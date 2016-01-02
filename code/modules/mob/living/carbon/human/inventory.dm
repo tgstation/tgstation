@@ -711,7 +711,11 @@ It can still be worn/put on as normal.
 	if(source.loc != s_loc) return		//source has moved
 	if(target.loc != t_loc) return		//target has moved
 	if(!source.Adjacent(target)) return	//Use a proxi!
-	if(item && source.get_active_hand() != item) return	//Swapped hands / removed item from the active one
+
+	if(item)
+		if(source.get_active_hand() != item) return //Swapped hands / removed item from the active one
+		if(item.cant_drop > 0) return //Item can't be dropped
+
 	if ((source.restrained() || source.stat)) return //Source restrained or unconscious / dead
 
 	var/slot_to_process
@@ -893,6 +897,10 @@ It can still be worn/put on as normal.
 		if(strip_item) //Stripping an item from the mob
 
 			var/obj/item/W = strip_item
+			if((W.cant_drop > 0) && ((target.r_hand == W) || (target.l_hand == W))) //If item we're trying to take off can't be dropped AND is in target's hand(s):
+				source << "<span class='notice'>\The [W] is stuck to \the [target]!</span>"
+				return
+
 			target.u_equip(W,1)
 			if (target.client)
 				target.client.screen -= W

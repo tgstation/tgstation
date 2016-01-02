@@ -37,12 +37,12 @@
 		visible_message("<span class='danger'>The [P] has a reduced effect on [src]!</span>")
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM)//No floor tiling them to death, wiseguy
+/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, speed)//No floor tiling them to death, wiseguy
 	if(istype(AM, /obj/item))
 		var/obj/item/T = AM
 		if(!stat)
 			Aggro()
-		if(T.throwforce <= 15)
+		if(T.throwforce <= 15 && speed < 10)
 			visible_message("<span class='notice'>The [T.name] [src.throw_message] [src.name]!</span>")
 			return
 	..()

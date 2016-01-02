@@ -147,14 +147,14 @@ var/savefile/Banlistjob
 	else
 		Banlistjob.dir.Add("[ckey][computerid][rank]")
 		Banlistjob.cd = "/base/[ckey][computerid][rank]"
-		to_chat(Banlistjob["key"], ckey)
-		to_chat(Banlistjob["id"], computerid)
-		to_chat(Banlistjob["rank"], rank)
-		to_chat(Banlistjob["reason"], reason)
-		to_chat(Banlistjob["bannedby"], bannedby)
-		to_chat(Banlistjob["temp"], temp)
+		Banlistjob["key"]      << ckey
+		Banlistjob["id"]       << computerid
+		Banlistjob["rank"]     << rank
+		Banlistjob["reason"]   << reason
+		Banlistjob["bannedby"] << bannedby
+		Banlistjob["temp"]     << temp
 		if (temp)
-			to_chat(Banlistjob["minutes"], bantimestamp)
+			Banlistjob["minutes"] << bantimestamp
 
 	return 1
 
@@ -163,8 +163,8 @@ var/savefile/Banlistjob
 	var/id
 	var/rank
 	Banlistjob.cd = "/base/[foldername]"
-	Banlistjob["key"] >> key
-	Banlistjob["id"] >> id
+	Banlistjob["key"]  >> key
+	Banlistjob["id"]   >> id
 	Banlistjob["rank"] >> rank
 	Banlistjob.cd = "/base"
 
@@ -259,17 +259,17 @@ var/savefile/Banlistjob
 			Banlistjob.cd = "/base"
 			Banlistjob.dir.Add("trash[i]trashid[i]")
 			Banlistjob.cd = "/base/trash[i]trashid[i]"
-			to_chat(Banlistjob["key"], "trash[i]")
+			Banlistjob["key"] << "trash[i]"
 		else
 			Banlistjob.cd = "/base"
 			Banlistjob.dir.Add("[last]trashid[i]")
 			Banlistjob.cd = "/base/[last]trashid[i]"
-			to_chat(Banlistjob["key"], last)
-		to_chat(Banlistjob["id"], "trashid[i]")
-		to_chat(Banlistjob["reason"], "Trashban[i].")
-		to_chat(Banlistjob["temp"], a)
-		to_chat(Banlistjob["minutes"], CMinutes + rand(1,2000))
-		to_chat(Banlistjob["bannedby"], "trashmin")
+			Banlistjob["key"] << last
+		Banlistjob["id"]       << "trashid[i]"
+		Banlistjob["reason"]   << "Trashban[i]."
+		Banlistjob["temp"]     << a
+		Banlistjob["minutes"]  << CMinutes + rand(1,2000)
+		Banlistjob["bannedby"] << "trashmin"
 		last = "trash[i]"
 
 	Banlistjob.cd = "/base"

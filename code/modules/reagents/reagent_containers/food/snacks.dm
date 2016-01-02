@@ -5,6 +5,7 @@
 	desc = "yummy"
 	icon = 'icons/obj/food.dmi'
 	icon_state = null
+	log_reagents = 1
 
 	var/food_flags	//Possible flags: FOOD_LIQUID, FOOD_MEAT, FOOD_ANIMAL, FOOD_SWEET
 					//FOOD_LIQUID	- for stuff like soups
@@ -28,14 +29,22 @@
 	volume = 100 //Double amount snacks can carry, so that food prepared from excellent items can contain all the nutriments it deserves
 
 //Proc for effects that trigger on eating that aren't directly tied to the reagents.
-/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(var/mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(var/mob/user, var/datum/reagents/reagentreference)
 	if(!user)
 		return
-	if(!reagents.total_volume) //Are we done eating (determined by the amount of reagents left, here 0)
+	if(reagents)
+		reagentreference = reagents
+	if(!reagentreference || !reagentreference.total_volume) //Are we done eating (determined by the amount of reagents left, here 0)
 		user.visible_message("<span class='notice'>[user] finishes eating \the [src].</span>", \
 		"<span class='notice'>You finish eating \the [src].</span>")
 		score["foodeaten"]++ //For post-round score
-		user.drop_from_inventory(src) //Drop our item before we delete it
+
+		//Drop our item before we delete it, to clear any references of ourselves in people's hands or whatever.
+		if(loc == user)
+			user.drop_from_inventory(src)
+		else if(ismob(loc))
+			var/mob/holder = loc
+			holder.drop_from_inventory(src)
 
 		if(trash) //Do we have somehing defined as trash for our snack item ?
 			//Note : This makes sense in some way, or at least this works, just don't mess with it
@@ -135,24 +144,28 @@
 				to_chat(user, "<span class='warning'>[target] doesn't seem to have a mouth. Awkward!</span>")
 				return
 
-		if(reagents)	//Handle ingestion of any reagents (Note : Foods always have reagents)
+		var/datum/reagents/reagentreference = reagents //Even when the object is qdeleted, the reagents exist until this ref gets removed
+		if(reagentreference)	//Handle ingestion of any reagents (Note : Foods always have reagents)
 			playsound(target.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-			if(reagents.total_volume)
-				reagents.reaction(target, INGEST)
-				spawn(5)
-					if(reagents.total_volume > bitesize)
+			if(reagentreference.total_volume)
+				reagentreference.reaction(target, INGEST)
+				spawn() //WHY IS THIS SPAWN() HERE
+					if(gcDestroyed)
+						return
+					if(reagentreference.total_volume > bitesize)
 						/*
 						 * I totally cannot understand what this code supposed to do.
 						 * Right now every snack consumes in 2 bites, my popcorn does not work right, so I simplify it. -- rastaf0
 						var/temp_bitesize =  max(reagents.total_volume /2, bitesize)
 						reagents.trans_to(target, temp_bitesize)
 						*/
-						reagents.trans_to(target, bitesize)
+						reagentreference.trans_to(target, bitesize)
 					else
-						reagents.trans_to(target, reagents.total_volume)
+						reagentreference.trans_to(target, reagentreference.total_volume)
 					bitecount++
-					On_Consume(target)
+					On_Consume(target, reagentreference)
 			return 1
+
 	return 0
 
 /obj/item/weapon/reagent_containers/food/snacks/examine(mob/user)
@@ -187,8 +200,10 @@
 	if(W.w_class <= 2 && W.is_sharp() < 0.8 && !istype(W,/obj/item/device/analyzer/plant_analyzer)) //Make sure the item is valid to attempt slipping shit into it
 		if(!iscarbon(user))
 			return 0
-		to_chat(user, "<span class='notice'>You slip \the [W] inside [src].</span>")
-		user.drop_item(W, src)
+
+		if(user.drop_item(W, src))
+			to_chat(user, "<span class='notice'>You slip \the [W] inside [src].</span>")
+
 		add_fingerprint(user)
 		contents += W
 		return 1 //No afterattack here
@@ -848,9 +863,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
 	..()
-	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
-	new trash(src.loc)
-	qdel(src)
+	if(isturf(hit_atom))
+		new/obj/effect/decal/cleanable/pie_smudge(src.loc)
+		if(trash) new trash(src.loc)
+		qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/empty //so the H.O.N.K. cream pie mortar can't generate free nutriment
 	trash = null
@@ -2801,15 +2817,16 @@
 				boxestoadd += i
 
 			if( (boxes.len+1) + boxestoadd.len <= 5 )
-				user.drop_item(I, src)
+				if(user.drop_item(I, src))
 
-				box.boxes = list() // Clear the box boxes so we don't have boxes inside boxes. - Xzibit
-				src.boxes.Add( boxestoadd )
+					box.boxes = list() // Clear the box boxes so we don't have boxes inside boxes. - Xzibit
+					src.boxes.Add( boxestoadd )
 
-				box.update_icon()
-				update_icon()
+					box.update_icon()
+					update_icon()
 
-				to_chat(user, "<span class='notice'>You put the [box] ontop of the [src]!</span>")
+					to_chat(user, "<span class='notice'>You put the [box] ontop of the [src]!</span>")
+
 			else
 				to_chat(user, "<span class='warning'>The stack is too high!</span>")
 		else
@@ -2820,11 +2837,12 @@
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/)) // Long ass fucking object name
 		if(src.pizza) to_chat(user, "<span class='warning'>[src] already has a pizza in it.</span>")
 		else if(src.open)
-			user.drop_item(I, src)
-			src.pizza = I
-			src.update_icon()
-			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+			if(user.drop_item(I, src))
+				src.pizza = I
+				src.update_icon()
+				to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 		else to_chat(user, "<span class='warning'>Open [src] first.</span>")
+
 		return
 
 	if( istype(I, /obj/item/weapon/pen/) )
@@ -3834,10 +3852,10 @@
 
 	spawn(0)
 		if(((M_CLUMSY in H.mutations)) || prob(25))
-			user.visible_message("<span class='warning'>[src] escapes from [H]'s hands!</span>","<span class='warning'>[src] escapes from your grasp!</span>")
-			H.drop_item()
+			if(H.drop_item())
+				user.visible_message("<span class='warning'>[src] escapes from [H]'s hands!</span>","<span class='warning'>[src] escapes from your grasp!</span>")
 
-			jump()
+				jump()
 	return 1
 
 /obj/item/weapon/reagent_containers/food/snacks/potentham
@@ -3871,3 +3889,33 @@
 	var/list/possible_reagents=list("zombiepowder"=5, "mindbreaker"=5, "pacid"=5, "hyperzine"=5, "chloralhydrate"=5, "tricordazine"=5, "doctorsdelight"=5, "mutationtoxin"=5, "mercury"=5, "anti_toxin"=5, "space_drugs"=5, "holywater"=5,  "ryetalyn"=5, "cryptobiolin"=5, "dexalinp"=5, "hamserum"=1)
 	var/reagent=pick(possible_reagents)
 	reagents.add_reagent(reagent, possible_reagents[reagent])
+
+/obj/item/weapon/reagent_containers/food/snacks/chococoin
+	name = "\improper Choco-Coin"
+	desc = "A thin wafer of milky, chocolatey, melt-in-your-mouth goodness. That alone is already worth a hoard."
+	food_flags = FOOD_SWEET
+	icon_state = "chococoin_unwrapped"
+	bitesize = 4
+
+/obj/item/weapon/reagent_containers/food/snacks/chococoin/wrapped
+	desc = "Still covered in golden foil wrapper."
+	icon_state = "chococoin_wrapped"
+	wrapped = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/chococoin/New()
+	..()
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("sugar", 2)
+	reagents.add_reagent("coco", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/chococoin/attack_self(mob/user)
+	if(wrapped)
+		Unwrap(user)
+	else
+		..()
+
+/obj/item/weapon/reagent_containers/food/snacks/chococoin/proc/Unwrap(mob/user)
+	icon_state = "chococoin_unwrapped"
+	desc = "A thin wafer of milky, chocolatey, melt-in-your-mouth goodness. That alone is already worth a hoard."
+	to_chat(user, "<span class='notice'>You remove the golden foil from \the [src].</span>")
+	wrapped = 0

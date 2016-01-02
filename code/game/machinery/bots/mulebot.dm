@@ -122,9 +122,9 @@ var/global/mulebot_count = 0
 
 	else if(istype(I,/obj/item/weapon/cell) && open && !cell)
 		var/obj/item/weapon/cell/C = I
-		user.drop_item(C, src)
-		cell = C
-		updateDialog()
+		if(user.drop_item(C, src))
+			cell = C
+			updateDialog()
 	else if(istype(I,/obj/item/weapon/wirecutters)||istype(I,/obj/item/device/multitool))
 		attack_hand(user)
 	else if(istype(I,/obj/item/weapon/screwdriver))
@@ -304,12 +304,12 @@ var/global/mulebot_count = 0
 				if(open && !cell)
 					var/obj/item/weapon/cell/C = usr.get_active_hand()
 					if(istype(C))
-						usr.drop_item(C, src)
-						cell = C
-						C.add_fingerprint(usr)
+						if(usr.drop_item(C, src))
+							cell = C
+							C.add_fingerprint(usr)
 
-						usr.visible_message("<span class='notice'>[usr] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
-						updateDialog()
+							usr.visible_message("<span class='notice'>[usr] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
+							updateDialog()
 
 
 			if("stop")

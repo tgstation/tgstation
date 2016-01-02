@@ -10,7 +10,7 @@
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5, 10, 25)
 	volume = 50
-
+	log_reagents = 1
 	//Merged from bottle.dm - Hinaichigo
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/isGlass = 0 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
@@ -767,13 +767,15 @@
 	name = "Shaker"
 	desc = "A metal shaker to mix drinks in."
 	icon_state = "shaker"
+	origin_tech = "materials=1"
 	amount_per_transfer_from_this = 10
 	volume = 100
 
 /obj/item/weapon/reagent_containers/food/drinks/flask
 	name = "Captain's Flask"
-	desc = "A metal flask belonging to the captain"
+	desc = "A metal flask belonging to the captain."
 	icon_state = "flask"
+	origin_tech = "materials=1"
 	volume = 60
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/detflask
@@ -1047,7 +1049,7 @@
 			new /obj/item/weapon/reagent_containers/glass/rag(get_turf(src))
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
-	user.drop_item()
+	user.drop_item(force_drop = 1)
 	var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(user.loc)
 	B.icon_state = src.icon_state
 	B.force = src.force

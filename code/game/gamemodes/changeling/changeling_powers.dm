@@ -109,14 +109,14 @@
 	var/datum/changeling/changeling = changeling_power(0,0,100)
 	if(!changeling)	return
 
-	var/mob/living/carbon/human/H=src
+	var/mob/living/carbon/human/H = src
 
 	for(var/obj/item/slot in H.get_all_slots())
 		u_equip(slot, 1)
 
 	monkeyizing = 1
 	canmove = 0
-	stunned = 1
+	delayNextAttack(50)
 	icon = null
 	invisibility = 101
 
@@ -133,7 +133,7 @@
 
 	monkeyizing = 0
 	canmove = 1
-	stunned = 0
+	delayNextAttack(0)
 	icon = null
 	invisibility = initial(invisibility)
 	H.maxHealth = 800 /* Gonna need more than one egun to kill one of these bad boys*/
@@ -347,7 +347,7 @@
 	return 1
 
 
-//Transform into a monkey.
+//Transform into a monkey. 	//TODO replace with monkeyize proc
 /mob/proc/changeling_lesser_form()
 	set category = "Changeling"
 	set name = "Lesser Form (1)"
@@ -355,9 +355,6 @@
 	var/datum/changeling/changeling = changeling_power(1,0,0, deny_horror=1)
 	if(!changeling)	return
 
-	if(src.has_brain_worms())
-		to_chat(src, "<span class='warning'>We cannot perform this ability at the present time!</span>")
-		return
 	var/mob/living/carbon/human/C = src
 
 	if(!istype(C) || !C.species.primitive)
@@ -370,16 +367,12 @@
 	changeling.geneticdamage = 30
 	to_chat(C, "<span class='warning'>Our genes cry out!</span>")
 
-	//TODO replace with monkeyize proc
-	var/list/implants = list() //Try to preserve implants.
-	for(var/obj/item/weapon/implant/W in C)
-		implants += W
-
 	C.monkeyizing = 1
 	C.canmove = 0
 	C.icon = null
 	C.overlays.len = 0
 	C.invisibility = 101
+	C.delayNextAttack(50)
 
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( C.loc )
 	animation.icon_state = "blank"
@@ -394,6 +387,8 @@
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey(src)
 	O.dna = C.dna.Clone()
 	C.dna = null
+	C.transferImplantsTo(O)
+	C.transferBorers(O)
 
 	for(var/obj/item/W in C)
 		C.drop_from_inventory(W)
@@ -407,13 +402,9 @@
 	O.setOxyLoss(C.getOxyLoss())
 	O.adjustFireLoss(C.getFireLoss())
 	O.stat = C.stat
+	O.delayNextAttack(0)
 	O.a_intent = I_HURT
-	for(var/obj/item/weapon/implant/I in implants)
-		I.loc = O
-		I.implanted = O
-
 	C.mind.transfer_to(O)
-
 	O.make_changeling(1)
 	O.verbs += /mob/proc/changeling_lesser_transform
 	O.changeling_update_languages(O.mind.changeling.absorbed_languages)
@@ -449,15 +440,12 @@
 	C.visible_message("<span class='warning'>[C] transforms!</span>")
 	C.dna = chosen_dna.Clone()
 
-	var/list/implants = list()
-	for (var/obj/item/weapon/implant/I in C) //Still preserving implants
-		implants += I
-
 	C.monkeyizing = 1
 	C.canmove = 0
 	C.icon = null
 	C.overlays.len = 0
 	C.invisibility = 101
+	C.delayNextAttack(50)
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( C.loc )
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
@@ -467,24 +455,19 @@
 	qdel(animation)
 	animation = null
 
-	for(var/obj/item/W in src)
-		C.u_equip(W, 1)
-		if (C.client)
-			C.client.screen -= W
-		if (W)
-			W.loc = C.loc
-			W.dropped(C)
-			W.layer = initial(W.layer)
-
 	var/mob/living/carbon/human/O = new /mob/living/carbon/human( src, delay_ready_dna=1 )
 	if (C.dna.GetUIState(DNA_UI_GENDER))
 		O.setGender(FEMALE)
 	else
 		O.setGender(MALE)
+	C.transferImplantsTo(O)
+	C.transferBorers(O)
 	O.dna = C.dna.Clone()
 	C.dna = null
 	O.real_name = chosen_dna.real_name
 
+	for(var/obj/item/W in src)
+		C.drop_from_inventory(W)
 	for(var/obj/T in C)
 		qdel(T)
 
@@ -497,10 +480,7 @@
 	O.setOxyLoss(C.getOxyLoss())
 	O.adjustFireLoss(C.getFireLoss())
 	O.stat = C.stat
-	for (var/obj/item/weapon/implant/I in implants)
-		I.loc = O
-		I.implanted = O
-
+	O.delayNextAttack(0)
 	C.mind.transfer_to(O)
 	O.make_changeling()
 	O.changeling_update_languages(changeling.absorbed_languages)

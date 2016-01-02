@@ -35,9 +35,9 @@
 /obj/item/weapon/moneybag/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if (istype(W, /obj/item/weapon/coin))
-		var/obj/item/weapon/coin/C = W
-		to_chat(user, "<span class='notice'>You add the [C.name] into the bag.</span>")
-		usr.drop_item(W, src)
+		if(usr.drop_item(W, src))
+			var/obj/item/weapon/coin/C = W
+			to_chat(user, "<span class='notice'>You add the [C.name] into the bag.</span>")
 	if (istype(W, /obj/item/weapon/moneybag))
 		var/obj/item/weapon/moneybag/C = W
 		for (var/obj/O in C.contents)

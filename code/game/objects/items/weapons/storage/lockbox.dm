@@ -39,7 +39,7 @@
 				tracked_access = "The tracker reads: 'Last unlocked by [ID.registered_name].'"
 				return
 		else
-			to_chat(user, "<span class='warning'>Access Denied</span>")
+			to_chat(user, "<span class='warning'>Access Denied.</span>")
 	else if(istype(W, /obj/item/weapon/card/emag) && !src.broken)
 		broken = 1
 		locked = 0
@@ -51,13 +51,13 @@
 	if(!locked)
 		. = ..()
 	else
-		to_chat(user, "<span class='warning'>Its locked!</span>")
+		to_chat(user, "<span class='warning'>It's locked!</span>")
 	return
 
 
 /obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
 	if(locked)
-		to_chat(user, "<span class='warning'>Its locked!</span>")
+		to_chat(user, "<span class='warning'>It's locked!</span>")
 	else
 		..()
 	return
@@ -191,7 +191,7 @@
 	icon_state = "coinbox+l"
 	w_class = 2
 	max_w_class = 1
-	can_hold = list("/obj/item/voucher","/obj/item/weapon/coin")
+	can_hold = list("/obj/item/voucher","/obj/item/weapon/coin","/obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin","/obj/item/weapon/reagent_containers/food/snacks/chococoin")
 	max_combined_w_class = 30
 	force = 8
 	throwforce = 10

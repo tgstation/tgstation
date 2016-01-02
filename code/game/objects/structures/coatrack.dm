@@ -35,18 +35,17 @@
 
 /obj/structure/coatrack/attackby(obj/item/clothing/C, mob/user)
 	if (istype(C, /obj/item/clothing/suit/storage/det_suit) && !suit)
-		to_chat(user, "<span class='notice'>You place your [C] on the [src]</span>")
-		playsound(get_turf(src), "rustle", 50, 1, -5)
-		user.drop_item(C, src)
-		suit = C
-		update_icon()
-
+		if(user.drop_item(C, src))
+			to_chat(user, "<span class='notice'>You place your [C] on the [src]</span>")
+			playsound(get_turf(src), "rustle", 50, 1, -5)
+			suit = C
+			update_icon()
 	else if (istype(C, /obj/item/clothing/head/det_hat) && !hat)
-		to_chat(user, "<span class='notice'>You place your [C] on the [src]</span>")
-		playsound(get_turf(src), "rustle", 50, 1, -5)
-		user.drop_item(C, src)
-		hat = C
-		update_icon()
+		if(user.drop_item(C, src))
+			to_chat(user, "<span class='notice'>You place your [C] on the [src]</span>")
+			playsound(get_turf(src), "rustle", 50, 1, -5)
+			hat = C
+			update_icon()
 
 	else
 		return ..()

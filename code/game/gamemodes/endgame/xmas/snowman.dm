@@ -75,15 +75,14 @@
 
 /mob/living/simple_animal/hostile/retaliate/snowman/attackby(var/obj/item/W, var/mob/user)
 	if(!carrot && istype(W, /obj/item/weapon/reagent_containers/food/snacks/grown/carrot))
-		visible_message("<span class='notice'>[user] puts \a [W] on \the [src]'s nose.</span>")
-		user.drop_item(W, src)
-		carrot = W
-		overlays += "snowman_carrot"
-		speak -= "Would you happen to have a carrot for my nose?"
-		src.say("Ah, most excellent!")
-		if(prob(30))
-			call(/obj/item/weapon/winter_gift/proc/pick_a_gift)(src.loc)
-
+		if(user.drop_item(W, src))
+			visible_message("<span class='notice'>[user] puts \a [W] on \the [src]'s nose.</span>")
+			carrot = W
+			overlays += "snowman_carrot"
+			speak -= "Would you happen to have a carrot for my nose?"
+			src.say("Ah, most excellent!")
+			if(prob(30))
+				call(/obj/item/weapon/winter_gift/proc/pick_a_gift)(src.loc)
 
 	else if(istype(W,/obj/item/clothing/head/))
 		if(hat)
@@ -92,10 +91,10 @@
 			hat = null
 		else
 			speak += "I feel so dandy!"
-		user.drop_item(W, src)
-		hat = W
+		if(user.drop_item(W, src))
+			hat = W
 
-		overlays += image('icons/mob/head.dmi', hat.icon_state)
+			overlays += image('icons/mob/head.dmi', hat.icon_state)
 
 	else	..()
 

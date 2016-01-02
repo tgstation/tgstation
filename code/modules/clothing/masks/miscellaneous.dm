@@ -7,6 +7,7 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 	species_fit = list("Vox")
+	origin_tech = "biotech=2"
 
 //Monkeys can not take the muzzle off of themself! Call PETA!
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user as mob)
@@ -37,33 +38,34 @@
 	flags_inv = HIDEFACE
 
 //scarves (fit in in mask slot)
+/obj/item/clothing/mask/scarf
+	flags = FPRINT
+	flags_inv = HIDEFACE
+	action_button_name = "Toggle Scarf"
+	w_class = 2
+	gas_transfer_coefficient = 0.90
+	can_flip = 1
 
-/obj/item/clothing/mask/bluescarf
+/obj/item/clothing/mask/scarf/blue
 	name = "blue neck scarf"
 	desc = "A blue neck scarf."
-	icon_state = "blueneckscarf"
-	item_state = "blueneckscarf"
-	flags = FPRINT
-	w_class = 2
-	gas_transfer_coefficient = 0.90
+	icon_state = "blue_scarf"
+	item_state = "blue_scarf"
 
-/obj/item/clothing/mask/redscarf
+
+/obj/item/clothing/mask/scarf/red
 	name = "red scarf"
-	desc = "A red and white checkered neck scarf."
-	icon_state = "redwhite_scarf"
-	item_state = "redwhite_scarf"
-	flags = FPRINT
-	w_class = 2
-	gas_transfer_coefficient = 0.90
+	desc = "A red neck scarf."
+	icon_state = "red_scarf"
+	item_state = "red_scarf"
 
-/obj/item/clothing/mask/greenscarf
+
+/obj/item/clothing/mask/scarf/green
 	name = "green scarf"
-	desc = "A green neck scarf."
+	desc = "A green and red line patterned scarf."
 	icon_state = "green_scarf"
 	item_state = "green_scarf"
-	flags = FPRINT
-	w_class = 2
-	gas_transfer_coefficient = 0.90
+
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"

@@ -70,6 +70,30 @@
 
 	material = "wood"
 
+/obj/item/stack/tile/wood/proc/build(turf/S as turf)
+	if(istype(S,/turf/unsimulated/floor/asteroid))
+		S.ChangeTurf(/turf/simulated/floor/plating/deck/airless)
+	else
+		S.ChangeTurf(/turf/simulated/floor/plating/deck)
+
+/obj/item/stack/tile/wood/afterattack(atom/target, mob/user, adjacent, params)
+	if(adjacent)
+		if(isturf(target) || istype(target, /obj/structure/lattice/wood))
+			var/turf/T = get_turf(target)
+			var/obj/structure/lattice/L
+			L = locate(/obj/structure/lattice/wood) in T
+			if(!istype(L))
+				return
+			var/obj/item/stack/tile/wood/S = src
+			if(!(T.canBuildPlating(S)))
+				to_chat(user, "<span class='warning'>You can't get that deck up without some support!</span>")
+				return
+			if(S.use(1))
+				playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
+				S.build(T)
+				if(T.canBuildPlating(S) == BUILD_SUCCESS)
+					qdel(L)
+
 /*
  * Carpets
  */

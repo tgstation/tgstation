@@ -612,6 +612,7 @@
 	production = 6
 	yield = 6
 	potency = 5
+	chems = list("nutriment" = list(1), "space_drugs" = list(1,8), "kelotane" = list(1,8,1), "bicaridine" = list(1,10,1), "toxin" = list(1,5), spiritbreaker = list(10))
 
 
 /datum/seed/ambrosia/deus

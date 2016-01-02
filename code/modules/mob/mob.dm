@@ -22,7 +22,11 @@ var/global/obj/screen/fuckstat/FUCK = new
 	if(on_uattack) on_uattack.holder = null
 	unset_machine()
 	if(mind && mind.current == src)
-		spellremove(src)
+		mind.current = null
+	spellremove(src)
+	if(istype(src,/mob/living/carbon))//iscarbon is defined at the mob/living level
+		var/mob/living/carbon/Ca = src
+		Ca.dropBorers(1)//sanity checking for borers that haven't been qdel'd yet
 	if(client)
 		for(var/obj/screen/movable/spell_master/spell_master in spell_masters)
 			returnToPool(spell_master)
@@ -40,15 +44,19 @@ var/global/obj/screen/fuckstat/FUCK = new
 	mob_list.Remove(src)
 	dead_mob_list.Remove(src)
 	living_mob_list.Remove(src)
-	ghostize()
+	ghostize(0)
 	//Fuck datums amirite
 	click_delayer = null
 	attack_delayer = null
 	special_delayer = null
 	gui_icons = null
 	qdel(hud_used)
+	hud_used = null
 	for(var/obj/leftovers in src)
 		qdel(leftovers)
+	if(on_uattack)
+		on_uattack.holder = null
+		on_uattack = null
 	..()
 
 /mob/projectile_check()
@@ -198,6 +206,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 	store_position()
 	on_uattack = new("owner"=src)
 
+	forceMove(loc) //Without this, area.Entered() isn't called when a mob is spawned inside area
+
 	if(flags & HEAR_ALWAYS)
 		getFromPool(/mob/virtualhearer, src)
 
@@ -342,18 +352,24 @@ var/global/obj/screen/fuckstat/FUCK = new
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 /atom/proc/visible_message(var/message, var/blind_message, var/drugged_message, var/blind_drugged_message)
-	for(var/mob/M in viewers(src))
-		var/hallucination = M.hallucinating()
-		var/msg = message
-		var/msg2 = blind_message
+	if(world.time>resethearers) sethearing()
+	for(var/mob/virtualhearer/hearer in viewers(src))
+		if(istype(hearer.attached, /mob))
+			var/mob/M = hearer.attached
+			var/hallucination = M.hallucinating()
+			var/msg = message
+			var/msg2 = blind_message
 
-		if(hallucination)
-			if(drugged_message)
-				msg = drugged_message
-			if(blind_drugged_message)
-				msg2 = blind_drugged_message
-		M.show_message( msg, 1, msg2, 2)
-
+			if(hallucination)
+				if(drugged_message)
+					msg = drugged_message
+				if(blind_drugged_message)
+					msg2 = blind_drugged_message
+			M.show_message( msg, 1, msg2, 2)
+		else if(istype(hearer.attached, /obj/machinery/hologram/holopad))
+			var/obj/machinery/hologram/holopad/holo = hearer.attached
+			if(holo.master)
+				holo.master.show_message( message, 1, blind_message, 2)
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)
@@ -511,7 +527,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 						W.loc=get_turf(src) // I think.
 					else
 						if(!disable_warning)
-							to_chat(src, "<span class='warning'> You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
+							to_chat(src, "<span class='warning'>You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
 
 				return 0
 			if(1)
@@ -527,23 +543,24 @@ var/global/obj/screen/fuckstat/FUCK = new
 							if(EQUIP_FAILACTION_DROP)
 								W.loc=get_turf(src) // I think.
 						return
-					drop_item(W)
-					if(!(put_in_active_hand(wearing)))
-						equip_to_slot(wearing, slot, redraw_mob)
-						switch(act_on_fail)
-							if(EQUIP_FAILACTION_DELETE)
-								qdel(W)
-							else
-								if(!disable_warning && act_on_fail != EQUIP_FAILACTION_DROP)
-									to_chat(src, "<span class='warning'> You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
 
-						return
-					else
-						equip_to_slot(W, slot, redraw_mob)
-						u_equip(wearing,0)
-						put_in_active_hand(wearing)
-					if(H.s_store && !H.s_store.mob_can_equip(src, slot_s_store, 1))
-						u_equip(H.s_store,1)
+					if(drop_item(W))
+						if(!(put_in_active_hand(wearing)))
+							equip_to_slot(wearing, slot, redraw_mob)
+							switch(act_on_fail)
+								if(EQUIP_FAILACTION_DELETE)
+									qdel(W)
+								else
+									if(!disable_warning && act_on_fail != EQUIP_FAILACTION_DROP)
+										to_chat(src, "<span class='warning'>You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
+
+							return
+						else
+							equip_to_slot(W, slot, redraw_mob)
+							u_equip(wearing,0)
+							put_in_active_hand(wearing)
+						if(H.s_store && !H.s_store.mob_can_equip(src, slot_s_store, 1))
+							u_equip(H.s_store,1)
 		return 1
 	else
 		if(!W.mob_can_equip(src, slot, disable_warning))
@@ -555,7 +572,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 					W.loc=get_turf(src) // I think.
 				else
 					if(!disable_warning)
-						to_chat(src, "<span class='warning'> You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
+						to_chat(src, "<span class='warning'>You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
 
 			return 0
 
@@ -692,7 +709,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_belt)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>")
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if( !(slot_flags & SLOT_BELT) )
 					return 0
@@ -743,7 +760,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_wear_id)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>")
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if( !(slot_flags & SLOT_ID) )
 					return 0
@@ -758,7 +775,7 @@ var/list/slot_equipment_priority = list( \
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>")
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return
@@ -769,7 +786,7 @@ var/list/slot_equipment_priority = list( \
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>")
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return 0
@@ -779,7 +796,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_s_store)
 				if(!H.wear_suit)
 					if(!disable_warning)
-						to_chat(H, "<span class='warning'> You need a suit before you can attach this [name].</span>")
+						to_chat(H, "<span class='warning'>You need a suit before you can attach this [name].</span>")
 					return 0
 				if(!H.wear_suit.allowed)
 					if(!disable_warning)
@@ -891,7 +908,7 @@ var/list/slot_equipment_priority = list( \
 	set name = "Point To"
 	set category = "Object"
 
-	if(!src || usr.stat || (usr.status_flags & FAKEDEATH) || !isturf(src.loc) || !(A in view(src.loc)))
+	if(!src || usr.isUnconscious() || !isturf(src.loc) || !(A in view(src.loc)))
 		return 0
 
 	if(istype(A, /obj/effect/decal/point))
@@ -1182,7 +1199,7 @@ var/list/slot_equipment_priority = list( \
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = 1
 	else if(stat != DEAD || istype(src, /mob/new_player))
-		to_chat(usr, "<span class='notice'> You must be observing to use this!</span>")
+		to_chat(usr, "<span class='notice'>You must be observing to use this!</span>")
 		return
 
 	if(is_admin && stat == DEAD)
@@ -1438,7 +1455,7 @@ var/list/slot_equipment_priority = list( \
 		lying = locked_to.locked_should_lie
 
 
-	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
+	else if( isUnconscious() || weakened || paralysis || resting || sleeping )
 		stop_pulling()
 		lying = 1
 		canmove = 0
@@ -1753,6 +1770,9 @@ mob/proc/on_foot()
 
 /mob/proc/teleport_to(var/atom/A)
 	forceMove(get_turf(A))
+
+/mob/proc/nuke_act() //Called when caught in a nuclear blast
+	return
 
 #undef MOB_SPACEDRUGS_HALLUCINATING
 #undef MOB_MINDBREAKER_HALLUCINATING

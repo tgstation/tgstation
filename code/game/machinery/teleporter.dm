@@ -36,9 +36,12 @@
 
 
 		if(istype(L, /obj/effect/landmark/) && istype(L.loc, /turf))
+			if(!user.drop_item(I))
+				user << "<span class='warning'>You can't let go of \the [I]!</span>"
+				return
+
 			to_chat(usr, "You insert the coordinates into the machine.")
 			to_chat(usr, "A message flashes across the screen reminding the traveller that the nuclear authentication disk is to remain on the station at all times.")
-			user.drop_item(I)
 			qdel(I)
 
 			/* FUCK YOU

@@ -109,9 +109,9 @@
 		if(isrobot(user) && !isMoMMI(user)) // MoMMI's can but borgs can't
 			to_chat(user, "You're a robot. No.")
 			return
-		user.drop_item(W, src)
-		to_chat(user, "You cram \the [W] into the nozzle of \the [src].")
-		message_admins("[user]/[user.ckey] has crammed \a [W] into a [src].")
+		if(user.drop_item(W, src))
+			to_chat(user, "You cram \the [W] into the nozzle of \the [src].")
+			message_admins("[user]/[user.ckey] has crammed \a [W] into a [src].")
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(proximity_flag)

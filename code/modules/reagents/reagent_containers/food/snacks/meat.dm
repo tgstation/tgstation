@@ -112,6 +112,11 @@
 		reagents.add_reagent("hyperzine", 5)
 		src.bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/roach
+	name = "cockroach meat"
+	desc = "A cockroach's severed abdomen, small but nonetheless nutritious."
+	icon_state = "roachmeat"
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/mimic
 	name = "mimic meat"
 	desc = "Woah! You were eating THIS all along?"

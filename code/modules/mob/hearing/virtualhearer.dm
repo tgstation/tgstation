@@ -1,4 +1,10 @@
 var/global/list/mob/virtualhearer/virtualhearers = list()
+//To improve the performance of the virtualhearers loop, we do not need to
+//locate the virtualhearers of these stationary objects, as they should not move
+//and if they do move (singuloth), the virtualhearer should be moving with them
+var/list/stationary_hearers = list(	/obj/item/device/radio/intercom,
+									/obj/machinery/camera,
+									/obj/machinery/hologram/holopad)
 
 /mob/virtualhearer
 	name = ""
@@ -22,7 +28,7 @@ var/global/list/mob/virtualhearer/virtualhearers = list()
 	virtualhearers += src
 	loc = get_turf(attachedto)
 	attached = attachedto
-	if(istype(attached,/obj/item/device/radio/intercom) || istype(attached,/obj/machinery/camera))
+	if(is_type_in_list(attachedto,stationary_hearers))
 		virtualhearers -= src
 
 /mob/virtualhearer/Destroy()
@@ -42,7 +48,4 @@ var/global/list/mob/virtualhearer/virtualhearers = list()
 	return
 
 /mob/virtualhearer/singularity_act()
-	return
-
-/mob/virtualhearer/singularity_pull()
 	return

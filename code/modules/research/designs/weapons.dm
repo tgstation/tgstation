@@ -107,6 +107,26 @@
 	locked = 1
 	req_lock_access = list(access_armory)
 
+/datum/design/ammo_12mm
+	name = "Ammunition Box (12mm)"
+	desc = "A box of 12mm ammunition."
+	id = "ammo_12mm"
+	req_tech = list("combat" = 3, "materials" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_IRON = 2000, MAT_GLASS = 200)
+	category = "Weapons"
+	build_path = /obj/item/ammo_storage/box/c12mm
+
+/datum/design/magazine_12mm
+	name = "Magazine (12mm)"
+	desc = "A magazine that holds 12mm ammunition."
+	id = "magazine_12mm"
+	req_tech = list("combat" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_IRON = 300)
+	category = "Weapons"
+	build_path = /obj/item/ammo_storage/magazine/a12mm/empty
+
 /datum/design/decloner
 	name = "Decloner"
 	desc = "Your opponent will bubble into a messy pile of goop."
@@ -208,6 +228,16 @@
 	materials = list(MAT_IRON = 3750, MAT_SILVER = 100)
 	category = "Weapons"
 	build_path = /obj/item/ammo_storage/box/c9mm
+
+/datum/design/magazine_9mm
+	name = "Magazine (9mm SMG)"
+	desc = "A SMG magazine that holds 9mm ammunition."
+	id = "magazine_9mm"
+	req_tech = list("combat" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_IRON = 300)
+	category = "Weapons"
+	build_path = /obj/item/ammo_storage/magazine/smg9mm/empty
 
 /datum/design/stunshell
 	name = "Stun Shell"

@@ -594,11 +594,11 @@
 		if(src.SUIT)
 			to_chat(user, "<font color='blue'>The unit already contains a suit.</font>")
 			return
-		to_chat(user, "You load the [S.name] into the storage compartment.")
-		user.drop_item(S, src)
-		src.SUIT = S
-		src.update_icon()
-		src.updateUsrDialog()
+		if(user.drop_item(S, src))
+			to_chat(user, "You load the [S.name] into the storage compartment.")
+			src.SUIT = S
+			src.update_icon()
+			src.updateUsrDialog()
 		return
 	if( istype(I,/obj/item/clothing/head/helmet) )
 		if(!src.isopen)
@@ -607,12 +607,12 @@
 		if(src.HELMET)
 			to_chat(user, "<font color='blue'>The unit already contains a helmet.</font>")
 			return
-		to_chat(user, "You load the [H.name] into the storage compartment.")
-		user.drop_item(H, src)
-		src.HELMET = H
-		src.update_icon()
-		src.updateUsrDialog()
-		return
+		if(user.drop_item(H, src))
+			to_chat(user, "You load the [H.name] into the storage compartment.")
+			src.HELMET = H
+			src.update_icon()
+			src.updateUsrDialog()
+			return
 	if( istype(I,/obj/item/clothing/mask) )
 		if(!src.isopen)
 			return
@@ -620,11 +620,11 @@
 		if(src.MASK)
 			to_chat(user, "<font color='blue'>The unit already contains a mask.</font>")
 			return
-		to_chat(user, "You load the [M.name] into the storage compartment.")
-		user.drop_item(M, src)
-		src.MASK = M
-		src.update_icon()
-		src.updateUsrDialog()
+		if(user.drop_item(M, src))
+			to_chat(user, "You load the [M.name] into the storage compartment.")
+			src.MASK = M
+			src.update_icon()
+			src.updateUsrDialog()
 		return
 	if( istype(I,/obj/item/clothing/shoes) )
 		if(!src.isopen)
@@ -633,11 +633,11 @@
 		if(src.BOOTS)
 			to_chat(user, "<font color='blue'>The unit already contains shoes.</font>")
 			return
-		to_chat(user, "You load \the [M.name] into the storage compartment.")
-		user.drop_item(M, src)
-		src.BOOTS = M
-		src.update_icon()
-		src.updateUsrDialog()
+		if(user.drop_item(M, src))
+			to_chat(user, "You load \the [M.name] into the storage compartment.")
+			src.BOOTS = M
+			src.update_icon()
+			src.updateUsrDialog()
 		return
 	src.update_icon()
 	src.updateUsrDialog()

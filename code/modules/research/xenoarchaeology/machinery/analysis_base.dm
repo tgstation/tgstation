@@ -148,11 +148,11 @@ obj/machinery/anomaly/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 		if(held_container)
 			to_chat(user, "<span class='warning'>You must remove the [held_container] first.</span>")
 		else
-			to_chat(user, "<span class='notice'>You put the [W] into the [src].</span>")
-			user.drop_item(W, src)
+			if(user.drop_item(W, src))
+				to_chat(user, "<span class='notice'>You put the [W] into the [src].</span>")
 
-			held_container = W
-			updateDialog()
+				held_container = W
+				updateDialog()
 
 		return 1 // avoid afterattack() being called
 	/*else if(istype(W, /obj/item/weapon/tank))

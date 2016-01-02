@@ -1,15 +1,16 @@
 /mob/living/carbon/human/proc/monkeyize()
 	if (monkeyizing)
 		return
+
 	for(var/obj/item/W in src)
 		if (W==w_uniform) // will be torn
 			continue
 		drop_from_inventory(W)
 	regenerate_icons()
-
+	dropBorers()
 	monkeyizing = 1
 	canmove = 0
-	stunned = 1
+	delayNextAttack(50)
 	icon = null
 	invisibility = 101
 
@@ -52,10 +53,12 @@
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
 	regenerate_icons()
+	dropBorers()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	for(var/t in organs)	//this really should not be necessary
 		qdel(t)
 
@@ -93,10 +96,12 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
+	dropBorers()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	return ..()
 
 /mob/proc/AIize()
@@ -169,11 +174,13 @@
 			qdel(W)
 		else
 			drop_from_inventory(W)
+	dropBorers()
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	for(var/t in organs)
 		qdel(t)
 
@@ -214,11 +221,13 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
+	dropBorers()
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	for(var/t in organs)
 		qdel(t)
 
@@ -261,11 +270,13 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
+	dropBorers()
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	for(var/t in organs)
 		qdel(t)
 
@@ -292,11 +303,13 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
+	dropBorers()
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	for(var/t in organs)
 		qdel(t)
 
@@ -328,11 +341,13 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
+	dropBorers()
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 	for(var/t in organs)	//this really should not be necessary
 		qdel(t)
 
@@ -358,12 +373,14 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
+	dropBorers()
 
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
+	delayNextAttack(50)
 
 	for(var/t in organs)
 		qdel(t)

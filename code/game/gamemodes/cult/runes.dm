@@ -54,12 +54,12 @@
 			user.whisper("Sas[pick("'","`")]so c'arta forbici!")
 		if(universe.name != "Hell Rising")
 			user.visible_message("<span class='warning'> [user] disappears in a flash of red light!</span>", \
-			"<span class='warning'> You feel as your body gets dragged through the dimension of Nar-Sie!</span>", \
-			"<span class='warning'> You hear a sickening crunch and sloshing of viscera.</span>")
+			"<span class='warning'>You feel as your body gets dragged through the dimension of Nar-Sie!</span>", \
+			"<span class='warning'>You hear a sickening crunch and sloshing of viscera.</span>")
 		else
 			user.visible_message("<span class='warning'> [user] disappears in a flash of red light!</span>", \
-			"<span class='warning'> You feel as your body gets dragged through a tunnel of viscera !</span>", \
-			"<span class='warning'> You hear a sickening crunch and sloshing of viscera.</span>")
+			"<span class='warning'>You feel as your body gets dragged through a tunnel of viscera !</span>", \
+			"<span class='warning'>You hear a sickening crunch and sloshing of viscera.</span>")
 
 		if(istype(src,/obj/effect/rune))
 			invocation("rune_teleport")
@@ -220,7 +220,7 @@
 
 	usr.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
 	usr.show_message("<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='warning'>You hear a faint fizzle.</span>", 2)
-	to_chat(usr, "<span class='notice'> You remembered the words correctly, but the rune isn't working. Maybe your ritual is missing something important.</span>")
+	to_chat(usr, "<span class='notice'>You remembered the words correctly, but the rune isn't working. Maybe your ritual is missing something important.</span>")
 
 /////////////////////////////////////////FOURTH RUNE
 
@@ -434,7 +434,7 @@
 		return
 	usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
 	usr.show_message("\<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='warning'>You hear a faint fizzle.</span>", 2)
-	to_chat(usr, "<span class='notice'> You remembered the words correctly, but the rune isn't reacting. Maybe you should position yourself differently.</span>")
+	to_chat(usr, "<span class='notice'>You remembered the words correctly, but the rune isn't reacting. Maybe you should position yourself differently.</span>")
 
 /////////////////////////////////////////EIGHTH RUNE
 
@@ -599,7 +599,7 @@
 
 	usr.visible_message("<span class='warning'> A shape forms in the center of the rune. A shape of... a man.<BR>The world feels blury as your soul permeates this temporary body.</span>", \
 	"<span class='warning'> A shape forms in the center of the rune. A shape of... a man.</span>", \
-	"<span class='warning'> You hear liquid flowing.</span>")
+	"<span class='warning'>You hear liquid flowing.</span>")
 
 	animation = new(D.loc)
 	animation.layer = usr.layer + 1
@@ -736,7 +736,7 @@
 	else
 		usr.say("H'drak v[pick("'","`")]loso, mir'kanas verbot!")
 		usr.show_message("\<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='warning'>You hear a faint fizzle.</span>", 2)
-		to_chat(usr, "<span class='notice'> You remembered the words correctly, but the rune isn't working properly. Maybe you're missing something in the ritual.</span>")
+		to_chat(usr, "<span class='notice'>You remembered the words correctly, but the rune isn't working properly. Maybe you're missing something in the ritual.</span>")
 
 /////////////////////////////////////////THIRTEENTH RUNE
 
@@ -1298,7 +1298,7 @@
 		usr.whisper("Sa tatha najin")
 		if(ishuman(user))
 			usr.visible_message("<span class='warning'> In flash of red light, a set of armor appears on [usr]...</span>", \
-			"<span class='warning'> You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
+			"<span class='warning'>You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
 			var/datum/game_mode/cult/mode_ticker = ticker.mode
 			if((istype(mode_ticker) && mode_ticker.narsie_condition_cleared) || (universe.name == "Hell Rising"))
 				user.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/cult(user), slot_head)
@@ -1314,7 +1314,7 @@
 		else if(ismonkey(user))
 			var/mob/living/carbon/monkey/K = user
 			K.visible_message("<span class='warning'> The rune disappears with a flash of red light, [K] now looks like the cutest of all followers of Nar-Sie...</span>", \
-			"<span class='warning'> You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor. Might not offer much protection due to its size though.</span>")
+			"<span class='warning'>You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor. Might not offer much protection due to its size though.</span>")
 			if(!istype(K.uniform, /obj/item/clothing/monkeyclothes/cultrobes))
 				var/obj/item/clothing/monkeyclothes/cultrobes/CR = new /obj/item/clothing/monkeyclothes/cultrobes(user.loc)
 				K.wearclothes(CR)
@@ -1330,7 +1330,7 @@
 			if(iscultist(M))
 				if(ishuman(M))
 					M.visible_message("<span class='warning'> In flash of red light, and a set of armor appears on [M]...</span>", \
-					"<span class='warning'> You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
+					"<span class='warning'>You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
 					var/datum/game_mode/cult/mode_ticker = ticker.mode
 					if((istype(mode_ticker) && mode_ticker.narsie_condition_cleared) || (universe.name == "Hell Rising"))
 						M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/cult(M), slot_head)
@@ -1344,7 +1344,7 @@
 				else if(ismonkey(M))
 					var/mob/living/carbon/monkey/K = M
 					K.visible_message("<span class='warning'> The rune disappears with a flash of red light, [K] now looks like the cutest of all followers of Nar-Sie...</span>", \
-					"<span class='warning'> You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor. Might not offer much protection due to its size though.</span>")
+					"<span class='warning'>You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor. Might not offer much protection due to its size though.</span>")
 					var/obj/item/clothing/monkeyclothes/cultrobes/CR = new /obj/item/clothing/monkeyclothes/cultrobes(loc)
 					K.wearclothes(CR)
 					var/obj/item/clothing/head/culthood/alt/CH = new /obj/item/clothing/head/culthood/alt(loc)
@@ -1415,5 +1415,5 @@
 			else
 				to_chat(usr, "<span class='warning'>Only the followers of Nar-Sie may be given their armor.</span>")
 				to_chat(M, "<span class='warning'>Only the followers of Nar-Sie may be given their armor.</span>")
-	to_chat(user, "<span class='note'> You have to be standing on top of the rune.</span>")
+	to_chat(user, "<span class='note'>You have to be standing on top of the rune.</span>")
 	return

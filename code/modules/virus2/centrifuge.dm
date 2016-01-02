@@ -42,8 +42,9 @@
 
 	var/mob/living/carbon/C = user
 	if(!sample)
-		sample = I
 		if(!C.drop_item(I, src)) return 1
+
+		sample = I
 
 	attack_hand(user)
 

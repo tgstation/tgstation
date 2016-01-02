@@ -14,6 +14,7 @@
 	desc = "A suit that protects against fire and heat."
 	icon_state = "fire"
 	item_state = "fire_suit"
+	origin_tech = "materials=2;engineering=1"
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50

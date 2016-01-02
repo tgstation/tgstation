@@ -118,6 +118,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/floramut"
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
+	mech_flags = null // So it can be scanned by the Device Analyser
 	modifystate = "floramut"
 	var/charge_tick = 0
 	var/mode = 0 //0 = mutate, 1 = yield boost, 2 = emag-mutate
@@ -404,7 +405,7 @@ obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user as mob)
 	power_supply.charge = min(power_supply.charge + 200,power_supply.maxcharge)
 	if(power_supply.charge >= power_supply.maxcharge)
 		playsound(get_turf(src), 'sound/machines/click.ogg', 25, 1)
-		to_chat(user, "<span class='rose'>You pull the pump at the back of the gun.Looks like the Inner battery is fully charged now.</span>")
+		to_chat(user, "<span class='rose'>You pull the pump at the back of the gun. Looks like the inner battery is fully charged now.</span>")
 	else
 		playsound(get_turf(src), 'sound/weapons/bison_reload.ogg', 25, 1)
 		to_chat(user, "<span class='rose'>You pull the pump at the back of the gun.</span>")

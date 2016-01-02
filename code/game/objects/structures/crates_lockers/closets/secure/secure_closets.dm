@@ -54,7 +54,7 @@
 		else
 			src.icon_state = src.icon_closed
 	else
-		to_chat(user, "<span class='notice'>Access Denied</span>")
+		to_chat(user, "<span class='notice'>Access Denied.</span>")
 
 /obj/structure/closet/secure_closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(src.opened)
@@ -138,7 +138,7 @@
 	set category = "Object"
 	set name = "Toggle Lock"
 
-	if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH)) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
+	if(!usr.canmove || usr.isUnconscious() || usr.restrained()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
 		return
 
 	if(get_dist(usr, src) != 1)

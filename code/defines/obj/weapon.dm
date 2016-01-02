@@ -112,6 +112,7 @@
 	name = "cane"
 	desc = "A cane used by a true gentlemen. Or a clown."
 	icon = 'icons/obj/weapons.dmi'
+	origin_tech = "materials=1"
 	icon_state = "cane"
 	item_state = "stick"
 	flags = FPRINT
@@ -357,19 +358,19 @@
 		if(I.w_class) //if it has a defined weight
 			if(I.w_class == 2.0 || I.w_class == 3.0) //just one is too specific, so don't change this
 				if(!weight1)
-					user.drop_item(I, src)
-					weight1 = I
-					user.show_message("<span class='notice'>You tie [weight1] to the [src].</span>")
-					update_icon()
-					//del(I)
-					return
+					if(user.drop_item(I, src))
+						weight1 = I
+						user.show_message("<span class='notice'>You tie [weight1] to the [src].</span>")
+						update_icon()
+						//del(I)
+						return
 				if(!weight2) //just in case
-					user.drop_item(I, src)
-					weight2 = I
-					user.show_message("<span class='notice'>You tie [weight2] to the [src].</span>")
-					update_icon()
-					//del(I)
-					return
+					if(user.drop_item(I, src))
+						weight2 = I
+						user.show_message("<span class='notice'>You tie [weight2] to the [src].</span>")
+						update_icon()
+						//del(I)
+						return
 				else
 					user.show_message("<span class='rose'>There are already two weights on this [src]!</span>")
 					return
@@ -422,14 +423,14 @@
 				IED = null
 				return
 			if(2,3)
-				user.drop_item(I, src)
-				var/turf/bombturf = get_turf(src)
-				var/area/A = get_area(bombturf)
-				var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has rigged a beartrap with an IED at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
-				message_admins(log_str)
-				log_game(log_str)
-				to_chat(user, "<span class='notice'>You sneak the [IED] underneath the pressure plate and connect the trigger wire.</span>")
-				desc = "A trap used to catch bears and other legged creatures. <span class='warning'>There is an IED hooked up to it.</span>"
+				if(user.drop_item(I, src))
+					var/turf/bombturf = get_turf(src)
+					var/area/A = get_area(bombturf)
+					var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has rigged a beartrap with an IED at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
+					message_admins(log_str)
+					log_game(log_str)
+					to_chat(user, "<span class='notice'>You sneak the [IED] underneath the pressure plate and connect the trigger wire.</span>")
+					desc = "A trap used to catch bears and other legged creatures. <span class='warning'>There is an IED hooked up to it.</span>"
 			else
 				to_chat(user, "<span class='danger'>You shouldn't be reading this message! Contact a coder or someone, something broke!</span>")
 				IED = null

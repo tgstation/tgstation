@@ -24,7 +24,7 @@
 	pixel_y = rand(-10.0, 10)
 	dir = pick(cardinal)
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
-	desc = "[initial(desc)][BB ? "" : " This one is spent"]"
+	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 
 
 //Boxes of ammo
@@ -57,6 +57,7 @@
 	var/ammo_to_load = 0
 	if(starting_ammo > -1 && starting_ammo < max_ammo)
 		ammo_to_load = starting_ammo
+		update_icon()
 	else
 		ammo_to_load = max_ammo
 	for(var/i = 1, i <= ammo_to_load, i++)
@@ -70,9 +71,15 @@
 		if((exact && (AC.type == text2path(ammo_type))) || (!exact && istype(AC, text2path(ammo_type))))//if it's the exact type we want, or the general class
 			accepted = 1
 		if(AC.BB && accepted && stored_ammo.len < max_ammo)
+			if(user.drop_item(A, src))
+				to_chat(user, "<span class='notice'>You successfully load the [src] with \the [AC]. </span>")
+			else
+				to_chat(user, "<span class='warning'>You can't let go of \the [A]!</span>")
+				return
+
+
 			stored_ammo += AC
-			user.drop_item(A, src)
-			to_chat(user, "<span class='notice'>You successfully load the [src] with \the [AC]</span>")
+
 			update_icon()
 		else if(!AC.BB)
 			to_chat(user, "<span class='notice'>You can't load a spent bullet.</span>")
@@ -84,7 +91,7 @@
 		if(stored_ammo.len < max_ammo && AS.stored_ammo)
 			var/loaded_bullets = LoadInto(AS, src)
 			if(loaded_bullets)
-				to_chat(user, "<span class='notice'>You successfully fill the [src] with [loaded_bullets] shell\s from the [AS]</span>")
+				to_chat(user, "<span class='notice'>You successfully fill the [src] with [loaded_bullets] shell\s from the [AS].</span>")
 				update_icon()
 		else if (stored_ammo.len >= max_ammo)
 			to_chat(user, "<span class='notice'>\The [src] can't hold any more shells.</span>")
@@ -192,5 +199,6 @@
 		else
 			update_icon()
 		return b
+
 /obj/item/ammo_storage/proc/ammo_count()
 	return stored_ammo.len

@@ -104,6 +104,9 @@
 	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
 	adult.set_species("Diona")
 
+	transferImplantsTo(adult)
+	transferBorers(adult)
+
 	if(istype(loc,/obj/item/weapon/holder/diona))
 		var/obj/item/weapon/holder/diona/L = loc
 		src.loc = L.loc

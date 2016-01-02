@@ -474,16 +474,17 @@
 		if(rigged)
 			to_chat(user, "<span class='notice'>[src] is already rigged!</span>")
 			return
-		to_chat(user, "<span class='notice'>You rig [src].</span>")
-		user.drop_item(W)
-		qdel(W)
-		W = null
-		rigged = 1
+
+		if(user.drop_item(W))
+			to_chat(user, "<span class='notice'>You rig [src].</span>")
+			qdel(W)
+			W = null
+			rigged = 1
 		return
 	else if(istype(W, /obj/item/device/radio/electropack))
 		if(rigged)
-			to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
-			user.drop_item(W, src.loc)
+			if(user.drop_item(W, src.loc))
+				to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 			return
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(rigged)

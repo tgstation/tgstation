@@ -10,7 +10,6 @@
 	name = "floor"
 
 
-
 /turf/simulated/floor/plating/vox
 	icon_state = "plating"
 	name = "vox plating"
@@ -184,6 +183,36 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
+
+/turf/simulated/floor/plating/deck
+	name = "deck"
+	icon_plating = "deck"
+	desc = "Children love to play on this deck."
+
+/turf/simulated/floor/plating/deck/New()
+	..()
+	icon_state = "deck"
+
+/turf/simulated/floor/plating/deck/update_icon()
+	icon_plating = "deck"
+	..()
+	if(!floor_tile)
+		name = "deck"
+		icon_state = "deck"
+		desc = "Children love to play on this deck."
+	else
+		name = "floor"
+		desc = null
+
+/turf/simulated/floor/plating/deck/airless
+	name = "airless deck"
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
+/turf/simulated/floor/plating/deck/airless/New()
+	..()
+	name = "deck"
 
 /turf/simulated/floor/plating/New()
 	..()

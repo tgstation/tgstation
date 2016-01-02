@@ -81,14 +81,14 @@ Note: Must be placed within 3 tiles of the R&D Console
 		/*if(O.reliability < 90 && O.crit_fail == 0)
 			to_chat(usr, "<span class='warning'>Item is neither reliable enough or broken enough to learn from.</span>")
 			return*/
-		busy = 1
-		loaded_item = O
-		user.drop_item(O, src)
-		to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
-		flick("d_analyzer_la", src)
-		spawn(10)
-			icon_state = "d_analyzer_l"
-			busy = 0
+		if(user.drop_item(O, src))
+			busy = 1
+			loaded_item = O
+			to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
+			flick("d_analyzer_la", src)
+			spawn(10)
+				icon_state = "d_analyzer_l"
+				busy = 0
 	return
 
 /obj/machinery/r_n_d/destructive_analyzer/attack_hand(mob/user as mob)

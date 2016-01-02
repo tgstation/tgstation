@@ -19,19 +19,19 @@
 	name = "exile"
 	desc = "Prevents you from returning from the asteroid"
 
-	get_data()
-		var/dat = {"
+/obj/item/weapon/implant/exile/get_data()
+	var/dat = {"
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Nanotrasen Employee Exile Implant<BR>
 <b>Implant Details:</b> The host of this implant will be prevented from returning to the station."}
-		return dat
+	return dat
 
-	implanted(mob/M)
-		if(!istype(M, /mob/living/carbon/human))	return 0
-		var/mob/living/carbon/human/H = M
-		to_chat(H, "<span class='notice'>Your hair raises on end as you feel a weak bluespace void surround you.</span>")
-		H.locked_to_z = ASTEROID_Z
-		return 1
+/obj/item/weapon/implant/exile/implanted(mob/M)
+	if(!istype(M, /mob/living/carbon))	return 0
+	var/mob/living/carbon/I = M
+	to_chat(I, "<span class='notice'>You shiver as you feel a weak bluespace void surround you.</span>")
+	I.locked_to_z = ASTEROID_Z
+	return 1
 
 /obj/item/weapon/implantcase/exile
 	name = "Glass Case- 'Exile'"
@@ -40,23 +40,23 @@
 	icon_state = "implantcase-r"
 
 
-	New()
-		src.imp = new /obj/item/weapon/implant/exile( src )
-		..()
-		return
+/obj/item/weapon/implantcase/exile/New()
+	src.imp = new /obj/item/weapon/implant/exile( src )
+	..()
+	return
 
 
 /obj/structure/closet/secure_closet/exile
 	name = "Exile Implants"
 	req_access = list(access_hos)
 
-	New()
-		..()
-		sleep(2)
-		new /obj/item/weapon/implanter/exile(src)
-		new /obj/item/weapon/implantcase/exile(src)
-		new /obj/item/weapon/implantcase/exile(src)
-		new /obj/item/weapon/implantcase/exile(src)
-		new /obj/item/weapon/implantcase/exile(src)
-		new /obj/item/weapon/implantcase/exile(src)
-		return
+/obj/structure/closet/secure_closet/exile/New()
+	..()
+	sleep(2)
+	new /obj/item/weapon/implanter/exile(src)
+	new /obj/item/weapon/implantcase/exile(src)
+	new /obj/item/weapon/implantcase/exile(src)
+	new /obj/item/weapon/implantcase/exile(src)
+	new /obj/item/weapon/implantcase/exile(src)
+	new /obj/item/weapon/implantcase/exile(src)
+	return

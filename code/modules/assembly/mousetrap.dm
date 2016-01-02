@@ -120,7 +120,7 @@
 	set name = "Hide"
 	set category = "Object"
 
-	if(usr.stat || (usr.status_flags & FAKEDEATH))
+	if(usr.isUnconscious())
 		return
 
 	layer = TURF_LAYER+0.2

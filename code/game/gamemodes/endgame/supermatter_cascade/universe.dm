@@ -114,7 +114,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 /datum/universal_state/supermatter_cascade/proc/AreaSet()
 	for(var/area/ca in areas)
 		var/area/A=get_area_master(ca)
-		if(!istype(A,/area) || A.name=="Space" || istype(A,/area/beach))
+		if(!istype(A,/area) || isspace(A) || istype(A,/area/beach))
 			continue
 
 		// No cheating~

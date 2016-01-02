@@ -77,7 +77,7 @@
 		return
 
 	if(!allowed(user) && (wires & 1))
-		to_chat(user, "<span class='warning'>Access Denied</span>")
+		to_chat(user, "<span class='warning'>Access Denied.</span>")
 		flick("doorctrl-denied",src)
 		return
 

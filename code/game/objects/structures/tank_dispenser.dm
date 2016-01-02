@@ -59,20 +59,20 @@
 /obj/structure/dispenser/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/tank/oxygen) || istype(I, /obj/item/weapon/tank/air) || istype(I, /obj/item/weapon/tank/anesthetic))
 		if(oxygentanks < 10)
-			user.drop_item(I, src)
-			oxytanks.Add(I)
-			oxygentanks++
-			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+			if(user.drop_item(I, src))
+				oxytanks.Add(I)
+				oxygentanks++
+				to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 		else
 			to_chat(user, "<span class='notice'>[src] is full.</span>")
 		updateUsrDialog()
 		return
 	if(istype(I, /obj/item/weapon/tank/plasma))
 		if(plasmatanks < 10)
-			user.drop_item(I, src)
-			platanks.Add(I)
-			plasmatanks++
-			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+			if(user.drop_item(I, src))
+				platanks.Add(I)
+				plasmatanks++
+				to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 		else
 			to_chat(user, "<span class='notice'>[src] is full.</span>")
 		updateUsrDialog()

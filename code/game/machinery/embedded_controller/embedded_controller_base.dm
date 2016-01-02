@@ -52,12 +52,12 @@
 						return
 					to_chat(usr, "You begin to insert \the [C] into \the [src].")
 					if(do_after(user, src, 10))
-						to_chat(usr, "<span class='notice'>You secure \the [C]!</span>")
-						user.drop_item(C, src)
-						_circuitboard=C
-						playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
-						build++
-						update_icon()
+						if(user.drop_item(C, src))
+							to_chat(usr, "<span class='notice'>You secure \the [C]!</span>")
+							_circuitboard=C
+							playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+							build++
+							update_icon()
 					return 1
 			if(1) // Circuitboard installed
 				if(istype(W, /obj/item/weapon/crowbar))

@@ -94,6 +94,7 @@ var/list/all_doors = list()
 			if (mecha.occupant && !operating && (allowed(mecha.occupant) || check_access_list(mecha.operation_req_access)))
 				open()
 			else if(!operating)
+				playsound(src.loc, 'sound/machines/denied.ogg', 50, 1)
 				door_animate("deny")
 
 	if (istype(AM, /obj/structure/bed/chair/vehicle))
@@ -105,6 +106,7 @@ var/list/all_doors = list()
 					vehicle.forceMove(get_step(vehicle,vehicle.dir))//Firebird doesn't wait for no slowpoke door to fully open before dashing through!
 				open()
 			else if(!operating)
+				playsound(src.loc, 'sound/machines/denied.ogg', 50, 1)
 				door_animate("deny")
 
 /obj/machinery/door/proc/bump_open(mob/user as mob)
@@ -120,6 +122,7 @@ var/list/all_doors = list()
 	if(allowed(user))
 		open()
 	else if(!operating)
+		playsound(src.loc, 'sound/machines/denied.ogg', 50, 1)
 		door_animate("deny")
 
 	return
@@ -186,6 +189,7 @@ var/list/all_doors = list()
 		else
 			return open()
 
+	playsound(src.loc, 'sound/machines/denied.ogg', 50, 1)
 	door_animate("deny")
 	return
 

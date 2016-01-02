@@ -92,11 +92,11 @@
 			to_chat(usr, "<spawn class='notice'>The locker is full.")
 			return
 		else
-			to_chat(usr, "<span class='notice'>You put \the [G] in \the [src].</span>")
-			defib = G
-			update_icon()
-			user.drop_item(G, src)
-			return
+			if(user.drop_item(G, src))
+				to_chat(usr, "<span class='notice'>You put \the [G] in \the [src].</span>")
+				defib = G
+				update_icon()
+				return
 	return
 
 

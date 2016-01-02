@@ -24,7 +24,7 @@
 		set category = "Object"
 		set src in usr
 
-		if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
+		if(!usr.canmove || usr.isUnconscious() || usr.restrained())
 			return 0
 
 		if(open)

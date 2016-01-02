@@ -89,11 +89,11 @@ log transactions
 	if(istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = I
 		if(!held_card)
-			usr.drop_item(idcard, src)
-			held_card = idcard
-			if(authenticated_account && held_card.associated_account_number != authenticated_account.account_number)
-				authenticated_account = null
-			src.attack_hand(user)
+			if(usr.drop_item(idcard, src))
+				held_card = idcard
+				if(authenticated_account && held_card.associated_account_number != authenticated_account.account_number)
+					authenticated_account = null
+				src.attack_hand(user)
 	else if(authenticated_account)
 		if(istype(I,/obj/item/weapon/spacecash))
 			var/obj/item/weapon/spacecash/dosh = I
@@ -456,8 +456,8 @@ log transactions
 				else
 					var/obj/item/I = usr.get_active_hand()
 					if (istype(I, /obj/item/weapon/card/id))
-						usr.drop_item(I, src)
-						held_card = I
+						if(usr.drop_item(I, src))
+							held_card = I
 			if("logout")
 				authenticated_account = null
 				failsafe = 1

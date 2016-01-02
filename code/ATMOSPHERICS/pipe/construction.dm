@@ -520,7 +520,7 @@ var/global/list/nlist = list( \
 
 /obj/item/pipe_meter
 	name = "meter"
-	desc = "A meter that can be laid on pipes"
+	desc = "A meter that can be laid on pipes."
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
@@ -540,11 +540,11 @@ var/global/list/nlist = list( \
 			pipe = P
 			break
 	if(!pipe)
-		to_chat(user, "<span class='warning'>You need to fasten it to a pipe</span>")
+		to_chat(user, "<span class='warning'>You need to fasten it to a pipe.</span>")
 		return 1
 	new/obj/machinery/meter(src.loc, pipe)
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-	to_chat(user, "<span class='notice'>You have fastened the meter to the pipe</span>")
+	to_chat(user, "<span class='notice'>You have fastened the meter to the pipe.</span>")
 	qdel(src)
 
 /obj/item/pipe_meter/dropped()
@@ -559,7 +559,7 @@ var/global/list/nlist = list( \
 
 /obj/item/pipe_gsensor
 	name = "gas sensor"
-	desc = "A sensor that can be hooked to a computer"
+	desc = "A sensor that can be hooked to a computer."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor0"
 	item_state = "buildpipe"
@@ -572,5 +572,5 @@ var/global/list/nlist = list( \
 		return ..()
 	new/obj/machinery/air_sensor( src.loc )
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-	to_chat(user, "<span class='notice'>You have fastened the gas sensor</span>")
+	to_chat(user, "<span class='notice'>You have fastened the gas sensor.</span>")
 	qdel(src)

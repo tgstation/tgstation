@@ -177,11 +177,17 @@ var/global/list/rnd_machines = list()
 			if(M.sheettype==O.type)
 				found = matID
 		if(!found)
+			if(O.materials && research_flags &FAB_RECYCLER)
+				busy = 0
+				return 0 //let the autolathe try to do it's thing
 			to_chat(user, "<span class='warning'>\The [src] rejects \the [O.name].</span>")
 			busy = 0
 			return 1
 		if(allowed_materials && allowed_materials.len)
 			if(!(found in allowed_materials))
+				if(O.materials && research_flags &FAB_RECYCLER)
+					busy = 0
+					return 0 //let the autolathe try to do it's thing
 				to_chat(user, "<span class='warning'>\The [src] rejects \the [O.name].</span>")
 				busy = 0
 				return 1

@@ -40,7 +40,7 @@ obj/item/proc/get_clamped_volume()
 		return Clamp(src.w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
-	handle_attack(src, M, user, def_zone)
+	return handle_attack(src, M, user, def_zone)
 
 // Making this into a helper proc because of inheritance wonkyness making children of reagent_containers being nigh impossible to attack with.
 /obj/item/proc/handle_attack(obj/item/I, mob/living/M as mob, mob/living/user as mob, def_zone)
@@ -147,19 +147,20 @@ obj/item/proc/get_clamped_volume()
 		if(!(user in viewers(M, null)))
 			showname = "."
 
+		//make not the same mistake as me, these messages are only for slimes
 		if(istype(I.attack_verb,/list) && I.attack_verb.len)
-			M.visible_message("<span class='danger'>[M] has been [pick(I.attack_verb)] with [I][showname]</span>",
-			"<span class='userdanger'>[M] has been [pick(attack_verb)] with [src][showname]!</span>")
+			M.visible_message("<span class='danger'>[M] has been [pick(I.attack_verb)] with [I][showname]</span>", \
+				"<span class='userdanger'>You have been [pick(attack_verb)] with [I][showname]</span>")
 		else if(I.force == 0)
-			M.visible_message("<span class='danger'>[M] has been [pick("tapped","patted")] with [I][showname]</span>",
-			"<span class='userdanger'>[M] has been [pick("tapped","patted")] with [I][showname]</span>")
+			M.visible_message("<span class='danger'>[M] has been [pick("tapped","patted")] with [I][showname]</span>", \
+				"<span class='userdanger'>You have been [pick("tapped","patted")] with [I][showname]</span>")
 		else
-			M.visible_message("<span class='danger'>[M] has been attacked with [I][showname]</span>",
-			"<span class='userdanger'>[M] has been attacked with [I][showname]</span>")
+			M.visible_message("<span class='danger'>[M] has been attacked with [I][showname]</span>", \
+				"<span class='userdanger'>You have been attacked with [I][showname]</span>")
 
 		if(!showname && user)
 			if(user.client)
-				to_chat(user, "<span class='danger'>You attack [M] with [I]. </span>")
+				to_chat(user, "<span class='warning'>You attack [M] with [I]!</span>")
 
 
 	if(istype(M, /mob/living/carbon/human))

@@ -62,10 +62,10 @@
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/cell))
 		if(!bcell)
-			user.drop_item(W, src)
-			bcell = W
-			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
-			update_icon()
+			if(user.drop_item(W, src))
+				bcell = W
+				to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
+				update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 
@@ -148,8 +148,9 @@
 		L.Weaken(stunforce)
 		L.apply_effect(STUTTER, stunforce)
 
-		L.visible_message("<span class='danger'>[L] has been stunned with [src] by [user]!</span>",
-			self_drugged_message="<span class='danger'>The [src.name] absorbs [L]'s life!</span>")
+		L.visible_message("<span class='danger'>[L] has been stunned with [src] by [user]!</span>",\
+			"<span class='userdanger'>You have been stunned with [src] by [user]!</span>",\
+			self_drugged_message="<span class='userdanger'>[user]'s [src.name] sucks the life right out of you!</span>")
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
 		if(isrobot(loc))

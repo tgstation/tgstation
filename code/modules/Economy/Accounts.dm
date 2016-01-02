@@ -294,13 +294,13 @@ var/global/list/all_money_accounts = list()
 			emag(user)
 			return
 		if(!held_card)
-			usr.drop_item(O, src)
-			held_card = idcard
+			if(usr.drop_item(O, src))
+				held_card = idcard
 
-			if(access_cent_captain in idcard.access)
-				access_level = 2
-			else if(access_hop in idcard.access || access_captain in idcard.access)
-				access_level = 1
+				if(access_cent_captain in idcard.access)
+					access_level = 2
+				else if(access_hop in idcard.access || access_captain in idcard.access)
+					access_level = 1
 	else
 		..()
 
@@ -363,13 +363,13 @@ var/global/list/all_money_accounts = list()
 						return
 					if (istype(I, /obj/item/weapon/card/id))
 						var/obj/item/weapon/card/id/C = I
-						usr.drop_item(C, src)
-						held_card = C
-						if(access_level < 3)
-							if(access_cent_captain in C.access)
-								access_level = 2
-							else if(access_hop in C.access || access_captain in C.access)
-								access_level = 1
+						if(usr.drop_item(C, src))
+							held_card = C
+							if(access_level < 3)
+								if(access_cent_captain in C.access)
+									access_level = 2
+								else if(access_hop in C.access || access_captain in C.access)
+									access_level = 1
 			if("view_account_detail")
 				var/index = text2num(href_list["account_index"])
 				if(index && index <= all_money_accounts.len)

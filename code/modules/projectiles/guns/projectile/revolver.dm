@@ -16,7 +16,7 @@
 			if(istype(AC, /obj/item/ammo_casing/a357) && !perfect && prob(70 - (getAmmo() * 10)))	//minimum probability of 10, maximum of 60
 				to_chat(M, "<span class='danger'>[src] blows up in your face.</span>")
 				M.take_organ_damage(0,20)
-				M.drop_item(src)
+				M.drop_item(src, force_drop = 1)
 				qdel(src)
 				return 0
 		return 1
@@ -34,7 +34,7 @@
 
 		var/input = stripped_input(usr,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
 
-		if(src && input && !M.stat && in_range(M,src))
+		if(src && input && !M.stat && in_range(src,M))
 			name = input
 			to_chat(M, "You name the gun [input]. Say hello to your new friend.")
 			return 1

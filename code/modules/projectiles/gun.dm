@@ -78,7 +78,7 @@
 			if ((M_CLUMSY in M.mutations) && prob(50))
 				to_chat(M, "<span class='danger'>[src] blows up in your face.</span>")
 				M.take_organ_damage(0,20)
-				M.drop_item(src)
+				M.drop_item(src, force_drop = 1)
 				qdel(src)
 				return
 
@@ -92,8 +92,8 @@
 			return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H=user
-		if(user.dna && user.dna.mutantrace == "adamantine")
-			to_chat(user, "<span class='warning'>Your metal fingers don't fit in the trigger guard!</span>")
+		if(user.dna && (user.dna.mutantrace == "adamantine" || user.dna.mutantrace=="coalgolem"))
+			to_chat(user, "<span class='warning'>Your fat fingers don't fit in the trigger guard!</span>")
 			return
 		var/datum/organ/external/a_hand = H.get_active_hand_organ()
 		if(!a_hand.can_use_advanced_tools())
@@ -242,6 +242,8 @@
 				user.apply_damage(in_chamber.damage*2.5, in_chamber.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [in_chamber]")
 				user.stat=2 // Just to be sure
 				user.death()
+				var/suicidesound = pick('sound/misc/suicide/suicide1.ogg','sound/misc/suicide/suicide2.ogg','sound/misc/suicide/suicide3.ogg','sound/misc/suicide/suicide4.ogg','sound/misc/suicide/suicide5.ogg','sound/misc/suicide/suicide6.ogg')
+				playsound(get_turf(src), pick(suicidesound), 10, channel = 125)
 			else
 				to_chat(user, "<span class = 'notice'>Ow...</span>")
 				user.apply_effect(110,AGONY,0)

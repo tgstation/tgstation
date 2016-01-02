@@ -51,7 +51,6 @@
 				for(var/i=0;i<materials.storage[ore_id];i++)
 					getFromPool(mat.oretype, get_turf(src))
 				materials.removeAmount(ore_id, materials.storage[ore_id])
-		to_chat(usr, "<span class='notice'>You empty the box</span>")
+		to_chat(usr, "<span class='notice'>You empty the box.</span>")
 	src.updateUsrDialog()
 	return
-

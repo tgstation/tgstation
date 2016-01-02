@@ -192,7 +192,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	var/encoded_message = html_encode(message)
 
 	to_chat(src, "You drop words into [host]'s mind: <span class='borer2host'>\"[encoded_message]\"</span>")
-	to_chat(host, "<span class='borer2host'>\"[encoded_message]\"</span>")
+	to_chat(host, "<b>Your mind speaks to you:</b> <span class='borer2host'>\"[encoded_message]\"</span>")
 	var/turf/T = get_turf(src)
 	log_say("[truename] [key_name(src)] (@[T.x],[T.y],[T.z]) -> [host]([key_name(host)]) Borer->Host Speech: [message]")
 

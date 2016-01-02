@@ -44,6 +44,38 @@
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.5
 
+
+/obj/item/clothing/suit/armor/knight
+ 	name = "plate armour"
+ 	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
+ 	icon_state = "knight_green"
+ 	item_state = "knight_green"
+ 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+ 	slowdown = 1
+ 	armor = list(melee = 40, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
+ 	flags_inv = HIDEJUMPSUIT
+
+
+
+/obj/item/clothing/suit/armor/knight/yellow
+ 	icon_state = "knight_yellow"
+ 	item_state = "knight_yellow"
+
+/obj/item/clothing/suit/armor/knight/blue
+ 	icon_state = "knight_blue"
+ 	item_state = "knight_blue"
+
+/obj/item/clothing/suit/armor/knight/red
+ 	icon_state = "knight_red"
+ 	item_state = "knight_red"
+
+/obj/item/clothing/suit/armor/knight/templar
+ 	name = "crusader armour"
+ 	desc = "God wills it!"
+ 	icon_state = "knight_templar"
+ 	item_state = "knight_templar"
+
+
 /obj/item/clothing/suit/armor/xcomsquaddie
 	name = "Squaddie Armor"
 	desc = "A suit of armor with heavy padding to protect against projectile and laser attacks. Distributed to shadow organization squaddies."

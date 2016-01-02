@@ -37,14 +37,19 @@
 /obj/item/weapon/gun/projectile/proc/LoadMag(var/obj/item/ammo_storage/magazine/AM, var/mob/user)
 	if(istype(AM, text2path(mag_type)) && !stored_magazine)
 		if(user)
-			user.drop_item(AM, src)
-			to_chat(usr, "<span class='notice'>You load the magazine into \the [src].</span>")
+			if(user.drop_item(AM, src))
+				to_chat(usr, "<span class='notice'>You load the magazine into \the [src].</span>")
+			else
+				return
+
 		stored_magazine = AM
 		chamber_round()
 		AM.update_icon()
 		update_icon()
-		user.update_inv_r_hand()
-		user.update_inv_l_hand()
+
+		if(user)
+			user.update_inv_r_hand()
+			user.update_inv_l_hand()
 		return 1
 	return 0
 
@@ -117,12 +122,13 @@
 		if(user.l_hand != src && user.r_hand != src)	//if we're not in his hands
 			to_chat(user, "<span class='notice'>You'll need [src] in your hands to do that.</span>")
 			return
-		user.drop_item(A, src) //put the silencer into the gun
-		to_chat(user, "<span class='notice'>You screw [A] onto [src].</span>")
-		silenced = A	//dodgy?
-		w_class = 3
-		update_icon()
-		return 1
+
+		if(user.drop_item(A, src)) //put the silencer into the gun
+			to_chat(user, "<span class='notice'>You screw [A] onto [src].</span>")
+			silenced = A	//dodgy?
+			w_class = 3
+			update_icon()
+			return 1
 
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_storage/magazine))
@@ -138,21 +144,21 @@
 		var/obj/item/ammo_storage/AS = A
 		var/success_load = AS.LoadInto(AS, src)
 		if(success_load)
-			to_chat(user, "<span class='notice'>You successfully fill the [src] with [success_load] shell\s from the [AS]</span>")
+			to_chat(user, "<span class='notice'>You successfully fill the [src] with [success_load] shell\s from the [AS].</span>")
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
 		//message_admins("Loading the [src], with [AC], [AC.caliber] and [caliber.len]") //Enable this for testing
 		if(AC.BB && caliber[AC.caliber]) // a used bullet can't be fired twice
 			if(load_method == MAGAZINE && !chambered)
-				user.drop_item(AC, src)
-				chambered = AC
-				num_loaded++
-				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 25, 1)
+				if(user.drop_item(AC, src))
+					chambered = AC
+					num_loaded++
+					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 25, 1)
 			else if(getAmmo() < max_shells)
-				user.drop_item(AC, src)
-				loaded += AC
-				num_loaded++
-				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 25, 1)
+				if(user.drop_item(AC, src))
+					loaded += AC
+					num_loaded++
+					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 25, 1)
 
 	if(num_loaded)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")

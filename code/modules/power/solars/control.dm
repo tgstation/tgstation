@@ -37,11 +37,11 @@
 	overlays.len = 0
 
 	if(stat & BROKEN)
-		icon_state = "broken"
+		icon_state = "solarb"
 		return
 
 	if(stat & NOPOWER)
-		icon_state = "c_unpowered"
+		icon_state = "solar0"
 		return
 
 	icon_state = "solar"

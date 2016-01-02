@@ -65,7 +65,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 	if (istype(O,/obj/item/seeds))
 		if (!hasSpaceCheck(user))
 			return
-		user.drop_item()
+		user.drop_item(force_drop = 1)
 		moveToStorage(O)
 		to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
 		updateUsrDialog()
@@ -74,7 +74,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 	// Fruits and vegetables.
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown) || istype(O, /obj/item/weapon/grown))
 
-		user.drop_item(O)
+		user.drop_item(O, force_drop = 1)
 
 		var/datum/seed/new_seed_type
 		if(istype(O, /obj/item/weapon/grown))
@@ -107,7 +107,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 		var/obj/item/F = O
 		if(F.nonplant_seed_type)
 			to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
-			user.drop_item(O)
+			user.drop_item(O, force_drop = 1)
 			var/t_amount = 0
 			var/t_max = rand(1,4)
 			while(t_amount < t_max)

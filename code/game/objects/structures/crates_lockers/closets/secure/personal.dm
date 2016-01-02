@@ -81,4 +81,4 @@
 			src.registered_name = given_name
 			src.desc = "Owned by [given_name]."
 	else
-		to_chat(user, "<span class='notice'>Access Denied</span>")
+		to_chat(user, "<span class='notice'>Access Denied.</span>")

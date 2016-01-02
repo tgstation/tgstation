@@ -1,7 +1,6 @@
 /var/global/list/prox_sensor_ignored_types = list \
 (
-	/obj/effect/beam,
-	/mob/dead/observer
+	/obj/effect/beam
 )
 
 /obj/item/device/assembly/prox_sensor
@@ -27,6 +26,12 @@
 	var/default_time = 10
 
 	var/range = 2
+
+	accessible_values = list("Scanning" = "scanning;number",\
+		"Scan range" = "range;number;1;5",\
+		"Remaining time" = "time;number",\
+		"Default time" = "default_time;number",\
+		"Timing" = "timing;number")
 
 /obj/item/device/assembly/prox_sensor/activate()
 	if(!..())	return 0//Cooldown check
@@ -161,7 +166,7 @@
 	if(href_list["range"])
 		var/r = text2num(href_list["range"])
 		range += r
-		range = min(max(range, 1), 5)
+		range = Clamp(range, 1, 5)
 
 	if(href_list["set_default_time"])
 		default_time = time

@@ -121,8 +121,11 @@
 /obj/item/weapon/gun/lawgiver/proc/LoadMag(var/obj/item/ammo_storage/magazine/AM, var/mob/user)
 	if(istype(AM, /obj/item/ammo_storage/magazine/lawgiver) && !magazine)
 		if(user)
-			user.drop_item(AM, src)
-			to_chat(user, "<span class='notice'>You load the magazine into \the [src].</span>")
+			if(user.drop_item(AM, src))
+				to_chat(user, "<span class='notice'>You load the magazine into \the [src].</span>")
+			else
+				return
+
 		magazine = AM
 		AM.update_icon()
 		update_icon()
@@ -239,7 +242,7 @@
 			if ((M_CLUMSY in M.mutations) && prob(50))
 				to_chat(M, "<span class='danger'>[src] blows up in your face.</span>")
 				M.take_organ_damage(0,20)
-				M.drop_item(src)
+				M.drop_item(src, force_drop = 1)
 				qdel(src)
 				return
 
@@ -253,8 +256,8 @@
 			return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H=user
-		if(user.dna && user.dna.mutantrace == "adamantine")
-			to_chat(user, "<span class='warning'>Your metal fingers don't fit in the trigger guard!</span>")
+		if(user.dna && (user.dna.mutantrace == "adamantine" || user.dna.mutantrace=="coalgolem"))
+			to_chat(user, "<span class='warning'>Your fat fingers don't fit in the trigger guard!</span>")
 			return
 		var/datum/organ/external/a_hand = H.get_active_hand_organ()
 		if(!a_hand.can_use_advanced_tools())

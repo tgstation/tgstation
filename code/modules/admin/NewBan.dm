@@ -110,14 +110,14 @@ var/savefile/Banlist
 	else
 		Banlist.dir.Add("[ckey][computerid]")
 		Banlist.cd = "/base/[ckey][computerid]"
-		to_chat(Banlist["key"], ckey)
-		to_chat(Banlist["id"], computerid)
-		to_chat(Banlist["ip"], address)
-		to_chat(Banlist["reason"], reason)
-		to_chat(Banlist["bannedby"], bannedby)
-		to_chat(Banlist["temp"], temp)
+		Banlist["key"]      << ckey
+		Banlist["id"]       << computerid
+		Banlist["ip"]       << address
+		Banlist["reason"]   << reason
+		Banlist["bannedby"] << bannedby
+		Banlist["temp"]     << temp
 		if (temp)
-			to_chat(Banlist["minutes"], bantimestamp)
+			Banlist["minutes"] << bantimestamp
 	return 1
 
 /proc/RemoveBan(foldername)
@@ -211,17 +211,17 @@ var/savefile/Banlist
 			Banlist.cd = "/base"
 			Banlist.dir.Add("trash[i]trashid[i]")
 			Banlist.cd = "/base/trash[i]trashid[i]"
-			to_chat(Banlist["key"], "trash[i]")
+			Banlist["key"] << "trash[i]"
 		else
 			Banlist.cd = "/base"
 			Banlist.dir.Add("[last]trashid[i]")
 			Banlist.cd = "/base/[last]trashid[i]"
-			to_chat(Banlist["key"], last)
-		to_chat(Banlist["id"], "trashid[i]")
-		to_chat(Banlist["reason"], "Trashban[i].")
-		to_chat(Banlist["temp"], a)
-		to_chat(Banlist["minutes"], CMinutes + rand(1,2000))
-		to_chat(Banlist["bannedby"], "trashmin")
+			Banlist["key"] << last
+		Banlist["id"]       << "trashid[i]"
+		Banlist["reason"]   << "Trashban[i]."
+		Banlist["temp"]     << a
+		Banlist["minutes"]  << CMinutes + rand(1,2000)
+		Banlist["bannedby"] << "trashmin"
 		last = "trash[i]"
 
 	Banlist.cd = "/base"

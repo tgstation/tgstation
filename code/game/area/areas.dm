@@ -13,7 +13,7 @@
 	uid = ++global_uid
 	areas |= src
 
-	if(type == /area)	// override defaults for space. TODO: make space areas of type /area/space rather than /area
+	if(isspace(src))	// override defaults for space. TODO: make space areas of type /area/space rather than /area
 		requires_power = 1
 		always_unpowered = 1
 		lighting_use_dynamic = 0
@@ -187,7 +187,7 @@
 //////////////////////////////////////////////
 
 /area/proc/firealert()
-	if(name == "Space") //no fire alarms in space
+	if(isspace(src)) //no fire alarms in space
 		return
 	if( !fire )
 		fire = 1
@@ -225,24 +225,24 @@
 		UpdateFirelocks()
 
 /area/proc/radiation_alert()
-	if(name == "Space")
-		return
+	if(isspace(src)) return
+
 	if(!radalert)
 		radalert = 1
 		updateicon()
 	return
 
 /area/proc/reset_radiation_alert()
-	if(name == "Space")
-		return
+	if(isspace(src)) return
+
 	if(radalert)
 		radalert = 0
 		updateicon()
 	return
 
 /area/proc/readyalert()
-	if(name == "Space")
-		return
+	if(isspace(src)) return
+
 	if(!eject)
 		eject = 1
 		updateicon()
@@ -255,8 +255,8 @@
 	return
 
 /area/proc/partyalert()
-	if(name == "Space") //no parties in space!!!
-		return
+	if(isspace(src)) return
+
 	if (!( party ))
 		party = 1
 		updateicon()
@@ -390,7 +390,7 @@
 					sound = pick('sound/ambience/ambicha1.ogg', 'sound/ambience/ambicha2.ogg', 'sound/ambience/ambicha3.ogg', 'sound/ambience/ambicha4.ogg')
 				else if(istype(src, /area/medical/morgue))
 					sound = pick('sound/ambience/ambimo1.ogg', 'sound/ambience/ambimo2.ogg', 'sound/music/main.ogg')
-				else if(type == /area)
+				else if(isspace(src))
 					sound = pick('sound/ambience/ambispace.ogg', 'sound/music/space.ogg', 'sound/music/main.ogg', 'sound/music/traitor.ogg', 'sound/ambience/spookyspace1.ogg', 'sound/ambience/spookyspace2.ogg')
 				else if(istype(src, /area/engineering))
 					sound = pick('sound/ambience/ambisin1.ogg', 'sound/ambience/ambisin2.ogg', 'sound/ambience/ambisin3.ogg', 'sound/ambience/ambisin4.ogg')

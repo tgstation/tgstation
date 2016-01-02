@@ -54,7 +54,7 @@
 					to_chat(user, "You insert the cables.")
 					A.amount -= 5
 					if(A.amount <= 0)
-						user.drop_item(A)
+						user.drop_item(A, force_drop = 1)
 						returnToPool(A)
 					construct_op --
 					stat &= ~BROKEN // the machine's not borked anymore!
@@ -375,6 +375,6 @@
 		return 0
 
 /obj/machinery/telecomms/proc/canAccess(var/mob/user)
-	if(issilicon(user) || in_range(user, src))
+	if(issilicon(user) || in_range(src,user))
 		return 1
 	return 0

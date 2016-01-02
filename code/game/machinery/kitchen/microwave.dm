@@ -157,10 +157,9 @@
 				to_chat(user, "<span class='warning'>Your [O] contains components unsuitable for cookery.</span>")
 				return 1
 
-		user.before_take_item(O)
-		O.loc = src
-		holdingitems += O
-		src.updateUsrDialog()
+		if(user.drop_item(O, src))
+			holdingitems += O
+			src.updateUsrDialog()
 		return 1
 	else if(is_type_in_list(O,acceptable_items))
 		if (istype(O,/obj/item/stack) && O:amount>1)
@@ -171,10 +170,10 @@
 				"<span class='notice'>You add one of [O] to \the [src].</span>")
 		else
 		//	user.before_take_item(O)	//This just causes problems so far as I can tell. -Pete
-			user.drop_item(O, src)
-			user.visible_message( \
-				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
-				"<span class='notice'>You add \the [O] to \the [src].</span>")
+			if(user.drop_item(O, src))
+				user.visible_message( \
+					"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
+					"<span class='notice'>You add \the [O] to \the [src].</span>")
 	else if(is_type_in_list(O,accepts_reagents_from))
 		if (!O.reagents)
 			return 1

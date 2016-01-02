@@ -41,7 +41,11 @@
 					to_chat(src, "<span class='warning'>Your hands are full.</span>")
 					to_chat(user, "<span class='warning'>Their hands are full.</span>")
 					return
-				user.drop_item(I)
+				if(!user.drop_item(I))
+					src << "<span class='warning'>[user] can't let go of \the [I]!</span>"
+					user << "<span class='warning'>You can't seem to let go of \the [I].</span>"
+					return
+
 				src.put_in_hands(I)
 				src.visible_message("<span class='notice'>[user] handed \the [I] to [src].</span>")
 			if("No")

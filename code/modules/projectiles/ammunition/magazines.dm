@@ -39,6 +39,9 @@
 	sprite_modulo = 3
 	multiple_sprites = 1
 
+/obj/item/ammo_storage/magazine/smg9mm/empty
+	starting_ammo = 0
+
 /obj/item/ammo_storage/magazine/a50
 	name = "magazine (.50)"
 	icon_state = "50ae"
@@ -83,6 +86,9 @@
 	multiple_sprites = 1
 	sprite_modulo = 1
 
+/obj/item/ammo_storage/magazine/c45/empty
+	starting_ammo = 0
+
 /obj/item/ammo_storage/magazine/uzi45 //Uzi mag
 	name = "magazine (.45)"
 	icon_state = "uzi45"
@@ -91,6 +97,9 @@
 	max_ammo = 16
 	multiple_sprites = 1
 	sprite_modulo = 2
+
+/obj/item/ammo_storage/magazine/uzi45/empty
+	starting_ammo = 0
 
 /obj/item/ammo_storage/magazine/lawgiver
 	name = "lawgiver magazine"

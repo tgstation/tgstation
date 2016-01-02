@@ -58,7 +58,7 @@ mob/proc/airflow_stun()
 		return 0
 
 	if(weakened <= 0) src << "<span class='warning'>The sudden rush of air knocks you over!</span>"
-	weakened = max(weakened,5)
+	SetWeakened(5)
 	last_airflow_stun = world.time
 	return
 
@@ -78,7 +78,7 @@ mob/living/carbon/human/airflow_stun()
 		return 0
 
 	if(weakened <= 0) src << "<span class='warning'>The sudden rush of air knocks you over!</span>"
-	weakened = max(weakened,rand(1,5))
+	SetWeakened(rand(1,5))
 	last_airflow_stun = world.time
 	return
 
@@ -377,11 +377,17 @@ atom/movable/proc/airflow_hit(atom/A)
 	airflow_dest = null
 
 mob/airflow_hit(atom/A)
+	if(size == SIZE_TINY) return //Slamming into a mouse/roach doesn't make much sense
+
 	if(!sound_override)
 		for(var/mob/M in hearers(src))
 			M.show_message("<span class='danger'>\The [src] slams into \a [A]!</span>",1,"<span class='warning'>You hear a loud slam!</span>",2)
 	//playsound(get_turf(src), "smash.ogg", 25, 1, -1)
-	weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
+	if(istype(A,/obj/item))
+		var/obj/item/item = A
+		SetWeakened(item.w_class)
+	else
+		SetWeakened(rand(1,5))
 	. = ..()
 
 obj/airflow_hit(atom/A)

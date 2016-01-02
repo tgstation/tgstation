@@ -112,7 +112,7 @@
 				alarm_types_clear[i] = 0
 
 /mob/living/silicon/drop_item()
-	return
+	return 1
 
 /mob/living/silicon/generate_static_overlay()
 	return
@@ -307,4 +307,4 @@
 	return 0
 
 /mob/living/silicon/spook()
-	to_chat(src, "<i>[pick(boo_phrases)]</i>")
+	to_chat(src, "<i>[pick(boo_phrases_silicon)]</i>")

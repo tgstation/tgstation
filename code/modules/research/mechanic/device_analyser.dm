@@ -25,7 +25,7 @@
 /obj/item/device/device_analyser/attack_self()
 	..()
 	loadone = !loadone
-	to_chat(usr, "<span class='notice'> You set the Device Analyzer to [loadone ? "transfer one design" : "transfer all designs"] on use.</span>")
+	to_chat(usr, "<span class='notice'>You set the Device Analyzer to [loadone ? "transfer one design" : "transfer all designs"] on use.</span>")
 
 /obj/item/device/device_analyser/preattack(var/atom/A, mob/user, proximity_flag) //Hurrah for after-attack
 	/*if(get_turf(src) != get_turf(user)) //we aren't in the same place as our holder, so we have been moved and can ignore scanning
@@ -81,16 +81,22 @@
 	if((O.mech_flags & MECH_SCAN_FAIL)==MECH_SCAN_FAIL)
 		return 0
 
-	var/list/techlist
+	var/list/techlist = O.give_tech_list() //Some items may have a specific techlist. Currently only used for solar assemblies, since they don't hold a circuitboard.
+	if(techlist)
+		return 1
+
 	if(istype(O, /obj/machinery))
 		var/obj/machinery/M = O
+
 		if(user && (!M.allowed(user) && M.mech_flags & MECH_SCAN_ACCESS) && !src.access_avoidance) //if we require access, and don't have it, and the scanner can't bypass it
 			return -2
+
 		if(M.component_parts)
 			for(var/obj/item/weapon/circuitboard/CB in M.component_parts) //fetching the circuit by looking in the parts
 				if(istype(CB))
 					techlist = ConvertReqString2List(CB.origin_tech)
 					break
+
 		else if(istype(M, /obj/machinery/computer))
 			var/obj/machinery/computer/C = M
 			if(C.circuit)
@@ -110,4 +116,3 @@
 		if((techlist && techlist["syndicate"]) || (O.mech_flags & MECH_SCAN_ILLEGAL))
 			return -1 //special negative return case
 	return 1
-

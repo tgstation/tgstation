@@ -274,7 +274,7 @@ Auto Patrol: []"},
 						if(declare_arrests)
 							declare()
 						target.visible_message("<span class='danger'>[target] has been stunned by [src]!</span>",\
-						"<span class='userdanger'>[target] has been stunned by [src]!</span>")
+						"<span class='userdanger'>You have been stunned by [src]!</span>")
 						maxstuns--
 						if(maxstuns <= 0)
 							target = null
@@ -823,30 +823,30 @@ Auto Patrol: []"},
 			to_chat(user, "You weld a hole in [src]!")
 
 	else if(isprox(W) && (src.build_step == 1))
-		user.drop_item(W)
-		src.build_step++
-		to_chat(user, "You add the prox sensor to [src]!")
-		src.overlays += image('icons/obj/aibots.dmi', "hs_eye")
-		src.name = "helmet/signaler/prox sensor assembly"
-		qdel(W)
+		if(user.drop_item(W))
+			src.build_step++
+			to_chat(user, "You add the prox sensor to [src]!")
+			src.overlays += image('icons/obj/aibots.dmi', "hs_eye")
+			src.name = "helmet/signaler/prox sensor assembly"
+			qdel(W)
 
 	else if(((istype(W, /obj/item/robot_parts/l_arm)) || (istype(W, /obj/item/robot_parts/r_arm))) && (src.build_step == 2))
-		user.drop_item(W)
-		src.build_step++
-		to_chat(user, "You add the robot arm to [src]!")
-		src.name = "helmet/signaler/prox sensor/robot arm assembly"
-		src.overlays += image('icons/obj/aibots.dmi', "hs_arm")
-		qdel(W)
+		if(user.drop_item(W))
+			src.build_step++
+			to_chat(user, "You add the robot arm to [src]!")
+			src.name = "helmet/signaler/prox sensor/robot arm assembly"
+			src.overlays += image('icons/obj/aibots.dmi', "hs_arm")
+			qdel(W)
 
 	else if((istype(W, /obj/item/weapon/melee/baton)) && (src.build_step >= 3))
-		user.drop_item(W)
-		src.build_step++
-		to_chat(user, "You complete the Securitron! Beep boop.")
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
-		S.loc = get_turf(src)
-		S.name = src.created_name
-		qdel(W)
-		qdel(src)
+		if(user.drop_item(W))
+			src.build_step++
+			to_chat(user, "You complete the Securitron! Beep boop.")
+			var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
+			S.loc = get_turf(src)
+			S.name = src.created_name
+			qdel(W)
+			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)

@@ -4,6 +4,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
+	origin_tech = "programming=2"
 	w_class = 1
 
 	var/obj/item/radio/integrated/radio = null
@@ -221,6 +222,8 @@
 	icon_state = "cart"
 	access_remote_door = 1
 	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
+	origin_tech = "programming=2;syndicate=2"
+	mech_flags = MECH_SCAN_ILLEGAL
 	var/shock_charges = 4
 
 /obj/item/weapon/cartridge/proc/unlock()

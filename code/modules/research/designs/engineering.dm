@@ -52,7 +52,7 @@
 
 /datum/design/superior_welding_goggles
 	name = "Superior Welding Goggles"
-	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes. Allows for better vision than normal goggles.."
+	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes. Allows for better vision than normal goggles."
 	id = "superior_welding_goggles"
 	req_tech = list("materials" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
@@ -132,3 +132,13 @@
 	materials = list(MAT_IRON = 6000, MAT_GLASS = 3500, MAT_PLASTIC = 1000)
 	category = "Engineering"
 	build_path = /obj/item/device/assembly_frame
+
+/datum/design/light_tile_remote
+	name = "Light Tile Remote"
+	desc = "A device used to remotely configure light tiles."
+	id = "lt_remote"
+	req_tech = list("programming" = 2, "magnets" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_IRON = 1500, MAT_GLASS = 200)
+	build_path = /obj/item/device/assembly/light_tile_control
+	category = "Engineering"

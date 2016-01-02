@@ -34,9 +34,12 @@
 			return A
 	return 0
 
-/proc/in_range(source, user)
-	if(get_dist(source, user) <= 1)
+/proc/in_range(atom/source, mob/user)
+	if(source.Adjacent(user))
 		return 1
+	else if(istype(user) && user.mutations && user.mutations.len)
+		if((M_TK in user.mutations) && (get_dist(user,source) < tk_maxrange))
+			return 1
 
 	return 0 //not in range and not telekinetic
 
@@ -240,7 +243,7 @@ proc/isInSight(var/atom/A, var/atom/B)
 
 //i think this is used soley by verb/give(), cael
 proc/check_can_reach(atom/user, atom/target)
-	if(!in_range(user,target))
+	if(!in_range(target,user))
 		return 0
 	return CanReachThrough(get_turf(user), get_turf(target), target)
 

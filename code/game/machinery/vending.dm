@@ -67,7 +67,7 @@ var/global/num_vending_terminals = 1
 	var/shut_up = 0				//Stop spouting those godawful pitches!
 	var/extended_inventory = 0	//can we access the hidden inventory?
 	var/scan_id = 1
-	var/obj/item/weapon/coin/coin
+	var/obj/item/weapon/coin
 	var/datum/wires/vending/wires = null
 	var/list/overlays_vending[2]//1 is the panel layer, 2 is the dangermode layer
 
@@ -149,7 +149,7 @@ var/global/num_vending_terminals = 1
 		newpack.coin_records = coin_records
 
 	if(coinbox)
-		coinbox.loc = get_turf(src)
+		coinbox.forceMove(get_turf(src))
 	..()
 
 /obj/machinery/vending/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
@@ -332,7 +332,7 @@ var/global/num_vending_terminals = 1
 			vouchers = list()
 		vouchers.Add(voucher)
 		if(coinbox)
-			voucher.loc = coinbox
+			voucher.forceMove(coinbox)
 	return 1
 
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
@@ -357,24 +357,29 @@ var/global/num_vending_terminals = 1
 			C.use(4)
 			to_chat(user, "<span class='notice'>You slot some cardboard into the machine into [src].</span>")
 			cardboard = 1
+			src.updateUsrDialog()
 	if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
 			attack_hand(user)
 		return
-	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
+	else if(premium.len > 0 && is_type_in_list(W, list(/obj/item/weapon/coin/, /obj/item/weapon/reagent_containers/food/snacks/chococoin)))
 		if (isnull(coin))
-			user.drop_item(W, src)
-			coin = W
-			to_chat(user, "<span class='notice'>You insert a coin into [src].</span>")
+			if(user.drop_item(W, src))
+				coin = W
+				to_chat(user, "<span class='notice'>You insert a coin into [src].</span>")
+				src.updateUsrDialog()
 		else
 			to_chat(user, "<SPAN CLASS='notice'>There's already a coin in [src].</SPAN>")
-
+		return
+	else if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin))
+		to_chat(user, "<span class='rose'>That coin is smudgy and oddly soft, you don't think that would work.</span>")
 		return
 	else if(istype(W, /obj/item/voucher))
 		if(can_accept_voucher(W, user))
-			user.drop_item(W, src)
-			to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
-			return voucher_act(W, user)
+			if(user.drop_item(W, src))
+				to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
+				return voucher_act(W, user)
+				src.updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>\The [src] refuses to take [W].</span>")
 			return 1
@@ -391,10 +396,12 @@ var/global/num_vending_terminals = 1
 								 "<span class='notice'>You load \the [src] with \the [bag].</span>")
 			if(bag.contents.len > 0)
 				to_chat(user, "<span class='notice'>Some items are refused.</span>")
+			src.updateUsrDialog()
 	else
 		if(is_type_in_list(W, allowed_inputs))
-			user.drop_item(W, src)
-			add_item(W)
+			if(user.drop_item(W, src))
+				add_item(W)
+				src.updateUsrDialog()
 	/*else if(istype(W, /obj/item/weapon/card) && currently_vending)
 		//attempt to connect to a new db, and if that doesn't work then fail
 		if(!linked_db)
@@ -547,14 +554,17 @@ var/global/num_vending_terminals = 1
 /obj/machinery/vending/attack_hand(mob/living/user as mob)
 	if(user.a_intent == "hurt" && istype(user, /mob/living/carbon/)) //Will make another update later. Hulks will insta-break
 		user.delayNextAttack(10)
-		user.visible_message(	"<span class='danger'>[user] kicks the [src].</span>",
-								"<span class='danger'>You kick the [src].</span>")
 		playsound(get_turf(src), 'sound/effects/grillehit.ogg', 50, 1) //Zth: I couldn't find a proper sound, please replace it
 		src.shake(1, 3) //1 means x movement, 3 means intensity
 		src.health -= 4
+		if (!Adjacent(user) && (M_TK in usr.mutations))
+			to_chat(user, "<span class='danger'>You slam the [src] with your mind.</span>")
+			src.visible_message("<span class='danger'>[src] dents slightly as if struck.</span>")
+		else
+			user.visible_message(	"<span class='danger'>[user] kicks the [src].</span>", "<span class='danger'>You kick the [src].</span>")
+			if(prob(70))
+				user.apply_damage(rand(2,4), BRUTE, "r_leg")
 
-		if(prob(70))
-			user.apply_damage(rand(2,4), BRUTE, "r_leg")
 		if(src.health <= 0)
 			stat |= BROKEN
 			src.update_vicon()
@@ -696,7 +706,7 @@ var/global/num_vending_terminals = 1
 			to_chat(usr, "There is no coin in this machine.")
 			return
 
-		coin.loc = get_turf(src)
+		coin.forceMove(get_turf(src))
 		if(!usr.get_active_hand())
 			usr.put_in_hands(coin)
 		to_chat(usr, "<span class='notice'>You remove the [coin] from the [src]</span>")
@@ -788,13 +798,19 @@ var/global/num_vending_terminals = 1
 			to_chat(user, "<SPAN CLASS='notice'>You need to insert a coin to get this item.</SPAN>")
 			return
 
-		if (coin.string_attached && prob(50))
-			user.put_in_hands(coin)
-			to_chat(user, "<SPAN CLASS='notice'>You successfully pulled the coin out before the [src] could swallow it.</SPAN>")
-		else
-			if(coin.string_attached)
-				to_chat(user, "<SPAN CLASS='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</SPAN>")
+		var/return_coin = 0
+		if(istype(coin, /obj/item/weapon/coin/))
+			var/obj/item/weapon/coin/real_coin = coin
+			if(real_coin.string_attached)
+				if(prob(50))
+					to_chat(user, "<SPAN CLASS='notice'>You successfully pulled the coin out before the [src] could swallow it.</SPAN>")
+					return_coin = 1
+				else
+					to_chat(user, "<SPAN CLASS='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</SPAN>")
 
+		if(return_coin)
+			user.put_in_hands(coin)
+		else
 			if (!isnull(coinbox))
 				if (coinbox.can_be_inserted(coin, TRUE))
 					coinbox.handle_item_insertion(coin, TRUE)
@@ -1057,6 +1073,7 @@ var/global/num_vending_terminals = 1
 		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,
 		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6,
+		/obj/item/weapon/reagent_containers/food/snacks/chococoin/wrapped = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/bustanuts = 10,
 		)
 	contraband = list(
@@ -1070,6 +1087,7 @@ var/global/num_vending_terminals = 1
 		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 60,
 		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 12,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 40,
+		/obj/item/weapon/reagent_containers/food/snacks/chococoin/wrapped = 75,
 		/obj/item/weapon/reagent_containers/food/snacks/bustanuts = 0,
 		)
 
@@ -1328,12 +1346,12 @@ var/global/num_vending_terminals = 1
 					return
 				to_chat(usr, "You begin to insert \the [C] into \the [src].")
 				if(do_after(user, src, 10))
-					to_chat(usr, "<span class='notice'>You secure \the [C]!</span>")
-					user.drop_item(C, src)
-					_circuitboard=C
-					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
-					build++
-					update_icon()
+					if(user.drop_item(C, src))
+						to_chat(usr, "<span class='notice'>You secure \the [C]!</span>")
+						_circuitboard=C
+						playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+						build++
+						update_icon()
 				return 1
 		if(1) // Circuitboard installed
 			if(istype(W, /obj/item/weapon/crowbar))
@@ -2220,6 +2238,8 @@ var/global/num_vending_terminals = 1
 		)
 	premium = list(
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 1,
+		/obj/item/clothing/head/helmet/knight/templar = 2,
+ 		/obj/item/clothing/suit/armor/knight/templar = 5,
 		)
 	req_access_txt = "22"
 

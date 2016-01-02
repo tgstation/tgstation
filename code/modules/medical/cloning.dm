@@ -365,11 +365,11 @@
 			src.locked = 0
 			to_chat(user, "System unlocked.")
 	if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
-		to_chat(user, "<span class='notice'>\The [src] processes \the [W].</span>")
-		biomass += 50
-		user.drop_item(W)
-		qdel(W)
-		return
+		if(user.drop_item(W))
+			to_chat(user, "<span class='notice'>\The [src] processes \the [W].</span>")
+			biomass += 50
+			qdel(W)
+			return
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/cloning/clonepod/proc/connected_message(var/message)
@@ -387,7 +387,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
+	if (usr.isUnconscious())
 		return
 	src.go_out()
 	add_fingerprint(usr)

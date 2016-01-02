@@ -8,6 +8,7 @@
 	anchored = 1
 	density = 0
 	var/health = 15
+	gender = NEUTER
 	w_type=NOT_RECYCLABLE
 
 //similar to weeds, but only barfed out by nurses manually
@@ -26,9 +27,9 @@
 /obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user)
 	user.delayNextAttack(8)
 	if(W.attack_verb && W.attack_verb.len)
-		visible_message("<span class='warning'><B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]</span>")
+		visible_message("<span class='warning'><B>\The [src] [gender == PLURAL ? "have" : "has"] been [pick(W.attack_verb)] with \the [W][(user ? " by [user]" : "")].</span>")
 	else
-		visible_message("<span class='warning'><B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
+		visible_message("<span class='warning'><B>\The [src] [gender == PLURAL ? "have" : "has"] been attacked with \the [W][(user ? " by [user]" : "")]</span>")
 
 	var/damage = (W.is_hot() || W.is_sharp()) ? (W.force) : (W.force / SPIDERWEB_BRUTE_DIVISOR)
 
@@ -80,7 +81,7 @@
 
 /obj/effect/spider/eggcluster
 	name = "egg cluster"
-	desc = "They seem to pulse slightly with an inner life"
+	desc = "They seem to pulse slightly with an inner life."
 	icon_state = "eggs"
 	var/amount_grown = 0
 	New()
@@ -143,7 +144,7 @@
 
 /obj/effect/spider/cocoon
 	name = "cocoon"
-	desc = "Something wrapped in silky spider web"
+	desc = "Something wrapped in silky spider web."
 	icon_state = "cocoon1"
 	health = 30
 

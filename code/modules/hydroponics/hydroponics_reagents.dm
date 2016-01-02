@@ -22,19 +22,18 @@
 
 //Process reagents being input into the tray.
 /obj/machinery/portable_atmospherics/hydroponics/proc/process_reagents()
-	if((reagents.total_volume <= 0 && mutation_level) || mutation_level >= 25)
-		//Now that we've absorbed all the things in the tray, it would be a good time to mutate if we've recently absorbed mutagenic reagents
-		mutate(min(mutation_level, 25)) //Lazy 25u cap to prevent cheesing the whole thing
-		mutation_level = 0
-		return
+	if(reagents.total_volume <= 0 || mutation_level >= 25)
+		if(mutation_level) //probably a way to not check this twice but meh
+			mutate(min(mutation_level, 25)) //Lazy 25u cap to prevent cheesing the whole thing
+			mutation_level = 0
+			return
+	else
+		for(var/datum/reagent/A in reagents.reagent_list)
+			A.on_plant_life(src)
+			reagents.update_total()
 
-	for(var/datum/reagent/A in reagents.reagent_list)
-		A.on_plant_life(src)
-		reagents.update_total()
-
-	check_level_sanity()
-	update_icon()
-
+		check_level_sanity()
+		update_icon_after_process = 1
 
 /*
  -----------------------------------  -----------------------------------  -----------------------------------
@@ -247,7 +246,7 @@
 
 /datum/reagent/cryoxadone/on_plant_life(var/obj/machinery/portable_atmospherics/hydroponics/T)
 	..()
-	T.toxins += -3
+	T.toxins -= 3
 	if(T.seed && !T.dead)
 		T.health += 3
 

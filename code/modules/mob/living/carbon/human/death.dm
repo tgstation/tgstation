@@ -5,11 +5,6 @@
 	icon = null
 	invisibility = 101
 
-	//If we have brain worms, dump 'em.
-	var/mob/living/simple_animal/borer/B=has_brain_worms()
-	if(B)
-		B.detach()
-
 	for(var/datum/organ/external/E in src.organs)
 		if(istype(E, /datum/organ/external/chest) || istype(E, /datum/organ/external/groin)) //Really bad stuff happens when either get removed
 			continue
@@ -29,10 +24,7 @@
 	icon = null
 	invisibility = 101
 
-	//If we have brain worms, dump 'em.
-	var/mob/living/simple_animal/borer/B=has_brain_worms()
-	if(B)
-		B.detach()
+	dropBorers(1)
 
 	if(istype(src, /mob/living/carbon/human/manifested))
 		anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-hm", sleeptime = 15)

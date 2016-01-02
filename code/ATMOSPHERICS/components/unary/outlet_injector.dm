@@ -4,7 +4,7 @@
 	use_power = 1
 
 	name = "Air Injector"
-	desc = "Has a valve and pump attached to it"
+	desc = "Has a valve and pump attached to it."
 
 	var/on = 0
 	var/injecting = 0

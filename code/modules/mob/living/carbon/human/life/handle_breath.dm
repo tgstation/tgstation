@@ -103,7 +103,7 @@
 					adjust_fire_stacks(0.5)
 					IgniteMob()
 		else
-			if(fire_stacks)
+			if(fire_stacks > 0)
 				var/obj/item/clothing/suit/space/plasmaman/PS=wear_suit
 				PS.Extinguish(src)
 

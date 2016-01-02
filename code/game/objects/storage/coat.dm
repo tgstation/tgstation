@@ -103,7 +103,7 @@
 				to_chat(user, "<span class='notice'>You can't throw away something built into you.</span>")
 				return //Mommis cant give away their modules but can place other items
 		else
-			to_chat(user, "<span class='notice'> You're a robot. No.</span>")
+			to_chat(user, "<span class='notice'>You're a robot. No.</span>")
 			return //Robots can't interact with storage items.
 
 	if(src.loc == W)

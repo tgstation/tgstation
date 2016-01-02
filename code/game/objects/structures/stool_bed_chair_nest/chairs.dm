@@ -18,15 +18,15 @@
 		if(!SK.status)
 			to_chat(user, "<span class='notice'>[SK] is not ready to be attached!</span>")
 			return
-		user.drop_item(W)
-		var/obj/structure/bed/chair/e_chair/E = new /obj/structure/bed/chair/e_chair(src.loc)
-		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		E.dir = dir
-		E.part = SK
-		SK.forceMove(E)
-		SK.master = E
-		qdel(src)
-		return
+		if(user.drop_item(W))
+			var/obj/structure/bed/chair/e_chair/E = new /obj/structure/bed/chair/e_chair(src.loc)
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+			E.dir = dir
+			E.part = SK
+			SK.forceMove(E)
+			SK.master = E
+			qdel(src)
+			return
 
 	if(iswrench(W))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
@@ -59,7 +59,7 @@
 		return
 
 	if(!config.ghost_interaction && !blessed)
-		if(usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
+		if(usr.isUnconscious() || usr.restrained())
 			return
 
 	spin()
@@ -75,13 +75,13 @@
 				M.visible_message(\
 					"<span class='notice'>[M.name] has no butt, and slides right out of [src]!</span>",\
 					"Having no butt, you slide right out of the [src]",\
-					"You hear metal clanking")
+					"You hear metal clanking.")
 
 			else
 				M.visible_message(\
 					"<span class='notice'>[M.name] has no butt, and slides right out of [src]!</span>",\
 					"Having no butt, you slide right out of the [src]",\
-					"You hear metal clanking")
+					"You hear metal clanking.")
 
 			M.Weaken(5)
 		else

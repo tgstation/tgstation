@@ -3,6 +3,7 @@
 	name = "modification kit"
 	desc = "A kit containing all the needed tools and parts to modify an item into another one."
 	icon_state = "modkit"
+	origin_tech = "materials=2;engineering=2"
 	var/list/parts = list()		//how many times can this kit perform a given modification
 	var/list/original = list()	//the starting parts
 	var/list/finished = list()	//the finished products

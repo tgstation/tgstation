@@ -1,6 +1,6 @@
 //SUPPLY PACKS
 //NOTE: only secure crate types use the access var (and are lockable)
-//NOTE: hidden packs only show up when the computer has been hacked.
+//NOTE: hidden packs only show up when the computer has been emagged.
 //ANOTER NOTE: Contraband is obtainable through modified supplycomp circuitboards.
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 //NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
@@ -16,8 +16,8 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	var/containertype = null
 	var/containername = null
 	var/access = null
-	var/hidden = 0
-	var/contraband = 0
+	var/hidden = 0 //Emaggable
+	var/contraband = 0 //Hackable via tools
 	var/group = "Supplies"
 
 /datum/supply_packs/New()
@@ -423,6 +423,21 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Feminine clothing"
 	group = "Clothing"
 
+/datum/supply_packs/knight //why seperate them
+	name = "Knight Armor Crate"
+	contains = list(/obj/item/clothing/suit/armor/knight,
+					/obj/item/clothing/suit/armor/knight/red,
+					/obj/item/clothing/suit/armor/knight/yellow,
+					/obj/item/clothing/suit/armor/knight/blue,
+					/obj/item/clothing/head/helmet/knight,
+					/obj/item/clothing/head/helmet/knight/red,
+					/obj/item/clothing/head/helmet/knight/yellow,
+					/obj/item/clothing/head/helmet/knight/blue)
+	cost = 35
+	containertype = /obj/structure/closet/crate
+	containername = "knight armor crate"
+	group = "Clothing"
+
 //////SECURITY//////
 
 /datum/supply_packs/specialops
@@ -742,6 +757,29 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	cost = 40
 	containertype = /obj/structure/closet/crate
 	containername = "Bartending equipment"
+	group = "Hospitality"
+
+/datum/supply_packs/festive
+	name = "Festive supplies"
+	contains = list(/obj/item/stack/package_wrap/gift,
+					/obj/item/stack/package_wrap/gift,
+					/obj/item/weapon/toy/xmas_cracker,
+					/obj/item/weapon/toy/xmas_cracker,
+					/obj/item/weapon/toy/xmas_cracker,
+					/obj/item/weapon/toy/xmas_cracker,
+					/obj/item/weapon/toy/xmas_cracker,
+					/obj/item/weapon/toy/xmas_cracker,
+					/obj/item/clothing/head/christmas/santahat/red,
+					/obj/item/clothing/head/christmas/santahat/green,
+					/obj/item/clothing/suit/jumper/christmas/red,
+					/obj/item/clothing/suit/jumper/christmas/green,
+					/obj/item/clothing/suit/jumper/christmas/blue,
+					/obj/item/clothing/mask/scarf/red,
+					/obj/item/clothing/mask/scarf/blue,
+					/obj/item/clothing/mask/scarf/green)
+	cost = 30
+	containertype = /obj/structure/closet/crate
+	containername = "Festivus supplies"
 	group = "Hospitality"
 
 
@@ -1199,6 +1237,15 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containertype = /obj/structure/closet/crate/secure/plasma
 	containername = "Plasma assembly crate"
 	access = access_tox_storage
+	group = "Science"
+
+/datum/supply_packs/borer
+	name = "Borer Egg Crate"
+	contains = list (/obj/item/weapon/reagent_containers/food/snacks/borer_egg)
+	cost = 100
+	containertype = /obj/structure/closet/crate/secure/scisec
+	containername = "Borer egg crate"
+	access = access_xenobiology
 	group = "Science"
 
 //////HYDROPONICS//////

@@ -363,22 +363,19 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 			G.affecting = src
 			LAssailant = M
 
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='warning'>[] has grabbed [] passively!</span>", M, src), 1)
+			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
 
 		if(I_HURT, I_DISARM)
 			adjustBruteLoss(harm_intent_damage)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message("<span class='warning'>[M] [response_harm] [src]!</span>")
+
+			visible_message("<span class='warning'>[M] [response_harm] [src]!</span>")
 
 	return
 
 /mob/living/simple_animal/MouseDrop(mob/living/carbon/human/M)
 	if(M != usr)		return
 	if(!istype(M))		return
-	if(M.stat)			return
+	if(M.isUnconscious())return
 	if(M.restrained())	return
 	if(!Adjacent(M))	return
 
@@ -472,12 +469,16 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 			if(health < maxHealth)
 				if(MED.use(1))
 					adjustBruteLoss(-MED.heal_brute)
-					src.visible_message("<span class='notice'>[user] applies \the [MED] on [src].</span>")
+					src.visible_message("<span class='notice'>[user] applies \the [MED] to \the [src].</span>")
 		else
-			to_chat(user, "<span class='notice'>this [src] is dead, medical items won't bring it back to life.</span>")
+			to_chat(user, "<span class='notice'>This [src] is dead, medical items won't bring it back to life.</span>")
 	else if((meat_type || butchering_drops) && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(O.is_sharp())
-			butcher()
+			if(user.a_intent != I_HELP)
+				to_chat(user, "<span class='info'>You must be on <b>help</b> intent to do this!</span>")
+			else
+				butcher()
+				return 1
 	else
 		user.delayNextAttack(8)
 		if(O.force)
@@ -655,3 +656,14 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	if(issilicon(other))
 		return 1
 	return ..()
+
+/mob/living/simple_animal/proc/reagent_act(id, method, volume)
+	if(isDead()) return
+
+	switch(id)
+		if("sacid")
+			if(!supernatural)
+				adjustBruteLoss(volume * 0.5)
+		if("pacid")
+			if(!supernatural)
+				adjustBruteLoss(volume * 0.5)

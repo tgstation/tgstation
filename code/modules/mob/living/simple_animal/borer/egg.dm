@@ -5,6 +5,7 @@
 	icon_state = "borer egg-growing"
 	bitesize = 12
 	origin_tech = "biotech=4"
+	mech_flags = MECH_SCAN_FAIL
 	var/grown = 0
 	var/hatching = 0 // So we don't spam ghosts.
 	var/datum/recruiter/recruiter = null
@@ -65,6 +66,7 @@
 		var/mob/living/simple_animal/borer/B = new (T)
 		B.transfer_personality(O.client)
 		// Play hatching noise here.
+		playsound(src.loc, 'sound/items/borer_hatch.ogg', 50, 1)
 		qdel(src)
 	else
 		src.visible_message("<span class='notice'>\The [name] calms down.</span>")
@@ -73,6 +75,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg/process()
 	var/turf/location = get_turf(src)
+	if(!location)
+		return
 	var/datum/gas_mixture/environment = location.return_air()
 	//testing("[type]/PROCESS() - plasma: [environment.toxins]")
 	var/meets_conditions=1

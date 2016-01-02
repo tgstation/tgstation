@@ -167,7 +167,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
-	if(in_range(user,src))
+	if(Adjacent(user))
 		if(contents)
 			to_chat(user, "You can just about make out some properties of the cryo's murky depths:")
 			for(var/atom/movable/floater in (contents - beaker))
@@ -312,9 +312,9 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 		if(beaker)
 			to_chat(user, "<span class='warning'>A beaker is already loaded into the machine.</span>")
 			return
-		beaker =  G
-		user.drop_item(G, src)
-		user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
+		if(user.drop_item(G, src))
+			beaker =  G
+			user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
 	if(istype(G, /obj/item/weapon/wrench))//FUCK YOU PARENT, YOU AREN'T MY REAL DAD
 		return
 	if(..())

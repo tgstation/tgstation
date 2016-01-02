@@ -29,7 +29,7 @@
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | EMAGGABLE | WRENCHMOVE | FIXED2WORK
 
-	research_flags = NANOTOUCH | TAKESMATIN | HASOUTPUT | IGNORE_CHEMS | HASMAT_OVER
+	research_flags = NANOTOUCH | TAKESMATIN | HASOUTPUT | IGNORE_CHEMS | HASMAT_OVER | FAB_RECYCLER
 
 	light_color = LIGHT_COLOR_CYAN
 
@@ -64,6 +64,9 @@
 		new /obj/item/device/assembly/speaker(), \
 		new /obj/item/device/assembly/addition(), \
 		new /obj/item/device/assembly/comparison(), \
+		new /obj/item/device/assembly/randomizer(), \
+		new /obj/item/device/assembly/read_write(), \
+		new /obj/item/device/assembly/math(), \
 		),
 		"Stock_Parts"=list(
 		new /obj/item/weapon/stock_parts/console_screen(), \
@@ -174,9 +177,10 @@
 			else
 				to_chat(user, "You cannot recycle your built in tools.")
 				return 1
-		user.drop_item(I, src)
-		materials.removeFrom(I.materials)
-		user.visible_message("[user] puts \the [I] into \the [src]'s recycling unit.",
-							"You put \the [I] in \the [src]'s reycling unit.")
-		qdel(I)
+
+		if(user.drop_item(I, src))
+			materials.removeFrom(I.materials)
+			user.visible_message("[user] puts \the [I] into \the [src]'s recycling unit.",
+								"You put \the [I] in \the [src]'s reycling unit.")
+			qdel(I)
 		return 1

@@ -40,6 +40,7 @@
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_l_hand()
+		W.pickup(src)
 		return 1
 	return 0
 
@@ -59,6 +60,7 @@
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_r_hand()
+		W.pickup(src)
 		return 1
 	return 0
 
@@ -119,11 +121,7 @@
 		u_equip(W,1)
 		if(!W) return 1 // self destroying objects (tk, grabs)
 		W.layer = initial(W.layer)
-		W.loc = loc
-
-		var/turf/T = get_turf(loc)
-		if(isturf(T))
-			T.Entered(W)
+		W.forceMove(loc)
 
 		//W.dropped(src)
 		//update_icons() // Redundant as u_equip will handle updating the specific overlay
@@ -137,7 +135,8 @@
 
 
 //Drops the item in our hand - you can specify an item and a location to drop to
-/mob/proc/drop_item(var/obj/item/to_drop, var/atom/Target)
+
+/mob/proc/drop_item(var/obj/item/to_drop, var/atom/Target, force_drop = 0) //Set force_drop to 1 to force the item to drop (even if it can't be dropped normally)
 
 	if(!candrop) //can't drop items while etheral
 		return 0
@@ -147,6 +146,9 @@
 
 	if(!istype(to_drop)) //still nothing to drop?
 		return 0 //bail
+
+	if((to_drop.cant_drop > 0) && !force_drop)
+		return 0
 
 	if(!Target)
 		Target = src.loc
@@ -164,9 +166,9 @@
 		return 1
 	return 0
 
-/mob/proc/drop_hands(var/atom/Target) //drops both items
-	drop_item(get_active_hand(), Target)
-	drop_item(get_inactive_hand(), Target)
+/mob/proc/drop_hands(var/atom/Target, force_drop = 0) //drops both items
+	drop_item(get_active_hand(), Target, force_drop)
+	drop_item(get_inactive_hand(), Target, force_drop)
 
 //TODO: phase out this proc
 /mob/proc/before_take_item(var/obj/item/W)	//TODO: what is this?

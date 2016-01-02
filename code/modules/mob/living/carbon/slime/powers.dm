@@ -184,6 +184,11 @@
 			else
 				new_slime.key = src.key
 			new_slime.languages = languages.Copy()
+			new_slime.name = src.name
+			new_slime.real_name = src.real_name
+			transferImplantsTo(new_slime)
+			transferBorers(new_slime)
+
 			to_chat(new_slime, "<B>You are now an adult slime.</B>")
 			qdel(src)
 		else
@@ -226,10 +231,14 @@
 			var/mob/living/carbon/slime/new_slime = pick(babies)
 			new_slime.a_intent = I_HURT
 			new_slime.languages = languages.Copy()
+			new_slime.name = src.name
+			new_slime.real_name = src.real_name
 			if(src.mind)
 				src.mind.transfer_to(new_slime)
 			else
 				new_slime.key = src.key
+			transferImplantsTo(new_slime)
+			transferBorers(new_slime)
 
 			to_chat(new_slime, "<B>You are now a slime!</B>")
 			qdel(src)

@@ -270,6 +270,9 @@
 You are weak to holy things and starlight. Don't go into space and avoid the Chaplain, the chapel, and especially Holy Water."}
 	to_chat(vampire.current, dat)
 	to_chat(vampire.current, "<B>You must complete the following tasks:</B>")
+	vampire.current << dat
+	vampire.current << "<B>You must complete the following tasks:</B>"
+	vampire.current << sound('sound/effects/vampire_intro.ogg')
 
 	if (vampire.current.mind)
 		if (vampire.current.mind.assigned_role == "Clown")

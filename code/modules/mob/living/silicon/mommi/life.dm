@@ -42,7 +42,6 @@
 	if(cell)
 		if(cell.charge <= 0)
 			uneq_all()
-			stat = 1
 		else if (src.cell.charge <= MOMMI_LOW_POWER)
 			uneq_all()
 			cell.use(1)

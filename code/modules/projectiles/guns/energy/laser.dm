@@ -15,6 +15,7 @@
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	projectile_type = "/obj/item/projectile/beam/practice"
 	clumsy_check = 0
+	mech_flags = null // So it can be scanned by the Device Analyser
 
 /obj/item/weapon/gun/energy/laser/pistol
 	name = "laser pistol"
@@ -78,24 +79,24 @@ obj/item/weapon/gun/energy/laser/retro
 	projectile_type = "/obj/item/projectile/beam/captain"
 
 
-	New()
-		..()
-		processing_objects.Add(src)
+/obj/item/weapon/gun/energy/laser/captain/New()
+	..()
+	processing_objects.Add(src)
 
 
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/gun/energy/laser/captain/Destroy()
+	processing_objects.Remove(src)
+	..()
 
 
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
-		update_icon()
-		return 1
+/obj/item/weapon/gun/energy/laser/captain/process()
+	charge_tick++
+	if(charge_tick < 4) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(100)
+	update_icon()
+	return 1
 
 
 
@@ -238,37 +239,38 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "bluetag"
 	item_state = null
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
-	desc = "Standard issue weapon of the Imperial Guard"
+	desc = "Standard issue weapon of the Imperial Guard."
 	projectile_type = "/obj/item/projectile/beam/lastertag/blue"
-	origin_tech = "combat=1;magnets=2"
+	origin_tech = "magnets=2"
+	mech_flags = null // So it can be scanned by the Device Analyser
 	clumsy_check = 0
 	var/charge_tick = 0
 
-	special_check(var/mob/living/carbon/human/M)
-		if(ishuman(M))
-			if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
-				return 1
-			to_chat(M, "<span class='warning'>You need to be wearing your laser tag vest!</span>")
-		return 0
+/obj/item/weapon/gun/energy/laser/bluetag/special_check(var/mob/living/carbon/human/M)
+	if(ishuman(M))
+		if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
+			return 1
+		to_chat(M, "<span class='warning'>You need to be wearing your laser tag vest!</span>")
+	return 0
 
-	New()
-		..()
-		processing_objects.Add(src)
-
-
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/gun/energy/laser/bluetag/New()
+	..()
+	processing_objects.Add(src)
 
 
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
-		update_icon()
-		return 1
+/obj/item/weapon/gun/energy/laser/bluetag/Destroy()
+	processing_objects.Remove(src)
+	..()
+
+
+/obj/item/weapon/gun/energy/laser/bluetag/process()
+	charge_tick++
+	if(charge_tick < 4) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(100)
+	update_icon()
+	return 1
 
 
 
@@ -277,37 +279,38 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "redtag"
 	item_state = null
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
-	desc = "Standard issue weapon of the Imperial Guard"
+	desc = "Standard issue weapon of the Imperial Guard."
 	projectile_type = "/obj/item/projectile/beam/lastertag/red"
-	origin_tech = "combat=1;magnets=2"
+	origin_tech = "magnets=2"
+	mech_flags = null // So it can be scanned by the Device Analyser
 	clumsy_check = 0
 	var/charge_tick = 0
 
-	special_check(var/mob/living/carbon/human/M)
-		if(ishuman(M))
-			if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
-				return 1
-			to_chat(M, "<span class='warning'>You need to be wearing your laser tag vest!</span>")
-		return 0
+/obj/item/weapon/gun/energy/laser/redtag/special_check(var/mob/living/carbon/human/M)
+	if(ishuman(M))
+		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
+			return 1
+		to_chat(M, "<span class='warning'>You need to be wearing your laser tag vest!</span>")
+	return 0
 
-	New()
-		..()
-		processing_objects.Add(src)
-
-
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/gun/energy/laser/redtag/New()
+	..()
+	processing_objects.Add(src)
 
 
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
-		update_icon()
-		return 1
+/obj/item/weapon/gun/energy/laser/redtag/Destroy()
+	processing_objects.Remove(src)
+	..()
+
+
+/obj/item/weapon/gun/energy/laser/redtag/process()
+	charge_tick++
+	if(charge_tick < 4) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(100)
+	update_icon()
+	return 1
 
 
 /obj/item/weapon/gun/energy/megabuster

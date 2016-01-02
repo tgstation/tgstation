@@ -1029,12 +1029,20 @@
 	return BUILD_FAILURE
 
 /turf/unsimulated/floor/asteroid/canBuildLattice()
-	if(!(locate(/obj/structure/lattice) in contents))
+	if(src.x >= (world.maxx - TRANSITIONEDGE) || src.x <= TRANSITIONEDGE)
+		return BUILD_FAILURE
+	else if (src.y >= (world.maxy - TRANSITIONEDGE || src.y <= TRANSITIONEDGE ))
+		return BUILD_FAILURE
+	else if(!(locate(/obj/structure/lattice) in contents))
 		return BUILD_SUCCESS
 	return BUILD_FAILURE
 
 /turf/unsimulated/floor/asteroid/canBuildPlating()
-	if(!dug)
+	if(src.x >= (world.maxx - TRANSITIONEDGE) || src.x <= TRANSITIONEDGE)
+		return BUILD_FAILURE
+	else if (src.y >= (world.maxy - TRANSITIONEDGE || src.y <= TRANSITIONEDGE ))
+		return BUILD_FAILURE
+	else if(!dug)
 		return BUILD_IGNORE
 	if(locate(/obj/structure/lattice) in contents)
 		return BUILD_SUCCESS

@@ -51,10 +51,10 @@
 		if(animal_count[/mob/living/simple_animal/chicken] >= ANIMAL_CHILD_CAP)
 			to_chat(user, "<span class='warning'>You get the feeling there are enough chickens already.</span>")
 			return 1
-		user.drop_item(O, src)
-		user.visible_message( \
-			"<span class='notice'>\The [user] has added \the [O] to \the [src].</span>", \
-			"<span class='notice'>You add \the [O] to \the [src].</span>")
+		if(user.drop_item(O, src))
+			user.visible_message( \
+				"<span class='notice'>\The [user] has added \the [O] to \the [src].</span>", \
+				"<span class='notice'>You add \the [O] to \the [src].</span>")
 	src.updateUsrDialog()
 
 /obj/machinery/egg_incubator/attack_paw(mob/user as mob)

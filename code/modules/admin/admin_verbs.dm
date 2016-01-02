@@ -13,6 +13,8 @@ var/list/admin_verbs_default = list(
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/set_base_turf,
+	/datum/admins/proc/delay,
+	/client/proc/SendCentcommFax,		/*sends a fax to all fax machines*/
 	/client/proc/player_panel,			/*shows an interface for all players, with links to various panels (old style)*/
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
@@ -128,7 +130,6 @@ var/list/admin_verbs_server = list(
 	/client/proc/ToRban,
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
-	/datum/admins/proc/delay,
 	/datum/admins/proc/toggleaban,
 	/client/proc/toggle_log_hrefs,
 	/datum/admins/proc/immreboot,
@@ -1042,3 +1043,18 @@ var/list/admin_verbs_mod = list(
 	message_admins("[key_name_admin(usr)] has stopped all media.", 1)
 
 	stop_all_media()
+
+/client/proc/SendCentcommFax()
+	set	category = "Fun"
+	set name = "Send Fax"
+	set desc = "Sends a fax to all fax machines."
+
+	var/sent = input(src, "Please enter a message send via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null
+	if(!sent)	return
+
+	var/sentname = input(src, "Pick a title for the report", "Title") as text|null
+
+	SendFax(sent, sentname, centcomm = 1)
+
+	log_admin("[key_name(src)] sent a fax to all machines.: [sent]")
+	message_admins("[key_name_admin(src)] sent a fax to all machines.", 1)

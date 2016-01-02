@@ -42,6 +42,7 @@ h1.alert, h2.alert		{color: #000000;}
 .disarm					{color: #990000;}
 .passive				{color: #660000;}
 .danger					{color: #ff0000;	font-weight: bold;}
+.userdanger				{color: #ff0000;	font-weight: bold;	font-size: 120%}
 .warning				{color: #ff0000;	font-style: italic;}
 .sinister				{color: #800080;	font-weight: bold;	font-style: italic;} /* /vg/ */
 .blob					{color: #006221;	font-weight: bold;	font-style: italic;}

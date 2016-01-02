@@ -87,6 +87,7 @@
 					src.gib()
 
 /mob/living/carbon/gib()
+	dropBorers(1)
 	for(var/mob/M in src)
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
@@ -362,6 +363,11 @@
 				returnToPool(G)
 	if(!item) return //Grab processing has a chance of returning null
 
+	var/obj/item/I = item
+	if(I.cant_drop > 0)
+		usr << "<span class='warning'>It's stuck to your hand!</span>"
+		return
+
 	remove_from_mob(item)
 
 	//actually throw it!
@@ -575,8 +581,6 @@
 
 //Check for brain worms in head.
 /mob/proc/has_brain_worms()
-
-
 	for(var/I in contents)
 		if(istype(I,/mob/living/simple_animal/borer))
 			return I
@@ -621,3 +625,37 @@
 	playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 
 	return 1
+
+/mob/living/carbon/proc/transferImplantsTo(mob/living/carbon/newmob)
+	for(var/obj/item/weapon/implant/I in src)
+		I.loc = newmob
+		I.implanted = 1
+		I.imp_in = newmob
+		if(istype(newmob, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = newmob
+			if(!I.part) //implanted as a nonhuman, won't have one.
+				I.part = /datum/organ/external/chest
+			for (var/datum/organ/external/affected in H.organs)
+				if(!istype(affected, I.part)) continue
+				affected.implants += I
+
+/mob/living/carbon/proc/dropBorers(var/gibbed = null)
+	var/mob/living/simple_animal/borer/B = has_brain_worms()
+	if(B)
+		B.detach()
+		if(gibbed)
+			to_chat(B, "<span class='danger'>As your host is violently destroyed, so are you!</span>")
+			B.ghostize(0)
+			qdel(B)
+		else
+			to_chat(B, "<span class='notice'>You're forcefully popped out of your host!</span>")
+
+/mob/living/carbon/proc/transferBorers(mob/living/target)
+	var/mob/living/simple_animal/borer/B = has_brain_worms()
+	if(B)
+		B.detach()
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			B.perform_infestation(C)
+		else
+			to_chat(B, "<span class='notice'>You're forcefully popped out of your host!</span>")

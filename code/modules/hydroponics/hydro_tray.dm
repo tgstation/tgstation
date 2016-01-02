@@ -10,6 +10,7 @@
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
 	var/draw_warnings = 1 // Set to 0 to stop it from drawing the alert lights.
+	var/tmp/update_icon_after_process = 0 // Will try to only call update_icon() when necessary.
 
 	// Plant maintenance vars.
 	var/waterlevel = 100       // Water (max 100)
@@ -106,6 +107,7 @@
 	// When the plant dies, weeds thrive and pests die off.
 	weedlevel += 1 * HYDRO_SPEED_MULTIPLIER
 	pestlevel = 0
+	update_icon()
 
 //Calls necessary sanity when a plant is removed from the tray.
 /obj/machinery/portable_atmospherics/hydroponics/proc/remove_plant()
@@ -121,6 +123,7 @@
 	improper_kpa = 0
 	improper_heat = 0
 	set_light(0)
+	update_icon()
 
 //Harvests the product of a plant.
 /obj/machinery/portable_atmospherics/hydroponics/proc/harvest(var/mob/user)
@@ -333,7 +336,7 @@
 	else if ( istype(O, /obj/item/weapon/plantspray) )
 
 		var/obj/item/weapon/plantspray/spray = O
-		user.drop_item(spray)
+		user.drop_item(spray, force_drop = 1)
 		toxins += spray.toxicity
 		pestlevel -= spray.pest_kill_str
 		weedlevel -= spray.weed_kill_str
@@ -362,7 +365,7 @@
 		if(seed)
 			to_chat(user, "<span class='alert'>[src] is already occupied!</span>")
 		else
-			user.drop_item(O)
+			user.drop_item(O, force_drop = 1)
 			qdel(O)
 
 			var/obj/machinery/apiary/A = new(src.loc)
@@ -470,7 +473,7 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
+	if(!usr || usr.isUnconscious() || usr.restrained())
 		return
 
 	closed_system = !closed_system
@@ -486,7 +489,7 @@
 	set name = "Toggle Light"
 	set category = "Object"
 	set src in view(1)
-	if(!usr || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
+	if(!usr || usr.isUnconscious() || usr.restrained())
 		return
 	light_on = !light_on
 	calculate_light()
@@ -496,11 +499,11 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
+	if(!usr || usr.isUnconscious() || usr.restrained())
 		return
 
 	var/n_label = copytext(reject_bad_text(input(usr, "What would you like to set the tray's label display to?", "Hydroponics Tray Labeling", null) as text), 1, MAX_NAME_LEN)
-	if(!usr || !n_label || !Adjacent(usr) || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
+	if(!usr || !n_label || !Adjacent(usr) || usr.isUnconscious() || usr.restrained())
 		return
 
 	labeled = copytext(n_label, 1, 32) //technically replaces any traditional hand labeler labels, but will anyone really complain?

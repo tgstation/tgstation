@@ -9,8 +9,8 @@
 	var/const/meteorannouncedelay_h = 3000 //Upper bound on announcement, here 5 minutes
 	var/meteorannouncedelay = 2400 //Default final announcement delay
 	var/const/supplydelay = 100 //Delay before meteor supplies are spawned in tenth of seconds
-	var/const/meteordelay_l = 3000 //Lower bound to meteor wave arrival, here 5 minutes
-	var/const/meteordelay_h = 4500 //Higher bound to meteor wave arrival, here 7 and a half minutes
+	var/const/meteordelay_l = 4500 //Lower bound to meteor wave arrival, here 7.5 minutes
+	var/const/meteordelay_h = 6000 //Higher bound to meteor wave arrival, here 10 minutes
 	var/const/meteorshuttlemultiplier = 3 //How much more will we need to hold out ? Here 30 minutes until the shuttle arrives. Multiplies by 10
 	var/meteordelay = 7500 //Default final meteor delay
 	var/meteors_allowed = 0 //Can we send the meteors ?
@@ -80,7 +80,7 @@
 
 /datum/game_mode/meteor/process()
 	if(meteors_allowed)
-		var/meteors_in_wave = rand(50, 100) //Between 25 and 50 meteors per wave
+		var/meteors_in_wave = rand(150, 200) //Between 150 and 200 meteors per wave
 		meteor_wave(meteors_in_wave, 3)
 	return
 

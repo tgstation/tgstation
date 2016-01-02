@@ -82,10 +82,12 @@ Remotes have procs for when attack_self() is called to handle which button is pr
 				return 1
 
 		if(istype(used_item, /obj/item/device/remote_button))
-			if(add_button(used_item, return_clicked_id_by_params(params) )) //attempt to plug the button on
-				user.drop_item(used_item, holder)
-				to_chat(user, "You click \the [used_item] into \the [holder].")
-				return 1
+			if(user.drop_item(used_item, holder))
+				if(add_button(used_item, return_clicked_id_by_params(params) )) //attempt to plug the button on
+					to_chat(user, "You click \the [used_item] into \the [holder].")
+					return 1
+				else
+					used_item.forceMove(get_turf(src))
 
 	var/button_id = return_clicked_id_by_params(params)
 	return press_button(button_id, user)

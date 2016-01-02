@@ -131,7 +131,7 @@
 
 /obj/item/clothing/shoes/magboots/vox/toggle()
 	//set name = "Toggle Floor Grip"
-	if(usr.stat || (usr.status_flags & FAKEDEATH))
+	if(usr.isUnconscious())
 		return
 	if(src.magpulse)
 		src.flags &= ~NOSLIP

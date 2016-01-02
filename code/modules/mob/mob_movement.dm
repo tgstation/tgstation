@@ -48,13 +48,13 @@
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(!C.get_active_hand())
-			to_chat(usr, "<span class='warning'> You have nothing to drop in your hand.</span>")
+			to_chat(usr, "<span class='warning'>You have nothing to drop in your hand.</span>")
 			return
 		drop_item()
 	else if(isMoMMI(usr))
 		var/mob/living/silicon/robot/mommi/M = usr
 		if(!M.get_active_hand())
-			to_chat(M, "<span class='warning'> You have nothing to drop or store.</span>")
+			to_chat(M, "<span class='warning'>You have nothing to drop or store.</span>")
 			return
 		M.uneq_active()
 	else if(isrobot(usr))
@@ -63,7 +63,7 @@
 			return
 		R.uneq_active()
 	else
-		to_chat(usr, "<span class='warning'> This mob type cannot drop items.</span>")
+		to_chat(usr, "<span class='warning'>This mob type cannot drop items.</span>")
 	return
 
 //This gets called when you press the delete button.
@@ -71,7 +71,7 @@
 	set hidden = 1
 
 	if(!usr.pulling)
-		to_chat(usr, "<span class='notice'> You are not pulling anything.</span>")
+		to_chat(usr, "<span class='notice'>You are not pulling anything.</span>")
 		return
 	usr.stop_pulling()
 
@@ -272,7 +272,7 @@
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.restrained() && M.stat == 0 && M.canmove && mob.Adjacent(M))
-						to_chat(src, "<span class='notice'> You're restrained! You can't move!</span>")
+						to_chat(src, "<span class='notice'>You're restrained! You can't move!</span>")
 						return 0
 					else
 						M.stop_pulling()
@@ -280,15 +280,15 @@
 				var/datum/chain/chain_datum = mob.tether.chain_datum
 				if(chain_datum.extremity_A == mob)
 					if(istype(chain_datum.extremity_B,/mob/living))
-						to_chat(src, "<span class='notice'> You're restrained! You can't move!</span>")
+						to_chat(src, "<span class='notice'>You're restrained! You can't move!</span>")
 						return 0
 				else if(chain_datum.extremity_B == mob)
 					if(istype(chain_datum.extremity_A,/mob/living))
-						to_chat(src, "<span class='notice'> You're restrained! You can't move!</span>")
+						to_chat(src, "<span class='notice'>You're restrained! You can't move!</span>")
 						return 0
 
 		if(mob.pinned.len)
-			to_chat(src, "<span class='notice'> You're pinned to a wall by [mob.pinned[1]]!</span>")
+			to_chat(src, "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>")
 			return 0
 
 		// COMPLEX MOVE DELAY SHIT
@@ -502,7 +502,7 @@
 
 	//Check to see if we slipped
 	if(!ignore_slip && prob(Process_Spaceslipping(5)))
-		to_chat(src, "<span class='notice'> <B>You slipped!</B></span>")
+		to_chat(src, "<span class='notice'><B>You slipped!</B></span>")
 		src.inertia_dir = src.last_move
 		step(src, src.inertia_dir)
 		return 0

@@ -147,6 +147,13 @@ var/list/uplink_items = list()
 	cost = 4
 	job = list("Clown")
 
+/datum/uplink_item/jobspecific/superglue
+	name = "1 Bottle of Superglue"
+	desc = "Considered illegal everywhere except for the Clown Planet, this water-resistant superglue can instantly bind human flesh to ANY material, permanently. One-time use."
+	item = /obj/item/weapon/glue
+	cost = 3
+	job = list("Clown", "Mime")
+
 //Detective
 /datum/uplink_item/jobspecific/evidenceforger
 	name = "Evidence Forger"

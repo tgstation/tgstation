@@ -95,7 +95,7 @@
 		if(S.seed && S.seed.immutable > 0)
 			to_chat(user, "That seed is not compatible with our genetics technology.")
 		else
-			user.drop_item(S, src)
+			user.drop_item(S, src, force_drop = 1)
 			loaded_seed = W
 			to_chat(user, "You load [W] into [src].")
 			nanomanager.update_uis(src)
@@ -117,7 +117,9 @@
 					to_chat(user, "That disk does not have any gene data loaded.")
 					return
 
-			user.drop_item(W, src)
+			if(!user.drop_item(W, src))
+				return
+
 			loaded_disk = W
 			to_chat(user, "You load [W] into [src].")
 			nanomanager.update_uis(src)
@@ -186,7 +188,7 @@
 		ui = new(user, src, ui_key, "botany_isolator.tmpl", "Lysis-isolation Centrifuge UI", 470, 450)
 		ui.set_initial_data(data)
 		ui.open()
-		ui.set_auto_update(1)
+		//ui.set_auto_update(1)
 
 /obj/machinery/botany/Topic(href, href_list)
 
@@ -208,7 +210,6 @@
 		visible_message("\icon[src] [src] beeps and spits out [loaded_seed].")
 
 		loaded_seed = null
-		nanomanager.update_uis(src)
 
 	if(href_list["eject_disk"])
 		if(!loaded_disk) return
@@ -216,7 +217,6 @@
 		visible_message("\icon[src] [src] beeps and spits out [loaded_disk].")
 
 		loaded_disk = null
-		nanomanager.update_uis(src)
 
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
@@ -235,7 +235,6 @@
 
 		last_action = world.time
 		active = 1
-		nanomanager.update_uis(src)
 
 		if(loaded_seed && loaded_seed.seed)
 			genetics = loaded_seed.seed
@@ -250,7 +249,6 @@
 
 		last_action = world.time
 		active = 1
-		nanomanager.update_uis(src)
 
 		var/datum/plantgene/P = genetics.get_gene(href_list["get_gene"])
 		if(!P) return
@@ -274,8 +272,7 @@
 		if(!genetics) return
 		genetics = null
 		degradation = 0
-		nanomanager.update_uis(src)
-	return
+	return 1
 
 // Fires an extracted trait into another packet of seeds with a chance
 // of destroying it based on the size/complexity of the plasmid.
@@ -336,7 +333,7 @@
 		ui = new(user, src, ui_key, "botany_editor.tmpl", "Bioballistic Delivery UI", 470, 450)
 		ui.set_initial_data(data)
 		ui.open()
-		ui.set_auto_update(1)
+		//ui.set_auto_update(1)
 
 /obj/machinery/botany/editor/Topic(href, href_list)
 
@@ -348,7 +345,6 @@
 
 		last_action = world.time
 		active = 1
-		nanomanager.update_uis(src)
 
 		if(!isnull(plant_controller.seeds[loaded_seed.seed.name]))
 			loaded_seed.seed = loaded_seed.seed.diverge(1)
@@ -369,7 +365,7 @@
 				mode = GENEGUN_MODE_PURGE
 			if(GENEGUN_MODE_PURGE)
 				mode = GENEGUN_MODE_SPLICE
-		nanomanager.update_uis(src)
 
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
+	return 1

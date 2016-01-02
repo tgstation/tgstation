@@ -65,6 +65,8 @@
 	icon_living = "mouse_[_color]"
 	icon_dead = "mouse_[_color]_dead"
 	desc = "It's a small [_color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
+	add_language("Mouse")
+	default_language = all_languages["Mouse"]
 
 
 /mob/living/simple_animal/mouse/proc/splat()

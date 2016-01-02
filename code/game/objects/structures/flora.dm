@@ -186,7 +186,7 @@
 
 /obj/structure/flora/pottedplant
 	name = "potted plant"
-	desc = "Oh, no. Not again"
+	desc = "Oh, no. Not again."
 	icon = 'icons/obj/plants.dmi'
 	icon_state = "plant-26"
 	layer = FLY_LAYER

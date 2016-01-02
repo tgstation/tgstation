@@ -82,9 +82,8 @@ STI KALY - blind
 		var/mob/living/carbon/H = affected_mob
 		if(prob(chance))
 			if(!istype(H.r_hand, /obj/item/weapon/staff))
-				if(H.r_hand) //no need to drop if we aren't holding anything
-					H.drop_item(H.r_hand)
-				H.put_in_r_hand( new /obj/item/weapon/staff(H) )
+				if(H.r_hand || H.drop_item(H.r_hand))
+					H.put_in_r_hand( new /obj/item/weapon/staff(H) )
 			return
 	return
 
@@ -93,7 +92,7 @@ STI KALY - blind
 /datum/disease/wizarditis/proc/teleport()
 	var/list/theareas = new/list()
 	for(var/area/AR in orange(80, affected_mob))
-		if(theareas.Find(AR) || AR.name == "Space") continue
+		if(theareas.Find(AR) || isspace(AR)) continue
 		theareas += AR
 
 	if(!theareas)

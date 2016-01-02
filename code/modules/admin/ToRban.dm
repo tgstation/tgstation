@@ -35,7 +35,7 @@
 					var/cleaned = copytext(line,13,length(line)-19)
 					if(!cleaned)	continue
 					F[cleaned] << 1
-			to_chat(F["last_update"], world.realtime)
+			F["last_update"] << world.realtime
 			diary << "ToR data updated!"
 			if(usr)	to_chat(usr, "ToRban updated.")
 			return 1

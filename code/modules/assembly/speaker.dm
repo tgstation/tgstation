@@ -7,7 +7,10 @@
 	starting_materials = list(MAT_IRON = 800, MAT_GLASS = 100)
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
+
 	var/message = "Thank you for using NanoSpeaker!"
+
+	accessible_values = list("Message" = "message;text")
 
 /obj/item/device/assembly/speaker/activate()
 	src.say(message)

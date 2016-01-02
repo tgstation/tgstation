@@ -175,4 +175,3 @@
 	visible_message(message = "<span class='danger'>[B] begins to go dark, having seemingly thought himself to death</span>", blind_message = "<span class='danger'>You hear the wistful sigh of a hopeful machine powering off with a tone of finality.<span>")
 	icon_state = "posibrain"
 	searching = 0
-	B.ghostize(0)

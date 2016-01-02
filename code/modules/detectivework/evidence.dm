@@ -35,7 +35,7 @@
 			var/obj/item/weapon/storage/U = I.loc
 			user.client.screen -= I
 			U.contents.Remove(I)
-		user.drop_item(I)
+		user.drop_item(I, force_drop = 1)
 
 	user.visible_message("[user] puts [I] into [src]", "You put [I] inside [src].",\
 	"You hear a rustle as someone puts something into a plastic bag.")

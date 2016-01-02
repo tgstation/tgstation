@@ -1,5 +1,6 @@
 /mob/living/carbon/slime
 	name = "baby slime"
+	desc = null
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
@@ -82,7 +83,8 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	name = text("[colour] baby slime ([rand(1, 1000)])")
+	name = text("[colour] slime ([rand(1, 1000)])")
+	desc = text("A baby [colour] slime.")
 	real_name = name
 	spawn (1)
 		regenerate_icons()
@@ -92,7 +94,8 @@
 /mob/living/carbon/slime/adult/New()
 	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
 	..()
-	name = text("[colour] adult slime ([rand(1,1000)])")
+	name = text("[colour] slime ([rand(1,1000)])")
+	desc = text("An adult [colour] slime.")
 	slime_mutation[1] = /mob/living/carbon/slime/orange
 	slime_mutation[2] = /mob/living/carbon/slime/metal
 	slime_mutation[3] = /mob/living/carbon/slime/blue
@@ -968,7 +971,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /obj/item/clothing/suit/golem
 	name = "adamantine shell"
-	desc = "a golem's thick outter shell"
+	desc = "a golem's thick outer shell"
 	icon_state = "golem"
 	item_state = "golem"
 	w_class = 4//bulky item
@@ -994,16 +997,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	canremove = 0
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
-
-
-/obj/item/clothing/mask/gas/golem
-	name = "golem's face"
-	desc = "the imposing face of an adamantine golem"
-	icon_state = "golem"
-	item_state = "golem"
-	canremove = 0
-	siemens_coefficient = 0
-	unacidable = 1
 
 /obj/item/clothing/mask/gas/golem
 	name = "golem's face"

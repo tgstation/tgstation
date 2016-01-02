@@ -28,9 +28,9 @@
 		return
 	has_suit = S
 	if(user)
-		user.drop_item(src, has_suit)
-		to_chat(user, "<span class='notice'>You attach [src] to [has_suit].</span>")
-		src.add_fingerprint(user)
+		if(user.drop_item(src, has_suit))
+			to_chat(user, "<span class='notice'>You attach [src] to [has_suit].</span>")
+			src.add_fingerprint(user)
 	else
 		loc = has_suit
 	has_suit.overlays += inv_overlay
@@ -77,6 +77,7 @@
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
 	icon_state = "stethoscope"
 	_color = "stethoscope"
+	origin_tech = "biotech=1"
 
 /obj/item/clothing/accessory/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
@@ -91,7 +92,7 @@
 				var/sound = "pulse"
 				var/sound_strength
 
-				if(M.stat == DEAD || (M.status_flags&FAKEDEATH))
+				if(M.isDead())
 					sound_strength = "cannot hear"
 					sound = "anything"
 				else

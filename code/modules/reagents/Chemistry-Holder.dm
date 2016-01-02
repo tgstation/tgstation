@@ -443,31 +443,25 @@ datum
 					if(TOUCH)
 						for(var/datum/reagent/R in reagent_list)
 							if(ismob(A))
-								spawn(0)
-									if(!R) return
-									else R.reaction_mob(A, TOUCH, R.volume+volume_modifier)
+								if(isanimal(A))
+									R.reaction_animal(A, TOUCH, R.volume+volume_modifier)
+								else
+									R.reaction_mob(A, TOUCH, R.volume+volume_modifier)
 							if(isturf(A))
-								spawn(0)
-									if(!R) return
-									else R.reaction_turf(A, R.volume+volume_modifier)
+								R.reaction_turf(A, R.volume+volume_modifier)
 							if(isobj(A))
-								spawn(0)
-									if(!R) return
-									else R.reaction_obj(A, R.volume+volume_modifier)
+								R.reaction_obj(A, R.volume+volume_modifier)
 					if(INGEST)
 						for(var/datum/reagent/R in reagent_list)
-							if(ismob(A) && R)
-								spawn(0)
-									if(!R) return
-									else R.reaction_mob(A, INGEST, R.volume+volume_modifier)
+							if(ismob(A))
+								if(isanimal(A))
+									R.reaction_animal(A, INGEST, R.volume+volume_modifier)
+								else
+									R.reaction_mob(A, INGEST, R.volume+volume_modifier)
 							if(isturf(A) && R)
-								spawn(0)
-									if(!R) return
-									else R.reaction_turf(A, R.volume+volume_modifier)
+								R.reaction_turf(A, R.volume+volume_modifier)
 							if(isobj(A) && R)
-								spawn(0)
-									if(!R) return
-									else R.reaction_obj(A, R.volume+volume_modifier)
+								R.reaction_obj(A, R.volume+volume_modifier)
 				return
 
 			add_reagent(var/reagent, var/amount, var/list/data=null)

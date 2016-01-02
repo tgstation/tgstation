@@ -418,7 +418,7 @@ var/global/list/damage_icon_parts = list()
 	overlays -= obj_overlays[MUTANTRACE_LAYER]
 	if(dna)
 		switch(dna.mutantrace)
-			if("golem","slime","shadow","adamantine")
+			if("golem","slime","shadow","adamantine","coalgolem")
 				if(species && (!species.override_icon && species.has_mutant_race))
 					var/obj/Overlays/O = obj_overlays[MUTANTRACE_LAYER]
 					O.icon = 'icons/effects/genetics.dmi'

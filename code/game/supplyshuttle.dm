@@ -379,6 +379,8 @@ var/list/mechtoys = list(
 		. = TRUE
 	else if (locate(/obj/item/beacon) in contents)
 		. = TRUE
+	else if (locate(/obj/effect/portal) in contents)//you crafty fuckers
+		. = TRUE
 	else
 		. = FALSE
 

@@ -80,14 +80,12 @@ var/const/HOLOPAD_MODE = 0
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/holopad/Hear(var/datum/speech/speech, var/rendered_message="")
-	ASSERT(istype(speech, /datum/speech))
 	if(speech.speaker && hologram && master && !speech.frequency && speech.speaker != master)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		if(!master.say_understands(speech.speaker, speech.language)) //previously if(!master.languages & speaker.languages)//The AI will be able to understand most mobs talking through the holopad.
 			rendered_message = speech.render_message()
 		var/name_used = speech.name
 		rendered_message = "<i><span class='[speech.render_wrapper_classes()]'>Holopad received, <span class='name'>[name_used]</span> <span class='message'>[rendered_message]</span></span></i>"
 		master.show_message(rendered_message, 2)
-	return
 
 
 /obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)

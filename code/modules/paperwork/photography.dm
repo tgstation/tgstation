@@ -16,6 +16,7 @@
 	icon_state = "film"
 	item_state = "electropack"
 	w_class = 1.0
+	origin_tech = "materials=1;programming=1"
 
 
 /*
@@ -76,7 +77,7 @@
 
 	var/n_name = copytext(sanitize(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text), 1, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if((loc == usr || loc.loc && loc.loc == usr) && !usr.stat && !(usr.status_flags & FAKEDEATH))
+	if(!usr.isUnconscious() && Adjacent(usr))
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
@@ -105,6 +106,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
+	origin_tech = "materials=1;programming=1"
 	starting_materials = list(MAT_IRON = 2000)
 	w_type = RECYK_ELECTRONIC
 	min_harm_label = 3
@@ -124,6 +126,7 @@
 	item_state = "sepia-polaroid"
 	icon_on = "sepia-camera"
 	icon_off = "sepia-camera_off"
+	mech_flags = MECH_SCAN_FAIL
 
 /obj/item/device/camera/examine(mob/user)
 	..()
@@ -159,13 +162,15 @@
 		if(pictures_left)
 			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")
 			return
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		user.drop_item(I)
-		qdel(I)
-		pictures_left = pictures_max
-		icon_state = icon_on
-		on = 1
-		return
+
+		if(user.drop_item(I))
+			to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+
+			qdel(I)
+			pictures_left = pictures_max
+			icon_state = icon_on
+			on = 1
+			return
 	..()
 
 

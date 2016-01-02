@@ -22,6 +22,11 @@ var/global/list/blood_list = list()
 	transfers_dna = 1
 	absorbs_types=list(/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/drip,/obj/effect/decal/cleanable/blood/writing)
 
+/obj/effect/decal/cleanable/blood/Destroy()
+	..()
+	blood_DNA = null
+	virus2 = null
+
 /obj/effect/decal/cleanable/blood/cultify()
 	return
 

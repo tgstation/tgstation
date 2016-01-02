@@ -71,12 +71,12 @@
 		if(health > 0)
 			to_chat(user, "<span class='warning'>There is already a queen in there.</span>")
 		else
-			health = 10
-			nutrilevel = min(10,nutrilevel+10)
-			user.drop_item(O)
-			qdel(O)
-			to_chat(user, "<span class='notice'>You carefully insert the queen into [src], she gets busy making a hive.</span>")
-			bees_in_hive = 0
+			if(user.drop_item(O))
+				health = 10
+				nutrilevel = min(10,nutrilevel+10)
+				qdel(O)
+				to_chat(user, "<span class='notice'>You carefully insert the queen into [src], she gets busy making a hive.</span>")
+				bees_in_hive = 0
 	else if(istype(O, /obj/item/beezeez))
 		beezeez += 100
 		nutrilevel += 10

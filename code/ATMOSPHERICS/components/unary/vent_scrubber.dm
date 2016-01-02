@@ -2,7 +2,7 @@
 	icon = 'icons/obj/atmospherics/vent_scrubber.dmi'
 	icon_state = "hoff"
 	name = "Air Scrubber"
-	desc = "Has a valve and pump attached to it"
+	desc = "Has a valve and pump attached to it."
 	use_power = 1
 
 	level				= 1

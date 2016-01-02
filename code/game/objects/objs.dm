@@ -1,4 +1,4 @@
-var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "plasma", "pacid" =  "polytrinic acid", "sacid" =  "sulphuric acid" )
+var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "plasma", "pacid" =  "polytrinic acid", "sacid" =  "sulphuric acid", "amutationtoxin" = "slime mutation toxin")
 /obj
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
@@ -316,3 +316,7 @@ a {
 	if (isobj(loc))
 		var/obj/location = loc
 		location.on_log()
+
+// Dummy to give items special techlist for the purposes of the Device Analyser, in case you'd ever need them to give them different tech levels depending on special checks.
+/obj/proc/give_tech_list()
+	return null

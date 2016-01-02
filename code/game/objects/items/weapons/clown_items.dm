@@ -127,3 +127,66 @@
 	attack_verb = list("quacked")
 	hitsound = 'sound/items/quack.ogg'
 	honk_delay = 10
+
+#define GLUE_WEAROFF_TIME -1 //was 9000: 15 minutes, or 900 seconds. Negative values = infinite glue
+
+/obj/item/weapon/glue
+	name = "bottle of superglue"
+	desc = "A small plastic bottle full of superglue."
+
+	icon = 'icons/obj/items.dmi'
+	icon_state = "glue0"
+
+	w_class = 1
+
+	var/spent = 0
+
+/obj/item/weapon/glue/examine(mob/user)
+	..()
+	if(Adjacent(user))
+		user.show_message("<span class='info'>The label reads:</span><br><span class='notice'>1) Apply glue to the surface of an object<br>2) Apply object to human flesh</span>", MESSAGE_SEE)
+
+/obj/item/weapon/glue/update_icon()
+	..()
+	icon_state = "glue[spent]"
+
+/obj/item/weapon/glue/afterattack(obj/item/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag)
+		return
+
+	if(spent)
+		user << "<span class='warning'>There's no glue left in the bottle.</span>"
+		return
+
+	if(!istype(target)) //Can only apply to items!
+		user << "<span class='warning'>That would be such a waste of glue.</span>"
+		return
+	else
+		if(istype(target, /obj/item/stack)) //The whole cant_drop thing is EXTREMELY fucky with stacks and can be bypassed easily
+			user << "<span class='warning'>There's not enough glue in \the [src] to cover the whole [target]!</span>"
+			return
+
+		if(target.abstract) //Can't glue TK grabs, grabs, offhands!
+			return
+
+	user << "<span class='info'>You gently apply the whole [src] to \the [target].</span>"
+	spent = 1
+	update_icon()
+	apply_glue(target)
+
+/obj/item/weapon/glue/proc/apply_glue(obj/item/target)
+	src = null
+
+	target.cant_drop++
+
+	if(GLUE_WEAROFF_TIME > 0)
+		spawn(GLUE_WEAROFF_TIME)
+			target.cant_drop--
+
+/obj/item/weapon/glue/infinite/afterattack()
+	.=..()
+
+	spent = 0
+	update_icon()
+
+#undef GLUE_WEAROFF_TIME

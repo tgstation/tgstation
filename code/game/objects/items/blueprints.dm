@@ -95,7 +95,7 @@ move an amendment</a> to the drawing.</p>
 	return A
 
 /obj/item/blueprints/proc/get_area_type(var/area/A = get_area())
-	if (A.type == /area && A.name == "Space")
+	if (isspace(A))
 		return AREA_SPACE
 	else if(istype(A, /area/station/custom))
 		return AREA_BLUEPRINTS

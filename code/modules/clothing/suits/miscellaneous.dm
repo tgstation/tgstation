@@ -14,6 +14,7 @@
 	icon_state = "bluetag"
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
+	origin_tech = "materials=1;magnets=2"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list (/obj/item/weapon/gun/energy/laser/bluetag)
 	siemens_coefficient = 3.0
@@ -24,6 +25,7 @@
 	icon_state = "redtag"
 	item_state = "redtag"
 	blood_overlay_type = "armor"
+	origin_tech = "materials=1;magnets=2"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list (/obj/item/weapon/gun/energy/laser/redtag)
 	siemens_coefficient = 3.0
@@ -191,6 +193,7 @@
 	desc = "A suit that completely restrains the wearer."
 	icon_state = "straight_jacket"
 	item_state = "straight_jacket"
+	origin_tech = "biotech=2"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -206,7 +209,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
+	if(!usr.canmove || usr.isUnconscious() || usr.restrained())
 		return 0
 
 	if(src.icon_state == "suitjacket_blue_open")
@@ -480,3 +483,22 @@
 		if(user.lying)//aka. if they have just been stunned
 			user.pixel_y -= 6
 	..()
+
+/obj/item/clothing/suit/jumper/christmas
+	name = "christmas jumper"
+	desc = "Made by professional knitting nanas to truly fit the festive mood."
+
+/obj/item/clothing/suit/jumper/christmas/red
+	desc = "Made by professional knitting nanas to truly fit the festive mood. This one has a tasteful red colour to it, and a festive Fir tree."
+	icon_state = "cjumper-red"
+	item_state = "cjumper-red"
+
+/obj/item/clothing/suit/jumper/christmas/blue
+	desc = "Made by professional knitting nanas to truly fit the festive mood. This one has a nice light blue colouring to it, and has a snowman on it."
+	icon_state = "cjumper-blue"
+	item_state = "cjumper-blue"
+
+/obj/item/clothing/suit/jumper/christmas/green
+	desc = "Made by professional knitting nanas to truly fit the festive mood. This one is green in colour, and has a reindeer with a red nose on the front. At least you think it's a reindeer."
+	icon_state = "cjumper-green"
+	item_state = "cjumper-green"

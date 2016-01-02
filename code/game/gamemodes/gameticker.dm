@@ -70,7 +70,7 @@ var/global/datum/controller/gameticker/ticker
 		var/delay_timetotal = 3000 //actually 5 minutes or incase this is changed from 3000, (time_in_seconds * 10)
 		pregame_timeleft = world.timeofday + delay_timetotal
 		to_chat(world, "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>")
-		to_chat(world, "Please, setup your character and select ready. Game will start in [(pregame_timeleft - world.timeofday) / 10] seconds")
+		to_chat(world, "Please, setup your character and select ready. Game will start in [(pregame_timeleft - world.timeofday) / 10] seconds.")
 		while(current_state <= GAME_STATE_PREGAME)
 			for(var/i=0, i<10, i++)
 				sleep(1)
@@ -265,11 +265,9 @@ var/global/datum/controller/gameticker/ticker
 				if(0)	//inside a crate or something
 					var/turf/T = get_turf(M)
 					if(T && T.z==1)				//we don't use M.death(0) because it calls a for(/mob) loop and
-						M.health = 0
-						M.stat = DEAD
+						M.nuke_act()
 				if(1)	//on a z-level 1 turf.
-					M.health = 0
-					M.stat = DEAD
+					M.nuke_act()
 
 	//Now animate the cinematic
 	switch(station_missed)
@@ -395,9 +393,21 @@ var/global/datum/controller/gameticker/ticker
 		spawn
 			declare_completion()
 			if(config.map_voting)
+				//testing("Vote picked [chosen_map]")
 				vote.initiate_vote("map","The Server", popup = 1)
 				var/options = list2text(vote.choices, " ")
 				feedback_set("map vote choices", options)
+
+			else
+				var/list/maps = get_maps()
+				var/list/choices=list()
+				for(var/key in maps)
+					choices.Add(key)
+				var/mapname=pick(choices)
+				vote.chosen_map = maps[mapname] // Hack, but at this point I could not give a shit.
+				watchdog.chosen_map = copytext(mapname,1,(length(mapname)))
+				log_game("Server chose [watchdog.chosen_map]!")
+
 
 
 		spawn(50)

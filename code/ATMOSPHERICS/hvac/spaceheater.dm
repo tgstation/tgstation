@@ -114,10 +114,10 @@
 				// insert cell
 				var/obj/item/weapon/cell/C = usr.get_active_hand()
 				if(istype(C))
-					user.drop_item(C, src)
-					cell = C
-					C.add_fingerprint(usr)
-					user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
+					if(user.drop_item(C, src))
+						cell = C
+						C.add_fingerprint(usr)
+						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 		else
 			to_chat(user, "The hatch must be open to insert a power cell.")
 			return
@@ -253,11 +253,11 @@
 				if(panel_open && !cell)
 					var/obj/item/weapon/cell/C = usr.get_active_hand()
 					if(istype(C))
-						usr.drop_item(C, src)
-						cell = C
-						C.add_fingerprint(usr)
+						if(usr.drop_item(C, src))
+							cell = C
+							C.add_fingerprint(usr)
 
-						usr.visible_message("<span class='notice'>[usr] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
+							usr.visible_message("<span class='notice'>[usr] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
 
 		updateDialog()
 	else
@@ -335,23 +335,30 @@
 	light_range_on = 6
 	nocell = 2
 	density = 0
+	pixel_y = 30
 
 /obj/machinery/space_heater/campfire/stove/fireplace/attackby(obj/item/I, mob/user)
 	var/shoesfound = 0
-//	var/gunfound = 0
 	for(var/obj/W in contents)
 		if(istype(W,/obj/item/clothing/shoes))
 			shoesfound = 1
 //		if(istype(W,/obj/item/weapon/gun/projectile))
 //			gunfound = 1
 	if(istype(I,/obj/item/clothing/shoes) && !(shoesfound))
-		src.overlays += image(icon,"fireplace_stocking")
 		user.drop_item(I,src)
+		src.update_icon()
 //	else if(istype(I,/obj/item/weapon/gun/projectile) && !(gunfound))
+	else
+		..()
+
+/obj/machinery/space_heater/campfire/stove/fireplace/update_icon()
+	..()
+//	var/gunfound = 0
+	for(var/obj/W in contents)
+		if(istype(W,/obj/item/clothing/shoes))
+			src.overlays += image(icon,"fireplace_stocking")
 //		var/icon/img = image(I.icon,I.icon_state)
 //		img.Scale(12,12)
 //		//img.pixel_y += 12
 //		src.overlays += img
 //		user.drop_item(I,src)
-	else
-		..()

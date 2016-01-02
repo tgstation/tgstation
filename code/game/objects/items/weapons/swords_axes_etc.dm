@@ -12,8 +12,8 @@
  * Banhammer
  */
 /obj/item/weapon/banhammer/attack(mob/M as mob, mob/user as mob)
-	to_chat(M, "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>")
-	to_chat(user, "<font color='red'> You have <b>BANNED</b> [M]</font>")
+	to_chat(M, "<font color='red'><b>You have been banned FOR NO REISIN by [user]<b></font>")
+	to_chat(user, "<font color='red'>You have <b>BANNED</b> [M]</font>")
 
 /*
  * Classic Baton
@@ -25,6 +25,8 @@
 	icon_state = "baton"
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/misc_tools.dmi', "right_hand" = 'icons/mob/in-hand/right/misc_tools.dmi')
 	item_state = "classic_baton"
+	origin_tech = "combat=3"
+	mech_flags = MECH_SCAN_FAIL
 	flags = FPRINT
 	slot_flags = SLOT_BELT
 	force = 10
@@ -78,6 +80,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "telebaton_0"
 	item_state = "telebaton_0"
+	origin_tech = "combat=2"
 	flags = FPRINT
 	slot_flags = SLOT_BELT
 	w_class = 2
@@ -206,5 +209,3 @@
 		src.sharpness = 1.0
 	src.add_fingerprint(user)
 	return
-
-
