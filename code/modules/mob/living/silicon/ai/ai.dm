@@ -843,3 +843,13 @@ var/list/ai_list = list()
 	if(M && cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
 		return
 	return 1
+
+/mob/living/silicon/ai/synchborgs()
+	for(var/mob/living/silicon/robot/R in connected_robots)
+		if(R.lawupdate)
+		R.lawsync()
+		R << "<br>"
+		R << "<span class='danger'>[message] ...LAWS SYNCHRONIZED</span>"
+		R << "<br>"
+		R.show_laws()
+		R.law_change_counter++
