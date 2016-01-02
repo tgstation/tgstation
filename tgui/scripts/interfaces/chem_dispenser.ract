@@ -1,34 +1,34 @@
-<n-display title='Power'>
-  <n-section label='Energy'>
-    <n-bar min='0' max='{{data.maxEnergy}}' value='{{data.energy}}'>{{Math.fixed(adata.energy)}} Units</n-bar>
-  </n-section>
+<ui-display title='Power'>
+  <ui-section label='Energy'>
+    <ui-bar min='0' max='{{data.maxEnergy}}' value='{{data.energy}}'>{{Math.fixed(adata.energy)}} Units</ui-bar>
+  </ui-section>
   {{#if data.beakerTransferAmounts}}
-    <n-section label='Amount'>
+    <ui-section label='Amount'>
       {{#each data.beakerTransferAmounts}}
-        <n-button icon='plus' state='{{data.amount == . ? "selected" : null}}' action='amount' params='{"amount": {{.}}}'>{{.}}</n-button>
+        <ui-button icon='plus' state='{{data.amount == . ? "selected" : null}}' action='amount' params='{"amount": {{.}}}'>{{.}}</ui-button>
       {{/each}}
-    </n-section>
+    </ui-section>
   {{/if}}
-</n-display>
-<n-display title='Dispense'>
-  <n-section>
+</ui-display>
+<ui-display title='Dispense'>
+  <ui-section>
     {{#each data.chemicals}}
-      <n-button grid icon='tint' action='dispense' params='{"reagent": "{{id}}"}'>{{title}}</n-button>
+      <ui-button grid icon='tint' action='dispense' params='{"reagent": "{{id}}"}'>{{title}}</ui-button>
     {{/each}}
-  </n-section>
-</n-display>
-<n-display title='Beaker' button>
+  </ui-section>
+</ui-display>
+<ui-display title='Beaker' button>
   {{#partial button}}
-    <n-button icon='eject' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='eject'>Eject</n-button>
+    <ui-button icon='eject' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='eject'>Eject</ui-button>
   {{/partial}}
   {{#if data.beakerTransferAmounts}}
-    <n-section label='Remove'>
+    <ui-section label='Remove'>
       {{#each data.beakerTransferAmounts}}
-        <n-button icon='minus' action='remove' params='{"amount": {{.}}}'>{{.}}</n-button>
+        <ui-button icon='minus' action='remove' params='{"amount": {{.}}}'>{{.}}</ui-button>
       {{/each}}
-    </n-section>
+    </ui-section>
   {{/if}}
-  <n-section label='Contents'>
+  <ui-section label='Contents'>
     {{#if data.isBeakerLoaded}}
       <span>{{Math.round(adata.beakerCurrentVolume)}}/{{data.beakerMaxVolume}} Units</span>
       <br/>
@@ -40,5 +40,5 @@
     {{else}}
       <span class='average'>No Beaker</span>
     {{/if}}
-  </n-section>
-</n-display>
+  </ui-section>
+</ui-display>

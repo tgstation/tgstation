@@ -4,12 +4,12 @@
 <script type='text/coffeescript'>
 component.exports =
   components:
-    "n-bar": require "./components/bar"
-    "n-button": require "./components/button"
-    "n-display": require "./components/display"
-    "n-notice": require "./components/notice"
-    "n-section": require "./components/section"
-    "n-subdisplay": require "./components/subdisplay"
+    "ui-bar": require "./components/bar"
+    "ui-button": require "./components/button"
+    "ui-display": require "./components/display"
+    "ui-notice": require "./components/notice"
+    "ui-section": require "./components/section"
+    "ui-subdisplay": require "./components/subdisplay"
   events:
     enter: (require "ractive-events-keys").enter
     space: (require "ractive-events-keys").space
