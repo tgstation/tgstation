@@ -14,7 +14,7 @@
 	var/diseasetype
 	var/curedbyremoval = 0
 
-/obj/item/organ/internal/Remove()
+/obj/item/organ/internal/Remove(special = 0)
 	if(organ_action_name)
 		action_button_name = null
 	update_icon()
@@ -24,7 +24,7 @@
 			if(istype(A, diseasetype))
 				A.cure()
 				dysfunctional = 1
-	else if(diseasetype)	//Basically if you remove a healthy organ you will have the same symptoms as if it was dysfunctional
+	else if(diseasetype && !special)	//Basically if you remove a healthy organ you will have the same symptoms as if it was dysfunctional
 		for(var/datum/disease/A in owner.viruses)
 			if(istype(A, diseasetype))
 				return

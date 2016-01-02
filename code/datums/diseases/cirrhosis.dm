@@ -1,6 +1,6 @@
 /datum/disease/cirrhosis
 	form = "Condition"
-	name = "Cirrhosis"
+	name = "Liver failure"	//Changed the name due to being caused by liver being removed too
 	max_stages = 3
 	cure_text = "Liver transplant"
 	agent = "Alcohol"
