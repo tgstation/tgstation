@@ -527,7 +527,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 						W.loc=get_turf(src) // I think.
 					else
 						if(!disable_warning)
-							to_chat(src, "<span class='warning'> You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
+							to_chat(src, "<span class='warning'>You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
 
 				return 0
 			if(1)
@@ -552,7 +552,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 									qdel(W)
 								else
 									if(!disable_warning && act_on_fail != EQUIP_FAILACTION_DROP)
-										to_chat(src, "<span class='warning'> You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
+										to_chat(src, "<span class='warning'>You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
 
 							return
 						else
@@ -572,7 +572,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 					W.loc=get_turf(src) // I think.
 				else
 					if(!disable_warning)
-						to_chat(src, "<span class='warning'> You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
+						to_chat(src, "<span class='warning'>You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
 
 			return 0
 
@@ -709,7 +709,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_belt)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>")
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if( !(slot_flags & SLOT_BELT) )
 					return 0
@@ -760,7 +760,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_wear_id)
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>")
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if( !(slot_flags & SLOT_ID) )
 					return 0
@@ -775,7 +775,7 @@ var/list/slot_equipment_priority = list( \
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>")
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return
@@ -786,7 +786,7 @@ var/list/slot_equipment_priority = list( \
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						to_chat(H, "<span class='warning'> You need a jumpsuit before you can attach this [name].</span>")
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return 0
@@ -796,7 +796,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_s_store)
 				if(!H.wear_suit)
 					if(!disable_warning)
-						to_chat(H, "<span class='warning'> You need a suit before you can attach this [name].</span>")
+						to_chat(H, "<span class='warning'>You need a suit before you can attach this [name].</span>")
 					return 0
 				if(!H.wear_suit.allowed)
 					if(!disable_warning)
@@ -1199,7 +1199,7 @@ var/list/slot_equipment_priority = list( \
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = 1
 	else if(stat != DEAD || istype(src, /mob/new_player))
-		to_chat(usr, "<span class='notice'> You must be observing to use this!</span>")
+		to_chat(usr, "<span class='notice'>You must be observing to use this!</span>")
 		return
 
 	if(is_admin && stat == DEAD)

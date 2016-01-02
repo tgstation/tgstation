@@ -105,12 +105,12 @@
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite && can_thermite)
 		if(W.is_hot()) //HEY CAN THIS SET THE THERMITE ON FIRE ?
-			user.visible_message("<span class='warning'>[user] applies \the [W] to the thermite coating \the [src] and waits</span>", \
-			"<span class='warning'>You apply \the [W] to the thermite coating \the [src] and wait</span>")
+			user.visible_message("<span class='warning'>[user] applies \the [W] to the thermite coating \the [src] and waits.</span>", \
+			"<span class='warning'>You apply \the [W] to the thermite coating \the [src] and wait...</span>")
 			if(do_after(user, src, 100) && W.is_hot()) //Thermite is hard to light up
 				thermitemelt(user) //There, I just saved you fifty lines of redundant typechecks and awful snowflake coding
-				user.visible_message("<span class='warning'>[user] sets \the [src] ablaze with \the [W]</span>", \
-				"<span class='warning'>You set \the [src] ablaze with \the [W]</span>")
+				user.visible_message("<span class='warning'>[user] sets \the [src] ablaze with \the [W]!</span>", \
+				"<span class='warning'>You set \the [src] ablaze with \the [W]!</span>")
 				return
 
 	//Deconstruction and reconstruction

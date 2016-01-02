@@ -194,7 +194,7 @@
 		to_chat(user, "<span class='warning'>You can't analyze non-robotic things!</span>")
 		return
 
-	user.visible_message("<span class='notice'> [user] has analyzed [M]'s components.","<span class='notice'> You have analyzed [M]'s components.")
+	user.visible_message("<span class='notice'> [user] has analyzed [M]'s components.","<span class='notice'>You have analyzed [M]'s components.")
 	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getFireLoss()]</b>" 		: M.getFireLoss()
 	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
 	user.show_message("<span class='notice'>Analyzing Results for [M]:\n\t Overall Status: [M.stat > 1 ? "fully disabled" : "[M.health - M.halloss]% functional"]</span>")

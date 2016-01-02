@@ -672,9 +672,9 @@
 	to_chat(user, "<span class='notice'> <b>Thoughts</b>: [M.name] is currently [thoughts].</span>")
 
 	if (/spell/targeted/empath in M.spell_list)
-		to_chat(M, "<span class='warning'> You sense [usr.name] reading your mind.</span>")
+		to_chat(M, "<span class='warning'>You sense [usr.name] reading your mind.</span>")
 	else if (prob(5) || (M.mind && M.mind.assigned_role=="Chaplain"))
-		to_chat(M, "<span class='warning'> You sense someone intruding upon your thoughts...</span>")
+		to_chat(M, "<span class='warning'>You sense someone intruding upon your thoughts...</span>")
 
 ////////////////////////////////////////////////////////////////////////
 

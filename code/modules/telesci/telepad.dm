@@ -17,18 +17,18 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(opened)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-			to_chat(user, "<span class = 'caution'> You secure the access port on \the [src].</span>")
+			to_chat(user, "<span class = 'caution'>You secure the access port on \the [src].</span>")
 			opened = 0
 		else
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-			to_chat(user, "<span class = 'caution'> You open \the [src]'s access port.</span>")
+			to_chat(user, "<span class = 'caution'>You open \the [src]'s access port.</span>")
 			opened = 1
 	if(istype(W, /obj/item/bluespace_crystal) && opened)
 		if(amplifier)
 			to_chat(user, "<span class='warning'>There's something in the booster coil already.</span>")
 			return
 		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-		to_chat(user, "<span class = 'caution'> You jam \the [W] into \the [src]'s booster coil.</span>")
+		to_chat(user, "<span class = 'caution'>You jam \the [W] into \the [src]'s booster coil.</span>")
 		user.u_equip(W,1)
 		W.loc=src
 		amplifier=W
@@ -65,15 +65,15 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-			to_chat(user, "<span class = 'caution'> You unscrew the telepad's tracking beacon.</span>")
+			to_chat(user, "<span class = 'caution'>You unscrew the telepad's tracking beacon.</span>")
 			stage = 1
 		else if(stage == 1)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-			to_chat(user, "<span class = 'caution'> You screw in the telepad's tracking beacon.</span>")
+			to_chat(user, "<span class = 'caution'>You screw in the telepad's tracking beacon.</span>")
 			stage = 0
 	if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
 		playsound(src, 'sound/items/Welder.ogg', 50, 1)
-		to_chat(user, "<span class = 'caution'> You disassemble the telepad.</span>")
+		to_chat(user, "<span class = 'caution'>You disassemble the telepad.</span>")
 		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 		M.amount = 1
 		new /obj/item/stack/sheet/glass/glass(get_turf(src))
@@ -146,7 +146,7 @@
 		else
 			mode = 0
 			playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
-			to_chat(user, "<span class = 'caution'> You calibrate the telepad locator.</span>")
+			to_chat(user, "<span class = 'caution'>You calibrate the telepad locator.</span>")
 
 /obj/item/weapon/rcs/attackby(obj/item/W, mob/user)
 	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
@@ -154,5 +154,5 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		to_chat(user, "<span class = 'caution'> You emag the RCS. Click on it to toggle between modes.</span>")
+		to_chat(user, "<span class = 'caution'>You emag the RCS. Click on it to toggle between modes.</span>")
 		return

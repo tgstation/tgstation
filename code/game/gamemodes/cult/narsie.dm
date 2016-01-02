@@ -97,7 +97,7 @@ var/global/list/narsie_list = list()
 			if(M.flags & INVULNERABLE)
 				continue
 			if(!iscultist(M))
-				to_chat(M, "<span class='danger'> You feel your sanity crumble away in an instant as you gaze upon [src.name]...</span>")
+				to_chat(M, "<span class='danger'>You feel your sanity crumble away in an instant as you gaze upon [src.name]...</span>")
 				M.apply_effect(3, STUN)
 
 
@@ -445,7 +445,7 @@ var/global/mr_clean_targets = list(
 		if(M.stat == CONSCIOUS)
 			if(M.flags & INVULNERABLE)
 				continue
-			to_chat(M, "<span class='warning'> You take a moment to admire [src.name] hard at work...</span>")
+			to_chat(M, "<span class='warning'>You take a moment to admire [src.name] hard at work...</span>")
 			M.apply_effect(3, STUN)
 
 /obj/machinery/singularity/narsie/large/clean/update_icon()

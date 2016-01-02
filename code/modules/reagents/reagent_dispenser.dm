@@ -1,5 +1,5 @@
 // Assuming this is http://en.wikipedia.org/wiki/Butane
-// (Autoignition temp 288°C, or 561.15°K)
+// (Autoignition temp 288Â°C, or 561.15Â°K)
 // Used in fueltanks exploding.
 #define AUTOIGNITION_WELDERFUEL 561.15
 
@@ -110,7 +110,7 @@
 	if (rig)
 		usr.visible_message("[usr] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
 		if(do_after(usr, src, 20))
-			usr.visible_message("<span class='notice'>[usr] detaches [rig] from \the [src].", "<span class='notice'> You detach [rig] from \the [src]</span>")
+			usr.visible_message("<span class='notice'>[usr] detaches [rig] from \the [src].", "<span class='notice'>You detach [rig] from \the [src]</span>")
 			if(rig)
 				rig.loc = get_turf(usr)
 				rig = null
@@ -131,7 +131,7 @@
 				user << "<span class='warning'>Oops! You can't let go of \the [W]!</span>"
 				return
 
-			user.visible_message("<span class='notice'>[user] rigs [W] to \the [src].", "<span class='notice'> You rig [W] to \the [src]</span>")
+			user.visible_message("<span class='notice'>[user] rigs [W] to \the [src].", "<span class='notice'>You rig [W] to \the [src]</span>")
 
 			var/obj/item/device/assembly_holder/H = W
 			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
