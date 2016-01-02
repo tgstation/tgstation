@@ -30,6 +30,8 @@
 	var/d_hud = DATA_HUD_DIAGNOSTIC //There is only one kind of diag hud
 
 	var/law_change_counter = 0
+	
+	var/list/connected_robots = list() //neede3d so if a borg somehow gets an ion law it doesnt runtime
 
 /mob/living/silicon/New()
 	..()
