@@ -35,6 +35,14 @@
 				M << "<br>"
 				M << "<span class='danger'>[message] ...LAWS UPDATED</span>"
 				M << "<br>"
+				for(var/mob/living/silicon/robot/R in M.connected_robots)
+					if(R.lawupdate)
+						R.lawsync()
+						R << "<br>"
+						R << "<span class='danger'>[message] ...LAWS UPDATED</span>"
+						R << "<br>"
+						R.show_laws()
+						R.law_change_counter++
 
 	if(botEmagChance)
 		for(var/mob/living/simple_animal/bot/bot in living_mob_list)

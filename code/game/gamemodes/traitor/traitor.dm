@@ -2,9 +2,10 @@
 	// this includes admin-appointed traitors and multitraitors. Easy!
 	var/traitor_name = "traitor"
 	var/list/datum/mind/traitors = list()
-
+	
 	var/datum/mind/exchange_red
 	var/datum/mind/exchange_blue
+
 
 /datum/game_mode/traitor
 	name = "traitor"
@@ -152,6 +153,11 @@
 	killer << "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!"
 	killer.verbs += /mob/living/silicon/ai/proc/choose_modules
 	killer.malf_picker = new /datum/module_picker
+	for(var/mob/living/silicon/robot/R in killer.connected_robots)
+		if(R.lawupdate)
+			R.lawsync()
+			R << "You are now a team antagonist, Obey your Ai! From now on, these are your laws:"
+			R.show_laws()
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
