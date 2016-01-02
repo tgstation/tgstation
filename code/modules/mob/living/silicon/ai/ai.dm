@@ -842,4 +842,15 @@ var/list/ai_list = list()
 	//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
 	if(M && cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
 		return
-	return 1
+	return
+
+/mob/living/silicon/ai/syncborgs
+	for(var/mob/living/silicon/robot/R in connected_robots)
+					if(R.lawupdate)
+						R.lawsync()
+						R << "<br>"
+						R << "<span class='danger'>[message] ...LAWS UPDATED</span>"
+						R << "<br>"
+						R.show_laws()
+						R.law_change_counter++
+		
