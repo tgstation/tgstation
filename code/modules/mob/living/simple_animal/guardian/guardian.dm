@@ -26,7 +26,6 @@
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 	AIStatus = AI_OFF
-	var/animated_manifest = FALSE
 	var/cooldown = 0
 	var/damage_transfer = 1 //how much damage from each attack we transfer to the owner
 	var/mob/living/summoner
@@ -118,11 +117,6 @@
 	if(loc == summoner)
 		loc = get_turf(summoner)
 		cooldown = world.time + 30
-		if(animated_manifest)
-			var/end_icon = icon_state
-			icon_state = "parasite_forming"
-			spawn(6)
-			icon_state = end_icon
 
 /mob/living/simple_animal/hostile/guardian/proc/Recall()
 	if(cooldown > world.time)
