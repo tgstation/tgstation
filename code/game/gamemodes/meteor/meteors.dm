@@ -6,7 +6,9 @@
 /var/max_meteor_size = 0 //One for small waves, two for big waves, three for massive waves, four for boss waves
 /var/chosen_dir = 1
 
-/proc/meteor_wave(var/number = meteors_in_wave, var/max_size = 0, var/list/types = null) //Call above constants to change
+//Call above constants to change
+/proc/meteor_wave(var/number = meteors_in_wave, var/max_size = 0, var/list/types = null)
+
 	if(!ticker || meteor_wave_active)
 		return
 	meteor_wave_active = 1
@@ -62,7 +64,6 @@
 			bhangmeter.say("Detected: [wave_name], containing [wave_size] objects up to [meteor_l_size] size and incoming from the [wave_l_dir], will strike in [meteor_delay/10] seconds.")
 
 /proc/spawn_meteor(var/chosen_dir, var/meteorpath = null)
-
 
 	var/startx
 	var/starty
@@ -276,11 +277,18 @@
 /obj/effect/meteor/big/cluster/Bump(atom/A)
 
 	explosion(get_turf(src), 1, 0, 0, 0, 0, 1, 0) //Enough to destroy whatever was in the way
+	var/failcount = 0
 	for(var/i = 0, i < 3, i++)
+		if(failcount >= 5)
+			break
 		var/obj/effect/meteor/M = new /obj/effect/meteor(get_turf(src))
 		var/c_endy = rand(TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)
 		var/c_endx = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE)
 		var/c_pickedgoal = locate(c_endx, c_endy, 1)
+		if(!c_pickedgoal)
+			qdel(M)
+			i-- //Try again
+			failcount++ //Keep a track of failures
 		walk_towards(M, c_pickedgoal, 1)
 	qdel(src)
 
