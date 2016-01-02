@@ -277,7 +277,7 @@ Works together with spawning an observer, noted above.
 	return 1
 
 /mob/proc/ghostize(var/flags = GHOST_CAN_REENTER)
-	if(key)
+	if(key && !(copytext(key,1,2)=="@"))
 		var/mob/dead/observer/ghost = new(src, flags)	//Transfer safety to observer spawning proc.
 		ghost.timeofdeath = src.timeofdeath //BS12 EDIT
 		ghost.key = key
