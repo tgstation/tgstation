@@ -854,7 +854,7 @@ var/list/ai_list = list()
 	for(var/mob/living/silicon/robot/I in connected_robots)
 		if(I.lawupdate)
 			I.lawsync()
-			I << "From now on, these are your laws:
+			I << "From now on, these are your laws:"
 			I.show_laws()
 			I.law_change_counter++
 	return
