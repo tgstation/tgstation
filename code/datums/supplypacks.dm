@@ -773,7 +773,10 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/clothing/head/christmas/santahat/green,
 					/obj/item/clothing/suit/jumper/christmas/red,
 					/obj/item/clothing/suit/jumper/christmas/green,
-					/obj/item/clothing/suit/jumper/christmas/blue)
+					/obj/item/clothing/suit/jumper/christmas/blue,
+					/obj/item/clothing/mask/scarf/red,
+					/obj/item/clothing/mask/scarf/blue,
+					/obj/item/clothing/mask/scarf/green)
 	cost = 30
 	containertype = /obj/structure/closet/crate
 	containername = "Festivus supplies"
