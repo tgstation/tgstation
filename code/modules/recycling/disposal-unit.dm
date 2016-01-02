@@ -269,7 +269,7 @@
 		stored.loc = T
 		src.transfer_fingerprints_to(stored)
 		stored.anchored = 0
-		stored.density = 1
+		stored.density = 0
 		stored.update()
 	..()
 
