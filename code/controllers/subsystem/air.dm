@@ -36,8 +36,8 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air/New()
 	NEW_SS_GLOBAL(SSair)
 
-	plasma_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="plasma"}()
-	sleeptoxin_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="sleeping_agent"}()
+	plasma_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="plasma";appearance_flags=RESET_COLOR}()
+	sleeptoxin_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="sleeping_agent";appearance_flags=RESET_COLOR}()
 
 /datum/subsystem/air/stat_entry(msg)
 	msg += "C:{"
