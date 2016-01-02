@@ -1,7 +1,7 @@
-gutil = require "gulp-util"
+flags = require("minimist")(process.argv.slice(2))
 
 
 module.exports =
-  colorblind: gutil.env.colorblind || gutil.env.c
-  debug: gutil.env.debug || gutil.env.d
-  min: gutil.env.min || gutil.env.m
+  colorblind: flags.colorblind || flags.c
+  debug: flags.debug || flags.d
+  min: flags.min || flags.m

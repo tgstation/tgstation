@@ -28,7 +28,7 @@ module.exports = ->
     ])
     .pipe g.concat(p.css.out)
     .pipe g.bytediff.start()
-    .pipe g.if(f.colorblind, g.postcss([p.colorblind]))
+    .pipe g.if(f.colorblind, g.postcss([s.colorblind]))
     .pipe g.if(f.min, g.cssnano(cssnano))
     .pipe g.if(f.debug, g.sourcemaps.write(sourceRoot: "/source/#{p.css.dir}"))
     .pipe g.bytediff.stop()
