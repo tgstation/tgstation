@@ -19,11 +19,10 @@
 	icon_state = "hanginglantern1"
 	anchored = 1
 	layer = 5
-	ghost_write = 0 //Can't be too safe
-	ghost_read = 0
-	var/flickering = 0 //SPOOK
+	var/tmp/flickering = 0 //SPOOK
 	var/obj/item/device/flashlight/lantern/lantern = null
 	var/start_with_lantern = 1
+	var/busy = 0
 
 /obj/structure/hanging_lantern/New()
 
@@ -50,19 +49,20 @@
 /obj/structure/hanging_lantern/examine(mob/user)
 	..()
 	if(lantern)
-		user << "There is a [lantern.name] hanging on the hook. [lantern.on ? "It is lit":"It is unlit"]."
+		to_chat(user, "There is a [lantern.name] hanging on the hook. [lantern.on ? "It is lit":"It is unlit"].")
 	else
-		user << "This one isn't producing any light, most likely missing something important."
+		to_chat(user, "This one isn't producing any light, most likely missing something important.")
 
 
 /obj/structure/hanging_lantern/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	add_fingerprint(user)
 
-	if(iswrench(W))
+	if(iswrench(W) && !busy)
 		if(lantern)
 			user << "<span class='warning'>Remove \the [lantern] from \the [src] first.</span>"
 			return
+		busy = 1
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 		user.visible_message("<span class='warning'>[user] begins deconstructing \the [src].</span>", \
 		"<span class='notice'>You begin deconstructing \the [src].</span>")
@@ -70,12 +70,15 @@
 			new /obj/item/mounted/frame/hanging_lantern_hook(get_turf(user))
 			user.visible_message("<span class='warning'>[user] deconstructs \the [src].</span>", \
 			"<span class='notice'>You deconstruct \the [src].</span>")
+			busy = 0
 			qdel(src)
+		else
+			busy = 0
 
 	else if(istype(W, /obj/item/device/flashlight/lantern))
 		if(lantern)
 			user << "<span class='warning'>There already is \a [lantern.name] on \the [src].</span>"
-			return
+			return 1
 		if(user.drop_item(W, src))
 			user.visible_message("<span class='notice'>[user] puts \a [W.name] on the \the [src].</span>", \
 			"<span class='notice'>You put \a [W.name] on the \the [src].</span>")
@@ -83,6 +86,7 @@
 			lantern = W
 			update_brightness()
 			update_icon()
+			return 1
 
 /obj/structure/hanging_lantern/update_icon()
 
@@ -106,7 +110,7 @@
 			sleep(rand(5, 15))
 			update_brightness()
 
-	flickering = 0
+		flickering = 0
 
 /obj/structure/hanging_lantern/proc/update_brightness()
 
@@ -138,6 +142,14 @@
 /obj/structure/hanging_lantern/spook()
 	if(..())
 		flicker()
+
+/obj/structure/hanging_lantern/Destroy()
+
+	if(lantern)
+		lantern.forceMove(get_turf(src))
+		lantern = null
+
+	..()
 
 /obj/structure/hanging_lantern/hook
 
