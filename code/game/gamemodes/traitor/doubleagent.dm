@@ -89,10 +89,13 @@
 
 
 	// Escape
-	if(prob(25))
-		var/datum/objective/die/die_objective = new
+	if(prob(15))
+		var/datum/objective/hijack/hijack_objective = new
+		hijack_objective.owner = traitor
+		traitor.objectives += hijack_objective
+		/*var/datum/objective/die/die_objective = new //NO
 		die_objective.owner = traitor
-		traitor.objectives += die_objective
+		traitor.objectives += die_objective*/
 	else
 		var/datum/objective/escape/escape_objective = new
 		escape_objective.owner = traitor
