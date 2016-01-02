@@ -133,6 +133,11 @@
 
 	if(!lantern)
 		return 0
+	if(!islivng(usr))
+		return 0
+	if(!usr.dexterity_check())
+		to_chat(usr, "<span class='warning>You don't have the dexterity to do this!</span>")
+		return 0
 
 	lantern.on = !lantern.on
 	lantern.update_brightness()
