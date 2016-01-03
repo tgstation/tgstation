@@ -394,7 +394,7 @@ var/global/datum/controller/gameticker/ticker
 			declare_completion()
 			if(config.map_voting)
 				//testing("Vote picked [chosen_map]")
-				vote.initiate_vote("map","The Server", popup = 1)
+				vote.initiate_vote("map","The Server", popup = 1, weighed_vote = 1)
 				var/options = list2text(vote.choices, " ")
 				feedback_set("map vote choices", options)
 
