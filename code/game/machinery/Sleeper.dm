@@ -203,6 +203,12 @@
 /obj/machinery/sleeper/attack_paw(mob/user)
 	return attack_hand(user)
 
+/obj/machinery/sleeper/emag_act(mob/user)
+	if(!emagged)
+		emagged = 1
+		playsound(src.loc, "sparks", 75, 1, -1)
+		user << "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>"
+
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
 		..()
@@ -216,10 +222,21 @@
 		return
 	if(occupant && occupant.reagents)
 		if(chem in injection_chems + "epinephrine")
-			if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
+			var/datum/reagent/R = chemical_reagents_list[chem]
+			if(emagged == 1 && occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
 				occupant.reagents.add_reagent(chem, 10)
-			var/units = round(occupant.reagents.get_reagent_amount(chem))
-			user << "<span class='notice'>Occupant now has [units] unit\s of [chemical_reagents_list[chem]] in their bloodstream.</span>"
+				var/units = round(occupant.reagents.get_reagent_amount(chem))
+				user << "<span class='notice'>Occupant now has [units] unit\s of [chemical_reagents_list[chem]] in their bloodstream.</span>"
+			else if(R.overdose_threshold == 0 && occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
+				occupant.reagents.add_reagent(chem, 10)
+				var/units = round(occupant.reagents.get_reagent_amount(chem))
+				user << "<span class='notice'>Occupant now has [units] unit\s of [chemical_reagents_list[chem]] in their bloodstream.</span>"
+			else if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency && occupant.reagents.get_reagent_amount(chem) + 10 < R.overdose_threshold)
+				occupant.reagents.add_reagent(chem, 10)
+				var/units = round(occupant.reagents.get_reagent_amount(chem))
+				user << "<span class='notice'>Occupant now has [units] unit\s of [chemical_reagents_list[chem]] in their bloodstream.</span>"
+			else
+				user << "<span class='notice'>Cannot add more [chemical_reagents_list[chem]] to bloodstream.</span>"
 
 /obj/machinery/sleeper/update_icon()
 	if(state_open)
