@@ -86,4 +86,4 @@
 	icon_state = "mechanic"
 	item_state = "mechanic"
 	_color = "mechanic"
-	flags = FPRINT
+	flags = FPRINT  | ONESIZEFITSALL
