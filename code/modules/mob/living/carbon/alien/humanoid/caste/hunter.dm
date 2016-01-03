@@ -4,6 +4,7 @@
 	maxHealth = 125
 	health = 125
 	icon_state = "alienh_s"
+	var/obj/screen/leap_icon = null
 
 /mob/living/carbon/alien/humanoid/hunter/New()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small
@@ -36,7 +37,6 @@
 
 
 //Hunter verbs
-
 
 /mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(message = 1)
 	leap_on_click = !leap_on_click
