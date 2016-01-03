@@ -135,7 +135,7 @@
 	if(work_sound)
 		playsound(src, work_sound, 50, 1)
 	icon_state = icon_creating
-	sleep 30
+	sleep(30)
 	icon_state = icon_on
 	metal -= metal_cost
 	glass -= glass_cost
