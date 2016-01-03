@@ -9,7 +9,6 @@
 	endWhen = 0
 
 /datum/round_event/wizard/lava/start()
-	spawn()
-		var/datum/weather/floor_is_lava/LAVA = new /datum/weather/floor_is_lava
-		LAVA.weather_start_up()
+	var/datum/weather/floor_is_lava/LAVA = new /datum/weather/floor_is_lava
+	LAVA.weather_start_up()
 	return
