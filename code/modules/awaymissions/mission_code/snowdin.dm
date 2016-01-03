@@ -1,37 +1,37 @@
 //Snow Valley Areas//--
 
 /area/awaymission/snowdin
-	name = "\improper Snowdin Tundra Plains"
+	name = "Snowdin Tundra Plains"
 	icon_state = "away"
 	requires_power = 0
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/snowdin/post
-	name = "\improper Snowdin Outpost"
+	name = "Snowdin Outpost"
 	requires_power = 1
 
 /area/awaymission/snowdin/igloo
-	name = "\improper Snowdin Igloos"
+	name = "Snowdin Igloos"
 	icon_state = "away2"
 
 /area/awaymission/snowdin/cave
-	name = "\improper Snowdin Caves"
+	name = "Snowdin Caves"
 	icon_state = "away2"
 	luminosity = 0
 
 /area/awaymission/snowdin/base
-	name = "\improper Snowdin Main Base"
+	name = "Snowdin Main Base"
 	icon_state = "away3"
 	requires_power = 1
 
 /area/awaymission/snowdin/dungeon1
-	name = "\improper Snowdin Depths"
+	name = "Snowdin Depths"
 	icon_state = "away2"
 	luminosity = 0
 
 /area/awaymission/snowdin/sekret
-	name = "\improper Snowdin Operations"
+	name = "Snowdin Operations"
 	icon_state = "away3"
 	requires_power = 1
 
@@ -237,6 +237,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
+	implants = list(/obj/item/weapon/implant/exile)
 	faction = "syndicate"
 	flavour_text = {"You are a syndicate operative recently awoken from cyrostatis in an underground outpost. Monitor Nanotrasen communications and record infomation. All intruders should be
 	disposed of swirfly to assure no gathered infomation is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."}

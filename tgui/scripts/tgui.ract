@@ -1,0 +1,51 @@
+<link rel='ractive' href='./components/resize.ract'>
+<link rel='ractive' href='./components/titlebar.ract'>
+
+<script type='text/coffeescript'>
+dragresize = require "./dragresize"
+
+component.exports =
+  components:
+    "ui-bar": require "./components/bar"
+    "ui-button": require "./components/button"
+    "ui-display": require "./components/display"
+    "ui-notice": require "./components/notice"
+    "ui-section": require "./components/section"
+    "ui-subdisplay": require "./components/subdisplay"
+  events:
+    enter: (require "ractive-events-keys").enter
+    space: (require "ractive-events-keys").space
+  transitions:
+    fade: require "ractive-transitions-fade"
+  onconfig: ->
+    requested  = @get "config.interface"
+    interfaces = require "./interfaces/*", mode: "hash"
+    if interfaces[requested]?
+      @components.interface = interfaces[requested] # Use the interface specified in the config...
+    else
+      @components.interface = require "./interfaces/error" unless @components.interface? # ...unless it does not exist.
+  oninit: ->
+    @on "titlebar.drag", -> @toggle "drag"; false
+    @on "resize.resize", -> @toggle "resize"; false
+    window.addEventListener "mousemove", (event) =>
+      if @get "drag" then dragresize.drag(@, event)
+      else if @get "resize" then dragresize.resize(@, event)
+    window.addEventListener "mouseup", (event) =>
+      if drag = @get "drag" then @set "drag"
+      if resize = @get "resize" then @set "resize"
+      if drag or resize then @set "x"; @set "y"
+  onrender: ->
+    @observe "config.style", (newkey, oldkey, keypath) -> # Change style to match config.
+      if oldkey?
+        document.body.classList.remove oldkey
+        @el.classList.remove oldkey
+      if newkey?
+        @el.classList.add newkey
+        document.body.classList.add newkey
+</script>
+
+<titlebar>{{{config.title}}}</titlebar>
+<main>
+  <interface/>
+</main>
+<resize/>

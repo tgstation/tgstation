@@ -86,7 +86,7 @@ Works together with spawning an observer, noted above.
 	if(key)
 		if(!cmptext(copytext(key,1,2),"@")) // Skip aghosts.
 			var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
-			SSnano.on_transfer(src, ghost) // Transfer NanoUIs.
+			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 			ghost.can_reenter_corpse = can_reenter_corpse
 			ghost.key = key
 			return ghost
@@ -156,7 +156,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
 		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
 		return
-	SSnano.on_transfer(src, mind.current) // Transfer NanoUIs.
+	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
 	return 1
 

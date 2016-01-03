@@ -141,9 +141,8 @@
  */
 
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/item))
-		var/obj/item/Item = O
-		Item.extinguish()
+	if(istype(O))
+		O.extinguish()
 
 	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
@@ -163,10 +162,11 @@
  */
 
 /datum/reagent/water/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with water can help put them out!
-	if(!istype(M, /mob/living))
+	if(!istype(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(reac_volume / 10))
+		M.ExtinguishMob()
 	..()
 
 /datum/reagent/water/holywater

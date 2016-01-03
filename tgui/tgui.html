@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'/>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+    <script type='text/javascript'>
+      var data;
+      function receiveUpdate(dataString) {
+        data = JSON.parse(dataString);
+        if (typeof tgui !== 'undefined') {
+          tgui.set("config", data.config);
+          if (typeof data.data !== 'undefined') {
+            tgui.set("data", data.data);
+            tgui.animate("adata", data.data);
+          }
+        }
+      };
+    </script>
+    <link rel='stylesheet' type='text/css' href='tgui.css'/>
+    <script id='data' type='application/json'>{}</script>
+    <script defer type='text/javascript' src='tgui.js'></script>
+  </head>
+  <body>
+    <div id='container' class='container'>
+      <div class='notice'>
+        <span>Loading...</span>
+      </div>
+    </div>
+    <noscript>
+      <div class='notice'>
+        <span>Javascript is required in order to use this interface.</span>
+        <span>Please enable Javascript and restart the game.</span>
+      </div>
+    </noscript>
+  </body>
+</html>

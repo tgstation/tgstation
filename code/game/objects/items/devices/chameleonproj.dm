@@ -11,11 +11,14 @@
 	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
+	var/saved_appearance = null
+	/*
 	var/saved_item = /obj/item/weapon/cigbutt
 	var/saved_icon = 'icons/obj/clothing/masks.dmi'
 	var/saved_icon_state = "cigbutt"
 	var/saved_overlays = null
 	var/saved_underlays = null
+	*/
 
 /obj/item/device/chameleon/dropped()
 	disrupt()
@@ -32,14 +35,13 @@
 		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 			user << "<span class='notice'>Scanned [target].</span>"
-			saved_item = target.type
-			saved_icon = target.icon
-			saved_icon_state = target.icon_state
-			saved_overlays = target.overlays
-			saved_underlays = target.underlays
+			var/obj/temp = new/obj()
+			temp.appearance = target.appearance
+			temp.layer = initial(target.layer) // scanning things in your inventory
+			saved_appearance = temp.appearance
 
 /obj/item/device/chameleon/proc/toggle()
-	if(!can_use || !saved_item) return
+	if(!can_use || !saved_appearance) return
 	if(active_dummy)
 		eject_all()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
@@ -53,11 +55,8 @@
 			qdel(T)
 	else
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
-		var/obj/O = new saved_item(src)
-		if(!O) return
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
-		C.activate(O, usr, saved_icon, saved_icon_state, saved_overlays, saved_underlays, src)
-		qdel(O)
+		C.activate(usr, saved_appearance, src)
 		usr << "<span class='notice'>You activate \the [src].</span>"
 		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
 		T.icon = 'icons/effects/effects.dmi'
@@ -89,18 +88,11 @@
 	name = ""
 	desc = ""
 	density = 0
-	anchored = 1
 	var/can_move = 1
 	var/obj/item/device/chameleon/master = null
 
-/obj/effect/dummy/chameleon/proc/activate(obj/O, mob/M, new_icon, new_iconstate, new_overlays, new_underlays, obj/item/device/chameleon/C)
-	name = O.name
-	desc = O.desc
-	icon = new_icon
-	icon_state = new_iconstate
-	overlays = new_overlays
-	underlays = new_underlays
-	dir = O.dir
+/obj/effect/dummy/chameleon/proc/activate(mob/M, saved_appearance, obj/item/device/chameleon/C)
+	appearance = saved_appearance
 	M.loc = src
 	master = C
 	master.active_dummy = src

@@ -1,0 +1,110 @@
+<script type='text/coffeescript'>
+component.exports =
+  data:
+    powerState: (status) ->
+      if status is 2 then "good"
+      else if status is 1 then "average"
+      else "bad"
+  computed:
+    malfAction: ->
+      status = @get "data.malfStatus"
+      if status is 1 then "hack"
+      else if status is 2 then "occupy"
+      else if status is 3 then "deoccupy"
+    malfButton: ->
+      status = @get "data.malfStatus"
+      if status is 1 then "Override Programming"
+      else if status is 2 or 4 then "Shunt Core Process"
+      else if status is 3 then "Return to Main Core"
+    malfIcon: ->
+      status = @get "data.malfStatus"
+      if status is 1 then "terminal"
+      else if status is 2 or 4 then "caret-square-o-down"
+      else if status is 3 then "caret-square-o-left"
+    powerCellStatusState: ->
+      status = @get "data.powerCellStatus"
+      if status > 50 then "good"
+      else if status > 25 then "average"
+      else "bad"
+</script>
+
+<ui-notice>
+  {{#if data.siliconUser}}
+    <ui-section label='Interface Lock'>
+      <ui-button icon='{{data.locked ? "lock" : "unlock"}}' action='lock'>{{data.locked ? "Engaged" : "Disengaged"}}</ui-button>
+    </ui-section>
+  {{else}}
+    <span>Swipe an ID card to {{data.locked ? "unlock" : "lock"}} this interface.</span>
+  {{/if}}
+</ui-notice>
+<ui-display title='Power Status'>
+  <ui-section label='Main Breaker'>
+    {{#if data.locked && !data.siliconUser}}
+      <span class='{{data.isOperating ? "good" : "bad"}}'>{{data.isOperating ? "On" : "Off"}}</span>
+    {{else}}
+      <ui-button icon='{{data.isOperating ? "power-off" : "close"}}' style='{{data.isOperating ? "selected" : null}}'
+        action='breaker'>{{data.isOperating ? "On" : "Off"}}</ui-button>
+    {{/if}}
+  </ui-section>
+  <ui-section label='External Power'>
+    <span class='{{powerState(data.externalPower)}}'>{{data.externalPower == 2 ? "Good" : data.externalPower == 1 ? "Low" : "None"}}</span>
+  </ui-section>
+  <ui-section label='Power Cell'>
+    {{#if data.powerCellStatus != null}}
+      <ui-bar min='0' max='100' value='{{data.powerCellStatus}}' state='{{powerCellStatusState}}'>{{Math.fixed(adata.powerCellStatus)}}%</ui-bar>
+    {{else}}
+      <span class='bad'>Power cell removed.</span>
+    {{/if}}
+  </ui-section>
+  {{#if data.powerCellStatus != null}}
+    <ui-section label='Charge Mode'>
+      {{#if data.locked && !data.siliconUser}}
+        <span class='{{data.chargeMode ? "good" : "bad"}}'>{{data.chargeMode ? "Auto" : "Off"}}</span>
+      {{else}}
+        <ui-button icon='{{data.chargeMode ? "refresh" : "close"}}' style='{{data.chargeMode ? "selected" : null}}'
+          action='charge'>{{data.chargeMode ? "Auto" : "Off"}}</ui-button>
+      {{/if}}
+      &nbsp;
+      [<span class='{{powerState(data.chargingStatus)}}'>{{data.chargingStatus == 2 ? "Fully Charged" : data.chargingStatus == 1 ? "Charging" : "Not Charging"}}</span>]
+    </ui-section>
+  {{/if}}
+</ui-display>
+<ui-display title='Power Channels'>
+  {{#each adata.powerChannels}}
+    <ui-section label='{{title}}' nowrap>
+      <div class='content'>{{Math.round(powerLoad)}} W</div>
+      <div class='content'><span class='{{status >= 2 ? "good" : "bad"}}'>{{status >= 2 ? "On" : "Off"}}</span></div>
+      <div class='content'>[<span>{{status == 1 || status == 3 ? "Auto" : "Manual"}}</span>]</div>
+      <div class='content' style='float:right'>
+        {{#if !data.locked || data.siliconUser}}
+          <ui-button icon='refresh' state='{{status == 1 || status == 3 ? "selected" : null}}'
+            action='channel' params='{{topicParams.auto}}'>Auto</ui-button>
+          <ui-button icon='power-off' state='{{status == 2 ? "selected" : null}}' action='channel'
+            params='{{topicParams.on}}'>On</ui-button>
+          <ui-button icon='close' state='{{status == 0 ? "selected" : null}}' action='channel'
+            params='{{topicParams.off}}'>Off</ui-button>
+        {{/if}}
+      </div>
+    </ui-section>
+  {{/each}}
+  <ui-section label='Total Load'>
+    <span class='bold'>{{Math.round(adata.totalLoad)}} W</span>
+  </ui-section>
+</ui-display>
+{{#if data.siliconUser}}
+  <ui-display title='System Overrides'>
+    <ui-button icon='lightbulb-o' action='overload'>Overload</ui-button>
+    {{#if data.malfStatus}}
+      <ui-button icon='{{malfIcon}}' state='{{data.malfStatus == 4 ? "disabled" : null}}' action='{{malfAction}}'>{{malfButton}}</ui-button>
+    {{/if}}
+  </ui-display>
+{{/if}}
+<ui-notice>
+  <ui-section label='Cover Lock'>
+    {{#if data.locked && !data.siliconUser}}
+      <span>{{data.coverLocked ? "Engaged" : "Disengaged"}}</span>
+    {{else}}
+      <ui-button icon='{{data.coverLocked ? "lock" : "unlock"}}' action='cover'>{{data.coverLocked ? "Engaged" : "Disengaged"}}</ui-button>
+    {{/if}}
+  </ui-section>
+</ui-notice>
