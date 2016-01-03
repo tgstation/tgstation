@@ -223,20 +223,13 @@
 	if(occupant && occupant.reagents)
 		if(chem in injection_chems + "epinephrine")
 			var/datum/reagent/R = chemical_reagents_list[chem]
-			if(emagged == 1 && occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
-				occupant.reagents.add_reagent(chem, 10)
-				var/units = round(occupant.reagents.get_reagent_amount(chem))
-				user << "<span class='notice'>Occupant now has [units] unit\s of [chemical_reagents_list[chem]] in their bloodstream.</span>"
-			else if(R.overdose_threshold == 0 && occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
-				occupant.reagents.add_reagent(chem, 10)
-				var/units = round(occupant.reagents.get_reagent_amount(chem))
-				user << "<span class='notice'>Occupant now has [units] unit\s of [chemical_reagents_list[chem]] in their bloodstream.</span>"
-			else if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency && occupant.reagents.get_reagent_amount(chem) + 10 < R.overdose_threshold)
-				occupant.reagents.add_reagent(chem, 10)
-				var/units = round(occupant.reagents.get_reagent_amount(chem))
-				user << "<span class='notice'>Occupant now has [units] unit\s of [chemical_reagents_list[chem]] in their bloodstream.</span>"
+			var/new_chem_amount = occupant.reagents.get_reagent_amount(chem) + 10
+			if((R.overdose_threshold && new_chem_amount >= R.overdose_threshold && !emagged) || new_chem_amount >= 20 * efficiency)
+				user << "<span class='notice'>Cannot add more [R] to bloodstream.</span>"
 			else
-				user << "<span class='notice'>Cannot add more [chemical_reagents_list[chem]] to bloodstream.</span>"
+				occupant.reagents.add_reagent(chem, 10)
+				var/units = round(new_chem_amount)
+				user << "<span class='notice'>Occupant now has [units] unit\s of [R] in their bloodstream.</span>"
 
 /obj/machinery/sleeper/update_icon()
 	if(state_open)
