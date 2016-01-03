@@ -10316,7 +10316,7 @@
 "dQt" = (/obj/structure/transit_tube{icon_state = "W-NE"},/obj/structure/lattice,/turf/space,/area)
 "dQu" = (/obj/structure/transit_tube{icon_state = "D-NW"},/obj/structure/lattice,/turf/space,/area)
 "dQv" = (/obj/machinery/portable_atmospherics/hydroponics,/obj/machinery/atmospherics/unary/portables_connector,/turf/simulated/floor/grass,/area/research_outpost/xenobot)
-"dQw" = (/obj/machinery/atmospherics/unary/portables_connector,/obj/effect/decal/warning_stripes{tag = "icon-warning (WEST)"; icon_state = "warning"; dir = 8},/turf/simulated/floor{dir = 1; icon_state = "whitegreen"},/area/research_outpost/xenobot)
+"dQw" = (/obj/machinery/atmospherics/unary/portables_connector,/obj/effect/decal/warning_stripes{tag = "icon-warning (WEST)"; icon_state = "warning"; dir = 8},/obj/machinery/light_switch{pixel_x = 0; pixel_y = 27},/turf/simulated/floor{dir = 1; icon_state = "whitegreen"},/area/research_outpost/xenobot)
 "dQx" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor{dir = 1; icon_state = "whitegreencorner"},/area/research_outpost/xenobot)
 "dQy" = (/obj/effect/landmark{name = "bluespacerift"},/turf/simulated/floor{icon_state = "white"},/area/research_outpost/xenobot)
 "dQz" = (/obj/machinery/smartfridge,/turf/simulated/floor{dir = 4; icon_state = "whitegreen"},/area/research_outpost/xenobot)

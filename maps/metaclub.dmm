@@ -10700,7 +10700,7 @@
 "dXN" = (/turf/simulated/floor/carpet,/area/research_outpost/hallway)
 "dXO" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor{dir = 1; icon_state = "whitegreencorner"},/area/research_outpost/xenobot)
 "dXP" = (/obj/machinery/door/firedoor/border_only{dir = 8; name = "Firelock West"},/obj/machinery/door/airlock{id_tag = "rdorm2"; name = "Dorm 2"},/turf/simulated/floor{icon_state = "carpet"},/area/research_outpost/hallway)
-"dXQ" = (/obj/machinery/atmospherics/unary/portables_connector,/obj/effect/decal/warning_stripes{tag = "icon-warning (WEST)"; icon_state = "warning"; dir = 8},/turf/simulated/floor{dir = 1; icon_state = "whitegreen"},/area/research_outpost/xenobot)
+"dXQ" = (/obj/machinery/atmospherics/unary/portables_connector,/obj/effect/decal/warning_stripes{tag = "icon-warning (WEST)"; icon_state = "warning"; dir = 8},/obj/machinery/light_switch{pixel_x = 0; pixel_y = 27},/turf/simulated/floor{dir = 1; icon_state = "whitegreen"},/area/research_outpost/xenobot)
 "dXR" = (/obj/structure/transit_tube{icon_state = "D-NW"},/obj/structure/lattice,/turf/space,/area)
 "dXS" = (/obj/machinery/smartfridge,/turf/simulated/floor{dir = 4; icon_state = "whitegreen"},/area/research_outpost/xenobot)
 "dXT" = (/obj/item/weapon/shard,/turf/simulated/floor/airless{icon_state = "floorscorched2"},/area/mine/abandoned)
