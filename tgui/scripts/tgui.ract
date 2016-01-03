@@ -2,6 +2,8 @@
 <link rel='ractive' href='./components/titlebar.ract'>
 
 <script type='text/coffeescript'>
+dragresize = require "./dragresize"
+
 component.exports =
   components:
     "ui-bar": require "./components/bar"
@@ -22,6 +24,16 @@ component.exports =
       @components.interface = interfaces[requested] # Use the interface specified in the config...
     else
       @components.interface = require "./interfaces/error" unless @components.interface? # ...unless it does not exist.
+  oninit: ->
+    @on "titlebar.drag", -> @toggle "drag"; false
+    @on "resize.resize", -> @toggle "resize"; false
+    window.addEventListener "mousemove", (event) =>
+      if @get "drag" then dragresize.drag(@, event)
+      else if @get "resize" then dragresize.resize(@, event)
+    window.addEventListener "mouseup", (event) =>
+      if drag = @get "drag" then @set "drag"
+      if resize = @get "resize" then @set "resize"
+      if drag or resize then @set "x"; @set "y"
   onrender: ->
     @observe "config.style", (newkey, oldkey, keypath) -> # Change style to match config.
       @el.classList.remove oldkey oldkey if oldkey?
@@ -30,6 +42,6 @@ component.exports =
 
 <titlebar>{{{config.title}}}</titlebar>
 <main>
-  <interface />
+  <interface/>
 </main>
-<resize />
+<resize/>

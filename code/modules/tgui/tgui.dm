@@ -212,6 +212,7 @@
 			"style"      = style,
 			"interface"  = interface,
 			"fancy"      = user.client.prefs.tgui_fancy,
+			"locked"     = user.client.prefs.tgui_lock,
 			"window"     = window_id,
 			"ref"        = "\ref[src]",
 			"user"       = list(
