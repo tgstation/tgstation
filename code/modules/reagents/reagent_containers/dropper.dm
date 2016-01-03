@@ -33,7 +33,6 @@
 		return
 	var/list/bad_reagents = reagents.get_bad_reagent_names() // Used for logging
 	if(reagents.total_volume)
-		
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>[target] is full.</span>")
@@ -116,6 +115,15 @@
 
 /obj/item/weapon/reagent_containers/dropper/baster/update_icon()
 	return
+
+/obj/item/weapon/reagent_containers/dropper/robodropper
+	name = "Industrial Dropper"
+	desc = "A larger dropper. Transfers 10 units."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "dropper0"
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(1,2,3,4,5,6,7,8,9,10)
+	volume = 10
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Droppers. END
