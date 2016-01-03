@@ -208,7 +208,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 				for(var/mob/M in mob_list)
 					if(M in dead_mob_list)
-						M << msg
+						M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a>[msg]"
 					else
 						switch(M.lingcheck())
 							if(2)

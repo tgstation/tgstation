@@ -20,11 +20,12 @@
 		user.say(message)
 	else
 		user.whisper(message)
+	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
 	for(var/mob/M in mob_list)
 		if(iscultist(M))
-			M << "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
+			M << my_message
 		if(M in dead_mob_list)
-			M << "<a href=?src=\ref[M];follow=\ref[user]>(F)</a> <span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
+			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a>[my_message]"
 	log_say("[user.real_name]/[user.key] : [message]")
 
 

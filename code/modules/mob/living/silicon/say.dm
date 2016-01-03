@@ -13,12 +13,14 @@
 	var/message_a = say_quote(message, get_spans())
 	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 	for(var/mob/M in player_list)
-		if(M.binarycheck() || (M in dead_mob_list))
+		if(M.binarycheck())
 			if(istype(M, /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='?src=\ref[M];track=[html_encode(name)]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
 				M << renderedAI
 			else
 				M << rendered
+		if(M in dead_mob_list)
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a>[rendered]"
 
 /mob/living/silicon/binarycheck()
 	return 1

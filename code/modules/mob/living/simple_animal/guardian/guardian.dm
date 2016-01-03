@@ -136,12 +136,13 @@
 	var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
 	if(!input) return
 
+	var/my_message = "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	for(var/mob/M in mob_list)
 		if(M == summoner)
-			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
+			M << my_message
 		if(M in dead_mob_list)
-			M << "<a href=?src=\ref[M];follow=\ref[src]>(F) </a><span class='boldannounce'><i>[src]:</i> [input]</span>"
-	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a>[my_message]"
+	src << "[my_message]"
 	log_say("[src.real_name]/[src.key] : [input]")
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleMode()
@@ -155,13 +156,14 @@
 	var/input = stripped_input(src, "Please enter a message to tell your guardian.", "Message", "")
 	if(!input) return
 
+	var/my_message = "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	for(var/mob/M in mob_list)
 		if(istype (M, /mob/living/simple_animal/hostile/guardian))
 			var/mob/living/simple_animal/hostile/guardian/G = M
 			if(G.summoner == src)
-				G << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
+				G << "[my_message]"
 		else if (M in dead_mob_list)
-			M << "<a href=?src=\ref[M];follow=\ref[src]> (F)<span class='boldannounce'><i>[src]:</i> [input]</span>"
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a>[my_message]"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	log_say("[src.real_name]/[src.key] : [text]")
 
