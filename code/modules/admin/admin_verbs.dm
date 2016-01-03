@@ -367,6 +367,8 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		holder.check_antagonists()
 		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
+		if(!isobserver(usr))
+			message_admins("[key_name_admin(usr)] checked antagonists.")
 	feedback_add_details("admin_verb","CHA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -423,6 +425,9 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		if(holder.fakekey)
 			holder.fakekey = null
+			mob.invisibility = initial(mob.invisibility)
+			mob.alpha = initial(mob.alpha)
+			mob.name = initial(mob.name)
 		else
 			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
 			if(!new_key)	return
@@ -430,6 +435,9 @@ var/list/admin_verbs_hideable = list(
 				new_key = copytext(new_key, 1, 26)
 			holder.fakekey = new_key
 			createStealthKey()
+			mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
+			mob.alpha = 0 //JUUUUST IN CASE
+			mob.name = " "
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

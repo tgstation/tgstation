@@ -136,7 +136,6 @@
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/uranium)
 
-	var/alerted = 0
 	var/chase_time = 100
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/New()
@@ -157,7 +156,8 @@
 			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
 			retreat_distance = 10
 			minimum_distance = 10
-			Burrow()
+			spawn(chase_time)
+				Burrow()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -173,12 +173,9 @@
 	visible_message("<span class='notice'>The ore was swallowed whole!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
-	if(!alerted)
-		alerted = 1
-		spawn(chase_time)
-		if(alerted)
-			visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
-			qdel(src)
+	if(!stat)
+		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
+		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
@@ -220,12 +217,16 @@
 	minimum_distance = 3
 	pass_flags = PASSTABLE
 	loot = list(/obj/item/organ/internal/hivelord_core)
+	var/next_brood = 0
+	var/brood_cooldown = 20
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
-	A.GiveTarget(target)
-	A.friends = friends
-	A.faction = faction
+	if(world.time >= next_brood)
+		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
+		A.GiveTarget(target)
+		A.friends = friends
+		A.faction = faction
+		next_brood = world.time + brood_cooldown
 	return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
@@ -373,6 +374,8 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
+	if(!(istype(tturf, /turf/simulated)))
+		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
 		new /obj/effect/goliath_tentacle/original(tturf)

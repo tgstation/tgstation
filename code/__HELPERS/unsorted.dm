@@ -379,6 +379,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(skip_mindless && (!M.mind && !M.ckey))
 			if(!isbot(M) && !istype(M, /mob/camera/))
 				continue
+		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
+			continue
 		var/name = M.name
 		if (name in names)
 			namecounts[name]++

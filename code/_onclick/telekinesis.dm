@@ -127,12 +127,11 @@ var/const/tk_maxrange = 15
 		var/resolved = target.attackby(I, user, params)
 		if(!resolved && target && I)
 			I.afterattack(target,user,1) // for splashing with beakers
-
-
 	else
 		apply_focus_overlay()
 		focus.throw_at(target, 10, 1,user)
 		last_throw = world.time
+		user.changeNext_move(CLICK_CD_MELEE)
 	return
 
 /proc/tkMaxRangeCheck(mob/user, atom/target, atom/focus)

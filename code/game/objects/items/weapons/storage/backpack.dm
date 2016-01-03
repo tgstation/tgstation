@@ -439,7 +439,7 @@
 	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle
-	desc = "A large dufflebag containing a M90gl, a magazine, and a stimpack."
+	desc = "A large dufflebag containing an M90gl, a magazine, four additional grenades, and a pack of Syndicate cigarettes."
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle/New()
 	..()
