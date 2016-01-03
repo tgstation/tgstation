@@ -1,2 +1,15 @@
 author: Duny
-changes: []
+changes: 
+  - rscadd: Added a borer egg and a plasma canister to xenobiology. Two portable air scrubbers have also been added in xenobiology maintenance.
+  - bugfix: Fixed glass doors on the derelict not being dense.
+  - bugfix: Fixed solar APCs not charging.
+  - rscadd: Added a coin press to the asteroid.
+  - tweak: Modified the morgue's layout, more trays and less empty space.
+  - tweak: Fixed up a bit the walls and rwalls around science to be more nanotrasen-approved.
+  - rscadd: Added a light switch to hydrophonics.
+  - bugfix: Fixed Mechanics Workshop vent not being connected to anything.
+  - tweak: Added a few additional lights in science to make the hallway less spooky when one breaks.
+  - bugfix: Attached the floating camera in xenobio to the wall.
+  - rscadd: Added two cyborg analyzers to robotics.
+  - rscadd: Added plant clippers in xenobotany.
+  - rscadd: Added compressed matter cartridges in the bar storage, and replaced the shotgun with a double-barreled model.
