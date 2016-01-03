@@ -97,12 +97,6 @@
 					src:aiRestorePowerRoutine = 1
 
 					src << "You've lost power!"
-//							world << "DEBUG CODE TIME! [loc] is the area the AI is sucking power from"
-					//if (!is_special_character(src))
-						//src.set_zeroth_law("")
-					//src.clear_supplied_laws() // Don't reset our laws.
-					//var/time = time2text(world.realtime,"hh:mm:ss")
-					//lawchanges.Add("[time] <b>:</b> [src.name]'s noncore laws have been reset due to power failure")
 					spawn(20)
 						src << "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection."
 						sleep(50)
@@ -123,13 +117,6 @@
 						src << "Connection verified. Searching for APC in power network."
 						sleep(50)
 						var/obj/machinery/power/apc/theAPC = null
-/*
-						for (var/something in loc)
-							if (istype(something, /obj/machinery/power/apc))
-								if (!(something:stat & BROKEN))
-									theAPC = something
-									break
-*/
 						var/PRP //like ERP with the code, at least this stuff is no more 4x sametext
 						for (PRP=1, PRP<=4, PRP++)
 							var/area/AIarea = get_area(src)
