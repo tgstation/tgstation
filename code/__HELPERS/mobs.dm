@@ -28,13 +28,10 @@
 		if(FEMALE)	return pick(undershirt_f)
 		else		return pick(undershirt_list)
 
-/proc/random_socks(gender)
+/proc/random_socks()
 	if(!socks_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list, socks_m, socks_f)
-	switch(gender)
-		if(MALE)	return pick(socks_m)
-		if(FEMALE)	return pick(socks_f)
-		else		return pick(socks_list)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
+	return pick(socks_list)
 
 /proc/random_features()
 	if(!tails_list_human.len)
@@ -147,6 +144,10 @@ Proc for attack log creation, because really why not
 	if(!user || !target)
 		return 0
 	var/user_loc = user.loc
+	
+	var/drifting = 0
+	if(!user.Process_Spacemove(0) && user.inertia_dir)
+		drifting = 1 
 
 	var/target_loc = target.loc
 
@@ -167,7 +168,12 @@ Proc for attack log creation, because really why not
 			break
 		if(uninterruptible)
 			continue
-		if(user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+		
+		if(drifting && !user.inertia_dir)
+			drifting = 0
+			user_loc = user.loc
+		
+		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
 			. = 0
 			break
 	if (progress)
@@ -182,7 +188,11 @@ Proc for attack log creation, because really why not
 		Tloc = target.loc
 
 	var/atom/Uloc = user.loc
-
+	
+	var/drifting = 0
+	if(!user.Process_Spacemove(0) && user.inertia_dir)
+		drifting = 1 
+		
 	var/holding = user.get_active_hand()
 
 	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
@@ -200,8 +210,12 @@ Proc for attack log creation, because really why not
 		sleep(1)
 		if (progress)
 			progbar.update(world.time - starttime)
-
-		if(!user || user.stat || user.weakened || user.stunned  || user.loc != Uloc)
+		
+		if(drifting && !user.inertia_dir)
+			drifting = 0
+			Uloc = user.loc
+				
+		if(!user || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc))
 			. = 0
 			break
 

@@ -1,0 +1,51 @@
+<script type='text/coffeescript'>
+component.exports =
+  data:
+    text: require "../text"
+</script>
+
+<n-display title='Power' button>
+  {{#partial button}}
+    {{#if data.open}}
+      <n-button icon='eject' action='eject'>Eject</n-button>
+    {{/if}}
+  {{/partial}}
+  <n-section label='Power'>
+    <n-button icon='{{data.on ? "power-off" : "close"}}'
+      style='{{data.on ? "selected" : null}}'
+      action='power'>{{data.on ? "On" : "Off"}}</n-button>
+  </n-section>
+  <n-section label='Cell'>
+    {{#if data.hasPowercell}}
+      <n-bar min='0' max='100' value='{{data.powerLevel}}'>{{Math.fixed(adata.powerLevel)}}%</n-bar>
+		{{else}}
+			<span class='bad'>No Cell</span>
+		{{/if}}
+  </n-section>
+</n-display>
+<n-display title='Thermostat'>
+  <n-section label='Current Temperature'>
+		<span>{{Math.round(adata.currentTemp)}}&deg;C</span>
+	</n-section>
+	<n-section label='Target Temperature'>
+		<span>{{Math.round(adata.targetTemp)}}&deg;C</span>
+	</n-section>
+  {{#if data.open}}
+	<n-section label='Adjust Target'>
+      <n-button icon='fast-backward' state='{{data.targetTemp > data.minTemp ? null : "disabled"}}' action='target' params='{"target": -20}'/>
+      <n-button icon='backward' state='{{data.targetTemp > data.minTemp ? null : "disabled"}}' action='target' params='{"target": -5}'/>
+      <n-button icon='pencil' action='target' params='{"target": "custom"}'>Set</n-button>
+      <n-button icon='forward' state='{{data.targetTemp < data.maxTemp ? null : "disabled"}}' action='target' params='{"target": 5}'/>
+      <n-button icon='fast-forward' state='{{data.targetTemp < data.maxTemp ? null : "disabled"}}' action='target' params='{"target": 20}'/>
+	  </n-section>
+	{{/if}}
+  <n-section label='Mode'>
+		{{#if data.open}}
+      <n-button icon='long-arrow-up' state='{{data.mode == "heat" ? "selected" : null}}' action='mode' params='{"mode": "heat"}'>Heat</n-button>
+      <n-button icon='long-arrow-down' state='{{data.mode == "cool" ? "selected" : null}}' action='mode' params='{"mode": "cool"}'>Cool</n-button>
+      <n-button icon='arrows-v' state='{{data.mode == "auto" ? "selected" : null}}' action='mode' params='{"mode": "auto"}'>Auto</n-button>
+		{{else}}
+			<span>{{text.titleCase(data.mode)}}</span>
+		{{/if}}
+	</n-section>
+</n-display>

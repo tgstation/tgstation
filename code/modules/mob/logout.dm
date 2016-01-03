@@ -1,5 +1,5 @@
 /mob/Logout()
-	SSnano.on_logout(src)
+	SStgui.on_logout(src)
 	player_list -= src
 	log_access("Logout: [key_name(src)]")
 	if(admin_datums[src.ckey])

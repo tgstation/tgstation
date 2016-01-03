@@ -1,0 +1,30 @@
+<link rel='ractive' href='./air_alarm/controls.ract'>
+<link rel='ractive' href='./air_alarm/scrubbers.ract'>
+<link rel='ractive' href='./air_alarm/status.ract'>
+<link rel='ractive' href='./air_alarm/thresholds.ract'>
+<link rel='ractive' href='./air_alarm/modes.ract'>
+<link rel='ractive' href='./air_alarm/vents.ract'>
+
+<n-notice>
+  {{#if data.siliconUser}}
+    <n-section label='Interface Lock'>
+      <n-button icon='{{data.locked ? "lock" : "unlock"}}' action='lock'>{{data.locked ? "Engaged" : "Disengaged"}}</n-button>
+    </n-section>
+  {{else}}
+    <span>Swipe an ID card to {{data.locked ? "unlock" : "lock"}} this interface.</span>
+  {{/if}}
+</n-notice>
+<status/>
+{{#if !data.locked || data.siliconUser}}
+	{{#if data.screen == 1}}
+    <controls/>
+	{{elseif data.screen == 2}}
+    <vents/>
+  {{elseif data.screen == 3}}
+    <scrubbers/>
+  {{elseif data.screen == 4}}
+    <modes/>
+  {{elseif data.screen == 5}}
+    <thresholds/>
+	{{/if}}
+{{/if}}

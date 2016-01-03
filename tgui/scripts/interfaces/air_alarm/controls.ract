@@ -1,0 +1,23 @@
+<n-display title='Air Controls'>
+  <n-section>
+    <n-button icon='{{data.atmos_alarm ? "exclamation-triangle" : "exclamation"}}' style='{{data.atmos_alarm ? "caution" : null}}'
+        action='{{data.atmos_alarm ? "reset" : "alarm"}}'>Area Atmosphere Alarm</n-button>
+  </n-section>
+  <n-section>
+    <n-button icon='{{data.mode == 3 ? "exclamation-triangle" : "exclamation"}}' style='{{data.mode == 3 ? "danger" : null}}'
+      action='mode' params='{"mode": {{data.mode == 3 ? 1 : 3}}}'>Panic Siphon</n-button>
+  </n-section>
+  <br/>
+  <n-section>
+    <n-button icon='sign-out' action='screen' params='{"screen": 2}'>Vent Controls</n-button>
+  </n-section>
+  <n-section>
+    <n-button icon='filter' action='screen' params='{"screen": 3}'>Scrubber Controls</n-button>
+  </n-section>
+  <n-section>
+    <n-button icon='cog' action='screen' params='{"screen": 4}'>Operating Mode</n-button>
+  </n-section>
+  <n-section>
+    <n-button icon='bar-chart' action='screen' params='{"screen": 5}'>Alarm Thresholds</n-button>
+  </n-section>
+</n-display>
