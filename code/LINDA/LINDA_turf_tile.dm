@@ -292,10 +292,13 @@
 /atom/movable/var/pressure_resistance = 5
 
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
+	set waitfor = 0
+	. = 0
 	if(!anchored && !pulledby)
+		. = 1
 		if(pressure_difference > pressure_resistance)
-			spawn step(src, direction)
-		return 1
+			step(src, direction)
+
 
 
 

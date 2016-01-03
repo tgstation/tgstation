@@ -122,18 +122,18 @@
 
 
 /obj/item/projectile/proc/fire()
-	spawn(1)
-		while(loc)
-			if(!paused)
-				if((!( current ) || loc == current))
-					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-				step_towards(src, current)
-				if(original && (original.layer>=2.75) || ismob(original))
-					if(loc == get_turf(original))
-						if(!(original in permutated))
-							Bump(original, 1)
-				Range()
-			sleep(1)
+	set waitfor = 0
+	while(loc)
+		if(!paused)
+			if((!( current ) || loc == current))
+				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+			step_towards(src, current)
+			if(original && (original.layer>=2.75) || ismob(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						Bump(original, 1)
+			Range()
+		sleep(1)
 
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.

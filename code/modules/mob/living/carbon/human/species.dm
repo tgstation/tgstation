@@ -1215,7 +1215,7 @@
 					H.adjustOxyLoss(8)
 				H.throw_alert("too_much_co2", /obj/screen/alert/too_much_co2)
 			if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
-				spawn(0) H.emote("cough")
+				H.emote("cough")
 
 		else
 			H.co2overloadtime = 0
@@ -1279,7 +1279,7 @@
 					H.sleeping = max(H.sleeping+2, 10)
 			else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 				if(prob(20))
-					spawn(0) H.emote(pick("giggle", "laugh"))
+					H.emote(pick("giggle", "laugh"))
 
 	handle_breath_temperature(breath, H)
 
@@ -1294,8 +1294,7 @@
 
 	if(!(NOBREATH in specflags) || (H.health <= config.health_threshold_crit))
 		if(prob(20))
-			spawn(0)
-				H.emote("gasp")
+			H.emote("gasp")
 		if(breath_pp > 0)
 			var/ratio = safe_breath_min/breath_pp
 			H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!

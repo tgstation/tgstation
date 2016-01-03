@@ -334,6 +334,6 @@ var/next_external_rsc = 0
 		'html/browser/scannernew.css',
 		'html/browser/playeroptions.css',
 		)
-	spawn (10)
+	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
