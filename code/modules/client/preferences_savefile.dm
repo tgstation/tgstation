@@ -102,6 +102,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 12)
 		ignoring = list()
 
+
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
 //SAVEFILE_VERSION_MAX and then delete any obsolete if clauses
@@ -164,13 +165,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
-	S["tgui_fancy"]			>> tgui_fancy
+	S["nanoui_fancy"]		>> nanoui_fancy
+	S["be_special"]			>> be_special
 
 	if(islist(S["be_special"]))
-		S["be_special"] 	>> be_special
+		S["be_special"] >> be_special
 	else //force update and store the old bitflag version of be_special
 		needs_update = 11
-		S["be_special"] 	>> old_be_special
+		S["be_special"] >> old_be_special
 
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
@@ -211,7 +213,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			<< ooccolor
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
-	S["tgui_fancy"]			<< tgui_fancy
+	S["nanoui_fancy"]		<< nanoui_fancy
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
@@ -321,12 +323,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_male_list)
 		underwear		= sanitize_inlist(underwear, underwear_m)
 		undershirt 		= sanitize_inlist(undershirt, undershirt_m)
+		socks			= sanitize_inlist(socks, socks_m)
 	else
 		hair_style			= sanitize_inlist(hair_style, hair_styles_female_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_female_list)
 		underwear		= sanitize_inlist(underwear, underwear_f)
 		undershirt		= sanitize_inlist(undershirt, undershirt_f)
-	socks			= sanitize_inlist(socks, socks_list)
+		socks			= sanitize_inlist(socks, socks_f)
+
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
