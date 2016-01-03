@@ -15,6 +15,8 @@ WebFont.load
   custom:
     families: ["FontAwesome"]
     urls: ["https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"]
+    testStrings:
+      FontAwesome: "\uf240"
 
 tgui = require "./tgui"
 # Create the UI; this is just a Ractive component.
