@@ -28,83 +28,83 @@ component.exports =
       else "bad"
 </script>
 
-<n-notice>
+<ui-notice>
   {{#if data.siliconUser}}
-    <n-section label='Interface Lock'>
-      <n-button icon='{{data.locked ? "lock" : "unlock"}}' action='lock'>{{data.locked ? "Engaged" : "Disengaged"}}</n-button>
-    </n-section>
+    <ui-section label='Interface Lock'>
+      <ui-button icon='{{data.locked ? "lock" : "unlock"}}' action='lock'>{{data.locked ? "Engaged" : "Disengaged"}}</ui-button>
+    </ui-section>
   {{else}}
     <span>Swipe an ID card to {{data.locked ? "unlock" : "lock"}} this interface.</span>
   {{/if}}
-</n-notice>
-<n-display title='Power Status'>
-  <n-section label='Main Breaker'>
+</ui-notice>
+<ui-display title='Power Status'>
+  <ui-section label='Main Breaker'>
     {{#if data.locked && !data.siliconUser}}
       <span class='{{data.isOperating ? "good" : "bad"}}'>{{data.isOperating ? "On" : "Off"}}</span>
     {{else}}
-      <n-button icon='{{data.isOperating ? "power-off" : "close"}}' style='{{data.isOperating ? "selected" : null}}'
-        action='breaker'>{{data.isOperating ? "On" : "Off"}}</n-button>
+      <ui-button icon='{{data.isOperating ? "power-off" : "close"}}' style='{{data.isOperating ? "selected" : null}}'
+        action='breaker'>{{data.isOperating ? "On" : "Off"}}</ui-button>
     {{/if}}
-  </n-section>
-  <n-section label='External Power'>
+  </ui-section>
+  <ui-section label='External Power'>
     <span class='{{powerState(data.externalPower)}}'>{{data.externalPower == 2 ? "Good" : data.externalPower == 1 ? "Low" : "None"}}</span>
-  </n-section>
-  <n-section label='Power Cell'>
+  </ui-section>
+  <ui-section label='Power Cell'>
     {{#if data.powerCellStatus != null}}
-      <n-bar min='0' max='100' value='{{data.powerCellStatus}}' state='{{powerCellStatusState}}'>{{Math.fixed(adata.powerCellStatus)}}%</n-bar>
+      <ui-bar min='0' max='100' value='{{data.powerCellStatus}}' state='{{powerCellStatusState}}'>{{Math.fixed(adata.powerCellStatus)}}%</ui-bar>
     {{else}}
       <span class='bad'>Power cell removed.</span>
     {{/if}}
-  </n-section>
+  </ui-section>
   {{#if data.powerCellStatus != null}}
-    <n-section label='Charge Mode'>
+    <ui-section label='Charge Mode'>
       {{#if data.locked && !data.siliconUser}}
         <span class='{{data.chargeMode ? "good" : "bad"}}'>{{data.chargeMode ? "Auto" : "Off"}}</span>
       {{else}}
-        <n-button icon='{{data.chargeMode ? "refresh" : "close"}}' style='{{data.chargeMode ? "selected" : null}}'
-          action='charge'>{{data.chargeMode ? "Auto" : "Off"}}</n-button>
+        <ui-button icon='{{data.chargeMode ? "refresh" : "close"}}' style='{{data.chargeMode ? "selected" : null}}'
+          action='charge'>{{data.chargeMode ? "Auto" : "Off"}}</ui-button>
       {{/if}}
       &nbsp;
       [<span class='{{powerState(data.chargingStatus)}}'>{{data.chargingStatus == 2 ? "Fully Charged" : data.chargingStatus == 1 ? "Charging" : "Not Charging"}}</span>]
-    </n-section>
+    </ui-section>
   {{/if}}
-</n-display>
-<n-display title='Power Channels'>
+</ui-display>
+<ui-display title='Power Channels'>
   {{#each adata.powerChannels}}
-    <n-section label='{{title}}' nowrap>
+    <ui-section label='{{title}}' nowrap>
       <div class='content'>{{Math.round(powerLoad)}} W</div>
       <div class='content'><span class='{{status >= 2 ? "good" : "bad"}}'>{{status >= 2 ? "On" : "Off"}}</span></div>
       <div class='content'>[<span>{{status == 1 || status == 3 ? "Auto" : "Manual"}}</span>]</div>
       <div class='content' style='float:right'>
         {{#if !data.locked || data.siliconUser}}
-          <n-button icon='refresh' state='{{status == 1 || status == 3 ? "selected" : null}}'
-            action='channel' params='{{topicParams.auto}}'>Auto</n-button>
-          <n-button icon='power-off' state='{{status == 2 ? "selected" : null}}' action='channel'
-            params='{{topicParams.on}}'>On</n-button>
-          <n-button icon='close' state='{{status == 0 ? "selected" : null}}' action='channel'
-            params='{{topicParams.off}}'>Off</n-button>
+          <ui-button icon='refresh' state='{{status == 1 || status == 3 ? "selected" : null}}'
+            action='channel' params='{{topicParams.auto}}'>Auto</ui-button>
+          <ui-button icon='power-off' state='{{status == 2 ? "selected" : null}}' action='channel'
+            params='{{topicParams.on}}'>On</ui-button>
+          <ui-button icon='close' state='{{status == 0 ? "selected" : null}}' action='channel'
+            params='{{topicParams.off}}'>Off</ui-button>
         {{/if}}
       </div>
-    </n-section>
+    </ui-section>
   {{/each}}
-  <n-section label='Total Load'>
+  <ui-section label='Total Load'>
     <span class='bold'>{{Math.round(adata.totalLoad)}} W</span>
-  </n-section>
-</n-display>
+  </ui-section>
+</ui-display>
 {{#if data.siliconUser}}
-  <n-display title='System Overrides'>
-    <n-button icon='lightbulb-o' action='overload'>Overload</n-button>
+  <ui-display title='System Overrides'>
+    <ui-button icon='lightbulb-o' action='overload'>Overload</ui-button>
     {{#if data.malfStatus}}
-      <n-button icon='{{malfIcon}}' state='{{data.malfStatus == 4 ? "disabled" : null}}' action='{{malfAction}}'>{{malfButton}}</n-button>
+      <ui-button icon='{{malfIcon}}' state='{{data.malfStatus == 4 ? "disabled" : null}}' action='{{malfAction}}'>{{malfButton}}</ui-button>
     {{/if}}
-  </n-display>
+  </ui-display>
 {{/if}}
-<n-notice>
-  <n-section label='Cover Lock'>
+<ui-notice>
+  <ui-section label='Cover Lock'>
     {{#if data.locked && !data.siliconUser}}
       <span>{{data.coverLocked ? "Engaged" : "Disengaged"}}</span>
     {{else}}
-      <n-button icon='{{data.coverLocked ? "lock" : "unlock"}}' action='cover'>{{data.coverLocked ? "Engaged" : "Disengaged"}}</n-button>
+      <ui-button icon='{{data.coverLocked ? "lock" : "unlock"}}' action='cover'>{{data.coverLocked ? "Engaged" : "Disengaged"}}</ui-button>
     {{/if}}
-  </n-section>
-</n-notice>
+  </ui-section>
+</ui-notice>

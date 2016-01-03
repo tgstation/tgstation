@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-    <script id='data' type='application/json'>{}</script>
+    <meta charset='utf-8'/>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'/>
     <script type='text/javascript'>
       var data;
       function receiveUpdate(dataString) {
@@ -17,11 +16,15 @@
         }
       };
     </script>
-    <link rel='stylesheet' type='text/css' href='tgui.css' />
+    <link rel='stylesheet' type='text/css' href='tgui.css'/>
+    <script id='data' type='application/json'>{}</script>
+    <script defer type='text/javascript' src='tgui.js'></script>
   </head>
   <body>
     <div id='container' class='container'>
-      <div class='loading'>Loading...</div>
+      <div class='notice'>
+        <span>Loading...</span>
+      </div>
     </div>
     <noscript>
       <div class='notice'>
@@ -29,6 +32,5 @@
         <span>Please enable Javascript and restart the game.</span>
       </div>
     </noscript>
-    <script type='text/javascript' src='tgui.js'></script>
   </body>
 </html>

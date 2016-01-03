@@ -1,8 +1,8 @@
-<n-display>
-  <n-section>
-    <n-button icon='{{data.oneAccess ? "unlock" : "lock"}}' action='one_access'>{{data.oneAccess ? "One" : "All"}} Required</n-button>
-    <n-button icon='refresh' action='clear'>Clear</n-button>
-  </n-section>
+<ui-display>
+  <ui-section>
+    <ui-button icon='{{data.oneAccess ? "unlock" : "lock"}}' action='one_access'>{{data.oneAccess ? "One" : "All"}} Required</ui-button>
+    <ui-button icon='refresh' action='clear'>Clear</ui-button>
+  </ui-section>
   <hr/>
   <table>
 		<thead>
@@ -13,14 +13,14 @@
 		<tbody>
 			<tr>{{#each data.regions}}
 				<td>{{#each accesses}}
-          <n-button icon='{{req ? "check-square-o" : "square-o"}}' style='{{req ? "selected" : null}}'
-            action='set' params='{"access": "{{id}}"}'>{{name}}</n-button>
+          <ui-button icon='{{req ? "check-square-o" : "square-o"}}' style='{{req ? "selected" : null}}'
+            action='set' params='{"access": "{{id}}"}'>{{name}}</ui-button>
 		      <br/>
 				{{/each}}</td>
 			{{/each}}</tr>
 		</tbody>
 	</table>
-</n-display>
+</ui-display>
 
 <style type='text/stylus'>
   table

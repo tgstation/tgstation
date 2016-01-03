@@ -5,18 +5,18 @@
 <link rel='ractive' href='./air_alarm/modes.ract'>
 <link rel='ractive' href='./air_alarm/vents.ract'>
 
-<n-notice>
+<ui-notice>
   {{#if data.siliconUser}}
-    <n-section label='Interface Lock'>
-      <n-button icon='{{data.locked ? "lock" : "unlock"}}' action='lock'>{{data.locked ? "Engaged" : "Disengaged"}}</n-button>
-    </n-section>
+    <ui-section label='Interface Lock'>
+      <ui-button icon='{{data.locked ? "lock" : "unlock"}}' action='lock'>{{data.locked ? "Engaged" : "Disengaged"}}</ui-button>
+    </ui-section>
   {{else}}
     <span>Swipe an ID card to {{data.locked ? "unlock" : "lock"}} this interface.</span>
   {{/if}}
-</n-notice>
+</ui-notice>
 <status/>
 {{#if !data.locked || data.siliconUser}}
-	{{#if data.screen == 1}}
+  {{#if data.screen == 1}}
     <controls/>
 	{{elseif data.screen == 2}}
     <vents/>

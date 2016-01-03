@@ -5,19 +5,8 @@ component.exports =
   oninit: ->
     @observe "config.fancy", (newkey, oldkey, keypath) ->
       byond.winset @get("config.window"), "can-resize", !!!newkey
-
-    @on
-      startresize: -> @toggle "resize"; false
-      endresize: -> @set "resize"; @set "x"; @set "y"; false
-      resize: (event) ->
-        if @get "x"
-          x = Math.max 100, (event.original.screenX - @get "x") + window.innerWidth
-          y = Math.max 100, (event.original.screenY - @get "y") + window.innerHeight
-          byond.winset @get("config.window"), "size", "#{x},#{y}"
-        @set x: event.original.screenX, y: event.original.screenY
-        false
 </script>
 
 {{#if config.fancy}}
-  <div class='resize' on-mousedown='startresize' on-mouseup-mouseleave='endresize' on-mousemove='{{#resize}}resize{{/}}'></div>
+  <div class='resize' on-mousedown='resize'></div>
 {{/if}}

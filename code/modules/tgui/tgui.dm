@@ -196,7 +196,7 @@
  **/
 /datum/tgui/proc/get_html()
 	// Poplate HTML with JSON.
-	return replacetextEx(SStgui.html, "{}", get_json(initial_data))
+	return replacetextEx(SStgui.basehtml, "{}", get_json(initial_data))
 
  /**
   * private
@@ -212,6 +212,7 @@
 			"style"      = style,
 			"interface"  = interface,
 			"fancy"      = user.client.prefs.tgui_fancy,
+			"locked"     = user.client.prefs.tgui_lock,
 			"window"     = window_id,
 			"ref"        = "\ref[src]",
 			"user"       = list(
