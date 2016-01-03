@@ -114,7 +114,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	return closest_atom
 
 /proc/tesla_zap(var/atom/source, zap_range = 3, power)
-	if(power < 100)
+	if(power < 1000)
 		return
 	var/list/tesla_coils = list()
 	var/list/grounding_rods = list()
