@@ -1847,12 +1847,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				to_chat(user, "<span class='notice'>You add a passive container. It now contains [cans.len].</span>")
 		else
 			if(!beaker)
-				to_chat(user, "<span class='notice'>You insert an active container.</span>")
-				src.beaker =  W
-				if(user.type == /mob/living/silicon/robot)
-					var/mob/living/silicon/robot/R = user
-					R.uneq_active()
-					targetMoveKey =  R.on_moved.Add(src, "user_moved")
+				if(user.drop_item(W, src))
+					to_chat(user, "<span class='notice'>You insert an active container.</span>")
+					src.beaker =  W
+					if(user.type == /mob/living/silicon/robot)
+						var/mob/living/silicon/robot/R = user
+						R.uneq_active()
+						targetMoveKey =  R.on_moved.Add(src, "user_moved")
 			else
 				to_chat(user, "<span class='warning'>There is already an active container.</span>")
 		return
@@ -1903,9 +1904,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		detach()
 		return
 
+/obj/structure/centrifuge/AltClick()
+	if(Adjacent(usr) && !usr.isUnconscious() && !usr.restrained())
+		flush()
+
 /obj/structure/centrifuge/proc/detach()
 	if(beaker)
-		beaker.loc = src.loc
+		beaker.forceMove(src.loc)
 		if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))
 			var/mob/living/silicon/robot/R = beaker:holder:loc
 			if(R.module_state_1 == beaker || R.module_state_2 == beaker || R.module_state_3 == beaker)
