@@ -857,4 +857,3 @@ var/list/ai_list = list()
 			I << "From now on, these are your laws:"
 			I.show_laws()
 			I.law_change_counter++
-	return
