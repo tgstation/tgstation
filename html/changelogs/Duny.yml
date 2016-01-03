@@ -13,3 +13,4 @@ changes:
   - rscadd: Added two cyborg analyzers to robotics.
   - rscadd: Added plant clippers in xenobotany.
   - rscadd: Added compressed matter cartridges in the bar storage, and replaced the shotgun with a double-barreled model.
+  - tweak: Tweaked the starting charge of the SMES cells again. Might or might not be adequate since I still can't use SMES cells or APCs or anything else so I can't test it properly.
