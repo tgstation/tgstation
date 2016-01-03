@@ -16,6 +16,9 @@
 /obj/item/weapon/gun/projectile/automatic/toy/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()
 
+/obj/item/weapon/gun/projectile/automatic/toy/unrestricted
+	pin = /obj/item/device/firing_pin
+
 /obj/item/weapon/gun/projectile/automatic/toy/pistol
 	name = "foam force pistol"
 	desc = "A small, easily concealable toy handgun. Ages 8 and up."
@@ -39,6 +42,12 @@
 	magazine = new /obj/item/ammo_box/magazine/toy/pistol/riot(src)
 	..()
 
+/obj/item/weapon/gun/projectile/automatic/toy/pistol/unrestricted
+	pin = /obj/item/device/firing_pin
+
+/obj/item/weapon/gun/projectile/automatic/toy/pistol/riot/unrestricted
+	pin = /obj/item/device/firing_pin
+
 /obj/item/weapon/gun/projectile/shotgun/toy
 	name = "foam force shotgun"
 	desc = "A toy shotgun with wood furniture and a four-shell capacity underneath. Ages 8 and up."
@@ -54,6 +63,9 @@
 	..()
 	if(chambered && !chambered.BB)
 		qdel(chambered)
+
+/obj/item/weapon/gun/projectile/shotgun/toy/unrestricted
+	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/shotgun/toy/crossbow
 	name = "foam force crossbow"
@@ -77,6 +89,10 @@
 /obj/item/weapon/gun/projectile/automatic/c20r/toy/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()
 
+
+/obj/item/weapon/gun/projectile/automatic/c20r/toy/unrestricted
+	pin = /obj/item/device/firing_pin
+
 /obj/item/weapon/gun/projectile/automatic/l6_saw/toy
 	name = "donksoft LMG"
 	desc = "A heavily modified toy light machine gun, designated 'L6 SAW'. Ages 8 and up."
@@ -87,3 +103,6 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/toy/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/toy/unrestricted
+	pin = /obj/item/device/firing_pin

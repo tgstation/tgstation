@@ -60,13 +60,6 @@ AI MODULES
 	user << "Upload complete. [reciever]'s laws have been modified."
 	reciever.show_laws()
 	reciever.law_change_counter++
-	if(isAI(reciever))
-		var/mob/living/silicon/ai/A = reciever
-		for(var/mob/living/silicon/robot/R in A.connected_robots)
-			if(R.lawupdate)
-				R << "From now on, these are your laws:"
-				R.show_laws()
-				R.law_change_counter++
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [reciever.name]([reciever.key]).[law2log ? " The law specified [law2log]" : ""]")
@@ -197,13 +190,19 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/freeform
 	name = "'Freeform' AI Module"
-	lawpos = 0
+	lawpos = 15
 	origin_tech = "programming=4;materials=4"
 	laws = list("")
 
 /obj/item/weapon/aiModule/supplied/freeform/attack_self(mob/user)
 	var/newpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num|null
-	if(!newpos || (newpos < 15)) return
+	if(newpos == null)
+		return
+	if(newpos < 15)
+		var/response = alert("Error: The law priority of [newpos] is invalid,  Law priorities below 14 are reserved for core laws,  Would you like to change that that to 15?", "Invalid law priority", "Change to 15", "Cancel")
+		if (!response || response == "Cancel")
+			return
+		newpos = 15
 	lawpos = min(newpos, 50)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_MESSAGE_LEN)
 	if(!targName)	return
@@ -354,9 +353,9 @@ AI MODULES
 /obj/item/weapon/aiModule/core/full/robocop
 	name = "'Robo-Officer' Core AI Module"
 	origin_tech = "programming=4"
-	laws = list("Uphold the law.",\
-				"Protect the innocent.",\
-				"Serve the public trust.")
+	laws = list("Serve the public trust.",\
+				"Protect the innocent",\
+				"Uphold the law.")
 
 
 /******************** Antimov ********************/

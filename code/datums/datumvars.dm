@@ -612,7 +612,12 @@ body
 			M << "Control of your mob has been offered to dead players."
 			log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 			message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
-			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [M.real_name]?", "pAI", null, FALSE, 100)
+			var/poll_message = "Do you want to play as [M.real_name]?"
+			if(M.mind && M.mind.assigned_role)
+				poll_message = "[poll_message] Job:[M.mind.assigned_role]."
+			if(M.mind && M.mind.special_role)
+				poll_message = "[poll_message] Status:[M.mind.special_role]."
+			var/list/mob/dead/observer/candidates = pollCandidates(poll_message, "pAI", null, FALSE, 100)
 			var/mob/dead/observer/theghost = null
 
 			if(candidates.len)

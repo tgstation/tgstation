@@ -76,6 +76,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
+
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.
 Works together with spawning an observer, noted above.
@@ -83,8 +84,9 @@ Works together with spawning an observer, noted above.
 
 /mob/proc/ghostize(can_reenter_corpse = 1)
 	if(key)
-		if(!cmptext(copytext(key,1,2),"@")) //aghost
-			var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
+		if(!cmptext(copytext(key,1,2),"@")) // Skip aghosts.
+			var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
+			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 			ghost.can_reenter_corpse = can_reenter_corpse
 			ghost.key = key
 			return ghost
@@ -154,6 +156,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
 		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
 		return
+	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
 	return 1
 

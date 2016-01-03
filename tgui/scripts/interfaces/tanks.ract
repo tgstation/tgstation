@@ -1,0 +1,36 @@
+<script type='text/coffeescript'>
+component.exports =
+  data:
+    tankPressureState: ->
+      pressure = @get "data.tankPressureState"
+      if pressure >= 200 then "good"
+      else if pressure >= 100 then "average"
+      else "bad"
+</script>
+
+<n-notice>
+  <span>The regulator {{data.hasHoldingTank ? "is" : "is not"}} connected to a mask.</span>
+</n-notice>
+<n-display>
+  <n-section label='Tank Pressure'>
+      <n-bar min='0' max='1013' value='{{data.tankPressure}}'
+        state='{{tankPressureState}}'>{{Math.round(adata.tankPressure)}} kPa</n-bar>
+  </n-section>
+  <n-section label='Release Pressure'>
+    <n-bar min='{{data.minReleasePressure}}' max='{{data.maxReleasePressure}}'
+      value='{{data.releasePressure}}'>{{Math.round(adata.releasePressure)}} kPa</n-bar>
+  </n-section>
+  <n-section label='Pressure Regulator'>
+    <n-button icon='refresh' state='{{data.releasePressure != data.defaultReleasePressure ? null : "disabled"}}'
+      action='pressure' params='{"pressure": "reset"}'>Reset</n-button>
+    <n-button icon='minus' state='{{data.releasePressure > data.minReleasePressure ? null : "disabled"}}'
+      action='pressure' params='{"pressure": "min"}'>Min</n-button>
+    <n-button icon='pencil' action='pressure' params='{"pressure": "custom"}'>Set</n-button>
+    <n-button icon='plus' state='{{data.releasePressure < data.maxReleasePressure ? null : "disabled"}}'
+      action='pressure' params='{"pressure": "max"}'>Max</n-button>
+  </n-section>
+  <n-section label='Valve'>
+    <n-button icon='{{data.valveOpen ? "unlock" : "lock"}}' state='{{data.maskConnected ? null : "disabled"}}'
+      action='valve'>{{data.valveOpen ? "Open" : "Closed"}}</n-button>
+  </n-section>
+</n-display>

@@ -141,9 +141,8 @@
  */
 
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/item))
-		var/obj/item/Item = O
-		Item.extinguish()
+	if(istype(O))
+		O.extinguish()
 
 	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
@@ -163,10 +162,11 @@
  */
 
 /datum/reagent/water/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with water can help put them out!
-	if(!istype(M, /mob/living))
+	if(!istype(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(reac_volume / 10))
+		M.ExtinguishMob()
 	..()
 
 /datum/reagent/water/holywater
@@ -762,6 +762,16 @@
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		M.ContractDisease(new /datum/disease/transformation/xeno(0))
+
+/datum/reagent/fungalspores
+	name = "Tubercle bacillus Cosmosis microbes"
+	id = "fungalspores"
+	description = "Active fungal spores."
+	color = "#92D17D" // rgb: 146, 209, 125
+
+/datum/reagent/fungalspores/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+		M.ForceContractDisease(new /datum/disease/tuberculosis(0))
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"

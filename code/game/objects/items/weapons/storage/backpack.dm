@@ -113,7 +113,7 @@
 	max_w_class = 3
 	max_combined_w_class = 60
 
-/obj/item/weapon/storage/santabag/suicide_act(mob/user)
+/obj/item/weapon/storage/backpack/santabag/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] places the [src.name] over their head and pulls it tight! It looks like they aren't in the Christmas spirit...</span>")
 	return (OXYLOSS)
 
@@ -439,7 +439,7 @@
 	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle
-	desc = "A large dufflebag containing a M90gl, a magazine, and a stimpack."
+	desc = "A large dufflebag containing an M90gl, a magazine, four additional grenades, and a pack of Syndicate cigarettes."
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle/New()
 	..()

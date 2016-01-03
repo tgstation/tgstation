@@ -818,7 +818,7 @@ About the new airlock wires panel:
 							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
 							"<span class='italics'>You hear welding.</span>")
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			if(do_after(user,40/C.toolspeed,5,1, target = src))
+			if(do_after(user,40/C.toolspeed, 1, target = src))
 				if(density && !operating)//Door must be closed to weld.
 					if( !istype(src, /obj/machinery/door/airlock) || !user || !W || !W.isOn() || !user.loc )
 						return
@@ -923,7 +923,10 @@ About the new airlock wires panel:
 
 	else if(istype(C, /obj/item/weapon/airlock_painter))
 		change_paintjob(C, user)
-	else if(istype(C, /obj/item/device/doorCharge) && p_open)
+	else if(istype(C, /obj/item/device/doorCharge))
+		if(!p_open)
+			user << "<span class='warning'>The maintenance panel must be open to apply [C]!</span>"
+			return
 		if(emagged)
 			return
 		if(charge && !detonated)
@@ -1161,13 +1164,13 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/emag_act(mob/user)
 	if(!operating && density && hasPower() && !emagged)
 		operating = 1
-		update_icon(AIRLOCK_EMAG)
+		update_icon(AIRLOCK_EMAG, 1)
 		sleep(6)
 		if(qdeleted(src))
 			return
 		operating = 0
 		if(!open())
-			update_icon(AIRLOCK_CLOSED)
+			update_icon(AIRLOCK_CLOSED, 1)
 		emagged = 1
 		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
 		lights = 0
