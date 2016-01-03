@@ -27,7 +27,3 @@ window.tgui = new tgui
     alert "Initial data did not load correctly." if not data? or not (data.data? and data.config?)
     data.adata = data.data # Spoof animated data as this is the first load.
     data
-  onrender: ->
-    @observe "config.style", (newkey, oldkey, keypath) -> # Change body style to match config.
-      document.body.classList.remove oldkey if oldkey?
-      document.body.classList.add newkey if newkey?

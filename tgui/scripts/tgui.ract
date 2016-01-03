@@ -36,8 +36,12 @@ component.exports =
       if drag or resize then @set "x"; @set "y"
   onrender: ->
     @observe "config.style", (newkey, oldkey, keypath) -> # Change style to match config.
-      @el.classList.remove oldkey oldkey if oldkey?
-      @el.classList.add newkey newkey if newkey?
+      if oldkey?
+        document.body.classList.remove oldkey
+        @el.classList.remove oldkey
+      if newkey?
+        @el.classList.add newkey
+        document.body.classList.add newkey
 </script>
 
 <titlebar>{{{config.title}}}</titlebar>
