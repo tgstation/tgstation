@@ -3,7 +3,7 @@
   <head>
     <meta charset='utf-8'/>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'/>
-    <script type='text/javascript'>
+    <script>
       var data;
       function receiveUpdate(dataString) {
         data = JSON.parse(dataString);
@@ -16,9 +16,9 @@
         }
       };
     </script>
-    <link rel='stylesheet' type='text/css' href='tgui.css'/>
+    <link rel='stylesheet' href='tgui.css'/>
     <script id='data' type='application/json'>{}</script>
-    <script defer type='text/javascript' src='tgui.js'></script>
+    <script defer src='tgui.js'></script>
   </head>
   <body>
     <div id='container' class='container'>

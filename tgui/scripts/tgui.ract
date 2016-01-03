@@ -27,10 +27,10 @@ component.exports =
   oninit: ->
     @on "titlebar.drag", -> @toggle "drag"; false
     @on "resize.resize", -> @toggle "resize"; false
-    window.addEventListener "mousemove", (event) =>
+    document.addEventListener "mousemove", (event) =>
       if @get "drag" then dragresize.drag(@, event)
       else if @get "resize" then dragresize.resize(@, event)
-    window.addEventListener "mouseup", (event) =>
+    document.addEventListener "mouseup", (event) =>
       if drag = @get "drag" then @set "drag"
       if resize = @get "resize" then @set "resize"
       if drag or resize then @set "x"; @set "y"
