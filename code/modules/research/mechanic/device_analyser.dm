@@ -36,7 +36,7 @@
 		var/obj/O = A
 		if(istype(O, /obj/machinery/r_n_d/reverse_engine) && loaded_designs.len)
 			return //don't try to scan the reverse engine if we have any designs to upload! let the reverse engine's attackby handle it instead
-		for(var/datum/design/mechanic_design/current_design in loaded_designs)
+		for(var/datum/design/current_design in loaded_designs)
 			if(current_design.build_path == O.type)
 				to_chat(user, "<span class='rose'>You've already got a schematic of \the [O]!</span>")
 				return

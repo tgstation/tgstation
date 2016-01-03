@@ -50,9 +50,11 @@ The required techs are the following:
 #define CRAFTLATHE	8	//Uses fuck if I know. For use eventually.
 #define MECHFAB		16  //Remember, objects built under fabricators need DESIGNS
 #define PODFAB		32  //Used by the spacepod part fabricator. Same idea as the mechfab
+#define FLATPACKER	64  //This design creates a machine, not an item.
+#define GENFAB		128 //Generic item.
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
-/datum/design						//Datum for object designs, used in construction
+/datum/design							//Datum for object designs, used in construction
 	var/name = "Name"					//Name of the created object.
 	var/desc = "Desc"					//Description of the created object.
 	var/id = "id"						//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols

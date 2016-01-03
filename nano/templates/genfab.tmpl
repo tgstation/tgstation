@@ -1,4 +1,4 @@
-<!-- 
+<!--
 Title: General Fabricator UI
 Used In File(s): code\modules\research\mechanic\mechanic_fabs.dm
 Used By Machine(s): Flatpack Fabricator, General Fabricator
@@ -16,7 +16,7 @@ Used By Machine(s): Flatpack Fabricator, General Fabricator
 		float:left;
 	}
 </style>
-		
+
 	<div class="item">
 		<div class="itemLabel">
 			Design List
@@ -24,7 +24,7 @@ Used By Machine(s): Flatpack Fabricator, General Fabricator
 		<div class="line">
 			<div class="statusDisplay">
 				<div class="line">
-							{{for data.parts.Items}}
+							{{for data.parts.Generic}}
 							<div class="line">
 								<div class="statusValue">
 									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
