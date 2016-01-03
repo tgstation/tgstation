@@ -1,0 +1,27 @@
+@require "display"
+
+$noticeStripes
+  background-color: colors.notice1 // Fallback for old browers.
+  background-image: repeating-linear-gradient(
+    -45deg,
+    colors.notice1,
+    colors.notice1 10px,
+    colors.notice2 10px,
+    colors.notice2 20px
+  )
+
+div.notice
+  @extend div.display, $noticeStripes
+  margin: 8px 0
+
+  box-shadow: none
+
+  color: colors.textinverse
+  font-weight: bold
+  font-style: italic
+
+  .button
+    outline: 1px solid colors.border
+
+  .label
+    color: colors.textinverse

@@ -734,7 +734,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				show_to_sender(msg)
 			P.show_recieved_message(msg,src)
 			if(!multiple)
-				show_to_ghosts(msg)
+				show_to_ghosts(user,msg)
 				log_pda("[user] (PDA: [src.name]) sent \"[message]\" to [P.name]")
 		else
 			if(!multiple)
@@ -744,7 +744,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if(multiple)
 		show_to_sender(last_sucessful_msg,1)
-		show_to_ghosts(last_sucessful_msg,1)
+		show_to_ghosts(user,last_sucessful_msg,1)
 		log_pda("[user] (PDA: [src.name]) sent \"[message]\" to Everyone")
 
 /obj/item/device/pda/proc/show_to_sender(datum/data_pda_msg/msg,multiple = 0)
@@ -764,16 +764,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		L = get(src, /mob/living/silicon)
 
-	if(L)
+	if(L && L.stat != UNCONSCIOUS)
 		L << "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)"
 
 	overlays.Cut()
 	overlays += image(icon, icon_alert)
 
-/obj/item/device/pda/proc/show_to_ghosts(datum/data_pda_msg/msg,multiple = 0)
+/obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)
 	for(var/mob/M in player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
-			M.show_message("<span class='game say'>PDA Message - <span class='name'>[msg.sender]</span> -> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
+			M.show_message("<a href='?src=\ref[M];follow=\ref[user]'>(F)</a><span class='name'> [msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
 
 /obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
 	if(!P || qdeleted(P) || P.toff)

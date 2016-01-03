@@ -191,6 +191,7 @@
 		qdel(src)
 
 /obj/item/weapon/survivalcapsule/proc/load()
+	var/list/blacklist = list(/area/shuttle) //Shuttles move based on area, and we'd like not to break them
 	var/turf/start_turf = get_turf(src.loc)
 	var/turf/cur_turf
 	var/x_size = 5
@@ -243,7 +244,9 @@
 	threshhold.nitrogen = 82
 	threshhold.carbon_dioxide = 0
 	threshhold.toxins = 0
-	L.contents += threshhold
+	var/area/ZZ = get_area(threshhold)
+	if(!is_type_in_list(ZZ, blacklist))
+		L.contents += threshhold
 	threshhold.overlays.Cut()
 
 	var/list/turfs = room["floors"]
@@ -257,5 +260,6 @@
 		A.air.copy_from_turf(A)
 		SSair.add_to_active(A)
 		A.overlays.Cut()
-
-		L.contents += A
+		var/area/Z = get_area(A)
+		if(!is_type_in_list(Z, blacklist))
+			L.contents += A

@@ -1,7 +1,7 @@
 /obj/item/weapon/reagent_containers/glass
 	name = "glass"
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5, 10, 15, 25, 30, 50)
+	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	flags = OPENCONTAINER
 	spillable = 1
@@ -197,7 +197,7 @@
 	materials = list(MAT_GLASS=2500)
 	volume = 100
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50,100)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
@@ -216,7 +216,7 @@
 	materials = list(MAT_GLASS=5000)
 	volume = 300
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50,100,300)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
@@ -253,7 +253,7 @@
 	materials = list(MAT_METAL=200)
 	w_class = 3
 	amount_per_transfer_from_this = 20
-	possible_transfer_amounts = list(10,20,30,50,70)
+	possible_transfer_amounts = list(10,15,20,25,30,50,70)
 	volume = 70
 	flags = OPENCONTAINER | BLOCKHAIR
 	slot_flags = SLOT_HEAD
@@ -282,3 +282,12 @@
 		user << "<span class='userdanger'>[src]'s contents spill all over you!</span>"
 		reagents.reaction(user, TOUCH)
 		reagents.clear_reagents()
+
+/obj/item/weapon/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
+	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
+		var/index = slot_equipment_priority.Find(slot_head)
+		slot_equipment_priority.Remove(slot_head)
+		. = ..()
+		slot_equipment_priority.Insert(index, slot_head)
+		return
+	return ..()

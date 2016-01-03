@@ -19,6 +19,7 @@
 	var/obj/item/weapon/weldingtool/weldtool = null
 	var/obj/item/device/assembly/igniter/igniter = null
 	var/obj/item/weapon/tank/internals/plasma/ptank = null
+	var/warned_admins = 0 //for the message_admins() when lit
 
 
 /obj/item/weapon/flamethrower/Destroy()
@@ -144,6 +145,9 @@
 		lit = !lit
 		if(lit)
 			SSobj.processing |= src
+			if(!warned_admins)
+				message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has lit a flamethrower.")
+				warned_admins = 1
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
 		throw_amount = max(50, min(5000, throw_amount))

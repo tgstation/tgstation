@@ -8,8 +8,9 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 
 		gas_info[1] = initial(g.specific_heat)
 		gas_info[2] = initial(g.name)
-		gas_info[3] = new /obj/effect/overlay/gas(initial(g.gas_overlay))
-		gas_info[4] = initial(g.moles_visible)
+		gas_info[3] = initial(g.moles_visible)
+		if(gas_info[3] != null)
+			gas_info[4] = new /obj/effect/overlay/gas(initial(g.gas_overlay))
 
 		meta_list[initial(g.id)] = gas_info
 	. = meta_list

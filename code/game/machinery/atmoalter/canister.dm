@@ -279,10 +279,10 @@ update_flag
 		return
 	ui_interact(user)
 
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "canister", name, 470, 470, state = physical_state)
+		ui = new(user, src, ui_key, "canister", name, 405, 405, state = physical_state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/get_ui_data()
@@ -310,7 +310,7 @@ update_flag
 
 	switch(action)
 		if("relabel")
-			if (can_label)
+			if(can_label)
 				var/list/colors = list(\
 					"\[N2O\]" = "redws", \
 					"\[N2\]" = "red", \
@@ -326,7 +326,7 @@ update_flag
 					src.icon_state = colors[label]
 					src.name = "canister: [label]"
 		if("pressure")
-			switch(params["set"])
+			switch(params["pressure"])
 				if("custom")
 					var/custom = input(usr, "What rate do you set the regulator to? The dial reads from [CAN_MIN_RELEASE_PRESSURE] to [CAN_MAX_RELEASE_PRESSURE].") as null|num
 					if(custom)
@@ -340,13 +340,13 @@ update_flag
 			release_pressure = Clamp(round(release_pressure), CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
 		if("valve")
 			var/logmsg
-			if (valve_open)
-				if (holding)
+			if(valve_open)
+				if(holding)
 					logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into the [holding]<br>"
 				else
 					logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into the <span class='boldannounce'>air</span><br>"
 			else
-				if (holding)
+				if(holding)
 					logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting the transfer into the [holding]<br>"
 				else
 					logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting the transfer into the <span class='boldannounce'>air</span><br>"
@@ -361,7 +361,7 @@ update_flag
 			valve_open = !valve_open
 		if("eject")
 			if(holding)
-				if (valve_open)
+				if(valve_open)
 					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
 				holding.loc = loc
 				holding = null

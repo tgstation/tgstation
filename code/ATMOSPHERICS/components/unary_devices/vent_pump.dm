@@ -277,7 +277,7 @@
 					welded = 0
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = 20, dir = dir)
-			return 1
+			return 0
 	else
 		return ..()
 

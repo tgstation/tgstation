@@ -13,10 +13,10 @@
 	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/item/weapon/electronics/airlock/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, force_open = 0)
-	SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/item/weapon/electronics/airlock/ui_interact(mob/user, ui_key = "main", var/datum/tgui/ui = null, force_open = 0)
+	SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "airlock_electronics", name, 975, 415, state = hands_state)
+		ui = new(user, src, ui_key, "airlock_electronics", name, 975, 420, state = hands_state)
 		ui.open()
 
 /obj/item/weapon/electronics/airlock/get_ui_data()

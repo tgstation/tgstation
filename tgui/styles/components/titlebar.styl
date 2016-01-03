@@ -1,0 +1,46 @@
+$titleButton
+  display: inline-block
+  position: relative
+  padding: 7px // To make a bigger clickable area.
+  margin: -7px
+
+  color: colors.title;
+
+  &:hover
+    color: lighten(colors.title, colors.hover)
+
+header.titlebar
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 32px;
+
+  background-color: colors.titlebar
+  box-shadow: 0 3px 3px alpha(#000, 0.1)
+
+  .statusicon
+    position: absolute
+    top: 4px
+    left: 12px
+    transition: color 0.5s
+
+  .title
+    position: absolute
+    top: 6px
+    left: 46px
+
+    color: colors.title
+    font-size: 16px
+    white-space: nowrap
+
+  .minimize
+    @extend $titleButton
+    position: absolute
+    top: 6px
+    right: 46px
+  .close
+    @extend $titleButton
+    position: absolute
+    top: 4px
+    right: 12px
