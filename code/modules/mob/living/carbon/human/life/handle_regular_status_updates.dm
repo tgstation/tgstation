@@ -77,6 +77,9 @@
 		else if(resting)
 			if(halloss > 0)
 				adjustHalLoss(-3)
+		else if(undergoing_hypothermia() >= SEVERE_HYPOTHERMIA)
+			blinded = 1
+			stat = UNCONSCIOUS
 		//CONSCIOUS
 		else
 			stat = CONSCIOUS
@@ -115,7 +118,11 @@
 			ear_damage = max(ear_damage - 0.05, 0)
 
 		//Dizziness
-		if(dizziness)
+		if(dizziness || undergoing_hypothermia() == MODERATE_HYPOTHERMIA)
+			var/wasdizzy = 1
+			if(undergoing_hypothermia() == MODERATE_HYPOTHERMIA && !dizziness && prob(25))
+				dizziness = 120
+				wasdizzy = 0
 			var/client/C = client
 			var/pixel_x_diff = 0
 			var/pixel_y_diff = 0
@@ -147,13 +154,18 @@
 							C.pixel_x -= pixel_x_diff
 							C.pixel_y -= pixel_y_diff
 				src = oldsrc
+			if(!wasdizzy)
+				dizziness = 0
 
 		//Jitteryness
-		if(jitteriness)
+		if(jitteriness || undergoing_hypothermia() == MILD_HYPOTHERMIA)
+			var/wasjittery = 1
+			if(undergoing_hypothermia() == MILD_HYPOTHERMIA && !jitteriness && prob(25))
+				jitteriness = 120
+				wasjittery = 0
 			var/amplitude = min(8, (jitteriness/70) + 1)
 			var/pixel_x_diff = rand(-amplitude, amplitude)
 			var/pixel_y_diff = rand(-amplitude, amplitude)
-
 			spawn()
 				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
 				animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
@@ -167,7 +179,8 @@
 				pixel_y_diff = rand(-amplitude, amplitude)
 				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
 				animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
-
+			if(!wasjittery)
+				jitteriness = 0
 		//Flying
 		if(flying)
 			spawn()

@@ -17,6 +17,7 @@
 	flags = FPRINT
 	item_state = "caphat"
 	siemens_coefficient = 0.9
+	heat_conductivity = HELMET_HEAT_CONDUCTIVITY
 
 //Captain: This probably shouldn't be space-worthy
 /obj/item/clothing/head/helmet/cap
@@ -25,8 +26,7 @@
 	icon_state = "capcap"
 	flags = FPRINT
 	flags_inv = 0
-	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_conductivity = INS_HELMET_HEAT_CONDUCTIVITY
 	siemens_coefficient = 0.9
 
 //Chaplain

@@ -125,7 +125,7 @@ BLIND     // can't see anything
 	attack_verb = list("challenged")
 	species_restricted = list("exclude","Unathi","Tajaran","Muton")
 	var/pickpocket = 0 //Master pickpocket?
-
+	heat_conductivity = GLOVES_HEAT_CONDUCTIVITY
 	var/bonus_knockout = 0 //Added to knockout chance. 5 or above is pretty much a 50% chance to weaken per hit
 	var/damage_added = 0 //Added to unarmed damage, doesn't affect knockout chance
 
@@ -164,6 +164,7 @@ BLIND     // can't see anything
 	var/is_flipped = 1
 	var/ignore_flip = 0
 	action_button_name = "Toggle Mask"
+	heat_conductivity = MASK_HEAT_CONDUCTIVITY
 
 /obj/item/clothing/mask/verb/togglemask()
 	set name = "Toggle Mask"
@@ -214,11 +215,10 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.9
 	body_parts_covered = FEET
 	slot_flags = SLOT_FEET
-
+	heat_conductivity = SHOE_HEAT_CONDUCTIVITY
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
 	species_restricted = list("exclude","Unathi","Tajaran","Muton")
-
 //Suit
 /obj/item/clothing/suit
 	icon = 'icons/obj/clothing/suits.dmi'
@@ -228,6 +228,7 @@ BLIND     // can't see anything
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	slot_flags = SLOT_OCLOTHING
+	heat_conductivity = ARMOUR_HEAT_CONDUCTIVITY
 	var/blood_overlay_type = "suit"
 	species_restricted = list("exclude","Muton")
 	siemens_coefficient = 0.9
@@ -246,12 +247,10 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	body_parts_covered = FULL_HEAD
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
-	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
+	heat_conductivity = INS_HELMET_HEAT_CONDUCTIVITY
 	species_restricted = list("exclude","Diona","Muton")
 	eyeprot = 1
-
 	cold_breath_protection = 230
 
 /obj/item/clothing/suit/space
@@ -269,10 +268,9 @@ BLIND     // can't see anything
 	slowdown = 3
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
 	species_restricted = list("exclude","Diona","Muton")
+	heat_conductivity = INS_ARMOUR_HEAT_CONDUCTIVITY
 
 //Under clothing
 /obj/item/clothing/under
@@ -282,6 +280,7 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.90
 	flags = FPRINT
 	slot_flags = SLOT_ICLOTHING
+	heat_conductivity = JUMPSUIT_HEAT_CONDUCTIVITY
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	species_restricted = list("exclude","Muton")
 	var/list/obj/item/clothing/accessory/accessories = list()

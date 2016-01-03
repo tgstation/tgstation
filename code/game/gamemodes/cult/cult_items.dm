@@ -39,10 +39,9 @@
 	flags_inv = HIDEFACE
 	flags = FPRINT
 	armor = list(melee = 30, bullet = 10, laser = 5,energy = 5, bomb = 0, bio = 0, rad = 0)
-	cold_protection = HEAD
 	body_parts_covered = HEAD | EYES
-	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
+	heat_conductivity = INS_HELMET_HEAT_CONDUCTIVITY
 
 /obj/item/clothing/head/culthood/cultify()
 	return

@@ -16,14 +16,10 @@
 
 	if(.)
 		if(nutrition && stat != DEAD)
-			nutrition -= HUNGER_FACTOR / 10
+			burn_calories(HUNGER_FACTOR / 10)
 
 			if(m_intent == "run")
-				nutrition -= HUNGER_FACTOR / 10
-
-		if((M_FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
-			bodytemperature += 2
-
+				burn_calories(HUNGER_FACTOR / 10)
 		update_minimap()
 
 /mob/living/carbon/attack_animal(mob/living/simple_animal/M as mob)//humans and slimes have their own
@@ -509,6 +505,9 @@
 	switch(src.pulse)
 		if(PULSE_NONE)
 			return "0"
+		if(PULSE_2SLOW)
+			temp = rand(20, 40)
+			return num2text(method ? temp : temp + rand(-10, 10))
 		if(PULSE_SLOW)
 			temp = rand(40, 60)
 			return num2text(method ? temp : temp + rand(-10, 10))

@@ -69,6 +69,7 @@
 	flags = NOSLIP
 	species_fit = list("Vox")
 	siemens_coefficient = 0.6
+	heat_conductivity = INS_SHOE_HEAT_CONDUCTIVITY
 
 /obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
 	name = "combat boots"
@@ -78,11 +79,8 @@
 	flags = NOSLIP
 	species_fit = list("Vox")
 	siemens_coefficient = 0.6
-
-	cold_protection = FEET
-	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = FEET
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
+	heat_conductivity = INS_SHOE_HEAT_CONDUCTIVITY
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -108,6 +106,7 @@
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
 	species_fit = list("Vox")
+	heat_conductivity = INS_SHOE_HEAT_CONDUCTIVITY
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn they're huge!"
@@ -232,6 +231,7 @@
 	_color = "hosred"
 	siemens_coefficient = 0.7
 	species_fit = list("Vox")
+	heat_conductivity = INS_SHOE_HEAT_CONDUCTIVITY
 
 /obj/item/clothing/shoes/jackboots/batmanboots
 	name = "batboots"
@@ -244,10 +244,7 @@
 	item_state = "cult"
 	_color = "cult"
 	siemens_coefficient = 0.7
-
-	cold_protection = FEET
-	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = FEET
+	heat_conductivity = INS_SHOE_HEAT_CONDUCTIVITY
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/shoes/cult/cultify()

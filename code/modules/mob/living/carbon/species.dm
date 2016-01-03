@@ -287,11 +287,8 @@ var/global/list/whitelisted_species = list("Human")
 					spawn(0) H.emote(pick("giggle", "laugh"))
 			SA.moles = 0
 
-	if( (abs(310.15 - breath.temperature) > 50) && !(M_RESIST_HEAT in H.mutations)) // Hot air hurts :(
+	if( (breath.temperature - 310.15 > 50) && !(M_RESIST_HEAT in H.mutations)) // Hot air hurts :(
 		if(H.status_flags & GODMODE)	return 1	//godmode
-		if(breath.temperature < cold_level_1)
-			if(prob(20))
-				to_chat(H, "<span class='warning'>You feel your face freezing and an icicle forming in your lungs!</span>")
 		else if(breath.temperature > heat_level_1)
 			if(prob(20))
 				if(H.dna.mutantrace == "slime")
@@ -306,7 +303,7 @@ var/global/list/whitelisted_species = list("Human")
 
 		if(H.dna.mutantrace != "slime")
 			switch(breath.temperature)
-				if(-INFINITY to cold_level_3)
+/*				if(-INFINITY to cold_level_3)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Cold")
 					H.fire_alert = max(H.fire_alert, 1)
 
@@ -317,7 +314,7 @@ var/global/list/whitelisted_species = list("Human")
 				if(cold_level_2 to cold_level_1)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Cold")
 					H.fire_alert = max(H.fire_alert, 1)
-
+*/
 				if(heat_level_1 to heat_level_2)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Heat")
 					H.fire_alert = max(H.fire_alert, 2)

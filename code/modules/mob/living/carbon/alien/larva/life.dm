@@ -199,8 +199,7 @@
 					to_chat(src, "<span class='danger'>You suddenly feel blubbery !</span>")
 					mutations.Add(M_FAT)
 
-		if (nutrition > 0)
-			nutrition-= HUNGER_FACTOR
+		burn_calories(HUNGER_FACTOR)
 
 		if (drowsyness)
 			drowsyness--

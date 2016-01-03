@@ -330,8 +330,8 @@
 
 
 	if(prob(20))
-		if(istype(src, /mob/living/carbon/slime/adult)) nutrition-=rand(4,6)
-		else nutrition-=rand(2,3)
+		if(istype(src, /mob/living/carbon/slime/adult)) burn_calories(4,6)
+		else burn_calories(2,3)
 
 	if(nutrition <= 0)
 		nutrition = 0

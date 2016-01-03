@@ -286,9 +286,8 @@
 		LE.process()
 
 /mob/living/carbon/human/LaserEyes()
-	if(nutrition>0)
+	if(burn_calories(rand(1,5)))
 		..()
-		nutrition = max(nutrition - rand(1,5),0)
 		handle_regular_hud_updates()
 	else
 		to_chat(src, "<span class='warning'>You're out of energy!  You need food!</span>")

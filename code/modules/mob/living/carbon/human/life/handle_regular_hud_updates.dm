@@ -60,7 +60,6 @@
 				if(45 to INFINITY)
 					damageoverlay.overlays += oxyloss_overlays["7"]
 			//damageoverlay.overlays += I
-
 		//Fire and Brute damage overlay (BSSR)
 		var/hurtdamage = src.getBruteLoss() + src.getFireLoss() + damageoverlaytemp
 		damageoverlaytemp = 0 //We do this so we can detect if someone hits us or not.
@@ -219,17 +218,25 @@
 			else									fire.icon_state = "fire0"
 
 		if(bodytemp)
-			switch(bodytemperature) //310.055 optimal body temp
-				if(370 to INFINITY)		bodytemp.icon_state = "temp4"
-				if(350 to 370)			bodytemp.icon_state = "temp3"
-				if(335 to 350)			bodytemp.icon_state = "temp2"
-				if(320 to 335)			bodytemp.icon_state = "temp1"
-				if(300 to 320)			bodytemp.icon_state = "temp0"
-				if(295 to 300)			bodytemp.icon_state = "temp-1"
-				if(280 to 295)			bodytemp.icon_state = "temp-2"
-				if(260 to 280)			bodytemp.icon_state = "temp-3"
-				else					bodytemp.icon_state = "temp-4"
-
+			if(!undergoing_hypothermia())
+				switch(bodytemperature) //310.055 optimal body temp
+					if(370 to INFINITY)		bodytemp.icon_state = "temp4"
+					if(350 to 370)			bodytemp.icon_state = "temp3"
+					if(335 to 350)			bodytemp.icon_state = "temp2"
+					if(320 to 335)			bodytemp.icon_state = "temp1"
+					if(0   to 320)			bodytemp.icon_state = "temp0"
+			else if(is_vessel_dilated() && undergoing_hypothermia() == MODERATE_HYPOTHERMIA)
+				bodytemp.icon_state = "temp4" // yes, this is intentional - this is the cause of "paradoxical undressing", ie feeling 2hot when hypothermic
+			else
+				switch(get_thermal_loss(loc.return_air())) // How many degrees of celsius we are losing per tick.
+					if(0.1 to 0.15)
+						bodytemp.icon_state = "temp-1"
+					if(0.15 to 0.2)
+						bodytemp.icon_state = "temp-2"
+					if(0.2 to 0.4)
+						bodytemp.icon_state = "temp-3"
+					if(0.4 to INFINITY)
+						bodytemp.icon_state = "temp-4"
 		if(blind)
 			if(blinded)
 				blind.layer = 18
