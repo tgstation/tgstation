@@ -629,12 +629,12 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(src) || next_move > world.time)
+	if(!isliving(src) || next_move > world.time || stat)
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
 	//resisting grabs (as if it helps anyone...)
-	if(!stat && canmove && !restrained())
+	if(canmove && !restrained())
 		var/resisting = 0
 		for(var/obj/O in requests)
 			qdel(O)
