@@ -126,14 +126,12 @@
 
 /obj/item/weapon/dice/d20/cursed
 	desc = "Something about this dice seems wrong"
-	name = "/improper Mysterious d20"
+	name = "\improper Mysterious d20"
 	var/deactivated = 0 //Eventually the dice runs out of power
 
 /obj/item/weapon/dice/d20/cursed/pickup(mob/user as mob)
 	if(deactivated == 0)
-		to_chat(user, "<span class=sinister><B>Are you feeling lucky?</span></B>")
-	else
-		return 0
+		to_chat(user, "<span class='sinister'>Are you feeling lucky?</span>")
 
 /obj/item/weapon/dice/d20/cursed/diceroll(mob/user as mob, thrown)
 	..()
@@ -284,7 +282,7 @@
 					user.update_mutations()
 					to_chat(user, "<span class=danger><B>You have been rewarded hanesomely with rare minerals and powers! </span></B>")
 
-			if(prob(20))
+			if(prob(15))
 				deactivated = 1
 				user.visible_message("<span class=danger><B>The dice shudders and loses its power! </span></B>")
 				name = "d20"
