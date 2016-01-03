@@ -134,7 +134,6 @@
 	desc = "A single-use teleporter designed to quickly reinforce operatives in the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
-	var/TC_cost = 0
 	var/borg_to_spawn
 	var/list/possible_types = list("Assault", "Medical")
 
@@ -163,6 +162,7 @@
 		var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
 		S.set_up(4, 1, src)
 		S.start()
+		qdel(src)
 	else
 		user << "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
