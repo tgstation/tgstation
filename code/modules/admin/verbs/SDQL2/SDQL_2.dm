@@ -147,7 +147,7 @@
 /proc/SDQL_callproc(thing, procname, args_list)
 	set waitfor = 0
 	if(hascall(thing, procname))
-		call(thing, procname)(arglist(args_list)) // Spawn in case the function sleeps.
+		call(thing, procname)(arglist(args_list))
 
 /proc/SDQL_parse(list/query_list)
 	var/datum/SDQL_parser/parser = new()
