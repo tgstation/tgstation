@@ -1,0 +1,35 @@
+<n-display>
+  <n-section>
+    <n-button icon='{{data.oneAccess ? "unlock" : "lock"}}' action='one_access'>{{data.oneAccess ? "One" : "All"}} Required</n-button>
+    <n-button icon='refresh' action='clear'>Clear</n-button>
+  </n-section>
+  <hr/>
+  <table>
+		<thead>
+			<tr>{{#each data.regions}}
+				<th><span class='highlight bold'>{{name}}</span></th>
+			{{/each}}</tr>
+		</thead>
+		<tbody>
+			<tr>{{#each data.regions}}
+				<td>{{#each accesses}}
+          <n-button icon='{{req ? "check-square-o" : "square-o"}}' style='{{req ? "selected" : null}}'
+            action='set' params='{"access": "{{id}}"}'>{{name}}</n-button>
+		      <br/>
+				{{/each}}</td>
+			{{/each}}</tr>
+		</tbody>
+	</table>
+</n-display>
+
+<style type='text/stylus'>
+  table
+    width: 100%
+    border-spacing: 2px
+  th
+    text-align: left
+  td
+    vertical-align: top
+    .button
+      margin-top: 4px
+</style>

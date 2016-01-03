@@ -28,7 +28,33 @@
 
 
 
+/datum/weather/advanced_darkness
+	name = "advanced darkness"
+	start_up_time = 100 //10 seconds
+	start_up_message = "The lights begin to dim... is power going out?"
+	duration_lower = 45
+	duration_upper = 60 //1 minute
+	duration_message = "This isn't average everyday darkness... this is advanced darkness!"
+	wind_down = 100 // 10 seconds
+	wind_down_message = "The darkness is receding. Thank god."
+	purely_aesthetic = TRUE
 
+	target_z = 1
+	exclude_walls = TRUE
+	area_type = /area
+
+	start_up_overlay = ""
+	duration_overlay = ""
+	overlay_layer = 10
+
+/datum/weather/advanced_darkness/update_areas()
+	for(var/area/A in impacted_areas)
+		if(stage == MAIN_STAGE)
+			A.invisibility = 0
+			A.opacity = 1
+		else
+			A.invisibility = 100
+			A.opacity = 0
 //Ash storms
 
 /datum/weather/ash_storm

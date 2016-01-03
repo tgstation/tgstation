@@ -1,0 +1,28 @@
+.bar
+  display: inline-block
+  position: relative
+  vertical-align: middle
+  width: 100%
+  height: 20px
+  line-height: 17px
+  padding: 1px
+
+  border: 1px solid colors.normal
+  background: colors.dark
+
+  .barText
+    @extend $fontReset
+    position: absolute
+    top: 0
+    right: 3px
+
+  .barFill
+    display: block
+    height: 100%
+
+    transition: background-color 1s
+    background-color: colors.normal
+    &.good { background-color: colors.good }
+    &.average { background-color: colors.average }
+    &.bad { background-color: colors.bad }
+    &.highlight { background-color: colors.highlight }

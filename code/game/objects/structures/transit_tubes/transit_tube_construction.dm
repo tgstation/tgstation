@@ -35,8 +35,11 @@
 	//for junctions, just swap the diagonals with each other
 	if(split_text.len == 3 && split_text[3] != "Pass")
 		split_text.Swap(2,3)
+	else if(length(split_text[1]) == 2 && length(split_text[2]) == 2) //diagonals
+		split_text[1] = copytext(split_text[1],1,2) + copytext(split_text[2],2,3)
+		split_text[2] = copytext(split_text[2],1,2) + ((copytext(split_text[2],2,3) == "E") ? "W" : "E")
 	//for curves, swap the diagonal direction that is not in the same axis as the cardinal direction
-	else
+	else 
 		if(split_text[1] == "N" || split_text[1] == "S")
 			split_text[2] = copytext(split_text[2],1,2) + ((copytext(split_text[2],2,3) == "E") ? "W" : "E")
 		else
