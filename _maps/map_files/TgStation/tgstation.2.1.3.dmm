@@ -980,7 +980,7 @@
 "asR" = (/obj/effect/decal/cleanable/cobweb,/obj/structure/closet/secure_closet/chemical,/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "asS" = (/obj/structure/closet/secure_closet/medical1,/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "asT" = (/obj/structure/closet/secure_closet/chemical,/turf/simulated/floor/plating,/area/maintenance/fpmaint)
-"asU" = (/obj/machinery/requests_console{department = "Detective's office"; pixel_x = -30; pixel_y = 0},/obj/structure/table/wood,/obj/item/device/camera{desc = "A single-use polaroid camera."; name = "detectives camera"; pictures_left = 30},/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plasteel{icon_state = "grimy"},/area/security/detectives_office)
+"asU" = (/obj/machinery/requests_console{department = "Detective's office"; pixel_x = -30; pixel_y = 0},/obj/structure/table/wood,/obj/item/device/camera/detective,/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plasteel{icon_state = "grimy"},/area/security/detectives_office)
 "asV" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{dir = 1},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plasteel,/area/crew_quarters/fitness)
 "asW" = (/obj/machinery/atmospherics/components/unary/vent_pump{dir = 4; on = 1},/turf/simulated/floor/carpet,/area/security/detectives_office)
 "asX" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plasteel,/area/crew_quarters/fitness)

@@ -2656,7 +2656,7 @@
 "aZe" = (/obj/structure/sink/kitchen{desc = "A sink used for washing one's hands and face. It looks rusty and home-made"; name = "old sink"; pixel_y = 28},/obj/item/weapon/reagent_containers/spray/plantbgone,/turf/simulated/floor/plasteel/white,/area/maintenance/fore{name = "Security Maintenance"})
 "aZf" = (/obj/structure/closet/crate/secure/hydrosec{req_access_txt = "35"},/obj/item/seeds/kudzuseed{potency = 0; production = 8},/obj/item/seeds/chilighost,/obj/item/seeds/deathberryseed,/obj/item/device/gps,/turf/simulated/floor/plasteel/white,/area/maintenance/fore{name = "Security Maintenance"})
 "aZg" = (/obj/structure/cable/cyan{icon_state = "1-2"},/obj/machinery/camera/autoname{icon_state = "camera"; dir = 5},/turf/simulated/floor/wood,/area/security/brig)
-"aZh" = (/obj/structure/closet/secure_closet/detective,/obj/item/device/camera{desc = "A single-use polaroid camera."; name = "detective's camera"; pictures_left = 30},/turf/simulated/floor/wood,/area/security/brig)
+"aZh" = (/obj/structure/closet/secure_closet/detective,/obj/item/device/camera/detective,/turf/simulated/floor/wood,/area/security/brig)
 "aZi" = (/obj/structure/table/wood,/turf/simulated/floor/wood,/area/security/brig)
 "aZj" = (/obj/machinery/computer/pandemic{layer = 2.5; pixel_x = -4},/turf/simulated/floor/plasteel/white,/area/medical/virology)
 "aZk" = (/obj/structure/reagent_dispensers/virusfood{density = 0; pixel_y = -32},/turf/simulated/floor/plasteel/white,/area/medical/virology)
