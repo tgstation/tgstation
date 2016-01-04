@@ -181,7 +181,6 @@
 #include "code\datums\martial.dm"
 #include "code\datums\material_container.dm"
 #include "code\datums\mind.dm"
-#include "code\datums\modules.dm"
 #include "code\datums\mutations.dm"
 #include "code\datums\outfit.dm"
 #include "code\datums\progressbar.dm"
