@@ -105,8 +105,7 @@
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
 	if(recoil)
-		spawn()
-			shake_camera(user, recoil + 1, recoil)
+		shake_camera(user, recoil + 1, recoil)
 
 	if(suppressed)
 		playsound(user, fire_sound, 10, 1)

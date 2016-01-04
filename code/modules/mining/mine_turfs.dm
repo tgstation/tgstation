@@ -284,16 +284,14 @@ var/global/list/rockTurfEdgeCache
 		countdown(notify_admins)
 
 /turf/simulated/mineral/gibtonite/proc/countdown(notify_admins = 0)
-	spawn(0)
-		while(stage == 1 && det_time > 0 && mineralAmt >= 1)
-			det_time--
-			sleep(5)
-		if(stage == 1 && det_time <= 0 && mineralAmt >= 1)
-			var/turf/bombturf = get_turf(src)
-			mineralAmt = 0
-			explosion(bombturf,1,3,5, adminlog = notify_admins)
-		if(stage == 0 || stage == 2)
-			return
+	set waitfor = 0
+	while(stage == 1 && det_time > 0 && mineralAmt >= 1)
+		det_time--
+		sleep(5)
+	if(stage == 1 && det_time <= 0 && mineralAmt >= 1)
+		var/turf/bombturf = get_turf(src)
+		mineralAmt = 0
+		explosion(bombturf,1,3,5, adminlog = notify_admins)
 
 /turf/simulated/mineral/gibtonite/proc/defuse()
 	if(stage == 1)

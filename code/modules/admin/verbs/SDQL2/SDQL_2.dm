@@ -93,10 +93,7 @@
 
 				for(var/datum/d in objs)
 					for(var/v in call_list)
-						// To stop any procs which sleep from executing slowly.
-						if(d)
-							if(hascall(d, v))
-								spawn() call(d, v)(arglist(args_list)) // Spawn in case the function sleeps.
+						SDQL_callproc(d, v, args_list)
 
 			if("delete")
 				for(var/datum/d in objs)
@@ -147,6 +144,10 @@
 
 
 
+/proc/SDQL_callproc(thing, procname, args_list)
+	set waitfor = 0
+	if(hascall(thing, procname))
+		call(thing, procname)(arglist(args_list))
 
 /proc/SDQL_parse(list/query_list)
 	var/datum/SDQL_parser/parser = new()
