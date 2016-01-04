@@ -131,7 +131,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		if (register_asset)
 			register_asset(file,files[file])
 		send_asset(client,file)
-		sleep(-1) //queuing calls like this too quickly can cause issues in some client versions
+		sleep(0) //queuing calls like this too quickly can cause issues in some client versions
 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //if it's an icon or something be careful, you'll have to copy it before further use.
