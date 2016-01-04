@@ -1,8 +1,5 @@
 // Removed Jobs, setting config_check to 0 will stop them from being initialised.
 
-/datum/job/chef/config_check()
-	return 0
-
 /datum/job/hydro/config_check()
 	return 0
 
