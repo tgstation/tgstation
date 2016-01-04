@@ -42,108 +42,100 @@ var/next_mob_id = 0
 	for(var/datum/gas/trace_gas in environment.trace_gases)
 		t+= "<span class='notice'>[trace_gas.type]: [trace_gas.moles] \n</span>"
 
-	usr.show_message(t, 1)
+	usr << t
 
-/mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
-	if(!client)	return
+	if(!client)
+		return
 
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
-	if (type)
-		if(type & 1 && (disabilities & BLIND || paralysis) )//Vision related
-			if (!( alt ))
+	if(type)
+		if(type & 1 && eye_blind )//Vision related
+			if(!alt_msg)
 				return
 			else
-				msg = alt
+				msg = alt_msg
 				type = alt_type
-		if (type & 2 && ear_deaf)//Hearing related
-			if (!( alt ))
+
+		if(type & 2 && ear_deaf)//Hearing related
+			if(!alt_msg)
 				return
 			else
-				msg = alt
+				msg = alt_msg
 				type = alt_type
-				if ((type & 1 && disabilities & BLIND))
+				if(type & 1 && eye_blind)
 					return
-	// Added voice muffling for Issue 41.
-	if(stat == UNCONSCIOUS || sleeping > 0)
-		src << "<I>... You can almost hear someone talking ...</I>"
+	// voice muffling
+	if(stat == UNCONSCIOUS)
+		if(type & 2) //audio
+			src << "<I>... You can almost hear something ...</I>"
 	else
 		src << msg
-	return
 
-// Show a message to all mobs who sees the src mob and the src mob itself
+// Show a message the src mob and to all player mobs who sees the src mob
 // This would be for visible actions by the src mob
 // message is the message output to anyone who can see e.g. "[src] does something!"
 // self_message (optional) is what the src mob sees e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
 /mob/visible_message(message, self_message, blind_message)
-	var/list/mob_viewers = list()
-	var/list/possible_viewers = list()
-	mob_viewers |= src
-	mob_viewers |= viewers(src)
-	var/heard = get_hear(7, src)
-	for(var/atom/movable/A in heard)
-		possible_viewers |= recursive_hear_check(A)
-	for(var/mob/B in possible_viewers)
-		if(B in mob_viewers)
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	for(var/P in player_list)
+		var/mob/M = P
+		var/turf/U = get_turf(P)
+		if(!U)
 			continue
-		if(isturf(B.loc))
-			continue
-		var/turf/T = get_turf(B)
-		if(src in view(T))
-			mob_viewers |= B
+		if(get_dist(T,U)<7 && inLineOfSight(T.x,T.y, U.x,U.y,T.z))
+			var/msg = message
+			if(M == src) //the src always see the main message or self message
+				if(self_message)
+					msg = self_message
+			else
+				if(M.see_invisible<invisibility || T != loc) //if src is inside something or invisible to us,
+					if(blind_message) // then people see blind message if there is one, otherwise nothing.
+						msg = blind_message
+					else
+						continue
+				else if(T.lighting_object)
+					if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity)
+						if(blind_message) //if the light object is dark and not invisible to us, we see blind_message/nothing
+							msg = blind_message
+						else
+							continue
+			M.show_message(msg,1,blind_message,0)
 
-	for(var/mob/M in mob_viewers)
-		if(M.see_invisible < invisibility)
-			continue //can't view the invisible
-		var/msg = message
-		if(self_message && M==src)
-			msg = self_message
-		M.show_message(msg, 1)
-
-	if(blind_message)
-		var/list/mob_hearers = list()
-		for(var/mob/C in get_hearers_in_view(7, src))
-			if(C in mob_viewers)
-				continue
-			mob_hearers |= C
-		for(var/mob/MOB in mob_hearers)
-			MOB.show_message(blind_message, 2)
-
-// Show a message to all mobs who sees this atom
+// Show a message to all player mobs who sees this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
 /atom/proc/visible_message(message, blind_message)
-	var/list/mob_viewers = list()
-	var/list/possible_viewers = list()
-	mob_viewers |= viewers(src)
-	var/heard = get_hear(7, src)
-	for(var/atom/movable/A in heard)
-		possible_viewers |= recursive_hear_check(A)
-	for(var/mob/B in possible_viewers)
-		if(B in mob_viewers)
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	for(var/P in player_list)
+		var/mob/M = P
+		var/turf/U = get_turf(P)
+		if(!U)
 			continue
-		if(isturf(B.loc))
-			continue
-		var/turf/T = get_turf(B)
-		if(src in view(T))
-			mob_viewers |= B
-
-	for(var/mob/M in mob_viewers)
-		M.show_message(message, 1)
-
-	if(blind_message)
-		var/list/mob_hearers = list()
-		for(var/mob/C in get_hearers_in_view(7, src))
-			if(C in mob_viewers)
-				continue
-			mob_hearers |= C
-		for(var/mob/MOB in mob_hearers)
-			MOB.show_message(blind_message, 2)
+		if(get_dist(T,U)<7 && inLineOfSight(T.x,T.y, U.x,U.y,T.z))
+			var/msg = message
+			if(M.see_invisible<invisibility || T != loc)//if src is inside something or invisible to us,
+				if(blind_message) // then people see blind message if there is one, otherwise nothing.
+					msg = blind_message
+				else
+					continue
+			else if(T.lighting_object)
+				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
+					if(blind_message)
+						msg = blind_message
+					else
+						continue
+			M.show_message(msg,1,blind_message,2)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
