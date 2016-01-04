@@ -26,3 +26,7 @@ window.initialize = (dataString) -> # So we can get data inline or from the serv
 holder = document.getElementById "data"
 if holder.textContent != "{}" # If the JSON was inlined, load it.
   window.initialize(holder.textContent)
+else
+  byond = require "./byond"
+  byond.act holder.getAttribute("data-ref"), "tgui:initialize"
+  holder.remove()
