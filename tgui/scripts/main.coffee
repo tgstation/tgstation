@@ -18,12 +18,18 @@ WebFont.load
     testStrings:
       FontAwesome: "\uf240"
 
-tgui = require "./tgui"
-# Create the UI; this is just a Ractive component.
-window.tgui = new tgui
-  el: "#container"
-  data: ->
-    data = JSON.parse document.getElementById("data").textContent # Load initial data from the server.
-    alert "Initial data did not load correctly." if not data? or not (data.data? and data.config?)
-    data.adata = data.data # Spoof animated data as this is the first load.
-    data
+window.initialize = (dataString) ->
+  tgui = require "./tgui"
+  # Create the UI; this is just a Ractive component.
+  window.tgui = new tgui
+    el: "#container"
+    data: ->
+      data = JSON.parse dataString # Load initial data from the server.
+      data.adata = data.data # Spoof animated data as this is the first load.
+      data
+
+holder = document.getElementById "data"
+if holder.textContent != "{}"
+  window.initialize(holder.textContent)
+  holder.remove()
+  window.initialize = (_) ->

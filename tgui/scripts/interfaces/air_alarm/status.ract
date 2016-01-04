@@ -1,6 +1,6 @@
 <ui-display title='Air Status'>
   {{#if data.environment_data}}
-    {{#each data.environment_data}}
+    {{#each adata.environment_data}}
       <ui-section label='{{name}}'>
   	  <span class='{{danger_level == 2 ? "bad" : danger_level == 1 ? "average" : "good"}}'>
   		{{Math.fixed(value, 2)}}{{unit}}

@@ -89,6 +89,7 @@
   * optional data list The data to intialize the UI with.
  **/
 /datum/tgui/proc/open(list/data = null)
+	set waitfor = 0 // Don't wait on sleep()s.
 	if(!user.client)
 		return // Bail if there is no client.
 
@@ -105,7 +106,11 @@
 	if(width && height) // If we have a width and height, use them.
 		window_size = "size=[width]x[height];"
 
-	user << browse(get_html(), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
+	var/debugable = check_rights_for(user.client, R_DEBUG)
+	user << browse(get_html(debugable), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
+	if(!debugable)
+		sleep(1)
+		user << output(url_encode(get_json(initial_data)), "[window_id].browser:initialize") // If the window is not debugable (JSON not inlined), send the JSON.
 	winset(user, window_id, "on-close=\"uiclose \ref[src]\"") // Instruct the client to signal UI when the window is closed.
 	SStgui.on_open(src)
 
@@ -192,11 +197,18 @@
   *
   * Generate HTML for this UI.
   *
+  * optional bool inline If the JSON should be inlined into the HTML (for debugging).
+  *
   * return string UI HTML output.
  **/
-/datum/tgui/proc/get_html()
-	// Poplate HTML with JSON.
-	return replacetextEx(SStgui.basehtml, "{}", get_json(initial_data))
+/datum/tgui/proc/get_html(var/inline)
+	var/html
+	// Poplate HTML with JSON if we're supposed to inline.
+	if(inline)
+		html = replacetextEx(SStgui.basehtml, "{}", get_json(initial_data))
+	else
+		html = SStgui.basehtml
+	return html
 
  /**
   * private
@@ -207,19 +219,19 @@
  **/
 /datum/tgui/proc/get_config_data()
 	var/list/config_data = list(
-			"title"      = title,
-			"status"     = status,
-			"style"      = style,
-			"interface"  = interface,
-			"fancy"      = user.client.prefs.tgui_fancy,
-			"locked"     = user.client.prefs.tgui_lock,
-			"window"     = window_id,
-			"ref"        = "\ref[src]",
-			"user"       = list(
-				"name" = user.name,
-				"ref"  = "\ref[user]"
+			"title"     = title,
+			"status"    = status,
+			"style"     = style,
+			"interface" = interface,
+			"fancy"     = user.client.prefs.tgui_fancy,
+			"locked"    = user.client.prefs.tgui_lock,
+			"window"    = window_id,
+			"ref"       = "\ref[src]",
+			"user"      = list(
+				"name"  = user.name,
+				"ref"   = "\ref[user]"
 			),
-			"srcObject"  = list(
+			"srcObject" = list(
 				"name" = src_object.name,
 				"ref"  = "\ref[src_object]"
 			)
@@ -297,8 +309,8 @@
 	if(status <= UI_DISABLED && !force)
 		return // Cannot update UI, we have no visibility.
 
-	// Send the new JSON to the recieveUpdate() Javascript function.
-	user << output(url_encode(get_json(data)), "[window_id].browser:receiveUpdate")
+	// Send the new JSON to the update() Javascript function.
+	user << output(url_encode(get_json(data)), "[window_id].browser:update")
 
 
  /**
