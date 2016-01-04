@@ -1,6 +1,6 @@
 <link rel='ractive' href='./back.ract'>
 
-<n-display title='Alarm Thresholds' button>
+<ui-display title='Alarm Thresholds' button>
   {{#partial button}}
     <back/>
   {{/partial}}
@@ -16,12 +16,12 @@
       {{#each data.thresholds}}<tr>
         <th>{{{name}}}</th>
         {{#each settings}}<td>
-          <n-button action='threshold' params='{"env": "{{env}}", "var": "{{val}}"}'>{{Math.fixed(selected, 2)}}</n-button>
+          <ui-button action='threshold' params='{"env": "{{env}}", "var": "{{val}}"}'>{{Math.fixed(selected, 2)}}</ui-button>
         </td>{{/each}}
       </tr>{{/each}}
     </tbody>
   <table>
-</n-display>
+</ui-display>
 
 <style type='text/stylus'>
   th,td

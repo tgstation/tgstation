@@ -47,12 +47,13 @@
 	duration_overlay = ""
 	overlay_layer = 10
 
-/datum/weather/advanced_darkness/advanced_darkness/update_areas()
-	..()
+/datum/weather/advanced_darkness/update_areas()
 	for(var/area/A in impacted_areas)
 		if(stage == MAIN_STAGE)
+			A.invisibility = 0
 			A.opacity = 1
 		else
+			A.invisibility = 100
 			A.opacity = 0
 //Ash storms
 

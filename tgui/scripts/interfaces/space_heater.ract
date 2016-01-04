@@ -4,48 +4,48 @@ component.exports =
     text: require "../text"
 </script>
 
-<n-display title='Power' button>
+<ui-display title='Power' button>
   {{#partial button}}
     {{#if data.open}}
-      <n-button icon='eject' action='eject'>Eject</n-button>
+      <ui-button icon='eject' action='eject'>Eject</ui-button>
     {{/if}}
   {{/partial}}
-  <n-section label='Power'>
-    <n-button icon='{{data.on ? "power-off" : "close"}}'
+  <ui-section label='Power'>
+    <ui-button icon='{{data.on ? "power-off" : "close"}}'
       style='{{data.on ? "selected" : null}}'
-      action='power'>{{data.on ? "On" : "Off"}}</n-button>
-  </n-section>
-  <n-section label='Cell'>
+      action='power'>{{data.on ? "On" : "Off"}}</ui-button>
+  </ui-section>
+  <ui-section label='Cell'>
     {{#if data.hasPowercell}}
-      <n-bar min='0' max='100' value='{{data.powerLevel}}'>{{Math.fixed(adata.powerLevel)}}%</n-bar>
+      <ui-bar min='0' max='100' value='{{data.powerLevel}}'>{{Math.fixed(adata.powerLevel)}}%</ui-bar>
 		{{else}}
 			<span class='bad'>No Cell</span>
 		{{/if}}
-  </n-section>
-</n-display>
-<n-display title='Thermostat'>
-  <n-section label='Current Temperature'>
+  </ui-section>
+</ui-display>
+<ui-display title='Thermostat'>
+  <ui-section label='Current Temperature'>
 		<span>{{Math.round(adata.currentTemp)}}&deg;C</span>
-	</n-section>
-	<n-section label='Target Temperature'>
+	</ui-section>
+	<ui-section label='Target Temperature'>
 		<span>{{Math.round(adata.targetTemp)}}&deg;C</span>
-	</n-section>
+	</ui-section>
   {{#if data.open}}
-	<n-section label='Adjust Target'>
-      <n-button icon='fast-backward' state='{{data.targetTemp > data.minTemp ? null : "disabled"}}' action='target' params='{"target": -20}'/>
-      <n-button icon='backward' state='{{data.targetTemp > data.minTemp ? null : "disabled"}}' action='target' params='{"target": -5}'/>
-      <n-button icon='pencil' action='target' params='{"target": "custom"}'>Set</n-button>
-      <n-button icon='forward' state='{{data.targetTemp < data.maxTemp ? null : "disabled"}}' action='target' params='{"target": 5}'/>
-      <n-button icon='fast-forward' state='{{data.targetTemp < data.maxTemp ? null : "disabled"}}' action='target' params='{"target": 20}'/>
-	  </n-section>
+	<ui-section label='Adjust Target'>
+      <ui-button icon='fast-backward' state='{{data.targetTemp > data.minTemp ? null : "disabled"}}' action='target' params='{"target": -20}'/>
+      <ui-button icon='backward' state='{{data.targetTemp > data.minTemp ? null : "disabled"}}' action='target' params='{"target": -5}'/>
+      <ui-button icon='pencil' action='target' params='{"target": "custom"}'>Set</ui-button>
+      <ui-button icon='forward' state='{{data.targetTemp < data.maxTemp ? null : "disabled"}}' action='target' params='{"target": 5}'/>
+      <ui-button icon='fast-forward' state='{{data.targetTemp < data.maxTemp ? null : "disabled"}}' action='target' params='{"target": 20}'/>
+	  </ui-section>
 	{{/if}}
-  <n-section label='Mode'>
+  <ui-section label='Mode'>
 		{{#if data.open}}
-      <n-button icon='long-arrow-up' state='{{data.mode == "heat" ? "selected" : null}}' action='mode' params='{"mode": "heat"}'>Heat</n-button>
-      <n-button icon='long-arrow-down' state='{{data.mode == "cool" ? "selected" : null}}' action='mode' params='{"mode": "cool"}'>Cool</n-button>
-      <n-button icon='arrows-v' state='{{data.mode == "auto" ? "selected" : null}}' action='mode' params='{"mode": "auto"}'>Auto</n-button>
+      <ui-button icon='long-arrow-up' state='{{data.mode == "heat" ? "selected" : null}}' action='mode' params='{"mode": "heat"}'>Heat</ui-button>
+      <ui-button icon='long-arrow-down' state='{{data.mode == "cool" ? "selected" : null}}' action='mode' params='{"mode": "cool"}'>Cool</ui-button>
+      <ui-button icon='arrows-v' state='{{data.mode == "auto" ? "selected" : null}}' action='mode' params='{"mode": "auto"}'>Auto</ui-button>
 		{{else}}
 			<span>{{text.titleCase(data.mode)}}</span>
 		{{/if}}
-	</n-section>
-</n-display>
+	</ui-section>
+</ui-display>

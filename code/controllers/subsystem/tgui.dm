@@ -10,11 +10,11 @@ var/datum/subsystem/tgui/SStgui
 
 	var/list/open_uis = list() // A list of open UIs, grouped by src_object and ui_key.
 	var/list/processing_uis = list() // A list of processing UIs, not grouped.
-	var/html // The HTML template used by new UIs; minus initial data.
+	var/basehtml // The HTML template used by new UIs; minus initial data.
 
 
 /datum/subsystem/tgui/New()
-	html = file2text('tgui/tgui.html') // Read the HTML from disk.
+	basehtml = file2text('tgui/tgui.html') // Read the HTML from disk.
 
 	NEW_SS_GLOBAL(SStgui)
 

@@ -374,6 +374,8 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
+	if(!(istype(tturf, /turf/simulated)))
+		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
 		new /obj/effect/goliath_tentacle/original(tturf)

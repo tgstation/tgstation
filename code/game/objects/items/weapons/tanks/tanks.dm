@@ -1,7 +1,3 @@
-#define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
-#define TANK_MIN_RELEASE_PRESSURE 0
-#define TANK_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE*O2STANDARD)
-
 /obj/item/weapon/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
