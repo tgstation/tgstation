@@ -1236,6 +1236,6 @@ B --><-- A
 /atom/proc/contains(var/atom/A)
 	if(!A)
 		return 0
-	for(var/atom/location = A.loc, location, location = location.loc); // Semicolon is for the empty statement.
+	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
 			return 1

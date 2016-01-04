@@ -9,8 +9,8 @@ var/datum/subsystem/tgui/SStgui
 	can_fire = 1 // This needs to fire before round start.
 
 	var/list/open_uis = list() // A list of open UIs, grouped by src_object and ui_key.
-	var/list/processing_uis = list() // A list of processing UIs, not grouped.
-	var/basehtml // The HTML template used by new UIs; minus initial data.
+	var/list/processing_uis = list() // A list of processing UIs, ungrouped.
+	var/basehtml // The HTML base used for all UIs.
 
 
 /datum/subsystem/tgui/New()
@@ -19,9 +19,9 @@ var/datum/subsystem/tgui/SStgui
 	NEW_SS_GLOBAL(SStgui)
 
 /datum/subsystem/tgui/stat_entry()
-	..("P:[processing_uis.len]") // Show how many interfaces we have open/are processing.
+	..("P:[processing_uis.len]")
 
-/datum/subsystem/tgui/fire() // Process UIs.
+/datum/subsystem/tgui/fire()
 	for(var/thing in processing_uis)
 		var/datum/tgui/ui = thing
 		if(ui && ui.user && ui.src_object)
