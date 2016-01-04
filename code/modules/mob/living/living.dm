@@ -1009,6 +1009,7 @@ Thanks.
 	set category = "IC"
 
 	resting = !resting
+	update_canmove()
 	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"]</span>")
 
 /mob/living/proc/has_brain()
