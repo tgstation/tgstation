@@ -200,9 +200,9 @@
 
 /turf/simulated/floor/plating/lava/proc/burn_stuff()
 	. = 0
-	for(var/atom/movable/AM in contents)
-		if(istype(AM, /obj))
-			var/obj/O = AM
+	for(var/thing in contents)
+		if(istype(thing, /obj))
+			var/obj/O = thing
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
 				qdel(O)
 				continue
@@ -211,9 +211,9 @@
 				O.burn_state = FLAMMABLE //Even fireproof things burn up in lava
 			O.fire_act()
 			
-		else if (istype(AM, /mob/living))
+		else if (istype(thing, /mob/living))
 			. = 1
-			var/mob/living/L = AM
+			var/mob/living/L = thing
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.
 				L.adjust_fire_stacks(20)
