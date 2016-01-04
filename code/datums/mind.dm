@@ -36,6 +36,7 @@
 	var/active = 0
 
 	var/memory
+	var/attack_log
 
 	var/assigned_role
 	var/special_role
