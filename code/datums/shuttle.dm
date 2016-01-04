@@ -313,15 +313,12 @@
 			sleep(get_transit_delay())
 
 	if(destination_port)
-		if(move_to_dock(destination_port))
-			current_port = destination_port //Only change our location if we successfully moved to destination
-			after_flight() //Shake the shuttle, weaken unbuckled mobs, etc.
-
+		move_to_dock(destination_port)
 		destination_port = null
 
 	moving = 0
 
-//This is the proc you want to use to FORCE a shuttle to move. It always moves it, unless the shuttle or its area don't exist. Transit is skipped
+//This is the proc you want to use to FORCE a shuttle to move. It always moves it, unless the shuttle or its area don't exist. Transit is skipped, after_flight() is called
 /datum/shuttle/proc/move_to_dock(var/obj/structure/docking_port/D, var/ignore_innacuracy = 0) //A direct proc with no bullshit
 	if(!D) return
 	if(!linked_port) return
@@ -386,6 +383,10 @@
 				S.move_to_dock(our_moved_dock, ignore_innacuracy = 1)
 
 		log_game("[name] ([type]) moved to [D.areaname]")
+
+		current_port = D
+
+		after_flight() //Shake the shuttle, weaken unbuckled mobs, etc.
 
 		return 1
 
