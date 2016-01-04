@@ -282,11 +282,11 @@
 
 /mob/living/simple_animal/adjustFireLoss(amount)
 	if(damage_coeff[BURN])
-		adjustBruteLoss(amount*damage_coeff[BURN])
+		..(amount*damage_coeff[BURN])
 
 /mob/living/simple_animal/adjustOxyLoss(amount)
 	if(damage_coeff[OXY])
-		adjustBruteLoss(amount*damage_coeff[OXY])
+		..(amount*damage_coeff[OXY])
 
 /mob/living/simple_animal/adjustToxLoss(amount)
 	if(damage_coeff[TOX])
