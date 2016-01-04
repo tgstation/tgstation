@@ -46,7 +46,7 @@ var/global/datum/controller/vote/vote = new()
 	var/last_update    = 0
 	var/initialized    = 0
 	var/lastupdate     = 0
-	var/weighed        = FALSE // Whether to use weighed voting.
+	var/weighted        = FALSE // Whether to use weighted voting.
 
 /datum/controller/vote/New()
 	. = ..()
@@ -96,7 +96,7 @@ var/global/datum/controller/vote/vote = new()
 	voted.len = 0
 	voting.len = 0
 	current_votes.len = 0
-	weighed = FALSE
+	weighted = FALSE
 	update(1)
 
 /datum/controller/vote/proc/get_result()
@@ -141,7 +141,7 @@ var/global/datum/controller/vote/vote = new()
 
 	//get all options with that many votes and return them in a list
 	. = list()
-	if(weighed)
+	if(weighted)
 		. += pickweight(choices.Copy())
 	else
 		if(greatest_votes)
@@ -169,7 +169,7 @@ var/global/datum/controller/vote/vote = new()
 			else
 				feedback_set("map vote tie", "[feedbackanswer] chosen: [.]")
 
-		text += "<b>[weighed ? "Weighed " : ""]Vote Result: [.] with [choices[.]] vote\s</b>"
+		text += "<b>[weighted ? "Weighted " : ""]Vote Result: [.] with [choices[.]] vote\s</b>"
 		for(var/choice in choices)
 			if(. == choice) continue
 			text += "<br>\t [choice] had [choices[choice] != null ? choices[choice] : "0"] vote\s"
@@ -230,7 +230,7 @@ var/global/datum/controller/vote/vote = new()
 			return vote
 	return 0
 
-/datum/controller/vote/proc/initiate_vote(var/vote_type, var/initiator_key, var/popup = 0, var/weighed_vote = 0)
+/datum/controller/vote/proc/initiate_vote(var/vote_type, var/initiator_key, var/popup = 0, var/weighted_vote = 0)
 	if(!mode)
 		if(started_time != null && !check_rights(R_ADMIN))
 			var/next_allowed_time = (started_time + config.vote_delay)
@@ -273,7 +273,7 @@ var/global/datum/controller/vote/vote = new()
 		mode = vote_type
 		initiator = initiator_key
 		started_time = world.time
-		weighed  = weighed_vote
+		weighted  = weighted_vote
 		var/text = "[capitalize(mode)] vote started by [initiator]."
 		choices = shuffle(choices)
 		if(mode == "custom")
