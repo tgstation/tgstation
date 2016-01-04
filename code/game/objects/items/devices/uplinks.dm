@@ -176,10 +176,11 @@ var/list/world_uplinks = list()
 //Refund proc for the borg teleporter (later I'll make a general refund proc if there is demand for it)
 /obj/item/device/radio/uplink/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W))
-		for(var/datum/uplink_item/D in subtypesof(/datum/uplink_item))
-			if(D.item == W.type && D.refundable)
-				hidden_uplink.uses += D.cost
-				hidden_uplink.used_TC -= D.cost
+		for(var/path in subtypesof(/datum/uplink_item))
+			var/datum/uplink_item/D = path
+			if(initial(D.item) == W.type && initial(D.refundable))
+				hidden_uplink.uses += (D.cost)
+				hidden_uplink.used_TC -= initial(D.cost)
 				user << "<span class='notice'>[W] refunded.</span>"
 				qdel(W)
 				return
