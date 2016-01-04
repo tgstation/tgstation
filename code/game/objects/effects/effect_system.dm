@@ -738,10 +738,13 @@ steam.start() -- spawns the effect
 	var/ccolor = mix_color_from_reagents(reagents.reagent_list)
 	if(ccolor)
 		icon += ccolor
+	var/savedtemp
 	//playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 	if(reagents.has_reagent("water"))
 		var/turf/simulated/T = get_turf(src)
-		if(istype(T))
+//		var/datum/gas_mixture/old_air = T.return_air() - I've a feeling they'll want me to re-add this cap, but after holding a vote I've decided to let this one slide.
+//		savedtemp = old_air.temperature
+		if(istype(T) && savedtemp > T0C - 20)
 			var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
 			lowertemp.temperature = max( min(lowertemp.temperature-500,lowertemp.temperature / 2) ,0)
 			lowertemp.react()
@@ -751,7 +754,13 @@ steam.start() -- spawns the effect
 	spawn(120)
 		processing_objects.Remove(src)
 		sleep(30)
+//		var/turf/simulated/T = get_turf(src)
+//		var/datum/gas_mixture/local_air = T.return_air()
 		flick("[icon_state]-disolve", src)
+//		if((local_air.temperature  < T0C - 20)&&(savedtemp > T0C - 20)) //ie, we have over-chilled
+//			local_air.temperature = T0C - 20
+//		else if ((local_air.temperature  < T0C - 20)&&(savedtemp < T0C - 20) && savedtemp) //ie it chilled when it shouldn't have
+//			local_air.temperature = savedtemp
 		sleep(5)
 		qdel(src)
 	AddToProfiler()

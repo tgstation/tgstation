@@ -72,7 +72,8 @@
 			obscured |= slot_w_uniform
 		if(wear_suit.flags_inv & HIDESHOES)
 			obscured |= slot_shoes
-
+		if(wear_suit.flags_inv & HIDEBAG)
+			obscured |= slot_back
 	if(head)
 		if(head.flags_inv & HIDEMASK)
 			obscured |= slot_wear_mask

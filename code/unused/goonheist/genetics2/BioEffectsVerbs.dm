@@ -47,7 +47,7 @@
 			usr.verbs += /proc/bioproc_cryokinesis
 		usr.verbs -= /proc/bioproc_cryokinesis_cd
 
-	C.bodytemperature = -1500
+	C.bodytemperature = T0C + 30
 	if(C.burning) C.burning = 0
 
 	C.visible_message("<span class='warning'>A cloud of fine ice crystals engulfs [C]!</span>")

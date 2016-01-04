@@ -1483,7 +1483,7 @@ datum
 
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 				for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
-					M.bodytemperature -= 240
+					M.bodytemperature -= 6
 					to_chat(M, "<span class='notice'>You feel a chill!</span>")
 
 //Orange

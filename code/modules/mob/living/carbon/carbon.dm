@@ -16,10 +16,10 @@
 
 	if(.)
 		if(nutrition && stat != DEAD)
-			burn_calories(HUNGER_FACTOR / 10)
+			burn_calories(HUNGER_FACTOR / 20)
 
 			if(m_intent == "run")
-				burn_calories(HUNGER_FACTOR / 10)
+				burn_calories(HUNGER_FACTOR / 20)
 		update_minimap()
 
 /mob/living/carbon/attack_animal(mob/living/simple_animal/M as mob)//humans and slimes have their own

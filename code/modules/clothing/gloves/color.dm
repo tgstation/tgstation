@@ -77,7 +77,7 @@
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
 /obj/item/clothing/gloves/black
-	desc = "These gloves are quite insulative!"
+	desc = "These gloves are quite comfortable, and will keep you warm!"
 	name = "black gloves"
 	icon_state = "black"
 	item_state = "black"

@@ -25,6 +25,13 @@
 	update_brightness()
 	update_icon()
 
+/obj/item/clothing/head/helmet/space/rig/ghettorig
+	name = "jury-rigged fire helmet"
+	desc = "Let me give it to you straight like a pear cider made from 100% pears, this helmet isn't particularly good"
+	icon_state = "ghettorig"
+	_color = "ghetto"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
 /obj/item/clothing/head/helmet/space/rig/examine(mob/user)
 
 	..()
@@ -83,6 +90,14 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/device/rcd, /obj/item/weapon/wrench/socket)
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	pressure_resistance = 200 * ONE_ATMOSPHERE
+
+
+/obj/item/clothing/suit/space/rig/ghettorig
+	name = "jury-rigged firesuit"
+	icon_state = "ghettorig"
+	item_state = "ghettorig"
+	desc = "Let me give it to you straight like a pear cider made from 100% pears, this space suit isn't particularly good"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/elite

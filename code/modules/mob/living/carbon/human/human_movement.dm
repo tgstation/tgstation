@@ -67,7 +67,7 @@
 		if (bodytemperature < 183.222)
 			tally += (283.222 - bodytemperature) / 10 * 1.75
 	else if (undergoing_hypothermia())
-		tally += (1/2)*undergoing_hypothermia()
+		tally += 2*undergoing_hypothermia()
 	var/skate_bonus = 0
 	var/disease_slow = 0
 	for(var/obj/item/weapon/bomberman/dispenser in src)

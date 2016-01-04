@@ -77,13 +77,7 @@
 
 	//Nutrition decrease
 	if(stat != 2)
-		//Nutrition decreases slower when you're sleeping
-		var/reduce_nutrition_by = HUNGER_FACTOR
-
-		if(sleeping)
-			reduce_nutrition_by *= 0.25 //Reduce hunger factor by 75%
-
-		burn_calories(reduce_nutrition_by)
+		burn_calories(HUNGER_FACTOR)
 
 	if(nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat

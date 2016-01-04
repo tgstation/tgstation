@@ -218,13 +218,17 @@
 			else									fire.icon_state = "fire0"
 
 		if(bodytemp)
-			if(!undergoing_hypothermia())
+			if(!(get_thermal_loss(loc.return_air()) > 0.1) || bodytemperature > T0C + 50)
 				switch(bodytemperature) //310.055 optimal body temp
 					if(370 to INFINITY)		bodytemp.icon_state = "temp4"
 					if(350 to 370)			bodytemp.icon_state = "temp3"
 					if(335 to 350)			bodytemp.icon_state = "temp2"
 					if(320 to 335)			bodytemp.icon_state = "temp1"
-					if(0   to 320)			bodytemp.icon_state = "temp0"
+					if(305 to 320)			bodytemp.icon_state = "temp0"
+					if(303 to 305)			bodytemp.icon_state = "temp-1"
+					if(300 to 303)			bodytemp.icon_state = "temp-2"
+					if(290 to 295)			bodytemp.icon_state = "temp-3"
+					if(0   to 290)			bodytemp.icon_state = "temp-4"
 			else if(is_vessel_dilated() && undergoing_hypothermia() == MODERATE_HYPOTHERMIA)
 				bodytemp.icon_state = "temp4" // yes, this is intentional - this is the cause of "paradoxical undressing", ie feeling 2hot when hypothermic
 			else

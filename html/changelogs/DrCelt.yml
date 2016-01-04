@@ -1,2 +1,12 @@
 author: DrCelt
-changes: []
+changes: 
+  - experiment: Added Hypothermia - see the wiki for symptoms
+  - experiment: PLEASE USE THE THERMAL HOMEOSTASIS MACHINE AFTER TAKING SOMEONE OUT OF CRYO.
+  - rscdel: removes useless variables heat_protection and cold_protection
+  - rscadd: added a new variable heat_conductivity to all items determining how fast they conduct heat away from you
+  - experiment: refactored how heat transfer away from humans worked
+  - rscadd: added a machine that stabilises body temperature
+  - tweak: nerfs anything that I can find that does cold damage, but overall makes them more deadly including but not limited to coldingtons, cryokinesis, showers, goliaths, temperature gun, and chemicals which chill people
+  - rscadd: adds space blankets and advanced space blankets
+  - rscadd: adds ghetto rig suits by applying space blankets and cables to firesuits & gas masks.
+  - rscadd: probably a bunch of other stuff.

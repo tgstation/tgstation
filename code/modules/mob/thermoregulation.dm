@@ -1,6 +1,6 @@
 /mob/living/proc/burn_calories(var/amount)
 	if(nutrition - amount > 0)
-		var/heatmodifier = 0.6
+		var/heatmodifier = 0.7
 		nutrition = max(nutrition - amount,0)
 		if((M_FAT in mutations))
 			heatmodifier = heatmodifier*2
@@ -10,9 +10,10 @@
 		return 0
 
 /mob/living/proc/sweat(var/amount)
-	if(nutrition - amount > 0)
+	var/sustenance = amount / 50
+	if(nutrition - sustenance > 0)
 		var/heatmodifier = 1
-		nutrition = max(nutrition - amount,0)
+		nutrition = max(nutrition - sustenance,0)
 		if((M_FAT in mutations))
 			heatmodifier = heatmodifier*2
 		bodytemperature -= amount * heatmodifier

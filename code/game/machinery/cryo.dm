@@ -431,8 +431,8 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	else
 		occupant.forceMove(exit)
 	occupant.reset_view()
-	if (occupant.bodytemperature < 261 && occupant.bodytemperature > 140) //Patch by Aranclanos to stop people from taking burn damage after being ejected
-		occupant.bodytemperature = 261
+	if (occupant.bodytemperature < T0C+23)
+		occupant.bodytemperature = T0C+23
 //	occupant.metabslow = 0
 	occupant = null
 	update_icon()
@@ -473,11 +473,12 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	if(usr == occupant)//If the user is inside the tube...
 		if (usr.isDead())//and he's not dead....
 			return
-		to_chat(usr, "<span class='notice'>Release sequence activated. This will take two minutes.</span>")
-		sleep(1200)
+		to_chat(usr, "<span class='notice'>Release sequence activated. This will take thirty seconds.</span>")
+		sleep(300)
 		if(!src || !usr || !occupant || (occupant != usr)) //Check if someone's released/replaced/bombed him already
 			return
 		go_out()//and release him from the eternal prison.
+		occupant.bodytemperature = T0C+25 // because they've suffered enough.
 	else
 		if (usr.isUnconscious() || istype(usr, /mob/living/simple_animal))
 			return

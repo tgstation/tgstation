@@ -120,7 +120,7 @@
 		//Dizziness
 		if(dizziness || undergoing_hypothermia() == MODERATE_HYPOTHERMIA)
 			var/wasdizzy = 1
-			if(undergoing_hypothermia() == MODERATE_HYPOTHERMIA && !dizziness && prob(25))
+			if(undergoing_hypothermia() == MODERATE_HYPOTHERMIA && !dizziness && prob(50))
 				dizziness = 120
 				wasdizzy = 0
 			var/client/C = client
@@ -158,11 +158,7 @@
 				dizziness = 0
 
 		//Jitteryness
-		if(jitteriness || undergoing_hypothermia() == MILD_HYPOTHERMIA)
-			var/wasjittery = 1
-			if(undergoing_hypothermia() == MILD_HYPOTHERMIA && !jitteriness && prob(25))
-				jitteriness = 120
-				wasjittery = 0
+		if(jitteriness)
 			var/amplitude = min(8, (jitteriness/70) + 1)
 			var/pixel_x_diff = rand(-amplitude, amplitude)
 			var/pixel_y_diff = rand(-amplitude, amplitude)
@@ -179,8 +175,6 @@
 				pixel_y_diff = rand(-amplitude, amplitude)
 				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
 				animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
-			if(!wasjittery)
-				jitteriness = 0
 		//Flying
 		if(flying)
 			spawn()

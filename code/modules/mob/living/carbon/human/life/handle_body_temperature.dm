@@ -28,6 +28,6 @@
 		handle_hypothermia()
 	if(bodytemperature > 310.15)
 		//We totally need a sweat system cause it totally makes sense...~ - Now we do, sort of!
-		var/recovery_amt = Clamp((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR),body_temperature_difference,BODYTEMP_AUTORECOVERY_MAXIMUM)
+		var/recovery_amt = min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR),BODYTEMP_AUTORECOVERY_MAXIMUM)
 		//log_debug("Hot. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
 		sweat(recovery_amt)

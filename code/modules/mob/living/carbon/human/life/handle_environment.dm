@@ -14,9 +14,9 @@
 
 	//After then, it reacts to the surrounding atmosphere based on your thermal protection
 	if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
-		if(loc_temp < bodytemperature)
+		if(loc_temp < get_skin_temperature())
 			var/thermal_loss = get_thermal_loss(environment)
-			bodytemperature -= abs(thermal_loss)
+			bodytemperature -= thermal_loss
 		else
 			var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(thermal_protection < 1)
@@ -89,13 +89,16 @@
 	if(loc_temp < bodytemperature)
 		// We're going to try and just use exposed area(temperature difference)/cold divisor, and assume we're only conducting.
 		var/thermal_loss = (1-get_cold_protection())  				// How much of your skin is exposed.
-		thermal_loss	*= environment.total_moles/103.934			// Multiplied by how many moles are in the environment over 103.934, the normal value of a station - this means space will not take heat from you.
+		if(environment.total_moles > 103.934 || !IS_SPACE_COLD)
+			thermal_loss	*= environment.total_moles/103.934		// Multiplied by how many moles are in the environment over 103.934, the normal value of a station. - More moles means more heat transfer, that's basic science.
 		thermal_loss	*= (get_skin_temperature() - loc_temp)		// Multiplied by the difference between you and the room temperature
 		thermal_loss	/= BODYTEMP_COLD_DIVISOR					// Divided by the cold_divisor
 		return thermal_loss
 	return 0
 
 /mob/living/carbon/human/proc/get_loc_temp(var/datum/gas_mixture/environment)
+	if(!environment)
+		environment = loc.return_air()
 	var/loc_temp = T0C
 	if(istype(loc, /obj/mecha))
 		var/obj/mecha/M = loc

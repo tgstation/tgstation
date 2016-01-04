@@ -30,7 +30,23 @@
 /obj/item/clothing/suit/fire/firefighter
 	icon_state = "firesuit"
 	item_state = "firefighter"
+	var/stage = 0
 
+/obj/item/clothing/suit/fire/firefighter/attackby(obj/item/W,mob/user)
+	..()
+	if(istype(W,/obj/item/clothing/suit/spaceblanket) && !stage)
+		stage = 1
+		to_chat(user,"<span class='notice'>you add \the [W] to \the [src]</span>")
+		qdel(W)
+	if(istype(W,/obj/item/stack/cable_coil) && stage == 1)
+		var/obj/item/stack/cable_coil/C = W
+		if(C.amount <= 4)
+			return
+		to_chat(user,"<span class='notice'>you tie up \the [src] with some of \the [C]</span>")
+		C.use(4)
+		var/obj/ghetto = new /obj/item/clothing/suit/space/rig/ghettorig (src.loc)
+		user.put_in_hands(ghetto)
+		qdel(src)
 
 /obj/item/clothing/suit/fire/heavy
 	name = "firesuit"
