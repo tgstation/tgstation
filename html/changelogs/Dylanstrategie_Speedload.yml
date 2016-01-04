@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+- tweak: Change Syndicate ammo box to contain a loaded speedloader, instead of an empty speedloader and an ammo box (with as many bullets)
