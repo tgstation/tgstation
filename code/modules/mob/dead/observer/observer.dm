@@ -475,43 +475,49 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
-	set name = "Follow" // "Haunt"
-	set desc = "Follow and haunt a mob."
+	set name = "Haunt" //Flavor name for following mobs
+	set desc = "Haunt a mob, stalking them everywhere they go."
 
 	var/list/mobs = getmobs()
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
-	ManualFollow(target)
+	manual_follow(target)
 
-// This is the ghost's follow verb with an argument
-/mob/dead/observer/proc/ManualFollow(var/atom/movable/target)
+/mob/dead/observer/verb/end_follow()
+	set category = "Ghost"
+	set name = "Stop Haunting"
+	set desc = "Stop haunting a mob. They weren't worth your eternal time anyways."
+
+	if(locked_to)
+		manual_stop_follow(locked_to)
+
+//This is the ghost's follow verb with an argument
+/mob/dead/observer/proc/manual_follow(var/atom/movable/target)
 	if(target)
 		var/turf/targetloc = get_turf(target)
 		var/area/targetarea = get_area(target)
 		if(targetarea && targetarea.anti_ethereal && !isAdminGhost(usr))
 			to_chat(usr, "<span class='sinister'>You can sense a sinister force surrounding that mob, your spooky body itself refuses to follow it.</span>")
 			return
-		if(targetloc.holy && ((src.invisibility == 0) || (src.mind in ticker.mode.cult)))
+		if(targetloc.holy && ((!invisibility) || (mind in ticker.mode.cult)))
 			to_chat(usr, "<span class='warning'>You cannot follow a mob standing on holy grounds!</span>")
 			return
 		if(target != src)
-			if(following && following == target)
-				return
-			following = target
-			to_chat(src, "<span class='notice'>Now following [target]</span>")
-			spawn(0)
-				var/turf/pos = get_turf(src)
-				while(loc == pos && target && following == target && client)
-					var/turf/T = get_turf(target)
-					if(!T)
-						break
-					// To stop the ghost flickering.
-					if(loc != T)
-						loc = T
-					pos = loc
-					sleep(15)
-				following = null
+			if(locked_to)
+				if(locked_to == target) //Trying to follow same target, don't do anything
+					return
+				manual_stop_follow(locked_to) //So you can switch follow target on a whim
+			target.lock_atom(src)
+			to_chat(src, "<span class='sinister'>You are now haunting \the [target]</span>")
 
+/mob/dead/observer/proc/manual_stop_follow(var/atom/movable/target)
+
+	if(!target)
+		to_chat(src, "<span class='warning'>You are not currently haunting anyone.</span>")
+		return
+	else
+		to_chat(src, "<span class='sinister'>You are no longer haunting \the [target].</span>")
+		target.unlock_atom(src)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"

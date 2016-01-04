@@ -9,7 +9,7 @@
 
 	// Things you might plausibly want to follow
 	if((ismob(A) && A != src) || istype(A,/obj/machinery/bot) || istype(A,/obj/machinery/singularity))
-		ManualFollow(A)
+		manual_follow(A)
 
 	// Otherwise jump
 	else
