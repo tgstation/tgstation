@@ -698,18 +698,3 @@
 	new /obj/item/ammo_casing/shotgun/buckshot(src)
 	new /obj/item/ammo_casing/shotgun/buckshot(src)
 	new /obj/item/ammo_casing/shotgun/buckshot(src)
-
-/obj/item/weapon/storage/box/beanbag
-	name = "box of beanbag slugs"
-	desc = "A box full of beanbag slugs."
-	icon_state = "rubbershot_box"
-
-
-/obj/item/weapon/storage/box/beanbag/New()
-	..()
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
