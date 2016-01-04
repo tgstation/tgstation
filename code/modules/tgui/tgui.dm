@@ -9,7 +9,7 @@
  **/
 /datum/tgui
 	var/mob/user // The mob who opened/is using the UI.
-	var/atom/movable/src_object // The object which owns the UI.
+	var/datum/src_object // The object which owns the UI.
 	var/title // The title of te UI.
 	var/ui_key // The ui_key of the UI. This allows multiple UIs for one src_object.
 	var/window_id // The window_id for browse() and onclose().
@@ -40,7 +40,7 @@
   * Create a new UI.
   *
   * required user mob The mob who opened/is using the UI.
-  * required src_object atom/movable The object which owns the UI.
+  * required src_object datum The object or datum which owns the UI.
   * required ui_key string The ui_key of the UI.
   * required interface string The interface used to render the UI.
   * optional title string The title of the UI.
@@ -52,7 +52,7 @@
   *
   * return datum/tgui The requested UI.
  **/
-/datum/tgui/New(mob/user, atom/movable/src_object, ui_key, interface, \
+/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, \
 					title, width = 0, height = 0, \
 					atom/ref = null, datum/tgui/master_ui = null, \
 					datum/ui_state/state = default_state)
@@ -140,6 +140,9 @@
 	SStgui.on_close(src)
 	for(var/datum/tgui/child in children) // Loop through and close all children.
 		child.close()
+	children.Cut()
+	state = null
+	master_ui = null
 
  /**
   * public
@@ -232,7 +235,7 @@
 				"ref"   = "\ref[user]"
 			),
 			"srcObject" = list(
-				"name" = src_object.name,
+				"name" = "[src_object]",
 				"ref"  = "\ref[src_object]"
 			)
 		)
@@ -333,7 +336,8 @@
   * optional push bool Push an update to the UI (an update is always sent for UI_DISABLED).
  **/
 /datum/tgui/proc/update_status(push = 0)
-	var/status = src_object.ui_state(user, state)
+	var/obj/host = src_object.ui_host()
+	var/status = host.ui_status(user, state)
 	if(master_ui)
 		status = min(status, master_ui.status)
 

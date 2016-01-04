@@ -6,21 +6,21 @@
 
 /var/global/datum/ui_state/notcontained_state/notcontained_state = new()
 
-/datum/ui_state/notcontained_state/can_use_topic(atom/movable/src_object, mob/user)
+/datum/ui_state/notcontained_state/can_use_topic(atom/src_object, mob/user)
 	. = user.shared_ui_interaction(src_object)
 	if(. > UI_CLOSE)
 		return min(., user.notcontained_can_use_topic(src_object))
 
-/mob/proc/notcontained_can_use_topic(atom/movable/src_object)
+/mob/proc/notcontained_can_use_topic(src_object)
 	return UI_CLOSE
 
-/mob/living/notcontained_can_use_topic(atom/movable/src_object)
+/mob/living/notcontained_can_use_topic(atom/src_object)
 	if(src in src_object.contents)
 		return UI_CLOSE // Close if we're inside it.
 	return default_can_use_topic(src_object)
 
-/mob/living/silicon/notcontained_can_use_topic(atom/movable/src_object)
+/mob/living/silicon/notcontained_can_use_topic(src_object)
 	return default_can_use_topic(src_object) // Silicons use default bevhavior.
 
-/mob/living/simple_animal/drone/notcontained_can_use_topic(atom/movable/src_object)
+/mob/living/simple_animal/drone/notcontained_can_use_topic(src_object)
 	return default_can_use_topic(src_object) // Drones use default bevhavior.

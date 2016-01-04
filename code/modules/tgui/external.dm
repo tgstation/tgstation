@@ -17,7 +17,7 @@
   * optional master_ui datum/tgui The parent UI.
   * optional state datum/ui_state The state used to determine status.
  **/
-/atom/movable/proc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, \
+/datum/proc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, \
 								force_open = 0, datum/tgui/master_ui = null, \
 								datum/ui_state/state = default_state)
 	return -1 // Sorta implemented.
@@ -32,7 +32,7 @@
   *
   * return list Data to be sent to the UI.
  **/
-/atom/movable/proc/get_ui_data(mob/user)
+/datum/proc/get_ui_data(mob/user)
 	return list() // Not implemented.
 
 
@@ -47,7 +47,7 @@
   *
   * return bool If the UI should be updated or not.
  **/
-/atom/movable/proc/ui_act(action, list/params)
+/datum/proc/ui_act(action, list/params)
 	return // Not implemented.
 
 
@@ -55,9 +55,10 @@
   * private
   *
   * The UI's host object (usually src_object).
-  * Used internally by ui_state(s).
+  * This allows modules/datums to have the UI attached to them,
+  * and be a part of another object.
  **/
-/atom/proc/ui_host()
+/datum/proc/ui_host()
 	return src
 
  /**

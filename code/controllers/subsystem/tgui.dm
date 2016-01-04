@@ -19,7 +19,7 @@ var/datum/subsystem/tgui/SStgui
 	NEW_SS_GLOBAL(SStgui)
 
 /datum/subsystem/tgui/stat_entry()
-	..("O:[open_uis.len]|P:[processing_uis.len]") // Show how many interfaces we have open/are processing.
+	..("P:[processing_uis.len]") // Show how many interfaces we have open/are processing.
 
 /datum/subsystem/tgui/fire() // Process UIs.
 	for(var/thing in processing_uis)

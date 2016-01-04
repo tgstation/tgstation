@@ -2,6 +2,7 @@
 <link rel='ractive' href='./components/titlebar.ract'>
 
 <script type='text/coffeescript'>
+byond      = require "./byond"
 dragresize = require "./dragresize"
 
 component.exports =
@@ -42,6 +43,8 @@ component.exports =
       if newkey?
         @el.classList.add newkey
         document.body.classList.add newkey
+  oncomplete: ->
+    byond.winset "mapwindow.map", "focus", true # Give focus back to the map.
 </script>
 
 <titlebar>{{{config.title}}}</titlebar>
