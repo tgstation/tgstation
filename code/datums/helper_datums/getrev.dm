@@ -18,7 +18,7 @@ var/global/datum/getrev/revdata = new()
 				if(unix_time)
 					date = unix2date(unix_time)
 			break
-	world.log << "Running /tg/ revision:"
+	world.log << "Running CP revision:"
 	world.log << date
 	world.log << revision
 	world.log << "Current map - [MAP_NAME]" //can't think of anywhere better to put it

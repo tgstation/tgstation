@@ -6,7 +6,7 @@
 #else
 	hub_password = "SORRYNOPASSWORD"
 #endif
-	name = "/tg/ Station 13"
+	name = "Cocktail Party Station 13"
 
 /*
 This is for any host that would like their server to appear on the main SS13 hub.
