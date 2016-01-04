@@ -146,9 +146,8 @@
 
 	if (href_list["remove_tank"])
 		if(holding)
-			holding.loc = loc
-			holding = null
-		update_icon()
+			eject_holding()
+			update_icon()
 
 	if (href_list["pressure_adj"])
 		var/diff = text2num(href_list["pressure_adj"])
@@ -157,3 +156,9 @@
 
 	src.add_fingerprint(usr)
 	return 1
+
+/obj/machinery/portable_atmospherics/pump/AltClick()
+	if(usr.canmove && !usr.isUnconscious() && !usr.restrained() && Adjacent(usr) && usr.dexterity_check())
+		eject_holding()
+		return
+	return ..()

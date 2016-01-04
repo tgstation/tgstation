@@ -199,8 +199,7 @@
 
 	if(href_list["remove_tank"])
 		if(holding)
-			holding.loc = loc
-			holding = null
+			eject_holding()
 
 	if(href_list["volume_adj"])
 		var/diff = text2num(href_list["volume_adj"])
@@ -208,3 +207,9 @@
 
 	src.add_fingerprint(usr)
 	return 1
+
+/obj/machinery/portable_atmospherics/scrubber/AltClick()
+	if(usr.canmove && !usr.isUnconscious() && !usr.restrained() && Adjacent(usr) && usr.dexterity_check())
+		eject_holding()
+		return
+	return ..()

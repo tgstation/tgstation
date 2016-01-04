@@ -245,6 +245,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			else
 				beaker.loc = beaker:holder
 		beaker = null
+		return 1
+
+/obj/machinery/chem_dispenser/AltClick()
+	if(usr.canmove && !usr.isUnconscious() && !usr.restrained() && Adjacent(usr) && beaker && !(stat & (NOPOWER|BROKEN) && usr.dexterity_check()))
+		detach()
+		return
+	return ..()
 
 /obj/machinery/chem_dispenser/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(beaker)
@@ -1888,6 +1895,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	set name = "Flush"
 	set category = "Object"
 	set src in view(1)
+
+	if(!usr.canmove || usr.isUnconscious() || usr.restrained() || !usr.dexterity_check()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
+		return
+
 	add_fingerprint(usr)
 	to_chat(usr, "<span class='notice'>\The [src] groans as it spits out containers.</span>")
 	while(cans.len>0 && beaker.reagents.reagent_list.len>0)
@@ -1905,8 +1916,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return
 
 /obj/structure/centrifuge/AltClick()
-	if(Adjacent(usr) && !usr.isUnconscious() && !usr.restrained())
+	if(Adjacent(usr))
 		flush()
+		return
+	return ..()
 
 /obj/structure/centrifuge/proc/detach()
 	if(beaker)

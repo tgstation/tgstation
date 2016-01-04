@@ -19,6 +19,12 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 	if (N)
 		amount_per_transfer_from_this = N
 
+/obj/item/weapon/reagent_containers/AltClick()
+	if(loc == usr && possible_transfer_amounts)
+		set_APTFT()
+		return
+	return ..()
+
 /obj/item/weapon/reagent_containers/New()
 	..()
 	create_reagents(volume)
