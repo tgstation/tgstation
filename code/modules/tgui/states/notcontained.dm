@@ -15,7 +15,7 @@
 	return UI_CLOSE
 
 /mob/living/notcontained_can_use_topic(atom/src_object)
-	if(src in src_object.contents)
+	if(src_object.contains(src))
 		return UI_CLOSE // Close if we're inside it.
 	return default_can_use_topic(src_object)
 

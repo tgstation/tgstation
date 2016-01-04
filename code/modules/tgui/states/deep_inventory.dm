@@ -1,7 +1,7 @@
  /**
   * tgui state: deep_inventory_state
   *
-  * Checks that the src_object is in the user's fist-level (backpack, webbing, etc) inventory.
+  * Checks that the src_object is in the user's deep (backpack, box, toolbox, etc) inventory.
  **/
 
 /var/global/datum/ui_state/deep_inventory_state/deep_inventory_state = new()
