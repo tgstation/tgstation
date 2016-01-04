@@ -453,7 +453,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/blunt/cruciatus
 
-/obj/item/clothing/mask/cigarette/blunt/cruciatus/New()
+/*/obj/item/clothing/mask/cigarette/blunt/cruciatus/New()
 	. = ..()
 	reagents.clear_reagents()
 	reagents.add_reagent("nutriment", 1)
@@ -462,7 +462,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	reagents.add_reagent("bicaridine", 5)
 	reagents.add_reagent("toxin", 5)
 	reagents.add_reagent("spiritbreaker", 10)
-	update_brightness()
+	update_brightness()*/
 
 /obj/item/clothing/mask/cigarette/blunt/cruciatus/rolled
 
@@ -472,7 +472,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	icon_state = "dblunt"
 	overlay_on = "dbluntlit"
 
-/obj/item/clothing/mask/cigarette/blunt/deus/New()
+/*/obj/item/clothing/mask/cigarette/blunt/deus/New()
 	. = ..()
 	reagents.clear_reagents()
 	reagents.add_reagent("nutriment", 1)
@@ -480,7 +480,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	reagents.add_reagent("synaptizine", 7)
 	reagents.add_reagent("hyperzine", 5)
 	reagents.add_reagent("space_drugs", 5)
-	update_brightness()
+	update_brightness()*/
 
 /obj/item/clothing/mask/cigarette/blunt/deus/rolled
 
