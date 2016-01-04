@@ -31,7 +31,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/meat
 	name = "meatbread loaf"
-	desc = "The culinary base of every self-respecting eloquen/tg/entleman."
+	desc = "The culinary base of every self-respecting eloquent gentleman."
 	icon_state = "meatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
@@ -44,7 +44,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/xenomeat
 	name = "xenomeatbread loaf"
-	desc = "The culinary base of every self-respecting eloquen/tg/entleman. Extra Heretical."
+	desc = "The culinary base of every self-respecting eloquent gentleman. Extra Heretical."
 	icon_state = "xenomeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/xenomeat
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)

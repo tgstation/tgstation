@@ -457,7 +457,7 @@
 		var/datum/effect_system/spark_spread/s = new
 		s.set_up(2, 1, src)
 		s.start()
-		owner.visible_message("The [attack_text] sparks harmlessly off [owner]'s shields!")
+		owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!</span>")
 		current_charges--
 		recharge_cooldown = world.time + recharge_delay
 		SSobj.processing |= src
