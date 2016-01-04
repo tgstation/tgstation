@@ -252,6 +252,7 @@
 	json_data["config"] = get_config_data()
 	if(!isnull(data))
 		json_data["data"] = data
+		json_data["adata"] = data
 
 	// Generate the JSON; replace bad characters.
 	var/json = JSON.stringify(json_data)

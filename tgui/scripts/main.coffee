@@ -6,30 +6,23 @@ require "./math"
 
 
 Ractive = require "ractive"
-# Set Ractive debug mode based on if we're minified or not.
-Ractive.DEBUG = /minified/.test (minified) ->
+Ractive.DEBUG = /minified/.test (minified) -> # Set Ractive debug mode based on if we're minified or not.
 
 WebFont = require "webfontloader"
-# Load FontAwesome asynchronously from CDNJS.
-WebFont.load
+WebFont.load # Load FontAwesome asynchronously from CDNJS.
   custom:
     families: ["FontAwesome"]
     urls: ["https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"]
     testStrings:
       FontAwesome: "\uf240"
 
-window.initialize = (dataString) ->
-  tgui = require "./tgui"
-  # Create the UI; this is just a Ractive component.
-  window.tgui = new tgui
-    el: "#container"
-    data: ->
-      data = JSON.parse dataString # Load initial data from the server.
-      data.adata = data.data # Spoof animated data as this is the first load.
-      data
+tgui = require "./tgui.ract"
+window.initialize = (dataString) -> # So we can get data inline or from the server.
+  return if window.tgui # Just incase we get called again; only do this once.
+  window.tgui = new tgui # Create the UI; this is just a Ractive component.
+    el: "#container" # Attach the UI to the existing container div.
+    data: -> data = JSON.parse dataString # Load initial data from the server.
 
 holder = document.getElementById "data"
-if holder.textContent != "{}"
+if holder.textContent != "{}" # If the JSON was inlined, load it.
   window.initialize(holder.textContent)
-  holder.remove()
-  window.initialize = (_) ->
