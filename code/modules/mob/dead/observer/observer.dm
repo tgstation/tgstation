@@ -843,31 +843,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	..()
 
-	if (href_list["follow"])
+	if(href_list["follow"])
 		var/target = locate(href_list["follow"])
-		if(following == target) return
-		var/mob/A = usr;
-		to_chat(A, "You are now following [target]")
-		if(istype(target,/mob/living/silicon/ai))
-			var/mob/living/silicon/ai/M = target
-			target = M.eyeobj
-		if(target && target != usr)
-			following = target
-			spawn(0)
-				var/turf/pos = get_turf(A)
-				while(A.loc == pos)
-
-					var/turf/T = get_turf(target)
-					if(!T)
-						break
-					if(following != target)
-						break
-					if(!client)
-						break
-					A.loc = T
-					pos = A.loc
-					sleep(15)
-				following = null
+		if(target)
+			manual_follow(target)
 
 	if (href_list["jump"])
 		var/mob/target = locate(href_list["jump"])
