@@ -846,6 +846,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(href_list["follow"])
 		var/target = locate(href_list["follow"])
 		if(target)
+			if(isAI(target))
+				var/mob/living/silicon/ai/M = target
+				target = M.eyeobj
 			manual_follow(target)
 
 	if (href_list["jump"])
