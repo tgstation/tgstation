@@ -95,7 +95,7 @@
 
 	update_status(push = 0) // Update the window status.
 	if(status == UI_CLOSE)
-		return // Bail if we should close.
+		return // Bail if we're not supposed to open.
 
 	if(!initial_data)
 		if(!data) // If we don't have initial_data and data was not passed, get data from the src_object.
@@ -333,14 +333,13 @@
   * optional push bool Push an update to the UI (an update is always sent for UI_DISABLED).
  **/
 /datum/tgui/proc/update_status(push = 0)
-	var/new_status = src_object.ui_state(user, state)
+	var/status = src_object.ui_state(user, state)
 	if(master_ui)
-		new_status = min(new_status, master_ui.status)
+		status = min(status, master_ui.status)
 
-	if(new_status == UI_CLOSE)
+	set_status(status, push)
+	if(status == UI_CLOSE)
 		close()
-	else
-		set_status(new_status, push)
 
  /**
   * private
