@@ -1,5 +1,6 @@
 <link rel='ractive' href='./components/resize.ract'>
 <link rel='ractive' href='./components/titlebar.ract'>
+<link rel='ractive' href='./components/warnings.ract'>
 
 <script type='text/coffeescript'>
 byond      = require "./byond"
@@ -49,6 +50,7 @@ component.exports =
 
 <titlebar>{{{config.title}}}</titlebar>
 <main>
+  <warnings/>
   <interface/>
 </main>
 <resize/>

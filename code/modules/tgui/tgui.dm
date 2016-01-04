@@ -278,6 +278,18 @@
 	var/action = href_list["action"] // Pull the action out.
 	href_list -= "action"
 
+	// Handle any special actions.
+	switch(action)
+		if("tgui:ie")
+			user << link("http://windows.microsoft.com/en-us/internet-explorer/download-ie")
+			return
+		if("tgui:fancy")
+			user.client.prefs.tgui_fancy = TRUE
+			return
+		if("tgui:nofrills")
+			user.client.prefs.tgui_fancy = FALSE
+			return
+
 	var/update = src_object.ui_act(action, href_list, state) // Call ui_act() on the src_object.
 	if(src_object && update)
 		SStgui.update_uis(src_object) // If we have a src_object and its ui_act() told us to update.

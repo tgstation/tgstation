@@ -5,7 +5,7 @@ constants = require "../constants"
 component.exports =
   computed:
     clickable: ->
-      if @get("enabled") && not @get "state" then true
+      if @get("enabled") and not @get("state") then true
       else false
     enabled: ->
       if @get("config.status") is constants.UI_INTERACTIVE then true
@@ -19,16 +19,17 @@ component.exports =
         else "#{state}"
       else "disabled"
   oninit: ->
-    @on "act", (event) ->
+    @on "press", (event) ->
       event.node.blur()
-      {action, params} = @get()
+      action = @get "action"
+      params = @get "params"
       byond.act @get("config.ref"), action, params if action?
 </script>
 
 <span class='button {{styles}} {{#grid}}gridable{{/}}'
-  unselectable='true'
+  unselectable='on'
   {{#clickable}}tabindex='0'{{/}}
-  on-click-enter='{{#clickable}}act{{/}}'>
+  on-click-enter='{{#clickable}}press{{/}}'>
   {{#if icon}}
     <i class='fa fa-{{icon}}'></i>
   {{/if}}
