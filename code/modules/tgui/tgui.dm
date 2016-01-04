@@ -96,9 +96,6 @@
 
 	var/debugable = check_rights_for(user.client, R_DEBUG)
 	user << browse(get_html(debugable), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
-	if(!debugable)
-		sleep(1)
-		user << output(url_encode(get_json(initial_data)), "[window_id].browser:initialize") // If the window is not debugable (JSON not inlined), send the JSON.
 	winset(user, window_id, "on-close=\"uiclose \ref[src]\"") // Instruct the client to signal UI when the window is closed.
 	SStgui.on_open(src)
 
@@ -199,6 +196,7 @@
 		html = replacetextEx(SStgui.basehtml, "{}", get_json(initial_data))
 	else
 		html = SStgui.basehtml
+	html = replacetextEx(html, "\[ref]", "\ref[src]")
 	return html
 
  /**
@@ -259,15 +257,13 @@
   * If the src_object's ui_act() returns 1, update all UIs attacked to it.
  **/
 /datum/tgui/Topic(href, href_list)
-	update_status(push = 0) // Update the window state.
-	if(status != UI_INTERACTIVE || user != usr)
-		return // If UI is not interactive or usr calling Topic is not the UI user.
-
 	var/action = href_list["action"] // Pull the action out.
 	href_list -= "action"
 
 	// Handle any special actions.
 	switch(action)
+		if("tgui:initialize")
+			user << output(url_encode(get_json(initial_data)), "[window_id].browser:initialize")
 		if("tgui:ie")
 			user << link("http://windows.microsoft.com/en-us/internet-explorer/download-ie")
 			return
@@ -277,6 +273,10 @@
 		if("tgui:nofrills")
 			user.client.prefs.tgui_fancy = FALSE
 			return
+
+	update_status(push = 0) // Update the window state.
+	if(status != UI_INTERACTIVE || user != usr)
+		return // If UI is not interactive or usr calling Topic is not the UI user.
 
 	var/update = src_object.ui_act(action, href_list, state) // Call ui_act() on the src_object.
 	if(src_object && update)
