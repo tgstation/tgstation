@@ -20,9 +20,9 @@
       </ui-section>
       <ui-section label='Filters'>
         <ui-button icon='{{filter_co2 ? "check-square-o" : "square-o"}}' style='{{filter_co2 ? "selected" : null}}'
-          action='co2_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_co2}}}'>Oxygen</ui-button>
+          action='co2_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_co2}}}'>CO2</ui-button>
         <ui-button icon='{{filter_n2o ? "check-square-o" : "square-o"}}' style='{{filter_n2o ? "selected" : null}}'
-          action='n2o_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_n2o}}}'>Nitrogen</ui-button>
+          action='n2o_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_n2o}}}'>N2O</ui-button>
         <ui-button icon='{{filter_toxins ? "check-square-o" : "square-o"}}' style='{{filter_toxins ? "selected" : null}}'
           action='tox_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_toxins}}}'>Plasma</ui-button>
       </ui-section>

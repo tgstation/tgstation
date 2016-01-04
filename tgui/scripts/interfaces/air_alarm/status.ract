@@ -13,19 +13,18 @@
   	</span>
     </ui-section>
     <ui-section label='Area Status'>
-  	<span class='{{data.atmos_alarm || data.fire_alarm ? "bad bold" : "good"}}'>
+      <span class='{{data.atmos_alarm || data.fire_alarm ? "bad bold" : "good"}}'>
     	  {{data.atmos_alarm ? "Atmosphere Alarm" : fire_alarm ? "Fire Alarm" : "Nominal"}}
     	</span>
     </ui-section>
   {{else}}
-    <ui-section>
-      <span class='bad bold'>Warning: Cannot obtain air sample for analysis.</span>
+    <ui-section label='Warning'>
+      <span class='bad bold'>Cannot obtain air sample for analysis.</span>
     </ui-section>
   {{/if}}
   {{#if data.emagged}}
-    <hr/>
-    <ui-section>
-      <span class='bad bold'>Warning: Safety measures offline. Device may exhibit abnormal behavior.</span>
+    <ui-section label='Warning'>
+      <span class='bad bold'>Safety measures offline. Device may exhibit abnormal behavior.</span>
     </ui-section>
   {{/if}}
 </ui-display>
