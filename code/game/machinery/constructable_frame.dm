@@ -619,6 +619,10 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/scanning_module" = 1,
 							"/obj/item/weapon/stock_parts/manipulator" = 2)
 
+/obj/item/weapon/circuitboard/sleeper/mancrowave
+	name = "Circuit board (Mancrowave)"
+	build_path = "/obj/machinery/sleeper/mancrowave"
+
 /obj/item/weapon/circuitboard/biogenerator
 	name = "Circuit Board (Biogenerator)"
 	build_path = "/obj/machinery/biogenerator"

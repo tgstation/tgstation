@@ -1,7 +1,7 @@
 /mob/living/proc/undergoing_hypothermia()
 	if(!istype(src,/mob/living/carbon/human))
 		return NO_HYPOTHERMIA
-	if((status_flags & GODMODE) || (flags & INVULNERABLE))
+	if((status_flags & GODMODE) || (flags & INVULNERABLE) || istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 		return NO_HYPOTHERMIA
 	var/body_temp_celcius = src.bodytemperature - T0C
 	switch(body_temp_celcius)

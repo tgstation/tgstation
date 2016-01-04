@@ -73,11 +73,11 @@
 			dat += text("[]\t-Burn Severity %: []</FONT><BR>", (occupant.getFireLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getFireLoss())
 			dat += text("<HR>Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
 			if(occupant.reagents)
-				for(var/chemical in connected.available_chemicals)
-					dat += "[connected.available_chemicals[chemical]]: [occupant.reagents.get_reagent_amount(chemical)] units<br>"
+				for(var/chemical in connected.available_options)
+					dat += "[connected.available_options[chemical]]: [occupant.reagents.get_reagent_amount(chemical)] units<br>"
 			dat += "<HR><A href='?src=\ref[src];refresh=1'>Refresh meter readings each second</A><BR>"
-			for(var/chemical in connected.available_chemicals)
-				dat += "Inject [connected.available_chemicals[chemical]]: "
+			for(var/chemical in connected.available_options)
+				dat += "Inject [connected.available_options[chemical]]: "
 				for(var/amount in connected.amounts)
 					dat += "<a href ='?src=\ref[src];chemical=[chemical];amount=[amount]'>[amount] units</a> "
 				dat += "<br>"
@@ -147,13 +147,14 @@
 	icon_state = "sleeper_0"
 	density = 1
 	anchored = 1
+	var/base_icon = "sleeper"
 	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
 	var/mob/living/occupant = null
-	var/available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "dermaline" = "Dermaline", "bicaridine" = "Bicaridine", "dexalin" = "Dexalin")
+	var/available_options = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "dermaline" = "Dermaline", "bicaridine" = "Bicaridine", "dexalin" = "Dexalin")
 	var/amounts = list(5, 10)
 	var/obj/machinery/sleep_console/connected = null
 	var/sedativeblock = 0 //To prevent people from being surprisesoporific'd
-	machine_flags = SCREWTOGGLE | CROWDESTROY
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE
 	component_parts = newlist(
 		/obj/item/weapon/circuitboard/sleeper,
 		/obj/item/weapon/stock_parts/scanning_module,
@@ -169,6 +170,10 @@
 			set_light(light_range_on, light_power_on)
 		else
 			set_light(0)
+	var/connected_type = "/obj/machinery/sleep_console"
+	var/on = 0
+	var/target_time = 0
+	var/setting
 
 /obj/machinery/sleeper/New()
 	..()
@@ -184,7 +189,7 @@
 			t = get_step(get_turf(src), EAST)
 			// generate_console(get_step(get_turf(src), EAST))
 		ASSERT(t)
-		var/obj/machinery/sleep_console/c = locate() in t.contents
+		var/obj/machinery/sleep_console/c = locate(connected_type) in t.contents
 		if(c)
 			connected = c
 			c.connected = src
@@ -206,7 +211,7 @@
 		connected = null
 
 /obj/machinery/sleeper/update_icon()
-	icon_state = "sleeper_[occupant ? "1" : "0"][orient == "LEFT" ? null : "-r"]"
+	icon_state = "[base_icon]_[occupant ? "1" : "0"][orient == "LEFT" ? null : "-r"]"
 
 /obj/machinery/sleeper/proc/generate_console(turf/T as turf)
 	if(connected)
@@ -214,7 +219,7 @@
 		connected.update_icon()
 		return 1
 	if(!T.density)
-		connected = new /obj/machinery/sleep_console(T)
+		connected = new connected_type(T)
 		connected.orient = src.orient
 		connected.update_icon()
 		return 1
@@ -227,11 +232,11 @@
 		T += SP.rating
 	switch(T)
 		if(0 to 5)
-			available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "dermaline" = "Dermaline", "bicaridine" = "Bicaridine", "dexalin" = "Dexalin")
+			available_options = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "dermaline" = "Dermaline", "bicaridine" = "Bicaridine", "dexalin" = "Dexalin")
 		if(6 to 8)
-			available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "dermaline" = "Dermaline", "bicaridine" = "Bicaridine", "dexalin" = "Dexalin", "phalanximine" = "Phalanximine")
+			available_options = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "dermaline" = "Dermaline", "bicaridine" = "Bicaridine", "dexalin" = "Dexalin", "phalanximine" = "Phalanximine")
 		else
-			available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "dermaline" = "Dermaline", "bicaridine" = "Bicaridine", "dexalin" = "Dexalin", "phalanximine" = "Phalanximine", "spaceacillin" = "Spaceacillin")
+			available_options = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "dermaline" = "Dermaline", "bicaridine" = "Bicaridine", "dexalin" = "Dexalin", "phalanximine" = "Phalanximine", "spaceacillin" = "Spaceacillin")
 
 
 /obj/machinery/sleeper/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -308,7 +313,7 @@
 		return
 	var/mob/user = usr
 	if(user.restrained() || user.isUnconscious() || user.stunned || user.paralysis || user.resting) // If you're too disabled to put someone into it, you're too disabled to pull someone out of it.
-		return	
+		return
 	if(!(occupant == usr) && (!Adjacent(usr) || !usr.Adjacent(over_location)))
 		return
 	for(var/atom/movable/A in over_location.contents)
@@ -346,7 +351,7 @@
 	return ..()
 
 /obj/machinery/sleeper/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(iswrench(W)&&!occupant)
+	if(iswrench(W)&&!occupant&& (machine_flags & WRENCHMOVE))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		if(orient == "RIGHT")
 			orient = "LEFT"
@@ -373,7 +378,7 @@
 
 	for(var/mob/living/carbon/slime/M in range(1,G.affecting))
 		if(M.Victim == G.affecting)
-			to_chat(usr, "[G.affecting.name] will not fit into the sleeper because they have a slime latched onto their head.")
+			to_chat(usr, "[G.affecting.name] will not fit into \the [src] because they have a slime latched onto their head.")
 			return
 
 	visible_message("[user] places [G.affecting.name] into the sleeper.", 2) //spooky
@@ -386,7 +391,7 @@
 	src.occupant = M
 	update_icon()
 
-	to_chat(M, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
+	to_chat(M, "<span class='notice'><b>You feel an anaesthetising air surround you. You go numb as your senses turn inward.</b></span>")
 
 	for(var/obj/O in src)
 		O.loc = src.loc
@@ -448,6 +453,12 @@
 		M:reagents.add_reagent("inaprovaline", 5)
 	return
 
+/obj/machinery/sleeper/proc/cook(var/cook_setting)
+	var/time = available_options[cook_setting]
+	target_time = world.timeofday + time
+	update_icon()
+	on = 1
+	setting = cook_setting
 
 /obj/machinery/sleeper/proc/go_out(var/exit = src.loc)
 	if(!occupant)
@@ -471,10 +482,10 @@
 		to_chat(user, "<span class='warning'>The occupant appears to somehow lack a bloodstream. Please consult a shrink.</span>")
 		return
 	if(src.occupant.reagents.get_reagent_amount(chemical) + amount > 20)
-		to_chat(user, "<span class='warning'>Overdose Prevention System: The occupant already has enough [available_chemicals[chemical]] in their system.</span>")
+		to_chat(user, "<span class='warning'>Overdose Prevention System: The occupant already has enough [available_options[chemical]] in their system.</span>")
 		return
 	src.occupant.reagents.add_reagent(chemical, amount)
-	to_chat(user, "<span class='notice'>Occupant now has [src.occupant.reagents.get_reagent_amount(chemical)] units of [available_chemicals[chemical]] in their bloodstream.</span>")
+	to_chat(user, "<span class='notice'>Occupant now has [src.occupant.reagents.get_reagent_amount(chemical)] units of [available_options[chemical]] in their bloodstream.</span>")
 	return
 
 /obj/machinery/sleeper/proc/check(mob/living/user as mob)
@@ -554,3 +565,155 @@
 	return
 
 #undef SLEEPER_SOPORIFIC_DELAY
+
+/obj/machinery/sleeper/mancrowave
+	name = "mancrowave"
+	desc = "A human-sized microwave meant for warming up patients. Modern medical technology is amazing."
+	icon_state = "mancrowave_open"
+	base_icon = "mancrowave"
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/sleeper/mancrowave,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator
+	)
+	connected_type = "/obj/machinery/sleep_console/mancrowave_console"
+	setting = "Defrost"
+	available_options = list("Defrost" = 30)
+	light_color = LIGHT_COLOR_ORANGE
+
+/obj/machinery/sleeper/mancrowave/go_out(var/exit = src.loc)
+	if(on && !emagged)
+		return 0
+	else
+		on = 0
+		..()
+
+
+obj/machinery/sleeper/mancrowave/process()
+	if(stat & (NOPOWER|BROKEN))
+		return
+	src.updateUsrDialog()
+	if(world.timeofday >= target_time && on && istype(occupant,/mob/living/carbon))
+		switch(setting)
+			if("Defrost")
+				occupant.bodytemperature = (T0C + 37)
+				occupant.sleeping = 0
+				go_out()
+			if("Rare")
+				qdel(occupant)
+				occupant = null
+				for(var/i = 1;i < 5;i++)
+					new /obj/item/weapon/reagent_containers/food/snacks/soylentgreen(src.loc)
+			if("Medium")
+				qdel(occupant)
+				occupant = null
+				for(var/i = 1;i < 5;i++)
+					new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src.loc)
+			if("Well Done")
+				qdel(occupant)
+				occupant = null
+				new /obj/effect/decal/cleanable/ash(src.loc)
+		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
+		on = 0
+		update_icon()
+	return
+
+/obj/machinery/sleeper/mancrowave/update_icon()
+	if(!occupant)
+		icon_state = "[base_icon]_open"
+	else
+		icon_state = "[base_icon]_[on][emagged && on? "emag" : null ]"
+	if(connected)
+		connected.update_icon()
+	else
+		qdel(src)
+
+
+/obj/machinery/sleeper/mancrowave/emag(mob/user)
+	if(!emagged)
+		emagged = 1
+		connected.emagged = 1
+		to_chat(user, "<span class='warning'>You short out the safety features of \the [src]</span>")
+		update_icon()
+		available_options = list("Defrost" = 30,"Rare" = 500,"Medium" = 600,"Well Done" = 700)
+		light_color = LIGHT_COLOR_RED
+		return 1
+	return -1
+
+/obj/machinery/sleeper/mancrowave/RefreshParts()
+
+/obj/machinery/sleep_console/mancrowave_console
+	name = "mancrowave"
+	desc = "A human-sized microwave meant for warming up patients. Modern medical technology is amazing."
+	icon_state = "manconsole_open"
+
+
+/obj/machinery/sleep_console/mancrowave_console/update_icon()
+	if(connected)
+		if(!connected.occupant)
+			icon_state = "manconsole_open"
+		else
+			icon_state = "manconsole_[connected.on][emagged && connected.on? "emag" : null ]"
+
+/obj/machinery/sleep_console/mancrowave_console/emag(mob/user)
+	connected.emag(user)
+
+/obj/machinery/sleep_console/mancrowave_console/Destroy()
+	. = ..()
+	if(connected)
+		connected.connected = null
+		connected.go_out()
+		qdel(connected)
+		connected = null
+
+
+/obj/machinery/sleep_console/mancrowave_console/attack_hand(mob/user as mob)
+	if (src.connected)
+		var/mob/living/occupant = src.connected.occupant
+		var/dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>"
+		if (occupant)
+			var/t1
+			switch(occupant.stat)
+				if(0)
+					t1 = "Conscious"
+				if(1)
+					t1 = "<font color='blue'>Unconscious</font>"
+				if(2)
+					t1 = "<font color='red'>*dead*</font>"
+				else
+			dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
+			if(iscarbon(occupant))
+				var/mob/living/carbon/C = occupant
+				dat += text("[]\t-Pulse, bpm: []</FONT><BR>", (C.pulse == PULSE_NONE || C.pulse == PULSE_2SLOW || C.pulse == PULSE_THREADY ? "<font color='red'>" : "<font color='blue'>"), C.get_pulse(GETPULSE_TOOL))
+				dat +=  text("[]\t -Core Temperature: []&deg;C </FONT><BR></span>", (C.undergoing_hypothermia() ? "<font color='red'>" : "<font color='blue'>"), C.bodytemperature-T0C)
+			dat += "<HR><A href='?src=\ref[src];refresh=1'>Refresh meter readings each second</A><BR>"
+			dat += "<HR><b>Cook settings:</b><BR>"
+			for(var/cook_setting in connected.available_options)
+				dat += "<a href ='?src=\ref[src];cook=[cook_setting]'>[cook_setting] - [connected.available_options[cook_setting]/10] seconds</a>"
+				dat += "<br>"
+		else
+			dat += "\The [src] is empty."
+		dat += text("<BR><BR><A href='?src=\ref[];mach_close=sleeper'>Close</A>", user)
+		user << browse(dat, "window=sleeper;size=400x500")
+		onclose(user, "sleeper")
+	return
+
+/obj/machinery/sleeper/mancrowave/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W,/obj/item/weapon/card/emag))
+		src.emag(user)
+
+/obj/machinery/sleep_console/mancrowave_console/Topic(href, href_list)
+	usr.set_machine(src)
+	if (href_list["cook"])
+		if (src.connected)
+			if (src.connected.occupant)
+				if (src.connected.occupant.stat == DEAD && !emagged)
+					to_chat(usr, "<span class='danger'>Why would you mancrowave a dead guy? That's just stupid.</span>")
+				else
+					connected.cook(href_list["cook"])
+	if (href_list["refresh"])
+		src.updateUsrDialog()
+	src.add_fingerprint(usr)
+	return

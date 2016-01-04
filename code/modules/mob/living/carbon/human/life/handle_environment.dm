@@ -92,7 +92,6 @@
 		thermal_loss	*= environment.total_moles/103.934			// Multiplied by how many moles are in the environment over 103.934, the normal value of a station - this means space will not take heat from you.
 		thermal_loss	*= (get_skin_temperature() - loc_temp)		// Multiplied by the difference between you and the room temperature
 		thermal_loss	/= BODYTEMP_COLD_DIVISOR					// Divided by the cold_divisor
-		world << "[thermal_loss]"
 		return thermal_loss
 	return 0
 
