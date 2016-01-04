@@ -386,7 +386,11 @@
 	var/turf/mobloc = get_turf(mob)
 
 	switch(mob.incorporeal_move)
-		if(1)
+		if(INCORPOREAL_GHOST)
+			if(isobserver(mob)) //Typecast time
+				var/mob/dead/observer/observer = mob
+				if(observer.locked_to) //Ghosts can move at any time to unlock themselves (in theory from following a mob)
+					observer.manual_stop_follow(observer.locked_to)
 			var/turf/T = get_step(mob, direct)
 			var/area/A = get_area(T)
 			if(A && A.anti_ethereal && !isAdminGhost(mob))
@@ -397,7 +401,7 @@
 				else
 					mob.forceEnter(get_step(mob, direct))
 					mob.dir = direct
-		if(2)
+		if(INCORPOREAL_NINJA)
 			if(prob(50))
 				var/locx
 				var/locy
@@ -435,7 +439,7 @@
 				anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,mob.dir)
 				mob.forceEnter(get_step(mob, direct))
 			mob.dir = direct
-		if(3) //Jaunting, without needing to be done through relaymove
+		if(INCORPOREAL_ETHEREAL) //Jaunting, without needing to be done through relaymove
 			var/turf/newLoc = get_step(mob,direct)
 			if(!(newLoc.flags & NOJAUNT))
 				mob.forceEnter(newLoc)
