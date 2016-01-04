@@ -211,7 +211,7 @@
 		return 0 //Means the item is already in the storage item
 	if(contents.len >= storage_slots)
 		if(!stop_messages)
-			to_chat(usr, "<span class='notice'>[src] is full, make some space.</span>")
+			to_chat(usr, "<span class='notice'>\The [src] is full, make some space.</span>")
 		return 0 //Storage item is full
 	if(usr && (W.cant_drop > 0))
 		if(!stop_messages)
@@ -242,7 +242,7 @@
 			if(!stop_messages)
 				if (istype(W, /obj/item/weapon/hand_labeler))
 					return 0
-				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
+				to_chat(usr, "<span class='notice'>\The [src] cannot hold \the [W].</span>")
 			return 0
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
@@ -258,12 +258,12 @@
 			break
 		if(nope)
 			if(!stop_messages)
-				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
+				to_chat(usr, "<span class='notice'>\The [src] cannot hold \the [W].</span>")
 			return 0
 
 	if (W.w_class > max_w_class)
 		if(!stop_messages)
-			to_chat(usr, "<span class='notice'>[W] is too big for this [src].</span>")
+			to_chat(usr, "<span class='notice'>\The [W] is too big for \the [src].</span>")
 		return 0
 
 	var/sum_w_class = W.w_class
@@ -272,13 +272,13 @@
 
 	if(sum_w_class > max_combined_w_class)
 		if(!stop_messages)
-			to_chat(usr, "<span class='notice'>[src] is full, make some space.</span>")
+			to_chat(usr, "<span class='notice'>\The [src] is full, make some space.</span>")
 		return 0
 
 	if(W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
 		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
 			if(!stop_messages)
-				to_chat(usr, "<span class='notice'>[src] cannot hold [W] as it's a storage item of the same size.</span>")
+				to_chat(usr, "<span class='notice'>\The [src] cannot hold \the [W] as it's a storage item of the same size.</span>")
 			return 0 //To prevent the stacking of same sized storage items.
 
 	return 1
@@ -302,11 +302,11 @@
 		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
 			for(var/mob/M in viewers(usr, null))
 				if (M == usr)
-					to_chat(usr, "<span class='notice'>You put the [W] into [src].</span>")
+					to_chat(usr, "<span class='notice'>You put \the [W] into \the [src].</span>")
 				else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
+					M.show_message("<span class='notice'>[usr] puts \the [W] into \the [src].</span>")
 				else if (W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
+					M.show_message("<span class='notice'>[usr] puts \the [W] into \the [src].</span>")
 
 		src.orient2hud(usr)
 		if(usr.s_active)
@@ -389,7 +389,7 @@
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
-				to_chat(user, "<span class='warning'>The tray won't fit in [src].</span>")
+				to_chat(user, "<span class='warning'>The tray won't fit in \the [src].</span>")
 				return
 			else
 				W.loc = user.loc
@@ -459,9 +459,9 @@
 	collection_mode = !collection_mode
 	switch (collection_mode)
 		if(1)
-			to_chat(usr, "[src] now picks up all items in a tile at once.")
+			to_chat(usr, "\The [src] will now pick up all items on a tile at once.")
 		if(0)
-			to_chat(usr, "[src] now picks up one item at a time.")
+			to_chat(usr, "\The [src] will now pick up one item at a time.")
 
 
 /obj/item/weapon/storage/verb/quick_empty()
@@ -537,7 +537,7 @@
 	if ( !found )	// User is too far away
 		return
 	// Now make the cardboard
-	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
+	to_chat(user, "<span class='notice'>You fold \the [src] flat.</span>")
 	new src.foldable(get_turf(src),foldable_amount)
 	qdel(src)
 //BubbleWrap END
@@ -595,13 +595,13 @@
 				success = 1
 				handle_item_insertion(I, 1)	//The 1 stops the "You put the [target] into [src]" insertion message from being displayed.
 			if(success && !failure)
-				to_chat(user, "<span class='notice'>You put everything in [src].</span>")
+				to_chat(user, "<span class='notice'>You put everything into \the [src].</span>")
 				return 1
 			else if(success)
-				to_chat(user, "<span class='notice'>You put some things in [src].</span>")
+				to_chat(user, "<span class='notice'>You put some things into \the [src].</span>")
 				return 1
 			else
-				to_chat(user, "<span class='notice'>You fail to pick anything up with [src].</span>")
+				to_chat(user, "<span class='notice'>You fail to pick anything up with \the [src].</span>")
 				return 0
 
 		else if(can_be_inserted(target))
