@@ -273,10 +273,11 @@ update_flag
 		return
 	ui_interact(user)
 
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+															datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "canister", name, 405, 405, state = physical_state)
+		ui = new(user, src, ui_key, "canister", name, 405, 405, master_ui, state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/get_ui_data()

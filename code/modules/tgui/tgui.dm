@@ -24,7 +24,6 @@
 	  "can_close" = 1,
 	  "auto_format" = 0
 	)
-	var/atom/ref = null // An extra ref to call when the window is closed.
 	var/style = "nanotrasen" // The style to be used for this UI.
 	var/interface // The interface (template) to be used for this UI.
 	var/auto_update = 1 // Update the UI every MC tick.
@@ -46,16 +45,12 @@
   * optional title string The title of the UI.
   * optional width int The window width.
   * optional height int The window height.
-  * optional ref atom An extra ref to use when the window is closed.
   * optional master_ui datum/tgui The parent UI.
   * optional state datum/ui_state The state used to determine status.
   *
   * return datum/tgui The requested UI.
  **/
-/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, \
-					title, width = 0, height = 0, \
-					atom/ref = null, datum/tgui/master_ui = null, \
-					datum/ui_state/state = default_state)
+/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
@@ -70,9 +65,6 @@
 	if(height)
 		src.height = height
 
-	if(ref)
-		src.ref = ref
-
 	src.master_ui = master_ui
 	if(master_ui)
 		master_ui.children += src
@@ -85,10 +77,8 @@
   * public
   *
   * Open this UI (and initialize it with data).
-  *
-  * optional data list The data to intialize the UI with.
  **/
-/datum/tgui/proc/open(list/data = null)
+/datum/tgui/proc/open()
 	set waitfor = 0 // Don't wait on sleep()s.
 	if(!user.client)
 		return // Bail if there is no client.
@@ -98,9 +88,7 @@
 		return // Bail if we're not supposed to open.
 
 	if(!initial_data)
-		if(!data) // If we don't have initial_data and data was not passed, get data from the src_object.
-			data = src_object.get_ui_data(user)
-		set_initial_data(data) // Otherwise use the passed data.
+		set_initial_data(src_object.get_ui_data(user)) // Get the UI data.
 
 	var/window_size = ""
 	if(width && height) // If we have a width and height, use them.

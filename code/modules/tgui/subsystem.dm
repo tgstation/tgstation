@@ -13,20 +13,16 @@
   * required src_object datum The object/datum which owns the UI.
   * required ui_key string The ui_key of the UI.
   * optional ui datum/tgui The UI to be updated, if it exists.
-  * optional data list The data to update the UI with, if it exists.
   * optional force_open bool If the UI should be re-opened instead of updated.
   *
   * return datum/tgui The found UI.
  **/
-/datum/subsystem/tgui/proc/try_update_ui(mob/user, datum/src_object, ui_key, datum/tgui/ui, \
-											list/data = null, force_open = 0)
-	if(!data)
-		data = src_object.get_ui_data(user)
-
+/datum/subsystem/tgui/proc/try_update_ui(mob/user, datum/src_object, ui_key, datum/tgui/ui, force_open = 0)
 	if(isnull(ui)) // No UI was passed, so look for one.
 		ui = get_open_ui(user, src_object, ui_key)
 
 	if(!isnull(ui))
+		var/data = src_object.get_ui_data(user) // Get data from the src_object.
 		if(!force_open) // UI is already open; update it.
 			ui.push_data(data)
 		else // Re-open it anyways.
