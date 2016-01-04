@@ -89,7 +89,7 @@ var/next_mob_id = 0
 		var/turf/U = get_turf(P)
 		if(!U)
 			continue
-		if(get_dist(T,U)<7 && inLineOfSight(T.x,T.y, U.x,U.y,T.z))
+		if(get_dist(T,U)<8 && inLineOfSight(T.x,T.y, U.x,U.y,T.z))
 			var/msg = message
 			if(M == src) //the src always see the main message or self message
 				if(self_message)
@@ -106,7 +106,7 @@ var/next_mob_id = 0
 							msg = blind_message
 						else
 							continue
-			M.show_message(msg,1,blind_message,0)
+			M.show_message(msg,1,blind_message,2)
 
 // Show a message to all player mobs who sees this atom
 // Use for objects performing visible actions
@@ -122,7 +122,7 @@ var/next_mob_id = 0
 		var/turf/U = get_turf(P)
 		if(!U)
 			continue
-		if(get_dist(T,U)<7 && inLineOfSight(T.x,T.y, U.x,U.y,T.z))
+		if(get_dist(T,U)<8 && inLineOfSight(T.x,T.y, U.x,U.y,T.z))
 			var/msg = message
 			if(M.see_invisible<invisibility || T != loc)//if src is inside something or invisible to us,
 				if(blind_message) // then people see blind message if there is one, otherwise nothing.
