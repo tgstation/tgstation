@@ -100,7 +100,7 @@
 
 			if("delete")
 				for(var/datum/d in objs)
-					del d
+					qdel(d)
 
 			if("select")
 				var/text = ""
