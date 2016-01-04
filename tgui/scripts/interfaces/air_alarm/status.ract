@@ -1,6 +1,6 @@
 <ui-display title='Air Status'>
   {{#if data.environment_data}}
-    {{#each data.environment_data}}
+    {{#each adata.environment_data}}
       <ui-section label='{{name}}'>
   	  <span class='{{danger_level == 2 ? "bad" : danger_level == 1 ? "average" : "good"}}'>
   		{{Math.fixed(value, 2)}}{{unit}}
@@ -13,19 +13,18 @@
   	</span>
     </ui-section>
     <ui-section label='Area Status'>
-  	<span class='{{data.atmos_alarm || data.fire_alarm ? "bad bold" : "good"}}'>
+      <span class='{{data.atmos_alarm || data.fire_alarm ? "bad bold" : "good"}}'>
     	  {{data.atmos_alarm ? "Atmosphere Alarm" : fire_alarm ? "Fire Alarm" : "Nominal"}}
     	</span>
     </ui-section>
   {{else}}
-    <ui-section>
-      <span class='bad bold'>Warning: Cannot obtain air sample for analysis.</span>
+    <ui-section label='Warning'>
+      <span class='bad bold'>Cannot obtain air sample for analysis.</span>
     </ui-section>
   {{/if}}
   {{#if data.emagged}}
-    <hr/>
-    <ui-section>
-      <span class='bad bold'>Warning: Safety measures offline. Device may exhibit abnormal behavior.</span>
+    <ui-section label='Warning'>
+      <span class='bad bold'>Safety measures offline. Device may exhibit abnormal behavior.</span>
     </ui-section>
   {{/if}}
 </ui-display>
