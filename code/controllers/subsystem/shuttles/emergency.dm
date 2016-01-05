@@ -120,7 +120,7 @@
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
 				//move each escape pod to its corresponding transit dock
 				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
-					if(!M.launch_status) //Will not launch from the mine/planet
+					if(M.launch_status == UNLAUNCHED) //Will not launch from the mine/planet
 						M.launch_status = ENDGAME_LAUNCHED
 						M.enterTransit()
 				//now move the actual emergency shuttle to its transit dock
