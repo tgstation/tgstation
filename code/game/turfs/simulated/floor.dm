@@ -112,6 +112,7 @@ turf/simulated/floor/update_icon()
 			floor_overlay = T.get_turf_image()
 			icon_state = "light_base"
 			overlays += floor_overlay
+			light_color = floor_overlay.color
 		else
 			set_light(0)
 			icon_state = "light_off"
