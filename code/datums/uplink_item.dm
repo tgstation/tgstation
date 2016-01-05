@@ -63,6 +63,7 @@ var/list/uplink_items = list()
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/excludefrom = list() //Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
 	var/surplus = 100 //Chance of being included in the surplus crate (when pick() selects it)
+	var/refundable = FALSE
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
@@ -332,12 +333,7 @@ var/list/uplink_items = list()
 	cost = 25
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
-
-/datum/uplink_item/dangerous/reinforcement/spawn_item()
-	var/obj/item/weapon/antag_spawner/nuke_ops/T = ..()
-	if(istype(T))
-		T.TC_cost = cost
-
+	refundable = TRUE
 
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
@@ -1049,7 +1045,7 @@ var/list/uplink_items = list()
 		buyable_items += temp_uplink_list[category]
 	var/list/bought_items = list()
 	U.uses -= cost
-	U.used_TC = 20
+	U.used_TC += 20
 	var/remaining_TC = 50
 
 	var/datum/uplink_item/I
