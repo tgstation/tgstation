@@ -1047,9 +1047,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user as mob)
 	if(photo)
 		return EjectPhoto(user)
-	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
-		if(user.drop_item(photo, src))
-			photo = user.get_active_hand()
+
+	var/obj/item/weapon/photo/P = user.get_active_hand()
+	if(istype(P) && user.drop_item(P, src))
+		photo = P
 
 /obj/machinery/newscaster/proc/EjectPhoto(mob/user as mob)
 	if(!photo) return
