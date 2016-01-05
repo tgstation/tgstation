@@ -1142,7 +1142,7 @@ var/list/teleportlocs = list()
 	icon_state = "yellow"
 
 /area/construction/quarters
-	name = "Engineer's Quarters"
+	name = "Engineers' Quarters"
 	icon_state = "yellow"
 
 /area/construction/qmaint
