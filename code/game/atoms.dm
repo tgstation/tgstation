@@ -351,7 +351,7 @@ var/list/blood_splatter_icons = list()
 	return
 
 /atom/proc/emag_act()
-	return
+	return -1
 
 /atom/proc/narsie_act()
 	return

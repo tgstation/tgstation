@@ -70,7 +70,9 @@
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity)
 	var/atom/A = target
 	if(!proximity) return
-	A.emag_act(user)
+
+	if(A.emag_act(user) != -1)
+		user.do_attack_animation(A)
 
 /obj/item/weapon/card/id
 	name = "identification card"

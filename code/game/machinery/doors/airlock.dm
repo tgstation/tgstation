@@ -1165,15 +1165,15 @@ About the new airlock wires panel:
 	if(!operating && density && hasPower() && !emagged)
 		operating = 1
 		update_icon(AIRLOCK_EMAG, 1)
-		sleep(6)
-		if(qdeleted(src))
-			return
-		operating = 0
-		if(!open())
-			update_icon(AIRLOCK_CLOSED, 1)
-		emagged = 1
-		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
-		lights = 0
-		locked = 1
-		loseMainPower()
-		loseBackupPower()
+		spawn(6)
+			if(qdeleted(src))
+				return
+			operating = 0
+			if(!open())
+				update_icon(AIRLOCK_CLOSED, 1)
+			emagged = 1
+			desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
+			lights = 0
+			locked = 1
+			loseMainPower()
+			loseBackupPower()
