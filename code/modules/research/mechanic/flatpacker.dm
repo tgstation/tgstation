@@ -10,7 +10,7 @@
 
 	build_time = FLA_FAB_BASETIME
 
-	design_types = list("machine")
+	design_types = list(FLATPACKER)
 
 	var/build_parts =  list(
 		/obj/item/weapon/stock_parts/micro_laser = 1,
@@ -19,6 +19,7 @@
 		/obj/item/weapon/stock_parts/scanning_module = 1
 		)
 
+	one_part_set_only = 0
 	part_sets = list(	"Machines" = list(),
 						"Computers" = list(),
 						"Misc" = list()
@@ -42,7 +43,7 @@
 
 	RefreshParts()
 
-/obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker/build_part(var/datum/design/mechanic_design/part)
+/obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker/build_part(var/datum/design/part)
 	if(!part)
 		return
 
