@@ -54,7 +54,6 @@
 
 /obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/alien/user)
 	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen))
-		user.alien_evolve(/mob/living/carbon/alien/humanoid/royal/queen)
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
 		return 1
