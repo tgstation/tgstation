@@ -160,6 +160,19 @@
 	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
 
+/obj/item/weapon/storage/box/medipens/leppen
+	name = "leporazine pen value kit"
+	desc = "A box with several Leporazine medipens for the economical miner."
+	icon_state = "syringe"
+
+/obj/item/weapon/storage/box/medipens/leppen/New()
+	..()
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/leppen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/leppen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/leppen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/leppen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/leppen(src)
+
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"
 	icon_state = "beaker"
