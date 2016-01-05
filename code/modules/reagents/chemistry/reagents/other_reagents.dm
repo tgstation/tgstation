@@ -141,9 +141,8 @@
  */
 
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/item))
-		var/obj/item/Item = O
-		Item.extinguish()
+	if(istype(O))
+		O.extinguish()
 
 	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
@@ -163,10 +162,11 @@
  */
 
 /datum/reagent/water/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with water can help put them out!
-	if(!istype(M, /mob/living))
+	if(!istype(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(reac_volume / 10))
+		M.ExtinguishMob()
 	..()
 
 /datum/reagent/water/holywater
@@ -362,8 +362,14 @@
 	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3)
 	sleep(30)
-	var/list/blacklisted_species = list(/datum/species/zombie, /datum/species/skeleton, /datum/species/human, /datum/species/golem, /datum/species/golem/adamantine, /datum/species/shadow, /datum/species/shadow/ling, /datum/species/plasmaman)
-	var/list/possible_morphs = subtypesof(/datum/species/) - blacklisted_species
+	//var/list/blacklisted_species = list(
+
+	var/list/possible_morphs = list()
+	for(var/type in subtypesof(/datum/species))
+		var/datum/species/S = type
+		if(initial(S.blacklisted))
+			continue
+		possible_morphs += S
 	var/datum/species/mutation = pick(possible_morphs)
 	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
 		H << "<span class='danger'>The pain subsides. You feel... different.</span>"

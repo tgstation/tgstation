@@ -256,22 +256,27 @@
 		else
 			if(input_attempt && input_available > 0 && input_available >= input_level)
 				inputting = 1
+	else
+		inputting = 0
 
 	//outputting
-	if(outputting)
-		output_used = min( charge/SMESRATE, output_level)		//limit output to that stored
+	if(output_attempt)
+		if(outputting)
+			output_used = min( charge/SMESRATE, output_level)		//limit output to that stored
 
-		charge -= output_used*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
+			charge -= output_used*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
 
-		add_avail(output_used)				// add output to powernet (smes side)
+			add_avail(output_used)				// add output to powernet (smes side)
 
-		if(output_used < 0.0001)			// either from no charge or set to 0
-			outputting = 0
-			investigate_log("lost power and turned <font color='red'>off</font>","singulo")
-	else if(output_attempt && charge > output_level && output_level > 0)
-		outputting = 1
+			if(output_used < 0.0001)		// either from no charge or set to 0
+				outputting = 0
+				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+		else if(output_attempt && charge > output_level && output_level > 0)
+			outputting = 1
+		else
+			output_used = 0
 	else
-		output_used = 0
+		outputting = 0
 
 	// only update icon if state changed
 	if(last_disp != chargedisplay() || last_chrg != inputting || last_onln != outputting)
@@ -324,10 +329,11 @@
 		return
 	ui_interact(user)
 
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "smes", name, 500, 455)
+		ui = new(user, src, ui_key, "smes", name, 340, 440, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/smes/get_ui_data()
@@ -364,7 +370,7 @@
 			log_smes(usr.ckey)
 			update_icon()
 		if("input")
-			switch(params["set"])
+			switch(params["input"])
 				if("custom")
 					var/custom = input(usr, "What rate would you like this SMES to attempt to charge at? Max is [input_level_max].") as null|num
 					if(custom)
@@ -380,7 +386,7 @@
 			input_level = Clamp(input_level, 0, input_level_max)
 			log_smes(usr.ckey)
 		if("output")
-			switch(params["set"])
+			switch(params["output"])
 				if("custom")
 					var/custom = input(usr, "What rate would you like this SMES to attempt to output at? Max is [output_level_max].") as null|num
 					if(custom)

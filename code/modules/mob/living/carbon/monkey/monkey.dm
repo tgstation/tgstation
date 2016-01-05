@@ -96,10 +96,8 @@
 					damage = rand(10, 15)
 					if ( (paralysis < 5)  && (health > 0) )
 						Paralyse(rand(10, 15))
-						spawn( 0 )
-							visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
+						visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
 									"<span class='userdanger'>[M] has knocked out [name]!</span>")
-							return
 				adjustBruteLoss(damage)
 				add_logs(M, src, "attacked")
 				updatehealth()

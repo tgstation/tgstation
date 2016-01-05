@@ -85,10 +85,11 @@
 		return
 	ui_interact(user)
 
-/obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "chem_dispenser", name, 530, 700)
+		ui = new(user, src, ui_key, "chem_dispenser", name, 550, 550, master_ui, state)
 		ui.open()
 
 /obj/machinery/chem_dispenser/get_ui_data()
@@ -119,7 +120,7 @@
 	for(var/re in dispensable_reagents)
 		var/datum/reagent/temp = chemical_reagents_list[re]
 		if(temp)
-			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("reagent" = temp.id))))
+			chemicals.Add(list(list("title" = temp.name, "id" = temp.id)))
 	data["chemicals"] = chemicals
 	return data
 
@@ -129,11 +130,9 @@
 
 	switch(action)
 		if("amount")
-			amount = round(text2num(params["set"]), 5) // round to nearest 5
-			if (amount < 0) // Since the user can actually type the commands himself, some sanity checking
-				amount = 0
-			if (amount > 100)
-				amount = 100
+			var/amount = text2num(params["amount"])
+			if(amount in beaker.possible_transfer_amounts)
+				src.amount = amount
 		if("dispense")
 			if(beaker && dispensable_reagents.Find(params["reagent"]))
 				var/datum/reagents/R = beaker.reagents

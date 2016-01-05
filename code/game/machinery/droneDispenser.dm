@@ -135,32 +135,32 @@
 	if(work_sound)
 		playsound(src, work_sound, 50, 1)
 	icon_state = icon_creating
-	spawn(30)
+	sleep(30)
+	icon_state = icon_on
+	metal -= metal_cost
+	glass -= glass_cost
+	if(metal < 0)
+		metal = 0
+	if(glass < 0)
+		glass = 0
+	if(power_used)
+		use_power(power_used)
+	new dispense_type(loc)
+	if(create_sound)
+		playsound(src, create_sound, 50, 1)
+	if(end_create_message)
+		visible_message("<span class='notice'>[src] [end_create_message]</span>")
+	icon_state = icon_recharging
+	sleep(cooldownTime)
+	if(stat != BROKEN)
 		icon_state = icon_on
-		metal -= metal_cost
-		glass -= glass_cost
-		if(metal < 0)
-			metal = 0
-		if(glass < 0)
-			glass = 0
-		if(power_used)
-			use_power(power_used)
-		new dispense_type(loc)
-		if(create_sound)
-			playsound(src, create_sound, 50, 1)
-		if(end_create_message)
-			visible_message("<span class='notice'>[src] [end_create_message]</span>")
-		icon_state = icon_recharging
-		spawn(cooldownTime)
-			if(stat != BROKEN)
-				icon_state = icon_on
-			else
-				icon_state = icon_off
-			droneMadeRecently = 0
-			if(recharge_sound)
-				playsound(src, recharge_sound, 50, 1)
-			if(recharge_message)
-				visible_message("<span class='notice'>[src] [recharge_message]</span>")
+	else
+		icon_state = icon_off
+	droneMadeRecently = 0
+	if(recharge_sound)
+		playsound(src, recharge_sound, 50, 1)
+	if(recharge_message)
+		visible_message("<span class='notice'>[src] [recharge_message]</span>")
 
 /obj/machinery/droneDispenser/attackby(obj/item/O, mob/living/user)
 	if(istype(O, /obj/item/stack))

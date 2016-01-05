@@ -168,6 +168,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	darksight = 8
 	invis_sight = SEE_INVISIBLE_MINIMUM
 	sexes = 0
+	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
@@ -343,6 +344,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	armor = 55
 	siemens_coeff = 0
 	punchmod = 5
+	blacklisted = 1
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
@@ -387,6 +389,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	id = "skeleton"
 	say_mod = "rattles"
 	need_nutrition = 0
+	blacklisted = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
@@ -412,6 +415,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	id = "zombie"
 	say_mod = "moans"
 	sexes = 0
+	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
 
@@ -453,16 +457,16 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 /datum/species/abductor/handle_speech(message)
 	//Hacks
 	var/mob/living/carbon/human/user = usr
+	var/rendered = "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
 	for(var/mob/living/carbon/human/H in mob_list)
 		if(H.dna.species.id != "abductor")
 			continue
 		else
 			var/datum/species/abductor/target_spec = H.dna.species
 			if(target_spec.team == team)
-				H << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
-				//return - technically you can add more aliens to a team
+				H << rendered
 	for(var/mob/M in dead_mob_list)
-		M << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
+		M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a>[rendered]"
 	return ""
 
 
@@ -479,6 +483,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
 	dangerous_existence = 1 //So so much
+	blacklisted = 1 //See above
 	need_nutrition = 0 //Hard to eat through a helmet
 	burnmod = 2
 	heatmod = 2
@@ -549,6 +554,7 @@ var/global/list/synth_flesh_disguises = list()
 	SA_para_min = 0
 	SA_sleep_min = 0
 	dangerous_existence = 1
+	blacklisted = 1
 	need_nutrition = 0 //beep boop robots do not need sustinance
 	meat = null
 	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE) //for getting these values back for assume_disguise()

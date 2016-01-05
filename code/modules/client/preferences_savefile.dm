@@ -102,7 +102,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 12)
 		ignoring = list()
 
-
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
 //SAVEFILE_VERSION_MAX and then delete any obsolete if clauses
@@ -165,14 +164,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
-	S["nanoui_fancy"]		>> nanoui_fancy
-	S["be_special"]			>> be_special
+	S["tgui_fancy"]			>> tgui_fancy
+	S["tgui_lock"]			>> tgui_lock
 
 	if(islist(S["be_special"]))
-		S["be_special"] >> be_special
+		S["be_special"] 	>> be_special
 	else //force update and store the old bitflag version of be_special
 		needs_update = 11
-		S["be_special"] >> old_be_special
+		S["be_special"] 	>> old_be_special
 
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
@@ -193,7 +192,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro"), initial(UI_style))
-	nanoui_fancy	= sanitize_integer(nanoui_fancy, 0, 1, initial(nanoui_fancy))
+	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
+	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	ghost_form		= sanitize_inlist(ghost_form, ghost_forms, initial(ghost_form))
@@ -213,7 +213,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			<< ooccolor
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
-	S["nanoui_fancy"]		<< nanoui_fancy
+	S["tgui_fancy"]			<< tgui_fancy
+	S["tgui_lock"]			<< tgui_lock
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles

@@ -18,7 +18,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/simulated/T = pick(turfs)
-		spawn(0)	new/obj/effect/spacevine_controller(T) //spawn a controller at turf
+		new/obj/effect/spacevine_controller(T) //spawn a controller at turf
 
 
 /datum/spacevine_mutation

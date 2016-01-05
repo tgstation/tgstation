@@ -187,10 +187,11 @@
 	else if (!shorted)
 		ui_interact(user)
 
-/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "air_alarm", name, 480, 660)
+		ui = new(user, src, ui_key, "air_alarm", name, 440, 650, master_ui, state)
 		ui.open()
 
 /obj/machinery/alarm/get_ui_data(mob/user)
@@ -358,9 +359,9 @@
 			var/list/thresholds = list()
 
 			var/list/gas_names = list(
-				"oxygen"        	= "O<sub>2</sub>",
-				"nitrogen"			= "N<sub>2</sub>",
-				"carbon dioxide"	= "CO<sub>2</sub>",
+				"oxygen"        	= "Oxygen",
+				"nitrogen"			= "Nitrogen",
+				"carbon dioxide"	= "Carbon Dioxide",
 				"plasma"        	= "Toxin",
 				"other"         	= "Other")
 			for (var/g in gas_names)
@@ -401,51 +402,50 @@
 	if (usr.has_unlimited_silicon_privilege && src.aidisabled)
 		return
 
+	var/device_id = params["id_tag"]
 	switch(action)
-		if("toggleaccess")
+		if("lock")
 			if(usr.has_unlimited_silicon_privilege && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
 				locked = !locked
-		if("adjust")
-			var/device_id = params["id_tag"]
-			switch(params["command"])
-				if("set_external_pressure")
+		if(
+			"power",
+			"co2_scrub",
+			"tox_scrub",
+			"n2o_scrub",
+			"widenet",
+			"scrubbing"
+		)
+			send_signal(device_id, list("[action]" = text2num(params["val"])))
+		if("excheck")
+			send_signal(device_id, list("checks" = text2num(params["val"])^1))
+		if("incheck")
+			send_signal(device_id, list("checks" = text2num(params["val"])^2))
+		if("external_pressure")
+			switch(params["pressure"])
+				if("reset")
+					send_signal(device_id, list("set_external_pressure" = ONE_ATMOSPHERE))
+				else if("custom")
 					var/input_pressure = input("Enter target pressure:", "Pressure Controls") as num|null
 					if(isnum(input_pressure))
-						send_signal(device_id, list(params["command"] = input_pressure))
-				if("reset_external_pressure")
-					send_signal(device_id, list("set_external_pressure" = ONE_ATMOSPHERE))
-				if(
-					"power",
-					"adjust_external_pressure",
-					"co2_scrub",
-					"tox_scrub",
-					"n2o_scrub",
-					"widenet",
-					"scrubbing"
-				)
-					send_signal(device_id, list (params["command"] = text2num(params["val"])))
-				if ("excheck")
-					send_signal(device_id, list ("checks" = text2num(params["val"])^1))
-				if ("incheck")
-					send_signal(device_id, list ("checks" = text2num(params["val"])^2))
-				if("set_threshold")
-					var/env = params["env"]
-					var/varname = params["var"]
-					var/datum/tlv/tlv = TLV[env]
-					var/newval = input("Enter [varname] for [env]:", "Alarm Triggers", tlv.vars[varname]) as num|null
-					if (isnull(newval))
-						return
-					if (newval<0)
-						tlv.vars[varname] = -1
-					else if (env=="temperature" && newval>5000)
-						tlv.vars[varname] = 5000
-					else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
-						tlv.vars[varname] = 50*ONE_ATMOSPHERE
-					else if (env!="temperature" && env!="pressure" && newval>200)
-						tlv.vars[varname] = 200
-					else
-						newval = round(newval,0.01)
-						tlv.vars[varname] = newval
+						send_signal(device_id, list("set_external_pressure" = input_pressure))
+		if("threshold")
+			var/env = params["env"]
+			var/varname = params["var"]
+			var/datum/tlv/tlv = TLV[env]
+			var/newval = input("Enter [varname] for [env]:", "Alarm Triggers", tlv.vars[varname]) as num|null
+			if (isnull(newval))
+				return
+			if (newval<0)
+				tlv.vars[varname] = -1
+			else if (env=="temperature" && newval>5000)
+				tlv.vars[varname] = 5000
+			else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
+				tlv.vars[varname] = 50*ONE_ATMOSPHERE
+			else if (env!="temperature" && env!="pressure" && newval>200)
+				tlv.vars[varname] = 200
+			else
+				newval = round(newval,0.01)
+				tlv.vars[varname] = newval
 		if("screen")
 			screen = text2num(params["screen"])
 		if("mode")

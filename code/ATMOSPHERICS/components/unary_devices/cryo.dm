@@ -110,10 +110,11 @@
 		return
 	ui_interact(user)
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+																	datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "cryo", name, 410, 550, state = notcontained_state)
+		ui = new(user, src, ui_key, "cryo", name, 400, 550, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_ui_data()
@@ -152,11 +153,6 @@
 
 	data["isOpen"] = state_open
 	data["cellTemperature"] = round(air_contents.temperature)
-	data["cellTemperatureStatus"] = "good"
-	if(air_contents.temperature > T0C) // if greater than 273.15 kelvin (0 celcius)
-		data["cellTemperatureStatus"] = "bad"
-	else if(air_contents.temperature > 225)
-		data["cellTemperatureStatus"] = "average"
 
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 	var beakerContents[0]
@@ -171,17 +167,18 @@
 		return
 
 	switch(action)
-		if("open")
-			open_machine()
-		if("close")
-			close_machine()
+		if("power")
+			if(on)
+				on = FALSE
+			else if(!state_open)
+				on = TRUE
+		if("door")
+			if(state_open)
+				close_machine()
+			else
+				open_machine()
 		if("autoeject")
 			autoEject = !autoEject
-		if("on")
-			if(!state_open)
-				on = 1
-		if("off")
-			on = 0
 		if("ejectbeaker")
 			if(beaker)
 				beaker.loc = get_step(loc, SOUTH)

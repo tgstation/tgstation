@@ -1643,7 +1643,7 @@
 "aFE" = (/obj/machinery/computer/secure_data,/obj/item/device/radio/intercom{dir = 8; name = "Station Intercom (General)"; pixel_x = -28},/turf/simulated/floor/carpet,/area/security/detectives_office)
 "aFF" = (/obj/effect/landmark/start{name = "Detective"},/obj/structure/bed/chair{dir = 4},/turf/simulated/floor/carpet,/area/security/detectives_office)
 "aFG" = (/obj/structure/table/wood,/obj/item/weapon/hand_labeler,/turf/simulated/floor/carpet,/area/security/detectives_office)
-"aFH" = (/obj/structure/table/wood,/obj/item/device/camera{desc = "A one use - polaroid camera. 30 photos left."; name = "detective's camera"; pictures_left = 30},/obj/machinery/atmospherics/components/unary/vent_scrubber{on = 1},/obj/machinery/light{dir = 4},/turf/simulated/floor/wood,/area/security/detectives_office)
+"aFH" = (/obj/structure/table/wood,/obj/item/device/camera/detective,/obj/machinery/atmospherics/components/unary/vent_scrubber{on = 1},/obj/machinery/light{dir = 4},/turf/simulated/floor/wood,/area/security/detectives_office)
 "aFI" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plasteel{dir = 8; icon_state = "neutralcorner"},/area/security/main)
 "aFJ" = (/turf/simulated/floor/plasteel,/area/security/main)
 "aFK" = (/obj/machinery/requests_console{department = "Security"; departmentType = 5; name = "Security Requests Console"; pixel_y = 30},/turf/simulated/floor/plasteel,/area/security/main)

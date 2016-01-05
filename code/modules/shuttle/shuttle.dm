@@ -385,11 +385,10 @@
 
 					//docking turbulence
 					if(M.client)
-						spawn(0)
-							if(M.buckled)
-								shake_camera(M, 2, 1) // turn it down a bit come on
-							else
-								shake_camera(M, 7, 1)
+						if(M.buckled)
+							shake_camera(M, 2, 1) // turn it down a bit come on
+						else
+							shake_camera(M, 7, 1)
 					if(istype(M, /mob/living/carbon))
 						if(!M.buckled)
 							M.Weaken(3)

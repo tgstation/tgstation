@@ -160,13 +160,14 @@
 				if(M)
 					if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
 						. = ..()
-						if (isturf(M.loc))
-							var/diag = get_dir(mob, M)
-							if ((diag - 1) & diag)
-							else
-								diag = null
-							if ((get_dist(mob, M) > 1 || diag))
-								step(M, get_dir(M.loc, mob.loc))
+						if(M)//Mob may get deleted during parent call
+							if (isturf(M.loc))
+								var/diag = get_dir(mob, M)
+								if ((diag - 1) & diag)
+								else
+									diag = null
+								if ((get_dist(mob, M) > 1 || diag))
+									step(M, get_dir(M.loc, mob.loc))
 			else
 				for(var/mob/M in L)
 					M.other_mobs = 1
@@ -275,13 +276,12 @@
 					else
 						return
 				L.loc = locate(locx,locy,mobloc.z)
-				spawn(0)
-					var/limit = 2//For only two trailing shadows.
-					for(var/turf/T in getline(mobloc, L.loc))
-						spawn(0)
-							anim(T,L,'icons/mob/mob.dmi',,"shadow",,L.dir)
-						limit--
-						if(limit<=0)	break
+				var/limit = 2//For only two trailing shadows.
+				for(var/turf/T in getline(mobloc, L.loc))
+					spawn(0)
+						anim(T,L,'icons/mob/mob.dmi',,"shadow",,L.dir)
+					limit--
+					if(limit<=0)	break
 			else
 				spawn(0)
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)

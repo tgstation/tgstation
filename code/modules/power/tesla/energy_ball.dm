@@ -80,8 +80,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 			var/orbitsize = (I.Width()+I.Height())*pick(0.5,0.6,0.7)
 			orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
-			spawn(1)
-				EB.orbit(src,orbitsize, pick(FALSE,TRUE), rand(10,25), pick(3,4,5,6,36))
+			EB.orbit(src,orbitsize, pick(FALSE,TRUE), rand(10,25), pick(3,4,5,6,36))
 
 
 

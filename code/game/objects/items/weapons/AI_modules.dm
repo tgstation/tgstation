@@ -60,13 +60,6 @@ AI MODULES
 	user << "Upload complete. [reciever]'s laws have been modified."
 	reciever.show_laws()
 	reciever.law_change_counter++
-	if(isAI(reciever))
-		var/mob/living/silicon/ai/A = reciever
-		for(var/mob/living/silicon/robot/R in A.connected_robots)
-			if(R.lawupdate)
-				R << "From now on, these are your laws:"
-				R.show_laws()
-				R.law_change_counter++
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [reciever.name]([reciever.key]).[law2log ? " The law specified [law2log]" : ""]")

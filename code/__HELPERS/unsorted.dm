@@ -1232,10 +1232,10 @@ B --><-- A
 
 	return L
 
-/atom/proc/contains(var/atom/location)
-	if(!location)
+
+/atom/proc/contains(var/atom/A)
+	if(!A)
 		return 0
-	for(location, location && location != src, location=location.loc); //semicolon is for the empty statement
+	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
 			return 1
-		return 0
