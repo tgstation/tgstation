@@ -341,6 +341,10 @@
 
 /obj/item/weapon/coin/attack_self(mob/user)
 	if(cooldown < world.time - 15)
+		if(string_attached) //does the coin have a wire attached
+			user << "<span class='warning'>The coin won't flip very well with something attached!</span>" //Tell user it will not flip
+			return //do not flip the coin
+		else
 		var/coinflip = pick(sideslist)
 		cooldown = world.time
 		flick("coin_[cmineral]_flip", src)
@@ -349,10 +353,6 @@
 		var/oldloc = loc
 		sleep(15)
 		if(loc == oldloc && user && !user.incapacitated())
-			if(string_attached) //does the coin have a wire attached
-				user << "<span class='warning'>The coin won't flip very well with something attached!</span>" //call out the user for failing physics 101
-				return //do not flip the coin
-			else
-				user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
- 								 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
-								 "<span class='italics'>You hear the clattering of loose change.</span>")
+			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
+ 							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
+							 "<span class='italics'>You hear the clattering of loose change.</span>")
