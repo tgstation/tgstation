@@ -2276,6 +2276,8 @@ obj/item/device/pda/AltClick()
 /obj/item/device/pda/preattack(atom/A as mob|obj|turf|area, mob/user as mob)
 	switch(scanmode)
 		if(3)
+			if(!A.Adjacent(user))
+				return
 			if(!isnull(A.reagents))
 				if(A.reagents.reagent_list.len > 0)
 					var/reagents_length = A.reagents.reagent_list.len
