@@ -109,8 +109,9 @@ var/global/list/bombermangear = list()
 /obj/item/weapon/bomberman/proc/lost()
 	if(arena)
 		arena.tools -= src
+		var/datum/bomberman_arena/pastarena = arena
 		spawn()	//we're not waiting for the arena to close to despawn the BBD
-			arena.end()
+			pastarena.end()
 	var/list/turfs = list()
 	for(var/turf/T in range(loc,1))
 		if(!T.density)
