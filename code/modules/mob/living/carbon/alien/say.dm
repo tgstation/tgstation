@@ -14,7 +14,7 @@
 		if(!S.stat && S.hivecheck())
 			S << rendered
 		if(S in dead_mob_list)
-			S << "<a href='?src=\ref[S];follow=\ref[src]'>(F)</a>[rendered]"
+			S << "<a href='?src=\ref[S];follow=\ref[src]'>(F)</a> [rendered]"
 
 /mob/living/carbon/alien/humanoid/royal/queen/alien_talk(message, shown_name = name)
 	shown_name = "<FONT size = 3>[shown_name]</FONT>"
