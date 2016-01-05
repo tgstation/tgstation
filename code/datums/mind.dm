@@ -633,7 +633,8 @@
 		if (istype(new_objective, /datum/objective/custom)) //it's lame I know but this type is snowflaky by its very nature
 			var/expl = stripped_input(usr, "Custom objective:", "Objective", objective ? objective.explanation_text : "")
 			if (!expl)
-				expl = "Free objective"
+				qdel(new_objective)
+				return
 			new_objective.explanation_text = expl
 
 		if (!new_objective)
