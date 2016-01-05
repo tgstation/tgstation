@@ -29,6 +29,8 @@
 	if(issolder(W))
 		src.use(1)
 		new /obj/item/weapon/circuitboard/blank(user.loc)
+		to_chat(user, "<span class='notice'>You fashion a blank circuitboard out of the glass.</span>")
+		playsound(src.loc, 'sound/items/Welder.ogg', 35, 1)
 	if(istype(W, /obj/item/stack/rods) && !reinforced)
 		var/obj/item/stack/rods/V  = W
 		var/obj/item/stack/sheet/glass/RG = new rglass(user.loc)
@@ -214,7 +216,7 @@
 		CC.use(2)
 		src.use(1)
 
-		to_chat(user, "<span class='notice'>You attach some wires to the [name].</span></span>")
+		to_chat(user, "<span class='notice'>You attach some wires to the [name].</span>")//the dreaded dubblespan
 
 		drop_stack(/obj/item/stack/light_w, get_turf(user), 1, user)
 	else

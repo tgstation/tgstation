@@ -72,6 +72,8 @@
 		if(coil.amount < 2) return
 		coil.use(2)
 		var/obj/item/weapon/electrolyzer/E = new /obj/item/weapon/electrolyzer
+		to_chat(user, "<span class='notice'>You tightly coil the wire around the metal casing.</span>")
+		playsound(get_turf(src), 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 		user.before_take_item(src)
 		user.put_in_hands(E)
 		qdel(src)

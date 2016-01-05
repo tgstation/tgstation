@@ -73,8 +73,10 @@
 	if(istype(I,/obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/S = I
 		S.use(1)
-		new/obj/item/weapon/reagent_containers/mortar(get_turf(src))
+		var/obj/item/weapon/reagent_containers/glass/mortar/mortimer = new(get_turf(src))
+		to_chat(user, "<span class='notice'>You fashion a crude mortar out of the wooden bowl and a metal sheet.</span>")
 		qdel(src)
+		user.put_in_hands(mortimer)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		if(!recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))
 			to_chat(user, "<span class='warning'>Sorry, no recursive food.</span>")
