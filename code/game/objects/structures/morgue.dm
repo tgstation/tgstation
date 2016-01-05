@@ -180,7 +180,7 @@ var/global/list/crematoriums = new/list()
 		update_icon()
 
 		for(var/mob/living/M in contents)
-			if (M.stat!=2)
+			if (M.stat != DEAD)
 				M.emote("scream")
 			if(user)
 				user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
@@ -188,8 +188,9 @@ var/global/list/crematoriums = new/list()
 			else
 				log_attack("\[[time_stamp()]\] <b>UNKNOWN</b> cremated <b>[M]/[M.ckey]</b>")
 			M.death(1)
-			M.ghostize()
-			qdel(M)
+			if(M) //some animals get automatically deleted on death.
+				M.ghostize()
+				qdel(M)
 
 		for(var/obj/O in contents) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
 			if(O != connected) //Creamtorium does not burn hot enough to destroy the tray

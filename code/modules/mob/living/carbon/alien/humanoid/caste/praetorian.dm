@@ -54,11 +54,8 @@
 
 /obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/alien/user)
 	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen))
-		user << "<span class='noticealien'>You begin to evolve!</span>"
-		user.visible_message("<span class='alertalien'>[user] begins to twist and contort!</span>")
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
-		user.mind.transfer_to(new_xeno)
-		qdel(user)
+		user.alien_evolve(new_xeno)
 		return 1
 	else
 		user << "<span class='notice'>We already have an alive queen.</span>"

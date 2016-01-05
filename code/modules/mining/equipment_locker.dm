@@ -655,18 +655,19 @@
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
 						  /obj/item/weapon/ore/bananium)
+	healable = 0
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding && !stat)
-			if(AIStatus == AI_ON)
+			if(AIStatus != AI_OFF && AIStatus != AI_IDLE)
 				user << "<span class='info'>[src] is moving around too much to repair!</span>"
 				return
 			if(maxHealth == health)
 				user << "<span class='info'>[src] is at full integrity.</span>"
 			else
-				health += 10
+				adjustBruteLoss(-10)
 				user << "<span class='info'>You repair some of the armor on [src].</span>"
 			return
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner))

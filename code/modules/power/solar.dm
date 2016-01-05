@@ -369,10 +369,11 @@
 		return
 	ui_interact(user)
 
-/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+												datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "solar_control", name, 465, 400)
+		ui = new(user, src, ui_key, "solar_control", name, 465, 400, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/solar_control/get_ui_data()

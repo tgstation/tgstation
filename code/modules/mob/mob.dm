@@ -976,3 +976,9 @@ var/next_mob_id = 0
 //Can the mob use Topic to interact with machines
 /mob/proc/canUseTopic()
 	return
+
+/mob/proc/faction_check(mob/target)
+	for(var/F in faction)
+		if(F in target.faction)
+			return 1
+	return 0

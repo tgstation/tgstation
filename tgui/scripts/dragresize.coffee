@@ -3,6 +3,7 @@ byond = require "./byond"
 
 module.exports =
   drag: (ractive, event) ->
+    event.preventDefault()
     lock = (x, y) ->
       if x < 0 # Left
         x = 0
@@ -23,6 +24,7 @@ module.exports =
     ractive.set x: event.screenX, y: event.screenY
 
   resize: (ractive, event) ->
+    event.preventDefault()
     sane = (x, y) ->
       x = Math.clamp x, 100, screen.width
       y = Math.clamp y, 100, screen.height

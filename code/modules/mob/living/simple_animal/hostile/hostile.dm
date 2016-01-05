@@ -116,11 +116,7 @@
 					return 1
 		if(isliving(the_target))
 			var/mob/living/L = the_target
-			var/faction_check = 0
-			for(var/F in faction)
-				if(F in L.faction)
-					faction_check = 1
-					break
+			var/faction_check = faction_check(L)
 			if(robust_searching)
 				if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
 					return 0

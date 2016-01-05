@@ -87,7 +87,7 @@
 
 		if(grasping.len < max_grasps)
 			for(var/mob/living/L in range(grasp_range,src))
-				if(L == src)
+				if(L == src || faction_check(L))
 					continue
 				if(!(L in grasping) && L != target && prob(grasp_chance))
 					L << "<span class='userdanger'>\the [src] has you entangled!</span>"
