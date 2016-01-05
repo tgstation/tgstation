@@ -278,6 +278,8 @@
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(1,user))
 			var/obj/item/weapon/circuitboard/blank/B = new /obj/item/weapon/circuitboard/blank(src.loc)
+			to_chat(user, "<span class='notice'>You melt away the circuitry, leaving behind a blank.</span>")
+			playsound(B.loc, 'sound/items/Welder.ogg', 30, 1)
 			if(user.get_inactive_hand() == src)
 				user.before_take_item(src)
 				user.put_in_hands(B)

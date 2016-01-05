@@ -262,12 +262,12 @@ to destroy them and players will be able to make replacements.
 		if(!t) return
 		var/obj/item/weapon/solder/S = O
 		if(!S.remove_fuel(4,user)) return
-		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 		soldering = 1
 		if(do_after(user, src,40))
-			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 			var/boardType = allowed_boards[t]
 			var/obj/item/I = new boardType(get_turf(user))
+			to_chat(user, "<span class='notice'>You fashion a crude [I] from the blank circuitboard.</span>")
 			qdel(src)
 			user.put_in_hands(I)
 		soldering = 0
