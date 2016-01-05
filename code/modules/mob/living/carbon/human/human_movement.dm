@@ -39,11 +39,11 @@
 	if(shoes)
 		tally += shoes.slowdown
 
-	if(l_hand)
-		tally += l_hand.slowdown
-
-	if(r_hand)
+	if(istype(l_hand,/obj/item/offhand))
 		tally += r_hand.slowdown
+
+	if(istype(r_hand,/obj/item/offhand))
+		tally += l_hand.slowdown
 
 	if(reagents.has_reagent("frostoil") && dna.mutantrace == "slime")
 		tally *= 5
