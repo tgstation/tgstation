@@ -1,0 +1,4 @@
+author: PJB3005
+delete-after: true
+changes:
+  - experimental: "Made map voting weight-based: if box got 75% of the votes, meta 10% and deff 15%, those chances will be used to pick the map."
