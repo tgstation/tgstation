@@ -245,12 +245,12 @@
 		return 0
 
 	if(consenting_candidates.len)
-		var/client/ghost = null
+		var/mob/dead/observer/ghost = null
 		ghost = pick(consenting_candidates)
 		if(C.contents.len) //If they used the soulstone on someone else in the meantime
 			return 0
 		if(!T.client) //If the original returns in the alloted time
-			T.client = ghost
+			T.client = ghost.client
 		for(var/obj/item/W in T)
 			T.unEquip(W)
 		init_shade(C, T, U)
