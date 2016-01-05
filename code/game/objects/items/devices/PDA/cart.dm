@@ -274,6 +274,7 @@
 /obj/item/weapon/cartridge/proc/generate_menu(mob/user)
 	switch(mode)
 		if(40) //signaller
+			var/obj/item/radio/integrated/signal/S = radio
 			menu = "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"
 
 			menu += {"
@@ -281,14 +282,14 @@
 Frequency:
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-10'>-</a>
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-2'>-</a>
-[format_frequency(radio:frequency)]
+[format_frequency(S.frequency)]
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=2'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=10'>+</a><br>
 <br>
 Code:
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=-5'>-</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=-1'>-</a>
-[radio:code]
+[S.code]
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
 		if (41) //crew manifest
@@ -628,17 +629,17 @@ Code:
 
 		if("Send Signal")
 			spawn( 0 )
-				var/obj/item/radio/integrated/signal/S
+				var/obj/item/radio/integrated/signal/S = radio
 				S.send_signal("ACTIVATE")
 				return
 
 		if("Signal Frequency")
-			var/obj/item/radio/integrated/signal/S
+			var/obj/item/radio/integrated/signal/S = radio
 			var/new_frequency = sanitize_frequency(S.frequency + text2num(href_list["sfreq"]))
 			S.set_frequency(new_frequency)
 
 		if("Signal Code")
-			var/obj/item/radio/integrated/signal/S
+			var/obj/item/radio/integrated/signal/S = radio
 			S.code += text2num(href_list["scode"])
 			S.code = round(S.code)
 			S.code = min(100, S.code)
