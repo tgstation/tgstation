@@ -457,16 +457,16 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 /datum/species/abductor/handle_speech(message)
 	//Hacks
 	var/mob/living/carbon/human/user = usr
+	var/rendered = "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
 	for(var/mob/living/carbon/human/H in mob_list)
 		if(H.dna.species.id != "abductor")
 			continue
 		else
 			var/datum/species/abductor/target_spec = H.dna.species
 			if(target_spec.team == team)
-				H << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
-				//return - technically you can add more aliens to a team
+				H << rendered
 	for(var/mob/M in dead_mob_list)
-		M << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
+		M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a>[rendered]"
 	return ""
 
 
