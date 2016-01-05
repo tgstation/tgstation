@@ -209,11 +209,8 @@
 			. = 1
 			if(O.burn_state == FIRE_PROOF)
 				O.burn_state = FLAMMABLE //Even fireproof things burn up in lava
-				O.fire_act()
-				if (O)
-					O.burn_state = FIRE_PROOF
-			else
-				O.fire_act()
+			
+			O.fire_act()
 			
 			
 		else if (istype(thing, /mob/living))
