@@ -724,7 +724,7 @@
 
 /obj/item/toy/gasha/jani
 	name = "toy janitor"
-	desc = "cleanliness is next to godliness!"
+	desc = "Cleanliness is next to godliness!"
 	icon_state = "jani"
 
 /obj/item/toy/gasha/miner
