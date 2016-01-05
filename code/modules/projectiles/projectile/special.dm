@@ -102,10 +102,6 @@
 
 	//Copied straight from small meteor code
 	spawn(0)
-		for(var/mob/M in range(8, src))
-			if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
-				shake_camera(M, 2, 1) //Poof
-
 		playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 10, 1)
 		explosion(src.loc, -1, 1, 3, 4, 0) //Tiny meteor doesn't cause too much damage
 		qdel(src)
