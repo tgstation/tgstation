@@ -620,15 +620,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
-	var/steps = 0
-
-	while(current != target_turf)
-		if(steps > length) return 0
-		if(current.opacity) return 0
-		for(var/atom/A in current)
-			if(A.opacity) return 0
+	var/steps = 1
+	if(current != target_turf)
 		current = get_step_towards(current, target_turf)
-		steps++
+		while(current != target_turf)
+			if(steps > length) return 0
+			if(current.opacity) return 0
+			for(var/atom/A in current)
+				if(A.opacity) return 0
+			current = get_step_towards(current, target_turf)
+			steps++
 
 	return 1
 

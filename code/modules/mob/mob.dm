@@ -84,29 +84,26 @@ var/next_mob_id = 0
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	for(var/P in player_list)
-		var/mob/M = P
-		var/turf/U = get_turf(P)
-		if(!U)
+	for(var/mob/M in get_hearers_in_view(7, src))
+		if(!M.client)
 			continue
-		if(get_dist(T,U)<8 && inLineOfSight(T.x,T.y, U.x,U.y,T.z))
-			var/msg = message
-			if(M == src) //the src always see the main message or self message
-				if(self_message)
-					msg = self_message
-			else
-				if(M.see_invisible<invisibility || T != loc) //if src is inside something or invisible to us,
-					if(blind_message) // then people see blind message if there is one, otherwise nothing.
+		var/msg = message
+		if(M == src) //the src always see the main message or self message
+			if(self_message)
+				msg = self_message
+		else
+			if(M.see_invisible<invisibility || T != loc) //if src is inside something or invisible to us,
+				if(blind_message) // then people see blind message if there is one, otherwise nothing.
+					msg = blind_message
+				else
+					continue
+			else if(T.lighting_object)
+				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity)
+					if(blind_message) //if the light object is dark and not invisible to us, we see blind_message/nothing
 						msg = blind_message
 					else
 						continue
-				else if(T.lighting_object)
-					if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity)
-						if(blind_message) //if the light object is dark and not invisible to us, we see blind_message/nothing
-							msg = blind_message
-						else
-							continue
-			M.show_message(msg,1,blind_message,2)
+		M.show_message(msg,1,blind_message,2)
 
 // Show a message to all player mobs who sees this atom
 // Use for objects performing visible actions
@@ -117,25 +114,22 @@ var/next_mob_id = 0
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	for(var/P in player_list)
-		var/mob/M = P
-		var/turf/U = get_turf(P)
-		if(!U)
+	for(var/mob/M in get_hearers_in_view(7, src))
+		if(!M.client)
 			continue
-		if(get_dist(T,U)<8 && inLineOfSight(T.x,T.y, U.x,U.y,T.z))
-			var/msg = message
-			if(M.see_invisible<invisibility || T != loc)//if src is inside something or invisible to us,
-				if(blind_message) // then people see blind message if there is one, otherwise nothing.
+		var/msg = message
+		if(M.see_invisible<invisibility || T != loc)//if src is inside something or invisible to us,
+			if(blind_message) // then people see blind message if there is one, otherwise nothing.
+				msg = blind_message
+			else
+				continue
+		else if(T.lighting_object)
+			if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
+				if(blind_message)
 					msg = blind_message
 				else
 					continue
-			else if(T.lighting_object)
-				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
-					if(blind_message)
-						msg = blind_message
-					else
-						continue
-			M.show_message(msg,1,blind_message,2)
+		M.show_message(msg,1,blind_message,2)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
