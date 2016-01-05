@@ -1,0 +1,69 @@
+<script type='text/coffeescript'>
+component.exports =
+  computed:
+    capacityPercentState: ->
+      charge = @get "data.capacityPercent"
+      if charge > 50 then "good"
+      else if charge > 15 then "average"
+      else "bad"
+    inputState: ->
+      charge = @get "data.capacityPercent"
+      input = @get "data.inputting"
+      if charge >= 100 then "good"
+      else if input then "average"
+      else "bad"
+    outputState: ->
+      charge = @get "data.charge"
+      output = @get "data.outputting"
+      if output then "good"
+      else if charge > 0 then "average"
+      else "bad"
+</script>
+
+<n-display title='Storage'>
+  <n-section label='Stored Energy'>
+    <n-bar min='0' max='100' value='{{data.capacityPercent}}' state='{{capacityPercentState}}'>{{Math.fixed(adata.capacityPercent)}}%</n-bar>
+  </n-section>
+</n-display>
+<n-display title='Input'>
+  <n-section label='Charge Mode'>
+    <n-button icon='{{data.inputAttempt ? "refresh" : "close"}}' style='{{data.inputAttempt ? "selected" : null}}'
+      action='tryinput'>{{data.inputAttempt ? "Auto" : "Off"}}</n-button>
+    &nbsp;
+    [<span class='{{inputState}}'>{{data.capacityPercent >= 100 ? "Fully Charged" : data.inputting ? "Charging" : "Not Charging"}}</span>]
+	</n-section>
+  <n-section label='Target Input'>
+    <n-bar min='0' max='{{data.inputLevelMax}}' value='{{data.inputLevel}}'>{{Math.round(adata.inputLevel)}}W</n-bar>
+	</n-section>
+  <n-section label='Adjust Input'>
+    <n-button icon='fast-backward' state='{{data.inputLevel == 0 ? "disabled" : null}}' action='input' params='{"input": "min"}'/>
+    <n-button icon='backward' state='{{data.inputLevel == 0 ? "disabled" : null}}' action='input' params='{"input": "minus"}'/>
+    <n-button icon='pencil' action='input' params='{"input": "custom"}'>Set</n-button>
+    <n-button icon='forward' state='{{data.inputLevel == data.inputLevelMax ? "disabled" : null}}' action='input' params='{"input": "plus"}'/>
+    <n-button icon='fast-forward' state='{{data.inputLevel == data.inputLevelMax ? "disabled" : null}}' action='input' params='{"input": "max"}'/>
+  </n-section>
+  <n-section label='Available'>
+		<span>{{Math.round(adata.inputAvailable)}}W</span>
+	</n-section>
+</n-display>
+<n-display title='Output'>
+  <n-section label='Output Mode'>
+    <n-button icon='{{data.outputAttempt ? "power-off" : "close"}}' style='{{data.outputAttempt ? "selected" : null}}'
+      action='tryoutput'>{{data.outputAttempt ? "On" : "Off"}}</n-button>
+    &nbsp;
+    [<span class='{{outputState}}'>{{data.outputting ? "Sending" : data.charge > 0 ? "Not Sending" : "No Charge"}}</span>]
+	</n-section>
+  <n-section label='Target Output'>
+    <n-bar min='0' max='{{data.outputLevelMax}}' value='{{data.outputLevel}}'>{{Math.round(adata.outputLevel)}}W</n-bar>
+	</n-section>
+  <n-section label='Adjust Output'>
+    <n-button icon='fast-backward' state='{{data.outputLevel == 0 ? "disabled" : null}}' action='output' params='{"output": "min"}'/>
+    <n-button icon='backward' state='{{data.outputLevel == 0 ? "disabled" : null}}' action='output' params='{"output": "minus"}'/>
+    <n-button icon='pencil' action='output' params='{"output": "custom"}'>Set</n-button>
+    <n-button icon='forward' state='{{data.outputLevel == data.outputLevelMax ? "disabled" : null}}' action='output' params='{"output": "plus"}'/>
+    <n-button icon='fast-forward' state='{{data.outputLevel == data.outputLevelMax ? "disabled" : null}}' action='output' params='{"output": "max"}'/>
+  </n-section>
+  <n-section label='Outputting'>
+		<span>{{Math.round(adata.outputUsed)}}W</span>
+	</n-section>
+</n-display>

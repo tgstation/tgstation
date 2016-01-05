@@ -221,7 +221,7 @@ mob/verb/test()
 	hclient = getClient(hclient, TRUE)
 
 	if (istype(hclient))
-		if (type in asset_list && islist(asset_list[type]))
+		if ((type in asset_list) && islist(asset_list[type]))
 			send_asset_list(hclient.client, asset_list[type], TRUE)
 
 		if (!winexists(hclient.client, "browser_\ref[src]"))

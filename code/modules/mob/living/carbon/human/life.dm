@@ -106,14 +106,8 @@
 	if(!dna || !dna.species.handle_fire(src))
 		..()
 	if(on_fire)
-		var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
-		if(wear_suit)
-			if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
-				thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
-		if(head)
-			if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
-				thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
-		thermal_protection = round(thermal_protection)
+		var/thermal_protection = get_thermal_protection()
+
 		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
 			return
 		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
@@ -121,6 +115,16 @@
 		else
 			bodytemperature += (BODYTEMP_HEATING_MAX + (fire_stacks * 12))
 
+/mob/living/carbon/human/proc/get_thermal_protection()
+	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
+	if(wear_suit)
+		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
+			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
+	if(head)
+		if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
+			thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
+	thermal_protection = round(thermal_protection)
+	return thermal_protection
 
 /mob/living/carbon/human/IgniteMob()
 	if(!dna || !dna.species.IgniteMob(src))
@@ -302,6 +306,8 @@
 	if(head)
 		if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
 			. = 1
+	if(NOBREATH in dna.species.specflags)
+		. = 1
 	return .
 /mob/living/carbon/human/proc/handle_embedded_objects()
 	for(var/obj/item/organ/limb/L in organs)

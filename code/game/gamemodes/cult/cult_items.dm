@@ -159,7 +159,9 @@
 	if(!cult.attempts_left)
 		user << "<span class='notice'>You attempt to call out to the Geometer, but there is no answer...</span>"
 		return
-
+	if(cult.eldergod)
+		user << "<span class='cultlarge>The Geometer is already among us.</span>"
+		return
 	if(cult.large_shell_reference)
 		var/obj/S = cult.large_shell_reference
 		if(S.anchored)

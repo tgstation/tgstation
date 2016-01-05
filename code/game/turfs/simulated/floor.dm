@@ -25,7 +25,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
 	intact = 1
-	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
 	var/floor_tile = null //tile that this floor drops
@@ -82,8 +81,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	return
 
 /turf/simulated/floor/proc/update_icon()
-	if(lava)
-		return 0
 	if(air)
 		update_visuals()
 	return 1
@@ -172,4 +169,4 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		ChangeTurf(/turf/simulated/floor/engine/cult)
 
 /turf/simulated/floor/can_have_cabling()
-	return !burnt & !broken & !lava
+	return !burnt & !broken

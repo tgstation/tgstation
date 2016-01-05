@@ -174,7 +174,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 	var/list/libcomp_menu
-	var/page = 1	//current page of the external archives 
+	var/page = 1	//current page of the external archives
 	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/build_library_menu()
@@ -184,7 +184,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	if(!cachedbooks)
 		return
 	libcomp_menu = list("")
-	
+
 	for(var/i in 1 to cachedbooks.len)
 		var/datum/cachedbook/C = cachedbooks[i]
 		var/page = round(i/250)+1
@@ -434,7 +434,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				B.title = title
 				B.author = author
 				B.dat = content
-				B.icon_state = "book[rand(1,7)]"
+				B.icon_state = "book[rand(1,8)]"
 				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
 	src.add_fingerprint(usr)

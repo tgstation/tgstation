@@ -73,6 +73,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		spawn(100)
 			var/obj/singularity/energy_ball/EB = new(loc)
 			orbiting_balls.Add(EB)
+			poi_list.Remove(EB)
 			EB.transform *= pick(0.3,0.4,0.5,0.6,0.7)
 			EB.is_orbiting = 1
 			var/icon/I = icon(icon,icon_state,dir)
