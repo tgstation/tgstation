@@ -190,6 +190,10 @@
 		CRASH("pAI without card")
 	loc = card
 
+/mob/living/silicon/pai/canUseTopic(atom/movable/M)
+	return 1
+
+
 //Addition by Mord_Sith to define AI's network change ability
 /*
 /mob/living/silicon/pai/proc/pai_network_change()
