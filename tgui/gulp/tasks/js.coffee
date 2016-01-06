@@ -5,12 +5,21 @@ b = c.plugins.browserify
 g = c.plugins.gulp
 
 
+babel        = require "babel-core"
 browserify   = require "browserify"
 coffeescript = require "coffee-script"
 gulp         = require "gulp"
 stylus       = require "stylus"
 through      = require "through2"
 
+
+b.componentify.compilers["text/javascript"] = (source, file) ->
+  compiled = babel.transform source,
+    sourceMaps: true
+
+  output =
+    source: compiled.code
+    map: compiled.map
 
 b.componentify.compilers["text/coffeescript"] = (source, file) ->
   compiled = coffeescript.compile source,
@@ -34,7 +43,7 @@ bundle = ->
     browserify file.path,
       extensions: [".coffee", ".ract"]
       debug: f.debug
-    .transform b.babelify, {presets: ["es2015"], plugins: ["external-helpers-2"]}
+    .transform b.babelify
     .plugin b.helpers
     .transform b.coffeeify
     .transform b.componentify
