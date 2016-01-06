@@ -149,7 +149,7 @@ var/global/datum/controller/master/Master = new()
 							// If we caused BYOND to miss a tick, stop processing for a bit...
 							if(startingtick < world.time || start_time + 1 < world.timeofday)
 								break
-							sleep(-1)
+							sleep(0)
 
 				cost = MC_AVERAGE(cost, world.timeofday - start_time)
 				if(ran_subsystems)
