@@ -4,7 +4,6 @@
   "average": "#be6209",
   "bad": "#b00e0e",
   "highlight": "#8ba5c4",
-  "label": "#8ba5c4",
   "text": {
     "normal": "white",
     "inverse": "black",
@@ -29,6 +28,9 @@
     "first": "#bb9b68",
     "second": "#b1905d",
     "border": "#272727"
+  },
+  "section": {
+    "label": "#8ba5c4"
   },
   "bar": {
     "border": "#40628a",
