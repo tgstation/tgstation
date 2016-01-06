@@ -1,10 +1,11 @@
 module.exports =
   browserify:
     aliasify:     require "aliasify"
+    babelify:     require "babelify"
     coffeeify:    require "coffeeify"
     componentify: require "ractive-componentify"
+    es3ify:       require "es3ify"
     globify:      require "require-globify"
-    resolutions:  require "browserify-resolutions"
   gulp: require("gulp-load-plugins")({replaceString: /^gulp(-|\.)|-/g})
   postcss:
     autoprefixer: require "autoprefixer"
