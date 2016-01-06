@@ -26,7 +26,7 @@
 
 
 /mob/living/simple_animal/drone/proc/alert_drones(msg, dead_can_hear = 0)
-	for(var/mob/M in mob_list)
+	for(var/M in mob_list)
 		if(istype(M, /mob/living/simple_animal/drone) && M.stat != DEAD)
 			for(var/F in src.faction)
 				if(F in M.faction)
