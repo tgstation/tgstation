@@ -1,0 +1,40 @@
+################################
+# Example Changelog File
+#
+# Note: This file, and files beginning with ".", and files that don't end in ".yml" will not be read.  If you change this file, you will look really dumb.
+#
+# Your changelog will be merged with a master changelog. (New stuff added only, and only on the date entry for the day it was merged.)
+# When it is, any changes listed below will disappear.
+#
+# Valid Prefixes: 
+#   bugfix
+#   wip (For works in progress)
+#   tweak
+#   soundadd
+#   sounddel
+#   rscdel (general deleting of nice things)
+#   rscadd (general adding of nice things)
+#   imageadd
+#   imagedel
+#   spellcheck (typo fixes)
+#   experiment
+#   tgs (TG-ported fixes?)
+#################################
+
+# Your name.  
+author: 9600bauds
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+# Any changes you've made.  See valid prefix list above.
+# INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
+# SCREW THIS UP AND IT WON'T WORK.
+# Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
+changes: 
+  - rscadd: Alt-clicking a reagent container (i.e. beaker) while it's in your inventory will now directly bring up the \"Set transfer amount\" menu.
+  - rscadd: Alt-clicking a Chemistry Dispenser will now directly eject it's beaker, if any.
+  - rscadd: Alt-clicking a portable scrubber or portable pump will now eject their held tank, without having to open their menu.
+  - rscadd: Alt-clicking a washing machine will now start it. Likewise for Centrifuges.
+  - rscadd: Janicarts have now gained a \"Remove Trash Bag\" verb. Alt-clicking a Janicart will directly remove it's trash bag. Clicking a Janicart while you're riding it will no longer bring up a popup asking what you want to do, it will instead always make you stop riding it. If you want to remove the trash bag while riding it, use the verb or alt-click.
+  - experiment: If you can think of any other alt-click shortcuts that you'd like to see in the game, please don't hesitate to write a letter, stamp it, and mail it to my house, but don't make a feature request or people other than me will have to read it, which gets them mad cranky.

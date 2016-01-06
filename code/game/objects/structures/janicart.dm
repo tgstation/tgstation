@@ -36,7 +36,7 @@
 		if(1 to 39)
 			to_chat(user, "<span class='warning'>It appears severely dented.</span>")
 		if((INFINITY * -1) to 0)
-			to_chat(user, "<span class='danger'>It appears completely unsalvageable</span>")
+			to_chat(user, "<span class='danger'>It appears completely unsalvageable.</span>")
 	if(mybag)
 		to_chat(user, "\A [mybag] is hanging on \the [nick].")
 
@@ -67,21 +67,29 @@
 			to_chat(user, "<span class='notice'>\The [nick] is out of water!</span>")
 	return 1
 
-/obj/structure/bed/chair/vehicle/janicart/attack_hand(mob/user)
-	if(mybag)
-		if(occupant && occupant == user)
-			switch(alert("Choose an action.","Janicart","Get off the ride","Remove the bag","Cancel"))
-				if("Get off the ride")
-					return ..()
+/obj/structure/bed/chair/vehicle/janicart/verb/remove_trashbag()
+	set name = "Remove Trash Bag"
+	set category = "Object"
+	set src in oview(1)
 
-				if("Cancel")
-					return
-
-		mybag.forceMove(get_turf(user))
-		user.put_in_hands(mybag)
+	if(usr.canmove && !usr.isUnconscious() && !usr.restrained() && Adjacent(usr) && usr.dexterity_check())
+		mybag.forceMove(get_turf(usr))
+		usr.put_in_hands(mybag)
 		mybag = null
+
+/obj/structure/bed/chair/vehicle/janicart/attack_hand(mob/user)
+	if(occupant && occupant == user)
+		return ..()
+	if(mybag)
+		remove_trashbag()
 	else
 		..()
+
+/obj/structure/bed/chair/vehicle/janicart/AltClick()
+	if(mybag)
+		remove_trashbag()
+		return
+	..()
 
 /obj/structure/bed/chair/vehicle/janicart/Move()
 	..()
