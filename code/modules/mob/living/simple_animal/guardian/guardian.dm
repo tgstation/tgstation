@@ -78,7 +78,7 @@
 	summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
 	summoner.death()
 
-/mob/living/simple_animal/hostile/guardian/adjustBruteLoss(amount) //The spirit is invincible, but passes on damage to the summoner
+/mob/living/simple_animal/hostile/guardian/adjustHealth(amount) //The spirit is invincible, but passes on damage to the summoner
 	var/damage = amount * damage_transfer
 	if (summoner)
 		if(loc == summoner)

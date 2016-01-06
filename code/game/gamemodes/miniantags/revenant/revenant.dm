@@ -139,7 +139,7 @@
 /mob/living/simple_animal/revenant/narsie_act()
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
-/mob/living/simple_animal/revenant/adjustBruteLoss(amount)
+/mob/living/simple_animal/revenant/adjustHealth(amount)
 	if(!revealed)
 		return
 	essence = max(0, essence-amount)
