@@ -130,6 +130,7 @@
 	var/deactivated = 0 //Eventually the dice runs out of power
 
 /obj/item/weapon/dice/d20/cursed/pickup(mob/user as mob)
+	..()
 	if(deactivated == 0)
 		to_chat(user, "<span class='sinister'>Are you feeling lucky?</span>")
 
@@ -145,7 +146,7 @@
 					to_chat(user, "<span class=sinister><B>A natural failure, your poor roll has cursed you. Better luck next time! </span></B>")
 					flick("e_flash", user.flash)
 					h.Cluwneize()
-				if(2 to 4)
+				if(2 to 5)
 					to_chat(user, "<span class=sinister><B>It could be worse, but not much worse! Enjoy your curse! </span></B>")
 					flick("e_flash", user.flash)
 					switch(pick(1,2,3))
