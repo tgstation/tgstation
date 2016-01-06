@@ -134,7 +134,7 @@
 		if(M == summoner)
 			M << my_message
 		if(M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a>[my_message]"
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
 	src << "[my_message]"
 	log_say("[src.real_name]/[src.key] : [input]")
 
@@ -156,7 +156,7 @@
 			if(G.summoner == src)
 				G << "[my_message]"
 		else if (M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a>[my_message]"
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	log_say("[src.real_name]/[src.key] : [text]")
 

@@ -243,7 +243,7 @@
 		if(istype(M, /mob/living/simple_animal/revenant))
 			M << rendered
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a>[rendered]"
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
 	return
 
 
