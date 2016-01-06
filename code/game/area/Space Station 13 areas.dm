@@ -740,7 +740,7 @@ var/list/teleportlocs = list()
 	music = 'sound/ambience/signal.ogg'
 
 /area/medical/patients_rooms
-	name = "Patient's Rooms"
+	name = "Patients' Rooms"
 	icon_state = "patients"
 
 /area/medical/cmo
