@@ -1,7 +1,7 @@
+require "core-js"
+require "html5shiv"
 require "ie8"
 require "dom4"
-require "es5-shim"
-require "html5shiv"
 require "./math"
 
 
