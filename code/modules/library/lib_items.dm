@@ -45,12 +45,14 @@
 		qdel(src)
 
 /obj/structure/bookcase/attackby(obj/O as obj, mob/user as mob)
-
 	if(busy) //So that you can't mess with it while deconstructing
 		return
 	if(is_type_in_list(O, valid_types))
 		user.drop_item(O, src)
 		update_icon()
+	else if(isscrewdriver(O) && user.a_intent == I_HELP) //They're probably trying to open the "maintenance panel" to deconstruct it. Let them know what's wrong.
+		to_chat(user, "<span class='notice'>There are no screws on \the [src], it appears to be nailed together. You could probably disassemble it with just a crowbar.</span>")
+		return
 	else if(iscrowbar(O) && user.a_intent == I_HELP) //Only way to deconstruct, needs help intent
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 75, 1)
 		user.visible_message("<span class='warning'>[user] starts disassembling \the [src].</span>", \
@@ -99,6 +101,15 @@
 			else
 				choice.forceMove(get_turf(src))
 			update_icon()
+
+/obj/structure/bookcase/attack_ghost(mob/dead/observer/user as mob)
+	if(contents.len && in_range(user, src))
+		var/obj/item/weapon/book/choice = input("Which book would you like to read?") as null|obj in contents
+		if(choice)
+			if(!istype(choice)) //spellbook, cult tome, or the one weird bible storage
+				to_chat(user,"A mysterious force is keeping you from reading that.")
+				return
+			choice.read_a_motherfucking_book(user)
 
 /obj/structure/bookcase/ex_act(severity)
 	switch(severity)
@@ -204,22 +215,31 @@
 	new /obj/item/weapon/tome(loc)
 	..()
 
-/obj/item/weapon/book/attack_self(var/mob/user as mob)
+/obj/item/weapon/book/proc/read_a_motherfucking_book(mob/user)
 	if(carved)
-		if(store)
-			to_chat(user, "<span class='notice'>[store] falls out of [title]!</span>")
-			store.loc = get_turf(src.loc)
-			store = null
-			return
-		else
-			to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
-			return
+		to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
+		return
 	if(src.dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
-		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
+		if(!isobserver(user))
+			user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 		onclose(user, "book")
 	else
 		to_chat(user, "This book is completely blank!")
+
+/obj/item/weapon/book/attack_self(var/mob/user as mob)
+	if(store)
+		to_chat(user, "<span class='notice'>[store] falls out of [title]!</span>")
+		store.forceMove(get_turf(src))
+		store = null
+		return
+	read_a_motherfucking_book(user)
+
+/obj/item/weapon/book/examine(mob/user)
+	if(isobserver(user) && in_range(src,user))
+		read_a_motherfucking_book(user)
+	else
+		..()
 
 /obj/item/weapon/book/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(carved)
