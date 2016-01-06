@@ -7,6 +7,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	layer = MOB_LAYER + 1
 	stat = DEAD
 	density = 0
+	mouse_opacity = 0
 	canmove = 0
 	anchored = 1	//  don't get pushed around
 	invisibility = INVISIBILITY_OBSERVER
