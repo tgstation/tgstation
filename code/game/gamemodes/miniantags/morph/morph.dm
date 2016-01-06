@@ -61,6 +61,13 @@
 		return 0
 	return 1
 
+/mob/living/simple_animal/hostile/morph/proc/eat(atom/movable/A)
+	if(A && A.loc != src)
+		visible_message("<span class='warning'>[src] swallows [A] whole!</span>")
+		A.loc = src
+		return 1
+	return 0
+
 /mob/living/simple_animal/hostile/morph/ShiftClickOn(atom/movable/A)
 	if(morph_time <= world.time && !stat)
 		if(A == src)
@@ -151,16 +158,14 @@
 		var/mob/living/L = target
 		if(L.stat == DEAD)
 			if(do_after(src, 30, target = L))
-				visible_message("<span class='warning'>[src] swallows [target] whole!</span>")
-				L.loc = src
-				adjustHealth(-50)
+				if(eat(L))
+					adjustHealth(-50)
 			return
 	else if(istype(target,/obj/item)) // Eat items just to be annoying
 		var/obj/item/I = target
 		if(!I.anchored)
 			if(do_after(src,20, target = I))
-				visible_message("<span class='warning'>[src] swallows [target] whole!</span>")
-				I.loc = src
+				eat(I)
 			return
 	target.attack_animal(src)
 
