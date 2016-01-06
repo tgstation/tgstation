@@ -279,7 +279,7 @@
 /mob/living/simple_animal/proc/adjustHealth(amount)
 	if(status_flags & GODMODE)
 		return 0
-	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
+	bruteloss = Clamp(bruteloss + amount, 0, maxHealth)
 	handle_regular_status_updates()
 
 /mob/living/simple_animal/adjustBruteLoss(amount)
