@@ -344,7 +344,6 @@
 		if(string_attached) //does the coin have a wire attached
 			user << "<span class='warning'>The coin won't flip very well with something attached!</span>" //Tell user it will not flip
 			return //do not flip the coin
-		else
 		var/coinflip = pick(sideslist)
 		cooldown = world.time
 		flick("coin_[cmineral]_flip", src)
