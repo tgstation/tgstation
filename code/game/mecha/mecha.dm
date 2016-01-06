@@ -410,26 +410,12 @@
 	if(.)
 		return 1
 
-	var/atom/movable/dense_object_backup
-	for(var/atom/A in orange(1, get_turf(src)))
-		if(isarea(A))
-			continue
-		else if(isturf(A))
-			var/turf/turf = A
-			if(!turf.density)
-				continue
-			return 1
-		else
-			var/atom/movable/AM = A
-			if(!AM.CanPass(src) || AM.density)
-				if(AM.anchored)
-					return 1
-				dense_object_backup = AM
-
-	if(movement_dir && dense_object_backup)
-		if(dense_object_backup.newtonian_move(turn(movement_dir, 180)))
-			if(occupant)
-				occupant << "<span class='info'>You push off of [dense_object_backup] to propel yourself.</span>"
+	var/atom/movable/backup = get_spacemove_backup()
+	if(backup)
+		if(istype(backup) && movement_dir && !!backup.anchored)
+			if(backup.newtonian_move(turn(movement_dir, 180)))
+				if(occupant)
+					occupant << "<span class='info'>You push off of [backup] to propel yourself.</span>"
 		return 1
 
 /obj/mecha/relaymove(mob/user,direction)
