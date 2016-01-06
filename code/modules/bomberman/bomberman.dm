@@ -201,6 +201,9 @@ var/global/list/bombermangear = list()
 
 /obj/structure/bomberman/proc/detonate()
 	var/turf/T = get_turf(src)
+	if(!T)
+		qdel(src)
+		return
 	playsound(T, 'sound/bomberman/bombexplode.ogg', 100, 1)
 	spawn()
 		new /obj/structure/bomberflame(T,1,bombpower,SOUTH,destroy_environnement,hurt_players)
@@ -208,6 +211,9 @@ var/global/list/bombermangear = list()
 
 /obj/structure/bomberman/power/detonate()
 	var/turf/T = get_turf(src)
+	if(!T)
+		qdel(src)
+		return
 	playsound(T, 'sound/bomberman/bombexplode.ogg', 100, 1)
 	spawn()
 		new /obj/structure/bomberflame(T,1,MAX_BOMB_POWER,SOUTH,destroy_environnement,hurt_players)
