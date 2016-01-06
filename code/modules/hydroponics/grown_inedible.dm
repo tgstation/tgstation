@@ -173,7 +173,7 @@
 
 /obj/item/weapon/grown/deathnettle // -- Skie
 	plantname = "deathnettle"
-	desc = "The <span class='danger'>glowingnettle incites <span class='warning'>rage\black in you just from looking at it!</span></span>"
+	desc = "A glowing red nettle that incites rage in you just from looking at it."
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
 	icon_state = "deathnettle"
@@ -187,14 +187,14 @@
 	origin_tech = "combat=3"
 	attack_verb = list("stung")
 
-	New()
-		..()
-		spawn(5)
-			force = round((5+potency/2.5), 1)
+/obj/item/weapon/grown/deathnettle/New()
+	..()
+	spawn(5)
+		force = round((5+potency/2.5), 1)
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "<span class='danger'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>")
-		return (BRUTELOSS|TOXLOSS)
+/obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='danger'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return (BRUTELOSS|TOXLOSS)
 
 /obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user as mob)
 	if(!user.gloves)

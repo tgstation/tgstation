@@ -294,7 +294,7 @@
 
 		for(var/mob/O in viewers(M, null))
 			if(O.client)
-				O.show_message(text("<span class = 'danger'><B>[] casually lines up a shot with []'s head and pulls the trigger!</B></span>", user, M), 1, "<span class = 'danger'>You hear the sound of foam against skull</span>", 2)
+				O.show_message(text("<span class = 'danger'><B>[] casually lines up a shot with []'s head and pulls the trigger!</B></span>", user, M), 1, "<span class = 'danger'>You hear the sound of foam against skull.</span>", 2)
 				O.show_message(text("<span class = 'danger'>[] was hit in the head by the foam dart!</span>", M), 1)
 
 		playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)

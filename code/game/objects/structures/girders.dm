@@ -24,11 +24,11 @@
 		if(state == 0) //Normal girder or wooden girder
 			if(anchored && !istype(src, /obj/structure/girder/displaced)) //Anchored, destroy it
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
-				user.visible_message("<span class='notice'>[user] starts disassembling \the [src]</span>", \
-				"<span class='notice'>You start disassembling \the [src]</span>")
+				user.visible_message("<span class='notice'>[user] starts disassembling \the [src].</span>", \
+				"<span class='notice'>You start disassembling \the [src].</span>")
 				if(do_after(user, src, 40))
-					user.visible_message("<span class='warning'>[user] dissasembles \the [src]</span>", \
-					"<span class='notice'>You dissasemble \the [src]</span>")
+					user.visible_message("<span class='warning'>[user] dissasembles \the [src].</span>", \
+					"<span class='notice'>You dissasemble \the [src].</span>")
 					getFromPool(material, get_turf(src))
 					qdel(src)
 			else if(!anchored) //Unanchored, anchor it
@@ -37,23 +37,23 @@
 					return
 
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
-				user.visible_message("<span class='notice'>[user] starts securing \the [src]</span>", \
-				"<span class='notice'>You start securing \the [src]</span>")
+				user.visible_message("<span class='notice'>[user] starts securing \the [src].</span>", \
+				"<span class='notice'>You start securing \the [src].</span>")
 				if(do_after(user, src, 40))
-					user.visible_message("<span class='notice'>[user] secures \the [src]</span>", \
-					"<span class='notice'>You secure \the [src]</span>")
+					user.visible_message("<span class='notice'>[user] secures \the [src].</span>", \
+					"<span class='notice'>You secure \the [src].</span>")
 					add_hiddenprint(user)
 					add_fingerprint(user)
 					anchored = 1
 					update_icon()
 		else if(state == 1 || state == 2) //Clearly a reinforced girder
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
-			user.visible_message("<span class='notice'>[user] starts [anchored ? "un" : ""]securing \the [src]</span>", \
-			"<span class='notice'>You start [anchored ? "un" : ""]securing \the [src]</span>")
+			user.visible_message("<span class='notice'>[user] starts [anchored ? "un" : ""]securing \the [src].</span>", \
+			"<span class='notice'>You start [anchored ? "un" : ""]securing \the [src].</span>")
 			if(do_after(user, src, 40))
 				anchored = !anchored //Unachor it if anchored, or opposite
-				user.visible_message("<span class='notice'>[user] [anchored ? "" : "un"]secures \the [src]</span>", \
-				"<span class='notice'>You [anchored ? "" : "un"]secure \the [src]</span>")
+				user.visible_message("<span class='notice'>[user] [anchored ? "" : "un"]secures \the [src].</span>", \
+				"<span class='notice'>You [anchored ? "" : "un"]secure \the [src].</span>")
 				add_hiddenprint(user)
 				add_fingerprint(user)
 				update_icon()
@@ -111,18 +111,18 @@
 	else if(istype(W, /obj/item/stack/rods) && state == 0 && material == /obj/item/stack/sheet/metal) //Inserting support struts, stage 0 to 1 (reinforced girder, replaces plasteel step)
 		var/obj/item/stack/rods/R = W
 		if(R.amount < 2) //Do a first check BEFORE the user begins, in case he's using a single rod
-			to_chat(user, "<span class='warning'>You need more rods to finish the support struts</span>")
+			to_chat(user, "<span class='warning'>You need more rods to finish the support struts.</span>")
 			return
-		user.visible_message("<span class='notice'>[user] starts inserting internal support struts into \the [src]</span>", \
-		"<span class='notice'>You start inserting internal support struts into \the [src]</span>")
+		user.visible_message("<span class='notice'>[user] starts inserting internal support struts into \the [src.]</span>", \
+		"<span class='notice'>You start inserting internal support struts into \the [src].</span>")
 		if(do_after(user, src,40))
 			var/obj/item/stack/rods/O = W
 			if(O.amount < 2) //In case our user is trying to be tricky
-				to_chat(user, "<span class='warning'>You need more rods to finish the support struts</span>")
+				to_chat(user, "<span class='warning'>You need more rods to finish the support struts.</span>")
 				return
 			O.use(2)
-			user.visible_message("<span class='notice'>[user] inserts internal support struts into \the [src]</span>", \
-			"<span class='notice'>You insert internal support struts into \the [src]</span>")
+			user.visible_message("<span class='notice'>[user] inserts internal support struts into \the [src].</span>", \
+			"<span class='notice'>You insert internal support struts into \the [src].</span>")
 			add_hiddenprint(user)
 			add_fingerprint(user)
 			state = 1
@@ -166,14 +166,14 @@
 				else
 					if(S.amount < 2)
 						return ..() // ?
-					user.visible_message("<span class='notice'>[user] starts installing plating to \the [src]</span>", \
-					"<span class='notice'>You start installing plating to \the [src]</span>")
+					user.visible_message("<span class='notice'>[user] starts installing plating to \the [src].</span>", \
+					"<span class='notice'>You start installing plating to \the [src].</span>")
 					if(do_after(user, src, 40))
 						if(S.amount < 2) //User being tricky
 							return
 						S.use(2)
-						user.visible_message("<span class='notice'>[user] finishes installing plating to \the [src]</span>", \
-						"<span class='notice'>You finish installing plating to \the [src]</span>")
+						user.visible_message("<span class='notice'>[user] finishes installing plating to \the [src].</span>", \
+						"<span class='notice'>You finish installing plating to \the [src].</span>")
 						var/turf/Tsrc = get_turf(src)
 						if(!istype(Tsrc)) return 0
 						var/turf/simulated/wall/X = Tsrc.ChangeTurf(/turf/simulated/wall)
@@ -253,14 +253,14 @@
 				var/wallpath = text2path("/turf/simulated/wall/mineral/[M]")
 				if(!ispath(wallpath))
 					return ..()
-				user.visible_message("<span class='notice'>[user] starts installing plating to \the [src]</span>", \
-				"<span class='notice'>You start installing plating to \the [src]</span>")
+				user.visible_message("<span class='notice'>[user] starts installing plating to \the [src].</span>", \
+				"<span class='notice'>You start installing plating to \the [src].</span>")
 				if(do_after(user, src,40))
 					if(S.amount < 2) //Don't be tricky now
 						return
 					S.use(2)
-					user.visible_message("<span class='notice'>[user] finishes installing plating to \the [src]</span>", \
-					"<span class='notice'>You finish installing plating to \the [src]</span>")
+					user.visible_message("<span class='notice'>[user] finishes installing plating to \the [src].</span>", \
+					"<span class='notice'>You finish installing plating to \the [src].</span>")
 					var/turf/Tsrc = get_turf(src)
 					var/turf/simulated/wall/mineral/X = Tsrc.ChangeTurf(wallpath)
 					if(X)
@@ -375,11 +375,11 @@
 /obj/structure/cultgirder/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
-		user.visible_message("<span class='notice'>[user] starts disassembling \the [src]</span>", \
-		"<span class='notice'>You start disassembling \the [src]</span>")
+		user.visible_message("<span class='notice'>[user] starts disassembling \the [src].</span>", \
+		"<span class='notice'>You start disassembling \the [src].</span>")
 		if(do_after(user, src,40))
-			user.visible_message("<span class='warning'>[src] dissasembles \the [src]</span>", \
-			"<span class='notice'>You dissasemble \the [src]</span>")
+			user.visible_message("<span class='warning'>[src] dissasembles \the [src].</span>", \
+			"<span class='notice'>You dissasemble \the [src].</span>")
 			//new /obj/effect/decal/remains/human(get_turf(src))	//Commented out until remains are cleanable
 			qdel(src)
 
@@ -388,8 +388,8 @@
 		if(!(PK.diggables & DIG_WALLS))
 			return
 
-		user.visible_message("<span class='warning'>[user] starts [PK.drill_verb] \the [src] with \the [PK]</span>",
-							"<span class='notice'>You start [PK.drill_verb] \the [src] with \the [PK]</span>")
+		user.visible_message("<span class='warning'>[user] starts [PK.drill_verb] \the [src] with \the [PK].</span>",
+							"<span class='notice'>You start [PK.drill_verb] \the [src] with \the [PK].</span>")
 		if(do_after(user, src,30))
 			user.visible_message("<span class='warning'>[user] destroys \the [src]!</span>",
 								"<span class='notice'>Your [PK] tears through the last of \the [src]!</span>")
