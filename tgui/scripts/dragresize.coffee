@@ -26,8 +26,8 @@ module.exports =
   resize: (ractive, event) ->
     event.preventDefault()
     sane = (x, y) ->
-      x = Math.clamp x, 100, screen.width
-      y = Math.clamp y, 100, screen.height
+      x = Math.clamp 100, screen.width, x
+      y = Math.clamp 100, screen.height, y
       {x: x, y: y}
 
     if ractive.get "x"

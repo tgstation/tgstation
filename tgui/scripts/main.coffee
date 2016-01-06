@@ -2,7 +2,9 @@ require "core-js"
 require "html5shiv"
 require "ie8"
 require "dom4"
-require "./math"
+
+
+Object.assign(Math, require("./math"))
 
 
 Ractive = require "ractive"

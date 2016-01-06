@@ -34,7 +34,8 @@ bundle = ->
     browserify file.path,
       extensions: [".coffee", ".ract"]
       debug: f.debug
-    .transform b.babelify, {presets: ["es2015"]}
+    .transform b.babelify, {presets: ["es2015"], plugins: ["external-helpers-2"]}
+    .plugin b.helpers
     .transform b.coffeeify
     .transform b.componentify
     .transform b.aliasify

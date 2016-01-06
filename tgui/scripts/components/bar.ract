@@ -4,7 +4,7 @@ component.exports =
     @observe "value", (newkey, oldkey, keypath) ->
       min = @get "min"
       max = @get "max"
-      value = Math.clamp newkey, min, max
+      value = Math.clamp min, max, newkey
       @animate "percentage", Math.round (value - min) / (max - min) * 100
 </script>
 
