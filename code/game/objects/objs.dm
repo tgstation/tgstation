@@ -195,7 +195,7 @@
 
 /obj/proc/tesla_act(var/power)
 	being_shocked = 1
-	var/power_bounced = power / 1.3
-	tesla_zap(src, 5, power_bounced)
+	var/power_bounced = power / 2
+	tesla_zap(src, 3, power_bounced)
 	spawn(10)
 		being_shocked = 0
