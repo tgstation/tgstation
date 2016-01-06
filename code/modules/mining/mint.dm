@@ -147,6 +147,7 @@ a.notsmelting {
 </html>
 	"}
 	user << browse(html, "window=mint")
+	onclose(user, "mint")
 
 /obj/machinery/mineral/mint/Topic(href, href_list)
 	if(..())
