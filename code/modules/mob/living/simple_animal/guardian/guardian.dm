@@ -70,7 +70,7 @@
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			loc = get_turf(summoner)
 
-/mob/living/mob/living/simple_animal/hostile/guardian/canSuicide()
+/mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
 
 /mob/living/simple_animal/hostile/guardian/death()
