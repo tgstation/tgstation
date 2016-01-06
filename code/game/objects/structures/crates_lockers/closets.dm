@@ -33,6 +33,10 @@
 	if(!opened)		// if closed, any item at the crate's loc is put in the contents
 		take_contents()
 
+/obj/structure/closet/Destroy()
+	dump_contents()
+	return ..()
+
 /obj/structure/closet/update_icon()
 	overlays.Cut()
 	if(!opened)
@@ -167,7 +171,6 @@
 	contents_explosion(severity, target)
 	if(loc && ispath(material_drop) && !(flags & NODECONSTRUCT))
 		new material_drop(loc)
-	dump_contents()
 	qdel(src)
 	..()
 
@@ -176,7 +179,6 @@
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
 		if(health <= 0)
-			dump_contents()
 			qdel(src)
 	return
 
@@ -184,12 +186,10 @@
 	if(user.environment_smash)
 		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] destroys \the [src].</span>")
-		dump_contents()
 		qdel(src)
 
 /obj/structure/closet/blob_act()
 	if(prob(75))
-		dump_contents()
 		qdel(src)
 
 
