@@ -4,10 +4,10 @@ $titleButton
   padding: 7px // To make a bigger clickable area.
   margin: -7px
 
-  color: colors.title;
+  color: colors.text.title;
 
   &:hover
-    color: lighten(colors.title, colors.hover)
+    color: lighten(colors.text.title, colors.buttons.hover)
 
 header.titlebar
   position: fixed;
@@ -16,8 +16,8 @@ header.titlebar
   width: 100%;
   height: 32px;
 
-  background-color: colors.titlebar
-  box-shadow: 0 3px 3px alpha(#000, 0.1)
+  background-color: colors.titlebar.background
+  box-shadow: 0 3px 3px colors.titlebar.shadow
 
   .statusicon
     position: absolute
@@ -30,7 +30,7 @@ header.titlebar
     top: 6px
     left: 46px
 
-    color: colors.title
+    color: colors.text.title
     font-size: 16px
     white-space: nowrap
 
