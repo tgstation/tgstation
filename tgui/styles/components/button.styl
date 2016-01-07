@@ -1,3 +1,14 @@
+buttoncolor(selector, color)
+  &.{selector}
+    transition: background-color 0.5s
+    background-color: color
+  &.{selector}.active:hover,
+  &.{selector}.active:focus
+    transition: background-color 0.25s
+    background-color: lighten(color, colors.hover)
+    outline: 0
+
+
 span.button
   @extend $fontReset
   display: inline-block
@@ -10,20 +21,11 @@ span.button
   .fa
     padding-right: 2px
 
-  transition: background-color 0.25s, box-shadow 0.25s
-  &.normal
-    background-color: colors.normal
-    &:hover, &:focus
-      outline: 0
-      box-shadow: inset 0 0 100px 100px alpha(#fff, colors.hover)
-  &.disabled
-    background-color: colors.disabled
-  &.selected
-    background-color: colors.selected
-  &.caution
-    background-color: colors.caution
-  &.danger
-    background-color: colors.danger
+  buttoncolor(normal, colors.normal)
+  buttoncolor(disabled, colors.disabled)
+  buttoncolor(selected, colors.selected)
+  buttoncolor(caution, colors.caution)
+  buttoncolor(danger, colors.danger)
 
   &.gridable
     width: 125px

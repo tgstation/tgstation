@@ -235,7 +235,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustBruteLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
+	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getOxyLoss()
@@ -243,7 +243,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustOxyLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
+	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setOxyLoss(amount)
@@ -256,7 +256,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustToxLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
+	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setToxLoss(amount)
@@ -269,7 +269,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustFireLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
+	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getCloneLoss()
@@ -277,7 +277,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustCloneLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
+	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setCloneLoss(amount)
@@ -290,7 +290,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustBrainLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
+	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setBrainLoss(amount)
@@ -303,7 +303,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustStaminaLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
+	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
 
 /mob/living/proc/setStaminaLoss(amount)
 	if(status_flags & GODMODE)	return 0

@@ -4,7 +4,6 @@
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "rune1"
 	layer = 2.1
-	anchored = 1
 	var/do_icon_rotate = TRUE
 
 /obj/effect/decal/cleanable/crayon/examine()

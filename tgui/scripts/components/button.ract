@@ -15,9 +15,9 @@ component.exports =
       state   = @get "state"
       style   = @get "style"
       if enabled
-        if not state then "normal #{[style]}"
-        else "#{state}"
-      else "disabled"
+        if not state then "active normal #{[style]}"
+        else "inactive #{state}"
+      else "inactive disabled"
   oninit: ->
     @on "press", (event) ->
       event.node.blur()
