@@ -221,6 +221,9 @@
 	update_icon()
 	if(visible && !glass)
 		SetOpacity(1)
+	if(locate(/mob/living) in get_turf(src))
+		sleep(1)
+		open()
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
