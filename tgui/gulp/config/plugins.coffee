@@ -1,6 +1,5 @@
 module.exports =
   browserify:
-    aliasify:     require "aliasify"
     babelify:     require "babelify"
     coffeeify:    require "coffeeify"
     componentify: require "ractive-componentify"

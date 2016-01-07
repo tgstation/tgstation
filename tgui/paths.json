@@ -11,7 +11,7 @@
   },
   "js":{
     "dir":"scripts/",
-    "main":"main.coffee",
+    "main":"main.js",
     "out":"tgui.js"
   }
 }

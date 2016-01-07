@@ -1,7 +1,7 @@
 // Extensions to the built-in 'Math' object.
 
 // Helper to limit a number to be inside 'min' and 'max'.
-export function clamp (min, max) {
+export function clamp (min, max, number) {
   return Math.max(min, Math.min(number, max))
 }
 

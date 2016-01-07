@@ -16,6 +16,8 @@ through      = require "through2"
 b.componentify.compilers["text/javascript"] = (source, file) ->
   compiled = babel.transform source,
     sourceMaps: true
+    presets: ["es2015"]
+    plugins: ["external-helpers-2"]
 
   output =
     source: compiled.code
@@ -41,13 +43,14 @@ b.componentify.compilers["text/stylus"] = (source, file) ->
 bundle = ->
   through.obj (file, enc, next) ->
     browserify file.path,
-      extensions: [".coffee", ".ract"]
+      extensions: [".js", ".coffee", ".ract"]
       debug: f.debug
-    .transform b.babelify
+    .transform b.babelify,
+      presets: ["es2015"]
+      plugins: ["external-helpers-2"]
     .plugin b.helpers
     .transform b.coffeeify
     .transform b.componentify
-    .transform b.aliasify
     .transform b.globify
     .transform b.es3ify
     .bundle (err, res) ->
