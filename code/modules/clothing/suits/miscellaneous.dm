@@ -165,6 +165,14 @@
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/stormtrooper
+	name = "stormtrooper suit"
+	desc = "Cease-and-Desist incoming"
+	icon_state = "stormtrooper"
+	item_state = "stormtrooper"
+	body_parts_covered = CHEST|GROIN
+	flags_inv = HIDEJUMPSUIT
+
 /obj/item/clothing/suit/snowman
 	name = "snowman outfit"
 	desc = "Two white spheres covered in white glitter. 'Tis the season."
