@@ -14,10 +14,11 @@ through      = require "through2"
 
 
 b.componentify.compilers["text/javascript"] = (source, file) ->
-  compiled = babel.transform source,
+  fs = require "fs"
+  config =
     sourceMaps: true
-    presets: ["es2015"]
-    plugins: ["external-helpers-2"]
+  Object.assign config, JSON.parse fs.readFileSync(".babelrc", "utf8")
+  compiled = babel.transform source, config
 
   output =
     source: compiled.code
@@ -45,9 +46,7 @@ bundle = ->
     browserify file.path,
       extensions: [".js", ".coffee", ".ract"]
       debug: f.debug
-    .transform b.babelify,
-      presets: ["es2015"]
-      plugins: ["external-helpers-2"]
+    .transform b.babelify
     .plugin b.helpers
     .transform b.coffeeify
     .transform b.componentify
