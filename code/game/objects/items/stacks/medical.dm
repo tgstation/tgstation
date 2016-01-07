@@ -115,7 +115,7 @@
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"
 	singular_name = "improvised gauze"
-	desc = "A roughly cut roll of cloth that can stop bleeding, but does not heal wounds."
+	desc = "A roughly cut roll of cloth that can stop sone bleeding, but does not heal wounds."
 	stop_bleeding = 900
 
 /obj/item/stack/medical/gauze/cyborg/

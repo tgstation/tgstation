@@ -14,6 +14,8 @@
 	icon_state = "bandaid" // thanks inheritance
 
 /obj/item/weapon/reagent_containers/pill/patch/attack(mob/living/M, mob/user)
+	if(!canconsume(M, user))
+		return 0
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 	if(affecting.status != ORGAN_ORGANIC) // fuck you inheritance
