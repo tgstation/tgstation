@@ -180,7 +180,6 @@
 		if(isliving(src.loc))
 			return
 		//user.next_move = max(user.next_move+2,world.time + 2)
-		src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
 	return
@@ -214,7 +213,6 @@
 	else
 		if(istype(src.loc, /mob/living))
 			return
-		src.pickup(user)
 		//user.next_move = max(user.next_move+2,world.time + 2)
 
 	user.put_in_active_hand(src)
