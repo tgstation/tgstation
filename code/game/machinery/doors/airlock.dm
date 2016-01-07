@@ -508,7 +508,7 @@ About the new airlock wires panel:
 				src.aiHacking=0
 				return
 			else if(!src.canAIHack())
-				user << "We've lost our connection! Unable to hack airlock."
+				user << "Connection lost! Unable to hack airlock."
 				src.aiHacking=0
 				return
 			user << "Fault confirmed: airlock control wire disabled or cut."
@@ -520,7 +520,7 @@ About the new airlock wires panel:
 				src.aiHacking=0
 				return
 			else if(!src.canAIHack())
-				user << "We've lost our connection! Unable to hack airlock."
+				user << "Connection lost! Unable to hack airlock."
 				src.aiHacking=0
 				return
 			user << "Upload access confirmed. Loading control program into airlock software."
@@ -530,7 +530,7 @@ About the new airlock wires panel:
 				src.aiHacking=0
 				return
 			else if(!src.canAIHack())
-				user << "We've lost our connection! Unable to hack airlock."
+				user << "Connection lost! Unable to hack airlock."
 				src.aiHacking=0
 				return
 			user << "Transfer complete. Forcing airlock to execute program."
@@ -658,7 +658,7 @@ About the new airlock wires panel:
 					else if (src.normalspeed)
 						normalspeed = 0
 					else
-						usr << text("Door timing circurity already accellerated.")
+						usr << text("Door timing circurity already accelerated.")
 
 				if(7)
 					//close door
@@ -1053,9 +1053,7 @@ About the new airlock wires panel:
 	air_update_turf(1)
 	update_freelook_sight()
 	if(safe)
-		if(locate(/mob/living) in get_turf(src))
-			sleep(1)
-			open()
+		CheckForMobs()
 	return 1
 
 /obj/machinery/door/airlock/proc/prison_open()
