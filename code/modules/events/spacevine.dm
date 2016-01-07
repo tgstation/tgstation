@@ -425,6 +425,7 @@
 
 
 /obj/effect/spacevine_controller
+	invisibility = 101
 	var/list/obj/effect/spacevine/vines = list()
 	var/list/growth_queue = list()
 	var/spread_multiplier = 5
