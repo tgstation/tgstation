@@ -1912,6 +1912,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	if(!usr.canmove || usr.isUnconscious() || usr.restrained() || !usr.dexterity_check()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
 		return
 
+	if(!cans || !beaker)
+		to_chat(usr, "<span class='warning'>\The [src] needs an active container and multiple passive containers to work.</span>")
+		return
+
 	add_fingerprint(usr)
 	to_chat(usr, "<span class='notice'>\The [src] groans as it spits out containers.</span>")
 	while(cans.len>0 && beaker.reagents.reagent_list.len>0)

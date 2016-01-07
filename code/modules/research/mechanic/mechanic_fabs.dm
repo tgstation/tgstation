@@ -13,7 +13,7 @@
 	icon_state = "genfab"
 	max_material_storage = GEN_FAB_BASESTORAGE
 	nano_file = "genfab.tmpl"
-	var/list/design_types = list(GENFAB, IMPRINTER, PROTOLATHE, AUTOLATHE, MECHFAB, PODFAB)
+	var/list/design_types = GENFAB | IMPRINTER | PROTOLATHE | AUTOLATHE | MECHFAB | PODFAB
 	var/removable_designs = 1
 	var/plastic_added = 1 //if plastic costs are added for designs - the autolathe doesn't have this
 
@@ -93,10 +93,10 @@
 		return 1
 	if(istype(O, /obj/item/research_blueprint))
 		var/obj/item/research_blueprint/RB = O
-		if(!(RB.build_type in design_types)) //This should be using bitflags but I am too stupid to use them, consider this comment a cry for attention
+		if(!(design_types & RB.build_type))
 			to_chat(user, "<span class='warning'>This isn't the right machine for that kind of blueprint!</span>")
 			return 0
-		else if(RB.stored_design && (RB.build_type in design_types))
+		else if(RB.stored_design)
 			if(src.AddBlueprint(RB, user))
 				if(src.AddMechanicDesign(RB.stored_design, user))
 					overlays += "[base_state]-bp"
