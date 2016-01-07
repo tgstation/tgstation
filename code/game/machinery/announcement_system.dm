@@ -191,8 +191,3 @@ var/list/announcement_systems = list()
 	if(!(stat & (NOPOWER|BROKEN)))
 		act_up()
 	..(severity)
-
-/obj/machinery/announcement_system/emag_act()
-	if(!emagged)
-		emagged = 1
-		act_up()

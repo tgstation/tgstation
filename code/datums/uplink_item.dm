@@ -704,6 +704,13 @@ var/list/uplink_items = list()
 	cost = 6
 	excludefrom = list(/datum/game_mode/gang)
 
+/datum/uplink_item/device_tools/sabotage
+	name = "Sabotage Sequencer"
+	desc = "The sabotage sequencer produces a powerful EMP on electronics it comes in contact with."
+	item = /obj/item/weapon/card/sabotage
+	cost = 6
+	excludefrom = list(/datum/game_mode/gang)
+
 /datum/uplink_item/device_tools/toolbox
 	name = "Full Syndicate Toolbox"
 	desc = "The syndicate toolbox is a suspicious black and red. It comes loaded with a full tool set including a multitool and combat gloves that are resistant to shocks and heat."
