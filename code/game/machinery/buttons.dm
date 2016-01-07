@@ -174,16 +174,15 @@
 	var/normaldoorcontrol = 0
 	var/specialfunctions = OPEN // Bitflag, see assembly file
 
-/obj/machinery/button/door/New(loc, ndir = 0, built = 0)
-	..()
-	if(id && !built && !device)
+/obj/machinery/button/door/setup_device()
+	if(!device)
 		if(normaldoorcontrol)
 			var/obj/item/device/assembly/control/airlock/A = new(src)
 			device = A
 			A.specialfunctions = specialfunctions
 		else
 			device = new /obj/item/device/assembly/control(src)
-
+	..()
 
 /obj/machinery/button/massdriver
 	name = "mass driver button"
