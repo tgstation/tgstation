@@ -101,6 +101,10 @@
 				adjustBruteLoss(damage)
 				add_logs(M, src, "attacked")
 				updatehealth()
+			else
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				visible_message("<span class='danger'>[M] has attempted to punch [name]!</span>", \
+						"<span class='userdanger'>[M] has attempted to punch [name]!</span>")
 		if("disarm")
 			if (!( paralysis ))
 				M.do_attack_animation(src)
@@ -115,12 +119,6 @@
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
 								"<span class='userdanger'>[M] has disarmed [src]!</span>")
-		else
-			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] has attempted to punch [name]!</span>", \
-					"<span class='userdanger'>[M] has attempted to punch [name]!</span>")
- 	return
-
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
