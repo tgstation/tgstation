@@ -829,3 +829,13 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 			to_chat(src, "<span class='notice'>No active chemical agents found in [host]'s blood.</span>")
 	else
 		to_chat(src, "<span class='notice'>No significant chemical agents found in [host]'s blood.</span>")
+
+
+/mob/living/simple_animal/borer/attack_ghost(var/mob/dead/observer/O)
+	if(!(src.key))
+		if(O.can_reenter_corpse)
+			var/response = alert(O,"Do you want to take it over?","This borer has no soul","Yes","No")
+			if(response == "Yes")
+				src.key = O.key
+		else if(!(O.can_reenter_corpse))
+			to_chat(O,"<span class='notice'>While the borer may be mindless, you have recently ghosted and thus are not allowed to take over for now.</span>")
