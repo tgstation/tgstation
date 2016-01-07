@@ -1,6 +1,6 @@
 /datum/mapGenerator/lavaland
 	var/start_z = 5
-	modules = list(/datum/mapGeneratorModule/bottomLayer/asteroidTurfs)
+	modules = list(/datum/mapGeneratorModule/river)
 
 /datum/mapGenerator/lavaland/defineRegion(turf/Start, turf/End, replace = 0)
 	start_z = Start.z
