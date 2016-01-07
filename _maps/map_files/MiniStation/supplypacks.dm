@@ -31,8 +31,12 @@
 	anchored = 0
 
 /datum/supply_packs/organic/hydroponics/hydro_tray
-	name = "Hydroponics Tray"
-	contains = list(/obj/machinery/hydroponics/unattached)
+	name = "Hydroponics Tray Kit"
+	contains = list(/obj/item/weapon/circuitboard/hydroponics,
+                   /obj/item/weapon/stock_parts/matter_bin,
+                   /obj/item/weapon/stock_parts/matter_bin,
+                   /obj/item/weapon/stock_parts/manipulator,
+                   /obj/item/weapon/stock_parts/console_screen)
 	cost = 10
-	containertype = /obj/structure/largecrate
-	containername = "hydroponics tray crate"
+	containertype = /obj/structure/closet/crate/hydroponics
+	containername = "hydroponics kit"
