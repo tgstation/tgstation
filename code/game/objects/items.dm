@@ -130,9 +130,8 @@
 			size = "normal-sized"
 		if(4.0)
 			size = "bulky"
-		if(5.0)
+		if(5.0 to INFINITY)
 			size = "huge"
-		else
 	//if ((M_CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
 	var/pronoun
 	if (src.gender == PLURAL)

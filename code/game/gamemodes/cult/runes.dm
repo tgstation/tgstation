@@ -219,7 +219,7 @@
 			return 0
 
 	usr.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
-	usr.show_message("<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='warning'>You hear a faint fizzle.</span>", 2)
+	usr.show_message("<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 1, "<span class='warning'>You hear a faint fizzle.</span>", 2)
 	to_chat(usr, "<span class='notice'>You remembered the words correctly, but the rune isn't working. Maybe your ritual is missing something important.</span>")
 
 /////////////////////////////////////////FOURTH RUNE
@@ -433,7 +433,7 @@
 			usr.seer = 1
 		return
 	usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
-	usr.show_message("\<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='warning'>You hear a faint fizzle.</span>", 2)
+	usr.show_message("\<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 1, "<span class='warning'>You hear a faint fizzle.</span>", 2)
 	to_chat(usr, "<span class='notice'>You remembered the words correctly, but the rune isn't reacting. Maybe you should position yourself differently.</span>")
 
 /////////////////////////////////////////EIGHTH RUNE
@@ -532,14 +532,14 @@
 		if(istype(src,/obj/effect/rune))
 			usr.say("Kla[pick("'","`")]atu barada nikt'o!")
 			for (var/mob/V in viewers(src))
-				V.show_message("<span class='warning'>The rune turns into gray dust, veiling the surrounding runes.</span>", 3)
+				V.show_message("<span class='warning'>The rune turns into gray dust, veiling the surrounding runes.</span>")
 			qdel(src)
 		else
 			usr.whisper("Kla[pick("'","`")]atu barada nikt'o!")
 			to_chat(usr, "<span class='warning'>Your talisman turns into gray dust, veiling the surrounding runes.</span>")
 			for (var/mob/V in orange(1,src))
 				if(V!=usr)
-					V.show_message("<span class='warning'>Dust emanates from [usr]'s hands for a moment.</span>", 3)
+					V.show_message("<span class='warning'>Dust emanates from [usr]'s hands for a moment.</span>")
 
 		return
 	if(istype(src,/obj/effect/rune))
@@ -728,14 +728,14 @@
 			break
 	if (imbued_from)
 		for (var/mob/V in viewers(src))
-			V.show_message("<span class='warning'>The runes turn into dust, which then forms into an arcane image on the paper.</span>", 3)
+			V.show_message("<span class='warning'>The runes turn into dust, which then forms into an arcane image on the paper.</span>", 1)
 		usr.say("H'drak v[pick("'","`")]loso, mir'kanas verbot!")
 		qdel(imbued_from)
 		qdel(newtalisman)
 		invocation("rune_imbue")
 	else
 		usr.say("H'drak v[pick("'","`")]loso, mir'kanas verbot!")
-		usr.show_message("\<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='warning'>You hear a faint fizzle.</span>", 2)
+		usr.show_message("\<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 1, "<span class='warning'>You hear a faint fizzle.</span>", 2)
 		to_chat(usr, "<span class='notice'>You remembered the words correctly, but the rune isn't working properly. Maybe you're missing something in the ritual.</span>")
 
 /////////////////////////////////////////THIRTEENTH RUNE
@@ -976,7 +976,7 @@
 		if(istype(W,/obj/effect/rune))
 			usr.say("Nikt[pick("'","`")]o barada kla'atu!")
 			for (var/mob/V in viewers(src))
-				V.show_message("<span class='warning'>The rune turns into red dust, reveaing the surrounding runes.</span>", 3)
+				V.show_message("<span class='warning'>The rune turns into red dust, revealing the surrounding runes.</span>", 1)
 			qdel(src)
 			return
 		if(istype(W,/obj/item/weapon/paper/talisman))
@@ -984,7 +984,7 @@
 			to_chat(usr, "<span class='warning'>Your talisman turns into red dust, revealing the surrounding runes.</span>")
 			for (var/mob/V in orange(1,usr.loc))
 				if(V!=usr)
-					V.show_message("<span class='warning'>Red dust emanates from [usr]'s hands for a moment.</span>", 3)
+					V.show_message("<span class='warning'>Red dust emanates from [usr]'s hands for a moment.</span>", 1)
 			return
 		return
 	if(istype(W,/obj/effect/rune))
@@ -1161,7 +1161,7 @@
 		if(nullblock)
 			continue
 		C.ear_deaf += 50
-		C.show_message("<span class='warning'>The world around you suddenly becomes quiet.</span>", 3)
+		C.show_message("<span class='warning'>The world around you suddenly becomes quiet.</span>")
 		affected++
 		if(prob(1))
 			C.sdisabilities |= DEAF

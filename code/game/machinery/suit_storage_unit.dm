@@ -445,7 +445,7 @@
 					src.MASK = null
 				if(src.BOOTS)
 					src.BOOTS = null
-				visible_message("<font color='red'>With a loud whining noise, the Suit Storage Unit's door grinds open. Puffs of ashen smoke come out of its chamber.</font>", 3)
+				visible_message("<font color='red'>With a loud whining noise, the Suit Storage Unit's door grinds open. Puffs of ashen smoke come out of its chamber.</font>", 2) //spooky
 				stat |= BROKEN
 				src.isopen = 1
 				src.islocked = 0
@@ -509,7 +509,7 @@
 	if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) || BOOTS )
 		to_chat(usr, "<font color='red'>It's too cluttered inside for you to fit in!</font>")
 		return
-	visible_message("[usr] starts squeezing into the suit storage unit!", 3)
+	visible_message("[usr] starts squeezing into the suit storage unit!", 2) //spooky
 	if(do_after(usr, src, 10))
 		usr.stop_pulling()
 		usr.client.perspective = EYE_PERSPECTIVE
@@ -567,7 +567,7 @@
 		if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) || BOOTS) //Unit needs to be absolutely empty
 			to_chat(user, "<font color='red'>The unit's storage area is too cluttered.</font>")
 			return
-		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 3)
+		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 2) //spooky
 		if(do_after(user, src, 20))
 			if(!G || !G.affecting) return //derpcheck
 			var/mob/M = G.affecting

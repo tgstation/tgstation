@@ -3,7 +3,7 @@
 	icon_state = "hvalve0"
 
 	name = "manual valve"
-	desc = "A pipe valve"
+	desc = "A pipe valve."
 	var/open = 0
 	var/openDuringInit = 0
 

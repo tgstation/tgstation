@@ -387,7 +387,7 @@
 
 /obj/item/weapon/storage/box/mousetraps
 	name = "box of Pest-B-Gon Mousetraps"
-	desc = "<B><FONT=red>WARNING:</FONT></B> <I>Keep out of reach of children</I>."
+	desc = "<span class='danger'>WARNING:</span> <I>Keep out of reach of children</I>."
 	icon_state = "mousetraps"
 
 	New()

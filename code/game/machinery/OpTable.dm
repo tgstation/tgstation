@@ -145,7 +145,7 @@
 	if (C == user)
 		user.visible_message("[user] climbs on the operating table.","You climb on the operating table.")
 	else
-		visible_message("<span class='warning'>[C] has been laid on the operating table by [user].</span>", 3)
+		visible_message("<span class='warning'>[C] has been laid on the operating table by [user].</span>", 2) //spooky
 
 	add_fingerprint(user)
 

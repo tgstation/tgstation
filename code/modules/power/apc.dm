@@ -441,7 +441,7 @@
 			to_chat(user, "The interface is broken.")
 		else if(has_electronics == 2)
 			wiresexposed = !wiresexposed
-			to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
+			to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"].")
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>You open the panel and find nothing inside.</span>")
@@ -995,7 +995,7 @@
 				s.set_up(3, 1, src)
 				s.start()
 				for(var/mob/M in viewers(src))
-					M.show_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", 3, "<span class='warning'>You hear sizzling electronics.</span>", 2)
+					M.show_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", 1, "<span class='warning'>You hear sizzling electronics.</span>", 2)
 
 /obj/machinery/power/apc/can_attach_terminal(mob/user)
 	return user.loc == src.loc && has_electronics != 2 && !terminal
