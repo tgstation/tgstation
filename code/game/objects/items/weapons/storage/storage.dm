@@ -340,7 +340,6 @@
 			W.dropped(M)
 		if(ismob(new_location))
 			M = new_location
-			W.pickup(M)
 			M.put_in_active_hand(W)
 		else
 			if(istype(new_location, /obj/item/weapon/storage))
