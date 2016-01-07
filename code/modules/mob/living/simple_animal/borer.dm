@@ -836,6 +836,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		if(O.can_reenter_corpse)
 			var/response = alert(O,"Do you want to take it over?","This borer has no soul","Yes","No")
 			if(response == "Yes")
-				src.key = O.key
+				src.transfer_personality(O.client)
 		else if(!(O.can_reenter_corpse))
 			to_chat(O,"<span class='notice'>While the borer may be mindless, you have recently ghosted and thus are not allowed to take over for now.</span>")
