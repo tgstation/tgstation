@@ -5,7 +5,6 @@
 	desc = "It's a useless heap of junk... <i>or is it?</i>"
 	gender = PLURAL
 	density = 0
-	anchored = 1
 	layer = 2
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
@@ -45,7 +44,6 @@
 	desc = "It's black and greasy. Looks like Beepsky made another mess."
 	gender = PLURAL
 	density = 0
-	anchored = 1
 	layer = 2
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "floor1"
