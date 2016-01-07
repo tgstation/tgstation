@@ -70,7 +70,7 @@
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			loc = get_turf(summoner)
 
-/mob/living/mob/living/simple_animal/hostile/guardian/canSuicide()
+/mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
 
 /mob/living/simple_animal/hostile/guardian/death()
@@ -78,7 +78,7 @@
 	summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
 	summoner.death()
 
-/mob/living/simple_animal/hostile/guardian/adjustBruteLoss(amount) //The spirit is invincible, but passes on damage to the summoner
+/mob/living/simple_animal/hostile/guardian/adjustHealth(amount) //The spirit is invincible, but passes on damage to the summoner
 	var/damage = amount * damage_transfer
 	if (summoner)
 		if(loc == summoner)
@@ -134,7 +134,7 @@
 		if(M == summoner)
 			M << my_message
 		if(M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a>[my_message]"
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
 	src << "[my_message]"
 	log_say("[src.real_name]/[src.key] : [input]")
 
@@ -156,7 +156,7 @@
 			if(G.summoner == src)
 				G << "[my_message]"
 		else if (M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a>[my_message]"
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	log_say("[src.real_name]/[src.key] : [text]")
 

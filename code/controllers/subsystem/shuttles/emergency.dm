@@ -1,3 +1,7 @@
+#define UNLAUNCHED 0
+#define ENDGAME_LAUNCHED 1
+#define EARLY_LAUNCHED 2
+
 /obj/docking_port/mobile/emergency
 	name = "emergency shuttle"
 	id = "emergency"
@@ -116,7 +120,8 @@
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
 				//move each escape pod to its corresponding transit dock
 				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
-					if(M.z == ZLEVEL_STATION) //Will not launch from the mine/planet(for some reason)
+					if(M.launch_status == UNLAUNCHED) //Will not launch from the mine/planet
+						M.launch_status = ENDGAME_LAUNCHED
 						M.enterTransit()
 				//now move the actual emergency shuttle to its transit dock
 				for(var/area/shuttle/escape/E in world)
@@ -129,7 +134,8 @@
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
 				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
-					M.dock(SSshuttle.getDock("[M.id]_away"))
+					if(M.launch_status == ENDGAME_LAUNCHED)
+						M.dock(SSshuttle.getDock("[M.id]_away"))
 				//now move the actual emergency shuttle to centcomm
 				for(var/area/shuttle/escape/E in world)
 					E << 'sound/effects/hyperspace_end.ogg'
@@ -151,9 +157,11 @@
 	dwidth = 1
 	width = 3
 	height = 4
+	var/launch_status = UNLAUNCHED
 
 /obj/docking_port/mobile/pod/request()
-	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA && z == ZLEVEL_STATION)
+	if((security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA) && launch_status == UNLAUNCHED)
+		launch_status = EARLY_LAUNCHED
 		return ..()
 
 /obj/docking_port/mobile/pod/New()
@@ -241,3 +249,9 @@
 
 /obj/item/weapon/storage/pod/attack_hand(mob/user)
 	return
+
+
+
+#undef UNLAUNCHED
+#undef LAUNCHED
+#undef EARLY_LAUNCHED
