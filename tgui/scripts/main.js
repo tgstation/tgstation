@@ -3,24 +3,25 @@ import 'html5shiv'
 import 'ie8'
 import 'dom4'
 
-
 import * as mathext from './math'
 Object.assign(Math, mathext)
 
 import Ractive from 'ractive'
-Ractive.DEBUG = /minified/.test(() => {/*minified*/})
+Ractive.DEBUG = /minified/.test(() => {
+  /*minified*/
+})
 
 import WebFont from 'webfontloader'
 WebFont.load({
   custom: {
     families: [
-      "FontAwesome"
+      'FontAwesome'
     ],
     urls: [
-      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
+      'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css'
     ],
-    testStrings:{
-      FontAwesome: "\uf240"
+    testStrings: {
+      FontAwesome: '\uf240'
     }
   }
 })
@@ -36,9 +37,9 @@ window.initialize = (dataString) => {
 
 import act from './byond'
 let holder = document.getElementById('data')
-if (holder.textContent != '{}') {// If the JSON was inlined, load it.
+if (holder.textContent != '{}') { // If the JSON was inlined, load it.
   window.initialize(holder.textContent)
 } else {
-  act(holder.getAttribute("data-ref"), "tgui:initialize")
+  act(holder.getAttribute('data-ref'), 'tgui:initialize')
   holder.remove()
 }

@@ -3,8 +3,8 @@
 <link rel='ractive' href='./components/warnings.ract'>
 
 <script>
-  import winset from './byond'
-  import {drag, resize} from './dragresize'
+import {winset} from './byond'
+import {drag, resize} from './dragresize'
 
 component.exports = {
   components: {
@@ -42,18 +42,13 @@ component.exports = {
     })
     document.addEventListener('mousemove', (event) => {
       if (this.get('drag')) {
-        drag(this, event)
+        drag.bind(this)(event)
       } else if (this.get('resize')) {
-        resize(this, event)
+        resize.bind(this)(event)
       }
     })
     document.addEventListener('mouseup', (event) => {
-      if (this.get('drag')) this.set('drag')
-      if (this.get('resize')) this.get('resize')
-      if (this.get('drag') || this.get('resize')) {
-        this.set('x')
-        this.set('y')
-      }
+      this.set({ drag: false, resize: false, x: null, y: null })
     })
   },
   onrender: function () {
