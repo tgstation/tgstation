@@ -16,6 +16,7 @@ var/global/list/rockTurfEdgeCache
 	opacity = 1
 	density = 1
 	blocks_air = 1
+	layer = 2.1
 	temperature = TCMB
 	var/environment_type = "asteroid"
 	var/turf/simulated/floor/plating/asteroid/turf_type = /turf/simulated/floor/plating/asteroid //For basalt vs normal asteroid
