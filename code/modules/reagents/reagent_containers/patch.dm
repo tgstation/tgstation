@@ -13,6 +13,14 @@
 	..()
 	icon_state = "bandaid" // thanks inheritance
 
+/obj/item/weapon/reagent_containers/pill/patch/attack(mob/living/M, mob/user)
+	var/mob/living/carbon/human/H = M
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+	if(affecting.status != ORGAN_ORGANIC) // fuck you inheritance
+		user << "<span class='notice'>Patches won't work on robotic limbs! Try applying it elsewhere.</span>"
+		return
+	..()
+
 /obj/item/weapon/reagent_containers/pill/patch/afterattack(obj/target, mob/user , proximity)
 	return // thanks inheritance again
 
