@@ -26,8 +26,6 @@
 	//mapGeneratorModule information
 	var/list/modules = list()
 
-	var/start_z
-
 /datum/mapGenerator/New()
 	..()
 	initialiseModules()
@@ -40,7 +38,6 @@
 
 	if(replace)
 		undefineRegion()
-	start_z = Start.z
 	map |= block(Start,End)
 	return map
 
