@@ -51,7 +51,6 @@ bundle = ->
     .transform b.coffeeify
     .transform b.componentify
     .transform b.globify
-    .transform b.es3ify
     .bundle (err, res) ->
       return next err if err
       file.contents = res

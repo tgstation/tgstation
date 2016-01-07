@@ -1,14 +1,12 @@
-import 'core-js'
-import 'html5shiv'
-import 'ie8'
+import 'babel-polyfill'
 import 'dom4'
 
-import * as mathext from './math'
-Object.assign(Math, mathext)
+
+Object.assign(Math, require('./math'))
 
 import Ractive from 'ractive'
 Ractive.DEBUG = /minified/.test(() => {
-  /*minified*/
+  /* minified */
 })
 
 import WebFont from 'webfontloader'
@@ -18,7 +16,7 @@ WebFont.load({
       'FontAwesome'
     ],
     urls: [
-      'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css'
+      'https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'
     ],
     testStrings: {
       FontAwesome: '\uf240'
@@ -26,18 +24,18 @@ WebFont.load({
   }
 })
 
-import tgui from './tgui'
+import TGUI from './tgui'
 window.initialize = (dataString) => {
   if (window.tgui) return
-  window.tgui = new tgui({
+  window.tgui = new TGUI({
     el: '#container',
     data: () => JSON.parse(dataString)
   })
 }
 
-import act from './byond'
+import { act } from './byond'
 let holder = document.getElementById('data')
-if (holder.textContent != '{}') { // If the JSON was inlined, load it.
+if (holder.textContent !== '{}') { // If the JSON was inlined, load it.
   window.initialize(holder.textContent)
 } else {
   act(holder.getAttribute('data-ref'), 'tgui:initialize')

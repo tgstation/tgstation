@@ -3,8 +3,8 @@
 <link rel='ractive' href='./components/warnings.ract'>
 
 <script>
-import {winset} from './byond'
-import {drag, resize} from './dragresize'
+import { winset } from './byond'
+import { drag, resize } from './dragresize'
 
 component.exports = {
   components: {

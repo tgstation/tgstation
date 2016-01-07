@@ -3,7 +3,6 @@ module.exports =
     babelify:     require "babelify"
     coffeeify:    require "coffeeify"
     componentify: require "ractive-componentify"
-    es3ify:       require "es3ify"
     globify:      require "require-globify"
     helpers:      require "babelify-external-helpers"
   gulp: require("gulp-load-plugins")({replaceString: /^gulp(-|\.)|-/g})
