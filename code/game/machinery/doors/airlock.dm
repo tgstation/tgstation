@@ -658,7 +658,7 @@ About the new airlock wires panel:
 					else if (src.normalspeed)
 						normalspeed = 0
 					else
-						usr << text("Door timing circurity already accelerated.")
+						usr << text("Door timing circuitry already accelerated.")
 
 				if(7)
 					//close door
