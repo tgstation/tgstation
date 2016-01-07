@@ -781,3 +781,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/Logout()
 	. = ..()
 	bot_reset()
+
+/mob/living/simple_animal/bot/revive()
+	..()
+	update_icon()
