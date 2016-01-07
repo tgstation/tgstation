@@ -26,12 +26,23 @@
 
 			potency = round(S.potency)
 
+			var/totalreagents = 0
 			for(var/rid in S.chems)
 				var/list/reagent_data = S.chems[rid]
 				var/rtotal = reagent_data[1]
 				if(reagent_data.len > 1 && potency > 0)
 					rtotal += round(potency/reagent_data[2])
-				reagents.add_reagent(rid,max(1,rtotal))
+				totalreagents += rtotal
+
+			if(totalreagents)
+				var/coeff = min(reagents.maximum_volume / totalreagents, 1)
+
+				for(var/rid in S.chems)
+					var/list/reagent_data = S.chems[rid]
+					var/rtotal = reagent_data[1]
+					if(reagent_data.len > 1 && potency > 0)
+						rtotal += round(potency/reagent_data[2])
+					reagents.add_reagent(rid,max(1,round(rtotal*coeff, 0.1)))
 
 /obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
 	potency = newValue

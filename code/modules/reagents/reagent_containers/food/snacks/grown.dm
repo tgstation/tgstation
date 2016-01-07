@@ -33,12 +33,23 @@
 			potency = round(seed.potency)
 			force = seed.thorny ? 5+seed.carnivorous*3 : 0
 
+			var/totalreagents = 0
 			for(var/rid in seed.chems)
 				var/list/reagent_data = seed.chems[rid]
 				var/rtotal = reagent_data[1]
 				if(reagent_data.len > 1 && potency > 0)
 					rtotal += round(potency/reagent_data[2])
-				reagents.add_reagent(rid, max(1, rtotal))
+				totalreagents += rtotal
+
+			if(totalreagents)
+				var/coeff = min(reagents.maximum_volume / totalreagents, 1)
+
+				for(var/rid in seed.chems)
+					var/list/reagent_data = seed.chems[rid]
+					var/rtotal = reagent_data[1]
+					if(reagent_data.len > 1 && potency > 0)
+						rtotal += round(potency/reagent_data[2])
+					reagents.add_reagent(rid, max(1, round(rtotal*coeff, 0.1)))
 
 			if(seed.teleporting)
 				name = "blue-space [name]"
