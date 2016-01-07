@@ -216,10 +216,12 @@
 	var/output = ""
 	for(var/M in part.materials)
 		if(copytext(M,1,2) == "$")
-			var/datum/material/material=materials.getMaterial(M)
-			output += "[output ? " | " : null][get_resource_cost_w_coeff(part,M)] [material.processed_name]"
+			if(!(research_flags & IGNORE_MATS))
+				var/datum/material/material=materials.getMaterial(M)
+				output += "[output ? " | " : null][get_resource_cost_w_coeff(part,M)] [material.processed_name]"
 		else
-			output += "[output ? " | " : null][get_resource_cost_w_coeff(part,M)] [chemical_reagents_list[M]]"
+			if(!(research_flags & IGNORE_CHEMS))
+				output += "[output ? " | " : null][get_resource_cost_w_coeff(part,M)] [chemical_reagents_list[M]]"
 	return output
 
 /obj/machinery/r_n_d/fabricator/proc/remove_materials(var/datum/design/part)
@@ -688,4 +690,3 @@
 			mats.loc = src.loc
 		return total_amount
 	return 0
-
