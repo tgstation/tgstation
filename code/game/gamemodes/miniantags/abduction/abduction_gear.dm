@@ -338,9 +338,9 @@
  1.Acquire fresh specimen.<br>
  2.Put the specimen on operating table<br>
  3.Apply surgical drapes preparing for dissection<br>
- 4.Apply scapel to specimen torso
+ 4.Apply scalpel to specimen torso<br>
  5.Retract skin from specimen's torso<br>
- 6.Apply scapel to specimen torso<br>
+ 6.Apply scalpel to specimen's torso<br>
  7.Search through the specimen's torso with your hands to remove any organs<br>
  8.Insert replacement gland (Retrieve one from gland storage)<br>
  9.Consider dressing the specimen back to not disturb the habitat <br>
