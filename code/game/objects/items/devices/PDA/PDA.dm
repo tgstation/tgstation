@@ -138,7 +138,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		"Odontophobia is the fear of teeth.",
 		"The surface area of an average-sized brick is 79 cm squared.",
 		"According to suicide statistics, Monday is the favoured day for self-destruction.",
-		"When you die your hair still grows for a couple of months.",
 		"The Neanderthal's brain was bigger than yours is.",
 		"The pancreas produces Insulin.",
 		"The word 'lethologica' describes the state of not being able to remember the word you want.",
@@ -164,8 +163,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		"Zero is an even number.",
 		"The longest English word that can be spelled without repeating any letters is 'uncopyrightable'.",
 		"10! (Ten factorial) seconds equals exactly six Earth weeks.",
-		"Moths don't have a stomach or mouth. They never eat again after undergoing metamorphosis.",
-		"'J' is the only letter that doesn't appear in the Periodic Table of Elements.",
 		"Want to remember the first digits of Pi easily? You can do it by counting each word's letters in 'May I have a large container of plasma?'"
 		)
 	var/currentevent1 = null
