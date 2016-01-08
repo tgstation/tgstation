@@ -319,9 +319,7 @@
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 		if(24)
-			var/list/possible_spawns = typesof(/obj/item/weapon/stock_parts)
-			possible_spawns -= /obj/item/weapon/stock_parts
-			possible_spawns -= /obj/item/weapon/stock_parts/subspace
+			var/list/possible_spawns = existing_typesof(/obj/item/weapon/stock_parts)
 
 			var/new_type = pick(possible_spawns)
 			new_item = new new_type(src.loc)
