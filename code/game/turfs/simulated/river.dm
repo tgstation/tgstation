@@ -15,7 +15,7 @@
 
 	//make some randomly pathing rivers
 	for(var/A in river_nodes)
-    		var/obj/effect/landmark/river_waypoint/W = A
+		var/obj/effect/landmark/river_waypoint/W = A
 		if (W.z != target_z || W.connected)
 			continue
 		W.connected = 1
