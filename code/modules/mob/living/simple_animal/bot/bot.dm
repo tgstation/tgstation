@@ -105,7 +105,7 @@
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
 		Radio.keyslot = new radio_key
-	Radio.canhear_range = 1 // 0 ?
+	Radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
 	Radio.recalculateChannels()
 
 	bot_core = new bot_core_type(src)
