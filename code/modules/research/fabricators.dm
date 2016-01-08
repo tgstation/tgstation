@@ -541,7 +541,7 @@
 	if(href_list["eject"])
 		var/num = input("Enter amount to eject", "Amount", "5") as num
 		if(num)
-			amount = Clamp(round(text2num(num), 5), 0, 50)
+			amount = Clamp(round(text2num(num), 1), 0, 50)
 		remove_material(href_list["eject"], amount)
 		return 1
 
