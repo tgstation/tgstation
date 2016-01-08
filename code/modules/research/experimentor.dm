@@ -171,7 +171,7 @@
 		dat += "<b><a href='byond://?src=\ref[src];function=search'>Scan for R&D Console</A></b><br>"
 	if(loaded_item)
 		if(recentlyExperimented)
-			dat += "<b>The [src] is still resetting!</b>"
+			return
 		else
 			dat += "<b>Loaded Item:</b> [loaded_item]<br>"
 			dat += "<b>Technology</b>:<br>"
