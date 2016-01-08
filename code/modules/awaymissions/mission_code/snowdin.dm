@@ -168,7 +168,6 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/weapon/twohanded/dualsaber = 15,
 				/obj/item/organ/internal/heart/demon = 7,
 				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted = 16,
-				/obj/item/weapon/teleportation_scroll = 5,
 				/obj/item/weapon/dice/d20/fate = 4,
 				/obj/item/weapon/gun/magic/wand/resurrection/inert = 15,
 				/obj/item/weapon/gun/magic/wand/resurrection = 10,
