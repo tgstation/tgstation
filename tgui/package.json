@@ -48,7 +48,7 @@
   },
   "require-globify": {
     "appliesTo": {
-      "includeExtensions": [".js", ".coffee", ".ract"]
+      "includeExtensions": [".js", ".ract"]
     }
   }
 }

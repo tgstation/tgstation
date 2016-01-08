@@ -21,7 +21,7 @@ b.componentify.compilers["text/javascript"] = (source, file) ->
 bundle = ->
   through.obj (file, enc, next) ->
     browserify file.path,
-      extensions: [".js", ".coffee", ".ract"]
+      extensions: [".js", ".ract"]
       debug: f.debug
     .transform b.babelify
     .plugin b.helpers
