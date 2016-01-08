@@ -14,7 +14,7 @@
 		num_spawned++
 
 	//make some randomly pathing rivers
-	for(var/obj/effect/landmark/river_waypoint/W in river_nodes)
+	for(var/W in river_nodes)
 		if (W.z != target_z || W.connected)
 			continue
 		W.connected = 1
@@ -53,7 +53,7 @@
 				continue
 
 
-	for(var/obj/effect/landmark/river_waypoint/WP in river_nodes)
+	for(var/WP in river_nodes)
 		qdel(WP)
 
 
