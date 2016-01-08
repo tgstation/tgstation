@@ -1,7 +1,6 @@
 module.exports =
   browserify:
     babelify:     require "babelify"
-    coffeeify:    require "coffeeify"
     componentify: require "ractive-componentify"
     globify:      require "require-globify"
     helpers:      require "babelify-external-helpers"

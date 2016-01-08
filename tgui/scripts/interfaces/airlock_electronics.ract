@@ -22,14 +22,18 @@
 	</table>
 </ui-display>
 
-<style type='text/stylus'>
-  table
-    width: 100%
-    border-spacing: 2px
-  th
-    text-align: left
-  td
-    vertical-align: top
-    .button
-      margin-top: 4px
+<style>
+  table {
+    width: 100%;
+    border-spacing: 2px;
+  }
+  th {
+    text-align: left;
+  }
+  td {
+    vertical-align: top;
+  }
+  td .button {
+    margin-top: 4px
+  }
 </style>

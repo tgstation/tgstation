@@ -269,7 +269,7 @@
 			user << link("http://windows.microsoft.com/en-us/internet-explorer/download-ie")
 			return
 		if("tgui:eol")
-			user << link("https://support.microsoft.com/en-us/lifecycle#gp/Microsoft-Internet-Explorer"
+			user << link("https://support.microsoft.com/en-us/lifecycle#gp/Microsoft-Internet-Explorer")
 			return
 		if("tgui:fancy")
 			user.client.prefs.tgui_fancy = TRUE

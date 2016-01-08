@@ -4,42 +4,19 @@ p = c.paths
 b = c.plugins.browserify
 g = c.plugins.gulp
 
-
-babel        = require "babel-core"
-browserify   = require "browserify"
-coffeescript = require "coffee-script"
-gulp         = require "gulp"
-stylus       = require "stylus"
-through      = require "through2"
-
+babel      = require "babel-core"
+browserify = require "browserify"
+gulp       = require "gulp"
+through    = require "through2"
 
 b.componentify.compilers["text/javascript"] = (source, file) ->
-  fs = require "fs"
-  config =
-    sourceMaps: true
-  Object.assign config, JSON.parse fs.readFileSync(".babelrc", "utf8")
+  config = { sourceMaps: true }
+  Object.assign config, JSON.parse(require('fs').readFileSync(".babelrc", "utf8"))
   compiled = babel.transform source, config
 
   output =
     source: compiled.code
     map: compiled.map
-
-b.componentify.compilers["text/coffeescript"] = (source, file) ->
-  compiled = coffeescript.compile source,
-    bare: true
-    sourceMap: true
-    inline: true
-
-  output =
-    source: compiled.js
-    map: JSON.parse compiled.v3SourceMap
-
-b.componentify.compilers["text/stylus"] = (source, file) ->
-  source = stylus source
-    .set "filename", file
-  output =
-    source: source.render()
-
 
 bundle = ->
   through.obj (file, enc, next) ->
@@ -48,7 +25,6 @@ bundle = ->
       debug: f.debug
     .transform b.babelify
     .plugin b.helpers
-    .transform b.coffeeify
     .transform b.componentify
     .transform b.globify
     .bundle (err, res) ->

@@ -5,11 +5,12 @@ import { href, winset } from '../byond'
 component.exports = {
   computed: {
     visualStatus: function () {
-      let status = this.get('config.status')
-      if (status === UI_INTERACTIVE) return 'good'
-      if (status === UI_UPDATE) return 'average'
-      if (status === UI_DISABLED) return 'bad'
-      return 'bad'
+      switch (this.get('config.status')) {
+        case UI_INTERACTIVE: return 'good'
+        case UI_UPDATE: return 'average'
+        case UI_DISABLED: return 'bad'
+        default: return 'bad'
+      }
     }
   },
   oninit: function() {
