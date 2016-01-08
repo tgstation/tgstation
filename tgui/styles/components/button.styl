@@ -5,7 +5,7 @@ buttoncolor(selector, color)
   &.{selector}.active:hover,
   &.{selector}.active:focus
     transition: background-color 0.25s
-    background-color: lighten(color, colors.hover)
+    background-color: lighten(color, colors.buttons.hover)
     outline: 0
 
 
@@ -21,11 +21,11 @@ span.button
   .fa
     padding-right: 2px
 
-  buttoncolor(normal, colors.normal)
-  buttoncolor(disabled, colors.disabled)
-  buttoncolor(selected, colors.selected)
-  buttoncolor(caution, colors.caution)
-  buttoncolor(danger, colors.danger)
+  buttoncolor(normal, colors.buttons.normal)
+  buttoncolor(disabled, colors.buttons.disabled)
+  buttoncolor(selected, colors.buttons.selected)
+  buttoncolor(caution, colors.buttons.caution)
+  buttoncolor(danger, colors.buttons.danger)
 
   &.gridable
     width: 125px
