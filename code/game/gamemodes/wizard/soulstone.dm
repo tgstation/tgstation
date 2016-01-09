@@ -236,18 +236,15 @@
 		U << "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from their body and stored within the soul stone."
 		U << "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls."
 
-
 /obj/item/device/soulstone/proc/getCultGhost(obj/item/device/soulstone/C, mob/living/carbon/human/T, mob/U)
-	var/success = 0
-	var/client/chosen_ghost
+	var/mob/dead/observer/chosen_ghost
 
 	for(var/mob/dead/observer/ghost in player_list) //We put them back in their body
 		if(T.real_name == ghost.real_name && ghost.client)
-			chosen_ghost = ghost.client
-			success = 1
+			chosen_ghost = ghost
 			break
 
-	if(!success)	//Failing that, we grab a ghost
+	if(!chosen_ghost)	//Failing that, we grab a ghost
 		var/list/consenting_candidates = pollCandidates("Would you like to play as a Shade?", be_special_flag = ROLE_CULTIST, poll_time = 100)
 		if(consenting_candidates.len)
 			chosen_ghost = pick(consenting_candidates)
@@ -259,10 +256,10 @@
 		return 0
 	if(C.contents.len) //If they used the soulstone on someone else in the meantime
 		return 0
+	T.ckey = chosen_ghost.ckey
 	for(var/obj/item/W in T)
 		T.unEquip(W)
 	init_shade(C, T, U)
 	qdel(T)
 	return 1
-
 
