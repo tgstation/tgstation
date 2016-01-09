@@ -38,7 +38,7 @@
 
 /obj/machinery/sleeper/Destroy()
 	go_out()
-	return ..()
+	. = ..()
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
