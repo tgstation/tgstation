@@ -144,12 +144,12 @@
 
 /client/proc/vampire_hypnotise()
 	set category = "Vampire"
-	set name = "Hypnotise"
+	set name = "Hypnotise (10)"
 	set desc= "A piercing stare that incapacitates your victim for a good length of time."
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
-	var/mob/living/carbon/C = M.current.vampire_active(0, 0, 1)
+	var/mob/living/carbon/C = M.current.vampire_active(10, 0, 1)
 
 	if(!C) return
 	M.current.visible_message("<span class='warning'>[M.current.name]'s eyes flash briefly as he stares into [C.name]'s eyes</span>")
@@ -270,11 +270,11 @@
 
 /client/proc/vampire_screech()
 	set category = "Vampire"
-	set name = "Chiroptean Screech (10)"
+	set name = "Chiroptean Screech (30)"
 	set desc = "An extremely loud shriek that stuns nearby humans and breaks windows as well."
 	var/datum/mind/M = usr.mind
 	if(!M) return
-	if(M.current.vampire_power(10, 0))
+	if(M.current.vampire_power(30, 0))
 		M.current.visible_message("<span class='warning'>[M.current.name] lets out an ear piercing shriek!</span>", "<span class='warning'>You let out a loud shriek.</span>", "<span class='warning'>You hear a loud painful shriek!</span>")
 		for(var/mob/living/carbon/C in hearers(4, M.current))
 			if(C == M.current) continue
@@ -441,13 +441,13 @@
 
 /client/proc/vampire_jaunt()
 	set category = "Vampire"
-	set name = "Bat Form"
+	set name = "Bat Form (30)"
 	set desc = "You become etheral and can travel through walls for a short time, while leaving a scary bat behind."
 	var/duration = 5 SECONDS
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
-	if(M.current.vampire_power(0, 0))
+	if(M.current.vampire_power(30, 0))
 		M.current.verbs -= /client/proc/vampire_jaunt
 		new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
 		ethereal_jaunt(M.current, duration, "batify", "debatify", 0)
@@ -458,7 +458,7 @@
 // Less smoke spam.
 /client/proc/vampire_shadowstep()
 	set category = "Vampire"
-	set name = "Shadowstep"
+	set name = "Shadowstep (20)"
 	set desc = "Vanish into the shadows."
 
 	var/datum/mind/M = usr.mind
@@ -471,7 +471,7 @@
 	// Maximum lighting_lumcount.
 	var/max_lum = 1
 
-	if(M.current.vampire_power(10, 0))
+	if(M.current.vampire_power(20, 0))
 		if(M.current.locked_to) M.current.locked_to.unlock_atom(M.current)
 		spawn(0)
 			var/list/turfs = new/list()
