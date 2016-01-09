@@ -406,9 +406,17 @@
 		events.fireEvent("onMove",get_turf(src))
 
 /obj/mecha/Process_Spacemove(var/movement_dir = 0)
-	if(occupant)
-		return occupant.Process_Spacemove(movement_dir) //We'll just say you used the clamp to grab the wall
-	return ..()
+	. = ..()
+	if(.)
+		return 1
+
+	var/atom/movable/backup = get_spacemove_backup()
+	if(backup)
+		if(istype(backup) && movement_dir && !!backup.anchored)
+			if(backup.newtonian_move(turn(movement_dir, 180)))
+				if(occupant)
+					occupant << "<span class='info'>You push off of [backup] to propel yourself.</span>"
+		return 1
 
 /obj/mecha/relaymove(mob/user,direction)
 	if(!direction)

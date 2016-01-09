@@ -1,5 +1,6 @@
 #define CHALLENGE_TIME_LIMIT 3000
 #define MIN_CHALLENGE_PLAYERS 50
+#define CHALLENGE_SHUTTLE_DELAY 15000 //25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
 /obj/item/device/nuclear_challenge
 	name = "Declaration of War (Challenge Mode)"
@@ -39,8 +40,10 @@
 	U.hidden_uplink.uplink_owner= "[user.key]"
 	U.hidden_uplink.uses = 280
 	U.hidden_uplink.mode_override = /datum/game_mode/nuclear //Maybe we can have a special set of items for the challenge uplink eventually
+	config.shuttle_refuel_delay = min(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
 	qdel(src)
 
 
 #undef CHALLENGE_TIME_LIMIT
 #undef MIN_CHALLENGE_PLAYERS
+#undef CHALLENGE_SHUTTLE_DELAY

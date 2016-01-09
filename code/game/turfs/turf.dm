@@ -27,7 +27,6 @@
 	flags = 0
 
 	var/image/obscured	//camerachunks
-
 /turf/New()
 	..()
 	for(var/atom/movable/AM in src)
@@ -291,6 +290,7 @@
 	blocks_air = 1
 	opacity = 1
 	explosion_block = 50
+	layer = TURF_LAYER + 0.05
 
 /turf/indestructible/splashscreen
 	name = "Space Station 13"

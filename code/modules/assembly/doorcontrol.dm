@@ -76,7 +76,6 @@
 		if (M.id == src.id)
 			spawn( 0 )
 				M.open()
-				return
 
 	sleep(10)
 
@@ -90,7 +89,6 @@
 		if (M.id == src.id)
 			spawn( 0 )
 				M.close()
-				return
 
 	sleep(10)
 	cooldown = 0

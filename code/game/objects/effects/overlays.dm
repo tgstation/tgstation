@@ -50,7 +50,7 @@
 /obj/effect/overlay/temp/cult/turf
 	name = "unholy glow"
 	icon_state = "wallglow"
-	layer = 2.01
+	layer = TURF_LAYER + 0.07
 
 /obj/effect/overlay/temp/cult/turf/floor
 	icon_state = "floorglow"

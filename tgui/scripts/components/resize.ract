@@ -1,0 +1,12 @@
+<script type='text/coffeescript'>
+byond = require "../byond"
+
+component.exports =
+  oninit: ->
+    @observe "config.fancy", (newkey, oldkey, keypath) ->
+      byond.winset @get("config.window"), "can-resize", !!!newkey
+</script>
+
+{{#if config.fancy}}
+  <div class='resize' on-mousedown='resize'></div>
+{{/if}}

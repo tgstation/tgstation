@@ -149,6 +149,15 @@
 /mob/living/carbon/alien/humanoid/get_permeability_protection()
 	return 0.8
 
+/mob/living/carbon/alien/humanoid/alien_evolve(mob/living/carbon/alien/humanoid/new_xeno)
+	drop_l_hand()
+	drop_r_hand()
+	for(var/atom/movable/A in stomach_contents)
+		stomach_contents.Remove(A)
+		new_xeno.stomach_contents.Add(A)
+		A.loc = new_xeno
+	..()
+
 //For alien evolution/promotion procs. Checks for
 proc/alien_type_present(var/alienpath)
 	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)

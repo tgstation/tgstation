@@ -24,7 +24,7 @@
 	speak_emote = list("states")
 	gold_core_spawnable = 1
 	del_on_death = 1
-	loot = (/obj/effect/decal/cleanable/robot_debris)
+	loot = list(/obj/effect/decal/cleanable/robot_debris)
 
 /mob/living/simple_animal/hostile/hivebot/New()
 	..()

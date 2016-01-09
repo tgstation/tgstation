@@ -157,7 +157,6 @@
 	minbodytemp = 0
 	maxbodytemp = 360
 	force_threshold = 10
-	environment_smash = 3
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 1
 

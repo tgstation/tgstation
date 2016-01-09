@@ -121,6 +121,7 @@ What are the archived variables for?
 					temperature -= (reaction_rate*20000)/heat_capacity()
 
 					reacting = 1
+	/*
 	if(thermal_energy() > (PLASMA_BINDING_ENERGY*10))
 		if(toxins > MINIMUM_HEAT_CAPACITY && carbon_dioxide > MINIMUM_HEAT_CAPACITY && (toxins+carbon_dioxide)/total_moles() >= FUSION_PURITY_THRESHOLD)//Fusion wont occur if the level of impurities is too high.
 			//world << "pre [temperature, [toxins], [carbon_dioxide]
@@ -145,7 +146,7 @@ What are the archived variables for?
 					temperature = max(((temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
 					//Prevents whatever mechanism is causing it to hit negative temperatures.
 				//world << "post [temperature], [toxins], [carbon_dioxide]
-
+			*/
 
 
 	fuel_burnt = 0
@@ -503,7 +504,8 @@ What are the archived variables for?
 
 		trace_types_considered += trace_gas.type
 
-	for(var/datum/gas/trace_gas in sharer.trace_gases)
+	for(var/gas in sharer.trace_gases)
+		var/datum/gas/trace_gas = gas
 		if(trace_gas.type in trace_types_considered)
 			continue
 		var/datum/gas/corresponding
@@ -582,7 +584,8 @@ What are the archived variables for?
 	last_share = abs(delta_oxygen) + abs(delta_carbon_dioxide) + abs(delta_nitrogen) + abs(delta_toxins)
 
 	if(trace_gases.len)
-		for(var/datum/gas/trace_gas in trace_gases)
+		for(var/gas in trace_gases)
+			var/datum/gas/trace_gas = gas
 			var/delta = 0
 
 			delta = trace_gas.moles_archived/(atmos_adjacent_turfs+1)

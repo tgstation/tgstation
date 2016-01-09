@@ -39,7 +39,10 @@ var/global/posibrain_notif_cooldown = 0
 		spawn(askDelay) //Seperate from the global cooldown.
 			notified = 0
 			update_icon()
-			visible_message("<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
+			if(brainmob.stat == CONSCIOUS && brainmob.client)
+				visible_message("<span class='notice'>The positronic brain pings, and its lights start flashing. Success!</span>")
+			else
+				visible_message("<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
 
 	return //Code for deleting personalities recommended here.
 
@@ -127,7 +130,6 @@ var/global/posibrain_notif_cooldown = 0
 	return
 
 /obj/item/device/mmi/posibrain/New()
-
 	brainmob = new(src)
 	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR","CHRI","CDB","HG","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","GOOF","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","WJ","JRD","CHOC","ANCL","JLLO","ANNS","KOS","TKRG","XAL","STLP","CBOS","DNCN","FXMC","DRSD"))]-[rand(100, 999)]"
 	brainmob.real_name = brainmob.name
@@ -137,7 +139,6 @@ var/global/posibrain_notif_cooldown = 0
 	brainmob.silent = 0
 	dead_mob_list -= brainmob
 	ping_ghosts("created")
-
 	..()
 
 
