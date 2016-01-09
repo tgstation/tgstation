@@ -12,18 +12,42 @@
 	throw_range = 3
 	throw_speed = 3
 	var/signed = 0
+	var/mob/living/target
 
 /obj/item/weapon/paper/contract/update_text(var/target)
 	name = "paper- generic contract"
 
 
 /obj/item/weapon/paper/contract/employment
+	
 
 
 
 /obj/item/weapon/paper/contract/employment/update_text(var/employee)
 	name = "paper- [employee] employment contract"
 	info = "<center><B>Official copy of Nanotransen employment agreement</B></center><BR><BR><BR>"
+
+
+/obj/item/weapon/paper/contract/employment/attack(mob/living/M, mob/living/carbon/human/user)
+	var/deconvert = 0
+	if((M == target) && !target.HasSoul())
+		if(user.mind && (user.mind.assigned_role == "Lawyer"))
+			deconvert = prob (25)
+		if (user.mind && (user.mind.assigned_role =="Head of Personnel") || (user.mind.assigned_role == "Centcom Commander"))
+			deconvert = prob (10) // the HoP doesn't have AS much legal training
+	if(deconvert)
+		M.visible_message("<span class='notice'>[user] reminds [M] that [M]'s soul was already purchased by Nanotransen!</span>")
+		M << "<span class='boldnotice'>You feel that your soul has returned to it's rightful owner, Nanotransen.</span>"
+		M.returnSoul()
+		M.removeDemonBoons()
+		return
+	else
+		if(ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
+			M.adjustBrainLoss(10)
+			M << "<span class='danger'>You feel dumber.</span>"
+		M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
+			"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
+
 
 /obj/item/weapon/paper/contract/infernal
 	var/contractType = CONTRACT_POWER
@@ -47,7 +71,7 @@
 	update_text()
 
 /obj/item/weapon/paper/contract/infernal/suicide_act(mob/user)
-	if(signed)
+	if(signed && (user == target))
 		user.say("OH GREAT INFERNO!  I DEMAND YOU COLLECT YOUR BOUNTY IMMEDIATELY!")
 		user.visible_message("<span class='suicide'>[user] holds up a contract claiming his soul, then immediately catches fire.  Their corpse smelling of brimstone.</span>")
 		user.adjust_fire_stacks(20)
