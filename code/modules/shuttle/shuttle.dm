@@ -531,6 +531,7 @@
 	var/shuttleId
 	var/possible_destinations = ""
 	var/admin_controlled
+	var/no_destination_swap = 0
 
 /obj/machinery/computer/shuttle/New(location, obj/item/weapon/circuitboard/shuttle/C)
 	..()
@@ -577,6 +578,11 @@
 		return
 
 	if(href_list["move"])
+		if(no_destination_swap)
+			var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
+			if(M.mode != SHUTTLE_IDLE)
+				usr << "<span class='warning'>Shuttle already in transit.</span>"
+				return
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)	usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
 			if(1)	usr << "<span class='warning'>Invalid shuttle requested.</span>"
