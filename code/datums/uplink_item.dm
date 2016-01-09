@@ -252,6 +252,13 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/grenade/syndieminibomb
 	cost = 6
 
+/datum/uplink_item/dangerous/wirebomb
+	name = "Tripwire Bomb"
+	desc = "A grenade that will shoot out spiked explosives in random directions and connect everything with tripwire."
+	item = /obj/item/weapon/grenade/wirebomb
+	cost = 4
+	gamemodes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade rounds with a 20-round magazine."
