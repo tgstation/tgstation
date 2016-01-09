@@ -296,7 +296,7 @@
 	. = 0
 	if(!anchored && !pulledby)
 		. = 1
-		if(pressure_difference > pressure_resistance && last_high_pressure_movement_cycle < SSair.times_fired)
+		if(pressure_difference > pressure_resistance && last_high_pressure_movement_air_cycle < SSair.times_fired)
 			last_high_pressure_movement_air_cycle = SSair.times_fired
 			step(src, direction)
 
