@@ -46,7 +46,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/human/handle_blood()
 
 	if(NOBLOOD in dna.species.specflags)
-		blood_max = 0
 		return
 
 	if(stat != DEAD && bodytemperature >= 170)	//Dead or cryosleep people do not pump the blood.

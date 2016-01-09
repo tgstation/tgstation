@@ -38,6 +38,7 @@
 
 	if(replace)
 		undefineRegion()
+
 	map |= block(Start,End)
 	return map
 

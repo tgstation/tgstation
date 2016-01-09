@@ -742,7 +742,7 @@
 		O.loc = src.loc
 	return
 
-/mob/living/simple_animal/hostile/mining_drone/adjustHealth()
+/mob/living/simple_animal/hostile/mining_drone/adjustBruteLoss()
 	if(search_objects)
 		SetOffenseBehavior()
 	..()

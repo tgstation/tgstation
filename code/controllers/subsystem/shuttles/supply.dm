@@ -211,7 +211,6 @@
 	var/list/blacklist = list(
 		/mob/living,
 		/obj/effect/blob,
-		/obj/effect/rune,
 		/obj/effect/spider/spiderling,
 		/obj/item/weapon/disk/nuclear,
 		/obj/machinery/nuclearbomb,

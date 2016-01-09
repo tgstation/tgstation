@@ -3,6 +3,7 @@
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
 	gender = PLURAL
 	density = 0
+	anchored = 1
 	layer = 2
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
@@ -38,6 +39,7 @@
 	desc = "Your instincts say you shouldn't be following these."
 	gender = PLURAL
 	density = 0
+	anchored = 1
 	layer = 2
 	random_icon_states = null
 	var/list/existing_dirs = list()
@@ -53,6 +55,7 @@
 	desc = "They look bloody and gruesome."
 	gender = PLURAL
 	density = 0
+	anchored = 1
 	layer = 2
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"

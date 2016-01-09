@@ -34,13 +34,16 @@
 	..()
 	new /obj/item/clothing/gloves/color/yellow(src)
 	new /obj/item/clothing/gloves/color/yellow(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/storage/toolbox/electrical(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/electronics/apc(src)
-	for(var/i in 1 to 3)
-		new /obj/item/device/multitool(src)
-	
+	new /obj/item/weapon/storage/toolbox/electrical(src)
+	new /obj/item/weapon/storage/toolbox/electrical(src)
+	new /obj/item/weapon/storage/toolbox/electrical(src)
+	new /obj/item/weapon/electronics/apc(src)
+	new /obj/item/weapon/electronics/apc(src)
+	new /obj/item/weapon/electronics/apc(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/device/multitool(src)
+
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "welding supplies locker"
 	req_access = list(access_engine_equip)
@@ -49,11 +52,13 @@
 
 /obj/structure/closet/secure_closet/engineering_welding/New()
 	..()
-	for(var/i in 1 to 3)
-		new /obj/item/clothing/head/welding(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/weldingtool/largetank(src)
-	
+	new /obj/item/clothing/head/welding(src)
+	new /obj/item/clothing/head/welding(src)
+	new /obj/item/clothing/head/welding(src)
+	new /obj/item/weapon/weldingtool/largetank(src)
+	new /obj/item/weapon/weldingtool/largetank(src)
+	new /obj/item/weapon/weldingtool/largetank(src)
+
 /obj/structure/closet/secure_closet/engineering_personal
 	name = "engineer's locker"
 	req_access = list(access_engine_equip)

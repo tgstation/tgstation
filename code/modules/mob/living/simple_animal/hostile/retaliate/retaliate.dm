@@ -51,7 +51,7 @@
 			H.enemies |= enemies
 	return 0
 
-/mob/living/simple_animal/hostile/retaliate/adjustHealth(damage)
+/mob/living/simple_animal/hostile/retaliate/adjustBruteLoss(damage)
 	..(damage)
 	if(stat == CONSCIOUS)
 		Retaliate()

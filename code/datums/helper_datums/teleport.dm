@@ -82,12 +82,12 @@
 /datum/teleport/proc/playSpecials(atom/location,datum/effect_system/effect,sound)
 	if(location)
 		if(effect)
-			spawn(0)
+			spawn(-1)
 				src = null
 				effect.attach(location)
 				effect.start()
 		if(sound)
-			spawn(0)
+			spawn(-1)
 				src = null
 				playsound(location,sound,60,1)
 	return

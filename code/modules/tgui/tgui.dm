@@ -264,7 +264,6 @@
 	switch(action)
 		if("tgui:initialize")
 			user << output(url_encode(get_json(initial_data)), "[window_id].browser:initialize")
-			return
 		if("tgui:ie")
 			user << link("http://windows.microsoft.com/en-us/internet-explorer/download-ie")
 			return

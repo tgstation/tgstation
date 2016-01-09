@@ -486,7 +486,7 @@
 		return
 	src << "<span class='info'>Attempting to repair damage to our body, stand by...</span>"
 	if(do_mob(src, src, 100))
-		adjustHealth(-100)
+		adjustBruteLoss(-100)
 		src << "<span class='info'>We successfully repaired ourselves.</span>"
 
 /mob/living/simple_animal/hostile/swarmer/proc/ToggleLight()

@@ -15,10 +15,12 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/toxin(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/morphine(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/morphine(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
 	new /obj/item/weapon/storage/box/rxglasses(src)
 
 /obj/structure/closet/secure_closet/medical2
@@ -28,11 +30,13 @@
 
 /obj/structure/closet/secure_closet/medical2/New()
 	..()
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/tank/internals/anesthetic(src)
-	for(var/i in 1 to 3)
-		new /obj/item/clothing/mask/breath/medical(src)
-	
+	new /obj/item/weapon/tank/internals/anesthetic(src)
+	new /obj/item/weapon/tank/internals/anesthetic(src)
+	new /obj/item/weapon/tank/internals/anesthetic(src)
+	new /obj/item/clothing/mask/breath/medical(src)
+	new /obj/item/clothing/mask/breath/medical(src)
+	new /obj/item/clothing/mask/breath/medical(src)
+
 /obj/structure/closet/secure_closet/medical3
 	name = "medical doctor's locker"
 	req_access = list(access_surgery)
@@ -77,9 +81,10 @@
 /obj/structure/closet/secure_closet/animal/New()
 	..()
 	new /obj/item/device/assembly/signaler(src)
-	for(var/i in 1 to 3)
-		new /obj/item/device/electropack(src)
-	
+	new /obj/item/device/electropack(src)
+	new /obj/item/device/electropack(src)
+	new /obj/item/device/electropack(src)
+
 /obj/structure/closet/secure_closet/chemical
 	name = "chemical closet"
 	desc = "Store dangerous chemicals in here."

@@ -90,13 +90,13 @@
 		return
 
 	var/message_a = say_quote(message, get_spans())
-	var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"
+	var/rendered = "<span class='big'><font color=\"#EE4000\">Blob Telepathy, <b>[name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"
 
 	for(var/mob/M in mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
 			M << rendered
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a>[rendered]"
 
 /mob/camera/blob/emote(act,m_type=1,message = null)
 	return

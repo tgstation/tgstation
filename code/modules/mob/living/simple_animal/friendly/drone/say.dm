@@ -26,16 +26,21 @@
 
 
 /mob/living/simple_animal/drone/proc/alert_drones(msg, dead_can_hear = 0)
-	for(var/W in mob_list)
-		var/mob/M = W
+	for(var/mob/M in player_list)
+		var/send_msg = 0
+
 		if(istype(M, /mob/living/simple_animal/drone) && M.stat != DEAD)
 			for(var/F in src.faction)
 				if(F in M.faction)
-					M << msg
-		if(dead_can_hear && (M in dead_mob_list))
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [msg]"
+					send_msg = 1
+					break
+		else if(dead_can_hear && (M in dead_mob_list))
+			send_msg = 1
+
+		if(send_msg)
+			M << msg
 
 
 /mob/living/simple_animal/drone/proc/drone_chat(msg)
-	var/rendered = "<i>DRONE CHAT: <span class='name'>[name]</span>: [msg]</i>"
+	var/rendered = "<i><span class='game say'>DRONE CHAT: <span class='name'>[name]</span>: [msg]</span></i>"
 	alert_drones(rendered, 1)

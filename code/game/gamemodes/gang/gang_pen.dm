@@ -92,15 +92,16 @@
 			if(I != src)
 				qdel(I)
 
-		if(!target.mind || target.stat == DEAD)
-			return 0
-
 		var/success
-		if(target.mind in ticker.mode.get_gangsters())
-			if(ticker.mode.remove_gangster(target.mind,0,1))
-				success = 1	//Was not a gang boss, convert as usual
-		else
-			success = 1
+		if(target.stat != DEAD)
+			if(target.mind in ticker.mode.get_gangsters())
+				if(ticker.mode.remove_gangster(target.mind,0,1))
+					success = 1	//Was not a gang boss, convert as usual
+			else
+				success = 1
+
+		if(!target.mind)
+			return 0
 
 		if(ishuman(target))
 			if(!success)

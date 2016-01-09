@@ -105,7 +105,7 @@
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
 		Radio.keyslot = new radio_key
-	Radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
+	Radio.canhear_range = 1 // 0 ?
 	Radio.recalculateChannels()
 
 	bot_core = new bot_core_type(src)
@@ -163,7 +163,12 @@
 	else
 		user << "[src] is in pristine condition."
 
-/mob/living/simple_animal/bot/adjustHealth(amount)
+/mob/living/simple_animal/bot/adjustBruteLoss(amount)
+	if(amount>0 && prob(10))
+		new /obj/effect/decal/cleanable/oil(loc)
+	return ..(amount)
+
+/mob/living/simple_animal/bot/adjustFireLoss(amount)
 	if(amount>0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
 	return ..(amount)
@@ -705,12 +710,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(usr in users)
 			users.Remove(usr)
 		return 1
-
+	
 	if(topic_denied(usr))
 		usr << "<span class='warning'>[src]'s interface is not responding!</span>"
 		return 1
 	add_fingerprint(usr)
-
+	
 	if((href_list["power"]) && (bot_core.allowed(usr) || !locked))
 		if (on)
 			turn_off()
@@ -781,7 +786,3 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/Logout()
 	. = ..()
 	bot_reset()
-
-/mob/living/simple_animal/bot/revive()
-	..()
-	update_icon()

@@ -674,10 +674,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
 
-//Repopulates sortedAreas list
+//Returns sortedAreas list if populated
+//else populates the list first before returning it
 /proc/SortAreas()
-	sortedAreas = list()
-
 	for(var/area/A in world)
 		sortedAreas.Add(A)
 

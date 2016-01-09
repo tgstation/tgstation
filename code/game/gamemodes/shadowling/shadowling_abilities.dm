@@ -275,7 +275,7 @@
 		if(is_shadow_or_thrall(M))
 			M << my_message
 		if(M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [my_message]"
+			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a>[my_message]"
 
 
 
@@ -755,7 +755,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 		if(is_shadow_or_thrall(M))
 			M << text
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [text]"
+			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a>[text]"
 	log_say("[user.real_name]/[user.key] : [text]")
 
 
@@ -899,5 +899,5 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 		if(is_shadow_or_thrall(M))
 			M << text
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [text]"
+			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a>[text]"
 	log_say("[user.real_name]/[user.key] : [text]")

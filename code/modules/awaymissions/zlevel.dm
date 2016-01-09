@@ -34,7 +34,6 @@ var/global/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRu
 
 		world << "<span class='boldannounce'>Away mission loaded.</span>"
 
-		SortAreas() //To add recently loaded areas
 	else
 		world << "<span class='boldannounce'>No away missions found.</span>"
 		return

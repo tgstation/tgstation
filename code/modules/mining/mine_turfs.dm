@@ -90,7 +90,7 @@ var/global/list/rockTurfEdgeCache
 		icon_state = "rock"
 	return
 
-/turf/simulated/mineral/Spread(turf/T)
+/turf/simulated/mineral/proc/Spread(turf/T)
 	new src.type(T)
 
 /turf/simulated/mineral/random
@@ -684,7 +684,7 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/chasm/proc/drop(atom/movable/AM)
 	visible_message("[AM] falls into [src]!")
-	AM.forceMove(locate(drop_x, drop_y, drop_z))
+	AM.Move(locate(drop_x, drop_y, drop_z))
 	AM.visible_message("[AM] falls from above!")
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM

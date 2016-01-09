@@ -70,9 +70,9 @@ component.exports =
   {{/if}}
 </ui-display>
 <ui-display title='Power Channels'>
-  {{#each data.powerChannels}}
+  {{#each adata.powerChannels}}
     <ui-section label='{{title}}' nowrap>
-      <div class='content'>{{Math.round(adata.powerChannels[@index].powerLoad)}} W</div>
+      <div class='content'>{{Math.round(powerLoad)}} W</div>
       <div class='content'><span class='{{status >= 2 ? "good" : "bad"}}'>{{status >= 2 ? "On" : "Off"}}</span></div>
       <div class='content'>[<span>{{status == 1 || status == 3 ? "Auto" : "Manual"}}</span>]</div>
       <div class='content' style='float:right'>

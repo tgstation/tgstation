@@ -241,12 +241,11 @@
 /obj/item/weapon/cartridge/proc/print_to_host(text)
 	if (!istype(loc, /obj/item/device/pda))
 		return
-	var/obj/item/device/pda/P = loc
-	P.cart = text
+	loc:cart = text
 
 	for (var/mob/M in viewers(1, loc.loc))
 		if (M.client && M.machine == loc)
-			P.attack_self(M)
+			loc:attack_self(M)
 
 	return
 
@@ -274,7 +273,6 @@
 /obj/item/weapon/cartridge/proc/generate_menu(mob/user)
 	switch(mode)
 		if(40) //signaller
-			var/obj/item/radio/integrated/signal/S = radio
 			menu = "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"
 
 			menu += {"
@@ -282,14 +280,14 @@
 Frequency:
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-10'>-</a>
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-2'>-</a>
-[format_frequency(S.frequency)]
+[format_frequency(radio:frequency)]
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=2'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=10'>+</a><br>
 <br>
 Code:
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=-5'>-</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=-1'>-</a>
-[S.code]
+[radio:code]
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
 		if (41) //crew manifest
@@ -613,7 +611,7 @@ Code:
 			active1 = find_record("id", href_list["target"], data_core.general)
 			if(active1)
 				active2 = find_record("id", href_list["target"], data_core.medical)
-			pda.mode = 441
+			loc:mode = 441
 			mode = 441
 			if(!active2)
 				active1 = null
@@ -622,28 +620,25 @@ Code:
 			active1 = find_record("id", href_list["target"], data_core.general)
 			if(active1)
 				active3 = find_record("id", href_list["target"], data_core.security)
-			pda.mode = 451
+			loc:mode = 451
 			mode = 451
 			if(!active3)
 				active1 = null
 
 		if("Send Signal")
 			spawn( 0 )
-				var/obj/item/radio/integrated/signal/S = radio
-				S.send_signal("ACTIVATE")
+				radio:send_signal("ACTIVATE")
 				return
 
 		if("Signal Frequency")
-			var/obj/item/radio/integrated/signal/S = radio
-			var/new_frequency = sanitize_frequency(S.frequency + text2num(href_list["sfreq"]))
-			S.set_frequency(new_frequency)
+			var/new_frequency = sanitize_frequency(radio:frequency + text2num(href_list["sfreq"]))
+			radio:set_frequency(new_frequency)
 
 		if("Signal Code")
-			var/obj/item/radio/integrated/signal/S = radio
-			S.code += text2num(href_list["scode"])
-			S.code = round(S.code)
-			S.code = min(100, S.code)
-			S.code = max(1, S.code)
+			radio:code += text2num(href_list["scode"])
+			radio:code = round(radio:code)
+			radio:code = min(100, radio:code)
+			radio:code = max(1, radio:code)
 
 		if("Status")
 			switch(href_list["statdisp"])
@@ -662,7 +657,7 @@ Code:
 		if("Power Select")
 			var/pnum = text2num(href_list["target"])
 			powmonitor = powermonitors[pnum]
-			pda.mode = 433
+			loc:mode = 433
 			mode = 433
 
 		if("Supply Orders")

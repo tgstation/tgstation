@@ -186,12 +186,11 @@
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
-	if(H)
-		H.faction |= factions
+	H.faction |= factions
 
-		H.set_cloned_appearance()
+	H.set_cloned_appearance()
 
-		H.suiciding = 0
+	H.suiciding = 0
 	src.attempting = 0
 	return 1
 

@@ -57,7 +57,7 @@
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
 		if(health < maxHealth)
-			adjustHealth(-5)
+			adjustBruteLoss(-5)
 			if(src != M)
 				Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
 				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \

@@ -62,5 +62,6 @@
 	new /obj/item/stack/sheet/glass(src, 50)
 	new /obj/item/clothing/shoes/magboots(src)
 	new /obj/item/weapon/storage/box/metalfoam(src)
-	for(var/i in 1 to 3)	
-		new /obj/item/weapon/rcd_ammo/large(src)
+	new /obj/item/weapon/rcd_ammo/large(src)
+	new /obj/item/weapon/rcd_ammo/large(src)
+	new /obj/item/weapon/rcd_ammo/large(src)

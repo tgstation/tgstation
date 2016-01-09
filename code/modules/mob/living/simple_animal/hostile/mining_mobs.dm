@@ -181,7 +181,7 @@
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(damage)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(damage)
 	idle_vision_range = 9
 	..()
 
@@ -384,7 +384,7 @@
 		pre_attack = 0
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(damage)
+/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(damage)
 	ranged_cooldown--
 	handle_preattack()
 	..()
@@ -524,7 +524,7 @@
 		Inflate()
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/fugu/adjustHealth(var/damage)
+/mob/living/simple_animal/hostile/asteroid/fugu/adjustBruteLoss(var/damage)
 	if(wumbo)
 		return
 	..()

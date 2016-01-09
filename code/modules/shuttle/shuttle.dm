@@ -374,7 +374,7 @@
 					//close open doors
 					if(istype(O, /obj/machinery/door))
 						var/obj/machinery/door/Door = O
-						spawn(0)
+						spawn(-1)
 							if(Door)
 								Door.close()
 				else if (istype(AM,/mob))
@@ -443,7 +443,7 @@
 	if(T)
 		var/obj/machinery/door/Door = locate() in T
 		if(Door)
-			spawn(0)
+			spawn(-1)
 				Door.close()
 
 /obj/docking_port/mobile/proc/roadkill(list/L, dir, x, y)

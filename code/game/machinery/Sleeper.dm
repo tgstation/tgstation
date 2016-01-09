@@ -36,10 +36,6 @@
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
 
-/obj/machinery/sleeper/Destroy()
-	go_out()
-	. = ..()
-
 /obj/machinery/sleeper/RefreshParts()
 	var/E
 	var/I
@@ -86,6 +82,10 @@
 		return
 
 	default_deconstruction_crowbar(I)
+
+/obj/machinery/sleeper/ex_act(severity, target)
+	go_out()
+	..()
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

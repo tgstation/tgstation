@@ -186,9 +186,12 @@
 
 /obj/structure/closet/secure_closet/injection/New()
 	..()
-	for(var/i in 1 to 5)
-		new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
-	
+	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
+	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
+	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
+	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
+	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
+
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
 	req_access = list(access_brig)
@@ -207,8 +210,9 @@
 /obj/structure/closet/secure_closet/courtroom/New()
 	..()
 	new /obj/item/clothing/shoes/sneakers/brown(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/paper/Court (src)
+	new /obj/item/weapon/paper/Court (src)
+	new /obj/item/weapon/paper/Court (src)
+	new /obj/item/weapon/paper/Court (src)
 	new /obj/item/weapon/pen (src)
 	new /obj/item/clothing/suit/judgerobe (src)
 	new /obj/item/clothing/head/powdered_wig (src)
@@ -222,13 +226,16 @@
 /obj/structure/closet/secure_closet/armory1/New()
 	..()
 	new /obj/item/clothing/suit/armor/laserproof(src)
-	for(var/i in 1 to 3)
-		new /obj/item/clothing/suit/armor/riot(src)
-	for(var/i in 1 to 3)
-		new /obj/item/clothing/head/helmet/riot(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/shield/riot(src)
-	
+	new /obj/item/clothing/suit/armor/riot(src)
+	new /obj/item/clothing/suit/armor/riot(src)
+	new /obj/item/clothing/suit/armor/riot(src)
+	new /obj/item/clothing/head/helmet/riot(src)
+	new /obj/item/clothing/head/helmet/riot(src)
+	new /obj/item/clothing/head/helmet/riot(src)
+	new /obj/item/weapon/shield/riot(src)
+	new /obj/item/weapon/shield/riot(src)
+	new /obj/item/weapon/shield/riot(src)
+
 /obj/structure/closet/secure_closet/armory2
 	name = "armory ballistics locker"
 	req_access = list(access_armory)
@@ -237,11 +244,13 @@
 /obj/structure/closet/secure_closet/armory2/New()
 	..()
 	new /obj/item/weapon/storage/box/firingpins(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/storage/box/rubbershot(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/gun/projectile/shotgun/riot(src)
-	
+	new /obj/item/weapon/storage/box/rubbershot(src)
+	new /obj/item/weapon/storage/box/rubbershot(src)
+	new /obj/item/weapon/storage/box/rubbershot(src)
+	new /obj/item/weapon/gun/projectile/shotgun/riot(src)
+	new /obj/item/weapon/gun/projectile/shotgun/riot(src)
+	new /obj/item/weapon/gun/projectile/shotgun/riot(src)
+
 /obj/structure/closet/secure_closet/armory3
 	name = "armory energy gun locker"
 	req_access = list(access_armory)
@@ -251,11 +260,13 @@
 	..()
 	new /obj/item/weapon/storage/box/firingpins(src)
 	new /obj/item/weapon/gun/energy/ionrifle(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/gun/energy/gun(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/gun/energy/laser(src)
-	
+	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/laser(src)
+	new /obj/item/weapon/gun/energy/laser(src)
+	new /obj/item/weapon/gun/energy/laser(src)
+
 /obj/structure/closet/secure_closet/tac
 	name = "armory tac locker"
 	req_access = list(access_armory)
@@ -275,5 +286,6 @@
 
 /obj/structure/closet/secure_closet/lethalshots/New()
 	..()
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/storage/box/lethalshot(src)
+	new /obj/item/weapon/storage/box/lethalshot(src)
+	new /obj/item/weapon/storage/box/lethalshot(src)
+	new /obj/item/weapon/storage/box/lethalshot(src)
