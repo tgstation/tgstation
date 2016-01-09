@@ -469,9 +469,8 @@
 	if(recipe.reagent)
 		beaker.reagents.add_reagent(recipe.reagent,recipe.amount_per_unit*num)
 	else
-		if(istype(recipe.result,/obj/item/stack))
-			var/obj/item/stack/stack=new recipe.result(src.loc)
-			stack.amount=num*recipe.amount_per_unit
+		if(ispath(recipe.result,/obj/item/stack))
+			drop_stack(recipe.result, src.loc, num*recipe.amount_per_unit, 1, null)
 		else
 			for(var/i=0;i<num;i++)
 				new recipe.result(src.loc)

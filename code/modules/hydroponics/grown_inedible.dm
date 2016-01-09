@@ -52,16 +52,10 @@
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
-		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
-		for(var/i=0,i<2,i++)
-			var/obj/item/stack/sheet/wood/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/wood/G in user.loc)
-				if(G==NG)
-					continue
-				if(G.amount>=G.max_amount)
-					continue
-				G.attackby(NG, user)
-			to_chat(user, "You add the newly-formed wood to the stack. It now contains [NG.amount] planks.")
+		user.show_message("<span class='notice'>You make two planks out of \the [src].</span>", MESSAGE_SEE)
+
+		drop_stack(/obj/item/stack/sheet/wood, get_turf(user), 2, user)
+
 		qdel(src)
 		return
 

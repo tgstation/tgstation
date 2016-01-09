@@ -150,15 +150,23 @@
 				return
 		if (src.amount < R.req_amount*multiplier)
 			return
-		var/atom/O = new R.result_type( usr.loc )
+
+		var/atom/O
+		if(ispath(R.result_type, /obj/item/stack))
+			O = drop_stack(R.result_type, usr.loc, (R.max_res_amount>1 ? R.res_amount*multiplier : 1), usr)
+		else
+			O = new R.result_type( usr.loc )
+
 		O.dir = usr.dir
 		if(R.start_unanchored)
 			var/obj/A = O
 			A.anchored = 0
-		if (R.max_res_amount>1)
-			var/obj/item/stack/new_item = O
-			new_item.amount = R.res_amount*multiplier
-			//new_item.add_to_stacks(usr)
+
+		//if (R.max_res_amount>1)
+		//	var/obj/item/stack/new_item = O
+		//	new_item.amount = R.res_amount*multiplier
+		//	//new_item.add_to_stacks(usr)
+
 		src.use(R.req_amount*multiplier)
 		if (src.amount<=0)
 			var/oldsrc = src
@@ -289,6 +297,8 @@
  add *amount items to them and return.
  If unable to add to any already existing stack, create a new instance of *new_stack_type
 
+ Returns stack
+
  */
 
 /proc/drop_stack(new_stack_type = /obj/item/stack, turf/loc, add_amount = 1, mob/user)
@@ -298,10 +308,11 @@
 				S.amount += add_amount
 
 				to_chat(user, "<span class='info'>You add [add_amount] item\s to the stack. It now contains [S.amount] [CORRECT_STACK_NAME(S)].</span>")
-				return 1
+				return S
 
 	var/obj/item/stack/S = getFromPool(new_stack_type, loc)
 	S.amount = add_amount
+	return S
 
 /*
  * Recipe datum
