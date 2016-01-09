@@ -20,8 +20,7 @@
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
 	src.add_fingerprint(user)
-	spawn (0)
-		attack_self(user)
+	attack_self(user)
 
 /obj/item/device/radio/intercom/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -29,8 +28,7 @@
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
 	src.add_fingerprint(user)
-	spawn (0)
-		attack_self(user)
+	attack_self(user)
 
 /obj/item/device/radio/intercom/receive_range(freq, level)
 	if (!on)

@@ -18,12 +18,12 @@
 	return (FIRELOSS)
 
 /obj/item/device/electropack/initialize()
-	if(radio_controller)
-		radio_controller.add_object(src, frequency, RADIO_CHAT)
+	if(SSradio)
+		SSradio.add_object(src, frequency, RADIO_CHAT)
 
 /obj/item/device/electropack/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, frequency)
+	if(SSradio)
+		SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/item/device/electropack/attack_hand(mob/user)
@@ -65,9 +65,9 @@
 	if(((istype(usr, /mob/living/carbon/human) && ((!( ticker ) || (ticker && ticker.mode != "monkey")) && usr.contents.Find(src))) || (usr.contents.Find(master) || (in_range(src, usr) && istype(loc, /turf)))))
 		usr.set_machine(src)
 		if(href_list["freq"])
-			radio_controller.remove_object(src, frequency)
+			SSradio.remove_object(src, frequency)
 			frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
-			radio_controller.add_object(src, frequency, RADIO_CHAT)
+			SSradio.add_object(src, frequency, RADIO_CHAT)
 		else
 			if(href_list["code"])
 				code += text2num(href_list["code"])

@@ -211,6 +211,7 @@
 	var/list/blacklist = list(
 		/mob/living,
 		/obj/effect/blob,
+		/obj/effect/rune,
 		/obj/effect/spider/spiderling,
 		/obj/item/weapon/disk/nuclear,
 		/obj/machinery/nuclearbomb,
@@ -547,7 +548,7 @@
 
 /obj/machinery/computer/supplycomp/proc/post_signal(command)
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
 
 	if(!frequency) return
 

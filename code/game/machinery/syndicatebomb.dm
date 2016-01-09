@@ -114,9 +114,8 @@
 		wires.Interact(user)
 	if(!open_panel)
 		if(!active)
-			spawn()
-				settings(user)
-				return
+			settings(user)
+			return
 		else if(anchored)
 			user << "<span class='warning'>The bomb is bolted to the floor!</span>"
 			return
@@ -182,7 +181,7 @@
 	item_state = "eshield0"
 	w_class = 3
 	origin_tech = "syndicate=6;combat=5"
-	burn_state = 0 //Burnable (but the casing isn't)
+	burn_state = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
 
 /obj/item/weapon/bombcore/ex_act(severity, target) //Little boom can chain a big boom

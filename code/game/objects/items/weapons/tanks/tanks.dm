@@ -1,7 +1,3 @@
-#define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
-#define TANK_MIN_RELEASE_PRESSURE 0
-#define TANK_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE*O2STANDARD)
-
 /obj/item/weapon/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
@@ -119,10 +115,11 @@
 	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "tanks.tmpl", name, 525, 175, state = inventory_state)
+		ui = new(user, src, ui_key, "tanks", name, 400, 200, master_ui, state)
 		ui.open()
 
 /obj/item/weapon/tank/get_ui_data()
@@ -144,55 +141,54 @@
 
 	if(istype(location))
 		var/mask_check = 0
-
 		if(location.internal == src)	// if tank is current internal
 			mask_check = 1
 			data["valveOpen"] = 1
 		else if(src in location)		// or if tank is in the mobs possession
 			if(!location.internal)		// and they do not have any active internals
 				mask_check = 1
-
 		if(mask_check)
 			if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
 				data["maskConnected"] = 1
 	return data
 
-/obj/item/weapon/tank/Topic(href, href_list)
+/obj/item/weapon/tank/ui_act(action, params)
 	if (..())
 		return
 
-	if (href_list["dist_p"])
-		if (href_list["dist_p"] == "custom")
-			var/custom = input(usr, "What rate do you set the regulator to? The dial reads from 0 to [TANK_MAX_RELEASE_PRESSURE].") as null|num
-			if(isnum(custom))
-				href_list["dist_p"] = custom
-				.()
-		else if (href_list["dist_p"] == "reset")
-			distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
-		else if (href_list["dist_p"] == "min")
-			distribute_pressure = TANK_MIN_RELEASE_PRESSURE
-		else if (href_list["dist_p"] == "max")
-			distribute_pressure = TANK_MAX_RELEASE_PRESSURE
-		else
-			distribute_pressure = text2num(href_list["dist_p"])
-		distribute_pressure = min(max(round(distribute_pressure), TANK_MIN_RELEASE_PRESSURE), TANK_MAX_RELEASE_PRESSURE)
-	if (href_list["stat"])
-		if(istype(loc,/mob/living/carbon))
-			var/mob/living/carbon/location = loc
-			if(location.internal == src)
-				location.internal = null
-				location.internals.icon_state = "internal0"
-				usr << "<span class='notice'>You close the tank release valve.</span>"
-				if (location.internals)
+	switch(action)
+		if("pressure")
+			switch(params["pressure"])
+				if("custom")
+					var/custom = input(usr, "What rate do you set the regulator to? The dial reads from 0 to [TANK_MAX_RELEASE_PRESSURE].") as null|num
+					if(isnum(custom))
+						distribute_pressure = custom
+				if("reset")
+					distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+				if("min")
+					distribute_pressure = TANK_MIN_RELEASE_PRESSURE
+				if("max")
+					distribute_pressure = TANK_MAX_RELEASE_PRESSURE
+			distribute_pressure = Clamp(round(distribute_pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
+		if("valve")
+			if(istype(loc,/mob/living/carbon))
+				var/mob/living/carbon/location = loc
+				if(location.internal == src)
+					location.internal = null
 					location.internals.icon_state = "internal0"
-			else
-				if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
-					location.internal = src
-					usr << "<span class='notice'>You open \the [src] valve.</span>"
+					usr << "<span class='notice'>You close the tank release valve.</span>"
 					if (location.internals)
-						location.internals.icon_state = "internal1"
+						location.internals.icon_state = "internal0"
 				else
-					usr << "<span class='warning'>You need something to connect to \the [src]!</span>"
+					if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
+						location.internal = src
+						usr << "<span class='notice'>You open \the [src] valve.</span>"
+						if (location.internals)
+							location.internals.icon_state = "internal1"
+					else
+						usr << "<span class='warning'>You need something to connect to \the [src]!</span>"
+	return 1
+
 
 /obj/item/weapon/tank/remove_air(amount)
 	return air_contents.remove(amount)

@@ -330,3 +330,104 @@
 #undef EXTINGUISHER
 #undef NANOFROST
 #undef METAL_FOAM
+
+/obj/item/weapon/reagent_containers/chemtank
+	name = "backpack chemical injector"
+	desc = "A chemical autoinjector that can be carried on your back."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "waterbackpackatmos"
+	item_state = "waterbackpackatmos"
+	w_class = 4
+	slot_flags = SLOT_BACK
+	slowdown = 1
+	action_button_name = "Activate Injector"
+
+	var/on = 0
+	volume = 300
+	var/usage_ratio = 5 //5 unit added per 1 removed
+	var/injection_amount = 1 
+	amount_per_transfer_from_this = 5
+	flags = OPENCONTAINER
+	spillable = 0
+	possible_transfer_amounts = list(5,10,15)
+
+/obj/item/weapon/reagent_containers/chemtank/ui_action_click()
+	toggle_injection()
+
+/obj/item/weapon/reagent_containers/chemtank/proc/toggle_injection()
+	var/mob/living/carbon/human/user = usr
+	if(!istype(user))
+		return
+	if (user.get_item_by_slot(slot_back) != src)
+		user << "<span class='warning'>The chemtank needs to be on your back before you can activate it!</span>"
+		return
+	if(on)
+		turn_off()
+	else
+		turn_on()
+
+//Todo : cache these.
+/obj/item/weapon/reagent_containers/chemtank/proc/update_filling()
+	overlays.Cut()
+
+	if(reagents.total_volume)
+		var/image/filling = image('icons/obj/reagentfillings.dmi',icon_state = "backpack-10")
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		switch(percent)
+			if(0 to 15)		filling.icon_state = "backpack-10"
+			if(16 to 60) 	filling.icon_state = "backpack50"
+			if(61 to INFINITY)	filling.icon_state = "backpack100"
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		overlays += filling
+
+/obj/item/weapon/reagent_containers/chemtank/worn_overlays(var/isinhands = FALSE) //apply chemcolor and level
+	. = list()
+	//inhands + reagent_filling
+	if(!isinhands && reagents.total_volume)
+		var/image/filling = image('icons/obj/reagentfillings.dmi',icon_state = "backpackmob-10")
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		switch(percent)
+			if(0 to 15)		filling.icon_state = "backpackmob-10"
+			if(16 to 60) 	filling.icon_state = "backpackmob50"
+			if(61 to INFINITY)	filling.icon_state = "backpackmob100"
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		. += filling
+
+/obj/item/weapon/reagent_containers/chemtank/proc/turn_on()
+	on = 1
+	SSobj.processing |= src
+	if(ismob(loc))
+		loc << "<span class='notice'>[src] turns on.</span>"
+
+/obj/item/weapon/reagent_containers/chemtank/proc/turn_off()
+	on = 0
+	SSobj.processing.Remove(src)
+	if(ismob(loc))
+		loc << "<span class='notice'>[src] turns off.</span>"
+
+/obj/item/weapon/reagent_containers/chemtank/process()
+	if(!istype(loc,/mob/living/carbon/human))
+		turn_off()
+		return
+	if(!reagents.total_volume)
+		turn_off()
+		return
+	var/mob/living/carbon/human/user = loc
+	if(user.back != src)
+		turn_off()
+		return
+
+	var/used_amount = injection_amount/usage_ratio
+	reagents.reaction(user, INJECT,injection_amount,0)
+	reagents.trans_to(user,used_amount,multiplier=usage_ratio)
+	update_filling()
+	user.update_inv_back() //for overlays update
+
+/obj/item/weapon/reagent_containers/chemtank/stim/New()
+	..()
+	reagents.add_reagent("stimulants_longterm", 300)
+	update_filling()

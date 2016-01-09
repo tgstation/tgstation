@@ -67,7 +67,7 @@
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
-				S.give_glass()
+				S.give_glass(stat & BROKEN)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the tracker.", "<span class='notice'>You take the glass off the tracker.</span>")
 			qdel(src)

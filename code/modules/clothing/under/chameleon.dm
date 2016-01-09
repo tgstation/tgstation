@@ -11,7 +11,7 @@
 	random_sensor = 0
 	var/list/clothing_choices = list()
 	var/malfunctioning = 0
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/under/chameleon/New()
 	..()

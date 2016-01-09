@@ -205,7 +205,7 @@
 	if(!(active2 in data_core.medical))
 		src.active2 = null
 
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		if(href_list["temp"])
 			src.temp = null
@@ -247,6 +247,12 @@
 				src.active2 = null
 				src.authenticated = 1
 				src.rank = "AI"
+				src.screen = 1
+			else if(IsAdminGhost(usr))
+				src.active1 = null
+				src.active2 = null
+				src.authenticated = 1
+				src.rank = "Central Command"
 				src.screen = 1
 			else if(istype(src.scan, /obj/item/weapon/card/id))
 				src.active1 = null

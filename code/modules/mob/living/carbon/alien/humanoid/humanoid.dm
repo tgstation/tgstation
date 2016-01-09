@@ -32,7 +32,7 @@
 /mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
 		..(user, 1)
-		adjustBruteLoss(14 + rand(1,9))
+		adjustBruteLoss(15)
 		var/hitverb = "punched"
 		if(mob_size < MOB_SIZE_LARGE)
 			Paralyse(1)
@@ -148,6 +148,15 @@
 
 /mob/living/carbon/alien/humanoid/get_permeability_protection()
 	return 0.8
+
+/mob/living/carbon/alien/humanoid/alien_evolve(mob/living/carbon/alien/humanoid/new_xeno)
+	drop_l_hand()
+	drop_r_hand()
+	for(var/atom/movable/A in stomach_contents)
+		stomach_contents.Remove(A)
+		new_xeno.stomach_contents.Add(A)
+		A.loc = new_xeno
+	..()
 
 //For alien evolution/promotion procs. Checks for
 proc/alien_type_present(var/alienpath)

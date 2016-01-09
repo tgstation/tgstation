@@ -3,7 +3,7 @@
 	desc = "You sit in this. Either by will or force.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon_state = "chair"
 	buckle_lying = 0 //you sit in a chair, not lay
-	burn_state = -1 //Not Burnable
+	burn_state = FIRE_PROOF
 	buildstackamount = 1
 
 /obj/structure/bed/chair/New()
@@ -85,7 +85,7 @@
 
 // Chair types
 /obj/structure/bed/chair/wood
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 20
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
@@ -105,7 +105,7 @@
 	desc = "It looks comfy.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon_state = "comfychair"
 	color = rgb(255,255,255)
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 30
 	buildstackamount = 2
 	var/image/armrest = null

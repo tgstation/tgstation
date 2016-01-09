@@ -197,7 +197,7 @@
 
 		else
 			if(!air.check_turf(enemy_tile, atmos_adjacent_turfs_amount))
-				var/difference = air.mimic(enemy_tile,,atmos_adjacent_turfs_amount)
+				var/difference = air.mimic(enemy_tile,atmos_adjacent_turfs_amount)
 				if(difference)
 					if(difference > 0)
 						consider_pressure_difference(enemy_tile, difference)
@@ -292,10 +292,13 @@
 /atom/movable/var/pressure_resistance = 5
 
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
+	set waitfor = 0
+	. = 0
 	if(!anchored && !pulledby)
+		. = 1
 		if(pressure_difference > pressure_resistance)
-			spawn step(src, direction)
-		return 1
+			step(src, direction)
+
 
 
 

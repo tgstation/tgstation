@@ -28,14 +28,16 @@
 		src << "Only administrators may use this command."
 		return
 
+	message_admins("[key_name_admin(src)] has started answering [key_name(M.key, 0, 0)]'s prayer.")
 	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text
 
 	if (!msg)
+		message_admins("[key_name_admin(src)] decided not to answer [key_name(M.key, 0, 0)]'s prayer")
 		return
 	if(usr)
 		if (usr.client)
 			if(usr.client.holder)
-				M << "<i>You hear [ticker.Bible_deity_name ? "the voice of " + ticker.Bible_deity_name : "a voice"] in your head... <b>[msg]</i></b>"
+				M << "<i>You hear a voice in your head... <b>[msg]</i></b>"
 
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
 	message_admins("<span class='adminnotice'><b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>")

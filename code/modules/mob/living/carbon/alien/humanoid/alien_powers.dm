@@ -241,8 +241,10 @@ Doesn't work on other aliens/AI.*/
 		user << "<span class='danger'>There is already a resin structure there.</span>"
 		return 0
 	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
-	if(!choice) return 0
-
+	if(!choice) 
+		return 0
+	if (!cost_check(check_turf,user))
+		return 0
 	user << "<span class='notice'>You shape a [choice].</span>"
 	user.visible_message("<span class='notice'>[user] vomits up a thick purple substance and begins to shape it.</span>")
 

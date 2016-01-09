@@ -137,11 +137,9 @@
 	return visual_indicators[g]
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
-	if(owner.health < 25)
+	if(owner.health < 0)
 		on_losing(owner)
 		owner << "<span class='danger'>You suddenly feel very weak.</span>"
-		owner.Weaken(3)
-		owner.emote("collapse")
 
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -391,32 +389,6 @@
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
 	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
 		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
-
-
-/datum/mutation/human/stealth
-	name = "Cloak Of Darkness"
-	quality = POSITIVE
-	get_chance = 25
-	lowest_value = 256 * 12
-	text_gain_indication = "<span class='notice'>You begin to fade into the shadows.</span>"
-	text_lose_indication = "<span class='notice'>You become fully visible.</span>"
-	time_coeff = 5
-
-
-/datum/mutation/human/stealth/on_life(mob/living/carbon/human/owner)
-	var/turf/simulated/T = get_turf(owner)
-	if(!istype(T))
-		return
-	if(T.lighting_lumcount <= 2)
-		owner.alpha -= 25
-	else
-		if(!owner.dna.check_mutation(CHAMELEON))
-			owner.alpha = round(255 * 0.80)
-
-/datum/mutation/human/stealth/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	owner.alpha = 255
 
 /datum/mutation/human/chameleon
 	name = "Chameleon"

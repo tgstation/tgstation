@@ -78,13 +78,17 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 	..()
 
 
-/mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/components/unary/starting_machine)
-	if(!istype(starting_machine) || !starting_machine.returnPipenet())
+/mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
+	if(!istype(starting_machine))
 		return
 	var/list/totalMembers = list()
-	var/datum/pipeline/starting_machine_parent = starting_machine.PARENT1
-	totalMembers += starting_machine_parent.members
-	totalMembers += starting_machine_parent.other_atmosmch
+
+	for(var/datum/pipeline/P in starting_machine.returnPipenets())
+		totalMembers += P.members
+		totalMembers += P.other_atmosmch
+	
+	if(!totalMembers.len)
+		return
 
 	for(var/obj/machinery/atmospherics/A in totalMembers)
 		if(!A.pipe_vision_img)

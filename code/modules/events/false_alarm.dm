@@ -13,6 +13,8 @@
 	for(var/datum/round_event_control/E in SSevent.control)
 		if(E.holidayID || E.wizardevent)
 			continue
+		if(E.earliest_start >= world.time)
+			continue
 		var/datum/round_event/event = E.typepath
 		if(initial(event.announceWhen) <= 0)
 			continue

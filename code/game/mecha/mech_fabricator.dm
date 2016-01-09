@@ -396,7 +396,7 @@
 		add_part_set_to_queue(filter.get("partset_to_queue"))
 		return update_queue_on_page()
 	if(href_list["process_queue"])
-		spawn(-1)
+		spawn(0)
 			if(processing_queue || being_built)
 				return 0
 			processing_queue = 1

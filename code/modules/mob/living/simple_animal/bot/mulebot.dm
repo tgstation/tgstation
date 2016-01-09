@@ -43,7 +43,6 @@ var/global/mulebot_count = 0
 	
 	var/reached_target = 1 	//true if already reached the target
 
-	var/refresh = 1			// true to refresh dialogue
 	var/auto_return = 1		// true if auto return to home beacon after unload
 	var/auto_pickup = 1 	// true if auto-pickup at beacon
 	var/report_delivery = 1 // true if bot will announce an arrival to a location.
@@ -199,7 +198,7 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 		dat += "<b>Destination:</b> [!destination ? "<i>none</i>" : destination]<BR>"
 		dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
 
-		if(locked && !ai)
+		if(locked && !ai && !IsAdminGhost(user))
 			dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=\ref[src];op=unlock'>Unlock Controls</A>"
 		else
 			dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=\ref[src];op=lock'>Lock Controls</A><BR><BR>"
@@ -214,8 +213,6 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 			dat += "<A href='byond://?src=\ref[src];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
 			dat += "<A href='byond://?src=\ref[src];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
 			dat += "<A href='byond://?src=\ref[src];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
-			dat += "<A href='byond://?src=\ref[src];op=autorefresh'>Toggle Interface Refreshing</A> ([refresh ? "On" : "Off"])<BR>"
-
 			if(load)
 				dat += "<A href='byond://?src=\ref[src];op=unload'>Unload Now</A><BR>"
 			dat += "<div class='notice'>The maintenance hatch is closed.</div>"
@@ -245,7 +242,7 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 		return
 	if (usr.stat)
 		return
-	if ((in_range(src, usr) && istype(loc, /turf)) || (istype(usr, /mob/living/silicon)))
+	if ((in_range(src, usr) && istype(loc, /turf)) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
 		switch(href_list["op"])
 
 			if("lock", "unlock")
@@ -297,11 +294,6 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 		return
 
 	switch(command)
-
-		if("autorefresh")
-			refresh = !refresh
-			update_controls()
-
 		if("stop")
 			if(mode >= BOT_DELIVER)
 				bot_reset()
@@ -318,26 +310,21 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 				update_controls()
 
 		if("destination")
-			refresh=0
 			var/new_dest = input(user, "Select M.U.L.E. Destination", "Mulebot [suffix ? "([suffix])" : ""]", destination) as null|anything in deliverybeacontags
-			refresh=1
 			if(new_dest)
 				set_destination(new_dest)
+				update_controls()
 
 
 		if("setid")
-			refresh=0
 			var/new_id = stripped_input(user, "Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix, MAX_NAME_LEN)
-			refresh=1
 			if(new_id)
 				suffix = new_id
 				name = "\improper Mulebot ([suffix])"
 				update_controls()
 
 		if("sethome")
-			refresh=0
 			var/new_home = stripped_input(user, "Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", home_destination)
-			refresh=1
 			if(new_home)
 				home_destination = new_home
 				update_controls()
@@ -512,10 +499,7 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 						sleep(2)
 						process_bot()
 
-	if(refresh) update_controls()
-
 /mob/living/simple_animal/bot/mulebot/proc/process_bot()
-
 	if(!on)
 		return
 
@@ -582,13 +566,13 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 						if(blockcount > 10)	// attempt 10 times before recomputing
 							// find new path excluding blocked turf
 							buzz(SIGH)
-
-							spawn(2)
-								calc_path(next)
+							mode = BOT_WAIT_FOR_NAV
+							blockcount = 0
+							spawn(20)
+								calc_path(avoid=next)
 								if(path.len > 0)
 									buzz(DELIGHT)
 								mode = BOT_BLOCKED
-							mode = BOT_WAIT_FOR_NAV
 							return
 						return
 				else
@@ -621,7 +605,6 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/mulebot/calc_path(turf/avoid = null)
 	path = get_path_to(loc, target, src, /turf/proc/Distance_cardinal, 0, 250, id=access_card, exclude=avoid)
-
 
 // sets the current destination
 // signals all beacons matching the delivery code
@@ -720,12 +703,12 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,15)
-	H.apply_damage(2*damage, BRUTE, "head")
-	H.apply_damage(2*damage, BRUTE, "chest")
-	H.apply_damage(0.5*damage, BRUTE, "l_leg")
-	H.apply_damage(0.5*damage, BRUTE, "r_leg")
-	H.apply_damage(0.5*damage, BRUTE, "l_arm")
-	H.apply_damage(0.5*damage, BRUTE, "r_arm")
+	H.apply_damage(2*damage, BRUTE, "head", run_armor_check("head", "melee"))
+	H.apply_damage(2*damage, BRUTE, "chest", run_armor_check("chest", "melee"))
+	H.apply_damage(0.5*damage, BRUTE, "l_leg", run_armor_check("l_leg", "melee"))
+	H.apply_damage(0.5*damage, BRUTE, "r_leg", run_armor_check("r_leg", "melee"))
+	H.apply_damage(0.5*damage, BRUTE, "l_arm", run_armor_check("l_arm", "melee"))
+	H.apply_damage(0.5*damage, BRUTE, "r_arm", run_armor_check("r_arm", "melee"))
 
 	var/obj/effect/decal/cleanable/blood/B = new(loc)
 	B.add_blood_list(H)

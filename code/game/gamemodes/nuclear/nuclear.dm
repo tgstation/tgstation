@@ -113,6 +113,10 @@
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 	synd_mind.current << "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>"
 	synd_mind.current << "<B>If you feel you are not up to this task, give your ID to another operative.</B>"
+	synd_mind.current << "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>"
+
+	var/obj/item/device/nuclear_challenge/challenge = new /obj/item/device/nuclear_challenge
+	synd_mind.current.equip_to_slot_or_del(challenge, slot_r_hand)
 
 	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/weapon/card/id)
 	if(foundIDs.len)
@@ -121,6 +125,10 @@
 			ID.access += access_syndicate_leader
 	else
 		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
+
+	var/obj/item/device/radio/headset/syndicate/alt/A = locate() in synd_mind.current
+	if(A)
+		A.command = TRUE
 
 	if (nuke_code)
 		var/obj/item/weapon/paper/P = new
@@ -133,6 +141,7 @@
 	else
 		nuke_code = "code will be provided later"
 	return
+
 
 
 /datum/game_mode/proc/forge_syndicate_objectives(datum/mind/syndicate)
@@ -155,8 +164,11 @@
 	return 1337 // WHY??? -- Doohl
 
 
-/datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob)
-	synd_mob.equipOutfit(/datum/outfit/syndicate)
+/datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, telecrystals = TRUE)
+	if(telecrystals)
+		synd_mob.equipOutfit(/datum/outfit/syndicate)
+	else
+		synd_mob.equipOutfit(/datum/outfit/syndicate/no_crystals)
 	return 1
 
 
@@ -298,18 +310,23 @@
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1)
 
-	var/tc = 20
+	var/tc = 30
+
+/datum/outfit/syndicate/no_crystals
+	tc = 0
+
 
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
 	var/obj/item/device/radio/R = H.ears
 	R.set_frequency(SYND_FREQ)
 	R.freqlock = 1
 
-	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(H)
-	U.hidden_uplink.uplink_owner="[H.key]"
-	U.hidden_uplink.uses = tc
-	U.hidden_uplink.mode_override = /datum/game_mode/nuclear //Goodies
-	H.equip_to_slot_or_del(U, slot_in_backpack)
+	if(tc)
+		var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(H)
+		U.hidden_uplink.uplink_owner="[H.key]"
+		U.hidden_uplink.uses = tc
+		U.hidden_uplink.mode_override = /datum/game_mode/nuclear //Goodies
+		H.equip_to_slot_or_del(U, slot_in_backpack)
 
 	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(H)
 	W.implant(H)

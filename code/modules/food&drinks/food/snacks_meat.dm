@@ -119,6 +119,11 @@
 	desc = "Vegan meat, on a stick."
 	bonus_reagents = list("nutriment" = 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/kebab/tail
+	name = "lizard-tail kebab"
+	desc = "Severed lizard tail on a stick."
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
+
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 	name = "monkey cube"
 	desc = "Just add water!"

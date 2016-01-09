@@ -140,7 +140,7 @@ Detective
 	name = "Detective"
 
 	belt = /obj/item/device/pda/detective
-	ears = /obj/item/device/radio/headset/headset_sec
+	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/det
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/det_suit
@@ -287,7 +287,10 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 					continue
 				else
 					break
-	H << "<b>You have been assigned to [department]!</b>"
+	if(department)
+		H << "<b>You have been assigned to [department]!</b>"
+	else
+		H << "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>"
 
 /obj/item/device/radio/headset/headset_sec/department/New()
 	wires = new(src)

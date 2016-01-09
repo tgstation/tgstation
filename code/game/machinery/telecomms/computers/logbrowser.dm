@@ -206,7 +206,7 @@
 
 		var/newnet = stripped_input(usr, "Which network do you want to view?", "Comm Monitor", network)
 
-		if(newnet && ((usr in range(1, src) || issilicon(usr))))
+		if(newnet && ((usr in range(1, src)) || issilicon(usr)))
 			if(length(newnet) > 15)
 				temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
 

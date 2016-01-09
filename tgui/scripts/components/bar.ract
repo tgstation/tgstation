@@ -1,0 +1,14 @@
+<script type='text/coffeescript'>
+component.exports =
+  oninit: ->
+    @observe "value", (newkey, oldkey, keypath) ->
+      min = @get "min"
+      max = @get "max"
+      value = Math.clamp newkey, min, max
+      @animate "percentage", Math.round (value - min) / (max - min) * 100
+</script>
+
+<div class='bar'>
+  <div class='barFill {{state}}' style='width: {{percentage}}%'></div>
+  <span class='barText'>{{yield}}</span>
+</div>

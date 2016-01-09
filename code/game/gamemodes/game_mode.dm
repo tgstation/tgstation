@@ -461,8 +461,7 @@
 						continue //Dead mob, ghost abandoned
 				else
 					if(D.can_reenter_corpse)
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>This shouldn't appear.</span>)\n"
-						continue //Lolwhat
+						continue //Adminghost, or cult/wizard ghost
 					else
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>Ghosted</span>)\n"
 						continue //Ghosted while alive
@@ -525,7 +524,7 @@
 		theghost = pick(candidates)
 		M << "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)]) to replace a jobbaned player.")
-		M.ghostize()
+		M.ghostize(0)
 		M.key = theghost.key
 
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)

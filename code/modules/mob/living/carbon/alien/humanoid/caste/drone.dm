@@ -26,12 +26,12 @@
 	action_icon_state = "alien_evolve_drone"
 
 /obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/user)
-	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/))
-		user << "<span class='noticealien'>You begin to evolve!</span>"
-		user.visible_message("<span class='alertalien'>[user] begins to twist and contort!</span>")
+	if(!isturf(user.loc))
+		user << "<span class='notice'>You can't evolve here!</span>"
+		return 0
+	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal))
 		var/mob/living/carbon/alien/humanoid/royal/praetorian/new_xeno = new (user.loc)
-		user.mind.transfer_to(new_xeno)
-		qdel(user)
+		user.alien_evolve(new_xeno)
 		return 1
 	else
 		user << "<span class='notice'>We already have a living royal!</span>"

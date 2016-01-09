@@ -105,7 +105,7 @@
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
 		Radio.keyslot = new radio_key
-	Radio.canhear_range = 1 // 0 ?
+	Radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
 	Radio.recalculateChannels()
 
 	bot_core = new bot_core_type(src)
@@ -163,12 +163,7 @@
 	else
 		user << "[src] is in pristine condition."
 
-/mob/living/simple_animal/bot/adjustBruteLoss(amount)
-	if(amount>0 && prob(10))
-		new /obj/effect/decal/cleanable/oil(loc)
-	return ..(amount)
-
-/mob/living/simple_animal/bot/adjustFireLoss(amount)
+/mob/living/simple_animal/bot/adjustHealth(amount)
 	if(amount>0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
 	return ..(amount)
@@ -706,14 +701,16 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/Topic(href, href_list)
 	//No ..() to prevent strip panel showing up - Todo: make that saner
-	if(topic_denied(usr))
-		usr << "<span class='warning'>[src]'s interface is not responding!</span>"
-		return 1
-	add_fingerprint(usr)
 	if(href_list["close"])// HUE HUE
 		if(usr in users)
 			users.Remove(usr)
 		return 1
+
+	if(topic_denied(usr))
+		usr << "<span class='warning'>[src]'s interface is not responding!</span>"
+		return 1
+	add_fingerprint(usr)
+
 	if((href_list["power"]) && (bot_core.allowed(usr) || !locked))
 		if (on)
 			turn_off()
@@ -757,17 +754,19 @@ Pass a positive integer as an argument to override a bot's default speed.
 		qdel(src)
 
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
+	if(!user.canUseTopic(src))
+		return 1
 	// 0 for access, 1 for denied.
 	if(emagged == 2) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
 		if(!hacked) //Manually emagged by a human - access denied to all.
 			return 1
-		else if(!issilicon(user)) //Bot is hacked, so only silicons are allowed access.
+		else if(!issilicon(user) && !IsAdminGhost(user)) //Bot is hacked, so only silicons and admins are allowed access.
 			return 1
 	return 0
 
 /mob/living/simple_animal/bot/proc/hack(mob/user)
 	var/hack
-	if(issilicon(user)) //Allows silicons to toggle the emag status of a bot.
+	if(issilicon(user) || IsAdminGhost(user)) //Allows silicons or admins to toggle the emag status of a bot.
 		hack += "[emagged == 2 ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
 		hack += "Harm Prevention Safety System: <A href='?src=\ref[src];operation=hack'>[emagged ? "<span class='bad'>DANGER</span>" : "Engaged"]</A><BR>"
 	else if(!locked) //Humans with access can use this option to hide a bot from the AI's remote control panel and PDA control.
@@ -782,3 +781,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/Logout()
 	. = ..()
 	bot_reset()
+
+/mob/living/simple_animal/bot/revive()
+	..()
+	update_icon()
