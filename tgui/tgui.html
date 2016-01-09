@@ -15,14 +15,23 @@
         }
       };
     </script>
-    <link rel='stylesheet' href='tgui.css'/>
+    <link rel='stylesheet' type='text/css' href='tgui.css'/>
     <script id='data' type='application/json' data-ref='[ref]'>{}</script>
-    <script defer src='tgui.js'></script>
+    <script defer type='application/javascript' src='tgui.js'></script>
   </head>
   <body>
     <div id='container' class='container'>
       <div class='notice'>
-        <span>Loading...</span>
+        <span>Loading...</span><br/>
+        <!--[if IE 8]>
+          <span>You are running Internet Explorer 8, which is End of Life, and unsupported by this interface.</span><br/>
+          <span>Please upgrade or use a virtual machine if you wish to use this interface.</span><br/>
+          <ul>
+            <li><span>Upgrade IE: http://windows.microsoft.com/en-us/internet-explorer/download-ie</span></li>
+            <li><span>IE VMs: https://dev.windows.com/en-us/microsoft-edge/tools/vms</span></li>
+            <li><span>EOL Info: https://support.microsoft.com/en-us/lifecycle#gp/Microsoft-Internet-Explorer</span></li>
+          </ul>
+        <![endif]-->
       </div>
     </div>
     <noscript>
