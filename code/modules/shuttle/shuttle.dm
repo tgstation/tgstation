@@ -374,7 +374,7 @@
 					//close open doors
 					if(istype(O, /obj/machinery/door))
 						var/obj/machinery/door/Door = O
-						spawn(-1)
+						spawn(0)
 							if(Door)
 								Door.close()
 				else if (istype(AM,/mob))
@@ -385,11 +385,10 @@
 
 					//docking turbulence
 					if(M.client)
-						spawn(0)
-							if(M.buckled)
-								shake_camera(M, 2, 1) // turn it down a bit come on
-							else
-								shake_camera(M, 7, 1)
+						if(M.buckled)
+							shake_camera(M, 2, 1) // turn it down a bit come on
+						else
+							shake_camera(M, 7, 1)
 					if(istype(M, /mob/living/carbon))
 						if(!M.buckled)
 							M.Weaken(3)
@@ -444,7 +443,7 @@
 	if(T)
 		var/obj/machinery/door/Door = locate() in T
 		if(Door)
-			spawn(-1)
+			spawn(0)
 				Door.close()
 
 /obj/docking_port/mobile/proc/roadkill(list/L, dir, x, y)

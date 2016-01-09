@@ -1,31 +1,31 @@
 //Academy Areas
 
 /area/awaymission/academy
-	name = "\improper Academy Asteroids"
+	name = "Academy Asteroids"
 	icon_state = "away"
 
 /area/awaymission/academy/headmaster
-	name = "\improper Academy Fore Block"
+	name = "Academy Fore Block"
 	icon_state = "away1"
 
 /area/awaymission/academy/classrooms
-	name = "\improper Academy Classroom Block"
+	name = "Academy Classroom Block"
 	icon_state = "away2"
 
 /area/awaymission/academy/academyaft
-	name = "\improper Academy Ship Aft Block"
+	name = "Academy Ship Aft Block"
 	icon_state = "away3"
 
 /area/awaymission/academy/academygate
-	name = "\improper Academy Gateway"
+	name = "Academy Gateway"
 	icon_state = "away4"
 
 /area/awaymission/academy/academycellar
-	name = "\improper Academy Cellar"
+	name = "Academy Cellar"
 	icon_state = "away4"
 
 /area/awaymission/academy/academyengine
-	name = "\improper Academy Engine"
+	name = "Academy Engine"
 	icon_state = "away4"
 
 //Academy Items
@@ -102,7 +102,7 @@
 
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
 	var/turf/T = src.loc
-	
+
 	var/mob/living/carbon/human/wizbody = new(T)
 	wizbody.equipOutfit(/datum/outfit/wizard/academy)
 	var/obj/item/weapon/implant/exile/Implant = new/obj/item/weapon/implant/exile(wizbody)
@@ -110,7 +110,7 @@
 	wizbody.faction |= "wizard"
 	wizbody.real_name = "Academy Teacher"
 	wizbody.name = "Academy Teacher"
-	
+
 	var/datum/mind/wizmind = new /datum/mind()
 	wizmind.name = "Wizard Defender"
 	wizmind.special_role = "Academy Defender"
@@ -118,13 +118,13 @@
 	wizmind.objectives += O
 	wizmind.transfer_to(wizbody)
 	ticker.mode.wizards |= wizmind
-	
+
 	wizmind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt)
 	wizmind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile)
 	wizmind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball)
 
 	current_wizard = wizbody
-	
+
 	give_control()
 
 /obj/structure/academy_wizard_spawner/proc/update_status()

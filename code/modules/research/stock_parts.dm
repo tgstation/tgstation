@@ -114,7 +114,7 @@
 
 /obj/item/weapon/stock_parts/matter_bin
 	name = "matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
+	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "matter_bin"
 	origin_tech = "materials=1"
 	materials = list(MAT_METAL=80)
@@ -155,7 +155,7 @@
 
 /obj/item/weapon/stock_parts/matter_bin/adv
 	name = "advanced matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
+	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "advanced_matter_bin"
 	origin_tech = "materials=3"
 	rating = 2
@@ -197,7 +197,7 @@
 
 /obj/item/weapon/stock_parts/matter_bin/super
 	name = "super matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
+	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "super_matter_bin"
 	origin_tech = "materials=5"
 	rating = 3
@@ -239,7 +239,7 @@
 
 /obj/item/weapon/stock_parts/matter_bin/bluespace
 	name = "bluespace matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
+	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "bluespace_matter_bin"
 	origin_tech = "materials=6"
 	rating = 4

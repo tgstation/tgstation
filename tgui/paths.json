@@ -1,0 +1,17 @@
+{
+  "out":"assets",
+  "css":{
+    "dir":"styles/",
+    "main":"main.styl",
+    "out":"tgui.css"
+  },
+  "img":{
+    "dir":"images/",
+    "main":"*"
+  },
+  "js":{
+    "dir":"scripts/",
+    "main":"main.coffee",
+    "out":"tgui.js"
+  }
+}

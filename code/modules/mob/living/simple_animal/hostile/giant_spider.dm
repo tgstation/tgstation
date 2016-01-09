@@ -116,13 +116,11 @@
 			//second, spin a sticky spiderweb on this tile
 			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 			if(!W)
-				spawn()
-					Web()
+				Web()
 			else
 				//third, lay an egg cluster there
 				if(fed)
-					spawn()
-						LayEggs()
+					LayEggs()
 				else
 					//fourthly, cocoon any nearby items so those pesky pinkskins can't use them
 					for(var/obj/O in can_see)
@@ -140,8 +138,7 @@
 
 		else if(busy == MOVING_TO_TARGET && cocoon_target)
 			if(get_dist(src, cocoon_target) <= 1)
-				spawn()
-					Wrap()
+				Wrap()
 
 	else
 		busy = 0

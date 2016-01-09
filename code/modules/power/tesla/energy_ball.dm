@@ -44,7 +44,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		move_the_basket_ball(amount_to_move)
 		pixel_x = 0
 		pixel_y = 0
-		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 5)
+		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 15)
 		tesla_zap(src, 7, what_does_the_scouter_say_about_the_balls_power_level)
 		pixel_x = -32
 		pixel_y = -32
@@ -69,7 +69,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= 300)
 		energy -= 300
-		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 5)
+		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 15)
 		spawn(100)
 			var/obj/singularity/energy_ball/EB = new(loc)
 			orbiting_balls.Add(EB)
@@ -80,8 +80,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 			var/orbitsize = (I.Width()+I.Height())*pick(0.5,0.6,0.7)
 			orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
-			spawn(1)
-				EB.orbit(src,orbitsize, pick(FALSE,TRUE), rand(10,25), pick(3,4,5,6,36))
+			EB.orbit(src,orbitsize, pick(FALSE,TRUE), rand(10,25), pick(3,4,5,6,36))
 
 
 
@@ -114,7 +113,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	return closest_atom
 
 /proc/tesla_zap(var/atom/source, zap_range = 3, power)
-	if(power < 500)
+	if(power < 1000)
 		return
 	var/list/tesla_coils = list()
 	var/list/grounding_rods = list()

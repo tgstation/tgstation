@@ -1,7 +1,3 @@
-#define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
-#define TANK_MIN_RELEASE_PRESSURE 0
-#define TANK_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE*O2STANDARD)
-
 /obj/item/weapon/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
@@ -119,10 +115,11 @@
 	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "tanks", name, 525, 210, state = inventory_state)
+		ui = new(user, src, ui_key, "tanks", name, 400, 200, master_ui, state)
 		ui.open()
 
 /obj/item/weapon/tank/get_ui_data()
@@ -144,14 +141,12 @@
 
 	if(istype(location))
 		var/mask_check = 0
-
 		if(location.internal == src)	// if tank is current internal
 			mask_check = 1
 			data["valveOpen"] = 1
 		else if(src in location)		// or if tank is in the mobs possession
 			if(!location.internal)		// and they do not have any active internals
 				mask_check = 1
-
 		if(mask_check)
 			if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
 				data["maskConnected"] = 1
@@ -163,7 +158,7 @@
 
 	switch(action)
 		if("pressure")
-			switch(params["set"])
+			switch(params["pressure"])
 				if("custom")
 					var/custom = input(usr, "What rate do you set the regulator to? The dial reads from 0 to [TANK_MAX_RELEASE_PRESSURE].") as null|num
 					if(isnum(custom))

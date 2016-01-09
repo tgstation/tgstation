@@ -48,7 +48,7 @@
 	if(losebreath > 0)
 		losebreath--
 		if(prob(10))
-			spawn emote("gasp")
+			emote("gasp")
 		if(istype(loc, /obj/))
 			var/obj/loc_as_obj = loc
 			loc_as_obj.handle_internal_lifeform(src,0)
@@ -113,8 +113,7 @@
 	//OXYGEN
 	if(O2_partialpressure < safe_oxy_min) //Not enough oxygen
 		if(prob(20))
-			spawn(0)
-				emote("gasp")
+			emote("gasp")
 		if(O2_partialpressure > 0)
 			var/ratio = safe_oxy_min/O2_partialpressure
 			adjustOxyLoss(min(5*ratio, 3))
@@ -144,7 +143,7 @@
 			if(world.time - co2overloadtime > 300)
 				adjustOxyLoss(8)
 		if(prob(20))
-			spawn(0) emote("cough")
+			emote("cough")
 
 	else
 		co2overloadtime = 0
@@ -168,7 +167,7 @@
 					sleeping = max(sleeping+2, 10)
 			else if(SA_partialpressure > 0.01)
 				if(prob(20))
-					spawn(0) emote(pick("giggle","laugh"))
+					emote(pick("giggle","laugh"))
 
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
@@ -264,21 +263,21 @@
 
 
 /mob/living/carbon/handle_stomach()
-	spawn(0)
-		for(var/mob/living/M in stomach_contents)
-			if(M.loc != src)
+	set waitfor = 0
+	for(var/mob/living/M in stomach_contents)
+		if(M.loc != src)
+			stomach_contents.Remove(M)
+			continue
+		if(istype(M, /mob/living/carbon) && stat != 2)
+			if(M.stat == 2)
+				M.death(1)
 				stomach_contents.Remove(M)
+				qdel(M)
 				continue
-			if(istype(M, /mob/living/carbon) && stat != 2)
-				if(M.stat == 2)
-					M.death(1)
-					stomach_contents.Remove(M)
-					qdel(M)
-					continue
-				if(SSmob.times_fired%3==1)
-					if(!(M.status_flags & GODMODE))
-						M.adjustBruteLoss(5)
-					nutrition += 10
+			if(SSmob.times_fired%3==1)
+				if(!(M.status_flags & GODMODE))
+					M.adjustBruteLoss(5)
+				nutrition += 10
 
 //This updates the health and status of the mob (conscious, unconscious, dead)
 /mob/living/carbon/handle_regular_status_updates()
@@ -320,8 +319,7 @@
 		adjustStaminaLoss(-10)
 		sleeping = max(sleeping-1, 0)
 		if( prob(10) && health && !hal_crit )
-			spawn(0)
-				emote("snore")
+			emote("snore")
 	else
 		clear_alert("asleep")
 

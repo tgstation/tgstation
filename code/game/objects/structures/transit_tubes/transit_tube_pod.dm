@@ -61,62 +61,63 @@
 	else return ..()
 
 /obj/structure/transit_tube_pod/proc/follow_tube(reverse_launch)
+	set waitfor = 0
 	if(moving)
 		return
 
 	moving = 1
 
-	spawn()
-		var/obj/structure/transit_tube/current_tube = null
-		var/next_dir
-		var/next_loc
-		var/last_delay = 0
-		var/exit_delay
 
-		if(reverse_launch)
-			dir = turn(dir, 180) // Back it up
+	var/obj/structure/transit_tube/current_tube = null
+	var/next_dir
+	var/next_loc
+	var/last_delay = 0
+	var/exit_delay
 
-		for(var/obj/structure/transit_tube/tube in loc)
-			if(tube.has_exit(dir))
+	if(reverse_launch)
+		dir = turn(dir, 180) // Back it up
+
+	for(var/obj/structure/transit_tube/tube in loc)
+		if(tube.has_exit(dir))
+			current_tube = tube
+			break
+
+	while(current_tube)
+		next_dir = current_tube.get_exit(dir)
+
+		if(!next_dir)
+			break
+
+		exit_delay = current_tube.exit_delay(src, dir)
+		last_delay += exit_delay
+
+		sleep(exit_delay)
+
+		next_loc = get_step(loc, next_dir)
+
+		current_tube = null
+		for(var/obj/structure/transit_tube/tube in next_loc)
+			if(tube.has_entrance(next_dir))
 				current_tube = tube
 				break
 
-		while(current_tube)
-			next_dir = current_tube.get_exit(dir)
-
-			if(!next_dir)
-				break
-
-			exit_delay = current_tube.exit_delay(src, dir)
-			last_delay += exit_delay
-
-			sleep(exit_delay)
-
-			next_loc = get_step(loc, next_dir)
-
-			current_tube = null
-			for(var/obj/structure/transit_tube/tube in next_loc)
-				if(tube.has_entrance(next_dir))
-					current_tube = tube
-					break
-
-			if(current_tube == null)
-				dir = next_dir
-				Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
-				break
-
-			last_delay = current_tube.enter_delay(src, next_dir)
-			sleep(last_delay)
+		if(current_tube == null)
 			dir = next_dir
-			loc = next_loc // When moving from one tube to another, skip collision and such.
-			density = current_tube.density
+			Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
+			break
 
-			if(current_tube && current_tube.should_stop_pod(src, next_dir))
-				current_tube.pod_stopped(src, dir)
-				break
+		last_delay = current_tube.enter_delay(src, next_dir)
+		sleep(last_delay)
+		dir = next_dir
+		loc = next_loc // When moving from one tube to another, skip collision and such.
+		density = current_tube.density
 
-		density = 1
-		moving = 0
+		if(current_tube && current_tube.should_stop_pod(src, next_dir))
+			current_tube.pod_stopped(src, dir)
+			break
+
+	density = 1
+	moving = 0
 
 
 // Should I return a copy here? If the caller edits or del()s the returned

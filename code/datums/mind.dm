@@ -36,6 +36,7 @@
 	var/active = 0
 
 	var/memory
+	var/attack_log
 
 	var/assigned_role
 	var/special_role
@@ -63,7 +64,7 @@
 /datum/mind/proc/transfer_to(mob/new_character)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
-		SSnano.on_transfer(current, new_character)
+		SStgui.on_transfer(current, new_character)
 
 	if(key)
 		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
@@ -632,7 +633,8 @@
 		if (istype(new_objective, /datum/objective/custom)) //it's lame I know but this type is snowflaky by its very nature
 			var/expl = stripped_input(usr, "Custom objective:", "Objective", objective ? objective.explanation_text : "")
 			if (!expl)
-				expl = "Free objective"
+				qdel(new_objective)
+				return
 			new_objective.explanation_text = expl
 
 		if (!new_objective)
@@ -1577,4 +1579,3 @@
 	..()
 	mind.assigned_role = "[initial(name)]"
 	mind.special_role = "Cultist"
-

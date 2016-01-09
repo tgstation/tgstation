@@ -23,8 +23,7 @@
 		user << "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
-		spawn(0)
-			user << "<span class='info'>\icon [I] It has \the [I] loaded.</span>"
+		user << "<span class='info'>\icon [I] It has \the [I] loaded.</span>"
 	if(tank)
 		user << "<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>"
 

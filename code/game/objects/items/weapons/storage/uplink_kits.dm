@@ -158,15 +158,9 @@
 
 /obj/item/weapon/storage/box/syndie_kit/bioterror/New()
 	..()
-	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
-	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
-	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
-	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
-	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
-	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
-	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
 	return
-
 
 /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	name = "boxed adrenal implant (with injector)"
@@ -178,7 +172,6 @@
 	O.update_icon()
 	return
 
-
 /obj/item/weapon/storage/box/syndie_kit/imp_storage
 	name = "boxed storage implant (with injector)"
 
@@ -186,7 +179,6 @@
 	..()
 	new /obj/item/weapon/implanter/storage(src)
 	return
-
 
 /obj/item/weapon/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
@@ -198,7 +190,6 @@
 	new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
 	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 	return
-
 
 /obj/item/weapon/storage/box/syndie_kit/emp
 	name = "boxed EMP kit"
@@ -241,30 +232,25 @@
 	new /obj/item/nuke_core_container(src)
 	new /obj/item/weapon/paper/nuke_instructions(src)
 
-
 /obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade
- 	name = "boxed virus grenade kit"
+	name = "boxed virus grenade kit"
 
 /obj/item/weapon/storage/box/virus_kit/tuberculosisgrenade/New()
- 	..()
- 	new /obj/item/weapon/grenade/chem_grenade/tuberculosis(src)
- 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
- 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
- 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
- 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
- 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
- 	new /obj/item/weapon/reagent_containers/syringe(src)
- 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
- 	return
+	..()
+	new /obj/item/weapon/grenade/chem_grenade/tuberculosis(src)
+	for(var/i in 1 to 5)
+		new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
+	return
 
 /obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
- 	name = "boxed virus kit"
+	name = "boxed virus kit"
 
 /obj/item/weapon/storage/box/virus_kit/tuberculosiskit/New()
- 	..()
- 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosis(src)
- 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
- 	new /obj/item/weapon/reagent_containers/syringe(src)
- 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
- 	return
-
+	..()
+	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosis(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
+	return
