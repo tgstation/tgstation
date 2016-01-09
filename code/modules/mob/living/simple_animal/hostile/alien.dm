@@ -72,7 +72,6 @@
 	icon = 'icons/mob/alienqueen.dmi'
 	pixel_x = -16
 	layer = 6
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	ranged = 1
