@@ -60,3 +60,16 @@
 /turf/simulated/ChangeTurf(var/path)
 	. = ..()
 	smooth_icon_neighbors(src)
+
+/turf/simulated/proc/is_shielded()
+
+/turf/simulated/contents_explosion(severity, target)
+	var/affecting_level
+	if(severity == 1)
+		affecting_level = 1
+	else
+		affecting_level = is_shielded() ? 2 : (intact ? 2 : 1)
+	for(var/V in contents)
+		var/atom/A = V
+		if(A.level >= affecting_level)
+			A.ex_act(severity, target)
