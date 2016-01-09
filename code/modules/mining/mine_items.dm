@@ -166,6 +166,11 @@ proc/move_mining_shuttle()
 	light_power = 2
 	light_color = LIGHT_COLOR_TUNGSTEN
 
+//Explicit
+/obj/item/device/flashlight/lantern/on
+
+	on = 1
+
 /*****************************Pickaxe********************************/
 
 //Dig constants defined in setup.dm

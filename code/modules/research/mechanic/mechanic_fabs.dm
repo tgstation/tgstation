@@ -13,7 +13,7 @@
 	icon_state = "genfab"
 	max_material_storage = GEN_FAB_BASESTORAGE
 	nano_file = "genfab.tmpl"
-	var/list/design_types = list("item")
+	var/list/design_types = GENFAB | IMPRINTER | PROTOLATHE | AUTOLATHE | MECHFAB | PODFAB
 	var/removable_designs = 1
 	var/plastic_added = 1 //if plastic costs are added for designs - the autolathe doesn't have this
 
@@ -24,7 +24,8 @@
 
 	research_flags = NANOTOUCH | TAKESMATIN | HASOUTPUT | IGNORE_CHEMS //we don't need chems to make boards
 
-	part_sets = list("Items" = list())
+	var/one_part_set_only = 1 //Lump up all items into the same category. Only true for the Genfab.
+	part_sets = list("Generic" = list())
 
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab/setup_part_sets()
@@ -92,10 +93,10 @@
 		return 1
 	if(istype(O, /obj/item/research_blueprint))
 		var/obj/item/research_blueprint/RB = O
-		if(!(RB.design_type in design_types))
+		if(!(design_types & RB.build_type))
 			to_chat(user, "<span class='warning'>This isn't the right machine for that kind of blueprint!</span>")
 			return 0
-		else if(RB.stored_design && (RB.design_type in design_types))
+		else if(RB.stored_design)
 			if(src.AddBlueprint(RB, user))
 				if(src.AddMechanicDesign(RB.stored_design, user))
 					overlays += "[base_state]-bp"
@@ -163,19 +164,19 @@
 	if(!istype(blueprint) || !user) //sanity, yeah
 		return
 
-	var/datum/design/mechanic_design/BPdesign = blueprint.stored_design
+	var/datum/design/BPdesign = blueprint.stored_design
 	for(var/list in src.part_sets)
-		for(var/datum/design/mechanic_design/MD in part_sets[list])
+		for(var/datum/design/MD in part_sets[list])
 			if(MD == BPdesign) //because they're the same design, they make exactly the same thing
 				to_chat(user, "You can't add that design, as it's already loaded into the machine!")
 				return 0 //can't add to an infinite design
 	return 1 //let's add the new design, since we haven't found it
 
-/obj/machinery/r_n_d/fabricator/mechanic_fab/proc/AddMechanicDesign(var/datum/design/mechanic_design/design)
+/obj/machinery/r_n_d/fabricator/mechanic_fab/proc/AddMechanicDesign(var/datum/design/design)
 	if(istype(design))
 		if(!design.materials.len)
 			return 0
-		if(add_part_to_set(design.category, design))
+		if(add_part_to_set(src.one_part_set_only ? "Generic" : design.category, design))
 			return 1
 		else
 			return 0

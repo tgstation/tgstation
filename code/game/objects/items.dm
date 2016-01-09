@@ -130,9 +130,8 @@
 			size = "normal-sized"
 		if(4.0)
 			size = "bulky"
-		if(5.0)
+		if(5.0 to INFINITY)
 			size = "huge"
-		else
 	//if ((M_CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
 	var/pronoun
 	if (src.gender == PLURAL)
@@ -180,7 +179,6 @@
 		if(isliving(src.loc))
 			return
 		//user.next_move = max(user.next_move+2,world.time + 2)
-		src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
 	return
@@ -214,7 +212,6 @@
 	else
 		if(istype(src.loc, /mob/living))
 			return
-		src.pickup(user)
 		//user.next_move = max(user.next_move+2,world.time + 2)
 
 	user.put_in_active_hand(src)

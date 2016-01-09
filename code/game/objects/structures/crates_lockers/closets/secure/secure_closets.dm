@@ -91,7 +91,7 @@
 			src.welded =! src.welded
 			src.update_icon()
 			for(var/mob/M in viewers(src))
-				M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 3, "You hear welding.", 2)
+				M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 1, "You hear welding.", 2)
 		else
 			togglelock(user)
 
@@ -141,7 +141,7 @@
 	if(!usr.canmove || usr.isUnconscious() || usr.restrained()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
 		return
 
-	if(get_dist(usr, src) != 1)
+	if(!Adjacent(usr) || usr.loc == src)
 		return
 
 	if(src.broken)
@@ -150,8 +150,14 @@
 	if (ishuman(usr))
 		if (!opened)
 			togglelock(usr)
+			return 1
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
+
+/obj/structure/closet/secure_closet/AltClick()
+	if(verb_togglelock())
+		return
+	return ..()
 
 /obj/structure/closet/secure_closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
 	overlays.len = 0

@@ -214,9 +214,9 @@
 				continue
 			return
 	if(occupant == usr)
-		visible_message("[usr] climbs out of \the [src].", 3)
+		visible_message("[usr] climbs out of \the [src].", 2) //spooky
 	else
-		visible_message("[usr] removes [occupant.name] from \the [src].", 3)
+		visible_message("[usr] removes [occupant.name] from \the [src].", 2) //spooky
 	eject_occupant(over_location)
 
 /obj/machinery/dna_scannernew/attackby(var/obj/item/weapon/item as obj, var/mob/user as mob)

@@ -646,10 +646,10 @@ Auto Patrol: []"},
 			if((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
 				continue
 
-			if(istype(C, /mob/living/carbon/human))
+			if(ishuman(C))
 				src.threatlevel = src.assess_perp(C)
-			else if((src.idcheck) && (istype(C, /mob/living/carbon/monkey)))
-				src.threatlevel = 4
+			else if(ismonkey(C) && isbadmonkey(C)) //Beepsky can detect jungle fever monkeys
+				src.threatlevel = 666
 			else
 				continue
 		else

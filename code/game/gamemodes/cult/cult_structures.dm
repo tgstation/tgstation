@@ -42,7 +42,7 @@
 			for(var/mob/M in viewers(src))
 				if(M == user)
 					continue
-				M.show_message("[user.name] smashed the pylon!", 3, "You hear a tinkle of crystal shards.", 2)
+				M.show_message("[user.name] smashed the pylon!", 1, "You hear a tinkle of crystal shards.", 2)
 			playsound(get_turf(src), 'sound/effects/Glassbr3.ogg', 75, 1)
 			isbroken = 1
 			density = 0

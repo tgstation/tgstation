@@ -47,12 +47,12 @@ var/global/list/disease2_list = list()
 		return // return if isn't proper mob type
 	var/datum/disease2/disease/D = new /datum/disease2/disease("custom_disease") //set base name
 	for(var/i = 1; i <= D.max_stage; i++)  // run through this loop until everything is set
-		var/datum/disease2/effect/sympton = input(C, "Choose a sympton to add ([5-i] remaining)", "Choose a Sympton") in ((typesof(/datum/disease2/effect) - /datum/disease2/effect)) // choose a sympton from the list of them
+		var/datum/disease2/effect/symptom = input(C, "Choose a symptom to add ([5-i] remaining)", "Choose a Symptom") in ((typesof(/datum/disease2/effect) - /datum/disease2/effect)) // choose a symptom from the list of them
 		var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder(infectedMob) // create the infectedMob as a holder for it.
 		holder.stage = i // set the stage of this holder equal to i.
-		var/datum/disease2/effect/f = new sympton // initalize the new sympton
-		holder.effect = f // assign the new sympton to the holder
-		holder.chance = input(C, "Choose chance", "Chance") as num // set the chance of the sympton that can occur
+		var/datum/disease2/effect/f = new symptom // initalize the new symptom
+		holder.effect = f // assign the new symptom to the holder
+		holder.chance = input(C, "Choose chance", "Chance") as num // set the chance of the symptom that can occur
 		if(holder.chance > 100 || holder.chance < 0)
 			return 0
 		D.log += "[f.name] [holder.chance]%<br>"

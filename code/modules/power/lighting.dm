@@ -335,7 +335,7 @@ var/global/list/obj/machinery/light/alllights = list()
 			for(var/mob/M in viewers(src))
 				if(M == user)
 					continue
-				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
+				M.show_message("[user.name] smashed the light!", 1, "You hear a tinkle of breaking glass", 2)
 			if(on && (W.is_conductor()))
 				//if(!user.mutations & M_RESIST_COLD)
 				if (prob(12))
@@ -399,6 +399,7 @@ var/global/list/obj/machinery/light/alllights = list()
 			update(0)
 		flickering = 0
 		on = has_power()
+		update(0)
 
 /obj/machinery/light/attack_ghost(mob/user)
 	if(blessed) return
@@ -429,7 +430,7 @@ var/global/list/obj/machinery/light/alllights = list()
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		for(var/mob/M in viewers(src))
-			M.show_message("<span class='attack'>[user.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
+			M.show_message("<span class='attack'>[user.name] smashed the light!</span>", 1, "You hear a tinkle of breaking glass", 2)
 		broken()
 	return
 
@@ -440,7 +441,7 @@ var/global/list/obj/machinery/light/alllights = list()
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		for(var/mob/O in viewers(src))
-			O.show_message("<span class='attack'>[M.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
+			O.show_message("<span class='attack'>[M.name] smashed the light!</span>", 1, "You hear a tinkle of breaking glass", 2)
 		broken()
 	return
 // attack with hand - remove tube/bulb

@@ -36,7 +36,7 @@
 		p = new /obj/item/weapon/paper/nano
 		p.loc = user.loc
 		user.put_in_hands(p)
-		to_chat(user, "<span class='notice'>the [src] spits out a [p]</span>")
+		to_chat(user, "<span class='notice'>\The [src] spits out a piece of nano paper.</span>")
 		if(ressources == 0)
 			to_chat(user, "<span class=notice> The dispenser is now empty!")
 	else

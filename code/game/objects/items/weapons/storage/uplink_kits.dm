@@ -201,8 +201,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit/ammo/New()
 	..()
-	new /obj/item/ammo_storage/speedloader/a357/empty(src)
-	new /obj/item/ammo_storage/box/a357(src)
+	new /obj/item/ammo_storage/speedloader/a357(src)
 	return
 
 /obj/item/weapon/storage/box/syndie_kit/flaregun

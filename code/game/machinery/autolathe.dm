@@ -33,6 +33,7 @@
 
 	light_color = LIGHT_COLOR_CYAN
 
+	one_part_set_only = 0
 	part_sets = list(
 		"Tools"=list(
 		new /obj/item/device/multitool(), \

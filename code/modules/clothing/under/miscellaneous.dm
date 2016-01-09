@@ -435,7 +435,7 @@
 	_color = "jester"
 
 /obj/item/clothing/under/stilsuit
-	name = "dtilsuit"
+	name = "stillsuit"
 	desc = "Designed to preserve bodymoisture."
 	icon_state = "stilsuit"
 	item_state = "stilsuit"

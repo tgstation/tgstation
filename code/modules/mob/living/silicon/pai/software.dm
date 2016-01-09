@@ -38,7 +38,7 @@
 	if(temp)
 		left_part = temp
 	else if(src.stat == 2)						// Show some flavor text if the pAI is dead
-		left_part = "<b><font color=red>ÈRrÖR Ğa†Ä ÇÖRrÚş†Ìoñ</font></b>"
+		left_part = "<b><font color=red>ÃˆRrÃ–R Ãaâ€ Ã„ Ã‡Ã–RrÃšÃ¾â€ ÃŒoÃ±</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
@@ -202,7 +202,7 @@
 
 				sradio.send_signal("ACTIVATE")
 				for(var/mob/O in hearers(1, src.loc))
-					O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
+					O.show_message(text("\icon[] *beep* *beep*", src), 1, "*beep* *beep*", 2)
 
 			if(href_list["freq"])
 
@@ -362,7 +362,7 @@
 		if(s == SOFT_WJ)
 			dat += "<a href='byond://?src=\ref[src];software=wirejack;sub=0'>Wire Jack</a> <br>"
 		if(s == SOFT_UT)
-			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[(universal_understand) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[(universal_understand) ? "<font color=#55FF55>ï¿½</font>" : "<font color=#FF5555>ï¿½</font>"] <br>"
 		if(s == SOFT_CS)
 			dat += "<a href='byond://?src=\ref[src];software=chemsynth;sub=0'>Chemical Synthesizer</a> <br>"
 		if(s == SOFT_FS)
@@ -426,7 +426,7 @@
 	if(answer == "Yes")
 		var/turf/T = get_turf(P.loc)
 		for (var/mob/v in viewers(T))
-			v.show_message("<span class='notice'>[M] presses \his thumb against [P].</span>", 3, "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>", 2)
+			v.show_message("<span class='notice'>[M] presses \his thumb against [P].</span>", 1, "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>", 2)
 		var/datum/dna/dna = M.dna
 		to_chat(P, "<font color = red><h3>[M]'s UE string : [dna.unique_enzymes]</h3></font>")
 		if(dna.unique_enzymes == P.master_dna)

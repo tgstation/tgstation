@@ -20,7 +20,7 @@
 			I.loc = src
 			for(var/mob/M in viewers(src))
 				if(M == user)	continue
-				M.show_message("<span class='notice'>[user.name] inserts the [dish.name] in the [src.name]</span>", 3)
+				M.show_message("<span class='notice'>[user.name] inserts the [dish.name] in the [src.name].</span>", 1)
 
 
 		else
@@ -55,7 +55,7 @@
 			icon_state = "analyser"
 
 			for(var/mob/O in hearers(src, null))
-				O.show_message("\icon[src] <span class='notice'>The [src.name] prints a sheet of paper</span>", 3)
+				O.show_message("\icon[src] <span class='notice'>The [src.name] prints a sheet of paper.</span>", 1)
 	else if(dish && !scanning && !pause)
 		if(dish.virus2 && dish.growth > 50)
 			dish.growth -= 10

@@ -27,7 +27,7 @@
 			update_icon()
 
 /obj/machinery/portable_atmospherics/process()
-	if(!connected_port) //only react when pipe_network will ont it do it for you
+	if(!connected_port) //only react when pipe_network will not it do it for you
 		//Allow for reactions
 		air_contents.react()
 	else
@@ -78,6 +78,10 @@
 	connected_port = null
 
 	return 1
+
+/obj/machinery/portable_atmospherics/proc/eject_holding()
+	holding.forceMove(loc)
+	holding = null
 
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 

@@ -188,7 +188,7 @@
 /datum/surgery_step/cavity/implant_removal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message("[user] starts poking around inside the incision on [target]'s [affected.display_name] with \the [tool].",
-	"You start poking around inside the incision on [target]'s [affected.display_name] with \the [tool]" )
+	"You start poking around inside the incision on [target]'s [affected.display_name] with \the [tool]." )
 	target.custom_pain("The pain in your chest is living hell!",1)
 	..()
 

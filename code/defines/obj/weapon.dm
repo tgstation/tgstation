@@ -587,7 +587,7 @@
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
-	desc = "used to comunicate it appears."
+	desc = "Used for communication, it appears."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio"
 	var/temp = null
@@ -779,7 +779,7 @@
 
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"
-	desc = "Meat that appears...strange..."
+	desc = "Meat that appears... strange..."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "meat"
 	flags = FPRINT

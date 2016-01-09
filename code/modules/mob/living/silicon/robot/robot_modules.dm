@@ -122,7 +122,7 @@
 	src.modules += new /obj/item/device/healthanalyzer(src)
 	src.modules += new /obj/item/weapon/reagent_containers/borghypo(src)
 	src.modules += new /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg(src,src)
-	src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
+	src.modules += new /obj/item/weapon/reagent_containers/dropper/robodropper(src)
 	src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	src.modules += new /obj/item/weapon/storage/bag/chem(src)
 	src.modules += new /obj/item/weapon/extinguisher/mini(src)
@@ -312,7 +312,7 @@
 
 	src.modules += new /obj/item/device/rcd/borg/rsf(src)
 
-	src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
+	src.modules += new /obj/item/weapon/reagent_containers/dropper/robodropper(src)
 
 	var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
 	L.lit = 1

@@ -281,7 +281,7 @@
 			var/obj/item/stack/sheet/metal/Met = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 			Met.amount = 2
 			for(var/mob/M in viewers(src))
-				M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)
+				M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 1, "You hear welding.", 2)
 			qdel(src)
 			return
 
@@ -297,7 +297,7 @@
 		src.welded =! src.welded
 		src.update_icon()
 		for(var/mob/M in viewers(src))
-			M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 3, "You hear welding.", 2)
+			M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 1, "You hear welding.", 2)
 	else if(!place(user, W))
 		src.attack_hand(user)
 	return

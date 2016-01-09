@@ -109,8 +109,9 @@ var/global/list/bombermangear = list()
 /obj/item/weapon/bomberman/proc/lost()
 	if(arena)
 		arena.tools -= src
+		var/datum/bomberman_arena/pastarena = arena
 		spawn()	//we're not waiting for the arena to close to despawn the BBD
-			arena.end()
+			pastarena.end()
 	var/list/turfs = list()
 	for(var/turf/T in range(loc,1))
 		if(!T.density)
@@ -200,6 +201,9 @@ var/global/list/bombermangear = list()
 
 /obj/structure/bomberman/proc/detonate()
 	var/turf/T = get_turf(src)
+	if(!T)
+		qdel(src)
+		return
 	playsound(T, 'sound/bomberman/bombexplode.ogg', 100, 1)
 	spawn()
 		new /obj/structure/bomberflame(T,1,bombpower,SOUTH,destroy_environnement,hurt_players)
@@ -207,6 +211,9 @@ var/global/list/bombermangear = list()
 
 /obj/structure/bomberman/power/detonate()
 	var/turf/T = get_turf(src)
+	if(!T)
+		qdel(src)
+		return
 	playsound(T, 'sound/bomberman/bombexplode.ogg', 100, 1)
 	spawn()
 		new /obj/structure/bomberflame(T,1,MAX_BOMB_POWER,SOUTH,destroy_environnement,hurt_players)

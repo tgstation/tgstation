@@ -236,18 +236,37 @@
 	..()
 
 	if(istype(W, /obj/item/device/assembly))
-		var/obj/item/device/assembly/AS = W
-
-		if(user.drop_item(AS, src))
-			AS.holder = src
-			assemblies.Add(AS)
-
-		if(!AS.secured)
-			AS.toggle_secure() //Make it secured
+		insert_assembly(W, user)
 
 	else if(istype(W, /obj/item/device/assembly_holder))
 		to_chat(user, "<span class='notice'>\The [W] is too big for any of the sockets here. Try taking it apart.")
 		return
+
+/obj/item/device/assembly_frame/proc/insert_assembly(obj/item/device/assembly/AS, mob/user = null)
+	if(!istype(AS))
+		return
+
+	if(istype(user) || ismob(AS.loc))
+		if(!user)
+			user = AS.loc
+		if(user.drop_item(AS, src))
+			AS.holder = src
+			assemblies.Add(AS)
+
+	else if(istype(AS.loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = AS.loc
+		if(S.remove_from_storage(AS, src))
+			AS.holder = src
+			assemblies.Add(AS)
+
+	else //Make sure to remove the thing properly BEFORE calling insert_assembly, in this case
+		if(AS.forceMove(src))
+			AS.holder = src
+			assemblies.Add(AS)
+
+	if(!AS.secured)
+		AS.toggle_secure() //Make it secured
+
 
 
 /obj/item/device/assembly_frame/proc/eject_assembly(obj/item/device/assembly/AS) //Disconnect an assembly from everything, then remove it
@@ -266,3 +285,164 @@
 
 	AS.holder = null
 	AS.forceMove(get_turf(src))
+
+/obj/item/device/assembly_frame/proc/to_text() //Return a string that contains all information necessary to copy this assembly. Hoo boy. Probably slow as fuck due to all the string operations. Also designed to be somewhat human-readable.
+	var/list/mainholder = list() //For holdiing the top-level list with everything in it.
+	for(var/obj/item/device/assembly/AS in assemblies)
+		var/list/midholder = list()
+		midholder.Add(AS.short_name)
+		midholder.Add(AS.labeled && copytext(AS.labeled, 3, -1)) //A && B is a shortcut for A ? B : A, so this adds AS.labeled if it is falsy and just the part of AS.labeled within the parentheses otherwise.
+		var/list/subholder = list()
+		for(var/V in AS.accessible_values)
+			subholder[V] = AS.get_value(V)
+		midholder.Add(list2params(subholder))
+		var/list/L = connections[AS]
+		if(L)
+			subholder = list()
+			for(var/A in L)
+				subholder.Add(assemblies.Find(A))
+			midholder.Add(list2text(subholder, ";"))
+		else
+			midholder.Add("")
+		mainholder.Add(list2text(midholder, "|"))
+	return list2text(mainholder, "<br>")
+
+/obj/item/device/assembly_frame/proc/debug_to_text() //Spawns a paper with the to_text data
+	var/obj/item/weapon/paper/P = new(get_turf(src))
+	P.info = to_text()
+
+//Fills and sets up the assembly frame from the string given by to_text(). Only works if the frame is empty.
+//assembly_data is the string given by to_text. use_parts is whether or not to get assemblies from an atom's contents, otherwise simply creating them. parts_from is the list of available assemblies to grab if use_parts is true.
+//Defaults to simply making the assemblies appear, in which case only assembly_data need be provided.
+//If use_parts is set to 1, parts_from must be given.
+//Returns 1 if successful, 0 if it fails due to a lack of assemblies or because the frame already has something in it, and null if assembly_data is invalid or something weird happens.
+//Still returns 1 if there is a non-fatal error, such as invalid value or data type for a value. This may be fixed later.
+//MAKE SURE the assemblies in parts_from are located in a mob, a storage item, or something that won't have problems if items are just forceMove()d from its contents.
+//If that isn't possible, make insert_assembly() work properly with the atom assemblies are being removed from or remove the required assemblies first.
+/obj/item/device/assembly_frame/proc/from_text(assembly_data, use_parts = 0, list/obj/item/device/assembly/parts_from = null)
+	if(assemblies.len || connections.len)
+		return 0
+	if(!assembly_data)
+		return
+	if(use_parts && !istype(parts_from))
+		return
+
+	var/list/data_list = decompose_text(assembly_data)
+	if(isnull(data_list)) //If decompose_text() found any problems with the text, go ahead and stop.
+		return
+
+	var/list/obj/item/device/assembly/parts_to_add = list()
+
+	if(!use_parts)
+		var/list/req_parts = get_req_parts(data_list)
+		if(isnull(req_parts)) //If any parts were invalid, stop.
+			return
+		for(var/req_part in req_parts)
+			parts_to_add.Add(new req_part)
+
+	else
+		var/list/obj/item/device/assembly/parts_from_holder = parts_from.Copy() //I cannot fucking believe this is necessary, but here we are.
+		find_parts: //What the fuck kind of syntax is this?
+			for(var/list/req_part in data_list)
+				for(var/obj/item/device/assembly/check_part in parts_from_holder)
+					if(req_part["short_name"] == check_part.short_name)
+						parts_to_add.Add(check_part)
+						parts_from_holder.Remove(check_part)
+						continue find_parts //I mean who the fuck came up with this?
+				return 0
+
+	for(var/obj/item/device/assembly/AS in parts_to_add)
+		insert_assembly(AS)
+		var/cur_pos = parts_to_add.Find(AS)
+		var/list/a_data = data_list[cur_pos]
+		AS.remove_label()
+		AS.labeled = a_data["labeled"]
+		AS.name += AS.labeled //Someday when I clean up my hand labeler shitcode I'll make an add_label proc that handles this too
+		var/list/a_values = a_data["values"]
+		for(var/a_value in a_values)
+			AS.write_to_value(a_value, a_values[a_value])
+		var/list/a_cons = a_data["connections"]
+		if(a_cons.len)
+			var/list/obj/item/device/assembly/active_connections = list()
+			for(var/a_con in a_cons)
+				if(a_con == cur_pos)
+					continue
+				active_connections |= parts_to_add[a_con]
+			connections[AS] = active_connections
+	return 1
+
+//Converts the text from to_text into a list containing the information of the text.
+//Returns this list if successful, of course.
+//Returns null if assembly_data is invalid in any immediately-obvious way
+//Each value in the main list is an associated list as follows:
+//The key "short_name" has the value of this assembly's short_name.
+//The key "labeled" has the value that this assembly's labeled var should be set to.
+//The key "values" has another associated list as its value. The keys are entries in this assembly's accessible_values list and the values are what they should be set to. All values that are just numbers are converted to num, as write_to_value() will turn them back into strings if it should.
+//The key "connections" has a list as its value. This list contains the indices in the assemblies list of the assemblies that this assembly should be connected to.
+/obj/item/device/assembly_frame/proc/decompose_text(assembly_data)
+	if(!istext(assembly_data))
+		return null
+	var/list/mainholder = text2list(assembly_data, "<br>")
+	. = list()
+	for(var/a_data in mainholder)
+		var/list/subholder = text2list(a_data, "|")
+		if(subholder.len != 4) //A valid string for this purpose will always contain exactly four chunks of information per assembly, even if some are empty.
+			return null
+		if(!subholder[1]) //This is the only part that cannot be empty. Note that this does not check if it is a valid assembly short_name; normally, that is either done in get_req_parts() or irrelevant because invalid short_names shouldn't appear.
+			return null
+		var/list/rlistholder = list()
+		rlistholder["short_name"] = subholder[1]
+		rlistholder["labeled"] = subholder[2] && " ([subholder[2]])" //A && B is a shortcut for A ? B : A, so this adds subholder[2] if it is falsy and subholder[2] surrounded by parentheses and with a space before otherwise.
+		if(subholder[3]) //This can be empty and still valid, but the check inside would disagree.
+			var/list/valuesholder = params2list(subholder[3])
+			for(var/value in valuesholder)
+				var/numvalue = text2num(valuesholder[value])
+				if(isnull(numvalue)) //If num2text doesn't work, leave the string be.
+					continue
+				if("[numvalue]" == valuesholder[value]) //Only change the string to a number if the whole string is the number. Necessary because text2num() always returns a number if the first character of the string is a number, even if the rest isn't.
+					valuesholder[value] = numvalue
+			rlistholder["values"] = valuesholder
+		else
+			rlistholder["values"] = list()
+		if(subholder[4]) //No connections? No problem.
+			var/list/connectionsholder_text = text2list(subholder[4], ";")
+			var/list/connectionsholder_num = list()
+			for(var/num in connectionsholder_text)
+				var/numholder = text2num(num)
+				if(!numholder) //It shouldn't be zero (not a valid position for an assembly) and it definitely shouldn't be null.
+					return null
+				if(numholder > mainholder.len) //There can't be an assembly at an index higher than the number of assemblies.
+					return null
+				connectionsholder_num.Add(numholder)
+			rlistholder["connections"] = connectionsholder_num
+		else
+			rlistholder["connections"] = list()
+		. += list(rlistholder) //So the actual rlistholder is added rather than its elements
+
+//Accepts a list returned by decompose_text().
+//Returns a list of the types of the assemblies the list calls for, unless the list calls for an invalid assembly, in which case it returns null.
+//The returned list contains one entry per part in the given list, in the same order. Multiple of the same type of assembly means multiple copies of the type returned.
+//NOTE: This does NOT check if the called-for assemblies are ones that should ever actually exist. It will not return null if asked for the base assembly type, infrared tripwires, etc.
+//This is not a problem as long as from_text() is called with use_parts = 1, as those assemblies are unobtainable and thus the construction will fail elsewhere.
+//However, this means that the ability to call, in any way, from_text() with use_parts = 0 should be restricted to admins and *maybe* trusted players unless extra checks are added.
+/obj/item/device/assembly_frame/proc/get_req_parts(list/data_list)
+	
+	if(!assembly_short_name_to_type.len) //Populate the list the first time someone calls this proc
+		for(var/assembly_path in typesof(/obj/item/device/assembly))
+			var/obj/item/device/assembly/assembly_type = assembly_path//So I can use the undocumented behavior of initial() to retrieve the value without initializing the object.
+			assembly_short_name_to_type[initial(assembly_type.short_name) || initial(assembly_type.name)] = assembly_path //I personally believe that this behavior of initial() was actually an accident on the part of the BYOND devs, but it's useful so whatever.
+
+	. = list()
+	for(var/list/part in data_list)
+		var/assembly_path = assembly_short_name_to_type[part["short_name"]]
+		if(!assembly_path)
+			return null
+		. += assembly_path
+
+/obj/item/device/assembly_frame/proc/debug_from_text(use_parts = 0)
+	var/obj/item/weapon/paper/P = locate() in loc
+	var/list/parts_from = list()
+	if(use_parts)
+		var/obj/item/weapon/storage/box/B = locate() in loc
+		parts_from = B.contents
+	return from_text(P.info, use_parts, parts_from)

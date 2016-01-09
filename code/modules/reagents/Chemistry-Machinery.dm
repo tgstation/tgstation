@@ -245,6 +245,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			else
 				beaker.loc = beaker:holder
 		beaker = null
+		return 1
+
+/obj/machinery/chem_dispenser/AltClick()
+	if(usr.canmove && !usr.isUnconscious() && !usr.restrained() && Adjacent(usr) && beaker && !(stat & (NOPOWER|BROKEN) && usr.dexterity_check()))
+		detach()
+		return
+	return ..()
 
 /obj/machinery/chem_dispenser/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(beaker)
@@ -1716,6 +1723,18 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	force = 2.0
 	var/list/beakers = new/list()
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/)
+	var/datum/effect/effect/system/spark_spread/spark_system
+
+/obj/item/weapon/electrolyzer/New()
+	. = ..()
+	spark_system = new
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+
+/obj/item/weapon/electrolyzer/Destroy()
+	qdel(spark_system)
+	spark_system	= null
+	. = ..()
 
 /obj/item/weapon/electrolyzer/attack_self(mob/user as mob)
 	if(beakers.len)
@@ -1802,6 +1821,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			else
 				empty.reagents.add_reagent(E, unreaction.required_reagents[E]*total_reactions)
 		to_chat(user, "<span class='warning'>The system electrolyzes!</span>")
+		spark_system.start()
 	else
 		..()
 
@@ -1847,12 +1867,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				to_chat(user, "<span class='notice'>You add a passive container. It now contains [cans.len].</span>")
 		else
 			if(!beaker)
-				to_chat(user, "<span class='notice'>You insert an active container.</span>")
-				src.beaker =  W
-				if(user.type == /mob/living/silicon/robot)
-					var/mob/living/silicon/robot/R = user
-					R.uneq_active()
-					targetMoveKey =  R.on_moved.Add(src, "user_moved")
+				if(user.drop_item(W, src))
+					to_chat(user, "<span class='notice'>You insert an active container.</span>")
+					src.beaker =  W
+					if(user.type == /mob/living/silicon/robot)
+						var/mob/living/silicon/robot/R = user
+						R.uneq_active()
+						targetMoveKey =  R.on_moved.Add(src, "user_moved")
 			else
 				to_chat(user, "<span class='warning'>There is already an active container.</span>")
 		return
@@ -1887,6 +1908,14 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	set name = "Flush"
 	set category = "Object"
 	set src in view(1)
+
+	if(!usr.canmove || usr.isUnconscious() || usr.restrained() || !usr.dexterity_check()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
+		return
+
+	if(!cans || !beaker)
+		to_chat(usr, "<span class='warning'>\The [src] needs an active container and multiple passive containers to work.</span>")
+		return
+
 	add_fingerprint(usr)
 	to_chat(usr, "<span class='notice'>\The [src] groans as it spits out containers.</span>")
 	while(cans.len>0 && beaker.reagents.reagent_list.len>0)
@@ -1903,9 +1932,15 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		detach()
 		return
 
+/obj/structure/centrifuge/AltClick()
+	if(Adjacent(usr))
+		flush()
+		return
+	return ..()
+
 /obj/structure/centrifuge/proc/detach()
 	if(beaker)
-		beaker.loc = src.loc
+		beaker.forceMove(src.loc)
 		if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))
 			var/mob/living/silicon/robot/R = beaker:holder:loc
 			if(R.module_state_1 == beaker || R.module_state_2 == beaker || R.module_state_3 == beaker)
@@ -1915,7 +1950,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		beaker = null
 		return
 
-/obj/item/weapon/reagent_containers/mortar
+/obj/item/weapon/reagent_containers/glass/mortar
 	name = "mortar"
 	desc = "This is a reinforced bowl, used for crushing reagents. Ooga booga Rockstop."
 	icon = 'icons/obj/food.dmi'
@@ -1969,19 +2004,18 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 	var/obj/item/crushable = null
 
+/obj/item/weapon/reagent_containers/glass/mortar/Destroy()
+	qdel(crushable)
+	crushable = null
+	. = ..()
 
-/obj/item/weapon/reagent_containers/mortar/afterattack(var/obj/target, var/mob/user, var/adjacency_flag)
-	if (!adjacency_flag)
-		return
-
-	transfer(target, user, can_send = TRUE, can_receive = TRUE, splashable_units = -1)
-
-/obj/item/weapon/reagent_containers/mortar/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/weapon/reagent_containers/glass/mortar/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (isscrewdriver(O))
 		if(crushable)
-			crushable.loc = src.loc
+			crushable.forceMove(user.loc)
 		new /obj/item/stack/sheet/metal(user.loc)
 		new /obj/item/trash/bowl(user.loc)
+		qdel(src) //Important detail
 		return
 	if (crushable)
 		to_chat(user, "<span class ='warning'>There's already something inside!</span>")
@@ -1995,24 +2029,26 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		var/obj/item/stack/S = O
 		S.use(1)
 		crushable = N
+		to_chat(user, "<span class='notice'>You place \the [N] in \the [src].</span>")
 		return 0
 	else if(!user.drop_item(O, src))
 		to_chat(user, "<span class='warning'>You can't let go of \the [O]!</span>")
 		return
 
 	crushable = O
+	to_chat(user, "<span class='notice'>You place \the [O] in \the [src].</span>")
 	return 0
 
-/obj/item/weapon/reagent_containers/mortar/attack_hand(mob/user as mob)
+/obj/item/weapon/reagent_containers/glass/mortar/attack_hand(mob/user as mob)
 	add_fingerprint(user)
 	if(user.get_inactive_hand() != src) return ..()
 	if(crushable)
-		crushable.loc = src.loc
+		crushable.forceMove(user.loc)
 		user.put_in_active_hand(crushable)
 		crushable = null
 	return
 
-/obj/item/weapon/reagent_containers/mortar/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/glass/mortar/attack_self(mob/user as mob)
 	if(!crushable)
 		to_chat(user, "<span class='notice'>There is nothing to be crushed.</span>")
 		return
@@ -2062,6 +2098,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	crushable = null
 	return
 
-/obj/item/weapon/reagent_containers/mortar/examine(mob/user)
+/obj/item/weapon/reagent_containers/glass/mortar/examine(mob/user)
 	..()
-	to_chat(user, "<span class='info'>It has [crushable ? "an unground \the [crushable] inside." : "nothing to be crushed."]</span>")
+	to_chat(user, "<span class='info'>It has [crushable ? "an unground [crushable] inside." : "nothing to be crushed."]</span>")

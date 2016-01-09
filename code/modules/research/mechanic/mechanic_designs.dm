@@ -2,7 +2,7 @@
 	name = "" //the design name
 	desc = ""
 
-	var/design_type = "" //this is "machine" or "item" (not to be confused with design, this is just an indicator of type)
+	//var/design_type = "" //this is "machine" or "item" (not to be confused with design, this is just an indicator of type) //Comic why
 	build_path = null //used to store the type of the design itself (not to be confused with design type, this is the class of the thing)
 
 	req_tech = list() //the origin tech of either the item, or the board in the machine
@@ -18,7 +18,7 @@
 
 	if(istype(O, /obj/machinery))
 		var/obj/machinery/M = O
-		design_type = "machine"
+		build_type = FLATPACKER
 		materials += list(MAT_IRON = 5 * CC_PER_SHEET_METAL) //cost of the frame
 		if(M.component_parts && M.component_parts.len)
 			category = "Machines"
@@ -44,7 +44,7 @@
 	else if(istype(O, /obj/item))
 		var/obj/item/I = O
 		category = "Items"
-		design_type = "item"
+		build_type = GENFAB
 		req_tech = ConvertReqString2List(I.origin_tech)
 		if(I.materials)
 			for(var/matID in I.materials.storage)
@@ -80,7 +80,7 @@
 	var/techtotal = src.TechTotal() / 2
 	materials[MAT_IRON] += techtotal * round(rand(300, 1500), 100) * modifier
 	materials[MAT_GLASS] += techtotal * round(rand(150, 300), 50) * modifier
-	if(src.design_type == "item")
+	if(src.build_type == GENFAB)
 		if(prob(techtotal * 15)) //let's add an extra cost of some medium-rare material - sure a lot of items
 			materials[pick(MAT_PLASMA, MAT_URANIUM, MAT_GOLD, MAT_SILVER)] += techtotal * round(rand(50, 250), 10) * modifier
 		if(prob(techtotal * 8))//and another cost, because we can - can proc for some items

@@ -221,14 +221,13 @@ mob/living/proc/NotTargeted(var/obj/item/weapon/gun/I)
 	targeted_by -= I
 	I.target.Remove(src) //De-target them
 	if(!I.target.len)
-		qdel(I.target)
 		I.target = null
 	var/mob/living/T = I.loc //Remove the targeting icons
 	if(T && ismob(T) && !I.target)
 		T.client.remove_gun_icons()
 	if(!targeted_by.len)
 		del (target_locked) //Remove the overlay
-		del targeted_by
+		targeted_by = null
 	spawn(1) update_targeted()
 
 //If you move out of range, it isn't going to still stay locked on you any more.

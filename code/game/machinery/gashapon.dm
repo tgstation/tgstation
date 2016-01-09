@@ -2,7 +2,7 @@
 
 
 /obj/machinery/gashapon
-	name = "Gashapon Machine"
+	name = "\improper Gashapon Machine"
 	desc = "Insert coin, recieve capsule!"
 	icon = 'icons/obj/gashapon.dmi'
 	icon_state = "gashapon"
@@ -19,8 +19,18 @@
 			src.visible_message("<span class='notice'>[src] dispenses a capsule!</span>")
 			var/obj/item/weapon/capsule/b = new(src.loc)
 			b.icon_state = "capsule[rand(1,12)]"
-			qdel(O)
-			O = null
+
+			if(istype(O, /obj/item/weapon/coin/))
+				var/obj/item/weapon/coin/real_coin = O
+				if(real_coin.string_attached)
+					if(prob(30))
+						to_chat(user, "<SPAN CLASS='notice'>You were able to force the knob around and successfully pulled the coin out before [src] could swallow it.</SPAN>")
+						user.put_in_hands(O)
+					else
+						to_chat(user, "<SPAN CLASS='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</SPAN>")
+						qdel(O)
+			else
+				qdel(O)
 	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin))
 		to_chat(user, "<span class='rose'>That coin is smudgy and oddly soft, you don't think that would work.</span>")
 		return
