@@ -965,8 +965,6 @@ var/global/list/common_tools = list(
 		return 1
 	if(istype(W, /obj/item/weapon/kitchen/fork))
 		return 1
-	if(istype(W, /obj/item/wirebomb_spike))
-		return 1
 	else
 		return 0
 

@@ -184,6 +184,8 @@
 	else if(isobj(AM))
 		if(AM.density || AM.anchored || istype(AM,/obj/structure/closet))
 			return 0
+		else if(AM == glued_to || (AM in glued_objects))
+			return 0
 	else
 		return 0
 

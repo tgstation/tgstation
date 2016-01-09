@@ -143,7 +143,6 @@
 //		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
 	update_freelook_sight()
-	call_crossed()
 	sleep(10)
 
 	src.operating = 0

@@ -100,7 +100,6 @@
 		throwing = 0
 
 /obj/structure/closet/proc/take_contents()
-
 	for(var/atom/movable/AM in loc)
 		if(insert(AM) == -1) // limit reached
 			break
@@ -116,7 +115,6 @@
 	return 1
 
 /obj/structure/closet/proc/insert(atom/movable/AM)
-
 	if(contents.len >= storage_capacity)
 		return -1
 
@@ -139,6 +137,8 @@
 	else if(AM.density || AM.anchored)
 		return 0
 	else if(AM.flags & NODROP)
+		return 0
+	else if(AM == glued_to || (AM in glued_objects))
 		return 0
 	AM.loc = src
 	if(AM.pulledby)

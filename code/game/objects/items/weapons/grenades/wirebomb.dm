@@ -1,6 +1,6 @@
 /obj/item/weapon/grenade/wirebomb
-	name = "wire bomb"
-	desc = "A grenade that will shoot out spiked explosives in random directions and connect everything with trip wire."
+	name = "tripwire bomb"
+	desc = "A grenade that will shoot out spiked explosives in random directions and connect everything with tripwire."
 	icon_state = "wirebomb"
 	item_state = "flashbang"
 	var/armed = 0
@@ -12,7 +12,6 @@
 	var/spike_range = 8
 	var/list/directions = list()
 	var/list/alldirs_copy
-	var/debug = 1
 
 /obj/item/weapon/grenade/wirebomb/New()
 	alldirs_copy = alldirs
@@ -28,56 +27,48 @@
 /obj/item/weapon/grenade/wirebomb/prime()
 	if(!isturf(loc))
 		if(ismob(loc))
-			src.flags |= NODROP
 			var/mob/M = loc
 			if(!M.unEquip(src))
 				detonate()
 				return
 		else
 			loc = get_turf(src)
+
 	anchored = 1
 	var/passflag=0
-	for(var/atom/movable/O in loc)
-		if(O.pass_flags & LETPASSTHROW)
+	for(var/R in loc)
+		var/atom/movable/AM = R
+		if(AM.pass_flags & LETPASSTHROW)
 			passflag = LETPASSTHROW
 			break
+
 	flying_spike_count = spike_count
 	for(var/V in spikes)
 		var/obj/item/wirebomb_spike/spike = V
 		spike.loc = get_turf(src)
 		var/direction = pick_n_take(directions)
-		var/datum/beam/wire = new(src, spike, beam_icon_state="spikewire", time=9999999, maxdistance=spike_range, btype=/obj/effect/ebeam/spikewire)
+		spike.wire = new(src, spike, beam_icon_state="spikewire", time=9999999, maxdistance=spike_range+1, btype=/obj/effect/ebeam/spikewire)
 		spawn(0)
-			wire.Start()
+			spike.wire.Start()
 		spawn(0)
 			spike.launch(direction, spike_range, passflag)
+
 	playsound(src, 'sound/effects/snap.ogg', 100, 1)
 	icon_state = "wirebomb_armed"
 	layer = 3.1
-	animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1) //suspension effect
 	armed = 1
 	SSobj.processing |= src
 
 /obj/item/weapon/grenade/wirebomb/process()
-	if(!armed || detonating || flying_spike_count)
+	if(detonating || !armed)
+		return
+	if(!spikes.len)
+		disarm()
 		return
 	for(var/V in spikes)
 		var/obj/item/wirebomb_spike/spike = V
-		if(!spike.sticked_to)
-			world << "null sticked_to ([spike.sticked_to])"
-			sleep(1)
+		if(spike.sticked_to && !spike.sticked_to.density)
 			detonate()
-			break
-		if(!spike.sticked_to.density)
-			world << "non dense sticked_to"
-			sleep(1)
-			detonate()
-			break
-		if(get_turf(spike.sticked_to) != spike.locsave)
-			world << "different loc than locsave  [get_turf(spike.sticked_to)] != [spike.locsave]"
-			sleep(1)
-			detonate()
-			break
 
 /obj/item/weapon/grenade/wirebomb/ex_act()
 	if(armed && !detonating)
@@ -86,7 +77,6 @@
 		qdel(src)
 
 /obj/item/weapon/grenade/wirebomb/Crossed(atom/movable/O)
-	..()
 	if(armed && O.density)
 		detonate()
 
@@ -95,7 +85,7 @@
 	return ..()
 
 /obj/item/weapon/grenade/wirebomb/proc/detonate()
-	if(!armed || detonating || debug)
+	if(!armed || detonating)
 		return
 	detonating = 1
 	for(var/V in spikes)
@@ -118,37 +108,41 @@
 			disarm()
 		else
 			detonate()
+	else if(armed)
+		detonate()
+	else
+		..()
 
 /obj/item/weapon/grenade/wirebomb/proc/disarm()
 	armed = 0
 	for(var/V in spikes)
 		var/obj/item/wirebomb_spike/spike = V
 		spike.owner = null
-		spike.icon_state = "wirebomb_disarmed"
+		spike.icon_state = "bombspike_disarmed"
+		if(spike.wire)
+			spike.wire.End()
+			spike.wire = null
 		spikes -= spike
 	anchored = 0
-	animate(src, pixel_y = initial(pixel_y), time = 10)
 	icon_state = "wirebomb_disarmed"
 
 /obj/item/weapon/grenade/wirebomb/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		detonate()
 
+
 ////////////////////
 //Wired spike bomb//
+////////////////////
 /obj/item/wirebomb_spike
 	name = "bomb spike"
-	desc = "It explodes when its wire is tripped."
+	desc = "It explodes when triggered by its tripwire"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bombspike"
-	embed_chance = 100
-	embedded_fall_chance = 0
-	throwforce = 7
-	throw_speed = EMBED_THROWSPEED_THRESHOLD
+	throwforce = 20
 	var/obj/item/weapon/grenade/wirebomb/owner
 	var/atom/sticked_to
-	var/turf/locsave
-	layer = 3.1
+	var/datum/beam/wire
 
 /obj/item/wirebomb_spike/proc/launch(direction, range, passflag=0)
 	var/count = 0
@@ -158,18 +152,17 @@
 		var/atom/A = SimpleMove(direction, passflag)
 		if(A)
 			sticked_to = A
-			locsave = loc
-			//anchored = 1
-			if(ishuman(A))
-				A.hitby(src)
-				var/datum/beam/wire = new(owner, A, beam_icon_state="spikewire", time=9999999, maxdistance=owner.spike_range, btype=/obj/effect/ebeam/spikewire)
-				spawn(0)
-					wire.Start()
-			else if(isobj(A))
-				var/obj/O = A
-				O.glue_object(src)
+			if(istype(A, /atom/movable))
+				var/atom/movable/AM = A
+				glue_object(AM)
+				if(AM.anchored)
+					anchored=1
+				if(ismob(AM))
+					var/mob/M = AM
+					M.hitby(src,1,0)
 			else
 				anchored = 1
+			layer = A.layer+0.1
 			break
 		sleep(1)
 
@@ -181,16 +174,10 @@
 	if(owner)
 		if(owner.armed && !owner.detonating)
 			owner.detonate()
-		else
-			qdel(src)
-	else //if the core was disarmed and an explosion hits the spike
+			return
+	else
 		explosion(get_turf(src), 0, 1, 2, 3)
-
-/obj/item/wirebomb_spike/Destroy()
-	if(owner)
-		owner.spikes -= src
-		owner = null
-	return ..()
+	qdel(src)
 
 /obj/item/wirebomb_spike/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -198,19 +185,26 @@
 			owner.detonate()
 
 /obj/item/wirebomb_spike/attack_hand(mob/user)
-	if(owner)
-		owner.detonate()
-	else if(!sticked_to)
+	if(!sticked_to)
 		anchored = 0
-	if(!anchored && !glued_to)
+	if(!anchored && !glued_objects.len)
 		..()
 	else
 		user << "<span class='warning'>It's wedged into [sticked_to]. You can't pick it up.</span>"
 
-/obj/item/wirebomb_spike/Move()
+/obj/item/wirebomb_spike/glued_move(atom/movable/AM)
 	..()
-	if(sticked_to && owner)
-		if(get_turf(sticked_to) != locsave)
+	if(owner)
+		owner.detonate()
+
+/obj/item/wirebomb_spike/unglue_object(atom/movable/AM)
+	..()
+	if(owner)
+		owner.detonate()
+
+/obj/item/wirebomb_spike/Move()
+	if(..())
+		if(owner)
 			owner.detonate()
 
 /obj/item/wirebomb_spike/proc/SimpleMove(direction, passflag=0)
@@ -254,12 +248,10 @@
 
 		if(Ax && Ay)  //if movement forward is impossible, randomly choose a side to end movement in
 			if(rand(50))
-				x = Tx.x
-				y = Tx.y
+				loc = Tx
 				return Ax
 			else
-				x = Ty.x
-				y = Ty.y
+				loc = Ty
 				return Ay
 
 	x = new_x
@@ -273,15 +265,21 @@
 			if(A.density && !(A.pass_flags & passflag))
 				return A
 
+/obj/item/wirebomb_spike/Destroy()
+	if(owner)
+		owner.spikes -= src
+		owner = null
+	wire = null
+	return ..()
+
 /////////////////////////
 //Trip wire beam effect//
-
+/////////////////////////
 /obj/effect/ebeam/spikewire
-	name = "bomb spike wire"
+	name = "bomb spike tripwire"
 	desc = "Don't even trip."
 
 /obj/effect/ebeam/spikewire/Crossed(atom/movable/O)
-	..()
 	if(O.density)
 		if(owner && owner.origin)
 			var/obj/item/weapon/grenade/wirebomb/wbomb = owner.origin

@@ -85,7 +85,6 @@
 	sleep(5)
 	air_update_turf(1)
 	update_freelook_sight()
-	call_crossed()
 	sleep(5)
 	crush()
 	sleep(5)

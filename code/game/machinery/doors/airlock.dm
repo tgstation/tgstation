@@ -1064,7 +1064,6 @@ About the new airlock wires panel:
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
-	call_crossed()
 
 	if(safe)
 		if(locate(/mob/living) in get_turf(src))

@@ -224,7 +224,6 @@
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
-	call_crossed()
 	return
 
 /obj/machinery/door/proc/crush()
