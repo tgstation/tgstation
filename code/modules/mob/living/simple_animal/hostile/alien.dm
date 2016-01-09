@@ -87,7 +87,6 @@
 	unique_name = 0
 	ventcrawler = 0 //pull over that ass too fat
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
-	gold_core_spawnable = 0
 
 /mob/living/simple_animal/hostile/alien/royal/praetorian
 	name = "alien praetorian"
@@ -96,7 +95,6 @@
 	icon_state = "alienp"
 	icon_living = "alienp"
 	icon_dead = "alienp_dead"
-	gold_core_spawnable = 1
 	loot = list(/mob/living/carbon/alien/humanoid/royal/praetorian)
 
 /mob/living/simple_animal/hostile/alien/royal/queen
@@ -106,7 +104,6 @@
 	icon_dead = "alienq_dead"
 	maxHealth = 400
 	health = 400
-	gold_core_spawnable = 1
 	loot = list(/mob/living/carbon/alien/humanoid/royal/queen)
 
 	var/sterile = 1
