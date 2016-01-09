@@ -10,6 +10,7 @@
 /obj/effect/landmark/mobcorpse
 	name = "Unknown"
 	var/mobname = "Unknown"  //Unused now but it'd fuck up maps to remove it now
+	var/mobtype = /mob/living/carbon/human	//Mob's type. Now uses for spawn dead mob from aliens
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
 	var/corpsesuit = null
 	var/corpseshoes = null
@@ -27,57 +28,63 @@
 	var/corpseidaccess = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
 	var/corpseidicon = null //For setting it to be a gold, silver, centcom etc ID
 
-/obj/effect/landmark/mobcorpse/New()
-	createCorpse()
+/obj/effect/landmark/mobcorpse/New(alt_name)
+	createCorpse(alt_name)
 
-/obj/effect/landmark/mobcorpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
-	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
-	M.real_name = src.name
+/obj/effect/landmark/mobcorpse/proc/createCorpse(alt_name) //Creates a mob and checks for gear in each slot before attempting to equip it.
+	var/mob/M = new mobtype (src.loc)
+	var/spawned = 0
 	M.stat = 2 //Kills the new mob
-	if(src.corpseuniform)
-		M.equip_to_slot_or_del(new src.corpseuniform(M), slot_w_uniform)
-	if(src.corpsesuit)
-		M.equip_to_slot_or_del(new src.corpsesuit(M), slot_wear_suit)
-	if(src.corpseshoes)
-		M.equip_to_slot_or_del(new src.corpseshoes(M), slot_shoes)
-	if(src.corpsegloves)
-		M.equip_to_slot_or_del(new src.corpsegloves(M), slot_gloves)
-	if(src.corpseradio)
-		M.equip_to_slot_or_del(new src.corpseradio(M), slot_ears)
-	if(src.corpseglasses)
-		M.equip_to_slot_or_del(new src.corpseglasses(M), slot_glasses)
-	if(src.corpsemask)
-		M.equip_to_slot_or_del(new src.corpsemask(M), slot_wear_mask)
-	if(src.corpsehelmet)
-		M.equip_to_slot_or_del(new src.corpsehelmet(M), slot_head)
-	if(src.corpsebelt)
-		M.equip_to_slot_or_del(new src.corpsebelt(M), slot_belt)
-	if(src.corpsepocket1)
-		M.equip_to_slot_or_del(new src.corpsepocket1(M), slot_r_store)
-	if(src.corpsepocket2)
-		M.equip_to_slot_or_del(new src.corpsepocket2(M), slot_l_store)
-	if(src.corpseback)
-		M.equip_to_slot_or_del(new src.corpseback(M), slot_back)
-	if(src.corpseid == 1)
-		var/obj/item/weapon/card/id/W = new(M)
-		var/datum/job/jobdatum
-		for(var/jobtype in typesof(/datum/job))
-			var/datum/job/J = new jobtype
-			if(J.title == corpseidaccess)
-				jobdatum = J
-				break
-		if(src.corpseidicon)
-			W.icon_state = corpseidicon
-		if(src.corpseidaccess)
-			if(jobdatum)
-				W.access = jobdatum.get_access()
-			else
-				W.access = list()
-		if(corpseidjob)
-			W.assignment = corpseidjob
-		W.registered_name = M.real_name
-		W.update_label()
-		M.equip_to_slot_or_del(W, slot_wear_id)
+
+	if(ishuman(M) && !spawned)
+		M.real_name = name
+		spawned = 1
+		var/mob/living/carbon/human/H = M
+		if(src.corpseuniform)
+			M.equip_to_slot_or_del(new src.corpseuniform(H), slot_w_uniform)
+		if(src.corpsesuit)
+			M.equip_to_slot_or_del(new src.corpsesuit(H), slot_wear_suit)
+		if(src.corpseshoes)
+			M.equip_to_slot_or_del(new src.corpseshoes(H), slot_shoes)
+		if(src.corpsegloves)
+			M.equip_to_slot_or_del(new src.corpsegloves(H), slot_gloves)
+		if(src.corpseradio)
+			M.equip_to_slot_or_del(new src.corpseradio(H), slot_ears)
+		if(src.corpseglasses)
+			M.equip_to_slot_or_del(new src.corpseglasses(H), slot_glasses)
+		if(src.corpsemask)
+			M.equip_to_slot_or_del(new src.corpsemask(H), slot_wear_mask)
+		if(src.corpsehelmet)
+			M.equip_to_slot_or_del(new src.corpsehelmet(H), slot_head)
+		if(src.corpsebelt)
+			M.equip_to_slot_or_del(new src.corpsebelt(H), slot_belt)
+		if(src.corpsepocket1)
+			M.equip_to_slot_or_del(new src.corpsepocket1(H), slot_r_store)
+		if(src.corpsepocket2)
+			M.equip_to_slot_or_del(new src.corpsepocket2(H), slot_l_store)
+		if(src.corpseback)
+			M.equip_to_slot_or_del(new src.corpseback(H), slot_back)
+		if(src.corpseid == 1)
+			var/obj/item/weapon/card/id/W = new(H)
+			var/datum/job/jobdatum
+			for(var/jobtype in typesof(/datum/job))
+				var/datum/job/J = new jobtype
+				if(J.title == corpseidaccess)
+					jobdatum = J
+					break
+			if(src.corpseidicon)
+				W.icon_state = corpseidicon
+			if(src.corpseidaccess)
+				if(jobdatum)
+					W.access = jobdatum.get_access()
+				else
+					W.access = list()
+			if(corpseidjob)
+				W.assignment = corpseidjob
+				W.registered_name = H.real_name
+				W.update_label()
+				M.equip_to_slot_or_del(H, slot_wear_id)
+
 	qdel(src)
 
 
@@ -177,3 +184,18 @@
 	corpseid = 1
 	corpseidjob = "Private Security Force"
 	corpseidaccess = "Security Officer"
+
+/obj/effect/landmark/mobcorpse/alien/hunter
+	mobtype = /mob/living/carbon/alien/humanoid/hunter
+
+/obj/effect/landmark/mobcorpse/alien/drone
+	mobtype = /mob/living/carbon/alien/humanoid/drone
+
+/obj/effect/landmark/mobcorpse/alien/sentinel
+	mobtype = /mob/living/carbon/alien/humanoid/sentinel
+
+/obj/effect/landmark/mobcorpse/alien/praetorian
+	mobtype = /mob/living/carbon/alien/humanoid/royal/praetorian
+
+/obj/effect/landmark/mobcorpse/alien/queen
+	mobtype = /mob/living/carbon/alien/humanoid/royal/queen
