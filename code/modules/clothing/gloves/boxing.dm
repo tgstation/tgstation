@@ -4,6 +4,10 @@
 	icon_state = "boxing"
 	item_state = "boxingred"
 	species_fit = list("Vox")
+	bonus_knockout = 1 //Increase knockout chance from 1/12 to 1/6
+
+/obj/item/clothing/gloves/boxing/dexterity_check()
+	return 0 //Wearing boxing gloves makes you less dexterious (so, for example, you can't use computers)
 
 /obj/item/clothing/gloves/boxing/green
 	icon_state = "boxinggreen"
