@@ -132,7 +132,7 @@
 					C.add_fingerprint(usr)
 
 					user.visible_message("\The [user] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>")
-					SSnano.update_uis(src)
+					SStgui.update_uis(src)
 		else
 			user << "<span class='warning'>The hatch must be open to insert a power cell!</span>"
 			return
@@ -150,74 +150,47 @@
 /obj/machinery/space_heater/attack_hand(mob/user)
 	interact(user)
 
-/obj/machinery/space_heater/attack_paw(mob/user)
-	interact(user)
-
 /obj/machinery/space_heater/interact(mob/user)
 	ui_interact(user)
 
-/obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "space_heater.tmpl", name, 490, 350, state = physical_state)
+		ui = new(user, src, ui_key, "space_heater", name, 400, 305, master_ui, state)
 		ui.open()
 
-/obj/machinery/space_heater/Topic(href, href_list)
-	if((stat & BROKEN) || ..())
+/obj/machinery/space_heater/ui_act(action, params)
+	if(..())
 		return
 
-	add_fingerprint(usr)
+	switch(action)
+		if("power")
+			on = !on
+			mode = HEATER_MODE_STANDBY
+			usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
+			update_icon()
+		if("mode")
+			setMode = params["mode"]
+		if("target")
+			if(panel_open)
+				var/value
+				if(params["target"] == "custom")
+					value = input("Please input the target temperature", name) as num|null
+					if(isnull(value))
+						return
+					value += T0C
+				else
+					value = targetTemperature + text2num(params["target"])
 
-	if(href_list["power"])
-		on = !!text2num(href_list["power"])
-		mode = HEATER_MODE_STANDBY
-		usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
-		update_icon()
-		SSnano.update_uis(src)
-
-	else if(href_list["mode"])
-		setMode = href_list["mode"]
-		SSnano.update_uis(src)
-
-	else if(href_list["temp"] && panel_open)
-		var/value
-		if(href_list["temp"] == "custom")
-			value = input("Please input the target temperature", name) as num|null
-			if(isnull(value))
-				return
-			value += T0C
-		else
-			value = targetTemperature + text2num(href_list["temp"])
-
-		var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
-		var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-		targetTemperature = dd_range(minTemp, maxTemp, round(value, 1))
-		SSnano.update_uis(src)
-
-	else if(href_list["cellremove"] && panel_open)
-		if(cell)
-			if(usr.get_active_hand())
-				usr << "<span class='warning'>You need an empty hand to remove \the [cell]!</span>"
-				return
-			cell.updateicon()
-			usr.put_in_hands(cell)
-			cell.add_fingerprint(usr)
-			usr.visible_message("\The [usr] removes \the [cell] from \the [src].", "<span class='notice'>You remove \the [cell] from \the [src].</span>")
-			cell = null
-			SSnano.update_uis(src)
-
-	else if(href_list["cellinstall"] && panel_open)
-		if(!cell)
-			var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
-			if(istype(C))
-				if(!usr.drop_item())
-					return
-				cell = C
-				C.loc = src
-				C.add_fingerprint(usr)
-
-				usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")
-				SSnano.update_uis(src)
+				var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
+				var/maxTemp = settableTemperatureMedian + settableTemperatureRange
+				targetTemperature = dd_range(minTemp, maxTemp, round(value, 1))
+		if("eject")
+			if(cell)
+				cell.loc = get_turf(src)
+				cell = null
+	return 1
 
 /obj/machinery/space_heater/process()
 	if(!on || (stat & BROKEN))

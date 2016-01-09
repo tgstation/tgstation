@@ -161,7 +161,7 @@
 									sleep(2)
 									//bring up APC dialog
 									apc_override = 1
-									theAPC.attack_ai(src)
+									theAPC.ui_interact(src, state = conscious_state)
 									apc_override = 0
 									src:aiRestorePowerRoutine = 3
 									src << "Here are your current laws:"

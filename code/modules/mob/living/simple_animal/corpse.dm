@@ -162,3 +162,18 @@
 	corpsesuit = /obj/item/clothing/suit/wizrobe
 	corpseshoes = /obj/item/clothing/shoes/sandal
 	corpsehelmet = /obj/item/clothing/head/wizard
+
+
+/obj/effect/landmark/mobcorpse/nanotrasensoldier
+	name = "Nanotrasen Private Security Officer"
+	corpseuniform = /obj/item/clothing/under/rank/security
+	corpsesuit = /obj/item/clothing/suit/armor/vest
+	corpseshoes = /obj/item/clothing/shoes/combat
+	corpsegloves = /obj/item/clothing/gloves/combat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/gas/sechailer/swat
+	corpsehelmet = /obj/item/clothing/head/helmet/swat/nanotrasen
+	corpseback = /obj/item/weapon/storage/backpack/security
+	corpseid = 1
+	corpseidjob = "Private Security Force"
+	corpseidaccess = "Security Officer"

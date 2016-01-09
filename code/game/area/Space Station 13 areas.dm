@@ -151,6 +151,9 @@ var/list/teleportlocs = list()
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
 
+/area/shuttle/assault_pod
+	name = "Steel Rain"
+
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 
@@ -737,7 +740,7 @@ var/list/teleportlocs = list()
 	music = 'sound/ambience/signal.ogg'
 
 /area/medical/patients_rooms
-	name = "Patient's Rooms"
+	name = "Patients' Rooms"
 	icon_state = "patients"
 
 /area/medical/cmo
@@ -1139,7 +1142,7 @@ var/list/teleportlocs = list()
 	icon_state = "yellow"
 
 /area/construction/quarters
-	name = "Engineer's Quarters"
+	name = "Engineers' Quarters"
 	icon_state = "yellow"
 
 /area/construction/qmaint
@@ -1172,7 +1175,7 @@ var/list/teleportlocs = list()
 	icon_state = "eva"
 
 /area/ai_monitored/storage/secure
-	name = "Secure Storage"
+	name = "AI Satellite Storage"
 	icon_state = "storage"
 
 /area/ai_monitored/storage/emergency

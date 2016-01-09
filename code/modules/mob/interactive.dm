@@ -182,7 +182,7 @@
 	if(TRAITS & TRAIT_THIEVING)
 		slyness = 75
 
-	SSbp.insertBot(src)
+	SSnpc.insertBot(src)
 
 
 /mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M)
@@ -324,8 +324,8 @@
 	//proc functions
 	for(var/Proc in functions)
 		if(!isnotfunc())
-			spawn(1)
-				call(src,Proc)(src)
+			callfunction(Proc)
+
 
 	//target interaction stays hardcoded
 
@@ -411,6 +411,9 @@
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 
+/mob/living/carbon/human/interactive/proc/callfunction(Proc)
+	set waitfor = 0
+	call(src,Proc)(src)
 /mob/living/carbon/human/interactive/proc/tryWalk(turf/TARGET)
 	if(!isnotfunc())
 		if(!walk2derpless(TARGET))

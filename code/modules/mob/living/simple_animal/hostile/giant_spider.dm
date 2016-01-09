@@ -46,6 +46,8 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	unique_name = 1
 	gold_core_spawnable = 1
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 4
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
@@ -114,13 +116,11 @@
 			//second, spin a sticky spiderweb on this tile
 			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 			if(!W)
-				spawn()
-					Web()
+				Web()
 			else
 				//third, lay an egg cluster there
 				if(fed)
-					spawn()
-						LayEggs()
+					LayEggs()
 				else
 					//fourthly, cocoon any nearby items so those pesky pinkskins can't use them
 					for(var/obj/O in can_see)
@@ -138,8 +138,7 @@
 
 		else if(busy == MOVING_TO_TARGET && cocoon_target)
 			if(get_dist(src, cocoon_target) <= 1)
-				spawn()
-					Wrap()
+				Wrap()
 
 	else
 		busy = 0
@@ -161,8 +160,8 @@
 		if(do_after(src, 40, target = T))
 			if(busy == SPINNING_WEB && src.loc == T)
 				new /obj/effect/spider/stickyweb(T)
-			busy = 0
-			stop_automated_movement = 0
+		busy = 0
+		stop_automated_movement = 0
 
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/verb/Wrap()
@@ -219,9 +218,9 @@
 						break
 					if(large_cocoon)
 						C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
-			cocoon_target = null
-			busy = 0
-			stop_automated_movement = 0
+		cocoon_target = null
+		busy = 0
+		stop_automated_movement = 0
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/verb/LayEggs()
 	set name = "Lay Eggs"
@@ -248,9 +247,10 @@
 						C.player_spiders = 1
 					C.poison_type = poison_type
 					C.poison_per_bite = poison_per_bite
+					C.faction = faction.Copy()
 					fed--
-			busy = 0
-			stop_automated_movement = 0
+		busy = 0
+		stop_automated_movement = 0
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)

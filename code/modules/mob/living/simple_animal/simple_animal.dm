@@ -69,6 +69,10 @@
 
 	var/sentience_type = SENTIENCE_ORGANIC // Sentience type, for slime potions
 
+	var/list/loot = list() //list of things spawned at mob's loc when it dies
+	var/del_on_death = 0 //causes mob to be deleted on death, useful for mobs that spawn lootable corpses
+	var/deathmessage = ""
+
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
@@ -272,25 +276,31 @@
 	Proj.on_hit(src)
 	return 0
 
+/mob/living/simple_animal/proc/adjustHealth(amount)
+	if(status_flags & GODMODE)
+		return 0
+	bruteloss = Clamp(bruteloss + amount, 0, maxHealth)
+	handle_regular_status_updates()
+
 /mob/living/simple_animal/adjustBruteLoss(amount)
 	if(damage_coeff[BRUTE])
-		..(amount*damage_coeff[BRUTE])
+		adjustHealth(amount*damage_coeff[BRUTE])
 
 /mob/living/simple_animal/adjustFireLoss(amount)
 	if(damage_coeff[BURN])
-		adjustBruteLoss(amount*damage_coeff[BURN])
+		adjustHealth(amount*damage_coeff[BURN])
 
 /mob/living/simple_animal/adjustOxyLoss(amount)
 	if(damage_coeff[OXY])
-		adjustBruteLoss(amount*damage_coeff[OXY])
+		adjustHealth(amount*damage_coeff[OXY])
 
 /mob/living/simple_animal/adjustToxLoss(amount)
 	if(damage_coeff[TOX])
-		..(amount*damage_coeff[TOX])
+		adjustHealth(amount*damage_coeff[TOX])
 
 /mob/living/simple_animal/adjustCloneLoss(amount)
 	if(damage_coeff[CLONE])
-		..(amount*damage_coeff[CLONE])
+		adjustHealth(amount*damage_coeff[CLONE])
 
 /mob/living/simple_animal/adjustStaminaLoss(amount)
 	return
@@ -390,12 +400,24 @@
 		return 1
 
 /mob/living/simple_animal/death(gibbed)
-	health = 0
-	icon_state = icon_dead
-	stat = DEAD
-	density = 0
-	if(!gibbed)
+	if(nest)
+		nest.spawned_mobs -= src
+		nest = null
+	if(loot.len)
+		for(var/i in loot)
+			new i(loc)
+	if(deathmessage && !gibbed)
+		visible_message("<span class='danger'>[deathmessage]</span>")
+	else if(!del_on_death)
 		visible_message("<span class='danger'>\the [src] stops moving...</span>")
+	if(del_on_death)
+		ghostize()
+		qdel(src)
+	else
+		health = 0
+		icon_state = icon_dead
+		stat = DEAD
+		density = 0
 	..()
 
 /mob/living/simple_animal/ex_act(severity, target)
@@ -513,3 +535,7 @@
 		nest.spawned_mobs -= src
 	nest = null
 	return ..()
+
+
+/mob/living/simple_animal/proc/sentience_act() //Called when a simple animal gains sentience via gold slime potion
+	return

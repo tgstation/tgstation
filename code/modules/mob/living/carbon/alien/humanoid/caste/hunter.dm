@@ -4,6 +4,7 @@
 	maxHealth = 125
 	health = 125
 	icon_state = "alienh_s"
+	var/obj/screen/leap_icon = null
 
 /mob/living/carbon/alien/humanoid/hunter/New()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small
@@ -37,7 +38,6 @@
 
 //Hunter verbs
 
-
 /mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(message = 1)
 	leap_on_click = !leap_on_click
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
@@ -63,14 +63,12 @@
 		src << "<span class='alertalien'>You are too fatigued to pounce right now!</span>"
 		return
 
-	if(leaping) //Leap while you leap, so you can leap while you leap
+	if(leaping || stat || buckled || lying)
 		return
 
 	if(!has_gravity(src) || !has_gravity(A))
 		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
 		//It's also extremely buggy visually, so it's balance+bugfix
-		return
-	if(lying)
 		return
 
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
@@ -91,7 +89,7 @@
 			var/blocked = 0
 			if(ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if(H.check_shields(90, "the [name]", src, 1))
+				if(H.check_shields(90, "the [name]", src, attack_type = THROWN_PROJECTILE_ATTACK))
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")

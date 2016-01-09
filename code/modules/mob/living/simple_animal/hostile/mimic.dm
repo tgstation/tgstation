@@ -27,12 +27,7 @@
 	faction = list("mimic")
 	move_to_delay = 9
 	gold_core_spawnable = 1
-
-/mob/living/simple_animal/hostile/mimic/death()
-	..(1)
-	visible_message("[src] stops moving!")
-	ghostize()
-	qdel(src)
+	del_on_death = 1
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
 /mob/living/simple_animal/hostile/mimic/crate
@@ -75,7 +70,7 @@
 		visible_message("<b>[src]</b> starts to move!")
 		attempt_open = 1
 
-/mob/living/simple_animal/hostile/mimic/crate/adjustBruteLoss(damage)
+/mob/living/simple_animal/hostile/mimic/crate/adjustHealth(damage)
 	trigger()
 	..(damage)
 
@@ -119,6 +114,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/Life()
 	..()
+	if(!target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
+		adjustBruteLoss(1)
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
 		death()
 

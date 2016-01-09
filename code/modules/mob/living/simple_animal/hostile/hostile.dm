@@ -116,11 +116,7 @@
 					return 1
 		if(isliving(the_target))
 			var/mob/living/L = the_target
-			var/faction_check = 0
-			for(var/F in faction)
-				if(F in L.faction)
-					faction_check = 1
-					break
+			var/faction_check = faction_check(L)
 			if(robust_searching)
 				if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
 					return 0
@@ -155,6 +151,9 @@
 		if(ranged)//We ranged? Shoot at em
 			if(target_distance >= 2 && ranged_cooldown <= 0)//But make sure they're a tile away at least, and our range attack is off cooldown
 				OpenFire(target)
+		if(!Process_Spacemove()) // Drifting
+			walk(src,0)
+			return 1
 		if(retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
 			if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
 				walk_away(src,target,retreat_distance,move_to_delay)
@@ -180,9 +179,9 @@
 /mob/living/simple_animal/hostile/proc/Goto(target, delay, minimum_distance)
 	walk_to(src, target, minimum_distance, delay)
 
-/mob/living/simple_animal/hostile/adjustBruteLoss(damage)
+/mob/living/simple_animal/hostile/adjustHealth(damage)
 	..(damage)
-	if(!ckey && !stat && search_objects < 3)//Not unconscious, and we don't ignore mobs
+	if(!ckey && !stat && search_objects < 3 && damage > 0)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			search_objects = 0
 			target = null
@@ -221,10 +220,13 @@
 /mob/living/simple_animal/hostile/proc/summon_backup(distance)
 	do_alert_animation(src)
 	playsound(loc, 'sound/machines/chime.ogg', 50, 1, -1)
-	for (var/mob/living/simple_animal/hostile/M in oview(distance, src))
+	for(var/mob/living/simple_animal/hostile/M in oview(distance, src))
 		var/list/L = M.faction&faction
 		if(L.len)
-			M.Goto(src,M.move_to_delay,M.minimum_distance)
+			if(M.AIStatus == AI_OFF)
+				return
+			else
+				M.Goto(src,M.move_to_delay,M.minimum_distance)
 
 /mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
 

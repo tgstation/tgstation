@@ -79,6 +79,11 @@
 /obj/machinery/door/proc/CanAStarPass(var/obj/item/weapon/card/id/ID)
 	return !density
 
+/obj/machinery/door/proc/CheckForMobs()
+	if(locate(/mob/living) in get_turf(src))
+		sleep(1)
+		open()
+
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)
 		return
@@ -221,6 +226,7 @@
 	update_icon()
 	if(visible && !glass)
 		SetOpacity(1)
+	CheckForMobs()
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()

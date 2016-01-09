@@ -65,25 +65,28 @@
 
 /obj/machinery/mineral/ore_redemption/process()
 	if(!panel_open && powered()) //If the machine is partially disassembled and/or depowered, it should not process minerals
-		var/turf/T = get_turf(get_step(src, input_dir))
-		var/i
+		var/turf/T = get_step(src, input_dir)
+		var/i = 0
 		if(T)
-			if(locate(/obj/item/weapon/ore) in T)
-				for (i = 0; i < ore_pickup_rate; i++)
-					var/obj/item/weapon/ore/O = locate() in T
-					if(O && O.refined_type)
-						process_sheet(O)
-					else
+			for(var/obj/item/weapon/ore/O in T)
+				if (i >= ore_pickup_rate)
+					break
+				else if (!O || !O.refined_type)
+					continue
+				else
+					process_sheet(O)
+					i++
+		else
+			var/obj/structure/ore_box/B = locate() in T
+			if(B)
+				for(var/obj/item/weapon/ore/O in B.contents)
+					if (i >= ore_pickup_rate)
 						break
-			else
-				var/obj/structure/ore_box/B = locate() in T
-				if(B)
-					for (i = 0; i < ore_pickup_rate; i++)
-						var/obj/item/weapon/ore/O = locate() in B.contents
-						if(O)
-							process_sheet(O)
-						else
-							break
+					else if (!O || !O.refined_type)
+						continue
+					else
+						process_sheet(O)
+						i++
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/weapon/W, mob/user, params)
 	if (!powered())
@@ -289,11 +292,11 @@
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   800),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                1000),
-		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  1200),
+		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  1000),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               2000),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  2000),
-		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              2400),
-		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  2500),
+		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  2000),
+		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              2500),
 		new /datum/data/mining_equipment("Super Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator/super,			  3000),
 		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   500),
 		)
@@ -652,18 +655,19 @@
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
 						  /obj/item/weapon/ore/bananium)
+	healable = 0
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding && !stat)
-			if(AIStatus == AI_ON)
+			if(AIStatus != AI_OFF && AIStatus != AI_IDLE)
 				user << "<span class='info'>[src] is moving around too much to repair!</span>"
 				return
 			if(maxHealth == health)
 				user << "<span class='info'>[src] is at full integrity.</span>"
 			else
-				health += 10
+				adjustBruteLoss(-10)
 				user << "<span class='info'>You repair some of the armor on [src].</span>"
 			return
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner))
@@ -738,7 +742,7 @@
 		O.loc = src.loc
 	return
 
-/mob/living/simple_animal/hostile/mining_drone/adjustBruteLoss()
+/mob/living/simple_animal/hostile/mining_drone/adjustHealth()
 	if(search_objects)
 		SetOffenseBehavior()
 	..()
@@ -895,13 +899,13 @@
 
 /obj/item/weapon/hivelordstabilizer
 	name = "hivelord stabilizer"
-	icon_state = "hivestabilizer"
-	item_state = "hivestabilizer"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle19"
 	desc = "Inject a hivelord core with this stabilizer to preserve its healing powers indefinitely."
 	w_class = 1
 	origin_tech = "biotech=1"
 
-/obj/item/weapon/hivelordstabilizer/attack(obj/item/organ/internal/M, mob/user)
+/obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/internal/M, mob/user)
 	var/obj/item/organ/internal/hivelord_core/C = M
 	if(!istype(C, /obj/item/organ/internal/hivelord_core))
 		user << "<span class='warning'>The stabilizer only works on hivelord cores.</span>"

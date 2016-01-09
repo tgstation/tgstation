@@ -242,7 +242,7 @@
 	hardness = 1
 	openSound = 'sound/effects/doorcreaky.ogg'
 	closeSound = 'sound/effects/doorcreaky.ogg'
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 30
 
 /obj/structure/mineral_door/wood/Dismantle(devastated = 0)

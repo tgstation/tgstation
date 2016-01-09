@@ -205,6 +205,7 @@
 					health = maxhealth
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					update_nearby_icons()
+					user << "<span class='notice'>You repair [src].</span>"
 		else
 			user << "<span class='warning'>[src] is already in good condition!</span>"
 		return
@@ -481,7 +482,13 @@
 	dir = 5
 	fulltile = 1
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
+
+/obj/structure/window/reinforced/fulltile/ice
+	icon = 'icons/obj/smooth_structures/rice_window.dmi'
+	icon_state = "ice_window"
+	maxhealth = 150
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/reinforced/fulltile/ice)
 
 /obj/structure/window/shuttle
 	name = "shuttle window"

@@ -17,11 +17,14 @@
 	var/is_cyborg = 0 // It's 1 if module is used by a cyborg, and uses its storage
 	var/datum/robot_energy_storage/source
 	var/cost = 1 // How much energy from storage it costs
+	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
 	if (amount)
 		src.amount = amount
+	if(!merge_type)
+		merge_type = src.type
 	return
 
 /obj/item/stack/Destroy()
@@ -208,19 +211,19 @@
 	S.add(transfer)
 
 /obj/item/stack/Crossed(obj/o)
-	if(istype(o, src.type) && !o.throwing)
+	if(istype(o, merge_type) && !o.throwing)
 		merge(o)
 	return ..()
 
 /obj/item/stack/hitby(atom/movable/AM, skip, hitpush)
-	if(istype(AM, src.type))
+	if(istype(AM, merge_type))
 		merge(AM)
 	return ..()
 
 /obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_hand() == src)
 		if(zero_amount())	return
-		var/obj/item/stack/F = new src.type( user, 1)
+		var/obj/item/stack/F = new src.type(user, 1)
 		. = F
 		F.copy_evidences(src)
 		user.put_in_hands(F)
@@ -234,7 +237,7 @@
 	return
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
-	if(istype(W, src.type))
+	if(istype(W, merge_type))
 		var/obj/item/stack/S = W
 		merge(S)
 		user << "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>"

@@ -13,9 +13,9 @@
 	maxbodytemp = 360
 	var/mob/camera/blob/overmind = null
 
-/mob/living/simple_animal/hostile/blob/proc/adjustcolors(a_color)
-	if(a_color)
-		color = a_color
+/mob/living/simple_animal/hostile/blob/update_icons()
+	if(overmind)
+		color = overmind.blob_reagent_datum.color
 
 /mob/living/simple_animal/hostile/blob/blob_act()
 	return
@@ -25,7 +25,7 @@
 ////////////////
 
 /mob/living/simple_animal/hostile/blob/blobspore
-	name = "blob"
+	name = "blob spore"
 	desc = "A floating, fragile spore."
 	icon_state = "blobpod"
 	icon_living = "blobpod"
@@ -58,7 +58,6 @@
 	..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
-
 	if(!is_zombie && isturf(src.loc))
 		for(var/mob/living/carbon/human/H in oview(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == DEAD)
@@ -78,8 +77,8 @@
 	health = maxHealth
 	name = "blob zombie"
 	desc = "A shambling corpse animated by the blob."
-	melee_damage_lower = 10
-	melee_damage_upper = 15
+	melee_damage_lower += 8
+	melee_damage_upper += 11
 	icon = H.icon
 	speak_emote = list("groans")
 	icon_state = "zombie_s"
@@ -121,19 +120,8 @@
 			M.loc = src.loc
 	return ..()
 
-
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
 	..()
-
-	if(overmind && overmind.blob_reagent_datum)
-		adjustcolors(overmind.blob_reagent_datum.color)
-	else
-		adjustcolors(color) //to ensure zombie/other overlays update
-
-
-/mob/living/simple_animal/hostile/blob/blobspore/adjustcolors(a_color)
-	color = a_color
-
 	if(is_zombie)
 		overlays.Cut()
 		overlays = human_overlays
@@ -141,6 +129,13 @@
 		I.color = color
 		color = initial(color)//looks better.
 		overlays += I
+
+/mob/living/simple_animal/hostile/blob/blobspore/weak
+	name = "fragile blob spore"
+	health = 20
+	maxHealth = 20
+	melee_damage_lower = 1
+	melee_damage_upper = 2
 
 /////////////////
 // BLOBBERNAUT //
@@ -156,18 +151,34 @@
 	maxHealth = 240
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	attacktext = "hits"
+	attacktext = "slams"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	speak_emote = list("gurgles")
 	minbodytemp = 0
 	maxbodytemp = 360
 	force_threshold = 10
-	environment_smash = 3
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 1
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/blob_act()
-	return
+/mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
+	if(isliving(target))
+		if(overmind)
+			var/mob/living/L = target
+			var/mob_protection = L.get_permeability_protection()
+			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 17.5, 0, mob_protection)//this will do between 7 and 17 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
+	if(target)
+		..()
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
+	..()
+	if(overmind) //if we have an overmind, we're doing chemical reactions instead of pure damage
+		melee_damage_lower = 4
+		melee_damage_upper = 4
+		attacktext = overmind.blob_reagent_datum.blobbernaut_message
+	else
+		melee_damage_lower = initial(melee_damage_lower)
+		melee_damage_upper = initial(melee_damage_upper)
+		attacktext = initial(attacktext)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
 	..(gibbed)

@@ -38,6 +38,9 @@
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 	..()
 
+/mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
+	return -10
+
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	return
 
@@ -174,6 +177,12 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
 
+/mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
+	src << "<span class='noticealien'>You begin to evolve!</span>"
+	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
+	if(mind)
+		mind.transfer_to(new_xeno)
+	qdel(src)
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2
