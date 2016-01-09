@@ -290,7 +290,7 @@
 	blocks_air = 1
 	opacity = 1
 	explosion_block = 50
-	layer = TURF_LAYER + 0.1
+	layer = TURF_LAYER + 0.05
 
 /turf/indestructible/splashscreen
 	name = "Space Station 13"
