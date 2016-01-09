@@ -25,7 +25,7 @@ component.exports = {
 
 {{#if config.fancy && ie && ie < 11}}
   <ui-notice>
-    <span>You have an old (IE{{ie}}), EOL (click 'EOL Info' for more information) version of Internet Explorer installed.</span><br/>
+    <span>You have an old (IE{{ie}}), end-of-life (click 'EOL Info' for more information) version of Internet Explorer installed.</span><br/>
     <span>To upgrade, click 'Upgrade IE' to download IE11 from Microsoft.</span><br/>
     <span>If you are unable to upgrade directly, click 'IE VMs' to download a VM with IE11 or Edge from Microsoft.</span><br/>
     <span>Otherwise, click 'No Frills' below to disable potentially incompatible features (and this message).</span>
