@@ -228,6 +228,8 @@
 	if(has_gravity(src))
 		var/obj/buckled_obj
 		var/oldlying = C.lying
+		if(flags & NOSLIP_TURF)
+			return 0
 		if(C.buckled)
 			buckled_obj = C.buckled
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
