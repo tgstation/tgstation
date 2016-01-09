@@ -639,7 +639,7 @@
 		if("tech")
 			user << "[G.tech_fluff_string]."
 			G.theme = "tech"
-			colour = pick("orange", "pink", "salmon", "blue", "green", "neon")
+			colour = pick("orange", "pink", "rose", "blue", "green", "neon")
 			picked_name = pick("Gallium", "Indium", "Thallium", "Bismuth", "Aluminium", "Mercury", "Iron", "Silver", "Zinc", "Titanium", "Chromium", "Nickel")
 
 	G.name = "[picked_name] [capitalize(colour)]"
