@@ -28,10 +28,10 @@
 	var/corpseidaccess = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
 	var/corpseidicon = null //For setting it to be a gold, silver, centcom etc ID
 
-/obj/effect/landmark/mobcorpse/New(alt_name)
-	createCorpse(alt_name)
+/obj/effect/landmark/mobcorpse/New()
+	createCorpse()
 
-/obj/effect/landmark/mobcorpse/proc/createCorpse(alt_name) //Creates a mob and checks for gear in each slot before attempting to equip it.
+/obj/effect/landmark/mobcorpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/M = new mobtype (src.loc)
 	var/spawned = 0
 	M.stat = 2 //Kills the new mob
