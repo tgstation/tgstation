@@ -238,24 +238,28 @@
 
 
 /obj/item/device/soulstone/proc/getCultGhost(obj/item/device/soulstone/C, mob/living/carbon/human/T, mob/U)
+	var/mob/dead/observer/chosen_ghost
 
-	var/list/consenting_candidates = pollCandidates("Would you like to play as a Shade?", be_special_flag = ROLE_CULTIST, poll_time = 100)
+	for(var/mob/dead/observer/ghost in player_list) //We put them back in their body
+		if(T.real_name == ghost.real_name && ghost.client)
+			chosen_ghost = ghost
+			break
 
-	if(!T) //target mob got soulstoned or gibbed during sleep(50)
-		return 0
+	if(!chosen_ghost)	//Failing that, we grab a ghost
+		var/list/consenting_candidates = pollCandidates("Would you like to play as a Shade?", be_special_flag = ROLE_CULTIST, poll_time = 100)
+		if(consenting_candidates.len)
+			chosen_ghost = pick(consenting_candidates)
 
-	if(consenting_candidates.len)
-		var/mob/dead/observer/ghost = null
-		ghost = pick(consenting_candidates)
-		if(C.contents.len) //If they used the soulstone on someone else in the meantime
-			return 0
-		if(!T.client) //If the original returns in the alloted time
-			T.client = ghost.client
-		for(var/obj/item/W in T)
-			T.unEquip(W)
-		init_shade(C, T, U)
-		qdel(T)
-		return 1
-	else
+	if(!chosen_ghost)
 		U << "<span class='danger'>The ghost has fled beyond your grasp.</span>"
 		return 0
+	if(!T)
+		return 0
+	if(C.contents.len) //If they used the soulstone on someone else in the meantime
+		return 0
+	T.ckey = chosen_ghost.ckey
+	for(var/obj/item/W in T)
+		T.unEquip(W)
+	init_shade(C, T, U)
+	qdel(T)
+	return 1
