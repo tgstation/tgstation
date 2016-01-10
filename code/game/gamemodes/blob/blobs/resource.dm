@@ -9,10 +9,10 @@
 	var/resource_delay = 0
 
 /obj/effect/blob/resource/Be_Pulsed()
-	if(resource_delay > world.time)
-		return 0
-	flick("factory_glow", src)
-	resource_delay = world.time + 45 // 4 and a half seconds
-	if(overmind)
-		overmind.add_points(1)
-	. = ..()
+	if(..())
+		if(resource_delay > world.time)
+			return 0
+		flick("factory_glow", src)
+		resource_delay = world.time + 45 // 4 and a half seconds
+		if(overmind)
+			overmind.add_points(1)
