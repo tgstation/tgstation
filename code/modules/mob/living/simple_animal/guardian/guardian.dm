@@ -88,7 +88,7 @@
 			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
 		if(summoner.stat == UNCONSCIOUS)
 			summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
-			summoner.adjustCloneLoss(amount/2)
+			summoner.adjustCloneLoss(amount*0.5) //dying hosts take 50% bonus damage as cloneloss
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
