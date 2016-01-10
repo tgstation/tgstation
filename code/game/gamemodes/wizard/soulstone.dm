@@ -8,9 +8,9 @@
 	slot_flags = SLOT_BELT
 	origin_tech = "bluespace=4;materials=4"
 	var/imprinted = "empty"
-	var/usability = 0
+	var/usability = 1
 
-/obj/item/device/soulstone/anybody
+/obj/item/device/soulstone/anybody //redundant, but kept for the sake of compatibility and easy reversion.
 	usability = 1
 
 /obj/item/device/soulstone/pickup(mob/living/user)
