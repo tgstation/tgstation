@@ -10,8 +10,8 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 4,
-							/obj/item/stack/sheet/animalhide/xeno = 1)
+	loot = list(/obj/effect/landmark/mobcorpse/alien/hunter)
+	del_on_death = 1
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
@@ -39,6 +39,7 @@
 	health = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	loot = list(/mob/living/carbon/alien/humanoid/drone)
 	var/plant_cooldown = 30
 	var/plants_off = 0
 
@@ -59,6 +60,7 @@
 	health = 120
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	loot = list(/mob/living/carbon/alien/humanoid/sentinel)
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
@@ -66,31 +68,51 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 
 
-/mob/living/simple_animal/hostile/alien/queen
-	name = "alien queen"
-	icon_state = "alienq_s"
-	icon_living = "alienq_s"
-	icon_dead = "alienq_dead"
-	health = 250
-	maxHealth = 250
+/mob/living/simple_animal/hostile/alien/royal
+	icon = 'icons/mob/alienqueen.dmi'
+	pixel_x = -16
+	layer = 6
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
 	move_to_delay = 4
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 4,
-							/obj/item/stack/sheet/animalhide/xeno = 1)
+	mob_size = MOB_SIZE_LARGE
 	projectiletype = /obj/item/projectile/neurotox
+	loot = list()
 	projectilesound = 'sound/weapons/pierce.ogg'
 	status_flags = 0
 	unique_name = 0
+	ventcrawler = 0 //pull over that ass too fat
+	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
+
+/mob/living/simple_animal/hostile/alien/royal/praetorian
+	name = "alien praetorian"
+	maxHealth = 250
+	health = 250
+	icon_state = "alienp"
+	icon_living = "alienp"
+	icon_dead = "alienp_dead"
+	loot = list(/mob/living/carbon/alien/humanoid/royal/praetorian)
+
+/mob/living/simple_animal/hostile/alien/royal/queen
+	name = "alien queen"
+	icon_state = "alienq"
+	icon_living = "alienq"
+	icon_dead = "alienq_dead"
+	maxHealth = 400
+	health = 400
+	loot = list(/mob/living/carbon/alien/humanoid/royal/queen)
+
 	var/sterile = 1
 	var/plants_off = 0
 	var/egg_cooldown = 30
 	var/plant_cooldown = 30
 
-/mob/living/simple_animal/hostile/alien/queen/handle_automated_action()
+
+
+/mob/living/simple_animal/hostile/alien/royal/queen/handle_automated_action()
 	if(!..()) //AIStatus is off
 		return
 	egg_cooldown--
@@ -118,20 +140,6 @@
 		return
 	visible_message("<span class='alertalien'>[src] has laid an egg!</span>")
 	new /obj/structure/alien/egg(loc)
-
-/mob/living/simple_animal/hostile/alien/queen/large
-	name = "alien empress"
-	icon = 'icons/mob/alienqueen.dmi'
-	icon_state = "alienq"
-	icon_living = "alienq"
-	icon_dead = "alienq_dead"
-	move_to_delay = 4
-	maxHealth = 400
-	health = 400
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 10,
-							/obj/item/stack/sheet/animalhide/xeno = 2)
-	mob_size = MOB_SIZE_LARGE
-	gold_core_spawnable = 0
 
 /obj/item/projectile/neurotox
 	name = "neurotoxin"
