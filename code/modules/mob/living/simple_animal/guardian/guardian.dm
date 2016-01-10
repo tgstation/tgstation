@@ -636,7 +636,7 @@
 			picked_name = pick("Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces")
 		if("tech")
 			user << "[G.tech_fluff_string]."
-			colour = pick("orange", "pink", "rose", "blue", "green", "neon")
+			colour = pick("lily", "orchid", "rose", "iris", "ivy", "zinnia")
 			picked_name = pick("Gallium", "Indium", "Thallium", "Bismuth", "Aluminium", "Mercury", "Iron", "Silver", "Zinc", "Titanium", "Chromium", "Nickel")
 
 	G.name = "[picked_name] [capitalize(colour)]"
