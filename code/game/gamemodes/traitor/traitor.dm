@@ -9,9 +9,9 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
-	antag_flag = BE_TRAITOR
+	antag_flag = ROLE_TRAITOR
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -74,8 +74,8 @@
 	if(ticker.mode.traitors.len >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
 	if(ticker.mode.traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
-		if(character.client.prefs.be_special & BE_TRAITOR)
-			if(!jobban_isbanned(character.client, "traitor") && !jobban_isbanned(character.client, "Syndicate"))
+		if(ROLE_TRAITOR in character.client.prefs.be_special)
+			if(!jobban_isbanned(character.client, ROLE_TRAITOR) && !jobban_isbanned(character.client, "Syndicate"))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						add_latejoin_traitor(character.mind)
@@ -108,7 +108,7 @@
 		var/is_hijacker = prob(10)
 		var/martyr_chance = prob(20)
 		var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
-		if(!exchange_blue && traitors.len >= 5) 	//Set up an exchange if there are enough traitors
+		if(!exchange_blue && traitors.len >= 8) 	//Set up an exchange if there are enough traitors
 			if(!exchange_red)
 				exchange_red = traitor
 			else
@@ -210,7 +210,10 @@
 	give_codewords(killer)
 	killer.set_syndie_radio()
 	killer << "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!"
-
+	killer << "In the top right corner of the screen you will find the Malfunctions tab, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices."
+	killer << "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds."
+	killer.verbs += /mob/living/silicon/ai/proc/choose_modules
+	killer.malf_picker = new /datum/module_picker
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)

@@ -50,10 +50,8 @@
 
 /obj/structure/closet/crate/rcd/New()
 	..()
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
+	for(var/i in 1 to 4)
+		new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd(src)
 
 /obj/structure/closet/crate/freezer
@@ -91,15 +89,10 @@
 
 /obj/structure/closet/crate/radiation/New()
 	..()
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-
+	for(var/i in 1 to 4)
+		new /obj/item/clothing/suit/radiation(src)
+		new /obj/item/clothing/head/radiation(src)
+	
 /obj/structure/closet/crate/hydroponics
 	name = "hydroponics crate"
 	desc = "All you need to destroy those pesky weeds and pests."
@@ -187,8 +180,8 @@
 	else
 		return 0
 
-	if(istype(AM, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
-		var/obj/structure/stool/bed/B = AM
+	if(istype(AM, /obj/structure/bed)) //This is only necessary because of rollerbeds and swivel chairs.
+		var/obj/structure/bed/B = AM
 		if(B.buckled_mob)
 			return 0
 
@@ -215,7 +208,7 @@
 			if(isliving(user))
 				var/mob/living/L = user
 				if(L.electrocute_act(17, src))
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 					s.set_up(5, 1, src)
 					s.start()
 					return

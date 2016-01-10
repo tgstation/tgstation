@@ -5,7 +5,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
-	w_class = 4.0
+	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
 	action_button_name = "Toggle Mister"
@@ -25,8 +25,8 @@
 /obj/item/weapon/watertank/verb/toggle_mister()
 	set name = "Toggle Mister"
 	set category = "Object"
-	if (usr.get_item_by_slot(slot_back) != src)
-		usr << "<span class='warning'>The watertank needs to be on your back to use!</span>"
+	if (usr.get_item_by_slot(usr.getWatertankSlot()) != src)
+		usr << "<span class='warning'>The watertank must be worn properly to use!</span>"
 		return
 	if(usr.incapacitated())
 		return
@@ -66,8 +66,7 @@
 		remove_noz()
 		qdel(noz)
 		noz = null
-	..()
-	return
+	return ..()
 
 /obj/item/weapon/watertank/attack_hand(mob/user)
 	if(src.loc == user)
@@ -76,8 +75,8 @@
 	..()
 
 /obj/item/weapon/watertank/MouseDrop(obj/over_object)
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/H = src.loc
+	var/mob/H = src.loc
+	if(istype(H))
 		switch(over_object.name)
 			if("r_hand")
 				if(H.r_hand)
@@ -99,6 +98,12 @@
 		return
 	..()
 
+/mob/proc/getWatertankSlot()
+	return slot_back
+
+/mob/living/simple_animal/drone/getWatertankSlot()
+	return slot_drone_storage
+
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
 // the watertank backpack. Allowing it to be placed elsewhere or created without a parent
@@ -109,7 +114,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
-	w_class = 4.0
+	w_class = 4
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
@@ -169,7 +174,7 @@
 	icon_state = "misterjani"
 	item_state = "misterjani"
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 
 /obj/item/weapon/watertank/janitor/make_noz()
 	return new /obj/item/weapon/reagent_containers/spray/mister/janitor(src)
@@ -294,7 +299,7 @@
 		if(!Adj|| !istype(target, /turf))
 			return
 		if(metal_synthesis_cooldown < 5)
-			var/obj/effect/effect/foam/metal/F = PoolOrNew(/obj/effect/effect/foam/metal, get_turf(target))
+			var/obj/effect/particle_effect/foam/metal/F = PoolOrNew(/obj/effect/particle_effect/foam/metal, get_turf(target))
 			F.amount = 0
 			metal_synthesis_cooldown++
 			spawn(100)
@@ -312,8 +317,8 @@
 	pass_flags = PASSTABLE
 
 /obj/effect/nanofrost_container/proc/Smoke()
-	var/datum/effect/effect/system/smoke_spread/freezing/S = new
-	S.set_up(6, 0, loc, null, 1)
+	var/datum/effect_system/smoke_spread/freezing/S = new
+	S.set_up(2, src.loc, blasting=1)
 	S.start()
 	var/obj/effect/decal/cleanable/flour/F = new /obj/effect/decal/cleanable/flour(src.loc)
 	F.color = "#B2FFFF"
@@ -322,50 +327,107 @@
 	playsound(src,'sound/effects/bamf.ogg',100,1)
 	qdel(src)
 
-/obj/effect/effect/smoke/freezing
-	name = "nanofrost smoke"
-	opacity = 0
-	color = "#B2FFFF"
-
-/datum/effect/effect/system/smoke_spread/freezing
-	smoke_type = /obj/effect/effect/smoke/freezing
-	var/blast = 0
-
-/datum/effect/effect/system/smoke_spread/freezing/proc/Chilled(atom/A)
-	if(istype(A, /turf/simulated))
-		var/turf/simulated/T = A
-		if(T.air)
-			var/datum/gas_mixture/G = T.air
-			if(get_dist(T, location) < 2) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
-				G.temperature = 2
-			T.air_update_turf()
-			for(var/obj/effect/hotspot/H in T)
-				H.Kill()
-				if(G.toxins)
-					G.nitrogen += (G.toxins)
-					G.toxins = 0
-		for(var/obj/machinery/atmospherics/components/unary/U in T)
-			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
-				U.welded = 1
-				U.update_icon()
-				U.visible_message("<span class='danger'>[U] was frozen shut!</span>")
-		for(var/mob/living/L in T)
-			L.ExtinguishMob()
-		for(var/obj/item/Item in T)
-			Item.extinguish()
-	return
-
-/datum/effect/effect/system/smoke_spread/freezing/set_up(n = 5, c = 0, loca, direct, blasting = 0)
-	..()
-	blast = blasting
-
-/datum/effect/effect/system/smoke_spread/freezing/start()
-	if(blast)
-		for(var/turf/T in trange(2, location))
-			Chilled(T)
-	..()
-
-
 #undef EXTINGUISHER
 #undef NANOFROST
 #undef METAL_FOAM
+
+/obj/item/weapon/reagent_containers/chemtank
+	name = "backpack chemical injector"
+	desc = "A chemical autoinjector that can be carried on your back."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "waterbackpackatmos"
+	item_state = "waterbackpackatmos"
+	w_class = 4
+	slot_flags = SLOT_BACK
+	slowdown = 1
+	action_button_name = "Activate Injector"
+
+	var/on = 0
+	volume = 300
+	var/usage_ratio = 5 //5 unit added per 1 removed
+	var/injection_amount = 1 
+	amount_per_transfer_from_this = 5
+	flags = OPENCONTAINER
+	spillable = 0
+	possible_transfer_amounts = list(5,10,15)
+
+/obj/item/weapon/reagent_containers/chemtank/ui_action_click()
+	toggle_injection()
+
+/obj/item/weapon/reagent_containers/chemtank/proc/toggle_injection()
+	var/mob/living/carbon/human/user = usr
+	if(!istype(user))
+		return
+	if (user.get_item_by_slot(slot_back) != src)
+		user << "<span class='warning'>The chemtank needs to be on your back before you can activate it!</span>"
+		return
+	if(on)
+		turn_off()
+	else
+		turn_on()
+
+//Todo : cache these.
+/obj/item/weapon/reagent_containers/chemtank/proc/update_filling()
+	overlays.Cut()
+
+	if(reagents.total_volume)
+		var/image/filling = image('icons/obj/reagentfillings.dmi',icon_state = "backpack-10")
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		switch(percent)
+			if(0 to 15)		filling.icon_state = "backpack-10"
+			if(16 to 60) 	filling.icon_state = "backpack50"
+			if(61 to INFINITY)	filling.icon_state = "backpack100"
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		overlays += filling
+
+/obj/item/weapon/reagent_containers/chemtank/worn_overlays(var/isinhands = FALSE) //apply chemcolor and level
+	. = list()
+	//inhands + reagent_filling
+	if(!isinhands && reagents.total_volume)
+		var/image/filling = image('icons/obj/reagentfillings.dmi',icon_state = "backpackmob-10")
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		switch(percent)
+			if(0 to 15)		filling.icon_state = "backpackmob-10"
+			if(16 to 60) 	filling.icon_state = "backpackmob50"
+			if(61 to INFINITY)	filling.icon_state = "backpackmob100"
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		. += filling
+
+/obj/item/weapon/reagent_containers/chemtank/proc/turn_on()
+	on = 1
+	SSobj.processing |= src
+	if(ismob(loc))
+		loc << "<span class='notice'>[src] turns on.</span>"
+
+/obj/item/weapon/reagent_containers/chemtank/proc/turn_off()
+	on = 0
+	SSobj.processing.Remove(src)
+	if(ismob(loc))
+		loc << "<span class='notice'>[src] turns off.</span>"
+
+/obj/item/weapon/reagent_containers/chemtank/process()
+	if(!istype(loc,/mob/living/carbon/human))
+		turn_off()
+		return
+	if(!reagents.total_volume)
+		turn_off()
+		return
+	var/mob/living/carbon/human/user = loc
+	if(user.back != src)
+		turn_off()
+		return
+
+	var/used_amount = injection_amount/usage_ratio
+	reagents.reaction(user, INJECT,injection_amount,0)
+	reagents.trans_to(user,used_amount,multiplier=usage_ratio)
+	update_filling()
+	user.update_inv_back() //for overlays update
+
+/obj/item/weapon/reagent_containers/chemtank/stim/New()
+	..()
+	reagents.add_reagent("stimulants_longterm", 300)
+	update_filling()

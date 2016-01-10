@@ -12,13 +12,7 @@ Assistant
 	selection_color = "#dddddd"
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
-
-/datum/job/assistant/equip_items(mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
-	if (config.grey_assistants)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(H), slot_w_uniform)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/color/random(H), slot_w_uniform)
+	outfit = /datum/outfit/job/assistant
 
 /datum/job/assistant/get_access()
 	if((config.jobs_have_maint_access & ASSISTANTS_HAVE_MAINT_ACCESS) || !config.jobs_have_minimal_access) //Config has assistant maint access set
@@ -33,3 +27,14 @@ Assistant
 		spawn_positions = config.assistant_cap
 		return 1
 	return 0
+
+
+/datum/outfit/job/assistant
+	name = "Assistant"
+
+/datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
+	..()
+	if (config.grey_assistants)
+		uniform = /obj/item/clothing/under/color/grey
+	else
+		uniform = /obj/item/clothing/under/color/random

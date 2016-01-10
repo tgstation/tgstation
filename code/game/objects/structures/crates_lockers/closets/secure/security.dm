@@ -10,18 +10,21 @@
 		new /obj/item/weapon/storage/backpack/captain(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_cap(src)
-	new /obj/item/clothing/cloak/cap(src)
+	new /obj/item/clothing/suit/cloak/cap(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/captain(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/under/captainparade(src)
 	new /obj/item/clothing/head/caphat/parade(src)
 	new /obj/item/clothing/under/rank/captain(src)
-	new /obj/item/clothing/suit/armor/vest/capcarapace(src)
+	new /obj/item/clothing/suit/armor/vest/capcarapace/alt(src)
 	new /obj/item/weapon/cartridge/captain(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/weapon/storage/box/silver_ids(src)
 	new /obj/item/device/radio/headset/heads/captain/alt(src)
+	new /obj/item/device/radio/headset/heads/captain(src)
 	new /obj/item/clothing/glasses/sunglasses/gar/supergar(src)
 	new /obj/item/clothing/gloves/color/captain(src)
+	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 
 /obj/structure/closet/secure_closet/hop
@@ -40,9 +43,10 @@
 	new /obj/item/weapon/storage/box/ids(src)
 	new /obj/item/device/megaphone/command(src)
 	new /obj/item/clothing/suit/armor/vest(src)
-	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/weapon/mining_voucher(src)
+	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/clothing/tie/petcollar(src)
 
@@ -53,7 +57,7 @@
 
 /obj/structure/closet/secure_closet/hos/New()
 	..()
-	new /obj/item/clothing/cloak/hos(src)
+	new /obj/item/clothing/suit/cloak/hos(src)
 	new /obj/item/weapon/cartridge/hos(src)
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/clothing/under/hosparadefem(src)
@@ -95,7 +99,6 @@
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
-	new /obj/item/weapon/gun/energy/gun/advtaser(src)
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
@@ -108,7 +111,7 @@
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/radio/headset/headset_sec/alt(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
-	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
@@ -152,7 +155,7 @@
 	name = "\proper detective's cabinet"
 	req_access = list(access_forensics_lockers)
 	icon_state = "cabinet"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 20
 
 /obj/structure/closet/secure_closet/detective/New()
@@ -168,6 +171,7 @@
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec/alt(src)
+	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/tapeproj/security(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
@@ -182,12 +186,9 @@
 
 /obj/structure/closet/secure_closet/injection/New()
 	..()
-	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
-	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
-	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
-	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
-	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
-
+	for(var/i in 1 to 5)
+		new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
+	
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
 	req_access = list(access_brig)
@@ -206,10 +207,73 @@
 /obj/structure/closet/secure_closet/courtroom/New()
 	..()
 	new /obj/item/clothing/shoes/sneakers/brown(src)
-	new /obj/item/weapon/paper/Court (src)
-	new /obj/item/weapon/paper/Court (src)
-	new /obj/item/weapon/paper/Court (src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/paper/Court (src)
 	new /obj/item/weapon/pen (src)
 	new /obj/item/clothing/suit/judgerobe (src)
 	new /obj/item/clothing/head/powdered_wig (src)
 	new /obj/item/weapon/storage/briefcase(src)
+
+/obj/structure/closet/secure_closet/armory1
+	name = "armory armor locker"
+	req_access = list(access_armory)
+	icon_state = "armory"
+
+/obj/structure/closet/secure_closet/armory1/New()
+	..()
+	new /obj/item/clothing/suit/armor/laserproof(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/suit/armor/riot(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/head/helmet/riot(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/shield/riot(src)
+	
+/obj/structure/closet/secure_closet/armory2
+	name = "armory ballistics locker"
+	req_access = list(access_armory)
+	icon_state = "armory"
+
+/obj/structure/closet/secure_closet/armory2/New()
+	..()
+	new /obj/item/weapon/storage/box/firingpins(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/storage/box/rubbershot(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/gun/projectile/shotgun/riot(src)
+	
+/obj/structure/closet/secure_closet/armory3
+	name = "armory energy gun locker"
+	req_access = list(access_armory)
+	icon_state = "armory"
+
+/obj/structure/closet/secure_closet/armory3/New()
+	..()
+	new /obj/item/weapon/storage/box/firingpins(src)
+	new /obj/item/weapon/gun/energy/ionrifle(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/gun/energy/gun(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/gun/energy/laser(src)
+	
+/obj/structure/closet/secure_closet/tac
+	name = "armory tac locker"
+	req_access = list(access_armory)
+	icon_state = "tac"
+
+/obj/structure/closet/secure_closet/tac/New()
+	..()
+	new /obj/item/weapon/gun/projectile/automatic/wt550(src)
+	new /obj/item/clothing/head/helmet/alt(src)
+	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/clothing/suit/armor/bulletproof(src)
+
+/obj/structure/closet/secure_closet/lethalshots
+	name = "shotgun lethal rounds"
+	req_access = list(access_armory)
+	icon_state = "tac"
+
+/obj/structure/closet/secure_closet/lethalshots/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/storage/box/lethalshot(src)

@@ -33,17 +33,17 @@ Acts like a normal vent, but has an input AND output.
 	//OUTPUT_MAX: Do not pass output_pressure_max
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, frequency)
-	..()
+	if(SSradio)
+		SSradio.remove_object(src, frequency)
+	return ..()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
 	..()
-	var/datum/gas_mixture/air1 = airs[AIR1]
-	var/datum/gas_mixture/air2 = airs[AIR2]
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
 	air1.volume = 1000
 	air2.volume = 1000
 
@@ -66,8 +66,8 @@ Acts like a normal vent, but has an input AND output.
 
 	if(!on)
 		return 0
-	var/datum/gas_mixture/air1 = airs[AIR1]
-	var/datum/gas_mixture/air2 = airs[AIR2]
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
@@ -89,7 +89,7 @@ Acts like a normal vent, but has an input AND output.
 				loc.assume_air(removed)
 				air_update_turf()
 
-				var/datum/pipeline/parent1 = parents[PARENT1]
+				var/datum/pipeline/parent1 = PARENT1
 				parent1.update = 1
 
 	else //external -> output
@@ -109,7 +109,7 @@ Acts like a normal vent, but has an input AND output.
 				air2.merge(removed)
 				air_update_turf()
 
-				var/datum/pipeline/parent2 = parents[PARENT2]
+				var/datum/pipeline/parent2 = PARENT2
 				parent2.update = 1
 
 	return 1
@@ -117,10 +117,10 @@ Acts like a normal vent, but has an input AND output.
 	//Radio remote control
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = radio_controller.add_object(src, frequency, filter = RADIO_ATMOSIA)
+		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
 	if(!radio_connection)
@@ -176,25 +176,13 @@ Acts like a normal vent, but has an input AND output.
 		pump_direction = 1
 
 	if("set_input_pressure" in signal.data)
-		input_pressure_min = Clamp(
-			text2num(signal.data["set_input_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
+		input_pressure_min = Clamp(text2num(signal.data["set_input_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("set_output_pressure" in signal.data)
-		output_pressure_max = Clamp(
-			text2num(signal.data["set_output_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
+		output_pressure_max = Clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("set_external_pressure" in signal.data)
-		external_pressure_bound = Clamp(
-			text2num(signal.data["set_external_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
+		external_pressure_bound = Clamp(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("status" in signal.data)
 		spawn(2)

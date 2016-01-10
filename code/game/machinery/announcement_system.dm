@@ -65,6 +65,7 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/Destroy()
 	announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
+	return ..()
 
 /obj/machinery/announcement_system/power_change()
 	..()
@@ -89,6 +90,9 @@ var/list/announcement_systems = list()
 			user << "<span class='notice'>You reset [src]'s firmware.</span>"
 			broken = 0
 			update_icon()
+			return
+
+	return ..()
 
 /obj/machinery/announcement_system/attack_hand(mob/user)
 	if(can_be_used_by(user))

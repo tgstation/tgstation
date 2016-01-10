@@ -22,6 +22,8 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	var/body_color //brown, gray and white, leave blank for random
+	gold_core_spawnable = 2
+	var/chew_probability = 1
 
 /mob/living/simple_animal/mouse/New()
 	..()
@@ -37,11 +39,14 @@
 	src.icon_dead = "mouse_[body_color]_splat"
 	death()
 
-/mob/living/simple_animal/mouse/death(gibbed)
+/mob/living/simple_animal/mouse/death(gibbed, toast)
 	if(!ckey)
 		..(1)
 		var/obj/item/trash/deadmouse/M = new(src.loc)
 		M.icon_state = icon_dead
+		if(toast)
+			M.color = "#3A3A3A"
+			M.desc = "It's toast."
 		qdel(src)
 	else
 		..(gibbed)
@@ -53,6 +58,21 @@
 			M << "<span class='notice'>\icon[src] Squeek!</span>"
 			playsound(src, 'sound/effects/mousesqueek.ogg', 100, 1)
 	..()
+
+/mob/living/simple_animal/mouse/handle_automated_action()
+	if(prob(chew_probability))
+		var/turf/simulated/floor/F = get_turf(src)
+		if(istype(F) && !F.intact)
+			var/obj/structure/cable/C = locate() in F
+			if(C && prob(15))
+				if(C.avail())
+					visible_message("<span class='warning'>[src] chews through the [C]. It's toast!</span>")
+					playsound(src, 'sound/effects/sparks2.ogg', 100, 1)
+					C.Deconstruct()
+					death(toast=1)
+				else
+					C.Deconstruct()
+					visible_message("<span class='warning'>[src] chews through the [C].</span>")
 
 /*
  * Mouse types
@@ -77,6 +97,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
+	gold_core_spawnable = 0
 
 /obj/item/trash/deadmouse
 	name = "dead mouse"

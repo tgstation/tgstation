@@ -1,5 +1,5 @@
 /client/proc/only_one()
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		alert("The game hasn't started yet!")
 		return
 
@@ -50,8 +50,8 @@
 	log_admin("[key_name(usr)] used there can be only one.")
 
 
-/client/proc/only_me()
-	if(!ticker)
+/proc/only_me()
+	if(!ticker || !ticker.mode)
 		alert("The game hasn't started yet!")
 		return
 

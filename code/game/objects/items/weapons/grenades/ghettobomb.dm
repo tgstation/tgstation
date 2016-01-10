@@ -3,7 +3,7 @@
 /obj/item/weapon/grenade/iedcasing
 	name = "improvised firebomb"
 	desc = "A weak, improvised incendiary device."
-	w_class = 2.0
+	w_class = 2
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "improvised_grenade"
 	item_state = "flashbang"
@@ -59,7 +59,7 @@
 
 /obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()
-	explosion(src.loc,-1,-1,-1, flame_range = range)	// no explosive damage, only a large fireball.
+	explosion(src.loc,-1,-1,2, flame_range = 4)	// small explosion, plus a very large fireball.
 	qdel(src)
 
 /obj/item/weapon/grenade/iedcasing/examine(mob/user)

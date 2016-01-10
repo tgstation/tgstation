@@ -40,6 +40,9 @@
 	var/const/FREQ_LISTENING = 1
 		//FREQ_BROADCASTING = 2
 
+	var/command = FALSE //If we are speaking into a command headset, our text can be BOLD
+	var/use_command = FALSE
+
 /obj/item/device/radio/proc/set_frequency(new_frequency)
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
@@ -50,7 +53,7 @@
 		wires.CutWireIndex(WIRE_TRANSMIT)
 	secure_radio_connections = new
 	..()
-	if(radio_controller)
+	if(SSradio)
 		initialize()
 
 
@@ -93,7 +96,9 @@
 	qdel(wires)
 	wires = null
 	remove_radio_all(src) //Just to be sure
-	..()
+	patch_link = null
+	keyslot = null
+	return ..()
 
 /obj/item/device/radio/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -152,8 +157,8 @@
 	for (var/ch_name in channels)
 		dat+=text_sec_channel(ch_name, channels[ch_name])
 	dat+= text_wires()
-	//user << browse(dat, "window=radio")
-	//onclose(user, "radio")
+	if (command)
+		dat+= "<b>High Volume Mode:</b> [use_command ? "<A href='byond://?src=\ref[src];bold=1'>Engaged</A>" : "<A href='byond://?src=\ref[src];bold=1'>Disengaged</A>"]<BR>"
 	var/datum/browser/popup = new(user, "radio", "[src]")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -174,10 +179,10 @@
 
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
-	if (usr.stat || !on)
+	if ((usr.stat && !IsAdminGhost(usr)) || !on)
 		return
 
-	if (!(issilicon(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
+	if (!(issilicon(usr) || IsAdminGhost(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
 		usr << browse(null, "window=radio")
 		return
 	usr.set_machine(src)
@@ -203,6 +208,8 @@
 				channels[chan_name] &= ~FREQ_LISTENING
 			else
 				channels[chan_name] |= FREQ_LISTENING
+	else if (href_list["bold"])
+		use_command = !use_command
 	if (!( master ))
 		if (istype(loc, /mob))
 			interact(loc)
@@ -231,6 +238,9 @@
 	if(!M.IsVocal())
 		return
 
+	if(use_command)
+		spans |= SPAN_COMMAND
+
 	/* Quick introduction:
 		This new radio system uses a very robust FTL signaling technology unoriginally
 		dubbed "subspace" which is somewhat similar to 'blue-space' but can't
@@ -246,7 +256,7 @@
 		be prepared to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
 	*/
 
-		//get the frequency you buttface. radios no longer use the radio_controller. confusing for future generations, convenient for me.
+		//get the frequency you buttface. radios no longer use the SSradio. confusing for future generations, convenient for me.
 	var/freq
 	if(channel && channels && channels.len > 0)
 		if (channel == "department")
@@ -533,10 +543,10 @@
 		return
 	b_stat = !( b_stat )
 	if(!istype(src, /obj/item/device/radio/beacon))
-		if (b_stat)
-			user.show_message("<span class='notice'>The radio can now be attached and modified!</span>")
+		if(b_stat)
+			user << "<span class='notice'>The radio can now be attached and modified!</span>"
 		else
-			user.show_message("<span class='notice'>The radio can no longer be modified or attached!</span>")
+			user << "<span class='notice'>The radio can no longer be modified or attached!</span>"
 		updateDialog()
 			//Foreach goto(83)
 		add_fingerprint(user)
@@ -585,7 +595,7 @@
 
 
 			for(var/ch_name in channels)
-				radio_controller.remove_object(src, radiochannels[ch_name])
+				SSradio.remove_object(src, radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
 

@@ -297,7 +297,8 @@
 					src.updateUsrDialog()
 					return
 
-				src.active_record.fields = diskette.fields.Copy()
+				for(var/key in diskette.fields)
+					src.active_record.fields[key] = diskette.fields[key]
 				src.temp = "Load successful."
 
 			if("eject")
@@ -350,7 +351,7 @@
 	return
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
-	if (!check_dna_integrity(subject) || !istype(subject))
+	if (!istype(subject))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		return
 	if (!subject.getorgan(/obj/item/organ/internal/brain))
@@ -359,7 +360,7 @@
 	if (subject.suiciding == 1)
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		return
-	if ((NOCLONE in subject.mutations) && (src.scanner.scan_level < 2))
+	if ((subject.disabilities & NOCLONE) && (src.scanner.scan_level < 2))
 		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		return
 	if ((!subject.ckey) || (!subject.client))

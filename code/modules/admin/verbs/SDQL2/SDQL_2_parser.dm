@@ -396,7 +396,7 @@
 	string(i, list/node)
 
 		if(copytext(token(i), 1, 2) in list("'", "\""))
-			node += token(i)
+			node += copytext(token(i),2,-1)
 
 		else
 			parse_error("Expected string but found '[token(i)]'")

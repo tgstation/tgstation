@@ -49,7 +49,7 @@
 			loc = T.loc
 			if (istype(loc, /area))
 				//stage = 4
-				if (!loc.master.power_equip && !is_type_in_list(src.loc,list(/obj/item, /obj/mecha)))
+				if (lacks_power())
 					//stage = 5
 					blindness = 1
 
@@ -92,7 +92,7 @@
 			src.see_in_dark = 0
 			src.see_invisible = SEE_INVISIBLE_LIVING
 
-			if (((!loc.master.power_equip) || istype(T, /turf/space)) && !is_type_in_list(src.loc,list(/obj/item, /obj/mecha)))
+			if (lacks_power())
 				if (src:aiRestorePowerRoutine==0)
 					src:aiRestorePowerRoutine = 1
 
@@ -161,13 +161,18 @@
 									sleep(2)
 									//bring up APC dialog
 									apc_override = 1
-									theAPC.attack_ai(src)
+									theAPC.ui_interact(src, state = conscious_state)
 									apc_override = 0
 									src:aiRestorePowerRoutine = 3
 									src << "Here are your current laws:"
 									src.show_laws()
 							sleep(50)
 							theAPC = null
+
+/mob/living/silicon/ai/proc/lacks_power()
+	var/turf/T = get_turf(src)
+	var/area/A = get_area(src)
+	return ((!A.power_equip) || istype(T, /turf/space)) && !is_type_in_list(src.loc, list(/obj/item, /obj/mecha))
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
@@ -177,3 +182,5 @@
 	health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss()
 	if(!fire_res_on_core)
 		health -= getFireLoss()
+	diag_hud_set_status()
+	diag_hud_set_health()

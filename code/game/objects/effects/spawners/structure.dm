@@ -25,7 +25,7 @@ again.
 						)
 
 /obj/effect/spawner/structure/window/reinforced
-	name = "reenforced window spawner"
+	name = "reinforced window spawner"
 	icon_state = "rwindow_spawner"
 	spawn_list = 	list(
 						/obj/structure/grille,

@@ -54,7 +54,7 @@
 	target << "<span class='userdanger'>You are absorbed by the changeling!</span>"
 
 	if(!changeling.has_dna(target.dna))
-		changeling.add_profile(target, user)
+		changeling.add_new_profile(target, user)
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
@@ -130,7 +130,7 @@
 	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
 		user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
 		return
-	if(!check_dna_integrity(target) || !ishuman(target))
+	if(!ishuman(target))
 		user << "<span class='warning'>[target] is not compatible with this ability.</span>"
 		return
 	return 1
@@ -152,14 +152,15 @@
 	target << "<span class='userdanger'>[user] tightens their grip as a painful sensation invades your body.</span>"
 
 	if(!changeling.has_dna(target.dna))
-		changeling.add_profile(target, user)
+		changeling.add_new_profile(target, user)
 	changeling.remove_profile(user)
 
 	var/mob/dead/observer/ghost = target.ghostize(0)
 	user.mind.transfer_to(target)
-	if(ghost && ghost.mind)
+	if(ghost)
 		ghost.mind.transfer_to(user)
-		user.key = ghost.key
+		if(ghost.key)
+			user.key = ghost.key
 
 	user.Paralyse(2)
 	target << "<span class='warning'>Our genes cry out as we swap our [user] form for [target].</span>"

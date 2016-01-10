@@ -38,6 +38,9 @@
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 	..()
 
+/mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
+	return -10
+
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	return
 
@@ -74,7 +77,7 @@
 
 	if(bodytemperature > 360.15)
 		//Body temperature is too hot.
-		throw_alert("alien_fire")
+		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
 		switch(bodytemperature)
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
@@ -93,16 +96,16 @@
 	..()
 
 	switch (severity)
-		if (1.0)
+		if (1)
 			gib()
 			return
 
-		if (2.0)
+		if (2)
 			adjustBruteLoss(60)
 			adjustFireLoss(60)
 			adjustEarDamage(30,120)
 
-		if(3.0)
+		if(3)
 			adjustBruteLoss(30)
 			if (prob(50))
 				Paralyse(1)
@@ -128,7 +131,6 @@
 
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
 
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)
@@ -139,8 +141,10 @@
 	return
 
 /mob/living/carbon/alien/getTrail()
-	return "xltrails"
-
+	if(getBruteLoss() < 200)
+		return pick (list("xltrails_1", "xltrails2"))
+	else
+		return pick (list("xttrails_1", "xttrails2"))
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
@@ -149,9 +153,10 @@ Des: Gives the client of the alien an image on each infected mob.
 	if (client)
 		for (var/mob/living/C in mob_list)
 			if(C.status_flags & XENO_HOST)
-				var/obj/item/organ/internal/body_egg/alien_embryo/A = getorgan(/obj/item/organ/internal/body_egg/alien_embryo)
-				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
-				client.images += I
+				var/obj/item/organ/internal/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo)
+				if(A)
+					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
+					client.images += I
 	return
 
 
@@ -172,6 +177,12 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
 
+/mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
+	src << "<span class='noticealien'>You begin to evolve!</span>"
+	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
+	if(mind)
+		mind.transfer_to(new_xeno)
+	qdel(src)
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

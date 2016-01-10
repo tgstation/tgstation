@@ -1,0 +1,25 @@
+<ui-display>
+  <ui-section label='Power'>
+    <ui-button icon='{{data.on ? "power-off" : "close"}}' style='{{data.on ? "selected" : null}}'
+      action='power'>{{data.on ? "On" : "Off"}}</ui-button>
+  </ui-section>
+  <ui-section label='Output Pressure'>
+    <ui-button icon='pencil' action='pressure' params='{"pressure": "custom"}'>Set</ui-button>
+    <ui-button icon='plus' state='{{data.set_pressure == data.max_pressure ? "disabled" : null}}' action='pressure' params='{"pressure": "max"}'>Max</ui-button>
+    <span class='buttoninfo'>{{Math.round(adata.set_pressure)}} kPa</span>
+  </ui-section>
+  <ui-section label='Filter'>
+    <ui-button state='{{data.filter_type == -1 ? "selected" : null}}'
+      action='filter' params='{"mode": -1}'>Nothing</ui-button>
+    <ui-button state='{{data.filter_type == 0 ? "selected" : null}}'
+      action='filter' params='{"mode": 0}'>Plasma</ui-button>
+    <ui-button state='{{data.filter_type == 1 ? "selected" : null}}'
+      action='filter' params='{"mode": 1}'>O2</ui-button>
+    <ui-button state='{{data.filter_type == 2 ? "selected" : null}}'
+      action='filter' params='{"mode": 2}'>N2</ui-button>
+    <ui-button state='{{data.filter_type == 3 ? "selected" : null}}'
+      action='filter' params='{"mode": 3}'>CO2</ui-button>
+    <ui-button state='{{data.filter_type == 4 ? "selected" : null}}'
+      action='filter' params='{"mode": 4}'>N2O</ui-button>
+	</ui-section>
+</ui-display>

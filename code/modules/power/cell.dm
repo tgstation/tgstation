@@ -1,12 +1,13 @@
 /obj/item/weapon/stock_parts/cell
 	name = "power cell"
 	desc = "A rechargable electrochemical power cell."
+	var/ratingdesc
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
 	origin_tech = "powerstorage=1"
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
 	w_class = 2
@@ -20,7 +21,8 @@
 /obj/item/weapon/stock_parts/cell/New()
 	..()
 	charge = maxcharge
-	desc = "This cell has a power rating of [maxcharge], and you should not swallow it."
+	ratingdesc = " This one has a power rating of [maxcharge], and you should not swallow it."
+	desc = desc + ratingdesc
 	updateicon()
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
@@ -33,7 +35,7 @@
 		overlays += image('icons/obj/power.dmi', "cell-o1")
 
 /obj/item/weapon/stock_parts/cell/proc/percent()		// return % charge of cell
-	return 100.0*charge/maxcharge
+	return 100*charge/maxcharge
 
 // use power from a cell
 /obj/item/weapon/stock_parts/cell/proc/use(amount)
@@ -43,7 +45,7 @@
 	if(charge < amount)	return 0
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
-		feedback_add_details("cell_used","[src.name]")
+		feedback_add_details("cell_used","[src.type]")
 	return 1
 
 // recharge the cell
@@ -145,7 +147,7 @@
 /obj/item/weapon/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
-	origin_tech = "powerstorage=0"
+	origin_tech = null
 	maxcharge = 500
 	materials = list(MAT_GLASS=40)
 	rating = 2
@@ -156,7 +158,7 @@
 
 /obj/item/weapon/stock_parts/cell/secborg
 	name = "security borg rechargable D battery"
-	origin_tech = "powerstorage=0"
+	origin_tech = null
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	materials = list(MAT_GLASS=40)
 	rating = 2.5
@@ -165,9 +167,9 @@
 	..()
 	charge = 0
 
-/obj/item/weapon/stock_parts/cell/pulse //80 pulse shots
+/obj/item/weapon/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
-	maxcharge = 16000
+	maxcharge = 40000
 	rating = 3
 	chargerate = 1500
 
@@ -187,6 +189,13 @@
 	materials = list(MAT_GLASS=60)
 	rating = 3
 	chargerate = 1500
+
+/obj/item/weapon/stock_parts/cell/high/plus
+	name = "high-capacity power cell+"
+	desc = "Where did these come from?"
+	icon_state = "h+cell"
+	maxcharge = 15000
+	chargerate = 2250
 
 /obj/item/weapon/stock_parts/cell/high/empty/New()
 	..()

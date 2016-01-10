@@ -1,5 +1,8 @@
 /mob/living/silicon/ai/death(gibbed)
-	if(stat == DEAD)	return
+	if(stat == DEAD)
+		return
+	if(!gibbed)
+		emote("me", 1, "sparks and its screen flickers, its systems slowly coming to a halt.")
 	stat = DEAD
 
 
@@ -8,6 +11,7 @@
 	else
 		icon_state = "ai_dead"
 
+	anchored = 0 //unbolt floorbolts
 	update_canmove()
 	if(src.eyeobj)
 		src.eyeobj.setLoc(get_turf(src))
@@ -19,13 +23,24 @@
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 
+	if(nuking)
+		set_security_level("red")
+		nuking = 0
+		SSshuttle.emergencyNoEscape = 0
+		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+			SSshuttle.emergency.mode = SHUTTLE_DOCKED
+			SSshuttle.emergency.timer = world.time
+			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+
+	if(doomsday_device)
+		doomsday_device.timing = 0
+		qdel(doomsday_device)
 	if(explosive)
 		spawn(10)
 			explosion(src.loc, 3, 6, 12, 15)
 
 	for(var/obj/machinery/ai_status_display/O in world) //change status
 		if(src.key)
-			spawn( 0 )
 			O.mode = 2
 			if (istype(loc, /obj/item/device/aicard))
 				loc.icon_state = "aicard-404"

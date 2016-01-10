@@ -8,7 +8,8 @@
 	action_button_name = "Toggle Magboots"
 	strip_delay = 70
 	put_on_delay = 70
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
+	origin_tech = "magnets=2"
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
@@ -52,3 +53,4 @@
 	name = "blood-red magboots"
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
+	origin_tech = "magnets=2;syndicate=3"

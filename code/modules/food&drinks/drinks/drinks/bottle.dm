@@ -7,6 +7,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
+	throwforce = 15
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
@@ -124,8 +125,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/SplashReagents(var/mob/M)
 	if(src.reagents.total_volume)
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span class='danger'>The contents of \the [src] splashes all over [M]!</span>"), 1)
+		M.visible_message("<span class='danger'>The contents of \the [src] splashes all over [M]!</span>")
 		reagents.reaction(M, TOUCH)
 		reagents.clear_reagents()
 	return
@@ -136,14 +136,15 @@
 	desc = "A bottle with a sharp broken bottom."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "broken_bottle"
-	force = 9.0
-	throwforce = 5.0
+	force = 9
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	item_state = "beer"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
+	sharpness = IS_SHARP
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater Gin"
@@ -298,13 +299,13 @@
 	..()
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
-	if(is_hot(I) && !active)
+	if(I.is_hot() && !active)
 		active = 1
 		var/turf/bombturf = get_turf(src)
 		var/area/bombarea = get_area(bombturf)
 		message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[bombarea] (JMP)</a>.")
 		log_game("[key_name(user)] has primed a [name] for detonation at [bombarea] ([bombturf.x],[bombturf.y],[bombturf.z]).")
-		
+
 		user << "<span class='info'>You light \the [src] on fire.</span>"
 		overlays += fire_overlay
 		if(!isGlass)

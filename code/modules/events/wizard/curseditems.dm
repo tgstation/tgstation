@@ -37,7 +37,7 @@
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(ruins_spaceworthiness && (H.z != 1 || istype(H.loc, /turf/space)))	continue	//#savetheminers
-		if(ruins_wizard_loadout && H.mind && H.mind in ticker.mode.wizards)		continue
+		if(ruins_wizard_loadout && H.mind && ((H.mind in ticker.mode.wizards) || (H.mind in ticker.mode.apprentices)))		continue
 		if(item_set == "catgirls2015") //Wizard code means never having to say you're sorry
 			H.gender = FEMALE
 		var/list/slots		= list(H.wear_suit, H.shoes, H.head, H.wear_mask, H.r_hand, H.gloves, H.ears) //add new slots as needed to back
@@ -51,6 +51,6 @@
 				I.name = "cursed " + I.name
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		var/datum/effect/effect/system/smoke_spread/smoke = new
-		smoke.set_up(max(1,1), 0, H.loc)
+		var/datum/effect_system/smoke_spread/smoke = new
+		smoke.set_up(0, H.loc)
 		smoke.start()

@@ -5,7 +5,7 @@
 	icon_state = "x2"
 	name = "Input area"
 	density = 0
-	anchored = 1.0
+	anchored = 1
 	New()
 		icon_state = "blank"
 
@@ -14,7 +14,7 @@
 	icon_state = "x"
 	name = "Output area"
 	density = 0
-	anchored = 1.0
+	anchored = 1
 	New()
 		icon_state = "blank"
 

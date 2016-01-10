@@ -4,13 +4,13 @@
 	icon_state = "clipboard"
 	item_state = "clipboard"
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 3
 	throw_range = 7
 	var/obj/item/weapon/pen/haspen		//The stored pen.
 	var/obj/item/weapon/paper/toppaper	//The topmost piece of paper.
 	slot_flags = SLOT_BELT
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/weapon/clipboard/New()
 	update_icon()

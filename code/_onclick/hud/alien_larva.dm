@@ -7,16 +7,9 @@
 	using = new /obj/screen/act_intent()
 	using.icon = 'icons/mob/screen_alien.dmi'
 	using.icon_state = mymob.a_intent
-	using.screen_loc = ui_acti
-	adding += using
-	action_intent = using
-
-	using = new /obj/screen/mov_intent()
-	using.icon = 'icons/mob/screen_alien.dmi'
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
 	adding += using
-	move_intent = using
+	action_intent = using
 
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon = 'icons/mob/screen_alien.dmi'

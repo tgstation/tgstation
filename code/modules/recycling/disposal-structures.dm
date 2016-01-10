@@ -17,7 +17,7 @@
 /obj/structure/disposalholder/Destroy()
 	qdel(gas)
 	active = 0
-	..()
+	return ..()
 
 	// initialize a holder from the contents of a disposal unit
 /obj/structure/disposalholder/proc/init(obj/machinery/disposal/D)
@@ -59,17 +59,16 @@
 	if(!D.trunk)
 		D.expel(src)	// no trunk connected, so expel immediately
 		return
-
 	loc = D.trunk
 	active = 1
 	dir = DOWN
-	spawn(1)
-		move()		// spawn off the movement process
+	move()
 
 	return
 
 // movement process, persists while holder is moving through pipes
 /obj/structure/disposalholder/proc/move()
+	set waitfor = 0
 	var/obj/structure/disposalpipe/last
 	while(active)
 		var/obj/structure/disposalpipe/curr = loc
@@ -122,11 +121,9 @@
 	playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
 
 // called to vent all gas in holder to a location
-/obj/structure/disposalholder/proc/vent_gas(atom/location)
-	if(location)
-		location.assume_air(gas)  // vent all gas to turf
-	air_update_turf()
-	return
+/obj/structure/disposalholder/proc/vent_gas(turf/T)
+	T.assume_air(gas)
+	T.air_update_turf()
 
 /obj/structure/disposalholder/allow_drop()
 	return 1
@@ -197,13 +194,12 @@
 				AM.loc = T
 				AM.pipe_eject(0)
 			qdel(H)
-			..()
-			return
+			return ..()
 
 		// otherwise, do normal expel from turf
 		if(H)
 			expel(H, T, 0)
-	..()
+	return ..()
 
 // returns the direction of the next pipe object, given the entrance dir
 // by default, returns the bitmask of remaining directions
@@ -282,9 +278,7 @@
 			for(var/atom/movable/AM in H)
 				AM.loc = T
 				AM.pipe_eject(direction)
-				spawn(1)
-					if(AM)
-						AM.throw_at(target, 10, 1)
+				AM.throw_at_fast(target, 10, 1)
 
 	else	// no specified direction, so throw in random direction
 
@@ -295,9 +289,7 @@
 
 				AM.loc = T
 				AM.pipe_eject(0)
-				spawn(1)
-					if(AM)
-						AM.throw_at(target, 5, 1)
+				AM.throw_at_fast(target, 5, 1)
 	H.vent_gas(T)
 	qdel(H)
 	return
@@ -346,14 +338,14 @@
 		H.contents_explosion(severity, target)
 
 	switch(severity)
-		if(1.0)
+		if(1)
 			broken(0)
 			return
-		if(2.0)
+		if(2)
 			health -= rand(5,15)
 			healthcheck()
 			return
-		if(3.0)
+		if(3)
 			health -= rand(0,15)
 			healthcheck()
 			return
@@ -637,6 +629,16 @@
 	update()
 	return
 
+/obj/structure/disposalpipe/trunk/Destroy()
+	if(linked)
+		if(istype(linked, /obj/structure/disposaloutlet))
+			var/obj/structure/disposaloutlet/D = linked
+			D.trunk = null
+		else if(istype(linked, /obj/machinery/disposal))
+			var/obj/machinery/disposal/D = linked
+			D.trunk = null
+	return ..()
+
 /obj/structure/disposalpipe/trunk/proc/getlinked()
 	linked = null
 	var/obj/machinery/disposal/D = locate() in src.loc
@@ -687,7 +689,7 @@
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			user << "<span class='notice'>You start slicing the disposal pipe...</span>"
-			if(do_after(user,30, target = src))
+			if(do_after(user,30/I.toolspeed, target = src))
 				if(!src || !W.isOn()) return
 				Deconstruct()
 				user << "<span class='notice'>You slice the disposal pipe.</span>"
@@ -776,7 +778,7 @@
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)
 		trunk.linked = null
-	..()
+	return ..()
 
 // expel the contents of the holder object, then delete it
 // called when the holder exits the outlet
@@ -794,9 +796,7 @@
 		for(var/atom/movable/AM in H)
 			AM.loc = src.loc
 			AM.pipe_eject(dir)
-			spawn(5)
-				if(AM)
-					AM.throw_at(target, eject_range, 1)
+			AM.throw_at_fast(target, eject_range, 1)
 		H.vent_gas(src.loc)
 		qdel(H)
 	return
@@ -821,7 +821,7 @@
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
-			if(do_after(user,20, target = src))
+			if(do_after(user,20/I.toolspeed, target = src))
 				if(!src || !W.isOn()) return
 				user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
 				stored.loc = loc

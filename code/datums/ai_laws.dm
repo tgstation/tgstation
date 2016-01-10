@@ -100,7 +100,7 @@
 				WARNING("Invalid custom AI laws, check silicon_laws.txt")
 				return
 		if(2)
-			var/datum/ai_laws/lawtype = pick(typesof(/datum/ai_laws/default) - /datum/ai_laws/default)
+			var/datum/ai_laws/lawtype = pick(subtypesof(/datum/ai_laws/default))
 			var/datum/ai_laws/templaws = new lawtype()
 			inherent = templaws.inherent
 
@@ -134,7 +134,7 @@
 	src.ion += law
 
 /datum/ai_laws/proc/clear_inherent_laws()
-	del(src.inherent)
+	qdel(src.inherent)
 	src.inherent = list()
 
 /datum/ai_laws/proc/add_supplied_law(number, law)

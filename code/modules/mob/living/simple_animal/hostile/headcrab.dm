@@ -1,13 +1,13 @@
 #define EGG_INCUBATION_TIME 120
 
 /mob/living/simple_animal/hostile/headcrab
-	name = "Headslug"
+	name = "headslug"
 	desc = "Absolutely not de-beaked or harmless. Keep away from corpses."
 	icon_state = "headcrab"
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
-	health = 20
-	maxHealth = 20
+	health = 50
+	maxHealth = 50
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attacktext = "chomps"
@@ -20,6 +20,7 @@
 	ventcrawler = 2
 	var/datum/mind/origin
 	var/egg_lain = 0
+	gold_core_spawnable = 1 //are you sure about this??
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
 	var/obj/item/organ/internal/body_egg/changeling_egg/egg = new(victim)
@@ -30,7 +31,8 @@
 		egg.origin = mind
 	for(var/obj/item/organ/internal/I in src)
 		I.loc = egg
-	visible_message("<span class='warning'>[src] lays an egg in a [victim].</span>")
+	visible_message("<span class='warning'>[src] plants something in [victim]'s flesh!</span>", \
+					"<span class='danger'>We inject our egg into [victim]'s body!</span>")
 	egg_lain = 1
 
 /mob/living/simple_animal/hostile/headcrab/AttackingTarget()
@@ -41,8 +43,11 @@
 		// Changeling egg can survive in aliens!
 		var/mob/living/carbon/C = target
 		if(C.stat == DEAD)
+			if(C.status_flags & XENO_HOST)
+				src << "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>"
+				return
 			Infect(target)
-			src << "<span class='userdanger'>With your egg laid you feel your death rapidly approaching, time to die...</span>"
+			src << "<span class='userdanger'>With our egg laid, our death approaches rapidly...</span>"
 			spawn(100)
 				death()
 			return
@@ -73,13 +78,14 @@
 	for(var/obj/item/organ/internal/I in src)
 		I.Insert(M, 1)
 
-	if(!origin && owner.mind)
-		origin = owner.mind
-
-	if(origin)
+	if(origin && origin.current && (origin.current.stat == DEAD))
 		origin.transfer_to(M)
-		if(origin.changeling)
-			origin.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+		if(!origin.changeling)
+			M.make_changeling()
+		if(origin.changeling.can_absorb_dna(M, owner))
+			origin.changeling.add_new_profile(owner, M)
+
+		origin.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 		M.key = origin.key
 	owner.gib()
 

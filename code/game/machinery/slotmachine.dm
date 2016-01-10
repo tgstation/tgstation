@@ -100,7 +100,7 @@
 /obj/machinery/computer/slot_machine/emag_act()
 	if(!emagged)
 		emagged = 1
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(4, 0, src.loc)
 		spark_system.start()
 		playsound(src.loc, "sparks", 50, 1)
@@ -237,7 +237,7 @@
 		money = 0
 
 		for(var/i = 0, i < 5, i++)
-			var/cointype = pick(typesof(/obj/item/weapon/coin) - /obj/item/weapon/coin)
+			var/cointype = pick(subtypesof(/obj/item/weapon/coin))
 			var/obj/item/weapon/coin/C = new cointype(loc)
 			random_step(C, 2, 50)
 
@@ -289,7 +289,7 @@
 		amount = dispense(amount, cointype, null, 0)
 
 	else
-		var/mob/living/target = locate() in range(src, 2)
+		var/mob/living/target = locate() in range(2, src)
 
 		amount = dispense(amount, cointype, target, 1)
 

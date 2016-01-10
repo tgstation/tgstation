@@ -1,12 +1,13 @@
-##/tg/station v1.0.1
+##/tg/station v1.0.1 
 
 [![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
 
 
 **Website:** http://www.tgstation13.org <BR>
 **Code:** https://github.com/tgstation/-tg-station <BR>
-**Wiki** http://tgstation13.org/wiki/Main_Page<BR>
-**IRC:** irc://irc.rizon.net/coderbus <BR>
+**Wiki** http://tgstation13.org/wiki/Main_Page <BR>
+**IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
+
 
 ##DOWNLOADING
 
@@ -69,19 +70,13 @@ where the admin rank must be properly capitalised.
 Finally, to start the server, run Dream Daemon and enter the path to your
 compiled tgstation.dmb file.  Make sure to set the port to the one you 
 specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
-and the server should start up and be ready to join.
+and the server should start up and be ready to join. It is also recommended that
+you set up the SQL backend (see below).
 
 ###HOSTING ON LINUX
 We use BYGEX for some of our text replacement related code. Unfortunately, we
 only have a windows dll included right now. You can find a version known to compile on linux, along with some basic install instructions here
 https://github.com/optimumtact/byond-regex
-
-Otherwise, edit the file `code/_compile_options.dm`, and comment out:
-`#define USE_BYGEX`
-at the bottom, so that it looks like this:
-`//#define USE_BYGEX`
-Recompile the codebase afterwards.
-
 
 ##UPDATING
 
@@ -118,9 +113,7 @@ To enable an away mission open fileList.txt in the _maps/RandomZLevels directory
 
 ##SQL SETUP
 
-The SQL backend for the library and stats tracking requires a 
-MySQL server.  Your server details go in /config/dbconfig.txt, and the SQL 
-schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes.  More detailed setup instructions are located here: http://www.tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
+The SQL backend requires a MySQL server. SQL is required for the library, stats tracking, admin notes, and job-only bans, among other features, mostly related to server administration. Your server details go in /config/dbconfig.txt, and the SQL schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes.  More detailed setup instructions are located here: http://www.tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
 
 ##IRC BOT SETUP
 
@@ -137,7 +130,9 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 All code after commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).
 All code before commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
+(Including tools unless their readme specifies otherwise.)
 
-including tools unless their readme specifies otherwise. See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details.
+See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details.
+
 All content including icons and sound is under a Creative Commons 3.0 BY-SA
 license (http://creativecommons.org/licenses/by-sa/3.0/).

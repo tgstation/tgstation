@@ -70,11 +70,11 @@
 
 proc/get_location_modifier(mob/M)
 	var/turf/T = get_turf(M)
-	if(locate(/obj/structure/optable, T))
+	if(locate(/obj/structure/table/optable, T))
 		return 1
 	else if(locate(/obj/structure/table, T))
 		return 0.8
-	else if(locate(/obj/structure/stool/bed, T))
+	else if(locate(/obj/structure/bed, T))
 		return 0.7
 	else
 		return 0.5

@@ -69,7 +69,7 @@
 /datum/table_recipe/birthdaycake
 	name = "Birthday cake"
 	reqs = list(
-		/obj/item/clothing/head/cakehat = 1,
+		/obj/item/clothing/head/hardhat/cakehat = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/birthday

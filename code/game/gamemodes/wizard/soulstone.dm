@@ -4,7 +4,7 @@
 	icon_state = "soulstone"
 	item_state = "electronic"
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefacts power."
-	w_class = 1.0
+	w_class = 1
 	slot_flags = SLOT_BELT
 	origin_tech = "bluespace=4;materials=4"
 	var/imprinted = "empty"
@@ -28,8 +28,14 @@
 	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 		return ..()
 	if(istype(M, /mob/living/carbon/human/dummy))
-		return..()
+		return ..()
+	if(iscultist(M))
+		user << "<span class='cultlarge'>You shouldn't do that.</span>"
+		return
 	add_logs(user, M, "captured [M.name]'s soul", src)
+
+	if(iscultist(user) && M && M.mind)
+		new /obj/item/summoning_orb(get_turf(M))
 
 	transfer_soul("VICTIM", M, user)
 	return
@@ -101,98 +107,87 @@
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 
 
-/obj/item/device/soulstone/proc/transfer_soul(choice as text, target, mob/U).
+/obj/item/device/soulstone/proc/transfer_soul(choice as text, target, mob/user).
 	switch(choice)
 		if("FORCE")
-			if(!iscarbon(target))		//TO-DO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
+			if(!iscarbon(target))		//TODO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
+				return 0
+			if(contents.len)
 				return 0
 			var/mob/living/carbon/T = target
-			var/obj/item/device/soulstone/C = src
 			if(T.client != null)
-				if(C.contents.len)
-					return 0
-				else
-					for(var/obj/item/W in T)
-						T.unEquip(W)
-				init_shade(C, T, U)
+				for(var/obj/item/W in T)
+					T.unEquip(W)
+				init_shade(src, T, user)
 				return 1
 			else
-				U << "<span class='userdanger'>Capture failed!</span>: The soul has already fled it's mortal frame. You attempt to bring it back..."
-				getCultGhost(C,T,U)
-			return 0
+				user << "<span class='userdanger'>Capture failed!</span>: The soul has already fled it's mortal frame. You attempt to bring it back..."
+				return getCultGhost(src,T,user)
+
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
-			var/obj/item/device/soulstone/C = src
-			if(ticker.mode.name == "cult" && T.mind == ticker.mode:sacrifice_target)
-				if(iscultist(U))
-					U << "<span class='danger'>The Geometer of blood wants this mortal sacrificed with the rune.</span>"
-				else
-					U << "<span class='danger'>The soul stone doesn't work for no apparent reason.</span>"
-				return 0
-			if(C.imprinted != "empty")
-				U << "<span class='userdanger'>Capture failed!</span>: The soul stone has already been imprinted with [C.imprinted]'s mind!"
+			if(imprinted != "empty")
+				user << "<span class='userdanger'>Capture failed!</span>: The soul stone has already been imprinted with [imprinted]'s mind!"
 			else
 				if (T.stat == 0)
-					U << "<span class='userdanger'>Capture failed!</span>: Kill or maim the victim first!"
+					user << "<span class='userdanger'>Capture failed!</span>: Kill or maim the victim first!"
 				else
 					if(T.client == null)
-						U << "<span class='userdanger'>Capture failed!</span>: The soul has already fled it's mortal frame. You attempt to bring it back..."
-						getCultGhost(C,T,U)
+						user << "<span class='userdanger'>Capture failed!</span>: The soul has already fled it's mortal frame. You attempt to bring it back..."
+						getCultGhost(src,T,user)
 					else
-						if(C.contents.len)
-							U << "<span class='userdanger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room."
+						if(contents.len)
+							user << "<span class='userdanger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room."
 						else
 							for(var/obj/item/W in T)
 								T.unEquip(W)
-							init_shade(C, T, U, vic = 1)
+							init_shade(src, T, user, vic = 1)
 							qdel(T)
 		if("SHADE")
 			var/mob/living/simple_animal/shade/T = target
-			var/obj/item/device/soulstone/C = src
 			if (T.stat == DEAD)
-				U << "<span class='userdanger'>Capture failed!</span>: The shade has already been banished!"
+				user << "<span class='userdanger'>Capture failed!</span>: The shade has already been banished!"
 			else
-				if(C.contents.len)
-					U << "<span class='userdanger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room."
+				if(contents.len)
+					user << "<span class='userdanger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room."
 				else
-					if(T.name != C.imprinted)
-						U << "<span class='userdanger'>Capture failed!</span>: The soul stone has already been imprinted with [C.imprinted]'s mind!"
+					if(T.name != imprinted)
+						user << "<span class='userdanger'>Capture failed!</span>: The soul stone has already been imprinted with [imprinted]'s mind!"
 					else
-						T.loc = C //put shade in stone
+						T.loc = src //put shade in stone
 						T.status_flags |= GODMODE
 						T.canmove = 0
 						T.health = T.maxHealth
-						C.icon_state = "soulstone2"
+						icon_state = "soulstone2"
 						T << "Your soul has been recaptured by the soul stone, its arcane energies are reknitting your ethereal form"
-						if(U != T)
-							U << "<span class='info'><b>Capture successful!</b>:</span> [T.name]'s has been recaptured and stored within the soul stone."
+						if(user != T)
+							user << "<span class='info'><b>Capture successful!</b>:</span> [T.name]'s has been recaptured and stored within the soul stone."
 		if("CONSTRUCT")
 			var/obj/structure/constructshell/T = target
-			var/obj/item/device/soulstone/C = src
-			var/mob/living/simple_animal/shade/A = locate() in C
+			var/mob/living/simple_animal/shade/A = locate() in src
 			if(A)
-				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
+				var/construct_class = alert(user, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
 				if(!T || !T.loc)
 					return
 				switch(construct_class)
 					if("Juggernaut")
-						makeNewConstruct(/mob/living/simple_animal/construct/armored, A, U)
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
 
 					if("Wraith")
-						makeNewConstruct(/mob/living/simple_animal/construct/wraith, A, U)
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
 
 					if("Artificer")
-						makeNewConstruct(/mob/living/simple_animal/construct/builder, A, U)
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
 
 				qdel(T)
-				qdel(C)
+				qdel(src)
 			else
-				U << "<span class='userdanger'>Creation failed!</span>: The soul stone is empty! Go kill someone!"
+				user << "<span class='userdanger'>Creation failed!</span>: The soul stone is empty! Go kill someone!"
 	return
 
 
-/proc/makeNewConstruct(mob/living/simple_animal/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0)
-	var/mob/living/simple_animal/construct/newstruct = new ctype(get_turf(target))
+/proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null)
+	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
 	newstruct.faction |= "\ref[stoner]"
 	newstruct.key = target.key
 	if(stoner && iscultist(stoner) || cultoverride)
@@ -205,7 +200,7 @@
 	if(stoner && iswizard(stoner))
 		newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 	else if(stoner && iscultist(stoner))
-		newstruct << "<B>You are still bound to serve the cult, follow their orders and help them complete their goals at all costs.</B>"
+		newstruct << "<B>You are still bound to serve the cult, follow their orders and help them summon the Geometer at all costs.</B>"
 	else newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 	newstruct.cancel_camera()
 
@@ -243,34 +238,24 @@
 
 
 /obj/item/device/soulstone/proc/getCultGhost(obj/item/device/soulstone/C, mob/living/carbon/human/T, mob/U)
-	var/list/candidates = get_candidates(BE_CULTIST)
 
-	shuffle(candidates)
+	var/list/consenting_candidates = pollCandidates("Would you like to play as a Shade?", be_special_flag = ROLE_CULTIST, poll_time = 100)
 
-	var/time_passed = world.time
-	var/list/consenting_candidates = list()
-
-	for(var/candidate in candidates)
-
-		spawn(0)
-			switch(alert(candidate, "Would you like to play as a Shade? Please choose quickly!","Confirmation","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>=50 || !src)
-						return
-					consenting_candidates += candidate
-
-	sleep(50)
+	if(!T) //target mob got soulstoned or gibbed during sleep(50)
+		return 0
 
 	if(consenting_candidates.len)
-		var/client/ghost = null
+		var/mob/dead/observer/ghost = null
 		ghost = pick(consenting_candidates)
 		if(C.contents.len) //If they used the soulstone on someone else in the meantime
 			return 0
 		if(!T.client) //If the original returns in the alloted time
-			T.client = ghost
+			T.client = ghost.client
 		for(var/obj/item/W in T)
 			T.unEquip(W)
 		init_shade(C, T, U)
 		qdel(T)
+		return 1
 	else
 		U << "<span class='danger'>The ghost has fled beyond your grasp.</span>"
+		return 0

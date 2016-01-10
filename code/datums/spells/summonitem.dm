@@ -15,9 +15,9 @@
 
 	action_icon_state = "summons"
 
-/obj/effect/proc_holder/spell/targeted/summonitem/cast(list/targets)
-	for(var/mob/living/user in targets)
-		var/list/hand_items = list(user.get_active_hand(),user.get_inactive_hand())
+/obj/effect/proc_holder/spell/targeted/summonitem/cast(list/targets,mob/user = usr)
+	for(var/mob/living/L in targets)
+		var/list/hand_items = list(L.get_active_hand(),L.get_inactive_hand())
 		var/butterfingers = 0
 		var/message
 
@@ -58,7 +58,7 @@
 					var/obj/item/organ/internal/organ = item_to_retrive
 					if(organ.owner)
 						// If this code ever runs I will be happy
-						add_logs(user, organ.owner, "magically removed [organ.name] from", addition="INTENT: [uppertext(user.a_intent)]")
+						add_logs(L, organ.owner, "magically removed [organ.name] from", addition="INTENT: [uppertext(L.a_intent)]")
 						organ.Remove(organ.owner)
 			else
 				while(!isturf(item_to_retrive.loc) && infinite_recursion < 10) //if it's in something you get the whole thing.
@@ -67,7 +67,7 @@
 
 						if(issilicon(M)) //Items in silicons warp the whole silicon
 							M.loc.visible_message("<span class='warning'>[M] suddenly disappears!</span>")
-							M.loc = user.loc
+							M.loc = L.loc
 							M.loc.visible_message("<span class='caution'>[M] suddenly appears!</span>")
 							item_to_retrive = null
 							break
@@ -95,22 +95,22 @@
 				item_to_retrive.loc.visible_message("<span class='warning'>The [item_to_retrive.name] suddenly disappears!</span>")
 
 
-			if(user.hand) //left active hand
-				if(!user.equip_to_slot_if_possible(item_to_retrive, slot_l_hand, 0, 1, 1))
-					if(!user.equip_to_slot_if_possible(item_to_retrive, slot_r_hand, 0, 1, 1))
+			if(L.hand) //left active hand
+				if(!L.equip_to_slot_if_possible(item_to_retrive, slot_l_hand, 0, 1, 1))
+					if(!L.equip_to_slot_if_possible(item_to_retrive, slot_r_hand, 0, 1, 1))
 						butterfingers = 1
 			else			//right active hand
-				if(!user.equip_to_slot_if_possible(item_to_retrive, slot_r_hand, 0, 1, 1))
-					if(!user.equip_to_slot_if_possible(item_to_retrive, slot_l_hand, 0, 1, 1))
+				if(!L.equip_to_slot_if_possible(item_to_retrive, slot_r_hand, 0, 1, 1))
+					if(!L.equip_to_slot_if_possible(item_to_retrive, slot_l_hand, 0, 1, 1))
 						butterfingers = 1
 			if(butterfingers)
-				item_to_retrive.loc = user.loc
+				item_to_retrive.loc = L.loc
 				item_to_retrive.loc.visible_message("<span class='caution'>The [item_to_retrive.name] suddenly appears!</span>")
-				playsound(get_turf(user),"sound/magic/SummonItems_generic.ogg",50,1)
+				playsound(get_turf(L),"sound/magic/SummonItems_generic.ogg",50,1)
 			else
-				item_to_retrive.loc.visible_message("<span class='caution'>The [item_to_retrive.name] suddenly appears in [user]'s hand!</span>")
-				playsound(get_turf(user),"sound/magic/SummonItems_generic.ogg",50,1)
+				item_to_retrive.loc.visible_message("<span class='caution'>The [item_to_retrive.name] suddenly appears in [L]'s hand!</span>")
+				playsound(get_turf(L),"sound/magic/SummonItems_generic.ogg",50,1)
 
 
 		if(message)
-			user << message
+			L << message

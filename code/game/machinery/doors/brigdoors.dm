@@ -19,7 +19,7 @@
 	icon_state = "frame"
 	desc = "A remote control for a door."
 	req_access = list(access_brig)
-	anchored = 1.0    		// can't pick it up
+	anchored = 1    		// can't pick it up
 	density = 0       		// can walk through it.
 	var/id = null     		// id of door it controls.
 	var/releasetime = 0		// when world.time reaches it - release the prisoneer
@@ -38,19 +38,16 @@
 	Radio = new/obj/item/device/radio(src)
 	Radio.listening = 0
 
-	pixel_x = ((src.dir & 3)? (0) : (src.dir == 4 ? 32 : -32))
-	pixel_y = ((src.dir & 3)? (src.dir ==1 ? 24 : -32) : (0))
-
 	spawn(20)
-		for(var/obj/machinery/door/window/brigdoor/M in range(20, src))
+		for(var/obj/machinery/door/window/brigdoor/M in ultra_range(20, src))
 			if (M.id == src.id)
 				targets += M
 
-		for(var/obj/machinery/flasher/F in range(20, src))
+		for(var/obj/machinery/flasher/F in ultra_range(20, src))
 			if(F.id == src.id)
 				targets += F
 
-		for(var/obj/structure/closet/secure_closet/brig/C in range(20, src))
+		for(var/obj/structure/closet/secure_closet/brig/C in ultra_range(20, src))
 			if(C.id == src.id)
 				targets += C
 

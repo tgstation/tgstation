@@ -5,7 +5,7 @@
 	icon_keyboard = "security_key"
 	circuit = /obj/item/weapon/circuitboard/security
 	var/obj/machinery/camera/current = null
-	var/last_pic = 1.0
+	var/last_pic = 1
 	var/list/network = list("SS13")
 	var/mapping = 0//For the overview file, interesting bit of code.
 
@@ -68,8 +68,10 @@
 
 		if(C)
 			if ((get_dist(user, src) > 1 || user.machine != src || user.eye_blind || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
+				user.unset_machine()
 				if(!C.can_use() && !isAI(user))
 					src.current = null
+
 				return 0
 			else
 				if(isAI(user))

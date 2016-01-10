@@ -21,8 +21,6 @@
 		t_has = "have"
 		t_is = "are"
 	else
-		if(icon)
-			msg += "\icon[src] " //note, should we ever go back to runtime-generated icons (please don't), you will need to change this to \icon[icon] to prevent crashes.
 		switch(gender)
 			if(MALE)
 				t_He = "He"
@@ -241,8 +239,14 @@
 
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
-	else if(blood_max)
-		msg += "<B>[t_He] [t_is] bleeding!</B>\n"
+	if(blood_max)
+		if(reagents.has_reagent("heparin"))
+			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
+		else
+			msg += "<B>[t_He] [t_is] bleeding!</B>\n"
+
+	if(reagents.has_reagent("teslium"))
+		msg += "[t_He] is emitting a gentle blue glow!\n"
 
 	msg += "</span>"
 
@@ -263,7 +267,7 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
-	if(!wear_mask && is_thrall(src) && in_range(user,src))
+	if(!skipface && is_thrall(src) && in_range(user,src))
 		msg += "Their features seem unnaturally tight and drawn.\n"
 
 	if(istype(user, /mob/living/carbon/human))
@@ -280,7 +284,8 @@
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/internal/cyberimp/eyes/hud/medical))
 					var/implant_detect
 					for(var/obj/item/organ/internal/cyberimp/CI in internal_organs)
-						implant_detect += "[name] is modified with a [CI.name].<br>"
+						if(CI.status == ORGAN_ROBOTIC)
+							implant_detect += "[name] is modified with a [CI.name].<br>"
 					if(implant_detect)
 						msg += "Detected cybernetic modifications:<br>"
 						msg += implant_detect

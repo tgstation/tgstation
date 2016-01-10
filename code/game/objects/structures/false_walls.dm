@@ -19,9 +19,8 @@
 	/obj/structure/falsewall/reinforced,  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
 	/turf/simulated/wall/rust,
 	/turf/simulated/wall/r_wall/rust)
-	smooth = 1
+	smooth = SMOOTH_TRUE
 	can_be_unanchored = 0
-
 
 /obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
@@ -30,10 +29,11 @@
 	opening = 1
 	if(density)
 		do_the_flick()
-		sleep(4)
-		density = 0
-		SetOpacity(0)
-		update_icon()
+		sleep(5)
+		if(!qdeleted(src))
+			density = 0
+			SetOpacity(0)
+			update_icon()
 	else
 		var/srcturf = get_turf(src)
 		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
@@ -41,22 +41,23 @@
 			return
 		do_the_flick()
 		density = 1
-		sleep(4)
-		SetOpacity(1)
-		update_icon()
+		sleep(5)
+		if(!qdeleted(src))
+			SetOpacity(1)
+			update_icon()
 	opening = 0
 
 /obj/structure/falsewall/proc/do_the_flick()
 	if(density)
-		smooth = 0
-		clear_overlays(src)
-		flick("fwall_opening", src)
+		smooth = SMOOTH_FALSE
+		clear_smooth_overlays()
+		icon_state = "fwall_opening"
 	else
-		flick("fwall_closing", src)
+		icon_state = "fwall_closing"
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(density)
-		smooth = 1
+		smooth = SMOOTH_TRUE
 		smooth_icon(src)
 		icon_state = ""
 	else
@@ -168,8 +169,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			for(var/mob/living/L in range(3,src))
-				L.irradiate(4)
+			radiation_pulse(get_turf(src), 0, 3, 15, 1)
 			for(var/turf/simulated/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
@@ -217,7 +217,7 @@
 	canSmoothWith = list(/obj/structure/falsewall/plasma, /turf/simulated/wall/mineral/plasma)
 
 /obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user, params)
-	if(is_hot(W) > 300)
+	if(W.is_hot() > 300)
 		message_admins("Plasma falsewall ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma falsewall ignited by [key_name(user)] in ([x],[y],[z])")
 		burnbabyburn()
@@ -261,3 +261,12 @@
 	mineral = "wood"
 	walltype = "wood"
 	canSmoothWith = list(/obj/structure/falsewall/wood, /turf/simulated/wall/mineral/wood)
+
+/obj/structure/falsewall/iron
+	name = "rough metal wall"
+	desc = "A wall with rough metal plating."
+	icon = 'icons/turf/walls/iron_wall.dmi'
+	icon_state = ""
+	mineral = "metal"
+	walltype = "iron"
+	canSmoothWith = list(/obj/structure/falsewall/iron, /turf/simulated/wall/mineral/iron)

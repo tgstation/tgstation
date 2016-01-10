@@ -9,13 +9,13 @@
 /obj/screen
 	name = ""
 	icon = 'icons/mob/screen_gen.dmi'
-	layer = 20.0
+	layer = 20
 	unacidable = 1
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 
 /obj/screen/Destroy()
 	master = null
-	..()
+	return ..()
 
 
 /obj/screen/text

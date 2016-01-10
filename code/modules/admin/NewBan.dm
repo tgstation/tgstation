@@ -117,9 +117,9 @@ var/savefile/Banlist
 		if (temp)
 			Banlist["minutes"] << bantimestamp
 		if(!temp)
-			notes_add(ckey, "Permanently banned - [reason]")
+			add_note(ckey, "Permanently banned - [reason]", null, bannedby, 0)
 		else
-			notes_add(ckey, "Banned for [minutes] minutes - [reason]")
+			add_note(ckey, "Banned for [minutes] minutes - [reason]", null, bannedby, 0)
 	return 1
 
 /proc/RemoveBan(foldername)

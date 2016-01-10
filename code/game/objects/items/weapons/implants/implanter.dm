@@ -6,7 +6,7 @@
 	item_state = "syringe_0"
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2.0
+	w_class = 2
 	origin_tech = "materials=1;biotech=3;programming=2"
 	materials = list(MAT_METAL=600, MAT_GLASS=200)
 	var/obj/item/weapon/implant/imp = null
@@ -32,8 +32,10 @@
 		if(T && (M == user || do_after(user, 50)))
 			if(user && M && (get_turf(M) == T) && src && imp)
 				if(imp.implant(M, user))
-					user << "<span class='notice'>You implant the implant into [M].</span>"
-					M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you with the implant.</span>")
+					if (M == user)
+						user << "<span class='notice'>You implant yourself.</span>"
+					else
+						M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you.</span>")
 					imp = null
 					update_icon()
 

@@ -6,7 +6,7 @@
 	item_state = ""	//no inhands
 	item_color = "bluetie"
 	slot_flags = 0
-	w_class = 2.0
+	w_class = 2
 
 /obj/item/clothing/tie/blue
 	name = "blue tie"
@@ -84,7 +84,8 @@
 	desc = "A bronze medal."
 	icon_state = "bronze"
 	item_color = "bronze"
-	burn_state = -1 //Won't burn in fires
+	materials = list(MAT_METAL=1000)
+	burn_state = FIRE_PROOF
 
 //Pinning medals on people
 /obj/item/clothing/tie/medal/attack(mob/living/carbon/human/M, mob/living/user)
@@ -109,7 +110,7 @@
 
 /obj/item/clothing/tie/medal/conduct
 	name = "distinguished conduct medal"
-	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is most basic award given by Nanotrasen. It is often awarded by a captain to a member of his crew."
+	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is the most basic award given by Nanotrasen. It is often awarded by a captain to a member of his crew."
 
 /obj/item/clothing/tie/medal/bronze_heart
 	name = "bronze heart medal"
@@ -125,6 +126,7 @@
 	desc = "A silver medal."
 	icon_state = "silver"
 	item_color = "silver"
+	materials = list(MAT_SILVER=1000)
 
 /obj/item/clothing/tie/medal/silver/valor
 	name = "medal of valor"
@@ -139,6 +141,7 @@
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
 	item_color = "gold"
+	materials = list(MAT_GOLD=1000)
 
 /obj/item/clothing/tie/medal/gold/captain
 	name = "medal of captaincy"
@@ -289,3 +292,15 @@
 /obj/item/clothing/tie/petcollar/attack_self(mob/user)
 	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
+
+//////////////
+//DOPE BLING//
+//////////////
+
+/obj/item/clothing/tie/dope_necklace
+	name = "gold necklace"
+	desc = "Damn, it feels good to be a gangster."
+	icon = 'icons/obj/clothing/ties.dmi'
+	icon_state = "bling"
+	item_state = ""	//no inhands
+	item_color = "bling"

@@ -9,8 +9,8 @@
 	icon_state = "paint_neutral"
 	item_color = "FFFFFF"
 	item_state = "paintcan"
-	w_class = 3.0
-	burn_state = 0 //Burnable
+	w_class = 3
+	burn_state = FLAMMABLE
 	burntime = 5
 	var/paintleft = 10
 

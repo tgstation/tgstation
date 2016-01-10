@@ -11,12 +11,9 @@
 
 	name = "gas filter"
 
-	req_access = list(access_atmospherics)
-
 	can_unwrench = 1
 
 	var/on = 0
-	var/temp = null
 
 	var/target_pressure = ONE_ATMOSPHERE
 
@@ -39,15 +36,15 @@ Filter types:
 	flipped = 1
 
 /obj/machinery/atmospherics/components/trinary/filter/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
+		radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/trinary/filter/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
-	..()
+	if(SSradio)
+		SSradio.remove_object(src,frequency)
+	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	overlays.Cut()
@@ -62,7 +59,7 @@ Filter types:
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
 
-	if(!(stat & NOPOWER) && on && nodes[NODE1] && nodes[NODE2] && nodes[NODE3])
+	if(!(stat & NOPOWER) && on && NODE1 && NODE2 && NODE3)
 		icon_state = "filter_on[flipped?"_f":""]"
 		return
 
@@ -80,12 +77,12 @@ Filter types:
 	..()
 	if(!on)
 		return 0
-	if(!(nodes[NODE1] && nodes[NODE2] && nodes[NODE3]))
+	if(!(NODE1 && NODE2 && NODE3))
 		return 0
 
-	var/datum/gas_mixture/air1 = airs[AIR1]
-	var/datum/gas_mixture/air2 = airs[AIR2]
-	var/datum/gas_mixture/air3 = airs[AIR3]
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air3 = AIR3
 
 	var/output_starting_pressure = air3.return_pressure()
 
@@ -157,66 +154,62 @@ Filter types:
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/attack_hand(mob/user)
-	if(..())
+	if(..() | !user)
 		return
+	interact(user)
 
-	if(!src.allowed(user))
-		user << "<span class='danger'>Access denied.</span>"
-		return
-
-	ui_interact(user)
-
-/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+/obj/machinery/atmospherics/components/trinary/filter/interact(mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
+	if(!src.allowed(usr))
+		usr << "<span class='danger'>Access denied.</span>"
+		return
+	ui_interact(user)
 
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_filter.tmpl", name, 400, 320, 0)
+/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "atmos_filter", name, 430, 140, master_ui, state)
+		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/filter/get_ui_data()
 	var/data = list()
 	data["on"] = on
-	data["pressure_set"] = round(target_pressure*100) //Nano UI can't handle rounded non-integers, apparently.
-	data["max_pressure"] = MAX_OUTPUT_PRESSURE
+	data["set_pressure"] = round(target_pressure)
+	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 	data["filter_type"] = filter_type
 	return data
 
-/obj/machinery/atmospherics/components/trinary/filter/Topic(href, href_list)
+/obj/machinery/atmospherics/components/trinary/filter/ui_act(action, params)
 	if(..())
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
-	if(href_list["filterset"])
-		src.filter_type = text2num(href_list["filterset"])
-		var/filtering_name = "nothing"
-		switch(filter_type)
-			if(FILTER_PLASMA)
-				filtering_name = "plasma"
-			if(FILTER_OXYGEN)
-				filtering_name = "oxygen"
-			if(FILTER_NITROGEN)
-				filtering_name = "nitrogen"
-			if(FILTER_CARBONDIOXIDE)
-				filtering_name = "carbon dioxide"
-			if(FILTER_NITROUSOXIDE)
-				filtering_name = "nitrous oxide"
-		investigate_log("was set to filter [filtering_name] by [key_name(usr)]", "atmos")
-	if (href_list["temp"])
-		src.temp = null
-	if(href_list["set_press"])
-		switch(href_list["set_press"])
-			if ("max")
-				target_pressure = MAX_OUTPUT_PRESSURE
-			if ("set")
-				target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
-		investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
-	if(href_list["power"])
-		on=!on
-		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
-	src.update_icon()
-	src.updateUsrDialog()
-/*
-	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			src.attack_hand(M)
-*/
-	return
+
+	switch(action)
+		if("power")
+			on=!on
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+		if("pressure")
+			switch(params["pressure"])
+				if("max")
+					target_pressure = MAX_OUTPUT_PRESSURE
+				if("custom")
+					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", target_pressure)))
+			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+		if("filter")
+			src.filter_type = text2num(params["mode"])
+			var/filtering_name = "nothing"
+			switch(filter_type)
+				if(FILTER_PLASMA)
+					filtering_name = "plasma"
+				if(FILTER_OXYGEN)
+					filtering_name = "oxygen"
+				if(FILTER_NITROGEN)
+					filtering_name = "nitrogen"
+				if(FILTER_CARBONDIOXIDE)
+					filtering_name = "carbon dioxide"
+				if(FILTER_NITROUSOXIDE)
+					filtering_name = "nitrous oxide"
+			investigate_log("was set to filter [filtering_name] by [key_name(usr)]", "atmos")
+	update_icon()
+	return 1

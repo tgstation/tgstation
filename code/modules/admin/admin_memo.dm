@@ -19,7 +19,7 @@
 	var/sql_ckey = sanitizeSQL(src.ckey)
 	switch(task)
 		if("Write")
-			var/DBQuery/query_memocheck = dbcon.NewQuery("SELECT ckey FROM [format_table_name("memo")] WHERE (ckey = '[sql_ckey]')")
+			var/DBQuery/query_memocheck = dbcon.NewQuery("SELECT ckey FROM [format_table_name("memo")] WHERE ckey = '[sql_ckey]'")
 			if(!query_memocheck.Execute())
 				var/err = query_memocheck.ErrorMsg()
 				log_game("SQL ERROR obtaining ckey from memo table. Error : \[[err]\]\n")
@@ -27,7 +27,7 @@
 			if(query_memocheck.NextRow())
 				src << "You already have set a memo."
 				return
-			var/memotext = input(src,"Write your Memo","Memo") as text|null
+			var/memotext = input(src,"Write your Memo","Memo") as message
 			if(!memotext)
 				return
 			memotext = sanitizeSQL(memotext)
@@ -56,20 +56,20 @@
 			if(!target_ckey)
 				return
 			var/target_sql_ckey = sanitizeSQL(target_ckey)
-			var/DBQuery/query_memofind = dbcon.NewQuery("SELECT ckey, memotext FROM [format_table_name("memo")] WHERE (ckey = '[target_sql_ckey]')")
+			var/DBQuery/query_memofind = dbcon.NewQuery("SELECT memotext FROM [format_table_name("memo")] WHERE ckey = '[target_sql_ckey]'")
 			if(!query_memofind.Execute())
 				var/err = query_memofind.ErrorMsg()
-				log_game("SQL ERROR obtaining ckey, memotext from memo table. Error : \[[err]\]\n")
+				log_game("SQL ERROR obtaining memotext from memo table. Error : \[[err]\]\n")
 				return
 			if(query_memofind.NextRow())
-				var/old_memo = query_memofind.item[2]
-				var/new_memo = input("Input new memo", "New Memo", "[old_memo]", null) as null|text
+				var/old_memo = query_memofind.item[1]
+				var/new_memo = input("Input new memo", "New Memo", "[old_memo]", null) as message
 				if(!new_memo)
 					return
 				new_memo = sanitizeSQL(new_memo)
 				var/edit_text = "Edited by [sql_ckey] on [SQLtime()] from<br>[old_memo]<br>to<br>[new_memo]<hr>"
 				edit_text = sanitizeSQL(edit_text)
-				var/DBQuery/update_query = dbcon.NewQuery("UPDATE [format_table_name("memo")] SET memotext = '[new_memo]', last_editor = '[sql_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE (ckey = '[target_sql_ckey]')")
+				var/DBQuery/update_query = dbcon.NewQuery("UPDATE [format_table_name("memo")] SET memotext = '[new_memo]', last_editor = '[sql_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE ckey = '[target_sql_ckey]'")
 				if(!update_query.Execute())
 					var/err = update_query.ErrorMsg()
 					log_game("SQL ERROR editing memo. Error : \[[err]\]\n")

@@ -1,3 +1,6 @@
+#define SIPHONING	0
+#define SCRUBBING	1
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber
 	icon_state = "scrub_map"
 
@@ -22,7 +25,7 @@
 	var/list/turf/simulated/adjacent_turfs = list()
 
 	var/on = 0
-	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
+	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 	var/scrub_CO2 = 1
 	var/scrub_Toxins = 0
 	var/scrub_N2O = 0
@@ -46,12 +49,16 @@
 		id_tag = num2text(uid)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
+	if(SSradio)
+		SSradio.remove_object(src,frequency)
+	radio_connection = null
 	if(initial_loc)
 		initial_loc.air_scrub_info -= id_tag
 		initial_loc.air_scrub_names -= id_tag
-	..()
+		initial_loc = null
+	for(var/I in adjacent_turfs)
+		I = null
+	return ..()
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
 	if(!powered(power_channel))
 		return 0
@@ -62,14 +69,14 @@
 
 	var/amount = idle_power_usage
 
-	if (scrubbing)
+	if(scrubbing & SCRUBBING)
 		if (scrub_CO2)
 			amount += idle_power_usage
 		if (scrub_Toxins)
 			amount += idle_power_usage
 		if (scrub_N2O)
 			amount += idle_power_usage
-	else
+	else //scrubbing == SIPHONING
 		amount = active_power_usage
 
 	if (widenet)
@@ -86,19 +93,19 @@
 		icon_state = "scrub_welded"
 		return
 
-	if(!nodes[NODE1] || !on || stat & (NOPOWER|BROKEN))
+	if(!NODE1 || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "scrub_off"
 		return
 
-	if(scrubbing)
+	if(scrubbing & SCRUBBING)
 		icon_state = "scrub_on"
-	else
+	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, radio_filter_in)
+	radio_connection = SSradio.add_object(src, frequency, radio_filter_in)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
 	if(!radio_connection)
@@ -142,7 +149,7 @@
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!nodes[NODE1])
+	if (!NODE1)
 		on = 0
 	//broadcast_status()
 	if(!on || welded)
@@ -159,9 +166,9 @@
 		return 0
 
 	var/datum/gas_mixture/environment = tile.return_air()
-	var/datum/gas_mixture/air_contents = airs[AIR1]
+	var/datum/gas_mixture/air_contents = AIR1
 
-	if(scrubbing)
+	if(scrubbing & SCRUBBING)
 		if((environment.toxins>0) || (environment.carbon_dioxide>0) || (environment.trace_gases.len>0))
 			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
@@ -290,19 +297,19 @@
 		if(WT.remove_fuel(0,user))
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 			user << "<span class='notice'>Now welding the scrubber.</span>"
-			if(do_after(user, 20, target = src))
+			if(do_after(user, 20/W.toolspeed, target = src))
 				if(!src || !WT.isOn())
 					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				if(!welded)
 					user.visible_message("[user] welds the scrubber shut.","You weld the scrubber shut.", "You hear welding.")
 					welded = 1
-					update_icon()
 				else
 					user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
 					welded = 0
-					update_icon()
-			return 1
+				update_icon()
+				pipe_vision_img = image(src, loc, layer = 20, dir = dir)
+			return 0
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)
@@ -312,3 +319,6 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded
+
+#undef SIPHONING
+#undef SCRUBBING

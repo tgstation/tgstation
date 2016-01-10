@@ -6,6 +6,7 @@
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
 	var/datum/mind/mind
+	var/list/datum/action/actions = list()
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
@@ -26,7 +27,6 @@
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
-	var/obj/screen/leap_icon = null
 	var/obj/screen/healthdoll = null
 
 	var/damageoverlaytemp = 0
@@ -49,8 +49,6 @@
 	var/stuttering = null	//Carbon
 	var/slurring = 0		//Carbon
 	var/real_name = null
-	var/bhunger = 0			//Carbon
-	var/ajourn = 0
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/sleeping = 0		//Carbon
@@ -79,19 +77,20 @@
 	var/stunned = 0
 	var/weakened = 0
 	var/losebreath = 0//Carbon
-	var/shakecamera = 0
 	var/a_intent = "help"//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
-	var/obj/structure/stool/bed/buckled = null//Living
+	var/atom/movable/buckled = null//Living
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living
 	var/obj/item/weapon/storage/s_active = null//Carbon
 
-	var/seer = 0 //for cult//Carbon, probably Human
 	var/see_override = 0 //0 for no override, sets see_invisible = see_override in mob life process
 
 	var/datum/hud/hud_used = null
+
+	var/research_scanner = 0 //For research scanner equipped mobs. Enable to show research data when examining.
+	var/datum/action/innate/scan_mode/scanner = new
 
 	var/list/grabbed_by = list(  )
 	var/list/requests = list(  )
@@ -105,9 +104,6 @@
 	var/job = null//Living
 
 	var/radiation = 0//Carbon
-
-	var/list/mutations = list() //Carbon -- Doohl
-	//see: setup.dm for list of mutations
 
 	var/voice_name = "unidentifiable voice"
 
@@ -126,19 +122,17 @@
 //List of active diseases
 
 	var/list/viruses = list() // replaces var/datum/disease/virus
-
-//Monkey/infected mode
 	var/list/resistances = list()
-	var/datum/disease/virus = null
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 
 	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
-	var/area/lastarea = null
-
 	var/digitalcamo = 0 // Can they be tracked by the AI?
+	var/digitalinvis = 0 //Are they ivisible to the AI?
+	var/image/digitaldisguise = null  //what does the AI see instead of them?
+
 	var/weakeyes = 0 //Are they vulnerable to flashes?
 
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
@@ -147,6 +141,8 @@
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
+
+	var/remote_view = 0 // Set to 1 to prevent view resets on Life
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 

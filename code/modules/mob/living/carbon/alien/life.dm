@@ -15,7 +15,7 @@
 
 	if(Toxins_pp) // Detect toxins in air
 		adjustPlasma(breath.toxins*250)
-		throw_alert("alien_tox")
+		throw_alert("alien_tox", /obj/screen/alert/alien_tox)
 
 		toxins_used = breath.toxins
 
@@ -63,4 +63,7 @@
 
 /mob/living/carbon/alien/CheckStamina()
 	setStaminaLoss(max((staminaloss - 2), 0))
+	return
+
+/mob/living/carbon/alien/handle_changeling()
 	return

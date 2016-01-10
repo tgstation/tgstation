@@ -47,7 +47,9 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!chosen_dna)
 		return
 
-	hivemind_bank += chosen_dna
+	var/datum/changelingprofile/uploaded_dna = new chosen_dna.type
+	chosen_dna.copy_profile(uploaded_dna)
+	hivemind_bank += uploaded_dna
 	user << "<span class='notice'>We channel the DNA of [chosen_name] to the air.</span>"
 	feedback_add_details("changeling_powers","HU")
 	return 1
@@ -85,7 +87,9 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!chosen_prof)
 		return
 
-	changeling.add_profile(chosen_prof, user)
+	var/datum/changelingprofile/downloaded_prof = new chosen_prof.type
+	chosen_prof.copy_profile(downloaded_prof)
+	changeling.add_profile(downloaded_prof)
 	user << "<span class='notice'>We absorb the DNA of [S] from the air.</span>"
 	feedback_add_details("changeling_powers","HD")
 	return 1

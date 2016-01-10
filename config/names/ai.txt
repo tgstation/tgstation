@@ -2,22 +2,22 @@
 16-20
 7-Zark-7
 790
-AM
-AMEE
-ASTAR
 Adaptive Manipulator
 Allied Mastercomputer
 Alpha 5
 Alpha 6
 Alpha 7
+AM
+AMEE
 AmigoBot
 Android
 Aniel
 Asimov
+ASTAR
 Astor
+B O B 
 B-4
 B-9
-B.O.B.
 B166ER
 Bender
 Bishop
@@ -33,22 +33,23 @@ Computer
 Conky 2000
 Cutie
 Data
+Decimus
 Dee Model
 Deep Thought
 Dor-15
 Dorfl
 Dot Matrix
 Duey
-E.D.I.
-ED-209
+E D I 
 E-Man
+ED-209
 Emma-2
 Erasmus
 Ez-27
-FRIEND COMPUTER
 Fagor
 Faith
 Fi
+FRIEND COMPUTER
 Frost
 Fum
 Futura
@@ -56,13 +57,14 @@ G2
 George
 Gnut
 Gort
-H.A.R.L.I.E.
-H.E.L.P.eR.
-H.E.R.B.I.E.
-HAL 9000
+H A R L I E 
+H E L P eR 
+H E R B I E 
 Hadaly
+HAL 9000
 Huey
 Irona
+Ironhide
 Jay-Dub
 Jinx
 Johnny 5
@@ -72,62 +74,67 @@ Klapaucius
 Kryten 2X4B-523P
 L-76
 L-Ron
-LUH 3417
 Louie
-MARK13
+LUH 3417
 Maria
+MARK13
 Marvin
 Master Control Program
 Max 404
 Maximillian
 Mechagodzilla
 Mechani-Kong
+Megatron
 Metalhead
-Mr. R.I.N.G.
+Mr R I N G 
+Mugsy3000
 NCH
 Necron-99
 Norby
 OMM 0910
-Orange v 3.5
-PTO
+Optimus
+Orange v 3 5
 Project 2501
-R.I.C. 2.0
+PTO
+R I C 2 0
 R2-D2
 R4-P17
 Revelation
 Ro-Man
 Robbie
-S.A.M.
-S.H.O.C.K.
-S.H.R.O.U.D.
-S.O.P.H.I.E.
+Robot Devil
+S A M 
+S H O C K 
+S H R O U D 
+S O P H I E 
 SEN 5241
-SHODAN
-SID 6.7
 Setaur
+SHODAN
 Shrike
+SID 6 7
 Solo
+Soundwave
 Speedy
 Super 17
 Surgeon General Kraken
 T-1000
 T-800
 T-850
-THX 1138
-TWA
 Terminus
+THX 1138
 Tidy
 Tik-Tok
 Tobor
 Trurl
+TWA
 ULTRABOT
 Ulysses
 Uniblab
-V.I.N.CENT.
+V I N CENT 
 Voltes V
 W1k1
 Wikipedia
-Windows 3.1
+Windows 3 1
 X-5
 XERXES
 XR
@@ -137,11 +144,3 @@ Z-2
 Z-3
 Zed
 Zord
-Mugsy3000
-Terminus
-Decimus
-Robot Devil
-Optimus
-Megatron
-Soundwave
-Ironhide

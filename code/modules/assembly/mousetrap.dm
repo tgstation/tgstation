@@ -4,6 +4,7 @@
 	icon_state = "mousetrap"
 	materials = list(MAT_METAL=100)
 	origin_tech = "combat=1"
+	attachable = 1
 	var/armed = 0
 
 

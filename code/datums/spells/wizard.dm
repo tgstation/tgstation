@@ -3,12 +3,12 @@
 	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
 
 	school = "evocation"
-	charge_max = 150
+	charge_max = 200
 	clothes_req = 1
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
 	range = 7
-	cooldown_min = 90 //15 deciseconds reduction per rank
+	cooldown_min = 60 //35 deciseconds reduction per rank
 
 	max_targets = 0
 
@@ -29,7 +29,6 @@
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 	amt_weakened = 3
-	amt_dam_fire = 10
 	sound = "sound/magic/MM_Hit.ogg"
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
@@ -41,7 +40,6 @@
 	clothes_req = 1
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
-	message = "<span class='notice'>You feel strong! You feel a pressure building behind your eyes!</span>"
 	range = -1
 	include_user = 1
 	centcom_cancast = 0
@@ -68,7 +66,7 @@
 	cooldown_min = 20 //25 deciseconds reduction per rank
 
 	smoke_spread = 2
-	smoke_amt = 10
+	smoke_amt = 4
 
 	action_icon_state = "smoke"
 
@@ -102,7 +100,7 @@
 
 
 	smoke_spread = 1
-	smoke_amt = 1
+	smoke_amt = 0
 
 	inner_tele_radius = 0
 	outer_tele_radius = 6
@@ -134,7 +132,7 @@
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	smoke_spread = 1
-	smoke_amt = 5
+	smoke_amt = 2
 	sound1="sound/magic/Teleport_diss.ogg"
 	sound2="sound/magic/Teleport_app.ogg"
 
@@ -160,12 +158,12 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
-	charge_max = 300
+	charge_max = 500
 	clothes_req = 1
 	invocation = "TOKI WO TOMARE"
 	invocation_type = "shout"
 	range = 0
-	cooldown_min = 90
+	cooldown_min = 100
 	summon_amt = 1
 	action_icon_state = "time"
 
@@ -248,7 +246,7 @@
 	sound="sound/magic/Blind.ogg"
 
 /obj/effect/proc_holder/spell/targeted/genetic/blind
-	disabilities = 1
+	disabilities = BLIND
 	duration = 300
 	sound="sound/magic/Blind.ogg"
 
@@ -274,7 +272,7 @@
 	action_icon_state = "fireball"
 	sound = "sound/magic/Fireball.ogg"
 
-/obj/effect/proc_holder/spell/turf/fireball/cast(turf/T)
+/obj/effect/proc_holder/spell/turf/fireball/cast(turf/T,mob/user = usr)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
 
 
@@ -298,16 +296,17 @@
 	range = 5
 	cooldown_min = 150
 	selection_type = "view"
+	sound = 'sound/magic/Repulse.ogg'
 	var/maxthrow = 5
+	var/animation = "shieldsparkles"
 
 	action_icon_state = "repulse"
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets)
-	var/mob/user = usr
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
-	playsound(user, "sound/magic/Repulse.ogg", 50, 1, -1)
+	playMagSound()
 	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
 		for(var/atom/movable/AM in T)
 			thrownatoms += AM
@@ -316,6 +315,7 @@
 		if(AM == user || AM.anchored) continue
 
 		var/obj/effect/overlay/targeteffect	= new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density = 0}()
+		targeteffect.icon_state = animation
 		AM.overlays += targeteffect
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
@@ -327,10 +327,31 @@
 				var/mob/living/M = AM
 				M.Weaken(5)
 				M.adjustBruteLoss(5)
-				M << "<span class='userdanger'>You're slammed into the floor by a mystical force!</span>"
+				M << "<span class='userdanger'>You're slammed into the floor by [user]!</span>"
 		else
 			if(istype(AM, /mob/living))
 				var/mob/living/M = AM
 				M.Weaken(2)
-				M << "<span class='userdanger'>You're thrown back by a mystical force!</span>"
-			spawn(0) AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
+			AM.throw_at_fast(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
+	name = "Tail Sweep"
+	desc = "Throw back attackers with a sweep of your tail."
+	sound = 'sound/magic/Tail_swing.ogg'
+	charge_max = 150
+	clothes_req = 0
+	range = 2
+	cooldown_min = 150
+	invocation_type = "none"
+	animation = "tailsweep"
+	action_icon_state = "tailsweep"
+	action_background_icon_state = "bg_alien"
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
+	if(istype(user, /mob/living/carbon))
+		var/mob/living/carbon/C = user
+		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
+		C.spin(6,1)
+	..()

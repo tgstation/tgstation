@@ -5,110 +5,42 @@
 // will always spawn at the items location.
 /////////////////////////////////////////////
 
-/obj/effect/effect/sparks
+/obj/effect/particle_effect/sparks
 	name = "sparks"
 	icon_state = "sparks"
-	var/amount = 6.0
-	anchored = 1.0
-	mouse_opacity = 0
+	anchored = 1
 
-/obj/effect/effect/sparks/New()
+/obj/effect/particle_effect/sparks/New()
 	..()
 	flick("sparks", src) // replay the animation
 	playsound(src.loc, "sparks", 100, 1)
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
-	spawn (100)
+	spawn(20)
 		qdel(src)
 
-/obj/effect/effect/sparks/Destroy()
+/obj/effect/particle_effect/sparks/Destroy()
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
 	return ..()
 
-/obj/effect/effect/sparks/Move()
+/obj/effect/particle_effect/sparks/Move()
 	..()
 	var/turf/T = src.loc
-	if (istype(T, /turf))
+	if(isturf(T))
 		T.hotspot_expose(1000,100)
-	return
 
-/datum/effect/effect/system/spark_spread
-	var/total_sparks = 0 // To stop it being spammed and lagging!
-
-/datum/effect/effect/system/spark_spread/set_up(n = 3, c = 0, loca)
-	if(n > 10)
-		n = 10
-	number = n
-	cardinals = c
-	if(istype(loca, /turf/))
-		location = loca
-	else
-		location = get_turf(loca)
-
-/datum/effect/effect/system/spark_spread/start()
-	var/i = 0
-	for(i=0, i<src.number, i++)
-		if(src.total_sparks > 20)
-			return
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/sparks/sparks = PoolOrNew(/obj/effect/effect/sparks, location)
-			src.total_sparks++
-			var/direction
-			if(src.cardinals)
-				direction = pick(cardinal)
-			else
-				direction = pick(alldirs)
-			for(i=0, i<pick(1,2,3), i++)
-				sleep(5)
-				step(sparks,direction)
-			spawn(20)
-				qdel(sparks)
-				src.total_sparks--
+/datum/effect_system/spark_spread
+	effect_type = /obj/effect/particle_effect/sparks
 
 
+//electricity
 
-
-
-/obj/effect/effect/sparks/electricity
+/obj/effect/particle_effect/sparks/electricity
 	name = "lightning"
 	icon_state = "electricity"
 
-/datum/effect/effect/system/lightning_spread
-	var/total_sparks = 0 // To stop it being spammed and lagging!
-
-/datum/effect/effect/system/lightning_spread/set_up(n = 3, c = 0, loca)
-	if(n > 10)
-		n = 10
-	number = n
-	cardinals = c
-	if(istype(loca, /turf/))
-		location = loca
-	else
-		location = get_turf(loca)
-
-/datum/effect/effect/system/lightning_spread/start()
-	var/i = 0
-	for(i=0, i<src.number, i++)
-		if(src.total_sparks > 20)
-			return
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/sparks/electricity/sparks = PoolOrNew(/obj/effect/effect/sparks/electricity, location)
-			src.total_sparks++
-			var/direction
-			if(src.cardinals)
-				direction = pick(cardinal)
-			else
-				direction = pick(alldirs)
-			for(i=0, i<pick(1,2,3), i++)
-				sleep(5)
-				step(sparks,direction)
-			spawn(20)
-				qdel(sparks)
-				src.total_sparks--
+/datum/effect_system/lightning_spread
+	effect_type = /obj/effect/particle_effect/sparks/electricity

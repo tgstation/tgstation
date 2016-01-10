@@ -12,9 +12,7 @@
 		return 0
 	user << "<span class='warning'>Our genes cry out!</span>"
 
-	user.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPSE | TR_KEEPSRC)
+	user.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
-	// Human-form power now handled in monkeyize()
 	feedback_add_details("changeling_powers","LF")
-	.=1
-	qdel(user)
+	return 1

@@ -5,7 +5,10 @@ var/datum/subsystem/air/SSair
 	priority = -1
 	wait = 5
 	dynamic_wait = 1
-	dwait_upper = 50
+	dwait_upper = 300
+	dwait_buffer = 0
+	dwait_delta = 10
+	display = 1
 
 	var/cost_turfs = 0
 	var/cost_groups = 0
@@ -33,8 +36,8 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air/New()
 	NEW_SS_GLOBAL(SSair)
 
-	plasma_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="plasma"}()
-	sleeptoxin_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="sleeping_agent"}()
+	plasma_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="plasma";appearance_flags=RESET_COLOR}()
+	sleeptoxin_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="sleeping_agent";appearance_flags=RESET_COLOR}()
 
 /datum/subsystem/air/stat_entry(msg)
 	msg += "C:{"
@@ -95,13 +98,11 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/proc/process_pipenets()
-	var/i=1
 	for(var/thing in networks)
 		if(thing)
 			thing:process()
-			++i
 			continue
-		networks.Cut(i, i+1)
+		networks.Remove(thing)
 
 
 /datum/subsystem/air/proc/process_atmos_machinery()

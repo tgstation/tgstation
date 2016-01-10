@@ -1,3 +1,7 @@
+/mob/living/carbon/New()
+	create_reagents(1000)
+	..()
+
 /mob/living/carbon/prepare_huds()
 	..()
 	prepare_data_huds()
@@ -18,6 +22,8 @@
 	for(var/atom/movable/food in stomach_contents)
 		qdel(food)
 	remove_from_all_data_huds()
+	if(dna)
+		qdel(dna)
 	return ..()
 
 /mob/living/carbon/Move(NewLoc, direct)
@@ -31,7 +37,7 @@
 			src.bodytemperature += 2
 
 /mob/living/carbon/movement_delay()
-	. = 0
+	. = ..()
 	if(legcuffed)
 		. += legcuffed.slowdown
 
@@ -74,13 +80,14 @@
 	. = ..()
 
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0)
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
 	shock_damage *= siemens_coeff
-	if (shock_damage<1)
+	if(shock_damage<1 && !override)
 		return 0
+	if(reagents.has_reagent("teslium"))
+		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
 	take_overall_damage(0,shock_damage)
-	//src.burn_skin(shock_damage)
-	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
+	//src.adjustFireLoss(shock_damage)
 	//src.updatehealth()
 	visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
@@ -90,12 +97,17 @@
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
-	Stun(2)
+	if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
+		Stun(2)
 	spawn(20)
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
-		Stun(3)
-		Weaken(3)
-	return shock_damage
+		if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
+			Stun(3)
+			Weaken(3)
+	if(override)
+		return override
+	else
+		return shock_damage
 
 
 /mob/living/carbon/swap_hand()
@@ -135,6 +147,10 @@
 		mode() // Activate held item
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
+	if(on_fire)
+		M << "<span class='warning'>You can't put them out with just your bare hands!"
+		return
+
 	if(health >= 0)
 
 		if(lying)
@@ -256,13 +272,6 @@
 
 		item.throw_at(target, item.throw_range, item.throw_speed, src)
 
-/mob/living/carbon/can_use_hands()
-	if(handcuffed)
-		return 0
-	if(buckled && ! istype(buckled, /obj/structure/stool/bed/chair)) // buckling does not restrict hands
-		return 0
-	return 1
-
 /mob/living/carbon/restrained()
 	if (handcuffed)
 		return 1
@@ -335,11 +344,11 @@
 	return "trails_2"
 
 var/const/NO_SLIP_WHEN_WALKING = 1
-var/const/STEP = 2
-var/const/SLIDE = 4
-var/const/GALOSHES_DONT_HELP = 8
+var/const/SLIDE = 2
+var/const/GALOSHES_DONT_HELP = 4
 /mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
-	loc.handle_slip(src, s_amount, w_amount, O, lube)
+	add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
+	return loc.handle_slip(src, s_amount, w_amount, O, lube)
 
 /mob/living/carbon/fall(forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
@@ -355,22 +364,21 @@ var/const/GALOSHES_DONT_HELP = 8
 		adjustBruteLoss(10)
 
 /mob/living/carbon/proc/spin(spintime, speed)
-	spawn()
-		var/D = dir
-		while(spintime >= speed)
-			sleep(speed)
-			switch(D)
-				if(NORTH)
-					D = EAST
-				if(SOUTH)
-					D = WEST
-				if(EAST)
-					D = SOUTH
-				if(WEST)
-					D = NORTH
-			dir = D
-			spintime -= speed
-	return
+	set waitfor = 0
+	var/D = dir
+	while(spintime >= speed)
+		sleep(speed)
+		switch(D)
+			if(NORTH)
+				D = EAST
+			if(SOUTH)
+				D = WEST
+			if(EAST)
+				D = SOUTH
+			if(WEST)
+				D = NORTH
+		dir = D
+		spintime -= speed
 
 /mob/living/carbon/resist_buckle()
 	if(restrained())
@@ -378,7 +386,7 @@ var/const/GALOSHES_DONT_HELP = 8
 		last_special = world.time + CLICK_CD_BREAKOUT
 		visible_message("<span class='warning'>[src] attempts to unbuckle themself!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around one minute and you need to stay still.)</span>")
-		if(do_after(src, 600, needhand = 0, target = src))
+		if(do_after(src, 600, 0, target = src))
 			if(!buckled)
 				return
 			buckled.user_unbuckle_mob(src,src)
@@ -421,7 +429,7 @@ var/const/GALOSHES_DONT_HELP = 8
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		src << "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>"
-		if(do_after(src, breakouttime, 10, 0, target = src))
+		if(do_after(src, breakouttime, 0, target = src))
 			if(I.loc != src || buckled)
 				return
 			visible_message("<span class='danger'>[src] manages to remove [I]!</span>")
@@ -447,7 +455,7 @@ var/const/GALOSHES_DONT_HELP = 8
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		src << "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>"
-		if(do_after(src, breakouttime, needhand = 0, target = src))
+		if(do_after(src, breakouttime, 0, target = src))
 			if(!I.loc || buckled)
 				return
 			visible_message("<span class='danger'>[src] manages to break [I]!</span>")
@@ -505,7 +513,7 @@ var/const/GALOSHES_DONT_HELP = 8
 		return 1
 
 /mob/living/carbon/proc/accident(obj/item/I)
-	if(!I || (I.flags & NODROP))
+	if(!I || (I.flags & (NODROP|ABSTRACT)))
 		return
 
 	unEquip(I)
@@ -573,4 +581,32 @@ var/const/GALOSHES_DONT_HELP = 8
 		var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
 		if(vessel)
 			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
+		if(locate(/obj/item/device/assembly/health) in src)
+			stat(null, "Health: [health]")
+
 	add_abilities_to_panel()
+
+/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood)
+	if(src.is_muzzled())
+		src << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
+		return 0
+	Stun(4)
+	if(nutrition < 100 && !blood)
+		visible_message("<span class='warning'>[src] dry heaves!</span>", \
+						"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+		Weaken(10)
+	else
+		visible_message("<span class='danger'>[src] throws up!</span>", \
+						"<span class='userdanger'>You throw up!</span>")
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+		var/turf/T = get_turf(src)
+		if(blood)
+			if(T)
+				T.add_blood_floor(src)
+			adjustBruteLoss(3)
+		else
+			if(T)
+				T.add_vomit_floor(src)
+			nutrition -= lost_nutrition
+			adjustToxLoss(-3)
+	return 1

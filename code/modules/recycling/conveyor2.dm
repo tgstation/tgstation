@@ -104,15 +104,15 @@
 	use_power(100)
 
 	affecting = loc.contents - src		// moved items will be all in loc
-	spawn(1)	// slight delay to prevent infinite propagation due to map order	//TODO: please no spawn() in process(). It's a very bad idea
-		var/items_moved = 0
-		for(var/atom/movable/A in affecting)
-			if(!A.anchored)
-				if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
-					step(A,movedir)
-					items_moved++
-			if(items_moved >= 10)
-				break
+	sleep(1)	// slight delay to prevent infinite propagation due to map order
+	var/items_moved = 0
+	for(var/atom/movable/A in affecting)
+		if(!A.anchored)
+			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
+				step(A,movedir)
+				items_moved++
+		if(items_moved >= 10)
+			break
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
@@ -204,7 +204,7 @@
 
 	spawn(5)		// allow map load
 		conveyors = list()
-		for(var/obj/machinery/conveyor/C in world)
+		for(var/obj/machinery/conveyor/C in machines)
 			if(C.id == id)
 				conveyors += C
 
@@ -252,7 +252,7 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in world)
+	for(var/obj/machinery/conveyor_switch/S in machines)
 		if(S.id == src.id)
 			S.position = position
 			S.update()

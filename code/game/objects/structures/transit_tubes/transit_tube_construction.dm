@@ -7,7 +7,11 @@
 	icon_state = "E-W" //icon_state decides which tube will be built
 	density = 0
 	layer = 3.1 //same as the built tube
-	anchored = 0.0
+	anchored = 0
+
+/obj/structure/c_transit_tube/examine(mob/user)
+	..()
+	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
 //wrapper for turn that changes the transit tube formatted icon_state instead of the dir
 /obj/structure/c_transit_tube/proc/tube_turn(angle)
@@ -31,8 +35,11 @@
 	//for junctions, just swap the diagonals with each other
 	if(split_text.len == 3 && split_text[3] != "Pass")
 		split_text.Swap(2,3)
+	else if(length(split_text[1]) == 2 && length(split_text[2]) == 2) //diagonals
+		split_text[1] = copytext(split_text[1],1,2) + copytext(split_text[2],2,3)
+		split_text[2] = copytext(split_text[2],1,2) + ((copytext(split_text[2],2,3) == "E") ? "W" : "E")
 	//for curves, swap the diagonal direction that is not in the same axis as the cardinal direction
-	else
+	else 
 		if(split_text[1] == "N" || split_text[1] == "S")
 			split_text[2] = copytext(split_text[2],1,2) + ((copytext(split_text[2],2,3) == "E") ? "W" : "E")
 		else
@@ -45,17 +52,27 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src))
+	if(usr.incapacitated())
 		return
 
 	tube_turn(-90)
+
+/obj/structure/c_transit_tube/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		rotate()
 
 /obj/structure/c_transit_tube/verb/rotate_ccw()
 	set name = "Rotate Tube CCW"
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src))
+	if(usr.incapacitated())
 		return
 
 	tube_turn(90)
@@ -65,7 +82,7 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src))
+	if(usr.incapacitated())
 		return
 
 	tube_flip()
@@ -81,7 +98,7 @@
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start attaching the [name]...</span>"
 		src.add_fingerprint(user)
-		if(do_after(user, 40, target = src))
+		if(do_after(user, 40/I.toolspeed, target = src))
 			if(!src) return
 			user << "<span class='notice'>You attach the [name].</span>"
 			var/obj/structure/transit_tube/R = src.buildtube()
@@ -138,5 +155,5 @@
 	name = "unattached transit tube pod"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube_pod.dmi'
 	icon_state = "pod"
-	anchored = 0.0
+	anchored = 0
 	density = 0

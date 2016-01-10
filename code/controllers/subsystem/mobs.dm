@@ -3,6 +3,7 @@ var/datum/subsystem/mobs/SSmob
 /datum/subsystem/mobs
 	name = "Mobs"
 	priority = 4
+	display = 4
 
 
 /datum/subsystem/mobs/New()
@@ -19,5 +20,4 @@ var/datum/subsystem/mobs/SSmob
 		if(thing)
 			thing:Life(seconds)
 			continue
-		WARNING("Found a null in the mob list. Removing.")
 		mob_list.Remove(thing)

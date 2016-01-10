@@ -27,6 +27,7 @@
 	materials = list(MAT_METAL=150)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	toolspeed = 1
 
 /obj/item/weapon/wrench/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -51,6 +52,7 @@
 	materials = list(MAT_METAL=75)
 	attack_verb = list("stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	toolspeed = 1
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
@@ -106,14 +108,15 @@
 	icon_state = "cutters"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 6.0
+	force = 6
 	throw_speed = 3
 	throw_range = 7
-	w_class = 2.0
+	w_class = 2
 	materials = list(MAT_METAL=80)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/Wirecutter.ogg'
+	toolspeed = 1
 
 /obj/item/weapon/wirecutters/New(loc, var/param_color = null)
 	..()
@@ -164,6 +167,8 @@
 	var/change_icons = 1
 	var/can_off_process = 0
 	var/light_intensity = 2 //how powerful the emitted light is when used.
+	heat = 3800
+	toolspeed = 1
 
 /obj/item/weapon/weldingtool/New()
 	..()
@@ -194,6 +199,10 @@
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
 	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
+
+/obj/item/weapon/weldingtool/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] welds \his every orifice closed! It looks like \he's trying to commit suicide..</span>")
+	return (FIRELOSS)
 
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
@@ -346,6 +355,9 @@
 		hitsound = "swing_hit"
 		update_icon()
 
+/obj/item/weapon/weldingtool/is_hot()
+	return welding * heat
+
 /obj/item/weapon/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
 	if(welding)
 		user << "<span class='warning'>Turn it off first!</span>"
@@ -421,6 +433,7 @@
 	change_icons = 0
 	can_off_process = 1
 	light_intensity = 1
+	toolspeed = 2
 
 
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
@@ -457,6 +470,7 @@
 	materials = list(MAT_METAL=50)
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+	toolspeed = 1
 
 /obj/item/weapon/crowbar/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -477,3 +491,4 @@
 	throw_range = 3
 	materials = list(MAT_METAL=70)
 	icon_state = "crowbar_large"
+	toolspeed = 2

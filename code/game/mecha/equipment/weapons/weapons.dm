@@ -109,7 +109,7 @@
 	icon_state = "mecha_plasmacutter"
 	item_state = "plasmacutter"
 	energy_drain = 60
-	origin_tech = "materials=3;combat=2;powerstorage=3;plasma=3"
+	origin_tech = "materials=3;combat=2;powerstorage=3;plasmatech=3"
 	projectile = /obj/item/projectile/plasma/adv/mech
 	fire_sound = 'sound/weapons/Laser.ogg'
 
@@ -285,8 +285,7 @@
 	log_message("Launched a [O.name] from [name], targeting [target].")
 	projectiles--
 	proj_init(O)
-	spawn(0)
-		O.throw_at(target, missile_range, missile_speed, spin = 0)
+	O.throw_at_fast(target, missile_range, missile_speed, spin = 0)
 	return 1
 
 //used for projectile initilisation (priming flashbang) and additional logging

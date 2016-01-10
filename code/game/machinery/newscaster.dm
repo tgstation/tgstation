@@ -159,34 +159,12 @@ var/list/obj/machinery/newscaster/allCasters = list()
 
 
 
-/obj/item/newscaster_frame
+/obj/item/wallframe/newscaster
 	name = "newscaster frame"
 	desc = "Used to build newscasters, just secure to the wall."
 	icon_state = "newscaster"
-	item_state = "syringe_kit"
 	materials = list(MAT_METAL=14000, MAT_GLASS=8000)
-
-/obj/item/newscaster_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-	var/ndir = get_dir(usr,on_wall)
-	if (!(ndir in cardinal))
-		return
-	var/turf/loc = get_turf(usr)
-	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='warning'>Newscaster cannot be placed on this spot!</span>"
-		return
-	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='warning'>Newscaster cannot be placed in this area!</span>"
-		return
-	for(var/obj/machinery/newscaster/T in loc)
-		usr << "<span class='warning'>There is another newscaster here!</span>"
-		return
-	var/obj/machinery/newscaster/N = new(loc)
-	N.pixel_y -= (loc.y - on_wall.y) * 32
-	N.pixel_x -= (loc.x - on_wall.x) * 32
-	qdel(src)
+	result_path = /obj/machinery/newscaster
 
 
 /obj/machinery/newscaster
@@ -200,7 +178,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/isbroken = 0
 	var/ispowered = 1
 	var/screen = 0
-	var/paper_remaining = 0
+	var/paper_remaining = 15
 	var/securityCaster = 0
 	var/unit_no = 0
 	var/alert_delay = 500
@@ -220,19 +198,23 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	name = "security newscaster"
 	securityCaster = 1
 
-/obj/machinery/newscaster/New()
+/obj/machinery/newscaster/New(loc, ndir, building)
+	..()
+	if(building)
+		dir = ndir
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
+		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
+
 	allCasters += src
-	paper_remaining = 15
 	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 		unit_no++
 	update_icon()
-	..()
 
 /obj/machinery/newscaster/Destroy()
 	allCasters -= src
 	viewing_channel = null
 	photo = null
-	..()
+	return ..()
 
 /obj/machinery/newscaster/update_icon()
 	if(!ispowered || isbroken)
@@ -266,9 +248,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 
 /obj/machinery/newscaster/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			isbroken=1
 			if(prob(50))
 				qdel(src)
@@ -741,9 +723,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 60, target = src))
+		if(do_after(user, 60/I.toolspeed, target = src))
 			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
-			new /obj/item/newscaster_frame(loc)
+			new /obj/item/wallframe/newscaster(loc)
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			qdel(src)
 		return
@@ -895,8 +877,15 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/creationTime
 
 /obj/item/weapon/newspaper/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like they're trying to commit sudoku.</span>")
-	return(OXYLOSS)
+	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like they're trying to commit sudoku... until their eyes light up with realization!</span>")
+	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF")
+	var/mob/living/carbon/human/H = user
+	var/obj/W = new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(H.loc)
+	playsound(H.loc, 'sound/items/drink.ogg', rand(10,50), 1)
+	W.reagents.trans_to(H, W.reagents.total_volume)
+	user.visible_message("<span class='suicide'>[user] downs the contents of [W.name] in one gulp! Shoulda stuck to sudoku!</span>")
+
+	return(TOXLOSS)
 
 /obj/item/weapon/newspaper/attack_self(mob/user)
 	if(ishuman(user))

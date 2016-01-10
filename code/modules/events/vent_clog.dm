@@ -18,7 +18,7 @@
 	endWhen = rand(25, 100)
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in machines)
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
-			var/datum/pipeline/temp_vent_parent = temp_vent.parents["p1"]
+			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
 			if(temp_vent_parent.other_atmosmch.len > 20)
 				vents += temp_vent
 	if(!vents.len)
@@ -34,8 +34,8 @@
 			R.my_atom = vent
 			R.add_reagent(pick(gunk), 50)
 
-			var/datum/effect/effect/system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, rand(1, 2), 0, vent, 0, silent = 1)
+			var/datum/effect_system/smoke_spread/chem/smoke = new
+			smoke.set_up(R, 1, vent, silent = 1)
 			playsound(vent.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
 			qdel(R)

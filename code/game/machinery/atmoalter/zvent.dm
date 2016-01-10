@@ -15,7 +15,7 @@
 
 /obj/machinery/zvent/Destroy()
 	SSair.atmos_machinery -= src
-	..()
+	return ..()
 
 /obj/machinery/zvent/process_atmos()
 
