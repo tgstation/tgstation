@@ -632,11 +632,11 @@
 	switch(theme)
 		if("magic")
 			user << "[G.magic_fluff_string]."
-			colour = pick("Orange", "Pink", "Red", "Blue", "Green")
+			colour = pick("Pink", "Red", "Orange", "Green", "Blue")
 			picked_name = pick("Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces")
 		if("tech")
 			user << "[G.tech_fluff_string]."
-			colour = pick("Lily", "Orchid", "Rose", "Iris", "Ivy", "Zinnia", "Daisy", "Violet") //technically not colors, just flowers that can be specific colors
+			colour = pick("Rose", "Lily", "Daisy", "Zinnia", "Ivy", "Iris", "Petunia", "Violet", "Orchid") //technically not colors, just flowers that can be specific colors
 			picked_name = pick("Gallium", "Indium", "Thallium", "Bismuth", "Aluminium", "Mercury", "Iron", "Silver", "Zinc", "Titanium", "Chromium", "Nickel")
 
 	G.name = "[picked_name] [colour]"
