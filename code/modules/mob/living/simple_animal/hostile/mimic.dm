@@ -165,7 +165,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			move_to_delay = 2 * I.w_class + 1
 		maxHealth = health
 		if(creator)
-			creator = creator
+			src.creator = creator
 			faction += "\ref[creator]" // very unique
 		if(destroy_original)
 			qdel(O)
