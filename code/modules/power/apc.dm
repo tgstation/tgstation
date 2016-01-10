@@ -597,7 +597,9 @@
 	interact(user)
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(!user) return
+	if(!user)
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	user.visible_message("<span class='danger'>[user.name] slashes at the [src.name]!</span>", "<span class='notice'>You slash at the [src.name]!</span>")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
