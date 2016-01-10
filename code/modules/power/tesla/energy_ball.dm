@@ -13,7 +13,8 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 										/obj/structure/particle_accelerator/power_box,
 										/obj/structure/particle_accelerator/end_cap,
 										/obj/machinery/field/containment,
-										/obj/structure/disposalpipe)
+										/obj/structure/disposalpipe
+										/obj/machinery/gateway)
 
 /obj/singularity/energy_ball
 	name = "energy ball"
