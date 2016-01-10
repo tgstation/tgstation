@@ -2235,6 +2235,7 @@ var/global/num_vending_terminals = 1
 		/obj/item/clothing/under/sl_suit = 2,
 		/obj/item/weapon/storage/backpack/cultpack = 2,
 		/obj/item/weapon/storage/fancy/candle_box = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/eucharist = 7,
 		)
 	premium = list(
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 1,

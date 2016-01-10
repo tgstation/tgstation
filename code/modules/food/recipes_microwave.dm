@@ -444,6 +444,10 @@
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/creamcheesebread
 
+/datum/recipe/eucharist
+	reagents = list("flour" = 5, "holywater" = 5)
+	result = /obj/item/weapon/reagent_containers/food/snacks/eucharist
+
 // French //////////////////////////////////////////////////////
 
 /datum/recipe/eggplantparm

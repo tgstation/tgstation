@@ -3919,3 +3919,13 @@
 	desc = "A thin wafer of milky, chocolatey, melt-in-your-mouth goodness. That alone is already worth a hoard."
 	to_chat(user, "<span class='notice'>You remove the golden foil from \the [src].</span>")
 	wrapped = 0
+
+/obj/item/weapon/reagent_containers/food/snacks/eucharist
+	name = "\improper Eucharist Wafer"
+	icon_state = "eucharist"
+	desc = "For the kingdom, the power, and the glory are yours, now and forever."
+	bitesize = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/eucharist/New()
+	..()
+	reagents.add_reagent("holywater", 5)
