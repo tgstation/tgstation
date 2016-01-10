@@ -12,6 +12,7 @@
 	minbodytemp = 270
 	maxbodytemp = INFINITY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	status_flags = CANPUSH
 	mob_size = MOB_SIZE_TINY
 	response_help  = "pokes"
 	response_disarm = "shoos"
