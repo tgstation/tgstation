@@ -125,8 +125,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/SplashReagents(var/mob/M)
 	if(src.reagents.total_volume)
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span class='danger'>The contents of \the [src] splashes all over [M]!</span>"), 1)
+		M.visible_message("<span class='danger'>The contents of \the [src] splashes all over [M]!</span>")
 		reagents.reaction(M, TOUCH)
 		reagents.clear_reagents()
 	return
