@@ -8,6 +8,7 @@
 	explosion_block = 6
 	point_return = -1
 	atmosblock = 1
+	health_regen = 0 //we regen in Life() instead
 	var/overmind_get_delay = 0 //we don't want to constantly try to find an overmind, this var tracks when we'll try to get an overmind again
 	var/resource_delay = 0
 	var/point_rate = 2
@@ -34,9 +35,6 @@
 	var/image/C = new('icons/mob/blob.dmi', "blob_core_overlay")
 	overlays += C
 
-/obj/effect/blob/core/PulseAnimation()
-	return
-
 /obj/effect/blob/core/Destroy()
 	blob_cores -= src
 	if(overmind)
@@ -56,9 +54,6 @@
 	if(overmind) //we should have an overmind, but...
 		overmind.update_health()
 
-/obj/effect/blob/core/RegenHealth()
-	return // Don't regen, we handle it in Life()
-
 /obj/effect/blob/core/Life()
 	if(!overmind)
 		create_overmind()
@@ -66,7 +61,7 @@
 		if(resource_delay <= world.time)
 			resource_delay = world.time + 10 // 1 second
 			overmind.add_points(point_rate)
-	health = min(maxhealth, health+health_regen)
+	health = min(maxhealth, health+2)
 	if(overmind)
 		overmind.update_health()
 	Pulse_Area(overmind, 12, 4, 3)

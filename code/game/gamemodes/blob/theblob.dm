@@ -12,8 +12,7 @@
 	var/health = 30
 	var/maxhealth = 30
 	var/health_regen = 2 //how much health this blob regens when pulsed
-	var/health_timestamp = 0 //we got healed when?
-	var/pulse_timestamp = 0 //we got pulsed when?
+	var/pulse_timestamp = 0 //we got pulsed/healed when?
 	var/brute_resist = 0.5 //multiplies brute damage by this
 	var/fire_resist = 1 //multiplies burn damage by this
 	var/atmosblock = 0 //if the blob blocks atmos and heat spread
@@ -90,7 +89,6 @@
 	src.Be_Pulsed()
 	if(claim_range)
 		for(var/obj/effect/blob/B in ultra_range(claim_range, src, 1))
-			B.update_icon()
 			if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
 				B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
 				B.update_icon()
@@ -106,10 +104,9 @@
 
 /obj/effect/blob/proc/Be_Pulsed()
 	if(pulse_timestamp <= world.time)
-		PulseAnimation()
 		ConsumeTile()
-		RegenHealth()
-		run_action()
+		health = min(maxhealth, health+health_regen)
+		update_icon()
 		pulse_timestamp = world.time + 10
 		return 1 //we did it, we were pulsed!
 	return 0 //oh no we failed
@@ -117,21 +114,6 @@
 /obj/effect/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
 		A.blob_act()
-
-/obj/effect/blob/proc/PulseAnimation()
-	flick("[icon_state]_glow", src)
-	return
-
-/obj/effect/blob/proc/RegenHealth() //when pulsed, heal!
-	if(health_timestamp <= world.time)
-		health = min(maxhealth, health+health_regen)
-		update_icon()
-		health_timestamp = world.time + 10 //1 second between heals
-		return 1
-	return 0
-
-/obj/effect/blob/proc/run_action()
-	return 0
 
 
 /obj/effect/blob/proc/expand(turf/T = null, prob = 1, controller = null)
