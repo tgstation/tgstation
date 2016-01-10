@@ -8,7 +8,8 @@
 	explosion_block = 6
 	point_return = -1
 	atmosblock = 1
-	health_regen = 0 //we regen in Life() instead
+	health_regen = 0 //we regen in Life() instead of when pulsed
+	var/core_regen = 2
 	var/overmind_get_delay = 0 //we don't want to constantly try to find an overmind, this var tracks when we'll try to get an overmind again
 	var/resource_delay = 0
 	var/point_rate = 2
@@ -61,7 +62,7 @@
 		if(resource_delay <= world.time)
 			resource_delay = world.time + 10 // 1 second
 			overmind.add_points(point_rate)
-	health = min(maxhealth, health+2)
+	health = min(maxhealth, health+core_regen)
 	if(overmind)
 		overmind.update_health()
 	Pulse_Area(overmind, 12, 4, 3)
