@@ -11,10 +11,8 @@
 	var/spike_type = /obj/item/wirebomb_spike //other types should be a child of this
 	var/spike_range = 8
 	var/list/directions = list()
-	var/list/alldirs_copy
 
 /obj/item/weapon/grenade/wirebomb/New()
-	alldirs_copy = alldirs
 	while(spikes.len < spike_count)
 		var/obj/item/wirebomb_spike/sticker = new spike_type(src)
 		spikes += sticker
@@ -25,6 +23,7 @@
 	..()
 
 /obj/item/weapon/grenade/wirebomb/prime()
+	set waitfor = 0
 	if(!isturf(loc))
 		if(ismob(loc))
 			var/mob/M = loc
@@ -50,12 +49,11 @@
 		spike.wire = new(src, spike, beam_icon_state="spikewire", time=9999999, maxdistance=spike_range+1, btype=/obj/effect/ebeam/spikewire)
 		spawn(0)
 			spike.wire.Start()
-		spawn(0)
-			spike.launch(direction, spike_range, passflag)
+		spike.launch(direction, spike_range, passflag)
 
 	playsound(src, 'sound/effects/snap.ogg', 100, 1)
 	icon_state = "wirebomb_armed"
-	layer = 3.1
+	layer = OBJ_LAYER + 0.5
 	armed = 1
 	SSobj.processing |= src
 
@@ -82,7 +80,7 @@
 
 /obj/item/weapon/grenade/wirebomb/Destroy()
 	SSobj.processing -= src
-	return ..()
+	. = ..()
 
 /obj/item/weapon/grenade/wirebomb/proc/detonate()
 	if(!armed || detonating)
@@ -90,8 +88,8 @@
 	detonating = 1
 	for(var/V in spikes)
 		var/obj/item/wirebomb_spike/spike = V
-		explosion(get_turf(spike), 0, 1, 2, 3)
-	explosion(get_turf(src), 0, 1, 2, 3)
+		explosion(get_turf(spike), 0, 2, 3)
+	explosion(get_turf(src), 0, 2, 3)
 
 /obj/item/weapon/grenade/wirebomb/attack_hand(mob/user)
 	if(armed)
@@ -104,14 +102,14 @@
 		if(!armed)
 			return
 		user << "<span class='warning'>You start disarming [src]. If you stop now it will go off!</span>"
-		if(do_after(user, 400, 20, 1, src))
+		if(do_after(user, 400, target=src))
 			disarm()
 		else
 			detonate()
 	else if(armed)
 		detonate()
 	else
-		..()
+		. = ..()
 
 /obj/item/weapon/grenade/wirebomb/proc/disarm()
 	armed = 0
@@ -145,6 +143,8 @@
 	var/datum/beam/wire
 
 /obj/item/wirebomb_spike/proc/launch(direction, range, passflag=0)
+	set waitfor = 0
+
 	var/count = 0
 	dir = direction
 	while(count < range)
