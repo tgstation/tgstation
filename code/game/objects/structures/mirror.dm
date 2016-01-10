@@ -11,7 +11,6 @@
 
 /obj/structure/mirror/attack_hand(mob/user)
 	if(shattered)
-	user.changeNext_move(CLICK_CD_MELEE)
 		return
 
 	if(ishuman(user))
