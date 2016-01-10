@@ -89,8 +89,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				if(!pale)
 					pale = 1
 					update_body()
-				if(oxyloss < 39)
-					oxyloss += 10
+				if(oxyloss < 50)
+					oxyloss = min(oxyloss+10, 50)
 				if(prob(5))
 					eye_blurry += 6
 					var/word = pick("dizzy","woozy","faint")
