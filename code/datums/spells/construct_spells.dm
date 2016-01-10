@@ -64,7 +64,11 @@
 	action_icon_state = "summonsoulstone"
 	action_background_icon_state = "bg_demon"
 
+	if(iscultist(usr) || iswizard(usr))
 	summon_type = list(/obj/item/device/soulstone)
+	else
+	summon_type = list(/obj/item/device/soulstone/anybody)
+	
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult
 	cult_req = 1
