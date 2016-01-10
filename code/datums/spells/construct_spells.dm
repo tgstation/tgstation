@@ -64,7 +64,7 @@
 	action_icon_state = "summonsoulstone"
 	action_background_icon_state = "bg_demon"
 
-	if(iscultist(user) || iswizard(user) || !iscarbon(user))
+	if(iscultist(user) || iswizard(user))
 	summon_type = list(/obj/item/device/soulstone)
 	else
 	summon_type = list(/obj/item/device/soulstone/anybody)
