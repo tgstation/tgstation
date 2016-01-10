@@ -30,6 +30,7 @@
 	color = main
 
 /obj/effect/decal/cleanable/crayon/gang
+	desc = "A spray-painted [name]."
 	layer = 3.6 //Harder to hide
 	do_icon_rotate = FALSE //These are designed to always face south, so no rotation please.
 	var/datum/gang/gang
