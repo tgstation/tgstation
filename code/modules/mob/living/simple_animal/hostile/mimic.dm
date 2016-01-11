@@ -367,7 +367,7 @@ var/global/list/item_mimic_disguises = list(
 				/obj/item/weapon/gun/energy/mindflayer, /obj/item/weapon/gun/energy/lasercannon, /obj/item/weapon/gun/energy/pulse_rifle, /obj/item/weapon/katana/hfrequency,\
 				/obj/item/weapon/melee/cultblade, /obj/item/weapon/pickaxe/jackhammer, /obj/item/weapon/tank/plasma, /obj/item/weapon/gibtonite), //Security items and weapons
 
-	"bar" = (typesof(/obj/item/weapon/reagent_containers/food/drinks) - typesof(/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable) - /obj/item/weapon/reagent_containers/food/drinks/bottle - /obj/item/weapon/reagent_containers/food/drinks/soda_cans),  //All drinks (except for abstract types)
+	"bar" = (existing_typesof(/obj/item/weapon/reagent_containers/food/drinks) - typesof(/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable)),  //All drinks (except for customizable stuff)
 
 	"emergency" = list(/obj/item/clothing/mask/breath, /obj/item/weapon/tank/jetpack/oxygen, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/tank/air, /obj/item/weapon/crowbar,\
 					/obj/item/weapon/storage/firstaid, /obj/item/weapon/storage/backpack/holding, /obj/item/weapon/storage/backpack/security, /obj/item/device/maracas, /obj/item/device/multitool,\
@@ -375,12 +375,12 @@ var/global/list/item_mimic_disguises = list(
 
 	"lowhealth" = list(/obj/item/weapon/cigbutt, /obj/item/weapon/shard, /obj/item/toy/blink, /obj/item/toy/ammo/crossbow, /obj/item/ammo_casing/a666), //Small, hard-to-notice items to turn into when at low health
 
-	//All foods EXCEPT for those with no icons (plenty of them)
-	"kitchen" = (typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks - typesof(/obj/item/weapon/reagent_containers/food/snacks/chip) - typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable) - typesof(/obj/item/weapon/reagent_containers/food/snacks/sliceable) - /obj/item/weapon/reagent_containers/food/snacks/slimesoup - typesof(/obj/item/weapon/reagent_containers/food/snacks/sweet)),
+	//All foods except for customizable stuff
+	"kitchen" = (existing_typesof(/obj/item/weapon/reagent_containers/food/snacks) - typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable) - typesof(/obj/item/weapon/reagent_containers/food/snacks/sliceable) - /obj/item/weapon/reagent_containers/food/snacks/slimesoup - typesof(/obj/item/weapon/reagent_containers/food/snacks/sweet)),
 
 	"library" = typesof(/obj/item/weapon/book), //All default books
 
-	"botany" = (typesof(/obj/item/weapon/reagent_containers/food/snacks/grown) - /obj/item/weapon/reagent_containers/food/snacks/grown), //All grown items
+	"botany" = existing_typesof(/obj/item/weapon/reagent_containers/food/snacks/grown), //All grown items
 
 	//Nuke, nuke disk, all coins, all minerals (except for those with no icons)
 	"vault" = list(/obj/machinery/nuclearbomb, /obj/item/weapon/disk/nuclear) + typesof(/obj/item/weapon/coin) + typesof(/obj/item/stack/sheet/mineral) - /obj/item/stack/sheet/mineral - /obj/item/stack/sheet/mineral/enruranium,
@@ -489,6 +489,8 @@ var/global/list/protected_objects = list(
 
 	health = 100
 	maxHealth = 100
+
+	icon_state = "" //So that existing_typesof() doesn't return this type
 
 	copied_object = null
 	var/mob/living/creator = null // the creator

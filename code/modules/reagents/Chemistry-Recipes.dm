@@ -1158,44 +1158,24 @@ datum
 				else
 					send_admin_alert(holder, reaction_name="gold slime + plasma in a grenade!!")//expect to this this one spammed in the times to come
 
-				var/blocked = list(/mob/living/simple_animal/hostile,
-					/mob/living/simple_animal/hostile/humanoid/,
-					/mob/living/simple_animal/hostile/humanoid/pirate,
-					/mob/living/simple_animal/hostile/humanoid/pirate/ranged,
-					/mob/living/simple_animal/hostile/humanoid/russian,
-					/mob/living/simple_animal/hostile/humanoid/russian/ranged,
-					/mob/living/simple_animal/hostile/humanoid/syndicate,
-					/mob/living/simple_animal/hostile/humanoid/syndicate/melee,
-					/mob/living/simple_animal/hostile/humanoid/syndicate/melee/space,
-					/mob/living/simple_animal/hostile/humanoid/syndicate/ranged,
-					/mob/living/simple_animal/hostile/humanoid/syndicate/ranged/space,
+				var/blocked = list(
 					/mob/living/simple_animal/hostile/alien/queen/large,
 					/mob/living/simple_animal/hostile/faithless,
 					/mob/living/simple_animal/hostile/faithless/cult,
 					/mob/living/simple_animal/hostile/scarybat/cult,
 					/mob/living/simple_animal/hostile/creature/cult,
-					// /mob/living/simple_animal/hostile/panther,
-					// /mob/living/simple_animal/hostile/snake,
-					/mob/living/simple_animal/hostile/retaliate,
 					/mob/living/simple_animal/hostile/retaliate/clown,
 					/mob/living/simple_animal/hostile/mushroom,
-					/mob/living/simple_animal/hostile/asteroid,
-					/mob/living/simple_animal/hostile/asteroid/basilisk,
-					/mob/living/simple_animal/hostile/asteroid/goldgrub,
-					/mob/living/simple_animal/hostile/asteroid/goliath,
-					/mob/living/simple_animal/hostile/asteroid/hivelord,
-					/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
 					/mob/living/simple_animal/hostile/carp/holocarp,
 					/mob/living/simple_animal/hostile/slime,
 					/mob/living/simple_animal/hostile/slime/adult,
 					/mob/living/simple_animal/hostile/mining_drone,
 					/mob/living/simple_animal/hostile/mimic,
-					/mob/living/simple_animal/hostile/mimic/copy,
 					/mob/living/simple_animal/hostile/mimic/crate,
 					/mob/living/simple_animal/hostile/mimic/crate/chest,
 					/mob/living/simple_animal/hostile/mimic/crate/item,
-					)//exclusion list for things you don't want the reaction to create.
-				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
+					) + typesof(/mob/living/simple_animal/hostile/humanoid) + typesof(/mob/living/simple_animal/hostile/asteroid)//exclusion list for things you don't want the reaction to create.
+				var/list/critters = existing_typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
 
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
@@ -1237,27 +1217,10 @@ datum
 				else
 					send_admin_alert(holder, reaction_name="gold slime + blood in a grenade")
 
-				var/blocked = list(/mob/living/simple_animal/hostile,
-					/mob/living/simple_animal/hostile/humanoid,
-					/mob/living/simple_animal/hostile/humanoid/pirate,
-					/mob/living/simple_animal/hostile/humanoid/pirate/ranged,
-					/mob/living/simple_animal/hostile/humanoid/russian,
-					/mob/living/simple_animal/hostile/humanoid/russian/ranged,
-					/mob/living/simple_animal/hostile/humanoid/syndicate,
-					/mob/living/simple_animal/hostile/humanoid/syndicate/melee,
-					/mob/living/simple_animal/hostile/humanoid/syndicate/melee/space,
-					/mob/living/simple_animal/hostile/humanoid/syndicate/ranged,
-					/mob/living/simple_animal/hostile/humanoid/syndicate/ranged/space,
+				var/blocked = list(
 					/mob/living/simple_animal/hostile/alien/queen/large,
-					/mob/living/simple_animal/hostile/retaliate,
 					/mob/living/simple_animal/hostile/retaliate/clown,
 					/mob/living/simple_animal/hostile/mushroom,
-					/mob/living/simple_animal/hostile/asteroid,
-					/mob/living/simple_animal/hostile/asteroid/basilisk,
-					/mob/living/simple_animal/hostile/asteroid/goldgrub,
-					/mob/living/simple_animal/hostile/asteroid/goliath,
-					/mob/living/simple_animal/hostile/asteroid/hivelord,
-					/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
 					/mob/living/simple_animal/hostile/carp/holocarp,
 					/mob/living/simple_animal/hostile/faithless/cult,
 					/mob/living/simple_animal/hostile/scarybat/cult,
@@ -1266,8 +1229,8 @@ datum
 					/mob/living/simple_animal/hostile/slime/adult,
 					/mob/living/simple_animal/hostile/hivebot/tele,//this thing spawns hostile mobs
 					/mob/living/simple_animal/hostile/mining_drone,
-					)//exclusion list for things you don't want the reaction to create.
-				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
+					) + typesof(/mob/living/simple_animal/hostile/humanoid) + typesof(/mob/living/simple_animal/hostile/asteroid)//exclusion list for things you don't want the reaction to create.
+				var/list/critters = existing_typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
 				send_admin_alert(holder, reaction_name="gold slime + blood")
 
@@ -1360,7 +1323,7 @@ datum
 					)
 				blocked += typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable)	//silver-slime spawned customizable food is borked
 
-				var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - blocked
+				var/list/borks = existing_typesof(/obj/item/weapon/reagent_containers/food/snacks) - blocked
 				// BORK BORK BORK
 
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
@@ -1413,7 +1376,7 @@ datum
 				blocked += typesof(/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable)	//silver-slime spawned customizable food is borked
 				blocked += typesof(/obj/item/weapon/reagent_containers/food/drinks/golden_cup)		//was probably never intended to spawn outside admin events
 
-				var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/drinks) - blocked
+				var/list/borks = existing_typesof(/obj/item/weapon/reagent_containers/food/drinks) - blocked
 				// BORK BORK BORK
 
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)

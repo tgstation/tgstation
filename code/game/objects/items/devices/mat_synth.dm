@@ -174,7 +174,7 @@
 			emagged = 1
 			var/matter_rng = rand(5, 25)
 			if(matter >= matter_rng)
-				var/obj/item/device/spawn_item = pick(typesof(/obj/item/device) - /obj/item/device) //we make any kind of device. It's a surprise!
+				var/obj/item/device/spawn_item = pick(existing_typesof(/obj/item/device)) //we make any kind of device. It's a surprise!
 				user.visible_message("<span class='warning'>\The [src] in [user]'s hands appears to be trying to synthesize... \a [initial(spawn_item.name)]?</span>", \
 									 "<span class='warning'>\The [src] pops and fizzles in your hands, before creating... \a [initial(spawn_item.name)]?</span>", \
 									 "<span class='warning'>You hear a loud popping noise.</span>")

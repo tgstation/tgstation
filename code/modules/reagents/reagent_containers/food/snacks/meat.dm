@@ -140,7 +140,7 @@
 	visible_message("<span class='info'>\The [src] transforms into a pile of bones!</span>")
 	shapeshift(/obj/effect/decal/remains/human) //Turn into human remains
 
-var/global/list/valid_random_food_types = typesof(/obj/item/weapon/reagent_containers/food/snacks) - typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable) - /obj/item/weapon/reagent_containers/food/snacks
+var/global/list/valid_random_food_types = existing_typesof(/obj/item/weapon/reagent_containers/food/snacks) - typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/mimic/proc/shapeshift(atom/atom_to_copy = null)
 	if(!atom_to_copy)
