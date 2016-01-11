@@ -457,6 +457,8 @@
 	return
 
 /obj/machinery/sleeper/proc/cook(var/cook_setting)
+	if (!(cook_setting in available_options))
+		return
 	var/time = available_options[cook_setting]
 	target_time = world.timeofday + time
 	on = 1
@@ -600,9 +602,11 @@
 /obj/machinery/sleeper/mancrowave/update_icon()
 	if(!occupant)
 		icon_state = "[base_icon]_open"
+	else if(setting != "Thermoregulate" && on)
+		icon_state = "[base_icon]_2"
 	else
 		icon_state = "[base_icon]_[on]"
-	if(setting != "Thermoregulate" && on)
+	if(emagged)
 		light_color = LIGHT_COLOR_RED
 		icon_state += "emag"
 	else
@@ -623,6 +627,8 @@
 		to_chat(user, "<span class='warning'>You short out the safety features of \the [src]</span>")
 		available_options = list("Thermoregulate" = 50,"Rare" = 500,"Medium" = 600,"Well Done" = 700)
 		update_icon()
+		connected.name = "MANCROWAVE"
+		name = "MANCROWAVE"
 		return 1
 	return -1
 
@@ -649,9 +655,11 @@
 	if(connected)
 		if(!connected.occupant)
 			icon_state = "manconsole_open"
+		else if(connected.setting != "Thermoregulate" && connected.on)
+			icon_state = "manconsole_2"
 		else
 			icon_state = "manconsole_[connected.on]"
-		if(connected.setting != "Thermoregulate" && connected.on && connected.occupant)
+		if(connected.emagged)
 			icon_state += "emag"
 
 
@@ -722,6 +730,8 @@
 	if(href_list["security"])
 		connected.emagged = 0
 		emagged = 0
+		name = "thermal homeostasis regulator"
+		connected.name = "thermal homeostasis regulator"
 		connected.available_options = list("Thermoregulate" = 50)
 		connected.update_icon()
 	src.add_fingerprint(usr)
@@ -738,7 +748,14 @@
 		connected.on = 0
 		connected.update_icon()
 		return
-	if(world.timeofday >= connected.target_time && connected.on && istype(connected.occupant,/mob/living/carbon))
+	if(!istype(connected.occupant,/mob/living/carbon))
+		connected.go_out()
+		return
+	if(!(world.timeofday <= connected.target_time && connected.on)) //If we're currently still cooking
+		var/timefraction = (connected.available_options["[connected.setting]"])/250
+		var/tempdifference = (T0C+32+(connected.available_options["[connected.setting]"]/10) - connected.occupant.bodytemperature)
+		connected.occupant.bodytemperature += tempdifference*(timefraction)
+	else
 		switch(connected.setting)
 			if("Thermoregulate")
 				connected.occupant.bodytemperature = (T0C + 37)

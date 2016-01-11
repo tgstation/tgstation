@@ -77,7 +77,10 @@
 
 	//Nutrition decrease
 	if(stat != 2)
-		burn_calories(HUNGER_FACTOR)
+		var/reduce_nutrition_by = HUNGER_FACTOR
+		if(sleeping)
+			reduce_nutrition_by *= 0.1 //Reduce hunger factor by 90%
+		burn_calories(reduce_nutrition_by,1)
 
 	if(nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
