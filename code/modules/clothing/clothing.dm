@@ -126,7 +126,7 @@ BLIND     // can't see anything
 	species_restricted = list("exclude","Unathi","Tajaran","Muton")
 	var/pickpocket = 0 //Master pickpocket?
 
-	var/bonus_knockout = 0 //Added to knockout chance. 5 or above is pretty much a 50% chance to weaken per hit
+	var/bonus_knockout = 0 //Knockout chance is multiplied by (1 + bonus_knockout) and is capped at 1/2. 0 = 1/12 chance, 1 = 1/6 chance, 2 = 1/4 chance, 3 = 1/3 chance, etc.
 	var/damage_added = 0 //Added to unarmed damage, doesn't affect knockout chance
 
 /obj/item/clothing/gloves/emp_act(severity)
