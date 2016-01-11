@@ -1,11 +1,9 @@
 import gulp from 'gulp'
 
-import build from './tasks/build'
-import clean from './tasks/clean'
-import reload from './tasks/reload'
-import watch from './tasks/watch'
+import { css, watch_css } from './tasks/css'
+import { js, watch_js } from './tasks/js'
+import { reload, watch_reload } from './tasks/reload'
+import { size } from './tasks/size'
 
-gulp.task(clean)
-gulp.task('default', gulp.series(clean, build))
-gulp.task('update', gulp.series(clean, build, reload))
-gulp.task(watch)
+gulp.task('default', gulp.series(gulp.parallel(css, js), size))
+gulp.task('watch', gulp.parallel(watch_css, watch_js, watch_reload))

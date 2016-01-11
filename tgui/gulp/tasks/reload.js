@@ -1,7 +1,10 @@
-import child_process from 'child_process'
-module.exports = function () {
-  child_process.exec('reload.bat', (err, stdout, stderr) => {
-    if (err) console.log(err)
-  })
+import * as p from '../paths'
+
+import { exec } from 'child_process'
+export function reload () {
+  return exec('reload.bat')
 }
-module.exports.displayName = 'reload'
+import gulp from 'gulp'
+export function watch_reload () {
+  return gulp.watch(p.out + '**', reload)
+}
