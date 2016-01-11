@@ -74,15 +74,10 @@
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
 	sleep(100)
-	for(var/mob/living/L in mob_list)
-		var/turf/T = get_turf(L)
-		if(T.z != z_level)
-			continue
-		if(issilicon(L))
-			continue
-		L << "<span class='danger'><B>The blast wave from the [src] tears you atom from atom!</B></span>"
-		L.dust()
-	world << "<B>The AI cleansed the station of life with the doomsday device!</B>"
+	ticker.mode.explosion_in_progress = 1
+	ticker.station_explosion_cinematic(0,"AI malfunction",1)
+	ticker.mode.explosion_in_progress = 0
+	world << "<B>The self-destruction of [station_name()] killed everyone not in the AI's nuclear bunker!</B>"
 	ticker.force_ending = 1
 
 /datum/AI_Module/large/fireproof_core

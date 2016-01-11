@@ -206,7 +206,7 @@ var/datum/subsystem/ticker/ticker
 
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
-/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
+/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null, corebunker = 0)
 	if( cinematic )	return	//already a cinematic in progress!
 
 	for (var/datum/html_interface/hi in html_interfaces)
@@ -228,6 +228,8 @@ var/datum/subsystem/ticker/ticker
 			if(M.stat != DEAD)
 				var/turf/T = get_turf(M)
 				if(T && T.z==1)
+					if(corebunker && istype(get_area(M), /area/turret_protected/ai))
+						continue
 					M.death(0) //no mercy
 
 	//Now animate the cinematic
