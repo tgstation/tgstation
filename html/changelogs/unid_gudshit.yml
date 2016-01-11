@@ -1,6 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-  - tweak: Grass, planks, stacks produced from crafting or from the biogenerator will now automatically stack with each other (so harvesting from a tray with glass yields one stack with 5 grass tiles)
