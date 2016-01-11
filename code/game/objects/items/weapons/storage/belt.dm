@@ -266,7 +266,7 @@
 /obj/item/weapon/storage/belt/lazarus
 	name = "trainer's belt"
 	desc = "For the pokemo- mining master, holds your lazarus capsules."
-	icon_state = "lazarusbelt"
+	icon_state = "lazarusbelt_0"
 	item_state = "lazbelt"
 	w_class = 4
 	max_w_class = 4
@@ -281,7 +281,7 @@
 
 /obj/item/weapon/storage/belt/lazarus/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]_[contents.len]"
+	icon_state = "lazarusbelt_[contents.len]"
 
 /obj/item/weapon/storage/belt/lazarus/attackby(obj/item/W, mob/user)
 	var/amount = contents.len
@@ -305,12 +305,10 @@
 	can_hold = list("/obj/item/device/mobcapsule")
 
 /obj/item/weapon/storage/belt/lazarus/antag/New(loc, mob/user)
-	var/blocked = list(/mob/living/simple_animal/hostile,
+	var/blocked = list(
 	/mob/living/simple_animal/hostile/hivebot/tele,
-	/mob/living/simple_animal/hostile/necro/copy,
-	/mob/living/simple_animal/hostile/humanoid,
 	)
-	var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
+	var/list/critters = existing_typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 	critters = shuffle(critters)
 	while(contents.len < 6)
 		var/obj/item/device/mobcapsule/MC = new /obj/item/device/mobcapsule(src)

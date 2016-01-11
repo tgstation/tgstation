@@ -117,7 +117,7 @@ proc/tg_list2text(list/list, glue = ",")
 			. += "[list[i]][assoc_glue][list[list[i]]][glue]"
 
 	. = copytext(., 1, length(.) - length(glue) + 1) // Shush. (cut out the glue which is added to the end.)
-	
+
 // HTTP GET URL query builder thing.
 // list("a"="b","c"="d") -> ?a=b&c=d
 /proc/buildurlquery(list/list,sep="&")
@@ -234,6 +234,19 @@ proc/tg_list2text(list/list, glue = ",")
 		if(NORTHWEST)	return 315
 		if(SOUTHWEST)	return 225
 		else			return null
+
+//returns the east-zero counter-clockwise angle in degrees, given a direction
+
+/proc/dir2angle_t(const/D)
+	switch(D)
+		if(EAST)		return 0
+		if(NORTHEAST)	return 45
+		if(NORTH)		return 90
+		if(NORTHWEST)	return 135
+		if(WEST)		return 180
+		if(SOUTHWEST)	return 225
+		if(SOUTH)		return 270
+		if(SOUTHEAST)	return 315
 
 //Returns the angle in english
 /proc/angle2text(var/degree)

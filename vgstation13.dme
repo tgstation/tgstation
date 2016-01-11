@@ -36,6 +36,7 @@
 #include "code\__HELPERS\time.dm"
 #include "code\__HELPERS\timed_alerts.dm"
 #include "code\__HELPERS\type2type.dm"
+#include "code\__HELPERS\typeof.dm"
 #include "code\__HELPERS\unsorted.dm"
 #include "code\__HELPERS\sorts\_Main.dm"
 #include "code\__HELPERS\sorts\InsertSort.dm"

@@ -744,7 +744,7 @@
 
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'
-	icon_state = "std_module"
+	//icon_state = "std_module"
 	w_class = 2.0
 	item_state = "electronic"
 	flags = FPRINT

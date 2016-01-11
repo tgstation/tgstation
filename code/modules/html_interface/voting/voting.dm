@@ -46,6 +46,7 @@ var/global/datum/controller/vote/vote = new()
 	var/last_update    = 0
 	var/initialized    = 0
 	var/lastupdate     = 0
+	var/total_votes    = 0
 	var/weighted        = FALSE // Whether to use weighted voting.
 
 /datum/controller/vote/New()
@@ -95,6 +96,7 @@ var/global/datum/controller/vote/vote = new()
 	choices.len = 0
 	voted.len = 0
 	voting.len = 0
+	total_votes = 0
 	current_votes.len = 0
 	weighted = FALSE
 	update(1)
@@ -102,7 +104,6 @@ var/global/datum/controller/vote/vote = new()
 /datum/controller/vote/proc/get_result()
 	//get the highest number of votes
 	var/greatest_votes = 0
-	var/total_votes = 0
 	for(var/option in choices)
 		var/votes = choices[option]
 		total_votes += votes
@@ -142,7 +143,12 @@ var/global/datum/controller/vote/vote = new()
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(weighted)
-		. += pickweight(choices.Copy())
+		var/list/filteredchoices = choices.Copy()
+		for(var/a in filteredchoices)
+			if(!filteredchoices[a])
+				filteredchoices -= a //Remove choices with 0 votes, as pickweight gives them 1 vote
+		if(filteredchoices.len)
+			. += pickweight(filteredchoices.Copy())
 	else
 		if(greatest_votes)
 			for(var/option in choices)
@@ -169,10 +175,10 @@ var/global/datum/controller/vote/vote = new()
 			else
 				feedback_set("map vote tie", "[feedbackanswer] chosen: [.]")
 
-		text += "<b>[weighted ? "Weighted " : ""]Vote Result: [.] with [choices[.]] vote\s</b>"
+		text += "<b>[weighted ? "Random Weighted " : ""]Vote Result: [.] with [choices[.]] vote[weighted? " and a [round(100*choices[.]/total_votes)]% chance of winning" : null]\s</b>"
 		for(var/choice in choices)
 			if(. == choice) continue
-			text += "<br>\t [choice] had [choices[choice] != null ? choices[choice] : "0"] vote\s"
+			text += "<br>\t [choice] had [choices[choice] != null ? choices[choice] : "0"] vote[(weighted&&choices[choice])? " and a [round(100*choices[choice]/total_votes)]% chance of winning" : null]\s"
 	else
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)

@@ -926,7 +926,7 @@
 /obj/item/toy/gasha/bomberman
 	name = "toy bomberman"
 	desc = "The explosive hero of the Bomberman series!"
-	icon_state = "bomberman"
+	icon_state = "bomberman1"
 
 /obj/item/toy/gasha/bomberman/white
 	icon_state = "bomberman1"

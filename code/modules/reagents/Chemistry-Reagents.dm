@@ -112,6 +112,8 @@
 		M.adjustToxLoss(overdose_dam)
 
 	holder.remove_reagent(src.id, custom_metabolism) //Trigger metabolism
+	if(!holder) // We might be out of the holder list and holder might be nulled, but if we don't do this then the reagent keeps on reacting
+		return 1
 
 /datum/reagent/proc/on_plant_life(var/obj/machinery/portable_atmospherics/hydroponics/T)
 	if(!holder)
@@ -605,7 +607,6 @@
 			for(var/obj/item/W in C)
 				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
 					qdel(W)
-					W = null
 					continue
 				W.layer = initial(W.layer)
 				W.loc = C.loc
@@ -1036,6 +1037,7 @@
 			if(H.wear_mask)
 				if(!H.wear_mask.unacidable)
 					qdel(H.wear_mask)
+					H.wear_mask = null
 					H.update_inv_wear_mask()
 					to_chat(H, "<span class='warning'>Your mask melts away but protects you from the acid!</span>")
 				else
@@ -1057,6 +1059,7 @@
 			if(MK.wear_mask)
 				if(!MK.wear_mask.unacidable)
 					qdel(MK.wear_mask)
+					MK.wear_mask = null
 					MK.update_inv_wear_mask()
 					to_chat(MK, "<span class='warning'>Your mask melts away but protects you from the acid!</span>")
 				else
@@ -1121,6 +1124,7 @@
 			if(H.wear_mask)
 				if(!H.wear_mask.unacidable)
 					qdel(H.wear_mask)
+					H.wear_mask = null
 					H.update_inv_wear_mask()
 					to_chat(H, "<span class='warning'>Your mask melts away but protects you from the acid!</span>")
 				else
@@ -1148,6 +1152,7 @@
 			if(MK.wear_mask)
 				if(!MK.wear_mask.unacidable)
 					qdel(MK.wear_mask)
+					MK.wear_mask = null
 					MK.update_inv_wear_mask()
 					to_chat(MK, "<span class='warning'>Your mask melts away but protects you from the acid!</span>")
 				else
@@ -1495,7 +1500,7 @@
 	O.clean_blood()
 	if(istype(O, /obj/effect/decal/cleanable))
 		qdel(O)
-	if(O.color && istype(O, /obj/item/weapon/paper))
+	else if(O.color && istype(O, /obj/item/weapon/paper))
 		O.color = null
 
 /datum/reagent/space_cleaner/reaction_turf(var/turf/simulated/T, var/volume)
@@ -2858,7 +2863,6 @@
 		lowertemp.react()
 		T.assume_air(lowertemp)
 		qdel(hotspot)
-		hotspot = null
 
 /datum/reagent/enzyme
 	name = "Universal Enzyme"

@@ -1,3 +1,36 @@
+//List of all drawable graffitis. Their icon states are associated with icon states (so for example "Chaos Undivided" = "chaos")
+var/global/list/all_graffitis = list(
+	"Left arrow"="left",
+	"Right arrow"="right",
+	"Up arrow"="up",
+	"Down arrow"="down",
+	"Heart"="heart",
+	"Lambda"="lambda",
+	"50 blessings"="50bless",
+	"Engineer"="engie",
+	"Guy"="guy",
+	"The end is nigh"="end",
+	"Amy + Jon"="amyjon",
+	"Matt was here"="matt",
+	"Revolution"="revolution",
+	"Face"="face",
+	"Dwarf"="dwarf",
+	"Uboa"="uboa",
+	"Rogue cyborgs"="borgsrogue",
+	"Shitcurity"="shitcurity",
+	"Catbeast here"="catbeast",
+	"Vox are pox"="voxpox",
+	"Hieroglyphs 1"="hieroglyphs1",
+	"Hieroglyphs 2"="hieroglyphs2",
+	"Hieroglyphs 3"="hieroglyphs3",
+	"Securites eunt domus"="security",
+	"Nanotrasen logo"="nanotrasen",
+	"Syndicate logo 1"="syndicate1",
+	"Syndicate logo 2"="syndicate2",
+	"Don't believe these lies"="lie",
+	"Chaos Undivided"="chaos"
+)
+
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
 	colour = "#DA0000"
@@ -68,9 +101,7 @@
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity) return
 
-	var/user_loc = user.loc
-
-	if(istype(target,/turf/simulated/floor))
+	if(istype(target, /turf/simulated))
 		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti","rune","letter")
 		var/preference
 		switch(drawtype)
@@ -78,36 +109,7 @@
 				drawtype = input("Choose the letter.", "Crayon scribbles") in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
 				to_chat(user, "You start drawing a letter on the [target.name].")
 			if("graffiti")
-				var/list/graffitis = list(
-					"Random"="graffiti",
-					"Cancel"="cancel",
-					"Left arrow"="left",
-					"Right arrow"="right",
-					"Up arrow"="up",
-					"Down arrow"="down",
-					"Heart"="heart",
-					"Lambda"="lambda",
-					"50 blessings"="50bless",
-					"Engineer"="engie",
-					"Guy"="guy",
-					"The end is nigh"="end",
-					"Amy + Jon"="amyjon",
-					"Matt was here"="matt",
-					"Revolution"="revolution",
-					"Face"="face",
-					"Dwarf"="dwarf",
-					"Uboa"="uboa",
-					"Rogue cyborgs"="borgsrogue",
-					"Shitcurity"="shitcurity",
-					"Catbeast here"="catbeast",
-					"Vox are pox"="voxpox",
-					"Hieroglyphs"="hieroglyphs[rand(1,3)]",
-					"Securites eunt domus"="security",
-					"Nanotrasen logo"="nanotrasen",
-					"Syndicate logo"="syndicate[rand(1,2)]",
-					"Don't believe these lies"="lie",
-					"Chaos Undivided"="chaos"
-				)
+				var/list/graffitis = list("Random" = "graffiti") + all_graffitis
 				if(istype(user,/mob/living/carbon/human))
 					var/mob/living/carbon/human/M=user
 					if(M.getBrainLoss() >= 60)
@@ -116,16 +118,32 @@
 							"Dick"="dick[rand(1,3)]",
 							"Valids"="valid"
 							)
-				preference = input("Choose the graffiti.", "Crayon scribbles") in graffitis
+				preference = input("Choose the graffiti.", "Crayon scribbles") as null|anything in graffitis
+
+				if(!preference) return
+
 				drawtype=graffitis[preference]
-				if(drawtype=="cancel") return
 				to_chat(user, "You start drawing graffiti on the [target.name].")
 			if("rune")
 				to_chat(user, "You start drawing a rune on the [target.name].")
 
-		if(user_loc != user.loc) return//check to see if user has moved
+		if(!user.Adjacent(target)) return
+		if(target.density && !cardinal.Find(get_dir(user, target))) //Drawing on a wall and not standing in a cardinal direction - don't draw
+			to_chat(user, "<span class='warning'>You can't reach \the [target] from here!</span>")
+			return
+
 		if(instant || do_after(user,target, 50))
-			new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+			var/obj/effect/decal/cleanable/C = new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+
+			if(target.density && (C.loc != get_turf(user))) //Drawn on a wall (while standing on a floor)
+				C.forceMove(get_turf(user))
+
+				var/angle = dir2angle_t(get_dir(C, target))
+
+				C.pixel_x = 32 * cos(angle)
+				C.pixel_y = 32 * sin(angle) //Offset the graffiti to make it appear on the wall
+				C.on_wall = target
+
 			to_chat(user, "You finish drawing.")
 			target.add_fingerprint(user)		// Adds their fingerprints to the floor the crayon is drawn on.
 			if(uses)

@@ -44,10 +44,15 @@
 	else if(istype(target,/turf/simulated))
 		var/turf/simulated/T = target
 		var/list/cleanables = list()
+
 		for(var/obj/effect/decal/cleanable/CC in T)
-			if(!istype(CC) || !CC)
-				continue
+			if(!istype(CC) || !CC) continue
 			cleanables += CC
+
+		for(var/obj/effect/decal/cleanable/CC in get_turf(user)) //Get all nearby decals drawn on this wall and erase them
+			if(CC.on_wall == target)
+				cleanables += CC
+
 		if(!cleanables.len)
 			user.simple_message("<span class='notice'>You fail to clean anything.</span>",
 				"<span class='notice'>There is nothing for you to vandalize.</span>")
