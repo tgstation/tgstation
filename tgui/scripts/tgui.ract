@@ -23,8 +23,8 @@ component.exports = {
     fade: require('ractive-transitions-fade'),
   },
   onconfig: function () {
-    let requested  = this.get('config.interface')
-    let interfaces = require('./interfaces/*', { mode: 'hash' })
+    const requested  = this.get('config.interface')
+    const interfaces = require('./interfaces/*', { mode: 'hash' })
     if (requested in interfaces) {
       this.components.interface = interfaces[requested] // Use the interface specified in the config...
     } else {

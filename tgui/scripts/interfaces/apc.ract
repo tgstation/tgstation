@@ -34,7 +34,7 @@ component.exports = {
       }
     },
     powerCellStatusState: function () {
-      let status = this.get('data.powerCellStatus')
+      const status = this.get('data.powerCellStatus')
       if (status > 50) return 'good'
       else if (status > 25) return 'average'
       else return 'bad'

@@ -2,7 +2,7 @@
 component.exports = {
   computed: {
     capacityPercentState: function () {
-      let charge = this.get('data.capacityPercent')
+      const charge = this.get('data.capacityPercent')
       if (charge > 50) return 'good'
       else if (charge > 15) return 'average'
       else return 'bad'

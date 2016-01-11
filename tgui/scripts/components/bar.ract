@@ -2,8 +2,8 @@
 component.exports = {
   oninit: function () {
     this.observe('value', (newkey, oldkey, keypath) => {
-      let { min, max } = this.get()
-      let value = Math.clamp(min, max, newkey)
+      const { min, max } = this.get()
+      const value = Math.clamp(min, max, newkey)
       this.animate('percentage', Math.round((value - min) / (max - min) * 100))
     })
   }

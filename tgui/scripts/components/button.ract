@@ -17,7 +17,7 @@ component.exports = {
       return false
     },
     styles: function () {
-      let state = this.get('state'), style = this.get('style')
+      const state = this.get('state'), style = this.get('style')
       if (this.get('enabled')) {
         if (!state) {
           return `active normal ${[style]}`
@@ -31,7 +31,7 @@ component.exports = {
   },
   oninit: function () {
     this.on('press', (event) => {
-      let { action, params } = this.get()
+      const { action, params } = this.get()
       act(this.get('config.ref'), action, params)
       event.node.blur()
     })

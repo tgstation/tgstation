@@ -5,9 +5,9 @@ import { browserify as b, gulp as g } from '../plugins'
 import { transform as babel } from 'babel-core'
 import { readFileSync as read } from 'fs'
 b.componentify.compilers['text/javascript'] = function (source, file) {
-  let config = { sourceMaps: true }
+  const config = { sourceMaps: true }
   Object.assign(config, JSON.parse(read('.babelrc', 'utf8')))
-  let compiled = babel(source, config)
+  const compiled = babel(source, config)
 
   return {
     source: compiled.code,
@@ -19,7 +19,7 @@ import browserify from 'browserify'
 import through from 'through2'
 const bundle = function () {
   return through.obj((file, enc, next) => {
-    let bundle = browserify(file.path, { extensions: ['.js', '.ract'], debug: f.debug })
+    const bundle = browserify(file.path, { extensions: ['.js', '.ract'], debug: f.debug })
       .transform(b.babelify)
       .plugin(b.helpers)
       .transform(b.componentify)

@@ -2,7 +2,7 @@
 component.exports = {
   computed: {
     cellTemperatureState: function () {
-        let temp = this.get('data.cellTemperature')
+        const temp = this.get('data.cellTemperature')
         if (temp < 225) return 'good'
         else if (temp < 273.15) return 'average'
         else return 'bad'

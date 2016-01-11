@@ -34,7 +34,7 @@ window.initialize = (dataString) => {
 }
 
 import { act } from './byond'
-let holder = document.getElementById('data')
+const holder = document.getElementById('data')
 if (holder.textContent !== '{}') { // If the JSON was inlined, load it.
   window.initialize(holder.textContent)
 } else {

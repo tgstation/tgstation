@@ -1,8 +1,8 @@
+import * as p from '../paths'
+
 import build from './build'
 import clean from './clean'
 import reload from './reload'
-
-let p = require('../paths')
 
 import debounce from 'debounce'
 import gulp from 'gulp'
