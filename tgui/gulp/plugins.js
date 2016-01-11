@@ -1,5 +1,6 @@
 export const browserify = {
   babelify: require('babelify'),
+  collapse: require('bundle-collapser/plugin'),
   componentify: require('ractive-componentify'),
   globify: require('require-globify'),
   helpers: require('babelify-external-helpers')

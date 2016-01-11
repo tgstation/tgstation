@@ -17,14 +17,17 @@ b.componentify.compilers['text/javascript'] = function (source, file) {
 
 import browserify from 'browserify'
 import through from 'through2'
-let bundle = function () {
+const bundle = function () {
   return through.obj((file, enc, next) => {
-    browserify(file.path, { extensions: ['.js', '.ract'], debug: f.debug })
-    .transform(b.babelify)
-    .plugin(b.helpers)
-    .transform(b.componentify)
-    .transform(b.globify)
-    .bundle((err, res) => {
+    let bundle = browserify(file.path, { extensions: ['.js', '.ract'], debug: f.debug })
+      .transform(b.babelify)
+      .plugin(b.helpers)
+      .transform(b.componentify)
+      .transform(b.globify)
+    if (f.min) {
+      bundle.plugin(b.collapse)
+    }
+    bundle.bundle((err, res) => {
       if (err) next(err)
       file.contents = res
       next(null, file)
