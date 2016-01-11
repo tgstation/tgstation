@@ -472,6 +472,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			to_chat(usr, "No area available.")
 
 	usr.loc = pick(L)
+	if(locked_to)
+		manual_stop_follow(locked_to)
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
@@ -550,6 +552,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
 				A.loc = T
+				if(locked_to)
+					manual_stop_follow(locked_to)
 			else
 				to_chat(A, "This mob is not located in the game world.")
 
