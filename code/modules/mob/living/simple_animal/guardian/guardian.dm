@@ -627,23 +627,28 @@
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
 
-	var/colour
-	var/picked_name
 	switch(theme)
 		if("magic")
 			user << "[G.magic_fluff_string]."
+		if("tech")
+			user << "[G.tech_fluff_string]."
+
+	var/colour
+	var/picked_name
+	var/randomtheme = pick("tech", "magic")
+	switch(randomtheme)
+		if("magic")
 			colour = pick("Pink", "Red", "Orange", "Green", "Blue")
 			picked_name = pick("Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces")
 		if("tech")
-			user << "[G.tech_fluff_string]."
 			colour = pick("Rose", "Lily", "Daisy", "Zinnia", "Ivy", "Iris", "Petunia", "Violet", "Orchid") //technically not colors, just flowers that can be specific colors
 			picked_name = pick("Gallium", "Indium", "Thallium", "Bismuth", "Aluminium", "Mercury", "Iron", "Silver", "Zinc", "Titanium", "Chromium", "Nickel")
 
 	G.name = "[picked_name] [colour]"
 	G.real_name = "[picked_name] [colour]"
-	G.icon_living = "[theme][colour]"
-	G.icon_state = "[theme][colour]"
-	G.icon_dead = "[theme][colour]"
+	G.icon_living = "[randomtheme][colour]"
+	G.icon_state = "[randomtheme][colour]"
+	G.icon_dead = "[randomtheme][colour]"
 
 	G.mind.name = "[G.real_name]"
 
