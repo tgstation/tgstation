@@ -631,7 +631,6 @@ trans_to_atmos(var/datum/gas_mixture/target, var/amount=1, var/multiplier=1, var
 /datum/reagents/Destroy()
 	for(var/datum/reagent/reagent in reagent_list)
 		qdel(reagent)
-		reagent = null // Should be done by the Cut() but just in case
 
 	reagent_list.Cut()
 

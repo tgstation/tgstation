@@ -618,7 +618,6 @@
 			else
 				new_mob.key = C.key
 			qdel(C)
-			C = null
 
 /datum/reagent/stoxin
 	name = "Sleep Toxin"
@@ -1100,7 +1099,6 @@
 		I.desc = "Looks like this was \an [O] some time ago."
 		O.visible_message("<span class='warning'>\The [O] melts.</span>")
 		qdel(O)
-		O = null
 
 /datum/reagent/pacid
 	name = "Polytrinic acid"
@@ -1187,7 +1185,6 @@
 		I.desc = "Looks like this was \an [O] some time ago."
 		O.visible_message("<span class='warning'>\The [O] melts.</span>")
 		qdel(O)
-		O = null
 	else if(istype(O,/obj/effect/plantsegment))
 		var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 		I.desc = "Looks like these were some [O.name] some time ago."
@@ -1503,8 +1500,7 @@
 	O.clean_blood()
 	if(istype(O, /obj/effect/decal/cleanable))
 		qdel(O)
-		O = null
-	if(O.color && istype(O, /obj/item/weapon/paper))
+	else if(O.color && istype(O, /obj/item/weapon/paper))
 		O.color = null
 
 /datum/reagent/space_cleaner/reaction_turf(var/turf/simulated/T, var/volume)
@@ -1610,7 +1606,6 @@
 		alien_weeds.healthcheck()
 	else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
 		qdel(O)
-		O = null
 	else if(istype(O,/obj/effect/plantsegment)) //Kills kudzu too.
 		var/obj/effect/plantsegment/K = O
 		var/dmg = 200
