@@ -547,7 +547,13 @@ var/global/list/gene_tag_masks = list()   // Gene obfuscation for delicious tria
 		currently_querying = list()
 		for(var/i = 0;i<total_yield;i++)
 			var/product_type = pick(products)
-			var/obj/item/product = new product_type(get_turf(user))
+
+			var/obj/item/product
+
+			if(ispath(product_type, /obj/item/stack))
+				product = drop_stack(product_type, get_turf(user), 1, user)
+			else
+				product = new product_type(get_turf(user))
 
 			score["stuffharvested"] += 1 //One point per product unit
 
