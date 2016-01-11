@@ -556,6 +556,14 @@
 		if(recentlyExperimented)
 			usr << "<span class='warning'>[src] has been used too recently!</span>"
 			return
+		else if(!loaded_item)
+			updateUsrDialog() //Set the interface to unloaded mode
+			usr << "<span class='warning'>[src] is not currently loaded!</span>"
+			return
+		else if(!process || process != loaded_item) //Interface exploit protection (such as hrefs or swapping items with interface set to old item)
+			updateUsrDialog() //Refresh interface to update interface hrefs
+			usr << "<span class='danger'>Interface failure detected in [src]. Please try again.</span>"
+			return
 		var/dotype
 		if(text2num(scantype) == SCANTYPE_DISCOVER)
 			dotype = SCANTYPE_DISCOVER
