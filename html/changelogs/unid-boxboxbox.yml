@@ -1,7 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-  - tweak: Boxing gloves now reduce dexterity, just like knuckledusters
-  - tweak: Boxing gloves now double the chance to stun your enemy in unarmed combat

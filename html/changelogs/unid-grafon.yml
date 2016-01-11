@@ -1,6 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-  - tweak: Graffiti may now be drawn on walls (although slightly slower). 
