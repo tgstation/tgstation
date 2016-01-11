@@ -99,32 +99,21 @@ emp_act
 
 
 /mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
-	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
+	if(l_hand && istype(l_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = l_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
-			visible_message("<span class='danger'>[src] blocks [attack_text] with the [l_hand.name]!</span>")
+		if(I.IsShield() && I.on_block(damage, attack_text))
 			return 1
+
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
-			visible_message("<span class='danger'>[src] blocks [attack_text] with the [r_hand.name]!</span>")
+		if(I.IsShield() && I.on_block(damage, attack_text))
 			return 1
+
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
-		if(I.IsShield() && (prob(35)))
-			visible_message("<span class='danger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
-			var/list/turfs = new/list()
-			for(var/turf/T in orange(6))
-				if(istype(T,/turf/space)) continue
-				if(T.density) continue
-				if(T.x>world.maxx-6 || T.x<6)	continue
-				if(T.y>world.maxy-6 || T.y<6)	continue
-				turfs += T
-			if(!turfs.len) turfs += pick(/turf in orange(6))
-			var/turf/picked = pick(turfs)
-			if(!isturf(picked)) return
-			src.loc = picked
+		if(I.IsShield() && I.on_block(damage, attack_text))
 			return 1
+
 	return 0
 
 /mob/living/carbon/human/emp_act(severity)

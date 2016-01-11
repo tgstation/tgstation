@@ -688,6 +688,15 @@
 /obj/item/proc/IsShield()
 	return 0
 
+//Called when the item blocks an attack. Return 1 to stop the hit, return 0 to let the hit go through
+/obj/item/proc/on_block(damage, attack_text = "the attack")
+	if(ismob(loc))
+		if(prob(50 - round(damage / 3)))
+			visible_message("<span class='danger'>[loc] blocks [attack_text] with \the [src]!</span>")
+			return 1
+
+	return 0
+
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 
