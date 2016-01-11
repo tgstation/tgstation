@@ -14,7 +14,10 @@ export function css () {
     ]))
     .pipe(g.rename(p.css.out))
     .pipe(g.bytediff.start())
-    .pipe(g.if(f.min, g.cssnano({ autoprefixer: { browsers: ['last 2 versions', 'ie >= 9'] }, discardComments: { removeAll: true } })))
+    .pipe(g.if(f.min, g.cssnano({
+      autoprefixer: { browsers: ['last 2 versions', 'ie >= 9'] },
+      discardComments: { removeAll: true }
+    })))
     .pipe(g.if(f.debug, g.sourcemaps.write({ sourceRoot: '/source/#{p.css.dir}' })))
     .pipe(g.bytediff.stop())
     .pipe(gulp.dest(p.out))
