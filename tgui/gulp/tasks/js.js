@@ -16,29 +16,27 @@ b.componentify.compilers['text/javascript'] = function (source, file) {
 }
 
 import browserify from 'browserify'
-import through from 'through2'
-const bundle = function () {
-  return through.obj((file, enc, next) => {
-    const bundle = browserify(file.path, { extensions: ['.js', '.ract'], debug: f.debug })
-      .transform(b.babelify)
-      .plugin(b.helpers)
-      .transform(b.componentify)
-      .transform(b.globify)
-    if (f.min) {
-      bundle.plugin(b.collapse)
-    }
-    bundle.bundle((err, res) => {
-      if (err) next(err)
-      file.contents = res
-      next(null, file)
-    })
+const bundle = browserify(p.js.dir + p.js.main, {
+    debug: f.debug,
+    cache: {},
+    extensions: ['.js', '.ract']
   })
+  .plugin(b.rememberify)
+  .transform(b.babelify)
+  .plugin(b.helpers)
+  .transform(b.componentify)
+  .transform(b.globify)
+if (f.min) {
+  bundle.plugin(b.collapse)
 }
 
+import buffer from 'vinyl-buffer'
 import gulp from 'gulp'
-module.exports = function () {
-  return gulp.src(p.js.dir + p.js.main)
-    .pipe(bundle())
+import source from 'vinyl-source-stream'
+export function js () {
+  return bundle.bundle()
+    .pipe(source('bundle'))
+    .pipe(buffer())
     .pipe(g.if(f.debug, g.sourcemaps.init({loadMaps: true})))
     .pipe(g.rename(p.js.out))
     .pipe(g.bytediff.start())
@@ -47,4 +45,9 @@ module.exports = function () {
     .pipe(g.bytediff.stop())
     .pipe(gulp.dest(p.out))
 }
-module.exports.displayName = 'js'
+export function watch_js () {
+  return gulp.watch(p.js.dir + '**', vinyl => {
+    b.rememberify.forget(bundle, vinyl.path)
+    return js()
+  })
+}

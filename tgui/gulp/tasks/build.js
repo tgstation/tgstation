@@ -1,5 +1,5 @@
-import css from './css'
-import js from './js'
+import { css } from './css'
+import { js } from './js'
 import size from './size'
 
 import gulp from 'gulp'

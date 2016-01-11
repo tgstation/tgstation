@@ -3,7 +3,7 @@ import * as p from '../paths'
 import { gulp as g, postcss as s } from '../plugins'
 
 import gulp from 'gulp'
-module.exports = function () {
+export function css () {
   return gulp.src(p.css.dir + p.css.main)
     .pipe(g.if(f.debug, g.sourcemaps.init({loadMaps: true})))
     .pipe(g.stylus({ url: 'data-url', paths: [p.img.dir] }))
@@ -19,4 +19,6 @@ module.exports = function () {
     .pipe(g.bytediff.stop())
     .pipe(gulp.dest(p.out))
 }
-module.exports.displayName = 'css'
+export function watch_css () {
+  return gulp.watch(p.css.dir + '**', css)
+}

@@ -3,7 +3,8 @@ export const browserify = {
   collapse: require('bundle-collapser/plugin'),
   componentify: require('ractive-componentify'),
   globify: require('require-globify'),
-  helpers: require('babelify-external-helpers')
+  helpers: require('babelify-external-helpers'),
+  rememberify: require('rememberify')
 }
 
 export const gulp = require('gulp-load-plugins')({replaceString: /^gulp(-|\.)|-/g})
