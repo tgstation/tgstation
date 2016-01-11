@@ -20,9 +20,9 @@
 	if(istype(user, /mob/dead/observer)) // Special-case ghosts.
 		if(IsAdminGhost(user))
 			return UI_INTERACTIVE // Admins can interact anyway.
-		if(get_dist(src_object, src) > user.client.view)
-			return UI_CLOSE // Keep ghosts from opening too many UIs.
-		return UI_UPDATE // Ghosts can only view.
+		if(get_dist(src_object, src) < user.client.view)
+			return UI_UPDATE // Keep ghosts from opening too many UIs.
+		return UI_CLOSE // Ghosts can only view.
 	return state.can_use_topic(src_object, user) // Check if the state allows interaction.
 
  /**
