@@ -1,7 +1,6 @@
 import 'babel-polyfill'
 import 'dom4'
 
-
 Object.assign(Math, require('./math'))
 
 import Ractive from 'ractive'

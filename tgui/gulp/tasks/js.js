@@ -17,15 +17,15 @@ b.componentify.compilers['text/javascript'] = function (source, file) {
 
 import browserify from 'browserify'
 const bundle = browserify(p.js.dir + p.js.main, {
-    debug: f.debug,
-    cache: {},
-    extensions: ['.js', '.ract']
-  })
-  .plugin(b.rememberify)
-  .transform(b.babelify)
-  .plugin(b.helpers)
-  .transform(b.componentify)
-  .transform(b.globify)
+  debug: f.debug,
+  cache: {},
+  extensions: ['.js', '.ract']
+})
+.plugin(b.rememberify)
+.transform(b.babelify)
+.plugin(b.helpers)
+.transform(b.componentify)
+.transform(b.globify)
 if (f.min) {
   bundle.plugin(b.collapse)
 }
