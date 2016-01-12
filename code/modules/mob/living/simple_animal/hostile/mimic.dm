@@ -139,7 +139,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		return 1
 	return 0
 
-/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/creator, destroy_original = 0)
+/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/user, destroy_original = 0)
 	if(destroy_original || CheckObject(O))
 		O.loc = src
 		name = O.name
@@ -164,8 +164,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			melee_damage_upper = 2 + I.force
 			move_to_delay = 2 * I.w_class + 1
 		maxHealth = health
-		if(creator)
-			creator = creator
+		if(user)
+			creator = user
 			faction += "\ref[creator]" // very unique
 		if(destroy_original)
 			qdel(O)
