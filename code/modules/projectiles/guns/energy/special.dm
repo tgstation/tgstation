@@ -83,7 +83,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 
 /obj/item/weapon/gun/energy/staff/attack_self(var/mob/living/user)
 	if(world.time < next_changetype)
-		user << "<span class='warning'>[src] is still recharging.</span>"
+		to_chat(user, "<span class='warning'>[src] is still recharging.</span>")
 		return
 
 	var/selected = input("You squint at the dial conspicuously mounted on the side of your staff.","Staff of Change") as null|anything in list("random")+available_staff_transforms
@@ -91,9 +91,9 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 		return
 
 	if (selected == "furry")
-		user << "<span class='danger'>You monster.</span>"
+		to_chat(user, "<span class='danger'>You monster.</span>")
 	else
-		user << "<span class='info'>You have selected to make your next victim have a [selected] form.</span>"
+		to_chat(user, "<span class='info'>You have selected to make your next victim have a [selected] form.</span>")
 
 	switch(selected)
 		if("random")
@@ -203,9 +203,11 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/floramut"
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
+	mech_flags = null // So it can be scanned by the Device Analyser
 	modifystate = "floramut"
 	var/charge_tick = 0
-	var/mode = 0 //0 = mutate, 1 = yield boost
+	var/mode = 0 //0 = mutate, 1 = yield boost, 2 = emag-mutate
+	var/mutstrength = 10 //how many units of mutagen will the mutation projectile act as
 
 /obj/item/weapon/gun/energy/floragun/New()
 	..()
@@ -226,22 +228,56 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	update_icon()
 	return 1
 
+/obj/item/weapon/gun/energy/floragun/process_chambered()
+	. = ..()
+	if(istype(in_chamber, /obj/item/projectile/energy/floramut))
+		var/obj/item/projectile/energy/floramut/P = in_chamber
+		P.mutstrength = src.mutstrength
+
 /obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user as mob)
 	switch(mode)
 		if(0)
 			mode = 1
 			charge_cost = 100
-			user << "<span class='warning'>The [src.name] is now set to increase yield.</span>"
+			to_chat(user, "<span class='warning'>The [src.name] is now set to improve harvests.</span>")
 			projectile_type = "/obj/item/projectile/energy/florayield"
 			modifystate = "florayield"
 		if(1)
 			mode = 0
-			charge_cost = 100
-			user << "<span class='warning'>The [src.name] is now set to induce mutations.</span>"
+			charge_cost = mutstrength * 10
+			to_chat(user, "<span class='warning'>The [src.name] is now set to induce mutations.</span>")
 			projectile_type = "/obj/item/projectile/energy/floramut"
 			modifystate = "floramut"
+		if(2)
+			to_chat(user, "<span class='warning'>The [src.name] appears to be locked into one mode.</span>")
+			return
 	update_icon()
 	return
+
+/obj/item/weapon/gun/energy/floragun/verb/SetMutationStrength()
+	set name = "Set mutation strength"
+	set category = "Object"
+	if(mode == 2)
+		mutstrength = input(usr, "Enter new mutation strength level (15-25):", "Somatoray Gamma Ray Threshold", mutstrength) as num
+		mutstrength = Clamp(round(mutstrength), 15, 25)
+	else
+		mutstrength = input(usr, "Enter new mutation strength level (1-15):", "Somatoray Alpha Ray Threshold", mutstrength) as num
+		mutstrength = Clamp(round(mutstrength), 1, 15)
+
+/obj/item/weapon/gun/energy/floragun/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(isEmag(W) || issolder(W))
+		if (mode == 2)
+			to_chat(user, "The safeties are already de-activated.")
+		else
+			mode = 2
+			mutstrength = 25
+			charge_cost = mutstrength * 10
+			projectile_type = "/obj/item/projectile/energy/floramut/emag"
+			to_chat(user, "<span class='warning'>You short out the safety limit of the [src.name]!</span>")
+			desc += " It seems to have it's safety features de-activated."
+			playsound(get_turf(user), 'sound/effects/sparks4.ogg', 50, 1)
+			modifystate = "floraemag"
+			update_icon()
 
 /obj/item/weapon/gun/energy/floragun/afterattack(obj/target, mob/user, flag)
 	if(flag && istype(target,/obj/machinery/portable_atmospherics/hydroponics))
@@ -250,7 +286,6 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 			user.visible_message("<span class='danger'> \The [user] fires \the [src] into \the [tray]!</span>")
 			Fire(target,user)
 		return
-
 	..()
 
 /obj/item/weapon/gun/energy/meteorgun
@@ -314,11 +349,11 @@ obj/item/weapon/gun/energy/staff/focus
 obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user as mob)
 	if(projectile_type == "/obj/item/projectile/forcebolt")
 		charge_cost = 250
-		user << "<span class='warning'>The [src.name] will now strike a small area.</span>"
+		to_chat(user, "<span class='warning'>The [src.name] will now strike a small area.</span>")
 		projectile_type = "/obj/item/projectile/forcebolt/strong"
 	else
 		charge_cost = 100
-		user << "<span class='warning'>The [src.name] will now strike only a single person.</span>"
+		to_chat(user, "<span class='warning'>The [src.name] will now strike only a single person.</span>")
 		projectile_type = "/obj/item/projectile/forcebolt"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator
@@ -455,10 +490,10 @@ obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user as mob)
 	power_supply.charge = min(power_supply.charge + 200,power_supply.maxcharge)
 	if(power_supply.charge >= power_supply.maxcharge)
 		playsound(get_turf(src), 'sound/machines/click.ogg', 25, 1)
-		user << "<span class='rose'>You pull the pump at the back of the gun.Looks like the Inner battery is fully charged now.</span>"
+		to_chat(user, "<span class='rose'>You pull the pump at the back of the gun. Looks like the inner battery is fully charged now.</span>")
 	else
 		playsound(get_turf(src), 'sound/weapons/bison_reload.ogg', 25, 1)
-		user << "<span class='rose'>You pull the pump at the back of the gun.</span>"
+		to_chat(user, "<span class='rose'>You pull the pump at the back of the gun.</span>")
 	sleep(5)
 	pumping = 0
 	update_icon()
