@@ -241,7 +241,7 @@
 	var/mob/dead/observer/chosen_ghost
 
 	for(var/mob/dead/observer/ghost in player_list) //We put them back in their body
-		if(T.real_name == ghost.real_name && ghost.client)
+		if(ghost.mind && ghost.mind.current == T && ghost.client)
 			chosen_ghost = ghost
 			break
 
@@ -249,11 +249,10 @@
 		var/list/consenting_candidates = pollCandidates("Would you like to play as a Shade?", be_special_flag = ROLE_CULTIST, poll_time = 100)
 		if(consenting_candidates.len)
 			chosen_ghost = pick(consenting_candidates)
-
+	if(!T)
+		return 0
 	if(!chosen_ghost)
 		U << "<span class='danger'>The ghost has fled beyond your grasp.</span>"
-		return 0
-	if(!T)
 		return 0
 	if(C.contents.len) //If they used the soulstone on someone else in the meantime
 		return 0
