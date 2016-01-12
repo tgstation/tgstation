@@ -77,24 +77,25 @@ var/const/INJECT = 5 //injection
 		if(current_list_element > reagent_list.len) current_list_element = 1
 		var/datum/reagent/current_reagent = reagent_list[current_list_element]
 
-		src.remove_reagent(current_reagent.id, 1)
+		remove_reagent(current_reagent.id, 1)
 
 		current_list_element++
 		total_transfered++
-		src.update_total()
+		update_total()
 
 	handle_reactions()
 	return total_transfered
 
 /datum/reagents/proc/remove_all(amount = 1)
-	var/part = amount / src.total_volume
-	for (var/datum/reagent/current_reagent in src.reagent_list)
-		var/current_reagent_transfer = current_reagent.volume * part
-		src.remove_reagent(current_reagent.id, current_reagent_transfer)
+	if(total_volume > 0)
+		var/part = amount / total_volume
+		for(var/datum/reagent/current_reagent in reagent_list)
+			var/current_reagent_transfer = current_reagent.volume * part
+			remove_reagent(current_reagent.id, current_reagent_transfer)
 
-	src.update_total()
-	src.handle_reactions()
-	return amount
+		update_total()
+		handle_reactions()
+		return amount
 
 /datum/reagents/proc/get_master_reagent_name()
 	var/the_name = null
