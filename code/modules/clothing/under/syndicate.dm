@@ -8,12 +8,14 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	alt_covers_chest = 1
 
-/obj/item/clothing/under/syndicate/tacticool
+/obj/item/clothing/under/tacticool
 	name = "tacticool turtleneck"
 	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
 	icon_state = "tactifool"
 	item_state = "bl_suit"
 	item_color = "tactifool"
+	alt_covers_chest = 1
+	has_sensor = 0
 
 /obj/item/clothing/under/syndicate/sniper
 	name = "Tactical turtleneck suit"
