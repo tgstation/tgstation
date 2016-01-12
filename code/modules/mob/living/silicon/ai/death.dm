@@ -23,7 +23,7 @@
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 
-	if(nuking)
+	if(nuking && !ticker.mode.explosion_in_progress)
 		set_security_level("red")
 		nuking = 0
 		SSshuttle.emergencyNoEscape = 0
