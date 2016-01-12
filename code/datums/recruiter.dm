@@ -56,6 +56,7 @@
 	spawn(recruitment_timeout)
 		if(!currently_querying || currently_querying.len==0)
 			INVOKE_EVENT(recruited, list("player"=null))
+			return
 
 		var/mob/dead/observer/O
 
