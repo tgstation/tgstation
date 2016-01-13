@@ -60,6 +60,7 @@
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 			loc = get_turf(summoner)
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, loc)
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	..()
@@ -71,6 +72,7 @@
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 			loc = get_turf(summoner)
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
@@ -141,7 +143,7 @@
 	log_say("[src.real_name]/[src.key] : [input]")
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleMode()
-	src << "<span class='danger'><B>You dont have another mode!</span></B>"
+	src << "<span class='danger'><B>You don't have another mode!</span></B>"
 
 
 /mob/living/proc/guardian_comm()
@@ -194,8 +196,10 @@
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleLight()
 	if(!luminosity)
+		src << "<span class='notice'>You activate your light.</span>"
 		SetLuminosity(3)
 	else
+		src << "<span class='notice'>You deactivate your light.</span>"
 		SetLuminosity(0)
 
 
@@ -203,7 +207,6 @@
 
 
 //Fire. Low damage, low resistance, sets mobs on fire when bumping
-
 /mob/living/simple_animal/hostile/guardian/fire
 	a_intent = "help"
 	melee_damage_lower = 10
@@ -231,6 +234,7 @@
 			if(!M.anchored && M != summoner)
 				PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
 				do_teleport(M, M, 10)
+				PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(M))
 
 /mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
 	..()
@@ -254,8 +258,8 @@
 /mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
 	..()
 	collision_ignite(AM)
-//Standard
 
+//Standard
 /mob/living/simple_animal/hostile/guardian/punch
 	melee_damage_lower = 20
 	melee_damage_upper = 20
@@ -286,7 +290,6 @@
 		playsound(loc, src.attack_sound, 50, 1, 1)
 
 //Healer
-
 /mob/living/simple_animal/hostile/guardian/healer
 	a_intent = "harm"
 	friendly = "heals"
@@ -307,11 +310,11 @@
 	medsensor.add_hud_to(src)
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
+	if(src.loc == summoner)
+		src << "<span class='danger'><B>You must be manifested to attack!</span></B>"
+		return
 	..()
 	if(toggle == TRUE)
-		if(src.loc == summoner)
-			src << "<span class='danger'><B>You must be manifested to heal!</span></B>"
-			return
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.adjustBruteLoss(-5)
@@ -342,7 +345,7 @@
 
 
 /mob/living/simple_animal/hostile/guardian/healer/verb/Beacon()
-	set name = "Place Bluespsace Beacon"
+	set name = "Place Bluespace Beacon"
 	set category = "Guardian"
 	set desc = "Mark a floor as your beacon point, allowing you to warp targets to it. Your beacon will not work in unfavorable atmospheric conditions."
 	if(beacon_cooldown<world.time)
@@ -400,7 +403,6 @@
 
 
 ///////////////////Ranged
-
 /obj/item/projectile/guardian
 	name = "crystal spray"
 	icon_state = "guardian"
@@ -490,7 +492,6 @@
 					G.summoner << "<span class='danger'><B>[AM] has crossed your surveillance trap at [get_area(snare_loc)].</span></B>"
 
 ////Bomb
-
 /mob/living/simple_animal/hostile/guardian/bomb
 	melee_damage_lower = 15
 	melee_damage_upper = 15
