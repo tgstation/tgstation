@@ -14,6 +14,15 @@ b.componentify.compilers['text/javascript'] = function (source, file) {
     map: compiled.map
   }
 }
+import { render as stylus } from 'stylus'
+b.componentify.compilers['text/stylus'] = function (source, file) {
+  const config = { filename: file }
+  const compiled = stylus(source, config)
+
+  return {
+    source: compiled
+  }
+}
 
 import browserify from 'browserify'
 const bundle = browserify(p.js.dir + p.js.main, {

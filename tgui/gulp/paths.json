@@ -1,7 +1,7 @@
 {
   "out":"assets/",
   "css":{
-    "dir":"styles/",
+    "dir":"src/",
     "main":"main.styl",
     "out":"tgui.css"
   },
@@ -10,7 +10,7 @@
     "main":"*"
   },
   "js":{
-    "dir":"scripts/",
+    "dir":"src/",
     "main":"main.js",
     "out":"tgui.js"
   }
