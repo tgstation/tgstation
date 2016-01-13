@@ -85,8 +85,7 @@
 		if(istype(D, T))
 			. += D
 	if(.)
-		return(pick(.))
-	return 0
+		. = pick(.)
 
 /mob/living/simple_animal/bot/cleanbot/handle_automated_action()
 	if (!..())
