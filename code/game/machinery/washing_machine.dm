@@ -20,7 +20,7 @@
 /obj/machinery/washing_machine/AltClick(mob/user)
 	if(!in_range(src, user))
 		return
-	if(!user.canUseTopic(user))
+	if(!user.canUseTopic(src))
 		return
 
 	if( state != 4 )
