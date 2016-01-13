@@ -44,6 +44,10 @@
     "danger": "#9d0808",
     "hover": "15%"
   },
+  "generic": {
+    "background-start": "#2a2a2a",
+    "background-end": "#202020"
+  },
   "nanotrasen": {
     "background-start": "#2a2a2a",
     "background-end": "#202020"
