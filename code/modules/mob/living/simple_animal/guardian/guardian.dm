@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/guardian
 	name = "Guardian Spirit"
 	real_name = "Guardian Spirit"
-	desc = "A mysterious being that stands by it's charge, ever vigilant."
+	desc = "A mysterious being that stands by its charge, ever vigilant."
 	speak_emote = list("hisses")
 	response_help  = "passes through"
 	response_disarm = "flails at"
@@ -644,7 +644,7 @@
 		if("tech")
 			user << "[G.tech_fluff_string]."
 			colour = pick("Rose", "Peony", "Lily", "Daisy", "Zinnia", "Ivy", "Iris", "Petunia", "Violet", "Lilac", "Orchid") //technically not colors, just flowers that can be specific colors
-			picked_name = pick("Gallium", "Indium", "Thallium", "Bismuth", "Aluminium", "Mercury", "Iron", "Platinum", "Zinc", "Titanium", "Chromium", "Nickel")
+			picked_name = pick("Gallium", "Indium", "Thallium", "Bismuth", "Aluminium", "Mercury", "Iron", "Silver", "Zinc", "Titanium", "Chromium", "Nickel", "Platinum", "Tellurium", "Palladium", "Rhodium", "Cobalt", "Osmium", "Tungsten", "Iridium")
 
 	G.name = "[picked_name] [colour]"
 	G.real_name = "[picked_name] [colour]"
