@@ -466,7 +466,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 			if(target_spec.team == team)
 				H << rendered
 	for(var/mob/M in dead_mob_list)
-		M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a>[rendered]"
+		M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [rendered]"
 	return ""
 
 
