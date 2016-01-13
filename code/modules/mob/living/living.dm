@@ -162,10 +162,10 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Pull"
 	set category = "Object"
 
-	if(pulling == AM)
+	if(AM.Adjacent(src))
+		start_pulling(AM)
+	else
 		stop_pulling()
-	else if(AM.Adjacent(src))
-		src.start_pulling(AM)
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
