@@ -1,0 +1,15 @@
+###################################################################################
+# This is a list of ckeys authorized to use client-side debug options:            #
+# Profile, Reboot, Resume, Status, and Trace-client                               #
+# Of these, Profile is the most relevant as it allows you to easily               #
+# retrieve information regarding the game's processing.                           #
+# If a ckey is on this list, and has proper admin privledges,                     #
+# they will be able to right-click the top of the client to access these options. #                                                                                        #
+# Case is not important for ckey.                                                 #
+###################################################################################
+aranclanos
+cheridan
+giacomand
+rockdtben
+MrStonedOne
+Jordie0608

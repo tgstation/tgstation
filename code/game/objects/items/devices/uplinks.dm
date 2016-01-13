@@ -6,16 +6,28 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 */
 
+var/list/world_uplinks = list()
+
 /obj/item/device/uplink
-	var/welcome 					// Welcoming menu message
-	var/uses 						// Numbers of crystals
+	var/welcome = "Syndicate Uplink Console:"	// Welcoming menu message
+	var/uses = 20								// Numbers of crystals
 	// List of items not to shove in their hands.
-	var/list/purchase_log = list()
+	var/purchase_log = ""
+	var/show_description = null
+	var/active = 0
+
+	var/uplink_owner = null//text-only
+	var/used_TC = 0
+
+	var/mode_override = null
 
 /obj/item/device/uplink/New()
 	..()
-	welcome = ticker.mode.uplink_welcome
-	uses = ticker.mode.uplink_uses
+	world_uplinks+=src
+
+/obj/item/device/uplink/Destroy()
+	world_uplinks-=src
+	return ..()
 
 //Let's build a menu!
 /obj/item/device/uplink/proc/generate_menu()
@@ -26,7 +38,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	dat += "<B>Request item:</B><BR>"
 	dat += "<I>Each item costs a number of tele-crystals as indicated by the number following their name.</I><br><BR>"
 
-	var/list/buyable_items = get_uplink_items()
+	var/list/buyable_items = get_uplink_items(mode_override)
 
 	// Loop through categories
 	var/index = 0
@@ -40,13 +52,20 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		// Loop through items in category
 		for(var/datum/uplink_item/item in buyable_items[category])
 			i++
+			var/desc = "[item.desc]"
 			var/cost_text = ""
 			if(item.cost > 0)
 				cost_text = "([item.cost])"
 			if(item.cost <= uses)
-				dat += "<A href='byond://?src=\ref[src];buy_item=[category]:[i];'>[item.name]</A> [cost_text]<BR>"
+				dat += "<A href='byond://?src=\ref[src];buy_item=[category]:[i];'>[item.name]</A> [cost_text] "
 			else
-				dat += "<font color='grey'><i>[item.name] [cost_text]</i></font><BR>"
+				dat += "<font color='grey'><i>[item.name] [cost_text] </i></font>"
+			if(item.desc)
+				if(show_description == item.type)
+					dat += "<A href='byond://?src=\ref[src];show_desc=0'><font size=2>\[-\]</font></A><BR><font size=2>[desc]</font>"
+				else
+					dat += "<A href='byond://?src=\ref[src];show_desc=[item.type]'><font size=2>\[?\]</font></A>"
+			dat += "<BR>"
 
 		// Break up the categories, if it isn't the last.
 		if(buyable_items.len != index)
@@ -69,23 +88,34 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 /obj/item/device/uplink/Topic(href, href_list)
 	..()
+
+	if(!active)
+		return
+
 	if (href_list["buy_item"])
 
 		var/item = href_list["buy_item"]
-		var/list/split = stringsplit(item, ":") // throw away variable
+		var/list/split = text2list(item, ":") // throw away variable
 
 		if(split.len == 2)
 			// Collect category and number
 			var/category = split[1]
 			var/number = text2num(split[2])
 
-			var/list/buyable_items = get_uplink_items()
+			var/list/buyable_items = get_uplink_items(mode_override)
 
 			var/list/uplink = buyable_items[category]
 			if(uplink && uplink.len >= number)
 				var/datum/uplink_item/I = uplink[number]
 				if(I)
 					I.buy(src, usr)
+
+
+	else if(href_list["show_desc"])
+
+		var/type = text2path(href_list["show_desc"])
+		show_description = type
+		interact(usr)
 
 
 // HIDDEN UPLINK - Can be stored in anything but the host item has to have a trigger for it.
@@ -101,11 +131,12 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 */
 
 /obj/item/device/uplink/hidden
-	name = "Hidden Uplink."
+	name = "hidden uplink."
 	desc = "There is something wrong if you're examining this."
-	var/active = 0
 
 /obj/item/device/uplink/hidden/Topic(href, href_list)
+	if(usr.stat || usr.restrained() || usr.paralysis || usr.stunned || usr.weakened)
+		return 0		// To stop people using their uplink when they shouldn't be able to
 	..()
 	if(href_list["lock"])
 		toggle()
@@ -117,7 +148,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	active = !active
 
 // Directly trigger the uplink. Turn on if it isn't already.
-/obj/item/device/uplink/hidden/proc/trigger(mob/user as mob)
+/obj/item/device/uplink/hidden/proc/trigger(mob/user)
 	if(!active)
 		toggle()
 	interact(user)
@@ -125,7 +156,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 // Checks to see if the value meets the target. Like a frequency being a traitor_frequency, in order to unlock a headset.
 // If true, it accesses trigger() and returns 1. If it fails, it returns false. Use this to see if you need to close the
 // current item's menu.
-/obj/item/device/uplink/hidden/proc/check_trigger(mob/user as mob, var/value, var/target)
+/obj/item/device/uplink/hidden/proc/check_trigger(mob/user, value, target)
 	if(value == target)
 		trigger(user)
 		return 1
@@ -142,6 +173,17 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			src.hidden_uplink.trigger(user)
 			return 1
 	return 0
+//Refund proc for the borg teleporter (later I'll make a general refund proc if there is demand for it)
+/obj/item/device/radio/uplink/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W))
+		for(var/path in subtypesof(/datum/uplink_item))
+			var/datum/uplink_item/D = path
+			if(initial(D.item) == W.type && initial(D.refundable))
+				hidden_uplink.uses += (D.cost)
+				hidden_uplink.used_TC -= initial(D.cost)
+				user << "<span class='notice'>[W] refunded.</span>"
+				qdel(W)
+				return
 
 // PRESET UPLINKS
 // A collection of preset uplinks.
@@ -153,14 +195,14 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	hidden_uplink = new(src)
 	icon_state = "radio"
 
-/obj/item/device/radio/uplink/attack_self(mob/user as mob)
+/obj/item/device/radio/uplink/attack_self(mob/user)
 	if(hidden_uplink)
 		hidden_uplink.trigger(user)
 
 /obj/item/device/multitool/uplink/New()
 	hidden_uplink = new(src)
 
-/obj/item/device/multitool/uplink/attack_self(mob/user as mob)
+/obj/item/device/multitool/uplink/attack_self(mob/user)
 	if(hidden_uplink)
 		hidden_uplink.trigger(user)
 
@@ -170,7 +212,4 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/radio/headset/uplink/New()
 	..()
 	hidden_uplink = new(src)
-	hidden_uplink.uses = 10
-
-
-
+	hidden_uplink.uses = 20

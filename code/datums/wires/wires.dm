@@ -10,7 +10,6 @@ var/list/same_wires = list()
 var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", "gold", "gray", "cyan", "navy", "purple", "pink")
 
 /datum/wires
-
 	var/random = 0 // Will the wires be different for every single instance.
 	var/atom/holder = null // The holder
 	var/holder_type = null // The holder type; used to make sure that the holder is the correct type.
@@ -46,6 +45,11 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 			var/list/wires = same_wires[holder_type]
 			src.wires = wires // Reference the wires list.
 
+/datum/wires/Destroy()
+	holder = null
+	signallers = list()
+	return ..()
+
 /datum/wires/proc/GenerateWires()
 	var/list/colours_to_pick = wireColours.Copy() // Get a copy, not a reference.
 	var/list/indexes_to_pick = list()
@@ -64,16 +68,40 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 		src.wires[colour] = index
 		//wires = shuffle(wires)
 
+/datum/wires/proc/IsInteractionTool(obj/item/I)
+	if(istype(I, /obj/item/device/multitool))
+		return 1
 
-/datum/wires/proc/Interact(var/mob/living/user)
+	if(istype(I, /obj/item/weapon/wirecutters))
+		return 1
 
+	if(istype(I, /obj/item/device/assembly))
+		var/obj/item/device/assembly/A = I
+		if(A.attachable)
+			return 1
+
+	return 0
+
+
+/datum/wires/proc/Interact(mob/living/user)
 	var/html = null
 	if(holder && CanUse(user))
 		html = GetInteractWindow()
 	if(html)
+		if(user.machine != holder)
+			for(var/A in signallers)
+				if(istype(signallers[A], /obj/item))
+					var/obj/item/I = signallers[A]
+					if(I.on_found(user))
+						return
+
 		user.set_machine(holder)
-	//user << browse(html, "window=wires;size=[window_x]x[window_y]")
-	//onclose(user, "wires")
+	else
+		user.unset_machine()
+		// No content means no window.
+		user << browse(null, "window=wires")
+		return
+
 	var/datum/browser/popup = new(user, "wires", holder.name, window_x, window_y)
 	popup.set_content(html)
 	popup.set_title_image(user.browse_rsc_icon(holder.icon, holder.icon_state))
@@ -98,8 +126,7 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 
 /datum/wires/Topic(href, href_list)
 	..()
-	if(in_range(holder, usr) && isliving(usr))
-
+	if(usr.Adjacent(holder) && isliving(usr))
 		var/mob/living/L = usr
 		if(CanUse(L) && href_list["action"])
 			var/obj/item/I = L.get_active_hand()
@@ -109,14 +136,14 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 					var/colour = href_list["cut"]
 					CutWireColour(colour)
 				else
-					L << "<span class='error'>You need wirecutters!</span>"
+					L << "<span class='warning'>You need wirecutters!</span>"
 
 			else if(href_list["pulse"])
 				if(istype(I, /obj/item/device/multitool))
 					var/colour = href_list["pulse"]
 					PulseColour(colour)
 				else
-					L << "<span class='error'>You need a multitool!</span>"
+					L << "<span class='warning'>You need a multitool!</span>"
 
 			else if(href_list["attach"])
 				var/colour = href_list["attach"]
@@ -128,11 +155,14 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 
 				// Attach
 				else
-					if(istype(I, /obj/item/device/assembly/signaler))
-						L.drop_item()
-						Attach(colour, I)
-					else
-						L << "<span class='error'>You need a remote signaller!</span>"
+					if(istype(I, /obj/item/device/assembly))
+						var/obj/item/device/assembly/A = I;
+						if(A.attachable)
+							if(!L.drop_item())
+								return
+							Attach(colour, A)
+						else
+							L << "<span class='warning'>You need a attachable assembly!</span>"
 
 
 
@@ -149,14 +179,14 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 //
 
 // Called when wires cut/mended.
-/datum/wires/proc/UpdateCut(var/index, var/mended)
+/datum/wires/proc/UpdateCut(index, mended)
 	return
 
 // Called when wire pulsed. Add code here.
-/datum/wires/proc/UpdatePulsed(var/index)
+/datum/wires/proc/UpdatePulsed(index)
 	return
 
-/datum/wires/proc/CanUse(var/mob/living/L)
+/datum/wires/proc/CanUse(mob/living/L)
 	return 1
 
 // Example of use:
@@ -185,57 +215,62 @@ var/const/POWER = 8
 // Helper Procs
 //
 
-/datum/wires/proc/PulseColour(var/colour)
+/datum/wires/proc/PulseColour(colour)
 	PulseIndex(GetIndex(colour))
 
-/datum/wires/proc/PulseIndex(var/index)
+/datum/wires/proc/PulseIndex(index)
 	if(IsIndexCut(index))
 		return
 	UpdatePulsed(index)
 
-/datum/wires/proc/GetIndex(var/colour)
+/datum/wires/proc/GetIndex(colour)
 	if(wires[colour])
 		var/index = wires[colour]
 		return index
 	else
 		CRASH("[colour] is not a key in wires.")
 
+/datum/wires/proc/GetColour(index)
+	for(var/colour in wires)
+		if(wires[colour] == index)
+			return colour
+
 //
 // Is Index/Colour Cut procs
 //
 
-/datum/wires/proc/IsColourCut(var/colour)
+/datum/wires/proc/IsColourCut(colour)
 	var/index = GetIndex(colour)
 	return IsIndexCut(index)
 
-/datum/wires/proc/IsIndexCut(var/index)
+/datum/wires/proc/IsIndexCut(index)
 	return (index & wires_status)
 
 //
 // Signaller Procs
 //
 
-/datum/wires/proc/IsAttached(var/colour)
+/datum/wires/proc/IsAttached(colour)
 	if(signallers[colour])
 		return 1
 	return 0
 
-/datum/wires/proc/GetAttached(var/colour)
+/datum/wires/proc/GetAttached(colour)
 	if(signallers[colour])
 		return signallers[colour]
 	return null
 
-/datum/wires/proc/Attach(var/colour, var/obj/item/device/assembly/signaler/S)
-	if(colour && S)
+/datum/wires/proc/Attach(colour, obj/item/device/assembly/S)
+	if(colour && S && S.attachable)
 		if(!IsAttached(colour))
 			signallers[colour] = S
 			S.loc = holder
 			S.connected = src
 			return S
 
-/datum/wires/proc/Detach(var/colour)
+/datum/wires/proc/Detach(colour)
 	if(colour)
-		var/obj/item/device/assembly/signaler/S = GetAttached(colour)
+		var/obj/item/device/assembly/S = GetAttached(colour)
 		if(S)
 			signallers -= colour
 			S.connected = null
@@ -243,7 +278,7 @@ var/const/POWER = 8
 			return S
 
 
-/datum/wires/proc/Pulse(var/obj/item/device/assembly/signaler/S)
+/datum/wires/proc/Pulse(obj/item/device/assembly/S)
 
 	for(var/colour in signallers)
 		if(S == signallers[colour])
@@ -255,11 +290,11 @@ var/const/POWER = 8
 // Cut Wire Colour/Index procs
 //
 
-/datum/wires/proc/CutWireColour(var/colour)
+/datum/wires/proc/CutWireColour(colour)
 	var/index = GetIndex(colour)
 	CutWireIndex(index)
 
-/datum/wires/proc/CutWireIndex(var/index)
+/datum/wires/proc/CutWireIndex(index)
 	if(IsIndexCut(index))
 		wires_status &= ~index
 		UpdateCut(index, 1)
@@ -279,3 +314,11 @@ var/const/POWER = 8
 	if(wires_status == (1 << wire_count) - 1)
 		return 1
 	return 0
+
+//
+//Shuffle and Mend
+//
+
+/datum/wires/proc/Shuffle()
+	wires_status = 0
+	GenerateWires()

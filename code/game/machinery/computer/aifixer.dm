@@ -1,100 +1,62 @@
 /obj/machinery/computer/aifixer
-	name = "AI System Integrity Restorer"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "ai-fixer"
+	name = "\improper AI system integrity restorer"
+	desc = "Used with intelliCards containing nonfunctioning AIs to restore them to working order."
 	req_access = list(access_captain, access_robotics, access_heads)
-	var/mob/living/silicon/ai/occupant = null
+	var/mob/living/silicon/ai/occupier = null
 	var/active = 0
+	circuit = /obj/item/weapon/circuitboard/aifixer
+	icon_keyboard = "tech_key"
+	icon_screen = "ai-fixer"
 
-/obj/machinery/computer/aifixer/New()
-	src.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
-
-
-/obj/machinery/computer/aifixer/attackby(I as obj, user as mob)
-/*
-	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/robotics/M = new /obj/item/weapon/circuitboard/robotics( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				M.id = src.id
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/robotics/M = new /obj/item/weapon/circuitboard/robotics( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				M.id = src.id
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
-*/
-	if(istype(I, /obj/item/device/aicard))
+/obj/machinery/computer/aifixer/attackby(obj/I, mob/user, params)
+	if(occupier && istype(I, /obj/item/weapon/screwdriver))
 		if(stat & (NOPOWER|BROKEN))
-			user << "This terminal isn't functioning right now, get it working!"
-			return
-		I:transfer_ai("AIFIXER","AICARD",src,user)
+			user << "<span class='warning'>The screws on [name]'s screen won't budge.</span>"
+		else
+			user << "<span class='warning'>The screws on [name]'s screen won't budge and it emits a warning beep.</span>"
+		return
+	else
+		..()
 
-	//src.attack_hand(user)
-	return
-
-/obj/machinery/computer/aifixer/attack_ai(var/mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/aifixer/attack_paw(var/mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/aifixer/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/aifixer/attack_hand(mob/user)
 	if(..())
 		return
+	interact(user)
 
-	if(ishuman(user))//Checks to see if they are ninja
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			if(user:wear_suit:s_control)
-				user:wear_suit.transfer_ai("AIFIXER","NINJASUIT",src,user)
-			else
-				user << "\red <b>ERROR</b>: \black Remote access channel disabled."
-			return
+/obj/machinery/computer/aifixer/interact(mob/user)
 
-	user.set_machine(src)
 	var/dat = ""
 
-	if (src.occupant)
+	if (src.occupier)
 		var/laws
-		dat += "<h3>Stored AI: [src.occupant.name]</h3>"
-		dat += "<b>System integrity:</b> [(src.occupant.health+100)/2]%<br>"
+		dat += "<h3>Stored AI: [src.occupier.name]</h3>"
+		dat += "<b>System integrity:</b> [(src.occupier.health+100)/2]%<br>"
 
-		if (src.occupant.laws.zeroth)
-			laws += "<b>0:</b> [src.occupant.laws.zeroth]<BR>"
+		if (src.occupier.laws.zeroth)
+			laws += "<b>0:</b> [src.occupier.laws.zeroth]<BR>"
+
+		for (var/index = 1, index <= src.occupier.laws.ion.len, index++)
+			var/law = src.occupier.laws.ion[index]
+			if (length(law) > 0)
+				var/num = ionnum()
+				laws += "<b>[num]:</b> [law]<BR>"
 
 		var/number = 1
-		for (var/index = 1, index <= src.occupant.laws.inherent.len, index++)
-			var/law = src.occupant.laws.inherent[index]
+		for (var/index = 1, index <= src.occupier.laws.inherent.len, index++)
+			var/law = src.occupier.laws.inherent[index]
 			if (length(law) > 0)
 				laws += "<b>[number]:</b> [law]<BR>"
 				number++
 
-		for (var/index = 1, index <= src.occupant.laws.supplied.len, index++)
-			var/law = src.occupant.laws.supplied[index]
+		for (var/index = 1, index <= src.occupier.laws.supplied.len, index++)
+			var/law = src.occupier.laws.supplied[index]
 			if (length(law) > 0)
 				laws += "<b>[number]:</b> [law]<BR>"
 				number++
 
 		dat += "<b>Laws:</b><br>[laws]<br>"
 
-		if (src.occupant.stat == 2)
+		if (src.occupier.stat == 2)
 			dat += "<span class='bad'>AI non-functional</span>"
 		else
 			dat += "<span class='good'>AI functional</span>"
@@ -122,44 +84,67 @@
 		return
 	if (href_list["fix"])
 		src.active = 1
-		src.overlays += image('icons/obj/computer.dmi', "ai-fixer-on")
-		while (src.occupant.health < 100)
-			src.occupant.adjustOxyLoss(-1)
-			src.occupant.adjustFireLoss(-1)
-			src.occupant.adjustToxLoss(-1)
-			src.occupant.adjustBruteLoss(-1)
-			src.occupant.updatehealth()
-			if (src.occupant.health >= 0 && src.occupant.stat == 2)
-				src.occupant.stat = 0
-				src.occupant.lying = 0
-				dead_mob_list -= src.occupant
-				living_mob_list += src.occupant
-				src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
-				src.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
+		while (src.occupier.health < 100)
+			src.occupier.adjustOxyLoss(-1)
+			src.occupier.adjustFireLoss(-1)
+			src.occupier.adjustToxLoss(-1)
+			src.occupier.adjustBruteLoss(-1)
+			src.occupier.updatehealth()
+			if (src.occupier.health >= 0 && src.occupier.stat == 2)
+				src.occupier.stat = 0
+				src.occupier.lying = 0
+				dead_mob_list -= src.occupier
+				living_mob_list += src.occupier
 			src.updateUsrDialog()
+			update_icon()
 			sleep(10)
 		src.active = 0
-		src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-on")
-
-
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()
+	update_icon()
 	return
 
 
 /obj/machinery/computer/aifixer/update_icon()
 	..()
-	// Broken / Unpowered
-	if((stat & BROKEN) || (stat & NOPOWER))
-		overlays.Cut()
-
-	// Working / Powered
+	if(stat & (NOPOWER|BROKEN))
+		return
 	else
-		if (occupant)
-			switch (occupant.stat)
+		if(active)
+			overlays += "ai-fixer-on"
+		if (occupier)
+			switch (occupier.stat)
 				if (0)
-					overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
+					overlays += "ai-fixer-full"
 				if (2)
-					overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
+					overlays += "ai-fixer-404"
 		else
-			overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
+			overlays += "ai-fixer-empty"
+
+/obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+	if(!..())
+		return
+	//Downloading AI from card to terminal.
+	if(interaction == AI_TRANS_FROM_CARD)
+		if(stat & (NOPOWER|BROKEN))
+			user << "[src] is offline and cannot take an AI at this time!"
+			return
+		AI.loc = src
+		occupier = AI
+		AI.control_disabled = 1
+		AI.radio_enabled = 0
+		AI << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
+		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+		update_icon()
+
+	else //Uploading AI from terminal to card
+		if(occupier && !active)
+			occupier << "You have been downloaded to a mobile storage device. Still no remote access."
+			user << "<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+			occupier.loc = card
+			occupier = null
+			update_icon()
+		else if (active)
+			user << "<span class='boldannounce'>ERROR</span>: Reconstruction in progress."
+		else if (!occupier)
+			user << "<span class='boldannounce'>ERROR</span>: Unable to locate artificial intelligence."

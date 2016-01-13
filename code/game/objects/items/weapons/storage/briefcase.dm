@@ -2,55 +2,55 @@
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
 	icon_state = "briefcase"
-	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 8.0
-	throw_speed = 1
+	flags = CONDUCT
+	force = 8
+	hitsound = "swing_hit"
+	throw_speed = 2
 	throw_range = 4
-	w_class = 4.0
+	w_class = 4
 	max_w_class = 3
 	max_combined_w_class = 21
+	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	burn_state = FLAMMABLE
+	burntime = 20
+	var/folder_path = /obj/item/weapon/folder //this is the path of the folder that gets spawned in New()
 
 /obj/item/weapon/storage/briefcase/New()
 	..()
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
+	var/obj/item/weapon/folder/folder = new folder_path(src)
+	for(var/i in 1 to 6)
+		new /obj/item/weapon/paper(folder)
 
-/obj/item/weapon/storage/briefcase/attack(mob/living/M as mob, mob/living/user as mob)
-	//..()
+/obj/item/weapon/storage/briefcase/lawyer
+	folder_path = /obj/item/weapon/folder/blue
 
-	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red The [src] slips out of your hand and hits your head."
-		user.take_organ_damage(10)
-		user.Paralyse(2)
-		return
+/obj/item/weapon/storage/briefcase/lawyer/New()
+	new /obj/item/weapon/stamp/law(src)
+	..()
+	
+/obj/item/weapon/storage/briefcase/sniperbundle
+	name = "briefcase"
+	desc = "It's label reads genuine hardened Captain leather, but suspiciously has no other tags or branding. Smells like L'Air du Temps."
+	icon_state = "briefcase"
+	flags = CONDUCT
+	force = 10
+	hitsound = "swing_hit"
+	throw_speed = 2
+	throw_range = 4
+	w_class = 4
+	max_w_class = 3
+	max_combined_w_class = 21
+	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	burn_state = FLAMMABLE
+	burntime = 20
 
+/obj/item/weapon/storage/briefcase/sniperbundle/New()
+	..()
+	new /obj/item/weapon/gun/projectile/sniper_rifle/syndicate(src)
+	new /obj/item/clothing/tie/red(src)
+	new /obj/item/clothing/under/syndicate/sniper(src)
+	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
+	new /obj/item/ammo_box/magazine/sniper_rounds/haemorrhage(src)
+	new /obj/item/weapon/suppressor/specialoffer(src)
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-
-	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
-	if (M.stat < 2 && M.health < 50 && prob(90))
-		var/mob/H = M
-		// ******* Check
-		if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
-			M << "\red The helmet protects you from being hit hard in the head!"
-			return
-		var/time = rand(2, 6)
-		if (prob(75))
-			M.Paralyse(time)
-		else
-			M.Stun(time)
-		if(M.stat != 2)	M.stat = 1
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red <B>[] has been knocked unconscious!</B>", M), 1, "\red You hear someone fall.", 2)
-	else
-		M << text("\red [] tried to knock you unconcious!",user)
-		M.eye_blurry += 3
-
-	return

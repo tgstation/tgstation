@@ -1,85 +1,78 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/obj/machinery/computer/aiupload
-	name = "AI Upload"
+/obj/machinery/computer/upload
+	var/mob/living/silicon/current = null //The target of future law uploads
+	icon_screen = "command"
+
+/obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/weapon/aiModule))
+		var/obj/item/weapon/aiModule/M = O
+		if(src.stat & (NOPOWER|BROKEN|MAINT))
+			return
+		if(!current)
+			user << "<span class='caution'>You haven't selected anything to transmit laws to!</span>"
+			return
+		if(!can_upload_to(current))
+			user << "<span class='caution'>Upload failed!</span> Check to make sure [current.name] is functioning properly."
+			current = null
+			return
+		var/turf/currentloc = get_turf(current)
+		if(currentloc && user.z != currentloc.z)
+			user << "<span class='caution'>Upload failed!</span> Unable to establish a connection to [current.name]. You're too far away!"
+			current = null
+			return
+		M.install(current, user)
+	else
+		..()
+
+/obj/machinery/computer/upload/proc/can_upload_to(mob/living/silicon/S)
+	if(S.stat == DEAD || S.syndicate)
+		return 0
+	return 1
+
+/obj/machinery/computer/upload/ai
+	name = "\improper AI upload console"
 	desc = "Used to upload laws to the AI."
-	icon_state = "command"
-	circuit = "/obj/item/weapon/circuitboard/aiupload"
-	var/mob/living/silicon/ai/current = null
-	var/opened = 0
+	circuit = /obj/item/weapon/circuitboard/aiupload
 
-
-	verb/AccessInternals()
-		set category = "Object"
-		set name = "Access Computer's Internals"
-		set src in oview(1)
-		if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || istype(usr, /mob/living/silicon))
-			return
-
-		opened = !opened
-		if(opened)
-			usr << "\blue The access panel is now open."
-		else
-			usr << "\blue The access panel is now closed."
+/obj/machinery/computer/upload/ai/attack_hand(mob/user)
+	if(..())
 		return
 
+	src.current = select_active_ai(user)
 
-	attackby(obj/item/weapon/O as obj, mob/user as mob)
-		if (user.z > 6)
-			user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
-			return
-		if(istype(O, /obj/item/weapon/aiModule))
-			var/obj/item/weapon/aiModule/M = O
-			M.install(src)
-		else
-			..()
+	if (!src.current)
+		user << "<span class='caution'>No active AIs detected!</span>"
+	else
+		user << "[src.current.name] selected for law changes."
 
-
-	attack_hand(var/mob/user as mob)
-		if(src.stat & NOPOWER)
-			usr << "The upload computer has no power!"
-			return
-		if(src.stat & BROKEN)
-			usr << "The upload computer is broken!"
-			return
-
-		src.current = select_active_ai(user)
-
-		if (!src.current)
-			usr << "No active AIs detected."
-		else
-			usr << "[src.current.name] selected for law changes."
-		return
+/obj/machinery/computer/upload/ai/can_upload_to(mob/living/silicon/ai/A)
+	if(!A || !isAI(A))
+		return 0
+	if(A.control_disabled)
+		return 0
+	return ..()
 
 
-
-/obj/machinery/computer/borgupload
-	name = "Cyborg Upload"
+/obj/machinery/computer/upload/borg
+	name = "cyborg upload console"
 	desc = "Used to upload laws to Cyborgs."
-	icon_state = "command"
-	circuit = "/obj/item/weapon/circuitboard/borgupload"
-	var/mob/living/silicon/robot/current = null
+	circuit = /obj/item/weapon/circuitboard/borgupload
 
-
-	attackby(obj/item/weapon/aiModule/module as obj, mob/user as mob)
-		if(istype(module, /obj/item/weapon/aiModule))
-			module.install(src)
-		else
-			return ..()
-
-
-	attack_hand(var/mob/user as mob)
-		if(src.stat & NOPOWER)
-			usr << "The upload computer has no power!"
-			return
-		if(src.stat & BROKEN)
-			usr << "The upload computer is broken!"
-			return
-
-		src.current = freeborg()
-
-		if (!src.current)
-			usr << "No free cyborgs detected."
-		else
-			usr << "[src.current.name] selected for law changes."
+/obj/machinery/computer/upload/borg/attack_hand(mob/user)
+	if(..())
 		return
+
+	src.current = select_active_free_borg(user)
+
+	if(!src.current)
+		user << "<span class='caution'>No active unslaved cyborgs detected!</span>"
+	else
+		user << "[src.current.name] selected for law changes."
+
+/obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
+	if(!B || !isrobot(B))
+		return 0
+	if(B.scrambledcodes || B.emagged)
+		return 0
+	return ..()

@@ -11,6 +11,7 @@
 	var/proj_trail_icon = 'icons/obj/wizard.dmi'
 	var/proj_trail_icon_state = "trail"
 
+
 	var/proj_type = "/obj/effect/proc_holder/spell/targeted" //IMPORTANT use only subtypes of this
 
 	var/proj_lingering = 0 //if it lingers or disappears upon hitting an obstacle
@@ -22,7 +23,7 @@
 	var/proj_step_delay = 1 //lower = faster
 
 /obj/effect/proc_holder/spell/targeted/projectile/cast(list/targets, mob/user = usr)
-
+	playMagSound()
 	for(var/mob/living/target in targets)
 		spawn(0)
 			var/obj/effect/proc_holder/spell/targeted/projectile
@@ -37,7 +38,7 @@
 			projectile.dir = get_dir(target,projectile)
 			projectile.name = proj_name
 
-			var/current_loc = usr.loc
+			var/current_loc = user.loc
 
 			projectile.loc = current_loc
 
@@ -60,8 +61,8 @@
 				if(!projectile) // step and step_to sleeps so we'll have to check again.
 					break
 
-				if(!proj_lingering && projectile.loc == current_loc) //if it didn't move since last time
-					del(projectile)
+				if(!target || (!proj_lingering && projectile.loc == current_loc)) //if it didn't move since last time
+					qdel(projectile)
 					break
 
 				if(proj_trail && projectile)
@@ -72,10 +73,10 @@
 							trail.icon_state = proj_trail_icon_state
 							trail.density = 0
 							spawn(proj_trail_lifespan)
-								del(trail)
+								qdel(trail)
 
 				if(projectile.loc in range(target.loc,proj_trigger_range))
-					projectile.perform(list(target))
+					projectile.perform(list(target),user=user)
 					break
 
 				current_loc = projectile.loc
@@ -83,4 +84,4 @@
 				sleep(proj_step_delay)
 
 			if(projectile)
-				del(projectile)
+				qdel(projectile)

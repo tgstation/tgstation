@@ -1,10 +1,10 @@
 /obj/machinery/meter
-	name = "meter"
+	name = "gas flow meter"
 	desc = "It measures something."
 	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
-	anchored = 1.0
+	anchored = 1
 	power_channel = ENVIRON
 	var/frequency = 0
 	var/id
@@ -14,14 +14,20 @@
 
 /obj/machinery/meter/New()
 	..()
+	SSair.atmos_machinery += src
 	src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 	return 1
+
+/obj/machinery/meter/Destroy()
+	SSair.atmos_machinery -= src
+	src.target = null
+	return ..()
 
 /obj/machinery/meter/initialize()
 	if (!target)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 
-/obj/machinery/meter/process()
+/obj/machinery/meter/process_atmos()
 	if(!target)
 		icon_state = "meterX"
 		return 0
@@ -53,7 +59,7 @@
 		icon_state = "meter4"
 
 	if(frequency)
-		var/datum/radio_frequency/radio_connection = radio_controller.return_frequency(frequency)
+		var/datum/radio_frequency/radio_connection = SSradio.return_frequency(frequency)
 
 		if(!radio_connection) return
 
@@ -73,42 +79,39 @@
 	if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
-			t += "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)]&deg;K ([round(environment.temperature-T0C,0.01)]&deg;C)"
+			t += "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)] K ([round(environment.temperature-T0C,0.01)]&deg;C)"
 		else
 			t += "The sensor error light is blinking."
 	else
 		t += "The connect error light is blinking."
 	return t
 
-/obj/machinery/meter/examine()
-	set src in view(3)
-
-	var/t = "A gas flow meter. "
-	t += status()
-	usr << t
+/obj/machinery/meter/examine(mob/user)
+	..()
+	user << status()
 
 
-/obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/meter/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << "\blue You begin to unfasten \the [src]..."
-		if (do_after(user, 40))
+		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+		if (do_after(user, 40/W.toolspeed, target = src))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
-				"\blue You have unfastened \the [src].", \
-				"You hear ratchet.")
+				"<span class='notice'>You unfasten \the [src].</span>", \
+				"<span class='italics'>You hear ratchet.</span>")
 			new /obj/item/pipe_meter(src.loc)
-			del(src)
-		return
-	..()
+			qdel(src)
+	else
+		..()
 
-/obj/machinery/meter/attack_ai(var/mob/user as mob)
+/obj/machinery/meter/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/meter/attack_paw(var/mob/user as mob)
+/obj/machinery/meter/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/meter/attack_hand(var/mob/user as mob)
+/obj/machinery/meter/attack_hand(mob/user)
 
 	if(stat & (NOPOWER|BROKEN))
 		return 1
@@ -116,7 +119,13 @@
 		usr << status()
 		return 1
 
+/obj/machinery/meter/singularity_pull(S, current_size)
+	if(current_size >= STAGE_FIVE)
+		new /obj/item/pipe_meter(loc)
+		qdel(src)
+
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
+//	why are you yelling?
 
 /obj/machinery/meter/turf/New()
 	..()

@@ -18,7 +18,7 @@ var/const/BORG_WIRE_CAMERA = 16
 	. += text("<br>\n[(R.lockcharge ? "The lockdown light is on." : "The lockdown light is off.")]")
 	return .
 
-/datum/wires/robot/UpdateCut(var/index, var/mended)
+/datum/wires/robot/UpdateCut(index, mended)
 
 	var/mob/living/silicon/robot/R = holder
 	switch(index)
@@ -49,13 +49,36 @@ var/const/BORG_WIRE_CAMERA = 16
 			R.SetLockdown(!mended)
 
 
-/datum/wires/robot/UpdatePulsed(var/index)
+/datum/wires/robot/UpdatePulsed(index)
 
 	var/mob/living/silicon/robot/R = holder
 	switch(index)
 		if (BORG_WIRE_AI_CONTROL) //pulse the AI wire to make the borg reselect an AI
 			if(!R.emagged)
-				R.connected_ai = select_active_ai()
+				var/new_ai = select_active_ai(R)
+				if(new_ai && (new_ai != R.connected_ai))
+					R.connected_ai = new_ai
+					R.notify_ai(1)
+				var/numberer = 1  // Send images the Cyborg has taken to the AI's album upon sync.
+				for(var/datum/picture/z in R.aicamera.aipictures)
+					if(R.connected_ai.aicamera.aipictures.len == 0)
+						var/datum/picture/p = new/datum/picture()
+						p = z
+						p.fields["name"] = "Uploaded Image [numberer] (synced from [R.name])"
+						R.connected_ai.aicamera.aipictures += p
+						numberer++
+						continue
+					for(var/datum/picture/t in R.connected_ai.aicamera.aipictures) //Hopefully to prevent someone spamming images to silicons, by spamming this wire
+						if((z.fields["pixel_y"] != t.fields["pixel_y"]) && (z.fields["pixel_x"] != t.fields["pixel_x"])) //~2.26 out of 1000 chance this will stop something it shouldn't
+							var/datum/picture/p = new/datum/picture()
+							p = z
+							p.fields["name"] = "Uploaded Image [numberer] (synced from [R.name])"
+							R.connected_ai.aicamera.aipictures += p
+						else
+							continue
+					numberer++
+				if(R.aicamera.aipictures.len > 0)
+					R << "<span class='notice'>Locally saved images synced with AI. Images were retained in local database in case of loss of connection with the AI.</span>"
 
 		if (BORG_WIRE_CAMERA)
 			if(!isnull(R.camera) && R.camera.can_use() && !R.scrambledcodes)
@@ -66,7 +89,7 @@ var/const/BORG_WIRE_CAMERA = 16
 		if(BORG_WIRE_LOCKED_DOWN)
 			R.SetLockdown(!R.lockcharge) // Toggle
 
-/datum/wires/robot/CanUse(var/mob/living/L)
+/datum/wires/robot/CanUse(mob/living/L)
 	var/mob/living/silicon/robot/R = holder
 	if(R.wiresexposed)
 		return 1

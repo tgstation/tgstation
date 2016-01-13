@@ -4,47 +4,38 @@
 	icon_state = "taperecorder_empty"
 	item_state = "analyzer"
 	w_class = 2
+	flags = HEAR
 	slot_flags = SLOT_BELT
-	m_amt = 60
-	g_amt = 30
-	flags = FPRINT | TABLEPASS | CONDUCT
+	languages = ALL //this is a translator, after all.
+	materials = list(MAT_METAL=60, MAT_GLASS=30)
 	force = 2
-	throwforce = 2
+	throwforce = 0
 	var/recording = 0
 	var/playing = 0
 	var/playsleepseconds = 0
 	var/obj/item/device/tape/mytape
 	var/open_panel = 0
-	var/datum/wires/taperecorder/wires = null
 	var/canprint = 1
 
 
 /obj/item/device/taperecorder/New()
-	wires = new(src)
 	mytape = new /obj/item/device/tape/random(src)
 	update_icon()
 
 
-/obj/item/device/taperecorder/examine()
-	set src in view(1)
+/obj/item/device/taperecorder/examine(mob/user)
 	..()
-	usr << "The wire panel is [open_panel ? "opened" : "closed"]."
+	user << "The wire panel is [open_panel ? "opened" : "closed"]."
 
 
-/obj/item/device/taperecorder/attackby(obj/item/I, mob/user)
+/obj/item/device/taperecorder/attackby(obj/item/I, mob/user, params)
 	if(!mytape && istype(I, /obj/item/device/tape))
-		user.drop_item()
+		if(!user.unEquip(I))
+			return
 		I.loc = src
 		mytape = I
 		user << "<span class='notice'>You insert [I] into [src].</span>"
 		update_icon()
-	else if(istype(I, /obj/item/weapon/screwdriver))
-		open_panel = !open_panel
-		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
-		if(open_panel)
-			wires.Interact(user)
-	else if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler))
-		wires.Interact(user)
 
 
 /obj/item/device/taperecorder/proc/eject(mob/user)
@@ -55,6 +46,9 @@
 		mytape = null
 		update_icon()
 
+/obj/item/device/taperecorder/fire_act()
+	mytape.ruin() //Fires destroy the tape
+	return()
 
 /obj/item/device/taperecorder/attack_hand(mob/user)
 	if(loc == user)
@@ -67,11 +61,18 @@
 	..()
 
 
+/obj/item/device/taperecorder/proc/can_use(mob/user)
+	if(user && ismob(user))
+		if(!user.incapacitated())
+			return 1
+	return 0
+
+
 /obj/item/device/taperecorder/verb/ejectverb()
 	set name = "Eject Tape"
 	set category = "Object"
 
-	if(usr.stat)
+	if(!can_use(usr))
 		return
 	if(!mytape)
 		return
@@ -90,38 +91,22 @@
 		icon_state = "taperecorder_idle"
 
 
-/obj/item/device/taperecorder/hear_talk(mob/living/M as mob, msg)
+/obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
 	if(mytape && recording)
-		var/ending = copytext(msg, length(msg))
 		mytape.timestamp += mytape.used_capacity
-		if(M.stuttering)
-			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] stammers, \"[msg]\""
-			return
-		if(M.getBrainLoss() >= 60)
-			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] gibbers, \"[msg]\""
-			return
-		if(ending == "?")
-			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] asks, \"[msg]\""
-			return
-		else if(ending == "!")
-			mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] exclaims, \"[msg]\""
-			return
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [M.name] says, \"[msg]\""
-
+		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
 
 /obj/item/device/taperecorder/verb/record()
 	set name = "Start Recording"
 	set category = "Object"
 
-	if(usr.stat)
+	if(!can_use(usr))
 		return
 	if(!mytape || mytape.ruined)
 		return
 	if(recording)
 		return
 	if(playing)
-		return
-	if(!wires.get_record())
 		return
 
 	if(mytape.used_capacity < mytape.max_capacity)
@@ -135,22 +120,20 @@
 		for(used, used < max)
 			if(recording == 0)
 				break
-			if(!wires.get_record())
-				break
 			mytape.used_capacity++
 			used++
 			sleep(10)
 		recording = 0
 		update_icon()
 	else
-		usr << "<span class='notice'The tape is full.</span>"
+		usr << "<span class='notice'>The tape is full.</span>"
 
 
 /obj/item/device/taperecorder/verb/stop()
 	set name = "Stop"
 	set category = "Object"
 
-	if(usr.stat)
+	if(!can_use(usr))
 		return
 
 	if(recording)
@@ -170,15 +153,13 @@
 	set name = "Play Tape"
 	set category = "Object"
 
-	if(usr.stat)
+	if(!can_use(usr))
 		return
 	if(!mytape || mytape.ruined)
 		return
 	if(recording)
 		return
 	if(playing)
-		return
-	if(!wires.get_play())
 		return
 
 	playing = 1
@@ -189,25 +170,20 @@
 	for(var/i = 1, used < max, sleep(10 * playsleepseconds))
 		if(!mytape)
 			break
-		if(!wires.get_play())
-			break
 		if(playing == 0)
 			break
 		if(mytape.storedinfo.len < i)
 			break
-		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: [mytape.storedinfo[i]]</font>")
+		say(mytape.storedinfo[i])
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(10)
-			T = get_turf(src)
-			T.visible_message("<font color=Maroon><B>Tape Recorder</B>: End of recording.</font>")
+			say("End of recording.")
 		else
 			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
 		if(playsleepseconds > 14)
 			sleep(10)
-			T = get_turf(src)
-			T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Skipping [playsleepseconds] seconds of silence</font>")
+			say("Skipping [playsleepseconds] seconds of silence")
 			playsleepseconds = 1
 		i++
 
@@ -228,7 +204,7 @@
 	set name = "Print Transcript"
 	set category = "Object"
 
-	if(usr.stat)
+	if(!can_use(usr))
 		return
 	if(!mytape)
 		return
@@ -253,7 +229,6 @@
 
 //empty tape recorders
 /obj/item/device/taperecorder/empty/New()
-	wires = new(src)
 	return
 
 
@@ -263,17 +238,17 @@
 	icon_state = "tape_white"
 	item_state = "analyzer"
 	w_class = 1
-	m_amt = 20
-	g_amt = 5
-	flags = FPRINT | TABLEPASS | CONDUCT
+	materials = list(MAT_METAL=20, MAT_GLASS=5)
 	force = 1
-	throwforce = 1
+	throwforce = 0
 	var/max_capacity = 600
 	var/used_capacity = 0
 	var/list/storedinfo = list()
 	var/list/timestamp = list()
 	var/ruined = 0
 
+/obj/item/device/tape/fire_act()
+	ruin()
 
 /obj/item/device/tape/attack_self(mob/user)
 	if(!ruined)
@@ -291,11 +266,11 @@
 	ruined = 0
 
 
-/obj/item/device/tape/attackby(obj/item/I, mob/user)
+/obj/item/device/tape/attackby(obj/item/I, mob/user, params)
 	if(ruined && istype(I, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>You start winding the tape back in.</span>"
-		if(do_after(user, 120))
-			user << "<span class='notice'>You wound the tape back in!</span>"
+		user << "<span class='notice'>You start winding the tape back in...</span>"
+		if(do_after(user, 120/I.toolspeed, target = src))
+			user << "<span class='notice'>You wound the tape back in.</span>"
 			fix()
 
 

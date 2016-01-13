@@ -1,126 +1,259 @@
 /obj/machinery/computer/crew
-	name = "Crew Monitoring Console"
+	name = "crew monitoring console"
 	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
-	icon_state = "crew"
+	icon_screen = "crew"
+	icon_keyboard = "med_key"
 	use_power = 1
 	idle_power_usage = 250
 	active_power_usage = 500
 	circuit = "/obj/item/weapon/circuitboard/crew"
-	var/list/tracked = list(  )
-
-
-/obj/machinery/computer/crew/New()
-	tracked = list()
-	..()
-
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
-	attack_hand(user)
-	interact(user)
-
+	if(stat & (BROKEN|NOPOWER))
+		return
+	crewmonitor.show(user)
 
 /obj/machinery/computer/crew/attack_hand(mob/user)
-	add_fingerprint(user)
+	if(..())
+		return
 	if(stat & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	crewmonitor.show(user)
 
+var/global/datum/crewmonitor/crewmonitor = new
 
-/obj/machinery/computer/crew/update_icon()
+/datum/crewmonitor
+	var/list/jobs
+	var/list/interfaces
+	var/list/data
 
-	if(stat & BROKEN)
-		icon_state = "crewb"
-	else
-		if(stat & NOPOWER)
-			src.icon_state = "c_unpowered"
-			stat |= NOPOWER
+/datum/crewmonitor/New()
+	. = ..()
+
+	var/list/jobs = new/list()
+	jobs["Captain"] = 00
+	jobs["Head of Personnel"] = 50
+	jobs["Head of Security"] = 10
+	jobs["Warden"] = 11
+	jobs["Security Officer"] = 12
+	jobs["Detective"] = 13
+	jobs["Chief Medical Officer"] = 20
+	jobs["Chemist"] = 21
+	jobs["Geneticist"] = 22
+	jobs["Virologist"] = 23
+	jobs["Medical Doctor"] = 24
+	jobs["Research Director"] = 30
+	jobs["Scientist"] = 31
+	jobs["Roboticist"] = 32
+	jobs["Chief Engineer"] = 40
+	jobs["Station Engineer"] = 41
+	jobs["Atmospheric Technician"] = 42
+	jobs["Quartermaster"] = 51
+	jobs["Shaft Miner"] = 52
+	jobs["Cargo Technician"] = 53
+	jobs["Bartender"] = 61
+	jobs["Cook"] = 62
+	jobs["Botanist"] = 63
+	jobs["Librarian"] = 64
+	jobs["Chaplain"] = 65
+	jobs["Clown"] = 66
+	jobs["Mime"] = 67
+	jobs["Janitor"] = 68
+	jobs["Lawyer"] = 69
+	jobs["Admiral"] = 200
+	jobs["Centcom Commander"] = 210
+	jobs["Custodian"] = 211
+	jobs["Medical Officer"] = 212
+	jobs["Research Officer"] = 213
+	jobs["Emergency Response Team Commander"] = 220
+	jobs["Security Response Officer"] = 221
+	jobs["Engineer Response Officer"] = 222
+	jobs["Medical Response Officer"] = 223
+	jobs["Assistant"] = 999 //Unknowns/custom jobs should appear after civilians, and before assistants
+
+	src.jobs = jobs
+	src.interfaces = list()
+	src.data = list()
+	register_asset("crewmonitor.js",'crew.js')
+	register_asset("crewmonitor.css",'crew.css')
+
+/datum/crewmonitor/Destroy()
+	if (src.interfaces)
+		for (var/datum/html_interface/hi in interfaces)
+			qdel(hi)
+		src.interfaces = null
+
+	return ..()
+
+/datum/crewmonitor/proc/show(mob/mob, z)
+	if (mob.client)
+		sendResources(mob.client)
+	if (!z) z = mob.z
+
+	if (z > 0 && src.interfaces)
+		var/datum/html_interface/hi
+
+		if (!src.interfaces["[z]"])
+			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Crew Monitoring", 900, 540, "<link rel=\"stylesheet\" type=\"text/css\" href=\"crewmonitor.css\" /><script type=\"text/javascript\">var z = [z]; var tile_size = [world.icon_size]; var maxx = [world.maxx]; var maxy = [world.maxy];</script><script type=\"text/javascript\" src=\"crewmonitor.js\"></script>")
+
+			hi = src.interfaces["[z]"]
+
+			hi.updateContent("content", "<div id=\"minimap\"><a href=\"javascript:zoomIn();\" class=\"zoom in\">+</a><a href=\"javascript:zoomOut();\" class=\"zoom\">-</a></div><div id=\"textbased\"></div>")
+
+			src.update(z, TRUE)
 		else
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
+			hi = src.interfaces["[z]"]
 
+		// Debugging purposes
+		mob << browse_rsc(file("code/game/machinery/computer/crew.js"), "crew.js")
+		mob << browse_rsc(file("code/game/machinery/computer/crew.css"), "crew.css")
 
-/obj/machinery/computer/crew/Topic(href, href_list)
-	if(..()) return
-	if (src.z > 6)
-		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
-		return
-	if( href_list["close"] )
-		usr << browse(null, "window=crewcomp")
-		usr.unset_machine()
-		return
-	if(href_list["update"])
-		src.updateDialog()
-		return
+		hi = src.interfaces["[z]"]
+		hi.show(mob)
+		src.updateFor(mob, hi, z)
 
+/datum/crewmonitor/proc/updateFor(hclient_or_mob, datum/html_interface/hi, z)
+	// This check will succeed if updateFor is called after showing to the player, but will fail
+	// on regular updates. Since we only really need this once we don't care if it fails.
+	hi.callJavaScript("clearAll", null, hclient_or_mob)
 
-/obj/machinery/computer/crew/interact(mob/user)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	if(!istype(user, /mob/living/silicon) && get_dist(src, user) > 1)
-		user.unset_machine()
-		user << browse(null, "window=powcomp")
-		return
-	user.set_machine(src)
-	src.scan()
-	var/t = ""
-	t += "<BR><A href='?src=\ref[src];update=1'>Refresh</A> "
-	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	t += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Vitals</h3></td><td width='30%'><h3>Position</h3></td></tr>"
-	var/list/logs = list()
-	for(var/obj/item/clothing/under/C in src.tracked)
-		var/log = ""
-		var/turf/pos = get_turf(C)
-		if((C) && (C.has_sensor) && (pos) && (pos.z == src.z) && C.sensor_mode)
-			if(istype(C.loc, /mob/living/carbon/human))
+	for (var/list/L in data)
+		hi.callJavaScript("add", L, hclient_or_mob)
 
-				var/mob/living/carbon/human/H = C.loc
-				var/obj/item/ID = null
+	hi.callJavaScript("onAfterUpdate", null, hclient_or_mob)
 
-				if(H.wear_id)
-					ID = H.wear_id.GetID()
+/datum/crewmonitor/proc/update(z, ignore_unused = FALSE)
+	if (src.interfaces["[z]"])
+		var/datum/html_interface/hi = src.interfaces["[z]"]
 
-				var/dam1 = round(H.getOxyLoss(),1)
-				var/dam2 = round(H.getToxLoss(),1)
-				var/dam3 = round(H.getFireLoss(),1)
-				var/dam4 = round(H.getBruteLoss(),1)
+		if (ignore_unused || hi.isUsed())
+			var/list/results = list()
+			var/obj/item/clothing/under/U
+			var/obj/item/weapon/card/id/I
+			var/turf/pos
+			var/ijob
+			var/name
+			var/assignment
+			var/dam1
+			var/dam2
+			var/dam3
+			var/dam4
+			var/area
+			var/pos_x
+			var/pos_y
+			var/life_status
 
-				var/life_status = "[H.stat > 1 ? "<span class='bad'>Deceased</span>" : "<span class='good'>Living</span>"]"
-				var/damage_report = "(<font color='blue'>[dam1]</font>/<font color='green'>[dam2]</font>/<font color='orange'>[dam3]</font>/<font color='red'>[dam4]</font>)"
+			for(var/mob/living/carbon/human/H in mob_list)
+				// Check if their z-level is correct and if they are wearing a uniform.
+				// Accept H.z==0 as well in case the mob is inside an object.
+				if ((H.z == 0 || H.z == z) && istype(H.w_uniform, /obj/item/clothing/under))
+					U = H.w_uniform
 
-				if(ID)
-					log += "<tr><td width='40%'>[ID.name]</td>"
-				else
-					log += "<tr><td width='40%'>Unknown</td>"
+					// Are the suit sensors on?
+					if (U.has_sensor && U.sensor_mode)
+						pos = H.z == 0 || U.sensor_mode == 3 ? get_turf(H) : null
 
-				switch(C.sensor_mode)
-					if(1)
-						log += "<td width='30%'>[life_status]</td><td width='30%'>Not Available</td></tr>"
-					if(2)
-						log += "<td width='30%'>[life_status] [damage_report]</td><td width='30%'>Not Available</td></tr>"
-					if(3)
-						var/area/player_area = get_area(H)
-						log += "<td width='30%'>[life_status] [damage_report]</td><td width='30%'>[format_text(player_area.name)] ([pos.x], [pos.y])</td></tr>"
-		logs += log
-	logs = sortList(logs)
-	for(var/log in logs)
-		t += log
-	t += "</table>"
-	//user << browse(t, "window=crewcomp;size=900x600")
-	//onclose(user, "crewcomp")
-	var/datum/browser/popup = new(user, "crewcomp", name, 900, 600)
-	popup.set_content(t)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
+						// Special case: If the mob is inside an object confirm the z-level on turf level.
+						if (H.z == 0 && (!pos || pos.z != z)) continue
 
+						I = H.wear_id ? H.wear_id.GetID() : null
 
-/obj/machinery/computer/crew/proc/scan()
-	for(var/obj/item/clothing/under/C in world)
-		if((C.has_sensor) && (istype(C.loc, /mob/living/carbon/human)))
-			var/check = 0
-			for(var/O in src.tracked)
-				if(O == C)
-					check = 1
-					break
-			if(!check)
-				src.tracked.Add(C)
-	return 1
+						if (I)
+							name = I.registered_name
+							assignment = I.assignment
+							ijob = jobs[I.assignment]
+						else
+							name = "<i>Unknown</i>"
+							assignment = ""
+							ijob = 80
+
+						if (U.sensor_mode >= 1) life_status = (!H.stat ? "true" : "false")
+						else                    life_status = null
+
+						if (U.sensor_mode >= 2)
+							dam1 = round(H.getOxyLoss(),1)
+							dam2 = round(H.getToxLoss(),1)
+							dam3 = round(H.getFireLoss(),1)
+							dam4 = round(H.getBruteLoss(),1)
+						else
+							dam1 = null
+							dam2 = null
+							dam3 = null
+							dam4 = null
+
+						if (U.sensor_mode >= 3)
+							if (!pos) pos = get_turf(H)
+							var/area/player_area = get_area(H)
+
+							area = format_text(player_area.name)
+							pos_x = pos.x
+							pos_y = pos.y
+						else
+							area = null
+							pos_x = null
+							pos_y = null
+
+						results[++results.len] = list(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, H.can_track(null))
+
+			src.data = results
+			src.updateFor(null, hi, z) // updates for everyone
+
+/datum/crewmonitor/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
+	var/z = ""
+
+	for (z in src.interfaces)
+		if (src.interfaces[z] == hi) break
+
+	if (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z))
+		if (isAI(hclient.client.mob)) return TRUE
+		else if (isrobot(hclient.client.mob))
+			return (locate(/obj/machinery/computer/crew, range(world.view, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
+		else
+			return (locate(/obj/machinery/computer/crew, range(1, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
+	else
+		return FALSE
+
+/datum/crewmonitor/Topic(href, href_list[], datum/html_interface_client/hclient)
+	if (istype(hclient))
+		if (hclient && hclient.client && hclient.client.mob && isAI(hclient.client.mob))
+			var/mob/living/silicon/ai/AI = hclient.client.mob
+
+			switch (href_list["action"])
+				if ("select_person")
+					AI.ai_camera_track(href_list["name"])
+
+				if ("select_position")
+					var/x = text2num(href_list["x"])
+					var/y = text2num(href_list["y"])
+					var/turf/tile = locate(x, y, AI.z)
+
+					var/obj/machinery/camera/C = locate(/obj/machinery/camera) in range(5, tile)
+
+					if (!C) C = locate(/obj/machinery/camera) in ultra_range(10, tile)
+					if (!C) C = locate(/obj/machinery/camera) in ultra_range(15, tile)
+
+					if (C)
+						var/turf/current_loc = AI.eyeobj.loc
+
+						spawn(min(30, get_dist(get_turf(C), AI.eyeobj) / 4))
+							if (AI && AI.eyeobj && current_loc == AI.eyeobj.loc)
+								AI.switchCamera(C)
+
+/mob/living/carbon/human/Move()
+	if (src.w_uniform)
+		var/old_z = src.z
+
+		. = ..()
+
+		if (old_z != src.z) crewmonitor.queueUpdate(old_z)
+		crewmonitor.queueUpdate(src.z)
+	else
+		return ..()
+
+/datum/crewmonitor/proc/queueUpdate(z)
+	addtimer(crewmonitor, "update", 5, TRUE, z)
+
+/datum/crewmonitor/proc/sendResources(var/client/client)
+	send_asset(client, "crewmonitor.js")
+	send_asset(client, "crewmonitor.css")
+	SSminimap.sendMinimaps(client)

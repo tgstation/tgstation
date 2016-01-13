@@ -1,9 +1,12 @@
 /mob/living/silicon/robot/verb/cmd_show_laws()
 	set category = "Robot Commands"
 	set name = "Show Laws"
+
+	if(usr.stat == DEAD)
+		return //won't work if dead
 	show_laws()
 
-/mob/living/silicon/robot/show_laws(var/everyone = 0)
+/mob/living/silicon/robot/show_laws(everyone = 0)
 	laws_sanity_check()
 	var/who
 
@@ -69,35 +72,3 @@
 			if (length(temp) > 0)
 				laws.supplied[index] = temp
 	return
-
-/mob/living/silicon/robot/proc/laws_sanity_check()
-	if (!laws)
-		laws = new /datum/ai_laws/asimov
-
-/mob/living/silicon/robot/proc/set_zeroth_law(var/law)
-	laws_sanity_check()
-	laws.set_zeroth_law(law)
-
-/mob/living/silicon/robot/proc/add_inherent_law(var/law)
-	laws_sanity_check()
-	laws.add_inherent_law(law)
-
-/mob/living/silicon/robot/proc/clear_inherent_laws()
-	laws_sanity_check()
-	laws.clear_inherent_laws()
-
-/mob/living/silicon/robot/proc/add_supplied_law(var/number, var/law)
-	laws_sanity_check()
-	laws.add_supplied_law(number, law)
-
-/mob/living/silicon/robot/proc/clear_supplied_laws()
-	laws_sanity_check()
-	laws.clear_supplied_laws()
-
-/mob/living/silicon/robot/proc/add_ion_law(var/law)
-	laws_sanity_check()
-	laws.add_ion_law(law)
-
-/mob/living/silicon/robot/proc/clear_ion_laws()
-	laws_sanity_check()
-	laws.clear_ion_laws()

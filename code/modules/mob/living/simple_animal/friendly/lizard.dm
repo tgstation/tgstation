@@ -3,7 +3,7 @@
 	desc = "A cute tiny lizard."
 	icon_state = "lizard"
 	icon_living = "lizard"
-	icon_dead = "lizard-dead"
+	icon_dead = "lizard_dead"
 	speak_emote = list("hisses")
 	health = 5
 	maxHealth = 5
@@ -14,3 +14,8 @@
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
+	ventcrawler = 2
+	density = 0
+	pass_flags = PASSTABLE | PASSMOB
+	mob_size = MOB_SIZE_SMALL
+	gold_core_spawnable = 2

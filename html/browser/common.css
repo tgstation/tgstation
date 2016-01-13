@@ -216,6 +216,19 @@ div.notice
 	margin: 3px 0;
 }
 
+.statusLabel
+{
+	width: 138px;
+	float: left;
+	overflow: hidden;
+	color: #98B0C3;
+}
+
+.statusValue
+{
+	float: left;
+}
+
 .block
 {
 	padding: 8px;
