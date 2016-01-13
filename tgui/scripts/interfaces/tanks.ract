@@ -1,11 +1,14 @@
-<script type='text/coffeescript'>
-component.exports =
-  data:
-    tankPressureState: ->
-      pressure = @get "data.tankPressureState"
-      if pressure >= 200 then "good"
-      else if pressure >= 100 then "average"
-      else "bad"
+<script>
+component.exports = {
+  data: {
+    tankPressureState: function () {
+      const pressure = this.get('data.tankPressureState')
+      if (pressure >= 200) return 'good'
+      else if (pressure >= 100) return 'average'
+      else return 'bad'
+    }
+  }
+}
 </script>
 
 <ui-notice>
