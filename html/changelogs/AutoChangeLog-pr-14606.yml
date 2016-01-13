@@ -1,0 +1,4 @@
+author: MrStonedOne
+delete-after: True
+changes: 
+  - tweak: "control clicking on the thing you are pulling will no longer unpull, instead control clicking on anything too far away to be pulled will unpull. (reminder that the delete key also unpulls)"
