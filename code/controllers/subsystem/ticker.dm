@@ -388,10 +388,10 @@ var/datum/subsystem/ticker/ticker
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
 		if (aiPlayer.stat != 2 && aiPlayer.mind)
 			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>"
-			aiPlayer.show_laws(1)
+			aiPlayer.show_laws(1,1)
 		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
 			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>"
-			aiPlayer.show_laws(1)
+			aiPlayer.show_laws(1,1)
 
 		world << "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
 

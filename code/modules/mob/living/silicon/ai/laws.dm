@@ -4,9 +4,9 @@
 	set name = "Show Laws"
 	if(usr.stat == 2)
 		return //won't work if dead
-	src.show_laws()
+	src.show_laws(0,1)
 
-/mob/living/silicon/ai/show_laws(everyone = 0)
+/mob/living/silicon/ai/show_laws(everyone = 0, voluntary = 0)
 	var/who
 
 	if (everyone)
@@ -21,6 +21,7 @@
 		for(var/mob/living/silicon/robot/R in connected_robots)
 			if(R.lawupdate)
 				R.lawsync()
-				R.show_laws()
-				R.law_change_counter++
+				if(!voluntary)
+					R.show_laws()
+					R.law_change_counter++
 
