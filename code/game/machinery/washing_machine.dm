@@ -18,8 +18,6 @@
 	var/obj/crayon
 
 /obj/machinery/washing_machine/AltClick(mob/user)
-	if(!in_range(src, user))
-		return
 	if(!user.canUseTopic(src))
 		return
 
