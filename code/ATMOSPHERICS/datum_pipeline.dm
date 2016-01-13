@@ -24,8 +24,7 @@
 	if(update)
 		update = 0
 		reconcile_air()
-
-	return
+	update = air.react()
 
 var/pipenetwarnings = 10
 

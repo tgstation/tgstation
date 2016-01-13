@@ -297,7 +297,8 @@
 					src.updateUsrDialog()
 					return
 
-				src.active_record.fields = diskette.fields.Copy()
+				for(var/key in diskette.fields)
+					src.active_record.fields[key] = diskette.fields[key]
 				src.temp = "Load successful."
 
 			if("eject")

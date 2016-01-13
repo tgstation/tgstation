@@ -597,7 +597,9 @@
 	interact(user)
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(!user) return
+	if(!user)
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	user.visible_message("<span class='danger'>[user.name] slashes at the [src.name]!</span>", "<span class='notice'>You slash at the [src.name]!</span>")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
@@ -626,10 +628,11 @@
 	else
 		ui_interact(user)
 
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "apc", name, 550, 550)
+		ui = new(user, src, ui_key, "apc", name, 535, 515, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/apc/get_ui_data(mob/user)
@@ -747,12 +750,22 @@
 	if(!can_use(usr, 1))
 		return
 
+	if(locked && !usr.has_unlimited_silicon_privilege)
+		return
+
 	switch(action)
 		if("lock")
+			if(usr.has_unlimited_silicon_privilege)
+				if(emagged || (stat & (BROKEN|MAINT)))
+					usr << "The APC does not respond to the command."
+				else
+					locked = !locked
+					update_icon()
+		if("cover")
 			coverlocked = !coverlocked
-		if ("breaker")
+		if("breaker")
 			toggle_breaker()
-		if("chargemode")
+		if("charge")
 			chargemode = !chargemode
 			if(!chargemode)
 				charging = 0
@@ -773,19 +786,12 @@
 				environ = setsubsystem(val)
 				update_icon()
 				update()
-		if("toggleaccess")
-			if(usr.has_unlimited_silicon_privilege)
-				if(emagged || (stat & (BROKEN|MAINT)))
-					usr << "The APC does not respond to the command."
-				else
-					locked = !locked
-					update_icon()
 		if("overload")
 			if(usr.has_unlimited_silicon_privilege)
 				src.overload_lighting()
 		if("hack")
 			var/mob/living/silicon/ai/malfai = usr
-			if(get_malf_status(malfai)==1)
+			if(get_malf_status(malfai) == 1)
 				if (malfai.malfhacking)
 					malfai << "You are already hacking an APC."
 					return 1
@@ -873,28 +879,6 @@
 			src.occupier.gib()
 			for(var/obj/item/weapon/pinpointer/point in world)
 				point.the_disk = null //the pinpointer will go back to pointing at the nuke disc.
-
-
-/obj/machinery/power/apc/proc/ion_act()
-	//intended to be exactly the same as an AI malf attack
-	if(!src.malfhack && src.z == ZLEVEL_STATION)
-		if(prob(3))
-			src.locked = 1
-			if (src.cell.charge > 0)
-//				world << "\red blew APC in [src.loc.loc]"
-				src.cell.charge = 0
-				cell.corrupt()
-				src.malfhack = 1
-				update_icon()
-				var/datum/effect_system/smoke_spread/smoke = new
-				smoke.set_up(1, src.loc)
-				smoke.attach(src)
-				smoke.start()
-				var/datum/effect_system/spark_spread/s = new
-				s.set_up(3, 1, src)
-				s.start()
-				visible_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", \
-								"<span class='italics'>You hear sizzling electronics.</span>")
 
 
 /obj/machinery/power/apc/surplus()

@@ -1,0 +1,31 @@
+<script type='text/coffeescript'>
+byond = require "../byond"
+
+component.exports =
+  computed:
+    visualStatus: ->
+      status    = @get "config.status"
+      constants = require "../constants"
+      if status is constants.UI_INTERACTIVE then "good"
+      else if status is constants.UI_UPDATE then "average"
+      else if status is constants.UI_DISABLED then "bad"
+  oninit: ->
+    @observe "config.fancy", (newkey, oldkey, keypath) ->
+      byond.winset @get("config.window"), "titlebar", !!!newkey
+
+    @on
+      close: ->
+        byond.winset @get("config.window"), "is-visible", "false"
+        location.href = byond.href {command: "uiclose #{@get "config.ref"}"}, "winset"
+      minimize: ->
+        byond.winset @get("config.window"), "is-minimized", "true"
+</script>
+
+<header class='titlebar' on-mousedown='drag'>
+  <i class='statusicon fa fa-eye fa-2x {{visualStatus}}'></i>
+  <span class='title'>{{yield}}</span>
+  {{#if config.fancy}}
+    <i class='minimize fa fa-minus fa-2x' on-click='minimize'></i>
+    <i class='close fa fa-close fa-2x' on-click='close'></i>
+  {{/if}}
+</header>

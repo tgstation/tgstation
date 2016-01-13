@@ -46,7 +46,7 @@
 					message_admins("[key_name_admin(usr)] tried to create changelings. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create changelings.")
 			if("3")
-				if(!src.makeRevs())
+				if(src.makeRevs())
 					message_admins("[key_name(usr)] started a revolution.")
 					log_admin("[key_name(usr)] started a revolution.")
 				else
@@ -2039,7 +2039,7 @@
 	else if(href_list["check_antagonist"])
 		if(!check_rights(R_ADMIN))
 			return
-		check_antagonists()
+		usr.client.check_antagonists()
 
 	else if(href_list["kick_all_from_lobby"])
 		if(!check_rights(R_ADMIN))

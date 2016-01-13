@@ -322,10 +322,12 @@ var/list/admin_verbs_hideable = list(
 	if(istype(mob,/mob/dead/observer))
 		//re-enter
 		var/mob/dead/observer/ghost = mob
-		if (!ghost.can_reenter_corpse)
+		if(!ghost.mind || !ghost.mind.current) //won't do anything if there is no body
+			return
+		if(!ghost.can_reenter_corpse)
 			log_admin("[key_name(usr)] re-entered corpse")
 			message_admins("[key_name_admin(usr)] re-entered corpse")
-		ghost.can_reenter_corpse = 1			//just in-case.
+		ghost.can_reenter_corpse = 1 //force re-entering even when otherwise not possible
 		ghost.reenter_corpse()
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else if(istype(mob,/mob/new_player))
@@ -425,6 +427,9 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		if(holder.fakekey)
 			holder.fakekey = null
+			mob.invisibility = initial(mob.invisibility)
+			mob.alpha = initial(mob.alpha)
+			mob.name = initial(mob.name)
 		else
 			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
 			if(!new_key)	return
@@ -432,6 +437,9 @@ var/list/admin_verbs_hideable = list(
 				new_key = copytext(new_key, 1, 26)
 			holder.fakekey = new_key
 			createStealthKey()
+			mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
+			mob.alpha = 0 //JUUUUST IN CASE
+			mob.name = " "
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

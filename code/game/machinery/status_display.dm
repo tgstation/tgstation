@@ -44,9 +44,12 @@
 
 /obj/machinery/status_display/New()
 	..()
-	spawn(5)	// must wait for map loading to finish
-		if(SSradio)
-			SSradio.add_object(src, frequency)
+	if(SSradio)
+		SSradio.add_object(src, frequency)
+
+/obj/machinery/status_display/initialize()
+	if(SSradio)
+		SSradio.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
 	if(SSradio)

@@ -379,6 +379,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(skip_mindless && (!M.mind && !M.ckey))
 			if(!isbot(M) && !istype(M, /mob/camera/))
 				continue
+		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
+			continue
 		var/name = M.name
 		if (name in names)
 			namecounts[name]++
@@ -618,15 +620,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
-	var/steps = 0
-
-	while(current != target_turf)
-		if(steps > length) return 0
-		if(current.opacity) return 0
-		for(var/atom/A in current)
-			if(A.opacity) return 0
+	var/steps = 1
+	if(current != target_turf)
 		current = get_step_towards(current, target_turf)
-		steps++
+		while(current != target_turf)
+			if(steps > length) return 0
+			if(current.opacity) return 0
+			for(var/atom/A in current)
+				if(A.opacity) return 0
+			current = get_step_towards(current, target_turf)
+			steps++
 
 	return 1
 
@@ -672,9 +675,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
 
-//Returns sortedAreas list if populated
-//else populates the list first before returning it
+//Repopulates sortedAreas list
 /proc/SortAreas()
+	sortedAreas = list()
+
 	for(var/area/A in world)
 		sortedAreas.Add(A)
 
@@ -1230,10 +1234,10 @@ B --><-- A
 
 	return L
 
-/atom/proc/contains(var/atom/location)
-	if(!location)
+
+/atom/proc/contains(var/atom/A)
+	if(!A)
 		return 0
-	for(location, location && location != src, location=location.loc); //semicolon is for the empty statement
+	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
 			return 1
-		return 0

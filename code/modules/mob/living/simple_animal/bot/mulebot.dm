@@ -43,7 +43,6 @@ var/global/mulebot_count = 0
 	
 	var/reached_target = 1 	//true if already reached the target
 
-	var/refresh = 1			// true to refresh dialogue
 	var/auto_return = 1		// true if auto return to home beacon after unload
 	var/auto_pickup = 1 	// true if auto-pickup at beacon
 	var/report_delivery = 1 // true if bot will announce an arrival to a location.
@@ -214,8 +213,6 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 			dat += "<A href='byond://?src=\ref[src];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
 			dat += "<A href='byond://?src=\ref[src];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
 			dat += "<A href='byond://?src=\ref[src];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
-			dat += "<A href='byond://?src=\ref[src];op=autorefresh'>Toggle Interface Refreshing</A> ([refresh ? "On" : "Off"])<BR>"
-
 			if(load)
 				dat += "<A href='byond://?src=\ref[src];op=unload'>Unload Now</A><BR>"
 			dat += "<div class='notice'>The maintenance hatch is closed.</div>"
@@ -297,11 +294,6 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 		return
 
 	switch(command)
-
-		if("autorefresh")
-			refresh = !refresh
-			update_controls()
-
 		if("stop")
 			if(mode >= BOT_DELIVER)
 				bot_reset()
@@ -318,26 +310,21 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 				update_controls()
 
 		if("destination")
-			refresh=0
 			var/new_dest = input(user, "Select M.U.L.E. Destination", "Mulebot [suffix ? "([suffix])" : ""]", destination) as null|anything in deliverybeacontags
-			refresh=1
 			if(new_dest)
 				set_destination(new_dest)
+				update_controls()
 
 
 		if("setid")
-			refresh=0
 			var/new_id = stripped_input(user, "Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix, MAX_NAME_LEN)
-			refresh=1
 			if(new_id)
 				suffix = new_id
 				name = "\improper Mulebot ([suffix])"
 				update_controls()
 
 		if("sethome")
-			refresh=0
 			var/new_home = stripped_input(user, "Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", home_destination)
-			refresh=1
 			if(new_home)
 				home_destination = new_home
 				update_controls()
@@ -511,8 +498,6 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 					for(var/i=num_steps,i>0,i--)
 						sleep(2)
 						process_bot()
-
-	if(refresh) update_controls()
 
 /mob/living/simple_animal/bot/mulebot/proc/process_bot()
 	if(!on)

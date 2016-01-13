@@ -49,11 +49,14 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 
 /turf/simulated/floor/ex_act(severity, target)
 	..()
+	if(is_shielded())
+		return
 	if(target == src)
 		src.ChangeTurf(src.baseturf)
 	if(target != null)
 		ex_act(3)
 		return
+
 	switch(severity)
 		if(1)
 			src.ChangeTurf(src.baseturf)
@@ -75,7 +78,11 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			if (prob(50))
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
-	return
+
+/turf/simulated/floor/is_shielded()
+	for(var/obj/structure/A in contents)
+		if(A.level == 3)
+			return 1
 
 /turf/simulated/floor/blob_act()
 	return
@@ -169,4 +176,4 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		ChangeTurf(/turf/simulated/floor/engine/cult)
 
 /turf/simulated/floor/can_have_cabling()
-	return !burnt & !broken
+	return !burnt && !broken

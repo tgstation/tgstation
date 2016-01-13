@@ -462,8 +462,7 @@
 						continue //Dead mob, ghost abandoned
 				else
 					if(D.can_reenter_corpse)
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>This shouldn't appear.</span>)\n"
-						continue //Lolwhat
+						continue //Adminghost, or cult/wizard ghost
 					else
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>Ghosted</span>)\n"
 						continue //Ghosted while alive

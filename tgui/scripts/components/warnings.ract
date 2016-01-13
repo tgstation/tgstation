@@ -1,0 +1,33 @@
+<script type='text/coffeescript'>
+component.exports =
+  data:
+    userAgent: navigator.userAgent
+  computed:
+    ie: ->
+      return document.documentMode if document.documentMode
+      for version in [11..6]
+        div = document.createElement "div"
+        div.innerHTML = "<!--[if IE " + version + "]><span></span><![endif]-->"
+        return version if div.getElementsByTagName("span").length
+      return undefined
+  oninit: ->
+    @on "debug", -> @toggle "debug"
+</script>
+
+
+{{#if config.fancy && ie && ie <= 8}}
+  <ui-notice>
+    <span>You have an old (&lt;= 8) version of Internet Explorer installed. Please upgrade to the latest available version of IE.</span><br/>
+    <span>To upgrade, please click 'Check For Upgrades' below to download the latest available version from Microsoft.</span><br/>
+    <span>Otherwise, if you are unable (XP/Wine) or unwilling to upgrade past IE8, please click 'No Frills' below to disable incompatible features (and this message).</span>
+    <hr/>
+    <ui-button icon='internet-explorer' action='tgui:ie'>Check For Upgrades</ui-button>
+    <ui-button icon='close' action='tgui:nofrills'>No Frills</ui-button>
+    <ui-button icon='bug' on-press='debug'>Debug Info</ui-button>
+    {{#if debug}}
+      <hr/>
+      <span>Detected: IE{{ie}}</span><br/>
+      <span>User Agent: {{userAgent}}</span>
+    {{/if}}
+  </ui-notice>
+{{/if}}

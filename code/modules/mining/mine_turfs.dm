@@ -16,6 +16,7 @@ var/global/list/rockTurfEdgeCache
 	opacity = 1
 	density = 1
 	blocks_air = 1
+	layer = TURF_LAYER + 0.05
 	temperature = TCMB
 	var/environment_type = "asteroid"
 	var/turf/simulated/floor/plating/asteroid/turf_type = /turf/simulated/floor/plating/asteroid //For basalt vs normal asteroid
@@ -89,7 +90,7 @@ var/global/list/rockTurfEdgeCache
 		icon_state = "rock"
 	return
 
-/turf/simulated/mineral/proc/Spread(turf/T)
+/turf/simulated/mineral/Spread(turf/T)
 	new src.type(T)
 
 /turf/simulated/mineral/random
@@ -284,16 +285,14 @@ var/global/list/rockTurfEdgeCache
 		countdown(notify_admins)
 
 /turf/simulated/mineral/gibtonite/proc/countdown(notify_admins = 0)
-	spawn(0)
-		while(stage == 1 && det_time > 0 && mineralAmt >= 1)
-			det_time--
-			sleep(5)
-		if(stage == 1 && det_time <= 0 && mineralAmt >= 1)
-			var/turf/bombturf = get_turf(src)
-			mineralAmt = 0
-			explosion(bombturf,1,3,5, adminlog = notify_admins)
-		if(stage == 0 || stage == 2)
-			return
+	set waitfor = 0
+	while(stage == 1 && det_time > 0 && mineralAmt >= 1)
+		det_time--
+		sleep(5)
+	if(stage == 1 && det_time <= 0 && mineralAmt >= 1)
+		var/turf/bombturf = get_turf(src)
+		mineralAmt = 0
+		explosion(bombturf,1,3,5, adminlog = notify_admins)
 
 /turf/simulated/mineral/gibtonite/proc/defuse()
 	if(stage == 1)
@@ -685,7 +684,7 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/chasm/proc/drop(atom/movable/AM)
 	visible_message("[AM] falls into [src]!")
-	AM.Move(locate(drop_x, drop_y, drop_z))
+	AM.forceMove(locate(drop_x, drop_y, drop_z))
 	AM.visible_message("[AM] falls from above!")
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM

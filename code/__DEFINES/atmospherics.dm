@@ -152,3 +152,8 @@
 #define PARENT2		parents[2]
 #define PARENT3		parents[3]
 #define PARENT_I	parents[I]
+
+//Tanks
+#define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
+#define TANK_MIN_RELEASE_PRESSURE 0
+#define TANK_DEFAULT_RELEASE_PRESSURE 16

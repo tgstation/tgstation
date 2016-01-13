@@ -1,8 +1,0 @@
-author: MrStonedOne
-delete-after: True
-changes: 
-  - experiment: "GHOST POPUP RE-WORK"
-  - bugfix: "Ghost popups will no longer steal focus"
-  - bugfix: "Ghost popups will no longer submit on key press (regardless of focus) unless you tab to a button first"
-  - tweak: "Ghost popups will close themselves after the time out has ended"
-  - rscadd: "Ghost popups are now themed."

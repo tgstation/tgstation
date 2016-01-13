@@ -114,9 +114,8 @@
 		wires.Interact(user)
 	if(!open_panel)
 		if(!active)
-			spawn()
-				settings(user)
-				return
+			settings(user)
+			return
 		else if(anchored)
 			user << "<span class='warning'>The bomb is bolted to the floor!</span>"
 			return

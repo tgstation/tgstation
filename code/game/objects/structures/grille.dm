@@ -11,6 +11,7 @@
 	var/health = 10
 	var/destroyed = 0
 	var/obj/item/stack/rods/stored
+	level = 3
 
 /obj/structure/grille/New()
 	stored = new/obj/item/stack/rods(src)

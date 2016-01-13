@@ -139,7 +139,7 @@
 /mob/living/simple_animal/revenant/narsie_act()
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
-/mob/living/simple_animal/revenant/adjustBruteLoss(amount)
+/mob/living/simple_animal/revenant/adjustHealth(amount)
 	if(!revealed)
 		return
 	essence = max(0, essence-amount)
@@ -238,11 +238,12 @@
 	if(!message)
 		return
 	log_say("[key_name(src)] : [message]")
+	var/rendered = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
 	for(var/mob/M in mob_list)
-		if (istype(M, /mob/new_player))
-			continue
-		if(istype(M, /mob/living/simple_animal/revenant) || M.stat == DEAD)
-			M << "<span class='revennotice'><b>[src]</b> says, \"[message]\"" //Can commune with the dead
+		if(istype(M, /mob/living/simple_animal/revenant))
+			M << rendered
+		if(isobserver(M))
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
 	return
 
 
