@@ -93,7 +93,7 @@ Made by Xhuis
 		shadows += shadow
 		antag_candidates -= shadow
 		modePlayer += shadow
-		shadow.special_role = "Shadowling"
+		//shadow.special_role = "Shadowling"
 		shadow.restricted_roles = restricted_jobs
 		shadowlings--
 	return 1
@@ -145,7 +145,7 @@ Made by Xhuis
 	if(!(new_thrall_mind in thralls))
 		update_shadow_icons_added(new_thrall_mind)
 		thralls += new_thrall_mind
-		new_thrall_mind.special_role = "thrall"
+		//new_thrall_mind.special_role = "thrall"
 		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lesser_glare(null))
@@ -166,7 +166,7 @@ Made by Xhuis
 	update_shadow_icons_removed(thrall_mind)
 	thralls.Remove(thrall_mind)
 	thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Dethralled</span>"
-	thrall_mind.special_role = null
+	//thrall_mind.special_role = null
 	for(var/obj/effect/proc_holder/spell/S in thrall_mind.spell_list)
 		thrall_mind.remove_spell(S)
 	if(kill && ishuman(thrall_mind.current)) //If dethrallization surgery fails, kill the mob as well as dethralling them
@@ -190,7 +190,7 @@ Made by Xhuis
 	update_shadow_icons_removed(ling_mind)
 	shadows.Remove(ling_mind)
 	ling_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Deshadowlinged</span>"
-	ling_mind.special_role = null
+	//ling_mind.special_role = null
 	for(var/obj/effect/proc_holder/spell/S in ling_mind.spell_list)
 		ling_mind.remove_spell(S)
 	var/mob/living/M = ling_mind.current

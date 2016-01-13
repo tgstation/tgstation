@@ -62,7 +62,7 @@
 		user << "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's."
 		return
 
-	else if(is_special_character(user))
+	else if(is_antag(user.mind))
 		user << "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away."
 
 	else if (!insistinga)
@@ -95,7 +95,7 @@
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart."
 				ticker.mode.traitors += user.mind
-				user.mind.special_role = "traitor"
+				//user.mind.special_role = "traitor"
 				var/datum/objective/hijack/hijack = new
 				hijack.owner = user.mind
 				user.mind.objectives += hijack

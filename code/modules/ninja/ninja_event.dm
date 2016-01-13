@@ -71,7 +71,7 @@ Contents:
 	for(var/datum/mind/M in ticker.minds)
 		if(M.current && M.current.stat != DEAD)
 			if(istype(M.current,/mob/living/carbon/human))
-				if(M.special_role)
+				if(is_antag(M))
 					possible_targets[M] = 0						//bad-guy
 				else if(M.assigned_role in command_positions)
 					possible_targets[M] = 1						//good-guy
@@ -178,8 +178,7 @@ Contents:
 /proc/create_ninja_mind(key)
 	var/datum/mind/Mind = new /datum/mind(key)
 	Mind.assigned_role = "Space Ninja"
-	Mind.special_role = "Space Ninja"
-	ticker.mode.traitors |= Mind			//Adds them to current traitor list. Which is really the extra antagonist list.
+	//Mind.special_role = "Space Ninja"
 	return Mind
 
 

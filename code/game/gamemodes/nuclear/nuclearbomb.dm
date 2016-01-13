@@ -346,8 +346,9 @@ var/bomb_set
 	update_icon()
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
-	if (ticker && ticker.mode)
-		ticker.mode.explosion_in_progress = 1
+
+	ticker.explosion_in_progress = 1
+
 	sleep(100)
 
 	if(!core)
@@ -355,34 +356,30 @@ var/bomb_set
 		ticker.mode.explosion_in_progress = 0
 		return
 
+	var/turf/bomb_location = get_turf(src)
+
+	spawn(1) //The cinematic provides a great cover for the horrible lag
+		explosion(bomb_location, 10, 20, 40, 80, 1, 0)
+
 	enter_allowed = 0
 
-	var/off_station = 0
-	var/turf/bomb_location = get_turf(src)
-	if( bomb_location && (bomb_location.z == ZLEVEL_STATION) )
-		if( (bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)) )
-			off_station = 1
+	if(bomb_location && (bomb_location.z == ZLEVEL_STATION))
+		for(var/datum/mind/M in all_antagonists) //give out the greentext
+			for(var/datum/objective/O in M.objectives)
+				if(istype(O,/datum/objective/nuclear))
+					O.completed = 1
+					if(istype(O,/datum/objective/nuclear/escape) && (!M.current || M.current.z == ZLEVEL_STATION))
+						O.completed = 0
+		ticker.station_explosion_cinematic()
+		ticker.explosion_in_progress = 0
+		ticker.station_was_nuked = 1
+		ticker.force_ending = 1 //That's all folks
 	else
-		off_station = 2
-
-	if(ticker.mode && ticker.mode.name == "nuclear emergency")
-		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
-		ticker.mode:syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
-		ticker.mode:nuke_off_station = off_station
-	ticker.station_explosion_cinematic(off_station,null)
-	if(ticker.mode)
+		ticker.station_explosion_cinematic(1,null)
 		ticker.mode.explosion_in_progress = 0
-		if(ticker.mode.name == "nuclear emergency")
-			ticker.mode:nukes_left --
-		else
-			world << "<B>The station was destoyed by the nuclear blast!</B>"
-		ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
-														//kinda shit but I couldn't  get permission to do what I wanted to do.
-		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-			spawn()
-				world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
-			return
-	return
+		new /datum/round_event/radiation_storm()
+		if(bomb_location.z == ZLEVEL_MINING)
+			new /datum/round_event_control/meteor_wave()
 
 
 /*

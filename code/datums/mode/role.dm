@@ -15,6 +15,10 @@
 	var/datum/group/active_group		//A group to actively track beside-eqwrqwe
 	var/datum/group/associated_group	//A path. If an antag functions exclusively in a group enviroment, this makes sure it exists.
 
+	var/mob/default_form = /mob/living/carbon/human //If we're creating the antag from whole cloth, this is what we base it on.
+
+	var/starting_location	//A path. If defined, marks the antag as someone who starts offstation, also keeps them out of the job pool
+
 /datum/role/proc/create_or_join_group(group_path,datum/mind/M) //Call if there should only ever be one of these groups (because they have a common goal)
 	for(var/datum/group/G in ticker.mode.antagonist_factions)
 		if(G.id == initial(associated_group.id))
@@ -38,6 +42,19 @@
 	//if(G.members.len == 0)
 		//remove_group(G)
 
+/datum/role/proc/create_body(client/C, body_loc)	//Antag datum makes a suitable body for choosen mind. Implies gain_role.
+	var/mob/M = new default_form(body_loc)
+	M.key = C.key
+	gain_role(M.mind)
+
+/datum/role/proc/place_role()	//Physical starting location setting
+	var/turf/T
+	if(starting_location && owner.current)
+		var/obj/effect/landmark/L = initial(starting_location)
+		for(L in landmarks_list)
+			if(!mob in contents)
+				T = get_turf(L)
+
 /datum/role/proc/gain_role(datum/mind/M) //Active group isn't put here because there's two ways of doing it
 	if(!M)
 		return 0
@@ -48,6 +65,7 @@
 	owner.antag_roles += src
 	if(associated_group && initial(associated_group.universal_group))
 		create_or_join_group(associated_group,owner)
+	all_antagonists += M
 	equip()
 	enpower()
 	greet()
@@ -70,6 +88,7 @@
 	return
 
 /datum/role/proc/equip()			//physical items put on the body
+	owner.current.update_icons()
 	return
 
 /datum/role/proc/enpower()			//special abilities given to the body or mind
@@ -102,12 +121,30 @@
 /datum/role/proc/declare_completion()
 	return
 
-/proc/is_antag(datum/mind/M, id) //with id field looks for specific kind of antag, without it just checks for anything
+/proc/is_antag(datum/mind/target, id) //with id field looks for specific kind of antag, without it just checks for anything
+	if(ismob(target))	//You can pass this a mob instead of a mind when the existance of a mind isn't explict.
+		var/mob/M = target
+		if(M.mind)
+			target = M.mind
+		else //mindless, can't be an antag
+			return 0
+	if(!istype(target))
+		warning("is_antag() is reporting an invalid input, [target]. This is a code issue. Valid inputs for is_antag() are mobs and minds.")
+		return 0
 	if(id)
-		for(var/datum/role/R in M.antag_roles)
+		for(var/datum/role/R in target.antag_roles)
 			if(R.id == id)
 				return 1
 	else
-		if(M.antag_roles.len > 0)
+		if(target.antag_roles.len > 0)
 			return 1
 	return 0
+
+/proc/compound_antag_name(datum/mind/target)
+	. = ""
+	for(var/datum/role/R in target.antag_roles)
+		. += "[R.name] "
+	if(. != "")
+		. = copytext(0,lentext(.))
+	else
+		. = assigned_role

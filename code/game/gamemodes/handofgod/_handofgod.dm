@@ -201,7 +201,7 @@ var/global/list/global_handofgod_structuretypes = list()
 	H.faction |= "[colour] god"
 	follower_mind.current << "<span class='danger'><FONT size = 3>You are now a follower of the [colour] deity! Follow your deity's prophet in order to complete your deity's objectives. Convert crewmembers to your cause by using your deity's nexus. And remember - there is no you, there is only the cult.</FONT></span>"
 	update_hog_icons_added(follower_mind, colour)
-	follower_mind.special_role = "Hand of God: [capitalize(colour)] Follower"
+	//follower_mind.special_role = "Hand of God: [capitalize(colour)] Follower"
 	follower_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [colour] follower cult!</font>"
 	return 1
 
@@ -213,7 +213,7 @@ var/global/list/global_handofgod_structuretypes = list()
 	if(colour == "blue")
 		blue_deities += god_mind
 	god_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been made into a [colour] deity!</font>"
-	god_mind.special_role = "Hand of God: [colour] God"
+	//god_mind.special_role = "Hand of God: [colour] God"
 	update_hog_icons_added(god_mind, colour)
 
 //////////////////

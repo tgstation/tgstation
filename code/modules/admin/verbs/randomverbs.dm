@@ -261,15 +261,17 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				else				T = pick(latejoin)
 
 				var/mob/living/carbon/alien/new_xeno
-				switch(G_found.mind.special_role)//If they have a mind, we can determine which caste they were.
+				for(var/datum/role/R in G_found.mind.antag_roles)//If they have a mind, we can determine which caste they were.
 					if("Hunter")	new_xeno = new /mob/living/carbon/alien/humanoid/hunter(T)
 					if("Sentinel")	new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(T)
 					if("Drone")		new_xeno = new /mob/living/carbon/alien/humanoid/drone(T)
 					if("Praetorian")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(T)
 					if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(T)
-					else//If we don't know what special role they have, for whatever reason, or they're a larva.
-						create_xeno(G_found.ckey)
-						return
+					if(new_xeno)
+						break
+				if(!new_xeno) //If we don't know what special role they have, for whatever reason, or they're a larva.
+					create_xeno(G_found.ckey)
+					return
 
 				//Now to give them their mind back.
 				G_found.mind.transfer_to(new_xeno)	//be careful when doing stuff like this! I've already checked the mind isn't in use
@@ -334,52 +336,24 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/player_key = G_found.key
 
 	//Now for special roles and equipment.
-	switch(new_character.mind.special_role)
-		if("traitor")
-			SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
-			ticker.mode.equip_traitor(new_character)
-		if("Wizard")
-			new_character.loc = pick(wizardstart)
-			//ticker.mode.learn_basic_spells(new_character)
-			ticker.mode.equip_wizard(new_character)
-		if("Syndicate")
-			var/obj/effect/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
-			if(synd_spawn)
-				new_character.loc = get_turf(synd_spawn)
-			call(/datum/game_mode/proc/equip_syndicate)(new_character)
-		if("Space Ninja")
-			var/list/ninja_spawn = list()
-			for(var/obj/effect/landmark/L in landmarks_list)
-				if(L.name=="carpspawn")
-					ninja_spawn += L
-			new_character.equip_space_ninja()
-			new_character.internal = new_character.s_store
-			new_character.internals.icon_state = "internal1"
-			if(ninja_spawn.len)
-				var/obj/effect/landmark/ninja_spawn_here = pick(ninja_spawn)
-				new_character.loc = ninja_spawn_here.loc
-/* DEATH SQUADS
-		if("Death Commando")//Leaves them at late-join spawn.
-			new_character.equip_death_commando()
-			new_character.internal = new_character.s_store
-			new_character.internals.icon_state = "internal1"*/
-
-		else//They may also be a cyborg or AI.
-			switch(new_character.mind.assigned_role)
-				if("Cyborg")//More rigging to make em' work and check if they're traitor.
-					new_character = new_character.Robotize()
-					if(new_character.mind.special_role=="traitor")
-						ticker.mode.add_law_zero(new_character)
-				if("AI")
-					new_character = new_character.AIize()
-					if(new_character.mind.special_role=="traitor")
-						ticker.mode.add_law_zero(new_character)
-				else
-					SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)//Or we simply equip them.
+	for(var/datum/role/R in new_character.mind.antag_roles)
+		R.equip()
+		R.enpower()
+	switch(new_character.mind.assigned_role)
+		if("Cyborg")//More rigging to make em' work and check if they're traitor.
+			new_character = new_character.Robotize()
+			if(is_antag(new_character.mind, "traitor"))
+				ticker.mode.add_law_zero(new_character)
+		if("AI")
+			new_character = new_character.AIize()
+			if(is_antag(new_character.mind, "traitor"))
+				ticker.mode.add_law_zero(new_character)
+		else
+			SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)//Or we simply equip them.
 
 	//Announces the character on all the systems, based on the record.
 	if(!issilicon(new_character))//If they are not a cyborg/AI.
-		if(!record_found&&new_character.mind.assigned_role!=new_character.mind.special_role)//If there are no records for them. If they have a record, this info is already in there. MODE people are not announced anyway.
+		if(!record_found)//If there are no records for them. If they have a record, this info is already in there. MODE people are not announced anyway.
 			//Power to the user!
 			if(alert(new_character,"Warning: No data core entry detected. Would you like to announce the arrival of this character by adding them to various databases, such as medical records?",,"No","Yes")=="Yes")
 				data_core.manifest_inject(new_character)

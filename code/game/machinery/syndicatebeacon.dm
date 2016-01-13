@@ -23,7 +23,7 @@
 	usr.set_machine(src)
 	var/dat = "<font color=#005500><i>Scanning [pick("retina pattern", "voice print", "fingerprints", "dna sequence")]...<br>Identity confirmed,<br></i></font>"
 	if(istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
-		if(is_special_character(user))
+		if(is_antag(user.mind))
 			dat += "<font color=#07700><i>Operative record found. Greetings, Agent [user.name].</i></font><br>"
 		else if(charges < 1)
 			dat += "<TT>Connection severed.</TT><BR>"
@@ -46,7 +46,7 @@
 			src.updateUsrDialog()
 			return
 		var/mob/M = locate(href_list["traitormob"])
-		if(M.mind.special_role)
+		if(is_antag(M.mind))
 			temptext = "<i>We have no need for you at this time. Have a pleasant day.</i><br>"
 			src.updateUsrDialog()
 			return
@@ -61,7 +61,7 @@
 			var/mob/living/carbon/human/N = M
 			ticker.mode.equip_traitor(N)
 			ticker.mode.traitors += N.mind
-			N.mind.special_role = "traitor"
+			//N.mind.special_role = "traitor"
 			var/objective = "Free Objective"
 			switch(rand(1,100))
 				if(1 to 50)

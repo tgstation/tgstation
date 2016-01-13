@@ -134,7 +134,6 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/new_player/player in player_list)
 		if((player) && (player.mind))
 			player.mind.assigned_role = null
-			player.mind.special_role = null
 	SetupOccupations()
 	unassigned = list()
 	return
@@ -454,7 +453,7 @@ var/datum/subsystem/job/SSjob
 	return 0
 
 /datum/subsystem/job/proc/RejectPlayer(mob/new_player/player)
-	if(player.mind && player.mind.special_role)
+	if(player.mind && is_antag(player.mind))
 		return
 	Debug("Popcap overflow Check observer located, Player: [player]")
 	player << "<b>You have failed to qualify for any job you desired.</b>"

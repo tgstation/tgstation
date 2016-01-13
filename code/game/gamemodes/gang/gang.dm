@@ -65,7 +65,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		antag_candidates -= boss
 		G.bosses += boss
 		boss.gang_datum = G
-		boss.special_role = "[G.name] Gang Boss"
+		//boss.special_role = "[G.name] Gang Boss"
 		boss.restricted_roles = restricted_jobs
 		log_game("[boss.key] has been selected as the Boss for the [G.name] Gang")
 
@@ -182,7 +182,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	gangster_mind.current << "<font color='red'>Their ultimate objective is to take over the station with a Dominator machine.</font>"
 	gangster_mind.current << "<font color='red'>You can identify your bosses by their <b>red \[G\] icon</b>.</font>"
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [G.name] Gang!</font>"
-	gangster_mind.special_role = "[G.name] Gangster"
+	//gangster_mind.special_role = "[G.name] Gangster"
 	G.add_gang_hud(gangster_mind)
 	if(jobban_isbanned(gangster_mind.current, ROLE_GANG))
 		replace_jobbaned_player(gangster_mind.current, ROLE_GANG, ROLE_GANG)
@@ -208,7 +208,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	if(!removed)
 		return 0
 
-	gangster_mind.special_role = null
+	//gangster_mind.special_role = null
 	gangster_mind.gang_datum = null
 
 	if(silent < 2)

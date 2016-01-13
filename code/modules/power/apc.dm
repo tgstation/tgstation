@@ -387,7 +387,6 @@
 							"[user.name] has broken the power control board inside [src.name]!",\
 							"<span class='notice'>You break the charred power control board and remove the remains.</span>",
 							"<span class='italics'>You hear a crack.</span>")
-						//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 					else
 						user.visible_message(\
 							"[user.name] has removed the power control board from [src.name]!",\
@@ -685,7 +684,7 @@
 
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
-	if (is_special_character(user) && istype(user, /mob/living/silicon/ai))
+	if (is_antag(user.mind, "malfunctioning") && istype(user, /mob/living/silicon/ai))
 		if (src.malfai == (user:parent ? user:parent : user))
 			if (src.occupier == user)
 				return 3 // 3 = User is shunted in this APC

@@ -46,7 +46,7 @@
 			break
 		var/datum/mind/traitor = pick(antag_candidates)
 		traitors += traitor
-		traitor.special_role = traitor_name
+		//traitor.special_role = traitor_name
 		traitor.restricted_roles = restricted_jobs
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
@@ -252,12 +252,7 @@
 
 			text += objectives
 
-			var/special_role_text
-			if(traitor.special_role)
-				special_role_text = lowertext(traitor.special_role)
-			else
-				special_role_text = "antagonist"
-
+			var/special_role_text = lowertext(compound_antag_name(traitor))
 
 			if(traitorwin)
 				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"

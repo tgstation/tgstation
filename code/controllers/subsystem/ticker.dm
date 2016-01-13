@@ -336,7 +336,7 @@ var/datum/subsystem/ticker/ticker
 		if(player && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
-			if(player.mind.assigned_role != player.mind.special_role)
+			if(player.z == ZLEVEL_STATION)
 				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 	if(captainless)
 		for(var/mob/M in player_list)
@@ -422,13 +422,12 @@ var/datum/subsystem/ticker/ticker
 	var/list/total_antagonists = list()
 	//Look into all mobs in world, dead or alive
 	for(var/datum/mind/Mind in minds)
-		var/temprole = Mind.special_role
-		if(temprole)							//if they are an antagonist of some sort.
-			if(temprole in total_antagonists)	//If the role exists already, add the name to it
-				total_antagonists[temprole] += ", [Mind.name]([Mind.key])"
+		for(var/datum/role/R in Mind.antag_roles)							//if they are an antagonist of some sort.
+			if(R.id in total_antagonists)	//If the role exists already, add the name to it
+				total_antagonists[R.id] += ", [Mind.name]([Mind.key])"
 			else
-				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
-				total_antagonists[temprole] += ": [Mind.name]([Mind.key])"
+				total_antagonists.Add(R.id) //If the role doesnt exist in the list, create it and add the mob
+				total_antagonists[R.id] += ": [Mind.name]([Mind.key])"
 
 	//Now print them all into the log!
 	log_game("Antagonists at round end were...")

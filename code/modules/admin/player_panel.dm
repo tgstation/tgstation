@@ -220,7 +220,7 @@
 			var/color = "#e6e6e6"
 			if(i%2 == 0)
 				color = "#f2f2f2"
-			var/is_antagonist = is_special_character(M)
+			var/is_antagonist = is_antag(M.mind)
 
 			var/M_job = ""
 

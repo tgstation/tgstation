@@ -54,9 +54,9 @@
 /obj/item/weapon/greentext/process()
 	if(new_holder && new_holder.z == ZLEVEL_CENTCOM)//you're winner!
 		new_holder << "<font color='green'>At last it feels like victory is assured!</font>"
-		if(!(new_holder in ticker.mode.traitors))
-			ticker.mode.traitors += new_holder.mind
-		new_holder.mind.special_role = "winner"
+		var/datum/role/R = new /datum/role/winner
+		R.gain_role(new_holder)
+
 		var/datum/objective/O = new /datum/objective("Succeed")
 		O.completed = 1 //YES!
 		O.owner = new_holder.mind

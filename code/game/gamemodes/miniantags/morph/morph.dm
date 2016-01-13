@@ -204,7 +204,7 @@
 	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(xeno_spawn))
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Morph"
-	player_mind.special_role = "Morph"
+	//player_mind.special_role = "Morph"
 	ticker.mode.traitors |= player_mind
 	S << S.playstyle_string
 	S << 'sound/magic/Mutate.ogg'

@@ -45,7 +45,7 @@
 		if(ROLE_TRAITOR in applicant.client.prefs.be_special)
 			if(!applicant.stat)
 				if(applicant.mind)
-					if (!applicant.mind.special_role)
+					if (!is_antag(applicant.mind))
 						if(!jobban_isbanned(applicant, ROLE_TRAITOR) && !jobban_isbanned(applicant, "Syndicate"))
 							if(temp.age_check(applicant.client))
 								if(!(applicant.job in temp.restricted_jobs))
@@ -81,7 +81,7 @@
 		if(ROLE_CHANGELING in applicant.client.prefs.be_special)
 			if(!applicant.stat)
 				if(applicant.mind)
-					if (!applicant.mind.special_role)
+					if (!is_antag(applicant.mind))
 						if(!jobban_isbanned(applicant, ROLE_CHANGELING) && !jobban_isbanned(applicant, "Syndicate"))
 							if(temp.age_check(applicant.client))
 								if(!(applicant.job in temp.restricted_jobs))
@@ -117,7 +117,7 @@
 				var/turf/T = get_turf(applicant)
 				if(T.z == ZLEVEL_STATION)
 					if(applicant.mind)
-						if(!applicant.mind.special_role)
+						if(!is_antag(applicant.mind))
 							if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate"))
 								if(temp.age_check(applicant.client))
 									if(!(applicant.job in temp.restricted_jobs))
@@ -187,7 +187,7 @@
 		if(ROLE_CULTIST in applicant.client.prefs.be_special)
 			if(applicant.stat == CONSCIOUS)
 				if(applicant.mind)
-					if(!applicant.mind.special_role)
+					if(!is_antag(applicant.mind))
 						if(!jobban_isbanned(applicant, ROLE_CULTIST) && !jobban_isbanned(applicant, "Syndicate"))
 							if(temp.age_check(applicant.client))
 								if(!(applicant.job in temp.restricted_jobs))
@@ -314,7 +314,7 @@
 
 			//Assign antag status and the mission
 			ticker.mode.traitors += Commando.mind
-			Commando.mind.special_role = "deathsquad"
+			//Commando.mind.special_role = "deathsquad"
 			var/datum/objective/missionobj = new
 			missionobj.owner = Commando.mind
 			missionobj.explanation_text = mission
@@ -365,7 +365,7 @@
 		if(ROLE_GANG in applicant.client.prefs.be_special)
 			if(!applicant.stat)
 				if(applicant.mind)
-					if(!applicant.mind.special_role)
+					if(!is_antag(applicant.mind))
 						if(!jobban_isbanned(applicant, ROLE_GANG) && !jobban_isbanned(applicant, "Syndicate"))
 							if(temp.age_check(applicant.client))
 								if(!(applicant.job in temp.restricted_jobs))
@@ -404,7 +404,7 @@
 
 		//Assign antag status and the mission
 		ticker.mode.traitors += newmob.mind
-		newmob.mind.special_role = "official"
+		//newmob.mind.special_role = "official"
 		var/datum/objective/missionobj = new
 		missionobj.owner = newmob.mind
 		missionobj.explanation_text = mission
@@ -501,7 +501,7 @@
 
 			//Assign antag status and the mission
 			ticker.mode.traitors += ERTOperative.mind
-			ERTOperative.mind.special_role = "ERT"
+			//ERTOperative.mind.special_role = "ERT"
 			var/datum/objective/missionobj = new
 			missionobj.owner = ERTOperative.mind
 			missionobj.explanation_text = mission
@@ -549,7 +549,7 @@
 		var/mob/living/simple_animal/revenant/revvie = new /mob/living/simple_animal/revenant(get_turf(O))
 		revvie.key = O.key
 		revvie.mind.assigned_role = "revenant"
-		revvie.mind.special_role = "Revenant"
+		//revvie.mind.special_role = "Revenant"
 		return 1
 	else
 		return
@@ -567,7 +567,7 @@
 		if(ROLE_SHADOWLING in applicant.client.prefs.be_special)
 			if(!applicant.stat)
 				if(applicant.mind)
-					if(!applicant.mind.special_role)
+					if(!is_antag(applicant.mind))
 						if(!jobban_isbanned(applicant, "shadowling") && !jobban_isbanned(applicant, "Syndicate"))
 							if(temp.age_check(applicant.client))
 								if(!(applicant.job in temp.restricted_jobs))
@@ -577,7 +577,7 @@
 	if(candidates.len)
 		H = pick(candidates)
 		ticker.mode.shadows += H.mind
-		H.mind.special_role = "shadowling"
+		//H.mind.special_role = "shadowling"
 		H << "<span class='shadowling'><b><i>Something stirs in the space between worlds. A red light floods your mind, and suddenly you understand. Your human disguise has served you well, but it \
 		is time you cast it away. You are a shadowling, and you are to ascend at all costs.</b></i></span>"
 		ticker.mode.finalize_shadowling(H.mind)

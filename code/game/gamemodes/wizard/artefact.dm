@@ -227,7 +227,7 @@ var/global/list/multiverse = list()
 	return ..()
 
 /obj/item/weapon/multisword/attack_self(mob/user)
-	if(user.mind.special_role == "apprentice")
+	if(is_antag(user, "apprentice"))
 		user << "<span class='warning'>You know better than to touch your teacher's stuff.</span>"
 		return
 	if(cooldown < world.time)
@@ -241,7 +241,7 @@ var/global/list/multiverse = list()
 			assigned = "[user.real_name]"
 			user.faction = list("[user.real_name]")
 			user << "You bind the sword to yourself. You can now use it to summon help."
-			if(!usr.mind.special_role)
+			if(!is_antag(user))
 				if(prob(30))
 					user << "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>"
 					var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
@@ -250,7 +250,7 @@ var/global/list/multiverse = list()
 					hijack_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
 					usr << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
 					ticker.mode.traitors += usr.mind
-					usr.mind.special_role = "[usr.real_name] Prime"
+					//usr.mind.special_role = "[usr.real_name] Prime"
 					evil = TRUE
 				else
 					user << "<span class='warning'><B>With your new found power you could easily defend the station!</B></span>"
@@ -260,7 +260,7 @@ var/global/list/multiverse = list()
 					usr << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 					usr.mind.objectives += new_objective
 					ticker.mode.traitors += usr.mind
-					usr.mind.special_role = "[usr.real_name] Prime"
+					//usr.mind.special_role = "[usr.real_name] Prime"
 					evil = FALSE
 		else
 			var/list/candidates = get_candidates(ROLE_WIZARD)
@@ -307,7 +307,7 @@ var/global/list/multiverse = list()
 		M.mind.objectives += hijack_objective
 		hijack_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
 		M << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
-		M.mind.special_role = "multiverse traveller"
+		//M.mind.special_role = "multiverse traveller"
 		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] hijack.")
 	else
 		var/datum/objective/protect/new_objective = new /datum/objective/protect
@@ -316,7 +316,7 @@ var/global/list/multiverse = list()
 		new_objective.explanation_text = "Protect [usr.real_name], your copy, and help them defend the innocent from the mobs of multiverse clones."
 		M.mind.objectives += new_objective
 		M << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
-		M.mind.special_role = "multiverse traveller"
+		//M.mind.special_role = "multiverse traveller"
 		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] protect the station.")
 
 /obj/item/weapon/multisword/proc/equip_copy(var/mob/living/carbon/human/M)

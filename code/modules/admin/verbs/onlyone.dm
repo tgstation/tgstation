@@ -5,10 +5,10 @@
 
 	for(var/mob/living/carbon/human/H in player_list)
 		if(H.stat == 2 || !(H.client)) continue
-		if(is_special_character(H)) continue
+		if(is_antag(H.mind)) continue
 
 		ticker.mode.traitors += H.mind
-		H.mind.special_role = "traitor"
+		//H.mind.special_role = "traitor"
 
 		var/datum/objective/steal/steal_objective = new
 		steal_objective.owner = H.mind
@@ -57,11 +57,9 @@
 
 	for(var/mob/living/carbon/human/H in player_list)
 		if(H.stat == 2 || !(H.client)) continue
-		if(is_special_character(H)) continue
-
-		ticker.mode.traitors += H.mind
-		H.mind.special_role = "[H.real_name] Prime"
-
+		if(is_antag(H.mind)) continue
+		var/datum/role/multiverse/R = new
+		R.gain_role(H)
 		var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
 		hijack_objective.owner = H.mind
 		H.mind.objectives += hijack_objective

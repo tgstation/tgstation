@@ -615,8 +615,11 @@ body
 			var/poll_message = "Do you want to play as [M.real_name]?"
 			if(M.mind && M.mind.assigned_role)
 				poll_message = "[poll_message] Job:[M.mind.assigned_role]."
-			if(M.mind && M.mind.special_role)
-				poll_message = "[poll_message] Status:[M.mind.special_role]."
+			if(M.mind && is_antag(M.mind))
+				var/special_string = ""
+				for(var/datum/role/R in M.mind.antag_roles)
+					special_string += "[R.name] | "
+				poll_message = "[poll_message] Status:[special_string]."
 			var/list/mob/dead/observer/candidates = pollCandidates(poll_message, "pAI", null, FALSE, 100)
 			var/mob/dead/observer/theghost = null
 

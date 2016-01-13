@@ -10,3 +10,6 @@
 	var/list/objectives	= list()	//In groups objectives are shared with all members, it's possible for someone to have both personal and group objectives.
 	var/list/members =	list()			//List of datums of antagonist members. A memberless group is effectively "dead".
 	var/universal_group = 0				//If a group is universal, any new relevent antags automatically join it instead of making new groups
+
+/datum/group/proc/populate_group()
+	return

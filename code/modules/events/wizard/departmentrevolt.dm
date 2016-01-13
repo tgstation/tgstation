@@ -43,7 +43,7 @@
 					if(M.assigned_role == job)
 						citizens += H
 						ticker.mode.traitors += M
-						M.special_role = "separatist"
+						//M.special_role = "separatist"
 						H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a separatist, long live [nation]!</font>"
 						H << "<B>You are a separatist! [nation] forever! Protect the soverignty of your newfound land with your comrades in arms!</B>"
 	if(citizens.len)

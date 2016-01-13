@@ -110,11 +110,6 @@
 			if(prob(3))
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."))
 
-/datum/disease/transformation/jungle_fever/cure()
-	ticker.mode.remove_monkey(affected_mob.mind)
-	..()
-
-
 /datum/disease/transformation/robot
 
 	name = "Robotic Transformation"

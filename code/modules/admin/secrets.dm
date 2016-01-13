@@ -313,10 +313,10 @@
 			feedback_add_details("admin_secrets_fun_used","TA([objective])")
 			for(var/mob/living/carbon/human/H in player_list)
 				if(H.stat == 2 || !H.client || !H.mind) continue
-				if(is_special_character(H)) continue
+				if(is_antag(H.mind)) continue
 				//traitorize(H, objective, 0)
 				ticker.mode.traitors += H.mind
-				H.mind.special_role = "traitor"
+				//H.mind.special_role = "traitor"
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
 				new_objective.explanation_text = objective
@@ -327,9 +327,9 @@
 			for(var/mob/living/silicon/A in player_list)
 				if(A.stat == 2 || !A.client || !A.mind) continue
 				if(ispAI(A)) continue
-				else if(is_special_character(A)) continue
+				else if(is_antag(A.mind)) continue
 				ticker.mode.traitors += A.mind
-				A.mind.special_role = "traitor"
+				//A.mind.special_role = "traitor"
 				var/datum/objective/new_objective = new
 				new_objective.owner = A
 				new_objective.explanation_text = objective

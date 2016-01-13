@@ -219,7 +219,7 @@
 			ticker.mode.remove_antag_for_borging(BM.mind)
 			BM.mind.transfer_to(O)
 
-			if(O.mind && O.mind.special_role)
+			if(O.mind && is_antag(O.mind))
 				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")
 				O << "<span class='userdanger'>You have been robotized!</span>"
 				O << "<span class='danger'>You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.</span>"

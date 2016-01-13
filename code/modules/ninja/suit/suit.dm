@@ -117,7 +117,7 @@ Contents:
 		H.gloves.icon_state = "s-ninjan"
 		H.gloves.item_state = "s-ninjan"
 	else
-		if(H.mind.special_role!="Space Ninja")
+		if(!is_antag(H.mind, "ninja"))
 			H << "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR..."
 			H.gib()
 			return 0

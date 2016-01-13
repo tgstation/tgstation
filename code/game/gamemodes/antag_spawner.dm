@@ -101,7 +101,7 @@
 	new_objective.explanation_text = "Protect [usr.real_name], the wizard."
 	M.mind.objectives += new_objective
 	ticker.mode.apprentices += M.mind
-	M.mind.special_role = "apprentice"
+	//M.mind.special_role = "apprentice"
 	ticker.mode.update_wiz_icons_added(M.mind)
 	M << sound('sound/effects/magic.ogg')
 	var/newname = copytext(sanitize(input(M, "You are the wizard's apprentice. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
@@ -206,7 +206,7 @@
 	R.key = C.key
 	ticker.mode.syndicates += R.mind
 	ticker.mode.update_synd_icons_added(R.mind)
-	R.mind.special_role = "syndicate"
+	//R.mind.special_role = "syndicate"
 	R.faction = list("syndicate")
 
 
@@ -250,7 +250,7 @@
 	S.holder = holder
 	S.key = C.key
 	S.mind.assigned_role = "Slaughter Demon"
-	S.mind.special_role = "Slaughter Demon"
+	//S.mind.special_role = "Slaughter Demon"
 	ticker.mode.traitors += S.mind
 	var/datum/objective/assassinate/new_objective = new /datum/objective/assassinate
 	new_objective.owner = S.mind

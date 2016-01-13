@@ -39,7 +39,7 @@
 
 	var/datum/mind/Mind = new /datum/mind(key_of_operative)
 	Mind.assigned_role = "Lone Operative"
-	Mind.special_role = "Lone Operative"
+	//Mind.special_role = "Lone Operative"
 	ticker.mode.traitors |= Mind
 	Mind.active = 1
 

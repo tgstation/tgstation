@@ -42,7 +42,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 			break
 		var/datum/mind/blob = pick(antag_candidates)
 		infected_crew += blob
-		blob.special_role = "Blob"
+		//blob.special_role = "Blob"
 		blob.restricted_roles = restricted_jobs
 		log_game("[blob.key] (ckey) has been selected as a Blob")
 		antag_candidates -= blob
@@ -56,7 +56,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 /datum/game_mode/blob/proc/get_blob_candidates()
 	var/list/candidates = list()
 	for(var/mob/living/carbon/human/player in player_list)
-		if(!player.stat && player.mind && !player.mind.special_role && !jobban_isbanned(player, "Syndicate") && (ROLE_BLOB in player.client.prefs.be_special))
+		if(!player.stat && player.mind && !!is_antag(player.mind) && !jobban_isbanned(player, "Syndicate") && (ROLE_BLOB in player.client.prefs.be_special))
 			if(age_check(player.client))
 				candidates += player
 	return candidates
@@ -67,7 +67,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	if(!istype(blobmind))
 		return 0
 	infected_crew += blobmind
-	blobmind.special_role = "Blob"
+	//blobmind.special_role = "Blob"
 	log_game("[blob.key] (ckey) has been selected as a Blob")
 	greet_blob(blobmind)
 	blob << "<span class='userdanger'>You feel very tired and bloated!  You don't have long before you burst!</span>"
@@ -107,7 +107,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 /datum/game_mode/blob/proc/burst_blobs()
 	for(var/datum/mind/blob in infected_crew)
-		if(blob.special_role != "Blob Overmind")
+		if(!is_antag(blob, "overmind"))
 			burst_blob(blob)
 
 /datum/game_mode/blob/proc/burst_blob(datum/mind/blob, warned=0)
@@ -141,7 +141,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 					core.overmind.mind.name = blob.name
 					infected_crew -= blob
 					infected_crew += core.overmind.mind
-					core.overmind.mind.special_role = "Blob Overmind"
+					//core.overmind.mind.special_role = "Blob Overmind"
 
 /datum/game_mode/blob/post_setup()
 

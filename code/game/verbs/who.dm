@@ -31,7 +31,7 @@
 									entry += " - <font color='black'><b>DEAD</b></font>"
 							else
 								entry += " - <font color='black'><b>DEAD</b></font>"
-					if(is_special_character(C.mob))
+					if(is_antag(C.mob.mind))
 						entry += " - <b><font color='red'>Antagonist</font></b>"
 				entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
 				Lines += entry

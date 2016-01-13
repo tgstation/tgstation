@@ -55,7 +55,7 @@
 	var/sqlname = sanitizeSQL(H.real_name)
 	var/sqlkey = sanitizeSQL(H.key)
 	var/sqlpod = sanitizeSQL(podname)
-	var/sqlspecial = sanitizeSQL(H.mind.special_role)
+	var/sqlspecial = sanitizeSQL(compound_antag_name(H.mind))
 	var/sqljob = sanitizeSQL(H.mind.assigned_role)
 	var/laname
 	var/lakey
@@ -90,7 +90,7 @@
 	var/sqlname = sanitizeSQL(H.real_name)
 	var/sqlkey = sanitizeSQL(H.key)
 	var/sqlpod = sanitizeSQL(podname)
-	var/sqlspecial = sanitizeSQL(H.mind.special_role)
+	var/sqlspecial = sanitizeSQL(compound_antag_name(H.mind))
 	var/sqljob = sanitizeSQL(H.mind.assigned_role)
 	var/laname
 	var/lakey

@@ -121,7 +121,7 @@ var/list/ai_list = list()
 		else
 			if (B.brainmob.mind)
 				B.brainmob.mind.transfer_to(src)
-				if(mind.special_role)
+				if(is_antag(mind))
 					mind.store_memory("As an AI, you must obey your silicon laws above all else. Your objectives will consider you to be dead.")
 					src << "<span class='userdanger'>You have been installed as an AI! </span>"
 					src << "<span class='danger'>You must obey your silicon laws above all else. Your objectives will consider you to be dead.</span>"

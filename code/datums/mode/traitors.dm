@@ -7,24 +7,23 @@
 	var/obj/item/device/uplink/hidden/my_uplink
 
 /datum/role/traitor/equip()
-	if(!..())
-		return
 	if(ishuman(owner.current))
 		create_traitor_uplink(owner.current)
 	else if(issilicon(owner.current))
 		add_law_zero(owner.current)
 	give_codewords(owner.current)
+	..()
 
 /datum/role/traitor/unequip()
-	if(!..())
-		return
 	if(my_uplink)
 		qdel(my_uplink)
+	..()
 
 /datum/role/traitor/doubleagent
 	id = "doubleagent"
 
 //---!Transfered Procs!---//
+/*
 
 /proc/give_codewords(mob/living/traitor_mob)
 	traitor_mob << "<U><B>The Syndicate provided you with the following information on how to identify their agents:</B></U>"
@@ -92,3 +91,4 @@
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
 		give_codewords(traitor_mob)
 
+*/

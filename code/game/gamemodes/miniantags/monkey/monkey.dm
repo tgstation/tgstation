@@ -29,7 +29,7 @@
 			break
 		var/datum/mind/carrier = pick(antag_candidates)
 		carriers += carrier
-		carrier.special_role = "monkey"
+		//carrier.special_role = "monkey"
 		carrier.restricted_roles = restricted_jobs
 		log_game("[carrier.key] (ckey) has been selected as a Jungle Fever carrier")
 		antag_candidates -= carrier
@@ -98,11 +98,11 @@
 
 /datum/game_mode/proc/add_monkey(datum/mind/monkey_mind)
 	ape_infectees |= monkey_mind
-	monkey_mind.special_role = "Infected Monkey"
+	//monkey_mind.special_role = "Infected Monkey"
 
 /datum/game_mode/proc/remove_monkey(datum/mind/monkey_mind)
 	ape_infectees.Remove(monkey_mind)
-	monkey_mind.special_role = null
+	//monkey_mind.special_role = null
 
 
 /datum/game_mode/monkey/declare_completion()

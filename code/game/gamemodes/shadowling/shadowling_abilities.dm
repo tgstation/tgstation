@@ -250,7 +250,7 @@
 		target.visible_message("<span class='big'>[target] looks to have experienced a revelation!</span>", \
 							   "<span class='warning'>False faces all d<b>ark not real not real not--</b></span>")
 		target.setOxyLoss(0) //In case the shadowling was choking them out
-		target.mind.special_role = "thrall"
+		//target.mind.special_role = "thrall"
 		ticker.mode.add_thrall(target.mind)
 
 
@@ -826,7 +826,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 
 		user << "<span class='shadowling'>You instantly rearrange <b>[target]</b>'s memories, hyptonitizing them into a thrall.</span>"
 		target << "<span class='userdanger'><font size=3>An agonizing spike of pain drives into your mind, and--</font></span>"
-		target.mind.special_role = "thrall"
+		//target.mind.special_role = "thrall"
 		ticker.mode.add_thrall(target.mind)
 
 

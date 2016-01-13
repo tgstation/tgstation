@@ -30,13 +30,11 @@
 		if(W.back)		I.equip_to_slot_or_del(new W.back.type, slot_back)
 		I.key = C.key
 
-		//Operation: Fuck off and scare people
-		I.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
-		I.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
-		I.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
+		var/datum/role/R = new /datum/role/wizard/imposter
+		R.gain_role(I)
 
 		ticker.mode.apprentices += I.mind
-		I.mind.special_role = "imposter"
+		//I.mind.special_role = "imposter"
 
 		var/datum/objective/protect/protect_objective = new /datum/objective/protect
 		protect_objective.owner = I.mind

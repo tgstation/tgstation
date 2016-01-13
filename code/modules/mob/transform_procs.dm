@@ -340,8 +340,6 @@
 
 	if(mind)		//TODO
 		mind.transfer_to(O)
-		if(mind.special_role)
-			O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 	else
 		O.key = key
 

@@ -179,7 +179,7 @@
 		src.zeroth_borg = null
 		return
 	else
-		if(src.owner.mind.special_role)
+		if(is_antag(src.owner.mind))
 			return
 		else
 			src.zeroth = null

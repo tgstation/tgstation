@@ -639,7 +639,7 @@
 	if(!istype(H, /mob/living/carbon/human))
 		return 1
 
-	if(H.mind.special_role == "apprentice")
+	if(is_antag(H, "apprentice"))
 		temp = "If you got caught sneaking a peak from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
 		return
 
@@ -688,7 +688,7 @@
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == S.type)
 			if(user.mind)
-				if(user.mind.special_role == "apprentice" || user.mind.special_role == "Wizard")
+				if(is_antag(user, "apprentice") || is_antag(user, "wizard"))
 					user <<"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>"
 				else
 					user <<"<span class='notice'>You've already read this one.</span>"

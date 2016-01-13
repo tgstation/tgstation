@@ -100,7 +100,7 @@
 		B.blob_core = src
 		src.overmind = B
 		update_icon()
-		if(B.mind && !B.mind.special_role)
-			B.mind.special_role = "Blob Overmind"
+		//if(B.mind && !is_antag(B.mind))
+			//B.mind.special_role = "Blob Overmind"
 		return 1
 	return 0

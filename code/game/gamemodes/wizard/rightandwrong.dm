@@ -12,13 +12,13 @@
 	for(var/mob/living/carbon/human/H in player_list)
 		if(H.stat == 2 || !(H.client)) continue
 		if(H.mind)
-			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice" || H.mind.special_role == "survivalist") continue
+			if(is_antag(H.mind, "wizard") || is_antag(H.mind, "apprentice") || is_antag(H.mind, "survivalist")) continue
 		if(prob(survivor_probability) && !(H.mind in ticker.mode.traitors))
 			ticker.mode.traitors += H.mind
 			var/datum/objective/summon_guns/guns = new
 			guns.owner = H.mind
 			H.mind.objectives += guns
-			H.mind.special_role = "survivalist"
+			//H.mind.special_role = "survivalist"
 			var/datum/objective/survive/survive = new
 			survive.owner = H.mind
 			H.mind.objectives += survive

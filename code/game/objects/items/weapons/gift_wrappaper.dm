@@ -26,7 +26,7 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/a_gift/attack_self(mob/M)
-	if(M && M.mind && M.mind.special_role == "Santa")
+	if(M && M.mind && is_antag(M.mind, "santa"))
 		M << "<span class='warning'>You're supposed to be spreading gifts, not opening them yourself!</span>"
 		return
 

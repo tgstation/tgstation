@@ -22,7 +22,7 @@
 			else
 				lawsync()
 				src << "<b>Laws synced with AI, be sure to note any changes.</b>"
-				if(is_special_character(src))
+				if(mind && is_antag(mind))
 					src << "<b>Remember, your AI does NOT share or know about your law 0.</b>"
 					if(src.connected_ai.laws.zeroth)
 						src << "<b>While you are free to disregard it, your AI has a law 0 of its own.</b>"
@@ -32,7 +32,7 @@
 
 	who << "<b>Obey these laws:</b>"
 	laws.show_laws(who)
-	if (is_special_character(src) && connected_ai)
+	if (mind && is_antag(mind) && connected_ai)
 		who << "<b>Remember, [connected_ai.name] is technically your master, but your objective comes first.</b>"
 	else if (connected_ai)
 		who << "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>"
@@ -53,7 +53,7 @@
 			if (length(temp) > 0)
 				laws.ion[index] = temp
 
-		if (!is_special_character(src)) //Don't override the borg's existing law 0, if any
+		if (mind && !is_antag(mind)) //Don't override the borg's existing law 0, if any
 			if(master.zeroth_borg) //If the AI has a defined law zero specifically for its borgs, give it that one, otherwise give it the same one. --NEO
 				temp = master.zeroth_borg
 			else

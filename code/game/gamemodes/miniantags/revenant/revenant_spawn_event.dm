@@ -53,7 +53,7 @@
 	var/mob/living/simple_animal/revenant/revvie = new /mob/living/simple_animal/revenant/(pick(spawn_locs))
 	player_mind.transfer_to(revvie)
 	player_mind.assigned_role = "revenant"
-	player_mind.special_role = "Revenant"
+	//player_mind.special_role = "Revenant"
 	ticker.mode.traitors |= player_mind
 	message_admins("[key_of_revenant] has been made into a revenant by an event.")
 	log_game("[key_of_revenant] was spawned as a revenant by an event.")

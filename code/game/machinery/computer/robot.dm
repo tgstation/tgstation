@@ -60,7 +60,7 @@
 		else
 			dat += " Independent from AI |"
 		if (istype(user, /mob/living/silicon) || IsAdminGhost(usr))
-			if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(usr)) && !R.emagged)
+			if(((issilicon(user) && is_antag(user.mind)) || IsAdminGhost(usr)) && !R.emagged)
 				dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
@@ -88,7 +88,7 @@
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
-					if(R.mind && R.mind.special_role && R.emagged)
+					if(R.mind && is_antag(R.mind) && R.emagged)
 						R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered."
 						R.ResetSecurityCodes()
 					else
@@ -117,12 +117,12 @@
 			usr << "<span class='danger'>Access Denied.</span>"
 
 	else if (href_list["magbot"])
-		if((issilicon(usr) && is_special_character(usr)) || IsAdminGhost(usr))
+		if(issilicon(usr) || IsAdminGhost(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
 			if(istype(R) && !R.emagged && (R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
 				log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 				R.SetEmagged(1)
-				if(R.mind.special_role)
+				if(is_antag(R.mind))
 					R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 
 	src.updateUsrDialog()

@@ -135,8 +135,6 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/proc/canRecall()
 	if(emergency.mode != SHUTTLE_CALL)
 		return
-	if(ticker.mode.name == "meteor")
-		return
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED)
 		if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
 			return

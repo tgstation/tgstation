@@ -136,7 +136,6 @@
 		src << laws
 		src << "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>"
 		hacked = 1
-		mind.special_role = "hacked drone"
 		seeStatic = 0 //I MUST SEE THEIR TERRIFIED FACES
 		ventcrawler = 0 //Again, balance
 		speed = 1 //gotta go slow
@@ -152,7 +151,6 @@
 		src << laws
 		src << "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>"
 		hacked = 0
-		mind.special_role = null
 		seeStatic = initial(seeStatic)
 		ventcrawler = initial(ventcrawler)
 		speed = initial(speed)

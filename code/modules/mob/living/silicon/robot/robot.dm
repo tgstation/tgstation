@@ -586,11 +586,7 @@
 			if((world.time - 100) < emag_cooldown)
 				return
 
-			var/ai_is_antag = 0
-			if(connected_ai && connected_ai.mind)
-				if(connected_ai.mind.special_role)
-					ai_is_antag = (connected_ai.mind.special_role == "traitor")
-			if(ai_is_antag)
+			if(connected_ai && connected_ai.mind && is_antag(connected_ai.mind))
 				user << "<span class='notice'>You emag [src]'s interface.</span>"
 				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
 				connected_ai << "<span class='danger'>ALERT: Cyborg unit \[[src]] successfuly defended against subversion.</span>"

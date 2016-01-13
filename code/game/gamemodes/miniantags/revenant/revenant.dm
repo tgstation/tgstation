@@ -468,7 +468,7 @@
 	player_mind.active = 1
 	player_mind.transfer_to(R)
 	player_mind.assigned_role = "revenant"
-	player_mind.special_role = "Revenant"
+	//player_mind.special_role = "Revenant"
 	ticker.mode.traitors |= player_mind
 	message_admins("[key_of_revenant] has been [client_to_revive ? "re":""]made into a revenant by reforming ectoplasm.")
 	log_game("[key_of_revenant] was [client_to_revive ? "re":""]made as a revenant by reforming ectoplasm.")

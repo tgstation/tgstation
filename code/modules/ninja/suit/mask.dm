@@ -65,43 +65,6 @@ Contents:
 /obj/item/clothing/mask/gas/voice/space_ninja/New()
 	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev
 
-
-//This proc is linked to human life.dm. It determines what hud icons to display based on mind special role for most mobs.
-/obj/item/clothing/mask/gas/voice/space_ninja/proc/assess_targets(list/target_list, mob/living/carbon/U)
-	var/icon/tempHud = 'icons/mob/hud.dmi'
-	for(var/mob/living/target in target_list)
-		if(iscarbon(target))
-			switch(target.mind.special_role)
-				if("traitor")
-					U.client.images += image(tempHud,target,"hudtraitor")
-				if("Revolutionary","Head Revolutionary")
-					U.client.images += image(tempHud,target,"hudrevolutionary")
-				if("Cultist")
-					U.client.images += image(tempHud,target,"hudcultist")
-				if("Changeling")
-					U.client.images += image(tempHud,target,"hudchangeling")
-				if("Wizard","Fake Wizard")
-					U.client.images += image(tempHud,target,"hudwizard")
-				if("Hunter","Sentinel","Drone","Queen")
-					U.client.images += image(tempHud,target,"hudalien")
-				if("Syndicate")
-					U.client.images += image(tempHud,target,"hudoperative")
-				if("Death Commando")
-					U.client.images += image(tempHud,target,"huddeathsquad")
-				if("Space Ninja")
-					U.client.images += image(tempHud,target,"hudninja")
-				else//If we don't know what role they have but they have one.
-					U.client.images += image(tempHud,target,"hudunknown1")
-		else if(issilicon(target))//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
-			var/mob/living/silicon/silicon_target = target
-			if(!silicon_target.laws||(silicon_target.laws&&(silicon_target.laws.zeroth||!silicon_target.laws.inherent.len)))
-				if(isrobot(silicon_target))//Different icons for robutts and AI.
-					U.client.images += image(tempHud,silicon_target,"hudmalborg")
-				else
-					U.client.images += image(tempHud,silicon_target,"hudmalai")
-	return 1
-
-
 /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev()
 	set name = "Toggle Voice"
 	set desc = "Toggles the voice synthesizer on or off."

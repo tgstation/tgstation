@@ -38,7 +38,7 @@
 		if((possible_target != owner) && ishuman(possible_target.current))
 			var/is_role = 0
 			if(role_type)
-				if(possible_target.special_role == role)
+				if(is_antag(possible_target, role))
 					is_role++
 			else
 				if(possible_target.assigned_role == role)
@@ -81,7 +81,7 @@
 /datum/objective/assassinate/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role : compound_antag_name(target)]."
 	else
 		explanation_text = "Free Objective"
 
@@ -109,7 +109,7 @@
 /datum/objective/mutiny/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Assassinate or exile [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Assassinate or exile [target.name], the [!target_role_type ? target.assigned_role : compound_antag_name(target)]."
 	else
 		explanation_text = "Free Objective"
 
@@ -136,7 +136,7 @@
 
 /datum/objective/maroon/update_explanation_text()
 	if(target && target.current)
-		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role : target.special_role], from escaping alive."
+		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role : compound_antag_name(target)], from escaping alive."
 	else
 		explanation_text = "Free Objective"
 
@@ -169,7 +169,7 @@
 /datum/objective/debrain/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Steal the brain of [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Steal the brain of [target.name], the [!target_role_type ? target.assigned_role : compound_antag_name(target)]."
 	else
 		explanation_text = "Free Objective"
 
@@ -198,7 +198,7 @@
 /datum/objective/protect/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role : compound_antag_name(target)]."
 	else
 		explanation_text = "Free Objective"
 
@@ -227,7 +227,7 @@
 				if(istype(player, /mob/living/silicon)) //Borgs are technically dead anyways
 					continue
 				if(get_area(player) == A)
-					if(!player.mind.special_role && !istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
+					if(!istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
 						return 0
 	return 1
 
@@ -300,8 +300,6 @@
 		return 0
 	if(ticker.force_ending) //This one isn't their fault, so lets just assume good faith
 		return 1
-	if(ticker.mode.station_was_nuked) //If they escaped the blast somehow, let them win
-		return 1
 	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
 		return 0
 	var/turf/location = get_turf(owner.current)
@@ -359,10 +357,8 @@
 	dangerrating = 3
 
 /datum/objective/survive/check_completion()
-	if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
+	if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current) || isrobot(owner.current))
 		return 0		//Brains no longer win survive objectives. --NEO
-	if(!is_special_character(owner.current)) //This fails borg'd traitors
-		return 0
 	return 1
 
 
@@ -378,15 +374,14 @@
 	return 0
 
 
-/datum/objective/nuclear
+/datum/objective/nuclear //Completion set during nuke blast, do not use check_completion()
 	explanation_text = "Destroy the station with a nuclear device."
 	martyr_compatible = 1
 
-/datum/objective/nuclear/check_completion()
-	if(ticker && ticker.mode && ticker.mode.station_was_nuked)
-		return 1
-	return 0
-
+/datum/objective/nuclear/escape //Note: ONLY FOR NUKE OPS
+	explanation_text = "Destroy the station with a nuclear device after escaping to a safe distance."
+	martyr_compatible = 0
+	var/caught_in_blast = 0
 
 var/global/list/possible_items = list()
 /datum/objective/steal

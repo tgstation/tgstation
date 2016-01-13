@@ -373,7 +373,7 @@
 			ticker.mode.remove_gangster(user.mind, 0, 2)
 			gang.bosses += user.mind
 			user.mind.gang_datum = gang
-			user.mind.special_role = "[gang.name] Gang Lieutenant"
+			//user.mind.special_role = "[gang.name] Gang Lieutenant"
 			gang.add_gang_hud(user.mind)
 			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang.name] Gang")
 			free_pen = 1

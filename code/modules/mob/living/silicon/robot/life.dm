@@ -81,10 +81,6 @@
 		if(connected_ai)
 			connected_ai.connected_robots -= src
 			connected_ai = null
-		if(mind)
-			if(!mind.special_role)
-				mind.special_role = "traitor"
-				ticker.mode.traitors += mind
 	..()
 	return 1
 

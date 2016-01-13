@@ -112,7 +112,7 @@
 		rev_mind.current << "<span class='userdanger'>You are a member of the revolutionaries' leadership!</span>"
 	for(var/datum/objective/objective in rev_mind.objectives)
 		rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		rev_mind.special_role = "Head Revolutionary"
+		//rev_mind.special_role = "Head Revolutionary"
 		obj_count++
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -247,7 +247,7 @@
 	rev_mind.current.Stun(5)
 	rev_mind.current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
 	rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the revolution!</font>"
-	rev_mind.special_role = "Revolutionary"
+	//rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
 	if(jobban_isbanned(rev_mind.current, ROLE_REV))
 		replace_jobbaned_player(rev_mind.current, ROLE_REV, ROLE_REV)
@@ -263,7 +263,7 @@
 
 	if((rev_mind in revolutionaries) || remove_head)
 		revolutionaries -= rev_mind
-		rev_mind.special_role = null
+		//rev_mind.special_role = null
 		rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has renounced the revolution!</font>"
 
 		if(beingborged)

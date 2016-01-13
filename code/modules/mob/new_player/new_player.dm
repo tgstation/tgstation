@@ -305,7 +305,7 @@
 	if (ticker.current_state == GAME_STATE_PLAYING)
 		if(announcement_systems.len)
 			if(character.mind)
-				if((character.mind.assigned_role != "Cyborg") && (character.mind.assigned_role != character.mind.special_role))
+				if((character.mind.assigned_role != "Cyborg") && (character.z == ZLEVEL_STATION))
 					var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
 					announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
 

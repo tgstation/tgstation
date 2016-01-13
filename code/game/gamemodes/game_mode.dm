@@ -1,17 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-/*
- * GAMEMODES (by Rastaf0)
- *
- * In the new mode system all special roles are fully supported.
- * You can have proper wizards/traitors/changelings/cultists during any mode.
- * Only two things really depends on gamemode:
- * 1. Starting roles, equipment and preparations
- * 2. Conditions of finishing the round.
- *
- */
-
-
 /datum/game_mode
 	var/name = "invalid"
 	var/config_tag = null
@@ -177,7 +163,7 @@
 		if(!continuous_sanity_checked) //make sure we have antags to be checking in the first place
 			for(var/mob/Player in mob_list)
 				if(Player.mind)
-					if(Player.mind.special_role)
+					if(is_antag(Player.mind))
 						continuous_sanity_checked = 1
 						return 0
 			if(!continuous_sanity_checked)
@@ -193,7 +179,7 @@
 
 		for(var/mob/Player in living_mob_list)
 			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
-				if(Player.mind.special_role) //Someone's still antaging!
+				if(is_antag(Player.mind)) //Someone's still antaging!
 					living_antag_player = Player
 					return 0
 

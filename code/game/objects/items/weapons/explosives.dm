@@ -31,17 +31,17 @@
 	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above \his head! It looks like \he's going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
-		if(user.mind.special_role)
-			var/role = lowertext(user.mind.special_role)
-			if(role == "traitor" || role == "syndicate")
+		if(is_antag(user.mind))
+			var/datum/role/R = pick(user.mind.antag_roles)
+			if(R.id == "traitor" || R.id == "doubleagent" || R.id == "nukeop")
 				message_say = "FOR THE SYNDICATE!"
-			else if(role == "changeling")
+			else if(R.id == "changeling")
 				message_say = "FOR THE HIVE!"
-			else if(role == "cultist")
+			else if(R.id == "cultist")
 				message_say = "FOR NAR-SIE!"
-			else if(role == "revolutionary" || role == "head revolutionary")
+			else if(R.id == "revolutionary" || R.id == "head revolutionary")
 				message_say = "VIVA LA REVOLUTION!"
-			else if(user.mind.gang_datum)
+			else if(R.id == "gangster")
 				message_say = "[uppertext(user.mind.gang_datum.name)] RULES!"
 	user.say(message_say)
 	target = user
