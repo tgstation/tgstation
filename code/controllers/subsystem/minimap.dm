@@ -12,6 +12,8 @@ var/datum/subsystem/minimap/SSminimap
 
 	var/const/MAX_ICON_DIMENSION = 1024
 	var/const/ICON_SIZE = 4
+	
+	var/max_initalized_zlevel = 0
 
 /datum/subsystem/minimap/New()
 	NEW_SS_GLOBAL(SSminimap)
@@ -23,6 +25,7 @@ var/datum/subsystem/minimap/SSminimap
 		generate(z)
 	for (var/z = 1 to ZLEVEL_SPACEMAX)
 		register_asset("minimap_[z].png", file("[getMinimapFile(z)].png"))
+	max_initalized_zlevel = ZLEVEL_SPACEMAX
 	..()
 
 /datum/subsystem/minimap/proc/generate(z, x1 = 1, y1 = 1, x2 = world.maxx, y2 = world.maxy)
@@ -173,7 +176,7 @@ var/datum/subsystem/minimap/SSminimap
 	return "data/minimaps/[MAP_NAME]_[zlevel]"
 
 /datum/subsystem/minimap/proc/sendMinimaps(client/client)
-	for (var/z = 1 to world.maxz)
+	for (var/z = 1 to max_initalized_zlevel)
 		send_asset(client, "minimap_[z].png")
 
 #ifdef MINIMAP_DEBUG
