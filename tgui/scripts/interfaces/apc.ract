@@ -1,31 +1,46 @@
-<script type='text/coffeescript'>
-component.exports =
-  data:
-    powerState: (status) ->
-      if status is 2 then "good"
-      else if status is 1 then "average"
-      else "bad"
-  computed:
-    malfAction: ->
-      status = @get "data.malfStatus"
-      if status is 1 then "hack"
-      else if status is 2 then "occupy"
-      else if status is 3 then "deoccupy"
-    malfButton: ->
-      status = @get "data.malfStatus"
-      if status is 1 then "Override Programming"
-      else if status is 2 or 4 then "Shunt Core Process"
-      else if status is 3 then "Return to Main Core"
-    malfIcon: ->
-      status = @get "data.malfStatus"
-      if status is 1 then "terminal"
-      else if status is 2 or 4 then "caret-square-o-down"
-      else if status is 3 then "caret-square-o-left"
-    powerCellStatusState: ->
-      status = @get "data.powerCellStatus"
-      if status > 50 then "good"
-      else if status > 25 then "average"
-      else "bad"
+<script>
+component.exports = {
+  data: {
+    powerState: function (status) {
+      switch (status) {
+        case 2: return 'good'
+        case 1: return 'average'
+        default: return 'bad'
+      }
+    }
+  },
+  computed: {
+    malfAction: function () {
+      switch (this.get('data.malfStatus')) {
+        case 1: return 'hack'
+        case 2: return 'occupy'
+        case 3: return 'deoccupy'
+      }
+    },
+    malfButton: function () {
+      switch (this.get('data.malfStatus')) {
+        case 1: return 'Override Programming'
+        case 2:
+        case 4: return 'Shunt Core Process'
+        case 3: return 'Return to Main Core'
+      }
+    },
+    malfIcon: function () {
+      switch (this.get('data.malfStatus')) {
+        case 1: return 'terminal'
+        case 2:
+        case 4: return 'caret-square-o-down'
+        case 3: return 'caret-square-o-left'
+      }
+    },
+    powerCellStatusState: function () {
+      const status = this.get('data.powerCellStatus')
+      if (status > 50) return 'good'
+      else if (status > 25) return 'average'
+      else return 'bad'
+    }
+  }
+}
 </script>
 
 <ui-notice>

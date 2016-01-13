@@ -23,8 +23,9 @@
   <table>
 </ui-display>
 
-<style type='text/stylus'>
-  th,td
-    padding-right: 16px
-    text-align: left
+<style>
+  th, td {
+    padding-right: 16px;
+    text-align: left;
+  }
 </style>
