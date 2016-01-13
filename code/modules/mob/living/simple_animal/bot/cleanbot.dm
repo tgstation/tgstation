@@ -80,9 +80,12 @@
 			user << "<span class='danger'>[src] buzzes and beeps.</span>"
 
 /mob/living/simple_animal/bot/cleanbot/process_scan(obj/effect/decal/cleanable/D)
+	. = list()
 	for(var/T in target_types)
 		if(istype(D, T))
-			return D
+			. += D
+	if(.)
+		. = pick(.)
 
 /mob/living/simple_animal/bot/cleanbot/handle_automated_action()
 	if (!..())
