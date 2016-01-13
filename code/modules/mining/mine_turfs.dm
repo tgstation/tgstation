@@ -32,29 +32,29 @@
 
 /turf/unsimulated/mineral/New()
 	. = ..()
-
+	MineralSpread()
 	if(ticker)
-		initialize(args)
+		initialize()
 
 /turf/unsimulated/mineral/initialize()
-	MineralSpread()
-	var/turf/T
-	if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)) || (istype(get_step(src, NORTH), /turf/simulated/shuttle/floor)))
-		T = get_step(src, NORTH)
-		if (T)
-			T.overlays += image('icons/turf/walls.dmi', "rock_side_s")
-	if((istype(get_step(src, SOUTH), /turf/simulated/floor)) || (istype(get_step(src, SOUTH), /turf/space)) || (istype(get_step(src, SOUTH), /turf/simulated/shuttle/floor)))
-		T = get_step(src, SOUTH)
-		if (T)
-			T.overlays += image('icons/turf/walls.dmi', "rock_side_n", layer=6)
-	if((istype(get_step(src, EAST), /turf/simulated/floor)) || (istype(get_step(src, EAST), /turf/space)) || (istype(get_step(src, EAST), /turf/simulated/shuttle/floor)))
-		T = get_step(src, EAST)
-		if (T)
-			T.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
-	if((istype(get_step(src, WEST), /turf/simulated/floor)) || (istype(get_step(src, WEST), /turf/space)) || (istype(get_step(src, WEST), /turf/simulated/shuttle/floor)))
-		T = get_step(src, WEST)
-		if (T)
-			T.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
+	spawn(1)
+		var/turf/T
+		if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)) || (istype(get_step(src, NORTH), /turf/simulated/shuttle/floor)))
+			T = get_step(src, NORTH)
+			if (T)
+				T.overlays += image('icons/turf/walls.dmi', "rock_side_s")
+		if((istype(get_step(src, SOUTH), /turf/simulated/floor)) || (istype(get_step(src, SOUTH), /turf/space)) || (istype(get_step(src, SOUTH), /turf/simulated/shuttle/floor)))
+			T = get_step(src, SOUTH)
+			if (T)
+				T.overlays += image('icons/turf/walls.dmi', "rock_side_n", layer=6)
+		if((istype(get_step(src, EAST), /turf/simulated/floor)) || (istype(get_step(src, EAST), /turf/space)) || (istype(get_step(src, EAST), /turf/simulated/shuttle/floor)))
+			T = get_step(src, EAST)
+			if (T)
+				T.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
+		if((istype(get_step(src, WEST), /turf/simulated/floor)) || (istype(get_step(src, WEST), /turf/space)) || (istype(get_step(src, WEST), /turf/simulated/shuttle/floor)))
+			T = get_step(src, WEST)
+			if (T)
+				T.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
 	/*
 	if (mineralName && mineralAmt && spread && spreadChance)
 		for(var/trydir in list(1,2,4,8))
@@ -502,6 +502,8 @@
 
 	if(prob(20))
 		icon_state = "asteroid[rand(0,12)]"
+	if(ticker)
+		initialize()
 
 /turf/unsimulated/floor/asteroid/initialize()
 	updateMineralOverlays()
@@ -562,15 +564,18 @@
 
 /turf/unsimulated/floor/asteroid/proc/updateMineralOverlays()
 	src.overlays.len = 0
-
-	if(istype(get_step(src, NORTH), /turf/unsimulated/mineral))
-		src.overlays += image('icons/turf/walls.dmi', "rock_side_n")
-	if(istype(get_step(src, SOUTH), /turf/unsimulated/mineral))
-		src.overlays += image('icons/turf/walls.dmi', "rock_side_s", layer=6)
-	if(istype(get_step(src, EAST), /turf/unsimulated/mineral))
-		src.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
-	if(istype(get_step(src, WEST), /turf/unsimulated/mineral))
-		src.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
+	spawn(1)
+		for(var/dir in cardinal)
+			if(istype(get_step(src,dir), /turf/unsimulated/mineral))
+				switch(dir)
+					if(NORTH)
+						src.overlays += image('icons/turf/walls.dmi', "rock_side_n")
+					if(SOUTH)
+						src.overlays += image('icons/turf/walls.dmi', "rock_side_s", layer=6)
+					if(EAST)
+						src.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
+					if(WEST)
+						src.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
 
 /turf/unsimulated/floor/asteroid/proc/fullUpdateMineralOverlays()
 	var/turf/unsimulated/floor/asteroid/A
@@ -632,9 +637,6 @@
 
 /turf/unsimulated/mineral/random/New()
 	icon_state = "rock"
-	. = ..()
-
-/turf/unsimulated/mineral/random/initialize()
 	if (prob(mineralChance) && !mineral)
 		var/mineral_name = pickweight(mineralSpawnChanceList) //temp mineral name
 
@@ -647,6 +649,8 @@
 				mineral.UpdateTurf(src)
 			else
 				warning("Unknown mineral ID: [mineral_name]")
+
+	. = ..()
 
 /turf/unsimulated/mineral/random/high_chance
 	icon_state = "rock(high)"
@@ -947,9 +951,7 @@
 	var/sanity = 1
 
 /turf/unsimulated/floor/asteroid/cave/New(loc, var/length, var/go_backwards = 1, var/exclude_dir = -1)
-	..()
 
-/turf/unsimulated/floor/asteroid/cave/initialize(loc, var/length, var/go_backwards = 1, var/exclude_dir = -1)
 	// If length (arg2) isn't defined, get a random length; otherwise assign our length to the length arg.
 	if(!length)
 		src.length = rand(25, 50)
@@ -967,6 +969,7 @@
 		make_tunnel(backward_cave_dir)
 	// Kill ourselves by replacing ourselves with a normal floor.
 	SpawnFloor(src)
+	..()
 
 /turf/unsimulated/floor/asteroid/cave/proc/make_tunnel(var/dir)
 
@@ -1005,6 +1008,7 @@
 			// We can't go a full loop though
 			next_angle = -next_angle
 			dir = angle2dir(dir2angle(dir) + next_angle)
+
 /turf/unsimulated/floor/asteroid/cave/proc/SpawnFloor(var/turf/T)
 	for(var/turf/S in range(2,T))
 		if(istype(S, /turf/space) || istype(S.loc, /area/mine/explored))
