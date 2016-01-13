@@ -75,6 +75,14 @@
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
 
+/mob/living/simple_animal/hostile/guardian/AttackingTarget()
+	if(src.loc == summoner)
+		src << "<span class='danger'><B>You must be manifested to attack!</span></B>"
+		return 0
+	else
+		..()
+		return 1
+
 /mob/living/simple_animal/hostile/guardian/death()
 	..()
 	summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
@@ -224,14 +232,14 @@
 		summoner.adjust_fire_stacks(-20)
 
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
-	..()
-	if(prob(45))
-		if(istype(target, /atom/movable))
-			var/atom/movable/M = target
-			if(!M.anchored && M != summoner)
-				PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
-				do_teleport(M, M, 10)
-				PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(M))
+	if(..())
+		if(prob(45))
+			if(istype(target, /atom/movable))
+				var/atom/movable/M = target
+				if(!M.anchored && M != summoner)
+					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
+					do_teleport(M, M, 10)
+					PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(M))
 
 /mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
 	..()
@@ -307,17 +315,14 @@
 	medsensor.add_hud_to(src)
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
-	if(src.loc == summoner)
-		src << "<span class='danger'><B>You must be manifested to attack!</span></B>"
-		return
-	..()
-	if(toggle == TRUE)
-		if(iscarbon(target))
-			var/mob/living/carbon/C = target
-			C.adjustBruteLoss(-5)
-			C.adjustFireLoss(-5)
-			C.adjustOxyLoss(-5)
-			C.adjustToxLoss(-5)
+	if(..())
+		if(toggle == TRUE)
+			if(iscarbon(target))
+				var/mob/living/carbon/C = target
+				C.adjustBruteLoss(-5)
+				C.adjustFireLoss(-5)
+				C.adjustOxyLoss(-5)
+				C.adjustToxLoss(-5)
 
 /mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
 	if(src.loc == summoner)
