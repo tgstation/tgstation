@@ -40,7 +40,7 @@
 	U.hidden_uplink.uplink_owner= "[user.key]"
 	U.hidden_uplink.uses = 280
 	U.hidden_uplink.mode_override = /datum/game_mode/nuclear //Maybe we can have a special set of items for the challenge uplink eventually
-	config.shuttle_refuel_delay = min(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
+	config.shuttle_refuel_delay = max(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
 	qdel(src)
 
 

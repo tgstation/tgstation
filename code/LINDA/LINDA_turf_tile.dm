@@ -290,13 +290,14 @@
 
 
 /atom/movable/var/pressure_resistance = 5
-
+/atom/movable/var/last_high_pressure_movement_air_cycle = 0
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 	set waitfor = 0
 	. = 0
 	if(!anchored && !pulledby)
 		. = 1
-		if(pressure_difference > pressure_resistance)
+		if(pressure_difference > pressure_resistance && last_high_pressure_movement_air_cycle < SSair.times_fired)
+			last_high_pressure_movement_air_cycle = SSair.times_fired
 			step(src, direction)
 
 
