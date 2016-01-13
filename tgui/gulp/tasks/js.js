@@ -26,6 +26,7 @@ const bundle = browserify(p.js.dir + p.js.main, {
 .plugin(b.helpers)
 .transform(b.componentify)
 .transform(b.globify)
+.transform(b.es3ify)
 if (f.min) {
   bundle.plugin(b.collapse)
 }

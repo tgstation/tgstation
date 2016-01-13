@@ -1,12 +1,15 @@
-import 'babel-polyfill'
-import 'dom4'
-
-Object.assign(Math, require('./math'))
-
+// Temporarily import Ractive first to keep it from detecting ie8's object.defineProperty shim, which it misuses (ractivejs/ractive#2343).
 import Ractive from 'ractive'
 Ractive.DEBUG = /minified/.test(() => {
   /* minified */
 })
+
+import 'ie8'
+import 'babel-polyfill'
+import 'dom4'
+import 'html5shiv'
+
+Object.assign(Math, require('./math'))
 
 import WebFont from 'webfontloader'
 WebFont.load({

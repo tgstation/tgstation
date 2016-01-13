@@ -9,7 +9,10 @@ export function css () {
     .pipe(g.stylus({ url: 'data-url', paths: [p.img.dir] }))
     .pipe(g.postcss([
       s.autoprefixer({ browsers: ['last 2 versions', 'ie >= 9'] }),
-      s.plsfilters,
+      s.gradient,
+      s.opacity,
+      s.rgba({oldie: true}),
+      s.plsfilters({oldIE: true}),
       s.fontweights
     ]))
     .pipe(g.rename(p.css.out))

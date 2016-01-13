@@ -40,14 +40,14 @@ component.exports = {
       this.toggle('resize')
       return false
     })
-    window.addEventListener('mousemove', (event) => {
+    document.addEventListener('mousemove', (event) => {
       if (this.get('drag')) {
         drag.bind(this)(event)
       } else if (this.get('resize')) {
         resize.bind(this)(event)
       }
     })
-    window.addEventListener('mouseup', (event) => {
+    document.addEventListener('mouseup', (event) => {
       this.set({ drag: false, resize: false, x: null, y: null })
     })
   },
