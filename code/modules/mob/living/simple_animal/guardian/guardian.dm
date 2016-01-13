@@ -60,7 +60,6 @@
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 			loc = get_turf(summoner)
-			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, loc)
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	..()
@@ -72,7 +71,6 @@
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 			loc = get_turf(summoner)
-			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
@@ -118,7 +116,6 @@
 		return
 	if(loc == summoner)
 		loc = get_turf(summoner)
-		PoolOrNew(/obj/effect/overlay/temp/guardian/phase, loc)
 		cooldown = world.time + 30
 
 /mob/living/simple_animal/hostile/guardian/proc/Recall()
@@ -392,6 +389,7 @@
 							if((pressure > 20) && (pressure < 550))
 								PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(A))
 								do_teleport(A, beacon, 0)
+								PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(A))
 						else
 							src << "<span class='danger'><B>The beacon isn't in a safe location!</span></B>"
 					else
