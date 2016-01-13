@@ -1241,3 +1241,21 @@ B --><-- A
 	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
 			return 1
+
+
+/proc/get_random_points_from(atom/A, amount_of_points = 1, range = 5, orange = 0)
+	if(!A)
+		return list()
+
+	var/list/range_turfs = ultra_range(range,A,orange)
+	. = list()
+
+	while(amount_of_points)
+		for(var/turf/T in range_turfs-.)
+			if(!amount_of_points)
+				break
+			if(get_dist(A,T) >= range-1) //get edge turfs
+				if(prob(3)) //try to space out the turfs
+					amount_of_points--
+					. += T
+
