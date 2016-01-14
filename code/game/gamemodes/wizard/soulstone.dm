@@ -177,10 +177,7 @@
 						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
 
 					if("Artificer")
-						if(iscultist(user))
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
-
-						if(iswizard(user))
+						if(iscultist(user) || iswizard(user))
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
 
 				else
