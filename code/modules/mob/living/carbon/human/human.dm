@@ -37,8 +37,6 @@
 	make_blood()
 
 	..()
-	var/mob/M = src
-	faction |= "\ref[M]"
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...

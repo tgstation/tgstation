@@ -208,6 +208,48 @@ This prevents nesting levels from getting deeper then they need to be.
 
 Math operators like +, -, /, *, etc are up in the air, just choose which version looks more readable.
 
+###Dream Maker Quirks/Tricks:
+Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
+
+* In-To for loops: ```for(var/i = 1, i <= some_value, i++)``` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family) however DM's ```for(var/i in 1 to some_value)``` syntax is oddly faster than its implementation of the former syntax; where possible it's advised to use DM's syntax. (Note, the ```to``` keyword is inclusive, so it automatically defaults to replacing ```<=```, if you want ```<``` then you should write it as ```1 to some_value-1```).
+
+* Istypeless for loops: a name for a differing syntax for writing for-each style loops in DM, however it is NOT DM's standard syntax hence why this is considered a quirk. Take a look at this:
+```
+var/list/bag_of_items = list(sword, apple, coinpouch, sword, sword)
+var/obj/item/sword/best_sword = null
+for(var/obj/item/sword/S in bag_of_items)
+	if(!best_sword || S.damage > best_sword.damage)
+    		best_sword = S
+```
+The above is a simple proc for checking all swords in a container and returning the one with the highest damage, it uses DM's standard syntax for a for loop, it does this by specifying a type in the variable of the for header which byond interprets as a type to filter by, it performs this filter using ```istype()``` (or some internal-magic similar to ```istype()```, I wouldn't put it past byond), the above example is fine with the data currently contained in ```bag_of_items```, however if ```bag_of_items``` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient, for example:
+```
+var/list/bag_of_swords = list(sword, sword, sword, sword)
+var/obj/item/sword/best_sword = null
+for(var/obj/item/sword/S in bag_of_items)
+	if(!best_sword || S.damage > best_sword.damage)
+    		best_sword = S
+```
+specifies a type for DM to filter by, with the previous example that's perfectly fine, we only want swords, but here the bag only contains swords? is DM still going to try to filter because we gave it a type to filter by? YES, and here comes the inefficiency. Whereever a list (or other container, such as an atom (in which case you're technically accessing their special contents list but I digress)) contains datums of the same datatype or subtypes of the datatype you require for your for body
+you can circumvent DM's filtering and automatic ```istype()``` checks by writing the loop as such:
+```
+var/list/bag_of_swords = list(sword, sword, sword, sword)
+var/obj/item/sword/best_sword = null
+for(var/s in bag_of_items)
+	var/obj/item/sword/S = s
+	if(!best_sword || S.damage > best_sword.damage)
+    		best_sword = S
+```
+Of course, if the list contains data of a mixed type then the above optimisation is DANGEROUS, as it will blindly typecast all data in the list as the specified type, even if it isn't really that type! which will cause runtime errors.
+
+* Dot variable: like other languages in the C family, Dream maker has a ```.``` or "Dot" operator, used for accessing variables/members/functions of an object instance.
+eg:
+```
+var/mob/living/carbon/human/H = YOU_THE_READER
+H.gib()
+```
+however DM also has a dot variable, accessed just as ```.``` on it's own, defaulting to a value of null, now what's special about the dot operator is that it is automatically returned (as in the ```return``` statment) at the end of a proc, provided the proc does not already manually return (```return count``` for example). Why is this special? well the ```return``` statement should ideally be free from overhead (functionally free, of course nothing's free) but DM fails to fulfill this,  DM's return statement is actually fairly costly for what it does and for what it's used for.
+With ```.``` being everpresent in every proc can we use it as a temporary variable? Of course we can! However the ```.``` operator cannot replace a typecasted variable, it can hold data any other var in DM can, it just can't be accessed as one, however the ```.``` operator is compatible with a few operators that look weird but work perfectly fine, such as: ```.++``` for incrementing ```.'s``` value, or ```.[1]``` for accessing the first element of ```.``` (provided it's a list).
+
 ##Pull Request Process
 
 There is no strict process when it comes to merging pull requests, pull requests will sometimes take a while before they are looked at by a maintainer, the bigger the change the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be nice. Here are some helpful ways to make it easier for you and for the maintainer when making a pull request.

@@ -41,7 +41,6 @@
 
 	for(var/obj/machinery/ai_status_display/O in world) //change status
 		if(src.key)
-			spawn( 0 )
 			O.mode = 2
 			if (istype(loc, /obj/item/device/aicard))
 				loc.icon_state = "aicard-404"

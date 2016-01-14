@@ -18,7 +18,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/simulated/T = pick(turfs)
-		spawn(0)	new/obj/effect/spacevine_controller(T) //spawn a controller at turf
+		new/obj/effect/spacevine_controller(T) //spawn a controller at turf
 
 
 /datum/spacevine_mutation
@@ -437,6 +437,7 @@
 
 
 /obj/effect/spacevine_controller
+	invisibility = 101
 	var/list/obj/effect/spacevine/vines = list()
 	var/list/growth_queue = list()
 	var/spread_multiplier = 5

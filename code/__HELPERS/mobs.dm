@@ -127,15 +127,21 @@ Proc for attack log creation, because really why not
 
 /proc/add_logs(mob/user, mob/target, what_done, object=null, addition=null)
 	var/newhealthtxt = ""
+	var/coordinates = ""
 	var/turf/attack_location = get_turf(target)
-	var/coordinates = "([attack_location.x],[attack_location.y],[attack_location.z])"
-	if (target && isliving(target))
+	if(attack_location)
+		coordinates = "([attack_location.x],[attack_location.y],[attack_location.z])"
+	if(target && isliving(target))
 		var/mob/living/L = target
 		newhealthtxt = " (NEWHP: [L.health])"
 	if(user && ismob(user))
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
+		if(user.mind)
+			user.mind.attack_log += text("\[[time_stamp()]\] <font color='red'>[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
 	if(target && ismob(target))
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
+		if(target.mind)
+			target.mind.attack_log += text("\[[time_stamp()]\] <font color='orange'>[target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
 	log_attack("[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(ismob(target) && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]")
 
 
@@ -144,10 +150,10 @@ Proc for attack log creation, because really why not
 	if(!user || !target)
 		return 0
 	var/user_loc = user.loc
-	
+
 	var/drifting = 0
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = 1 
+		drifting = 1
 
 	var/target_loc = target.loc
 
@@ -168,11 +174,11 @@ Proc for attack log creation, because really why not
 			break
 		if(uninterruptible)
 			continue
-		
+
 		if(drifting && !user.inertia_dir)
 			drifting = 0
 			user_loc = user.loc
-		
+
 		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
 			. = 0
 			break
@@ -188,11 +194,11 @@ Proc for attack log creation, because really why not
 		Tloc = target.loc
 
 	var/atom/Uloc = user.loc
-	
+
 	var/drifting = 0
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = 1 
-		
+		drifting = 1
+
 	var/holding = user.get_active_hand()
 
 	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
@@ -210,11 +216,11 @@ Proc for attack log creation, because really why not
 		sleep(1)
 		if (progress)
 			progbar.update(world.time - starttime)
-		
+
 		if(drifting && !user.inertia_dir)
 			drifting = 0
 			Uloc = user.loc
-				
+
 		if(!user || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc))
 			. = 0
 			break

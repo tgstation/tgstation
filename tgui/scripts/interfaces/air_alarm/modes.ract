@@ -1,14 +1,14 @@
 <link rel='ractive' href='./back.ract'>
 
-<n-display title='Operating Modes' button>
+<ui-display title='Operating Modes' button>
   {{#partial button}}
     <back/>
   {{/partial}}
   {{#each data.modes}}
-    <n-section>
-      <n-button icon='{{selected ? "check-square-o" : "square-o"}}'
+    <ui-section>
+      <ui-button icon='{{selected ? "check-square-o" : "square-o"}}'
         state='{{selected ? danger ? "danger" : "selected" : null}}'
-        action='mode' params='{"mode": {{mode}}}'>{{name}}</n-button>
-    </n-section>
+        action='mode' params='{"mode": {{mode}}}'>{{name}}</ui-button>
+    </ui-section>
   {{/each}}
-</n-display>
+</ui-display>

@@ -1,19 +1,19 @@
-<n-display>
-  <n-section label='Power'>
-    <n-button icon='{{data.on ? "power-off" : "close"}}' style='{{data.on ? "selected" : null}}'
-      action='power'>{{data.on ? "On" : "Off"}}</n-button>
-  </n-section>
+<ui-display>
+  <ui-section label='Power'>
+    <ui-button icon='{{data.on ? "power-off" : "close"}}' style='{{data.on ? "selected" : null}}'
+      action='power'>{{data.on ? "On" : "Off"}}</ui-button>
+  </ui-section>
   {{#if data.max_rate}}
-    <n-section label='Transfer Rate'>
-      <n-button icon='pencil' action='transfer' params='{"rate": "custom"}'>Set</n-button>
-      <n-button icon='plus' state='{{data.transfer_rate == data.max_rate ? "disabled" : null}}' action='transfer' params='{"rate": "max"}'>Max</n-button>
+    <ui-section label='Transfer Rate'>
+      <ui-button icon='pencil' action='transfer' params='{"rate": "custom"}'>Set</ui-button>
+      <ui-button icon='plus' state='{{data.transfer_rate == data.max_rate ? "disabled" : null}}' action='transfer' params='{"rate": "max"}'>Max</ui-button>
       <span class='buttoninfo'>{{Math.round(adata.transfer_rate)}} L/s</span>
-    </n-section>
+    </ui-section>
   {{else}}
-    <n-section label='Output Pressure'>
-      <n-button icon='pencil' action='pressure' params='{"pressure": "custom"}'>Set</n-button>
-      <n-button icon='plus' state='{{data.set_pressure == data.max_pressure ? "disabled" : null}}' action='pressure' params='{"pressure": "max"}'>Max</n-button>
+    <ui-section label='Output Pressure'>
+      <ui-button icon='pencil' action='pressure' params='{"pressure": "custom"}'>Set</ui-button>
+      <ui-button icon='plus' state='{{data.set_pressure == data.max_pressure ? "disabled" : null}}' action='pressure' params='{"pressure": "max"}'>Max</ui-button>
       <span class='buttoninfo'>{{Math.round(adata.set_pressure)}} kPa</span>
-    </n-section>
+    </ui-section>
   {{/if}}
-</n-display>
+</ui-display>

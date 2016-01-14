@@ -1,8 +1,8 @@
-<n-display>
-  <n-section>
-    <n-button icon='{{data.oneAccess ? "unlock" : "lock"}}' action='one_access'>{{data.oneAccess ? "One" : "All"}} Required</n-button>
-    <n-button icon='refresh' action='clear'>Clear</n-button>
-  </n-section>
+<ui-display>
+  <ui-section>
+    <ui-button icon='{{data.oneAccess ? "unlock" : "lock"}}' action='one_access'>{{data.oneAccess ? "One" : "All"}} Required</ui-button>
+    <ui-button icon='refresh' action='clear'>Clear</ui-button>
+  </ui-section>
   <hr/>
   <table>
 		<thead>
@@ -13,23 +13,27 @@
 		<tbody>
 			<tr>{{#each data.regions}}
 				<td>{{#each accesses}}
-          <n-button icon='{{req ? "check-square-o" : "square-o"}}' style='{{req ? "selected" : null}}'
-            action='set' params='{"access": "{{id}}"}'>{{name}}</n-button>
+          <ui-button icon='{{req ? "check-square-o" : "square-o"}}' style='{{req ? "selected" : null}}'
+            action='set' params='{"access": "{{id}}"}'>{{name}}</ui-button>
 		      <br/>
 				{{/each}}</td>
 			{{/each}}</tr>
 		</tbody>
 	</table>
-</n-display>
+</ui-display>
 
-<style type='text/stylus'>
-  table
-    width: 100%
-    border-spacing: 2px
-  th
-    text-align: left
-  td
-    vertical-align: top
-    .button
-      margin-top: 4px
+<style>
+  table {
+    width: 100%;
+    border-spacing: 2px;
+  }
+  th {
+    text-align: left;
+  }
+  td {
+    vertical-align: top;
+  }
+  td .button {
+    margin-top: 4px
+  }
 </style>

@@ -59,8 +59,7 @@
 	if(!src.lit)
 		src.lit = 1
 		//src.damtype = "fire"
-		for(var/mob/O in viewers(usr, null))
-			O.show_message(flavor_text, 1)
+		usr.visible_message(flavor_text)
 		SetLuminosity(CANDLE_LUMINOSITY)
 		if(!infinite)
 			SSobj.processing |= src

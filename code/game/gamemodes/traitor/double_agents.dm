@@ -32,19 +32,27 @@
 		// Assassinate
 		var/datum/mind/target_mind = target_list[traitor]
 		if(issilicon(target_mind.current))
-			var/datum/objective/default/destroy/destroy_objective = add_objective(traitor, /datum/objective/default/destroy)
+			var/datum/objective/destroy/destroy_objective = new
+			destroy_objective.owner = traitor
 			destroy_objective.target = target_mind
 			destroy_objective.update_explanation_text()
+			traitor.objectives += destroy_objective
 		else
-			var/datum/objective/default/assassinate/kill_objective = add_objective(traitor, /datum/objective/default/assassinate)
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = traitor
 			kill_objective.target = target_mind
 			kill_objective.update_explanation_text()
+			traitor.objectives += kill_objective
 
 		// Escape
 		if(issilicon(traitor.current))
-			add_objective(traitor, /datum/objective/escape_obj/survive)
+			var/datum/objective/survive/survive_objective = new
+			survive_objective.owner = traitor
+			traitor.objectives += survive_objective
 		else
-			add_objective(traitor, /datum/objective/escape_obj/escape)
+			var/datum/objective/escape/escape_objective = new
+			escape_objective.owner = traitor
+			traitor.objectives += escape_objective
 
 	else
 		..() // Give them standard objectives.

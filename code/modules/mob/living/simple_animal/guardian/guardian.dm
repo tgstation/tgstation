@@ -7,9 +7,9 @@
 	response_disarm = "flails at"
 	response_harm   = "punches"
 	icon = 'icons/mob/guardian.dmi'
-	icon_state = "guardianorange"
-	icon_living = "guardianorange"
-	icon_dead = "stand"
+	icon_state = "magicOrange"
+	icon_living = "magicOrange"
+	icon_dead = "magicOrange"
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
@@ -21,13 +21,13 @@
 	attacktext = "punches"
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
 	environment_smash = 0
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 	AIStatus = AI_OFF
 	var/cooldown = 0
-	var/damage_transfer = 1 //how much damage from each attack we transfer to the owner
 	var/mob/living/summoner
 	var/range = 10 //how far from the user the spirit can be
 	var/playstyle_string = "You are a standard Guardian. You shouldn't exist!"
@@ -70,7 +70,7 @@
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			loc = get_turf(summoner)
 
-/mob/living/mob/living/simple_animal/hostile/guardian/canSuicide()
+/mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
 
 /mob/living/simple_animal/hostile/guardian/death()
@@ -78,27 +78,25 @@
 	summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
 	summoner.death()
 
-/mob/living/simple_animal/hostile/guardian/adjustBruteLoss(amount) //The spirit is invincible, but passes on damage to the summoner
-	var/damage = amount * damage_transfer
-	if (summoner)
+/mob/living/simple_animal/hostile/guardian/adjustHealth(amount) //The spirit is invincible, but passes on damage to the summoner
+	if(summoner)
 		if(loc == summoner)
 			return
-		summoner.adjustBruteLoss(damage)
-		if(damage)
+		summoner.adjustBruteLoss(amount)
+		if(amount)
 			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
 			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
 		if(summoner.stat == UNCONSCIOUS)
 			summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
-			summoner.adjustCloneLoss(damage/2)
+			summoner.adjustCloneLoss(amount*0.5) //dying hosts take 50% bonus damage as cloneloss
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
-	switch (severity)
-		if (1)
+	switch(severity)
+		if(1)
 			gib()
 			return
-		if (2)
+		if(2)
 			adjustBruteLoss(60)
-
 		if(3)
 			adjustBruteLoss(30)
 
@@ -129,10 +127,13 @@
 	var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
 	if(!input) return
 
+	var/my_message = "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	for(var/mob/M in mob_list)
-		if(M == summoner || (M in dead_mob_list))
-			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
-	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
+		if(M == summoner)
+			M << my_message
+		if(M in dead_mob_list)
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
+	src << "[my_message]"
 	log_say("[src.real_name]/[src.key] : [input]")
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleMode()
@@ -146,13 +147,14 @@
 	var/input = stripped_input(src, "Please enter a message to tell your guardian.", "Message", "")
 	if(!input) return
 
+	var/my_message = "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	for(var/mob/M in mob_list)
 		if(istype (M, /mob/living/simple_animal/hostile/guardian))
 			var/mob/living/simple_animal/hostile/guardian/G = M
 			if(G.summoner == src)
-				G << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
+				G << "[my_message]"
 		else if (M in dead_mob_list)
-			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	log_say("[src.real_name]/[src.key] : [text]")
 
@@ -204,7 +206,7 @@
 	melee_damage_upper = 10
 	attack_sound = 'sound/items/Welder.ogg'
 	attacktext = "sears"
-	damage_transfer = 0.8
+	damage_coeff = list(BRUTE = 0.8, BURN = 0.8, TOX = 0.8, CLONE = 0.8, STAMINA = 0, OXY = 0.8)
 	range = 10
 	playstyle_string = "As a Chaos type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will randomly teleport enemies."
 	environment_smash = 1
@@ -252,7 +254,6 @@
 /mob/living/simple_animal/hostile/guardian/punch
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	damage_transfer = 0.5
 	playstyle_string = "As a standard type you have no special abilities, but have a high damage resistance and a powerful attack capable of smashing through walls."
 	environment_smash = 2
 	magic_fluff_string = "..And draw the Assistant, faceless and generic, but never to be underestimated."
@@ -285,6 +286,7 @@
 	a_intent = "harm"
 	friendly = "heals"
 	speed = 0
+	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	playstyle_string = "As a Support type, you may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent mob will warp them to your bluespace beacon after a short delay."
@@ -317,7 +319,7 @@
 		if(toggle)
 			a_intent = "harm"
 			speed = 0
-			damage_transfer = 0.7
+			damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 			melee_damage_lower = 15
 			melee_damage_upper = 15
 			src << "<span class='danger'><B>You switch to combat mode.</span></B>"
@@ -325,7 +327,7 @@
 		else
 			a_intent = "help"
 			speed = 1
-			damage_transfer = 1
+			damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			melee_damage_lower = 0
 			melee_damage_upper = 0
 			src << "<span class='danger'><B>You switch to healing mode.</span></B>"
@@ -413,7 +415,7 @@
 	friendly = "quietly assesses"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	damage_transfer = 0.9
+	damage_coeff = list(BRUTE = 0.9, BURN = 0.9, TOX = 0.9, CLONE = 0.9, STAMINA = 0, OXY = 0.9)
 	projectiletype = /obj/item/projectile/guardian
 	ranged_cooldown_cap = 0
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
@@ -494,7 +496,7 @@
 /mob/living/simple_animal/hostile/guardian/bomb
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	damage_transfer = 0.6
+	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
 	range = 13
 	playstyle_string = "As an explosive type, you have only moderate close combat abilities, but are capable of converting any adjacent item into a disguised bomb via alt click."
 	magic_fluff_string = "..And draw the Scientist, master of explosive death."
@@ -634,19 +636,24 @@
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
 
-	var/picked_name = pick("Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces")
-	var/colour = pick("orange", "pink", "red", "blue", "green")
-	G.name = "[picked_name] [capitalize(colour)]"
-	G.real_name = "[picked_name] [capitalize(colour)]"
-	G.icon_living = "guardian[colour]"
-	G.icon_state = "guardian[colour]"
-	G.icon_dead = "guardian[colour]"
-
-	switch (theme)
+	var/colour
+	var/picked_name
+	switch(theme)
 		if("magic")
 			user << "[G.magic_fluff_string]."
+			colour = pick("Pink", "Red", "Orange", "Green", "Blue")
+			picked_name = pick("Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces")
 		if("tech")
 			user << "[G.tech_fluff_string]."
+			colour = pick("Rose", "Lily", "Daisy", "Zinnia", "Ivy", "Iris", "Petunia", "Violet", "Orchid") //technically not colors, just flowers that can be specific colors
+			picked_name = pick("Gallium", "Indium", "Thallium", "Bismuth", "Aluminium", "Mercury", "Iron", "Silver", "Zinc", "Titanium", "Chromium", "Nickel")
+
+	G.name = "[picked_name] [colour]"
+	G.real_name = "[picked_name] [colour]"
+	G.icon_living = "[theme][colour]"
+	G.icon_state = "[theme][colour]"
+	G.icon_dead = "[theme][colour]"
+
 	G.mind.name = "[G.real_name]"
 
 /obj/item/weapon/guardiancreator/choose

@@ -62,13 +62,13 @@
 	loc = D.trunk
 	active = 1
 	dir = DOWN
-	spawn(1)
-		move()		// spawn off the movement process
+	move()
 
 	return
 
 // movement process, persists while holder is moving through pipes
 /obj/structure/disposalholder/proc/move()
+	set waitfor = 0
 	var/obj/structure/disposalpipe/last
 	while(active)
 		var/obj/structure/disposalpipe/curr = loc

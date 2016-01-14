@@ -1,5 +1,5 @@
 {
-  "out":"assets",
+  "out":"assets/",
   "css":{
     "dir":"styles/",
     "main":"main.styl",
@@ -11,7 +11,7 @@
   },
   "js":{
     "dir":"scripts/",
-    "main":"main.coffee",
+    "main":"main.js",
     "out":"tgui.js"
   }
 }

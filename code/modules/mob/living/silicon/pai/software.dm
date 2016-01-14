@@ -260,8 +260,7 @@
 			if(href_list["cable"])
 				var/turf/T = get_turf(src.loc)
 				src.cable = new /obj/item/weapon/pai_cable(T)
-				for (var/mob/M in viewers(T))
-					M.show_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", 3, "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>", 2)
+				T.visible_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return

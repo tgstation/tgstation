@@ -12,13 +12,11 @@
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_appearance = null
-	/*
-	var/saved_item = /obj/item/weapon/cigbutt
-	var/saved_icon = 'icons/obj/clothing/masks.dmi'
-	var/saved_icon_state = "cigbutt"
-	var/saved_overlays = null
-	var/saved_underlays = null
-	*/
+
+/obj/item/device/chameleon/New()
+	..()
+	var/obj/item/weapon/cigbutt/butt = /obj/item/weapon/cigbutt
+	saved_appearance = initial(butt.appearance)
 
 /obj/item/device/chameleon/dropped()
 	disrupt()

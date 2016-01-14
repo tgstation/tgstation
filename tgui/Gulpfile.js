@@ -1,2 +1,2 @@
-require('coffee-script/register');
-require('./gulp');
+require('babel-register')
+require('./gulp')

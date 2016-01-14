@@ -493,7 +493,7 @@
 		return
 	src << "<span class='info'>Attempting to repair damage to our body, stand by...</span>"
 	if(do_mob(src, src, 100))
-		adjustBruteLoss(-100)
+		adjustHealth(-100)
 		src << "<span class='info'>We successfully repaired ourselves.</span>"
 
 /mob/living/simple_animal/hostile/swarmer/proc/ToggleLight()
@@ -504,10 +504,13 @@
 
 /mob/living/simple_animal/hostile/swarmer/proc/ContactSwarmers()
 	var/message = input(src, "Announce to other swarmers", "Swarmer contact")
+	var/rendered = "<B>Swarm communication - </b> [src] states: [message]"
 	if(message)
 		for(var/mob/M in mob_list)
-			if(isswarmer(M) || (M in dead_mob_list))
-				M << "<B>Swarm communication - </b> [src] states: [message]"
+			if(isswarmer(M))
+				M << rendered
+			if(M in dead_mob_list)
+				M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
 
 
 

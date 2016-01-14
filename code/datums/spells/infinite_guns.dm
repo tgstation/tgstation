@@ -6,7 +6,7 @@
 	range = -1
 
 	school = "conjuration"
-	charge_max = 300
+	charge_max = 750
 	clothes_req = 1
 	cooldown_min = 10 //Gun wizard
 	action_icon_state = "bolt_action"

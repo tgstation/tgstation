@@ -141,6 +141,7 @@ var/list/cached_gases_list = null
 			garbage_collect()
 
 			reacting = 1
+	/*
 	if(thermal_energy() > (PLASMA_BINDING_ENERGY*10))
 		if(procgases["plasma"] && procgases["co2"] && procgases["plasma"][MOLES] > MINIMUM_HEAT_CAPACITY && procgases["co2"][MOLES] > MINIMUM_HEAT_CAPACITY && (procgases["plasma"][MOLES]+procgases["co2"][MOLES])/total_moles() >= FUSION_PURITY_THRESHOLD)//Fusion wont occur if the level of impurities is too high.
 			//world << "pre [temperature, [procgases["plasma"][MOLES]], [procgases["co2"][MOLES]]
@@ -172,6 +173,7 @@ var/list/cached_gases_list = null
 					temperature = max(((temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
 					//Prevents whatever mechanism is causing it to hit negative temperatures.
 				//world << "post [temperature], [procgases["plasma"][MOLES]], [procgases["co2"][MOLES]]
+			*/
 
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)

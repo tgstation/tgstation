@@ -364,22 +364,21 @@ var/const/GALOSHES_DONT_HELP = 4
 		adjustBruteLoss(10)
 
 /mob/living/carbon/proc/spin(spintime, speed)
-	spawn()
-		var/D = dir
-		while(spintime >= speed)
-			sleep(speed)
-			switch(D)
-				if(NORTH)
-					D = EAST
-				if(SOUTH)
-					D = WEST
-				if(EAST)
-					D = SOUTH
-				if(WEST)
-					D = NORTH
-			dir = D
-			spintime -= speed
-	return
+	set waitfor = 0
+	var/D = dir
+	while(spintime >= speed)
+		sleep(speed)
+		switch(D)
+			if(NORTH)
+				D = EAST
+			if(SOUTH)
+				D = WEST
+			if(EAST)
+				D = SOUTH
+			if(WEST)
+				D = NORTH
+		dir = D
+		spintime -= speed
 
 /mob/living/carbon/resist_buckle()
 	if(restrained())

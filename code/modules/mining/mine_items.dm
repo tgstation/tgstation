@@ -52,6 +52,7 @@
 	circuit = /obj/item/weapon/circuitboard/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away"
+	no_destination_swap = 1
 
 /*********************Pickaxe & Drills**************************/
 

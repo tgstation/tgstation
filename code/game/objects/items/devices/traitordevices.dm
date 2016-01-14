@@ -40,16 +40,15 @@ effective or pretty fucking useless.
 	add_logs(user, null, "knocked down people in the area", src)
 
 	for(var/mob/living/carbon/human/M in ultra_range(10, user, 1))
-		spawn()
-			if(prob(50))
+		if(prob(50))
 
-				M.Weaken(rand(10,20))
-				if(prob(25))
-					M.Stun(rand(5,10))
-				M << "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>"
+			M.Weaken(rand(10,20))
+			if(prob(25))
+				M.Stun(rand(5,10))
+			M << "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>"
 
-			else
-				M << "<span class='userdanger'>You feel a sudden, electric jolt travel through your head.</span>"
+		else
+			M << "<span class='userdanger'>You feel a sudden, electric jolt travel through your head.</span>"
 
 	playsound(src.loc, 'sound/misc/interference.ogg', 50, 1)
 	user << "<span class='notice'>You trigger [src].</span>"
