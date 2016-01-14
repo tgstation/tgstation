@@ -74,6 +74,10 @@
 	cards += new/obj/item/toy/singlecard(src, src, "Ace of Clubs")
 	cards += new/obj/item/toy/singlecard(src, src, "Ace of Diamonds")
 
+/obj/item/toy/cards/examine(mob/user)
+	..()
+	user.show_message("There are [src.cards.len] cards in the deck.", 1)
+
 /obj/item/toy/cards/attack_hand(mob/user as mob)
 	var/choice = null
 	if(!cards.len)
@@ -83,7 +87,7 @@
 	choice = cards[1]
 	src.cards -= choice
 	user.put_in_active_hand(choice)
-	src.visible_message("<span class = 'notice'>[user] draws a card from the deck.</span>",
+	user.visible_message("<span class = 'notice'>[user] draws a card from the deck.</span>",
 						"<span class = 'notice'>You draw a card from the deck.")
 
 	update_icon()
@@ -133,6 +137,44 @@
 		src.icon_state = "deck_half"
 	else if(cards.len > 1)
 		src.icon_state = "deck_low"
+
+/obj/item/toy/cards/verb/draw_specific()
+	set name = "Draw specific card"
+	set category = "Object"
+	set src in usr
+
+	var/list/card_names = new /list(src.cards.len)
+	for(var/i = 1; i <= src.cards.len; i++)
+		var/obj/item/toy/singlecard/T = src.cards[i]
+		card_names[i] = T.cardname
+
+	var/N = input("Draw a specific card from the deck.") as null|anything in card_names
+	if (N)
+		var/obj/item/toy/singlecard/C = null
+		for(var/i = 1; i <= src.cards.len; i++)
+			var/obj/item/toy/singlecard/Q = src.cards[i]
+			if(N == Q.cardname)
+				C = Q
+		var/mob/living/M = usr
+		if(M.r_hand == src)
+			if(M.l_hand)
+				to_chat(usr, "<span class = 'warning'>Your other hand is full.</span>")
+				return
+			else
+				src.cards -= C
+				C.Flip()
+				usr.put_in_l_hand(C)
+		else if(M.l_hand == src)
+			if(M.r_hand)
+				to_chat(usr, "<span class = 'warning'>Your other hand is full.</span>")
+				return
+			else
+				src.cards -= C
+				C.Flip()
+				usr.put_in_r_hand(C)
+		usr.visible_message("<span class = 'notice'>[usr] draws a specific card from the deck.</span>",
+							"<span class = 'notice'>You draw the [N] from the deck.")
+		update_icon()
 
 /obj/item/toy/cards/MouseDrop(atom/over_object)
 	var/mob/M = usr
