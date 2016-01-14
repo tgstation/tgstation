@@ -148,6 +148,9 @@
 		var/obj/item/toy/singlecard/T = src.cards[i]
 		card_names[i] = T.cardname
 
+	usr.visible_message("<span class = 'notice'>[usr] rifles through the deck.</span>",
+							"<span class = 'notice'>You rifle through the deck.")
+
 	var/N = input("Draw a specific card from the deck.") as null|anything in card_names
 	if (N)
 		var/obj/item/toy/singlecard/C = null
