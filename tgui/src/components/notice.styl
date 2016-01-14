@@ -1,30 +1,27 @@
-@require "display"
-
-$noticeStripes
-  background-color: colors.notice.first // Fallback for old browers.
-  background-image: repeating-linear-gradient(
-    -45deg,
-    colors.notice.first,
-    colors.notice.first 10px,
-    colors.notice.second 10px,
-    colors.notice.second 20px
-  )
-
 div.notice
-  @extend div.display, $noticeStripes
   margin: 8px 0
+  padding: 4px
 
   box-shadow: none
 
-  color: colors.text.inverse
+  color: text-color-inverse
   font-weight: bold
   font-style: italic
 
+  background-color: notice-color-first
+  background-image: repeating-linear-gradient(
+    -45deg,
+    notice-color-first,
+    notice-color-first 10px,
+    notice-color-second 10px,
+    notice-color-second 20px
+  )
+
   .button
-    outline: 1px solid colors.notice.border
+    outline: 1px solid notice-color-border
 
   .label
-    color: colors.text.inverse
+    color: text-color-inverse
 
   hr
-    background-color: colors.rule.dark
+    background-color: rule-color-dark

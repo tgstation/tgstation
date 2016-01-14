@@ -24,7 +24,7 @@ component.exports = {
   },
   onconfig: function () {
     const requested  = this.get('config.interface')
-    const interfaces = require('./interfaces/*', { mode: 'hash' })
+    const interfaces = require('../interfaces/*', { mode: 'hash' })
     if (requested in interfaces) {
       this.components.interface = interfaces[requested] // Use the interface specified in the config...
     } else {
@@ -32,6 +32,10 @@ component.exports = {
     }
   },
   oninit: function () {
+    this.observe('config.style', (newkey, oldkey, keypath) => {
+      if (newkey) document.body.classList.add(newkey)
+      if (oldkey) document.body.classList.remove(oldkey)
+    })
     this.on('titlebar.drag', () => {
       this.toggle('drag')
       return false
@@ -49,17 +53,6 @@ component.exports = {
     })
     document.addEventListener('mouseup', (event) => {
       this.set({ drag: false, resize: false, x: null, y: null })
-    })
-  },
-  onrender: function () {
-    this.observe('config.style', (newkey, oldkey, keypath) =>{ // Change style to match config.
-      if(oldkey) {
-        document.body.classList.remove(oldkey)
-        this.el.classList.remove(oldkey)
-      }
-      if(newkey)
-        document.body.classList.add(newkey)
-        this.el.classList.add(newkey)
     })
   },
   oncomplete: function () {

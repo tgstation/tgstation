@@ -7,8 +7,8 @@
   line-height: 17px
   padding: 1px
 
-  border: 1px solid colors.bar.border
-  background: colors.bar.background
+  border: 1px solid bar-color-border
+  background: bar-color-background
 
   .barText
     @extend $fontReset
@@ -21,8 +21,10 @@
     height: 100%
 
     transition: background-color 1s
-    background-color: colors.normal
-    &.good { background-color: colors.good }
-    &.average { background-color: colors.average }
-    &.bad { background-color: colors.bad }
-    &.highlight { background-color: colors.highlight }
+    background-color: bar-color-normal
+    &.good
+      background-color: bar-color-good
+    &.average
+      background-color: bar-color-average
+    &.bad
+      background-color: bar-color-bad

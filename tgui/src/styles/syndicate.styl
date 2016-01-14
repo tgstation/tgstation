@@ -1,6 +1,10 @@
 body.syndicate
-  background-color: colors.syndicate.background-start
+  root = 'body.syndicate'
+  background-color-start = #b30f0f
+  background-color-end   = #740d0d
+
   background: data-url('syndicate.svg') no-repeat fixed center/70% 70%,
     linear-gradient(to bottom,
-      colors.syndicate.background-start 0%,
-      colors.syndicate.background-end 100%)
+      background-color-start 0%,
+      background-color-end 100%)
+  @require "../components/*"

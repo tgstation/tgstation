@@ -1,6 +1,9 @@
 import * as f from '../flags'
-import * as p from '../paths'
 import { browserify as b, gulp as g } from '../plugins'
+
+const dir   = 'src'
+const entry = 'tgui.js'
+const out   = 'assets'
 
 import { transform as babel } from 'babel-core'
 import { readFileSync as read } from 'fs'
@@ -9,27 +12,22 @@ b.componentify.compilers['text/javascript'] = function (source, file) {
   Object.assign(config, JSON.parse(read('.babelrc', 'utf8')))
   const compiled = babel(source, config)
 
-  return {
-    source: compiled.code,
-    map: compiled.map
-  }
+  return { source: compiled.code, map: compiled.map }
 }
 import { render as stylus } from 'stylus'
 b.componentify.compilers['text/stylus'] = function (source, file) {
   const config = { filename: file }
   const compiled = stylus(source, config)
 
-  return {
-    source: compiled
-  }
+  return { source: compiled }
 }
 
 import browserify from 'browserify'
-const bundle = browserify(p.js.dir + p.js.main, {
+const bundle = browserify(`${dir}/${entry}`, {
   debug: f.debug,
   cache: {},
   extensions: ['.js', '.ract'],
-  paths: [p.js.dir]
+  paths: [dir]
 })
 .plugin(b.rememberify)
 .transform(b.babelify)
@@ -46,18 +44,17 @@ import gulp from 'gulp'
 import source from 'vinyl-source-stream'
 export function js () {
   return bundle.bundle()
-    .pipe(source('bundle'))
+    .pipe(source(entry))
     .pipe(buffer())
     .pipe(g.if(f.debug, g.sourcemaps.init({loadMaps: true})))
-    .pipe(g.rename(p.js.out))
     .pipe(g.bytediff.start())
     .pipe(g.if(f.min, g.uglify({mangle: true, compress: {unsafe: true}})))
     .pipe(g.if(f.debug, g.sourcemaps.write()))
     .pipe(g.bytediff.stop())
-    .pipe(gulp.dest(p.out))
+    .pipe(gulp.dest(out))
 }
 export function watch_js () {
-  return gulp.watch(p.js.dir + '**', vinyl => {
+  return gulp.watch(`${dir}/**.js`, vinyl => {
     b.rememberify.forget(bundle, vinyl.path)
     return js()
   })

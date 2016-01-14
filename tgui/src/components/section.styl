@@ -1,4 +1,4 @@
-$cell
+/$cell
   display: table-cell
   margin: 0
   text-align: left
@@ -9,7 +9,7 @@ section
   width: 100%
   padding: 3px 0
 
-  &:not(first-child)
+  &:not(:first-child)
     padding-top: 4px
 
   .label
@@ -18,7 +18,7 @@ section
     padding-right: 32px
     white-space: nowrap
 
-    color: colors.section.label
+    color: section-color-label
 
   .content
     @extend $cell
