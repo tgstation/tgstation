@@ -225,7 +225,7 @@ The above is a simple proc for checking all swords in a container and returning 
 ```
 var/list/bag_of_swords = list(sword, sword, sword, sword)
 var/obj/item/sword/best_sword = null
-for(var/obj/item/sword/S in bag_of_items)
+for(var/obj/item/sword/S in bag_of_swords)
 	if(!best_sword || S.damage > best_sword.damage)
     		best_sword = S
 ```
@@ -234,7 +234,7 @@ you can circumvent DM's filtering and automatic ```istype()``` checks by writing
 ```
 var/list/bag_of_swords = list(sword, sword, sword, sword)
 var/obj/item/sword/best_sword = null
-for(var/s in bag_of_items)
+for(var/s in bag_of_swords)
 	var/obj/item/sword/S = s
 	if(!best_sword || S.damage > best_sword.damage)
     		best_sword = S
