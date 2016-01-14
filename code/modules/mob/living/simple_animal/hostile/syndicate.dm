@@ -126,6 +126,7 @@
 	mob_size = MOB_SIZE_TINY
 	flying = 1
 	speak_emote = list("states")
+	bubble_icon = "syndibot"
 	gold_core_spawnable = 1
 	del_on_death = 1
 

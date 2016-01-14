@@ -344,7 +344,7 @@
 			if(M.client)
 				speech_bubble_recipients.Add(M.client)
 		spawn(0)
-			flick_overlay(image('icons/mob/talk.dmi', src, "hR[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+			flick_overlay(image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 	return
 
 ////////////////////////////

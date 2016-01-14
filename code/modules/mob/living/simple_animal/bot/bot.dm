@@ -15,6 +15,9 @@
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 
+	speak_emote = list("states")
+	bubble_icon = "machine"
+
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
 	var/list/users = list() //for dialog updates
@@ -287,9 +290,6 @@
 	else
 		say(message)
 	return
-
-/mob/living/simple_animal/bot/say(message)
-	return ..(message, "R")
 
 /mob/living/simple_animal/bot/get_spans()
 	return ..() | SPAN_ROBOT

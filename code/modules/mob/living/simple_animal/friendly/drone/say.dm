@@ -5,11 +5,6 @@
 //Drone speach
 //Drone hearing
 
-
-/mob/living/simple_animal/drone/say(message)
-	return ..(message, "R")
-
-
 /mob/living/simple_animal/drone/lang_treat(atom/movable/speaker, message_langs, raw_message) //This is so drones can understand humans without being able to speak human
 	. = ..()
 	var/hear_override_langs = HUMAN
