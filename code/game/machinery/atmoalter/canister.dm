@@ -22,7 +22,7 @@
 	use_power = 0
 	var/release_log = ""
 	var/update_flag = 0
-	var/gas_type
+	var/gas_type = ""
 
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
@@ -379,8 +379,9 @@ update_flag
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
-	air_contents.assert_gas(gas_type)
-	air_contents.gases[gas_type][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	if(gas_type)
+		air_contents.assert_gas(gas_type)
+		air_contents.gases[gas_type][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 //Dirty way to fill room with gas. However it is a bit easier to do than creating some floor/engine/n2o -rastaf0
 

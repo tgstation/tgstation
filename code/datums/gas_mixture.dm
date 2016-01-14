@@ -174,7 +174,6 @@ var/list/cached_gases_list = null
 					//Prevents whatever mechanism is causing it to hit negative temperatures.
 				//world << "post [temperature], [procgases["plasma"][MOLES]], [procgases["co2"][MOLES]]
 			*/
-
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		//world << "pre [temperature], [procgases["o2"][MOLES]], [procgases["plasma"][MOLES]]"
