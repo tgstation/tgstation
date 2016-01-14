@@ -123,7 +123,7 @@
 			return "carbon"
 		if(ARCHAEO_MASK)
 			return "mercury"
-		if(ARCHAEO_MASK)
+		if(ARCHAEO_DICE)
 			return "mercury"
 	return "plasma"
 
