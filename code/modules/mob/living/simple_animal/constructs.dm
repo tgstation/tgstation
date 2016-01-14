@@ -231,6 +231,18 @@
 
 
 
+
+
+
+/////////////////////////////Non-cult Artificer/////////////////////////
+/mob/living/simple_animal/hostile/construct/builder/noncult
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
+							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
+
+
 /////////////////////////////Harvester/////////////////////////
 /mob/living/simple_animal/hostile/construct/harvester
 	name = "Harvester"
