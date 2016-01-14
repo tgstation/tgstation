@@ -1,4 +1,6 @@
-/$titleButton
+context = selector()
+
+$titleButton
   display: inline-block
   position: relative
   padding: 7px // To make a bigger clickable area.
@@ -35,12 +37,12 @@ header.titlebar
     white-space: nowrap
 
   .minimize
-    @extend $titleButton
+    @extend {context} $titleButton
     position: absolute
     top: 6px
     right: 46px
   .close
-    @extend $titleButton
+    @extend {context} $titleButton
     position: absolute
     top: 4px
     right: 12px

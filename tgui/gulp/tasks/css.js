@@ -19,10 +19,9 @@ export function css () {
       s.fontweights
     ]))
     .pipe(g.bytediff.start())
-    .pipe(g.if(f.min, g.cssnano({
-      autoprefixer: { browsers: ['last 2 versions', 'ie >= 9'] },
-      discardComments: { removeAll: true }
-    })))
+    .pipe(g.if(f.min, g.minifycss()))
+    .pipe(g.if(f.min, g.csso()))
+    .pipe(g.if(f.min, g.cssnano()))
     .pipe(g.if(f.debug, g.sourcemaps.write()))
     .pipe(g.bytediff.stop())
     .pipe(gulp.dest(out))
