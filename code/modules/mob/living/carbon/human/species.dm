@@ -1275,7 +1275,7 @@
 
 	//-- TRACES --//
 
-if(breath && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
+	if(breath && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
 		var/SA_pp = breath.get_breath_partial_pressure(breath_gases["n2o"][MOLES])
 		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 			H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
@@ -1284,8 +1284,8 @@ if(breath && !(NOBREATH in specflags))	// If there's some other shit in the air 
 		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if(prob(20))
 				H.emote(pick("giggle", "laugh"))
-	handle_breath_temperature(breath, H)
-	breath.garbage_collect()
+		handle_breath_temperature(breath, H)
+		breath.garbage_collect()
 
 	return 1
 
