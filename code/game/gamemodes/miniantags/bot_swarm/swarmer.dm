@@ -34,6 +34,7 @@
 	icon = 'icons/mob/swarmer.dmi'
 	desc = "A robot of unknown design, they seek only to consume materials and replicate themselves indefinitely."
 	speak_emote = list("tones")
+	bubble_icon = "swarmer"
 	health = 40
 	maxHealth = 40
 	status_flags = CANPUSH
@@ -59,7 +60,6 @@
 	speed = 0
 	faction = list("swarmer")
 	AIStatus = AI_OFF
-	projectiletype = /obj/item/projectile/beam/disabler
 	pass_flags = PASSTABLE
 	ventcrawler = 2
 	ranged = 1
