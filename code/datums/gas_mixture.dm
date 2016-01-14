@@ -397,12 +397,13 @@ var/list/cached_gases_list = null
 		old_self_heat_capacity = heat_capacity()
 		old_sharer_heat_capacity = sharer.heat_capacity()
 
-	var/heat_capacity_self_to_sharer = 0
-	var/heat_capacity_sharer_to_self = 0
+	var/heat_capacity_self_to_sharer = 0 //heat capacity of the moles transferred from us to the sharer
+	var/heat_capacity_sharer_to_self = 0 //heat capacity of the moles transferred from the sharer to us
 
 	for(var/sharer_id in sharercache-selfcache)
 		add_gas(sharer_id) //we can use add_gas() because we're looping only through the IDs not in our cache
 
+	//GAS TRANSFER
 	for(var/id in selfcache)
 		if(!sharercache[id]) //checking here prevents an uneeded proc call if the check fails.
 			sharer.add_gas(id)
@@ -410,14 +411,14 @@ var/list/cached_gases_list = null
 		var/gas = selfcache[id]
 		var/sharergas = sharercache[id]
 
-		var/delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE])/(atmos_adjacent_turfs+1)
+		var/delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE])/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
 
 		if(delta && abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-			var/gas_heat_capacity = abs(gas[MOLES] * gas[SPECIFIC_HEAT])
+			var/gas_heat_capacity = delta * gas[SPECIFIC_HEAT]
 			if(delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
 			else
-				heat_capacity_sharer_to_self += gas_heat_capacity
+				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative. saves a proc call.
 
 		gas[MOLES]			-= delta
 		sharergas[MOLES]	+= delta
@@ -426,15 +427,18 @@ var/list/cached_gases_list = null
 
 	last_share = abs_moved_moles
 
+	//THERMAL ENERGY TRANSFER
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
 		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
 
+		//transfer of thermal energy (via changed heat capacity) between self and sharer
 		if(new_self_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			temperature = (old_self_heat_capacity*temperature - heat_capacity_self_to_sharer*temperature_archived + heat_capacity_sharer_to_self*sharer.temperature_archived)/new_self_heat_capacity
 
 		if(new_sharer_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			sharer.temperature = (old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.temperature_archived + heat_capacity_self_to_sharer*temperature_archived)/new_sharer_heat_capacity
+		//thermal energy of the system (self and sharer) is unchanged
 
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY)
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.10) // <10% change in sharer heat capacity
@@ -453,7 +457,7 @@ var/list/cached_gases_list = null
 	. = share(copied, atmos_adjacent_turfs)
 
 /datum/gas_mixture/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
-
+	//transfer of thermal energy (via conduction) between self and sharer
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity_archived()
@@ -465,6 +469,7 @@ var/list/cached_gases_list = null
 
 			temperature = max(temperature - heat/self_heat_capacity, TCMB)
 			sharer.temperature = max(sharer.temperature + heat/sharer_heat_capacity, TCMB)
+	//thermal energy of the system (self and sharer) is unchanged
 
 /datum/gas_mixture/temperature_mimic(turf/model, conduction_coefficient)
 	var/delta_temperature = (temperature - model.temperature)

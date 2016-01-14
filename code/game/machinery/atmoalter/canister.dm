@@ -372,12 +372,14 @@ update_flag
 /obj/machinery/portable_atmospherics/canister/New()
 	..()
 
-	if(gas_type)
-		air_contents.assert_gas(gas_type)
-		air_contents.gases[gas_type][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	create_gas()
 
 	update_icon()
 	return 1
+
+/obj/machinery/portable_atmospherics/canister/proc/create_gas()
+	air_contents.assert_gas(gas_type)
+	air_contents.gases[gas_type][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 //Dirty way to fill room with gas. However it is a bit easier to do than creating some floor/engine/n2o -rastaf0
 
@@ -394,8 +396,7 @@ update_flag
 			air_contents = new
 	return 1
 
-/obj/machinery/portable_atmospherics/canister/air/New()
-	. = ..()
+/obj/machinery/portable_atmospherics/canister/air/create_gas()
 	air_contents.assert_gases("o2","n2")
 	air_contents.gases["o2"][MOLES] = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	air_contents.gases["n2"][MOLES] = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
