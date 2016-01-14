@@ -28,7 +28,8 @@ import browserify from 'browserify'
 const bundle = browserify(p.js.dir + p.js.main, {
   debug: f.debug,
   cache: {},
-  extensions: ['.js', '.ract']
+  extensions: ['.js', '.ract'],
+  paths: [p.js.dir]
 })
 .plugin(b.rememberify)
 .transform(b.babelify)

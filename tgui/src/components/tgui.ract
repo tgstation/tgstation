@@ -1,19 +1,19 @@
-<link rel='ractive' href='./components/resize.ract'>
-<link rel='ractive' href='./components/titlebar.ract'>
-<link rel='ractive' href='./components/warnings.ract'>
+<link rel='ractive' href='components/resize.ract'>
+<link rel='ractive' href='components/titlebar.ract'>
+<link rel='ractive' href='components/warnings.ract'>
 
 <script>
-import { winset } from './byond'
-import { drag, resize } from './dragresize'
+import { winset } from 'util/byond'
+import { drag, resize } from 'util/dragresize'
 
 component.exports = {
   components: {
-    'ui-bar': require('./components/bar'),
-    'ui-button': require('./components/button'),
-    'ui-display': require('./components/display'),
-    'ui-notice': require('./components/notice'),
-    'ui-section': require('./components/section'),
-    'ui-subdisplay': require('./components/subdisplay'),
+    'ui-bar': require('components/bar'),
+    'ui-button': require('components/button'),
+    'ui-display': require('components/display'),
+    'ui-notice': require('components/notice'),
+    'ui-section': require('components/section'),
+    'ui-subdisplay': require('components/subdisplay'),
   },
   events: {
     enter: require('ractive-events-keys').enter,

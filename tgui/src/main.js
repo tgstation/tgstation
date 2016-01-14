@@ -9,7 +9,7 @@ import 'babel-polyfill'
 import 'dom4'
 import 'html5shiv'
 
-Object.assign(Math, require('./math'))
+Object.assign(Math, require('util/math'))
 
 import WebFont from 'webfontloader'
 WebFont.load({
@@ -26,7 +26,7 @@ WebFont.load({
   }
 })
 
-import TGUI from './tgui'
+import TGUI from 'components/tgui'
 window.initialize = (dataString) => {
   if (window.tgui) return
   window.tgui = new TGUI({
@@ -35,7 +35,7 @@ window.initialize = (dataString) => {
   })
 }
 
-import { act } from './byond'
+import { act } from 'util/byond'
 const holder = document.getElementById('data')
 if (holder.textContent !== '{}') { // If the JSON was inlined, load it.
   window.initialize(holder.textContent)

@@ -1,5 +1,5 @@
 <script>
-import { winset } from '../byond'
+import { winset } from 'util/byond'
 
 component.exports = {
   oninit: function () {

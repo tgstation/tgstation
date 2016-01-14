@@ -1,6 +1,6 @@
 <script>
-import { UI_INTERACTIVE } from '../constants'
-import { act } from '../byond'
+import { UI_INTERACTIVE } from 'util/constants'
+import { act } from 'util/byond'
 
 component.exports = {
   computed: {
