@@ -1,0 +1,9 @@
+author: Joan
+delete-after: True
+changes: 
+  - bugfix: "Holoparasites can no longer beat their owner to death while inside of them."
+  - spellcheck: "Updates traitor holoparasite descriptions for accuracy."
+  - spellcheck: "Adds 8 additional silvery metals to the holoparasite name pool."
+  - imageadd: "Adds two new holoparasite colors, light purple and red."
+  - imageadd: "Holoparasite HUD buttons now have new sprites."
+  - imageadd: "Adds glow effects when guardians teleport or recall, including fire guardian teleporting and support guardian teleporting."
