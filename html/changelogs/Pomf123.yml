@@ -1,2 +1,3 @@
 author: Pomf123
-changes: []
+changes:
+  - bugfix: Fixed station vox not having sol common during heist and fixed heist vox having sol common.
