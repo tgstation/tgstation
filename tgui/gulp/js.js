@@ -1,6 +1,5 @@
 import * as f from './flags'
 import { browserify as b, gulp as g } from './plugins'
-import { sync as glob } from 'glob'
 
 const entry = 'tgui.js'
 

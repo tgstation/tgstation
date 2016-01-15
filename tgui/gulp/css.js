@@ -1,6 +1,5 @@
 import * as f from './flags'
 import { gulp as g, postcss as s } from './plugins'
-import { sync as glob } from 'glob'
 
 const entry = 'tgui.styl'
 
