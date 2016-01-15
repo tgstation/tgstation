@@ -1,4 +1,4 @@
-import * as p from '../paths'
+const out = 'assets'
 
 import { exec } from 'child_process'
 export function reload () {
@@ -6,5 +6,5 @@ export function reload () {
 }
 import gulp from 'gulp'
 export function watch_reload () {
-  return gulp.watch(p.out + '**', reload)
+  return gulp.watch(`${out}/**`, reload)
 }
