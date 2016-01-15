@@ -1,15 +1,20 @@
 import * as f from '../flags'
 import { gulp as g, postcss as s } from '../plugins'
+import { sync as glob } from 'glob'
 
-const dir = 'generated'
+const main = 'src'
+const extra = glob('src.*')
 const entry = 'tgui.styl'
 const out = 'assets'
 
 import gulp from 'gulp'
 export function css () {
-  return gulp.src(`${dir}/${entry}`)
+  return gulp.src(`${main}/${entry}`)
     .pipe(g.if(f.debug, g.sourcemaps.init({loadMaps: true})))
-    .pipe(g.stylus({ url: 'data-url', paths: ['images/'] }))
+    .pipe(g.stylus({
+      url: 'data-url',
+      paths: [`${main}/images `]
+    }))
     .pipe(g.postcss([
       s.autoprefixer({ browsers: ['last 2 versions', 'ie >= 9'] }),
       s.gradient,
@@ -27,5 +32,5 @@ export function css () {
     .pipe(gulp.dest(out))
 }
 export function watch_css () {
-  return gulp.watch(`${dir}/**.styl`, css)
+  return gulp.watch(`${main}/**.styl`, css)
 }

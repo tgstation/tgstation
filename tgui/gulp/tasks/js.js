@@ -1,7 +1,9 @@
 import * as f from '../flags'
 import { browserify as b, gulp as g } from '../plugins'
+import { sync as glob } from 'glob'
 
-const dir = 'generated'
+const main = 'src'
+const extra = glob('src.*')
 const entry = 'tgui.js'
 const out = 'assets'
 
@@ -23,11 +25,11 @@ b.componentify.compilers['text/stylus'] = function (source, file) {
 }
 
 import browserify from 'browserify'
-const bundle = browserify(`${dir}/${entry}`, {
+const bundle = browserify(`${main}/${entry}`, {
   debug: f.debug,
   cache: {},
   extensions: ['.js', '.ract'],
-  paths: [dir]
+  paths: [main].concat(extra)
 })
 .plugin(b.rememberify)
 .transform(b.babelify)
@@ -54,7 +56,7 @@ export function js () {
     .pipe(gulp.dest(out))
 }
 export function watch_js () {
-  return gulp.watch(`${dir}/**.js`, vinyl => {
+  return gulp.watch(`${main}/**.js`, vinyl => {
     b.rememberify.forget(bundle, vinyl.path)
     return js()
   })
