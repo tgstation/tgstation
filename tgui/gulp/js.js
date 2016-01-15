@@ -1,9 +1,8 @@
-import * as f from '../flags'
-import { browserify as b, gulp as g } from '../plugins'
+import * as f from './flags'
+import { browserify as b, gulp as g } from './plugins'
 import { sync as glob } from 'glob'
 
 const main = 'src'
-const extra = glob('src.*')
 const entry = 'tgui.js'
 const out = 'assets'
 
@@ -29,7 +28,7 @@ const bundle = browserify(`${main}/${entry}`, {
   debug: f.debug,
   cache: {},
   extensions: ['.js', '.ract'],
-  paths: [main].concat(extra)
+  paths: [main]
 })
 .plugin(b.rememberify)
 .transform(b.babelify)

@@ -1,9 +1,8 @@
-import * as f from '../flags'
-import { gulp as g, postcss as s } from '../plugins'
+import * as f from './flags'
+import { gulp as g, postcss as s } from './plugins'
 import { sync as glob } from 'glob'
 
 const main = 'src'
-const extra = glob('src.*')
 const entry = 'tgui.styl'
 const out = 'assets'
 
@@ -13,7 +12,7 @@ export function css () {
     .pipe(g.if(f.debug, g.sourcemaps.init({loadMaps: true})))
     .pipe(g.stylus({
       url: 'data-url',
-      paths: [`${main}/images `]
+      paths: [main]
     }))
     .pipe(g.postcss([
       s.autoprefixer({ browsers: ['last 2 versions', 'ie >= 9'] }),

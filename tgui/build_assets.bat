@@ -1,9 +1,6 @@
 @echo off
-REM This assumes you have NPM installed
-if not exist generated mkdir generated
-del /S /Q generated\*.*
-for /D %%i in (src\*.*) do xcopy /S /Y "%%i\*.*" "generated\*.*"
-if not exist generated\images mkdir generated\images
-for /D %%i in (images\*.*) do xcopy /S /Y "%%i\*.*" "generated\images\*.*"
+echo node.js and all dependencies must be installed for this script to work.
+echo If this script fails try installing dependencies again.
+REM Build minified assets
 cmd /c gulp --min
 pause

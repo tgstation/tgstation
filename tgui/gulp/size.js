@@ -1,4 +1,4 @@
-import { gulp as g } from '../plugins'
+import { gulp as g } from './plugins'
 
 const out = 'assets'
 

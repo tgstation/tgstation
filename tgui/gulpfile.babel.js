@@ -1,9 +1,9 @@
 import gulp from 'gulp'
 
-import { css, watch_css } from './tasks/css'
-import { js, watch_js } from './tasks/js'
-import { reload, watch_reload } from './tasks/reload'
-import { size } from './tasks/size'
+import { css, watch_css } from './gulp/css'
+import { js, watch_js } from './gulp/js'
+import { reload, watch_reload } from './gulp/reload'
+import { size } from './gulp/size'
 
 gulp.task(reload)
 gulp.task(size)

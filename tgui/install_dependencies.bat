@@ -1,14 +1,14 @@
 @echo off
-echo This assumes you have NodeJS with NPM installed.
-echo If this script fails due to permission or other I/O errors, try running it again first.
-echo If you don't have the right tools installed you can close this window. If you want to continue, press the any key.
-echo Note that this script may warn about an unsupported dependency. You can safely ignore this warning.
-REM Install GULP globally
+echo node.js and npm must be installed for this script to work.
+echo If this script fails, try closing editors and running it again first.
+echo Any warnings about optional dependencies can be safely ignored.
+pause
+REM Install Gulp
 cmd /c npm install gulp-cli -g
-REM Install local dependencies
+REM Install tgui dependencies
 cmd /c npm install
-REM Remove old dependencies
-cmd /c npm prune
-REM Flatten the tree
+REM Flatten dependency tree
 cmd /c npm dedupe
+REM Clean dependency tree
+cmd /c npm prune
 pause
