@@ -15,26 +15,14 @@
 	//Create gas mixture to hold data for passing
 	var/datum/gas_mixture/GM = new
 
-	GM.oxygen = oxygen
-	GM.carbon_dioxide = carbon_dioxide
-	GM.nitrogen = nitrogen
-	GM.toxins = toxins
-
-	GM.temperature = temperature
+	GM.copy_from_turf(src)
 
 	return GM
 
-/turf/remove_air(amount as num)
-	var/datum/gas_mixture/GM = new
+/turf/remove_air(amount)
+	var/datum/gas_mixture/GM = return_air()
 
-	var/sum = oxygen + carbon_dioxide + nitrogen + toxins
-	if(sum>0)
-		GM.oxygen = (oxygen/sum)*amount
-		GM.carbon_dioxide = (carbon_dioxide/sum)*amount
-		GM.nitrogen = (nitrogen/sum)*amount
-		GM.toxins = (toxins/sum)*amount
-
-	GM.temperature = temperature
+	GM.remove(amount)
 
 	return GM
 
@@ -51,7 +39,7 @@
 
 	var/temperature_archived //USED ONLY FOR SOLIDS
 
-	var/atmos_overlay_type = "" //current active overlay
+	var/atmos_overlay_types = list() //gas IDs of current active overlays
 
 /turf/simulated/New()
 	..()
@@ -61,11 +49,7 @@
 	visibilityChanged()
 	if(!blocks_air)
 		air = new
-		air.oxygen = oxygen
-		air.carbon_dioxide = carbon_dioxide
-		air.nitrogen = nitrogen
-		air.toxins = toxins
-		air.temperature = temperature
+		air.copy_from_turf(src)
 
 /turf/simulated/Destroy()
 	visibilityChanged()
@@ -168,22 +152,22 @@
 							excited_group.merge_groups(enemy_simulated.excited_group) //combine groups
 						share_air(enemy_simulated) //share
 					else
-						if((recently_active == 1 && enemy_simulated.recently_active == 1) || !air.compare(enemy_simulated.air))
+						if((recently_active == 1 && enemy_simulated.recently_active == 1) || air.compare(enemy_simulated.air))
 							excited_group.add_turf(enemy_simulated) //add enemy to our group
 							share_air(enemy_simulated) //share
 				else
 					if(enemy_simulated.excited_group)
-						if((recently_active == 1 && enemy_simulated.recently_active == 1) || !air.compare(enemy_simulated.air))
+						if((recently_active == 1 && enemy_simulated.recently_active == 1) || air.compare(enemy_simulated.air))
 							enemy_simulated.excited_group.add_turf(src) //join self to enemy group
 							share_air(enemy_simulated) //share
 					else
-						if((recently_active == 1 && enemy_simulated.recently_active == 1) || !air.compare(enemy_simulated.air))
+						if((recently_active == 1 && enemy_simulated.recently_active == 1) || air.compare(enemy_simulated.air))
 							var/datum/excited_group/EG = new //generate new group
 							EG.add_turf(src)
 							EG.add_turf(enemy_simulated)
 							share_air(enemy_simulated) //share
 			else
-				if(!air.compare(enemy_simulated.air)) //compare if
+				if(air.compare(enemy_simulated.air)) //compare if
 					SSair.add_to_active(enemy_simulated) //excite enemy
 					if(excited_group)
 						excited_group.add_turf(enemy_simulated) //add enemy to group
@@ -233,34 +217,24 @@
 	archived_cycle = SSair.times_fired
 
 /turf/simulated/proc/update_visuals()
-	var/new_overlay_type = tile_graphic()
-	if (new_overlay_type == atmos_overlay_type)
-		return
-	var/atmos_overlay = get_atmos_overlay_by_name(atmos_overlay_type)
-	if (atmos_overlay)
-		overlays -= atmos_overlay
+	var/list/new_overlay_types = tile_graphic()
 
-	atmos_overlay = get_atmos_overlay_by_name(new_overlay_type)
-	if (atmos_overlay)
-		overlays += atmos_overlay
-	atmos_overlay_type = new_overlay_type
+	for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
+		overlays -= overlay
+		atmos_overlay_types -= overlay
 
-/turf/simulated/proc/get_atmos_overlay_by_name(var/name)
-	switch(name)
-		if("plasma")
-			return SSair.plasma_overlay
-		if("sleeping_agent")
-			return SSair.sleeptoxin_overlay
-	return null
+	for(var/overlay in new_overlay_types-atmos_overlay_types) //doesn't add overlays that already exist
+		overlays += overlay
+
+	atmos_overlay_types = new_overlay_types
 
 /turf/simulated/proc/tile_graphic()
-	if(air.toxins > MOLES_PLASMA_VISIBLE)
-		return "plasma"
-
-	var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in air.trace_gases
-	if(sleeping_agent && (sleeping_agent.moles > 1))
-		return "sleeping_agent"
-	return null
+	. = new /list
+	var/list/gases = air.gases
+	for(var/id in gases)
+		var/gas = gases[id]
+		if(gas[GAS_OVERLAY] && gas[MOLES] > gas[MOLES_VISIBLE])
+			. += gas[GAS_OVERLAY]
 
 /turf/simulated/proc/share_air(turf/simulated/T)
 	if(T.current_cycle < current_cycle)
@@ -335,35 +309,16 @@
 
 /datum/excited_group/proc/self_breakdown()
 	var/datum/gas_mixture/A = new
-	var/datum/gas/sleeping_agent/S = new
-	A.trace_gases += S
+	var/list/A_gases = A.gases
 	for(var/turf/simulated/T in turf_list)
-		A.oxygen 		+= T.air.oxygen
-		A.carbon_dioxide+= T.air.carbon_dioxide
-		A.nitrogen 		+= T.air.nitrogen
-		A.toxins 		+= T.air.toxins
-
-		if(T.air.trace_gases.len)
-			for(var/datum/gas/N in T.air.trace_gases)
-				S.moles += N.moles
+		A.merge(T.air)
 
 	for(var/turf/simulated/T in turf_list)
-		T.air.oxygen		= A.oxygen/turf_list.len
-		T.air.carbon_dioxide= A.carbon_dioxide/turf_list.len
-		T.air.nitrogen		= A.nitrogen/turf_list.len
-		T.air.toxins		= A.toxins/turf_list.len
-
-		if(S.moles > 0)
-			if(T.air.trace_gases.len)
-				for(var/datum/gas/G in T.air.trace_gases)
-					G.moles = S.moles/turf_list.len
-			else
-				var/datum/gas/sleeping_agent/G = new
-				G.moles = S.moles/turf_list.len
-				T.air.trace_gases += G
+		var/T_gases = T.air.gases
+		for(var/id in T_gases)
+			T_gases[id][MOLES] = A_gases[id][MOLES]/turf_list.len
 
 		T.update_visuals()
-
 
 /datum/excited_group/proc/dismantle()
 	for(var/turf/simulated/T in turf_list)
