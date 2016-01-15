@@ -1,7 +1,7 @@
 import * as f from '../flags'
 import { browserify as b, gulp as g } from '../plugins'
 
-const dir = 'src'
+const dir = 'generated'
 const entry = 'tgui.js'
 const out = 'assets'
 

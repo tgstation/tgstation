@@ -1,7 +1,7 @@
 import * as f from '../flags'
 import { gulp as g, postcss as s } from '../plugins'
 
-const dir = 'src'
+const dir = 'generated'
 const entry = 'tgui.styl'
 const out = 'assets'
 
