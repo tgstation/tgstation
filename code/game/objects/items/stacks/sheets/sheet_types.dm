@@ -88,7 +88,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	desc = "Sheets made out of metal. It has been dubbed Metal Sheets."
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
-	starting_materials = list(MAT_IRON = 3750)
+	starting_materials = list(MAT_IRON = CC_PER_SHEET_METAL)
 	w_type = RECYK_METAL
 	throwforce = 14.0
 	flags = FPRINT
@@ -122,10 +122,6 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	returnToPool(src)
 	return 2
 
-/obj/item/stack/sheet/metal/recycle(var/datum/materials/rec)
-	rec.addAmount(MAT_IRON, amount)
-	return 1
-
 // Diet metal.
 /obj/item/stack/sheet/metal/cyborg
 	starting_materials = null
@@ -156,7 +152,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list (
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-plasteel"
-	starting_materials = list(MAT_IRON = 3750) // Was 7500, which doesn't make any fucking sense
+	starting_materials = list(MAT_IRON = CC_PER_SHEET_METAL, MAT_PLASMA = CC_PER_SHEET_MISC) // Was 7500, which doesn't make any fucking sense
 	perunit = 2875 //average of plasma and metal
 	throwforce = 15.0
 	flags = FPRINT
@@ -168,11 +164,6 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list (
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 		recipes = plasteel_recipes
 		return ..()
-
-/obj/item/stack/sheet/plasteel/recycle(var/datum/materials/rec)
-	rec.addAmount(MAT_PLASMA, amount)
-	rec.addAmount(MAT_IRON, amount)
-	return 1
 
 /*
  * Wood

@@ -203,10 +203,6 @@
 /obj/item/stack/sheet/glass/glass/cyborg
 	starting_materials = null
 
-/obj/item/stack/sheet/glass/glass/recycle(var/datum/materials/rec)
-	rec.addAmount(MAT_GLASS, amount)
-	return 1
-
 /obj/item/stack/sheet/glass/glass/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
@@ -245,11 +241,6 @@
 /obj/item/stack/sheet/glass/rglass/cyborg
 	starting_materials = null
 
-/obj/item/stack/sheet/glass/rglass/recycle(var/datum/materials/rec)
-	rec.addAmount(MAT_GLASS, amount)
-	rec.addAmount(MAT_IRON,  0.5 * amount)
-	return 1
-
 /*
  * Plasma Glass sheets
  */
@@ -260,7 +251,7 @@
 	singular_name = "glass sheet"
 	icon_state = "sheet-plasmaglass"
 	sname = "plasma"
-	starting_materials = list(MAT_GLASS = CC_PER_SHEET_GLASS)
+	starting_materials = list(MAT_GLASS = CC_PER_SHEET_GLASS, MAT_PLASMA = CC_PER_SHEET_MISC)
 	origin_tech = "materials=3;plasmatech=2"
 	created_window = /obj/structure/window/plasma
 	full_window = /obj/structure/window/full/plasma
@@ -271,11 +262,6 @@
 	shealth = 20
 	shard_type = /obj/item/weapon/shard/plasma
 
-/obj/item/stack/sheet/glass/plasmaglass/recycle(var/datum/materials/rec)
-	rec.addAmount(MAT_PLASMA, amount)
-	rec.addAmount(MAT_GLASS, amount)
-	return RECYK_GLASS
-
 /*
  * Reinforced plasma glass sheets
  */
@@ -285,7 +271,7 @@
 	singular_name = "reinforced plasma glass sheet"
 	icon_state = "sheet-plasmarglass"
 	sname = "plasma_ref"
-	starting_materials = list(MAT_IRON = 1875, MAT_GLASS = CC_PER_SHEET_GLASS)
+	starting_materials = list(MAT_IRON = 1875, MAT_GLASS = CC_PER_SHEET_GLASS, MAT_PLASMA = CC_PER_SHEET_MISC)
 	melt_temperature = MELTPOINT_STEEL+500 // I guess...?
 	origin_tech = "materials=4;plasmatech=2"
 	created_window = /obj/structure/window/reinforced/plasma
@@ -296,9 +282,3 @@
 	glass_quality = 1.3
 	shealth = 30
 	shard_type = /obj/item/weapon/shard/plasma
-
-/obj/item/stack/sheet/glass/plasmarglass/recycle(var/datum/materials/rec)
-	rec.addAmount(MAT_PLASMA, amount)
-	rec.addAmount(MAT_GLASS, amount)
-	rec.addAmount(MAT_IRON,  0.5 * amount)
-	return 1
