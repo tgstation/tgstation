@@ -413,7 +413,7 @@
 
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)
-		if(istype(backup) && movement_dir && !!backup.anchored)
+		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180)))
 				if(occupant)
 					occupant << "<span class='info'>You push off of [backup] to propel yourself.</span>"
