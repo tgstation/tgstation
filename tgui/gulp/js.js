@@ -8,7 +8,7 @@ import { transform as babel } from 'babel-core'
 import { readFileSync as read } from 'fs'
 b.componentify.compilers['text/javascript'] = function (source, file) {
   const config = { sourceMaps: true }
-  Object.assign(config, JSON.parse(read('.babelrc', 'utf8')))
+  Object.assign(config, JSON.parse(read(`${f.src}/.babelrc`, 'utf8')))
   const compiled = babel(source, config)
 
   return { source: compiled.code, map: compiled.map }
