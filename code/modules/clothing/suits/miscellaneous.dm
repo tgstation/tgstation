@@ -166,7 +166,7 @@
 	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/stormtrooper
-	name = "stormtrooper suit"
+	name = "squallwalker suit"
 	desc = "Cease-and-Desist incoming"
 	icon_state = "stormtrooper"
 	item_state = "stormtrooper"
