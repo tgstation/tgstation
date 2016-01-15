@@ -1,4 +1,0 @@
-<ui-notice>
-  <span>Forks should place their interfaces in the interfaces/[fork] folder.</span>
-  <span>They can be referenced as [fork]/[interface].</span>
-</ui-notice>
