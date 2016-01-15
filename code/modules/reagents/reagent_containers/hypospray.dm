@@ -104,7 +104,7 @@
 	amount_per_transfer_from_this = 20
 	list_reagents = list("ephedrine" = 10, "coffee" = 10)
 
-/obj/item/weapon/reagent_containers/hypospray/medipen/leppen //basilisks were buffed
+/obj/item/weapon/reagent_containers/hypospray/medipen/leppen
 	name = "leporazine medipen"
 	desc = "A rapid way to stabilize your body's temperature and reduce burn wounds."
 	icon_state = "stimpen"
