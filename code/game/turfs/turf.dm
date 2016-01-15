@@ -146,9 +146,11 @@
 
 		for(var/direction in cardinal)//Only use cardinals to cut down on lag
 			var/turf/T = get_step(src,direction)
+
 			if(istype(T,/turf/space))//Counted as no air
 				turf_count++//Considered a valid turf for air calcs
 				continue
+
 			else if(istype(T,/turf/simulated/floor))
 				var/turf/simulated/S = T
 				if(S.air)//Add the air's contents to the holders
@@ -156,12 +158,14 @@
 					for(var/id in a_gases)
 						a_gases[id][MOLES] += S_gases[id][MOLES]
 					a_gas_mixture.temperature += S.air.temperature
-				turf_count ++
+				turf_count++
+
+		air.copy_from(a_gas_mixture)
 		var/list/air_gases = air.gases
 		for(var/id in air_gases)
-			var/a_gas_moles = a_gases[id] ? a_gases[id][MOLES] : 0
-			air_gases[id][MOLES] = (a_gas_moles/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
-		air.temperature = (a_gas_mixture.temperature/max(turf_count,1))//Trace gases can get bant
+			air_gases[id][MOLES] /= max(turf_count,1)//Averages contents of the turfs, ignoring walls and the like
+
+		air.temperature /= max(turf_count,1)
 		SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
