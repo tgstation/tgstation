@@ -2,8 +2,7 @@
 	name = "voice analyzer"
 	desc = "A small electronic device able to record a voice sample, and send a signal when that sample is repeated."
 	icon_state = "voice"
-	m_amt = 500
-	g_amt = 50
+	materials = list(MAT_METAL=500, MAT_GLASS=50)
 	origin_tech = "magnets=1"
 	flags = HEAR
 	attachable = 1
@@ -23,7 +22,8 @@
 		say("Activation message is '[recorded]'.")
 	else
 		if(findtext(raw_message, recorded))
-			pulse(0)
+			spawn(10)
+				pulse(0)
 
 /obj/item/device/assembly/voice/activate()
 	if(secured)

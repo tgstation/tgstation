@@ -1,12 +1,14 @@
 /turf/simulated/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
-	icon = 'icons/turf/walls.dmi'
+	icon = 'icons/turf/walls/wall.dmi'
+	icon_state = "wall"
 	var/mineral = "metal"
 	opacity = 1
 	density = 1
 	blocks_air = 1
 	explosion_block = 1
+	layer = TURF_LAYER + 0.05
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
@@ -17,13 +19,14 @@
 	var/sheet_type = /obj/item/stack/sheet/metal
 	var/obj/item/stack/sheet/builtin_sheet = null
 
-
-	var/del_suppress_resmoothing = 0 // Do not resmooth neighbors on Destroy. (smoothwall.dm)
 	canSmoothWith = list(
 	/turf/simulated/wall,
+	/turf/simulated/wall/r_wall,
 	/obj/structure/falsewall,
-	/obj/structure/falsewall/reinforced  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
-	)
+	/obj/structure/falsewall/reinforced,
+	/turf/simulated/wall/rust,
+	/turf/simulated/wall/r_wall/rust)
+	smooth = SMOOTH_TRUE
 
 /turf/simulated/wall/New()
 	..()
@@ -46,34 +49,33 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-
 	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/proc/break_wall()
-		builtin_sheet.amount = 2
-		builtin_sheet.loc = src
-		return (new /obj/structure/girder(src))
+	builtin_sheet.amount = 2
+	builtin_sheet.loc = src
+	return (new /obj/structure/girder(src))
 
 /turf/simulated/wall/proc/devastate_wall()
-		builtin_sheet.amount = 2
-		builtin_sheet.loc = src
-		new /obj/item/stack/sheet/metal(src)
+	builtin_sheet.amount = 2
+	builtin_sheet.loc = src
+	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity, target)
 	if(target == src)
 		dismantle_wall(1,1)
 		return
 	switch(severity)
-		if(1.0)
+		if(1)
 			//SN src = null
 			src.ChangeTurf(src.baseturf)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				dismantle_wall(0,1)
 			else
 				dismantle_wall(1,1)
-		if(3.0)
+		if(3)
 			if (prob(hardness))
 				dismantle_wall(0,1)
 			else
@@ -94,12 +96,12 @@
 			visible_message("<span class='warning'>[src.name] smashes through the wall!</span>")
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 
-/turf/simulated/wall/attack_paw(mob/living/user as mob)
+/turf/simulated/wall/attack_paw(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return src.attack_hand(user)
 
 
-/turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
+/turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if(M.environment_smash >= 2)
@@ -121,7 +123,7 @@
 		user << text("<span class='notice'>You punch the wall.</span>")
 	return 1
 
-/turf/simulated/wall/attack_hand(mob/user as mob)
+/turf/simulated/wall/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
@@ -130,7 +132,7 @@
 	return
 
 
-/turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/turf/simulated/wall/attackby(obj/item/weapon/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
@@ -143,7 +145,7 @@
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if( thermite )
-		if(is_hot(W))
+		if(W.is_hot())
 			thermitemelt(user)
 		return
 
@@ -156,43 +158,28 @@
 	return
 
 
-/turf/simulated/wall/proc/try_wallmount(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
+/turf/simulated/wall/proc/try_wallmount(obj/item/weapon/W, mob/user, turf/T)
 	//check for wall mounted frames
-	if(istype(W,/obj/item/apc_frame))
-		var/obj/item/apc_frame/AH = W
-		AH.try_build(src)
-		return 1
-	else if(istype(W,/obj/item/newscaster_frame))
-		var/obj/item/newscaster_frame/AH = W
-		AH.try_build(src)
-		return 1
-	else if(istype(W,/obj/item/alarm_frame))
-		var/obj/item/alarm_frame/AH = W
-		AH.try_build(src)
-		return 1
-	else if(istype(W,/obj/item/firealarm_frame))
-		var/obj/item/firealarm_frame/AH = W
-		AH.try_build(src)
-		return 1
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
-		AH.try_build(src)
+	if(istype(W,/obj/item/wallframe))
+		var/obj/item/wallframe/F = W
+		if(F.try_build(src))
+			F.attach(src)
 		return 1
 	//Poster stuff
-	else if(istype(W,/obj/item/weapon/contraband/poster))
+	else if(istype(W,/obj/item/weapon/poster))
 		place_poster(W,user)
 		return 1
 
 	return 0
 
 
-/turf/simulated/wall/proc/try_decon(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
+/turf/simulated/wall/proc/try_decon(obj/item/weapon/W, mob/user, turf/T)
 	if( istype(W, /obj/item/weapon/weldingtool) )
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
 			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			if(do_after(user, slicing_duration, target = src))
+			if(do_after(user, slicing_duration/W.toolspeed, target = src))
 				if( !istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T )
 					return 1
 				if( user.loc == T && user.get_active_hand() == WT )
@@ -213,7 +200,7 @@
 	return 0
 
 
-/turf/simulated/wall/proc/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
+/turf/simulated/wall/proc/try_destroy(obj/item/weapon/W, mob/user, turf/T)
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
@@ -226,7 +213,7 @@
 	return 0
 
 
-/turf/simulated/wall/proc/thermitemelt(mob/user as mob)
+/turf/simulated/wall/proc/thermitemelt(mob/user)
 	overlays = list()
 	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
 	O.name = "thermite"

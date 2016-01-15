@@ -12,7 +12,7 @@ Thus, the two variables affect pump operation are set in New():
 			but overall network volume is also increased as this increases...
 */
 
-/obj/machinery/atmospherics/binary/volume_pump
+/obj/machinery/atmospherics/components/binary/volume_pump
 	icon_state = "volpump_map"
 	name = "volumetric gas pump"
 	desc = "A volumetric pump"
@@ -26,27 +26,30 @@ Thus, the two variables affect pump operation are set in New():
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/atmospherics/binary/volume_pump/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
-	..()
+/obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
+	if(SSradio)
+		SSradio.remove_object(src,frequency)
+	return ..()
 
-/obj/machinery/atmospherics/binary/volume_pump/on
+/obj/machinery/atmospherics/components/binary/volume_pump/on
 	on = 1
 
-/obj/machinery/atmospherics/binary/volume_pump/update_icon_nopipes()
+/obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
 	if(stat & NOPOWER)
 		icon_state = "volpump_off"
 		return
 
 	icon_state = "volpump_[on?"on":"off"]"
 
-/obj/machinery/atmospherics/binary/volume_pump/process_atmos()
+/obj/machinery/atmospherics/components/binary/volume_pump/process_atmos()
 //	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(!on)
 		return 0
+
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
 
 // Pump mechanism just won't do anything if the pressure is too high/too low
 
@@ -62,19 +65,17 @@ Thus, the two variables affect pump operation are set in New():
 
 	air2.merge(removed)
 
-	parent1.update = 1
-
-	parent2.update = 1
+	update_parents()
 
 	return 1
 
-/obj/machinery/atmospherics/binary/volume_pump/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
+/obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = radio_controller.add_object(src, frequency)
+		radio_connection = SSradio.add_object(src, frequency)
 
-/obj/machinery/atmospherics/binary/volume_pump/proc/broadcast_status()
+/obj/machinery/atmospherics/components/binary/volume_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return 0
 
@@ -93,25 +94,34 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/binary/volume_pump/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/atmospherics/components/binary/volume_pump/interact(mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
+	if(!src.allowed(usr))
+		usr << "<span class='danger'>Access denied.</span>"
+		return
+	ui_interact(user)
 
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_gas_pump.tmpl", name, 400, 120, 0)
+/obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+																		datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "atmos_pump", name, 310, 115, master_ui, state)
+		ui.open()
 
-/obj/machinery/atmospherics/binary/volume_pump/get_ui_data()
+/obj/machinery/atmospherics/components/binary/volume_pump/get_ui_data()
 	var/data = list()
 	data["on"] = on
-	data["transfer_rate"] = round(transfer_rate*100) //Nano UI can't handle rounded non-integers, apparently.
-	data["max_rate"] = MAX_TRANSFER_RATE
+	data["transfer_rate"] = round(transfer_rate)
+	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
 
-/obj/machinery/atmospherics/binary/volume_pump/atmosinit()
+/obj/machinery/atmospherics/components/binary/volume_pump/atmosinit()
 	..()
 
 	set_frequency(frequency)
 
-/obj/machinery/atmospherics/binary/volume_pump/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/binary/volume_pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
 
@@ -124,11 +134,8 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 
 	if("set_transfer_rate" in signal.data)
-		transfer_rate = Clamp(
-			text2num(signal.data["set_transfer_rate"]),
-			0,
-			air1.volume
-		)
+		var/datum/gas_mixture/air1 = AIR1
+		transfer_rate = Clamp(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
@@ -141,43 +148,37 @@ Thus, the two variables affect pump operation are set in New():
 	spawn(2)
 		broadcast_status()
 	update_icon()
+	return
 
 
-/obj/machinery/atmospherics/binary/volume_pump/attack_hand(user as mob)
+/obj/machinery/atmospherics/components/binary/volume_pump/attack_hand(mob/user)
+	if(..() || !user)
+		return
+	interact(user)
+
+/obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, params)
 	if(..())
 		return
-	src.add_fingerprint(usr)
-	if(!src.allowed(user))
-		user << "<span class='danger'>Access denied.</span>"
-		return
-	usr.set_machine(src)
-	ui_interact(user)
-	return
 
-/obj/machinery/atmospherics/binary/volume_pump/Topic(href,href_list)
-	if(..()) return
-	if(href_list["power"])
-		on = !on
-		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
-	if(href_list["set_transfer_rate"])
-		switch(href_list["set_transfer_rate"])
-			if ("max")
-				transfer_rate = MAX_TRANSFER_RATE
-			if ("set")
-				transfer_rate = max(0, min(MAX_TRANSFER_RATE, safe_input("Pressure control", "Enter new transfer rate (0-[MAX_TRANSFER_RATE] L/s)", transfer_rate)))
-		investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", "atmos")
-	usr.set_machine(src)
-	src.update_icon()
-	src.updateUsrDialog()
-	return
+	switch(action)
+		if("power")
+			on = !on
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+		if("transfer")
+			switch(params["rate"])
+				if ("max")
+					transfer_rate = MAX_TRANSFER_RATE
+				if ("custom")
+					transfer_rate = max(0, min(MAX_TRANSFER_RATE, safe_input("Pressure control", "Enter new transfer rate (0-[MAX_TRANSFER_RATE] L/s)", transfer_rate)))
+			investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", "atmos")
+	update_icon()
+	return 1
 
-/obj/machinery/atmospherics/binary/volume_pump/power_change()
+/obj/machinery/atmospherics/components/binary/volume_pump/power_change()
 	..()
 	update_icon()
 
-
-
-/obj/machinery/atmospherics/binary/volume_pump/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+/obj/machinery/atmospherics/components/binary/volume_pump/attackby(obj/item/weapon/W, mob/user, params)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)

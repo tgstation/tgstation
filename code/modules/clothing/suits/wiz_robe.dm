@@ -8,7 +8,7 @@
 	strip_delay = 50
 	put_on_delay = 50
 	unacidable = 1
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -64,7 +64,7 @@
 	strip_delay = 50
 	put_on_delay = 50
 	unacidable = 1
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -118,7 +118,7 @@
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	unacidable = 0
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/head/wizard/marisa/fake
 	name = "witch hat"
@@ -128,7 +128,7 @@
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	unacidable = 0
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/suit/wizrobe/marisa/fake
 	name = "witch robe"
@@ -139,4 +139,4 @@
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	unacidable = 0
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE

@@ -53,9 +53,9 @@ research holder datum.
 	var/list/known_designs = list()			//List of available designs (at base reliability).
 
 /datum/research/New()		//Insert techs into possible_tech here. Known_tech automatically updated.
-	for(var/T in typesof(/datum/tech) - /datum/tech)
+	for(var/T in subtypesof(/datum/tech))
 		possible_tech += new T(src)
-	for(var/D in typesof(/datum/design) - /datum/design)
+	for(var/D in subtypesof(/datum/design))
 		possible_designs += new D(src)
 	RefreshResearch()
 
@@ -63,7 +63,7 @@ research holder datum.
 
 //Checks to see if tech has all the required pre-reqs.
 //Input: datum/tech; Output: 0/1 (false/true)
-/datum/research/proc/TechHasReqs(var/datum/tech/T)
+/datum/research/proc/TechHasReqs(datum/tech/T)
 	if(T.req_tech.len == 0)
 		return 1
 	var/matches = 0
@@ -79,7 +79,7 @@ research holder datum.
 
 //Checks to see if design has all the required pre-reqs.
 //Input: datum/design; Output: 0/1 (false/true)
-/datum/research/proc/DesignHasReqs(var/datum/design/D)//Heavily optimized -Sieve
+/datum/research/proc/DesignHasReqs(datum/design/D)//Heavily optimized -Sieve
 	if(D.req_tech.len == 0)
 		return 1
 	for(var/datum/tech/T in known_tech)
@@ -106,7 +106,7 @@ research holder datum.
 */
 //Adds a tech to known_tech list. Checks to make sure there aren't duplicates and updates existing tech's levels if needed.
 //Input: datum/tech; Output: Null
-/datum/research/proc/AddTech2Known(var/datum/tech/T)
+/datum/research/proc/AddTech2Known(datum/tech/T)
 	for(var/datum/tech/known in known_tech)
 		if(T.id == known.id)
 			if(T.level > known.level)
@@ -115,7 +115,7 @@ research holder datum.
 	known_tech += T
 	return
 
-/datum/research/proc/AddDesign2Known(var/datum/design/D)
+/datum/research/proc/AddDesign2Known(datum/design/D)
 	for(var/datum/design/known in known_designs)
 		if(D.id == known.id)
 			if(D.reliability > known.reliability)
@@ -141,14 +141,14 @@ research holder datum.
 
 //Refreshes the levels of a given tech.
 //Input: Tech's ID and Level; Output: null
-/datum/research/proc/UpdateTech(var/ID, var/level)
+/datum/research/proc/UpdateTech(ID, level)
 	for(var/datum/tech/KT in known_tech)
 		if(KT.id == ID)
 			if(KT.level <= level)
 				KT.level = max((KT.level + 1), (level - 1))
 	return
 
-/datum/research/proc/UpdateDesigns(var/obj/item/I, var/list/temp_tech)
+/datum/research/proc/UpdateDesigns(obj/item/I, list/temp_tech)
 	for(var/T in temp_tech)
 		if(temp_tech[T] - 1 >= known_tech[T])
 			for(var/datum/design/D in known_designs)
@@ -159,7 +159,7 @@ research holder datum.
 						if(I.crit_fail)
 							D.reliability = min(100, D.reliability + rand(3, 5))
 
-/datum/research/proc/FindDesignByID(var/id)
+/datum/research/proc/FindDesignByID(id)
 	for(var/datum/design/D in known_designs)
 		if(D.id == id)
 			return D
@@ -167,15 +167,15 @@ research holder datum.
 
 //Autolathe files
 /datum/research/autolathe/New()
-	for(var/T in (typesof(/datum/tech) - /datum/tech))
+	for(var/T in (subtypesof(/datum/tech)))
 		possible_tech += new T(src)
-	for(var/path in typesof(/datum/design) - /datum/design)
+	for(var/path in subtypesof(/datum/design))
 		var/datum/design/D = new path(src)
 		possible_designs += D
 		if((D.build_type & AUTOLATHE) && ("initial" in D.category))  //autolathe starts without hacked designs
 			AddDesign2Known(D)
 
-/datum/research/autolathe/AddDesign2Known(var/datum/design/D)
+/datum/research/autolathe/AddDesign2Known(datum/design/D)
 	if(!(D.build_type & AUTOLATHE))
 		return
 	..()
@@ -190,6 +190,7 @@ research holder datum.
 	var/desc = "description"			//General description of what it does and what it makes.
 	var/id = "id"						//An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
 	var/level = 1						//A simple number scale of the research level. Level 0 = Secret tech.
+	var/rare = 1						//How much CentCom wants to get that tech. Used in supply shuttle tech cost calculation.
 	var/list/req_tech = list()			//List of ids associated values of techs required to research this tech. "id" = #
 
 
@@ -209,6 +210,7 @@ research holder datum.
 	name = "Plasma Research"
 	desc = "Research into the mysterious substance colloqually known as 'plasma'."
 	id = "plasmatech"
+	rare = 3
 
 /datum/tech/powerstorage
 	name = "Power Manipulation Technology"
@@ -219,6 +221,7 @@ research holder datum.
 	name = "'Blue-space' Research"
 	desc = "Research into the sub-reality known as 'blue-space'"
 	id = "bluespace"
+	rare = 2
 
 /datum/tech/biotech
 	name = "Biological Technology"
@@ -244,6 +247,8 @@ research holder datum.
 	name = "Illegal Technologies Research"
 	desc = "The study of technologies that violate Nanotrassen regulations."
 	id = "syndicate"
+	rare = 4
+
 
 /*
 /datum/tech/arcane
@@ -273,17 +278,36 @@ research holder datum.
 */
 
 
+/datum/tech/proc/getCost(var/current_level = null)
+	// Calculates tech disk's supply points sell cost
+	if(!current_level)
+		current_level = initial(level)
+
+	if(current_level >= level)
+		return 0
+
+	var/cost = 0
+	var/i
+	for(i=current_level+1, i<=level, i++)
+		if(i == initial(level))
+			continue
+		cost += i*5*rare
+
+	return cost
+
+
+
+
 /obj/item/weapon/disk/tech_disk
 	name = "Technology Disk"
 	desc = "A disk for storing technology data for further research."
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = 1.0
-	m_amt = 30
-	g_amt = 10
+	w_class = 1
+	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	var/datum/tech/stored
 
 /obj/item/weapon/disk/tech_disk/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-5, 5)
+	src.pixel_y = rand(-5, 5)

@@ -11,7 +11,7 @@
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
-/mob/living/carbon/human/proc/get_assignment(var/if_no_id = "No id", var/if_no_job = "No job")
+/mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job")
 	var/obj/item/weapon/card/id/id = get_idcard()
 	if(id)
 		. = id.assignment
@@ -26,7 +26,7 @@
 
 //gets name from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
-/mob/living/carbon/human/proc/get_authentification_name(var/if_no_id = "Unknown")
+/mob/living/carbon/human/proc/get_authentification_name(if_no_id = "Unknown")
 	var/obj/item/weapon/card/id/id = get_idcard()
 	if(id)
 		return id.registered_name
@@ -56,13 +56,13 @@
 	if( head && (head.flags_inv&HIDEFACE) )
 		return if_no_face		//Likewise for hats
 	var/obj/item/organ/limb/O = get_organ("head")
-	if( (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
+	if( !O || (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
 //gets name from ID or PDA itself, ID inside PDA doesn't matter
 //Useful when player is being seen by other mobs
-/mob/living/carbon/human/proc/get_id_name(var/if_no_id = "Unknown")
+/mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
 	var/obj/item/weapon/storage/wallet/wallet = wear_id
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
@@ -80,7 +80,7 @@
 ///checkeyeprot()
 ///Returns a number between -1 to 2
 /mob/living/carbon/human/check_eye_prot()
-	var/number = 0
+	var/number = ..()
 	if(istype(src.head, /obj/item/clothing/head))			//are they wearing something on their head
 		var/obj/item/clothing/head/HFP = src.head			//if yes gets the flash protection value from that item
 		number += HFP.flash_protect
@@ -90,9 +90,6 @@
 	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
-	var/obj/item/cybernetic_implant/eyes/EFP = locate() in src
-	if(EFP)
-		number += EFP.flash_protect
 	return number
 
 /mob/living/carbon/human/check_ear_prot()
@@ -115,7 +112,7 @@
 		tinted += MT.tint
 	return tinted
 
-/mob/living/carbon/human/abiotic(var/full_body = 0)
+/mob/living/carbon/human/abiotic(full_body = 0)
 	if(full_body && ((src.l_hand && !( src.l_hand.flags&ABSTRACT )) || (src.r_hand && !( src.r_hand.flags&ABSTRACT )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves)))
 		return 1
 
@@ -131,11 +128,9 @@
 	return (health <= config.health_threshold_crit && stat == UNCONSCIOUS)
 
 /mob/living/carbon/human/reagent_check(datum/reagent/R)
-	if(dna)
-		var/bypass = dna.species.handle_chemicals(R,src)
-		return bypass	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
-	else
-		return 0
+	return dna.species.handle_chemicals(R,src)
+	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
+
 
 /mob/living/carbon/human/can_track(mob/living/user)
 	if(wear_id && istype(wear_id.GetID(), /obj/item/weapon/card/id/syndicate))

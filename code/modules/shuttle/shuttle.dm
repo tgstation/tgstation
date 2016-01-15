@@ -21,8 +21,12 @@
 	//these objects are indestructable
 /obj/docking_port/Destroy()
 	return QDEL_HINT_LETMELIVE
-
-
+/obj/docking_port/singularity_pull()
+	return
+/obj/docking_port/singularity_act()
+	return 0
+/obj/docking_port/shuttleRotate()
+	return //we don't rotate with shuttles via this code.
 //returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
 /obj/docking_port/proc/return_coords(_x, _y, _dir)
 	if(!_dir)
@@ -166,7 +170,7 @@
 	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/mode = SHUTTLE_IDLE			//current shuttle mode (see global defines)
 	var/callTime = 50				//time spent in transit (deciseconds)
-
+	var/roundstart_move				//id of port to send shuttle to at roundstart
 	var/travelDir = 0			//direction the shuttle would travel in
 
 	var/obj/docking_port/stationary/destination
@@ -221,7 +225,8 @@
 //call the shuttle to destination S
 /obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
 	if(canDock(S))
-		ERROR("[type](\"[name]\") cannot dock at [S]\")")
+		. = 1
+		throw EXCEPTION("request(): shuttle cannot dock")
 		return 1	//we can't dock at S
 
 	switch(mode)
@@ -267,12 +272,33 @@
 	else
 		WARNING("shuttle \"[id]\" could not enter transit space. S0=[S0 ? S0.id : "null"] S1=[S1 ? S1.id : "null"]")
 
+//default shuttleRotate
+/atom/proc/shuttleRotate(rotation)
+	//rotate our direction
+	dir = angle2dir(rotation+dir2angle(dir))
+
+	//resmooth if need be.
+	if(smooth)
+		smooth_icon(src)
+
+	//rotate the pixel offsets too.
+	if (pixel_x || pixel_y)
+		if (rotation < 0)
+			rotation += 360
+		for (var/turntimes=rotation/90;turntimes>0;turntimes--)
+			var/oldPX = pixel_x
+			var/oldPY = pixel_y
+			pixel_x = oldPY
+			pixel_y = (oldPX*(-1))
+
+
+
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1)
 	. = canDock(S1)
 	if(.)
-		ERROR("[type](\"[name]\") cannot dock at [S1]")
+		throw EXCEPTION("dock(): shuttle cannot dock")
 		return .
 
 	if(canMove())
@@ -296,6 +322,13 @@
 	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
 	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
 
+	var/rotation = dir2angle(S1.dir)-dir2angle(dir)
+	if ((rotation % 90) != 0)
+		rotation += (rotation % 90) //diagonal rotations not allowed, round up
+	rotation = SimplifyDegrees(rotation)
+
+
+
 	//remove area surrounding docking port
 	if(areaInstance.contents.len)
 		var/area/A0 = locate("[area_type]")
@@ -314,64 +347,71 @@
 		var/turf/T1 = L1[i]
 		if(!T1)
 			continue
+		if(T0.type != T0.baseturf) //So if there is a hole in the shuttle we don't drag along the space/asteroid/etc to wherever we are going next
+			T0.copyTurf(T1)
+			areaInstance.contents += T1
 
-		T0.copyTurf(T1)
-		areaInstance.contents += T1
+			//copy over air
+			if(istype(T1, /turf/simulated))
+				var/turf/simulated/Ts1 = T1
+				Ts1.copy_air_with_tile(T0)
 
-		//copy over air
-		if(istype(T1, /turf/simulated))
-			var/turf/simulated/Ts1 = T1
-			Ts1.copy_air_with_tile(T0)
+			//move mobile to new location
 
-		//move mobile to new location
-		loc = S1.loc
-		dir = S1.dir
 
-		//move all objects
-		for(var/obj/O in T0)
-			if(O.invisibility >= 101)
-				continue
-			if(O == T0.lighting_object)
-				continue
-			O.loc = T1
+			for(var/atom/movable/AM in T0)
+				if (rotation)
+					AM.shuttleRotate(rotation)
 
-			//close open doors
-			if(istype(O, /obj/machinery/door))
-				var/obj/machinery/door/Door = O
-				spawn(-1)
-					if(Door)
-						Door.close()
+				if (istype(AM,/obj))
+					var/obj/O = AM
+					if(O.invisibility >= 101)
+						continue
+					if(O == T0.lighting_object)
+						continue
+					O.loc = T1
 
-		for(var/mob/M in T0)
-			if(!M.move_on_shuttle)
-				continue
-			M.loc = T1
+					//close open doors
+					if(istype(O, /obj/machinery/door))
+						var/obj/machinery/door/Door = O
+						spawn(0)
+							if(Door)
+								Door.close()
+				else if (istype(AM,/mob))
+					var/mob/M = AM
+					if(!M.move_on_shuttle)
+						continue
+					M.loc = T1
 
-			//docking turbulence
-			if(M.client)
-				spawn(0)
-					if(M.buckled)
-						shake_camera(M, 2, 1) // turn it down a bit come on
-					else
-						shake_camera(M, 7, 1)
-			if(istype(M, /mob/living/carbon))
-				if(!M.buckled)
-					M.Weaken(3)
+					//docking turbulence
+					if(M.client)
+						if(M.buckled)
+							shake_camera(M, 2, 1) // turn it down a bit come on
+						else
+							shake_camera(M, 7, 1)
+					if(istype(M, /mob/living/carbon))
+						if(!M.buckled)
+							M.Weaken(3)
 
-		T0.ChangeTurf(turf_type)
 
-	//air system updates
-	for(var/turf/T1 in L1)
+		if (rotation)
+			T1.shuttleRotate(rotation)
+
+		//lighting stuff
 		T1.redraw_lighting()
 		SSair.remove_from_active(T1)
 		T1.CalculateAdjacentTurfs()
 		SSair.add_to_active(T1,1)
 
-	for(var/turf/T0 in L0)
+		T0.ChangeTurf(turf_type)
+
 		T0.redraw_lighting()
 		SSair.remove_from_active(T0)
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)
+
+	loc = S1.loc
+	dir = S1.dir
 
 /*
 	if(istype(S1, /obj/docking_port/stationary/transit))
@@ -380,6 +420,8 @@
 			T.pushdirection = d
 			T.update_icon()
 */
+
+
 
 /obj/docking_port/mobile/proc/findTransitDock()
 	var/obj/docking_port/stationary/transit/T = SSshuttle.getDock("[id]_transit")
@@ -401,7 +443,7 @@
 	if(T)
 		var/obj/machinery/door/Door = locate() in T
 		if(Door)
-			spawn(-1)
+			spawn(0)
 				Door.close()
 
 /obj/docking_port/mobile/proc/roadkill(list/L, dir, x, y)
@@ -489,6 +531,7 @@
 	var/shuttleId
 	var/possible_destinations = ""
 	var/admin_controlled
+	var/no_destination_swap = 0
 
 /obj/machinery/computer/shuttle/New(location, obj/item/weapon/circuitboard/shuttle/C)
 	..()
@@ -496,7 +539,7 @@
 		possible_destinations = C.possible_destinations
 		shuttleId = C.shuttleId
 
-/obj/machinery/computer/shuttle/attack_hand(user as mob)
+/obj/machinery/computer/shuttle/attack_hand(mob/user)
 	if(..(user))
 		return
 	src.add_fingerprint(usr)
@@ -535,12 +578,17 @@
 		return
 
 	if(href_list["move"])
+		if(no_destination_swap)
+			var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
+			if(M.mode != SHUTTLE_IDLE)
+				usr << "<span class='warning'>Shuttle already in transit.</span>"
+				return
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)	usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
 			if(1)	usr << "<span class='warning'>Invalid shuttle requested.</span>"
 			else	usr << "<span class='notice'>Unable to comply.</span>"
 
-/obj/machinery/computer/shuttle/emag_act(mob/user as mob)
+/obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(!emagged)
 		src.req_access = list()
 		emagged = 1
@@ -567,7 +615,7 @@
 			return
 		cooldown = 1
 		usr << "<span class='notice'>Your request has been recieved by Centcom.</span>"
-		admins << "<b>FERRY: <font color='blue'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) (<A HREF='?_src_=holder;secretsadmin=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to Centcom.</font>"
+		admins << "<b>FERRY: <font color='blue'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) (<A HREF='?_src_=holder;secrets=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to Centcom.</font>"
 		spawn(600) //One minute cooldown
 			cooldown = 0
 
@@ -581,7 +629,7 @@
 		if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
 			O = new()
 			O.underlays.Add(T)
-		T = new type(T)
+		T.ChangeTurf(type)
 		if(underlays.len)
 			T.underlays = O.underlays
 	if(T.icon_state != icon_state)

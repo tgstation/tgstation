@@ -6,7 +6,7 @@
 
 	var/obj/machinery/machine
 
-/obj/item/weapon/pai_cable/proc/plugin(obj/machinery/M as obj, mob/user as mob)
+/obj/item/weapon/pai_cable/proc/plugin(obj/machinery/M, mob/user)
 	if(istype(M, /obj/machinery/door) || istype(M, /obj/machinery/camera))
 		if(!user.drop_item())
 			return
@@ -16,5 +16,5 @@
 	else
 		user.visible_message("[user] dumbly fumbles to find a place on [M] to plug in [src].", "<span class='warning'>There aren't any ports on [M] that match the jack belonging to [src]!</span>")
 
-/obj/item/weapon/pai_cable/attack(obj/machinery/M as obj, mob/user as mob)
+/obj/item/weapon/pai_cable/attack(obj/machinery/M, mob/user)
 	src.plugin(M, user)

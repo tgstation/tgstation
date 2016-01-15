@@ -17,10 +17,10 @@
 /datum/round_event/anomaly/anomaly_flux/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
 	if(T)
-		newAnomaly = new /obj/effect/anomaly/flux(T.loc)
+		newAnomaly = new /obj/effect/anomaly/flux(T)
 
 
 /datum/round_event/anomaly/anomaly_flux/end()
 	if(newAnomaly.loc)//If it hasn't been neutralized, it's time to blow up.
-		explosion(newAnomaly, -1, 3, 8, 10)
+		explosion(newAnomaly, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
 		qdel(newAnomaly)

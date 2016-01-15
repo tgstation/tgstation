@@ -21,6 +21,12 @@
 	icon_state = "tophat"
 	item_state = "that"
 
+/obj/item/clothing/head/canada
+	name = "striped red tophat"
+	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
+	icon_state = "canada"
+	item_state = "canada"
+
 /obj/item/clothing/head/redcoat
 	name = "redcoat's hat"
 	icon_state = "redcoat"
@@ -65,6 +71,14 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 
+/obj/item/clothing/head/snowman
+	name = "Snowman Head"
+	desc = "A ball of white styrofoam. So festive."
+	icon_state = "snowman_h"
+	item_state = "snowman_h"
+	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+
 /obj/item/clothing/head/justice
 	name = "justice hat"
 	desc = "Fight for what's righteous!"
@@ -91,7 +105,7 @@
 
 /obj/item/clothing/head/rabbitears
 	name = "rabbit ears"
-	desc = "Wearing these makes you looks useless, and only good for your sex appeal."
+	desc = "Wearing these makes you look useless, and only good for your sex appeal."
 	icon_state = "bunny"
 
 /obj/item/clothing/head/flatcap
@@ -202,13 +216,13 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cone"
 	item_state = "cone"
-	force = 1.0
-	throwforce = 3.0
+	force = 1
+	throwforce = 3
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2.0
+	w_class = 2
 	attack_verb = list("warned", "cautioned", "smashed")
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/head/santa
 	name = "santa hat"
@@ -222,3 +236,13 @@
 	name = "jester hat"
 	desc = "A hat with bells, to add some merryness to the suit."
 	icon_state = "jester_hat"
+
+/obj/item/clothing/head/rice_hat
+	name = "rice hat"
+	desc = "Welcome to the rice fields, motherfucker."
+	icon_state = "rice_hat"
+
+/obj/item/clothing/head/lizard
+	name = "lizardskin cloche hat"
+	desc = "How many lizards died to make this hat? Not enough."
+	icon_state = "lizard"

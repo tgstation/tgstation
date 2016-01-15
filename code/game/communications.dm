@@ -1,7 +1,7 @@
 /*
   HOW IT WORKS
 
-  The radio_controller is a global object maintaining all radio transmissions, think about it as about "ether".
+  The SSradio is a global object maintaining all radio transmissions, think about it as about "ether".
   Note that walkie-talkie, intercoms and headsets handle transmission using nonstandard way.
   procs:
 
@@ -40,7 +40,7 @@
 
   obj/proc/receive_signal(datum/signal/signal, var/receive_method as num, var/receive_param)
     Handler from received signals. By default does nothing. Define your own for your object.
-    Avoid of sending signals directly from this proc, use spawn(-1). Do not use sleep() here please.
+    Avoid of sending signals directly from this proc, use spawn(0). Do not use sleep() here please.
       parameters:
         signal - see description below. Extract all needed data from the signal before doing sleep(), spawn() or return!
         receive_method - may be TRANSMISSION_WIRE or TRANSMISSION_RADIO.
@@ -64,7 +64,7 @@
 	so i made radios not use the radio controller.
 */
 var/list/all_radios = list()
-/proc/add_radio(var/obj/item/radio, freq)
+/proc/add_radio(obj/item/radio, freq)
 	if(!freq || !radio)
 		return
 	if(!all_radios["[freq]"])
@@ -74,7 +74,7 @@ var/list/all_radios = list()
 	all_radios["[freq]"] |= radio
 	return freq
 
-/proc/remove_radio(var/obj/item/radio, freq)
+/proc/remove_radio(obj/item/radio, freq)
 	if(!freq || !radio)
 		return
 	if(!all_radios["[freq]"])
@@ -82,7 +82,7 @@ var/list/all_radios = list()
 
 	all_radios["[freq]"] -= radio
 
-/proc/remove_radio_all(var/obj/item/radio)
+/proc/remove_radio_all(obj/item/radio)
 	for(var/freq in all_radios)
 		all_radios["[freq]"] -= radio
 
@@ -182,7 +182,7 @@ var/const/RADIO_MAGNETS = "9"
 
 //If range > 0, only post to devices on the same z_level and within range
 //Use range = -1, to restrain to the same z_level without limiting range
-/datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, var/filter = null as text|null, var/range = null as num|null)
+/datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, filter = null as text|null, range = null as num|null)
 
 	//Apply filter to the signal. If none supply, broadcast to every devices
 	//_default channel is always checked
@@ -213,7 +213,7 @@ var/const/RADIO_MAGNETS = "9"
 					continue
 			device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 
-/datum/radio_frequency/proc/add_listener(obj/device as obj, var/filter as text|null)
+/datum/radio_frequency/proc/add_listener(obj/device, filter as text|null)
 	if (!filter)
 		filter = "_default"
 
@@ -272,9 +272,9 @@ var/list/pointers = list()
 	..()
 	pointers += "\ref[src]"
 
-/datum/signal/Del()
+/datum/signal/Destroy()
 	pointers -= "\ref[src]"
-	..()
+	return ..()
 
 /datum/signal/proc/copy_from(datum/signal/model)
 	source = model.source

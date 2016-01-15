@@ -21,8 +21,6 @@
 		t_has = "have"
 		t_is = "are"
 	else
-		if(icon)
-			msg += "\icon[src] " //note, should we ever go back to runtime-generated icons (please don't), you will need to change this to \icon[icon] to prevent crashes.
 		switch(gender)
 			if(MALE)
 				t_He = "He"
@@ -173,7 +171,7 @@
 	var/appears_dead = 0
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		appears_dead = 1
-		if(getorgan(/obj/item/organ/brain))//Only perform these checks if there is no brain
+		if(getorgan(/obj/item/organ/internal/brain))//Only perform these checks if there is no brain
 			if(suiciding)
 				msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
@@ -241,8 +239,14 @@
 
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
-	else if(blood_max)
-		msg += "<B>[t_He] [t_is] bleeding!</B>\n"
+	if(blood_max)
+		if(reagents.has_reagent("heparin"))
+			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
+		else
+			msg += "<B>[t_He] [t_is] bleeding!</B>\n"
+
+	if(reagents.has_reagent("teslium"))
+		msg += "[t_He] is emitting a gentle blue glow!\n"
 
 	msg += "</span>"
 
@@ -252,7 +256,7 @@
 		else if(getBrainLoss() >= 60)
 			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-		if(getorgan(/obj/item/organ/brain))
+		if(getorgan(/obj/item/organ/internal/brain))
 			if(istype(src,/mob/living/carbon/human/interactive))
 				msg += "<span class='deadsay'>[t_He] [t_is] appears to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
 			else if(!key)
@@ -263,10 +267,12 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
+	if(!skipface && is_thrall(src) && in_range(user,src))
+		msg += "Their features seem unnaturally tight and drawn.\n"
 
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/cybernetic_implant/eyes/hud/CIH = locate(/obj/item/cybernetic_implant/eyes/hud) in H.internal_organs
+		var/obj/item/organ/internal/cyberimp/eyes/hud/CIH = H.getorgan(/obj/item/organ/internal/cyberimp/eyes/hud)
 		if(istype(H.glasses, /obj/item/clothing/glasses/hud) || CIH)
 			var/perpname = get_face_name(get_id_name(""))
 			if(perpname)
@@ -275,10 +281,11 @@
 					msg += "<span class='deptradio'>Rank:</span> [R.fields["rank"]]<br>"
 					msg += "<a href='?src=\ref[src];hud=1;photo_front=1'>\[Front photo\]</a> "
 					msg += "<a href='?src=\ref[src];hud=1;photo_side=1'>\[Side photo\]</a><br>"
-				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/cybernetic_implant/eyes/hud/medical))
+				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/internal/cyberimp/eyes/hud/medical))
 					var/implant_detect
-					for(var/obj/item/cybernetic_implant/CI in internal_organs)
-						implant_detect += "[name] is modified with a [CI.name].<br>"
+					for(var/obj/item/organ/internal/cyberimp/CI in internal_organs)
+						if(CI.status == ORGAN_ROBOTIC)
+							implant_detect += "[name] is modified with a [CI.name].<br>"
 					if(implant_detect)
 						msg += "Detected cybernetic modifications:<br>"
 						msg += implant_detect
@@ -292,8 +299,9 @@
 						msg += "<a href='?src=\ref[src];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
 
 
-				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/cybernetic_implant/eyes/hud/security))
-					if(!user.stat && user != src) //|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
+				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/internal/cyberimp/eyes/hud/security))
+					if(!user.stat && user != src)
+					//|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 						var/criminal = "None"
 
 						R = find_record("name", perpname, data_core.security)

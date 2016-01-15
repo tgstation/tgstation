@@ -26,6 +26,7 @@
 		M.powernet = null
 
 	SSmachine.powernets -= src
+	return ..()
 
 /datum/powernet/proc/is_empty()
 	return !cables.len && !nodes.len
@@ -33,7 +34,7 @@
 //remove a cable from the current powernet
 //if the powernet is then empty, delete it
 //Warning : this proc DON'T check if the cable exists
-/datum/powernet/proc/remove_cable(var/obj/structure/cable/C)
+/datum/powernet/proc/remove_cable(obj/structure/cable/C)
 	cables -= C
 	C.powernet = null
 	if(is_empty())//the powernet is now empty...
@@ -41,7 +42,7 @@
 
 //add a cable to the current powernet
 //Warning : this proc DON'T check if the cable exists
-/datum/powernet/proc/add_cable(var/obj/structure/cable/C)
+/datum/powernet/proc/add_cable(obj/structure/cable/C)
 	if(C.powernet)// if C already has a powernet...
 		if(C.powernet == src)
 			return
@@ -53,7 +54,7 @@
 //remove a power machine from the current powernet
 //if the powernet is then empty, delete it
 //Warning : this proc DON'T check if the machine exists
-/datum/powernet/proc/remove_machine(var/obj/machinery/power/M)
+/datum/powernet/proc/remove_machine(obj/machinery/power/M)
 	nodes -=M
 	M.powernet = null
 	if(is_empty())//the powernet is now empty...
@@ -62,7 +63,7 @@
 
 //add a power machine to the current powernet
 //Warning : this proc DON'T check if the machine exists
-/datum/powernet/proc/add_machine(var/obj/machinery/power/M)
+/datum/powernet/proc/add_machine(obj/machinery/power/M)
 	if(M.powernet)// if M already has a powernet...
 		if(M.powernet == src)
 			return

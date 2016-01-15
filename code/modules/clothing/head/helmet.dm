@@ -11,29 +11,17 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
-	burn_state = -1 //Won't burn in fires
-	var/obj/machinery/camera/portable/helmetCam = null
-	var/spawnWithHelmetCam = 0
-	var/canAttachCam = 0
+	burn_state = FIRE_PROOF
 	flags_cover = HEADCOVERSEYES
 
 
 /obj/item/clothing/head/helmet/New()
 	..()
-	if(spawnWithHelmetCam)
-		helmetCam = new /obj/machinery/camera/portable(src)
-		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
-		helmetCam.network = list("SS13")
-		update_icon()
 
 /obj/item/clothing/head/helmet/emp_act(severity)
-	if(helmetCam) //Transfer the EMP to the camera so you can still disable it this way.
-		helmetCam.emp_act(severity)
 	..()
 
 /obj/item/clothing/head/helmet/sec
-	spawnWithHelmetCam = 1
-	canAttachCam = 1
 	can_flashlight = 1
 
 /obj/item/clothing/head/helmet/alt
@@ -64,22 +52,21 @@
 	if(usr.canmove && !usr.stat && !usr.restrained() && can_toggle)
 		if(world.time > cooldown + toggle_cooldown)
 			cooldown = world.time
-			if(up)
-				up = !up
-				flags |= (visor_flags)
-				flags_inv |= (visor_flags_inv)
-				icon_state = initial(icon_state)
-				usr << "[toggle_message] \the [src]."
-				usr.update_inv_head(0)
-			else
-				up = !up
-				flags &= ~(visor_flags)
-				flags_inv &= ~(visor_flags_inv)
-				icon_state = "[initial(icon_state)]up"
-				usr << "[alt_toggle_message] \the [src]"
-				usr.update_inv_head(0)
+			up ^= 1
+			flags ^= visor_flags
+			flags_inv ^= visor_flags_inv
+			flags_cover ^= initial(flags_cover)
+			icon_state = "[initial(icon_state)][up ? "up" : ""]"
+			usr << "[up ? alt_toggle_message : toggle_message] \the [src]"
+
+			usr.update_inv_head()
+			if(istype(usr, /mob/living/carbon))
+				var/mob/living/carbon/C = usr
+				C.head_update(src, forced = 1)
+
+			if(active_sound)
 				while(up)
-					playsound(src.loc, "[activation_sound]", 100, 0, 4)
+					playsound(src.loc, "[active_sound]", 100, 0, 4)
 					sleep(15)
 
 /obj/item/clothing/head/helmet/justice
@@ -90,8 +77,8 @@
 	alt_toggle_message = "You turn on the lights on"
 	action_button_name = "Toggle Justice Lights"
 	can_toggle = 1
-	toggle_cooldown = 14
-	activation_sound = 'sound/items/WEEOO1.ogg'
+	toggle_cooldown = 20
+	active_sound = 'sound/items/WEEOO1.ogg'
 
 /obj/item/clothing/head/helmet/justice/escape
 	name = "alarm helmet"
@@ -103,15 +90,22 @@
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
-	desc = "An extremely robust, space-worthy helmet with the Nanotrasen logo emblazoned on the top."
-	icon_state = "swat"
-	item_state = "swat"
-	armor = list(melee = 40, bullet = 30, laser = 25,energy = 25, bomb = 50, bio = 10, rad = 0)
+	desc = "An extremely robust, space-worthy helmet in a nefarious red and black stripe pattern."
+	icon_state = "swatsyndie"
+	item_state = "swatsyndie"
+	armor = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	flags = STOPSPRESSUREDMAGE
 	strip_delay = 80
+
+/obj/item/clothing/head/helmet/swat/nanotrasen
+	name = "\improper SWAT helmet"
+	desc = "An extremely robust, space-worthy helmet with the Nanotrasen logo emblazoned on the top."
+	icon_state = "swat"
+	item_state = "swat"
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
@@ -169,13 +163,40 @@
 	// Offer about the same protection as a hardhat.
 	flags_inv = HIDEEARS|HIDEEYES
 
+/obj/item/clothing/head/helmet/knight
+	name = "medieval helmet"
+	desc = "A classic metal helmet."
+	icon_state = "knight_green"
+	item_state = "knight_green"
+	armor = list(melee = 41, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
+	flags = BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	strip_delay = 80
+
+/obj/item/clothing/head/helmet/knight/blue
+	icon_state = "knight_blue"
+	item_state = "knight_blue"
+
+/obj/item/clothing/head/helmet/knight/yellow
+	icon_state = "knight_yellow"
+	item_state = "knight_yellow"
+
+/obj/item/clothing/head/helmet/knight/red
+	icon_state = "knight_red"
+	item_state = "knight_red"
+
+/obj/item/clothing/head/helmet/knight/templar
+	name = "crusader helmet"
+	desc = "Deus Vult."
+	icon_state = "knight_templar"
+	item_state = "knight_templar"
+
 //LightToggle
 
 /obj/item/clothing/head/helmet/update_icon()
 
 	var/state = "[initial(icon_state)]"
-	if(helmetCam)
-		state += "-cam" //"helmet-cam"
 	if(F)
 		if(F.on)
 			state += "-flight-on" //"helmet-flight-on" // "helmet-cam-flight-on"
@@ -186,7 +207,7 @@
 
 	if(istype(loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = loc
-		H.update_inv_head(0)
+		H.update_inv_head()
 
 	return
 
@@ -194,7 +215,7 @@
 	toggle_helmlight()
 	..()
 
-/obj/item/clothing/head/helmet/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/clothing/head/helmet/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/device/flashlight/seclite))
 		var/obj/item/device/flashlight/seclite/S = A
 		if(can_flashlight)
@@ -220,40 +241,9 @@
 				update_helmlight(user)
 				S.update_brightness(user)
 				update_icon()
-				usr.update_inv_head(0)
+				usr.update_inv_head()
 				verbs -= /obj/item/clothing/head/helmet/proc/toggle_helmlight
 			return
-
-
-	if(istype(A, /obj/item/weapon/camera_assembly))
-		if(!canAttachCam)
-			user << "<span class='warning'>You can't attach [A] to [src]!</span>"
-			return
-		if(helmetCam)
-			user << "<span class='notice'>[src] already has a mounted camera.</span>"
-			return
-		if(!user.unEquip(A))
-			return
-		helmetCam = new /obj/machinery/camera/portable(src)
-		helmetCam.assembly = A
-		A.loc = helmetCam
-		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
-		helmetCam.network = list("SS13")
-		update_icon()
-		user.visible_message("[user] attaches [A] to [src].","<span class='notice'>You attach [A] to [src].</span>")
-		return
-
-	if(istype(A, /obj/item/weapon/crowbar))
-		if(!helmetCam)
-			..()
-			return
-		user.visible_message("[user] removes [helmetCam] from [src].","<span class='notice'>You remove [helmetCam] from [src].</span>")
-		helmetCam.assembly.loc = get_turf(src)
-		helmetCam.assembly = null
-		qdel(helmetCam)
-		helmetCam = null
-		update_icon()
-		return
 
 	..()
 	return
@@ -266,7 +256,9 @@
 	if(!F)
 		return
 
-	var/mob/living/carbon/human/user = usr
+	var/mob/user = usr
+	if(user.incapacitated())
+		return
 	if(!isturf(user.loc))
 		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>"
 	F.on = !F.on
@@ -276,7 +268,7 @@
 	update_helmlight(user)
 	return
 
-/obj/item/clothing/head/helmet/proc/update_helmlight(var/mob/user = null)
+/obj/item/clothing/head/helmet/proc/update_helmlight(mob/user = null)
 	if(F)
 		action_button_name = "Toggle Helmetlight"
 		if(F.on)
@@ -305,16 +297,8 @@
 			SetLuminosity(0)
 
 
-/obj/item/clothing/head/helmet/equipped(mob/user)
-	if(helmetCam)
-		spawn(10) //Gives time for the game to set a name (lol rhyme) to roundstart officers.
-			helmetCam.c_tag = "Helmet-Mounted Camera ([user.name])([rand(1,999)])"
-
 /obj/item/clothing/head/helmet/dropped(mob/user)
 	if(F)
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
-
-	if(helmetCam)
-		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"

@@ -93,13 +93,13 @@
 /obj/machinery/portable_atmospherics/pump/return_air()
 	return air_contents
 
-/obj/machinery/portable_atmospherics/pump/attack_ai(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/pump/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/pump/attack_paw(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/pump/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/pump/attack_hand(mob/user)
 
 	user.set_machine(src)
 	var/holding_text

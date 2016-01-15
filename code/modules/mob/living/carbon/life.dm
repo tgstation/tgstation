@@ -8,12 +8,12 @@
 		return
 
 	if(..())
-		//Updates the number of stored chemicals for powers
-		handle_changeling()
-		//Heart Attacks, etc.
-		handle_heart()
-
 		. = 1
+		for(var/obj/item/organ/internal/O in internal_organs)
+			O.on_life()
+
+	//Updates the number of stored chemicals for powers
+	handle_changeling()
 
 ///////////////
 // BREATHING //
@@ -32,7 +32,7 @@
 /mob/living/carbon/proc/breathe()
 	if(reagents.has_reagent("lexorin"))
 		return
-	if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 
 	var/datum/gas_mixture/environment
@@ -48,7 +48,7 @@
 	if(losebreath > 0)
 		losebreath--
 		if(prob(10))
-			spawn emote("gasp")
+			emote("gasp")
 		if(istype(loc, /obj/))
 			var/obj/loc_as_obj = loc
 			loc_as_obj.handle_internal_lifeform(src,0)
@@ -68,17 +68,6 @@
 					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
 				breath = loc.remove_air(breath_moles)
-
-				//Harmful gasses
-				if(!has_smoke_protection())
-					for(var/obj/effect/effect/smoke/chem/S in range(1, src))
-						if(S.reagents.total_volume && S.lifetime)
-							var/fraction = 1/S.max_lifetime
-							S.reagents.reaction(src,INGEST, fraction)
-							var/amount = round(S.reagents.total_volume*fraction,0.1)
-							S.reagents.copy_to(src, amount)
-							S.lifetime--
-
 		else //Breathe from loc as obj again
 			if(istype(loc, /obj/))
 				var/obj/loc_as_obj = loc
@@ -104,7 +93,7 @@
 			return
 		adjustOxyLoss(1)
 		failed_last_breath = 1
-		throw_alert("oxy")
+		throw_alert("oxy", /obj/screen/alert/oxy)
 
 		return 0
 
@@ -124,8 +113,7 @@
 	//OXYGEN
 	if(O2_partialpressure < safe_oxy_min) //Not enough oxygen
 		if(prob(20))
-			spawn(0)
-				emote("gasp")
+			emote("gasp")
 		if(O2_partialpressure > 0)
 			var/ratio = safe_oxy_min/O2_partialpressure
 			adjustOxyLoss(min(5*ratio, 3))
@@ -134,7 +122,7 @@
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
-		throw_alert("oxy")
+		throw_alert("oxy", /obj/screen/alert/oxy)
 
 	else //Enough oxygen
 		failed_last_breath = 0
@@ -155,7 +143,7 @@
 			if(world.time - co2overloadtime > 300)
 				adjustOxyLoss(8)
 		if(prob(20))
-			spawn(0) emote("cough")
+			emote("cough")
 
 	else
 		co2overloadtime = 0
@@ -165,7 +153,7 @@
 		var/ratio = (breath.toxins/safe_tox_max) * 10
 		if(reagents)
 			reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-		throw_alert("tox_in_air")
+		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
 	else
 		clear_alert("tox_in_air")
 
@@ -179,7 +167,7 @@
 					sleeping = max(sleeping+2, 10)
 			else if(SA_partialpressure > 0.01)
 				if(prob(20))
-					spawn(0) emote(pick("giggle","laugh"))
+					emote(pick("giggle","laugh"))
 
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
@@ -207,9 +195,44 @@
 
 
 /mob/living/carbon/proc/handle_changeling()
-	return
+	if(mind && hud_used)
+		if(mind.changeling)
+			mind.changeling.regenerate(src)
+			hud_used.lingchemdisplay.invisibility = 0
+			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
+		else
+			hud_used.lingchemdisplay.invisibility = 101
+
 
 /mob/living/carbon/handle_mutations_and_radiation()
+	if(dna && dna.temporary_mutations.len)
+		var/datum/mutation/human/HM
+		for(var/mut in dna.temporary_mutations)
+			if(dna.temporary_mutations[mut] < world.time)
+				if(mut == UI_CHANGED)
+					if(dna.previous["UI"])
+						dna.uni_identity = merge_text(dna.uni_identity,dna.previous["UI"])
+						updateappearance(mutations_overlay_update=1)
+						dna.previous.Remove("UI")
+					dna.temporary_mutations.Remove(mut)
+					continue
+				if(mut == UE_CHANGED)
+					if(dna.previous["name"])
+						real_name = dna.previous["name"]
+						name = real_name
+						dna.previous.Remove("name")
+					if(dna.previous["UE"])
+						dna.unique_enzymes = dna.previous["UE"]
+						dna.previous.Remove("UE")
+					if(dna.previous["blood_type"])
+						dna.blood_type = dna.previous["blood_type"]
+						dna.previous.Remove("blood_type")
+					dna.temporary_mutations.Remove(mut)
+					continue
+				HM = mutations_list[mut]
+				HM.force_lose(src)
+				dna.temporary_mutations.Remove(mut)
+
 	if(radiation)
 
 		switch(radiation)
@@ -238,32 +261,30 @@
 	if(reagents)
 		reagents.metabolize(src)
 
-/mob/living/carbon/proc/handle_heart()
-	return
 
 /mob/living/carbon/handle_stomach()
-	spawn(0)
-		for(var/mob/living/M in stomach_contents)
-			if(M.loc != src)
+	set waitfor = 0
+	for(var/mob/living/M in stomach_contents)
+		if(M.loc != src)
+			stomach_contents.Remove(M)
+			continue
+		if(istype(M, /mob/living/carbon) && stat != 2)
+			if(M.stat == 2)
+				M.death(1)
 				stomach_contents.Remove(M)
+				qdel(M)
 				continue
-			if(istype(M, /mob/living/carbon) && stat != 2)
-				if(M.stat == 2)
-					M.death(1)
-					stomach_contents.Remove(M)
-					qdel(M)
-					continue
-				if(SSmob.times_fired%3==1)
-					if(!(M.status_flags & GODMODE))
-						M.adjustBruteLoss(5)
-					nutrition += 10
+			if(SSmob.times_fired%3==1)
+				if(!(M.status_flags & GODMODE))
+					M.adjustBruteLoss(5)
+				nutrition += 10
 
 //This updates the health and status of the mob (conscious, unconscious, dead)
 /mob/living/carbon/handle_regular_status_updates()
 
 	if(..()) //alive
 
-		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
+		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
 			death()
 			return
 
@@ -293,13 +314,12 @@
 	CheckStamina()
 
 	if(sleeping)
-		throw_alert("asleep")
+		throw_alert("asleep", /obj/screen/alert/asleep)
 		handle_dreams()
 		adjustStaminaLoss(-10)
 		sleeping = max(sleeping-1, 0)
 		if( prob(10) && health && !hal_crit )
-			spawn(0)
-				emote("snore")
+			emote("snore")
 	else
 		clear_alert("asleep")
 
@@ -460,7 +480,6 @@
 	return 1
 
 /mob/living/carbon/update_sight()
-
 	if(stat == DEAD)
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
@@ -525,3 +544,8 @@
 			//We totally need a sweat system cause it totally makes sense...~
 			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
 
+
+/mob/living/carbon/handle_actions()
+	..()
+	for(var/obj/item/I in internal_organs)
+		give_action_button(I, 1)

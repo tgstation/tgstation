@@ -72,7 +72,7 @@
 			usr << "<span class='warning'>There's nothing attached to the IV drip!</span>"
 
 
-/obj/machinery/iv_drip/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(beaker))
 			user << "<span class='warning'>There is already a reagent container loaded!</span>"
@@ -109,7 +109,7 @@
 					// speed up transfer on blood packs
 					transfer_amount = 10
 				var/fraction = min(transfer_amount/beaker.volume, 1) //the fraction that is transfered of the total volume
-				beaker.reagents.reaction(attached, INGEST, fraction,0) //make reagents reacts, but don't spam messages
+				beaker.reagents.reaction(attached, INJECT, fraction,0) //make reagents reacts, but don't spam messages
 				beaker.reagents.trans_to(attached, transfer_amount)
 				update_icon()
 
@@ -124,10 +124,10 @@
 
 			var/mob/living/carbon/human/T = attached
 
-			if(!istype(T)) return
-			if(!T.dna)
+			if(!istype(T))
 				return
-			if(NOCLONE in T.mutations)
+
+			if(T.disabilities & NOCLONE)
 				return
 
 			if(NOBLOOD in T.dna.species.specflags)

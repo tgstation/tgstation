@@ -3,8 +3,7 @@
 	desc = "An updated, modular intercom that fits over the head. Takes encryption keys. \nTo speak on the general radio frequency, use ; before speaking."
 	icon_state = "headset"
 	item_state = "headset"
-	g_amt = 0
-	m_amt = 75
+	materials = list(MAT_METAL=75)
 	subspace_transmission = 1
 	canhear_range = 0 // can't hear headsets from very far away
 
@@ -21,14 +20,14 @@
 	qdel(keyslot2)
 	keyslot = null
 	keyslot2 = null
-	..()
+	return ..()
 
 /obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans)
 	if (!listening)
 		return
 	..()
 
-/obj/item/device/radio/headset/receive_range(freq, level, var/AIuser)
+/obj/item/device/radio/headset/receive_range(freq, level, AIuser)
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		if(H.ears == src)
@@ -47,6 +46,10 @@
 	origin_tech = "syndicate=3"
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
+
+/obj/item/device/radio/headset/syndicate/alt/leader
+	name = "team leader headset"
+	command = TRUE
 
 /obj/item/device/radio/headset/syndicate/New()
 	..()
@@ -115,6 +118,9 @@
 	icon_state = "com_headset"
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_com
+
+/obj/item/device/radio/headset/heads
+	command = TRUE
 
 /obj/item/device/radio/headset/heads/captain
 	name = "\proper the captain's headset"
@@ -212,7 +218,7 @@
 /obj/item/device/radio/headset/ai/receive_range(freq, level)
 	return ..(freq, level, 1)
 
-/obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user, params)
 //	..()
 	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
@@ -223,7 +229,7 @@
 
 
 			for(var/ch_name in channels)
-				radio_controller.remove_object(src, radiochannels[ch_name])
+				SSradio.remove_object(src, radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
 

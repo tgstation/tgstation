@@ -6,8 +6,9 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 5
+	spillable = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/fire_act()
 	if(!reagents.total_volume)
@@ -184,7 +185,7 @@
 			if("doctorsdelight")
 				icon_state = "doctorsdelightglass"
 				name = "Doctor's Delight"
-				desc = "A healthy mixture of juices, guaranteed to keep you healthy until the next toolboxing takes place."
+				desc = "The space doctor's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
 			if("manlydorf")
 				icon_state = "manlydorfglass"
 				name = "The Manly Dorf"
@@ -511,11 +512,14 @@
 	icon_state = "shotglass"
 	gulp_size = 15
 	amount_per_transfer_from_this = 15
+	possible_transfer_amounts = list()
 	volume = 15
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change()
-	if (gulp_size < 15) gulp_size = 15
-	else gulp_size = max(round(reagents.total_volume / 15), 15)
+	if (gulp_size < 15)
+		gulp_size = 15
+	else
+		gulp_size = max(round(reagents.total_volume / 15), 15)
 
 	if (reagents.reagent_list.len > 0)
 		switch(reagents.get_master_reagent_id())
@@ -592,7 +596,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
 	list_reagents = list("cola" = 50)
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(var/obj/item/I, mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
 		if(reagents)
@@ -605,3 +609,26 @@
 			return
 	else
 		..()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attack(obj/target, mob/user)
+
+	if(user.a_intent == "harm" && ismob(target) && target.reagents && reagents.total_volume)
+		target.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
+						"<span class='userdanger'>[user] splashes the contents of [src] onto [target]!</span>")
+		add_logs(user, target, "splashed", src)
+		reagents.reaction(target, TOUCH)
+		reagents.clear_reagents()
+		return
+	..()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/afterattack(obj/target, mob/user, proximity)
+	if((!proximity) || !check_allowed_items(target,target_self=1)) return
+
+	else if(reagents.total_volume && user.a_intent == "harm")
+		user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
+							"<span class='notice'>You splash the contents of [src] onto [target].</span>")
+		reagents.reaction(target, TOUCH)
+		reagents.clear_reagents()
+		return
+	..()
+

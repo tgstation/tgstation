@@ -15,8 +15,8 @@
 	var/jaunt_duration = 50 //in deciseconds
 	action_icon_state = "jaunt"
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
-	playsound(get_turf(usr), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
+	playsound(get_turf(user), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
 	for(var/mob/living/target in targets)
 		target.notransform = 1 //protects the mob from being transformed (replaced) midjaunt and getting stuck in bluespace
 		spawn(0)
@@ -32,6 +32,11 @@
 			target.ExtinguishMob()
 			if(target.buckled)
 				target.buckled.unbuckle_mob()
+			if(target.pulledby)
+				target.pulledby.stop_pulling()
+			target.stop_pulling()
+			if(target.buckled_mob)
+				target.unbuckle_mob(force=1)
 			jaunt_disappear(animation, target)
 			target.loc = holder
 			target.notransform=0 //mob is safely inside holder now, no need for protection.
@@ -45,7 +50,7 @@
 			jaunt_steam(mobloc)
 			target.canmove = 0
 			holder.reappearing = 1
-			playsound(get_turf(usr), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
+			playsound(get_turf(user), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
 			sleep(20)
 			jaunt_reappear(animation, target)
 			sleep(5)
@@ -60,17 +65,17 @@
 			qdel(animation)
 			qdel(holder)
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(var/atom/movable/overlay/animation, var/mob/living/target)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(atom/movable/overlay/animation, mob/living/target)
 	animation.icon_state = "liquify"
 	flick("liquify",animation)
 
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_reappear(var/atom/movable/overlay/animation, var/mob/living/target)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_reappear(atom/movable/overlay/animation, mob/living/target)
 	flick("reappear",animation)
 
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(var/mobloc)
-	var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(mobloc)
+	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
 	steam.set_up(10, 0, mobloc)
 	steam.start()
 
@@ -82,12 +87,14 @@
 	var/reappearing = 0
 	density = 0
 	anchored = 1
+	invisibility = 60
+	burn_state = LAVA_PROOF
 
 /obj/effect/dummy/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow
 	for(var/atom/movable/AM in src)
 		AM.loc = get_turf(src)
-	..()
+	return ..()
 
 /obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
 	if (!src.canmove || reappearing || !direction) return

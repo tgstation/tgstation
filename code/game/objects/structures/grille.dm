@@ -11,6 +11,7 @@
 	var/health = 10
 	var/destroyed = 0
 	var/obj/item/stack/rods/stored
+	level = 3
 
 /obj/structure/grille/New()
 	stored = new/obj/item/stack/rods(src)
@@ -26,7 +27,7 @@
 	if(ismob(user)) shock(user, 70)
 
 
-/obj/structure/grille/attack_paw(mob/user as mob)
+/obj/structure/grille/attack_paw(mob/user)
 	attack_hand(user)
 
 /obj/structure/grille/attack_hulk(mob/living/carbon/human/user)
@@ -35,7 +36,7 @@
 	health -= 5
 	healthcheck()
 
-/obj/structure/grille/attack_hand(mob/living/user as mob)
+/obj/structure/grille/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -49,7 +50,7 @@
 		health -= rand(1,2)
 	healthcheck()
 
-/obj/structure/grille/attack_alien(mob/living/user as mob)
+/obj/structure/grille/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	if(istype(user, /mob/living/carbon/alien/larva))	return
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -63,7 +64,7 @@
 		healthcheck()
 		return
 
-/obj/structure/grille/attack_slime(mob/living/simple_animal/slime/user as mob)
+/obj/structure/grille/attack_slime(mob/living/simple_animal/slime/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(!user.is_adult)	return
@@ -77,9 +78,10 @@
 	healthcheck()
 	return
 
-/obj/structure/grille/attack_animal(var/mob/living/simple_animal/M as mob)
+/obj/structure/grille/attack_animal(var/mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
-	if(M.melee_damage_upper == 0)	return
+	if(M.melee_damage_upper == 0 || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
+		return
 	M.do_attack_animation(src)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
@@ -120,9 +122,10 @@
 /obj/structure/grille/Deconstruct()
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
-	transfer_fingerprints_to(stored)
-	var/turf/T = loc
-	stored.loc = T
+	if(!(flags&NODECONSTRUCT))
+		transfer_fingerprints_to(stored)
+		var/turf/T = loc
+		stored.loc = T
 	..()
 
 /obj/structure/grille/proc/Break()
@@ -130,10 +133,11 @@
 	density = 0
 	destroyed = 1
 	stored.amount = 1
-	var/obj/item/stack/rods/newrods = new(loc)
-	transfer_fingerprints_to(newrods)
+	if(!(flags&NODECONSTRUCT))
+		var/obj/item/stack/rods/newrods = new(loc)
+		transfer_fingerprints_to(newrods)
 
-/obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/grille/attackby(obj/item/weapon/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/wirecutters))
@@ -158,6 +162,8 @@
 			icon_state = "grille"
 			R.use(1)
 			return
+	else if(istype(W, /obj/item/weapon/rcd) && istype(loc, /turf/simulated)) //Do not attack the grille if the user is holding an RCD
+		return
 
 //window placing begin
 	else if(istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/glass))
@@ -223,7 +229,7 @@
 // shock user with probability prb (if all connections & power are working)
 // returns 1 if shocked, 0 otherwise
 
-/obj/structure/grille/proc/shock(mob/user as mob, prb)
+/obj/structure/grille/proc/shock(mob/user, prb)
 	if(!anchored || destroyed)		// anchored/destroyed grilles are never connected
 		return 0
 	if(!prob(prb))
@@ -234,7 +240,7 @@
 	var/obj/structure/cable/C = T.get_cable_node()
 	if(C)
 		if(electrocute_mob(user, C, src))
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
 			return 1

@@ -18,12 +18,13 @@
 	filling_color = "#F0E68C"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
-	..()
-	new/obj/effect/decal/cleanable/egg_smudge(src.loc)
-	reagents.reaction(hit_atom, TOUCH)
-	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
+	if(!..()) //was it caught by a mob?
+		var/turf/T = get_turf(hit_atom)
+		new/obj/effect/decal/cleanable/egg_smudge(T)
+		reagents.reaction(hit_atom, TOUCH)
+		qdel(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype( W, /obj/item/toy/crayon ))
 		var/obj/item/toy/crayon/C = W
 		var/clr = C.colourName

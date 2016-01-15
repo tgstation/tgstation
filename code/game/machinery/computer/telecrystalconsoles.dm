@@ -30,7 +30,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		name = "[name] [rand(1,999)]"
 
 
-/obj/machinery/computer/telecrystals/uplinker/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item))
 
 		if(uplinkholder)
@@ -63,7 +63,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		uplinkholder = null
 		update_icon()
 
-/obj/machinery/computer/telecrystals/uplinker/proc/donateTC(var/amt, var/addLog = 1)
+/obj/machinery/computer/telecrystals/uplinker/proc/donateTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
 		if(amt <= uplinkholder.hidden_uplink.uses)
 			uplinkholder.hidden_uplink.uses -= amt
@@ -71,7 +71,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 			if(addLog)
 				linkedboss.logTransfer("[src] donated [amt] telecrystals to [linkedboss].")
 
-/obj/machinery/computer/telecrystals/uplinker/proc/giveTC(var/amt, var/addLog = 1)
+/obj/machinery/computer/telecrystals/uplinker/proc/giveTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
 		if(amt <= linkedboss.storedcrystals)
 			uplinkholder.hidden_uplink.uses += amt
@@ -81,7 +81,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 ///////
 
-/obj/machinery/computer/telecrystals/uplinker/attack_hand(mob/user as mob)
+/obj/machinery/computer/telecrystals/uplinker/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_fingerprint(user)
@@ -137,11 +137,11 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	var/list/TCstations = list()
 	var/list/transferlog = list()
 
-/obj/machinery/computer/telecrystals/boss/proc/logTransfer(var/logmessage)
+/obj/machinery/computer/telecrystals/boss/proc/logTransfer(logmessage)
 	transferlog += ("<b>[worldtime2text()]</b> [logmessage]")
 
 /obj/machinery/computer/telecrystals/boss/proc/scanUplinkers()
-	for(var/obj/machinery/computer/telecrystals/uplinker/A in range(scanrange, src.loc))
+	for(var/obj/machinery/computer/telecrystals/uplinker/A in ultra_range(scanrange, src.loc))
 		if(!A.linkedboss)
 			TCstations += A
 			A.linkedboss = src
@@ -152,16 +152,16 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	..()
 	var/danger
-	danger = player_list.len
+	danger = joined_player_list.len - ticker.mode.syndicates.len
 	while(!IsMultiple(++danger,10))//Just round up to the nearest multiple of ten.
 	scaleTC(danger)
 
-/obj/machinery/computer/telecrystals/boss/proc/scaleTC(var/amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
+/obj/machinery/computer/telecrystals/boss/proc/scaleTC(amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
 	storedcrystals += amt * NUKESCALINGMODIFIER
 
 /////////
 
-/obj/machinery/computer/telecrystals/boss/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/telecrystals/boss/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_fingerprint(user)

@@ -133,7 +133,7 @@
 
 		return
 
-	proc/AttemptToEat(var/atom/target)
+	proc/AttemptToEat(atom/target)
 		if(istype(target,/turf/simulated/wall))
 			if((!istype(target,/turf/simulated/wall/r_wall) && eatingDuration >= 100) || eatingDuration >= 200) //need 20 ticks to eat an rwall, 10 for a regular one
 				var/turf/simulated/wall/wall = target
@@ -148,7 +148,7 @@
 
 		return 0
 
-	proc/Attach(var/mob/living/simple_animal/space_worm/attachement)
+	proc/Attach(mob/living/simple_animal/space_worm/attachement)
 		if(!attachement)
 			return
 
@@ -168,7 +168,7 @@
 		if(die)
 			newHead.Die()
 
-		del(src)
+		qdel(src)
 
 	proc/ProcessStomach()
 		for(var/atom/movable/stomachContent in contents)
@@ -177,16 +177,16 @@
 					if(!istype(stomachContent,/obj/item/stack/sheet/mineral/plasma))
 						var/obj/item/stack/oldStack = stomachContent
 						new /obj/item/stack/sheet/mineral/plasma(src, oldStack.amount)
-						del(oldStack)
+						qdel(oldStack)
 						continue
 				else if(istype(stomachContent,/obj/item)) //converts to plasma, keeping the w_class
 					var/obj/item/oldItem = stomachContent
 					new /obj/item/stack/sheet/mineral/plasma(src, oldItem.w_class)
-					del(oldItem)
+					qdel(oldItem)
 					continue
 				else
 					new /obj/item/stack/sheet/mineral/plasma(src, flatPlasmaValue) //just flat amount
-					del(stomachContent)
+					qdel(stomachContent)
 					continue
 
 		if(previous)

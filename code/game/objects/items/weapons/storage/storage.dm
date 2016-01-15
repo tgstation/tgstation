@@ -1,14 +1,15 @@
-// To clarify:
-// For use_to_pickup and allow_quick_gather functionality,
-// see item/attackby() (/game/objects/items.dm)
-// Do not remove this functionality without good reason, cough reagent_containers cough.
-// -Sayu
+// External storage-related logic:
+// /mob/proc/ClickOn() in /_onclick/click.dm - clicking items in storages
+// /mob/living/Move() in /modules/mob/living/living.dm - hiding storage boxes on mob movement
+// /item/attackby() in /game/objects/items.dm - use_to_pickup and allow_quick_gather functionality
+// -- c0
 
 
 /obj/item/weapon/storage
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
-	w_class = 3.0
+	w_class = 3
+	var/silent = 0 // No message on putting items in
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
 	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
@@ -42,11 +43,11 @@
 			show_to(M)
 			return
 
-		if(!( M.restrained() ) && !( M.stat ))
-			if(!( istype(over_object, /obj/screen) ))
+		if(!M.restrained() && !M.stat)
+			if(!istype(over_object, /obj/screen))
 				return content_can_dump(over_object, M)
 
-			if(!(loc == usr) || (loc && loc.loc == usr))
+			if(loc != usr || (loc && loc.loc == usr))
 				return
 
 			playsound(loc, "rustle", 50, 1, -5)
@@ -72,6 +73,9 @@
 //Object behaviour on storage dump
 /obj/item/weapon/storage/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	for(var/obj/item/I in src_object)
+		if(user.s_active != src_object)
+			if(I.on_found(user))
+				return
 		if(can_be_inserted(I,0,user))
 			src_object.remove_from_storage(I, src)
 	orient2hud(user)
@@ -107,7 +111,7 @@
 	is_seeing |= user
 
 
-/obj/item/weapon/storage/throw_at(atom/target, range, speed)
+/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin)
 	close_all()
 	return ..()
 
@@ -168,6 +172,7 @@
 
 	if(display_contents_with_number)
 		for(var/datum/numbered_display/ND in display_contents)
+			ND.sample_object.mouse_opacity = 2
 			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
 			ND.sample_object.layer = 20
@@ -177,6 +182,7 @@
 				cy--
 	else
 		for(var/obj/O in contents)
+			O.mouse_opacity = 2 //This is here so storage items that spawn with contents correctly have the "click around item to equip"
 			O.screen_loc = "[cx]:16,[cy]:16"
 			O.maptext = ""
 			O.layer = 20
@@ -193,7 +199,7 @@
 
 	New(obj/item/sample)
 		if(!istype(sample))
-			del(src)
+			qdel(src)
 		sample_object = sample
 		number = 1
 
@@ -266,7 +272,7 @@
 
 	if(sum_w_class > max_combined_w_class)
 		if(!stop_messages)
-			usr << "<span class='warning'>[src] is full, make some space!</span>"
+			usr << "<span class='warning'>[W] won't fit in [src], make some space!</span>"
 		return 0
 
 	if(W.w_class >= w_class && (istype(W, /obj/item/weapon/storage)))
@@ -290,6 +296,8 @@
 	if(usr)
 		if(!usr.unEquip(W))
 			return 0
+	if(silent)
+		prevent_warning = 1
 	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
@@ -304,18 +312,19 @@
 					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
 				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
 					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
-				else if(W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
+				else if(W && W.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
 					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
 
 		orient2hud(usr)
 		for(var/mob/M in can_see_contents())
 			show_to(M)
+	W.mouse_opacity = 2 //So you can click on the area around the item to equip it, instead of having to pixel hunt
 	update_icon()
 	return 1
 
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
-/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location)
+/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location, burn = 0)
 	if(!istype(W)) return 0
 
 	if(istype(src, /obj/item/weapon/storage/fancy))
@@ -327,7 +336,8 @@
 			M.client.screen -= W
 
 	if(ismob(loc))
-		W.dropped(usr)
+		var/mob/M = loc
+		W.dropped(M)
 	W.layer = initial(W.layer)
 	W.loc = new_location
 
@@ -339,8 +349,15 @@
 		W.maptext = ""
 	W.on_exit_storage(src)
 	update_icon()
+	W.mouse_opacity = initial(W.mouse_opacity)
+	if(burn)
+		W.fire_act()
 	return 1
 
+
+/obj/item/weapon/storage/empty_object_contents(burn, src.loc)
+	for(var/obj/item/Item in contents)
+		remove_from_storage(Item, src.loc, burn)
 
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W, mob/user, params)
@@ -450,10 +467,13 @@
 
 
 /obj/item/weapon/storage/Destroy()
+	for(var/obj/O in contents)
+		O.mouse_opacity = initial(O.mouse_opacity)
+
 	close_all()
 	qdel(boxes)
 	qdel(closer)
-	..()
+	return ..()
 
 
 /obj/item/weapon/storage/emp_act(severity)
@@ -469,3 +489,7 @@
 		if(verbs.Find(/obj/item/weapon/storage/verb/quick_empty))
 			quick_empty()
 
+/obj/item/weapon/storage/handle_atom_del(atom/A)
+	if(A in contents)
+		usr = null
+		remove_from_storage(A, loc)

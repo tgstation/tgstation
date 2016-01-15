@@ -14,9 +14,17 @@
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
+	if(butcher_results && stat == DEAD) //can we butcher it?
+		var/sharpness = I.is_sharp()
+		if(sharpness)
+			user << "<span class='notice'>You begin to butcher [src]...</span>"
+			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+			if(do_mob(user, src, 80/sharpness))
+				harvest(user)
+			return
 	I.attack(src, user)
 
-/mob/living/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
+/mob/living/proc/attacked_by(obj/item/I, mob/living/user, def_zone)
 	apply_damage(I.force, I.damtype, def_zone)
 	if(I.damtype == "brute")
 		if(prob(33) && I.force)
@@ -63,7 +71,7 @@
 	else if(!src.force && src.w_class)
 		return Clamp(src.w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
-/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
 
 	if (!istype(M)) // not sure if this is the right thing...
 		return
@@ -76,11 +84,12 @@
 	user.lastattacked = M
 	M.lastattacker = user
 
-	add_logs(user, M, "attacked", object=src.name, addition="(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
-
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
 	M.attacked_by(src, user, def_zone)
+
+	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
+
 	return 1

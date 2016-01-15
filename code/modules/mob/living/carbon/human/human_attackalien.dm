@@ -1,4 +1,4 @@
-/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(check_shields(0, M.name))
 		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>")
 		return 0
@@ -7,7 +7,7 @@
 		if(M.a_intent == "harm")
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/damage = rand(15, 30)
+			var/damage = prob(90) ? 20 : 0
 			if(!damage)
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
@@ -21,11 +21,11 @@
 				"<span class='userdanger'>[M] has slashed at [src]!</span>")
 
 			apply_damage(damage, BRUTE, affecting, armor_block)
-			if (damage >= 25)
+			if (prob(30))
 				visible_message("<span class='danger'>[M] has wounded [src]!</span>", \
 					"<span class='userdanger'>[M] has wounded [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)
-				add_logs(M, src, "attacked", admin=0)
+				add_logs(M, src, "attacked")
 			updatehealth()
 
 		if(M.a_intent == "disarm")
@@ -33,7 +33,7 @@
 			if (randn <= 80)
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 				Weaken(5)
-				add_logs(M, src, "tackled", admin=0)
+				add_logs(M, src, "tackled")
 				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 					"<span class='userdanger'>[M] has tackled down [src]!</span>")
 			else

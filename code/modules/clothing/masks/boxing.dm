@@ -10,7 +10,7 @@
 	action_button_name = "Adjust Balaclava"
 	ignore_maskadjust = 0
 
-/obj/item/clothing/mask/balaclava/attack_self(var/mob/user)
+/obj/item/clothing/mask/balaclava/attack_self(mob/user)
 	adjustmask(user)
 
 /obj/item/clothing/mask/luchador

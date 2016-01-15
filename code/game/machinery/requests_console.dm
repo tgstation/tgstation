@@ -121,7 +121,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0
 
-/obj/machinery/requests_console/attack_hand(var/mob/user)
+/obj/machinery/requests_console/attack_hand(mob/user)
 	if(..(user))
 		return
 	var/dat = ""
@@ -211,7 +211,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					dat += "<div class='notice'>Swipe your card to authenticate yourself</div><BR>"
 				dat += "<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>"
 				dat += "<A href='?src=\ref[src];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"
-				if (announceAuth && message)
+				if ((announceAuth || IsAdminGhost(user)) && message)
 					dat += "<A href='?src=\ref[src];sendAnnouncement=1'>Announce Message</A><BR>"
 				else
 					dat += "<span class='linkOff'>Announce Message</span><BR>"
@@ -315,7 +315,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					emergency = "Medical"
 			if(radio_freq)
 				Radio.set_frequency(radio_freq)
-				Radio.talk_into(src,"[emergency] emergency declared from [department]!",radio_freq)
+				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
 				update_icon()
 				spawn(3000)
 					emergency = null
@@ -334,7 +334,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
 		if (sending)
 			var/pass = 0
-			for (var/obj/machinery/message_server/MS in world)
+			for (var/obj/machinery/message_server/MS in machines)
 				if(!MS.active) continue
 				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
 				pass = 1
@@ -359,23 +359,24 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				if(msgVerified || msgStamped)
 					authentic = " (Authenticated)"
 
+				var/alert = ""
 				for (var/obj/machinery/requests_console/Console in allConsoles)
 					if (ckey(Console.department) == ckey(href_list["department"]))
 						switch(priority)
 							if(2)		//High priority
-								Console.createmessage(src, "PRIORITY Alert in [department][authentic]", sending, 2, 1)
-								if(radio_freq)
-									Radio.talk_into(src,"PRIORITY Alert from [department][authentic]: <i>[message]</i>",radio_freq)
+								alert = "PRIORITY Alert in [department][authentic]"
+								Console.createmessage(src, alert, sending, 2, 1)
 							if(3)		// Extreme Priority
-								Console.createmessage(src, "EXTREME PRIORITY Alert from [department][authentic]", sending, 3, 1)
-								if(radio_freq)
-									Radio.talk_into(src,"EXTREME PRIORITY Alert in [department][authentic]: <i>[message]</i>",radio_freq)
+								alert = "EXTREME PRIORITY Alert from [department][authentic]"
+								Console.createmessage(src, alert , sending, 3, 1)
 							else		// Normal priority
-								Console.createmessage(src, "Message from [department][authentic]", sending, 1, 1)
-								if(radio_freq)
-									Radio.talk_into(src,"Message from [department][authentic]: <i>[message]</i>",radio_freq)
+								alert = "Message from [department][authentic]"
+								Console.createmessage(src, alert , sending, 1, 1)
 						screen = 6
 						Console.SetLuminosity(2)
+
+				if(radio_freq)
+					Radio.talk_into(src,"[alert]: <i>[message]</i>",radio_freq)
 
 				switch(priority)
 					if(2)
@@ -427,10 +428,10 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	updateUsrDialog()
 	return
 
-/obj/machinery/say_quote(var/input, list/spans)
+/obj/machinery/say_quote(input, list/spans)
 	var/ending = copytext(input, length(input) - 2)
 	if (ending == "!!!")
-		return "blares, \"attach_spans(input, spans)\""
+		return "blares, \"[attach_spans(input, spans)]\""
 
 	return ..()
 
@@ -472,7 +473,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			src.messages += "<b>From:</b> [linkedsender]<BR>[message]"
 	SetLuminosity(2)
 
-/obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob, params)
+/obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user, params)
 	if (istype(O, /obj/item/weapon/crowbar))
 		if(open)
 			user << "<span class='notice'>You close the maintenance panel.</span>"

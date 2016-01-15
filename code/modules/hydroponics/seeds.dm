@@ -7,7 +7,7 @@
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed"				//Unknown plant seed - these shouldn't exist in-game.
 	w_class = 1						//Pocketable.
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	var/plantname = "Plants"		//Name of plant when planted.
 	var/product						//A type path. The thing that is created when the plant is harvested.
 	var/species = ""				//Used to update icons. Should match the name in the sprites.
@@ -31,10 +31,10 @@
 /obj/item/seeds/proc/get_analyzer_text()  //in case seeds have something special to tell to the analyzer
 	return
 
-/obj/item/seeds/proc/on_chem_reaction(var/datum/reagents/S)  //in case seeds have some special interaction with special chems
+/obj/item/seeds/proc/on_chem_reaction(datum/reagents/S)  //in case seeds have some special interaction with special chems
 	return
 
-/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "*** <B>[plantname]</B> ***"
 		user << "-Plant Endurance: <span class='notice'>[endurance]</span>"
@@ -95,7 +95,7 @@
 	var/factions = null
 	var/contains_sample = 0
 
-/obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/seeds/replicapod/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/reagent_containers/syringe))
 		if(!contains_sample)
 			for(var/datum/reagent/blood/bloodSample in W.reagents.reagent_list)
@@ -234,6 +234,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	rarity = 10
 
 /obj/item/seeds/eggplantseed
 	name = "pack of eggplant seeds"
@@ -389,6 +390,7 @@
 	oneharvest = 1
 	potency = 20
 	growthstages = 3
+	rarity = 10
 
 /obj/item/seeds/poppyseed
 	name = "pack of poppy seeds"
@@ -736,6 +738,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
+	rarity = 20
 
 /obj/item/seeds/glowshroom
 	name = "pack of glowshroom mycelium"
@@ -744,6 +747,25 @@
 	species = "glowshroom"
 	plantname = "Glowshrooms"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
+	lifespan = 120 //ten times that is the delay
+	endurance = 30
+	maturation = 15
+	production = 1
+	yield = 3 //-> spread
+	potency = 30 //-> brightness
+	oneharvest = 1
+	growthstages = 4
+	plant_type = 2
+	rarity = 20
+	mutatelist = list(/obj/item/seeds/glowcap)
+
+/obj/item/seeds/glowcap
+	name = "pack of glowcap mycelium"
+	desc = "This mycelium -powers- into mushrooms!"
+	icon_state = "mycelium-glowcap"
+	species = "glowcap"
+	plantname = "Glowcaps"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
 	lifespan = 120 //ten times that is the delay
 	endurance = 30
 	maturation = 15
@@ -912,6 +934,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 0
+	rarity = 20
 
 /obj/item/seeds/appleseed
 	name = "pack of apple seeds"
@@ -1081,6 +1104,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	rarity = 20
 
 /obj/item/seeds/pumpkinseed
 	name = "pack of pumpkin seeds"
@@ -1114,6 +1138,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 3
+	rarity = 20
 
 /obj/item/seeds/limeseed
 	name = "pack of lime seeds"
@@ -1250,6 +1275,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 2
+	rarity = 10
 
 /obj/item/seeds/cocoapodseed
 	name = "pack of cocoa pod seeds"
@@ -1315,6 +1341,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 5
+	rarity = 10
 
 /obj/item/seeds/kudzuseed
 	name = "pack of kudzu seeds"
@@ -1339,20 +1366,28 @@
 	if(parent)
 		mutations = parent.mutations
 
+/obj/item/seeds/kudzuseed/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] swallows the pack of kudzu seeds! It looks like \he's trying to commit suicide..</span>")
+	plant(user)
+	return (BRUTELOSS)
+
 /obj/item/seeds/kudzuseed/harvest()
 	var/list/prod = ..()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/K in prod)
 		K.mutations = mutations
 
-/obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
+/obj/item/seeds/kudzuseed/proc/plant(mob/user)
 	if(istype(user.loc,/turf/space))
 		return
 	var/turf/T = get_turf(src)
-	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 	message_admins("Kudzu planted by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a>)",0,1)
 	investigate_log("was planted by [key_name(user)] at ([T.x],[T.y],[T.z])","kudzu")
 	new /obj/effect/spacevine_controller(user.loc, mutations, potency, production)
 	qdel(src)
+
+/obj/item/seeds/kudzuseed/attack_self(mob/user)
+	plant(user)
+	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 
 /obj/item/seeds/kudzuseed/get_analyzer_text()
 	var/list/mut_text = list()
@@ -1362,7 +1397,7 @@
 	mut_text += "-Plant Mutations: [(text_string == "") ? "None" : text_string]"
 	return mut_text
 
-/obj/item/seeds/kudzuseed/on_chem_reaction(var/datum/reagents/S)
+/obj/item/seeds/kudzuseed/on_chem_reaction(datum/reagents/S)
 
 	var/list/temp_mut_list = list()
 

@@ -13,8 +13,8 @@ var/time_last_changed_position = 0
 	circuit = /obj/item/weapon/circuitboard/card
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
-	var/authenticated = 0.0
-	var/mode = 0.0
+	var/authenticated = 0
+	var/mode = 0
 	var/printing = null
 	var/list/region_access = null
 	var/list/head_subordinates = null
@@ -44,7 +44,7 @@ var/time_last_changed_position = 0
 	//Assoc array: "JobName" = (int)<Opened Positions>
 	var/list/opened_positions = list();
 
-/obj/machinery/computer/card/attackby(O as obj, user as mob, params)//TODO:SANITY
+/obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = O
 		if(check_access(idcard))
@@ -73,7 +73,7 @@ var/time_last_changed_position = 0
 
 
 //Logic check for Topic() if you can open the job
-/obj/machinery/computer/card/proc/can_open_job(var/datum/job/job)
+/obj/machinery/computer/card/proc/can_open_job(datum/job/job)
 	if(job)
 		if(!job_blacklisted(job.title))
 			if((job.total_positions <= player_list.len * (max_relative_positions / 100)))
@@ -85,7 +85,7 @@ var/time_last_changed_position = 0
 	return 0
 
 //Logic check for Topic() if you can close the job
-/obj/machinery/computer/card/proc/can_close_job(var/datum/job/job)
+/obj/machinery/computer/card/proc/can_close_job(datum/job/job)
 	if(job)
 		if(!job_blacklisted(job.title))
 			if(job.total_positions > job.current_positions)
@@ -96,7 +96,7 @@ var/time_last_changed_position = 0
 			return -1
 	return 0
 
-/obj/machinery/computer/card/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/card/attack_hand(mob/user)
 	if(..())
 		return
 
@@ -391,7 +391,7 @@ var/time_last_changed_position = 0
 						t1 = newJob
 
 				else if(t1 == "Unassigned")
-					modify.access = list()
+					modify.access -= get_all_accesses()
 
 				else
 					var/datum/job/jobdatum
@@ -475,7 +475,7 @@ var/time_last_changed_position = 0
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/card/proc/get_subordinates(var/rank)
+/obj/machinery/computer/card/proc/get_subordinates(rank)
 	for(var/datum/job/job in SSjob.occupations)
 		if(rank in job.department_head)
 			head_subordinates += job.title

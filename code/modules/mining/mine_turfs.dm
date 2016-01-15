@@ -10,13 +10,16 @@ var/global/list/rockTurfEdgeCache
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock_nochance"
-	baseturf = /turf/simulated/floor/plating/asteroid
+	baseturf = /turf/simulated/floor/plating/asteroid/airless
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
 	density = 1
 	blocks_air = 1
+	layer = TURF_LAYER + 0.05
 	temperature = TCMB
+	var/environment_type = "asteroid"
+	var/turf/simulated/floor/plating/asteroid/turf_type = /turf/simulated/floor/plating/asteroid //For basalt vs normal asteroid
 	var/mineralType = null
 	var/mineralAmt = 3
 	var/spread = 0 //will the seam spread?
@@ -25,16 +28,21 @@ var/global/list/rockTurfEdgeCache
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 	var/hidden = 1
 
+/turf/simulated/mineral/volcanic
+	environment_type = "basalt"
+	turf_type = /turf/simulated/floor/plating/asteroid/basalt
+	baseturf = /turf/simulated/floor/plating/asteroid/basalt
+
 /turf/simulated/mineral/ex_act(severity, target)
 	..()
 	switch(severity)
-		if(3.0)
+		if(3)
 			if (prob(75))
 				src.gets_drilled(null, 1)
-		if(2.0)
+		if(2)
 			if (prob(90))
 				src.gets_drilled(null, 1)
-		if(1.0)
+		if(1)
 			src.gets_drilled(null, 1)
 	return
 
@@ -78,14 +86,15 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/mineral/proc/HideRock()
 	if(hidden)
+		name = "rock"
 		icon_state = "rock"
 	return
 
-/turf/simulated/mineral/proc/Spread(var/turf/T)
+/turf/simulated/mineral/Spread(turf/T)
 	new src.type(T)
 
 /turf/simulated/mineral/random
-	name = "mineral deposit"
+	name = "rock"
 	icon_state = "rock"
 	var/mineralSpawnChanceList = list(
 		"Uranium" = 5, "Diamond" = 1, "Gold" = 10,
@@ -126,6 +135,10 @@ var/global/list/rockTurfEdgeCache
 				/*if("Adamantine")
 					M = new/turf/simulated/mineral/adamantine(src)*/
 			if(M)
+				M.mineralAmt = rand(1, 5)
+				M.environment_type = src.environment_type
+				M.turf_type = src.turf_type
+				M.baseturf = src.baseturf
 				src = M
 				M.levelupdate()
 	return
@@ -215,7 +228,7 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/mineral/bscrystal
 	name = "bluespace crystal deposit"
 	icon_state = "rock_BScrystal"
-	mineralType = /obj/item/bluespace_crystal
+	mineralType = /obj/item/weapon/ore/bluespace_crystal
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
@@ -246,7 +259,7 @@ var/global/list/rockTurfEdgeCache
 		defuse()
 	..()
 
-/turf/simulated/mineral/gibtonite/proc/explosive_reaction(var/mob/user = null, triggered_by_explosion = 0)
+/turf/simulated/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
 	if(stage == 0)
 		icon_state = "rock_Gibtonite_active"
 		name = "gibtonite deposit"
@@ -272,16 +285,14 @@ var/global/list/rockTurfEdgeCache
 		countdown(notify_admins)
 
 /turf/simulated/mineral/gibtonite/proc/countdown(notify_admins = 0)
-	spawn(0)
-		while(stage == 1 && det_time > 0 && mineralAmt >= 1)
-			det_time--
-			sleep(5)
-		if(stage == 1 && det_time <= 0 && mineralAmt >= 1)
-			var/turf/bombturf = get_turf(src)
-			mineralAmt = 0
-			explosion(bombturf,1,3,5, adminlog = notify_admins)
-		if(stage == 0 || stage == 2)
-			return
+	set waitfor = 0
+	while(stage == 1 && det_time > 0 && mineralAmt >= 1)
+		det_time--
+		sleep(5)
+	if(stage == 1 && det_time <= 0 && mineralAmt >= 1)
+		var/turf/bombturf = get_turf(src)
+		mineralAmt = 0
+		explosion(bombturf,1,3,5, adminlog = notify_admins)
 
 /turf/simulated/mineral/gibtonite/proc/defuse()
 	if(stage == 1)
@@ -292,7 +303,7 @@ var/global/list/rockTurfEdgeCache
 			det_time = 0
 		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [src.det_time] reactions left till the explosion!</span>")
 
-/turf/simulated/mineral/gibtonite/gets_drilled(var/mob/user, triggered_by_explosion = 0)
+/turf/simulated/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = 0)
 	if(stage == 0 && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
 		explosive_reaction(user, triggered_by_explosion)
@@ -309,12 +320,8 @@ var/global/list/rockTurfEdgeCache
 		if(det_time >= 1 && det_time <= 2)
 			G.quality = 2
 			G.icon_state = "Gibtonite ore 2"
-	var/turf/simulated/floor/plating/asteroid/airless/gibtonite_remains/G = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless/gibtonite_remains)
+	var/turf/simulated/floor/plating/asteroid/G = ChangeTurf(turf_type)
 	G.fullUpdateMineralOverlays()
-
-/turf/simulated/floor/plating/asteroid/airless/gibtonite_remains
-	var/det_time = 0
-	var/stage = 0
 
 ////////////////////////////////End Gibtonite
 
@@ -322,6 +329,7 @@ var/global/list/rockTurfEdgeCache
 	var/length = 100
 	var/mob_spawn_list = list("Goldgrub" = 1, "Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3)
 	var/sanity = 1
+	turf_type = /turf/simulated/floor/plating/asteroid/airless
 
 /turf/simulated/floor/plating/asteroid/airless/cave/New(loc, var/length, var/go_backwards = 1, var/exclude_dir = -1)
 
@@ -344,7 +352,7 @@ var/global/list/rockTurfEdgeCache
 	SpawnFloor(src)
 	..()
 
-/turf/simulated/floor/plating/asteroid/airless/cave/proc/make_tunnel(var/dir)
+/turf/simulated/floor/plating/asteroid/airless/cave/proc/make_tunnel(dir)
 
 	var/turf/simulated/mineral/tunnel = src
 	var/next_angle = pick(45, -45)
@@ -382,7 +390,7 @@ var/global/list/rockTurfEdgeCache
 			dir = angle2dir(dir2angle(dir) + next_angle)
 
 
-/turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnFloor(var/turf/T)
+/turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	for(var/turf/S in range(2,T))
 		if(istype(S, /turf/space) || istype(S.loc, /area/mine/explored))
 			sanity = 0
@@ -391,15 +399,15 @@ var/global/list/rockTurfEdgeCache
 		return
 
 	SpawnMonster(T)
-	var/turf/simulated/floor/t = new /turf/simulated/floor/plating/asteroid/airless(T)
+	var/turf/simulated/floor/t = new turf_type(T)
 	spawn(2)
 		t.fullUpdateMineralOverlays()
 
-/turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnMonster(var/turf/T)
+/turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
 		if(istype(loc, /area/mine/explored))
 			return
-		for(var/atom/A in range(15,T))//Lowers chance of mob clumps
+		for(var/atom/A in ultra_range(15,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
 				return
 		var/randumb = pickweight(mob_spawn_list)
@@ -414,7 +422,7 @@ var/global/list/rockTurfEdgeCache
 				new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
 	return
 
-/turf/simulated/mineral/attackby(var/obj/item/weapon/pickaxe/P as obj, mob/user as mob, params)
+/turf/simulated/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)
 
 	if (!user.IsAdvancedToolUser())
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
@@ -432,11 +440,10 @@ var/global/list/rockTurfEdgeCache
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed, target = src))
-			if(istype(src, /turf/simulated/mineral)) //sanity check against turf being deleted during digspeed delay
+			if(istype(src, /turf/simulated/mineral))
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
-				P.update_icon()
 				gets_drilled(user)
-				feedback_add_details("pick_used_mining","[P.name]")
+				feedback_add_details("pick_used_mining","[P.type]")
 	else
 		return attack_hand(user)
 	return
@@ -447,29 +454,22 @@ var/global/list/rockTurfEdgeCache
 		for (i=0;i<mineralAmt;i++)
 			new mineralType(src)
 		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
-	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
+	var/turf/simulated/floor/plating/asteroid/N = ChangeTurf(turf_type)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	N.fullUpdateMineralOverlays()
 	return
 
-/turf/simulated/mineral/attack_animal(mob/living/simple_animal/user as mob)
+/turf/simulated/mineral/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash >= 2)
 		gets_drilled()
 	..()
 
-/*
-/turf/simulated/mineral/proc/setRandomMinerals()
-	var/s = pickweight(list("uranium" = 5, "iron" = 50, "gold" = 5, "silver" = 5, "plasma" = 50, "diamond" = 1))
-	if (s)
-		mineralName = s
-
-	var/N = text2path("/turf/simulated/mineral/[s]")
-	if (N)
-		var/turf/simulated/mineral/M = new N
-		src = M
-		if (src.mineralName)
-			mineralAmt = 5
-	return*/
+/turf/simulated/mineral/attack_alien(mob/living/carbon/alien/M)
+	M << "<span class='notice'>You start digging into the rock...</span>"
+	playsound(src, 'sound/effects/break_stone.ogg', 50, 1)
+	if(do_after(M,40, target = src))
+		M << "<span class='notice'>You tunnel into the rock.</span>"
+		gets_drilled(M)
 
 /turf/simulated/mineral/Bumped(AM as mob|obj)
 	..()
@@ -487,7 +487,7 @@ var/global/list/rockTurfEdgeCache
 			return
 /*	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
+		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			src.attackby(M.selected,M)
 			return*/
 //Aparantly mechs are just TOO COOL to call Bump(), so fuck em (for now)
@@ -502,10 +502,44 @@ var/global/list/rockTurfEdgeCache
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
+	var/environment_type = "asteroid"
+	var/turf_type = /turf/simulated/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
-	ignoredirt = 1
 
 /turf/simulated/floor/plating/asteroid/airless
+	oxygen = 0.01
+	nitrogen = 0.01
+	turf_type = /turf/simulated/floor/plating/asteroid/airless
+	temperature = TCMB
+
+/turf/simulated/floor/plating/asteroid/basalt
+	name = "volcanic floor"
+	baseturf = /turf/simulated/floor/plating/asteroid/basalt
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "basalt"
+	icon_plating = "basalt"
+	environment_type = "basalt"
+
+/turf/simulated/floor/plating/asteroid/basalt/lava //lava underneath
+	baseturf = /turf/simulated/floor/plating/lava/smooth
+
+/turf/simulated/floor/plating/asteroid/basalt/airless
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
+/turf/simulated/floor/plating/asteroid/snow
+	name = "snow"
+	desc = "Looks cold."
+	icon = 'icons/turf/snow.dmi'
+	baseturf = /turf/simulated/floor/plating/asteroid/snow
+	icon_state = "snow"
+	icon_plating = "snow"
+	temperature = 180
+	slowdown = 2
+	environment_type = "snow"
+
+/turf/simulated/floor/plating/asteroid/snow/airless
 	oxygen = 0.01
 	nitrogen = 0.01
 	temperature = TCMB
@@ -514,13 +548,8 @@ var/global/list/rockTurfEdgeCache
 	var/proper_name = name
 	..()
 	name = proper_name
-	//if (prob(50))
-	//	seedName = pick(list("1","2","3","4"))
-	//	seedAmt = rand(1,4)
 	if(prob(20))
-		icon_state = "asteroid[rand(0,12)]"
-//	spawn(2)
-//O		updateMineralOverlays()
+		icon_state = "[environment_type][rand(0,12)]"
 
 /turf/simulated/floor/plating/asteroid/burn_tile()
 	return
@@ -528,40 +557,27 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/floor/plating/asteroid/ex_act(severity, target)
 	contents_explosion(severity, target)
 	switch(severity)
-		if(3.0)
+		if(3)
 			return
-		if(2.0)
+		if(2)
 			if (prob(20))
 				src.gets_dug()
-		if(1.0)
+		if(1)
 			src.gets_dug()
 	return
 
-/turf/simulated/floor/plating/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/turf/simulated/floor/plating/asteroid/attackby(obj/item/weapon/W, mob/user, params)
 	//note that this proc does not call ..()
 	if(!W || !user)
 		return 0
-
-	if ((istype(W, /obj/item/weapon/shovel)))
-		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
-			return
-
-		if (dug)
-			user << "<span class='warning'>This area has already been dug!</span>"
-			return
-
-		user << "<span class='notice'>You start digging...</span>"
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
-
-		sleep(20)
-		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dig a hole.</span>"
-			gets_dug()
-			return
-
-	if ((istype(W, /obj/item/weapon/pickaxe)))
+	var/digging_speed = 0
+	if (istype(W, /obj/item/weapon/shovel))
+		var/obj/item/weapon/shovel/S = W
+		digging_speed = S.digspeed
+	else if (istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/P = W
+		digging_speed = P.digspeed
+	if (digging_speed)
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -573,11 +589,11 @@ var/global/list/rockTurfEdgeCache
 		user << "<span class='notice'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
-		sleep(P.digspeed)
-		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dig a hole.</span>"
-			gets_dug()
-			return
+		if(do_after(user, digging_speed, target = src))
+			if(istype(src, /turf/simulated/floor/plating/asteroid))
+				user << "<span class='notice'>You dig a hole.</span>"
+				gets_dug()
+				feedback_add_details("pick_used_mining","[W.type]")
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
@@ -606,8 +622,15 @@ var/global/list/rockTurfEdgeCache
 	new/obj/item/weapon/ore/glass(src)
 	new/obj/item/weapon/ore/glass(src)
 	dug = 1
-	icon_plating = "asteroid_dug"
-	icon_state = "asteroid_dug"
+	icon_plating = "[environment_type]_dug"
+	icon_state = "[environment_type]_dug"
+	slowdown = 0
+	return
+
+/turf/simulated/floor/plating/asteroid/singularity_act()
+	return
+
+/turf/simulated/floor/plating/asteroid/singularity_pull(S, current_size)
 	return
 
 /turf/proc/updateMineralOverlays()
@@ -625,10 +648,104 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/mineral/updateMineralOverlays()
 	return
 
+/turf/simulated/wall/updateMineralOverlays()
+	return
+
 /turf/proc/fullUpdateMineralOverlays()
 	for (var/turf/t in range(1,src))
 		t.updateMineralOverlays()
 
+
+
+
+
+
+
+
+//////////////CHASM//////////////////
+
+/turf/simulated/chasm
+	name = "chasm"
+	desc = "Watch your step."
+	baseturf = /turf/simulated/chasm
+	smooth = SMOOTH_TRUE
+	icon = 'icons/turf/floors/Chasms.dmi'
+	icon_state = "smooth"
+	var/drop_x = 1
+	var/drop_y = 1
+	var/drop_z = 1
+
+
+/turf/simulated/chasm/Entered(atom/movable/AM)
+	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile))
+		return
+	drop(AM)
+
+
+/turf/simulated/chasm/proc/drop(atom/movable/AM)
+	visible_message("[AM] falls into [src]!")
+	AM.forceMove(locate(drop_x, drop_y, drop_z))
+	AM.visible_message("[AM] falls from above!")
+	if(istype(AM, /mob/living))
+		var/mob/living/L = AM
+		L.adjustBruteLoss(30)
+
+
+
+/turf/simulated/chasm/straight_down/New()
+	..()
+	drop_x = x
+	drop_y = y
+	if(z+1 <= world.maxz)
+		drop_z = z+1
+
+
+
+/**********************Lavaland Turfs**************************/
+
+///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
+
+/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface
+	oxygen = 14
+	nitrogen = 23
+	temperature = 300
+	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+
+/turf/simulated/chasm/straight_down/lava_land_surface
+	oxygen = 14
+	nitrogen = 23
+	temperature = 300
+	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+
+/turf/simulated/mineral/volcanic/lava_land_surface
+	environment_type = "basalt"
+	turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface
+	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+
+/turf/simulated/floor/plating/lava/smooth/lava_land_surface
+	oxygen = 14
+	nitrogen = 23
+	temperature = 300
+	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+
+///////Underground. The underground is deadly hot. You absolutely require a suit to be down here. The floors break to lava.
+
+/turf/simulated/floor/plating/asteroid/basalt/lava_land_underground
+	oxygen = 14
+	nitrogen = 23
+	temperature = 500
+	baseturf = /turf/simulated/floor/plating/lava/smooth/lava_land_underground
+
+/turf/simulated/mineral/volcanic/lava_land_underground
+	environment_type = "basalt"
+	turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_underground
+	baseturf = /turf/simulated/floor/plating/lava/smooth/lava_land_underground
+
+/turf/simulated/floor/plating/lava/smooth/lava_land_underground
+	oxygen = 14
+	nitrogen = 23
+	temperature = 500
+	baseturf = /turf/simulated/floor/plating/lava/smooth/lava_land_underground
 
 #undef NORTH_EDGING
 #undef SOUTH_EDGING

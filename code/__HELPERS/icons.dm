@@ -217,7 +217,7 @@ world
 
 
 	// Multiply all alpha values by this float
-/icon/proc/ChangeOpacity(opacity = 1.0)
+/icon/proc/ChangeOpacity(opacity = 1)
 	MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,opacity, 0,0,0,0)
 
 // Convert to grayscale
@@ -870,7 +870,7 @@ The _flatIcons list is a cache for generated icon files.
 
 //Find's the average colour of the icon
 //By vg's ComicIronic
-/proc/AverageColour(var/icon/I)
+/proc/AverageColour(icon/I)
 	var/list/colours = list()
 	for(var/x_pixel = 1 to I.Width())
 		for(var/y_pixel = 1 to I.Height())
@@ -889,7 +889,7 @@ The _flatIcons list is a cache for generated icon files.
 
 //Interface for using DrawBox() to draw 1 pixel on a coordinate.
 //Returns the same icon specifed in the argument, but with the pixel drawn
-/proc/DrawPixel(var/icon/I,var/colour,var/drawX,var/drawY)
+/proc/DrawPixel(icon/I,colour,drawX,drawY)
 	if(!I)
 		return 0
 
@@ -906,7 +906,7 @@ The _flatIcons list is a cache for generated icon files.
 
 
 //Interface for easy drawing of one pixel on an atom.
-/atom/proc/DrawPixelOn(var/colour, var/drawX, var/drawY)
+/atom/proc/DrawPixelOn(colour, drawX, drawY)
 	var/icon/I = new(icon)
 	var/icon/J = DrawPixel(I, colour, drawX, drawY)
 	if(J) //Only set the icon if it succeeded, the icon without the pixel is 1000x better than a black square.
@@ -915,4 +915,39 @@ The _flatIcons list is a cache for generated icon files.
 	return 0
 
 
+var/global/list/humanoid_icon_cache = list()
+//For creating consistent icons for human looking simple animals
+/proc/get_flat_human_icon(var/icon_id,var/outfit,var/datum/preferences/prefs)
+	if(!icon_id || !humanoid_icon_cache[icon_id])
+		var/mob/living/carbon/human/dummy/body = new()
+		
+		if(prefs)
+			prefs.copy_to(body)
+		if(outfit)
+			body.equipOutfit(outfit, TRUE)
+		
+		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
+
+		body.dir = NORTH
+		var/icon/partial = getFlatIcon(body)
+		out_icon.Insert(partial,dir=NORTH)
+
+		body.dir = SOUTH
+		partial = getFlatIcon(body)
+		out_icon.Insert(partial,dir=SOUTH)
+
+		body.dir = WEST
+		partial = getFlatIcon(body)
+		out_icon.Insert(partial,dir=WEST)
+
+		body.dir = EAST
+		partial = getFlatIcon(body)
+		out_icon.Insert(partial,dir=EAST)
+
+		qdel(body)
+		
+		humanoid_icon_cache[icon_id] = out_icon
+		return out_icon
+	else
+		return humanoid_icon_cache[icon_id]
 

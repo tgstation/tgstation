@@ -38,7 +38,7 @@
 /obj/machinery/power/am_control_unit/Destroy()//Perhaps damage and run stability checks rather than just del on the others
 	for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 		qdel(AMS)
-	..()
+	return ..()
 
 
 /obj/machinery/power/am_control_unit/process()
@@ -118,7 +118,7 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj)
 	if(Proj.flag != "bullet")
 		stability -= Proj.force
 	return 0
@@ -138,7 +138,6 @@
 
 
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
-	if(!istype(W) || !user) return
 	if(istype(W, /obj/item/weapon/wrench))
 		if(!anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -177,16 +176,16 @@
 		stability -= W.force/2
 		check_stability()
 	..()
-	return
 
 
-/obj/machinery/power/am_control_unit/attack_hand(mob/user as mob)
+
+/obj/machinery/power/am_control_unit/attack_hand(mob/user)
 	if(anchored)
 		interact(user)
 	return
 
 
-/obj/machinery/power/am_control_unit/proc/add_shielding(var/obj/machinery/am_shielding/AMS, var/AMS_linking = 0)
+/obj/machinery/power/am_control_unit/proc/add_shielding(obj/machinery/am_shielding/AMS, AMS_linking = 0)
 	if(!istype(AMS)) return 0
 	if(!anchored) return 0
 	if(!AMS_linking && !AMS.link_control(src)) return 0
@@ -195,7 +194,7 @@
 	return 1
 
 
-/obj/machinery/power/am_control_unit/proc/remove_shielding(var/obj/machinery/am_shielding/AMS)
+/obj/machinery/power/am_control_unit/proc/remove_shielding(obj/machinery/am_shielding/AMS)
 	if(!istype(AMS)) return 0
 	linked_shielding.Remove(AMS)
 	update_shield_icons = 2

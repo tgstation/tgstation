@@ -7,7 +7,7 @@
 	if(master)
 		master.post_signal(signal, comm_line)
 	else
-		del(signal)
+		qdel(signal)
 
 /datum/computer/file/embedded_program/proc/receive_user_command(command)
 
@@ -26,7 +26,7 @@
 
 	var/on = 1
 
-/obj/machinery/embedded_controller/interact(mob/user as mob)
+/obj/machinery/embedded_controller/interact(mob/user)
 	//user << browse(return_text(), "window=computer")
 	//onclose(user, "computer")
 	user.set_machine(src)
@@ -35,7 +35,7 @@
 	popup.set_content(return_text())
 	popup.open()
 
-/obj/machinery/embedded_controller/attack_hand(mob/user as mob)
+/obj/machinery/embedded_controller/attack_hand(mob/user)
 	interact(user)
 
 /obj/machinery/embedded_controller/update_icon()
@@ -75,9 +75,9 @@
 	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/embedded_controller/radio/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
-	..()
+	if(SSradio)
+		SSradio.remove_object(src,frequency)
+	return ..()
 
 /obj/machinery/embedded_controller/radio/initialize()
 	set_frequency(frequency)
@@ -90,6 +90,6 @@
 		signal = null
 
 /obj/machinery/embedded_controller/radio/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency)
+	radio_connection = SSradio.add_object(src, frequency)

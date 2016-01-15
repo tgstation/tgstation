@@ -4,7 +4,7 @@
 	req_stat = DEAD
 
 //Revive from revival stasis
-/obj/effect/proc_holder/changeling/revive/sting_action(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/revive/sting_action(mob/living/carbon/user)
 	if(user.stat == DEAD)
 		dead_mob_list -= user
 		living_mob_list += user
@@ -31,3 +31,9 @@
 	feedback_add_details("changeling_powers","CR")
 	user.stat = CONSCIOUS
 	return 1
+
+/obj/effect/proc_holder/changeling/revive/can_be_used_by(mob/user)
+	if((user.stat != DEAD) && !(user.status_flags & FAKEDEATH))
+		user.mind.changeling.purchasedpowers -= src
+		return 0
+	. = ..()

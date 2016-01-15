@@ -2,8 +2,7 @@
 	name = "proximity sensor"
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
 	icon_state = "prox"
-	m_amt = 800
-	g_amt = 200
+	materials = list(MAT_METAL=800, MAT_GLASS=200)
 	origin_tech = "magnets=1"
 	attachable = 1
 
@@ -16,6 +15,11 @@
 
 /obj/item/device/assembly/prox_sensor/proc/sense()
 
+
+/obj/item/device/assembly/prox_sensor/New()
+	..()
+	SSobj.processing |= src
+
 /obj/item/device/assembly/prox_sensor/describe()
 	if(timing)
 		return "<span class='notice'>The proximity sensor is arming.</span>"
@@ -25,7 +29,7 @@
 	if(!..())	return 0//Cooldown check
 	timing = !timing
 	update_icon()
-	return 0
+	return 1
 
 
 /obj/item/device/assembly/prox_sensor/toggle_secure()
@@ -52,31 +56,27 @@
 	cooldown = 2
 	spawn(10)
 		process_cooldown()
-	return
 
 
 /obj/item/device/assembly/prox_sensor/process()
-	if(timing && (time >= 0))
+	if(timing)
 		time--
-	if(timing && time <= 0)
-		timing = 0
-		toggle_scan()
-		time = 10
-	return
+		if(time <= 0)
+			timing = 0
+			toggle_scan()
+			time = initial(time)
 
 
 /obj/item/device/assembly/prox_sensor/dropped()
 	spawn(0)
 		sense()
-		return
-	return
 
 
 /obj/item/device/assembly/prox_sensor/toggle_scan()
 	if(!secured)	return 0
 	scanning = !scanning
 	update_icon()
-	return
+
 
 
 /obj/item/device/assembly/prox_sensor/update_icon()
@@ -99,7 +99,7 @@
 	return
 
 
-/obj/item/device/assembly/prox_sensor/interact(mob/user as mob)//TODO: Change this to the wires thingy
+/obj/item/device/assembly/prox_sensor/interact(mob/user)//TODO: Change this to the wires thingy
 	if(is_secured(user))
 		var/second = time % 60
 		var/minute = (time - second) / 60
@@ -114,7 +114,7 @@
 
 /obj/item/device/assembly/prox_sensor/Topic(href, href_list)
 	..()
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(usr.incapacitated() || !in_range(loc, usr))
 		usr << browse(null, "window=prox")
 		onclose(usr, "prox")
 		return
@@ -138,5 +138,3 @@
 	if(usr)
 		attack_self(usr)
 
-
-	return

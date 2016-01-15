@@ -2,11 +2,15 @@
 	name = "core removal"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/incise, /datum/surgery_step/extract_core)
 	species = list(/mob/living/simple_animal/slime)
-	target_must_be_dead = 1
 
+/datum/surgery/core_removal/can_start(mob/user, mob/living/carbon/target)
+	if(target.stat == DEAD)
+		return 1
+	return 0
 
 //extract brain
 /datum/surgery_step/extract_core
+	name = "extract core"
 	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 100)
 	time = 16
 

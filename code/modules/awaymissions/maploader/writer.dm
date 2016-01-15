@@ -49,9 +49,9 @@ dmm_suite{
 		var/list/templates[0]
 		var/template_buffer = {""}
 		var/dmm_text = {""}
-		for(var/pos_z=nw.z;pos_z<=se.z;pos_z++){
-			for(var/pos_y=nw.y;pos_y>=se.y;pos_y--){
-				for(var/pos_x=nw.x;pos_x<=se.x;pos_x++){
+		for(var/pos_z in nw.z to se.z){
+			for(var/pos_y in nw.y to se.y){
+				for(var/pos_x in nw.x to se.x){
 					var/turf/test_turf = locate(pos_x,pos_y,pos_z)
 					var/test_template = make_template(test_turf, flags)
 					var/template_number = templates.Find(test_template)
@@ -67,7 +67,7 @@ dmm_suite{
 			}
 		var/key_length = round/*floor*/(log(letter_digits.len,templates.len-1)+1)
 		var/list/keys[templates.len]
-		for(var/key_pos=1;key_pos<=templates.len;key_pos++){
+		for(var/key_pos in 1 to templates.len){
 			keys[key_pos] = get_model_key(key_pos,key_length)
 			dmm_text += {""[keys[key_pos]]" = ([templates[key_pos]])\n"}
 			}
@@ -163,7 +163,7 @@ dmm_suite{
 		get_model_key(var/which as num, var/key_length as num){
 			var/key = ""
 			var/working_digit = which-1
-			for(var/digit_pos=key_length;digit_pos>=1;digit_pos--){
+			for(var/digit_pos in key_length to 1 step -1){
 				var/place_value = round/*floor*/(working_digit/(letter_digits.len**(digit_pos-1)))
 				working_digit-=place_value*(letter_digits.len**(digit_pos-1))
 				key = "[key][letter_digits[place_value+1]]"

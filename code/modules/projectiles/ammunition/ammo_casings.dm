@@ -13,23 +13,60 @@
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/weakbullet2
 
-
 /obj/item/ammo_casing/c10mm
 	desc = "A 10mm bullet casing."
 	caliber = "10mm"
 	projectile_type = /obj/item/projectile/bullet/midbullet3
-
 
 /obj/item/ammo_casing/c9mm
 	desc = "A 9mm bullet casing."
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
+/obj/item/ammo_casing/c9mmap
+	desc = "A 9mm bullet casing."
+	caliber = "9mm"
+	projectile_type =/obj/item/projectile/bullet/armourpiercing
+
+/obj/item/ammo_casing/c9mmtox
+	desc = "A 9mm bullet casing."
+	caliber = "9mm"
+	projectile_type = /obj/item/projectile/bullet/toxinbullet
+
+/obj/item/ammo_casing/c9mminc
+	desc = "A 9mm bullet casing."
+	caliber = "9mm"
+	projectile_type = /obj/item/projectile/bullet/incendiary/firebullet
+
+/obj/item/ammo_casing/c46x30mm
+	desc = "A 4.6x30mm bullet casing."
+	caliber = "4.6x30mm"
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
+
+/obj/item/ammo_casing/c46x30mmap
+	desc = "A 4.6x30mm bullet casing."
+	caliber = "4.6x30mm"
+	projectile_type =/obj/item/projectile/bullet/armourpiercing
+
+/obj/item/ammo_casing/c46x30mmtox
+	desc = "A 4.6x30mm bullet casing."
+	caliber = "4.6x30mm"
+	projectile_type = /obj/item/projectile/bullet/toxinbullet
+
+/obj/item/ammo_casing/c46x30mminc
+	desc = "A 4.6x30mm bullet casing."
+	caliber = "4.6x30mm"
+	projectile_type = /obj/item/projectile/bullet/incendiary/firebullet
 
 /obj/item/ammo_casing/c45
 	desc = "A .45 bullet casing."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/midbullet
+
+/obj/item/ammo_casing/c45nostamina
+	desc = "A .45 bullet casing."
+	caliber = ".45"
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
@@ -37,7 +74,7 @@
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet
-	m_amt = 4000
+	materials = list(MAT_METAL=4000)
 
 
 /obj/item/ammo_casing/shotgun/buckshot
@@ -45,8 +82,17 @@
 	desc = "A 12 gauge buckshot shell."
 	icon_state = "gshell"
 	projectile_type = /obj/item/projectile/bullet/pellet
-	pellets = 5
+	pellets = 6
 	variance = 0.8
+
+/obj/item/ammo_casing/shotgun/rubbershot
+	name = "rubber shot"
+	desc = "A shotgun casing filled with densely-packed rubber balls, used to incapacitate crowds from a distance."
+	icon_state = "bshell"
+	projectile_type = /obj/item/projectile/bullet/rpellet
+	pellets = 6
+	variance = 0.8
+	materials = list(MAT_METAL=4000)
 
 
 /obj/item/ammo_casing/shotgun/beanbag
@@ -54,7 +100,7 @@
 	desc = "A weak beanbag slug for riot control."
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/weakbullet
-	m_amt = 250
+	materials = list(MAT_METAL=250)
 
 
 /obj/item/ammo_casing/shotgun/improvised
@@ -62,7 +108,7 @@
 	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards."
 	icon_state = "improvshell"
 	projectile_type = /obj/item/projectile/bullet/pellet/weak
-	m_amt = 250
+	materials = list(MAT_METAL=250)
 	pellets = 5
 	variance = 0.8
 
@@ -73,9 +119,9 @@
 	propellant. It's like playing russian roulette, with a shotgun."
 	icon_state = "improvshell"
 	projectile_type = /obj/item/projectile/bullet/pellet/random
-	m_amt = 250
+	materials = list(MAT_METAL=250)
 	pellets = 5
-	variance = 1.0
+	variance = 1
 
 /obj/item/ammo_casing/shotgun/improvised/overload/New()
 	..()
@@ -87,7 +133,7 @@
 	desc = "A stunning taser slug."
 	icon_state = "stunshell"
 	projectile_type = /obj/item/projectile/bullet/stunshot
-	m_amt = 250
+	materials = list(MAT_METAL=250)
 
 
 /obj/item/ammo_casing/shotgun/meteorshot
@@ -165,18 +211,11 @@
 
 /obj/item/ammo_casing/shotgun/dart/bioterror/New()
 	..()
-	reagents.add_reagent("neurotoxin", 5)
-	reagents.add_reagent("morphine", 5)
-	reagents.add_reagent("spore", 5)
-	reagents.add_reagent("mutetoxin", 5) //;HELP OPS IN MAINT
-	reagents.add_reagent("initropidril", 5)
-	reagents.add_reagent("sodium_thiopental", 5)
-
-/obj/item/ammo_casing/a762
-	desc = "A 7.62mm bullet casing."
-	icon_state = "762-casing"
-	caliber = "a762"
-	projectile_type = /obj/item/projectile/bullet
+	reagents.add_reagent("neurotoxin", 6)
+	reagents.add_reagent("spore", 6)
+	reagents.add_reagent("mutetoxin", 6) //;HELP OPS IN MAINT
+	reagents.add_reagent("coniine", 6)
+	reagents.add_reagent("sodium_thiopental", 6)
 
 /obj/item/ammo_casing/a556
 	desc = "A 5.56mm bullet casing."
@@ -187,7 +226,7 @@
 	desc = "A caseless bullet casing."
 
 
-/obj/item/ammo_casing/caseless/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, var/distro, var/quiet)
+/obj/item/ammo_casing/caseless/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, distro, quiet)
 	if (..())
 		loc = null
 		return 1
@@ -235,7 +274,7 @@
 		icon_state = "foamdart_empty"
 		desc = "Its nerf or nothing! ... Although, this one doesn't look too safe."
 
-/obj/item/ammo_casing/caseless/foam_dart/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
 	..()
 	if (istype(A, /obj/item/weapon/screwdriver) && !modified)
 		modified = 1

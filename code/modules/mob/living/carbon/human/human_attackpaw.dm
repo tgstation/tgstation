@@ -1,4 +1,4 @@
-/mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 

@@ -19,13 +19,15 @@ var/list/world_uplinks = list()
 	var/uplink_owner = null//text-only
 	var/used_TC = 0
 
+	var/mode_override = null
+
 /obj/item/device/uplink/New()
 	..()
 	world_uplinks+=src
 
 /obj/item/device/uplink/Destroy()
 	world_uplinks-=src
-	..()
+	return ..()
 
 //Let's build a menu!
 /obj/item/device/uplink/proc/generate_menu()
@@ -36,7 +38,7 @@ var/list/world_uplinks = list()
 	dat += "<B>Request item:</B><BR>"
 	dat += "<I>Each item costs a number of tele-crystals as indicated by the number following their name.</I><br><BR>"
 
-	var/list/buyable_items = get_uplink_items()
+	var/list/buyable_items = get_uplink_items(mode_override)
 
 	// Loop through categories
 	var/index = 0
@@ -100,7 +102,7 @@ var/list/world_uplinks = list()
 			var/category = split[1]
 			var/number = text2num(split[2])
 
-			var/list/buyable_items = get_uplink_items()
+			var/list/buyable_items = get_uplink_items(mode_override)
 
 			var/list/uplink = buyable_items[category]
 			if(uplink && uplink.len >= number)
@@ -146,7 +148,7 @@ var/list/world_uplinks = list()
 	active = !active
 
 // Directly trigger the uplink. Turn on if it isn't already.
-/obj/item/device/uplink/hidden/proc/trigger(mob/user as mob)
+/obj/item/device/uplink/hidden/proc/trigger(mob/user)
 	if(!active)
 		toggle()
 	interact(user)
@@ -154,7 +156,7 @@ var/list/world_uplinks = list()
 // Checks to see if the value meets the target. Like a frequency being a traitor_frequency, in order to unlock a headset.
 // If true, it accesses trigger() and returns 1. If it fails, it returns false. Use this to see if you need to close the
 // current item's menu.
-/obj/item/device/uplink/hidden/proc/check_trigger(mob/user as mob, var/value, var/target)
+/obj/item/device/uplink/hidden/proc/check_trigger(mob/user, value, target)
 	if(value == target)
 		trigger(user)
 		return 1
@@ -172,15 +174,16 @@ var/list/world_uplinks = list()
 			return 1
 	return 0
 //Refund proc for the borg teleporter (later I'll make a general refund proc if there is demand for it)
-/obj/item/device/radio/uplink/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if(istype(W, /obj/item/weapon/antag_spawner/borg_tele))
-		var/obj/item/weapon/antag_spawner/borg_tele/S = W
-		if(!S.used)
-			hidden_uplink.uses += S.TC_cost
-			qdel(S)
-			user << "<span class='notice'>Teleporter refunded.</span>"
-		else
-			user << "<span class='warning'>This teleporter is already used!</span>"
+/obj/item/device/radio/uplink/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W))
+		for(var/path in subtypesof(/datum/uplink_item))
+			var/datum/uplink_item/D = path
+			if(initial(D.item) == W.type && initial(D.refundable))
+				hidden_uplink.uses += (D.cost)
+				hidden_uplink.used_TC -= initial(D.cost)
+				user << "<span class='notice'>[W] refunded.</span>"
+				qdel(W)
+				return
 
 // PRESET UPLINKS
 // A collection of preset uplinks.
@@ -192,14 +195,14 @@ var/list/world_uplinks = list()
 	hidden_uplink = new(src)
 	icon_state = "radio"
 
-/obj/item/device/radio/uplink/attack_self(mob/user as mob)
+/obj/item/device/radio/uplink/attack_self(mob/user)
 	if(hidden_uplink)
 		hidden_uplink.trigger(user)
 
 /obj/item/device/multitool/uplink/New()
 	hidden_uplink = new(src)
 
-/obj/item/device/multitool/uplink/attack_self(mob/user as mob)
+/obj/item/device/multitool/uplink/attack_self(mob/user)
 	if(hidden_uplink)
 		hidden_uplink.trigger(user)
 
@@ -210,6 +213,3 @@ var/list/world_uplinks = list()
 	..()
 	hidden_uplink = new(src)
 	hidden_uplink.uses = 20
-
-
-

@@ -40,23 +40,23 @@
 		src.colorlist += D
 
 
-/obj/machinery/pdapainter/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/pdapainter/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/device/pda))
 		if(storedpda)
 			user << "<span class='warning'>There is already a PDA inside!</span>"
 			return
 		else
-			var/obj/item/device/pda/P = usr.get_active_hand()
+			var/obj/item/device/pda/P = user.get_active_hand()
 			if(istype(P))
 				if(!user.drop_item())
 					return
 				storedpda = P
 				P.loc = src
-				P.add_fingerprint(usr)
+				P.add_fingerprint(user)
 				update_icon()
 
 
-/obj/machinery/pdapainter/attack_hand(mob/user as mob)
+/obj/machinery/pdapainter/attack_hand(mob/user)
 	..()
 
 	src.add_fingerprint(user)

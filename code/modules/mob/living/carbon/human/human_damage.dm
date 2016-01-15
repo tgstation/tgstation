@@ -33,13 +33,13 @@
 	return amount
 
 
-/mob/living/carbon/human/adjustBruteLoss(var/amount)
+/mob/living/carbon/human/adjustBruteLoss(amount)
 	if(amount > 0)
 		take_overall_damage(amount, 0)
 	else
 		heal_overall_damage(-amount, 0)
 
-/mob/living/carbon/human/adjustFireLoss(var/amount)
+/mob/living/carbon/human/adjustFireLoss(amount)
 	if(amount > 0)
 		take_overall_damage(0, amount)
 	else
@@ -58,7 +58,7 @@
 ////////////////////////////////////////////
 
 //Returns a list of damaged organs
-/mob/living/carbon/human/proc/get_damaged_organs(var/brute, var/burn)
+/mob/living/carbon/human/proc/get_damaged_organs(brute, burn)
 	var/list/obj/item/organ/limb/parts = list()
 	for(var/obj/item/organ/limb/O in organs)
 		if((brute && O.brute_dam) || (burn && O.burn_dam))
@@ -76,7 +76,7 @@
 //Heals ONE external organ, organ gets randomly selected from damaged ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
-/mob/living/carbon/human/heal_organ_damage(var/brute, var/burn)
+/mob/living/carbon/human/heal_organ_damage(brute, burn)
 	var/list/obj/item/organ/limb/parts = get_damaged_organs(brute,burn)
 	if(!parts.len)	return
 	var/obj/item/organ/limb/picked = pick(parts)
@@ -87,7 +87,7 @@
 //Damages ONE external organ, organ gets randomly selected from damagable ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
-/mob/living/carbon/human/take_organ_damage(var/brute, var/burn)
+/mob/living/carbon/human/take_organ_damage(brute, burn)
 	var/list/obj/item/organ/limb/parts = get_damageable_organs()
 	if(!parts.len)	return
 	var/obj/item/organ/limb/picked = pick(parts)
@@ -98,7 +98,7 @@
 
 
 //Heal MANY external organs, in random order
-/mob/living/carbon/human/heal_overall_damage(var/brute, var/burn)
+/mob/living/carbon/human/heal_overall_damage(brute, burn)
 	var/list/obj/item/organ/limb/parts = get_damaged_organs(brute,burn)
 
 	var/update = 0
@@ -118,7 +118,7 @@
 	if(update)	update_damage_overlays(0)
 
 // damage MANY external organs, in random order
-/mob/living/carbon/human/take_overall_damage(var/brute, var/burn)
+/mob/living/carbon/human/take_overall_damage(brute, burn)
 	if(status_flags & GODMODE)	return	//godmode
 
 	var/list/obj/item/organ/limb/parts = get_damageable_organs()
@@ -146,12 +146,12 @@
 /mob/living/carbon/human/proc/restore_blood()
 	if(!(NOBLOOD in dna.species.specflags))
 		var/blood_volume = vessel.get_reagent_amount("blood")
-		vessel.add_reagent("blood",560.0-blood_volume)
+		vessel.add_reagent("blood",560-blood_volume)
 
 ////////////////////////////////////////////
 
 
-/mob/living/carbon/human/proc/get_organ(var/zone)
+/mob/living/carbon/human/proc/get_organ(zone)
 	if(!zone)	zone = "chest"
 	for(var/obj/item/organ/limb/O in organs)
 		if(O.name == zone)
@@ -159,39 +159,6 @@
 	return null
 
 
-/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
-	if(dna)	// if you have a species, it will run the apply_damage code there instead
-		dna.species.apply_damage(damage, damagetype, def_zone, blocked, src)
-	else
-		if((damagetype != BRUTE) && (damagetype != BURN))
-			..(damage, damagetype, def_zone, blocked)
-			return 1
-
-		else
-			blocked = (100-blocked)/100
-			if(blocked <= 0)	return 0
-
-			var/obj/item/organ/limb/organ = null
-			if(isorgan(def_zone))
-				organ = def_zone
-			else
-				if(!def_zone)	def_zone = ran_zone(def_zone)
-				organ = get_organ(check_zone(def_zone))
-			if(!organ)	return 0
-
-			damage = (damage * blocked)
-
-			switch(damagetype)
-				if(BRUTE)
-					damageoverlaytemp = 20
-					if(organ.take_damage(damage, 0))
-						update_damage_overlays(0)
-				if(BURN)
-					damageoverlaytemp = 20
-					if(organ.take_damage(0, damage))
-						update_damage_overlays(0)
-
-		// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
-
-		updatehealth()
-	return 1
+/mob/living/carbon/human/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
+	// depending on the species, it will run the corresponding apply_damage code there
+	return dna.species.apply_damage(damage, damagetype, def_zone, blocked, src)

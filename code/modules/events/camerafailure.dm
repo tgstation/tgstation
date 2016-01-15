@@ -16,5 +16,6 @@
 	while(prob(round(100/iterations)))
 		while(!("SS13" in C.network))
 			C = pick(cameranet.cameras)
-		C.deactivate(null, 0)
+		if(C.status)
+			C.deactivate(null, 0)
 		iterations *= 2.5

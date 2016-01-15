@@ -1,8 +1,9 @@
-var/datum/subsystem/npcpool/SSbp
+var/datum/subsystem/npcpool/SSnpc
 
 /datum/subsystem/npcpool
-	name = "NPCPool"
-	priority = 100
+	name = "NPC Pool"
+	priority = 17
+	display = 6
 
 	var/list/canBeUsed = list()
 	var/list/canBeUsed_non = list()
@@ -12,12 +13,12 @@ var/datum/subsystem/npcpool/SSbp
 	var/list/botPool_l = list() //list of all npcs using the pool
 	var/list/botPool_l_non = list() //list of all non SNPC mobs using the pool
 
-/datum/subsystem/npcpool/proc/insertBot(var/toInsert)
+/datum/subsystem/npcpool/proc/insertBot(toInsert)
 	if(istype(toInsert,/mob/living/carbon/human/interactive))
 		botPool_l |= toInsert
 
 /datum/subsystem/npcpool/New()
-	NEW_SS_GLOBAL(SSbp)
+	NEW_SS_GLOBAL(SSnpc)
 
 /datum/subsystem/npcpool/stat_entry()
 	..("T:[botPool_l.len + botPool_l_non.len]|D:[needsDelegate.len]|A:[needsAssistant.len + needsHelp_non.len]|U:[canBeUsed.len + canBeUsed_non.len]")

@@ -1,6 +1,6 @@
 /datum/wires/mulebot
 	random = 1
-	holder_type = /obj/machinery/bot/mulebot
+	holder_type = /mob/living/simple_animal/bot/mulebot
 	wire_count = 10
 
 var/const/WIRE_POWER1 = 1			// power connections
@@ -13,19 +13,19 @@ var/const/WIRE_REMOTE_RX = 64		// remote recv functions
 var/const/WIRE_REMOTE_TX = 128	// remote trans status
 var/const/WIRE_BEACON_RX = 256	// beacon ping recv
 
-/datum/wires/mulebot/CanUse(var/mob/living/L)
-	var/obj/machinery/bot/mulebot/M = holder
+/datum/wires/mulebot/CanUse(mob/living/L)
+	var/mob/living/simple_animal/bot/mulebot/M = holder
 	if(M.open)
 		return 1
 	return 0
 
 // So the wires do not open a new window, handle the interaction ourselves.
-/datum/wires/mulebot/Interact(var/mob/living/user)
+/datum/wires/mulebot/Interact(mob/living/user)
 	if(CanUse(user))
-		var/obj/machinery/bot/mulebot/M = holder
-		M.interact(user)
+		var/mob/living/simple_animal/bot/mulebot/M = holder
+		M.update_controls()
 
-/datum/wires/mulebot/UpdatePulsed(var/index)
+/datum/wires/mulebot/UpdatePulsed(index)
 	switch(index)
 		if(WIRE_POWER1, WIRE_POWER2)
 			holder.visible_message("<span class='notice'>\icon[holder] The charge light flickers.</span>")

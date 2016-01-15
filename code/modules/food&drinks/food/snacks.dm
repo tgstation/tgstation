@@ -92,7 +92,7 @@
 
 				if(!do_mob(user, M))
 					return
-				add_logs(user, M, "fed", object="[reagentlist(src)]")
+				add_logs(user, M, "fed", reagentlist(src))
 				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
 									"<span class='userdanger'>[user] feeds [M] to eat [src].</span>")
 
@@ -150,9 +150,9 @@
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
 			return 0
-	if(is_sharp(W))
-		var/sharpness = is_sharp(W)
-		if(slice(sharpness, W, user))
+	var/sharp = W.is_sharp()
+	if(sharp)
+		if(slice(sharp, W, user))
 			return 1
 
 //Called when you finish tablecrafting a snack.
@@ -162,21 +162,21 @@
 			var/amount = bonus_reagents[r_id]
 			reagents.add_reagent(r_id, amount)
 
-/obj/item/weapon/reagent_containers/food/snacks/proc/slice(var/accuracy, obj/item/weapon/W, mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/proc/slice(accuracy, obj/item/weapon/W, mob/user)
 	if((slices_num <= 0 || !slices_num) || !slice_path) //is the food sliceable?
 		return 0
 
 	if ( \
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
-			!(locate(/obj/structure/optable) in src.loc) && \
+			!(locate(/obj/structure/table/optable) in src.loc) && \
 			!(locate(/obj/item/weapon/storage/bag/tray) in src.loc) \
 		)
 		user << "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>"
 		return 1
 
 	var/slices_lost = 0
-	if (accuracy > 1)
+	if (accuracy >= IS_SHARP_ACCURATE)
 		user.visible_message( \
 			"[user] slices [src].", \
 			"<span class='notice'>You slice [src].</span>" \
@@ -223,7 +223,7 @@
 	if(contents)
 		for(var/atom/movable/something in contents)
 			something.loc = get_turf(src)
-	..()
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	if(isanimal(M))
@@ -278,7 +278,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/store/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(W.w_class <= 2 & !istype(W, /obj/item/weapon/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
-		if(is_sharp(W))
+		if(W.is_sharp())
 			return 0
 		if(stored_item)
 			return 0

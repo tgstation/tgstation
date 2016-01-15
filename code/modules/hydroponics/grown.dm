@@ -20,7 +20,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	potency = -1
 	dried_type = -1 //bit different. saves us from having to define each stupid grown's dried_type as itself. If you don't want a plant to be driable (watermelons) set this to null in the time definition.
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc, new_potency = 50)
 	..()
@@ -49,7 +49,7 @@
 		return 1
 	return 0
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user, params)
 	..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		var/msg
@@ -73,7 +73,7 @@
 		return
 	return
 
-/obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/item/weapon/grown/attackby(obj/item/O, mob/user, params)
 	..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		var/msg
@@ -193,7 +193,7 @@
 		reagents.add_reagent("vitamin", 1 + round((potency / 25), 1))
 		bitesize = reagents.total_volume
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
@@ -305,7 +305,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/Destroy()
 	if(istype(loc,/mob))
 		loc.AddLuminosity(round(-potency / 5,1))
-	..()
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/pickup(mob/user)
 	src.SetLuminosity(0)
@@ -487,7 +487,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
-	if(is_sharp(W))
+	if(W.is_sharp())
 		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
 		new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
 		qdel(src)
@@ -646,7 +646,7 @@
 		reagents.add_reagent("vitamin", 1 + round((potency / 25), 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/chili/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/snacks/grown/chili/attackby(obj/item/O, mob/user, params)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
@@ -666,7 +666,7 @@
 	reagents.add_reagent("frostoil", 3+round(potency / 5, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/attackby(obj/item/O, mob/user, params)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Frost Oil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>"
@@ -687,12 +687,12 @@
 	reagents.add_reagent("condensedcapsaicin", 4+round(potency / 4, 1))
 	bitesize = 1 + round(reagents.total_volume / 4, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attackby(obj/item/O, mob/user, params)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
 	..()
 	if( istype(src.loc, /mob) )
 		held_mob = src.loc
@@ -806,17 +806,16 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/proc/squish(atom/target)
-	new splat(src.loc)
-	src.visible_message("The [src.name] has been squashed.","<span class='italics'>You hear a smack.</span>")
+	var/turf/T = get_turf(target)
+	new splat(T)
+	visible_message("The [src.name] has been squashed.","<span class='italics'>You hear a smack.</span>")
 	for(var/atom/A in get_turf(target))
-		src.reagents.reaction(A)
+		reagents.reaction(A)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom)
-	..()
-	squish(hit_atom)
-	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
-	return
-
+	if(!..()) //was it caught by a mob?
+		squish(hit_atom)
+		qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer
 	seed = /obj/item/seeds/killertomatoseed
@@ -832,7 +831,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 		return
 	..()
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user)
 	if(awakening || istype(user.loc,/turf/space))
 		return
 	user << "<span class='notice'>You begin to awaken the Killer Tomato...</span>"
@@ -861,9 +860,9 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	splat = /obj/effect/gibspawner/generic
 	filling_color = "#FF0000"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood/add_juice(var/loc, var/potency = 10)
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood/add_juice(loc, potency = 10)
 	..()
-	reagents.add_reagent("blood", 1 + round((potency / 5), 1))
+	reagents.add_reagent("blood", 1 + round((potency / 5)), list("blood_type"="O-"))
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue
@@ -896,7 +895,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	..()
 	reagents.add_reagent("singulo", 1 + round((potency / 5), 1))
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace/attack_self(var/mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace/attack_self(mob/user)
 	squish(user)
 	user.unEquip(src)
 	src.visible_message("[user] squashes the [src.name].","<span class='italics'>You hear a smack.</span>")
@@ -906,7 +905,8 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	..()
 	var/teleport_radius = potency / 10
 	if(isliving(squishee))
-		new /obj/effect/decal/cleanable/molten_item(squishee.loc) //Leave a pile of goo behind for dramatic effect...
+		var/turf/T = get_turf(squishee)
+		new /obj/effect/decal/cleanable/molten_item(T) //Leave a pile of goo behind for dramatic effect...
 		do_teleport(squishee, get_turf(squishee), teleport_radius)
 
 
@@ -961,7 +961,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 		reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/grass/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/grass/attack_self(mob/user)
 	user << "<span class='notice'>You prepare the astroturf.</span>"
 	var/grassAmt = 1 + round(potency / 50) // The grass we're holding
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/grass/G in user.loc) // The grass on the floor
@@ -986,7 +986,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	desc = "The textile industry's dark secret."
 	icon_state = "carpetclump"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/carpet/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/carpet/attack_self(mob/user)
 	user << "<span class='notice'>You roll out the red carpet.</span>"
 	var/carpetAmt = 1 + round(potency / 50) // The carpet we're holding
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/carpet/C in user.loc) // The carpet on the floor
@@ -1051,7 +1051,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	reagents.add_reagent("morphine", 3+round(potency / 3, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi/attackby(obj/item/O, mob/user, params)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Anti-Toxin: <i>[reagents.get_reagent_amount("charcoal")]%</i></span>"
@@ -1071,7 +1071,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	reagents.add_reagent("mushroomhallucinogen", 1 + round(potency / 25, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita/attackby(obj/item/O, mob/user, params)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>"
@@ -1091,7 +1091,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	reagents.add_reagent("mushroomhallucinogen", 1 + round(potency / 25, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel/attackby(obj/item/O, mob/user, params)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>"
@@ -1104,13 +1104,13 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	icon_state = "libertycap"
 	filling_color = "#DAA520"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/add_juice(var/loc, var/potency = 15)
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/add_juice(loc, potency = 15)
 	..()
 	reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
 	reagents.add_reagent("mushroomhallucinogen", 3+round(potency / 5, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/attackby(obj/item/O, mob/user, params)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Mushroom Hallucinogen: <i>[reagents.get_reagent_amount("mushroomhallucinogen")]%</i></span>"
@@ -1141,7 +1141,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	reagents.add_reagent("nutriment", 2+round((potency / 10), 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user)
 	if(istype(user.loc,/turf/space))
 		return
 	var/mob/living/simple_animal/hostile/mushroom/M = new /mob/living/simple_animal/hostile/mushroom(user.loc)
@@ -1172,6 +1172,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	desc = "<I>Mycena Bregprox</I>: This species of mushroom glows in the dark."
 	icon_state = "glowshroom"
 	filling_color = "#00FA9A"
+	var/effect_path = /obj/effect/glowshroom
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/New(var/loc, var/new_potency = 10)
 	..()
@@ -1194,21 +1195,21 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	reagents.add_reagent("radium", 1 + round((potency / 20), 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
 	if(istype(user.loc,/turf/space))
 		return
-	var/obj/effect/glowshroom/planted = new /obj/effect/glowshroom(user.loc)
+	var/obj/effect/glowshroom/planted = new effect_path(user.loc)
 	planted.delay = planted.delay - production * 100 //So the delay goes DOWN with better stats instead of up. :I
 	planted.endurance = endurance
 	planted.yield = yield
 	planted.potency = potency
+	user << "<span class='notice'>You plant [src].</span>"
 	qdel(src)
-	user << "<span class='notice'>You plant the glowshroom.</span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Destroy()
 	if(istype(loc,/mob))
 		loc.AddLuminosity(round(-potency / 10,1))
-	..()
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
 	SetLuminosity(0)
@@ -1218,6 +1219,28 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	user.AddLuminosity(round(-potency / 10,1))
 	SetLuminosity(round(potency / 10,1))
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
+	seed = /obj/item/seeds/glowcap
+	name = "glowcap cluster"
+	desc = "<I>Mycena Ruthenia</I>: This species of mushroom glows in the dark, but aren't bioluminescent. They're warm to the touch..."
+	icon_state = "glowcap"
+	filling_color = "#00FA9A"
+	effect_path = /obj/effect/glowshroom/glowcap
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap/On_Consume()
+	if(!reagents.total_volume)
+		var/batteries_recharged = 0
+		for(var/obj/item/weapon/stock_parts/cell/C in usr.GetAllContents())
+			var/newcharge = (potency*0.01)*C.maxcharge
+			if(C.charge < newcharge)
+				C.charge = newcharge
+				if(isobj(C.loc))
+					var/obj/O = C.loc
+					O.update_icon() //update power meters and such
+				batteries_recharged = 1
+		if(batteries_recharged)
+			usr << "<span class='notice'>Battery has recovered.</span>"
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit
 	seed = /obj/item/seeds/cashseed
@@ -1290,7 +1313,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	desc = "Dry them out to make coffee."
 	icon_state = "coffee_robusta"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta/add_juice(var/loc, var/potency = 20)
+/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta/add_juice(loc, potency = 20)
 	..()
 	reagents.add_reagent("morphine", 1 + round((potency / 20), 1))
 

@@ -12,12 +12,12 @@
 	action_button_name = "Adjust Breath Mask"
 	ignore_maskadjust = 0
 	flags_cover = MASKCOVERSMOUTH
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
-/obj/item/clothing/mask/breath/attack_self(var/mob/user)
+/obj/item/clothing/mask/breath/attack_self(mob/user)
 	adjustmask(user)
 
-/obj/item/clothing/mask/breath/AltClick(var/mob/user)
+/obj/item/clothing/mask/breath/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(user))
 		user << "<span class='warning'>You can't do that right now!</span>"

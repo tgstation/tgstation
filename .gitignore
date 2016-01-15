@@ -8,3 +8,5 @@
 *.rsc
 *.lk
 *.int
+*.backup
+*.int

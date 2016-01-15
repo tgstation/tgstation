@@ -7,8 +7,7 @@
 	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	m_amt = 50
-	g_amt = 20
+	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	action_button_name = "Toggle Light"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
@@ -22,7 +21,7 @@
 		icon_state = initial(icon_state)
 		SetLuminosity(0)
 
-/obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
+/obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		if(loc == user)
@@ -45,7 +44,7 @@
 	return 1
 
 
-/obj/item/device/flashlight/attack(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
+/obj/item/device/flashlight/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
 	if(on && user.zone_sel.selecting == "eyes")
 
@@ -120,7 +119,7 @@
 			return
 	..()
 
-/obj/item/device/flashlight/pen/proc/CreateHolo(var/tturf,var/creator)
+/obj/item/device/flashlight/pen/proc/CreateHolo(tturf,creator)
 	var/obj/effect/medical_holosign/M = new /obj/effect/medical_holosign(tturf)
 	M.visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
 	holo_cooldown = 1
@@ -160,8 +159,7 @@
 	brightness_on = 5
 	w_class = 4
 	flags = CONDUCT
-	m_amt = 0
-	g_amt = 0
+	materials = list()
 	on = 1
 
 
@@ -193,7 +191,7 @@ obj/item/device/flashlight/lamp/bananalamp
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = 2.0
+	w_class = 2
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
@@ -201,6 +199,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
+	heat = 1000
 
 /obj/item/device/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
@@ -227,7 +226,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	else
 		update_brightness(null)
 
-/obj/item/device/flashlight/flare/update_brightness(var/mob/user = null)
+/obj/item/device/flashlight/flare/update_brightness(mob/user = null)
 	..()
 	if(on)
 		item_state = "[initial(item_state)]-on"
@@ -251,18 +250,23 @@ obj/item/device/flashlight/lamp/bananalamp
 		damtype = "fire"
 		SSobj.processing += src
 
+/obj/item/device/flashlight/flare/is_hot()
+	return on * heat
+
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
 	w_class = 4
-	brightness_on = 7
+	brightness_on = 4
 	icon_state = "torch"
 	item_state = "torch"
 	on_damage = 10
+	slot_flags = null
 
 /obj/item/device/flashlight/lantern
 	name = "lantern"
 	icon_state = "lantern"
+	item_state = "lantern"
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
 
@@ -276,8 +280,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	item_state = "slime"
 	w_class = 2
 	slot_flags = SLOT_BELT
-	m_amt = 0
-	g_amt = 0
+	materials = list()
 	brightness_on = 6 //luminosity when on
 
 /obj/item/device/flashlight/emp
@@ -294,7 +297,7 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/emp/Destroy()
 		SSobj.processing.Remove(src)
-		..()
+		return ..()
 
 /obj/item/device/flashlight/emp/process()
 		charge_tick++
@@ -303,20 +306,22 @@ obj/item/device/flashlight/lamp/bananalamp
 		emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
 		return 1
 
-/obj/item/device/flashlight/emp/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
 	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
 		..()
 	return
 
 /obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity) return
+	if(istype(A, /obj/item/weapon/storage/) && A.loc == user) 
+		return
 	if (emp_cur_charges > 0)
 		emp_cur_charges -= 1
 		A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
 											"<span class='userdanger'>[user] blinks \the [src] at \the [A].")
 		if(ismob(A))
 			var/mob/M = A
-			add_logs(user, M, "attacked", object="EMP-light")
+			add_logs(user, M, "attacked", "EMP-light")
 		user << "\The [src] now has [emp_cur_charges] charge\s."
 		A.emp_act(1)
 	else

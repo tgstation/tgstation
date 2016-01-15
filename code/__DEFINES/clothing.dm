@@ -44,6 +44,7 @@
 #define slot_s_store		17
 #define slot_in_backpack	18
 #define slot_legcuffed		19
+#define slot_drone_storage	20
 
 //Cant seem to find a mob bitflags area other than the powers one
 

@@ -29,9 +29,11 @@
 /obj/machinery/particle_accelerator/control_box/Destroy()
 	if(active)
 		toggle_power()
-	..()
+	qdel(wires)
+	wires = null
+	return ..()
 
-/obj/machinery/particle_accelerator/control_box/attack_hand(mob/user as mob)
+/obj/machinery/particle_accelerator/control_box/attack_hand(mob/user)
 	if(construction_state >= 3)
 		interact(user)
 	else if(construction_state == 2) // Wires exposed
@@ -113,7 +115,7 @@
 		part.strength = strength
 		part.update_icon()
 
-/obj/machinery/particle_accelerator/control_box/proc/add_strength(var/s)
+/obj/machinery/particle_accelerator/control_box/proc/add_strength(s)
 	if(assembled)
 		strength++
 		if(strength > strength_upper_limit)
@@ -124,7 +126,7 @@
 			investigate_log("increased to <font color='red'>[strength]</font> by [key_name(usr)]","singulo")
 		strength_change()
 
-/obj/machinery/particle_accelerator/control_box/proc/remove_strength(var/s)
+/obj/machinery/particle_accelerator/control_box/proc/remove_strength(s)
 	if(assembled)
 		strength--
 		if(strength < 0)
@@ -196,7 +198,7 @@
 		return 0
 
 
-/obj/machinery/particle_accelerator/control_box/proc/check_part(var/turf/T, var/type)
+/obj/machinery/particle_accelerator/control_box/proc/check_part(turf/T, type)
 	if(!(T)||!(type))
 		return 0
 	var/obj/structure/particle_accelerator/PA = locate(/obj/structure/particle_accelerator) in T

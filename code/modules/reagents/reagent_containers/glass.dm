@@ -1,9 +1,10 @@
 /obj/item/weapon/reagent_containers/glass
 	name = "glass"
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5, 10, 15, 25, 30, 50)
+	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	flags = OPENCONTAINER
+	spillable = 1
 
 	can_be_placed_into = list(
 		/obj/machinery/chem_master/,
@@ -19,9 +20,9 @@
 		/obj/structure/closet,
 		/obj/structure/sink,
 		/obj/item/weapon/storage,
-		/obj/machinery/atmospherics/unary/cryo_cell,
+		/obj/machinery/atmospherics/components/unary/cryo_cell,
 		/obj/item/weapon/grenade/chem_grenade,
-		/obj/machinery/bot/medbot,
+		/mob/living/simple_animal/bot/medbot,
 		/obj/machinery/computer/pandemic,
 		/obj/structure/safe,
 		/obj/machinery/disposal,
@@ -33,22 +34,49 @@
 
 
 
-/obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
-	if((!proximity) || !check_allowed_items(target)) return
-
-	if(ismob(target) && target.reagents && reagents.total_volume)
-		var/mob/M = target
-		var/R
-		target.visible_message("<span class='danger'>[user] has splashed [target] with something!</span>", \
-						"<span class='userdanger'>[user] has splashed [target] with something!</span>")
-		if(reagents)
-			for(var/datum/reagent/A in reagents.reagent_list)
-				R += A.id + " ("
-				R += num2text(A.volume) + "),"
-		add_logs(user, M, "splashed", object="[R]")
-		reagents.reaction(target, TOUCH)
-		reagents.clear_reagents()
+/obj/item/weapon/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
+	if(!canconsume(M, user))
 		return
+
+	if(!spillable)
+		return
+
+	if(!reagents || !reagents.total_volume)
+		user << "<span class='warning'>[src] is empty!</span>"
+		return
+
+	if(istype(M))
+		if(user.a_intent == "harm")
+			var/R
+			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
+							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
+			if(reagents)
+				for(var/datum/reagent/A in reagents.reagent_list)
+					R += A.id + " ("
+					R += num2text(A.volume) + "),"
+			reagents.reaction(M, TOUCH)
+			add_logs(user, M, "splashed", R)
+			reagents.clear_reagents()
+		else
+			if(M != user)
+				M.visible_message("<span class='danger'>[user] attempts to feed something to [M].</span>", \
+							"<span class='userdanger'>[user] attempts to feed something to you.</span>")
+				if(!do_mob(user, M))
+					return
+				if(!reagents || !reagents.total_volume)
+					return // The drink might be empty after the delay, such as by spam-feeding
+				M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
+				add_logs(user, M, "fed", reagentlist(src))
+			else
+				user << "<span class='notice'>You swallow a gulp of [src].</span>"
+			var/fraction = min(5/reagents.total_volume, 1)
+			reagents.reaction(M, INGEST, fraction)
+			spawn(5)
+				reagents.trans_to(M, 5)
+			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+
+/obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
+	if((!proximity) || !check_allowed_items(target,target_self=1)) return
 
 	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
@@ -60,7 +88,7 @@
 			user << "<span class='notice'>[src] is full.</span>"
 			return
 
-		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 		user << "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>"
 
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
@@ -85,14 +113,14 @@
 		return
 
 	else if(reagents.total_volume)
-		user << "<span class='notice'>You splash the solution onto [target].</span>"
-		reagents.reaction(target, TOUCH)
-		reagents.clear_reagents()
+		if(user.a_intent == "harm")
+			user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
+								"<span class='notice'>You splash the contents of [src] onto [target].</span>")
+			reagents.reaction(target, TOUCH)
+			reagents.clear_reagents()
 
-/obj/item/weapon/reagent_containers/glass/attackby(var/obj/item/I, mob/user as mob, params)
-	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
-		return
-	var/hotness = is_hot(I)
+/obj/item/weapon/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
+	var/hotness = I.is_hot()
 	if(hotness)
 		var/added_heat = (hotness / 100) //ishot returns a temperature
 		if(reagents)
@@ -122,8 +150,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
-	m_amt = 0
-	g_amt = 500
+	materials = list(MAT_GLASS=500)
 
 /obj/item/weapon/reagent_containers/glass/beaker/New()
 	..()
@@ -167,17 +194,17 @@
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units."
 	icon_state = "beakerlarge"
-	g_amt = 2500
+	materials = list(MAT_GLASS=2500)
 	volume = 100
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50,100)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
 	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
-	g_amt = 500
+	materials = list(MAT_GLASS=500)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	flags = OPENCONTAINER | NOREACT
@@ -186,10 +213,10 @@
 	name = "bluespace beaker"
 	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
 	icon_state = "beakerbluespace"
-	g_amt = 5000
+	materials = list(MAT_GLASS=5000)
 	volume = 300
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50,100,300)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
@@ -223,15 +250,16 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "bucket"
 	item_state = "bucket"
-	m_amt = 200
-	g_amt = 0
-	w_class = 3.0
+	materials = list(MAT_METAL=200)
+	w_class = 3
 	amount_per_transfer_from_this = 20
-	possible_transfer_amounts = list(10,20,30,50,70)
+	possible_transfer_amounts = list(10,15,20,25,30,50,70)
 	volume = 70
-	flags = OPENCONTAINER
+	flags = OPENCONTAINER | BLOCKHAIR
+	slot_flags = SLOT_HEAD
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) //Weak melee protection, because you can wear it on your head
 
-/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/O, mob/user as mob, params)
+/obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/mop))
 		if(reagents.total_volume < 1)
 			user << "<span class='warning'>[src] is out of water!</span>"
@@ -247,3 +275,19 @@
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 	else
 		..()
+
+/obj/item/weapon/reagent_containers/glass/bucket/equipped(mob/user, slot)
+	..()
+	if(slot == slot_head && reagents.total_volume)
+		user << "<span class='userdanger'>[src]'s contents spill all over you!</span>"
+		reagents.reaction(user, TOUCH)
+		reagents.clear_reagents()
+
+/obj/item/weapon/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
+	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
+		var/index = slot_equipment_priority.Find(slot_head)
+		slot_equipment_priority.Remove(slot_head)
+		. = ..()
+		slot_equipment_priority.Insert(index, slot_head)
+		return
+	return ..()

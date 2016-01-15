@@ -33,7 +33,7 @@
 	return
 
 
-/obj/machinery/am_shielding/proc/controllerscan(var/priorscan = 0)
+/obj/machinery/am_shielding/proc/controllerscan(priorscan = 0)
 	//Make sure we are the only one here
 	if(!istype(src.loc, /turf))
 		qdel(src)
@@ -68,7 +68,7 @@
 	if(processing)	shutdown_core()
 	visible_message("<span class='danger'>The [src.name] melts!</span>")
 	//Might want to have it leave a mess on the floor but no sprites for now
-	..()
+	return ..()
 
 
 /obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0)
@@ -106,7 +106,7 @@
 	return
 
 
-/obj/machinery/am_shielding/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj)
 	if(Proj.flag != "bullet")
 		stability -= Proj.force/2
 	return 0
@@ -126,17 +126,14 @@
 
 
 /obj/machinery/am_shielding/attackby(obj/item/W, mob/user, params)
-	if(!istype(W) || !user) return
 	if(W.force > 10)
 		stability -= W.force/2
 		check_stability()
 	..()
-	return
-
 
 
 //Call this to link a detected shilding unit to the controller
-/obj/machinery/am_shielding/proc/link_control(var/obj/machinery/power/am_control_unit/AMC)
+/obj/machinery/am_shielding/proc/link_control(obj/machinery/power/am_control_unit/AMC)
 	if(!istype(AMC))	return 0
 	if(control_unit && control_unit != AMC) return 0//Already have one
 	control_unit = AMC
@@ -171,7 +168,7 @@
 	return
 
 
-/obj/machinery/am_shielding/proc/check_stability(var/injecting_fuel = 0)
+/obj/machinery/am_shielding/proc/check_stability(injecting_fuel = 0)
 	if(stability > 0) return
 	if(injecting_fuel && control_unit)
 		control_unit.exploding = 1
@@ -180,7 +177,7 @@
 	return
 
 
-/obj/machinery/am_shielding/proc/recalc_efficiency(var/new_efficiency)//tbh still not 100% sure how I want to deal with efficiency so this is likely temp
+/obj/machinery/am_shielding/proc/recalc_efficiency(new_efficiency)//tbh still not 100% sure how I want to deal with efficiency so this is likely temp
 	if(!control_unit || !processing) return
 	if(stability < 50)
 		new_efficiency /= 2
@@ -196,14 +193,14 @@
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = 4
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
-	m_amt = 100
+	materials = list(MAT_METAL=100)
 
-/obj/item/device/am_shielding_container/attackby(var/obj/item/I, var/mob/user, params)
+/obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
 		new/obj/machinery/am_shielding(src.loc)
 		qdel(src)

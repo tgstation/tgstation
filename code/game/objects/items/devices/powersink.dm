@@ -5,12 +5,12 @@
 	name = "power sink"
 	icon_state = "powersink0"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = 4
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
-	m_amt = 750
+	materials = list(MAT_METAL=750)
 	origin_tech = "powerstorage=3;syndicate=5"
 	var/drain_rate = 600000		// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
@@ -54,14 +54,14 @@
 	update_icon()
 	SetLuminosity(0)
 
-/obj/item/device/powersink/attackby(var/obj/item/I, var/mob/user, params)
+/obj/item/device/powersink/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(mode == DISCONNECTED)
 			var/turf/T = loc
 			if(isturf(T) && !T.intact)
 				attached = locate() in T
 				if(!attached)
-					user << "<span class='warning'>No exposed cable here to attach to!</span>"
+					user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
 				else
 					set_mode(CLAMPED_OFF)
 					user.visible_message( \
@@ -69,7 +69,7 @@
 						"<span class='notice'>You attach \the [src] to the cable.</span>",
 						"<span class='italics'>You hear some wires being connected to something.</span>")
 			else
-				user << "<span class='warning'>Device must be placed over an exposed cable to attach to it!</span>"
+				user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
 		else
 			set_mode(DISCONNECTED)
 			user.visible_message( \
@@ -85,7 +85,7 @@
 /obj/item/device/powersink/attack_ai()
 	return
 
-/obj/item/device/powersink/attack_hand(var/mob/user)
+/obj/item/device/powersink/attack_hand(mob/user)
 	switch(mode)
 		if(DISCONNECTED)
 			..()

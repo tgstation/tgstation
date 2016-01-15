@@ -65,7 +65,7 @@
 	w_class = I.w_class
 	return 1
 
-/obj/item/weapon/evidencebag/attack_self(mob/user as mob)
+/obj/item/weapon/evidencebag/attack_self(mob/user)
 	if(contents.len)
 		var/obj/item/I = contents[1]
 		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\

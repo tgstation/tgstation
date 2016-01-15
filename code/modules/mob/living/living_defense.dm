@@ -1,4 +1,4 @@
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, var/armour_penetration, var/penetrated_text)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, armour_penetration, penetrated_text)
 	var/armor = getarmor(def_zone, attack_flag)
 
 	//the if "armor" check is because this is used for everything on /living, including humans
@@ -22,10 +22,10 @@
 	return armor
 
 
-/mob/living/proc/getarmor(var/def_zone, var/type)
+/mob/living/proc/getarmor(def_zone, type)
 	return 0
 
-/mob/living/proc/on_hit(var/obj/item/projectile/proj_type)
+/mob/living/proc/on_hit(obj/item/projectile/proj_type)
 	return
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
@@ -34,7 +34,7 @@
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 	return P.on_hit(src, armor, def_zone)
 
-/proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
+/proc/vol_by_throwforce_and_or_w_class(obj/item/I)
 		if(!I)
 				return 0
 		if(I.throwforce && I.w_class)
@@ -44,7 +44,7 @@
 		else
 				return 0
 
-/mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
+/mob/living/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked = 0)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
@@ -66,17 +66,16 @@
 			playsound(loc, 'sound/weapons/genhit.ogg', volume, 1, -1)//...play genhit.ogg
 		if(!I.throwforce)// Otherwise, if the item's throwforce is 0...
 			playsound(loc, 'sound/weapons/throwtap.ogg', 1, volume, -1)//...play throwtap.ogg.
-
-		visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
-						"<span class='userdanger'>[src] has been hit by [I].</span>")
-		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
-		apply_damage(I.throwforce, dtype, zone, armor, I)
-		if(!I.fingerprintslast)
-			return
-		var/client/assailant = directory[ckey(I.fingerprintslast)]
-		if(assailant && assailant.mob && istype(assailant.mob,/mob))
-			var/mob/M = assailant.mob
-			add_logs(M, src, "hit", object="[I]")
+		if(!blocked)
+			visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
+							"<span class='userdanger'>[src] has been hit by [I].</span>")
+			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
+			apply_damage(I.throwforce, dtype, zone, armor, I)
+			if(I.thrownby)
+				add_logs(I.thrownby, src, "hit", I)
+	else
+		playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
+	..()
 
 /mob/living/mech_melee_attack(obj/mecha/M)
 	if(M.occupant.a_intent == "harm")
@@ -97,10 +96,10 @@
 		updatehealth()
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
 						"<span class='userdanger'>[M.name] has hit [src]!</span>")
-		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		step_away(src,M)
-		add_logs(M.occupant, src, "pushed", object=M, admin=0)
+		add_logs(M.occupant, src, "pushed", M)
 		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>")
 
 		return
@@ -110,7 +109,10 @@
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
+		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
+						"<span class='userdanger'>You're set on fire!</span>")
 		src.AddLuminosity(3)
+		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
@@ -118,20 +120,27 @@
 		on_fire = 0
 		fire_stacks = 0
 		src.AddLuminosity(-3)
+		clear_alert("fire")
 		update_fire()
 
 /mob/living/proc/update_fire()
 	return
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-    fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
+	fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
+	if(on_fire && fire_stacks <= 0)
+		ExtinguishMob()
 
 /mob/living/proc/handle_fire()
-	if(fire_stacks < 0)
-		fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
-		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
+	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
+		fire_stacks = min(0, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
 		return 1
+	if(fire_stacks > 0)
+		adjust_fire_stacks(-0.1) //the fire is slowly consumed
+	else
+		ExtinguishMob()
+		return
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
 	if(G.oxygen < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
@@ -140,13 +149,13 @@
 	location.hotspot_expose(700, 50, 1)
 
 /mob/living/fire_act()
-	adjust_fire_stacks(0.5)
+	adjust_fire_stacks(3)
 	IgniteMob()
 
 
 //Share fire evenly between the two mobs
 //Called in MobBump() and Crossed()
-/mob/living/proc/spreadFire(var/mob/living/L)
+/mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
 		return
 	var/L_old_on_fire = L.on_fire
@@ -164,10 +173,10 @@
 //Mobs on Fire end
 
 
-/mob/living/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+/mob/living/acid_act(acidpwr, toxpwr, acid_volume)
 	take_organ_damage(min(10*toxpwr, acid_volume * toxpwr))
 
-/mob/living/proc/grabbedby(mob/living/carbon/user,var/supress_message = 0)
+/mob/living/proc/grabbedby(mob/living/carbon/user,supress_message = 0)
 	if(user == src || anchored)
 		return 0
 	if(!(status_flags & CANPUSH))
@@ -178,6 +187,7 @@
 	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(user, src)
 	if(buckled)
 		user << "<span class='warning'>You cannot grab [src], \he is buckled in!</span>"
+		return 0
 	if(!G)	//the grab will delete itself in New if src is anchored
 		return 0
 	user.put_in_active_hand(G)
@@ -189,22 +199,24 @@
 		visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")
 
 
-/mob/living/attack_slime(mob/living/simple_animal/slime/M as mob)
-	if (!ticker)
+/mob/living/attack_slime(mob/living/simple_animal/slime/M)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return
 
-	if(M.Victim)
+	if(M.buckled)
+		if(M == buckled_mob)
+			M.Feedstop()
 		return // can't attack while eating!
 
 	if (stat != DEAD)
-		add_logs(M, src, "attacked", admin=0)
+		add_logs(M, src, "attacked")
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
 		return 1
 
-/mob/living/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)
 		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
 		return 0
@@ -214,12 +226,12 @@
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
 						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>")
-		add_logs(M, src, "attacked", admin=0)
+		add_logs(M, src, "attacked")
 		return 1
 
 
-/mob/living/attack_paw(mob/living/carbon/monkey/M as mob)
-	if (!ticker)
+/mob/living/attack_paw(mob/living/carbon/monkey/M)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return 0
 
@@ -233,7 +245,7 @@
 			return 0
 		M.do_attack_animation(src)
 		if (prob(75))
-			add_logs(M, src, "attacked", admin=0)
+			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
 					"<span class='userdanger'>[M.name] bites [src]!</span>")
@@ -243,7 +255,7 @@
 				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>")
 	return 0
 
-/mob/living/attack_larva(mob/living/carbon/alien/larva/L as mob)
+/mob/living/attack_larva(mob/living/carbon/alien/larva/L)
 
 	switch(L.a_intent)
 		if("help")
@@ -253,7 +265,7 @@
 		else
 			L.do_attack_animation(src)
 			if(prob(90))
-				add_logs(L, src, "attacked", admin=0)
+				add_logs(L, src, "attacked")
 				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
 						"<span class='userdanger'>[L.name] bites [src]!</span>")
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
@@ -263,8 +275,8 @@
 					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>")
 	return 0
 
-/mob/living/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if (!ticker)
+/mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return 0
 
@@ -288,7 +300,4 @@
 	if(stat || paralysis || stunned || weakened || restrained())
 		return 1
 
-/mob/living/proc/irradiate(amount)
-	if(amount)
-		var/blocked = run_armor_check(null, "rad", "Your clothes feel warm", "Your clothes feel warm")
-		apply_effect(amount, IRRADIATE, blocked)
+//Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.

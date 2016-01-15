@@ -18,7 +18,7 @@
 /datum/game_mode/traitor/changeling/can_start()
 	if(!..())
 		return 0
-	possible_changelings = get_players_for_role(BE_CHANGELING)
+	possible_changelings = get_players_for_role(ROLE_CHANGELING)
 	if(possible_changelings.len < required_enemies)
 		return 0
 	return 1
@@ -30,7 +30,7 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
+	var/list/datum/mind/possible_changelings = get_players_for_role(ROLE_CHANGELING)
 
 	var/num_changelings = 1
 
@@ -60,14 +60,14 @@
 	..()
 	return
 
-/datum/game_mode/traitor/changeling/make_antag_chance(var/mob/living/carbon/human/character) //Assigns changeling to latejoiners
+/datum/game_mode/traitor/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
 	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*4))+2, round(joined_player_list.len/(config.changeling_scaling_coeff*2)) )
 	if(ticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		..()
 		return
 	if(ticker.mode.changelings.len <= (changelingcap - 2) || prob(100 / (config.changeling_scaling_coeff * 4)))
-		if(character.client.prefs.be_special & BE_CHANGELING)
-			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
+		if(ROLE_CHANGELING in character.client.prefs.be_special)
+			if(!jobban_isbanned(character.client, ROLE_CHANGELING) && !jobban_isbanned(character.client, "Syndicate"))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()

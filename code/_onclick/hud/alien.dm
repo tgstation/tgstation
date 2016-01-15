@@ -76,21 +76,15 @@
 	using = new /obj/screen/act_intent()
 	using.icon = 'icons/mob/screen_alien.dmi'
 	using.icon_state = mymob.a_intent
-	using.screen_loc = ui_acti
+	using.screen_loc = ui_movi
 	adding += using
 	action_intent = using
 
 	if(istype(mymob, /mob/living/carbon/alien/humanoid/hunter))
-		mymob.leap_icon = new /obj/screen/alien/leap()
-		mymob.leap_icon.screen_loc = ui_alien_storage_r
-		adding += mymob.leap_icon
-
-	using = new /obj/screen/mov_intent()
-	using.icon = 'icons/mob/screen_alien.dmi'
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
-	adding += using
-	move_intent = using
+		var/mob/living/carbon/alien/humanoid/hunter/H = mymob
+		H.leap_icon = new /obj/screen/alien/leap()
+		H.leap_icon.screen_loc = ui_alien_storage_r
+		adding += H.leap_icon
 
 	using = new /obj/screen/drop()
 	using.icon = 'icons/mob/screen_alien.dmi'
@@ -134,6 +128,7 @@
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
 	mymob.blind.layer = 0
+	mymob.blind.mouse_opacity = 0
 
 	mymob.flash = new /obj/screen()
 	mymob.flash.icon = 'icons/mob/screen_gen.dmi'
@@ -146,8 +141,8 @@
 	mymob.zone_sel.icon = 'icons/mob/screen_alien.dmi'
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen = null
+	mymob.client.screen = list()
 
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, nightvisionicon, alien_plasma_display, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
-
+	mymob.client.screen += mymob.client.void

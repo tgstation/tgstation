@@ -45,14 +45,13 @@
 	icon_state = "medicalcrate"
 
 /obj/structure/closet/crate/rcd
-	desc = "A crate for the storage of the RCD."
+	desc = "A crate for the storage of an RCD."
 	name = "\improper RCD crate"
 
 /obj/structure/closet/crate/rcd/New()
 	..()
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
+	for(var/i in 1 to 4)
+		new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd(src)
 
 /obj/structure/closet/crate/freezer
@@ -90,15 +89,10 @@
 
 /obj/structure/closet/crate/radiation/New()
 	..()
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-
+	for(var/i in 1 to 4)
+		new /obj/item/clothing/suit/radiation(src)
+		new /obj/item/clothing/head/radiation(src)
+	
 /obj/structure/closet/crate/hydroponics
 	name = "hydroponics crate"
 	desc = "All you need to destroy those pesky weeds and pests."
@@ -172,7 +166,7 @@
 	update_icon()
 	return 1
 
-/obj/structure/closet/crate/insert(var/atom/movable/AM, var/include_mobs = 0)
+/obj/structure/closet/crate/insert(atom/movable/AM, include_mobs = 0)
 
 	if(contents.len >= storage_capacity)
 		return -1
@@ -186,15 +180,15 @@
 	else
 		return 0
 
-	if(istype(AM, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
-		var/obj/structure/stool/bed/B = AM
+	if(istype(AM, /obj/structure/bed)) //This is only necessary because of rollerbeds and swivel chairs.
+		var/obj/structure/bed/B = AM
 		if(B.buckled_mob)
 			return 0
 
 	AM.loc = src
 	return 1
 
-/obj/structure/closet/crate/proc/tear_manifest(mob/user as mob)
+/obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	user << "<span class='notice'>You tear the manifest off of the crate.</span>"
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 75, 1)
 	manifest.loc = loc
@@ -203,7 +197,7 @@
 	manifest = null
 	overlays-="manifest"
 
-/obj/structure/closet/crate/attack_hand(mob/user as mob)
+/obj/structure/closet/crate/attack_hand(mob/user)
 	if(manifest)
 		tear_manifest(user)
 		return
@@ -214,14 +208,14 @@
 			if(isliving(user))
 				var/mob/living/L = user
 				if(L.electrocute_act(17, src))
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 					s.set_up(5, 1, src)
 					s.start()
 					return
 		open()
 	return
 
-/obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
+/obj/structure/closet/crate/secure/attack_hand(mob/user)
 	if(manifest)
 		tear_manifest(user)
 		return
@@ -238,7 +232,7 @@
 	else
 		..()
 
-/obj/structure/closet/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/closet/crate/secure/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/card) && src.allowed(user) && !locked && !opened && !broken)
 		user << "<span class='notice'>You lock \the [src].</span>"
 		src.locked = 1
@@ -248,7 +242,7 @@
 
 	return ..()
 
-/obj/structure/closet/crate/secure/emag_act(mob/user as mob)
+/obj/structure/closet/crate/secure/emag_act(mob/user)
 	if(locked && !broken)
 		src.locked = 0
 		src.broken = 1
@@ -259,10 +253,10 @@
 		user << "<span class='notice'>You unlock \the [src].</span>"
 		add_fingerprint(user)
 
-/obj/structure/closet/crate/attack_paw(mob/user as mob)
+/obj/structure/closet/crate/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/closet/crate/attackby(obj/item/weapon/W, mob/user, params)
 	if(opened)
 		if(isrobot(user))
 			return

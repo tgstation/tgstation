@@ -8,11 +8,11 @@ Contents:
 
 
 //ADMIN CREATE NINJA (From Player)
-/client/proc/cmd_admin_ninjafy(var/mob/living/carbon/human/H in player_list)
+/client/proc/cmd_admin_ninjafy(mob/living/carbon/human/H in player_list)
 	set category = null
 	set name = "Make Space Ninja"
 
-	if(!ticker)
+	if (!ticker.mode)
 		alert("Wait until the game starts")
 		return
 

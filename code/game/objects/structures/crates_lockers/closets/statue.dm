@@ -108,7 +108,7 @@
 /obj/structure/closet/statue/toggle()
 	return
 
-/obj/structure/closet/statue/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/closet/statue/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	if(health <= 0)
 		for(var/mob/M in src)
@@ -116,7 +116,7 @@
 
 	return
 
-/obj/structure/closet/statue/attack_animal(mob/living/simple_animal/user as mob)
+/obj/structure/closet/statue/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
 		for(var/mob/M in src)
 			shatter(M)
@@ -125,7 +125,7 @@
 	for(var/mob/M in src)
 		shatter(M)
 
-/obj/structure/closet/statue/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/structure/closet/statue/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	health -= I.force
 	visible_message("<span class='danger'>[user] strikes [src] with [I].</span>")
@@ -151,7 +151,7 @@
 /obj/structure/closet/statue/update_icon()
 	return
 
-/obj/structure/closet/statue/proc/shatter(mob/user as mob)
+/obj/structure/closet/statue/proc/shatter(mob/user)
 	if (user)
 		user.dust()
 	dump_contents()

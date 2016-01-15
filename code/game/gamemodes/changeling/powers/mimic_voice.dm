@@ -8,7 +8,7 @@
 
 
 // Fake Voice
-/obj/effect/proc_holder/changeling/mimicvoice/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/mimicvoice/sting_action(mob/user)
 	var/datum/changeling/changeling=user.mind.changeling
 	if(changeling.mimicing)
 		changeling.mimicing = ""
@@ -22,7 +22,7 @@
 
 	changeling.mimicing = mimic_voice
 	changeling.chem_recharge_slowdown += 0.5
-	user << "<span class='notice'>We shape our glands to take the voice of <b>[mimic_voice]</b>, this will stop us from regenerating chemicals while active.</span>"
-	user << "<span class='notice'>Use this power again to return to our original voice and reproduce chemicals again.</span>"
+	user << "<span class='notice'>We shape our glands to take the voice of <b>[mimic_voice]</b>, this will slow down regenerating chemicals while active.</span>"
+	user << "<span class='notice'>Use this power again to return to our original voice and return chemical production to normal levels.</span>"
 
 	feedback_add_details("changeling_powers","MV")

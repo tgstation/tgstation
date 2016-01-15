@@ -12,7 +12,7 @@
 	var/insults = 0
 	var/list/insultmsg = list("FUCK EVERYONE!", "DEATH TO LIZARDS!", "ALL SECURITY TO SHOOT ME ON SIGHT!", "I HAVE A BOMB!", "CAPTAIN IS A COMDOM!", "FOR THE SYNDICATE!", "VIVA!", "HONK!")
 
-/obj/item/device/megaphone/attack_self(mob/living/carbon/human/user as mob)
+/obj/item/device/megaphone/attack_self(mob/living/carbon/human/user)
 	if(user.client)
 		if(user.client.prefs.muted & MUTE_IC)
 			src << "<span class='warning'>You cannot speak in IC (muted).</span>"
@@ -38,12 +38,12 @@
 	if ((src.loc == user && user.stat == 0))
 		if(emagged)
 			if(insults)
-				user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>")
+				user.audible_message("<B>[user.GetVoice()]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>")
 				insults--
 			else
 				user << "<span class='warning'>*BZZZZzzzzzt*</span>"
 		else
-			user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>")
+			user.audible_message("<B>[user.GetVoice()]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>")
 
 		playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
 		spamcheck = world.time + 50

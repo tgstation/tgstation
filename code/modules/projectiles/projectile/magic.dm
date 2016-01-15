@@ -4,13 +4,14 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
+	armour_penetration = 100
 	flag = "magic"
 
 /obj/item/projectile/magic/death
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
 
-/obj/item/projectile/magic/death/on_hit(var/target)
+/obj/item/projectile/magic/death/on_hit(target)
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
@@ -22,7 +23,6 @@
 	damage = 10
 	damage_type = BRUTE
 	nodamage = 0
-	flag = "magic"
 
 /obj/item/projectile/magic/fireball/Range()
 	var/mob/living/L = locate(/mob/living) in (range(src, 1) - firer)
@@ -31,7 +31,7 @@
 		return
 	..()
 
-/obj/item/projectile/magic/fireball/on_hit(var/target)
+/obj/item/projectile/magic/fireball/on_hit(target)
 	. = ..()
 	var/turf/T = get_turf(target)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
@@ -45,9 +45,8 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	flag = "magic"
 
-/obj/item/projectile/magic/resurrection/on_hit(var/mob/living/carbon/target)
+/obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
 	if(ismob(target))
 		var/old_stat = target.stat
@@ -69,11 +68,10 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	flag = "magic"
 	var/inner_tele_radius = 0
 	var/outer_tele_radius = 6
 
-/obj/item/projectile/magic/teleport/on_hit(var/mob/target)
+/obj/item/projectile/magic/teleport/on_hit(mob/target)
 	. = ..()
 	var/teleammount = 0
 	var/teleloc = target
@@ -83,8 +81,8 @@
 		if(!stuff.anchored && stuff.loc)
 			teleammount++
 			do_teleport(stuff, stuff, 10)
-			var/datum/effect/effect/system/smoke_spread/smoke = new
-			smoke.set_up(max(round(10 - teleammount),1), 0, stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+			var/datum/effect_system/smoke_spread/smoke = new
+			smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
 			smoke.start()
 
 /obj/item/projectile/magic/door
@@ -93,9 +91,11 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	flag = "magic"
+	var/list/door_types = list(/obj/structure/mineral_door/wood,/obj/structure/mineral_door/iron,/obj/structure/mineral_door/silver,\
+		/obj/structure/mineral_door/gold,/obj/structure/mineral_door/uranium,/obj/structure/mineral_door/sandstone,/obj/structure/mineral_door/transparent/plasma,\
+		/obj/structure/mineral_door/transparent/diamond)
 
-/obj/item/projectile/magic/door/on_hit(var/atom/target)
+/obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
 	var/atom/T = target.loc
 	if(isturf(target) && target.density)
@@ -103,8 +103,9 @@
 	else if (isturf(T) && T.density)
 		CreateDoor(T)
 
-/obj/item/projectile/magic/door/proc/CreateDoor(var/turf/T)
-	new /obj/structure/mineral_door/wood(T)
+/obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
+	var/door_type = pick(door_types)
+	new door_type(T)
 	T.ChangeTurf(/turf/simulated/floor/plating)
 
 
@@ -114,9 +115,8 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "magic"
 
-/obj/item/projectile/magic/change/on_hit(var/atom/change)
+/obj/item/projectile/magic/change/on_hit(atom/change)
 	. = ..()
 	wabbajack(change)
 
@@ -145,7 +145,7 @@
 
 			var/mob/living/new_mob
 
-			var/randomize = pick("monkey","robot","slime","xeno","human","animal")
+			var/randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
 			switch(randomize)
 				if("monkey")
 					new_mob = new /mob/living/carbon/monkey(M.loc)
@@ -155,7 +155,10 @@
 					switch(robot)
 						if("cyborg")		new_mob = new /mob/living/silicon/robot(M.loc)
 						if("syndiborg")		new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
-						if("drone")			new_mob = new /mob/living/simple_animal/drone(M.loc)
+						if("drone")
+							new_mob = new /mob/living/simple_animal/drone(M.loc)
+							var/mob/living/simple_animal/drone/D = new_mob
+							D.update_drone_hack()
 					if(issilicon(new_mob))
 						new_mob.gender = M.gender
 						new_mob.invisibility = 0
@@ -205,9 +208,9 @@
 						var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly")
 						switch(animal)
 							if("parrot")	new_mob = new /mob/living/simple_animal/parrot(M.loc)
-							if("corgi")		new_mob = new /mob/living/simple_animal/pet/corgi(M.loc)
+							if("corgi")		new_mob = new /mob/living/simple_animal/pet/dog/corgi(M.loc)
 							if("crab")		new_mob = new /mob/living/simple_animal/crab(M.loc)
-							if("pug")		new_mob = new /mob/living/simple_animal/pet/pug(M.loc)
+							if("pug")		new_mob = new /mob/living/simple_animal/pet/dog/pug(M.loc)
 							if("cat")		new_mob = new /mob/living/simple_animal/pet/cat(M.loc)
 							if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)
 							if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)
@@ -217,22 +220,25 @@
 							if("butterfly")	new_mob = new /mob/living/simple_animal/butterfly(M.loc)
 							else			new_mob = new /mob/living/simple_animal/chick(M.loc)
 					new_mob.languages |= HUMAN
-				if("human")
+				if("humanoid")
 					new_mob = new /mob/living/carbon/human(M.loc)
 
 					var/datum/preferences/A = new()	//Randomize appearance for the human
-					A.copy_to(new_mob)
+					A.copy_to(new_mob, icon_updates=0)
 
 					var/mob/living/carbon/human/H = new_mob
-					ready_dna(H)
-					if(H.dna && prob(50))
+					if(prob(50))
 						var/list/all_species = list()
-						for(var/speciestype in typesof(/datum/species) - /datum/species)
+						for(var/speciestype in subtypesof(/datum/species))
 							var/datum/species/S = new speciestype()
 							if(!S.dangerous_existence)
 								all_species += speciestype
-						hardset_dna(H, null, null, null, null, pick(all_species))
-					H.update_icons()
+						H.set_species(pick(all_species), icon_update=0)
+						H.real_name = H.dna.species.random_name(H.gender,1)
+					H.update_body()
+					H.update_hair()
+					H.update_mutcolor()
+					H.dna.update_dna_identity()
 				else
 					return
 
@@ -247,7 +253,7 @@
 
 			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 
-			del(M)
+			qdel(M)
 			return new_mob
 
 /obj/item/projectile/magic/animate
@@ -256,9 +262,8 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "magic"
 
-/obj/item/projectile/magic/animate/Bump(var/atom/change)
+/obj/item/projectile/magic/animate/Bump(atom/change)
 	..()
 	if(istype(change, /obj/item) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
 		if(istype(change, /obj/structure/closet/statue))

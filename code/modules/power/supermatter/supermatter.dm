@@ -119,7 +119,7 @@
 					var/mob/living/carbon/human/H = mob
 					H.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
 				var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(mob, src) + 1) )
-				mob.irradiate(rads)
+				mob.rad_act(rads)
 
 			explode()
 
@@ -181,7 +181,7 @@
 
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
-		l.irradiate(rads)
+		l.rad_act(rads)
 
 	power -= (power/500)**3
 
@@ -189,7 +189,7 @@
 
 /obj/machinery/power/supermatter_shard
 
-/obj/machinery/power/supermatter_shard/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/power/supermatter_shard/bullet_act(obj/item/projectile/Proj)
 	var/turf/L = loc
 	if(!istype(L))		// We don't run process() when we are in space
 		return 0	// This stops people from being able to really power up the supermatter
@@ -217,21 +217,21 @@
 	qdel(src)
 	return(gain)
 
-/obj/machinery/power/supermatter_shard/attack_paw(mob/user as mob)
+/obj/machinery/power/supermatter_shard/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/machinery/power/supermatter_shard/attack_robot(mob/user as mob)
+/obj/machinery/power/supermatter_shard/attack_robot(mob/user)
 	if(Adjacent(user))
 		return attack_hand(user)
 	else
 		user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
 	return
 
-/obj/machinery/power/supermatter_shard/attack_ai(mob/user as mob)
+/obj/machinery/power/supermatter_shard/attack_ai(mob/user)
 	user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
 
-/obj/machinery/power/supermatter_shard/attack_hand(mob/living/user as mob)
+/obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
 	if(!istype(user))
 		return
 	user.visible_message("<span class='danger'>\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
@@ -248,7 +248,7 @@
 			R.receive_pulse(power/10)
 	return
 
-/obj/machinery/power/supermatter_shard/attackby(obj/item/W as obj, mob/living/user as mob, params)
+/obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(W) || (W.flags & ABSTRACT) || !istype(user))
 		return
 	if(user.drop_item(W))
@@ -259,7 +259,7 @@
 
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
-		user.irradiate(150)
+		radiation_pulse(get_turf(src), 1, 1, 150, 1)
 
 
 /obj/machinery/power/supermatter_shard/Bumped(atom/AM as mob|obj)
@@ -281,10 +281,10 @@
 /obj/machinery/power/supermatter_shard/proc/Consume(atom/movable/AM)
 	if(istype(AM, /mob/living))
 		var/mob/living/user = AM
-		user.dust()
-		power += 200
 		message_admins("[src] has consumed [key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
 		investigate_log("has consumed [key_name(user)].", "supermatter")
+		user.dust()
+		power += 200
 	else if(isobj(AM) && !istype(AM, /obj/effect))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
@@ -292,9 +292,8 @@
 	power += 200
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
+	radiation_pulse(get_turf(src), 4, 10, 500, 1)
 	for(var/mob/living/L in range(10))
-		var/rads = 500 * sqrt( 1 / (get_dist(L, src) + 1) )
-		L.irradiate(rads)
 		investigate_log("has irradiated [L] after consuming [AM].", "supermatter")
 		if(L in view())
 			L.show_message("<span class='danger'>As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\

@@ -24,11 +24,11 @@
 	mixer = new /obj/item/weapon/reagent_containers(src, MIXER_CAPACITY)
 	mixer.name = "Mixer"
 
-/obj/machinery/food_cart/attack_hand(mob/user as mob)
+/obj/machinery/food_cart/attack_hand(mob/user)
 	user.set_machine(src)
 	interact(user)
 
-/obj/machinery/food_cart/interact(mob/user as mob)
+/obj/machinery/food_cart/interact(mob/user)
 	var/dat
 	dat += "<br><b>STORED INGREDIENTS AND DRINKS</b><br><div class='statusDisplay'>"
 	dat += "Remaining glasses: [glasses]<br>"
@@ -59,7 +59,7 @@
 /obj/machinery/food_cart/proc/isFull()
 	return food_stored >= STORAGE_CAPACITY
 
-/obj/machinery/food_cart/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/food_cart/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
 		var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/DG = O
 		if(!DG.reagents.total_volume) //glass is empty

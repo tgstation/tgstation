@@ -4,9 +4,8 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = ""
 	flags = CONDUCT
-	w_class = 2.0
-	m_amt = 100
-	g_amt = 0
+	w_class = 2
+	materials = list(MAT_METAL=100)
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 7
@@ -51,16 +50,18 @@
 
 
 //Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
-/obj/item/device/assembly/proc/pulsed(var/radio = 0)
-	if(holder && (wires & WIRE_RECEIVE))
-		activate()
+/obj/item/device/assembly/proc/pulsed(radio = 0)
+	if(wires & WIRE_RECEIVE)
+		spawn(0)
+			activate()
 	if(radio && (wires & WIRE_RADIO_RECEIVE))
-		activate()
+		spawn(0)
+			activate()
 	return 1
 
 
 //Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
-/obj/item/device/assembly/proc/pulse(var/radio = 0)
+/obj/item/device/assembly/proc/pulse(radio = 0)
 	if(src.connected && src.wires)
 		connected.Pulse(src)
 		return 1
@@ -87,7 +88,7 @@
 	return secured
 
 
-/obj/item/device/assembly/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/device/assembly/attackby(obj/item/weapon/W, mob/user, params)
 	if(isassembly(W))
 		var/obj/item/device/assembly/A = W
 		if((!A.secured) && (!secured))
@@ -104,12 +105,6 @@
 			user << "<span class='notice'>\The [src] can now be attached!</span>"
 		return
 	..()
-	return
-
-
-/obj/item/device/assembly/process()
-	SSobj.processing.Remove(src)
-	return
 
 
 /obj/item/device/assembly/examine(mob/user)
@@ -120,7 +115,7 @@
 		user << "\The [src] can be attached to other things."
 
 
-/obj/item/device/assembly/attack_self(mob/user as mob)
+/obj/item/device/assembly/attack_self(mob/user)
 	if(!user)
 		return 0
 	user.set_machine(src)
@@ -128,6 +123,6 @@
 	return 1
 
 
-/obj/item/device/assembly/interact(mob/user as mob)
+/obj/item/device/assembly/interact(mob/user)
 	return //HTML MENU FOR WIRES GOES HERE
 

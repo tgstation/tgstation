@@ -8,7 +8,7 @@
 
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
+#define HEAT_DAMAGE_LEVEL_3 10 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
 #define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
 #define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
@@ -38,20 +38,21 @@
 	tinttotal = tintcheck() //here as both hud updates and status updates call it
 
 	if(..())
-		if(dna)
-			for(var/datum/mutation/human/HM in dna.mutations)
-				HM.on_life(src)
+		for(var/datum/mutation/human/HM in dna.mutations)
+			HM.on_life(src)
+
+		//heart attack stuff
+		handle_heart()
 
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
-	if(dna)
-		dna.species.spec_life(src) // for mutantraces
+	dna.species.spec_life(src) // for mutantraces
 
 
-/mob/living/carbon/human/calculate_affecting_pressure(var/pressure)
+/mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
 		return ONE_ATMOSPHERE
 	else
@@ -73,7 +74,7 @@
 
 	if (getBrainLoss() >= 60 && stat != DEAD)
 		if (prob(3))
-			switch(pick(1,2,3,4))
+			switch(pick(1,2,3,4,5))
 				if(1)
 					say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse","kamelien","eksrey","glowey skin")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#", "shiggey diggey!!", "A PIRATE APPEAR"))
 				if(2)
@@ -82,31 +83,39 @@
 					say(pick("GEY AWAY FROM ME U GREIFING PRICK!!!!", "ur a fuckeing autist!", ";HELP SHITECIRTY MURDERIN  MEE!!!", "hwat dose tha [pick("g", "squid", "r")] mean?????", "CAL; TEH SHUTTLE!!!!!", "wearnig siNGUARLTY IS .... FIne xDDDDDDDDD", "AI laW 22 Open door", "this SI mY stATIon......", "who the HELL do u thenk u r?!!!!", "geT THE FUCK OUTTTT", "H U G B O X", ";;CRAGING THIS STTAYTION WITH NIO SURVIVROS", "[pick("bager", "syebl")] is down11!!!!!!!!!!!!!!!!!", "PSHOOOM"))
 				if(4)
 					emote("drool")
+				if(5)
+					say(pick("REMOVE SINGULARITY", "INSTLL TEG", "TURBIN IS BEST ENGIENE", "SOLIRS CAN POWER THE HOLE STATION ANEWAY", "parasteng was best", "Tajaran has warrrres, if you have coin"))
 
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
-	if(dna)
-		if(dna.species.handle_mutations_and_radiation(src))
-			..()
+	if(!dna || !dna.species.handle_mutations_and_radiation(src))
+		..()
 
 /mob/living/carbon/human/breathe()
-	if(dna)
-		dna.species.breathe(src)
+	if(!dna.species.breathe(src))
+		..()
 
-	return
+/mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
+	dna.species.check_breath(breath, src)
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
-	if(dna)
-		dna.species.handle_environment(environment, src)
-
-	return
+	dna.species.handle_environment(environment, src)
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
-	if(dna)
-		dna.species.handle_fire(src)
-	if(..())
-		return
+	if(!dna || !dna.species.handle_fire(src))
+		..()
+	if(on_fire)
+		var/thermal_protection = get_thermal_protection()
+
+		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
+			return
+		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
+			bodytemperature += 11
+		else
+			bodytemperature += (BODYTEMP_HEATING_MAX + (fire_stacks * 12))
+
+/mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
 	if(wear_suit)
 		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
@@ -115,25 +124,14 @@
 		if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
 			thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
 	thermal_protection = round(thermal_protection)
-	if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
-		return
-	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
-		bodytemperature += 11
-		return
-	else
-		bodytemperature += BODYTEMP_HEATING_MAX
-	return
+	return thermal_protection
 
 /mob/living/carbon/human/IgniteMob()
-	if(dna)
-		dna.species.IgniteMob(src)
-	else
+	if(!dna || !dna.species.IgniteMob(src))
 		..()
 
 /mob/living/carbon/human/ExtinguishMob()
-	if(dna)
-		dna.species.ExtinguishMob(src)
-	else
+	if(!dna || !dna.species.ExtinguishMob(src))
 		..()
 //END FIRE CODE
 
@@ -166,7 +164,7 @@
 /mob/living/carbon/human/proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = get_heat_protection_flags(temperature)
 
-	var/thermal_protection = 0.0
+	var/thermal_protection = 0
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
 			thermal_protection += THERMAL_PROTECTION_HEAD
@@ -231,7 +229,7 @@
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
 
-	var/thermal_protection = 0.0
+	var/thermal_protection = 0
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
 			thermal_protection += THERMAL_PROTECTION_HEAD
@@ -260,25 +258,21 @@
 
 
 /mob/living/carbon/human/handle_chemicals_in_body()
-	..()
-	if(dna)
-		dna.species.handle_chemicals_in_body(src)
-
-	return //TODO: DEFERRED
+	if(reagents)
+		reagents.metabolize(src, can_overdose=1)
+	dna.species.handle_chemicals_in_body(src)
 
 /mob/living/carbon/human/handle_vision()
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 	if(machine)
 		if(!machine.check_eye(src))		reset_view(null)
 	else
-		if(!client.adminobs)			reset_view(null)
+		if(!remote_view && !client.adminobs)			reset_view(null)
 
-	if(dna)
-		dna.species.handle_vision(src)
+	dna.species.handle_vision(src)
 
 /mob/living/carbon/human/handle_hud_icons()
-	if(dna)
-		dna.species.handle_hud_icons(src)
+	dna.species.handle_hud_icons(src)
 
 /mob/living/carbon/human/handle_random_events()
 	// Puke if toxloss is too high
@@ -302,16 +296,6 @@
 				// make it so you can only puke so fast
 				lastpuke = 0
 
-
-/mob/living/carbon/human/handle_changeling()
-	if(mind && hud_used)
-		if(mind.changeling)
-			mind.changeling.regenerate()
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
-		else
-			hud_used.lingchemdisplay.invisibility = 101
-
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
 		if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
@@ -322,6 +306,8 @@
 	if(head)
 		if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
 			. = 1
+	if(NOBREATH in dna.species.specflags)
+		. = 1
 	return .
 /mob/living/carbon/human/proc/handle_embedded_objects()
 	for(var/obj/item/organ/limb/L in organs)
@@ -338,13 +324,13 @@
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 
-/mob/living/carbon/human/handle_heart()
+/mob/living/carbon/human/proc/handle_heart()
 	if(!heart_attack)
 		return
 	else
-		losebreath += 5
+		if(losebreath < 3)
+			losebreath += 2
 		adjustOxyLoss(5)
 		adjustBruteLoss(1)
-	return
 
 #undef HUMAN_MAX_OXYLOSS

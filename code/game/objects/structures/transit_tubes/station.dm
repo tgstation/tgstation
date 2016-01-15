@@ -23,7 +23,7 @@
 
 /obj/structure/transit_tube/station/Destroy()
 	SSobj.processing -= src
-	..()
+	return ..()
 
 // Stations which will send the tube in the opposite direction after their stop.
 /obj/structure/transit_tube/station/reverse
@@ -42,7 +42,7 @@
 
 
 //pod insertion
-/obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R as obj, mob/user as mob)
+/obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R, mob/user)
 	if(!user.canmove || user.stat || user.restrained())
 		return
 	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
@@ -58,7 +58,7 @@
 	qdel(R)
 
 
-/obj/structure/transit_tube/station/attack_hand(mob/user as mob)
+/obj/structure/transit_tube/station/attack_hand(mob/user)
 	if(!pod_moving)
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(!pod.moving && pod.dir in directions())
@@ -128,13 +128,12 @@
 		return
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		if(!pod.moving && turn(pod.dir, (reverse_launch ? 180 : 0)) in directions())
-			spawn(0)
-				pod_moving = 1
-				close_animation()
-				sleep(CLOSE_DURATION + 2)
-				if(icon_state == "closed" && pod)
-					pod.follow_tube(reverse_launch)
-				pod_moving = 0
+			pod_moving = 1
+			close_animation()
+			sleep(CLOSE_DURATION + 2)
+			if(icon_state == "closed" && pod)
+				pod.follow_tube(reverse_launch)
+			pod_moving = 0
 			return 1
 	return 0
 

@@ -10,13 +10,13 @@
 	var/obj/item/device/mmi/brain = null
 
 
-/obj/structure/AIcore/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "<span class='notice'>You start wrenching the frame into place...</span>"
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
@@ -27,7 +27,7 @@
 					return
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 				user << "<span class='notice'>You start to deconstruct the frame...</span>"
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20/P.toolspeed, target = src))
 					if(!src || !WT.remove_fuel(0, user)) return
 					user << "<span class='notice'>You deconstruct the frame.</span>"
 					new /obj/item/stack/sheet/plasteel( loc, 4)
@@ -36,7 +36,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "<span class='notice'>You start to unfasten the frame...</span>"
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You unfasten the frame.</span>"
 					anchored = 0
 					state = 0
@@ -113,12 +113,12 @@
 				laws.clear_zeroth_law(0)
 				for(var/templaw in M.laws)
 					laws.add_inherent_law(templaw)
-				usr << "<span class='notice'>Law module applied.</span>"
+				user << "<span class='notice'>Law module applied.</span>"
 
 			if(istype(P, /obj/item/weapon/aiModule/reset/purge))
 				laws.clear_inherent_laws()
 				laws.clear_zeroth_law(0)
-				usr << "<span class='notice'>Laws cleared applied.</span>"
+				user << "<span class='notice'>Laws cleared applied.</span>"
 
 
 			if(istype(P, /obj/item/weapon/aiModule/supplied/freeform) || istype(P, /obj/item/weapon/aiModule/core/freeformcore))
@@ -126,7 +126,7 @@
 				if(M.laws[1] == "")
 					return
 				laws.add_inherent_law(M.laws[1])
-				usr << "<span class='notice'>Added a freeform law.</span>"
+				user << "<span class='notice'>Added a freeform law.</span>"
 
 			if(istype(P, /obj/item/device/mmi))
 				var/obj/item/device/mmi/M = P
@@ -160,13 +160,10 @@
 				if(!user.drop_item())
 					return
 
-				ticker.mode.remove_cultist(M.brainmob.mind, 1)
-				ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
-				ticker.mode.remove_gangster(M.brainmob.mind, 1)
-
+				ticker.mode.remove_antag_for_borging(M.brainmob.mind)
 				M.loc = src
 				brain = M
-				usr << "<span class='notice'>Added a brain.</span>"
+				user << "<span class='notice'>Added a brain.</span>"
 				icon_state = "3b"
 
 			if(istype(P, /obj/item/weapon/crowbar) && brain)
@@ -204,7 +201,7 @@
 	anchored = 1
 	state = 20//So it doesn't interact based on the above. Not really necessary.
 
-/obj/structure/AIcore/deactivated/attackby(var/obj/item/A as obj, var/mob/user as mob, params)
+/obj/structure/AIcore/deactivated/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/device/aicard))//Is it?
 		A.transfer_ai("INACTIVE","AICARD",src,user)
 	if(istype(A, /obj/item/weapon/wrench))
@@ -230,7 +227,7 @@ That prevents a few funky behaviors.
 //The type of interaction, the player performing the operation, the AI itself, and the card object, if any.
 
 
-atom/proc/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
+atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(istype(card))
 		if(card.flush)
 			user << "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol."
@@ -238,7 +235,7 @@ atom/proc/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/A
 	return 1
 
 
-/obj/structure/AIcore/deactivated/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
+/obj/structure/AIcore/deactivated/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())
 		return
  //Transferring a carded AI to a core.

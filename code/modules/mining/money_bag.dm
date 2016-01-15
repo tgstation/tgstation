@@ -5,13 +5,13 @@
 	name = "Money bag"
 	icon_state = "moneybag"
 	flags = CONDUCT
-	force = 10.0
+	force = 10
 	throwforce = 0
-	w_class = 4.0
-	burn_state = 0 //Burnable
+	w_class = 4
+	burn_state = FLAMMABLE
 	burntime = 20
 
-/obj/item/weapon/moneybag/attack_hand(user as mob)
+/obj/item/weapon/moneybag/attack_hand(mob/user)
 	var/amt_gold = 0
 	var/amt_silver = 0
 	var/amt_diamond = 0
@@ -58,7 +58,7 @@
 		dat += text("Adamantine coins: [amt_adamantine] <A href='?src=\ref[src];remove=adamantine'>Remove one</A><br>")
 	user << browse("[dat]", "window=moneybag")
 
-/obj/item/weapon/moneybag/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/moneybag/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if (istype(W, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = W

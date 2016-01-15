@@ -56,6 +56,7 @@
 	friendly = "grooms"
 	mob_size = MOB_SIZE_SMALL
 	flying = 1
+	gold_core_spawnable = 2
 
 	var/parrot_damage_upper = 10
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
@@ -111,7 +112,8 @@
 			  /mob/living/simple_animal/parrot/proc/steal_from_mob, \
 			  /mob/living/simple_animal/parrot/verb/drop_held_item_player, \
 			  /mob/living/simple_animal/parrot/proc/perch_player, \
-			  /mob/living/simple_animal/parrot/proc/toggle_mode)
+			  /mob/living/simple_animal/parrot/proc/toggle_mode,
+			  /mob/living/simple_animal/parrot/proc/perch_mob_player)
 
 
 /mob/living/simple_animal/parrot/death(gibbed)
@@ -119,6 +121,13 @@
 		held_item.loc = src.loc
 		held_item = null
 	walk(src,0)
+
+	if(buckled)
+		buckled.buckled_mob = null
+	buckled = null
+	pixel_x = initial(pixel_x)
+	pixel_y = initial(pixel_y)
+
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Stat()
@@ -143,11 +152,6 @@
 		if(MODE_HEADSET)
 			if (ears)
 				ears.talk_into(src, message, , spans)
-			return ITALICS | REDUCE_RANGE
-
-		if(MODE_SECURE_HEADSET)
-			if (ears)
-				ears.talk_into(src, message, 1, spans)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_DEPARTMENT)
@@ -180,7 +184,7 @@
 /mob/living/simple_animal/parrot/Topic(href, href_list)
 
 	//Can the usr physically do this?
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(usr.incapacitated() || !usr.Adjacent(loc))
 		return
 
 	//Is the usr's mob type able to do this? (lolaliens)
@@ -261,7 +265,7 @@
  * Attack responces
  */
 //Humans, monkeys, aliens
-/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M as mob)
+/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M)
 	..()
 	if(client)
 		return
@@ -282,14 +286,14 @@
 			drop_held_item(0)
 	return
 
-/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
 	attack_hand(M)
 
-/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/alien/M as mob)
+/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/alien/M)
 	attack_hand(M)
 
 //Simple animals
-/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)
 	..() //goodbye immortal parrots
 
 	if(client)
@@ -304,7 +308,7 @@
 		icon_state = "parrot_fly"
 
 //Mobs with objects
-/mob/living/simple_animal/parrot/attackby(var/obj/item/O as obj, var/mob/living/user as mob, params)
+/mob/living/simple_animal/parrot/attackby(obj/item/O, mob/living/user, params)
 	if(!stat && !client && !istype(O, /obj/item/stack/medical) && !istype(O,/obj/item/weapon/reagent_containers/food/snacks/cracker))
 		if(O.force)
 			if(parrot_state == PARROT_PERCH)
@@ -328,7 +332,7 @@
 	return
 
 //Bullets
-/mob/living/simple_animal/parrot/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
 	..()
 	if(!stat && !client)
 		if(parrot_state == PARROT_PERCH)
@@ -479,7 +483,7 @@
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
-		if(in_range(src, parrot_interest))
+		if(Adjacent(parrot_interest))
 
 			if(isliving(parrot_interest))
 				steal_from_mob()
@@ -507,7 +511,7 @@
 			parrot_state = PARROT_WANDER
 			return
 
-		if(in_range(src, parrot_perch))
+		if(Adjacent(parrot_perch))
 			src.loc = parrot_perch.loc
 			drop_held_item()
 			parrot_state = PARROT_PERCH
@@ -547,7 +551,7 @@
 			a_intent = "harm"
 
 		//If the mob is close enough to interact with
-		if(in_range(src, parrot_interest))
+		if(Adjacent(parrot_interest))
 
 			//If the mob we've been chasing/attacking dies or falls into crit, check for loot!
 			if(L.stat)
@@ -586,7 +590,8 @@
 /mob/living/simple_animal/parrot/movement_delay()
 	if(client && stat == CONSCIOUS && parrot_state != "parrot_fly")
 		icon_state = "parrot_fly"
-	..()
+		//Because the most appropriate place to set icon_state is movement_delay(), clearly
+	return ..()
 
 /mob/living/simple_animal/parrot/proc/isStuck()
 	//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
@@ -618,7 +623,7 @@
 			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
 				item = C
 		if(item)
-			if(!AStar(loc, get_turf(item), src, /turf/proc/Distance))
+			if(!AStar(loc, get_turf(item), src, /turf/proc/Distance_cardinal))
 				item = null
 				continue
 			return item
@@ -729,7 +734,7 @@
 
 	return
 
-/mob/living/simple_animal/parrot/proc/drop_held_item(var/drop_gently = 1)
+/mob/living/simple_animal/parrot/proc/drop_held_item(drop_gently = 1)
 	set name = "Drop held item"
 	set category = "Parrot"
 	set desc = "Drop the item you're holding."
@@ -786,6 +791,46 @@
 	src << "<span class='warning'>There is no perch nearby to sit on!</span>"
 	return
 
+
+/mob/living/simple_animal/parrot/proc/perch_mob_player()
+	set name = "Sit on Human's Shoulder"
+	set category = "Parrot"
+	set desc = "Sit on a nice comfy human being!"
+
+	if(stat || !client)
+		return
+
+	if(icon_state == "parrot_fly")
+		for(var/mob/living/carbon/human/H in view(src,1))
+			if(H.buckled_mob) //Already has a parrot, or is being eaten by a slime
+				continue
+			perch_on_human(H)
+			return
+		src << "<span class='warning'>There is nobody nearby that you can sit on!</span>"
+	else
+		icon_state = "parrot_fly"
+		parrot_state = PARROT_WANDER
+		if(buckled)
+			src << "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>"
+			buckled.buckled_mob = null
+		buckled = null
+		pixel_x = initial(pixel_x)
+		pixel_y = initial(pixel_y)
+
+
+
+/mob/living/simple_animal/parrot/proc/perch_on_human(mob/living/carbon/human/H)
+	if(!H)
+		return
+	loc = get_turf(H)
+	H.buckle_mob(src, force=1)
+	pixel_y = 9
+	pixel_x = pick(-8,8) //pick left or right shoulder
+	icon_state = "parrot_sit"
+	parrot_state = PARROT_PERCH
+	src << "<span class='notice'>You sit on [H]'s shoulder.</span>"
+
+
 /mob/living/simple_animal/parrot/proc/toggle_mode()
 	set name = "Toggle mode"
 	set category = "Parrot"
@@ -800,6 +845,7 @@
 	else
 		melee_damage_upper = parrot_damage_upper
 		a_intent = "harm"
+	src << "You will now [a_intent] others..."
 	return
 
 /*
@@ -809,6 +855,7 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	speak = list("Poly wanna cracker!", ":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS FREE CALL THE SHUTTLE")
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/parrot/Poly/New()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)

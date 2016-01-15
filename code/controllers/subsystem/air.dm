@@ -2,11 +2,13 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air
 	name = "Air"
-	priority = 20
+	priority = -1
 	wait = 5
 	dynamic_wait = 1
-	dwait_lower = 5
-	dwait_upper = 50
+	dwait_upper = 300
+	dwait_buffer = 0
+	dwait_delta = 10
+	display = 1
 
 	var/cost_turfs = 0
 	var/cost_groups = 0
@@ -34,8 +36,8 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air/New()
 	NEW_SS_GLOBAL(SSair)
 
-	plasma_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="plasma"}()
-	sleeptoxin_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="sleeping_agent"}()
+	plasma_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="plasma";appearance_flags=RESET_COLOR}()
+	sleeptoxin_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="sleeping_agent";appearance_flags=RESET_COLOR}()
 
 /datum/subsystem/air/stat_entry(msg)
 	msg += "C:{"
@@ -55,11 +57,10 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/Initialize(timeofday, zlevel)
-	setup_atmos_machinery(zlevel)
-	..()
-
-/datum/subsystem/air/AfterInitialize(zlevel)
 	setup_allturfs(zlevel)
+	setup_atmos_machinery(zlevel)
+	setup_pipenets(zlevel)
+	..()
 
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
 /datum/subsystem/air/fire()
@@ -97,13 +98,11 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/proc/process_pipenets()
-	var/i=1
 	for(var/thing in networks)
 		if(thing)
 			thing:process()
-			++i
 			continue
-		networks.Cut(i, i+1)
+		networks.Remove(thing)
 
 
 /datum/subsystem/air/proc/process_atmos_machinery()
@@ -136,7 +135,7 @@ var/datum/subsystem/air/SSair
 		T.process_cell()
 
 
-/datum/subsystem/air/proc/remove_from_active(var/turf/simulated/T)
+/datum/subsystem/air/proc/remove_from_active(turf/simulated/T)
 	if(istype(T))
 		T.excited = 0
 		active_turfs -= T
@@ -144,7 +143,7 @@ var/datum/subsystem/air/SSair
 			T.excited_group.garbage_collect()
 
 
-/datum/subsystem/air/proc/add_to_active(var/turf/simulated/T, var/blockchanges = 1)
+/datum/subsystem/air/proc/add_to_active(turf/simulated/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		T.excited = 1
 		active_turfs |= T
@@ -168,7 +167,6 @@ var/datum/subsystem/air/SSair
 			EG.dismantle()
 
 /datum/subsystem/air/proc/setup_allturfs(z_level)
-	active_turfs.Cut()
 	var/z_start = 1
 	var/z_finish = world.maxz
 	if(1 <= z_level && z_level <= world.maxz)
@@ -178,9 +176,10 @@ var/datum/subsystem/air/SSair
 	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
 	for(var/turf/simulated/T in turfs_to_init)
 		T.CalculateAdjacentTurfs()
+		T.excited = 0
+		active_turfs -= T
 		if(!T.blocks_air)
-			if(T.air.check_tile_graphic())
-				T.update_visuals(T.air)
+			T.update_visuals()
 			for(var/direction in cardinal)
 				if(!(T.atmos_adjacent_turfs & direction))
 					continue
@@ -195,11 +194,23 @@ var/datum/subsystem/air/SSair
 					if(!T.air.check_turf_total(enemy_tile))
 						T.excited = 1
 						active_turfs |= T
+						break
 	if(active_turfs.len)
-		warning("There are [active_turfs.len] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs.")
+		warning("There are [active_turfs.len] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
+		for(var/turf/simulated/T in active_turfs)
+			active_turfs_startlist += text("[T.x], [T.y], [T.z]\n")
 
 /datum/subsystem/air/proc/setup_atmos_machinery(z_level)
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
 		if (z_level && AM.z != z_level)
 			continue
 		AM.atmosinit()
+
+//this can't be done with setup_atmos_machinery() because
+//	all atmos machinery has to initalize before the first
+//	pipenet can be built.
+/datum/subsystem/air/proc/setup_pipenets(z_level)
+	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
+		if (z_level && AM.z != z_level)
+			continue
+		AM.build_network()

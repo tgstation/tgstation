@@ -53,7 +53,7 @@
 		still_recharging_msg = "<span class='warning'>You'll have to wait before you can give your vow of silence again!</span>"
 	..()
 
-/obj/effect/proc_holder/spell/targeted/mime/speak/cast(list/targets)
+/obj/effect/proc_holder/spell/targeted/mime/speak/cast(list/targets,mob/user = usr)
 	for(var/mob/living/carbon/human/H in targets)
 		H.mind.miming=!H.mind.miming
 		if(H.mind.miming)

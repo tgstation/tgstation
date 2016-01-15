@@ -54,7 +54,7 @@ Contents:
 
 	//selecting a candidate player
 	if(!key)
-		var/list/candidates = get_candidates(BE_NINJA)
+		var/list/candidates = get_candidates(ROLE_NINJA)
 		if(!candidates.len)
 			return kill()
 		var/client/C = pick(candidates)
@@ -155,7 +155,8 @@ Contents:
 		Ninja.internals.icon_state = "internal1"
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
-		ERROR("The ninja wasn't assigned the right mind. ;ç;")
+		throw EXCEPTION("Ninja created with incorrect mind")
+		return
 
 	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
 
@@ -166,11 +167,10 @@ Contents:
 
 /proc/create_space_ninja(spawn_loc)
 	var/mob/living/carbon/human/new_ninja = new(spawn_loc)
-	if(prob(50)) new_ninja.gender = "female"
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
 	A.real_name = "[pick(ninja_titles)] [pick(ninja_names)]"
 	A.copy_to(new_ninja)
-	ready_dna(new_ninja)
+	new_ninja.dna.update_dna_identity()
 	new_ninja.equip_space_ninja()
 	return new_ninja
 
@@ -212,7 +212,5 @@ Contents:
 	equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/carbondioxide(src), slot_back)
 
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src)
-	E.imp_in = src
-	E.implanted = 1
-	E.implanted(src)
+	E.implant(src)
 	return 1

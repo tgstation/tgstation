@@ -36,6 +36,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	..()
 	icon_state = "[get_status()]_[sprite_number]"
 
+//prevents shuttles attempting to rotate this since it messes up sprites
+/obj/machinery/gravity_generator/shuttleRotate()
+	return
+
 /obj/machinery/gravity_generator/proc/get_status()
 	return "off"
 
@@ -54,7 +58,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	set_broken()
 	if(main_part)
 		qdel(main_part)
-	..()
+	return ..()
 
 //
 // Part generator which is mostly there for looks
@@ -63,13 +67,13 @@ var/const/GRAV_NEEDS_WRENCH = 3
 /obj/machinery/gravity_generator/part
 	var/obj/machinery/gravity_generator/main/main_part = null
 
-/obj/machinery/gravity_generator/part/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/gravity_generator/part/attackby(obj/item/I, mob/user, params)
 	return main_part.attackby(I, user)
 
 /obj/machinery/gravity_generator/part/get_status()
 	return main_part.get_status()
 
-/obj/machinery/gravity_generator/part/attack_hand(mob/user as mob)
+/obj/machinery/gravity_generator/part/attack_hand(mob/user)
 	return main_part.attack_hand(user)
 
 /obj/machinery/gravity_generator/part/set_broken()
@@ -122,7 +126,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	for(var/obj/machinery/gravity_generator/part/O in parts)
 		O.main_part = null
 		qdel(O)
-	..()
+	return ..()
 
 /obj/machinery/gravity_generator/main/proc/setup_parts()
 	var/turf/our_turf = get_turf(src)
@@ -171,7 +175,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 // Interaction
 
 // Fixing the gravity generator.
-/obj/machinery/gravity_generator/main/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/gravity_generator/main/attackby(obj/item/I, mob/user, params)
 	var/old_broken_state = broken_state
 	switch(broken_state)
 		if(GRAV_NEEDS_SCREWDRIVER)
@@ -208,11 +212,11 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	if(old_broken_state != broken_state)
 		update_icon()
 
-/obj/machinery/gravity_generator/main/attack_hand(mob/user as mob)
+/obj/machinery/gravity_generator/main/attack_hand(mob/user)
 	if(!..())
 		return interact(user)
 
-/obj/machinery/gravity_generator/main/interact(mob/user as mob)
+/obj/machinery/gravity_generator/main/interact(mob/user)
 	if(stat & BROKEN)
 		return
 	var/dat = "Gravity Generator Breaker: "
@@ -277,7 +281,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	update_icon()
 
 // Set the state of the gravity.
-/obj/machinery/gravity_generator/main/proc/set_state(var/new_state)
+/obj/machinery/gravity_generator/main/proc/set_state(new_state)
 	charging_state = POWER_IDLE
 	on = new_state
 	use_power = on ? 2 : 1
@@ -346,8 +350,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 
 /obj/machinery/gravity_generator/main/proc/pulse_radiation()
-	for(var/mob/living/L in view(7, src))
-		L.irradiate(20)
+	radiation_pulse(get_turf(src), 3, 7, 20)
 
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()

@@ -14,21 +14,23 @@
 	var/mob/event_confirmed_by
 	//1 = select event
 	//2 = authenticate
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
 
-/obj/machinery/keycard_auth/attack_ai(mob/user as mob)
+/obj/machinery/keycard_auth/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return
 	user << "The station AI is not to interact with these devices."
 	return
 
-/obj/machinery/keycard_auth/attack_paw(mob/user as mob)
+/obj/machinery/keycard_auth/attack_paw(mob/user)
 	user << "<span class='warning'>You are too primitive to use this device!</span>"
 	return
 
-/obj/machinery/keycard_auth/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/keycard_auth/attackby(obj/item/weapon/W, mob/user, params)
 	if(stat & (NOPOWER|BROKEN))
 		user << "This device is not powered."
 		return
@@ -51,7 +53,7 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/keycard_auth/attack_hand(mob/user as mob)
+/obj/machinery/keycard_auth/attack_hand(mob/user)
 	if(user.stat || stat & (NOPOWER|BROKEN))
 		user << "<span class='warning'>This device is not powered!</span>"
 		return
@@ -106,7 +108,7 @@
 
 /obj/machinery/keycard_auth/proc/broadcast_request()
 	icon_state = "auth_on"
-	for(var/obj/machinery/keycard_auth/KA in world)
+	for(var/obj/machinery/keycard_auth/KA in machines)
 		if(KA == src) continue
 		KA.reset()
 		spawn()
@@ -120,7 +122,7 @@
 		message_admins("[key_name(event_triggered_by)] triggered and [key_name(event_confirmed_by)] confirmed event [event]")
 	reset()
 
-/obj/machinery/keycard_auth/proc/receive_request(var/obj/machinery/keycard_auth/source)
+/obj/machinery/keycard_auth/proc/receive_request(obj/machinery/keycard_auth/source)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	event_source = source

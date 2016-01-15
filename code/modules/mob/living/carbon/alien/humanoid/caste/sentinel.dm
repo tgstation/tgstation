@@ -1,23 +1,16 @@
 /mob/living/carbon/alien/humanoid/sentinel
 	name = "alien sentinel"
 	caste = "s"
-	maxHealth = 125
-	health = 125
-	storedPlasma = 100
-	max_plasma = 250
+	maxHealth = 150
+	health = 150
 	icon_state = "aliens_s"
-	plasma_rate = 10
 
 
 /mob/living/carbon/alien/humanoid/sentinel/New()
-	create_reagents(100)
-	if(name == "alien sentinel")
-		name = text("alien sentinel ([rand(1, 1000)])")
-	real_name = name
-
-	AddAbility(new/obj/effect/proc_holder/alien/acid(null))
-	AddAbility(new/obj/effect/proc_holder/alien/neurotoxin(null))
-
+	internal_organs += new /obj/item/organ/internal/alien/plasmavessel
+	internal_organs += new /obj/item/organ/internal/alien/acid
+	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
+	AddAbility(new /obj/effect/proc_holder/alien/sneak)
 	..()
 
 /mob/living/carbon/alien/humanoid/sentinel/handle_hud_icons_health()
@@ -43,4 +36,3 @@
 
 /mob/living/carbon/alien/humanoid/sentinel/movement_delay()
 	. = ..()
-	. += 1

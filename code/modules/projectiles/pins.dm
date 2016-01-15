@@ -42,7 +42,7 @@
 		emagged = 1
 		user << "<span class='notice'>You override the authentication mechanism.</span>"
 
-/obj/item/device/firing_pin/proc/gun_insert(mob/living/user, var/obj/item/weapon/gun/G)
+/obj/item/device/firing_pin/proc/gun_insert(mob/living/user, obj/item/weapon/gun/G)
 	gun = G
 	loc = gun
 	gun.pin = src
@@ -132,7 +132,7 @@
 		return 0
 	return 1
 
-/obj/item/device/firing_pin/clown/ultra/gun_insert(mob/living/user, var/obj/item/weapon/gun/G)
+/obj/item/device/firing_pin/clown/ultra/gun_insert(mob/living/user, obj/item/weapon/gun/G)
 	..()
 	G.clumsy_check = 0
 

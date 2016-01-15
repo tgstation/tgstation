@@ -11,21 +11,21 @@
 	random_sensor = 0
 	var/list/clothing_choices = list()
 	var/malfunctioning = 0
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/under/chameleon/New()
 	..()
-	for(var/U in typesof(/obj/item/clothing/under/color)-(/obj/item/clothing/under/color))
+	for(var/U in subtypesof(/obj/item/clothing/under/color))
 		var/obj/item/clothing/under/V = new U
 		src.clothing_choices += V
 
-	for(var/U in typesof(/obj/item/clothing/under/rank)-(/obj/item/clothing/under/rank))
+	for(var/U in subtypesof(/obj/item/clothing/under/rank))
 		var/obj/item/clothing/under/V = new U
 		src.clothing_choices += V
 	return
 
 
-/obj/item/clothing/under/chameleon/attackby(obj/item/clothing/under/U as obj, mob/user as mob, params)
+/obj/item/clothing/under/chameleon/attackby(obj/item/clothing/under/U, mob/user, params)
 	..()
 	if(istype(U, /obj/item/clothing/under/chameleon))
 		user << "\<span class='notice'>Nothing happens.</span>"

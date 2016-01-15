@@ -25,6 +25,7 @@
 	speed = 1
 	ventcrawler = 2
 	robust_searching = 1
+	unique_name = 1
 	speak_emote = list("squeaks")
 	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
 	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it
@@ -57,16 +58,17 @@
 	cap_dead.color = cap_color
 	UpdateMushroomCap()
 	health = maxHealth
+	deathmessage = "[src] fainted."
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/adjustBruteLoss(var/damage)//Possibility to flee from a fight just to make it more visually interesting
+/mob/living/simple_animal/hostile/mushroom/adjustHealth(damage)//Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
 		spawn(30)
 			retreat_distance = null
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/attack_animal(var/mob/living/L)
+/mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
 		var/mob/living/simple_animal/hostile/mushroom/M = L
 		if(faint_ticker < 2)
@@ -89,8 +91,6 @@
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/death(gibbed)
-	if(!gibbed)
-		visible_message("[src] fainted.")
 	..(gibbed)
 	UpdateMushroomCap()
 
@@ -110,7 +110,7 @@
 	spawn(300)
 		recovery_cooldown = 0
 
-/mob/living/simple_animal/hostile/mushroom/proc/LevelUp(var/level_gain)
+/mob/living/simple_animal/hostile/mushroom/proc/LevelUp(level_gain)
 	if(powerlevel <= 9)
 		powerlevel += level_gain
 		if(prob(25))
@@ -125,7 +125,7 @@
 		src.visible_message("The [src.name] was bruised!")
 		bruised = 1
 
-/mob/living/simple_animal/hostile/mushroom/attackby(obj/item/I as obj, mob/user as mob, params)
+/mob/living/simple_animal/hostile/mushroom/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom))
 		if(stat == DEAD && !recovery_cooldown)
 			Recover()
@@ -137,7 +137,7 @@
 		Bruise()
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
 	..()
 	if(M.a_intent == "harm")
 		Bruise()
@@ -158,6 +158,6 @@
 	for(counter=0, counter<=powerlevel, counter++)
 		var/obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice/S = new /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice(src.loc)
 		S.reagents.add_reagent("mushroomhallucinogen", powerlevel)
-		S.reagents.add_reagent("doctorsdelight", powerlevel)
+		S.reagents.add_reagent("omnizine", powerlevel)
 		S.reagents.add_reagent("synaptizine", powerlevel)
 	qdel(src)

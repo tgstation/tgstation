@@ -18,9 +18,9 @@
 	set_frequency(receive_frequency)
 
 /obj/machinery/computer/atmos_alert/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, receive_frequency)
-	..()
+	if(SSradio)
+		SSradio.remove_object(src, receive_frequency)
+	return ..()
 
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
@@ -41,9 +41,9 @@
 
 
 /obj/machinery/computer/atmos_alert/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, receive_frequency)
+	SSradio.remove_object(src, receive_frequency)
 	receive_frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, receive_frequency, RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, receive_frequency, RADIO_ATMOSIA)
 
 
 /obj/machinery/computer/atmos_alert/attack_hand(mob/user)

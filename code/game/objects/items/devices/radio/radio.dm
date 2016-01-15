@@ -34,12 +34,14 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = 2
-	g_amt = 25
-	m_amt = 75
+	materials = list(MAT_METAL=75, MAT_GLASS=25)
 
 	var/const/TRANSMISSION_DELAY = 5 // only 2/second/radio
 	var/const/FREQ_LISTENING = 1
 		//FREQ_BROADCASTING = 2
+
+	var/command = FALSE //If we are speaking into a command headset, our text can be BOLD
+	var/use_command = FALSE
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
 	remove_radio(src, frequency)
@@ -51,7 +53,7 @@
 		wires.CutWireIndex(WIRE_TRANSMIT)
 	secure_radio_connections = new
 	..()
-	if(radio_controller)
+	if(SSradio)
 		initialize()
 
 
@@ -94,9 +96,11 @@
 	qdel(wires)
 	wires = null
 	remove_radio_all(src) //Just to be sure
-	..()
+	patch_link = null
+	keyslot = null
+	return ..()
 
-/obj/item/device/radio/MouseDrop(obj/over_object as obj, src_location, over_location)
+/obj/item/device/radio/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
 	if((!istype(over_object, /obj/screen)) && src.loc == M)
 		return attack_self(M)
@@ -118,11 +122,11 @@
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
 
-/obj/item/device/radio/attack_self(mob/user as mob)
+/obj/item/device/radio/attack_self(mob/user)
 	user.set_machine(src)
 	interact(user)
 
-/obj/item/device/radio/interact(mob/user as mob)
+/obj/item/device/radio/interact(mob/user)
 	if(!on)
 		return
 
@@ -153,8 +157,8 @@
 	for (var/ch_name in channels)
 		dat+=text_sec_channel(ch_name, channels[ch_name])
 	dat+= text_wires()
-	//user << browse(dat, "window=radio")
-	//onclose(user, "radio")
+	if (command)
+		dat+= "<b>High Volume Mode:</b> [use_command ? "<A href='byond://?src=\ref[src];bold=1'>Engaged</A>" : "<A href='byond://?src=\ref[src];bold=1'>Disengaged</A>"]<BR>"
 	var/datum/browser/popup = new(user, "radio", "[src]")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -167,7 +171,7 @@
 	return
 
 
-/obj/item/device/radio/proc/text_sec_channel(var/chan_name, var/chan_stat)
+/obj/item/device/radio/proc/text_sec_channel(chan_name, chan_stat)
 	var/list = !!(chan_stat&FREQ_LISTENING)!=0
 	return {"
 			<B>[chan_name]</B>: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
@@ -175,10 +179,10 @@
 
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
-	if (usr.stat || !on)
+	if ((usr.stat && !IsAdminGhost(usr)) || !on)
 		return
 
-	if (!(issilicon(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
+	if (!(issilicon(usr) || IsAdminGhost(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
 		usr << browse(null, "window=radio")
 		return
 	usr.set_machine(src)
@@ -204,6 +208,8 @@
 				channels[chan_name] &= ~FREQ_LISTENING
 			else
 				channels[chan_name] |= FREQ_LISTENING
+	else if (href_list["bold"])
+		use_command = !use_command
 	if (!( master ))
 		if (istype(loc, /mob))
 			interact(loc)
@@ -216,7 +222,7 @@
 			updateDialog()
 	add_fingerprint(usr)
 
-/obj/item/device/radio/proc/isWireCut(var/index)
+/obj/item/device/radio/proc/isWireCut(index)
 	return wires.IsIndexCut(index)
 
 /obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
@@ -231,6 +237,9 @@
 
 	if(!M.IsVocal())
 		return
+
+	if(use_command)
+		spans |= SPAN_COMMAND
 
 	/* Quick introduction:
 		This new radio system uses a very robust FTL signaling technology unoriginally
@@ -247,7 +256,7 @@
 		be prepared to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
 	*/
 
-		//get the frequency you buttface. radios no longer use the radio_controller. confusing for future generations, convenient for me.
+		//get the frequency you buttface. radios no longer use the SSradio. confusing for future generations, convenient for me.
 	var/freq
 	if(channel && channels && channels.len > 0)
 		if (channel == "department")
@@ -527,17 +536,17 @@
 	else
 		user << "<span class='notice'>[name] can not be modified or attached.</span>"
 
-/obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/device/radio/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) ))
 		return
 	b_stat = !( b_stat )
 	if(!istype(src, /obj/item/device/radio/beacon))
-		if (b_stat)
-			user.show_message("<span class='notice'>The radio can now be attached and modified!</span>")
+		if(b_stat)
+			user << "<span class='notice'>The radio can now be attached and modified!</span>"
 		else
-			user.show_message("<span class='notice'>The radio can no longer be modified or attached!</span>")
+			user << "<span class='notice'>The radio can no longer be modified or attached!</span>"
 		updateDialog()
 			//Foreach goto(83)
 		add_fingerprint(user)
@@ -575,7 +584,7 @@
 	..()
 	set_frequency(SYND_FREQ)
 
-/obj/item/device/radio/borg/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user, params)
 //	..()
 	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
@@ -586,7 +595,7 @@
 
 
 			for(var/ch_name in channels)
-				radio_controller.remove_object(src, radiochannels[ch_name])
+				SSradio.remove_object(src, radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
 
@@ -629,7 +638,7 @@
 		usr << "Subspace Transmission is [(subspace_transmission) ? "enabled" : "disabled"]"
 	..()
 
-/obj/item/device/radio/borg/interact(mob/user as mob)
+/obj/item/device/radio/borg/interact(mob/user)
 	if(!on)
 		return
 

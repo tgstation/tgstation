@@ -1,4 +1,3 @@
-
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return null
 
@@ -58,6 +57,9 @@
 	..()
 	SSair.hotspots += src
 	perform_exposure()
+	dir = pick(cardinal)
+	air_update_turf()
+
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/simulated/location = loc
@@ -78,7 +80,8 @@
 		volume = affected.fuel_burnt*FIRE_GROWTH_RATE
 		location.assume_air(affected)
 
-	for(var/atom/item in loc)
+	for(var/A in loc)
+		var/atom/item = A
 		if(item && item != src) // It's possible that the item is deleted in temperature_expose
 			item.fire_act(null, temperature, volume)
 	return 0
@@ -91,18 +94,18 @@
 
 	var/turf/simulated/location = loc
 	if(!istype(location))
-		Kill()
+		qdel(src)
 		return
 
 	if(location.excited_group)
 		location.excited_group.reset_cooldowns()
 
 	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
-		Kill()
+		qdel(src)
 		return
 
 	if(!(location.air) || location.air.toxins < 0.5 || location.air.oxygen < 0.5)
-		Kill()
+		qdel(src)
 		return
 
 	perform_exposure()
@@ -139,12 +142,8 @@
 			return 0*/
 	return 1
 
-// Garbage collect itself by nulling reference to it
-
-/obj/effect/hotspot/proc/Kill()
-	PlaceInPool(src)
-
 /obj/effect/hotspot/Destroy()
+	SetLuminosity(0)
 	SSair.hotspots -= src
 	DestroyTurf()
 	if(istype(loc, /turf/simulated))
@@ -152,6 +151,7 @@
 		if(T.active_hotspot == src)
 			T.active_hotspot = null
 	loc = null
+	..()
 	return QDEL_HINT_PUTINPOOL
 
 /obj/effect/hotspot/proc/DestroyTurf()
@@ -169,12 +169,6 @@
 			else
 				T.to_be_destroyed = 0
 				T.max_fire_temperature_sustained = 0
-
-/obj/effect/hotspot/New()
-	..()
-	dir = pick(cardinal)
-	air_update_turf()
-	return
 
 /obj/effect/hotspot/Crossed(mob/living/L)
 	..()

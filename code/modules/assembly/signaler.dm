@@ -3,8 +3,7 @@
 	desc = "Used to remotely activate devices."
 	icon_state = "signaller"
 	item_state = "signaler"
-	m_amt = 400
-	g_amt = 120
+	materials = list(MAT_METAL=400, MAT_GLASS=120)
 	origin_tech = "magnets=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = 1
@@ -18,12 +17,12 @@
 	..()
 	spawn(40)
 		set_frequency(frequency)
-	return
+
 
 /obj/item/device/assembly/signaler/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
-	..()
+	if(SSradio)
+		SSradio.remove_object(src,frequency)
+	return ..()
 
 /obj/item/device/assembly/signaler/activate()
 	if(cooldown > 0)	return 0
@@ -39,7 +38,7 @@
 		holder.update_icon()
 	return
 
-/obj/item/device/assembly/signaler/interact(mob/user as mob, flag1)
+/obj/item/device/assembly/signaler/interact(mob/user, flag1)
 	if(is_secured(user))
 		var/t1 = "-------"
 	//	if ((src.b_stat && !( flag1 )))
@@ -136,13 +135,13 @@ Code:
 
 
 /obj/item/device/assembly/signaler/proc/set_frequency(new_frequency)
-	if(!radio_controller)
+	if(!SSradio)
 		sleep(20)
-	if(!radio_controller)
+	if(!SSradio)
 		return
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_CHAT)
 	return
 
 // Embedded signaller used in grenade construction.
@@ -178,7 +177,7 @@ Code:
 		return 0
 	if(signal.encryption != code)
 		return 0
-	for(var/obj/effect/anomaly/A in orange(0, src))
+	for(var/obj/effect/anomaly/A in get_turf(src))
 		A.anomalyNeutralize()
 
 /obj/item/device/assembly/signaler/anomaly/attack_self()

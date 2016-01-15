@@ -58,7 +58,7 @@ var/intercom_range_display_status = 0
 	set category = "Mapping"
 	set name = "Camera Report"
 
-	if(!master_controller)
+	if(!Master)
 		alert(usr,"Master_controller not found.","Sec Camera Report")
 		return 0
 
@@ -114,6 +114,22 @@ var/intercom_range_display_status = 0
 					qdel(F)
 	feedback_add_details("admin_verb","mIRD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_show_at_list()
+	set category = "Mapping"
+	set name = "Show roundstart AT list"
+	set desc = "Displays a list of active turfs coordinates at roundstart"
+
+	var/dat = {"<b>Coordinate list of Active Turfs at Roundstart</b>
+	 <br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
+
+	for(var/i=1; i<=active_turfs_startlist.len; i++)
+		dat += active_turfs_startlist[i]
+		dat += "<br>"
+
+	usr << browse(dat, "window=at_list")
+
+	feedback_add_details("admin_verb","mATL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/enable_debug_verbs()
 	set category = "Debug"
 	set name = "Debug verbs"
@@ -137,13 +153,12 @@ var/intercom_range_display_status = 0
 	src.verbs += /client/proc/cmd_admin_areatest
 	src.verbs += /client/proc/cmd_admin_rejuvenate
 	src.verbs += /datum/admins/proc/show_traitor_panel
-	src.verbs += /client/proc/print_jobban_old
-	src.verbs += /client/proc/print_jobban_old_filter
 	src.verbs += /client/proc/disable_communication
 	src.verbs += /client/proc/print_pointers
 	src.verbs += /client/proc/count_movable_instances
-	src.verbs += /client/proc/cmd_display_del_log
-	//src.verbs += /client/proc/cmd_admin_rejuvenate
+	src.verbs += /client/proc/cmd_show_at_list
+	src.verbs += /client/proc/cmd_show_at_list
+	src.verbs += /client/proc/manipulate_organs
 
 	feedback_add_details("admin_verb","mDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

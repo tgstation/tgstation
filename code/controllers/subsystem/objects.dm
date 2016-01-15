@@ -1,6 +1,7 @@
 var/datum/subsystem/objects/SSobj
 
 /datum/proc/process()
+	set waitfor = 0
 	SSobj.processing.Remove(src)
 	return 0
 
@@ -15,6 +16,7 @@ var/datum/subsystem/objects/SSobj
 	NEW_SS_GLOBAL(SSobj)
 
 /datum/subsystem/objects/Initialize(timeofday, zlevel)
+	setupGenetics()
 	for(var/atom/movable/AM in world)
 		if (zlevel && AM.z != zlevel)
 			continue
@@ -31,16 +33,14 @@ var/datum/subsystem/objects/SSobj
 
 
 /datum/subsystem/objects/fire()
-	var/i=1
 	for(var/thing in SSobj.processing)
 		if(thing)
 			thing:process(wait)
-			++i
 			continue
-		SSobj.processing.Cut(i, i+1)
+		SSobj.processing.Remove(thing)
 	for(var/obj/burningobj in SSobj.burning)
-		if(burningobj && (burningobj.burn_state == 1))
+		if(burningobj && (burningobj.burn_state == ON_FIRE))
 			if(burningobj.burn_world_time < world.time)
 				burningobj.burn()
 		else
-			SSobj.burning -= burningobj
+			SSobj.burning.Remove(burningobj)

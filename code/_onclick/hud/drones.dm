@@ -44,7 +44,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "suit_storage"
 	inv_box.screen_loc = ui_drone_storage
-	inv_box.slot_id = "drone_storage_slot"
+	inv_box.slot_id = slot_drone_storage
 	inv_box.layer = 19
 	adding += inv_box
 
@@ -77,5 +77,6 @@
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen = null
+	mymob.client.screen = list()
+	mymob.client.screen += mymob.client.void
 	mymob.client.screen += adding

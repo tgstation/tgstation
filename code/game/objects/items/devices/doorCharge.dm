@@ -8,8 +8,8 @@
 	throw_speed = 1
 	force = 3
 	attack_verb = list("blown up", "exploded", "detonated")
-	m_amt = 50
-	g_amt = 30
+	materials = list(MAT_METAL=50, MAT_GLASS=30)
+	origin_tech = "syndicate=3;combat=2"
 
 /obj/item/device/doorCharge/ex_act(severity, target)
 	switch(severity)

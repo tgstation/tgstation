@@ -13,15 +13,15 @@
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
-	g_amt = MINERAL_MATERIAL_AMOUNT
+	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/glass/cyborg
-	g_amt = 0
+	materials = list()
 	is_cyborg = 1
 	cost = 500
 
-/obj/item/stack/sheet/glass/attack_self(mob/user as mob)
+/obj/item/stack/sheet/glass/attack_self(mob/user)
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
@@ -42,7 +42,6 @@
 		if (V.get_amount() >= 1 && src.get_amount() >= 1)
 			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 			RG.add_fingerprint(user)
-			RG.add_to_stacks(user)
 			var/obj/item/stack/sheet/glass/G = src
 			src = null
 			var/replace = (user.get_inactive_hand()==G)
@@ -56,7 +55,7 @@
 	else
 		return ..()
 
-/obj/item/stack/sheet/glass/proc/construct_window(mob/user as mob)
+/obj/item/stack/sheet/glass/proc/construct_window(mob/user)
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
@@ -127,13 +126,11 @@
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
-	g_amt = MINERAL_MATERIAL_AMOUNT
-	m_amt = MINERAL_MATERIAL_AMOUNT / 2
+	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/rglass/cyborg
-	g_amt = 0
-	m_amt = 0
+	materials = list()
 	var/datum/robot_energy_storage/metsource
 	var/datum/robot_energy_storage/glasource
 	var/metcost = 250
@@ -142,20 +139,20 @@
 /obj/item/stack/sheet/rglass/cyborg/get_amount()
 	return min(round(metsource.energy / metcost), round(glasource.energy / glacost))
 
-/obj/item/stack/sheet/rglass/cyborg/use(var/amount) // Requires special checks, because it uses two storages
+/obj/item/stack/sheet/rglass/cyborg/use(amount) // Requires special checks, because it uses two storages
 	metsource.use_charge(amount * metcost)
 	glasource.use_charge(amount * glacost)
 	return
 
-/obj/item/stack/sheet/rglass/cyborg/add(var/amount)
+/obj/item/stack/sheet/rglass/cyborg/add(amount)
 	metsource.add_charge(amount * metcost)
 	glasource.add_charge(amount * glacost)
 	return
 
-/obj/item/stack/sheet/rglass/attack_self(mob/user as mob)
+/obj/item/stack/sheet/rglass/attack_self(mob/user)
 	construct_window(user)
 
-/obj/item/stack/sheet/rglass/proc/construct_window(mob/user as mob)
+/obj/item/stack/sheet/rglass/proc/construct_window(mob/user)
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
@@ -263,14 +260,15 @@
 	desc = "A nasty looking shard of glass."
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
-	w_class = 1.0
-	force = 5.0
-	throwforce = 10.0
+	w_class = 1
+	force = 5
+	throwforce = 10
 	item_state = "shard-glass"
-	g_amt = MINERAL_MATERIAL_AMOUNT
+	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/cooldown = 0
+	sharpness = IS_SHARP
 
 /obj/item/weapon/shard/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
@@ -300,7 +298,7 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves)
+		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
 			var/organ = (H.hand ? "l_" : "r_") + "arm"
 			var/obj/item/organ/limb/affecting = H.get_organ(organ)
@@ -327,8 +325,8 @@
 			qdel(src)
 	..()
 
-/obj/item/weapon/shard/Crossed(var/mob/AM)
-	if(istype(AM))
+/obj/item/weapon/shard/Crossed(mob/AM)
+	if(istype(AM) && has_gravity(loc))
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM

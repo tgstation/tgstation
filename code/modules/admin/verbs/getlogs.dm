@@ -1,7 +1,7 @@
 /*
 	HOW DO I LOG RUNTIMES?
 	Firstly, start dreamdeamon if it isn't already running. Then select "world>Log Session" (or press the F3 key)
-	navigate the popup window to the data/logs/runtime/ folder from where your tgstation .dmb is located.
+	navigate the popup window to the data/logs/runtimes/ folder from where your tgstation .dmb is located.
 	(you may have to make this folder yourself)
 
 	OPTIONAL: 	you can select the little checkbox down the bottom to make dreamdeamon save the log everytime you
@@ -44,7 +44,7 @@
 	set desc = "Retrieve any session logfiles saved by dreamdeamon."
 	set category = null
 
-	var/path = browse_files("data/logs/runtime/")
+	var/path = browse_files("data/logs/runtimes/")
 	if(!path)
 		return
 
@@ -52,7 +52,7 @@
 		return
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
-	src << run( file(path) )
+	src << ftp( file(path) )
 	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
 	return
 
@@ -72,7 +72,7 @@
 		return
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
-	src << run( file(path) )
+	src << ftp( file(path) )
 	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
 	return
 
@@ -87,7 +87,7 @@
 
 	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")].log"
 	if( fexists(path) )
-		src << run( file(path) )
+		src << ftp( file(path) )
 	else
 		src << "<font color='red'>Error: view_txt_log(): File not found/Invalid path([path]).</font>"
 		return
@@ -102,7 +102,7 @@
 
 	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")] Attack.log"
 	if( fexists(path) )
-		src << run( file(path) )
+		src << ftp( file(path) )
 	else
 		src << "<font color='red'>Error: view_atk_log(): File not found/Invalid path([path]).</font>"
 		return

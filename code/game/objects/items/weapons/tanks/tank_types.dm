@@ -14,7 +14,8 @@
 	name = "oxygen tank"
 	desc = "A tank of oxygen."
 	icon_state = "oxygen"
-	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+	force = 10
 
 
 /obj/item/weapon/tank/internals/oxygen/New()
@@ -40,6 +41,7 @@
 	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
 	item_state = "an_tank"
+	force = 10
 
 /obj/item/weapon/tank/internals/anesthetic/New()
 	..()
@@ -59,6 +61,7 @@
 	name = "air tank"
 	desc = "Mixed anyone?"
 	icon_state = "oxygen"
+	force = 10
 
 
 /obj/item/weapon/tank/internals/air/New()
@@ -78,6 +81,7 @@
 	icon_state = "plasma"
 	flags = CONDUCT
 	slot_flags = null	//they have no straps!
+	force = 8
 
 
 /obj/item/weapon/tank/internals/plasma/New()
@@ -86,7 +90,7 @@
 	src.air_contents.toxins = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
-/obj/item/weapon/tank/internals/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/tank/internals/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 
 	if (istype(W, /obj/item/weapon/flamethrower))
@@ -112,6 +116,7 @@
 /obj/item/weapon/tank/internals/plasmaman
 	icon_state = "plasmaman_tank"
 	item_state = "plasmaman_tank"
+	force = 10
 
 /obj/item/weapon/tank/internals/plasmaman/New()
 	..()
@@ -130,6 +135,7 @@
 	icon_state = "plasmaman_tank_belt"
 	item_state = "plasmaman_tank_belt"
 	slot_flags = SLOT_BELT
+	force = 5
 
 /obj/item/weapon/tank/internals/plasmaman/belt/full/New()
 	..()
@@ -148,9 +154,9 @@
 	icon_state = "emergency"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	w_class = 2.0
-	force = 4.0
-	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+	w_class = 2
+	force = 4
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
 
 

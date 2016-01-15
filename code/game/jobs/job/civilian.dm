@@ -12,30 +12,40 @@ Clown
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 
-	default_pda = /obj/item/device/pda/clown
-	default_backpack = /obj/item/weapon/storage/backpack/clown
+	outfit = /datum/outfit/job/clown
 
 	access = list(access_theatre)
 	minimal_access = list(access_theatre)
 
-/datum/job/clown/equip_backpack(var/mob/living/carbon/human/H)
-	var/obj/item/weapon/storage/backpack/BPK = new default_backpack(H)
+/datum/outfit/job/clown
+	name = "Clown"
 
-	new default_storagebox(BPK)
-	new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(BPK, 50)
-	new /obj/item/weapon/stamp/clown(BPK)
-	new /obj/item/weapon/reagent_containers/spray/waterflower(BPK)
+	belt = /obj/item/device/pda/clown
+	uniform = /obj/item/clothing/under/rank/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes
+	mask = /obj/item/clothing/mask/gas/clown_hat
+	l_pocket = /obj/item/weapon/bikehorn
+	r_pocket = /obj/item/toy/crayon/rainbow
+	backpack_contents = list(/obj/item/weapon/stamp/clown=1,/obj/item/weapon/reagent_containers/spray/waterflower=1)
 
-	H.equip_to_slot_or_del(BPK, slot_back)
+	backpack = /obj/item/weapon/storage/backpack/clown
+	satchel = /obj/item/weapon/storage/backpack/clown
 
-/datum/job/clown/equip_items(var/mob/living/carbon/human/H)
-	H.fully_replace_character_name(H.real_name, pick(clown_names)) // Give him a temporary random name to prevent identity revealing
+/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
 
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
-	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), slot_l_store)
-	H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), slot_r_store)
+	if(visualsOnly)
+		return
+
+	H.fully_replace_character_name(H.real_name, pick(clown_names))
+
+/datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H.back, 50)
 
 	H.dna.add_mutation(CLOWNMUT)
 	H.rename_self("clown")
@@ -54,28 +64,31 @@ Mime
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 
-	default_pda = /obj/item/device/pda/mime
-	default_backpack = /obj/item/weapon/storage/backpack/mime
+	outfit = /datum/outfit/job/mime
 
 	access = list(access_theatre)
 	minimal_access = list(access_theatre)
 
-/datum/job/mime/equip_backpack(var/mob/living/carbon/human/H)
-	var/obj/item/weapon/storage/backpack/BPK = new default_backpack(H)
+/datum/outfit/job/mime
+	name = "Mime"
 
-	new default_storagebox(BPK)
-	new /obj/item/toy/crayon/mime(BPK)
-	new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(BPK)
+	belt = /obj/item/device/pda/mime
+	uniform = /obj/item/clothing/under/rank/mime
+	mask = /obj/item/clothing/mask/gas/mime
+	gloves = /obj/item/clothing/gloves/color/white
+	head = /obj/item/clothing/head/beret
+	suit = /obj/item/clothing/suit/suspenders
+	backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing=1,\
+		/obj/item/toy/crayon/mime=1)
 
-	H.equip_to_slot_or_del(BPK, slot_back)
+	backpack = /obj/item/weapon/storage/backpack/mime
+	satchel = /obj/item/weapon/storage/backpack/mime
 
-/datum/job/mime/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/mime(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/white(H), slot_gloves)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(H), slot_wear_mask)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/suspenders(H), slot_wear_suit)
+/datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
 
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
@@ -98,17 +111,19 @@ Librarian
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 
-	default_pda = /obj/item/device/pda/librarian
+	outfit = /datum/outfit/job/librarian
 
 	access = list(access_library)
 	minimal_access = list(access_library)
 
-/datum/job/librarian/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/librarian(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/books(H), slot_l_hand)
-	H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_r_store)
-	H.equip_to_slot_or_del(new /obj/item/device/laser_pointer(H), slot_l_store)
+/datum/outfit/job/librarian
+	name = "Librarian"
+
+	belt = /obj/item/device/pda/librarian
+	uniform = /obj/item/clothing/under/rank/librarian
+	l_hand = /obj/item/weapon/storage/bag/books
+	r_pocket = /obj/item/weapon/barcodescanner
+	l_pocket = /obj/item/device/laser_pointer
 
 /*
 Lawyer
@@ -123,25 +138,32 @@ Lawyer
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	var/global/lawyers = 0 //Counts lawyer amount
+	var/lawyers = 0 //Counts lawyer amount
 
-	default_pda = /obj/item/device/pda/lawyer
-	default_headset = /obj/item/device/radio/headset/headset_sec
+	outfit = /datum/outfit/job/lawyer
 
 	access = list(access_lawyer, access_court, access_sec_doors)
 	minimal_access = list(access_lawyer, access_court, access_sec_doors)
 
-/datum/job/lawyer/equip_items(var/mob/living/carbon/human/H)
-	lawyers += 1
+/datum/outfit/job/lawyer
+	name = "Lawyer"
 
-	switch(lawyers)
-		if(1)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/bluesuit(H), slot_w_uniform)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer(H), slot_wear_suit)
-		else
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), slot_w_uniform)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/lawyer/purple(H), slot_wear_suit)
+	belt = /obj/item/device/pda/lawyer
+	ears = /obj/item/device/radio/headset/headset_sec
+	uniform = /obj/item/clothing/under/lawyer/bluesuit
+	suit = /obj/item/clothing/suit/toggle/lawyer
+	shoes = /obj/item/clothing/shoes/laceup
+	l_hand = /obj/item/weapon/storage/briefcase/lawyer
+	l_pocket = /obj/item/device/laser_pointer
 
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)
-	H.equip_to_slot_or_del(new /obj/item/device/laser_pointer(H), slot_l_store)
+/datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	var/datum/job/lawyer/J = SSjob.GetJob(H.job)
+	J.lawyers++
+	if(J.lawyers>1)
+		uniform = /obj/item/clothing/under/lawyer/purpsuit
+		suit = /obj/item/clothing/suit/toggle/lawyer/purple

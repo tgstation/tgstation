@@ -25,11 +25,11 @@ Bonus
 	level = 2
 	severity = 2
 
-/datum/symptom/shivering/Activate(var/datum/disease/advance/A)
+/datum/symptom/shivering/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/carbon/M = A.affected_mob
-		M << "<span class='notice'>[pick("You feel cold.", "You start shaking from the cold.")]</span>"
+		M << "<span class='warning'>[pick("You feel cold.", "You start shivering.")]</span>"
 		if(M.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			M.bodytemperature = min(M.bodytemperature - (20 * A.stage), BODYTEMP_COLD_DAMAGE_LIMIT + 1)
 

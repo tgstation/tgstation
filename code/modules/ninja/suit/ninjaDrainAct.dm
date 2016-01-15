@@ -18,7 +18,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //APC//
-/obj/machinery/power/apc/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/power/apc/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -28,7 +28,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	. = 0
 
 	if(cell && cell.charge)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 
 		while(G.candrain && cell.charge> 0 && !maxcapacity)
@@ -61,7 +61,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //SMES//
-/obj/machinery/power/smes/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/power/smes/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -71,7 +71,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	. = 0
 
 	if(charge)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 
 		while(G.candrain && charge > 0 && !maxcapacity)
@@ -96,7 +96,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //CELL//
-/obj/item/weapon/stock_parts/cell/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/item/weapon/stock_parts/cell/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -115,7 +115,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //RDCONSOLE//
-/obj/machinery/computer/rdconsole/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/computer/rdconsole/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -146,7 +146,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 //RD SERVER//
 //Shamelessly copypasted from above, since these two used to be the same proc, but with MANY colon operators
-/obj/machinery/r_n_d/server/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/r_n_d/server/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -176,7 +176,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //WIRE//
-/obj/structure/cable/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/structure/cable/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -212,7 +212,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		S.spark_system.start()
 
 //MECH//
-/obj/mecha/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/mecha/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -239,7 +239,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				break
 
 //BORG//
-/mob/living/silicon/robot/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/mob/living/silicon/robot/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -268,7 +268,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //CARBON MOBS//
-/mob/living/carbon/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/mob/living/carbon/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -278,7 +278,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	if(S.cell && S.cell.charge && S.cell.use(1000))
 		. = DRAIN_MOB_SHOCK
 		//Got that electric touch
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 		playsound(src, "sparks", 50, 1)
 		visible_message("<span class='danger'>[H] electrocutes [src] with their touch!</span>", "<span class='userdanger'>[H] electrocutes you with their touch!</span>")

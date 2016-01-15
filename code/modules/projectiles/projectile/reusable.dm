@@ -3,7 +3,7 @@
 	desc = "How do you even reuse a bullet?"
 	var/obj/item/ammo_casing/caseless/ammo_type = /obj/item/ammo_casing/caseless/
 
-/obj/item/projectile/bullet/reusable/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/bullet/reusable/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if (src.contents.len)
 		var/obj/content

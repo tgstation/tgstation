@@ -10,12 +10,12 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	icon_state = "rods"
 	item_state = "rods"
 	flags = CONDUCT
-	w_class = 3.0
-	force = 9.0
-	throwforce = 10.0
+	w_class = 3
+	force = 9
+	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 1000
+	materials = list(MAT_METAL=1000)
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
@@ -33,7 +33,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	else
 		icon_state = "rods"
 
-/obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
@@ -43,7 +43,6 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 
 		if(WT.remove_fuel(0,user))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-			new_item.add_to_stacks(usr)
 			user.visible_message("[user.name] shaped [src] into metal with the welding tool.", \
 						 "<span class='notice'>You shape [src] into metal with the welding tool.</span>", \
 						 "<span class='italics'>You hear welding.</span>")
@@ -68,7 +67,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	..()
 
 /obj/item/stack/rods/cyborg/
-	m_amt = 0
+	materials = list()
 	is_cyborg = 1
 	cost = 250
 

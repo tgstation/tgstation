@@ -35,7 +35,7 @@
 			diary << "a [src] didn't find an input plate."
 			return
 
-/obj/machinery/gibber/autogibber/Bumped(var/atom/A)
+/obj/machinery/gibber/autogibber/Bumped(atom/A)
 	if(!input_plate) return
 
 	if(ismob(A))
@@ -78,14 +78,14 @@
 	else
 		src.overlays += image('icons/obj/kitchen.dmi', "gridle")
 
-/obj/machinery/gibber/attack_paw(mob/user as mob)
+/obj/machinery/gibber/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/gibber/container_resist()
 	src.go_out()
 	return
 
-/obj/machinery/gibber/attack_hand(mob/user as mob)
+/obj/machinery/gibber/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
@@ -94,26 +94,29 @@
 	else
 		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
 	if (istype(P, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = P
-		if(!istype(G.affecting, /mob/living/carbon/))
+		if(!iscarbon(G.affecting))
 			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
 			return
-		if(G.affecting.abiotic(1) && !ignore_clothing)
+		var/mob/living/carbon/C = G.affecting
+		if(C.buckled ||C.buckled_mob)
+			user << "<span class='warning'>[C] is attached to something!</span>"
+			return
+		if(C.abiotic(1) && !ignore_clothing)
 			user << "<span class='danger'>Subject may not have abiotic items on.</span>"
 			return
 
 		user.visible_message("<span class='danger'>[user] starts to put [G.affecting] into the gibber!</span>")
 		src.add_fingerprint(user)
-		if(do_after(user, gibtime, target = src) && G && G.affecting && !occupant)
+		if(do_after(user, gibtime, target = src) && G && G.affecting && G.affecting == C && !C.buckled && !C.buckled_mob && !occupant)
 			user.visible_message("<span class='danger'>[user] stuffs [G.affecting] into the gibber!</span>")
-			var/mob/M = G.affecting
-			if(M.client)
-				M.client.perspective = EYE_PERSPECTIVE
-				M.client.eye = src
-			M.loc = src
-			src.occupant = M
+			if(C.client)
+				C.client.perspective = EYE_PERSPECTIVE
+				C.client.eye = src
+			C.loc = src
+			occupant = C
 			qdel(G)
 			update_icon()
 
@@ -138,7 +141,7 @@
 	set name = "empty gibber"
 	set src in oview(1)
 
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.incapacitated())
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -148,7 +151,7 @@
 	dropContents()
 	update_icon()
 
-/obj/machinery/gibber/proc/startgibbing(mob/user as mob)
+/obj/machinery/gibber/proc/startgibbing(mob/user)
 	if(src.operating)
 		return
 	if(!src.occupant)
@@ -204,7 +207,7 @@
 			var/list/nearby_turfs = orange(3, get_turf(src))
 			var/obj/item/meatslab = allmeat[i]
 			meatslab.loc = src.loc
-			meatslab.throw_at(pick(nearby_turfs),i,3)
+			meatslab.throw_at_fast(pick(nearby_turfs),i,3)
 			for (var/turfs=1 to meat_produced*3)
 				var/turf/gibturf = pick(nearby_turfs)
 				if (!gibturf.density && src in viewers(gibturf))

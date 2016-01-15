@@ -6,8 +6,8 @@
 	icon_living = "crab"
 	icon_dead = "crab_dead"
 	speak_emote = list("clicks")
-	emote_hear = list("clicks")
-	emote_see = list("clacks")
+	emote_hear = list("clicks.")
+	emote_see = list("clacks.")
 	speak_chance = 1
 	turns_per_move = 5
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
@@ -19,6 +19,7 @@
 	ventcrawler = 2
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
+	gold_core_spawnable = 2
 
 /mob/living/simple_animal/crab/Life()
 	..()
@@ -41,3 +42,4 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "stomps"
+	gold_core_spawnable = 0

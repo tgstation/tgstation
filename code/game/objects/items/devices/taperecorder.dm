@@ -7,8 +7,7 @@
 	flags = HEAR
 	slot_flags = SLOT_BELT
 	languages = ALL //this is a translator, after all.
-	m_amt = 60
-	g_amt = 30
+	materials = list(MAT_METAL=60, MAT_GLASS=30)
 	force = 2
 	throwforce = 0
 	var/recording = 0
@@ -16,12 +15,10 @@
 	var/playsleepseconds = 0
 	var/obj/item/device/tape/mytape
 	var/open_panel = 0
-	var/datum/wires/taperecorder/wires = null
 	var/canprint = 1
 
 
 /obj/item/device/taperecorder/New()
-	wires = new(src)
 	mytape = new /obj/item/device/tape/random(src)
 	update_icon()
 
@@ -39,13 +36,6 @@
 		mytape = I
 		user << "<span class='notice'>You insert [I] into [src].</span>"
 		update_icon()
-	else if(istype(I, /obj/item/weapon/screwdriver))
-		open_panel = !open_panel
-		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
-		if(open_panel)
-			wires.Interact(user)
-	else if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler))
-		wires.Interact(user)
 
 
 /obj/item/device/taperecorder/proc/eject(mob/user)
@@ -104,7 +94,7 @@
 /obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [html_encode(message)]"
+		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
 
 /obj/item/device/taperecorder/verb/record()
 	set name = "Start Recording"
@@ -118,8 +108,6 @@
 		return
 	if(playing)
 		return
-	if(!wires.get_record())
-		return
 
 	if(mytape.used_capacity < mytape.max_capacity)
 		usr << "<span class='notice'>Recording started.</span>"
@@ -131,8 +119,6 @@
 		var/max = mytape.max_capacity
 		for(used, used < max)
 			if(recording == 0)
-				break
-			if(!wires.get_record())
 				break
 			mytape.used_capacity++
 			used++
@@ -175,8 +161,6 @@
 		return
 	if(playing)
 		return
-	if(!wires.get_play())
-		return
 
 	playing = 1
 	update_icon()
@@ -185,8 +169,6 @@
 	var/max = mytape.max_capacity
 	for(var/i = 1, used < max, sleep(10 * playsleepseconds))
 		if(!mytape)
-			break
-		if(!wires.get_play())
 			break
 		if(playing == 0)
 			break
@@ -247,7 +229,6 @@
 
 //empty tape recorders
 /obj/item/device/taperecorder/empty/New()
-	wires = new(src)
 	return
 
 
@@ -257,8 +238,7 @@
 	icon_state = "tape_white"
 	item_state = "analyzer"
 	w_class = 1
-	m_amt = 20
-	g_amt = 5
+	materials = list(MAT_METAL=20, MAT_GLASS=5)
 	force = 1
 	throwforce = 0
 	var/max_capacity = 600
@@ -289,7 +269,7 @@
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
 	if(ruined && istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You start winding the tape back in...</span>"
-		if(do_after(user, 120, target = src))
+		if(do_after(user, 120/I.toolspeed, target = src))
 			user << "<span class='notice'>You wound the tape back in.</span>"
 			fix()
 

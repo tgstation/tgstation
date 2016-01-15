@@ -14,7 +14,7 @@
 
 	layer = 21
 	item_state = "nothing"
-	w_class = 5.0
+	w_class = 5
 
 
 /obj/item/weapon/grab/New(mob/user, mob/victim)
@@ -44,7 +44,7 @@
 			assailant.client.screen -= hud
 		assailant = null
 	qdel(hud)
-	..()
+	return ..()
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/get_mob_if_throwable()
@@ -123,8 +123,6 @@
 		return
 	if(state == GRAB_UPGRADING)
 		return
-	if(assailant.next_move > world.time)
-		return
 	if(world.time < (last_upgrade + UPGRADE_COOLDOWN))
 		return
 	if(!assailant.canmove || assailant.lying)
@@ -136,16 +134,16 @@
 	if(state < GRAB_AGGRESSIVE)
 		if(!allow_upgrade)
 			return
-		assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively (now hands)!</span>")
+		assailant.visible_message("<span class='warning'>[assailant] grabs [affecting] aggressively!</span>")
 		state = GRAB_AGGRESSIVE
 		icon_state = "grabbed1"
 	else
 		if(state < GRAB_NECK)
 			if(isslime(affecting))
-				assailant << "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>"
+				assailant << "<span class='warning'>You squeeze [affecting], but nothing interesting happens!</span>"
 				return
 
-			assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
+			assailant.visible_message("<span class='warning'>[assailant] moves \his grip to [affecting]'s neck!</span>")
 			state = GRAB_NECK
 			icon_state = "grabbed+1"
 			if(!affecting.buckled)
@@ -168,14 +166,14 @@
 						qdel(src)
 						return
 					state = GRAB_KILL
-					assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
+					assailant.visible_message("<span class='danger'>[assailant] tightens \his grip on [affecting]'s neck!</span>")
 					add_logs(assailant, affecting, "strangled")
 
 					assailant.changeNext_move(CLICK_CD_TKSTRANGLE)
 					affecting.losebreath += 1
 				else
 					if(assailant)
-						assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
+						assailant.visible_message("<span class='warning'>[assailant] is unable to tighten \his grip on [affecting]'s neck!</span>")
 						hud.icon_state = "disarm/kill"
 						state = GRAB_NECK
 
@@ -207,14 +205,15 @@
 			var/mob/living/carbon/attacker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
 			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
-				if(!do_mob(user, affecting)||!do_after(user, 30, target = affecting)) return
+				if(!do_mob(user, affecting, 60)) return
 			else
-				if(!do_mob(user, affecting)||!do_after(user, 100, target = affecting)) return
+				if(!do_mob(user, affecting, 130)) return
 			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
 			affecting.loc = user
 			attacker.stomach_contents.Add(affecting)
 			qdel(src)
 
+	add_logs(user, affecting, "attempted to put", src, "into [M]")
 
 /obj/item/weapon/grab/dropped()
 	qdel(src)

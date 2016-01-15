@@ -3,7 +3,7 @@
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "pai"
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = 2
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2"
 	var/obj/item/device/radio/radio
@@ -18,7 +18,7 @@
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
 	if(!isnull(pai))
 		pai.death(0)
-	..()
+	return ..()
 
 /obj/item/device/paicard/attack_self(mob/user)
 	if (!in_range(src, user))
@@ -112,7 +112,7 @@
 	src.overlays.Cut()
 	src.overlays += "pai-off"
 
-/obj/item/device/paicard/proc/setEmotion(var/emotion)
+/obj/item/device/paicard/proc/setEmotion(emotion)
 	if(pai)
 		src.overlays.Cut()
 		switch(emotion)
@@ -128,7 +128,7 @@
 			if(10) src.overlays += "pai-null"
 
 /obj/item/device/paicard/proc/alertUpdate()
-	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", 3, "<span class='notice'>[src] bleeps electronically.</span>", 2)
+	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")
 
 /obj/item/device/paicard/emp_act(severity)
 	if(pai)
