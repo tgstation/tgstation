@@ -1,46 +1,46 @@
-<n-display title='Status'>
-  <n-section label='Generated Power'>
+<ui-display title='Status'>
+  <ui-section label='Generated Power'>
     {{Math.round(adata.generated)}}W
-  </n-section>
-  <n-section label='Orientation'>
+  </ui-section>
+  <ui-section label='Orientation'>
     <span>{{Math.round(adata.angle)}}&deg; ({{data.direction}})</span>
-  </n-section>
-  <n-section label='Adjust Angle'>
-    <n-button icon='step-backward' action='control' params='{"cdir": -15}'>15&deg;</n-button>
-    <n-button icon='backward' action='control' params='{"cdir": -5}'>5&deg;</n-button>
-    <n-button icon='forward' action='control' params='{"cdir": 5}'>5&deg;</n-button>
-    <n-button icon='step-forward' action='control' params='{"cdir": 15}'>15&deg;</n-button>
-	</n-section>
-</n-display>
-<n-display title='Tracking'>
-  <n-section label='Tracker Mode'>
-    <n-button icon='close' state='{{data.tracking_state == 0 ? "selected" : null}}'
-      action='tracking' params='{"mode": 0}'>Off</n-button>
-    <n-button icon='clock-o' state='{{data.tracking_state == 1 ? "selected" : null}}'
-      action='tracking' params='{"mode": 1}'>Timed</n-button>
-    <n-button icon='refresh' state='{{data.connected_tracker ? data.tracking_state == 2 ? "selected" : null : "disabled"}}'
-      action='tracking' params='{"mode": 2}'>Auto</n-button>
-	</n-section>
-  <n-section label='Tracking Rate'>
+  </ui-section>
+  <ui-section label='Adjust Angle'>
+    <ui-button icon='step-backward' action='control' params='{"cdir": -15}'>15&deg;</ui-button>
+    <ui-button icon='backward' action='control' params='{"cdir": -5}'>5&deg;</ui-button>
+    <ui-button icon='forward' action='control' params='{"cdir": 5}'>5&deg;</ui-button>
+    <ui-button icon='step-forward' action='control' params='{"cdir": 15}'>15&deg;</ui-button>
+	</ui-section>
+</ui-display>
+<ui-display title='Tracking'>
+  <ui-section label='Tracker Mode'>
+    <ui-button icon='close' state='{{data.tracking_state == 0 ? "selected" : null}}'
+      action='tracking' params='{"mode": 0}'>Off</ui-button>
+    <ui-button icon='clock-o' state='{{data.tracking_state == 1 ? "selected" : null}}'
+      action='tracking' params='{"mode": 1}'>Timed</ui-button>
+    <ui-button icon='refresh' state='{{data.connected_tracker ? data.tracking_state == 2 ? "selected" : null : "disabled"}}'
+      action='tracking' params='{"mode": 2}'>Auto</ui-button>
+	</ui-section>
+  <ui-section label='Tracking Rate'>
 		<span>{{Math.round(adata.tracking_rate)}}&deg;/h ({{data.rotating_way}})</span>
-	</n-section>
-  <n-section label='Adjust Rate'>
-    <n-button icon='fast-backward' action='control' params='{"tdir": -180}'>180&deg;</n-button>
-    <n-button icon='step-backward' action='control' params='{"tdir": -30}'>30&deg;</n-button>
-    <n-button icon='backward' action='control' params='{"tdir": -5}'>5&deg;</n-button>
-    <n-button icon='forward' action='control' params='{"tdir": 5}'>5&deg;</n-button>
-    <n-button icon='step-forward' action='control' params='{"tdir": 30}'>30&deg;</n-button>
-    <n-button icon='fast-forward' action='control' params='{"tdir": 180}'>180&deg;</n-button>
-	</n-section>
-</n-display>
-<n-display title="Devices" button>
+	</ui-section>
+  <ui-section label='Adjust Rate'>
+    <ui-button icon='fast-backward' action='control' params='{"tdir": -180}'>180&deg;</ui-button>
+    <ui-button icon='step-backward' action='control' params='{"tdir": -30}'>30&deg;</ui-button>
+    <ui-button icon='backward' action='control' params='{"tdir": -5}'>5&deg;</ui-button>
+    <ui-button icon='forward' action='control' params='{"tdir": 5}'>5&deg;</ui-button>
+    <ui-button icon='step-forward' action='control' params='{"tdir": 30}'>30&deg;</ui-button>
+    <ui-button icon='fast-forward' action='control' params='{"tdir": 180}'>180&deg;</ui-button>
+	</ui-section>
+</ui-display>
+<ui-display title="Devices" button>
   {{#partial button}}
-    <n-button icon='refresh' action='refresh'>Refresh</n-button>
+    <ui-button icon='refresh' action='refresh'>Refresh</ui-button>
   {{/partial}}
-	<n-section label='Solar Tracker'>
+	<ui-section label='Solar Tracker'>
     <span class='{{data.connected_tracker ? "good" : "bad"}}'>{{data.connected_tracker ? "" : "Not "}}Found</span>
-	</n-section>
-	<n-section label='Solar Panels'>
+	</ui-section>
+	<ui-section label='Solar Panels'>
 		<span class='{{data.connected_panels ? "good" : "bad"}}'>{{Math.round(adata.connected_panels)}} Panels Connected</span>
-	</n-section>
-</n-display>
+	</ui-section>
+</ui-display>

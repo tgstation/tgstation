@@ -31,6 +31,8 @@
 			SSshuttle.emergency.mode = SHUTTLE_DOCKED
 			SSshuttle.emergency.timer = world.time
 			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+		for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
+			point.the_disk = null //Point back to the disk.
 
 	if(doomsday_device)
 		doomsday_device.timing = 0
@@ -41,7 +43,6 @@
 
 	for(var/obj/machinery/ai_status_display/O in world) //change status
 		if(src.key)
-			spawn( 0 )
 			O.mode = 2
 			if (istype(loc, /obj/item/device/aicard))
 				loc.icon_state = "aicard-404"

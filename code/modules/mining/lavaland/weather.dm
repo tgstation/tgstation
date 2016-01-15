@@ -36,9 +36,9 @@
 		if(M.z == target_z)
 			M << start_up_message
 
-	sleep(start_up_time)
-	stage = MAIN_STAGE
-	weather_main()
+	spawn(start_up_time)
+		stage = MAIN_STAGE
+		weather_main()
 
 
 /datum/weather/proc/weather_main()

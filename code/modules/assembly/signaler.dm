@@ -17,7 +17,7 @@
 	..()
 	spawn(40)
 		set_frequency(frequency)
-	return
+
 
 /obj/item/device/assembly/signaler/Destroy()
 	if(SSradio)

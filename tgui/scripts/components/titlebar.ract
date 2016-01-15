@@ -1,38 +1,37 @@
-<script type='text/coffeescript'>
-byond = require "../byond"
+<script>
+import { UI_INTERACTIVE, UI_UPDATE, UI_DISABLED } from '../constants'
+import { href, winset } from '../byond'
 
-component.exports =
-  computed:
-    visualStatus: ->
-      status    = @get "config.status"
-      constants = require "../constants"
-      if status is constants.UI_INTERACTIVE then "good"
-      else if status is constants.UI_UPDATE then "average"
-      else if status is constants.UI_DISABLED then "bad"
-  oninit: ->
-    @observe "config.fancy", (newkey, oldkey, keypath) ->
-      byond.winset @get("config.window"), "titlebar", !!!newkey
+component.exports = {
+  computed: {
+    visualStatus: function () {
+      switch (this.get('config.status')) {
+        case UI_INTERACTIVE: return 'good'
+        case UI_UPDATE: return 'average'
+        case UI_DISABLED: return 'bad'
+        default: return 'bad'
+      }
+    }
+  },
+  oninit: function() {
+    this.observe('config.fancy', (newkey, oldkey, keypath) => {
+      winset(this.get('config.window'), 'titlebar', !!!newkey)
+    })
 
-    @on
-      startdrag: -> @toggle "drag"; false
-      enddrag: -> @set "drag"; @set "x"; @set "y"; false
-      drag: (event) ->
-        if @get "x"
-          x = (event.original.screenX - @get "x") + window.screenLeft
-          y = (event.original.screenY - @get "y") + window.screenTop
-          byond.winset @get("config.window"), "pos", "#{x},#{y}"
-        @set x: event.original.screenX, y: event.original.screenY
-        false
-
-    @on
-      close: ->
-        byond.winset @get("config.window"), "is-visible", "false"
-        location.href = byond.href {command: "uiclose #{@get "config.ref"}"}, "winset"
-      minimize: ->
-        byond.winset @get("config.window"), "is-minimized", "true"
+    this.on({
+      close: () => {
+        winset(this.get('config.window'), 'is-visible', false)
+        window.location.href = href({command: `uiclose ${this.get('config.ref')}`}, 'winset')
+      },
+      minimize: () => {
+        winset(this.get('config.window'), 'is-minimized', true)
+      }
+    })
+  }
+}
 </script>
 
-<header class='titlebar' on-mousedown='startdrag' on-mouseup-mouseleave='enddrag' on-mousemove='{{#drag}}drag{{/}}'>
+<header class='titlebar' on-mousedown='drag'>
   <i class='statusicon fa fa-eye fa-2x {{visualStatus}}'></i>
   <span class='title'>{{yield}}</span>
   {{#if config.fancy}}

@@ -181,7 +181,7 @@
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(damage)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(damage)
 	idle_vision_range = 9
 	..()
 
@@ -374,6 +374,8 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
+	if(!(istype(tturf, /turf/simulated)))
+		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
 		new /obj/effect/goliath_tentacle/original(tturf)
@@ -382,7 +384,7 @@
 		pre_attack = 0
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(damage)
+/mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(damage)
 	ranged_cooldown--
 	handle_preattack()
 	..()
@@ -522,7 +524,7 @@
 		Inflate()
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/fugu/adjustBruteLoss(var/damage)
+/mob/living/simple_animal/hostile/asteroid/fugu/adjustHealth(var/damage)
 	if(wumbo)
 		return
 	..()

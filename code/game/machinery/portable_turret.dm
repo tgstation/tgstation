@@ -504,8 +504,7 @@
 
 	if(!tryToShootAt(targets))
 		if(!always_up)
-			spawn()
-				popDown() // no valid targets, close the cover
+			popDown() // no valid targets, close the cover
 
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
