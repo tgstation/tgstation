@@ -24,7 +24,7 @@ component.exports = {
   },
   onconfig: function () {
     const requested  = this.get('config.interface')
-    const interfaces = require('../interfaces/*.ract', { mode: 'hash' })
+    const interfaces = require('../interfaces/*{,/*}.ract', { mode: 'hash' })
     if (requested in interfaces) {
       this.components.interface = interfaces[requested] // Use the interface specified in the config...
     } else {
