@@ -176,7 +176,7 @@ Filter types:
 					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", target_pressure)))
 			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 		if("filter")
-			src.filter_type = text2num(params["mode"])
+			src.filter_type = params["mode"]
 			var/filtering_name = "nothing"
 			switch(filter_type)
 				if(FILTER_PLASMA)
