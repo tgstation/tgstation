@@ -17,6 +17,8 @@
 	health = 30
 	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
 	faction = list("syndicate")
+	speak_emote = list("hisses")
+	bubble_icon = "syndibot"
 	heavy_emp_damage = 10
 	laws = \
 	"1. Interfere.\n"+\

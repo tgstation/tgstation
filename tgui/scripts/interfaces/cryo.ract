@@ -1,16 +1,21 @@
-<script type='text/coffeescript'>
-component.exports =
-  computed:
-    cellTemperatureState: ->
-        temp = @get "data.cellTemperature"
-        if temp < 225 then "good"
-        else if temp < 273.15 then "average"
-        else "bad"
-    occupantStatState: ->
-      stat = @get "data.occupant.stat"
-      if stat is 0 then "good"
-      else if stat is 1 then "average"
-      else "bad"
+<script>
+component.exports = {
+  computed: {
+    cellTemperatureState: function () {
+        const temp = this.get('data.cellTemperature')
+        if (temp < 225) return 'good'
+        else if (temp < 273.15) return 'average'
+        else return 'bad'
+    },
+    occupantStatState: function () {
+      switch (this.get('data.occupant.stat')) {
+        case 0: return 'good'
+        case 1: return 'average'
+        default: return 'bad'
+      }
+    }
+  }
+}
 </script>
 
 <ui-display title='Occupant'>

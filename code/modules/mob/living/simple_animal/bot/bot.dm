@@ -15,6 +15,9 @@
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 
+	speak_emote = list("states")
+	bubble_icon = "machine"
+
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
 	var/list/users = list() //for dialog updates
@@ -288,9 +291,6 @@
 		say(message)
 	return
 
-/mob/living/simple_animal/bot/say(message)
-	return ..(message, "R")
-
 /mob/living/simple_animal/bot/get_spans()
 	return ..() | SPAN_ROBOT
 
@@ -327,7 +327,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 */
 /mob/living/simple_animal/bot/proc/scan(scan_type, old_target, scan_range = DEFAULT_SCAN_RANGE)
 	var/final_result
-	for (var/scan in view (scan_range, src) ) //Search for something in range!
+	for (var/scan in shuffle(view(scan_range, src))) //Search for something in range!
 		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
 			continue //If not, keep searching!
 		if( (scan in ignore_list) || (scan == old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness

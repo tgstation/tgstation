@@ -1,23 +1,24 @@
-<script type='text/coffeescript'>
-component.exports =
-  computed:
-    capacityPercentState: ->
-      charge = @get "data.capacityPercent"
-      if charge > 50 then "good"
-      else if charge > 15 then "average"
-      else "bad"
-    inputState: ->
-      charge = @get "data.capacityPercent"
-      input = @get "data.inputting"
-      if charge >= 100 then "good"
-      else if input then "average"
-      else "bad"
-    outputState: ->
-      charge = @get "data.charge"
-      output = @get "data.outputting"
-      if output then "good"
-      else if charge > 0 then "average"
-      else "bad"
+<script>
+component.exports = {
+  computed: {
+    capacityPercentState: function () {
+      const charge = this.get('data.capacityPercent')
+      if (charge > 50) return 'good'
+      else if (charge > 15) return 'average'
+      else return 'bad'
+    },
+    inputState: function () {
+      if (this.get('data.capacityPercent') >= 100) return 'good'
+      else if (this.get('data.inputting')) return 'average'
+      else return 'bad'
+    },
+    outputState: function () {
+      if (this.get('data.outputting')) return 'good'
+      else if (this.get('data.charge') > 0) return 'average'
+      else return 'bad'
+    }
+  }
+}
 </script>
 
 <ui-display title='Storage'>

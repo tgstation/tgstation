@@ -196,10 +196,15 @@
 		if(istype(T,/turf/simulated))
 			var/turf/simulated/ST = T
 			if(ST.air)
-				var/tox = ST.air.toxins
-				var/oxy = ST.air.oxygen
-				var/n2  = ST.air.nitrogen
-				var/co2 = ST.air.carbon_dioxide
+				var/ST_gases = ST.air.gases
+				ST.air.assert_gases(arglist(hardcoded_gases))
+
+				var/tox = ST_gases["plasma"][MOLES]
+				var/oxy = ST_gases["o2"][MOLES]
+				var/n2  = ST_gases["n2"][MOLES]
+				var/co2 = ST_gases["co2"][MOLES]
+
+				ST.air.garbage_collect()
 
 				if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])
 					atmos_suitable = 0

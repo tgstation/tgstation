@@ -1,7 +1,9 @@
-<script type='text/coffeescript'>
-component.exports =
-  data:
-    text: require "../text"
+<script>
+component.exports = {
+  data: {
+    text: require('../text')
+  }
+}
 </script>
 
 <ui-display title='Power' button>

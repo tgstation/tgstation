@@ -148,6 +148,7 @@
 	icon_state = ".50"
 
 /obj/item/projectile/bullet/sniper/penetrator
+	icon_state = "gauss"
 	name = "penetrator round"
 	damage = 60
 	forcedodge = 1
@@ -172,7 +173,7 @@
 	icon_state = ".50"
 
 /obj/item/projectile/bullet/sniper/accelerator
-	icon_state = "red_laser"
+	icon_state = "gaussweak"
 	name = "accelerator round"
 	damage = 5
 	stun = 0
@@ -183,7 +184,7 @@
 	..()
 	damage += 5
 	if(damage > 40)
-		icon_state = "heavylaser"
+		icon_state = "gaussstrong"
 		breakthings = TRUE
 	else if(damage > 25)
-		icon_state = "laser"
+		icon_state = "gauss"
