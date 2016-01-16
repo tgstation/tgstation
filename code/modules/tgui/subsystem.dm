@@ -10,23 +10,19 @@
   * Get a open UI given a user, src_object, and ui_key and try to update it with data.
   *
   * required user mob The mob who opened/is using the UI.
-  * required src_object atom/movable The object which owns the UI.
+  * required src_object datum The object/datum which owns the UI.
   * required ui_key string The ui_key of the UI.
   * optional ui datum/tgui The UI to be updated, if it exists.
-  * optional data list The data to update the UI with, if it exists.
   * optional force_open bool If the UI should be re-opened instead of updated.
   *
   * return datum/tgui The found UI.
  **/
-/datum/subsystem/tgui/proc/try_update_ui(mob/user, atom/movable/src_object, ui_key, datum/tgui/ui, \
-											list/data = null, force_open = 0)
-	if(!data)
-		data = src_object.get_ui_data(user)
-
+/datum/subsystem/tgui/proc/try_update_ui(mob/user, datum/src_object, ui_key, datum/tgui/ui, force_open = 0)
 	if(isnull(ui)) // No UI was passed, so look for one.
 		ui = get_open_ui(user, src_object, ui_key)
 
 	if(!isnull(ui))
+		var/data = src_object.get_ui_data(user) // Get data from the src_object.
 		if(!force_open) // UI is already open; update it.
 			ui.push_data(data)
 		else // Re-open it anyways.
@@ -41,12 +37,12 @@
   * Get a open UI given a user, src_object, and ui_key.
   *
   * required user mob The mob who opened/is using the UI.
-  * required src_object atom/movable The object which owns the UI.
+  * required src_object datum The object/datum which owns the UI.
   * required ui_key string The ui_key of the UI.
   *
   * return datum/tgui The found UI.
  **/
-/datum/subsystem/tgui/proc/get_open_ui(mob/user, atom/movable/src_object, ui_key)
+/datum/subsystem/tgui/proc/get_open_ui(mob/user, datum/src_object, ui_key)
 	var/src_object_key = "\ref[src_object]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return null // No UIs open.
@@ -64,11 +60,11 @@
   *
   * Update all UIs attached to src_object.
   *
-  * required src_object atom/movable The object which owns the UIs.
+  * required src_object datum The object/datum which owns the UIs.
   *
   * return int The number of UIs updated.
  **/
-/datum/subsystem/tgui/proc/update_uis(atom/movable/src_object)
+/datum/subsystem/tgui/proc/update_uis(datum/src_object)
 	var/src_object_key = "\ref[src_object]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return 0 // Couldn't find any UIs for this object.
@@ -86,11 +82,11 @@
   *
   * Close all UIs attached to src_object.
   *
-  * required src_object atom/movable The object which owns the UIs.
+  * required src_object datum The object/datum which owns the UIs.
   *
   * return int The number of UIs closed.
  **/
-/datum/subsystem/tgui/proc/close_uis(atom/movable/src_object)
+/datum/subsystem/tgui/proc/close_uis(datum/src_object)
 	var/src_object_key = "\ref[src_object]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return 0 // Couldn't find any UIs for this object.
@@ -109,12 +105,12 @@
   * Update all UIs belonging to a user.
   *
   * required user mob The mob who opened/is using the UI.
-  * optional src_object atom/movable If provided, only update UIs belonging this atom.
+  * optional src_object datum If provided, only update UIs belonging this src_object.
   * optional ui_key string If provided, only update UIs with this UI key.
   *
   * return int The number of UIs updated.
  **/
-/datum/subsystem/tgui/proc/update_user_uis(mob/user, atom/movable/src_object = null, ui_key = null)
+/datum/subsystem/tgui/proc/update_user_uis(mob/user, datum/src_object = null, ui_key = null)
 	if(isnull(user.open_uis) || !istype(user.open_uis, /list) || open_uis.len == 0)
 		return 0 // Couldn't find any UIs for this user.
 
@@ -131,12 +127,12 @@
   * Close all UIs belonging to a user.
   *
   * required user mob The mob who opened/is using the UI.
-  * optional src_object atom/movable If provided, only update UIs belonging this atom.
-  * optional ui_key string If provided, only update UIs with this UI key.
+  * optional src_object datum If provided, only close UIs belonging this src_object.
+  * optional ui_key string If provided, only close UIs with this UI key.
   *
   * return int The number of UIs closed.
  **/
-/datum/subsystem/tgui/proc/close_user_uis(mob/user, atom/movable/src_object = null, ui_key = null)
+/datum/subsystem/tgui/proc/close_user_uis(mob/user, datum/src_object = null, ui_key = null)
 	if(isnull(user.open_uis) || !istype(user.open_uis, /list) || open_uis.len == 0)
 		return 0 // Couldn't find any UIs for this user.
 

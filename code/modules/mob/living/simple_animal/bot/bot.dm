@@ -15,6 +15,9 @@
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 
+	speak_emote = list("states")
+	bubble_icon = "machine"
+
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
 	var/list/users = list() //for dialog updates
@@ -105,7 +108,7 @@
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
 		Radio.keyslot = new radio_key
-	Radio.canhear_range = 1 // 0 ?
+	Radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
 	Radio.recalculateChannels()
 
 	bot_core = new bot_core_type(src)
@@ -163,12 +166,7 @@
 	else
 		user << "[src] is in pristine condition."
 
-/mob/living/simple_animal/bot/adjustBruteLoss(amount)
-	if(amount>0 && prob(10))
-		new /obj/effect/decal/cleanable/oil(loc)
-	return ..(amount)
-
-/mob/living/simple_animal/bot/adjustFireLoss(amount)
+/mob/living/simple_animal/bot/adjustHealth(amount)
 	if(amount>0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
 	return ..(amount)
@@ -293,9 +291,6 @@
 		say(message)
 	return
 
-/mob/living/simple_animal/bot/say(message)
-	return ..(message, "R")
-
 /mob/living/simple_animal/bot/get_spans()
 	return ..() | SPAN_ROBOT
 
@@ -332,7 +327,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 */
 /mob/living/simple_animal/bot/proc/scan(scan_type, old_target, scan_range = DEFAULT_SCAN_RANGE)
 	var/final_result
-	for (var/scan in view (scan_range, src) ) //Search for something in range!
+	for (var/scan in shuffle(view(scan_range, src))) //Search for something in range!
 		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
 			continue //If not, keep searching!
 		if( (scan in ignore_list) || (scan == old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
@@ -710,12 +705,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(usr in users)
 			users.Remove(usr)
 		return 1
-	
+
 	if(topic_denied(usr))
 		usr << "<span class='warning'>[src]'s interface is not responding!</span>"
 		return 1
 	add_fingerprint(usr)
-	
+
 	if((href_list["power"]) && (bot_core.allowed(usr) || !locked))
 		if (on)
 			turn_off()
@@ -786,3 +781,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/Logout()
 	. = ..()
 	bot_reset()
+
+/mob/living/simple_animal/bot/revive()
+	..()
+	update_icon()

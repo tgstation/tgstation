@@ -134,10 +134,9 @@
 /turf/simulated/floor/engine/n20/New()
 	..()
 	var/datum/gas_mixture/adding = new
-	var/datum/gas/sleeping_agent/trace_gas = new
 
-	trace_gas.moles = 6000
-	adding.trace_gases += trace_gas
+	adding.assert_gas("n2o")
+	adding.gases["n2o"][MOLES] = 6000
 	adding.temperature = T20C
 
 	assume_air(adding)
@@ -193,30 +192,34 @@
 		SSobj.processing |= src
 
 /turf/simulated/floor/plating/lava/process()
-	if(!contents)
+	if(!burn_stuff())
 		processing = 0
 		SSobj.processing.Remove(src)
-		return
-	burn_stuff()
+	
 
 /turf/simulated/floor/plating/lava/proc/burn_stuff()
-	for(var/atom/movable/AM in contents)
-		if(!istype(AM))
-			return
-		if(istype(AM, /obj))
-			var/obj/O = AM
+	. = 0
+	for(var/thing in contents)
+		if(istype(thing, /obj))
+			var/obj/O = thing
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
 				qdel(O)
-				return
+				continue
+			. = 1
 			if(O.burn_state == FIRE_PROOF)
 				O.burn_state = FLAMMABLE //Even fireproof things burn up in lava
+			
 			O.fire_act()
-		else if (istype(AM, /mob/living))
-			var/mob/living/L = AM
+			
+			
+		else if (istype(thing, /mob/living))
+			. = 1
+			var/mob/living/L = thing
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.
 				L.adjust_fire_stacks(20)
 				L.IgniteMob()
+			
 
 /turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
 	return

@@ -365,18 +365,18 @@
 	return A.master.lightswitch && A.master.power_light
 
 /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
+	set waitfor = 0
 	if(flickering) return
 	flickering = 1
-	spawn(0)
-		if(on && status == LIGHT_OK)
-			for(var/i = 0; i < amount; i++)
-				if(status != LIGHT_OK) break
-				on = !on
-				update(0)
-				sleep(rand(5, 15))
-			on = (status == LIGHT_OK)
+	if(on && status == LIGHT_OK)
+		for(var/i = 0; i < amount; i++)
+			if(status != LIGHT_OK) break
+			on = !on
 			update(0)
-		flickering = 0
+			sleep(rand(5, 15))
+		on = (status == LIGHT_OK)
+		update(0)
+	flickering = 0
 
 // ai attack - make lights flicker, because why not
 
@@ -539,13 +539,13 @@
 // explode the light
 
 /obj/machinery/light/proc/explode()
+	set waitfor = 0
 	var/turf/T = get_turf(src.loc)
-	spawn(0)
-		broken()	// break it first to give a warning
-		sleep(2)
-		explosion(T, 0, 0, 2, 2)
-		sleep(1)
-		qdel(src)
+	broken()	// break it first to give a warning
+	sleep(2)
+	explosion(T, 0, 0, 2, 2)
+	sleep(1)
+	qdel(src)
 
 // the light item
 // can be tube or bulb subtypes

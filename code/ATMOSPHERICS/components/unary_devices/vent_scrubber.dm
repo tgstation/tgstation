@@ -162,40 +162,56 @@
 
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(var/turf/simulated/tile)
-	if (!tile || !istype(tile))
+	if (!istype(tile))
 		return 0
 
 	var/datum/gas_mixture/environment = tile.return_air()
 	var/datum/gas_mixture/air_contents = AIR1
+	var/list/env_gases = environment.gases
 
 	if(scrubbing & SCRUBBING)
-		if((environment.toxins>0) || (environment.carbon_dioxide>0) || (environment.trace_gases.len>0))
+		var/should_we_scrub = FALSE
+		for(var/id in env_gases)
+			if(id == "n2" || id == "o2")
+				continue
+			if(env_gases[id][MOLES])
+				should_we_scrub = TRUE
+				break
+		if(should_we_scrub)
 			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
+			var/list/removed_gases = removed.gases
 			if (isnull(removed)) //in space
 				return
 
 			//Filter it
 			var/datum/gas_mixture/filtered_out = new
+			var/list/filtered_gases = filtered_out.gases
 			filtered_out.temperature = removed.temperature
-			if(scrub_Toxins)
-				filtered_out.toxins = removed.toxins
-				removed.toxins = 0
-			if(scrub_CO2)
-				filtered_out.carbon_dioxide = removed.carbon_dioxide
-				removed.carbon_dioxide = 0
 
-			if(removed.trace_gases.len>0)
-				for(var/datum/gas/trace_gas in removed.trace_gases)
-					if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-						removed.trace_gases -= trace_gas
-						filtered_out.trace_gases += trace_gas
-					else if(istype(trace_gas, /datum/gas/sleeping_agent) && scrub_N2O)
-						removed.trace_gases -= trace_gas
-						filtered_out.trace_gases += trace_gas
+			if(scrub_Toxins && removed_gases["plasma"])
+				filtered_out.assert_gas("plasma")
+				filtered_gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
+				removed.gases["plasma"][MOLES] = 0
 
+			if(scrub_CO2 && removed_gases["co2"])
+				filtered_out.assert_gas("co2")
+				filtered_out.gases["co2"][MOLES] = removed_gases["co2"][MOLES]
+				removed.gases["co2"][MOLES] = 0
+
+			if(removed_gases["agent_b"])
+				filtered_out.assert_gas("agent_b")
+				filtered_out.gases["agent_b"][MOLES] = removed_gases["agent_b"][MOLES]
+				removed.gases["agent_b"][MOLES] = 0
+
+			if(scrub_N2O && removed_gases["n2o"])
+				filtered_out.assert_gas("n2o")
+				filtered_out.gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
+				removed.gases["n2o"][MOLES] = 0
+
+			removed.garbage_collect()
 
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)
@@ -309,7 +325,7 @@
 					welded = 0
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = 20, dir = dir)
-			return 1
+			return 0
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)

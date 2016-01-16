@@ -37,6 +37,7 @@
 		signal.data["timestamp"] = world.time
 
 		var/datum/gas_mixture/air_sample = return_air()
+		var/list/sample_gases = air_sample.gases
 
 		if(output&1)
 			signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1))
@@ -46,14 +47,16 @@
 		if(output>4)
 			var/total_moles = air_sample.total_moles()
 			if(total_moles > 0)
+				air_sample.assert_gases(arglist(hardcoded_gases))
 				if(output&4)
-					signal.data["oxygen"] = round(100*air_sample.oxygen/total_moles,0.1)
+					signal.data["oxygen"] = round(100*sample_gases["o2"][MOLES]/total_moles,0.1)
 				if(output&8)
-					signal.data["toxins"] = round(100*air_sample.toxins/total_moles,0.1)
+					signal.data["toxins"] = round(100*sample_gases["plasma"][MOLES]/total_moles,0.1)
 				if(output&16)
-					signal.data["nitrogen"] = round(100*air_sample.nitrogen/total_moles,0.1)
+					signal.data["nitrogen"] = round(100*sample_gases["n2"][MOLES]/total_moles,0.1)
 				if(output&32)
-					signal.data["carbon_dioxide"] = round(100*air_sample.carbon_dioxide/total_moles,0.1)
+					signal.data["carbon_dioxide"] = round(100*sample_gases["co2"][MOLES]/total_moles,0.1)
+				air_sample.garbage_collect()
 			else
 				signal.data["oxygen"] = 0
 				signal.data["toxins"] = 0

@@ -17,9 +17,7 @@
   * optional master_ui datum/tgui The parent UI.
   * optional state datum/ui_state The state used to determine status.
  **/
-/atom/movable/proc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, \
-								force_open = 0, datum/tgui/master_ui = null, \
-								datum/ui_state/state = default_state)
+/datum/proc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	return -1 // Sorta implemented.
 
  /**
@@ -32,7 +30,7 @@
   *
   * return list Data to be sent to the UI.
  **/
-/atom/movable/proc/get_ui_data(mob/user)
+/datum/proc/get_ui_data(mob/user)
 	return list() // Not implemented.
 
 
@@ -47,7 +45,7 @@
   *
   * return bool If the UI should be updated or not.
  **/
-/atom/movable/proc/ui_act(action, list/params)
+/datum/proc/ui_act(action, list/params)
 	return // Not implemented.
 
 
@@ -55,9 +53,10 @@
   * private
   *
   * The UI's host object (usually src_object).
-  * Used internally by ui_state(s).
+  * This allows modules/datums to have the UI attached to them,
+  * and be a part of another object.
  **/
-/atom/proc/ui_host()
+/datum/proc/ui_host()
 	return src
 
  /**
@@ -75,21 +74,17 @@
   *
   * required uiref ref The UI that was closed.
  **/
-/client/verb/uiclose(uiref as text)
+/client/verb/uiclose(ref as text)
 	// Name the verb, and hide it from the user panel.
 	set name = "uiclose"
 	set hidden = 1
 
 	// Get the UI based on the ref.
-	var/datum/tgui/ui = locate(uiref)
+	var/datum/tgui/ui = locate(ref)
 
 	// If we found the UI, close it.
 	if(istype(ui))
 		ui.close()
-		// If there is a custom ref, call that atom's Topic().
-		if(ui.ref)
-			var/href = "close=1"
-			src.Topic(href, params2list(href), ui.ref)
-		// Otherwise, if we use the legacy logic, unset the mob's machine.
-		else if(src && src.mob)
+		// Unset machine just to be sure.
+		if(src && src.mob)
 			src.mob.unset_machine()

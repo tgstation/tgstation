@@ -110,10 +110,11 @@
 		return
 	ui_interact(user)
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+																	datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "cryo", name, 400, 550, state = notcontained_state)
+		ui = new(user, src, ui_key, "cryo", name, 400, 550, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_ui_data()
@@ -265,7 +266,7 @@
 		if(occupant.bodytemperature < T0C)
 			occupant.sleeping = max(5 / efficiency, (1 / occupant.bodytemperature) * 2000 / efficiency)
 			occupant.Paralyse(max(5 / efficiency, (1 / occupant.bodytemperature) * 3000 / efficiency))
-			if(air_contents.oxygen > 2)
+			if(air_contents.gases["o2"] && air_contents.gases["o2"][MOLES] > 2)
 				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
 			else
 				occupant.adjustOxyLoss(-1)

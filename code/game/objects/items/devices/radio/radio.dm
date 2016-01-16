@@ -543,10 +543,10 @@
 		return
 	b_stat = !( b_stat )
 	if(!istype(src, /obj/item/device/radio/beacon))
-		if (b_stat)
-			user.show_message("<span class='notice'>The radio can now be attached and modified!</span>")
+		if(b_stat)
+			user << "<span class='notice'>The radio can now be attached and modified!</span>"
 		else
-			user.show_message("<span class='notice'>The radio can no longer be modified or attached!</span>")
+			user << "<span class='notice'>The radio can no longer be modified or attached!</span>"
 		updateDialog()
 			//Foreach goto(83)
 		add_fingerprint(user)
