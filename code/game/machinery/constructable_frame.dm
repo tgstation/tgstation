@@ -15,7 +15,7 @@
 	var/machineframepasschance = 20
 
 
-/obj/structure/constructable_frame/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/machinery/constructable_frame/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
 		return 1
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
