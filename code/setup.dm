@@ -1464,3 +1464,11 @@ var/proccalls = 1
 #define NORMAL_ATTACK 0
 #define ATTACK_BITE 1
 #define ATTACK_KICK 2
+
+// Defines for the map writer, moved here for reasons.
+#define DMM_IGNORE_AREAS 1
+#define DMM_IGNORE_TURFS 2
+#define DMM_IGNORE_OBJS 4
+#define DMM_IGNORE_NPCS 8
+#define DMM_IGNORE_PLAYERS 16
+#define DMM_IGNORE_MOBS 24
