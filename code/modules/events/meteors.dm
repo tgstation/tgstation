@@ -15,9 +15,9 @@
 	command_alert("A meteor storm has been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert")
 	to_chat(world, sound('sound/AI/meteors.ogg'))
 
-//One to three waves. So 10 to 60. Note that it used to be (20, 50) per wave with two to three waves
+//Two to three waves. So 40 to 120
 /datum/event/meteor_wave/tick()
-	meteor_wave(rand(10, 15), max_size = 2) //Large waves, panic is mandatory
+	meteor_wave(rand(20, 40), max_size = 2) //Large waves, panic is mandatory
 
 /datum/event/meteor_wave/end()
 	command_alert("The station has cleared the meteor storm.", "Meteor Alert")
@@ -28,15 +28,15 @@
 	endWhen 		= 30
 
 /datum/event/meteor_shower/setup()
-	endWhen	= rand(30, 60) //From thirty seconds to one minute
+	endWhen	= rand(45, 60) //From thirty seconds to one minute
 
 /datum/event/meteor_shower/announce()
 	command_alert("The station is about to be hit by a small-intensity meteor storm. Seek shelter within the core of the station immediately.", "Meteor Alert")
 
 //Meteor showers are lighter and more common
-//Usually a single wave, rarely two, so anywhere from 5 to 20 small meteors
+//Sometimes a single wave, most likely two, so anywhere from 10 to 30 small meteors
 /datum/event/meteor_shower/tick()
-	meteor_wave(rand(5, 10), max_size = 1) //Much more clement
+	meteor_wave(rand(10, 15), max_size = 1) //Much more clement
 
 /datum/event/meteor_shower/end()
 	command_alert("The station has cleared the meteor shower.", "Meteor Alert")
