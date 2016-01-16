@@ -946,6 +946,9 @@
 					Parent_Turret.attacked = 0
 		..()
 
+/obj/machinery/porta_turret_cover/can_be_overridden()
+	. = 0
+
 /obj/machinery/porta_turret_cover/emag_act(mob/user)
 	if(!Parent_Turret.emagged)
 		user << "<span class='notice'>You short out [Parent_Turret]'s threat assessment circuits.</span>"

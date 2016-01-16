@@ -406,3 +406,6 @@ Class Procs:
 // Hook for html_interface module to unset the active machine when the window is closed by the player.
 /obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)
 	if (hclient.client.mob && hclient.client.mob.machine == src) hclient.client.mob.unset_machine()
+
+/obj/machinery/proc/can_be_overridden()
+	. = 1
