@@ -12,6 +12,19 @@
 	var/list/req_components = null
 	var/list/req_component_names = null // user-friendly names of components
 	var/state = 1
+	var/machineframepasschance = 20
+
+
+/obj/structure/constructable_frame/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0)
+		return 1
+	if(istype(mover) && mover.checkpass(PASSGRILLE))
+		return prob(machineframepasschance)
+	else
+		if(istype(mover, /obj/item/projectile))
+			return prob(machineframepasschance)
+		else
+			return 0
 
 // unfortunately, we have to instance the objects really quickly to get the names
 // fortunately, this is only called once when the board is added and the items are immediately GC'd
