@@ -12,7 +12,7 @@ export function css () {
       paths: [f.src]
     }))
     .pipe(g.postcss([
-      s.autoprefixer({ browsers: ['last 2 versions', 'ie >= 9'] }),
+      s.autoprefixer({ browsers: ['last 2 versions', 'ie >= 8'] }),
       s.gradient,
       s.opacity,
       s.rgba({oldie: true}),
@@ -20,9 +20,7 @@ export function css () {
       s.fontweights
     ]))
     .pipe(g.bytediff.start())
-    .pipe(g.if(f.min, g.minifycss()))
-    .pipe(g.if(f.min, g.csso()))
-    .pipe(g.if(f.min, g.cssnano()))
+    .pipe(g.if(f.min, g.cssnano({autoprefixer: false})))
     .pipe(g.if(f.debug, g.sourcemaps.write()))
     .pipe(g.bytediff.stop())
     .pipe(gulp.dest(f.dest))
