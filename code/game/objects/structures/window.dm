@@ -58,20 +58,11 @@
 		spawnfragments()
 	return
 
-
 /obj/structure/window/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-			return
-		if(2)
-			spawnfragments()
-			return
-		if(3)
-			if(prob(50))
-				spawnfragments()
-				return
-
+	if(severity == 1)
+		qdel(src)
+	else
+		spawnfragments()
 
 /obj/structure/window/blob_act()
 	spawnfragments()
@@ -445,6 +436,16 @@
 	maxhealth = 50
 	explosion_block = 1
 
+/obj/structure/window/reinforced/ex_act(severity, target)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			spawnfragments()
+		if(3)
+			if(prob(50))
+				spawnfragments()
+
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
 	icon_state = "twindow"
@@ -463,34 +464,34 @@
 	dir = 5
 	maxhealth = 50
 	fulltile = 1
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
+	smooth = SMOOTH_MORE
+	canSmoothWith = list(/obj/structure/window/fulltile)
 
-/obj/structure/window/reinforced/fulltile
+/obj/structure/window/fulltile/reinforced
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "r_window"
-	dir = 5
 	maxhealth = 100
-	fulltile = 1
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	level = 3
 
-/obj/structure/window/reinforced/tinted/fulltile
+/obj/structure/window/fulltile/reinforced/ex_act(severity, target)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			spawnfragments()
+		if(3)
+			if(prob(50))
+				spawnfragments()
+
+/obj/structure/window/fulltile/reinforced/tinted
 	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
 	icon_state = "tinted_window"
-	dir = 5
-	fulltile = 1
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
-	level = 3
+	opacity = 1
 
-/obj/structure/window/reinforced/fulltile/ice
+/obj/structure/window/fulltile/reinforced/ice
 	icon = 'icons/obj/smooth_structures/rice_window.dmi'
 	icon_state = "ice_window"
 	maxhealth = 150
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/reinforced/fulltile/ice)
-	level = 3
 
 /obj/structure/window/shuttle
 	name = "shuttle window"
