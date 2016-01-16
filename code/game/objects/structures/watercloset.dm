@@ -415,14 +415,14 @@
 		return
 
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
-		if (wrapped)
+		if (/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped)
 			user << "<span class='notice'>You need to unwrap [src] first!</span>"
 			return
 		else
 			user << "<span class='notice'>You place [src] under a stream of water...</span>"
 			user.drop_item()
 			loc = get_turf(O)
-			return Expand()
+			return /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Expand()
 
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
