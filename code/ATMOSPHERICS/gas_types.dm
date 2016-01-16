@@ -57,7 +57,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	id = "n2o"
 	specific_heat = 40
 	name = "Nitrous Oxide"
-	gas_overlay = "sleeping_agent"
+	gas_overlay = "nitrous_oxide"
 	moles_visible = 1
 
 /datum/gas/oxygen_agent_b

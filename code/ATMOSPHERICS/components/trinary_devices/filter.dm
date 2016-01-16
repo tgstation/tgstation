@@ -7,28 +7,13 @@
 #define FILTER_NITROUSOXIDE		"n2o"
 
 /obj/machinery/atmospherics/components/trinary/filter
+	name = "gas filter"
 	icon_state = "filter_off"
 	density = 0
-
-	name = "gas filter"
-
 	can_unwrench = 1
-
 	var/on = 0
-
 	var/target_pressure = ONE_ATMOSPHERE
-
 	var/filter_type = FILTER_PLASMA
-/*
-Filter types:
--1: Nothing
- 0: Plasma: Plasma Toxin, Oxygen Agent B
- 1: Oxygen: Oxygen ONLY
- 2: Nitrogen: Nitrogen ONLY
- 3: Carbon Dioxide: Carbon Dioxide ONLY
- 4: Sleeping Agent (N2O)
-*/
-
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 
@@ -166,7 +151,7 @@ Filter types:
 
 	switch(action)
 		if("power")
-			on=!on
+			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 		if("pressure")
 			switch(params["pressure"])
@@ -176,7 +161,7 @@ Filter types:
 					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", target_pressure)))
 			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 		if("filter")
-			src.filter_type = params["mode"]
+			filter_type = params["mode"]
 			var/filtering_name = "nothing"
 			switch(filter_type)
 				if(FILTER_PLASMA)
