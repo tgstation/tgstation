@@ -1,0 +1,14 @@
+<section>
+  {{#if label}}
+    <span class='label'>{{label}}:</span>
+    {{#if nowrap}}
+      {{yield}}
+    {{else}}
+      <div class='content'>
+        {{yield}}
+      </div>
+    {{/if}}
+  {{else}}
+    {{yield}}
+  {{/if}}
+</section>

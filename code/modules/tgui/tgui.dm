@@ -197,6 +197,7 @@
 	else
 		html = SStgui.basehtml
 	html = replacetextEx(html, "\[ref]", "\ref[src]")
+	html = replacetextEx(html, "\[style]", style)
 	return html
 
  /**
