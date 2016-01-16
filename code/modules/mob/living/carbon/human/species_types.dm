@@ -12,6 +12,8 @@
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
 	use_skintones = 1
 
+/datum/species/human/ContactDisease(datum/disease/D)
+	. = 1
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
 	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
@@ -65,6 +67,9 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 
+/datum/species/lizard/ContactDisease(datum/disease/D)
+	. = 1
+
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_lizard_name(gender)
@@ -113,6 +118,8 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	heatmod = 1.5
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 
+/datum/species/pod/ContactDisease(datum/disease/D)
+	. = 1
 
 /datum/species/pod/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
@@ -369,6 +376,9 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	id = "fly"
 	say_mod = "buzzes"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
+
+/datum/species/fly/ContactDisease(datum/disease/D)
+	. = 1
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")

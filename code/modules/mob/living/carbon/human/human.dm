@@ -54,6 +54,12 @@
 	organs = list()
 	return ..()
 
+/mob/living/carbon/human/ContractDisease(datum/disease/D)
+	if(dna.species)
+		if(!(dna.species.ContactDisease(D)))
+			return
+	..()
+
 /mob/living/carbon/human/Stat()
 	..()
 
