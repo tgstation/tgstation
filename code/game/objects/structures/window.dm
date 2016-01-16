@@ -307,7 +307,7 @@
 		return
 
 /obj/structure/window/proc/spawnfragments()
-	if(!loc) //if already qdel'd somehow, we do nothing
+	if(qdeleted())
 		return
 	var/turf/T = loc
 	for(var/obj/item/I in storeditems)
