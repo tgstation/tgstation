@@ -186,7 +186,7 @@
 					return
 				var/obj/structure/window/WD
 				if(istype(W, /obj/item/stack/sheet/rglass))
-					WD = new/obj/structure/window/fulltile/reinforced(loc) //reinforced window
+					WD = new/obj/structure/window/reinforced/fulltile(loc) //reinforced window
 				else
 					WD = new/obj/structure/window/fulltile(loc) //normal window
 				WD.dir = dir_to_set

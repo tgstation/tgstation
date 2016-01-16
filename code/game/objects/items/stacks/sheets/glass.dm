@@ -206,7 +206,7 @@
 				user << "<span class='warning'>There is a window in the way!</span>"
 				return 1
 			var/obj/structure/window/W
-			W = new /obj/structure/window/fulltile/reinforced(user.loc, 1)
+			W = new /obj/structure/window/reinforced/fulltile(user.loc, 1)
 			W.state = 0
 			W.anchored = 0
 			W.add_fingerprint(user)
