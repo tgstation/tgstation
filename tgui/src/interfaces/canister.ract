@@ -3,7 +3,7 @@
 </ui-notice>
 <ui-display title='Canister' button>
   {{#partial button}}
-    <ui-button icon='pencil' state='{{data.canLabel ? null : "disabled"}}' action='relable'>Relabel</ui-button>
+    <ui-button icon='pencil' state='{{data.canLabel ? null : "disabled"}}' action='relabel'>Relabel</ui-button>
   {{/partial}}
   <ui-section label='Pressure'>
     <span>{{Math.round(adata.tankPressure)}} kPa</span>

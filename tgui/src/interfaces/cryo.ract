@@ -1,13 +1,13 @@
 <script>
 component.exports = {
   computed: {
-    cellTemperatureState: function () {
+    cellTemperatureState () {
         const temp = this.get('data.cellTemperature')
         if (temp < 225) return 'good'
         else if (temp < 273.15) return 'average'
         else return 'bad'
     },
-    occupantStatState: function () {
+    occupantStatState () {
       switch (this.get('data.occupant.stat')) {
         case 0: return 'good'
         case 1: return 'average'

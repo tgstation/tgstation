@@ -1,6 +1,6 @@
 <script>
 component.exports = {
-  oninit: function () {
+  oninit () {
     this.observe('value', (newkey, oldkey, keypath) => {
       const { min, max } = this.get()
       const value = Math.clamp(min, max, newkey)

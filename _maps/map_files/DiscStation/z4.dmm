@@ -847,7 +847,7 @@
 "qC" = (/obj/machinery/portable_atmospherics/canister/air,/turf/simulated/floor/plasteel/airless{icon_state = "bot"},/area/derelict/storage/engine_storage)
 "qD" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/plasteel/airless{icon_state = "bot"},/area/derelict/storage/engine_storage)
 "qE" = (/obj/machinery/portable_atmospherics/canister/nitrogen,/turf/simulated/floor/plasteel/airless{icon_state = "bot"},/area/derelict/storage/engine_storage)
-"qF" = (/obj/machinery/portable_atmospherics/canister/sleeping_agent,/turf/simulated/floor/plasteel/airless{icon_state = "bot"},/area/derelict/storage/engine_storage)
+"qF" = (/obj/machinery/portable_atmospherics/canister/nitrous_oxide,/turf/simulated/floor/plasteel/airless{icon_state = "bot"},/area/derelict/storage/engine_storage)
 "qG" = (/obj/machinery/door/firedoor/heavy,/obj/machinery/door/airlock/maintenance{name = "Atmospherics Maintenance"; req_access_txt = "24"},/turf/simulated/floor/plating/airless,/area/derelict/storage/engine_storage)
 "qH" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/simulated/floor/plating/airless,/area/derelict/storage/equipment)
 "qI" = (/obj/structure/closet/secure_closet/personal/patient,/obj/machinery/button/door{id = "medpriv1"; name = "Privacy Shutters"; pixel_y = -25},/turf/simulated/floor/plasteel{icon_state = "white"},/area/derelict/medical)

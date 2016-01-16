@@ -22,7 +22,7 @@ component.exports = {
   transitions: {
     fade: require('ractive-transitions-fade'),
   },
-  onconfig: function () {
+  onconfig () {
     const requested  = this.get('config.interface')
     const interfaces = require('interfaces/**/*.ract', { mode: 'hash' })
     if (requested in interfaces) {
@@ -31,7 +31,7 @@ component.exports = {
       this.components.interface = interfaces.error // ...unless it does not exist.
     }
   },
-  oninit: function () {
+  oninit () {
     this.observe('config.style', (newkey, oldkey, keypath) => {
       if (newkey) document.body.classList.add(newkey)
       if (oldkey) document.body.classList.remove(oldkey)
@@ -55,7 +55,7 @@ component.exports = {
       this.set({ drag: false, resize: false, x: null, y: null })
     })
   },
-  oncomplete: function () {
+  oncomplete () {
     winset('mapwindow.map', 'focus', true) // Give focus back to the map.
   }
 }

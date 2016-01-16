@@ -9,10 +9,8 @@
 	icon_state = "yellow"
 	density = 1
 	var/health = 100
-
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
-
 	var/canister_color = "yellow"
 	var/can_label = 1
 	var/filled = 0.5
@@ -23,45 +21,54 @@
 	var/release_log = ""
 	var/update_flag = 0
 	var/gas_type = ""
+	var/static/list/label2types = list(
+		"caution" = /obj/machinery/portable_atmospherics/canister,
+		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
+		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
+		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
+		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+		"air" = /obj/machinery/portable_atmospherics/canister/air
+	)
 
 
-/obj/machinery/portable_atmospherics/canister/sleeping_agent
-	name = "canister: \[N2O\]"
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide
+	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
 	canister_color = "redws"
 	can_label = 0
 	gas_type = "n2o"
 /obj/machinery/portable_atmospherics/canister/nitrogen
-	name = "canister: \[N2\]"
+	name = "n2 canister"
 	desc = "Nitrogen gas. Reportedly useful for something."
 	icon_state = "red"
 	canister_color = "red"
 	can_label = 0
 	gas_type = "n2"
 /obj/machinery/portable_atmospherics/canister/oxygen
-	name = "canister: \[O2\]"
+	name = "o2 canister"
 	desc = "Oxygen. Necessary for human life."
 	icon_state = "blue"
 	canister_color = "blue"
 	can_label = 0
 	gas_type = "o2"
 /obj/machinery/portable_atmospherics/canister/toxins
-	name = "canister \[Plasma\]"
+	name = "plasma canister"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	icon_state = "orange"
 	canister_color = "orange"
 	can_label = 0
 	gas_type = "plasma"
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
-	name = "canister \[CO2\]"
+	name = "co2 canister"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	icon_state = "black"
 	canister_color = "black"
 	can_label = 0
 	gas_type = "co2"
 /obj/machinery/portable_atmospherics/canister/air
-	name = "canister \[Air\]"
+	name = "air canister"
 	desc = "Pre-mixed air."
 	icon_state = "grey"
 	canister_color = "grey"
@@ -312,20 +319,11 @@ update_flag
 	switch(action)
 		if("relabel")
 			if(can_label)
-				var/list/colors = list(\
-					"\[N2O\]" = "redws", \
-					"\[N2\]" = "red", \
-					"\[O2\]" = "blue", \
-					"\[Plasma\]" = "orange", \
-					"\[CO2\]" = "black", \
-					"\[Air\]" = "grey", \
-					"\[CAUTION\]" = "yellow", \
-				)
-				var/label = input("Label canister:", "Gas Canister") as null|anything in colors
-				if(label)
-					src.canister_color = colors[label]
-					src.icon_state = colors[label]
-					src.name = "canister: [label]"
+				var/label = input("Label canister:", "Gas Canister") as null|anything in label2types
+				var/newtype = label2types[label]
+				if(newtype)
+					new newtype (loc, 0)
+					qdel(src)
 		if("pressure")
 			switch(params["pressure"])
 				if("custom")
@@ -370,10 +368,11 @@ update_flag
 	update_icon()
 	return 1
 
-/obj/machinery/portable_atmospherics/canister/New()
+/obj/machinery/portable_atmospherics/canister/New(loc, fill = 1)
 	..()
 
-	create_gas()
+	if(fill)
+		create_gas()
 
 	update_icon()
 	return 1
@@ -384,8 +383,7 @@ update_flag
 		air_contents.gases[gas_type][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 //Dirty way to fill room with gas. However it is a bit easier to do than creating some floor/engine/n2o -rastaf0
-
-/obj/machinery/portable_atmospherics/canister/sleeping_agent/roomfiller/New()
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide/roomfiller/New()
 	..()
 
 	air_contents.gases["n2o"][MOLES] = 9*4000

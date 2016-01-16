@@ -4,7 +4,7 @@ import { href, winset } from 'util/byond'
 
 component.exports = {
   computed: {
-    visualStatus: function () {
+    visualStatus () {
       switch (this.get('config.status')) {
         case UI_INTERACTIVE: return 'good'
         case UI_UPDATE: return 'average'
@@ -13,17 +13,17 @@ component.exports = {
       }
     }
   },
-  oninit: function() {
+  oninit () {
     this.observe('config.fancy', (newkey, oldkey, keypath) => {
       winset(this.get('config.window'), 'titlebar', !!!newkey)
     })
 
     this.on({
-      close: () => {
+      close () {
         winset(this.get('config.window'), 'is-visible', false)
         window.location.href = href({command: `uiclose ${this.get('config.ref')}`}, 'winset')
       },
-      minimize: () => {
+      minimize () {
         winset(this.get('config.window'), 'is-minimized', true)
       }
     })

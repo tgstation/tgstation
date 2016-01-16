@@ -12,15 +12,9 @@ Object.assign(Math, require('util/math'))
 import WebFont from 'webfontloader'
 WebFont.load({
   custom: {
-    families: [
-      'FontAwesome'
-    ],
-    urls: [
-      'https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'
-    ],
-    testStrings: {
-      FontAwesome: '\uf240'
-    }
+    families: [ 'FontAwesome' ],
+    urls: [ 'https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' ],
+    testStrings: { FontAwesome: '\uf240' }
   }
 })
 

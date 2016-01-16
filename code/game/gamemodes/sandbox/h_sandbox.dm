@@ -84,7 +84,7 @@ var/hsboxspawn = 1
 			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/toxins]'>Spawn Plasma Canister</a><br>"
 			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/carbon_dioxide]'>Spawn CO2 Canister</a><br>"
 			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrogen]'>Spawn Nitrogen Canister</a><br>"
-			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/sleeping_agent]'>Spawn N2O Canister</a><hr>"
+			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrous_oxide]'>Spawn N2O Canister</a><hr>"
 		else
 			hsbinfo += "<i>Some item spawning may be disabled by the administrators.</i><br>"
 			hsbinfo += "<i>Only administrators may spawn dangerous canisters.</i><br>"

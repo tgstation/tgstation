@@ -4,19 +4,19 @@ import { act } from 'util/byond'
 
 component.exports = {
   computed: {
-    clickable: function () {
+    clickable () {
       if (this.get('enabled') && !this.get('state')) {
         return true
       }
       return false
     },
-    enabled: function () {
+    enabled () {
       if (this.get('config.status') === UI_INTERACTIVE) {
         return true
       }
       return false
     },
-    styles: function () {
+    styles () {
       const state = this.get('state'), style = this.get('style')
       if (this.get('enabled')) {
         if (!state) {
@@ -29,7 +29,7 @@ component.exports = {
       }
     }
   },
-  oninit: function () {
+  oninit () {
     this.on('press', (event) => {
       const { action, params } = this.get()
       act(this.get('config.ref'), action, params)

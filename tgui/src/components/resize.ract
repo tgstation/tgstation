@@ -2,7 +2,7 @@
 import { winset } from 'util/byond'
 
 component.exports = {
-  oninit: function () {
+  oninit () {
     this.observe('config.fancy', (newkey, oldkey, keypath) => {
       winset(this.get('config.window'), 'can-resize', !!!newkey)
     })
