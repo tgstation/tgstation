@@ -78,7 +78,7 @@
 	name = "reinforced floor"
 	icon_state = "engine"
 	thermal_conductivity = 0.025
-	heat_capacity = 99999999999999999999
+	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 
 /turf/simulated/floor/engine/break_tile()
