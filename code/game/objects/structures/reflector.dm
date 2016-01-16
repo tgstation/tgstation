@@ -145,8 +145,8 @@
 "[EAST]" = list("[SOUTH]" = EAST, "[WEST]" = NORTH),
 "[SOUTH]" = list("[NORTH]" = EAST, "[WEST]" = SOUTH),
 "[WEST]" = list("[NORTH]" = WEST, "[EAST]" = SOUTH) )
-	var/buildstacktype = /obj/item/stack/sheet/glass
-	var/buildstackamount = 5
+	buildstacktype = /obj/item/stack/sheet/glass
+	buildstackamount = 5
 
 /obj/structure/reflector/single/get_reflection(srcdir,pdir)
 	var/new_dir = rotations["[srcdir]"]["[pdir]"]
@@ -168,8 +168,8 @@
 "[EAST]" = list("[NORTH]" = EAST, "[WEST]" = SOUTH, "[SOUTH]" = WEST, "[EAST]" = NORTH),
 "[SOUTH]" = list("[NORTH]" = EAST, "[WEST]" = SOUTH, "[SOUTH]" = WEST, "[EAST]" = NORTH),
 "[WEST]" = list("[NORTH]" = WEST, "[EAST]" = SOUTH, "[SOUTH]" = EAST, "[WEST]" = NORTH) )
-	var/buildstacktype = /obj/item/stack/sheet/rglass
-	var/buildstackamount = 10
+	buildstacktype = /obj/item/stack/sheet/rglass
+	buildstackamount = 10
 
 /obj/structure/reflector/double/get_reflection(srcdir,pdir)
 	var/new_dir = double_rotations["[srcdir]"]["[pdir]"]
@@ -191,8 +191,8 @@
 "[EAST]" = list("[SOUTH]" = EAST, "[EAST]" = EAST, "[WEST]" = EAST, "[NORTH]" = EAST),
 "[SOUTH]" = list("[SOUTH]" = SOUTH, "[EAST]" = SOUTH, "[WEST]" = SOUTH, "[NORTH]" = SOUTH),
 "[WEST]" = list("[SOUTH]" = WEST, "[EAST]" = WEST, "[WEST]" = WEST, "[NORTH]" = WEST) )
-	var/buildstacktype = /obj/item/stack/sheet/mineral/diamond
-	var/buildstackamount = 1
+	buildstacktype = /obj/item/stack/sheet/mineral/diamond
+	buildstackamount = 1
 
 /obj/structure/reflector/box/get_reflection(srcdir,pdir)
 	var/new_dir = box_rotations["[srcdir]"]["[pdir]"]
