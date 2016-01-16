@@ -425,7 +425,6 @@ Congratulations! You are now trained for xenobiology research!"}
 
 	user.do_attack_animation(L)
 
-	// [tgstation/#14599] Allow reactive teleport armor to kick in when attacked.
 	if (ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if (H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
