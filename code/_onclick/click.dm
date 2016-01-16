@@ -222,7 +222,7 @@
 	A.CtrlClick(src)
 	return
 
-/atom/CtrlClick(mob/user)
+/atom/proc/CtrlClick(mob/user)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
