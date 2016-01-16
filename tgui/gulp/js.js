@@ -25,17 +25,16 @@ const bundle = browserify(`${f.src}/${entry}`, {
   debug: f.debug,
   cache: {},
   packageCache: {},
-  extensions: ['.js', '.ract'],
-  paths: [f.src]
+  extensions: [ '.js', '.ract' ],
+  paths: [ f.src ]
 })
-.transform(b.babelify)
-.plugin(b.helpers)
-.transform(b.componentify)
-.transform(b.globify)
-.transform(b.es3ify)
-if (f.min) {
-  bundle.plugin(b.collapse)
-}
+if (f.min) bundle.plugin(b.collapse)
+bundle
+  .transform(b.babelify)
+  .plugin(b.helpers)
+  .transform(b.componentify)
+  .transform(b.globify)
+  .transform(b.es3ify)
 
 import buffer from 'vinyl-buffer'
 import gulp from 'gulp'
