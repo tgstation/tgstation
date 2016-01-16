@@ -274,6 +274,10 @@ Class Procs:
 	interact(user)
 	return 0
 
+/obj/machinery/interact(mob/user)
+	add_fingerprint(user)
+	ui_interact(user)
+
 /obj/machinery/CheckParts()
 	RefreshParts()
 	return
