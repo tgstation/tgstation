@@ -124,7 +124,9 @@
 			H.update_inv_l_hand()
 
 	else
-		dynamic_overlay = null
+		dynamic_overlay["[BACK_LAYER]"] = null
+		dynamic_overlay["[L_HAND_LAYER]"] = null
+		dynamic_overlay["[R_HAND_LAYER]"] = null
 		if (istype(loc,/mob/living/carbon/human))
 			H.update_inv_back()
 			H.update_inv_r_hand()

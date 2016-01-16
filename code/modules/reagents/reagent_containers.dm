@@ -119,11 +119,13 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 
 	if (amount > 0)
 		reagents.remove_any(amount)
-		user.visible_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>",
+		if(user.Adjacent(target))
+			user.visible_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>",
 		                     "<span class='notice'>You splash some of the solution onto \the [target].</span>")
 	else
 		reagents.clear_reagents()
-		user.visible_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>",
+		if(user.Adjacent(target))
+			user.visible_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>",
 		                     "<span class='notice'>You splash the solution onto \the [target].</span>")
 
 /**

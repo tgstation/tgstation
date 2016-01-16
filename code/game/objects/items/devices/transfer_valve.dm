@@ -10,7 +10,14 @@
 	var/valve_open = 0
 	var/toggle = 1
 
+	var/damaged = 0
+
 	flags = FPRINT | PROXMOVE
+
+/obj/item/device/transfer_valve/examine(mob/user)
+	..()
+	if(damaged)
+		to_chat(user, "<span class='info'>\The [src] appears to be damaged.</span>")
 
 /obj/item/device/transfer_valve/proc/process_activation(var/obj/item/device/D)
 
@@ -31,6 +38,10 @@
 	if(istype(item, /obj/item/weapon/tank))
 		if(tank_one && tank_two)
 			to_chat(user, "<span class='warning'>There are already two tanks attached, remove one first.</span>")
+			return
+
+		if(damaged)
+			to_chat(user, "<span class='warning'>\The [src] has sustained too much damage. \The [item] won't fit onto its warped valves.</span>")
 			return
 
 		if(!tank_one)

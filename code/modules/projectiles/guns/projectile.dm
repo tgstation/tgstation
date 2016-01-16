@@ -29,7 +29,8 @@
 		chamber_round()
 	else
 		for(var/i = 1, i <= max_shells, i++)
-			loaded += new ammo_type(src)
+			if(ammo_type)
+				loaded += new ammo_type(src)
 	update_icon()
 	return
 
@@ -209,7 +210,8 @@
 
 /obj/item/weapon/gun/projectile/examine(mob/user)
 	..()
-	to_chat(user, "<span class='info'>Has [getAmmo()] round\s remaining.</span>")
+	if(conventional_firearm)
+		to_chat(user, "<span class='info'>Has [getAmmo()] round\s remaining.</span>")
 //		if(in_chamber && !loaded.len)
 //			to_chat(usr, "However, it has a chambered round.")
 //		if(in_chamber && loaded.len)

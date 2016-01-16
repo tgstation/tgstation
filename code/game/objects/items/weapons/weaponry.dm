@@ -81,6 +81,7 @@
 	force = 40
 	throwforce = 10
 	w_class = 3
+	sharpness = 1.2
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	suicide_act(mob/user)
@@ -107,7 +108,7 @@
 	attack_verb = list("jabbed","stabbed","ripped")
 
 obj/item/weapon/wirerod
-	name = "Wired rod"
+	name = "wired rod"
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
 	icon_state = "wiredrod"
 	item_state = "rods"
@@ -145,6 +146,18 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 		to_chat(user, "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>")
 		qdel(I)
 		I =  null
+		qdel(src)
+
+	else if(istype(I, /obj/item/stack/rods))
+		to_chat(user, "You fasten the metal rods together.")
+		var/obj/item/stack/rods/R = I
+		if(src.loc == user)
+			user.drop_item(src, force_drop = 1)
+			var/obj/item/weapon/rail_assembly/Q = new (get_turf(user))
+			user.put_in_hands(Q)
+		else
+			new /obj/item/weapon/rail_assembly(get_turf(src.loc))
+		R.use(1)
 		qdel(src)
 
 

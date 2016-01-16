@@ -772,6 +772,20 @@ datum
 			required_reagents = list("toxin" = 1, "water" = 4)
 			result_amount = 5
 
+		potassiumnitrate
+			name = "Potassium Nitrate"
+			id = "potassiumnitrate"
+			result = "potassiumnitrate"
+			required_reagents = list("potassium" = 1, "nitrogen" = 1, "oxygen" = 3)
+			result_amount = 5
+
+		gunpowder
+			name = "Gunpowder"
+			id = "gunpowder"
+			result = "gunpowder"
+			required_reagents = list("sulfur" = 1, "charcoal" = 1, "potassiumnitrate" = 1)
+			result_amount = 3
+
 //Special reaction for mimic meat: injecting it with 5 units of blood causes it to turn into a random food item. Makes more sense than hitting it with a fking rolling pin
 
 		mimicshift
