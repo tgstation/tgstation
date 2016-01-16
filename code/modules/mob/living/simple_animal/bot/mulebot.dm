@@ -604,7 +604,7 @@ mob/living/simple_animal/bot/mulebot/bot_reset()
 // calculates a path to the current destination
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/mulebot/calc_path(turf/avoid = null)
-	path = get_path_to(loc, target, src, /turf/proc/Distance_cardinal, 0, 250, id=access_card, exclude=avoid)
+	path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 250, id=access_card, exclude=avoid)
 
 // sets the current destination
 // signals all beacons matching the delivery code
