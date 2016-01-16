@@ -26,7 +26,7 @@ WebFont.load({
   }
 })
 
-import TGUI from 'components/tgui'
+import TGUI from 'tgui.ract'
 window.initialize = (dataString) => {
   if (window.tgui) return
   window.tgui = new TGUI({
