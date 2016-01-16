@@ -24,10 +24,10 @@ import browserify from 'browserify'
 const bundle = browserify(`${f.src}/${entry}`, {
   debug: f.debug,
   cache: {},
+  packageCache: {},
   extensions: ['.js', '.ract'],
   paths: [f.src]
 })
-.plugin(b.rememberify)
 .transform(b.babelify)
 .plugin(b.helpers)
 .transform(b.componentify)
@@ -52,8 +52,7 @@ export function js () {
     .pipe(gulp.dest(f.dest))
 }
 export function watch_js () {
-  return gulp.watch(`${f.src}/**.js`, vinyl => {
-    b.rememberify.forget(bundle, vinyl.path)
-    return js()
-  })
+  bundle.plugin(b.watchify)
+  bundle.on('update', js)
+  return js()
 }

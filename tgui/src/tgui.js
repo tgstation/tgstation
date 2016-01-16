@@ -1,8 +1,6 @@
 // Temporarily import Ractive first to keep it from detecting ie8's object.defineProperty shim, which it misuses (ractivejs/ractive#2343).
 import Ractive from 'ractive'
-Ractive.DEBUG = /minified/.test(() => {
-  /* minified */
-})
+Ractive.DEBUG = /minified/.test(() => {/* minified */})
 
 import 'ie8'
 import 'babel-polyfill'
@@ -31,7 +29,13 @@ window.initialize = (dataString) => {
   if (window.tgui) return
   window.tgui = new TGUI({
     el: '#container',
-    data: () => JSON.parse(dataString)
+    data () {
+      const base = {
+        constants: require('util/constants')
+      }
+      const server = JSON.parse(dataString)
+      return Object.assign(base, server)
+    }
   })
 }
 

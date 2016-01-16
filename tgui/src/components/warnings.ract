@@ -6,17 +6,17 @@ component.exports = {
     userAgent: navigator.userAgent
   },
   computed: {
-    ie: function () {
+    ie () {
       if (document.documentMode) return document.documentMode
       for (let version in versions) {
-        div = document.createElement('div')
+        const div = document.createElement('div')
         div.innerHTML = `<!--[if IE ${version}]><span></span><![endif]-->`
         if (div.getElementsByTagName('span').length) return version
       }
       return undefined
     }
   },
-  oninit: function () {
+  oninit () {
     this.on('debug', () => this.toggle('debug'))
   }
 }

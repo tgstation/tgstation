@@ -26,5 +26,6 @@ export function css () {
     .pipe(gulp.dest(f.dest))
 }
 export function watch_css () {
-  return gulp.watch(`${f.src}/**.styl`, css)
+  gulp.watch(`${f.src}/**/*.styl`, css)
+  return css()
 }

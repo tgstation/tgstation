@@ -7,9 +7,7 @@ export function href (params = {}, url = '') {
 
 // Helper to make a BYOND ui_act() call on the UI 'src' given an 'action' and optional 'params'.
 export function act (src, action, params = {}) {
-  params.src = src
-  params.action = action
-  window.location.href = href(params)
+  window.location.href = href(Object.assign({ src, action }, params))
 }
 
 // Helper to make a BYOND winset() call on 'window', setting 'key' to 'value'

@@ -6,5 +6,5 @@ export function reload () {
 }
 import gulp from 'gulp'
 export function watch_reload () {
-  return gulp.watch(`${out}/**`, reload)
+  gulp.watch(`${out}/**`, reload)
 }
