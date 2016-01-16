@@ -414,7 +414,7 @@
 		user << "<span class='warning'>Someone's already washing here!</span>"
 		return
 
-	if(istype(O, /obj/item/weapon/reagent_containers))
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		if (wrapped)
 			user << "<span class='notice'>You need to unwrap [src] first!</span>"
 			return
@@ -424,7 +424,7 @@
 			loc = get_turf(O)
 			return Expand()
 
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
 		if(RG.flags & OPENCONTAINER)
 			RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
