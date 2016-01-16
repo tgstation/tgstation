@@ -81,7 +81,8 @@
 	if(src != usr)
 		return 0
 
-	if(!client)	return 0
+	if(!client)
+		return 0
 
 	//Determines Relevent Population Cap
 	var/relevant_cap
@@ -107,7 +108,8 @@
 	if(href_list["observe"])
 
 		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
-			if(!client)	return 1
+			if(!client)
+				return 1
 			var/mob/dead/observer/observer = new()
 
 			spawning = 1

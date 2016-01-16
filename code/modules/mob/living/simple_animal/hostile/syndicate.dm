@@ -46,7 +46,8 @@
 	health = 170
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)	return
+	if(!Proj)
+		return
 	if(prob(50))
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			src.health -= Proj.damage

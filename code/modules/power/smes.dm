@@ -189,7 +189,8 @@
 
 /obj/machinery/power/smes/update_icon()
 	overlays.Cut()
-	if(stat & BROKEN)	return
+	if(stat & BROKEN)
+		return
 
 	if(panel_open)
 		return
@@ -231,7 +232,8 @@
 
 /obj/machinery/power/smes/process()
 
-	if(stat & BROKEN)	return
+	if(stat & BROKEN)
+		return
 
 	//store machine state to see if we need to update the icon overlays
 	var/last_disp = chargedisplay()
@@ -428,10 +430,11 @@
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power."
-	process()
-		capacity = INFINITY
-		charge = INFINITY
-		..()
+
+/obj/machinery/power/smes/magical/process()
+	capacity = INFINITY
+	charge = INFINITY
+	..()
 
 
 #undef SMESRATE

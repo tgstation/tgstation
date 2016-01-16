@@ -83,7 +83,8 @@
 		return "<span class='average'>[mode_name[mode]]</span>"
 
 /mob/living/simple_animal/bot/proc/turn_on()
-	if(stat)	return 0
+	if(stat)
+		return 0
 	on = 1
 	SetLuminosity(initial(luminosity))
 	update_icon()
