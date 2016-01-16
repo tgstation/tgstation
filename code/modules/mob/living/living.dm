@@ -162,7 +162,7 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Pull"
 	set category = "Object"
 
-	if(AM.Adjacent(src))
+	if(istype(AM) && AM.Adjacent(src))
 		start_pulling(AM)
 	else
 		stop_pulling()
