@@ -411,20 +411,28 @@ Congratulations! You are now trained for xenobiology research!"}
 	return 1
 
 /obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
-	if(!IsAbductor(user))
+	if (!IsAbductor(user))
 		return
 
-	if(isrobot(target))
+	if (isrobot(target))
 		..()
 		return
 
-	if(!isliving(target))
+	if (!isliving(target))
 		return
 
 	var/mob/living/L = target
 
 	user.do_attack_animation(L)
-	switch(mode)
+
+	// [tgstation/#14599] Allow reactive teleport armor to kick in when attacked.
+	if (ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if (H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
+			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
+			return 0
+
+	switch (mode)
 		if(BATON_STUN)
 			StunAttack(L,user)
 		if(BATON_SLEEP)
