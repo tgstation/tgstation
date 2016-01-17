@@ -667,7 +667,8 @@
 	if( H.stat == DEAD )
 		H.sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		H.see_in_dark = 8
-		if(!H.druggy)		H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		if(!H.druggy)
+			H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	else
 		if(!(SEE_TURFS & H.permanent_sight_flags))
 			H.sight &= ~SEE_TURFS
@@ -721,7 +722,8 @@
 
 		if( H.disabilities & NEARSIGHT && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
 			H.client.screen += global_hud.vimpaired
-		if(H.eye_blurry)			H.client.screen += global_hud.blurry
+		if(H.eye_blurry)
+			H.client.screen += global_hud.blurry
 		if(H.druggy)
 			H.client.screen += global_hud.druggy
 			H.throw_alert("high", /obj/screen/alert/high)
@@ -730,8 +732,10 @@
 
 
 		if(H.eye_stat > 20)
-			if(H.eye_stat > 30)	H.client.screen += global_hud.darkMask
-			else				H.client.screen += global_hud.vimpaired
+			if(H.eye_stat > 30)
+				H.client.screen += global_hud.darkMask
+			else
+				H.client.screen += global_hud.vimpaired
 
 	return 1
 
@@ -741,18 +745,28 @@
 			H.healths.icon_state = "health7"
 		else
 			switch(H.hal_screwyhud)
-				if(1)	H.healths.icon_state = "health6"
-				if(2)	H.healths.icon_state = "health7"
-				if(5)	H.healths.icon_state = "health0"
+				if(1)
+					H.healths.icon_state = "health6"
+				if(2)
+					H.healths.icon_state = "health7"
+				if(5)
+					H.healths.icon_state = "health0"
 				else
 					switch(H.health - H.staminaloss)
-						if(100 to INFINITY)		H.healths.icon_state = "health0"
-						if(80 to 100)			H.healths.icon_state = "health1"
-						if(60 to 80)			H.healths.icon_state = "health2"
-						if(40 to 60)			H.healths.icon_state = "health3"
-						if(20 to 40)			H.healths.icon_state = "health4"
-						if(0 to 20)				H.healths.icon_state = "health5"
-						else					H.healths.icon_state = "health6"
+						if(100 to INFINITY)
+							H.healths.icon_state = "health0"
+						if(80 to 100)
+							H.healths.icon_state = "health1"
+						if(60 to 80)
+							H.healths.icon_state = "health2"
+						if(40 to 60)
+							H.healths.icon_state = "health3"
+						if(20 to 40)
+							H.healths.icon_state = "health4"
+						if(0 to 20)
+							H.healths.icon_state = "health5"
+						else
+							H.healths.icon_state = "health6"
 
 	if(H.healthdoll)
 		H.healthdoll.overlays.Cut()
@@ -1100,7 +1114,8 @@
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
-	if(!damage || blocked <= 0)	return 0
+	if(!damage || blocked <= 0)
+		return 0
 
 	var/obj/item/organ/limb/organ = null
 	if(islimb(def_zone))
@@ -1108,7 +1123,8 @@
 	else
 		if(!def_zone)	def_zone = ran_zone(def_zone)
 		organ = H.get_organ(check_zone(def_zone))
-	if(!organ)	return 0
+	if(!organ)
+		return 0
 
 	damage = (damage * blocked)
 
@@ -1155,7 +1171,8 @@
 		if(H.reagents.has_reagent("epinephrine"))
 			return
 		if(H.health >= config.health_threshold_crit)
-			if(NOBREATH in specflags)	return 1
+			if(NOBREATH in specflags)
+				return 1
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			H.failed_last_breath = 1
 		else

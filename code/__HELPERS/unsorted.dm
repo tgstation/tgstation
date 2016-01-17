@@ -131,7 +131,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				destination_list += T
 			if(destination_list.len)
 				destination = pick(destination_list)
-			else	return
+			else
+				return
 
 		else//Same deal here.
 			if(density&&destination.density)

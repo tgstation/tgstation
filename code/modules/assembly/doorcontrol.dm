@@ -22,8 +22,10 @@
 				openclose = M.density
 			spawn(0)
 				if(M)
-					if(openclose)	M.open()
-					else			M.close()
+					if(openclose)
+						M.open()
+					else
+						M.close()
 				return
 	sleep(10)
 	cooldown = 0
@@ -49,8 +51,10 @@
 			if(specialfunctions & OPEN)
 				spawn(0)
 					if(D)
-						if(D.density)	D.open()
-						else			D.close()
+						if(D.density)
+							D.open()
+						else
+							D.close()
 					return
 			if(specialfunctions & IDSCAN)
 				D.aiDisabledIdScanner = !D.aiDisabledIdScanner

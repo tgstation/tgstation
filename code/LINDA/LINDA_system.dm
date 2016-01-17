@@ -1,5 +1,6 @@
 /turf/proc/CanAtmosPass(turf/T)
-	if(!istype(T))	return 0
+	if(!istype(T))
+		return 0
 	var/R
 	if(blocks_air || T.blocks_air)
 		R = 1

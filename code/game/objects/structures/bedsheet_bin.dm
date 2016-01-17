@@ -194,9 +194,12 @@ LINEN BINS
 
 /obj/structure/bedsheetbin/update_icon()
 	switch(amount)
-		if(0)		icon_state = "linenbin-empty"
-		if(1 to 5)	icon_state = "linenbin-half"
-		else		icon_state = "linenbin-full"
+		if(0)
+			icon_state = "linenbin-empty"
+		if(1 to 5)
+			icon_state = "linenbin-half"
+		else
+			icon_state = "linenbin-full"
 
 /obj/structure/bedsheetbin/fire_act()
 	if(!amount)

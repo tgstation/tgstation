@@ -740,7 +740,8 @@ var/global/list/possible_items_special = list()
 	explanation_text = "Steal at least five guns!"
 
 /datum/objective/summon_guns/check_completion()
-	if(!isliving(owner.current))	return 0
+	if(!isliving(owner.current))
+		return 0
 	var/guncount = 0
 	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
 	for(var/obj/I in all_items) //Check for guns

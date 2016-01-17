@@ -1060,7 +1060,8 @@ About the new airlock wires panel:
 	return 1
 
 /obj/machinery/door/airlock/proc/prison_open()
-	if(emagged)	return
+	if(emagged)
+		return
 	src.locked = 0
 	src.open()
 	src.locked = 1
@@ -1089,7 +1090,8 @@ About the new airlock wires panel:
 		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!in_range(src, usr) && src.loc != usr) || !W.use(user))	return
+	if((!in_range(src, usr) && src.loc != usr) || !W.use(user))
+		return
 	switch(paintjob)
 		if("Public")
 			icon = 'icons/obj/doors/airlocks/station/public.dmi'

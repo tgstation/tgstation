@@ -226,18 +226,30 @@ var/list/admin_verbs_hideable = list(
 
 		var/rights = holder.rank.rights
 		verbs += admin_verbs_default
-		if(rights & R_BUILDMODE)	verbs += /client/proc/togglebuildmodeself
-		if(rights & R_ADMIN)		verbs += admin_verbs_admin
-		if(rights & R_BAN)			verbs += admin_verbs_ban
-		if(rights & R_FUN)			verbs += admin_verbs_fun
-		if(rights & R_SERVER)		verbs += admin_verbs_server
-		if(rights & R_DEBUG)		verbs += admin_verbs_debug
-		if(rights & R_POSSESS)		verbs += admin_verbs_possess
-		if(rights & R_PERMISSIONS)	verbs += admin_verbs_permissions
-		if(rights & R_STEALTH)		verbs += /client/proc/stealth
-		if(rights & R_REJUVINATE)	verbs += admin_verbs_rejuv
-		if(rights & R_SOUNDS)		verbs += admin_verbs_sounds
-		if(rights & R_SPAWN)		verbs += admin_verbs_spawn
+		if(rights & R_BUILDMODE)
+			verbs += /client/proc/togglebuildmodeself
+		if(rights & R_ADMIN)
+			verbs += admin_verbs_admin
+		if(rights & R_BAN)
+			verbs += admin_verbs_ban
+		if(rights & R_FUN)
+			verbs += admin_verbs_fun
+		if(rights & R_SERVER)
+			verbs += admin_verbs_server
+		if(rights & R_DEBUG)
+			verbs += admin_verbs_debug
+		if(rights & R_POSSESS)
+			verbs += admin_verbs_possess
+		if(rights & R_PERMISSIONS)
+			verbs += admin_verbs_permissions
+		if(rights & R_STEALTH)
+			verbs += /client/proc/stealth
+		if(rights & R_REJUVINATE)
+			verbs += admin_verbs_rejuv
+		if(rights & R_SOUNDS)
+			verbs += admin_verbs_sounds
+		if(rights & R_SPAWN)
+			verbs += admin_verbs_spawn
 
 		for(var/path in holder.rank.adds)
 			verbs += path
@@ -318,7 +330,8 @@ var/list/admin_verbs_hideable = list(
 /client/proc/admin_ghost()
 	set category = "Admin"
 	set name = "Aghost"
-	if(!holder)	return
+	if(!holder)
+		return
 	if(istype(mob,/mob/dead/observer))
 		//re-enter
 		var/mob/dead/observer/ghost = mob
@@ -430,7 +443,8 @@ var/list/admin_verbs_hideable = list(
 			mob.name = initial(mob.name)
 		else
 			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
-			if(!new_key)	return
+			if(!new_key)
+				return
 			if(length(new_key) >= 26)
 				new_key = copytext(new_key, 1, 26)
 			holder.fakekey = new_key
@@ -547,7 +561,8 @@ var/list/admin_verbs_hideable = list(
 /client/proc/toggle_log_hrefs()
 	set name = "Toggle href logging"
 	set category = "Server"
-	if(!holder)	return
+	if(!holder)
+		return
 	if(config)
 		if(config.log_hrefs)
 			config.log_hrefs = 0

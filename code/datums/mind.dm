@@ -205,8 +205,10 @@
 		for(var/datum/objective/objective in objectives)
 			output += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
 
-	if(window)	recipient << browse(output,"window=memory")
-	else		recipient << "<i>[output]</i>"
+	if(window)
+		recipient << browse(output,"window=memory")
+	else
+		recipient << "<i>[output]</i>"
 
 /datum/mind/proc/edit_memory()
 	if(!ticker || !ticker.mode)
@@ -1490,13 +1492,15 @@
 		else
 			spawn(0)
 				throw EXCEPTION("mind_initialize(): No ticker ready")
-	if(!mind.name)	mind.name = real_name
+	if(!mind.name)
+		mind.name = real_name
 	mind.current = src
 
 //HUMAN
 /mob/living/carbon/human/mind_initialize()
 	..()
-	if(!mind.assigned_role)	mind.assigned_role = "Assistant"	//defualt
+	if(!mind.assigned_role)
+		mind.assigned_role = "Assistant"	//defualt
 
 //MONKEY
 /mob/living/carbon/monkey/mind_initialize()

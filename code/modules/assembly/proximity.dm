@@ -26,7 +26,8 @@
 	return "The proximity sensor is [scanning?"armed":"disarmed"]."
 
 /obj/item/device/assembly/prox_sensor/activate()
-	if(!..())	return 0//Cooldown check
+	if(!..())
+		return 0//Cooldown check
 	timing = !timing
 	update_icon()
 	return 1
@@ -45,12 +46,14 @@
 
 
 /obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
-	if (istype(AM, /obj/effect/beam))	return
+	if (istype(AM, /obj/effect/beam))
+		return
 	sense()
 
 
 /obj/item/device/assembly/prox_sensor/sense()
-	if((!secured)||(!scanning)||(cooldown > 0))	return 0
+	if((!secured)||(!scanning)||(cooldown > 0))
+		return 0
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
 	cooldown = 2
@@ -73,7 +76,8 @@
 
 
 /obj/item/device/assembly/prox_sensor/toggle_scan()
-	if(!secured)	return 0
+	if(!secured)
+		return 0
 	scanning = !scanning
 	update_icon()
 

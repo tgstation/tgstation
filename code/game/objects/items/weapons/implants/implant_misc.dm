@@ -33,7 +33,8 @@
 	return dat
 
 /obj/item/weapon/implant/adrenalin/activate()
-	if(uses < 1)	return 0
+	if(uses < 1)
+		return 0
 	uses--
 	imp_in << "<span class='notice'>You feel a sudden surge of energy!</span>"
 	imp_in.SetStunned(0)
@@ -56,6 +57,7 @@
 	uses = 2
 
 /obj/item/weapon/implant/emp/activate()
-	if (src.uses < 1)	return 0
+	if (src.uses < 1)
+		return 0
 	src.uses--
 	empulse(imp_in, 3, 5)

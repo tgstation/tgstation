@@ -32,12 +32,12 @@ Notes:
 
 
 /datum/tooltip
-	var = client/owner
-	var = control = "mainwindow.tooltip"
-	var = file = 'code/modules/tooltip/tooltip.html'
-	var = showing = 0
-	var = queueHide = 0
-	var = init = 0
+	var/client/owner
+	var/control = "mainwindow.tooltip"
+	var/file = 'code/modules/tooltip/tooltip.html'
+	var/showing = 0
+	var/queueHide = 0
+	var/init = 0
 
 
 /datum/tooltip/New(client/C)

@@ -234,7 +234,8 @@ Sorry Giacom. Please don't be mad :(
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates() //we update our health right away.
 
@@ -242,12 +243,14 @@ Sorry Giacom. Please don't be mad :(
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	oxyloss = amount
 	handle_regular_status_updates()
 
@@ -255,12 +258,14 @@ Sorry Giacom. Please don't be mad :(
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setToxLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	toxloss = amount
 	handle_regular_status_updates()
 
@@ -268,7 +273,8 @@ Sorry Giacom. Please don't be mad :(
 	return fireloss
 
 /mob/living/proc/adjustFireLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates() //we update our health right away.
 
@@ -276,12 +282,14 @@ Sorry Giacom. Please don't be mad :(
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	cloneloss = amount
 	handle_regular_status_updates()
 
@@ -289,12 +297,14 @@ Sorry Giacom. Please don't be mad :(
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	brainloss = amount
 	handle_regular_status_updates() //we update our health right away.
 
@@ -302,11 +312,13 @@ Sorry Giacom. Please don't be mad :(
 	return staminaloss
 
 /mob/living/proc/adjustStaminaLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
 
 /mob/living/proc/setStaminaLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	staminaloss = amount
 
 /mob/living/proc/getMaxHealth()

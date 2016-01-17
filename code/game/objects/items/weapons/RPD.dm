@@ -183,7 +183,8 @@ var/global/list/RPD_recipes=list(
 	return "<a href=\"?src=\ref[src];setdir=[_dir];flipped=[flipped]\" title=\"[title]\"[selected]\"><img src=\"[pic]\" /></a>"
 
 /obj/item/weapon/pipe_dispenser/proc/show_menu(mob/user)
-	if(!user || !src)	return 0
+	if(!user || !src)
+		return 0
 	var/dat = {"<h2>Type</h2>
 <b>Utilities:</b>
 <ul>"}

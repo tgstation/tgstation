@@ -74,7 +74,8 @@
 	return ..()
 
 /turf/simulated/assume_air(datum/gas_mixture/giver)
-	if(!giver)	return 0
+	if(!giver)
+		return 0
 	var/datum/gas_mixture/receiver = air
 	if(istype(receiver))
 

@@ -158,12 +158,14 @@
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 			if("r_leg")
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-	if(update)	update_damage_overlays(0)
+	if(update)
+		update_damage_overlays(0)
 
 	..()
 
 /mob/living/carbon/human/blob_act()
-	if(stat == DEAD)	return
+	if(stat == DEAD)
+		return
 	show_message("<span class='userdanger'>The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
