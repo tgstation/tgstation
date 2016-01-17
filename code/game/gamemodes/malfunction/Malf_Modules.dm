@@ -345,7 +345,7 @@
 
 	if (istype(M, /obj/machinery))
 		if(!M.can_be_overridden())
-			src << "Cant override this device."
+			src << "Can't override this device."
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
