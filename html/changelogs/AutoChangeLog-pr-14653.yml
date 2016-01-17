@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - bugfix: "You can once again repair a hacked APC by using an APC frame on it instead of welding it off the wall, at the same stage as you'd weld it off the wall."
