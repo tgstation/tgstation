@@ -8,7 +8,6 @@ buttoncolor(selector, color)
     background-color: lighten(color, button-lighten-hover)
     outline: 0
 
-
 span.button
   @extend $fontReset
   display: inline-block
@@ -26,6 +25,9 @@ span.button
   buttoncolor(selected, button-color-selected)
   buttoncolor(caution, button-color-caution)
   buttoncolor(danger, button-color-danger)
+
+  & + span:not(.buttoninfo)
+    margin-left: 5px
 
   &.gridable
     width: 125px

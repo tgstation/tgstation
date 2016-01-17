@@ -13,18 +13,6 @@ var/const/WIRE_REMOTE_RX = 64		// remote recv functions
 var/const/WIRE_REMOTE_TX = 128	// remote trans status
 var/const/WIRE_BEACON_RX = 256	// beacon ping recv
 
-/datum/wires/mulebot/CanUse(mob/living/L)
-	var/mob/living/simple_animal/bot/mulebot/M = holder
-	if(M.open)
-		return 1
-	return 0
-
-// So the wires do not open a new window, handle the interaction ourselves.
-/datum/wires/mulebot/Interact(mob/living/user)
-	if(CanUse(user))
-		var/mob/living/simple_animal/bot/mulebot/M = holder
-		M.update_controls()
-
 /datum/wires/mulebot/UpdatePulsed(index)
 	switch(index)
 		if(WIRE_POWER1, WIRE_POWER2)

@@ -457,7 +457,7 @@
 		else if(stat & (BROKEN|MAINT))
 			user << "<span class='warning'>Nothing happens!</span>"
 		else
-			if(src.allowed(usr) && !isWireCut(APC_WIRE_IDSCAN))
+			if(src.allowed(usr) && !wires.IsIndexCut(APC_WIRE_IDSCAN))
 				locked = !locked
 				user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>"
 				update_icon()
@@ -716,10 +716,6 @@
 //		if (area.name == "AI Chamber")
 //			world << "[area.power_equip]"
 	area.power_change()
-
-/obj/machinery/power/apc/proc/isWireCut(wireIndex)
-	return wires.IsIndexCut(wireIndex)
-
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(IsAdminGhost(user))
