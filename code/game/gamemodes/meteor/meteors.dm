@@ -185,7 +185,7 @@
 /obj/effect/meteor/dust
 	name = "space dust"
 	icon_state = "dust"
-	pass_flags = PASSTABLE | PASSGRILLE
+	pass_flags = PASSTABLE
 	hits = 1
 	hitpwr = 3
 	meteorsound = 'sound/weapons/throwtap.ogg'
