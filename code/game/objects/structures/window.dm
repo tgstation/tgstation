@@ -439,6 +439,14 @@
 /obj/structure/window/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
 
+/obj/structure/window/CanAStarPass(ID, to_dir)
+	if(!density)
+		return 1
+	if((dir == SOUTHWEST) || (dir == to_dir))
+		return 0
+
+	return 1
+
 /obj/structure/window/reinforced
 	name = "reinforced window"
 	icon_state = "rwindow"
