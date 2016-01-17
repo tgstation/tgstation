@@ -28,10 +28,6 @@
 	var/list/records = null
 	var/frame_desc = null
 
-/obj/item/weapon/circuitboard/large_tank_control
-	name = "circuit board (Large Tank Control)"
-	build_path = /obj/machinery/computer/general_air_control/large_tank_control
-	origin_tech = "programming=2;engineering=3;materials=2"
 /obj/item/weapon/circuitboard/turbine_computer
 	name = "circuit board (Turbine Computer)"
 	build_path = /obj/machinery/computer/turbine_computer
@@ -104,12 +100,13 @@
 /*/obj/item/weapon/circuitboard/atmospheresiphonswitch
 	name = "circuit board (Atmosphere siphon control)"
 	build_path = /obj/machinery/computer/atmosphere/siphonswitch*/
-/obj/item/weapon/circuitboard/air_management
-	name = "circuit board (Atmospheric monitor)"
-	build_path = /obj/machinery/computer/general_air_control
-/obj/item/weapon/circuitboard/injector_control
-	name = "circuit board (Injector control)"
-	build_path = /obj/machinery/computer/general_air_control/fuel_injection
+/obj/item/weapon/circuitboard/atmos_control
+	name = "circuit board (Atmospheric Monitor)"
+	build_path = /obj/machinery/computer/atmos_control
+/obj/item/weapon/circuitboard/atmos_control/tank
+	name = "circuit board (Tank Control)"
+	build_path = /obj/machinery/computer/atmos_control/tank
+	origin_tech = "programming=2;engineering=3;materials=2"
 /obj/item/weapon/circuitboard/atmos_alert
 	name = "circuit board (Atmospheric Alert)"
 	build_path = /obj/machinery/computer/atmos_alert

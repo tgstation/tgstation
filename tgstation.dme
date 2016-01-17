@@ -428,7 +428,7 @@
 #include "code\game\machinery\airlock_control.dm"
 #include "code\game\machinery\alarm.dm"
 #include "code\game\machinery\announcement_system.dm"
-#include "code\game\machinery\atmo_control.dm"
+#include "code\game\machinery\atmos_control.dm"
 #include "code\game\machinery\autolathe.dm"
 #include "code\game\machinery\Beacon.dm"
 #include "code\game\machinery\buttons.dm"

@@ -161,12 +161,14 @@ var/global/mulebot_count = 0
 	if(open && !istype(user, /mob/living/silicon/ai))
 		wires.Interact(user)
 	else
+		if(!wires.RemoteRX() && istype(user, /mob/living/silicon/ai))
+			return
 		ui_interact(user)
 
 /mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "mulebot", name, 600, 375, master_ui, state)
 		ui.open()
 
