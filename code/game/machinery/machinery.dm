@@ -265,7 +265,7 @@ Class Procs:
 	if(check_power && stat & NOPOWER)
 		user << "<span class='danger'>\The [src] seems unpowered.</span>"
 		return 1
-	if(!interact_offline && stat & (BROKEN|MAINT))
+	if(!interact_offline && (stat & (BROKEN|MAINT)))
 		user << "<span class='danger'>\The [src] seems broken.</span>"
 		return 1
 	add_fingerprint(user)
@@ -275,7 +275,6 @@ Class Procs:
 	return 0
 
 /obj/machinery/interact(mob/user)
-	add_fingerprint(user)
 	ui_interact(user)
 
 /obj/machinery/CheckParts()
