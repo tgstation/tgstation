@@ -34,6 +34,8 @@
 				to_chat(usr, "<span class='warning'>These are sacred grounds, you cannot go there!</span>")
 			else
 				forceEnter(targetloc)
+				if(locked_to)
+					manual_stop_follow(locked_to)
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
 	if(client.buildmode)

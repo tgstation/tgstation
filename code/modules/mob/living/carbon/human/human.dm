@@ -1372,8 +1372,9 @@
 		if(src.species.abilities)	src.verbs -= species.abilities
 		if(species.language)
 			remove_language(species.language)
+	var/datum/species/S = all_species[new_species_name]
 
-	src.species = all_species[new_species_name]
+	src.species = new S.type
 
 	if(species.language)
 		add_language(species.language)

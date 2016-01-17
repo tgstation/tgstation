@@ -33,9 +33,9 @@
 	if(istype(W,/obj/item/clothing/head/hardhat/red) && stage == 2)
 		to_chat(user,"<span class='notice'>You finish the ghetto helmet</span>")
 		var/obj/ghetto = new /obj/item/clothing/head/helmet/space/rig/ghettorig (src.loc)
-		user.put_in_hands(ghetto)
 		qdel(src)
 		qdel(W)
+		user.put_in_hands(ghetto)
 
 
 //Plague Dr suit can be found in clothing/suits/bio.dm

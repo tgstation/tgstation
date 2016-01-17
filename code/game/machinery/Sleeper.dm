@@ -624,11 +624,11 @@
 	if(!emagged)
 		emagged = 1
 		connected.emagged = 1
-		to_chat(user, "<span class='warning'>You short out the safety features of \the [src]</span>")
+		to_chat(user, "<span class='warning'>You short out the safety features of \the [src], and feel like a MAN!	</span>")
 		available_options = list("Thermoregulate" = 50,"Rare" = 500,"Medium" = 600,"Well Done" = 700)
 		update_icon()
-		connected.name = "MANCROWAVE"
-		name = "MANCROWAVE"
+		connected.name = "THE MANCROWAVE"
+		name = "THE MANCROWAVE"
 		return 1
 	return -1
 
@@ -751,10 +751,15 @@
 	if(!istype(connected.occupant,/mob/living/carbon))
 		connected.go_out()
 		return
-	if(!(world.timeofday <= connected.target_time && connected.on)) //If we're currently still cooking
+	if(!(world.timeofday >= connected.target_time && connected.on)) //If we're currently still cooking
+		var/targettemperature = T0C+32+(connected.available_options["[connected.setting]"]/10)
 		var/timefraction = (connected.available_options["[connected.setting]"])/250
-		var/tempdifference = (T0C+32+(connected.available_options["[connected.setting]"]/10) - connected.occupant.bodytemperature)
-		connected.occupant.bodytemperature += tempdifference*(timefraction)
+		var/tempdifference = abs(targettemperature - connected.occupant.bodytemperature))
+		if(bodytemperature < targettemperature)
+			connected.occupant.bodytemperature += tempdifference*(timefraction)
+		else
+			connected.occupant.bodytemperature -= tempdifference*(timefraction)
+
 	else
 		switch(connected.setting)
 			if("Thermoregulate")
