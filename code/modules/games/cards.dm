@@ -92,7 +92,7 @@
 		return ..()
 
 /obj/item/weapon/deck/proc/dealTo(mob/living/target, mob/living/source)
-	if (!src.cards.len)
+	if (!cards.len)
 		source.show_message("There are no cards in the deck.")
 		return
 
@@ -193,10 +193,10 @@
 	. = ..()
 
 	if((!concealed || src.loc == usr) && cards.len)
-		usr.show_message("It contains: ")
+		usr.show_message("It contains: ", 1)
 
 		for (var/datum/playingcard/card in cards)
-			usr.show_message("The [card.name].")
+			usr.show_message("The [card.name].", 1)
 
 /obj/item/weapon/hand/proc/update_conceal()
 	if (src.concealed)

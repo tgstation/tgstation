@@ -90,8 +90,7 @@ Doesn't work on other aliens/AI.*/
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
 		src << "There's already a weed node here."
 		return 0
-	for(var/mob/O in viewers(user, null))
-		O.show_message(text("<span class='alertalien'>[user] has planted some alien weeds!</span>"), 1)
+	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
 	new/obj/structure/alien/weeds/node(user.loc)
 	return 1
 
@@ -241,7 +240,7 @@ Doesn't work on other aliens/AI.*/
 		user << "<span class='danger'>There is already a resin structure there.</span>"
 		return 0
 	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
-	if(!choice) 
+	if(!choice)
 		return 0
 	if (!cost_check(check_turf,user))
 		return 0

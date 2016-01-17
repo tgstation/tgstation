@@ -1,33 +1,19 @@
-#define FILTER_NOTHING			-1
-#define FILTER_PLASMA			0
-#define FILTER_OXYGEN			1
-#define FILTER_NITROGEN			2
-#define FILTER_CARBONDIOXIDE	3
-#define FILTER_NITROUSOXIDE		4
+#define FILTER_NOTHING			""
+//very cleverly using the gas IDs so as to simplify a bunch of logic
+#define FILTER_PLASMA			"plasma"
+#define FILTER_OXYGEN			"o2"
+#define FILTER_NITROGEN			"n2"
+#define FILTER_CARBONDIOXIDE	"co2"
+#define FILTER_NITROUSOXIDE		"n2o"
 
 /obj/machinery/atmospherics/components/trinary/filter
+	name = "gas filter"
 	icon_state = "filter_off"
 	density = 0
-
-	name = "gas filter"
-
 	can_unwrench = 1
-
 	var/on = 0
-
 	var/target_pressure = ONE_ATMOSPHERE
-
-	var/filter_type = 0
-/*
-Filter types:
--1: Nothing
- 0: Plasma: Plasma Toxin, Oxygen Agent B
- 1: Oxygen: Oxygen ONLY
- 2: Nitrogen: Nitrogen ONLY
- 3: Carbon Dioxide: Carbon Dioxide ONLY
- 4: Sleeping Agent (N2O)
-*/
-
+	var/filter_type = FILTER_PLASMA
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 
@@ -108,39 +94,17 @@ Filter types:
 		var/datum/gas_mixture/filtered_out = new
 		filtered_out.temperature = removed.temperature
 
-		switch(filter_type)
-			if(FILTER_PLASMA)
-				filtered_out.toxins = removed.toxins
-				removed.toxins = 0
-
-				if(removed.trace_gases.len>0)
-					for(var/datum/gas/trace_gas in removed.trace_gases)
-						if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-							removed.trace_gases -= trace_gas
-							filtered_out.trace_gases += trace_gas
-
-			if(FILTER_OXYGEN)
-				filtered_out.oxygen = removed.oxygen
-				removed.oxygen = 0
-
-			if(FILTER_NITROGEN)
-				filtered_out.nitrogen = removed.nitrogen
-				removed.nitrogen = 0
-
-			if(FILTER_CARBONDIOXIDE)
-				filtered_out.carbon_dioxide = removed.carbon_dioxide
-				removed.carbon_dioxide = 0
-
-			if(FILTER_NITROUSOXIDE)
-				if(removed.trace_gases.len>0)
-					for(var/datum/gas/trace_gas in removed.trace_gases)
-						if(istype(trace_gas, /datum/gas/sleeping_agent))
-							removed.trace_gases -= trace_gas
-							filtered_out.trace_gases += trace_gas
-
-			else
-				filtered_out = null
-
+		if(filter_type && removed.gases[filter_type])
+			filtered_out.assert_gas(filter_type)
+			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
+			removed.gases[filter_type][MOLES] = 0
+			if(filter_type == FILTER_PLASMA && removed.gases["agent_b"])
+				filtered_out.assert_gas("agent_b")
+				filtered_out.gases["agent_b"][MOLES] = removed.gases["agent_b"][MOLES]
+				removed.gases["agent_b"][MOLES] = 0
+			removed.garbage_collect()
+		else
+			filtered_out = null
 
 		air2.merge(filtered_out)
 		air3.merge(removed)
@@ -187,7 +151,7 @@ Filter types:
 
 	switch(action)
 		if("power")
-			on=!on
+			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 		if("pressure")
 			switch(params["pressure"])
@@ -197,7 +161,7 @@ Filter types:
 					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", target_pressure)))
 			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 		if("filter")
-			src.filter_type = text2num(params["mode"])
+			filter_type = params["mode"]
 			var/filtering_name = "nothing"
 			switch(filter_type)
 				if(FILTER_PLASMA)

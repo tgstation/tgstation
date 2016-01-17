@@ -1,5 +1,3 @@
-/mob/living/silicon/say(message)
-	return ..(message, "R")
 
 /mob/living/silicon/get_spans()
 	return ..() | SPAN_ROBOT

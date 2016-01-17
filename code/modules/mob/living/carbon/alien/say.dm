@@ -1,5 +1,5 @@
 /mob/living/carbon/alien/say(message)
-	. = ..(message, "A")
+	. = ..()
 	if(.)
 		playsound(loc, "hiss", 25, 1, 1) //erp just isn't the same without sound feedback
 

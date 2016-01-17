@@ -113,6 +113,9 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 /datum/game_mode/proc/forge_changeling_objectives(datum/mind/changeling, var/team_mode = 0)
 	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
+	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
+	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
+
 	var/escape_objective_possible = TRUE
 
 	//if there's a team objective, check if it's compatible with escape objectives
@@ -121,7 +124,63 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			escape_objective_possible = FALSE
 			break
 
-	generate_objectives(changeling, 4, escape_objective_possible)
+	var/datum/objective/absorb/absorb_objective = new
+	absorb_objective.owner = changeling
+	absorb_objective.gen_amount_goal(6, 8)
+	changeling.objectives += absorb_objective
+
+	if(prob(60))
+		var/datum/objective/steal/steal_objective = new
+		steal_objective.owner = changeling
+		steal_objective.find_target()
+		changeling.objectives += steal_objective
+
+	var/list/active_ais = active_ais()
+	if(active_ais.len && prob(100/joined_player_list.len))
+		var/datum/objective/destroy/destroy_objective = new
+		destroy_objective.owner = changeling
+		destroy_objective.find_target()
+		changeling.objectives += destroy_objective
+	else
+		if(prob(70))
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = changeling
+			if(team_mode) //No backstabbing while in a team
+				kill_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+			else
+				kill_objective.find_target()
+			changeling.objectives += kill_objective
+		else
+			var/datum/objective/maroon/maroon_objective = new
+			maroon_objective.owner = changeling
+			if(team_mode)
+				maroon_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+			else
+				maroon_objective.find_target()
+			changeling.objectives += maroon_objective
+
+			if (!(locate(/datum/objective/escape) in changeling.objectives) && escape_objective_possible)
+				var/datum/objective/escape/escape_with_identity/identity_theft = new
+				identity_theft.owner = changeling
+				identity_theft.target = maroon_objective.target
+				identity_theft.update_explanation_text()
+				changeling.objectives += identity_theft
+				escape_objective_possible = FALSE
+
+	if (!(locate(/datum/objective/escape) in changeling.objectives) && escape_objective_possible)
+		if(prob(50))
+			var/datum/objective/escape/escape_objective = new
+			escape_objective.owner = changeling
+			changeling.objectives += escape_objective
+		else
+			var/datum/objective/escape/escape_with_identity/identity_theft = new
+			identity_theft.owner = changeling
+			if(team_mode)
+				identity_theft.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+			else
+				identity_theft.find_target()
+			changeling.objectives += identity_theft
+		escape_objective_possible = FALSE
 
 
 
