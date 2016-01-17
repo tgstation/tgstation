@@ -422,9 +422,7 @@ var/const/GALOSHES_DONT_HELP = 4
 
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
-	if(istype(I, /obj/item/weapon/restraints))
-		var/obj/item/weapon/restraints/R = I
-		breakouttime = R.breakouttime
+	breakouttime = I.breakouttime
 	var/displaytime = breakouttime / 600
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
@@ -435,7 +433,7 @@ var/const/GALOSHES_DONT_HELP = 4
 			visible_message("<span class='danger'>[src] manages to remove [I]!</span>")
 			src << "<span class='notice'>You successfully remove [I].</span>"
 
-			if(handcuffed)
+			if(I == handcuffed)
 				handcuffed.loc = loc
 				handcuffed.dropped(src)
 				handcuffed = null
@@ -443,11 +441,13 @@ var/const/GALOSHES_DONT_HELP = 4
 					buckled.unbuckle_mob()
 				update_inv_handcuffed()
 				return
-			if(legcuffed)
+			if(I == legcuffed)
 				legcuffed.loc = loc
 				legcuffed.dropped()
 				legcuffed = null
 				update_inv_legcuffed()
+				return
+			return 1
 		else
 			src << "<span class='warning'>You fail to remove [I]!</span>"
 
@@ -462,13 +462,15 @@ var/const/GALOSHES_DONT_HELP = 4
 			src << "<span class='notice'>You successfully break [I].</span>"
 			qdel(I)
 
-			if(handcuffed)
+			if(I == handcuffed)
 				handcuffed = null
 				update_inv_handcuffed()
 				return
-			else
+			else if(I == legcuffed)
 				legcuffed = null
 				update_inv_legcuffed()
+				return
+			return 1
 		else
 			src << "<span class='warning'>You fail to break [I]!</span>"
 
