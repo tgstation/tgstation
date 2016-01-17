@@ -1,6 +1,5 @@
 var/list/world_uplinks = list()
 
-
 /**
  * Uplinks
  *
