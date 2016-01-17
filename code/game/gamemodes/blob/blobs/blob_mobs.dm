@@ -160,6 +160,8 @@
 	force_threshold = 10
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 1
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 8
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	if(isliving(target))
