@@ -92,8 +92,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
-
-	usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
+	. = get_callproc_returnval(returnval)
+	if(.)
+		usr << .
 	feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/callproc_datum(A as null|area|mob|obj|turf)
@@ -122,7 +123,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	feedback_add_details("admin_verb","DPC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	var/returnval = call(A,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
-	usr << "<span class='notice'>[procname] returned: [returnval ? returnval : "null"]</span>"
+	. = get_callproc_returnval(returnval)
+	if(.)
+		usr << .
 
 
 
@@ -181,6 +184,23 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if("Marked datum")
 				lst += holder.marked_datum
 	return lst
+
+
+/client/proc/get_callproc_returnval(returnval)
+	. = ""
+	if(islist(returnval))
+		var/list/returnedlist = returnval
+		. = "<font color='blue'>"
+		if(returnedlist.len)
+			. += "[procname] returned a list:"
+			for(var/elem in returnedlist)
+				. += "[elem]"
+		else
+			. = "[procname] returned an empty list"
+		. += "</font>"
+
+	else
+		. = "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
 
 
 /client/proc/Cell()
