@@ -1,5 +1,5 @@
 <ui-display title='{{data.sensors.length == 1 ? data.sensors[0].long_name : null}}'> {{! When there is just one entry make it full size. }}
-  {{#each data.sensors}}
+  {{#each adata.sensors}}
     <ui-subdisplay title='{{data.sensors.length > 1 ? long_name : null}}'>
       <ui-section label='Pressure'>
 		<span>{{Math.fixed(pressure, 2)}} kPa</span>

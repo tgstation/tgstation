@@ -10,13 +10,13 @@
       {{data.inputting ? "Injecting": "Off"}}</ui-button>
   </ui-section>
   <ui-section label='Input Rate'>
-    <span>{{data.inputRate}} L/s</span>
+    <span>{{Math.fixed(adata.inputRate)}} L/s</span>
   </ui-section>
   <ui-section label='Output Regulator'>
     <ui-button icon='{{data.outputting ? "power-off" : "close"}}' style='{{data.outputting ? "selected" : null}}' action='output'>
       {{data.outputting ? "Open": "Closed"}}</ui-button>
   </ui-section>
   <ui-section label='Output Pressure'>
-    <ui-button icon='pencil' action='output_pressure'>{{data.outputPressure}} kPa</ui-button>
+    <ui-button icon='pencil' action='output_pressure'>{{Math.fixed(adata.outputPressure)}} kPa</ui-button>
   </ui-section>
 </ui-display>

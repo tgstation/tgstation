@@ -13,9 +13,11 @@ span.button
   display: inline-block
   vertical-align: middle
   height: 20px
-  line-height: 19px
+  line-height: @height - 3px
   padding: 0 5px
   white-space: nowrap
+
+  border: 1px solid button-color-border
 
   .fa
     padding-right: 2px

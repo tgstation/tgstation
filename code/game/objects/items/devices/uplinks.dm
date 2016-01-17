@@ -1,13 +1,13 @@
 var/list/world_uplinks = list()
 
 
-/* How to create an uplink in 3 easy steps!
-
- 1. All obj/item 's have a hidden_uplink var. By default it's null. Give the item one with "new(src)", it must be in it's contents. Feel free to add "uses".
- 2. Code in the triggers. Use check_trigger for this; the var/value is the value that will be compared with the var/target. If they are equal it will activate the menu.
- 3. If you want the menu to stay until the users locks his uplink, add an active_uplink_check(mob/user as mob) in your interact/attack_hand proc.
-	Then check if it's true, if true return. This will stop the normal menu appearing and will instead show the uplink menu.
-*/
+/**
+ * Uplinks
+ *
+ * All obj/item 's have a hidden_uplink var. By default it's null. Give the item one with 'new(src') (it must be in it's contents). Then add 'uses.'
+ * Use whatever conditionals you want to check that the user has an uplink, and then call interact() on their uplink.
+ * You might also want the uplink menu to open if active. Check if the uplink is 'active' and then interact() with it.
+**/
 /obj/item/device/uplink
 	name = "syndicate uplink"
 	desc = "There is something wrong if you're examining this."
@@ -28,9 +28,11 @@ var/list/world_uplinks = list()
 	return ..()
 
 /obj/item/device/uplink/attack_self(mob/user)
-	trigger(user)
+	interact(user)
 
 /obj/item/device/uplink/interact(mob/user)
+	if(!active)
+		active = TRUE
 	ui_interact(user)
 
 /obj/item/device/uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
@@ -45,22 +47,22 @@ var/list/world_uplinks = list()
 	var/list/data = list()
 	data["uses"] = uses
 
-	var/list/buyable = list()
-	var/list/buyable_items = get_uplink_items(mode_override)
-	var/list/category
-	for(var/category_name in buyable_items)
-		category = list()
-		category["name"] = category_name
-		var/i
-		for(var/datum/uplink_item/item in buyable_items[category_name])
-			category["items"] += list(list(
-				"name" = item.name,
-				"cost" = item.cost,
-				"desc" = item.desc,
-				"index" = ++i
+	var/list/uplink_items = get_uplink_items(mode_override)
+	data["buyable"] = list()
+	for(var/category in uplink_items)
+		var/list/cat = list(
+			"name" = category,
+			"items" = list(),
+		)
+		for(var/item in uplink_items[category])
+			var/datum/uplink_item/I = uplink_items[category][item]
+			cat["items"] += list(list(
+				"name" = I.name,
+				"category" = I.category,
+				"cost" = I.cost,
+				"desc" = I.desc,
 			))
-		buyable[++buyable.len] = category
-	data["buyable"] = buyable
+		data["buyable"] += list(cat)
 	return data
 
 /obj/item/device/uplink/ui_act(action, params)
@@ -69,12 +71,12 @@ var/list/world_uplinks = list()
 
 	switch(action)
 		if("buy")
+			var/list/uplink_items = get_uplink_items(mode_override)
 			var/category = params["category"]
-			var/index = text2num(params["index"])
-
-			var/list/buyable_items = get_uplink_items(mode_override)
-			var/datum/uplink_item/I = buyable_items[category][index]
-			I.buy(src, usr)
+			var/item = params["item"]
+			var/datum/uplink_item/I = uplink_items[category][item]
+			if(I)
+				I.buy(src, usr)
 		if("lock")
 			active = FALSE
 			SStgui.close_uis(src)
@@ -83,19 +85,6 @@ var/list/world_uplinks = list()
 
 /obj/item/device/uplink/ui_host()
 	return loc
-
-// Directly trigger an uplink.
-/obj/item/device/uplink/proc/trigger(mob/user)
-	if(!active)
-		active = TRUE
-	interact(user)
-
-// Helper to try and unlock/use an uplink.
-/obj/item/device/uplink/proc/check_trigger(mob/user, value, target)
-	if(value == target)
-		trigger(user)
-		return 1
-	return 0
 
 // Refund certain items by hitting the uplink with it.
 /obj/item/device/radio/uplink/attackby(obj/item/weapon/W, mob/user, params)
@@ -109,15 +98,6 @@ var/list/world_uplinks = list()
 				qdel(W)
 				return
 
-// Helper to open an uplink if present and active.
-/obj/item/proc/active_uplink_check(mob/user as mob)
-	// Activates the uplink if it's active
-	if(src.hidden_uplink)
-		if(src.hidden_uplink.active)
-			src.hidden_uplink.trigger(user)
-			return 1
-	return 0
-
 // PRESET UPLINKS
 // A collection of preset uplinks.
 //
@@ -130,14 +110,14 @@ var/list/world_uplinks = list()
 
 /obj/item/device/radio/uplink/attack_self(mob/user)
 	if(hidden_uplink)
-		hidden_uplink.trigger(user)
+		hidden_uplink.interact(user)
 
 /obj/item/device/multitool/uplink/New()
 	hidden_uplink = new(src)
 
 /obj/item/device/multitool/uplink/attack_self(mob/user)
 	if(hidden_uplink)
-		hidden_uplink.trigger(user)
+		hidden_uplink.interact(user)
 
 /obj/item/device/radio/headset/uplink
 	traitor_frequency = 1445

@@ -130,7 +130,8 @@
 	if(!on)
 		return
 
-	if(active_uplink_check(user))
+	if(hidden_uplink && hidden_uplink.active)
+		hidden_uplink.interact(user)
 		return
 
 	var/dat = ""
@@ -192,10 +193,10 @@
 			if (!freerange || (frequency < 1200 || frequency > 1600))
 				new_frequency = sanitize_frequency(new_frequency, maxf)
 			set_frequency(new_frequency)
-			if(hidden_uplink)
-				if(hidden_uplink.check_trigger(usr, frequency, traitor_frequency))
-					usr << browse(null, "window=radio")
-					return
+			if(hidden_uplink && (frequency == traitor_frequency))
+				hidden_uplink.interact(usr)
+				usr << browse(null, "window=radio")
+				return
 
 	else if (href_list["talk"])
 		broadcasting = text2num(href_list["talk"])
