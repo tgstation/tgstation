@@ -804,6 +804,7 @@
 						malfai.malfhack = null
 						malfai.malfhacking = 0
 						locked = 1
+						malfhack = 1
 						malfai.malf_picker.processing_time += 10
 						if(usr:parent)
 							src.malfai = usr:parent
