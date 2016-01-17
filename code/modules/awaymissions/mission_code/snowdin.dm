@@ -220,6 +220,9 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "walkietalkie"
 
+/obj/item/device/uplink/old/ui_host()
+	return src
+
 /obj/effect/landmark/corpse/syndicatesoldier/coldres
 	name = "Syndicate Snow Operative"
 	corpseuniform = /obj/item/clothing/under/syndicate/coldres

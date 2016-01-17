@@ -1,0 +1,17 @@
+<ui-display title='Uplink' button>
+  {{#partial button}}
+    <ui-button icon='lock' action='lock'>Lock</ui-button>
+  {{/partial}}
+  <ui-section label='Telecrystals'>
+    <span class='{{data.uses > 0 ? "good" : "bad"}}'>{{data.uses}} TC</span>
+  </ui-section>
+</ui-display>
+{{#each data.buyable}}
+  <ui-display title='{{name}}'>
+    {{#each items}}
+      <ui-section label='{{name}}'>
+        <ui-button action='buy' params='{"category": "{{../../name}}", "index": {{index}}}'>{{cost}} TC</ui-button>
+      </ui-section>
+    {{/each}}
+  </ui-display>
+{{/each}}
