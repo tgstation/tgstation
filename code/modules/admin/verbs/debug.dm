@@ -92,7 +92,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
-	. = get_callproc_returnval(returnval)
+	. = get_callproc_returnval(returnval, procname)
 	if(.)
 		usr << .
 	feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -123,7 +123,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	feedback_add_details("admin_verb","DPC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	var/returnval = call(A,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
-	. = get_callproc_returnval(returnval)
+	. = get_callproc_returnval(returnval,procname)
 	if(.)
 		usr << .
 
@@ -186,7 +186,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	return lst
 
 
-/client/proc/get_callproc_returnval(returnval)
+/client/proc/get_callproc_returnval(returnval,procname)
 	. = ""
 	if(islist(returnval))
 		var/list/returnedlist = returnval
