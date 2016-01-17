@@ -349,21 +349,9 @@
 				data["modes"] += list(list("name" = "Flood - Shuts off scrubbers and opens vents",	"mode" = AALARM_MODE_FLOOD,			"selected" = mode == AALARM_MODE_FLOOD, 		"danger" = 1))
 		if(AALARM_SCREEN_SENSORS)
 			var/datum/tlv/selected
-			var/list/thresholds = list()
 
-			var/list/gas_names = list(
-				"oxygen"        	= "Oxygen",
-				"nitrogen"			= "Nitrogen",
-				"carbon dioxide"	= "Carbon Dioxide",
-				"plasma"        	= "Toxin",
-				"other"         	= "Other")
-			for (var/g in gas_names)
-				thresholds += list(list("name" = gas_names[g], "settings" = list()))
-				selected = TLV[g]
-				thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = "min2", "selected" = selected.min2))
-				thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = "min1", "selected" = selected.min1))
-				thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = "max1", "selected" = selected.max1))
-				thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = "max2", "selected" = selected.max2))
+
+			var/list/thresholds = list()
 
 			selected = TLV["pressure"]
 			thresholds += list(list("name" = "Pressure", "settings" = list()))
@@ -379,6 +367,15 @@
 			thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max1", "selected" = selected.max1))
 			thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max2", "selected" = selected.max2))
 
+			for (var/gas_id in meta_gas_info)
+				if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
+					continue
+				selected = TLV[gas_id]
+				thresholds += list(list("name" = meta_gas_info[gas_id][2], "settings" = list()))
+				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min2", "selected" = selected.min2))
+				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min1", "selected" = selected.min1))
+				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max1", "selected" = selected.max1))
+				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max2", "selected" = selected.max2))
 
 			data["thresholds"] = thresholds
 
