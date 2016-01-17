@@ -261,13 +261,15 @@ About the new airlock wires panel:
 				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
-			if(lights)
+			if(lights && hasPower())
 				if(locked)
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
 
 		if(AIRLOCK_DENY)
+			if(!hasPower())
+				return
 			frame_overlay = get_airlock_overlay("closed", icon)
 			if(airlock_material)
 				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
@@ -297,7 +299,7 @@ About the new airlock wires panel:
 				filling_overlay = get_airlock_overlay("[airlock_material]_closing", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_closing", icon)
-			if(lights)
+			if(lights && hasPower())
 				lights_overlay = get_airlock_overlay("lights_closing", overlays_file)
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
@@ -317,7 +319,7 @@ About the new airlock wires panel:
 				filling_overlay = get_airlock_overlay("[airlock_material]_opening", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_opening", icon)
-			if(lights)
+			if(lights && hasPower())
 				lights_overlay = get_airlock_overlay("lights_opening", overlays_file)
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
