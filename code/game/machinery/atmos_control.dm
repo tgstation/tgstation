@@ -146,9 +146,9 @@
 					name = "Distribution and Waste Monitor"
 					set_frequency(1443)
 					sensors = list(
-						"air_in_meter" = "Mixed Air In",
-						"air_sensor" = "Mixed Air Supply Tank",
-						"air_out_meter" = "Mixed Air Out",
+						"air_in_meter" = "Air In",
+						"air_sensor" = "Air Tank",
+						"air_out_meter" = "Air Out",
 						"distro_meter" = "Distribution Loop",
 						"waste_meter" = "Waste Loop"
 					)
@@ -156,12 +156,12 @@
 					name = "Tank Monitor"
 					set_frequency(1441)
 					sensors = list(
-						"n2_sensor" = "Nitrogen",
-						"o2_sensor" = "Oxygen",
-						"co2_sensor" = "Carbon Dioxide",
-						"tox_sensor" = "Toxins",
-						"n2o_sensor" = "Nitrous Oxide",
-						"mix_sensor" = "Mix"
+						"n2_sensor" = "Nitrogen Tank",
+						"o2_sensor" = "Oxygen Tank",
+						"co2_sensor" = "Carbon Dioxide Tank",
+						"tox_sensor" = "Toxins Tank",
+						"n2o_sensor" = "Nitrous Oxide Tank",
+						"mix_sensor" = "Mix Tank"
 					)
 	return 1
 
