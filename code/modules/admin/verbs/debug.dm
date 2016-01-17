@@ -192,9 +192,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/list/returnedlist = returnval
 		. = "<font color='blue'>"
 		if(returnedlist.len)
-			. += "[procname] returned a list:"
-			for(var/elem in returnedlist)
-				. += "[elem]"
+			var/assoc_check = returnedlist[1]
+			if(istext(assoc_check) && (returnedlist[assoc_check] != null))
+				. += "[procname] returned an associative list:"
+				for(var/key in returnedlist)
+					. += "[key] = [returnedlist[key]]"
+				
+			else
+				. += "[procname] returned a list:"
+				for(var/elem in returnedlist)
+					. += "[elem]"
 		else
 			. = "[procname] returned an empty list"
 		. += "</font>"
