@@ -1,4 +1,0 @@
-author: MrStonedOne
-delete-after: True
-changes: 
-  - bugfix: "Control clicking on a turf now un-pulls"
