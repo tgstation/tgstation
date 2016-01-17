@@ -178,11 +178,10 @@
 
 	playsound(loc, 'sound/effects/bamf.ogg', 50, 1)
 
-	var/mob/Dlast = get_mob_by_ckey(chem_grenade.fingerprintslast)
 	var/turf/DT = get_turf(src)
 	var/area/DA = get_area(DT)
-	message_admins("A grenade, last touched by key_name_admin(Dlast)]<A HREF='?_src_=holder;adminmoreinfo=\ref[Dlast]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Dlast]'>FLW</A>), detonated at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[DT.x];Y=[DT.y];Z=[DT.z]'>[DA.name] (JMP)</a>.")
-	log_game("A grenade, last touched by [key_name(last)], detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")
+	message_admins("A grenade detonated at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[DT.x];Y=[DT.y];Z=[DT.z]'>[DA.name] (JMP)</a>.")
+	log_game("A grenade detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")
 
 	update_mob()
 
