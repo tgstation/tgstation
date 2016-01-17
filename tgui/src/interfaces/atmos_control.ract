@@ -2,16 +2,16 @@
   {{#each data.sensors}}
     <ui-subdisplay title='{{data.sensors.length > 1 ? long_name : null}}'>
       <ui-section label='Pressure'>
-		<span>{{pressure}} kPa</span>
+		<span>{{Math.fixed(pressure, 2)}} kPa</span>
       </ui-section>
       {{#if temperature}}
         <ui-section label='Temperature'>
-          <span>{{temperature}} K</span>
+          <span>{{Math.fixed(temperature, 2)}} K</span>
         </ui-section>
       {{/if}}
 	  {{#each gases:id}}
         <ui-section label='{{id}}'>
-		  <span>{{.}}%</span>
+		  <span>{{Math.fixed(., 2)}}%</span>
         </ui-section>
 	  {{/each}}
     </ui-subdisplay>

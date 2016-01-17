@@ -29,14 +29,14 @@
 			"sigtype" = "status",
 			"id_tag" = id_tag,
 			"timestamp" = world.time,
-			"pressure" = num2text(round(air_sample.return_pressure(), 0.1)),
-			"temperature" = round(air_sample.temperature, 0.1),
+			"pressure" = air_sample.return_pressure(),
+			"temperature" = air_sample.temperature,
 			"gases" = list()
 		)
 		var/total_moles = air_sample.total_moles()
 		for(var/gas_id in air_sample.gases)
 			var/gas_name = air_sample.gases[gas_id][GAS_NAME]
-			signal.data["gases"][gas_name] = round(100 * air_sample.gases[gas_id][MOLES] / total_moles, 0.1)
+			signal.data["gases"][gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
 
 		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
