@@ -88,8 +88,6 @@
 	///////////
 
 
-/datum/species/proc/ContactDisease(datum/disease/D)
-	. = 0
 
 //Called when admins use the Set Species verb, let's species
 //do some init stuff on the mob that got SS'd if necessary
