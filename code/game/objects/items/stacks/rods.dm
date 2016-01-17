@@ -16,10 +16,6 @@
 	w_type=RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
 
-/obj/item/stack/rods/recycle(var/datum/materials/rec)
-	rec.addAmount("iron",amount/2)
-	return RECYK_METAL
-
 /obj/item/stack/rods/afterattack(atom/Target, mob/user, adjacent, params)
 	var/busy = 0
 	if(adjacent)
