@@ -28,9 +28,12 @@ span.button
   buttoncolor(caution, button-color-caution)
   buttoncolor(danger, button-color-danger)
 
-  & + span:not(.button)
-    margin-left: 5px
-
   &.gridable
     width: 125px
     margin: 2px 0
+
+span:not(.button) + span.button
+  margin-left: 5px
+
+span.button + span:not(.button)
+  margin-left: 5px

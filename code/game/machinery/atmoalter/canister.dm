@@ -263,16 +263,6 @@ update_flag
 
 	..()
 
-/obj/machinery/portable_atmospherics/canister/attack_hand(mob/user)
-	if (!user)
-		return
-	interact(user)
-
-/obj/machinery/portable_atmospherics/canister/interact(mob/user)
-	if (src.destroyed)
-		return
-	ui_interact(user)
-
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 															datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -309,7 +299,7 @@ update_flag
 			if(newtype)
 				var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc)
 				replacement.air_contents = air_contents
-				replacement.ui_interact(usr)
+				replacement.interact(usr)
 				qdel(src)
 		if("pressure")
 			switch(params["pressure"])
