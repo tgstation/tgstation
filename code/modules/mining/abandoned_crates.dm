@@ -180,7 +180,7 @@
 		return ..()
 
 /obj/structure/closet/crate/secure/loot/attack_animal()
-	return
+	qdel(src)
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
