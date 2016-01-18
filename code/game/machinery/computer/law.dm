@@ -21,7 +21,7 @@
 			user << "<span class='caution'>Upload failed!</span> Unable to establish a connection to [current.name]. You're too far away!"
 			current = null
 			return
-		M.install(current, user)
+		M.install(current.laws, user)
 	else
 		..()
 
