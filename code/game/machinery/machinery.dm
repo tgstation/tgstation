@@ -384,7 +384,7 @@ Class Procs:
 		user << "<span class='notice'>\icon[C] [C.name]</span>"
 
 /obj/machinery/examine(mob/user)
-	..(user)
+	..()
 	if(user.research_scanner && component_parts)
 		display_parts(user)
 

@@ -86,12 +86,6 @@
 		SSradio.remove_object(src, frequency)
 	return ..()
 
-/obj/machinery/computer/atmos_control/attack_hand(mob/user)
-	interact(user)
-
-/obj/machinery/computer/atmos_control/interact(mob/user)
-	ui_interact(user)
-
 /obj/machinery/computer/atmos_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -228,7 +222,7 @@
 		ui.open()
 
 /obj/machinery/computer/atmos_control/tank/get_ui_data(mob/user)
-	var/list/data = ..(user)
+	var/list/data = ..()
 	data["inputting"] = input_info ? input_info["power"] : FALSE
 	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
 	data["outputting"] = output_info ? output_info["power"] : FALSE

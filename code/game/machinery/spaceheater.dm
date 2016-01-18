@@ -147,12 +147,6 @@
 	else
 		..()
 
-/obj/machinery/space_heater/attack_hand(mob/user)
-	interact(user)
-
-/obj/machinery/space_heater/interact(mob/user)
-	ui_interact(user)
-
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

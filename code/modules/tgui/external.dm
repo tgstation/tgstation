@@ -18,7 +18,7 @@
   * optional state datum/ui_state The state used to determine status.
  **/
 /datum/proc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-	return -1 // Sorta implemented.
+	return -1 // Not implemented.
 
  /**
   * public
@@ -46,7 +46,7 @@
   * return bool If the UI should be updated or not.
  **/
 /datum/proc/ui_act(action, list/params)
-	return // Not implemented.
+	return -1 // Not implemented.
 
 
  /**
@@ -57,7 +57,7 @@
   * and be a part of another object.
  **/
 /datum/proc/ui_host()
-	return src
+	return src // Default src.
 
  /**
   * global

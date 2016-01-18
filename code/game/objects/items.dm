@@ -221,8 +221,18 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		user << msg
 
 
+/obj/item/attack_self(mob/user)
+	if (!user)
+		return
+	interact(user)
+
+/obj/item/interact(mob/user)
+	add_fingerprint(user)
+	ui_interact(user)
+
 /obj/item/attack_hand(mob/user)
-	if (!user) return
+	if(!user)
+		return
 
 	if(burn_state == ON_FIRE)
 		var/mob/living/carbon/human/H = user
@@ -240,13 +250,13 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		else
 			extinguish()
 
-	if (istype(src.loc, /obj/item/weapon/storage))
+	if(istype(src.loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src, user.loc)
 
 	src.throwing = 0
-	if (loc == user)
+	if(loc == user)
 		if(!user.unEquip(src))
 			return
 
@@ -290,7 +300,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	attack_paw(A)
 
 /obj/item/attack_ai(mob/user)
-	if (istype(src.loc, /obj/item/weapon/robot_module))
+	if(istype(src.loc, /obj/item/weapon/robot_module))
 		//If the item is part of a cyborg module, equip it
 		if(!isrobot(user)) return
 		var/mob/living/silicon/robot/R = user
@@ -380,7 +390,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		return 0
 
 	return M.can_equip(src, slot, disable_warning)
-
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)

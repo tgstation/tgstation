@@ -358,17 +358,6 @@
 	if(cdir > -1)
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
 
-/obj/machinery/power/solar_control/attack_hand(mob/user)
-	if (..() || !user)
-		return
-	add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/power/solar_control/interact(mob/user)
-	if (stat & BROKEN)
-		return
-	ui_interact(user)
-
 /obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 												datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

@@ -27,9 +27,6 @@ var/list/world_uplinks = list()
 	world_uplinks -= src
 	return ..()
 
-/obj/item/device/uplink/attack_self(mob/user)
-	interact(user)
-
 /obj/item/device/uplink/interact(mob/user)
 	if(!active)
 		active = TRUE

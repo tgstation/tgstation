@@ -6,6 +6,13 @@
 	circuit = /obj/item/weapon/circuitboard/stationalert
 	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
 
+/obj/machinery/computer/station_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "station_alert", name, 300, 350, master_ui, state)
+		ui.open()
+
 /obj/machinery/computer/station_alert/get_ui_data(mob/user)
 	var/list/data = list()
 
@@ -16,13 +23,6 @@
 			data["alarms"][class] += area
 
 	return data
-
-/obj/machinery/computer/station_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "station_alert", name, 300, 350, master_ui, state)
-		ui.open()
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, obj/source)
 	if(source.z != z)

@@ -72,11 +72,6 @@
 			default_deconstruction_crowbar(I)
 			return 1
 
-/obj/machinery/chem_heater/attack_hand(mob/user)
-	if (!user)
-		return
-	interact(user)
-
 /obj/machinery/chem_heater/ui_act(action, params)
 	if(..())
 		return
@@ -90,11 +85,6 @@
 			on = FALSE
 			eject_beaker()
 	return 1
-
-/obj/machinery/chem_heater/interact(mob/user)
-	if(stat & BROKEN)
-		return
-	ui_interact(user)
 
 /obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
