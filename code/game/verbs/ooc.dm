@@ -46,7 +46,7 @@
 	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
 		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
 			return
-			
+
 	log_ooc("[mob.name]/[key] : [raw_msg]")
 
 	var/keyname = key
@@ -89,7 +89,7 @@ var/global/normal_ooc_colour = "#002eb8"
 	set name = "Reset Player OOC Color"
 	set desc = "Returns player OOC Color to default"
 	set category = "Fun"
-	normal_ooc_colour = initial(normal_ooc_colour)
+	normal_ooc_colour = "#002eb8"
 
 /client/verb/colorooc()
 	set name = "Set Your OOC Color"
