@@ -37,7 +37,9 @@
 </ui-display>
 <ui-display title='Channel'>
   <ui-section label='Frequency'>
-    {{#if !data.freqlock}}
+    {{#if data.freqlock}}
+      <span>{{readableFrequency}}</span>
+    {{else}}
       <ui-button icon='fast-backward' state='{{data.frequency == data.minFrequency ? "disabled": null}}' action='frequency' params='{"change": -10}'/>
       <ui-button icon='backward' state='{{data.frequency == data.minFrequency ? "disabled": null}}' action='frequency' params='{"change": -2}'/>
       <ui-button icon='pencil' action='frequency' params='{"change": "custom"}'>{{readableFrequency}}</ui-button>

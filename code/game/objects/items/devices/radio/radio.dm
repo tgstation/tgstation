@@ -152,8 +152,9 @@
 			if(!freqlock)
 				switch(params["change"])
 					if("custom")
-						var/range = "[freerange ? MIN_FREE_FREQ / 10 : MIN_FREQ / 10]-[freerange ? MAX_FREE_FREQ / 10 : MAX_FREQ / 10]"
-						var/custom = input(usr, "Adjust frequency ([range]):", name) as null|num
+						var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
+						var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
+						var/custom = input(usr, "Adjust frequency ([min]-[max]):", name) as null|num
 						if(custom)
 							frequency = custom * 10
 					else
