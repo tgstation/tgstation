@@ -1,39 +1,24 @@
 var/list/uplink_items = list()
 
-/proc/get_uplink_items(var/gamemode_override=null)
+/proc/get_uplink_items(var/gamemode_override = null)
 	// If not already initialized..
 	if(!uplink_items.len)
-
 		// Fill in the list	and order it like this:
 		// A keyed list, acting as categories, which are lists to the datum.
-
-		var/list/last = list()
 		for(var/item in subtypesof(/datum/uplink_item))
-
 			var/datum/uplink_item/I = new item()
 			if(!I.item)
 				continue
-			if(I.last)
-				last += I
-				continue
 
 			if(!uplink_items[I.category])
 				uplink_items[I.category] = list()
-
-			uplink_items[I.category] += I
-
-		for(var/datum/uplink_item/I in last)
-
-			if(!uplink_items[I.category])
-				uplink_items[I.category] = list()
-
-			uplink_items[I.category] += I
+			uplink_items[I.category][I.name] = I
 
 	//Filtered version
 	var/list/filtered_uplink_items = list()
-
 	for(var/category in uplink_items)
-		for(var/datum/uplink_item/I in uplink_items[category])
+		for(var/item in uplink_items[category])
+			var/datum/uplink_item/I = uplink_items[category][item]
 			if(I.gamemodes.len)
 				if(!gamemode_override && ticker && !(ticker.mode.type in I.gamemodes))
 					continue
@@ -44,9 +29,10 @@ var/list/uplink_items = list()
 					continue
 				if(gamemode_override && (gamemode_override in I.excludefrom))
 					continue
-			if(!filtered_uplink_items[I.category])
-				filtered_uplink_items[I.category] = list()
-			filtered_uplink_items[category] += I
+
+			if(!filtered_uplink_items[category])
+				filtered_uplink_items[category] = list()
+			filtered_uplink_items[category][item] = I
 
 	return filtered_uplink_items
 
@@ -59,7 +45,6 @@ var/list/uplink_items = list()
 	var/desc = "item description"
 	var/item = null
 	var/cost = 0
-	var/last = 0 // Appear last
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/excludefrom = list() //Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
 	var/surplus = 100 //Chance of being included in the surplus crate (when pick() selects it)
@@ -113,7 +98,7 @@ var/list/uplink_items = list()
 //Operator special offers
 
 /datum/uplink_item/specoffer
-	category = "Special offer roles"
+	category = "Special Offers"
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/specoffer/c20r
@@ -962,7 +947,6 @@ var/list/uplink_items = list()
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
 	surplus = 0
-	last = 1
 
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"

@@ -182,22 +182,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return 0
 	return 1
 
-//Ensure the frequency is within bounds of what it should be sending/recieving at
-/proc/sanitize_frequency(f)
-	f = round(f)
-	f = max(1441, f) // 144.1
-	f = min(1489, f) // 148.9
-	if ((f % 2) == 0) //Ensure the last digit is an odd number
-		f += 1
-	return f
-
-//Turns 1479 into 147.9
-/proc/format_frequency(f)
-	f = text2num(f)
-	return "[round(f / 10)].[f % 10]"
-
-
-
 //This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
 /mob/proc/fully_replace_character_name(oldname,newname)

@@ -24,7 +24,7 @@
 
 /obj/item/weapon/implant/uplink/activate()
 	if(hidden_uplink)
-		hidden_uplink.check_trigger(imp_in)
+		hidden_uplink.interact(usr)
 
 
 /obj/item/weapon/implanter/uplink

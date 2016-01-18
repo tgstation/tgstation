@@ -78,43 +78,36 @@
 	var/area/alarm_area
 	var/danger_level = 0
 
-	// breathable air according to human/Life()
-	var/list/TLV = list(
-		"oxygen"         = new/datum/tlv(16,19,135,140), // Partial pressure, kpa
-		"nitrogen"       = new/datum/tlv(-1,-1,1000,1000), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1,-1,5,10), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1,-1,0.2,0.5), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1,-1,0.5,1), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20), // kPa
-		"temperature"    = new/datum/tlv(T0C,T0C+10,T0C+40,T0C+66), // K
+	var/list/TLV = list( // Breathable air.
+		"pressure"		= new/datum/tlv(ONE_ATMOSPHERE * 0.80, ONE_ATMOSPHERE*  0.90, ONE_ATMOSPHERE * 1.10, ONE_ATMOSPHERE * 1.20), // kPa
+		"temperature"	= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66), // K
+		"o2"			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
+		"n2"			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
+		"co2" 			= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
+		"plasma"		= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 	)
 
-/*
-	// breathable air according to wikipedia
-		"oxygen"         = new/datum/tlv(   9,  12, 158, 296), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1,-1, 0.5,   1), // Partial pressure, kpa
-*/
-/obj/machinery/alarm/server
-	//req_access = list(access_rd) //no, let departaments to work together
+/obj/machinery/alarm/server // No checks here.
 	TLV = list(
-		"oxygen"         = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
-		"nitrogen"       = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1,-1,-1,-1), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(-1,-1,-1,-1), /* kpa */
-		"temperature"    = new/datum/tlv(-1,-1,-1,-1), // K
+		"pressure"		= new/datum/tlv(-1, -1, -1, -1),
+		"temperature"	= new/datum/tlv(-1, -1, -1, -1),
+		"o2"			= new/datum/tlv(-1, -1, -1, -1),
+		"n2"			= new/datum/tlv(-1, -1, -1, -1),
+		"co2"			= new/datum/tlv(-1, -1, -1, -1),
+		"plasma"		= new/datum/tlv(-1, -1, -1, -1),
+		"n2o"			= new/datum/tlv(-1, -1, -1, -1),
 	)
 
-/obj/machinery/alarm/kitchen_cold_room
+/obj/machinery/alarm/kitchen_cold_room // Copypasta: to check temperatures.
 	TLV = list(
-		"oxygen"         = new/datum/tlv(16,19,135,140), // Partial pressure, kpa
-		"nitrogen"       = new/datum/tlv(-1,-1,1000,1000), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1,-1,5,10), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1,-1,0.2,0.5), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1,-1,0.5,1), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20), // kPa
-		"temperature"    = new/datum/tlv(200,210,273.15,283.15), // K
+		"pressure"		= new/datum/tlv(ONE_ATMOSPHERE * 0.80, ONE_ATMOSPHERE*  0.90, ONE_ATMOSPHERE * 1.10, ONE_ATMOSPHERE * 1.20), // kPa
+		"temperature"	= new/datum/tlv(200,210,273.15,283.15), // K
+		"o2"			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
+		"n2"			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
+		"co2" 			= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
+		"plasma"		= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 	)
 
 //all air alarms in area are connected via magic
@@ -171,12 +164,6 @@
 				return 1
 	return 0
 
-/obj/machinery/alarm/attack_hand(mob/user)
-	if (..() || !user) return
-	if (buildstage != 2) return
-
-	interact(user)
-
 /obj/machinery/alarm/interact(mob/user)
 	if (user.has_unlimited_silicon_privilege && src.aidisabled)
 		user << "AI control for this Air Alarm interface has been disabled."
@@ -190,7 +177,7 @@
 /obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "air_alarm", name, 440, 650, master_ui, state)
 		ui.open()
 
@@ -206,53 +193,6 @@
 		populate_controls(data)
 	return data
 
-/obj/machinery/alarm/proc/shock(mob/user, prb)
-	if((stat & (NOPOWER)))		// unpowered, no shock
-		return 0
-	if(!prob(prb))
-		return 0 //you lucked out, no shock for you
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, src)
-	s.start() //sparks always.
-	if (electrocute_mob(user, get_area(src), src))
-		return 1
-	else
-		return 0
-
-/obj/machinery/alarm/proc/refresh_all()
-	for(var/id_tag in alarm_area.air_vent_names)
-		var/list/I = alarm_area.air_vent_info[id_tag]
-		if (I && I["timestamp"]+AALARM_REPORT_TIMEOUT/2 > world.time)
-			continue
-		send_signal(id_tag, list("status") )
-	for(var/id_tag in alarm_area.air_scrub_names)
-		var/list/I = alarm_area.air_scrub_info[id_tag]
-		if (I && I["timestamp"]+AALARM_REPORT_TIMEOUT/2 > world.time)
-			continue
-		send_signal(id_tag, list("status") )
-
-/obj/machinery/alarm/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
-
-/obj/machinery/alarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
-	if(!radio_connection)
-		return 0
-
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
-	signal.source = src
-
-	signal.data = command
-	signal.data["tag"] = target
-	signal.data["sigtype"] = "command"
-
-	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
-//			world << text("Signal [] Broadcasted to []", command, target)
-
-	return 1
-
 /obj/machinery/alarm/proc/populate_status(list/data)
 	var/turf/location = get_turf(src)
 	if(!location)
@@ -267,45 +207,38 @@
 	data["danger_level"] = danger_level
 	if(total)
 		var/datum/tlv/cur_tlv
-		var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
 
-		cur_tlv = TLV["pressure"]
+		var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
+
 		var/pressure = environment.return_pressure()
-		var/pressure_danger = cur_tlv.get_danger_level(pressure)
-		environment_data += list(list("name" = "Pressure", "value" = pressure, "unit" = "kPa", "danger_level" = pressure_danger))
+		cur_tlv = TLV["pressure"]
+		environment_data += list(list(
+								"name" = "Pressure",
+								"value" = pressure,
+								"unit" = "kPa",
+								"danger_level" = cur_tlv.get_danger_level(pressure)
+		))
 
-		environment.assert_gases(arglist(hardcoded_gases))
-
-		cur_tlv = TLV["oxygen"]
-		var/oxygen_danger = cur_tlv.get_danger_level(env_gases["o2"][MOLES]*partial_pressure)
-		environment_data += list(list("name" = "Oxygen", "value" = env_gases["o2"][MOLES] / total * 100, "unit" = "%", "danger_level" = oxygen_danger))
-
-		cur_tlv = TLV["nitrogen"]
-		var/nitrogen_danger = cur_tlv.get_danger_level(env_gases["n2"][MOLES]*partial_pressure)
-		environment_data += list(list("name" = "Nitrogen", "value" = env_gases["n2"][MOLES] / total * 100, "unit" = "%", "danger_level" = nitrogen_danger))
-
-		cur_tlv = TLV["carbon dioxide"]
-		var/carbon_dioxide_danger = cur_tlv.get_danger_level(env_gases["co2"][MOLES]*partial_pressure)
-		environment_data += list(list("name" = "Carbon Dioxide", "value" = env_gases["co2"][MOLES] / total * 100, "unit" = "%", "danger_level" = carbon_dioxide_danger))
-
-		cur_tlv = TLV["plasma"]
-		var/plasma_danger = cur_tlv.get_danger_level(env_gases["plasma"][MOLES]*partial_pressure)
-		environment_data += list(list("name" = "Toxins", "value" = env_gases["plasma"][MOLES] / total * 100, "unit" = "%", "danger_level" = plasma_danger))
-
-		environment.garbage_collect()
-
-		cur_tlv = TLV["other"]
-		var/other_moles = 0
-		for(var/id in env_gases)
-			if(id in hardcoded_gases)
-				continue
-			other_moles += env_gases[id][MOLES]
-		var/other_danger = cur_tlv.get_danger_level(other_moles*partial_pressure)
-		environment_data += list(list("name" = "Other", "value" = other_moles / total * 100, "unit" = "%", "danger_level" = other_danger))
-
+		var/temperature = environment.temperature
 		cur_tlv = TLV["temperature"]
-		var/temperature_danger = cur_tlv.get_danger_level(environment.temperature)
-		environment_data += list(list("name" = "Temperature", "value" = environment.temperature, "unit" = "K ([round(environment.temperature - T0C, 0.1)]C)", "danger_level" = temperature_danger))
+		environment_data += list(list(
+								"name" = "Temperature",
+								"value" = temperature,
+								"unit" = "K ([round(temperature - T0C, 0.1)]C)",
+								"danger_level" = cur_tlv.get_danger_level(temperature)
+		))
+
+		for(var/gas_id in env_gases)
+			if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
+				continue
+			cur_tlv = TLV[gas_id]
+			environment_data += list(list(
+									"name" = env_gases[gas_id][GAS_NAME],
+									"value" = env_gases[gas_id][MOLES] / total * 100,
+									"unit" = "%",
+									"danger_level" = cur_tlv.get_danger_level(env_gases[gas_id][MOLES] * partial_pressure)
+			))
+
 
 		data["environment_data"] = environment_data
 
@@ -363,21 +296,9 @@
 				data["modes"] += list(list("name" = "Flood - Shuts off scrubbers and opens vents",	"mode" = AALARM_MODE_FLOOD,			"selected" = mode == AALARM_MODE_FLOOD, 		"danger" = 1))
 		if(AALARM_SCREEN_SENSORS)
 			var/datum/tlv/selected
-			var/list/thresholds = list()
 
-			var/list/gas_names = list(
-				"oxygen"        	= "Oxygen",
-				"nitrogen"			= "Nitrogen",
-				"carbon dioxide"	= "Carbon Dioxide",
-				"plasma"        	= "Toxin",
-				"other"         	= "Other")
-			for (var/g in gas_names)
-				thresholds += list(list("name" = gas_names[g], "settings" = list()))
-				selected = TLV[g]
-				thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = "min2", "selected" = selected.min2))
-				thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = "min1", "selected" = selected.min1))
-				thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = "max1", "selected" = selected.max1))
-				thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = "max2", "selected" = selected.max2))
+
+			var/list/thresholds = list()
 
 			selected = TLV["pressure"]
 			thresholds += list(list("name" = "Pressure", "settings" = list()))
@@ -393,6 +314,15 @@
 			thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max1", "selected" = selected.max1))
 			thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max2", "selected" = selected.max2))
 
+			for (var/gas_id in meta_gas_info)
+				if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
+					continue
+				selected = TLV[gas_id]
+				thresholds += list(list("name" = meta_gas_info[gas_id][2], "settings" = list()))
+				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min2", "selected" = selected.min2))
+				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min1", "selected" = selected.min1))
+				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max1", "selected" = selected.max1))
+				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max2", "selected" = selected.max2))
 
 			data["thresholds"] = thresholds
 
@@ -466,6 +396,53 @@
 			if(alarm_area.atmosalert(0, src))
 				post_alert(0)
 			update_icon()
+	return 1
+
+/obj/machinery/alarm/proc/shock(mob/user, prb)
+	if((stat & (NOPOWER)))		// unpowered, no shock
+		return 0
+	if(!prob(prb))
+		return 0 //you lucked out, no shock for you
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	s.set_up(5, 1, src)
+	s.start() //sparks always.
+	if (electrocute_mob(user, get_area(src), src))
+		return 1
+	else
+		return 0
+
+/obj/machinery/alarm/proc/refresh_all()
+	for(var/id_tag in alarm_area.air_vent_names)
+		var/list/I = alarm_area.air_vent_info[id_tag]
+		if (I && I["timestamp"]+AALARM_REPORT_TIMEOUT/2 > world.time)
+			continue
+		send_signal(id_tag, list("status") )
+	for(var/id_tag in alarm_area.air_scrub_names)
+		var/list/I = alarm_area.air_scrub_info[id_tag]
+		if (I && I["timestamp"]+AALARM_REPORT_TIMEOUT/2 > world.time)
+			continue
+		send_signal(id_tag, list("status") )
+
+/obj/machinery/alarm/proc/set_frequency(new_frequency)
+	SSradio.remove_object(src, frequency)
+	frequency = new_frequency
+	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
+
+/obj/machinery/alarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+	if(!radio_connection)
+		return 0
+
+	var/datum/signal/signal = new
+	signal.transmission_method = 1 //radio signal
+	signal.source = src
+
+	signal.data = command
+	signal.data["tag"] = target
+	signal.data["sigtype"] = "command"
+
+	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
+//			world << text("Signal [] Broadcasted to []", command, target)
+
 	return 1
 
 /obj/machinery/alarm/proc/apply_mode()
@@ -606,60 +583,40 @@
 		return
 
 	var/turf/simulated/location = src.loc
-	if (!istype(location))
+	if(!istype(location))
 		return 0
+
+	var/datum/tlv/cur_tlv
 
 	var/datum/gas_mixture/environment = location.return_air()
 	var/list/env_gases = environment.gases
-
-	var/datum/tlv/cur_tlv
-	var/GET_PP = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
+	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
 
 	cur_tlv = TLV["pressure"]
 	var/environment_pressure = environment.return_pressure()
 	var/pressure_dangerlevel = cur_tlv.get_danger_level(environment_pressure)
 
-	environment.assert_gases(arglist(hardcoded_gases))
-
-	cur_tlv = TLV["oxygen"]
-	var/oxygen_dangerlevel = cur_tlv.get_danger_level(env_gases["o2"][MOLES]*GET_PP)
-
-	cur_tlv = TLV["carbon dioxide"]
-	var/co2_dangerlevel = cur_tlv.get_danger_level(env_gases["co2"][MOLES]*GET_PP)
-
-	cur_tlv = TLV["plasma"]
-	var/plasma_dangerlevel = cur_tlv.get_danger_level(env_gases["plasma"][MOLES]*GET_PP)
-
-	environment.garbage_collect()
-
-	cur_tlv = TLV["other"]
-	var/other_moles = 0
-	for(var/id in env_gases)
-		if(id in hardcoded_gases)
-			continue
-		other_moles += env_gases[id][MOLES]
-	var/other_dangerlevel = cur_tlv.get_danger_level(other_moles*GET_PP)
-
 	cur_tlv = TLV["temperature"]
 	var/temperature_dangerlevel = cur_tlv.get_danger_level(environment.temperature)
 
-	var/old_danger_level = danger_level
-	danger_level = max(
-		pressure_dangerlevel,
-		oxygen_dangerlevel,
-		co2_dangerlevel,
-		plasma_dangerlevel,
-		other_dangerlevel,
-		temperature_dangerlevel
-	)
-	if (old_danger_level!=danger_level)
-		apply_danger_level()
+	var/gas_dangerlevel = 0
+	for(var/gas_id in env_gases)
+		if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
+			continue
+		cur_tlv = TLV[gas_id]
+		gas_dangerlevel = max(gas_dangerlevel, cur_tlv.get_danger_level(env_gases[gas_id][MOLES] * partial_pressure))
 
-	if (mode==AALARM_MODE_REPLACEMENT && environment_pressure<ONE_ATMOSPHERE*0.05)
-		mode=AALARM_MODE_SCRUBBING
+	environment.garbage_collect()
+
+	var/old_danger_level = danger_level
+	danger_level = max(pressure_dangerlevel, temperature_dangerlevel, gas_dangerlevel)
+
+	if (old_danger_level != danger_level)
+		apply_danger_level()
+	if (mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
+		mode = AALARM_MODE_SCRUBBING
 		apply_mode()
 
-	//src.updateDialog()
 	return
 
 /obj/machinery/alarm/proc/post_alert(alert_level)

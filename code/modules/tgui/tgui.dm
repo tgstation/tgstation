@@ -244,10 +244,11 @@
 		json_data["data"] = data
 		json_data["adata"] = data
 
-	// Generate the JSON; replace bad characters.
+	// Generate the JSON.
 	var/json = JSON.stringify(json_data)
-	json = replacetextEx(json, "\improper", "")
-
+	// Strip #255/improper.
+	json = regex_replaceall(json, "\improper", "")
+	json = regex_replaceall(json, "\proper", "")
 	return json
 
  /**

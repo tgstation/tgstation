@@ -53,7 +53,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/list/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
 	var/list/allowed = null //suit storage stuff.
-	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
+	var/obj/item/device/uplink/hidden_uplink = null
 	var/strip_delay = 40
 	var/put_on_delay = 20
 	var/list/materials = list()
@@ -221,8 +221,21 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		user << msg
 
 
+/obj/item/attack_self(mob/user)
+	if(!user)
+		return
+	add_fingerprint(user)
+	interact(user)
+
+/obj/item/interact(mob/user)
+	if(hidden_uplink && hidden_uplink.active)
+		hidden_uplink.interact(user)
+		return
+	ui_interact(user)
+
 /obj/item/attack_hand(mob/user)
-	if (!user) return
+	if(!user)
+		return
 
 	if(burn_state == ON_FIRE)
 		var/mob/living/carbon/human/H = user
@@ -240,13 +253,13 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		else
 			extinguish()
 
-	if (istype(src.loc, /obj/item/weapon/storage))
+	if(istype(src.loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src, user.loc)
 
 	src.throwing = 0
-	if (loc == user)
+	if(loc == user)
 		if(!user.unEquip(src))
 			return
 
@@ -290,7 +303,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	attack_paw(A)
 
 /obj/item/attack_ai(mob/user)
-	if (istype(src.loc, /obj/item/weapon/robot_module))
+	if(istype(src.loc, /obj/item/weapon/robot_module))
 		//If the item is part of a cyborg module, equip it
 		if(!isrobot(user)) return
 		var/mob/living/silicon/robot/R = user
@@ -380,7 +393,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		return 0
 
 	return M.can_equip(src, slot, disable_warning)
-
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
