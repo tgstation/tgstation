@@ -206,7 +206,6 @@
 	var/law_borg = "Accomplish your AI's objectives at all costs."
 	killer << "<b>Your laws have been changed!</b>"
 	killer.set_zeroth_law(law, law_borg)
-	killer << "New law: 0. [law]"
 	give_codewords(killer)
 	killer.set_syndie_radio()
 	killer << "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!"
@@ -215,6 +214,7 @@
 	killer.view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 	killer.verbs += /mob/living/silicon/ai/proc/choose_modules
 	killer.malf_picker = new /datum/module_picker
+	killer.show_laws()
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)

@@ -1089,7 +1089,6 @@
 					if(isAI(current))
 						var/mob/living/silicon/ai/A = current
 						ticker.mode.add_law_zero(A)
-						A.show_laws()
 
 			if("autoobjectives")
 				ticker.mode.forge_traitor_objectives(src)
