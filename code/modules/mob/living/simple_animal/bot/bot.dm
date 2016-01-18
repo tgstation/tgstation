@@ -193,11 +193,17 @@
 	return 1 //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
-/mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "help")
-		show_controls(M)
+/mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
+	if(H.a_intent == "help")
+		interact(H)
 	else
 		return ..()
+
+/mob/living/simple_animal/bot/attack_ai(mob/user)
+	interact(user)
+
+/mob/living/simple_animal/bot/interact(mob/user)
+	show_controls(user)
 
 /mob/living/simple_animal/bot/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -275,8 +281,6 @@
 	text_dehack = "You reset [name]."
 	text_dehack_fail = "You fail to reset [name]."
 
-/mob/living/simple_animal/bot/attack_ai(mob/user as mob)
-	show_controls(user)
 
 /mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
 	if((!on) || (!message))

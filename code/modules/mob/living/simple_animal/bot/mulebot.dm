@@ -154,9 +154,6 @@ var/global/mulebot_count = 0
 			visible_message("<span class='danger'>Something shorts out inside [src]!</span>")
 			wires.RandomCut()
 
-/mob/living/simple_animal/bot/mulebot/attack_hand(mob/user)
-	interact(user)
-
 /mob/living/simple_animal/bot/mulebot/interact(mob/user)
 	if(open && !istype(user, /mob/living/silicon/ai))
 		wires.Interact(user)
