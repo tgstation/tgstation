@@ -1,0 +1,4 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - bugfix: Extinguishers once again properly calm the heart of a rabid slime
