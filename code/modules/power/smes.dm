@@ -79,7 +79,7 @@
 	output_level_max = 200000 * IO
 	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
 		MC += PC.maxcharge
-		C.Add(MC / PC.charge)
+		C.Add(PC.charge / PC.maxcharge)
 	capacity = MC / (15000) * 1e6
 	if(!charge)
 		var/summ = Mean(C)
