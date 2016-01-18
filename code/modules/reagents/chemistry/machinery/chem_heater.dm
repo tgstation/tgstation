@@ -73,9 +73,6 @@
 			return 1
 
 /obj/machinery/chem_heater/ui_act(action, params)
-	if(..())
-		return
-
 	switch(action)
 		if("power")
 			on = !on

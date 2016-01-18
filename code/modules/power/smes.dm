@@ -356,9 +356,6 @@
 	return data
 
 /obj/machinery/power/smes/ui_act(action, params)
-	if(..())
-		return
-
 	switch(action)
 		if("tryinput")
 			input_attempt = !input_attempt

@@ -9,10 +9,10 @@
 </ui-notice>
 <ui-display title='Status'>
   <ui-section label='Power'>
-    {{#if data.locked}}
-      <span class='{{data.on ? "good" : "bad"}}' state='{{data.cell ? null : "disabled"}}'>{{data.on ? "On" : "Off"}}</span>
-    {{else}}
+    {{#if !data.locked || data.siliconUser }}
       <ui-button icon='{{data.on ? "power-off" : "close"}}' style='{{data.on ? "selected" : null}}' action="power">{{data.on ? "On" : "Off"}}</ui-button>
+    {{else}}
+      <span class='{{data.on ? "good" : "bad"}}' state='{{data.cell ? null : "disabled"}}'>{{data.on ? "On" : "Off"}}</span>
     {{/if}}
   </ui-section>
   <ui-section label='Cell'>

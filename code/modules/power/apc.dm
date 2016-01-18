@@ -738,9 +738,6 @@
 	return 1
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(..())
-		return
-
 	if(!can_use(usr, 1))
 		return
 
