@@ -10,7 +10,8 @@ var/list/world_uplinks = list()
 /obj/item/device/uplink
 	name = "syndicate uplink"
 	desc = "There is something wrong if you're examining this."
-	var/active = 0
+	var/active = FALSE
+	var/lockable = TRUE
 	var/uses = 20
 	var/used_TC = 0
 	var/uplink_owner = null
@@ -45,6 +46,7 @@ var/list/world_uplinks = list()
 /obj/item/device/uplink/get_ui_data(mob/user)
 	var/list/data = list()
 	data["uses"] = uses
+	data["lockable"] = lockable
 
 	var/list/uplink_items = get_uplink_items(mode_override)
 	data["buyable"] = list()
@@ -104,8 +106,9 @@ var/list/world_uplinks = list()
 // implant uplink (not the implant tool) and a preset headset uplink.
 
 /obj/item/device/radio/uplink/New()
-	hidden_uplink = new(src)
 	icon_state = "radio"
+	hidden_uplink = new(src)
+	hidden_uplink.lockable = FALSE
 
 /obj/item/device/radio/uplink/attack_self(mob/user)
 	if(hidden_uplink)
@@ -113,6 +116,7 @@ var/list/world_uplinks = list()
 
 /obj/item/device/multitool/uplink/New()
 	hidden_uplink = new(src)
+	hidden_uplink.lockable = FALSE
 
 /obj/item/device/multitool/uplink/attack_self(mob/user)
 	if(hidden_uplink)

@@ -17,7 +17,9 @@ component.exports = {
 
 <ui-display title='Uplink' button>
   {{#partial button}}
-    <ui-button icon='lock' action='lock'>Lock</ui-button>
+    {{#if data.lockable}}
+      <ui-button icon='lock' action='lock'>Lock</ui-button>
+    {{/if}}
   {{/partial}}
   <ui-section label='Telecrystals' right>
     <span class='{{data.uses > 0 ? "good" : "bad"}}'>{{data.uses}} TC</span>
