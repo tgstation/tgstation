@@ -600,6 +600,7 @@
 					break
 
 			// Give the power and take away the money.
+			A.view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 			A.verbs += AM.power_type
 			A.current_modules += new AM.type
 			temp = AM.description
