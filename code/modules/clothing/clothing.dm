@@ -219,6 +219,10 @@ BLIND     // can't see anything
 	slowdown = SHOES_SLOWDOWN
 	species_restricted = list("exclude","Unathi","Tajaran","Muton")
 
+/obj/item/clothing/shoes/clean_blood()
+	..()
+	track_blood = 0
+
 //Suit
 /obj/item/clothing/suit
 	icon = 'icons/obj/clothing/suits.dmi'
