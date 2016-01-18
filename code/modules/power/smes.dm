@@ -81,7 +81,7 @@
 		MC += PC.maxcharge
 		C.Add(MC / PC.charge)
 	capacity = MC / (15000) * 1e6
-	if(charge)
+	if(!charge)
 		var/summ = Mean(C)
 		charge = capacity * summ
 
