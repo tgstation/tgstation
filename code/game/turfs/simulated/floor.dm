@@ -48,8 +48,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	return ..()
 
 /turf/simulated/floor/ex_act(severity, target)
+	var/shielded = is_shielded()
 	..()
-	if(is_shielded())
+	if(severity != 1 && shielded && target != src)
 		return
 	if(target == src)
 		src.ChangeTurf(src.baseturf)
