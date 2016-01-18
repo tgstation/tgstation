@@ -327,9 +327,6 @@
 			data["thresholds"] = thresholds
 
 /obj/machinery/alarm/ui_act(action, params)
-	if(..())
-		return
-
 	if (buildstage != 2)
 		return
 

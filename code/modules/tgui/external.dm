@@ -46,7 +46,7 @@
   * return bool If the UI should be updated or not.
  **/
 /datum/proc/ui_act(action, list/params)
-	return -1 // Not implemented.
+	return 0 // Not implemented.
 
 
  /**

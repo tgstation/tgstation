@@ -289,9 +289,6 @@ update_flag
 	return data
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
-	if(..())
-		return
-
 	switch(action)
 		if("relabel")
 			var/label = input("Label canister:", "Gas Canister") as null|anything in label2types

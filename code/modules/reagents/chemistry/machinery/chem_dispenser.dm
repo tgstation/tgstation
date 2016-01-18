@@ -120,9 +120,6 @@
 	return data
 
 /obj/machinery/chem_dispenser/ui_act(action, params)
-	if(..())
-		return
-
 	switch(action)
 		if("amount")
 			var/amount = text2num(params["amount"])

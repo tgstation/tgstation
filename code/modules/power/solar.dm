@@ -428,9 +428,6 @@
 			nexttime += 36000/abs(trackrate) //reset the counter for the next 1°
 
 /obj/machinery/power/solar_control/ui_act(action, params)
-	if(..())
-		return
-
 	switch(action)
 		if("control")
 			if(params["cdir"])
