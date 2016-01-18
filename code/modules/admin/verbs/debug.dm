@@ -196,12 +196,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if(istext(assoc_check) && (returnedlist[assoc_check] != null))
 				. += "[procname] returned an associative list:"
 				for(var/key in returnedlist)
-					. += "[key] = [returnedlist[key]]\n"
+					. += "\n[key] = [returnedlist[key]]"
 				
 			else
 				. += "[procname] returned a list:"
 				for(var/elem in returnedlist)
-					. += "[elem]\n"
+					. += "\n[elem]"
 		else
 			. = "[procname] returned an empty list"
 		. += "</font>"
