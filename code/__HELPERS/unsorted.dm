@@ -252,15 +252,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
 
-/mob/proc/rename_self(role, allow_numbers=0)
+/mob/proc/rename_self(role, allow_numbers=0, client/client_fallback)
 	var/oldname = real_name
 	var/newname
 	var/loop = 1
 	var/safety = 0
+	var/client/use_client = client ? client : client_fallback
 
 	while(loop && safety < 5)
-		if(client && client.prefs.custom_names[role] && !safety)
-			newname = client.prefs.custom_names[role]
+		if(use_client && use_client.prefs.custom_names[role] && !safety)
+			newname = use_client.prefs.custom_names[role]
 		else
 			switch(role)
 				if("clown")

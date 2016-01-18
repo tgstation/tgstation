@@ -77,7 +77,7 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	..()
-	rename_self("ai", 1)
+	rename_self("ai", 1, B ? B.brainmob.client : null)
 	name = real_name
 	anchored = 1
 	canmove = 0
