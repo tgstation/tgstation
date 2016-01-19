@@ -1,6 +1,0 @@
-author: neersighted
-delete-after: True
-changes: 
-  - rscadd: "Many many interfaces have been ported to tgui; uplinks and MULEbots being the most important"
-  - rscadd: "You can now tune radios by entering a frequency"
-  - bugfix: "Air Alarms now support any gas"
