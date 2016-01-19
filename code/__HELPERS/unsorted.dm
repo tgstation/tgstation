@@ -1220,3 +1220,6 @@ B --><-- A
 	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
 			return 1
+
+/proc/PROCCRASH(msg)
+	CRASH(msg)
