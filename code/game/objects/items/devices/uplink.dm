@@ -103,21 +103,21 @@ var/list/world_uplinks = list()
 // implant uplink (not the implant tool) and a preset headset uplink.
 
 /obj/item/device/radio/uplink/New()
+	..()
 	icon_state = "radio"
 	hidden_uplink = new(src)
 	hidden_uplink.lockable = FALSE
 
-/obj/item/device/radio/uplink/attack_self(mob/user)
-	if(hidden_uplink)
-		hidden_uplink.interact(user)
+/obj/item/device/radio/uplink/interact(mob/user)
+	hidden_uplink.interact(user)
 
 /obj/item/device/multitool/uplink/New()
+	..()
 	hidden_uplink = new(src)
 	hidden_uplink.lockable = FALSE
 
-/obj/item/device/multitool/uplink/attack_self(mob/user)
-	if(hidden_uplink)
-		hidden_uplink.interact(user)
+/obj/item/device/multitool/uplink/interact(mob/user)
+	hidden_uplink.interact(user)
 
 /obj/item/device/radio/headset/uplink
 	traitor_frequency = 1445
