@@ -73,7 +73,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(stat || paralysis || stunned || weakened)
+	if(stat || paralysis || stunned || weakened || sleeping)
 		return
 
 	face_atom(A)
