@@ -7,11 +7,14 @@ var/const/APC_WIRE_MAIN_POWER1 = 2
 var/const/APC_WIRE_MAIN_POWER2 = 4
 var/const/APC_WIRE_AI_CONTROL = 8
 
-/datum/wires/apc/GetInteractWindow()
-	var/obj/machinery/power/apc/A = holder
-	. += ..()
-	. += text("<br>\n[(A.locked ? "The APC is locked." : "The APC is unlocked.")]<br>\n[(A.shorted ? "The APCs power has been shorted." : "The APC is working properly!")]<br>\n[(A.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]")
 
+/datum/wires/apc/getStatus()
+	var/obj/machinery/power/apc/A = holder
+	var/list/status = list()
+	status.Add(A.locked ? "The Air Alarm is locked." : "The Air Alarm is unlocked.")
+	status.Add(A.shorted ? "The APCs power has been shorted." : "The APC is working properly!")
+	status.Add(A.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")
+	return status
 
 /datum/wires/apc/CanUse(mob/living/L)
 	var/obj/machinery/power/apc/A = holder

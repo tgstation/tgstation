@@ -315,10 +315,8 @@
 
 /obj/machinery/vending/attack_hand(mob/user)
 	var/dat = ""
-	if(panel_open)
-		dat += wires()
-		if(product_slogans != "")
-			dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+	if(panel_open && !isAI(user))
+		return wires.Interact(user)
 	else
 		if(stat & (BROKEN|NOPOWER))
 			return
@@ -373,11 +371,6 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-
-
-// returns the wire panel text
-/obj/machinery/vending/proc/wires()
-	return wires.GetInteractWindow()
 
 
 /obj/machinery/vending/Topic(href, href_list)

@@ -38,9 +38,9 @@ var/const/PIZZA_WIRE_DISARM = 1		// No boom
 				log_game("a pizza bomb ([P.loc.x],[P.loc.y],[P.loc.z]) armed by [key_name(P.armer)] has exploded via wire pulsing.")
 				P.go_boom()
 
-
-/datum/wires/pizza_bomb/GetInteractWindow()
-	. = ..()
+/datum/wires/pizza_bomb/getStatus()
 	var/obj/item/device/pizza_bomb/P = holder
-	. += text("<br>The red light is [P.primed ? "on" : "off"].<br>")
-	. += text("The green light is [P.disarmed ? "on": "off"].<br>")
+	var/list/status = list()
+	status.Add("The red light is [P.primed ? "on" : "off"].")
+	status.Add("The green light is [P.disarmed ? "on": "off"].")
+	return status

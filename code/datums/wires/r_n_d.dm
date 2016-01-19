@@ -41,11 +41,11 @@ var/const/RD_WIRE_DISABLE = 4   // Disables the machine
 		if(RD_WIRE_SHOCK)
 			R.shocked = !mended
 
-
-/datum/wires/r_n_d/GetInteractWindow()
-	. = ..()
+/datum/wires/r_n_d/getStatus()
 	var/obj/machinery/r_n_d/R = holder
-	. += text("<br>The red light is [R.disabled ? "off" : "on"].<br>")
-	. += text("The green light is [R.shocked ? "off" : "on"].<br>")
-	. += text("The blue light is [R.hacked ? "off" : "on"].<br>")
+	var/list/status = list()
+	status.Add("The red light is [R.disabled ? "off" : "on"].")
+	status.Add("The green light is [R.shocked ? "off" : "on"].")
+	status.Add("The blue light is [R.hacked ? "off" : "on"].")
+	return status
 

@@ -7,21 +7,19 @@ var/const/AUTOLATHE_HACK_WIRE = 1
 var/const/AUTOLATHE_SHOCK_WIRE = 2
 var/const/AUTOLATHE_DISABLE_WIRE = 4
 
-/datum/wires/autolathe/GetInteractWindow()
+
+/datum/wires/autolathe/getStatus()
 	var/obj/machinery/autolathe/A = holder
-	. += ..()
-	. += text("<BR>The red light is [A.disabled ? "off" : "on"].<BR>The green light is [A.shocked ? "off" : "on"].<BR>The blue light is [A.hacked ? "off" : "on"].<BR>")
+	var/list/status = list()
+	status.Add("The red light is [A.disabled ? "off" : "on"].")
+	status.Add("The blue light is [A.hacked ? "off" : "on"].")
+	return status
 
 /datum/wires/autolathe/CanUse()
 	var/obj/machinery/autolathe/A = holder
 	if(A.panel_open)
 		return 1
 	return 0
-
-/datum/wires/autolathe/Interact(mob/living/user)
-	if(CanUse(user))
-		var/obj/machinery/autolathe/V = holder
-		V.attack_hand(user)
 
 /datum/wires/autolathe/UpdateCut(index, mended)
 	var/obj/machinery/autolathe/A = holder

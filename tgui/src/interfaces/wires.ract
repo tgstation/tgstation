@@ -1,0 +1,13 @@
+<ui-display title="Exposed Wires">
+	{{#each data.wires}}
+		<ui-section style='text-align:center'>
+			<span style='color:{{colour}};display:inline-block;width:50px;'>{{colour}}</span>
+			<ui-button action='cut' params='{"wire":"{{colour}}"}'>{{isCut ? "Mend" : "Cut"}}</ui-button>
+			<ui-button action='pulse' params='{"wire":"{{colour}}"}'>Pulse</ui-button>
+			<ui-button action='attach' params='{"wire":"{{colour}}"}'>{{hasAttachment ? "Detach" : "Attach"}}</ui-button>
+		</ui-section>
+	{{/each}}
+	{{#each data.holderInfo}}
+		<ui-section>{{.}}</ui-section>
+	{{/each}}
+</ui-display>

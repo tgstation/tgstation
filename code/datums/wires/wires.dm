@@ -82,97 +82,26 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 
 	return 0
 
+/datum/wires/ui_interact(mob/user, ui_key = "wires", datum/tgui/ui = null, force_open = 0, \
+										datum/tgui/master_ui = null, datum/ui_state/state = wire_state)
+	
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "wires", holder.name, 200 + wire_count*50, 470, master_ui, state)
+		ui.open()
 
 /datum/wires/proc/Interact(mob/living/user)
-	var/html = null
-	if(holder && CanUse(user))
-		html = GetInteractWindow()
-	if(html)
-		if(user.machine != holder)
-			for(var/A in signallers)
-				if(istype(signallers[A], /obj/item))
-					var/obj/item/I = signallers[A]
-					if(I.on_found(user))
-						return
+	if(holder && CanUse(user)) //remove this
+		ui_interact(user)
+		//Active prox sensors and similar on wires
+		for(var/A in signallers)
+			if(istype(signallers[A], /obj/item))
+				var/obj/item/I = signallers[A]
+				if(I.on_found(user))
+					return
 
-		user.set_machine(holder)
-	else
-		user.unset_machine()
-		// No content means no window.
-		user << browse(null, "window=wires")
-		return
-
-	var/datum/browser/popup = new(user, "wires", holder.name, window_x, window_y)
-	popup.set_content(html)
-	popup.set_title_image(user.browse_rsc_icon(holder.icon, holder.icon_state))
-	popup.open()
-
-/datum/wires/proc/GetInteractWindow()
-	var/html = "<div class='block'>"
-	html += "<h3>Exposed Wires</h3>"
-	html += "<table[table_options]>"
-
-	for(var/colour in wires)
-		html += "<tr>"
-		html += "<td[row_options1]><font color='[colour]'>[capitalize(colour)]</font></td>"
-		html += "<td[row_options2]>"
-		html += "<A href='?src=\ref[src];action=1;cut=[colour]'>[IsColourCut(colour) ? "Mend" :  "Cut"]</A>"
-		html += " <A href='?src=\ref[src];action=1;pulse=[colour]'>Pulse</A>"
-		html += " <A href='?src=\ref[src];action=1;attach=[colour]'>[IsAttached(colour) ? "Detach" : "Attach"] Signaller</A></td></tr>"
-	html += "</table>"
-	html += "</div>"
-
-	return html
-
-/datum/wires/Topic(href, href_list)
-	..()
-	if(usr.Adjacent(holder) && isliving(usr))
-		var/mob/living/L = usr
-		if(CanUse(L) && href_list["action"])
-			var/obj/item/I = L.get_active_hand()
-			holder.add_hiddenprint(L)
-			if(href_list["cut"]) // Toggles the cut/mend status
-				if(istype(I, /obj/item/weapon/wirecutters))
-					var/colour = href_list["cut"]
-					CutWireColour(colour)
-				else
-					L << "<span class='warning'>You need wirecutters!</span>"
-
-			else if(href_list["pulse"])
-				if(istype(I, /obj/item/device/multitool))
-					var/colour = href_list["pulse"]
-					PulseColour(colour)
-				else
-					L << "<span class='warning'>You need a multitool!</span>"
-
-			else if(href_list["attach"])
-				var/colour = href_list["attach"]
-				// Detach
-				if(IsAttached(colour))
-					var/obj/item/O = Detach(colour)
-					if(O)
-						L.put_in_hands(O)
-
-				// Attach
-				else
-					if(istype(I, /obj/item/device/assembly))
-						var/obj/item/device/assembly/A = I;
-						if(A.attachable)
-							if(!L.drop_item())
-								return
-							Attach(colour, A)
-						else
-							L << "<span class='warning'>You need a attachable assembly!</span>"
-
-
-
-
-		// Update Window
-			Interact(usr)
-
-	if(href_list["close"])
-		usr << browse(null, "window=wires")
-		usr.unset_machine(holder)
+/datum/wires/proc/getStatus()
+	return
 
 //
 // Overridable Procs
@@ -279,7 +208,6 @@ var/const/POWER = 8
 
 
 /datum/wires/proc/Pulse(obj/item/device/assembly/S)
-
 	for(var/colour in signallers)
 		if(S == signallers[colour])
 			PulseColour(colour)
@@ -322,3 +250,50 @@ var/const/POWER = 8
 /datum/wires/proc/Shuffle()
 	wires_status = 0
 	GenerateWires()
+
+/datum/wires/get_ui_data()
+	var/list/data = list()
+	var/list/payload = list()
+	for(var/colour in wires)
+		payload.Add(list(list("colour"=colour,"isCut"=IsColourCut(colour),"hasAttachment"=IsAttached(colour))))
+	data["wires"] = payload
+	data["holderInfo"] = getStatus()
+	return data
+
+/datum/wires/ui_act(action, params)
+	if(..())
+		return
+
+	var/target_wire = params["wire"]
+	var/mob/living/L = usr
+	if(!istype(L) || !CanUse(L)) //only physical beings can touch these. Sorry admins, maybe later
+		return
+	var/obj/item/I = L.get_active_hand()
+	switch(action)
+		if("cut")
+			if(istype(I, /obj/item/weapon/wirecutters))
+				CutWireColour(target_wire)
+			else
+				L << "<span class='warning'>You need wirecutters!</span>"
+		if("pulse")
+			if(istype(I, /obj/item/device/multitool))
+				PulseColour(target_wire)
+			else
+				L << "<span class='warning'>You need a multitool!</span>"
+		if("attach")
+			//Detach
+			if(IsAttached(target_wire))
+				var/obj/item/O = Detach(target_wire)
+				if(O)
+					L.put_in_hands(O)
+			// Attach
+			else
+				if(istype(I, /obj/item/device/assembly))
+					var/obj/item/device/assembly/A = I;
+					if(A.attachable)
+						if(!L.drop_item())
+							return
+						Attach(target_wire, A)
+					else
+						L << "<span class='warning'>You need an attachable assembly!</span>"
+	return 1

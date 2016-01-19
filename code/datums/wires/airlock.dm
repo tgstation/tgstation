@@ -31,16 +31,16 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 		return 1
 	return 0
 
-/datum/wires/airlock/GetInteractWindow()
+/datum/wires/airlock/getStatus()
 	var/obj/machinery/door/airlock/A = holder
-	. += ..()
-	. += text("<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]", (A.locked ? "The door bolts have fallen!" : "The door bolts look up."),
-	(A.lights ? "The door bolt lights are on." : "The door bolt lights are off!"),
-	((A.hasPower()) ? "The test light is on." : "The test light is off!"),
-	((A.aiControlDisabled==0 && !A.emagged) ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."),
-	(A.safe==0 ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."),
-	(A.normalspeed==0 ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."),
-	(A.emergency==0 ? "The emergency lights are off." : "The emergency lights are on."))
+	var/list/status = list()
+	status.Add(A.locked ? "The door bolts have fallen!" : "The door bolts look up.")
+	status.Add(A.hasPower() ? "The test light is on." : "The test light is off!")
+	status.Add((A.aiControlDisabled==0 && !A.emagged) ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off.")
+	status.Add(A.safe==0 ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off.")
+	status.Add(A.normalspeed==0 ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off.")
+	status.Add(A.emergency==0 ? "The emergency lights are off." : "The emergency lights are on.")
+	return status
 
 /datum/wires/airlock/UpdateCut(var/index, var/mended)
 
