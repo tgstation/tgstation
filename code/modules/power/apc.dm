@@ -1,7 +1,8 @@
-#define APC_WIRE_IDSCAN 1
-#define APC_WIRE_MAIN_POWER1 2
-#define APC_WIRE_MAIN_POWER2 3
-#define APC_WIRE_AI_CONTROL 4
+#define APC_RESET_IDSCAN 1
+#define APC_RESET_MAIN_POWER1 2
+#define APC_RESET_MAIN_POWER2 4
+#define APC_RESET_AI_CONTROL 8
+#define APC_RESET_EMP 5
 
 //update_state
 #define UPSTATE_CELL_IN 1
@@ -1075,6 +1076,24 @@
 
 	return val
 
+/obj/machinery/power/apc/proc/reset(state)
+	switch(state)
+		if(APC_RESET_IDSCAN)
+			locked = 1
+			updateDialog()
+		if(APC_RESET_MAIN_POWER1, APC_RESET_MAIN_POWER2)
+			if(!wires.IsIndexCut(APC_WIRE_MAIN_POWER1) && !wires.IsIndexCut(APC_WIRE_MAIN_POWER2))
+				shorted = 0
+				updateDialog()
+		if(APC_RESET_AI_CONTROL)
+			if(!wires.IsIndexCut(APC_WIRE_AI_CONTROL))
+				aidisabled = 0
+				updateDialog()
+		if(APC_RESET_EMP)
+			equipment = 3
+			environ = 3
+			update_icon()
+			update()
 
 // damage and destruction acts
 /obj/machinery/power/apc/emp_act(severity)
@@ -1087,11 +1106,7 @@
 	environ = 0
 	update_icon()
 	update()
-	spawn(600)
-		equipment = 3
-		environ = 3
-		update_icon()
-		update()
+	addtimer(src, "reset", 600, FALSE, APC_RESET_EMP)
 	..()
 
 /obj/machinery/power/apc/ex_act(severity, target)
