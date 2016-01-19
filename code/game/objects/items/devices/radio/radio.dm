@@ -99,12 +99,6 @@
 	keyslot = null
 	return ..()
 
-/obj/item/device/radio/MouseDrop(obj/over_object, src_location, over_location)
-	var/mob/M = usr
-	if((!istype(over_object, /obj/screen)) && src.loc == M)
-		return attack_self(M)
-	return
-
 /obj/item/device/radio/initialize()
 	frequency = sanitize_frequency(frequency, freerange)
 	set_frequency(frequency)
@@ -545,15 +539,11 @@
 	set_frequency(SYND_FREQ)
 
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user, params)
-//	..()
-	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(keyslot)
-
-
 			for(var/ch_name in channels)
 				SSradio.remove_object(src, radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
