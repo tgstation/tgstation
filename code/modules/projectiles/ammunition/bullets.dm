@@ -114,7 +114,7 @@
 	w_type = RECYK_METAL
 
 /obj/item/ammo_casing/shotgun/dart
-	name = "shotgun darts"
+	name = "shotgun dart"
 	desc = "A dart for use in shotguns."
 	icon_state = "blshell"
 	projectile_type = "/obj/item/projectile/bullet/dart"
