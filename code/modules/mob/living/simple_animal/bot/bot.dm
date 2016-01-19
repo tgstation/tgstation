@@ -140,7 +140,7 @@
 /mob/living/simple_animal/bot/proc/explode()
 	qdel(src)
 
-mob/living/simple_animal/bot/emag_act(mob/user)
+/mob/living/simple_animal/bot/emag_act(mob/user)
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = 0
 		emagged = 1
@@ -200,7 +200,10 @@ mob/living/simple_animal/bot/emag_act(mob/user)
 		return ..()
 
 /mob/living/simple_animal/bot/attack_ai(mob/user)
-	interact(user)
+	if(!topic_denied(user))
+		interact(user)
+	else
+		user << "<span class='warning'>[src]'s interface is not responding!</span>"
 
 /mob/living/simple_animal/bot/interact(mob/user)
 	show_controls(user)
@@ -276,12 +279,6 @@ mob/living/simple_animal/bot/emag_act(mob/user)
 	text_hack = "You hack [name]."
 	text_dehack = "You reset [name]."
 	text_dehack_fail = "You fail to reset [name]."
-
-/mob/living/simple_animal/bot/attack_ai(mob/user as mob)
-	if(!topic_denied(user))
-		show_controls(user)
-	else
-		user << "<span class='warning'>[src]'s interface is not responding!</span>"
 
 /mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
 	if((!on) || (!message))
