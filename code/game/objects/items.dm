@@ -231,7 +231,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/interact(mob/user)
 	if(hidden_uplink && hidden_uplink.active)
 		hidden_uplink.interact(user)
-		return
+		return 1
 	ui_interact(user)
 
 /obj/item/attack_hand(mob/user)

@@ -114,6 +114,8 @@
 
 
 /obj/item/device/radio/interact(mob/user)
+	if (..())
+		return
 	if(b_stat && !istype(user, /mob/living/silicon/ai))
 		wires.Interact(user)
 	else

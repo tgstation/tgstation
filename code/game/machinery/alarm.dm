@@ -617,7 +617,6 @@
 	return
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
-
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(alarm_frequency)
 
 	if(!frequency) return
