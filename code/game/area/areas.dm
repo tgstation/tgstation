@@ -11,7 +11,8 @@
 	icon_state = ""
 	layer = 10
 	uid = ++global_uid
-	areas |= src
+	if (x) // If we're actually located in the world
+		areas |= src
 
 	if(isspace(src))	// override defaults for space. TODO: make space areas of type /area/space rather than /area
 		requires_power = 1
