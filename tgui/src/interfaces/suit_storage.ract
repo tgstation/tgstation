@@ -1,0 +1,71 @@
+{{#if data.isBroken}}
+  <ui-notice>
+    <span>Unit chamber is too contaminated to continue usage. Please call for a qualified individual to perform maintenance.</span> 
+  </ui-notice>
+{{/if}}
+
+{{#if data.isBaking}}
+  <ui-notice>
+    <span>Unit is cauterising contents with selected UV ray intensity. Please wait.</span>
+  </ui-notice>
+{{/if}}
+
+{{#if data.occupied}}
+  <ui-notice>
+    <span>WARNING: Biological entity detected inside the Unit's storage. Please remove.</span>
+  </ui-notice>
+{{/if}}
+
+{{#if !data.isBaking && !data.isBroken}}
+  <ui-display title="Storage" button>
+  {{#partial button}}
+      <ui-section>
+      {{#if !data.isLocked}}
+        <ui-button action='toggle_open' icon='{{data.isOpen ? "sign-out" : "sign-in"}}'>{{data.isOpen ? 'Close' : 'Open'}}</ui-button>
+      {{/if}}
+      {{#if !data.isOpen}}
+        <ui-button action='toggle_lock' icon='{{data.isLocked ? "unlock" : "lock"}}'>{{data.isLocked ? 'Unlock' : 'Lock'}}</ui-button>
+      {{/if}}
+      </ui-section>
+  {{/partial}}
+  {{#if data.isLocked}}
+    <ui-notice>
+      <span>LOCKED</span>
+    </ui-notice>
+  {{else}}
+      {{#if data.maintenance}}
+          <ui-notice>
+            <span>The panel is ridden with controls{{','}} buttons{{','}} and meters{{','}} labeled in strange signs and symbols that you cannot understand; probably the manufacturing world's language. Among other things, a few controls catch your eye...</span>
+          </ui-notice>
+          <ui-section>
+            <div>A small dial with a &lambda; symbol engraved on it.</div>
+            <span>It's pointing towards a gauge that reads</span>
+            <ui-button action="uv">{{data.uv ? '15nm' : '185nm'}}</ui-button>
+          </ui-section>
+          <ui-section>
+            <div>A thick old-style button, with 2 grimy LED lights next to it.</div>
+            <span>The</span>
+            <ui-button action="safety" icon="lightbulb-o">{{data.safety ? 'green' : 'red'}}</ui-button>
+            <span>LED is on</span>
+          </ui-section>
+      {{else}}
+            {{#if data.isOpen}}
+              <ui-section label='Helmet storage compartment'>
+                <ui-button action='helmet' icon='{{data.helmet ? "square" : "square-o"}}'>{{data.helmet ? data.helmet : 'Empty'}}</ui-button>
+              </ui-section>
+              <ui-section label='Suit storage compartment'>
+                <ui-button action='suit' icon='{{data.suit ? "square" : "square-o"}}'>{{data.suit ? data.suit : 'Empty'}}</ui-button>
+              </ui-section>
+              <ui-section label='Breathmask storage compartment'>
+                <ui-button action='mask' icon='{{data.mask ? "square" : "square-o"}}'>{{data.mask ? data.mask : 'Empty'}}</ui-button>
+              </ui-section>
+              <ui-section label='Auxiliary storage compartment'>
+                <ui-button action='aux' icon='{{data.aux ? "square" : "square-o"}}'>{{data.aux ? data.aux : 'Empty'}}</ui-button>
+              </ui-section>
+            {{else}}
+             <ui-button action='uv_start' icon='recycle'>Start Disinfection cycle</ui-button>
+            {{/if}}
+      {{/if}}
+  {{/if}}
+  </ui-display>
+{{/if}}
