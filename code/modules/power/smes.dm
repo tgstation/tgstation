@@ -82,7 +82,7 @@
 		C.Add(PC.charge / PC.maxcharge)
 	capacity = MC / (15000) * 1e6
 	if(!charge)
-		var/summ = Mean(C)
+		var/summ = Mean(arglist(C))
 		charge = capacity * summ
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
