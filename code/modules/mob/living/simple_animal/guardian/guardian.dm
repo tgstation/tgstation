@@ -436,6 +436,8 @@
 	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit."
 	magic_fluff_string = "..And draw the Sentinel, an alien master of ranged combat."
 	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Holoparasite swarm online."
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 8
 	var/list/snares = list()
 	var/toggle = FALSE
 
@@ -461,6 +463,14 @@
 			toggle = TRUE
 	else
 		src << "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>"
+
+/mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
+	if(see_in_dark)
+		src << "<span class='notice'>You deactivate your night vision.</span>"
+		see_in_dark = 0
+	else
+		src << "<span class='notice'>You activate your night vision.</span>"
+		see_in_dark = 8
 
 /mob/living/simple_animal/hostile/guardian/ranged/verb/Snare()
 	set name = "Set Surveillance Trap"
