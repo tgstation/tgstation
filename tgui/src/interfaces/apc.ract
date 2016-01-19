@@ -68,7 +68,7 @@ component.exports = {
     {{#if data.powerCellStatus != null}}
       <ui-bar min='0' max='100' value='{{data.powerCellStatus}}' state='{{powerCellStatusState}}'>{{Math.fixed(adata.powerCellStatus)}}%</ui-bar>
     {{else}}
-      <span class='bad'>Power cell removed.</span>
+      <span class='bad'>Removed</span>
     {{/if}}
   </ui-section>
   {{#if data.powerCellStatus != null}}
