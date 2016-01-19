@@ -3667,14 +3667,16 @@
 
 	if(istype(O, /obj/item/weapon/paper))
 		var/obj/item/weapon/paper/paperaffected = O
-		paperaffected.clearpaper()
-		O.visible_message("<span class='warning'>The solution melts away \the [O]'s ink.</span>")
+		if(paperaffected.info || paperaffected.stamps)
+			paperaffected.clearpaper()
+			O.visible_message("<span class='warning'>The solution melts away \the [O]'s ink.</span>")
 
 	if(istype(O, /obj/item/weapon/book))
 		if(volume >= 5)
 			var/obj/item/weapon/book/affectedbook = O
-			affectedbook.dat = null
-			O.visible_message("<span class='warning'>The solution melts away \the [O]'s ink.</span>")
+			if(affectedbook.dat)
+				affectedbook.dat = null
+				O.visible_message("<span class='warning'>The solution melts away \the [O]'s ink.</span>")
 
 //It's really much more stronger than other drinks
 /datum/reagent/ethanol/beer
