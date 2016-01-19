@@ -80,15 +80,10 @@
 	if(prob(50))
 		qdel(src)
 
-/obj/machinery/chem_dispenser/interact(mob/user)
-	if(stat & BROKEN)
-		return
-	ui_interact(user)
-
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "chem_dispenser", name, 550, 550, master_ui, state)
 		ui.open()
 
@@ -125,9 +120,6 @@
 	return data
 
 /obj/machinery/chem_dispenser/ui_act(action, params)
-	if(..())
-		return
-
 	switch(action)
 		if("amount")
 			var/amount = text2num(params["amount"])
@@ -178,12 +170,6 @@
 		icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
 	icon_beaker.pixel_x = rand(-10,5)
 	overlays += icon_beaker
-
-/obj/machinery/chem_dispenser/attack_hand(mob/user)
-	if (!user)
-		return
-	interact(user)
-
 
 /obj/machinery/chem_dispenser/constructable
 	name = "portable chem dispenser"

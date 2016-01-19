@@ -100,20 +100,10 @@
 	else
 		user << "Seems empty."
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/attack_hand(mob/user)
-	if(..() | !user)
-		return
-	interact(user)
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/interact(mob/user)
-	if(panel_open)
-		return
-	ui_interact(user)
-
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "cryo", name, 400, 550, master_ui, state)
 		ui.open()
 

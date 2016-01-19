@@ -9,7 +9,7 @@ export function css () {
     .pipe(g.if(f.debug, g.sourcemaps.init({loadMaps: true})))
     .pipe(g.stylus({
       url: 'data-url',
-      paths: [f.src]
+      paths: [ f.src ]
     }))
     .pipe(g.postcss([
       s.autoprefixer({ browsers: ['last 2 versions', 'ie >= 8'] }),

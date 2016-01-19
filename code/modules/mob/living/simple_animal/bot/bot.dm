@@ -86,7 +86,8 @@
 		return "<span class='average'>[mode_name[mode]]</span>"
 
 /mob/living/simple_animal/bot/proc/turn_on()
-	if(stat)	return 0
+	if(stat)
+		return 0
 	on = 1
 	SetLuminosity(initial(luminosity))
 	update_icon()
@@ -192,30 +193,36 @@ mob/living/simple_animal/bot/emag_act(mob/user)
 	return 1 //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
-/mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "help")
-		show_controls(M)
+/mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
+	if(H.a_intent == "help")
+		interact(H)
 	else
 		return ..()
+
+/mob/living/simple_animal/bot/attack_ai(mob/user)
+	interact(user)
+
+/mob/living/simple_animal/bot/interact(mob/user)
+	show_controls(user)
 
 /mob/living/simple_animal/bot/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(!locked)
 			open = !open
-			user << "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>"
+			user << "<span class='notice'>The maintenance panel is now [open ? "opened" : "closed"].</span>"
 		else
-			user << "<span class='warning'>Maintenance panel is locked.</span>"
-	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+			user << "<span class='warning'>The maintenance panel is locked.</span>"
+	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			user << "Controls are now [locked ? "locked." : "unlocked."]"
 		else
 			if(emagged)
-				user << "<span class='warning'>ERROR</span>"
+				user << "<span class='danger'>ERROR</span>"
 			if(open)
-				user << "<span class='danger'>Please close the access panel before locking it.</span>"
+				user << "<span class='warning'>Please close the access panel before locking it.</span>"
 			else
-				user << "<span class='danger'>Access denied.</span>"
+				user << "<span class='warning'>Access denied.</span>"
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")

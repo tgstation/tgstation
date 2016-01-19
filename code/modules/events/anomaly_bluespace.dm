@@ -15,14 +15,14 @@
 
 
 /datum/round_event/anomaly/anomaly_bluespace/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
+	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/bluespace(T)
 
 
 /datum/round_event/anomaly/anomaly_bluespace/end()
 	if(newAnomaly.loc)//If it hasn't been neutralized, it's time to warp half the station away jeez
-		var/turf/T = pick(get_area_turfs(impact_area))
+		var/turf/T = safepick(get_area_turfs(impact_area))
 		if(T)
 				// Calculate new position (searches through beacons in world)
 			var/obj/item/device/radio/beacon/chosen

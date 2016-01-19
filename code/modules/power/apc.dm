@@ -457,7 +457,7 @@
 		else if(stat & (BROKEN|MAINT))
 			user << "<span class='warning'>Nothing happens!</span>"
 		else
-			if(src.allowed(usr) && !isWireCut(APC_WIRE_IDSCAN))
+			if(src.allowed(usr) && !wires.IsIndexCut(APC_WIRE_IDSCAN))
 				locked = !locked
 				user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>"
 				update_icon()
@@ -579,8 +579,8 @@
 // attack with hand - remove cell (if cover open) or interact with the APC
 
 /obj/machinery/power/apc/attack_hand(mob/user)
-	if (!user) return
-	add_fingerprint(user)
+	if(!user)
+		return
 	if(usr == user && opened && (!issilicon(user)))
 		if(cell)
 			user.put_in_hands(cell)
@@ -594,7 +594,7 @@
 			charging = 0
 			src.update_icon()
 		return
-	interact(user)
+	..()
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
 	if(!user)
@@ -621,8 +621,6 @@
 
 
 /obj/machinery/power/apc/interact(mob/user)
-	if(stat & (BROKEN|MAINT))
-		return
 	if(wiresexposed && !istype(user, /mob/living/silicon/ai))
 		wires.Interact(user)
 	else
@@ -631,7 +629,7 @@
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "apc", name, 535, 515, master_ui, state)
 		ui.open()
 
@@ -717,10 +715,6 @@
 //			world << "[area.power_equip]"
 	area.power_change()
 
-/obj/machinery/power/apc/proc/isWireCut(wireIndex)
-	return wires.IsIndexCut(wireIndex)
-
-
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(IsAdminGhost(user))
 		return 1
@@ -744,9 +738,6 @@
 	return 1
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(..())
-		return
-
 	if(!can_use(usr, 1))
 		return
 

@@ -251,7 +251,7 @@ Class Procs:
 	if(!user.IsAdvancedToolUser() && !IsAdminGhost(user))
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
-	if (ishuman(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
 			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
@@ -268,10 +268,10 @@ Class Procs:
 	if(!interact_offline && (stat & (BROKEN|MAINT)))
 		user << "<span class='danger'>\The [src] seems broken.</span>"
 		return 1
-	add_fingerprint(user)
 	if(set_machine)
 		user.set_machine(src)
 	interact(user)
+	add_fingerprint(user)
 	return 0
 
 /obj/machinery/interact(mob/user)
@@ -384,7 +384,7 @@ Class Procs:
 		user << "<span class='notice'>\icon[C] [C.name]</span>"
 
 /obj/machinery/examine(mob/user)
-	..(user)
+	..()
 	if(user.research_scanner && component_parts)
 		display_parts(user)
 

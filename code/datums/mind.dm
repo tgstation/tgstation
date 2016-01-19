@@ -560,7 +560,7 @@
 		istype(current,/mob/living/carbon/human)      )
 
 		text = "Uplink: <a href='?src=\ref[src];common=uplink'>give</a>"
-		var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink()
+		var/obj/item/device/uplink/suplink = find_syndicate_uplink()
 		var/crystals
 		if (suplink)
 			crystals = suplink.uses
@@ -1089,7 +1089,6 @@
 					if(isAI(current))
 						var/mob/living/silicon/ai/A = current
 						ticker.mode.add_law_zero(A)
-						A.show_laws()
 
 			if("autoobjectives")
 				ticker.mode.forge_traitor_objectives(src)
@@ -1228,7 +1227,7 @@
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
 				if (check_rights(R_FUN, 0))
-					var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink()
+					var/obj/item/device/uplink/suplink = find_syndicate_uplink()
 					var/crystals
 					if (suplink)
 						crystals = suplink.uses
@@ -1260,7 +1259,7 @@
 	return null
 
 /datum/mind/proc/take_uplink()
-	var/obj/item/device/uplink/hidden/H = find_syndicate_uplink()
+	var/obj/item/device/uplink/H = find_syndicate_uplink()
 	if(H)
 		qdel(H)
 

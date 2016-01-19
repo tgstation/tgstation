@@ -42,6 +42,9 @@ component.exports = {
 <span class='button {{styles}} {{#grid}}gridable{{/}}'
   unselectable='on'
   {{#clickable}}tabindex='0'{{/}}
+  data-tooltip='{{tooltip}}'
+  on-mouseover-mousemove='hover'
+  on-mouseleave='unhover'
   on-click-enter='{{#clickable}}press{{/}}'>
   {{#if icon}}
     <i class='fa fa-{{icon}}'></i>
