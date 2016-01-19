@@ -68,7 +68,7 @@
 	speed = 1
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(movement_dir = 0)
-	return
+	return 1
 
 /mob/living/simple_animal/hostile/syndicate/ranged
 	ranged = 1
@@ -95,7 +95,7 @@
 				/obj/item/weapon/shield/energy)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
-	return
+	return 1
 
 
 /mob/living/simple_animal/hostile/syndicate/civilian
