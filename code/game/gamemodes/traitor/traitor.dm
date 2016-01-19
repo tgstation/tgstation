@@ -206,14 +206,15 @@
 	var/law_borg = "Accomplish your AI's objectives at all costs."
 	killer << "<b>Your laws have been changed!</b>"
 	killer.set_zeroth_law(law, law_borg)
-	killer << "New law: 0. [law]"
 	give_codewords(killer)
 	killer.set_syndie_radio()
 	killer << "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!"
 	killer << "In the top right corner of the screen you will find the Malfunctions tab, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices."
 	killer << "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds."
+	killer.view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 	killer.verbs += /mob/living/silicon/ai/proc/choose_modules
 	killer.malf_picker = new /datum/module_picker
+	killer.show_laws()
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
