@@ -98,17 +98,16 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/components/binary/pump/interact(mob/user)
-	if(stat & (BROKEN|NOPOWER)) return
+/obj/machinery/atmospherics/components/binary/pump/attack_hand(mob/user)
 	if(!src.allowed(usr))
 		usr << "<span class='danger'>Access denied.</span>"
 		return
-	ui_interact(user)
+	..()
 
 /obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 																datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "atmos_pump", name, 335, 115, master_ui, state)
 		ui.open()
 
@@ -118,6 +117,21 @@ Thus, the two variables affect pump operation are set in New():
 	data["set_pressure"] = round(target_pressure)
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 	return data
+
+/obj/machinery/atmospherics/components/binary/pump/ui_act(action, params)
+	switch(action)
+		if("power")
+			on = !on
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+		if("pressure")
+			switch(params["pressure"])
+				if("max")
+					target_pressure = MAX_OUTPUT_PRESSURE
+				if("custom")
+					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
+			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+	update_icon()
+	return 1
 
 /obj/machinery/atmospherics/components/binary/pump/atmosinit()
 	..()
@@ -151,30 +165,6 @@ Thus, the two variables affect pump operation are set in New():
 		broadcast_status()
 	update_icon()
 	return
-
-
-/obj/machinery/atmospherics/components/binary/pump/attack_hand(mob/user)
-	if(..() || !user)
-		return
-	interact(user)
-
-/obj/machinery/atmospherics/components/binary/pump/ui_act(action, params)
-	if(..())
-		return
-
-	switch(action)
-		if("power")
-			on = !on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
-		if("pressure")
-			switch(params["pressure"])
-				if ("max")
-					target_pressure = MAX_OUTPUT_PRESSURE
-				if ("custom")
-					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
-			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
-	update_icon()
-	return 1
 
 /obj/machinery/atmospherics/components/binary/pump/power_change()
 	..()

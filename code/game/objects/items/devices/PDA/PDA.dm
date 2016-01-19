@@ -256,7 +256,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	user.set_machine(src)
 
-	if(active_uplink_check(user))
+	if(hidden_uplink && hidden_uplink.active)
+		hidden_uplink.interact(user)
 		return
 
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
@@ -565,9 +566,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				tnote = null
 			if("Ringtone")
 				var/t = input(U, "Please enter new ringtone", name, ttone) as text
-				if (in_range(src, U) && loc == U)
-					if (t)
-						if(src.hidden_uplink && hidden_uplink.check_trigger(U, trim(lowertext(t)), trim(lowertext(lock_code))))
+				if(in_range(src, U) && loc == U)
+					if(t)
+						if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
+							hidden_uplink.interact(U)
 							U << "The PDA softly beeps."
 							U << browse(null, "window=pda")
 							src.mode = 0

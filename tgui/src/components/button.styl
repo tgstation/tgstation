@@ -8,15 +8,16 @@ buttoncolor(selector, color)
     background-color: lighten(color, button-lighten-hover)
     outline: 0
 
-
 span.button
   @extend $fontReset
   display: inline-block
   vertical-align: middle
   height: 20px
-  line-height: 19px
+  line-height: @height - 3px
   padding: 0 5px
   white-space: nowrap
+
+  border: 1px solid button-color-border
 
   .fa
     padding-right: 2px
@@ -30,3 +31,9 @@ span.button
   &.gridable
     width: 125px
     margin: 2px 0
+
+span:not(.button) + span.button
+  margin-left: 5px
+
+span.button + span:not(.button)
+  margin-left: 5px

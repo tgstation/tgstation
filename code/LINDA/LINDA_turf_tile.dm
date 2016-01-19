@@ -181,13 +181,13 @@
 		/******************* GROUP HANDLING FINISH *********************************************************************/
 
 		else
-			if(!air.check_turf(enemy_tile, atmos_adjacent_turfs_amount))
+			if(air.check_turf(enemy_tile, atmos_adjacent_turfs_amount))
 				var/difference = air.mimic(enemy_tile,atmos_adjacent_turfs_amount)
 				if(difference)
 					if(difference > 0)
 						consider_pressure_difference(enemy_tile, difference)
 					else
-						enemy_tile.consider_pressure_difference(src, difference)
+						enemy_tile.consider_pressure_difference(src, -difference)
 				remove = 0
 				if(excited_group)
 					last_share_check()
@@ -245,7 +245,7 @@
 			if(difference > 0)
 				consider_pressure_difference(T, difference)
 			else
-				T.consider_pressure_difference(src, difference)
+				T.consider_pressure_difference(src, -difference)
 		last_share_check()
 
 /turf/proc/consider_pressure_difference(turf/simulated/T, difference)

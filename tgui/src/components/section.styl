@@ -3,14 +3,17 @@
   margin: 0
   text-align: left
   vertical-align: middle
+  padding: 3px 2px
 
 section
   display: table-row
   width: 100%
-  padding: 3px 0
 
   &:not(:first-child)
     padding-top: 4px
+
+  &.candystripe:nth-child(even)
+    background-color: section-color-candystripe
 
   .label
     @extend $cell
@@ -28,6 +31,3 @@ section
   .line
     @extend $cell
     width: 100%
-
-  .buttoninfo
-    margin-left: 5px

@@ -12,7 +12,6 @@
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
 	var/canister_color = "yellow"
-	var/can_label = 1
 	var/filled = 0.5
 	pressure_resistance = 7*ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
@@ -37,42 +36,36 @@
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
 	canister_color = "redws"
-	can_label = 0
 	gas_type = "n2o"
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"
 	desc = "Nitrogen gas. Reportedly useful for something."
 	icon_state = "red"
 	canister_color = "red"
-	can_label = 0
 	gas_type = "n2"
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "o2 canister"
 	desc = "Oxygen. Necessary for human life."
 	icon_state = "blue"
 	canister_color = "blue"
-	can_label = 0
 	gas_type = "o2"
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "plasma canister"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	icon_state = "orange"
 	canister_color = "orange"
-	can_label = 0
 	gas_type = "plasma"
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "co2 canister"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	icon_state = "black"
 	canister_color = "black"
-	can_label = 0
 	gas_type = "co2"
 /obj/machinery/portable_atmospherics/canister/air
 	name = "air canister"
 	desc = "Pre-mixed air."
 	icon_state = "grey"
 	canister_color = "grey"
-	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/proc/check_change()
 	var/old_flag = update_flag
@@ -193,13 +186,7 @@ update_flag
 			else
 				loc.assume_air(removed)
 				air_update_turf()
-			src.update_icon()
-
-
-	if(air_contents.return_pressure() < 1)
-		can_label = 1
-	else
-		can_label = 0
+			update_icon()
 
 /obj/machinery/portable_atmospherics/canister/process()
 	src.updateDialog()
@@ -276,27 +263,16 @@ update_flag
 
 	..()
 
-/obj/machinery/portable_atmospherics/canister/attack_hand(mob/user)
-	if (!user)
-		return
-	interact(user)
-
-/obj/machinery/portable_atmospherics/canister/interact(mob/user)
-	if (src.destroyed)
-		return
-	ui_interact(user)
-
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 															datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "canister", name, 405, 405, master_ui, state)
+	if(!ui)
+		ui = new(user, src, ui_key, "canister", name, 415, 405, master_ui, state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/get_ui_data()
 	var/data = list()
 	data["name"] = name
-	data["canLabel"] = can_label ? 1 : 0
 	data["portConnected"] = connected_port ? 1 : 0
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["releasePressure"] = round(release_pressure ? release_pressure : 0)
@@ -313,17 +289,15 @@ update_flag
 	return data
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
-	if(..())
-		return
-
 	switch(action)
 		if("relabel")
-			if(can_label)
-				var/label = input("Label canister:", "Gas Canister") as null|anything in label2types
-				var/newtype = label2types[label]
-				if(newtype)
-					new newtype (loc, 0)
-					qdel(src)
+			var/label = input("Label canister:", "Gas Canister") as null|anything in label2types
+			var/newtype = label2types[label]
+			if(newtype)
+				var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc)
+				replacement.air_contents = air_contents
+				replacement.interact(usr)
+				qdel(src)
 		if("pressure")
 			switch(params["pressure"])
 				if("custom")
@@ -368,12 +342,10 @@ update_flag
 	update_icon()
 	return 1
 
-/obj/machinery/portable_atmospherics/canister/New(loc, fill = 1)
+/obj/machinery/portable_atmospherics/canister/New(loc)
 	..()
 
-	if(fill)
-		create_gas()
-
+	create_gas()
 	update_icon()
 	return 1
 

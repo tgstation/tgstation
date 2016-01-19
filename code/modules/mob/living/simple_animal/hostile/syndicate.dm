@@ -25,6 +25,7 @@
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list("syndicate")
+	check_friendly_fire = 1
 	status_flags = CANPUSH
 	del_on_death = 1
 
@@ -68,7 +69,7 @@
 	speed = 1
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(movement_dir = 0)
-	return
+	return 1
 
 /mob/living/simple_animal/hostile/syndicate/ranged
 	ranged = 1
@@ -95,7 +96,7 @@
 				/obj/item/weapon/shield/energy)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
-	return
+	return 1
 
 
 /mob/living/simple_animal/hostile/syndicate/civilian

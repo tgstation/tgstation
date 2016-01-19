@@ -56,6 +56,7 @@ component.exports = {
     })
   },
   oncomplete () {
+    this.find('main').focus() // Focus for the scrollbar.
     winset('mapwindow.map', 'focus', true) // Give focus back to the map.
   }
 }

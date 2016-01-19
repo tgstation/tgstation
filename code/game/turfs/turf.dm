@@ -142,8 +142,8 @@
 //////Assimilate Air//////
 /turf/simulated/proc/Assimilate_Air()
 	if(air)
-		var/datum/gas_mixture/a_gas_mixture = new//Holders to assimilate air from nearby turfs
-		var/list/a_gases = a_gas_mixture.gases
+		var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
+		var/list/total_gases = total.gases
 		var/turf_count = 0
 
 		for(var/direction in cardinal)//Only use cardinals to cut down on lag
@@ -153,21 +153,24 @@
 				turf_count++//Considered a valid turf for air calcs
 				continue
 
-			else if(istype(T,/turf/simulated/floor))
+			if(istype(T,/turf/simulated/floor))
 				var/turf/simulated/S = T
 				if(S.air)//Add the air's contents to the holders
 					var/list/S_gases = S.air.gases
-					for(var/id in a_gases)
-						a_gases[id][MOLES] += S_gases[id][MOLES]
-					a_gas_mixture.temperature += S.air.temperature
+					for(var/id in S_gases)
+						total.assert_gas(id)
+						total_gases[id][MOLES] += S_gases[id][MOLES]
+					total.temperature += S.air.temperature
 				turf_count++
 
-		air.copy_from(a_gas_mixture)
-		var/list/air_gases = air.gases
-		for(var/id in air_gases)
-			air_gases[id][MOLES] /= max(turf_count,1)//Averages contents of the turfs, ignoring walls and the like
+		if(turf_count) //if there weren't any open turfs, no need to update.
+			air.copy_from(total)
+			var/list/air_gases = air.gases
+			for(var/id in air_gases)
+				air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
 
-		air.temperature /= max(turf_count,1)
+			air.temperature /= turf_count
+
 		SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()

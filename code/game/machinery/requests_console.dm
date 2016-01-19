@@ -122,7 +122,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	Radio.listening = 0
 
 /obj/machinery/requests_console/attack_hand(mob/user)
-	if(..(user))
+	if(..())
 		return
 	var/dat = ""
 	if(!open)
