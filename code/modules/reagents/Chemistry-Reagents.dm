@@ -335,10 +335,6 @@
 	if(isslime(M))
 		M.adjustToxLoss(rand(15, 20))
 
-	if(istype(M,/mob/living/simple_animal/hostile/slime))
-		var/mob/living/simple_animal/hostile/slime/S = M
-		S.calm()
-
 	//Greys treat water like acid
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -398,6 +394,13 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
 			cube.Expand()
+
+/datum/reagent/water/reaction_animal(var/mob/living/simple_animal/M, var/method=TOUCH, var/volume)
+	..()
+
+	if(istype(M,/mob/living/simple_animal/hostile/slime))
+		var/mob/living/simple_animal/hostile/slime/S = M
+		S.calm()
 
 /datum/reagent/lube
 	name = "Space Lube"

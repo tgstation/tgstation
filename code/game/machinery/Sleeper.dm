@@ -728,6 +728,9 @@
 		connected.go_out()
 		connected.update_icon()
 	if(href_list["security"])
+		if(src.connected && connected.on)
+			to_chat(usr, "<span class='danger'>The security features of \the [src] cannot be re-enabled when it is on!</span>")
+			return
 		connected.emagged = 0
 		emagged = 0
 		name = "thermal homeostasis regulator"
@@ -753,13 +756,13 @@
 		return
 	if(!(world.timeofday >= connected.target_time && connected.on)) //If we're currently still cooking
 		var/targettemperature = T0C+32+(connected.available_options["[connected.setting]"]/10)
-		var/timefraction = (connected.available_options["[connected.setting]"])/250
-		var/tempdifference = abs(targettemperature - connected.occupant.bodytemperature))
-		if(bodytemperature < targettemperature)
-			connected.occupant.bodytemperature += tempdifference*(timefraction)
+		var/emaggedbonus = (connected.emagged) ? 10 : 1
+		var/timefraction = (connected.available_options["[connected.setting]"])/250*emaggedbonus
+		var/tempdifference = abs(targettemperature - connected.occupant.bodytemperature)
+		if(connected.occupant.bodytemperature < targettemperature)
+			connected.occupant.bodytemperature = min(connected.occupant.bodytemperature + tempdifference*(timefraction),targettemperature)
 		else
-			connected.occupant.bodytemperature -= tempdifference*(timefraction)
-
+			connected.occupant.bodytemperature = max(connected.occupant.bodytemperature - tempdifference*(timefraction),targettemperature)
 	else
 		switch(connected.setting)
 			if("Thermoregulate")

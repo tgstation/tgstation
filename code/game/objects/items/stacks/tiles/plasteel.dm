@@ -22,10 +22,6 @@
 	pixel_x = rand(1, 14)
 	pixel_y = rand(1, 14)
 
-/obj/item/stack/tile/plasteel/recycle(var/datum/materials/rec)
-	rec.addAmount("iron",amount/4)
-	return 1
-
 /*
 /obj/item/stack/tile/plasteel/attack_self(mob/user as mob)
 	if (usr.stat)
