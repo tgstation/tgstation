@@ -113,7 +113,7 @@
 	return tinted
 
 /mob/living/carbon/human/abiotic(full_body = 0)
-	if(full_body && ((src.l_hand && !( src.l_hand.flags&ABSTRACT )) || (src.r_hand && !( src.r_hand.flags&ABSTRACT )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves)))
+	if(full_body && ((l_hand && !( src.l_hand.flags&ABSTRACT )) || (r_hand && !( src.r_hand.flags&ABSTRACT )) || (back && !(back.flags&ABSTRACT)) || (wear_mask && !(wear_mask.flags&ABSTRACT)) || (head && !(head.flags&ABSTRACT)) || (shoes && !(shoes.flags&ABSTRACT)) || (w_uniform && !(w_uniform.flags&ABSTRACT)) || (wear_suit && !(wear_suit.flags&ABSTRACT)) || (glasses && !(glasses.flags&ABSTRACT)) || (ears && !(ears.flags&ABSTRACT)) || (gloves && !(gloves.flags&ABSTRACT)) ) )
 		return 1
 
 	if( (src.l_hand && !(src.l_hand.flags&ABSTRACT)) || (src.r_hand && !(src.r_hand.flags&ABSTRACT)) )
