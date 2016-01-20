@@ -26,6 +26,7 @@
     "gulp-sourcemaps": "1.6.0",
     "gulp-stylus": "2.2.0",
     "gulp-uglify": "1.5.1",
+    "gulplog": "1.0.0",
     "html5shiv": "3.7.3",
     "ie8": "0.3.0",
     "minimist": "1.2.0",

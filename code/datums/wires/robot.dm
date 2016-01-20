@@ -5,7 +5,7 @@
 	var/const/W_CAMERA = "camera"
 
 	holder_type = /mob/living/silicon/robot
-	randomize = 1
+	randomize = TRUE
 
 /datum/wires/r_n_d/New(atom/holder)
 	wires = list(

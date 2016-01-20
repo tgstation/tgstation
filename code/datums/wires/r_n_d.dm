@@ -4,7 +4,7 @@
 	var/const/W_SHOCK = "shock" // Shocks the user, 50% chance
 
 	holder_type = /obj/machinery/r_n_d
-	randomize = 1
+	randomize = TRUE
 
 /datum/wires/r_n_d/New(atom/holder)
 	wires = list(

@@ -10,6 +10,7 @@
 	var/const/W_BEACON_RX = "beacon"
 
 	holder_type = /mob/living/simple_animal/bot/mulebot
+	randomize = TRUE
 
 /datum/wires/mulebot/New(atom/holder)
 	wires = list(

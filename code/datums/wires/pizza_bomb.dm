@@ -5,7 +5,7 @@
 	var/const/W_DISARM = "disarm" // No boom!
 
 	holder_type = /obj/item/device/pizza_bomb
-	randomize = 1
+	randomize = TRUE
 
 /datum/wires/pizza_bomb/New(atom/holder)
 	wires = list(
