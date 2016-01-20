@@ -1,9 +1,3 @@
-#define APC_RESET_IDSCAN 1
-#define APC_RESET_MAIN_POWER1 2
-#define APC_RESET_MAIN_POWER2 4
-#define APC_RESET_AI_CONTROL 8
-#define APC_RESET_EMP 5
-
 //update_state
 #define UPSTATE_CELL_IN 1
 #define UPSTATE_OPENED1 2
@@ -13,6 +7,8 @@
 #define UPSTATE_BLUESCREEN 32
 #define UPSTATE_WIREEXP 64
 #define UPSTATE_ALLGOOD 128
+
+#define APC_RESET_EMP "emp"
 
 //update_overlay
 #define APC_UPOVERLAY_CHARGEING0 1
@@ -458,7 +454,7 @@
 		else if(stat & (BROKEN|MAINT))
 			user << "<span class='warning'>Nothing happens!</span>"
 		else
-			if(src.allowed(usr) && !wires.IsIndexCut(APC_WIRE_IDSCAN))
+			if(allowed(usr) && !wires.is_cut(wires.W_IDSCAN))
 				locked = !locked
 				user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>"
 				update_icon()
@@ -551,9 +547,8 @@
 				opened = 1
 			update_icon()
 	else
-		if((!opened && wiresexposed && wires.IsInteractionTool(W)) || (issilicon(user) && !(stat & BROKEN) &&!malfhack))
+		if(!opened && wiresexposed && is_wire_tool(W))
 			return attack_hand(user)
-
 		..()
 		if( ((stat & BROKEN) || malfhack) && !opened && W.force >= 5 && W.w_class >= 3 && prob(20) )
 			opened = 2
@@ -605,17 +600,15 @@
 	user.visible_message("<span class='danger'>[user.name] slashes at the [src.name]!</span>", "<span class='notice'>You slash at the [src.name]!</span>")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 
-	var/allcut = wires.IsAllCut()
-
 	if(beenhit >= pick(3, 4) && wiresexposed != 1)
 		wiresexposed = 1
-		src.update_icon()
-		src.visible_message("<span class='danger'>The [src.name]'s cover flies open, exposing the wires!</span>")
+		update_icon()
+		visible_message("<span class='danger'>The [src.name]'s cover flies open, exposing the wires!</span>")
 
-	else if(wiresexposed == 1 && allcut == 0)
-		wires.CutAll()
-		src.update_icon()
-		src.visible_message("<span class='danger'>The [src.name]'s wires are shredded!</span>")
+	else if(wiresexposed == 1 && !wires.is_all_cut())
+		wires.cut_all()
+		update_icon()
+		visible_message("<span class='danger'>The [src.name]'s wires are shredded!</span>")
 	else
 		beenhit += 1
 	return
@@ -623,7 +616,7 @@
 
 /obj/machinery/power/apc/interact(mob/user)
 	if(wiresexposed && !istype(user, /mob/living/silicon/ai))
-		wires.Interact(user)
+		wires.interact(user)
 	else
 		ui_interact(user)
 
@@ -1067,16 +1060,16 @@
 
 	return val
 
-/obj/machinery/power/apc/proc/reset(state)
-	switch(state)
-		if(APC_RESET_IDSCAN)
+/obj/machinery/power/apc/proc/reset(wire)
+	switch(wire)
+		if(WIRE_IDSCAN)
 			locked = 1
 			updateDialog()
-		if(APC_RESET_MAIN_POWER1, APC_RESET_MAIN_POWER2)
+		if(WIRE_POWER1, WIRE_POWER2)
 			if(!wires.IsIndexCut(APC_WIRE_MAIN_POWER1) && !wires.IsIndexCut(APC_WIRE_MAIN_POWER2))
 				shorted = 0
 				updateDialog()
-		if(APC_RESET_AI_CONTROL)
+		if(WIRE_AI)
 			if(!wires.IsIndexCut(APC_WIRE_AI_CONTROL))
 				aidisabled = 0
 				updateDialog()

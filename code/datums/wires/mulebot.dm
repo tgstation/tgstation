@@ -1,53 +1,40 @@
 /datum/wires/mulebot
-	random = 1
+	var/const/W_POWER1 = "power1"
+	var/const/W_POWER2 = "power2"
+	var/const/W_AVOIDANCE = "avoidance"
+	var/const/W_LOADCHECK = "loadcheck"
+	var/const/W_MOTOR1 = "motor1"
+	var/const/W_MOTOR2 = "motor2"
+	var/const/W_REMOTE_RX = "rx"
+	var/const/W_REMOTE_TX = "tx"
+	var/const/W_BEACON_RX = "beacon"
+
 	holder_type = /mob/living/simple_animal/bot/mulebot
-	wire_count = 10
 
-var/const/WIRE_POWER1 = 1			// power connections
-var/const/WIRE_POWER2 = 2
-var/const/WIRE_AVOIDANCE = 4		// mob avoidance
-var/const/WIRE_LOADCHECK = 8		// load checking (non-crate)
-var/const/WIRE_MOTOR1 = 16		// motor wires
-var/const/WIRE_MOTOR2 = 32		//
-var/const/WIRE_REMOTE_RX = 64		// remote recv functions
-var/const/WIRE_REMOTE_TX = 128	// remote trans status
-var/const/WIRE_BEACON_RX = 256	// beacon ping recv
+/datum/wires/mulebot/New(atom/holder)
+	wires = list(
+		W_POWER1, W_POWER2,
+		W_AVOIDANCE, W_LOADCHECK,
+		W_MOTOR1, W_MOTOR2,
+		W_REMOTE_RX, W_REMOTE_TX, W_BEACON_RX
+	)
+	..()
 
-/datum/wires/mulebot/UpdatePulsed(index)
-	switch(index)
-		if(WIRE_POWER1, WIRE_POWER2)
-			holder.visible_message("<span class='notice'>\icon[holder] The charge light flickers.</span>")
-		if(WIRE_AVOIDANCE)
-			holder.visible_message("<span class='notice'>\icon[holder] The external warning lights flash briefly.</span>")
-		if(WIRE_LOADCHECK)
-			holder.visible_message("<span class='notice'>\icon[holder] The load platform clunks.</span>")
-		if(WIRE_MOTOR1, WIRE_MOTOR2)
-			holder.visible_message("<span class='notice'>\icon[holder] The drive motor whines briefly.</span>")
+/datum/wires/mulebot/interactable(mob/user)
+	var/mob/living/simple_animal/bot/mulebot/M = holder
+	if(M.open)
+		return TRUE
+
+/datum/wires/mulebot/on_pulse(wire)
+	var/mob/living/simple_animal/bot/mulebot/M = holder
+	switch(wire)
+		if(W_POWER1, W_POWER2)
+			holder.visible_message("<span class='notice'>\icon[M] The charge light flickers.</span>")
+		if(W_AVOIDANCE)
+			holder.visible_message("<span class='notice'>\icon[M] The external warning lights flash briefly.</span>")
+		if(W_LOADCHECK)
+			holder.visible_message("<span class='notice'>\icon[M] The load platform clunks.</span>")
+		if(W_MOTOR1, W_MOTOR2)
+			holder.visible_message("<span class='notice'>\icon[M] The drive motor whines briefly.</span>")
 		else
-			holder.visible_message("<span class='notice'>\icon[holder] You hear a radio crackle.</span>")
-
-// HELPER PROCS
-
-/datum/wires/mulebot/proc/Motor1()
-	return !(wires_status & WIRE_MOTOR1)
-
-/datum/wires/mulebot/proc/Motor2()
-	return !(wires_status & WIRE_MOTOR2)
-
-/datum/wires/mulebot/proc/HasPower()
-	return !(wires_status & WIRE_POWER1) && !(wires_status & WIRE_POWER2)
-
-/datum/wires/mulebot/proc/LoadCheck()
-	return !(wires_status & WIRE_LOADCHECK)
-
-/datum/wires/mulebot/proc/MobAvoid()
-	return !(wires_status & WIRE_AVOIDANCE)
-
-/datum/wires/mulebot/proc/RemoteTX()
-	return !(wires_status & WIRE_REMOTE_TX)
-
-/datum/wires/mulebot/proc/RemoteRX()
-	return !(wires_status & WIRE_REMOTE_RX)
-
-/datum/wires/mulebot/proc/BeaconRX()
-	return !(wires_status & WIRE_BEACON_RX)
+			holder.visible_message("<span class='notice'>\icon[M] You hear a radio crackle.</span>")

@@ -144,8 +144,8 @@
 		return
 
 	if(wires && !primed)
-		if(wires.IsInteractionTool(I))
-			wires.Interact(user)
+		if(is_wire_tool(I))
+			wires.interact(user)
 			return
 
 	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator) || I.force >= 10)
@@ -162,7 +162,7 @@
 
 /obj/item/weapon/twohanded/required/gibtonite/attack_self(user)
 	if(wires)
-		wires.Interact(user)
+		wires.interact(user)
 	else
 		..()
 

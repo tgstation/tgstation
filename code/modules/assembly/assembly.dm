@@ -63,7 +63,7 @@
 //Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
 /obj/item/device/assembly/proc/pulse(radio = 0)
 	if(src.connected && src.wires)
-		connected.Pulse(src)
+		connected.pulse_assembly(src)
 		return 1
 	if(holder && (wires & WIRE_PULSE))
 		holder.process_activation(src, 1, 0)

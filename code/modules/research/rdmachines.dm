@@ -42,7 +42,7 @@
 	if(shocked)
 		shock(user,50)
 	if(panel_open)
-		wires.Interact(user)
+		wires.interact(user)
 
 
 

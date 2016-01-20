@@ -81,9 +81,6 @@ var/global/mulebot_count = 0
 		..()
 		if(open)
 			on = FALSE
-			icon_state="mulebot-hatch"
-		else
-			icon_state = "mulebot0"
 	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
 		if(!user.drop_item())
 			return
@@ -98,7 +95,7 @@ var/global/mulebot_count = 0
 		cell = null
 		visible_message("[user] crowbars out the power cell from [src].",
 						"<span class='notice'>You pry the powercell out of [src].</span>")
-	else if(wires.IsInteractionTool(I) && open)
+	else if(is_wire_tool(I) && open)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1 + I.force * 2))
@@ -110,6 +107,7 @@ var/global/mulebot_count = 0
 			..()
 	else
 		..()
+	update_icon()
 	return
 
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user)
@@ -120,12 +118,11 @@ var/global/mulebot_count = 0
 
 /mob/living/simple_animal/bot/mulebot/update_icon()
 	switch(mode)
-		if(BOT_IDLE)
-			icon_state = "mulebot0"
+		if(BOT_IDLE && open)
 			if(open)
 				icon_state="mulebot-hatch"
 		else
-			icon_state = "mulebot0"
+			icon_state = "mulebot[wires.is_cut(wires.W_AVOIDANCE)]"
 	overlays.Cut()
 	if(load && !ismob(load))//buckling handles the mob offsets
 		load.pixel_y = initial(load.pixel_y) + 9
@@ -141,9 +138,9 @@ var/global/mulebot_count = 0
 			qdel(src)
 		if(2)
 			for(var/i = 1; i < 3; i++)
-				wires.RandomCut()
+				wires.cut_random()
 		if(3)
-			wires.RandomCut()
+			wires.cut_random()
 	return
 
 /mob/living/simple_animal/bot/mulebot/bullet_act(obj/item/projectile/Proj)
@@ -152,13 +149,13 @@ var/global/mulebot_count = 0
 			unload(0)
 		if(prob(25))
 			visible_message("<span class='danger'>Something shorts out inside [src]!</span>")
-			wires.RandomCut()
+			wires.cut_random()
 
 /mob/living/simple_animal/bot/mulebot/interact(mob/user)
 	if(open && !istype(user, /mob/living/silicon/ai))
-		wires.Interact(user)
+		wires.interact(user)
 	else
-		if(!wires.RemoteRX() && istype(user, /mob/living/silicon/ai))
+		if(wires.is_cut(wires.W_REMOTE_RX) && istype(user, /mob/living/silicon/ai))
 			return
 		ui_interact(user)
 
@@ -213,7 +210,7 @@ var/global/mulebot_count = 0
 	return 1
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, pda = 0)
-	if(pda && !wires.RemoteRX()) //MULE wireless is controlled by wires.
+	if(pda && wires.is_cut(wires.W_REMOTE_RX)) //MULE wireless is controlled by wires.
 		return
 
 	switch(command)
@@ -303,7 +300,7 @@ var/global/mulebot_count = 0
 
 // returns true if the bot has power
 /mob/living/simple_animal/bot/mulebot/proc/has_power()
-	return !open && cell && cell.charge > 0 && wires.HasPower()
+	return !open && cell && cell.charge > 0 && (!wires.is_cut(wires.W_POWER1) && !wires.is_cut(wires.W_POWER2))
 
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
@@ -342,7 +339,7 @@ var/global/mulebot_count = 0
 	if(istype(AM,/obj/structure/closet/crate))
 		CRATE = AM
 	else
-		if(wires.LoadCheck())
+		if(!wires.is_cut(wires.W_LOADCHECK))
 			buzz(SIGH)
 			return	// if not hacked, only allow crates to be loaded
 
@@ -427,7 +424,7 @@ var/global/mulebot_count = 0
 		on = 0
 		return
 	if(on)
-		var/speed = (wires.Motor1() ? 1 : 0) + (wires.Motor2() ? 2 : 0)
+		var/speed = (wires.is_cut(wires.W_MOTOR1) ? 0 : 1) + (wires.is_cut(wires.W_MOTOR2) ? 0 : 2)
 		//world << "speed: [speed]"
 		var/num_steps = 0
 		switch(speed)
@@ -452,29 +449,25 @@ var/global/mulebot_count = 0
 /mob/living/simple_animal/bot/mulebot/proc/process_bot()
 	if(!on)
 		return
+	update_icon()
 
 	switch(mode)
-		if(BOT_IDLE)		// idle
-			icon_state = "mulebot0"
+		if(BOT_IDLE) // idle
 			return
 
-		if(BOT_DELIVER,BOT_GO_HOME,BOT_BLOCKED)		// navigating to deliver,home, or blocked
-			if(loc == target)		// reached target
+		if(BOT_DELIVER, BOT_GO_HOME, BOT_BLOCKED) // navigating to deliver,home, or blocked
+			if(loc == target) // reached target
 				at_target()
 				return
 
-			else if(path.len > 0 && target)		// valid path
-
+			else if(path.len > 0 && target) // valid path
 				var/turf/next = path[1]
 				reached_target = 0
 				if(next == loc)
 					path -= next
 					return
-
-
 				if(istype( next, /turf/simulated))
 					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
-
 
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
@@ -571,7 +564,7 @@ var/global/mulebot_count = 0
 		mode = BOT_GO_HOME
 	else
 		mode = BOT_DELIVER
-	icon_state = "mulebot[(wires.MobAvoid() != 0)]"
+	update_icon()
 	get_nav()
 
 // starts bot moving to home
@@ -582,7 +575,7 @@ var/global/mulebot_count = 0
 	spawn(0)
 		set_destination(home_destination)
 		mode = BOT_BLOCKED
-	icon_state = "mulebot[(wires.MobAvoid() != 0)]"
+	update_icon()
 
 // called when bot reaches current target
 /mob/living/simple_animal/bot/mulebot/proc/at_target()
@@ -606,9 +599,9 @@ var/global/mulebot_count = 0
 			unload(loaddir)
 		else
 			// not loaded
-			if(auto_pickup)		// find a crate
+			if(auto_pickup) // find a crate
 				var/atom/movable/AM
-				if(!wires.LoadCheck())		// if emagged, load first unanchored thing we find
+				if(wires.is_cut(wires.W_LOADCHECK)) // if hacked, load first unanchored thing we find
 					for(var/atom/movable/A in get_step(loc, loaddir))
 						if(!A.anchored)
 							AM = A
@@ -632,7 +625,7 @@ var/global/mulebot_count = 0
 
 // called when bot bumps into anything
 /mob/living/simple_animal/bot/mulebot/Bump(atom/obs)
-	if(!wires.MobAvoid())		//usually just bumps, but if avoidance disabled knock over mobs
+	if(wires.is_cut(wires.W_AVOIDANCE))	// usually just bumps, but if avoidance disabled knock over mobs
 		var/mob/M = obs
 		if(ismob(M))
 			if(istype(M,/mob/living/silicon/robot))
@@ -674,8 +667,7 @@ var/global/mulebot_count = 0
 
 //Update navigation data. Called when commanded to deliver, return home, or a route update is needed...
 /mob/living/simple_animal/bot/mulebot/proc/get_nav()
-//Formerly the beacon reception proc, except that it is no longer a potential lag bomb called TEN TIMES A SECOND OR MORE in some cases!
-	if(!on || !wires.BeaconRX())
+	if(!on || wires.is_cut(wires.W_BEACON_RX))
 		return
 
 	for(var/obj/machinery/navbeacon/NB in deliverybeacons)
@@ -688,7 +680,7 @@ var/global/mulebot_count = 0
 				loaddir = text2num(direction)
 			else
 				loaddir = 0
-			icon_state = "mulebot[(wires.MobAvoid() != null)]"
+			update_icon()
 			if(destination) // No need to calculate a path if you do not have a destination set!
 				calc_path()
 

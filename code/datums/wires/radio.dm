@@ -1,31 +1,29 @@
 /datum/wires/radio
+	var/const/W_SIGNAL = "signal"
+	var/const/W_RX = "recieve"
+	var/const/W_TX = "transmit"
+
 	holder_type = /obj/item/device/radio
-	wire_count = 3
 
-var/const/WIRE_SIGNAL = 1
-var/const/WIRE_RECEIVE = 2
-var/const/WIRE_TRANSMIT = 4
+/datum/wires/radio/New(atom/holder)
+	wires = list(
+		W_SIGNAL,
+		W_RX, W_TX
+	)
+	..()
 
-/datum/wires/radio/CanUse(mob/living/L)
+/datum/wires/radio/interactable(mob/user)
 	var/obj/item/device/radio/R = holder
 	if(R.b_stat)
-		return 1
-	return 0
+		return TRUE
 
-/datum/wires/radio/Interact(mob/living/user)
-	if(CanUse(user))
-		var/obj/item/device/radio/R = holder
-		R.interact(user)
-
-/datum/wires/radio/UpdatePulsed(index)
+/datum/wires/radio/on_pulse(index)
 	var/obj/item/device/radio/R = holder
 	switch(index)
-		if(WIRE_SIGNAL)
+		if(W_SIGNAL)
 			R.listening = !R.listening
 			R.broadcasting = R.listening
-
-		if(WIRE_RECEIVE)
+		if(W_RX)
 			R.listening = !R.listening
-
-		if(WIRE_TRANSMIT)
+		if(W_TX)
 			R.broadcasting = !R.broadcasting

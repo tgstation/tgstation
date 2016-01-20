@@ -316,7 +316,7 @@
 /obj/machinery/vending/attack_hand(mob/user)
 	var/dat = ""
 	if(panel_open && !isAI(user))
-		return wires.Interact(user)
+		return wires.interact(user)
 	else
 		if(stat & (BROKEN|NOPOWER))
 			return

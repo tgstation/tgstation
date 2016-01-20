@@ -170,7 +170,7 @@
 		return
 
 	if(panel_open && !istype(user, /mob/living/silicon/ai))
-		wires.Interact(user)
+		wires.interact(user)
 	else if (!shorted)
 		ui_interact(user)
 
@@ -339,7 +339,7 @@
 	var/device_id = params["id_tag"]
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
+			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(wires.W_IDSCAN))
 				locked = !locked
 		if(
 			"power",
@@ -647,10 +647,10 @@
 /obj/machinery/alarm/attackby(obj/item/W, mob/user, params)
 	switch(buildstage)
 		if(2)
-			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && (wires.wires_status == 27 || wires.wires_status == 31))   //this checks for all wires to be cut, except the syphon wire which is optional.
+			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && wires.is_all_cut())
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "<span class='notice'>You cut the final wires.</span>"
-				var/obj/item/stack/cable_coil/cable = new /obj/item/stack/cable_coil( src.loc )
+				var/obj/item/stack/cable_coil/cable = new /obj/item/stack/cable_coil(loc)
 				cable.amount = 5
 				buildstage = 1
 				update_icon()
@@ -669,7 +669,7 @@
 				if(stat & (NOPOWER|BROKEN))
 					user << "<span class='warning'>It does nothing!</span>"
 				else
-					if(src.allowed(usr) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
+					if(src.allowed(usr) && !wires.is_cut(wires.W_IDSCAN))
 						locked = !locked
 						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>"
 						src.updateUsrDialog()
@@ -701,7 +701,7 @@
 					if (cable.get_amount() >= 5 && buildstage == 1)
 						cable.use(5)
 						user << "<span class='notice'>You wire the air alarm.</span>"
-						wires.wires_status = 0
+						wires.repair()
 						aidisabled = 0
 						locked = 1
 						mode = 1

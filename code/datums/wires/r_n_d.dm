@@ -1,47 +1,25 @@
-
 /datum/wires/r_n_d
-	random = 1
+	var/const/W_HACK = "hack" // Hacks the machine.
+	var/const/W_DISABLE = "disable" // Disables the machine.
+	var/const/W_SHOCK = "shock" // Shocks the user, 50% chance
+
 	holder_type = /obj/machinery/r_n_d
-	wire_count = 6
+	randomize = 1
 
-var/const/RD_WIRE_HACK = 1		// Hacks the r_n_d machine
-var/const/RD_WIRE_SHOCK = 2		// Shocks the user, 50% chance
-var/const/RD_WIRE_DISABLE = 4   // Disables the machine
+/datum/wires/r_n_d/New(atom/holder)
+	wires = list(
+		W_HACK, W_DISABLE,
+		W_SHOCK
+	)
+	add_duds(5)
+	..()
 
-
-/datum/wires/r_n_d/CanUse(mob/living/L)
+/datum/wires/r_n_d/interactable(mob/user)
 	var/obj/machinery/r_n_d/R = holder
 	if(R.panel_open)
-		return 1
-	return 0
+		return TRUE
 
-
-/datum/wires/r_n_d/UpdatePulsed(index)
-	var/obj/machinery/r_n_d/R = holder
-	switch(index)
-		if(RD_WIRE_HACK)
-			R.hacked = !R.hacked
-		if(RD_WIRE_DISABLE)
-			R.disabled = !R.disabled
-		if(RD_WIRE_SHOCK)
-			var/Rshock = R.shocked
-			R.shocked = !R.shocked
-			spawn(100)
-				if(R)
-					R.shocked = Rshock
-
-
-/datum/wires/r_n_d/UpdateCut(index,mended)
-	var/obj/machinery/r_n_d/R = holder
-	switch(index)
-		if(RD_WIRE_HACK)
-			R.hacked = !mended
-		if(RD_WIRE_DISABLE)
-			R.disabled = !mended
-		if(RD_WIRE_SHOCK)
-			R.shocked = !mended
-
-/datum/wires/r_n_d/getStatus()
+/datum/wires/r_n_d/get_status()
 	var/obj/machinery/r_n_d/R = holder
 	var/list/status = list()
 	status.Add("The red light is [R.disabled ? "off" : "on"].")
@@ -49,3 +27,25 @@ var/const/RD_WIRE_DISABLE = 4   // Disables the machine
 	status.Add("The blue light is [R.hacked ? "off" : "on"].")
 	return status
 
+/datum/wires/r_n_d/on_pulse(wire)
+	var/obj/machinery/r_n_d/R = holder
+	switch(wire)
+		if(W_HACK)
+			R.hacked = !R.hacked
+		if(W_DISABLE)
+			R.disabled = !R.disabled
+		if(W_SHOCK)
+			R.shocked = TRUE
+			spawn(100)
+				if(R)
+					R.shocked = FALSE
+
+/datum/wires/r_n_d/on_cut(wire, mend)
+	var/obj/machinery/r_n_d/R = holder
+	switch(wire)
+		if(W_HACK)
+			R.hacked = !mend
+		if(W_DISABLE)
+			R.disabled = !mend
+		if(W_SHOCK)
+			R.shocked = !mend

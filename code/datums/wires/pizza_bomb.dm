@@ -1,46 +1,48 @@
-
 /datum/wires/pizza_bomb
-	random = 1
+	var/const/W_BOOM1 = "boomb1" // Boom.
+	var/const/W_BOOM2 = "boomb2" // Boom!
+	var/const/W_BOOM3 = "boomb3" // BOOM!
+	var/const/W_DISARM = "disarm" // No boom!
+
 	holder_type = /obj/item/device/pizza_bomb
-	wire_count = 4
+	randomize = 1
 
-var/const/PIZZA_WIRE_DISARM = 1		// No boom
+/datum/wires/pizza_bomb/New(atom/holder)
+	wires = list(
+		W_BOOM1, W_BOOM2, W_BOOM3,
+		W_DISARM
+	)
+	..()
 
-
-/datum/wires/pizza_bomb/UpdatePulsed(index)
-	var/obj/item/device/pizza_bomb/P = holder
-	switch(index)
-		if(PIZZA_WIRE_DISARM)
-			var/was_primed = P.primed
-			P.disarm()
-			if(was_primed)
-				spawn(100) //Rearm after a short time
-					if(P)
-						P.arm()
-		else
-			if(!P.disarmed)
-				message_admins("a pizza bomb at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[P.loc.x];Y=[P.loc.y];Z=[P.loc.z]'>(JMP)</a> armed by [key_name_admin(P.armer)] has exploded via wire pulsing.")
-				log_game("a pizza bomb ([P.loc.x],[P.loc.y],[P.loc.z]) armed by [key_name(P.armer)] has exploded via wire pulsing.")
-				P.go_boom()
-
-
-/datum/wires/pizza_bomb/UpdateCut(index,mended)
-	var/obj/item/device/pizza_bomb/P = holder
-	switch(index)
-		if(PIZZA_WIRE_DISARM)
-			if(mended)
-				P.disarmed = 0
-			else
-				P.disarm()
-		else
-			if(!mended && !P.disarmed)
-				message_admins("a pizza bomb at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[P.loc.x];Y=[P.loc.y];Z=[P.loc.z]'>(JMP)</a> armed by [key_name_admin(P.armer)] has exploded via wire pulsing.")
-				log_game("a pizza bomb ([P.loc.x],[P.loc.y],[P.loc.z]) armed by [key_name(P.armer)] has exploded via wire pulsing.")
-				P.go_boom()
-
-/datum/wires/pizza_bomb/getStatus()
+/datum/wires/pizza_bomb/get_status()
 	var/obj/item/device/pizza_bomb/P = holder
 	var/list/status = list()
 	status.Add("The red light is [P.primed ? "on" : "off"].")
 	status.Add("The green light is [P.disarmed ? "on": "off"].")
 	return status
+
+/datum/wires/pizza_bomb/on_pulse(wire)
+	var/obj/item/device/pizza_bomb/P = holder
+	switch(wire)
+		if(W_DISARM) // Rearm after a short time
+			var/was_primed = P.primed
+			P.disarm()
+			if(was_primed)
+				spawn(100)
+					if(P)
+						P.arm()
+		else
+			if(!P.disarmed)
+				P.go_boom()
+
+/datum/wires/pizza_bomb/on_cut(wire, mend)
+	var/obj/item/device/pizza_bomb/P = holder
+	switch(wire)
+		if(W_DISARM)
+			if(mend)
+				P.disarmed = FALSE
+			else
+				P.disarm()
+		else
+			if(!mend && !P.disarmed)
+				P.go_boom()

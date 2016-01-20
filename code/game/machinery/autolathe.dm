@@ -146,7 +146,7 @@
 
 /obj/machinery/autolathe/attack_hand(mob/user)
 	if(panel_open && !isAI(user))
-		return wires.Interact(user)
+		return wires.interact(user)
 	if(..(user, 0))
 		return
 	interact(user)

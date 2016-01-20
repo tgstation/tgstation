@@ -76,11 +76,11 @@
 		update_icon()
 		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
 
-	else if(wires.IsInteractionTool(I) && open_panel)
-		wires.Interact(user)
+	else if(is_wire_tool(I) && open_panel)
+		wires.interact(user)
 
 	else if(istype(I, /obj/item/weapon/crowbar))
-		if(open_panel && isWireCut(WIRE_BOOM) && isWireCut(WIRE_UNBOLT) && isWireCut(WIRE_DELAY) && isWireCut(WIRE_PROCEED) && isWireCut(WIRE_ACTIVATE))
+		if(open_panel && wires.is_all_cut())
 			if(payload)
 				user << "<span class='notice'>You carefully pry out [payload].</span>"
 				payload.loc = user.loc
@@ -110,8 +110,7 @@
 	return
 
 /obj/machinery/syndicatebomb/interact(mob/user)
-	if(wires)
-		wires.Interact(user)
+	wires.interact(user)
 	if(!open_panel)
 		if(!active)
 			settings(user)
@@ -144,9 +143,6 @@
 				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has primed a [name] ([payload]) for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 				log_game("[key_name(user)] has primed a [name] ([payload]) for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 				payload.adminlog = "The [src.name] that [key_name(user)] had primed detonated!"
-
-/obj/machinery/syndicatebomb/proc/isWireCut(index)
-	return wires.IsIndexCut(index)
 
 ///Bomb Subtypes///
 
@@ -217,7 +213,8 @@
 	var/obj/machinery/syndicatebomb/holder = src.loc
 	if(istype(holder))
 		if(holder.wires)
-			holder.wires.Shuffle()
+			holder.wires.repair()
+			holder.wires.randomize()
 		holder.defused = 0
 		holder.open_panel = 0
 		holder.update_icon()

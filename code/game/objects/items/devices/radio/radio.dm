@@ -50,7 +50,7 @@
 /obj/item/device/radio/New()
 	wires = new(src)
 	if(prison_radio)
-		wires.CutWireIndex(WIRE_TRANSMIT)
+		wires.cut(wires.W_TX) // OH GOD WHY
 	secure_radio_connections = new
 	..()
 	if(SSradio)
@@ -106,12 +106,11 @@
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
-
 /obj/item/device/radio/interact(mob/user)
 	if (..())
 		return
 	if(b_stat && !istype(user, /mob/living/silicon/ai))
-		wires.Interact(user)
+		wires.interact(user)
 	else
 		ui_interact(user)
 
@@ -188,9 +187,7 @@
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
 
-	//  Uncommenting this. To the above comment:
-	// 	The permacell radios aren't suppose to be able to transmit, this isn't a bug and this "fix" is just making radio wires useless. -Giacom
-	if(wires.IsIndexCut(WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
+	if(wires.is_cut(wires.W_TX))
 		return
 
 	if(!M.IsVocal())
@@ -449,7 +446,7 @@
 	// what the range is in which mobs will hear the radio
 	// returns: -1 if can't receive, range otherwise
 
-	if (wires.IsIndexCut(WIRE_RECEIVE))
+	if (wires.is_cut(wires.W_RX))
 		return -1
 	if(!listening)
 		return -1

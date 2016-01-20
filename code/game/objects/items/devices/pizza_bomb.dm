@@ -57,6 +57,8 @@
 	if(disarmed)
 		visible_message("<span class='danger'>\icon[src] Sparks briefly jump out of \the [src], but it's disarmed!")
 		return
+	message_admins("a pizza bomb at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>(JMP)</a> armed by [key_name_admin(armer)] has exploded.")
+	log_game("a pizza bomb ([loc.x],[loc.y],[loc.z]) armed by [key_name(armer)] has exploded.")
 	src.audible_message("\icon[src] <b>[src]</b> beeps, \"Enjoy the pizza!\"")
 	src.visible_message("<span class='userdanger'>\The [src] violently explodes!</span>")
 	explosion(src.loc,1,2,4,flame_range = 2) //Identical to a minibomb
@@ -65,7 +67,7 @@
 
 /obj/item/device/pizza_bomb/attack_hand(mob/user)
 	if(loc == user || primed)
-		wires.Interact(user)
+		wires.interact(user)
 	else
 		..()
 
@@ -90,7 +92,7 @@
 		else
 			attack_hand(user)
 			return
-	if(wires.IsInteractionTool(I))
+	if(is_wire_tool(I))
 		attack_hand(user)
 		return
 
@@ -107,7 +109,7 @@
 
 /obj/item/device/pizza_bomb/proc/disarm()
 	audible_message("\icon[src] \The [src] suddenly stops beeping and seems lifeless.")
-	icon_state = "pizzabox_bomb_[wires.GetColour(PIZZA_WIRE_DISARM)]"
+	icon_state = "pizzabox_bomb_disarmed"
 	name = "pizza bomb"
 	desc = "A devious contraption, made of a small explosive payload hooked up to pressure-sensitive wires. It's disarmed."
 	disarmed = 1
