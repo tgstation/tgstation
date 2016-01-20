@@ -93,7 +93,7 @@
 	. =  ..()
 	if(summoner)
 		if(loc == summoner)
-			return
+			return 0
 		summoner.adjustBruteLoss(amount)
 		if(amount)
 			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
