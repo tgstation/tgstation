@@ -17,6 +17,6 @@
       {{data.outputting ? "Open": "Closed"}}</ui-button>
   </ui-section>
   <ui-section label='Output Pressure'>
-    <ui-button icon='pencil' action='output_pressure'>{{Math.fixed(adata.outputPressure)}} kPa</ui-button>
+    <ui-button icon='pencil' action='output_pressure'>{{Math.round(adata.outputPressure)}} kPa</ui-button>
   </ui-section>
 </ui-display>

@@ -7,7 +7,6 @@ export function href (params = {}, url = '') {
 
 // Helper to make a BYOND ui_act() call on the UI 'src' given an 'action' and optional 'params'.
 export function act (src, action, params = {}) {
-  console.log(params)
   window.location.href = href(Object.assign({ src, action }, params))
 }
 

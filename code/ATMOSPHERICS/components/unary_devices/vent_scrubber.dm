@@ -117,7 +117,8 @@
 	signal.data = list(
 		"area" = area_uid,
 		"tag" = id_tag,
-		"device" = "AScr",
+		"frequency" = frequency,
+		"device" = "VS",
 		"timestamp" = world.time,
 		"power" = on,
 		"scrubbing" = scrubbing,
@@ -151,11 +152,10 @@
 		return
 	if (!NODE1)
 		on = 0
-	//broadcast_status()
 	if(!on || welded)
 		return 0
 	scrub(loc)
-	if (widenet)
+	if(widenet)
 		for (var/turf/simulated/tile in adjacent_turfs)
 			scrub(tile)
 
@@ -291,12 +291,10 @@
 		return
 
 	if("status" in signal.data)
-		spawn(2)
-			broadcast_status()
+		broadcast_status()
 		return //do not update_icon
 
-	spawn(2)
-		broadcast_status()
+	broadcast_status()
 	update_icon()
 	return
 

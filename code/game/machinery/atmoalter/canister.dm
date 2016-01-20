@@ -295,7 +295,7 @@ update_flag
 			var/newtype = label2types[label]
 			if(newtype)
 				var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc)
-				replacement.air_contents = air_contents
+				replacement.air_contents.copy_from(air_contents)
 				replacement.interact(usr)
 				qdel(src)
 		if("pressure")

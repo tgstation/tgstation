@@ -1,19 +1,18 @@
+#define CHALLENGE_TELECRYSTALS 280
 #define CHALLENGE_TIME_LIMIT 3000
-#define MIN_CHALLENGE_PLAYERS 50
-#define CHALLENGE_SHUTTLE_DELAY 15000 //25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
+#define CHALLENGE_MIN_PLAYERS 50
+#define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
 /obj/item/device/nuclear_challenge
 	name = "Declaration of War (Challenge Mode)"
 	icon_state = "gangtool-red"
 	item_state = "walkietalkie"
 	desc = "Use to send a declaration of hostilities to the target, delaying your shuttle departure for 20 minutes while they prepare for your assault.  \
-	Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals.  \
-	Must be used within five minutes, or your benefactors will lose interest."
-
-
+			Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals.  \
+			Must be used within five minutes, or your benefactors will lose interest."
 
 /obj/item/device/nuclear_challenge/attack_self(mob/living/user)
-	if(player_list.len < MIN_CHALLENGE_PLAYERS)
+	if(player_list.len < CHALLENGE_MIN_PLAYERS)
 		user << "The enemy crew is too small to be worth declaring war on."
 		return
 	if(user.z != ZLEVEL_CENTCOM)
@@ -36,14 +35,15 @@
 	for(var/obj/machinery/computer/shuttle/syndicate/S in machines)
 		S.challenge = TRUE
 
-	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(get_turf(user))
-	U.hidden_uplink.uplink_owner= "[user.key]"
-	U.hidden_uplink.uses = 280
-	U.hidden_uplink.mode_override = /datum/game_mode/nuclear //Maybe we can have a special set of items for the challenge uplink eventually
+	var/obj/item/device/radio/uplink/nuclear/U = new(get_turf(user))
+	U.hidden_uplink.owner = "[user.key]"
+	U.hidden_uplink.telecrystals = CHALLENGE_TELECRYSTALS
+	U.hidden_uplink.gamemode = /datum/game_mode/nuclear
 	config.shuttle_refuel_delay = max(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
 	qdel(src)
 
 
+#undef CHALLENGE_TELECRYSTALS
 #undef CHALLENGE_TIME_LIMIT
-#undef MIN_CHALLENGE_PLAYERS
+#undef CHALLENGE_MIN_PLAYERS
 #undef CHALLENGE_SHUTTLE_DELAY
