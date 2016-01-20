@@ -313,6 +313,12 @@
 					   // w_class = 2 -- takes up 3
 					   // w_class = 3 -- takes up 5
 
+/obj/item/weapon/tray/Destroy()
+	for(var/atom/thing in carrying)
+		qdel(thing)
+	carrying = null
+	..()
+
 /obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	// Drop all the things. All of them.
