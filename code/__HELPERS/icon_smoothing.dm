@@ -41,18 +41,61 @@
 		if(!AM.anchored)
 			return 0
 
-		for(var/direction in alldirs)
+		for(var/direction in cardinal)
 			AM = find_type_in_direction(A, direction)
-			if(istype(AM))
-				if(AM.anchored)
-					adjacencies |= 1 << direction
-			else
-				if(AM)
-					adjacencies |= 1 << direction
+			if(istype(AM) && AM.anchored)
+				adjacencies |= 1 << direction
+			else if(AM)
+				adjacencies |= 1 << direction
+
+		if(adjacencies & N_NORTH)
+			if(adjacencies & N_WEST)
+				AM = find_type_in_direction(A, NORTHWEST)
+				if(istype(AM) && AM.anchored)
+					adjacencies |= N_NORTHWEST
+				else if(AM)
+					adjacencies |= N_NORTHWEST
+			if(adjacencies & N_EAST)
+				AM = find_type_in_direction(A, NORTHEAST)
+				if(istype(AM) && AM.anchored)
+					adjacencies |= N_NORTHEAST
+				else if(AM)
+					adjacencies |= N_NORTHEAST
+
+		if(adjacencies & N_SOUTH)
+			if(adjacencies & N_WEST)
+				AM = find_type_in_direction(A, SOUTHWEST)
+				if(istype(AM) && AM.anchored)
+					adjacencies |= N_SOUTHWEST
+				else if(AM)
+					adjacencies |= N_SOUTHWEST
+			if(adjacencies & N_EAST)
+				AM = find_type_in_direction(A, SOUTHEAST)
+				if(istype(AM) && AM.anchored)
+					adjacencies |= N_SOUTHEAST
+				else if(AM)
+					adjacencies |= N_SOUTHEAST
 	else
-		for(var/direction in alldirs)
+		for(var/direction in cardinal)
 			if(find_type_in_direction(A, direction))
 				adjacencies |= 1 << direction
+
+		if(adjacencies & N_NORTH)
+			if(adjacencies & N_WEST)
+				if(find_type_in_direction(A, NORTHWEST))
+					adjacencies |= N_NORTHWEST
+			if(adjacencies & N_EAST)
+				if(find_type_in_direction(A, NORTHEAST))
+					adjacencies |= N_NORTHEAST
+
+		if(adjacencies & N_SOUTH)
+			if(adjacencies & N_WEST)
+				if(find_type_in_direction(A, SOUTHWEST))
+					adjacencies |= N_SOUTHWEST
+			if(adjacencies & N_EAST)
+				if(find_type_in_direction(A, SOUTHEAST))
+					adjacencies |= N_SOUTHEAST
+
 	return adjacencies
 
 /proc/smooth_icon(atom/A)
