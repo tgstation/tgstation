@@ -408,9 +408,9 @@
 		return
 	if(client)
 		if(buckled)
-			shake_camera(M, 2, 1) // turn it down a bit come on
+			shake_camera(src, 2, 1) // turn it down a bit come on
 		else
-			shake_camera(M, 7, 1)
+			shake_camera(src, 7, 1)
 
 /mob/living/carbon/onShuttleMove()
 	. = ..()
