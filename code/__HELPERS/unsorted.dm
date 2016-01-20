@@ -182,22 +182,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return 0
 	return 1
 
-//Ensure the frequency is within bounds of what it should be sending/recieving at
-/proc/sanitize_frequency(f)
-	f = round(f)
-	f = max(1441, f) // 144.1
-	f = min(1489, f) // 148.9
-	if ((f % 2) == 0) //Ensure the last digit is an odd number
-		f += 1
-	return f
-
-//Turns 1479 into 147.9
-/proc/format_frequency(f)
-	f = text2num(f)
-	return "[round(f / 10)].[f % 10]"
-
-
-
 //This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
 /mob/proc/fully_replace_character_name(oldname,newname)
@@ -379,6 +363,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(skip_mindless && (!M.mind && !M.ckey))
 			if(!isbot(M) && !istype(M, /mob/camera/))
 				continue
+		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
+			continue
 		var/name = M.name
 		if (name in names)
 			namecounts[name]++
@@ -618,15 +604,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
-	var/steps = 0
-
-	while(current != target_turf)
-		if(steps > length) return 0
-		if(current.opacity) return 0
-		for(var/atom/A in current)
-			if(A.opacity) return 0
+	var/steps = 1
+	if(current != target_turf)
 		current = get_step_towards(current, target_turf)
-		steps++
+		while(current != target_turf)
+			if(steps > length) return 0
+			if(current.opacity) return 0
+			for(var/atom/A in current)
+				if(A.opacity) return 0
+			current = get_step_towards(current, target_turf)
+			steps++
 
 	return 1
 
@@ -666,117 +653,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	else return get_step(ref, base_dir)
 
-/proc/do_mob(mob/user , mob/target, time = 30, numticks = 5, uninterruptible = 0, progress = 1)
-	//This is quite an ugly solution but i refuse to use the old request system.
-	if(!user || !target)
-		return 0
-	if(numticks == 0)
-		return 0
-	var/user_loc = user.loc
-	user.last_move = null
-	var/target_loc = target.loc
-	target.last_move = null
-	var/holding = user.get_active_hand()
-	var/timefraction = round(time/numticks)
-	var/image/progbar
-	var/continue_looping = 1
-	for(var/i = 1 to numticks)
-		if(user.client && progress)
-			progbar = make_progress_bar(i, numticks, target)
-			assign_progress_bar(user, progbar)
-		sleep(timefraction)
-		if(!user || !target)
-			continue_looping = 0
-
-		if (continue_looping && !uninterruptible && (user.loc != user_loc || user.last_move != null || target.loc != target_loc || target.last_move != null || user.get_active_hand() != holding || user.incapacitated() || user.lying ))
-			continue_looping = 0
-
-		cancel_progress_bar(user, progbar)//Clear the way for the next progbar image
-		if(!continue_looping)
-			return 0
-
-	cancel_progress_bar(user, progbar)
-	return 1
-
-/proc/make_progress_bar(current_number, goal_number, atom/target)
-	if(current_number && goal_number && target)
-		var/image/progbar
-		progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
-		progbar.icon_state = "prog_bar_[round(((current_number / goal_number) * 100), 10)]"
-		progbar.pixel_y = 32
-		return progbar
-
-/proc/cancel_progress_bar(mob/user, image/progbar)
-	if(user && user.client && progbar)
-		user.client.images -= progbar
-
-/proc/assign_progress_bar(mob/user, image/progbar)
-	if(user && user.client && progbar)
-		user.client.images |= progbar
-
-/proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null, progress = 1)
-	if(!user)
-		return 0
-
-	if(numticks == 0)
-		return 0
-
-	var/atom/Tloc = null
-	if(target)
-		Tloc = target.loc
-	var/atom/movable/AMtarget
-	if(istype(target,/atom/movable))
-		AMtarget = target
-		AMtarget.last_move = null
-	var/delayfraction = round(delay/numticks)
-
-	var/atom/Uloc = user.loc
-	user.last_move = null
-	var/holding = user.get_active_hand()
-	var/holdingnull = 1 //User is not holding anything
-	if(holding)
-		holdingnull = 0 //User is holding a tool of some kind
-
-	var/image/progbar
-
-	var/continue_looping = 1
-	for (var/i = 1 to numticks)
-		if(user.client && progress)
-			progbar = make_progress_bar(i, numticks, target)
-			assign_progress_bar(user, progbar)
-
-		sleep(delayfraction)
-		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc) || (user.last_move != null))
-			continue_looping = 0
-
-		if(continue_looping && Tloc && (!target || Tloc != target.loc || (AMtarget && AMtarget.last_move != null))) //Tloc not set when we don't want to track target
-			continue_looping = 0
-
-		if(continue_looping && needhand)
-			//This might seem like an odd check, but you can still need a hand even when it's empty
-			//i.e the hand is used to insert some item/tool into the construction
-			if(!holdingnull)
-				if(!holding)
-					continue_looping = 0
-			if(continue_looping && user.get_active_hand() != holding)
-				continue_looping = 0
-
-		cancel_progress_bar(user, progbar)//Clear the way for the next progbar image
-		if(!continue_looping)
-			return 0
-
-	cancel_progress_bar(user,progbar)
-	return 1
-
 //Takes: Anything that could possibly have variables and a varname to check.
 //Returns: 1 if found, 0 if not.
 /proc/hasvar(datum/A, varname)
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
 
-//Returns sortedAreas list if populated
-//else populates the list first before returning it
+//Repopulates sortedAreas list
 /proc/SortAreas()
+	sortedAreas = list()
+
 	for(var/area/A in world)
 		sortedAreas.Add(A)
 
@@ -802,8 +688,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
-/proc/get_area_turfs(areatype)
-	if(!areatype) return null
+/proc/get_area_turfs(areatype, target_z = 0)
+	if(!areatype)
+		return null
 	if(istext(areatype)) areatype = text2path(areatype)
 	if(isarea(areatype))
 		var/area/areatemp = areatype
@@ -812,7 +699,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/turfs = new/list()
 	for(var/area/N in world)
 		if(istype(N, areatype))
-			for(var/turf/T in N) turfs += T
+			for(var/turf/T in N)
+				if(target_z == 0 || target_z == T.z)
+					turfs += T
 	return turfs
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
@@ -830,8 +719,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			for(var/atom/A in N)
 				atoms += A
 	return atoms
-
-
 
 /proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
@@ -1046,20 +933,15 @@ var/list/WALLITEMS_INVERSE = list(
 
 	user << "<span class='notice'>Results of analysis of \icon[icon] [target].</span>"
 	if(total_moles>0)
-		var/o2_concentration = air_contents.oxygen/total_moles
-		var/n2_concentration = air_contents.nitrogen/total_moles
-		var/co2_concentration = air_contents.carbon_dioxide/total_moles
-		var/plasma_concentration = air_contents.toxins/total_moles
-
-		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
-
 		user << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
-		user << "<span class='notice'>Nitrogen: [round(n2_concentration*100)] %</span>"
-		user << "<span class='notice'>Oxygen: [round(o2_concentration*100)] %</span>"
-		user << "<span class='notice'>CO2: [round(co2_concentration*100)] %</span>"
-		user << "<span class='notice'>Plasma: [round(plasma_concentration*100)] %</span>"
-		if(unknown_concentration>0.01)
-			user << "<span class='danger'>Unknown: [round(unknown_concentration*100)] %</span>"
+
+		var/list/cached_gases = air_contents.gases
+
+		for(var/id in cached_gases)
+			var/gas_concentration = cached_gases[id][MOLES]/total_moles
+			if(id in hardcoded_gases || gas_concentration > 0.01) //ensures the four primary gases are always shown.
+				user << "<span class='notice'>[cached_gases[id][GAS_NAME]]: [round(gas_concentration*100)] %</span>"
+
 		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
 	else
 		user << "<span class='notice'>[target] is empty!</span>"
@@ -1217,7 +1099,7 @@ B --><-- A
 	transform = shift
 
 	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
-	
+
 	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
 	transform = initial_transform
 	while(orbiting && orbiting == A && A.loc)
@@ -1227,7 +1109,7 @@ B --><-- A
 		loc = targetloc
 		lastloc = loc
 		sleep(0.6)
-	
+
 	if (orbiting == A) //make sure we haven't started orbiting something else.
 		orbiting = null
 		SpinAnimation(0,0)
@@ -1331,10 +1213,10 @@ B --><-- A
 
 	return L
 
-/atom/proc/contains(var/atom/location)
-	if(!location)
+
+/atom/proc/contains(var/atom/A)
+	if(!A)
 		return 0
-	for(location, location && location != src, location=location.loc); //semicolon is for the empty statement
+	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
 			return 1
-		return 0

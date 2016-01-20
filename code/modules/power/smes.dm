@@ -71,14 +71,19 @@
 
 /obj/machinery/power/smes/RefreshParts()
 	var/IO = 0
-	var/C = 0
+	var/MC = 0
+	var/list/C = list()
 	for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
 		IO += CP.rating
 	input_level_max = 200000 * IO
 	output_level_max = 200000 * IO
 	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
-		C += PC.maxcharge
-	capacity = C / (15000) * 1e6
+		MC += PC.maxcharge
+		C.Add(PC.charge / PC.maxcharge)
+	capacity = MC / (15000) * 1e6
+	if(!charge)
+		var/summ = Mean(C)
+		charge = capacity * summ
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
 	//opening using screwdriver
@@ -158,10 +163,15 @@
 		terminal.dismantle(user)
 
 	//crowbarring it !
+	var/turf/T = get_turf(src)
 	if(default_deconstruction_crowbar(I))
-		message_admins("[src] has been deconstructed by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		message_admins("[src] has been deconstructed by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
 		log_game("[src] has been deconstructed by [key_name(user)]")
 		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
+
+/obj/machinery/power/smes/deconstruction()
+	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
+		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
@@ -256,22 +266,27 @@
 		else
 			if(input_attempt && input_available > 0 && input_available >= input_level)
 				inputting = 1
+	else
+		inputting = 0
 
 	//outputting
-	if(outputting)
-		output_used = min( charge/SMESRATE, output_level)		//limit output to that stored
+	if(output_attempt)
+		if(outputting)
+			output_used = min( charge/SMESRATE, output_level)		//limit output to that stored
 
-		charge -= output_used*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
+			charge -= output_used*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
 
-		add_avail(output_used)				// add output to powernet (smes side)
+			add_avail(output_used)				// add output to powernet (smes side)
 
-		if(output_used < 0.0001)			// either from no charge or set to 0
-			outputting = 0
-			investigate_log("lost power and turned <font color='red'>off</font>","singulo")
-	else if(output_attempt && charge > output_level && output_level > 0)
-		outputting = 1
+			if(output_used < 0.0001)		// either from no charge or set to 0
+				outputting = 0
+				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+		else if(output_attempt && charge > output_level && output_level > 0)
+			outputting = 1
+		else
+			output_used = 0
 	else
-		output_used = 0
+		outputting = 0
 
 	// only update icon if state changed
 	if(last_disp != chargedisplay() || last_chrg != inputting || last_onln != outputting)
@@ -313,21 +328,11 @@
 	if(terminal && terminal.powernet)
 		terminal.powernet.load += amount
 
-/obj/machinery/power/smes/attack_hand(mob/user)
-	if (!user)
-		return
-	add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/power/smes/interact(mob/user)
-	if (stat & BROKEN)
-		return
-	ui_interact(user)
-
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "smes", name, 500, 455)
+/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "smes", name, 340, 440, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/smes/get_ui_data()
@@ -351,9 +356,6 @@
 	return data
 
 /obj/machinery/power/smes/ui_act(action, params)
-	if(..())
-		return
-
 	switch(action)
 		if("tryinput")
 			input_attempt = !input_attempt
@@ -364,7 +366,7 @@
 			log_smes(usr.ckey)
 			update_icon()
 		if("input")
-			switch(params["set"])
+			switch(params["input"])
 				if("custom")
 					var/custom = input(usr, "What rate would you like this SMES to attempt to charge at? Max is [input_level_max].") as null|num
 					if(custom)
@@ -380,7 +382,7 @@
 			input_level = Clamp(input_level, 0, input_level_max)
 			log_smes(usr.ckey)
 		if("output")
-			switch(params["set"])
+			switch(params["output"])
 				if("custom")
 					var/custom = input(usr, "What rate would you like this SMES to attempt to output at? Max is [output_level_max].") as null|num
 					if(custom)

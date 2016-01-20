@@ -1,7 +1,5 @@
 
 var/global/BSACooldown = 0
-var/global/floorIsLava = 0
-
 
 ////////////////////////////////
 /proc/message_admins(msg)
@@ -147,8 +145,8 @@ var/global/floorIsLava = 0
 			body += "<A href='?_src_=holder;simplemake=coffee;mob=\ref[M]'>Coffee</A> | "
 			//body += "<A href='?_src_=holder;simplemake=parrot;mob=\ref[M]'>Parrot</A> | "
 			//body += "<A href='?_src_=holder;simplemake=polyparrot;mob=\ref[M]'>Poly</A> | "
-			body += "\[ Construct: <A href='?_src_=holder;simplemake=constructarmored;mob=\ref[M]'>Armored</A> , "
-			body += "<A href='?_src_=holder;simplemake=constructbuilder;mob=\ref[M]'>Builder</A> , "
+			body += "\[ Construct: <A href='?_src_=holder;simplemake=constructarmored;mob=\ref[M]'>Juggernaut</A> , "
+			body += "<A href='?_src_=holder;simplemake=constructbuilder;mob=\ref[M]'>Artificer</A> , "
 			body += "<A href='?_src_=holder;simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \] "
 			body += "<A href='?_src_=holder;simplemake=shade;mob=\ref[M]'>Shade</A>"
 			body += "<br>"
@@ -398,7 +396,10 @@ var/global/floorIsLava = 0
 		<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>
 		"}
 
-	usr << browse(dat, "window=admin2;size=210x180")
+	if(marked_datum && istype(marked_datum, /atom))
+		dat += "<A href='?src=\ref[src];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
+
+	usr << browse(dat, "window=admin2;size=210x200")
 	return
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge

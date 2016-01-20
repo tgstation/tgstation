@@ -25,7 +25,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
 	intact = 1
-	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
 	var/floor_tile = null //tile that this floor drops
@@ -49,12 +48,16 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	return ..()
 
 /turf/simulated/floor/ex_act(severity, target)
+	var/shielded = is_shielded()
 	..()
+	if(severity != 1 && shielded && target != src)
+		return
 	if(target == src)
 		src.ChangeTurf(src.baseturf)
 	if(target != null)
 		ex_act(3)
 		return
+
 	switch(severity)
 		if(1)
 			src.ChangeTurf(src.baseturf)
@@ -76,14 +79,16 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			if (prob(50))
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
-	return
+
+/turf/simulated/floor/is_shielded()
+	for(var/obj/structure/A in contents)
+		if(A.level == 3)
+			return 1
 
 /turf/simulated/floor/blob_act()
 	return
 
 /turf/simulated/floor/proc/update_icon()
-	if(lava)
-		return 0
 	if(air)
 		update_visuals()
 	return 1
@@ -172,4 +177,4 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		ChangeTurf(/turf/simulated/floor/engine/cult)
 
 /turf/simulated/floor/can_have_cabling()
-	return !burnt & !broken & !lava
+	return !burnt && !broken

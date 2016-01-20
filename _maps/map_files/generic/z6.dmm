@@ -446,7 +446,7 @@
 "iD" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating,/area/awaymission/listeningpost)
 "iE" = (/turf/simulated/floor/plating/asteroid/airless,/area/mine/explored)
 "iF" = (/obj/machinery/computer/message_monitor,/turf/simulated/floor/plasteel,/area/awaymission/listeningpost)
-"iG" = (/obj/structure/bed/chair{dir = 4},/mob/living/simple_animal/hostile/syndicate{desc = "A weary looking syndicate operative."; faction = "syndicate"},/turf/simulated/floor/plasteel,/area/awaymission/listeningpost)
+"iG" = (/obj/structure/bed/chair{dir = 4},/mob/living/simple_animal/hostile/syndicate{desc = "A weary looking syndicate operative."},/turf/simulated/floor/plasteel,/area/awaymission/listeningpost)
 "iH" = (/obj/structure/table,/obj/item/weapon/paper{info = "Nothing of interest to report."; name = "november report"},/obj/item/weapon/pen,/turf/simulated/floor/plasteel,/area/awaymission/listeningpost)
 "iI" = (/obj/item/device/radio/intercom{desc = "Talk through this. Evilly"; freerange = 1; frequency = 1213; name = "Syndicate Intercom"; pixel_x = 32; subspace_transmission = 1; syndie = 1},/turf/simulated/floor/plasteel,/area/awaymission/listeningpost)
 "iJ" = (/obj/structure/rack,/obj/item/clothing/suit/space/syndicate,/obj/item/clothing/mask/gas,/obj/item/clothing/head/helmet/space/syndicate,/turf/simulated/floor/plasteel,/area/awaymission/listeningpost)

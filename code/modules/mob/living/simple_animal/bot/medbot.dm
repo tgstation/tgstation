@@ -153,7 +153,7 @@
 		dat += "Critical Patient Alerts: <a href='?src=\ref[src];critalerts=1'>[declare_crit ? "Yes" : "No"]</a><br>"
 		dat += "Patrol Station: <a href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</a><br>"
 		dat += "Stationary Mode: <a href='?src=\ref[src];stationary=1'>[stationary_mode ? "Yes" : "No"]</a><br>"
-	
+
 	return dat
 
 /mob/living/simple_animal/bot/medbot/Topic(href, href_list)
@@ -229,8 +229,7 @@
 		declare_crit = 0
 		if(user)
 			user << "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>"
-		spawn(0)
-			audible_message("<span class='danger'>[src] buzzes oddly!</span>")
+		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
 		if(user)
 			oldpatient = user
@@ -303,10 +302,10 @@
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		path = get_path_to(loc, get_turf(patient), src, /turf/proc/Distance_cardinal, 0, 30,id=access_card)
+		path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,id=access_card)
 		mode = BOT_MOVING
 		if(!path.len) //try to get closer if you can't reach the patient directly
-			path = get_path_to(loc, get_turf(patient), src, /turf/proc/Distance_cardinal, 0, 30,1,id=access_card)
+			path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,1,id=access_card)
 			if(!path.len) //Do not chase a patient we cannot reach.
 				soft_reset()
 

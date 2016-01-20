@@ -118,7 +118,7 @@
 	if(target)
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = get_path_to(loc, target.loc, src, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
+			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
 			if (!bot_move(target))
 				add_to_ignore(target)
 				target = null
@@ -152,6 +152,7 @@
 	target_types += /obj/effect/decal/cleanable/ash
 	target_types += /obj/effect/decal/cleanable/greenglow
 	target_types += /obj/effect/decal/cleanable/dirt
+	target_types += /obj/effect/decal/cleanable/deadcockroach
 
 	if(blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood/

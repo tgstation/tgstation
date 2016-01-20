@@ -181,6 +181,8 @@
 #define ZLEVEL_ABANDONNEDTSAT 3
 #define ZLEVEL_CENTCOM 2
 #define ZLEVEL_STATION 1
+#define ZLEVEL_LAVALAND 5
+#define ZLEVEL_UNDERGROUND 6
 
 //ticker.current_state values
 #define GAME_STATE_STARTUP		0
@@ -322,3 +324,6 @@ var/list/bloody_footprints_cache = list()
 //Bloodcrawling
 #define BLOODCRAWL 1
 #define BLOODCRAWL_EAT 2
+
+//Color Defines
+#define OOC_COLOR  "#002eb8"

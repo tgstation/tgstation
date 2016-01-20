@@ -26,6 +26,7 @@
 	//Spaceborn beings don't get hurt by space
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
+	del_on_death = 1
 
 /mob/living/simple_animal/hostile/poison/bees/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -33,12 +34,6 @@
 /mob/living/simple_animal/hostile/poison/bees/New()
 	..()
 	update_bees()
-
-/mob/living/simple_animal/hostile/poison/bees/death(gibbed)
-	..(1)
-	ghostize()
-	qdel(src)
-	return
 
 /mob/living/simple_animal/hostile/poison/bees/Life()
 	..()

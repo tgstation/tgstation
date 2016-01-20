@@ -457,7 +457,7 @@
 		else if(stat & (BROKEN|MAINT))
 			user << "<span class='warning'>Nothing happens!</span>"
 		else
-			if(src.allowed(usr) && !isWireCut(APC_WIRE_IDSCAN))
+			if(src.allowed(usr) && !wires.IsIndexCut(APC_WIRE_IDSCAN))
 				locked = !locked
 				user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>"
 				update_icon()
@@ -579,8 +579,8 @@
 // attack with hand - remove cell (if cover open) or interact with the APC
 
 /obj/machinery/power/apc/attack_hand(mob/user)
-	if (!user) return
-	add_fingerprint(user)
+	if(!user)
+		return
 	if(usr == user && opened && (!issilicon(user)))
 		if(cell)
 			user.put_in_hands(cell)
@@ -594,10 +594,12 @@
 			charging = 0
 			src.update_icon()
 		return
-	interact(user)
+	..()
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(!user) return
+	if(!user)
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	user.visible_message("<span class='danger'>[user.name] slashes at the [src.name]!</span>", "<span class='notice'>You slash at the [src.name]!</span>")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
@@ -619,17 +621,16 @@
 
 
 /obj/machinery/power/apc/interact(mob/user)
-	if(stat & (BROKEN|MAINT))
-		return
 	if(wiresexposed && !istype(user, /mob/living/silicon/ai))
 		wires.Interact(user)
 	else
 		ui_interact(user)
 
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "apc", name, 550, 550)
+/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "apc", name, 535, 515, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/apc/get_ui_data(mob/user)
@@ -714,10 +715,6 @@
 //			world << "[area.power_equip]"
 	area.power_change()
 
-/obj/machinery/power/apc/proc/isWireCut(wireIndex)
-	return wires.IsIndexCut(wireIndex)
-
-
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(IsAdminGhost(user))
 		return 1
@@ -741,18 +738,25 @@
 	return 1
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(..())
+	if(!can_use(usr, 1))
 		return
 
-	if(!can_use(usr, 1))
+	if(locked && !usr.has_unlimited_silicon_privilege)
 		return
 
 	switch(action)
 		if("lock")
+			if(usr.has_unlimited_silicon_privilege)
+				if(emagged || (stat & (BROKEN|MAINT)))
+					usr << "The APC does not respond to the command."
+				else
+					locked = !locked
+					update_icon()
+		if("cover")
 			coverlocked = !coverlocked
-		if ("breaker")
+		if("breaker")
 			toggle_breaker()
-		if("chargemode")
+		if("charge")
 			chargemode = !chargemode
 			if(!chargemode)
 				charging = 0
@@ -773,19 +777,12 @@
 				environ = setsubsystem(val)
 				update_icon()
 				update()
-		if("toggleaccess")
-			if(usr.has_unlimited_silicon_privilege)
-				if(emagged || (stat & (BROKEN|MAINT)))
-					usr << "The APC does not respond to the command."
-				else
-					locked = !locked
-					update_icon()
 		if("overload")
 			if(usr.has_unlimited_silicon_privilege)
 				src.overload_lighting()
 		if("hack")
 			var/mob/living/silicon/ai/malfai = usr
-			if(get_malf_status(malfai)==1)
+			if(get_malf_status(malfai) == 1)
 				if (malfai.malfhacking)
 					malfai << "You are already hacking an APC."
 					return 1
@@ -798,6 +795,7 @@
 						malfai.malfhack = null
 						malfai.malfhacking = 0
 						locked = 1
+						malfhack = 1
 						malfai.malf_picker.processing_time += 10
 						if(usr:parent)
 							src.malfai = usr:parent
@@ -845,8 +843,8 @@
 		qdel(malf)
 	src.occupier.verbs += /mob/living/silicon/ai/proc/corereturn
 	src.occupier.cancel_camera()
-	if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
-		for(var/obj/item/weapon/pinpointer/point in world)
+	if ((seclevel2num(get_security_level()) == SEC_LEVEL_DELTA) && malf.nuking)
+		for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
 			point.the_disk = src //the pinpointer will detect the shunted AI
 
 
@@ -860,9 +858,9 @@
 		src.occupier.parent.cancel_camera()
 		qdel(src.occupier)
 		if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
-			for(var/obj/item/weapon/pinpointer/point in world)
-				for(var/mob/living/silicon/ai/A in living_mob_list)
-					if(A.stat != DEAD)
+			for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
+				for(var/mob/living/silicon/ai/A in ai_list)
+					if((A.stat != DEAD) && A.nuking)
 						point.the_disk = A //The pinpointer tracks the AI back into its core.
 
 	else
@@ -871,30 +869,8 @@
 			src.occupier.loc = src.loc
 			src.occupier.death()
 			src.occupier.gib()
-			for(var/obj/item/weapon/pinpointer/point in world)
+			for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
 				point.the_disk = null //the pinpointer will go back to pointing at the nuke disc.
-
-
-/obj/machinery/power/apc/proc/ion_act()
-	//intended to be exactly the same as an AI malf attack
-	if(!src.malfhack && src.z == ZLEVEL_STATION)
-		if(prob(3))
-			src.locked = 1
-			if (src.cell.charge > 0)
-//				world << "\red blew APC in [src.loc.loc]"
-				src.cell.charge = 0
-				cell.corrupt()
-				src.malfhack = 1
-				update_icon()
-				var/datum/effect_system/smoke_spread/smoke = new
-				smoke.set_up(1, src.loc)
-				smoke.attach(src)
-				smoke.start()
-				var/datum/effect_system/spark_spread/s = new
-				s.set_up(3, 1, src)
-				s.start()
-				visible_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", \
-								"<span class='italics'>You hear sizzling electronics.</span>")
 
 
 /obj/machinery/power/apc/surplus()

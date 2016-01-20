@@ -8,7 +8,7 @@
 	icon_state = null
 	flags = OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
-	possible_transfer_amounts = list(5,10,25)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
 	burn_state = FIRE_PROOF
 

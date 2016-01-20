@@ -277,7 +277,7 @@
 	desc = "A chainsaw that has replaced your arm."
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
-	flags = NODROP
+	flags = NODROP | ABSTRACT
 	w_class = 5.0
 	force = 21
 	throwforce = 0

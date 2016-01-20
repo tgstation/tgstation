@@ -178,6 +178,11 @@
 
 	playsound(loc, 'sound/effects/bamf.ogg', 50, 1)
 
+	var/turf/DT = get_turf(src)
+	var/area/DA = get_area(DT)
+	message_admins("A grenade detonated at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[DT.x];Y=[DT.y];Z=[DT.z]'>[DA.name] (JMP)</a>.")
+	log_game("A grenade detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")
+
 	update_mob()
 
 	mix_reagents()
@@ -438,6 +443,25 @@
 	B1.reagents.add_reagent("itching_powder", 50)
 	B2.reagents.add_reagent("fluorosurfactant", 150)
 	B2.reagents.add_reagent("mutagen", 150)
+	beakers += B1
+	beakers += B2
+
+/obj/item/weapon/grenade/chem_grenade/tuberculosis
+ 	name = "Fungal tuberculosis grenade"
+ 	desc = "WARNING: GRENADE WILL RELEASE DEADLY SPORES CONTAINING ACTIVE AGENTS. SEAL SUIT AND AIRFLOW BEFORE USE."
+ 	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/tuberculosis/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
+
+	B1.reagents.add_reagent("potassium", 50)
+	B1.reagents.add_reagent("phosphorus", 50)
+	B1.reagents.add_reagent("fungalspores", 200)
+	B2.reagents.add_reagent("blood", 250)
+	B2.reagents.add_reagent("sugar", 50)
+
 	beakers += B1
 	beakers += B2
 

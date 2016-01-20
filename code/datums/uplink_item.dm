@@ -1,39 +1,24 @@
 var/list/uplink_items = list()
 
-/proc/get_uplink_items(var/gamemode_override=null)
+/proc/get_uplink_items(var/gamemode_override = null)
 	// If not already initialized..
 	if(!uplink_items.len)
-
 		// Fill in the list	and order it like this:
 		// A keyed list, acting as categories, which are lists to the datum.
-
-		var/list/last = list()
 		for(var/item in subtypesof(/datum/uplink_item))
-
 			var/datum/uplink_item/I = new item()
 			if(!I.item)
 				continue
-			if(I.last)
-				last += I
-				continue
 
 			if(!uplink_items[I.category])
 				uplink_items[I.category] = list()
-
-			uplink_items[I.category] += I
-
-		for(var/datum/uplink_item/I in last)
-
-			if(!uplink_items[I.category])
-				uplink_items[I.category] = list()
-
-			uplink_items[I.category] += I
+			uplink_items[I.category][I.name] = I
 
 	//Filtered version
 	var/list/filtered_uplink_items = list()
-
 	for(var/category in uplink_items)
-		for(var/datum/uplink_item/I in uplink_items[category])
+		for(var/item in uplink_items[category])
+			var/datum/uplink_item/I = uplink_items[category][item]
 			if(I.gamemodes.len)
 				if(!gamemode_override && ticker && !(ticker.mode.type in I.gamemodes))
 					continue
@@ -44,9 +29,10 @@ var/list/uplink_items = list()
 					continue
 				if(gamemode_override && (gamemode_override in I.excludefrom))
 					continue
-			if(!filtered_uplink_items[I.category])
-				filtered_uplink_items[I.category] = list()
-			filtered_uplink_items[category] += I
+
+			if(!filtered_uplink_items[category])
+				filtered_uplink_items[category] = list()
+			filtered_uplink_items[category][item] = I
 
 	return filtered_uplink_items
 
@@ -59,10 +45,10 @@ var/list/uplink_items = list()
 	var/desc = "item description"
 	var/item = null
 	var/cost = 0
-	var/last = 0 // Appear last
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/excludefrom = list() //Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
 	var/surplus = 100 //Chance of being included in the surplus crate (when pick() selects it)
+	var/refundable = FALSE
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
@@ -81,7 +67,7 @@ var/list/uplink_items = list()
 		return 0
 
 	// If the uplink's holder is in the user's contents
-	if ((U.loc in user.contents || (in_range(U.loc, user) && istype(U.loc.loc, /turf))))
+	if ((U.loc in user.contents) || (in_range(U.loc, user) && istype(U.loc.loc, /turf)))
 		user.set_machine(U)
 		if(cost > U.uses)
 			return 0
@@ -112,7 +98,7 @@ var/list/uplink_items = list()
 //Operator special offers
 
 /datum/uplink_item/specoffer
-	category = "Special offer roles"
+	category = "Special Offers"
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/specoffer/c20r
@@ -292,6 +278,14 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 	surplus = 0
 
+/datum/uplink_item/stealthy_weapons/operator_virus_grenade
+	name = "Fungal Tuberculosis grenade"
+	desc = "A primed bio-grenade packed into a compact box. Comes with five Bio Virus Antidote Kit (BVAK) autoinjectors for rapid application on up to two targets each, a syringe, and a bottle containing the BVAK solution."
+	item = /obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade
+	cost = 12
+	surplus = 35
+	gamemodes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/gygax
 	name = "Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent for hit-and-run style attacks. \
@@ -324,12 +318,7 @@ var/list/uplink_items = list()
 	cost = 25
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
-
-/datum/uplink_item/dangerous/reinforcement/spawn_item()
-	var/obj/item/weapon/antag_spawner/nuke_ops/T = ..()
-	if(istype(T))
-		T.TC_cost = cost
-
+	refundable = TRUE
 
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
@@ -549,6 +538,14 @@ var/list/uplink_items = list()
 	cost = 1
 	surplus = 50
 
+/datum/uplink_item/stealthy_weapons/traitor_virus_kit
+	name = "Virus Kit"
+	desc = "An active fungal pathogen in a sterile, compact box. Comes with one Bio Virus Antidote Kit (BVAK) autoinjector for rapid application on up to two targets each, a syringe, and a bottle containing the BVAK solution."
+	item = /obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
+	cost = 20 //because nobody knows jack shit about virology
+	surplus = 50
+	excludefrom = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
@@ -760,7 +757,7 @@ var/list/uplink_items = list()
 	They allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, emitted as heat and light by objects. \
 	Hotter objects, such as warm bodies, cybernetic organisms and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks." //THEN WHY CANT THEY SEE PLASMA FIRES????
 	item = /obj/item/clothing/glasses/thermal/syndi
-	cost = 6
+	cost = 4
 
 /datum/uplink_item/device_tools/binary
 	name = "Binary Translator Key"
@@ -950,7 +947,6 @@ var/list/uplink_items = list()
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
 	surplus = 0
-	last = 1
 
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"
@@ -1033,7 +1029,7 @@ var/list/uplink_items = list()
 		buyable_items += temp_uplink_list[category]
 	var/list/bought_items = list()
 	U.uses -= cost
-	U.used_TC = 20
+	U.used_TC += 20
 	var/remaining_TC = 50
 
 	var/datum/uplink_item/I

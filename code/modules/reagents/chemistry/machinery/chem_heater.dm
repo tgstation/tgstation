@@ -72,33 +72,22 @@
 			default_deconstruction_crowbar(I)
 			return 1
 
-/obj/machinery/chem_heater/attack_hand(mob/user)
-	if (!user)
-		return
-	interact(user)
-
 /obj/machinery/chem_heater/ui_act(action, params)
-	if(..())
-		return
-
 	switch(action)
 		if("power")
 			on = !on
 		if("temperature")
 			desired_temp = Clamp(input("Please input the target temperature", name) as num, 0, 1000)
 		if("eject")
+			on = FALSE
 			eject_beaker()
 	return 1
 
-/obj/machinery/chem_heater/interact(mob/user)
-	if(stat & BROKEN)
-		return
-	ui_interact(user)
-
-/obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "chem_heater", name, 350, 400)
+/obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "chem_heater", name, 275, 400, master_ui, state)
 		ui.open()
 
 /obj/machinery/chem_heater/get_ui_data()

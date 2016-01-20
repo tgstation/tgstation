@@ -135,7 +135,6 @@
 	desc = "A single-use teleporter designed to quickly reinforce operatives in the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
-	var/TC_cost = 0
 	var/borg_to_spawn
 	var/list/possible_types = list("Assault", "Medical")
 
@@ -164,18 +163,19 @@
 		var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
 		S.set_up(4, 1, src)
 		S.start()
+		qdel(src)
 	else
 		user << "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
 /obj/item/weapon/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T)
-	var/nuke_code = "Ask your leader!"
+	var/new_op_code = "Ask your leader!"
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
 	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
 	if(nuke)
-		nuke.r_code = nuke_code
-	M.mind.make_Nuke(T, nuke_code, 0, FALSE)
+		new_op_code = nuke.r_code
+	M.mind.make_Nuke(T, new_op_code, 0, FALSE)
 
 
 

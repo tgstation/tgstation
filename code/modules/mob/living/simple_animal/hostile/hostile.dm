@@ -16,6 +16,7 @@
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the starting cooldown is on ranged attacks
 	var/ranged_cooldown_cap = 3 //What ranged attacks, after being used are set to, to go back on cooldown, defaults to 3 life() ticks
+	var/check_friendly_fire = 0 // Should the ranged mob check for friendlies when shooting
 	var/retreat_distance = null //If our mob runs from players when they're too close, set in tile distance. By default, mobs do not retreat.
 	var/minimum_distance = 1 //Minimum approach distance, so ranged mobs chase targets down, but still keep their distance set in tiles to the target, set higher to make mobs keep distance
 
@@ -116,11 +117,7 @@
 					return 1
 		if(isliving(the_target))
 			var/mob/living/L = the_target
-			var/faction_check = 0
-			for(var/F in faction)
-				if(F in L.faction)
-					faction_check = 1
-					break
+			var/faction_check = faction_check(L)
 			if(robust_searching)
 				if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
 					return 0
@@ -155,6 +152,9 @@
 		if(ranged)//We ranged? Shoot at em
 			if(target_distance >= 2 && ranged_cooldown <= 0)//But make sure they're a tile away at least, and our range attack is off cooldown
 				OpenFire(target)
+		if(!Process_Spacemove()) // Drifting
+			walk(src,0)
+			return 1
 		if(retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
 			if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
 				walk_away(src,target,retreat_distance,move_to_delay)
@@ -180,7 +180,7 @@
 /mob/living/simple_animal/hostile/proc/Goto(target, delay, minimum_distance)
 	walk_to(src, target, minimum_distance, delay)
 
-/mob/living/simple_animal/hostile/adjustBruteLoss(damage)
+/mob/living/simple_animal/hostile/adjustHealth(damage)
 	..(damage)
 	if(!ckey && !stat && search_objects < 3 && damage > 0)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
@@ -230,7 +230,13 @@
 				M.Goto(src,M.move_to_delay,M.minimum_distance)
 
 /mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
-
+	if(check_friendly_fire)
+		for(var/turf/T in getline(src,A)) // Not 100% reliable but this is faster than simulating actual trajectory
+			for(var/mob/living/L in T)
+				if(L == src || L == A)
+					continue
+				if(faction_check(L) && !attack_same)
+					return
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 
 	if(rapid)

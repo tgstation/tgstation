@@ -57,7 +57,7 @@
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
 		if(health < maxHealth)
-			adjustBruteLoss(-5)
+			adjustHealth(-5)
 			if(src != M)
 				Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
 				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
@@ -229,6 +229,18 @@
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
 
+
+
+
+
+
+/////////////////////////////Non-cult Artificer/////////////////////////
+/mob/living/simple_animal/hostile/construct/builder/noncult
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
+							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
 
 
 /////////////////////////////Harvester/////////////////////////

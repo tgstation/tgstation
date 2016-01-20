@@ -19,6 +19,7 @@
 	var/obj/item/weapon/weldingtool/weldtool = null
 	var/obj/item/device/assembly/igniter/igniter = null
 	var/obj/item/weapon/tank/internals/plasma/ptank = null
+	var/warned_admins = 0 //for the message_admins() when lit
 
 
 /obj/item/weapon/flamethrower/Destroy()
@@ -144,6 +145,9 @@
 		lit = !lit
 		if(lit)
 			SSobj.processing |= src
+			if(!warned_admins)
+				message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has lit a flamethrower.")
+				warned_admins = 1
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
 		throw_amount = max(50, min(5000, throw_amount))
@@ -194,7 +198,8 @@
 	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
 	//Transfer 5% of current tank air contents to turf
 	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(release_amount)
-	air_transfer.toxins = air_transfer.toxins * 5
+	if(air_transfer.gases["plasma"])
+		air_transfer.gases["plasma"][MOLES] *= 5
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)

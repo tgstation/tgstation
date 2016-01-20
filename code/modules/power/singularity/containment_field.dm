@@ -92,10 +92,7 @@
 			var/stun = min(shock_damage, 15)
 			user.Stun(stun)
 			user.Weaken(10)
-			user.burn_skin(shock_damage)
-			user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
-			"<span class='userdanger'>You feel a powerful shock course through your body, sending you flying!</span>", \
-			"<span class='italics'>You hear a heavy electrical crack.</span>")
+			user.electrocute_act(shock_damage, src, 1)
 
 		else if(issilicon(user))
 			if(prob(20))

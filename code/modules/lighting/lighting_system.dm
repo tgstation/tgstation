@@ -131,7 +131,7 @@
 		if(AM.opacity)
 			range = 0
 			break
-	
+
 	owner.luminosity = range
 	if (!range)
 		return 0

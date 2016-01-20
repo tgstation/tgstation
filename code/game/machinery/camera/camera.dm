@@ -28,7 +28,6 @@
 	var/view_range = 7
 	var/short_range = 2
 
-	var/light_disabled = 0
 	var/alarm_on = 0
 	var/busy = 0
 	var/emped = 0  //Number of consecutive EMP's on this camera
@@ -69,6 +68,8 @@
 	return ..()
 
 /obj/machinery/camera/emp_act(severity)
+	if(!status)
+		return
 	if(!isEmpProof())
 		if(prob(150/severity))
 			icon_state = "[initial(icon_state)]emp"
@@ -355,6 +356,16 @@
 		return 1
 	busy = 0
 	return 0
+
+/obj/machinery/camera/proc/Togglelight(on=0)
+	for(var/mob/living/silicon/ai/A in ai_list)
+		for(var/obj/machinery/camera/cam in A.lit_cameras)
+			if(cam == src)
+				return
+	if(on)
+		src.SetLuminosity(AI_CAMERA_LUMINOSITY)
+	else
+		src.SetLuminosity(0)
 
 /obj/machinery/camera/bullet_act(obj/item/projectile/proj)
 	if(proj.damage_type == BRUTE)

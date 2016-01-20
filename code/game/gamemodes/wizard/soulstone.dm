@@ -177,7 +177,11 @@
 						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
 
 					if("Artificer")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
+						if(iscultist(user) || iswizard(user))
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
+
+						else
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
 
 				qdel(T)
 				qdel(src)
@@ -238,40 +242,27 @@
 
 
 /obj/item/device/soulstone/proc/getCultGhost(obj/item/device/soulstone/C, mob/living/carbon/human/T, mob/U)
-	var/list/candidates = get_candidates(ROLE_CULTIST)
+	var/mob/dead/observer/chosen_ghost
 
-	shuffle(candidates)
+	for(var/mob/dead/observer/ghost in player_list) //We put them back in their body
+		if(ghost.mind && ghost.mind.current == T && ghost.client)
+			chosen_ghost = ghost
+			break
 
-	var/time_passed = world.time
-	var/list/consenting_candidates = list()
-
-	for(var/candidate in candidates)
-
-		spawn(0)
-			switch(alert(candidate, "Would you like to play as a Shade? Please choose quickly!","Confirmation","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>=50 || !src)
-						return
-					consenting_candidates += candidate
-
-	sleep(50)
-
-	if(!T) //target mob got soulstoned or gibbed during sleep(50)
+	if(!chosen_ghost)	//Failing that, we grab a ghost
+		var/list/consenting_candidates = pollCandidates("Would you like to play as a Shade?", be_special_flag = ROLE_CULTIST, poll_time = 100)
+		if(consenting_candidates.len)
+			chosen_ghost = pick(consenting_candidates)
+	if(!T)
 		return 0
-	listclearnulls(consenting_candidates) //some candidates might have left during sleep(50)
-
-	if(consenting_candidates.len)
-		var/client/ghost = null
-		ghost = pick(consenting_candidates)
-		if(C.contents.len) //If they used the soulstone on someone else in the meantime
-			return 0
-		if(!T.client) //If the original returns in the alloted time
-			T.client = ghost
-		for(var/obj/item/W in T)
-			T.unEquip(W)
-		init_shade(C, T, U)
-		qdel(T)
-		return 1
-	else
+	if(!chosen_ghost)
 		U << "<span class='danger'>The ghost has fled beyond your grasp.</span>"
 		return 0
+	if(C.contents.len) //If they used the soulstone on someone else in the meantime
+		return 0
+	T.ckey = chosen_ghost.ckey
+	for(var/obj/item/W in T)
+		T.unEquip(W)
+	init_shade(C, T, U)
+	qdel(T)
+	return 1

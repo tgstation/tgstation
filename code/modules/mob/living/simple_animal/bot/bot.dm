@@ -15,6 +15,9 @@
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 
+	speak_emote = list("states")
+	bubble_icon = "machine"
+
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
 	var/list/users = list() //for dialog updates
@@ -83,7 +86,8 @@
 		return "<span class='average'>[mode_name[mode]]</span>"
 
 /mob/living/simple_animal/bot/proc/turn_on()
-	if(stat)	return 0
+	if(stat)
+		return 0
 	on = 1
 	SetLuminosity(initial(luminosity))
 	update_icon()
@@ -105,7 +109,7 @@
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
 		Radio.keyslot = new radio_key
-	Radio.canhear_range = 1 // 0 ?
+	Radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
 	Radio.recalculateChannels()
 
 	bot_core = new bot_core_type(src)
@@ -163,12 +167,7 @@
 	else
 		user << "[src] is in pristine condition."
 
-/mob/living/simple_animal/bot/adjustBruteLoss(amount)
-	if(amount>0 && prob(10))
-		new /obj/effect/decal/cleanable/oil(loc)
-	return ..(amount)
-
-/mob/living/simple_animal/bot/adjustFireLoss(amount)
+/mob/living/simple_animal/bot/adjustHealth(amount)
 	if(amount>0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
 	return ..(amount)
@@ -194,30 +193,36 @@
 	return 1 //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
-/mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "help")
-		show_controls(M)
+/mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
+	if(H.a_intent == "help")
+		interact(H)
 	else
 		return ..()
+
+/mob/living/simple_animal/bot/attack_ai(mob/user)
+	interact(user)
+
+/mob/living/simple_animal/bot/interact(mob/user)
+	show_controls(user)
 
 /mob/living/simple_animal/bot/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(!locked)
 			open = !open
-			user << "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>"
+			user << "<span class='notice'>The maintenance panel is now [open ? "opened" : "closed"].</span>"
 		else
-			user << "<span class='warning'>Maintenance panel is locked.</span>"
-	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+			user << "<span class='warning'>The maintenance panel is locked.</span>"
+	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			user << "Controls are now [locked ? "locked." : "unlocked."]"
 		else
 			if(emagged)
-				user << "<span class='warning'>ERROR</span>"
+				user << "<span class='danger'>ERROR</span>"
 			if(open)
-				user << "<span class='danger'>Please close the access panel before locking it.</span>"
+				user << "<span class='warning'>Please close the access panel before locking it.</span>"
 			else
-				user << "<span class='danger'>Access denied.</span>"
+				user << "<span class='warning'>Access denied.</span>"
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
@@ -276,8 +281,6 @@
 	text_dehack = "You reset [name]."
 	text_dehack_fail = "You fail to reset [name]."
 
-/mob/living/simple_animal/bot/attack_ai(mob/user as mob)
-	show_controls(user)
 
 /mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
 	if((!on) || (!message))
@@ -292,9 +295,6 @@
 	else
 		say(message)
 	return
-
-/mob/living/simple_animal/bot/say(message)
-	return ..(message, "R")
 
 /mob/living/simple_animal/bot/get_spans()
 	return ..() | SPAN_ROBOT
@@ -332,7 +332,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 */
 /mob/living/simple_animal/bot/proc/scan(scan_type, old_target, scan_range = DEFAULT_SCAN_RANGE)
 	var/final_result
-	for (var/scan in view (scan_range, src) ) //Search for something in range!
+	for (var/scan in shuffle(view(scan_range, src))) //Search for something in range!
 		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
 			continue //If not, keep searching!
 		if( (scan in ignore_list) || (scan == old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
@@ -412,7 +412,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/datum/job/captain/All = new/datum/job/captain
 	all_access.access = All.get_access()
 
-	path = get_path_to(src, waypoint, src, /turf/proc/Distance_cardinal, 0, 200, id=all_access)
+	path = get_path_to(src, waypoint, /turf/proc/Distance_cardinal, 0, 200, id=all_access)
 	calling_ai = caller //Link the AI to the bot!
 	ai_waypoint = waypoint
 
@@ -635,12 +635,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/proc/calc_path(turf/avoid)
 	check_bot_access()
-	path = get_path_to(loc, patrol_target, src, /turf/proc/Distance_cardinal, 0, 120, id=access_card, exclude=avoid)
+	path = get_path_to(src, patrol_target, /turf/proc/Distance_cardinal, 0, 120, id=access_card, exclude=avoid)
 
 /mob/living/simple_animal/bot/proc/calc_summon_path(turf/avoid)
 	check_bot_access()
 	spawn()
-		path = get_path_to(loc, summon_target, src, /turf/proc/Distance_cardinal, 0, 150, id=access_card, exclude=avoid)
+		path = get_path_to(src, summon_target, /turf/proc/Distance_cardinal, 0, 150, id=access_card, exclude=avoid)
 		if(!path.len || tries >= 5) //Cannot reach target. Give up and announce the issue.
 			speak("Summon command failed, destination unreachable.",radio_channel)
 			bot_reset()
@@ -710,12 +710,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(usr in users)
 			users.Remove(usr)
 		return 1
-	
+
 	if(topic_denied(usr))
 		usr << "<span class='warning'>[src]'s interface is not responding!</span>"
 		return 1
 	add_fingerprint(usr)
-	
+
 	if((href_list["power"]) && (bot_core.allowed(usr) || !locked))
 		if (on)
 			turn_off()
@@ -786,3 +786,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/Logout()
 	. = ..()
 	bot_reset()
+
+/mob/living/simple_animal/bot/revive()
+	..()
+	update_icon()

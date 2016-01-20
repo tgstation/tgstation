@@ -23,6 +23,8 @@ Sorry Giacom. Please don't be mad :(
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
+	
+	faction |= "\ref[src]"
 
 
 /mob/living/Destroy()
@@ -160,10 +162,10 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Pull"
 	set category = "Object"
 
-	if(pulling == AM)
+	if(istype(AM) && AM.Adjacent(src))
+		start_pulling(AM)
+	else
 		stop_pulling()
-	else if(AM.Adjacent(src))
-		src.start_pulling(AM)
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
@@ -208,27 +210,6 @@ Sorry Giacom. Please don't be mad :(
 	return pressure
 
 
-//sort of a legacy burn method for /electrocute, /shock, and the e_chair
-/mob/living/proc/burn_skin(burn_amount)
-	if(istype(src, /mob/living/carbon/human))
-		//world << "DEBUG: burn_skin(), mutations=[mutations]"
-		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
-		var/divided_damage = (burn_amount)/(H.organs.len)
-		var/extradam = 0	//added to when organ is at max dam
-		for(var/obj/item/organ/limb/affecting in H.organs)
-			if(!affecting)	continue
-			if(affecting.take_damage(0, divided_damage+extradam))	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
-				H.update_damage_overlays(0)
-		H.updatehealth()
-		return 1
-	else if(istype(src, /mob/living/carbon/monkey))
-		var/mob/living/carbon/monkey/M = src
-		M.adjustFireLoss(burn_amount)
-		M.updatehealth()
-		return 1
-	else if(istype(src, /mob/living/silicon/ai))
-		return 0
-
 /mob/living/proc/adjustBodyTemp(actual, desired, incrementboost)
 	var/temperature = actual
 	var/difference = abs(actual-desired)	//get difference
@@ -256,7 +237,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustBruteLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
+	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getOxyLoss()
@@ -264,7 +245,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustOxyLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
+	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setOxyLoss(amount)
@@ -277,7 +258,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustToxLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
+	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setToxLoss(amount)
@@ -290,7 +271,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustFireLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
+	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getCloneLoss()
@@ -298,7 +279,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustCloneLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
+	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setCloneLoss(amount)
@@ -311,7 +292,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustBrainLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
+	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setBrainLoss(amount)
@@ -324,7 +305,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustStaminaLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
+	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
 
 /mob/living/proc/setStaminaLoss(amount)
 	if(status_flags & GODMODE)	return 0
@@ -459,6 +440,7 @@ Sorry Giacom. Please don't be mad :(
 	eye_blurry = 0
 	ear_deaf = 0
 	ear_damage = 0
+	hallucination = 0
 	heal_overall_damage(1000, 1000)
 	ExtinguishMob()
 	fire_stacks = 0

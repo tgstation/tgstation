@@ -27,7 +27,8 @@ var/list/preferences_datums = list()
 
 
 	var/UI_style = "Midnight"
-	var/nanoui_fancy = TRUE
+	var/tgui_fancy = TRUE
+	var/tgui_lock = TRUE
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
@@ -325,7 +326,8 @@ var/list/preferences_datums = list()
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>General Settings</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
-			dat += "<b>Fancy NanoUI:</b> <a href='?_src_=prefs;preference=nanoui'>[(nanoui_fancy) ? "Yes" : "No"]</a><br>"
+			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
+			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a><br>"
@@ -721,7 +723,7 @@ var/list/preferences_datums = list()
 				if("undershirt")
 					undershirt = random_undershirt(gender)
 				if("socks")
-					socks = random_socks(gender)
+					socks = random_socks()
 				if("eyes")
 					eye_color = random_eye_color()
 				if("s_tone")
@@ -834,10 +836,7 @@ var/list/preferences_datums = list()
 
 				if("socks")
 					var/new_socks
-					if(gender == MALE)
-						new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_m
-					else
-						new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_f
+					new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_list
 					if(new_socks)
 						socks = new_socks
 
@@ -1001,7 +1000,7 @@ var/list/preferences_datums = list()
 						gender = MALE
 					underwear = random_underwear(gender)
 					undershirt = random_undershirt(gender)
-					socks = random_socks(gender)
+					socks = random_socks()
 					facial_hair_style = random_facial_hair_style(gender)
 					hair_style = random_hair_style(gender)
 
@@ -1011,11 +1010,17 @@ var/list/preferences_datums = list()
 							UI_style = "Plasmafire"
 						if("Plasmafire")
 							UI_style = "Retro"
+						if("Retro")
+							UI_style = "Slimecore"
+						if("Slimecore")
+							UI_style = "Operative"
 						else
 							UI_style = "Midnight"
 
-				if("nanoui")
-					nanoui_fancy = !nanoui_fancy
+				if("tgui_fancy")
+					tgui_fancy = !tgui_fancy
+				if("tgui_lock")
+					tgui_lock = !tgui_lock
 
 				if("hear_adminhelps")
 					toggles ^= SOUND_ADMINHELP

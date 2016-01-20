@@ -764,7 +764,7 @@ var/list/ai_list = list()
 	var/list/obj/machinery/camera/visible = list()
 	for (var/datum/camerachunk/CC in eyeobj.visibleCameraChunks)
 		for (var/obj/machinery/camera/C in CC.cameras)
-			if (!C.can_use() || C.light_disabled || get_dist(C, eyeobj) > 7)
+			if (!C.can_use() || get_dist(C, eyeobj) > 7)
 				continue
 			visible |= C
 
@@ -772,10 +772,10 @@ var/list/ai_list = list()
 	remove = lit_cameras - visible
 
 	for (var/obj/machinery/camera/C in remove)
-		C.SetLuminosity(0)
-		lit_cameras -= C
+		lit_cameras -= C //Removed from list before turning off the light so that it doesn't check the AI looking away.
+		C.Togglelight(0)
 	for (var/obj/machinery/camera/C in add)
-		C.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		C.Togglelight(1)
 		lit_cameras |= C
 
 /mob/living/silicon/ai/proc/control_integrated_radio()
@@ -843,3 +843,9 @@ var/list/ai_list = list()
 	if(M && cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
 		return
 	return 1
+
+/mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+	raw_message = lang_treat(speaker, message_langs, raw_message, spans)
+	var/name_used = speaker.GetVoice()
+	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
+	show_message(rendered, 2)
