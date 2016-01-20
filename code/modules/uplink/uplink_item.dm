@@ -432,14 +432,16 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 5
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/ammo/machinegun
+	cost = 6
+	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/ammo/machinegun/basic
 	name = "7.62x51mm Box Magazine"
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use with the L6 SAW. \
 			By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
-	cost = 6
-	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun/bleeding
 	name = "7.62x51mm (Bleeding) Box Magazine"
@@ -466,11 +468,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/ammo_box/magazine/m762/incen
 
 /datum/uplink_item/ammo/sniper
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/sniper/basic
 	name = ".50 Magazine"
 	desc = "An additional standard 6-round magazine for use with .50 sniper rifles."
 	item = /obj/item/ammo_box/magazine/sniper_rounds
-	cost = 4
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/sniper/soporific
 	name = ".50 Soporific Magazine"
