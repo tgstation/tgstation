@@ -208,7 +208,9 @@
 	if(!excited_group && remove == 1)
 		SSair.remove_from_active(src)
 
-
+/turf/simulated/temperature_expose()
+	if(temperature > heat_capacity)
+		to_be_destroyed = 1
 
 /turf/simulated/proc/archive()
 	if(air) //For open space like floors
