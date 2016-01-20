@@ -72,18 +72,17 @@
 /obj/machinery/power/smes/RefreshParts()
 	var/IO = 0
 	var/MC = 0
-	var/list/C = list()
+	var/C
 	for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
 		IO += CP.rating
 	input_level_max = 200000 * IO
 	output_level_max = 200000 * IO
 	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
 		MC += PC.maxcharge
-		C.Add(PC.charge / PC.maxcharge)
+		C += PC.charge
 	capacity = MC / (15000) * 1e6
 	if(!charge)
-		var/summ = Mean(arglist(C))
-		charge = capacity * summ
+		charge = C / 15000 * 1e6
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
 	//opening using screwdriver
