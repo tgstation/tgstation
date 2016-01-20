@@ -25,7 +25,7 @@
 	if(!timer_set)
 		name = "pizza bomb"
 		desc = "It seems inactive."
-		icon_state = "pizzabox_bomb"
+		icon_state = "pizzabox_open_bomb"
 		timer_set = 1
 		timer = (input(user, "Set a timer, from one second to ten seconds.", "Timer", "[timer]") as num) * 10
 		if(!user.canUseTopic(src))
@@ -109,7 +109,7 @@
 
 /obj/item/device/pizza_bomb/proc/disarm()
 	audible_message("\icon[src] \The [src] suddenly stops beeping and seems lifeless.")
-	icon_state = "pizzabox_bomb_disarmed"
+	icon_state = "pizzabox_open_bomb"
 	name = "pizza bomb"
 	desc = "A devious contraption, made of a small explosive payload hooked up to pressure-sensitive wires. It's disarmed."
 	disarmed = 1
@@ -119,7 +119,7 @@
 /obj/item/device/pizza_bomb/proc/arm()
 	name = "pizza bomb"
 	desc = "OH GOD THAT'S NOT A PIZZA"
-	icon_state = "pizzabox_bomb"
+	icon_state = "pizzabox_open_bomb_active"
 	audible_message("<span class='warning'>\icon[src] *beep* *beep*</span>")
 	primed = 1
 	sleep(timer)
