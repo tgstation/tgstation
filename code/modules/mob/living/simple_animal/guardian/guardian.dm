@@ -90,6 +90,7 @@
 	summoner.death()
 
 /mob/living/simple_animal/hostile/guardian/adjustHealth(amount) //The spirit is invincible, but passes on damage to the summoner
+	. =  ..()
 	if(summoner)
 		if(loc == summoner)
 			return
