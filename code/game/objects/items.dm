@@ -56,6 +56,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/obj/item/device/uplink/hidden_uplink = null
 	var/strip_delay = 40
 	var/put_on_delay = 20
+	var/breakouttime = 0
 	var/list/materials = list()
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
@@ -222,15 +223,13 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 
 /obj/item/attack_self(mob/user)
-	if(!user)
-		return
-	add_fingerprint(user)
 	interact(user)
 
 /obj/item/interact(mob/user)
 	if(hidden_uplink && hidden_uplink.active)
 		hidden_uplink.interact(user)
-		return
+		return 1
+	add_fingerprint(user)
 	ui_interact(user)
 
 /obj/item/attack_hand(mob/user)

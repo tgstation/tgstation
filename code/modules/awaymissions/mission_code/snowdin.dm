@@ -220,7 +220,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 /obj/item/device/radio/uplink/old/New()
 	..()
 	hidden_uplink.name = "dusty radio"
-	hidden_uplink.uses = 10
+	hidden_uplink.telecrystals = 10
 
 /obj/effect/landmark/corpse/syndicatesoldier/coldres
 	name = "Syndicate Snow Operative"

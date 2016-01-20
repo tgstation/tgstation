@@ -251,7 +251,7 @@
 			for(var/id_tag in alarm_area.air_vent_names)
 				var/long_name = alarm_area.air_vent_names[id_tag]
 				var/list/info = alarm_area.air_vent_info[id_tag]
-				if(!info)
+				if(!info || info["frequency"] != frequency)
 					continue
 				data["vents"] += list(list(
 						"id_tag"	= id_tag,
@@ -269,7 +269,7 @@
 			for(var/id_tag in alarm_area.air_scrub_names)
 				var/long_name = alarm_area.air_scrub_names[id_tag]
 				var/list/info = alarm_area.air_scrub_info[id_tag]
-				if(!info)
+				if(!info || info["frequency"] != frequency)
 					continue
 				data["scrubbers"] += list(list(
 						"id_tag"		= id_tag,
@@ -327,13 +327,13 @@
 			data["thresholds"] = thresholds
 
 /obj/machinery/alarm/ui_act(action, params)
-	if (buildstage != 2)
+	if(buildstage != 2)
 		return
 
-	if (locked && !usr.has_unlimited_silicon_privilege)
+	if(locked && !usr.has_unlimited_silicon_privilege)
 		return
 
-	if (usr.has_unlimited_silicon_privilege && src.aidisabled)
+	if(usr.has_unlimited_silicon_privilege && aidisabled)
 		return
 
 	var/device_id = params["id_tag"]
@@ -354,14 +354,12 @@
 			send_signal(device_id, list("checks" = text2num(params["val"])^1))
 		if("incheck")
 			send_signal(device_id, list("checks" = text2num(params["val"])^2))
-		if("external_pressure")
-			switch(params["pressure"])
-				if("reset")
-					send_signal(device_id, list("set_external_pressure" = ONE_ATMOSPHERE))
-				else if("custom")
-					var/input_pressure = input("Enter target pressure:", "Pressure Controls") as num|null
-					if(isnum(input_pressure))
-						send_signal(device_id, list("set_external_pressure" = input_pressure))
+		if("set_external_pressure")
+			var/input_pressure = input("Enter target pressure:", "Pressure Controls") as num|null
+			if(isnum(input_pressure))
+				send_signal(device_id, list("set_external_pressure" = input_pressure))
+		if("reset_external_pressure")
+			send_signal(device_id, list("reset_external_pressure"))
 		if("threshold")
 			var/env = params["env"]
 			var/varname = params["var"]
@@ -617,7 +615,6 @@
 	return
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
-
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(alarm_frequency)
 
 	if(!frequency) return

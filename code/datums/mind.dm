@@ -562,16 +562,13 @@
 		istype(current,/mob/living/carbon/human)      )
 
 		text = "Uplink: <a href='?src=\ref[src];common=uplink'>give</a>"
-		var/obj/item/device/uplink/suplink = find_syndicate_uplink()
-		var/crystals
-		if (suplink)
-			crystals = suplink.uses
-		if (suplink)
+		var/obj/item/device/uplink/U = find_syndicate_uplink()
+		if(U)
 			text += "|<a href='?src=\ref[src];common=takeuplink'>take</a>"
 			if (check_rights(R_FUN, 0))
-				text += ", <a href='?src=\ref[src];common=crystals'>[crystals]</a> crystals"
+				text += ", <a href='?src=\ref[src];common=crystals'>[U.telecrystals]</a> TC"
 			else
-				text += ", [crystals] crystals"
+				text += ", [U.telecrystals] TC"
 		text += "." //hiel grammar
 		out += text
 
@@ -1101,7 +1098,6 @@
 					if(isAI(current))
 						var/mob/living/silicon/ai/A = current
 						ticker.mode.add_law_zero(A)
-						A.show_laws()
 
 			if("autoobjectives")
 				ticker.mode.forge_traitor_objectives(src)
@@ -1239,19 +1235,16 @@
 				memory = null//Remove any memory they may have had.
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
-				if (check_rights(R_FUN, 0))
-					var/obj/item/device/uplink/suplink = find_syndicate_uplink()
-					var/crystals
-					if (suplink)
-						crystals = suplink.uses
-					crystals = input("Amount of telecrystals for [key]","Syndicate uplink", crystals) as null|num
-					if (!isnull(crystals))
-						if (suplink)
-							suplink.uses = crystals
+				if(check_rights(R_FUN, 0))
+					var/obj/item/device/uplink/U = find_syndicate_uplink()
+					if(U)
+						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals) as null|num
+						if(!isnull(crystals))
+							U.telecrystals = crystals
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
 			if("uplink")
-				if (!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
+				if(!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
 					usr << "<span class='danger'>Equipping a syndicate failed!</span>"
 				log_admin("[key_name(usr)] attempted to give [current] an uplink.")
 
@@ -1607,15 +1600,13 @@
 		else
 			spawn(0)
 				throw EXCEPTION("mind_initialize(): No ticker ready")
-	if(!mind.name)
-		mind.name = real_name
+	if(!mind.name)	mind.name = real_name
 	mind.current = src
 
 //HUMAN
 /mob/living/carbon/human/mind_initialize()
 	..()
-	if(!mind.assigned_role)
-		mind.assigned_role = "Assistant"	//defualt
+	if(!mind.assigned_role)	mind.assigned_role = "Assistant"	//defualt
 
 //MONKEY
 /mob/living/carbon/monkey/mind_initialize()
