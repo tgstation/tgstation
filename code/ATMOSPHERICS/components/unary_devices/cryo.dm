@@ -4,7 +4,6 @@
 	icon_state = "cell-off"
 	density = 1
 	anchored = 1
-	layer = 4
 
 	var/on = FALSE
 	state_open = FALSE
@@ -135,12 +134,12 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
 		on = FALSE
-		layer = 3
 		..()
+		if(beaker)
+			beaker.loc = src
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
-		layer = 4
 		..(user)
 		return occupant
 
@@ -252,7 +251,7 @@
 			autoeject = !autoeject
 		if("ejectbeaker")
 			if(beaker)
-				beaker.loc = get_step(loc, SOUTH)
+				beaker.loc = loc
 				beaker = null
 	update_icon()
 	return 1
