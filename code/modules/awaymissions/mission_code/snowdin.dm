@@ -135,7 +135,6 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	name = "dungeon mid"
 	loot = list(/obj/item/weapon/defibrillator/compact = 6,
 				/obj/item/weapon/storage/firstaid/tactical = 35,
-				/obj/item/weapon/teleportation_scroll/apprentice = 4,
 				/obj/item/weapon/shield/energy = 6,
 				/obj/item/weapon/shield/riot/tele = 12,
 				/obj/item/weapon/dnainjector/lasereyesmut = 7,
