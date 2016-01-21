@@ -125,8 +125,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				"}
 
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\\\pai\recruit.dm:123: dat += "<p class=\"top\">Please configure your pAI personality's options. Remember, what you enter here could determine whether or not the user requesting a personality chooses you!</p>"
 		dat += {"<p class=\"top\">Please configure your pAI personality's options. Remember, what you enter here could determine whether or not the user requesting a personality chooses you!</p>
 			<table>
 			<tr class=\"d0\"><td>Name:</td><td>[candidate.name]</td></tr>
@@ -142,7 +140,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			<h3><a href='byond://?src=\ref[src];option=submit;new=1;candidate=\ref[candidate]'>Submit Personality</a></h3><br>
 			<a href='byond://?src=\ref[src];option=save;new=1;candidate=\ref[candidate]'>Save Personality</a><br>
 			<a href='byond://?src=\ref[src];option=load;new=1;candidate=\ref[candidate]'>Load Personality</a><br>"}
-		// END AUTOFIX
 		M << browse(dat, "window=paiRecruit")
 
 	proc/findPAI(var/obj/item/device/paicard/p, var/mob/user)
@@ -177,21 +174,15 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				</style>
 				"}
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\\\pai\recruit.dm:177: dat += "<p class=\"top\">Requesting AI personalities from central database... If there are no entries, or if a suitable entry is not listed, check again later as more personalities may be added.</p>"
 		dat += {"<p class=\"top\">Requesting AI personalities from central database... If there are no entries, or if a suitable entry is not listed, check again later as more personalities may be added.</p>
 			<table>"}
-		// END AUTOFIX
 		for(var/datum/paiCandidate/c in available)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\\\pai\recruit.dm:182: dat += "<tr class=\"d0\"><td>Name:</td><td>[c.name]</td></tr>"
 			dat += {"<tr class=\"d0\"><td>Name:</td><td>[c.name]</td></tr>
 				<tr class=\"d1\"><td>Description:</td><td>[c.description]</td></tr>
 				<tr class=\"d0\"><td>Preferred Role:</td><td>[c.role]</td></tr>
 				<tr class=\"d1\"><td>OOC Comments:</td><td>[c.comments]</td></tr>
 				<tr class=\"d2\"><td><a href='byond://?src=\ref[src];download=1;candidate=\ref[c];device=\ref[p]'>\[Download [c.name]\]</a></td><td></td></tr>"}
-			// END AUTOFIX
 
 		dat += "</table>"
 

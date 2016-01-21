@@ -60,11 +60,8 @@
 /obj/machinery/computer/station_alert/interact(mob/user)
 	usr.set_machine(src)
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\station_alert.dm:29: var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	var/dat = {"<HEAD><TITLE>Current [general_area_name] Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n
 	<A HREF='?src=\ref[user];mach_close=alerts'>Close</A><br><br>"}
-	// END AUTOFIX
 	for (var/cat in src.alarms)
 		dat += text("<B>[]</B><BR>\n", cat)
 		var/list/L = src.alarms[cat]
@@ -74,12 +71,9 @@
 				var/area/A = alm[1]
 				var/list/sources = alm[3]
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\station_alert.dm:39: dat += "<NOBR>"
 				dat += {"<NOBR>
 					&bull;
 					[A.name]"}
-				// END AUTOFIX
 				if (sources.len > 1)
 					dat += text(" - [] sources", sources.len)
 				dat += "</NOBR><BR>\n"

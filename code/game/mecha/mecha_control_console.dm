@@ -35,19 +35,13 @@
 
 	if(screen==1)
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\mecha\\mecha_control_console.dm:33: dat += "<h3>Log contents</h3>"
 		dat += {"<h3>Log contents</h3>
 			<a href='?src=\ref[src];return=1'>Return</a><hr>
 			[stored_data]"}
-		// END AUTOFIX
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\mecha\\mecha_control_console.dm:37: dat += "<A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR>"
 	dat += {"<A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR>
 		</body></html>"}
-	// END AUTOFIX
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 	return

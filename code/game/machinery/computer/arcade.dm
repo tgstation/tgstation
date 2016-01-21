@@ -107,22 +107,16 @@
 	user.set_machine(src)
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\arcade.dm:67: dat += "<center><h4>[src.enemy_name]</h4></center>"
 	dat += {"<center><h4>[src.enemy_name]</h4></center>
 		<br><center><h3>[src.temp]</h3></center>
 		<br><center>Health: [src.player_hp] | Magic: [src.player_mp] | Enemy Health: [src.enemy_hp]</center>"}
-	// END AUTOFIX
 	if (src.gameover)
 		dat += "<center><b><a href='byond://?src=\ref[src];newgame=1'>New Game</a>"
 	else
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\arcade.dm:75: dat += "<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
 		dat += {"<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> |
 			<a href='byond://?src=\ref[src];heal=1'>Heal</a> |
 			<a href='byond://?src=\ref[src];charge=1'>Recharge Power</a>"}
-	// END AUTOFIX
 
 	dat += "</b></center>"
 

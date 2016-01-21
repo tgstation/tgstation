@@ -326,12 +326,9 @@
 	dat += "<A href='byond://?src=\ref[src];software=refresh'>Refresh</A><br>"
 	// Built-in
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\\\pai\software.dm:283: dat += "<A href='byond://?src=\ref[src];software=directives'>Directives</A><br>"
 	dat += {"<A href='byond://?src=\ref[src];software=directives'>Directives</A><br>
 		<A href='byond://?src=\ref[src];software=radio;sub=0'>Radio Configuration</A><br>
 		<A href='byond://?src=\ref[src];software=image'>Screen Display</A><br>"}
-	// END AUTOFIX
 	//dat += "Text Messaging <br>"
 	dat += "<br>"
 
@@ -583,22 +580,16 @@
 			var/plasma_level = environment.toxins/total_moles
 			var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\\\pai\software.dm:547: dat += "Nitrogen: [round(n2_level*100)]%<br>"
 			dat += {"Nitrogen: [round(n2_level*100)]%<br>
 				Oxygen: [round(o2_level*100)]%<br>
 				Carbon Dioxide: [round(co2_level*100)]%<br>
 				Plasma: [round(plasma_level*100)]%<br>"}
-			// END AUTOFIX
 			if(unknown_level > 0.01)
 				dat += "OTHER: [round(unknown_level)]%<br>"
 		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\\\pai\software.dm:554: dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
 	dat += {"<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>
 		<br>"}
-	// END AUTOFIX
 	return dat
 
 /mob/living/silicon/pai/proc/softwareDoor()
@@ -713,15 +704,9 @@ Target Machine: "}
 		for (var/obj/item/device/pda/P in sortNames(PDAs))
 			if (!P.owner||P.toff||P == src.pda||P.hidden)	continue
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\\\pai\software.dm:642: dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
 			dat += {"<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>
 				</li>"}
-			// END AUTOFIX
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\\\pai\software.dm:644: dat += "</ul>"
 	dat += {"</ul>
 		<br><br>
 		Messages: <hr> [pda.tnote]"}
-	// END AUTOFIX
 	return dat

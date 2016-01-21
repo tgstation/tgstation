@@ -304,12 +304,9 @@
 			if(item_quants[O] > 0)
 				var/N = item_quants[O]
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\kitchen\smartfridge.dm:140: dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
 				dat += {"<FONT color = 'blue'><B>[capitalize(O)]</B>:
 					[N] </font>
 					<a href='byond://?src=\ref[src];vend=[O];amount=1'>Vend</A> "}
-				// END AUTOFIX
 				if(N > 5)
 					dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=5'>x5</A>)"
 					if(N > 10)

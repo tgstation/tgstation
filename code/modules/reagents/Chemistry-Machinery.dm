@@ -822,8 +822,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			dat += "Add to buffer:<BR>"
 			for(var/datum/reagent/G in R.reagent_list)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:518: dat += "[G.name] , [G.volume] Units - "
 				dat += {"[G.name] , [G.volume] Units -
 					<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>(Analyze)</A>
 					<A href='?src=\ref[src];add=[G.id];amount=1'>(1)</A>
@@ -831,14 +829,11 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 					<A href='?src=\ref[src];add=[G.id];amount=10'>(10)</A>
 					<A href='?src=\ref[src];add=[G.id];amount=[G.volume]'>(All)</A>
 					<A href='?src=\ref[src];addcustom=[G.id]'>(Custom)</A><BR>"}
-				// END AUTOFIX
 
 		dat += "<HR>Transfer to <A href='?src=\ref[src];toggle=1'>[(!mode ? "disposal" : "beaker")]:</A><BR>"
 		if(reagents.total_volume)
 			for(var/datum/reagent/N in reagents.reagent_list)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:529: dat += "[N.name] , [N.volume] Units - "
 				dat += {"[N.name] , [N.volume] Units -
 					<A href='?src=\ref[src];analyze=1;desc=[N.description];name=[N.name]'>(Analyze)</A>
 					<A href='?src=\ref[src];remove=[N.id];amount=1'>(1)</A>
@@ -846,13 +841,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 					<A href='?src=\ref[src];remove=[N.id];amount=10'>(10)</A>
 					<A href='?src=\ref[src];remove=[N.id];amount=[N.volume]'>(All)</A>
 					<A href='?src=\ref[src];removecustom=[N.id]'>(Custom)</A><BR>"}
-				// END AUTOFIX
 		else
 			dat += "Buffer is empty.<BR>"
 		if(!condi)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:539: dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"
 			//dat += {"<a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><a href=\"?src=\ref[src]&change_bottle=1\"><img src=\"bottle[bottlesprite].png\" /></a><BR>"}
 			dat += {"<a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"}
 			dat += {"<HR><BR><A href='?src=\ref[src];createpill=1'>Create single pill (50 units max)</A><BR>
@@ -860,7 +852,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 					<A href='?src=\ref[src];createpill_multiple=1;createempty=1'>Create empty pills</A><BR>
 					<A href='?src=\ref[src];createbottle=1'>Create bottle ([max_bottle_size] units max)</A><BR>
 					<A href='?src=\ref[src];createbottle_multiple=1'>Create multiple bottles ([max_bottle_size] units max each; 4 max)</A><BR>"}
-			// END AUTOFIX
 		else
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"
 	dat = list2text(dat)
@@ -1101,11 +1092,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		dat = "[src.temphtml]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
 	else if(!beaker)
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:722: dat += "Please insert beaker.<BR>"
 		dat += {"Please insert beaker.<BR>
 			<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"}
-		// END AUTOFIX
 	else
 		var/datum/reagents/R = beaker.reagents
 		var/datum/reagent/blood/Blood = null
@@ -1121,12 +1109,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			dat += "No blood data found in beaker."
 		else
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:738: dat += "<h3>Blood sample data:</h3>"
 			dat += {"<h3>Blood sample data:</h3>
 				<b>Blood DNA:</b> [(Blood.data["blood_DNA"]||"none")]<BR>
 				<b>Blood Type:</b> [(Blood.data["blood_type"]||"none")]<BR>"}
-			// END AUTOFIX
 			if(Blood.data["viruses"])
 				var/list/vir = Blood.data["viruses"]
 				if(vir.len)
@@ -1147,14 +1132,11 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 								CRASH("We weren't able to get the advance disease from the archive.")
 
 
-							// AUTOFIXED BY fix_string_idiocy.py
-							// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:762: dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>"
 							dat += {"<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>
 								<b>Common name:</b> [(D.name||"none")]<BR>
 								<b>Description: </b> [(D.desc||"none")]<BR>
 								<b>Spread:</b> [(D.spread||"none")]<BR>
 								<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>"}
-							// END AUTOFIX
 							if(istype(D, /datum/disease/advance))
 								var/datum/disease/advance/A = D
 								dat += "<b>Symptoms:</b> "
@@ -1187,11 +1169,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			else
 				dat += "nothing<BR>"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:799: dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>"
 		dat += {"<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>
 			<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"}
-		// END AUTOFIX
 	user << browse("<TITLE>[src.name]</TITLE><BR>[dat]", "window=pandemic;size=575x400")
 	onclose(user, "pandemic")
 	return
@@ -1465,11 +1444,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	"}
 		if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:1016: dat += "<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>"
 			dat += {"<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>
 				<A href='?src=\ref[src];action=juice'>Juice the reagents</a><BR><BR>"}
-			// END AUTOFIX
 		if(holdingitems && holdingitems.len > 0)
 			dat += "<A href='?src=\ref[src];action=eject'>Eject the reagents</a><BR>"
 		if (beaker)

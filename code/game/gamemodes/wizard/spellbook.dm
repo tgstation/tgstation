@@ -33,8 +33,6 @@
 		dat = "[temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
 	else
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\gamemodes\wizard\spellbook.dm:22: dat = "<B>The Book of Spells:</B><BR>"
 		dat = {"<B>The Book of Spells:</B><BR>
 			Spells left to memorize: [uses]<BR>
 			<HR>
@@ -118,7 +116,6 @@
 			<A href='byond://?src=\ref[src];spell_choice=scrying'>Scrying Orb</A><BR>
 			<I>An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you x-ray vision.</I><BR>
 			<HR>"}
-		// END AUTOFIX
 		if(op)
 			dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
 	user << browse(dat, "window=radio")

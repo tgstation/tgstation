@@ -244,28 +244,19 @@
 	if(song)
 		if(song.lines.len > 0 && !(playing))
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\violin.dm:246: dat += "<A href='?src=\ref[src];play=1'>Play Song</A><BR><BR>"
 			dat += {"<A href='?src=\ref[src];play=1'>Play Song</A><BR><BR>
 				<A href='?src=\ref[src];repeat=1'>Repeat Song: [repeat] times.</A><BR><BR>"}
-			// END AUTOFIX
 		if(playing)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\violin.dm:249: dat += "<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR>"
 			dat += {"<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR>
 				Repeats left: [repeat].<BR><BR>"}
-			// END AUTOFIX
 	if(!edit)
 		dat += "<A href='?src=\ref[src];edit=2'>Show Editor</A><BR><BR>"
 	else
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\violin.dm:254: dat += "<A href='?src=\ref[src];edit=1'>Hide Editor</A><BR>"
 		dat += {"<A href='?src=\ref[src];edit=1'>Hide Editor</A><BR>
 			<A href='?src=\ref[src];newsong=1'>Start a New Song</A><BR>
 			<A href='?src=\ref[src];import=1'>Import a Song</A><BR><BR>"}
-		// END AUTOFIX
 		if(song)
 			var/calctempo = (10/song.tempo)*60
 			dat += "Tempo : <A href='?src=\ref[src];tempo=10'>-</A><A href='?src=\ref[src];tempo=1'>-</A> [calctempo] BPM <A href='?src=\ref[src];tempo=-1'>+</A><A href='?src=\ref[src];tempo=-10'>+</A><BR><BR>"

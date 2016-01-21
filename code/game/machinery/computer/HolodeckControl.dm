@@ -25,8 +25,6 @@
 	user.set_machine(src)
 	var/dat
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\HolodeckControl.dm:28: dat += "<B>Holodeck Control System</B><BR>"
 	dat += {"<B>Holodeck Control System</B><BR>
 		<HR>Current Loaded Programs:<BR>
 		<A href='?src=\ref[src];emptycourt=1'>((Empty Court)</font>)</A><BR>
@@ -40,20 +38,16 @@
 		<A href='?src=\ref[src];snowfield=1'>((Snow Field)</font>)</A><BR>
 		<A href='?src=\ref[src];theatre=1'>((Theatre)</font>)</A><BR>
 		<A href='?src=\ref[src];meetinghall=1'>((Meeting Hall)</font>)</A><BR>"}
-	// END AUTOFIX
 //	dat += "<A href='?src=\ref[src];turnoff=1'>((Shutdown System)</font>)</A><BR>"
 	dat += "Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.<BR>"
 
 	if(emagged)
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\HolodeckControl.dm:47: dat += "<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>"
 		dat += {"<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>
 			Ensure the holodeck is empty before testing.<BR>
 			<BR>
 			<A href='?src=\ref[src];wildlifecarp=1'>(<font color=red>Begin Wildlife Simulation</font>)</A><BR>
 			Ensure the holodeck is empty before testing.<BR>
 			<BR>"}
-		// END AUTOFIX
 		if(issilicon(user))
 			dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=green>Re-Enable Safety Protocols?</font>)</A><BR>"
 		dat += "Safety Protocols are <font color=red> DISABLED </font><BR>"
@@ -61,11 +55,8 @@
 		if(issilicon(user))
 			dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\HolodeckControl.dm:59: dat += "<BR>"
 		dat += {"<BR>
 			Safety Protocols are <font color=green> ENABLED </font><BR>"}
-		// END AUTOFIX
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 	return

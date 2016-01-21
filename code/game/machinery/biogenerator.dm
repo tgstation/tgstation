@@ -379,8 +379,6 @@
 			if("menu")
 				if (beaker)
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\biogenerator.dm:89: dat += "<A href='?src=\ref[src];action=activate'>Activate Biogenerator!</A><BR>"
 					dat += {"<A href='?src=\ref[src];action=activate'>Activate Biogenerator!</A><BR>
 						<A href='?src=\ref[src];action=detach'>Detach Container</A><BR><BR>"}
 
@@ -395,25 +393,16 @@
 					dat += "<BR><FONT COLOR=red>No beaker inside. Please insert a beaker.</FONT><BR>"
 			if("nopoints")
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\biogenerator.dm:108: dat += "You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.<BR>"
 				dat += {"You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.<BR>
 					<A href='?src=\ref[src];action=menu'>Return to menu</A>"}
-				// END AUTOFIX
 			if("complete")
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\biogenerator.dm:111: dat += "Operation complete.<BR>"
 				dat += {"Operation complete.<BR>
 					<A href='?src=\ref[src];action=menu'>Return to menu</A>"}
-				// END AUTOFIX
 			if("void")
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\biogenerator.dm:114: dat += "<FONT COLOR=red>Error: No growns inside.</FONT><BR>Please, put growns into reactor.<BR>"
 				dat += {"<FONT COLOR=red>Error: No growns inside.</FONT><BR>Please, put growns into reactor.<BR>
 					<A href='?src=\ref[src];action=menu'>Return to menu</A>"}
-				// END AUTOFIX
 	user << browse(dat, "window=biogenerator")
 	onclose(user, "biogenerator")
 	return

@@ -80,19 +80,13 @@
 			if(item_quants[O] > 0)
 				var/N = item_quants[O]
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\weapons\hydroponics.dm:82: dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
 				dat += {"<FONT color = 'blue'><B>[capitalize(O)]</B>:
 					[N] </font>
 					<a href='byond://?src=\ref[src];vend=[O]'>Vend</A>
 					<br>"}
-				// END AUTOFIX
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\weapons\hydroponics.dm:87: dat += "<br><a href='byond://?src=\ref[src];unload=1'>Unload All</A>"
 		dat += {"<br><a href='byond://?src=\ref[src];unload=1'>Unload All</A>
 			</TT>"}
-		// END AUTOFIX
 	user << browse("<HEAD><TITLE>Seedbag Supplies</TITLE></HEAD><TT>[dat]</TT>", "window=seedbag")
 	onclose(user, "seedbag")
 	return

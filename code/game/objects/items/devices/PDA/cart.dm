@@ -300,11 +300,8 @@ Code:
 		/*if (41) //crew manifest
 
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:281: menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
 			menu = {"<h4><img src=pda_notes.png> Crew Manifest</h4>
 				Entries cannot be modified from this terminal.<br><br>"}
-			// END AUTOFIX
 			if(data_core)
 				menu += data_core.get_manifest(1) // make it monochrome
 			menu += "<br>"*/
@@ -312,8 +309,6 @@ Code:
 
 		if (42) //status displays
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:289: menu = "<h4><img src=pda_status.png> Station Status Display Interlink</h4>"
 			menu = {"<h4><img src=pda_status.png> Station Status Display Interlink</h4>
 				\[ <A HREF='?src=\ref[src];choice=Status;statdisp=blank'>Clear</A> \]<BR>
 				\[ <A HREF='?src=\ref[src];choice=Status;statdisp=shuttle'>Shuttle ETA</A> \]<BR>
@@ -324,7 +319,6 @@ Code:
 				<A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=redalert'>Red Alert</A> |
 				<A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=lockdown'>Lockdown</A> |
 				<A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"}
-			// END AUTOFIX
 		if (43) //Muskets' and Rockdtben's power monitor :D
 			menu = "<h4><img src=pda_power.png> Please select a Power Monitoring Computer</h4><BR>No Power Monitoring Computer detected in the vicinity.<BR>"
 			var/powercount = 0
@@ -357,11 +351,8 @@ Code:
 						L += A
 
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:338: menu += "<PRE>Total power: [powmonitor.powernet.avail] W<BR>Total load:  [num2text(powmonitor.powernet.viewload,10)] W<BR>"
 				menu += {"<PRE>Total power: [powmonitor.powernet.avail] W<BR>Total load:  [num2text(powmonitor.powernet.viewload,10)] W<BR>
 					<FONT SIZE=-1>"}
-				// END AUTOFIX
 				if(L.len > 0)
 					menu += "Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
 
@@ -435,8 +426,6 @@ Code:
 
 			if (istype(active1, /datum/data/record) && (active1 in data_core.general))
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:364: menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 				menu += {"Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>
 					Sex: [active1.fields["sex"]]<br>
 					Age: [active1.fields["age"]]<br>
@@ -444,20 +433,14 @@ Code:
 					Fingerprint: [active1.fields["fingerprint"]]<br>
 					Physical Status: [active1.fields["p_stat"]]<br>
 					Mental Status: [active1.fields["m_stat"]]<br>"}
-				// END AUTOFIX
 			else
 				menu += "<b>Record Lost!</b><br>"
 
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:374: menu += "<br>"
 			menu += {"<br>
 				<h4><img src=pda_medical.png> Medical Data</h4>"}
-			// END AUTOFIX
 			if (istype(active2, /datum/data/record) && (active2 in data_core.medical))
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:378: menu += "Blood Type: [active2.fields["b_type"]]<br><br>"
 				menu += {"Blood Type: [active2.fields["b_type"]]<br><br>
 					Minor Disabilities: [active2.fields["mi_dis"]]<br>
 					Details: [active2.fields["mi_dis_d"]]<br><br>
@@ -468,7 +451,6 @@ Code:
 					Current Diseases: [active2.fields["cdi"]]<br>
 					Details: [active2.fields["cdi_d"]]<br><br>
 					Important Notes: [active2.fields["notes"]]<br>"}
-				// END AUTOFIX
 			else
 				menu += "<b>Record Lost!</b><br>"
 
@@ -485,8 +467,6 @@ Code:
 
 			if (istype(active1, /datum/data/record) && (active1 in data_core.general))
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:408: menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 				menu += {"Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>
 					Sex: [active1.fields["sex"]]<br>
 					Age: [active1.fields["age"]]<br>
@@ -494,20 +474,14 @@ Code:
 					Fingerprint: [active1.fields["fingerprint"]]<br>
 					Physical Status: [active1.fields["p_stat"]]<br>
 					Mental Status: [active1.fields["m_stat"]]<br>"}
-				// END AUTOFIX
 			else
 				menu += "<b>Record Lost!</b><br>"
 
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:418: menu += "<br>"
 			menu += {"<br>
 				<h4><img src=pda_cuffs.png> Security Data</h4>"}
-			// END AUTOFIX
 			if (istype(active3, /datum/data/record) && (active3 in data_core.security))
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:422: menu += "Criminal Status: [active3.fields["criminal"]]<br>"
 				menu += {"Criminal Status: [active3.fields["criminal"]]<br>
 					Minor Crimes: [active3.fields["mi_crim"]]<br>
 					Details: [active3.fields["mi_crim"]]<br><br>
@@ -515,7 +489,6 @@ Code:
 					Details: [active3.fields["ma_crim_d"]]<br><br>
 					Important Notes:<br>
 					[active3.fields["notes"]]"}
-				// END AUTOFIX
 			else
 				menu += "<b>Record Lost!</b><br>"
 
@@ -549,11 +522,8 @@ Code:
 				else
 
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:464: menu += "Location: [SC.botstatus["loca"] ]<BR>"
 					menu += {"Location: [SC.botstatus["loca"] ]<BR>
 						Mode: "}
-					// END AUTOFIX
 					switch(SC.botstatus["mode"])
 						if(0)
 							menu += "Ready"
@@ -569,31 +539,22 @@ Code:
 							menu += "Responding to summons"
 
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:481: menu += "<BR>\[<A href='byond://?src=\ref[SC];op=stop'>Stop Patrol</A>\] "
 					menu += {"<BR>\[<A href='byond://?src=\ref[SC];op=stop'>Stop Patrol</A>\]
 						\[<A href='byond://?src=\ref[SC];op=go'>Start Patrol</A>\]
 						\[<A href='byond://?src=\ref[SC];op=summon'>Summon Bot</A>\]<BR>
 						<HR><A href='byond://?src=\ref[SC];op=botlist'><img src=pda_back.png>Return to bot list</A>"}
-					// END AUTOFIX
 		if (47) //quartermaster order records
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:487: menu = "<h4><img src=pda_crate.png> Supply Record Interlink</h4>"
 			menu = {"<h4><img src=pda_crate.png> Supply Record Interlink</h4>
 				<BR><B>Supply shuttle</B><BR>
 				Location: [supply_shuttle.moving ? "Moving to station ([supply_shuttle.eta] Mins.)":supply_shuttle.at_station ? "Station":"Dock"]<BR>
 				Current approved orders: <BR><ol>"}
-			// END AUTOFIX
 			for(var/S in supply_shuttle.shoppinglist)
 				var/datum/supply_order/SO = S
 				menu += "<li>#[SO.ordernum] - [SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]</li>"
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:495: menu += "</ol>"
 			menu += {"</ol>
 				Current requests: <BR><ol>"}
-			// END AUTOFIX
 			for(var/S in supply_shuttle.requestlist)
 				var/datum/supply_order/SO = S
 				menu += "<li>#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]</li>"
@@ -626,11 +587,8 @@ Code:
 				else
 
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:529: menu += "Location: [QC.botstatus["loca"] ]<BR>"
 					menu += {"Location: [QC.botstatus["loca"] ]<BR>
 						Mode: "}
-					// END AUTOFIX
 					switch(QC.botstatus["mode"])
 						if(0)
 							menu += "Ready"
@@ -648,8 +606,6 @@ Code:
 							menu += "Unable to locate destination"
 					var/obj/structure/closet/crate/C = QC.botstatus["load"]
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:548: menu += "<BR>Current Load: [ !C ? "<i>none</i>" : "[C.name] (<A href='byond://?src=\ref[QC];op=unload'><i>unload</i></A>)" ]<BR>"
 					menu += {"<BR>Current Load: [ !C ? "<i>none</i>" : "[C.name] (<A href='byond://?src=\ref[QC];op=unload'><i>unload</i></A>)" ]<BR>
 						Destination: [!QC.botstatus["dest"] ? "<i>none</i>" : QC.botstatus["dest"] ] (<A href='byond://?src=\ref[QC];op=setdest'><i>set</i></A>)<BR>
 						Power: [QC.botstatus["powr"]]%<BR>
@@ -660,18 +616,14 @@ Code:
 						\[<A href='byond://?src=\ref[QC];op=go'>Proceed</A>\]
 						\[<A href='byond://?src=\ref[QC];op=home'>Return Home</A>\]<BR>
 						<HR><A href='byond://?src=\ref[QC];op=botlist'><img src=pda_back.png>Return to bot list</A>"}
-					// END AUTOFIX
 		if (49) //janitorial locator
 			menu = "<h4><img src=pda_bucket.png> Persistent Custodial Object Locator</h4>"
 
 			var/turf/cl = get_turf(src)
 			if (cl)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:565: menu += "Current Orbital Location: <b>\[[cl.x],[cl.y]\]</b>"
 				menu += {"Current Orbital Location: <b>\[[cl.x-WORLD_X_OFFSET[cl.z]],[cl.y-WORLD_Y_OFFSET[cl.z]]\]</b>
 					<h4>Located Mops:</h4>"}
-				// END AUTOFIX
 				var/ldat
 				for (var/obj/item/weapon/mop/M in world)
 					var/turf/ml = get_turf(M)

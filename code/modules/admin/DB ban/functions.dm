@@ -307,8 +307,6 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 	var/output = "<div align='center'><table width='90%'><tr>"
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:282: output += "<td width='35%' align='center'>"
 	output += {"<td width='35%' align='center'>
 		<h1>Banning panel</h1>
 		</td>
@@ -330,7 +328,6 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 		<tr><td><b>Duration:</b> <input type='text' name='dbbaddduration'></td>
 		<td><b>Job:</b><select name='dbbanaddjob'>
 		<option value=''>--</option>"}
-	// END AUTOFIX
 	for(var/j in get_all_jobs())
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in nonhuman_positions)
@@ -338,8 +335,6 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 	for(var/j in list("traitor","changeling","operative","revolutionary","cultist","wizard"))
 		output += "<option value='[j]'>[j]</option>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:309: output += "</select></td></tr></table>"
 	output += {"</select></td></tr></table>
 		<b>Reason:<br></b><textarea name='dbbanreason' cols='50'></textarea><br>
 		<input type='submit' value='Add ban'>
@@ -354,7 +349,6 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 		<input type='submit' value='search'>
 		</form>
 		Please note that all jobban bans or unbans are in-effect the following round."}
-	// END AUTOFIX
 	if(adminckey || playerckey)
 
 		var/blcolor = "#ffeeee" //banned light
@@ -363,8 +357,6 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 		var/udcolor = "#ddffdd" //unbanned dark
 
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:333: output += "<table width='90%' bgcolor='#e3e3e3' cellpadding='5' cellspacing='0' align='center'>"
 		output += {"<table width='90%' bgcolor='#e3e3e3' cellpadding='5' cellspacing='0' align='center'>
 			<tr>
 			<th width='25%'><b>TYPE</b></th>
@@ -373,7 +365,6 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 			<th width='20%'><b>ADMIN</b></th>
 			<th width='15%'><b>OPTIONS</b></th>
 			</tr>"}
-		// END AUTOFIX
 		adminckey = ckey(adminckey)
 		playerckey = ckey(playerckey)
 		var/adminsearch = ""
@@ -425,8 +416,6 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 					typedesc = "<b>TEMP OOCBAN</b>"
 
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:388: output += "<tr bgcolor='[dcolor]'>"
 			output += {"<tr bgcolor='[dcolor]'>
 				<td align='center'>[typedesc]</td>
 				<td align='center'><b>[ckey]</b></td>
@@ -437,32 +426,22 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 				<tr bgcolor='[lcolor]'>
 				<td align='center' colspan='5'><b>Reason: [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=reason;dbbanid=[banid]\">Edit</a>)"]</b> <cite>\"[reason]\"</cite></td>
 				</tr>"}
-			// END AUTOFIX
 			if(edits)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:399: output += "<tr bgcolor='[dcolor]'>"
 				output += {"<tr bgcolor='[dcolor]'>
 					<td align='center' colspan='5'><b>EDITS</b></td>
 					</tr>
 					<tr bgcolor='[lcolor]'>
 					<td align='center' colspan='5'><font size='2'>[edits]</font></td>
 					</tr>"}
-				// END AUTOFIX
 			if(unbanned)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:406: output += "<tr bgcolor='[dcolor]'>"
 				output += {"<tr bgcolor='[dcolor]'>
 					<td align='center' colspan='5' bgcolor=''><b>UNBANNED by admin [unbanckey] on [unbantime]</b></td>
 					</tr>"}
-				// END AUTOFIX
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:409: output += "<tr>"
 			output += {"<tr>
 				<td colspan='5' bgcolor='white'>&nbsp</td>
 				</tr>"}
-			// END AUTOFIX
 
 		output += "</table></div>"
 

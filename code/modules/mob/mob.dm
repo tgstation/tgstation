@@ -243,14 +243,11 @@ var/global/obj/screen/fuckstat/FUCK = new
 
 	var/t = "<span class='notice'> Coordinates: [x],[y] \n</span>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\\mob.dm:25: t+= "<span class='warning'> Temperature: [environment.temperature] \n"
 	t += {"<span class='warning'> Temperature: [environment.temperature] \n</span>
 <span class='notice'> Nitrogen: [environment.nitrogen] \n</span>
 <span class='notice'> Oxygen: [environment.oxygen] \n</span>
 <span class='notice'> Plasma : [environment.toxins] \n</span>
 <span class='notice'> Carbon Dioxide: [environment.carbon_dioxide] \n</span>"}
-	// END AUTOFIX
 	for(var/datum/gas/trace_gas in environment.trace_gases)
 		to_chat(usr, "<span class='notice'> [trace_gas.type]: [trace_gas.moles] \n</span>")
 

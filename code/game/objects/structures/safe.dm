@@ -75,11 +75,8 @@ FLOOR SAFES
 /obj/structure/safe/attack_hand(mob/user as mob)
 	user.set_machine(src)
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\structures\safe.dm:77: var/dat = "<center>"
 	var/dat = {"<center>
 <a href='?src=\ref[src];open=1'>[open ? "Close" : "Open"] [src]</a> | <a href='?src=\ref[src];decrement=1'>-</a> [dial * 5] <a href='?src=\ref[src];increment=1'>+</a>"}
-	// END AUTOFIX
 	if(open)
 		dat += "<table>"
 		for(var/i = contents.len, i>=1, i--)
