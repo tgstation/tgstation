@@ -159,3 +159,7 @@ Helpers
 	. = list()
 	for(DEVICE_TYPE_LOOP)
 		. += returnPipenet(NODE_I)
+
+/obj/machinery/atmospherics/components/dealWithShuttleStuff(I)
+	..()
+	nullifyPipenet(PARENT_I)
