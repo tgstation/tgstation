@@ -44,12 +44,11 @@ var/global/mulebot_count = 0
 	var/report_delivery = 1 // true if bot will announce an arrival to a location.
 
 	var/obj/item/weapon/stock_parts/cell/cell
-	var/datum/wires/mulebot/wires = null
 	var/bloodiness = 0
 
 /mob/living/simple_animal/bot/mulebot/New()
 	..()
-	wires = new(src)
+	wires = new /datum/wires/mulebot(src)
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
 	access_card.access = J.get_access()
 	prev_access = access_card.access
@@ -122,7 +121,7 @@ var/global/mulebot_count = 0
 			if(open)
 				icon_state="mulebot-hatch"
 		else
-			icon_state = "mulebot[wires.is_cut(wires.W_AVOIDANCE)]"
+			icon_state = "mulebot[wires.is_cut(WIRE_AVOIDANCE)]"
 	overlays.Cut()
 	if(load && !ismob(load))//buckling handles the mob offsets
 		load.pixel_y = initial(load.pixel_y) + 9
@@ -155,7 +154,7 @@ var/global/mulebot_count = 0
 	if(open && !istype(user, /mob/living/silicon/ai))
 		wires.interact(user)
 	else
-		if(wires.is_cut(wires.W_REMOTE_RX) && istype(user, /mob/living/silicon/ai))
+		if(wires.is_cut(WIRE_RX) && istype(user, /mob/living/silicon/ai))
 			return
 		ui_interact(user)
 
@@ -210,7 +209,7 @@ var/global/mulebot_count = 0
 	return 1
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, pda = 0)
-	if(pda && wires.is_cut(wires.W_REMOTE_RX)) //MULE wireless is controlled by wires.
+	if(pda && wires.is_cut(WIRE_RX)) //MULE wireless is controlled by wires.
 		return
 
 	switch(command)
@@ -300,7 +299,7 @@ var/global/mulebot_count = 0
 
 // returns true if the bot has power
 /mob/living/simple_animal/bot/mulebot/proc/has_power()
-	return !open && cell && cell.charge > 0 && (!wires.is_cut(wires.W_POWER1) && !wires.is_cut(wires.W_POWER2))
+	return !open && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
@@ -339,7 +338,7 @@ var/global/mulebot_count = 0
 	if(istype(AM,/obj/structure/closet/crate))
 		CRATE = AM
 	else
-		if(!wires.is_cut(wires.W_LOADCHECK))
+		if(!wires.is_cut(WIRE_LOADCHECK))
 			buzz(SIGH)
 			return	// if not hacked, only allow crates to be loaded
 
@@ -424,7 +423,7 @@ var/global/mulebot_count = 0
 		on = 0
 		return
 	if(on)
-		var/speed = (wires.is_cut(wires.W_MOTOR1) ? 0 : 1) + (wires.is_cut(wires.W_MOTOR2) ? 0 : 2)
+		var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
 		//world << "speed: [speed]"
 		var/num_steps = 0
 		switch(speed)
@@ -601,7 +600,7 @@ var/global/mulebot_count = 0
 			// not loaded
 			if(auto_pickup) // find a crate
 				var/atom/movable/AM
-				if(wires.is_cut(wires.W_LOADCHECK)) // if hacked, load first unanchored thing we find
+				if(wires.is_cut(WIRE_LOADCHECK)) // if hacked, load first unanchored thing we find
 					for(var/atom/movable/A in get_step(loc, loaddir))
 						if(!A.anchored)
 							AM = A
@@ -625,7 +624,7 @@ var/global/mulebot_count = 0
 
 // called when bot bumps into anything
 /mob/living/simple_animal/bot/mulebot/Bump(atom/obs)
-	if(wires.is_cut(wires.W_AVOIDANCE))	// usually just bumps, but if avoidance disabled knock over mobs
+	if(wires.is_cut(WIRE_AVOIDANCE))	// usually just bumps, but if avoidance disabled knock over mobs
 		var/mob/M = obs
 		if(ismob(M))
 			if(istype(M,/mob/living/silicon/robot))
@@ -667,7 +666,7 @@ var/global/mulebot_count = 0
 
 //Update navigation data. Called when commanded to deliver, return home, or a route update is needed...
 /mob/living/simple_animal/bot/mulebot/proc/get_nav()
-	if(!on || wires.is_cut(wires.W_BEACON_RX))
+	if(!on || wires.is_cut(WIRE_BEACON))
 		return
 
 	for(var/obj/machinery/navbeacon/NB in deliverybeacons)

@@ -49,7 +49,6 @@
 	var/extended_inventory = 0	//can we access the hidden inventory?
 	var/scan_id = 1
 	var/obj/item/weapon/coin/coin
-	var/datum/wires/vending/wires = null
 
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 
@@ -57,7 +56,7 @@
 
 /obj/machinery/vending/New()
 	..()
-	wires = new(src)
+	wires = new /datum/wires/vending(src)
 	if(refill_canister) //constructable vending machine
 		component_parts = list()
 		var/obj/item/weapon/circuitboard/vendor/V = new(null)

@@ -293,7 +293,8 @@
   * optional force bool If the UI should be forced to update.
  **/
 /datum/tgui/process(force = 0)
-	if(!src_object || !user) // If the object or user died (or something else), abort.
+	var/datum/host = src_object.ui_host()
+	if(!src_object || !host || !user) // If the object or user died (or something else), abort.
 		close()
 		return
 
@@ -338,7 +339,7 @@
   * optional push bool Push an update to the UI (an update is always sent for UI_DISABLED).
  **/
 /datum/tgui/proc/update_status(push = 0)
-	var/obj/host = src_object.ui_host()
+	var/datum/host = src_object.ui_host()
 	var/status = host.ui_status(user, state)
 	if(master_ui)
 		status = min(status, master_ui.status)

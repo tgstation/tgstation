@@ -1,15 +1,11 @@
 /datum/wires/r_n_d
-	var/const/W_HACK = "hack" // Hacks the machine.
-	var/const/W_DISABLE = "disable" // Disables the machine.
-	var/const/W_SHOCK = "shock" // Shocks the user, 50% chance
-
 	holder_type = /obj/machinery/r_n_d
 	randomize = TRUE
 
 /datum/wires/r_n_d/New(atom/holder)
 	wires = list(
-		W_HACK, W_DISABLE,
-		W_SHOCK
+		WIRE_HACK, WIRE_DISABLE,
+		WIRE_SHOCK
 	)
 	add_duds(5)
 	..()
@@ -30,11 +26,11 @@
 /datum/wires/r_n_d/on_pulse(wire)
 	var/obj/machinery/r_n_d/R = holder
 	switch(wire)
-		if(W_HACK)
+		if(WIRE_HACK)
 			R.hacked = !R.hacked
-		if(W_DISABLE)
+		if(WIRE_DISABLE)
 			R.disabled = !R.disabled
-		if(W_SHOCK)
+		if(WIRE_SHOCK)
 			R.shocked = TRUE
 			spawn(100)
 				if(R)
@@ -43,9 +39,9 @@
 /datum/wires/r_n_d/on_cut(wire, mend)
 	var/obj/machinery/r_n_d/R = holder
 	switch(wire)
-		if(W_HACK)
+		if(WIRE_HACK)
 			R.hacked = !mend
-		if(W_DISABLE)
+		if(WIRE_DISABLE)
 			R.disabled = !mend
-		if(W_SHOCK)
+		if(WIRE_SHOCK)
 			R.shocked = !mend

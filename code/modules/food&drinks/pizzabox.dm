@@ -19,13 +19,18 @@
 
 	var/obj/item/weapon/reagent_containers/food/snacks/pizza/pizza
 
-	var/datum/wires/explosive/pizza/wires
 	var/obj/item/weapon/bombcore/pizza/bomb
 	var/bomb_active = FALSE // If the bomb is counting down.
 	var/bomb_defused = TRUE // If the bomb is inert.
 	var/bomb_timer = 1 // How long before blowing the bomb.
 	var/const/BOMB_TIMER_MIN = 1
 	var/const/BOMB_TIMER_MAX = 10
+
+/obj/item/pizzabox/New()
+	update_icon()
+
+/obj/item/pizzabox/Destroy()
+	unprocess()
 
 /obj/item/pizzabox/update_icon()
 	// Description
@@ -35,6 +40,10 @@
 			desc = "[desc] It appears to have \a [pizza] inside."
 		if(bomb)
 			desc = "[desc] Wait, what?! It has \a [bomb] inside!"
+			if(bomb_defused)
+				desc = "[desc] The bomb seems inert."
+			if(bomb_active)
+				desc = "[desc] It looks like its about to go off!"
 	else
 		var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 		if(boxes.len)
@@ -72,6 +81,7 @@
 		audible_message("<span class='warning'>\icon[src] *beep*</span>")
 		bomb_active = TRUE
 		SSobj.processing |= src
+		process()
 	update_icon()
 
 /obj/item/pizzabox/attack_hand(mob/user)
@@ -149,7 +159,7 @@
 		if(open && !bomb)
 			if(!user.drop_item())
 				return
-			wires = new(src)
+			wires = new /datum/wires/explosive/pizza(src)
 			bomb = I
 			I.loc = src
 			user << "<span class='notice'>You put [I] in [src]. Sneeki breeki...</span>"
@@ -188,32 +198,33 @@
 
 /obj/item/pizzabox/proc/unprocess()
 	SSobj.processing -= src
+	qdel(wires)
+	wires = null
 	update_icon()
-
 
 /obj/item/pizzabox/bomb/New()
 	var/randompizza = pick(subtypesof(/obj/item/weapon/reagent_containers/food/snacks/pizza))
 	pizza = new randompizza(src)
 	bomb = new(src)
-	wires = new(src)
-	update_icon()
+	wires = new /datum/wires/explosive/pizza(src)
+	..()
 
 /obj/item/pizzabox/margherita/New()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/margherita(src)
 	boxtag = "Margherita Deluxe"
-	update_icon()
+	..()
 
 /obj/item/pizzabox/vegetable/New()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/vegetable(src)
 	boxtag = "Gourmet Vegatable"
-	update_icon()
+	..()
 
 /obj/item/pizzabox/mushroom/New()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/mushroom(src)
 	boxtag = "Mushroom Special"
-	update_icon()
+	..()
 
 /obj/item/pizzabox/meat/New()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/meat(src)
 	boxtag = "Meatlover's Supreme"
-	update_icon()
+	..()

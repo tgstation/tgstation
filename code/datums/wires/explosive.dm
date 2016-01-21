@@ -1,6 +1,3 @@
-/datum/wires/explosive
-	var/const/W_DISARM = "disarm" // No boom!
-
 /datum/wires/explosive/New(atom/holder)
 	add_duds(2) // In this case duds actually explode.
 	..()
@@ -33,14 +30,14 @@
 
 /datum/wires/explosive/pizza/New(atom/holder)
 	wires = list(
-		W_DISARM
+		WIRE_DISARM
 	)
 	add_duds(3) // Duds also explode here.
 	..()
 
 /datum/wires/explosive/pizza/interactable(mob/user)
 	var/obj/item/pizzabox/P = holder
-	if(P && P.open && P.bomb)
+	if(P.open && P.bomb)
 		return TRUE
 
 /datum/wires/explosive/pizza/get_status()
@@ -53,7 +50,7 @@
 /datum/wires/explosive/pizza/on_pulse(wire)
 	var/obj/item/pizzabox/P = holder
 	switch(wire)
-		if(W_DISARM) // Pulse to toggle
+		if(WIRE_DISARM) // Pulse to toggle
 			P.bomb_defused = !P.bomb_defused
 		else // Boom
 			explode()
@@ -61,7 +58,7 @@
 /datum/wires/explosive/pizza/on_cut(wire, mend)
 	var/obj/item/pizzabox/P = holder
 	switch(wire)
-		if(W_DISARM) // Disarm and untrap the box.
+		if(WIRE_DISARM) // Disarm and untrap the box.
 			if(!mend)
 				P.bomb_defused = TRUE
 		else

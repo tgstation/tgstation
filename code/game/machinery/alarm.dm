@@ -1,34 +1,25 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-// A datum for dealing with threshold limit values
-// used in /obj/machinery/alarm
 /datum/tlv
 	var/min2
 	var/min1
 	var/max1
 	var/max2
 
-/datum/tlv/New(_min2 as num, _min1 as num, _max1 as num, _max2 as num)
-	min2 = _min2
-	min1 = _min1
-	max1 = _max1
-	max2 = _max2
+/datum/tlv/New(min2 as num, min1 as num, max1 as num, max2 as num)
+	src.min2 = min2
+	src.min1 = min1
+	src.max1 = max1
+	src.max2 = max2
 
-/datum/tlv/proc/get_danger_level(curval as num)
-	if (max2 >=0 && curval>=max2)
+/datum/tlv/proc/get_danger_level(val as num)
+	if(max2 != -1 && val >= max2)
 		return 2
-	if (min2 >=0 && curval<=min2)
+	if(min2 != -1 && val <= min2)
 		return 2
-	if (max1 >=0 && curval>=max1)
+	if(max1 != -1 && val >= max1)
 		return 1
-	if (min1 >=0 && curval<=min1)
+	if(min1 != -1 && val <= min1)
 		return 1
 	return 0
-
-/datum/tlv/proc/CopyFrom(datum/tlv/other)
-	min2 = other.min2
-	min1 = other.min1
-	max1 = other.max1
-	max2 = other.max2
 
 #define AALARM_MODE_SCRUBBING 1
 #define AALARM_MODE_VENTING 2 //makes draught
@@ -65,7 +56,6 @@
 
 	var/datum/radio_frequency/radio_connection
 	var/locked = 1
-	var/datum/wires/alarm/wires = null
 	var/aidisabled = 0
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
@@ -120,7 +110,7 @@
 
 /obj/machinery/alarm/New(loc, ndir, nbuild)
 	..()
-	wires = new(src)
+	wires = new /datum/wires/alarm(src)
 	if(ndir)
 		dir = ndir
 
@@ -339,7 +329,7 @@
 	var/device_id = params["id_tag"]
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(wires.W_IDSCAN))
+			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 		if(
 			"power",
@@ -669,7 +659,7 @@
 				if(stat & (NOPOWER|BROKEN))
 					user << "<span class='warning'>It does nothing!</span>"
 				else
-					if(src.allowed(usr) && !wires.is_cut(wires.W_IDSCAN))
+					if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 						locked = !locked
 						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>"
 						src.updateUsrDialog()

@@ -23,7 +23,6 @@
 	active_power_usage = 100
 	var/busy = 0
 	var/prod_coeff
-	var/datum/wires/autolathe/wires = null
 
 	var/datum/design/being_built
 	var/datum/research/files
@@ -56,7 +55,7 @@
 	materials = new /datum/material_container(src, list(MAT_METAL=1, MAT_GLASS=1))
 	RefreshParts()
 
-	wires = new(src)
+	wires = new /datum/wires/autolathe(src)
 	files = new /datum/research/autolathe(src)
 	matching_designs = list()
 

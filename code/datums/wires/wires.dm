@@ -159,6 +159,9 @@ var/list/wire_color_directory = list()
 			return TRUE
 	return
 
+/atom
+	var/datum/wires/wires = null
+
 /datum/wires
 	var/atom/holder = null // The holder (atom that contains these wires).
 	var/holder_type = null // The holder's typepath (used to make wire colors common to all holders).
@@ -297,6 +300,9 @@ var/list/wire_color_directory = list()
 		var/obj/item/I = assemblies[A]
 		if(istype(I) && I.on_found(user))
 			return
+
+/datum/wires/ui_host()
+	return holder
 
 /datum/wires/ui_interact(mob/user, ui_key = "wires", datum/tgui/ui = null, force_open = 0, \
 							datum/tgui/master_ui = null, datum/ui_state/state = wire_state)

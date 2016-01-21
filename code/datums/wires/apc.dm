@@ -1,15 +1,10 @@
 /datum/wires/apc
-	var/const/W_POWER1 = "power1"
-	var/const/W_POWER2 = "power2"
-	var/const/W_IDSCAN = "idscan"
-	var/const/W_AI = "ai"
-
 	holder_type = /obj/machinery/power/apc
 
 /datum/wires/apc/New(atom/holder)
 	wires = list(
-		W_POWER1, W_POWER2,
-		W_IDSCAN, W_AI
+		WIRE_POWER1, WIRE_POWER2,
+		WIRE_IDSCAN, WIRE_AI
 	)
 	add_duds(6)
 	..()
@@ -30,7 +25,7 @@
 /datum/wires/apc/on_pulse(wire)
 	var/obj/machinery/power/apc/A = holder
 	switch(wire)
-		if(W_POWER1, W_POWER2) // Short for a long while.
+		if(WIRE_POWER1, WIRE_POWER2) // Short for a long while.
 			if(!A.shorted)
 				A.shorted = TRUE
 				addtimer(A, "reset", 1200, FALSE, index)
@@ -45,14 +40,14 @@
 /datum/wires/apc/on_cut(index, mend)
 	var/obj/machinery/power/apc/A = holder
 	switch(index)
-		if(W_POWER1, W_POWER2) // Short out.
-			if(mend && !is_cut(W_POWER1) && !is_cut(W_POWER2))
+		if(WIRE_POWER1, WIRE_POWER2) // Short out.
+			if(mend && !is_cut(WIRE_POWER1) && !is_cut(WIRE_POWER2))
 				A.shorted = FALSE
 				A.shock(usr, 50)
 			else
 				A.shorted = TRUE
 				A.shock(usr, 50)
-		if(W_AI) // Disable AI control.
+		if(WIRE_AI) // Disable AI control.
 			if(mend)
 				A.aidisabled = FALSE
 			else

@@ -19,10 +19,9 @@
 	var/list/obj/structure/particle_accelerator/connected_parts
 	var/assembled = 0
 	var/parts = null
-	var/datum/wires/particle_accelerator/control_box/wires = null
 
 /obj/machinery/particle_accelerator/control_box/New()
-	wires = new(src)
+	wires = new /datum/wires/particle_accelerator/control_box(src)
 	connected_parts = list()
 	..()
 
@@ -91,18 +90,18 @@
 		usr.unset_machine()
 		return
 	if(href_list["togglep"])
-		if(!wires.is_cut(wires.W_POWER))
+		if(!wires.is_cut(WIRE_POWER))
 			src.toggle_power()
 
 	else if(href_list["scan"])
 		src.part_scan()
 
 	else if(href_list["strengthup"])
-		if(!wires.is_cut(wires.W_STRENGTH))
+		if(!wires.is_cut(WIRE_STRENGTH))
 			add_strength()
 
 	else if(href_list["strengthdown"])
-		if(!wires.is_cut(wires.W_STRENGTH))
+		if(!wires.is_cut(WIRE_STRENGTH))
 			remove_strength()
 
 	src.updateDialog()

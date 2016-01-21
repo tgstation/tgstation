@@ -9,12 +9,11 @@
 	layer = MOB_LAYER - 0.2 //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = 1
 
-	var/datum/wires/syndicatebomb/wires = null
 	var/timer = 60
 	var/open_panel = 0 	//are the wires exposed?
 	var/active = 0		//is the bomb counting down?
 	var/defused = 0		//is the bomb capable of exploding?
-	var/obj/item/weapon/bombcore/payload = /obj/item/weapon/bombcore/
+	var/obj/item/weapon/bombcore/payload = /obj/item/weapon/bombcore
 	var/beepsound = 'sound/items/timer.ogg'
 
 /obj/machinery/syndicatebomb/process()
@@ -35,7 +34,7 @@
 		return
 
 /obj/machinery/syndicatebomb/New()
-	wires 	= new(src)
+	wires 	= new /datum/wires/syndicatebomb(src)
 	payload = new payload(src)
 	update_icon()
 	..()

@@ -1,14 +1,10 @@
 /datum/wires/radio
-	var/const/W_SIGNAL = "signal"
-	var/const/W_RX = "recieve"
-	var/const/W_TX = "transmit"
-
 	holder_type = /obj/item/device/radio
 
 /datum/wires/radio/New(atom/holder)
 	wires = list(
-		W_SIGNAL,
-		W_RX, W_TX
+		WIRE_SIGNAL,
+		WIRE_RX, WIRE_TX
 	)
 	..()
 
@@ -20,10 +16,10 @@
 /datum/wires/radio/on_pulse(index)
 	var/obj/item/device/radio/R = holder
 	switch(index)
-		if(W_SIGNAL)
+		if(WIRE_SIGNAL)
 			R.listening = !R.listening
 			R.broadcasting = R.listening
-		if(W_RX)
+		if(WIRE_RX)
 			R.listening = !R.listening
-		if(W_TX)
+		if(WIRE_TX)
 			R.broadcasting = !R.broadcasting

@@ -14,11 +14,10 @@
 	var/disabled = 0
 	var/shocked = 0
 	var/obj/machinery/computer/rdconsole/linked_console
-	var/datum/wires/r_n_d/wires
 
 /obj/machinery/r_n_d/New()
 	..()
-	wires = new(src)
+	wires = new /datum/wires/r_n_d(src)
 
 /obj/machinery/r_n_d/Destroy()
 	qdel(wires)

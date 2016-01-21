@@ -10,7 +10,6 @@
 	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
 	var/canhear_range = 3 // the range which mobs can hear this radio from
 	var/obj/item/device/radio/patch_link = null
-	var/datum/wires/radio/wires = null
 	var/list/secure_radio_connections
 	var/prison_radio = 0
 	var/b_stat = 0
@@ -48,9 +47,9 @@
 	frequency = add_radio(src, new_frequency)
 
 /obj/item/device/radio/New()
-	wires = new(src)
+	wires = new /datum/wires/radio(src)
 	if(prison_radio)
-		wires.cut(wires.W_TX) // OH GOD WHY
+		wires.cut(WIRE_TX) // OH GOD WHY
 	secure_radio_connections = new
 	..()
 	if(SSradio)
@@ -187,7 +186,7 @@
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
 
-	if(wires.is_cut(wires.W_TX))
+	if(wires.is_cut(WIRE_TX))
 		return
 
 	if(!M.IsVocal())
@@ -446,7 +445,7 @@
 	// what the range is in which mobs will hear the radio
 	// returns: -1 if can't receive, range otherwise
 
-	if (wires.is_cut(wires.W_RX))
+	if (wires.is_cut(WIRE_RX))
 		return -1
 	if(!listening)
 		return -1

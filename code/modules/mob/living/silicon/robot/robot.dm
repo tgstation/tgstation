@@ -34,7 +34,6 @@
 	var/obj/machinery/camera/camera = null
 
 	var/obj/item/device/mmi/mmi = null
-	var/datum/wires/robot/wires = null
 
 	var/opened = 0
 	var/emagged = 0
@@ -76,7 +75,7 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-	wires = new(src)
+	wires = new /datum/wires/robot(src)
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
@@ -105,7 +104,7 @@
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
 		camera.network = list("SS13")
-		if(wires.is_cut(wires.W_CAMERA))
+		if(wires.is_cut(WIRE_CAMERA))
 			camera.status = 0
 	..()
 
@@ -990,7 +989,7 @@
 
 /mob/living/silicon/robot/proc/SetLockdown(state = 1)
 	// They stay locked down if their wire is cut.
-	if(wires.is_cut(wires.W_LOCKDOWN))
+	if(wires.is_cut(WIRE_LOCKDOWN))
 		state = 1
 	if(state)
 		throw_alert("locked", /obj/screen/alert/locked)

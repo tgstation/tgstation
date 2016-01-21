@@ -82,7 +82,6 @@
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
 	var/longtermpower = 10
-	var/datum/wires/apc/wires = null
 	var/auto_name = 0
 	var/update_state = -1
 	var/update_overlay = -1
@@ -106,7 +105,7 @@
 	..()
 	apcs_list += src
 
-	wires = new(src)
+	wires = new /datum/wires/apc(src)
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
 	if (building)
@@ -454,7 +453,7 @@
 		else if(stat & (BROKEN|MAINT))
 			user << "<span class='warning'>Nothing happens!</span>"
 		else
-			if(allowed(usr) && !wires.is_cut(wires.W_IDSCAN))
+			if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>"
 				update_icon()
@@ -1063,16 +1062,13 @@
 /obj/machinery/power/apc/proc/reset(wire)
 	switch(wire)
 		if(WIRE_IDSCAN)
-			locked = 1
-			updateDialog()
+			locked = TRUE
 		if(WIRE_POWER1, WIRE_POWER2)
-			if(!wires.IsIndexCut(APC_WIRE_MAIN_POWER1) && !wires.IsIndexCut(APC_WIRE_MAIN_POWER2))
-				shorted = 0
-				updateDialog()
+			if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
+				shorted = FALSE
 		if(WIRE_AI)
-			if(!wires.IsIndexCut(APC_WIRE_AI_CONTROL))
-				aidisabled = 0
-				updateDialog()
+			if(!wires.is_cut(WIRE_AI))
+				aidisabled = FALSE
 		if(APC_RESET_EMP)
 			equipment = 3
 			environ = 3

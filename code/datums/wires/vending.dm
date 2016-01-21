@@ -1,10 +1,4 @@
 /datum/wires/vending
-	var/const/W_THROW = "throw"
-	var/const/W_CONTRABAND = "contraband"
-	var/const/W_ELECTRIFY = "electrify"
-	var/const/W_IDSCAN = "idscan"
-	var/const/W_SPEAKER = "speaker"
-
 	holder_type = /obj/machinery/vending
 
 /datum/wires/vending/interactable(mob/user)
@@ -27,30 +21,30 @@
 /datum/wires/vending/on_pulse(wire)
 	var/obj/machinery/vending/V = holder
 	switch(wire)
-		if(W_THROW)
+		if(WIRE_THROW)
 			V.shoot_inventory = !V.shoot_inventory
-		if(W_CONTRABAND)
+		if(WIRE_CONTRABAND)
 			V.extended_inventory = !V.extended_inventory
-		if(W_ELECTRIFY)
+		if(WIRE_ELECTRIFY)
 			V.seconds_electrified = 30
-		if(W_IDSCAN)
+		if(WIRE_IDSCAN)
 			V.scan_id = !V.scan_id
-		if(W_SPEAKER)
+		if(WIRE_SPEAKER)
 			V.shut_up = !V.shut_up
 
 /datum/wires/vending/on_cut(wire, mend)
 	var/obj/machinery/vending/V = holder
 	switch(wire)
-		if(W_THROW)
+		if(WIRE_THROW)
 			V.shoot_inventory = !mend
-		if(W_CONTRABAND)
+		if(WIRE_CONTRABAND)
 			V.extended_inventory = FALSE
-		if(W_ELECTRIFY)
+		if(WIRE_ELECTRIFY)
 			if(mend)
 				V.seconds_electrified = FALSE
 			else
 				V.seconds_electrified = -1
-		if(W_IDSCAN)
+		if(WIRE_IDSCAN)
 			V.scan_id = mend
-		if(W_SPEAKER)
+		if(WIRE_SPEAKER)
 			V.shut_up = mend
