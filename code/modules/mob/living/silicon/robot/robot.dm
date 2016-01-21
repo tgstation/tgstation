@@ -1,10 +1,11 @@
 /mob/living/silicon/robot
 	name = "Cyborg"
 	real_name = "Cyborg"
-	icon = 'icons/mob/robots.dmi'//
+	icon = 'icons/mob/robots.dmi'
 	icon_state = "robot"
 	maxHealth = 100
 	health = 100
+	bubble_icon = "robot"
 	var/sight_mode = 0
 	var/custom_name = ""
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
@@ -1109,6 +1110,7 @@
 	scrambledcodes = 1
 	modtype = "Synd"
 	faction = list("syndicate")
+	bubble_icon = "syndibot"
 	designation = "Syndicate Assault"
 	req_access = list(access_syndicate)
 	var/playstyle_string = "<span class='userdanger'>You are a Syndicate assault cyborg!</span><br>\

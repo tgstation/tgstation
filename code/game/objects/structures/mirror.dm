@@ -61,6 +61,7 @@
 
 
 /obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
+	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(I.damtype == STAMINA)
 		return
@@ -90,6 +91,7 @@
 
 
 /obj/structure/mirror/attack_alien(mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(islarva(user))
 		return
@@ -106,6 +108,7 @@
 	var/mob/living/simple_animal/M = user
 	if(M.melee_damage_upper <= 0)
 		return
+	user.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
@@ -115,6 +118,7 @@
 
 
 /obj/structure/mirror/attack_slime(mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)

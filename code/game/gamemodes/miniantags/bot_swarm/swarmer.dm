@@ -34,6 +34,7 @@
 	icon = 'icons/mob/swarmer.dmi'
 	desc = "A robot of unknown design, they seek only to consume materials and replicate themselves indefinitely."
 	speak_emote = list("tones")
+	bubble_icon = "swarmer"
 	health = 40
 	maxHealth = 40
 	status_flags = CANPUSH
@@ -59,7 +60,6 @@
 	speed = 0
 	faction = list("swarmer")
 	AIStatus = AI_OFF
-	projectiletype = /obj/item/projectile/beam/disabler
 	pass_flags = PASSTABLE
 	ventcrawler = 2
 	ranged = 1
@@ -290,7 +290,14 @@
 					var/turf/simulated/floor/F = random_location
 					if(F.air)
 						var/datum/gas_mixture/A = F.air
-						if(A.oxygen >= 16 && !A.toxins && A.carbon_dioxide < 10 && !A.trace_gases.len)//Can most things breathe in this location?
+						var/list/A_gases = A.gases
+						var/trace_gases
+						for(var/id in A_gases)
+							if(id in hardcoded_gases)
+								continue
+							trace_gases = TRUE
+							break
+						if((A_gases["o2"] && A_gases["o2"][MOLES] >= 16) && !A_gases["plasma"] && (!A_gases["co2"] || A_gases["co2"][MOLES] < 10) && !trace_gases)//Can most things breathe in this location?
 							if((A.temperature > 270) && (A.temperature < 360))//Not too hot, not too cold
 								var/pressure = A.return_pressure()
 								if((pressure > 20) && (pressure < 550))//Account for crushing pressure or vaccuums
@@ -497,10 +504,13 @@
 
 /mob/living/simple_animal/hostile/swarmer/proc/ContactSwarmers()
 	var/message = input(src, "Announce to other swarmers", "Swarmer contact")
+	var/rendered = "<B>Swarm communication - </b> [src] states: [message]"
 	if(message)
 		for(var/mob/M in mob_list)
-			if(isswarmer(M) || (M in dead_mob_list))
-				M << "<B>Swarm communication - </b> [src] states: [message]"
+			if(isswarmer(M))
+				M << rendered
+			if(M in dead_mob_list)
+				M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
 
 
 

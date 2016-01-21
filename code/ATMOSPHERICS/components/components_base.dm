@@ -150,9 +150,16 @@ Helpers
 /obj/machinery/atmospherics/components/proc/update_parents()
 	for(DEVICE_TYPE_LOOP)
 		var/datum/pipeline/parent = PARENT_I
+		if(!parent)
+			throw EXCEPTION("Component is missing a pipenet! Rebuilding...")
+			build_network()
 		parent.update = 1
 
 /obj/machinery/atmospherics/components/returnPipenets()
 	. = list()
 	for(DEVICE_TYPE_LOOP)
 		. += returnPipenet(NODE_I)
+
+/obj/machinery/atmospherics/components/dealWithShuttleStuff(I)
+	..()
+	nullifyPipenet(PARENT_I)

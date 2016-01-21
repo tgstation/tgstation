@@ -80,10 +80,17 @@
 			custom_objective.owner = N.mind
 			N.mind.objectives += custom_objective
 
-			add_objective(N.mind, /datum/objective/escape_obj/escape, 1)
+			var/datum/objective/escape/escape_objective = new
+			escape_objective.owner = N.mind
+			N.mind.objectives += escape_objective
 
 
 			M << "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>"
+
+			var/obj_count = 1
+			for(var/datum/objective/OBJ in M.mind.objectives)
+				M << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
+				obj_count++
 
 	src.updateUsrDialog()
 	return

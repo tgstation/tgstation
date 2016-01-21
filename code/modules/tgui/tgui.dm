@@ -197,6 +197,7 @@
 	else
 		html = SStgui.basehtml
 	html = replacetextEx(html, "\[ref]", "\ref[src]")
+	html = replacetextEx(html, "\[style]", style)
 	return html
 
  /**
@@ -243,10 +244,11 @@
 		json_data["data"] = data
 		json_data["adata"] = data
 
-	// Generate the JSON; replace bad characters.
+	// Generate the JSON.
 	var/json = JSON.stringify(json_data)
-	json = replacetextEx(json, "\improper", "")
-
+	// Strip #255/improper.
+	json = regex_replaceall(json, "\improper", "")
+	json = regex_replaceall(json, "\proper", "")
 	return json
 
  /**
@@ -257,16 +259,16 @@
   * If the src_object's ui_act() returns 1, update all UIs attacked to it.
  **/
 /datum/tgui/Topic(href, href_list)
-	var/action = href_list["action"] // Pull the action out.
-	href_list -= "action"
+	var/action = href_list["action"]
+	var/params = href_list; params -= "action"
 
 	// Handle any special actions.
 	switch(action)
 		if("tgui:initialize")
 			user << output(url_encode(get_json(initial_data)), "[window_id].browser:initialize")
 			return
-		if("tgui:ie")
-			user << link("http://windows.microsoft.com/en-us/internet-explorer/download-ie")
+		if("tgui:link")
+			user << link(params["url"])
 			return
 		if("tgui:fancy")
 			user.client.prefs.tgui_fancy = TRUE
@@ -279,7 +281,7 @@
 	if(status != UI_INTERACTIVE || user != usr)
 		return // If UI is not interactive or usr calling Topic is not the UI user.
 
-	var/update = src_object.ui_act(action, href_list, state) // Call ui_act() on the src_object.
+	var/update = src_object.ui_act(action, params, state) // Call ui_act() on the src_object.
 	if(src_object && update)
 		SStgui.update_uis(src_object) // If we have a src_object and its ui_act() told us to update.
 
