@@ -192,7 +192,10 @@ var/list/wire_color_directory = list()
 
 /datum/wires/proc/add_duds(duds)
 	while(duds)
-		wires += "dud[duds--]"
+		var/dud = "dud[--duds]"
+		if(dud in wires)
+			continue
+		wires += dud
 
 /datum/wires/proc/randomize()
 	var/list/possible_colors = shuffle(wire_colors.Copy())

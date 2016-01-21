@@ -604,9 +604,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/stealthy_weapons/pizza_bomb
 	name = "Pizza Bomb"
-	desc = "A pizza box with a bomb taped inside it. The timer needs to be set by opening the box; afterwards, \
-			opening the box again will trigger the detonation."
-	item = /obj/item/device/pizza_bomb
+	desc = "A pizza box with a bomb cunningly attached to the lid. The timer needs to be set by opening the box; afterwards, \
+			opening the box again will trigger the detonation after the timer has elapsed. Comes with free pizza, for you or your target!"
+	item = /obj/item/pizzabox/bomb
 	cost = 6
 	surplus = 8
 

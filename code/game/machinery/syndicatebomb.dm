@@ -180,20 +180,20 @@
 	burn_state = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
 
-/obj/item/weapon/bombcore/ex_act(severity, target) //Little boom can chain a big boom
-	src.detonate()
+/obj/item/weapon/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
+	detonate()
 
 /obj/item/weapon/bombcore/burn()
-	src.detonate()
+	detonate()
 	..()
 
 /obj/item/weapon/bombcore/proc/detonate()
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
-	explosion(get_turf(src),3,9,17, flame_range = 17)
-	if(src.loc && istype(src.loc,/obj/machinery/syndicatebomb/))
-		qdel(src.loc)
+	explosion(get_turf(src), 3, 9, 17, flame_range = 17)
+	if(loc && istype(loc,/obj/machinery/syndicatebomb/))
+		qdel(loc)
 	qdel(src)
 
 /obj/item/weapon/bombcore/proc/defuse()
@@ -210,7 +210,7 @@
 	var/attempts = 0
 
 /obj/item/weapon/bombcore/training/proc/reset()
-	var/obj/machinery/syndicatebomb/holder = src.loc
+	var/obj/machinery/syndicatebomb/holder = loc
 	if(istype(holder))
 		if(holder.wires)
 			holder.wires.repair()
@@ -221,7 +221,7 @@
 		holder.updateDialog()
 
 /obj/item/weapon/bombcore/training/detonate()
-	var/obj/machinery/syndicatebomb/holder = src.loc
+	var/obj/machinery/syndicatebomb/holder = loc
 	if(istype(holder))
 		attempts++
 		holder.loc.visible_message("<span class='danger'>\icon[holder] Alert: Bomb has detonated. Your score is now [defusals] for [attempts]. Resetting wires...</span>")
@@ -230,7 +230,7 @@
 		qdel(src)
 
 /obj/item/weapon/bombcore/training/defuse()
-	var/obj/machinery/syndicatebomb/holder = src.loc
+	var/obj/machinery/syndicatebomb/holder = loc
 	if(istype(holder))
 		attempts++
 		defusals++
@@ -245,7 +245,7 @@
 	origin_tech = null
 
 /obj/item/weapon/bombcore/badmin/defuse() //because we wouldn't want them being harvested by players
-	var/obj/machinery/syndicatebomb/B = src.loc
+	var/obj/machinery/syndicatebomb/B = loc
 	qdel(B)
 	qdel(src)
 
@@ -272,21 +272,25 @@
 	playsound(src.loc, 'sound/misc/sadtrombone.ogg', 50)
 	..()
 
-/obj/item/weapon/bombcore/badmin/explosion/
+/obj/item/weapon/bombcore/badmin/explosion
 	var/HeavyExplosion = 2
 	var/MediumExplosion = 5
 	var/LightExplosion = 11
 	var/Flames = 11
 
 /obj/item/weapon/bombcore/badmin/explosion/detonate()
-	explosion(get_turf(src),HeavyExplosion,MediumExplosion,LightExplosion, flame_range = Flames)
+	explosion(get_turf(src), HeavyExplosion, MediumExplosion, LightExplosion, flame_range = Flames)
+	qdel(src)
 
 /obj/item/weapon/bombcore/miniature
 	name = "small bomb core"
 	w_class = 2
 
 /obj/item/weapon/bombcore/miniature/detonate()
-	explosion(src.loc,1,2,4,flame_range = 2) //Identical to a minibomb
+	if(adminlog)
+		message_admins(adminlog)
+		log_game(adminlog)
+	explosion(src.loc, 1, 2, 4, flame_range = 2) //Identical to a minibomb
 	qdel(src)
 
 ///Syndicate Detonator (aka the big red button)///
