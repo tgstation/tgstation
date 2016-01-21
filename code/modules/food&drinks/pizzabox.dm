@@ -136,7 +136,7 @@
 				user << "<span class='notice'>The stack is dangerously high!</span>"
 		else
 			user << "<span class='notice'>Close [open ? src : newbox] first!</span>"
-	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pizza))
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pizza) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza))
 		if(open)
 			if(!user.drop_item())
 				return
@@ -167,23 +167,29 @@
 	else if(is_wire_tool(I))
 		if(wires && bomb)
 			wires.interact(user)
+	else if(istype(I, /obj/item/weapon/reagent_containers/food))
+		user << "<span class='notice'>That's not a pizza!</span>"
 	..()
 
 /obj/item/pizzabox/process()
 	if(bomb_active && !bomb_defused && (bomb_timer > 0))
-		playsound(loc, 'sound/items/timer.ogg', 40, 0)
+		playsound(loc, 'sound/items/timer.ogg', 50, 0)
 		bomb_timer--
 	if(bomb_active && !bomb_defused && (bomb_timer <= 0))
 		if(bomb in src)
 			bomb.detonate()
-		return
+			unprocess()
 	if(!bomb_active || bomb_defused)
 		if(bomb_defused && bomb in src)
 			bomb.defuse()
 			bomb_active = FALSE
-			SSobj.processing -= src
-			update_icon()
-		return
+			unprocess()
+	return
+
+/obj/item/pizzabox/proc/unprocess()
+	SSobj.processing -= src
+	update_icon()
+
 
 /obj/item/pizzabox/bomb/New()
 	var/randompizza = pick(subtypesof(/obj/item/weapon/reagent_containers/food/snacks/pizza))
