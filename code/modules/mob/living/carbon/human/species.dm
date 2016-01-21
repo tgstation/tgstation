@@ -50,7 +50,9 @@
 	var/burnmod = 1		// multiplier for burn damage
 	var/coldmod = 1		// multiplier for cold damage
 	var/heatmod = 1		// multiplier for heat damage
-	var/punchmod = 0	// adds to the punch damage
+	var/punchdamagelow = 0       //lowest possible punch damage
+	var/punchdamagehigh = 9      //highest possible punch damage
+	var/punchstunthreshold = 9//damage at which punches from this race will stun
 	var/siemens_coeff = 1 //base electrocution coefficient
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
@@ -928,7 +930,7 @@
 				if(H.lying)
 					atk_verb = "kick"
 
-				var/damage = rand(0, 9) + M.dna.species.punchmod
+				var/damage = rand(M.dna.species.punchdamagelow, M.dna.species.punchdamagehigh)
 
 				if(!damage)
 					playsound(H.loc, M.dna.species.miss_sound, 25, 1, -1)
@@ -946,7 +948,7 @@
 
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
 				add_logs(M, H, "punched")
-				if((H.stat != DEAD) && damage >= 9)
+				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold)
 					H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
 									"<span class='userdanger'>[M] has weakened [H]!</span>")
 					H.apply_effect(4, WEAKEN, armor_block)
