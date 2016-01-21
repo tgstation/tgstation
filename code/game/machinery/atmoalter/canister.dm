@@ -296,6 +296,7 @@ update_flag
 			if(newtype)
 				var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc)
 				replacement.air_contents.copy_from(air_contents)
+				replacement.update_icon()
 				replacement.interact(usr)
 				qdel(src)
 		if("pressure")

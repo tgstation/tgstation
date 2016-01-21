@@ -1333,6 +1333,8 @@
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	if(!environment)
 		return
+	if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		return
 
 	var/loc_temp = H.get_temperature(environment)
 
@@ -1369,21 +1371,19 @@
 					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
 				else
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
-		if(!istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-			switch(H.bodytemperature)
-				if(200 to 260)
-					H.throw_alert("temp", /obj/screen/alert/cold, 1)
-					H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
-				if(120 to 200)
-					H.throw_alert("temp", /obj/screen/alert/cold, 2)
-					H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
-				if(-INFINITY to 120)
-					H.throw_alert("temp", /obj/screen/alert/cold, 3)
-					H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
-		else
-			H.clear_alert("temp")
+		switch(H.bodytemperature)
+			if(200 to 260)
+				H.throw_alert("temp", /obj/screen/alert/cold, 1)
+				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
+			if(120 to 200)
+				H.throw_alert("temp", /obj/screen/alert/cold, 2)
+				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
+			if(-INFINITY to 120)
+				H.throw_alert("temp", /obj/screen/alert/cold, 3)
+				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+			else
+				H.clear_alert("temp")
 
 	else
 		H.clear_alert("temp")
