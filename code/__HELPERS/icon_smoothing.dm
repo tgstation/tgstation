@@ -17,9 +17,8 @@
 /atom/var/top_right_corner
 /atom/var/bottom_left_corner
 /atom/var/bottom_right_corner
-/atom/var/can_be_unanchored = 0
 /atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
-
+/atom/movable/var/can_be_unanchored = 0
 //generic (by snowflake) tile smoothing code; smooth your icons with this!
 /*
 	Each tile is divided in 4 corners, each corner has an image associated to it; the tile is then overlayed by these 4 images
@@ -36,65 +35,36 @@
 
 	var/adjacencies = 0
 
-	if(A.can_be_unanchored)
-		var/atom/movable/AM = A
-		if(!AM.anchored)
+	var/atom/movable/AM
+	if(istype(A, /atom/movable))
+		AM = A
+		if(AM.can_be_unanchored && !AM.anchored)
 			return 0
 
-		for(var/direction in cardinal)
-			AM = find_type_in_direction(A, direction)
-			if(istype(AM) && AM.anchored)
-				adjacencies |= 1 << direction
-			else if(AM)
-				adjacencies |= 1 << direction
+	for(var/direction in cardinal)
+		AM = find_type_in_direction(A, direction)
+		if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			adjacencies |= 1 << direction
 
-		if(adjacencies & N_NORTH)
-			if(adjacencies & N_WEST)
-				AM = find_type_in_direction(A, NORTHWEST)
-				if(istype(AM) && AM.anchored)
-					adjacencies |= N_NORTHWEST
-				else if(AM)
-					adjacencies |= N_NORTHWEST
-			if(adjacencies & N_EAST)
-				AM = find_type_in_direction(A, NORTHEAST)
-				if(istype(AM) && AM.anchored)
-					adjacencies |= N_NORTHEAST
-				else if(AM)
-					adjacencies |= N_NORTHEAST
+	if(adjacencies & N_NORTH)
+		if(adjacencies & N_WEST)
+			AM = find_type_in_direction(A, NORTHWEST)
+			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+				adjacencies |= N_NORTHWEST
+		if(adjacencies & N_EAST)
+			AM = find_type_in_direction(A, NORTHEAST)
+			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+				adjacencies |= N_NORTHEAST
 
-		if(adjacencies & N_SOUTH)
-			if(adjacencies & N_WEST)
-				AM = find_type_in_direction(A, SOUTHWEST)
-				if(istype(AM) && AM.anchored)
-					adjacencies |= N_SOUTHWEST
-				else if(AM)
-					adjacencies |= N_SOUTHWEST
-			if(adjacencies & N_EAST)
-				AM = find_type_in_direction(A, SOUTHEAST)
-				if(istype(AM) && AM.anchored)
-					adjacencies |= N_SOUTHEAST
-				else if(AM)
-					adjacencies |= N_SOUTHEAST
-	else
-		for(var/direction in cardinal)
-			if(find_type_in_direction(A, direction))
-				adjacencies |= 1 << direction
-
-		if(adjacencies & N_NORTH)
-			if(adjacencies & N_WEST)
-				if(find_type_in_direction(A, NORTHWEST))
-					adjacencies |= N_NORTHWEST
-			if(adjacencies & N_EAST)
-				if(find_type_in_direction(A, NORTHEAST))
-					adjacencies |= N_NORTHEAST
-
-		if(adjacencies & N_SOUTH)
-			if(adjacencies & N_WEST)
-				if(find_type_in_direction(A, SOUTHWEST))
-					adjacencies |= N_SOUTHWEST
-			if(adjacencies & N_EAST)
-				if(find_type_in_direction(A, SOUTHEAST))
-					adjacencies |= N_SOUTHEAST
+	if(adjacencies & N_SOUTH)
+		if(adjacencies & N_WEST)
+			AM = find_type_in_direction(A, SOUTHWEST)
+			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+				adjacencies |= N_SOUTHWEST
+		if(adjacencies & N_EAST)
+			AM = find_type_in_direction(A, SOUTHEAST)
+			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+				adjacencies |= N_SOUTHEAST
 
 	return adjacencies
 
