@@ -161,7 +161,7 @@
 
 	if(!user.drop_item()) // Can't let go?
 		return
-
+	
 	beaker = B
 	beaker.loc = src
 	user << "<span class='notice'>You add the beaker to the machine.</span>"
@@ -299,10 +299,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if (istype(I, /obj/item/weapon/reagent_containers/glass) || \
-		istype(I, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \
-		istype(I, /obj/item/weapon/reagent_containers/food/drinks/shaker))
-
+	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
 		if (beaker)
 			return 1
 		else
