@@ -133,9 +133,9 @@ var/global/datum/controller/master/Master = new()
 						//byond will pause most client updates for (about) 1.6 seconds.
 						//(1.6 seconds worth of ticks)
 						//We just stop running subsystems to avoid that.
-						break;
+						break
 					if(SS.can_fire > 0)
-						if(SS.next_fire <= world.time && SS.last_fire + (SS.wait * 0.5) <= world.time) // Check if it's time.
+						if(SS.next_fire <= world.time && SS.last_fire + (SS.wait * 0.75) <= world.time) // Check if it's time.
 							ran_subsystems = 1
 							timer = world.timeofday
 							last_type_processed = SS.type
@@ -151,7 +151,9 @@ var/global/datum/controller/master/Master = new()
 								SS.wait = Clamp(newwait, SS.dwait_lower, SS.dwait_upper)
 								if(oldwait != SS.wait)
 									processing_interval = calculate_gcd()
-							SS.next_fire += SS.wait
+								SS.next_fire = world.time + SS.wait
+							else
+								SS.next_fire += SS.wait
 							++SS.times_fired
 							// If we caused BYOND to miss a tick, stop processing for a bit...
 							if(startingtick < world.time || start_time + 1 < world.timeofday)
@@ -174,14 +176,14 @@ var/global/datum/controller/master/Master = new()
 					extrasleep += world.tick_lag * 2
 				// If we are loading the server too much, sleep a bit extra...
 				if(world.cpu >= 75)
-					extrasleep += (1 + extrasleep + processing_interval) * ((world.cpu-50)/10)
+					extrasleep += (extrasleep + processing_interval) * ((world.cpu-50)/10)
+
 				if(world.cpu >= 100)
-					extrasleep += extrasleep //double it, we are close to triggering a byond bug.
 					if(!old_fps)
 						old_fps = world.fps
 						//byond bug, if we go over 120 fps and world.fps is higher then 10, the bad things that happen are made worst.
 						world.fps = 10
-				else if(old_fps && world.cpu < 75)
+				else if(old_fps && world.cpu < 50)
 					world.fps = old_fps
 					old_fps = null
 
