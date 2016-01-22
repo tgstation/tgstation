@@ -21,7 +21,8 @@ var/global/datum/controller/master/Master = new()
 	var/iteration = 0
 	// The cost (in deciseconds) of the MC loop.
 	var/cost = 0
-
+	// The old fps when we slow it down to prevent lag.
+	var/old_fps
 	// A list of subsystems to process().
 	var/list/subsystems = list()
 	// The cost of running the subsystems (in deciseconds).
@@ -127,6 +128,12 @@ var/global/datum/controller/master/Master = new()
 
 				var/ran_subsystems = 0
 				for(var/datum/subsystem/SS in subsystems)
+					if(world.cpu >= 100)
+						//if world.cpu gets above 120,
+						//byond will pause most client updates for (about) 1.6 seconds.
+						//(1.6 seconds worth of ticks)
+						//We just stop running subsystems to avoid that.
+						break;
 					if(SS.can_fire > 0)
 						if(SS.next_fire <= world.time && SS.last_fire + (SS.wait * 0.5) <= world.time) // Check if it's time.
 							ran_subsystems = 1
@@ -166,9 +173,20 @@ var/global/datum/controller/master/Master = new()
 				if(startingtick < world.time || start_time + 1 < world.timeofday)
 					extrasleep += world.tick_lag * 2
 				// If we are loading the server too much, sleep a bit extra...
-				if(world.cpu > 80)
-					extrasleep += extrasleep + processing_interval
+				if(world.cpu >= 75)
+					extrasleep += (1 + extrasleep + processing_interval) * ((world.cpu-50)/10)
+				if(world.cpu >= 100)
+					extrasleep += extrasleep //double it, we are close to triggering a byond bug.
+					if(!old_fps)
+						old_fps = world.fps
+						//byond bug, if we go over 120 fps and world.fps is higher then 10, the bad things that happen are made worst.
+						world.fps = 10
+				else if(old_fps && world.cpu < 75)
+					world.fps = old_fps
+					old_fps = null
+
 				sleep(processing_interval + extrasleep)
+
 			else
 				sleep(50)
 #undef MC_AVERAGE
