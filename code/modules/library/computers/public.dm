@@ -13,14 +13,11 @@
 	switch(screenstate)
 		if(0)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:40: dat += "<h2>Search Settings</h2><br />"
 			dat += {"<h2>Search Settings</h2><br />
 				<A href='?src=\ref[src];settitle=1'>Filter by Title: [query.title]</A><br />
 				<A href='?src=\ref[src];setcategory=1'>Filter by Category: [query.category]</A><br />
 				<A href='?src=\ref[src];setauthor=1'>Filter by Author: [query.author]</A><br />
 				<A href='?src=\ref[src];search=1'>\[Start Search\]</A><br />"}
-			// END AUTOFIX
 		if(1)
 			establish_old_db_connection()
 			if(!dbcon_old.IsConnected())
@@ -36,8 +33,6 @@
 										<input type='text' name='pagenum' value='[page_num]' maxlength="5" size="5">
 										<input type='submit' value='Jump To Page'>
 							</form>"}
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:52: dat += "<table>"
 				dat += {"<table border=\"0\">
 					<tr>
 						<td>Author</td>
@@ -45,7 +40,6 @@
 						<td>Category</td>
 						<td>SS<sup>13</sup>BN</td>
 					</tr>"}
-				// END AUTOFIX
 				for(var/datum/cachedbook/CB in get_page(page_num))
 					dat += {"<tr>
 						<td>[CB.author]</td>

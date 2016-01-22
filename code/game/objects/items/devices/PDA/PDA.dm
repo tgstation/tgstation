@@ -605,28 +605,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(active_uplink_check(user))
 		return
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:313: var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
 	var/dat = {"<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>
 <a href='byond://?src=\ref[src];choice=Close'><img src=pda_exit.png> Close</a>"}
-	// END AUTOFIX
 	if ((!isnull(cartridge)) && (mode == 0))
 		dat += " | <a href='byond://?src=\ref[src];choice=Eject'><img src=pda_eject.png> Eject [cartridge]</a>"
 	if (mode)
 		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=pda_menu.png> Return</a>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:321: dat += " | <a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>"
 	dat += {"| <a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>
 		<br>"}
-	// END AUTOFIX
 	if (!owner)
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:326: dat += "Warning: No owner information entered.  Please swipe card.<br><br>"
 		dat += {"Warning: No owner information entered.  Please swipe card.<br><br>
 			<a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Retry</a>"}
-		// END AUTOFIX
 	else
 		switch (mode)
 			if (0)
@@ -635,17 +626,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					var/datum/asset/simple/C = new/datum/asset/simple/pda()
 					send_asset_list(user.client, C.assets)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:331: dat += "<h2>PERSONAL DATA ASSISTANT v.1.3</h2>"
 				dat += {"<h2>PERSONAL DATA ASSISTANT v.1.3</h2>
 					Owner: [owner], [ownjob]<br>"}
-				// END AUTOFIX
 				dat += text("ID: <A href='?src=\ref[src];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
 				dat += text("<br><A href='?src=\ref[src];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:336: dat += "Station Time: [worldtime2text()]"//:[world.time / 100 % 6][world.time / 100 % 10]"
 				dat += {"Station Time: [worldtime2text()]
 					<br><br>
 					<h4>General Functions</h4>
@@ -653,7 +639,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>
 					<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>
 					<li><a href='byond://?src=\ref[src];choice=50'><img src=pda_clock.png> Current Events</a></li>"}
-				// END AUTOFIX
 				//dat += "<li><a href='byond://?src=[src];choice=chatroom'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a></li>"
 
 				dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
@@ -694,47 +679,32 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 					if (cartridge.access_medical)
 
-						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:360: dat += "<h4>Medical Functions</h4>"
 						dat += {"<h4>Medical Functions</h4>
 							<ul>
 							<li><a href='byond://?src=\ref[src];choice=44'><img src=pda_medical.png> Medical Records</a></li>
 							<li><a href='byond://?src=\ref[src];choice=Medical Scan'><img src=pda_scanner.png> [scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>
 							</ul>"}
-						// END AUTOFIX
 					if (cartridge.access_security)
 
-						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:366: dat += "<h4>Security Functions</h4>"
 						dat += {"<h4>Security Functions</h4>
 							<ul>
 							<li><a href='byond://?src=\ref[src];choice=45'><img src=pda_cuffs.png> Security Records</A></li>"}
-						// END AUTOFIX
 					if(istype(cartridge.radio, /obj/item/radio/integrated/beepsky))
 
-						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:370: dat += "<li><a href='byond://?src=\ref[src];choice=46'><img src=pda_cuffs.png> Security Bot Access</a></li>"
 						dat += {"<li><a href='byond://?src=\ref[src];choice=46'><img src=pda_cuffs.png> Security Bot Access</a></li>
 							</ul>"}
-						// END AUTOFIX
 					else	dat += "</ul>"
 					if(cartridge.access_quartermaster)
 
-						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:374: dat += "<h4>Quartermaster Functions:</h4>"
 						dat += {"<h4>Quartermaster Functions:</h4>
 							<ul>
 							<li><a href='byond://?src=\ref[src];choice=47'><img src=pda_crate.png> Supply Records</A></li>
 							<li><a href='byond://?src=\ref[src];choice=48'><img src=pda_mule.png> Delivery Bot Control</A></li>
 							</ul>"}
-				// END AUTOFIX
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:379: dat += "</ul>"
 				dat += {"</ul>
 					<h4>Utilities</h4>
 					<ul>"}
-				// END AUTOFIX
 				if (cartridge)
 					if (cartridge.access_janitor)
 						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Custodial Locator</a></li>"
@@ -749,42 +719,30 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (cartridge.access_remote_door)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:396: dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
 				dat += {"<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>
 					<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png> [fon ? "Disable" : "Enable"] Flashlight</a></li>"}
-				// END AUTOFIX
 				if (pai)
 					if(pai.loc != src)
 						pai = null
 					else
 
-						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:402: dat += "<li><a href='byond://?src=\ref[src];choice=pai;option=1'>pAI Device Configuration</a></li>"
 						dat += {"<li><a href='byond://?src=\ref[src];choice=pai;option=1'>pAI Device Configuration</a></li>
 							<li><a href='byond://?src=\ref[src];choice=pai;option=2'>Eject pAI Device</a></li>"}
-						// END AUTOFIX
 				dat += "</ul>"
 
 			if (1)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:407: dat += "<h4><img src=pda_notes.png> Notekeeper V2.1</h4>"
 				dat += {"<h4><img src=pda_notes.png> Notekeeper V2.1</h4>
 					<a href='byond://?src=\ref[src];choice=Edit'> Edit</a><br>"}
-				// END AUTOFIX
 				dat += note
 
 			if (2)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:412: dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
 				dat += {"<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>
 					<a href='byond://?src=\ref[src];choice=Toggle Ringer'><img src=pda_bell.png> Ringer: [silent == 1 ? "Off" : "On"]</a> |
 					<a href='byond://?src=\ref[src];choice=Toggle Messenger'><img src=pda_mail.png> Send / Receive: [toff == 1 ? "Off" : "On"]</a> |
 					<a href='byond://?src=\ref[src];choice=Ringtone'><img src=pda_bell.png> Set Ringtone</a> |
 					<a href='byond://?src=\ref[src];choice=21'><img src=pda_mail.png> Messages</a><br>"}
-				// END AUTOFIX
 				if (istype(cartridge, /obj/item/weapon/cartridge/syndicate))
 					dat += "<b>[cartridge:shock_charges] detonation charges left.</b><HR>"
 				if (istype(cartridge, /obj/item/weapon/cartridge/clown))
@@ -793,11 +751,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					dat += "<b>[cartridge:mime_charges] viral files left.</b><HR>"
 
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:425: dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
 				dat += {"<h4><img src=pda_menu.png> Detected PDAs</h4>
 					<ul>"}
-				// END AUTOFIX
 				var/count = 0
 
 				if (!toff)
@@ -821,12 +776,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if(21)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:448: dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
 				dat += {"<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>
 					<a href='byond://?src=\ref[src];choice=Clear'><img src=pda_blank.png> Clear Messages</a>
 					<h4><img src=pda_mail.png> Messages</h4>"}
-				// END AUTOFIX
 				dat += tnote
 				dat += "<br>"
 
@@ -851,13 +803,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						var/plasma_level = environment.toxins/total_moles
 						var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
 
-						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:476: dat += "Nitrogen: [round(n2_level*100)]%<br>"
 						dat += {"Nitrogen: [round(n2_level*100)]%<br>
 							Oxygen: [round(o2_level*100)]%<br>
 							Carbon Dioxide: [round(co2_level*100)]%<br>
 							Plasma: [round(plasma_level*100)]%<br>"}
-						// END AUTOFIX
 						if(unknown_level > 0.01)
 							dat += "OTHER: [round(unknown_level)]%<br>"
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
@@ -865,11 +814,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if (5)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:486: dat += "<h4><img src=pda_chatroom.png> Nanotrasen Relay Chat</h4>"
 				dat += {"<h4><img src=pda_chatroom.png> Nanotrasen Relay Chat</h4>
 					<h4><img src=pda_menu.png> Detected Channels</h4>: <li>"}
-				// END AUTOFIX
 				for(var/datum/chatroom/C in chatrooms)
 					dat += "<a href='byond://?src=\ref[src];pdachannel=[C.name]'>#[html_encode(lowertext(C.name))]"
 					if(C.password != "")
@@ -878,11 +824,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if (41) //Allows everyone to access crew
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:281: menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
 				dat += {"<h4><img src=pda_notes.png> Crew Manifest</h4>
 					Entries cannot be modified from this terminal.<br><br>"}
-				// END AUTOFIX
 				if(data_core)
 					dat += data_core.get_manifest(1) // make it monochrome
 				dat += "<br>"

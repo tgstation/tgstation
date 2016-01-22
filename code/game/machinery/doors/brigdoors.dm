@@ -136,22 +136,16 @@
 		user.set_machine(src)
 		var/dat = "<HTML><BODY><TT>"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\\doors\brigdoors.dm:138: dat += "<HR>Timer System:</hr>"
 		dat += {"<HR>Timer System:</hr>
 			<b>Door [src.id_tag] controls</b><br/>"}
-		// END AUTOFIX
 		if (src.timing)
 			dat += "<a href='?src=\ref[src];timing=0'>Stop Timer and open door</a><br/>"
 		else
 			dat += "<a href='?src=\ref[src];timing=1'>Activate Timer and close door</a><br/>"
 
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\\doors\brigdoors.dm:145: dat += "Time Left: [(minute ? text("[minute]:") : null)][second] <br/>"
 		dat += {"Time Left: [(minute ? text("[minute]:") : null)][second] <br/>
 			<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"}
-		// END AUTOFIX
 		for(var/obj/machinery/flasher/F in targets)
 			if(F.last_flash && (F.last_flash + 150) > world.time)
 				dat += "<br/><A href='?src=\ref[src];fc=1'>Flash Charging</A>"
@@ -159,11 +153,8 @@
 				dat += "<br/><A href='?src=\ref[src];fc=1'>Activate Flash</A>"
 
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\\doors\brigdoors.dm:154: dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
 		dat += {"<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>
 			</TT></BODY></HTML>"}
-		// END AUTOFIX
 		user << browse(dat, "window=computer;size=400x500")
 		onclose(user, "computer")
 		return

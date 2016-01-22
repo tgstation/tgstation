@@ -128,7 +128,6 @@
 <A href='?src=\ref[src];rune=soulstone'>Kal om neth</A> - Summons a soul stone<BR>
 <A href='?src=\ref[src];rune=construct'>Da A'ig Osk</A> - Summons a construct shell for use with captured souls. It is too large to carry on your person.<BR>"}
 //<A href='?src=\ref[src];rune=armor'>Sa tatha najin</A> - Allows you to summon armoured robes and an unholy blade<BR> //Kept for reference
-	// END AUTOFIX
 	usr << browse(dat, "window=id_com;size=350x200")
 	return
 

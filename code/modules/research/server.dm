@@ -254,22 +254,16 @@
 				if(istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin)
 					continue
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\server.dm:289: dat += "[S.name] || "
 				dat += {"[S.name] ||
 					<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> |
 					<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"}
-				// END AUTOFIX
 				if(badmin) dat += " | <A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
 				dat += "<BR>"
 
 		if(1) //Access rights menu
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\server.dm:296: dat += "[temp_server.name] Access Rights<BR><BR>"
 			dat += {"[temp_server.name] Access Rights<BR><BR>
 				Consoles with Upload Access<BR>"}
-			// END AUTOFIX
 			for(var/obj/machinery/computer/rdconsole/C in consoles)
 				var/turf/console_turf = get_turf(C)
 				dat += "* <A href='?src=\ref[src];upload_toggle=[C.id]'>[console_turf.loc]" //FYI, these are all numeric ids, eventually.
@@ -289,35 +283,23 @@
 
 		if(2) //Data Management menu
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\server.dm:316: dat += "[temp_server.name] Data ManagementP<BR><BR>"
 			dat += {"[temp_server.name] Data Management<BR><BR>
 				Known Technologies<BR>"}
-			// END AUTOFIX
 			for(var/datum/tech/T in temp_server.files.known_tech)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\server.dm:319: dat += "* [T.name] "
 				dat += {"* [T.name]
 					<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>"} //FYI, these are all strings
-				// END AUTOFIX
 			dat += "Known Designs<BR>"
 			for(var/datum/design/D in temp_server.files.known_designs)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\server.dm:323: dat += "* [D.name] "
 				dat += {"* [D.name]
 					<A href='?src=\ref[src];reset_design=[D.id]'>(Delete)</A><BR>"}
-				// END AUTOFIX
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 
 		if(3) //Server Data Transfer
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\server.dm:328: dat += "[temp_server.name] Server to Server Transfer<BR><BR>"
 			dat += {"[temp_server.name] Server to Server Transfer<BR><BR>
 				Send Data to what server?<BR>"}
-			// END AUTOFIX
 			for(var/obj/machinery/r_n_d/server/S in servers)
 				dat += "[S.name] <A href='?src=\ref[src];send_to=[S.server_id]'> (Transfer)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"

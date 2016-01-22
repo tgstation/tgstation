@@ -35,21 +35,15 @@
 
 		if(0)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\logbrowser.dm:30: dat += "<br>[temp]<br>"
 			dat += {"<br>[temp]<br>
 				<br>Current Network: <a href='?src=\ref[src];network=1'>[network]</a><br>"}
-			// END AUTOFIX
 			if(servers.len)
 				dat += "<br>Detected Telecommunication Servers:<ul>"
 				for(var/obj/machinery/telecomms/T in servers)
 					dat += "<li><a href='?src=\ref[src];viewserver=[T.id]'>\ref[T] [T.name]</a> ([T.id])</li>"
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\logbrowser.dm:36: dat += "</ul>"
 				dat += {"</ul>
 					<br><a href='?src=\ref[src];operation=release'>\[Flush Buffer\]</a>"}
-				// END AUTOFIX
 			else
 				dat += "<br>No servers detected. Scan for servers: <a href='?src=\ref[src];operation=scan'>\[Scan\]</a>"
 
@@ -58,13 +52,10 @@
 
 		if(1)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\logbrowser.dm:46: dat += "<br>[temp]<br>"
 			dat += {"<br>[temp]<br>
 				<center><a href='?src=\ref[src];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=\ref[src];operation=refresh'>\[Refresh\]</a></center>
 				<br>Current Network: [network]
 				<br>Selected Server: [SelectedServer.id]"}
-			// END AUTOFIX
 			if(SelectedServer.totaltraffic >= 1024)
 				dat += "<br>Total recorded traffic: [round(SelectedServer.totaltraffic / 1024)] Terrabytes<br><br>"
 			else
@@ -125,36 +116,27 @@
 
 					if(language == "Human" || universal_translate || C.parameters["uspeech"])
 
-						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\logbrowser.dm:102: dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"
 						dat += {"<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>
 							<u><font color = #18743E>Source</font color></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>
 							<u><font color = #18743E>Class</font color></u>: [race]<br>
 							<u><font color = #18743E>Contents</font color></u>: \"[C.parameters["message"]]\"<br>"}
-						// END AUTOFIX
 					// -- Orator is not human and universal translate not active --
 
 					else
 
-						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\logbrowser.dm:111: dat += "<u><font color = #18743E>Data type</font color></u>: Audio File<br>"
 						dat += {"<u><font color = #18743E>Data type</font color></u>: Audio File<br>
 							<u><font color = #18743E>Source</font color></u>: <i>Unidentifiable</i><br>
 							<u><font color = #18743E>Class</font color></u>: [race]<br>
 							<u><font color = #18743E>Contents</font color></u>: <i>Unintelligble</i><br>"}
-					// END AUTOFIX
 
 					dat += "</li><br>"
 
 				else if(C.input_type == "Execution Error")
 
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\logbrowser.dm:120: dat += "<li><font color = #990000>[C.name]</font color>  <font color = #FF0000><a href='?src=\ref[src];delete=[i]'>\[X\]</a></font color><br>"
 					dat += {"<li><font color = #990000>[C.name]</font color>  <font color = #FF0000><a href='?src=\ref[src];delete=[i]'>\[X\]</a></font color><br>
 						<u><font color = #787700>Output</font color></u>: \"[C.parameters["message"]]\"<br>
 						</li><br>"}
-					// END AUTOFIX
 
 
 			dat += "</ol>"

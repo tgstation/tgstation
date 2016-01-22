@@ -395,7 +395,6 @@ var/const/POS_HEADER = {"<html>
 		if(POS_SCREEN_SETTINGS) dat += SettingsScreen()
 
 	dat += "</body></html>"
-	// END AUTOFIX
 	user << browse(dat, "window=pos")
 	onclose(user, "pos")
 	return
