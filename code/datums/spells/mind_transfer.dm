@@ -69,6 +69,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 	ghost.mind.transfer_to(caster)
 	if(ghost.key)
 		caster.key = ghost.key	//have to transfer the key since the mind was not active
+	qdel(ghost)
 
 	if(caster.mind.special_verbs.len)//If they had any special verbs, we add them here.
 		for(var/V in caster.mind.special_verbs)
