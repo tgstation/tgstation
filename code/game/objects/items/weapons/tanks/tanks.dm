@@ -110,7 +110,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "tanks", name, 405, 200, master_ui, state)
+		ui = new(user, src, ui_key, "tanks", name, 420, 200, master_ui, state)
 		ui.open()
 
 /obj/item/weapon/tank/get_ui_data()

@@ -1,8 +1,8 @@
 <script>
 component.exports = {
-  data: {
+  computed: {
     tankPressureState () {
-      const pressure = this.get('data.tankPressureState')
+      const pressure = this.get('data.tankPressure')
       if (pressure >= 200) return 'good'
       else if (pressure >= 100) return 'average'
       else return 'bad'

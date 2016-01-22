@@ -69,10 +69,6 @@
 	if(!on)
 		return
 	var/datum/gas_mixture/air1 = AIR1
-	if(!is_operational())
-		on = FALSE
-		update_icon()
-		return
 	if(occupant)
 		if(occupant.health >= 100) // Don't bother with fully healed people.
 			on = FALSE
@@ -102,7 +98,7 @@
 	if(!on)
 		return
 	var/datum/gas_mixture/air1 = AIR1
-	if(!NODE1 || !air1 || air1.gases["o2"][MOLES] < 5) // Turn off if the machine won't work.
+	if(!NODE1 || !AIR1 || air1.gases["o2"][MOLES] < 5) // Turn off if the machine won't work.
 		on = FALSE
 		update_icon()
 		return
@@ -129,7 +125,6 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user) // Prevent ventcrawl in this machine.
 	return
-
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
