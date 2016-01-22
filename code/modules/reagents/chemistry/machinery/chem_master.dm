@@ -363,7 +363,7 @@
 			user << "<span class='warning'>You can't use the [src.name] while it's panel is opened!</span>"
 			return 1
 
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
+	if(istype(B, /obj/item/weapon/reagent_containers) && (B.flags & OPENCONTAINER))
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 			return
