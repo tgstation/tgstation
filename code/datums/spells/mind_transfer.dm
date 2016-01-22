@@ -43,7 +43,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		user << "<span class='warning'>They appear to be catatonic! Not even magic can affect their vacant mind.</span>"
 		return
 
-	if(target.mind.special_role in protected_roles)
+	if((target.mind.special_role in protected_roles) || cmptext(copytext(target.key,1,2),"@"))
 		user << "<span class='warning'>Their mind is resisting your spell!</span>"
 		return
 
