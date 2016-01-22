@@ -269,6 +269,9 @@
 	if(overloaded)//ensure the implant isn't broken
 		owner << "<span class='warning'>The implant doesn't respond. It seems to be broken...</span>"
 		return
+	if(holder == null)
+		owner << "<span class='warning'>You should not be attempting to use this implant, as it is a dummy item that should never appear. Please adminhelp and report this as an issue on github.</span>"
+		return
 	if(out)//check if the owner has the item out already
 		owner.unEquip(holder, 1)//if he does, take it away. then,
 		holder.loc = null//stash it in nullspace
