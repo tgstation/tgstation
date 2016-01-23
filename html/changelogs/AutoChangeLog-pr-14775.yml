@@ -1,0 +1,4 @@
+author: octareenroon91
+delete-after: True
+changes: 
+  - bugfix: "Chemistry machinery should now all equally accept beakers, drinking glasses, etc."
