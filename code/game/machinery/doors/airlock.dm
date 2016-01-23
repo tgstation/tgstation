@@ -499,53 +499,51 @@ About the new airlock wires panel:
 
 
 /obj/machinery/door/airlock/proc/hack(mob/user)
-	if(src.aiHacking==0)
-		src.aiHacking=1
-		spawn(20)
-			//TODO: Make this take a minute
-			user << "Airlock AI control has been blocked. Beginning fault-detection."
-			sleep(50)
-			if(src.canAIControl())
-				user << "Alert cancelled. Airlock control has been restored without our assistance."
-				src.aiHacking=0
-				return
-			else if(!src.canAIHack())
-				user << "Connection lost! Unable to hack airlock."
-				src.aiHacking=0
-				return
-			user << "Fault confirmed: airlock control wire disabled or cut."
-			sleep(20)
-			user << "Attempting to hack into airlock. This may take some time."
-			sleep(200)
-			if(src.canAIControl())
-				user << "Alert cancelled. Airlock control has been restored without our assistance."
-				src.aiHacking=0
-				return
-			else if(!src.canAIHack())
-				user << "Connection lost! Unable to hack airlock."
-				src.aiHacking=0
-				return
-			user << "Upload access confirmed. Loading control program into airlock software."
-			sleep(170)
-			if(src.canAIControl())
-				user << "Alert cancelled. Airlock control has been restored without our assistance."
-				src.aiHacking=0
-				return
-			else if(!src.canAIHack())
-				user << "Connection lost! Unable to hack airlock."
-				src.aiHacking=0
-				return
-			user << "Transfer complete. Forcing airlock to execute program."
-			sleep(50)
-			//disable blocked control
-			src.aiControlDisabled = 2
-			user << "Receiving control information from airlock."
-			sleep(10)
-			//bring up airlock dialog
-			src.aiHacking = 0
-			if (user)
-				src.attack_ai(user)
-
+	set waitfor = 0
+	if(src.aiHacking == 0)
+		src.aiHacking = 1
+		user << "Airlock AI control has been blocked. Beginning fault-detection."
+		sleep(50)
+		if(src.canAIControl())
+			user << "Alert cancelled. Airlock control has been restored without our assistance."
+			src.aiHacking=0
+			return
+		else if(!src.canAIHack())
+			user << "Connection lost! Unable to hack airlock."
+			src.aiHacking=0
+			return
+		user << "Fault confirmed: airlock control wire disabled or cut."
+		sleep(20)
+		user << "Attempting to hack into airlock. This may take some time."
+		sleep(200)
+		if(src.canAIControl())
+			user << "Alert cancelled. Airlock control has been restored without our assistance."
+			src.aiHacking=0
+			return
+		else if(!src.canAIHack())
+			user << "Connection lost! Unable to hack airlock."
+			src.aiHacking=0
+			return
+		user << "Upload access confirmed. Loading control program into airlock software."
+		sleep(170)
+		if(src.canAIControl())
+			user << "Alert cancelled. Airlock control has been restored without our assistance."
+			src.aiHacking=0
+			return
+		else if(!src.canAIHack())
+			user << "Connection lost! Unable to hack airlock."
+			src.aiHacking=0
+			return
+		user << "Transfer complete. Forcing airlock to execute program."
+		sleep(50)
+		//disable blocked control
+		src.aiControlDisabled = 2
+		user << "Receiving control information from airlock."
+		sleep(10)
+		//bring up airlock dialog
+		src.aiHacking = 0
+		if (user)
+			src.attack_ai(user)
 
 /obj/machinery/door/airlock/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -991,11 +989,9 @@ About the new airlock wires panel:
 		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
 	if(autoclose && normalspeed)
-		spawn(150)
-			autoclose()
+		addtimer(src, "autoclose", 150)
 	else if(autoclose && !normalspeed)
-		spawn(11)
-			autoclose()
+		addtimer(src, "autoclose", 10)
 
 	if(!density)
 		return 1
@@ -1025,8 +1021,7 @@ About the new airlock wires panel:
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
-				spawn (60)
-					autoclose()
+				addtimer(src, "autoclose", 60)
 				return
 
 	if(forced < 2)

@@ -49,7 +49,8 @@ var/datum/subsystem/timer/SStimer
 /datum/timedevent/Destroy()
 	SStimer.processing -= src
 	SStimer.hashes -= src.hash
-	return ..()
+	return QDEL_HINT_IWILLGC
+
 
 /proc/addtimer(thingToCall, procToCall, wait, unique = FALSE, ...)
 	if (!SStimer) //can't run timers before the mc has been created

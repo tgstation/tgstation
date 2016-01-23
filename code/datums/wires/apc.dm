@@ -20,37 +20,21 @@ var/const/APC_WIRE_AI_CONTROL = 8
 	return 0
 
 /datum/wires/apc/UpdatePulsed(index)
-
 	var/obj/machinery/power/apc/A = holder
-
 	switch(index)
-
 		if(APC_WIRE_IDSCAN)
 			A.locked = 0
-
-			spawn(300)
-				if(A)
-					A.locked = 1
-					A.updateDialog()
+			addtimer(A, "reset", 300, FALSE, APC_WIRE_IDSCAN)
 
 		if (APC_WIRE_MAIN_POWER1, APC_WIRE_MAIN_POWER2)
 			if(A.shorted == 0)
 				A.shorted = 1
-
-				spawn(1200)
-					if(A && !IsIndexCut(APC_WIRE_MAIN_POWER1) && !IsIndexCut(APC_WIRE_MAIN_POWER2))
-						A.shorted = 0
-						A.updateDialog()
+				addtimer(A, "reset", 1200, FALSE, index)
 
 		if (APC_WIRE_AI_CONTROL)
 			if (A.aidisabled == 0)
 				A.aidisabled = 1
-
-				spawn(10)
-					if(A && !IsIndexCut(APC_WIRE_AI_CONTROL))
-						A.aidisabled = 0
-						A.updateDialog()
-
+				addtimer(A, "reset", 10, FALSE, APC_WIRE_AI_CONTROL)
 	A.updateDialog()
 
 /datum/wires/apc/UpdateCut(index, mended)
