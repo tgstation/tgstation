@@ -467,10 +467,10 @@
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
 	if(see_in_dark)
 		src << "<span class='notice'>You deactivate your night vision.</span>"
-		see_in_dark = 0
+		see_invisible = SEE_INVISIBLE_LIVING
 	else
 		src << "<span class='notice'>You activate your night vision.</span>"
-		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_MINIMUM
 
 /mob/living/simple_animal/hostile/guardian/ranged/verb/Snare()
 	set name = "Set Surveillance Trap"
