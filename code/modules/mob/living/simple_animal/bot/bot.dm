@@ -109,6 +109,7 @@
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
 		Radio.keyslot = new radio_key
+	Radio.subspace_transmission = 1
 	Radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
 	Radio.recalculateChannels()
 
@@ -283,13 +284,8 @@
 /mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
 	if((!on) || (!message))
 		return
-	if(channel)
-		if(!Radio.channels[channel]) //Ignore lack of keys
-			Radio.channels[channel] = 1
-			Radio.talk_into(src, message, channel)
-			Radio.channels[channel] = 0
-		else
-			Radio.talk_into(src, message, channel)
+	if(channel && Radio.channels[channel])// Use radio if we have channel key
+		Radio.talk_into(src, message, channel)
 	else
 		say(message)
 	return
