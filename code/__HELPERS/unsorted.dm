@@ -613,12 +613,22 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return 1
 
 /proc/is_blocked_turf(turf/T)
-	var/cant_pass = 0
-	if(T.density) cant_pass = 1
-	for(var/atom/A in T)
-		if(A.density)//&&A.anchored
-			cant_pass = 1
-	return cant_pass
+	if(T.density)
+		return 1
+	for(var/i in T)
+		var/atom/A = i
+		if(A.density)
+			return 1
+	return 0
+
+/proc/is_anchored_dense_turf(turf/T) //like the older version of the above, fails only if also anchored
+	if(T.density)
+		return 1
+	for(var/i in T)
+		var/atom/movable/A = i
+		if(A.density && A.anchored)
+			return 1
+	return 0
 
 /proc/get_step_towards2(atom/ref , atom/trg)
 	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
