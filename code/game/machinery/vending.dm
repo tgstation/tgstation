@@ -49,7 +49,6 @@
 	var/extended_inventory = 0	//can we access the hidden inventory?
 	var/scan_id = 1
 	var/obj/item/weapon/coin/coin
-	var/datum/wires/vending/wires = null
 
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 
@@ -57,7 +56,7 @@
 
 /obj/machinery/vending/New()
 	..()
-	wires = new(src)
+	wires = new /datum/wires/vending(src)
 	if(refill_canister) //constructable vending machine
 		component_parts = list()
 		var/obj/item/weapon/circuitboard/vendor/V = new(null)
@@ -315,10 +314,8 @@
 
 /obj/machinery/vending/attack_hand(mob/user)
 	var/dat = ""
-	if(panel_open)
-		dat += wires()
-		if(product_slogans != "")
-			dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+	if(panel_open && !isAI(user))
+		return wires.interact(user)
 	else
 		if(stat & (BROKEN|NOPOWER))
 			return
@@ -373,11 +370,6 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-
-
-// returns the wire panel text
-/obj/machinery/vending/proc/wires()
-	return wires.GetInteractWindow()
 
 
 /obj/machinery/vending/Topic(href, href_list)

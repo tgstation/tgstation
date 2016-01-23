@@ -510,7 +510,7 @@
 "jP" = (/turf/simulated/floor/plasteel/cult/airless{icon_state = "cultdamage3"},/area/wizard_station)
 "jQ" = (/obj/effect/decal/cleanable/blood/gibs/body,/turf/simulated/floor/plasteel/cult/airless,/area/wizard_station)
 "jT" = (/obj/structure/table/wood,/obj/item/device/paicard,/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
-"jU" = (/obj/structure/table/wood,/obj/item/pizzabox{ismessy = 1},/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
+"jU" = (/obj/structure/table/wood,/obj/item/pizzabox,/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
 "jV" = (/obj/structure/bed/stool,/obj/effect/landmark{name = "Syndicate-Spawn"},/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
 "jW" = (/obj/machinery/computer/telecrystals/uplinker,/turf/simulated/floor/plasteel/podhatch{dir = 9},/area/syndicate_mothership)
 "jY" = (/obj/structure/toilet{icon_state = "toilet00"; dir = 8},/obj/structure/window/reinforced/tinted{tag = "icon-rwindow (NORTH)"; icon_state = "rwindow"; dir = 1},/obj/machinery/door/window{tag = "icon-right (WEST)"; name = "Tactical Toilet"; icon_state = "right"; dir = 8; opacity = 1},/turf/simulated/floor/plasteel/freezer{dir = 2},/area/syndicate_mothership)

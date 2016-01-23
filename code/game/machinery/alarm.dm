@@ -1,34 +1,25 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-// A datum for dealing with threshold limit values
-// used in /obj/machinery/alarm
 /datum/tlv
 	var/min2
 	var/min1
 	var/max1
 	var/max2
 
-/datum/tlv/New(_min2 as num, _min1 as num, _max1 as num, _max2 as num)
-	min2 = _min2
-	min1 = _min1
-	max1 = _max1
-	max2 = _max2
+/datum/tlv/New(min2 as num, min1 as num, max1 as num, max2 as num)
+	src.min2 = min2
+	src.min1 = min1
+	src.max1 = max1
+	src.max2 = max2
 
-/datum/tlv/proc/get_danger_level(curval as num)
-	if (max2 >=0 && curval>=max2)
+/datum/tlv/proc/get_danger_level(val as num)
+	if(max2 != -1 && val >= max2)
 		return 2
-	if (min2 >=0 && curval<=min2)
+	if(min2 != -1 && val <= min2)
 		return 2
-	if (max1 >=0 && curval>=max1)
+	if(max1 != -1 && val >= max1)
 		return 1
-	if (min1 >=0 && curval<=min1)
+	if(min1 != -1 && val <= min1)
 		return 1
 	return 0
-
-/datum/tlv/proc/CopyFrom(datum/tlv/other)
-	min2 = other.min2
-	min1 = other.min1
-	max1 = other.max1
-	max2 = other.max2
 
 #define AALARM_MODE_SCRUBBING 1
 #define AALARM_MODE_VENTING 2 //makes draught
@@ -65,7 +56,6 @@
 
 	var/datum/radio_frequency/radio_connection
 	var/locked = 1
-	var/datum/wires/alarm/wires = null
 	var/aidisabled = 0
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
@@ -120,7 +110,7 @@
 
 /obj/machinery/alarm/New(loc, ndir, nbuild)
 	..()
-	wires = new(src)
+	wires = new /datum/wires/alarm(src)
 	if(ndir)
 		dir = ndir
 
@@ -170,7 +160,7 @@
 		return
 
 	if(panel_open && !istype(user, /mob/living/silicon/ai))
-		wires.Interact(user)
+		wires.interact(user)
 	else if (!shorted)
 		ui_interact(user)
 
@@ -318,7 +308,7 @@
 				if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
 					continue
 				selected = TLV[gas_id]
-				thresholds += list(list("name" = meta_gas_info[gas_id][2], "settings" = list()))
+				thresholds += list(list("name" = meta_gas_info[gas_id][META_GAS_NAME], "settings" = list()))
 				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min2", "selected" = selected.min2))
 				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min1", "selected" = selected.min1))
 				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max1", "selected" = selected.max1))
@@ -327,71 +317,68 @@
 			data["thresholds"] = thresholds
 
 /obj/machinery/alarm/ui_act(action, params)
-	if(buildstage != 2)
+	if(..() || buildstage != 2)
 		return
-
-	if(locked && !usr.has_unlimited_silicon_privilege)
+	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
 		return
-
-	if(usr.has_unlimited_silicon_privilege && aidisabled)
-		return
-
 	var/device_id = params["id_tag"]
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
+			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
-		if(
-			"power",
-			"co2_scrub",
-			"tox_scrub",
-			"n2o_scrub",
-			"widenet",
-			"scrubbing"
-		)
+				. = TRUE
+		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "widenet", "scrubbing")
 			send_signal(device_id, list("[action]" = text2num(params["val"])))
+			. = TRUE
 		if("excheck")
 			send_signal(device_id, list("checks" = text2num(params["val"])^1))
+			. = TRUE
 		if("incheck")
 			send_signal(device_id, list("checks" = text2num(params["val"])^2))
+			. = TRUE
 		if("set_external_pressure")
-			var/input_pressure = input("Enter target pressure:", "Pressure Controls") as num|null
-			if(isnum(input_pressure))
-				send_signal(device_id, list("set_external_pressure" = input_pressure))
+			var/value = text2num(params["value"])
+			if(value != null)
+				send_signal(device_id, list("set_external_pressure" = value))
+				. = TRUE
+			else
+				value = input("New target pressure:", name, alarm_area.air_vent_info[device_id]["external"]) as num|null
+				. = .(action, params + list("value" = value))
 		if("reset_external_pressure")
 			send_signal(device_id, list("reset_external_pressure"))
+			. = TRUE
 		if("threshold")
 			var/env = params["env"]
-			var/varname = params["var"]
+			var/name = params["var"]
+			var/value = text2num(params["value"])
 			var/datum/tlv/tlv = TLV[env]
-			var/newval = input("Enter [varname] for [env]:", "Alarm Triggers", tlv.vars[varname]) as num|null
-			if (isnull(newval))
+			if(isnull(tlv))
 				return
-			if (newval<0)
-				tlv.vars[varname] = -1
-			else if (env=="temperature" && newval>5000)
-				tlv.vars[varname] = 5000
-			else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
-				tlv.vars[varname] = 50*ONE_ATMOSPHERE
-			else if (env!="temperature" && env!="pressure" && newval>200)
-				tlv.vars[varname] = 200
+			if(value != null)
+				if(value < 0)
+					tlv.vars[name] = -1
+				else
+					tlv.vars[name] = round(value, 0.01)
+				. = TRUE
 			else
-				newval = round(newval,0.01)
-				tlv.vars[varname] = newval
+				value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
+				. = .(action, params + list("value" = value))
 		if("screen")
 			screen = text2num(params["screen"])
+			. = TRUE
 		if("mode")
 			mode = text2num(params["mode"])
 			apply_mode()
+			. = TRUE
 		if("alarm")
 			if(alarm_area.atmosalert(2, src))
 				post_alert(2)
-			update_icon()
+			. = TRUE
 		if("reset")
 			if(alarm_area.atmosalert(0, src))
 				post_alert(0)
-			update_icon()
-	return 1
+			. = TRUE
+	update_icon()
 
 /obj/machinery/alarm/proc/shock(mob/user, prb)
 	if((stat & (NOPOWER)))		// unpowered, no shock
@@ -647,10 +634,10 @@
 /obj/machinery/alarm/attackby(obj/item/W, mob/user, params)
 	switch(buildstage)
 		if(2)
-			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && (wires.wires_status == 27 || wires.wires_status == 31))   //this checks for all wires to be cut, except the syphon wire which is optional.
+			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && wires.is_all_cut())
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "<span class='notice'>You cut the final wires.</span>"
-				var/obj/item/stack/cable_coil/cable = new /obj/item/stack/cable_coil( src.loc )
+				var/obj/item/stack/cable_coil/cable = new /obj/item/stack/cable_coil(loc)
 				cable.amount = 5
 				buildstage = 1
 				update_icon()
@@ -669,7 +656,7 @@
 				if(stat & (NOPOWER|BROKEN))
 					user << "<span class='warning'>It does nothing!</span>"
 				else
-					if(src.allowed(usr) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
+					if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 						locked = !locked
 						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>"
 						src.updateUsrDialog()
@@ -701,7 +688,7 @@
 					if (cable.get_amount() >= 5 && buildstage == 1)
 						cable.use(5)
 						user << "<span class='notice'>You wire the air alarm.</span>"
-						wires.wires_status = 0
+						wires.repair()
 						aidisabled = 0
 						locked = 1
 						mode = 1

@@ -34,11 +34,11 @@ component.exports = {
 	</ui-section>
   {{#if data.open}}
 	<ui-section label='Adjust Target'>
-      <ui-button icon='fast-backward' state='{{data.targetTemp > data.minTemp ? null : "disabled"}}' action='target' params='{"target": -20}'/>
-      <ui-button icon='backward' state='{{data.targetTemp > data.minTemp ? null : "disabled"}}' action='target' params='{"target": -5}'/>
-      <ui-button icon='pencil' action='target' params='{"target": "custom"}'>Set</ui-button>
-      <ui-button icon='forward' state='{{data.targetTemp < data.maxTemp ? null : "disabled"}}' action='target' params='{"target": 5}'/>
-      <ui-button icon='fast-forward' state='{{data.targetTemp < data.maxTemp ? null : "disabled"}}' action='target' params='{"target": 20}'/>
+      <ui-button icon='fast-backward' state='{{data.targetTemp > data.minTemp ? null : "disabled"}}' action='target' params='{"adjust": -20}'/>
+      <ui-button icon='backward' state='{{data.targetTemp > data.minTemp ? null : "disabled"}}' action='target' params='{"adjust": -5}'/>
+      <ui-button icon='pencil' action='target' params='{"target": "input"}'>Set</ui-button>
+      <ui-button icon='forward' state='{{data.targetTemp < data.maxTemp ? null : "disabled"}}' action='target' params='{"adjust": 5}'/>
+      <ui-button icon='fast-forward' state='{{data.targetTemp < data.maxTemp ? null : "disabled"}}' action='target' params='{"adjust": 20}'/>
 	  </ui-section>
 	{{/if}}
   <ui-section label='Mode'>
