@@ -416,7 +416,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(buckled)
+	if(!buckled)
 		Weaken(3)
 
 /*
