@@ -465,7 +465,7 @@
 		src << "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>"
 
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
-	if(see_in_dark)
+	if(see_invisible == SEE_INVISIBLE_MINIMUM)
 		src << "<span class='notice'>You deactivate your night vision.</span>"
 		see_invisible = SEE_INVISIBLE_LIVING
 	else
