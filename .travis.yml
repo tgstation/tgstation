@@ -1,5 +1,6 @@
 #pretending we're C because otherwise ruby/rvm will initialize, even with "language: dm".
 language: c
+sudo: false
 
 env:
     global:
@@ -11,22 +12,31 @@ env:
     - DM_MAPFILE="defficiency"
     - DM_MAPFILE="taxistation"
 
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install libc6:i386 libgcc1:i386 libstdc++6:i386 python python-pip -qq
+cache:
+  directories:
+    - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+    - $HOME/.cache/pip
+
+addons:
+  apt:
+    packages:
+      - libc6-i386
+      - libgcc1:i386
+      - libstdc++6:i386
 
 install:
-  - pip install --user PyYaml -q
-  - pip install --user beautifulsoup4 -q
-  - curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip
-  - unzip byond.zip
-  - cd byond
-  - sudo make install
-  - cd ..
+  - pip install --user PyYaml -q --download-cache $HOME/.pip-cache
+  - pip install --user beautifulsoup4 -q --download-cache $HOME/.pip-cache
+
+before_script:
+  - chmod +x ./dm.sh
+  - chmod +x ./install-byond.sh
+  - ./install-byond.sh
 
 script:
   - python tools/ss13_genchangelog.py html/changelog.html html/changelogs --dry-run
-  - bash dm.sh -M${DM_MAPFILE} vgstation13.dme
+  - source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+  - ./dm.sh -M${DM_MAPFILE} vgstation13.dme
 
 notifications:
   irc:
