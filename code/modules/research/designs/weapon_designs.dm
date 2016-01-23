@@ -272,3 +272,33 @@
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
 	build_path = /obj/item/weapon/suppressor
 	category = list("Weapons")
+
+/datum/design/extraction_pack
+	name = "Fulton Recovery Pack"
+	desc = "A fulton recovery pack with 12 uses."
+	id = "extraction_pack"
+	req_tech = list("engineering" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 5000)
+	build_path = /obj/item/weapon/extraction_pack
+	category = list("Weapons")
+
+/datum/design/extraction_pack_adv
+	name = "Advanced Fulton Recovery Pack"
+	desc = "A fulton recovery pack with 24 uses."
+	id = "extraction_pack_adv"
+	req_tech = list("engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 5000)
+	build_path = /obj/item/weapon/extraction_pack/advanced
+	category = list("Weapons")
+
+/datum/design/extraction_pack_super
+	name = "Super Fulton Recovery Pack"
+	desc = "A fulton recovery pack with 48 uses."
+	id = "extraction_pack_super"
+	req_tech = list("engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 5000)
+	build_path = /obj/item/weapon/extraction_pack/super
+	category = list("Weapons")

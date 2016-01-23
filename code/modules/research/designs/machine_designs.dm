@@ -472,3 +472,13 @@
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/grounding_rod
 	category = list ("Misc. Machinery")
+
+/datum/design/extraction_point
+	name = "Machine Design (Fulton Recovery Beacon Board)"
+	desc = "The circuit board for a Fulton Recovery Beacon."
+	id = "extraction_point"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/extraction_point
+	category = list ("Misc. Machinery")
