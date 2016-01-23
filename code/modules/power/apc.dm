@@ -675,12 +675,12 @@
 	return data
 
 
-/obj/machinery/power/apc/proc/get_malf_status(mob/user)
-	if (is_special_character(user) && istype(user, /mob/living/silicon/ai))
-		if (src.malfai == (user:parent ? user:parent : user))
-			if (src.occupier == user)
+/obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
+	if(istype(malf) && is_special_character(malf))
+		if(malfai == (malf.parent || malf))
+			if(occupier == malf)
 				return 3 // 3 = User is shunted in this APC
-			else if (istype(user.loc, /obj/machinery/power/apc))
+			else if(istype(malf.loc, /obj/machinery/power/apc))
 				return 4 // 4 = User is shunted in another APC
 			else
 				return 2 // 2 = APC hacked by user, and user is in its core.
@@ -805,10 +805,7 @@
 		malf.malfhacking = FALSE
 		malf.malf_picker.processing_time += 10
 
-		if(malf:parent)
-			malfai = malf:parent
-		else
-			malfai = malf
+		malfai = malf.parent || malf
 		malfhack = TRUE
 		locked = TRUE
 
