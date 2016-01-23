@@ -81,7 +81,7 @@
 /obj/structure/table/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(tableclimber && tableclimber != user)
-		tableclimber.Weaken(5)
+		tableclimber.Weaken(2)
 		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You're knocked off the table!", "You see [tableclimber.name] get knocked off the table</span>")
 	..()
 
@@ -135,7 +135,7 @@
 			OT.check_patient()
 			qdel(I)
 			return 1
-		G.affecting.Weaken(2)
+		G.affecting.Weaken(5)
 		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
 									"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
 		add_logs(G.assailant, G.affecting, "pushed")
