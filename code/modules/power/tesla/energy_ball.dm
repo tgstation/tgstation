@@ -1,5 +1,5 @@
-#define TESLA_DEFAULT_POWER 3476520
-#define TESLA_MINI_POWER 1738260
+#define TESLA_DEFAULT_POWER 1738260
+#define TESLA_MINI_POWER 869130
 
 var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
@@ -31,6 +31,8 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	var/list/orbiting_balls = list()
 	var/produced_power
 	var/is_orbiting
+	var/energy_to_raise = 100
+	var/energy_to_lower = -10
 
 /obj/singularity/energy_ball/Destroy()
 	for(var/obj/singularity/energy_ball/EB in orbiting_balls)
@@ -40,17 +42,11 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/process()
 	if(!is_orbiting)
 		handle_energy()
-		var/amount_to_move = 2 + orbiting_balls.len * 2
-		var/what_does_the_scouter_say_about_the_balls_power_level = (TESLA_DEFAULT_POWER + (TESLA_MINI_POWER * orbiting_balls.len))
-		move_the_basket_ball(amount_to_move)
-		pixel_x = 0
-		pixel_y = 0
+		move_the_basket_ball(2 + orbiting_balls.len * 2)
 		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 15)
-		tesla_zap(src, 7, what_does_the_scouter_say_about_the_balls_power_level)
-		pixel_x = -32
-		pixel_y = -32
-		energy += rand(1,3) // ensure it generates energy without needing to be blasted by the PA too much due to its size, and that a tesla engine will always get bigger over time
+		tesla_zap(src, 7, TESLA_DEFAULT_POWER)
 	else
+		tesla_zap(src, rand(1,Clamp(orbiting_balls.len,3,7)), TESLA_MINI_POWER)
 		energy = 0 // ensure we dont have miniballs of miniballs
 	return
 
@@ -68,8 +64,10 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 			loc = get_step(src,move_dir)
 
 /obj/singularity/energy_ball/proc/handle_energy()
-	if(energy >= 300)
-		energy -= 300
+	if(energy >= energy_to_raise)
+		energy_to_lower = energy_to_raise - 10
+		energy_to_raise += energy_to_raise
+
 		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 15)
 		spawn(100)
 			var/obj/singularity/energy_ball/EB = new(loc)
@@ -82,6 +80,14 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 			var/orbitsize = (I.Width()+I.Height())*pick(0.5,0.6,0.7)
 			orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
 			EB.orbit(src,orbitsize, pick(FALSE,TRUE), rand(10,25), pick(3,4,5,6,36))
+	else if (energy < energy_to_lower && orbiting_balls.len)
+		energy_to_raise = energy_to_raise * 0.5
+		energy_to_lower = (energy_to_raise * 0.5) - 10
+		var/Orchiectomy_target = pick(orbiting_balls)
+		orbiting_balls.Remove(Orchiectomy_target)
+		qdel(Orchiectomy_target)
+	else	
+		energy -= 5+(2*orbiting_balls.len)
 
 
 
