@@ -11,11 +11,11 @@
 /datum/wires/vending/get_status()
 	var/obj/machinery/vending/V = holder
 	var/list/status = list()
-	status.Add("The orange light is [V.seconds_electrified ? "on" : "off"].")
-	status.Add("The red light is [V.shoot_inventory ? "off" : "blinking"].")
-	status.Add("The green light is [V.extended_inventory ? "on" : "off"].")
-	status.Add("A [V.scan_id ? "purple" : "yellow"] light is on.")
-	status.Add("The speaker light is [V.shut_up ? "off" : "on"].")
+	status += "The orange light is [V.seconds_electrified ? "on" : "off"]."
+	status += "The red light is [V.shoot_inventory ? "off" : "blinking"]."
+	status += "The green light is [V.extended_inventory ? "on" : "off"]."
+	status += "A [V.scan_id ? "purple" : "yellow"] light is on."
+	status += "The speaker light is [V.shut_up ? "off" : "on"]."
 	return status
 
 /datum/wires/vending/on_pulse(wire)

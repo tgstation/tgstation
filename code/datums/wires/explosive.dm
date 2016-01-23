@@ -43,8 +43,8 @@
 /datum/wires/explosive/pizza/get_status()
 	var/obj/item/pizzabox/P = holder
 	var/list/status = list()
-	status.Add("The red light is [P.bomb_active ? "on" : "off"].")
-	status.Add("The green light is [P.bomb_defused ? "on": "off"].")
+	status += "The red light is [P.bomb_active ? "on" : "off"]."
+	status += "The green light is [P.bomb_defused ? "on": "off"]."
 	return status
 
 /datum/wires/explosive/pizza/on_pulse(wire)

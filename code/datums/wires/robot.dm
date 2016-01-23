@@ -18,10 +18,10 @@
 /datum/wires/robot/get_status()
 	var/mob/living/silicon/robot/R = holder
 	var/list/status = list()
-	status.Add("The law sync module is [R.lawupdate ? "on" : "off"].")
-	status.Add("The intelligence link display shows [R.connected_ai ? R.connected_ai.name : "NULL"].")
-	status.Add("The camera light is [!isnull(R.camera) && R.camera.status ? "on" : "off"].")
-	status.Add("The lockdown indicator is [R.lockcharge ? "on" : "off"].")
+	status += "The law sync module is [R.lawupdate ? "on" : "off"]."
+	status += "The intelligence link display shows [R.connected_ai ? R.connected_ai.name : "NULL"]."
+	status += "The camera light is [!isnull(R.camera) && R.camera.status ? "on" : "off"]."
+	status += "The lockdown indicator is [R.lockcharge ? "on" : "off"]."
 	return status
 
 /datum/wires/robot/on_pulse(wire)

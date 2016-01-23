@@ -18,9 +18,9 @@
 /datum/wires/r_n_d/get_status()
 	var/obj/machinery/r_n_d/R = holder
 	var/list/status = list()
-	status.Add("The red light is [R.disabled ? "off" : "on"].")
-	status.Add("The green light is [R.shocked ? "off" : "on"].")
-	status.Add("The blue light is [R.hacked ? "off" : "on"].")
+	status += "The red light is [R.disabled ? "off" : "on"]."
+	status += "The green light is [R.shocked ? "off" : "on"]."
+	status += "The blue light is [R.hacked ? "off" : "on"]."
 	return status
 
 /datum/wires/r_n_d/on_pulse(wire)

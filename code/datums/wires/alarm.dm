@@ -18,9 +18,9 @@
 /datum/wires/alarm/get_status()
 	var/obj/machinery/alarm/A = holder
 	var/list/status = list()
-	status.Add("The interface light is [A.locked ? "red" : "green"].")
-	status.Add("The short indicator is [A.shorted ? "lit" : "off"].")
-	status.Add("The AI connection light is [!A.aidisabled ? "on" : "off"].")
+	status += "The interface light is [A.locked ? "red" : "green"]."
+	status += "The short indicator is [A.shorted ? "lit" : "off"]."
+	status += "The AI connection light is [!A.aidisabled ? "on" : "off"]."
 	return status
 
 /datum/wires/alarm/on_pulse(wire)

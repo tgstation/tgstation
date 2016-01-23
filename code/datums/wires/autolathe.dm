@@ -17,8 +17,8 @@
 /datum/wires/autolathe/get_status()
 	var/obj/machinery/autolathe/A = holder
 	var/list/status = list()
-	status.Add("The red light is [A.disabled ? "off" : "on"].")
-	status.Add("The blue light is [A.hacked ? "off" : "on"].")
+	status += "The red light is [A.disabled ? "off" : "on"]."
+	status += "The blue light is [A.hacked ? "off" : "on"]."
 	return status
 
 /datum/wires/autolathe/on_pulse(wire)
