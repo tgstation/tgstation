@@ -21,27 +21,27 @@
 	var/update_flag = 0
 	var/gas_type = ""
 	var/static/list/label2types = list(
-		"caution" = /obj/machinery/portable_atmospherics/canister,
-		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
 		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
-		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-		"air" = /obj/machinery/portable_atmospherics/canister/air
+		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
+		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+		"air" = /obj/machinery/portable_atmospherics/canister/air,
+		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
 
-/obj/machinery/portable_atmospherics/canister/oxygen
-	name = "o2 canister"
-	desc = "Oxygen. Necessary for human life."
-	icon_state = "blue"
-	canister_color = "blue"
-	gas_type = "o2"
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"
 	desc = "Nitrogen gas. Reportedly useful for something."
 	icon_state = "red"
 	canister_color = "red"
 	gas_type = "n2"
+/obj/machinery/portable_atmospherics/canister/oxygen
+	name = "o2 canister"
+	desc = "Oxygen. Necessary for human life."
+	icon_state = "blue"
+	canister_color = "blue"
+	gas_type = "o2"
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "co2 canister"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
