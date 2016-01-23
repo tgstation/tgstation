@@ -199,7 +199,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/t = ""
 	for(var/id in env_gases)
 		if(id in hardcoded_gases || env_gases[id][MOLES])
-			t+= "[env_gases[id][GAS_NAME]] : [env_gases[id][MOLES]]\n"
+			t+= "[env_gases[id][GAS_META][META_GAS_NAME]] : [env_gases[id][MOLES]]\n"
 
 	usr << t
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
