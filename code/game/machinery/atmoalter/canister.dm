@@ -362,20 +362,6 @@ update_flag
 		air_contents.assert_gas(gas_type)
 		air_contents.gases[gas_type][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-//Dirty way to fill room with gas. However it is a bit easier to do than creating some floor/engine/n2o -rastaf0
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide/roomfiller/New()
-	..()
-
-	air_contents.gases["n2o"][MOLES] = 9*4000
-	spawn(10)
-		var/turf/simulated/location = src.loc
-		if (istype(src.loc))
-			while (!location.air)
-				sleep(10)
-			location.assume_air(air_contents)
-			air_contents = new
-	return 1
-
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
 	air_contents.assert_gases("o2","n2")
 	// PV = nRT
