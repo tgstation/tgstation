@@ -195,8 +195,8 @@ var/pipenetwarnings = 10
 	var/list/datum/pipeline/PL = list()
 	PL += src
 
-	for(var/i in PL)
-		var/datum/pipeline/P = i
+	for(var/i = 1; i <= PL.len; i++) //can't do a for-each here because we may add to the list within the loop
+		var/datum/pipeline/P = PL[i]
 		GL += P.air
 		GL += P.other_airs
 		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)

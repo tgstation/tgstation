@@ -6,7 +6,7 @@
 <ui-display title='Dispense' button>
   {{#partial button}}
     {{#each data.beakerTransferAmounts}}
-      <ui-button icon='plus' state='{{data.amount == . ? "selected" : null}}' action='amount' params='{"amount": {{.}}}'>{{.}}</ui-button>
+      <ui-button icon='plus' state='{{data.amount == . ? "selected" : null}}' action='amount' params='{"target": {{.}}}'>{{.}}</ui-button>
     {{/each}}
   {{/partial}}
   <ui-section>

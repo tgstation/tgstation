@@ -27,12 +27,12 @@
 	containername = "carbon dioxide canister crate"
 
 
-/obj/machinery/hydroponics/unattached
+/obj/machinery/hydroponics/constructable/unattached
 	anchored = 0
 
 /datum/supply_packs/organic/hydroponics/hydro_tray
-	name = "Hydroponics Tray"
-	contains = list(/obj/machinery/hydroponics/unattached)
+	name = "Hydroponics Tray Kit"
+	contains = list(/obj/machinery/hydroponics/constructable/unattached)
 	cost = 10
 	containertype = /obj/structure/largecrate
-	containername = "hydroponics tray crate"
+	containername = "hydroponics kit"

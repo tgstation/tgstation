@@ -24,20 +24,25 @@ window.initialize = (dataString) => {
   window.tgui = new TGUI({
     el: '#container',
     data () {
-      const base = {
-        constants: require('util/constants')
+      const initial = JSON.parse(dataString)
+      return {
+        constants: require('util/constants'),
+        config: initial.config,
+        data: initial.data,
+        adata: initial.data
       }
-      const server = JSON.parse(dataString)
-      return Object.assign(base, server)
     }
   })
+  window.initialize = function () {}
+}
+
+const holder = document.getElementById('data')
+const data = holder.textContent
+const ref = holder.getAttribute('data-ref')
+if (data !== '{}') { // If the JSON was inlined, load it.
+  window.initialize(data)
+  holder.remove()
 }
 
 import { act } from 'util/byond'
-const holder = document.getElementById('data')
-if (holder.textContent !== '{}') { // If the JSON was inlined, load it.
-  window.initialize(holder.textContent)
-} else {
-  act(holder.getAttribute('data-ref'), 'tgui:initialize')
-  holder.remove()
-}
+act(ref, 'tgui:initialize')

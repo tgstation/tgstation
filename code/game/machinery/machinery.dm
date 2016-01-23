@@ -212,9 +212,8 @@ Class Procs:
 /obj/machinery/ui_act(action, params)
 	..()
 	if(!can_be_used_by(usr))
-		return 1
+		return TRUE
 	add_fingerprint(usr)
-	return 0
 
 /obj/machinery/proc/can_be_used_by(mob/user)
 	if(!interact_offline && stat & (NOPOWER|BROKEN))
@@ -251,7 +250,7 @@ Class Procs:
 	if(!user.IsAdvancedToolUser() && !IsAdminGhost(user))
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
-	if (ishuman(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
 			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
@@ -268,10 +267,10 @@ Class Procs:
 	if(!interact_offline && (stat & (BROKEN|MAINT)))
 		user << "<span class='danger'>\The [src] seems broken.</span>"
 		return 1
-	add_fingerprint(user)
 	if(set_machine)
 		user.set_machine(src)
 	interact(user)
+	add_fingerprint(user)
 	return 0
 
 /obj/machinery/interact(mob/user)
@@ -384,7 +383,7 @@ Class Procs:
 		user << "<span class='notice'>\icon[C] [C.name]</span>"
 
 /obj/machinery/examine(mob/user)
-	..(user)
+	..()
 	if(user.research_scanner && component_parts)
 		display_parts(user)
 
@@ -410,3 +409,6 @@ Class Procs:
 // Hook for html_interface module to unset the active machine when the window is closed by the player.
 /obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)
 	if (hclient.client.mob && hclient.client.mob.machine == src) hclient.client.mob.unset_machine()
+
+/obj/machinery/proc/can_be_overridden()
+	. = 1

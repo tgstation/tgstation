@@ -179,6 +179,9 @@
 	else
 		return ..()
 
+/obj/structure/closet/crate/secure/loot/attack_animal()
+	qdel(src)
+
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
 		if (istype(W, /obj/item/weapon/card/emag))

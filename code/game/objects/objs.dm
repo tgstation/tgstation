@@ -98,8 +98,6 @@
 	if(ui_interact(user) != -1)
 		return
 	..()
-/obj/proc/interact(mob/user)
-	return
 
 /obj/proc/container_resist()
 	return

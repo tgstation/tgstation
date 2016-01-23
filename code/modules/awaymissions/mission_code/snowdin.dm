@@ -135,7 +135,6 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	name = "dungeon mid"
 	loot = list(/obj/item/weapon/defibrillator/compact = 6,
 				/obj/item/weapon/storage/firstaid/tactical = 35,
-				/obj/item/weapon/teleportation_scroll/apprentice = 4,
 				/obj/item/weapon/shield/energy = 6,
 				/obj/item/weapon/shield/riot/tele = 12,
 				/obj/item/weapon/dnainjector/lasereyesmut = 7,
@@ -171,7 +170,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/weapon/dice/d20/fate = 4,
 				/obj/item/weapon/gun/magic/wand/resurrection/inert = 15,
 				/obj/item/weapon/gun/magic/wand/resurrection = 10,
-				/obj/item/device/uplink/old = 2,
+				/obj/item/device/radio/uplink/old = 2,
 				/obj/item/weapon/spellbook/oneuse/charge = 12,
 				/obj/item/weapon/grenade/clusterbuster/spawner_manhacks = 15,
 				/obj/item/weapon/spellbook/oneuse/fireball = 10,
@@ -213,12 +212,14 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	desc = "This wand uses healing magics to heal and revive. The years of the cold have weakened the magic inside the wand."
 	max_charges = 5
 
-/obj/item/device/uplink/old //!!!
+/obj/item/device/radio/uplink/old
 	name = "dusty radio"
 	desc = "A dusty looking radio."
-	uses = 10
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "walkietalkie"
+
+/obj/item/device/radio/uplink/old/New()
+	..()
+	hidden_uplink.name = "dusty radio"
+	hidden_uplink.telecrystals = 10
 
 /obj/effect/landmark/corpse/syndicatesoldier/coldres
 	name = "Syndicate Snow Operative"

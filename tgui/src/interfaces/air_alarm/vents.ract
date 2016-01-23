@@ -20,10 +20,10 @@
           action='excheck' params='{"id_tag": "{{id_tag}}", "val": {{checks}}}'>External</ui-button>
       </ui-section>
       <ui-section label='Target Pressure'>
-        <ui-button icon='pencil' action='external_pressure'
-          params='{"id_tag": "{{id_tag}}", "pressure": "custom"}'>{{Math.fixed(external)}}</ui-button>
-        <ui-button icon='refresh' state='{{extdefault ? "disabled" : null}}' action='external_pressure'
-          params='{"id_tag": "{{id_tag}}", "pressure": "reset"}'>Reset</ui-button>
+        <ui-button icon='pencil' action='set_external_pressure'
+          params='{"id_tag": "{{id_tag}}"}'>{{Math.fixed(external)}}</ui-button>
+        <ui-button icon='refresh' state='{{extdefault ? "disabled" : null}}' action='reset_external_pressure'
+          params='{"id_tag": "{{id_tag}}"}'>Reset</ui-button>
       </ui-section>
     </ui-subdisplay>
   {{else}}

@@ -23,7 +23,6 @@
 	active_power_usage = 100
 	var/busy = 0
 	var/prod_coeff
-	var/datum/wires/autolathe/wires = null
 
 	var/datum/design/being_built
 	var/datum/research/files
@@ -56,7 +55,7 @@
 	materials = new /datum/material_container(src, list(MAT_METAL=1, MAT_GLASS=1))
 	RefreshParts()
 
-	wires = new(src)
+	wires = new /datum/wires/autolathe(src)
 	files = new /datum/research/autolathe(src)
 	matching_designs = list()
 
@@ -76,17 +75,13 @@
 
 	var/dat
 
-	if(panel_open)
-		dat = wires.GetInteractWindow()
-
-	else
-		switch(screen)
-			if(AUTOLATHE_MAIN_MENU)
-				dat = main_win(user)
-			if(AUTOLATHE_CATEGORY_MENU)
-				dat = category_win(user,selected_category)
-			if(AUTOLATHE_SEARCH_MENU)
-				dat = search_win(user)
+	switch(screen)
+		if(AUTOLATHE_MAIN_MENU)
+			dat = main_win(user)
+		if(AUTOLATHE_CATEGORY_MENU)
+			dat = category_win(user,selected_category)
+		if(AUTOLATHE_SEARCH_MENU)
+			dat = search_win(user)
 
 	var/datum/browser/popup = new(user, "autolathe", name, 400, 500)
 	popup.set_content(dat)
@@ -149,6 +144,8 @@
 	return attack_hand(user)
 
 /obj/machinery/autolathe/attack_hand(mob/user)
+	if(panel_open && !isAI(user))
+		return wires.interact(user)
 	if(..(user, 0))
 		return
 	interact(user)
