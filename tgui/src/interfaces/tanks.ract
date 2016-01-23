@@ -12,7 +12,7 @@ component.exports = {
 </script>
 
 <ui-notice>
-  <span>The regulator {{data.hasHoldingTank ? "is" : "is not"}} connected to a mask.</span>
+  <span>The regulator {{data.maskConnected ? "is" : "is not"}} connected to a mask.</span>
 </ui-notice>
 <ui-display>
   <ui-section label='Tank Pressure'>

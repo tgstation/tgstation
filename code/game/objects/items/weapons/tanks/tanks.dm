@@ -120,22 +120,23 @@
 	data["defaultReleasePressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
 	data["minReleasePressure"] = round(TANK_MIN_RELEASE_PRESSURE)
 	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
-	data["valveOpen"] = FALSE
-	data["maskConnected"] = FALSE
 
-	var/mob/living/carbon/user = loc
-	var/mask = FALSE
-	if(!istype(user))
+	var/mob/living/carbon/user = null
+	if(istype(loc, /mob/living/carbon))
+		user = loc
+	else if(istype(loc.loc, /mob/living/carbon))
 		user = loc.loc
-	if(!istype(user))
-		user = null
-	if(!isnull(user) && user.internal == src)
-		mask = TRUE
+
+	if(user && user.internal == src)
 		data["valveOpen"] = TRUE
-	else if(src in user && !user.internal)
-		mask = TRUE
-	if(mask && user.wear_mask && (user.wear_mask.flags & MASKINTERNALS))
-		data["maskConnected"] = TRUE
+	else
+		data["valveOpen"] = FALSE
+
+	if(user.wear_mask && (user.wear_mask.flags & MASKINTERNALS))
+		if(data["valveOpen"] || ((src in user) && !user.internal))
+			data["maskConnected"] = TRUE
+		else
+			data["maskConnected"] = FALSE
 	return data
 
 /obj/item/weapon/tank/ui_act(action, params)
@@ -172,7 +173,7 @@
 				if(user.wear_mask && (user.wear_mask.flags & MASKINTERNALS))
 					user.internal = src
 					user.internals.icon_state = "internal1"
-					usr << "<span class='notice'>You open [src] valve.</span>"
+					usr << "<span class='notice'>You open \the [src] valve.</span>"
 					. = TRUE
 				else
 					usr << "<span class='warning'>You need something to connect to [src]!</span>"
