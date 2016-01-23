@@ -5,7 +5,7 @@ var/list/directory = list()							//list of all ckeys with associated client
 //Since it didn't really belong in any other category, I'm putting this here
 //This is for procs to replace all the goddamn 'in world's that are chilling around the code
 
-var/global/list/mixed_modes = list()							//Set when admins wish to force specific modes to be mixed
+var/list/mixed_modes = list()							//Set when admins wish to force specific modes to be mixed
 
 var/global/list/player_list = list()				//List of all mobs **with clients attached**. Excludes /mob/new_player
 var/global/list/mob_list = list()					//List of all mobs, including clientless
