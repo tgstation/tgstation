@@ -304,13 +304,8 @@
 		emagged  = 1
 		user << "<span class='notice'>You short out the product lock on [src].</span>"
 
-/obj/machinery/vending/attack_paw(mob/user)
-	return attack_hand(user)
-
-
 /obj/machinery/vending/attack_ai(mob/user)
 	return attack_hand(user)
-
 
 /obj/machinery/vending/attack_hand(mob/user)
 	var/dat = ""
@@ -375,7 +370,6 @@
 /obj/machinery/vending/Topic(href, href_list)
 	if(..())
 		return
-
 
 	if(istype(usr,/mob/living/silicon))
 		if(istype(usr,/mob/living/silicon/robot))

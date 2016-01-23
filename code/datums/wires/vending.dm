@@ -1,6 +1,14 @@
 /datum/wires/vending
 	holder_type = /obj/machinery/vending
 
+/datum/wires/vending/New(atom/holder)
+	wires = list(
+		WIRE_THROW, WIRE_ELECTRIFY, WIRE_SPEAKER,
+		WIRE_CONTRABAND, WIRE_IDSCAN
+	)
+	add_duds(1)
+	..()
+
 /datum/wires/vending/interactable(mob/user)
 	var/obj/machinery/vending/V = holder
 	if(!istype(user, /mob/living/silicon) && V.seconds_electrified && V.shock(user, 100))
