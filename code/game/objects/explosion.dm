@@ -56,6 +56,7 @@ var/global/explosion_shake_message_cooldown = 0
 //3/7/14 will calculate to 80 + 35
 		var/far_dist = (devastation_range * 20) + (heavy_impact_range * 5)
 		var/frequency = get_rand_frequency()
+		var/skip_shake = 0 //Will not display shaking-related messages
 
 		for (var/mob/M in player_list)
 			//Double check for client
@@ -82,8 +83,9 @@ var/global/explosion_shake_message_cooldown = 0
 							shake_camera(M, 3, 1)
 						else
 							M.playsound_local(epicenter, 'sound/effects/explosionsmallfar.ogg', far_volume, 1, frequency, falloff = 5)
+							skip_shake = 1
 
-					if(!explosion_shake_message_cooldown)
+					if(!explosion_shake_message_cooldown && !skip_shake)
 						to_chat(M, "<span class='danger'>You feel the station's structure shaking all around you.</span>")
 						explosion_shake_message_cooldown = 1
 						spawn(50)
