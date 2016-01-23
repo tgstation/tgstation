@@ -88,7 +88,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		orbiting_balls.Remove(Orchiectomy_target)
 		qdel(Orchiectomy_target)
 	else	
-		energy -= 5*orbiting_balls.len
+		energy -= 5+(2*orbiting_balls.len)
 
 
 
