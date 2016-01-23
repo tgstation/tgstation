@@ -1,16 +1,3 @@
-<script>
-component.exports = {
-  computed: {
-    heater () {
-      if (this.get('data.max')) return true
-    },
-    freezer () {
-      if (this.get('data.min')) return true
-    }
-  }
-}
-</script>
-
 <ui-display title='Status'>
     <ui-section label='Temperature'>
         <span>{{Math.fixed(adata.temperature, 2)}} K</span>
@@ -25,14 +12,14 @@ component.exports = {
             action='power'>{{data.on ? "On": "Off"}}</ui-button>
     </ui-section>
     <ui-section label='Target Temperature'>
-        <ui-button icon='fast-backward' style='{{data.target == (freezer ? data.min : data.initial) ? "disabled" : null}}'
+        <ui-button icon='fast-backward' style='{{data.target == data.min ? "disabled" : null}}'
             action='target' params='{"adjust": -20}'/>
-        <ui-button icon='backward' style='{{data.target == (freezer ? data.min : data.initial) ? "disabled" : null}}'
+        <ui-button icon='backward' style='{{data.target == data.min ? "disabled" : null}}'
             action='target' params='{"adjust": -5}'/>
-        <span>{{Math.fixed(adata.target, 2)}}</span>
-        <ui-button icon='forward' style='{{data.target == (heater ? data.max : data.initial) ? "disabled" : null}}'
+        <ui-button icon='pencil' action='target' params='{"target": "input"}'>{{Math.fixed(adata.target, 2)}}</ui-button>
+        <ui-button icon='forward' style='{{data.target == data.max ? "disabled" : null}}'
             action='target' params='{"adjust": 5}'/>
-        <ui-button icon='fast-forward' style='{{data.target == (heater ? data.max : data.initial) ? "disabled" : null}}'
+        <ui-button icon='fast-forward' style='{{data.target == data.max ? "disabled" : null}}'
             action='target' params='{"adjust": 20}'/>
     </ui-section>
 </ui-display>

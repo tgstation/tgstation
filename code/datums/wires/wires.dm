@@ -326,9 +326,8 @@ var/list/wire_color_directory = list()
 	return data
 
 /datum/wires/ui_act(action, params)
-	if(!interactable(usr))
+	if(..() || !interactable(usr))
 		return
-
 	var/target_wire = params["wire"]
 	var/mob/living/L = usr
 	var/obj/item/I = L.get_active_hand()
@@ -336,11 +335,13 @@ var/list/wire_color_directory = list()
 		if("cut")
 			if(istype(I, /obj/item/weapon/wirecutters) || IsAdminGhost(usr))
 				cut_color(target_wire)
+				. = TRUE
 			else
 				L << "<span class='warning'>You need wirecutters!</span>"
 		if("pulse")
 			if(istype(I, /obj/item/device/multitool) || IsAdminGhost(usr))
 				pulse_color(target_wire)
+				. = TRUE
 			else
 				L << "<span class='warning'>You need a multitool!</span>"
 		if("attach")
@@ -348,6 +349,7 @@ var/list/wire_color_directory = list()
 				var/obj/item/O = detach_assembly(target_wire)
 				if(O)
 					L.put_in_hands(O)
+					. = TRUE
 			else
 				if(istype(I, /obj/item/device/assembly))
 					var/obj/item/device/assembly/A = I
@@ -355,6 +357,6 @@ var/list/wire_color_directory = list()
 						if(!L.drop_item())
 							return
 						attach_assembly(target_wire, A)
+						. = TRUE
 					else
 						L << "<span class='warning'>You need an attachable assembly!</span>"
-	return 1

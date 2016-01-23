@@ -6,10 +6,10 @@
     <span>{{Math.round(adata.angle)}}&deg; ({{data.direction}})</span>
   </ui-section>
   <ui-section label='Adjust Angle'>
-    <ui-button icon='step-backward' action='control' params='{"cdir": -15}'>15&deg;</ui-button>
-    <ui-button icon='backward' action='control' params='{"cdir": -5}'>5&deg;</ui-button>
-    <ui-button icon='forward' action='control' params='{"cdir": 5}'>5&deg;</ui-button>
-    <ui-button icon='step-forward' action='control' params='{"cdir": 15}'>15&deg;</ui-button>
+    <ui-button icon='step-backward' action='angle' params='{"adjust": -15}'>15&deg;</ui-button>
+    <ui-button icon='backward' action='angle' params='{"adjust": -5}'>5&deg;</ui-button>
+    <ui-button icon='forward' action='angle' params='{"adjust": 5}'>5&deg;</ui-button>
+    <ui-button icon='step-forward' action='angle' params='{"adjust": 15}'>15&deg;</ui-button>
 	</ui-section>
 </ui-display>
 <ui-display title='Tracking'>
@@ -25,12 +25,12 @@
 		<span>{{Math.round(adata.tracking_rate)}}&deg;/h ({{data.rotating_way}})</span>
 	</ui-section>
   <ui-section label='Adjust Rate'>
-    <ui-button icon='fast-backward' action='control' params='{"tdir": -180}'>180&deg;</ui-button>
-    <ui-button icon='step-backward' action='control' params='{"tdir": -30}'>30&deg;</ui-button>
-    <ui-button icon='backward' action='control' params='{"tdir": -5}'>5&deg;</ui-button>
-    <ui-button icon='forward' action='control' params='{"tdir": 5}'>5&deg;</ui-button>
-    <ui-button icon='step-forward' action='control' params='{"tdir": 30}'>30&deg;</ui-button>
-    <ui-button icon='fast-forward' action='control' params='{"tdir": 180}'>180&deg;</ui-button>
+    <ui-button icon='fast-backward' action='rate' params='{"adjust": -180}'>180&deg;</ui-button>
+    <ui-button icon='step-backward' action='rate' params='{"adjust": -30}'>30&deg;</ui-button>
+    <ui-button icon='backward' action='rate' params='{"adjust": -5}'>5&deg;</ui-button>
+    <ui-button icon='forward' action='rate' params='{"adjust": 5}'>5&deg;</ui-button>
+    <ui-button icon='step-forward' action='rate' params='{"adjust": 30}'>30&deg;</ui-button>
+    <ui-button icon='fast-forward' action='rate' params='{"adjust": 180}'>180&deg;</ui-button>
 	</ui-section>
 </ui-display>
 <ui-display title="Devices" button>

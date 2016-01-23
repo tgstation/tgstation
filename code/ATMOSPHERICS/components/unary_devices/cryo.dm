@@ -230,23 +230,25 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_act(action, params)
 	if(..())
 		return
-
 	switch(action)
 		if("power")
 			if(on)
 				on = FALSE
 			else if(!state_open)
 				on = TRUE
+			. = TRUE
 		if("door")
 			if(state_open)
 				close_machine()
 			else
 				open_machine()
+			. = TRUE
 		if("autoeject")
 			autoeject = !autoeject
+			. = TRUE
 		if("ejectbeaker")
 			if(beaker)
 				beaker.loc = loc
 				beaker = null
+				. = TRUE
 	update_icon()
-	return 1

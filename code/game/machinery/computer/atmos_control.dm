@@ -130,7 +130,6 @@
 /obj/machinery/computer/atmos_control/ui_act(action, params)
 	if(..())
 		return
-
 	switch(action)
 		if("initialize")
 			if(name != initial(name))
@@ -157,8 +156,7 @@
 						"n2o_sensor" = "Nitrous Oxide Tank",
 						"mix_sensor" = "Mix Tank"
 					)
-	return 1
-
+			. = TRUE
 
 /////////////////////////////////////////////////////////////
 // LARGE TANK CONTROL
@@ -218,11 +216,12 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_control/tank", name, 400, 425, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_control", name, 400, 425, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/atmos_control/tank/get_ui_data(mob/user)
 	var/list/data = ..()
+	data["tank"] = TRUE
 	data["inputting"] = input_info ? input_info["power"] : FALSE
 	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
 	data["outputting"] = output_info ? output_info["power"] : FALSE
@@ -231,29 +230,32 @@
 	return data
 
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
-	if(!radio_connection)
+	if(..() || !radio_connection)
 		return
-
 	var/datum/signal/signal = new
 	signal.transmission_method = 1
 	signal.source = src
 	signal.data = list("sigtype" = "command")
-
 	switch(action)
 		if("reconnect")
 			reconnect(usr)
+			. = TRUE
 		if("input")
 			signal.data += list("tag" = input_tag, "power_toggle" = TRUE)
+			. = TRUE
 		if("output")
 			signal.data += list("tag" = output_tag, "power_toggle" = TRUE)
-		if("output_pressure")
-			var/custom = input(usr, "Adjust output pressure:", name) as null|num
-			if(isnum(custom))
-				var/pressure = Clamp(custom, 0, 50 * ONE_ATMOSPHERE)
-				signal.data += list("tag" = output_tag, "set_internal_pressure" = "[pressure]")
-
+			. = TRUE
+		if("pressure")
+			var/pressure = text2num(params["pressure"])
+			if(pressure != null)
+				pressure = Clamp(pressure, 0, 50 * ONE_ATMOSPHERE)
+				signal.data += list("tag" = output_tag, "set_internal_pressure" = pressure)
+				. = TRUE
+			else
+				pressure = input("New output pressure:", name, input_info["internal"]) as num|null
+				. = .(action, params + list("pressure" = pressure))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
-	return 1
 
 /obj/machinery/computer/atmos_control/tank/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return

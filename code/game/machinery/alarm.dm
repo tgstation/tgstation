@@ -308,7 +308,7 @@
 				if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
 					continue
 				selected = TLV[gas_id]
-				thresholds += list(list("name" = meta_gas_info[gas_id][2], "settings" = list()))
+				thresholds += list(list("name" = meta_gas_info[gas_id][META_GAS_NAME], "settings" = list()))
 				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min2", "selected" = selected.min2))
 				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min1", "selected" = selected.min1))
 				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max1", "selected" = selected.max1))
@@ -317,71 +317,68 @@
 			data["thresholds"] = thresholds
 
 /obj/machinery/alarm/ui_act(action, params)
-	if(buildstage != 2)
+	if(..() || buildstage != 2)
 		return
-
-	if(locked && !usr.has_unlimited_silicon_privilege)
+	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
 		return
-
-	if(usr.has_unlimited_silicon_privilege && aidisabled)
-		return
-
 	var/device_id = params["id_tag"]
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
-		if(
-			"power",
-			"co2_scrub",
-			"tox_scrub",
-			"n2o_scrub",
-			"widenet",
-			"scrubbing"
-		)
+				. = TRUE
+		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "widenet", "scrubbing")
 			send_signal(device_id, list("[action]" = text2num(params["val"])))
+			. = TRUE
 		if("excheck")
 			send_signal(device_id, list("checks" = text2num(params["val"])^1))
+			. = TRUE
 		if("incheck")
 			send_signal(device_id, list("checks" = text2num(params["val"])^2))
+			. = TRUE
 		if("set_external_pressure")
-			var/input_pressure = input("Enter target pressure:", "Pressure Controls") as num|null
-			if(isnum(input_pressure))
-				send_signal(device_id, list("set_external_pressure" = input_pressure))
+			var/value = text2num(params["value"])
+			if(value != null)
+				send_signal(device_id, list("set_external_pressure" = value))
+				. = TRUE
+			else
+				value = input("New target pressure:", name, alarm_area.air_vent_info[device_id]["external"]) as num|null
+				. = .(action, params + list("value" = value))
 		if("reset_external_pressure")
 			send_signal(device_id, list("reset_external_pressure"))
+			. = TRUE
 		if("threshold")
 			var/env = params["env"]
-			var/varname = params["var"]
+			var/name = params["var"]
+			var/value = text2num(params["value"])
 			var/datum/tlv/tlv = TLV[env]
-			var/newval = input("Enter [varname] for [env]:", "Alarm Triggers", tlv.vars[varname]) as num|null
-			if (isnull(newval))
+			if(isnull(tlv))
 				return
-			if (newval<0)
-				tlv.vars[varname] = -1
-			else if (env=="temperature" && newval>5000)
-				tlv.vars[varname] = 5000
-			else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
-				tlv.vars[varname] = 50*ONE_ATMOSPHERE
-			else if (env!="temperature" && env!="pressure" && newval>200)
-				tlv.vars[varname] = 200
+			if(value != null)
+				if(value < 0)
+					tlv.vars[name] = -1
+				else
+					tlv.vars[name] = round(value, 0.01)
+				. = TRUE
 			else
-				newval = round(newval,0.01)
-				tlv.vars[varname] = newval
+				value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
+				. = .(action, params + list("value" = value))
 		if("screen")
 			screen = text2num(params["screen"])
+			. = TRUE
 		if("mode")
 			mode = text2num(params["mode"])
 			apply_mode()
+			. = TRUE
 		if("alarm")
 			if(alarm_area.atmosalert(2, src))
 				post_alert(2)
-			update_icon()
+			. = TRUE
 		if("reset")
 			if(alarm_area.atmosalert(0, src))
 				post_alert(0)
-			update_icon()
-	return 1
+			. = TRUE
+	update_icon()
 
 /obj/machinery/alarm/proc/shock(mob/user, prb)
 	if((stat & (NOPOWER)))		// unpowered, no shock

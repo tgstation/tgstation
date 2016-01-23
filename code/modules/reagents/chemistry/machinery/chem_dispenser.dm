@@ -120,29 +120,35 @@
 	return data
 
 /obj/machinery/chem_dispenser/ui_act(action, params)
+	if(..())
+		return
 	switch(action)
 		if("amount")
-			var/amount = text2num(params["amount"])
-			if(amount in beaker.possible_transfer_amounts)
-				src.amount = amount
+			var/target = text2num(params["target"])
+			if(target in beaker.possible_transfer_amounts)
+				amount = target
+				. = TRUE
 		if("dispense")
-			if(beaker && dispensable_reagents.Find(params["reagent"]))
+			var/reagent = params["reagent"]
+			if(beaker && dispensable_reagents.Find(reagent))
 				var/datum/reagents/R = beaker.reagents
-				var/space = R.maximum_volume - R.total_volume
+				var/free = R.maximum_volume - R.total_volume
+				var/actual = min(amount, energy * 10, free)
 
-				R.add_reagent(params["reagent"], min(amount, energy * 10, space))
-				energy = max(energy - min(amount, energy * 10, space) / 10, 0)
+				R.add_reagent(reagent, actual)
+				energy = max(energy - actual / 10, 0)
+				. = TRUE
 		if("remove")
-			if(beaker)
-				var/amount = text2num(params["amount"])
-				if(isnum(amount) && (amount > 0) && (amount in beaker.possible_transfer_amounts))
-					beaker.reagents.remove_all(amount)
+			var/amount = text2num(params["amount"])
+			if(beaker && amount in beaker.possible_transfer_amounts)
+				beaker.reagents.remove_all(amount)
+				. = TRUE
 		if("eject")
 			if(beaker)
 				beaker.loc = loc
 				beaker = null
 				overlays.Cut()
-	return 1
+				. = TRUE
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))

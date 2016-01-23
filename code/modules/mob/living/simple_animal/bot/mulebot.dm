@@ -190,13 +190,13 @@ var/global/mulebot_count = 0
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
-	if(locked && !usr.has_unlimited_silicon_privilege)
+	if(..() || (locked && !usr.has_unlimited_silicon_privilege))
 		return
-
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
 				locked = !locked
+				. = TRUE
 		if("power")
 			if(on)
 				turn_off()
@@ -204,12 +204,13 @@ var/global/mulebot_count = 0
 				if(!turn_on())
 					usr << "<span class='warning'>You can't switch on [src]!</span>"
 					return
+			. = TRUE
 		else
-			bot_control(action, usr)
-	return 1
+			bot_control(action, usr) // Kill this later.
+			. = TRUE
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, pda = 0)
-	if(pda && wires.is_cut(WIRE_RX)) //MULE wireless is controlled by wires.
+	if(pda && wires.is_cut(WIRE_RX)) // MULE wireless is controlled by wires.
 		return
 
 	switch(command)

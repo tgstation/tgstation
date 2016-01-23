@@ -51,8 +51,8 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	..()
-	if(!on)
-		return 0
+	if(!on || !NODE1)
+		return
 	var/datum/gas_mixture/air_contents = AIR1
 
 	var/air_heat_capacity = air_contents.heat_capacity()
@@ -100,7 +100,7 @@
 	data["min"] = min_temperature
 	data["max"] = max_temperature
 	data["target"] = target_temperature
-	data["initial"] = T20C
+	data["initial"] = initial(target_temperature)
 
 	var/datum/gas_mixture/air1 = AIR1
 	data["temperature"] = air1.temperature
@@ -114,15 +114,24 @@
 		if("power")
 			on = !on
 			use_power = 1 + on
-			update_icon()
-			return 1
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			. = TRUE
 		if("target")
-			target_temperature += text2num(params["adjust"])
-			if(min_temperature)
-				target_temperature = Clamp(target_temperature, min_temperature, T20C)
-			else if(max_temperature)
-				target_temperature = Clamp(target_temperature, T20C, max_temperature)
-			return 1
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "input")
+				target = input("Set new target ([min_temperature]-[max_temperature] K):", name, target_temperature) as num|null
+				. = .(action, list("target" = target))
+			else if(text2num(target) != null)
+				target_temperature = text2num(target)
+				. = TRUE
+			else if(adjust)
+				target_temperature += adjust
+				. = TRUE
+			if(.)
+				target_temperature = Clamp(target_temperature, min_temperature, max_temperature)
+				investigate_log("was set to [target_temperature] K by [key_name(usr)]", "atmos")
+	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 	name = "freezer"
@@ -130,6 +139,8 @@
 	icon_state = "freezer"
 	icon_state_on = "freezer_1"
 	icon_state_open = "freezer-o"
+	max_temperature = T20C
+	min_temperature = 170
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/New()
 	..()
@@ -140,7 +151,7 @@
 	var/L
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
-	min_temperature = max(T0C - (170 + L * 15), TCMB)
+	min_temperature = max(T0C - (initial(min_temperature) + L * 15), TCMB)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
 	name = "heater"
@@ -148,6 +159,8 @@
 	icon_state = "heater"
 	icon_state_on = "heater_1"
 	icon_state_open = "heater-o"
+	max_temperature = 140
+	min_temperature = T20C
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/New()
 	..()
@@ -158,4 +171,4 @@
 	var/L
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
-	max_temperature = T20C + (140 * L)
+	max_temperature = T20C + (initial(max_temperature) * L)

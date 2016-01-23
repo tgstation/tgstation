@@ -76,9 +76,9 @@
 	settableTemperatureRange = cap * 30
 	efficiency = (cap + 1) * 10000
 
-	var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
-	var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-	targetTemperature = dd_range(minTemp, maxTemp, targetTemperature)
+	targetTemperature = Clamp(targetTemperature,
+		max(settableTemperatureMedian - settableTemperatureRange, TCMB),
+		settableTemperatureMedian + settableTemperatureRange)
 
 /obj/machinery/space_heater/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -87,32 +87,6 @@
 	if(cell)
 		cell.emp_act(severity)
 	..(severity)
-
-/obj/machinery/space_heater/get_ui_data()
-	var/list/data = list()
-	data["open"] = panel_open
-	data["on"] = on
-	data["mode"] = setMode
-	data["hasPowercell"] = !!cell
-	if(cell)
-		data["powerLevel"] = round(cell.percent(), 1)
-	data["targetTemp"] = round(targetTemperature - T0C, 1)
-	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB)
-	data["maxTemp"] = settableTemperatureMedian + settableTemperatureRange - T0C
-
-	var/turf/simulated/L = get_turf(loc)
-	var/curTemp
-	if(istype(L))
-		var/datum/gas_mixture/env = L.return_air()
-		curTemp = env.temperature
-	else if(isturf(L))
-		curTemp = L.temperature
-
-	if(isnull(curTemp))
-		data["currentTemp"] = "N/A"
-	else
-		data["currentTemp"] = round(curTemp - T0C, 1)
-	return data
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -154,34 +128,67 @@
 		ui = new(user, src, ui_key, "space_heater", name, 400, 305, master_ui, state)
 		ui.open()
 
+/obj/machinery/space_heater/get_ui_data()
+	var/list/data = list()
+	data["open"] = panel_open
+	data["on"] = on
+	data["mode"] = setMode
+	data["hasPowercell"] = !!cell
+	if(cell)
+		data["powerLevel"] = round(cell.percent(), 1)
+	data["targetTemp"] = round(targetTemperature - T0C, 1)
+	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB)
+	data["maxTemp"] = settableTemperatureMedian + settableTemperatureRange - T0C
+
+	var/turf/simulated/L = get_turf(loc)
+	var/curTemp
+	if(istype(L))
+		var/datum/gas_mixture/env = L.return_air()
+		curTemp = env.temperature
+	else if(isturf(L))
+		curTemp = L.temperature
+	if(isnull(curTemp))
+		data["currentTemp"] = "N/A"
+	else
+		data["currentTemp"] = round(curTemp - T0C, 1)
+	return data
+
 /obj/machinery/space_heater/ui_act(action, params)
+	if(..())
+		return
 	switch(action)
 		if("power")
 			on = !on
 			mode = HEATER_MODE_STANDBY
 			usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
 			update_icon()
+			. = TRUE
 		if("mode")
 			setMode = params["mode"]
+			. = TRUE
 		if("target")
-			if(panel_open)
-				var/value
-				if(params["target"] == "custom")
-					value = input("Please input the target temperature", name) as num|null
-					if(isnull(value))
-						return
-					value += T0C
-				else
-					value = targetTemperature + text2num(params["target"])
-
-				var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
-				var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-				targetTemperature = dd_range(minTemp, maxTemp, round(value, 1))
+			if(!panel_open)
+				return
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "input")
+				target = input("New target temperature", name, round(targetTemperature - T0C, 1)) as num|null
+				. = .(action, list("target" = target))
+			else if(text2num(target) != null)
+				targetTemperature = text2num(target) + T0C
+				. = TRUE
+			else if(adjust)
+				targetTemperature += adjust
+				. = TRUE
+			if(.)
+				targetTemperature = Clamp(round(targetTemperature, 1),
+					max(settableTemperatureMedian - settableTemperatureRange, TCMB),
+					settableTemperatureMedian + settableTemperatureRange)
 		if("eject")
-			if(cell)
+			if(panel_open && cell)
 				cell.loc = get_turf(src)
 				cell = null
-	return 1
+				. = TRUE
 
 /obj/machinery/space_heater/process()
 	if(!on || (stat & BROKEN))

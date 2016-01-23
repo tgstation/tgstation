@@ -710,7 +710,7 @@
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(IsAdminGhost(user))
-		return 1
+		return TRUE
 	if(user.has_unlimited_silicon_privilege)
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
@@ -723,20 +723,13 @@
 			)                                                            \
 		)
 			if(!loud)
-				user << "<span class='danger'>\The [src] have AI control disabled!</span>"
-			return 0
-	else
-		if ((!in_range(src, user) || !istype(src.loc, /turf)))
-			return 0
-	return 1
+				user << "<span class='danger'>\The [src] has AI control disabled!</span>"
+			return FALSE
+	return TRUE
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(!can_use(usr, 1))
+	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege))
 		return
-
-	if(locked && !usr.has_unlimited_silicon_privilege)
-		return
-
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
@@ -745,70 +738,82 @@
 				else
 					locked = !locked
 					update_icon()
+					. = TRUE
 		if("cover")
 			coverlocked = !coverlocked
+			. = TRUE
 		if("breaker")
 			toggle_breaker()
+			. = TRUE
 		if("charge")
 			chargemode = !chargemode
 			if(!chargemode)
 				charging = 0
 				update_icon()
+			. = TRUE
 		if("channel")
-			if (params["eqp"])
-				var/val = text2num(params["eqp"])
-				equipment = setsubsystem(val)
+			if(params["eqp"])
+				equipment = setsubsystem(text2num(params["eqp"]))
 				update_icon()
 				update()
-			else if (params["lgt"])
-				var/val = text2num(params["lgt"])
-				lighting = setsubsystem(val)
+			else if(params["lgt"])
+				lighting = setsubsystem(text2num(params["lgt"]))
 				update_icon()
 				update()
-			else if (params["env"])
-				var/val = text2num(params["env"])
-				environ = setsubsystem(val)
+			else if(params["env"])
+				environ = setsubsystem(text2num(params["env"]))
 				update_icon()
 				update()
+			. = TRUE
 		if("overload")
 			if(usr.has_unlimited_silicon_privilege)
-				src.overload_lighting()
+				overload_lighting()
+				. = TRUE
 		if("hack")
-			var/mob/living/silicon/ai/malfai = usr
-			if(get_malf_status(malfai) == 1)
-				if (malfai.malfhacking)
-					malfai << "You are already hacking an APC."
-					return 1
-				malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
-				malfai.malfhack = src
-				malfai.malfhacking = 1
-				sleep(600)
-				if(src)
-					if (!src.aidisabled)
-						malfai.malfhack = null
-						malfai.malfhacking = 0
-						locked = 1
-						malfhack = 1
-						malfai.malf_picker.processing_time += 10
-						if(usr:parent)
-							src.malfai = usr:parent
-						else
-							src.malfai = usr
-						malfai << "Hack complete. The APC is now under your exclusive control."
-						update_icon()
+			if(get_malf_status(usr))
+				malfhack(usr)
 		if("occupy")
 			if(get_malf_status(usr))
 				malfoccupy(usr)
 		if("deoccupy")
 			if(get_malf_status(usr))
 				malfvacate()
-	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
 	operating = !operating
-
-	src.update()
+	update()
 	update_icon()
+
+/obj/machinery/power/apc/proc/malfhack(mob/living/silicon/ai/malf)
+	if(!istype(malf))
+		return
+	if(get_malf_status(malf) != 1)
+		return
+	if(malf.malfhacking)
+		malf << "You are already hacking an APC."
+		return
+	malf << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
+	malf.malfhack = src
+	malf.malfhacking = TRUE
+	addtimer(src, "malfhacked", 600, FALSE, malf)
+
+/obj/machinery/power/apc/proc/malfhacked(mob/living/silicon/ai/malf)
+	if(!istype(malf))
+		return
+	if(src && !src.aidisabled)
+		malf.malfhack = null
+		malf.malfhacking = FALSE
+		malf.malf_picker.processing_time += 10
+
+		if(malf:parent)
+			malfai = malf:parent
+		else
+			malfai = malf
+		malfhack = TRUE
+		locked = TRUE
+
+		malf << "Hack complete. The APC is now under your exclusive control."
+		update_icon()
 
 /obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
 	if(!istype(malf))
@@ -889,7 +894,6 @@
 	if(!area.requires_power)
 		return
 
-
 	/*
 	if (equipment > 1) // off=0, off auto=1, on=2, on auto=3
 		use_power(src.equip_consumption, EQUIP)
@@ -928,8 +932,6 @@
 	//	world.log << "Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light] - Longterm: [longtermpower]"
 
 	if(cell && !shorted)
-
-
 		// draw power from cell as before to power the area
 		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
 		cell.use(cellused)
@@ -941,9 +943,7 @@
 
 
 		else		// no excess, and not enough per-apc
-
-			if( (cell.charge/CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
-
+			if((cell.charge/CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
 				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * excess)	//recharge with what we can
 				add_load(excess)		// so draw what we can from the grid
 				charging = 0
@@ -989,7 +989,6 @@
 				area.poweralert(1, src)
 
 		// now trickle-charge the cell
-
 		if(chargemode && charging == 1 && operating)
 			if(excess > 0)		// check to make sure we have enough to charge
 				// Max charge is capped to % per second constant
@@ -1048,15 +1047,12 @@
 			return 0
 		else if(val==3)		// if auto-on, return auto-off
 			return 1
-
 	else if(on==1)
 		if(val==1)			// if auto-off, return auto-on
 			return 3
-
 	else if(on==2)
 		if(val==3)			// if auto-on, return auto-off
 			return 1
-
 	return val
 
 /obj/machinery/power/apc/proc/reset(wire)

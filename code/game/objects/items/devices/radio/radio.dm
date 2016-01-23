@@ -117,7 +117,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "radio", name, 830, 275, master_ui, state)
+		ui = new(user, src, ui_key, "radio", name, 370, 220 + channels.len * 22, master_ui, state)
 		ui.open()
 
 /obj/item/device/radio/get_ui_data(mob/user)
@@ -141,27 +141,37 @@
 	return data
 
 /obj/item/device/radio/ui_act(action, params)
+	if(..())
+		return
 	switch(action)
 		if("frequency")
-			if(!freqlock)
-				switch(params["change"])
-					if("custom")
-						var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
-						var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
-						var/custom = input(usr, "Adjust frequency ([min]-[max]):", name) as null|num
-						if(custom)
-							frequency = custom * 10
-					else
-						frequency = frequency + text2num(params["change"])
+			if(freqlock)
+				return
+			var/tune = params["tune"]
+			var/adjust = text2num(params["adjust"])
+			if(tune == "input")
+				var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
+				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
+				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
+				. = .(action, list("tune" = tune))
+			else if(text2num(tune) != null)
+				frequency = tune * 10
+				. = TRUE
+			else if(adjust)
+				frequency += adjust * 10
+				. = TRUE
+			if(.)
 				frequency = sanitize_frequency(frequency, freerange)
 				set_frequency(frequency)
-				if(hidden_uplink && (frequency == traitor_frequency))
+				if(frequency == traitor_frequency && hidden_uplink)
 					hidden_uplink.interact(usr)
 					SStgui.close_uis(src)
 		if("listen")
 			listening = !listening
+			. = TRUE
 		if("broadcast")
 			broadcasting = !broadcasting
+			. = TRUE
 		if("channel")
 			var/channel = params["channel"]
 			if(!(channel in channels))
@@ -170,8 +180,10 @@
 				channels[channel] &= ~FREQ_LISTENING
 			else
 				channels[channel] |= FREQ_LISTENING
+			. = TRUE
 		if("command")
 			use_command = !use_command
+			. = TRUE
 		if("subspace")
 			if(subspace_switchable)
 				subspace_transmission = !subspace_transmission
@@ -179,7 +191,7 @@
 					channels = list()
 				else
 					recalculateChannels()
-	return 1
+				. = TRUE
 
 /obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
 	if(!on) return // the device has to be on
