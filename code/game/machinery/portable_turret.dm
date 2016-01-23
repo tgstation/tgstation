@@ -241,6 +241,8 @@
 			criminals = !criminals
 		if("shootall")
 			stun_all = !stun_all
+		if("checkxenos")
+			check_anomalies = !check_anomalies
 	updateUsrDialog()
 
 
