@@ -27,8 +27,8 @@
 	var/list/status = list()
 	status += "The door bolts [A.locked ? "have fallen!" : "look up."]"
 	status += "The test light is [A.hasPower() ? "on" : "off"]."
-	status += "The AI connection light is [!A.aiControlDisabled && !A.emagged ? "on" : "off"]."
-	status += "The check wiring light is [!A.safe ? "on" : "off"]."
+	status += "The AI connection light is [A.aiControlDisabled || A.emagged ? "off" : "on"]."
+	status += "The check wiring light is [A.safe ? "off" : "on"]."
 	status += "The timer is powered [A.autoclose ? "on" : "off"]."
 	status += "The speed light is [A.normalspeed ? "on" : "off"]."
 	status += "The emergency light is [A.emergency ? "on" : "off"]."

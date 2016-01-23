@@ -354,6 +354,18 @@
 		dat += "[D.materials[MAT_GLASS] / coeff] glass"
 	return dat
 
+/obj/machinery/autolathe/proc/reset(wire)
+	switch(wire)
+		if(WIRE_HACK)
+			if(!wires.is_cut(wire))
+				adjust_hacked(FALSE)
+		if(WIRE_SHOCK)
+			if(!wires.is_cut(wire))
+				shocked = FALSE
+		if(WIRE_DISABLE)
+			if(!wires.is_cut(wire))
+				disabled = FALSE
+
 /obj/machinery/autolathe/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return 0
