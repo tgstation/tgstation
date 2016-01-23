@@ -1469,6 +1469,16 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 			colour += temp_col
 	return colour
 
+/proc/is_round_cult()
+	var/cult_mode = null
+	if(ticker && ticker.mode)
+		if(ticker.mode.name == "cult")
+			cult_mode = ticker.mode
+		else if(ticker.mode.name == "mixed")
+			var/datum/game_mode/mixed/mixed_mode = ticker.mode
+			cult_mode = locate(/datum/game_mode/cult) in mixed_mode.modes
+	return cult_mode
+
 // Use this to send to a client's chat, no exceptions (except this proc itself).
 /proc/to_chat(var/thing, var/output)
 	thing << output
