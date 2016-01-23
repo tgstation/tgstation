@@ -237,7 +237,11 @@
 /obj/item/proc/stripped(mob/wearer as mob, mob/stripper as mob)
 	return unequipped(wearer)
 
-// called just as an item is picked up (loc is not yet changed)
+// called just as an item is picked up (loc is not yet changed). return 1 to prevent the item from being actually picked up.
+/obj/item/proc/prepickup(mob/user)
+	return
+
+// called after an item is picked up (loc has already changed)
 /obj/item/proc/pickup(mob/user)
 	return
 

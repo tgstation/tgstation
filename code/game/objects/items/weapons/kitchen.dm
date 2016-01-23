@@ -298,8 +298,8 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
-	throwforce = 12.0
 	throwforce = 10.0
+	force = 5 //look at us, we don't even use this var in our attack because we're so snowflake!
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
@@ -313,20 +313,16 @@
 					   // w_class = 2 -- takes up 3
 					   // w_class = 3 -- takes up 5
 
+/obj/item/weapon/tray/Destroy()
+	for(var/atom/thing in carrying)
+		qdel(thing)
+	carrying = null
+	..()
+
 /obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	// Drop all the things. All of them.
-	overlays.len = 0
-	for(var/obj/item/I in carrying)
-		I.loc = M.loc
-		carrying.Remove(I)
-		if(isturf(I.loc))
-			spawn()
-				for(var/i = 1, i <= rand(1,2), i++)
-					if(I)
-						step(I, pick(NORTH,SOUTH,EAST,WEST))
-						sleep(rand(2,4))
-
+	send_items_flying()
 
 	if((M_CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
 		to_chat(M, "<span class='warning'>You accidentally slam yourself with the [src]!</span>")
@@ -434,7 +430,7 @@
 				return
 			return
 
-/obj/item/weapon/tray/var/cooldown = 0	//shield bash cooldown. based on world.time
+/obj/item/weapon/tray/var/cooldown = 0	//shield bash cooldown. based on world.time //why is this defined down here?
 
 /obj/item/weapon/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/kitchen/rollingpin))
@@ -461,25 +457,30 @@
 			val ++
 		else if(I.w_class == 2.0)
 			val += 3
-		else
+		else if(I.w_class == 3.0)
 			val += 5
+		else //Shouldn't happen
+			val += INFINITY
 
 	return val
 
-/obj/item/weapon/tray/pickup(mob/user)
+/obj/item/weapon/tray/prepickup(mob/user)
+	..()
 
 	if(!isturf(loc))
 		return
 
 	for(var/obj/item/I in loc)
-		if( I != src && !I.anchored && !istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/suit) && !istype(I, /obj/item/projectile) )
+		if( I != src && !I.anchored && !is_type_in_list(I, list(/obj/item/clothing/under, /obj/item/clothing/suit, /obj/item/projectile, /obj/item/weapon/tray)) )
 			var/add = 0
 			if(I.w_class == 1.0)
 				add = 1
 			else if(I.w_class == 2.0)
 				add = 3
-			else
+			else if(I.w_class == 3.0)
 				add = 5
+			else
+				continue
 			if(calc_carry() + add >= max_carry)
 				break
 
@@ -494,29 +495,47 @@
 			//overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer)
 
 /obj/item/weapon/tray/dropped(mob/user)
-
-	var/mob/living/M
-	for(M in src.loc) //to handle hand switching
-		return
-
-	var/foundtable = 0
-	for(var/obj/structure/table/T in loc)
-		foundtable = 1
-		break
-
-	overlays.len = 0
-
-	for(var/obj/item/I in carrying)
-		I.loc = loc
-		carrying.Remove(I)
-		if(!foundtable && isturf(loc))
+	spawn() //because throwing drops items before setting their throwing var, and a lot of other zany bullshit
+		if(throwing)
+			return ..()
+		//This is so monumentally bad that I have to leave it in as a comment
+		/*var/mob/living/M
+		for(M in src.loc) //to handle hand switching
+			return*/
+		if(isturf(loc))
+			for(var/obj/structure/table/T in loc)
+				remove_items()
+				return ..()
 			// if no table, presume that the person just shittily dropped the tray on the ground and made a mess everywhere!
-			spawn()
-				for(var/i = 1, i <= rand(1,2), i++)
-					if(I)
-						step(I, pick(NORTH,SOUTH,EAST,WEST))
-						sleep(rand(2,4))
+			whoops()
+		..()
 
+/obj/item/weapon/tray/throw_impact(atom/hit_atom)
+	if(isturf(hit_atom))
+		whoops()
+	..()
+
+/obj/item/weapon/tray/proc/remove_items()
+	overlays.len = 0
+	for(var/obj/item/I in carrying)
+		I.forceMove(get_turf(src))
+		carrying.Remove(I)
+
+/obj/item/weapon/tray/proc/send_items_flying()
+	overlays.len = 0
+	for(var/obj/item/I in carrying)
+		I.forceMove(get_turf(src))
+		carrying.Remove(I)
+		spawn(rand(1,3))
+			if(I && prob(75))
+				step(I, pick(alldirs))
+
+/obj/item/weapon/tray/proc/whoops()
+	if(prob(50))
+		playsound(src, 'sound/items/trayhit1.ogg', 35, 1)
+	else
+		playsound(src, 'sound/items/trayhit2.ogg', 35, 1)
+	send_items_flying()
 
 
 
