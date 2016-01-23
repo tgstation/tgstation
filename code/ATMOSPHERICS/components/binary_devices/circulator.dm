@@ -15,8 +15,8 @@
 	anchored = 1
 	density = 1
 
-	var/global/const/CIRC_COLD = 1
-	var/global/const/CIRC_HOT = 2
+	var/global/const/CIRC_LEFT = 1
+	var/global/const/CIRC_RIGHT = 2
 
 
 /obj/machinery/atmospherics/components/binary/circulator/proc/return_transfer_air()

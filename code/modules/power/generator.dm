@@ -18,6 +18,7 @@
 	var/obj/machinery/atmospherics/components/binary/circulator/cold_circ
 	var/obj/machinery/atmospherics/components/binary/circulator/hot_circ
 
+	//note: these currently only support EAST and WEST
 	var/cold_dir = WEST
 	var/hot_dir = EAST
 
@@ -33,10 +34,19 @@
 	connect_to_network()
 
 	if(cold_circ)
-		cold_circ.side = circpath.CIRC_COLD
+		switch(cold_dir)
+			if(EAST)
+				cold_circ.side = circpath.CIRC_RIGHT
+			if(WEST)
+				cold_circ.side = circpath.CIRC_LEFT
 		cold_circ.update_icon()
+
 	if(hot_circ)
-		hot_circ.side = circpath.CIRC_HOT
+		switch(hot_dir)
+			if(EAST)
+				hot_circ.side = circpath.CIRC_RIGHT
+			if(WEST)
+				hot_circ.side = circpath.CIRC_LEFT
 		hot_circ.update_icon()
 
 	if(!cold_circ || !hot_circ)

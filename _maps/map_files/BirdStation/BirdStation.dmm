@@ -367,7 +367,7 @@
 "ahc" = (/obj/machinery/atmospherics/pipe/manifold/general/visible{icon_state = "manifold"; dir = 4},/turf/simulated/floor/engine,/area/engine/engineering)
 "ahd" = (/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/engine,/area/engine/engineering)
 "ahe" = (/obj/machinery/atmospherics/components/binary/circulator,/turf/simulated/floor/plasteel,/area/engine/engineering)
-"ahf" = (/obj/structure/cable,/obj/machinery/power/generator/birdstation,/turf/simulated/floor/plasteel,/area/engine/engineering)
+"ahf" = (/obj/structure/cable,/obj/machinery/power/generator{cold_dir = 8; hot_dir = 4},/turf/simulated/floor/plasteel,/area/engine/engineering)
 "ahg" = (/obj/machinery/atmospherics/components/binary/circulator{icon_state = "circ2-off"},/turf/simulated/floor/plasteel,/area/engine/engineering)
 "ahh" = (/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plasteel/darkwarning{icon_state = "warndark"; dir = 10},/area/engine/engineering)
 "ahi" = (/obj/machinery/computer/monitor,/obj/structure/cable/cyan{icon_state = "0-4"},/turf/simulated/floor/plasteel/darkwarning,/area/engine/engineering)
