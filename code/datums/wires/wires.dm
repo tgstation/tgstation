@@ -334,6 +334,7 @@ var/list/wire_color_directory = list()
 	switch(action)
 		if("cut")
 			if(istype(I, /obj/item/weapon/wirecutters) || IsAdminGhost(usr))
+				playsound(holder, 'sound/items/Wirecutter.ogg', 20, 1)
 				cut_color(target_wire)
 				. = TRUE
 			else
