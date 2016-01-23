@@ -170,7 +170,7 @@
 /mob/living/simple_animal/bot/adjustHealth(amount)
 	if(amount>0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
-	return ..(amount)
+	. = ..()
 
 /mob/living/simple_animal/bot/updatehealth()
 	..()

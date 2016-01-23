@@ -213,7 +213,7 @@
 		return
 
 /mob/living/simple_animal/shade/howling_ghost/adjustHealth()
-	return
+	. = 0
 
 /mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1
@@ -273,6 +273,7 @@
 	return
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/adjustHealth()
+	. = 0
 	if(prob(5))
 		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 
