@@ -1,7 +1,0 @@
-author: neersighted
-delete-after: True
-changes: 
-  - experiment: "Refactor wires; port wire interface to tgui."
-  - rscadd: "Wire colors are now fully randomized."
-  - rscdel: "Remove pizza bombs, as the code and sprites were terrible."
-  - rscadd: "Add pizza bomb cores, which can be combined with a pizza box to make a pizza bomb."
