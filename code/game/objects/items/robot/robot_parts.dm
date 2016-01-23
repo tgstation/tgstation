@@ -312,12 +312,12 @@
 			src.cell = W
 			user << "<span class='notice'>You insert the cell.</span>"
 	if(istype(W, /obj/item/stack/cable_coil))
-		if(src.wires)
+		if(src.wired)
 			user << "<span class='warning'>You have already inserted wire!</span>"
 			return
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.use(1))
-			src.wires = 1
+			src.wired = 1
 			user << "<span class='notice'>You insert the wire.</span>"
 		else
 			user << "<span class='warning'>You need one length of coil to wire it!</span>"
