@@ -249,7 +249,7 @@
 						<td><A href='?priv_msg=\ref[M]'>PM</A></td>"}
 			dat += "</table>"
 		if(ticker.mode.raiders.len)
-			dat += "<br><table cellspacing=5><tr><td><B>Thralls</B></td><td></td><td></td></tr>"
+			dat += "<br><table cellspacing=5><tr><td><B>Raiders</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/vox in ticker.mode.raiders)
 				var/mob/M = vox.current
 				if(M)
