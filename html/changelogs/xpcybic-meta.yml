@@ -17,3 +17,4 @@ changes:
   - rscdel: Removed the crate and two grilles blocking passage through aft maint.
   - rscdel: Removed the human test dummies from the toxins test site.
   - rscadd: Added a cyborg analyzer to robotics.
+  - rscadd: Added a missing airlock button outside research outpost.
