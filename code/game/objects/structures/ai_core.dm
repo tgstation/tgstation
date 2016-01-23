@@ -107,26 +107,9 @@
 					user << "<span class='warning'>You need two sheets of reinforced glass to insert them into AI core!</span>"
 					return
 
-			if(istype(P, /obj/item/weapon/aiModule/core/full)) //Allows any full core boards to be applied to AI cores.
-				var/obj/item/weapon/aiModule/core/M = P
-				laws.clear_inherent_laws()
-				laws.clear_zeroth_law(0)
-				for(var/templaw in M.laws)
-					laws.add_inherent_law(templaw)
-				user << "<span class='notice'>Law module applied.</span>"
-
-			if(istype(P, /obj/item/weapon/aiModule/reset/purge))
-				laws.clear_inherent_laws()
-				laws.clear_zeroth_law(0)
-				user << "<span class='notice'>Laws cleared applied.</span>"
-
-
-			if(istype(P, /obj/item/weapon/aiModule/supplied/freeform) || istype(P, /obj/item/weapon/aiModule/core/freeformcore))
-				var/obj/item/weapon/aiModule/supplied/freeform/M = P
-				if(M.laws[1] == "")
-					return
-				laws.add_inherent_law(M.laws[1])
-				user << "<span class='notice'>Added a freeform law.</span>"
+			if(istype(P, /obj/item/weapon/aiModule))
+				var/obj/item/weapon/aiModule/module = P
+				module.install(laws, user)
 
 			if(istype(P, /obj/item/device/mmi))
 				var/obj/item/device/mmi/M = P

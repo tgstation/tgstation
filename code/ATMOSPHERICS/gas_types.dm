@@ -6,11 +6,11 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 		var/list/gas_info = new(4)
 		var/datum/gas/g = gas_path
 
-		gas_info[1] = initial(g.specific_heat)
-		gas_info[2] = initial(g.name)
-		gas_info[3] = initial(g.moles_visible)
-		if(gas_info[3] != null)
-			gas_info[4] = new /obj/effect/overlay/gas(initial(g.gas_overlay))
+		gas_info[META_GAS_SPECIFIC_HEAT] = initial(g.specific_heat)
+		gas_info[META_GAS_NAME] = initial(g.name)
+		gas_info[META_GAS_MOLES_VISIBLE] = initial(g.moles_visible)
+		if(gas_info[META_GAS_MOLES_VISIBLE] != null)
+			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas(initial(g.gas_overlay))
 
 		meta_list[initial(g.id)] = gas_info
 	. = meta_list
@@ -57,7 +57,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	id = "n2o"
 	specific_heat = 40
 	name = "Nitrous Oxide"
-	gas_overlay = "sleeping_agent"
+	gas_overlay = "nitrous_oxide"
 	moles_visible = 1
 
 /datum/gas/oxygen_agent_b

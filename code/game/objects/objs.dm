@@ -98,8 +98,6 @@
 	if(ui_interact(user) != -1)
 		return
 	..()
-/obj/proc/interact(mob/user)
-	return
 
 /obj/proc/container_resist()
 	return
@@ -199,3 +197,6 @@
 	tesla_zap(src, 3, power_bounced)
 	spawn(10)
 		being_shocked = 0
+
+/obj/proc/CanAStarPass()
+	. = !density

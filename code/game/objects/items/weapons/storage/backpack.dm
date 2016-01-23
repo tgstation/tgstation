@@ -301,61 +301,6 @@
 	slowdown = 1
 	max_combined_w_class = 30
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie
-	name = "suspicious looking dufflebag"
-	desc = "A large dufflebag for holding extra tactical supplies."
-	icon_state = "duffle-syndie"
-	item_state = "duffle-syndiemed"
-	origin_tech = "syndicate=1"
-	silent = 1
-	slowdown = 0
-
-/obj/item/weapon/storage/backpack/dufflebag/syndie/med
-	name = "medical dufflebag"
-	desc = "A large dufflebag for holding extra tactical medical supplies."
-	icon_state = "duffle-syndiemed"
-	item_state = "duffle-syndiemed"
-
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo
-	name = "ammunition dufflebag"
-	desc = "A large dufflebag for holding extra weapons ammunition and supplies."
-	icon_state = "duffle-syndieammo"
-	item_state = "duffle-syndieammo"
-
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/loaded
-	desc = "A large dufflebag, packed to the brim with Bulldog shotgun ammo."
-
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/loaded/New()
-	..()
-	contents = list()
-	for(var/i in 1 to 6)
-		new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
-	new /obj/item/ammo_box/magazine/m12g/stun(src)
-	new /obj/item/ammo_box/magazine/m12g/dragon(src)
-	return
-
-/obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
-	name = "surgery dufflebag"
-	desc = "A suspicious looking dufflebag for holding surgery tools."
-	icon_state = "duffle-syndiemed"
-	item_state = "duffle-syndiemed"
-
-/obj/item/weapon/storage/backpack/dufflebag/syndie/surgery/New()
-	..()
-	contents = list()
-	new /obj/item/weapon/scalpel(src)
-	new /obj/item/weapon/hemostat(src)
-	new /obj/item/weapon/retractor(src)
-	new /obj/item/weapon/circular_saw(src)
-	new /obj/item/weapon/surgicaldrill(src)
-	new /obj/item/weapon/cautery(src)
-	new /obj/item/weapon/surgical_drapes(src)
-	new /obj/item/clothing/suit/straight_jacket(src)
-	new /obj/item/clothing/mask/muzzle(src)
-	new /obj/item/device/mmi/syndie(src)
-	return
-
 /obj/item/weapon/storage/backpack/dufflebag/captain
 	name = "captain's dufflebag"
 	desc = "A large dufflebag for holding extra captainly goods."
@@ -388,6 +333,62 @@
 	icon_state = "duffle-clown"
 	item_state = "duffle-clown"
 
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie
+	name = "suspicious looking dufflebag"
+	desc = "A large dufflebag for holding extra tactical supplies."
+	icon_state = "duffle-syndie"
+	item_state = "duffle-syndiemed"
+	origin_tech = "syndicate=1"
+	silent = 1
+	slowdown = 0
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med
+	name = "medical dufflebag"
+	desc = "A large dufflebag for holding extra tactical medical supplies."
+	icon_state = "duffle-syndiemed"
+	item_state = "duffle-syndiemed"
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
+	name = "surgery dufflebag"
+	desc = "A suspicious looking dufflebag for holding surgery tools."
+	icon_state = "duffle-syndiemed"
+	item_state = "duffle-syndiemed"
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/surgery/New()
+	..()
+	contents = list()
+	new /obj/item/weapon/scalpel(src)
+	new /obj/item/weapon/hemostat(src)
+	new /obj/item/weapon/retractor(src)
+	new /obj/item/weapon/circular_saw(src)
+	new /obj/item/weapon/surgicaldrill(src)
+	new /obj/item/weapon/cautery(src)
+	new /obj/item/weapon/surgical_drapes(src)
+	new /obj/item/clothing/suit/straight_jacket(src)
+	new /obj/item/clothing/mask/muzzle(src)
+	new /obj/item/device/mmi/syndie(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo
+	name = "ammunition dufflebag"
+	desc = "A large dufflebag for holding extra weapons ammunition and supplies."
+	icon_state = "duffle-syndieammo"
+	item_state = "duffle-syndieammo"
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/shotgun
+	desc = "A large dufflebag, packed to the brim with Bulldog shotgun ammo."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/shotgun/New()
+	..()
+	contents = list()
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
+	new /obj/item/ammo_box/magazine/m12g/stun(src)
+	new /obj/item/ammo_box/magazine/m12g/dragon(src)
+	return
+
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg
 	desc = "A large dufflebag, packed to the brim with C20r magazines."
 
@@ -400,15 +401,15 @@
 
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam
-	desc = "A large dufflebag, packed to the brim with C20r, M90gl, and sniper ammunition."
+	desc = "A large dufflebag, packed to the brim with .45, 5.56, and .50 ammo."
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam/New()
 	..()
 	contents = list()
 	for(var/i in 1 to 4)
 		new /obj/item/ammo_box/magazine/smgm45(src)
-	new /obj/item/ammo_box/magazine/m556(src)
-	new /obj/item/ammo_box/magazine/m556(src)
+	for(var/i in 1 to 3)
+		new /obj/item/ammo_box/magazine/m556(src)
 	new /obj/item/ammo_box/a40mm(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds(src)
 	return

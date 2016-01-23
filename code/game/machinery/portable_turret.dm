@@ -479,7 +479,7 @@
 			targets += C
 			continue
 
-		if(C.stat || C.handcuffed || C.lying)	//if the perp is handcuffed or lying or dead/dying, no need to bother really
+		if(C.stat || C.handcuffed || (C.lying && !(C.buckled)))	//if the perp is handcuffed or lying or dead/dying, no need to bother really
 			continue
 
 		if(ai)	//If it's set to attack all nonsilicons, target them!
@@ -945,6 +945,9 @@
 					sleep(30)
 					Parent_Turret.attacked = 0
 		..()
+
+/obj/machinery/porta_turret_cover/can_be_overridden()
+	. = 0
 
 /obj/machinery/porta_turret_cover/emag_act(mob/user)
 	if(!Parent_Turret.emagged)

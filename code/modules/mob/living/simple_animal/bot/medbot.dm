@@ -223,7 +223,7 @@
 		if (health < current_health) //if medbot took some damage
 			step_to(src, (get_step_away(src,user)))
 
-/mob/living/simple_animal/bot/medbot/Emag(mob/user)
+/mob/living/simple_animal/bot/medbot/emag_act(mob/user)
 	..()
 	if(emagged == 2)
 		declare_crit = 0
@@ -302,10 +302,10 @@
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		path = get_path_to(loc, get_turf(patient), src, /turf/proc/Distance_cardinal, 0, 30,id=access_card)
+		path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,id=access_card)
 		mode = BOT_MOVING
 		if(!path.len) //try to get closer if you can't reach the patient directly
-			path = get_path_to(loc, get_turf(patient), src, /turf/proc/Distance_cardinal, 0, 30,1,id=access_card)
+			path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,1,id=access_card)
 			if(!path.len) //Do not chase a patient we cannot reach.
 				soft_reset()
 

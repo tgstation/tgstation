@@ -58,20 +58,11 @@
 		spawnfragments()
 	return
 
-
 /obj/structure/window/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-			return
-		if(2)
-			spawnfragments()
-			return
-		if(3)
-			if(prob(50))
-				spawnfragments()
-				return
-
+	if(severity == 1)
+		qdel(src)
+	else
+		spawnfragments()
 
 /obj/structure/window/blob_act()
 	spawnfragments()
@@ -308,7 +299,7 @@
 		return
 
 /obj/structure/window/proc/spawnfragments()
-	if(!loc) //if already qdel'd somehow, we do nothing
+	if(qdeleted())
 		return
 	var/turf/T = loc
 	for(var/obj/item/I in storeditems)
@@ -439,12 +430,30 @@
 /obj/structure/window/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
 
+/obj/structure/window/CanAStarPass(ID, to_dir)
+	if(!density)
+		return 1
+	if((dir == SOUTHWEST) || (dir == to_dir))
+		return 0
+
+	return 1
+
 /obj/structure/window/reinforced
 	name = "reinforced window"
 	icon_state = "rwindow"
 	reinf = 1
 	maxhealth = 50
 	explosion_block = 1
+
+/obj/structure/window/reinforced/ex_act(severity, target)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			spawnfragments()
+		if(3)
+			if(prob(50))
+				spawnfragments()
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
