@@ -24,11 +24,13 @@ window.initialize = (dataString) => {
   window.tgui = new TGUI({
     el: '#container',
     data () {
-      const base = {
-        constants: require('util/constants')
+      const initial = JSON.parse(dataString)
+      return {
+        constants: require('util/constants'),
+        config: initial.config,
+        data: initial.data,
+        adata: initial.data
       }
-      const server = JSON.parse(dataString)
-      return Object.assign(base, server)
     }
   })
   window.initialize = function () {}
