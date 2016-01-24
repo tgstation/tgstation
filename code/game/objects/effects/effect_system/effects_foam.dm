@@ -7,7 +7,7 @@
 	opacity = 0
 	anchored = 1
 	density = 0
-	layer = OBJ_LAYER - 0.5 //above table, below windoor/airlock/foamed metal.
+	layer = MOB_LAYER + 0.5
 	mouse_opacity = 0
 	var/amount = 3
 	animate_movement = 0
