@@ -43,10 +43,10 @@ var/datum/subsystem/minimap/SSminimap
 	minimap.Scale(MINIMAP_SIZE, MINIMAP_SIZE)
 
 	// Loop over turfs and generate icons.
-	for(var/turf/tile in block(locate(x1, y1, z), locate(x2, y2, z)))
+	for(var/T in block(locate(x1, y1, z), locate(x2, y2, z)))
+		var/turf/tile = T
 		var/icon/tile_icon
 		var/obj/obj
-
 
 		// Don't use icons for space, just add objects in space if they exist.
 		if(istype(tile, /turf/space))
@@ -76,7 +76,8 @@ var/datum/subsystem/minimap/SSminimap
 			if(obj)
 				obj_icons += new /icon('icons/obj/smooth_structures/window.dmi', "window", SOUTH)
 
-			for(var/icon/obj_icon in obj_icons)
+			for(var/I in obj_icons)
+				var/icon/obj_icon = I
 				tile_icon.Blend(obj_icon, ICON_OVERLAY)
 
 		if(tile_icon)
