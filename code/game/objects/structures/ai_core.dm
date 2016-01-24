@@ -228,6 +228,7 @@ atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/
 		AI.loc = loc//To replace the terminal.
 		AI << "You have been uploaded to a stationary terminal. Remote device connection restored."
 		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+		card.AI = null
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
 		user << "There is no AI loaded on this terminal!"
