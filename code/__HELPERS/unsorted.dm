@@ -1469,6 +1469,47 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 			colour += temp_col
 	return colour
 
+//We check if a specific game mode is currently undergoing.
+//First by checking if it is the current main mode,
+//Secondly by checking if it is part of a Mixed game mode.
+//If it exists, we return the game mode's datum. If it doesn't exist, we return null
+
+/*
+Game Mode config tags:
+"extended"
+"traitor"
+"double_agents"
+"autotraitor"
+"blob"
+"changeling"
+"traitorchan"
+"cult"
+"heist"
+"malfunction"
+"meteor"
+"mixed"
+"nuclear"
+"revolution"
+"sandbox"
+"vampire"
+"wizard
+"raginmages""
+*/
+
+/proc/find_active_mode(var/mode_ctag)
+	var/found_mode = null
+	if(ticker && ticker.mode)
+		if(ticker.mode.config_tag == mode_ctag)
+			found_mode = ticker.mode
+		else if(ticker.mode.name == "mixed")
+			var/datum/game_mode/mixed/mixed_mode = ticker.mode
+			for(var/datum/game_mode/GM in mixed_mode.modes)
+				if(GM.config_tag == mode_ctag)
+					found_mode = GM
+					break
+	return found_mode
+
+
 // Use this to send to a client's chat, no exceptions (except this proc itself).
 /proc/to_chat(var/thing, var/output)
 	thing << output

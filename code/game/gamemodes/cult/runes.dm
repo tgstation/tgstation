@@ -163,8 +163,7 @@
 
 /obj/effect/rune/proc/convert()
 
-
-	var/datum/game_mode/cult/mode_ticker = ticker.mode
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
 
 	for(var/mob/living/carbon/M in src.loc)
 		if(iscultist(M))
@@ -176,7 +175,7 @@
 		if(!M.mind)
 			to_chat(usr, "<span class='warning'>You cannot convert that which has no soul</span>")
 			return 0
-		if(istype(mode_ticker) && (M.mind == mode_ticker.sacrifice_target))
+		if(cult_round && (M.mind == cult_round.sacrifice_target))
 			to_chat(usr, "<span class='warning'>The Geometer of blood wants this mortal for himself.</span>")
 			return 0
 		usr.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
@@ -242,13 +241,13 @@
 			to_chat(M, "<span class='warning'>This plane of reality has already been torn into Nar-Sie's realm.</span>")
 		return
 
-	var/datum/game_mode/cult/mode_ticker = ticker.mode
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
 
-	if(mode_ticker.eldergod)
+	if(ticker.mode.eldergod)
 		// Sanity checks
 		// Are we permitted to spawn Nar-Sie?
 
-		if((ticker.mode.name != "cult") || mode_ticker.narsie_condition_cleared)//if the game mode wasn't cult to begin with, there won't be need to complete a first objective to prepare the summoning.
+		if(!cult_round || cult_round.narsie_condition_cleared)//if the game mode wasn't cult to begin with, there won't be need to complete a first objective to prepare the summoning.
 			if(active_cultists.len >= 9)
 				if(z != map.zMainStation)
 					for(var/mob/M in active_cultists)
@@ -442,10 +441,12 @@
 	var/mob/living/carbon/human/corpse_to_raise
 	var/mob/living/carbon/human/body_to_sacrifice
 
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
+
 	var/is_sacrifice_target = 0
 	for(var/mob/living/carbon/human/M in src.loc)
 		if(M.stat == DEAD)
-			if((ticker.mode.name == "cult") && (M.mind == ticker.mode:sacrifice_target))
+			if(cult_round && (M.mind == cult_round.sacrifice_target))
 				is_sacrifice_target = 1
 			else
 				corpse_to_raise = M
@@ -463,7 +464,7 @@
 		for(var/obj/effect/rune/R in rune_list)
 			if(R.word1==cultwords["blood"] && R.word2==cultwords["join"] && R.word3==cultwords["hell"])
 				for(var/mob/living/carbon/human/N in R.loc)
-					if((ticker.mode.name == "cult") && (N.mind) && (N.mind == ticker.mode:sacrifice_target))
+					if(cult_round && (N.mind) && (N.mind == cult_round.sacrifice_target))
 						is_sacrifice_target = 1
 					else
 						if(N.stat!= DEAD)
@@ -507,8 +508,8 @@
 	"<span class='warning'>You hear a thousand voices, all crying in pain.</span>")
 	body_to_sacrifice.gib()
 
-//	if(ticker.mode.name == "cult")
-//		ticker.mode:add_cultist(corpse_to_raise.mind)
+//	if(cult_round)
+//		cult_round.add_cultist(corpse_to_raise.mind)
 //	else
 //		ticker.mode.cult |= corpse_to_raise.mind
 
@@ -621,11 +622,11 @@
 		D.real_name = "[pick(first_names_male)] [pick(last_names)]"
 	D.status_flags &= ~GODMODE
 
-
-	if(ticker.mode.name == "cult")
-		ticker.mode:add_cultist(D.mind)
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
+	if(cult_round)
+		cult_round.add_cultist(D.mind)
 	else
-		ticker.mode.cult+=D.mind
+		ticker.mode.cult += D.mind
 
 	ticker.mode.update_cult_icons_added(D.mind)
 	D.canmove = 1
@@ -813,12 +814,7 @@
 		to_chat(usr, "<span class='warning'>The presence of a null rod is perturbing the ritual.</span>")
 		return
 
-	var/cult_game = 0
-
-	if(ticker.mode.name == "cult")
-		cult_game = 1
-
-	var/datum/game_mode/cult/mode_ticker = ticker.mode
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
 
 	for(var/atom/A in loc)
 		if(iscultist(A))
@@ -827,15 +823,15 @@
 //Humans and Animals
 		if(istype(A,/mob/living/carbon) || istype(A,/mob/living/simple_animal))//carbon mobs and simple animals
 			var/mob/living/M = A
-			if (cult_game && (M.mind == mode_ticker.sacrifice_target))
+			if (cult_round && (M.mind == cult_round.sacrifice_target))
 				if(cultsinrange.len >= 3)
-					mode_ticker.sacrificed += M.mind
+					cult_round.sacrificed += M.mind
 					M.gib()
 					sacrificedone = 1
 					invocation("rune_sac")
 					ritualresponse += "The Geometer of Blood gladly accepts this sacrifice, your objective is now complete."
 					spawn(10)	//so the messages for the new phase get received after the feedback for the sacrifice
-						mode_ticker.additional_phase()
+						cult_round.additional_phase()
 				else
 					ritualresponse += "You need more cultists to perform the ritual and complete your objective."
 			else
@@ -867,15 +863,15 @@
 			var/mob/living/silicon/robot/B = A
 			var/obj/item/device/mmi/O = locate() in B
 			if(O)
-				if(cult_game && (O.brainmob.mind == mode_ticker.sacrifice_target))
+				if(cult_round && (O.brainmob.mind == cult_round.sacrifice_target))
 					if(cultsinrange.len >= 3)
-						mode_ticker.sacrificed += O.brainmob.mind
+						cult_round.sacrificed += O.brainmob.mind
 						ritualresponse += "The Geometer of Blood accepts this sacrifice, your objective is now complete."
 						sacrificedone = 1
 						invocation("rune_sac")
 						B.dust()
 						spawn(10)	//so the messages for the new phase get received after the feedback for the sacrifice
-							mode_ticker.additional_phase()
+							cult_round.additional_phase()
 					else
 						ritualresponse += "You need more cultists to perform the ritual and complete your objective."
 				else
@@ -897,7 +893,7 @@
 			var/obj/item/device/mmi/I = A
 			var/mob/living/carbon/brain/N = I.brainmob
 			if(N)//the MMI has a player's brain in it
-				if((ticker.mode.name == "cult") && (N.mind == ticker.mode:sacrifice_target))
+				if(cult_round && (N.mind == cult_round.sacrifice_target))
 					ritualresponse += "You need to place that brain back inside a body before you can complete your objective."
 				else
 					ritualresponse += "The Geometer of Blood accepts to destroy that pile of machinery."
@@ -910,7 +906,7 @@
 			var/obj/item/organ/brain/R = A
 			var/mob/living/carbon/brain/N = R.brainmob
 			if(N)//the brain is a player's
-				if((ticker.mode.name == "cult") && (N.mind == ticker.mode:sacrifice_target))
+				if(cult_round && (N.mind == cult_round.sacrifice_target))
 					ritualresponse += "You need to place that brain back inside a body before you can complete your objective."
 				else
 					ritualresponse += "The Geometer of Blood accepts to destroy that brain."
@@ -923,11 +919,11 @@
 			var/obj/item/device/aicard/D = A
 			var/mob/living/silicon/ai/T = locate() in D
 			if(T)//there is an AI on the card
-				if(cult_game && (T.mind == ticker.mode:sacrifice_target))//what are the odds this ever happens?
-					mode_ticker.sacrificed += T.mind
+				if(cult_round && (T.mind == cult_round.sacrifice_target))//what are the odds this ever happens?
+					cult_round.sacrificed += T.mind
 					ritualresponse += "With a sigh, the Geometer of Blood accepts this sacrifice, your objective is now complete."//since you cannot debrain an AI.
 					spawn(10)	//so the messages for the new phase get received after the feedback for the sacrifice
-						mode_ticker.additional_phase()
+						cult_round.additional_phase()
 				else
 					ritualresponse += "The Geometer of Blood accepts to destroy that piece of technological garbage."
 				sacrificedone = 1
