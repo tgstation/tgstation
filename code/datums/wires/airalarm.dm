@@ -38,11 +38,12 @@
 				A.aidisabled = TRUE
 			addtimer(A, "reset", 100, FALSE, wire)
 		if(WIRE_PANIC) // Toggle panic siphon.
-			if(A.mode == 1) // AALARM_MODE_SCRUB
-				A.mode = 3 // AALARM_MODE_PANIC
-			else
-				A.mode = 1 // AALARM_MODE_SCRUB
-			A.apply_mode()
+			if(!A.shorted)
+				if(A.mode == 1) // AALARM_MODE_SCRUB
+					A.mode = 3 // AALARM_MODE_PANIC
+				else
+					A.mode = 1 // AALARM_MODE_SCRUB
+				A.apply_mode()
 		if(WIRE_ALARM) // Clear alarms.
 			if(A.alarm_area.atmosalert(0, holder))
 				A.post_alert(0)
