@@ -38,6 +38,8 @@
 		materials[MAT_PLASMA] = new /datum/material/plasma()
 	if(mat_list[MAT_BANANIUM])
 		materials[MAT_BANANIUM] = new /datum/material/bananium()
+	if(mat_list[MAT_SILENCIUM])
+		materials[MAT_SILENCIUM] = new /datum/material/silencium()
 
 /datum/material_container/Destroy()
 	owner = null
@@ -264,3 +266,10 @@
 	..()
 	material_type = MAT_BANANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
+	
+/datum/material/silencium
+
+/datum/material/silencium/New()
+	..()
+	material_type = MAT_SILENCIUM
+	sheet_type = /obj/item/stack/sheet/mineral/silencium

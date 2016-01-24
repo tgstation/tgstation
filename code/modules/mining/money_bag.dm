@@ -19,6 +19,7 @@
 	var/amt_plasma = 0
 	var/amt_uranium = 0
 	var/amt_clown = 0
+	var/amt_mime = 0
 	var/amt_adamantine = 0
 
 	for (var/obj/item/weapon/coin/C in contents)
@@ -36,6 +37,8 @@
 			amt_uranium++;
 		if (istype(C,/obj/item/weapon/coin/clown))
 			amt_clown++;
+		if (istype(C,/obj/item/weapon/coin/mime))
+			amt_mime++;
 		if (istype(C,/obj/item/weapon/coin/adamantine))
 			amt_adamantine++;
 
@@ -54,6 +57,8 @@
 		dat += text("Uranium coins: [amt_uranium] <A href='?src=\ref[src];remove=uranium'>Remove one</A><br>")
 	if (amt_clown)
 		dat += text("Bananium coins: [amt_clown] <A href='?src=\ref[src];remove=clown'>Remove one</A><br>")
+	if (amt_mime)
+		dat += text("Silencium coins: [amt_mime] <A href='?src=\ref[src];remove=mime'>Remove one</A><br>")
 	if (amt_adamantine)
 		dat += text("Adamantine coins: [amt_adamantine] <A href='?src=\ref[src];remove=adamantine'>Remove one</A><br>")
 	user << browse("[dat]", "window=moneybag")
@@ -95,6 +100,8 @@
 				COIN = locate(/obj/item/weapon/coin/uranium,src.contents)
 			if("clown")
 				COIN = locate(/obj/item/weapon/coin/clown,src.contents)
+			if("mime")
+				COIN = locate(/obj/item/weapon/coin/mime,src.contents)
 			if("adamantine")
 				COIN = locate(/obj/item/weapon/coin/adamantine,src.contents)
 		if(!COIN)

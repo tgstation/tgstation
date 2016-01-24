@@ -108,6 +108,15 @@
 	points = 60
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
+	
+/obj/item/weapon/ore/silencium
+	name = "silencium ore"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "empty"
+	origin_tech = "materials=4"
+	points = 60
+	materials = list(MAT_SILENCIUM=MINERAL_MATERIAL_AMOUNT)
+	refined_type = /obj/item/stack/sheet/mineral/silencium
 
 /obj/item/weapon/ore/slag
 	name = "slag"
@@ -281,6 +290,13 @@
 	icon_state = "coin_bananium_heads"
 	value = 600 //makes the clown cri
 	materials = list(MAT_BANANIUM = 400)
+	
+/obj/item/weapon/coin/mime
+	cmineral = "silencium"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "empty"
+	value = 600 //makes the mime cri
+	materials = list(MAT_SILENCIUM = 400)
 
 /obj/item/weapon/coin/adamantine
 	cmineral = "adamantine"

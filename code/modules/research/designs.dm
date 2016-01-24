@@ -15,6 +15,7 @@ The currently supporting non-reagent materials. All material amounts are set as 
 - MAT_URANIUM (/obj/item/stack/uranium).
 - MAT_DIAMOND (/obj/item/stack/diamond).
 - MAT_BANANIUM (/obj/item/stack/bananium).
+- MAT_SILENCIUM (/obj/item/stack/silencium).
 (Insert new ones here)
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.

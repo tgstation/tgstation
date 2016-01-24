@@ -58,3 +58,12 @@
 	mineralType = "bananium"
 	materials = list(MAT_BANANIUM=500)
 
+/obj/item/stack/tile/mineral/silencium
+	name = "silencium tile"
+	singular_name = "silencium floor tile"
+	desc = "A tile made out of silencium, SHHHHHHHHH!"
+	icon_state = "tile_bananium"
+	origin_tech = "materials=1"
+	turf_type = /turf/simulated/floor/mineral/silencium
+	mineralType = "silencium"
+	materials = list(MAT_SILENCIUM=500)

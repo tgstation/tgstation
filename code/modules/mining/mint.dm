@@ -14,6 +14,7 @@
 	var/amt_plasma = 0
 	var/amt_uranium = 0
 	var/amt_clown = 0
+	var/amt_mime = 0
 	var/amt_adamantine = 0
 	var/amt_mythril = 0
 	var/newCoins = 0   //how many coins the machine made in it's last load
@@ -45,6 +46,9 @@
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/bananium))
 				amt_clown += 100 * O.amount
+				O.loc = null
+			if (istype(O, /obj/item/stack/sheet/mineral/silencium))
+				amt_mime += 100 * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/adamantine))
 				amt_adamantine += 100 * O.amount
@@ -92,6 +96,12 @@
 			dat += text("chosen")
 		else
 			dat += text("<A href='?src=\ref[src];choose=clown'>Choose</A>")
+	if(amt_mime > 0)
+		dat += text("<br><font color='#AAAA00'><b>Silencium inserted: </b>[amt_mime]</font> ")
+		if (chosen == "mime")
+			dat += text("chosen")
+		else
+			dat += text("<A href='?src=\ref[src];choose=mime'>Choose</A>")
 	dat += text("<br><font color='#888888'><b>Adamantine inserted: </b>[amt_adamantine]</font> ")//I don't even know these color codes, so fuck it.
 	if (chosen == "adamantine")
 		dat += text("chosen")
@@ -180,6 +190,14 @@
 				while(amt_clown > 0 && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/clown)
 					amt_clown -= 20
+					coinsToProduce--
+					newCoins++
+					src.updateUsrDialog()
+					sleep(5);
+			if("mime")
+				while(amt_mime > 0 && coinsToProduce > 0)
+					create_coins(/obj/item/weapon/coin/mimme)
+					amt_mime -= 20
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()

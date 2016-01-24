@@ -4,6 +4,7 @@
  * Gold floor
  * Silver floor
  * Bananium floor
+ * Silencium floor
  * Diamond floor
  * Uranium floor
  */
@@ -119,6 +120,15 @@
 	oxygen = 0.01
 	nitrogen = 0.01
 	temperature = TCMB
+
+//SILENCIUM
+
+/turf/simulated/floor/mineral/silencium
+	name = "silencium floor"
+	icon_state = "bananium"
+	floor_tile = /obj/item/stack/tile/mineral/silencium
+	icons = list("bananium","bananium_dam")
+
 
 //DIAMOND
 

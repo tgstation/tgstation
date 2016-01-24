@@ -185,6 +185,15 @@
 	var/mineral = "bananium"
 	doorsound = 'sound/items/bikehorn.ogg'
 	doortype = /obj/structure/door_assembly/door_assembly_clown
+	
+/obj/machinery/door/airlock/mime
+	name = "silencium airlock"
+	desc = "..."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "empty"
+	var/mineral = "silencium"
+	doorsound = 'null'
+	doortype = /obj/structure/door_assembly/door_assembly_mime
 
 /obj/machinery/door/airlock/sandstone
 	name = "sandstone airlock"

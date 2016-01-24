@@ -469,7 +469,7 @@
 "ja" = (/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/listeningpost)
 "jb" = (/obj/machinery/shower{icon_state = "shower"; dir = 8},/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/listeningpost)
 "jc" = (/obj/structure/toilet{icon_state = "toilet00"; dir = 8},/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/listeningpost)
-"jd" = (/turf/simulated/mineral/clown,/area/mine/unexplored)
+"jd" = (/turf/simulated/mineral/mime,/area/mine/unexplored)
 "je" = (/turf/simulated/wall/shuttle{icon_state = "wall3"},/area/mine/explored)
 "jf" = (/turf/simulated/floor/plasteel/airless{icon_state = "gcircuit"},/area/mine/explored)
 

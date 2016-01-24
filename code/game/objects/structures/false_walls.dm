@@ -242,6 +242,15 @@
 	mineral = "bananium"
 	walltype = "bananium"
 	canSmoothWith = list(/obj/structure/falsewall/clown, /turf/simulated/wall/mineral/clown)
+	
+/obj/structure/falsewall/mime
+	name = "silencium wall"
+	desc = "A wall with silencium plating. Honk!"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "empty"
+	mineral = "silencium"
+	walltype = "silencium"
+	canSmoothWith = list(/obj/structure/falsewall/mime, /turf/simulated/wall/mineral/mime)
 
 
 /obj/structure/falsewall/sandstone

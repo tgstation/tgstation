@@ -131,6 +131,36 @@
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/targeting
 	category = list("Exosuit Modules")
+	
+/datum/design/reticence_main
+	name = "Exosuit Module (\"Reticence\" Central Control module)"
+	desc = "Allows for the construction of a \"Reticence\" Central Control module."
+	id = "reticence_main"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mecha/reticence/main
+	category = list("Exosuit Modules")
+
+/datum/design/reticence_peri
+	name = "Exosuit Module (\"Reticence\" Peripherals Control module)"
+	desc = "Allows for the construction of a \"Reticence\" Peripheral Control module."
+	id = "reticence_peri"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mecha/reticence/peripherals
+	category = list("Exosuit Modules")
+
+/datum/design/reticence_targ
+	name = "Exosuit Module (\"Reticence\" Weapons & Targeting Control module)"
+	desc = "Allows for the construction of a \"Reticence\" Weapons & Targeting Control module."
+	id = "reticence_targ"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mecha/reticence/targeting
+	category = list("Exosuit Modules")
 
 /datum/design/phazon_main
 	name = "Exosuit Module (\"Phazon\" Central Control module)"
