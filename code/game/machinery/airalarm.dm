@@ -21,6 +21,17 @@
 		return 1
 	return 0
 
+/obj/item/weapon/electronics/airalarm
+	name = "air alarm electronics"
+	icon_state = "airalarm_electronics"
+
+/obj/item/wallframe/airalarm
+	name = "air alarm frame"
+	desc = "Used for building Air Alarms"
+	icon = 'icons/obj/monitors.dmi'
+	icon_state = "alarm_bitem"
+	result_path = /obj/machinery/airalarm
+
 #define AALARM_MODE_SCRUBBING 1
 #define AALARM_MODE_VENTING 2 //makes draught
 #define AALARM_MODE_PANIC 3 //like siphon, but stronger (enables widenet)
@@ -161,14 +172,14 @@
 
 	if(panel_open && !istype(user, /mob/living/silicon/ai))
 		wires.interact(user)
-	else if (!shorted)
+	else if(!shorted)
 		ui_interact(user)
 
 /obj/machinery/airalarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "air_alarm", name, 440, 650, master_ui, state)
+		ui = new(user, src, ui_key, "airalarm", name, 440, 650, master_ui, state)
 		ui.open()
 
 /obj/machinery/airalarm/get_ui_data(mob/user)
@@ -719,7 +730,7 @@
 			if(istype(W, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You detach \the [src] from the wall.</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				new /obj/item/wallframe/alarm( user.loc )
+				new /obj/item/wallframe/airalarm( user.loc )
 				qdel(src)
 				return
 
@@ -742,23 +753,3 @@
 			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its safeties.</span>")
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 		return
-
-
-/*
-AIR ALARM CIRCUIT
-Just a object used in constructing air alarms
-*/
-/obj/item/weapon/electronics/airalarm
-	name = "air alarm electronics"
-	icon_state = "airalarm_electronics"
-
-/*
-AIR ALARM ITEM
-Handheld air alarm frame, for placing on walls
-*/
-/obj/item/wallframe/alarm
-	name = "air alarm frame"
-	desc = "Used for building Air Alarms"
-	icon = 'icons/obj/monitors.dmi'
-	icon_state = "alarm_bitem"
-	result_path = /obj/machinery/airalarm

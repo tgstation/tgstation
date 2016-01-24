@@ -274,7 +274,8 @@ Class Procs:
 	return 0
 
 /obj/machinery/interact(mob/user)
-	ui_interact(user)
+	if(is_operational())
+		ui_interact(user)
 
 /obj/machinery/CheckParts()
 	RefreshParts()

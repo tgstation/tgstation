@@ -1,9 +1,9 @@
 <script>
-component.exports = {
-  data: {
-    text: require('util/text')
+  component.exports = {
+    data: {
+      text: require('util/text')
+    }
   }
-}
 </script>
 
 <ui-display title='Power' button>
