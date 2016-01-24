@@ -345,6 +345,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	siemens_coeff = 0
 	punchdamagelow = 5
 	punchdamagehigh = 14
+	punchstunthreshold = 11 //about 40% chance to stun
 	blacklisted = 1
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
@@ -570,6 +571,7 @@ var/global/list/synth_flesh_disguises = list()
 	armor = 25
 	punchdamagelow = 10
 	punchdamagehigh = 19
+	punchstunthreshold = 14 //about 50% chance to stun
 	disguise_fail_health = 50
 
 

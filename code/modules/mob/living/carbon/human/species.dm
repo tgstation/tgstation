@@ -52,7 +52,7 @@
 	var/heatmod = 1		// multiplier for heat damage
 	var/punchdamagelow = 0       //lowest possible punch damage
 	var/punchdamagehigh = 9      //highest possible punch damage
-	var/punchstunthreshold = 9//damage at which punches from this race will stun
+	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
