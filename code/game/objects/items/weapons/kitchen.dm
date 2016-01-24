@@ -98,6 +98,16 @@
 	origin_tech = "materials=2;combat=4"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
 
+/obj/item/weapon/kitchen/knife/carrotshiv
+	name = "carrot shiv"
+	icon_state = "carrotshiv"
+	item_state = "carrotshiv"
+	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
+	force = 8
+	throwforce = 12
+	throw_speed = 4//the aerodynamics of the carrot allow it to embed more easily
+	embedded_impact_pain_multiplier = 3
+
 
 /obj/item/weapon/kitchen/rollingpin
 	name = "rolling pin"
