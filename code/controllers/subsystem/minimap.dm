@@ -4,8 +4,8 @@ var/datum/subsystem/minimap/SSminimap
 	name = "Minimap"
 	priority = -2
 
-	var/const/MINIMAP_SIZE = 4080
-	var/const/TILE_SIZE = 16
+	var/const/MINIMAP_SIZE = 2048
+	var/const/TILE_SIZE = 8
 
 	var/list/z_levels = list(1)
 
@@ -44,40 +44,48 @@ var/datum/subsystem/minimap/SSminimap
 
 	// Loop over turfs and generate icons.
 	for(var/turf/tile in block(locate(x1, y1, z), locate(x2, y2, z)))
+		var/icon/tile_icon
 		var/obj/obj
-		var/icon/ikon = new /icon('icons/minimap.dmi')
+
 
 		// Don't use icons for space, just add objects in space if they exist.
 		if(istype(tile, /turf/space))
+			obj = locate(/obj/structure/lattice/catwalk) in tile
+			if(obj)
+				tile_icon = new /icon('icons/obj/smooth_structures/catwalk.dmi', "catwalk", SOUTH)
 			obj = locate(/obj/structure/lattice) in tile
 			if(obj)
-				ikon = new /icon('icons/obj/smooth_structures/lattice.dmi', "lattice", 2)
+				tile_icon = new /icon('icons/obj/smooth_structures/lattice.dmi', "lattice", SOUTH)
 			obj = locate(/obj/structure/grille) in tile
 			if(obj)
-				ikon = new /icon('icons/obj/structures.dmi', "grille", 2)
+				tile_icon = new /icon('icons/obj/structures.dmi', "grille", SOUTH)
 			obj = locate(/obj/structure/transit_tube) in tile
 			if(obj)
-				ikon = new /icon('icons/obj/atmospherics/pipes/transit_tube.dmi', obj.icon_state, obj.dir)
+				tile_icon = new /icon('icons/obj/atmospherics/pipes/transit_tube.dmi', obj.icon_state, obj.dir)
 		else
-			ikon = new(tile.icon, tile.icon_state, tile.dir)
+			tile_icon = new /icon(tile.icon, tile.icon_state, tile.dir)
+			var/list/obj_icons = list()
 
-			var/icon/object
-			obj = locate(/obj/structure/window/reinforced) in tile
+			obj = locate(/obj/structure) in tile
 			if(obj)
-				object = new /icon('icons/obj/smooth_structures/reinforced_window.dmi', "r_window", 2)
-			obj = locate(/obj/machinery/door/airlock) in tile
+				obj_icons += getFlatIcon(obj)
+			obj = locate(/obj/machinery) in tile
 			if(obj)
-				object = new /icon(obj.icon, obj.icon_state, obj.dir, 1, 0)
+				obj_icons += new /icon(obj.icon, obj.icon_state, obj.dir, 1, 0)
+			obj = locate(/obj/structure/window) in tile
+			if(obj)
+				obj_icons += new /icon('icons/obj/smooth_structures/window.dmi', "window", SOUTH)
 
-			if(object)
-				ikon.Blend(object, ICON_OVERLAY)
+			for(var/icon/obj_icon in obj_icons)
+				tile_icon.Blend(obj_icon, ICON_OVERLAY)
 
-		// Scale the icon.
-		ikon.Scale(TILE_SIZE, TILE_SIZE)
-		// Add the tile to the minimap.
-		minimap.Blend(ikon, ICON_OVERLAY, ((tile.x - 1) * TILE_SIZE), ((tile.y - 1) * TILE_SIZE))
+		if(tile_icon)
+			// Scale the icon.
+			tile_icon.Scale(TILE_SIZE, TILE_SIZE)
+			// Add the tile to the minimap.
+			minimap.Blend(tile_icon, ICON_OVERLAY, ((tile.x - 1) * TILE_SIZE), ((tile.y - 1) * TILE_SIZE))
 
 	// Create a new icon and insert the generated minimap, so that BYOND doesn't generate different directions.
-	//var/icon/final = new /icon()
-	//final.Insert(minimap, "", SOUTH, 1, 0)
-	fcopy(minimap, map_path(z))
+	var/icon/final = new /icon()
+	final.Insert(minimap, "", SOUTH, 1, 0)
+	fcopy(final, map_path(z))
