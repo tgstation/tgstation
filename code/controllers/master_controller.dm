@@ -89,6 +89,7 @@ datum/controller/game_controller/proc/setup()
 		global.garbageCollector = new
 		garbageCollector = global.garbageCollector
 */
+
 	setup_objects() // Most log_startup spam happens here
 	setupgenetics()
 	setupfactions()
