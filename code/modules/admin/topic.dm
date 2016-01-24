@@ -1699,8 +1699,12 @@
 		if(alert(usr, "Validate the current Cult objective and unlock the next one?", "Cult Cheat Code", "Yes", "No") != "Yes")
 			return
 
-		var/datum/game_mode/cult/mode_ticker = ticker.mode
-		mode_ticker.bypass_phase()
+		var/datum/game_mode/cult/cult_round = find_active_mode("cult")
+		if(!cult_round)
+			alert("Couldn't locate cult mode datum! This shouldn't ever happen, tell a coder!")
+			return
+
+		cult_round.bypass_phase()
 		message_admins("Admin [key_name_admin(usr)] has unlocked the Cult's next objective.")
 		log_admin("Admin [key_name_admin(usr)] has unlocked the Cult's next objective.")
 		check_antagonists()
