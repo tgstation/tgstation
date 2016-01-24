@@ -81,7 +81,7 @@
 		MC += PC.maxcharge
 		C += PC.charge
 	capacity = MC / (15000) * 1e6
-	if(!charge)
+	if(!initial(charge))
 		charge = C / 15000 * 1e6
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
