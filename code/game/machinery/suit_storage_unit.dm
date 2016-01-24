@@ -28,6 +28,7 @@
 	var/STORAGE_TYPE = null
 
 	//Machine related vars
+	var/maintenance_mode = 0
 	var/isopen = 0
 	var/islocked = 0
 	var/isUV = 0
@@ -41,7 +42,7 @@
 /obj/machinery/suit_storage_unit/examine(mob/user)
 	..()
 	if(isbroken && isopen)
-		if(!panel_open)
+		if(!maintenance_mode)
 			user << "<span class='warning'>A small LED above the maintenance panel is flashing red.</span>"
 			return
 		switch(repair_stage)
@@ -193,7 +194,7 @@
 	data["isBaking"] = isUV
 	data["uv"] = issuperUV
 	data["safety"] = safetieson
-	data["maintenance"] = panel_open
+	data["maintenance"] = maintenance_mode
 	if(HELMET)
 		data["helmet"] = HELMET.name
 	if(SUIT)
@@ -238,11 +239,8 @@
 	update_icon()
 	return 1
 
-/obj/machinery/suit_storage_unit/attack_hand(mob/user)
-	interact(user)
-
 /obj/machinery/suit_storage_unit/proc/toggleUV(mob/user)
-	if(!src.panel_open)
+	if(!src.maintenance_mode)
 		return
 	else
 		if(src.issuperUV)
@@ -255,7 +253,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user)
-	if(!src.panel_open) //Needed check due to bugs
+	if(!src.maintenance_mode) //Needed check due to bugs
 		return
 	else
 		user << "<span class='notice'>You push the button. The coloured LED next to it changes.</span>"
@@ -477,12 +475,11 @@
 				update_icon()
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))
-		panel_open = !panel_open
+		maintenance_mode = !maintenance_mode
 		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		user << text("<span class='notice'>You [] the unit's maintenance panel.</span>",(src.panel_open ? "open up" : "close") )
-		src.updateUsrDialog()
+		user << text("<span class='notice'>You [] the unit's maintenance panel.</span>",(src.maintenance_mode ? "open up" : "close") )
 		return
-	if(isbroken && panel_open)
+	if(isbroken && maintenance_mode)
 		if(istype(I, /obj/item/weapon/wirecutters) && repair_stage == REPAIR_NEEDS_WIRECUTTERS)
 			user.visible_message("<span class='notice'>[user] starts removing [src]'s damaged wires.</span>", \
 								 "<span class='notice'>You begin removing the damaged wires from [src]...</span>")
