@@ -13,7 +13,6 @@
 	can_border_transition = 1
 
 /turf/space/New()
-	turfs |= src
 	if(!istype(src, /turf/space/transit))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
 
