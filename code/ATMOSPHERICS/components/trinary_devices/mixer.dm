@@ -126,7 +126,7 @@
 																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_mixer", name, 330, 165, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_mixer", name, 370, 165, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/mixer/get_ui_data()

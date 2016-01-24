@@ -89,7 +89,7 @@
 				beaker.reagents.trans_to(occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
 				beaker.reagents.reaction(occupant, VAPOR)
 				air1.gases["o2"][MOLES] -= 2 / efficiency // Lets use gas for this.
-			if(++reagent_transfer == 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
+			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
 				reagent_transfer = 0
 	return 1
 

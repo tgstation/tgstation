@@ -334,12 +334,14 @@ var/list/wire_color_directory = list()
 	switch(action)
 		if("cut")
 			if(istype(I, /obj/item/weapon/wirecutters) || IsAdminGhost(usr))
+				playsound(holder, 'sound/items/Wirecutter.ogg', 20, 1)
 				cut_color(target_wire)
 				. = TRUE
 			else
 				L << "<span class='warning'>You need wirecutters!</span>"
 		if("pulse")
 			if(istype(I, /obj/item/device/multitool) || IsAdminGhost(usr))
+				playsound(holder, 'sound/weapons/empty.ogg', 20, 1)
 				pulse_color(target_wire)
 				. = TRUE
 			else
