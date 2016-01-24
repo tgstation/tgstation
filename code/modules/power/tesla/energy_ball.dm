@@ -13,7 +13,8 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 										/obj/structure/particle_accelerator/power_box,
 										/obj/structure/particle_accelerator/end_cap,
 										/obj/machinery/field/containment,
-										/obj/structure/disposalpipe)
+										/obj/structure/disposalpipe,
+										/obj/machinery/gateway)
 
 /obj/singularity/energy_ball
 	name = "energy ball"
@@ -34,7 +35,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/Destroy()
 	for(var/obj/singularity/energy_ball/EB in orbiting_balls)
 		qdel(EB)
-	..()
+	return ..()
 
 /obj/singularity/energy_ball/process()
 	if(!is_orbiting)
@@ -44,7 +45,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		move_the_basket_ball(amount_to_move)
 		pixel_x = 0
 		pixel_y = 0
-		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 5)
+		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 15)
 		tesla_zap(src, 7, what_does_the_scouter_say_about_the_balls_power_level)
 		pixel_x = -32
 		pixel_y = -32
@@ -69,7 +70,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= 300)
 		energy -= 300
-		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 5)
+		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 15)
 		spawn(100)
 			var/obj/singularity/energy_ball/EB = new(loc)
 			orbiting_balls.Add(EB)
@@ -113,7 +114,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	return closest_atom
 
 /proc/tesla_zap(var/atom/source, zap_range = 3, power)
-	if(power < 500)
+	if(power < 1000)
 		return
 	var/list/tesla_coils = list()
 	var/list/grounding_rods = list()

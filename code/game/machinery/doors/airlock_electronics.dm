@@ -5,18 +5,11 @@
 	var/list/accesses = list()
 	var/one_access = 0
 
-/obj/item/weapon/electronics/airlock/attack_self(mob/user)
-	if (!user) return
-	interact(user)
-
-/obj/item/weapon/electronics/airlock/interact(mob/user)
-	add_fingerprint(user)
-	ui_interact(user)
-
-/obj/item/weapon/electronics/airlock/ui_interact(mob/user, ui_key = "main", var/datum/tgui/ui = null, force_open = 0)
-	SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "airlock_electronics", name, 975, 420, state = hands_state)
+/obj/item/weapon/electronics/airlock/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+													datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
+	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "airlock_electronics", name, 975, 420, master_ui, state)
 		ui.open()
 
 /obj/item/weapon/electronics/airlock/get_ui_data()
@@ -43,17 +36,18 @@
 /obj/item/weapon/electronics/airlock/ui_act(action, params)
 	if(..())
 		return
-
 	switch(action)
 		if("clear")
 			accesses = list()
 			one_access = 0
+			. = TRUE
 		if("one_access")
 			one_access = !one_access
+			. = TRUE
 		if("set")
 			var/access = text2num(params["access"])
 			if (!(access in accesses))
 				accesses += access
 			else
 				accesses -= access
-	return 1
+			. = TRUE

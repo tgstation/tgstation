@@ -17,6 +17,7 @@
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("chirps")
+	bubble_icon = "slime"
 
 	layer = 5
 

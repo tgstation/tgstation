@@ -35,10 +35,6 @@
 			return
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
-	// NanoUI
-	if(href_list["nano_error"])
-		src << href_list["nano_error"]
-		throw EXCEPTION("NanoUI: [href_list["nano_error"]]")
 
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)

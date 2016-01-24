@@ -157,10 +157,10 @@
 
 	var/mob/dead/observer/ghost = target.ghostize(0)
 	user.mind.transfer_to(target)
-	if(ghost && ghost.mind)
+	if(ghost)
 		ghost.mind.transfer_to(user)
-	else
-		user.key = ghost.key
+		if(ghost.key)
+			user.key = ghost.key
 
 	user.Paralyse(2)
 	target << "<span class='warning'>Our genes cry out as we swap our [user] form for [target].</span>"

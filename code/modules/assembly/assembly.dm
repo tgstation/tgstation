@@ -15,7 +15,7 @@
 	var/list/attached_overlays = null
 	var/obj/item/device/assembly_holder/holder = null
 	var/cooldown = 0//To prevent spam
-	var/wires = WIRE_RECEIVE | WIRE_PULSE
+	var/wire_type = WIRE_RECEIVE | WIRE_PULSE
 	var/attachable = 0 // can this be attached to wires
 	var/datum/wires/connected = null
 
@@ -51,10 +51,10 @@
 
 //Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
 /obj/item/device/assembly/proc/pulsed(radio = 0)
-	if(wires & WIRE_RECEIVE)
+	if(wire_type & WIRE_RECEIVE)
 		spawn(0)
 			activate()
-	if(radio && (wires & WIRE_RADIO_RECEIVE))
+	if(radio && (wire_type & WIRE_RADIO_RECEIVE))
 		spawn(0)
 			activate()
 	return 1
@@ -62,12 +62,12 @@
 
 //Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
 /obj/item/device/assembly/proc/pulse(radio = 0)
-	if(src.connected && src.wires)
-		connected.Pulse(src)
+	if(connected && wire_type)
+		connected.pulse_assembly(src)
 		return 1
-	if(holder && (wires & WIRE_PULSE))
+	if(holder && (wire_type & WIRE_PULSE))
 		holder.process_activation(src, 1, 0)
-	if(holder && (wires & WIRE_PULSE_SPECIAL))
+	if(holder && (wire_type & WIRE_PULSE_SPECIAL))
 		holder.process_activation(src, 0, 1)
 	return 1
 
@@ -121,7 +121,6 @@
 	user.set_machine(src)
 	interact(user)
 	return 1
-
 
 /obj/item/device/assembly/interact(mob/user)
 	return //HTML MENU FOR WIRES GOES HERE

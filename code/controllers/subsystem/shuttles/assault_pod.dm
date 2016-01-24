@@ -37,8 +37,9 @@
 	if(!src || qdeleted(src))
 		return
 
-	var/turf/T = pick(get_area_turfs(picked_area))
-
+	var/turf/T = safepick(get_area_turfs(picked_area))
+	if(!T)
+		return
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
 	landing_zone.id = "assault_pod(\ref[src])"
 	landing_zone.name = "Landing Zone"

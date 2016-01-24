@@ -1,5 +1,3 @@
-/mob/living/silicon/say(message)
-	return ..(message, "R")
 
 /mob/living/silicon/get_spans()
 	return ..() | SPAN_ROBOT
@@ -20,7 +18,7 @@
 			else
 				M << rendered
 		if(M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a>[rendered]"
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
 
 /mob/living/silicon/binarycheck()
 	return 1

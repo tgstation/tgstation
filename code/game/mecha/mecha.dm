@@ -207,8 +207,9 @@
 	cabin_air = new
 	cabin_air.temperature = T20C
 	cabin_air.volume = 200
-	cabin_air.oxygen = O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
-	cabin_air.nitrogen = N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
+	cabin_air.assert_gases("o2","n2")
+	cabin_air.gases["o2"][MOLES] = O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
+	cabin_air.gases["n2"][MOLES] = N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
 	return cabin_air
 
 /obj/mecha/proc/add_radio()
@@ -374,7 +375,7 @@
 			if(M.client)
 				speech_bubble_recipients.Add(M.client)
 		spawn(0)
-			flick_overlay(image('icons/mob/talk.dmi', src, "hR[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+			flick_overlay(image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 	return
 
 ////////////////////////////
@@ -440,11 +441,18 @@
 
 /obj/mecha/Process_Spacemove(var/movement_dir = 0)
 	. = ..()
-	if(!.)
-		if(occupant)
-			. = occupant.Process_Spacemove(movement_dir) //We'll just say you used the clamp to grab the wall
-		if(thrusters_active && movement_dir && use_power(step_energy_drain))
-			. = 1
+	if(.)
+		return 1
+	if(thrusters_active && movement_dir && use_power(step_energy_drain))
+		return 1
+
+	var/atom/movable/backup = get_spacemove_backup()
+	if(backup)
+		if(istype(backup) && movement_dir && !backup.anchored)
+			if(backup.newtonian_move(turn(movement_dir, 180)))
+				if(occupant)
+					occupant << "<span class='info'>You push off of [backup] to propel yourself.</span>"
+		return 1
 
 /obj/mecha/relaymove(mob/user,direction)
 	if(!direction)
@@ -627,6 +635,7 @@
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
 			AI.loc = card
+			card.AI = AI
 			occupant = null
 			AI.controlled_mech = null
 			AI.remote_control = null
@@ -643,7 +652,7 @@
 			ai_enter_mech(AI, interaction)
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to a mech.
-			AI = locate(/mob/living/silicon/ai) in card
+			AI = card.AI
 			if(!AI)
 				user << "<span class='warning'>There is no AI currently installed on this device.</span>"
 				return
@@ -656,6 +665,7 @@
 			AI.control_disabled = 0
 			AI.radio_enabled = 1
 			user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+			card.AI = null
 			ai_enter_mech(AI, interaction)
 
 //Hack and From Card interactions share some code, so leave that here for both to use.

@@ -70,6 +70,10 @@
 	cult_req = 1
 	charge_max = 4000
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
+	summon_type = list(/obj/item/device/soulstone/anybody)
+
+
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
 	name = "Shield"

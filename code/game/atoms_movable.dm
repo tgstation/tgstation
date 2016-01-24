@@ -295,3 +295,23 @@
 	if(buckled_mob == mover)
 		return 1
 	return ..()
+
+
+/atom/movable/proc/get_spacemove_backup()
+	var/atom/movable/dense_object_backup
+	for(var/A in orange(1, get_turf(src)))
+		if(isarea(A))
+			continue
+		else if(isturf(A))
+			var/turf/turf = A
+			if(!turf.density)
+				continue
+			return turf
+		else
+			var/atom/movable/AM = A
+			if(!AM.CanPass(src) || AM.density)
+				if(AM.anchored)
+					return AM
+				dense_object_backup = AM
+				break
+	. = dense_object_backup

@@ -1,6 +1,5 @@
-
 /obj/item/weapon/restraints
-	var/breakouttime = 600
+	breakouttime = 600
 
 //Handcuffs
 

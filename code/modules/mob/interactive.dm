@@ -407,7 +407,7 @@
 			if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 				TARGET = pick(target_filter(ultra_range(MIN_RANGE_FIND,src,1)))
 			else
-				TARGET = pick(get_area_turfs(job2area(myjob)))
+				TARGET = safepick(get_area_turfs(job2area(myjob)))
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 
@@ -424,6 +424,8 @@
 
 /mob/living/carbon/human/interactive/proc/walk2derpless(target)
 	set background = 1
+	if(!target)
+		return 0
 	var/turf/T = get_turf(target)
 	var/turf/D = get_step(src,dir)
 	if(D)

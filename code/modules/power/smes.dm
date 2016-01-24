@@ -71,14 +71,18 @@
 
 /obj/machinery/power/smes/RefreshParts()
 	var/IO = 0
-	var/C = 0
+	var/MC = 0
+	var/C
 	for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
 		IO += CP.rating
 	input_level_max = 200000 * IO
 	output_level_max = 200000 * IO
 	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
-		C += PC.maxcharge
-	capacity = C / (15000) * 1e6
+		MC += PC.maxcharge
+		C += PC.charge
+	capacity = MC / (15000) * 1e6
+	if(!initial(charge))
+		charge = C / 15000 * 1e6
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
 	//opening using screwdriver
@@ -158,10 +162,15 @@
 		terminal.dismantle(user)
 
 	//crowbarring it !
+	var/turf/T = get_turf(src)
 	if(default_deconstruction_crowbar(I))
-		message_admins("[src] has been deconstructed by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		message_admins("[src] has been deconstructed by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
 		log_game("[src] has been deconstructed by [key_name(user)]")
 		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
+
+/obj/machinery/power/smes/deconstruction()
+	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
+		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
@@ -318,21 +327,11 @@
 	if(terminal && terminal.powernet)
 		terminal.powernet.load += amount
 
-/obj/machinery/power/smes/attack_hand(mob/user)
-	if (!user)
-		return
-	add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/power/smes/interact(mob/user)
-	if (stat & BROKEN)
-		return
-	ui_interact(user)
-
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open = force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "smes", name, 340, 440)
+/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "smes", name, 340, 440, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/smes/get_ui_data()
@@ -358,52 +357,62 @@
 /obj/machinery/power/smes/ui_act(action, params)
 	if(..())
 		return
-
 	switch(action)
 		if("tryinput")
 			input_attempt = !input_attempt
 			log_smes(usr.ckey)
 			update_icon()
+			. = TRUE
 		if("tryoutput")
 			output_attempt = !output_attempt
 			log_smes(usr.ckey)
 			update_icon()
+			. = TRUE
 		if("input")
-			switch(params["input"])
-				if("custom")
-					var/custom = input(usr, "What rate would you like this SMES to attempt to charge at? Max is [input_level_max].") as null|num
-					if(custom)
-						input_level = custom
-				if("min")
-					input_level = 0
-				if("max")
-					input_level = input_level_max
-				if("plus")
-					input_level += 10000
-				if("minus")
-					input_level -= 10000
-			input_level = Clamp(input_level, 0, input_level_max)
-			log_smes(usr.ckey)
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "input")
+				target = input("New input target (0-[input_level_max]):", name, input_level) as num|null
+				. = .(action, list("target" = target))
+			else if(target == "min")
+				input_level = 0
+				. = TRUE
+			else if(target == "max")
+				input_level = input_level_max
+				. = TRUE
+			else if(text2num(target) != null)
+				input_level = text2num(target)
+				. = TRUE
+			else if(adjust)
+				input_level += adjust
+				. = TRUE
+			if(.)
+				input_level = Clamp(input_level, 0, input_level_max)
+				log_smes(usr.ckey)
 		if("output")
-			switch(params["output"])
-				if("custom")
-					var/custom = input(usr, "What rate would you like this SMES to attempt to output at? Max is [output_level_max].") as null|num
-					if(custom)
-						output_level = custom
-				if("min")
-					output_level = 0
-				if("max")
-					output_level = output_level_max
-				if("plus")
-					output_level += 10000
-				if("minus")
-					output_level -= 10000
-			output_level = Clamp(output_level, 0, output_level_max)
-			log_smes(usr.ckey)
-	return 1
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "input")
+				target = input("New output target (0-[output_level_max]):", name, output_level) as num|null
+				. = .(action, list("target" = target))
+			else if(target == "min")
+				output_level = 0
+				. = TRUE
+			else if(target == "max")
+				output_level = input_level_max
+				. = TRUE
+			else if(text2num(target) != null)
+				output_level = text2num(target)
+				. = TRUE
+			else if(adjust)
+				output_level += adjust
+				. = TRUE
+			if(.)
+				output_level = Clamp(output_level, 0, output_level_max)
+				log_smes(usr.ckey)
 
 /obj/machinery/power/smes/proc/log_smes(user = "")
-	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]","singulo")
+	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]", "singulo")
 
 
 /obj/machinery/power/smes/emp_act(severity)
