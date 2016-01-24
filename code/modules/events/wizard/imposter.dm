@@ -38,9 +38,11 @@
 		ticker.mode.apprentices += I.mind
 		I.mind.special_role = "imposter"
 
-		var/datum/objective/protect_objective = add_objective(I.mind, /datum/objective/default/protect)
+		var/datum/objective/protect/protect_objective = new /datum/objective/protect
+		protect_objective.owner = I.mind
 		protect_objective.target = W.mind
 		protect_objective.explanation_text = "Protect [W.real_name], the wizard."
+		I.mind.objectives += protect_objective
 		ticker.mode.update_wiz_icons_added(I.mind)
 
 		I.attack_log += "\[[time_stamp()]\] <font color='red'>Is an imposter!</font>"

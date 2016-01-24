@@ -26,9 +26,12 @@ var/datum/subsystem/timer/SStimer
 		if (!event.thingToCall || qdeleted(event.thingToCall))
 			qdel(event)
 		if (event.timeToRun <= world.time)
-			spawn(-1)
-				call(event.thingToCall, event.procToCall)(arglist(event.argList))
+			runevent(event)
 			qdel(event)
+
+/datum/subsystem/timer/proc/runevent(datum/timedevent/event)
+	set waitfor = 0
+	call(event.thingToCall, event.procToCall)(arglist(event.argList))
 
 /datum/timedevent
 	var/thingToCall
@@ -46,7 +49,8 @@ var/datum/subsystem/timer/SStimer
 /datum/timedevent/Destroy()
 	SStimer.processing -= src
 	SStimer.hashes -= src.hash
-	return ..()
+	return QDEL_HINT_IWILLGC
+
 
 /proc/addtimer(thingToCall, procToCall, wait, unique = FALSE, ...)
 	if (!SStimer) //can't run timers before the mc has been created

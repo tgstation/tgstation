@@ -102,11 +102,7 @@
 		return
 	if (!NODE1)
 		on = 0
-	//broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
-	if(!on)
-		return 0
-
-	if(welded)
+	if(!on || welded)
 		return 0
 
 	var/datum/gas_mixture/air_contents = AIR1
@@ -170,7 +166,8 @@
 	signal.data = list(
 		"area" = src.area_uid,
 		"tag" = src.id_tag,
-		"device" = "AVP",
+		"frequency" = frequency,
+		"device" = "VP",
 		"power" = on,
 		"direction" = pump_direction?("release"):("siphon"),
 		"checks" = pressure_checks,
@@ -236,6 +233,9 @@
 	if("set_external_pressure" in signal.data)
 		external_pressure_bound = Clamp(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
 
+	if("reset_external_pressure" in signal.data)
+		external_pressure_bound = ONE_ATMOSPHERE
+
 	if("adjust_internal_pressure" in signal.data)
 		internal_pressure_bound = Clamp(internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),0,ONE_ATMOSPHERE*50)
 
@@ -247,13 +247,11 @@
 		return
 
 	if("status" in signal.data)
-		spawn(2)
-			broadcast_status()
+		broadcast_status()
 		return //do not update_icon
 
 		//log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
-	spawn(2)
-		broadcast_status()
+	broadcast_status()
 	update_icon()
 	return
 
@@ -277,7 +275,7 @@
 					welded = 0
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = 20, dir = dir)
-			return 1
+			return 0
 	else
 		return ..()
 

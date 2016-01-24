@@ -468,6 +468,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	item_state = "coil_red"
 	max_amount = MAXCOIL
 	amount = MAXCOIL
+	merge_type = /obj/item/stack/cable_coil // This is here to let its children merge between themselves
 	item_color = "red"
 	desc = "A coil of power cable."
 	throwforce = 0

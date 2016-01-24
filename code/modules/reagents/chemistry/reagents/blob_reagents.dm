@@ -334,15 +334,15 @@
 			if(!X.anchored)
 				var/distance = get_dist(X, pull)
 				var/moving_power = max(range_power - distance, 1)
-				spawn(0)
-					if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
-						if(setting_type)
-							var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, pull)))
-							var/throw_range = 5 - distance
-							X.throw_at(throw_target, throw_range, 1)
-						else
-							X.throw_at(pull, distance, 1)
+				if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
+					if(setting_type)
+						var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, pull)))
+						var/throw_range = 5 - distance
+						X.throw_at_fast(throw_target, throw_range, 1)
 					else
+						X.throw_at_fast(pull, distance, 1)
+				else
+					spawn(0)
 						if(setting_type)
 							for(var/i in 0 to moving_power-1)
 								sleep(2)

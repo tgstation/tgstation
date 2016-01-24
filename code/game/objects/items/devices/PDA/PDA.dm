@@ -256,7 +256,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	user.set_machine(src)
 
-	if(active_uplink_check(user))
+	if(hidden_uplink && hidden_uplink.active)
+		hidden_uplink.interact(user)
 		return
 
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
@@ -414,6 +415,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					dat += "Unable to obtain a reading.<br>"
 				else
 					var/datum/gas_mixture/environment = T.return_air()
+					var/list/env_gases = environment.gases
 
 					var/pressure = environment.return_pressure()
 					var/total_moles = environment.total_moles()
@@ -421,17 +423,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					dat += "Air Pressure: [round(pressure,0.1)] kPa<br>"
 
 					if (total_moles)
-						var/o2_level = environment.oxygen/total_moles
-						var/n2_level = environment.nitrogen/total_moles
-						var/co2_level = environment.carbon_dioxide/total_moles
-						var/plasma_level = environment.toxins/total_moles
-						var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
-						dat += "Nitrogen: [round(n2_level*100)]%<br>"
-						dat += "Oxygen: [round(o2_level*100)]%<br>"
-						dat += "Carbon Dioxide: [round(co2_level*100)]%<br>"
-						dat += "Plasma: [round(plasma_level*100)]%<br>"
-						if(unknown_level > 0.01)
-							dat += "OTHER: [round(unknown_level)]%<br>"
+						for(var/id in env_gases)
+							var/gas_level = env_gases[id][MOLES]/total_moles
+							if(id in hardcoded_gases || gas_level > 0.01)
+								dat += "[env_gases[id][GAS_NAME]]: [round(gas_level*100)]%<br>"
+
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
 
@@ -565,9 +561,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				tnote = null
 			if("Ringtone")
 				var/t = input(U, "Please enter new ringtone", name, ttone) as text
-				if (in_range(src, U) && loc == U)
-					if (t)
-						if(src.hidden_uplink && hidden_uplink.check_trigger(U, trim(lowertext(t)), trim(lowertext(lock_code))))
+				if(in_range(src, U) && loc == U)
+					if(t)
+						if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
+							hidden_uplink.interact(U)
 							U << "The PDA softly beeps."
 							U << browse(null, "window=pda")
 							src.mode = 0
@@ -778,7 +775,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)
 	for(var/mob/M in player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
-			M.show_message("<a href='?src=\ref[M];follow=\ref[user]'>(F)</a><span class='name'> [msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
+			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a><span class='name'> [msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>"
 
 /obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
 	if(!P || qdeleted(P) || P.toff)
@@ -944,9 +941,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		switch(scanmode)
 
 			if(1)
-				user.visible_message(text("<span class='alert'>[] has analyzed []'s vitals!</span>", user, C))
+				C.visible_message("<span class='alert'>[user] has analyzed [C]'s vitals!</span>")
 				healthscan(user, C, 1)
-				src.add_fingerprint(user)
+				add_fingerprint(user)
 
 			if(2)
 				// Unused

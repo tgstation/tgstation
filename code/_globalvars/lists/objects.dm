@@ -17,3 +17,4 @@ var/global/list/rcd_list = list()					//list of Rapid Construction Devices.
 var/global/list/apcs_list = list()					//list of all Area Power Controller machines, seperate from machines for powernet speeeeeeed.
 var/global/list/tracked_implants = list()			//list of all current implants that are tracked to work out what sort of trek everyone is on. Sadly not on lavaworld not implemented...
 var/global/list/poi_list = list()					//list of points of interest for observe/follow
+var/global/list/pinpointer_list = list()			//list of all pinpointers. Used to change stuff they are pointing to all at once.

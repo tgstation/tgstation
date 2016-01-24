@@ -67,8 +67,8 @@ var/list/teleportlocs = list()
 	for(var/area/AR in world)
 		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station)) continue
 		if(teleportlocs.Find(AR.name)) continue
-		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == ZLEVEL_STATION)
+		var/turf/picked = safepick(get_area_turfs(AR.type))
+		if (picked && (picked.z == ZLEVEL_STATION))
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 
@@ -740,7 +740,7 @@ var/list/teleportlocs = list()
 	music = 'sound/ambience/signal.ogg'
 
 /area/medical/patients_rooms
-	name = "Patient's Rooms"
+	name = "Patients' Rooms"
 	icon_state = "patients"
 
 /area/medical/cmo
@@ -1142,7 +1142,7 @@ var/list/teleportlocs = list()
 	icon_state = "yellow"
 
 /area/construction/quarters
-	name = "Engineer's Quarters"
+	name = "Engineers' Quarters"
 	icon_state = "yellow"
 
 /area/construction/qmaint

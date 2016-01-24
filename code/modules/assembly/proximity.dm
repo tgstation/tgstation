@@ -56,7 +56,6 @@
 	cooldown = 2
 	spawn(10)
 		process_cooldown()
-	return
 
 
 /obj/item/device/assembly/prox_sensor/process()
@@ -71,15 +70,13 @@
 /obj/item/device/assembly/prox_sensor/dropped()
 	spawn(0)
 		sense()
-		return
-	return
 
 
 /obj/item/device/assembly/prox_sensor/toggle_scan()
 	if(!secured)	return 0
 	scanning = !scanning
 	update_icon()
-	return
+
 
 
 /obj/item/device/assembly/prox_sensor/update_icon()

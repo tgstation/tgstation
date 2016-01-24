@@ -377,7 +377,7 @@
 	harvest = 0
 	weedlevel = 0 // Reset
 
-	spawn(5) // Wait a while
+	sleep(5) // Wait a while
 	update_icon()
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutated into [myseed.plantname]!</span>")
 
@@ -397,7 +397,7 @@
 		harvest = 0
 		weedlevel = 0 // Reset
 
-		spawn(5) // Wait a while
+		sleep(5) // Wait a while
 		update_icon()
 		visible_message("<span class='warning'>The mutated weeds in [src] spawned a [myseed.plantname]!</span>")
 	else
@@ -798,8 +798,7 @@
 				user << "<span class='notice'>You reconnect \the [src]'s hoses.</span>"
 
 			for(var/obj/machinery/hydroponics/h in range(1,src))
-				spawn()
-					h.update_icon()
+				h.update_icon()
 
 	return
 

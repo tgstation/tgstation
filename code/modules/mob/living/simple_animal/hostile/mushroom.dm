@@ -61,12 +61,12 @@
 	deathmessage = "[src] fainted."
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/adjustBruteLoss(damage)//Possibility to flee from a fight just to make it more visually interesting
+/mob/living/simple_animal/hostile/mushroom/adjustHealth(damage)//Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
 		spawn(30)
 			retreat_distance = null
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)

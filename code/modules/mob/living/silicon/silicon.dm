@@ -7,6 +7,7 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
+	bubble_icon = "machine"
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()

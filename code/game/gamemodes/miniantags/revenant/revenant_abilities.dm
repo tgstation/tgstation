@@ -187,7 +187,7 @@
 						PoolOrNew(/obj/effect/overlay/temp/revenant, bot.loc)
 						bot.locked = 0
 						bot.open = 1
-						bot.Emag(null)
+						bot.emag_act()
 				for(var/mob/living/carbon/human/human in T.contents)
 					if(human == user)
 						continue

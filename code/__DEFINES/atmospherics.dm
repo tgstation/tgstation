@@ -8,11 +8,19 @@
 #define MOLES_O2STANDARD		(MOLES_CELLSTANDARD*O2STANDARD)	// O2 standard value (21%)
 #define MOLES_N2STANDARD		(MOLES_CELLSTANDARD*N2STANDARD)	// N2 standard value (79%)
 
-#define GAS_O2 	(1 << 0)
-#define GAS_N2	(1 << 1)
-#define GAS_PL	(1 << 2)
-#define GAS_CO2	(1 << 3)
-#define GAS_N2O	(1 << 4)
+//indices of values in gas lists. used by listmos.
+#define MOLES			1
+#define ARCHIVE			2
+#define GAS_META		3
+//this is kinda hacky... but it means I don't have to change every single time they're called.
+#define META_GAS_SPECIFIC_HEAT	1
+#define META_GAS_NAME			2
+#define META_GAS_OVERLAY		4
+#define META_GAS_MOLES_VISIBLE	3
+#define SPECIFIC_HEAT	GAS_META][META_GAS_SPECIFIC_HEAT
+#define GAS_NAME		GAS_META][META_GAS_NAME
+#define GAS_OVERLAY		GAS_META][META_GAS_OVERLAY
+#define MOLES_VISIBLE	GAS_META][META_GAS_MOLES_VISIBLE
 
 //stuff you should probably leave well alone!
 //ATMOS
@@ -152,3 +160,8 @@
 #define PARENT2		parents[2]
 #define PARENT3		parents[3]
 #define PARENT_I	parents[I]
+
+//Tanks
+#define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
+#define TANK_MIN_RELEASE_PRESSURE 0
+#define TANK_DEFAULT_RELEASE_PRESSURE 16

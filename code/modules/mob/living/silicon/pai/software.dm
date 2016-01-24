@@ -260,8 +260,7 @@
 			if(href_list["cable"])
 				var/turf/T = get_turf(src.loc)
 				src.cable = new /obj/item/weapon/pai_cable(T)
-				for (var/mob/M in viewers(T))
-					M.show_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", 3, "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>", 2)
+				T.visible_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
@@ -520,6 +519,7 @@
 		dat += "Unable to obtain a reading.<br>"
 	else
 		var/datum/gas_mixture/environment = T.return_air()
+		var/list/env_gases = environment.gases
 
 		var/pressure = environment.return_pressure()
 		var/total_moles = environment.total_moles()
@@ -527,17 +527,10 @@
 		dat += "Air Pressure: [round(pressure,0.1)] kPa<br>"
 
 		if (total_moles)
-			var/o2_level = environment.oxygen/total_moles
-			var/n2_level = environment.nitrogen/total_moles
-			var/co2_level = environment.carbon_dioxide/total_moles
-			var/plasma_level = environment.toxins/total_moles
-			var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
-			dat += "Nitrogen: [round(n2_level*100)]%<br>"
-			dat += "Oxygen: [round(o2_level*100)]%<br>"
-			dat += "Carbon Dioxide: [round(co2_level*100)]%<br>"
-			dat += "Plasma: [round(plasma_level*100)]%<br>"
-			if(unknown_level > 0.01)
-				dat += "OTHER: [round(unknown_level)]%<br>"
+			for(var/id in env_gases)
+				var/gas_level = env_gases[id][MOLES]/total_moles
+				if(id in hardcoded_gases || gas_level > 0.01)
+					dat += "[env_gases[id][GAS_NAME]]: [round(gas_level*100)]%<br>"
 		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 	dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
 	dat += "<br>"

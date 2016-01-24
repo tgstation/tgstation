@@ -196,10 +196,15 @@
 		if(istype(T,/turf/simulated))
 			var/turf/simulated/ST = T
 			if(ST.air)
-				var/tox = ST.air.toxins
-				var/oxy = ST.air.oxygen
-				var/n2  = ST.air.nitrogen
-				var/co2 = ST.air.carbon_dioxide
+				var/ST_gases = ST.air.gases
+				ST.air.assert_gases(arglist(hardcoded_gases))
+
+				var/tox = ST_gases["plasma"][MOLES]
+				var/oxy = ST_gases["o2"][MOLES]
+				var/n2  = ST_gases["n2"][MOLES]
+				var/co2 = ST_gases["co2"][MOLES]
+
+				ST.air.garbage_collect()
 
 				if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])
 					atmos_suitable = 0
@@ -276,25 +281,32 @@
 	Proj.on_hit(src)
 	return 0
 
+/mob/living/simple_animal/proc/adjustHealth(amount)
+	if(status_flags & GODMODE)
+		return 0
+	bruteloss = Clamp(bruteloss + amount, 0, maxHealth)
+	handle_regular_status_updates()
+	return amount
+
 /mob/living/simple_animal/adjustBruteLoss(amount)
 	if(damage_coeff[BRUTE])
-		..(amount*damage_coeff[BRUTE])
+		. = adjustHealth(amount*damage_coeff[BRUTE])
 
 /mob/living/simple_animal/adjustFireLoss(amount)
 	if(damage_coeff[BURN])
-		adjustBruteLoss(amount*damage_coeff[BURN])
+		. = adjustHealth(amount*damage_coeff[BURN])
 
 /mob/living/simple_animal/adjustOxyLoss(amount)
 	if(damage_coeff[OXY])
-		adjustBruteLoss(amount*damage_coeff[OXY])
+		. = adjustHealth(amount*damage_coeff[OXY])
 
 /mob/living/simple_animal/adjustToxLoss(amount)
 	if(damage_coeff[TOX])
-		..(amount*damage_coeff[TOX])
+		. = adjustHealth(amount*damage_coeff[TOX])
 
 /mob/living/simple_animal/adjustCloneLoss(amount)
 	if(damage_coeff[CLONE])
-		..(amount*damage_coeff[CLONE])
+		. = adjustHealth(amount*damage_coeff[CLONE])
 
 /mob/living/simple_animal/adjustStaminaLoss(amount)
 	return
