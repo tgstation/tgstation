@@ -1,4 +1,4 @@
-/mob/living/simple_animal/lizard
+/mob/living/simple_animal/hostile/lizard
 	name = "Lizard"
 	desc = "A cute tiny lizard."
 	icon_state = "lizard"
@@ -7,6 +7,7 @@
 	speak_emote = list("hisses")
 	health = 5
 	maxHealth = 5
+	faction = list("Lizard")
 	attacktext = "bites"
 	attacktext = "bites"
 	melee_damage_lower = 1
@@ -19,3 +20,20 @@
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = 2
+	environment_smash = 0
+
+/mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?
+	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
+		return 0
+	if(istype(the_target,/mob/living/simple_animal/butterfly) || istype(the_target,/mob/living/simple_animal/cockroach))
+		return 1
+	return 0
+
+/mob/living/simple_animal/hostile/lizard/AttackingTarget()
+	if(istype(target,/mob/living/simple_animal/butterfly) || istype(target,/mob/living/simple_animal/cockroach)) //Makes sure player lizards only consume insects.
+		visible_message("[name] consumes [target] in a single gulp", "<span class='notice'>You consume [target] in a single gulp</span>")
+		qdel(target) //Nom
+		target = null
+		adjustBruteLoss(-2)
+	else
+		..()
