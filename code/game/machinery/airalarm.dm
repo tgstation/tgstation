@@ -151,28 +151,26 @@
 
 /obj/machinery/airalarm/initialize()
 	set_frequency(frequency)
-	if (!master_is_operating())
+	if(!master_is_operating())
 		elect_master()
 
 /obj/machinery/airalarm/proc/master_is_operating()
 	return alarm_area.master_air_alarm && !(alarm_area.master_air_alarm.stat & (NOPOWER|BROKEN))
 
 /obj/machinery/airalarm/proc/elect_master()
-	for (var/area/A in alarm_area.related)
-		for (var/obj/machinery/airalarm/AA in A)
-			if (!(AA.stat & (NOPOWER|BROKEN)))
+	for(var/area/A in alarm_area.related)
+		for(var/obj/machinery/airalarm/AA in A)
+			if(!(AA.stat & (NOPOWER|BROKEN)))
 				alarm_area.master_air_alarm = AA
 				return 1
 	return 0
 
 /obj/machinery/airalarm/interact(mob/user)
-	if (user.has_unlimited_silicon_privilege && src.aidisabled)
+	if(user.has_unlimited_silicon_privilege && src.aidisabled)
 		user << "AI control for this Air Alarm interface has been disabled."
 		return
 
-	if(panel_open && !istype(user, /mob/living/silicon/ai))
-		wires.interact(user)
-	else if(!shorted)
+	if(!shorted)
 		ui_interact(user)
 
 /obj/machinery/airalarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
@@ -663,17 +661,13 @@
 				buildstage = 1
 				update_icon()
 				return
-
-			if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
+			else if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				panel_open = !panel_open
 				user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
 				update_icon()
 				return
-
-			if (panel_open && ((istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))))
-				return src.attack_hand(user)
-			else if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
+			else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
 					user << "<span class='warning'>It does nothing!</span>"
 				else
@@ -683,6 +677,9 @@
 						src.updateUsrDialog()
 					else
 						user << "<span class='danger'>Access denied.</span>"
+				return
+			else if(panel_open && is_wire_tool(W))
+				wires.interact(user)
 				return
 		if(1)
 			if(istype(W, /obj/item/weapon/crowbar))

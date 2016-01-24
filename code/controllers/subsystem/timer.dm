@@ -4,6 +4,7 @@ var/datum/subsystem/timer/SStimer
 	name = "Timer"
 	wait = 5
 	priority = 1
+	display = 3
 
 	var/list/datum/timedevent/processing
 	var/list/hashes

@@ -61,7 +61,7 @@
 		if(WIRE_AI)
 			A.aidisabled = mend // Enable/disable AI control.
 		if(WIRE_PANIC) // Force panic syphon on.
-			if(!mend)
+			if(!mend && !A.shorted)
 				A.mode = 3 // AALARM_MODE_PANIC
 				A.apply_mode()
 		if(WIRE_ALARM) // Post alarm.
