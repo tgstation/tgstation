@@ -1449,7 +1449,7 @@
 "aBS" = (/obj/structure/cable/blue{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{dir = 10},/turf/simulated/floor/plating,/area/maintenance/maintcentral)
 "aBT" = (/obj/structure/table,/obj/item/device/paicard,/turf/simulated/floor/plating,/area/construction/Storage{name = "Construction Site"})
 "aBU" = (/obj/structure/table,/obj/item/weapon/storage/toolbox/mechanical,/turf/simulated/floor/plating,/area/construction/Storage{name = "Construction Site"})
-"aBV" = (/obj/item/wallframe/alarm,/turf/simulated/floor/plating,/area/construction/Storage{name = "Construction Site"})
+"aBV" = (/obj/item/wallframe/airalarm,/turf/simulated/floor/plating,/area/construction/Storage{name = "Construction Site"})
 "aBW" = (/obj/structure/extinguisher_cabinet{pixel_y = -30},/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/turf/simulated/floor/plasteel,/area/quartermaster/miningdock)
 "aBX" = (/obj/structure/table,/obj/item/device/flashlight/lantern{pixel_y = 5},/obj/item/device/flashlight/lantern{pixel_x = 5},/turf/simulated/floor/plasteel,/area/quartermaster/miningdock)
 "aBY" = (/turf/simulated/floor/plasteel{dir = 1; icon_state = "browncorner"},/area/construction/hallway{name = "Port Central Hallway"})
