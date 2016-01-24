@@ -1603,7 +1603,6 @@
 #include "code\modules\tgui\states\notcontained.dm"
 #include "code\modules\tgui\states\physical.dm"
 #include "code\modules\tgui\states\self.dm"
-#include "code\modules\tgui\states\wire.dm"
 #include "code\modules\tgui\states\zlevel.dm"
 #include "code\modules\tooltip\tooltip.dm"
 #include "code\modules\uplink\uplink.dm"
