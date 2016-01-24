@@ -77,7 +77,7 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	..()
-	rename_self("ai", 1)
+	rename_self("ai")
 	name = real_name
 	anchored = 1
 	canmove = 0
@@ -121,6 +121,7 @@ var/list/ai_list = list()
 		else
 			if (B.brainmob.mind)
 				B.brainmob.mind.transfer_to(src)
+				rename_self("ai")
 				if(mind.special_role)
 					mind.store_memory("As an AI, you must obey your silicon laws above all else. Your objectives will consider you to be dead.")
 					src << "<span class='userdanger'>You have been installed as an AI! </span>"
@@ -849,3 +850,18 @@ var/list/ai_list = list()
 	var/name_used = speaker.GetVoice()
 	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
 	show_message(rendered, 2)
+
+/mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
+	..()
+	if(oldname != real_name)
+		if(eyeobj)
+			eyeobj.name = "[newname] (AI Eye)"
+
+		// Notify Cyborgs
+		for(var/mob/living/silicon/robot/Slave in connected_robots)
+			Slave.show_laws()
+
+/mob/living/silicon/ai/replace_identification_name(oldname,newname)
+	if(aiPDA)
+		aiPDA.owner = newname
+		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"

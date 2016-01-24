@@ -177,82 +177,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return 0
 	return 1
 
-//This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
-//Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
-/mob/proc/fully_replace_character_name(oldname,newname)
-	if(!newname)	return 0
-	real_name = newname
-	name = newname
-	if(mind)
-		mind.name = newname
-	if(istype(src, /mob/living/carbon))
-		var/mob/living/carbon/C = src
-		if(C.dna)
-			C.dna.real_name = real_name
-
-	if(isAI(src))
-		var/mob/living/silicon/ai/AI = src
-		if(oldname != real_name)
-			if(AI.eyeobj)
-				AI.eyeobj.name = "[newname] (AI Eye)"
-
-			// Set ai pda name
-			if(AI.aiPDA)
-				AI.aiPDA.owner = newname
-				AI.aiPDA.name = newname + " (" + AI.aiPDA.ownjob + ")"
-
-			// Notify Cyborgs
-			for(var/mob/living/silicon/robot/Slave in AI.connected_robots)
-				Slave.show_laws()
-
-	if(isrobot(src))
-		var/mob/living/silicon/robot/R = src
-		if(oldname != real_name)
-			R.notify_ai(3, oldname, newname)
-		if(R.camera)
-			R.camera.c_tag = real_name
-
-	if(oldname)
-		//update the datacore records! This is goig to be a bit costly.
-		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
-			var/datum/data/record/R = find_record("name", oldname, L)
-			if(R)	R.fields["name"] = newname
-
-		//update our pda and id if we have them on our person
-		var/list/searching = GetAllContents()
-		var/search_id = 1
-		var/search_pda = 1
-
-		for(var/A in searching)
-			if( search_id && istype(A,/obj/item/weapon/card/id) )
-				var/obj/item/weapon/card/id/ID = A
-				if(ID.registered_name == oldname)
-					ID.registered_name = newname
-					ID.update_label()
-					if(!search_pda)	break
-					search_id = 0
-
-			else if( search_pda && istype(A,/obj/item/device/pda) )
-				var/obj/item/device/pda/PDA = A
-				if(PDA.owner == oldname)
-					PDA.owner = newname
-					PDA.update_label()
-					if(!search_id)	break
-					search_pda = 0
-
-		for(var/datum/mind/T in ticker.minds)
-			for(var/datum/objective/obj in T.objectives)
-				// Only update if this player is a target
-				if(obj.target && obj.target.current && obj.target.current.real_name == name)
-					obj.update_explanation_text()
-
-	return 1
-
-
-
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
-
-/mob/proc/rename_self(role, allow_numbers=0)
+/mob/proc/rename_self(role)
 	var/oldname = real_name
 	var/newname
 	var/loop = 1
@@ -284,13 +210,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		loop--
 		safety++
 
-	if(isAI(src))
-		oldname = null//don't bother with the records update crap
 	if(newname)
 		fully_replace_character_name(oldname,newname)
-		if(isrobot(src))
-			var/mob/living/silicon/robot/A = src
-			A.custom_name = newname
 
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
