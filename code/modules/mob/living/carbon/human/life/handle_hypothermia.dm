@@ -2,7 +2,7 @@ var/global/list/coldwarning_light = list("It's a wee bit chilly, isn't it?","You
 var/global/list/coldwarning_hard = list("Holy shit, it's freezing cold out here!","You should probably get warmed up quickly!","You can't feel your hands!","You can't feel anything!","You're absolutely exhausted!")
 
 /mob/living/proc/undergoing_hypothermia()
-	if(!istype(src,/mob/living/carbon/human))
+	if(!istype(src,/mob/living/carbon/human) && !istype(src,/mob/living/carbon/monkey))
 		return NO_HYPOTHERMIA
 	else
 		var/mob/living/carbon/human/H = src
@@ -50,7 +50,7 @@ var/global/list/coldwarning_hard = list("Holy shit, it's freezing cold out here!
 	switch(undergoing_hypothermia())
 		if(MILD_HYPOTHERMIA) // shivering + stuttering + slowed down
 			// see human_movement.dm for slowdown.
-			if(prob(5) && !is_vessel_dilated())
+			if(prob(15) && !is_vessel_dilated())
 				if(prob(75))
 					to_chat(src,"<b>[pick(coldwarning_light)]</b>")
 				else to_chat(src,"<span class='danger'>[pick(coldwarning_hard)]</span>")
@@ -62,8 +62,8 @@ var/global/list/coldwarning_hard = list("Holy shit, it's freezing cold out here!
 		// may stutter - see say.dm
 		// may slur words - see a different say.dm there's like a billion.
 		// see human_movement.dm for slowdown.
-			if(prob(5) && !is_vessel_dilated())
-				if(prob(50))
+			if(prob(15) && !is_vessel_dilated())
+				if(prob(25))
 					to_chat(src,"<b>[pick(coldwarning_light)]</b>")
 				else to_chat(src,"<span class='danger'>[pick(coldwarning_hard)]</span>")
 			burn_calories(0.2)
