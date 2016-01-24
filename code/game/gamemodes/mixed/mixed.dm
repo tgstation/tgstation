@@ -77,14 +77,14 @@
 		M.declare_completion()
 
 /datum/game_mode/mixed/add_cultist(datum/mind/cult_mind)
-	var/datum/game_mode/cult/cult_round = is_round_cult()
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
 	if(cult_round)
 		cult_round.add_cultist(..())
 	else
 		..()
 
 /datum/game_mode/mixed/remove_cultist(var/datum/mind/cult_mind, var/show_message = 1, var/log=1)
-	var/datum/game_mode/cult/cult_round = is_round_cult()
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
 	if(cult_round)
 		cult_round.remove_cultist(..())
 	else

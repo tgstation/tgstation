@@ -163,7 +163,7 @@
 
 /obj/effect/rune/proc/convert()
 
-	var/datum/game_mode/cult/cult_round = is_round_cult()
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
 
 	for(var/mob/living/carbon/M in src.loc)
 		if(iscultist(M))
@@ -241,7 +241,7 @@
 			to_chat(M, "<span class='warning'>This plane of reality has already been torn into Nar-Sie's realm.</span>")
 		return
 
-	var/datum/game_mode/cult/cult_round = is_round_cult()
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
 
 	if(ticker.mode.eldergod)
 		// Sanity checks
@@ -441,7 +441,7 @@
 	var/mob/living/carbon/human/corpse_to_raise
 	var/mob/living/carbon/human/body_to_sacrifice
 
-	var/datum/game_mode/cult/cult_round = is_round_cult()
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
 
 	var/is_sacrifice_target = 0
 	for(var/mob/living/carbon/human/M in src.loc)
@@ -622,7 +622,7 @@
 		D.real_name = "[pick(first_names_male)] [pick(last_names)]"
 	D.status_flags &= ~GODMODE
 
-	var/datum/game_mode/cult/cult_round = is_round_cult()
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
 	if(cult_round)
 		cult_round.add_cultist(D.mind)
 	else
@@ -814,7 +814,7 @@
 		to_chat(usr, "<span class='warning'>The presence of a null rod is perturbing the ritual.</span>")
 		return
 
-	var/datum/game_mode/cult/cult_round = is_round_cult()
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
 
 	for(var/atom/A in loc)
 		if(iscultist(A))

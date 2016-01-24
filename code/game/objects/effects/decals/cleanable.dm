@@ -34,7 +34,7 @@
 		D.holder = null
 
 	if(counts_as_blood)
-		var/datum/game_mode/cult/cult_round = is_round_cult()
+		var/datum/game_mode/cult/cult_round = find_active_mode("cult")
 		if(cult_round)
 			var/turf/T = get_turf(src)
 			if(T && (T.z == map.zMainStation))
@@ -83,7 +83,7 @@
 	update_icon()
 
 	if(counts_as_blood)
-		var/datum/game_mode/cult/cult_round = is_round_cult()
+		var/datum/game_mode/cult/cult_round = find_active_mode("cult")
 		if(cult_round)
 			var/turf/T = get_turf(src)
 			if(T && (T.z == map.zMainStation))//F I V E   T I L E S
