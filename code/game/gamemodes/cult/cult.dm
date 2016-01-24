@@ -421,7 +421,7 @@
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult += cult_mind
 
-		if(istype(ticker.mode, /datum/game_mode/mixed) && (ticker.mode != src))
+		if(mixed)
 			ticker.mode.cult += cult_mind
 
 		update_cult_icons_added(cult_mind)
@@ -446,7 +446,7 @@
 		cult_mind.current.remove_language("Cult")
 		cult_mind.memory = ""
 
-		if(istype(ticker.mode, /datum/game_mode/mixed) && (ticker.mode != src))
+		if(mixed)
 			ticker.mode.cult -= cult_mind
 
 		if(show_message)
