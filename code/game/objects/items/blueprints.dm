@@ -38,6 +38,9 @@
 /obj/item/areaeditor/Topic(href, href_list)
 	if(..())
 		return
+	if(!usr.canUseTopic(src))
+		usr << browse(null, "window=blueprints")
+		return
 	if(href_list["create_area"])
 		if(get_area_type()==AREA_SPACE)
 			create_area()
