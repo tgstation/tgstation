@@ -15,7 +15,6 @@
 	anchored = 1
 	density = 1
 	//Vars to hold internal items
-	var/mob/living/occupant = null
 	var/obj/item/clothing/suit/space/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
 	var/obj/item/clothing/mask/mask = null
