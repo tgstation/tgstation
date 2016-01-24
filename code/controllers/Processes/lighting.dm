@@ -9,7 +9,8 @@
 /datum/controller/process/lighting/setup()
 	name = "lighting"
 
-	create_lighting_overlays()
+	spawn(20)
+		create_lighting_overlays()
 
 /datum/controller/process/lighting/doWork()
 	// Counters

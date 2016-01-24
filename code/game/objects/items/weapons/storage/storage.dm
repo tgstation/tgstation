@@ -391,11 +391,9 @@
 				to_chat(user, "<span class='warning'>The tray won't fit in \the [src].</span>")
 				return
 			else
-				W.loc = user.loc
-				if ((user.client && user.s_active != src))
-					user.client.screen -= W
-				W.dropped(user)
+				user.drop_item(W, user.loc)
 				to_chat(user, "<span class='warning'>God damnit!</span>")
+				return
 
 	return handle_item_insertion(W)
 

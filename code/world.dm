@@ -335,15 +335,12 @@ var/savefile/panicfile
 		s += "<b>[config.server_name]</b> &#8212; "
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\world.dm:235: s += "<b>[station_name()]</b>";
 	s += {"<b>[station_name()]</b>"
 		(
 		<a href=\"http://\">" //Change this to wherever you want the hub to link to
 		Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version
 		</a>
 		)"}
-	// END AUTOFIX
 	var/list/features = list()
 
 	if(ticker)

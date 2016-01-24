@@ -35,21 +35,15 @@
 
 		if(0)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\telemonitor.dm:34: dat += "<br>[temp]<br><br>"
 			dat += {"<br>[temp]<br><br>
 				<br>Current Network: <a href='?src=\ref[src];network=1'>[network]</a><br>"}
-			// END AUTOFIX
 			if(machinelist.len)
 				dat += "<br>Detected Network Entities:<ul>"
 				for(var/obj/machinery/telecomms/T in machinelist)
 					dat += "<li><a href='?src=\ref[src];viewmachine=[T.id]'>\ref[T] [T.name]</a> ([T.id])</li>"
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\telemonitor.dm:40: dat += "</ul>"
 				dat += {"</ul>
 					<br><a href='?src=\ref[src];operation=release'>\[Flush Buffer\]</a>"}
-				// END AUTOFIX
 			else
 				dat += "<a href='?src=\ref[src];operation=probe'>\[Probe Network\]</a>"
 
@@ -58,14 +52,11 @@
 
 		if(1)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\telemonitor.dm:49: dat += "<br>[temp]<br>"
 			dat += {"<br>[temp]<br>
 				<center><a href='?src=\ref[src];operation=mainmenu'>\[Main Menu\]</a></center>
 				<br>Current Network: [network]<br>
 				Selected Network Entity: [SelectedMachine.name] ([SelectedMachine.id])<br>
 				Linked Entities: <ol>"}
-			// END AUTOFIX
 			for(var/obj/machinery/telecomms/T in SelectedMachine.links)
 				if(!T.hide)
 					dat += "<li><a href='?src=\ref[src];viewmachine=[T.id]'>\ref[T.id] [T.name]</a> ([T.id])</li>"

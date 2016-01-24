@@ -100,10 +100,7 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 	if(!output || output == "")
 		output = "Unable to load revision info from HEAD"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\helper_datums\getrev.dm:93: output += "Current Infomational Settings: <br>"
 	output += {"Current Infomational Settings: <br>
 		Protect Authority Roles From Tratior: [config.protect_roles_from_antagonist]<br>"}
-	// END AUTOFIX
 	usr << browse(output,"window=revdata");
 	return

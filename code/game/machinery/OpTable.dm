@@ -180,5 +180,5 @@
 			returnToPool(W)
 			return
 	if(isrobot(user)) return
-	user.drop_item(W, src.loc)
+	//user.drop_item(W, src.loc) why?
 	return

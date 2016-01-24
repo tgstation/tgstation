@@ -80,6 +80,54 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">2016.01.23</h2>
+			<h3 class="author">9600bauds updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed trays not picking up items. Fixed trays not removing their items when dropped or thrown. Fixed trays picking up items bigger than w_class = 3. Also fixed trays picking up trays. Also fixed a tray-related gamebreaking exploit that allowed you to permanently delete the nukedisk. Also fixed a tray-related gamebreaking exploit that allowed you to put any item inside a backpack, including other backpacks, and load a backpack past it's maximum storage slots. These things were really broken, weren't they?</li>
+			</ul>
+			<h3 class="author">xpcybic updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">The following changes apply to Metaclub.</li>
+				<li class="rscdel">Removed the hot drinks machine from permabrig.</li>
+				<li class="rscadd">Added a newscaster to tcomms control room, for easy AI access.</li>
+				<li class="bugfix">Fixed the bar window shutter control not working.</li>
+				<li class="tweak">Removed a set of plastic flaps at one end of recycling, and added an airlock at the other end.</li>
+				<li class="tweak">Replaced the windows between toxins lab and RD's office with plasma ones.</li>
+				<li class="tweak">Moved the launch room intercom closer to the bhangmeter.</li>
+				<li class="rscdel">Removed the sleeper blocking the infirmary door on the escape pod docking shuttle.</li>
+				<li class="tweak">Rearranged the emergency shuttle infirmary to remove the console-less sleeper.</li>
+				<li class="tweak">Un-reinforced the tables in toxins.</li>
+				<li class="tweak">Widened xenobio.</li>
+				<li class="rscadd">Added a couple of emergency closets in hallways and maint.</li>
+				<li class="rscdel">Removed the crate and two grilles blocking passage through aft maint.</li>
+				<li class="rscdel">Removed the human test dummies from the toxins test site.</li>
+				<li class="rscadd">Added a cyborg analyzer to robotics.</li>
+				<li class="rscadd">Added a missing airlock button outside research outpost.</li>
+			</ul>
+
+			<h2 class="date">2016.01.22</h2>
+			<h3 class="author">9600bauds updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed nested storage items (e.g. a box inside a backpack) closing their inventory when you move, even if you were holding the parent storage item.</li>
+				<li class="bugfix">Fixed not being able to use screwdrivers as ghetto surgery tools.</li>
+				<li class="tweak">Added an error message when trying to use surgery to fix a bone fracture in a very damaged limb. This is to prevent the \"bone explodes immediately after being mended\" syndrome.</li>
+				<li class="tweak">Will no longer place items on operating tables, which was really annoying because it would end up in accidentally dropping your surgery tools under the patient. If you really want to place an item on top of the operating table for some reason, you can throw it on top instead.</li>
+			</ul>
+
+			<h2 class="date">2016.01.19</h2>
+			<h3 class="author">xpcybic updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">The following changes apply to Taxistation.</li>
+				<li class="tweak">Enlarged engineering just a little.</li>
+				<li class="rscadd">Added a singularity telescreen outside engine room.</li>
+				<li class="tweak">Adjusted engine room so that rad collectors are closer to singularity generator.</li>
+				<li class="bugfix">fixed a floating fire extinguisher in engineering.</li>
+				<li class="tweak">Removed the table between kitchen and botany so that chefs and botanists can get between departments.</li>
+				<li class="rscadd">Added two trays to hydroponics.</li>
+				<li class="tweak">Enlarged xenobio cells to 2x3.</li>
+				<li class="tweak">Adjusted lights in several areas which were too dim.</li>
+			</ul>
+
 			<h2 class="date">2016.01.18</h2>
 			<h3 class="author">Kurfurst updated:</h3>
 			<ul class="changes bgimages16">
@@ -1737,88 +1785,6 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h3 class="author">PJB3005 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="tweak">Horribly ruined the life of validhunters, spacesuits now block the <s>valid gun</s> syringe gun!</li>
-			</ul>
-
-			<h2 class="date">2015.08.27</h2>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Fixed a few helmets/hoods that were hiding your glasses/beard when they shouldn't.</li>
-				<li class="bugfix">Hopefully fixed Bomberman Arenas not properly putting players inside the spawned Bombermen</li>
-				<li class="rscadd">Bomberman Arenas with more than 2 players now starts a 60 seconds countdown as soon as 2 players have registered, Which for example allows 2-9 players to fight on the 10-players map without requiring an admin to force-start the round.</li>
-				<li class="rscadd">Thunderdome/Arena cameras are now fucking indestructible.</li>
-				<li class="rscadd">You can now add voice analyzers to cameras, which will allow people near security camera computers connected to them to hear what people in view of those cameras are saying. Entertainment monitors broadcast to everyone that can see them.</li>
-				<li class="tweak">Hookshots no longer knock you down when they reel you in, no matter which intent you're on.</li>
-			</ul>
-			<h3 class="author">N3X15 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Bees try to stay within 10m (5 tiles) of their nest, except when pissed.</li>
-			</ul>
-
-			<h2 class="date">2015.08.26</h2>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added "Beekeeper" to botanist alt job titles.</li>
-				<li class="imageadd">Added a beekeeper jumpsuit.</li>
-				<li class="bugfix">Gravity Wells no longer try to move atoms that are already on top of them.</li>
-				<li class="bugfix">Gravity Well Gun projectiles aren't affected by singularities or narsie anymore, and thus can reliably keep them stuck in a place for the duration of the Gravity Well (Note that the Gravity Well can only pull singularities to its center once it has reached a certain size, which it takes about 12 seconds to reach).</li>
-				<li class="bugfix">Singularities cannot be eaten by smaller singularities anymore.</li>
-				<li class="bugfix">Fixed the Hookshot being able to pull you through grilles and closing doors and stuff.</li>
-				<li class="bugfix">You can no longer holster the PGM Hecate II, the Stickybomb launcher, or the Gatling gun.</li>
-				<li class="rscadd">Using the hookshot on a mob now creates attack logs.</li>
-				<li class="bugfix">Fixed a bug that would make hookshots unable to fire, and their projectile chain to remain on the ground.</li>
-				<li class="bugfix">Fixed a bug that would allow hookshots to let players clip through walls.</li>
-				<li class="bugfix">Enthralling used to take 10 times less time than it was meant to (5 seconds, 2.5 with charisma. instead of 50 seconds, 25 with charisma). It's been balanced to 30 seconds, 15 with charisma. At the very least you cannot be enthralled just by being slipped on a banana anymore. That should solve part of the enthralling problem.</li>
-				<li class="imageadd">Shadowstep now leaves a brief animation behind.</li>
-				<li class="tweak">Mist Form replaced with Bat Form. Doesn't extinguish you anymore, but leaves a scary bat behind. Also new animations.</li>
-				<li class="tweak">Summon Bats now summons 3 bats instead of 2.</li>
-			</ul>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Don't get hit by shit you throw while in a time bubble</li>
-				<li class="tweak">beams don't act stupid when fired in time bubbles or when entering them.</li>
-				<li class="tweak">humans are no longer stunned by lightning</li>
-				<li class="tweak">silicons take 33% less damage from lightning since they take 10 brute damage from an EMP.</li>
-				<li class="tweak">upped the chance of za warudo and it is admin tweakable.</li>
-			</ul>
-			<h3 class="author">Unid updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added carp pheromones, created by mixing carpotoxin, leporazine and carbon.</li>
-				<li class="rscadd">Adult space carps ignore mobs with carp pheromones, baby space carp follow them instead (without attacking).</li>
-			</ul>
-
-			<h2 class="date">2015.08.25</h2>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="experiment">THE EXPERIMENTAL GUNS UPDATE IS LIVE!!</li>
-				<li class="experiment">10 NEW ORIGINAL WEAPONS ADDED. Half of them can be obtained during any round, the other half have certain requirements. I won't go into details here. Have fun trying to get them all!</li>
-				<li class="bugfix">Fixed a bug that caused the Power Gloves's electrical arc to be invisible, and refined its code so the arc looks much nicer.</li>
-				<li class="rscadd">Reworked projectile pathing and appearance. Projectiles now follow a proper Bresenham path, which means you're less likely to hit something that you didn't intend to hit.</li>
-				<li class="rscadd">Projectiles appear to follow a linear path, coders can force specific projectiles to not appear linear. The Captain's laser gun and the Retro laser gun's projectiles don't appear linear. (but still follow a Bresenham path)</li>
-				<li class="rscadd">Turrets, Mechas, and ED209 projectiles follow the new pathing as well.</li>
-				<li class="rscadd">Turrets now make noises when they fire.</li>
-				<li class="imageadd">Replaced recharger sprites. Players can see which gun is currently being recharged. They know also have a visibly different sprite when they are unanchored. You can longer place a gun in an unanchored recharger.</li>
-				<li class="tweak">The Syndicate RPG now uses an actual rocket launcher fire sound, instead of a shotgun sound. Fired RPG projectiles now pick up speed gradually over half a second instead of being at bullet speed from the get go.</li>
-				<li class="rscadd">Destroying projectiles such as pulse rifle beams can now also destroy tables.</li>
-				<li class="rscadd">All projectiles now have a penetration variable, and all objects/mobs have a penetration_dampening variable. What this means for example is that bullets will now keep going after hitting a window. Projectiles can be made to only penetrate certain types of atoms. When a projectile goes through a wall, it loses a bit of damage and leaves markings on it, those can be removed with a soldering tool.</li>
-				<li class="rscadd">All projectiles can now bounce off atoms. Beams now properly bounce off a player wearing an ablative armor. Ablative armor chance of deflection slightly increased. Energy based projectiles (such as ion bolts or electrodes), or staff of change/focus projectiles can be deflected as well.</li>
-				<li class="bugfix">Fixed reinforced walls/girder being indestructible by destroying projectiles.</li>
-				<li class="tweak">Slightly increased the size at which items placed in display cases appear.</li>
-				<li class="bugfix">Damage overlays are now properly updated after you get hit by a projectile.</li>
-				<li class="tweak">Ear deafness now gradually reduces the volume of sounds instead of completly blocking them off.</li>
-				<li class="bugfix">Modification Kits (such as the one that turn atmos hardsuits into their gold versions) can no longer be used at infinite range. Coders can now easily add new modification kits that can turn any item into any other item, not just hardsuits.</li>
-			</ul>
-			<h3 class="author">Intigracy updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed jaunters. They now delete when you spawn the portal, and the portal actually works.</li>
-			</ul>
-			<h3 class="author">PJB3005 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The power monitor now has a fancy chart.</li>
-				<li class="tweak">The power monitor now has colour coding.</li>
-			</ul>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="experiment">Useless</li>
 			</ul>
 		</div>
 		<!--

@@ -237,12 +237,12 @@
 	idle_power_usage = 40
 	var/speed_coefficient = 15
 	var/biomass_coefficient = 9
-	var/processing = 0
+	var/tmp/processing = 0
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/points = 0
 	var/menustat = "menu"
-	var/list/recipes[0]
-	var/list/recipe_categories[0]
+	var/tmp/list/recipes[0]
+	var/tmp/list/recipe_categories[0]
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
@@ -268,19 +268,19 @@
 	create_reagents(1000)
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 
-	component_parts = newlist(\
-		/obj/item/weapon/circuitboard/biogenerator,\
-		/obj/item/weapon/stock_parts/manipulator,\
-		/obj/item/weapon/stock_parts/manipulator,\
-		/obj/item/weapon/stock_parts/matter_bin,\
-		/obj/item/weapon/stock_parts/matter_bin,\
-		/obj/item/weapon/stock_parts/micro_laser,\
-		/obj/item/weapon/stock_parts/micro_laser,\
-		/obj/item/weapon/stock_parts/micro_laser,\
-		/obj/item/weapon/stock_parts/scanning_module,\
-		/obj/item/weapon/stock_parts/scanning_module,\
-		/obj/item/weapon/stock_parts/console_screen,\
-		/obj/item/weapon/stock_parts/console_screen\
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/biogenerator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/stock_parts/console_screen
 	)
 
 	RefreshParts()
@@ -379,8 +379,6 @@
 			if("menu")
 				if (beaker)
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\biogenerator.dm:89: dat += "<A href='?src=\ref[src];action=activate'>Activate Biogenerator!</A><BR>"
 					dat += {"<A href='?src=\ref[src];action=activate'>Activate Biogenerator!</A><BR>
 						<A href='?src=\ref[src];action=detach'>Detach Container</A><BR><BR>"}
 
@@ -395,25 +393,16 @@
 					dat += "<BR><FONT COLOR=red>No beaker inside. Please insert a beaker.</FONT><BR>"
 			if("nopoints")
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\biogenerator.dm:108: dat += "You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.<BR>"
 				dat += {"You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.<BR>
 					<A href='?src=\ref[src];action=menu'>Return to menu</A>"}
-				// END AUTOFIX
 			if("complete")
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\biogenerator.dm:111: dat += "Operation complete.<BR>"
 				dat += {"Operation complete.<BR>
 					<A href='?src=\ref[src];action=menu'>Return to menu</A>"}
-				// END AUTOFIX
 			if("void")
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\biogenerator.dm:114: dat += "<FONT COLOR=red>Error: No growns inside.</FONT><BR>Please, put growns into reactor.<BR>"
 				dat += {"<FONT COLOR=red>Error: No growns inside.</FONT><BR>Please, put growns into reactor.<BR>
 					<A href='?src=\ref[src];action=menu'>Return to menu</A>"}
-				// END AUTOFIX
 	user << browse(dat, "window=biogenerator")
 	onclose(user, "biogenerator")
 	return
@@ -447,7 +436,6 @@
 		update_icon()
 	else
 		menustat = "void"
-	return
 
 /obj/machinery/biogenerator/proc/check_cost(var/cost)
 	if (cost > points)
@@ -459,13 +447,18 @@
 		update_icon()
 		updateUsrDialog()
 		sleep(30)
-		return 0
 
 /obj/machinery/biogenerator/proc/create_product(var/item, var/num)
 	var/datum/biogen_recipe/recipe=recipes[item]
-	num=Clamp(num,1,10)
+	if(!recipe)
+		return 0
+
+	if(!recipe.other_amounts.Find(num))
+		return 0
+
 	if(check_cost(recipe.cost*num))
 		return 0
+
 	if(recipe.reagent)
 		beaker.reagents.add_reagent(recipe.reagent,recipe.amount_per_unit*num)
 	else

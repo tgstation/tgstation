@@ -1052,7 +1052,7 @@
 	user.drop_item(force_drop = 1)
 	var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(user.loc)
 	B.icon_state = src.icon_state
-	B.force = src.force
+	//B.force = src.force //Who thought this was a good idea? It makes bottles broken by throwing deal no damage and bottles smashed over someone's head continue to deal a ton.
 	B.name = src.smashname
 
 	if(istype(src, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass))  //for drinking glasses

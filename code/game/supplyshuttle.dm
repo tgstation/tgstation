@@ -326,15 +326,12 @@ var/list/mechtoys = list(
 
 		var/obj/item/weapon/paper/manifest/slip = new /obj/item/weapon/paper/manifest(A)
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:298: slip.info = "<h3>[command_name()] Shipping Manifest</h3><hr><br>"
 		slip.name = "Shipping Manifest for [SO.orderedby]'s Order"
 		slip.info = {"<h3>[command_name()] Shipping Manifest for [SO.orderedby]'s Order</h3><hr><br>
 			Order #[SO.ordernum]<br>
 			Destination: [station_name]<br>
 			[supply_shuttle.shoppinglist.len] PACKAGES IN THIS SHIPMENT<br>
 			CONTENTS:<br><ul>"}
-		// END AUTOFIX
 		//spawn the stuff, finish generating the manifest while you're at it
 		if(SP.access)
 			A:req_access = list()
@@ -358,11 +355,8 @@ var/list/mechtoys = list(
 
 		//manifest finalisation
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:326: slip.info += "</ul><br>"
 		slip.info += {"</ul><br>
 			CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"}
-		// END AUTOFIX
 		if (SP.contraband) slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
 
 	supply_shuttle.shoppinglist.len = 0
@@ -436,23 +430,17 @@ var/list/mechtoys = list(
 			//Request what?
 			last_viewed_group = "categories"
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:383: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
 			temp = {"<b>Bank account credits: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>
 				<b>Select a category</b><BR><BR>"}
-			// END AUTOFIX
 			for(var/supply_group_name in all_supply_groups )
 				temp += "<A href='?src=\ref[src];order=[supply_group_name]'>[supply_group_name]</A><BR>"
 		else
 			last_viewed_group = href_list["order"]
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:390: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
 			temp = {"<b>Bank account credits: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>
 				<b>Request from: [last_viewed_group]</b><BR><BR>"}
-			// END AUTOFIX
 			for(var/supply_name in supply_shuttle.supply_packs )
 				var/datum/supply_packs/N = supply_shuttle.supply_packs[supply_name]
 				if(N.hidden || N.contraband || N.group != last_viewed_group) continue								//Have to send the type instead of a reference to
@@ -496,8 +484,6 @@ var/list/mechtoys = list(
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
 		reqform.name = "[P.name] Requisition Form - [idname], [idrank]"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:425: reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 		reqform.info += {"<h3>[station_name] Supply Requisition Form</h3><hr>
 			INDEX: #[supply_shuttle.ordernum]<br>
 			REQUESTED BY: [idname]<br>
@@ -506,14 +492,10 @@ var/list/mechtoys = list(
 			SUPPLY CRATE TYPE: [P.name]<br>
 			ACCESS RESTRICTION: [replacetext(get_access_desc(P.access))]<br>
 			CONTENTS:<br>"}
-		// END AUTOFIX
 		reqform.info += P.manifest
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:434: reqform.info += "<hr>"
 		reqform.info += {"<hr>
 			STAMP BELOW TO APPROVE THIS REQUISITION:<br>"}
-		// END AUTOFIX
 		reqform.update_icon()	//Fix for appearing blank when printed.
 		reqtime = (world.time + 5) % 1e5
 
@@ -527,11 +509,8 @@ var/list/mechtoys = list(
 		stat_collection.crates_ordered++
 
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:447: temp = "Thanks for your request. The cargo team will process it as soon as possible.<BR>"
 		temp = {"Thanks for your request. The cargo team will process it as soon as possible.<BR>
 			<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"}
-		// END AUTOFIX
 	else if (href_list["vieworders"])
 		temp = "Current approved orders: <BR><BR>"
 		for(var/S in supply_shuttle.shoppinglist)
@@ -647,22 +626,16 @@ var/list/mechtoys = list(
 			//all_supply_groups
 			//Request what?
 			last_viewed_group = "categories"
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:567: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
 			temp = {"<b>Available credits: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>
 				<b>Select a category</b><BR><BR>"}
-			// END AUTOFIX
 			for(var/supply_group_name in all_supply_groups )
 				temp += "<A href='?src=\ref[src];order=[supply_group_name]'>[supply_group_name]</A><BR>"
 		else
 			last_viewed_group = href_list["order"]
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:574: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
 			temp = {"<b>Available credits: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>
 				<b>Request from: [last_viewed_group]</b><BR><BR>"}
-			// END AUTOFIX
 			for(var/supply_name in supply_shuttle.supply_packs )
 				var/datum/supply_packs/N = supply_shuttle.supply_packs[supply_name]
 				if((N.hidden && !hacked) || (N.contraband && !can_order_contraband) || N.group != last_viewed_group) continue								//Have to send the type instead of a reference to
@@ -707,8 +680,6 @@ var/list/mechtoys = list(
 		supply_shuttle.ordernum++
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
 		reqform.name = "[P.name] Requisition Form - [idname], [idrank]"
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:618: reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 		reqform.info += {"<h3>[station_name] Supply Requisition Form</h3><hr>
 			INDEX: #[supply_shuttle.ordernum]<br>
 			REQUESTED BY: [idname]<br>
@@ -717,13 +688,9 @@ var/list/mechtoys = list(
 			SUPPLY CRATE TYPE: [P.name]<br>
 			ACCESS RESTRICTION: [replacetext(get_access_desc(P.access))]<br>
 			CONTENTS:<br>"}
-		// END AUTOFIX
 		reqform.info += P.manifest
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:627: reqform.info += "<hr>"
 		reqform.info += {"<hr>
 			STAMP BELOW TO APPROVE THIS REQUISITION:<br>"}
-		// END AUTOFIX
 		reqform.update_icon()	//Fix for appearing blank when printed.
 		reqtime = (world.time + 5) % 1e5
 		//make our supply_order datum
@@ -733,11 +700,8 @@ var/list/mechtoys = list(
 		O.orderedby = idname
 		O.account = account
 		supply_shuttle.requestlist += O
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:640: temp = "Order request placed.<BR>"
 		temp = {"Order request placed.<BR>
 			<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> | <A href='?src=\ref[src];mainmenu=1'>Main Menu</A> | <A href='?src=\ref[src];confirmorder=[O.ordernum]'>Authorize Order</A>"}
-		// END AUTOFIX
 	else if(href_list["confirmorder"])
 		//Find the correct supply_order datum
 		var/ordernum = text2num(href_list["confirmorder"])
@@ -759,17 +723,11 @@ var/list/mechtoys = list(
 					A.charge(centcom_share,null,"Supply Order #[SO.ordernum] ([P.name])",src.name,dest_name = "CentComm")
 					A.charge(cargo_share,cargo_acct,"Order Tax",src.name)
 					supply_shuttle.shoppinglist += O
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:658: temp = "Thanks for your order.<BR>"
 					temp = {"Thanks for your order.<BR>
 						<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"}
-					// END AUTOFIX
 				else
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:661: temp = "Not enough supply points.<BR>"
 					temp = {"Not enough credit.<BR>
 						<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"}
-					// END AUTOFIX
 				break
 	else if (href_list["vieworders"])
 		temp = "Current approved orders: <BR><BR>"
@@ -795,11 +753,8 @@ var/list/mechtoys = list(
 			temp += "#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]  [supply_shuttle.moving ? "":supply_shuttle.at_station ? "":"<A href='?src=\ref[src];confirmorder=[SO.ordernum]'>Approve</A> <A href='?src=\ref[src];rreq=[SO.ordernum]'>Remove</A>"]<BR>"
 
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:689: temp += "<BR><A href='?src=\ref[src];clearreq=1'>Clear list</A>"
 		temp += {"<BR><A href='?src=\ref[src];clearreq=1'>Clear list</A>
 			<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
-		// END AUTOFIX
 	else if (href_list["rreq"])
 		var/ordernum = text2num(href_list["rreq"])
 		temp = "Invalid Request.<BR>"
@@ -814,11 +769,8 @@ var/list/mechtoys = list(
 	else if (href_list["clearreq"])
 		supply_shuttle.requestlist.len = 0
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:705: temp = "List cleared.<BR>"
 		temp = {"List cleared.<BR>
 			<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
-		// END AUTOFIX
 	else if (href_list["mainmenu"])
 		temp = null
 
