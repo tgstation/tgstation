@@ -165,13 +165,12 @@
 				return 1
 	return 0
 
-/obj/machinery/airalarm/interact(mob/user)
-	if(user.has_unlimited_silicon_privilege && src.aidisabled)
-		user << "AI control for this Air Alarm interface has been disabled."
-		return
-
-	if(!shorted)
-		ui_interact(user)
+/obj/machinery/airalarm/ui_status(mob/user)
+	if(user.has_unlimited_silicon_privilege && aidisabled)
+		user << "AI control has been disabled."
+	else if(!shorted)
+		return ..()
+	return UI_CLOSE
 
 /obj/machinery/airalarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
