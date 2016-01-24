@@ -57,7 +57,7 @@
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/enter_mecha(obj/mecha/M)
 	if(!M)
 		return 0
-
+	target = null //Target was our mecha, so null it out
 	M.aimob_enter_mech(src)
 	targets_from = M
 	allow_movement_on_non_turfs = TRUE //duh
@@ -102,10 +102,15 @@
 
 //Checks if a mecha is valid for theft
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/is_valid_mecha(obj/mecha/M)
-	. = 0
-	if(M && !M.occupant && M.has_charge(required_mecha_charge) && (M.health >= (initial(M.health)*0.5)))
-		. = 1
-
+	if(!M)
+		return 0
+	if(M.occupant)
+		return 0
+	if(!M.has_charge(required_mecha_charge))
+		return 0
+	if(M.health < (initial(M.health)*0.5))
+		return 0
+	return 1
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/mecha_face_target(atom/A)
@@ -171,7 +176,7 @@
 				enter_mecha(M)
 				return
 			else
-				if(!CanAttack(M.occupant))
+				if(!CanAttack(M))
 					target = null
 					return
 
@@ -243,11 +248,12 @@
 	if(istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target
 		if(mecha)
-			if(M == mecha || !M.occupant || !CanAttack(M.occupant))
+			if(M == mecha || !CanAttack(M.occupant))
 				return 0
 		else //we're not in a mecha, so we check if we can steal it instead.
 			if(is_valid_mecha(M))
 				return 1
+
 	. = ..()
 
 
