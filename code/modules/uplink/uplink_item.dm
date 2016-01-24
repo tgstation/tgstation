@@ -74,7 +74,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		H.put_in_any_hand_if_possible(A)
+		H.put_in_hands(A)
 
 	return 1
 

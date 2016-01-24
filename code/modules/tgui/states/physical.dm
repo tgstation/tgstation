@@ -21,4 +21,4 @@
 	return max(UI_UPDATE, shared_living_ui_distance(src_object)) // Silicons can always see.
 
 /mob/living/silicon/ai/physical_can_use_topic(src_object)
-	return UI_CLOSE // AIs are not physical.
+	return UI_UPDATE // AIs are not physical.
