@@ -86,6 +86,24 @@
 	if(default_deconstruction_crowbar(I))
 		return
 
+/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
+	if(!..())
+		return 0
+	SetInitDirections()
+	var/obj/machinery/atmospherics/node = NODE1
+	if(node)
+		node.disconnect(src)
+		NODE1 = null
+	nullifyPipenet(PARENT1)
+
+	atmosinit()
+	node = NODE1
+	if(node)
+		node.atmosinit()
+		node.addMember(src)
+	build_network()
+	return 1
+
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
