@@ -189,6 +189,9 @@ datum/controller/game_controller/proc/cachedamageicons()
 		//	last_init_type = object.type
 		object.initialize()
 		count++
+	for(var/turf/T in world)
+		T.initialize()
+		turfs += T
 	log_startup_progress("  Initialized [count] objects in [stop_watch(watch)]s.")
 
 	watch = start_watch()
