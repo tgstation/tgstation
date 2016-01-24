@@ -38,7 +38,7 @@
 	var/obj/machinery/autolathe/A = holder
 	switch(wire)
 		if(WIRE_HACK)
-			A.adjust_hacked(mend)
+			A.adjust_hacked(!mend)
 		if(WIRE_HACK)
 			A.shocked = !mend
 		if(WIRE_DISABLE)
