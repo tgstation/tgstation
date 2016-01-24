@@ -12,7 +12,7 @@
 
 {{#if data.occupied}}
   <ui-notice>
-    <span>WARNING: Biological entity detected inside the Unit's storage. Please remove.</span>
+    <span>Biological entity detected inside the Unit's storage. Please remove.</span>
   </ui-notice>
 {{/if}}
 
@@ -34,9 +34,6 @@
     </ui-notice>
   {{else}}
       {{#if data.maintenance}}
-          <ui-notice>
-            <span>The panel is ridden with controls{{','}} buttons{{','}} and meters{{','}} labeled in strange signs and symbols that you cannot understand; probably the manufacturing world's language. Among other things, a few controls catch your eye...</span>
-          </ui-notice>
           <ui-section>
             <div>A small dial with a &lambda; symbol engraved on it.</div>
             <span>It's pointing towards a gauge that reads</span>

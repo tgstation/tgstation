@@ -15,11 +15,11 @@
 	anchored = 1
 	density = 1
 	//Vars to hold internal items
-	var/mob/living/OCCUPANT = null
-	var/obj/item/clothing/suit/space/SUIT = null
-	var/obj/item/clothing/head/helmet/space/HELMET = null
-	var/obj/item/clothing/mask/MASK = null
-	var/obj/item/STORAGE = null
+	var/mob/living/occupant = null
+	var/obj/item/clothing/suit/space/suit = null
+	var/obj/item/clothing/head/helmet/space/helmet = null
+	var/obj/item/clothing/mask/mask = null
+	var/obj/item/storage = null
 
 	//Base types on creation
 	var/SUIT_TYPE = null
@@ -128,24 +128,24 @@
 	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/New()
-	src.update_icon()
+	update_icon()
 	if(SUIT_TYPE)
-		SUIT = new SUIT_TYPE(src)
+		suit = new SUIT_TYPE(src)
 	if(HELMET_TYPE)
-		HELMET = new HELMET_TYPE(src)
+		helmet = new HELMET_TYPE(src)
 	if(MASK_TYPE)
-		MASK = new MASK_TYPE(src)
+		mask = new MASK_TYPE(src)
 	if(STORAGE_TYPE)
-		STORAGE = new STORAGE_TYPE(src)
+		storage = new STORAGE_TYPE(src)
 
 /obj/machinery/suit_storage_unit/update_icon() //overlays yaaaay - Jordie
-	src.overlays = 0
+	overlays = 0
 
 	if(!isopen)
 		overlays += "close"
-	if(OCCUPANT)
+	if(occupant)
 		overlays += "human"
-	if(OCCUPANT && isUV)
+	if(occupant && isUV)
 		overlays += "uvhuman"
 	if(isUV)
 		overlays += "uv"
@@ -153,11 +153,11 @@
 		overlays += "super"
 	if(isopen)
 		overlays += "open"
-		if(SUIT)
+		if(suit)
 			overlays += "suit"
-		if(HELMET)
+		if(helmet)
 			overlays += "helm"
-		if(STORAGE)
+		if(storage)
 			overlays += "storage"
 		if(isbroken)
 			overlays += "broken"
@@ -174,12 +174,12 @@
 	switch(severity)
 		if(1)
 			if(prob(50))
-				src.dump_everything() //So suits dont survive all the time
+				dump_everything() //So suits dont survive all the time
 			qdel(src)
 			return
 		if(2)
 			if(prob(50))
-				src.dump_everything()
+				dump_everything()
 				qdel(src)
 			return
 		else
@@ -195,15 +195,15 @@
 	data["uv"] = issuperUV
 	data["safety"] = safetieson
 	data["maintenance"] = maintenance_mode
-	if(HELMET)
-		data["helmet"] = HELMET.name
-	if(SUIT)
-		data["suit"] = SUIT.name
-	if(MASK)
-		data["mask"] = MASK.name
-	if(STORAGE)
-		data["aux"] = STORAGE.name
-	if(OCCUPANT)
+	if(helmet)
+		data["helmet"] = helmet.name
+	if(suit)
+		data["suit"] = suit.name
+	if(mask)
+		data["mask"] = mask.name
+	if(storage)
+		data["aux"] = storage.name
+	if(occupant)
 		data["occupied"] = 1
 	return data
 
@@ -240,56 +240,56 @@
 	return 1
 
 /obj/machinery/suit_storage_unit/proc/toggleUV(mob/user)
-	if(!src.maintenance_mode)
+	if(!maintenance_mode)
 		return
 	else
-		if(src.issuperUV)
+		if(issuperUV)
 			user << "<span class='notice'>You slide the dial back towards \"185nm\".</span>"
-			src.issuperUV = 0
+			issuperUV = 0
 		else
 			user << "<span class='notice'>You crank the dial all the way up to \"15nm\".</span>"
-			src.issuperUV = 1
+			issuperUV = 1
 		return
 
 
 /obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user)
-	if(!src.maintenance_mode) //Needed check due to bugs
+	if(!maintenance_mode) //Needed check due to bugs
 		return
 	else
 		user << "<span class='notice'>You push the button. The coloured LED next to it changes.</span>"
-		src.safetieson = !src.safetieson
+		safetieson = !safetieson
 
 
 /obj/machinery/suit_storage_unit/proc/dispense_helmet()
-	eject(HELMET)
-	HELMET = null
+	eject(helmet)
+	helmet = null
 
 /obj/machinery/suit_storage_unit/proc/dispense_suit()
-	eject(SUIT)
-	SUIT = null
+	eject(suit)
+	suit = null
 
 /obj/machinery/suit_storage_unit/proc/dispense_mask()
-	eject(MASK)
-	MASK = null
+	eject(mask)
+	mask = null
 
 /obj/machinery/suit_storage_unit/proc/eject_storage()
-	eject(STORAGE)
-	STORAGE = null
+	eject(storage)
+	storage = null
 
 /obj/machinery/suit_storage_unit/proc/eject(atom/movable/ITEM)
 	//Check item still exists - if not, then usually someone has already ejected the item
 	if(ITEM)
-		ITEM.loc = src.loc
+		ITEM.loc = loc
 
 /obj/machinery/suit_storage_unit/proc/dump_everything()
 	for(var/obj/item/ITEM in src)
 		eject(ITEM)
-	SUIT = null
-	HELMET = null
-	MASK = null
-	STORAGE = null
-	if(OCCUPANT)
-		eject_occupant(OCCUPANT)
+	suit = null
+	helmet = null
+	mask = null
+	storage = null
+	if(occupant)
+		eject_occupant(occupant)
 	return
 
 
@@ -297,7 +297,7 @@
 	if(islocked || isUV)
 		user << "<span class='warning'>You're unable to open unit!</span>"
 		return 0
-	if(OCCUPANT)
+	if(occupant)
 		eject_occupant(user)
 		return 1  // eject_occupant opens the door, so we need to return
 	isopen = !isopen
@@ -305,7 +305,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user)
-	if(OCCUPANT && safetieson)
+	if(occupant && safetieson)
 		user << "<span class='warning'>The unit's safety protocols disallow locking when a biological form is detected inside its compartments.</span>"
 		return
 	if(isopen)
@@ -317,16 +317,16 @@
 /obj/machinery/suit_storage_unit/proc/start_UV(mob/user)
 	if(isUV || isopen) //I'm bored of all these sanity checks
 		return
-	if(OCCUPANT && safetieson)
+	if(occupant && safetieson)
 		user << "<font color='red'><B>WARNING:</B> Biological entity detected in the confines of the unit's storage. Cannot initiate cycle.</font>"
 		return
-	if(!HELMET && !MASK && !SUIT && !STORAGE && !OCCUPANT )
+	if(!helmet && !mask && !suit && !storage && !occupant )
 		user << "<font color='red'>Unit storage bays empty. Nothing to disinfect -- Aborting.</font>"
 		return
 	user << "<span class='notice'>You start the unit's cauterisation cycle.</span>"
 	cycletime_left = 20
 	isUV = 1
-	if(OCCUPANT && !islocked)
+	if(occupant && !islocked)
 		islocked = 1 //Let's lock it for good measure
 	update_icon()
 
@@ -334,32 +334,32 @@
 	spawn(0)
 		for(i=0,i<4,++i)
 			sleep(50)
-			if(OCCUPANT)
+			if(occupant)
 				var/burndamage = rand(6,10)
 				if(issuperUV)
 					burndamage = rand(28,35)
-				if(iscarbon(OCCUPANT))
-					OCCUPANT.take_organ_damage(0,burndamage)
-					OCCUPANT.emote("scream")
+				if(iscarbon(occupant))
+					occupant.take_organ_damage(0,burndamage)
+					occupant.emote("scream")
 				else
-					OCCUPANT.take_organ_damage(burndamage)
+					occupant.take_organ_damage(burndamage)
 			if(i==3) //End of the cycle
 				if(!issuperUV)
 					for(var/obj/item/ITEM in src)
 						ITEM.clean_blood()
-					if(istype(STORAGE, /obj/item/weapon/reagent_containers/food))
-						qdel(STORAGE)
+					if(istype(storage, /obj/item/weapon/reagent_containers/food))
+						qdel(storage)
 				else //It was supercycling, destroy everything
-					HELMET = null
-					SUIT = null
-					MASK = null
-					qdel(STORAGE)
+					helmet = null
+					suit = null
+					mask = null
+					qdel(storage)
 					visible_message("<span class='warning'>With a loud whining noise, [src]'s door grinds open. A foul cloud of smoke emanates from the chamber.</span>")
 					isbroken = 1
 					isopen = 1
 					islocked = 0
 					repair_stage = REPAIR_NEEDS_WIRECUTTERS
-					eject_occupant(OCCUPANT)
+					eject_occupant(occupant)
 				isUV = 0 //Cycle ends
 		update_icon()
 		return
@@ -374,20 +374,20 @@
 	if (islocked)
 		return
 
-	if (!OCCUPANT)
+	if (!occupant)
 		return
 
-	if (OCCUPANT.client)
-		if(user != OCCUPANT)
-			OCCUPANT << "<span class='warning'>The machine kicks you out!</span>"
+	if (occupant.client)
+		if(user != occupant)
+			occupant << "<span class='warning'>The machine kicks you out!</span>"
 		if(user.loc != loc)
-			OCCUPANT << "<span class='warning'>You leave the not-so-cozy confines of [src].</span>"
+			occupant << "<span class='warning'>You leave the not-so-cozy confines of [src].</span>"
 
-		OCCUPANT.client.eye = OCCUPANT.client.mob
-		OCCUPANT.client.perspective = MOB_PERSPECTIVE
-	if(OCCUPANT.loc == src)
-		OCCUPANT.loc = loc
-	OCCUPANT = null
+		occupant.client.eye = occupant.client.mob
+		occupant.client.perspective = MOB_PERSPECTIVE
+	if(occupant.loc == src)
+		occupant.loc = loc
+	occupant = null
 	if(!isopen)
 		isopen = 1
 	update_icon()
@@ -438,7 +438,7 @@
 	if (!ispowered || isbroken)
 		user << "<span class='warning'>The unit is not operational!</span>"
 		return
-	if ( (OCCUPANT) || (HELMET) || (SUIT) || (STORAGE))
+	if ( occupant || helmet || suit || storage )
 		user << "<span class='warning'>It's too cluttered inside to fit in!</span>"
 		return
 	if(M == user)
@@ -451,7 +451,7 @@
 			M.client.perspective = EYE_PERSPECTIVE
 			M.client.eye = src
 		M.loc = src
-		OCCUPANT = M
+		occupant = M
 		isopen = 0
 		update_icon()
 
@@ -477,7 +477,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		maintenance_mode = !maintenance_mode
 		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		user << text("<span class='notice'>You [] the unit's maintenance panel.</span>",(src.maintenance_mode ? "open up" : "close") )
+		user << text("<span class='notice'>You [] the unit's maintenance panel.</span>",(maintenance_mode ? "open up" : "close") )
 		return
 	if(isbroken && maintenance_mode)
 		if(istype(I, /obj/item/weapon/wirecutters) && repair_stage == REPAIR_NEEDS_WIRECUTTERS)
@@ -540,10 +540,10 @@
 		store_mob(G.affecting, user)
 		return
 	if( istype(I,/obj/item/clothing/suit/space) )
-		if(!src.isopen || src.isbroken)
+		if(!isopen || isbroken)
 			return
 		var/obj/item/clothing/suit/space/S = I
-		if(src.SUIT)
+		if(suit)
 			user << "<span class='notice'>The unit already contains a suit.</span>"
 			return
 		if(!user.drop_item())
@@ -551,14 +551,14 @@
 			return
 		user << "<span class='notice'>You load [S] into the suit storage compartment.</span>"
 		S.loc = src
-		SUIT = S
+		suit = S
 		update_icon()
 		return
 	if( istype(I,/obj/item/clothing/head/helmet) )
-		if(!src.isopen || src.isbroken)
+		if(!isopen || isbroken)
 			return
 		var/obj/item/clothing/head/helmet/H = I
-		if(src.HELMET)
+		if(helmet)
 			user << "<span class='warning'>The unit already contains a helmet!</span>"
 			return
 		if(!user.drop_item())
@@ -566,14 +566,14 @@
 			return
 		user << "<span class='notice'>You load [H] into the helmet storage compartment.</span>"
 		H.loc = src
-		HELMET = H
+		helmet = H
 		update_icon()
 		return
 	if( istype(I,/obj/item/clothing/mask) )
-		if(!src.isopen || src.isbroken)
+		if(!isopen || isbroken)
 			return
 		var/obj/item/clothing/mask/M = I
-		if(src.MASK)
+		if(mask)
 			user << "<span class='warning'>The unit already contains a mask!</span>"
 			return
 		if(!user.drop_item())
@@ -581,14 +581,14 @@
 			return
 		user << "<span class='notice'>You load [M] into the mask storage compartment.</span>"
 		M.loc = src
-		MASK = M
+		mask = M
 		update_icon()
 		return
 	if( istype(I,/obj/item) )
-		if(!src.isopen || src.isbroken)
+		if(!isopen || isbroken)
 			return
 		var/obj/item/ITEM = I
-		if(src.STORAGE)
+		if(storage)
 			user << "<span class='warning'>The auxiliary storage compartment is full!</span>"
 			return
 		if(!user.drop_item())
@@ -596,14 +596,13 @@
 			return
 		user << "<span class='notice'>You load [ITEM] into the auxiliary storage compartment.</span>"
 		ITEM.loc = src
-		STORAGE = ITEM
+		storage = ITEM
 	update_icon()
 	return
 
 
 /obj/machinery/suit_storage_unit/attack_ai(mob/user)
 	return attack_hand(user)
-
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)
 	user << "<span class='warning'>You don't know how to work this!</span>"
