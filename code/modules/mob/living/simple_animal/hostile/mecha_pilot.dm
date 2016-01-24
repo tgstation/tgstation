@@ -240,14 +240,14 @@
 //Yes they actually try and pull this shit
 //~simple animals~
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/CanAttack(atom/the_target)
-	if(mecha && the_target == mecha)
-		return 0
 	if(istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target
-		if(is_valid_mecha(M))
-			return 1
-		if(!M.occupant || !CanAttack(M.occupant))
-			return 0
+		if(mecha)
+			if(M == mecha || !M.occupant || !CanAttack(M.occupant))
+				return 0
+		else //we're not in a mecha, so we check if we can steal it instead.
+			if(is_valid_mecha(M))
+				return 1
 	. = ..()
 
 
