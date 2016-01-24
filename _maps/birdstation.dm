@@ -16,6 +16,7 @@ A small map intended for lowpop(40 players and less).
         #include "map_files\generic\z6.dmm"
         #include "map_files\generic\z7.dmm"
 
+		#define MAP_PATH "map_files/BirdStation"
         #define MAP_FILE "BirdStation.dmm"
         #define MAP_NAME "BirdboatStation"
 
