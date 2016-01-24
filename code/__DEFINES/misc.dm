@@ -324,3 +324,6 @@ var/list/bloody_footprints_cache = list()
 //Bloodcrawling
 #define BLOODCRAWL 1
 #define BLOODCRAWL_EAT 2
+
+//Color Defines
+#define OOC_COLOR  "#002eb8"

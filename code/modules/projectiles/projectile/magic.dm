@@ -136,12 +136,8 @@
 				Robot.notify_ai(1)
 			else
 				for(var/obj/item/W in M)
-					if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
+					if(!M.unEquip(W))
 						qdel(W)
-						continue
-					W.layer = initial(W.layer)
-					W.loc = M.loc
-					W.dropped(M)
 
 			var/mob/living/new_mob
 

@@ -154,6 +154,7 @@
 
 /obj/item/ammo_box/magazine/m10mm
 	name = "pistol magazine (10mm)"
+	desc = "A gun magazine."
 	icon_state = "9x19p"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c10mm
@@ -176,7 +177,7 @@
 	name = "wt550 magazine (4.6x30mm)"
 	icon_state = "46x30mmt-20"
 	ammo_type = /obj/item/ammo_casing/c46x30mm
-	caliber = "4x6x30mm"
+	caliber = "4.6x30mm"
 	max_ammo = 20
 
 /obj/item/ammo_box/magazine/wt550m9/update_icon()
@@ -272,6 +273,7 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/ammo_box/magazine/m12g
 	name = "shotgun magazine (12g slugs)"
+	desc = "A drum magazine."
 	icon_state = "m12gb"
 	ammo_type = /obj/item/ammo_casing/shotgun
 	origin_tech = "combat=3;syndicate=1"

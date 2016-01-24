@@ -43,7 +43,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		user << "<span class='warning'>They appear to be catatonic! Not even magic can affect their vacant mind.</span>"
 		return
 
-	if(target.mind.special_role in protected_roles)
+	if((target.mind.special_role in protected_roles) || cmptext(copytext(target.key,1,2),"@"))
 		user << "<span class='warning'>Their mind is resisting your spell!</span>"
 		return
 
@@ -69,6 +69,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 	ghost.mind.transfer_to(caster)
 	if(ghost.key)
 		caster.key = ghost.key	//have to transfer the key since the mind was not active
+	qdel(ghost)
 
 	if(caster.mind.special_verbs.len)//If they had any special verbs, we add them here.
 		for(var/V in caster.mind.special_verbs)

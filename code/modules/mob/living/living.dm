@@ -24,6 +24,8 @@ Sorry Giacom. Please don't be mad :(
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
 
+	faction |= "\ref[src]"
+
 
 /mob/living/Destroy()
 	..()
@@ -160,10 +162,10 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Pull"
 	set category = "Object"
 
-	if(pulling == AM)
+	if(istype(AM) && AM.Adjacent(src))
+		start_pulling(AM)
+	else
 		stop_pulling()
-	else if(AM.Adjacent(src))
-		src.start_pulling(AM)
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
@@ -235,7 +237,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustBruteLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
+	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getOxyLoss()
@@ -243,7 +245,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustOxyLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
+	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setOxyLoss(amount)
@@ -256,7 +258,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustToxLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
+	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setToxLoss(amount)
@@ -269,7 +271,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustFireLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
+	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getCloneLoss()
@@ -277,7 +279,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustCloneLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
+	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setCloneLoss(amount)
@@ -290,7 +292,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustBrainLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
+	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setBrainLoss(amount)
@@ -303,7 +305,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustStaminaLoss(amount)
 	if(status_flags & GODMODE)	return 0
-	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
+	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
 
 /mob/living/proc/setStaminaLoss(amount)
 	if(status_flags & GODMODE)	return 0
@@ -438,6 +440,7 @@ Sorry Giacom. Please don't be mad :(
 	eye_blurry = 0
 	ear_deaf = 0
 	ear_damage = 0
+	hallucination = 0
 	heal_overall_damage(1000, 1000)
 	ExtinguishMob()
 	fire_stacks = 0

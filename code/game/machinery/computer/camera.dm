@@ -68,8 +68,10 @@
 
 		if(C)
 			if ((get_dist(user, src) > 1 || user.machine != src || user.eye_blind || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
+				user.unset_machine()
 				if(!C.can_use() && !isAI(user))
 					src.current = null
+
 				return 0
 			else
 				if(isAI(user))

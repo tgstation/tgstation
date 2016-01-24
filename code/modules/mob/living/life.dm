@@ -167,7 +167,7 @@
 
 	if(recursive)
 		for(var/obj/item/T in I)
-			give_action_button(I, recursive - 1)
+			give_action_button(T, recursive - 1)
 
 
 //this handles hud updates. Calls update_vision() and handle_hud_icons()

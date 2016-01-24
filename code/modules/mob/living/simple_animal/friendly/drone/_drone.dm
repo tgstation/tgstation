@@ -35,6 +35,8 @@
 	status_flags = (CANPUSH | CANSTUN | CANWEAKEN)
 	gender = NEUTER
 	voice_name = "synthesized chirp"
+	speak_emote = list("chirps")
+	bubble_icon = "machine"
 	languages = DRONE
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
@@ -77,6 +79,7 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, slot_head)
 
+	access_card.flags |= NODROP
 	scanner.Grant(src)
 
 	alert_drones(DRONE_NET_CONNECT)

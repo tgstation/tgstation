@@ -73,7 +73,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(stat || paralysis || stunned || weakened)
+	if(stat || paralysis || stunned || weakened || sleeping)
 		return
 
 	face_atom(A)
@@ -221,10 +221,8 @@
 /mob/proc/CtrlClickOn(atom/A)
 	A.CtrlClick(src)
 	return
-/atom/proc/CtrlClick(mob/user)
-	return
 
-/atom/movable/CtrlClick(mob/living/user)
+/atom/proc/CtrlClick(mob/user)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)

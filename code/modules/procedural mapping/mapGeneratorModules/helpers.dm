@@ -14,11 +14,7 @@
 		SSair.remove_from_active(T)
 	for(var/turf/simulated/T in map)
 		if(T.air)
-			T.air.oxygen = T.oxygen
-			T.air.nitrogen = T.nitrogen
-			T.air.carbon_dioxide = T.carbon_dioxide
-			T.air.toxins = T.toxins
-			T.air.temperature = T.temperature
+			T.air.copy_from_turf(T)
 		SSair.add_to_active(T)
 
 //Only places atoms/turfs on area borders

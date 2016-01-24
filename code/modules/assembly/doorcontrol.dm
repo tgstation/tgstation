@@ -22,8 +22,10 @@
 				openclose = M.density
 			spawn(0)
 				if(M)
-					if(openclose)	M.open()
-					else			M.close()
+					if(openclose)
+						M.open()
+					else
+						M.close()
 				return
 	sleep(10)
 	cooldown = 0
@@ -47,15 +49,14 @@
 	for(var/obj/machinery/door/airlock/D in airlocks)
 		if(D.id_tag == src.id)
 			if(specialfunctions & OPEN)
-				spawn(0)
-					if(D)
-						if(D.density)	D.open()
-						else			D.close()
-					return
+				if(D.density)
+					D.open()
+				else
+					D.close()
 			if(specialfunctions & IDSCAN)
 				D.aiDisabledIdScanner = !D.aiDisabledIdScanner
 			if(specialfunctions & BOLTS)
-				if(!D.isWireCut(4) && D.hasPower())
+				if(!D.wires.is_cut(WIRE_BOLTS) && D.hasPower())
 					D.locked = !D.locked
 					D.update_icon()
 			if(specialfunctions & SHOCK)
@@ -76,7 +77,6 @@
 		if (M.id == src.id)
 			spawn( 0 )
 				M.open()
-				return
 
 	sleep(10)
 
@@ -90,7 +90,6 @@
 		if (M.id == src.id)
 			spawn( 0 )
 				M.close()
-				return
 
 	sleep(10)
 	cooldown = 0

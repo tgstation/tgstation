@@ -38,6 +38,7 @@
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
+	var/blacklisted = 0 //Flag to exclude from green slime core species.
 	var/dangerous_existence = null //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
 	var/say_mod = "says"	// affects the speech message
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
@@ -1167,10 +1168,14 @@
 
 	var/gas_breathed = 0
 
+	var/list/breath_gases = breath.gases
+
+	breath.assert_gases("o2", "plasma", "co2", "n2o")
+
 	//Partial pressures in our breath
-	var/O2_pp = breath.get_breath_partial_pressure(breath.oxygen)
-	var/Toxins_pp = breath.get_breath_partial_pressure(breath.toxins)
-	var/CO2_pp = breath.get_breath_partial_pressure(breath.carbon_dioxide)
+	var/O2_pp = breath.get_breath_partial_pressure(breath_gases["o2"][MOLES])
+	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases["plasma"][MOLES])
+	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases["co2"][MOLES])
 
 
 	//-- OXY --//
@@ -1178,7 +1183,7 @@
 	//Too much oxygen! //Yes, some species may not like it.
 	if(safe_oxygen_max)
 		if(O2_pp > safe_oxygen_max && !(NOBREATH in specflags))
-			var/ratio = (breath.oxygen/safe_oxygen_max) * 10
+			var/ratio = (breath_gases["o2"][MOLES]/safe_oxygen_max) * 10
 			H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
 			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
 		else
@@ -1187,17 +1192,17 @@
 	//Too little oxygen!
 	if(safe_oxygen_min)
 		if(O2_pp < safe_oxygen_min)
-			gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath.oxygen)
+			gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath_gases["o2"][MOLES])
 			H.throw_alert("oxy", /obj/screen/alert/oxy)
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath.oxygen/6
+			gas_breathed = breath_gases["o2"][MOLES]/6
 			H.clear_alert("oxy")
 
 	//Exhale
-	breath.oxygen -= gas_breathed
-	breath.carbon_dioxide += gas_breathed
+	breath_gases["o2"][MOLES] -= gas_breathed
+	breath_gases["co2"][MOLES] += gas_breathed
 	gas_breathed = 0
 
 
@@ -1215,7 +1220,7 @@
 					H.adjustOxyLoss(8)
 				H.throw_alert("too_much_co2", /obj/screen/alert/too_much_co2)
 			if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
-				spawn(0) H.emote("cough")
+				H.emote("cough")
 
 		else
 			H.co2overloadtime = 0
@@ -1224,17 +1229,17 @@
 	//Too little CO2!
 	if(safe_co2_min)
 		if(CO2_pp < safe_co2_min)
-			gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath.carbon_dioxide)
+			gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath_gases["co2"][MOLES])
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath.carbon_dioxide/6
+			gas_breathed = breath_gases["co2"][MOLES]/6
 			H.clear_alert("not_enough_co2")
 
 	//Exhale
-	breath.carbon_dioxide -= gas_breathed
-	breath.oxygen += gas_breathed
+	breath_gases["co2"][MOLES] -= gas_breathed
+	breath_gases["o2"][MOLES] += gas_breathed
 	gas_breathed = 0
 
 
@@ -1243,7 +1248,7 @@
 	//Too much toxins!
 	if(safe_toxins_max)
 		if(Toxins_pp > safe_toxins_max && !(NOBREATH in specflags))
-			var/ratio = (breath.toxins/safe_toxins_max) * 10
+			var/ratio = (breath_gases["plasma"][MOLES]/safe_toxins_max) * 10
 			if(H.reagents)
 				H.reagents.add_reagent("plasma", Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
 			H.throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
@@ -1254,34 +1259,33 @@
 	//Too little toxins!
 	if(safe_toxins_min)
 		if(Toxins_pp < safe_toxins_min && !(NOBREATH in specflags))
-			gas_breathed = handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath.toxins)
+			gas_breathed = handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath_gases["plasma"][MOLES])
 			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath.toxins/6
+			gas_breathed = breath_gases["plasma"][MOLES]/6
 			H.clear_alert("not_enough_tox")
 
 	//Exhale
-	breath.toxins -= gas_breathed
-	breath.carbon_dioxide += gas_breathed
+	breath_gases["plasma"][MOLES] -= gas_breathed
+	breath_gases["co2"][MOLES] += gas_breathed
 	gas_breathed = 0
 
 
 	//-- TRACES --//
 
-	if(breath.trace_gases.len && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
-		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-			var/SA_pp = breath.get_breath_partial_pressure(SA.moles)
-			if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-				H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
-				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-					H.sleeping = max(H.sleeping+2, 10)
-			else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-				if(prob(20))
-					spawn(0) H.emote(pick("giggle", "laugh"))
-
-	handle_breath_temperature(breath, H)
+	if(breath && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
+		var/SA_pp = breath.get_breath_partial_pressure(breath_gases["n2o"][MOLES])
+		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
+			H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
+			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
+				H.sleeping = max(H.sleeping+2, 10)
+		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+			if(prob(20))
+				H.emote(pick("giggle", "laugh"))
+		handle_breath_temperature(breath, H)
+		breath.garbage_collect()
 
 	return 1
 
@@ -1294,8 +1298,7 @@
 
 	if(!(NOBREATH in specflags) || (H.health <= config.health_threshold_crit))
 		if(prob(20))
-			spawn(0)
-				H.emote("gasp")
+			H.emote("gasp")
 		if(breath_pp > 0)
 			var/ratio = safe_breath_min/breath_pp
 			H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!
@@ -1329,6 +1332,8 @@
 
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	if(!environment)
+		return
+	if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 
 	var/loc_temp = H.get_temperature(environment)
@@ -1366,21 +1371,19 @@
 					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
 				else
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
-		if(!istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-			switch(H.bodytemperature)
-				if(200 to 260)
-					H.throw_alert("temp", /obj/screen/alert/cold, 1)
-					H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
-				if(120 to 200)
-					H.throw_alert("temp", /obj/screen/alert/cold, 2)
-					H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
-				if(-INFINITY to 120)
-					H.throw_alert("temp", /obj/screen/alert/cold, 3)
-					H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
-		else
-			H.clear_alert("temp")
+		switch(H.bodytemperature)
+			if(200 to 260)
+				H.throw_alert("temp", /obj/screen/alert/cold, 1)
+				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
+			if(120 to 200)
+				H.throw_alert("temp", /obj/screen/alert/cold, 2)
+				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
+			if(-INFINITY to 120)
+				H.throw_alert("temp", /obj/screen/alert/cold, 3)
+				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+			else
+				H.clear_alert("temp")
 
 	else
 		H.clear_alert("temp")

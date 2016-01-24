@@ -80,14 +80,22 @@
 	else if (istype(W, /obj/item/weapon/wrench))
 		if(connected_port)
 			disconnect()
-			user << "<span class='notice'>You disconnect [name] from the port.</span>"
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			user.visible_message( \
+				"[user] disconnects [src].", \
+				"<span class='notice'>You unfasten [src] from the port.</span>", \
+				"<span class='italics'>You hear a ratchet.</span>")
 			update_icon()
 			return
 		else
 			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
 			if(possible_port)
 				if(connect(possible_port))
-					user << "<span class='notice'>You connect [name] to the port.</span>"
+					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+					user.visible_message( \
+						"[user] connects [src].", \
+						"<span class='notice'>You fasten [src] to the port.</span>", \
+						"<span class='italics'>You hear a ratchet.</span>")
 					update_icon()
 					return
 				else

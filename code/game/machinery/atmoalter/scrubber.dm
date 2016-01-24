@@ -11,6 +11,8 @@
 
 	volume = 750
 
+	var/list/gases_to_scrub = list("plasma", "co2", "agent_b", "n2o") //datum var so we can VV it and maybe even change it in the future
+
 
 
 /obj/machinery/portable_atmospherics/scrubber/emp_act(severity)
@@ -72,27 +74,16 @@
 	//Filter it
 	if (removed)
 		var/datum/gas_mixture/filtered_out = new
+		var/list/filtered_gases = filtered_out.gases
+		var/list/removed_gases = removed.gases
+
+		for(var/id in removed_gases & gases_to_scrub)
+			filtered_out.assert_gas(id)
+			filtered_gases[id][MOLES] = removed_gases[id][MOLES]
+			removed_gases[id][MOLES] = 0
 
 		filtered_out.temperature = removed.temperature
-
-
-		filtered_out.toxins = removed.toxins
-		removed.toxins = 0
-
-		filtered_out.carbon_dioxide = removed.carbon_dioxide
-		removed.carbon_dioxide = 0
-
-		if(removed.trace_gases.len>0)
-			for(var/datum/gas/trace_gas in removed.trace_gases)
-				if(istype(trace_gas, /datum/gas/sleeping_agent))
-					removed.trace_gases -= trace_gas
-					filtered_out.trace_gases += trace_gas
-
-		if(removed.trace_gases.len>0)
-			for(var/datum/gas/trace_gas in removed.trace_gases)
-				if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-					removed.trace_gases -= trace_gas
-					filtered_out.trace_gases += trace_gas
+		removed.garbage_collect()
 
 	//Remix the resulting gases
 		air_contents.merge(filtered_out)

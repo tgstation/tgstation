@@ -22,6 +22,7 @@ var/global/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRu
 		var/file = file(map)
 		if(isfile(file))
 			maploader.load_map(file)
+			smooth_zlevel(world.maxz)
 			world.log << "away mission loaded: [map]"
 
 		map_transition_config.Add(AWAY_MISSION_LIST)
@@ -33,6 +34,7 @@ var/global/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRu
 
 		world << "<span class='boldannounce'>Away mission loaded.</span>"
 
+		SortAreas() //To add recently loaded areas
 	else
 		world << "<span class='boldannounce'>No away missions found.</span>"
 		return
@@ -66,7 +68,7 @@ var/global/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRu
 
 		potentialMaps.Add(t)
 
-		return potentialMaps
+	return potentialMaps
 
 
 /proc/seedRuins(z_level = 1, ruin_number = 0, whitelist = /area/space, list/potentialRuins = potentialSpaceRuins)

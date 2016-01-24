@@ -12,14 +12,11 @@
 	var/insisting = 0
 
 /obj/machinery/wish_granter/attack_hand(mob/living/carbon/user)
-	if(istype(user))	return
-	usr.set_machine(src)
-
 	if(charges <= 0)
 		user << "The Wish Granter lies silent."
 		return
 
-	else if(!istype(user, /mob/living/carbon/human))
+	else if(!ishuman(user))
 		user << "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's."
 		return
 
@@ -45,7 +42,14 @@
 		ticker.mode.traitors += user.mind
 		user.mind.special_role = "Avatar of the Wish Granter"
 
-		add_objective(user.mind, /datum/objective/escape_obj/hijack, 1)
+		var/datum/objective/hijack/hijack = new
+		hijack.owner = user.mind
+		user.mind.objectives += hijack
+
+		var/obj_count = 1
+		for(var/datum/objective/OBJ in user.mind.objectives)
+			user << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
+			obj_count++
 
 		user << "You have a very bad feeling about this."
 
