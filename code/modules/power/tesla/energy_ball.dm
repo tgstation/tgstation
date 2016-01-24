@@ -44,7 +44,11 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		handle_energy()
 		move_the_basket_ball(2 + orbiting_balls.len * 2)
 		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 15)
+		pixel_x = 0
+		pixel_y = 0
 		tesla_zap(src, 7, TESLA_DEFAULT_POWER)
+		pixel_x = -32
+		pixel_y = -32
 	else
 		tesla_zap(src, rand(1,Clamp(orbiting_balls.len,3,7)), TESLA_MINI_POWER)
 		energy = 0 // ensure we dont have miniballs of miniballs
@@ -86,8 +90,8 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		var/Orchiectomy_target = pick(orbiting_balls)
 		orbiting_balls.Remove(Orchiectomy_target)
 		qdel(Orchiectomy_target)
-	else	
-		energy -= 5+(2*orbiting_balls.len)
+	else if (orbiting_balls.len)
+		energy -= 5+(1.5*orbiting_balls.len)
 
 
 
