@@ -1,0 +1,7 @@
+author: TheEliminator16
+delete-after: True
+changes:
+  - bugfix: Made brown gloves properly use the on mob sprite.
+  - bugfix: Gave the detached limb sprite all four directions, just as god intended.
+  - bugfix: Fixed the bedhead hairstyle having certain pixels in one direction but not the opposite direction.
+  - bugfix: Fixed an issue with a voice changer set to look like a facehugger becoming invisible when pushed off the face.

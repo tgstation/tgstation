@@ -193,7 +193,7 @@
 	name = "brown gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "brown"
-	item_state = "browngloves"
+	item_state = "brown"
 	_color="brown"
 	species_fit = list("Vox")
 
