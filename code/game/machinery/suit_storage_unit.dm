@@ -15,11 +15,10 @@
 	anchored = 1
 	density = 1
 	//Vars to hold internal items
-	var/mob/living/OCCUPANT = null
-	var/obj/item/clothing/suit/space/SUIT = null
-	var/obj/item/clothing/head/helmet/space/HELMET = null
-	var/obj/item/clothing/mask/MASK = null
-	var/obj/item/STORAGE = null
+	var/obj/item/clothing/suit/space/suit = null
+	var/obj/item/clothing/head/helmet/space/helmet = null
+	var/obj/item/clothing/mask/mask = null
+	var/obj/item/storage = null
 
 	//Base types on creation
 	var/SUIT_TYPE = null
@@ -28,6 +27,7 @@
 	var/STORAGE_TYPE = null
 
 	//Machine related vars
+	var/maintenance_mode = 0
 	var/isopen = 0
 	var/islocked = 0
 	var/isUV = 0
@@ -41,7 +41,7 @@
 /obj/machinery/suit_storage_unit/examine(mob/user)
 	..()
 	if(isbroken && isopen)
-		if(!panel_open)
+		if(!maintenance_mode)
 			user << "<span class='warning'>A small LED above the maintenance panel is flashing red.</span>"
 			return
 		switch(repair_stage)
@@ -127,24 +127,24 @@
 	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/New()
-	src.update_icon()
+	update_icon()
 	if(SUIT_TYPE)
-		SUIT = new SUIT_TYPE(src)
+		suit = new SUIT_TYPE(src)
 	if(HELMET_TYPE)
-		HELMET = new HELMET_TYPE(src)
+		helmet = new HELMET_TYPE(src)
 	if(MASK_TYPE)
-		MASK = new MASK_TYPE(src)
+		mask = new MASK_TYPE(src)
 	if(STORAGE_TYPE)
-		STORAGE = new STORAGE_TYPE(src)
+		storage = new STORAGE_TYPE(src)
 
 /obj/machinery/suit_storage_unit/update_icon() //overlays yaaaay - Jordie
-	src.overlays = 0
+	overlays = 0
 
 	if(!isopen)
 		overlays += "close"
-	if(OCCUPANT)
+	if(occupant)
 		overlays += "human"
-	if(OCCUPANT && isUV)
+	if(occupant && isUV)
 		overlays += "uvhuman"
 	if(isUV)
 		overlays += "uv"
@@ -152,11 +152,11 @@
 		overlays += "super"
 	if(isopen)
 		overlays += "open"
-		if(SUIT)
+		if(suit)
 			overlays += "suit"
-		if(HELMET)
+		if(helmet)
 			overlays += "helm"
-		if(STORAGE)
+		if(storage)
 			overlays += "storage"
 		if(isbroken)
 			overlays += "broken"
@@ -173,267 +173,223 @@
 	switch(severity)
 		if(1)
 			if(prob(50))
-				src.dump_everything() //So suits dont survive all the time
+				dump_everything() //So suits dont survive all the time
 			qdel(src)
 			return
 		if(2)
 			if(prob(50))
-				src.dump_everything()
+				dump_everything()
 				qdel(src)
 			return
 		else
 			return
 	return
 
+/obj/machinery/suit_storage_unit/get_ui_data()
+	var/list/data = list()
+	data["isBroken"] = isbroken
+	data["isLocked"] = islocked
+	data["isOpen"] = isopen
+	data["isBaking"] = isUV
+	data["uv"] = issuperUV
+	data["safety"] = safetieson
+	data["maintenance"] = maintenance_mode
+	if(helmet)
+		data["helmet"] = helmet.name
+	if(suit)
+		data["suit"] = suit.name
+	if(mask)
+		data["mask"] = mask.name
+	if(storage)
+		data["aux"] = storage.name
+	if(occupant)
+		data["occupied"] = 1
+	return data
 
-/obj/machinery/suit_storage_unit/attack_hand(mob/user)
-	var/dat
-	if(..())
-		return
-	if(stat & NOPOWER)
-		return
-	if(src.panel_open) //The maintenance panel is open. Time for some shady stuff
-		dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
-		dat+= "<B>Maintenance panel controls</B><HR>"
-		dat+= "The panel is ridden with controls, button and meters, labeled in strange signs and symbols that you cannot understand; probably the manufacturing world's language. Among other things, a few controls catch your eye...<BR><BR>"
-		dat+= text("A small dial with a \"ë\" symbol embroidded on it. It's pointing towards a gauge that reads [].<BR> <A href='?src=\ref[];toggleUV=1'>Turn towards []</A><BR>",(src.issuperUV ? "15nm" : "185nm"),src,(src.issuperUV ? "185nm" : "15nm") )
-		dat+= text("A thick old-style button, with 2 grimy LED lights next to it. The [] LED is on.<BR><A href='?src=\ref[];togglesafeties=1'>Press button</a>",(src.safetieson? "<font color='green'><B>GREEN</B></font>" : "<font color='red'><B>RED</B></font>"),src)
-		dat+= text("<HR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close panel</A>", user)
-	else if(src.isUV) //The thing is running its cauterisation cycle. You have to wait.
-		dat += "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
-		dat+= "<font color ='red'><B>Unit is cauterising contents with selected UV ray intensity. Please wait.</font></B><BR>"
+/obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "suit_storage", name, 400, 305, master_ui, state)
+		ui.open()
 
-
-	else
-		if(!src.isbroken)
-			dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
-			dat+= "<font size = 4><B>U-Stor-It Suit Storage Unit, model DS1900</B></FONT><BR>"
-			dat+= "<B>Welcome to the Unit control panel.</B><HR>"
-			dat+= text("Helmet storage compartment: <B>[]</B><BR>",(src.HELMET ? HELMET.name : "<font color ='grey'>No helmet detected.</font>") )
-			if(HELMET && src.isopen)
-				dat+=text("<A href='?src=\ref[];dispense_helmet=1'>Dispense helmet</A><BR>",src)
-			dat+= text("Suit storage compartment: <B>[]</B><BR>",(src.SUIT ? SUIT.name : "<font color ='grey'>No exosuit detected.</font>") )
-			if(SUIT && src.isopen)
-				dat+=text("<A href='?src=\ref[];dispense_suit=1'>Dispense suit</A><BR>",src)
-			dat+= text("Breathmask storage compartment: <B>[]</B><BR>",(src.MASK ? MASK.name : "<font color ='grey'>No breathmask detected.</font>") )
-			if(MASK && src.isopen)
-				dat+=text("<A href='?src=\ref[];dispense_mask=1'>Dispense mask</A><BR>",src)
-			dat+= text("Auxiliary storage compartment: <B>[]</B><BR>",(src.STORAGE ? STORAGE.name : "<font color ='grey'>Contents empty.</font>") )
-			if(STORAGE && src.isopen)
-				dat+=text("<A href='?src=\ref[];eject_storage=1'>Eject contents</A><BR>",src)
-			if(src.OCCUPANT)
-				dat+= "<HR><B><font color ='red'>WARNING: Biological entity detected inside the Unit's storage. Please remove.</B></font><BR>"
-				dat+= "<A href='?src=\ref[src];eject_guy=1'>Eject extra load</A>"
-			dat+= text("<HR>Unit is: [] - <A href='?src=\ref[];toggle_open=1'>[] Unit</A> ",(src.isopen ? "Open" : "Closed"),src,(src.isopen ? "Close" : "Open"))
-			if(src.isopen)
-				dat+="<HR>"
-			else
-				dat+= text(" - <A href='?src=\ref[];toggle_lock=1'><font color ='orange'>*[] Unit*</A></font><HR>",src,(src.islocked ? "Unlock" : "Lock") )
-			dat+= text("Unit status: []",(src.islocked? "<font color ='red'><B>**LOCKED**</B></font><BR>" : "<font color ='green'><B>**UNLOCKED**</B></font><BR>") )
-			dat+= text("<A href='?src=\ref[];start_UV=1'>Start Disinfection cycle</A><BR>",src)
-			dat += text("<BR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close control panel</A>", user)
-
-		else //Ohhhh shit it's dirty or broken! Let's inform the guy.
-			dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
-			dat+= "<B>Unit chamber is too contaminated to continue usage. Please call for a qualified individual to perform maintenance.</B><BR><BR>"
-			dat+= text("<HR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close control panel</A>", user)
-
-
-	var/datum/browser/popup = new(user, "suit_storage_unit", "Suit Storage Unit", 440, 500)
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
-	return
-
-
-/obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
-	if(..())
-		return
-	if(usr == src.OCCUPANT)
-		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-		usr.set_machine(src)
-		if (href_list["toggleUV"])
-			src.toggleUV(usr)
-		if (href_list["togglesafeties"])
-			src.togglesafeties(usr)
-		if (href_list["dispense_helmet"])
-			src.dispense_helmet(usr)
-		if (href_list["dispense_suit"])
-			src.dispense_suit(usr)
-		if (href_list["dispense_mask"])
-			src.dispense_mask(usr)
-		if (href_list["eject_storage"])
-			src.eject_storage(usr)
-		if (href_list["toggle_open"])
-			src.toggle_open(usr)
-		if (href_list["toggle_lock"])
-			src.toggle_lock(usr)
-		if (href_list["start_UV"])
-			src.start_UV(usr)
-		if (href_list["eject_guy"])
-			src.eject_occupant(usr)
-		src.updateUsrDialog()
-		src.update_icon()
-	src.add_fingerprint(usr)
-	return
-
+/obj/machinery/suit_storage_unit/ui_act(action, params)
+	switch(action)
+		if ("uv")
+			toggleUV(usr)
+		if ("safety")
+			togglesafeties(usr)
+		if ("helmet")
+			dispense_helmet(usr)
+		if ("suit")
+			dispense_suit(usr)
+		if ("mask")
+			dispense_mask(usr)
+		if ("aux")
+			eject_storage(usr)
+		if ("toggle_open")
+			toggle_open(usr)
+		if ("toggle_lock")
+			toggle_lock(usr)
+		if ("uv_start")
+			start_UV(usr)
+		if ("mob")
+			eject_occupant(usr)
+	update_icon()
+	return 1
 
 /obj/machinery/suit_storage_unit/proc/toggleUV(mob/user)
-	if(!src.panel_open)
+	if(!maintenance_mode)
 		return
-
 	else
-		if(src.issuperUV)
+		if(issuperUV)
 			user << "<span class='notice'>You slide the dial back towards \"185nm\".</span>"
-			src.issuperUV = 0
+			issuperUV = 0
 		else
 			user << "<span class='notice'>You crank the dial all the way up to \"15nm\".</span>"
-			src.issuperUV = 1
+			issuperUV = 1
 		return
 
 
 /obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user)
-	if(!src.panel_open) //Needed check due to bugs
+	if(!maintenance_mode) //Needed check due to bugs
 		return
 	else
 		user << "<span class='notice'>You push the button. The coloured LED next to it changes.</span>"
-		src.safetieson = !src.safetieson
+		safetieson = !safetieson
 
 
 /obj/machinery/suit_storage_unit/proc/dispense_helmet()
-	eject(HELMET)
-	HELMET = null
+	eject(helmet)
+	helmet = null
 
 /obj/machinery/suit_storage_unit/proc/dispense_suit()
-	eject(SUIT)
-	SUIT = null
+	eject(suit)
+	suit = null
 
 /obj/machinery/suit_storage_unit/proc/dispense_mask()
-	eject(MASK)
-	MASK = null
+	eject(mask)
+	mask = null
 
 /obj/machinery/suit_storage_unit/proc/eject_storage()
-	eject(STORAGE)
-	STORAGE = null
+	eject(storage)
+	storage = null
 
 /obj/machinery/suit_storage_unit/proc/eject(atom/movable/ITEM)
 	//Check item still exists - if not, then usually someone has already ejected the item
 	if(ITEM)
-		ITEM.loc = src.loc
+		ITEM.loc = loc
 
 /obj/machinery/suit_storage_unit/proc/dump_everything()
 	for(var/obj/item/ITEM in src)
 		eject(ITEM)
-	src.SUIT = null
-	src.HELMET = null
-	src.MASK = null
-	src.STORAGE = null
-	if(src.OCCUPANT)
-		src.eject_occupant(OCCUPANT)
+	suit = null
+	helmet = null
+	mask = null
+	storage = null
+	if(occupant)
+		eject_occupant(occupant)
 	return
 
 
 /obj/machinery/suit_storage_unit/proc/toggle_open(mob/user)
-	if(src.islocked || src.isUV)
+	if(islocked || isUV)
 		user << "<span class='warning'>You're unable to open unit!</span>"
 		return 0
-	if(src.OCCUPANT)
-		src.eject_occupant(user)
+	if(occupant)
+		eject_occupant(user)
 		return 1  // eject_occupant opens the door, so we need to return
-	src.isopen = !src.isopen
+	isopen = !isopen
 	return 1
 
 
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user)
-	if(src.OCCUPANT && src.safetieson)
+	if(occupant && safetieson)
 		user << "<span class='warning'>The unit's safety protocols disallow locking when a biological form is detected inside its compartments.</span>"
 		return
-	if(src.isopen)
+	if(isopen)
 		return
-	src.islocked = !src.islocked
+	islocked = !islocked
 	return
 
 
 /obj/machinery/suit_storage_unit/proc/start_UV(mob/user)
-	if(src.isUV || src.isopen) //I'm bored of all these sanity checks
+	if(isUV || isopen) //I'm bored of all these sanity checks
 		return
-	if(src.OCCUPANT && src.safetieson)
+	if(occupant && safetieson)
 		user << "<font color='red'><B>WARNING:</B> Biological entity detected in the confines of the unit's storage. Cannot initiate cycle.</font>"
 		return
-	if(!src.HELMET && !src.MASK && !src.SUIT && !src.STORAGE && !src.OCCUPANT )
+	if(!helmet && !mask && !suit && !storage && !occupant )
 		user << "<font color='red'>Unit storage bays empty. Nothing to disinfect -- Aborting.</font>"
 		return
 	user << "<span class='notice'>You start the unit's cauterisation cycle.</span>"
-	src.cycletime_left = 20
-	src.isUV = 1
-	if(src.OCCUPANT && !src.islocked)
-		src.islocked = 1 //Let's lock it for good measure
-	src.update_icon()
-	src.updateUsrDialog()
+	cycletime_left = 20
+	isUV = 1
+	if(occupant && !islocked)
+		islocked = 1 //Let's lock it for good measure
+	update_icon()
 
 	var/i
 	spawn(0)
 		for(i=0,i<4,++i)
 			sleep(50)
-			if(src.OCCUPANT)
+			if(occupant)
 				var/burndamage = rand(6,10)
-				if(src.issuperUV)
+				if(issuperUV)
 					burndamage = rand(28,35)
-				if(iscarbon(OCCUPANT))
-					OCCUPANT.take_organ_damage(0,burndamage)
-					OCCUPANT.emote("scream")
+				if(iscarbon(occupant))
+					occupant.take_organ_damage(0,burndamage)
+					occupant.emote("scream")
 				else
-					OCCUPANT.take_organ_damage(burndamage)
+					occupant.take_organ_damage(burndamage)
 			if(i==3) //End of the cycle
-				if(!src.issuperUV)
+				if(!issuperUV)
 					for(var/obj/item/ITEM in src)
 						ITEM.clean_blood()
-					if(istype(STORAGE, /obj/item/weapon/reagent_containers/food))
-						qdel(STORAGE)
+					if(istype(storage, /obj/item/weapon/reagent_containers/food))
+						qdel(storage)
 				else //It was supercycling, destroy everything
-					src.HELMET = null
-					src.SUIT = null
-					src.MASK = null
-					qdel(STORAGE)
+					helmet = null
+					suit = null
+					mask = null
+					qdel(storage)
 					visible_message("<span class='warning'>With a loud whining noise, [src]'s door grinds open. A foul cloud of smoke emanates from the chamber.</span>")
-					src.isbroken = 1
-					src.isopen = 1
-					src.islocked = 0
+					isbroken = 1
+					isopen = 1
+					islocked = 0
 					repair_stage = REPAIR_NEEDS_WIRECUTTERS
-					src.eject_occupant(OCCUPANT)
-				src.isUV = 0 //Cycle ends
-		src.update_icon()
-		src.updateUsrDialog()
+					eject_occupant(occupant)
+				isUV = 0 //Cycle ends
+		update_icon()
 		return
 
 /obj/machinery/suit_storage_unit/proc/cycletimeleft()
-	if(src.cycletime_left >= 1)
-		src.cycletime_left--
-	return src.cycletime_left
+	if(cycletime_left >= 1)
+		cycletime_left--
+	return cycletime_left
 
 
 /obj/machinery/suit_storage_unit/proc/eject_occupant(mob/user)
-	if (src.islocked)
+	if (islocked)
 		return
 
-	if (!src.OCCUPANT)
+	if (!occupant)
 		return
 
-	if (src.OCCUPANT.client)
-		if(user != OCCUPANT)
-			OCCUPANT << "<span class='warning'>The machine kicks you out!</span>"
-		if(user.loc != src.loc)
-			OCCUPANT << "<span class='warning'>You leave the not-so-cozy confines of [src].</span>"
+	if (occupant.client)
+		if(user != occupant)
+			occupant << "<span class='warning'>The machine kicks you out!</span>"
+		if(user.loc != loc)
+			occupant << "<span class='warning'>You leave the not-so-cozy confines of [src].</span>"
 
-		src.OCCUPANT.client.eye = src.OCCUPANT.client.mob
-		src.OCCUPANT.client.perspective = MOB_PERSPECTIVE
-	if(src.OCCUPANT.loc == src)
-		src.OCCUPANT.loc = src.loc
-	src.OCCUPANT = null
-	if(!src.isopen)
-		src.isopen = 1
-	src.update_icon()
+		occupant.client.eye = occupant.client.mob
+		occupant.client.perspective = MOB_PERSPECTIVE
+	if(occupant.loc == src)
+		occupant.loc = loc
+	occupant = null
+	if(!isopen)
+		isopen = 1
+	update_icon()
 	return
 
 
@@ -461,10 +417,9 @@
 
 		else
 			return
-	src.eject_occupant(user)
+	eject_occupant(user)
 	add_fingerprint(user)
-	src.updateUsrDialog()
-	src.update_icon()
+	update_icon()
 	return
 
 
@@ -476,13 +431,13 @@
 		return
 	if (user.stat != 0)
 		return
-	if (!src.isopen)
+	if (!isopen)
 		user << "<span class='warning'>The unit's doors are shut!</span>"
 		return
-	if (!src.ispowered || src.isbroken)
+	if (!ispowered || isbroken)
 		user << "<span class='warning'>The unit is not operational!</span>"
 		return
-	if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) || (src.STORAGE))
+	if ( occupant || helmet || suit || storage )
 		user << "<span class='warning'>It's too cluttered inside to fit in!</span>"
 		return
 	if(M == user)
@@ -495,12 +450,11 @@
 			M.client.perspective = EYE_PERSPECTIVE
 			M.client.eye = src
 		M.loc = src
-		src.OCCUPANT = M
-		src.isopen = 0
-		src.update_icon()
+		occupant = M
+		isopen = 0
+		update_icon()
 
-		src.add_fingerprint(user)
-		src.updateUsrDialog()
+		add_fingerprint(user)
 		return
 	return
 
@@ -512,7 +466,7 @@
 	update_icon()
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
-	if(!src.ispowered)
+	if(!ispowered)
 		if(istype(I, /obj/item/weapon/crowbar) && !isopen)
 			if(toggle_open(user))
 				dump_everything()
@@ -520,12 +474,11 @@
 				update_icon()
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))
-		src.panel_open = !src.panel_open
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		user << text("<span class='notice'>You [] the unit's maintenance panel.</span>",(src.panel_open ? "open up" : "close") )
-		src.updateUsrDialog()
+		maintenance_mode = !maintenance_mode
+		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		user << text("<span class='notice'>You [] the unit's maintenance panel.</span>",(maintenance_mode ? "open up" : "close") )
 		return
-	if(isbroken && panel_open)
+	if(isbroken && maintenance_mode)
 		if(istype(I, /obj/item/weapon/wirecutters) && repair_stage == REPAIR_NEEDS_WIRECUTTERS)
 			user.visible_message("<span class='notice'>[user] starts removing [src]'s damaged wires.</span>", \
 								 "<span class='notice'>You begin removing the damaged wires from [src]...</span>")
@@ -586,10 +539,10 @@
 		store_mob(G.affecting, user)
 		return
 	if( istype(I,/obj/item/clothing/suit/space) )
-		if(!src.isopen || src.isbroken)
+		if(!isopen || isbroken)
 			return
 		var/obj/item/clothing/suit/space/S = I
-		if(src.SUIT)
+		if(suit)
 			user << "<span class='notice'>The unit already contains a suit.</span>"
 			return
 		if(!user.drop_item())
@@ -597,15 +550,14 @@
 			return
 		user << "<span class='notice'>You load [S] into the suit storage compartment.</span>"
 		S.loc = src
-		src.SUIT = S
-		src.update_icon()
-		src.updateUsrDialog()
+		suit = S
+		update_icon()
 		return
 	if( istype(I,/obj/item/clothing/head/helmet) )
-		if(!src.isopen || src.isbroken)
+		if(!isopen || isbroken)
 			return
 		var/obj/item/clothing/head/helmet/H = I
-		if(src.HELMET)
+		if(helmet)
 			user << "<span class='warning'>The unit already contains a helmet!</span>"
 			return
 		if(!user.drop_item())
@@ -613,15 +565,14 @@
 			return
 		user << "<span class='notice'>You load [H] into the helmet storage compartment.</span>"
 		H.loc = src
-		src.HELMET = H
-		src.update_icon()
-		src.updateUsrDialog()
+		helmet = H
+		update_icon()
 		return
 	if( istype(I,/obj/item/clothing/mask) )
-		if(!src.isopen || src.isbroken)
+		if(!isopen || isbroken)
 			return
 		var/obj/item/clothing/mask/M = I
-		if(src.MASK)
+		if(mask)
 			user << "<span class='warning'>The unit already contains a mask!</span>"
 			return
 		if(!user.drop_item())
@@ -629,15 +580,14 @@
 			return
 		user << "<span class='notice'>You load [M] into the mask storage compartment.</span>"
 		M.loc = src
-		src.MASK = M
-		src.update_icon()
-		src.updateUsrDialog()
+		mask = M
+		update_icon()
 		return
 	if( istype(I,/obj/item) )
-		if(!src.isopen || src.isbroken)
+		if(!isopen || isbroken)
 			return
 		var/obj/item/ITEM = I
-		if(src.STORAGE)
+		if(storage)
 			user << "<span class='warning'>The auxiliary storage compartment is full!</span>"
 			return
 		if(!user.drop_item())
@@ -645,15 +595,13 @@
 			return
 		user << "<span class='notice'>You load [ITEM] into the auxiliary storage compartment.</span>"
 		ITEM.loc = src
-		src.STORAGE = ITEM
-	src.update_icon()
-	src.updateUsrDialog()
+		storage = ITEM
+	update_icon()
 	return
 
 
 /obj/machinery/suit_storage_unit/attack_ai(mob/user)
-	return src.attack_hand(user)
-
+	return attack_hand(user)
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)
 	user << "<span class='warning'>You don't know how to work this!</span>"
