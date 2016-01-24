@@ -242,12 +242,16 @@
 			var/skip = 0
 			for (var/obj/structure/window/W in T)
 				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
-					skip = 1; break
-			if (skip) continue
+					skip = 1
+					break
+			if (skip)
+				continue
 			for(var/obj/machinery/door/window/D in T)
 				if(dir == D.dir)
-					skip = 1; break
-			if (skip) continue
+					skip = 1
+					break
+			if (skip)
+				continue
 
 			var/turf/NT = get_step(T,dir)
 			if (!isturf(NT) || (NT in found) || (NT in pending))
@@ -260,6 +264,13 @@
 					//do nothing, may be later i'll add 'rejected' list as optimization
 				if(BORDER_2NDTILE)
 					found+=NT //tile included to new area, but we dont seek more
+					for(var/direction in dir_relative_diagonals(dir))
+						var/turf/d_turf = get_step(T, direction)
+						if( check_tile_is_border(d_turf, direction) == BORDER_2NDTILE )
+							if(!(d_turf in found))
+								found += d_turf
+							if(d_turf in pending)
+								pending -= d_turf
 				if(BORDER_SPACE)
 					return ROOM_ERR_SPACE
 		found+=T
