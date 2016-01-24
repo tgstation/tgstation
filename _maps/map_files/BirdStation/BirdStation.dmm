@@ -172,7 +172,7 @@
 "adp" = (/obj/machinery/atmospherics/pipe/heat_exchanging/simple{dir = 10},/turf/simulated/floor/engine,/area/engine/engineering)
 "adq" = (/obj/machinery/atmospherics/pipe/heat_exchanging/simple{dir = 6},/obj/machinery/camera{c_tag = "Heating chamber north"; network = list("heating")},/turf/simulated/floor/engine,/area/engine/engineering)
 "adr" = (/obj/machinery/atmospherics/components/unary/outlet_injector/on{dir = 1},/turf/simulated/floor/engine,/area/engine/engineering)
-"ads" = (/obj/machinery/meter,/obj/machinery/alarm{dir = 4; pixel_x = -23; pixel_y = 0; req_access = null},/obj/machinery/atmospherics/pipe/manifold/general/visible{icon_state = "manifold"; dir = 8},/obj/machinery/camera/autoname{icon_state = "camera"; dir = 4},/turf/simulated/floor/plasteel,/area/engine/engineering)
+"ads" = (/obj/machinery/meter,/obj/machinery/airalarm{dir = 4; pixel_x = -23; pixel_y = 0; req_access = null},/obj/machinery/atmospherics/pipe/manifold/general/visible{icon_state = "manifold"; dir = 8},/obj/machinery/camera/autoname{icon_state = "camera"; dir = 4},/turf/simulated/floor/plasteel,/area/engine/engineering)
 "adt" = (/obj/machinery/atmospherics/components/binary/pump/on{icon_state = "pump_map"; dir = 8},/turf/simulated/floor/plasteel/warning{icon_state = "warning"; dir = 4},/area/engine/engineering)
 "adu" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/general/visible{icon_state = "intact"; dir = 4},/turf/simulated/floor/plating,/area/engine/engineering)
 "adv" = (/obj/machinery/atmospherics/pipe/simple/general/hidden{icon_state = "intact"; dir = 4},/turf/simulated/floor/engine,/area/engine/engineering)

@@ -1,7 +1,7 @@
-/datum/wires/alarm
-	holder_type = /obj/machinery/alarm
+/datum/wires/airalarm
+	holder_type = /obj/machinery/airalarm
 
-/datum/wires/alarm/New(atom/holder)
+/datum/wires/airalarm/New(atom/holder)
 	wires = list(
 		WIRE_POWER,
 		WIRE_IDSCAN, WIRE_AI,
@@ -10,38 +10,33 @@
 	add_duds(3)
 	..()
 
-/datum/wires/alarm/interactable(mob/user)
-	var/obj/machinery/alarm/A = holder
+/datum/wires/airalarm/interactable(mob/user)
+	var/obj/machinery/airalarm/A = holder
 	if(A.panel_open && A.buildstage == 2)
 		return TRUE
 
-/datum/wires/alarm/get_status()
-	var/obj/machinery/alarm/A = holder
+/datum/wires/airalarm/get_status()
+	var/obj/machinery/airalarm/A = holder
 	var/list/status = list()
 	status += "The interface light is [A.locked ? "red" : "green"]."
 	status += "The short indicator is [A.shorted ? "lit" : "off"]."
 	status += "The AI connection light is [!A.aidisabled ? "on" : "off"]."
 	return status
 
-/datum/wires/alarm/on_pulse(wire)
-	var/obj/machinery/alarm/A = holder
+/datum/wires/airalarm/on_pulse(wire)
+	var/obj/machinery/airalarm/A = holder
 	switch(wire)
 		if(WIRE_POWER) // Short out for a long time.
 			if(!A.shorted)
 				A.shorted = TRUE
 				A.update_icon()
-			spawn(12000)
-				if(A.shorted)
-					A.shorted = FALSE
-					A.update_icon()
+			addtimer(A, "reset", 1200, FALSE, wire)
 		if(WIRE_IDSCAN) // Toggle lock.
 			A.locked = !A.locked
 		if(WIRE_AI) // Disable AI control for a while.
 			if(!A.aidisabled)
 				A.aidisabled = TRUE
-			spawn(100)
-				if(A.aidisabled)
-					A.aidisabled = FALSE
+			addtimer(A, "reset", 100, FALSE, wire)
 		if(WIRE_PANIC) // Toggle panic siphon.
 			if(A.mode == 1) // AALARM_MODE_SCRUB
 				A.mode = 3 // AALARM_MODE_PANIC
@@ -53,8 +48,8 @@
 				A.post_alert(0)
 			A.update_icon()
 
-/datum/wires/alarm/on_cut(wire, mend)
-	var/obj/machinery/alarm/A = holder
+/datum/wires/airalarm/on_cut(wire, mend)
+	var/obj/machinery/airalarm/A = holder
 	switch(wire)
 		if(WIRE_POWER) // Short out forever.
 			A.shock(usr, 50)
