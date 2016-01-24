@@ -135,6 +135,10 @@ var/savefile/panicfile
 	master_controller = new /datum/controller/game_controller()
 
 	spawn(1)
+		for(var/turf/T in world)
+			T.initialize()
+			turfs += T
+
 		processScheduler.deferSetupFor(/datum/controller/process/ticker)
 		processScheduler.setup()
 
@@ -155,7 +159,7 @@ var/savefile/panicfile
 	process_adminbus_teleport_locs()	//Sets up adminbus teleport locations.
 	SortAreas()							//Build the list of all existing areas and sort it alphabetically
 
-	spawn(3000)		//so we aren't adding to the round-start lag
+	spawn(2000)		//so we aren't adding to the round-start lag
 		if(config.ToRban)
 			ToRban_autoupdate()
 		/*if(config.kick_inactive)
