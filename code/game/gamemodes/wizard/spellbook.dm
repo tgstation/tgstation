@@ -453,7 +453,7 @@
 	..()
 	to_chat(user, "<span class='caution'>Your stomach rumbles...</span>")
 	if(user.nutrition)
-		user.burn_calories(200)
+		user.nutrition = max(user.nutrition - 200,0)
 
 /obj/item/weapon/spellbook/oneuse/blind
 	spell = /spell/targeted/genetic/blind

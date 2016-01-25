@@ -169,7 +169,7 @@
 			set_light(light_range_on, light_power_on)
 		else
 			set_light(0)
-	var/connected_type = "/obj/machinery/sleep_console"
+	var/connected_type = /obj/machinery/sleep_console
 	var/on = 0
 	var/target_time = 0
 	var/setting
@@ -192,7 +192,7 @@
 			// generate_console(get_step(get_turf(src), EAST))
 		ASSERT(t)
 		var/obj/machinery/sleep_console/c = locate() in t.contents
-		if(c)
+		if(c && istype(c,connected_type))
 			connected = c
 			c.connected = src
 		else if (!connected)
@@ -354,6 +354,7 @@
 	return ..()
 
 /obj/machinery/sleeper/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if(iswrench(W)&&!occupant&& (machine_flags & WRENCHMOVE))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		if(orient == "RIGHT")
@@ -459,8 +460,8 @@
 /obj/machinery/sleeper/proc/cook(var/cook_setting)
 	if (!(cook_setting in available_options))
 		return
-	var/time = available_options[cook_setting]
-	target_time = world.timeofday + time
+	var/cooktime = available_options[cook_setting]
+	target_time = world.time + cooktime
 	on = 1
 	setting = cook_setting
 	update_icon()
@@ -569,6 +570,11 @@
 		return
 	return
 
+/obj/machinery/sleep_console/mancrowave_console
+	name = "thermal homeostasis regulator"
+	desc = "This invention by Mancrowave Inc. is meant for stabilising body temperature. Modern medical technology is amazing."
+	icon_state = "manconsole_open"
+
 /obj/machinery/sleeper/mancrowave
 	name = "thermal homeostasis regulator"
 	desc = "This invention by Mancrowave Inc. is meant for stabilising body temperature. Modern medical technology is amazing."
@@ -580,12 +586,14 @@
 		/obj/item/weapon/stock_parts/manipulator,
 		/obj/item/weapon/stock_parts/manipulator
 	)
-	connected_type = "/obj/machinery/sleep_console/mancrowave_console"
+	connected_type = /obj/machinery/sleep_console/mancrowave_console
 	setting = "Thermoregulate"
 	available_options = list("Thermoregulate" = 50)
 	light_color = LIGHT_COLOR_ORANGE
 	automatic = 1
 	drag_delay = 0
+	machine_flags = SCREWTOGGLE | CROWDESTROY | EMAGGABLE
+
 
 /obj/machinery/sleeper/mancrowave/go_out(var/exit = src.loc)
 	if(on && !emagged)
@@ -593,11 +601,6 @@
 	else
 		on = 0
 		..()
-
-/obj/machinery/sleeper/mancrowave/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if(istype(W,/obj/item/weapon/card/emag))
-		emag(user)
 
 /obj/machinery/sleeper/mancrowave/update_icon()
 	if(!occupant)
@@ -633,23 +636,6 @@
 	return -1
 
 /obj/machinery/sleeper/mancrowave/RefreshParts()
-
-/obj/machinery/sleep_console/mancrowave_console
-	name = "thermal homeostasis regulator"
-	desc = "This invention by Mancrowave Inc. is meant for stabilising body temperature. Modern medical technology is amazing."
-	icon_state = "manconsole_open"
-
-/obj/machinery/sleeper/mancrowave/New()
-	spawn( 5 )
-		var/turf/t
-		t = get_step(get_turf(src), EAST)
-		ASSERT(t)
-		var/obj/machinery/sleep_console/mancrowave_console/c = locate() in t.contents
-		if(c)
-			c.connected = src
-			connected = c
-		else
-			..()
 
 /obj/machinery/sleep_console/mancrowave_console/update_icon()
 	if(connected)
@@ -743,6 +729,8 @@
 
 /obj/machinery/sleep_console/mancrowave_console/process()
 	..()
+	if(!connected)
+		return
 	if(connected.automatic && connected.occupant && !connected.on)
 		connected.cook("Thermoregulate")
 	if(!connected.on)
@@ -754,7 +742,7 @@
 	if(!istype(connected.occupant,/mob/living/carbon))
 		connected.go_out()
 		return
-	if(!(world.timeofday >= connected.target_time && connected.on)) //If we're currently still cooking
+	if(!(world.time >= connected.target_time && connected.on)) //If we're currently still cooking
 		var/targettemperature = T0C+32+(connected.available_options["[connected.setting]"]/10)
 		var/emaggedbonus = (connected.emagged) ? 10 : 1
 		var/timefraction = (connected.available_options["[connected.setting]"])/250*emaggedbonus

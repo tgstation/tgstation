@@ -89,8 +89,8 @@
 	if(loc_temp < bodytemperature)
 		// We're going to try and just use exposed area(temperature difference)/cold divisor, and assume we're only conducting.
 		var/thermal_loss = (1-get_cold_protection())  				// How much of your skin is exposed.
-		if(environment.total_moles > 103.934 || !IS_SPACE_COLD)
-			thermal_loss	*= environment.total_moles/103.934		// Multiplied by how many moles are in the environment over 103.934, the normal value of a station. - More moles means more heat transfer, that's basic science.
+		if(environment.total_moles > MOLES_CELLSTANDARD || !IS_SPACE_COLD)
+			thermal_loss	*= environment.total_moles/MOLES_CELLSTANDARD	// Multiplied by how many moles are in the environment over 103.934, the normal value of a station. - More moles means more heat transfer, that's basic science.
 		thermal_loss	*= (get_skin_temperature() - loc_temp)		// Multiplied by the difference between you and the room temperature
 		thermal_loss	/= BODYTEMP_COLD_DIVISOR					// Divided by the cold_divisor
 		return thermal_loss

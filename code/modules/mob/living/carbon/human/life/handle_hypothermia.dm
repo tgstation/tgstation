@@ -6,7 +6,7 @@ var/global/list/coldwarning_hard = list("Holy shit, it's freezing cold out here!
 		return NO_HYPOTHERMIA
 	else
 		var/mob/living/carbon/human/H = src
-		if(H.species == "/datum/species/horror")
+		if(!H.species.can_be_hypothermic)
 			return NO_HYPOTHERMIA
 	if((status_flags & GODMODE) || (flags & INVULNERABLE) || istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 		return NO_HYPOTHERMIA
@@ -26,14 +26,15 @@ var/global/list/coldwarning_hard = list("Holy shit, it's freezing cold out here!
 	if(!reagents)
 		return 0
 	var/datum/reagents/blood = reagents
-	var/vessel_dilated = 0
 	if(blood.reagent_list)
 		for(var/datum/reagent/chem in blood.reagent_list)
 			if(istype(chem,/datum/reagent/ethanol)) // alcohol is a vasodilator.
-				vessel_dilated = 1
+				return 1
+			if(istype(chem,/datum/reagent/capsaicin)) // as is capsaicin
+				return 1
 	if(undergoing_hypothermia() == MODERATE_HYPOTHERMIA && bodytemperature < 29) // conserve our energy for something else.
-		vessel_dilated = 1
-	return vessel_dilated
+		return 1
+	return 0
 
 
 /mob/living/carbon/human/proc/get_skin_temperature()

@@ -123,6 +123,7 @@ var/global/list/whitelisted_species = list("Human")
 	var/has_mutant_race = 1
 
 	var/move_speed_mod = 0 //Higher value is slower, lower is faster.
+	var/can_be_hypothermic = 1
 
 /datum/species/proc/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
 	if(H.dna)
@@ -303,18 +304,12 @@ var/global/list/whitelisted_species = list("Human")
 
 		if(H.dna.mutantrace != "slime")
 			switch(breath.temperature)
-/*				if(-INFINITY to cold_level_3)
+				if(-INFINITY to cold_level_3)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Cold")
 					H.fire_alert = max(H.fire_alert, 1)
 
-				if(cold_level_3 to cold_level_2)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Cold")
-					H.fire_alert = max(H.fire_alert, 1)
+				// there was once behaviour for higher levels of cold, no longer.
 
-				if(cold_level_2 to cold_level_1)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Cold")
-					H.fire_alert = max(H.fire_alert, 1)
-*/
 				if(heat_level_1 to heat_level_2)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Heat")
 					H.fire_alert = max(H.fire_alert, 2)

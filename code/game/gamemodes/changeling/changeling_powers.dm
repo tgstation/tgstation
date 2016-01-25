@@ -922,7 +922,7 @@ var/list/datum/dna/hivemind_bank = list()
 	if(T.overeatduration>100)
 		to_chat(T, "<span class='danger'>You feel a small prick as your stomach churns violently. You begin to feel skinnier.</span>")
 		T.overeatduration = 0
-		T.burn_calories(100)
+		T.nutrition = max(T.nutrition - 200,0)
 		feedback_add_details("changeling_powers","US")
 	return 1
 
