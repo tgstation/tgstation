@@ -1367,7 +1367,7 @@
 "aAo" = (/obj/item/weapon/weldingtool/largetank,/turf/simulated/floor/plating/airless,/area/space/nearstation)
 "aAp" = (/obj/structure/transit_tube{tag = "icon-S-NW"; icon_state = "S-NW"},/turf/space,/area/space)
 "aAq" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/flora/kirbyplants{icon_state = "plant-07"; name = "Photosynthetic Potted plant"; pixel_y = 10},/turf/simulated/floor/grass,/area/hallway/primary/starboard)
-"aAr" = (/obj/machinery/light{dir = 8; icon_state = "tube1"},/obj/structure/flora/tree/festivus,/turf/simulated/floor/plasteel{dir = 8; icon_state = "warnwhite"},/area/crew_quarters/hor)
+"aAr" = (/obj/machinery/light{dir = 8; icon_state = "tube1"},/turf/simulated/floor/plasteel{dir = 8; icon_state = "warnwhite"},/area/crew_quarters/hor)
 "aAs" = (/obj/machinery/suit_storage_unit/rd,/turf/simulated/floor/plasteel{icon_state = "white"},/area/crew_quarters/hor)
 "aAt" = (/turf/simulated/floor/plasteel{dir = 4; icon_state = "warnwhite"},/area/crew_quarters/hor)
 "aAu" = (/obj/machinery/computer/robotics,/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/crew_quarters/hor)
