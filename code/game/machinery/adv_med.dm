@@ -162,9 +162,9 @@
 				continue
 			return
 	if(occupant == usr)
-		visible_message("[usr] climbs out of \the [src].", 2) //spooky
+		visible_message("[usr] climbs out of \the [src].")
 	else
-		visible_message("[usr] removes [occupant.name] from \the [src].", 2) //spooky
+		visible_message("[usr] removes [occupant.name] from \the [src].")
 	go_out(over_location)
 
 /obj/machinery/bodyscanner/relaymove(mob/user as mob)

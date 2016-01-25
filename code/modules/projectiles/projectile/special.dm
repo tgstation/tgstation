@@ -157,7 +157,7 @@
 			M.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	else if(istype(target, /mob/living/carbon/))
 	//	for (var/mob/V in viewers(src))
-	//		V.show_message("The radiation beam dissipates harmlessly through [M]", 2) //spooky
+	//		V.show_message("The radiation beam dissipates harmlessly through [M]")
 		M.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	else
 		return 1
