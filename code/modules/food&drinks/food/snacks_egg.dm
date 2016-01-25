@@ -16,6 +16,18 @@
 	list_reagents = list("nutriment" = 1)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	filling_color = "#F0E68C"
+	var/incubation_tick = 0
+	var/incubation_threshold = 100
+	var/contained_mob = /mob/living/simple_animal/farm/chicken
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/process()
+	incubation_tick++
+	if(incubation_tick >= incubation_threshold)
+		var/turf/T = get_turf(loc)
+		T.visible_message("[src] hatches!")
+		new contained_mob(T)
+		SSobj.processing.Remove(src)
+		qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
