@@ -9,12 +9,12 @@
 <ui-display title='Power' button>
   {{#partial button}}
     {{#if data.open}}
-      <ui-button icon='eject' action='eject'>Eject</ui-button>
+      <ui-button icon='eject' state='{{data.hasPowercell ? null : "disabled"}}' action='eject'>Eject</ui-button>
     {{/if}}
   {{/partial}}
   <ui-section label='Power'>
     <ui-button icon='{{data.on ? "power-off" : "close"}}'
-      style='{{data.on ? "selected" : null}}'
+      style='{{data.on ? "selected" : null}}' state='{{data.hasPowercell ? null : "disabled"}}'
       action='power'>{{data.on ? "On" : "Off"}}</ui-button>
   </ui-section>
   <ui-section label='Cell'>
