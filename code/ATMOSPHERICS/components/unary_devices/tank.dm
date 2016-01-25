@@ -16,7 +16,7 @@
 	if(gas_type)
 		air_contents.assert_gas(gas_type)
 		air_contents.gases[gas_type][MOLES] = AIR_CONTENTS
-		name = "[name] ([air_contents.gases[gas_type][GAS_NAME]])"
+		name = "[name] ([air_contents.gases[gas_type][GAS_META][META_GAS_NAME]])"
 
 /obj/machinery/atmospherics/components/unary/tank/carbon_dioxide
 	gas_type = "co2"

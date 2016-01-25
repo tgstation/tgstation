@@ -38,7 +38,7 @@ var/next_mob_id = 0
 	for(var/id in environment.gases)
 		var/gas = environment.gases[id]
 		if(gas[MOLES])
-			t+="<span class='notice'>[gas[GAS_NAME]]: [gas[MOLES]] \n</span>"
+			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
 
 	usr << t
 

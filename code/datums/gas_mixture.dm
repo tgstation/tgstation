@@ -86,13 +86,13 @@ var/list/cached_gases_list = null
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
-		. += cached_gases[id][MOLES]*cached_gases[id][SPECIFIC_HEAT]
+		. += cached_gases[id][MOLES]*cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
 
 /datum/gas_mixture/proc/heat_capacity_archived()
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
-		. += cached_gases[id][ARCHIVE]*cached_gases[id][SPECIFIC_HEAT]
+		. += cached_gases[id][ARCHIVE]*cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
 
 /datum/gas_mixture/proc/total_moles()
 	var/list/cached_gases = gases
@@ -415,7 +415,7 @@ var/list/cached_gases_list = null
 		var/delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE])/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
 
 		if(delta && abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-			var/gas_heat_capacity = delta * gas[SPECIFIC_HEAT]
+			var/gas_heat_capacity = delta * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
 			if(delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
 			else
