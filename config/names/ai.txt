@@ -93,6 +93,7 @@ OMM 0910
 Orange v 3.5
 PTO
 Project 2501
+Puppet Master
 R.I.C. 2.0
 R2-D2
 R4-P17
