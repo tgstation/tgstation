@@ -275,16 +275,6 @@
 
 //Reactive armors
 
-/datum/design/armor/teleport
-	name = "Reactive Teleport Armor"
-	desc= "Someone seperated our Research Director from his own head!"
-	id = "teleportarmor"
-	req_tech = list("materials" = 7, "combat" = 6, "bluespace" = 4, "programming" = 6)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 25000, MAT_GLASS = 10000, MAT_SILVER = 8000, MAT_GOLD = 8000, MAT_PLASMA = 6000, MAT_DIAMOND = 4000)
-	build_path = /obj/item/clothing/suit/armor/reactive
-	category = list("Weapons")
-	
 /datum/design/armor/tesla
 	name = "Reactive Tesla Armor"
 	desc= "ZAPP!"
