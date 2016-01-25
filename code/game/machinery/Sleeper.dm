@@ -276,9 +276,9 @@
 			return
 
 	if(L == user)
-		visible_message("[user] climbs into \the [src].", 3)
+		visible_message("[user] climbs into \the [src].")
 	else
-		visible_message("[user] places [L.name] into \the [src].", 3)
+		visible_message("[user] places [L.name] into \the [src].")
 
 	L.forceMove(src)
 	L.reset_view()
@@ -325,9 +325,9 @@
 				continue
 			return
 	if(occupant == usr)
-		visible_message("[usr] climbs out of \the [src].", 3)
+		visible_message("[usr] climbs out of \the [src].")
 	else
-		visible_message("[usr] removes [occupant.name] from \the [src].", 3)
+		visible_message("[usr] removes [occupant.name] from \the [src].")
 	go_out(over_location)
 
 /obj/machinery/sleeper/allow_drop()
@@ -385,7 +385,7 @@
 			to_chat(usr, "[G.affecting.name] will not fit into \the [src] because they have a slime latched onto their head.")
 			return
 
-	visible_message("[user] places [G.affecting.name] into \the [src].", 3)
+	visible_message("[user] places [G.affecting.name] into \the [src].")
 
 	var/mob/M = G.affecting
 	if(!isliving(M) || M.locked_to)
@@ -549,7 +549,7 @@
 			return
 	if(usr.locked_to)
 		return
-	visible_message("[usr] starts climbing into the sleeper.", 3)
+	visible_message("[usr] starts climbing into \the [src].")
 	if(do_after(usr, src, drag_delay))
 		if(src.occupant)
 			to_chat(usr, "<span class='notice'><B>The sleeper is already occupied!</B></span>")

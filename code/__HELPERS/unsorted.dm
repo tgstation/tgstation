@@ -233,18 +233,21 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 					search_pda = FALSE
 
-		// fixes renames not being reflected in objective text
-		var/length
-		var/position
-
-		for (var/datum/mind/mind in ticker.minds)
-			if (mind)
-				for (var/datum/objective/objective in mind.objectives)
+		for (var/datum/mind/themind in ticker.minds)
+			if (themind)
+				var/found = 0
+				for (var/datum/objective/objective in themind.objectives)
 					if (objective && objective.target == mind)
-						length = length(oldname)
-						position = findtextEx(objective.explanation_text, oldname)
-						objective.explanation_text = copytext(objective.explanation_text, 1, position) + newname + copytext(objective.explanation_text, position + length)
-
+						found = 1
+						objective.explanation_text = replacetext(objective.explanation_text, oldname, newname)
+						themind.memory = replacetext(themind.memory, oldname, newname)
+				if(themind.current && found)
+					var/obj_count = 1
+					to_chat(themind.current, "<span class='danger'>Objectives Updated</span>")
+					to_chat(themind.current, "<span class='notice'>Your current objectives:</span>")
+					for(var/datum/objective/objective in themind.objectives)
+						to_chat(themind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+						obj_count++
 	return 1
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
@@ -1468,6 +1471,47 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 				temp_col  = "0[temp_col]"
 			colour += temp_col
 	return colour
+
+//We check if a specific game mode is currently undergoing.
+//First by checking if it is the current main mode,
+//Secondly by checking if it is part of a Mixed game mode.
+//If it exists, we return the game mode's datum. If it doesn't exist, we return null
+
+/*
+Game Mode config tags:
+"extended"
+"traitor"
+"double_agents"
+"autotraitor"
+"blob"
+"changeling"
+"traitorchan"
+"cult"
+"heist"
+"malfunction"
+"meteor"
+"mixed"
+"nuclear"
+"revolution"
+"sandbox"
+"vampire"
+"wizard
+"raginmages""
+*/
+
+/proc/find_active_mode(var/mode_ctag)
+	var/found_mode = null
+	if(ticker && ticker.mode)
+		if(ticker.mode.config_tag == mode_ctag)
+			found_mode = ticker.mode
+		else if(ticker.mode.name == "mixed")
+			var/datum/game_mode/mixed/mixed_mode = ticker.mode
+			for(var/datum/game_mode/GM in mixed_mode.modes)
+				if(GM.config_tag == mode_ctag)
+					found_mode = GM
+					break
+	return found_mode
+
 
 // Use this to send to a client's chat, no exceptions (except this proc itself).
 /proc/to_chat(var/thing, var/output)
