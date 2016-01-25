@@ -33,7 +33,7 @@
 	var/B
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		B += M.rating
-	heat_capacity = 1000 * ((B - 1) ** 2)
+	heat_capacity = 5000 * ((B - 1) ** 2)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon()
 	if(panel_open)

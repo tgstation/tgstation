@@ -13,7 +13,7 @@
 	var/efficiency = 1
 	var/sleep_factor = 750
 	var/paralyze_factor = 1000
-	var/heat_capacity = 100000
+	var/heat_capacity = 50000
 	var/conduction_coefficient = 0.01
 
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
@@ -67,6 +67,10 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
 	if(!on)
+		return
+	if(!is_operational())
+		on = FALSE
+		update_icon()
 		return
 	var/datum/gas_mixture/air1 = AIR1
 	if(occupant)
