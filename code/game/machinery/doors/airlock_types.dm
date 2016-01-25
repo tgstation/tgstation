@@ -188,11 +188,13 @@
 	
 /obj/machinery/door/airlock/mime
 	name = "silencium airlock"
-	desc = "..."
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "empty"
+	desc = "The exact opposite of a squeaky door."
+	icon = 'icons/obj/doors/airlocks/station/public.dmi'
+	color = "#87878715"
+	opacity = 0
 	var/mineral = "silencium"
-	doorsound = 'sound/effects/nothing.ogg'
+	airlock_material = "glass"
+	doorsound = null
 	doortype = /obj/structure/door_assembly/door_assembly_mime
 
 /obj/machinery/door/airlock/sandstone
