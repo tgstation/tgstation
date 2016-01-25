@@ -242,7 +242,7 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 /*
  * Mimeium
  */
-/obj/item/stack/sheet/mineral/bananium
+/obj/item/stack/sheet/mineral/silencium
 	name = "silencium"
 	icon_state = "sheet-clown"
 	singular_name = "silencium sheet"
