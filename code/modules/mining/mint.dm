@@ -196,7 +196,7 @@
 					sleep(5);
 			if("mime")
 				while(amt_mime > 0 && coinsToProduce > 0)
-					create_coins(/obj/item/weapon/coin/mimme)
+					create_coins(/obj/item/weapon/coin/mime)
 					amt_mime -= 20
 					coinsToProduce--
 					newCoins++
