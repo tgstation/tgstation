@@ -435,18 +435,18 @@
 	name = "circuit board (H.O.N.K\ Central Control module)"
 	icon_state = "mainboard"
 	
-/obj/item/weapon/circuitboard/mecha/reticience
+/obj/item/weapon/circuitboard/mecha/reticence
 	origin_tech = "programming=4"
 
-/obj/item/weapon/circuitboard/mecha/reticience/peripherals
+/obj/item/weapon/circuitboard/mecha/reticence/peripherals
 	name = "circuit board (Reticience Peripherals Control module)"
 	icon_state = "mcontroller"
 
-/obj/item/weapon/circuitboard/mecha/reticience/targeting
+/obj/item/weapon/circuitboard/mecha/reticence/targeting
 	name = "circuit board (Reticience Weapon Control and Targeting module)"
 	icon_state = "mcontroller"
 
-/obj/item/weapon/circuitboard/mecha/reticience/main
+/obj/item/weapon/circuitboard/mecha/reticence/main
 	name = "circuit board (Reticience Central Control module)"
 	icon_state = "mainboard"
 
