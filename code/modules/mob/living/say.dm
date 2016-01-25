@@ -345,7 +345,7 @@ var/list/department_radio_keys = list(
 	if(getBrainLoss() >= 60)
 		speech.message = derpspeech(speech.message, stuttering)
 
-	if(stuttering)
+	if(stuttering || (undergoing_hypothermia() == MODERATE_HYPOTHERMIA && prob(25)) )
 		speech.message = stutter(speech.message)
 
 /mob/living/proc/radio(var/datum/speech/speech, var/message_mode)

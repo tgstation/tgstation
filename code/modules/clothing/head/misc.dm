@@ -375,6 +375,7 @@
 	icon_state = "cowboy"
 	item_state = "cowboy"
 
+
 /obj/item/clothing/head/christmas/santahat/red
 	name = "red santa hat"
 	desc = "Not quite as magical as the real thing, but it flops over one ear and itches your head just the same"

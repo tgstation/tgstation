@@ -402,7 +402,7 @@ proc/move_mining_shuttle()
 			spawn(20)
 				if(L)
 					L.visible_message("<span class='danger'>[L] vomits from travelling through \the [src]!</span>")
-					L.nutrition -= 20
+					L.burn_calories(20)
 					L.adjustToxLoss(-3)
 					var/turf/V = get_turf(L) //V for Vomit
 					V.add_vomit_floor(L)

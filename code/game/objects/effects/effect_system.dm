@@ -707,6 +707,7 @@ steam.start() -- spawns the effect
 	var/expand = 1
 	animate_movement = 0
 	var/metal = 0
+	var/lowest_temperature = 0
 
 /obj/effect/effect/foam/fire
 	name = "fire supression foam"
@@ -738,10 +739,13 @@ steam.start() -- spawns the effect
 	var/ccolor = mix_color_from_reagents(reagents.reagent_list)
 	if(ccolor)
 		icon += ccolor
+	var/savedtemp
 	//playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 	if(reagents.has_reagent("water"))
 		var/turf/simulated/T = get_turf(src)
-		if(istype(T))
+		var/datum/gas_mixture/old_air = T.return_air()
+		savedtemp = old_air.temperature
+		if(istype(T) && savedtemp > lowest_temperature)
 			var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
 			lowertemp.temperature = max( min(lowertemp.temperature-500,lowertemp.temperature / 2) ,0)
 			lowertemp.react()
@@ -751,7 +755,13 @@ steam.start() -- spawns the effect
 	spawn(120)
 		processing_objects.Remove(src)
 		sleep(30)
+		var/turf/simulated/T = get_turf(src)
+		var/datum/gas_mixture/local_air = T.return_air()
 		flick("[icon_state]-disolve", src)
+		if((local_air.temperature  < lowest_temperature)&&(savedtemp > lowest_temperature)) //ie, we have over-chilled
+			local_air.temperature = lowest_temperature
+		else if ((local_air.temperature  < lowest_temperature)&&(savedtemp < lowest_temperature) && savedtemp) //ie it chilled when it shouldn't have
+			local_air.temperature = savedtemp
 		sleep(5)
 		qdel(src)
 	AddToProfiler()

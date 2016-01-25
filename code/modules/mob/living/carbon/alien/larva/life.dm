@@ -199,9 +199,9 @@
 					to_chat(src, "<span class='danger'>You suddenly feel blubbery !</span>")
 					mutations.Add(M_FAT)
 
-		if (nutrition > 0)
-			nutrition-= HUNGER_FACTOR
-
+		burn_calories(2*HUNGER_FACTOR / 3)
+		if(!stat)
+			burn_calories(HUNGER_FACTOR / 3)
 		if (drowsyness)
 			drowsyness--
 			eye_blurry = max(2, eye_blurry)

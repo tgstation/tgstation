@@ -484,9 +484,12 @@
 			user.pixel_y -= 6
 	..()
 
+
 /obj/item/clothing/suit/jumper/christmas
 	name = "christmas jumper"
 	desc = "Made by professional knitting nanas to truly fit the festive mood."
+	heat_conductivity = INS_ARMOUR_HEAT_CONDUCTIVITY
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARM_LEFT|ARM_RIGHT
 
 /obj/item/clothing/suit/jumper/christmas/red
 	desc = "Made by professional knitting nanas to truly fit the festive mood. This one has a tasteful red colour to it, and a festive Fir tree."
@@ -502,3 +505,29 @@
 	desc = "Made by professional knitting nanas to truly fit the festive mood. This one is green in colour, and has a reindeer with a red nose on the front. At least you think it's a reindeer."
 	icon_state = "cjumper-green"
 	item_state = "cjumper-green"
+
+/obj/item/clothing/suit/spaceblanket
+	icon_state = "shittyuglyawfulBADblanket"
+	name = "space blanket"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	desc = "First developed by NASA in 1964 for the US space program!"
+	heat_conductivity = 0 // Good luck losing heat in this!
+	slowdown = 10
+
+
+/obj/item/clothing/suit/spaceblanket/attackby(obj/item/W,mob/user)
+	..()
+	if(istype(W,/obj/item/clothing/head/bearpelt))
+		to_chat(user,"<span class='notice'>You add \the [W] to \the [src].</span>")
+		qdel(W)
+		qdel(src)
+		var/obj/advanced = new /obj/item/clothing/suit/spaceblanket/advanced (src.loc)
+		user.put_in_hands(advanced)
+
+/obj/item/clothing/suit/spaceblanket/advanced
+	name = "advanced space blanket"
+	desc = "Using an Advanced Space Blanket requires Advanced Power Blanket Training."
+	icon_state = "goodblanket"
+	item_state = "shittyuglyawfulBADblanket"
+	heat_conductivity = 0
+	slowdown = 5

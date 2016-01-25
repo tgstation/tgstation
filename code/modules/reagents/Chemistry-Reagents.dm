@@ -2412,7 +2412,7 @@
 
 	switch(data)
 		if(1 to 15)
-			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature += 2 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("frostoil"))
 				holder.remove_reagent("frostoil", 5)
 			if(isslime(M))
@@ -2420,13 +2420,13 @@
 			if(M.dna.mutantrace == "slime")
 				M.bodytemperature += rand(5,20)
 		if(15 to 25)
-			M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature += 4 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
 				M.bodytemperature += rand(10,20)
 			if(M.dna.mutantrace == "slime")
 				M.bodytemperature += rand(10,20)
 		if(25 to INFINITY)
-			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature += 6 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
 				M.bodytemperature += rand(15,20)
 			if(M.dna.mutantrace == "slime")
@@ -2501,7 +2501,7 @@
 
 	switch(data)
 		if(1 to 15)
-			M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature = max(M.bodytemperature-0.3 * TEMPERATURE_DAMAGE_COEFFICIENT,T20C)
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
 			if(isslime(M))
@@ -2509,13 +2509,13 @@
 			if(M.dna && M.dna.mutantrace == "slime")
 				M.bodytemperature -= rand(5,20)
 		if(15 to 25)
-			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature = max(M.bodytemperature-0.6 * TEMPERATURE_DAMAGE_COEFFICIENT,T20C)
 			if(isslime(M))
 				M.bodytemperature -= rand(10,20)
 			if(M.dna.mutantrace == "slime")
 				M.bodytemperature -= rand(10,20)
 		if(25 to INFINITY)
-			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature = max(M.bodytemperature-0.9 * TEMPERATURE_DAMAGE_COEFFICIENT,T20C)
 			if(prob(1))
 				M.emote("shiver")
 			if(isslime(M))
@@ -3530,7 +3530,7 @@
 
 	switch(data)
 		if(1 to 15)
-			M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= 0.1 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
 			if(isslime(M))
@@ -3538,13 +3538,13 @@
 			if(M.dna.mutantrace == "slime")
 				M.bodytemperature -= rand(5,20)
 		if(15 to 25)
-			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= 0.2 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
 				M.bodytemperature -= rand(10,20)
 			if(M.dna.mutantrace == "slime")
 				M.bodytemperature -= rand(10,20)
 		if(25 to INFINITY)
-			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= 0.3 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(1)) M.emote("shiver")
 			if(isslime(M))
 				M.bodytemperature -= rand(15,20)
@@ -3938,8 +3938,6 @@
 
 	M.nutrition += nutriment_factor
 	M.drowsyness = max(0, M.drowsyness - 7)
-	if(M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - 5)
 	M.Jitter(1)
 
 /////////////////////////////////////////////////////////////////Cocktail Entities//////////////////////////////////////////////
@@ -4306,8 +4304,8 @@
 
 	if(..()) return 1
 
-	if(M.bodytemperature < 270)
-		M.bodytemperature = min(270, M.bodytemperature - 40) //310 is the normal bodytemp. 310.055
+	if(M.bodytemperature < T0C+33)
+		M.bodytemperature = min(T0C+33, M.bodytemperature - 4) //310 is the normal bodytemp. 310.055
 
 /datum/reagent/ethanol/deadrum/grog
 	name = "Grog"

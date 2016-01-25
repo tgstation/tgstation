@@ -3,19 +3,7 @@
 /mob/living/carbon/human/proc/handle_environment(datum/gas_mixture/environment)
 	if(!environment || (flags & INVULNERABLE))
 		return
-	var/loc_temp = T0C
-	if(istype(loc, /obj/mecha))
-		var/obj/mecha/M = loc
-		loc_temp =  M.return_temperature()
-	//else if(istype(get_turf(src), /turf/space))
-	if(istype(loc, /obj/spacepod))
-		var/obj/spacepod/S = loc
-		loc_temp = S.return_temperature()
-	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-		var/obj/machinery/atmospherics/unary/cryo_cell/CC = loc
-		loc_temp = CC.air_contents.temperature
-	else
-		loc_temp = environment.temperature
+	var/loc_temp = get_loc_temp(environment)
 
 //	to_chat(world, "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)] - Heat capacity: [environment_heat_capacity] - Location: [loc] - src: [src]")
 
@@ -26,14 +14,13 @@
 
 	//After then, it reacts to the surrounding atmosphere based on your thermal protection
 	if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
-		if(loc_temp < bodytemperature)
-			var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				bodytemperature += min((1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
+		if(loc_temp < get_skin_temperature())
+			var/thermal_loss = get_thermal_loss(environment)
+			bodytemperature -= thermal_loss
 		else
 			var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(thermal_protection < 1)
-				bodytemperature += min((1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
+				bodytemperature += min((1 - thermal_protection) * ((loc_temp - get_skin_temperature()) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 	if (status_flags & GODMODE)
 		fire_alert = 0
@@ -96,3 +83,33 @@
 		return HEAT_DAMAGE_LEVEL_3
 	else
 		return 0
+
+/mob/living/carbon/human/proc/get_thermal_loss(var/datum/gas_mixture/environment)
+	var/loc_temp = get_loc_temp(environment)
+	if(loc_temp < bodytemperature)
+		// We're going to try and just use exposed area(temperature difference)/cold divisor, and assume we're only conducting.
+		var/thermal_loss = (1-get_cold_protection())  				// How much of your skin is exposed.
+		if(environment.total_moles > MOLES_CELLSTANDARD || !IS_SPACE_COLD)
+			thermal_loss	*= environment.total_moles/MOLES_CELLSTANDARD	// Multiplied by how many moles are in the environment over 103.934, the normal value of a station. - More moles means more heat transfer, that's basic science.
+		thermal_loss	*= (get_skin_temperature() - loc_temp)		// Multiplied by the difference between you and the room temperature
+		thermal_loss	/= BODYTEMP_COLD_DIVISOR					// Divided by the cold_divisor
+		return thermal_loss
+	return 0
+
+/mob/living/carbon/human/proc/get_loc_temp(var/datum/gas_mixture/environment)
+	if(!environment)
+		environment = loc.return_air()
+	var/loc_temp = T0C
+	if(istype(loc, /obj/mecha))
+		var/obj/mecha/M = loc
+		loc_temp =  M.return_temperature()
+	//else if(istype(get_turf(src), /turf/space))
+	if(istype(loc, /obj/spacepod))
+		var/obj/spacepod/S = loc
+		loc_temp = S.return_temperature()
+	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+		var/obj/machinery/atmospherics/unary/cryo_cell/CC = loc
+		loc_temp = CC.air_contents.temperature
+	else
+		loc_temp = environment.temperature
+	return loc_temp

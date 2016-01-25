@@ -985,7 +985,7 @@
 					location.add_vomit_floor(src, 1)
 
 				if(!hairball)
-					nutrition -= 40
+					burn_calories(40)
 					adjustToxLoss(-3)
 
 				spawn(350)	//Wait 35 seconds before next volley

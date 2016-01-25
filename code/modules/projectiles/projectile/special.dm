@@ -77,7 +77,10 @@
 		var/mob/living/M = target
 		if(M.flags & INVULNERABLE)
 			return 0
-		M.bodytemperature = temperature
+		if(istype(M,/mob/living/carbon/human))
+			M.bodytemperature -= 2*((temperature-T0C)/(-T0C))
+		else
+			M.bodytemperature = temperature
 		if(temperature > 500)//emagged
 			M.adjust_fire_stacks(0.5)
 			M.on_fire = 1

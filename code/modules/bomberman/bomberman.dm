@@ -675,7 +675,7 @@ obj/structure/bomberflame/Destroy()
 	flags = FPRINT  | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEJUMPSUIT
-	heat_protection = UPPER_TORSO|LOWER_TORSO
+	heat_conductivity = INS_ARMOUR_HEAT_CONDUCTIVITY
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01

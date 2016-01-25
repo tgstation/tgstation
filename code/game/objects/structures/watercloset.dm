@@ -357,7 +357,7 @@
 
 	//Note : Remember process() rechecks this, so the mix/max procs slowly increase/decrease body temperature
 	if(watertemp == "freezing cold")
-		C.bodytemperature = max(T0C - 200, C.bodytemperature - 50) //Down to -200°C
+		C.bodytemperature = max(T0C - 10, C.bodytemperature - 0.5) //Down to -10°C - sorry.
 		return
 	if(watertemp == "searing hot")
 		C.bodytemperature = min(T0C + 300, C.bodytemperature + 50) //Up to 300°C

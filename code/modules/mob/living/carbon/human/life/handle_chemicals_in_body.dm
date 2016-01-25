@@ -76,14 +76,11 @@
 				update_inv_wear_suit()
 
 	//Nutrition decrease
-	if(nutrition > 0 && stat != 2)
-		//Nutrition decreases slower when you're sleeping
+	if(stat != 2)
 		var/reduce_nutrition_by = HUNGER_FACTOR
-
 		if(sleeping)
-			reduce_nutrition_by *= 0.25 //Reduce hunger factor by 75%
-
-		nutrition = max (0, nutrition - reduce_nutrition_by)
+			reduce_nutrition_by *= 0.1 //Reduce hunger factor by 90%
+		burn_calories(reduce_nutrition_by,1)
 
 	if(nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat

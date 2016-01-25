@@ -144,9 +144,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		/*
 		if(blood_volume < BLOOD_VOLUME_SAFE)
 			if(nutrition >= 300)
-				nutrition -= 5
+				burn_calories(5)
 			else if(nutrition >= 200)
-				nutrition -= 2
+				burn_calories(2)
 		*/
 
 		//Bleeding out
