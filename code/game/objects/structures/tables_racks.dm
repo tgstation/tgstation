@@ -135,7 +135,7 @@
 			OT.check_patient()
 			qdel(I)
 			return 1
-		G.affecting.Weaken(2)
+		G.affecting.Weaken(5)
 		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
 									"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
 		add_logs(G.assailant, G.affecting, "pushed")
