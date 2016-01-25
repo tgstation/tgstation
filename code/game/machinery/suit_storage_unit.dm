@@ -160,9 +160,6 @@
 				qdel(src)
 
 /obj/machinery/suit_storage_unit/MouseDrop_T(mob/target, mob/user)
-	stuff_mob(target, user)
-
-/obj/machinery/suit_storage_unit/proc/stuff_mob(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !Adjacent(target))
 		return
 
@@ -247,10 +244,7 @@
 		open_machine()
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		stuff_mob(G.affecting, user)
-	else if(state_open && is_operational())
+	if(state_open && is_operational())
 		if(istype(I, /obj/item/clothing/suit/space))
 			if(suit)
 				user << "<span class='warning'>The unit already contains a suit!.</span>"
