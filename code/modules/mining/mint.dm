@@ -145,7 +145,7 @@
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
-					sleep(5);
+					sleep(5)
 			if("gold")
 				while(amt_gold > 0 && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/gold)
@@ -153,7 +153,7 @@
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
-					sleep(5);
+					sleep(5)
 			if("silver")
 				while(amt_silver > 0 && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/silver)
@@ -161,7 +161,7 @@
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
-					sleep(5);
+					sleep(5)
 			if("diamond")
 				while(amt_diamond > 0 && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/diamond)
@@ -169,7 +169,7 @@
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
-					sleep(5);
+					sleep(5)
 			if("plasma")
 				while(amt_plasma > 0 && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/plasma)
@@ -177,7 +177,7 @@
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
-					sleep(5);
+					sleep(5)
 			if("uranium")
 				while(amt_uranium > 0 && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/uranium)
@@ -193,7 +193,7 @@
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
-					sleep(5);
+					sleep(5)
 			if("mime")
 				while(amt_mime > 0 && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/mime)
@@ -201,7 +201,7 @@
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
-					sleep(5);
+					sleep(5)
 			if("adamantine")
 				while(amt_adamantine > 0 && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/adamantine)
@@ -209,7 +209,7 @@
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
-					sleep(5);
+					sleep(5)
 			if("mythril")
 				while(amt_adamantine > 0 && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/mythril)
@@ -217,9 +217,9 @@
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
-					sleep(5);
+					sleep(5)
 		icon_state = "coinpress0"
-		processing = 0;
+		processing = 0
 		coinsToProduce = temp_coins
 	src.updateUsrDialog()
 	return
