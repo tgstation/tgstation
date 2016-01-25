@@ -64,7 +64,7 @@
 
 	last_check = world.time
 
-	if(get_dist(source,current_target)>max_range || !los_check(source,current_target))
+	if(get_dist(source, current_target)>max_range || !los_check(source, current_target))
 		LoseTarget()
 		if(ishuman(source))
 			source << "<span class='warning'>You lose control of the beam!</span>"
@@ -119,4 +119,4 @@
 
 /obj/item/weapon/gun/medbeam/mech/New()
 	..()
-	SSobj.processing.Remove(src) //Mech mediguns do not process until installed, and are controlled by the holder obj
+	SSobj.processing -= src //Mech mediguns do not process until installed, and are controlled by the holder obj

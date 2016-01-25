@@ -8,26 +8,25 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/medical/can_attach(obj/mecha/medical/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
+	if(..() && istype(M))
+		return 1
+
 
 /obj/item/mecha_parts/mecha_equipment/medical/attach(obj/mecha/M)
 	..()
 	SSobj.processing |= src
 
 /obj/item/mecha_parts/mecha_equipment/medical/Destroy()
-	SSobj.processing.Remove(src)
+	SSobj.processing -= src
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/process()
 	if(!chassis)
-		SSobj.processing.Remove(src)
+		SSobj.processing -= src
 		return 1
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/detach()
-	SSobj.processing.Remove(src)
+	SSobj.processing -= src
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper
@@ -95,7 +94,7 @@
 	occupant_message("[patient] ejected. Life support functions disabled.")
 	log_message("[patient] ejected. Life support functions disabled.")
 	patient.reset_view()
-	SSobj.processing.Remove(src)
+	SSobj.processing -= src
 	patient = null
 	update_equip_info()
 
@@ -103,7 +102,7 @@
 	if(patient)
 		occupant_message("<span class='warning'>Unable to detach [src] - equipment occupied!</span>")
 		return
-	SSobj.processing.Remove(src)
+	SSobj.processing -= src
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/get_equip_info()
@@ -226,7 +225,7 @@
 		set_ready_state(1)
 		log_message("Deactivated.")
 		occupant_message("[src] deactivated - no power.")
-		SSobj.processing.Remove(src)
+		SSobj.processing -= src
 		return
 	var/mob/living/carbon/M = patient
 	if(!M)
@@ -274,11 +273,11 @@
 	create_reagents(max_volume)
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
-	SSobj.processing.Remove(src)
+	SSobj.processing -= src
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Destroy()
-	SSobj.processing.Remove(src)
+	SSobj.processing -= src
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/critfail()
@@ -523,7 +522,7 @@
 	if(!processed_reagents.len || reagents.total_volume >= reagents.maximum_volume || !chassis.has_charge(energy_drain))
 		occupant_message("<span class=\"alert\">Reagent processing stopped.</a>")
 		log_message("Reagent processing stopped.")
-		SSobj.processing.Remove(src)
+		SSobj.processing -= src
 		return
 	if(anyprob(reliability))
 		critfail()
@@ -547,7 +546,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/New()
 	..()
-	medigun = new /obj/item/weapon/gun/medbeam/mech(src)
+	medigun = new(src)
 
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/Destroy()
