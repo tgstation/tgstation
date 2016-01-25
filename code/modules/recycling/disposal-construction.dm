@@ -24,6 +24,8 @@
 	..(loc)
 	if(pipe_type)
 		ptype = pipe_type
+		if(!is_pipe())    // bins/chutes/outlets are dense
+			density = 1
 	dir = direction
 
 // update iconstate and dpdir due to dir and type
@@ -197,7 +199,9 @@
 			anchored = 0
 			if(ispipe)
 				level = 2
-			density = 0
+				density = 0
+			else
+				density = 1
 			user << "<span class='notice'>You detach the [nicetype] from the underfloor.</span>"
 		else
 			if(!is_pipe()) // Disposal or outlet
@@ -220,7 +224,9 @@
 			anchored = 1
 			if(ispipe)
 				level = 1 // We don't want disposal bins to disappear under the floors
-			density = 0
+				density = 0
+			else
+				density = 1 // We don't want disposal bins or outlets to go density 0
 			user << "<span class='notice'>You attach the [nicetype] to the underfloor.</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 		update()

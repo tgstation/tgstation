@@ -211,9 +211,6 @@
 //
 /obj/structure/disposalpipe/proc/transfer(obj/structure/disposalholder/H)
 	var/nextdir = nextdir(H.dir)
-	transfer_to_dir(H, nextdir)
-
-/obj/structure/disposalpipe/proc/transfer_to_dir(obj/structure/disposalholder/H, nextdir)
 	H.dir = nextdir
 	var/turf/T = H.nextloc()
 	var/obj/structure/disposalpipe/P = H.findpipe(T)
@@ -225,10 +222,12 @@
 			H.merge(H2)
 
 		H.loc = P
-		return P
-	else			// if wasn't a pipe, then they're now in our turf
-		H.loc = get_turf(src)
+	else			// if wasn't a pipe, then set loc to turf
+		H.loc = T
 		return null
+
+	return P
+
 
 // update the icon_state to reflect hidden status
 /obj/structure/disposalpipe/proc/update()
@@ -534,7 +533,23 @@
 
 /obj/structure/disposalpipe/sortjunction/transfer(obj/structure/disposalholder/H)
 	var/nextdir = nextdir(H.dir, H.destinationTag)
-	transfer_to_dir(H, nextdir)
+	H.dir = nextdir
+	var/turf/T = H.nextloc()
+	var/obj/structure/disposalpipe/P = H.findpipe(T)
+
+	if(P)
+		// find other holder in next loc, if inactive merge it with current
+		var/obj/structure/disposalholder/H2 = locate() in P
+		if(H2 && !H2.active)
+			H.merge(H2)
+
+		H.loc = P
+	else			// if wasn't a pipe, then set loc to turf
+		H.loc = T
+		return null
+
+	return P
+
 
 //a three-way junction that sorts objects destined for the mail office mail table (tomail = 1)
 /obj/structure/disposalpipe/wrapsortjunction
@@ -579,7 +594,26 @@
 
 /obj/structure/disposalpipe/wrapsortjunction/transfer(obj/structure/disposalholder/H)
 	var/nextdir = nextdir(H.dir, H.tomail)
-	transfer_to_dir(H, nextdir)
+	H.dir = nextdir
+	var/turf/T = H.nextloc()
+	var/obj/structure/disposalpipe/P = H.findpipe(T)
+
+	if(P)
+		// find other holder in next loc, if inactive merge it with current
+		var/obj/structure/disposalholder/H2 = locate() in P
+		if(H2 && !H2.active)
+			H.merge(H2)
+
+		H.loc = P
+	else			// if wasn't a pipe, then set loc to turf
+		H.loc = T
+		return null
+
+	return P
+
+
+
+
 
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
@@ -667,6 +701,7 @@
 	// transfer to linked object (outlet or bin)
 
 /obj/structure/disposalpipe/trunk/transfer(obj/structure/disposalholder/H)
+
 	if(H.dir == DOWN)		// we just entered from a disposer
 		return ..()		// so do base transfer proc
 	// otherwise, go to the linked object
@@ -680,8 +715,10 @@
 				D.expel(H)	// expel at disposal
 	else
 		if(H)
-			src.expel(H, get_turf(src), 0)	// expel at turf
+			src.expel(H, src.loc, 0)	// expel at turf
 	return null
+
+	// nextdir
 
 /obj/structure/disposalpipe/trunk/nextdir(fromdir)
 	if(fromdir == DOWN)
