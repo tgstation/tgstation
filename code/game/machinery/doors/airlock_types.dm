@@ -192,7 +192,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "empty"
 	var/mineral = "silencium"
-	doorsound = ''
+	doorsound = 'sound/effects/nothing.ogg'
 	doortype = /obj/structure/door_assembly/door_assembly_mime
 
 /obj/machinery/door/airlock/sandstone
