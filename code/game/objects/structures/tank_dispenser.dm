@@ -1,8 +1,8 @@
 #define TANK_DISPENSER_CAPACITY 10
 
-/obj/structure/dispenser
-	name = "tank storage unit"
-	desc = "A simple yet bulky storage device for gas tanks. Has room for up to ten oxygen tanks, and ten plasma tanks."
+/obj/structure/tank_dispenser
+	name = "tank dispenser"
+	desc = "A simple yet bulky storage device for gas tanks. Holds up to 10 oxygen tanks and 10 plasma tanks."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "dispenser"
 	density = 1
@@ -10,20 +10,20 @@
 	var/oxygentanks = TANK_DISPENSER_CAPACITY
 	var/plasmatanks = TANK_DISPENSER_CAPACITY
 
-/obj/structure/dispenser/oxygen
+/obj/structure/tank_dispenser/oxygen
 	plasmatanks = 0
 
-/obj/structure/dispenser/plasma
+/obj/structure/tank_dispenser/plasma
 	oxygentanks = 0
 
-/obj/structure/dispenser/New()
+/obj/structure/tank_dispenser/New()
 	for(var/i in 1 to oxygentanks)
 		new /obj/item/weapon/tank/internals/oxygen(src)
 	for(var/i in 1 to plasmatanks)
 		new /obj/item/weapon/tank/internals/plasma(src)
 	update_icon()
 
-/obj/structure/dispenser/update_icon()
+/obj/structure/tank_dispenser/update_icon()
 	overlays.Cut()
 	switch(oxygentanks)
 		if(1 to 3)
@@ -36,7 +36,7 @@
 		if(5 to TANK_DISPENSER_CAPACITY)
 			overlays += "plasma-5"
 
-/obj/structure/dispenser/attackby(obj/item/I, mob/user, params)
+/obj/structure/tank_dispenser/attackby(obj/item/I, mob/user, params)
 	var/full
 	if(istype(I, /obj/item/weapon/tank/internals/plasma))
 		if(plasmatanks < TANK_DISPENSER_CAPACITY)
@@ -60,21 +60,21 @@
 	I.loc = src
 	user << "<span class='notice'>You put [I] in [src].</span>"
 
-/obj/structure/dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/structure/tank_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "tank_dispenser", name, 275, 100, master_ui, state)
 		ui.open()
 
-/obj/structure/dispenser/get_ui_data(mob/user)
+/obj/structure/tank_dispenser/get_ui_data(mob/user)
 	var/list/data = list()
 	data["oxygen"] = oxygentanks
 	data["plasma"] = plasmatanks
 
 	return data
 
-/obj/structure/dispenser/ui_act(action, params)
+/obj/structure/tank_dispenser/ui_act(action, params)
 	if(..())
 		return
 	switch(action)

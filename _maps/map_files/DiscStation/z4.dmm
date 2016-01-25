@@ -814,7 +814,7 @@
 "pV" = (/obj/item/device/assembly/signaler{pixel_x = 0; pixel_y = 8},/turf/simulated/floor/plasteel/airless{icon_state = "white"},/area/derelict/secret)
 "pW" = (/obj/item/device/transfer_valve{pixel_x = -5},/turf/simulated/floor/plasteel/airless{icon_state = "white"},/area/derelict/secret)
 "pX" = (/obj/item/device/assembly/timer{pixel_x = 5; pixel_y = 4},/turf/simulated/floor/plasteel/airless{icon_state = "white"},/area/derelict/secret)
-"pY" = (/obj/structure/dispenser,/turf/simulated/floor/plasteel/airless{icon_state = "white"},/area/derelict/secret)
+"pY" = (/obj/structure/tank_dispenser,/turf/simulated/floor/plasteel/airless{icon_state = "white"},/area/derelict/secret)
 "pZ" = (/obj/structure/cable,/turf/simulated/floor/plasteel/airless{icon_state = "white"},/area/derelict/secret)
 "qa" = (/obj/machinery/door/window/southleft{name = "Mass Driver Door"; req_access_txt = "7"},/turf/simulated/floor/plasteel,/area/derelict/secret)
 "qb" = (/turf/simulated/wall/r_wall,/area/derelict/storage/engine_storage)
