@@ -193,9 +193,9 @@
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
 		for(var/mob/living/carbon/C in range(6, owner))
 			if(C != owner)
-				C.fire_stacks += 8
+				C.fire_stacks += 2
 				C.IgniteMob()
-		owner.fire_stacks = -20
+		owner.fire_stacks = -10
 		return 1
 	return 0
 
