@@ -90,7 +90,7 @@
 	var/points = 0
 	var/points_to_win = 3
 	var/list/team_members = list()
-	var/ctf_enabled = TRUE
+	var/ctf_enabled = FALSE
 	var/ctf_gear = /datum/outfit/ctf
 
 /obj/machinery/capture_the_flag/New()
