@@ -13,7 +13,7 @@ Bonus
 /datum/symptom/scalerot
 
 		name = "Scale rot"
-		stealth = 3
+		stealth = 2
 		resistance = 3
 		stage_speed = 3
 		transmittable = 0

@@ -3,7 +3,7 @@
 
 Sneezing
 
-	Very Noticable.
+	Noticable.
 	Increases resistance.
 	Doesn't increase stage speed.
 	Very transmittable.
@@ -19,8 +19,8 @@ Bonus
 /datum/symptom/sneeze
 
 	name = "Sneezing"
-	stealth = -2
-	resistance = 3
+	stealth = -1
+	resistance = 2
 	stage_speed = 0
 	transmittable = 4
 	level = 1

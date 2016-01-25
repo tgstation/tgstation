@@ -14,7 +14,7 @@ BONUS
 /datum/symptom/asthmothia
 
 	name = "Asthmothia"
-	stealth = -5
+	stealth = -3
 	resistance = -5
 	stage_speed = -5
 	transmittable = -6
