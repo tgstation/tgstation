@@ -369,16 +369,13 @@
 	else
 		return 0
 
-/obj/machinery/autolathe/proc/adjust_hacked(hack)
-	hacked = hack
-
-	if(hack)
-		for(var/datum/design/D in files.possible_designs)
-			if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
+/obj/machinery/autolathe/proc/adjust_hacked(state)
+	hacked = state
+	for(var/datum/design/D in files.possible_designs)
+		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
+			if(hacked)
 				files.known_designs += D
-	else
-		for(var/datum/design/D in files.known_designs)
-			if("hacked" in D.category)
+			else
 				files.known_designs -= D
 
 //Called when the object is constructed by an autolathe
