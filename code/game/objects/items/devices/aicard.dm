@@ -11,7 +11,6 @@
 	var/mob/living/silicon/ai/AI
 	origin_tech = "programming=4;materials=4"
 
-
 /obj/item/device/aicard/afterattack(atom/target, mob/user, proximity)
 	..()
 	if(!proximity || !target)
@@ -21,20 +20,21 @@
 		add_logs(user, AI, "carded", src)
 	else //No AI on the card, therefore the user wants to download one.
 		target.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
-	update_state() //Whatever happened, update the card's state (icon, name) to match.
+	update_icon() //Whatever happened, update the card's state (icon, name) to match.
 
-
-/obj/item/device/aicard/proc/update_state()
+/obj/item/device/aicard/update_icon()
 	if(AI)
-		name = "intelliCard - [AI.name]"
-		if (AI.stat == DEAD)
+		name = "[initial(name)]- [AI.name]"
+		if(AI.stat == DEAD)
 			icon_state = "aicard-404"
 		else
 			icon_state = "aicard-full"
-		AI.cancel_camera() //AI are forced to move when transferred, so do this whenver one is downloaded.
+		if(!AI.control_disabled)
+			overlays += image('icons/obj/aicards.dmi', "aicard-on")
+		AI.cancel_camera()
 	else
-		icon_state = "aicard"
-		name = "intelliCard"
+		name = initial(name)
+		icon_state = initial(icon_state)
 		overlays.Cut()
 
 /obj/item/device/aicard/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
@@ -43,7 +43,6 @@
 	if(!ui)
 		ui = new(user, src, ui_key, "intellicard", name, 500, 500, master_ui, state)
 		ui.open()
-
 
 /obj/item/device/aicard/get_ui_data()
 	var/list/data = list()
@@ -61,28 +60,26 @@
 /obj/item/device/aicard/ui_act(action,params)
 	if(..())
 		return
-
 	switch(action)
 		if("wipe")
-			var/confirm = alert("Are you sure you want to wipe this card's memory? This cannot be undone once started.", "Confirm Wipe", "Yes", "No")
+			var/confirm = alert("Are you sure you want to wipe this card's memory? This cannot be undone once started.", name, "Yes", "No")
 			if(confirm == "Yes" && !..())
-				flush = 1
+				flush = TRUE
 				if(AI && AI.loc == src)
-					AI.suiciding = 1
+					AI.suiciding = TRUE
 					AI << "Your core files are being wiped!"
 					while(AI.stat != DEAD)
 						AI.adjustOxyLoss(2)
 						AI.updatehealth()
 						sleep(10)
-					flush = 0
+					flush = FALSE
+			. = TRUE
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled
-			AI << "The intellicard's wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"
-			if (AI.control_disabled)
-				overlays -= image('icons/obj/aicards.dmi', "aicard-on")
-			else
-				overlays += image('icons/obj/aicards.dmi', "aicard-on")
+			AI << "[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"
+			. = TRUE
 		if("radio")
 			AI.radio_enabled = !AI.radio_enabled
 			AI << "Your Subspace Transceiver has been [AI.radio_enabled ? "enabled" : "disabled"]!"
-	return 1
+			. = TRUE
+	update_icon()

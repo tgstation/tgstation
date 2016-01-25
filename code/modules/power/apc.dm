@@ -1124,7 +1124,7 @@
 	s.start()
 	if(isalien(user))
 		return 0
-	if (electrocute_mob(user, src, src))
+	if(electrocute_mob(user, src, src))
 		return 1
 	else
 		return 0

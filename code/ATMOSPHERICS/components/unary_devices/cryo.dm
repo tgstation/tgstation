@@ -123,8 +123,8 @@
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user) // Prevent ventcrawl in this machine.
-	return
+/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
+	container_resist()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
@@ -175,7 +175,7 @@
 		I.loc = src
 		user.visible_message("[user] places [I] in [src].", \
 							"<span class='notice'>You place [I] in [src].</span>")
-	if(!(on || occupant || state_open))
+	if(!on && !occupant && !state_open)
 		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
 			return
 		if(exchange_parts(user, I))
