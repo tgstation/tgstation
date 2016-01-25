@@ -1,4 +1,4 @@
-/datum/symptom/liggeritis
+/datum/symptom/skinmutation
 	name = "Skin mutation"
 	max_stages = 5
 	spread_text = "Contact"
@@ -9,7 +9,7 @@
 	desc = "This skin disorder disease clumps keratin filaments, creating blisters, and turning the infected into a lizard by undergoing genetically induced Atavism."
 	severity = BIOHAZARD
 
-/datum/symptom/liggeritis/Activate(var/datum/disease/advance/A)
+/datum/symptom/skinmutation/Activate(var/datum/disease/advance/A)
         ..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
