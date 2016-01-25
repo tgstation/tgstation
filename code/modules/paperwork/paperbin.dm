@@ -89,15 +89,58 @@
 	..()
 	if(amount)
 		to_chat(user, "<span class='info'>There " + (amount > 1 ? "are [amount] papers" : "is one paper") + " in the bin.</span>")
+		if(papers.len > 0)
+			var/obj/item/weapon/paper/P = papers[papers.len]
+			if(istype(P,/obj/item/weapon/paper/talisman))
+				if(iscultist(user) || isobserver(user))
+					var/obj/item/weapon/paper/talisman/T = P
+					switch(T.imbue)
+						if("newtome")
+							to_chat(user, "<span class='info'>You spot a Spawn Arcane Tome talisman on top.</span>")
+						if("armor")
+							to_chat(user, "<span class='info'>You spot a Cult Armor talisman on top.</span>")
+						if("emp")
+							to_chat(user, "<span class='info'>You spot an EMP talisman on top.</span>")
+						if("conceal")
+							to_chat(user, "<span class='info'>You spot an Hide Runes talisman on top.</span>")
+						if("revealrunes")
+							to_chat(user, "<span class='info'>You spot a Reveal Runes talisman on top.</span>")
+						if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
+							to_chat(user, "<span class='info'>You spot a Teleport talisman on top, linked to <i>[T.imbue]</i></span>")
+						if("communicate")
+							to_chat(user, "<span class='info'>You spot a Communicate talisman on top.</span>")
+						if("deafen")
+							to_chat(user, "<span class='info'>You spot a Deafen talisman on top.</span>")
+						if("blind")
+							to_chat(user, "<span class='info'>You spot a Blind talisman on top.</span>")
+						if("runestun")
+							to_chat(user, "<span class='info'>You spot a Stun talisman on top.</span>")
+						if("supply")
+							to_chat(user, "<span class='info'>You spot a Supply talisman on top.</span>")
+						else
+							to_chat(user, "<span class='info'>You spot a weird talisman on top.</span>")
+				else
+					to_chat(user, "<span class='info'>The paper on top has some bloody markings on it.</span>")
+			else if(P.info)
+				to_chat(user, "<span class='info'>You notice some writings on the top paper. <a HREF='?src=\ref[user];lookitem=\ref[P]'>Take a closer look.</a></span>")
 	else
 		to_chat(user, "<span class='info'>There are no papers in the bin.</span>")
 
 
 /obj/item/weapon/paper_bin/update_icon()
-	if(amount < 1)
-		icon_state = "paper_bin0"
+	if(amount > 0)
+		if(papers.len > 0)
+			var/obj/item/weapon/paper/P = papers[papers.len]
+			if(istype(P,/obj/item/weapon/paper/talisman))
+				icon_state = "paper_bin3"
+			else if(P.info)
+				icon_state = "paper_bin2"
+			else
+				icon_state = "paper_bin1"
+		else
+			icon_state = "paper_bin1"
 	else
-		icon_state = "paper_bin1"
+		icon_state = "paper_bin0"
 
 /obj/item/weapon/paper_bin/empty
 	icon_state = "paper_bin0"
