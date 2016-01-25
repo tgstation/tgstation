@@ -74,7 +74,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		H.put_in_any_hand_if_possible(A)
+		H.put_in_hands(A)
 
 	return 1
 
@@ -1020,21 +1020,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	category = "(Pointless) Badassery"
 	surplus = 0
 
-/datum/uplink_item/badass/syndiecigs
-	name = "Syndicate Smokes"
-	desc = "Strong flavor, dense smoke, infused with omnizine."
-	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
-	cost = 2
-
-/datum/uplink_item/badass/bundle
-	name = "Syndicate Bundle"
-	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. \
-			These items are collectively worth more than 20 telecrystals, but you do not know which specialisation \
-			you will receive."
-	item = /obj/item/weapon/storage/box/syndicate
-	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
 	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, \
@@ -1052,6 +1037,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/secure/briefcase/syndie
 	cost = 1
 
+/datum/uplink_item/badass/syndiecigs
+	name = "Syndicate Smokes"
+	desc = "Strong flavor, dense smoke, infused with omnizine."
+	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
+	cost = 2
+
 /datum/uplink_item/badass/balloon
 	name = "Syndicate Balloon"
 	desc = "For showing that you are THE BOSS: A useless red balloon with the Syndicate logo on it. \
@@ -1059,12 +1050,20 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
 
+/datum/uplink_item/badass/bundle
+	name = "Syndicate Bundle"
+	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. \
+			These items are collectively worth more than 20 telecrystals, but you do not know which specialisation \
+			you will receive."
+	item = /obj/item/weapon/storage/box/syndicate
+	cost = 20
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+
 /datum/uplink_item/badass/surplus
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse. Rumored to contain a valuable assortion of items, \
 			but you never know. Contents are sorted to always be worth 50 TC."
 	cost = 20
-	item = /obj/item/weapon/storage/box/syndicate
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/badass/surplus_crate/spawn_item(turf/loc, obj/item/device/uplink/U)
@@ -1091,7 +1090,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Random Item"
 	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't \
 			decided on a strategy yet."
-	item = /obj/item/weapon/storage/box/syndicate
 	cost = 0
 
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)

@@ -800,7 +800,7 @@
 	H.apply_card_vars(H,O)
 	src.cards -= choice
 	H.pickup(user)
-	user.put_in_active_hand(H)
+	user.put_in_hands(H)
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
 	if(cards.len > 26)
 		src.icon_state = "deck_[deckstyle]_full"
@@ -921,7 +921,7 @@
 			C.cardname = choice
 			C.apply_card_vars(C,O)
 			C.pickup(cardUser)
-			cardUser.put_in_any_hand_if_possible(C)
+			cardUser.put_in_hands(C)
 			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from \his hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
 
 			interact(cardUser)
@@ -938,7 +938,7 @@
 				N.apply_card_vars(N,O)
 				cardUser.unEquip(src)
 				N.pickup(cardUser)
-				cardUser.put_in_any_hand_if_possible(N)
+				cardUser.put_in_hands(N)
 				cardUser << "<span class='notice'>You also take [currenthand[1]] and hold it.</span>"
 				cardUser << browse(null, "window=cardhand")
 				qdel(src)

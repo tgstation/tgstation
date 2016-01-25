@@ -185,7 +185,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_control", name, 500, 1035, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_control", name, 500, 305, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/atmos_control/tank/get_ui_data(mob/user)

@@ -316,13 +316,12 @@
 /datum/tgui/proc/push_data(data, force = 0)
 	update_status(push = 0) // Update the window state.
 	if(!initialized)
-		return // Cannot upadte UI if it is not set up yet.
+		return // Cannot update UI if it is not set up yet.
 	if(status <= UI_DISABLED && !force)
 		return // Cannot update UI, we have no visibility.
 
 	// Send the new JSON to the update() Javascript function.
 	user << output(url_encode(get_json(data)), "[window_id].browser:update")
-
 
  /**
   * private
@@ -343,8 +342,7 @@
   * optional push bool Push an update to the UI (an update is always sent for UI_DISABLED).
  **/
 /datum/tgui/proc/update_status(push = 0)
-	var/datum/host = src_object.ui_host()
-	var/status = host.ui_status(user, state)
+	var/status = src_object.ui_status(user, state)
 	if(master_ui)
 		status = min(status, master_ui.status)
 

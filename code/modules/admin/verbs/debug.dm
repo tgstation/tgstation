@@ -469,8 +469,8 @@ var/global/list/g_fancy_list_of_types = null
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
 
-	for(var/obj/machinery/alarm/alarm in machines)
-		var/area/A = get_area(alarm)
+	for(var/obj/machinery/airalarm/AA in machines)
+		var/area/A = get_area(AA)
 		if(!(A.type in areas_with_air_alarm))
 			areas_with_air_alarm.Add(A.type)
 

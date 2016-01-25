@@ -13,7 +13,7 @@
 	var/efficiency = 1
 	var/sleep_factor = 750
 	var/paralyze_factor = 1000
-	var/heat_capacity = 100000
+	var/heat_capacity = 50000
 	var/conduction_coefficient = 0.01
 
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
@@ -67,6 +67,10 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
 	if(!on)
+		return
+	if(!is_operational())
+		on = FALSE
+		update_icon()
 		return
 	var/datum/gas_mixture/air1 = AIR1
 	if(occupant)
@@ -123,8 +127,8 @@
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user) // Prevent ventcrawl in this machine.
-	return
+/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
+	container_resist()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
@@ -175,7 +179,7 @@
 		I.loc = src
 		user.visible_message("[user] places [I] in [src].", \
 							"<span class='notice'>You place [I] in [src].</span>")
-	if(!(on || occupant || state_open))
+	if(!on && !occupant && !state_open)
 		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
 			return
 		if(exchange_parts(user, I))

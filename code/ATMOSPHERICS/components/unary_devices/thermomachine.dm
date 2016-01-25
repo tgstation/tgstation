@@ -33,7 +33,7 @@
 	var/B
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		B += M.rating
-	heat_capacity = 1000 * ((B - 1) ** 2)
+	heat_capacity = 5000 * ((B - 1) ** 2)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon()
 	if(panel_open)
@@ -85,6 +85,24 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
+
+/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
+	if(!..())
+		return 0
+	SetInitDirections()
+	var/obj/machinery/atmospherics/node = NODE1
+	if(node)
+		node.disconnect(src)
+		NODE1 = null
+	nullifyPipenet(PARENT1)
+
+	atmosinit()
+	node = NODE1
+	if(node)
+		node.atmosinit()
+		node.addMember(src)
+	build_network()
+	return 1
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
