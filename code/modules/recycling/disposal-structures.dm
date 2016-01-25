@@ -211,7 +211,7 @@
 //
 /obj/structure/disposalpipe/proc/transfer(obj/structure/disposalholder/H)
 	var/nextdir = nextdir(H.dir)
-	transfer_to_dir(H, nextdir)
+	return transfer_to_dir(H, nextdir)
 
 /obj/structure/disposalpipe/proc/transfer_to_dir(obj/structure/disposalholder/H, nextdir)
 	H.dir = nextdir
@@ -534,7 +534,7 @@
 
 /obj/structure/disposalpipe/sortjunction/transfer(obj/structure/disposalholder/H)
 	var/nextdir = nextdir(H.dir, H.destinationTag)
-	transfer_to_dir(H, nextdir)
+	return transfer_to_dir(H, nextdir)
 
 //a three-way junction that sorts objects destined for the mail office mail table (tomail = 1)
 /obj/structure/disposalpipe/wrapsortjunction
@@ -579,7 +579,7 @@
 
 /obj/structure/disposalpipe/wrapsortjunction/transfer(obj/structure/disposalholder/H)
 	var/nextdir = nextdir(H.dir, H.tomail)
-	transfer_to_dir(H, nextdir)
+	return transfer_to_dir(H, nextdir)
 
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
