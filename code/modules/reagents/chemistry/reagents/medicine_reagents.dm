@@ -113,7 +113,7 @@
 		M.adjustBruteLoss(-3)
 		M.adjustFireLoss(-3)
 		M.adjustToxLoss(-3)
-  		M.status_flags &= ~DISFIGURED
+		M.status_flags &= ~DISFIGURED
 	..()
 	return
 
