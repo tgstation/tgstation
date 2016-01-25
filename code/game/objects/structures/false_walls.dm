@@ -45,6 +45,8 @@
 		if(!qdeleted(src))
 			SetOpacity(1)
 			update_icon()
+			if(walltype == "silencium")
+				SetOpacity(0)
 	opening = 0
 
 /obj/structure/falsewall/proc/do_the_flick()
@@ -246,8 +248,9 @@
 /obj/structure/falsewall/mime
 	name = "silencium wall"
 	desc = "A wall with silencium plating. Honk!"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "empty"
+	color = "#87878715"
+	opacity = 0
+	icon = 'icons/turf/walls/wall.dmi'
 	mineral = "silencium"
 	walltype = "silencium"
 	canSmoothWith = list(/obj/structure/falsewall/mime, /turf/simulated/wall/mineral/mime)
