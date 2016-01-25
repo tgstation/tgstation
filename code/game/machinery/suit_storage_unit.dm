@@ -534,10 +534,6 @@
 								 "<spna class='notice'>You add interior plating to [src].</span>")
 			fix()
 			return
-	if ( istype(I, /obj/item/weapon/grab) )
-		var/obj/item/weapon/grab/G = I
-		store_mob(G.affecting, user)
-		return
 	if( istype(I,/obj/item/clothing/suit/space) )
 		if(!isopen || isbroken)
 			return
