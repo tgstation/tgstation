@@ -143,34 +143,38 @@
 			else
 				usr << "<span class='warning'>Error! Please notify administration.</span>"
 				return
-	var/list/turf/turfs = res
+	var/list/turfs = res
 	var/str = trim(stripped_input(usr,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN))
 	if(!str || !length(str)) //cancel
 		return
 	if(length(str) > 50)
 		usr << "<span class='warning'>The given name is too long.  The area remains undefined.</span>"
 		return
-	var/area/A = new
-	A.name = str
-	//var/ma
-	//ma = A.master ? "[A.master]" : "(null)"
-	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
-	A.power_equip = 0
-	A.power_light = 0
-	A.power_environ = 0
-	A.always_unpowered = 0
-	A.valid_territory = 0
-	move_turfs_to_area(turfs, A)
-	A.SetDynamicLighting()
 
-	A.addSorted()
+	var/area/A
+	for(var/key in turfs)
+		if(key == str)
+			A = turfs[key]
+		if(turfs[key])
+			turfs -= turfs[key]
+			turfs -= key
+	if(A)
+		A.contents += turfs
+		A.SetDynamicLighting()
+	else
+		A = new
+		A.name = str
+		A.power_equip = 0
+		A.power_light = 0
+		A.power_environ = 0
+		A.always_unpowered = 0
+		A.valid_territory = 0
+		A.contents += turfs
+		A.SetDynamicLighting()
+		A.addSorted()
 
 	interact()
 	return 1
-
-
-/obj/item/areaeditor/proc/move_turfs_to_area(list/turf/turfs, area/A)
-	A.contents.Add(turfs)
 
 
 /obj/item/areaeditor/proc/edit_area()
@@ -236,6 +240,7 @@
 /obj/item/areaeditor/proc/detect_room(turf/first)
 	var/list/turf/found = new
 	var/list/turf/pending = list(first)
+	var/list/border = list()
 	while(pending.len)
 		if (found.len+pending.len > 300)
 			return ROOM_ERR_TOOLARGE
@@ -264,17 +269,24 @@
 				if(BORDER_NONE)
 					pending+=NT
 				if(BORDER_BETWEEN)
-					//do nothing, may be later i'll add 'rejected' list as optimization
+					var/area/A = NT.loc
+					if(!found[A.name])
+						found[A.name] = NT.loc
 				if(BORDER_2NDTILE)
-					found+=NT //tile included to new area, but we dont seek more
-					for(var/direction in dir_relative_diagonals(dir))
-						var/turf/d_turf = get_step(T, direction)
-						if( check_tile_is_border(d_turf, direction) == BORDER_2NDTILE )
-							if(!(d_turf in found))
-								found += d_turf
-							if(d_turf in pending)
-								pending -= d_turf
+					border[NT] += dir
 				if(BORDER_SPACE)
 					return ROOM_ERR_SPACE
 		found+=T
+
+	for(var/V in border) //lazy but works
+		var/turf/F = V
+		for(var/direction in cardinal)
+			if(direction == border[F])
+				continue //don't want to grab turfs from outside the border
+			var/turf/U = get_step(F, direction)
+			if((U in border) || (U in found))
+				continue
+			if(check_tile_is_border(U, direction) == BORDER_2NDTILE)
+				found += U
+		found |= F
 	return found
