@@ -233,18 +233,21 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 					search_pda = FALSE
 
-		// fixes renames not being reflected in objective text
-		var/length
-		var/position
-
-		for (var/datum/mind/mind in ticker.minds)
-			if (mind)
-				for (var/datum/objective/objective in mind.objectives)
+		for (var/datum/mind/themind in ticker.minds)
+			if (themind)
+				var/found = 0
+				for (var/datum/objective/objective in themind.objectives)
 					if (objective && objective.target == mind)
-						length = length(oldname)
-						position = findtextEx(objective.explanation_text, oldname)
-						objective.explanation_text = copytext(objective.explanation_text, 1, position) + newname + copytext(objective.explanation_text, position + length)
-
+						found = 1
+						objective.explanation_text = replacetext(objective.explanation_text, oldname, newname)
+						themind.memory = replacetext(themind.memory, oldname, newname)
+				if(themind.current && found)
+					var/obj_count = 1
+					to_chat(themind.current, "<span class='danger'>Objectives Updated</span>")
+					to_chat(themind.current, "<span class='notice'>Your current objectives:</span>")
+					for(var/datum/objective/objective in themind.objectives)
+						to_chat(themind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+						obj_count++
 	return 1
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
