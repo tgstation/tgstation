@@ -7,7 +7,7 @@ var/datum/subsystem/minimap/SSminimap
 	var/const/MINIMAP_SIZE = 2048
 	var/const/TILE_SIZE = 8
 
-	var/list/z_levels = list(1)
+	var/list/z_levels = list(ZLEVEL_STATION)
 
 /datum/subsystem/minimap/New()
 	NEW_SS_GLOBAL(SSminimap)
