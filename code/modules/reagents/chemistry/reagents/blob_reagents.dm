@@ -31,9 +31,9 @@
 /datum/reagent/blob/ripping_tendrils/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
 	if(M)
-		M.apply_damage(0.6*reac_volume, BRUTE)
+		M.apply_damage(0.7*reac_volume, BRUTE)
 	if(M)
-		M.adjustStaminaLoss(0.6*reac_volume)
+		M.adjustStaminaLoss(0.5*reac_volume)
 	if(iscarbon(M))
 		M.emote("scream")
 
@@ -241,11 +241,11 @@
 /datum/reagent/blob/synchronous_mesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
 	if(M)
-		M.apply_damage(0.2*reac_volume, BRUTE)
+		M.apply_damage(0.1*reac_volume, BRUTE)
 	if(M)
 		for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 0.8*reac_volume bonus damage, total of 1.2*reac_volume
 			if(M)
-				M.apply_damage(0.2*reac_volume, BRUTE)
+				M.apply_damage(0.3*reac_volume, BRUTE)
 
 /datum/reagent/blob/synchronous_mesh/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(!isnull(cause)) //the cause isn't fire or bombs, so split the damage
