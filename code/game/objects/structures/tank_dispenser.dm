@@ -59,6 +59,7 @@
 		return
 	I.loc = src
 	user << "<span class='notice'>You put [I] in [src].</span>"
+	update_icon()
 
 /obj/structure/tank_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
@@ -80,12 +81,14 @@
 	switch(action)
 		if("plasma")
 			var/obj/item/weapon/tank/internals/plasma/tank = locate() in src
-			if(tank && usr.put_in_any_hand_if_possible(tank))
+			if(tank)
+				usr.put_in_hands(tank)
 				plasmatanks--
 			. = TRUE
 		if("oxygen")
 			var/obj/item/weapon/tank/internals/oxygen/tank = locate() in src
-			if(tank && usr.put_in_any_hand_if_possible(tank))
+			if(tank)
+				usr.put_in_hands(tank)
 				oxygentanks--
 			. = TRUE
 	update_icon()
