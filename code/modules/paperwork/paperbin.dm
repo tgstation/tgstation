@@ -50,8 +50,6 @@
 /obj/item/weapon/paper_bin/attack_hand(mob/user as mob)
 	if(amount >= 1)
 		amount--
-		if(amount==0)
-			update_icon()
 
 		var/obj/item/weapon/paper/P
 		if(papers.len > 0)	//If there's any custom paper on the stack, use that instead of creating a new paper.
@@ -64,7 +62,7 @@
 					P.info = "<font face=\"MS Comic Sans\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
 					P.rigged = 1
 					P.updateinfolinks()
-
+		update_icon()
 		P.loc = user.loc
 		user.put_in_hands(P)
 		to_chat(user, "<span class='notice'>You take [P] out of the [src].</span>")
