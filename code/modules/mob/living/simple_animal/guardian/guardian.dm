@@ -60,7 +60,7 @@
 			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
-			loc = get_turf(summoner)
+			forceMove(get_turf(summoner))
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	..()
@@ -71,7 +71,7 @@
 			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
-			loc = get_turf(summoner)
+			forceMove(get_turf(summoner))
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
@@ -125,15 +125,15 @@
 	if(cooldown > world.time)
 		return
 	if(loc == summoner)
-		loc = get_turf(summoner)
+		forceMove(get_turf(summoner))
 		cooldown = world.time + 30
 
 /mob/living/simple_animal/hostile/guardian/proc/Recall()
-	if(cooldown > world.time)
+	if(loc == summoner || cooldown > world.time)
 		return
 	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
+	unbuckle_mob(force=1)
 	loc = summoner
-	buckled = null
 	cooldown = world.time + 30
 
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
