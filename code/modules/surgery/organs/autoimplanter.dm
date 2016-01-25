@@ -11,8 +11,7 @@
 		user << "<span class='notice'>[src] currently has no implant stored.</span>"
 		return
 	storedorgan.Insert(user)//insert stored organ into the user
-	user.visible_message("<span class='notice'>[user] presses a button on [src], and you hear a short mechanical noise.</span>")
-	user << "<span class='notice'>You feel a slight tickle as [src] quickly implants you with the [storedorgan].</span>"
+	user.visible_message("<span class='notice'>[user] presses a button on [src], and you hear a short mechanical noise.</span>", "<span class='notice'>You feel a sharp sting as [src] plunges into your body.</span>")
 	storedorgan = null
 
 /obj/item/device/autoimplanter/attackby(obj/item/I, mob/user, params)
