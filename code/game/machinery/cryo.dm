@@ -101,9 +101,9 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 			return
 	if(put_mob(L))
 		if(L == user)
-			visible_message("[user] climbs into \the [src].", 2) //spooky
+			visible_message("[user] climbs into \the [src].")
 		else
-			visible_message("[user] puts [L.name] into \the [src].", 2) //spooky
+			visible_message("[user] puts [L.name] into \the [src].")
 			if(user.pulling == L)
 				user.pulling = null
 
@@ -127,7 +127,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 			if((A == src) || istype(A, /mob))
 				continue
 			return
-	visible_message("[usr] removes [occupant.name] from \the [src].", 2) //spooky
+	visible_message("[usr] removes [occupant.name] from \the [src].")
 	go_out(over_location)
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
