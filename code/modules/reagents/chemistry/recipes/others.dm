@@ -124,66 +124,6 @@
 	required_temp = 777 // pure carbon isn't especially reactive.
 	result_amount = 3
 
-////////////////////////////////// VIROLOGY //////////////////////////////////////////
-
-/datum/chemical_reaction/virus_food
-	name = "Virus Food"
-	id = "virusfood"
-	result = "virusfood"
-	required_reagents = list("water" = 5, "milk" = 5)
-	result_amount = 15
-
-/datum/chemical_reaction/mix_virus
-	name = "Mix Virus"
-	id = "mixvirus"
-	result = "blood"
-	required_reagents = list("virusfood" = 1)
-	required_catalysts = list("blood" = 1)
-	var/level_min = 0
-	var/level_max = 2
-
-/datum/chemical_reaction/mix_virus/on_reaction(datum/reagents/holder, created_volume)
-
-	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
-	if(B && B.data)
-		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
-		if(D)
-			D.Evolve(level_min, level_max)
-
-
-/datum/chemical_reaction/mix_virus/mix_virus_2
-
-	name = "Mix Virus 2"
-	id = "mixvirus2"
-	required_reagents = list("mutagen" = 1)
-	level_min = 2
-	level_max = 4
-
-/datum/chemical_reaction/mix_virus/mix_virus_3
-
-	name = "Mix Virus 3"
-	id = "mixvirus3"
-	required_reagents = list("plasma" = 1)
-	level_min = 4
-	level_max = 6
-
-/datum/chemical_reaction/mix_virus/rem_virus
-
-	name = "Devolve Virus"
-	id = "remvirus"
-	required_reagents = list("synaptizine" = 1)
-	required_catalysts = list("blood" = 1)
-
-/datum/chemical_reaction/mix_virus/rem_virus/on_reaction(datum/reagents/holder, created_volume)
-
-	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
-	if(B && B.data)
-		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
-		if(D)
-			D.Devolve()
-
-
-
 ////////////////////////////////// foam and foam precursor ///////////////////////////////////////////////////
 
 

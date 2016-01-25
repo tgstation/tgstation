@@ -312,9 +312,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if("apprentice")
 				if(M.mind in ticker.mode.apprentices)
 					return 2
-			if("monkey")
-				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
-					return 2
 			if("abductor")
 				if(M.mind in ticker.mode.abductors)
 					return 2

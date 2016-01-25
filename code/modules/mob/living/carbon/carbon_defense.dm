@@ -31,14 +31,6 @@
 	if(!iscarbon(user))
 		return
 
-	for(var/datum/disease/D in viruses)
-		if(D.IsSpreadByTouch())
-			user.ContractDisease(D)
-
-	for(var/datum/disease/D in user.viruses)
-		if(D.IsSpreadByTouch())
-			ContractDisease(D)
-
 	if(lying)
 		if(user.a_intent == "help")
 			if(surgeries.len)
@@ -52,21 +44,11 @@
 	if(!istype(M, /mob/living/carbon))
 		return 0
 
-	for(var/datum/disease/D in viruses)
-		if(D.IsSpreadByTouch())
-			M.ContractDisease(D)
-
-	for(var/datum/disease/D in M.viruses)
-		if(D.IsSpreadByTouch())
-			ContractDisease(D)
-
 	if(M.a_intent == "help")
 		help_shake_act(M)
 		return 0
 
 	if(..()) //successful monkey bite.
-		for(var/datum/disease/D in M.viruses)
-			ForceContractDisease(D)
 		return 1
 
 

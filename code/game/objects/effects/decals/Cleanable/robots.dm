@@ -56,11 +56,5 @@
 	..()
 	reagents.add_reagent("oil", 30)
 
-/obj/effect/decal/cleanable/oil/Destroy()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
-	viruses = null
-	return ..()
-
 /obj/effect/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")

@@ -56,14 +56,6 @@
 	O.loc = loc
 	O.a_intent = "harm"
 
-	//keep viruses?
-	if (tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/datum/disease/D in O.viruses)
-			D.affected_mob = O
-			D.holder = O
-
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
 		O.setToxLoss(getToxLoss())
@@ -174,15 +166,6 @@
 		O.suiciding = suiciding
 
 	O.loc = loc
-
-	//keep viruses?
-	if (tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/datum/disease/D in O.viruses)
-			D.affected_mob = O
-			D.holder = O
-		O.med_hud_set_status()
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)

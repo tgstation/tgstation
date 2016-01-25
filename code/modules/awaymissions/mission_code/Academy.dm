@@ -222,9 +222,8 @@
 			//Fueltank Explosion
 			explosion(src.loc,-1,0,2, flame_range = 2)
 		if(9)
-			//Cold
-			var/datum/disease/D = new /datum/disease/cold
-			user.ForceContractDisease(D)
+			//Nothing
+			visible_message("<span class='notice'>[src] roll perfectly.</span>")
 		if(10)
 			//Nothing
 			visible_message("<span class='notice'>[src] roll perfectly.</span>")

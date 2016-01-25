@@ -23,7 +23,6 @@
 		/obj/machinery/atmospherics/components/unary/cryo_cell,
 		/obj/item/weapon/grenade/chem_grenade,
 		/mob/living/simple_animal/bot/medbot,
-		/obj/machinery/computer/pandemic,
 		/obj/structure/safe,
 		/obj/machinery/disposal,
 		/obj/machinery/hydroponics,

@@ -134,14 +134,6 @@
 			var/area/template = locate(/area/tdome/arena_source)
 			template.copy_contents_to(thunderdome)
 
-		if("clear_virus")
-
-			var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
-			if(choice == "Yes")
-				message_admins("[key_name_admin(usr)] has cured all diseases.")
-				for(var/datum/disease/D in SSdisease.processing)
-					D.cure(D)
-
 		if("list_bombers")
 			if(!check_rights(R_ADMIN))
 				return
@@ -391,22 +383,6 @@
 		if("floorlava")
 			var/datum/weather/floor_is_lava/storm = new /datum/weather/floor_is_lava
 			storm.weather_start_up()
-
-		if("virus")
-			if(!check_rights(R_FUN))
-				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","V")
-			switch(alert("Do you want this to be a random disease or do you have something in mind?",,"Make Your Own","Random","Choose"))
-				if("Make Your Own")
-					AdminCreateVirus(usr.client)
-				if("Random")
-					E = new /datum/round_event/disease_outbreak()
-				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in typesof(/datum/disease)
-					E = new /datum/round_event/disease_outbreak{}()
-					var/datum/round_event/disease_outbreak/DO = E
-					DO.virus_type = virus
 
 		if("retardify")
 			if(!check_rights(R_FUN))

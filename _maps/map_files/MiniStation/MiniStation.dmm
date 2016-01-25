@@ -900,7 +900,7 @@
 "rp" = (/obj/structure/closet/secure_closet/medical2,/turf/simulated/floor/plasteel{icon_state = "whitebluecorner"; dir = 1},/area/medical/medbay)
 "rq" = (/obj/structure/table,/obj/item/weapon/storage/box/beakers{pixel_x = 2; pixel_y = 2},/obj/item/weapon/reagent_containers/dropper,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/medbay)
 "rr" = (/obj/machinery/vending/wallmed{pixel_y = -28},/obj/structure/table,/obj/item/weapon/storage/box/syringes,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/medbay)
-"rs" = (/obj/machinery/computer/pandemic,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/medbay)
+"rs" = (/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/medbay)
 "rt" = (/obj/structure/closet/crate/freezer,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/medbay)
 "ru" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/plasteel,/area/hallway/secondary/exit)
 "rv" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/simulated/floor/plasteel{icon_state = "L1"; dir = 4},/area/hallway/secondary/exit)
