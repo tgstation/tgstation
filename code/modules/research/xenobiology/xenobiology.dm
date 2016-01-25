@@ -292,7 +292,6 @@
 		if(I.slowdown <= 0)
 			user << "<span class='warning'>The [C] can't be made any faster!</span>"
 			return..()
-		user <<"<span class='notice'>You slather the red gunk over the [C], making it faster.</span>"
 		I.slowdown = 0
 
 	if(istype(C, /obj/vehicle))
