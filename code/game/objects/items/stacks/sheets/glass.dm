@@ -270,6 +270,12 @@
 	var/cooldown = 0
 	sharpness = IS_SHARP
 
+/obj/item/weapon/shard/attackby(obj/item/S, mob/user, params)
+	if(istype(S, /obj/item/stack/medical/gauze/improvised) || istype(S, /obj/item/weapon/bedsheet))
+		new /obj/item/weapon/kitchen/knife/shank(src.loc)
+		qdel(src)
+		user << "<span class='notice'>You wrap up the shard with [src] to create a makeshift handle.</span>"
+
 /obj/item/weapon/shard/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>"))

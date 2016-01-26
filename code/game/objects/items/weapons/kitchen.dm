@@ -6,6 +6,7 @@
  *		Butcher's cleaver
  *		Combat Knife
  *		Rolling Pins
+ *		Prison Shank
  */
 
 /obj/item/weapon/kitchen
@@ -98,6 +99,21 @@
 	origin_tech = "materials=2;combat=4"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
 
+/obj/item/weapon/kitchen/knife/shank
+	name = "shank"
+	desc = "A piece of glass with cloth wrapped around the bottom-end."
+	icon = 'icons/obj/shards.dmi'
+	item_state = "shard-glass"
+	icon_state = "shank"
+	w_class = 1
+	force = 7
+	throwforce = 10
+	siemens_coefficient = 0
+	origin_tech = "materials=1;combat=1"
+	item_state = "shard-glass"
+	attack_verb = list("stabbed", "slashed", "sliced", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
 
 /obj/item/weapon/kitchen/rollingpin
 	name = "rolling pin"
