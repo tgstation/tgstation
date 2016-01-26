@@ -306,12 +306,12 @@
 /obj/machinery/space_heater/campfire/process()
 	..()
 	var/list/comfyfire = list('sound/misc/comfyfire1.ogg','sound/misc/comfyfire2.ogg','sound/misc/comfyfire3.ogg',)
-	if(Floor((cell.charge/250)-1) != lastcharge)
+	if(Floor(cell.charge/10) != lastcharge)
 		update_icon()
 	if(!(cell && cell.charge > 0) && nocell != 2)
 		new /obj/effect/decal/cleanable/campfire(get_turf(src))
 		qdel(src)
-	lastcharge = Floor(cell.charge/250-1)
+	lastcharge = Floor(cell.charge/10)
 	if(on)
 		playsound(get_turf(src), pick(comfyfire), (cell.charge/250)*5, 1, -1,channel = 124)
 
@@ -325,14 +325,16 @@
 
 /obj/machinery/space_heater/campfire/stove/fireplace
 	name = "fireplace"
+	icon = 'icons/obj/fireplace.dmi'
 	icon_state = "fireplace"
 	base_state = "fireplace"
 	desc = "The wood cracks and pops as the fire dances across its grainy surface. The sweet and smokey smell reminds you of smores and hot chocolate."
-	light_power_on = 3
-	light_range_on = 6
+	light_power_on = 0.8
+	light_range_on = 0
 	nocell = 2
 	density = 0
-	pixel_y = 30
+	pixel_x = -16
+	pixel_y = 16
 
 /obj/machinery/space_heater/campfire/stove/fireplace/attackby(obj/item/I, mob/user)
 	var/shoesfound = 0
@@ -349,7 +351,26 @@
 		..()
 
 /obj/machinery/space_heater/campfire/stove/fireplace/update_icon()
-	..()
+	overlays.len = 0
+	var/light_r = 0
+	if(on)
+		var/fireintensity = min(Floor((cell.charge-1)/(cell.maxcharge/4))+1,4)
+		if(cell.charge > 150)
+			src.overlays += image(icon,"fireplace_glow",LIGHTING_LAYER + 1)
+		switch(cell.charge)
+			if(15 to 149)
+				src.overlays += image(icon,"fireplace_fire0",LIGHTING_LAYER + 1)
+			if(150 to 249)
+				src.overlays += image(icon,"fireplace_fire1",LIGHTING_LAYER + 1)
+			if(250 to 499)
+				src.overlays += image(icon,"fireplace_fire2",LIGHTING_LAYER + 1)
+			if(500 to 749)
+				src.overlays += image(icon,"fireplace_fire3",LIGHTING_LAYER + 1)
+			if(750 to INFINITY)
+				src.overlays += image(icon,"fireplace_fire4",LIGHTING_LAYER + 1)
+		light_r = max(1.1,cell.charge/100)
+		set_temperature = 15 + 5*fireintensity
+	set_light(on ? light_r : 0, light_power_on)
 //	var/gunfound = 0
 	for(var/obj/W in contents)
 		if(istype(W,/obj/item/clothing/shoes))
