@@ -142,6 +142,12 @@
 	icon_state = "mshell"
 	projectile_type = /obj/item/projectile/bullet/meteorshot
 
+/obj/item/ammo_casing/shotgun/breaching
+	name = "breaching shell"
+	desc = "An economic version of the meteorshot, utilizing similar technologies. Great for busting down doors."
+	icon_state = "mshell"
+	projectile_type = /obj/item/projectile/bullet/meteorshot/weak
+
 /obj/item/ammo_casing/shotgun/pulseslug
 	name = "pulse slug"
 	desc = "A delicate device which can be loaded into a shotgun. The primer acts as a button which triggers the gain medium and fires a powerful \
