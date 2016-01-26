@@ -696,7 +696,7 @@
 
 
 /mob/living/silicon/robot/emag_act(mob/user as mob)
-	if(!user != src)
+	if(user != src)
 		if(!opened)
 			if(locked)
 				if(prob(90))
@@ -708,12 +708,10 @@
 						to_chat(src, "Hack attempt detected.")
 			else
 				to_chat(user, "The cover is already open.")
-			return
-		if(opened)
-			if(emagged == 1) return
+		else
+			if(emagged == 1) return 1
 			if(wiresexposed)
 				to_chat(user, "The wires get in your way.")
-				return
 			else
 				if(prob(50))
 					sleep(6)
@@ -749,10 +747,12 @@
 					to_chat(src, "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>")
 					SetLockdown(0)
 					update_icons()
+					return 0
 				else
 					to_chat(user, "You fail to unlock [src]'s interface.")
 					if(prob(25))
 						to_chat(src, "Hack attempt detected.")
+	return 1
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
