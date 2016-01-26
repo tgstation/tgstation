@@ -194,6 +194,15 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/minigun
+	name = "M134 Minigun"
+	desc = "A fully-loaded Minigun! \
+			This deadly weapon has a massive 300-round magazine of devastating explosive ammunition."
+	item = /obj/item/weapon/minigunpack
+	cost = 30
+	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. guaranteed to cause shock and awe or your TC back!"
