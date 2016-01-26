@@ -187,15 +187,6 @@
 				..()
 		else
 			..()
-	else if(istype(W,/obj/item/weapon/grab))
-		if(state == 1)
-			var/obj/item/weapon/grab/G = W
-			if(iscorgi(G.affecting))
-				G.affecting.loc = src
-				qdel(G)
-				state = 3
-		else
-			..()
 	else if(istype(W,/obj/item/stack/sheet/hairlesshide) || \
 		istype(W,/obj/item/clothing/under) || \
 		istype(W,/obj/item/clothing/mask) || \
@@ -290,3 +281,13 @@
 
 
 	update_icon()
+
+/obj/machinery/washing_machine/MouseDrop(mob/living/target)
+	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE))
+		return
+	if(!state_open)
+		usr << "<span class='notice'>Open the scanner first.</span>"
+		return
+	if(state == 1 && iscorgi(target))
+		target.loc = src
+		state = 3
