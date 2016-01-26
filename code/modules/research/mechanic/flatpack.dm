@@ -26,7 +26,6 @@
 	icon_state = "flatpack" //it gets changed in the crate code, so we reset it here
 
 /obj/structure/closet/crate/flatpack/update_icon()
-	overlays.len = 0
 
 	icon_state = "flatpack"
 
