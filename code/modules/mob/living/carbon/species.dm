@@ -124,6 +124,7 @@ var/global/list/whitelisted_species = list("Human")
 
 	var/move_speed_mod = 0 //Higher value is slower, lower is faster.
 	var/can_be_hypothermic = 1
+	var/has_sweat_glands = 1
 
 /datum/species/proc/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
 	if(H.dna)
@@ -376,7 +377,7 @@ var/global/list/whitelisted_species = list("Human")
 	heat_level_1 = 420 //Default 360 - Higher is better
 	heat_level_2 = 480 //Default 400
 	heat_level_3 = 1100 //Default 1000
-
+	has_sweat_glands = 0
 	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
 
 	flesh_color = "#34AF10"
@@ -391,7 +392,7 @@ var/global/list/whitelisted_species = list("Human")
 	deform = 'icons/mob/human_races/r_skeleton.dmi'  // TODO: Need deform.
 	language = "Clatter"
 	attack_verb = "punch"
-
+	has_sweat_glands = 0
 	flags = IS_WHITELISTED | HAS_LIPS | NO_BREATHE | NO_BLOOD | NO_SKIN
 
 	chem_flags = NO_DRINK | NO_EAT | NO_INJECT
