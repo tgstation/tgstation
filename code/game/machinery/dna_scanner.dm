@@ -149,19 +149,15 @@
 	if(default_deconstruction_crowbar(I))
 		return
 
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		if(!ismob(G.affecting))
-			return
-
-		if(!state_open)
-			user << "<span class='notice'>Open the scanner first.</span>"
-			return
-
-		var/mob/M = G.affecting
-		M.loc = loc
-		user.stop_pulling()
-		qdel(G)
+/obj/machinery/dna_scannernew/MouseDrop(mob/living/target)
+	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE))
+		return
+	if(!state_open)
+		usr << "<span class='notice'>Open the scanner first.</span>"
+		return
+	if(!istype(target))
+		return
+	target.loc = loc
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
 	if(..(user,1,0)) //don't set the machine, since there's no dialog
