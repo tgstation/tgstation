@@ -117,7 +117,8 @@
 		return 1
 	else
 		if(istype(mover, /obj/item/projectile))
-			return prob(66) //Fairly hit chance
+			var/obj/item/projectile/projectile = mover
+			return prob(projectile.grillepasschance) //Fairly hit chance
 		else
 			return !density
 
