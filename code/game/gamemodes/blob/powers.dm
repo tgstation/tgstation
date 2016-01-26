@@ -269,7 +269,8 @@
 	var/msg = stripped_input(owner, "What do you wish to tell your fellow blobs?", null, "")
 	if(msg && owner)
 		var/mob/living/carbon/human/O = owner
-		var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [O.real_name]</b> [msg]</font></span>"
+		var/spanned_message = O.say_quote(msg, O.get_spans())
+		var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [O.real_name]</b> [spanned_message]</font></span>"
 		var/datum/game_mode/blob/B = ticker.mode
 		B.show_message("[rendered]")
 		for(var/mob/M in mob_list)
