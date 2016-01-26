@@ -19,17 +19,17 @@
 	switch(wire)
 		if(WIRE_BOOM)
 			if(B.active)
-				B.loc.visible_message("<span class='danger'>\icon[B] An alarm sounds! It's go-</span>")
+				holder.visible_message("<span class='danger'>\icon[B] An alarm sounds! It's go-</span>")
 				B.timer = 0
 		if(WIRE_UNBOLT)
-			B.loc.visible_message("<span class='notice'>\icon[B] The bolts spin in place for a moment.</span>")
+			holder.visible_message("<span class='notice'>\icon[B] The bolts spin in place for a moment.</span>")
 		if(WIRE_DELAY)
-			B.loc.visible_message("<span class='notice'>\icon[B] The bomb chirps.</span>")
-			playsound(B.loc, 'sound/machines/chime.ogg', 30, 1)
+			holder.visible_message("<span class='notice'>\icon[B] The bomb chirps.</span>")
+			playsound(B, 'sound/machines/chime.ogg', 30, 1)
 			B.timer += 10
 		if(WIRE_PROCEED)
-			B.loc.visible_message("<span class='danger'>\icon[B] The bomb buzzes ominously!</span>")
-			playsound(B.loc, 'sound/machines/buzz-sigh.ogg', 30, 1)
+			holder.visible_message("<span class='danger'>\icon[B] The bomb buzzes ominously!</span>")
+			playsound(B, 'sound/machines/buzz-sigh.ogg', 30, 1)
 			if(B.timer >= 61) // Long fuse bombs can suddenly become more dangerous if you tinker with them.
 				B.timer = 60
 			else if(B.timer >= 21)
@@ -38,12 +38,12 @@
 				B.timer = 10
 		if(WIRE_ACTIVATE)
 			if(!B.active && !B.defused)
-				B.loc.visible_message("<span class='danger'>\icon[B] You hear the bomb start ticking!</span>")
-				playsound(B.loc, 'sound/machines/click.ogg', 30, 1)
-				B.active = 1
+				holder.visible_message("<span class='danger'>\icon[B] You hear the bomb start ticking!</span>")
+				playsound(B, 'sound/machines/click.ogg', 30, 1)
+				B.active = TRUE
 				B.update_icon()
 			else
-				B.loc.visible_message("<span class='notice'>\icon[B] The bomb seems to hesitate for a moment.</span>")
+				holder.visible_message("<span class='notice'>\icon[B] The bomb seems to hesitate for a moment.</span>")
 				B.timer += 5
 
 /datum/wires/syndicatebomb/on_cut(wire, mend)
@@ -51,25 +51,25 @@
 	switch(wire)
 		if(WIRE_BOOM)
 			if(mend)
-				B.defused = 0 // Cutting and mending all the wires of an inactive bomb will thus cure any sabotage.
+				B.defused = FALSE // Cutting and mending all the wires of an inactive bomb will thus cure any sabotage.
 			else
 				if(B.active)
-					B.loc.visible_message("<span class='danger'>\icon[B] An alarm sounds! It's go-</span>")
+					holder.visible_message("<span class='danger'>\icon[B] An alarm sounds! It's go-</span>")
 					B.timer = 0
 				else
-					B.defused = 1
+					B.defused = TRUE
 		if(WIRE_UNBOLT)
 			if(!mend && B.anchored)
-				B.loc.visible_message("<span class='notice'>\icon[B] The bolts lift out of the ground!</span>")
-				playsound(B.loc, 'sound/effects/stealthoff.ogg', 30, 1)
+				holder.visible_message("<span class='notice'>\icon[B] The bolts lift out of the ground!</span>")
+				playsound(B, 'sound/effects/stealthoff.ogg', 30, 1)
 				B.anchored = 0
 		if(WIRE_PROCEED)
 			if(!mend && B.active)
-				B.loc.visible_message("<span class='danger'>\icon[B] An alarm sounds! It's go-</span>")
+				holder.visible_message("<span class='danger'>\icon[B] An alarm sounds! It's go-</span>")
 				B.timer = 0
 		if(WIRE_ACTIVATE)
-			if (!mend && B.active)
-				B.loc.visible_message("<span class='notice'>\icon[B] The timer stops! The bomb has been defused!</span>")
-				B.active = 0
-				B.defused = 1
+			if(!mend && B.active)
+				holder.visible_message("<span class='notice'>\icon[B] The timer stops! The bomb has been defused!</span>")
+				B.active = FALSE
+				B.defused = TRUE
 				B.update_icon()
