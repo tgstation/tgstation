@@ -101,11 +101,13 @@
 
 /obj/machinery/capture_the_flag/red
 	name = "Red CTF Controller"
+	icon_state = "syndbeacon"
 	team = RED_TEAM
 	ctf_gear = /datum/outfit/ctf/red
 
 /obj/machinery/capture_the_flag/blue
 	name = "Blue CTF Controller"
+	icon_state = "bluebeacon"
 	team = BLUE_TEAM
 	ctf_gear = /datum/outfit/ctf/blue
 
