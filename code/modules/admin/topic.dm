@@ -2778,7 +2778,7 @@
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
 				command_alert("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.")
-				to_chat(world, sound('sound/AI/commandreport.ogg'))
+				to_chat(world, sound('sound/AI/commandreport.ogg', volume = 60))
 			if("dorf")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","DF")
