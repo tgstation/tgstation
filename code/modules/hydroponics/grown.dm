@@ -601,6 +601,10 @@
 	trash = /obj/item/weapon/grown/bananapeel
 	filling_color = "#FFFF00"
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
+		user.visible_message("<span class='suicide'>[user] horrifically mutilates \himself with the [src.name] in a way you cannot even comprehend! It looks like \he's trying to commit suicide.</span>")
+		return (BRUTELOSS|FIRELOSS|OXYLOSS)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/add_juice()
 	if(..())
 		reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
