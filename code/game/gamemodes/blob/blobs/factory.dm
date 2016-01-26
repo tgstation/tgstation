@@ -25,7 +25,7 @@
 		return
 	if(spore_delay > world.time)
 		return
-	flick("factory_glow", src)
+	flick("blob_factory_glow", src)
 	spore_delay = world.time + 100 // 10 seconds
 	var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore(src.loc, src)
 	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
