@@ -175,6 +175,8 @@ BLIND     // can't see anything
 	slowdown = SHOES_SLOWDOWN
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
+	var/can_hold_knives = 0//if set to 1, the shoe can hold knives and edaggers
+	var/obj/item/weapon/held_knife
 
 
 /obj/item/clothing/shoes/worn_overlays(var/isinhands = FALSE)
@@ -197,6 +199,46 @@ BLIND     // can't see anything
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_shoes()
+
+/obj/item/clothing/shoes/attackby(obj/item/I, mob/user, params)
+	if(!can_hold_knives)
+		return
+	if(held_knife)
+		user << "<span class='notice'>There's already something in [src].</span>"
+		return
+	if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/pen))//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
+		if(!user.drop_item())
+			return
+		I.loc = src
+		user << "<span class='notice'>You discreetly slip [I] into [src]. Click and drag [src] to yourself to remove it.</span>"
+		held_knife = I
+
+/obj/item/clothing/shoes/MouseDrop(atom/over_object)
+	..()
+	if(!can_hold_knives)
+		return
+	var/mob/M = usr
+	if(M.restrained() || M.stat || !Adjacent(M) || !held_knife)
+		return
+	if(over_object == M)
+		M.put_in_hands(held_knife)
+		usr.visible_message("<span class='warning'>[usr] draws [held_knife] from \his shoes!</span>", "<span class='notice'>You withdraw [held_knife] from [src].</span>")
+		held_knife = null
+	else if(istype(over_object, /obj/screen))
+		switch(over_object.name)
+			if("r_hand")
+				if(!remove_item_from_storage(M))
+					M.unEquip(held_knife)
+				M.put_in_r_hand(held_knife)
+				usr.visible_message("<span class='warning'>[usr] draws [held_knife] from their boots!</span>", "<span class='notice'>You withdraw [held_knife] from [src].</span>")
+				held_knife = null
+			if("l_hand")
+				if(!remove_item_from_storage(M))
+					M.unEquip(held_knife)
+				M.put_in_l_hand(held_knife)
+				usr.visible_message("<span class='warning'>[usr] draws [held_knife] from their boots!</span>", "<span class='notice'>You withdraw [held_knife] from [src].</span>")
+				held_knife = null
+	add_fingerprint(M)
 
 
 /obj/item/proc/negates_gravity()
