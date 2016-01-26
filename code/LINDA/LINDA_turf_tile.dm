@@ -222,11 +222,11 @@
 	var/list/new_overlay_types = tile_graphic()
 
 	for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
-		overlays -= overlay
+		lighting_object.overlays -= overlay
 		atmos_overlay_types -= overlay
 
 	for(var/overlay in new_overlay_types-atmos_overlay_types) //doesn't add overlays that already exist
-		overlays += overlay
+		lighting_object.overlays += overlay
 
 	atmos_overlay_types = new_overlay_types
 
