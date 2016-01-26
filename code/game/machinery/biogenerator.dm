@@ -102,6 +102,12 @@
 	name="Utility Belt"
 	result=/obj/item/weapon/storage/belt/utility
 
+/datum/biogen_recipe/leather/moneybag
+	cost=300
+	id="moneybag"
+	name="Money Bag"
+	result=/obj/item/weapon/storage/bag/money
+	
 /datum/biogen_recipe/leather/plants
 	cost=350
 	id="plants"

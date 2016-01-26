@@ -33,3 +33,4 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
 - bugfix: Reworked money bags.
+- rscadd: Added money bags to the biogenerator.
