@@ -1063,7 +1063,7 @@
 /datum/sprite_accessory/socks/thin_thigh
 	name = "Thigh-high Thin"
 	icon_state = "thin_thigh"
-	gender = NEUTER
+	gender = FEMALE
 
 /datum/sprite_accessory/socks/striped_thigh
 	name = "Thigh-high Striped"
