@@ -86,6 +86,7 @@
 	R.status_flags |= CANPUSH
 	R.updateicon()
 	R.luminosity = 0 //flashlight fix
+	R.resurrect()
 
 	return 1
 
