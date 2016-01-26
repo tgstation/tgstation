@@ -1091,6 +1091,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Random Item"
 	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't \
 			decided on a strategy yet."
+	item = /obj/item/weapon/paper
 	cost = 0
 
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
