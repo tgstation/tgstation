@@ -1,12 +1,12 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "\improper L6 SAW"
-	desc = "A heavily modified 556x45mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
+	desc = "A heavily modified 5.56x45mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = 5
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
-	mag_type = /obj/item/ammo_box/magazine/m762
+	mag_type = /obj/item/ammo_box/magazine/mm556x45
 	heavy_weapon = 1
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	var/cover_open = 0
@@ -89,6 +89,13 @@
 	damage = 7
 	armour_penetration = 0
 
+obj/item/projectile/bullet/saw/incen/Move()
+	..()
+	var/turf/location = get_turf(src)
+	if(location)
+		PoolOrNew(/obj/effect/hotspot, location)
+		location.hotspot_expose(700, 50, 1)
+
 /obj/item/projectile/bullet/saw/incen/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(iscarbon(target))
@@ -101,7 +108,7 @@
 
 
 /obj/item/ammo_box/magazine/mm556x45
-	name = "box magazine (7.62mm)"
+	name = "box magazine (5.56x45mm)"
 	icon_state = "a762-50"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/mm556x45
@@ -109,22 +116,22 @@
 	max_ammo = 50
 
 /obj/item/ammo_box/magazine/mm556x45/bleeding
-	name = "box magazine (Bleeding 7.62mm)"
+	name = "box magazine (Bleeding 5.56x45mm)"
 	origin_tech = "combat=3"
-	ammo_type = /obj/item/ammo_casing/a762/bleeding
+	ammo_type = /obj/item/ammo_casing/mm556x45/bleeding
 
 /obj/item/ammo_box/magazine/mm556x45/hollow
-	name = "box magazine (Hollow-Point 7.62mm)"
+	name = "box magazine (Hollow-Point 5.56x45mm)"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/mm556x45/hollow
 
 /obj/item/ammo_box/magazine/mm556x45/ap
-	name = "box magazine (Armor Penetrating 7.62mm)"
+	name = "box magazine (Armor Penetrating 5.56x45mm)"
 	origin_tech = "combat=4"
 	ammo_type = /obj/item/ammo_casing/mm556x45/ap
 
 /obj/item/ammo_box/magazine/mm556x45/incen
-	name = "box magazine (Incendiary 7.62mm)"
+	name = "box magazine (Incendiary 5.56x45mm)"
 	origin_tech = "combat=4"
 	ammo_type = /obj/item/ammo_casing/mm556x45/incen
 
@@ -139,13 +146,12 @@
 /obj/item/ammo_casing/mm556x45
 	desc = "A 556x45mm bullet casing."
 	icon_state = "762-casing"
-	caliber = "a762"
+	caliber = "mm55645"
 	projectile_type = /obj/item/projectile/bullet/saw
 
 /obj/item/ammo_casing/mm556x45/bleeding
 	desc = "A 556x45mm bullet casing with specialized inner-casing, that when it makes contact with a target, release tiny shrapnel to induce internal bleeding."
 	icon_state = "762-casing"
-	caliber = "a762"
 	projectile_type = /obj/item/projectile/bullet/saw/bleeding
 
 /obj/item/ammo_casing/mm556x45/hollow

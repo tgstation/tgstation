@@ -188,9 +188,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
-			This deadly weapon has a massive 50-round magazine of devastating 7.62x51mm ammunition."
+			This deadly weapon has a massive 50-round magazine of devastating 5.56x45mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
-	cost = 23
+	cost = 18
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -445,34 +445,34 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun/basic
-	name = "7.62x51mm Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use with the L6 SAW. \
+	name = "5.56x45mm Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use with the L6 SAW. \
 			By the time you need to use this, you'll already be on a pile of corpses."
-	item = /obj/item/ammo_box/magazine/m762
+	item = /obj/item/ammo_box/magazine/mm556x45
 
 /datum/uplink_item/ammo/machinegun/bleeding
-	name = "7.62x51mm (Bleeding) Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW; equipped with special properties \
+	name = "5.56x45mm (Bleeding) Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with special properties \
 			to induce internal bleeding on targets."
-	item = /obj/item/ammo_box/magazine/m762/bleeding
+	item = /obj/item/ammo_box/magazine/mm556x45/bleeding
 
 /datum/uplink_item/ammo/machinegun/hollow
-	name = "7.62x51mm (Hollow-Point) Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
+	name = "5.56x45mm (Hollow-Point) Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
 			with the unarmored masses of crew."
-	item = /obj/item/ammo_box/magazine/m762/hollow
+	item = /obj/item/ammo_box/magazine/mm556x45/hollow
 
 /datum/uplink_item/ammo/machinegun/ap
-	name = "7.62x51mm (Armor Penetrating) Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW; equipped with special properties \
+	name = "5.56x45mm (Armor Penetrating) Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with special properties \
 			to puncture even the most durable armor."
-	item = /obj/item/ammo_box/magazine/m762/ap
+	item = /obj/item/ammo_box/magazine/mm556x45/ap
 
 /datum/uplink_item/ammo/machinegun/incen
-	name = "7.62x51mm (Incendiary) Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW; tipped with a special flammable \
+	name = "5.56x45mm (Incendiary) Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; tipped with a special flammable \
 			mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
-	item = /obj/item/ammo_box/magazine/m762/incen
+	item = /obj/item/ammo_box/magazine/mm556x45/incen
 
 /datum/uplink_item/ammo/sniper
 	cost = 4
