@@ -141,5 +141,5 @@
 
 	if(power_drained >= max_power)
 		SSobj.processing.Remove(src)
-		explosion(src.loc, 3,6,9,12)
+		explosion(src.loc, 4,8,16,32)
 		qdel(src)
