@@ -245,6 +245,10 @@
 	if(M)
 		for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 2.4*reac_volume bonus damage, total of 2.5*reac_volume
 			if(M)
+				var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, B.loc)
+				if(B.overmind)
+					O.color = B.overmind.blob_reagent_datum.color
+				O.do_attack_animation(M) //show them they're getting a bad time
 				M.apply_damage(0.3*reac_volume, BRUTE)
 
 /datum/reagent/blob/synchronous_mesh/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
