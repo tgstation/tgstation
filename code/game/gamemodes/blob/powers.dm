@@ -83,7 +83,7 @@
 	if(!B)
 		src << "<span class='warning'>You must be on a factory blob!</span>"
 		return
-	if(B.health < B.maxhealth*0.8) //if it's at less than 60% of its health, you can't blobbernaut it
+	if(B.health < B.maxhealth*0.8) //if it's at less than 80% of its health, you can't blobbernaut it
 		src << "<span class='warning'>This factory blob is too damaged to produce a blobbernaut.</span>"
 		return
 	if(!can_buy(20))
