@@ -39,7 +39,7 @@
 			listening = 0
 			say("Activation message is '[recorded]'.")
 		if(3)
-			recorded = speaker
+			recorded = speaker.GetVoice()
 			listening = 0
 			say("Your voice pattern is saved.")
 		if(4)
@@ -57,7 +57,7 @@
 			if(raw_message == recorded)
 				. = 1
 		if(3)
-			if(speaker == recorded)
+			if(speaker.GetVoice() == recorded)
 				. = 1
 		if(4)
 			if(length(raw_message))

@@ -26,7 +26,7 @@
 	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	bulb = new /obj/item/device/assembly/flash/handheld(src)
 
-/obh/machinery/flasher/Move()
+/obj/machinery/flasher/Move()
 	remove_from_proximity_list(src, range)
 	..()
 

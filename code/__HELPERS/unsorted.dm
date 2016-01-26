@@ -1148,25 +1148,33 @@ B --><-- A
 			return 1
 
 proc/add_to_proximity_list(atom/A, range)
-	var/list/L = block(locate(A.x - range, A.y - range, A.z), locate(A.x + range, A.y + range, A.z))
+	var/turf/T = get_turf(A)
+	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
-		B.proximity_checkers |= A
+		C.proximity_checkers |= A
+	return L
 
 proc/remove_from_proximity_list(atom/A, range)
-	var/list/L = block(locate(A.x - range, A.y - range, A.z), locate(A.x + range, A.y + range, A.z))
+	var/turf/T = get_turf(A)
+	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
-		B.proximity_checkers.Remove(A)
+		C.proximity_checkers.Remove(A)
 
-proc/shift_proximity(atom/A, range, atom/B, newrange)
-	var/list/L = block(locate(A.x - range, A.y - range, A.z), locate(A.x + range, A.y + range, A.z))
-	var/list/M = block(locate(B.x - newrange, B.y - newrange, B.z), locate(B.x + newrange, B.y + newrange, B.z))
+proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
+	var/turf/T = get_turf(A)
+	var/turf/Q = get_turf(B)
+	if(T == Q && range == newrange)
+		return 0
+	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
+	var/list/M = block(locate(Q.x - newrange, Q.y - newrange, Q.z), locate(Q.x + newrange, Q.y + newrange, Q.z))
 	var/list/N = L - M
 	var/list/O = M - L
 	for(var/C in N)
 		var/turf/D = C
-		D.proximity_checkers.Remove(A)
+		D.proximity_checkers.Remove(checker)
 	for(var/E in O)
 		var/turf/F = E
-		F.proximity_checkers |= A
+		F.proximity_checkers |= checker
+	return 1

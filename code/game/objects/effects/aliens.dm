@@ -319,7 +319,7 @@
 		Grow()
 
 /obj/structure/alien/egg/Destroy()
-	remove_from_checker_list(src, 1)
+	remove_from_proximity_list(src, 1)
 	..()
 
 /obj/structure/alien/egg/attack_paw(mob/living/user)

@@ -10,7 +10,8 @@
 	var/timing = 0
 	var/time = 10
 	var/sensitivity = 1
-	var/oldloc
+	var/atom/oldloc
+	var/list/turfs_around = list()
 
 /obj/item/device/assembly/prox_sensor/proc/toggle_scan()
 
@@ -28,11 +29,11 @@
 		return "<span class='notice'>The proximity sensor is arming.</span>"
 	return "The proximity sensor is [scanning?"armed":"disarmed"]."
 
-/obj/item/device/assembly/prox_sensor/attach(datum/wires)
-	handle_move(wires.holder)
+/obj/item/device/assembly/prox_sensor/on_attach(datum/wires/w)
+	handle_move(w.holder)
 
-/obj/item/device/assembly/prox_sensor/detach(datum/wires)
-	handle_move(wires.holder.loc)
+/obj/item/device/assembly/prox_sensor/on_detach(datum/wires/w)
+	handle_move(w.holder.loc)
 
 /obj/item/device/assembly/prox_sensor/activate()
 	if(!..())	return 0//Cooldown check
@@ -69,15 +70,14 @@
 		time--
 		if(time <= 0)
 			timing = 0
-			toggle_scan()
+			toggle_scan(1)
 			time = initial(time)
-	if(scanning)
-		if((x != oldloc.x) || (y != oldloc.y) || (z != oldloc.z))
-			handle_move(loc)
+	handle_move(get_turf(loc))
 
 /obj/item/device/assembly/prox_sensor/dropped()
-	spawn(0)
-		sense()
+	if(scanning)
+		spawn(0)
+			sense()
 
 
 /obj/item/device/assembly/prox_sensor/toggle_scan(scan)
@@ -87,12 +87,14 @@
 		add_to_proximity_list(src, sensitivity)
 	else
 		remove_from_proximity_list(src, sensitivity)
+	oldloc = get_turf(loc)
 	update_icon()
 
 /obj/item/device/assembly/prox_sensor/proc/sensitivity_change(value)
+	var/sense = min(max(sensitivity + value, 0), 5)
 	if(scanning)
-		shift_proximity(src, sensitinity, src, sensitivity + value)
-	sensitivity += value
+		shift_proximity(src, oldloc, sensitivity, loc, sense)
+	sensitivity = sense
 
 /obj/item/device/assembly/prox_sensor/update_icon()
 	overlays.Cut()
@@ -109,9 +111,9 @@
 
 /obj/item/device/assembly/prox_sensor/proc/handle_move(atom/newloc)
 	if(scanning)
-		shift_proximity(oldloc, sensitivity, newloc, sensitivity)
-		sense()
-		oldloc = newloc
+		if(shift_proximity(src, oldloc, sensitivity, newloc, sensitivity))
+			sense()
+			oldloc = newloc
 
 /obj/item/device/assembly/prox_sensor/Move(newloc)
 	..()
@@ -123,8 +125,8 @@
 		var/second = time % 60
 		var/minute = (time - second) / 60
 		var/dat = "<TT><B>Proximity Sensor</B>\n[(timing ? "<A href='?src=\ref[src];time=0'>Arming</A>" : "<A href='?src=\ref[src];time=1'>Not Arming</A>")] [minute]:[second]\n<A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT>"
-		dat += "<BR><A href='?src=\ref[src];scanning=[scanning?"1'>Armed":"0'>Unarmed"]</A> (Movement sensor active when armed!)"
-		dat += "<BR>Detection range: <A href='?src=\ref[src];sense=up'>+</A> [sensitivity] <A href='?src=\ref[src];sense=down'>-</A>"
+		dat += "<BR><A href='?src=\ref[src];scanning=[scanning?"0'>Armed":"1'>Unarmed"]</A> (Movement sensor active when armed!)"
+		dat += "<BR>Detection range: <A href='?src=\ref[src];sense=down'>-</A> [sensitivity] <A href='?src=\ref[src];sense=up'>+</A>"
 		dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
 		user << browse(dat, "window=prox")
