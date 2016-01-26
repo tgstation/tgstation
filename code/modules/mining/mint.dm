@@ -166,17 +166,17 @@ a.notsmelting {
 		if (src.output)
 			processing = 1
 			icon_state = "coinpress1"
-			var/obj/item/weapon/moneybag/M
+			var/obj/item/weapon/storage/bag/money/M
 			var/datum/material/po=materials.getMaterial(chosen)
 			if(!po)
 				chosen=null
 				processing=0
 				return
 			while(materials.storage[chosen] > 0 && coinsToProduce > 0)
-				if (locate(/obj/item/weapon/moneybag,output.loc))
-					M = locate(/obj/item/weapon/moneybag,output.loc)
+				if (locate(/obj/item/weapon/storage/bag/money,output.loc))
+					M = locate(/obj/item/weapon/storage/bag/money,output.loc)
 				else
-					M = new/obj/item/weapon/moneybag(output.loc)
+					M = new/obj/item/weapon/storage/bag/money(output.loc)
 				new po.cointype(M)
 				materials.removeAmount(chosen, 1)
 				coinsToProduce--

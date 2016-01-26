@@ -1172,7 +1172,6 @@
 #include "code\modules\mining\mine_vending.dm"
 #include "code\modules\mining\minerals.dm"
 #include "code\modules\mining\mint.dm"
-#include "code\modules\mining\money_bag.dm"
 #include "code\modules\mining\ore_redemption.dm"
 #include "code\modules\mining\ores_coins.dm"
 #include "code\modules\mining\satchel_ore_boxdm.dm"

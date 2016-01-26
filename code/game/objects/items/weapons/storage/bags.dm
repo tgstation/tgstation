@@ -346,3 +346,24 @@
 		if(B.get_rating() > lowest_rating)
 			continue
 		remove_from_storage(B, A)
+
+// -----------------------------
+//          Money Bag
+// -----------------------------
+
+// This used to be /obj/item/weapon/moneybag
+
+/obj/item/weapon/storage/bag/money
+	icon = 'icons/obj/storage.dmi'
+	name = "money bag"
+	icon_state = "moneybag"
+
+	desc = "You had an uncle who was obsessed with these once."
+
+	flags = FPRINT
+	w_class = 4
+	max_w_class = 3
+	storage_slots = 21
+	max_combined_w_class = 63 // Fuck this var
+	can_hold = list("/obj/item/weapon/coin", "/obj/item/weapon/ore", "/obj/item/weapon/spacecash")
+	cant_hold = list()

@@ -234,7 +234,7 @@
 		return 0
 	var/list/all_items = owner.current.get_contents()
 	var/found_amount=0.0
-	for(var/obj/item/weapon/moneybag/B in all_items)
+	for(var/obj/item/weapon/storage/bag/money/B in all_items)
 		if(B)
 			for(var/obj/item/weapon/coin/C in B)
 				found_amount += C.credits
