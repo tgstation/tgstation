@@ -52,7 +52,10 @@
 							mobs_found += found
 							if(!ai_found && isAI(found))
 								ai_found = 1
-							msg += "[original_word]<font size='1' color='black'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
+							var/is_antag = 0
+							if(found.mind && found.mind.special_role)
+								is_antag = 1
+							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
 							continue
 		msg += "[original_word] "
 	return msg
