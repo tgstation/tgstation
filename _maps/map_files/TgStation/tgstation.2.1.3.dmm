@@ -6794,7 +6794,7 @@
 "cAI" = (/obj/machinery/conveyor_switch/oneway{convdir = -1; id = "garbage"; name = "disposal coveyor"},/mob/living/simple_animal/cockroach,/turf/simulated/floor/plating,/area/maintenance/disposal)
 "cAJ" = (/obj/structure/closet,/mob/living/simple_animal/cockroach,/turf/simulated/floor/plating,/area/maintenance/disposal)
 "cAK" = (/mob/living/simple_animal/cockroach,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
-"cAL" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/mob/living/simple_animal/lizard{name = "Wags-His-Tail"; real_name = "Wags-His-Tail"},/turf/simulated/floor/plasteel,/area/janitor)
+"cAL" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/mob/living/simple_animal/hostile/lizard{name = "Wags-His-Tail"; real_name = "Wags-His-Tail"},/turf/simulated/floor/plasteel,/area/janitor)
 "cAM" = (/mob/living/simple_animal/cockroach,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/maintenance/aft)
 "cAN" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/mob/living/simple_animal/cockroach,/turf/simulated/floor/plating,/area/maintenance/aft)
 "cAO" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/yellow{d1 = 1; d2 = 8; icon_state = "1-8"},/mob/living/simple_animal/cockroach,/turf/simulated/floor/plating,/area/engine/engineering)
