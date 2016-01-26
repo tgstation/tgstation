@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: Admins can now specify which modes they want in Mixed (among the modes allowed in Mixed)
