@@ -125,6 +125,50 @@ var/datum/global_hud/global_hud = new()
 	instantiate()
 	..()
 
+/datum/hud/Destroy()
+	if(mymob.hud_used == src)
+		mymob.hud_used = null
+	qdel(lingchemdisplay)
+	lingchemdisplay = null
+	qdel(lingstingdisplay)
+	lingstingdisplay = null
+	qdel(blobpwrdisplay)
+	blobpwrdisplay = null
+	qdel(blobhealthdisplay)
+	blobhealthdisplay = null
+	qdel(alien_plasma_display)
+	alien_plasma_display = null
+	qdel(deity_health_display)
+	deity_health_display = null
+	qdel(deity_power_display)
+	deity_power_display = null
+	qdel(deity_follower_display)
+	deity_follower_display = null
+	qdel(nightvisionicon)
+	nightvisionicon = null
+	qdel(r_hand_hud_object)
+	r_hand_hud_object = null
+	qdel(l_hand_hud_object)
+	l_hand_hud_object = null
+	qdel(action_intent)
+	action_intent = null
+	qdel(move_intent)
+	move_intent = null
+	qdel(hotkeybuttons)
+	hotkeybuttons = null
+	qdel(hide_actions_toggle)
+	hide_actions_toggle = null
+	if(adding)
+		for(var/thing in adding)
+			qdel(thing)
+		adding.Cut()
+	if(other)
+		for(var/thing in other)
+			qdel(thing)
+		other.Cut()
+	mymob = null
+	return ..()
+
 
 /datum/hud/proc/hidden_inventory_update()
 	if(!mymob)
