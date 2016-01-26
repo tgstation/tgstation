@@ -1,5 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - imageadd: Paper bins have a new default sprite. Their sprite is now different whether there's a blank paper, a written paper, or a cult talisman on top.
-  - rscadd: You can now also read the top paper or identify which talisman (if you're a cultist) is on top simply by examining the paper bin.
