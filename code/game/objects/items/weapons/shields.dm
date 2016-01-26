@@ -54,18 +54,16 @@
 	icon_state = "makeshift"
 	item_state = "makeshift"
 	force = 5
-	block_chance = 15
+	block_chance = 30
 	materials = list()
 
-/obj/item/weapon/shield/riot/makeshift/hit_reaction()
+/obj/item/weapon/shield/riot/makeshift/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(prob(30))
-		if(ishuman(loc))
-			var/mob/living/carbon/S = loc
-			visible_message("<span class='danger'>[H]'s shield breaks apart!</span>", "<span class='userdanger'>Your shield breaks apart!</span>")
-			playsound(S, 'sound/effects/bang.ogg', 30, 1)
-			S.unEquip(src, 1)
-			qdel(src)
-	return 1
+		visible_message("<span class='danger'>[owner]'s shield breaks apart!</span>", "<span class='userdanger'>Your shield breaks apart!</span>")
+		playsound(usr, 'sound/effects/bang.ogg', 30, 1)
+		usr.unEquip(src)
+		qdel(src)
+	return 0
 
 
 /obj/item/weapon/shield/energy

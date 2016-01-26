@@ -111,7 +111,7 @@
 	siemens_coefficient = 0
 	origin_tech = "materials=1;combat=1"
 	item_state = "shard-glass"
-	attack_verb = list("stabbed", "slashed", "sliced", "cut", "shived", "shanked")
+	attack_verb = list("stabbed", "slashed", "sliced", "cut", "shivved", "shanked")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
 

@@ -309,16 +309,15 @@
 	preposition = "on"
 
 /obj/item/weapon/storage/bag/tray/attackby(obj/item/M, mob/user, params)
-	if(istype(I, /obj/item/stack/cable_coil))
+	if(istype(M, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/U = M
-		if (U.use(30))
+		if(U.use(30))
 			new /obj/item/weapon/shield/riot/makeshift(src.loc)
 			user << "<span class='notice'>You tie the coil around the tray and make a sturdy handle.</span>"
 			quick_empty()
 			qdel(src)
 		else
 			user << "<span class='warning'>You need a full coil to properly secure the tray handle!</span>"
-			return
 
 /obj/item/weapon/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	..()
