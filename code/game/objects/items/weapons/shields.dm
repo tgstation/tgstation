@@ -48,6 +48,26 @@
 	burn_state = FLAMMABLE
 	block_chance = 30
 
+/obj/item/weapon/shield/riot/makeshift
+	name = "makeshift shield"
+	desc = "A tray with cable tightly wrapped around it to act as a handle."
+	icon_state = "makeshift"
+	item_state = "makeshift"
+	force = 5
+	block_chance = 15
+	materials = list()
+
+/obj/item/weapon/shield/riot/makeshift/hit_reaction()
+	if(prob(30))
+		if(ishuman(loc))
+			var/mob/living/carbon/S = loc
+			visible_message("<span class='danger'>[H]'s shield breaks apart!</span>", "<span class='userdanger'>Your shield breaks apart!</span>")
+			playsound(S, 'sound/effects/bang.ogg', 30, 1)
+			S.unEquip(src, 1)
+			qdel(src)
+	return 1
+
+
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
 	desc = "A shield capable of stopping most melee attacks. Protects user from almost all energy projectiles. It can be retracted, expanded, and stored anywhere."

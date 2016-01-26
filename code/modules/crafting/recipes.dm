@@ -48,6 +48,37 @@
 	time = 80
 	category = CAT_WEAPON
 
+/datum/table_recipe/shank
+	name = "makeshift shank"
+	result = /obj/item/weapon/kitchen/knife/shank
+	reqs = list(/obj/item/weapon/bedsheet = 1)
+	parts = list(/obj/item/weapon/shard = 1)
+	time = 15
+	category = CAT_WEAPON
+
+/datum/table_recipe/shank2
+	name = "makeshift shank"
+	result = /obj/item/weapon/kitchen/knife/shank
+	reqs = list(/obj/item/stack/medical/gauze/improvised = 1)
+	parts = list(/obj/item/weapon/shard = 1)
+	time = 15
+	category = CAT_WEAPON
+
+/datum/table_recipe/shank3
+	name = "makeshift shank"
+	result = /obj/item/weapon/kitchen/knife/shank
+	reqs = list(/obj/item/weapon/paper = 1)
+	parts = list(/obj/item/weapon/shard = 1)
+	time = 15
+	category = CAT_WEAPON
+
+/datum/table_recipe/makeshift_shield
+	name = "makeshift shield"
+	result = /obj/item/weapon/shield/riot/makeshift
+	reqs = list(/obj/item/stack/cable_coil = 30)
+	parts = list(/obj/item/weapon/storage/bag/tray = 1)
+	time = 80
+	category = CAT_WEAPON
 
 /datum/table_recipe/molotov
 	name = "Molotov"

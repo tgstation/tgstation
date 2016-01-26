@@ -271,7 +271,7 @@
 	sharpness = IS_SHARP
 
 /obj/item/weapon/shard/attackby(obj/item/S, mob/user, params)
-	if(istype(S, /obj/item/stack/medical/gauze/improvised) || istype(S, /obj/item/weapon/bedsheet))
+	if(istype(S, /obj/item/stack/medical/gauze/improvised) || istype(S, /obj/item/weapon/bedsheet) || istype(S, /obj/item/weapon/paper)))
 		new /obj/item/weapon/kitchen/knife/shank(src.loc)
 		qdel(src)
 		user << "<span class='notice'>You wrap up the shard with [src] to create a makeshift handle.</span>"
