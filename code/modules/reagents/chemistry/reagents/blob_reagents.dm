@@ -243,7 +243,7 @@
 	if(M)
 		M.apply_damage(0.1*reac_volume, BRUTE)
 	if(M)
-		for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 0.8*reac_volume bonus damage, total of 1.2*reac_volume
+		for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 2.4*reac_volume bonus damage, total of 2.5*reac_volume
 			if(M)
 				M.apply_damage(0.3*reac_volume, BRUTE)
 

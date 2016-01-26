@@ -39,6 +39,13 @@
 	spawn(duration)
 		qdel(src)
 
+/obj/effect/overlay/temp/blob
+	name = "blob"
+	icon_state = "blob_attack"
+	alpha = 125
+	randomdir = 0
+	duration = 5
+
 /obj/effect/overlay/temp/guardian
 	randomdir = 0
 
