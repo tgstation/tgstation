@@ -61,7 +61,6 @@ var/list/ai_list = list()
 
 	var/last_paper_seen = null
 	var/can_shunt = 1
-	var/last_announcement = "" // For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
 	var/waypoint_mode = 0 //Waypoint mode is for selecting a turf via clicking.
 	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
@@ -392,21 +391,16 @@ var/list/ai_list = list()
 	if(usr != src)
 		return
 	..()
-	if (href_list["mach_close"])
+	if(href_list["mach_close"])
 		if (href_list["mach_close"] == "aialerts")
 			viewalerts = 0
 		var/t1 = text("window=[]", href_list["mach_close"])
 		unset_machine()
 		src << browse(null, t1)
-	if (href_list["switchcamera"])
+	if(href_list["switchcamera"])
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
-	if (href_list["showalerts"])
+	if(href_list["showalerts"])
 		ai_alerts()
-#ifdef AI_VOX
-	if(href_list["say_word"])
-		play_vox_word(href_list["say_word"], null, src)
-		return
-#endif
 	if(href_list["show_paper"])
 		if(last_paper_seen)
 			src << browse(last_paper_seen, "window=show_paper")
