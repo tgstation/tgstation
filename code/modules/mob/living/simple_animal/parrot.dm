@@ -372,7 +372,6 @@
 			speak.Remove(pick(speak))
 
 		speak.Add(pick(speech_buffer))
-		clearlist(speech_buffer)
 
 
 /mob/living/simple_animal/parrot/handle_automated_movement()
@@ -623,7 +622,7 @@
 			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
 				item = C
 		if(item)
-			if(!AStar(loc, get_turf(item), src, /turf/proc/Distance_cardinal))
+			if(!AStar(src, get_turf(item), /turf/proc/Distance_cardinal))
 				item = null
 				continue
 			return item
@@ -856,8 +855,31 @@
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	speak = list("Poly wanna cracker!", ":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS FREE CALL THE SHUTTLE")
 	gold_core_spawnable = 0
+	speak_chance = 3
+	var/memory_saved = 0
 
 /mob/living/simple_animal/parrot/Poly/New()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)
 	available_channels = list(":e")
+	Read_Memory()
 	..()
+
+/mob/living/simple_animal/parrot/Poly/Life()
+	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+		Write_Memory()
+	..()
+
+/mob/living/simple_animal/parrot/Poly/death(gibbed)
+	Write_Memory()
+	..(gibbed)
+
+/mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
+	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
+	S["phrases"] 	>> speech_buffer
+	if(isnull(speech_buffer))
+		speech_buffer = list()
+
+/mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
+	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
+	S["phrases"] 	<< speech_buffer
+	memory_saved = 1

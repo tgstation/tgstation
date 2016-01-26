@@ -23,10 +23,12 @@
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/weapon/mop, mob/user)
 	if(reagents.total_volume < 1)
 		user << "<span class='warning'>[src] is out of water!</span>"
+		return 0
 	else
-		reagents.trans_to(mop, 5)	//
+		reagents.trans_to(mop, 5)
 		user << "<span class='notice'>You wet [mop] in [src].</span>"
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+		return 1
 
 /obj/structure/janitorialcart/proc/put_in_cart(obj/item/I, mob/user)
 	if(!user.drop_item())
@@ -43,8 +45,8 @@
 	if(istype(I, /obj/item/weapon/mop))
 		var/obj/item/weapon/mop/m=I
 		if(m.reagents.total_volume < m.reagents.maximum_volume)
-			wet_mop(m, user)
-			return
+			if (wet_mop(m, user))
+				return
 		if(!mymop)
 			m.janicart_insert(user, src)
 		else

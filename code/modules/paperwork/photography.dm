@@ -131,6 +131,12 @@
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = 1
 
+/obj/item/device/camera/detective
+	name = "Detective's camera"
+	desc = "A polaroid camera with extra capacity for crime investigations."
+	pictures_max = 30
+	pictures_left = 30
+
 
 /obj/item/device/camera/siliconcam //camera AI can take pictures with
 	name = "silicon photo camera"

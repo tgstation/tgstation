@@ -7,13 +7,16 @@
 	desc = "A gas circulator pump and heat exchanger."
 	icon_state = "circ1-off"
 
-	var/side = 1 // 1=left 2=right
+	var/side = CIRC_LEFT
 	var/status = 0
 
 	var/last_pressure_delta = 0
 
 	anchored = 1
 	density = 1
+
+	var/global/const/CIRC_LEFT = 1
+	var/global/const/CIRC_RIGHT = 2
 
 
 /obj/machinery/atmospherics/components/binary/circulator/proc/return_transfer_air()

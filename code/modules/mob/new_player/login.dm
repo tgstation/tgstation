@@ -15,11 +15,6 @@
 	if(config.soft_popcap && living_player_count() >= config.soft_popcap)
 		src << "<span class='notice'><b>Server Notice:</b>\n \t [config.soft_popcap_message]</span>"
 
-	if(length(newplayer_start))
-		loc = pick(newplayer_start)
-	else
-		loc = locate(1,1,1)
-
 	sight |= SEE_TURFS
 
 /*

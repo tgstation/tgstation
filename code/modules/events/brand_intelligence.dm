@@ -25,7 +25,8 @@
 
 /datum/round_event/brand_intelligence/start()
 	for(var/obj/machinery/vending/V in machines)
-		if(V.z != 1)	continue
+		if(V.z != 1)
+			continue
 		vendingMachines.Add(V)
 	if(!vendingMachines.len)
 		kill()
@@ -37,7 +38,7 @@
 
 
 /datum/round_event/brand_intelligence/tick()
-	if(!originMachine || originMachine.gc_destroyed || originMachine.shut_up || originMachine.wires.IsAllCut())	//if the original vending machine is missing or has it's voice switch flipped
+	if(!originMachine || originMachine.gc_destroyed || originMachine.shut_up || originMachine.wires.is_all_cut())	//if the original vending machine is missing or has it's voice switch flipped
 		for(var/obj/machinery/vending/saved in infectedMachines)
 			saved.shoot_inventory = 0
 		if(originMachine)

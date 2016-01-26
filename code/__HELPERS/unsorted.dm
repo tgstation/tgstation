@@ -26,11 +26,6 @@
 	return text("#[][][]", textr, textg, textb)
 	return
 
-//Returns the middle-most value
-/proc/dd_range(low, high, num)
-	return max(low,min(high,num))
-
-
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end) return 0
 	var/dy
@@ -182,98 +177,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return 0
 	return 1
 
-//Ensure the frequency is within bounds of what it should be sending/recieving at
-/proc/sanitize_frequency(f)
-	f = round(f)
-	f = max(1441, f) // 144.1
-	f = min(1489, f) // 148.9
-	if ((f % 2) == 0) //Ensure the last digit is an odd number
-		f += 1
-	return f
-
-//Turns 1479 into 147.9
-/proc/format_frequency(f)
-	f = text2num(f)
-	return "[round(f / 10)].[f % 10]"
-
-
-
-//This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
-//Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
-/mob/proc/fully_replace_character_name(oldname,newname)
-	if(!newname)	return 0
-	real_name = newname
-	name = newname
-	if(mind)
-		mind.name = newname
-	if(istype(src, /mob/living/carbon))
-		var/mob/living/carbon/C = src
-		if(C.dna)
-			C.dna.real_name = real_name
-
-	if(isAI(src))
-		var/mob/living/silicon/ai/AI = src
-		if(oldname != real_name)
-			if(AI.eyeobj)
-				AI.eyeobj.name = "[newname] (AI Eye)"
-
-			// Set ai pda name
-			if(AI.aiPDA)
-				AI.aiPDA.owner = newname
-				AI.aiPDA.name = newname + " (" + AI.aiPDA.ownjob + ")"
-
-			// Notify Cyborgs
-			for(var/mob/living/silicon/robot/Slave in AI.connected_robots)
-				Slave.show_laws()
-
-	if(isrobot(src))
-		var/mob/living/silicon/robot/R = src
-		if(oldname != real_name)
-			R.notify_ai(3, oldname, newname)
-		if(R.camera)
-			R.camera.c_tag = real_name
-
-	if(oldname)
-		//update the datacore records! This is goig to be a bit costly.
-		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
-			var/datum/data/record/R = find_record("name", oldname, L)
-			if(R)	R.fields["name"] = newname
-
-		//update our pda and id if we have them on our person
-		var/list/searching = GetAllContents()
-		var/search_id = 1
-		var/search_pda = 1
-
-		for(var/A in searching)
-			if( search_id && istype(A,/obj/item/weapon/card/id) )
-				var/obj/item/weapon/card/id/ID = A
-				if(ID.registered_name == oldname)
-					ID.registered_name = newname
-					ID.update_label()
-					if(!search_pda)	break
-					search_id = 0
-
-			else if( search_pda && istype(A,/obj/item/device/pda) )
-				var/obj/item/device/pda/PDA = A
-				if(PDA.owner == oldname)
-					PDA.owner = newname
-					PDA.update_label()
-					if(!search_id)	break
-					search_pda = 0
-
-		for(var/datum/mind/T in ticker.minds)
-			for(var/datum/objective/obj in T.objectives)
-				// Only update if this player is a target
-				if(obj.target && obj.target.current && obj.target.current.real_name == name)
-					obj.update_explanation_text()
-
-	return 1
-
-
-
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
-
-/mob/proc/rename_self(role, allow_numbers=0)
+/mob/proc/rename_self(role)
 	var/oldname = real_name
 	var/newname
 	var/loop = 1
@@ -305,13 +210,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		loop--
 		safety++
 
-	if(isAI(src))
-		oldname = null//don't bother with the records update crap
 	if(newname)
 		fully_replace_character_name(oldname,newname)
-		if(isrobot(src))
-			var/mob/living/silicon/robot/A = src
-			A.custom_name = newname
 
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
@@ -620,25 +520,36 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
-	var/steps = 0
-
-	while(current != target_turf)
-		if(steps > length) return 0
-		if(current.opacity) return 0
-		for(var/atom/A in current)
-			if(A.opacity) return 0
+	var/steps = 1
+	if(current != target_turf)
 		current = get_step_towards(current, target_turf)
-		steps++
+		while(current != target_turf)
+			if(steps > length) return 0
+			if(current.opacity) return 0
+			for(var/atom/A in current)
+				if(A.opacity) return 0
+			current = get_step_towards(current, target_turf)
+			steps++
 
 	return 1
 
 /proc/is_blocked_turf(turf/T)
-	var/cant_pass = 0
-	if(T.density) cant_pass = 1
-	for(var/atom/A in T)
-		if(A.density)//&&A.anchored
-			cant_pass = 1
-	return cant_pass
+	if(T.density)
+		return 1
+	for(var/i in T)
+		var/atom/A = i
+		if(A.density)
+			return 1
+	return 0
+
+/proc/is_anchored_dense_turf(turf/T) //like the older version of the above, fails only if also anchored
+	if(T.density)
+		return 1
+	for(var/i in T)
+		var/atom/movable/A = i
+		if(A.density && A.anchored)
+			return 1
+	return 0
 
 /proc/get_step_towards2(atom/ref , atom/trg)
 	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
@@ -674,9 +585,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
 
-//Returns sortedAreas list if populated
-//else populates the list first before returning it
+//Repopulates sortedAreas list
 /proc/SortAreas()
+	sortedAreas = list()
+
 	for(var/area/A in world)
 		sortedAreas.Add(A)
 
@@ -889,7 +801,7 @@ var/global/list/common_tools = list(
 Checks if that loc and dir has a item on the wall
 */
 var/list/WALLITEMS = list(
-	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
+	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
@@ -947,20 +859,15 @@ var/list/WALLITEMS_INVERSE = list(
 
 	user << "<span class='notice'>Results of analysis of \icon[icon] [target].</span>"
 	if(total_moles>0)
-		var/o2_concentration = air_contents.oxygen/total_moles
-		var/n2_concentration = air_contents.nitrogen/total_moles
-		var/co2_concentration = air_contents.carbon_dioxide/total_moles
-		var/plasma_concentration = air_contents.toxins/total_moles
-
-		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
-
 		user << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
-		user << "<span class='notice'>Nitrogen: [round(n2_concentration*100)] %</span>"
-		user << "<span class='notice'>Oxygen: [round(o2_concentration*100)] %</span>"
-		user << "<span class='notice'>CO2: [round(co2_concentration*100)] %</span>"
-		user << "<span class='notice'>Plasma: [round(plasma_concentration*100)] %</span>"
-		if(unknown_concentration>0.01)
-			user << "<span class='danger'>Unknown: [round(unknown_concentration*100)] %</span>"
+
+		var/list/cached_gases = air_contents.gases
+
+		for(var/id in cached_gases)
+			var/gas_concentration = cached_gases[id][MOLES]/total_moles
+			if(id in hardcoded_gases || gas_concentration > 0.01) //ensures the four primary gases are always shown.
+				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100)] %</span>"
+
 		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
 	else
 		user << "<span class='notice'>[target] is empty!</span>"
@@ -1232,10 +1139,10 @@ B --><-- A
 
 	return L
 
-/atom/proc/contains(var/atom/location)
-	if(!location)
+
+/atom/proc/contains(var/atom/A)
+	if(!A)
 		return 0
-	for(location, location && location != src, location=location.loc); //semicolon is for the empty statement
+	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
 			return 1
-		return 0

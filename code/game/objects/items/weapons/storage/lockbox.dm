@@ -82,9 +82,8 @@
 
 /obj/item/weapon/storage/lockbox/loyalty/New()
 	..()
-	new /obj/item/weapon/implantcase/loyalty(src)
-	new /obj/item/weapon/implantcase/loyalty(src)
-	new /obj/item/weapon/implantcase/loyalty(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/implantcase/loyalty(src)
 	new /obj/item/weapon/implanter/loyalty(src)
 
 
@@ -114,7 +113,6 @@
 	..()
 	new /obj/item/clothing/tie/medal/silver/valor(src)
 	new /obj/item/clothing/tie/medal/bronze_heart(src)
-	new /obj/item/clothing/tie/medal/conduct(src)
-	new /obj/item/clothing/tie/medal/conduct(src)
-	new /obj/item/clothing/tie/medal/conduct(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/tie/medal/conduct(src)
 	new /obj/item/clothing/tie/medal/gold/captain(src)

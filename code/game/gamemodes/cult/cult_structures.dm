@@ -37,16 +37,17 @@
 		cult.large_shell_reference = null
 		if(cult.eldergod)
 			go_to_red = 0
-	if(go_to_red)
-		priority_announce("The extra-dimensional flow has ceased. All personnel should return to their routine activities.","Central Command Higher Dimensions Affairs")
-		if(get_security_level() == "delta")
-			set_security_level("red")
 	black_overlay = null
 	if(timer_id)
 		deltimer(timer_id)
+		if(go_to_red)
+			priority_announce("The extra-dimensional flow has ceased. All personnel should return to their routine activities.","Central Command Higher Dimensions Affairs")
+			if(get_security_level() == "delta")
+				set_security_level("red")
 	SSshuttle.emergencyNoEscape = 0
-	SSshuttle.emergency.mode = SHUTTLE_DOCKED
-	SSshuttle.emergency.timer = world.time
+	if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+		SSshuttle.emergency.mode = SHUTTLE_DOCKED
+		SSshuttle.emergency.timer = world.time
 	..()
 
 /obj/structure/constructshell/large/examine(mob/user)

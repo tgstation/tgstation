@@ -33,117 +33,101 @@ var/next_mob_id = 0
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	var/t = "<span class='notice'>Coordinates: [x],[y] \n</span>"
-	t+= "<span class='danger'>Temperature: [environment.temperature] \n</span>"
-	t+= "<span class='notice'>Nitrogen: [environment.nitrogen] \n</span>"
-	t+= "<span class='notice'>Oxygen: [environment.oxygen] \n</span>"
-	t+= "<span class='notice'>Plasma : [environment.toxins] \n</span>"
-	t+= "<span class='notice'>Carbon Dioxide: [environment.carbon_dioxide] \n</span>"
-	for(var/datum/gas/trace_gas in environment.trace_gases)
-		t+= "<span class='notice'>[trace_gas.type]: [trace_gas.moles] \n</span>"
+	var/t =	"<span class='notice'>Coordinates: [x],[y] \n</span>"
+	t +=	"<span class='danger'>Temperature: [environment.temperature] \n</span>"
+	for(var/id in environment.gases)
+		var/gas = environment.gases[id]
+		if(gas[MOLES])
+			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
 
-	usr.show_message(t, 1)
+	usr << t
 
-/mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
-	if(!client)	return
+	if(!client)
+		return
 
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
-	if (type)
-		if(type & 1 && (disabilities & BLIND || paralysis) )//Vision related
-			if (!( alt ))
+	if(type)
+		if(type & 1 && eye_blind )//Vision related
+			if(!alt_msg)
 				return
 			else
-				msg = alt
+				msg = alt_msg
 				type = alt_type
-		if (type & 2 && ear_deaf)//Hearing related
-			if (!( alt ))
+
+		if(type & 2 && ear_deaf)//Hearing related
+			if(!alt_msg)
 				return
 			else
-				msg = alt
+				msg = alt_msg
 				type = alt_type
-				if ((type & 1 && disabilities & BLIND))
+				if(type & 1 && eye_blind)
 					return
-	// Added voice muffling for Issue 41.
-	if(stat == UNCONSCIOUS || sleeping > 0)
-		src << "<I>... You can almost hear someone talking ...</I>"
+	// voice muffling
+	if(stat == UNCONSCIOUS)
+		if(type & 2) //audio
+			src << "<I>... You can almost hear something ...</I>"
 	else
 		src << msg
-	return
 
-// Show a message to all mobs who sees the src mob and the src mob itself
+// Show a message the src mob and to all player mobs who sees the src mob
 // This would be for visible actions by the src mob
 // message is the message output to anyone who can see e.g. "[src] does something!"
 // self_message (optional) is what the src mob sees e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
 /mob/visible_message(message, self_message, blind_message)
-	var/list/mob_viewers = list()
-	var/list/possible_viewers = list()
-	mob_viewers |= src
-	mob_viewers |= viewers(src)
-	var/heard = get_hear(7, src)
-	for(var/atom/movable/A in heard)
-		possible_viewers |= recursive_hear_check(A)
-	for(var/mob/B in possible_viewers)
-		if(B in mob_viewers)
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	for(var/mob/M in get_hearers_in_view(7, src))
+		if(!M.client)
 			continue
-		if(isturf(B.loc))
-			continue
-		var/turf/T = get_turf(B)
-		if(src in view(T))
-			mob_viewers |= B
-
-	for(var/mob/M in mob_viewers)
-		if(M.see_invisible < invisibility)
-			continue //can't view the invisible
 		var/msg = message
-		if(self_message && M==src)
-			msg = self_message
-		M.show_message(msg, 1)
+		if(M == src) //the src always see the main message or self message
+			if(self_message)
+				msg = self_message
+		else
+			if(M.see_invisible<invisibility || T != loc) //if src is inside something or invisible to us,
+				if(blind_message) // then people see blind message if there is one, otherwise nothing.
+					msg = blind_message
+				else
+					continue
+			else if(T.lighting_object)
+				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity)
+					if(blind_message) //if the light object is dark and not invisible to us, we see blind_message/nothing
+						msg = blind_message
+					else
+						continue
+		M.show_message(msg,1,blind_message,2)
 
-	if(blind_message)
-		var/list/mob_hearers = list()
-		for(var/mob/C in get_hearers_in_view(7, src))
-			if(C in mob_viewers)
-				continue
-			mob_hearers |= C
-		for(var/mob/MOB in mob_hearers)
-			MOB.show_message(blind_message, 2)
-
-// Show a message to all mobs who sees this atom
+// Show a message to all player mobs who sees this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
 /atom/proc/visible_message(message, blind_message)
-	var/list/mob_viewers = list()
-	var/list/possible_viewers = list()
-	mob_viewers |= viewers(src)
-	var/heard = get_hear(7, src)
-	for(var/atom/movable/A in heard)
-		possible_viewers |= recursive_hear_check(A)
-	for(var/mob/B in possible_viewers)
-		if(B in mob_viewers)
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	for(var/mob/M in get_hearers_in_view(7, src))
+		if(!M.client)
 			continue
-		if(isturf(B.loc))
-			continue
-		var/turf/T = get_turf(B)
-		if(src in view(T))
-			mob_viewers |= B
-
-	for(var/mob/M in mob_viewers)
-		M.show_message(message, 1)
-
-	if(blind_message)
-		var/list/mob_hearers = list()
-		for(var/mob/C in get_hearers_in_view(7, src))
-			if(C in mob_viewers)
+		var/msg = message
+		if(M.see_invisible<invisibility || T != loc)//if src is inside something or invisible to us,
+			if(blind_message) // then people see blind message if there is one, otherwise nothing.
+				msg = blind_message
+			else
 				continue
-			mob_hearers |= C
-		for(var/mob/MOB in mob_hearers)
-			MOB.show_message(blind_message, 2)
+		else if(T.lighting_object)
+			if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
+				if(blind_message)
+					msg = blind_message
+				else
+					continue
+		M.show_message(msg,1,blind_message,2)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -244,13 +228,6 @@ var/next_mob_id = 0
 		if(istype(I))
 			I.attack_hand(src)
 
-	return 0
-
-/mob/proc/put_in_any_hand_if_possible(obj/item/W, qdel_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	if(equip_to_slot_if_possible(W, slot_l_hand, qdel_on_fail, disable_warning, redraw_mob))
-		return 1
-	else if(equip_to_slot_if_possible(W, slot_r_hand, qdel_on_fail, disable_warning, redraw_mob))
-		return 1
 	return 0
 
 //This is a SAFE proc. Use this instead of equip_to_splot()!
@@ -976,3 +953,96 @@ var/next_mob_id = 0
 //Can the mob use Topic to interact with machines
 /mob/proc/canUseTopic()
 	return
+
+/mob/proc/faction_check(mob/target)
+	for(var/F in faction)
+		if(F in target.faction)
+			return 1
+	return 0
+
+
+//This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
+//Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
+/mob/proc/fully_replace_character_name(oldname,newname)
+	if(!newname)
+		return 0
+	real_name = newname
+	name = newname
+	if(mind)
+		mind.name = newname
+
+	if(oldname)
+		//update the datacore records! This is goig to be a bit costly.
+		replace_records_name(oldname,newname)
+
+		//update our pda and id if we have them on our person
+		replace_identification_name(oldname,newname)
+
+		for(var/datum/mind/T in ticker.minds)
+			for(var/datum/objective/obj in T.objectives)
+				// Only update if this player is a target
+				if(obj.target && obj.target.current && obj.target.current.real_name == name)
+					obj.update_explanation_text()
+	return 1
+
+/mob/living/carbon/fully_replace_character_name(oldname,newname)
+	..()
+	if(dna)
+		dna.real_name = real_name
+
+/mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
+	..()
+	if(oldname != real_name)
+		if(eyeobj)
+			eyeobj.name = "[newname] (AI Eye)"
+
+		// Notify Cyborgs
+		for(var/mob/living/silicon/robot/Slave in connected_robots)
+			Slave.show_laws()
+
+/mob/living/silicon/robot/fully_replace_character_name(oldname,newname)
+	..()
+	if(oldname != real_name)
+		notify_ai(3, oldname, newname)
+	if(camera)
+		camera.c_tag = real_name
+	custom_name = newname
+
+//Updates data_core records with new name , see mob/living/carbon/human
+/mob/proc/replace_records_name(oldname,newname)
+	return
+
+/mob/living/carbon/human/replace_records_name(oldname,newname) // Only humans have records right now, move this up if changed.
+	for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
+		var/datum/data/record/R = find_record("name", oldname, L)
+		if(R)
+			R.fields["name"] = newname
+
+/mob/proc/replace_identification_name(oldname,newname)
+	var/list/searching = GetAllContents()
+	var/search_id = 1
+	var/search_pda = 1
+
+	for(var/A in searching)
+		if( search_id && istype(A,/obj/item/weapon/card/id) )
+			var/obj/item/weapon/card/id/ID = A
+			if(ID.registered_name == oldname)
+				ID.registered_name = newname
+				ID.update_label()
+				if(!search_pda)
+					break
+				search_id = 0
+
+		else if( search_pda && istype(A,/obj/item/device/pda) )
+			var/obj/item/device/pda/PDA = A
+			if(PDA.owner == oldname)
+				PDA.owner = newname
+				PDA.update_label()
+				if(!search_id)
+					break
+				search_pda = 0
+
+/mob/living/silicon/ai/replace_identification_name(oldname,newname)
+	if(aiPDA)
+		aiPDA.owner = newname
+		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"

@@ -1,10 +1,11 @@
 /mob/living/silicon/robot
 	name = "Cyborg"
 	real_name = "Cyborg"
-	icon = 'icons/mob/robots.dmi'//
+	icon = 'icons/mob/robots.dmi'
 	icon_state = "robot"
 	maxHealth = 100
 	health = 100
+	bubble_icon = "robot"
 	var/sight_mode = 0
 	var/custom_name = ""
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
@@ -33,7 +34,6 @@
 	var/obj/machinery/camera/camera = null
 
 	var/obj/item/device/mmi/mmi = null
-	var/datum/wires/robot/wires = null
 
 	var/opened = 0
 	var/emagged = 0
@@ -75,7 +75,7 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-	wires = new(src)
+	wires = new /datum/wires/robot(src)
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
@@ -104,7 +104,7 @@
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
 		camera.network = list("SS13")
-		if(wires.IsCameraCut()) // 5 = BORG CAMERA
+		if(wires.is_cut(WIRE_CAMERA))
 			camera.status = 0
 	..()
 
@@ -448,7 +448,7 @@
 		else
 			user << "The wires seem fine, there's no need to fix them."
 
-	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
+	else if(istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
 			user << "<span class='notice'>You close the cover.</span>"
 			opened = 0
@@ -461,7 +461,7 @@
 				opened = 1
 				update_icons()
 
-	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
+	else if(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
 			user << "<span class='warning'>Close the cover first!</span>"
 		else if(cell)
@@ -475,9 +475,9 @@
 		update_icons()
 		diag_hud_set_borgcell()
 
-	else if (wires.IsInteractionTool(W))
+	else if(is_wire_tool(W))
 		if (wiresexposed)
-			wires.Interact(user)
+			wires.interact(user)
 		else
 			user << "<span class='warning'>You can't reach the wiring!</span>"
 
@@ -989,7 +989,7 @@
 
 /mob/living/silicon/robot/proc/SetLockdown(state = 1)
 	// They stay locked down if their wire is cut.
-	if(wires.LockedCut())
+	if(wires.is_cut(WIRE_LOCKDOWN))
 		state = 1
 	if(state)
 		throw_alert("locked", /obj/screen/alert/locked)
@@ -1068,9 +1068,9 @@
 		robot_suit.l_leg = null
 		robot_suit.r_leg.loc = T
 		robot_suit.r_leg = null
-		new /obj/item/stack/cable_coil(T, robot_suit.chest.wires)
+		new /obj/item/stack/cable_coil(T, robot_suit.chest.wired)
 		robot_suit.chest.loc = T
-		robot_suit.chest.wires = 0
+		robot_suit.chest.wired = 0
 		robot_suit.chest = null
 		robot_suit.l_arm.loc = T
 		robot_suit.l_arm = null
@@ -1109,6 +1109,7 @@
 	scrambledcodes = 1
 	modtype = "Synd"
 	faction = list("syndicate")
+	bubble_icon = "syndibot"
 	designation = "Syndicate Assault"
 	req_access = list(access_syndicate)
 	var/playstyle_string = "<span class='userdanger'>You are a Syndicate assault cyborg!</span><br>\
@@ -1170,3 +1171,11 @@
 			if(health < -maxHealth*0.5)
 				if(uneq_module(module_state_1))
 					src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
+
+/mob/living/silicon/robot/fully_replace_character_name(oldname,newname)
+	..()
+	if(oldname != real_name)
+		notify_ai(3, oldname, newname)
+	if(camera)
+		camera.c_tag = real_name
+	custom_name = newname

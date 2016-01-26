@@ -19,12 +19,13 @@
 	projectilesound = 'sound/weapons/Gunshot.ogg'
 	projectiletype = /obj/item/projectile/hivebotbullet
 	faction = list("hivebot")
+	check_friendly_fire = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speak_emote = list("states")
 	gold_core_spawnable = 1
 	del_on_death = 1
-	loot = (/obj/effect/decal/cleanable/robot_debris)
+	loot = list(/obj/effect/decal/cleanable/robot_debris)
 
 /mob/living/simple_animal/hostile/hivebot/New()
 	..()
