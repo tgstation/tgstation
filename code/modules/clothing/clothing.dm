@@ -210,36 +210,18 @@ BLIND     // can't see anything
 		if(!user.drop_item())
 			return
 		I.loc = src
-		user << "<span class='notice'>You discreetly slip [I] into [src]. Click and drag [src] to yourself to remove it.</span>"
+		user << "<span class='notice'>You discreetly slip [I] into [src]. Alt-click [src] to remove it.</span>"
 		held_knife = I
 
-/obj/item/clothing/shoes/MouseDrop(atom/over_object)
-	..()
-	if(!can_hold_knives)
+/obj/item/clothing/shoes/AltClick(mob/user)
+	if(user.incapacitated() || !held_knife || !can_hold_knives)
 		return
-	var/mob/M = usr
-	if(M.restrained() || M.stat || !Adjacent(M) || !held_knife)
-		return
-	if(over_object == M)
-		M.put_in_hands(held_knife)
-		usr.visible_message("<span class='warning'>[usr] draws [held_knife] from \his shoes!</span>", "<span class='notice'>You withdraw [held_knife] from [src].</span>")
-		held_knife = null
-	else if(istype(over_object, /obj/screen))
-		switch(over_object.name)
-			if("r_hand")
-				if(!remove_item_from_storage(M))
-					M.unEquip(held_knife)
-				M.put_in_r_hand(held_knife)
-				usr.visible_message("<span class='warning'>[usr] draws [held_knife] from their boots!</span>", "<span class='notice'>You withdraw [held_knife] from [src].</span>")
-				held_knife = null
-			if("l_hand")
-				if(!remove_item_from_storage(M))
-					M.unEquip(held_knife)
-				M.put_in_l_hand(held_knife)
-				usr.visible_message("<span class='warning'>[usr] draws [held_knife] from their boots!</span>", "<span class='notice'>You withdraw [held_knife] from [src].</span>")
-				held_knife = null
-	add_fingerprint(M)
-
+	if(!user.put_in_hands(held_knife))
+		user << "<span class='notice'>You fumble for [held_knife] and it falls on the floor.</span>"
+		return 1
+	user.visible_message("<span class='warning'>[user] draws [held_knife] from their shoes!</span>", "<span class='notice'>You withdraw [held_knife] from [src].</span>")
+	held_knife = null
+	add_fingerprint(user)
 
 /obj/item/proc/negates_gravity()
 	return 0
