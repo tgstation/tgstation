@@ -1063,10 +1063,11 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse. Rumored to contain a valuable assortion of items, \
 			but you never know. Contents are sorted to always be worth 50 TC."
+	item = /obj/structure/closet/crate
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
-/datum/uplink_item/badass/surplus_crate/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)
 	var/list/uplink_items = get_uplink_items()
 
 	var/crate_value = 50
