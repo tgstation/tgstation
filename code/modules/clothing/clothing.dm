@@ -210,8 +210,8 @@ BLIND     // can't see anything
 		if(!user.drop_item())
 			return
 		I.loc = src
-		user << "<span class='notice'>You discreetly slip [I] into [src]. Alt-click [src] to remove it.</span>"
 		held_knife = I
+		user << "<span class='notice'>You discreetly slip [I] into [src]. Alt-click [src] to remove it.</span>"
 
 /obj/item/clothing/shoes/AltClick(mob/user)
 	if(user.incapacitated() || !held_knife || !can_hold_knives)
@@ -219,9 +219,8 @@ BLIND     // can't see anything
 	if(!user.put_in_hands(held_knife))
 		user << "<span class='notice'>You fumble for [held_knife] and it falls on the floor.</span>"
 		return 1
-	user.visible_message("<span class='warning'>[user] draws [held_knife] from their shoes!</span>", "<span class='notice'>You withdraw [held_knife] from [src].</span>")
+	user.visible_message("<span class='warning'>[user] draws [held_knife] from their shoes!</span>", "<span class='notice'>You draw [held_knife] from [src].</span>")
 	held_knife = null
-	add_fingerprint(user)
 
 /obj/item/proc/negates_gravity()
 	return 0
