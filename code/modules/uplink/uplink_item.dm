@@ -72,7 +72,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	else
 		U.purchase_log += "<big>\icon[A]</big>"
 
-	if(ishuman(user))
+	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
 		H.put_in_hands(A)
 
@@ -1109,5 +1109,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	if(possible_items.len)
 		var/datum/uplink_item/I = pick(possible_items)
 		U.telecrystals -= I.cost
+		U.spent_telecrystals += I.cost
 		feedback_add_details("traitor_uplink_items_bought","RN")
 		return new I.item(loc)
