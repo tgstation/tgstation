@@ -117,15 +117,17 @@ Passive gate is similar to the regular pump except:
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "max")
-				target_pressure = MAX_OUTPUT_PRESSURE
+				pressure = MAX_OUTPUT_PRESSURE
 				. = TRUE
 			else if(pressure == "input")
 				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, target_pressure) as num|null
-				. = .(action, list("pressure" = pressure))
+				if(pressure && !..())
+					. = TRUE
 			else if(text2num(pressure) != null)
-				target_pressure = Clamp(text2num(pressure), 0, MAX_OUTPUT_PRESSURE)
+				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
+				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 	update_icon()
 

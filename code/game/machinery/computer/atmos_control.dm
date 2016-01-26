@@ -216,14 +216,11 @@
 			signal.data += list("tag" = output_tag, "power_toggle" = TRUE)
 			. = TRUE
 		if("pressure")
-			var/pressure = text2num(params["pressure"])
-			if(pressure != null)
-				pressure = Clamp(pressure, 0, 50 * ONE_ATMOSPHERE)
-				signal.data += list("tag" = output_tag, "set_internal_pressure" = pressure)
+			var/target = input("New target pressure:", name, output_info["internal"]) as num|null
+			if(target && !..())
+				target =  Clamp(target, 0, 50 * ONE_ATMOSPHERE)
+				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
-			else
-				pressure = input("New output pressure:", name, input_info["internal"]) as num|null
-				. = .(action, params + list("pressure" = pressure))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_control/tank/receive_signal(datum/signal/signal)
