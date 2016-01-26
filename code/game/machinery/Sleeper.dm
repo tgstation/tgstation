@@ -695,6 +695,8 @@
 
 
 /obj/machinery/sleep_console/mancrowave_console/Topic(href, href_list)
+	if(usr.stat)
+		return
 	usr.set_machine(src)
 	if (href_list["cook"])
 		if (src.connected)
