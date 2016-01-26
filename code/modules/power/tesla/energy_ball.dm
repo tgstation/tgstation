@@ -46,12 +46,12 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 15)
 		pixel_x = 0
 		pixel_y = 0
-		tesla_zap(src, 7, TESLA_DEFAULT_POWER)
+		dir = tesla_zap(src, 7, TESLA_DEFAULT_POWER)
 		pixel_x = -32
 		pixel_y = -32
 	else
-		tesla_zap(src, rand(1,Clamp(orbiting_balls.len,3,7)), TESLA_MINI_POWER)
 		energy = 0 // ensure we dont have miniballs of miniballs
+		tesla_zap(ball, rand(1,Clamp(orbiting_balls.len,3,7)), TESLA_MINI_POWER)
 	return
 
 /obj/singularity/energy_ball/examine(mob/user)
@@ -61,11 +61,13 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
-	for(var/i = 0, i < move_amount, i++)
-		var/move_dir = pick(alldirs)
+	//we face the last thing we zapped, so this lets us favor that direction a bit
+	var/first_move = dir
+	for(var/i in 0 to move_amount)
+		var/move_dir = pick(alldirs+first_move) //give the first move direction a bit of favoring.
 		var/turf/T = get_step(src,move_dir)
 		if(can_move(T))
-			loc = get_step(src,move_dir)
+			loc = T
 
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= energy_to_raise)
@@ -124,6 +126,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	return closest_atom
 
 /proc/tesla_zap(var/atom/source, zap_range = 3, power)
+	. = source.dir
 	if(power < 1000)
 		return
 	var/list/tesla_coils = list()
@@ -135,51 +138,40 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	for(var/atom/A in oview(source, zap_range))
 		if(istype(A, /obj/machinery/power/tesla_coil))
 			var/obj/machinery/power/tesla_coil/C = A
-			if(C.being_shocked)
-				continue
-			tesla_coils.Add(C)
-			continue
-		if(istype(A, /obj/machinery/power/grounding_rod))
+			if(!C.being_shocked)
+				tesla_coils.Add(C)
+
+		else if(istype(A, /obj/machinery/power/grounding_rod))
 			var/obj/machinery/power/grounding_rod/R = A
 			grounding_rods.Add(R)
-			continue
-		if(istype(A, /obj/machinery))
+			
+		else if(istype(A, /obj/machinery))
 			var/obj/machinery/M = A
-			if(is_type_in_list(M, blacklisted_tesla_types))
-				continue
-			if(M.being_shocked)
-				continue
-			potential_machine_zaps.Add(M)
-			continue
-		if(istype(A, /obj/structure))
+			if(!is_type_in_list(M, blacklisted_tesla_types) && !M.being_shocked)
+				potential_machine_zaps.Add(M)
+		else if(istype(A, /obj/structure))
 			var/obj/structure/M = A
-			if(is_type_in_list(M, blacklisted_tesla_types))
-				continue
-			if(M.being_shocked)
-				continue
-			potential_structure_zaps.Add(M)
-			continue
-		if(istype(A, /mob/living))
+			if(!is_type_in_list(M, blacklisted_tesla_types) && !M.being_shocked)
+				potential_structure_zaps.Add(M)
+			
+		else if(istype(A, /mob/living))
 			var/mob/living/L = A
-			if(L.stat == DEAD)
-				continue
-			if(is_type_in_list(L, blacklisted_tesla_types))
-				continue
-			potential_mob_zaps.Add(L)
-			continue
+			if(L.stat != DEAD && is_type_in_list(L, blacklisted_tesla_types))
+				potential_mob_zaps.Add(L)
+
 	closest_atom = get_closest_atom(/obj/machinery/power/tesla_coil, tesla_coils, source)
 	if(closest_atom && istype(closest_atom, /obj/machinery/power/tesla_coil))
 		var/obj/machinery/power/tesla_coil/C = closest_atom
 		source.Beam(C,icon_state="lightning[rand(1,12)]",icon='icons/effects/effects.dmi',time=5)
 		C.tesla_act(power)
-		return
+
 	if(!closest_atom)
 		closest_atom = get_closest_atom(/obj/machinery/power/grounding_rod, grounding_rods, source)
 		if(closest_atom && istype(closest_atom, /obj/machinery/power/grounding_rod))
 			var/obj/machinery/power/grounding_rod/R = closest_atom
 			source.Beam(R,icon_state="lightning[rand(1,12)]",icon='icons/effects/effects.dmi',time=5)
 			R.tesla_act(power)
-			return
+			
 	if(!closest_atom)
 		closest_atom = get_closest_atom(/mob/living, potential_mob_zaps, source)
 		if(closest_atom && istype(closest_atom, /mob/living))
@@ -193,7 +185,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 				tesla_zap(S, 7, power / 1.5) // metallic folks bounce it further
 			else
 				tesla_zap(L, 5, power / 1.5)
-			return
+			
 	if(!closest_atom)
 		closest_atom = get_closest_atom(/obj/machinery, potential_machine_zaps, source)
 		if(closest_atom)
@@ -210,11 +202,15 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 						M.ex_act(2)
 					else
 						M.ex_act(1)
-			return
+			
 	if(!closest_atom)
 		closest_atom = get_closest_atom(/obj/structure, potential_structure_zaps, source)
 		if(closest_atom)
 			var/obj/structure/S = closest_atom
 			source.Beam(S,icon_state="lightning[rand(1,12)]",icon='icons/effects/effects.dmi',time=5)
 			S.tesla_act(power)
-			return
+			
+	if(closest_atom)
+		var/zapdir = get_dir(source,closest_atom)
+		if (zapdir)
+			. = zapdir
