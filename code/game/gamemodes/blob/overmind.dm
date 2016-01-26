@@ -157,8 +157,8 @@
 
 /obj/screen/blob/Blobbernaut
 	icon_state = "ui_blobbernaut"
-	name = "Produce Blobbernaut (20)"
-	desc = "Produces a blobbernaut for 20 points."
+	name = "Produce Blobbernaut (30)"
+	desc = "Produces a blobbernaut for 30 points."
 
 /obj/screen/blob/Blobbernaut/Click()
 	if(isovermind(usr))

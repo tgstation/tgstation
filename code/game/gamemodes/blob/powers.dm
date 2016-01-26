@@ -76,20 +76,20 @@
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
-	set name = "Create Blobbernaut (20)"
+	set name = "Create Blobbernaut (30)"
 	set desc = "Create a powerful blobbernaut which is mildly smart and will attack enemies."
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/factory/B = locate(/obj/effect/blob/factory) in T
 	if(!B)
 		src << "<span class='warning'>You must be on a factory blob!</span>"
 		return
-	if(B.health < B.maxhealth*0.6) //if it's at less than 60% of its health, you can't blobbernaut it
+	if(B.health < B.maxhealth*0.8) //if it's at less than 60% of its health, you can't blobbernaut it
 		src << "<span class='warning'>This factory blob is too damaged to produce a blobbernaut.</span>"
 		return
 	if(!can_buy(20))
 		return
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
-	B.take_damage(B.maxhealth*0.6, CLONE, null, 0) //take a bunch of damage, so you can't produce tons of blobbernauts from a single factory
+	B.take_damage(B.maxhealth*0.8, CLONE, null, 0) //take a bunch of damage, so you can't produce tons of blobbernauts from a single factory
 	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 	B.spore_delay = world.time + 600 //one minute before it can spawn spores again
 	blobber.overmind = src
