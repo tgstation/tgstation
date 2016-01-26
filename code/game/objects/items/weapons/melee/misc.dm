@@ -214,6 +214,18 @@
 	shard.Consume()
 	T.ChangeTurf(T.baseturf)
 	T.CalculateAdjacentTurfs()
+	
+/obj/item/weapon/melee/knife/hidden_blade
+	name = "hidden blade"
+	desc = "A small yet sharp weapon, can be concealed when retracted."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "telebaton_0"
+	item_state = null
+	slot_flags = SLOT_GLOVES
+	w_class = 2
+	needs_permit = 1
+	force = 1
+	on = 0
 
 /obj/item/weapon/melee/supermatter_sword/add_blood()
 	return
