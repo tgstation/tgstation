@@ -42,7 +42,7 @@
 /obj/effect/overlay/temp/blob
 	name = "blob"
 	icon_state = "blob_attack"
-	alpha = 125
+	alpha = 120
 	randomdir = 0
 	duration = 5
 
