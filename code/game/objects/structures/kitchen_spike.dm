@@ -48,34 +48,6 @@
 				qdel(src)
 		else
 			user << "<span class='notice'>You can't do that while something's on the spike!</span>"
-		return
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		if(istype(G.affecting, /mob/living/))
-			if(!buckled_mob)
-				if(do_mob(user, src, 120))
-					if(buckled_mob) //to prevent spam/queing up attacks
-						return
-					if(G.affecting.buckled)
-						return
-					var/mob/living/H = G.affecting
-					playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
-					H.visible_message("<span class='danger'>[user] slams [G.affecting] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
-					H.loc = src.loc
-					H.emote("scream")
-					if(istype(H, /mob/living/carbon/human)) //So you don't get human blood when you spike a giant spidere
-						var/turf/pos = get_turf(H)
-						pos.add_blood_floor(H)
-					H.adjustBruteLoss(30)
-					H.buckled = src
-					H.dir = 2
-					buckled_mob = H
-					var/matrix/m180 = matrix(H.transform)
-					m180.Turn(180)
-					animate(H, transform = m180, time = 3)
-					H.pixel_y = H.get_standard_pixel_y_offset(180)
-					qdel(G)
-					return
 		user << "<span class='danger'>You can't use that on the spike!</span>"
 		return
 	..()
@@ -119,3 +91,33 @@
 		unbuckle_mob()
 		M.emote("scream")
 		M.AdjustWeakened(10)
+
+
+/obj/structure/kitchenspike/MouseDrop(mob/living/target)
+	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE))
+		return
+	if(!istype(target))
+		return
+	if(!buckled_mob)
+		if(do_mob(usr, src, 120))
+			if(buckled_mob) //to prevent spam/queing up attacks
+				return
+			if(target.buckled)
+				return
+			var/mob/living/H = target
+			playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
+			H.visible_message("<span class='danger'>[usr] slams [target] onto the meat spike!</span>", "<span class='userdanger'>[usr] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
+			H.loc = src.loc
+			H.emote("scream")
+			if(istype(H, /mob/living/carbon/human)) //So you don't get human blood when you spike a giant spidere
+				var/turf/pos = get_turf(H)
+				pos.add_blood_floor(H)
+			H.adjustBruteLoss(30)
+			H.buckled = src
+			H.dir = 2
+			buckled_mob = H
+			var/matrix/m180 = matrix(H.transform)
+			m180.Turn(180)
+			animate(H, transform = m180, time = 3)
+			H.pixel_y = H.get_standard_pixel_y_offset(180)
+			return
