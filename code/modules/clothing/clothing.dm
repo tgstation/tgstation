@@ -219,6 +219,7 @@ BLIND     // can't see anything
 	if(!user.put_in_hands(held_knife))
 		user << "<span class='notice'>You fumble for [held_knife] and it falls on the floor.</span>"
 		return 1
+		held_knife = null
 	user.visible_message("<span class='warning'>[user] draws [held_knife] from their shoes!</span>", "<span class='notice'>You draw [held_knife] from [src].</span>")
 	held_knife = null
 
