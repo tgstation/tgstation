@@ -1402,14 +1402,8 @@
 "AY" = (/obj/machinery/firealarm{dir = 4; pixel_x = 24},/turf/simulated/floor/plasteel,/area/engine/engineering)
 "AZ" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plasteel,/area/engine/engineering)
 "Ba" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/camera/autoname,/turf/simulated/floor/plasteel,/area/engine/engineering)
-<<<<<<< HEAD
 "Bb" = (/obj/machinery/meter,/obj/machinery/atmospherics/pipe/simple/cyan/visible{icon_state = "intact"; dir = 1},/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 4},/area/engine/engineering)
-"Bc" = (/obj/machinery/atmospherics/components/unary/vent_scrubber{frequency = 1441; on = 1},/turf/simulated/floor/plasteel,/area/engine/engineering)
 "Bd" = (/obj/machinery/airalarm{dir = 1; frequency = 1441; icon_state = "alarm0"; pixel_y = -22},/turf/simulated/floor/plasteel,/area/engine/engineering)
-=======
-"Bb" = (/obj/machinery/meter,/obj/machinery/atmospherics/pipe/simple/cyan/visible{icon_state = "intact"; dir = 1},/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 4},/area/engine/engineering)
-"Bd" = (/obj/machinery/alarm{dir = 1; frequency = 1441; icon_state = "alarm0"; pixel_y = -22},/turf/simulated/floor/plasteel,/area/engine/engineering)
->>>>>>> 87adbfb... Removed festivus pole and wiz santa's suit
 "Be" = (/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 9},/area/engine/engineering)
 "Bf" = (/obj/machinery/meter,/obj/machinery/atmospherics/pipe/simple/yellow/visible{icon_state = "intact"; dir = 1},/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 8},/area/engine/engineering)
 "Bg" = (/obj/item/device/radio/intercom{broadcasting = 0; freerange = 0; listening = 1; name = "Common Channel"; pixel_y = 25},/obj/machinery/atmospherics/components/unary/portables_connector/visible,/turf/simulated/floor/plating,/area/engine/engineering)
