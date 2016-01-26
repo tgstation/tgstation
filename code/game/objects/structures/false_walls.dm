@@ -46,6 +46,8 @@
 		if(!qdeleted(src))
 			SetOpacity(1)
 			update_icon()
+			if(walltype == "silencium")
+				SetOpacity(0)
 	opening = 0
 
 /obj/structure/falsewall/proc/do_the_flick()
@@ -243,6 +245,16 @@
 	mineral = "bananium"
 	walltype = "bananium"
 	canSmoothWith = list(/obj/structure/falsewall/clown, /turf/simulated/wall/mineral/clown)
+	
+/obj/structure/falsewall/mime
+	name = "silencium wall"
+	desc = "A wall with silencium plating. Honk!"
+	color = "#87878715"
+	opacity = 0
+	icon = 'icons/turf/walls/wall.dmi'
+	mineral = "silencium"
+	walltype = "silencium"
+	canSmoothWith = list(/obj/structure/falsewall/mime, /turf/simulated/wall/mineral/mime)
 
 
 /obj/structure/falsewall/sandstone

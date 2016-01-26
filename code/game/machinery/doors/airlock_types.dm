@@ -185,6 +185,17 @@
 	var/mineral = "bananium"
 	doorsound = 'sound/items/bikehorn.ogg'
 	doortype = /obj/structure/door_assembly/door_assembly_clown
+	
+/obj/machinery/door/airlock/mime
+	name = "silencium airlock"
+	desc = "The exact opposite of a squeaky door."
+	icon = 'icons/obj/doors/airlocks/station/public.dmi'
+	color = "#87878715"
+	opacity = 0
+	var/mineral = "silencium"
+	airlock_material = "glass"
+	doorsound = null
+	doortype = /obj/structure/door_assembly/door_assembly_mime
 
 /obj/machinery/door/airlock/sandstone
 	name = "sandstone airlock"

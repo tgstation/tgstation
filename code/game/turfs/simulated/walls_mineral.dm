@@ -56,6 +56,18 @@
 	mineral = "bananium"
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	canSmoothWith = list(/turf/simulated/wall/mineral/clown, /obj/structure/falsewall/clown)
+	
+/turf/simulated/wall/mineral/mime
+	name = "silencium wall"
+	desc = "A wall with silencium plating. Almost completely invisible!"
+	icon = 'icons/turf/walls/wall.dmi'
+	icon_state = "wall"
+	color = "#87878715"
+	opacity = 0
+	walltype = "silencium"
+	mineral = "silencium"
+	sheet_type = /obj/item/stack/sheet/mineral/silencium
+	canSmoothWith = list(/turf/simulated/wall/mineral/mime, /obj/structure/falsewall/mime)
 
 /turf/simulated/wall/mineral/sandstone
 	name = "sandstone wall"

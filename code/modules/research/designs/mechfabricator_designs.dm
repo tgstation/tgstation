@@ -411,6 +411,70 @@
 	construction_time = 200
 	category = list("H.O.N.K")
 
+//Reticence
+/datum/design/reticence_chassis
+	name = "Exosuit Chassis (\"Reticence\")"
+	id = "reticence_chassis"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/reticence
+	materials = list(MAT_METAL=20000)
+	construction_time = 100
+	category = list("Reticience")
+
+/datum/design/reticence_torso
+	name = "Exosuit Torso (\"Reticence\")"
+	id = "reticence_torso"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/reticence_torso
+	materials = list(MAT_METAL=20000,MAT_GLASS=10000,MAT_SILENCIUM=10000)
+	construction_time = 300
+	category = list("Reticence")
+
+/datum/design/reticence_head
+	name = "Exosuit Head (\"Reticence\")"
+	id = "reticence_head"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/reticence_head
+	materials = list(MAT_METAL=10000,MAT_GLASS=5000,MAT_SILENCIUM=5000)
+	construction_time = 200
+	category = list("Reticence")
+
+/datum/design/reticence_left_arm
+	name = "Exosuit Left Arm (\"Reticence\")"
+	id = "reticence_left_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/reticence_left_arm
+	materials = list(MAT_METAL=15000,MAT_SILENCIUM=5000)
+	construction_time = 200
+	category = list("Reticence")
+
+/datum/design/reticence_right_arm
+	name = "Exosuit Right Arm (\"Reticence\")"
+	id = "reticence_right_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/reticence_right_arm
+	materials = list(MAT_METAL=15000,MAT_SILENCIUM=5000)
+	construction_time = 200
+	category = list("Reticence")
+
+/datum/design/reticence_left_leg
+	name = "Exosuit Left Leg (\"Reticence\")"
+	id = "reticence_left_leg"
+	build_type = MECHFAB
+	build_path =/obj/item/mecha_parts/part/reticence_left_leg
+	materials = list(MAT_METAL=20000,MAT_SILENCIUM=5000)
+	construction_time = 200
+	category = list("Reticence")
+
+/datum/design/reticence_right_leg
+	name = "Exosuit Right Leg (\"Reticence\")"
+	id = "reticence_right_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/reticence_right_leg
+	materials = list(MAT_METAL=20000,MAT_SILENCIUM=5000)
+	construction_time = 200
+	category = list("Reticence")
+
 
 //Phazon
 /datum/design/phazon_chassis
@@ -564,6 +628,15 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/honker
 	materials = list(MAT_METAL=20000,MAT_BANANIUM=10000)
+	construction_time = 500
+	category = list("Exosuit Equipment")
+	
+/datum/design/mech_silentgun
+	name = "S.H.H. \"Quietus\" Carbine"
+	id = "mech_silentgun"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
+	materials = list(MAT_METAL=20000,MAT_SILENCIUM=10000)
 	construction_time = 500
 	category = list("Exosuit Equipment")
 

@@ -88,6 +88,8 @@ proc/CallMaterialName(ID)
 				return_name = "Diamond"
 			if("clown")
 				return_name = "Bananium"
+			if("mime")
+				return_name = "Silencium"
 	else
 		for(var/R in subtypesof(/datum/reagent))
 			temp_reagent = null
@@ -504,6 +506,8 @@ proc/CallMaterialName(ID)
 				MAT = MAT_DIAMOND
 			if("clown")
 				MAT = MAT_BANANIUM
+			if("mime")
+				MAT = MAT_SILENCIUM
 		linked_lathe.materials.retrieve_sheets(desired_num_sheets, MAT)
 
 	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
@@ -943,6 +947,13 @@ proc/CallMaterialName(ID)
 			if(bananium_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=clown;lathe_ejectsheet_amt=1'>Eject</A> "
 			if(bananium_amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];lathe_ejectsheet=clown;lathe_ejectsheet_amt=5'>5x</A> "
 			if(bananium_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=clown;lathe_ejectsheet_amt=50'>All</A>"
+			dat += "</div>"
+			//Silencium
+			var/silencium_amount = linked_lathe.materials.amount(MAT_SILENCIUM)
+			dat += "* [silencium_amount] of Silencium: "
+			if(silencium_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=mime;lathe_ejectsheet_amt=1'>Eject</A> "
+			if(silencium_amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];lathe_ejectsheet=mime;lathe_ejectsheet_amt=5'>5x</A> "
+			if(silencium_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=mime;lathe_ejectsheet_amt=50'>All</A>"
 			dat += "</div>"
 
 		if(3.3)

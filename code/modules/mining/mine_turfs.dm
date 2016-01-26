@@ -130,6 +130,8 @@ var/global/list/rockTurfEdgeCache
 					M = new/turf/simulated/mineral/gibtonite(src)
 				if("Bananium")
 					M = new/turf/simulated/mineral/clown(src)
+				if("Silencium")
+					M = new/turf/simulated/mineral/mime(src)
 				if("BScrystal")
 					M = new/turf/simulated/mineral/bscrystal(src)
 				/*if("Adamantine")
@@ -220,6 +222,15 @@ var/global/list/rockTurfEdgeCache
 	name = "bananium deposit"
 	icon_state = "rock_Clown"
 	mineralType = /obj/item/weapon/ore/bananium
+	mineralAmt = 3
+	spreadChance = 0
+	spread = 0
+	hidden = 0
+
+/turf/simulated/mineral/mime
+	name = "silencium deposit"
+	icon_state = "rock"
+	mineralType = /obj/item/weapon/ore/silencium
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0

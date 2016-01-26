@@ -217,6 +217,53 @@
 	icon_state = "honker_r_leg"
 
 
+////////// Reticence
+
+/obj/item/mecha_parts/chassis/reticence
+	name = "\improper Reticence chassis"
+
+/obj/item/mecha_parts/chassis/reticence/New()
+	..()
+	construct = new /datum/construction/mecha/reticence_chassis(src)
+
+/obj/item/mecha_parts/part/reticence_torso
+	name = "\improper Reticence torso"
+	desc = "A torso part of Reticence. Contains a invisibility generator, silencium core and mute support systems."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "empty"
+
+/obj/item/mecha_parts/part/reticence_head
+	name = "\improper Reticence head"
+	desc = "A Reticence head. Appears to lack a face plate."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "empty"
+
+/obj/item/mecha_parts/part/reticence_left_arm
+	name = "\improper Reticence left arm"
+	desc = "A Reticence right arm. With unique sockets capable of holding the most silent weapons created by mime scientists."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "empty"
+
+/obj/item/mecha_parts/part/reticence_right_arm
+	name = "\improper Reticence right arm"
+	desc = "A Reticence right arm. With unique sockets capable of holding the most silent weapons created by mime scientists."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "empty"
+
+/obj/item/mecha_parts/part/reticence_left_leg
+	name = "\improper Reticence left leg"
+	desc = "A Reticence left leg."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "empty"
+	
+/obj/item/mecha_parts/part/reticence_right_leg
+	name = "\improper Reticence right leg"
+	desc = "A Reticence right leg."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "empty"
+
+
+
 ////////// Phazon
 
 /obj/item/mecha_parts/chassis/phazon
@@ -385,7 +432,22 @@
 	icon_state = "mcontroller"
 
 /obj/item/weapon/circuitboard/mecha/honker/main
-	name = "circuit board (H.O.N.K Central Control module)"
+	name = "circuit board (H.O.N.K\ Central Control module)"
+	icon_state = "mainboard"
+	
+/obj/item/weapon/circuitboard/mecha/reticence
+	origin_tech = "programming=4"
+
+/obj/item/weapon/circuitboard/mecha/reticence/peripherals
+	name = "circuit board (Reticience Peripherals Control module)"
+	icon_state = "mcontroller"
+
+/obj/item/weapon/circuitboard/mecha/reticence/targeting
+	name = "circuit board (Reticience Weapon Control and Targeting module)"
+	icon_state = "mcontroller"
+
+/obj/item/weapon/circuitboard/mecha/reticence/main
+	name = "circuit board (Reticience Central Control module)"
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/odysseus

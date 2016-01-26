@@ -17,6 +17,7 @@
 								MAT_METAL=0,
 								MAT_GLASS=0,
 								MAT_BANANIUM=0,
+								MAT_SILENCIUM=0,
 								MAT_DIAMOND=0,
 								MAT_GOLD=0,
 								MAT_PLASMA=0,
@@ -467,6 +468,8 @@
 			type = /obj/item/stack/sheet/mineral/uranium
 		if(MAT_BANANIUM)
 			type = /obj/item/stack/sheet/mineral/bananium
+		if(MAT_SILENCIUM)
+			type = /obj/item/stack/sheet/mineral/silencium
 		else
 			return 0
 	var/result = 0
@@ -520,6 +523,8 @@
 				material = MAT_GLASS
 			if(/obj/item/stack/sheet/mineral/bananium)
 				material = MAT_BANANIUM
+			if(/obj/item/stack/sheet/mineral/silencium)
+				material = MAT_SILENCIUM
 			if(/obj/item/stack/sheet/mineral/uranium)
 				material = MAT_URANIUM
 			else
