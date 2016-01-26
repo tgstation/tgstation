@@ -69,6 +69,7 @@
 		mode++
 		user << "You set [src] into a [modes[mode]] mode."
 		listening = 0
+		recorded = ""
 
 /obj/item/device/assembly/voice/activate()
 	if(secured)

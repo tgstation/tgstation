@@ -1146,3 +1146,27 @@ B --><-- A
 	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
 			return 1
+
+proc/add_to_proximity_list(atom/A, range)
+	var/list/L = block(locate(A.x - range, A.y - range, A.z), locate(A.x + range, A.y + range, A.z))
+	for(var/B in L)
+		var/turf/C = B
+		B.proximity_checkers |= A
+
+proc/remove_from_proximity_list(atom/A, range)
+	var/list/L = block(locate(A.x - range, A.y - range, A.z), locate(A.x + range, A.y + range, A.z))
+	for(var/B in L)
+		var/turf/C = B
+		B.proximity_checkers.Remove(A)
+
+proc/shift_proximity(atom/A, range, atom/B, newrange)
+	var/list/L = block(locate(A.x - range, A.y - range, A.z), locate(A.x + range, A.y + range, A.z))
+	var/list/M = block(locate(B.x - newrange, B.y - newrange, B.z), locate(B.x + newrange, B.y + newrange, B.z))
+	var/list/N = L - M
+	var/list/O = M - L
+	for(var/C in N)
+		var/turf/D = C
+		D.proximity_checkers.Remove(A)
+	for(var/E in O)
+		var/turf/F = E
+		F.proximity_checkers |= A
