@@ -174,7 +174,7 @@ var/intercom_range_display_status = 0
 		if(isturf(thing))
 			continue
 		count++;
-	usr << "There are [count]/[MAX_FLAG] instances of non-turfs in the world."
+	usr << "There are [count]/65535 instances of non-turfs in the world."
 
 
 /client/proc/count_objects_on_z_level()

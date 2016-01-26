@@ -1,5 +1,3 @@
-#define MAX_FLAG 65535
-
 var/list/wire_colors = list( // http://www.crockford.com/wrrrld/color.html
 	"aliceblue",
 	"antiquewhite",
