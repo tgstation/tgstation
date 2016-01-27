@@ -211,6 +211,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/bolt_action
+	name = "Surplus Rifle"
+	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
+	item = /obj/item/weapon/gun/projectile/shotgun/boltaction
+	cost = 2
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
 	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag \
@@ -366,6 +373,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
+
+/datum/uplink_item/ammo/bolt_action
+	name = "Surplus Rifle Clip"
+	desc = "A stripper clip used to quickly load bolt action rifles. Contains 5 rounds."
+	item = 	/obj/item/ammo_box/a762
+	cost = 1
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/revolver
 	name = ".357 Speed Loader"

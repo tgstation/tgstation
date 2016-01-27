@@ -336,8 +336,8 @@
 
 /obj/item/weapon/storage/box/cyber_implants/New()
 	..()
-	var/i
 	var/implant
-	for(i = 0, i < amount, i++)
+	while(contents.len <= amount)
 		implant = pick(boxed)
 		new implant(src)
+	new /obj/item/device/autoimplanter(src)

@@ -1,6 +1,6 @@
 /datum/game_mode
 	var/list/datum/mind/syndicates = list()
-
+	var/nukeops_lastname = ""
 
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
@@ -15,6 +15,7 @@
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
 	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
+
 
 /datum/game_mode/nuclear/announce()
 	world << "<B>The current game mode is - Nuclear Emergency!</B>"
@@ -109,7 +110,8 @@
 /datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
 	spawn(1)
-		NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
+		nukeops_lastname = nukelastname(synd_mind.current)
+		NukeNameAssign(nukeops_lastname,syndicates) //allows time for the rest of the syndies to be chosen
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 	synd_mind.current << "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>"
 	synd_mind.current << "<B>If you feel you are not up to this task, give your ID to another operative.</B>"

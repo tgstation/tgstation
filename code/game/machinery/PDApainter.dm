@@ -41,6 +41,10 @@
 
 
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/user, params)
+	if(default_unfasten_wrench(user, O))
+		power_change()
+		return
+
 	if(istype(O, /obj/item/device/pda))
 		if(storedpda)
 			user << "<span class='warning'>There is already a PDA inside!</span>"
