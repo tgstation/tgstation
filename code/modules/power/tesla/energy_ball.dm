@@ -28,30 +28,44 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	grav_pull = 0
 	contained = 0
 	density = 1
+	
 	var/list/orbiting_balls = list()
 	var/produced_power
-	var/is_orbiting
 	var/energy_to_raise = 100
 	var/energy_to_lower = -10
 
 /obj/singularity/energy_ball/Destroy()
-	for(var/obj/singularity/energy_ball/EB in orbiting_balls)
+	if (orbiting && istype(orbiting, /obj/singularity/energy_ball))
+		var/obj/singularity/energy_ball/EB = orbiting
+		EB.orbiting_balls -= src
+		orbiting = null
+	
+	for(var/ball in orbiting_balls)
+		var/obj/singularity/energy_ball/EB = ball
 		qdel(EB)
+	
 	return ..()
 
 /obj/singularity/energy_ball/process()
-	if(!is_orbiting)
+	if(orbiting)
 		handle_energy()
+		
 		move_the_basket_ball(2 + orbiting_balls.len * 2)
+		
 		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 15)
+		
 		pixel_x = 0
 		pixel_y = 0
+		
 		dir = tesla_zap(src, 7, TESLA_DEFAULT_POWER)
+		
 		pixel_x = -32
 		pixel_y = -32
+		for (var/ball in orbiting_balls)
+			tesla_zap(ball, rand(1, Clamp(orbiting_balls.len, 3, 7)), TESLA_MINI_POWER)
 	else
 		energy = 0 // ensure we dont have miniballs of miniballs
-		tesla_zap(ball, rand(1,Clamp(orbiting_balls.len,3,7)), TESLA_MINI_POWER)
+	
 	return
 
 /obj/singularity/energy_ball/examine(mob/user)
@@ -64,8 +78,8 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	//we face the last thing we zapped, so this lets us favor that direction a bit
 	var/first_move = dir
 	for(var/i in 0 to move_amount)
-		var/move_dir = pick(alldirs+first_move) //give the first move direction a bit of favoring.
-		var/turf/T = get_step(src,move_dir)
+		var/move_dir = pick(alldirs + first_move) //give the first move direction a bit of favoring.
+		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
 			loc = T
 
@@ -77,25 +91,24 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 15)
 		spawn(100)
 			var/obj/singularity/energy_ball/EB = new(loc)
-			orbiting_balls.Add(EB)
-			poi_list.Remove(EB)
-			EB.transform *= pick(0.3,0.4,0.5,0.6,0.7)
-			EB.is_orbiting = 1
+			
+			EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
 			var/icon/I = icon(icon,icon_state,dir)
-
-			var/orbitsize = (I.Width()+I.Height())*pick(0.5,0.6,0.7)
-			orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
-			EB.orbit(src,orbitsize, pick(FALSE,TRUE), rand(10,25), pick(3,4,5,6,36))
-	else if (energy < energy_to_lower && orbiting_balls.len)
+			
+			var/orbitsize = (I.Width() + I.Height()) * pick(0.5, 0.6, 0.7)
+			orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
+			
+			EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
+			
+	else if(energy < energy_to_lower && orbiting_balls.len)
 		energy_to_raise = energy_to_raise * 0.5
 		energy_to_lower = (energy_to_raise * 0.5) - 10
+		
 		var/Orchiectomy_target = pick(orbiting_balls)
-		orbiting_balls.Remove(Orchiectomy_target)
 		qdel(Orchiectomy_target)
-	else if (orbiting_balls.len)
+		
+	else if(orbiting_balls.len)
 		energy -= orbiting_balls.len
-
-
 
 /obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
@@ -103,26 +116,30 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/Bumped(atom/A)
 	dust_mobs(A)
 
+/obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
+	if (istype(target))
+		target.orbiting_balls += src
+		poi_list -= src
+	
+	. = ..()
+	
+	if (istype(target))
+		target.orbiting_balls -= src
+
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
 	if(istype(A, /mob/living/carbon))
 		var/mob/living/carbon/C = A
 		C.dust()
 	return
 
-/proc/get_closest_atom(type, list, source)
+/proc/get_closest_atom(list, source)
 	var/closest_atom
 	var/closest_distance
 	for(var/A in list)
-		if(!istype(A, type))
-			continue
 		var/distance = get_dist(source, A)
-		if(!closest_distance)
+		if(!closest_atom || closest_distance > distance)
 			closest_distance = distance
 			closest_atom = A
-		else
-			if(closest_distance > distance)
-				closest_distance = distance
-				closest_atom = A
 	return closest_atom
 
 /proc/tesla_zap(var/atom/source, zap_range = 3, power)
@@ -139,45 +156,46 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		if(istype(A, /obj/machinery/power/tesla_coil))
 			var/obj/machinery/power/tesla_coil/C = A
 			if(!C.being_shocked)
-				tesla_coils.Add(C)
+				tesla_coils += C
 
 		else if(istype(A, /obj/machinery/power/grounding_rod))
 			var/obj/machinery/power/grounding_rod/R = A
-			grounding_rods.Add(R)
+			grounding_rods += R
 			
 		else if(istype(A, /obj/machinery))
 			var/obj/machinery/M = A
 			if(!is_type_in_list(M, blacklisted_tesla_types) && !M.being_shocked)
-				potential_machine_zaps.Add(M)
+				potential_machine_zaps += M
+		
 		else if(istype(A, /obj/structure))
 			var/obj/structure/M = A
 			if(!is_type_in_list(M, blacklisted_tesla_types) && !M.being_shocked)
-				potential_structure_zaps.Add(M)
+				potential_structure_zaps += M
 			
 		else if(istype(A, /mob/living))
 			var/mob/living/L = A
-			if(L.stat != DEAD && is_type_in_list(L, blacklisted_tesla_types))
-				potential_mob_zaps.Add(L)
+			if(!is_type_in_list(L, blacklisted_tesla_types) && L.stat != DEAD)
+				potential_mob_zaps += L
 
-	closest_atom = get_closest_atom(/obj/machinery/power/tesla_coil, tesla_coils, source)
-	if(closest_atom && istype(closest_atom, /obj/machinery/power/tesla_coil))
+	closest_atom = get_closest_atom(tesla_coils, source)
+	if(closest_atom)
 		var/obj/machinery/power/tesla_coil/C = closest_atom
-		source.Beam(C,icon_state="lightning[rand(1,12)]",icon='icons/effects/effects.dmi',time=5)
+		source.Beam(C, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5)
 		C.tesla_act(power)
 
 	if(!closest_atom)
-		closest_atom = get_closest_atom(/obj/machinery/power/grounding_rod, grounding_rods, source)
-		if(closest_atom && istype(closest_atom, /obj/machinery/power/grounding_rod))
+		closest_atom = get_closest_atom(grounding_rods, source)
+		if(closest_atom)
 			var/obj/machinery/power/grounding_rod/R = closest_atom
-			source.Beam(R,icon_state="lightning[rand(1,12)]",icon='icons/effects/effects.dmi',time=5)
+			source.Beam(R, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5)
 			R.tesla_act(power)
 			
 	if(!closest_atom)
-		closest_atom = get_closest_atom(/mob/living, potential_mob_zaps, source)
-		if(closest_atom && istype(closest_atom, /mob/living))
+		closest_atom = get_closest_atom(potential_mob_zaps, source)
+		if(closest_atom)
 			var/mob/living/L = closest_atom
-			var/shock_damage = Clamp(round(power/400), 10, 90) + rand(-5,5)
-			source.Beam(L,icon_state="lightning[rand(1,12)]",icon='icons/effects/effects.dmi',time=5)
+			var/shock_damage = Clamp(round(power/400), 10, 90) + rand(-5, 5)
+			source.Beam(L, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5)
 			L.electrocute_act(shock_damage, source, 1, tesla_shock = 1)
 			if(istype(L, /mob/living/silicon))
 				var/mob/living/silicon/S = L
@@ -187,10 +205,10 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 				tesla_zap(L, 5, power / 1.5)
 			
 	if(!closest_atom)
-		closest_atom = get_closest_atom(/obj/machinery, potential_machine_zaps, source)
+		closest_atom = get_closest_atom(potential_machine_zaps, source)
 		if(closest_atom)
 			var/obj/machinery/M = closest_atom
-			source.Beam(M,icon_state="lightning[rand(1,12)]",icon='icons/effects/effects.dmi',time=5)
+			source.Beam(M, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi',time=5)
 			M.tesla_act(power)
 			if(prob(85))
 				M.emp_act(2)
@@ -207,10 +225,11 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		closest_atom = get_closest_atom(/obj/structure, potential_structure_zaps, source)
 		if(closest_atom)
 			var/obj/structure/S = closest_atom
-			source.Beam(S,icon_state="lightning[rand(1,12)]",icon='icons/effects/effects.dmi',time=5)
+			source.Beam(S, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5)
 			S.tesla_act(power)
 			
 	if(closest_atom)
-		var/zapdir = get_dir(source,closest_atom)
+		var/zapdir = get_dir(source, closest_atom)
 		if (zapdir)
 			. = zapdir
+
