@@ -137,10 +137,11 @@
 		stat("Mode",a_intent)
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
-	if(speaker != src && prob(20)) //Dont imitate ourselves
-		if(speech_buffer.len >= 20)
-			speech_buffer -= pick(speech_buffer)
-		speech_buffer |= html_decode(raw_message)
+	if(speaker != src && prob(50)) //Dont imitate ourselves
+		if(!radio_freq || prob(10))
+			if(speech_buffer.len >= 500)
+				speech_buffer -= pick(speech_buffer)
+			speech_buffer |= html_decode(raw_message)
 	..()
 
 /mob/living/simple_animal/parrot/radio(message, message_mode, list/spans) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
