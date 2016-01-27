@@ -23,6 +23,7 @@ var/datum/subsystem/minimap/SSminimap
 	for(var/z in z_levels)
 		generate(z)
 		register_asset("minimap_[z].png", fcopy_rsc(map_path(z)))
+	fdel(hash_path())
 	text2file(hash, hash_path())
 	..()
 
