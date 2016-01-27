@@ -26,7 +26,7 @@ BAN_LEGACY_SYSTEM
 ## log OOC channel
 LOG_OOC
 
-## log client Say 
+## log client Say
 LOG_SAY
 
 ## log admin actions
@@ -146,7 +146,7 @@ GUEST_BAN
 ##Remove the # mark infront of this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Remove the # to show a popup 'reply to' window to every non-admin that recieves an adminPM. 
+## Remove the # to show a popup 'reply to' window to every non-admin that recieves an adminPM.
 ## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
 #POPUP_ADMIN_PM
 
@@ -190,7 +190,7 @@ EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, f
 
 ## Notify admins when a new player connects for the first x days a player's been around. (0 for first connection only, -1 for never)
 ##	Requres database
-NOTIFY_NEW_PLAYER_AGE 0 
+NOTIFY_NEW_PLAYER_AGE 0
 
 ## Notify the irc channel when a new player makes their first connection
 ##	Requres database
@@ -205,9 +205,6 @@ NOTIFY_NEW_PLAYER_AGE 0
 
 ## Uncomment to have the game log runtimes to the log folder. (Note: this disables normal output in dd/ds, so it should be left off for testing.
 #LOG_RUNTIMES
-
-##Comment this out if you've used the mass conversion sql proc for notes or want to stop converting notes
-AUTOCONVERT_NOTES
 
 ##Comment this out to stop admin messages sent anytime an admin disconnects from a round in play, you can edit the messages in admin.dm
 ANNOUNCE_ADMIN_LOGOUT

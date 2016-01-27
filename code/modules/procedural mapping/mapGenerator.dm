@@ -155,8 +155,8 @@
 		src << "Missing Input"
 		return
 
-	var/list/startCoords = text2list(startInput, ";")
-	var/list/endCoords = text2list(endInput, ";")
+	var/list/startCoords = splittext(startInput, ";")
+	var/list/endCoords = splittext(endInput, ";")
 	if(!startCoords || !endCoords)
 		src << "Invalid Coords"
 		src << "Start Input: [startInput]"

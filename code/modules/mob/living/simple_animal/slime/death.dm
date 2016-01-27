@@ -25,7 +25,7 @@
 
 	update_canmove()
 	if(blind)
-		blind.layer = 0
+		blind.plane = -80
 
 	if(ticker && ticker.mode)
 		ticker.mode.check_win()

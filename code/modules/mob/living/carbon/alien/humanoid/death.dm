@@ -10,7 +10,7 @@
 		visible_message("<span class='name'>[src]</span> lets out a waning guttural screech, green blood bubbling from its maw...")
 		update_canmove()
 		if(client)
-			blind.layer = 0
+			blind.plane = -80
 		update_icons()
 		status_flags |=CANPUSH
 

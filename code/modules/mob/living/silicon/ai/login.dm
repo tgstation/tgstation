@@ -14,7 +14,7 @@
 	blind.icon_state = "black"
 	blind.name = " "
 	blind.screen_loc = "1,1 to 15,15"
-	blind.layer = 0
+	blind.plane = -80
 	client.screen.Add( blind, flash )
 
 	if(stat != DEAD)

@@ -332,6 +332,7 @@
 	icon = 'icons/mob/screen_full.dmi'
 	icon_state = "passage0"
 	layer = 0
+	plane = -80
 	mouse_opacity = 2
 	screen_loc = "CENTER-7,CENTER-7"
 

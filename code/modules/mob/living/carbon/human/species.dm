@@ -716,10 +716,10 @@
 		if(H.blind)
 			if(H.eye_blind)
 				H.throw_alert("blind", /obj/screen/alert/blind)
-				H.blind.layer = 18
+				H.blind.plane = 0
 			else
 				H.clear_alert("blind")
-				H.blind.layer = 0
+				H.blind.plane = -80
 
 		if(!H.client)//no client, no screen to update
 			return 1
