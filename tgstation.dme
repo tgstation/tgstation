@@ -282,6 +282,7 @@
 #include "code\datums\wires\r_n_d.dm"
 #include "code\datums\wires\radio.dm"
 #include "code\datums\wires\robot.dm"
+#include "code\datums\wires\simple_wire.dm"
 #include "code\datums\wires\suit_storage_unit.dm"
 #include "code\datums\wires\syndicatebomb.dm"
 #include "code\datums\wires\vending.dm"

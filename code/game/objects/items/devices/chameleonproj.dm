@@ -89,7 +89,7 @@
 	var/can_move = 1
 	var/obj/item/device/chameleon/master = null
 
-/obj/effect/dummy/chameleon/proc/activate(mob/M, saved_appearance, obj/item/device/chameleon/C)
+/obj/effect/dummy/chameleon/activate(mob/M, saved_appearance, obj/item/device/chameleon/C)
 	appearance = saved_appearance
 	M.loc = src
 	master = C

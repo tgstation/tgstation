@@ -58,6 +58,9 @@
 /atom/proc/CheckParts()
 	return
 
+/atom/proc/activate()
+	return
+
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
 	return null

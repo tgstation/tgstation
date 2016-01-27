@@ -117,11 +117,11 @@
 		qdel(I)
 		qdel(src)
 
-	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags & NODROP))
+	else if(istype(I, /obj/item/device/assembly/igniter))
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 
-		if(!remove_item_from_storage(user))
-			user.unEquip(src)
+		if(!user.drop_item())
+			return
 		user.unEquip(I)
 
 		user.put_in_hands(P)

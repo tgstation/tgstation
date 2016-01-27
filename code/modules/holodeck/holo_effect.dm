@@ -8,8 +8,6 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
 	invisibility = 101
-	proc/activate(var/obj/machinery/computer/holodeck/HC)
-		return
 	proc/deactivate(var/obj/machinery/computer/holodeck/HC)
 		qdel(src)
 		return
