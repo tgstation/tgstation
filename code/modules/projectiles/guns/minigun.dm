@@ -35,13 +35,11 @@
 
 /obj/item/weapon/minigunpack/attackby(obj/item/weapon/W, mob/user, params)
 	if(W == gun) //Don't need armed check, because if you have the gun assume its armed.
-		gun.unwield(user)
 		user.unEquip(gun,1)
-		attach_gun(user)
 	else
 		..()
 
-/obj/item/weapon/gun/projectile/minigun/dropped(mob/user)
+/obj/item/weapon/minigunpack/dropped(mob/user)
 	if(armed)
 		attach_gun(user)
 	..()
@@ -80,7 +78,7 @@
 	if(user)
 		user << "<span class='notice'>You attach the [gun.name] to the [name].</span>"
 	else
-		src.visible_message("<span class='warning'>The [gun.name] snaps back onto the [name]!</span>"
+		src.visible_message("<span class='warning'>The [gun.name] snaps back onto the [name]!</span>")
 	update_icon()
 
 
