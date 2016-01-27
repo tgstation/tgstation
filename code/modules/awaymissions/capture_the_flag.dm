@@ -229,6 +229,8 @@
 	name = "Spawn protection"
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
+	health = INFINITY
+	maxHealth = INFINITY
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
 	alpha = 255
