@@ -53,37 +53,44 @@
 
 /turf/simulated/wall/shuttle
 	name = "wall"
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall"
+	walltype = "shuttle"
+	smooth = SMOOTH_FALSE
+
+/turf/simulated/wall/shuttle/smooth
+	name = "wall"
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "shuttle"
 	walltype = "shuttle"
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/simulated/wall/shuttle, /obj/structure/window/shuttle)
+	canSmoothWith = list(/turf/simulated/wall/shuttle/smooth, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
 
-/turf/simulated/wall/shuttle/nodiagonal
+/turf/simulated/wall/shuttle/smooth/nodiagonal
 	smooth = SMOOTH_MORE
 	icon_state = "shuttle_nd"
 
-/turf/simulated/wall/shuttle/overplating
+/turf/simulated/wall/shuttle/smooth/overplating
 	icon_state = "overplating"
 	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="plating")
 
-/turf/simulated/wall/shuttle/overblue
+/turf/simulated/wall/shuttle/smooth/overblue
 	icon_state = "overblue"
 	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor")
 
-/turf/simulated/wall/shuttle/overwhite
+/turf/simulated/wall/shuttle/smooth/overwhite
 	icon_state = "overwhite"
 	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor3")
 
-/turf/simulated/wall/shuttle/overred
+/turf/simulated/wall/shuttle/smooth/overred
 	icon_state = "overred"
 	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor4")
 
-/turf/simulated/wall/shuttle/overpurple
+/turf/simulated/wall/shuttle/smooth/overpurple
 	icon_state = "overpurple"
 	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor5")
 
-/turf/simulated/wall/shuttle/overyellow
+/turf/simulated/wall/shuttle/smooth/overyellow
 	icon_state = "overyellow"
 	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor2")
 
