@@ -295,6 +295,22 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 
+/turf/proc/apply_fixed_underlay()
+	if(!fixed_underlay)
+		return
+	var/obj/O = new
+	O.layer = layer
+	if(fixed_underlay["icon"])
+		O.icon = fixed_underlay["icon"]
+		O.icon_state = fixed_underlay["icon_state"]
+	else if(fixed_underlay["space"])
+		O.icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+	else
+		O.icon = DEFAULT_UNDERLAY_ICON
+		O.icon_state = DEFAULT_UNDERLAY_ICON_STATE
+	underlays += O
+	return 1
+
 /turf/indestructible
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'

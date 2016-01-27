@@ -58,7 +58,6 @@
 	walltype = "shuttle"
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/simulated/wall/shuttle, /obj/structure/window/shuttle)
-	fixed_underlay = list("icon"='icons/turf/space.dmi', "icon_state"="", "delete"=1)
 
 /turf/simulated/wall/shuttle/overplating
 	icon_state = "overplating"
@@ -91,7 +90,6 @@
 	walltype = "shuttle"
 	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL
 	canSmoothWith = null
-
 
 //sub-type to be used for interior shuttle walls
 //won't get an underlay of the destination turf on shuttle move
