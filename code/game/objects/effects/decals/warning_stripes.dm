@@ -29,6 +29,8 @@
 /obj/effect/decal/warning_stripes/pathmarkers/blue
 	color = "#719eb6"
 
+
+//Deff only
 //For people who lose themselves on defficiency
 //Making it a decal makes it fuse with the plating and disappear under the pipes, I need a better solution but this will do for now
 /obj/effect/nmpi
@@ -39,3 +41,9 @@
 	icon_state = "maintguide"
 	layer = 2.45
 	anchored = 1  //Otherwise people move them using crates
+
+//Old parts of the station are not shielded against radiations, but don't blink because they lack power. Those big ass warnings should be enough to inform people.
+/obj/effect/decal/warning_stripes/unshielded_area
+	icon_state = "radiation_huge"
+	name = "Unshielded Area"
+	desc = "Designates an area that is NOT shielded against radiation storms. Enter at your own risk."
