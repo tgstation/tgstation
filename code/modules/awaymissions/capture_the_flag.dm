@@ -94,10 +94,12 @@
 	var/ctf_gear = /datum/outfit/ctf
 
 /obj/machinery/capture_the_flag/New()
+	..()
 	poi_list |= src
 
 /obj/machinery/capture_the_flag/Destroy()
 	poi_list.Remove(src)
+	..()
 
 /obj/machinery/capture_the_flag/red
 	name = "Red CTF Controller"
@@ -121,6 +123,7 @@
 			continue
 		if(user.ckey in CTF.team_members)
 			user << "No switching teams while the round is going!"
+			return
 		if(CTF.team_members.len < src.team_members.len)
 			user << "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up."
 			return
@@ -168,7 +171,8 @@
 
 /obj/machinery/capture_the_flag/proc/victory()
 	for(var/mob/M in mob_list)
-		if (M.z == src.z)
+		var/area/mob_area = get_area(M)
+		if(istype(mob_area, /area/ctf))
 			M << "<span class='narsie'>[team] team wins!</span>"
 			M << "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>"
 			M.dust()
@@ -225,6 +229,8 @@
 	name = "Spawn protection"
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
+	health = INFINITY
+	maxhealth = INFINITY
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
 	alpha = 255
