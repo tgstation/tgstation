@@ -179,7 +179,7 @@ var/list/wire_color_directory = list()
 	for(var/wire in shuffle(wires))
 		colors[pick_n_take(possible_colors)] = wire
 
-/datum/wires/proc/shuffle()
+/datum/wires/proc/shuffle_wires()
 	colors.Cut()
 	randomize()
 
