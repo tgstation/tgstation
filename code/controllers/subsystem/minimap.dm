@@ -41,7 +41,7 @@ var/datum/subsystem/minimap/SSminimap
 	var/icon/minimap = new /icon('icons/minimap.dmi')
 	// Scale it up to our target size.
 	minimap.Scale(MINIMAP_SIZE, MINIMAP_SIZE)
-
+	var/list/obj_icons = list() 
 	// Loop over turfs and generate icons.
 	for(var/T in block(locate(x1, y1, z), locate(x2, y2, z)))
 		var/turf/tile = T
@@ -64,7 +64,7 @@ var/datum/subsystem/minimap/SSminimap
 				tile_icon = new /icon('icons/obj/atmospherics/pipes/transit_tube.dmi', obj.icon_state, obj.dir)
 		else
 			tile_icon = new /icon(tile.icon, tile.icon_state, tile.dir)
-			var/list/obj_icons = list()
+			obj_icons.Cut()
 
 			obj = locate(/obj/structure) in tile
 			if(obj)

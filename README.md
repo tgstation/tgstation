@@ -1,4 +1,4 @@
-##/tg/station v1.0.1 
+##/tg/station v1.0.1
 
 [![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
 
@@ -30,7 +30,7 @@ hassle if you want to make any changes at all, so it's not recommended.)
 ##INSTALLATION
 
 First-time installation should be fairly straightforward.  First, you'll need
-BYOND installed.  You can get it from http://www.byond.com/.  Once you've done 
+BYOND installed.  You can get it from http://www.byond.com/.  Once you've done
 that, extract the game files to wherever you want to keep them.  This is a
 sourcecode-only release, so the next step is to compile the server files.
 Open tgstation.dme by double-clicking it, open the Build menu, and click
@@ -49,7 +49,7 @@ in irc://irc.rizon.net/coderbus
 Once that's done, open up the config folder.  You'll want to edit config.txt to
 set the probabilities for different gamemodes in Secret and to set your server
 location so that all your players don't get disconnected at the end of each
-round.  It's recommended you don't turn on the gamemodes with probability 0, 
+round.  It's recommended you don't turn on the gamemodes with probability 0,
 except Extended, as they have various issues and aren't currently being tested,
 so they may have unknown and bizarre bugs.  Extended is essentially no mode, and
 isn't in the Secret rotation by default as it's just not very fun.
@@ -68,7 +68,7 @@ byondkey = Rank
 where the admin rank must be properly capitalised.
 
 Finally, to start the server, run Dream Daemon and enter the path to your
-compiled tgstation.dmb file.  Make sure to set the port to the one you 
+compiled tgstation.dmb file.  Make sure to set the port to the one you
 specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
 and the server should start up and be ready to join. It is also recommended that
 you set up the SQL backend (see below).
@@ -129,10 +129,17 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 ##LICENSE
 
 All code after commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).
+
 All code before commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
 (Including tools unless their readme specifies otherwise.)
 
 See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details.
 
-All content including icons and sound is under a Creative Commons 3.0 BY-SA
-license (http://creativecommons.org/licenses/by-sa/3.0/).
+tgui clientside is licensed as a subproject under the MIT license.
+tgui assets are licensed under a Creative Commons Attribution-ShareAlike 4.0 International License
+(http://creativecommons.org/licenses/by-sa/4.0/).
+
+See tgui/LICENSE.md for more details.
+
+All assets including icons and sound are under a Creative Commons 3.0 BY-SA
+license (http://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
