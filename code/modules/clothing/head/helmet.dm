@@ -48,11 +48,11 @@
 	toggle_cooldown = 0
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
-/obj/item/clothing/head/helmet/attack_self()
+/obj/item/clothing/head/helmet/attack_self(mob/user)
 	if(can_toggle && !user.incapacitated())
 		if(world.time > cooldown + toggle_cooldown)
 			cooldown = world.time
-			up ^= 1
+			up = !up
 			flags ^= visor_flags
 			flags_inv ^= visor_flags_inv
 			flags_cover ^= initial(flags_cover)
@@ -60,7 +60,7 @@
 			user << "[up ? alt_toggle_message : toggle_message] \the [src]"
 
 			user.update_inv_head()
-			if(istype(user, /mob/living/carbon))
+			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.head_update(src, forced = 1)
 
