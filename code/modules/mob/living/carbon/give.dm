@@ -13,15 +13,15 @@
 	if(src.handcuffed)
 		to_chat(user, "<span class='warning'>Those hands are cuffed right now.</span>")
 		return //Can't receive items while cuffed
-	if(src == user) //Shouldn't happen
-		to_chat(user, "<span class='warning'>You feel stupider, suddenly.</span>")
-		return
 	var/obj/item/I
 	if(user.get_active_hand() == null)
 		to_chat(user, "You don't have anything in your [user.hand ? "left hand" : "right hand"] to give to [src].")
 		return
 	I = user.get_active_hand()
 	if(!I)
+		return
+	if(src == user) //Shouldn't happen
+		to_chat(user, "<span class='warning'>You tried to give yourself \the [I], but you didn't want it.</span>")
 		return
 	if(src.r_hand == null || src.l_hand == null)
 		switch(alert(src, "[user] wants to give you \a [I]?", , "Yes", "No"))
