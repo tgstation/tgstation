@@ -59,6 +59,10 @@
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/simulated/wall/shuttle, /obj/structure/window/shuttle)
 
+/turf/simulated/wall/shuttle/nodiagonal
+	smooth = SMOOTH_MORE
+	icon_state = "shuttle_nd"
+
 /turf/simulated/wall/shuttle/overplating
 	icon_state = "overplating"
 	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="plating")
