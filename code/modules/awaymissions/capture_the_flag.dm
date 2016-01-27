@@ -171,7 +171,8 @@
 
 /obj/machinery/capture_the_flag/proc/victory()
 	for(var/mob/M in mob_list)
-		if (M.z == src.z)
+		var/area/mob_area = get_area(M)
+		if(istype(mob_area, /area/ctf))
 			M << "<span class='narsie'>[team] team wins!</span>"
 			M << "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>"
 			M.dust()
