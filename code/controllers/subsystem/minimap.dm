@@ -90,7 +90,7 @@ var/datum/subsystem/minimap/SSminimap
 		
 		//byond bug, this fixes OOM crashes by flattening and reseting the minimap icon holder every 255 tiles
 		counter--
-		if (!counter)
+		if (counter <= 0)
 			counter = 255
 			var/icon/flatten = new /icon()
 			flatten.Insert(minimap, "", SOUTH, 1, 0)
