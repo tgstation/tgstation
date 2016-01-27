@@ -125,7 +125,7 @@
 //Reactive armor
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
 /obj/item/clothing/suit/armor/reactive
-	name = "reactive teleport armor"
+	name = "reactive armor"
 	desc = "Someone seperated our Research Director from his own head!"
 	var/active = 0
 	icon_state = "reactiveoff"
@@ -156,36 +156,12 @@
 	src.item_state = "reactiveoff"
 	..()
 
-/obj/item/clothing/suit/armor/reactive/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	if(!active)
-		return 0
-	if(prob(hit_reaction_chance))
-		var/mob/living/carbon/human/H = owner
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text]!</span>")
-		var/list/turfs = new/list()
-		for(var/turf/T in orange(6, H))
-			if(T.density)
-				continue
-			if(T.x>world.maxx-6 || T.x<6)
-				continue
-			if(T.y>world.maxy-6 || T.y<6)
-				continue
-			turfs += T
-		if(!turfs.len)
-			turfs += pick(/turf in orange(6, H))
-		var/turf/picked = pick(turfs)
-		if(!isturf(picked))
-			return
-		if(H.buckled)
-			H.buckled.unbuckle_mob()
-		H.forceMove(picked)
-		return 1
-	return 0
-
 /obj/item/clothing/suit/armor/reactive/teleport
 	name = "reactive teleport armor"
 	desc = "Someone seperated our Research Director from his own head!"
 	hit_reaction_chance = 50
+	var/tele_range = 6
+	var/rad_amount= 15
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(!active)
@@ -194,23 +170,23 @@
 		var/mob/living/carbon/human/H = owner
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text]!</span>")
 		var/list/turfs = new/list()
-		for(var/turf/T in orange(6, H))
+		for(var/turf/T in orange(tele_range, H))
 			if(T.density)
 				continue
-			if(T.x>world.maxx-6 || T.x<6)
+			if(T.x>world.maxx-tele_range || T.x<tele_range)
 				continue
-			if(T.y>world.maxy-6 || T.y<6)
+			if(T.y>world.maxy-tele_range || T.y<tele_range)
 				continue
 			turfs += T
 		if(!turfs.len)
-			turfs += pick(/turf in orange(6, H))
+			turfs += pick(/turf in orange(tele_range, H))
 		var/turf/picked = pick(turfs)
 		if(!isturf(picked))
 			return
 		if(H.buckled)
 			H.buckled.unbuckle_mob()
 		H.forceMove(picked)
-		H.rad_act(15)
+		rad_act(rad_amount)
 		return 1
 	return 0
 
