@@ -152,7 +152,7 @@
 					var/robot = pick("cyborg","syndiborg","drone")
 					switch(robot)
 						if("cyborg")
-								new_mob = new /mob/living/silicon/robot(M.loc)
+							new_mob = new /mob/living/silicon/robot(M.loc)
 						if("syndiborg")
 							new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
 						if("drone")
