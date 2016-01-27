@@ -18,7 +18,6 @@
 		if(1, 2, 3, 4, 5)
 			affected_mob << "<span class='notice'>[pick("You feel off.", "You feel really off.", "Your head feels off.", "Your mouth feels off.", "Your stomach feels off.", "Your chest feels off.")]</span>"
 		if(6, 7, 8, 9, 10)
-
 			if(prob(15))
 				affected_mob << "<span class='warning'>[pick("Your head hurts.", "Your head starts pounding.")]</span>"
 			if(prob(15))
@@ -94,6 +93,6 @@
 			affected_mob.visible_message("<span class='warning'>[affected_mob] begins a chilling deathrattle, as if he's going into cardiac arrest!</span>")
 			affected_mob.visible_message("<span class='warning'>[affected_mob] begins to foam at the mouth, as if his stomach is releasing acid!</span>")
 			if (affected_mob.reagents.get_reagent_amount("initropidril, mutagen, lexorin, venom, pancuronium, curare, coniine, sacid") < 50)
-				affected_mob.reagents.add_reagent("initropidril, mutagen, lexorin, venom, pancuronium, curare, coniine, sacid", 50)
+				affected_mob.reagents.add_reagent_list(list("initropidril" = 50, "mutagen" = 50, "lexorin" = 50, "venom" = 50, "pancuronium" = 50, "curare" = 50, "coniine" = 50, "sacid" = 50))
 	return
 
