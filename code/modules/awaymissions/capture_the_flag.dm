@@ -230,7 +230,7 @@
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
 	health = INFINITY
-	maxHealth = INFINITY
+	maxhealth = INFINITY
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
 	alpha = 255
