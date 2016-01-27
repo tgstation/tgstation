@@ -94,10 +94,12 @@
 	var/ctf_gear = /datum/outfit/ctf
 
 /obj/machinery/capture_the_flag/New()
+	..()
 	poi_list |= src
 
 /obj/machinery/capture_the_flag/Destroy()
 	poi_list.Remove(src)
+	..()
 
 /obj/machinery/capture_the_flag/red
 	name = "Red CTF Controller"
@@ -121,6 +123,7 @@
 			continue
 		if(user.ckey in CTF.team_members)
 			user << "No switching teams while the round is going!"
+			return
 		if(CTF.team_members.len < src.team_members.len)
 			user << "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up."
 			return
