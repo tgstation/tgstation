@@ -1,0 +1,5 @@
+author: Joan
+delete-after: True
+changes: 
+  - imageadd: "Blob tiles now do an attack animation when failing to expand into a turf."
+  - imageadd: "Overmind-directed expansion is more visible than automatic expansion."

@@ -142,6 +142,16 @@
 	if(T.density) //Check for walls and such dense turfs
 		make_blob = 0
 		T.blob_act() //Hit the turf
+
+	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, src.loc)
+	if(controller)
+		var/mob/camera/blob/BO = controller
+		O.color = BO.blob_reagent_datum.color
+		O.alpha = 200 //if we have a controller, we're direct attack and must be more important
+	else if(overmind)
+		O.color = overmind.blob_reagent_datum.color
+	O.do_attack_animation(T) //visually attack the turf
+
 	if(make_blob) //well, can we?
 		var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
 		if(controller)
@@ -150,6 +160,7 @@
 			B.overmind = overmind
 		B.density = 1
 		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
+			O.alpha = 0 //if we got to this point, we don't need to visually attack
 			B.density = initial(B.density)
 			B.loc = T
 			B.update_icon()
