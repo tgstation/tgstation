@@ -1,0 +1,5 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Golems have about a 40% chance to stun with punches, from about 60%."
+  - tweak: "Millitary Synths have about a 50% chance to stun with punches, from literally 100%."
