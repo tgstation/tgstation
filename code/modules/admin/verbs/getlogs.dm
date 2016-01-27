@@ -86,7 +86,7 @@
 	set desc = "Shows today's server log."
 
 	if(fexists("[diary]"))
-		src << ftp(file("[diary]"))
+		src << ftp(diary)
 	else
 		src << "<font color='red'>Server log not found, try using .getserverlog.</font>"
 		return
@@ -100,7 +100,7 @@
 	set desc = "Shows today's server attack log."
 
 	if(fexists("[diaryofmeanpeople]"))
-		src << ftp(file("[diaryofmeanpeople]"))
+		src << ftp(diaryofmeanpeople)
 	else
 		src << "<font color='red'>Server attack log not found, try using .getserverlog.</font>"
 		return
