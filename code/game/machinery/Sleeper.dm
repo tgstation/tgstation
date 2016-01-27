@@ -349,12 +349,13 @@
 
 /obj/machinery/sleeper/crowbarDestroy(mob/user)
 	if(occupant)
-		to_chat(user, "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>")
+		to_chat(user, "<span class='warning'>You cannot disassemble \the [src], it's occupied.</span>")
 		return
 	return ..()
 
 /obj/machinery/sleeper/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
+	if(..())
+		return 1
 	if(iswrench(W)&&!occupant&& (machine_flags & WRENCHMOVE))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		if(orient == "RIGHT")
@@ -659,6 +660,8 @@
 
 
 /obj/machinery/sleep_console/mancrowave_console/attack_hand(mob/user as mob)
+	if(..())
+		return 1
 	if (src.connected)
 		var/mob/living/occupant = src.connected.occupant
 		var/dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>"
@@ -695,8 +698,8 @@
 
 
 /obj/machinery/sleep_console/mancrowave_console/Topic(href, href_list)
-	if(usr.stat)
-		return
+	if(..())
+		return 1
 	usr.set_machine(src)
 	if (href_list["cook"])
 		if (src.connected)
@@ -705,7 +708,7 @@
 			else
 				if (src.connected.occupant)
 					if ((locate(/obj/item/weapon/disk/nuclear) in get_contents_in_object(connected.occupant)) && href_list["cook"] != "Thermoregulate" )
-						to_chat(usr, "<span class='danger'>Even with the safety features turned off, \the [src] won't cook that!</span>")
+						to_chat(usr, "<span class='danger'>Even with the safety features turned off, \the [src] refuses to cook something inside of it!</span>")
 					else connected.cook(href_list["cook"])
 	if (href_list["refresh"])
 		src.updateUsrDialog()
