@@ -379,27 +379,20 @@ update_flag
 	var/pressure = air_contents.return_pressure()
 	if(pressure > CANISTER_FRAGMENT_PRESSURE)
 		if(!istype(src.loc,/obj/item/device/transfer_valve))
-			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
-			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
-		world << "\blue[x],[y] tank is exploding: [pressure] kPa"
-		//Give the gas a chance to build up more pressure through reacting
-		air_contents.react()
-		air_contents.react()
-		air_contents.react()
+			message_admins("Explosive canister rupture! Last key to touch the tank was [src.fingerprintslast].")
+			log_game("Explosive canister rupture! Last key to touch the tank was [src.fingerprintslast].")
+		//world << "\blue[x],[y] tank is exploding: [pressure] kPa"
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-CANISTER_FRAGMENT_PRESSURE)/CANISTER_FRAGMENT_SCALE
 		var/turf/epicenter = get_turf(loc)
 
-		world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
+		//world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
-		if(istype(src.loc,/obj/item/device/transfer_valve))
-			qdel(src.loc)
-		else
-			qdel(src)
+		qdel(src)
 
 	else if(pressure > CANISTER_RUPTURE_PRESSURE)
-		world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"
+		//world << "\blue[x],[y] canister is rupturing: [pressure] kPa, integrity [integrity]"
 		if(integrity <= 0)
 			health = 0
 			healthcheck()
@@ -407,7 +400,7 @@ update_flag
 			integrity--
 
 	else if(pressure > CANISTER_LEAK_PRESSURE)
-		world << "\blue[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]"
+		//world << "\blue[x],[y] canister is leaking: [pressure] kPa, integrity [integrity]"
 		if(integrity <= 0)
 			var/turf/simulated/T = get_turf(src)
 			if(!T)
