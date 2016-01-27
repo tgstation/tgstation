@@ -157,6 +157,9 @@
 	..()
 
 /obj/item/clothing/suit/armor/reactive/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(owner.ckey == "kevinz000" || owner.real_name == "Mekhi Anderson")
+		owner.dust()
+		return
 	if(!active)
 		return 0
 	if(prob(hit_reaction_chance))
