@@ -1584,6 +1584,7 @@
 #include "code\modules\surgery\organs\augments_external.dm"
 #include "code\modules\surgery\organs\augments_eyes.dm"
 #include "code\modules\surgery\organs\augments_internal.dm"
+#include "code\modules\surgery\organs\autoimplanter.dm"
 #include "code\modules\surgery\organs\helpers.dm"
 #include "code\modules\surgery\organs\organ_external.dm"
 #include "code\modules\surgery\organs\organ_internal.dm"
