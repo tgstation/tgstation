@@ -182,6 +182,45 @@
 		return 1
 	return 0
 
+/obj/item/clothing/suit/armor/reactive/teleport
+	name = "reactive teleport armor"
+	desc = "Someone seperated our Research Director from his own head!"
+	var/active = 0
+	icon_state = "reactiveoff"
+	item_state = "reactiveoff"
+	blood_overlay_type = "armor"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	action_button_name = "Toggle Armor"
+	unacidable = 1
+	hit_reaction_chance = 50
+
+/obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(!active)
+		return 0
+	if(prob(hit_reaction_chance))
+		var/mob/living/carbon/human/H = owner
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text]!</span>")
+		var/list/turfs = new/list()
+		for(var/turf/T in orange(6, H))
+			if(T.density)
+				continue
+			if(T.x>world.maxx-6 || T.x<6)
+				continue
+			if(T.y>world.maxy-6 || T.y<6)
+				continue
+			turfs += T
+		if(!turfs.len)
+			turfs += pick(/turf in orange(6, H))
+		var/turf/picked = pick(turfs)
+		if(!isturf(picked))
+			return
+		if(H.buckled)
+			H.buckled.unbuckle_mob()
+		H.forceMove(picked)
+		H.rad_act(15)
+		return 1
+	return 0
+
 /obj/item/clothing/suit/armor/reactive/fire
 	name = "reactive incendiary armor"
 
