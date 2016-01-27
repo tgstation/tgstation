@@ -743,8 +743,10 @@ Sorry Giacom. Please don't be mad :(
 	gib()
 	return(gain)
 
-/mob/living/singularity_pull(S)
-	step_towards(src,S)
+/mob/living/singularity_pull(S, current_size)
+	if(current_size >= STAGE_SIX)
+		throw_at_fast(S,14,3, spin=0)
+	else step_towards(src,S)
 
 /mob/living/narsie_act()
 	if(client)
