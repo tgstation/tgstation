@@ -23,7 +23,7 @@ Sorry Giacom. Please don't be mad :(
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
-	
+
 	faction |= "\ref[src]"
 
 
@@ -797,20 +797,22 @@ Sorry Giacom. Please don't be mad :(
 	var/image/I
 	if(hand && l_hand) // Attacked with item in left hand.
 		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 1)
-	else if (!hand && r_hand) // Attacked with item in right hand.
+	else if(!hand && r_hand) // Attacked with item in right hand.
 		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 1)
 	else // Attacked with a fist?
 		return
 
 	// Who can see the attack?
 	var/list/viewing = list()
-	for (var/mob/M in viewers(A))
-		if (M.client)
+	for(var/mob/M in viewers(A))
+		if(M.client)
 			viewing |= M.client
 	flick_overlay(I, viewing, 5) // 5 ticks/half a second
 
 	// Scale the icon.
 	I.transform *= 0.75
+	// The icon should not rotate.
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
 	// Set the direction of the icon animation.
 	var/direction = get_dir(src, A)

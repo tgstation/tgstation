@@ -50,7 +50,9 @@
 	var/burnmod = 1		// multiplier for burn damage
 	var/coldmod = 1		// multiplier for cold damage
 	var/heatmod = 1		// multiplier for heat damage
-	var/punchmod = 0	// adds to the punch damage
+	var/punchdamagelow = 0       //lowest possible punch damage
+	var/punchdamagehigh = 9      //highest possible punch damage
+	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
@@ -942,7 +944,7 @@
 				if(H.lying)
 					atk_verb = "kick"
 
-				var/damage = rand(0, 9) + M.dna.species.punchmod
+				var/damage = rand(M.dna.species.punchdamagelow, M.dna.species.punchdamagehigh)
 
 				if(!damage)
 					playsound(H.loc, M.dna.species.miss_sound, 25, 1, -1)
@@ -960,7 +962,7 @@
 
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
 				add_logs(M, H, "punched")
-				if((H.stat != DEAD) && damage >= 9)
+				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold)
 					H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
 									"<span class='userdanger'>[M] has weakened [H]!</span>")
 					H.apply_effect(4, WEAKEN, armor_block)
@@ -1350,6 +1352,8 @@
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	if(!environment)
 		return
+	if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		return
 
 	var/loc_temp = H.get_temperature(environment)
 
@@ -1386,21 +1390,19 @@
 					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
 				else
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
-		if(!istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-			switch(H.bodytemperature)
-				if(200 to 260)
-					H.throw_alert("temp", /obj/screen/alert/cold, 1)
-					H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
-				if(120 to 200)
-					H.throw_alert("temp", /obj/screen/alert/cold, 2)
-					H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
-				if(-INFINITY to 120)
-					H.throw_alert("temp", /obj/screen/alert/cold, 3)
-					H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
-		else
-			H.clear_alert("temp")
+		switch(H.bodytemperature)
+			if(200 to 260)
+				H.throw_alert("temp", /obj/screen/alert/cold, 1)
+				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
+			if(120 to 200)
+				H.throw_alert("temp", /obj/screen/alert/cold, 2)
+				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
+			if(-INFINITY to 120)
+				H.throw_alert("temp", /obj/screen/alert/cold, 3)
+				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+			else
+				H.clear_alert("temp")
 
 	else
 		H.clear_alert("temp")

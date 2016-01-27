@@ -195,14 +195,17 @@
 
 	else if(isanimal(M))
 		var/mob/living/simple_animal/SA = M
-		SA.adjustBruteLoss(is_adult ? rand(4, 7) : rand(3, 4))
+
+		var/totaldamage = 0 //total damage done to this unfortunate animal
+		totaldamage += SA.adjustCloneLoss(rand(2,4))
+		totaldamage += SA.adjustToxLoss(rand(1,2))
+
+		if(totaldamage <= 0) //if we did no(or negative!) damage to it, stop
+			Feedstop(0, 0)
+			return
 
 	else
-		src << "<span class='warning'>[pick("This subject is incompatible", \
-		"This subject does not have a life energy", "This subject is empty", \
-		"I am not satisified", "I can not feed from this subject", \
-		"I do not feel nourished", "This subject is not food")]!</span>"
-		Feedstop()
+		Feedstop(0, 0)
 		return
 
 	add_nutrition(rand(7,15))

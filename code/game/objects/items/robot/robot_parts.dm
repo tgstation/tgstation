@@ -30,7 +30,7 @@
 	name = "cyborg torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	icon_state = "chest"
-	var/wires = 0
+	var/wired = 0
 	var/obj/item/weapon/stock_parts/cell/cell = null
 
 /obj/item/robot_parts/head
@@ -139,13 +139,13 @@
 	if(istype(W, /obj/item/robot_parts/chest))
 		if(src.chest)
 			return
-		if(W:wires && W:cell)
+		if(W:wired && W:cell)
 			if(!user.unEquip(W))
 				return
 			W.loc = src
 			src.chest = W
 			src.updateicon()
-		else if(!W:wires)
+		else if(!W:wired)
 			user << "<span class='warning'>You need to attach wires to it first!</span>"
 		else
 			user << "<span class='warning'>You need to attach a cell to it first!</span>"
@@ -319,12 +319,12 @@
 			src.cell = W
 			user << "<span class='notice'>You insert the cell.</span>"
 	if(istype(W, /obj/item/stack/cable_coil))
-		if(src.wires)
+		if(src.wired)
 			user << "<span class='warning'>You have already inserted wire!</span>"
 			return
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.use(1))
-			src.wires = 1
+			src.wired = 1
 			user << "<span class='notice'>You insert the wire.</span>"
 		else
 			user << "<span class='warning'>You need one length of coil to wire it!</span>"

@@ -31,9 +31,9 @@
 /datum/reagent/blob/ripping_tendrils/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
 	if(M)
-		M.apply_damage(0.6*reac_volume, BRUTE)
+		M.apply_damage(0.7*reac_volume, BRUTE)
 	if(M)
-		M.adjustStaminaLoss(0.6*reac_volume)
+		M.adjustStaminaLoss(0.5*reac_volume)
 	if(iscarbon(M))
 		M.emote("scream")
 
@@ -49,7 +49,7 @@
 /datum/reagent/blob/sporing_pods/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
 	if(M)
-		M.apply_damage(0.4*reac_volume, TOX)
+		M.apply_damage(0.5*reac_volume, TOX)
 
 /datum/reagent/blob/sporing_pods/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(!isnull(cause) && damage < 20 && original_health - damage <= 0 && prob(50)) //if the cause isn't fire or a bomb, the damage is less than 20, we're going to die from that damage, 50% chance of a shitty spore.
@@ -81,7 +81,7 @@
 		M.apply_damage(0.6*reac_volume, BRUTE)
 
 /datum/reagent/blob/replicating_foam/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(damage > 0 && original_health - damage > 0 && prob(100 - damage))
+	if(damage > 0 && original_health - damage > 0)
 		var/obj/effect/blob/newB = B.expand()
 		if(newB)
 			newB.health = original_health - damage
@@ -105,7 +105,7 @@
 /datum/reagent/blob/energized_fibers/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
 	if(M)
-		M.apply_damage(0.4*reac_volume, BURN)
+		M.apply_damage(0.5*reac_volume, BURN)
 	if(M)
 		M.adjustStaminaLoss(0.8*reac_volume)
 
@@ -146,12 +146,12 @@
 
 /datum/reagent/blob/hallucinogenic_nectar/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
-	M.hallucination += 0.6*reac_volume
-	M.druggy += 0.6*reac_volume
+	M.hallucination += 0.8*reac_volume
+	M.druggy += 0.8*reac_volume
 	if(M.reagents)
 		M.reagents.add_reagent("spore", 0.2*reac_volume)
 	if(M)
-		M.apply_damage(0.4*reac_volume, TOX)
+		M.apply_damage(0.6*reac_volume, TOX)
 
 //toxin, stamina, and some bonus spore toxin
 /datum/reagent/blob/envenomed_filaments
@@ -182,7 +182,7 @@
 	reac_volume = ..()
 	M.losebreath += round(0.2*reac_volume)
 	if(M)
-		M.apply_damage(0.4*reac_volume, BRUTE)
+		M.apply_damage(0.2*reac_volume, BRUTE)
 	if(M)
 		M.apply_damage(0.6*reac_volume, OXY)
 
@@ -224,7 +224,7 @@
 		M.reagents.add_reagent("frostoil", 0.4*reac_volume)
 		M.reagents.add_reagent("ice", 0.4*reac_volume)
 	if(M)
-		M.apply_damage(0.4*reac_volume, BURN)
+		M.apply_damage(0.6*reac_volume, BURN)
 	if(M)
 		M.adjustStaminaLoss(0.4*reac_volume)
 
@@ -241,11 +241,15 @@
 /datum/reagent/blob/synchronous_mesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
 	if(M)
-		M.apply_damage(0.4*reac_volume, BRUTE)
+		M.apply_damage(0.1*reac_volume, BRUTE)
 	if(M)
-		for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 0.8*reac_volume bonus damage, total of 1.2*reac_volume
+		for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 2.4*reac_volume bonus damage, total of 2.5*reac_volume
 			if(M)
-				M.apply_damage(0.1*reac_volume, BRUTE)
+				var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, B.loc)
+				if(B.overmind)
+					O.color = B.overmind.blob_reagent_datum.color
+				O.do_attack_animation(M) //show them they're getting a bad time
+				M.apply_damage(0.3*reac_volume, BRUTE)
 
 /datum/reagent/blob/synchronous_mesh/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(!isnull(cause)) //the cause isn't fire or bombs, so split the damage
@@ -274,7 +278,7 @@
 /datum/reagent/blob/pressurized_slime/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
 	var/turf/simulated/T = get_turf(M)
-	if(istype(T, /turf/simulated))
+	if(istype(T, /turf/simulated) && prob(reac_volume))
 		T.MakeSlippery(TURF_WET_WATER)
 	if(M)
 		M.apply_damage(0.4*reac_volume, BRUTE)
@@ -293,7 +297,7 @@
 	if(!isnull(cause))
 		B.visible_message("<span class='warning'><b>The blob ruptures, spraying the area with liquid!</b></span>")
 	for(var/turf/simulated/T in range(1, B))
-		if(prob(90))
+		if(prob(50))
 			T.MakeSlippery(TURF_WET_WATER)
 
 //does brute damage and throws or pulls nearby objects at the target
@@ -308,7 +312,7 @@
 	reagent_vortex(M, 0, reac_volume)
 	reac_volume = ..()
 	if(M)
-		M.apply_damage(0.6*reac_volume, BRUTE)
+		M.apply_damage(0.4*reac_volume, BRUTE)
 
 //does brute damage and throws or pushes nearby objects away from the target
 /datum/reagent/blob/b_sorium
@@ -322,7 +326,7 @@
 	reagent_vortex(M, 1, reac_volume)
 	reac_volume = ..()
 	if(M)
-		M.apply_damage(0.6*reac_volume, BRUTE)
+		M.apply_damage(0.5*reac_volume, BRUTE)
 
 /datum/reagent/blob/proc/reagent_vortex(mob/living/M, setting_type, reac_volume)
 	if(M)

@@ -21,22 +21,15 @@
 	var/update_flag = 0
 	var/gas_type = ""
 	var/static/list/label2types = list(
-		"caution" = /obj/machinery/portable_atmospherics/canister,
-		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
 		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
-		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-		"air" = /obj/machinery/portable_atmospherics/canister/air
+		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
+		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+		"air" = /obj/machinery/portable_atmospherics/canister/air,
+		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
 
-
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide
-	name = "n2o canister"
-	desc = "Nitrous oxide gas. Known to cause drowsiness."
-	icon_state = "redws"
-	canister_color = "redws"
-	gas_type = "n2o"
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"
 	desc = "Nitrogen gas. Reportedly useful for something."
@@ -49,18 +42,28 @@
 	icon_state = "blue"
 	canister_color = "blue"
 	gas_type = "o2"
-/obj/machinery/portable_atmospherics/canister/toxins
-	name = "plasma canister"
-	desc = "Plasma gas. The reason YOU are here. Highly toxic."
-	icon_state = "orange"
-	canister_color = "orange"
-	gas_type = "plasma"
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "co2 canister"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	icon_state = "black"
 	canister_color = "black"
 	gas_type = "co2"
+/obj/machinery/portable_atmospherics/canister/toxins
+	name = "plasma canister"
+	desc = "Plasma gas. The reason YOU are here. Highly toxic."
+	icon_state = "orange"
+	canister_color = "orange"
+	gas_type = "plasma"
+/obj/machinery/portable_atmospherics/canister/agent_b
+	name = "agent b canister"
+	desc = "Oxygen Agent B. You're not quite sure what it does."
+	gas_type = "agent_b"
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide
+	name = "n2o canister"
+	desc = "Nitrous oxide gas. Known to cause drowsiness."
+	icon_state = "redws"
+	canister_color = "redws"
+	gas_type = "n2o"
 /obj/machinery/portable_atmospherics/canister/air
 	name = "air canister"
 	desc = "Pre-mixed air."
@@ -289,58 +292,64 @@ update_flag
 	return data
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
+	if(..())
+		return
 	switch(action)
 		if("relabel")
-			var/label = input("Label canister:", "Gas Canister") as null|anything in label2types
-			var/newtype = label2types[label]
-			if(newtype)
-				var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc)
-				replacement.air_contents.copy_from(air_contents)
-				replacement.interact(usr)
-				qdel(src)
+			var/label = input("New canister label:", name) as null|anything in label2types
+			if(label && !..())
+				var/newtype = label2types[label]
+				if(newtype)
+					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc)
+					replacement.air_contents.copy_from(air_contents)
+					replacement.update_icon()
+					replacement.interact(usr)
+					qdel(src)
 		if("pressure")
-			switch(params["pressure"])
-				if("custom")
-					var/custom = input(usr, "What rate do you set the regulator to? The dial reads from [CAN_MIN_RELEASE_PRESSURE] to [CAN_MAX_RELEASE_PRESSURE].") as null|num
-					if(custom)
-						release_pressure = custom
-				if("reset")
-					release_pressure = CAN_DEFAULT_RELEASE_PRESSURE
-				if("min")
-					release_pressure = CAN_MIN_RELEASE_PRESSURE
-				if("max")
-					release_pressure = CAN_MAX_RELEASE_PRESSURE
-			release_pressure = Clamp(round(release_pressure), CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
+			var/pressure = params["pressure"]
+			if(pressure == "reset")
+				pressure = CAN_DEFAULT_RELEASE_PRESSURE
+				. = TRUE
+			else if(pressure == "min")
+				pressure = CAN_MIN_RELEASE_PRESSURE
+				. = TRUE
+			else if(pressure == "max")
+				pressure = CAN_MAX_RELEASE_PRESSURE
+				. = TRUE
+			else if(pressure == "input")
+				pressure = input("New release pressure ([CAN_MIN_RELEASE_PRESSURE]-[CAN_MAX_RELEASE_PRESSURE] kPa):", name, release_pressure) as num|null
+				if(pressure && !..())
+					. = TRUE
+			else if(text2num(pressure) != null)
+				pressure = text2num(pressure)
+				. = TRUE
+			if(.)
+				release_pressure = Clamp(round(pressure), CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
+				investigate_log("was set to [release_pressure] kPa by [key_name(usr)]", "atmos")
 		if("valve")
 			var/logmsg
+			valve_open = !valve_open
 			if(valve_open)
-				if(holding)
-					logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into the [holding]<br>"
-				else
-					logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into the <span class='boldannounce'>air</span><br>"
+				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
+				if(!holding)
+					var/plasma = air_contents.gases["plasma"]
+					var/n2o = air_contents.gases["n2o"]
+					if(n2o || plasma)
+						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+						log_admin("[key_name(usr)] opened a canister that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [x], [y], [z]")
 			else
-				if(holding)
-					logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting the transfer into the [holding]<br>"
-				else
-					logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting the transfer into the <span class='boldannounce'>air</span><br>"
-					if(air_contents.gases["plasma"])
-						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains plasma! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-						log_admin("[key_name(usr)] opened a canister that contains plasma at [x], [y], [z]")
-					if(air_contents.gases["n2o"])
-						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains N2O! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-						log_admin("[key_name(usr)] opened a canister that contains N2O at [x], [y], [z]")
+				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 			investigate_log(logmsg, "atmos")
 			release_log += logmsg
-			valve_open = !valve_open
+			. = TRUE
 		if("eject")
 			if(holding)
 				if(valve_open)
 					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
 				holding.loc = loc
 				holding = null
-	add_fingerprint(usr)
+				. = TRUE
 	update_icon()
-	return 1
 
 /obj/machinery/portable_atmospherics/canister/New(loc)
 	..()
@@ -354,21 +363,8 @@ update_flag
 		air_contents.assert_gas(gas_type)
 		air_contents.gases[gas_type][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-//Dirty way to fill room with gas. However it is a bit easier to do than creating some floor/engine/n2o -rastaf0
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide/roomfiller/New()
-	..()
-
-	air_contents.gases["n2o"][MOLES] = 9*4000
-	spawn(10)
-		var/turf/simulated/location = src.loc
-		if (istype(src.loc))
-			while (!location.air)
-				sleep(10)
-			location.assume_air(air_contents)
-			air_contents = new
-	return 1
-
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
 	air_contents.assert_gases("o2","n2")
-	air_contents.gases["o2"][MOLES] = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-	air_contents.gases["n2"][MOLES] = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	// PV = nRT
+	air_contents.gases["o2"][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.gases["n2"][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)

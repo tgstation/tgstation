@@ -138,12 +138,8 @@
 				Robot.notify_ai(1)
 			else
 				for(var/obj/item/W in M)
-					if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
+					if(!M.unEquip(W))
 						qdel(W)
-						continue
-					W.layer = initial(W.layer)
-					W.loc = M.loc
-					W.dropped(M)
 
 			var/mob/living/new_mob
 
@@ -156,7 +152,7 @@
 					var/robot = pick("cyborg","syndiborg","drone")
 					switch(robot)
 						if("cyborg")
-							new_mob = new /mob/living/silicon/robot(M.loc)
+								new_mob = new /mob/living/silicon/robot(M.loc)
 						if("syndiborg")
 							new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
 						if("drone")
@@ -244,7 +240,7 @@
 							if("cow")
 								new_mob = new /mob/living/simple_animal/cow(M.loc)
 							if("lizard")
-								new_mob = new /mob/living/simple_animal/lizard(M.loc)
+								new_mob = new /mob/living/simple_animal/hostile/lizard(M.loc)
 							if("fox")
 								new_mob = new /mob/living/simple_animal/pet/fox(M.loc)
 							if("butterfly")

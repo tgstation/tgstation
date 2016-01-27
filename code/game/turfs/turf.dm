@@ -163,8 +163,8 @@
 					total.temperature += S.air.temperature
 				turf_count++
 
+		air.copy_from(total)
 		if(turf_count) //if there weren't any open turfs, no need to update.
-			air.copy_from(total)
 			var/list/air_gases = air.gases
 			for(var/id in air_gases)
 				air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like

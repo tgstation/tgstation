@@ -7,7 +7,7 @@
 	opacity = 0
 	anchored = 1
 	density = 0
-	layer = OBJ_LAYER - 0.5 //above table, below windoor/airlock/foamed metal.
+	layer = MOB_LAYER + 0.5
 	mouse_opacity = 0
 	var/amount = 3
 	animate_movement = 0
@@ -271,13 +271,6 @@
 /obj/structure/foamedmetal/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	if (istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		G.affecting.loc = src.loc
-		visible_message("<span class='danger'>[G.assailant] smashes [G.affecting] through the foamed metal wall.</span>")
-		qdel(I)
-		qdel(src)
-		return
 
 	if(prob(I.force*20 - metal*25))
 		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \

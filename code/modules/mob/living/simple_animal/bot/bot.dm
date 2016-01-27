@@ -109,6 +109,7 @@
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
 		Radio.keyslot = new radio_key
+	Radio.subspace_transmission = 1
 	Radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
 	Radio.recalculateChannels()
 
@@ -170,7 +171,7 @@
 /mob/living/simple_animal/bot/adjustHealth(amount)
 	if(amount>0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
-	return ..(amount)
+	. = ..()
 
 /mob/living/simple_animal/bot/updatehealth()
 	..()
@@ -259,15 +260,7 @@
 /mob/living/simple_animal/bot/emp_act(severity)
 	var/was_on = on
 	stat |= EMPED
-	var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( loc )
-	pulse2.icon = 'icons/effects/effects.dmi'
-	pulse2.icon_state = "empdisable"
-	pulse2.name = "emp sparks"
-	pulse2.anchored = 1
-	pulse2.dir = pick(cardinal)
-
-	spawn(10)
-		qdel(pulse2)
+	PoolOrNew(/obj/effect/overlay/temp/emp/pulse, loc)
 	if (on)
 		turn_off()
 	spawn(severity*300)
@@ -283,13 +276,8 @@
 /mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
 	if((!on) || (!message))
 		return
-	if(channel)
-		if(!Radio.channels[channel]) //Ignore lack of keys
-			Radio.channels[channel] = 1
-			Radio.talk_into(src, message, channel)
-			Radio.channels[channel] = 0
-		else
-			Radio.talk_into(src, message, channel)
+	if(channel && Radio.channels[channel])// Use radio if we have channel key
+		Radio.talk_into(src, message, channel)
 	else
 		say(message)
 	return

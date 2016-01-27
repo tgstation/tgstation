@@ -16,17 +16,18 @@
 	var/width = 0 // The window width.
 	var/height = 0 // The window height
 	var/window_options = list( // Extra options to winset().
-	  "focus" = 0,
-	  "titlebar" = 1,
-	  "can_resize" = 1,
-	  "can_minimize" = 1,
-	  "can_maximize" = 0,
-	  "can_close" = 1,
-	  "auto_format" = 0
+	  "focus" = FALSE,
+	  "titlebar" = TRUE,
+	  "can_resize" = TRUE,
+	  "can_minimize" = TRUE,
+	  "can_maximize" = FALSE,
+	  "can_close" = TRUE,
+	  "auto_format" = FALSE
 	)
 	var/style = "nanotrasen" // The style to be used for this UI.
 	var/interface // The interface (template) to be used for this UI.
-	var/auto_update = 1 // Update the UI every MC tick.
+	var/auto_update = TRUE // Update the UI every MC tick.
+	var/initialized = FALSE // If the UI has been initialized yet.
 	var/list/initial_data // The data (and datastructure) used to initialize the UI.
 	var/status = UI_INTERACTIVE // The status/visibility of the UI.
 	var/datum/ui_state/state = null // Topic state used to determine status/interactability.
@@ -242,7 +243,6 @@
 	json_data["config"] = get_config_data()
 	if(!isnull(data))
 		json_data["data"] = data
-		json_data["adata"] = data
 
 	// Generate the JSON.
 	var/json = JSON.stringify(json_data)
@@ -259,6 +259,9 @@
   * If the src_object's ui_act() returns 1, update all UIs attacked to it.
  **/
 /datum/tgui/Topic(href, href_list)
+	if(user != usr)
+		return // Something is not right here.
+
 	var/action = href_list["action"]
 	var/params = href_list; params -= "action"
 
@@ -266,6 +269,7 @@
 	switch(action)
 		if("tgui:initialize")
 			user << output(url_encode(get_json(initial_data)), "[window_id].browser:initialize")
+			initialized = TRUE
 			return
 		if("tgui:link")
 			user << link(params["url"])
@@ -278,10 +282,7 @@
 			return
 
 	update_status(push = 0) // Update the window state.
-	if(status != UI_INTERACTIVE || user != usr)
-		return // If UI is not interactive or usr calling Topic is not the UI user.
-
-	var/update = src_object.ui_act(action, params, state) // Call ui_act() on the src_object.
+	var/update = src_object.ui_act(action, params, src, state) // Call ui_act() on the src_object.
 	if(src_object && update)
 		SStgui.update_uis(src_object) // If we have a src_object and its ui_act() told us to update.
 
@@ -294,7 +295,8 @@
   * optional force bool If the UI should be forced to update.
  **/
 /datum/tgui/process(force = 0)
-	if(!src_object || !user) // If the object or user died (or something else), abort.
+	var/datum/host = src_object.ui_host()
+	if(!src_object || !host || !user) // If the object or user died (or something else), abort.
 		close()
 		return
 
@@ -313,12 +315,13 @@
  **/
 /datum/tgui/proc/push_data(data, force = 0)
 	update_status(push = 0) // Update the window state.
+	if(!initialized)
+		return // Cannot update UI if it is not set up yet.
 	if(status <= UI_DISABLED && !force)
 		return // Cannot update UI, we have no visibility.
 
 	// Send the new JSON to the update() Javascript function.
 	user << output(url_encode(get_json(data)), "[window_id].browser:update")
-
 
  /**
   * private
@@ -339,8 +342,7 @@
   * optional push bool Push an update to the UI (an update is always sent for UI_DISABLED).
  **/
 /datum/tgui/proc/update_status(push = 0)
-	var/obj/host = src_object.ui_host()
-	var/status = host.ui_status(user, state)
+	var/status = src_object.ui_status(user, state)
 	if(master_ui)
 		status = min(status, master_ui.status)
 

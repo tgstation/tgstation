@@ -22,7 +22,7 @@
       action='pressure' params='{"pressure": "reset"}'>Reset</ui-button>
     <ui-button icon='minus' state='{{data.releasePressure > data.minReleasePressure ? null : "disabled"}}'
       action='pressure' params='{"pressure": "min"}'>Min</ui-button>
-    <ui-button icon='pencil' action='pressure' params='{"pressure": "custom"}'>Set</ui-button>
+    <ui-button icon='pencil' action='pressure' params='{"pressure": "input"}'>Set</ui-button>
     <ui-button icon='plus' state='{{data.releasePressure < data.maxReleasePressure ? null : "disabled"}}'
       action='pressure' params='{"pressure": "max"}'>Max</ui-button>
   </ui-section>

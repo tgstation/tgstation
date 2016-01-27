@@ -380,8 +380,10 @@
 				var/datum/data/record/R = find_record("name", perpname, data_core.general)
 				if(href_list["photo_front"] || href_list["photo_side"])
 					if(R)
-						if(!H.canUseHUD()) return
-						else if(!istype(H.glasses, /obj/item/clothing/glasses/hud)) return
+						if(!H.canUseHUD())
+							return
+						else if(!istype(H.glasses, /obj/item/clothing/glasses/hud))
+							return
 						var/obj/item/weapon/photo/P = null
 						if(href_list["photo_front"])
 							P = R.fields["photo_front"]
@@ -395,16 +397,20 @@
 						if(href_list["p_stat"])
 							var/health = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
 							if(R)
-								if(!H.canUseHUD()) return
-								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health)) return
+								if(!H.canUseHUD())
+									return
+								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
+									return
 								if(health && health != "Cancel")
 									R.fields["p_stat"] = health
 							return
 						if(href_list["m_stat"])
 							var/health = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
 							if(R)
-								if(!H.canUseHUD()) return
-								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health)) return
+								if(!H.canUseHUD())
+									return
+								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
+									return
 								if(health && health != "Cancel")
 									R.fields["m_stat"] = health
 							return
@@ -485,8 +491,10 @@
 
 								if(href_list["view"])
 									if(R)
-										if(!H.canUseHUD()) return
-										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
+										if(!H.canUseHUD())
+											return
+										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+											return
 										usr << "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]"
 										usr << "<b>Minor Crimes:</b>"
 										for(var/datum/data/crime/c in R.fields["mi_crim"])
@@ -510,9 +518,12 @@
 												var/t1 = stripped_input("Please input minor crime names:", "Security HUD", "", null)
 												var/t2 = stripped_multiline_input("Please input minor crime details:", "Security HUD", "", null)
 												if(R)
-													if (!t1 || !t2 || !allowed_access) return
-													else if(!H.canUseHUD()) return
-													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
+													if (!t1 || !t2 || !allowed_access)
+														return
+													else if(!H.canUseHUD())
+														return
+													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+														return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMinorCrime(R.fields["id"], crime)
 													usr << "<span class='notice'>Successfully added a minor crime.</span>"
@@ -522,9 +533,12 @@
 												var/t1 = stripped_input("Please input major crime names:", "Security HUD", "", null)
 												var/t2 = stripped_multiline_input("Please input major crime details:", "Security HUD", "", null)
 												if(R)
-													if (!t1 || !t2 || !allowed_access) return
-													else if (!H.canUseHUD()) return
-													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
+													if (!t1 || !t2 || !allowed_access)
+														return
+													else if (!H.canUseHUD())
+														return
+													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+														return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMajorCrime(R.fields["id"], crime)
 													usr << "<span class='notice'>Successfully added a major crime.</span>"
@@ -532,8 +546,10 @@
 
 								if(href_list["view_comment"])
 									if(R)
-										if(!H.canUseHUD()) return
-										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
+										if(!H.canUseHUD())
+											return
+										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+											return
 										usr << "<b>Comments/Log:</b>"
 										var/counter = 1
 										while(R.fields[text("com_[]", counter)])
@@ -546,9 +562,12 @@
 									if(R)
 										var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
 										if(R)
-											if (!t1 || !allowed_access) return
-											else if(!H.canUseHUD()) return
-											else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
+											if (!t1 || !allowed_access)
+												return
+											else if(!H.canUseHUD())
+												return
+											else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+												return
 											var/counter = 1
 											while(R.fields[text("com_[]", counter)])
 												counter++
@@ -873,3 +892,9 @@
 		cuff_resist(wear_suit)
 	else
 		..()
+
+/mob/living/carbon/human/replace_records_name(oldname,newname) // Only humans have records right now, move this up if changed.
+	for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
+		var/datum/data/record/R = find_record("name", oldname, L)
+		if(R)
+			R.fields["name"] = newname

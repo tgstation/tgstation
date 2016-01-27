@@ -241,6 +241,8 @@
 			criminals = !criminals
 		if("shootall")
 			stun_all = !stun_all
+		if("checkxenos")
+			check_anomalies = !check_anomalies
 	updateUsrDialog()
 
 
@@ -271,21 +273,21 @@
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
 			user << "<span class='notice'>You begin prying the metal coverings off...</span>"
-			sleep(20)
-			if(prob(70))
-				user << "<span class='notice'>You remove the turret and salvage some components.</span>"
-				if(installation)
-					var/obj/item/weapon/gun/energy/Gun = new installation(loc)
-					Gun.power_supply.charge = gun_charge
-					Gun.update_icon()
-					lasercolor = null
-				if(prob(50))
-					new /obj/item/stack/sheet/metal(loc, rand(1,4))
-				if(prob(50))
-					new /obj/item/device/assembly/prox_sensor(loc)
-			else
-				user << "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>"
-			qdel(src)
+			if(do_after(user, 20/I.toolspeed, target = src))
+				if(prob(70))
+					user << "<span class='notice'>You remove the turret and salvage some components.</span>"
+					if(installation)
+						var/obj/item/weapon/gun/energy/Gun = new installation(loc)
+						Gun.power_supply.charge = gun_charge
+						Gun.update_icon()
+						lasercolor = null
+					if(prob(50))
+						new /obj/item/stack/sheet/metal(loc, rand(1,4))
+					if(prob(50))
+						new /obj/item/device/assembly/prox_sensor(loc)
+				else
+					user << "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>"
+				qdel(src)
 
 	else if((istype(I, /obj/item/weapon/wrench)) && (!on))
 		if(raised) return

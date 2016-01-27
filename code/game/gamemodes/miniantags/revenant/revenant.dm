@@ -141,7 +141,8 @@
 
 /mob/living/simple_animal/revenant/adjustHealth(amount)
 	if(!revealed)
-		return
+		return 0
+	. = amount
 	essence = max(0, essence-amount)
 	if(essence == 0)
 		src << "<span class='revendanger'>You feel your essence fraying!</span>"

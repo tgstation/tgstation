@@ -21,7 +21,7 @@
 		listening = 0
 		say("Activation message is '[recorded]'.")
 	else
-		if(findtext(raw_message, recorded))
+		if(findtextEx(raw_message, recorded))
 			spawn(10)
 				pulse(0)
 

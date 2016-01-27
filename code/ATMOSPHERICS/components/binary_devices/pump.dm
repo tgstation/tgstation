@@ -15,7 +15,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/pump
 	icon_state = "pump_map"
 	name = "gas pump"
-	desc = "A pump"
+	desc = "A pump that moves gas by pressure."
 
 	can_unwrench = 1
 
@@ -54,7 +54,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	var/output_starting_pressure = air2.return_pressure()
 
-	if( (target_pressure - output_starting_pressure) < 0.01)
+	if((target_pressure - output_starting_pressure) < 0.01)
 		//No need to pump gas if target is already reached!
 		return 1
 
@@ -98,12 +98,6 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/components/binary/pump/attack_hand(mob/user)
-	if(!src.allowed(usr))
-		usr << "<span class='danger'>Access denied.</span>"
-		return
-	..()
-
 /obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 																datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -114,24 +108,34 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/pump/get_ui_data()
 	var/data = list()
 	data["on"] = on
-	data["set_pressure"] = round(target_pressure)
+	data["pressure"] = round(target_pressure)
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 	return data
 
 /obj/machinery/atmospherics/components/binary/pump/ui_act(action, params)
+	if(..())
+		return
 	switch(action)
 		if("power")
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			. = TRUE
 		if("pressure")
-			switch(params["pressure"])
-				if("max")
-					target_pressure = MAX_OUTPUT_PRESSURE
-				if("custom")
-					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
-			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+			var/pressure = params["pressure"]
+			if(pressure == "max")
+				pressure = MAX_OUTPUT_PRESSURE
+				. = TRUE
+			else if(pressure == "input")
+				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, target_pressure) as num|null
+				if(pressure && !..())
+					. = TRUE
+			else if(text2num(pressure) != null)
+				pressure = text2num(pressure)
+				. = TRUE
+			if(.)
+				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 	update_icon()
-	return 1
 
 /obj/machinery/atmospherics/components/binary/pump/atmosinit()
 	..()
@@ -157,12 +161,10 @@ Thus, the two variables affect pump operation are set in New():
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
 
 	if("status" in signal.data)
-		spawn(2)
-			broadcast_status()
-		return //do not update_icon
-
-	spawn(2)
 		broadcast_status()
+		return
+
+	broadcast_status()
 	update_icon()
 	return
 

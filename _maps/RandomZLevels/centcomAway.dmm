@@ -176,7 +176,7 @@
 "dt" = (/turf/simulated/floor/plasteel{icon_state = "red"; dir = 4},/area/awaymission/centcomAway/cafe)
 "du" = (/turf/simulated/wall/shuttle{icon_state = "swall0"; dir = 2},/area/awaymission/centcomAway/hangar)
 "dv" = (/obj/structure/closet/crate,/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 4},/area/awaymission/centcomAway/hangar)
-"dw" = (/obj/structure/dispenser,/turf/simulated/floor/plasteel{dir = 6; icon_state = "yellow"},/area/awaymission/centcomAway/general)
+"dw" = (/obj/structure/tank_dispenser,/turf/simulated/floor/plasteel{dir = 6; icon_state = "yellow"},/area/awaymission/centcomAway/general)
 "dx" = (/turf/simulated/floor/plasteel{icon_state = "red"; dir = 8},/area/awaymission/centcomAway/cafe)
 "dy" = (/obj/structure/closet/firecloset/full,/turf/simulated/floor/plating,/area/awaymission/centcomAway/maint)
 "dz" = (/obj/structure/bed,/turf/simulated/floor/plasteel/shuttle,/area/awaymission/centcomAway/hangar)

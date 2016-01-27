@@ -612,3 +612,8 @@ var/const/GALOSHES_DONT_HELP = 4
 			nutrition -= lost_nutrition
 			adjustToxLoss(-3)
 	return 1
+
+/mob/living/carbon/fully_replace_character_name(oldname,newname)
+	..()
+	if(dna)
+		dna.real_name = real_name

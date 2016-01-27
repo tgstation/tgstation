@@ -1,6 +1,6 @@
 import {winset} from './byond'
 
-function lock (x, y) {
+export function lock (x, y) {
   if (x < 0) { // Left
     x = 0
   } else if (x + window.innerWidth > window.screen.availWidth) { // Right
@@ -16,7 +16,7 @@ function lock (x, y) {
   return {x, y}
 }
 
-function drag (event) {
+export function drag (event) {
   event.preventDefault()
 
   if (this.get('x')) {
@@ -28,13 +28,13 @@ function drag (event) {
   this.set({ x: event.screenX, y: event.screenY })
 }
 
-function sane (x, y) {
+export function sane (x, y) {
   x = Math.clamp(100, window.screen.width, x)
   y = Math.clamp(100, window.screen.height, y)
   return {x, y}
 }
 
-function resize (event) {
+export function resize (event) {
   event.preventDefault()
 
   if (this.get('x')) {
@@ -45,5 +45,3 @@ function resize (event) {
   }
   this.set({ x: event.screenX, y: event.screenY })
 }
-
-export { drag, resize }

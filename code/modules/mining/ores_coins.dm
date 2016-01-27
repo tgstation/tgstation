@@ -127,7 +127,6 @@
 	var/det_time = 100
 	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
 	var/attacher = "UNKNOWN"
-	var/datum/wires/explosive/gibtonite/wires
 
 /obj/item/weapon/twohanded/required/gibtonite/Destroy()
 	qdel(wires)
@@ -137,15 +136,15 @@
 /obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/device/assembly/igniter))
 		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
-		wires = new(src)
+		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
 		qdel(I)
 		overlays += "Gibtonite_igniter"
 		return
 
 	if(wires && !primed)
-		if(wires.IsInteractionTool(I))
-			wires.Interact(user)
+		if(is_wire_tool(I))
+			wires.interact(user)
 			return
 
 	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator) || I.force >= 10)
@@ -162,7 +161,7 @@
 
 /obj/item/weapon/twohanded/required/gibtonite/attack_self(user)
 	if(wires)
-		wires.Interact(user)
+		wires.interact(user)
 	else
 		..()
 
