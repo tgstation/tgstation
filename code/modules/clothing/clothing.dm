@@ -206,7 +206,7 @@ BLIND     // can't see anything
 	if(held_knife)
 		user << "<span class='notice'>There's already something in [src].</span>"
 		return
-	if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/pen))//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
+	if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/weapon/switchblade))//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
 		if(!user.drop_item())
 			return
 		I.loc = src
