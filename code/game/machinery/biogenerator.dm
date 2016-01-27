@@ -453,7 +453,7 @@
 	if(!recipe)
 		return 0
 
-	if(!recipe.other_amounts.len || !recipe.other_amounts.Find(num))
+	if(!(num in (recipe.other_amounts + 1)))
 		return 0
 
 	if(check_cost(recipe.cost*num))
