@@ -194,3 +194,8 @@
 	if(is_on_ears(/obj/item/clothing/ears/earmuffs)||is_on_ears(/obj/item/device/radio/headset/headset_earmuffs))
 		detect = 1
 	return detect
+
+/mob/living/carbon/human/proc/has_reagent_in_blood(var/reagent_name)
+	if(!reagents)
+		return 0
+	return reagents.has_reagent(reagent_name)

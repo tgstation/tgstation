@@ -620,7 +620,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/manipulator" = 2)
 
 /obj/item/weapon/circuitboard/sleeper/mancrowave
-	name = "Circuit board (Mancrowave)"
+	name = "Circuit board (Thermal Homeostasis Regulator)"
 	build_path = "/obj/machinery/sleeper/mancrowave"
 
 /obj/item/weapon/circuitboard/biogenerator

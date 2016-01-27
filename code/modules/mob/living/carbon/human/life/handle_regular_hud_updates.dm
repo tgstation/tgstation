@@ -218,7 +218,11 @@
 			else									fire.icon_state = "fire0"
 
 		if(bodytemp)
-			if(!(get_thermal_loss(loc.return_air()) > 0.1) || bodytemperature > T0C + 50)
+			if(has_reagent_in_blood("capsaicin"))
+				bodytemp.icon_state = "temp4"
+			else if(has_reagent_in_blood("frostoil"))
+				bodytemp.icon_state = "temp-4"
+			else if(!(get_thermal_loss(loc.return_air()) > 0.1) || bodytemperature > T0C + 50)
 				switch(bodytemperature) //310.055 optimal body temp
 					if(370 to INFINITY)		bodytemp.icon_state = "temp4"
 					if(350 to 370)			bodytemp.icon_state = "temp3"
