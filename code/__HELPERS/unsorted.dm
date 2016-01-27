@@ -801,7 +801,7 @@ var/global/list/common_tools = list(
 Checks if that loc and dir has a item on the wall
 */
 var/list/WALLITEMS = list(
-	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
+	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
@@ -866,7 +866,7 @@ var/list/WALLITEMS_INVERSE = list(
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
 			if(id in hardcoded_gases || gas_concentration > 0.01) //ensures the four primary gases are always shown.
-				user << "<span class='notice'>[cached_gases[id][GAS_NAME]]: [round(gas_concentration*100)] %</span>"
+				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100)] %</span>"
 
 		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
 	else

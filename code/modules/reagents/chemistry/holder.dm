@@ -282,7 +282,7 @@ var/const/INJECT = 5 //injection
 	update_total()
 
 /datum/reagents/process()
-	if(my_atom.flags & NOREACT)
+	if(my_atom && (my_atom.flags & NOREACT))
 		return
 	for(var/datum/reagent/R in reagent_list)
 		R.on_tick()

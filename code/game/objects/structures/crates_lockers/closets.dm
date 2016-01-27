@@ -197,14 +197,6 @@
 	if(user.loc == src)
 		return
 	if(opened)
-		if(istype(W, /obj/item/weapon/grab))
-			if(large)
-				var/obj/item/weapon/grab/G = W
-				MouseDrop_T(G.affecting, user)	//act like they were dragged onto the closet
-				user.drop_item()
-			else
-				user << "<span class='notice'>The locker is too small to stuff [W] into!</span>"
-			return
 		if(istype(W,/obj/item/tk_grab))
 			return 0
 		if(istype(W, cutting_tool))

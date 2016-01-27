@@ -12,12 +12,10 @@ Contents:
 
 //Handles elporting while grabbing someone
 /obj/item/clothing/suit/space/space_ninja/proc/handle_teleport_grab(turf/T, mob/living/H)
-	if(istype(H.get_active_hand(),/obj/item/weapon/grab))//Handles grabbed persons.
-		var/obj/item/weapon/grab/G = H.get_active_hand()
-		G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
-	if(istype(H.get_inactive_hand(),/obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = H.get_inactive_hand()
-		G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
+	if(H.pulling && (istype(H.pulling, /mob/living)))
+		var/mob/living/victim =	H.pulling
+		if(!victim.anchored)
+			victim.forceMove(locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z))
 	return
 
 

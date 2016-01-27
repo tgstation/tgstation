@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Capture the flag has been added in space near central command. The spawners are disabled by default, so be sure to harass admins when you die until they let you play. The arena was mapped by Ausops."

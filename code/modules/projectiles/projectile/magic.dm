@@ -211,7 +211,7 @@
 							if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)
 							if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)
 							if("cow")		new_mob = new /mob/living/simple_animal/cow(M.loc)
-							if("lizard")	new_mob = new /mob/living/simple_animal/lizard(M.loc)
+							if("lizard")	new_mob = new /mob/living/simple_animal/hostile/lizard(M.loc)
 							if("fox") new_mob = new /mob/living/simple_animal/pet/fox(M.loc)
 							if("butterfly")	new_mob = new /mob/living/simple_animal/butterfly(M.loc)
 							else			new_mob = new /mob/living/simple_animal/chick(M.loc)

@@ -199,7 +199,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/t = ""
 	for(var/id in env_gases)
 		if(id in hardcoded_gases || env_gases[id][MOLES])
-			t+= "[env_gases[id][GAS_NAME]] : [env_gases[id][MOLES]]\n"
+			t+= "[env_gases[id][GAS_META][META_GAS_NAME]] : [env_gases[id][MOLES]]\n"
 
 	usr << t
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -469,8 +469,8 @@ var/global/list/g_fancy_list_of_types = null
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
 
-	for(var/obj/machinery/alarm/alarm in machines)
-		var/area/A = get_area(alarm)
+	for(var/obj/machinery/airalarm/AA in machines)
+		var/area/A = get_area(AA)
 		if(!(A.type in areas_with_air_alarm))
 			areas_with_air_alarm.Add(A.type)
 

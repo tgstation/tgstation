@@ -140,7 +140,7 @@
 
 	return data
 
-/obj/item/device/radio/ui_act(action, params)
+/obj/item/device/radio/ui_act(action, params, datum/tgui/ui)
 	if(..())
 		return
 	switch(action)
@@ -165,7 +165,7 @@
 				set_frequency(frequency)
 				if(frequency == traitor_frequency && hidden_uplink)
 					hidden_uplink.interact(usr)
-					SStgui.close_uis(src)
+					ui.close()
 		if("listen")
 			listening = !listening
 			. = TRUE
