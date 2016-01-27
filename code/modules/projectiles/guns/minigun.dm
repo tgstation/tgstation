@@ -37,26 +37,32 @@
 	if(W == gun) //Don't need armed check, because if you have the gun assume its armed.
 		gun.unwield(user)
 		user.unEquip(gun,1)
-		attach_gun()
+		attach_gun(user)
 	else
 		..()
 
+/obj/item/weapon/gun/projectile/minigun/dropped(mob/user)
+	if(armed)
+		attach_gun(user)
+	..()
+
 /obj/item/weapon/minigunpack/MouseDrop(obj/over_object) //Shamelessly copied from defibs.
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/H = src.loc
-		switch(over_object.name)
-			if("r_hand")
-				if(H.r_hand)
-					return
-				if(!H.unEquip(src))
-					return
-				H.put_in_r_hand(src)
-			if("l_hand")
-				if(H.l_hand)
-					return
-				if(!H.unEquip(src))
-					return
-				H.put_in_l_hand(src)
+	if(!armed)
+		if(ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			switch(over_object.name)
+				if("r_hand")
+					if(H.r_hand)
+						return
+					if(!H.unEquip(src))
+						return
+					H.put_in_r_hand(src)
+				if("l_hand")
+					if(H.l_hand)
+						return
+					if(!H.unEquip(src))
+						return
+					H.put_in_l_hand(src)
 	return
 
 /obj/item/weapon/minigunpack/update_icon()
@@ -66,9 +72,15 @@
 		icon_state = "minipack_g"
 
 
-/obj/item/weapon/minigunpack/proc/attach_gun()
+/obj/item/weapon/minigunpack/proc/attach_gun(var/mob/user)
+	if(!gun)
+		gun = new(src)
 	gun.forceMove(src)
 	armed = 0
+	if(user)
+		user << "<span class='notice'>You attach the [gun.name] to the [name].</span>"
+	else
+		src.visible_message("<span class='warning'>The [gun.name] snaps back onto the [name]!</span>"
 	update_icon()
 
 
@@ -138,10 +150,9 @@
 	return
 
 /obj/item/weapon/gun/projectile/minigun/dropped(mob/user)
-	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		unwield(user)
-	ammo_pack.attach_gun()
+	ammo_pack.attach_gun(user)
 	return
 
 
