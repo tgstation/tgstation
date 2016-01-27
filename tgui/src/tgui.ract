@@ -4,7 +4,7 @@
 
 <script>
 import { winset } from 'util/byond'
-import { drag, resize } from 'util/dragresize'
+import { lock, drag, resize } from 'util/dragresize'
 
 component.exports = {
   components: {
@@ -56,7 +56,12 @@ component.exports = {
     })
   },
   oncomplete () {
-    this.find('main').focus() // Focus for the scrollbar.
+    // If the window starts off screen, pull it back.
+    if (this.get('config.locked')) {
+      let {x, y} = lock(window.screenLeft, window.screenTop)
+      winset(this.get('config.window'), 'pos', `${x},${y}`)
+    }
+
     winset('mapwindow.map', 'focus', true) // Give focus back to the map.
   }
 }

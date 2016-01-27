@@ -146,20 +146,23 @@
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "reset")
-				distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+				pressure = TANK_DEFAULT_RELEASE_PRESSURE
 				. = TRUE
 			else if(pressure == "min")
-				distribute_pressure = TANK_MIN_RELEASE_PRESSURE
+				pressure = TANK_MIN_RELEASE_PRESSURE
 				. = TRUE
 			else if(pressure == "max")
-				distribute_pressure = TANK_MAX_RELEASE_PRESSURE
+				pressure = TANK_MAX_RELEASE_PRESSURE
 				. = TRUE
 			else if(pressure == "input")
 				pressure = input("New release pressure ([TANK_MIN_RELEASE_PRESSURE]-[TANK_MAX_RELEASE_PRESSURE] kPa):", name, distribute_pressure) as num|null
-				. = .(action, list("pressure" = pressure))
+				if(pressure && !..())
+					. = TRUE
 			else if(text2num(pressure) != null)
-				distribute_pressure = Clamp(round(text2num(pressure)), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
+				pressure = text2num(pressure)
 				. = TRUE
+			if(.)
+				distribute_pressure = Clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 		if("valve")
 			var/mob/living/carbon/user = loc
 			if(!istype(user))

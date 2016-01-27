@@ -124,15 +124,17 @@ Thus, the two variables affect pump operation are set in New():
 		if("rate")
 			var/rate = params["rate"]
 			if(rate == "max")
-				transfer_rate = MAX_TRANSFER_RATE
+				rate = MAX_TRANSFER_RATE
 				. = TRUE
 			else if(rate == "input")
 				rate = input("New transfer rate (0-[MAX_TRANSFER_RATE] L/s):", name, transfer_rate) as num|null
-				. = .(action, list("rate" = rate))
+				if(rate && !..())
+					. = TRUE
 			else if(text2num(rate) != null)
-				transfer_rate = Clamp(text2num(rate), 0, MAX_TRANSFER_RATE)
+				rate = text2num(rate)
 				. = TRUE
 			if(.)
+				transfer_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", "atmos")
 	update_icon()
 
@@ -156,12 +158,10 @@ Thus, the two variables affect pump operation are set in New():
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
 
 	if("status" in signal.data)
-		spawn(2)
-			broadcast_status()
+		broadcast_status()
 		return //do not update_icon
 
-	spawn(2)
-		broadcast_status()
+	broadcast_status()
 	update_icon()
 	return
 
