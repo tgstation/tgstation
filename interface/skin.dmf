@@ -1064,7 +1064,7 @@ window "mainwindow"
 		text = "Hotkey Toggle"
 		image = ""
 		command = ".winset \"mainwindow.macro!=macro ? mainwindow.macro=macro hotkey_toggle.is-checked=false input.background-color=#D3B5B5 : mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#F0F0F0\""
-		is-flat = false
+		is-flat = true
 		stretch = false
 		is-checked = false
 		group = ""
@@ -1110,7 +1110,7 @@ window "mainwindow"
 		is-disabled = false
 		is-transparent = false
 		is-default = true
-		border = sunken
+		border = none
 		drop-zone = false
 		right-click = false
 		saved-params = "command"
@@ -1142,7 +1142,7 @@ window "mainwindow"
 		text = "Chat"
 		image = ""
 		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\""
-		is-flat = false
+		is-flat = true
 		stretch = false
 		is-checked = false
 		group = ""
