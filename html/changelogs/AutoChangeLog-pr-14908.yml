@@ -1,6 +1,0 @@
-author: MrStonedOne
-delete-after: True
-changes: 
-  - bugfix: "Fixes the powersink drawing less power than the smeses put out."
-  - tweak: "Made the powersink hold significantly more power before overloading and going boom."
-  - tweak: "Buffed the explosion of the power sink when it overloads. You are suggested to think twice about wiring the engine to the grid."
