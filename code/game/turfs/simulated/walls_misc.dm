@@ -53,10 +53,45 @@
 
 /turf/simulated/wall/shuttle
 	name = "wall"
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall1"
+	icon = 'icons/turf/walls/shuttle_wall.dmi'
+	icon_state = "shuttle"
 	walltype = "shuttle"
-	smooth = SMOOTH_FALSE
+	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	canSmoothWith = list(/turf/simulated/wall/shuttle, /obj/structure/window/shuttle)
+	fixed_underlay = list("icon"='icons/turf/space.dmi', "icon_state"="", "delete"=1)
+
+/turf/simulated/wall/shuttle/overplating
+	icon_state = "overplating"
+	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="plating")
+
+/turf/simulated/wall/shuttle/overblue
+	icon_state = "overblue"
+	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor")
+
+/turf/simulated/wall/shuttle/overwhite
+	icon_state = "overwhite"
+	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor3")
+
+/turf/simulated/wall/shuttle/overred
+	icon_state = "overred"
+	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor4")
+
+/turf/simulated/wall/shuttle/overpurple
+	icon_state = "overpurple"
+	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor5")
+
+/turf/simulated/wall/shuttle/overyellow
+	icon_state = "overyellow"
+	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor2")
+
+/turf/simulated/wall/smooth
+	name = "smooth wall"
+	icon = 'icons/turf/smooth_wall.dmi'
+	icon_state = "smooth"
+	walltype = "shuttle"
+	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL
+	canSmoothWith = null
+
 
 //sub-type to be used for interior shuttle walls
 //won't get an underlay of the destination turf on shuttle move
@@ -79,6 +114,7 @@
 /turf/simulated/wall/shuttle/copyTurf(turf/T)
 	. = ..()
 	T.transform = transform
+
 
 //why don't shuttle walls habe smoothwall? now i gotta do rotation the dirty way
 /turf/simulated/wall/shuttle/shuttleRotate(rotation)

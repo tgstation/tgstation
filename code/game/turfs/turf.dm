@@ -120,10 +120,15 @@
 
 //Creates a new turf
 /turf/proc/ChangeTurf(path)
-	if(!path)			return
-	if(path == type)	return src
+	if(!path)
+		return
+	if(path == type)
+		return src
 
 	SSair.remove_from_active(src)
+
+	var/s_appearance = appearance
+	var/nocopy = density || smooth //dont copy walls or smooth turfs
 
 	var/turf/W = new path(src)
 	if(istype(W, /turf/simulated))
@@ -131,6 +136,10 @@
 		W.RemoveLattice()
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
+
+	if(W.smooth & SMOOTH_DIAGONAL)
+		if(!W.apply_fixed_underlay())
+			W.underlays += !nocopy ? s_appearance : DEFAULT_UNDERLAY_IMAGE
 
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
