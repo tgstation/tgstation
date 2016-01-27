@@ -586,3 +586,11 @@
 	materials = list(MAT_METAL = 12000)
 	build_path = /obj/item/wallframe/turret_control
 	category = list("initial", "Construction")
+
+/datum/design/modular_receiver
+	name = "modular receiver"
+	id = "modular_receiver"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30000)
+	build_path = /obj/item/weaponcrafting/reciever
+	category = list("hacked", "Security")
