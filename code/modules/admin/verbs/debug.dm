@@ -232,14 +232,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	var/t = ""
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\verbs\\debug.dm:145: t+= "Nitrogen : [env.nitrogen]\n"
 	t += {"Nitrogen : [env.nitrogen]
 Oxygen : [env.oxygen]
 Plasma : [env.toxins]
 CO2: [env.carbon_dioxide]
 Pressure: [env.return_pressure()]"}
-	// END AUTOFIX
 	usr.show_message(t, 1)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

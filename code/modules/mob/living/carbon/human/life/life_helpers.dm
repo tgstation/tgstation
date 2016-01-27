@@ -31,22 +31,22 @@
 	//Handle normal clothing
 	if(head)
 		if(head.max_heat_protection_temperature && head.max_heat_protection_temperature >= temperature)
-			thermal_protection_flags |= head.heat_protection
+			thermal_protection_flags |= head.body_parts_covered
 	if(wear_suit)
 		if(wear_suit.max_heat_protection_temperature && wear_suit.max_heat_protection_temperature >= temperature)
-			thermal_protection_flags |= wear_suit.heat_protection
+			thermal_protection_flags |= wear_suit.body_parts_covered
 	if(w_uniform)
 		if(w_uniform.max_heat_protection_temperature && w_uniform.max_heat_protection_temperature >= temperature)
-			thermal_protection_flags |= w_uniform.heat_protection
+			thermal_protection_flags |= w_uniform.body_parts_covered
 	if(shoes)
 		if(shoes.max_heat_protection_temperature && shoes.max_heat_protection_temperature >= temperature)
-			thermal_protection_flags |= shoes.heat_protection
+			thermal_protection_flags |= shoes.body_parts_covered
 	if(gloves)
 		if(gloves.max_heat_protection_temperature && gloves.max_heat_protection_temperature >= temperature)
-			thermal_protection_flags |= gloves.heat_protection
+			thermal_protection_flags |= gloves.body_parts_covered
 	if(wear_mask)
 		if(wear_mask.max_heat_protection_temperature && wear_mask.max_heat_protection_temperature >= temperature)
-			thermal_protection_flags |= wear_mask.heat_protection
+			thermal_protection_flags |= wear_mask.body_parts_covered
 
 	return thermal_protection_flags
 
@@ -84,68 +84,26 @@
 
 	return min(1, thermal_protection)
 
-//See proc/get_heat_protection_flags(temperature) for the description of this proc.
-/mob/living/carbon/human/proc/get_cold_protection_flags(temperature)
-	var/thermal_protection_flags = 0
-	//Handle normal clothing
 
-	if(head)
-		if(head.min_cold_protection_temperature && head.min_cold_protection_temperature <= temperature)
-			thermal_protection_flags |= head.cold_protection
-	if(wear_suit)
-		if(wear_suit.min_cold_protection_temperature && wear_suit.min_cold_protection_temperature <= temperature)
-			thermal_protection_flags |= wear_suit.cold_protection
-	if(w_uniform)
-		if(w_uniform.min_cold_protection_temperature && w_uniform.min_cold_protection_temperature <= temperature)
-			thermal_protection_flags |= w_uniform.cold_protection
-	if(shoes)
-		if(shoes.min_cold_protection_temperature && shoes.min_cold_protection_temperature <= temperature)
-			thermal_protection_flags |= shoes.cold_protection
-	if(gloves)
-		if(gloves.min_cold_protection_temperature && gloves.min_cold_protection_temperature <= temperature)
-			thermal_protection_flags |= gloves.cold_protection
-	if(wear_mask)
-		if(wear_mask.min_cold_protection_temperature && wear_mask.min_cold_protection_temperature <= temperature)
-			thermal_protection_flags |= wear_mask.cold_protection
-
-	return thermal_protection_flags
-
-/mob/living/carbon/human/proc/get_cold_protection(temperature)
-
+/mob/living/carbon/human/proc/get_cold_protection()
 
 	if(M_RESIST_COLD in mutations)
 		return 1 //Fully protected from the cold.
 
-	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation.
-										//Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
-
-	var/thermal_protection_flags = get_cold_protection_flags(temperature)
-
 	var/thermal_protection = 0.0
 
-	if(thermal_protection_flags)
-		if(thermal_protection_flags & HEAD)
-			thermal_protection += THERMAL_PROTECTION_HEAD
-		if(thermal_protection_flags & UPPER_TORSO)
-			thermal_protection += THERMAL_PROTECTION_UPPER_TORSO
-		if(thermal_protection_flags & LOWER_TORSO)
-			thermal_protection += THERMAL_PROTECTION_LOWER_TORSO
-		if(thermal_protection_flags & LEG_LEFT)
-			thermal_protection += THERMAL_PROTECTION_LEG_LEFT
-		if(thermal_protection_flags & LEG_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_LEG_RIGHT
-		if(thermal_protection_flags & FOOT_LEFT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_LEFT
-		if(thermal_protection_flags & FOOT_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_RIGHT
-		if(thermal_protection_flags & ARM_LEFT)
-			thermal_protection += THERMAL_PROTECTION_ARM_LEFT
-		if(thermal_protection_flags & ARM_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_ARM_RIGHT
-		if(thermal_protection_flags & HAND_LEFT)
-			thermal_protection += THERMAL_PROTECTION_HAND_LEFT
-		if(thermal_protection_flags & HAND_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
+	if(head)
+		thermal_protection += head.return_thermal_protection()
+	if(wear_suit)
+		thermal_protection += wear_suit.return_thermal_protection()
+	if(w_uniform)
+		thermal_protection += w_uniform.return_thermal_protection()
+	if(shoes)
+		thermal_protection += shoes.return_thermal_protection()
+	if(gloves)
+		thermal_protection += gloves.return_thermal_protection()
+	if(wear_mask)
+		thermal_protection += wear_mask.return_thermal_protection()
 
 	return min(1,thermal_protection)
 
@@ -236,3 +194,8 @@
 	if(is_on_ears(/obj/item/clothing/ears/earmuffs)||is_on_ears(/obj/item/device/radio/headset/headset_earmuffs))
 		detect = 1
 	return detect
+
+/mob/living/carbon/human/proc/has_reagent_in_blood(var/reagent_name)
+	if(!reagents)
+		return 0
+	return reagents.has_reagent(reagent_name)

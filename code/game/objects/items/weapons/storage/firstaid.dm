@@ -47,7 +47,7 @@
 		if (empty) return
 		new /obj/item/stack/medical/bruise_pack(src)
 		new /obj/item/stack/medical/bruise_pack(src)
-		new /obj/item/stack/medical/bruise_pack(src)
+		new /obj/item/clothing/suit/spaceblanket(src)
 		new /obj/item/stack/medical/ointment(src)
 		new /obj/item/stack/medical/ointment(src)
 		new /obj/item/device/healthanalyzer(src)

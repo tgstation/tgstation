@@ -171,10 +171,10 @@
 					else
 						H.visible_message("<span class='warning'>A cloud of fine ice crystals engulfs [H]!</span>",
 											"<span class='warning'>A cloud of fine ice crystals cover your [H.head]'s visor and make it into your air vents!.</span>")
-						H.bodytemperature = max(0, H.bodytemperature - 50)
+						H.bodytemperature = max(T0C + 31, H.bodytemperature - 3)
 						H.adjustFireLoss(5)
 		if(!handle_suit)
-			target.bodytemperature = max(0, target.bodytemperature - 100)
+			target.bodytemperature = max(T0C + 29, target.bodytemperature - 5)
 			target.adjustFireLoss(10)
 			target.ExtinguishMob()
 

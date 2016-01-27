@@ -79,11 +79,13 @@
 		spawn( 0 )
 			src.Entered(AM)
 			return
-	turfs |= src
 
 	var/area/A = loc
 	if(!dynamic_lighting || !A.lighting_use_dynamic)
 		luminosity = 1
+
+/turf/proc/initialize()
+	return
 
 /turf/DblClick()
 	if(istype(usr, /mob/living/silicon/ai))

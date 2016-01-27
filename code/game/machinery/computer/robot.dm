@@ -41,12 +41,9 @@
 	else
 		if(screen == 0)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\robot.dm:41: dat += "<h3>Cyborg Control Console</h3><BR>"
 			dat += {"<h3>Cyborg Control Console</h3><BR>
 				<A href='?src=\ref[src];screen=1'>1. Cyborg Status</A><BR>
 				<A href='?src=\ref[src];screen=2'>2. Emergency Full Destruct</A><BR>"}
-			// END AUTOFIX
 		if(screen == 1)
 			for(var/mob/living/silicon/robot/R in mob_list)
 				if(istype(user, /mob/living/silicon/ai))
@@ -82,12 +79,9 @@
 					if((user.mind.special_role && user.mind.original == user) && !R.emagged)
 						dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\robot.dm:78: dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
 				dat += {"<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A>
 					<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>
 					<BR>"}
-				// END AUTOFIX
 			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
 		if(screen == 2)
 			if(!src.status)

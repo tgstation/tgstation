@@ -446,11 +446,8 @@
 /mob/living/silicon/robot/proc/robot_alerts()
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\robot\robot.dm:322: var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	var/dat = {"<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n
 <A HREF='?src=\ref[src];mach_close=robotalerts'>Close</A><BR><BR>"}
-	// END AUTOFIX
 	for (var/cat in alarms)
 		dat += text("<B>[cat]</B><BR>\n")
 		var/list/L = alarms[cat]
@@ -699,7 +696,7 @@
 
 
 /mob/living/silicon/robot/emag_act(mob/user as mob)
-	if(!user != src)
+	if(user != src)
 		if(!opened)
 			if(locked)
 				if(prob(90))
@@ -711,12 +708,10 @@
 						to_chat(src, "Hack attempt detected.")
 			else
 				to_chat(user, "The cover is already open.")
-			return
-		if(opened)
-			if(emagged == 1) return
+		else
+			if(emagged == 1) return 1
 			if(wiresexposed)
 				to_chat(user, "The wires get in your way.")
-				return
 			else
 				if(prob(50))
 					sleep(6)
@@ -752,10 +747,12 @@
 					to_chat(src, "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>")
 					SetLockdown(0)
 					update_icons()
+					return 0
 				else
 					to_chat(user, "You fail to unlock [src]'s interface.")
 					if(prob(25))
 						to_chat(src, "Hack attempt detected.")
+	return 1
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)

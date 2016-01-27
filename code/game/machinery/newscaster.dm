@@ -242,36 +242,27 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		switch(screen)
 			if(NEWSCASTER_MENU)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:187: dat += "Welcome to Newscasting Unit #[src.unit_no].<BR> Interface & News networks Operational."
 				dat += {"Welcome to Newscasting Unit #[src.unit_no].<BR> Interface & News networks Operational.
 					<BR><FONT SIZE=1>property of Nanotransen Inc</FONT>"}
-				// END AUTOFIX
 				if(news_network.wanted_issue)
 					dat+= "<HR><A href='?src=\ref[src];view_wanted=1'>Read Wanted Issue</A>"
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:191: dat+= "<HR><BR><A href='?src=\ref[src];create_channel=1'>Create Feed Channel</A>"
 				dat += {"<HR><BR><A href='?src=\ref[src];create_channel=1'>Create Feed Channel</A>
 					<BR><A href='?src=\ref[src];view=1'>View Feed Channels</A>
 					<BR><A href='?src=\ref[src];create_feed_story=1'>Submit new Feed story</A>
 					<BR><A href='?src=\ref[src];menu_paper=1'>Print newspaper</A>
 					<BR><A href='?src=\ref[src];refresh=1'>Re-scan User</A>
 					<BR><BR><A href='?src=\ref[M];mach_close=newscaster_main'>Exit</A>"}
-				// END AUTOFIX
 				if(src.securityCaster)
 					var/wanted_already = 0
 					if(news_network.wanted_issue)
 						wanted_already = 1
 
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:202: dat+="<HR><B>Feed Security functions:</B><BR>"
 					dat += {"<HR><B>Feed Security functions:</B><BR>
 						<BR><A href='?src=\ref[src];menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>
 						<BR><A href='?src=\ref[src];menu_censor_story=1'>Censor Feed Stories</A>
 						<BR><A href='?src=\ref[src];menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice</A>"}
-				// END AUTOFIX
 				dat+="<BR><HR>The newscaster recognises you as: <FONT COLOR='green'>[src.scanned_user]</FONT>"
 			if(NEWSCASTER_CHANNEL_LIST)
 				dat+= "Station Feed Channels<HR>"
@@ -292,25 +283,17 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 								dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"*/
 
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:225: dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat += {"<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>
 					<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Back</A>"}
-				// END AUTOFIX
 			if(NEWSCASTER_NEW_CHANNEL)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:228: dat+="Creating new Feed Channel..."
 				dat += {"Creating new Feed Channel...
 					<HR><B><A href='?src=\ref[src];set_channel_name=1'>Channel Name</A>:</B> [src.channel_name]<BR>
 					<B>Channel Author:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>
 					<B><A href='?src=\ref[src];set_channel_lock=1'>Will Accept Public Feeds</A>:</B> [(src.c_locked) ? ("NO") : ("YES")]<BR><BR>
 					<BR><A href='?src=\ref[src];submit_new_channel=1'>Submit</A><BR><BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Cancel</A><BR>"}
-				// END AUTOFIX
 			if(NEWSCASTER_NEW_MESSAGE)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:234: dat+="Creating new Feed Message..."
 				dat += {"Creating new Feed Message...
 					<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Receiving Channel</A>:</B> [src.channel_name]<BR>
 					<B>Message Author:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>
@@ -324,21 +307,14 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat += AttachPhotoButton(user)
 
 				dat += "<BR><A href='?src=\ref[src];submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Cancel</A><BR>"
-				// END AUTOFIX
 			if(NEWSCASTER_NEW_MESSAGE_SUCCESS)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:241: dat+="Feed story successfully submitted to [src.channel_name].<BR><BR>"
 				dat += {"Feed story successfully submitted to [src.channel_name].<BR><BR>
 					<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Return</A><BR>"}
-				// END AUTOFIX
 			if(NEWSCASTER_NEW_CHANNEL_SUCCESS)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:244: dat+="Feed Channel [src.channel_name] created successfully.<BR><BR>"
 				dat += {"Feed Channel [src.channel_name] created successfully.<BR><BR>
 					<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Return</A><BR>"}
-				// END AUTOFIX
 			if(NEWSCASTER_NEW_MESSAGE_ERROR)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
 				if(src.channel_name=="")
@@ -383,22 +359,16 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					else
 						active_num--
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:289: dat+="Network currently serves a total of [total_num] Feed channels, [active_num] of which are active, and a total of [message_num] Feed Stories." //TODO: CONTINUE
 				dat += {"Network currently serves a total of [total_num] Feed channels, [active_num] of which are active, and a total of [message_num] Feed Stories." //TODO: CONTINU
 					<BR><BR><B>Liquid Paper remaining:</B> [(src.paper_remaining) *100 ] cm^3
 					<BR><BR><A href='?src=\ref[src];print_paper=[0]'>Print Paper</A>
 					<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Cancel</A>"}
-				// END AUTOFIX
 			if(NEWSCASTER_VIEW_CHANNEL)
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT>\]</FONT><HR>"
 				if(src.viewing_channel.censored)
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:296: dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
 					dat += {"<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>
 						No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"}
-					// END AUTOFIX
 				else
 					if( isemptylist(src.viewing_channel.messages) )
 						dat+="<I>No feed messages found in channel...</I><BR>"
@@ -412,20 +382,14 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 								dat+="<a href='?src=\ref[src];show_photo_info=\ref[MESSAGE]'><img src='tmp_photo[i].png' width = '180'></a><BR><BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:310: dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat += {"<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>
 					<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_CHANNEL_LIST]'>Back</A>"}
-				// END AUTOFIX
 			if(NEWSCASTER_CENSORSHIP_MENU)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:313: dat+="<B>Nanotrasen Feed Censorship Tool</B><BR>"
 				dat += {"<B>Nanotrasen Feed Censorship Tool</B><BR>
 					<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>
 					Keep in mind that users attempting to view a censored feed will instead see the \[REDACTED\] tag above it.</FONT>
 					<HR>Select Feed channel to get Stories from:<BR>"}
-				// END AUTOFIX
 				if(isemptylist(news_network.network_channels))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
@@ -434,13 +398,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Cancel</A>"
 			if(NEWSCASTER_D_NOTICE_MENU)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:324: dat+="<B>Nanotrasen D-Notice Handler</B><HR>"
 				dat += {"<B>Nanotrasen D-Notice Handler</B><HR>
 					<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's
 					morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed
 					stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>"}
-				// END AUTOFIX
 				if(isemptylist(news_network.network_channels))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
@@ -450,36 +411,24 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Back</A>"
 			if(NEWSCASTER_CENSORSHIP_CHANNEL)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:336: dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
 				dat += {"<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>
 					<FONT SIZE=2><A href='?src=\ref[src];censor_channel_author=\ref[src.viewing_channel]'>[(src.viewing_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"}
-				// END AUTOFIX
 				if( isemptylist(src.viewing_channel.messages) )
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
 					for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
 
-						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:344: dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 						dat += {"-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>
 							<FONT SIZE=2><A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"}
-						// END AUTOFIX
 				dat+="<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_CENSORSHIP_MENU]'>Back</A>"
 			if(NEWSCASTER_D_NOTICE_CHANNEL)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:348: dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
 				dat += {"<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>
 					Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=\ref[src];toggle_d_notice=\ref[src.viewing_channel]'>Bestow a D-Notice upon the channel</A>.<HR>"}
-				// END AUTOFIX
 				if(src.viewing_channel.censored)
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:351: dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
 					dat += {"<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>
 						No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"}
-					// END AUTOFIX
 				else
 					if( isemptylist(src.viewing_channel.messages) )
 						dat+="<I>No feed messages found in channel...</I><BR>"
@@ -499,13 +448,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(wanted_already)
 					dat+="<FONT SIZE=2><BR><I>A wanted issue is already in Feed Circulation. You can edit or cancel it below.</FONT></I>"
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:371: dat+="<HR>"
 				dat += {"<HR>
 					<A href='?src=\ref[src];set_wanted_name=1'>Criminal Name</A>: [src.channel_name] <BR>
 					<A href='?src=\ref[src];set_wanted_desc=1'>Description</A>: [src.msg] <BR>"}
 				dat += AttachPhotoButton(user)
-				// END AUTOFIX
 				if(wanted_already)
 					dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'> [news_network.wanted_issue.backup_author]</FONT><BR>"
 				else
@@ -516,11 +462,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Cancel</A>"
 			if(NEWSCASTER_WANTED_SUCCESS)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:384: dat+="<FONT COLOR='green'>Wanted issue for [src.channel_name] is now in Network Circulation.</FONT><BR><BR>"
 				dat += {"<FONT COLOR='green'>Wanted issue for [src.channel_name] is now in Network Circulation.</FONT><BR><BR>
 					<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Return</A><BR>"}
-				// END AUTOFIX
 			if(NEWSCASTER_WANTED_ERROR)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
 				if(src.channel_name=="" || src.channel_name == "\[REDACTED\]")
@@ -532,20 +475,14 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Return</A><BR>"
 			if(NEWSCASTER_WANTED_DELETED)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:396: dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
 				dat += {"<B>Wanted Issue successfully deleted from Circulation</B><BR>
 					<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Return</A><BR>"}
-				// END AUTOFIX
 			if(NEWSCASTER_WANTED_SHOW)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:399: dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
 				dat += {"<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>
 					<B>Criminal</B>: [news_network.wanted_issue.author]<BR>
 					<B>Description</B>: [news_network.wanted_issue.body]<BR>
 					<B>Photo:</B>: "}
-				// END AUTOFIX
 				if(news_network.wanted_issue.img)
 					usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
 					dat+="<BR><img src='tmp_photow.png' width = '180'>"
@@ -554,25 +491,16 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<BR><BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Back</A><BR>"
 			if(NEWSCASTER_WANTED_EDIT)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:410: dat+="<FONT COLOR='green'>Wanted issue for [src.channel_name] successfully edited.</FONT><BR><BR>"
 				dat += {"<FONT COLOR='green'>Wanted issue for [src.channel_name] successfully edited.</FONT><BR><BR>
 					<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Return</A><BR>"}
-				// END AUTOFIX
 			if(NEWSCASTER_PRINT_NEWSPAPER_SUCCESS)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:413: dat+="<FONT COLOR='green'>Printing successfull. Please receive your newspaper from the bottom of the machine.</FONT><BR><BR>"
 				dat += {"<FONT COLOR='green'>Printing successfull. Please receive your newspaper from the bottom of the machine.</FONT><BR><BR>
 					<A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Return</A>"}
-				// END AUTOFIX
 			if(NEWSCASTER_PRINT_NEWSPAPER_ERROR)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:416: dat+="<FONT COLOR='maroon'>Unable to print newspaper. Insufficient paper. Please notify maintenance personnell to refill machine storage.</FONT><BR><BR>"
 				dat += {"<FONT COLOR='maroon'>Unable to print newspaper. Insufficient paper. Please notify maintenance personnell to refill machine storage.</FONT><BR><BR>
 					<A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Return</A>"}
-				// END AUTOFIX
 			else
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
@@ -1113,11 +1041,8 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 		switch(screen)
 			if(NEWSPAPER_TITLE_PAGE) //Cover
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:806: dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
 				dat += {"<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>
 					<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen� Space Facilities</FONT></div><HR>"}
-				// END AUTOFIX
 				if(isemptylist(src.news_content))
 					if(src.important_message)
 						dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [src.pages+2]\]</FONT><BR></ul>"
@@ -1166,13 +1091,10 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 					src.pages++
 				if(src.important_message!=null)
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\newscaster.dm:855: dat+="<DIV STYLE='float:center;'><FONT SIZE=4><B>Wanted Issue:</B></FONT SIZE></DIV><BR><BR>"
 					dat += {"<DIV STYLE='float:center;'><FONT SIZE=4><B>Wanted Issue:</B></FONT SIZE></DIV><BR><BR>
 						<B>Criminal name</B>: <FONT COLOR='maroon'>[important_message.author]</FONT><BR>
 						<B>Description</B>: [important_message.body]<BR>
 						<B>Photo:</B>: "}
-					// END AUTOFIX
 					if(important_message.img)
 						user << browse_rsc(important_message.img, "tmp_photow.png")
 						dat+="<BR><img src='tmp_photow.png' width = '180'>"

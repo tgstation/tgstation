@@ -420,6 +420,10 @@
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult += cult_mind
+
+		if(mixed)
+			ticker.mode.cult += cult_mind
+
 		update_cult_icons_added(cult_mind)
 		if(name == "cult")
 			var/datum/game_mode/cult/C = src
@@ -441,6 +445,9 @@
 		to_chat(cult_mind.current, "<span class='danger'>You find yourself unable to mouth the words of the forgotten...</span>")
 		cult_mind.current.remove_language("Cult")
 		cult_mind.memory = ""
+
+		if(mixed)
+			ticker.mode.cult -= cult_mind
 
 		if(show_message)
 			for(var/mob/M in viewers(cult_mind.current))

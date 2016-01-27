@@ -13,6 +13,30 @@
 	siemens_coefficient = 0.9
 	species_fit = list("Vox")
 	body_parts_covered = FULL_HEAD
+	var/stage = 0
+
+
+/obj/item/clothing/mask/gas/attackby(obj/item/W,mob/user)
+	..()
+	if(istype(W,/obj/item/clothing/suit/spaceblanket) && !stage)
+		stage = 1
+		to_chat(user,"<span class='notice'>You add \the [W] to \the [src]</span>")
+		qdel(W)
+		icon_state = "gas_mask1"
+	if(istype(W,/obj/item/stack/cable_coil) && stage == 1)
+		var/obj/item/stack/cable_coil/C = W
+		if(C.amount <= 4)
+			return
+		icon_state = "gas_mask2"
+		to_chat(user,"<span class='notice'>You tie up \the [src] with \the [W]</span>")
+		stage = 2
+	if(istype(W,/obj/item/clothing/head/hardhat/red) && stage == 2)
+		to_chat(user,"<span class='notice'>You finish the ghetto helmet</span>")
+		var/obj/ghetto = new /obj/item/clothing/head/helmet/space/rig/ghettorig (src.loc)
+		qdel(src)
+		qdel(W)
+		user.put_in_hands(ghetto)
+
 
 //Plague Dr suit can be found in clothing/suits/bio.dm
 /obj/item/clothing/mask/gas/plaguedoctor

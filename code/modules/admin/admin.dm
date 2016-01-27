@@ -42,19 +42,13 @@ var/global/floorIsLava = 0
 		return
 
 	checkSessionKey()
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\admin.dm:40: var/body = "<html><head><title>Options for [M.key]</title></head>"
 	var/body = {"<html><head><title>Options for [M.key]</title></head>
 <body>Options panel for <b>[M]</b>"}
-	// END AUTOFIX
 	var/species_description
 	if(M.client)
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\admin.dm:43: body += " played by <b>[M.client]</b> "
 		body += {"played by <b>[M.client]</b>
 			\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"}
-		// END AUTOFIX
 	if(istype(M, /mob/new_player))
 		body += " <B>Hasn't Entered Game</B> "
 	else
@@ -109,12 +103,9 @@ var/global/floorIsLava = 0
 	if (M.client)
 		if(!istype(M, /mob/new_player))
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\admin.dm:90: body += "<br><br>"
 			body += {"<br><br>
 				<b>Transformation:</b>
 				<br>"}
-			// END AUTOFIX
 			//Monkey
 			if(ismonkey(M))
 				body += "<B>Monkeyized</B> | "

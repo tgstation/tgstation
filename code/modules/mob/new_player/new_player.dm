@@ -24,22 +24,16 @@
 /mob/new_player/proc/new_player_panel_proc()
 	var/output = "<div align='center'><B>New Player Options</B>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\new_player\new_player.dm:28: output +="<hr>"
 	output += {"<hr>
 		<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"}
-	// END AUTOFIX
 	if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
 		if(!ready)	output += "<p><a href='byond://?src=\ref[src];ready=1'>Declare Ready</A></p>"
 		else	output += "<p><b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)</p>"
 
 	else
 		ready = 0 // prevent setup character issues
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\new_player\new_player.dm:36: output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
 		output += {"<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>
 			<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"}
-		// END AUTOFIX
 
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
@@ -402,11 +396,8 @@
 	var/hours = mills / 36000
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\new_player\new_player.dm:322: var/dat = "<html><body><center>"
 	var/dat = {"<html><body><center>
 Round Duration: [round(hours)]h [round(mins)]m<br>"}
-	// END AUTOFIX
 	if(emergency_shuttle) //In case Nanotrasen decides reposess CentComm's shuttles.
 		if(emergency_shuttle.direction == 2) //Shuttle is going to centcomm, not recalled
 			dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
@@ -496,11 +487,8 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 /mob/new_player/proc/ViewManifest()
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\new_player\new_player.dm:410: var/dat = "<html><body>"
 	var/dat = {"<html><body>
 <h4>Crew Manifest</h4>"}
-	// END AUTOFIX
 	dat += data_core.get_manifest(OOC = 1)
 
 	src << browse(dat, "window=manifest;size=370x420;can_close=1")

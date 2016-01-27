@@ -24,6 +24,7 @@
 	..()
 	if (amount)
 		src.amount=amount
+	update_materials()
 	return
 
 /obj/item/stack/Destroy()
@@ -154,6 +155,8 @@
 		var/atom/O
 		if(ispath(R.result_type, /obj/item/stack))
 			O = drop_stack(R.result_type, usr.loc, (R.max_res_amount>1 ? R.res_amount*multiplier : 1), usr)
+			var/obj/item/stack/S = O
+			S.update_materials()
 		else
 			O = new R.result_type( usr.loc )
 
@@ -196,6 +199,7 @@
 
 	if(src.amount>=amount)
 		src.amount-=amount
+		update_materials()
 	else
 		return 0
 	. = 1
@@ -232,6 +236,11 @@
 		src.preattack(item, usr,1)
 		break
 
+/obj/item/stack/proc/update_materials()
+	if(amount && starting_materials)
+		for(var/matID in starting_materials)
+			materials.storage[matID] = max(0, starting_materials[matID]*amount)
+
 /obj/item/stack/proc/can_stack_with(obj/item/other_stack)
 	if(ispath(other_stack)) return (src.type == other_stack)
 
@@ -266,6 +275,7 @@
 		else
 			to_transfer = min(S.amount, max_amount-amount)
 		amount+=to_transfer
+		update_materials()
 		to_chat(user, "You add [to_transfer] [((to_transfer > 1) && S.irregular_plural) ? S.irregular_plural : "[S.singular_name]\s"] to \the [src]. It now contains [amount] [CORRECT_STACK_NAME(src)].")
 		if (S && user.machine==S)
 			spawn(0) interact(user)
@@ -306,6 +316,7 @@
 		if(S.can_stack_with(new_stack_type))
 			if(S.max_amount >= S.amount + add_amount)
 				S.amount += add_amount
+				S.update_materials()
 
 				to_chat(user, "<span class='info'>You add [add_amount] item\s to the stack. It now contains [S.amount] [CORRECT_STACK_NAME(S)].</span>")
 				return S

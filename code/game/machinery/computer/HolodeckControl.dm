@@ -25,8 +25,6 @@
 	user.set_machine(src)
 	var/dat
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\HolodeckControl.dm:28: dat += "<B>Holodeck Control System</B><BR>"
 	dat += {"<B>Holodeck Control System</B><BR>
 		<HR>Current Loaded Programs:<BR>
 		<A href='?src=\ref[src];emptycourt=1'>((Empty Court)</font>)</A><BR>
@@ -40,20 +38,16 @@
 		<A href='?src=\ref[src];snowfield=1'>((Snow Field)</font>)</A><BR>
 		<A href='?src=\ref[src];theatre=1'>((Theatre)</font>)</A><BR>
 		<A href='?src=\ref[src];meetinghall=1'>((Meeting Hall)</font>)</A><BR>"}
-	// END AUTOFIX
 //	dat += "<A href='?src=\ref[src];turnoff=1'>((Shutdown System)</font>)</A><BR>"
 	dat += "Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.<BR>"
 
 	if(emagged)
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\HolodeckControl.dm:47: dat += "<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>"
 		dat += {"<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>
 			Ensure the holodeck is empty before testing.<BR>
 			<BR>
 			<A href='?src=\ref[src];wildlifecarp=1'>(<font color=red>Begin Wildlife Simulation</font>)</A><BR>
 			Ensure the holodeck is empty before testing.<BR>
 			<BR>"}
-		// END AUTOFIX
 		if(issilicon(user))
 			dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=green>Re-Enable Safety Protocols?</font>)</A><BR>"
 		dat += "Safety Protocols are <font color=red> DISABLED </font><BR>"
@@ -61,11 +55,8 @@
 		if(issilicon(user))
 			dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\HolodeckControl.dm:59: dat += "<BR>"
 		dat += {"<BR>
 			Safety Protocols are <font color=green> ENABLED </font><BR>"}
-		// END AUTOFIX
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 	return
@@ -512,12 +503,12 @@
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 2) //spooky
+		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>")
 		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
 		if(user.drop_item(W, src.loc))
-			visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 2) //spooky
+			visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>")
 			return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
@@ -527,9 +518,9 @@
 			return
 		if(prob(50))
 			I.loc = src.loc
-			visible_message("<span class='notice'>Swish! \the [I] lands in \the [src].</span>", 2) //spooky
+			visible_message("<span class='notice'>Swish! \the [I] lands in \the [src].</span>")
 		else
-			visible_message("<span class='warning'>\the [I] bounces off of \the [src]'s rim!</span>", 2) //spooky
+			visible_message("<span class='warning'>\the [I] bounces off of \the [src]'s rim!</span>")
 		return 0
 	else
 		return ..(mover, target, height, air_group)

@@ -28,7 +28,7 @@
 
 	if ((M_HULK in mutations) && health >= 25 && length(speech.message))
 		speech.message = "[uppertext(replacetext(speech.message, ".", "!"))]!!" //because I don't know how to code properly in getting vars from other files -Bro
-	if (src.slurring)
+	if (src.slurring || (undergoing_hypothermia() == MODERATE_HYPOTHERMIA && prob(25)))
 		speech.message = slur(speech.message)
 
 	// Should be handled via a virus-specific proc.

@@ -24,13 +24,10 @@
 	user.set_machine(src)
 	var/dat = "<B>Bluespace Artillery Control:</B><BR>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\awaymissions<span class='warning'>spaceartillery.dm:26: dat += </span>"Locked on<BR>"
 	dat += {"Locked on<BR>
 		<B>Charge progress: [reload]/180:</B><BR>
 		<A href='byond://?src=\ref[src];fire=1'>Open Fire</A><BR>
 		Deployment of weapon authorized by <br>Nanotrasen Naval Command<br><br>Remember, friendly fire is grounds for termination of your contract and life.<HR>"}
-	// END AUTOFIX
 	user << browse(dat, "window=scroll")
 	onclose(user, "scroll")
 	return

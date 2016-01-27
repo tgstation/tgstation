@@ -98,11 +98,8 @@ datum/hSB
 			var/hsbpanel = "<center><b>h_Sandbox Panel</b></center><hr>"
 			if(admin)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\gamemodes\sandbox\h_sandbox.dm:39: hsbpanel += "<b>Administration Tools:</b><br>"
 				hsbpanel += {"<b>Administration Tools:</b><br>
 					- <a href=\"?\ref[src];hsb=hsbtobj\">Toggle Object Spawning</a><br><br>"}
-			// END AUTOFIX
 			hsbpanel += "<b>Regular Tools:</b><br>"
 			for(var/T in hrefs)
 				hsbpanel += "- <a href=\"?\ref[src];hsb=[T]\">[hrefs[T]]</a><br>"

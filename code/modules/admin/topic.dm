@@ -1195,12 +1195,43 @@
 		if (ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		master_mode = href_list["c_mode2"]
-		log_admin("[key_name(usr)] set the mode as [master_mode].")
-		message_admins("<span class='notice'>[key_name_admin(usr)] set the mode as [master_mode].</span>", 1)
-		to_chat(world, "<span class='notice'><b>The mode is now: [master_mode]</b></span>")
-		Game() // updates the main game menu
-		world.save_mode(master_mode)
-		.(href, list("c_mode"=1))
+		if((master_mode != "mixed") || alert("Do you wish to specify which game modes to be mixed?","Specify Mixed","Yes","No")=="No")
+			mixed_modes = list()
+			log_admin("[key_name(usr)] set the mode as [master_mode].")
+			message_admins("<span class='notice'>[key_name_admin(usr)] set the mode as [master_mode].</span>", 1)
+			to_chat(world, "<span class='notice'><b>The mode is now: [master_mode]</b></span>")
+			Game() // updates the main game menu
+			world.save_mode(master_mode)
+			.(href, list("c_mode"=1))
+		else
+			var/list/possible = list()
+			possible += mixed_allowed
+			possible += "DONE"
+			possible += "CANCEL"
+			if(possible.len < 3)
+				return alert(usr, "Not enough possible game modes.", null, null, null, null)
+			var/mixed_mode_added = null
+			while(possible.len >= 3)
+				var/mixed_mode_add = input("Pick game modes to add to the mix. ([mixed_mode_added])", "Specify Mixed") in possible
+				possible -= mixed_mode_add
+				if(mixed_mode_add == "CANCEL")
+					return
+				else if(mixed_mode_add == "DONE")
+					break
+				else
+					mixed_modes += mixed_mode_add
+					possible -= mixed_mode_add
+					if(!mixed_mode_added)
+						mixed_mode_added = mixed_mode_add
+					else
+						mixed_mode_added = "[mixed_mode_added], [mixed_mode_add]"
+
+			log_admin("[key_name(usr)] set the mode as [master_mode] with the following modes: [mixed_mode_added].")
+			message_admins("<span class='notice'>[key_name_admin(usr)] set the mode as [master_mode] with the following modes: [mixed_mode_added].</span>", 1)
+			to_chat(world, "<span class='notice'><b>The mode is now: [master_mode] ([mixed_mode_added])</b></span>")
+			Game() // updates the main game menu
+			world.save_mode(master_mode)
+			.(href, list("c_mode"=1))
 
 	else if(href_list["f_secret2"])
 		if(!check_rights(R_ADMIN|R_SERVER))	return
@@ -1210,10 +1241,40 @@
 		if(master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
 		secret_force_mode = href_list["f_secret2"]
-		log_admin("[key_name(usr)] set the forced secret mode as [secret_force_mode].")
-		message_admins("<span class='notice'>[key_name_admin(usr)] set the forced secret mode as [secret_force_mode].</span>", 1)
-		Game() // updates the main game menu
-		.(href, list("f_secret"=1))
+
+		if((secret_force_mode != "mixed") || alert("Do you wish to specify which game modes to be mixed?","Specify Secret Mixed","Yes","No")=="No")
+			mixed_modes = list()
+			log_admin("[key_name(usr)] set the forced secret mode as [secret_force_mode].")
+			message_admins("<span class='notice'>[key_name_admin(usr)] set the forced secret mode as [secret_force_mode].</span>", 1)
+			Game() // updates the main game menu
+			.(href, list("f_secret"=1))
+		else
+			var/list/possible = list()
+			possible += mixed_allowed
+			possible += "DONE"
+			possible += "CANCEL"
+			if(possible.len < 3)
+				return alert(usr, "Not enough possible game modes.", null, null, null, null)
+			var/mixed_mode_added = null
+			while(possible.len >= 3)
+				var/mixed_mode_add = input("Pick game modes to add to the secret mix. ([mixed_mode_added])", "Specify Secret Mixed") in possible
+				possible -= mixed_mode_add
+				if(mixed_mode_add == "CANCEL")
+					return
+				else if(mixed_mode_add == "DONE")
+					break
+				else
+					mixed_modes += mixed_mode_add
+					possible -= mixed_mode_add
+					if(!mixed_mode_added)
+						mixed_mode_added = mixed_mode_add
+					else
+						mixed_mode_added = "[mixed_mode_added], [mixed_mode_add]"
+
+			log_admin("[key_name(usr)] set the mode as [secret_force_mode] with the following modes: [mixed_mode_added].")
+			message_admins("<span class='notice'>[key_name_admin(usr)] set the forced secret mode as [secret_force_mode] with the following modes: [mixed_mode_added].</span>", 1)
+			Game() // updates the main game menu
+			.(href, list("f_secret"=1))
 
 	else if(href_list["monkeyone"])
 		if(!check_rights(R_SPAWN))	return
@@ -1699,8 +1760,12 @@
 		if(alert(usr, "Validate the current Cult objective and unlock the next one?", "Cult Cheat Code", "Yes", "No") != "Yes")
 			return
 
-		var/datum/game_mode/cult/mode_ticker = ticker.mode
-		mode_ticker.bypass_phase()
+		var/datum/game_mode/cult/cult_round = find_active_mode("cult")
+		if(!cult_round)
+			alert("Couldn't locate cult mode datum! This shouldn't ever happen, tell a coder!")
+			return
+
+		cult_round.bypass_phase()
 		message_admins("Admin [key_name_admin(usr)] has unlocked the Cult's next objective.")
 		log_admin("Admin [key_name_admin(usr)] has unlocked the Cult's next objective.")
 		check_antagonists()
@@ -2713,7 +2778,7 @@
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
 				command_alert("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.")
-				to_chat(world, sound('sound/AI/commandreport.ogg'))
+				to_chat(world, sound('sound/AI/commandreport.ogg', volume = 60))
 			if("dorf")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","DF")

@@ -597,12 +597,9 @@ var/global/num_vending_terminals = 1
 	if(src.currently_vending)
 		var/dat = "<TT><center><b>[vendorname]</b></center><hr /><br>" //display the name, and added a horizontal rule
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\vending.dm:260: dat += "<b>You have selected [currently_vending.product_name].<br>Please ensure your ID is in your ID holder or hand.</b><br>"
 		dat += {"<b>You have selected [currently_vending.product_name].<br>Please ensure your ID is in your ID holder or hand.</b><br>
 			<a href='byond://?src=\ref[src];buy=1'>Pay</a> |
 			<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"}
-		// END AUTOFIX
 		user << browse(dat, "window=vending")
 		onclose(user, "")
 		return

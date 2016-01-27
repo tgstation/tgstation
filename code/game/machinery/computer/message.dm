@@ -90,25 +90,16 @@
 		message = rebootmsg
 	var/dat = "<head><title>Message Monitor Console</title></head><body>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\message.dm:93: dat += "<center><h2>Message Monitor Console</h2></center><hr>"
 	dat += {"<center><h2>Message Monitor Console</h2></center><hr>
 		<center><h4><font color='blue'[message]</h5></center>"}
-	// END AUTOFIX
 	if(auth)
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\message.dm:97: dat += "<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/"
 		dat += {"<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/
 			Server Power: <A href='?src=\ref[src];active=1'>[src.linkedServer && src.linkedServer.active ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"}
-		// END AUTOFIX
 	else
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\message.dm:100: dat += "<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/"
 		dat += {"<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/
 			Server Power: <u>[src.linkedServer && src.linkedServer.active ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"}
-		// END AUTOFIX
 	if(hacking || emagged)
 		screen = 2
 	else if(!auth || !linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
@@ -126,15 +117,12 @@
 					dat += "<dd><A>&#09;ERROR: Server not found!</A><br></dd>"
 				else
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\message.dm:119: dat += "<dd><A href='?src=\ref[src];view=1'>&#09;[++i]. View Message Logs </a><br></dd>"
 					dat += {"<dd><A href='?src=\ref[src];view=1'>&#09;[++i]. View Message Logs </a><br></dd>
 						<dd><A href='?src=\ref[src];viewr=1'>&#09;[++i]. View Request Console Logs </a></br></dd>
 						<dd><A href='?src=\ref[src];clear=1'>&#09;[++i]. Clear Message Logs</a><br></dd>
 						<dd><A href='?src=\ref[src];clearr=1'>&#09;[++i]. Clear Request Console Logs</a><br></dd>
 						<dd><A href='?src=\ref[src];pass=1'>&#09;[++i]. Set Custom Key</a><br></dd>
 						<dd><A href='?src=\ref[src];msg=1'>&#09;[++i]. Send Admin Message</a><br></dd>"}
-					// END AUTOFIX
 			else
 				for(var/n = ++i; n <= optioncount; n++)
 					dat += "<dd><font color='blue'>&#09;[n]. ---------------</font><br></dd>"
@@ -157,11 +145,8 @@
 			//var/sender = "Unspecified" //name of the sender
 			//var/message = "Blank" //transferred message
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\message.dm:146: dat += "<center><A href='?src=\ref[src];back=1'>Back</a> - <A href='?src=\ref[src];refresh=1'>Refresh</center><hr>"
 			dat += {"<center><A href='?src=\ref[src];back=1'>Back</a> - <A href='?src=\ref[src];refresh=1'>Refresh</center><hr>
 				<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sender</th><th width='15%'>Recipient</th><th width='300px' word-wrap: break-word>Message</th></tr>"}
-			// END AUTOFIX
 			for(var/datum/data_pda_msg/pda in src.linkedServer.pda_msgs)
 				index++
 				if(index > 3000)
@@ -174,11 +159,8 @@
 		if(2)
 			if(istype(user, /mob/living/silicon/ai) || istype(user, /mob/living/silicon/robot))
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\message.dm:159: dat += "Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has."
 				dat += {"Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has.
 					In the meantime, this console can reveal your true intentions if you let someone access it. Make sure no humans enter the room during that time."}
-				// END AUTOFIX
 			else
 				//It's the same message as the one above but in binary. Because robots understand binary and humans don't... well I thought it was clever.
 				dat += {"01000010011100100111010101110100011001010010110<br>

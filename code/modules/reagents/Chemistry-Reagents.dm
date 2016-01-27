@@ -335,10 +335,6 @@
 	if(isslime(M))
 		M.adjustToxLoss(rand(15, 20))
 
-	if(istype(M,/mob/living/simple_animal/hostile/slime))
-		var/mob/living/simple_animal/hostile/slime/S = M
-		S.calm()
-
 	//Greys treat water like acid
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -398,6 +394,13 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
 			cube.Expand()
+
+/datum/reagent/water/reaction_animal(var/mob/living/simple_animal/M, var/method=TOUCH, var/volume)
+	..()
+
+	if(istype(M,/mob/living/simple_animal/hostile/slime))
+		var/mob/living/simple_animal/hostile/slime/S = M
+		S.calm()
 
 /datum/reagent/lube
 	name = "Space Lube"
@@ -2409,7 +2412,7 @@
 
 	switch(data)
 		if(1 to 15)
-			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature += 0.6 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("frostoil"))
 				holder.remove_reagent("frostoil", 5)
 			if(isslime(M))
@@ -2417,13 +2420,13 @@
 			if(M.dna.mutantrace == "slime")
 				M.bodytemperature += rand(5,20)
 		if(15 to 25)
-			M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature += 0.9 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
 				M.bodytemperature += rand(10,20)
 			if(M.dna.mutantrace == "slime")
 				M.bodytemperature += rand(10,20)
 		if(25 to INFINITY)
-			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature += 1.2 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
 				M.bodytemperature += rand(15,20)
 			if(M.dna.mutantrace == "slime")
@@ -2498,7 +2501,7 @@
 
 	switch(data)
 		if(1 to 15)
-			M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature = max(M.bodytemperature-0.3 * TEMPERATURE_DAMAGE_COEFFICIENT,T20C)
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
 			if(isslime(M))
@@ -2506,13 +2509,13 @@
 			if(M.dna && M.dna.mutantrace == "slime")
 				M.bodytemperature -= rand(5,20)
 		if(15 to 25)
-			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature = max(M.bodytemperature-0.6 * TEMPERATURE_DAMAGE_COEFFICIENT,T20C)
 			if(isslime(M))
 				M.bodytemperature -= rand(10,20)
 			if(M.dna.mutantrace == "slime")
 				M.bodytemperature -= rand(10,20)
 		if(25 to INFINITY)
-			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature = max(M.bodytemperature-0.9 * TEMPERATURE_DAMAGE_COEFFICIENT,T20C)
 			if(prob(1))
 				M.emote("shiver")
 			if(isslime(M))
@@ -3527,7 +3530,7 @@
 
 	switch(data)
 		if(1 to 15)
-			M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= 0.1 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
 			if(isslime(M))
@@ -3535,13 +3538,13 @@
 			if(M.dna.mutantrace == "slime")
 				M.bodytemperature -= rand(5,20)
 		if(15 to 25)
-			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= 0.2 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
 				M.bodytemperature -= rand(10,20)
 			if(M.dna.mutantrace == "slime")
 				M.bodytemperature -= rand(10,20)
 		if(25 to INFINITY)
-			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= 0.3 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(1)) M.emote("shiver")
 			if(isslime(M))
 				M.bodytemperature -= rand(15,20)
@@ -3667,14 +3670,16 @@
 
 	if(istype(O, /obj/item/weapon/paper))
 		var/obj/item/weapon/paper/paperaffected = O
-		paperaffected.clearpaper()
-		O.visible_message("<span class='warning'>The solution melts away \the [O]'s ink.</span>")
+		if(paperaffected.info || paperaffected.stamps)
+			paperaffected.clearpaper()
+			O.visible_message("<span class='warning'>The solution melts away \the [O]'s ink.</span>")
 
 	if(istype(O, /obj/item/weapon/book))
 		if(volume >= 5)
 			var/obj/item/weapon/book/affectedbook = O
-			affectedbook.dat = null
-			O.visible_message("<span class='warning'>The solution melts away \the [O]'s ink.</span>")
+			if(affectedbook.dat)
+				affectedbook.dat = null
+				O.visible_message("<span class='warning'>The solution melts away \the [O]'s ink.</span>")
 
 //It's really much more stronger than other drinks
 /datum/reagent/ethanol/beer
@@ -3933,8 +3938,6 @@
 
 	M.nutrition += nutriment_factor
 	M.drowsyness = max(0, M.drowsyness - 7)
-	if(M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - 5)
 	M.Jitter(1)
 
 /////////////////////////////////////////////////////////////////Cocktail Entities//////////////////////////////////////////////
@@ -4301,8 +4304,8 @@
 
 	if(..()) return 1
 
-	if(M.bodytemperature < 270)
-		M.bodytemperature = min(270, M.bodytemperature - 40) //310 is the normal bodytemp. 310.055
+	if(M.bodytemperature < T0C+33)
+		M.bodytemperature = min(T0C+33, M.bodytemperature - 4) //310 is the normal bodytemp. 310.055
 
 /datum/reagent/ethanol/deadrum/grog
 	name = "Grog"

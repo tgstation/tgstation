@@ -607,8 +607,11 @@
 	if(!isobserver(user))
 		src.add_fingerprint(user)
 		if(usr == user && opened)
-			if(cell && get_dist(src,user)<=1)
-				if(issilicon(user) && !isMoMMI(user)) // MoMMIs can hold one item in their tool slot.
+			if(cell && Adjacent(user))
+				if(isAI(user))
+					interact(user)
+					return
+				else if(issilicon(user) && !isMoMMI(user)) // MoMMIs can hold one item in their tool slot.
 					cell.loc=src.loc // Drop it, whoops.
 				else
 					user.put_in_hands(cell)

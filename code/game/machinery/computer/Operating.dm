@@ -54,10 +54,7 @@
 
 	updatemodules()
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\Operating.dm:41: var/dat = "<HEAD><TITLE>Operating Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	var/dat = {"<HEAD><TITLE>Operating Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>"}
-	// END AUTOFIX
 	if(!isnull(src.optable) && (src.optable.check_victim()))
 		src.victim = src.optable.victim
 		dat += {"

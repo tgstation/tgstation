@@ -29,12 +29,9 @@
 	var/obj/item/weapon/paper/R = new(src.loc)
 	R.name = "Reference: [eftpos_name]"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\EFTPOS.dm:31: R.info = "<b>[eftpos_name] reference</b><br><br>"
 	R.info = {"<b>[eftpos_name] reference</b><br><br>
 		Access code: [access_code]<br><br>
 		<b>Do not lose or misplace this code.</b><br>"}
-	// END AUTOFIX
 	//stamp the paper
 	var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 	stampoverlay.icon_state = "paper_stamp-cent"
@@ -63,33 +60,22 @@
 /obj/item/device/eftpos/attack_self(mob/user as mob)
 	if(get_dist(src,user) <= 1)
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\EFTPOS.dm:59: var/dat = "<b>[eftpos_name]</b><br>"
 		var/dat = {"<b>[eftpos_name]</b><br>
 <i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br>"}
-		// END AUTOFIX
 		if(transaction_locked)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\EFTPOS.dm:59: dat += "<a href='?src=\ref[src];choice=toggle_lock'>Reset[transaction_paid ? "" : " (authentication required)"]</a><br><br>"
 			dat += {"<a href='?src=\ref[src];choice=toggle_lock'>Reset[transaction_paid ? "" : " (authentication required)"]</a><br><br>
 				Transaction purpose: <b>[transaction_purpose]</b><br>
 				Value: <b>$[transaction_amount]</b><br>
 				Linked account: <b>[linked_account ? linked_account.owner_name : "None"]</b><hr>"}
-			// END AUTOFIX
 			if(transaction_paid)
 				dat += "<i>This transaction has been processed successfully.</i><hr>"
 			else
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\EFTPOS.dm:67: dat += "<i>Swipe your card below the line to finish this transaction.</i><hr>"
 				dat += {"<i>Swipe your card below the line to finish this transaction.</i><hr>
 					<a href='?src=\ref[src];choice=scan_card'>\[------\]</a>"}
-				// END AUTOFIX
 		else
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\EFTPOS.dm:70: dat += "<a href='?src=\ref[src];choice=toggle_lock'>Lock in new transaction</a><br><br>"
 			dat += {"<a href='?src=\ref[src];choice=toggle_lock'>Lock in new transaction</a><br><br>
 				Transaction purpose: <a href='?src=\ref[src];choice=trans_purpose'>[transaction_purpose]</a><br>
 				Value: <a href='?src=\ref[src];choice=trans_value'>$[transaction_amount]</a><br>
@@ -97,7 +83,6 @@
 				<a href='?src=\ref[src];choice=change_code'>Change access code</a><br>
 				<a href='?src=\ref[src];choice=change_id'>Change EFTPOS ID</a><br>
 				Scan card to reset access code <a href='?src=\ref[src];choice=reset'>\[------\]</a>"}
-			// END AUTOFIX
 		user << browse(dat,"window=eftpos")
 	else
 		user << browse(null,"window=eftpos")

@@ -155,14 +155,11 @@
 	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\\power\turbine.dm:156: t += "Generated power : [round(lastgen)] W<BR><BR>"
 	t += {"Generated power : [round(lastgen)] W<BR><BR>
 		Turbine: [round(compressor.rpm)] RPM<BR>
 		Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
 		</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
 		</TT>"}
-	// END AUTOFIX
 	user << browse(t, "window=turbine")
 	onclose(user, "turbine")
 

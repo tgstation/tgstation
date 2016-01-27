@@ -145,7 +145,7 @@
 	if (C == user)
 		user.visible_message("[user] climbs on the operating table.","You climb on the operating table.")
 	else
-		visible_message("<span class='warning'>[C] has been laid on the operating table by [user].</span>", 2) //spooky
+		visible_message("<span class='warning'>[C] has been laid on the operating table by [user].</span>")
 
 	add_fingerprint(user)
 
@@ -180,5 +180,5 @@
 			returnToPool(W)
 			return
 	if(isrobot(user)) return
-	user.drop_item(W, src.loc)
+	//user.drop_item(W, src.loc) why?
 	return

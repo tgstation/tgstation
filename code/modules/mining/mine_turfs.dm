@@ -33,7 +33,10 @@
 /turf/unsimulated/mineral/New()
 	. = ..()
 	MineralSpread()
+	if(ticker)
+		initialize()
 
+/turf/unsimulated/mineral/initialize()
 	spawn(1)
 		var/turf/T
 		if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)) || (istype(get_step(src, NORTH), /turf/simulated/shuttle/floor)))
@@ -499,6 +502,10 @@
 
 	if(prob(20))
 		icon_state = "asteroid[rand(0,12)]"
+	if(ticker)
+		initialize()
+
+/turf/unsimulated/floor/asteroid/initialize()
 	updateMineralOverlays()
 
 /turf/unsimulated/floor/asteroid/ex_act(severity)
@@ -557,15 +564,18 @@
 
 /turf/unsimulated/floor/asteroid/proc/updateMineralOverlays()
 	src.overlays.len = 0
-
-	if(istype(get_step(src, NORTH), /turf/unsimulated/mineral))
-		src.overlays += image('icons/turf/walls.dmi', "rock_side_n")
-	if(istype(get_step(src, SOUTH), /turf/unsimulated/mineral))
-		src.overlays += image('icons/turf/walls.dmi', "rock_side_s", layer=6)
-	if(istype(get_step(src, EAST), /turf/unsimulated/mineral))
-		src.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
-	if(istype(get_step(src, WEST), /turf/unsimulated/mineral))
-		src.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
+	spawn(1)
+		for(var/dir in cardinal)
+			if(istype(get_step(src,dir), /turf/unsimulated/mineral))
+				switch(dir)
+					if(NORTH)
+						src.overlays += image('icons/turf/walls.dmi', "rock_side_n")
+					if(SOUTH)
+						src.overlays += image('icons/turf/walls.dmi', "rock_side_s", layer=6)
+					if(EAST)
+						src.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
+					if(WEST)
+						src.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
 
 /turf/unsimulated/floor/asteroid/proc/fullUpdateMineralOverlays()
 	var/turf/unsimulated/floor/asteroid/A
@@ -998,6 +1008,7 @@
 			// We can't go a full loop though
 			next_angle = -next_angle
 			dir = angle2dir(dir2angle(dir) + next_angle)
+
 /turf/unsimulated/floor/asteroid/cave/proc/SpawnFloor(var/turf/T)
 	for(var/turf/S in range(2,T))
 		if(istype(S, /turf/space) || istype(S.loc, /area/mine/explored))

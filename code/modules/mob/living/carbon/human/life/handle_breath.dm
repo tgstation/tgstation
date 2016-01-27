@@ -5,6 +5,8 @@
 		return
 	if(reagents.has_reagent("lexorin"))
 		return
+	if(undergoing_hypothermia() == PROFOUND_HYPOTHERMIA) // we're not breathing. see handle_hypothermia.dm for details.
+		return
 	if(M_NO_BREATH in mutations)
 		return //No breath mutation means no breathing.
 	if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) //This is an annoying hack given that cryo cells are supposed to be oxygenated, but fuck it

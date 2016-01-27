@@ -55,6 +55,10 @@
 /datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return 0
 
+	// once a surgery is selected, let's check if we can actually accomplish it
+/datum/surgery_step/proc/can_operate(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return 1
+
 	// does stuff to begin the step, usually just printing messages. Moved germs transfering and bloodying here too
 /datum/surgery_step/proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -110,6 +114,8 @@ proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 			var/canuse = S.can_use(user, M, user.zone_sel.selecting, tool)
 			if(canuse == -1) sleep_fail = 1
 			if(canuse && S.is_valid_mutantrace(M) && !(M in S.doing_surgery))
+				if(!S.can_operate(user, M, user.zone_sel.selecting, tool)) //ruh oh, we picked this step, but we can't actually do it for some special raisin
+					return 1
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had surgery [S.type] with \the [tool] started by [user.name] ([user.ckey])</font>")
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Started surgery [S.type] with \the [tool] on [M.name] ([M.ckey])</font>")
 				log_attack("<font color='red'>[user.name] ([user.ckey]) used \the [tool] to perform surgery type [S.type] on [M.name] ([M.ckey])</font>")

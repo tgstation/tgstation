@@ -35,8 +35,6 @@
 		if(0)
 			// Main Menu
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:141: dat += "<A href='?src=\ref[src];switchscreen=1'>1. View General Inventory</A><BR>"
 			dat += {"<ol>
 				<li><A href='?src=\ref[src];switchscreen=1'>View General Inventory</A></li>
 				<li><A href='?src=\ref[src];switchscreen=2'>View Checked Out Inventory</A></li>
@@ -45,7 +43,6 @@
 				<li><A href='?src=\ref[src];switchscreen=5'>Upload New Title to Archive</A></li>
 				<li><A href='?src=\ref[src];switchscreen=6'>Print a Bible</A></li>
 				<li><A href='?src=\ref[src];switchscreen=7'>Print a Manual</A></li>"}
-			// END AUTOFIX
 			if(src.emagged)
 				dat += "<li><A href='?src=\ref[src];switchscreen=8'>Access the Forbidden Lore Vault</A></li>"
 			dat += "</ol>"
@@ -77,17 +74,12 @@
 				else
 					timedue = round(timedue)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:175: dat += "\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>"
 				dat += {"\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>
 					<A href='?src=\ref[src];checkin=\ref[b]'>(Check In)</A><BR><BR>"}
-				// END AUTOFIX
 			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(3)
 			// Check Out a Book
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:180: dat += "<h3>Check Out a Book</h3><BR>"
 			dat += {"<h3>Check Out a Book</h3><BR>
 				Book: [src.buffer_book]
 				<A href='?src=\ref[src];editbook=1'>\[Edit\]</A><BR>
@@ -98,7 +90,6 @@
 				(Checkout Period: [checkoutperiod] minutes) (<A href='?src=\ref[src];increasetime=1'>+</A>/<A href='?src=\ref[src];decreasetime=1'>-</A>)
 				<A href='?src=\ref[src];checkout=1'>(Commit Entry)</A><BR>
 				<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"}
-			// END AUTOFIX
 		if(4)
 			dat += "<h3>External Archive</h3>"
 			if(!dbcon_old.IsConnected())
@@ -106,8 +97,6 @@
 			else
 				num_results = src.get_num_results()
 				num_pages = Ceiling(num_results/LIBRARY_BOOKS_PER_PAGE)
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:196: dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
 				dat += {"<ul>
 					<li><A href='?src=\ref[src];id=-1'>(Order book by SS<sup>13</sup>BN)</A></li>
 				</ul>"}
@@ -164,20 +153,14 @@
 				dat += "<FONT color=red>No data found in scanner memory.</FONT><BR>"
 			else
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:222: dat += "<TT>Data marked for upload...</TT><BR>"
 				dat += {"<TT>Data marked for upload...</TT><BR>
 					<TT>Title: </TT>[scanner.cache.name]<BR>"}
-				// END AUTOFIX
 				if(!scanner.cache.author)
 					scanner.cache.author = "Anonymous"
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:226: dat += "<TT>Author: </TT><A href='?src=\ref[src];setauthor=1'>[scanner.cache.author]</A><BR>"
 				dat += {"<TT>Author: </TT><A href='?src=\ref[src];setauthor=1'>[scanner.cache.author]</A><BR>
 					<TT>Category: </TT><A href='?src=\ref[src];setcategory=1'>[upload_category]</A><BR>
 					<A href='?src=\ref[src];upload=1'>\[Upload\]</A><BR>"}
-				// END AUTOFIX
 			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(7)
 			dat += "<H3>Print a Manual</H3>"
@@ -204,8 +187,6 @@
 
 		if(8)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:231: dat += "<h3>Accessing Forbidden Lore Vault v 1.3</h3>"
 			dat += {"<h3>Accessing Forbidden Lore Vault v 1.3</h3>
 				Are you absolutely sure you want to proceed? EldritchTomes Inc. takes no responsibilities for loss of sanity resulting from this action.<p>
 				<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>

@@ -137,6 +137,11 @@
 	qdel(src)
 	return 20000
 
+/obj/machinery/power/supermatter/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(istype(mover,/obj/structure/closet/crate/secure/large/reinforced))
+		return 1
+	. = ..()
+
 /obj/machinery/power/supermatter/process()
 
 	var/turf/L = loc

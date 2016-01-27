@@ -45,6 +45,7 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 	can_flip = 1
+	heat_conductivity = INS_MASK_HEAT_CONDUCTIVITY
 
 /obj/item/clothing/mask/scarf/blue
 	name = "blue neck scarf"

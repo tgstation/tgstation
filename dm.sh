@@ -30,6 +30,7 @@ then
 	exit 2
 fi
 
+# map select
 for var
 do
 	arg=`echo $var | sed -r 's/^.{2}//'`
@@ -41,7 +42,7 @@ do
 	if [[ $var == -M* ]]
 	then
 		sed -i '1s/^/#define MAP_OVERRIDE\n/' $dmepath.mdme
-		sed -i 's!#include "maps\\[a-z]+.dm"!#include "maps\\'$arg'.dm"!' $dmepath.mdme
+		sed -ri 's!#include "maps\\[a-zA-Z0-9]+.dm"!#include "maps\\'$arg'.dm"!' $dmepath.mdme
 		continue
 	fi
 done

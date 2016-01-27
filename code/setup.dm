@@ -38,7 +38,7 @@ var/global/disable_vents     = 0
 #define ONE_ATMOSPHERE		101.325	//kPa
 
 #define CELL_VOLUME 2500	//liters in a cell
-#define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
+#define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC - about 103.934 in case you're searching
 
 #define O2STANDARD 0.21
 #define N2STANDARD 0.79
@@ -68,32 +68,27 @@ var/global/disable_vents     = 0
 #define HAZARD_LOW_PRESSURE 20		//This is when the black ultra-low pressure icon is displayed. (This one is set as a constant)
 
 #define TEMPERATURE_DAMAGE_COEFFICIENT 1.5	//This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
-#define BODYTEMP_AUTORECOVERY_DIVISOR 12 //This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
-#define BODYTEMP_AUTORECOVERY_MINIMUM 10 //Minimum amount of kelvin moved toward 310.15K per tick. So long as abs(310.15 - bodytemp) is more than 50.
-#define BODYTEMP_COLD_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
-#define BODYTEMP_HEAT_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
-#define BODYTEMP_COOLING_MAX 30 //The maximum number of degrees that your body can cool in 1 tick, when in a cold area.
-#define BODYTEMP_HEATING_MAX 30 //The maximum number of degrees that your body can heat up in 1 tick, when in a hot area.
+#define BODYTEMP_AUTORECOVERY_DIVISOR 4 //This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
+#define BODYTEMP_AUTORECOVERY_MAXIMUM 0.25 //Maximum amount of kelvin moved toward 310.15K per tick. So long as abs(310.15 - bodytemp) is more than 0.5 .
+#define BODYTEMP_COLD_DIVISOR 150 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
+#define BODYTEMP_HEAT_DIVISOR 80 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
+#define BODYTEMP_HEATING_MAX 10 //The maximum number of degrees that your body can heat up in 1 tick, when in a hot area.
 
 #define BODYTEMP_HEAT_DAMAGE_LIMIT 360.15 // The limit the human body can take before it starts taking damage from heat.
-#define BODYTEMP_COLD_DAMAGE_LIMIT 260.15 // The limit the human body can take before it starts taking damage from coldness.
+#define BODYTEMP_COLD_DAMAGE_LIMIT 220.15 // The limit the human body can take before it starts taking damage from coldness.
 
-#define SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
-#define SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
 #define SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE 5000	//These need better heat protect
 #define FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE 30000 //what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
 #define FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE 30000 //for fire helmet quality items (red and white hardhats)
-#define HELMET_MIN_COLD_PROTECTION_TEMPERATURE 160	//For normal helmets
+
 #define HELMET_MAX_HEAT_PROTECTION_TEMPERATURE 600	//For normal helmets
-#define ARMOR_MIN_COLD_PROTECTION_TEMPERATURE 160	//For armor
+
 #define ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE 600	//For armor
 
-#define GLOVES_MIN_COLD_PROTECTION_TEMPERATURE 2.0	//For some gloves (black and)
 #define GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE 1500		//For some gloves
-#define SHOE_MIN_COLD_PROTECTION_TEMPERATURE 2.0	//For gloves
 #define SHOE_MAX_HEAT_PROTECTION_TEMPERATURE 1500		//For gloves
 
-
+#define IS_SPACE_COLD 1
 #define PRESSURE_DAMAGE_COEFFICIENT 4 //The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
 #define MAX_HIGH_PRESSURE_DAMAGE 4	//This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
 #define LOW_PRESSURE_DAMAGE 2 	//The amounb of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
@@ -101,11 +96,30 @@ var/global/disable_vents     = 0
 #define PRESSURE_SUIT_REDUCTION_COEFFICIENT 0.8 //This is how much (percentual) a suit with the flag STOPSPRESSUREDMG reduces pressure.
 #define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.4 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMG reduces pressure.
 
+// Heat Conductivity - 1 is fully conductive, 0 is fully insulative.
+#define ARMOUR_HEAT_CONDUCTIVITY		0.4	//For armour
+#define INS_ARMOUR_HEAT_CONDUCTIVITY 	0.2	//For heat insulated suits like hardsuits or jumpers.
+
+#define MASK_HEAT_CONDUCTIVITY			0.4	//For normal masks
+#define INS_MASK_HEAT_CONDUCTIVITY 		0.2	//For heat insulated masks such as a balaclavas, scarves & gas masks
+
+#define JUMPSUIT_HEAT_CONDUCTIVITY		0.4 //For normal jumpsuits
+#define INS_JUMPSUIT_HEAT_CONDUCTIVITY	0.1 //For heat insulated jumpsuits, if such a thing is even possible.
+
+#define SHOE_HEAT_CONDUCTIVITY			0.4	//For normal shoes.
+#define INS_SHOE_HEAT_CONDUCTIVITY		0.3	//For insulated shoes like jackboots or magboots.
+
+#define HELMET_HEAT_CONDUCTIVITY		0.4 //For helmets
+#define INS_HELMET_HEAT_CONDUCTIVITY	0.1 //For heat insulated helmets
+
+#define GLOVES_HEAT_CONDUCTIVITY		0.4	//For normal gloves.
+#define INS_GLOVES_HEAT_CONDUCTIVITY	0.2	//For some heat insulated gloves (black and yellow.)
+
 // Doors!
 #define DOOR_CRUSH_DAMAGE 10
 
 // Factor of how fast mob nutrition decreases
-#define HUNGER_FACTOR 0.12
+#define HUNGER_FACTOR 0.15  // Please remember when editing this that it will also affect hypothermia.
 
 // How many units of reagent are consumed per tick, by default.
 #define REAGENTS_METABOLISM 0.2
@@ -275,6 +289,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define HIDESUITSTORAGE	2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
 #define HIDEJUMPSUIT	4	//APPLIES ONLY TO THE EXTERIOR SUIT!!
 #define HIDESHOES		8	//APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDEBAG			16	//APPLIES ONLY TO THE EXTERIOR SUIT
 #define HIDEMASK		1	//APPLIES ONLY TO HELMETS/MASKS!!
 #define HIDEEARS		2	//APPLIES ONLY TO HELMETS/MASKS!! (ears means headsets and such)
 #define HIDEEYES		4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
@@ -344,6 +359,9 @@ var/MAX_EXPLOSION_RANGE = 14
 #define THERMAL_PROTECTION_ARM_RIGHT	0.075
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
+
+var/global/list/THERMAL_BODY_PARTS = list(HEAD,UPPER_TORSO,LOWER_TORSO,LEG_LEFT,FOOT_LEFT,FOOT_RIGHT,ARM_LEFT,ARM_RIGHT,HAND_LEFT,HAND_RIGHT)
+var/global/list/BODY_THERMAL_VALUE_LIST=list("[HEAD]" = THERMAL_PROTECTION_HEAD,"[UPPER_TORSO]" = THERMAL_PROTECTION_UPPER_TORSO,"[LOWER_TORSO]" = THERMAL_PROTECTION_LOWER_TORSO,"[LEG_LEFT]" = THERMAL_PROTECTION_LEG_LEFT,"[LEG_RIGHT]" = THERMAL_PROTECTION_LEG_RIGHT,"[FOOT_LEFT]" = THERMAL_PROTECTION_FOOT_LEFT,"[FOOT_RIGHT]" = THERMAL_PROTECTION_FOOT_RIGHT,"[ARM_LEFT]" = THERMAL_PROTECTION_ARM_LEFT,"[ARM_RIGHT]" = THERMAL_PROTECTION_ARM_RIGHT,"[HAND_LEFT]" = THERMAL_PROTECTION_HAND_LEFT,"[HAND_RIGHT]" = THERMAL_PROTECTION_HAND_RIGHT)
 
 
 //bitflags for mutations
@@ -814,13 +832,21 @@ var/list/liftable_structures = list(\
 #define SPECIALROLE_HUD 	8 // AntagHUD image
 #define STATUS_HUD_OOC		9 // STATUS_HUD without virus db check for someone being ill.
 
+// Hypothermia - using the swiss staging system. - called by the proc undergoing_hypothermia() in handle_hypothermia.dm
+#define NO_HYPOTHERMIA			0	// >35C   - Fine
+#define MILD_HYPOTHERMIA		1	// 32-35C - Awake and shivering
+#define MODERATE_HYPOTHERMIA	2	// 28-35C - Drowsy, not shivering.
+#define SEVERE_HYPOTHERMIA 		3	// 20-28C - Unconcious, not shivering
+#define PROFOUND_HYPOTHERMIA 	4	// <20C   - No vital signs.
+
 //Pulse levels, very simplified
 #define PULSE_NONE		0	//so !M.pulse checks would be possible
-#define PULSE_SLOW		1	//<60 bpm
-#define PULSE_NORM		2	//60-90 bpm
-#define PULSE_FAST		3	//90-120 bpm
-#define PULSE_2FAST		4	//>120 bpm
-#define PULSE_THREADY	5	//occurs during hypovolemic shock
+#define PULSE_2SLOW		1	//20-40 bpm
+#define PULSE_SLOW		2	//40-60 bpm
+#define PULSE_NORM		3	//60-90 bpm
+#define PULSE_FAST		4	//90-120 bpm
+#define PULSE_2FAST		5	//>120 bpm
+#define PULSE_THREADY	6	//occurs during hypovolemic shock
 //feel free to add shit to lists below
 var/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine")	//increase heart rate
 var/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin")					//decrease heart rate

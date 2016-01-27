@@ -1,3 +1,12 @@
+
+var/global/list/mixed_allowed = list(
+	"autotraitor",
+	"changeling",
+	"cult",
+	"vampire",
+	"wizard",
+	)
+
 /datum/game_mode/mixed
 	name = "mixed"
 	config_tag = "mixed"
@@ -37,20 +46,43 @@
 	. = 1
 	modes = list()
 	picked_antags = list()
-	var/list/datum/game_mode/possible = typesof(/datum/game_mode) - list(/datum/game_mode, /datum/game_mode/mixed, /datum/game_mode/malfunction, /datum/game_mode/traitor, /datum/game_mode/traitor/double_agents, /datum/game_mode/sandbox, /datum/game_mode/revolution, /datum/game_mode/meteor, /datum/game_mode/extended, /datum/game_mode/heist, /datum/game_mode/nuclear, /datum/game_mode/traitor/changeling, /datum/game_mode/wizard/raginmages, /datum/game_mode/blob)
-	possible = shuffle(possible)
-	while(modes.len < 3)
-		if(!possible.len) break
-		var/ourmode = pick(possible)
-		possible -= ourmode
-		var/datum/game_mode/M = new ourmode
-		M.mixed = 1
-		if(!M.pre_setup())
-			del(M)
-			continue
-		//modePlayer += M.modePlayer
-		modes += M
-		possible = shuffle(possible)
+
+	if(mixed_modes.len)
+		for(var/M in mixed_modes)
+			var/datum/game_mode/GM = config.pick_mode(M)
+			GM.mixed = 1
+			if(GM.pre_setup())
+				modes += GM
+			else
+				qdel(GM)
+	else
+		var/list/datum/game_mode/possible = typesof(/datum/game_mode) - list(
+																			/datum/game_mode,
+																			/datum/game_mode/mixed,
+																			/datum/game_mode/malfunction,
+																			/datum/game_mode/traitor,
+																			/datum/game_mode/traitor/double_agents,
+																			/datum/game_mode/sandbox,
+																			/datum/game_mode/revolution,
+																			/datum/game_mode/meteor,
+																			/datum/game_mode/extended,
+																			/datum/game_mode/heist,
+																			/datum/game_mode/nuclear,
+																			/datum/game_mode/traitor/changeling,
+																			/datum/game_mode/wizard/raginmages,
+																			/datum/game_mode/blob,
+																			)
+		while(modes.len < 3)
+			if(!possible.len) break
+			var/ourmode = pick(possible)
+			possible -= ourmode
+			var/datum/game_mode/M = new ourmode
+			M.mixed = 1
+			if(!M.pre_setup())
+				qdel(M)
+				continue
+			//modePlayer += M.modePlayer
+			modes += M
 	if(!modes.len)
 		. = 0
 	else
@@ -75,3 +107,17 @@
 /datum/game_mode/mixed/declare_completion()
 	for(var/datum/game_mode/M in modes)
 		M.declare_completion()
+
+/datum/game_mode/mixed/add_cultist(datum/mind/cult_mind)
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
+	if(cult_round)
+		cult_round.add_cultist(..())
+	else
+		..()
+
+/datum/game_mode/mixed/remove_cultist(var/datum/mind/cult_mind, var/show_message = 1, var/log=1)
+	var/datum/game_mode/cult/cult_round = find_active_mode("cult")
+	if(cult_round)
+		cult_round.remove_cultist(..())
+	else
+		..()

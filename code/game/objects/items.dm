@@ -17,11 +17,8 @@
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
 
-	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
-	var/cold_protection = 0 //flags which determine which body parts are protected from cold. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
 	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
-	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
-
+	var/heat_conductivity = 0.5 // how conductive an item is to heat a player (ie how quickly someone will lose heat) on a scale of 0 - 1. - 1 is fully conductive, 0 is fully insulative, this is a range, not binary.
 	//If this is set, The item will make an action button on the player's HUD when picked up.
 	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
 
@@ -52,6 +49,13 @@
 
 	var/vending_cat = null// subcategory for vending machines.
 	var/list/dynamic_overlay[0] //For items which need to slightly alter their on-mob appearance while being worn.
+
+/obj/item/proc/return_thermal_protection()
+	var/total_protection = 0
+	for(var/body_part in THERMAL_BODY_PARTS)
+		if (body_part & src.body_parts_covered)
+			total_protection += BODY_THERMAL_VALUE_LIST["[body_part]"] * (1 - src.heat_conductivity)
+	return total_protection
 
 /obj/item/Destroy()
 	if(istype(src.loc, /mob))
@@ -237,7 +241,11 @@
 /obj/item/proc/stripped(mob/wearer as mob, mob/stripper as mob)
 	return unequipped(wearer)
 
-// called just as an item is picked up (loc is not yet changed)
+// called just as an item is picked up (loc is not yet changed). return 1 to prevent the item from being actually picked up.
+/obj/item/proc/prepickup(mob/user)
+	return
+
+// called after an item is picked up (loc has already changed)
 /obj/item/proc/pickup(mob/user)
 	return
 

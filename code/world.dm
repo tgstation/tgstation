@@ -135,6 +135,10 @@ var/savefile/panicfile
 	master_controller = new /datum/controller/game_controller()
 
 	spawn(1)
+		for(var/turf/T in world)
+			T.initialize()
+			turfs += T
+
 		processScheduler.deferSetupFor(/datum/controller/process/ticker)
 		processScheduler.setup()
 
@@ -155,7 +159,7 @@ var/savefile/panicfile
 	process_adminbus_teleport_locs()	//Sets up adminbus teleport locations.
 	SortAreas()							//Build the list of all existing areas and sort it alphabetically
 
-	spawn(3000)		//so we aren't adding to the round-start lag
+	spawn(2000)		//so we aren't adding to the round-start lag
 		if(config.ToRban)
 			ToRban_autoupdate()
 		/*if(config.kick_inactive)
@@ -335,15 +339,12 @@ var/savefile/panicfile
 		s += "<b>[config.server_name]</b> &#8212; "
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\world.dm:235: s += "<b>[station_name()]</b>";
 	s += {"<b>[station_name()]</b>"
 		(
 		<a href=\"http://\">" //Change this to wherever you want the hub to link to
 		Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version
 		</a>
 		)"}
-	// END AUTOFIX
 	var/list/features = list()
 
 	if(ticker)

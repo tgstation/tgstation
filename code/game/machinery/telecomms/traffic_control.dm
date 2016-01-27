@@ -90,11 +90,8 @@
 	user.set_machine(src)
 	var/dat = "<TITLE>Telecommunication Traffic Control</TITLE><center><b>Telecommunications Traffic Control</b></center>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\traffic_control.dm:93: dat += "<br><b><font color='[(auth ? "green" : "red")]'>[(auth ? "AUTHED" : "NOT AUTHED")]:</font></b> <A href='?src=\ref[src];auth=1'>[(!auth ? "Insert ID" : auth.registered_name)]</A><BR>"
 	dat += {"<br><b><font color='[(auth ? "green" : "red")]'>[(auth ? "AUTHED" : "NOT AUTHED")]:</font></b> <A href='?src=\ref[src];auth=1'>[(!auth ? "Insert ID" : auth.registered_name)]</A><BR>
 		<A href='?src=\ref[src];print=1'>View System Log</A><HR>"}
-	// END AUTOFIX
 	if(issilicon(user) || auth)
 
 		switch(screen)
@@ -104,21 +101,15 @@
 
 			if(0)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\traffic_control.dm:104: dat += "<br>[temp]<br>"
 				dat += {"<br>[temp]<br>
 					<br>Current Network: <a href='?src=\ref[src];network=1'>[network]</a><br>"}
-				// END AUTOFIX
 				if(servers.len)
 					dat += "<br>Detected Telecommunication Servers:<ul>"
 					for(var/obj/machinery/telecomms/T in servers)
 						dat += "<li><a href='?src=\ref[src];viewserver=[T.id]'>\ref[T] [T.name]</a> ([T.id])</li>"
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\traffic_control.dm:110: dat += "</ul>"
 					dat += {"</ul>
 						<br><a href='?src=\ref[src];operation=release'>\[Flush Buffer\]</a>"}
-					// END AUTOFIX
 				else
 					dat += "<br>No servers detected. Scan for servers: <a href='?src=\ref[src];operation=scan'>\[Scan\]</a>"
 
@@ -128,15 +119,12 @@
 			if(1)
 				if(SelectedServer)
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\traffic_control.dm:121: dat += "<br>[temp]<br>"
 					dat += {"<br>[temp]<br>
 						<center><a href='?src=\ref[src];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=\ref[src];operation=refresh'>\[Refresh\]</a></center>
 						<br>Current Network: [network]
 						<br>Selected Server: [SelectedServer.id]<br><br>
 						<br><a href='?src=\ref[src];operation=editcode'>\[Edit Code\]</a>
 						<br>Signal Execution: "}
-					// END AUTOFIX
 					if(SelectedServer.autoruncode)
 						dat += "<a href='?src=\ref[src];operation=togglerun'>ALWAYS</a>"
 					else

@@ -391,11 +391,8 @@ a { color: white; }
 	for(var/id in src.settings)
 		var/datum/ZAS_Setting/s = src.settings[id]
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\ZAS\NewSettings.dm:393: dat += "<dt><b>[s.name]</b> = <i>[s.value]</i> <A href='?src=\ref[src];changevar=[id]'>\[Change\]</A></dt>"
 		dat += {"<dt><b>[s.name]</b> = <i>[s.value]</i> <A href='?src=\ref[src];changevar=[id]'>\[Change\]</A></dt>
 			<dd>[s.desc]</i></dd>"}
-		// END AUTOFIX
 	dat += "</dl></body></html>"
 	user << browse(dat,"window=settings")
 

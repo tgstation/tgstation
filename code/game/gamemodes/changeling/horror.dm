@@ -31,7 +31,7 @@
 
 	throw_mult = 1.5 // +0.5 for hulk
 	fireloss_mult = 2 // double the damage, half the fun
-
+	can_be_hypothermic = 0
 
 	abilities = list(
 		/client/proc/changeling_force_airlock

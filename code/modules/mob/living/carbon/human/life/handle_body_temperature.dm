@@ -21,22 +21,13 @@
 */
 
 /mob/living/carbon/human/proc/handle_body_temperature()
-	var/body_temperature_difference = 310.15 - bodytemperature
-	if(abs(body_temperature_difference) < 0.5)
+	var/body_temperature_difference = abs(310.15 - bodytemperature)
+	if(body_temperature_difference < 0.5)
 		return //fuck this precision
-	switch(bodytemperature)
-		if(-INFINITY to 260.15) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
-			if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
-				nutrition -= 2
-			var/recovery_amt = max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
-			//log_debug("Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
-			bodytemperature += recovery_amt
-		if(260.15 to 360.15)
-			var/recovery_amt = body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR
-			//log_debug("Norm. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
-			bodytemperature += recovery_amt
-		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
-			//We totally need a sweat system cause it totally makes sense...~
-			var/recovery_amt = min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM) //We're dealing with negative numbers
-			//log_debug("Hot. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
-			bodytemperature += recovery_amt
+	if(undergoing_hypothermia())
+		handle_hypothermia()
+	if(bodytemperature > 310.15)
+		//We totally need a sweat system cause it totally makes sense...~ - Now we do, sort of!
+		var/recovery_amt = min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR),BODYTEMP_AUTORECOVERY_MAXIMUM)
+		//log_debug("Hot. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
+		sweat(recovery_amt,1)
