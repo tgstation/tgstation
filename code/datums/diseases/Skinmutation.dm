@@ -14,7 +14,7 @@
 	switch(stage)
 	if(human.dna.species.id != "lizard")
 		if(1, 2)
- 			affected_mob << "<span class='notice'>[pick("Your skin feels awfully itchy", "Something tries to stick out of your jumpsuit")]</span>"
+			affected_mob << "<span class='notice'>[pick("Your skin feels awfully itchy", "Something tries to stick out of your jumpsuit")]</span>"
 		if(3)
 			affected_mob << A.affected_mob.say(pick("Hiss, Hiss?, Hiss!"))
 			affected_mob << "<span class='notice'>[pick("You cannot resist the urge to hiss")]</span>"
@@ -36,9 +36,7 @@
 						human.update_icons()
 						human.update_body()
 						human.update_hair()
-				affected_mob.adjustcloneLoss(20)
-				affected_mob.adjustFireLoss(10)
- 				affected_mob.adjustBruteLoss(30)
+				affected_mob.adjustCloneLoss(40)
  				affected_mob.overeatduration = max(affected_mob.overeatduration - 100, 0)
 				affected_mob.nutrition = max(affected_mob.nutrition - 100, 0)
 				affected_mob << "<span class='userdanger'>[pick("You feel weak as your tailbone violently pops out of your jumpsuit and your blisters painfully dry up and harden into scales.")]</span>"
