@@ -132,10 +132,12 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		C.dust()
 	return
 
-/proc/get_closest_atom(list, source)
+/proc/get_closest_atom(list, source, typetocheck)
 	var/closest_atom
 	var/closest_distance
 	for(var/A in list)
+		if (typetocheck && !istype(A, typetocheck))
+			continue
 		var/distance = get_dist(source, A)
 		if(!closest_atom || closest_distance > distance)
 			closest_distance = distance
