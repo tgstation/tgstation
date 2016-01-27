@@ -55,13 +55,6 @@
 	if(master)
 		master.update_icon()
 
-/obj/item/device/assembly_holder/HasProximity(atom/movable/AM as mob|obj)
-	if(a_left)
-		a_left.HasProximity(AM)
-	if(a_right)
-		a_right.HasProximity(AM)
-
-
 /obj/item/device/assembly_holder/Crossed(atom/movable/AM as mob|obj)
 	if(a_left)
 		a_left.Crossed(AM)

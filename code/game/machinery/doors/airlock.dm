@@ -1113,11 +1113,6 @@ var/list/airlock_overlays = list()
 //Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
 	return !density || (check_access(ID) && !locked && hasPower())
 
-/obj/machinery/door/airlock/HasProximity(atom/movable/AM as mob|obj)
-	for (var/obj/A in contents)
-		A.HasProximity(AM)
-	return
-
 /obj/machinery/door/airlock/emag_act(mob/user)
 	if(!operating && density && hasPower() && !emagged)
 		operating = 1

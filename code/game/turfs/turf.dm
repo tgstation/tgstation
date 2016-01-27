@@ -26,6 +26,8 @@
 
 	flags = 0
 
+	var/list/proximity_checkers = list()
+
 	var/image/obscured	//camerachunks
 /turf/New()
 	..()
@@ -91,12 +93,9 @@
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/M)
-	var/loopsanity = 100
-	for(var/atom/A in range(1))
-		if(loopsanity == 0)
-			break
-		loopsanity--
-		A.HasProximity(M, 1)
+	for(var/A in proximity_checkers)
+		var/atom/B = A
+		B.HasProximity(M)
 
 /turf/proc/is_plasteel_floor()
 	return 0
