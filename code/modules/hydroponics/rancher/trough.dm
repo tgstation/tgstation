@@ -26,6 +26,8 @@
 /obj/machinery/trough/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		if(istype(O, /obj/item/weapon/reagent_containers/glass/))
+			var/obj/item/weapon/reagent_containers/glass/G = O
+			G.reagents.trans_to(src,G.reagents.total_volume)
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 			return
 		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))
@@ -39,4 +41,17 @@
 			if(istype(G,/obj/item/weapon/reagent_containers/food/snacks))
 				feed.Add(G)
 		user << "You empty food from [P] into [src]."
+	if(default_deconstruction_screwdriver(user, "trough", "trough", O))
+		return
+
+	if(exchange_parts(user, O))
+		return
+
+	if(default_pry_open(O))
+		return
+
+	if(default_unfasten_wrench(user, O))
+		return
+
+	default_deconstruction_crowbar(O)
 	return

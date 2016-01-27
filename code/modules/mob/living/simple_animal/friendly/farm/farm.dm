@@ -18,16 +18,16 @@
 	health = 100
 	maxHealth = 100
 
-	var/hunger = 100
-	var/thirst = 100
-	var/hunger_max = 100
-	var/thirst_max = 100
+	var/hunger = 500
+	var/thirst = 500
+	var/hunger_max = 500
+	var/thirst_max = 500
 	var/hunger_decay = 1
-	var/thirst_decay = 1
-	var/hunger_threshold_hungry = 50
-	var/hunger_threshold_dying = 5
-	var/thirst_threshold_thirsty = 50
-	var/thirst_threshold_dying = 5
+	var/thirst_decay = 3
+	var/hunger_threshold_hungry = 300
+	var/hunger_threshold_dying = 100
+	var/thirst_threshold_thirsty = 300
+	var/thirst_threshold_dying = 100
 
 	var/amount_drank = 10
 	var/amount_eaten_herbivore = 1
@@ -35,8 +35,8 @@
 
 	var/age = 0
 	var/child = 0
-	var/growth_age = 50
-	var/age_tick = 0
+	var/mob/living/simple_animal/farm/adult_version
+	var/growth_age = 150
 
 	var/walking_to_trough = FALSE
 	var/eating_from_trough = FALSE
@@ -44,7 +44,14 @@
 	var/mob/living/simple_animal/farm/mother = null
 	var/mob/living/simple_animal/farm/father = null
 
+	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg_type = /obj/item/weapon/reagent_containers/food/snacks/egg
+	var/mob/living/simple_animal/farm/mob_birth_type = /mob/living/simple_animal/farm/chick
+
+	var/datum/farm_animal_trait/default_breeding_trait = /datum/farm_animal_trait/herbivore
+	var/datum/farm_animal_trait/default_food_trait = /datum/farm_animal_trait/egg_layer
+
 	var/list/young = list()
+	var/list/default_traits = list()
 
 /mob/living/simple_animal/farm/examine(mob/user)
 	..()
@@ -58,11 +65,23 @@
 			user.show_message("<span class ='danger'>It looks like its dying of thirst!</span>",1)
 		if((thirst_threshold_dying + 1) to thirst_threshold_thirsty)
 			user.show_message("It looks thirsty.",1)
-/mob/living/simple_animal/farm/New(var/mob/living/simple_animal/farm/mother, var/mob/living/simple_animal/farm/father)
+	switch(gender)
+		if(FEMALE)
+			user.show_message("It is female.",1)
+		if(MALE)
+			user.show_message("It is male.",1)
+	if(dna)
+		for(var/datum/farm_animal_trait/T in dna.traits)
+			T.on_examine(user, src)
+	return
+/mob/living/simple_animal/farm/New(var/new_dna = 1, var/mob/living/simple_animal/farm/mother_temp, var/mob/living/simple_animal/farm/father_temp)
 	..()
-	if(!dna)
-		if(mother && father)
-			dna = create_child_from_dna(mother, father, src)
+	gender = pick(FEMALE, MALE)
+	if(child)
+		health /= 2
+	if(!dna && new_dna)
+		if(mother_temp && father_temp)
+			dna = create_child_from_dna(mother_temp, father_temp, src)
 		else
 			dna = create_child_from_scratch(src)
 	dna.owner = src
@@ -76,7 +95,7 @@
 
 	handle_needs()
 
-	handle_breeding()
+	handle_age()
 
 	handle_traits()
 	/*
@@ -91,19 +110,29 @@
 	hunger -= hunger_decay
 	thirst -= thirst_decay
 	if(hunger <= hunger_threshold_dying)
-		world << "DOING 1 DAMAGE, HUNGER DYING"
 		adjustBruteLoss(1)
-	if(hunger >= hunger_threshold_hungry)
+	if(hunger > hunger_threshold_hungry)
 		adjustBruteLoss(-1)
 
 	if(thirst <= thirst_threshold_dying)
-		world << "DOING 3 DAMAGE, HUNGER DYING"
 		adjustBruteLoss(3)
-	if(thirst >= thirst_threshold_thirsty)
+	if(thirst > thirst_threshold_thirsty)
 		adjustBruteLoss(-1)
 	return
 
-/mob/living/simple_animal/farm/proc/handle_breeding()
+/mob/living/simple_animal/farm/proc/handle_age()
+	if(child)
+		age++
+		if(age >= growth_age)
+			var/mob/living/simple_animal/farm/F = new adult_version(src.loc)
+			F.name = src.name
+			F.dna = create_child_from_dna(src, src, F) // this technically means that at some point all babies become their own parents but ehhh, saves me the time
+			F.dna.mother = mother
+			F.dna.father = father
+			F.mother = mother
+			F.father = father
+			F.gender = gender
+			qdel(src)
 	return
 
 /mob/living/simple_animal/farm/proc/handle_traits()
@@ -123,25 +152,3 @@
 		for(var/datum/farm_animal_trait/T in dna.traits)
 			T.on_hear(message, speaker, message_langs, raw_message, radio_freq, spans)
 	..()
-
-
-/mob/living/simple_animal/farm/chicken
-	name = "\improper chicken"
-	desc = "Hopefully the eggs are good this season."
-	icon_state = "chicken_white"
-	icon_living = "chicken_white"
-	icon_dead = "chicken_white_dead"
-	speak = list("Cluck!","BWAAAAARK BWAK BWAK BWAK!","Bwaak bwak.")
-	speak_emote = list("clucks","croons")
-	emote_hear = list("clucks.")
-	emote_see = list("pecks at the ground.","flaps its wings viciously.")
-	density = 0
-	speak_chance = 2
-	turns_per_move = 3
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
-	attacktext = "pecks at"
-	pass_flags = PASSTABLE | PASSMOB
-	mob_size = MOB_SIZE_SMALL
-	gold_core_spawnable = 2

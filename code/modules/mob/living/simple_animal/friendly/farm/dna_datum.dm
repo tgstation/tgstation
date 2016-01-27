@@ -1,6 +1,6 @@
-proc/create_child_from_dna(var/mob/living/simple_animal/farm/mother, var/mob/living/simple_animal/farm/father, var/mob/living/simple_animal/farm/self)
-	var/datum/farm_animal_dna/mother_dna = mother.dna
-	var/datum/farm_animal_dna/father_dna = father.dna
+proc/create_child_from_dna(var/mob/living/simple_animal/farm/mother_temp, var/mob/living/simple_animal/farm/father_temp, var/mob/living/simple_animal/farm/self)
+	var/datum/farm_animal_dna/mother_dna = mother_temp.dna
+	var/datum/farm_animal_dna/father_dna = father_temp.dna
 	var/datum/farm_animal_dna/child_dna = new
 	child_dna.owner = self
 
@@ -15,10 +15,15 @@ proc/create_child_from_dna(var/mob/living/simple_animal/farm/mother, var/mob/liv
 	self.health *= child_dna.health
 	self.maxHealth *= child_dna.health
 
+	for(var/def_T in self.default_traits)
+		child_dna.add_trait(def_T)
+
 	switch(prob(50))
 		if(TRUE)
 			for(var/datum/farm_animal_trait/T in mother_dna.traits)
 				if(T.random_blacklist)
+					continue
+				if(child_dna.has_trait(T))
 					continue
 				if(prob(T.continue_probability))
 					child_dna.add_trait(T)
@@ -26,6 +31,8 @@ proc/create_child_from_dna(var/mob/living/simple_animal/farm/mother, var/mob/liv
 					continue
 			for(var/datum/farm_animal_trait/T in father_dna.traits)
 				if(T.random_blacklist)
+					continue
+				if(child_dna.has_trait(T))
 					continue
 				if(prob(T.continue_probability))
 					child_dna.add_trait(T)
@@ -35,12 +42,16 @@ proc/create_child_from_dna(var/mob/living/simple_animal/farm/mother, var/mob/liv
 			for(var/datum/farm_animal_trait/T in father_dna.traits)
 				if(T.random_blacklist)
 					continue
+				if(child_dna.has_trait(T))
+					continue
 				if(prob(T.continue_probability))
 					child_dna.add_trait(T)
 				else
 					continue
 			for(var/datum/farm_animal_trait/T in mother_dna.traits)
 				if(T.random_blacklist)
+					continue
+				if(child_dna.has_trait(T))
 					continue
 				if(prob(T.continue_probability))
 					child_dna.add_trait(T)
@@ -62,9 +73,11 @@ proc/create_child_from_dna(var/mob/living/simple_animal/farm/mother, var/mob/liv
 		added_traits++
 		var/datum/farm_animal_trait/temp_T = T
 		if(child_dna.has_trait(initial(temp_T)))
+			added_traits--
 			continue
 		if(initial(temp_T.opposite_trait))
 			if(child_dna.has_trait(initial(temp_T.opposite_trait)))
+				added_traits--
 				continue
 		if(prob(initial(temp_T.manifest_probability)))
 			child_dna.add_trait(temp_T)
@@ -80,6 +93,18 @@ proc/create_child_from_dna(var/mob/living/simple_animal/farm/mother, var/mob/liv
 			child_dna.add_trait(/datum/farm_animal_trait/herbivore)
 		else
 			child_dna.add_trait(/datum/farm_animal_trait/carnivore)
+
+	if(mother_dna.has_trait(/datum/farm_animal_trait/egg_layer) && father_dna.has_trait(/datum/farm_animal_trait/egg_layer))
+		child_dna.add_trait(/datum/farm_animal_trait/egg_layer)
+
+	else if(mother_dna.has_trait(/datum/farm_animal_trait/mammal) && father_dna.has_trait(/datum/farm_animal_trait/mammal))
+		child_dna.add_trait(/datum/farm_animal_trait/mammal)
+
+	else if((mother_dna.has_trait(/datum/farm_animal_trait/egg_layer) && father_dna.has_trait(/datum/farm_animal_trait/mammal)) || (mother_dna.has_trait(/datum/farm_animal_trait/mammal) && father_dna.has_trait(/datum/farm_animal_trait/egg_layer)))
+		if(prob(50))
+			child_dna.add_trait(/datum/farm_animal_trait/egg_layer)
+		else
+			child_dna.add_trait(/datum/farm_animal_trait/mammal)
 
 	return child_dna
 
@@ -97,6 +122,9 @@ proc/create_child_from_scratch(var/mob/living/simple_animal/farm/self)
 	self.health *= child_dna.health
 	self.maxHealth *= child_dna.health
 
+	for(var/def_T in self.default_traits)
+		child_dna.add_trait(def_T)
+
 	var/max_new_traits = rand(1,3)
 	var/added_traits = 0
 	var/list/potential_traits = typesof(/datum/farm_animal_trait) - /datum/farm_animal_trait
@@ -113,17 +141,28 @@ proc/create_child_from_scratch(var/mob/living/simple_animal/farm/self)
 		added_traits++
 		var/datum/farm_animal_trait/temp_T = T
 		if(child_dna.has_trait(initial(temp_T)))
+			added_traits--
 			continue
 		if(initial(temp_T.opposite_trait))
 			if(child_dna.has_trait(initial(temp_T.opposite_trait)))
+				added_traits--
 				continue
 		if(prob(initial(temp_T.manifest_probability) + 20))
 			child_dna.add_trait(temp_T)
-
-	if(prob(50))
-		child_dna.add_trait(/datum/farm_animal_trait/herbivore)
+	if(!self.default_food_trait)
+		if(prob(50))
+			child_dna.add_trait(/datum/farm_animal_trait/herbivore)
+		else
+			child_dna.add_trait(/datum/farm_animal_trait/carnivore)
 	else
-		child_dna.add_trait(/datum/farm_animal_trait/carnivore)
+		child_dna.add_trait(self.default_food_trait)
+	if(!self.default_breeding_trait)
+		if(prob(50))
+			child_dna.add_trait(/datum/farm_animal_trait/egg_layer)
+		else
+			child_dna.add_trait(/datum/farm_animal_trait/mammal)
+	else
+		child_dna.add_trait(self.default_breeding_trait)
 
 	return child_dna
 
@@ -137,7 +176,8 @@ proc/create_child_from_scratch(var/mob/living/simple_animal/farm/self)
 	var/max_young = 1
 
 	var/mob/living/simple_animal/farm/owner = null
-
+	var/mob/living/simple_animal/farm/mother = null
+	var/mob/living/simple_animal/farm/father = null
 	var/list/traits = list()
 
 /datum/farm_animal_dna/proc/add_trait(var/datum/farm_animal_trait/T)

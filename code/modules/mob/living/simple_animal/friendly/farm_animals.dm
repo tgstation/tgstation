@@ -260,18 +260,6 @@ var/global/chicken_count = 0
 			if(chicken_count < MAX_CHICKENS && prob(25))
 				SSobj.processing |= E
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
-/obj/item/weapon/reagent_containers/food/snacks/egg/process()
-	if(isturf(loc))
-		amount_grown += rand(1,2)
-		if(amount_grown >= 100)
-			visible_message("[src] hatches with a quiet cracking sound.")
-			new /mob/living/simple_animal/chick(get_turf(src))
-			SSobj.processing.Remove(src)
-			qdel(src)
-	else
-		SSobj.processing.Remove(src)
-
 /obj/udder
 
 /obj/udder/New()

@@ -1,7 +1,7 @@
 /obj/machinery/incubator
 	name = "egg incubator"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "trough"
+	icon_state = "incubator"
 	density = 1
 	anchored = 1
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/incubated = null
@@ -18,7 +18,23 @@
 		user.drop_item(O)
 		O.loc = src
 		user << "You add [O] to [src]."
-		SSobj.processing.Add(O)
+		icon_state = "incubator_e"
+		incubated = O
+		SSobj.processing |= incubated
+		return
+	if(default_deconstruction_screwdriver(user, "incubator", "incubator", O))
+		return
+
+	if(exchange_parts(user, O))
+		return
+
+	if(default_pry_open(O))
+		return
+
+	if(default_unfasten_wrench(user, O))
+		return
+
+	default_deconstruction_crowbar(O)
 	return
 
 /obj/machinery/incubator/attack_hand(mob/user)
@@ -27,3 +43,4 @@
 		user << "You pull [incubated] out of [src]."
 		SSobj.processing.Remove(incubated)
 		incubated = null
+		icon_state = "incubator"

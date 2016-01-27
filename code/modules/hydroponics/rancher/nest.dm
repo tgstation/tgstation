@@ -2,7 +2,7 @@
 	name = "nest"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "nest"
-	density = 1
+	density = 0
 	anchored = 1
 
 /obj/machinery/nest/New()
@@ -13,4 +13,17 @@
 	RefreshParts()
 
 /obj/machinery/nest/attackby(obj/item/O, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "nest", "nest", O))
+		return
+
+	if(exchange_parts(user, O))
+		return
+
+	if(default_pry_open(O))
+		return
+
+	if(default_unfasten_wrench(user, O))
+		return
+
+	default_deconstruction_crowbar(O)
 	return
