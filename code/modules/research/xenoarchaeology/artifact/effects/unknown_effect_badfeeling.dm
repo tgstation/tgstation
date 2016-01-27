@@ -10,7 +10,7 @@
 		"There's a strange feeling in the air.",\
 		"There's a strange smell in the air.",\
 		"The tips of your fingers feel tingly.",\
-		"You feel witchy.",\
+		"You feel twitchy.",\
 		"You have a terrible sense of foreboding.",\
 		"You've got a bad feeling about this.",\
 		"Your scalp prickles.",\
