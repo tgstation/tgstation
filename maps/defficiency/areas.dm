@@ -41,3 +41,7 @@
 /area/derelictparts/incinerator
 	name = "Abandoned Incinerator"
 	icon_state = "incineratorderelict"
+
+/area/derelictparts/medbay
+	name = "Abandoned Medbay"
+	icon_state = "medbayderelict"
