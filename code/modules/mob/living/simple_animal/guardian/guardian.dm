@@ -99,7 +99,7 @@
 			resulthealth = round((summoner.health / abs(config.health_threshold_dead - summoner.maxHealth)) * 100)
 		else
 			resulthealth = round((summoner.health / summoner.maxHealth) * 100)
-		hud_used.healthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>"
+		hud_used.guardianhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>"
 
 /mob/living/simple_animal/hostile/guardian/adjustHealth(amount) //The spirit is invincible, but passes on damage to the summoner
 	. =  ..()
@@ -749,11 +749,11 @@
 
 	var/obj/screen/using
 
-	healthdisplay = new /obj/screen/guardian()
-	healthdisplay.name = "summoner health"
-	healthdisplay.screen_loc = ui_health
-	healthdisplay.mouse_opacity = 0
-	adding += healthdisplay
+	guardianhealthdisplay = new /obj/screen/guardian()
+	guardianhealthdisplay.name = "summoner health"
+	guardianhealthdisplay.screen_loc = ui_health
+	guardianhealthdisplay.mouse_opacity = 0
+	adding += guardianhealthdisplay
 
 	using = new /obj/screen/guardian/Manifest()
 	using.screen_loc = ui_rhand

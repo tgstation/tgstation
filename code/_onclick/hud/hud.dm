@@ -101,7 +101,7 @@ var/datum/global_hud/global_hud = new()
 	var/obj/screen/blobpwrdisplay
 	var/obj/screen/blobhealthdisplay
 
-	var/obj/screen/guardian/healthdisplay
+	var/obj/screen/guardianhealthdisplay
 
 	var/obj/screen/alien_plasma_display
 
