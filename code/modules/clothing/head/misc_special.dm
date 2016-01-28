@@ -63,6 +63,8 @@
 		if(M.l_hand == src || M.r_hand == src || M.head == src)
 			location = M.loc
 
+		M.contract_disease(new /datum/disease/transformation/cake, 1)
+
 	if (istype(location, /turf))
 		location.hotspot_expose(700, 1)
 

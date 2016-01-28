@@ -227,3 +227,25 @@
 		if(4)
 			if (prob(20))
 				affected_mob.say(pick("Bark!", "AUUUUUU"))
+
+/datum/disease/transformation/cake
+	name = "Cake Hat Infection"
+	cure = "Take off the damn hat"
+	agent = "Dixbfloppin"
+	hidden = list(0, 0)
+	stage_prob = 1
+	stage1	= list("This cake hat is so bitching...")
+	stage2	= list("You crave frosting.")
+	stage3	= list("\red The cake is all", "\red So fucking bitching")
+	stage4	= list("\red THE CAKE THE CAKE THE CAKE THE CAKE")
+	stage5	= list("\red YOU ARE NOW DELICIOUS")
+	new_form = /obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake
+
+/datum/disease/transformation/cake/stage_act()
+	..()
+	var/mob/living/carbon/human/H = affected_mob
+	if(stage != 5)
+		if(istype(H.head, /obj/item/clothing/head/cakehat/))
+			return
+
+	cure(0)
