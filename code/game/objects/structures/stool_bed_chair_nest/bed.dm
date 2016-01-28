@@ -14,7 +14,7 @@
 	icon = 'icons/obj/stools-chairs-beds.dmi'
 
 	locked_should_lie = 1
-	dense_when_locking = 0
+	lockflags = 0
 	anchored = 1
 	var/sheet_type = /obj/item/stack/sheet/metal
 	var/sheet_amt = 1
@@ -113,7 +113,7 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
-	dense_when_locking = 1
+	lockflags = DENSE_WHEN_LOCKING | DENSE_WHEN_LOCKED
 
 /obj/item/roller
 	name = "roller bed"

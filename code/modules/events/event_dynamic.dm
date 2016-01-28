@@ -57,6 +57,7 @@ var/list/event_last_fired = list()
 		possibleEvents[/datum/event/meteor_wave] = 15
 		possibleEvents[/datum/event/meteor_shower] = 40
 		possibleEvents[/datum/event/blob] = 10
+		possibleEvents[/datum/event/immovable_rod] = 15
 
 	possibleEvents[/datum/event/radiation_storm] = 50
 	if(active_with_role["Medical"] > 1)

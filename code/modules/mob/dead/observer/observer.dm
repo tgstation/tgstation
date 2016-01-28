@@ -10,6 +10,7 @@
 	layer = 4
 	stat = DEAD
 	density = 0
+	lockflags = 0 //Neither dense when locking or dense when locked to something
 	canmove = 0
 	blinded = 0
 	anchored = 1	//  don't get pushed around
