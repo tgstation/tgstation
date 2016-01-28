@@ -216,7 +216,7 @@
 
 	AM.anchored = 1
 
-	if((lockflags & DENSE_WHEN_LOCKING) && (AM.lockflags && DENSE_WHEN_LOCKED))
+	if((lockflags & DENSE_WHEN_LOCKING) && (AM.lockflags & DENSE_WHEN_LOCKED))
 		density = 1
 
 	return 1
