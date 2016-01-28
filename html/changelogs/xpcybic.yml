@@ -4,7 +4,7 @@ delete-after: True
 changes:
   - rscadd: (Taxi) Added spawn points for bluespace rifts.
   - rscadd: (Meta) Added a lightswitch to medbay breakroom.
-  - rsctweak: (Meta) Cryo freezer is now off at round start.
+  - tweak: (Meta) Cryo freezer is now off at round start.
   - bugfix: (Meta) Fixed xenobio blast doors being transparent.
   - tweak: (Meta) Added a delivery windoor to bridge MULEbot dropoff. Rearranged nearby objects to make room.
   - bugfix: (Meta) Fixed access requirement on telescience privacy shutters.
