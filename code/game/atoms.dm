@@ -27,7 +27,8 @@
 		return 0
 
 	//check for centcomm shuttles
-	for(var/obj/docking_port/mobile/M in SSshuttle.mobile)
+	for(var/A in SSshuttle.mobile)
+		var/obj/docking_port/mobile/M = A
 		if(M.launch_status == ENDGAME_LAUNCHED && T in M.areaInstance)
 			return 1
 
