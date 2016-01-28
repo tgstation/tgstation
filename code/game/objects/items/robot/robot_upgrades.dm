@@ -292,3 +292,47 @@
 			msg_cooldown = world.time
 	else
 		deactivate()
+
+
+
+
+///AI Upgrades
+
+
+//Malf Picker
+/obj/item/device/malf_upgrade
+	name = "combat software upgrade"
+	desc = "A highly illegal, highly dangerous upgrade for artificial intelligence units, granting them a variety of powers as well as the ability to hack APCs."
+	icon = 'icons/obj/cloning.dmi'
+	icon_state = "datadisk0"
+
+
+/obj/item/slimepotion/sentience/afterattack(mob/living/silicon/ai/AI, mob/user)
+	if(!istype(AI))
+		return
+	if(AI.malf_picker)
+		AI.malf_picker.processing_time += 50
+		AI << "[user] has attempted to upgrade you with combat software that you already possess. You gain 50 points to spend on Malfunction Modules instead."
+	else
+		AI << "[user] has upgraded you with combat software!
+		AI.add_malf_picker()
+	user << "You upgrade [AI]. [src] is consumed in the process."
+	qdel (src)
+
+
+//Lipreading
+/obj/item/device/surviellance_upgrade
+	name = "surveillance software upgrade"
+	desc = "A software package that will allow an artificial intelligence to 'hear' from its cameras via lip reading."
+	icon = 'icons/obj/cloning.dmi'
+	icon_state = "datadisk0"
+
+/obj/item/slimepotion/sentience/afterattack(mob/living/silicon/ai/AI, mob/user)
+	if(!istype(AI))
+		return
+	if(AI.eyeobj)
+		AI.eyeobj.relay_speech = TRUE
+		AI << "[user] has upgraded you with surveillance software!
+		AI << "Via a combination of hidden microphones and lip reading software, you are able to use your cameras to listen in on conversations."
+	user << "You upgrade [AI]. [src] is consumed in the process."
+	qdel (src)
