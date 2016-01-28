@@ -56,18 +56,13 @@
 				else if(src.heal_brute < 1)
 					user << "<span class='notice'> [src] won't help [M] at all.</span>"
 					return
-			user.visible_message("<span class='green'>[user] applies [src] on [M].</span>", "<span class='green'>You apply [src] on [M].</span>")
-		else
-			var/t_himself = "itself"
-			if(user.gender == MALE)
-				t_himself = "himself"
-			else if(user.gender == FEMALE)
-				t_himself = "herself"
-			user.visible_message("<span class='notice'>[user] starts to apply [src] on [t_himself]...</span>", "<span class='notice'>You begin applying [src] on yourself...</span>")
-			if(!do_mob(user, M, self_delay))	return
-			user.visible_message("<span class='green'>[user] applies [src] on [t_himself].</span>", "<span class='green'>You apply [src] on yourself.</span>")
-
-
+				else
+					var/mob/living/carbon/human/H = M
+					var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+					if(affecting.status != ORGAN_ORGANIC)
+						user << "<span class='notice'>Medicine won't work on a robotic limb!</span>"
+						return
+						user.visible_message("<span class='green'>[user] applies [src] on [M].</span>", "<span class='green'>You apply [src] on [M].</span>")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
@@ -81,8 +76,18 @@
 			M.updatehealth()
 		else
 			user << "<span class='notice'>Medicine won't work on a robotic limb!</span>"
+			return
 	else
+		var/t_himself = "itself"
+		if(user.gender == MALE)
+			t_himself = "himself"
+		else if(user.gender == FEMALE)
+			t_himself = "herself"
+		user.visible_message("<span class='notice'>[user] starts to apply [src] on [t_himself]...</span>", "<span class='notice'>You begin applying [src] on yourself...</span>")
 		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))
+		if(!do_mob(user, M, self_delay))	return
+		user.visible_message("<span class='green'>[user] applies [src] on [t_himself].</span>", "<span class='green'>You apply [src] on yourself.</span>")
+
 
 
 	use(1)
@@ -105,11 +110,12 @@
 	icon_state = "gauze"
 	stop_bleeding = 1800
 	self_delay = 80
+	burn_state = FLAMMABLE
 
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"
 	singular_name = "improvised gauze"
-	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
+	desc = "A roughly cut roll of cloth that can stop sone bleeding, but does not heal wounds."
 	stop_bleeding = 900
 
 /obj/item/stack/medical/gauze/cyborg/
