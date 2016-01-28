@@ -21,6 +21,11 @@
 /mob/living/simple_animal/hostile/blob/blob_act()
 	return
 
+/mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target, height=0)
+	if(istype(mover, /obj/effect/blob))
+		return 1
+	return ..()
+
 ////////////////
 // BLOB SPORE //
 ////////////////
@@ -46,11 +51,6 @@
 	..()
 	adjustBruteLoss(Clamp(0.01 * exposed_temperature, 1, 5))
 
-
-/mob/living/simple_animal/hostile/blob/blobspore/CanPass(atom/movable/mover, turf/target, height=0)
-	if(istype(mover, /obj/effect/blob))
-		return 1
-	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/New(loc, var/obj/effect/blob/factory/linked_node)
 	if(istype(linked_node))

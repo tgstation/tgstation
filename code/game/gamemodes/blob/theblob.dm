@@ -132,16 +132,19 @@
 	if(!T)
 		return 0
 	var/make_blob = 1 //can we make a blob?
+
 	if(istype(T, /turf/space) && prob(65))
 		make_blob = 0
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
-	for(var/atom/A in T)
-		if(A.density)
-			make_blob = 0
-		A.blob_act() //Hit everything
-	if(T.density) //Check for walls and such dense turfs
+
+	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
+	if(!T.CanPass(src, T, 5)) //is the target turf impassable
 		make_blob = 0
-		T.blob_act() //Hit the turf
+		T.blob_act() //hit the turf if it is
+	for(var/atom/A in T)
+		if(!A.CanPass(src, T, 5)) //is anything in the turf impassable
+			make_blob = 0
+		A.blob_act() //also hit everything in the turf
 
 	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, src.loc)
 	if(controller)
@@ -168,8 +171,8 @@
 				B.overmind.blob_reagent_datum.expand_reaction(B, T)
 			return B
 		else
-			T.blob_act() //If we cant move in hit the turf
-			qdel(B) //We should never get to this point, since we checked before moving in. Destroy blob anyway for cleanliness though
+			T.blob_act() //if we can't move in hit the turf again
+			qdel(B) //we should never get to this point, since we checked before moving in. destroy the blob so we don't have two blobs on one tile
 			return null
 	return null
 
