@@ -36,7 +36,7 @@
 						human.update_icons()
 						human.update_body()
 						human.update_hair()
-				affected_mob.adjustCloneLoss(50)
-				affected_mob << "<span class='userdanger'>[pick("You feel weak as your tailbone violently pops out of your jumpsuit and your blisters painfully dry up and harden into scales.")]</span>"
+			affected_mob.adjustCloneLoss(50)
+			affected_mob << "<span class='danger'>You feel weak as your tailbone violently pops out of your jumpsuit and your blisters painfully dry up and harden into scales.</span>"
 		else
 	return
