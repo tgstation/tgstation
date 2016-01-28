@@ -4,7 +4,7 @@
 Hyphema (Eye bleeding)
 
 	Slightly noticable.
-	Lowers resistance tremendously.
+	Lowers resistance
 	Decreases stage speed tremendously.
 	Decreases transmittablity.
 	Critical Level.
@@ -19,7 +19,7 @@ Bonus
 
 	name = "Hyphema"
 	stealth = -1
-	resistance = -4
+	resistance = -2
 	stage_speed = -4
 	transmittable = -3
 	level = 5
