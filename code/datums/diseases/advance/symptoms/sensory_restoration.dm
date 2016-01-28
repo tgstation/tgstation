@@ -46,7 +46,6 @@ Bonus
 			if(4, 5)
 				if (M.reagents.get_reagent_amount("mannitol") < 15)
 					M.reagents.add_reagent("mannitol", 15)
-			else
-				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
+			if(prob(SYMPTOM_ACTIVATION_PROB * 5))
 					M << "<span class='notice'>[pick("You see all colours of the spectrum.", "Your hearing feels clearer and crisp.", "You feel focused.")]</span>"
 	return

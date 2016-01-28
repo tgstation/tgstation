@@ -11,30 +11,43 @@
 
 /datum/disease/lizarditis/stage_act()
 	..()
+	var/mob/living/M = A.affected_mob
+	if(M.dna.species.id != "lizard")
 	switch(stage)
-	if(human.dna.species.id != "lizard")
 		if(1, 2)
-			affected_mob << "<span class='notice'>[pick("Your skin feels awfully itchy", "Something tries to stick out of your jumpsuit")]</span>"
+			if(M.dna.species.id == "lizard")
+				src.cure()
+			M << "<span class='notice'>[pick("Your skin feels awfully itchy", "Something tries to stick out of your jumpsuit")]</span>"
 		if(3)
-			affected_mob.say(pick("Hiss, Hiss?, Hiss!"))
-			affected_mob << "<span class='notice'>[pick("You cannot resist the urge to hiss")]</span>"
+			if(M.dna.species.id == "lizard")
+				src.cure()
+			M.say(pick("Hiss, Hiss?, Hiss!"))
+			M << "<span class='notice'>[pick("You cannot resist the urge to hiss")]</span>"
 		if(4)
-			affected_mob << "<span class='warning'>[pick("Your tailbone feels like it's going to burst!")]</span>"
- 			affected_mob.adjustbruteloss(10)
+			if(M.dna.species.id == "lizard")
+				src.cure()
+			M << "<span class='warning'>[pick("Your tailbone feels like it's going to burst!")]</span>"
+ 			M.adjustbruteloss(10)
  		if(5)
- 			affected_mob << "<span class='userdanger'>[pick("Your skin violently blisters!")]</span>"
- 			affected_mob.adjustbruteloss(10)
+ 			if(M.dna.species.id == "lizard")
+				src.cure()
+ 			M << "<span class='userdanger'>[pick("Your skin violently blisters!")]</span>"
+ 			M.adjustbruteloss(10)
  		if(6)
- 			affected_mob << "<span class='userdanger'>[pick("Your skin feels as rough as sandpaper!")]</span>"
- 			affected_mob.adjustbruteloss(20)
- 			affected_mob.reagents.add_reagent("itching_powder", 15)
+ 			if(M.dna.species.id == "lizard")
+				src.cure()
+ 			M << "<span class='userdanger'>[pick("Your skin feels as rough as sandpaper!")]</span>"
+ 			M.adjustbruteloss(20)
+ 			M.reagents.add_reagent("itching_powder", 15)
 		if(7)
-			if(ishuman(affected_mob) && affected_mob.dna && affected_mob.dna.species.id != "lizard")
-				affected_mob.dna.species = new /datum/species/lizard()
-				affected_mob.update_icons()
-				affected_mob.update_body()
-				affected_mob.update_hair()
-			affected_mob.adjustCloneLoss(50)
-			affected_mob << "<span class='danger'>You feel weak as your tailbone violently pops out of your jumpsuit and your blisters painfully dry up and harden into scales.</span>"
+			if(M.dna.species.id == "lizard")
+				src.cure()
+			if(ishuman(M) && M.dna && M.dna.species.id != "lizard")
+				M.dna.species = new /datum/species/lizard()
+				M.update_icons()
+				M.update_body()
+				M.update_hair()
+			M.adjustCloneLoss(50)
+			M << "<span class='danger'>You feel weak as your tailbone violently pops out of your jumpsuit and your blisters painfully dry up and harden into scales.</span>"
 		else
 	return

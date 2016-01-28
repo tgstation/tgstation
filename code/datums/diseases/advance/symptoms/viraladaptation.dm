@@ -29,8 +29,8 @@ BONUS
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1)
-				H << "<span class='notice'>You feel off, but no different from before.</span>"
+				M << "<span class='notice'>You feel off, but no different from before.</span>"
 			if(5)
-				H << "<span class='notice'>You feel better, but nothing interesting happens.</span>"
+				M << "<span class='notice'>You feel better, but nothing interesting happens.</span>"
 
 	return
