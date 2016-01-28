@@ -1,6 +1,6 @@
 /obj/machinery/transformer
 	name = "\improper Automatic Robotic Factory 5000"
-	desc = "A large metalic machine with an entrance and an exit. A sign on the side reads, 'human go in, robot come out', human must be lying down and alive. Has to cooldown between each use."
+	desc = "A large metallic machine with an entrance and an exit. A sign on the side reads, 'human go in, robot come out', human must be lying down and alive. Has to cooldown between each use."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = MOB_LAYER+1 // Overhead
@@ -28,7 +28,7 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/machinery/transformer/Bumped(var/atom/movable/AM)
+/obj/machinery/transformer/Bumped(atom/movable/AM)
 
 	if(cooldown == 1)
 		return
@@ -42,14 +42,14 @@
 			AM.loc = src.loc
 			do_transform(AM)
 
-/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target, height=0)
 	if(!ishuman(mover)) // Allows items to go through, to stop them from blocking the conveyour belt.
 		var/dir = get_dir(src, mover)
 		if(dir == EAST)
 			return ..()
 	return 0
 
-/obj/machinery/transformer/proc/do_transform(var/mob/living/carbon/human/H)
+/obj/machinery/transformer/proc/do_transform(mob/living/carbon/human/H)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(cooldown == 1)
@@ -87,6 +87,7 @@
 		sleep(30)
 		if(R)
 			R.SetLockdown(0)
+			R.notify_ai(1)
 
 /obj/machinery/transformer/conveyor/New()
 	..()

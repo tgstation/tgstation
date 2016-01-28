@@ -6,7 +6,7 @@
 	item_state = ""	//no inhands
 	item_color = "bluetie"
 	slot_flags = 0
-	w_class = 2.0
+	w_class = 2
 
 /obj/item/clothing/tie/blue
 	name = "blue tie"
@@ -17,6 +17,11 @@
 	name = "red tie"
 	icon_state = "redtie"
 	item_color = "redtie"
+
+/obj/item/clothing/tie/black
+	name = "black tie"
+	icon_state = "blacktie"
+	item_color = "blacktie"
 
 /obj/item/clothing/tie/horrible
 	name = "horrible tie"
@@ -79,6 +84,8 @@
 	desc = "A bronze medal."
 	icon_state = "bronze"
 	item_color = "bronze"
+	materials = list(MAT_METAL=1000)
+	burn_state = FIRE_PROOF
 
 //Pinning medals on people
 /obj/item/clothing/tie/medal/attack(mob/living/carbon/human/M, mob/living/user)
@@ -91,26 +98,19 @@
 
 		if(M.w_uniform)
 			var/obj/item/clothing/under/U = M.w_uniform
-			if(!U.hastie) //Check if he is not already wearing an accessory
-				user.drop_item()
-				U.hastie = src
-				src.loc = U
-
+			if(U.attachTie(src, user, 0)) //Attach it, do not notify the user of the attachment
 				if(user == M)
 					user << "<span class='notice'>You attach [src] to [U].</span>"
 				else
-					user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
+					user.visible_message("[user] pins \the [src] on [M]'s chest.", \
 										 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
-				M.update_inv_w_uniform(0)
 
-			else user << "<span class='warning'>\The [U] already has an accessory.</span>"
-
-		else user << "<span class='warning'>Medals can only be pinned on jumpsuits.</span>"
+		else user << "<span class='warning'>Medals can only be pinned on jumpsuits!</span>"
 	else ..()
 
 /obj/item/clothing/tie/medal/conduct
 	name = "distinguished conduct medal"
-	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is most basic award given by Nanotrasen. It is often awarded by a captain to a member of his crew."
+	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is the most basic award given by Nanotrasen. It is often awarded by a captain to a member of his crew."
 
 /obj/item/clothing/tie/medal/bronze_heart
 	name = "bronze heart medal"
@@ -126,6 +126,7 @@
 	desc = "A silver medal."
 	icon_state = "silver"
 	item_color = "silver"
+	materials = list(MAT_SILVER=1000)
 
 /obj/item/clothing/tie/medal/silver/valor
 	name = "medal of valor"
@@ -140,6 +141,7 @@
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
 	item_color = "gold"
+	materials = list(MAT_GOLD=1000)
 
 /obj/item/clothing/tie/medal/gold/captain
 	name = "medal of captaincy"
@@ -147,7 +149,7 @@
 
 /obj/item/clothing/tie/medal/gold/heroism
 	name = "medal of exceptional heroism"
-	desc = "An extremely rare golden medal awarded only by Centcom. To recieve such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
+	desc = "An extremely rare golden medal awarded only by Centcom. To receive such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
 
 ////////////
 //Armbands//
@@ -156,41 +158,149 @@
 /obj/item/clothing/tie/armband
 	name = "red armband"
 	desc = "An fancy red armband!"
-	icon_state = "red"
-	item_color = "red"
+	icon_state = "redband"
+	item_color = "redband"
+
+/obj/item/clothing/tie/armband/deputy
+	name = "security deputy armband"
+	desc = "An armband, worn by personnel authorized to act as a deputy of station security."
 
 /obj/item/clothing/tie/armband/cargo
 	name = "cargo bay guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is brown."
-	icon_state = "cargo"
-	item_color = "cargo"
+	icon_state = "cargoband"
+	item_color = "cargoband"
 
 /obj/item/clothing/tie/armband/engine
 	name = "engineering guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is orange with a reflective strip!"
-	icon_state = "engie"
-	item_color = "engie"
+	icon_state = "engieband"
+	item_color = "engieband"
 
 /obj/item/clothing/tie/armband/science
 	name = "science guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is purple."
-	icon_state = "rnd"
-	item_color = "rnd"
+	icon_state = "rndband"
+	item_color = "rndband"
 
 /obj/item/clothing/tie/armband/hydro
 	name = "hydroponics guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is green and blue."
-	icon_state = "hydro"
-	item_color = "hydro"
+	icon_state = "hydroband"
+	item_color = "hydroband"
 
 /obj/item/clothing/tie/armband/med
 	name = "medical guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white."
-	icon_state = "med"
-	item_color = "med"
+	icon_state = "medband"
+	item_color = "medband"
 
-/obj/item/clothing/tie/armband/medgreen
+/obj/item/clothing/tie/armband/medblue
 	name = "medical guard armband"
-	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and green."
-	icon_state = "medgreen"
-	item_color = "medgreen"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and blue."
+	icon_state = "medblueband"
+	item_color = "medblueband"
+
+///////////
+//SCARVES//
+///////////
+
+/obj/item/clothing/tie/scarf
+	name = "scarf"
+	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
+
+/obj/item/clothing/tie/scarf/red
+	name = "red scarf"
+	icon_state = "redscarf"
+	item_color = "redscarf"
+
+/obj/item/clothing/tie/scarf/green
+	name = "green scarf"
+	icon_state = "greenscarf"
+	item_color = "greenscarf"
+
+/obj/item/clothing/tie/scarf/darkblue
+	name = "dark blue scarf"
+	icon_state = "darkbluescarf"
+	item_color = "darkbluescarf"
+
+/obj/item/clothing/tie/scarf/purple
+	name = "purple scarf"
+	icon_state = "purplescarf"
+	item_color = "purplescarf"
+
+/obj/item/clothing/tie/scarf/yellow
+	name = "yellow scarf"
+	icon_state = "yellowscarf"
+	item_color = "yellowscarf"
+
+/obj/item/clothing/tie/scarf/orange
+	name = "orange scarf"
+	icon_state = "orangescarf"
+	item_color = "orangescarf"
+
+/obj/item/clothing/tie/scarf/lightblue
+	name = "light blue scarf"
+	icon_state = "lightbluescarf"
+	item_color = "lightbluescarf"
+
+/obj/item/clothing/tie/scarf/white
+	name = "white scarf"
+	icon_state = "whitescarf"
+	item_color = "whitescarf"
+
+/obj/item/clothing/tie/scarf/black
+	name = "black scarf"
+	icon_state = "blackscarf"
+	item_color = "blackscarf"
+
+/obj/item/clothing/tie/scarf/zebra
+	name = "zebra scarf"
+	icon_state = "zebrascarf"
+	item_color = "zebrascarf"
+
+/obj/item/clothing/tie/scarf/christmas
+	name = "christmas scarf"
+	icon_state = "christmasscarf"
+	item_color = "christmasscarf"
+
+//The three following scarves don't have the scarf subtype
+//This is because Ian can equip anything from that subtype
+//However, these 3 don't have corgi versions of their sprites
+/obj/item/clothing/tie/stripedredscarf
+	name = "striped red scarf"
+	icon_state = "stripedredscarf"
+	item_color = "stripedredscarf"
+
+/obj/item/clothing/tie/stripedgreenscarf
+	name = "striped green scarf"
+	icon_state = "stripedgreenscarf"
+	item_color = "stripedgreenscarf"
+
+/obj/item/clothing/tie/stripedbluescarf
+	name = "striped blue scarf"
+	icon_state = "stripedbluescarf"
+	item_color = "stripedbluescarf"
+
+/obj/item/clothing/tie/petcollar //don't really wear this though please c'mon seriously guys
+	name = "pet collar"
+	desc = "It's for pets. Though you probably could wear it yourself, you'd doubtless be the subject of ridicule."
+	icon_state = "petcollar"
+	item_color = "petcollar"
+	var/tagname = null
+
+/obj/item/clothing/tie/petcollar/attack_self(mob/user)
+	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
+	name = "[initial(name)] - [tagname]"
+
+//////////////
+//DOPE BLING//
+//////////////
+
+/obj/item/clothing/tie/dope_necklace
+	name = "gold necklace"
+	desc = "Damn, it feels good to be a gangster."
+	icon = 'icons/obj/clothing/ties.dmi'
+	icon_state = "bling"
+	item_state = ""	//no inhands
+	item_color = "bling"

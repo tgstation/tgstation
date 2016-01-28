@@ -15,18 +15,17 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
-	m_amt = 3000
-	g_amt = 1000
+	materials = list(MAT_METAL=1750, MAT_GLASS=400)
 //	var/up = 0
 	flash_protect = 2
 	tint = 2
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	action_button_name = "Toggle Welding Helmet"
-	visor_flags = HEADCOVERSEYES | HEADCOVERSMOUTH
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -43,21 +42,21 @@
 /*
  * Cakehat
  */
-/obj/item/clothing/head/cakehat
-	name = "cake-hat"
-	desc = "It's tasty looking!"
-	icon_state = "cake0"
-	flags = HEADCOVERSEYES
-	var/onfire = 0.0
-	var/status = 0
-	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
-	var/processing = 0 //I dont think this is used anywhere.
+/obj/item/clothing/head/hardhat/cakehat
+	name = "cakehat"
+	desc = "You put the cake on your head. Brilliant."
+	icon_state = "hardhat0_cakehat"
+	item_state = "hardhat0_cakehat"
+	item_color = "cakehat"
+	flags = BLOCKHAIR
+	flags_inv = HIDEEARS
+	action_button_name = "Toggle Candle"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	brightness_on = 2 //luminosity when on
+	flags_cover = HEADCOVERSEYES
+	heat = 1000
 
-/obj/item/clothing/head/cakehat/process()
-	if(!onfire)
-		processing_objects.Remove(src)
-		return
-
+/obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
 	if(istype(location, /mob/))
 		var/mob/living/carbon/human/M = location
@@ -69,21 +68,20 @@
 	if (istype(location, /turf))
 		location.hotspot_expose(700, 1)
 
-/obj/item/clothing/head/cakehat/attack_self(mob/user as mob)
-	if(status > 1)	return
-	src.onfire = !( src.onfire )
-	if (src.onfire)
-		src.force = 3
-		src.damtype = "fire"
-		src.icon_state = "cake1"
-		processing_objects.Add(src)
-	else
-		src.force = null
-		src.damtype = "brute"
-		src.icon_state = "cake0"
-	return
+/obj/item/clothing/head/hardhat/cakehat/turn_on()
+	..()
+	force = 15
+	damtype = BURN
+	SSobj.processing |= src
 
+/obj/item/clothing/head/hardhat/cakehat/turn_off()
+	..()
+	force = 0
+	damtype = BRUTE
+	SSobj.processing -= src
 
+/obj/item/clothing/head/hardhat/cakehat/is_hot()
+	return on * heat
 /*
  * Ushanka
  */
@@ -93,16 +91,21 @@
 	icon_state = "ushankadown"
 	item_state = "ushankadown"
 	flags_inv = HIDEEARS
+	var/earflaps = 1
+	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
-/obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
-	if(src.icon_state == "ushankadown")
+/obj/item/clothing/head/ushanka/attack_self(mob/user)
+	if(earflaps)
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"
-		user << "You raise the ear flaps on the ushanka."
+		earflaps = 0
+		user << "<span class='notice'>You raise the ear flaps on the ushanka.</span>"
 	else
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
-		user << "You lower the ear flaps on the ushanka."
+		earflaps = 1
+		user << "<span class='notice'>You lower the ear flaps on the ushanka.</span>"
 
 /*
  * Pumpkin head
@@ -113,11 +116,12 @@
 	icon_state = "hardhat0_pumpkin"
 	item_state = "hardhat0_pumpkin"
 	item_color = "pumpkin"
-	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
+	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	action_button_name = "Toggle Pumpkin Light"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 2 //luminosity when on
+	flags_cover = HEADCOVERSEYES
 
 /*
  * Kitty ears
@@ -126,6 +130,16 @@
 	name = "kitty ears"
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
+	color = "#999"
+
+/obj/item/clothing/head/kitty/equipped(mob/user, slot)
+	if(user && slot == slot_head)
+		update_icon(user)
+	..()
+
+/obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
+	if(istype(user))
+		color = "#[user.hair_color]"
 
 
 /obj/item/clothing/head/hardhat/reindeer

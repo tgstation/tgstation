@@ -24,7 +24,20 @@
 /obj/item/ammo_casing/magic/fireball
 	projectile_type = /obj/item/projectile/magic/fireball
 
+/obj/item/ammo_casing/magic/chaos
+	projectile_type = /obj/item/projectile/magic
+
+/obj/item/ammo_casing/magic/chaos/newshot()
+	projectile_type = pick(typesof(/obj/item/projectile/magic))
+	..()
+
 /obj/item/ammo_casing/syringegun
 	name = "syringe gun spring"
 	desc = "A high-power spring that throws syringes."
 	projectile_type = null
+
+/obj/item/ammo_casing/energy/c3dbullet
+	projectile_type = /obj/item/projectile/bullet/midbullet3
+	select_name = "spraydown"
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
+	e_cost = 20

@@ -8,14 +8,37 @@
 	//facial hair
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, facial_hair_styles_list, facial_hair_styles_male_list, facial_hair_styles_female_list)
 	//underwear
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_all, underwear_m, underwear_f)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_list, underwear_m, underwear_f)
+	//undershirt
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
+	//socks
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
+	//lizard bodyparts (blizzard intensifies)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, tails_list_lizard)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/lizard, animated_tails_list_lizard)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/human, animated_tails_list_human)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, snouts_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, horns_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, ears_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, animated_spines_list)
+
+
+	//Species
+	for(var/spath in subtypesof(/datum/species))
+		var/datum/species/S = new spath()
+		if(S.roundstart)
+			roundstart_species[S.id] = S.type
+		species_list[S.id] = S.type
 
 	//Surgeries
-	for(var/path in typesof(/datum/surgery))
-		if(path == /datum/surgery)
-			continue
-		var/datum/surgery/S = new path()
-		surgeries_list[S.name] = S
+	for(var/path in (subtypesof(/datum/surgery)))
+		surgeries_list += new path()
+
+	init_subtypes(/datum/table_recipe, table_recipes)
 
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
@@ -33,7 +56,15 @@
 //if no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)
 	if(!istype(L))	L = list()
-	for(var/path in typesof(prototype))
-		if(path == prototype)	continue
+	for(var/path in subtypesof(prototype))
 		L += new path()
 	return L
+
+//returns a list of paths to every subtype of prototype (excluding prototype)
+//if no list/L is provided, one is created.
+/proc/init_paths(prototype, list/L)
+	if(!istype(L))
+		L = list()
+		for(var/path in subtypesof(prototype))
+			L+= path
+		return L

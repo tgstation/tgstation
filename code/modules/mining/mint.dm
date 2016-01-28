@@ -6,7 +6,7 @@
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "coinpress0"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/amt_silver = 0 //amount of silver
 	var/amt_gold = 0   //amount of gold
 	var/amt_diamond = 0
@@ -25,34 +25,34 @@
 	var/turf/T = get_step(src,input_dir)
 	if(T)
 		for(var/obj/item/stack/sheet/O in T)
-			if (istype(O,/obj/item/stack/sheet/mineral/gold))
+			if (istype(O, /obj/item/stack/sheet/mineral/gold))
 				amt_gold += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/mineral/silver))
+			if (istype(O, /obj/item/stack/sheet/mineral/silver))
 				amt_silver += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/mineral/diamond))
+			if (istype(O, /obj/item/stack/sheet/mineral/diamond))
 				amt_diamond += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/mineral/plasma))
+			if (istype(O, /obj/item/stack/sheet/mineral/plasma))
 				amt_plasma += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/mineral/uranium))
+			if (istype(O, /obj/item/stack/sheet/mineral/uranium))
 				amt_uranium += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/metal))
+			if (istype(O, /obj/item/stack/sheet/metal))
 				amt_iron += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/mineral/clown))
+			if (istype(O, /obj/item/stack/sheet/mineral/bananium))
 				amt_clown += 100 * O.amount
 				O.loc = null
-			if (istype(O,/obj/item/stack/sheet/mineral/adamantine))
+			if (istype(O, /obj/item/stack/sheet/mineral/adamantine))
 				amt_adamantine += 100 * O.amount
 				O.loc = null //Commented out for now. -Durandan
 			return
 
 
-/obj/machinery/mineral/mint/attack_hand(user as mob) //TODO: Adamantine coins! -Durandan
+/obj/machinery/mineral/mint/attack_hand(mob/user) //TODO: Adamantine coins! -Durandan
 
 	var/dat = "<b>Coin Press</b><br>"
 
@@ -117,7 +117,7 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(processing==1)
-		usr << "\blue The machine is processing."
+		usr << "<span class='notice'>The machine is processing.</span>"
 		return
 	if(href_list["choose"])
 		chosen = href_list["choose"]
@@ -206,7 +206,7 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/mineral/mint/proc/create_coins(var/P)
+/obj/machinery/mineral/mint/proc/create_coins(P)
 	var/turf/T = get_step(src,output_dir)
 	if(T)
 		var/obj/item/O = new P(src)

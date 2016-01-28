@@ -7,6 +7,7 @@
  *			angle2dir
  *			angle2text
  *			worldtime2text
+ *			text2dir_extended & dir2text_short
  */
 
 //Returns an integer given a hex input, supports negative values "-ff"
@@ -122,7 +123,7 @@
 		. = "[ls[++i]]" // Make sure the initial element is converted to text.
 
 		if(l-1 & 0x01) // 'i' will always be 1 here.
-			. += S1 // Append 1 element if the remaining elements are not a multiple of 2.
+			. += "[S1]" // Append 1 element if the remaining elements are not a multiple of 2.
 		if(l-i & 0x02)
 			. = text("[][][]", ., S1, S1) // Append 2 elements if the remaining elements are not a multiple of 4.
 		if(l-i & 0x04)
@@ -149,7 +150,7 @@
 
 
 //slower then list2text, but correctly processes associative lists.
-proc/tg_list2text(list/list, glue=",")
+/proc/tg_list2text(list/list, glue=",")
 	if(!istype(list) || !list.len)
 		return
 	var/output
@@ -161,15 +162,19 @@ proc/tg_list2text(list/list, glue=",")
 //Converts a string into a list by splitting the string at each delimiter found. (discarding the seperator)
 /proc/text2list(text, delimiter="\n")
 	var/delim_len = length(delimiter)
-	if(delim_len < 1) return list(text)
 	. = list()
 	var/last_found = 1
-	var/found
-	do
-		found = findtext(text, delimiter, last_found, 0)
-		. += copytext(text, last_found, found)
-		last_found = found + delim_len
-	while(found)
+	var/found = 1
+	if(delim_len < 1)
+		var/text_len = length(text)
+		while(found++ <= text_len)
+			. += copytext(text,found-1, found)
+	else
+		do
+			found = findtext(text, delimiter, last_found, 0)
+			. += copytext(text, last_found, found)
+			last_found = found + delim_len
+		while(found)
 
 //Case Sensitive!
 /proc/text2listEx(text, delimiter="\n")
@@ -192,21 +197,21 @@ proc/tg_list2text(list/list, glue=",")
 //Turns a direction into text
 /proc/dir2text(direction)
 	switch(direction)
-		if(1.0)
+		if(1)
 			return "north"
-		if(2.0)
+		if(2)
 			return "south"
-		if(4.0)
+		if(4)
 			return "east"
-		if(8.0)
+		if(8)
 			return "west"
-		if(5.0)
+		if(5)
 			return "northeast"
-		if(6.0)
+		if(6)
 			return "southeast"
-		if(9.0)
+		if(9)
 			return "northwest"
-		if(10.0)
+		if(10)
 			return "southwest"
 		else
 	return
@@ -234,7 +239,7 @@ proc/tg_list2text(list/list, glue=",")
 	return
 
 //Converts an angle (degrees) into an ss13 direction
-/proc/angle2dir(var/degree)
+/proc/angle2dir(degree)
 
 	degree = SimplifyDegrees(degree)
 
@@ -249,7 +254,7 @@ proc/tg_list2text(list/list, glue=",")
 
 //returns the north-zero clockwise angle in degrees, given a direction
 
-/proc/dir2angle(var/D)
+/proc/dir2angle(D)
 	switch(D)
 		if(NORTH)		return 0
 		if(SOUTH)		return 180
@@ -262,9 +267,16 @@ proc/tg_list2text(list/list, glue=",")
 		else			return null
 
 //Returns the angle in english
-/proc/angle2text(var/degree)
+/proc/angle2text(degree)
 	return dir2text(angle2dir(degree))
 
+//Converts a blend_mode constant to one acceptable to icon.Blend()
+/proc/blendMode2iconMode(blend_mode)
+	switch(blend_mode)
+		if(BLEND_MULTIPLY) return ICON_MULTIPLY
+		if(BLEND_ADD)      return ICON_ADD
+		if(BLEND_SUBTRACT) return ICON_SUBTRACT
+		else               return ICON_OVERLAY
 
 //Converts a rights bitfield into a string
 /proc/rights2text(rights, seperator="", list/adds, list/subs)
@@ -292,6 +304,8 @@ proc/tg_list2text(list/list, glue=",")
 	switch(ui_style)
 		if("Retro")		return 'icons/mob/screen_retro.dmi'
 		if("Plasmafire")	return 'icons/mob/screen_plasmafire.dmi'
+		if("Slimecore") return 'icons/mob/screen_slimecore.dmi'
+		if("Operative") return 'icons/mob/screen_operative.dmi'
 		else			return 'icons/mob/screen_midnight.dmi'
 
 //colour formats
@@ -398,3 +412,232 @@ for(var/t in test_times)
 
 /proc/isLeap(y)
 	return ((y) % 4 == 0 && ((y) % 100 != 0 || (y) % 400 == 0))
+
+// A copy of text2dir, extended to accept one and two letter
+//  directions, and to clearly return 0 otherwise.
+/proc/text2dir_extended(direction)
+	switch(uppertext(direction))
+		if("NORTH", "N")
+			return 1
+		if("SOUTH", "S")
+			return 2
+		if("EAST", "E")
+			return 4
+		if("WEST", "W")
+			return 8
+		if("NORTHEAST", "NE")
+			return 5
+		if("NORTHWEST", "NW")
+			return 9
+		if("SOUTHEAST", "SE")
+			return 6
+		if("SOUTHWEST", "SW")
+			return 10
+		else
+	return 0
+
+
+
+// A copy of dir2text, which returns the short one or two letter
+//  directions used in tube icon states.
+/proc/dir2text_short(direction)
+	switch(direction)
+		if(1)
+			return "N"
+		if(2)
+			return "S"
+		if(4)
+			return "E"
+		if(8)
+			return "W"
+		if(5)
+			return "NE"
+		if(6)
+			return "SE"
+		if(9)
+			return "NW"
+		if(10)
+			return "SW"
+		else
+	return
+
+
+
+
+//Turns a Body_parts_covered bitfield into a list of organ/limb names.
+//(I challenge you to find a use for this)
+/proc/body_parts_covered2organ_names(bpc)
+	var/list/covered_parts = list()
+
+	if(!bpc)
+		return 0
+
+	if(bpc & FULL_BODY)
+		covered_parts |= list("l_arm","r_arm","head","chest","l_leg","r_leg")
+
+	else
+		if(bpc & HEAD)
+			covered_parts |= list("head")
+		if(bpc & CHEST)
+			covered_parts |= list("chest")
+		if(bpc & GROIN)
+			covered_parts |= list("chest")
+
+		if(bpc & ARMS)
+			covered_parts |= list("l_arm","r_arm")
+		else
+			if(bpc & ARM_LEFT)
+				covered_parts |= list("l_arm")
+			if(bpc & ARM_RIGHT)
+				covered_parts |= list("r_arm")
+
+		if(bpc & HANDS)
+			covered_parts |= list("l_arm","r_arm")
+		else
+			if(bpc & HAND_LEFT)
+				covered_parts |= list("l_arm")
+			if(bpc & HAND_RIGHT)
+				covered_parts |= list("r_arm")
+
+		if(bpc & LEGS)
+			covered_parts |= list("l_leg","r_leg")
+		else
+			if(bpc & LEG_LEFT)
+				covered_parts |= list("l_leg")
+			if(bpc & LEG_RIGHT)
+				covered_parts |= list("r_leg")
+
+		if(bpc & FEET)
+			covered_parts |= list("l_leg","r_leg")
+		else
+			if(bpc & FOOT_LEFT)
+				covered_parts |= list("l_leg")
+			if(bpc & FOOT_RIGHT)
+				covered_parts |= list("r_leg")
+
+	return covered_parts
+
+
+
+//adapted from http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
+/proc/heat2colour(temp)
+	return rgb(heat2colour_r(temp), heat2colour_g(temp), heat2colour_b(temp))
+
+
+/proc/heat2colour_r(temp)
+	temp /= 100
+	if(temp <= 66)
+		. = 255
+	else
+		. = max(0, min(255, 329.698727446 * (temp - 60) ** -0.1332047592))
+
+
+/proc/heat2colour_g(temp)
+	temp /= 100
+	if(temp <= 66)
+		. = max(0, min(255, 99.4708025861 * log(temp) - 161.1195681661))
+	else
+		. = max(0, min(255, 288.1221685293 * ((temp - 60) ** -0.075148492)))
+
+
+/proc/heat2colour_b(temp)
+	temp /= 100
+	if(temp >= 66)
+		. = 255
+	else
+		if(temp <= 16)
+			. = 0
+		else
+			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
+
+/proc/color2hex(color)	//web colors
+	if(!color)
+		return "#000000"
+
+	switch(color)
+		if("white")
+			return "#FFFFFF"
+		if("black")
+			return "#000000"
+		if("gray")
+			return "#808080"
+		if("brown")
+			return "#A52A2A"
+		if("red")
+			return "#FF0000"
+		if("darkred")
+			return "#8B0000"
+		if("crimson")
+			return "#DC143C"
+		if("orange")
+			return "#FFA500"
+		if("yellow")
+			return "#FFFF00"
+		if("green")
+			return "#008000"
+		if("lime")
+			return "#00FF00"
+		if("darkgreen")
+			return "#006400"
+		if("cyan")
+			return "#00FFFF"
+		if("blue")
+			return "#0000FF"
+		if("navy")
+			return "#000080"
+		if("teal")
+			return "#008080"
+		if("purple")
+			return "#800080"
+		if("indigo")
+			return "#4B0082"
+		else
+			return "#FFFFFF"
+
+
+//This is a weird one:
+//It returns a list of all var names found in the string
+//These vars must be in the [var_name] format
+//It's only a proc because it's used in more than one place
+
+//Takes a string and a datum
+//The string is well, obviously the string being checked
+//The datum is used as a source for var names, to check validity
+//Otherwise every single word could technically be a variable!
+/proc/string2listofvars(var/t_string, var/datum/var_source)
+	if(!t_string || !var_source)
+		return list()
+
+	. = list()
+
+	var/var_found = findtext(t_string,"\[") //Not the actual variables, just a generic "should we even bother" check
+	if(var_found)
+		//Find var names
+
+		// "A dog said hi [name]!"
+		// text2list() --> list("A dog said hi ","name]!"
+		// list2text() --> "A dog said hi name]!"
+		// text2list() --> list("A","dog","said","hi","name]!")
+
+		t_string = replacetext(t_string,"\[","\[ ")//Necessary to resolve "word[var_name]" scenarios
+		var/list/list_value = text2list(t_string,"\[")
+		var/intermediate_stage = list2text(list_value)
+
+		list_value = text2list(intermediate_stage," ")
+		for(var/value in list_value)
+			if(findtext(value,"]"))
+				value = text2list(value,"]") //"name]!" --> list("name","!")
+				for(var/A in value)
+					if(var_source.vars.Find(A))
+						. += A
+
+//assumes format #RRGGBB #rrggbb
+/proc/color_hex2num(A)
+	if(!A)
+		return 0
+	var/R = hex2num(copytext(A,2,4))
+	var/G = hex2num(copytext(A,4,6))
+	var/B = hex2num(copytext(A,6,0))
+	return R+G+B
+
+

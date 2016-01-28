@@ -1,9 +1,9 @@
 /mob/living/carbon/brain/death(gibbed)
 	if(stat == DEAD)	return
 	if(!gibbed && container && istype(container, /obj/item/device/mmi))//If not gibbed but in a container.
-		for(var/mob/O in viewers(container, null))
-			O.show_message(text("\red <B>[]'s MMI flatlines!</B>", src), 1, "\red You hear something flatline.", 2)
-		if(istype(src,/obj/item/organ/brain/alien))
+		container.visible_message("<span class='warning'>[src]'s MMI flatlines!</span>", \
+					"<span class='italics'>You hear something flatline.</span>")
+		if(istype(src,/obj/item/organ/internal/brain/alien))
 			container.icon_state = "mmi_alien_dead"
 		else
 			container.icon_state = "mmi_dead"
@@ -19,10 +19,10 @@
 
 	return ..(gibbed)
 
-/mob/living/carbon/brain/gib(var/animation = 0)
+/mob/living/carbon/brain/gib(animation = 0)
 	if(container && istype(container, /obj/item/device/mmi))
-		del(container)//Gets rid of the MMI if there is one
+		qdel(container)//Gets rid of the MMI if there is one
 	if(loc)
-		if(istype(loc,/obj/item/organ/brain))
-			del(loc)//Gets rid of the brain item
+		if(istype(loc,/obj/item/organ/internal/brain))
+			qdel(loc)//Gets rid of the brain item
 	..()

@@ -1,21 +1,20 @@
-/tg/station 13 v1.0 - 6 October 2010 [![Build Status](http://hibernia.fallemmc.com:8090/job/tgstation/badge/icon)](http://hibernia.fallemmc.com:8090/job/tgstation/)
+##/tg/station v1.0.1
 
-Website: http://ss13.eu
+[![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
 
-Code: https://github.com/tgstation/-tg-station
 
-IRC: irc://irc.rizon.net/coderbus
+**Website:** http://www.tgstation13.org <BR>
+**Code:** https://github.com/tgstation/-tg-station <BR>
+**Wiki** http://tgstation13.org/wiki/Main_Page <BR>
+**IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
 
-# DOWNLOADING
 
-There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://wiki.ss13.eu/index.php/Downloading_the_source_code
+##DOWNLOADING
 
-Option 1: Download the source code as a zip by clicking the ZIP button in the
-code tab of https://github.com/tgstation/-tg-station
-(note: this will use a lot of bandwidth if you wish to update and is a lot of
-hassle if you want to make any changes at all, so it's not recommended.)
+There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://www.tgstation13.org/wiki/Downloading_the_source_code
 
-(Options 2/3): Install Git-scm from here first: http://git-scm.com/download/win
+Option 1:
+Follow this: http://www.tgstation13.org/wiki/Setting_up_git
 
 Option 2:
 Install GitHub::windows from http://windows.github.com/
@@ -23,15 +22,15 @@ It handles most of the setup and configuraton of Git for you.
 Then you simply search for the -tg-station repository and click the big clone
 button.
 
-Option 3:
-Follow this: http://wiki.ss13.eu/index.php/Setting_up_git
-(It's recommended that you use git-scm, as above, rather than the git CLI
-suggested by the guide)
+Option 3: Download the source code as a zip by clicking the ZIP button in the
+code tab of https://github.com/tgstation/-tg-station
+(note: this will use a lot of bandwidth if you wish to update and is a lot of
+hassle if you want to make any changes at all, so it's not recommended.)
 
-#INSTALLATION
+##INSTALLATION
 
 First-time installation should be fairly straightforward.  First, you'll need
-BYOND installed.  You can get it from http://www.byond.com/.  Once you've done 
+BYOND installed.  You can get it from http://www.byond.com/.  Once you've done
 that, extract the game files to wherever you want to keep them.  This is a
 sourcecode-only release, so the next step is to compile the server files.
 Open tgstation.dme by double-clicking it, open the Build menu, and click
@@ -50,7 +49,7 @@ in irc://irc.rizon.net/coderbus
 Once that's done, open up the config folder.  You'll want to edit config.txt to
 set the probabilities for different gamemodes in Secret and to set your server
 location so that all your players don't get disconnected at the end of each
-round.  It's recommended you don't turn on the gamemodes with probability 0, 
+round.  It's recommended you don't turn on the gamemodes with probability 0,
 except Extended, as they have various issues and aren't currently being tested,
 so they may have unknown and bizarre bugs.  Extended is essentially no mode, and
 isn't in the Secret rotation by default as it's just not very fun.
@@ -69,11 +68,17 @@ byondkey = Rank
 where the admin rank must be properly capitalised.
 
 Finally, to start the server, run Dream Daemon and enter the path to your
-compiled tgstation.dmb file.  Make sure to set the port to the one you 
+compiled tgstation.dmb file.  Make sure to set the port to the one you
 specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
-and the server should start up and be ready to join.
+and the server should start up and be ready to join. It is also recommended that
+you set up the SQL backend (see below).
 
-#UPDATING
+###HOSTING ON LINUX
+We use BYGEX for some of our text replacement related code. Unfortunately, we
+only have a windows dll included right now. You can find a version known to compile on linux, along with some basic install instructions here
+https://github.com/optimumtact/byond-regex
+
+##UPDATING
 
 To update an existing installation, first back up your /config and /data folders
 as these store your server configuration, player preferences and banlist.
@@ -84,91 +89,57 @@ install, overwriting when prompted except if we've specified otherwise, and
 recompile the game.  Once you start the server up again, you should be running
 the new version.
 
-#SQL SETUP
+##MAPS
 
-The SQL backend for the library and stats tracking requires a 
-MySQL server.  Your server details go in /config/dbconfig.txt, and the SQL 
-schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are located here: http://wiki.ss13.eu/index.php/Downloading_the_source_code#Setting_up_the_database
+/tg/station currently comes equipped with three maps.
 
-#IRC BOT SETUP
+* [tgstation2 (default)](http://tgstation13.org/wiki/Boxstation)
+* [MiniStation](http://tgstation13.org/wiki/MiniStation)
+* [AsteroidStation](https://tgstation13.org/wiki/AsteroidStation)
 
-Included in the SVN is an IRC bot capable of relaying adminhelps to a specified
+All maps have their own code file that is in the base of the _maps directory. Instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it; for example MiniStation changes the uplink items for the map. Follow this guideline when adding your own map, to your fork, for easy compatibility.
+
+If you want to load a different map, just open the corresponding map's code file in Dream Maker, make sure all of the other map code files are unticked in the file tree, in the left side of the screen, and then make sure the map code file you want is ticked.
+
+Anytime you want to make changes to a map it's imperative you use the [Map Merging tools](http://tgstation13.org/wiki/Map_Merger)
+
+##AWAY MISSIONS
+
+/tg/station supports loading away missions however they are disabled by default.
+
+Map files for away missions are located in the _maps/RandomZLevels directory. Each away mission includes it's own code definitions located in /code/modules/awaymissions/mission_code. These files must be included and compiled with the server beforehand otherwise the server will crash upon trying to load away missions that lack their code.
+
+To enable an away mission open fileList.txt in the _maps/RandomZLevels directory and uncomment one of the .dmm lines by removing the #. If more than one away mission is uncommented then the away mission loader will randomly select one the enabled ones to load.
+
+##SQL SETUP
+
+The SQL backend requires a MySQL server. SQL is required for the library, stats tracking, admin notes, and job-only bans, among other features, mostly related to server administration. Your server details go in /config/dbconfig.txt, and the SQL schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes.  More detailed setup instructions are located here: http://www.tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
+
+##IRC BOT SETUP
+
+Included in the repository is an IRC bot capable of relaying adminhelps to a specified
 IRC channel/server (thanks to Skibiliano).
 Instructions for bot setup are included in the /bot folder along with the script
 itself
 
-#CONTRIBUTING
-Everyone is free to contribute to this project as long as they follow these simple guidelines and specifications.
+##CONTRIBUTING
 
-**Introduction**
+Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
-As a goal to increase code maintainability we are going to be requiring all pull requests to hold up to the standards mentioned below. This is in order for all of us to benefit, instead of having to fix the same bug more than once because of duplicated code.
+##LICENSE
 
-But first we want to make it clear over what powers the maintainers have over your pull request, so you do not get any surprises when submitting pull requests and it is closed for a reason you did not suspect.
+All code after commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).
 
-Maintainers are quality control. If a proposed pull request does not meet the mentioned quality specifications then it can be closed if you fail to satisfy them. Maintainers are required to give a reason for closing the pull request.
+All code before commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
+(Including tools unless their readme specifies otherwise.)
 
-Maintainers can revert your changes if they feel they are not worth maintaining or if they did not live up to the quality specifications.
+See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details.
 
-Headcoders, which are elected by the maintainers and members of the project, have complete control over what goes through and what is reverted. They are encouraged to take control in what features are added to the game. It is encouraged that if you do not want to waste time working on a feature, that might be denied, that you ask a head coder first.
+tgui clientside is licensed as a subproject under the MIT license.
+tgui assets are licensed under a Creative Commons Attribution-ShareAlike 4.0 International License
+(http://creativecommons.org/licenses/by-sa/4.0/).
 
-**Specification**
+See tgui/LICENSE.md for more details.
 
-As BYOND's Dream Maker is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it.
-
-You must write BYOND code with absolute pathing, like so:
-
-```C++
-
-/obj/item/weapon/baseball_bat
-    name = "baseball bat"
-    desc = "A baseball bat."
-    var/wooden = 1
-
-/obj/item/weapon/baseball_bat/examine()
-    if(wooden)
-        desc = "A wooden baseball bat."
-    else
-        desc = "A metal baseball bat."
-    ..()
-
-```
-
-You must not use colons to override safety checks on an object's variable/function, instead of using proper type casting.
-
-It is rarely allowed to put type paths in a text format, as they is no compile errors if the type path no longer exists.
-
-You must use tabs to indent your code.
-
-Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is no other option. You can avoid hacky code by using object oriented methodologies, such as overriding a function (called procs in DM) or sectioning code into functions and then overriding them as required.
-
-Duplicated code is 99% of the time never allowed. Copying code from one place to another maybe suitable for small short time projects but /tg/station focuses on the long term and thus discourages this. Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
-
-Code should be modular where possible, if you are working on a new class then it is best if you put it in a new file.
-
-Bloated code may be necessary to add a certain feature, which means there has to be a judgement over whether the feature is worth having or not. You can help make this decision easier by making sure your code is modular.
-
-You are expected to help maintain the code that you add, meaning if there is a problem then you are likely to be approached in order to fix any issues, runtimes or bugs.
-
-**Other Requirements/Information**
-
-Pull requests will sometimes take a while before they are looked at by a maintainer, the bigger the change the more time it will take before they are accepted into the code.
-
-You are expected to document all your changes in the pull request, failing to do so will risk delaying it. On the other hand you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data.
-
-If you are proposing multiple changes, which change many different aspects of the code, you are to section them off into different pull requests in order to easily review them and to deny/accept the changes that are deemed acceptable.
-
-If your pull request is accepted, the code you add is no longer yours but everyones, everyone is free to work on it but you are also free to object to any changes being made, which will be noted by a headcoder.
-
-**Getting Started**
-
-We have a [list of guides on the wiki](http://wiki.ss13.eu/index.php/Guides#Development_and_Contribution_Guides) which will help you get started contributing to /tg/station with git and Dream Maker.
-
-For beginners, it is recommended you work on small projects, at first. There is an easy list of issues which are [contributor friendly, here](https://github.com/tgstation/-tg-station/issues?labels=Contributor+Friendly&page=1&state=open).
-
-#LICENSE
-
-All code is under a GNU GPL v3 license (http://www.gnu.org/licenses/gpl.html),
-including tools unless their readme specifies otherwise.
-All content including icons and sound is under a Creative Commons 3.0 BY-SA
-license (http://creativecommons.org/licenses/by-sa/3.0/).
+All assets including icons and sound are under a Creative Commons 3.0 BY-SA
+license (http://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.

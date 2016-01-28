@@ -1,4 +1,3 @@
-
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return null
 
@@ -12,9 +11,13 @@
 	var/datum/gas_mixture/air_contents = return_air()
 	if(!air_contents)
 		return 0
+
+	var/oxy = air_contents.gases["o2"] ? air_contents.gases["o2"][MOLES] : 0
+	var/tox = air_contents.gases["plasma"] ? air_contents.gases["plasma"][MOLES] : 0
+
 	if(active_hotspot)
 		if(soh)
-			if(air_contents.toxins > 0.5 && air_contents.oxygen > 0.5)
+			if(tox > 0.5 && oxy > 0.5)
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
@@ -23,20 +26,20 @@
 
 	var/igniting = 0
 
-	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && air_contents.toxins > 0.5)
+	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && tox > 0.5)
 		igniting = 1
 
 	if(igniting)
-		if(air_contents.oxygen < 0.5 || air_contents.toxins < 0.5)
+		if(oxy < 0.5 || tox < 0.5)
 			return 0
 
-		active_hotspot = new(src)
+		active_hotspot = PoolOrNew(/obj/effect/hotspot, src)
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
 
-		active_hotspot.just_spawned = (current_cycle < air_master.current_cycle)
+		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
-		air_master.add_to_active(src, 0)
+		SSair.add_to_active(src, 0)
 	return igniting
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
@@ -56,12 +59,15 @@
 
 /obj/effect/hotspot/New()
 	..()
-	air_master.hotspots += src
+	SSair.hotspots += src
 	perform_exposure()
+	dir = pick(cardinal)
+	air_update_turf()
+
 
 /obj/effect/hotspot/proc/perform_exposure()
-	var/turf/simulated/floor/location = loc
-	if(!istype(location))	return 0
+	var/turf/simulated/location = loc
+	if(!istype(location) || !(location.air))	return 0
 
 	if(volume > CELL_VOLUME*0.95)	bypassing = 1
 	else bypassing = 0
@@ -78,7 +84,8 @@
 		volume = affected.fuel_burnt*FIRE_GROWTH_RATE
 		location.assume_air(affected)
 
-	for(var/atom/item in loc)
+	for(var/A in loc)
+		var/atom/item = A
 		if(item && item != src) // It's possible that the item is deleted in temperature_expose
 			item.fire_act(null, temperature, volume)
 	return 0
@@ -89,20 +96,20 @@
 		just_spawned = 0
 		return 0
 
-	var/turf/simulated/floor/location = loc
+	var/turf/simulated/location = loc
 	if(!istype(location))
-		Kill()
+		qdel(src)
 		return
 
 	if(location.excited_group)
-		location.excited_group.breakdown = 0
+		location.excited_group.reset_cooldowns()
 
 	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
-		Kill()
+		qdel(src)
 		return
 
-	if(location.air.toxins < 0.5 || location.air.oxygen < 0.5)
-		Kill()
+	if(!(location.air) || !location.air.gases["plasma"] || !location.air.gases["o2"] || location.air.gases["plasma"][MOLES] < 0.5 || location.air.gases["o2"][MOLES] < 0.5)
+		qdel(src)
 		return
 
 	perform_exposure()
@@ -139,19 +146,17 @@
 			return 0*/
 	return 1
 
-// Garbage collect itself by nulling reference to it
-
-/obj/effect/hotspot/proc/Kill()
-	air_master.hotspots -= src
+/obj/effect/hotspot/Destroy()
+	SetLuminosity(0)
+	SSair.hotspots -= src
 	DestroyTurf()
-	garbage_collect()
-
-/obj/effect/hotspot/proc/garbage_collect()
 	if(istype(loc, /turf/simulated))
 		var/turf/simulated/T = loc
 		if(T.active_hotspot == src)
 			T.active_hotspot = null
 	loc = null
+	..()
+	return QDEL_HINT_PUTINPOOL
 
 /obj/effect/hotspot/proc/DestroyTurf()
 
@@ -164,16 +169,10 @@
 			else
 				chance_of_deletion = 100
 			if(prob(chance_of_deletion))
-				T.ChangeTurf(/turf/space)
+				T.ChangeTurf(T.baseturf)
 			else
 				T.to_be_destroyed = 0
 				T.max_fire_temperature_sustained = 0
-
-/obj/effect/hotspot/New()
-	..()
-	dir = pick(cardinal)
-	air_update_turf()
-	return
 
 /obj/effect/hotspot/Crossed(mob/living/L)
 	..()

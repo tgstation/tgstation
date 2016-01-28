@@ -1,78 +1,136 @@
+#define CAN_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*10)
+#define CAN_MIN_RELEASE_PRESSURE (ONE_ATMOSPHERE/10)
+#define CAN_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE)
+
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
+	desc = "A canister for the storage of gas."
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "yellow"
 	density = 1
-	var/health = 100.0
-
+	var/health = 100
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
-
 	var/canister_color = "yellow"
-	var/can_label = 1
 	var/filled = 0.5
 	pressure_resistance = 7*ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	volume = 1000
 	use_power = 0
 	var/release_log = ""
+	var/update_flag = 0
+	var/gas_type = ""
+	var/static/list/label2types = list(
+		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
+		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
+		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
+		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+		"air" = /obj/machinery/portable_atmospherics/canister/air,
+		"caution" = /obj/machinery/portable_atmospherics/canister,
+	)
 
-/obj/machinery/portable_atmospherics/canister/sleeping_agent
-	name = "canister: \[N2O\]"
-	icon_state = "redws"
-	canister_color = "redws"
-	can_label = 0
 /obj/machinery/portable_atmospherics/canister/nitrogen
-	name = "canister: \[N2\]"
+	name = "n2 canister"
+	desc = "Nitrogen gas. Reportedly useful for something."
 	icon_state = "red"
 	canister_color = "red"
-	can_label = 0
+	gas_type = "n2"
 /obj/machinery/portable_atmospherics/canister/oxygen
-	name = "canister: \[O2\]"
+	name = "o2 canister"
+	desc = "Oxygen. Necessary for human life."
 	icon_state = "blue"
 	canister_color = "blue"
-	can_label = 0
-/obj/machinery/portable_atmospherics/canister/toxins
-	name = "canister \[Toxin (Bio)\]"
-	icon_state = "orange"
-	canister_color = "orange"
-	can_label = 0
+	gas_type = "o2"
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
-	name = "canister \[CO2\]"
+	name = "co2 canister"
+	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	icon_state = "black"
 	canister_color = "black"
-	can_label = 0
+	gas_type = "co2"
+/obj/machinery/portable_atmospherics/canister/toxins
+	name = "plasma canister"
+	desc = "Plasma gas. The reason YOU are here. Highly toxic."
+	icon_state = "orange"
+	canister_color = "orange"
+	gas_type = "plasma"
+/obj/machinery/portable_atmospherics/canister/agent_b
+	name = "agent b canister"
+	desc = "Oxygen Agent B. You're not quite sure what it does."
+	gas_type = "agent_b"
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide
+	name = "n2o canister"
+	desc = "Nitrous oxide gas. Known to cause drowsiness."
+	icon_state = "redws"
+	canister_color = "redws"
+	gas_type = "n2o"
 /obj/machinery/portable_atmospherics/canister/air
-	name = "canister \[Air\]"
+	name = "air canister"
+	desc = "Pre-mixed air."
 	icon_state = "grey"
 	canister_color = "grey"
-	can_label = 0
+
+/obj/machinery/portable_atmospherics/canister/proc/check_change()
+	var/old_flag = update_flag
+	update_flag = 0
+	if(holding)
+		update_flag |= 1
+	if(connected_port)
+		update_flag |= 2
+
+	var/tank_pressure = air_contents.return_pressure()
+	if(tank_pressure < 10)
+		update_flag |= 4
+	else if(tank_pressure < ONE_ATMOSPHERE)
+		update_flag |= 8
+	else if(tank_pressure < 15*ONE_ATMOSPHERE)
+		update_flag |= 16
+	else
+		update_flag |= 32
+
+	if(update_flag == old_flag)
+		return 1
+	else
+		return 0
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
+/*
+update_flag
+1 = holding
+2 = connected_port
+4 = tank_pressure < 10
+8 = tank_pressure < ONE_ATMOS
+16 = tank_pressure < 15*ONE_ATMOS
+32 = tank_pressure go boom.
+*/
+
+	if (destroyed)
+		overlays = 0
+		icon_state = text("[]-1", canister_color)
+		return
+
+	if(icon_state != "[canister_color]")
+		icon_state = "[canister_color]"
+
+	if(check_change()) //Returns 1 if no change needed to icons.
+		return
+
 	src.overlays = 0
 
-	if (src.destroyed)
-		src.icon_state = "[src.canister_color]-1"
-
-	else
-		icon_state = "[canister_color]"
-		if(holding)
-			overlays += "can-open"
-
-		if(connected_port)
-			overlays += "can-connector"
-
-		var/tank_pressure = air_contents.return_pressure()
-
-		if (tank_pressure < 10)
-			overlays += image('icons/obj/atmos.dmi', "can-o0")
-		else if (tank_pressure < ONE_ATMOSPHERE)
-			overlays += image('icons/obj/atmos.dmi', "can-o1")
-		else if (tank_pressure < 15*ONE_ATMOSPHERE)
-			overlays += image('icons/obj/atmos.dmi', "can-o2")
-		else
-			overlays += image('icons/obj/atmos.dmi', "can-o3")
+	if(update_flag & 1)
+		overlays += "can-open"
+	if(update_flag & 2)
+		overlays += "can-connector"
+	if(update_flag & 4)
+		overlays += "can-o0"
+	if(update_flag & 8)
+		overlays += "can-o1"
+	else if(update_flag & 16)
+		overlays += "can-o2"
+	else if(update_flag & 32)
+		overlays += "can-o3"
 	return
+
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
@@ -86,11 +144,13 @@
 	if (src.health <= 10)
 		var/atom/location = src.loc
 		location.assume_air(air_contents)
+		air_update_turf()
 
 		src.destroyed = 1
 		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
 		src.density = 0
 		update_icon()
+		investigate_log("was destroyed by heat/gunfire.", "atmos")
 
 		if (src.holding)
 			src.holding.loc = src.loc
@@ -100,9 +160,9 @@
 	else
 		return 1
 
-/obj/machinery/portable_atmospherics/canister/process()
+/obj/machinery/portable_atmospherics/canister/process_atmos()
 	if (destroyed)
-		return
+		return PROCESS_KILL
 
 	..()
 
@@ -129,16 +189,11 @@
 			else
 				loc.assume_air(removed)
 				air_update_turf()
-			src.update_icon()
+			update_icon()
 
-
-	if(air_contents.return_pressure() < 1)
-		can_label = 1
-	else
-		can_label = 0
-
+/obj/machinery/portable_atmospherics/canister/process()
 	src.updateDialog()
-	return
+	return ..()
 
 /obj/machinery/portable_atmospherics/canister/return_air()
 	return air_contents
@@ -160,44 +215,40 @@
 	healthcheck()
 	return
 
-/obj/machinery/portable_atmospherics/canister/bullet_act(var/obj/item/projectile/Proj)
-	if(Proj.damage)
-		src.health -= round(Proj.damage / 2)
-		healthcheck()
+/obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/Proj)
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		if(Proj.damage)
+			src.health -= round(Proj.damage / 2)
+			healthcheck()
 	..()
 
-/obj/machinery/portable_atmospherics/canister/meteorhit(var/obj/O as obj)
-	src.health = 0
-	healthcheck()
-	return
-
-/obj/machinery/portable_atmospherics/canister/ex_act(severity)
+/obj/machinery/portable_atmospherics/canister/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			if(destroyed || prob(30))
-				del(src)
+				qdel(src)
 			else
 				src.health = 0
 				healthcheck()
 			return
-		if(2.0)
+		if(2)
 			if(destroyed)
-				del(src)
+				qdel(src)
 			else
 				src.health -= rand(40, 100)
 				healthcheck()
 			return
-		if(3.0)
+		if(3)
 			src.health -= rand(15,40)
 			healthcheck()
 			return
 	return
 
-/obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user, params)
 	if(!istype(W, /obj/item/weapon/wrench) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
-		visible_message("\red [user] hits the [src] with a [W]!")
-		src.health -= W.force
-		src.add_fingerprint(user)
+		investigate_log("was smacked with \a [W] by [key_name(user)]", "atmos")
+		health -= W.force
+		add_fingerprint(user)
 		healthcheck()
 
 	if(istype(user, /mob/living/silicon/robot) && istype(W, /obj/item/weapon/tank/jetpack))
@@ -210,171 +261,110 @@
 			transfer_moles = pressure_delta*thejetpack.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)//Actually transfer the gas
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 			thejetpack.merge(removed)
-			user << "You pulse-pressurize your jetpack from the tank."
+			user << "<span class='notice'>You pulse-pressurize your jetpack from the tank.</span>"
 		return
 
 	..()
 
-/obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+															datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "canister", name, 415, 405, master_ui, state)
+		ui.open()
 
-/obj/machinery/portable_atmospherics/canister/attack_paw(var/mob/user as mob)
-	return src.attack_hand(user)
+/obj/machinery/portable_atmospherics/canister/get_ui_data()
+	var/data = list()
+	data["name"] = name
+	data["portConnected"] = connected_port ? 1 : 0
+	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
+	data["releasePressure"] = round(release_pressure ? release_pressure : 0)
+	data["defaultReleasePressure"] = round(CAN_DEFAULT_RELEASE_PRESSURE)
+	data["minReleasePressure"] = round(CAN_MIN_RELEASE_PRESSURE)
+	data["maxReleasePressure"] = round(CAN_MAX_RELEASE_PRESSURE)
+	data["valveOpen"] = valve_open ? 1 : 0
 
-/obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob)
-	return src.interact(user)
+	data["hasHoldingTank"] = holding ? 1 : 0
+	if (holding)
+		data["holdingTank"] = list()
+		data["holdingTank"]["name"] = holding.name
+		data["holdingTank"]["tankPressure"] = round(holding.air_contents.return_pressure())
+	return data
 
-/obj/machinery/portable_atmospherics/canister/interact(var/mob/user as mob)
-	if (src.destroyed)
+/obj/machinery/portable_atmospherics/canister/ui_act(action, params)
+	if(..())
 		return
-
-	user.set_machine(src)
-	var/holding_text
-	if(holding)
-		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
-<A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
-"}
-	var/output_text = {"<TT><B>[name]</B>[can_label?" <A href='?src=\ref[src];relabel=1'><small>relabel</small></a>":""]<BR>
-Pressure: [air_contents.return_pressure()] KPa<BR>
-Port Status: [(connected_port)?("Connected"):("Disconnected")]
-[holding_text]
-<BR>
-Release Valve: <A href='?src=\ref[src];toggle=1'>[valve_open?("Open"):("Closed")]</A><BR>
-Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=\ref[src];pressure_adj=-10'>-</A> <A href='?src=\ref[src];pressure_adj=-1'>-</A> [release_pressure] <A href='?src=\ref[src];pressure_adj=1'>+</A> <A href='?src=\ref[src];pressure_adj=10'>+</A> <A href='?src=\ref[src];pressure_adj=100'>+</A> <A href='?src=\ref[src];pressure_adj=1000'>+</A><BR>
-<HR>
-<A href='?src=\ref[user];mach_close=canister'>Close</A><BR>
-"}
-
-	user << browse("<html><head><title>[src]</title></head><body>[output_text]</body></html>", "window=canister;size=600x300")
-	onclose(user, "canister")
-	return
-
-/obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
-
-	//Do not use "if(..()) return" here, canisters will stop working in unpowered areas like space or on the derelict.
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
-		usr << browse(null, "window=canister")
-		onclose(usr, "canister")
-		return
-
-	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		usr.set_machine(src)
-
-		if(href_list["toggle"])
-			if (valve_open)
-				if (holding)
-					release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the [holding]<br>"
-				else
-					release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the <font color='red'><b>air</b></font><br>"
-			else
-				if (holding)
-					release_log += "Valve was <b>opened</b> by [usr] ([usr.ckey]), starting the transfer into the [holding]<br>"
-				else
-					release_log += "Valve was <b>opened</b> by [usr] ([usr.ckey]), starting the transfer into the <font color='red'><b>air</b></font><br>"
+	switch(action)
+		if("relabel")
+			var/label = input("New canister label:", name) as null|anything in label2types
+			if(label && !..())
+				var/newtype = label2types[label]
+				if(newtype)
+					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc)
+					replacement.air_contents.copy_from(air_contents)
+					replacement.update_icon()
+					replacement.interact(usr)
+					qdel(src)
+		if("pressure")
+			var/pressure = params["pressure"]
+			if(pressure == "reset")
+				pressure = CAN_DEFAULT_RELEASE_PRESSURE
+				. = TRUE
+			else if(pressure == "min")
+				pressure = CAN_MIN_RELEASE_PRESSURE
+				. = TRUE
+			else if(pressure == "max")
+				pressure = CAN_MAX_RELEASE_PRESSURE
+				. = TRUE
+			else if(pressure == "input")
+				pressure = input("New release pressure ([CAN_MIN_RELEASE_PRESSURE]-[CAN_MAX_RELEASE_PRESSURE] kPa):", name, release_pressure) as num|null
+				if(pressure && !..())
+					. = TRUE
+			else if(text2num(pressure) != null)
+				pressure = text2num(pressure)
+				. = TRUE
+			if(.)
+				release_pressure = Clamp(round(pressure), CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
+				investigate_log("was set to [release_pressure] kPa by [key_name(usr)]", "atmos")
+		if("valve")
+			var/logmsg
 			valve_open = !valve_open
-
-		if (href_list["remove_tank"])
+			if(valve_open)
+				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
+				if(!holding)
+					var/plasma = air_contents.gases["plasma"]
+					var/n2o = air_contents.gases["n2o"]
+					if(n2o || plasma)
+						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+						log_admin("[key_name(usr)] opened a canister that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [x], [y], [z]")
+			else
+				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
+			investigate_log(logmsg, "atmos")
+			release_log += logmsg
+			. = TRUE
+		if("eject")
 			if(holding)
+				if(valve_open)
+					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
 				holding.loc = loc
 				holding = null
+				. = TRUE
+	update_icon()
 
-		if (href_list["pressure_adj"])
-			var/diff = text2num(href_list["pressure_adj"])
-			if(diff > 0)
-				release_pressure = min(10*ONE_ATMOSPHERE, release_pressure+diff)
-			else
-				release_pressure = max(ONE_ATMOSPHERE/10, release_pressure+diff)
-
-		if (href_list["relabel"])
-			if (can_label)
-				var/list/colors = list(\
-					"\[N2O\]" = "redws", \
-					"\[N2\]" = "red", \
-					"\[O2\]" = "blue", \
-					"\[Toxin (Bio)\]" = "orange", \
-					"\[CO2\]" = "black", \
-					"\[Air\]" = "grey", \
-					"\[CAUTION\]" = "yellow", \
-				)
-				var/label = input("Choose canister label", "Gas canister") as null|anything in colors
-				if (label)
-					src.canister_color = colors[label]
-					src.icon_state = colors[label]
-					src.name = "canister: [label]"
-		src.updateUsrDialog()
-		src.add_fingerprint(usr)
-		update_icon()
-	else
-		usr << browse(null, "window=canister")
-		return
-	return
-
-/obj/machinery/portable_atmospherics/canister/toxins/New()
-
+/obj/machinery/portable_atmospherics/canister/New(loc)
 	..()
 
-	src.air_contents.toxins = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
-	src.update_icon()
+	create_gas()
+	update_icon()
 	return 1
 
-/obj/machinery/portable_atmospherics/canister/oxygen/New()
+/obj/machinery/portable_atmospherics/canister/proc/create_gas()
+	if(gas_type)
+		air_contents.assert_gas(gas_type)
+		air_contents.gases[gas_type][MOLES] = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-	..()
-
-	src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
-	src.update_icon()
-	return 1
-
-/obj/machinery/portable_atmospherics/canister/sleeping_agent/New()
-
-	..()
-
-	var/datum/gas/sleeping_agent/trace_gas = new
-	air_contents.trace_gases += trace_gas
-	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
-	src.update_icon()
-	return 1
-
-//Dirty way to fill room with gas. However it is a bit easier to do than creating some floor/engine/n2o -rastaf0
-/obj/machinery/portable_atmospherics/canister/sleeping_agent/roomfiller/New()
-	..()
-	var/datum/gas/sleeping_agent/trace_gas = air_contents.trace_gases[1]
-	trace_gas.moles = 9*4000
-	spawn(10)
-		var/turf/simulated/location = src.loc
-		if (istype(src.loc))
-			while (!location.air)
-				sleep(10)
-			location.assume_air(air_contents)
-			air_contents = new
-	return 1
-
-/obj/machinery/portable_atmospherics/canister/nitrogen/New()
-
-	..()
-
-	src.air_contents.nitrogen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
-	src.update_icon()
-	return 1
-
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide/New()
-
-	..()
-	src.air_contents.carbon_dioxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
-	src.update_icon()
-	return 1
-
-
-/obj/machinery/portable_atmospherics/canister/air/New()
-
-	..()
-	src.air_contents.oxygen = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-	src.air_contents.nitrogen = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
-	src.update_icon()
-	return 1
+/obj/machinery/portable_atmospherics/canister/air/create_gas()
+	air_contents.assert_gases("o2","n2")
+	// PV = nRT
+	air_contents.gases["o2"][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.gases["n2"][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)

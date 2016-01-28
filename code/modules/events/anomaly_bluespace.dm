@@ -1,5 +1,5 @@
 /datum/round_event_control/anomaly/anomaly_bluespace
-	name = "Bluespace Anomaly"
+	name = "Anomaly: Bluespace"
 	typepath = /datum/round_event/anomaly/anomaly_bluespace
 	max_occurrences = 1
 	weight = 5
@@ -7,22 +7,22 @@
 /datum/round_event/anomaly/anomaly_bluespace
 	startWhen = 3
 	announceWhen = 10
-	endWhen = 55
+	endWhen = 95
 
 
 /datum/round_event/anomaly/anomaly_bluespace/announce()
-	command_alert("Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
+	priority_announce("Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
 
 
 /datum/round_event/anomaly/anomaly_bluespace/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
+	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
-		newAnomaly = new /obj/effect/anomaly/bluespace(T.loc)
+		newAnomaly = new /obj/effect/anomaly/bluespace(T)
 
 
 /datum/round_event/anomaly/anomaly_bluespace/end()
-	if(newAnomaly)//If it hasn't been neutralized, it's time to warp half the station away jeez
-		var/turf/T = pick(get_area_turfs(impact_area))
+	if(newAnomaly.loc)//If it hasn't been neutralized, it's time to warp half the station away jeez
+		var/turf/T = safepick(get_area_turfs(impact_area))
 		if(T)
 				// Calculate new position (searches through beacons in world)
 			var/obj/item/device/radio/beacon/chosen
@@ -40,25 +40,22 @@
 				var/turf/TO = get_turf(chosen)			 // the turf of origin we're travelling TO
 
 				playsound(TO, 'sound/effects/phasein.ogg', 100, 1)
-				command_alert("Massive bluespace translocation detected.", "Anomaly Alert")
+				priority_announce("Massive bluespace translocation detected.", "Anomaly Alert")
 
 				var/list/flashers = list()
-				for(var/mob/living/carbon/human/M in viewers(TO, null))
-					if(M:eyecheck() <= 0)
-						flick("e_flash", M.flash) // flash dose faggots
-						flashers += M
+				for(var/mob/living/carbon/C in viewers(TO, null))
+					if(C.flash_eyes())
+						flashers += C
 
 				var/y_distance = TO.y - FROM.y
 				var/x_distance = TO.x - FROM.x
-				for (var/atom/movable/A in range(12, FROM )) // iterate thru list of mobs in the area
+				for (var/atom/movable/A in ultra_range(12, FROM )) // iterate thru list of mobs in the area
 					if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
-					if(A.anchored && istype(A, /obj/machinery)) continue
-					if(istype(A, /obj/structure/disposalpipe )) continue
-					if(istype(A, /obj/structure/cable )) continue
+					if(A.anchored) continue
 
 					var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
-					if(!A.Move(newloc)) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
-						A.loc = locate(A.x + x_distance, A.y + y_distance, TO.z)
+					if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
+						A.loc = newloc
 
 					spawn()
 						if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
@@ -73,5 +70,5 @@
 								M.client.screen += blueeffect
 								sleep(20)
 								M.client.screen -= blueeffect
-								del(blueeffect)
-			del(newAnomaly)
+								qdel(blueeffect)
+			qdel(newAnomaly)

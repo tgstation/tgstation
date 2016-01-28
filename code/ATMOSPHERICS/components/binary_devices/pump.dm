@@ -12,12 +12,10 @@ Thus, the two variables affect pump operation are set in New():
 			but overall network volume is also increased as this increases...
 */
 
-obj/machinery/atmospherics/binary/pump
-	icon = 'icons/obj/atmospherics/pump.dmi'
-	icon_state = "intact_off"
-
+/obj/machinery/atmospherics/components/binary/pump
+	icon_state = "pump_map"
 	name = "gas pump"
-	desc = "A pump"
+	desc = "A pump that moves gas by pressure."
 
 	can_unwrench = 1
 
@@ -28,157 +26,157 @@ obj/machinery/atmospherics/binary/pump
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-	on
-		on = 1
-		icon_state = "intact_on"
+/obj/machinery/atmospherics/components/binary/pump/Destroy()
+	if(SSradio)
+		SSradio.remove_object(src,frequency)
+	if(radio_connection)
+		radio_connection = null
+	return ..()
+/obj/machinery/atmospherics/components/binary/pump/on
+	on = 1
 
-	update_icon()
-		if(stat & NOPOWER)
-			icon_state = "intact_off"
-		else if(node1 && node2)
-			icon_state = "intact_[on?("on"):("off")]"
-		else
-			if(node1)
-				icon_state = "exposed_1_off"
-			else if(node2)
-				icon_state = "exposed_2_off"
-			else
-				icon_state = "exposed_3_off"
+/obj/machinery/atmospherics/components/binary/pump/update_icon_nopipes()
+	if(stat & NOPOWER)
+		icon_state = "pump_off"
 		return
 
-	process()
-//		..()
-		if(stat & (NOPOWER|BROKEN))
-			return
-		if(!on)
-			return 0
+	icon_state = "pump_[on?"on":"off"]"
 
-		var/output_starting_pressure = air2.return_pressure()
+/obj/machinery/atmospherics/components/binary/pump/process_atmos()
+//	..()
+	if(stat & (NOPOWER|BROKEN))
+		return 0
+	if(!on)
+		return 0
 
-		if( (target_pressure - output_starting_pressure) < 0.01)
-			//No need to pump gas if target is already reached!
-			return 1
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
 
-		//Calculate necessary moles to transfer using PV=nRT
-		if((air1.total_moles() > 0) && (air1.temperature>0))
-			var/pressure_delta = target_pressure - output_starting_pressure
-			var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+	var/output_starting_pressure = air2.return_pressure()
 
-			//Actually transfer the gas
-			var/datum/gas_mixture/removed = air1.remove(transfer_moles)
-			air2.merge(removed)
-
-			if(network1)
-				network1.update = 1
-
-			if(network2)
-				network2.update = 1
-
+	if((target_pressure - output_starting_pressure) < 0.01)
+		//No need to pump gas if target is already reached!
 		return 1
 
-	//Radio remote control
+	//Calculate necessary moles to transfer using PV=nRT
+	if((air1.total_moles() > 0) && (air1.temperature>0))
+		var/pressure_delta = target_pressure - output_starting_pressure
+		var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, frequency)
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, frequency, filter = RADIO_ATMOSIA)
+		//Actually transfer the gas
+		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
+		air2.merge(removed)
 
+		update_parents()
+
+	return 1
+
+//Radio remote control
+/obj/machinery/atmospherics/components/binary/pump/proc/set_frequency(new_frequency)
+	SSradio.remove_object(src, frequency)
+	frequency = new_frequency
+	if(frequency)
+		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
+
+/obj/machinery/atmospherics/components/binary/pump/proc/broadcast_status()
+	if(!radio_connection)
+		return 0
+
+	var/datum/signal/signal = new
+	signal.transmission_method = 1 //radio signal
+	signal.source = src
+
+	signal.data = list(
+		"tag" = id,
+		"device" = "AGP",
+		"power" = on,
+		"target_output" = target_pressure,
+		"sigtype" = "status"
+	)
+
+	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+
+	return 1
+
+/obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+																datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "atmos_pump", name, 335, 115, master_ui, state)
+		ui.open()
+
+/obj/machinery/atmospherics/components/binary/pump/get_ui_data()
+	var/data = list()
+	data["on"] = on
+	data["pressure"] = round(target_pressure)
+	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
+	return data
+
+/obj/machinery/atmospherics/components/binary/pump/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("power")
+			on = !on
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			. = TRUE
+		if("pressure")
+			var/pressure = params["pressure"]
+			if(pressure == "max")
+				pressure = MAX_OUTPUT_PRESSURE
+				. = TRUE
+			else if(pressure == "input")
+				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, target_pressure) as num|null
+				if(pressure && !..())
+					. = TRUE
+			else if(text2num(pressure) != null)
+				pressure = text2num(pressure)
+				. = TRUE
+			if(.)
+				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+	update_icon()
+
+/obj/machinery/atmospherics/components/binary/pump/atmosinit()
+	..()
+	if(frequency)
+		set_frequency(frequency)
+
+/obj/machinery/atmospherics/components/binary/pump/receive_signal(datum/signal/signal)
+	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
+		return 0
+
+	var/old_on = on //for logging
+
+	if("power" in signal.data)
+		on = text2num(signal.data["power"])
+
+	if("power_toggle" in signal.data)
+		on = !on
+
+	if("set_output_pressure" in signal.data)
+		target_pressure = Clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
+
+	if(on != old_on)
+		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
+
+	if("status" in signal.data)
 		broadcast_status()
-			if(!radio_connection)
-				return 0
-
-			var/datum/signal/signal = new
-			signal.transmission_method = 1 //radio signal
-			signal.source = src
-
-			signal.data = list(
-				"tag" = id,
-				"device" = "AGP",
-				"power" = on,
-				"target_output" = target_pressure,
-				"sigtype" = "status"
-			)
-
-			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
-
-			return 1
-
-	interact(mob/user as mob)
-		var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
-					<b>Desirable output pressure: </b>
-					[round(target_pressure,0.1)]kPa | <a href='?src=\ref[src];set_press=1'>Change</a>
-					"}
-
-		user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
-		onclose(user, "atmo_pump")
-
-	initialize()
-		..()
-		if(frequency)
-			set_frequency(frequency)
-
-	receive_signal(datum/signal/signal)
-		if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-			return 0
-
-		if("power" in signal.data)
-			on = text2num(signal.data["power"])
-
-		if("power_toggle" in signal.data)
-			on = !on
-
-		if("set_output_pressure" in signal.data)
-			target_pressure = Clamp(
-				text2num(signal.data["set_output_pressure"]),
-				0,
-				ONE_ATMOSPHERE*50
-			)
-
-		if("status" in signal.data)
-			spawn(2)
-				broadcast_status()
-			return //do not update_icon
-
-		spawn(2)
-			broadcast_status()
-		update_icon()
 		return
 
+	broadcast_status()
+	update_icon()
+	return
 
-	attack_hand(user as mob)
-		if(..())
-			return
-		src.add_fingerprint(usr)
-		if(!src.allowed(user))
-			user << "\red Access denied."
-			return
-		usr.set_machine(src)
-		interact(user)
-		return
+/obj/machinery/atmospherics/components/binary/pump/power_change()
+	..()
+	update_icon()
 
-	Topic(href,href_list)
-		if(..()) return
-		if(href_list["power"])
-			on = !on
-		if(href_list["set_press"])
-			var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
-			src.target_pressure = max(0, min(4500, new_pressure))
-		usr.set_machine(src)
-		src.update_icon()
-		src.updateUsrDialog()
-		return
-
-	power_change()
-		..()
-		update_icon()
-
-	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-		if (!istype(W, /obj/item/weapon/wrench))
-			return ..()
-		if (!(stat & NOPOWER) && on)
-			user << "\red You cannot unwrench this [src], turn it off first."
-			return 1
+/obj/machinery/atmospherics/components/binary/pump/attackby(obj/item/weapon/W, mob/user, params)
+	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
+	if (!(stat & NOPOWER) && on)
+		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+		return 1
+	return ..()
 

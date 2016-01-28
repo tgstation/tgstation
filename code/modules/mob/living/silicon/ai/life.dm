@@ -1,20 +1,24 @@
 /mob/living/silicon/ai/Life()
-	if (src.stat == 2)
+	if (src.stat == DEAD)
 		return
 	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist
 		//Being dead doesn't mean your temperature never changes
 		var/turf/T = get_turf(src)
 
-		if (src.stat!=0)
+		if (src.stat!= CONSCIOUS)
 			src.cameraFollow = null
 			src.reset_view(null)
 			src.unset_machine()
 
-		src.updatehealth()
+		updatehealth()
+
+		update_gravity(mob_has_gravity())
+
+		update_action_buttons()
 
 		if (src.malfhack)
 			if (src.malfhack.aidisabled)
-				src << "\red ERROR: APC access disabled, hack attempt canceled."
+				src << "<span class='danger'>ERROR: APC access disabled, hack attempt canceled.</span>"
 				src.malfhacking = 0
 				src.malfhack = null
 
@@ -37,7 +41,7 @@
 
 		//stage = 1
 		//if (istype(src, /mob/living/silicon/ai)) // Are we not sure what we are?
-		var/blind = 0
+		var/blindness = 0
 		//stage = 2
 		var/area/loc = null
 		if (istype(T, /turf))
@@ -45,11 +49,11 @@
 			loc = T.loc
 			if (istype(loc, /area))
 				//stage = 4
-				if (!loc.master.power_equip && !istype(src.loc,/obj/item))
+				if (lacks_power())
 					//stage = 5
-					blind = 1
+					blindness = 1
 
-		if (!blind)
+		if (!blindness)
 			//stage = 4.5
 			if (src.blind.layer != 0)
 				src.blind.layer = 0
@@ -58,20 +62,22 @@
 			src.sight |= SEE_OBJS
 			src.see_in_dark = 8
 			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+			if(see_override)
+				see_invisible = see_override
 
 			var/area/home = get_area(src)
 			if(!home)	return//something to do with malf fucking things up I guess. <-- aisat is gone. is this still necessary? ~Carn
 			if(home.powered(EQUIP))
 				home.use_power(1000, EQUIP)
 
-			if (src:aiRestorePowerRoutine==2)
+			if (aiRestorePowerRoutine==2)
 				src << "Alert cancelled. Power has been restored without our assistance."
-				src:aiRestorePowerRoutine = 0
+				aiRestorePowerRoutine = 0
 				src.blind.layer = 0
 				return
-			else if (src:aiRestorePowerRoutine==3)
+			else if (aiRestorePowerRoutine==3)
 				src << "Alert cancelled. Power has been restored."
-				src:aiRestorePowerRoutine = 0
+				aiRestorePowerRoutine = 0
 				src.blind.layer = 0
 				return
 		else
@@ -86,9 +92,9 @@
 			src.see_in_dark = 0
 			src.see_invisible = SEE_INVISIBLE_LIVING
 
-			if (((!loc.master.power_equip) || istype(T, /turf/space)) && !istype(src.loc,/obj/item))
-				if (src:aiRestorePowerRoutine==0)
-					src:aiRestorePowerRoutine = 1
+			if (lacks_power())
+				if (aiRestorePowerRoutine==0)
+					aiRestorePowerRoutine = 1
 
 					src << "You've lost power!"
 //							world << "DEBUG CODE TIME! [loc] is the area the AI is sucking power from"
@@ -103,7 +109,7 @@
 						if (loc.master.power_equip)
 							if (!istype(T, /turf/space))
 								src << "Alert cancelled. Power has been restored without our assistance."
-								src.aiRestorePowerRoutine = 0
+								aiRestorePowerRoutine = 0
 								src.blind.layer = 0
 								return
 						src << "Fault confirmed: missing external power. Shutting down main control system to save power."
@@ -112,7 +118,7 @@
 						sleep(50)
 						if (istype(T, /turf/space))
 							src << "Unable to verify! No power connection detected!"
-							src:aiRestorePowerRoutine = 2
+							aiRestorePowerRoutine = 2
 							return
 						src << "Connection verified. Searching for APC in power network."
 						sleep(50)
@@ -136,12 +142,12 @@
 								switch(PRP)
 									if (1) src << "Unable to locate APC!"
 									else src << "Lost connection with the APC!"
-								src:aiRestorePowerRoutine = 2
+								aiRestorePowerRoutine = 2
 								return
 							if (loc.master.power_equip)
 								if (!istype(T, /turf/space))
 									src << "Alert cancelled. Power has been restored without our assistance."
-									src:aiRestorePowerRoutine = 0
+									aiRestorePowerRoutine = 0
 									src.blind.layer = 0 //This, too, is a fix to issue 603
 									return
 							switch(PRP)
@@ -154,12 +160,19 @@
 									src << "Receiving control information from APC."
 									sleep(2)
 									//bring up APC dialog
-									theAPC.attack_ai(src)
-									src:aiRestorePowerRoutine = 3
+									apc_override = 1
+									theAPC.ui_interact(src, state = conscious_state)
+									apc_override = 0
+									aiRestorePowerRoutine = 3
 									src << "Here are your current laws:"
 									src.show_laws()
 							sleep(50)
 							theAPC = null
+
+/mob/living/silicon/ai/proc/lacks_power()
+	var/turf/T = get_turf(src)
+	var/area/A = get_area(src)
+	return ((!A.power_equip) || istype(T, /turf/space)) && !is_type_in_list(src.loc, list(/obj/item, /obj/mecha))
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
@@ -169,3 +182,5 @@
 	health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss()
 	if(!fire_res_on_core)
 		health -= getFireLoss()
+	diag_hud_set_status()
+	diag_hud_set_health()

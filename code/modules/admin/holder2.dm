@@ -8,22 +8,25 @@ var/list/admin_datums = list()
 
 	var/datum/marked_datum
 
-	var/admincaster_screen = 0	//See newscaster.dm under machinery for a full description
-	var/datum/feed_message/admincaster_feed_message = new /datum/feed_message   //These two will act as holders.
-	var/datum/feed_channel/admincaster_feed_channel = new /datum/feed_channel
-	var/admincaster_signature	//What you'll sign the newsfeeds as
+	var/admincaster_screen = 0	//TODO: remove all these 5 variables, they are completly unacceptable
+	var/datum/newscaster/feed_message/admincaster_feed_message = new /datum/newscaster/feed_message
+	var/datum/newscaster/wanted_message/admincaster_wanted_message = new /datum/newscaster/wanted_message
+	var/datum/newscaster/feed_channel/admincaster_feed_channel = new /datum/newscaster/feed_channel
+	var/admin_signature
 
 /datum/admins/New(datum/admin_rank/R, ckey)
 	if(!ckey)
-		error("Admin datum created without a ckey argument. Datum has been deleted")
-		del(src)
+		spawn(0)
+			del(src)
+		throw EXCEPTION("Admin datum created without a ckey")
 		return
 	if(!istype(R))
-		error("Admin datum created without a rank. Datum has been deleted")
-		del(src)
+		spawn(0)
+			del(src)
+		throw EXCEPTION("Admin datum created without a rank")
 		return
 	rank = R
-	admincaster_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
+	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	admin_datums[ckey] = src
 
 /datum/admins/proc/associate(client/C)
@@ -31,6 +34,7 @@ var/list/admin_datums = list()
 		owner = C
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO
+		owner.verbs -= /client/proc/readmin
 		admins |= C
 
 /datum/admins/proc/disassociate()
@@ -39,6 +43,18 @@ var/list/admin_datums = list()
 		owner.remove_admin_verbs()
 		owner.holder = null
 		owner = null
+
+/datum/admins/proc/check_if_greater_rights_than_holder(datum/admins/other)
+	if(!other)
+		return 1 //they have no rights
+	if(rank.rights == 65535)
+		return 1 //we have all the rights
+	if(src == other)
+		return 1 //you always have more rights than yourself
+	if(rank.rights != other.rank.rights)
+		if( (rank.rights & other.rank.rights) == other.rank.rights )
+			return 1 //we have all the rights they have and more
+	return 0
 
 /*
 checks if usr is an admin with at least ONE of the flags in rights_required. (Note, they don't need all the flags)
@@ -68,12 +84,8 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 		if(usr.client.holder)
 			if(!other || !other.holder)
 				return 1
-			if(usr.client.holder.rank.rights != other.holder.rank.rights)	//Check values smaller than 65536
-				if( (usr.client.holder.rank.rights & other.holder.rank.rights) == other.holder.rank.rights )
-					return 1	//we have all the rights they have and more
-		usr << "<font color='red'>Error: Cannot proceed. They have greater or equal rights to us.</font>"
+			return usr.client.holder.check_if_greater_rights_than_holder(other.holder)
 	return 0
-
 
 /client/proc/deadmin()
 	admin_datums -= ckey

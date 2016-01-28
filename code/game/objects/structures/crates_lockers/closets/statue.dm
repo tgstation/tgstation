@@ -16,21 +16,24 @@
 
 	if(ishuman(L) || ismonkey(L) || iscorgi(L))
 		if(L.buckled)
-			L.buckled = 0
-			L.anchored = 0
+			L.buckled.unbuckle_mob()
 		if(L.client)
 			L.client.perspective = EYE_PERSPECTIVE
 			L.client.eye = src
 		L.loc = src
-		L.sdisabilities += MUTE
+		L.disabilities += MUTE
+		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
+
 		health = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
 		intialTox = L.getToxLoss()
 		intialFire = L.getFireLoss()
 		intialBrute = L.getBruteLoss()
 		intialOxy = L.getOxyLoss()
 		if(ishuman(L))
-			name = "statue of [L.name]"
-			if(L.gender == "female")
+			var/mob/living/carbon/human/H = L
+			name = "statue of [H.name]"
+			H.bleedsuppress = 1
+			if(H.gender == "female")
 				icon_state = "human_female"
 		else if(ismonkey(L))
 			name = "statue of a monkey"
@@ -41,10 +44,10 @@
 			desc = "If it takes forever, I will wait for you..."
 
 	if(health == 0) //meaning if the statue didn't find a valid target
-		del(src)
+		qdel(src)
 		return
 
-	processing_objects.Add(src)
+	SSobj.processing |= src
 	..()
 
 /obj/structure/closet/statue/process()
@@ -56,18 +59,30 @@
 		M.setOxyLoss(intialOxy)
 	if (timer <= 0)
 		dump_contents()
-		processing_objects.Remove(src)
-		del(src)
+		SSobj.processing.Remove(src)
+		qdel(src)
 
 /obj/structure/closet/statue/dump_contents()
+
+	if(istype(src.loc, /mob/living/simple_animal/hostile/statue))
+		var/mob/living/simple_animal/hostile/statue/S = src.loc
+		src.loc = S.loc
+		if(S.mind)
+			for(var/mob/M in contents)
+				S.mind.transfer_to(M)
+				M << "As the animating magic wears off you feel yourself coming back to your senses. You are yourself again!"
+				break
+		qdel(S)
+
 
 	for(var/obj/O in src)
 		O.loc = src.loc
 
 	for(var/mob/living/M in src)
 		M.loc = src.loc
-		M.sdisabilities -= MUTE
+		M.disabilities -= MUTE
 		M.take_overall_damage((M.health - health - 100),0) //any new damage the statue incurred is transfered to the mob
+		M.faction -= "mimic"
 		if(M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
@@ -93,7 +108,7 @@
 /obj/structure/closet/statue/toggle()
 	return
 
-/obj/structure/closet/statue/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/closet/statue/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	if(health <= 0)
 		for(var/mob/M in src)
@@ -101,8 +116,8 @@
 
 	return
 
-/obj/structure/closet/statue/attack_animal(mob/living/simple_animal/user as mob)
-	if(user.wall_smash)
+/obj/structure/closet/statue/attack_animal(mob/living/simple_animal/user)
+	if(user.environment_smash)
 		for(var/mob/M in src)
 			shatter(M)
 
@@ -110,15 +125,10 @@
 	for(var/mob/M in src)
 		shatter(M)
 
-/obj/structure/closet/statue/meteorhit(obj/O as obj)
-	if(O.icon_state == "flaming")
-		for(var/mob/M in src)
-			M.meteorhit(O)
-			shatter(M)
-
-/obj/structure/closet/statue/attackby(obj/item/I as obj, mob/user as mob)
+/obj/structure/closet/statue/attackby(obj/item/I, mob/user, params)
+	user.changeNext_move(CLICK_CD_MELEE)
 	health -= I.force
-	visible_message("\red [user] strikes [src] with [I].")
+	visible_message("<span class='danger'>[user] strikes [src] with [I].</span>")
 	if(health <= 0)
 		for(var/mob/M in src)
 			shatter(M)
@@ -141,12 +151,12 @@
 /obj/structure/closet/statue/update_icon()
 	return
 
-/obj/structure/closet/statue/proc/shatter(mob/user as mob)
+/obj/structure/closet/statue/proc/shatter(mob/user)
 	if (user)
 		user.dust()
 	dump_contents()
-	visible_message("\red [src] shatters!. ")
-	del(src)
+	visible_message("<span class='danger'>[src] shatters!.</span>")
+	qdel(src)
 
 /obj/structure/closet/statue/container_resist()
 	return

@@ -47,14 +47,14 @@
 	name = "Safecode hint spawner"
 
 /obj/effect/landmark/sc_bible_spawner/New()
-	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(src.loc)
+	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(src.loc)
 	B.name = "The Holy book of the Geometer"
 	B.deity_name = "Narsie"
 	B.icon_state = "melted"
 	B.item_state = "melted"
 	new /obj/item/weapon/paper/sc_safehint_paper_bible(B)
 	new /obj/item/weapon/pen(B)
-	del(src)
+	qdel(src)
 
 /*
  * Guns - I'm making these specifically so that I dont spawn a pile of fully loaded weapons on the map.
@@ -66,15 +66,6 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces."
 //	projectile_type = "/obj/item/projectile/practice"
 	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
-
-//Syndicate silenced pistol. This definition is not necessary, it's just habit.
-/obj/item/weapon/gun/projectile/automatic/silenced/sc_silenced
-
-//Make it so that these guns only spawn with a couple bullets... if any
-/obj/item/weapon/gun/projectile/automatic/silenced/sc_silenced/New()
-	for(var/ammo in magazine.stored_ammo)
-		if(prob(95)) //95% chance
-			magazine.stored_ammo -= ammo
 
 //Syndicate sub-machine guns.
 /obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r
@@ -141,7 +132,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 			<br>
 			Our on-board spy has learned the code and has hidden away a few copies of the code around the station. Unfortunatly he has been captured by security
 			Your objective is to split up, locate any of the papers containing the captain's safe code, open the safe and
-			secure anything found inside. If possible, recover the imprisioned syndicate operative and recieve the code from him.<br>
+			secure anything found inside. If possible, recover the imprisioned syndicate operative and receive the code from him.<br>
 			<br>
 			<u>As always, eliminate anyone who gets in the way.</u><br>
 			<br>
@@ -168,21 +159,21 @@ var/sc_safecode5 = "[rand(0,9)]"
 /*
  * Modified Nar-Sie
  */
-/obj/machinery/singularity/narsie/sc_Narsie
+/obj/singularity/narsie/sc_Narsie
 	desc = "Your body becomes weak and your feel your mind slipping away as you try to comprehend what you know can't be possible."
 	move_self = 0 //Contianed narsie does not move!
 	grav_pull = 0 //Contained narsie does not pull stuff in!
-
+	var/uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/hostile/construct)
 //Override this to prevent no adminlog runtimes and admin warnings about a singularity without containment
-/obj/machinery/singularity/narsie/sc_Narsie/admin_investigate_setup()
+/obj/singularity/narsie/sc_Narsie/admin_investigate_setup()
 	return
 
-/obj/machinery/singularity/narsie/sc_Narsie/process()
+/obj/singularity/narsie/sc_Narsie/process()
 	eat()
 	if(prob(25))
 		mezzer()
 
-/obj/machinery/singularity/narsie/sc_Narsie/consume(var/atom/A)
+/obj/singularity/narsie/sc_Narsie/consume(atom/A)
 	if(is_type_in_list(A, uneatable))
 		return 0
 	if (istype(A,/mob/living))
@@ -190,8 +181,8 @@ var/sc_safecode5 = "[rand(0,9)]"
 		L.gib()
 	else if(istype(A,/obj/))
 		var/obj/O = A
-		O.ex_act(1.0)
-		if(O) del(O)
+		O.ex_act(1)
+		if(O) qdel(O)
 	else if(isturf(A))
 		var/turf/T = A
 		if(T.intact)
@@ -203,5 +194,5 @@ var/sc_safecode5 = "[rand(0,9)]"
 		T.ChangeTurf(/turf/space)
 	return
 
-/obj/machinery/singularity/narsie/sc_Narsie/ex_act()
+/obj/singularity/narsie/sc_Narsie/ex_act()
 	return

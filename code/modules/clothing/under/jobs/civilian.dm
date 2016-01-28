@@ -3,16 +3,17 @@
 /obj/item/clothing/under/rank/bartender
 	desc = "It looks like it could use some more flair."
 	name = "bartender's uniform"
-	icon_state = "ba_suit"
-	item_state = "ba_suit"
-	item_color = "ba_suit"
+	icon_state = "barman"
+	item_state = "bar_suit"
+	item_color = "barman"
+	alt_covers_chest = 1
 
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
 	name = "captain's jumpsuit"
 	icon_state = "captain"
-	item_state = "caparmor"
+	item_state = "b_suit"
 	item_color = "captain"
 
 
@@ -38,13 +39,15 @@
 	icon_state = "chaplain"
 	item_state = "bl_suit"
 	item_color = "chapblack"
+	can_adjust = 0
 
 
 /obj/item/clothing/under/rank/chef
-	desc = "It's an apron which is given only to the most <b>hardcore</b> chefs in space."
-	name = "chef's uniform"
+	name = "cook's suit"
+	desc = "A suit which is given only to the most <b>hardcore</b> cooks in space."
 	icon_state = "chef"
 	item_color = "chef"
+	alt_covers_chest = 1
 
 
 /obj/item/clothing/under/rank/clown
@@ -53,8 +56,12 @@
 	icon_state = "clown"
 	item_state = "clown"
 	item_color = "clown"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 0
 
+/obj/item/clothing/under/rank/clown/hit_reaction()
+	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
+	return 0
 
 /obj/item/clothing/under/rank/head_of_personnel
 	desc = "It's a jumpsuit worn by someone who works in the position of \"Head of Personnel\"."
@@ -62,6 +69,7 @@
 	icon_state = "hop"
 	item_state = "b_suit"
 	item_color = "hop"
+	can_adjust = 0
 
 
 /obj/item/clothing/under/rank/hydroponics
@@ -84,6 +92,7 @@
 /obj/item/clothing/under/lawyer
 	desc = "Slick threads."
 	name = "Lawyer suit"
+	can_adjust = 0
 
 
 /obj/item/clothing/under/lawyer/black
@@ -111,33 +120,51 @@
 
 
 /obj/item/clothing/under/lawyer/bluesuit
-	name = "Blue Suit"
-	desc = "A classy suit and tie"
+	name = "blue suit"
+	desc = "A classy suit and tie."
 	icon_state = "bluesuit"
 	item_state = "bluesuit"
 	item_color = "bluesuit"
+	can_adjust = 1
+	alt_covers_chest = 1
 
 
 /obj/item/clothing/under/lawyer/purpsuit
-	name = "Purple Suit"
+	name = "purple suit"
 	icon_state = "lawyer_purp"
 	item_state = "lawyer_purp"
 	item_color = "lawyer_purp"
-	fitted = 0
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = 1
+	alt_covers_chest = 1
 
-/obj/item/clothing/under/librarian
+
+/obj/item/clothing/under/lawyer/blacksuit
+	name = "black suit"
+	desc = "A professional black suit. Nanotrasen Investigation Bureau approved!"
+	icon_state = "blacksuit"
+	item_state = "bar_suit"
+	item_color = "blacksuit"
+	can_adjust = 1
+	alt_covers_chest = 1
+
+
+/obj/item/clothing/under/rank/librarian
 	name = "sensible suit"
 	desc = "It's very... sensible."
 	icon_state = "red_suit"
 	item_state = "red_suit"
 	item_color = "red_suit"
+	can_adjust = 0
 
-/obj/item/clothing/under/mime
+
+/obj/item/clothing/under/rank/mime
 	name = "mime's outfit"
 	desc = "It's not very colourful."
 	icon_state = "mime"
 	item_state = "mime"
 	item_color = "mime"
+
 
 /obj/item/clothing/under/rank/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."

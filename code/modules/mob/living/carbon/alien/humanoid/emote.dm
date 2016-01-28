@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid/emote(var/act)
+/mob/living/carbon/alien/humanoid/emote(act,m_type=1,message = null)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -6,66 +6,66 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,length(act))
-	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
-	var/m_type = 1
-	var/message
+	var/muzzled = is_muzzled()
 
 	switch(act) //Alphabetical please
-		if ("deathgasp")
-			message = "<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw..."
+		if ("deathgasp","deathgasps")
+			message = "<span class='name'>[src]</span> lets out a waning guttural screech, green blood bubbling from its maw..."
 			m_type = 2
 
-		if ("gnarl")
+		if ("gnarl","gnarls")
 			if (!muzzled)
-				message = "<B>[src]</B> gnarls and shows its teeth.."
+				message = "<span class='name'>[src]</span> gnarls and shows its teeth.."
 				m_type = 2
 
-		if ("hiss")
+		if ("hiss","hisses")
 			if(!muzzled)
-				message = "<B>[src]</B> hisses."
+				message = "<span class='name'>[src]</span> hisses."
 				m_type = 2
 
-		if ("moan")
-			message = "<B>[src]</B> moans!"
+		if ("me")
+			..()
+			return
+
+		if ("moan","moans")
+			message = "<span class='name'>[src]</span> moans!"
 			m_type = 2
 
-		if ("roar")
+		if ("roar","roars")
 			if (!muzzled)
-				message = "<B>[src]</B> roars."
+				message = "<span class='name'>[src]</span> roars."
 				m_type = 2
 
-		if ("roll")
+		if ("roll","rolls")
 			if (!src.restrained())
-				message = "<B>[src]</B> rolls."
+				message = "<span class='name'>[src]</span> rolls."
 				m_type = 1
 
-		if ("scratch")
+		if ("scratch","scratches")
 			if (!src.restrained())
-				message = "<B>[src]</B> scratches."
+				message = "<span class='name'>[src]</span> scratches."
 				m_type = 1
 
-		if ("scretch")
+		if ("screech","screeches")
 			if (!muzzled)
-				message = "<B>[src]</B> scretches."
+				message = "<span class='name'>[src]</span> screeches."
 				m_type = 2
 
-		if ("shiver")
-			message = "<B>[src]</B> shivers."
+		if ("shiver","shivers")
+			message = "<span class='name'>[src]</span> shivers."
 			m_type = 2
 
-		if ("sign")
+		if ("sign","signs")
 			if (!src.restrained())
-				message = text("<B>[src]</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
+				message = text("<span class='name'>[src]</span> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
 
 		if ("tail")
-			message = "<B>[src]</B> waves its tail."
+			message = "<span class='name'>[src]</span> waves its tail."
 			m_type = 1
 
 		if ("help") //This is an exception
-			src << "Help for xenomorph emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow, burp, choke, chucke, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, gnarl, hiss, jump, laugh, look-atom, me, moan, nod, point-atom, roar, roll, scream, scratch, scretch, shake, shiver, sign-#, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tail, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
+			src << "Help for xenomorph emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow, burp, choke, chucke, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, gnarl, hiss, jump, laugh, look-atom, me, moan, nod, point-atom, roar, roll, scream, scratch, screech, shake, shiver, sign-#, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tail, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
 
 		else
 			..(act)
@@ -79,11 +79,7 @@
 			playsound(src.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
 
 		if (m_type & 1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(message, m_type)
-				//Foreach goto(703)
+			visible_message(message)
 		else
-			for(var/mob/O in hearers(src, null))
-				O.show_message(message, m_type)
-				//Foreach goto(746)
+			audible_message(message)
 	return

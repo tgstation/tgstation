@@ -39,14 +39,14 @@ FLOOR SAFES
 			I.loc = src
 
 
-/obj/structure/safe/proc/check_unlocked(mob/user as mob, canhear)
+/obj/structure/safe/proc/check_unlocked(mob/user, canhear)
 	if(user && canhear)
 		if(tumbler_1_pos == tumbler_1_open)
-			user << "<span class='notice'>You hear a [pick("tonk", "krunk", "plunk")] from [src].</span>"
+			user << "<span class='italics'>You hear a [pick("tonk", "krunk", "plunk")] from [src].</span>"
 		if(tumbler_2_pos == tumbler_2_open)
-			user << "<span class='notice'>You hear a [pick("tink", "krink", "plink")] from [src].</span>"
+			user << "<span class='italics'>You hear a [pick("tink", "krink", "plink")] from [src].</span>"
 	if(tumbler_1_pos == tumbler_1_open && tumbler_2_pos == tumbler_2_open)
-		if(user) visible_message("<b>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b>")
+		if(user) visible_message("<i><b>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b></i>")
 		return 1
 	return 0
 
@@ -72,7 +72,7 @@ FLOOR SAFES
 		icon_state = initial(icon_state)
 
 
-/obj/structure/safe/attack_hand(mob/user as mob)
+/obj/structure/safe/attack_hand(mob/user)
 	user.set_machine(src)
 	var/dat = "<center>"
 	dat += "<a href='?src=\ref[src];open=1'>[open ? "Close" : "Open"] [src]</a> | <a href='?src=\ref[src];decrement=1'>-</a> [dial * 5] <a href='?src=\ref[src];increment=1'>+</a>"
@@ -101,7 +101,7 @@ FLOOR SAFES
 			updateUsrDialog()
 			return
 		else
-			user << "<span class='notice'>You can't [open ? "close" : "open"] [src], the lock is engaged!</span>"
+			user << "<span class='warning'>You can't [open ? "close" : "open"] [src], the lock is engaged!</span>"
 			return
 
 	if(href_list["decrement"])
@@ -109,11 +109,11 @@ FLOOR SAFES
 		if(dial == tumbler_1_pos + 1 || dial == tumbler_1_pos - 71)
 			tumbler_1_pos = decrement(tumbler_1_pos)
 			if(canhear)
-				user << "<span class='notice'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>"
+				user << "<span class='italics'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>"
 			if(tumbler_1_pos == tumbler_2_pos + 37 || tumbler_1_pos == tumbler_2_pos - 35)
 				tumbler_2_pos = decrement(tumbler_2_pos)
 				if(canhear)
-					user << "<span class='notice'>You hear a [pick("click", "chink", "clink")] from [src].</span>"
+					user << "<span class='italics'>You hear a [pick("click", "chink", "clink")] from [src].</span>"
 			check_unlocked(user, canhear)
 		updateUsrDialog()
 		return
@@ -123,11 +123,11 @@ FLOOR SAFES
 		if(dial == tumbler_1_pos - 1 || dial == tumbler_1_pos + 71)
 			tumbler_1_pos = increment(tumbler_1_pos)
 			if(canhear)
-				user << "<span class='notice'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>"
+				user << "<span class='italics'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>"
 			if(tumbler_1_pos == tumbler_2_pos - 37 || tumbler_1_pos == tumbler_2_pos + 35)
 				tumbler_2_pos = increment(tumbler_2_pos)
 				if(canhear)
-					user << "<span class='notice'>You hear a [pick("click", "chink", "clink")] from [src].</span>"
+					user << "<span class='italics'>You hear a [pick("click", "chink", "clink")] from [src].</span>"
 			check_unlocked(user, canhear)
 		updateUsrDialog()
 		return
@@ -142,11 +142,13 @@ FLOOR SAFES
 				updateUsrDialog()
 
 
-/obj/structure/safe/attackby(obj/item/I as obj, mob/user as mob)
+/obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
-			user.drop_item()
+			if(!user.drop_item())
+				user << "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>"
+				return
 			I.loc = src
 			user << "<span class='notice'>You put [I] in [src].</span>"
 			updateUsrDialog()
@@ -156,19 +158,14 @@ FLOOR SAFES
 			return
 	else
 		if(istype(I, /obj/item/clothing/tie/stethoscope))
-			user << "Hold [I] in one of your hands while you manipulate the dial."
+			user << "<span class='warning'>Hold [I] in one of your hands while you manipulate the dial!</span>"
 			return
 
 
 obj/structure/safe/blob_act()
 	return
 
-
-obj/structure/safe/ex_act(severity)
-	return
-
-
-obj/structure/safe/meteorhit(obj/O as obj)
+obj/structure/safe/ex_act(severity, target)
 	return
 
 

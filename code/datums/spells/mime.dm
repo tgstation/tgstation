@@ -11,10 +11,16 @@
 	clothes_req = 0
 	range = 0
 	cast_sound = null
+	human_req = 1
 
+	action_icon_state = "mime"
+	action_background_icon_state = "bg_mime"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Click()
-	if(usr)
+	if(usr && usr.mind)
+		if(!usr.mind.miming)
+			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
+			return
 		invocation = "<B>[usr.real_name]</B> looks as if a wall is in front of them."
 	else
 		invocation_type ="none"
@@ -32,22 +38,25 @@
 	range = -1
 	include_user = 1
 
+	action_icon_state = "mime"
+	action_background_icon_state = "bg_mime"
+
 /obj/effect/proc_holder/spell/targeted/mime/speak/Click()
 	if(!usr)
 		return
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/H = usr
-	if(H.miming)
-		still_recharging_msg = "<span class='notice'>You can't break your vow of silence that fast!</span>"
+	if(H.mind.miming)
+		still_recharging_msg = "<span class='warning'>You can't break your vow of silence that fast!</span>"
 	else
-		still_recharging_msg = "<span class='notice'>You'll have to wait before you can give your vow of silence again.</span>"
+		still_recharging_msg = "<span class='warning'>You'll have to wait before you can give your vow of silence again!</span>"
 	..()
 
-/obj/effect/proc_holder/spell/targeted/mime/speak/cast(list/targets)
+/obj/effect/proc_holder/spell/targeted/mime/speak/cast(list/targets,mob/user = usr)
 	for(var/mob/living/carbon/human/H in targets)
-		H.miming=!H.miming
-		if(H.miming)
+		H.mind.miming=!H.mind.miming
+		if(H.mind.miming)
 			H << "<span class='notice'>You make a vow of silence.</span>"
 		else
 			H << "<span class='notice'>You break your vow of silence.</span>"

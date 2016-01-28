@@ -16,9 +16,9 @@
 		if (machine)
 			machine.CONSOLE = src
 		else
-			del(src)
+			qdel(src)
 
-/obj/machinery/mineral/processing_unit_console/attack_hand(user as mob)
+/obj/machinery/mineral/processing_unit_console/attack_hand(mob/user)
 
 	var/dat = "<b>Smelter control console</b><br><br>"
 	//iron
@@ -271,7 +271,7 @@
 			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1)
 				if (ore_clown > 0)
 					ore_clown--;
-					generate_mineral(/obj/item/stack/sheet/mineral/clown)
+					generate_mineral(/obj/item/stack/sheet/mineral/bananium)
 				else
 					on = 0
 				continue
@@ -385,13 +385,13 @@
 				ore_uranium++
 				O.loc = null
 				continue
-			if (istype(O,/obj/item/weapon/ore/clown))
+			if (istype(O,/obj/item/weapon/ore/bananium))
 				ore_clown++
 				O.loc = null
 				continue
 			unload_mineral(O)
 
 
-/obj/machinery/mineral/processing_unit/proc/generate_mineral(var/P)
+/obj/machinery/mineral/processing_unit/proc/generate_mineral(P)
 	var/O = new P(src)
 	unload_mineral(O)

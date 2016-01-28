@@ -15,7 +15,6 @@
 		return
 
 	if(control_disabled || stat) return
-	next_move = world.time + 9
 
 	if(ismob(A))
 		ai_actual_track(A)
@@ -36,8 +35,14 @@
 		return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers["shift"] && modifiers["ctrl"])
+		CtrlShiftClickOn(A)
+		return
 	if(modifiers["middle"])
-		MiddleClickOn(A)
+		if(controlled_mech) //Are we piloting a mech? Placed here so the modifiers are not overridden.
+			controlled_mech.click_action(A, src) //Override AI normal click behavior.
+		return
+
 		return
 	if(modifiers["shift"])
 		ShiftClickOn(A)
@@ -51,11 +56,14 @@
 
 	if(world.time <= next_move)
 		return
-	next_move = world.time + 9
 
 	if(aicamera.in_camera_mode)
 		aicamera.camera_mode_off()
 		aicamera.captureimage(A, usr)
+		return
+	if(waypoint_mode)
+		set_waypoint(A)
+		waypoint_mode = 0
 		return
 
 	/*
@@ -77,7 +85,7 @@
 /mob/living/silicon/ai/RangedAttack(atom/A)
 	A.attack_ai(src)
 
-/atom/proc/attack_ai(mob/user as mob)
+/atom/proc/attack_ai(mob/user)
 	return
 
 /*
@@ -85,6 +93,9 @@
 	than anything else in the game, atoms have separate procs
 	for AI shift, ctrl, and alt clicking.
 */
+
+/mob/living/silicon/ai/CtrlShiftClickOn(var/atom/A)
+	A.AICtrlShiftClick(src)
 /mob/living/silicon/ai/ShiftClickOn(var/atom/A)
 	A.AIShiftClick(src)
 /mob/living/silicon/ai/CtrlClickOn(var/atom/A)
@@ -96,36 +107,31 @@
 	The following criminally helpful code is just the previous code cleaned up;
 	I have no idea why it was in atoms.dm instead of respective files.
 */
+/* Questions: Instead of an Emag check on every function, can we not add to airlocks onclick if emag return? */
 
-/atom/proc/AIShiftClick()
-	return
-
-/obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
-	if(density)
-		Topic("aiEnable=7", list("aiEnable"="7"), 1) // 1 meaning no window (consistency!)
-	else
-		Topic("aiDisable=7", list("aiDisable"="7"), 1)
-	return
-
-
+/* Atom Procs */
 /atom/proc/AICtrlClick()
 	return
+/atom/proc/AIAltClick(mob/living/silicon/ai/user)
+	AltClick(user)
+	return
+/atom/proc/AIShiftClick()
+	return
+/atom/proc/AICtrlShiftClick()
+	return
 
+/* Airlocks */
 /obj/machinery/door/airlock/AICtrlClick() // Bolts doors
+	if(emagged)
+		return
 	if(locked)
 		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
 	else
 		Topic("aiDisable=4", list("aiDisable"="4"), 1)
-
-/obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
-	toggle_breaker()
-
-
-/atom/proc/AIAltClick(var/mob/living/silicon/ai/user)
-	AltClick(user)
 	return
-
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
+	if(emagged)
+		return
 	if(!secondsElectrified)
 		// permenant shock
 		Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
@@ -133,6 +139,35 @@
 		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
 		Topic("aiDisable=5", list("aiDisable"="5"), 1)
 	return
+/obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
+	if(emagged)
+		return
+	if(density)
+		Topic("aiEnable=7", list("aiEnable"="7"), 1) // 1 meaning no window (consistency!)
+	else
+		Topic("aiDisable=7", list("aiDisable"="7"), 1)
+	return
+/obj/machinery/door/airlock/AICtrlShiftClick()  // Sets/Unsets Emergency Access Override
+	if(emagged)
+		return
+	if(!emergency)
+		Topic("aiEnable=11", list("aiEnable"="11"), 1) // 1 meaning no window (consistency!)
+	else
+		Topic("aiDisable=11", list("aiDisable"="11"), 1)
+	return
+
+/* APC */
+/obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
+	toggle_breaker()
+	add_fingerprint(usr)
+
+/* AI Turrets */
+/obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
+	toggle_lethal()
+	add_fingerprint(usr)
+/obj/machinery/turretid/AICtrlClick() //turns off/on Turrets
+	toggle_on()
+	add_fingerprint(usr)
 
 //
 // Override TurfAdjacent for AltClicking
