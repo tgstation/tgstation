@@ -26,7 +26,7 @@
 	)
 	var/style = "nanotrasen" // The style to be used for this UI.
 	var/interface // The interface (template) to be used for this UI.
-	var/auto_update = TRUE // Update the UI every MC tick.
+	var/autoupdate = TRUE // Update the UI every MC tick.
 	var/initialized = FALSE // If the UI has been initialized yet.
 	var/list/initial_data // The data (and datastructure) used to initialize the UI.
 	var/status = UI_INTERACTIVE // The status/visibility of the UI.
@@ -167,8 +167,8 @@
   *
   * required state bool Enable/disable auto-updating.
  **/
-/datum/tgui/proc/set_auto_update(state = 1)
-	auto_update = state
+/datum/tgui/proc/set_autoupdate(state = 1)
+	autoupdate = state
 
  /**
   * private
@@ -300,7 +300,7 @@
 		close()
 		return
 
-	if(status && (force || auto_update))
+	if(status && (force || autoupdate))
 		update() // Update the UI if the status and update settings allow it.
 	else
 		update_status(push = 1) // Otherwise only update status.

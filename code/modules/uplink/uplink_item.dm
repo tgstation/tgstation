@@ -72,10 +72,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	else
 		U.purchase_log += "<big>\icon[A]</big>"
 
-	if(ishuman(user))
+	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
-		H.put_in_hands(A)
-
+		if(H.put_in_hands(A))
+			H << "[A] materializes into your hands!"
+		else
+			H << "\The [A] materializes onto the floor."
 	return 1
 
 // Nuclear Operative (Special Offers)
@@ -1077,10 +1079,11 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse. Rumored to contain a valuable assortion of items, \
 			but you never know. Contents are sorted to always be worth 50 TC."
+	item = /obj/structure/closet/crate
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
-/datum/uplink_item/badass/surplus_crate/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)
 	var/list/uplink_items = get_uplink_items()
 
 	var/crate_value = 50
@@ -1104,6 +1107,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Random Item"
 	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't \
 			decided on a strategy yet."
+	item = /obj/item/weapon/paper
 	cost = 0
 
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
@@ -1121,5 +1125,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	if(possible_items.len)
 		var/datum/uplink_item/I = pick(possible_items)
 		U.telecrystals -= I.cost
+		U.spent_telecrystals += I.cost
 		feedback_add_details("traitor_uplink_items_bought","RN")
 		return new I.item(loc)
