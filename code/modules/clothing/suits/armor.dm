@@ -123,10 +123,9 @@
 
 
 //Reactive armor
-//When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
 /obj/item/clothing/suit/armor/reactive
 	name = "reactive armor"
-	desc = "Someone seperated our Research Director from his own head!"
+	desc = "Doesn't seem to do much for some reason."
 	var/active = 0
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
@@ -156,10 +155,10 @@
 	src.item_state = "reactiveoff"
 	..()
 
+//When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
 /obj/item/clothing/suit/armor/reactive/teleport
 	name = "reactive teleport armor"
 	desc = "Someone seperated our Research Director from his own head!"
-	hit_reaction_chance = 50
 	var/tele_range = 6
 	var/rad_amount= 15
 
