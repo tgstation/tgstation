@@ -1,149 +1,149 @@
 macro "borghotkeymode"
-	elem 
+	elem
 		name = "TAB"
-		command = ".winset \"mainwindow.macro=borgmacro hotkey_toggle.is-checked=false input.focus=true input.background-color=#D3B5B5\""
+		command = ".winset \"mainwindow.macro=borgmacro hotkey_toggle.is-checked=false input.focus=true input.background-color=#d3b5b5\""
 		is-disabled = false
-	elem 
+	elem
 		name = "CENTER+REP"
 		command = ".center"
 		is-disabled = false
-	elem 
+	elem
 		name = "NORTHEAST"
 		command = ".northeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "SOUTHEAST"
 		command = ".southeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "NORTHWEST"
 		command = "unequip-module"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+WEST"
 		command = "westface"
 		is-disabled = false
-	elem 
+	elem
 		name = "WEST+REP"
 		command = ".west"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+NORTH"
 		command = "northface"
 		is-disabled = false
-	elem 
+	elem
 		name = "NORTH+REP"
 		command = ".north"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+EAST"
 		command = "eastface"
 		is-disabled = false
-	elem 
+	elem
 		name = "EAST+REP"
 		command = ".east"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+SOUTH"
 		command = "southface"
 		is-disabled = false
-	elem 
+	elem
 		name = "SOUTH+REP"
 		command = ".south"
 		is-disabled = false
-	elem 
+	elem
 		name = "INSERT"
 		command = "a-intent right"
 		is-disabled = false
-	elem 
+	elem
 		name = "DELETE"
 		command = "delete-key-pressed"
 		is-disabled = false
-	elem 
+	elem
 		name = "1"
 		command = "toggle-module 1"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+1"
 		command = "toggle-module 1"
 		is-disabled = false
-	elem 
+	elem
 		name = "2"
 		command = "toggle-module 2"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+2"
 		command = "toggle-module 2"
 		is-disabled = false
-	elem 
+	elem
 		name = "3"
 		command = "toggle-module 3"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+3"
 		command = "toggle-module 3"
 		is-disabled = false
-	elem 
+	elem
 		name = "4"
 		command = "a-intent left"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+4"
 		command = "a-intent left"
 		is-disabled = false
-	elem 
+	elem
 		name = "A+REP"
 		command = ".west"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+A+REP"
 		command = ".west"
 		is-disabled = false
-	elem 
+	elem
 		name = "B"
 		command = "resist"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+B"
 		command = "resist"
 		is-disabled = false
-	elem 
+	elem
 		name = "O"
 		command = "ooc"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+O"
 		command = "ooc"
 		is-disabled = false
-	elem 
+	elem
 		name = "D+REP"
 		command = ".east"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+D+REP"
 		command = ".east"
 		is-disabled = false
-	elem 
+	elem
 		name = "F"
 		command = "a-intent left"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+F"
 		command = "a-intent left"
 		is-disabled = false
-	elem 
+	elem
 		name = "G"
 		command = "a-intent right"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+G"
 		command = "a-intent right"
 		is-disabled = false
-	elem 
+	elem
 		name = "Q"
 		command = "unequip-module"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+Q"
 		command = "unequip-module"
 		is-disabled = false
@@ -151,11 +151,11 @@ macro "borghotkeymode"
 		name = "S+REP"
 		command = ".south"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+S+REP"
 		command = ".south"
 		is-disabled = false
-	elem 
+	elem
 		name = "T"
 		command = "say"
 		is-disabled = false
@@ -163,415 +163,415 @@ macro "borghotkeymode"
 		name = "W+REP"
 		command = ".north"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+W+REP"
 		command = ".north"
 		is-disabled = false
-	elem 
+	elem
 		name = "X"
 		command = ".northeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+X"
 		command = ".northeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "Y"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+Y"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem 
+	elem
 		name = "Z"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem 
+	elem
 		name = "F1"
 		command = "adminhelp"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+SHIFT+F1+REP"
 		command = ".options"
 		is-disabled = false
-	elem 
+	elem
 		name = "F2+REP"
 		command = ".screenshot auto"
 		is-disabled = false
-	elem 
+	elem
 		name = "SHIFT+F2+REP"
 		command = ".screenshot"
 		is-disabled = false
-	elem 
+	elem
 		name = "F5"
 		command = "Aghost"
 		is-disabled = false
-	elem 
+	elem
 		name = "F6"
 		command = "Player-Panel"
 		is-disabled = false
-	elem 
+	elem
 		name = "F7"
 		command = "Admin-PM"
 		is-disabled = false
-	elem 
+	elem
 		name = "F8"
 		command = "Invisimin"
 		is-disabled = false
-	elem 
+	elem
 		name = "F12"
 		command = "F12"
 		is-disabled = false
 
 macro "macro"
-	elem 
+	elem
 		name = "TAB"
-		command = ".winset \"mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#F0F0F0\""
+		command = ".winset \"mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#afafaf\""
 		is-disabled = false
-	elem 
+	elem
 		name = "CENTER+REP"
 		command = ".center"
 		is-disabled = false
-	elem 
+	elem
 		name = "NORTHEAST"
 		command = ".northeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "SOUTHEAST"
 		command = ".southeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "SOUTHWEST"
 		command = ".southwest"
 		is-disabled = false
-	elem 
+	elem
 		name = "NORTHWEST"
 		command = ".northwest"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+WEST"
 		command = "westface"
 		is-disabled = false
-	elem 
+	elem
 		name = "WEST+REP"
 		command = ".west"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+NORTH"
 		command = "northface"
 		is-disabled = false
-	elem 
+	elem
 		name = "NORTH+REP"
 		command = ".north"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+EAST"
 		command = "eastface"
 		is-disabled = false
-	elem 
+	elem
 		name = "EAST+REP"
 		command = ".east"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+SOUTH"
 		command = "southface"
 		is-disabled = false
-	elem 
+	elem
 		name = "SOUTH+REP"
 		command = ".south"
 		is-disabled = false
-	elem 
+	elem
 		name = "INSERT"
 		command = "a-intent right"
 		is-disabled = false
-	elem 
+	elem
 		name = "DELETE"
 		command = "delete-key-pressed"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+1"
 		command = "a-intent help"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+2"
 		command = "a-intent disarm"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+3"
 		command = "a-intent grab"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+4"
 		command = "a-intent harm"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+A+REP"
 		command = ".west"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+B"
 		command = "resist"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+D+REP"
 		command = ".east"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+E"
 		command = "quick-equip"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+F"
 		command = "a-intent left"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+G"
 		command = "a-intent right"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+Q"
 		command = ".northwest"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+R"
 		command = ".southwest"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+S+REP"
 		command = ".south"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+W+REP"
 		command = ".north"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+X"
 		command = ".northeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+Y"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem 
+	elem
 		name = "F1"
 		command = "adminhelp"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+SHIFT+F1+REP"
 		command = ".options"
 		is-disabled = false
-	elem 
+	elem
 		name = "F2+REP"
 		command = ".screenshot auto"
 		is-disabled = false
-	elem 
+	elem
 		name = "SHIFT+F2+REP"
 		command = ".screenshot"
 		is-disabled = false
-	elem 
+	elem
 		name = "F5"
 		command = "Aghost"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+O"
 		command = "ooc"
 		is-disabled = false
-	elem 
+	elem
 		name = "F6"
 		command = "Player-Panel"
 		is-disabled = false
-	elem 
+	elem
 		name = "F7"
 		command = "Admin-PM"
 		is-disabled = false
-	elem 
+	elem
 		name = "F8"
 		command = "Invisimin"
 		is-disabled = false
-	elem 
+	elem
 		name = "F12"
 		command = "F12"
 		is-disabled = false
 
 macro "hotkeymode"
-	elem 
+	elem
 		name = "TAB"
-		command = ".winset \"mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true input.background-color=#D3B5B5\""
+		command = ".winset \"mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true input.background-color=#d3b5b5\""
 		is-disabled = false
-	elem 
+	elem
 		name = "CENTER+REP"
 		command = ".center"
 		is-disabled = false
-	elem 
+	elem
 		name = "NORTHEAST"
 		command = ".northeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "SOUTHEAST"
 		command = ".southeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "SOUTHWEST"
 		command = ".southwest"
 		is-disabled = false
-	elem 
+	elem
 		name = "NORTHWEST"
 		command = ".northwest"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+WEST"
 		command = "westface"
 		is-disabled = false
-	elem 
+	elem
 		name = "WEST+REP"
 		command = ".west"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+NORTH"
 		command = "northface"
 		is-disabled = false
-	elem 
+	elem
 		name = "NORTH+REP"
 		command = ".north"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+EAST"
 		command = "eastface"
 		is-disabled = false
-	elem 
+	elem
 		name = "EAST+REP"
 		command = ".east"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+SOUTH"
 		command = "southface"
 		is-disabled = false
-	elem 
+	elem
 		name = "SOUTH+REP"
 		command = ".south"
 		is-disabled = false
-	elem 
+	elem
 		name = "INSERT"
 		command = "a-intent right"
 		is-disabled = false
-	elem 
+	elem
 		name = "DELETE"
 		command = "delete-key-pressed"
 		is-disabled = false
-	elem 
+	elem
 		name = "1"
 		command = "a-intent help"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+1"
 		command = "a-intent help"
 		is-disabled = false
-	elem 
+	elem
 		name = "2"
 		command = "a-intent disarm"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+2"
 		command = "a-intent disarm"
 		is-disabled = false
-	elem 
+	elem
 		name = "3"
 		command = "a-intent grab"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+3"
 		command = "a-intent grab"
 		is-disabled = false
-	elem 
+	elem
 		name = "4"
 		command = "a-intent harm"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+4"
 		command = "a-intent harm"
 		is-disabled = false
-	elem 
+	elem
 		name = "A+REP"
 		command = ".west"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+A+REP"
 		command = ".west"
 		is-disabled = false
-	elem 
+	elem
 		name = "B"
 		command = "resist"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+B"
 		command = "resist"
 		is-disabled = false
-	elem 
+	elem
 		name = "D+REP"
 		command = ".east"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+D+REP"
 		command = ".east"
 		is-disabled = false
-	elem 
+	elem
 		name = "E"
 		command = "quick-equip"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+E"
 		command = "quick-equip"
 		is-disabled = false
-	elem 
+	elem
 		name = "F"
 		command = "a-intent left"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+F"
 		command = "a-intent left"
 		is-disabled = false
-	elem 
+	elem
 		name = "G"
 		command = "a-intent right"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+G"
 		command = "a-intent right"
 		is-disabled = false
-	elem 
+	elem
 		name = "M"
 		command = "me"
 		is-disabled = false
-	elem 
+	elem
 		name = "O"
 		command = "ooc"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+O"
 		command = "ooc"
 		is-disabled = false
-	elem 
+	elem
 		name = "Q"
 		command = ".northwest"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+Q"
 		command = ".northwest"
 		is-disabled = false
-	elem 
+	elem
 		name = "R"
 		command = ".southwest"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+R"
 		command = ".southwest"
 		is-disabled = false
@@ -579,11 +579,11 @@ macro "hotkeymode"
 		name = "S+REP"
 		command = ".south"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+S+REP"
 		command = ".south"
 		is-disabled = false
-	elem 
+	elem
 		name = "T"
 		command = "say"
 		is-disabled = false
@@ -591,236 +591,240 @@ macro "hotkeymode"
 		name = "W+REP"
 		command = ".north"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+W+REP"
 		command = ".north"
 		is-disabled = false
-	elem 
+	elem
 		name = "X"
 		command = ".northeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+X"
 		command = ".northeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "Y"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+Y"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem 
+	elem
 		name = "Z"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem 
+	elem
 		name = "F1"
 		command = "adminhelp"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+SHIFT+F1+REP"
 		command = ".options"
 		is-disabled = false
-	elem 
+	elem
 		name = "F2+REP"
 		command = ".screenshot auto"
 		is-disabled = false
-	elem 
+	elem
 		name = "SHIFT+F2+REP"
 		command = ".screenshot"
 		is-disabled = false
-	elem 
+	elem
 		name = "F5"
 		command = "Aghost"
 		is-disabled = false
-	elem 
+	elem
 		name = "F6"
 		command = "Player-Panel"
 		is-disabled = false
-	elem 
+	elem
 		name = "F7"
 		command = "Admin-PM"
 		is-disabled = false
-	elem 
+	elem
 		name = "F8"
 		command = "Invisimin"
 		is-disabled = false
-	elem 
+	elem
 		name = "F12"
 		command = "F12"
 		is-disabled = false
 
 macro "borgmacro"
-	elem 
+	elem
 		name = "TAB"
-		command = ".winset \"mainwindow.macro=borghotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#F0F0F0\""
+		command = ".winset \"mainwindow.macro=borghotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#afafaf\""
 		is-disabled = false
-	elem 
+	elem
 		name = "CENTER+REP"
 		command = ".center"
 		is-disabled = false
-	elem 
+	elem
 		name = "NORTHEAST"
 		command = ".northeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "SOUTHEAST"
 		command = ".southeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "NORTHWEST"
 		command = "unequip-module"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+WEST"
 		command = "westface"
 		is-disabled = false
-	elem 
+	elem
 		name = "WEST+REP"
 		command = ".west"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+NORTH"
 		command = "northface"
 		is-disabled = false
-	elem 
+	elem
 		name = "NORTH+REP"
 		command = ".north"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+EAST"
 		command = "eastface"
 		is-disabled = false
-	elem 
+	elem
 		name = "EAST+REP"
 		command = ".east"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+SOUTH"
 		command = "southface"
 		is-disabled = false
-	elem 
+	elem
 		name = "SOUTH+REP"
 		command = ".south"
 		is-disabled = false
-	elem 
+	elem
 		name = "INSERT"
 		command = "a-intent right"
 		is-disabled = false
-	elem 
+	elem
 		name = "DELETE"
 		command = "delete-key-pressed"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+1"
 		command = "toggle-module 1"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+2"
 		command = "toggle-module 2"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+3"
 		command = "toggle-module 3"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+4"
 		command = "a-intent left"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+A+REP"
 		command = ".west"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+B"
 		command = "resist"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+O"
 		command = "ooc"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+D+REP"
 		command = ".east"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+F"
 		command = "a-intent left"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+G"
 		command = "a-intent right"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+Q"
 		command = "unequip-module"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+S+REP"
 		command = ".south"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+W+REP"
 		command = ".north"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+X"
 		command = ".northeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+Y"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem 
+	elem
 		name = "F1"
 		command = "adminhelp"
 		is-disabled = false
-	elem 
+	elem
 		name = "CTRL+SHIFT+F1+REP"
 		command = ".options"
 		is-disabled = false
-	elem 
+	elem
 		name = "F2+REP"
 		command = ".screenshot auto"
 		is-disabled = false
-	elem 
+	elem
 		name = "SHIFT+F2+REP"
 		command = ".screenshot"
 		is-disabled = false
-	elem 
+	elem
 		name = "F5"
 		command = "Aghost"
 		is-disabled = false
-	elem 
+	elem
 		name = "F6"
 		command = "Player-Panel"
 		is-disabled = false
-	elem 
+	elem
 		name = "F7"
 		command = "Admin-PM"
 		is-disabled = false
-	elem 
+	elem
 		name = "F8"
 		command = "Invisimin"
 		is-disabled = false
-	elem 
+	elem
 		name = "F12"
 		command = "F12"
 		is-disabled = false
 
 
+
+
+
+
 menu "menu"
-	elem 
+	elem
 		name = "&File"
 		command = ""
 		category = ""
@@ -829,7 +833,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
@@ -838,7 +842,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
@@ -847,7 +851,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = ""
 		command = ""
 		category = "&File"
@@ -856,7 +860,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Reconnect"
 		command = ".reconnect"
 		category = "&File"
@@ -865,7 +869,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quit"
 		command = ".quit"
 		category = "&File"
@@ -874,7 +878,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Icons"
 		command = ""
 		category = ""
@@ -928,25 +932,7 @@ menu "menu"
 		group = "size"
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
-		name = ""
-		command = ""
-		category = "&Icons"
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "textmode"
-		name = "&Text"
-		command = ".winset \"menu.textmode.is-checked=true?mapwindow.map.text-mode=true:mapwindow.map.text-mode=false\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Help"
 		command = ""
 		category = ""
@@ -955,8 +941,8 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
-		name = "&Admin help\tF1"
+	elem
+		name = "&Admin Help\tF1"
 		command = "adminhelp"
 		category = "&Help"
 		is-checked = false
@@ -964,7 +950,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Hotkeys"
 		command = "hotkeys-help"
 		category = "&Help"
@@ -973,6 +959,10 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
+
+
+
+
 
 
 window "mainwindow"
@@ -996,7 +986,6 @@ window "mainwindow"
 		right-click = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		on-size = ""
-		title = "Space Station 13"
 		titlebar = true
 		statusbar = true
 		can-close = true
@@ -1017,7 +1006,7 @@ window "mainwindow"
 		on-close = ""
 	elem "asset_cache_browser"
 		type = BROWSER
-		pos = 424,208
+		pos = 0,0
 		size = 1x1
 		anchor1 = none
 		anchor2 = none
@@ -1043,32 +1032,9 @@ window "mainwindow"
 		on-hide = ""
 	elem "hotkey_toggle"
 		type = BUTTON
-		pos = 560,420
-		size = 80x20
-		anchor1 = 100,100
-		anchor2 = none
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = none
-		is-visible = true
-		is-disabled = false
-		is-transparent = false
-		is-default = false
-		border = line
-		drop-zone = false
-		right-click = false
-		saved-params = ""
-		on-size = ""
-		text = "Hotkey Toggle"
-		image = ""
-		command = ".winset \"mainwindow.macro!=macro ? mainwindow.macro=macro hotkey_toggle.is-checked=false input.background-color=#D3B5B5 : mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#F0F0F0\""
-		is-flat = true
-		stretch = false
-		is-checked = false
-		group = ""
-		button-type = pushbox
+		pos = 0,0
+		is-visible = false
+		button-type = checkbox
 	elem "mainvsplit"
 		type = CHILD
 		pos = 3,0
@@ -1097,15 +1063,15 @@ window "mainwindow"
 		lock = none
 	elem "input"
 		type = INPUT
-		pos = 3,420
-		size = 517x20
+		pos = 5,420
+		size = 595x20
 		anchor1 = 0,100
 		anchor2 = 100,100
 		font-family = ""
 		font-size = 0
 		font-style = ""
 		text-color = #000000
-		background-color = #d3b5b5
+		background-color = #afafaf
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
@@ -1121,7 +1087,7 @@ window "mainwindow"
 		no-command = false
 	elem "saybutton"
 		type = BUTTON
-		pos = 520,420
+		pos = 600,420
 		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
@@ -1134,14 +1100,14 @@ window "mainwindow"
 		is-disabled = false
 		is-transparent = false
 		is-default = false
-		border = line
+		border = none
 		drop-zone = false
 		right-click = false
 		saved-params = "is-checked"
 		on-size = ""
 		text = "Chat"
 		image = ""
-		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\""
+		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\""
 		is-flat = true
 		stretch = false
 		is-checked = false
@@ -1543,90 +1509,6 @@ window "rpane"
 		is-checked = false
 		group = "rpanemode"
 		button-type = pushbutton
-	elem "textb"
-		type = BUTTON
-		pos = 0,0
-		size = 60x16
-		anchor1 = none
-		anchor2 = none
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = none
-		is-visible = false
-		is-disabled = false
-		is-transparent = false
-		is-default = false
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "is-checked"
-		on-size = ""
-		text = "Text"
-		image = ""
-		command = ".winset \"rpanewindow.left=;\""
-		is-flat = true
-		stretch = false
-		is-checked = true
-		group = "rpanemode"
-		button-type = pushbox
-	elem "browseb"
-		type = BUTTON
-		pos = 552,0
-		size = 60x16
-		anchor1 = none
-		anchor2 = none
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = none
-		is-visible = false
-		is-disabled = false
-		is-transparent = false
-		is-default = false
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "is-checked"
-		on-size = ""
-		text = "Browser"
-		image = ""
-		command = ".winset \"rpanewindow.left=browserwindow\""
-		is-flat = true
-		stretch = false
-		is-checked = false
-		group = "rpanemode"
-		button-type = pushbox
-	elem "infob"
-		type = BUTTON
-		pos = 64,0
-		size = 60x16
-		anchor1 = none
-		anchor2 = none
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = none
-		is-visible = false
-		is-disabled = false
-		is-transparent = false
-		is-default = false
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "is-checked"
-		on-size = ""
-		text = "Info"
-		image = ""
-		command = ".winset \"rpanewindow.left=infowindow\""
-		is-flat = true
-		stretch = false
-		is-checked = false
-		group = "rpanemode"
-		button-type = pushbox
 
 window "browserwindow"
 	elem "browserwindow"
@@ -1768,4 +1650,3 @@ window "infowindow"
 		on-tab = ""
 		prefix-color = none
 		suffix-color = none
-
