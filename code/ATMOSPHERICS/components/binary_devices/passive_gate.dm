@@ -121,7 +121,7 @@ Passive gate is similar to the regular pump except:
 				. = TRUE
 			else if(pressure == "input")
 				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, target_pressure) as num|null
-				if(pressure && !..())
+				if(!isnull(pressure) || !..())
 					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)

@@ -218,7 +218,7 @@
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
 				target = input("New target temperature:", name, round(targetTemperature - T0C, 1)) as num|null
-				if(target && !..())
+				if(!isnull(target) && !..())
 					. = TRUE
 			else if(adjust)
 				target = targetTemperature + adjust

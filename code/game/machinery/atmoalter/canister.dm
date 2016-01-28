@@ -318,7 +318,7 @@ update_flag
 				. = TRUE
 			else if(pressure == "input")
 				pressure = input("New release pressure ([CAN_MIN_RELEASE_PRESSURE]-[CAN_MAX_RELEASE_PRESSURE] kPa):", name, release_pressure) as num|null
-				if(pressure && !..())
+				if(!isnull(pressure) && !..())
 					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
