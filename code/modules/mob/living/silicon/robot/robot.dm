@@ -1172,3 +1172,11 @@
 			if(health < -maxHealth*0.5)
 				if(uneq_module(module_state_1))
 					src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
+
+/mob/living/silicon/robot/emp_act(severity)
+	switch(severity)
+		if(1)
+			Stun(8)
+		if(2)
+			Stun(3)
+	..()
