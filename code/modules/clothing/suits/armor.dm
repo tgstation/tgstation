@@ -186,7 +186,7 @@
 		if(H.buckled)
 			H.buckled.unbuckle_mob()
 		H.forceMove(picked)
-		rad_act(rad_amount)
+		H.rad_act(rad_amount)
 		return 1
 	return 0
 
