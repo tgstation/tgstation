@@ -64,7 +64,7 @@
 				affected_mob.eye_stat += 5
 				if (affected_mob.eye_stat >= 10)
 					affected_mob.disabilities |= NEARSIGHT
-					if (prob(M.eye_stat - 10 + 1) && !(affected_mob.eye_blind))
+					if (prob(affected_mob.eye_stat - 10 + 1) && !(affected_mob.eye_blind))
 						affected_mob << "<span class='userdanger'>You go blind!</span>"
 						affected_mob.disabilities |= BLIND
 						affected_mob.eye_blind = 1
