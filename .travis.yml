@@ -14,7 +14,7 @@ env:
 
 cache:
   directories:
-    # - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+    - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
     - $HOME/.cache/pip
 
 addons:
