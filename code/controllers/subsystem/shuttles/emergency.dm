@@ -125,6 +125,7 @@
 					E << 'sound/effects/hyperspace_progress.ogg'
 				enterTransit()
 				mode = SHUTTLE_ESCAPE
+				launch_status = ENDGAME_LAUNCHED
 				timer = world.time
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 		if(SHUTTLE_ESCAPE)
