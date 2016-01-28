@@ -1179,6 +1179,7 @@
 	if(camera)
 		camera.c_tag = real_name
 	custom_name = newname
+
 /mob/living/silicon/robot/emp_act(severity)
 	switch(severity)
 		if(1)
