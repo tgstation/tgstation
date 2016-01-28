@@ -1,4 +1,4 @@
-/datum/symptom/skinmutation
+/datum/symptom/lizarditis
 	name = "Skin mutation"
 	max_stages = 7
 	spread_text = "Contact"
@@ -9,7 +9,7 @@
 	desc = "This skin disorder disease clumps keratin filaments, creating blisters, and turning the infected into a lizard by undergoing biologically induced Atavism."
 	severity = BIOHAZARD
 
-/datum/disease/skinmutation/stage_act()
+/datum/disease/lizarditis/stage_act()
 	..()
 	switch(stage)
 	if(human.dna.species.id != "lizard")
@@ -36,9 +36,7 @@
 						human.update_icons()
 						human.update_body()
 						human.update_hair()
-				affected_mob.adjustCloneLoss(40)
- 				affected_mob.overeatduration = max(affected_mob.overeatduration - 100, 0)
-				affected_mob.nutrition = max(affected_mob.nutrition - 100, 0)
+				affected_mob.adjustCloneLoss(50)
 				affected_mob << "<span class='userdanger'>[pick("You feel weak as your tailbone violently pops out of your jumpsuit and your blisters painfully dry up and harden into scales.")]</span>"
 		else
 	return
