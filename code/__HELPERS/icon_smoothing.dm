@@ -17,9 +17,8 @@
 /atom/var/top_right_corner
 /atom/var/bottom_left_corner
 /atom/var/bottom_right_corner
-/atom/var/can_be_unanchored = 0
 /atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
-
+/atom/movable/var/can_be_unanchored = 0
 //generic (by snowflake) tile smoothing code; smooth your icons with this!
 /*
 	Each tile is divided in 4 corners, each corner has an image associated to it; the tile is then overlayed by these 4 images
@@ -36,23 +35,37 @@
 
 	var/adjacencies = 0
 
-	if(A.can_be_unanchored)
-		var/atom/movable/AM = A
-		if(!AM.anchored)
+	var/atom/movable/AM
+	if(istype(A, /atom/movable))
+		AM = A
+		if(AM.can_be_unanchored && !AM.anchored)
 			return 0
 
-		for(var/direction in alldirs)
-			AM = find_type_in_direction(A, direction)
-			if(istype(AM))
-				if(AM.anchored)
-					adjacencies |= 1 << direction
-			else
-				if(AM)
-					adjacencies |= 1 << direction
-	else
-		for(var/direction in alldirs)
-			if(find_type_in_direction(A, direction))
-				adjacencies |= 1 << direction
+	for(var/direction in cardinal)
+		AM = find_type_in_direction(A, direction)
+		if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			adjacencies |= 1 << direction
+
+	if(adjacencies & N_NORTH)
+		if(adjacencies & N_WEST)
+			AM = find_type_in_direction(A, NORTHWEST)
+			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+				adjacencies |= N_NORTHWEST
+		if(adjacencies & N_EAST)
+			AM = find_type_in_direction(A, NORTHEAST)
+			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+				adjacencies |= N_NORTHEAST
+
+	if(adjacencies & N_SOUTH)
+		if(adjacencies & N_WEST)
+			AM = find_type_in_direction(A, SOUTHWEST)
+			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+				adjacencies |= N_SOUTHWEST
+		if(adjacencies & N_EAST)
+			AM = find_type_in_direction(A, SOUTHEAST)
+			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+				adjacencies |= N_SOUTHEAST
+
 	return adjacencies
 
 /proc/smooth_icon(atom/A)

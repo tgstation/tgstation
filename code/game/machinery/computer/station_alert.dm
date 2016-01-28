@@ -10,7 +10,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "station_alert", name, 300, 350, master_ui, state)
+		ui = new(user, src, ui_key, "station_alert", name, 300, 500, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/station_alert/get_ui_data(mob/user)

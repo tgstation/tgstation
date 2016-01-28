@@ -109,6 +109,7 @@
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
 		Radio.keyslot = new radio_key
+	Radio.subspace_transmission = 1
 	Radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
 	Radio.recalculateChannels()
 
@@ -140,7 +141,7 @@
 /mob/living/simple_animal/bot/proc/explode()
 	qdel(src)
 
-/mob/living/simple_animal/bot/proc/Emag(mob/user) //Master Emag proc. Ensure this is called in your bot before setting unique functions.
+/mob/living/simple_animal/bot/emag_act(mob/user)
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = 0
 		emagged = 1
@@ -170,7 +171,7 @@
 /mob/living/simple_animal/bot/adjustHealth(amount)
 	if(amount>0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
-	return ..(amount)
+	. = ..()
 
 /mob/living/simple_animal/bot/updatehealth()
 	..()
@@ -200,7 +201,10 @@
 		return ..()
 
 /mob/living/simple_animal/bot/attack_ai(mob/user)
-	interact(user)
+	if(!topic_denied(user))
+		interact(user)
+	else
+		user << "<span class='warning'>[src]'s interface is not responding!</span>"
 
 /mob/living/simple_animal/bot/interact(mob/user)
 	show_controls(user)
@@ -245,10 +249,6 @@
 				s.start()
 			..()
 
-/mob/living/simple_animal/bot/emag_act(mob/user)
-	if(emagged < 2)
-		Emag(user)
-
 /mob/living/simple_animal/bot/bullet_act(obj/item/projectile/Proj)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		if(prob(75) && Proj.damage > 0)
@@ -260,15 +260,7 @@
 /mob/living/simple_animal/bot/emp_act(severity)
 	var/was_on = on
 	stat |= EMPED
-	var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( loc )
-	pulse2.icon = 'icons/effects/effects.dmi'
-	pulse2.icon_state = "empdisable"
-	pulse2.name = "emp sparks"
-	pulse2.anchored = 1
-	pulse2.dir = pick(cardinal)
-
-	spawn(10)
-		qdel(pulse2)
+	PoolOrNew(/obj/effect/overlay/temp/emp/pulse, loc)
 	if (on)
 		turn_off()
 	spawn(severity*300)
@@ -281,17 +273,11 @@
 	text_dehack = "You reset [name]."
 	text_dehack_fail = "You fail to reset [name]."
 
-
 /mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
 	if((!on) || (!message))
 		return
-	if(channel)
-		if(!Radio.channels[channel]) //Ignore lack of keys
-			Radio.channels[channel] = 1
-			Radio.talk_into(src, message, channel)
-			Radio.channels[channel] = 0
-		else
-			Radio.talk_into(src, message, channel)
+	if(channel && Radio.channels[channel])// Use radio if we have channel key
+		Radio.talk_into(src, message, channel)
 	else
 		say(message)
 	return

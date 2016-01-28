@@ -1,4 +1,3 @@
-
 /datum/AI_Module
 	var/uses = 0
 	var/module_name
@@ -288,10 +287,10 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/alarm/A in machines)
-		if(A.z != ZLEVEL_STATION)
+	for(var/obj/machinery/airalarm/AA in machines)
+		if(AA.z != ZLEVEL_STATION)
 			continue
-		A.emagged = 1
+		AA.emagged = 1
 	src << "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode."
 	src.verbs -= /mob/living/silicon/ai/proc/break_air_alarms
 

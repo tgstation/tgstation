@@ -115,6 +115,7 @@ Class Procs:
 	var/state_open = 0
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
+	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 
 /obj/machinery/New()
@@ -202,33 +203,43 @@ Class Procs:
 		use_power(active_power_usage,power_channel)
 	return 1
 
-/obj/machinery/Topic(href, href_list)
-	..()
-	if(!can_be_used_by(usr))
-		return 1
-	add_fingerprint(usr)
-	return 0
-
-/obj/machinery/ui_act(action, params)
-	..()
-	if(!can_be_used_by(usr))
-		return 1
-	add_fingerprint(usr)
-	return 0
-
-/obj/machinery/proc/can_be_used_by(mob/user)
-	if(!interact_offline && stat & (NOPOWER|BROKEN))
-		return 0
-	if(!user.canUseTopic(src))
-		return 0
-	return 1
-
 /obj/machinery/proc/is_operational()
 	return !(stat & (NOPOWER|BROKEN|MAINT))
+
+/obj/machinery/proc/is_interactable()
+	if((stat & (NOPOWER|BROKEN)) && !interact_offline)
+		return FALSE
+	if(panel_open && !interact_open)
+		return FALSE
+	return TRUE
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+/obj/machinery/interact(mob/user)
+	add_fingerprint(user)
+	ui_interact(user)
+
+/obj/machinery/ui_status(mob/user)
+	if(is_interactable())
+		return ..()
+	return UI_CLOSE
+
+/obj/machinery/ui_act(action, params)
+	add_fingerprint(usr)
+	return ..()
+
+/obj/machinery/Topic(href, href_list)
+	..()
+	if(!is_interactable())
+		return 1
+	if(!usr.canUseTopic(src))
+		return 1
+	add_fingerprint(usr)
+	return 0
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/attack_ai(mob/user)
 	if(isrobot(user))
@@ -253,29 +264,17 @@ Class Procs:
 		return 1
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
-			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
-			return 1
-		else if(prob(H.getBrainLoss()))
+		if(prob(H.getBrainLoss()))
 			user << "<span class='warning'>You momentarily forget how to use [src]!</span>"
 			return 1
-	if(panel_open)
-		add_fingerprint(user)
-		return 0
-	if(check_power && stat & NOPOWER)
-		user << "<span class='danger'>\The [src] seems unpowered.</span>"
-		return 1
-	if(!interact_offline && (stat & (BROKEN|MAINT)))
-		user << "<span class='danger'>\The [src] seems broken.</span>"
+	if(!is_interactable())
+		user << "<span class='danger'>\The [src] seems offline.</span>"
 		return 1
 	if(set_machine)
 		user.set_machine(src)
 	interact(user)
 	add_fingerprint(user)
 	return 0
-
-/obj/machinery/interact(mob/user)
-	ui_interact(user)
 
 /obj/machinery/CheckParts()
 	RefreshParts()

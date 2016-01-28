@@ -189,3 +189,26 @@
 /datum/ai_laws/proc/associate(mob/living/silicon/M)
 	if(!owner)
 		owner = M
+
+/datum/ai_laws/proc/get_law_list(include_zeroth = 0, show_numbers = 1)
+	var/list/data = list()
+
+	if (include_zeroth && zeroth)
+		data += "[show_numbers ? "0:" : ""] [zeroth]"
+
+	for(var/law in ion)
+		if (length(law) > 0)
+			var/num = ionnum()
+			data += "[show_numbers ? "[num]:" : ""] [law]"
+
+	var/number = 1
+	for(var/law in inherent)
+		if (length(law) > 0)
+			data += "[show_numbers ? "[number]:" : ""] [law]"
+			number++
+
+	for(var/law in supplied)
+		if (length(law) > 0)
+			data += "[show_numbers ? "[number]:" : ""] [law]"
+			number++
+	return data

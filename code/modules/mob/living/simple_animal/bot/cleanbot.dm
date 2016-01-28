@@ -4,7 +4,6 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
-	layer = 5
 	density = 0
 	anchored = 0
 	health = 25
@@ -28,7 +27,11 @@
 	var/next_dest
 	var/next_dest_loc
 
+/proc/stack_trace(msg)
+	CRASH(msg)
+
 /mob/living/simple_animal/bot/cleanbot/New()
+	stack_trace("Cleanbot is being instantiated")
 	..()
 	get_targets()
 	icon_state = "cleanbot[on]"
@@ -73,7 +76,7 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/bot/cleanbot/Emag(mob/user)
+/mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()
 	if(emagged == 2)
 		if(user)

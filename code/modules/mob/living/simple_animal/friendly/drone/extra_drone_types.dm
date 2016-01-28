@@ -1,4 +1,3 @@
-
 ////////////////////
 //MORE DRONE TYPES//
 ////////////////////
@@ -28,21 +27,31 @@
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	seeStatic = 0 //Our programming is superior.
 
-
 /mob/living/simple_animal/drone/syndrone/New()
 	..()
-	if(internal_storage && internal_storage.hidden_uplink)
-		internal_storage.hidden_uplink.uses = (initial(internal_storage.hidden_uplink.uses) / 2)
-		internal_storage.name = "syndicate uplink"
-
+	internal_storage.hidden_uplink.telecrystals = 10
 
 /mob/living/simple_animal/drone/syndrone/Login()
 	..()
 	src << "<span class='notice'>You can kill and eat other drones to increase your health!</span>" //Inform the evil lil guy
 
+/mob/living/simple_animal/drone/syndrone/badass
+	name = "Badass Syndrone"
+	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
+	default_storage = /obj/item/device/radio/uplink/nuclear
+
+/mob/living/simple_animal/drone/syndrone/badass/New()
+	..()
+	internal_storage.hidden_uplink.telecrystals = 30
+	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(src)
+	W.implant(src)
 
 /obj/item/drone_shell/syndrone
 	name = "syndrone shell"
 	desc = "A shell of a syndrone, a modified maintenance drone designed to infiltrate and annihilate."
 	icon_state = "syndrone_item"
 	drone_type = /mob/living/simple_animal/drone/syndrone
+
+/obj/item/drone_shell/syndrone/badass
+	name = "badass syndrone shell"
+	drone_type = /mob/living/simple_animal/drone/syndrone/badass

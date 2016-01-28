@@ -136,12 +136,8 @@
 				Robot.notify_ai(1)
 			else
 				for(var/obj/item/W in M)
-					if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
+					if(!M.unEquip(W))
 						qdel(W)
-						continue
-					W.layer = initial(W.layer)
-					W.loc = M.loc
-					W.dropped(M)
 
 			var/mob/living/new_mob
 
@@ -215,7 +211,7 @@
 							if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)
 							if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)
 							if("cow")		new_mob = new /mob/living/simple_animal/cow(M.loc)
-							if("lizard")	new_mob = new /mob/living/simple_animal/lizard(M.loc)
+							if("lizard")	new_mob = new /mob/living/simple_animal/hostile/lizard(M.loc)
 							if("fox") new_mob = new /mob/living/simple_animal/pet/fox(M.loc)
 							if("butterfly")	new_mob = new /mob/living/simple_animal/butterfly(M.loc)
 							else			new_mob = new /mob/living/simple_animal/chick(M.loc)

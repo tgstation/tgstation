@@ -7,7 +7,7 @@
 	icon_state = "mixer0"
 	use_power = 1
 	idle_power_usage = 20
-	var/obj/item/weapon/reagent_containers/glass/beaker = null
+	var/obj/item/weapon/reagent_containers/beaker = null
 	var/obj/item/weapon/storage/pill_bottle/bottle = null
 	var/mode = 0
 	var/condi = 0
@@ -36,7 +36,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
 		if(isrobot(user))
 			return
 		if(beaker)
@@ -363,7 +363,7 @@
 			user << "<span class='warning'>You can't use the [src.name] while it's panel is opened!</span>"
 			return 1
 
-	if(istype(B, /obj/item/weapon/reagent_containers/glass))
+	if(istype(B, /obj/item/weapon/reagent_containers) && (B.flags & OPENCONTAINER))
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 			return

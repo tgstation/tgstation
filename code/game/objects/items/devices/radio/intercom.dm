@@ -18,8 +18,11 @@
 	SSobj.processing -= src
 	return ..()
 
+/obj/item/device/radio/intercom/attack_ai(mob/user)
+	interact(user)
+
 /obj/item/device/radio/intercom/attack_hand(mob/user)
-	attack_self(user)
+	interact(user)
 
 /obj/item/device/radio/intercom/interact(mob/user)
 	..()
@@ -28,7 +31,7 @@
 /obj/item/device/radio/intercom/receive_range(freq, level)
 	if(!on)
 		return -1
-	if(wires.IsIndexCut(WIRE_RECEIVE))
+	if(wires.is_cut(WIRE_RX))
 		return -1
 	if(!(0 in level))
 		var/turf/position = get_turf(src)

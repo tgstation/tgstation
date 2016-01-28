@@ -8,7 +8,6 @@
 	desc = "A little medical robot. He looks somewhat underwhelmed."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "medibot0"
-	layer = 5
 	density = 0
 	anchored = 0
 	health = 20
@@ -223,7 +222,7 @@
 		if (health < current_health) //if medbot took some damage
 			step_to(src, (get_step_away(src,user)))
 
-/mob/living/simple_animal/bot/medbot/Emag(mob/user)
+/mob/living/simple_animal/bot/medbot/emag_act(mob/user)
 	..()
 	if(emagged == 2)
 		declare_crit = 0

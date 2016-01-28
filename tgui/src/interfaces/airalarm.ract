@@ -1,9 +1,9 @@
-<link rel='ractive' href='./air_alarm/controls.ract'>
-<link rel='ractive' href='./air_alarm/scrubbers.ract'>
-<link rel='ractive' href='./air_alarm/status.ract'>
-<link rel='ractive' href='./air_alarm/thresholds.ract'>
-<link rel='ractive' href='./air_alarm/modes.ract'>
-<link rel='ractive' href='./air_alarm/vents.ract'>
+<link rel='ractive' href='./airalarm/controls.ract'>
+<link rel='ractive' href='./airalarm/scrubbers.ract'>
+<link rel='ractive' href='./airalarm/status.ract'>
+<link rel='ractive' href='./airalarm/thresholds.ract'>
+<link rel='ractive' href='./airalarm/modes.ract'>
+<link rel='ractive' href='./airalarm/vents.ract'>
 
 <ui-notice>
   {{#if data.siliconUser}}

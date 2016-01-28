@@ -135,7 +135,6 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	name = "dungeon mid"
 	loot = list(/obj/item/weapon/defibrillator/compact = 6,
 				/obj/item/weapon/storage/firstaid/tactical = 35,
-				/obj/item/weapon/teleportation_scroll/apprentice = 4,
 				/obj/item/weapon/shield/energy = 6,
 				/obj/item/weapon/shield/riot/tele = 12,
 				/obj/item/weapon/dnainjector/lasereyesmut = 7,
@@ -220,7 +219,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 /obj/item/device/radio/uplink/old/New()
 	..()
 	hidden_uplink.name = "dusty radio"
-	hidden_uplink.uses = 10
+	hidden_uplink.telecrystals = 10
 
 /obj/effect/landmark/corpse/syndicatesoldier/coldres
 	name = "Syndicate Snow Operative"

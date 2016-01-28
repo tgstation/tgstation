@@ -1,45 +1,51 @@
 <script>
-import { UI_INTERACTIVE } from 'util/constants'
-import { act } from 'util/byond'
+  import { UI_INTERACTIVE } from 'util/constants'
+  import { act } from 'util/byond'
 
-component.exports = {
-  computed: {
-    clickable () {
-      if (this.get('enabled') && !this.get('state')) {
-        return true
-      }
-      return false
-    },
-    enabled () {
-      if (this.get('config.status') === UI_INTERACTIVE) {
-        return true
-      }
-      return false
-    },
-    styles () {
-      const state = this.get('state'), style = this.get('style')
-      if (this.get('enabled')) {
-        if (!state) {
-          return `active normal ${[style]}`
-        } else {
-          return `inactive ${state}`
+  component.exports = {
+    computed: {
+      clickable () {
+        if (this.get('enabled') && !this.get('state')) {
+          return true
         }
-      } else {
-        return 'inactive disabled'
-      }
+        return false
+      },
+      enabled () {
+        if (this.get('config.status') === UI_INTERACTIVE) {
+          return true
+        }
+        return false
+      },
+      styles () {
+        let extra = ''
+        if (this.get('tooltip-side'))
+          extra = ` tooltip-${this.get('tooltip-side')}`
+        if (this.get('grid'))
+          extra += ' gridable'
+        if (this.get('enabled')) {
+          const state = this.get('state')
+          const style = this.get('style')
+          if (!state) {
+            return `active normal ${style} ${extra}`
+          } else {
+            return `inactive ${state} ${extra}`
+          }
+        } else {
+          return `inactive disabled ${extra}`
+        }
     }
   },
-  oninit () {
-    this.on('press', (event) => {
-      const { action, params } = this.get()
-      act(this.get('config.ref'), action, params)
-      event.node.blur()
-    })
+    oninit () {
+      this.on('press', (event) => {
+        const { action, params } = this.get()
+        act(this.get('config.ref'), action, params)
+        event.node.blur()
+      })
+    }
   }
-}
 </script>
 
-<span class='button {{styles}} {{#grid}}gridable{{/}}'
+<span class='button {{styles}}'
   unselectable='on'
   {{#clickable}}tabindex='0'{{/}}
   data-tooltip='{{tooltip}}'

@@ -60,7 +60,7 @@
 			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
-			loc = get_turf(summoner)
+			forceMove(get_turf(summoner))
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	..()
@@ -71,7 +71,7 @@
 			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
-			loc = get_turf(summoner)
+			forceMove(get_turf(summoner))
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
@@ -90,9 +90,10 @@
 	summoner.death()
 
 /mob/living/simple_animal/hostile/guardian/adjustHealth(amount) //The spirit is invincible, but passes on damage to the summoner
+	. =  ..()
 	if(summoner)
 		if(loc == summoner)
-			return
+			return 0
 		summoner.adjustBruteLoss(amount)
 		if(amount)
 			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
@@ -124,15 +125,15 @@
 	if(cooldown > world.time)
 		return
 	if(loc == summoner)
-		loc = get_turf(summoner)
+		forceMove(get_turf(summoner))
 		cooldown = world.time + 30
 
 /mob/living/simple_animal/hostile/guardian/proc/Recall()
-	if(cooldown > world.time)
+	if(loc == summoner || cooldown > world.time)
 		return
 	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
+	unbuckle_mob(force=1)
 	loc = summoner
-	buckled = null
 	cooldown = world.time + 30
 
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
@@ -436,6 +437,8 @@
 	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit."
 	magic_fluff_string = "..And draw the Sentinel, an alien master of ranged combat."
 	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Holoparasite swarm online."
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 8
 	var/list/snares = list()
 	var/toggle = FALSE
 
@@ -461,6 +464,14 @@
 			toggle = TRUE
 	else
 		src << "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>"
+
+/mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
+	if(see_invisible == SEE_INVISIBLE_MINIMUM)
+		src << "<span class='notice'>You deactivate your night vision.</span>"
+		see_invisible = SEE_INVISIBLE_LIVING
+	else
+		src << "<span class='notice'>You activate your night vision.</span>"
+		see_invisible = SEE_INVISIBLE_MINIMUM
 
 /mob/living/simple_animal/hostile/guardian/ranged/verb/Snare()
 	set name = "Set Surveillance Trap"

@@ -1,18 +1,18 @@
 <script>
-component.exports = {
-  data: {
-    tankPressureState () {
-      const pressure = this.get('data.tankPressureState')
-      if (pressure >= 200) return 'good'
-      else if (pressure >= 100) return 'average'
-      else return 'bad'
+  component.exports = {
+    computed: {
+      tankPressureState () {
+        const pressure = this.get('data.tankPressure')
+        if (pressure >= 200) return 'good'
+        else if (pressure >= 100) return 'average'
+        else return 'bad'
+      }
     }
   }
-}
 </script>
 
 <ui-notice>
-  <span>The regulator {{data.hasHoldingTank ? "is" : "is not"}} connected to a mask.</span>
+  <span>The regulator {{data.maskConnected ? "is" : "is not"}} connected to a mask.</span>
 </ui-notice>
 <ui-display>
   <ui-section label='Tank Pressure'>
@@ -28,7 +28,7 @@ component.exports = {
       action='pressure' params='{"pressure": "reset"}'>Reset</ui-button>
     <ui-button icon='minus' state='{{data.releasePressure > data.minReleasePressure ? null : "disabled"}}'
       action='pressure' params='{"pressure": "min"}'>Min</ui-button>
-    <ui-button icon='pencil' action='pressure' params='{"pressure": "custom"}'>Set</ui-button>
+    <ui-button icon='pencil' action='pressure' params='{"pressure": "input"}'>Set</ui-button>
     <ui-button icon='plus' state='{{data.releasePressure < data.maxReleasePressure ? null : "disabled"}}'
       action='pressure' params='{"pressure": "max"}'>Max</ui-button>
   </ui-section>

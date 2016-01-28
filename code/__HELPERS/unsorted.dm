@@ -26,11 +26,6 @@
 	return text("#[][][]", textr, textg, textb)
 	return
 
-//Returns the middle-most value
-/proc/dd_range(low, high, num)
-	return max(low,min(high,num))
-
-
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end) return 0
 	var/dy
@@ -182,82 +177,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return 0
 	return 1
 
-//This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
-//Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
-/mob/proc/fully_replace_character_name(oldname,newname)
-	if(!newname)	return 0
-	real_name = newname
-	name = newname
-	if(mind)
-		mind.name = newname
-	if(istype(src, /mob/living/carbon))
-		var/mob/living/carbon/C = src
-		if(C.dna)
-			C.dna.real_name = real_name
-
-	if(isAI(src))
-		var/mob/living/silicon/ai/AI = src
-		if(oldname != real_name)
-			if(AI.eyeobj)
-				AI.eyeobj.name = "[newname] (AI Eye)"
-
-			// Set ai pda name
-			if(AI.aiPDA)
-				AI.aiPDA.owner = newname
-				AI.aiPDA.name = newname + " (" + AI.aiPDA.ownjob + ")"
-
-			// Notify Cyborgs
-			for(var/mob/living/silicon/robot/Slave in AI.connected_robots)
-				Slave.show_laws()
-
-	if(isrobot(src))
-		var/mob/living/silicon/robot/R = src
-		if(oldname != real_name)
-			R.notify_ai(3, oldname, newname)
-		if(R.camera)
-			R.camera.c_tag = real_name
-
-	if(oldname)
-		//update the datacore records! This is goig to be a bit costly.
-		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
-			var/datum/data/record/R = find_record("name", oldname, L)
-			if(R)	R.fields["name"] = newname
-
-		//update our pda and id if we have them on our person
-		var/list/searching = GetAllContents()
-		var/search_id = 1
-		var/search_pda = 1
-
-		for(var/A in searching)
-			if( search_id && istype(A,/obj/item/weapon/card/id) )
-				var/obj/item/weapon/card/id/ID = A
-				if(ID.registered_name == oldname)
-					ID.registered_name = newname
-					ID.update_label()
-					if(!search_pda)	break
-					search_id = 0
-
-			else if( search_pda && istype(A,/obj/item/device/pda) )
-				var/obj/item/device/pda/PDA = A
-				if(PDA.owner == oldname)
-					PDA.owner = newname
-					PDA.update_label()
-					if(!search_id)	break
-					search_pda = 0
-
-		for(var/datum/mind/T in ticker.minds)
-			for(var/datum/objective/obj in T.objectives)
-				// Only update if this player is a target
-				if(obj.target && obj.target.current && obj.target.current.real_name == name)
-					obj.update_explanation_text()
-
-	return 1
-
-
-
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
-
-/mob/proc/rename_self(role, allow_numbers=0)
+/mob/proc/rename_self(role)
 	var/oldname = real_name
 	var/newname
 	var/loop = 1
@@ -289,13 +210,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		loop--
 		safety++
 
-	if(isAI(src))
-		oldname = null//don't bother with the records update crap
 	if(newname)
 		fully_replace_character_name(oldname,newname)
-		if(isrobot(src))
-			var/mob/living/silicon/robot/A = src
-			A.custom_name = newname
 
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
@@ -618,12 +534,22 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return 1
 
 /proc/is_blocked_turf(turf/T)
-	var/cant_pass = 0
-	if(T.density) cant_pass = 1
-	for(var/atom/A in T)
-		if(A.density)//&&A.anchored
-			cant_pass = 1
-	return cant_pass
+	if(T.density)
+		return 1
+	for(var/i in T)
+		var/atom/A = i
+		if(A.density)
+			return 1
+	return 0
+
+/proc/is_anchored_dense_turf(turf/T) //like the older version of the above, fails only if also anchored
+	if(T.density)
+		return 1
+	for(var/i in T)
+		var/atom/movable/A = i
+		if(A.density && A.anchored)
+			return 1
+	return 0
 
 /proc/get_step_towards2(atom/ref , atom/trg)
 	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
@@ -875,7 +801,7 @@ var/global/list/common_tools = list(
 Checks if that loc and dir has a item on the wall
 */
 var/list/WALLITEMS = list(
-	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
+	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
@@ -940,7 +866,7 @@ var/list/WALLITEMS_INVERSE = list(
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
 			if(id in hardcoded_gases || gas_concentration > 0.01) //ensures the four primary gases are always shown.
-				user << "<span class='notice'>[cached_gases[id][GAS_NAME]]: [round(gas_concentration*100)] %</span>"
+				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100)] %</span>"
 
 		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
 	else
@@ -1220,3 +1146,35 @@ B --><-- A
 	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
 			return 1
+
+proc/add_to_proximity_list(atom/A, range)
+	var/turf/T = get_turf(A)
+	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
+	for(var/B in L)
+		var/turf/C = B
+		C.proximity_checkers |= A
+	return L
+
+proc/remove_from_proximity_list(atom/A, range)
+	var/turf/T = get_turf(A)
+	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
+	for(var/B in L)
+		var/turf/C = B
+		C.proximity_checkers.Remove(A)
+
+proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
+	var/turf/T = get_turf(A)
+	var/turf/Q = get_turf(B)
+	if(T == Q && range == newrange)
+		return 0
+	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
+	var/list/M = block(locate(Q.x - newrange, Q.y - newrange, Q.z), locate(Q.x + newrange, Q.y + newrange, Q.z))
+	var/list/N = L - M
+	var/list/O = M - L
+	for(var/C in N)
+		var/turf/D = C
+		D.proximity_checkers.Remove(checker)
+	for(var/E in O)
+		var/turf/F = E
+		F.proximity_checkers |= checker
+	return 1

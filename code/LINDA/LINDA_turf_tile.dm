@@ -208,7 +208,9 @@
 	if(!excited_group && remove == 1)
 		SSair.remove_from_active(src)
 
-
+/turf/simulated/temperature_expose()
+	if(temperature > heat_capacity)
+		to_be_destroyed = 1
 
 /turf/simulated/proc/archive()
 	if(air) //For open space like floors
@@ -233,8 +235,8 @@
 	var/list/gases = air.gases
 	for(var/id in gases)
 		var/gas = gases[id]
-		if(gas[GAS_OVERLAY] && gas[MOLES] > gas[MOLES_VISIBLE])
-			. += gas[GAS_OVERLAY]
+		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
+			. += gas[GAS_META][META_GAS_OVERLAY]
 
 /turf/simulated/proc/share_air(turf/simulated/T)
 	if(T.current_cycle < current_cycle)
