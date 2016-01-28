@@ -106,6 +106,8 @@
 			Weaken(3)
 	if(override)
 		return override
+	else if(shock_damage > 400)
+		gib()
 	else
 		return shock_damage
 
