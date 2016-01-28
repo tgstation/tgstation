@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Butchering mobs by attacking them with sharp objects will only happen on harm intent. This means it is possible to do surgery on aliens again."
