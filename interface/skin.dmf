@@ -1,7 +1,7 @@
 macro "borghotkeymode"
 	elem
 		name = "TAB"
-		command = ".winset \"mainwindow.macro=borgmacro hotkey_toggle.is-checked=false input.focus=true input.background-color=#d3b5b5\""
+		command = ".winset \"mainwindow.macro=borgmacro input.focus=true input.background-color=#d3b5b5\""
 		is-disabled = false
 	elem
 		name = "CENTER+REP"
@@ -231,7 +231,7 @@ macro "borghotkeymode"
 macro "macro"
 	elem
 		name = "TAB"
-		command = ".winset \"mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#afafaf\""
+		command = ".winset \"mainwindow.macro=hotkeymode mapwindow.map.focus=true input.background-color=#afafaf\""
 		is-disabled = false
 	elem
 		name = "CENTER+REP"
@@ -405,7 +405,7 @@ macro "macro"
 macro "hotkeymode"
 	elem
 		name = "TAB"
-		command = ".winset \"mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true input.background-color=#d3b5b5\""
+		command = ".winset \"mainwindow.macro=macro input.focus=true input.background-color=#d3b5b5\""
 		is-disabled = false
 	elem
 		name = "CENTER+REP"
@@ -659,7 +659,7 @@ macro "hotkeymode"
 macro "borgmacro"
 	elem
 		name = "TAB"
-		command = ".winset \"mainwindow.macro=borghotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#afafaf\""
+		command = ".winset \"mainwindow.macro=borghotkeymode mapwindow.map.focus=true input.background-color=#afafaf\""
 		is-disabled = false
 	elem
 		name = "CENTER+REP"
@@ -818,151 +818,80 @@ macro "borgmacro"
 		command = "F12"
 		is-disabled = false
 
-
-
-
-
-
 menu "menu"
 	elem
 		name = "&File"
-		command = ""
-		category = ""
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
 	elem
 		name = "&Quick screenshot\tF2"
-		command = ".screenshot auto"
 		category = "&File"
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
+		command = ".screenshot auto"
 	elem
 		name = "&Save screenshot as...\tShift+F2"
-		command = ".screenshot"
 		category = "&File"
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
+		command = ".screenshot"
 	elem
 		name = ""
-		command = ""
 		category = "&File"
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
 	elem
 		name = "&Reconnect"
+		category = "&File"
 		command = ".reconnect"
-		category = "&File"
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
 	elem
-		name = "&Quit"
-		command = ".quit"
+		name = "&Quit\tAlt-F4"
 		category = "&File"
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
+		command = ".quit"
 	elem
 		name = "&Icons"
-		command = ""
-		category = ""
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "stretch"
-		name = "&Stretch to fit"
+	elem "auto"
+		name = "&Auto (stretch-to-fit)"
+		category = "&Icons"
+		group = "size"
 		command = ".winset \"mapwindow.map.icon-size=0\""
-		category = "&Icons"
+		can-check = true
 		is-checked = true
-		can-check = true
-		group = "size"
-		is-disabled = false
 		saved-params = "is-checked"
-	elem "icon96"
+  elem "icon96"
 		name = "&96x96 (3x)"
-		command = ".winset \"mapwindow.map.icon-size=96\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
+    category = "&Icons"
 		group = "size"
-		is-disabled = false
+		command = ".winset \"mapwindow.map.icon-size=96\""
+		can-check = true
+		is-checked = false
 		saved-params = "is-checked"
 	elem "icon64"
 		name = "&64x64 (2x)"
-		command = ".winset \"mapwindow.map.icon-size=64\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
+    category = "&Icons"
 		group = "size"
-		is-disabled = false
+		command = ".winset \"mapwindow.map.icon-size=64\""
+		can-check = true
+		is-checked = false
 		saved-params = "is-checked"
 	elem "icon48"
-		name = "&48x48 (1.5x)"
-		command = ".winset \"mapwindow.map.icon-size=48\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
+    name = "&48x48 (1.5x)"
+    category = "&Icons"
+    group = "size"
+    command = ".winset \"mapwindow.map.icon-size=48\""
+    can-check = true
+    is-checked = false
+    saved-params = "is-checked"
 	elem "icon32"
 		name = "&32x32"
-		command = ".winset \"mapwindow.map.icon-size=32\""
 		category = "&Icons"
-		is-checked = false
-		can-check = true
 		group = "size"
-		is-disabled = false
+		command = ".winset \"mapwindow.map.icon-size=32\""
+		can-check = true
+		is-checked = false
 		saved-params = "is-checked"
 	elem
 		name = "&Help"
-		command = ""
-		category = ""
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
 	elem
 		name = "&Admin Help\tF1"
-		command = "adminhelp"
 		category = "&Help"
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
+		command = "adminhelp"
 	elem
 		name = "&Hotkeys"
-		command = "hotkeys-help"
 		category = "&Help"
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
-
-
-
-
+		command = "hotkeys-help"
 
 
 window "mainwindow"
@@ -1030,11 +959,6 @@ window "mainwindow"
 		use-title = false
 		on-show = ""
 		on-hide = ""
-	elem "hotkey_toggle"
-		type = BUTTON
-		pos = 0,0
-		is-visible = false
-		button-type = checkbox
 	elem "mainvsplit"
 		type = CHILD
 		pos = 3,0
@@ -1055,7 +979,7 @@ window "mainwindow"
 		right-click = false
 		saved-params = "splitter"
 		on-size = ""
-		left = ""
+		left = "mapwindow"
 		right = "rpane"
 		is-vert = true
 		splitter = 50
@@ -1204,8 +1128,6 @@ window "mapwindow"
 		text-mode = false
 		letterbox = true
 		zoom = 0
-		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
-		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
 		style = ""
 
 window "outputwindow"
@@ -1317,8 +1239,8 @@ window "rpane"
 		on-close = ""
 	elem "rpanewindow"
 		type = CHILD
-		pos = 0,0
-		size = 640x499
+		pos = 0,20
+		size = 640x455
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = ""
@@ -1335,44 +1257,16 @@ window "rpane"
 		right-click = false
 		saved-params = "splitter"
 		on-size = ""
-		left = ""
+		left = "infowindow"
 		right = "outputwindow"
 		is-vert = false
 		splitter = 50
 		show-splitter = true
 		lock = none
-	elem "reportissueb"
+  elem "changelogb"
 		type = BUTTON
-		pos = 480,0
-		size = 67x16
-		anchor1 = none
-		anchor2 = none
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = none
-		is-visible = true
-		is-disabled = false
-		is-transparent = false
-		is-default = false
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "is-checked"
-		on-size = ""
-		text = "Report Issue"
-		image = ""
-		command = "report-issue"
-		is-flat = true
-		stretch = false
-		is-checked = false
-		group = "rpanemode"
-		button-type = pushbutton
-	elem "changelogb"
-		type = BUTTON
-		pos = 336,0
-		size = 67x16
+		pos = 5,0
+		size = 100x20
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
@@ -1399,8 +1293,8 @@ window "rpane"
 		button-type = pushbutton
 	elem "rulesb"
 		type = BUTTON
-		pos = 272,0
-		size = 60x16
+		pos = 100,0
+		size = 100x20
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
@@ -1425,66 +1319,10 @@ window "rpane"
 		is-checked = false
 		group = "rpanemode"
 		button-type = pushbutton
-	elem "githubb"
-		type = BUTTON
-		pos = 408,0
-		size = 67x16
-		anchor1 = none
-		anchor2 = none
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = none
-		is-visible = true
-		is-disabled = false
-		is-transparent = false
-		is-default = false
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "is-checked"
-		on-size = ""
-		text = "Github"
-		image = ""
-		command = "github"
-		is-flat = true
-		stretch = false
-		is-checked = false
-		group = "rpanemode"
-		button-type = pushbutton
-	elem "forumb"
-		type = BUTTON
-		pos = 208,0
-		size = 60x16
-		anchor1 = none
-		anchor2 = none
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = none
-		is-visible = true
-		is-disabled = false
-		is-transparent = false
-		is-default = false
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "is-checked"
-		on-size = ""
-		text = "Forum"
-		image = ""
-		command = "forum"
-		is-flat = true
-		stretch = false
-		is-checked = false
-		group = "rpanemode"
-		button-type = pushbutton
 	elem "wikib"
 		type = BUTTON
-		pos = 144,0
-		size = 60x16
+		pos = 200,0
+		size = 100x20
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
@@ -1509,12 +1347,10 @@ window "rpane"
 		is-checked = false
 		group = "rpanemode"
 		button-type = pushbutton
-
-window "browserwindow"
-	elem "browserwindow"
-		type = MAIN
-		pos = 281,0
-		size = 640x480
+  elem "forumb"
+		type = BUTTON
+		pos = 300,0
+		size = 100x20
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
@@ -1529,59 +1365,79 @@ window "browserwindow"
 		border = none
 		drop-zone = false
 		right-click = false
-		saved-params = "pos;size;is-minimized;is-maximized"
+		saved-params = "is-checked"
 		on-size = ""
-		title = "Browser"
-		titlebar = true
-		statusbar = true
-		can-close = true
-		can-minimize = true
-		can-resize = true
-		is-pane = true
-		is-minimized = false
-		is-maximized = false
-		can-scroll = none
-		icon = ""
+		text = "Forum"
 		image = ""
-		image-mode = stretch
-		keep-aspect = false
-		transparent-color = none
-		alpha = 255
-		macro = ""
-		menu = ""
-		on-close = ""
-	elem "browser"
-		type = BROWSER
-		pos = 0,0
-		size = 640x499
-		anchor1 = 0,0
-		anchor2 = 100,100
+		command = "forum"
+		is-flat = true
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
+  elem "githubb"
+		type = BUTTON
+		pos = 400,0
+		size = 100x20
+		anchor1 = none
+		anchor2 = none
 		font-family = ""
 		font-size = 0
 		font-style = ""
 		text-color = #000000
-		background-color = #ffffff
+		background-color = none
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
-		is-default = true
+		is-default = false
 		border = none
 		drop-zone = false
 		right-click = false
-		saved-params = ""
+		saved-params = "is-checked"
 		on-size = ""
-		show-history = false
-		show-url = false
-		auto-format = true
-		use-title = false
-		on-show = ".winset\"rpane.infob.is-visible=true?rpane.infob.pos=130,0;rpane.textb.is-visible=true;rpane.browseb.is-visible=true;rpane.browseb.is-checked=true;rpane.rpanewindow.pos=0,30;rpane.rpanewindow.size=0x0;rpane.rpanewindow.left=browserwindow\""
-		on-hide = ".winset\"rpane.infob.is-visible=true?rpane.infob.is-checked=true rpane.infob.pos=65,0 rpane.rpanewindow.left=infowindow:rpane.rpanewindow.left=textwindow rpane.textb.is-visible=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0\""
+		text = "Github"
+		image = ""
+		command = "github"
+		is-flat = true
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
+	elem "reportissueb"
+		type = BUTTON
+		pos = 500,0
+		size = 100x20
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Report Issue"
+		image = ""
+		command = "report-issue"
+		is-flat = true
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
+
 
 window "infowindow"
 	elem "infowindow"
 		type = MAIN
 		pos = 281,0
-		size = 640x480
+		size = 600x480
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
@@ -1620,7 +1476,7 @@ window "infowindow"
 	elem "info"
 		type = INFO
 		pos = 0,0
-		size = 638x475
+		size = 600x480
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = ""
@@ -1645,8 +1501,6 @@ window "infowindow"
 		tab-font-style = ""
 		allow-html = true
 		multi-line = true
-		on-show = ".winset\"rpane.infob.is-visible=true;rpane.browseb.is-visible=true?rpane.infob.pos=130,0:rpane.infob.pos=65,0 rpane.textb.is-visible=true rpane.infob.is-checked=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=infowindow\""
-		on-hide = ".winset\"rpane.infob.is-visible=false;rpane.browseb.is-visible=true?rpane.browseb.is-checked=true rpane.rpanewindow.left=browserwindow:rpane.textb.is-visible=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=\""
 		on-tab = ""
 		prefix-color = none
 		suffix-color = none
