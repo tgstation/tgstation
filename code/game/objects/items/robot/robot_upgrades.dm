@@ -307,7 +307,7 @@
 	icon_state = "datadisk0"
 
 
-/obj/item/slimepotion/sentience/afterattack(mob/living/silicon/ai/AI, mob/user)
+/obj/item/device/malf_upgrade/afterattack(mob/living/silicon/ai/AI, mob/user)
 	if(!istype(AI))
 		return
 	if(AI.malf_picker)
@@ -327,7 +327,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0"
 
-/obj/item/slimepotion/sentience/afterattack(mob/living/silicon/ai/AI, mob/user)
+/obj/item/device/surviellance_upgrade/afterattack(mob/living/silicon/ai/AI, mob/user)
 	if(!istype(AI))
 		return
 	if(AI.eyeobj)
