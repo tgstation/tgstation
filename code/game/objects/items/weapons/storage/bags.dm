@@ -365,5 +365,5 @@
 	max_w_class = 3
 	storage_slots = 21
 	max_combined_w_class = 63 // Fuck this var
-	can_hold = list("/obj/item/weapon/coin", "/obj/item/weapon/ore", "/obj/item/weapon/spacecash", "/obj/item/weapon/organ/head")
+	can_hold = list("/obj/item/weapon/coin", "/obj/item/weapon/ore", "/obj/item/weapon/spacecash")
 	cant_hold = list()
