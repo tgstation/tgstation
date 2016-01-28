@@ -96,7 +96,7 @@
 	if(summoner)
 		var/resulthealth
 		if(iscarbon(summoner))
-			resulthealth = round((summoner.health / abs(config.health_threshold_dead - summoner.maxHealth)) * 100)
+			resulthealth = round((abs(config.health_threshold_dead - summoner.Health) / abs(config.health_threshold_dead - summoner.maxHealth)) * 100)
 		else
 			resulthealth = round((summoner.health / summoner.maxHealth) * 100)
 		hud_used.guardianhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>"
