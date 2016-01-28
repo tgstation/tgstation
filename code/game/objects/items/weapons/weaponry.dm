@@ -117,13 +117,8 @@
 		qdel(I)
 		qdel(src)
 
-	else if(istype(I, /obj/item/device/assembly/igniter))
+	else if(istype(I, /obj/item/device/assembly/igniter) && user.drop_item())
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
-
-		if(!user.drop_item())
-			return
-		user.unEquip(I)
-
 		user.put_in_hands(P)
 		user << "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>"
 		qdel(I)
