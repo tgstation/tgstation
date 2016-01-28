@@ -118,6 +118,15 @@
 		return
 	if(ticker.current_state != GAME_STATE_PLAYING)
 		return
+	if(user.ckey in team_members)
+		if(user.mind.current && user.mind.current.timeofdeath + CTF_RESPAWN_COOLDOWN > world.time)
+			user << "It must be more than 15 seconds from your last death to respawn!"
+			return
+		var/client/new_team_member = user.client
+		dust_old(user)
+		spawn_team_member(new_team_member)
+		return
+
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
 		if(CTF == src || CTF.ctf_enabled == FALSE)
 			continue
@@ -127,14 +136,6 @@
 		if(CTF.team_members.len < src.team_members.len)
 			user << "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up."
 			return
-	if(user.ckey in team_members)
-		if(user.mind.current && user.mind.current.timeofdeath + CTF_RESPAWN_COOLDOWN > world.time)
-			user << "It must be more than 15 seconds from your last death to respawn!"
-			return
-		var/client/new_team_member = user.client
-		dust_old(user)
-		spawn_team_member(new_team_member)
-		return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
 	dust_old(user)
