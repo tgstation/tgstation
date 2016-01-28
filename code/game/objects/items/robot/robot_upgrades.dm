@@ -314,7 +314,7 @@
 		AI.malf_picker.processing_time += 50
 		AI << "[user] has attempted to upgrade you with combat software that you already possess. You gain 50 points to spend on Malfunction Modules instead."
 	else
-		AI << "[user] has upgraded you with combat software!
+		AI << "[user] has upgraded you with combat software!"
 		AI.add_malf_picker()
 	user << "You upgrade [AI]. [src] is consumed in the process."
 	qdel (src)
@@ -332,7 +332,7 @@
 		return
 	if(AI.eyeobj)
 		AI.eyeobj.relay_speech = TRUE
-		AI << "[user] has upgraded you with surveillance software!
+		AI << "[user] has upgraded you with surveillance software!"
 		AI << "Via a combination of hidden microphones and lip reading software, you are able to use your cameras to listen in on conversations."
 	user << "You upgrade [AI]. [src] is consumed in the process."
 	qdel (src)
