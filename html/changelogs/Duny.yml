@@ -1,13 +1,2 @@
 author: Duny
-changes: 
-  - wip: Added a metric fuckton of firelocks.
-  - bugfix: Added missing wire to Toxins Testing Area.
-  - rscadd: Added a unique area for the old medbay to match the other abandoned areas and avoid confusing alarms for the engineering crew.
-  - bugfix: Fixed HoP's office's area.
-  - tweak: Added a medical laptop and folders to virology.
-  - bugfix: Warehouse shutters in cargo should now close the right angle. Map now playable.
-  - rscadd: Added a bunch of intercoms in frequented areas.
-  - tweak: Replaced the abandoned medbay chem master which had a broken icon with a machine frame. Thought I had already removed this long ago.
-  - rscadd: Added a whole bunch of newscasters, mostly in hallways.
-  - rscadd: Added giant warning signs at the entrance of the abandoned stuff to show that they are not shielded against radiations.
-  - rscadd: Added a few console screens to Tech Storage.
+changes: []
