@@ -1,0 +1,4 @@
+author: TheEliminator16
+delete-after: True
+changes:
+  - bugfix: Fixed an issue with diona nymphs not appearing on the correct shoulder when held.
