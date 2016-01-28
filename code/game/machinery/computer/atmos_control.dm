@@ -217,7 +217,7 @@
 			. = TRUE
 		if("pressure")
 			var/target = input("New target pressure:", name, output_info["internal"]) as num|null
-			if(target && !..())
+			if(!isnull(target) && !..())
 				target =  Clamp(target, 0, 50 * ONE_ATMOSPHERE)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
