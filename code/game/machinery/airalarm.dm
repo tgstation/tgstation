@@ -343,32 +343,26 @@
 			send_signal(device_id, list("checks" = text2num(params["val"])^2))
 			. = TRUE
 		if("set_external_pressure")
-			var/value = text2num(params["value"])
-			if(value != null)
-				send_signal(device_id, list("set_external_pressure" = value))
+			var/target = input("New target pressure:", name, alarm_area.air_vent_info[device_id]["external"]) as num|null
+			if(!isnull(target) && !..())
+				send_signal(device_id, list("set_external_pressure" = target))
 				. = TRUE
-			else
-				value = input("New target pressure:", name, alarm_area.air_vent_info[device_id]["external"]) as num|null
-				. = .(action, params + list("value" = value))
 		if("reset_external_pressure")
 			send_signal(device_id, list("reset_external_pressure"))
 			. = TRUE
 		if("threshold")
 			var/env = params["env"]
 			var/name = params["var"]
-			var/value = text2num(params["value"])
 			var/datum/tlv/tlv = TLV[env]
 			if(isnull(tlv))
 				return
-			if(value != null)
+			var/value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
+			if(!isnull(value) && !..())
 				if(value < 0)
 					tlv.vars[name] = -1
 				else
 					tlv.vars[name] = round(value, 0.01)
 				. = TRUE
-			else
-				value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
-				. = .(action, params + list("value" = value))
 		if("screen")
 			screen = text2num(params["screen"])
 			. = TRUE

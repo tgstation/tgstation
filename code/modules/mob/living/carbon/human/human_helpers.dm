@@ -66,10 +66,14 @@
 	var/obj/item/weapon/storage/wallet/wallet = wear_id
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
-	if(istype(wallet))		id = wallet.front_id
-	if(istype(id))			. = id.registered_name
-	else if(istype(pda))	. = pda.owner
-	if(!.) 					. = if_no_id	//to prevent null-names making the mob unclickable
+	if(istype(wallet))
+		id = wallet.front_id
+	if(istype(id))
+		. = id.registered_name
+	else if(istype(pda))
+		. = pda.owner
+	if(!.)
+		. = if_no_id	//to prevent null-names making the mob unclickable
 	return
 
 //gets ID card object from special clothes slot or null.

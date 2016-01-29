@@ -25,8 +25,10 @@
 	icon_state = "[basestate][on]-[item_color]"
 	user.update_inv_head()	//so our mob-overlays update
 
-	if(on)	user.AddLuminosity(brightness_on)
-	else	user.AddLuminosity(-brightness_on)
+	if(on)
+		user.AddLuminosity(brightness_on)
+	else
+		user.AddLuminosity(-brightness_on)
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/pickup(mob/user)

@@ -73,22 +73,22 @@
 	var/transfer_moles2 = 0
 
 	if(air1.temperature > 0)
-		transfer_moles1 = (node1_concentration*pressure_delta)*air3.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+		transfer_moles1 = (node1_concentration * pressure_delta) * air3.volume / (air1.temperature * R_IDEAL_GAS_EQUATION)
 
 	if(air2.temperature > 0)
-		transfer_moles2 = (node2_concentration*pressure_delta)*air3.volume/(air2.temperature * R_IDEAL_GAS_EQUATION)
+		transfer_moles2 = (node2_concentration * pressure_delta) * air3.volume / (air2.temperature * R_IDEAL_GAS_EQUATION)
 
 	var/air1_moles = air1.total_moles()
 	var/air2_moles = air2.total_moles()
 
 	if((air1_moles < transfer_moles1) || (air2_moles < transfer_moles2))
 		var/ratio = 0
-		if (( transfer_moles1 > 0 ) && (transfer_moles2 >0 ))
-			ratio = min(air1_moles/transfer_moles1, air2_moles/transfer_moles2)
-		if (( transfer_moles2 == 0 ) && ( transfer_moles1 > 0 ))
-			ratio = air1_moles/transfer_moles1
-		if (( transfer_moles1 == 0 ) && ( transfer_moles2 > 0 ))
-			ratio = air2_moles/transfer_moles2
+		if((transfer_moles1 > 0 ) && (transfer_moles2 > 0))
+			ratio = min(air1_moles / transfer_moles1, air2_moles / transfer_moles2)
+		if((transfer_moles2 == 0 ) && ( transfer_moles1 > 0))
+			ratio = air1_moles / transfer_moles1
+		if((transfer_moles1 == 0 ) && ( transfer_moles2 > 0))
+			ratio = air2_moles / transfer_moles2
 
 		transfer_moles1 *= ratio
 		transfer_moles2 *= ratio
@@ -105,16 +105,16 @@
 
 	if(transfer_moles1)
 		var/datum/pipeline/parent1 = PARENT1
-		parent1.update = 1
+		parent1.update = TRUE
 
 	if(transfer_moles2)
 		var/datum/pipeline/parent2 = PARENT2
-		parent2.update = 1
+		parent2.update = TRUE
 
 	var/datum/pipeline/parent3 = PARENT3
-	parent3.update = 1
+	parent3.update = TRUE
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/components/trinary/mixer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -143,15 +143,17 @@
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "max")
-				target_pressure = MAX_OUTPUT_PRESSURE
+				pressure = MAX_OUTPUT_PRESSURE
 				. = TRUE
 			else if(pressure == "input")
 				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, target_pressure) as num|null
-				. = .(action, list("pressure" = pressure))
+				if(!isnull(pressure) && !..())
+					. = TRUE
 			else if(text2num(pressure) != null)
-				target_pressure = Clamp(text2num(pressure), 0, MAX_OUTPUT_PRESSURE)
+				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
+				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 		if("node1")
 			var/value = text2num(params["concentration"])

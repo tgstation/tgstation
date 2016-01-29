@@ -104,6 +104,11 @@
 	build_network()
 	return 1
 
+/obj/machinery/atmospherics/components/unary/thermomachine/ui_status(mob/user)
+	if(interactive)
+		return ..()
+	return UI_CLOSE
+
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -126,7 +131,7 @@
 	return data
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_act(action, params)
-	if(..() || !interactive)
+	if(..())
 		return
 	switch(action)
 		if("power")
@@ -139,15 +144,16 @@
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
 				target = input("Set new target ([min_temperature]-[max_temperature] K):", name, target_temperature) as num|null
-				. = .(action, list("target" = target))
-			else if(text2num(target) != null)
-				target_temperature = text2num(target)
-				. = TRUE
+				if(!isnull(target) && !..())
+					. = TRUE
 			else if(adjust)
-				target_temperature += adjust
+				target = target_temperature + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = Clamp(target_temperature, min_temperature, max_temperature)
+				target_temperature = Clamp(target, min_temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", "atmos")
 	update_icon()
 
