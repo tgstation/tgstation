@@ -190,8 +190,8 @@ var/list/all_doors = list()
 			return open()
 
 	playsound(src.loc, 'sound/machines/denied.ogg', 50, 1)
-	door_animate("deny")
-	return
+	if(density) //Why are we playing a denied animation on an OPEN DOOR
+		door_animate("deny")
 
 /obj/machinery/door/blob_act()
 	if(prob(BLOB_PROBABILITY))
