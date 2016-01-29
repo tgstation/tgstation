@@ -20,6 +20,7 @@
 	var/ghostimage = null
 
 /mob/camera/blob/New()
+	overminds += src
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
@@ -42,7 +43,8 @@
 	..()
 
 /mob/camera/blob/Destroy()
-	if (ghostimage)
+	overminds -= src
+	if(ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
 		ghostimage = null;

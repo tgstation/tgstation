@@ -220,11 +220,12 @@ var/pipenetwarnings = 10
 		total_thermal_energy += G.thermal_energy()
 		total_heat_capacity += G.heat_capacity()
 
-		total_gas_mixture.temperature = total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0
+	total_gas_mixture.temperature = total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0
 
 	if(total_gas_mixture.volume > 0)
 		//Update individual gas_mixtures by volume ratio
-		for(var/datum/gas_mixture/G in GL)
+		for(var/i in GL)
+			var/datum/gas_mixture/G = i
 			G.copy_from(total_gas_mixture)
 			var/list/G_gases = G.gases
 			for(var/id in G_gases)

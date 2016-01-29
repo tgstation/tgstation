@@ -42,7 +42,8 @@
 		if(jobban_isbanned(affected_mob, new_form))
 			affected_mob.death(1)
 			return
-		if(affected_mob.notransform)	return
+		if(affected_mob.notransform)
+			return
 		affected_mob.notransform = 1
 		affected_mob.canmove = 0
 		affected_mob.icon = null

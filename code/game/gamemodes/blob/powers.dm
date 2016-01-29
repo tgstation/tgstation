@@ -240,12 +240,10 @@
 	src << "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob"
 	src << "Attempting to talk will send a message to all other overminds, allowing you to coordinate with them."
 
-/datum/action/innate/blob_earlyhelp
-	name = "Blob Help"
-	button_icon_state = "blob"
+/datum/action/innate/blob
 	background_icon_state = "bg_alien"
 
-/datum/action/innate/blob_earlyhelp/CheckRemoval()
+/datum/action/innate/blob/CheckRemoval()
 	if(ticker.mode.name != "blob" || !ishuman(owner))
 		return 1
 	var/datum/game_mode/blob/B = ticker.mode
@@ -253,8 +251,28 @@
 		return 1
 	return 0
 
+/datum/action/innate/blob/earlyhelp
+	name = "Blob Help"
+	button_icon_state = "blob"
+
 /datum/action/innate/blob_earlyhelp/Activate()
 	owner << "<b>You are a blob!</b>"
 	owner << "You will shortly burst, and should find a quiet place to do so, out of sight of the station."
 	owner << "Alternatively, you could burst near a place that would hinder the station, such as telecomms or science."
 	owner << "Once you burst, you can get additional information by <b>pressing this button again.</b>"
+
+/datum/action/innate/blob/earlycomm
+	name = "Blob Communication"
+	button_icon_state = "blob_comm"
+
+/datum/action/innate/blob/earlycomm/Activate()
+	var/msg = stripped_input(owner, "What do you wish to tell your fellow blobs?", null, "")
+	if(msg && owner)
+		var/mob/living/carbon/human/O = owner
+		var/spanned_message = O.say_quote(msg, O.get_spans())
+		var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [O.real_name]</b> [spanned_message]</font></span>"
+		var/datum/game_mode/blob/B = ticker.mode
+		B.show_message("[rendered]")
+		for(var/mob/M in mob_list)
+			if(isobserver(M))
+				M << "<a href='?src=\ref[M];follow=\ref[O]'>(F)</a> [rendered]"

@@ -55,13 +55,15 @@
 
 
 /obj/item/weapon/gun/magic/Destroy()
-	if(can_charge)	SSobj.processing.Remove(src)
+	if(can_charge)
+		SSobj.processing.Remove(src)
 	return ..()
 
 
 /obj/item/weapon/gun/magic/process()
 	charge_tick++
-	if(charge_tick < recharge_rate || charges >= max_charges) return 0
+	if(charge_tick < recharge_rate || charges >= max_charges)
+		return 0
 	charge_tick = 0
 	charges++
 	return 1

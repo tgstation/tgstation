@@ -213,7 +213,7 @@
 	if(istype(holder))
 		if(holder.wires)
 			holder.wires.repair()
-			holder.wires.shuffle()
+			holder.wires.shuffle_wires()
 		holder.defused = 0
 		holder.open_panel = 0
 		holder.update_icon()

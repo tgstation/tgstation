@@ -49,8 +49,10 @@
 			if(body_part)
 				var/their = "their"
 				switch(M.gender)
-					if(MALE)	their = "his"
-					if(FEMALE)	their = "her"
+					if(MALE)
+						their = "his"
+					if(FEMALE)
+						their = "her"
 
 				var/sound = "pulse"
 				var/sound_strength

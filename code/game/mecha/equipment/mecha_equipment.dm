@@ -77,8 +77,6 @@
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/proc/action(atom/target)
-	return
-
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/proc/start_cooldown()
@@ -145,3 +143,12 @@
 	if(chassis)
 		chassis.log_message("<i>[src]:</i> [message]")
 	return
+
+
+//Used for reloading weapons/tools etc. that use some form of resource
+/obj/item/mecha_parts/mecha_equipment/proc/rearm()
+	return 0
+
+
+/obj/item/mecha_parts/mecha_equipment/proc/needs_rearm()
+	return 0
