@@ -131,19 +131,19 @@
 				T = null
 	if(!T)
 		return 0
-	var/make_blob = 1 //can we make a blob?
+	var/make_blob = TRUE //can we make a blob?
 
 	if(istype(T, /turf/space) && prob(65))
-		make_blob = 0
+		make_blob = FALSE
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
 	if(!T.CanPass(src, T, 5)) //is the target turf impassable
-		make_blob = 0
+		make_blob = FALSE
 		T.blob_act() //hit the turf if it is
 	for(var/atom/A in T)
 		if(!A.CanPass(src, T, 5)) //is anything in the turf impassable
-			make_blob = 0
+			make_blob = FALSE
 		A.blob_act() //also hit everything in the turf
 
 	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, src.loc)

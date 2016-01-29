@@ -21,7 +21,7 @@
 /mob/living/simple_animal/hostile/blob/blob_act()
 	return
 
-/mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target, height=0)
+/mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target, height = 0)
 	if(istype(mover, /obj/effect/blob))
 		return 1
 	return ..()
