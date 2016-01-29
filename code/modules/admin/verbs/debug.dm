@@ -1,7 +1,8 @@
 /client/proc/Debug2()
 	set category = "Debug"
 	set name = "Debug-Game"
-	if(!check_rights(R_DEBUG))	return
+	if(!check_rights(R_DEBUG))
+		return
 
 	if(Debug2)
 		Debug2 = 0
@@ -67,7 +68,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			targetselected = 0
 
 	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
-	if(!procname)	return
+	if(!procname)
+		return
 	if(targetselected && !hascall(target,procname))
 		usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
 		return
@@ -131,7 +133,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 /client/proc/get_callproc_args()
 	var/argnum = input("Number of arguments","Number:",0) as num|null
-	if(!argnum && (argnum!=0))	return
+	if(!argnum && (argnum!=0))
+		return
 
 	var/list/lst = list()
 	//TODO: make a list to store whether each argument was initialised as null.
@@ -720,5 +723,6 @@ var/global/list/g_fancy_list_of_types = null
 	set name = "Debug HUDs"
 	set desc = "Debug the data or antag HUDs"
 
-	if(!holder)	return
+	if(!holder)
+		return
 	debug_variables(huds[i])

@@ -14,7 +14,8 @@ AI
 	minimal_player_age = 30
 
 /datum/job/ai/equip(mob/living/carbon/human/H)
-	if(!H)	return 0
+	if(!H)
+		return 0
 
 /datum/job/ai/config_check()
 	if(config && config.allow_ai)
@@ -36,5 +37,6 @@ Cyborg
 	minimal_player_age = 21
 
 /datum/job/cyborg/equip(mob/living/carbon/human/H)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	return H.Robotize()

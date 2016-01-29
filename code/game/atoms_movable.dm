@@ -117,7 +117,8 @@
 		loc = destination
 		destination.Entered(src, oldloc)
 		for(var/atom/movable/AM in destination)
-			if(AM == src)	continue
+			if(AM == src)
+				continue
 			AM.Crossed(src)
 		Moved(oldloc, 0)
 		return 1
@@ -170,7 +171,8 @@
 	throw_at(target, range, speed, thrower, spin, diagonals_first)
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
-	if(!target || !src || (flags & NODROP))	return 0
+	if(!target || !src || (flags & NODROP))
+		return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
 	throwing = 1

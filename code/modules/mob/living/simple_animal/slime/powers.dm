@@ -44,7 +44,8 @@
 			choices += C
 
 	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|choices
-	if(!M) return 0
+	if(!M)
+		return 0
 	if(CanFeedon(M))
 		Feedon(M)
 		return 1
@@ -164,9 +165,11 @@
 					M.colour = slime_mutation[rand(1,4)]
 				else
 					M.colour = colour
-				if(ckey)	M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
+				if(ckey)
+					M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
-				if(i != 1) step_away(M,src)
+				if(i != 1)
+					step_away(M,src)
 				M.Friends = Friends.Copy()
 				babies += M
 				M.mutation_chance = Clamp(mutation_chance+(rand(5,-5)),0,100)
