@@ -160,10 +160,6 @@ Helpers
 	for(DEVICE_TYPE_LOOP)
 		. += returnPipenet(NODE_I)
 
-/obj/machinery/atmospherics/components/dealWithShuttleStuff(I)
-	..()
-	nullifyPipenet(PARENT_I)
-
 /*
 UI Stuff
 */
@@ -173,3 +169,4 @@ UI Stuff
 		return ..()
 	user << "<span class='danger'>Access denied.</span>"
 	return UI_CLOSE
+
