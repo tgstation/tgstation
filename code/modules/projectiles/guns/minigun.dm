@@ -5,7 +5,7 @@
 	name = "ammo pack"
 	desc = "The ammo pack for a M134 minigun" //Ironically contains 0 ammo.
 	icon = 'icons/obj/guns/minigun.dmi'
-	icon_state = "minipack_g"
+	icon_state = "minipack_gun"
 	item_state = "securitypack"
 	slot_flags = SLOT_BACK
 	w_class = 4
@@ -65,9 +65,9 @@
 
 /obj/item/weapon/minigunpack/update_icon()
 	if(armed)
-		icon_state = "minipack_n"
+		icon_state = "minipack"
 	else
-		icon_state = "minipack_g"
+		icon_state = "minipack_gun"
 
 
 /obj/item/weapon/minigunpack/proc/attach_gun(var/mob/user)
@@ -87,15 +87,17 @@
 	name = "M134 minigun"
 	desc = "She weighs one hundred fifty kilograms and fires two hundred dollar, custom-tooled cartridges at ten rounds per second."
 	icon = 'icons/obj/guns/minigun.dmi'
-	icon_state = "minigun_u"
-	item_state = "riotgun"
+	icon_state = "minigun"
+	item_state = "minigun"
 	origin_tech = null
-	flags = NODROP
+	flags = NODROP | CONDUCT
+	slot_flags = null
 	w_class = 5
 	materials = list()
 	burst_size = 10
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
+	unique_rename = 1 //WHO TOUCHED SASHA?
 	var/obj/item/weapon/minigunpack/ammo_pack
 	var/ready = 0
 
@@ -121,9 +123,9 @@
 
 /obj/item/weapon/gun/projectile/minigun/update_icon()
 	if(ready)
-		icon_state = "minigun_a"
+		icon_state = "minigun_spin"
 	else
-		icon_state = "minigun_u"
+		icon_state = "minigun"
 
 /obj/item/weapon/gun/projectile/minigun/proc/unwield(mob/living/carbon/user)
 	if(!ready)
