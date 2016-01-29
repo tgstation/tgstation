@@ -897,43 +897,55 @@ menu "menu"
 window "mainwindow"
 	elem "mainwindow"
 		type = MAIN
-		pos = 281,0
 		size = 640x440
-		anchor1 = none
+		is-default = true
+		icon = 'icons\\ss13_64.png'
+		menu = "menu"
+		macro = "macro"
+		saved-params = "pos;size;is-minimized;is-maximized"
+	elem "mainvsplit"
+		type = CHILD
+		pos = 3,0
+		size = 634x417
+    anchor1 = 0,0
+		anchor2 = 100,100
+		is-vert = true
+		splitter = 50
+		show-splitter = true
+    left = "mapwindow"
+		right = "rpane"
+		saved-params = "splitter"
+	elem "input"
+		type = INPUT
+		pos = 5,420
+		size = 595x20
+		anchor1 = 0,100
+		anchor2 = 100,100
+		is-default = true
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #d3b5b5
+		saved-params = "command"
+	elem "saybutton"
+		type = BUTTON
+		button-type = pushbox
+		pos = 600,420
+		size = 40x20
+		anchor1 = 100,100
 		anchor2 = none
 		font-family = ""
 		font-size = 0
 		font-style = ""
 		text-color = #000000
 		background-color = none
-		is-visible = true
-		is-disabled = false
-		is-transparent = false
-		is-default = true
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "pos;size;is-minimized;is-maximized"
-		on-size = ""
-		titlebar = true
-		statusbar = true
-		can-close = true
-		can-minimize = true
-		can-resize = true
-		is-pane = false
-		is-minimized = false
-		is-maximized = true
-		can-scroll = none
-		icon = 'icons\\ss13_64.png'
-		image = ""
-		image-mode = stretch
-		keep-aspect = false
-		transparent-color = none
-		alpha = 255
-		macro = "macro"
-		menu = "menu"
-		on-close = ""
-	elem "asset_cache_browser"
+		is-flat = true
+		text = "Chat"
+		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\""
+		is-checked = false
+		saved-params = "is-checked"
+  elem "asset_cache_browser"
 		type = BROWSER
 		pos = 0,0
 		size = 1x1
@@ -959,84 +971,6 @@ window "mainwindow"
 		use-title = false
 		on-show = ""
 		on-hide = ""
-	elem "mainvsplit"
-		type = CHILD
-		pos = 3,0
-		size = 634x416
-		anchor1 = 0,0
-		anchor2 = 100,100
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = none
-		is-visible = true
-		is-disabled = false
-		is-transparent = false
-		is-default = false
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "splitter"
-		on-size = ""
-		left = "mapwindow"
-		right = "rpane"
-		is-vert = true
-		splitter = 50
-		show-splitter = true
-		lock = none
-	elem "input"
-		type = INPUT
-		pos = 5,420
-		size = 595x20
-		anchor1 = 0,100
-		anchor2 = 100,100
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = #afafaf
-		is-visible = true
-		is-disabled = false
-		is-transparent = false
-		is-default = true
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "command"
-		on-size = ""
-		command = ""
-		multi-line = false
-		is-password = false
-		no-command = false
-	elem "saybutton"
-		type = BUTTON
-		pos = 600,420
-		size = 40x20
-		anchor1 = 100,100
-		anchor2 = none
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = none
-		is-visible = true
-		is-disabled = false
-		is-transparent = false
-		is-default = false
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "is-checked"
-		on-size = ""
-		text = "Chat"
-		image = ""
-		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\""
-		is-flat = true
-		stretch = false
-		is-checked = false
-		group = ""
-		button-type = pushbox
 	elem "tooltip"
 		type = BROWSER
 		pos = 0,0
@@ -1067,7 +1001,7 @@ window "mainwindow"
 window "mapwindow"
 	elem "mapwindow"
 		type = MAIN
-		pos = 281,0
+		pos = 0,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
@@ -1133,46 +1067,11 @@ window "mapwindow"
 window "outputwindow"
 	elem "outputwindow"
 		type = MAIN
-		pos = 281,0
-		size = 640x480
-		anchor1 = none
-		anchor2 = none
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = none
-		is-visible = true
-		is-disabled = false
-		is-transparent = false
-		is-default = false
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "pos;size;is-minimized;is-maximized"
-		on-size = ""
-		title = ""
-		titlebar = false
-		statusbar = false
-		can-close = false
-		can-minimize = false
-		can-resize = false
 		is-pane = true
-		is-minimized = false
-		is-maximized = false
-		can-scroll = none
-		icon = ""
-		image = ""
-		image-mode = stretch
-		keep-aspect = false
-		transparent-color = none
-		alpha = 255
-		macro = ""
-		menu = ""
-		on-close = ""
+		saved-params = "pos;size;is-minimized;is-maximized"
 	elem "output"
 		type = OUTPUT
-		pos = 0,0
+    is-default = true
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
@@ -1181,21 +1080,6 @@ window "outputwindow"
 		font-style = ""
 		text-color = #000000
 		background-color = #ffffff
-		is-visible = true
-		is-disabled = false
-		is-transparent = false
-		is-default = true
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "max-lines"
-		on-size = ""
-		link-color = #0000ff
-		visited-color = #ff00ff
-		style = ".system {color:#ff0000;}"
-		enable-http-images = false
-		max-lines = 1000
-		image = ""
 
 window "rpane"
 	elem "rpane"
