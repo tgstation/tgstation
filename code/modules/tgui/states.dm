@@ -55,13 +55,6 @@
 		return UI_UPDATE
 	return UI_INTERACTIVE
 
-/mob/living/carbon/human/shared_ui_interaction(src_object)
-	// If we have telekinesis and remain close enough, allow interaction.
-	if(dna.check_mutation(TK))
-		if(tkMaxRangeCheck(src, src_object))
-			return UI_INTERACTIVE
-	return ..()
-
 /mob/living/silicon/ai/shared_ui_interaction(src_object)
 	if(lacks_power()) // Close UIs if the AI is unpowered.
 		return UI_CLOSE
@@ -110,3 +103,8 @@
 	else if(dist <= 5) // Disable if 5 tiles away.
 		return UI_DISABLED
 	return UI_CLOSE // Otherwise, we got nothing.
+
+/mob/living/carbon/human/shared_living_ui_distance(atom/movable/src_object)
+	if(dna.check_mutation(TK) && tkMaxRangeCheck(src, src_object))
+		return UI_INTERACTIVE
+	return ..()
