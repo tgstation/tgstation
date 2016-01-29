@@ -118,7 +118,7 @@
 
 
 /obj/effect/landmark/mobcorpse/syndicatestormtrooper
-	name = "Syndicate Operative"
+	name = "Syndicate Stormtrooper"
 	corpseuniform = /obj/item/clothing/under/syndicate
 	corpsesuit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	corpseshoes = /obj/item/clothing/shoes/combat
