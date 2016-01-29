@@ -33,6 +33,11 @@
 	if(!istype(chassis, /obj/mecha/working/ripley)) return
 	var/obj/mecha/working/ripley/R = chassis
 
+	if(istype(target,/obj/machinery/power/supermatter))
+		var/obj/machinery/power/supermatter/supermatter = target
+		if(supermatter.damage) //is it overheating
+			occupant_message("<span class='danger'>The supermatter is fluctuating too wildly to safely lift!</span>")
+			return
 	if(istype(target, /obj/structure/bed))
 		occupant_message("<span class='warning'>Safety features prevent this action.</span>")
 		return //no picking up rollerbeds
@@ -68,6 +73,9 @@
 				O.anchored = 1 //Why
 				var/T = chassis.loc
 				if(do_after_cooldown(target))
+					var/list/oh_shit_new_living_in_target = target.search_contents_for(/mob/living)
+					if(oh_shit_new_living_in_target.len)
+						return
 					if(T == chassis.loc && src == chassis.selected)
 						R.cargo += O
 						O.loc = chassis
