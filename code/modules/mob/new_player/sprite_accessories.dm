@@ -711,6 +711,11 @@
 	icon_state = "female_blackalt"
 	gender = FEMALE
 
+/datum/sprite_accessory/underwear/female_usastripe
+	name = "Ladies Freedom"
+	icon_state = "female_assblastusa"
+	gender = FEMALE
+
 ////////////////////////////
 // Undershirt Definitions //
 ////////////////////////////
