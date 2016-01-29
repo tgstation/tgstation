@@ -317,11 +317,11 @@
 
 
 /obj/machinery/space_heater/campfire/Crossed(mob/user as mob)
-	if(istype(user,/mob/living/carbon/human) && on)
+	if(istype(user,/mob/living/carbon) && on)
 		var/mob/living/carbon/absolutemadman = user
 		absolutemadman.adjust_fire_stacks(1)
-		absolutemadman.IgniteMob()
-		absolutemadman.visible_message("<span class='danger'>[user] walks into \the [src], and is set alight!</span>", "<span class='danger'>You walk into \the [src], and are set alight!</span>")
+		if(absolutemadman.IgniteMob())
+			absolutemadman.visible_message("<span class='danger'>[user] walks into \the [src], and is set alight!</span>", "<span class='danger'>You walk into \the [src], and are set alight!</span>")
 
 /obj/machinery/space_heater/campfire/stove/fireplace
 	name = "fireplace"

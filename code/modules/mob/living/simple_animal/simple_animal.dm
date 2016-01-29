@@ -606,7 +606,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 /mob/living/simple_animal/update_fire()
 	return
 /mob/living/simple_animal/IgniteMob()
-	return
+	return 0
 /mob/living/simple_animal/ExtinguishMob()
 	return
 
