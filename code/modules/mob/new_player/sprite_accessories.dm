@@ -716,6 +716,16 @@
 	icon_state = "female_assblastusa"
 	gender = FEMALE
 
+/datum/sprite_accessory/underwear/female_uk
+	name = "Ladies UK"
+	icon_state = "female_uk"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/female_commie
+	name = "Ladies Commie"
+	icon_state = "female_commie"
+	gender = FEMALE
+
 ////////////////////////////
 // Undershirt Definitions //
 ////////////////////////////
