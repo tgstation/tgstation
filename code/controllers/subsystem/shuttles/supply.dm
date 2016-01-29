@@ -32,7 +32,8 @@
 
 /obj/docking_port/mobile/supply/dock()
 	. = ..()
-	if(.)	return .
+	if(.)
+		return .
 
 	buy()
 	sell()
@@ -46,11 +47,13 @@
 
 	var/list/emptyTurfs = list()
 	for(var/turf/simulated/floor/T in areaInstance)
-		if(T.density || T.contents.len)	continue
+		if(T.density || T.contents.len)
+			continue
 		emptyTurfs += T
 
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
-		if(!SO.object) continue
+		if(!SO.object)
+			continue
 
 		var/turf/T = pick_n_take(emptyTurfs)		//turf we will place it in
 		if(!T)
@@ -81,7 +84,8 @@
 	var/pointsEarned
 
 	for(var/atom/movable/MA in areaInstance)
-		if(MA.anchored)	continue
+		if(MA.anchored)
+			continue
 		SSshuttle.sold_atoms += " [MA.name]"
 
 		// Must be in a crate (or a critter crate)!
@@ -147,7 +151,8 @@
 				// Sell tech levels
 				if(istype(thing, /obj/item/weapon/disk/tech_disk))
 					var/obj/item/weapon/disk/tech_disk/disk = thing
-					if(!disk.stored) continue
+					if(!disk.stored)
+						continue
 					var/datum/tech/tech = disk.stored
 
 					var/cost = tech.getCost(SSshuttle.techLevels[tech.id])
@@ -159,9 +164,11 @@
 				// Sell max reliablity designs
 				if(istype(thing, /obj/item/weapon/disk/design_disk))
 					var/obj/item/weapon/disk/design_disk/disk = thing
-					if(!disk.blueprint) continue
+					if(!disk.blueprint)
+						continue
 					var/datum/design/design = disk.blueprint
-					if(design.id in SSshuttle.researchDesigns) continue
+					if(design.id in SSshuttle.researchDesigns)
+						continue
 
 					if(initial(design.reliability) < 100 && design.reliability >= 100)
 						// Maxed out reliability designs only.
@@ -285,7 +292,8 @@
 			temp += "<b>Request from: [get_supply_group_name(cat)]</b><BR><BR>"
 			for(var/supply_type in SSshuttle.supply_packs )
 				var/datum/supply_packs/N = SSshuttle.supply_packs[supply_type]
-				if(N.hidden || N.contraband || N.group != cat) continue												//Have to send the type instead of a reference to
+				if(N.hidden || N.contraband || N.group != cat)
+					continue												//Have to send the type instead of a reference to
 				temp += "<A href='?src=\ref[src];doorder=[supply_type]'>[N.name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
@@ -293,12 +301,15 @@
 			return
 
 		//Find the correct supply_pack datum
-		if(!SSshuttle.supply_packs["[href_list["doorder"]]"])	return
+		if(!SSshuttle.supply_packs["[href_list["doorder"]]"])
+			return
 
 		var/timeout = world.time + 600
 		var/reason = stripped_input(usr,"Reason:","Why do you require this item?","")
-		if(world.time > timeout)	return
-		if(!reason)	return
+		if(world.time > timeout)
+			return
+		if(!reason)
+			return
 
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"
@@ -310,7 +321,8 @@
 			idname = usr.real_name
 
 		var/datum/supply_order/O = SSshuttle.generateSupplyOrder(href_list["doorder"], idname, idrank, reason)
-		if(!O) return
+		if(!O)
+			return
 		O.generateRequisition(loc)
 
 		reqtime = (world.time + 5) % 1e5
@@ -414,7 +426,8 @@
 					post_signal("supply")
 
 	else if (href_list["order"])
-		if(SSshuttle.supply.mode != SHUTTLE_IDLE) return
+		if(SSshuttle.supply.mode != SHUTTLE_IDLE)
+			return
 		if(href_list["order"] == "categories")
 			//all_supply_groups
 			//Request what?
@@ -456,8 +469,10 @@
 
 		var/timeout = world.time + 600
 		var/reason = stripped_input(usr,"Reason:","Why do you require this item?","")
-		if(world.time > timeout)	return
-//		if(!reason)	return
+		if(world.time > timeout)
+			return
+//		if(!reason)
+//			return
 
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"
@@ -469,7 +484,8 @@
 			idname = usr.real_name
 
 		var/datum/supply_order/O = SSshuttle.generateSupplyOrder(href_list["doorder"], idname, idrank, reason)
-		if(!O)	return
+		if(!O)
+			return
 		O.generateRequisition(loc)
 
 		reqtime = (world.time + 5) % 1e5
@@ -550,7 +566,8 @@
 
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
 
-	if(!frequency) return
+	if(!frequency)
+		return
 
 	var/datum/signal/status_signal = new
 	status_signal.source = src

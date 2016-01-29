@@ -19,8 +19,10 @@
 			if(T in range(target,inner_tele_radius)) continue
 			if(istype(T,/turf/space) && !include_space) continue
 			if(T.density && !include_dense) continue
-			if(T.x>world.maxx-outer_tele_radius || T.x<outer_tele_radius)	continue	//putting them at the edge is dumb
-			if(T.y>world.maxy-outer_tele_radius || T.y<outer_tele_radius)	continue
+			if(T.x>world.maxx-outer_tele_radius || T.x<outer_tele_radius)
+				continue	//putting them at the edge is dumb
+			if(T.y>world.maxy-outer_tele_radius || T.y<outer_tele_radius)
+				continue
 			turfs += T
 
 		if(!turfs.len)

@@ -33,6 +33,7 @@
 	return 0
 
 /obj/structure/attack_hand(mob/user)
+	. = ..()
 	add_fingerprint(user)
 	interact(user)
 

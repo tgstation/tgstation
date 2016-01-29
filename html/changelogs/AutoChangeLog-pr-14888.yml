@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Red xenobio potions now work on vehicles (janitor cart, ATV, secway, etc), causing them to go faster."
