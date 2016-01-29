@@ -119,12 +119,12 @@ var/global/mulebot_count = 0
 		emagged = 1
 	if (!open)
 		locked = !locked
-		user << "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>"
+		user << "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>"
 	else if (emagged < 2)
 		emagged = 2
 		if(!wires.is_cut(WIRE_AVOIDANCE))
 			wires.cut(WIRE_AVOIDANCE)
-		user << "<span class='warning'>You engage the mulebot's kill mode!</span>"
+		user << "<span class='warning'>You awaken [src]'s thirst for blood!</span>"
 		src << "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>"
 		add_logs(user, src, "emagged")
 	flick("mulebot-emagged", src)
