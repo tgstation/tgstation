@@ -255,7 +255,7 @@
 		resources++
 		do_attack_animation(target)
 		changeNext_move(CLICK_CD_MELEE)
-		var/obj/effect/swarmer/integrate/I = new /obj/effect/swarmer/integrate(get_turf(target))
+		var/obj/effect/overlay/temp/swarmer/integrate/I = PoolOrNew(/obj/effect/overlay/temp/swarmer/integrate, get_turf(target))
 		I.pixel_x = target.pixel_x
 		I.pixel_y = target.pixel_y
 		I.pixel_z = target.pixel_z
@@ -270,7 +270,7 @@
 		return
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisIntegrate(var/atom/movable/target)
-	new /obj/effect/swarmer/disintegration(get_turf(target))
+	PoolOrNew(/obj/effect/overlay/temp/swarmer/disintegration, get_turf(target))
 	do_attack_animation(target)
 	changeNext_move(CLICK_CD_MELEE)
 	target.ex_act(3)
@@ -313,7 +313,7 @@
 /mob/living/simple_animal/hostile/swarmer/proc/DismantleMachine(var/obj/machinery/target)
 	do_attack_animation(target)
 	src << "<span class='info'>We begin to dismantle this machine. We will need to be uninterrupted.</span>"
-	var/obj/effect/swarmer/dismantle/D = new /obj/effect/swarmer/dismantle(get_turf(target))
+	var/obj/effect/overlay/temp/swarmer/dismantle/D = PoolOrNew(/obj/effect/overlay/temp/swarmer/dismantle, get_turf(target))
 	D.pixel_x = target.pixel_x
 	D.pixel_y = target.pixel_y
 	D.pixel_z = target.pixel_z
@@ -323,7 +323,7 @@
 		M.amount = 5
 		for(var/obj/item/I in target.component_parts)
 			I.loc = M.loc
-		var/obj/effect/swarmer/disintegration/N = new /obj/effect/swarmer/disintegration(get_turf(target))
+		var/obj/effect/overlay/temp/swarmer/disintegration/N = PoolOrNew(/obj/effect/overlay/temp/swarmer/disintegration, get_turf(target))
 		N.pixel_x = target.pixel_x
 		N.pixel_y = target.pixel_y
 		N.pixel_z = target.pixel_z
@@ -342,32 +342,28 @@
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "ui_light"
 	mouse_opacity = 0
-	layer = 4
+	layer = MOB_LAYER
 	unacidable = 1
 
-/obj/effect/swarmer/disintegration
+/obj/effect/overlay/temp/swarmer //temporary swarmer visual feedback objects
+	icon = 'icons/mob/swarmer.dmi'
+	layer = MOB_LAYER
+
+/obj/effect/overlay/temp/swarmer/disintegration
 	icon_state = "disintegrate"
-	anchored = 1
+	duration = 10
 
-/obj/effect/swarmer/disintegration/New()
+/obj/effect/overlay/temp/swarmer/disintegration/New()
 	playsound(src.loc, "sparks", 100, 1)
-	spawn(10)
-		qdel(src)
+	..()
 
-/obj/effect/swarmer/dismantle
+/obj/effect/overlay/temp/swarmer/dismantle
 	icon_state = "dismantle"
+	duration = 25
 
-/obj/effect/swarmer/dismantle/New()
-	spawn(25)
-		qdel(src)
-
-/obj/effect/swarmer/integrate
+/obj/effect/overlay/temp/swarmer/integrate
 	icon_state = "integrate"
-	anchored = 1
-
-/obj/effect/swarmer/integrate/New()
-	spawn(5)
-		qdel(src)
+	duration = 5
 
 /obj/effect/swarmer/destructible //Default destroyable object for swarmer constructions
 	luminosity = 1

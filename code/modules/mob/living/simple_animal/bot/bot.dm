@@ -260,8 +260,8 @@
 /mob/living/simple_animal/bot/emp_act(severity)
 	var/was_on = on
 	stat |= EMPED
-	PoolOrNew(/obj/effect/overlay/temp/emp/pulse, loc)
-	if (on)
+	PoolOrNew(/obj/effect/overlay/temp/emp, loc)
+	if(on)
 		turn_off()
 	spawn(severity*300)
 		stat &= ~EMPED
