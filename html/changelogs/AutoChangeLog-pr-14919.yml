@@ -1,4 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "Stuffing people in bins uses clickdrag instead of grab."
