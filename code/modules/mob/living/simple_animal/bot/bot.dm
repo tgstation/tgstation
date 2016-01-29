@@ -252,17 +252,22 @@
 					bot_name = name
 					name = paicard.pai.name
 				else
-					user << "<span class='warning'>This [W] is inactive.</span>"
+					user << "<span class='warning'>[W] is inactive.</span>"
 			else
 				user << "<span class='warning'>The personality slot is locked.</span>"
 		else
 			user << "<span class='warning'>[src] is not compatible with [W]</span>"
-	else if (istype(W, /obj/item/weapon/hemostat) && !locked && !isnull(paicard) && user.a_intent != "harm")
+	else if (istype(W, /obj/item/weapon/hemostat) && !isnull(paicard))
 		if (open)
 			user << "<span class='warning'>Close the access panel before manipulating the personality slot!</span>"
 		else
-			user.visible_message("[user] uses [W] to pry [paicard] out of [bot_name]!","<span class='notice'>You pry [paicard] out of [bot_name] with [W].</span>")
-			ejectpai()
+			var/T = user.loc
+			user << "<span class='notice'>You attempt to pull [paicard] free...</span>"
+			if(do_after(user, 30, target = src))
+				if(istype(src, /mob/living/simple_animal/bot) && user && W && T)
+					if(user.get_active_hand() == W && user.loc == T) //The insanity of sanity checks, folks.
+						user.visible_message("[user] uses [W] to pull [paicard] out of [bot_name]!","<span class='notice'>You pull [paicard] out of [bot_name] with [W].</span>")
+						ejectpai()
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
@@ -523,6 +528,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/patrol_step()
 
+	if(client)		// In use by player, don't actually move.
+		return
+
 	if(loc == patrol_target)		// reached target
 		//Find the next beacon matching the target.
 		if(!get_next_patrol_target())
@@ -629,6 +637,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 			speak("Responding.", radio_channel)
 			calc_summon_path()
 			return
+
+		if("ejectpai")
+			if(bot_core.allowed(user) && !isnull(paicard))
+				speak("Ejecting personality chip.", radio_channel)
+				ejectpai()
+			return
 	return
 
 //
@@ -649,6 +663,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 		if("home")
 			src << "<span class='warning big'>RETURN HOME!</span>"
+		if("ejectpai")
+			return
 		else
 			src << "<span class='warning'>Unidentified control sequence recieved:[command]</span>"
 
@@ -672,6 +688,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 			bot_reset()
 
 /mob/living/simple_animal/bot/proc/summon_step()
+
+	if(client)		// In use by player, don't actually move.
+		return
 
 	if(loc == summon_target)		// Arrived to summon location.
 		bot_reset()
@@ -769,7 +788,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				usr << "<span class='notice'>[text_dehack]</span>"
 				bot_reset()
 		if("ejectpai")
-			if (!isnull(paicard) && (bot_core.allowed(usr) || !locked))
+			if (!isnull(paicard) && (!locked || issilicon(usr) || IsAdminGhost(usr)))
 				usr << "<span class='notice'>You eject [paicard] from [bot_name]</span>"
 				ejectpai()
 	update_controls()
@@ -810,25 +829,20 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/showpai(mob/user)
 	var/eject = ""
-	if(!isnull(paicard) || allow_pai)
-		eject += "Personality card status: "
-		if(!isnull(paicard))
-			if(bot_core.allowed(usr) || !locked)
+	if((!locked || issilicon(usr) || IsAdminGhost(usr)))
+		if(!isnull(paicard) || allow_pai)
+			eject += "Personality card status: "
+			if(!isnull(paicard))
 				if(client)
 					eject += "<A href='?src=\ref[src];operation=ejectpai'>Active</A>"
 				else
 					eject += "<A href='?src=\ref[src];operation=ejectpai'>Inactive</A>"
+			else if (!allow_pai || !isnull(key))
+				eject += "Unavailable"
 			else
-				if(client)
-					eject += "Active"
-				else
-					eject += "Inactive"
-		else if (!allow_pai || !isnull(key))
-			eject += "Unavailable"
-		else
-			eject += "Not inserted"
+				eject += "Not inserted"
+			eject += "<BR>"
 		eject += "<BR>"
-	eject += "<BR>"
 	return eject
 
 /mob/living/simple_animal/bot/proc/ejectpai(announce = 1)
@@ -856,3 +870,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/revive()
 	..()
 	update_icon()
+
+/mob/living/simple_animal/bot/ghost()
+	if (stat != DEAD) // Only ghost if we're doing this while alive, the pAI probably isn't dead yet.
+		..()
+	if (!isnull(paicard) && !isnull(paicard.pai))
+		ejectpai(0)
+

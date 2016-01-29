@@ -71,7 +71,10 @@ var/global/mulebot_count = 0
 
 /mob/living/simple_animal/bot/mulebot/proc/set_suffix(suffix)
 	src.suffix = suffix
-	name = "\improper MULEbot ([suffix])"
+	if (!isnull(paicard))
+		bot_name = "\improper MULEbot ([suffix])"
+	else
+		name = "\improper MULEbot ([suffix])"
 
 /mob/living/simple_animal/bot/mulebot/bot_reset()
 	..()
@@ -247,6 +250,11 @@ var/global/mulebot_count = 0
 			auto_pickup = !auto_pickup
 		if("report")
 			report_delivery = !report_delivery
+		if("ejectpai")
+			if(bot_core.allowed(user) && !isnull(paicard))
+				speak("Ejecting personality chip.", radio_channel)
+				ejectpai()
+			return
 
 // TODO: remove this; PDAs currently depend on it
 /mob/living/simple_animal/bot/mulebot/get_controls(mob/user)
