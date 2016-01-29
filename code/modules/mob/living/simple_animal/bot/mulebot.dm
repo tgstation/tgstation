@@ -24,6 +24,9 @@ var/global/mulebot_count = 0
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
 
+	radio_key = /obj/item/device/encryptionkey/headset_cargo
+	radio_channel = "Supply"
+
 	bot_type = MULE_BOT
 	model = "MULE"
 	bot_core_type = /obj/machinery/bot_core/mulebot
@@ -115,12 +118,10 @@ var/global/mulebot_count = 0
 	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
 
 /mob/living/simple_animal/bot/mulebot/update_icon()
-	switch(mode)
-		if(BOT_IDLE && open)
-			if(open)
-				icon_state="mulebot-hatch"
-		else
-			icon_state = "mulebot[wires.is_cut(WIRE_AVOIDANCE)]"
+	if(BOT_IDLE && open)
+		icon_state="mulebot-hatch"
+	else
+		icon_state = "mulebot[wires.is_cut(WIRE_AVOIDANCE)]"
 	overlays.Cut()
 	if(load && !ismob(load))//buckling handles the mob offsets
 		load.pixel_y = initial(load.pixel_y) + 9
@@ -445,7 +446,7 @@ var/global/mulebot_count = 0
 						process_bot()
 
 /mob/living/simple_animal/bot/mulebot/proc/process_bot()
-	if(!on)
+	if(!on || client)
 		return
 	update_icon()
 
@@ -720,6 +721,12 @@ var/global/mulebot_count = 0
 	..()
 	if(load)
 		unload()
+
+/mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A)
+	if(isturf(A) && isturf(loc) && loc.Adjacent(A) && load)
+		unload(get_dir(loc, get_step_towards(loc,A)))
+	else
+		..()
 
 #undef SIGH
 #undef ANNOYED

@@ -8,6 +8,7 @@
 	anchored = 0
 	health = 25
 	maxHealth = 25
+	radio_key = /obj/item/device/encryptionkey/headset_service
 	radio_channel = "Service" //Service
 	bot_type = CLEAN_BOT
 	model = "Cleanbot"
@@ -202,6 +203,7 @@
 /mob/living/simple_animal/bot/cleanbot/get_controls(mob/user)
 	var/dat
 	dat += hack(user)
+	dat += showpai(user)
 	dat += text({"
 <TT><B>Cleaner v1.1 controls</B></TT><BR><BR>
 Status: []<BR>

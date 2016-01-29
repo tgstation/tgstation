@@ -17,6 +17,7 @@
 	bot_core_type = /obj/machinery/bot_core/secbot
 	window_id = "autosec"
 	window_name = "Automatic Security Unit v1.6"
+	allow_pai = 0
 
 	var/mob/living/carbon/target
 	var/oldtarget_name
@@ -86,6 +87,7 @@
 /mob/living/simple_animal/bot/secbot/get_controls(mob/user)
 	var/dat
 	dat += hack(user)
+	dat += showpai(user)
 	dat += text({"
 <TT><B>Securitron v1.6 controls</B></TT><BR><BR>
 Status: []<BR>

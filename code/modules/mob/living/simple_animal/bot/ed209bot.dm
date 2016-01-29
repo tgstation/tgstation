@@ -19,6 +19,7 @@
 	bot_core = /obj/machinery/bot_core/secbot
 	window_id = "autoed209"
 	window_name = "Automatic Security Unit v2.6"
+	allow_pai = 0
 
 	var/lastfired = 0
 	var/shot_delay = 3 //.3 seconds between shots
@@ -94,6 +95,7 @@
 /mob/living/simple_animal/bot/ed209/get_controls(mob/user)
 	var/dat
 	dat += hack(user)
+	dat += showpai(user)
 	dat += text({"
 <TT><B>Security Unit v2.6 controls</B></TT><BR><BR>
 Status: []<BR>

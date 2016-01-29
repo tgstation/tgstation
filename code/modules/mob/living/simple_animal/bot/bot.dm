@@ -25,6 +25,9 @@
 	var/window_name = "Protobot 1.0" //Popup title
 	var/window_width = 0 //0 for default size
 	var/window_height = 0
+	var/obj/item/device/paicard/paicard // Inserted pai card.
+	var/allow_pai = 1 // Are we even allowed to inset a pai card.
+	var/bot_name
 
 	var/list/player_access = list() //Additonal access the bots gets when player controlled
 	var/emagged = 0
@@ -77,7 +80,10 @@
 
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
-		return "<b>Sentient</b>"
+		if (!isnull(paicard))
+			return "<b>PAI Controlled</b>"
+		else
+			return "<b>Autonomous</b>"
 	else if(!on)
 		return "<span class='bad'>Inactive</span>"
 	else if(!mode)
@@ -129,6 +135,8 @@
 	canmove = .
 
 /mob/living/simple_animal/bot/Destroy()
+	if(!isnull(paicard))
+		ejectpai()
 	qdel(Radio)
 	qdel(access_card)
 	qdel(bot_core)
@@ -227,6 +235,34 @@
 				user << "<span class='warning'>Please close the access panel before locking it.</span>"
 			else
 				user << "<span class='warning'>Access denied.</span>"
+	else if(istype(W, /obj/item/device/paicard))
+		if(!isnull(paicard))
+			user << "<span class='warning'>A [paicard] is already inserted!</span>"
+		else if(allow_pai && isnull(key))
+			if(!locked && !open)
+				var/obj/item/device/paicard/card = W
+				if(!isnull(card.pai) && !isnull(card.pai.mind))
+					if(!user.unEquip(W))
+						return
+					W.forceMove(src)
+					paicard = card
+					user.visible_message("[user] inserts [W] into [src]!","<span class='notice'>You insert [W] into [src].</span>")
+					paicard.pai.mind.transfer_to(src)
+					src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
+					bot_name = name
+					name = paicard.pai.name
+				else
+					user << "<span class='warning'>This [W] is inactive.</span>"
+			else
+				user << "<span class='warning'>The personality slot is locked.</span>"
+		else
+			user << "<span class='warning'>[src] is not compatible with [W]</span>"
+	else if (istype(W, /obj/item/weapon/hemostat) && !locked && !isnull(paicard) && user.a_intent != "harm")
+		if (open)
+			user << "<span class='warning'>Close the access panel before manipulating the personality slot!</span>"
+		else
+			user.visible_message("[user] uses [W] to pry [paicard] out of [bot_name]!","<span class='notice'>You pry [paicard] out of [bot_name] with [W].</span>")
+			ejectpai()
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
@@ -261,7 +297,11 @@
 	var/was_on = on
 	stat |= EMPED
 	PoolOrNew(/obj/effect/overlay/temp/emp, loc)
-	if(on)
+	if(!isnull(paicard))
+		paicard.emp_act(severity)
+		src.visible_message("[paicard] is flies out of [bot_name]!","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")
+		ejectpai(0)
+	if (on)
 		turn_off()
 	spawn(severity*300)
 		stat &= ~EMPED
@@ -728,6 +768,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 				hacked = 0
 				usr << "<span class='notice'>[text_dehack]</span>"
 				bot_reset()
+		if("ejectpai")
+			if (!isnull(paicard) && (bot_core.allowed(usr) || !locked))
+				usr << "<span class='notice'>You eject [paicard] from [bot_name]</span>"
+				ejectpai()
 	update_controls()
 
 /mob/living/simple_animal/bot/proc/update_icon()
@@ -761,8 +805,44 @@ Pass a positive integer as an argument to override a bot's default speed.
 		hack += "[emagged == 2 ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
 		hack += "Harm Prevention Safety System: <A href='?src=\ref[src];operation=hack'>[emagged ? "<span class='bad'>DANGER</span>" : "Engaged"]</A><BR>"
 	else if(!locked) //Humans with access can use this option to hide a bot from the AI's remote control panel and PDA control.
-		hack += "Remote network control radio: <A href='?src=\ref[src];operation=remote'>[remote_disabled ? "Disconnected" : "Connected"]</A><BR><BR>"
+		hack += "Remote network control radio: <A href='?src=\ref[src];operation=remote'>[remote_disabled ? "Disconnected" : "Connected"]</A><BR>"
 	return hack
+
+/mob/living/simple_animal/bot/proc/showpai(mob/user)
+	var/eject = ""
+	if(!isnull(paicard) || allow_pai)
+		eject += "Personality card status: "
+		if(!isnull(paicard))
+			if(bot_core.allowed(usr) || !locked)
+				if(client)
+					eject += "<A href='?src=\ref[src];operation=ejectpai'>Active</A>"
+				else
+					eject += "<A href='?src=\ref[src];operation=ejectpai'>Inactive</A>"
+			else
+				if(client)
+					eject += "Active"
+				else
+					eject += "Inactive"
+		else if (!allow_pai || !isnull(key))
+			eject += "Unavailable"
+		else
+			eject += "Not inserted"
+		eject += "<BR>"
+	eject += "<BR>"
+	return eject
+
+/mob/living/simple_animal/bot/proc/ejectpai(announce = 1)
+	if(!isnull(paicard))
+		if(mind)
+			mind.transfer_to(paicard.pai)
+		else
+			paicard.pai.key = key
+			key = null
+		paicard.forceMove(loc)
+		if(announce)
+			paicard.pai << "<span class='notice'>You feel your control fade as [paicard] ejects from [bot_name].</span>"
+		paicard = null
+		name = bot_name
 
 /mob/living/simple_animal/bot/Login()
 	. = ..()
