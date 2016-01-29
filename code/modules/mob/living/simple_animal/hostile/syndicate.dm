@@ -2,8 +2,8 @@
 	CONTENTS
 	LINE 10  - BASE MOB
 	LINE 43  - SWORD AND SHIELD
-	LINE 85  - GUNS
-	LINE 126 - MISC
+	LINE 95  - GUNS
+	LINE 136 - MISC
 */
 
 
@@ -62,7 +62,7 @@
 		return
 	if(prob(50))
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			src.health -= Proj.damage
+			src.adjustHealth(Proj.damage)
 	else
 		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
 	return 0
