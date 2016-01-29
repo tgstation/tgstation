@@ -362,14 +362,12 @@ var/global/mulebot_count = 0
 	update_icon()
 
 /mob/living/simple_animal/bot/mulebot/proc/load_mob(mob/living/M)
-	if(M.buckled)
-		return 0
-	passenger = M
-	load = M
-	can_buckle = 1
-	buckle_mob(M)
-	can_buckle = 0
-	return 1
+	if(buckle_mob(M))
+		passenger = M
+		load = M
+		can_buckle = FALSE
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/bot/mulebot/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob) //post buckling
