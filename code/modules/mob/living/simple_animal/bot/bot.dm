@@ -26,8 +26,9 @@
 	var/window_width = 0 //0 for default size
 	var/window_height = 0
 	var/obj/item/device/paicard/paicard // Inserted pai card.
-	var/allow_pai = 1 // Are we even allowed to inset a pai card.
+	var/allow_pai = 1 // Are we even allowed to insert a pai card.
 	var/bot_name
+	var/pai_history = list()
 
 	var/list/player_access = list() //Additonal access the bots gets when player controlled
 	var/emagged = 0
@@ -80,7 +81,7 @@
 
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
-		if (!isnull(paicard))
+		if (paicard)
 			return "<b>PAI Controlled</b>"
 		else
 			return "<b>Autonomous</b>"
@@ -135,7 +136,7 @@
 	canmove = .
 
 /mob/living/simple_animal/bot/Destroy()
-	if(!isnull(paicard))
+	if(paicard)
 		ejectpai()
 	qdel(Radio)
 	qdel(access_card)
@@ -162,6 +163,7 @@
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 		src << "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>"
+		add_logs(user, src, "emagged")
 		return
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
 		user << "<span class='warning'>You need to open maintenance panel first!</span>"
@@ -236,13 +238,13 @@
 			else
 				user << "<span class='warning'>Access denied.</span>"
 	else if(istype(W, /obj/item/device/paicard))
-		if(!isnull(paicard))
+		if(paicard)
 			user << "<span class='warning'>A [paicard] is already inserted!</span>"
-		else if(allow_pai && isnull(key))
+		else if(allow_pai && !key)
 			if(!locked && !open)
 				var/obj/item/device/paicard/card = W
-				if(!isnull(card.pai) && !isnull(card.pai.mind))
-					if(!user.unEquip(W))
+				if(card.pai && card.pai.mind)
+					if(!user.drop_item())
 						return
 					W.forceMove(src)
 					paicard = card
@@ -251,13 +253,14 @@
 					src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
 					bot_name = name
 					name = paicard.pai.name
+					pai_history += text("\[[time_stamp()]\] [paicard.pai][(ismob(paicard.pai) && paicard.pai.ckey) ? "([paicard.pai.ckey])" : ""] added to [src.bot_name] by [user][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]")
 				else
 					user << "<span class='warning'>[W] is inactive.</span>"
 			else
 				user << "<span class='warning'>The personality slot is locked.</span>"
 		else
 			user << "<span class='warning'>[src] is not compatible with [W]</span>"
-	else if (istype(W, /obj/item/weapon/hemostat) && !isnull(paicard))
+	else if (istype(W, /obj/item/weapon/hemostat) && paicard)
 		if (open)
 			user << "<span class='warning'>Close the access panel before manipulating the personality slot!</span>"
 		else
@@ -267,7 +270,7 @@
 				if(istype(src, /mob/living/simple_animal/bot) && user && W && T)
 					if(user.get_active_hand() == W && user.loc == T) //The insanity of sanity checks, folks.
 						user.visible_message("[user] uses [W] to pull [paicard] out of [bot_name]!","<span class='notice'>You pull [paicard] out of [bot_name] with [W].</span>")
-						ejectpai()
+						ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
@@ -302,7 +305,7 @@
 	var/was_on = on
 	stat |= EMPED
 	PoolOrNew(/obj/effect/overlay/temp/emp, loc)
-	if(!isnull(paicard))
+	if(paicard)
 		paicard.emp_act(severity)
 		src.visible_message("[paicard] is flies out of [bot_name]!","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")
 		ejectpai(0)
@@ -639,9 +642,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 			return
 
 		if("ejectpai")
-			if(bot_core.allowed(user) && !isnull(paicard))
+			if(bot_core.allowed(user) && paicard)
 				speak("Ejecting personality chip.", radio_channel)
-				ejectpai()
+				ejectpai(user)
 			return
 	return
 
@@ -788,9 +791,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 				usr << "<span class='notice'>[text_dehack]</span>"
 				bot_reset()
 		if("ejectpai")
-			if (!isnull(paicard) && (!locked || issilicon(usr) || IsAdminGhost(usr)))
+			if (paicard && (!locked || issilicon(usr) || IsAdminGhost(usr)))
 				usr << "<span class='notice'>You eject [paicard] from [bot_name]</span>"
-				ejectpai()
+				ejectpai(usr)
 	update_controls()
 
 /mob/living/simple_animal/bot/proc/update_icon()
@@ -830,14 +833,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/showpai(mob/user)
 	var/eject = ""
 	if((!locked || issilicon(usr) || IsAdminGhost(usr)))
-		if(!isnull(paicard) || allow_pai)
+		if(paicard || allow_pai)
 			eject += "Personality card status: "
-			if(!isnull(paicard))
+			if(paicard)
 				if(client)
 					eject += "<A href='?src=\ref[src];operation=ejectpai'>Active</A>"
 				else
 					eject += "<A href='?src=\ref[src];operation=ejectpai'>Inactive</A>"
-			else if (!allow_pai || !isnull(key))
+			else if (!allow_pai || key)
 				eject += "Unavailable"
 			else
 				eject += "Not inserted"
@@ -845,14 +848,20 @@ Pass a positive integer as an argument to override a bot's default speed.
 		eject += "<BR>"
 	return eject
 
-/mob/living/simple_animal/bot/proc/ejectpai(announce = 1)
-	if(!isnull(paicard))
-		if(mind)
+/mob/living/simple_animal/bot/proc/ejectpai(mob/user = null, announce = 1)
+	if(paicard)
+		if(mind && paicard.pai)
 			mind.transfer_to(paicard.pai)
-		else
+		else if (paicard.pai)
 			paicard.pai.key = key
-			key = null
+		else
+			ghostize(0) // The pAI card that just got ejected was dead.
+		key = null
 		paicard.forceMove(loc)
+		if (user)
+			pai_history += text("\[[time_stamp()]\] [paicard.pai][(ismob(paicard.pai) && paicard.pai.ckey) ? "([paicard.pai.ckey])" : ""] removed from [src.bot_name] by [user][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]")
+		else
+			pai_history += text("\[[time_stamp()]\] [paicard.pai][(ismob(paicard.pai) && paicard.pai.ckey) ? "([paicard.pai.ckey])" : ""] force ejected from [src.bot_name]")
 		if(announce)
 			paicard.pai << "<span class='notice'>You feel your control fade as [paicard] ejects from [bot_name].</span>"
 		paicard = null
@@ -874,6 +883,5 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/ghost()
 	if (stat != DEAD) // Only ghost if we're doing this while alive, the pAI probably isn't dead yet.
 		..()
-	if (!isnull(paicard) && !isnull(paicard.pai))
+	if (paicard)
 		ejectpai(0)
-

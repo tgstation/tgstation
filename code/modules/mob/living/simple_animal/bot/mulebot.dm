@@ -71,7 +71,7 @@ var/global/mulebot_count = 0
 
 /mob/living/simple_animal/bot/mulebot/proc/set_suffix(suffix)
 	src.suffix = suffix
-	if (!isnull(paicard))
+	if (paicard)
 		bot_name = "\improper MULEbot ([suffix])"
 	else
 		name = "\improper MULEbot ([suffix])"
@@ -115,13 +115,23 @@ var/global/mulebot_count = 0
 	return
 
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user)
-	locked = !locked
-	user << "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>"
+	if (emagged < 1)
+		emagged = 1
+	if (!open)
+		locked = !locked
+		user << "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>"
+	else if (emagged < 2)
+		emagged = 2
+		if(!wires.is_cut(WIRE_AVOIDANCE))
+			wires.cut(WIRE_AVOIDANCE)
+		user << "<span class='warning'>You engage the mulebot's kill mode!</span>"
+		src << "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>"
+		add_logs(user, src, "emagged")
 	flick("mulebot-emagged", src)
 	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
 
 /mob/living/simple_animal/bot/mulebot/update_icon()
-	if(BOT_IDLE && open)
+	if(open)
 		icon_state="mulebot-hatch"
 	else
 		icon_state = "mulebot[wires.is_cut(WIRE_AVOIDANCE)]"
@@ -190,6 +200,7 @@ var/global/mulebot_count = 0
 	data["autoReturn"] = auto_return
 	data["autoPickup"] = auto_pickup
 	data["reportDelivery"] = report_delivery
+	data["haspai"] = paicard ? TRUE : FALSE
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
@@ -251,9 +262,9 @@ var/global/mulebot_count = 0
 		if("report")
 			report_delivery = !report_delivery
 		if("ejectpai")
-			if(bot_core.allowed(user) && !isnull(paicard))
+			if(bot_core.allowed(user) && paicard)
 				speak("Ejecting personality chip.", radio_channel)
-				ejectpai()
+				ejectpai(user)
 			return
 
 // TODO: remove this; PDAs currently depend on it
@@ -638,6 +649,7 @@ var/global/mulebot_count = 0
 			if(istype(M,/mob/living/silicon/robot))
 				visible_message("<span class='danger'>[src] bumps into [M]!</span>")
 			else
+				add_logs(src, M, "knocked down")
 				visible_message("<span class='danger'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
 				M.Stun(8)
@@ -647,6 +659,10 @@ var/global/mulebot_count = 0
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
+	if(client && emagged < 2)
+		return
+
+	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
 					"<span class='userdanger'>[src] drives over you!<span>")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
