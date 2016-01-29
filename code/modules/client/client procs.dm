@@ -195,7 +195,7 @@ var/next_external_rsc = 0
 		if(config.aggressive_changelog)
 			src.changes()
 		else
-			winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
+			winset(src, "infowindow.changelog", "font-style=bold")
 
 	if (ckey in clientmessages)
 		for (var/message in clientmessages[ckey])
@@ -333,3 +333,32 @@ var/next_external_rsc = 0
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+
+//view changelog
+/client/verb/changes()
+	set name = "Changelog"
+	set category = "OOC"
+	getFiles(
+		'html/88x31.png',
+		'html/bug-minus.png',
+		'html/cross-circle.png',
+		'html/hard-hat-exclamation.png',
+		'html/image-minus.png',
+		'html/image-plus.png',
+		'html/music-minus.png',
+		'html/music-plus.png',
+		'html/tick-circle.png',
+		'html/wrench-screwdriver.png',
+		'html/spell-check.png',
+		'html/burn-exclamation.png',
+		'html/chevron.png',
+		'html/chevron-expand.png',
+		'html/changelog.css',
+		'html/changelog.js',
+		'html/changelog.html'
+		)
+	src << browse('html/changelog.html', "window=changes;size=675x650")
+	if(prefs.lastchangelog != changelog_hash)
+		prefs.lastchangelog = changelog_hash
+		prefs.save_preferences()
+		winset(src, "infowindow.changelog", "font-style=;")
