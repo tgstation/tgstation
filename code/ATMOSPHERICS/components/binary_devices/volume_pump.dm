@@ -94,12 +94,6 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/components/binary/volume_pump/attack_hand(mob/user)
-	if(!src.allowed(usr))
-		usr << "<span class='danger'>Access denied.</span>"
-		return
-	..()
-
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 																		datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -130,15 +124,17 @@ Thus, the two variables affect pump operation are set in New():
 		if("rate")
 			var/rate = params["rate"]
 			if(rate == "max")
-				transfer_rate = MAX_TRANSFER_RATE
+				rate = MAX_TRANSFER_RATE
 				. = TRUE
 			else if(rate == "input")
 				rate = input("New transfer rate (0-[MAX_TRANSFER_RATE] L/s):", name, transfer_rate) as num|null
-				. = .(action, list("rate" = rate))
+				if(!isnull(rate) && !..())
+					. = TRUE
 			else if(text2num(rate) != null)
-				transfer_rate = Clamp(text2num(rate), 0, MAX_TRANSFER_RATE)
+				rate = text2num(rate)
 				. = TRUE
 			if(.)
+				transfer_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", "atmos")
 	update_icon()
 
@@ -162,12 +158,10 @@ Thus, the two variables affect pump operation are set in New():
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
 
 	if("status" in signal.data)
-		spawn(2)
-			broadcast_status()
+		broadcast_status()
 		return //do not update_icon
 
-	spawn(2)
-		broadcast_status()
+	broadcast_status()
 	update_icon()
 	return
 

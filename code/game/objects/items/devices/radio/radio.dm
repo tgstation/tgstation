@@ -140,7 +140,7 @@
 
 	return data
 
-/obj/item/device/radio/ui_act(action, params)
+/obj/item/device/radio/ui_act(action, params, datum/tgui/ui)
 	if(..())
 		return
 	switch(action)
@@ -153,19 +153,20 @@
 				var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
 				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
 				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
-				. = .(action, list("tune" = tune))
-			else if(text2num(tune) != null)
-				frequency = tune * 10
-				. = TRUE
+				if(!isnull(tune) && !..())
+					. = TRUE
 			else if(adjust)
-				frequency += adjust * 10
+				tune = frequency + adjust * 10
+				. = TRUE
+			else if(text2num(tune) != null)
+				tune = tune * 10
 				. = TRUE
 			if(.)
-				frequency = sanitize_frequency(frequency, freerange)
+				frequency = sanitize_frequency(tune, freerange)
 				set_frequency(frequency)
 				if(frequency == traitor_frequency && hidden_uplink)
 					hidden_uplink.interact(usr)
-					SStgui.close_uis(src)
+					ui.close()
 		if("listen")
 			listening = !listening
 			. = TRUE

@@ -45,13 +45,10 @@
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/smes(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	for(var/i in 1 to 5)
+		component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 5)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	RefreshParts()
 	spawn(5)
 		dir_loop:
@@ -75,8 +72,8 @@
 	var/C
 	for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
 		IO += CP.rating
-	input_level_max = 200000 * IO
-	output_level_max = 200000 * IO
+	input_level_max = initial(input_level_max) * IO
+	output_level_max = initial(output_level_max) * IO
 	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
 		MC += PC.maxcharge
 		C += PC.charge
@@ -373,42 +370,44 @@
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
 				target = input("New input target (0-[input_level_max]):", name, input_level) as num|null
-				. = .(action, list("target" = target))
+				if(!isnull(target) && !..())
+					. = TRUE
 			else if(target == "min")
-				input_level = 0
+				target = 0
 				. = TRUE
 			else if(target == "max")
-				input_level = input_level_max
-				. = TRUE
-			else if(text2num(target) != null)
-				input_level = text2num(target)
+				target = input_level_max
 				. = TRUE
 			else if(adjust)
-				input_level += adjust
+				target = input_level + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
 				. = TRUE
 			if(.)
-				input_level = Clamp(input_level, 0, input_level_max)
+				input_level = Clamp(target, 0, input_level_max)
 				log_smes(usr.ckey)
 		if("output")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
 				target = input("New output target (0-[output_level_max]):", name, output_level) as num|null
-				. = .(action, list("target" = target))
+				if(!isnull(target) && !..())
+					. = TRUE
 			else if(target == "min")
-				output_level = 0
+				target = 0
 				. = TRUE
 			else if(target == "max")
-				output_level = input_level_max
-				. = TRUE
-			else if(text2num(target) != null)
-				output_level = text2num(target)
+				target = output_level_max
 				. = TRUE
 			else if(adjust)
-				output_level += adjust
+				target = output_level + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
 				. = TRUE
 			if(.)
-				output_level = Clamp(output_level, 0, output_level_max)
+				output_level = Clamp(target, 0, output_level_max)
 				log_smes(usr.ckey)
 
 /obj/machinery/power/smes/proc/log_smes(user = "")

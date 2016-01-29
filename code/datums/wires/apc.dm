@@ -11,7 +11,7 @@
 
 /datum/wires/apc/interactable(mob/user)
 	var/obj/machinery/power/apc/A = holder
-	if(A.wiresexposed)
+	if(A.panel_open && !A.opened)
 		return TRUE
 
 /datum/wires/apc/get_status()

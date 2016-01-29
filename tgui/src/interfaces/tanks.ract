@@ -1,14 +1,14 @@
 <script>
-component.exports = {
-  computed: {
-    tankPressureState () {
-      const pressure = this.get('data.tankPressure')
-      if (pressure >= 200) return 'good'
-      else if (pressure >= 100) return 'average'
-      else return 'bad'
+  component.exports = {
+    computed: {
+      tankPressureState () {
+        const pressure = this.get('data.tankPressure')
+        if (pressure >= 200) return 'good'
+        else if (pressure >= 100) return 'average'
+        else return 'bad'
+      }
     }
   }
-}
 </script>
 
 <ui-notice>

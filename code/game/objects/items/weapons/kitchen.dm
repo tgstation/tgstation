@@ -104,9 +104,7 @@
 	item_state = "carrotshiv"
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
 	force = 8
-	throwforce = 12
-	throw_speed = 4//the aerodynamics of the carrot allow it to embed more easily
-	embedded_impact_pain_multiplier = 3
+	throwforce = 12//the aerodynamics of the carrot WOULD allow it to embed more easily if some people weren't WHINY CUCKS
 
 
 /obj/item/weapon/kitchen/rollingpin

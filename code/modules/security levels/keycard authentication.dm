@@ -58,13 +58,16 @@ var/datum/events/keycard_events = new()
 		if("red_alert")
 			if(!event_source)
 				sendEvent("Red Alert")
+				. = TRUE
 		if("emergency_maint")
 			if(!event_source)
 				sendEvent("Emergency Maintenance Access")
+				. = TRUE
 		if("auth_swipe")
 			if(event_source)
 				event_source.trigger_event(usr)
 				event_source = null
+				. = TRUE
 
 /obj/machinery/keycard_auth/proc/sendEvent(event_type)
 	triggerer = usr

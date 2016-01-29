@@ -38,7 +38,7 @@ var/next_mob_id = 0
 	for(var/id in environment.gases)
 		var/gas = environment.gases[id]
 		if(gas[MOLES])
-			t+="<span class='notice'>[gas[GAS_NAME]]: [gas[MOLES]] \n</span>"
+			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
 
 	usr << t
 
@@ -228,13 +228,6 @@ var/next_mob_id = 0
 		if(istype(I))
 			I.attack_hand(src)
 
-	return 0
-
-/mob/proc/put_in_any_hand_if_possible(obj/item/W, qdel_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	if(equip_to_slot_if_possible(W, slot_l_hand, qdel_on_fail, disable_warning, redraw_mob))
-		return 1
-	else if(equip_to_slot_if_possible(W, slot_r_hand, qdel_on_fail, disable_warning, redraw_mob))
-		return 1
 	return 0
 
 //This is a SAFE proc. Use this instead of equip_to_splot()!

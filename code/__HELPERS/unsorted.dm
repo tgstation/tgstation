@@ -801,7 +801,7 @@ var/global/list/common_tools = list(
 Checks if that loc and dir has a item on the wall
 */
 var/list/WALLITEMS = list(
-	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
+	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
@@ -866,7 +866,7 @@ var/list/WALLITEMS_INVERSE = list(
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
 			if(id in hardcoded_gases || gas_concentration > 0.01) //ensures the four primary gases are always shown.
-				user << "<span class='notice'>[cached_gases[id][GAS_NAME]]: [round(gas_concentration*100)] %</span>"
+				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100)] %</span>"
 
 		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
 	else
@@ -1146,3 +1146,35 @@ B --><-- A
 	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
 			return 1
+
+proc/add_to_proximity_list(atom/A, range)
+	var/turf/T = get_turf(A)
+	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
+	for(var/B in L)
+		var/turf/C = B
+		C.proximity_checkers |= A
+	return L
+
+proc/remove_from_proximity_list(atom/A, range)
+	var/turf/T = get_turf(A)
+	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
+	for(var/B in L)
+		var/turf/C = B
+		C.proximity_checkers.Remove(A)
+
+proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
+	var/turf/T = get_turf(A)
+	var/turf/Q = get_turf(B)
+	if(T == Q && range == newrange)
+		return 0
+	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
+	var/list/M = block(locate(Q.x - newrange, Q.y - newrange, Q.z), locate(Q.x + newrange, Q.y + newrange, Q.z))
+	var/list/N = L - M
+	var/list/O = M - L
+	for(var/C in N)
+		var/turf/D = C
+		D.proximity_checkers.Remove(checker)
+	for(var/E in O)
+		var/turf/F = E
+		F.proximity_checkers |= checker
+	return 1
