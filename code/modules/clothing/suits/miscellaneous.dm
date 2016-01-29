@@ -165,11 +165,11 @@
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 
-/obj/item/clothing/suit/stormtrooper
+/obj/item/clothing/suit/squallwalker
 	name = "squallwalker suit"
 	desc = "Cease-and-Desist incoming"
-	icon_state = "stormtrooper"
-	item_state = "stormtrooper"
+	icon_state = "squallwalker"
+	item_state = "squallwalker"
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 
