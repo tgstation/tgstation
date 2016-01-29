@@ -317,7 +317,7 @@
 
 
 /obj/machinery/space_heater/campfire/Crossed(mob/user as mob)
-	if(istype(user,/mob/living/carbon) && on)
+	if(istype(user,/mob/living/carbon/human) && on)
 		var/mob/living/carbon/absolutemadman = user
 		absolutemadman.adjust_fire_stacks(1)
 		absolutemadman.IgniteMob()
