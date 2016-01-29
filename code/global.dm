@@ -393,3 +393,6 @@ var/datum/stat_collector/stat_collection = new
 //Hardcore mode
 //When enabled, starvation kills
 var/global/hardcore_mode = 0
+
+//Global list of all unsimulated mineral turfs for xenoarch
+var/global/list/mineral_turfs = list()

@@ -75,6 +75,9 @@
 
 /turf/New()
 	..()
+	if(loc)
+		var/area/A = loc
+		A.area_turfs += src
 	for(var/atom/movable/AM as mob|obj in src)
 		spawn( 0 )
 			src.Entered(AM)
@@ -379,6 +382,9 @@
 
 //Creates a new turf
 /turf/proc/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_lighting_update = 0, var/allow = 1)
+	if(loc)
+		var/area/A = loc
+		A.area_turfs -= src
 	if (!N || !allow)
 		return
 

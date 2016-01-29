@@ -801,9 +801,12 @@ proc/GaussRandRound(var/sigma,var/roundto)
 		areatype = areatemp.type
 
 	var/list/turfs = new/list()
-	for(var/area/N in areas)
+	/*for(var/area/N in areas)
 		if(istype(N, areatype))
-			for(var/turf/T in N) turfs += T
+			for(var/turf/T in N) turfs += T*/
+	var/area/N = locate(areatype) in areas
+	if(N)
+		turfs += N.area_turfs
 	return turfs
 
 //Takes: Area type as text string or as typepath OR an instance of the area.

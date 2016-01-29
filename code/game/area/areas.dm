@@ -6,8 +6,10 @@
 	var/global/global_uid = 0
 	var/uid
 	var/obj/machinery/power/apc/areaapc = null
+	var/list/area_turfs
 
 /area/New()
+	area_turfs = list()
 	icon_state = ""
 	layer = 10
 	uid = ++global_uid
