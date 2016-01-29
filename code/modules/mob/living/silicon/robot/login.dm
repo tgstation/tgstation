@@ -9,3 +9,5 @@
 		ticker.mode.remove_thrall(mind,0)
 		ticker.mode.remove_shadowling(mind)
 		ticker.mode.remove_hog_follower(mind, 0)
+
+	winset(src, null, "mainwindow.macro=robot-default")

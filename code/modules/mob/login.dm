@@ -60,3 +60,5 @@
 	add_click_catcher()
 
 	sync_mind()
+
+	winset(src, null, "mainwindow.macro=default")
