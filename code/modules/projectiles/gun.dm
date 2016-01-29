@@ -129,7 +129,7 @@
 		O.emp_act(severity)
 
 
-/obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)//TODO: go over this
+/obj/item/weapon/gun/afterattack(atom/target, mob/living/user, flag, params)//TODO: go over this
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
@@ -141,8 +141,13 @@
 		if(target == user) //so we can't shoot ourselves (unless mouth selected)
 			return
 
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!can_trigger_gun(L))
+			return
+
 	//Exclude lasertag guns from the CLUMSY check.
-	if(clumsy_check && can_shoot())
+	if(clumsy_check)
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
 			if (M.disabilities & CLUMSY && prob(40))
@@ -152,10 +157,7 @@
 				M.drop_item()
 				return
 
-	if(isliving(user))
-		var/mob/living/L = user
-		if(!can_trigger_gun(L))
-			return
+
 
 	process_fire(target,user,1,params)
 
@@ -167,6 +169,9 @@
 		return 0
 
 	if(!handle_pins(user))
+		return 0
+
+	if(!can_shoot())
 		return 0
 
 	if(trigger_guard)
