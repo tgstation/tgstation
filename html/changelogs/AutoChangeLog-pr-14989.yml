@@ -1,5 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscadd: "Holoparasites can now see their summoner's health at all times. The health displayed is a percentage, with 0 being dead."
-  - imageadd: "Holoparasites now have visual flashes on the summoner's location when recalled due to range limits and when manifesting."
