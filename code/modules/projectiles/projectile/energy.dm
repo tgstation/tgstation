@@ -14,6 +14,7 @@
 	stun = 10
 	weaken = 10
 	stutter = 10
+	hitsound = 'sound/weapons/taserhit.ogg'
 /*VG EDIT
 	agony = 40
 	damage_type = HALLOSS

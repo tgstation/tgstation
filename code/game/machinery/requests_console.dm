@@ -53,6 +53,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/message = "";
 	var/dpt = ""; //the department which will be receiving the message
 	var/priority = -1 ; //Priority of the message being sent
+	var/announceSound = 'sound/vox/bloop.wav'
 	luminosity = 0
 
 /obj/machinery/requests_console/power_change()
@@ -274,6 +275,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		for(var/mob/M in player_list)
 			if(!istype(M,/mob/new_player) && M.client)
 				to_chat(M, "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>")
+				M << sound(announceSound)
 		announceAuth = 0
 		message = ""
 		screen = 0
