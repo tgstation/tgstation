@@ -303,7 +303,8 @@
 		O.icon = fixed_underlay["icon"]
 		O.icon_state = fixed_underlay["icon_state"]
 	else if(fixed_underlay["space"])
-		O.icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+		O.icon = 'icons/turf/space.dmi'
+		O.icon_state = SPACE_ICON_STATE
 	else
 		O.icon = DEFAULT_UNDERLAY_ICON
 		O.icon_state = DEFAULT_UNDERLAY_ICON_STATE
