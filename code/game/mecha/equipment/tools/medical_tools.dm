@@ -561,3 +561,8 @@
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/action(atom/target)
 	medigun.process_fire(target, loc)
 
+
+/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/detach()
+	SSobj.processing -= src
+	medigun.LoseTarget()
+	return ..()
