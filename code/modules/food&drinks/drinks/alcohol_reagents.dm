@@ -1,6 +1,7 @@
-
-
-
+#define SOLID 1
+#define LIQUID 2
+#define GAS 3
+#define REM REAGENTS_EFFECT_MULTIPLIER
 ///////////////////////////////////////////////////////////////////////////////////////
 						//ALCOHOLS
 /////////////////////////////////////////////////////////////////////////////////////
@@ -632,3 +633,8 @@
 	description = "A weird mix of whiskey and blumpkin juice."
 	color = "#1EA0FF" // rgb: 102, 67, 0
 	boozepwr = 35
+
+#undef SOLID
+#undef LIQUID
+#undef GAS
+#undef REM

@@ -1,3 +1,7 @@
+#define SOLID 1
+#define LIQUID 2
+#define GAS 3
+#define REM REAGENTS_EFFECT_MULTIPLIER
 ///////////////////////////////////////////////////////////////////
 					//Food Reagents
 //////////////////////////////////////////////////////////////////
@@ -434,3 +438,7 @@
 /datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/M)
 	holder.add_reagent("sugar", 3)
 	..()
+#define SOLID
+#define LIQUID
+#define GAS
+#define REM
