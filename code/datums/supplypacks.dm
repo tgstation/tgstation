@@ -925,6 +925,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/seeds/tomatoseed,
 					/obj/item/seeds/soyaseed,
 					/obj/item/seeds/wheatseed,
+					/obj/item/seeds/riceseed,
 					/obj/item/seeds/carrotseed,
 					/obj/item/seeds/sunflowerseed,
 					/obj/item/seeds/chantermycelium,
