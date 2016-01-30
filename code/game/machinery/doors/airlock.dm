@@ -991,7 +991,7 @@ About the new airlock wires panel:
 			if (shock(user, 100))
 				return
 	//Basically no open panel, not opening already, door has power, area has power, door isn't bolted
-	if (!panel_open && !operating && arePowerSystemsOn() && !(stat & NOPOWER|BROKEN) && !locked)
+	if (!panel_open && !operating && arePowerSystemsOn() && !(stat & (NOPOWER|BROKEN)) && !locked)
 		..(user)
 	//else
 	//	// TODO: logic for adding fingerprints when interacting with wires
@@ -1135,7 +1135,7 @@ About the new airlock wires panel:
 
 	if (!electronics)
 		A = new/obj/item/weapon/circuitboard/airlock(loc)
-
+		A.installed = 1
 		if(req_access && req_access.len)
 			A.conf_access = req_access
 		else if(req_one_access && req_one_access.len)
