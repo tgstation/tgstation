@@ -990,7 +990,8 @@ About the new airlock wires panel:
 			// TODO: analyze the called proc
 			if (shock(user, 100))
 				return
-	if (!panel_open)
+	//Basically no open panel, not opening already, door has power, area has power, door isn't bolted
+	if (!panel_open && !operating && arePowerSystemsOn() && !(stat & NOPOWER|BROKEN) && !locked)
 		..(user)
 	//else
 	//	// TODO: logic for adding fingerprints when interacting with wires
