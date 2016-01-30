@@ -546,7 +546,7 @@
 	oneharvest = 1
 	plant_type = 0
 	growthstages = 6
-	mutatelist = list(/obj/item/seeds/oatseed, /obj/item/seeds/riceseed)
+	mutatelist = list(/obj/item/seeds/oatseed)
 
 /obj/item/seeds/oatseed
 	name = "pack of oat seeds"
