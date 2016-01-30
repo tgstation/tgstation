@@ -62,10 +62,10 @@
 	if(key)//Someone is in it
 		return
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
-	if(spider_ask == "No" || gc_destroyed)
+	if(spider_ask == "No" || !src || !qdeleted(src))
 		return
 	if(key)
-		user << "Someone else took this spider"
+		user << "<span class='notice'>Someone else already took this spider.</span>"
 		return
 	key = user.key
 
