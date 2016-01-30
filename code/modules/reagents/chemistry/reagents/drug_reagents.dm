@@ -27,8 +27,8 @@
 
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
-	if(M.hallucination < volume && prob(20))
-		M.hallucination += 5
+	if(M.hallucination < volume*10)
+		M.hallucination += 50
 	..()
 	return
 
