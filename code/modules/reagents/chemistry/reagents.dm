@@ -3,7 +3,7 @@
 #define GAS 3
 
 #define REM REAGENTS_EFFECT_MULTIPLIER
-
+//Moved food_reagents.dm,drink_reagents.dm and alcohol_reagents.dm to food&drinks folder in modules.
 //Various reagents
 //Toxin & acid reagents
 //Hydroponics stuff
