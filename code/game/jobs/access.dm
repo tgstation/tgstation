@@ -159,11 +159,16 @@
 
 
 /obj/proc/check_access_list(list/L)
-	if(!src.req_access  && !src.req_one_access)	return 1
-	if(!istype(src.req_access, /list))	return 1
-	if(!src.req_access.len && (!src.req_one_access || !src.req_one_access.len))	return 1
-	if(!L)	return 0
-	if(!istype(L, /list))	return 0
+	if(!src.req_access  && !src.req_one_access)
+		return 1
+	if(!istype(src.req_access, /list))
+		return 1
+	if(!src.req_access.len && (!src.req_one_access || !src.req_one_access.len))
+		return 1
+	if(!L)
+		return 0
+	if(!istype(L, /list))
+		return 0
 	for(var/req in src.req_access)
 		if(!(req in L)) //doesn't have this access
 			return 0
@@ -437,7 +442,8 @@
 
 /obj/item/proc/GetJobName() //Used in secHUD icon generation
 	var/obj/item/weapon/card/id/I = GetID()
-	if(!I)	return
+	if(!I)
+		return
 	var/jobName = I.assignment
 	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
 		return jobName

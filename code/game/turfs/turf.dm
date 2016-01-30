@@ -26,6 +26,8 @@
 
 	flags = 0
 
+	var/list/proximity_checkers = list()
+
 	var/image/obscured	//camerachunks
 /turf/New()
 	..()
@@ -91,12 +93,9 @@
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/M)
-	var/loopsanity = 100
-	for(var/atom/A in range(1))
-		if(loopsanity == 0)
-			break
-		loopsanity--
-		A.HasProximity(M, 1)
+	for(var/A in proximity_checkers)
+		var/atom/B = A
+		B.HasProximity(M)
 
 /turf/proc/is_plasteel_floor()
 	return 0
@@ -120,8 +119,10 @@
 
 //Creates a new turf
 /turf/proc/ChangeTurf(path)
-	if(!path)			return
-	if(path == type)	return src
+	if(!path)
+		return
+	if(path == type)
+		return src
 
 	SSair.remove_from_active(src)
 
@@ -161,8 +162,8 @@
 					total.temperature += S.air.temperature
 				turf_count++
 
+		air.copy_from(total)
 		if(turf_count) //if there weren't any open turfs, no need to update.
-			air.copy_from(total)
 			var/list/air_gases = air.gases
 			for(var/id in air_gases)
 				air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like

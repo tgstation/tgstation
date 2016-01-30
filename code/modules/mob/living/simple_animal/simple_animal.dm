@@ -73,6 +73,9 @@
 	var/del_on_death = 0 //causes mob to be deleted on death, useful for mobs that spawn lootable corpses
 	var/deathmessage = ""
 
+	var/allow_movement_on_non_turfs = FALSE
+
+
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
@@ -135,7 +138,7 @@
 
 /mob/living/simple_animal/proc/handle_automated_movement()
 	if(!stop_automated_movement && wander)
-		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if((isturf(src.loc) || allow_movement_on_non_turfs) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
@@ -286,26 +289,27 @@
 		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth)
 	handle_regular_status_updates()
+	return amount
 
 /mob/living/simple_animal/adjustBruteLoss(amount)
 	if(damage_coeff[BRUTE])
-		adjustHealth(amount*damage_coeff[BRUTE])
+		. = adjustHealth(amount*damage_coeff[BRUTE])
 
 /mob/living/simple_animal/adjustFireLoss(amount)
 	if(damage_coeff[BURN])
-		adjustHealth(amount*damage_coeff[BURN])
+		. = adjustHealth(amount*damage_coeff[BURN])
 
 /mob/living/simple_animal/adjustOxyLoss(amount)
 	if(damage_coeff[OXY])
-		adjustHealth(amount*damage_coeff[OXY])
+		. = adjustHealth(amount*damage_coeff[OXY])
 
 /mob/living/simple_animal/adjustToxLoss(amount)
 	if(damage_coeff[TOX])
-		adjustHealth(amount*damage_coeff[TOX])
+		. = adjustHealth(amount*damage_coeff[TOX])
 
 /mob/living/simple_animal/adjustCloneLoss(amount)
 	if(damage_coeff[CLONE])
-		adjustHealth(amount*damage_coeff[CLONE])
+		. = adjustHealth(amount*damage_coeff[CLONE])
 
 /mob/living/simple_animal/adjustStaminaLoss(amount)
 	return

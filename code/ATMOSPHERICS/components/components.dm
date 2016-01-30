@@ -3,7 +3,7 @@ So much of atmospherics.dm was used solely by components, so separating this mak
 On top of that, now people can add component-speciic procs/vars if they want!
 */
 
-/obj/machinery/atmospherics/components/
+/obj/machinery/atmospherics/components
 	var/welded = 0 //Used on pumps and scrubbers
 	var/showpipe = 0
 
@@ -163,3 +163,13 @@ Helpers
 /obj/machinery/atmospherics/components/dealWithShuttleStuff(I)
 	..()
 	nullifyPipenet(PARENT_I)
+
+/*
+UI Stuff
+*/
+
+/obj/machinery/atmospherics/components/ui_status(mob/user)
+	if(allowed(user))
+		return ..()
+	user << "<span class='danger'>Access denied.</span>"
+	return UI_CLOSE

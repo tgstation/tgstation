@@ -50,8 +50,13 @@ export function js () {
     .pipe(g.bytediff.stop())
     .pipe(gulp.dest(f.dest))
 }
+import gulplog from 'gulplog'
 export function watch_js () {
   bundle.plugin(b.watchify)
   bundle.on('update', js)
+  bundle.on('error', err => {
+    gulplog.error(err.toString())
+    this.emit('end')
+  })
   return js()
 }

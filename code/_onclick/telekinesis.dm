@@ -11,7 +11,8 @@ var/const/tk_maxrange = 15
 	By default, emulate the user's unarmed attack
 */
 /atom/proc/attack_tk(mob/user)
-	if(user.stat) return
+	if(user.stat)
+		return
 	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
 	return
 
@@ -29,7 +30,8 @@ var/const/tk_maxrange = 15
 	attack_self(user)
 
 /obj/attack_tk(mob/user)
-	if(user.stat) return
+	if(user.stat)
+		return
 	if(anchored)
 		..()
 		return
@@ -41,7 +43,8 @@ var/const/tk_maxrange = 15
 	return
 
 /obj/item/attack_tk(mob/user)
-	if(user.stat) return
+	if(user.stat)
+		return
 	var/obj/item/tk_grab/O = new(src)
 	user.put_in_active_hand(O)
 	O.host = user
@@ -86,7 +89,8 @@ var/const/tk_maxrange = 15
 
 //stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
-	if( (slot == slot_l_hand) || (slot== slot_r_hand) )	return
+	if( (slot == slot_l_hand) || (slot== slot_r_hand) )
+		return
 	qdel(src)
 	return
 
@@ -96,8 +100,10 @@ var/const/tk_maxrange = 15
 		focus.attack_self_tk(user)
 
 /obj/item/tk_grab/afterattack(atom/target, mob/living/carbon/user, proximity, params)//TODO: go over this
-	if(!target || !user)	return
-	if(last_throw+3 > world.time)	return
+	if(!target || !user)
+		return
+	if(last_throw+3 > world.time)
+		return
 	if(!host || host != user)
 		qdel(src)
 		return
@@ -148,7 +154,8 @@ var/const/tk_maxrange = 15
 
 
 /obj/item/tk_grab/proc/focus_object(obj/target, mob/living/user)
-	if(!istype(target,/obj))	return//Cant throw non objects atm might let it do mobs later
+	if(!istype(target,/obj))
+		return//Cant throw non objects atm might let it do mobs later
 	if(target.anchored || !isturf(target.loc))
 		qdel(src)
 		return
@@ -159,7 +166,8 @@ var/const/tk_maxrange = 15
 
 
 /obj/item/tk_grab/proc/apply_focus_overlay()
-	if(!focus)	return
+	if(!focus)
+		return
 	var/obj/effect/overlay/O = new /obj/effect/overlay(locate(focus.x,focus.y,focus.z))
 	O.name = "sparkles"
 	O.anchored = 1
@@ -187,12 +195,15 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/proc/check_path()
 	var/turf/ref = get_turf(src.loc)
 	var/turf/target = get_turf(focus.loc)
-	if(!ref || !target)	return 0
+	if(!ref || !target)
+		return 0
 	var/distance = get_dist(ref, target)
-	if(distance >= 10)	return 0
+	if(distance >= 10)
+		return 0
 	for(var/i = 1 to distance)
 		ref = get_step_to(ref, target, 0)
-	if(ref != target)	return 0
+	if(ref != target)
+		return 0
 	return 1
 */
 
@@ -200,7 +211,8 @@ var/const/tk_maxrange = 15
 /*
 		if(istype(user, /mob/living/carbon))
 			if(user:mutations & TK && get_dist(source, user) <= 7)
-				if(user:get_active_hand())	return 0
+				if(user:get_active_hand())
+					return 0
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z

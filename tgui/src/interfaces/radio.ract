@@ -40,11 +40,11 @@
     {{#if data.freqlock}}
       <span>{{readableFrequency}}</span>
     {{else}}
-      <ui-button icon='fast-backward' state='{{data.frequency == data.minFrequency ? "disabled": null}}' action='frequency' params='{"change": -10}'/>
-      <ui-button icon='backward' state='{{data.frequency == data.minFrequency ? "disabled": null}}' action='frequency' params='{"change": -2}'/>
-      <ui-button icon='pencil' action='frequency' params='{"change": "custom"}'>{{readableFrequency}}</ui-button>
-      <ui-button icon='forward' state='{{data.frequency == data.maxFrequency ? "disabled": null}}' action='frequency' params='{"change": 2}'/>
-      <ui-button icon='fast-forward' state='{{data.frequency == data.maxFrequency ? "disabled": null}}' action='frequency' params='{"change": 10}'/>
+      <ui-button icon='fast-backward' state='{{data.frequency == data.minFrequency ? "disabled": null}}' action='frequency' params='{"adjust": -1}'/>
+      <ui-button icon='backward' state='{{data.frequency == data.minFrequency ? "disabled": null}}' action='frequency' params='{"adjust": -.2}'/>
+      <ui-button icon='pencil' action='frequency' params='{"tune": "input"}'>{{readableFrequency}}</ui-button>
+      <ui-button icon='forward' state='{{data.frequency == data.maxFrequency ? "disabled": null}}' action='frequency' params='{"adjust": .2}'/>
+      <ui-button icon='fast-forward' state='{{data.frequency == data.maxFrequency ? "disabled": null}}' action='frequency' params='{"adjust": 1}'/>
     {{/if}}
   </ui-section>
   {{#if data.subspaceSwitchable}}
@@ -59,7 +59,7 @@
         <ui-button icon='{{. ? "check-square-o" : "square-o"}}'
           style='{{. ? "selected" : null}}'
           action='channel' params='{"channel": "{{channel}}"}'>
-          {{channel}}</ui-button>
+          {{channel}}</ui-button><br/>
       {{/each}}
     </ui-section>
   {{/if}}

@@ -73,22 +73,22 @@
 	var/transfer_moles2 = 0
 
 	if(air1.temperature > 0)
-		transfer_moles1 = (node1_concentration*pressure_delta)*air3.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+		transfer_moles1 = (node1_concentration * pressure_delta) * air3.volume / (air1.temperature * R_IDEAL_GAS_EQUATION)
 
 	if(air2.temperature > 0)
-		transfer_moles2 = (node2_concentration*pressure_delta)*air3.volume/(air2.temperature * R_IDEAL_GAS_EQUATION)
+		transfer_moles2 = (node2_concentration * pressure_delta) * air3.volume / (air2.temperature * R_IDEAL_GAS_EQUATION)
 
 	var/air1_moles = air1.total_moles()
 	var/air2_moles = air2.total_moles()
 
 	if((air1_moles < transfer_moles1) || (air2_moles < transfer_moles2))
 		var/ratio = 0
-		if (( transfer_moles1 > 0 ) && (transfer_moles2 >0 ))
-			ratio = min(air1_moles/transfer_moles1, air2_moles/transfer_moles2)
-		if (( transfer_moles2 == 0 ) && ( transfer_moles1 > 0 ))
-			ratio = air1_moles/transfer_moles1
-		if (( transfer_moles1 == 0 ) && ( transfer_moles2 > 0 ))
-			ratio = air2_moles/transfer_moles2
+		if((transfer_moles1 > 0 ) && (transfer_moles2 > 0))
+			ratio = min(air1_moles / transfer_moles1, air2_moles / transfer_moles2)
+		if((transfer_moles2 == 0 ) && ( transfer_moles1 > 0))
+			ratio = air1_moles / transfer_moles1
+		if((transfer_moles1 == 0 ) && ( transfer_moles2 > 0))
+			ratio = air2_moles / transfer_moles2
 
 		transfer_moles1 *= ratio
 		transfer_moles2 *= ratio
@@ -105,28 +105,22 @@
 
 	if(transfer_moles1)
 		var/datum/pipeline/parent1 = PARENT1
-		parent1.update = 1
+		parent1.update = TRUE
 
 	if(transfer_moles2)
 		var/datum/pipeline/parent2 = PARENT2
-		parent2.update = 1
+		parent2.update = TRUE
 
 	var/datum/pipeline/parent3 = PARENT3
-	parent3.update = 1
+	parent3.update = TRUE
 
-	return 1
-
-/obj/machinery/atmospherics/components/trinary/mixer/attack_hand(mob/user)
-	if(!src.allowed(usr))
-		usr << "<span class='danger'>Access denied.</span>"
-		return
-	..()
+	return TRUE
 
 /obj/machinery/atmospherics/components/trinary/mixer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_mixer", name, 330, 165, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_mixer", name, 370, 165, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/mixer/get_ui_data()
@@ -139,26 +133,38 @@
 	return data
 
 /obj/machinery/atmospherics/components/trinary/mixer/ui_act(action, params)
+	if(..())
+		return
 	switch(action)
 		if("power")
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			. = TRUE
 		if("pressure")
-			switch(params["pressure"])
-				if("max")
-					target_pressure = MAX_OUTPUT_PRESSURE
-				if("custom")
-					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", target_pressure)))
-			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+			var/pressure = params["pressure"]
+			if(pressure == "max")
+				pressure = MAX_OUTPUT_PRESSURE
+				. = TRUE
+			else if(pressure == "input")
+				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, target_pressure) as num|null
+				if(!isnull(pressure) && !..())
+					. = TRUE
+			else if(text2num(pressure) != null)
+				pressure = text2num(pressure)
+				. = TRUE
+			if(.)
+				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 		if("node1")
 			var/value = text2num(params["concentration"])
-			src.node1_concentration = max(0, min(1, src.node1_concentration + value))
-			src.node2_concentration = max(0, min(1, src.node2_concentration - value))
+			node1_concentration = max(0, min(1, node1_concentration + value))
+			node2_concentration = max(0, min(1, node2_concentration - value))
 			investigate_log("was set to [node1_concentration] % on node 1 by [key_name(usr)]", "atmos")
+			. = TRUE
 		if("node2")
 			var/value = text2num(params["concentration"])
-			src.node2_concentration = max(0, min(1, src.node2_concentration + value))
-			src.node1_concentration = max(0, min(1, src.node1_concentration - value))
+			node2_concentration = max(0, min(1, node2_concentration + value))
+			node1_concentration = max(0, min(1, node1_concentration - value))
 			investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", "atmos")
+			. = TRUE
 	update_icon()
-	return 1

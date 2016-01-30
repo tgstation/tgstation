@@ -309,12 +309,6 @@
 		update()
 		return
 
-	var/obj/item/weapon/grab/G = I
-	if(istype(G))	// handle grabbed mob
-		if(ismob(G.affecting))
-			stuff_mob_in(G.affecting, user)
-		return
-
 	if(!user.drop_item())
 		return
 

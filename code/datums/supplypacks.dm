@@ -54,7 +54,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/New()
 	manifest += "<ul>"
 	for(var/path in contains)
-		if(!path)	continue
+		if(!path)
+			continue
 		var/atom/movable/AM = path
 		manifest += "<li>[initial(AM.name)]</li>"
 	manifest += "</ul>"

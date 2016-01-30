@@ -188,10 +188,10 @@
 
 
 /obj/item/areaeditor/proc/set_area_machinery_title(area/A,title,oldtitle)
-	if (!oldtitle) // or replacetext goes to infinite loop
+	if(!oldtitle) // or replacetext goes to infinite loop
 		return
 	for(var/area/RA in A.related)
-		for(var/obj/machinery/alarm/M in RA)
+		for(var/obj/machinery/airalarm/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
 		for(var/obj/machinery/power/apc/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)

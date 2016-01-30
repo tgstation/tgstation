@@ -38,7 +38,7 @@ var/next_mob_id = 0
 	for(var/id in environment.gases)
 		var/gas = environment.gases[id]
 		if(gas[MOLES])
-			t+="<span class='notice'>[gas[GAS_NAME]]: [gas[MOLES]] \n</span>"
+			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
 
 	usr << t
 
@@ -228,13 +228,6 @@ var/next_mob_id = 0
 		if(istype(I))
 			I.attack_hand(src)
 
-	return 0
-
-/mob/proc/put_in_any_hand_if_possible(obj/item/W, qdel_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	if(equip_to_slot_if_possible(W, slot_l_hand, qdel_on_fail, disable_warning, redraw_mob))
-		return 1
-	else if(equip_to_slot_if_possible(W, slot_r_hand, qdel_on_fail, disable_warning, redraw_mob))
-		return 1
 	return 0
 
 //This is a SAFE proc. Use this instead of equip_to_splot()!
@@ -461,34 +454,6 @@ var/next_mob_id = 0
 //	M.Login()	//wat
 	return
 
-/client/verb/changes()
-	set name = "Changelog"
-	set category = "OOC"
-	getFiles(
-		'html/88x31.png',
-		'html/bug-minus.png',
-		'html/cross-circle.png',
-		'html/hard-hat-exclamation.png',
-		'html/image-minus.png',
-		'html/image-plus.png',
-		'html/music-minus.png',
-		'html/music-plus.png',
-		'html/tick-circle.png',
-		'html/wrench-screwdriver.png',
-		'html/spell-check.png',
-		'html/burn-exclamation.png',
-		'html/chevron.png',
-		'html/chevron-expand.png',
-		'html/changelog.css',
-		'html/changelog.js',
-		'html/changelog.html'
-		)
-	src << browse('html/changelog.html', "window=changes;size=675x650")
-	if(prefs.lastchangelog != changelog_hash)
-		prefs.lastchangelog = changelog_hash
-		prefs.save_preferences()
-		winset(src, "rpane.changelogb", "background-color=none;font-style=;")
-
 /mob/verb/observe()
 	set name = "Observe"
 	set category = "OOC"
@@ -568,10 +533,14 @@ var/next_mob_id = 0
 
 /mob/MouseDrop(mob/M)
 	..()
-	if(M != usr)	return
-	if(usr == src)	return
-	if(!Adjacent(usr))	return
-	if(istype(M, /mob/living/silicon/ai))	return
+	if(M != usr)
+		return
+	if(usr == src)
+		return
+	if(!Adjacent(usr))
+		return
+	if(istype(M, /mob/living/silicon/ai))
+		return
 	show_inv(usr)
 
 /mob/proc/is_active()
@@ -680,13 +649,20 @@ var/next_mob_id = 0
 
 // facing verbs
 /mob/proc/canface()
-	if(!canmove)						return 0
-	if(client.moving)					return 0
-	if(world.time < client.move_delay)	return 0
-	if(stat==2)							return 0
-	if(anchored)						return 0
-	if(notransform)						return 0
-	if(restrained())					return 0
+	if(!canmove)
+		return 0
+	if(client.moving)
+		return 0
+	if(world.time < client.move_delay)
+		return 0
+	if(stat==2)
+		return 0
+	if(anchored)
+		return 0
+	if(notransform)
+		return 0
+	if(restrained())
+		return 0
 	return 1
 
 
@@ -725,7 +701,8 @@ var/next_mob_id = 0
 
 /mob/verb/eastface()
 	set hidden = 1
-	if(!canface())	return 0
+	if(!canface())
+		return 0
 	dir = EAST
 	client.move_delay += movement_delay()
 	return 1
@@ -733,7 +710,8 @@ var/next_mob_id = 0
 
 /mob/verb/westface()
 	set hidden = 1
-	if(!canface())	return 0
+	if(!canface())
+		return 0
 	dir = WEST
 	client.move_delay += movement_delay()
 	return 1
@@ -741,7 +719,8 @@ var/next_mob_id = 0
 
 /mob/verb/northface()
 	set hidden = 1
-	if(!canface())	return 0
+	if(!canface())
+		return 0
 	dir = NORTH
 	client.move_delay += movement_delay()
 	return 1
@@ -749,7 +728,8 @@ var/next_mob_id = 0
 
 /mob/verb/southface()
 	set hidden = 1
-	if(!canface())	return 0
+	if(!canface())
+		return 0
 	dir = SOUTH
 	client.move_delay += movement_delay()
 	return 1
@@ -966,3 +946,90 @@ var/next_mob_id = 0
 		if(F in target.faction)
 			return 1
 	return 0
+
+
+//This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
+//Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
+/mob/proc/fully_replace_character_name(oldname,newname)
+	if(!newname)
+		return 0
+	real_name = newname
+	name = newname
+	if(mind)
+		mind.name = newname
+
+	if(oldname)
+		//update the datacore records! This is goig to be a bit costly.
+		replace_records_name(oldname,newname)
+
+		//update our pda and id if we have them on our person
+		replace_identification_name(oldname,newname)
+
+		for(var/datum/mind/T in ticker.minds)
+			for(var/datum/objective/obj in T.objectives)
+				// Only update if this player is a target
+				if(obj.target && obj.target.current && obj.target.current.real_name == name)
+					obj.update_explanation_text()
+	return 1
+
+/mob/living/carbon/fully_replace_character_name(oldname,newname)
+	..()
+	if(dna)
+		dna.real_name = real_name
+
+/mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
+	..()
+	if(oldname != real_name)
+		if(eyeobj)
+			eyeobj.name = "[newname] (AI Eye)"
+
+		// Notify Cyborgs
+		for(var/mob/living/silicon/robot/Slave in connected_robots)
+			Slave.show_laws()
+
+/mob/living/silicon/robot/fully_replace_character_name(oldname,newname)
+	..()
+	if(oldname != real_name)
+		notify_ai(3, oldname, newname)
+	if(camera)
+		camera.c_tag = real_name
+	custom_name = newname
+
+//Updates data_core records with new name , see mob/living/carbon/human
+/mob/proc/replace_records_name(oldname,newname)
+	return
+
+/mob/living/carbon/human/replace_records_name(oldname,newname) // Only humans have records right now, move this up if changed.
+	for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
+		var/datum/data/record/R = find_record("name", oldname, L)
+		if(R)
+			R.fields["name"] = newname
+
+/mob/proc/replace_identification_name(oldname,newname)
+	var/list/searching = GetAllContents()
+	var/search_id = 1
+	var/search_pda = 1
+
+	for(var/A in searching)
+		if( search_id && istype(A,/obj/item/weapon/card/id) )
+			var/obj/item/weapon/card/id/ID = A
+			if(ID.registered_name == oldname)
+				ID.registered_name = newname
+				ID.update_label()
+				if(!search_pda)
+					break
+				search_id = 0
+
+		else if( search_pda && istype(A,/obj/item/device/pda) )
+			var/obj/item/device/pda/PDA = A
+			if(PDA.owner == oldname)
+				PDA.owner = newname
+				PDA.update_label()
+				if(!search_id)
+					break
+				search_pda = 0
+
+/mob/living/silicon/ai/replace_identification_name(oldname,newname)
+	if(aiPDA)
+		aiPDA.owner = newname
+		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"

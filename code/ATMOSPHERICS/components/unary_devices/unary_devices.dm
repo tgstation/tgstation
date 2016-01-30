@@ -16,21 +16,3 @@ Iconnery
 	update_icon()
 
 	..(intact)
-
-/obj/machinery/atmospherics/components/unary/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
-	if(!..())
-		return
-	SetInitDirections()
-	var/obj/machinery/atmospherics/node = NODE1
-	if(node)
-		node.disconnect(src)
-		NODE1 = null
-	nullifyPipenet(PARENT1)
-
-	atmosinit()
-	node = NODE1
-	if(node)
-		node.atmosinit()
-		node.addMember(src)
-	build_network()
-	. = 1

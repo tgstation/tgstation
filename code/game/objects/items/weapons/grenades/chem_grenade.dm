@@ -143,9 +143,6 @@
 /obj/item/weapon/grenade/chem_grenade/receive_signal()
 	prime()
 
-/obj/item/weapon/grenade/chem_grenade/HasProximity(atom/movable/AM)
-	if(nadeassembly)
-		nadeassembly.HasProximity(AM)
 
 /obj/item/weapon/grenade/chem_grenade/Crossed(atom/movable/AM)
 	if(nadeassembly)

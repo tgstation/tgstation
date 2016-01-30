@@ -71,10 +71,13 @@ var/const/INJECT = 5 //injection
 	current_list_element = rand(1,reagent_list.len)
 
 	while(total_transfered != amount)
-		if(total_transfered >= amount) break
-		if(total_volume <= 0 || !reagent_list.len) break
+		if(total_transfered >= amount)
+			break
+		if(total_volume <= 0 || !reagent_list.len)
+			break
 
-		if(current_list_element > reagent_list.len) current_list_element = 1
+		if(current_list_element > reagent_list.len)
+			current_list_element = 1
 		var/datum/reagent/current_reagent = reagent_list[current_list_element]
 
 		remove_reagent(current_reagent.id, 1)
@@ -282,6 +285,8 @@ var/const/INJECT = 5 //injection
 	update_total()
 
 /datum/reagents/process()
+	if(my_atom && (my_atom.flags & NOREACT))
+		return
 	for(var/datum/reagent/R in reagent_list)
 		R.on_tick()
 	return
@@ -319,11 +324,13 @@ var/const/INJECT = 5 //injection
 				var/required_temp = C.required_temp
 
 				for(var/B in C.required_reagents)
-					if(!has_reagent(B, C.required_reagents[B]))	break
+					if(!has_reagent(B, C.required_reagents[B]))
+						break
 					total_matching_reagents++
 					multipliers += round(get_reagent_amount(B) / C.required_reagents[B])
 				for(var/B in C.required_catalysts)
-					if(!has_reagent(B, C.required_catalysts[B]))	break
+					if(!has_reagent(B, C.required_catalysts[B]))
+						break
 					total_matching_catalysts++
 
 				if(!C.required_container)
@@ -460,7 +467,8 @@ var/const/INJECT = 5 //injection
 	if(!isnum(amount) || !amount)
 		return 1
 	update_total()
-	if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
+	if(total_volume + amount > maximum_volume)
+		amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 	chem_temp = round(((amount * reagtemp) + (total_volume * chem_temp)) / (total_volume + amount)) //equalize with new chems
 
 	for(var/A in reagent_list)
@@ -506,7 +514,8 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
 
-	if(!isnum(amount)) return 1
+	if(!isnum(amount))
+		return 1
 
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
@@ -525,10 +534,13 @@ var/const/INJECT = 5 //injection
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
-			if(!amount) return R
+			if(!amount)
+				return R
 			else
-				if(R.volume >= amount) return R
-				else return 0
+				if(R.volume >= amount)
+					return R
+				else
+					return 0
 
 	return 0
 
@@ -543,7 +555,8 @@ var/const/INJECT = 5 //injection
 /datum/reagents/proc/get_reagents()
 	var/res = ""
 	for(var/datum/reagent/A in reagent_list)
-		if (res != "") res += ","
+		if (res != "")
+			res += ","
 		res += A.name
 
 	return res
@@ -583,8 +596,10 @@ var/const/INJECT = 5 //injection
 			D.data = new_data
 
 /datum/reagents/proc/copy_data(datum/reagent/current_reagent)
-	if (!current_reagent || !current_reagent.data) return null
-	if (!istype(current_reagent.data, /list)) return current_reagent.data
+	if (!current_reagent || !current_reagent.data)
+		return null
+	if (!istype(current_reagent.data, /list))
+		return current_reagent.data
 
 	var/list/trans_data = current_reagent.data.Copy()
 

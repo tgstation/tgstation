@@ -17,20 +17,28 @@
 	conversion in savefile.dm
 */
 /proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female)
-	if(!istype(L))		L = list()
-	if(!istype(male))	male = list()
-	if(!istype(female))	female = list()
+	if(!istype(L))
+		L = list()
+	if(!istype(male))
+		male = list()
+	if(!istype(female))
+		female = list()
 
 	for(var/path in typesof(prototype))
-		if(path == prototype)	continue
+		if(path == prototype)
+			continue
 		var/datum/sprite_accessory/D = new path()
 
-		if(D.icon_state)	L[D.name] = D
-		else				L += D.name
+		if(D.icon_state)
+			L[D.name] = D
+		else
+			L += D.name
 
 		switch(D.gender)
-			if(MALE)	male += D.name
-			if(FEMALE)	female += D.name
+			if(MALE)
+				male += D.name
+			if(FEMALE)
+				female += D.name
 			else
 				male += D.name
 				female += D.name
@@ -709,6 +717,16 @@
 /datum/sprite_accessory/underwear/female_blackalt
 	name = "Ladies Black Sport"
 	icon_state = "female_blackalt"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/female_white_neko
+	name = "Ladies White Neko"
+	icon_state = "female_neko_white"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/female_black_neko
+	name = "Ladies Black Neko"
+	icon_state = "female_neko_black"
 	gender = FEMALE
 
 ////////////////////////////

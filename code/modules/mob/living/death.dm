@@ -65,5 +65,7 @@
 		qdel(src)
 	else
 		spawn(15)
-			if(animate)		qdel(animate)
-			if(src)			qdel(src)
+			if(animate)
+				qdel(animate)
+			if(src)
+				qdel(src)

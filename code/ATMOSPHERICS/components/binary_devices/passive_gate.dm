@@ -1,4 +1,3 @@
-
 /*
 
 Passive gate is similar to the regular pump except:
@@ -11,7 +10,7 @@ Passive gate is similar to the regular pump except:
 	icon_state = "passgate_map"
 
 	name = "passive gate"
-	desc = "A one-way air valve that does not require power"
+	desc = "A one-way air valve that does not require power."
 
 	can_unwrench = 1
 
@@ -103,24 +102,34 @@ Passive gate is similar to the regular pump except:
 /obj/machinery/atmospherics/components/binary/passive_gate/get_ui_data()
 	var/data = list()
 	data["on"] = on
-	data["set_pressure"] = round(target_pressure)
+	data["pressure"] = round(target_pressure)
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 	return data
 
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_act(action, params)
+	if(..())
+		return
 	switch(action)
 		if("power")
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			. = TRUE
 		if("pressure")
-			switch(params["pressure"])
-				if ("max")
-					target_pressure = MAX_OUTPUT_PRESSURE
-				if ("custom")
-					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
-			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+			var/pressure = params["pressure"]
+			if(pressure == "max")
+				pressure = MAX_OUTPUT_PRESSURE
+				. = TRUE
+			else if(pressure == "input")
+				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, target_pressure) as num|null
+				if(!isnull(pressure) || !..())
+					. = TRUE
+			else if(text2num(pressure) != null)
+				pressure = text2num(pressure)
+				. = TRUE
+			if(.)
+				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 	update_icon()
-	return 1
 
 /obj/machinery/atmospherics/components/binary/passive_gate/atmosinit()
 	..()
@@ -146,12 +155,10 @@ Passive gate is similar to the regular pump except:
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
 
 	if("status" in signal.data)
-		spawn(2)
-			broadcast_status()
-		return //do not update_icon
-
-	spawn(2)
 		broadcast_status()
+		return
+
+	broadcast_status()
 	update_icon()
 	return
 

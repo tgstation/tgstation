@@ -8,7 +8,8 @@
 	return 0
 
 /proc/check_zone(zone)
-	if(!zone)	return "chest"
+	if(!zone)
+		return "chest"
 	switch(zone)
 		if("eyes")
 			zone = "head"
@@ -36,12 +37,18 @@
 
 	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
 	switch(t)
-		if(1)		 return "head"
-		if(2)		 return "chest"
-		if(3 to 6)	 return "l_arm"
-		if(7 to 10)	 return "r_arm"
-		if(11 to 14) return "l_leg"
-		if(15 to 18) return "r_leg"
+		if(1)
+			return "head"
+		if(2)
+			return "chest"
+		if(3 to 6)
+			return "l_arm"
+		if(7 to 10)
+			return "r_arm"
+		if(11 to 14)
+			return "l_leg"
+		if(15 to 18)
+			return "r_leg"
 
 	return zone
 
@@ -83,18 +90,28 @@
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
 		if(rand(1,3)==3)
-			if(lowertext(newletter)=="o")	newletter="u"
-			if(lowertext(newletter)=="s")	newletter="ch"
-			if(lowertext(newletter)=="a")	newletter="ah"
-			if(lowertext(newletter)=="u")	newletter="oo"
-			if(lowertext(newletter)=="c")	newletter="k"
+			if(lowertext(newletter)=="o")
+				newletter="u"
+			if(lowertext(newletter)=="s")
+				newletter="ch"
+			if(lowertext(newletter)=="a")
+				newletter="ah"
+			if(lowertext(newletter)=="u")
+				newletter="oo"
+			if(lowertext(newletter)=="c")
+				newletter="k"
 		if(rand(1,20)==20)
-			if(newletter==" ")	newletter="...huuuhhh..."
-			if(newletter==".")	newletter=" *BURP*."
+			if(newletter==" ")
+				newletter="...huuuhhh..."
+			if(newletter==".")
+				newletter=" *BURP*."
 		switch(rand(1,20))
-			if(1)	newletter+="'"
-			if(10)	newletter+="[newletter]"
-			if(20)	newletter+="[newletter][newletter]"
+			if(1)
+				newletter+="'"
+			if(10)
+				newletter+="[newletter]"
+			if(20)
+				newletter+="[newletter][newletter]"
 		newphrase+="[newletter]";counter-=1
 	return newphrase
 
@@ -222,16 +239,24 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)
-			if("help")		return 0
-			if("disarm")	return 1
-			if("grab")		return 2
-			else			return 3
+			if("help")
+				return 0
+			if("disarm")
+				return 1
+			if("grab")
+				return 2
+			else
+				return 3
 	else
 		switch(argument)
-			if(0)			return "help"
-			if(1)			return "disarm"
-			if(2)			return "grab"
-			else			return "harm"
+			if(0)
+				return "help"
+			if(1)
+				return "disarm"
+			if(2)
+				return "grab"
+			else
+				return "harm"
 
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)

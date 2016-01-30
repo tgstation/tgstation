@@ -52,6 +52,6 @@
 	return 0
 
 /mob/living/simple_animal/hostile/retaliate/adjustHealth(damage)
-	..(damage)
+	. = ..()
 	if(stat == CONSCIOUS)
 		Retaliate()

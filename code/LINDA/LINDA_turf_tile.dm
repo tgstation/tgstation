@@ -58,7 +58,8 @@
 	return ..()
 
 /turf/simulated/assume_air(datum/gas_mixture/giver)
-	if(!giver)	return 0
+	if(!giver)
+		return 0
 	var/datum/gas_mixture/receiver = air
 	if(istype(receiver))
 
@@ -235,8 +236,8 @@
 	var/list/gases = air.gases
 	for(var/id in gases)
 		var/gas = gases[id]
-		if(gas[GAS_OVERLAY] && gas[MOLES] > gas[MOLES_VISIBLE])
-			. += gas[GAS_OVERLAY]
+		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
+			. += gas[GAS_META][META_GAS_OVERLAY]
 
 /turf/simulated/proc/share_air(turf/simulated/T)
 	if(T.current_cycle < current_cycle)
