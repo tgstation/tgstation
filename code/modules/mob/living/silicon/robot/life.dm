@@ -11,6 +11,15 @@
 	if(!stat)
 		use_power()
 
+/mob/living/silicon/robot/handle_environment(datum/gas_mixture/environment)
+	if(!environment)
+		return
+
+	//var/environment_heat_capacity = environment.heat_capacity()
+	var/loc_temp = get_temperature(environment)
+	if(loc_temp > 450)
+		adjustBruteLoss(4)
+
 /mob/living/silicon/robot/proc/clamp_values()
 	SetStunned(min(stunned, 30))
 	SetParalysis(min(paralysis, 30))
