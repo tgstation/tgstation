@@ -32,11 +32,16 @@ Chii
 Chip
 Computer
 Conky 2000
+Cortana
 Cutie
+Daedalus
 Data
+Decimus
 Dee Model
 Deep Thought
+Decimus
 Dial Up
+Donald Trump
 Dor-15
 Dorfl
 Dot Matrix
@@ -46,6 +51,7 @@ ED-209
 E-Man
 Emma-2
 Erasmus
+Everything
 Ez-27
 FRIEND COMPUTER
 Fagor
@@ -56,6 +62,8 @@ Fum
 Futura
 G2
 George
+GERTY
+GLaDOS
 Gnut
 Gort
 H.A.R.L.I.E.
@@ -63,8 +71,12 @@ H.E.L.P.eR.
 H.E.R.B.I.E.
 HAL 9000
 Hadaly
+Helios
+Hivebot Overmind
 Huey
+Icarus
 Irona
+Ironhide
 Jay-Dub
 Jinx
 Johnny 5
@@ -84,12 +96,17 @@ Max 404
 Maximillian
 Mechagodzilla
 Mechani-Kong
+Megatron
 Metalhead
 Mr. R.I.N.G.
+Mugsy3000
+Multivac
 NCH
 Necron-99
+Neuromancer
 Norby
 OMM 0910
+Optimus
 Orange v 3.5
 PTO
 Project 2501
@@ -100,16 +117,20 @@ R4-P17
 Revelation
 Ro-Man
 Robbie
+Robot Devil
 S.A.M.
 S.H.O.C.K.
 S.H.R.O.U.D.
 S.O.P.H.I.E.
+Samaritan
 SEN 5241
 SHODAN
 SID 6.7
+Siri
 Setaur
 Shrike
 Solo
+Soundwave
 Speedy
 Super 17
 Surgeon General Kraken
@@ -133,8 +154,10 @@ Wikipedia
 Windows 3.1
 Windows 7
 Windows 8
+Windows 10
 Windows XP
 Windows Vista
+Wintermute
 X-5
 XERXES
 XR
@@ -144,15 +167,3 @@ Z-2
 Z-3
 Zed
 Zord
-Mugsy3000
-Terminus
-Decimus
-Robot Devil
-Optimus
-Megatron
-Soundwave
-Ironhide
-Donald Trump
-Everything
-Hivebot Overmind
-
