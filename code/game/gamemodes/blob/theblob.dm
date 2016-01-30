@@ -60,6 +60,11 @@
 		return 1
 	return 0
 
+/obj/effect/blob/CanAStarPass(ID, dir, caller)
+	. = 0
+	if(ismovableatom(caller))
+		var/atom/movable/mover = caller
+		. = . || mover.checkpass(PASSBLOB)
 
 /obj/effect/blob/proc/check_health(cause)
 	health = Clamp(health, 0, maxhealth)

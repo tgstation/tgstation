@@ -159,7 +159,7 @@ Actual Adjacent procs :
 		T = get_step(src,dir)
 		if(simulated_only && !istype(T))
 			continue
-		if(!T.density && !LinkBlockedWithAccess(T,ID, caller))
+		if(!T.density && !LinkBlockedWithAccess(T,caller, ID))
 			L.Add(T)
 	return L
 
@@ -177,7 +177,7 @@ Actual Adjacent procs :
 				L.Add(T)
 	return L
 
-/turf/proc/LinkBlockedWithAccess(turf/T, ID, caller)
+/turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
 	var/adir = get_dir(src, T)
 	var/rdir = get_dir(T, src)
 
