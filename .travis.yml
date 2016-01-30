@@ -4,7 +4,7 @@ sudo: false
 env:
     global:
     - BYOND_MAJOR="510"
-    - BYOND_MINOR="1320"
+    - BYOND_MINOR="1321"
     - NODE_VERSION="4"
     matrix:
     - DM_MAPFILE="tgstation2"
