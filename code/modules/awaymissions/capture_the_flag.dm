@@ -89,6 +89,8 @@
 	var/team = WHITE_TEAM
 	var/points = 0
 	var/points_to_win = 3
+	var/control_points = 0
+	var/control_points_to_win = 180
 	var/list/team_members = list()
 	var/ctf_enabled = FALSE
 	var/ctf_gear = /datum/outfit/ctf
@@ -290,3 +292,38 @@
 
 /area/ctf/flag_room2
 	name = "Flag Room B"
+
+
+
+
+
+
+//Control Point
+
+/obj/machinery/control_point
+	name = "control point"
+	desc = "You should capture this."
+	icon_state = "capture_point_neutral"
+	var/obj/machinery/capture_the_flag/controlling
+	var/team = "none"
+	var/point_rate = 1
+
+/obj/machinery/control_point/process()
+	if(controlling)
+		controlling.control_points += point_rate
+		if(controlling.control_points >= controlling.control_points_to_win)
+			controlling.victory()
+
+/obj/machinery/control_point/attackby(mob/user, params)
+	capture(user)
+
+/obj/machinery/control_point/attack_hand(mob/user)
+	capture(user)
+
+/obj/machinery/control_point/proc/capture(mob/user)
+	if(do_after(user, 30, target = src))
+		for(var/obj/machinery/capture_the_flag/CTF in machines)
+			if(CTF.ctf_enabled && user.faction == CTF.team)
+				controlling = CTF
+				icon_state = "capture_point_[CTF.team]"
+				break
