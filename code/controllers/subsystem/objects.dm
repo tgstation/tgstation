@@ -17,14 +17,12 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects/Initialize(timeofday, zlevel)
 	setupGenetics()
-	for(var/atom/movable/AM in world)
-		if (zlevel && AM.z != zlevel)
+	for(var/atom/A in world)
+		if (zlevel && A.z != zlevel)
 			continue
-		AM.initialize()
+		A.initialize()
 	if (zlevel)
 		return ..()
-	for(var/turf/simulated/floor/F in world)
-		F.MakeDirty()
 	..()
 
 
@@ -44,3 +42,8 @@ var/datum/subsystem/objects/SSobj
 				burningobj.burn()
 		else
 			SSobj.burning.Remove(burningobj)
+
+/datum/subsystem/objects/proc/setup_template_objects(list/objects)
+	for(var/A in objects)
+		var/atom/B = A
+		B.initialize()

@@ -369,3 +369,7 @@ var/list/blood_splatter_icons = list()
 /atom/Stat()
 	. = ..()
 	sleep(1)
+
+//This will be called after the map and objects are loaded
+/atom/proc/initialize()
+	return

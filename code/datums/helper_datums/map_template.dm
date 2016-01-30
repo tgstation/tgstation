@@ -37,17 +37,26 @@
 		return
 
 	maploader.load_map(get_file(), T.x, T.y, T.z)
-	//initialize
-	for(var/A in block(T,locate(T.x+width, T.y+height, T.z)))
-		var/turf/B = A
-		for(var/atom/movable/AM in B)
-			AM.initialize()
-			if(istype(AM,/obj/structure/cable))
-				var/obj/structure/cable/PC = AM
-				if(!PC.powernet)
-					var/datum/powernet/NewPN = new()
-					NewPN.add_cable(PC)
-					propagate_network(PC,PC.powernet)
+
+	//initialize things that are normally initialized after map load
+	var/list/obj/machinery/atmospherics/atmos_machines = list()
+	var/list/obj/structure/cable/cables = list()
+	var/list/atom/atoms = list()
+
+	for(var/L in block(T,locate(T.x+width, T.y+height, T.z)))
+		var/turf/B = L
+		for(var/A in B)
+			atoms += A
+			if(istype(A,/obj/structure/cable))
+				cables += A
+				continue
+			if(istype(A,/obj/machinery/atmospherics))
+				atmos_machines += A
+				continue
+
+	SSobj.setup_template_objects(atoms)
+	SSmachine.setup_template_powernets(cables)
+	SSair.setup_template_machinery(atmos_machines)
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 
