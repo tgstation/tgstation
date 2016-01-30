@@ -121,6 +121,11 @@
 /obj/item/weapon/restraints/handcuffs/alien
 	icon_state = "handcuffAlien"
 
+/obj/item/weapon/restraints/handcuffs/fake
+	name = "fake handcuffs"
+	desc = "Fake handcuffs for 'gag' purposes."
+	breakouttime = 10 //Deciseconds = 1s
+
 /obj/item/weapon/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/rods))
