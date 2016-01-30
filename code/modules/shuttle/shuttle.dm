@@ -176,6 +176,8 @@
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
 
+	var/launch_status = NOLAUNCH
+
 /obj/docking_port/mobile/New()
 	..()
 	SSshuttle.mobile += src
@@ -584,8 +586,11 @@
 		return
 
 	if(href_list["move"])
+		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
+		if(M.launch_status == ENDGAME_LAUNCHED)
+			usr << "<span class='warning'>You've already escaped. Never going back to that place again!</span>"
+			return
 		if(no_destination_swap)
-			var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 			if(M.mode != SHUTTLE_IDLE)
 				usr << "<span class='warning'>Shuttle already in transit.</span>"
 				return
