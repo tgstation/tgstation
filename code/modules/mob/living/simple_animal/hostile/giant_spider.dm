@@ -62,7 +62,7 @@
 	if(key)//Someone is in it
 		return
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
-	if(spider_ask == "No" || !src || !qdeleted(src))
+	if(spider_ask == "No" || !src || qdeleted(src))
 		return
 	if(key)
 		user << "<span class='notice'>Someone else already took this spider.</span>"
