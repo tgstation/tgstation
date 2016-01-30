@@ -356,3 +356,6 @@ var/list/bloody_footprints_cache = list()
 #define UNLAUNCHED 0
 #define ENDGAME_LAUNCHED 1
 #define EARLY_LAUNCHED 2
+
+//Just space
+#define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
