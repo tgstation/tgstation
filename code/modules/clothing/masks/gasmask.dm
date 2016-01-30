@@ -3,7 +3,6 @@
 	desc = "A face-covering mask that can be connected to an air supply."
 	icon_state = "gas_alt"
 	flags = FPRINT  | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	w_class = 3.0
 	can_flip = 1
 	action_button_name = "Toggle Mask"
@@ -12,7 +11,7 @@
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.9
 	species_fit = list("Vox")
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = CLOTHING_FULLMASK
 	var/stage = 0
 
 
@@ -110,7 +109,7 @@
 	icon = A.icon
 	icon_state = A.icon_state
 	item_state = A.item_state
-	flags_inv = A.flags_inv
+	body_parts_covered = A.body_parts_covered
 	usr.update_inv_wear_mask(1)	//so our overlays update.
 
 /obj/item/clothing/mask/gas/voice/attack_self(mob/user)

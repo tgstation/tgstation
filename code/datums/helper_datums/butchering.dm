@@ -53,7 +53,8 @@
 			return //If he has no head, you can't see whether he has teeth or not!
 
 		var/obj/item/clothing/mask/M = H.wear_mask
-		if(istype(M) && (M.body_parts_covered & MOUTH)) return //If his mouth is covered, we can't see his teeth
+		if(istype(M) && is_slot_hidden(M,MOUTH))
+			return //If his mouth is covered, we can't see his teeth
 
 	var/pronoun = "Its"
 	if(L.gender == MALE) pronoun = "His"

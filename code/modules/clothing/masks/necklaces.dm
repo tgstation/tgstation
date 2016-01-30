@@ -1,5 +1,5 @@
 /obj/item/clothing/mask/necklace
-	body_parts_covered = null
+	body_parts_covered = CLOTHING_NOTHING
 
 /obj/item/clothing/mask/necklace/xeno_claw
 	name = "xeno necklace"

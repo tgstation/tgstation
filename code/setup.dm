@@ -284,20 +284,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define NOJAUNT		1
 
 
-//Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-#define HIDEGLOVES		1	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESUITSTORAGE	2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEJUMPSUIT	4	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESHOES		8	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEBAG			16	//APPLIES ONLY TO THE EXTERIOR SUIT
-#define HIDEMASK		1	//APPLIES ONLY TO HELMETS/MASKS!!
-#define HIDEEARS		2	//APPLIES ONLY TO HELMETS/MASKS!! (ears means headsets and such)
-#define HIDEEYES		4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
-#define HIDEFACE		8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
-#define HIDEHEADHAIR 	16	// APPLIES ONLY TO HELMETS/MASKS!! removes the user's hair overlay
-#define HIDEBEARDHAIR	32	// APPLIES ONLY TO HELMETS/MASKS!! removes the user's beard overlay
-#define HIDEHAIR		48	// APPLIES ONLY TO HELMETS/MASKS!! removes the user's hair, facial and otherwise.
-
 //slots
 #define slot_back 1
 #define slot_wear_mask 2
@@ -322,33 +308,106 @@ var/MAX_EXPLOSION_RANGE = 14
 
 //Cant seem to find a mob bitflags area other than the powers one
 
-// bitflags for clothing parts
-#define HEAD			1 		//top of the head
+// bitflags for mob parts
+
+#define HEAD			1		//specifically the top of the head- imagine it as the scalp.
 #define EYES			2048
 #define MOUTH			4096
 #define EARS			8192
-#define FULL_HEAD		14337 //everything
+
 #define UPPER_TORSO		2
 #define LOWER_TORSO		4
 #define LEG_LEFT		8
 #define LEG_RIGHT		16
-#define LEGS			24
 #define FOOT_LEFT		32
 #define FOOT_RIGHT		64
-#define FEET			96
 #define ARM_LEFT		128
 #define ARM_RIGHT		256
-#define ARMS			384
 #define HAND_LEFT		512
 #define HAND_RIGHT		1024
-#define HANDS			1536
-#define FULL_BODY		16383
+
+
+// bitflags for clothing parts
+
+#define FOREHEAD		EYES
+#define FULL_TORSO		UPPER_TORSO|LOWER_TORSO
+#define FACE			FOREHEAD|MOUTH|BEARD
+#define BEARD			32768
+#define FULL_HEAD		HEAD|EYES|MOUTH|EARS|BEARD //everything
+#define LEGS			LEG_LEFT|LEG_RIGHT 		// 24
+#define FEET			FOOT_LEFT|FOOT_RIGHT 	//96
+#define ARMS			ARM_LEFT|ARM_RIGHT		//384
+#define HANDS			HAND_LEFT|HAND_RIGHT //1536
+#define FULL_BODY		FULL_HEAD|HANDS|FULL_TORSO|ARMS|FEET|LEGS //65535
+#define IGNORE_INV		16384 // Don't make stuff invisible
+
+
+// bitflags for preset clothing parts
+// this is used with the variable body_parts_covered, and makes it far easier to set up with less snowflaking.
+
+// MISC CLOTHING
+
+#define CLOTHING_JUMPSUIT	ARMS|LEGS|FULL_TORSO
+#define CLOTHING_SUIT		ARMS|LEGS|FULL_TORSO
+#define CLOTHING_DUNGAREES	FULL_TORSO|LEGS
+#define CLOTHING_FULLJACKET	CLOTHING_SUIT|IGNORE_INV
+#define CLOTHING_ROBE		FULL_TORSO|LEGS|FEET|ARMS
+#define CLOTHING_HARDSUIT	ARMS|LEGS|FULL_TORSO|FEET|HANDS
+#define CLOTHING_HARD_HANDS	ARMS|LEGS|FULL_TORSO|FEET
+#define CLOTHING_BODYSUIT	CLOTHING_HARDSUIT
+#define CLOTHING_GLOVES		HANDS
+#define CLOTHING_GLASSES 	FOREHEAD
+#define CLOTHING_NOTHING	0
+
+// CHEST CLOTHING
+
+#define CLOTHING_VEST		FULL_TORSO|IGNORE_INV
+#define CLOTHING_SHIRT		FULL_TORSO|ARMS|IGNORE_INV
+#define CLOTHING_CROPTOP	UPPER_TORSO|IGNORE_INV
+#define CLOTHING_JACKET		FULL_TORSO|ARMS|IGNORE_INV
+
+// LEGS & SHOES CLOTHING
+
+#define CLOTHING_TROUSERS	LEGS
+#define CLOTHING_SHOES		FEET
+#define CLOTHING_TIGHTS		LEGS|FEET
+
+// HEAD CLOTHING
+
+#define CLOTHING_HELMET		HEAD|EARS|FOREHEAD	// covers ears & hair
+#define CLOTHING_HOOD		EARS|HEAD
+#define CLOTHING_BIOHOOD	HEAD|EARS|EYES|MOUTH
+#define CLOTHING_FULLHELMET	FULL_HEAD
+#define CLOTHING_HAT		HEAD
+#define CLOTHING_SOMBRERO	HEAD|FOREHEAD
+#define CLOTHING_FULLMASK	FACE
+#define CLOTHING_BALACLAVA	MOUTH|EARS|HEAD|BEARD
+#define	CLOTHING_HALFMASK	MOUTH|IGNORE_INV
+
+
+// bitflags for invisibility
+
+#define HIDEGLOVES		HANDS
+#define HIDEJUMPSUIT	ARMS|LEGS|FULL_TORSO
+#define HIDESHOES		FEET
+#define HIDEMASK		FACE
+#define HIDEEARS		EARS
+#define HIDEEYES		FOREHEAD
+#define HIDEFACE		FACE
+#define HIDEHEADHAIR 	EARS|HEAD
+#define HIDEBEARDHAIR	BEARD
+#define HIDEHAIR		HIDEHEADHAIR|HIDEBEARDHAIR
+#define	HIDESUITSTORAGE	LOWER_TORSO
 
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
 // The values here should add up to 1.
-// Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
-#define THERMAL_PROTECTION_HEAD			0.3
+// Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15%, and each of the head parts has 10%
+
+#define THERMAL_PROTECTION_HEAD		0.1
+#define THERMAL_PROTECTION_FOREHEAD		0.1
+#define THERMAL_PROTECTION_MOUTH		0.1
+
 #define THERMAL_PROTECTION_UPPER_TORSO	0.15
 #define THERMAL_PROTECTION_LOWER_TORSO	0.15
 #define THERMAL_PROTECTION_LEG_LEFT		0.075
@@ -361,7 +420,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
 var/global/list/THERMAL_BODY_PARTS = list(HEAD,UPPER_TORSO,LOWER_TORSO,LEG_LEFT,FOOT_LEFT,FOOT_RIGHT,ARM_LEFT,ARM_RIGHT,HAND_LEFT,HAND_RIGHT)
-var/global/list/BODY_THERMAL_VALUE_LIST=list("[HEAD]" = THERMAL_PROTECTION_HEAD,"[UPPER_TORSO]" = THERMAL_PROTECTION_UPPER_TORSO,"[LOWER_TORSO]" = THERMAL_PROTECTION_LOWER_TORSO,"[LEG_LEFT]" = THERMAL_PROTECTION_LEG_LEFT,"[LEG_RIGHT]" = THERMAL_PROTECTION_LEG_RIGHT,"[FOOT_LEFT]" = THERMAL_PROTECTION_FOOT_LEFT,"[FOOT_RIGHT]" = THERMAL_PROTECTION_FOOT_RIGHT,"[ARM_LEFT]" = THERMAL_PROTECTION_ARM_LEFT,"[ARM_RIGHT]" = THERMAL_PROTECTION_ARM_RIGHT,"[HAND_LEFT]" = THERMAL_PROTECTION_HAND_LEFT,"[HAND_RIGHT]" = THERMAL_PROTECTION_HAND_RIGHT)
+var/global/list/BODY_THERMAL_VALUE_LIST=list("[HEAD]" = THERMAL_PROTECTION_HEAD,"[FOREHEAD]" = THERMAL_PROTECTION_FOREHEAD,"[MOUTH]" = THERMAL_PROTECTION_MOUTH, "[UPPER_TORSO]" = THERMAL_PROTECTION_UPPER_TORSO,"[LOWER_TORSO]" = THERMAL_PROTECTION_LOWER_TORSO,"[LEG_LEFT]" = THERMAL_PROTECTION_LEG_LEFT,"[LEG_RIGHT]" = THERMAL_PROTECTION_LEG_RIGHT,"[FOOT_LEFT]" = THERMAL_PROTECTION_FOOT_LEFT,"[FOOT_RIGHT]" = THERMAL_PROTECTION_FOOT_RIGHT,"[ARM_LEFT]" = THERMAL_PROTECTION_ARM_LEFT,"[ARM_RIGHT]" = THERMAL_PROTECTION_ARM_RIGHT,"[HAND_LEFT]" = THERMAL_PROTECTION_HAND_LEFT,"[HAND_RIGHT]" = THERMAL_PROTECTION_HAND_RIGHT)
 
 
 //bitflags for mutations

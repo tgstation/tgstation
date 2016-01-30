@@ -105,7 +105,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		if(zas_settings.Get(/datum/ZAS_Setting/PLASMAGUARD_ONLY))
 			if(wear_suit.flags & PLASMAGUARD) return 1
 		else
-			if(wear_suit.flags_inv & HIDEJUMPSUIT) return 1
+			if(is_slot_hidden(wear_suit.body_parts_covered,HIDEJUMPSUIT)) return 1
 	return 0
 
 /mob/living/carbon/human/proc/suit_contamination()

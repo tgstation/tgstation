@@ -7,7 +7,6 @@
 	_color = "cargo"
 	var/flipped = 0
 	siemens_coefficient = 0.9
-	body_parts_covered = HEAD|EYES
 
 	proc/flip(var/mob/user as mob)
 		if(!user.incapacitated())
