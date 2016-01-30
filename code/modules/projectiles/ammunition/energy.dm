@@ -171,3 +171,6 @@ obj/item/ammo_casing/energy/net
 	projectile_type = /obj/item/projectile/beam/instakill
 	e_cost = 0
 	select_name = "DESTROY"
+
+/obj/item/ammo_casing/energy/instakill/blue
+	projectile_type = /obj/item/projectile/beam/instagib/blue

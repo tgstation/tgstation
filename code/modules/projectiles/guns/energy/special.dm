@@ -294,5 +294,10 @@
 	force = 60
 	origin_tech = null
 
+/obj/item/weapon/gun/energy/laser/instakill/blue
+	icon_state = "instagibblue"
+	item_state = "instagibblue"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/blue)
+
 /obj/item/weapon/gun/energy/laser/instagib/emp_act() //implying you could stop the instagib
 	return

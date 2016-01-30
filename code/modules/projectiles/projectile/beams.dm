@@ -99,6 +99,9 @@
 	damage = 200
 	damage_type = BURN
 
+/obj/item/projectile/beam/instagib/blue
+	icon_state = "bluelaser"
+
 /obj/item/projectile/beam/instakill/on_hit(atom/target)
 	. = ..()
 	if(iscarbon(target))
