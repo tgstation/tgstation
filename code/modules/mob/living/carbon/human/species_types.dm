@@ -74,10 +74,11 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 
 	return randname
 
-/datum/species/lizard/qualifies_for_rank(rank, list/features)
-	if(rank in command_positions)
-		return 0
-	return 1
+/datum/species/lizard/handle_speech(message)
+	if(copytext(message, 1, 2) != "*")
+		message = replacetextEx(message, "s", "sss")
+		message = replacetextEx(message, "S", "SSS")
+	return message
 
 //I wag in death
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)

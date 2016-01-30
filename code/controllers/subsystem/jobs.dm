@@ -428,7 +428,7 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/LoadJobs()
 	var/jobstext = return_file_text("config/jobs.txt")
 	for(var/datum/job/J in occupations)
-		var/regex/jobs = regex("[J.title]=(-1|\\d+),(-1|\\d+)")
+		var/regex/jobs = new("[J.title]=(-1|\\d+),(-1|\\d+)")
 		jobs.Find(jobstext)
 		J.total_positions = text2num(jobs.group[2])
 		J.spawn_positions = text2num(jobs.group[3])
