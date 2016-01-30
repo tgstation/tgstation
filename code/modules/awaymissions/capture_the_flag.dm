@@ -18,6 +18,7 @@
 	force = 200
 	armour_penetration = 100
 	anchored = TRUE
+	flags = HANDSLOW
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 	var/obj/effect/landmark/reset
