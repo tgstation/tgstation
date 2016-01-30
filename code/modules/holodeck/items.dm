@@ -23,13 +23,11 @@
 	armour_penetration = 50
 	var/active = 0
 
-/obj/item/weapon/holo/esword/green
-	New()
-		item_color = "green"
+/obj/item/weapon/holo/esword/green/New()
+	item_color = "green"
 
-/obj/item/weapon/holo/esword/red
-	New()
-		item_color = "red"
+/obj/item/weapon/holo/esword/red/New()
+	item_color = "red"
 
 /obj/item/weapon/holo/esword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)

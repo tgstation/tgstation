@@ -41,10 +41,14 @@
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
 	switch(href_list["_src_"])
-		if("holder")	hsrc = holder
-		if("usr")		hsrc = mob
-		if("prefs")		return prefs.process_link(usr,href_list)
-		if("vars")		return view_var_Topic(href,href_list,hsrc)
+		if("holder")
+			hsrc = holder
+		if("usr")
+			hsrc = mob
+		if("prefs")
+			return prefs.process_link(usr,href_list)
+		if("vars")
+			return view_var_Topic(href,href_list,hsrc)
 
 	..()	//redirect to hsrc.Topic()
 
@@ -193,9 +197,9 @@ var/next_external_rsc = 0
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		src << "<span class='info'>You have unread updates in the changelog.</span>"
 		if(config.aggressive_changelog)
-			src.changes()
+			changelog()
 		else
-			winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
+			winset(src, "infowindow.changelog", "font-style=bold")
 
 	if (ckey in clientmessages)
 		for (var/message in clientmessages[ckey])
@@ -306,7 +310,8 @@ var/next_external_rsc = 0
 //checks if a client is afk
 //3000 frames = 5 minutes
 /client/proc/is_afk(duration=3000)
-	if(inactivity > duration)	return inactivity
+	if(inactivity > duration)
+		return inactivity
 	return 0
 
 // Byond seemingly calls stat, each tick.

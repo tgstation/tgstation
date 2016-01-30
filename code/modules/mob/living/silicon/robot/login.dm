@@ -10,8 +10,4 @@
 		ticker.mode.remove_shadowling(mind)
 		ticker.mode.remove_hog_follower(mind, 0)
 
-/mob/living/silicon/robot/update_hotkey_mode()
-	winset(src, null, "mainwindow.macro=borghotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#F0F0F0")
-
-/mob/living/silicon/robot/update_normal_mode()
-	winset(src, null, "mainwindow.macro=borgmacro hotkey_toggle.is-checked=false input.focus=true input.background-color=#D3B5B5")
+	winset(src, null, "mainwindow.macro=robot-default")

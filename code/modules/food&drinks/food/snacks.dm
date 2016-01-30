@@ -22,7 +22,8 @@
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
-	if(!usr)	return
+	if(!usr)
+		return
 	if(!reagents.total_volume)
 		usr.unEquip(src)	//so icons update :[
 
@@ -259,7 +260,7 @@
 //	name = "Xenoburger"													//Name that displays in the UI.
 //	desc = "Smells caustic. Tastes like heresy."						//Duh
 //	icon_state = "xburger"												//Refers to an icon in food.dmi
-//	New()																//Don't mess with this.
+///obj/item/weapon/reagent_containers/food/snacks/xenoburger/New()		//Don't mess with this.
 //		..()															//Same here.
 //		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
 //		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.

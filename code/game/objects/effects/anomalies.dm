@@ -211,7 +211,8 @@
 /obj/effect/anomaly/bhole/proc/affect_coord(x, y, ex_act_force, pull_chance, turf_removal_chance)
 	//Get turf at coordinate
 	var/turf/T = locate(x, y, z)
-	if(isnull(T))	return
+	if(isnull(T))
+		return
 
 	//Pulling and/or ex_act-ing movable atoms in that turf
 	if(prob(pull_chance))

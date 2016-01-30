@@ -454,34 +454,6 @@ var/next_mob_id = 0
 //	M.Login()	//wat
 	return
 
-/client/verb/changes()
-	set name = "Changelog"
-	set category = "OOC"
-	getFiles(
-		'html/88x31.png',
-		'html/bug-minus.png',
-		'html/cross-circle.png',
-		'html/hard-hat-exclamation.png',
-		'html/image-minus.png',
-		'html/image-plus.png',
-		'html/music-minus.png',
-		'html/music-plus.png',
-		'html/tick-circle.png',
-		'html/wrench-screwdriver.png',
-		'html/spell-check.png',
-		'html/burn-exclamation.png',
-		'html/chevron.png',
-		'html/chevron-expand.png',
-		'html/changelog.css',
-		'html/changelog.js',
-		'html/changelog.html'
-		)
-	src << browse('html/changelog.html', "window=changes;size=675x650")
-	if(prefs.lastchangelog != changelog_hash)
-		prefs.lastchangelog = changelog_hash
-		prefs.save_preferences()
-		winset(src, "rpane.changelogb", "background-color=none;font-style=;")
-
 /mob/verb/observe()
 	set name = "Observe"
 	set category = "OOC"
@@ -561,10 +533,14 @@ var/next_mob_id = 0
 
 /mob/MouseDrop(mob/M)
 	..()
-	if(M != usr)	return
-	if(usr == src)	return
-	if(!Adjacent(usr))	return
-	if(istype(M, /mob/living/silicon/ai))	return
+	if(M != usr)
+		return
+	if(usr == src)
+		return
+	if(!Adjacent(usr))
+		return
+	if(istype(M, /mob/living/silicon/ai))
+		return
 	show_inv(usr)
 
 /mob/proc/is_active()
@@ -673,13 +649,20 @@ var/next_mob_id = 0
 
 // facing verbs
 /mob/proc/canface()
-	if(!canmove)						return 0
-	if(client.moving)					return 0
-	if(world.time < client.move_delay)	return 0
-	if(stat==2)							return 0
-	if(anchored)						return 0
-	if(notransform)						return 0
-	if(restrained())					return 0
+	if(!canmove)
+		return 0
+	if(client.moving)
+		return 0
+	if(world.time < client.move_delay)
+		return 0
+	if(stat==2)
+		return 0
+	if(anchored)
+		return 0
+	if(notransform)
+		return 0
+	if(restrained())
+		return 0
 	return 1
 
 
@@ -718,7 +701,8 @@ var/next_mob_id = 0
 
 /mob/verb/eastface()
 	set hidden = 1
-	if(!canface())	return 0
+	if(!canface())
+		return 0
 	dir = EAST
 	client.move_delay += movement_delay()
 	return 1
@@ -726,7 +710,8 @@ var/next_mob_id = 0
 
 /mob/verb/westface()
 	set hidden = 1
-	if(!canface())	return 0
+	if(!canface())
+		return 0
 	dir = WEST
 	client.move_delay += movement_delay()
 	return 1
@@ -734,7 +719,8 @@ var/next_mob_id = 0
 
 /mob/verb/northface()
 	set hidden = 1
-	if(!canface())	return 0
+	if(!canface())
+		return 0
 	dir = NORTH
 	client.move_delay += movement_delay()
 	return 1
@@ -742,7 +728,8 @@ var/next_mob_id = 0
 
 /mob/verb/southface()
 	set hidden = 1
-	if(!canface())	return 0
+	if(!canface())
+		return 0
 	dir = SOUTH
 	client.move_delay += movement_delay()
 	return 1
