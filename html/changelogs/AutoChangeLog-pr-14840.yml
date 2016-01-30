@@ -1,0 +1,4 @@
+author: xxalpha
+delete-after: True
+changes: 
+  - rscadd: "Blueprints will now allow the expansion of an existing area by giving its name to a new adjacent area."
