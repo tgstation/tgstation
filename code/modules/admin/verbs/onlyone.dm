@@ -1,4 +1,4 @@
-/client/proc/only_one()
+/client/proc/only_one(highlander = 1)
 	if(!ticker || !ticker.mode)
 		alert("The game hasn't started yet!")
 		return
@@ -30,21 +30,34 @@
 				continue
 			qdel(I)
 
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/beret(H), slot_head)
-		H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), slot_l_hand)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), slot_shoes)
+		if(highlander)
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt(H), slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/beret(H), slot_head)
+			H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), slot_l_hand)
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), slot_shoes)
+		else
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(H), slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear/grey_tide(H), slot_l_hand)
+
+		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain/alt(H), slot_ears)
 		H.equip_to_slot_or_del(new /obj/item/weapon/pinpointer(H.loc), slot_l_store)
 
 		var/obj/item/weapon/card/id/W = new(H)
 		W.icon_state = "centcom"
 		W.access = get_all_accesses()
 		W.access += get_all_centcom_access()
-		W.assignment = "Highlander"
+		if(highlander)
+			W.assignment = "Highlander"
+		else
+			W.assignment = "Lancer"
 		W.registered_name = H.real_name
 		W.update_label(H.real_name)
 		H.equip_to_slot_or_del(W, slot_wear_id)
+
+		var/datum/martial_art/the_sleeping_carp/theSleepingCarp = new(null) //No guns
+		theSleepingCarp.teach(H)
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
 	log_admin("[key_name(usr)] used there can be only one.")
