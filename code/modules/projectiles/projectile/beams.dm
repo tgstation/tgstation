@@ -92,3 +92,16 @@
 /obj/item/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"
 	suit_types = list(/obj/item/clothing/suit/redtag)
+
+/obj/item/projectile/beam/instagib
+	name = "instagib laser"
+	icon_state = "laser"
+	damage = 200
+	damage_type = BURN
+
+/obj/item/projectile/beam/instakill/on_hit(atom/target)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.gib()
+		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")

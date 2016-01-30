@@ -284,3 +284,15 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 	cell_type = "/obj/item/weapon/stock_parts/cell/high"
 	pin = null
+
+/obj/item/weapon/gun/energy/laser/instakill
+	name = "instakill rifle"
+	icon_state = "instagib"
+	item_state = "instagib"
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
+	force = 60
+	origin_tech = null
+
+/obj/item/weapon/gun/energy/laser/instagib/emp_act() //implying you could stop the instagib
+	return
