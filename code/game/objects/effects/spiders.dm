@@ -202,13 +202,8 @@
 			S.poison_type = poison_type
 			S.faction = faction.Copy()
 			if(player_spiders)
-				var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [S.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50)
-				var/mob/dead/observer/theghost = null
-				if(candidates.len)
-					theghost = pick(candidates)
-					S.key = theghost.key
+				notify_ghosts("Spider [S.name] can be controlled", null, enter_link="<a href=?src=\ref[S];activate=1>(Click to play)</a>", source=S, attack_not_jump = 1)
 			qdel(src)
-
 
 
 
