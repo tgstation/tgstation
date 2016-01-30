@@ -306,7 +306,7 @@
 /turf/indestructible/splashscreen/New()
 	..()
 	if(titlescreen)
-		icon_state = TITLESCREEN
+		icon_state = titlescreen
 
 /turf/indestructible/riveted
 	icon_state = "riveted"
