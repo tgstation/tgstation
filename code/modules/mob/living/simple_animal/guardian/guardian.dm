@@ -37,6 +37,7 @@
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
+	updatehudhealth()
 	if(summoner)
 		if(summoner.stat == DEAD)
 			src << "<span class='danger'>Your summoner has died!</span>"
@@ -61,17 +62,19 @@
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 			forceMove(get_turf(summoner))
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	..()
 	if(summoner)
-		if (get_dist(get_turf(summoner),get_turf(src)) <= range)
+		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
 			return
 		else
 			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 			forceMove(get_turf(summoner))
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
@@ -89,6 +92,15 @@
 	summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
 	summoner.death()
 
+/mob/living/simple_animal/hostile/guardian/proc/updatehudhealth()
+	if(summoner)
+		var/resulthealth
+		if(iscarbon(summoner))
+			resulthealth = round((abs(config.health_threshold_dead - summoner.health) / abs(config.health_threshold_dead - summoner.maxHealth)) * 100)
+		else
+			resulthealth = round((summoner.health / summoner.maxHealth) * 100)
+		hud_used.guardianhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>"
+
 /mob/living/simple_animal/hostile/guardian/adjustHealth(amount) //The spirit is invincible, but passes on damage to the summoner
 	. =  ..()
 	if(summoner)
@@ -101,6 +113,7 @@
 		if(summoner.stat == UNCONSCIOUS)
 			summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
 			summoner.adjustCloneLoss(amount*0.5) //dying hosts take 50% bonus damage as cloneloss
+		updatehudhealth()
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
@@ -126,6 +139,7 @@
 		return
 	if(loc == summoner)
 		forceMove(get_turf(summoner))
+		PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
 		cooldown = world.time + 30
 
 /mob/living/simple_animal/hostile/guardian/proc/Recall()
@@ -133,7 +147,7 @@
 		return
 	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 	unbuckle_mob(force=1)
-	loc = summoner
+	forceMove(summoner)
 	cooldown = world.time + 30
 
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
@@ -735,6 +749,12 @@
 
 	var/obj/screen/using
 
+	guardianhealthdisplay = new /obj/screen/guardian()
+	guardianhealthdisplay.name = "summoner health"
+	guardianhealthdisplay.screen_loc = ui_health
+	guardianhealthdisplay.mouse_opacity = 0
+	adding += guardianhealthdisplay
+
 	using = new /obj/screen/guardian/Manifest()
 	using.screen_loc = ui_rhand
 	adding += using
@@ -764,6 +784,7 @@
 
 /obj/screen/guardian
 	icon = 'icons/mob/guardian.dmi'
+	icon_state = "base"
 
 /obj/screen/guardian/Manifest
 	icon_state = "manifest"

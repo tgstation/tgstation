@@ -48,6 +48,7 @@
 	for(var/i in 1 to 5)
 		component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 5)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	RefreshParts()
 	spawn(5)
 		dir_loop:
@@ -71,8 +72,8 @@
 	var/C
 	for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
 		IO += CP.rating
-	input_level_max = 200000 * IO
-	output_level_max = 200000 * IO
+	input_level_max = initial(input_level_max) * IO
+	output_level_max = initial(output_level_max) * IO
 	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
 		MC += PC.maxcharge
 		C += PC.charge
@@ -193,7 +194,8 @@
 
 /obj/machinery/power/smes/update_icon()
 	overlays.Cut()
-	if(stat & BROKEN)	return
+	if(stat & BROKEN)
+		return
 
 	if(panel_open)
 		return
@@ -235,7 +237,8 @@
 
 /obj/machinery/power/smes/process()
 
-	if(stat & BROKEN)	return
+	if(stat & BROKEN)
+		return
 
 	//store machine state to see if we need to update the icon overlays
 	var/last_disp = chargedisplay()
@@ -369,7 +372,7 @@
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
 				target = input("New input target (0-[input_level_max]):", name, input_level) as num|null
-				if(target && !..())
+				if(!isnull(target) && !..())
 					. = TRUE
 			else if(target == "min")
 				target = 0
@@ -391,7 +394,7 @@
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
 				target = input("New output target (0-[output_level_max]):", name, output_level) as num|null
-				if(target && !..())
+				if(!isnull(target) && !..())
 					. = TRUE
 			else if(target == "min")
 				target = 0
@@ -433,10 +436,11 @@
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power."
-	process()
-		capacity = INFINITY
-		charge = INFINITY
-		..()
+
+/obj/machinery/power/smes/magical/process()
+	capacity = INFINITY
+	charge = INFINITY
+	..()
 
 
 #undef SMESRATE

@@ -151,12 +151,11 @@
 	reagents.handle_reactions()
 	return 1
 
-/obj/item/projectile/bullet/dart/metalfoam
-	New()
-		..()
-		reagents.add_reagent("aluminium", 15)
-		reagents.add_reagent("foaming_agent", 5)
-		reagents.add_reagent("facid", 5)
+/obj/item/projectile/bullet/dart/metalfoam/New()
+	..()
+	reagents.add_reagent("aluminium", 15)
+	reagents.add_reagent("foaming_agent", 5)
+	reagents.add_reagent("facid", 5)
 
 //This one is for future syringe guns update
 /obj/item/projectile/bullet/dart/syringe

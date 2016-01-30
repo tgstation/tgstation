@@ -94,10 +94,12 @@
 	var/ctf_gear = /datum/outfit/ctf
 
 /obj/machinery/capture_the_flag/New()
+	..()
 	poi_list |= src
 
 /obj/machinery/capture_the_flag/Destroy()
 	poi_list.Remove(src)
+	..()
 
 /obj/machinery/capture_the_flag/red
 	name = "Red CTF Controller"
@@ -116,14 +118,6 @@
 		return
 	if(ticker.current_state != GAME_STATE_PLAYING)
 		return
-	for(var/obj/machinery/capture_the_flag/CTF in machines)
-		if(CTF == src || CTF.ctf_enabled == FALSE)
-			continue
-		if(user.ckey in CTF.team_members)
-			user << "No switching teams while the round is going!"
-		if(CTF.team_members.len < src.team_members.len)
-			user << "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up."
-			return
 	if(user.ckey in team_members)
 		if(user.mind.current && user.mind.current.timeofdeath + CTF_RESPAWN_COOLDOWN > world.time)
 			user << "It must be more than 15 seconds from your last death to respawn!"
@@ -132,6 +126,16 @@
 		dust_old(user)
 		spawn_team_member(new_team_member)
 		return
+
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		if(CTF == src || CTF.ctf_enabled == FALSE)
+			continue
+		if(user.ckey in CTF.team_members)
+			user << "No switching teams while the round is going!"
+			return
+		if(CTF.team_members.len < src.team_members.len)
+			user << "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up."
+			return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
 	dust_old(user)
@@ -168,7 +172,8 @@
 
 /obj/machinery/capture_the_flag/proc/victory()
 	for(var/mob/M in mob_list)
-		if (M.z == src.z)
+		var/area/mob_area = get_area(M)
+		if(istype(mob_area, /area/ctf))
 			M << "<span class='narsie'>[team] team wins!</span>"
 			M << "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>"
 			M.dust()
@@ -225,6 +230,8 @@
 	name = "Spawn protection"
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
+	health = INFINITY
+	maxhealth = INFINITY
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
 	alpha = 255
