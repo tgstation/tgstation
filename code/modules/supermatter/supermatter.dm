@@ -381,6 +381,12 @@
 
 
 /obj/machinery/power/supermatter/Bumped(atom/AM as mob|obj)
+	if(istype(AM, /obj/machinery/power/supermatter))
+		AM.visible_message("<span class='sinister'>As \the [src] bumps into \the [AM] an otherworldly resonance ringing begins to shake the room, you ponder for a moment all the incorrect choices in your life that led you here, to this very moment, to witness this. You take one final sigh before it all ends.</span>")
+		sleep(10) //Adds to the hilarity
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+		explode()
+		return
 	if(istype(AM, /mob/living))
 		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\

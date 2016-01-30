@@ -135,6 +135,7 @@
 	if (src.health <= 0)
 		getFromPool(shard, loc)
 		getFromPool(/obj/item/stack/cable_coil,src.loc,2)
+		eject_electronics()
 		qdel(src)
 		return
 
@@ -290,6 +291,9 @@
 	WA.fingerprintslast = user.ckey
 
 	// Pop out electronics
+	eject_electronics()
+
+/obj/machinery/door/window/proc/eject_electronics()
 	var/obj/item/weapon/circuitboard/airlock/AE = (src.electronics ? src.electronics : new /obj/item/weapon/circuitboard/airlock(src.loc))
 	if (src.electronics)
 		src.electronics = null
