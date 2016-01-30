@@ -1,5 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "You can now use the abandoned white ship as an escape route at round end. This is possible on Box, Meta, and Dream."
-  - rscadd: "Added support so that mappers can make any shuttle function as an escape shuttle."
