@@ -88,7 +88,7 @@
 
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]
-		M << "Your Clown Mask has now morphed into [choice], all praise the Honkmother!"
+		M << "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>"
 		return 1
 
 /obj/item/clothing/mask/gas/sexyclown
@@ -108,6 +108,21 @@
 	item_state = "mime"
 	flags_cover = MASKCOVERSEYES
 	burn_state = FLAMMABLE
+
+/obj/item/clothing/mask/gas/mime/attack_self(mob/user)
+
+	var/mob/M = usr
+	var/list/options = list()
+	options["Arleccino"] = "mime"
+	options["Columbina"] = "sexymime"
+	options["Pierrot"] = "sadmime" // pierrot was a mime shut up
+
+	var/choice = input(M,"Which pantomime character would you like to play?","Change Mask") in options
+
+	if(src && choice && !M.stat && in_range(M,src))
+		icon_state = options[choice]
+		M << "<span class='notice'>You adjust your mask to portray [choice].</span>"
+		return 1
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
