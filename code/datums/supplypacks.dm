@@ -929,6 +929,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/seeds/sunflowerseed,
 					/obj/item/seeds/chantermycelium,
 					/obj/item/seeds/potatoseed,
+					/obj/item/seeds/riceseed,
 					/obj/item/seeds/sugarcaneseed)
 	cost = 10
 	containername = "seeds crate"
