@@ -163,16 +163,9 @@
 		A.SetDynamicLighting()
 	else
 		A = new
-		A.name = str
-		A.power_equip = 0
-		A.power_light = 0
-		A.power_environ = 0
-		A.always_unpowered = 0
-		A.valid_territory = 0
+		A.setup(str)
 		A.contents += turfs
 		A.SetDynamicLighting()
-		A.addSorted()
-
 	interact()
 	return 1
 
