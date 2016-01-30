@@ -1135,6 +1135,7 @@ About the new airlock wires panel:
 
 	if (!electronics)
 		A = new/obj/item/weapon/circuitboard/airlock(loc)
+		A.installed = 1
 		if(req_access && req_access.len)
 			A.conf_access = req_access
 		else if(req_one_access && req_one_access.len)
@@ -1144,6 +1145,7 @@ About the new airlock wires panel:
 		A = electronics
 		electronics = null
 		A.loc = loc
+		A.installed = 0
 
 	if (operating == -1)
 		A.icon_state = "door_electronics_smoked"

@@ -294,7 +294,10 @@
 	if (src.electronics)
 		src.electronics = null
 		AE.loc = src.loc
+		AE.installed = 0
 	else
+		if(operating == -1)
+			AE.icon_state = "door_electronics_smoked"
 		// Straight from /obj/machinery/door/airlock/attackby()
 		if (src.req_access && src.req_access.len > 0)
 			AE.conf_access = src.req_access

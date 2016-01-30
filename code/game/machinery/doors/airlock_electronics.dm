@@ -15,13 +15,14 @@
 	var/one_access = 0 //if set to 1, door would receive req_one_access instead of req_access
 	var/last_configurator = null
 	var/locked = 1
+	var/installed = 0
 
 	// Allow dicking with it while it's on the floor.
-	attack_robot(mob/user as mob)
-		if(isMoMMI(user))
-			return ..()
-		attack_self(user)
-		return 1
+/obj/item/weapon/circuitboard/airlock/attack_robot(mob/user as mob)
+	if(isMoMMI(user))
+		return ..()
+	attack_self(user)
+	return 1
 
 /obj/item/weapon/circuitboard/airlock/attackby(obj/item/W as obj, mob/user as mob)
 	if(issolder(W))
@@ -37,7 +38,7 @@
 
 /obj/item/weapon/circuitboard/airlock/attack_self(mob/user as mob)
 	if (!ishuman(user) && !isrobot(user))
-		return ..(user)
+		return ..()
 
 	// Can't manipulate it when broken (e.g. emagged)
 	if (icon_state == "door_electronics_smoked")
@@ -47,6 +48,9 @@
 		if(H.getBrainLoss() >= 60)
 			return
 
+	interact(user)
+
+/obj/item/weapon/circuitboard/airlock/interact(mob/user as mob)
 	var/t1 = text("<B>Access control</B><br>\n")
 
 	if (last_configurator)
@@ -84,14 +88,14 @@
 	onclose(user, "airlock")
 
 /obj/item/weapon/circuitboard/airlock/Topic(href, href_list)
-	if(..()) return 1
-	if (usr.stat || usr.restrained() || (!ishuman(usr) && !isrobot(usr)) || icon_state == "door_electronics_smoked")
+	if(..()) return 1 //Its not as though this does ANYTHING
+	if(!Adjacent(usr) || usr.stat || usr.restrained() || (!ishuman(usr) && !isrobot(usr)) || icon_state == "door_electronics_smoked" || installed)
 		return
-	if (href_list["close"])
+	if(href_list["close"])
 		usr << browse(null, "window=airlock")
 		return
 
-	if (href_list["login"])
+	if(href_list["login"])
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H=usr
 			var/obj/item/I = usr.get_active_hand()
@@ -109,19 +113,19 @@
 			src.locked=0
 			src.last_configurator = usr.name
 
-	if (locked)
+	if(locked)
 		return
 
-	if (href_list["logout"])
+	if(href_list["logout"])
 		locked = 1
 
-	if (href_list["one_access"])
+	if(href_list["one_access"])
 		one_access = !one_access
 
-	if (href_list["access"])
+	if(href_list["access"])
 		toggle_access(href_list["access"])
 
-	attack_self(usr)
+	interact(usr)
 
 /obj/item/weapon/circuitboard/airlock/proc/toggle_access(var/acc)
 	if (acc == "all")

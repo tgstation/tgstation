@@ -250,6 +250,8 @@
 
 		if(do_after(user, src, 40))
 			if(!src) return
+			var/obj/item/weapon/circuitboard/airlock/electronic = W
+			electronic.installed = 1
 			to_chat(user, "<span class='notice'>You installed the airlock electronics!</span>")
 			src.state = 2
 			src.name = "Near finished Airlock Assembly"
@@ -273,6 +275,7 @@
 				ae = new/obj/item/weapon/circuitboard/airlock( src.loc )
 			else
 				ae = electronics
+				electronics.installed = 0
 				electronics = null
 				ae.loc = src.loc
 		busy = 0
@@ -331,6 +334,7 @@
 			else
 				door.name = "[istext(glass) ? "[glass] airlock" : base_name]"
 			src.electronics.loc = door
+			src.electronics.installed = 1
 			qdel(src)
 		busy = 0
 	else
