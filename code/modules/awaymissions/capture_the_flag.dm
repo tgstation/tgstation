@@ -44,7 +44,9 @@
 	if(user.faction == team)
 		user << "You can't move your own flag!"
 		return
-
+	if(loc == user)
+		if(!user.unEquip(src))
+			return
 	anchored = FALSE
 	pickup(user)
 	if(!user.put_in_active_hand(src))
