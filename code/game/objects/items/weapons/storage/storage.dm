@@ -197,11 +197,11 @@
 	var/obj/item/sample_object
 	var/number
 
-	New(obj/item/sample)
-		if(!istype(sample))
-			qdel(src)
-		sample_object = sample
-		number = 1
+/datum/numbered_display/New(obj/item/sample)
+	if(!istype(sample))
+		qdel(src)
+	sample_object = sample
+	number = 1
 
 
 //This proc determins the size of the inventory to be displayed. Please touch it only if you know what you're doing.
@@ -235,7 +235,8 @@
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
-	if(!istype(W) || (W.flags & ABSTRACT)) return //Not an item
+	if(!istype(W) || (W.flags & ABSTRACT))
+		return //Not an item
 
 	if(loc == W)
 		return 0 //Means the item is already in the storage item
@@ -292,7 +293,8 @@
 //The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
 //such as when picking up all the items on a tile with one click.
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 	if(usr)
 		if(!usr.unEquip(W))
 			return 0
@@ -325,7 +327,8 @@
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
 /obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location, burn = 0)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 
 	if(istype(src, /obj/item/weapon/storage/fancy))
 		var/obj/item/weapon/storage/fancy/F = src

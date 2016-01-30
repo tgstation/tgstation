@@ -506,7 +506,8 @@
 	var/list/obj/effect/spacevine/queue_end = list()
 
 	for( var/obj/effect/spacevine/SV in growth_queue )
-		if(SV.gc_destroyed)	continue
+		if(SV.gc_destroyed)
+			continue
 		i++
 		queue_end += SV
 		growth_queue -= SV

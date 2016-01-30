@@ -91,7 +91,7 @@
 	for(var/i in 1 to 4)
 		new /obj/item/clothing/suit/radiation(src)
 		new /obj/item/clothing/head/radiation(src)
-	
+
 /obj/structure/closet/crate/hydroponics
 	name = "hydroponics crate"
 	desc = "All you need to destroy those pesky weeds and pests."

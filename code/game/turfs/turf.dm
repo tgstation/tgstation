@@ -119,8 +119,10 @@
 
 //Creates a new turf
 /turf/proc/ChangeTurf(path)
-	if(!path)			return
-	if(path == type)	return src
+	if(!path)
+		return
+	if(path == type)
+		return src
 
 	SSair.remove_from_active(src)
 

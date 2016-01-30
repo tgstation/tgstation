@@ -37,7 +37,8 @@
 	dna.species.spec_death(gibbed,src)
 
 	tod = worldtime2text()		//weasellos time of death patch
-	if(mind)	mind.store_memory("Time of death: [tod]", 0)
+	if(mind)
+		mind.store_memory("Time of death: [tod]", 0)
 	if(ticker && ticker.mode)
 //		world.log << "k"
 		sql_report_death(src)
@@ -50,7 +51,8 @@
 	return 1
 
 /mob/living/carbon/proc/ChangeToHusk()
-	if(disabilities & HUSK)	return
+	if(disabilities & HUSK)
+		return
 	disabilities |= HUSK
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	return 1

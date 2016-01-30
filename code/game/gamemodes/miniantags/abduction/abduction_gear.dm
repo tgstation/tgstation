@@ -316,7 +316,7 @@
 /obj/item/device/firing_pin/alien/pin_auth(mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human") //stealth lizard buff go
+		if(H.dna.species.id != "abductor")
 			return 0
 	return 1
 

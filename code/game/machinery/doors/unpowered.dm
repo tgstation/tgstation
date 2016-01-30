@@ -3,13 +3,15 @@
 
 
 /obj/machinery/door/unpowered/Bumped(atom/AM)
-	if(src.locked)	return
+	if(src.locked)
+		return
 	..()
 	return
 
 
 /obj/machinery/door/unpowered/attackby(obj/item/I, mob/user, params)
-	if(src.locked)	return
+	if(src.locked)
+		return
 	..()
 	return
 

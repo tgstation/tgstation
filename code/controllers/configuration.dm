@@ -211,7 +211,8 @@
 	var/list/Lines = file2list(filename)
 
 	for(var/t in Lines)
-		if(!t)	continue
+		if(!t)
+			continue
 
 		t = trim(t)
 		if(length(t) == 0)
@@ -576,7 +577,8 @@
 
 	var/datum/votablemap/currentmap = null
 	for(var/t in Lines)
-		if(!t)	continue
+		if(!t)
+			continue
 
 		t = trim(t)
 		if(length(t) == 0)
@@ -625,7 +627,8 @@
 /datum/configuration/proc/loadsql(filename)
 	var/list/Lines = file2list(filename)
 	for(var/t in Lines)
-		if(!t)	continue
+		if(!t)
+			continue
 
 		t = trim(t)
 		if(length(t) == 0)
