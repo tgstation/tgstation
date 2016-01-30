@@ -201,6 +201,7 @@ BLIND     // can't see anything
 		M.update_inv_shoes()
 
 /obj/item/clothing/shoes/attackby(obj/item/I, mob/user, params)
+	..()
 	if(!can_hold_knives)
 		return
 	if(held_knife)
