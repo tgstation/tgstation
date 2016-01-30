@@ -360,6 +360,16 @@
 		if(T && gravity_generators["[T.z]"] && length(gravity_generators["[T.z]"]))
 			return 1
 	return 0
+
+/area/proc/setup(a_name)
+	name = a_name
+	power_equip = 0
+	power_light = 0
+	power_environ = 0
+	always_unpowered = 0
+	valid_territory = 0
+	addSorted()
+
 /*
 /area/proc/clear_docking_area()
 	var/list/dstturfs = list()
