@@ -711,6 +711,16 @@
 	icon_state = "female_blackalt"
 	gender = FEMALE
 
+/datum/sprite_accessory/underwear/female_white_neko
+	name = "Ladies White Neko"
+	icon_state = "female_neko_white"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/female_black_neko
+	name = "Ladies Black Neko"
+	icon_state = "female_neko_black"
+	gender = FEMALE
+
 /datum/sprite_accessory/underwear/female_usastripe
 	name = "Ladies Freedom"
 	icon_state = "female_assblastusa"
