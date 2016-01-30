@@ -26,7 +26,7 @@
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
-	var/next_poltergeist = POLTERGEIST_COOLDOWN // FUCK OFF GHOSTS
+	var/next_poltergeist = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
@@ -102,6 +102,8 @@
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
+
+	start_poltergeist_cooldown() //FUCK OFF GHOSTS
 	..()
 
 /mob/dead/observer/Destroy()
