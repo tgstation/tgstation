@@ -789,7 +789,7 @@ window "infowindow"
   elem "changelog"
 		type = BUTTON
 		button-type = pushbutton
-    pos = 16,5
+		pos = 16,5
 		size = 104x20
 		anchor1 = 3,0
 		anchor2 = 19,0
@@ -798,7 +798,7 @@ window "infowindow"
 	elem "rules"
 		type = BUTTON
 		button-type = pushbutton
-    pos = 120,5
+		pos = 120,5
 		size = 100x20
 		anchor1 = 19,0
 		anchor2 = 34,0
@@ -807,7 +807,7 @@ window "infowindow"
 	elem "wiki"
 		type = BUTTON
 		button-type = pushbutton
-    pos = 220,5
+		pos = 220,5
 		size = 100x20
 		anchor1 = 34,0
 		anchor2 = 50,0
@@ -816,7 +816,7 @@ window "infowindow"
 	elem "forum"
 		type = BUTTON
 		button-type = pushbutton
-    pos = 320,5
+		pos = 320,5
 		size = 100x20
 		anchor1 = 50,0
 		anchor2 = 66,0
@@ -825,7 +825,7 @@ window "infowindow"
   elem "github"
 	  type = BUTTON
 	  button-type = pushbutton
-    pos = 420,5
+		pos = 420,5
 		size = 100x20
 		anchor1 = 66,0
 		anchor2 = 81,0
@@ -834,7 +834,7 @@ window "infowindow"
   elem "report-issue"
 	  type = BUTTON
 	  button-type = pushbutton
-    pos = 520,5
+		pos = 520,5
 		size = 100x20
 		anchor1 = 81,0
 		anchor2 = 97,0
