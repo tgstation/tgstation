@@ -182,44 +182,47 @@
 	return 1
 
 /mob/living/proc/handle_vision()
-
-	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
-
 	update_sight()
 
-	if(stat != DEAD)
-		if(blind)
-			if(eye_blind)
-				blind.plane = 0
-				throw_alert("blind", /obj/screen/alert/blind)
-			else
-				blind.plane = -80
-				clear_alert("blind")
+	if(stat == DEAD)
+		return
+	if(eye_blind)
+		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+		throw_alert("blind", /obj/screen/alert/blind)
+	else
+		clear_fullscreen("blind")
+		clear_alert("blind")
 
-				if (disabilities & NEARSIGHT)
-					client.screen += global_hud.vimpaired
-
-				if (eye_blurry)
-					client.screen += global_hud.blurry
-
-				if (druggy)
-					client.screen += global_hud.druggy
-					throw_alert("high", /obj/screen/alert/high)
-				else
-					clear_alert("high")
-
-				if(eye_stat > 20)
-					if(eye_stat > 30)
-						client.screen += global_hud.darkMask
-					else
-						client.screen += global_hud.vimpaired
-
-		if(machine)
-			if (!( machine.check_eye(src) ))
-				reset_view(null)
+		if(disabilities & NEARSIGHT)
+			overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
 		else
-			if(!remote_view && !client.adminobs)
-				reset_view(null)
+			clear_fullscreen("nearsighted")
+
+		if(eye_blurry)
+			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+		else
+			clear_fullscreen("blurry")
+
+		if(druggy)
+			overlay_fullscreen("high", /obj/screen/fullscreen/high)
+			throw_alert("high", /obj/screen/alert/high)
+		else
+			clear_fullscreen("high")
+			clear_alert("high")
+
+		if(eye_stat > 30)
+			overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 2)
+		else if(eye_stat > 20)
+			overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
+		else
+			clear_fullscreen("impaired")
+
+	if(machine)
+		if (!( machine.check_eye(src) ))
+			reset_view(null)
+	else
+		if(!remote_view && !client.adminobs)
+			reset_view(null)
 
 /mob/living/proc/update_sight()
 	return

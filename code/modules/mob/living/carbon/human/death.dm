@@ -32,10 +32,8 @@
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
 		update_canmove()
-		if(client)
-			blind.plane = -80
 
-	dna.species.spec_death(gibbed,src)
+	dna.species.spec_death(gibbed, src)
 
 	tod = worldtime2text()		//weasellos time of death patch
 	if(mind)
