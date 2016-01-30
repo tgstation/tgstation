@@ -286,7 +286,8 @@
 		LE.process()
 
 /mob/living/carbon/human/LaserEyes()
-	if(burn_calories(rand(1,5)))
+	if(burn_calories(0.5))
+		nutrition = max(0,nutrition-2)
 		..()
 		handle_regular_hud_updates()
 	else

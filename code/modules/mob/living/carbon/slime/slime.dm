@@ -1140,6 +1140,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	qdel (src)
 
+/mob/living/carbon/slime/IgniteMob()
+	return 0
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*

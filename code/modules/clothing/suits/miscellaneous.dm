@@ -513,11 +513,11 @@
 	desc = "First developed by NASA in 1964 for the US space program!"
 	heat_conductivity = 0 // Good luck losing heat in this!
 	slowdown = 10
-
+	var/bearpelt = 0
 
 /obj/item/clothing/suit/spaceblanket/attackby(obj/item/W,mob/user)
 	..()
-	if(istype(W,/obj/item/clothing/head/bearpelt))
+	if(istype(W,/obj/item/clothing/head/bearpelt) && !bearpelt)
 		to_chat(user,"<span class='notice'>You add \the [W] to \the [src].</span>")
 		qdel(W)
 		qdel(src)
@@ -531,3 +531,4 @@
 	item_state = "shittyuglyawfulBADblanket"
 	heat_conductivity = 0
 	slowdown = 5
+	bearpelt = 1
