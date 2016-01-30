@@ -633,6 +633,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 1
 
+/datum/uplink_item/stealthy_weapons/soap_clusterbang
+	name = "Slipocalypse Clusterbang"
+	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
+	item = /obj/item/weapon/grenade/clusterbuster/soap
+	cost = 2
+
 /datum/uplink_item/stealthy_weapons/door_charge
 	name = "Explosive Airlock Charge"
 	desc = "A small, easily concealable device. It can be applied to an open airlock panel, booby-trapping it. \
