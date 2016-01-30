@@ -362,6 +362,7 @@ var/global/mulebot_count = 0
 	update_icon()
 
 /mob/living/simple_animal/bot/mulebot/proc/load_mob(mob/living/M)
+	can_buckle = TRUE
 	if(buckle_mob(M))
 		passenger = M
 		load = M
