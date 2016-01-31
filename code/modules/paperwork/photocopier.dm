@@ -63,8 +63,8 @@
 		if(copy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 0 && !busy && copy)
-					if(istype(copy, /obj/item/weapon/paper/contract/employment)
-						var/obj/item/weapon/paper/contract/employment/c = new /obj/item/weapon/paper/contract/employment (loc, copy.owner)
+					if(istype(copy, /obj/item/weapon/paper/contract/employment))
+						new /obj/item/weapon/paper/contract/employment (loc, copy.owner)
 						toner--
 					else
 						var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
@@ -227,7 +227,7 @@
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
-			if(istype(O,/obj/item/weapon/paper/contract/infernal)
+			if(istype(O,/obj/item/weapon/paper/contract/infernal))
 				user << "<span class='warning'>The photocopier catches fire, smelling of brimstone!</span>"
 				burn_state = ON_FIRE
 			else
