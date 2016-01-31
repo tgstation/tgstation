@@ -1235,7 +1235,7 @@
 "axM" = (/obj/structure/table/wood,/obj/item/device/paicard,/turf/simulated/floor/plasteel,/area/crew_quarters/sleep)
 "axN" = (/obj/structure/table/wood,/obj/item/device/instrument/violin,/turf/simulated/floor/plasteel,/area/crew_quarters/sleep)
 "axO" = (/obj/structure/bed/stool{pixel_y = 8},/obj/effect/landmark/start{name = "Assistant"},/turf/simulated/floor/plasteel,/area/crew_quarters/sleep)
-"axP" = (/obj/structure/table/wood,/obj/item/toy/cards/deck{pixel_x = 2},/obj/item/clothing/mask/balaclava{pixel_x = -8; pixel_y = 8},/obj/item/weapon/restraints/handcuffs/fake,/turf/simulated/floor/plasteel,/area/crew_quarters/sleep)
+"axP" = (/obj/structure/table/wood,/obj/item/toy/cards/deck{pixel_x = 2},/obj/item/clothing/mask/balaclava{pixel_x = -8; pixel_y = 8},/turf/simulated/floor/plasteel,/area/crew_quarters/sleep)
 "axQ" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/disposalpipe/segment,/turf/simulated/floor/plasteel,/area/crew_quarters/fitness)
 "axR" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/door/firedoor,/obj/machinery/door/airlock/glass{name = "Fitness"},/turf/simulated/floor/plasteel,/area/crew_quarters/fitness)
 "axS" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/machinery/atmospherics/components/unary/vent_scrubber{dir = 8; on = 1; scrub_Toxins = 0},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/crew_quarters/fitness)

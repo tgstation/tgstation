@@ -128,7 +128,7 @@
 
 /obj/item/weapon/restraints/handcuffs/fake/kinky
 	name = "kinky handcuffs"
-	desc = "Fake handcuffs meant for 'Gag' purposes."
+	desc = "Fake handcuffs meant for erotic roleplay."
 	icon_state = "handcuffGag"
 
 /obj/item/weapon/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)

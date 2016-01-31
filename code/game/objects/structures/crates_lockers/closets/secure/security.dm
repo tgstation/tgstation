@@ -26,7 +26,6 @@
 	new /obj/item/clothing/gloves/color/captain(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/gun/energy/gun(src)
-	new /obj/item/weapon/restraints/handcuffs/fake(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
