@@ -1,2 +1,4 @@
 author: DrCelt
-changes: []
+changes:
+- tweak: You now pick up bells instead of using them when they are unanchored.
+- bugfix: Fixed a bug where deskbells could be anchored inside of pockets or bags.

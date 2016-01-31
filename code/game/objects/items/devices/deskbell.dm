@@ -29,7 +29,7 @@
 	var/wrenching = 0
 
 /obj/item/device/deskbell/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/wrench))
+	if(istype(W,/obj/item/weapon/wrench) && isturf(src.loc))
 		user.visible_message(
 			"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",
 			"You begin to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts..."
@@ -77,7 +77,8 @@
 	return
 
 /obj/item/device/deskbell/attack_hand(var/mob/user)
-	ring()
+	if(anchored)
+		ring()
 	add_fingerprint(user)
 	return
 
