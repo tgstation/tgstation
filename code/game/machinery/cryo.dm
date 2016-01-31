@@ -132,6 +132,10 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
+
+	if(stat & NOPOWER)
+		on = 0
+
 	update_icon()
 	if(!node)
 		return
