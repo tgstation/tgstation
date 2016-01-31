@@ -588,20 +588,23 @@ var/const/GALOSHES_DONT_HELP = 4
 
 	add_abilities_to_panel()
 
-/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0)
+/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1)
 	if(src.is_muzzled())
-		src << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
+		if(message)
+			src << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
 		return 0
 	if(stun)
 		Stun(4)
 	if(nutrition < 100 && !blood)
-		visible_message("<span class='warning'>[src] dry heaves!</span>", \
-						"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+		if(message)
+			visible_message("<span class='warning'>[src] dry heaves!</span>", \
+							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
 		if(stun)
 			Weaken(10)
 	else
-		visible_message("<span class='danger'>[src] throws up!</span>", \
-						"<span class='userdanger'>You throw up!</span>")
+		if(message)
+			visible_message("<span class='danger'>[src] throws up!</span>", \
+							"<span class='userdanger'>You throw up!</span>")
 		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 		var/turf/T = get_turf(src)
 		for (var/i = 0 to distance)
