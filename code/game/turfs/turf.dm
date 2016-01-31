@@ -325,6 +325,12 @@
 	icon = 'icons/misc/fullscreen.dmi'
 	icon_state = "title"
 	layer = FLY_LAYER
+	var/titlescreen = TITLESCREEN
+
+/turf/indestructible/splashscreen/New()
+	..()
+	if(titlescreen)
+		icon_state = titlescreen
 
 /turf/indestructible/riveted
 	icon_state = "riveted"
