@@ -3,6 +3,7 @@
 	Used to show and hide huds for all the different mob types,
 	including inventories and item quick actions.
 */
+var/global/obj/screen/clicker/catcher = new()
 
 /datum/hud
 	var/mob/mymob

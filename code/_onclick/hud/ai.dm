@@ -140,9 +140,10 @@
 
 	mymob.blind = getFromPool(/obj/screen)
 	mymob.blind.icon_state = "black"
-	mymob.blind.name = " "
+	mymob.blind.name = ""
 	mymob.blind.screen_loc = ui_entire_screen
 	mymob.blind.layer = 0
+	mymob.blind.mouse_opacity = 1
 
 	mymob.client.screen += adding + other + list(mymob.flash, mymob.blind)
 

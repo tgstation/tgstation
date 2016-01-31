@@ -36,7 +36,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 		for(var/atom/movable/AM in client.screen)
 			var/obj/screen/screenobj = AM
 			if(istype(screenobj))
-				if(screenobj.pool_on_reset())
+				if(!screenobj.globalscreen) //Screens taken care of in other places or used by multiple people
 					returnToPool(AM)
 			else
 				qdel(AM)
