@@ -16,16 +16,18 @@
 
 /obj/item/weapon/paper/contract/update_text(var/target)
 	name = "paper- generic contract"
-
-
-/obj/item/weapon/paper/contract/employment
 	
-
+	
+	
+/obj/item/weapon/paper/contract/employment/New(mob/living/nOwner)
+	..()
+	owner = nOwner
+	update_text()
 
 
 /obj/item/weapon/paper/contract/employment/update_text(var/employee)
 	name = "paper- [employee] employment contract"
-	info = "<center><B>Official copy of Nanotransen employment agreement</B></center><BR><BR><BR>"
+	info = "<center><B>Official copy of Nanotransen employment agreement</B></center><BR><BR><BR>Contract for [employee]<BR><BR><BR>Placeholder text"
 
 
 /obj/item/weapon/paper/contract/employment/attack(mob/living/M, mob/living/carbon/human/user)
@@ -51,7 +53,7 @@
 
 /obj/item/weapon/paper/contract/infernal
 	var/contractType = CONTRACT_POWER
-	burn_state = -1
+	burn_state = LAVA_PROOF
 	var/burn_timer = 2 //it will be on fire when first created
 	/var/mob/user/signer
 	/var/mob/user/owner
@@ -64,7 +66,7 @@
 	icon_state = "paper_words"
 	return
 
-/obj/item/weapon/paper/contract/infernal/New(var/incType, mob/nOwner)
+/obj/item/weapon/paper/contract/infernal/New(var/incType, mob/living/nOwner)
 	..()
 	owner = nOwner
 	contractType = incType
