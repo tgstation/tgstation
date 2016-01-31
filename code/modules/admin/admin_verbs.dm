@@ -440,9 +440,11 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		if(holder.fakekey)
 			holder.fakekey = null
-			mob.invisibility = initial(mob.invisibility)
-			mob.alpha = initial(mob.alpha)
-			mob.name = initial(mob.name)
+			if(isobserver(mob))
+				mob.invisibility = initial(mob.invisibility)
+				mob.alpha = initial(mob.alpha)
+				mob.name = initial(mob.name)
+				mob.mouse_opacity = initial(mob.mouse_opacity)
 		else
 			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
 			if(!new_key)
@@ -451,9 +453,11 @@ var/list/admin_verbs_hideable = list(
 				new_key = copytext(new_key, 1, 26)
 			holder.fakekey = new_key
 			createStealthKey()
-			mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
-			mob.alpha = 0 //JUUUUST IN CASE
-			mob.name = " "
+			if(isobserver(mob))
+				mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
+				mob.alpha = 0 //JUUUUST IN CASE
+				mob.name = " "
+				mob.mouse_opacity = 0
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -27,9 +27,9 @@
 		return 0
 
 	//check for centcomm shuttles
-	for(var/centcom_shuttle in list("emergency", "pod1", "pod2", "pod3", "pod4", "ferry"))
-		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(centcom_shuttle)
-		if(T in M.areaInstance)
+	for(var/A in SSshuttle.mobile)
+		var/obj/docking_port/mobile/M = A
+		if(M.launch_status == ENDGAME_LAUNCHED && T in M.areaInstance)
 			return 1
 
 	//finally check for centcom itself
@@ -371,3 +371,7 @@ var/list/blood_splatter_icons = list()
 /atom/Stat()
 	. = ..()
 	sleep(1)
+
+//This will be called after the map and objects are loaded
+/atom/proc/initialize()
+	return

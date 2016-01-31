@@ -59,6 +59,14 @@
 	var/timer = 450
 
 /obj/machinery/doomsday_device/process()
+	if(z != ZLEVEL_STATION)
+		minor_announce("DOOMSDAY DEVICE OUT OF RANGE OF STATION, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
+		SSshuttle.emergencyNoEscape = 0
+		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+			SSshuttle.emergency.mode = SHUTTLE_DOCKED
+			SSshuttle.emergency.timer = world.time
+			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+			qdel(src)
 	if(!timing)
 		return
 	if(timer <= 0)

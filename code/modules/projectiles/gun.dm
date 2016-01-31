@@ -129,60 +129,49 @@
 		O.emp_act(severity)
 
 
-/obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)//TODO: go over this
+/obj/item/weapon/gun/afterattack(atom/target, mob/living/user, flag, params)
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
 		if(!ismob(target) || user.a_intent == "harm") //melee attack
 			return
-		if(user.zone_sel.selecting == "mouth")
-			handle_suicide(user, target, params)
-			return
-		if(target == user) //so we can't shoot ourselves (unless mouth selected)
+		if(target == user && user.zone_sel.selecting != "mouth") //so we can't shoot ourselves (unless mouth selected)
 			return
 
-	//Exclude lasertag guns from the CLUMSY check.
-	if(clumsy_check && can_shoot())
-		if(istype(user, /mob/living))
-			var/mob/living/M = user
-			if (M.disabilities & CLUMSY && prob(40))
-				user << "<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>"
-				var/shot_leg = pick("l_leg", "r_leg")
-				process_fire(user,user,0,params, zone_override = shot_leg)
-				M.drop_item()
-				return
-
-	if(isliving(user))
+	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
 		var/mob/living/L = user
 		if(!can_trigger_gun(L))
 			return
+
+	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can't shoot.
+		return
+
+	if(flag)
+		handle_suicide(user, target, params) //
+		return
+
+
+	//Exclude lasertag guns from the CLUMSY check.
+	if(clumsy_check)
+		if(istype(user))
+			if (user.disabilities & CLUMSY && prob(40))
+				user << "<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>"
+				var/shot_leg = pick("l_leg", "r_leg")
+				process_fire(user,user,0,params, zone_override = shot_leg)
+				user.drop_item()
+				return
+
+
 
 	process_fire(target,user,1,params)
 
 
 
-/obj/item/weapon/gun/proc/can_trigger_gun(mob/living/carbon/user)
-	if (!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+/obj/item/weapon/gun/proc/can_trigger_gun(var/mob/living/user)
+
+	if(!handle_pins(user) || !user.can_use_guns(src))
 		return 0
 
-	if(!handle_pins(user))
-		return 0
-
-	if(trigger_guard)
-		if(user.has_dna())
-			if(user.dna.check_mutation(HULK))
-				user << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
-				return 0
-			if(NOGUNS in user.dna.species.specflags)
-				user << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
-				return 0
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.martial_art && H.martial_art.name == "The Sleeping Carp") //great dishonor to famiry
-			user << "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>"
-			return 0
 	return 1
 
 
@@ -416,9 +405,6 @@ obj/item/weapon/gun/proc/newshot()
 		return
 
 	semicd = 0
-
-	if(!can_trigger_gun(user))
-		return
 
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
 

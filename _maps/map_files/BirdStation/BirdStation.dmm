@@ -823,7 +823,7 @@
 "apQ" = (/obj/structure/window/reinforced{dir = 4; pixel_x = 0},/obj/structure/cable/cyan{icon_state = "1-2"},/turf/simulated/floor/plasteel/yellowsiding/corner{icon_state = "yellowcornersiding"; dir = 4},/area/bridge)
 "apR" = (/obj/machinery/computer/robotics,/turf/simulated/floor/plasteel/black,/area/bridge)
 "apS" = (/obj/structure/bed/chair,/turf/simulated/floor/plasteel/black,/area/bridge)
-"apT" = (/obj/structure/bed/dogbed{anchored = 1; desc = "A comfy-looking bird bed. You can even strap your pet in, in case the gravity turns off."; name = "bird bed"},/mob/living/simple_animal/parrot{harm_intent_damage = 20; health = 600; name = "Poly"; speak = list("BWAK!","Callings shuttle!","Helloings!","Rude!","CAW!","Cute birdings!","Squawk!","Hi!","Piyo!","BWAAK BWAAK.","Caw.","SQAWK!","Kill all humans.")},/turf/simulated/floor/plasteel/black,/area/bridge)
+"apT" = (/obj/structure/bed/dogbed{anchored = 1; desc = "A comfy-looking bird bed. You can even strap your pet in, in case the gravity turns off."; name = "bird bed"},/mob/living/simple_animal/parrot/Poly,/turf/simulated/floor/plasteel/black,/area/bridge)
 "apU" = (/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plasteel/yellowsiding/corner{icon_state = "yellowcornersiding"; dir = 1},/area/bridge)
 "apV" = (/obj/structure/table,/obj/machinery/recharger,/turf/simulated/floor/plasteel,/area/bridge)
 "apW" = (/obj/structure/table/wood,/obj/item/clothing/suit/monkeysuit,/obj/item/clothing/mask/gas/monkeymask,/turf/simulated/floor/wood,/area/maintenance/fsmaint)

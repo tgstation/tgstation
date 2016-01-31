@@ -72,6 +72,7 @@ var/global/datum/controller/master/Master = new()
 		return
 	world << "<span class='boldannounce'>Initializing subsystems...</span>"
 
+	preloadTemplates()
 	// Pick a random away mission.
 	createRandomZlevel()
 	// Generate asteroid.

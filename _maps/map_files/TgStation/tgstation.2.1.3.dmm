@@ -6657,7 +6657,7 @@
 "cya" = (/turf/simulated/wall/shuttle{icon_state = "swall_s6"; dir = 2},/area/shuttle/abandoned)
 "cyb" = (/turf/simulated/wall/shuttle{icon_state = "swall_s10"; dir = 2},/area/shuttle/abandoned)
 "cyc" = (/turf/simulated/wall/shuttle{icon_state = "swall12"; dir = 2},/area/shuttle/abandoned)
-"cyd" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile{dheight = 0; dir = 2; dwidth = 11; height = 22; id = "whiteship"; name = "NT Medical Ship"; roundstart_move = "whiteship_away"; travelDir = 180; width = 35},/obj/docking_port/stationary{dir = 2; dwidth = 11; height = 22; id = "whiteship_home"; name = "SS13 Arrival Docking"; width = 35},/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
+"cyd" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile{dheight = 0; dir = 2; dwidth = 11; height = 22; id = "whiteship"; launch_status = 0; name = "NT Medical Ship"; roundstart_move = "whiteship_away"; travelDir = 180; width = 35},/obj/docking_port/stationary{dir = 2; dwidth = 11; height = 22; id = "whiteship_home"; name = "SS13 Arrival Docking"; width = 35},/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
 "cye" = (/obj/machinery/door/airlock/shuttle,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
 "cyf" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"; dir = 4},/turf/simulated/floor/plating/airless,/area/shuttle/abandoned)
 "cyg" = (/turf/simulated/wall/shuttle{icon_state = "swall13"; dir = 2},/area/shuttle/abandoned)

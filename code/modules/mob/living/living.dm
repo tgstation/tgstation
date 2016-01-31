@@ -755,8 +755,11 @@ Sorry Giacom. Please don't be mad :(
 	gib()
 	return(gain)
 
-/mob/living/singularity_pull(S)
-	step_towards(src,S)
+/mob/living/singularity_pull(S, current_size)
+	if(current_size >= STAGE_SIX)
+		throw_at_fast(S,14,3, spin=1)
+	else
+		step_towards(src,S)
 
 /mob/living/narsie_act()
 	if(client)
@@ -934,3 +937,9 @@ Sorry Giacom. Please don't be mad :(
 	else
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 	return
+
+/mob/living/proc/can_use_guns(var/obj/item/weapon/gun/G)
+	if (!IsAdvancedToolUser())
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return 0
+	return 1
