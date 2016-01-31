@@ -1,4 +1,3 @@
-
 /datum/AI_Module
 	var/uses = 0
 	var/module_name
@@ -43,6 +42,10 @@
 	var/obj/machinery/doomsday_device/DOOM = new /obj/machinery/doomsday_device(src)
 	doomsday_device = DOOM
 	verbs -= /mob/living/silicon/ai/proc/nuke_station
+	for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
+		for(var/mob/living/silicon/ai/A in ai_list)
+			if((A.stat != DEAD) && A.nuking)
+				point.the_disk = A //The pinpointer now tracks the AI core
 
 /obj/machinery/doomsday_device
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
@@ -111,7 +114,7 @@
 	module_name = "AI Turret Upgrade"
 	mod_pick_name = "turret"
 	description = "Improves the power and health of all AI turrets. This effect is permanent."
-	cost = 50
+	cost = 30
 	one_time = 1
 
 	power_type = /mob/living/silicon/ai/proc/upgrade_turrets
@@ -284,10 +287,10 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/alarm/A in machines)
-		if(A.z != ZLEVEL_STATION)
+	for(var/obj/machinery/airalarm/AA in machines)
+		if(AA.z != ZLEVEL_STATION)
 			continue
-		A.emagged = 1
+		AA.emagged = 1
 	src << "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode."
 	src.verbs -= /mob/living/silicon/ai/proc/break_air_alarms
 
@@ -298,7 +301,7 @@
 	mod_pick_name = "overload"
 	description = "Overloads an electrical machine, causing a small explosion. 2 uses."
 	uses = 2
-	cost = 15
+	cost = 20
 
 	power_type = /mob/living/silicon/ai/proc/overload_machine
 
@@ -327,7 +330,7 @@
 	mod_pick_name = "override"
 	description = "Overrides a machine's programming, causing it to rise up and attack everyone except other machines. 4 uses."
 	uses = 4
-	cost = 15
+	cost = 30
 
 	power_type = /mob/living/silicon/ai/proc/override_machine
 
@@ -340,6 +343,8 @@
 		return
 
 	if (istype(M, /obj/machinery))
+		if(!M.can_be_overridden())
+			src << "Can't override this device."
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
@@ -596,6 +601,7 @@
 					break
 
 			// Give the power and take away the money.
+			A.view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 			A.verbs += AM.power_type
 			A.current_modules += new AM.type
 			temp = AM.description
@@ -606,3 +612,22 @@
 				temp = AM.description
 	src.use(usr)
 	return
+
+
+/datum/AI_Module/large/eavesdrop
+	module_name = "Enhanced Surveillance"
+	mod_pick_name = "eavesdrop"
+	description = "Via a combination of hidden microphones and lip reading software, you are able to use your cameras to listen in on conversations."
+	cost = 30
+	one_time = 1
+
+	power_type = /mob/living/silicon/ai/proc/surveillance
+
+/mob/living/silicon/ai/proc/surveillance()
+	set category = "Malfunction"
+	set name = "Enhanced Surveillance"
+
+	if(eyeobj)
+		eyeobj.relay_speech = TRUE
+	src << "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.</span>"
+	verbs -= /mob/living/silicon/ai/proc/surveillance

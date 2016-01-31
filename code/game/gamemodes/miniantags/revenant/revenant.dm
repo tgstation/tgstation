@@ -139,9 +139,10 @@
 /mob/living/simple_animal/revenant/narsie_act()
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
-/mob/living/simple_animal/revenant/adjustBruteLoss(amount)
+/mob/living/simple_animal/revenant/adjustHealth(amount)
 	if(!revealed)
-		return
+		return 0
+	. = amount
 	essence = max(0, essence-amount)
 	if(essence == 0)
 		src << "<span class='revendanger'>You feel your essence fraying!</span>"
@@ -169,7 +170,7 @@
 	draining = 1
 	essence_drained += rand(15, 20)
 	src << "<span class='revennotice'>You search for the soul of [target].</span>"
-	if(do_after(src, 10, 3, 0, target)) //did they get deleted in that second?
+	if(do_after(src, 10, 0, target)) //did they get deleted in that second?
 		if(target.ckey)
 			src << "<span class='revennotice'>Their soul burns with intelligence.</span>"
 			essence_drained += rand(20, 30)
@@ -178,7 +179,7 @@
 			essence_drained += rand(40, 50)
 		else
 			src << "<span class='revennotice'>Their soul is weak and faltering.</span>"
-		if(do_after(src, 20, 6, 0, target)) //did they get deleted NOW?
+		if(do_after(src, 20, 0, target)) //did they get deleted NOW?
 			switch(essence_drained)
 				if(1 to 30)
 					src << "<span class='revennotice'>[target] will not yield much essence. Still, every bit counts.</span>"
@@ -188,7 +189,7 @@
 					src << "<span class='revenboldnotice'>Such a feast! [target] will yield much essence to you.</span>"
 				if(90 to INFINITY)
 					src << "<span class='revenbignotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>"
-			if(do_after(src, 20, 6, 0, target)) //how about now
+			if(do_after(src, 20, 0, target)) //how about now
 				if(!target.stat)
 					src << "<span class='revenwarning'>They are now powerful enough to fight off your draining.</span>"
 					target << "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>"
@@ -202,7 +203,7 @@
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
 				Beam(target,icon_state="drain_life",icon='icons/effects/effects.dmi',time=44)
-				if(do_after(src, 50, 15, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
+				if(do_after(src, 50, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, 0, target)
 					if(essence_drained <= 90 && target.stat != DEAD)
 						essence_regen_cap += 5
@@ -238,11 +239,12 @@
 	if(!message)
 		return
 	log_say("[key_name(src)] : [message]")
+	var/rendered = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
 	for(var/mob/M in mob_list)
-		if (istype(M, /mob/new_player))
-			continue
-		if(istype(M, /mob/living/simple_animal/revenant) || M.stat == DEAD)
-			M << "<span class='revennotice'><b>[src]</b> says, \"[message]\"" //Can commune with the dead
+		if(istype(M, /mob/living/simple_animal/revenant))
+			M << rendered
+		if(isobserver(M))
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
 	return
 
 

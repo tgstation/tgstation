@@ -51,8 +51,10 @@
 
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if(!t)	return
-		if(!in_range(src, usr) && loc != usr)	return
+		if(!t)
+			return
+		if(!in_range(src, usr) && loc != usr)
+			return
 		created_name = t
 		return
 

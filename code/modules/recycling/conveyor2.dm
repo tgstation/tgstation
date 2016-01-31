@@ -104,15 +104,15 @@
 	use_power(100)
 
 	affecting = loc.contents - src		// moved items will be all in loc
-	spawn(1)	// slight delay to prevent infinite propagation due to map order	//TODO: please no spawn() in process(). It's a very bad idea
-		var/items_moved = 0
-		for(var/atom/movable/A in affecting)
-			if(!A.anchored)
-				if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
-					step(A,movedir)
-					items_moved++
-			if(items_moved >= 10)
-				break
+	sleep(1)	// slight delay to prevent infinite propagation due to map order
+	var/items_moved = 0
+	for(var/atom/movable/A in affecting)
+		if(!A.anchored)
+			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
+				step(A,movedir)
+				items_moved++
+		if(items_moved >= 10)
+			break
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
@@ -124,11 +124,13 @@
 		user << "<span class='notice'>You remove the conveyor belt.</span>"
 		qdel(src)
 		return
-	if(isrobot(user))	return //Carn: fix for borgs dropping their modules on conveyor belts
+	if(isrobot(user))
+		return //Carn: fix for borgs dropping their modules on conveyor belts
 	if(!user.drop_item())
 		user << "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
 		return
-	if(I && I.loc)	I.loc = src.loc
+	if(I && I.loc)
+		I.loc = src.loc
 	return
 
 // attack with hand, move pulled object onto conveyor

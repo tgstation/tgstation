@@ -29,6 +29,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	var/list/noqdelhint = list()// list of all types that do not return a QDEL_HINT
 
+#ifdef TESTING
+	var/list/qdel_list = list()	// list of all types that have been qdel()eted
+#endif
+
 /datum/subsystem/garbage_collector/New()
 	NEW_SS_GLOBAL(SSgarbage)
 
@@ -99,47 +103,49 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
-/proc/qdel(var/datum/A)
-	if (!A)
+/proc/qdel(datum/D)
+	if(!D)
 		return
-	if (!istype(A))
-		del(A)
-	else if (isnull(A.gc_destroyed))
-		// Let our friend know they're about to get fucked up.
-		var/hint = A.Destroy()
-		if (!A)
+#ifdef TESTING
+	SSgarbage.qdel_list += "[A.type]"
+#endif
+	if(!istype(D))
+		del(D)
+	else if(isnull(D.gc_destroyed))
+		var/hint = D.Destroy() // Let our friend know they're about to get fucked up.
+		if(!D)
 			return
-		switch (hint)
+		switch(hint)
 			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
-				SSgarbage.Queue(A)
+				SSgarbage.Queue(D)
 			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
 				return
 			if (QDEL_HINT_IWILLGC)		//functionally the same as the above. qdel should assume the object will gc on its own, and not check it.
 				return
 			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete using a hard reference to save time from the locate()
-				SSgarbage.HardQueue(A)
+				SSgarbage.HardQueue(D)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
-				del(A)
+				del(D)
 			if (QDEL_HINT_PUTINPOOL)	//qdel will put this object in the pool.
-				PlaceInPool(A,0)
+				PlaceInPool(D, 0)
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
-				SSgarbage.Queue(A)
+				SSgarbage.Queue(D)
 				#ifdef TESTING
 				A.find_references()
 				#endif
 			else
-				if(!("[A.type]" in SSgarbage.noqdelhint))
-					SSgarbage.noqdelhint += "[A.type]"
-					testing("WARNING: [A.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
-				SSgarbage.Queue(A)
+				if(!("[D.type]" in SSgarbage.noqdelhint))
+					SSgarbage.noqdelhint += "[D.type]"
+					testing("WARNING: [D.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
+				SSgarbage.Queue(D)
 
 // Returns 1 if the object has been queued for deletion.
-/proc/qdeleted(var/datum/A)
-	if (!istype(A))
-		return 0
-	if (A.gc_destroyed)
-		return 1
-	return 0
+/proc/qdeleted(datum/D)
+	if(!istype(D))
+		return FALSE
+	if(D.gc_destroyed)
+		return TRUE
+	return FALSE
 
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
@@ -225,4 +231,22 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	qdel(src)
 	if(!running_find_references)
 		find_references()
+
+/client/verb/show_qdeleted()
+	set category = "Debug"
+	set name = "Show qdel() Log"
+	set desc = "Render the qdel() log and display it"
+
+	var/dat = "<B>List of things that have been qdel()eted this round</B><BR><BR>"
+
+	var/tmplist = list()
+	for(var/elem in SSgarbage.qdel_list)
+		if(!(elem in tmplist))
+			tmplist[elem] = 0
+		tmplist[elem]++
+
+	for(var/path in tmplist)
+		dat += "[path] - [tmplist[path]] times<BR>"
+
+	usr << browse(dat, "window=qdeletedlog")
 #endif

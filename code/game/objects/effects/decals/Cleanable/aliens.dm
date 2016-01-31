@@ -5,7 +5,6 @@
 	desc = "It's green and acidic. It looks like... <i>blood?</i>"
 	gender = PLURAL
 	density = 0
-	anchored = 1
 	layer = 2
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"

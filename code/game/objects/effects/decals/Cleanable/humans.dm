@@ -3,7 +3,6 @@
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
 	gender = PLURAL
 	density = 0
-	anchored = 1
 	layer = 2
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
@@ -19,15 +18,10 @@
 	viruses = null
 	return ..()
 
-/obj/effect/decal/cleanable/blood/New()
+/obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
+	if (C.blood_DNA)
+		blood_DNA |= C.blood_DNA.Copy()
 	..()
-	if(src.type == /obj/effect/decal/cleanable/blood)
-		if(src.loc && isturf(src.loc))
-			for(var/obj/effect/decal/cleanable/blood/B in src.loc)
-				if(B != src)
-					if (B.blood_DNA)
-						blood_DNA |= B.blood_DNA.Copy()
-					qdel(B)
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
@@ -44,7 +38,6 @@
 	desc = "Your instincts say you shouldn't be following these."
 	gender = PLURAL
 	density = 0
-	anchored = 1
 	layer = 2
 	random_icon_states = null
 	var/list/existing_dirs = list()
@@ -60,7 +53,6 @@
 	desc = "They look bloody and gruesome."
 	gender = PLURAL
 	density = 0
-	anchored = 1
 	layer = 2
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
@@ -69,6 +61,9 @@
 /obj/effect/decal/cleanable/blood/gibs/New()
 	..()
 	reagents.add_reagent("liquidgibs", 5)
+
+/obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
+	return
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
@@ -90,18 +85,18 @@
 
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)
-	spawn (0)
-		var/direction = pick(directions)
-		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-			sleep(3)
-			if (i > 0)
-				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
-				for(var/datum/disease/D in src.viruses)
-					var/datum/disease/ND = D.Copy(1)
-					b.viruses += ND
-					ND.holder = b
-			if (step_to(src, get_step(src, direction), 0))
-				break
+	set waitfor = 0
+	var/direction = pick(directions)
+	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
+		sleep(3)
+		if (i > 0)
+			var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
+			for(var/datum/disease/D in src.viruses)
+				var/datum/disease/ND = D.Copy(1)
+				b.viruses += ND
+				ND.holder = b
+		if (step_to(src, get_step(src, direction), 0))
+			break
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"
@@ -191,6 +186,10 @@
 
 	user << .
 
+/obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
+	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
+		return
+	..()
 
 /obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))

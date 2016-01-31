@@ -12,8 +12,7 @@
 	var/health = 30
 	var/maxhealth = 30
 	var/health_regen = 2 //how much health this blob regens when pulsed
-	var/health_timestamp = 0 //we got healed when?
-	var/pulse_timestamp = 0 //we got pulsed when?
+	var/pulse_timestamp = 0 //we got pulsed/healed when?
 	var/brute_resist = 0.5 //multiplies brute damage by this
 	var/fire_resist = 1 //multiplies burn damage by this
 	var/atmosblock = 0 //if the blob blocks atmos and heat spread
@@ -90,7 +89,6 @@
 	src.Be_Pulsed()
 	if(claim_range)
 		for(var/obj/effect/blob/B in ultra_range(claim_range, src, 1))
-			B.update_icon()
 			if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
 				B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
 				B.update_icon()
@@ -106,10 +104,9 @@
 
 /obj/effect/blob/proc/Be_Pulsed()
 	if(pulse_timestamp <= world.time)
-		PulseAnimation()
 		ConsumeTile()
-		RegenHealth()
-		run_action()
+		health = min(maxhealth, health+health_regen)
+		update_icon()
 		pulse_timestamp = world.time + 10
 		return 1 //we did it, we were pulsed!
 	return 0 //oh no we failed
@@ -117,21 +114,6 @@
 /obj/effect/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
 		A.blob_act()
-
-/obj/effect/blob/proc/PulseAnimation()
-	flick("[icon_state]_glow", src)
-	return
-
-/obj/effect/blob/proc/RegenHealth() //when pulsed, heal!
-	if(health_timestamp <= world.time)
-		health = min(maxhealth, health+health_regen)
-		update_icon()
-		health_timestamp = world.time + 10 //1 second between heals
-		return 1
-	return 0
-
-/obj/effect/blob/proc/run_action()
-	return 0
 
 
 /obj/effect/blob/proc/expand(turf/T = null, prob = 1, controller = null)
@@ -149,17 +131,30 @@
 				T = null
 	if(!T)
 		return 0
-	var/make_blob = 1 //can we make a blob?
+	var/make_blob = TRUE //can we make a blob?
+
 	if(istype(T, /turf/space) && prob(65))
-		make_blob = 0
+		make_blob = FALSE
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
+
+	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
+	if(!T.CanPass(src, T, 5)) //is the target turf impassable
+		make_blob = FALSE
+		T.blob_act() //hit the turf if it is
 	for(var/atom/A in T)
-		if(A.density)
-			make_blob = 0
-		A.blob_act() //Hit everything
-	if(T.density) //Check for walls and such dense turfs
-		make_blob = 0
-		T.blob_act() //Hit the turf
+		if(!A.CanPass(src, T, 5)) //is anything in the turf impassable
+			make_blob = FALSE
+		A.blob_act() //also hit everything in the turf
+
+	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, src.loc)
+	if(controller)
+		var/mob/camera/blob/BO = controller
+		O.color = BO.blob_reagent_datum.color
+		O.alpha = 200 //if we have a controller, we're direct attack and must be more important
+	else if(overmind)
+		O.color = overmind.blob_reagent_datum.color
+	O.do_attack_animation(T) //visually attack the turf
+
 	if(make_blob) //well, can we?
 		var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
 		if(controller)
@@ -168,6 +163,7 @@
 			B.overmind = overmind
 		B.density = 1
 		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
+			O.alpha = 0 //if we got to this point, we don't need to visually attack
 			B.density = initial(B.density)
 			B.loc = T
 			B.update_icon()
@@ -175,8 +171,8 @@
 				B.overmind.blob_reagent_datum.expand_reaction(B, T)
 			return B
 		else
-			T.blob_act() //If we cant move in hit the turf
-			qdel(B) //We should never get to this point, since we checked before moving in. Destroy blob anyway for cleanliness though
+			T.blob_act() //if we can't move in hit the turf again
+			qdel(B) //we should never get to this point, since we checked before moving in. destroy the blob so we don't have two blobs on one tile
 			return null
 	return null
 
@@ -206,6 +202,8 @@
 	take_damage(W.force, W.damtype, user)
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
+	if("blob" in M.faction) //sorry, but you can't kill the blob as a blobbernaut
+		return
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
@@ -223,7 +221,7 @@
 	take_damage(damage, BRUTE, M)
 	return
 
-/obj/effect/blob/proc/take_damage(damage, damage_type, cause = null)
+/obj/effect/blob/proc/take_damage(damage, damage_type, cause = null, overmind_reagent_trigger = 1)
 	switch(damage_type) //blobs only take brute and burn damage
 		if(BRUTE)
 			damage = max(damage * brute_resist, 0)
@@ -233,7 +231,7 @@
 
 		else
 			damage = 0
-	if(overmind)
+	if(overmind && overmind_reagent_trigger)
 		damage = overmind.blob_reagent_datum.damage_reaction(src, health, damage, damage_type, cause) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
 	health -= damage
 	update_icon()

@@ -18,7 +18,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/simulated/T = pick(turfs)
-		spawn(0)	new/obj/effect/spacevine_controller(T) //spawn a controller at turf
+		new/obj/effect/spacevine_controller(T) //spawn a controller at turf
 
 
 /datum/spacevine_mutation
@@ -228,7 +228,10 @@
 	var/turf/simulated/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
-		GM.oxygen = max(0, GM.oxygen - severity * holder.energy)
+		if(!GM.gases["o2"])
+			return
+		GM.gases["o2"][MOLES] -= severity * holder.energy
+		GM.garbage_collect()
 
 /datum/spacevine_mutation/nitro_eater
 	name = "nitrogen consuming"
@@ -240,7 +243,10 @@
 	var/turf/simulated/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
-		GM.nitrogen = max(0, GM.nitrogen - severity * holder.energy)
+		if(!GM.gases["n2"])
+			return
+		GM.gases["n2"][MOLES] -= severity * holder.energy
+		GM.garbage_collect()
 
 /datum/spacevine_mutation/carbondioxide_eater
 	name = "CO2 consuming"
@@ -252,7 +258,10 @@
 	var/turf/simulated/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
-		GM.carbon_dioxide = max(0, GM.carbon_dioxide - severity * holder.energy)
+		if(!GM.gases["co2"])
+			return
+		GM.gases["co2"][MOLES] -= severity * holder.energy
+		GM.garbage_collect()
 
 /datum/spacevine_mutation/plasma_eater
 	name = "toxins consuming"
@@ -264,7 +273,10 @@
 	var/turf/simulated/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
-		GM.toxins = max(0, GM.toxins - severity * holder.energy)
+		if(!GM.gases["plasma"])
+			return
+		GM.gases["plasma"][MOLES] -= severity * holder.energy
+		GM.garbage_collect()
 
 /datum/spacevine_mutation/thorns
 	name = "thorny"
@@ -425,6 +437,7 @@
 
 
 /obj/effect/spacevine_controller
+	invisibility = 101
 	var/list/obj/effect/spacevine/vines = list()
 	var/list/growth_queue = list()
 	var/spread_multiplier = 5
@@ -493,7 +506,8 @@
 	var/list/obj/effect/spacevine/queue_end = list()
 
 	for( var/obj/effect/spacevine/SV in growth_queue )
-		if(SV.gc_destroyed)	continue
+		if(SV.gc_destroyed)
+			continue
 		i++
 		queue_end += SV
 		growth_queue -= SV

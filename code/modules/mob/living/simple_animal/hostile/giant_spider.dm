@@ -48,6 +48,26 @@
 	gold_core_spawnable = 1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 4
+    
+/mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
+	if(href_list["activate"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			humanize_spider(ghost)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
+	humanize_spider(user)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
+	if(key)//Someone is in it
+		return
+	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
+	if(spider_ask == "No" || !src || qdeleted(src))
+		return
+	if(key)
+		user << "<span class='notice'>Someone else already took this spider.</span>"
+		return
+	key = user.key
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
@@ -116,13 +136,11 @@
 			//second, spin a sticky spiderweb on this tile
 			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 			if(!W)
-				spawn()
-					Web()
+				Web()
 			else
 				//third, lay an egg cluster there
 				if(fed)
-					spawn()
-						LayEggs()
+					LayEggs()
 				else
 					//fourthly, cocoon any nearby items so those pesky pinkskins can't use them
 					for(var/obj/O in can_see)
@@ -140,8 +158,7 @@
 
 		else if(busy == MOVING_TO_TARGET && cocoon_target)
 			if(get_dist(src, cocoon_target) <= 1)
-				spawn()
-					Wrap()
+				Wrap()
 
 	else
 		busy = 0
@@ -250,7 +267,7 @@
 						C.player_spiders = 1
 					C.poison_type = poison_type
 					C.poison_per_bite = poison_per_bite
-					C.faction = faction
+					C.faction = faction.Copy()
 					fed--
 		busy = 0
 		stop_automated_movement = 0

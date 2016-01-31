@@ -61,6 +61,13 @@
 		return 0
 	return 1
 
+/mob/living/simple_animal/hostile/morph/proc/eat(atom/movable/A)
+	if(A && A.loc != src)
+		visible_message("<span class='warning'>[src] swallows [A] whole!</span>")
+		A.loc = src
+		return 1
+	return 0
+
 /mob/living/simple_animal/hostile/morph/ShiftClickOn(atom/movable/A)
 	if(morph_time <= world.time && !stat)
 		if(A == src)
@@ -76,24 +83,12 @@
 	morphed = 1
 	form = target
 
-	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir) No effect better than shit effect
-
-	//Todo : update to .appearance once 508 hits
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		overlays = H.get_overlays_copy(list(L_HAND_LAYER,R_HAND_LAYER))
-	else
-		overlays = target.overlays.Copy()
-
+	appearance = target.appearance
+	transform = initial(transform)
+	pixel_y = initial(pixel_y)
+	pixel_x = initial(pixel_x)
 	visible_message("<span class='warning'>[src] suddenly twists and changes shape, becoming a copy of [target]!</span>", \
 					"<span class='notice'>You twist your body and assume the form of [target].</span>")
-
-	name = target.name
-	icon = target.icon
-	icon_state = target.icon_state
-	overlays = target.overlays
-
-
 	//Morphed is weaker
 	melee_damage_lower = 5
 	melee_damage_upper = 5
@@ -163,16 +158,14 @@
 		var/mob/living/L = target
 		if(L.stat == DEAD)
 			if(do_after(src, 30, target = L))
-				visible_message("<span class='warning'>[src] swallows [target] whole!</span>")
-				L.loc = src
-				adjustBruteLoss(-50)
+				if(eat(L))
+					adjustHealth(-50)
 			return
 	else if(istype(target,/obj/item)) // Eat items just to be annoying
 		var/obj/item/I = target
 		if(!I.anchored)
 			if(do_after(src,20, target = I))
-				visible_message("<span class='warning'>[src] swallows [target] whole!</span>")
-				I.loc = src
+				eat(I)
 			return
 	target.attack_animal(src)
 

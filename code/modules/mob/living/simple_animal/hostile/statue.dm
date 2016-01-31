@@ -117,7 +117,7 @@
 	// This loop will, at most, loop twice.
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check) - src)
-			if(M.client && CanAttack(M) && !issilicon(M))
+			if(M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege)
 				if(!M.eye_blind)
 					return M
 		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
@@ -220,3 +220,8 @@
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"
+
+/mob/living/simple_animal/hostile/statue/restrained()
+	. = ..()
+	if(can_be_seen(loc))
+		return 1

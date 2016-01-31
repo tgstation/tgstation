@@ -19,6 +19,7 @@
 	var/obj/item/weapon/weldingtool/weldtool = null
 	var/obj/item/device/assembly/igniter/igniter = null
 	var/obj/item/weapon/tank/internals/plasma/ptank = null
+	var/warned_admins = 0 //for the message_admins() when lit
 
 
 /obj/item/weapon/flamethrower/Destroy()
@@ -69,7 +70,8 @@
 			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user, params)
-	if(user.stat || user.restrained() || user.lying)	return
+	if(user.stat || user.restrained() || user.lying)
+		return
 	if(istype(W, /obj/item/weapon/wrench) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
 		if(weldtool)
@@ -93,8 +95,10 @@
 
 	if(isigniter(W))
 		var/obj/item/device/assembly/igniter/I = W
-		if(I.secured)	return
-		if(igniter)		return
+		if(I.secured)
+			return
+		if(igniter)
+			return
 		if(!user.unEquip(W))
 			return
 		I.loc = src
@@ -120,7 +124,8 @@
 
 
 /obj/item/weapon/flamethrower/attack_self(mob/user)
-	if(user.stat || user.restrained() || user.lying)	return
+	if(user.stat || user.restrained() || user.lying)
+		return
 	user.set_machine(src)
 	if(!ptank)
 		user << "<span class='notice'>Attach a plasma tank first!</span>"
@@ -136,19 +141,26 @@
 		usr.unset_machine()
 		usr << browse(null, "window=flamethrower")
 		return
-	if(usr.stat || usr.restrained() || usr.lying)	return
+	if(usr.stat || usr.restrained() || usr.lying)
+		return
 	usr.set_machine(src)
 	if(href_list["light"])
-		if(!ptank)	return
-		if(!status)	return
+		if(!ptank)
+			return
+		if(!status)
+			return
 		lit = !lit
 		if(lit)
 			SSobj.processing |= src
+			if(!warned_admins)
+				message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has lit a flamethrower.")
+				warned_admins = 1
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
 		throw_amount = max(50, min(5000, throw_amount))
 	if(href_list["remove"])
-		if(!ptank)	return
+		if(!ptank)
+			return
 		usr.put_in_hands(ptank)
 		ptank = null
 		lit = 0
@@ -170,7 +182,8 @@
 
 //Called from turf.dm turf/dblclick
 /obj/item/weapon/flamethrower/proc/flame_turf(turflist)
-	if(!lit || operating)	return
+	if(!lit || operating)
+		return
 	operating = 1
 	var/turf/previousturf = get_turf(src)
 	for(var/turf/simulated/T in turflist)
@@ -194,7 +207,8 @@
 	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
 	//Transfer 5% of current tank air contents to turf
 	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(release_amount)
-	air_transfer.toxins = air_transfer.toxins * 5
+	if(air_transfer.gases["plasma"])
+		air_transfer.gases["plasma"][MOLES] *= 5
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)

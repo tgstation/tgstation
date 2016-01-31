@@ -102,7 +102,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 12)
 		ignoring = list()
 
-
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
 //SAVEFILE_VERSION_MAX and then delete any obsolete if clauses
@@ -113,48 +112,78 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 9)		//an example, underwear were an index for a hardcoded list, converting to a string
 		if(gender == MALE)
 			switch(underwear)
-				if(1)	underwear = "Mens White"
-				if(2)	underwear = "Mens Grey"
-				if(3)	underwear = "Mens Green"
-				if(4)	underwear = "Mens Blue"
-				if(5)	underwear = "Mens Black"
-				if(6)	underwear = "Mankini"
-				if(7)	underwear = "Mens Hearts Boxer"
-				if(8)	underwear = "Mens Black Boxer"
-				if(9)	underwear = "Mens Grey Boxer"
-				if(10)	underwear = "Mens Striped Boxer"
-				if(11)	underwear = "Mens Kinky"
-				if(12)	underwear = "Mens Red"
-				if(13)	underwear = "Nude"
+				if(1)
+					underwear = "Mens White"
+				if(2)
+					underwear = "Mens Grey"
+				if(3)
+					underwear = "Mens Green"
+				if(4)
+					underwear = "Mens Blue"
+				if(5)
+					underwear = "Mens Black"
+				if(6)
+					underwear = "Mankini"
+				if(7)
+					underwear = "Mens Hearts Boxer"
+				if(8)
+					underwear = "Mens Black Boxer"
+				if(9)
+					underwear = "Mens Grey Boxer"
+				if(10)
+					underwear = "Mens Striped Boxer"
+				if(11)
+					underwear = "Mens Kinky"
+				if(12)
+					underwear = "Mens Red"
+				if(13)
+					underwear = "Nude"
 		else
 			switch(underwear)
-				if(1)	underwear = "Ladies Red"
-				if(2)	underwear = "Ladies White"
-				if(3)	underwear = "Ladies Yellow"
-				if(4)	underwear = "Ladies Blue"
-				if(5)	underwear = "Ladies Black"
-				if(6)	underwear = "Ladies Thong"
-				if(7)	underwear = "Babydoll"
-				if(8)	underwear = "Ladies Baby-Blue"
-				if(9)	underwear = "Ladies Green"
-				if(10)	underwear = "Ladies Pink"
-				if(11)	underwear = "Ladies Kinky"
-				if(12)	underwear = "Tankini"
-				if(13)	underwear = "Nude"
+				if(1)
+					underwear = "Ladies Red"
+				if(2)
+					underwear = "Ladies White"
+				if(3)
+					underwear = "Ladies Yellow"
+				if(4)
+					underwear = "Ladies Blue"
+				if(5)
+					underwear = "Ladies Black"
+				if(6)
+					underwear = "Ladies Thong"
+				if(7)
+					underwear = "Babydoll"
+				if(8)
+					underwear = "Ladies Baby-Blue"
+				if(9)
+					underwear = "Ladies Green"
+				if(10)
+					underwear = "Ladies Pink"
+				if(11)
+					underwear = "Ladies Kinky"
+				if(12)
+					underwear = "Tankini"
+				if(13)
+					underwear = "Nude"
 		if(!(pref_species in species_list))
 			pref_species = new /datum/species/human()
 	return
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
-	if(!ckey)	return
+	if(!ckey)
+		return
 	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
 
 /datum/preferences/proc/load_preferences()
-	if(!path)				return 0
-	if(!fexists(path))		return 0
+	if(!path)
+		return 0
+	if(!fexists(path))
+		return 0
 
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/"
 
 	var/needs_update = savefile_needs_update(S)
@@ -165,14 +194,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
-	S["nanoui_fancy"]		>> nanoui_fancy
-	S["be_special"]			>> be_special
+	S["tgui_fancy"]			>> tgui_fancy
+	S["tgui_lock"]			>> tgui_lock
 
 	if(islist(S["be_special"]))
-		S["be_special"] >> be_special
+		S["be_special"] 	>> be_special
 	else //force update and store the old bitflag version of be_special
 		needs_update = 11
-		S["be_special"] >> old_be_special
+		S["be_special"] 	>> old_be_special
 
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
@@ -192,8 +221,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sanitize
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
-	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro"), initial(UI_style))
-	nanoui_fancy	= sanitize_integer(nanoui_fancy, 0, 1, initial(nanoui_fancy))
+	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative"), initial(UI_style))
+	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
+	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	ghost_form		= sanitize_inlist(ghost_form, ghost_forms, initial(ghost_form))
@@ -202,9 +232,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return 1
 
 /datum/preferences/proc/save_preferences()
-	if(!path)				return 0
+	if(!path)
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/"
 
 	S["version"] << SAVEFILE_VERSION_MAX		//updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
@@ -213,7 +245,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			<< ooccolor
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
-	S["nanoui_fancy"]		<< nanoui_fancy
+	S["tgui_fancy"]			<< tgui_fancy
+	S["tgui_lock"]			<< tgui_lock
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
@@ -228,12 +261,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return 1
 
 /datum/preferences/proc/load_character(slot)
-	if(!path)				return 0
-	if(!fexists(path))		return 0
+	if(!path)
+		return 0
+	if(!fexists(path))
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/"
-	if(!slot)	slot = default_slot
+	if(!slot)
+		slot = default_slot
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
@@ -314,7 +351,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	real_name		= reject_bad_name(real_name)
 	if(!features["mcolor"] || features["mcolor"] == "#000")
 		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-	if(!real_name)	real_name = random_unique_name(gender)
+	if(!real_name)
+		real_name = random_unique_name(gender)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
 	gender			= sanitize_gender(gender)
@@ -323,14 +361,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_male_list)
 		underwear		= sanitize_inlist(underwear, underwear_m)
 		undershirt 		= sanitize_inlist(undershirt, undershirt_m)
-		socks			= sanitize_inlist(socks, socks_m)
 	else
 		hair_style			= sanitize_inlist(hair_style, hair_styles_female_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_female_list)
 		underwear		= sanitize_inlist(underwear, underwear_f)
 		undershirt		= sanitize_inlist(undershirt, undershirt_f)
-		socks			= sanitize_inlist(socks, socks_f)
-
+	socks			= sanitize_inlist(socks, socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
@@ -361,9 +397,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return 1
 
 /datum/preferences/proc/save_character()
-	if(!path)				return 0
+	if(!path)
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/character[default_slot]"
 
 	S["version"]			<< SAVEFILE_VERSION_MAX	//load_character will sanitize any bad data, so assume up-to-date.

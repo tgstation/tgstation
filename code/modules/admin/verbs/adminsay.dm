@@ -2,10 +2,12 @@
 	set category = "Special Verbs"
 	set name = "Asay" //Gave this shit a shorter name so you only have to time out "asay" rather than "admin say" to use it --NeoFite
 	set hidden = 1
-	if(!check_rights(0))	return
+	if(!check_rights(0))
+		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	if(!msg)	return
+	if(!msg)
+		return
 
 	log_adminsay("[key_name(src)] : [msg]")
 	msg = keywords_lookup(msg)

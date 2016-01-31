@@ -140,7 +140,7 @@
 		return ..()
 	if(M.stat)
 		user << "<span class='warning'>The slime is dead!</span>"
-		return..()
+		return ..()
 
 	M.docile = 1
 	M.nutrition = 700
@@ -172,7 +172,7 @@
 		return ..()
 	if(M.stat)
 		user << "<span class='warning'>[M] is dead!</span>"
-		return..()
+		return ..()
 	var/mob/living/simple_animal/SM = M
 	if(SM.sentience_type != sentience_type)
 		user << "<span class='warning'>The potion won't work on [SM].</span>"
@@ -212,13 +212,13 @@
 		return ..()
 	if(M.is_adult) //Can't steroidify adults
 		user << "<span class='warning'>Only baby slimes can use the steroid!</span>"
-		return..()
+		return ..()
 	if(M.stat)
 		user << "<span class='warning'>The slime is dead!</span>"
-		return..()
+		return ..()
 	if(M.cores >= 5)
 		user <<"<span class='warning'>The slime already has the maximum amount of extract!</span>"
-		return..()
+		return ..()
 
 	user <<"<span class='notice'>You feed the slime the steroid. It will now produce one more extract.</span>"
 	M.cores++
@@ -242,10 +242,10 @@
 		return ..()
 	if(M.stat)
 		user << "<span class='warning'>The slime is dead!</span>"
-		return..()
+		return ..()
 	if(M.mutation_chance == 0)
 		user <<"<span class='warning'>The slime already has no chance of mutating!</span>"
-		return..()
+		return ..()
 
 	user <<"<span class='notice'>You feed the slime the stabilizer. It is now less likely to mutate.</span>"
 	M.mutation_chance = Clamp(M.mutation_chance-15,0,100)
@@ -263,13 +263,13 @@
 		return ..()
 	if(M.stat)
 		user << "<span class='warning'>The slime is dead!</span>"
-		return..()
+		return ..()
 	if(M.mutator_used)
 		user << "<span class='warning'>This slime has already consumed a mutator, any more would be far too unstable!</span>"
-		return..()
+		return ..()
 	if(M.mutation_chance == 100)
 		user <<"<span class='warning'>The slime is already guaranteed to mutate!</span>"
-		return..()
+		return ..()
 
 	user <<"<span class='notice'>You feed the slime the mutator. It is now more likely to mutate.</span>"
 	M.mutation_chance = Clamp(M.mutation_chance+12,0,100)
@@ -282,17 +282,27 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 
-/obj/item/slimepotion/speed/afterattack(obj/item/C, mob/user)
+/obj/item/slimepotion/speed/afterattack(obj/C, mob/user)
 	..()
 	if(!istype(C))
-		user << "<span class='warning'>The potion can only be used on items!</span>"
+		user << "<span class='warning'>The potion can only be used on items or vehicles!</span>"
 		return
-	if(C.slowdown <= 0)
-		user << "<span class='warning'>The [C] can't be made any faster!</span>"
-		return..()
+	if(istype(C, /obj/item))
+		var/obj/item/I = C
+		if(I.slowdown <= 0)
+			user << "<span class='warning'>The [C] can't be made any faster!</span>"
+			return ..()
+		I.slowdown = 0
+
+	if(istype(C, /obj/vehicle))
+		var/obj/vehicle/V = C
+		if(V.vehicle_move_delay <= 0)
+			user << "<span class='warning'>The [C] can't be made any faster!</span>"
+			return ..()
+		V.vehicle_move_delay = 0
+
 	user <<"<span class='notice'>You slather the red gunk over the [C], making it faster.</span>"
 	C.color = "#FF0000"
-	C.slowdown = 0
 	qdel(src)
 
 
@@ -313,7 +323,7 @@
 		return
 	if(C.max_heat_protection_temperature == FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
 		user << "<span class='warning'>The [C] is already fireproof!</span>"
-		return..()
+		return ..()
 	user <<"<span class='notice'>You slather the blue gunk over the [C], fireproofing it.</span>"
 	C.name = "fireproofed [C.name]"
 	C.color = "#000080"
@@ -440,8 +450,9 @@
 	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
 	if(user.mind.special_role)
-		message_admins("[G.real_name] has been summoned by [user.real_name], an antagonist.")
-	log_game("[G.real_name] ([G.key]) was made a golem by [user.real_name]([user.key]).")
+		message_admins("[key_name_admin(G)](<A HREF='?_src_=holder;adminmoreinfo=\ref[G]'>?</A>) has been summoned by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>), an antagonist.")
+	log_game("[key_name(G)] was made a golem by [key_name(user)].")
+	log_admin("[key_name(G)] was made a golem by [key_name(user)].")
 	qdel(src)
 
 
@@ -459,6 +470,7 @@
 	unacidable = 1
 	mouse_opacity = 0
 	var/mob/living/immune = list() // the one who creates the timestop is immune
+	var/list/stopped_atoms = list()
 	var/freezerange = 2
 	var/duration = 140
 	alpha = 125
@@ -473,9 +485,10 @@
 
 /obj/effect/timestop/proc/timestop()
 	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
-	while(loc)
-		if(duration)
-			for(var/mob/living/M in orange (freezerange, src.loc))
+	for(var/i in 1 to duration-1)
+		for(var/atom/A in orange (freezerange, src.loc))
+			if(istype(A, /mob/living))
+				var/mob/living/M = A
 				if(M in immune)
 					continue
 				M.stunned = 10
@@ -484,23 +497,35 @@
 					var/mob/living/simple_animal/hostile/H = M
 					H.AIStatus = AI_OFF
 					H.LoseTarget()
-					continue
-			for(var/obj/item/projectile/P in orange (freezerange, src.loc))
+				stopped_atoms |= M
+			else if(istype(A, /obj/item/projectile))
+				var/obj/item/projectile/P = A
 				P.paused = TRUE
-			duration --
-		else
-			for(var/mob/living/M in orange (freezerange+2, src.loc)) //longer range incase they lag out of it or something
-				M.stunned = 0
-				M.anchored = 0
-				if(istype(M, /mob/living/simple_animal/hostile))
-					var/mob/living/simple_animal/hostile/H = M
-					H.AIStatus = initial(H.AIStatus)
-					continue
-			for(var/obj/item/projectile/P in orange(freezerange+2, src.loc))
-				P.paused = FALSE
-			qdel(src)
-			return
+				stopped_atoms |= P
+
+		for(var/mob/living/M in stopped_atoms)
+			if(get_dist(get_turf(M),get_turf(src)) > freezerange) //If they lagged/ran past the timestop somehow, just ignore them
+				unfreeze_mob(M)
+				stopped_atoms -= M
 		sleep(1)
+
+	//End
+	for(var/mob/living/M in stopped_atoms)
+		unfreeze_mob(M)
+
+	for(var/obj/item/projectile/P in stopped_atoms)
+		P.paused = FALSE
+	qdel(src)
+	return
+
+
+
+/obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
+	M.stunned = 0
+	M.anchored = 0
+	if(istype(M, /mob/living/simple_animal/hostile))
+		var/mob/living/simple_animal/hostile/H = M
+		H.AIStatus = initial(H.AIStatus)
 
 
 /obj/effect/timestop/wizard

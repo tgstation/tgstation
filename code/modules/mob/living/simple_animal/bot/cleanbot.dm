@@ -4,7 +4,6 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
-	layer = 5
 	density = 0
 	anchored = 0
 	health = 25
@@ -28,7 +27,11 @@
 	var/next_dest
 	var/next_dest_loc
 
+/proc/stack_trace(msg)
+	CRASH(msg)
+
 /mob/living/simple_animal/bot/cleanbot/New()
+	stack_trace("Cleanbot is being instantiated")
 	..()
 	get_targets()
 	icon_state = "cleanbot[on]"
@@ -73,7 +76,7 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/bot/cleanbot/Emag(mob/user)
+/mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()
 	if(emagged == 2)
 		if(user)
@@ -118,7 +121,7 @@
 	if(target)
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = get_path_to(loc, target.loc, src, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
+			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
 			if (!bot_move(target))
 				add_to_ignore(target)
 				target = null
@@ -152,6 +155,7 @@
 	target_types += /obj/effect/decal/cleanable/ash
 	target_types += /obj/effect/decal/cleanable/greenglow
 	target_types += /obj/effect/decal/cleanable/dirt
+	target_types += /obj/effect/decal/cleanable/deadcockroach
 
 	if(blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood/
@@ -190,27 +194,6 @@
 	s.set_up(3, 1, src)
 	s.start()
 	..()
-
-/obj/item/weapon/bucket_sensor/attackby(obj/item/W, mob/user as mob, params)
-	..()
-	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
-		if(!user.unEquip(W))
-			return
-		qdel(W)
-		var/turf/T = get_turf(loc)
-		var/mob/living/simple_animal/bot/cleanbot/A = new /mob/living/simple_animal/bot/cleanbot(T)
-		A.name = created_name
-		user << "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>"
-		user.unEquip(src, 1)
-		qdel(src)
-
-	else if (istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if (!t)
-			return
-		if (!in_range(src, usr) && loc != usr)
-			return
-		created_name = t
 
 /obj/machinery/bot_core/cleanbot
 	req_one_access = list(access_janitor, access_robotics)

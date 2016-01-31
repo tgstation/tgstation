@@ -8,14 +8,8 @@
 	invisibility = 60
 	burn_state = LAVA_PROOF
 
-
-obj/effect/dummy/slaughter/relaymove(mob/user, direction)
-	if (!src.canmove || !direction) return
-	var/turf/newLoc = get_step(src,direction)
-	loc = newLoc
-	src.canmove = 0
-	spawn(1)
-		src.canmove = 1
+/obj/effect/dummy/slaughter/relaymove(mob/user, direction)
+	forceMove(get_step(src,direction))
 
 /obj/effect/dummy/slaughter/ex_act()
 	return

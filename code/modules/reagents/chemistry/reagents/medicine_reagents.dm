@@ -103,17 +103,29 @@
 /datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
 	id = "cryoxadone"
-	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 170K for it to metabolise correctly."
+	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
-	if(M.stat != DEAD && M.bodytemperature < 270)
-		M.adjustCloneLoss(-4)
-		M.adjustOxyLoss(-10)
-		M.adjustBruteLoss(-3)
-		M.adjustFireLoss(-3)
-		M.adjustToxLoss(-3)
+	if(M.stat != DEAD && M.bodytemperature < T0C) // Low temperatures are required to take effect.
 		M.status_flags &= ~DISFIGURED
+		M.adjustCloneLoss(-1)
+		M.adjustOxyLoss(-5)
+		M.adjustBruteLoss(-1)
+		M.adjustFireLoss(-1)
+		M.adjustToxLoss(-1)
+	if(M.stat != DEAD && M.bodytemperature < 225) // At lower temperatures (cryo) the full effect is boosted
+		M.adjustCloneLoss(-1)
+		M.adjustOxyLoss(-2)
+		M.adjustBruteLoss(-2)
+		M.adjustFireLoss(-2)
+		M.adjustToxLoss(-2)
+	if(M.stat != DEAD && M.bodytemperature < 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
+		M.adjustCloneLoss(-5)
+		M.adjustOxyLoss(-2)
+		M.adjustBruteLoss(-2)
+		M.adjustFireLoss(-2)
+		M.adjustToxLoss(-2)
 	..()
 	return
 
@@ -390,21 +402,23 @@
 /datum/reagent/medicine/sal_acid
 	name = "Salicyclic Acid"
 	id = "sal_acid"
-	description = "Very slowly restores low bruising. Primarily used as an ingredient in other medicines. Overdose causes slight bruising."
+	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 
+
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/M)
-	if(M.getBruteLoss() < 50)
-		M.adjustBruteLoss(-0.25*REM)
+	if(M.getBruteLoss() > 50)
+		M.adjustBruteLoss(-4*REM) //Twice as effective as styptic powder for severe bruising
+	else
+		M.adjustBruteLoss(-0.5*REM) //But only a quarter as effective for more minor ones
 	..()
 	return
-
 /datum/reagent/medicine/sal_acid/overdose_process(mob/living/M)
-	if(M.getBruteLoss() < 50)
-		M.adjustBruteLoss(0.5*REM)
+	if(M.getBruteLoss()) //It only makes existing bruises worse
+		M.adjustBruteLoss(4.5*REM) // it's going to be healing either 4 or 0.5
 	..()
 	return
 
@@ -960,5 +974,27 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-5*REM)
 	M.adjustBrainLoss(-15*REM)
 	M.adjustCloneLoss(-3*REM)
+	..()
+	return
+
+/datum/reagent/medicine/haloperidol
+	name = "Haloperidol"
+	id = "haloperidol"
+	description = "Increases depletion rates for most stimulating/hallucinogenic drugs. Reduces druggy effects and jitteriness. Severe stamina regeneration penalty, causes drowsiness. Small chance of brain damage."
+	reagent_state = LIQUID
+	color = "#27870a"
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/haloperidol/on_mob_life(mob/living/M)
+	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
+		M.reagents.remove_reagent(R.id,5)
+	M.drowsyness += 2
+	if(M.jitteriness >= 3)
+		M.jitteriness -= 3
+	if (M.hallucination >= 5)
+		M.hallucination -= 5
+	if(prob(20))
+		M.adjustBrainLoss(1*REM)
+	M.adjustStaminaLoss(2.5*REM)
 	..()
 	return

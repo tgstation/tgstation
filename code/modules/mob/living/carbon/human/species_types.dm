@@ -168,9 +168,10 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	darksight = 8
 	invis_sight = SEE_INVISIBLE_MINIMUM
 	sexes = 0
+	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
-	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
+	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 	dangerous_existence = 1
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
@@ -195,7 +196,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	default_color = "00FF90"
 	say_mod = "chirps"
 	eyes = "jelleyes"
-	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD)
+	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	var/recently_changed = 1
@@ -238,7 +239,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	default_color = "00FFFF"
 	darksight = 3
 	invis_sight = SEE_INVISIBLE_LEVEL_ONE
-	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
+	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE)
 	say_mod = "says"
 	eyes = "eyes"
 	hair_color = "mutcolor"
@@ -342,7 +343,10 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	speedmod = 3
 	armor = 55
 	siemens_coeff = 0
-	punchmod = 5
+	punchdamagelow = 5
+	punchdamagehigh = 14
+	punchstunthreshold = 11 //about 40% chance to stun
+	blacklisted = 1
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
@@ -387,6 +391,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	id = "skeleton"
 	say_mod = "rattles"
 	need_nutrition = 0
+	blacklisted = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
@@ -412,6 +417,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	id = "zombie"
 	say_mod = "moans"
 	sexes = 0
+	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
 
@@ -453,16 +459,16 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 /datum/species/abductor/handle_speech(message)
 	//Hacks
 	var/mob/living/carbon/human/user = usr
+	var/rendered = "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
 	for(var/mob/living/carbon/human/H in mob_list)
 		if(H.dna.species.id != "abductor")
 			continue
 		else
 			var/datum/species/abductor/target_spec = H.dna.species
 			if(target_spec.team == team)
-				H << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
-				//return - technically you can add more aliens to a team
+				H << rendered
 	for(var/mob/M in dead_mob_list)
-		M << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
+		M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [rendered]"
 	return ""
 
 
@@ -474,11 +480,12 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING)
+	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE)
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
 	dangerous_existence = 1 //So so much
+	blacklisted = 1 //See above
 	need_nutrition = 0 //Hard to eat through a helmet
 	burnmod = 2
 	heatmod = 2
@@ -505,7 +512,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		if(environment)
 			var/total_moles = environment.total_moles()
 			if(total_moles)
-				if((environment.oxygen /total_moles) >= 0.01)
+				if(environment.gases["o2"] && (environment.gases["o2"][MOLES] /total_moles) >= 0.01)
 					H.adjust_fire_stacks(0.5)
 					if(!H.on_fire && H.fire_stacks > 0)
 						H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
@@ -549,6 +556,7 @@ var/global/list/synth_flesh_disguises = list()
 	SA_para_min = 0
 	SA_sleep_min = 0
 	dangerous_existence = 1
+	blacklisted = 1
 	need_nutrition = 0 //beep boop robots do not need sustinance
 	meat = null
 	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE) //for getting these values back for assume_disguise()
@@ -561,7 +569,9 @@ var/global/list/synth_flesh_disguises = list()
 	name = "Military Synth"
 	id = "military_synth"
 	armor = 25
-	punchmod = 10
+	punchdamagelow = 10
+	punchdamagehigh = 19
+	punchstunthreshold = 14 //about 50% chance to stun
 	disguise_fail_health = 50
 
 

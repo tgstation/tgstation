@@ -21,24 +21,13 @@
 	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = "harm"
-	var/corpse = /obj/effect/landmark/mobcorpse/syndicatesoldier
-	var/weapon1
-	var/weapon2
+	loot = list(/obj/effect/landmark/mobcorpse/syndicatesoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list("syndicate")
+	check_friendly_fire = 1
 	status_flags = CANPUSH
-
-/mob/living/simple_animal/hostile/syndicate/death(gibbed)
-	..(gibbed)
-	if(corpse)
-		new corpse (src.loc)
-	if(weapon1)
-		new weapon1 (src.loc)
-	if(weapon2)
-		new weapon2 (src.loc)
-	qdel(src)
-	return
+	del_on_death = 1
 
 ///////////////Sword and shield////////////
 
@@ -47,8 +36,9 @@
 	melee_damage_upper = 30
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
-	weapon1 = /obj/item/weapon/melee/energy/sword/saber/red
-	weapon2 = /obj/item/weapon/shield/energy
+	loot = list(/obj/effect/landmark/mobcorpse/syndicatesoldier,
+				/obj/item/weapon/melee/energy/sword/saber/red,
+				/obj/item/weapon/shield/energy)
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	armour_penetration = 28
@@ -57,7 +47,8 @@
 	health = 170
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)	return
+	if(!Proj)
+		return
 	if(prob(50))
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			src.health -= Proj.damage
@@ -72,11 +63,13 @@
 	icon_state = "syndicatemeleespace"
 	icon_living = "syndicatemeleespace"
 	name = "Syndicate Commando"
-	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
+	loot = list(/obj/effect/landmark/mobcorpse/syndicatecommando,
+				/obj/item/weapon/melee/energy/sword/saber/red,
+				/obj/item/weapon/shield/energy)
 	speed = 1
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(movement_dir = 0)
-	return
+	return 1
 
 /mob/living/simple_animal/hostile/syndicate/ranged
 	ranged = 1
@@ -87,8 +80,9 @@
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/c45nostamina
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
-
-	weapon1 = /obj/item/weapon/gun/projectile/automatic/c20r/unrestricted
+	loot = list(/obj/effect/landmark/mobcorpse/syndicatesoldier,
+				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
+				/obj/item/weapon/shield/energy)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space
 	icon_state = "syndicaterangedpsace"
@@ -96,11 +90,13 @@
 	name = "Syndicate Commando"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
 	speed = 1
+	loot = list(/obj/effect/landmark/mobcorpse/syndicatecommando,
+				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
+				/obj/item/weapon/shield/energy)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
-	return
+	return 1
 
 
 /mob/living/simple_animal/hostile/syndicate/civilian
@@ -132,10 +128,10 @@
 	mob_size = MOB_SIZE_TINY
 	flying = 1
 	speak_emote = list("states")
+	bubble_icon = "syndibot"
 	gold_core_spawnable = 1
+	del_on_death = 1
 
-/mob/living/simple_animal/hostile/viscerator/death(gibbed)
-	..(gibbed)
-	visible_message("<span class='danger'><b>[src]</b> is smashed into pieces!</span>")
-	qdel(src)
-	return
+/mob/living/simple_animal/hostile/viscerator/New()
+	..()
+	deathmessage = "<b>[src]</b> is smashed into pieces!"

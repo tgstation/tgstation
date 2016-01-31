@@ -303,7 +303,7 @@
 
 	O.job = "AI"
 
-	O.rename_self("ai",1)
+	O.rename_self("ai")
 	. = O
 	qdel(src)
 	return
@@ -348,7 +348,7 @@
 	O.update_pipe_vision()
 
 	if (config.rename_cyborg)
-		O.rename_self("cyborg", 1)
+		O.rename_self("cyborg")
 
 	O.loc = loc
 	O.job = "Cyborg"
@@ -441,7 +441,7 @@
 		G.key = key
 
 	G.job = "Deity"
-	G.rename_self("deity", 0)
+	G.rename_self("deity")
 	G.update_icons()
 
 	. = G

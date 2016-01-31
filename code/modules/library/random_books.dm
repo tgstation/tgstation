@@ -39,7 +39,7 @@
 			B.title		=	query.item[3]
 			B.dat		=	query.item[4]
 			B.name		=	"Book: [B.title]"
-			B.icon_state=	"book[rand(1,7)]"
+			B.icon_state=	"book[rand(1,8)]"
 	else
 		log_game("SQL ERROR populating library bookshelf.  Category: \[[category]\], Count: [book_count], Error: \[[query.ErrorMsg()]\]\n")
 	update_icon()

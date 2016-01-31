@@ -253,6 +253,76 @@
 				if(H.stat == CONSCIOUS)
 					H << "<span class='notice'>You feel your heart beating again!</span>"
 
+/obj/item/organ/internal/cyberimp/chest/arm_mod//dummy parent item for making arm-mod implants. works best with nodrop items that are sent to nullspace upon being dropped.
+	name = "Arm-mounted item implant"
+	desc = "You shouldn't see this! Adminhelp and report this as an issue on github!"
+	icon_state = "chest_implant"
+	implant_color = "#007ACC"
+	slot = "shoulders"
+	origin_tech = "materials=5;biotech=4;powerstorage=4"
+	organ_action_name = "Toggle Arm Mod"
+	var/obj/holder//is defined as the retractable item itself. ensure this is defined somewhere!
+	var/out = 0//determines if the item is in the owner's hand or not
+	var/overloaded = 0//is set to 1 when owner gets EMPed. if set to 1, implant doesn't work.
+
+/obj/item/organ/internal/cyberimp/chest/arm_mod/ui_action_click()
+	if(overloaded)//ensure the implant isn't broken
+		owner << "<span class='warning'>The implant doesn't respond. It seems to be broken...</span>"
+		return
+	if(holder == null)
+		owner << "<span class='warning'>You should not be attempting to use this implant, as it is a dummy item that should never appear. Please adminhelp and report this as an issue on github.</span>"
+		return
+	if(out)//check if the owner has the item out already
+		owner.unEquip(holder, 1)//if he does, take it away. then,
+		holder.loc = null//stash it in nullspace
+		out = 0//and set this to clarify the item isn't out.
+		owner << "<span class='notice'>You retract [holder].</span>"
+		playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
+	else//if he doesn't have the item out
+		if(owner.put_in_hands(holder))//put it in his hands.
+			out = 1
+			owner << "<span class='notice'>You extend [holder]!</span>"
+			playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
+		else//if this fails to put the item in his hands,
+			holder.loc = null//keep it in nullspace
+			owner << "<span class='warning'>You can't extend [holder] if you can't use your hands!</span>"
+
+/obj/item/organ/internal/cyberimp/chest/arm_mod/emp_act(severity)//if the implant gets EMPed...
+	if(!owner || overloaded)//ensure that it's in an owner and that it's not already EMPed, then...
+		return
+	if(out)//check if he has the item out...
+		owner.unEquip(holder, 1)//if he does, take it away.
+		holder.loc = null
+		out = 0
+		owner << "<span class='warning'>[holder] forcibly retracts into your arm.</span>"
+	owner.visible_message("<span class='danger'>A loud bang comes from [owner]...</span>")
+	playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, 1)
+	owner << "<span class='warning'>You feel an explosion erupt inside you as your chest implant breaks. Is it hot in here?</span>"
+	owner.adjust_fire_stacks(20)
+	owner.IgniteMob()//ignite the owner, as well as
+	owner.say("AUUUUUUUUUUUUUUUUUUGH!!")
+	owner.adjustFireLoss(25)//severely injure him!
+	overloaded = 1//then make sure this can't happen again by breaking the implant.
+
+/obj/item/organ/internal/cyberimp/chest/arm_mod/tase//mounted, self-charging taser!
+	name = "Arm-cannon taser implant"
+	desc = "A variant of the arm cannon implant that fires electrodes and disabler shots. The cannon emerges from the subject's arms and remains in the shoulders when not in use."
+	icon_state = "armcannon_tase_implant"
+	origin_tech = "materials=5;combat=5;biotech=4;powerstorage=4"
+	organ_action_name = "Toggle Arm Cannon Taser"
+
+/obj/item/organ/internal/cyberimp/chest/arm_mod/tase/New()//when the implant is created...
+	holder = new /obj/item/weapon/gun/energy/gun/advtaser/mounted(src)//assign a brand new item to it. (in this case, a gun)
+
+/obj/item/organ/internal/cyberimp/chest/arm_mod/lase//mounted, self-charging laser!
+	name = "Arm-cannon laser implant"
+	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arms and remains in the shoulders when not in use."
+	icon_state = "armcannon_lase_implant"
+	origin_tech = "materials=5;combat=5;biotech=4;powerstorage=4;syndicate=5"//this is kinda nutty and i might lower it
+	organ_action_name = "Toggle Arm Cannon Laser"
+
+/obj/item/organ/internal/cyberimp/chest/arm_mod/lase/New()
+	holder = new /obj/item/weapon/gun/energy/laser/mounted(src)
 
 //BOX O' IMPLANTS
 
@@ -266,8 +336,8 @@
 
 /obj/item/weapon/storage/box/cyber_implants/New()
 	..()
-	var/i
 	var/implant
-	for(i = 0, i < amount, i++)
+	while(contents.len <= amount)
 		implant = pick(boxed)
 		new implant(src)
+	new /obj/item/device/autoimplanter(src)

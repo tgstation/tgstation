@@ -54,7 +54,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/New()
 	manifest += "<ul>"
 	for(var/path in contains)
-		if(!path)	continue
+		if(!path)
+			continue
 		var/atom/movable/AM = path
 		manifest += "<li>[initial(AM.name)]</li>"
 	manifest += "</ul>"
@@ -284,6 +285,21 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/suit/armor/bulletproof)
 	cost = 15
 	containername = "tactical armor crate"
+
+/datum/supply_packs/security/armory/swat
+	name = "SWAT gear crate"
+	contains = list(/obj/item/clothing/head/helmet/swat/nanotrasen,
+					/obj/item/clothing/head/helmet/swat/nanotrasen,
+					/obj/item/clothing/suit/space/swat,
+					/obj/item/clothing/suit/space/swat,
+					/obj/item/weapon/kitchen/knife/combat,
+					/obj/item/weapon/kitchen/knife/combat,
+					/obj/item/clothing/mask/gas/sechailer/swat,
+					/obj/item/clothing/mask/gas/sechailer/swat,
+					/obj/item/weapon/storage/belt/military/assault,
+					/obj/item/weapon/storage/belt/military/assault)
+	cost = 60
+	containername = "assault armor crate"
 
 /datum/supply_packs/security/armory/laserarmor
 	name = "Reflector Vest Crate"
@@ -547,9 +563,12 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/engineering/engine/spacesuit
 	name = "Space Suit Crate"
 	contains = list(/obj/item/clothing/suit/space,
+					/obj/item/clothing/suit/space,
 					/obj/item/clothing/head/helmet/space,
+					/obj/item/clothing/head/helmet/space,
+					/obj/item/clothing/mask/breath,
 					/obj/item/clothing/mask/breath,)
-	cost = 80
+	cost = 30
 	containertype = /obj/structure/closet/crate/secure
 	containername = "space suit crate"
 	access = access_eva

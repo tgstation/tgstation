@@ -8,6 +8,7 @@
 	icon = 'icons/mob/blob.dmi'
 	pass_flags = PASSBLOB
 	faction = list("blob")
+	bubble_icon = "blob"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 360
@@ -19,6 +20,11 @@
 
 /mob/living/simple_animal/hostile/blob/blob_act()
 	return
+
+/mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target, height = 0)
+	if(istype(mover, /obj/effect/blob))
+		return 1
+	return ..()
 
 ////////////////
 // BLOB SPORE //
@@ -45,11 +51,6 @@
 	..()
 	adjustBruteLoss(Clamp(0.01 * exposed_temperature, 1, 5))
 
-
-/mob/living/simple_animal/hostile/blob/blobspore/CanPass(atom/movable/mover, turf/target, height=0)
-	if(istype(mover, /obj/effect/blob))
-		return 1
-	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/New(loc, var/obj/effect/blob/factory/linked_node)
 	if(istype(linked_node))
@@ -157,9 +158,10 @@
 	minbodytemp = 0
 	maxbodytemp = 360
 	force_threshold = 10
-	environment_smash = 3
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 1
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 8
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	if(isliving(target))
@@ -167,7 +169,8 @@
 			var/mob/living/L = target
 			var/mob_protection = L.get_permeability_protection()
 			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 17.5, 0, mob_protection)//this will do between 7 and 17 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
-	..()
+	if(target)
+		..()
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
 	..()

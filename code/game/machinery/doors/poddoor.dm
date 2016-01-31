@@ -93,6 +93,9 @@
 
 //"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
 /obj/machinery/door/poddoor/ex_act(severity, target)
+	if(target == src)
+		qdel(src)
+		return
 	switch(severity)
 		if(1)
 			if(prob(80))
@@ -115,3 +118,8 @@
 				s.set_up(2, 1, src)
 				s.start()
 
+/obj/machinery/door/poddoor/update_icon()
+	if(density)
+		icon_state = "closed"
+	else
+		icon_state = "open"

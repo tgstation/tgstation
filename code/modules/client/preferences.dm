@@ -27,7 +27,8 @@ var/list/preferences_datums = list()
 
 
 	var/UI_style = "Midnight"
-	var/nanoui_fancy = TRUE
+	var/tgui_fancy = TRUE
+	var/tgui_lock = TRUE
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
@@ -114,7 +115,8 @@ var/list/preferences_datums = list()
 
 
 /datum/preferences/proc/ShowChoices(mob/user)
-	if(!user || !user.client)	return
+	if(!user || !user.client)
+		return
 	update_preview_icon()
 	user << browse_rsc(preview_icon, "previewicon.png")
 	var/dat = "<center>"
@@ -139,7 +141,8 @@ var/list/preferences_datums = list()
 					for(var/i=1, i<=max_save_slots, i++)
 						S.cd = "/character[i]"
 						S["real_name"] >> name
-						if(!name)	name = "Character[i]"
+						if(!name)
+							name = "Character[i]"
 						//if(i!=1) dat += " | "
 						dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
 					dat += "</center>"
@@ -325,7 +328,8 @@ var/list/preferences_datums = list()
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>General Settings</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
-			dat += "<b>Fancy NanoUI:</b> <a href='?_src_=prefs;preference=nanoui'>[(nanoui_fancy) ? "Yes" : "No"]</a><br>"
+			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
+			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a><br>"
@@ -409,7 +413,8 @@ var/list/preferences_datums = list()
 	popup.open(0)
 
 /datum/preferences/proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), widthPerColumn = 295, height = 620)
-	if(!SSjob)	return
+	if(!SSjob)
+		return
 
 	//limit - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
 	//splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
@@ -630,7 +635,8 @@ var/list/preferences_datums = list()
 
 
 /datum/preferences/proc/GetJobDepartment(datum/job/job, level)
-	if(!job || !level)	return 0
+	if(!job || !level)
+		return 0
 	switch(job.department_flag)
 		if(CIVILIAN)
 			switch(level)
@@ -721,7 +727,7 @@ var/list/preferences_datums = list()
 				if("undershirt")
 					undershirt = random_undershirt(gender)
 				if("socks")
-					socks = random_socks(gender)
+					socks = random_socks()
 				if("eyes")
 					eye_color = random_eye_color()
 				if("s_tone")
@@ -834,10 +840,7 @@ var/list/preferences_datums = list()
 
 				if("socks")
 					var/new_socks
-					if(gender == MALE)
-						new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_m
-					else
-						new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_f
+					new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_list
 					if(new_socks)
 						socks = new_socks
 
@@ -1001,7 +1004,7 @@ var/list/preferences_datums = list()
 						gender = MALE
 					underwear = random_underwear(gender)
 					undershirt = random_undershirt(gender)
-					socks = random_socks(gender)
+					socks = random_socks()
 					facial_hair_style = random_facial_hair_style(gender)
 					hair_style = random_hair_style(gender)
 
@@ -1011,11 +1014,17 @@ var/list/preferences_datums = list()
 							UI_style = "Plasmafire"
 						if("Plasmafire")
 							UI_style = "Retro"
+						if("Retro")
+							UI_style = "Slimecore"
+						if("Slimecore")
+							UI_style = "Operative"
 						else
 							UI_style = "Midnight"
 
-				if("nanoui")
-					nanoui_fancy = !nanoui_fancy
+				if("tgui_fancy")
+					tgui_fancy = !tgui_fancy
+				if("tgui_lock")
+					tgui_lock = !tgui_lock
 
 				if("hear_adminhelps")
 					toggles ^= SOUND_ADMINHELP

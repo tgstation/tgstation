@@ -324,8 +324,8 @@
 	//proc functions
 	for(var/Proc in functions)
 		if(!isnotfunc())
-			spawn(1)
-				call(src,Proc)(src)
+			callfunction(Proc)
+
 
 	//target interaction stays hardcoded
 
@@ -407,10 +407,13 @@
 			if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 				TARGET = pick(target_filter(ultra_range(MIN_RANGE_FIND,src,1)))
 			else
-				TARGET = pick(get_area_turfs(job2area(myjob)))
+				TARGET = safepick(get_area_turfs(job2area(myjob)))
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 
+/mob/living/carbon/human/interactive/proc/callfunction(Proc)
+	set waitfor = 0
+	call(src,Proc)(src)
 /mob/living/carbon/human/interactive/proc/tryWalk(turf/TARGET)
 	if(!isnotfunc())
 		if(!walk2derpless(TARGET))
@@ -421,6 +424,8 @@
 
 /mob/living/carbon/human/interactive/proc/walk2derpless(target)
 	set background = 1
+	if(!target)
+		return 0
 	var/turf/T = get_turf(target)
 	var/turf/D = get_step(src,dir)
 	if(D)
@@ -631,26 +636,23 @@
 			nearby += M
 
 //END OF MODULES
-/mob/living/carbon/human/interactive/angry
-	New()
-		TRAITS |= TRAIT_ROBUST
-		TRAITS |= TRAIT_MEAN
-		faction = list("bot_angry")
-		..()
+/mob/living/carbon/human/interactive/angry/New()
+	TRAITS |= TRAIT_ROBUST
+	TRAITS |= TRAIT_MEAN
+	faction = list("bot_angry")
+	..()
 
-/mob/living/carbon/human/interactive/friendly
-	New()
-		TRAITS |= TRAIT_FRIENDLY
-		TRAITS |= TRAIT_UNROBUST
-		faction = list("bot_friendly")
-		..()
+/mob/living/carbon/human/interactive/friendly/New()
+	TRAITS |= TRAIT_FRIENDLY
+	TRAITS |= TRAIT_UNROBUST
+	faction = list("bot_friendly")
+	..()
 
-/mob/living/carbon/human/interactive/greytide
-	New()
-		TRAITS |= TRAIT_ROBUST
-		TRAITS |= TRAIT_MEAN
-		TRAITS |= TRAIT_THIEVING
-		TRAITS |= TRAIT_DUMB
-		faction = list("bot_grey")
-		graytide = 1
-		..()
+/mob/living/carbon/human/interactive/greytide/New()
+	TRAITS |= TRAIT_ROBUST
+	TRAITS |= TRAIT_MEAN
+	TRAITS |= TRAIT_THIEVING
+	TRAITS |= TRAIT_DUMB
+	faction = list("bot_grey")
+	graytide = 1
+	..()

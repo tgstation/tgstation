@@ -63,7 +63,7 @@
 	result = /obj/item/weapon/melee/baton/cattleprod
 	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1,
-				/obj/item/weapon/wirecutters = 1,
+				/obj/item/device/assembly/igniter = 1,
 				/obj/item/weapon/stock_parts/cell = 1)
 	time = 80
 	parts = list(/obj/item/weapon/stock_parts/cell = 1)
@@ -283,9 +283,11 @@
 	result = /obj/item/clothing/head/lizard
 	time = 20
 	reqs = list(/obj/item/organ/severedtail = 1)
+	category = CAT_MISC
 
 /datum/table_recipe/lizardhat_alternate
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
 	time = 20
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
+	category = CAT_MISC

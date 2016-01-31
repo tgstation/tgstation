@@ -39,7 +39,7 @@
 	item_state = "laser"
 	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lense to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theorically infinite use."
 	origin_tech = "combat=5;materials=4;powerstorage=4"
-	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/weapon/gun/energy/laser/cyborg
 	can_charge = 0
@@ -55,7 +55,7 @@
 /obj/item/weapon/gun/energy/laser/scatter
 	name = "scatter laser gun"
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."
-	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/weapon/gun/energy/lasercannon
 	name = "laser cannon"

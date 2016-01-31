@@ -84,7 +84,8 @@
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
 			step(mob.control_object,direct)
-			if(!mob.control_object)	return
+			if(!mob.control_object)
+				return
 			mob.control_object.dir = direct
 		else
 			mob.control_object.loc = get_step(mob.control_object,direct)
@@ -113,7 +114,8 @@
 			Process_Incorpmove(direct)
 			return 0
 
-	if(Process_Grab())	return
+	if(Process_Grab())
+		return
 
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
@@ -160,13 +162,14 @@
 				if(M)
 					if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
 						. = ..()
-						if (isturf(M.loc))
-							var/diag = get_dir(mob, M)
-							if ((diag - 1) & diag)
-							else
-								diag = null
-							if ((get_dist(mob, M) > 1 || diag))
-								step(M, get_dir(M.loc, mob.loc))
+						if(M)//Mob may get deleted during parent call
+							if (isturf(M.loc))
+								var/diag = get_dir(mob, M)
+								if ((diag - 1) & diag)
+								else
+									diag = null
+								if ((get_dist(mob, M) > 1 || diag))
+									step(M, get_dir(M.loc, mob.loc))
 			else
 				for(var/mob/M in L)
 					M.other_mobs = 1
@@ -275,13 +278,13 @@
 					else
 						return
 				L.loc = locate(locx,locy,mobloc.z)
-				spawn(0)
-					var/limit = 2//For only two trailing shadows.
-					for(var/turf/T in getline(mobloc, L.loc))
-						spawn(0)
-							anim(T,L,'icons/mob/mob.dmi',,"shadow",,L.dir)
-						limit--
-						if(limit<=0)	break
+				var/limit = 2//For only two trailing shadows.
+				for(var/turf/T in getline(mobloc, L.loc))
+					spawn(0)
+						anim(T,L,'icons/mob/mob.dmi',,"shadow",,L.dir)
+					limit--
+					if(limit<=0)
+						break
 			else
 				spawn(0)
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
@@ -305,43 +308,40 @@
 ///For moving in space
 ///Return 1 for movement 0 for none
 /mob/Process_Spacemove(movement_dir = 0)
-
 	if(..())
 		return 1
+	var/atom/movable/backup = get_spacemove_backup()
+	if(backup)
+		if(istype(backup) && movement_dir && !backup.anchored)
+			if(backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
+				src << "<span class='info'>You push off of [backup] to propel yourself.</span>"
+		return 1
+	return 0
 
+/mob/get_spacemove_backup()
 	var/atom/movable/dense_object_backup
-	for(var/atom/A in orange(1, get_turf(src)))
+	for(var/A in orange(1, get_turf(src)))
 		if(isarea(A))
 			continue
-
 		else if(isturf(A))
 			var/turf/turf = A
 			if(istype(turf,/turf/space))
 				continue
-
 			if(!turf.density && !mob_negates_gravity())
 				continue
-
-			return 1
-
+			return A
 		else
 			var/atom/movable/AM = A
 			if(AM == buckled) //Kind of unnecessary but let's just be sure
 				continue
-			if(AM.density)
+			if(!AM.CanPass(src) || AM.density)
 				if(AM.anchored)
-					return 1
+					return AM
 				if(pulling == AM)
 					continue
 				dense_object_backup = AM
-
-	if(movement_dir && dense_object_backup)
-		if(dense_object_backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
-			src << "<span class='info'>You push off of [dense_object_backup] to propel yourself.</span>"
-
-
-		return 1
-	return 0
+				break
+	. = dense_object_backup
 
 /mob/proc/mob_has_gravity(turf/T)
 	return has_gravity(src, T)

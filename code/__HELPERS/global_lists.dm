@@ -12,7 +12,7 @@
 	//undershirt
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
 	//socks
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list, socks_m, socks_f)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
 	//lizard bodyparts (blizzard intensifies)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, tails_list_lizard)
@@ -55,7 +55,8 @@
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)
-	if(!istype(L))	L = list()
+	if(!istype(L))
+		L = list()
 	for(var/path in subtypesof(prototype))
 		L += new path()
 	return L

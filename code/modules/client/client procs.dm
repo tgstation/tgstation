@@ -22,20 +22,13 @@
 /client/Topic(href, href_list, hsrc)
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
-	// NanoUI
-	if(href_list["nano_error"])
-		src << href_list["nano_error"]
-		throw EXCEPTION("NanoUI: [href_list["nano_error"]]")
-	if(href_list["nano_log"])
-		src << href_list["nano_log"]
-		return
 	// asset_cache
 	if(href_list["asset_cache_confirm_arrival"])
 		//src << "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED."
 		var/job = text2num(href_list["asset_cache_confirm_arrival"])
 		completed_asset_jobs += job
 		return
-	//Admin PM
+	// Admin PM
 	if(href_list["priv_msg"])
 		if (href_list["ahelp_reply"])
 			cmd_ahelp_reply(href_list["priv_msg"])
@@ -48,10 +41,14 @@
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
 	switch(href_list["_src_"])
-		if("holder")	hsrc = holder
-		if("usr")		hsrc = mob
-		if("prefs")		return prefs.process_link(usr,href_list)
-		if("vars")		return view_var_Topic(href,href_list,hsrc)
+		if("holder")
+			hsrc = holder
+		if("usr")
+			hsrc = mob
+		if("prefs")
+			return prefs.process_link(usr,href_list)
+		if("vars")
+			return view_var_Topic(href,href_list,hsrc)
 
 	..()	//redirect to hsrc.Topic()
 
@@ -200,9 +197,9 @@ var/next_external_rsc = 0
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		src << "<span class='info'>You have unread updates in the changelog.</span>"
 		if(config.aggressive_changelog)
-			src.changes()
+			changelog()
 		else
-			winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
+			winset(src, "infowindow.changelog", "font-style=bold")
 
 	if (ckey in clientmessages)
 		for (var/message in clientmessages[ckey])
@@ -313,7 +310,8 @@ var/next_external_rsc = 0
 //checks if a client is afk
 //3000 frames = 5 minutes
 /client/proc/is_afk(duration=3000)
-	if(inactivity > duration)	return inactivity
+	if(inactivity > duration)
+		return inactivity
 	return 0
 
 // Byond seemingly calls stat, each tick.
@@ -337,6 +335,6 @@ var/next_external_rsc = 0
 		'html/browser/scannernew.css',
 		'html/browser/playeroptions.css',
 		)
-	spawn (10)
+	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSasset.cache, register_asset = FALSE)

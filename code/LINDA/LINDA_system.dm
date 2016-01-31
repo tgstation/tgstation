@@ -1,5 +1,6 @@
 /turf/proc/CanAtmosPass(turf/T)
-	if(!istype(T))	return 0
+	if(!istype(T))
+		return 0
 	var/R
 	if(blocks_air || T.blocks_air)
 		R = 1
@@ -155,6 +156,7 @@ var/const/SPAWN_AIR = 256
 		return
 
 	var/datum/gas_mixture/G = new
+	var/list/new_gases = G.gases
 
 	if(flag & SPAWN_20C)
 		G.temperature = T20C
@@ -163,22 +165,29 @@ var/const/SPAWN_AIR = 256
 		G.temperature += 1000
 
 	if(flag & SPAWN_TOXINS)
-		G.toxins += amount
+		G.assert_gas("plasma")
+		new_gases["plasma"][MOLES] += amount
+
 	if(flag & SPAWN_OXYGEN)
-		G.oxygen += amount
+		G.assert_gas("o2")
+		new_gases["o2"][MOLES] += amount
+
 	if(flag & SPAWN_CO2)
-		G.carbon_dioxide += amount
+		G.assert_gas("co2")
+		new_gases["co2"][MOLES] += amount
+
 	if(flag & SPAWN_NITROGEN)
-		G.nitrogen += amount
+		G.assert_gas("n2")
+		new_gases["n2"][MOLES] += amount
 
 	if(flag & SPAWN_N2O)
-		var/datum/gas/sleeping_agent/T = new
-		T.moles += amount
-		G.trace_gases += T
+		G.assert_gas("n2o")
+		new_gases["n2o"][MOLES] += amount
 
 	if(flag & SPAWN_AIR)
-		G.oxygen += MOLES_O2STANDARD * amount
-		G.nitrogen += MOLES_N2STANDARD * amount
+		G.assert_gases("o2","n2")
+		new_gases["o2"][MOLES] += MOLES_O2STANDARD * amount
+		new_gases["n2"][MOLES] += MOLES_N2STANDARD * amount
 
 	air.merge(G)
 	SSair.add_to_active(src, 0)

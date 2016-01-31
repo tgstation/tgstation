@@ -23,6 +23,7 @@ z7 = empty space
         #include "map_files\generic\z6.dmm"
         #include "map_files\generic\z7.dmm"
 
+		#define MAP_PATH "map_files/DreamStation"
         #define MAP_FILE "dreamstation04.dmm"
         #define MAP_NAME "DreamStation"
 

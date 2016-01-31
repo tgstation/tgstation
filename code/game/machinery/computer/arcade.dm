@@ -1033,7 +1033,9 @@
 	name = "Spaceport Security"
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
-	corpse = /obj/effect/landmark/mobcorpse/orionsecurity
+	loot = list(/obj/effect/landmark/mobcorpse/orionsecurity,
+				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
+				/obj/item/weapon/shield/energy)
 
 /obj/effect/landmark/mobcorpse/orionsecurity
 	name = "Spaceport Security"

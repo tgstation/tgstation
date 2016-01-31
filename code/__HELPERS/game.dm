@@ -292,7 +292,8 @@
 	return candidates
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
-	if(!isobj(O))	O = new /obj/screen/text()
+	if(!isobj(O))
+		O = new /obj/screen/text()
 	O.maptext = maptext
 	O.maptext_height = maptext_height
 	O.maptext_width = maptext_width
@@ -300,8 +301,10 @@
 	return O
 
 /proc/Show2Group4Delay(obj/O, list/group, delay=0)
-	if(!isobj(O))	return
-	if(!group)	group = clients
+	if(!isobj(O))
+		return
+	if(!group)
+		group = clients
 	for(var/client/C in group)
 		C.screen += O
 	if(delay)
@@ -389,22 +392,19 @@
 				continue
 		spawn(0)
 			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
-			switch(alert(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No"))
-				if("Yes")
+			switch(askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
+				if(1)
 					G << "<span class='notice'>Choice registered: Yes.</span>"
-					if((world.time-time_passed)>poll_time)//If more than 30 game seconds passed.
+					if((world.time-time_passed)>poll_time)
 						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
 						G << 'sound/machines/buzz-sigh.ogg'
-						return
-					candidates += G
-				if("No")
+					else
+						candidates += G
+				if(2)
 					G << "<span class='danger'>Choice registered: No.</span>"
-					return
-				else
-					return
 	sleep(poll_time)
 
-	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.
+	//Check all our candidates, to make sure they didn't log off during the wait period.
 	for(var/mob/dead/observer/G in candidates)
 		if(!G.key || !G.client)
 			candidates.Remove(G)
@@ -412,7 +412,8 @@
 	return candidates
 
 /proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
-	if(!G_found || !G_found.key)	return
+	if(!G_found || !G_found.key)
+		return
 
 	//First we spawn a dude.
 	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.

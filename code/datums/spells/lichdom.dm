@@ -104,7 +104,7 @@
 
 			if(!marked_item)
 				M << "<span class='caution'>You must hold an item you wish to make your phylactery...</span>"
-
+				return
 			spawn(50)
 				if(marked_item.loc != M) //I changed my mind I don't want to put my soul in a cheeseburger!
 					M << "<span class='warning'>Your soul snaps back to your body as you drop the [marked_item.name]!</span>"

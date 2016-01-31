@@ -60,7 +60,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_local_narrate,	/*sends text to all mobs within view of atom*/
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/toggle_antag_hud 	/*toggle display of the admin antag hud*/
+	/client/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
+	/client/proc/toggle_AI_interact /*toggle admin ability to interact with machines as an AI*/
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -225,18 +226,30 @@ var/list/admin_verbs_hideable = list(
 
 		var/rights = holder.rank.rights
 		verbs += admin_verbs_default
-		if(rights & R_BUILDMODE)	verbs += /client/proc/togglebuildmodeself
-		if(rights & R_ADMIN)		verbs += admin_verbs_admin
-		if(rights & R_BAN)			verbs += admin_verbs_ban
-		if(rights & R_FUN)			verbs += admin_verbs_fun
-		if(rights & R_SERVER)		verbs += admin_verbs_server
-		if(rights & R_DEBUG)		verbs += admin_verbs_debug
-		if(rights & R_POSSESS)		verbs += admin_verbs_possess
-		if(rights & R_PERMISSIONS)	verbs += admin_verbs_permissions
-		if(rights & R_STEALTH)		verbs += /client/proc/stealth
-		if(rights & R_REJUVINATE)	verbs += admin_verbs_rejuv
-		if(rights & R_SOUNDS)		verbs += admin_verbs_sounds
-		if(rights & R_SPAWN)		verbs += admin_verbs_spawn
+		if(rights & R_BUILDMODE)
+			verbs += /client/proc/togglebuildmodeself
+		if(rights & R_ADMIN)
+			verbs += admin_verbs_admin
+		if(rights & R_BAN)
+			verbs += admin_verbs_ban
+		if(rights & R_FUN)
+			verbs += admin_verbs_fun
+		if(rights & R_SERVER)
+			verbs += admin_verbs_server
+		if(rights & R_DEBUG)
+			verbs += admin_verbs_debug
+		if(rights & R_POSSESS)
+			verbs += admin_verbs_possess
+		if(rights & R_PERMISSIONS)
+			verbs += admin_verbs_permissions
+		if(rights & R_STEALTH)
+			verbs += /client/proc/stealth
+		if(rights & R_REJUVINATE)
+			verbs += admin_verbs_rejuv
+		if(rights & R_SOUNDS)
+			verbs += admin_verbs_sounds
+		if(rights & R_SPAWN)
+			verbs += admin_verbs_spawn
 
 		for(var/path in holder.rank.adds)
 			verbs += path
@@ -317,14 +330,17 @@ var/list/admin_verbs_hideable = list(
 /client/proc/admin_ghost()
 	set category = "Admin"
 	set name = "Aghost"
-	if(!holder)	return
+	if(!holder)
+		return
 	if(istype(mob,/mob/dead/observer))
 		//re-enter
 		var/mob/dead/observer/ghost = mob
-		if (!ghost.can_reenter_corpse)
+		if(!ghost.mind || !ghost.mind.current) //won't do anything if there is no body
+			return
+		if(!ghost.can_reenter_corpse)
 			log_admin("[key_name(usr)] re-entered corpse")
 			message_admins("[key_name_admin(usr)] re-entered corpse")
-		ghost.can_reenter_corpse = 1			//just in-case.
+		ghost.can_reenter_corpse = 1 //force re-entering even when otherwise not possible
 		ghost.reenter_corpse()
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else if(istype(mob,/mob/new_player))
@@ -366,6 +382,8 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		holder.check_antagonists()
 		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
+		if(!isobserver(usr))
+			message_admins("[key_name_admin(usr)] checked antagonists.")
 	feedback_add_details("admin_verb","CHA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -422,13 +440,20 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		if(holder.fakekey)
 			holder.fakekey = null
+			mob.invisibility = initial(mob.invisibility)
+			mob.alpha = initial(mob.alpha)
+			mob.name = initial(mob.name)
 		else
 			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
-			if(!new_key)	return
+			if(!new_key)
+				return
 			if(length(new_key) >= 26)
 				new_key = copytext(new_key, 1, 26)
 			holder.fakekey = new_key
 			createStealthKey()
+			mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
+			mob.alpha = 0 //JUUUUST IN CASE
+			mob.name = " "
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -538,7 +563,8 @@ var/list/admin_verbs_hideable = list(
 /client/proc/toggle_log_hrefs()
 	set name = "Toggle href logging"
 	set category = "Server"
-	if(!holder)	return
+	if(!holder)
+		return
 	if(config)
 		if(config.log_hrefs)
 			config.log_hrefs = 0
@@ -638,3 +664,12 @@ var/list/admin_verbs_hideable = list(
 
 							testing("Spawned test mob with name \"[mob.name]\" at [tile.x],[tile.y],[tile.z]")
 			while (!area && --j > 0)
+
+/client/proc/toggle_AI_interact()
+ 	set name = "Toggle Admin AI Interact"
+ 	set category = "Admin"
+ 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
+
+ 	AI_Interact = !AI_Interact
+ 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
+ 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")

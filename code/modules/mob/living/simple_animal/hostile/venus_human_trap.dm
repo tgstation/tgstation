@@ -65,7 +65,7 @@
 	var/grasp_chance = 20
 	var/grasp_pull_chance = 85
 	var/grasp_range = 4
-
+	del_on_death = 1
 
 /mob/living/simple_animal/hostile/venus_human_trap/handle_automated_action()
 	if(..())
@@ -87,7 +87,7 @@
 
 		if(grasping.len < max_grasps)
 			for(var/mob/living/L in range(grasp_range,src))
-				if(L == src)
+				if(L == src || faction_check(L))
 					continue
 				if(!(L in grasping) && L != target && prob(grasp_chance))
 					L << "<span class='userdanger'>\the [src] has you entangled!</span>"
@@ -107,8 +107,3 @@
 	if(.)
 		if(the_target in grasping)
 			return 0
-
-
-
-/mob/living/simple_animal/hostile/venus_human_trap/death()
-	qdel(src)

@@ -1,7 +1,5 @@
 
 var/global/BSACooldown = 0
-var/global/floorIsLava = 0
-
 
 ////////////////////////////////
 /proc/message_admins(msg)
@@ -147,8 +145,8 @@ var/global/floorIsLava = 0
 			body += "<A href='?_src_=holder;simplemake=coffee;mob=\ref[M]'>Coffee</A> | "
 			//body += "<A href='?_src_=holder;simplemake=parrot;mob=\ref[M]'>Parrot</A> | "
 			//body += "<A href='?_src_=holder;simplemake=polyparrot;mob=\ref[M]'>Poly</A> | "
-			body += "\[ Construct: <A href='?_src_=holder;simplemake=constructarmored;mob=\ref[M]'>Armored</A> , "
-			body += "<A href='?_src_=holder;simplemake=constructbuilder;mob=\ref[M]'>Builder</A> , "
+			body += "\[ Construct: <A href='?_src_=holder;simplemake=constructarmored;mob=\ref[M]'>Juggernaut</A> , "
+			body += "<A href='?_src_=holder;simplemake=constructbuilder;mob=\ref[M]'>Artificer</A> , "
 			body += "<A href='?_src_=holder;simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \] "
 			body += "<A href='?_src_=holder;simplemake=shade;mob=\ref[M]'>Shade</A>"
 			body += "<br>"
@@ -381,7 +379,8 @@ var/global/floorIsLava = 0
 
 
 /datum/admins/proc/Game()
-	if(!check_rights(0))	return
+	if(!check_rights(0))
+		return
 
 	var/dat = {"
 		<center><B>Game Panel</B></center><hr>\n
@@ -398,7 +397,10 @@ var/global/floorIsLava = 0
 		<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>
 		"}
 
-	usr << browse(dat, "window=admin2;size=210x180")
+	if(marked_datum && istype(marked_datum, /atom))
+		dat += "<A href='?src=\ref[src];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
+
+	usr << browse(dat, "window=admin2;size=210x200")
 	return
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
@@ -438,7 +440,8 @@ var/global/floorIsLava = 0
 	set category = "Special Verbs"
 	set name = "Announce"
 	set desc="Announce your desires to the world"
-	if(!check_rights(0))	return
+	if(!check_rights(0))
+		return
 
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
 	if(message)
@@ -452,7 +455,8 @@ var/global/floorIsLava = 0
 	set category = "Special Verbs"
 	set name = "Set Admin Notice"
 	set desc ="Set an announcement that appears to everyone who joins the server. Only lasts this round"
-	if(!check_rights(0))	return
+	if(!check_rights(0))
+		return
 
 	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice) as message|null
 	if(new_admin_notice == null)
@@ -612,7 +616,8 @@ var/global/floorIsLava = 0
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
 
-	if(!check_rights(R_SPAWN))	return
+	if(!check_rights(R_SPAWN))
+		return
 
 	var/list/matches = get_fancy_list_of_types()
 	if (!isnull(object) && object!="")
