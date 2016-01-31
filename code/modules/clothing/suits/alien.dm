@@ -11,4 +11,4 @@
 	desc = "A rather grisly selection of cured hides and skin, sewn together to form a ragged mantle."
 	icon_state = "mantle-unathi"
 	item_state = "mantle-unathi"
-	body_parts_covered = CLOTHING_CROPTOP//Unathi clothing.
+	body_parts_covered = UPPER_TORSO//Unathi clothing.

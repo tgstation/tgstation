@@ -54,7 +54,7 @@
 	desc = "It's unspeakably stylish"
 	icon_state = "hasturhood"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_HOOD
+	body_parts_covered = EARS|HEAD
 
 /obj/item/clothing/head/nursehat
 	name = "nurse's hat"
@@ -69,7 +69,7 @@
 	item_state = "syndicate"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/cueball
@@ -77,7 +77,7 @@
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 	item_state="cueball"
 
 /obj/item/clothing/head/that
@@ -101,7 +101,7 @@
 	icon_state = "cardborg_h"
 	item_state = "cardborg_h"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 	starting_materials = list(MAT_CARDBOARD = 3750)
 	w_type=RECYK_MISC
 
@@ -111,7 +111,7 @@
 	icon_state = "justicered"
 	item_state = "justicered"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
@@ -226,7 +226,7 @@
 	icon_state = "witch"
 	item_state = "witch"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_HOOD
+	body_parts_covered = EARS|HEAD
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/chicken
@@ -235,7 +235,7 @@
 	icon_state = "chickenhead"
 	item_state = "chickensuit"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/bearpelt
@@ -244,7 +244,7 @@
 	icon_state = "bearpelt"
 	item_state = "bearpelt"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_HOOD
+	body_parts_covered = EARS|HEAD
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/bearpelt/real
@@ -257,7 +257,7 @@
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
 	flags = FPRINT
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/batman
@@ -266,7 +266,7 @@
 	icon_state = "bmhead"
 	item_state = "bmhead"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_HELMET
+	body_parts_covered = HEAD|EARS|EYES
 
 /obj/item/clothing/head/stalhelm
 	name = "Stalhelm"

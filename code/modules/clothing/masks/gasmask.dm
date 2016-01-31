@@ -11,7 +11,7 @@
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.9
 	species_fit = list("Vox")
-	body_parts_covered = CLOTHING_FULLMASK
+	body_parts_covered = FACE
 	var/stage = 0
 
 

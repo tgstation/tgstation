@@ -182,7 +182,7 @@
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
 	_color = "blackskirt"
-	body_parts_covered = CLOTHING_SHIRT
+	body_parts_covered = FULL_TORSO|ARMS
 
 /obj/item/clothing/under/schoolgirl
 	name = "schoolgirl uniform"
@@ -190,7 +190,7 @@
 	icon_state = "schoolgirl"
 	item_state = "schoolgirl"
 	_color = "schoolgirl"
-	body_parts_covered = CLOTHING_SHIRT
+	body_parts_covered = FULL_TORSO|ARMS
 
 /obj/item/clothing/under/overalls
 	name = "laborer's overalls"
@@ -247,7 +247,7 @@
 //dress
 
 /obj/item/clothing/under/dress
-	body_parts_covered = CLOTHING_SHIRT
+	body_parts_covered = FULL_TORSO|ARMS
 
 /obj/item/clothing/under/dress/dress_fire
 	name = "flame dress"
@@ -330,7 +330,7 @@
 //wedding stuff
 
 /obj/item/clothing/under/wedding
-	body_parts_covered = CLOTHING_ROBE
+	body_parts_covered = FULL_TORSO|LEGS|FEET|ARMS
 
 /obj/item/clothing/under/wedding/bride_orange
 	name = "orange wedding dress"
@@ -368,7 +368,7 @@
 	icon_state = "sundress"
 	item_state = "sundress"
 	_color = "sundress"
-	body_parts_covered = CLOTHING_VEST
+	body_parts_covered = FULL_TORSO
 
 /obj/item/clothing/under/roman
 	name = "roman armor"

@@ -18,7 +18,7 @@
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
-	body_parts_covered = CLOTHING_BODYSUIT
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/weapon/extinguisher)
 	slowdown = 1.0
 	flags = FPRINT  | ONESIZEFITSALL
@@ -64,7 +64,7 @@
 	icon_state = "bombsuit"
 	flags = FPRINT
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 	siemens_coefficient = 0
 	species_fit = list("Vox")
 
@@ -100,7 +100,7 @@
 	item_state = "advancedeod_helmet"
 	flags = FPRINT
 	armor = list(melee = 80, bullet = 80, laser = 40,energy = 20, bomb = 100, bio = 0, rad = 0)
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 	species_restricted = list("exclude","Vox")
 	siemens_coefficient = 0
 
@@ -114,7 +114,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags = FPRINT
-	body_parts_covered = CLOTHING_ROBE
+	body_parts_covered = FULL_TORSO|LEGS|FEET|ARMS
 	slowdown = 6
 	armor = list(melee = 80, bullet = 80, laser = 40,energy = 20, bomb = 100, bio = 0, rad = 0)
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
@@ -129,7 +129,7 @@
 	icon_state = "rad"
 	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_HOOD
+	body_parts_covered = EARS|HEAD
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
 	species_fit = list("Vox")
 

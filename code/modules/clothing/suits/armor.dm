@@ -1,7 +1,7 @@
 
 /obj/item/clothing/suit/armor
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_storage,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/gun/lawgiver)
-	body_parts_covered = CLOTHING_VEST
+	body_parts_covered = FULL_TORSO
 	flags = FPRINT
 	heat_conductivity = ARMOUR_HEAT_CONDUCTIVITY
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
@@ -35,7 +35,7 @@
 	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
 	icon_state = "riot"
 	item_state = "swat_suit"
-	body_parts_covered = CLOTHING_HARDSUIT|IGNORE_INV
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS|IGNORE_INV
 	slowdown = 1
 	armor = list(melee = 80, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.5
@@ -46,7 +46,7 @@
  	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
  	icon_state = "knight_green"
  	item_state = "knight_green"
- 	body_parts_covered = CLOTHING_HARDSUIT
+ 	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
  	slowdown = 1
  	armor = list(melee = 40, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
 
@@ -75,7 +75,7 @@
 	desc = "A suit of armor with heavy padding to protect against projectile and laser attacks. Distributed to shadow organization squaddies."
 	icon_state = "xcomarmor2"
 	item_state = "xcomarmor2"
-	body_parts_covered = CLOTHING_HARDSUIT
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 	armor = list(melee = 10, bullet = 50, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.5
 
@@ -91,7 +91,7 @@
 	desc = "A suit of armor with heavy plating to protect against melee attacks. Distributed to shadow organization squaddies."
 	icon_state = "xcomarmor1"
 	item_state = "xcomarmor1"
-	body_parts_covered = CLOTHING_HARDSUIT
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 	armor = list(melee = 50, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
 	slowdown = 1
 	siemens_coefficient = 0.5
@@ -207,7 +207,7 @@
 	icon_state = "centcom"
 	item_state = "centcom"
 	w_class = 4//bulky item
-	body_parts_covered = CLOTHING_HARDSUIT
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen)
 	heat_conductivity = INS_ARMOUR_HEAT_CONDUCTIVITY
 	siemens_coefficient = 0
@@ -219,12 +219,12 @@
 	item_state = "swat_suit"
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.90
-	body_parts_covered = CLOTHING_HARDSUIT
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 	slowdown = 3
 	siemens_coefficient = 0
 
 /obj/item/clothing/suit/armor/tdome
-	body_parts_covered = CLOTHING_HARDSUIT
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 
 /obj/item/clothing/suit/armor/tdome/red
 	name = "Thunderdome suit (red)"
@@ -252,7 +252,7 @@
 	desc = "Found abandoned on an ancient space colony!"
 	icon_state = "volnutt"
 	item_state = "volnutt"
-	body_parts_covered = CLOTHING_HARDSUIT
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 	heat_conductivity = ARMOUR_HEAT_CONDUCTIVITY
 	slowdown = 0
 	armor = list(melee = 50, bullet = 40, laser = 40, energy = 40, bomb = 40, bio = 0, rad = 0)
@@ -262,7 +262,7 @@
 	desc = ""
 	icon_state = "doom"
 	item_state = "doom"
-	body_parts_covered = CLOTHING_VEST
+	body_parts_covered = FULL_TORSO
 	heat_conductivity = INS_ARMOUR_HEAT_CONDUCTIVITY
 	slowdown = 0
 	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 30, bio = 0, rad = 0)

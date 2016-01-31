@@ -1119,7 +1119,7 @@ proc/is_slot_hidden(var/clothes, var/slot = -1,var/ignore_slot = 0)
 	if(slot == -1)
 		slot = true_body_parts_covered
 	if(true_body_parts_covered & IGNORE_INV)
-		true_body_parts_covered = CLOTHING_NOTHING
+		true_body_parts_covered = 0
 	if(true_body_parts_covered & ignore_slot)
 		true_body_parts_covered ^= ignore_slot
 	if((true_body_parts_covered & slot) == slot)

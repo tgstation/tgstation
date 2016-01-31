@@ -4,7 +4,7 @@
 	icon_state = "balaclava"
 	item_state = "balaclava"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_BALACLAVA
+	body_parts_covered = MOUTH|EARS|HEAD|BEARD
 	w_class = 2
 	species_fit = list("Vox")
 
@@ -14,7 +14,7 @@
 	icon_state = "luchag"
 	item_state = "luchag"
 	flags = FPRINT|MASKINTERNALS
-	body_parts_covered = CLOTHING_HELMET
+	body_parts_covered = HEAD|EARS|EYES
 	w_class = 2
 	siemens_coefficient = 3.0
 	species_fit = list("Vox")

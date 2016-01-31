@@ -82,7 +82,7 @@
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
 	w_class = 2.0
-	body_parts_covered = CLOTHING_GLASSES
+	body_parts_covered = EYES
 	slot_flags = SLOT_EYES
 	var/vision_flags = 0
 	var/darkness_view = 0//Base human is 2
@@ -120,7 +120,7 @@ BLIND     // can't see anything
 	var/wired = 0
 	var/obj/item/weapon/cell/cell = 0
 	var/clipped = 0
-	body_parts_covered = CLOTHING_GLOVES
+	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
 	species_restricted = list("exclude","Unathi","Tajaran","Muton")
@@ -149,7 +149,7 @@ BLIND     // can't see anything
 /obj/item/clothing/head
 	name = "head"
 	icon = 'icons/obj/clothing/hats.dmi'
-	body_parts_covered = CLOTHING_HAT
+	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
 	species_restricted = list("exclude","Muton")
 
@@ -157,7 +157,7 @@ BLIND     // can't see anything
 /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/obj/clothing/masks.dmi'
-	body_parts_covered = CLOTHING_HALFMASK
+	body_parts_covered = MOUTH
 	slot_flags = SLOT_MASK
 	species_restricted = list("exclude","Muton")
 	var/can_flip = null
@@ -211,7 +211,7 @@ BLIND     // can't see anything
 	var/chained = 0
 	var/chaintype = null // Type of chain.
 	siemens_coefficient = 0.9
-	body_parts_covered = CLOTHING_SHOES
+	body_parts_covered = FEET
 	slot_flags = SLOT_FEET
 	heat_conductivity = SHOE_HEAT_CONDUCTIVITY
 	permeability_coefficient = 0.50
@@ -232,7 +232,7 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	slot_flags = SLOT_OCLOTHING
 	heat_conductivity = ARMOUR_HEAT_CONDUCTIVITY
-	body_parts_covered = CLOTHING_SUIT
+	body_parts_covered = ARMS|LEGS|FULL_TORSO
 	var/blood_overlay_type = "suit"
 	species_restricted = list("exclude","Muton")
 	siemens_coefficient = 0.9
@@ -249,7 +249,7 @@ BLIND     // can't see anything
 	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 	siemens_coefficient = 0.9
 	heat_conductivity = INS_HELMET_HEAT_CONDUCTIVITY
 	species_restricted = list("exclude","Diona","Muton")
@@ -266,7 +266,7 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.02
 	flags = FPRINT
 	pressure_resistance = 5 * ONE_ATMOSPHERE
-	body_parts_covered = CLOTHING_HARDSUIT
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen)
 	slowdown = 3
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
@@ -278,7 +278,7 @@ BLIND     // can't see anything
 /obj/item/clothing/under
 	icon = 'icons/obj/clothing/uniforms.dmi'
 	name = "under"
-	body_parts_covered = CLOTHING_JUMPSUIT
+	body_parts_covered = ARMS|LEGS|FULL_TORSO
 	permeability_coefficient = 0.90
 	flags = FPRINT
 	slot_flags = SLOT_ICLOTHING

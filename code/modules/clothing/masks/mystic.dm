@@ -4,7 +4,7 @@
 	icon_state = "happiest"
 	item_state = "happiest"
 	flags = FPRINT|MASKINTERNALS
-	body_parts_covered = CLOTHING_FULLMASK
+	body_parts_covered = FACE
 	w_class = 2
 	siemens_coefficient = 3.0
 	gas_transfer_coefficient = 0.90

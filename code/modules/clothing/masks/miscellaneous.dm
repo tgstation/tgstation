@@ -35,7 +35,7 @@
 	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_FULLMASK //totally intentional
+	body_parts_covered = FACE //totally intentional
 
 //scarves (fit in in mask slot)
 /obj/item/clothing/mask/scarf
@@ -73,7 +73,7 @@
 	icon_state = "pig"
 	item_state = "pig"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_FULLMASK
+	body_parts_covered = FACE
 	w_class = 2
 	siemens_coefficient = 0.9
 
@@ -83,7 +83,7 @@
 	icon_state = "horsehead"
 	item_state = "horsehead"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_FULLMASK
+	body_parts_covered = FACE
 	w_class = 2
 	var/voicechange = 0
 	siemens_coefficient = 0.9
@@ -98,7 +98,7 @@
 	icon_state = "chapmask"
 	item_state = "chapmask"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_FULLMASK
+	body_parts_covered = FACE
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 

@@ -1,11 +1,11 @@
 author: DrCelt
 changes: 
   - rscadd: Merged flags_inv and body_parts_covered
-  - rscadd: Made a bunch of body_parts_covered defines in setup.dm, replaced all instances of body_parts_covered being snowflakey except one, because gladiator outfits are really strange
-  - rscadd: This means that from now on, it should be far easier to add items as there is no longer a concern about getting either variable above correct, and one can simply reference setup.dm to find an appropriate define
-  - bugfix: fixed clothing being contaminated undesirably
-  - bugfix: fixes a bunch of unreported bugs due to the nature of the PR varying from the HoP jacket the riot suit and the stallhelm. If there is a bug where a sprite was overriding where it should not have this SHOULD fix that
-  - experimental: this SHOULD also prevent that type of bug ever happening again.
-  - rscadd: adds is_slot_hidden proc
-  - tweak: splits head thermal conductivity into three parts
-  - bugfix: fixed a bug where agent gas masks would conceal identities when they should not have.
+  - bugfix: Fixed clothing being contaminated undesirably
+  - bugfix: Fixes a bunch of unreported bugs due to the nature of the PR varying from the HoP jacket the riot suit and the stallhelm. If there is a bug where a sprite was overriding where it should not have this SHOULD fix that
+  - experimental: This SHOULD also prevent that type of bug ever happening again. Please bugreport if you notice any sprite errors
+  - rscadd: Adds is_slot_hidden proc
+  - tweak: Splits head thermal conductivity into three parts
+  - bugfix: Fixed a bug where agent gas masks would conceal identities when their mask should not have.
+  - bugfix: Fixed a bug where bloody hands were always visible on examine 
+  - tweak: You now lose heat to an environment if you have an exposed limb, no matter how wrapped up the other limbs are.

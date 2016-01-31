@@ -101,7 +101,7 @@
 		return
 	var/ignore_slot
 	for(var/obj/item/equipped in items)
-		ignore_slot = (equipped == wear_mask) ? MOUTH : CLOTHING_NOTHING
+		ignore_slot = (equipped == wear_mask) ? MOUTH : 0
 		if(!equipped)
 			continue
 		else if(is_slot_hidden(equipped.body_parts_covered,hidden_flags,ignore_slot))

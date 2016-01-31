@@ -22,7 +22,7 @@
 	var/up = 0
 	eyeprot = 3
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	body_parts_covered = CLOTHING_FULLMASK
+	body_parts_covered = FACE
 	action_button_name = "Toggle Welding Helmet"
 	siemens_coefficient = 0.9
 	species_fit = list("Vox")
@@ -39,13 +39,13 @@
 	if(!usr.incapacitated())
 		if(src.up)
 			src.up = !src.up
-			src.body_parts_covered |= CLOTHING_FULLMASK
+			src.body_parts_covered |= FACE
 			eyeprot = 3
 			icon_state = initial(icon_state)
 			to_chat(usr, "You flip the [src] down to protect your eyes.")
 		else
 			src.up = !src.up
-			src.body_parts_covered = CLOTHING_HAT
+			src.body_parts_covered = HEAD
 			icon_state = "[initial(icon_state)]up"
 			eyeprot = 0
 			to_chat(usr, "You push the [src] up out of your face.")
@@ -63,7 +63,7 @@
 	desc = "It's tasty looking!"
 	icon_state = "cake0"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_SOMBRERO
+	body_parts_covered = HEAD|EYES
 	light_power = 0.5
 	var/onfire = 0.0
 	var/status = 0
@@ -112,19 +112,19 @@
 	desc = "Perfect for winter in Siberia, da?"
 	icon_state = "ushankadown"
 	item_state = "ushankadown"
-	body_parts_covered = CLOTHING_HOOD
+	body_parts_covered = EARS|HEAD
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
 	if(src.icon_state == "ushankadown")
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"
-		body_parts_covered = CLOTHING_HAT
+		body_parts_covered = HEAD
 		to_chat(user, "You raise the ear flaps on the ushanka.")
 	else
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
 		to_chat(user, "You lower the ear flaps on the ushanka.")
-		body_parts_covered = CLOTHING_HOOD
+		body_parts_covered = EARS|HEAD
 
 /*
  * Pumpkin head
@@ -136,7 +136,7 @@
 	item_state = "hardhat0_pumpkin"
 	_color = "pumpkin"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 	var/brightness_on = 2 //luminosity when on
 	var/on = 0
 

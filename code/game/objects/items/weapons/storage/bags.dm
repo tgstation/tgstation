@@ -65,7 +65,7 @@
 	storage_slots = 21
 	can_hold = list() // any
 	cant_hold = list("/obj/item/weapon/disk/nuclear")
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 	slot_flags = SLOT_BELT | SLOT_HEAD
 	flags = FPRINT | BLOCK_BREATHING | BLOCK_GAS_SMOKE_EFFECT
 

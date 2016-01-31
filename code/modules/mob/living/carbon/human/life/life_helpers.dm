@@ -50,13 +50,26 @@
 
 	return thermal_protection_flags
 
-/mob/living/carbon/human/proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
-	var/thermal_protection_flags = get_heat_protection_flags(temperature)
+/mob/living/carbon/human/proc/get_thermal_protection_flags()
+	var/thermal_protection_flags = 0
+	if(head)
+		thermal_protection_flags |= head.body_parts_covered
+	if(wear_suit)
+		thermal_protection_flags |= wear_suit.body_parts_covered
+	if(w_uniform)
+		thermal_protection_flags |= w_uniform.body_parts_covered
+	if(shoes)
+		thermal_protection_flags |= shoes.body_parts_covered
+	if(gloves)
+		thermal_protection_flags |= gloves.body_parts_covered
+	if(wear_mask)
+		thermal_protection_flags |= wear_mask.body_parts_covered
+
+	return thermal_protection_flags
+
+/mob/living/carbon/human/proc/get_thermal_protection(var/thermal_protection_flags) //Temperature is the temperature you're being exposed to.
 
 	var/thermal_protection = 0.0
-
-	if(M_RESIST_HEAT in mutations)
-		return 1
 
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
@@ -84,6 +97,10 @@
 
 	return min(1, thermal_protection)
 
+/mob/living/carbon/human/proc/get_heat_protection(var/thermal_protection_flags) //Temperature is the temperature you're being exposed to.
+	if(M_RESIST_HEAT in mutations)
+		return 1
+	return get_thermal_protection(thermal_protection_flags)
 
 /mob/living/carbon/human/proc/get_cold_protection()
 
@@ -105,7 +122,9 @@
 	if(wear_mask)
 		thermal_protection += wear_mask.return_thermal_protection()
 
-	return min(1,thermal_protection)
+	var/max_protection = get_thermal_protection(get_thermal_protection_flags())
+	return min(thermal_protection,max_protection)
+
 
 /*
 /mob/living/carbon/human/proc/add_fire_protection(var/temp)

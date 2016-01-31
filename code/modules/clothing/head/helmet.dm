@@ -5,7 +5,7 @@
 	flags = FPRINT
 	item_state = "helmet"
 	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
-	body_parts_covered = CLOTHING_HELMET
+	body_parts_covered = HEAD|EARS|EYES
 	heat_conductivity = HELMET_HEAT_CONDUCTIVITY
 	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.7
@@ -14,7 +14,7 @@
 	name = "warden's hat"
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
 	icon_state = "policehelm"
-	body_parts_covered = CLOTHING_HAT
+	body_parts_covered = HEAD
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -83,7 +83,7 @@
 	armor = list(melee = 25, bullet = 0, laser = 15, energy = 10, bomb = 5, bio = 0, rad = 0)
 	item_state = "hopcap"
 	icon_state = "hopcap"
-	body_parts_covered = CLOTHING_HAT
+	body_parts_covered = HEAD
 
 /obj/item/clothing/head/helmet/aviatorhelmet
 	name = "Aviator Helmet"
@@ -104,14 +104,14 @@
 	desc = "This helmet should protect you from russians and masked vigilantes."
 	armor = list(melee = 25, bullet = 15, laser = 20, energy = 10, bomb = 10, bio = 0, rad = 0)
 	icon_state = "biker_helmet"
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 
 /obj/item/clothing/head/helmet/richard
 	name = "Richard"
 	desc = "Do you like hurting people?"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	icon_state = "richard"
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 
 /obj/item/clothing/head/helmet/megahelmet
 	name = "DRN-001 Helmet"
@@ -134,7 +134,7 @@
 	desc = "The product of twelve years of work by an eccentric and brilliant loner. A helmet belonging to the perfect man; an unbeatable machine."
 	icon_state = "breakhelmet"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 	item_state = "breakhelmet"
 	siemens_coefficient = 1
 
@@ -160,7 +160,7 @@
 	desc = "Helmet belonging to one of the many mass produced 'Joe' type robots."
 	icon_state = "joehelmet"
 	flags = FPRINT
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 	item_state = "joehelmet"
 	siemens_coefficient = 1
 
@@ -178,7 +178,7 @@
 	desc = "A classic metal helmet."
 	icon_state = "knight_green"
 	item_state = "knight_green"
-	body_parts_covered = CLOTHING_FULLHELMET
+	body_parts_covered = FULL_HEAD
 	armor = list(melee = 20, bullet = 5, laser = 2,energy = 2, bomb = 2, bio = 2, rad = 0)
 	flags = FPRINT
 	siemens_coefficient = 1
