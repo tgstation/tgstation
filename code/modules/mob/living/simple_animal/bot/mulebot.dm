@@ -120,13 +120,6 @@ var/global/mulebot_count = 0
 	if(!open)
 		locked = !locked
 		user << "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>"
-	else if(emagged < 2)
-		emagged = 2
-		if(!wires.is_cut(WIRE_AVOIDANCE))
-			wires.cut(WIRE_AVOIDANCE)
-		user << "<span class='warning'>You awaken [src]'s thirst for blood!</span>"
-		src << "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>"
-		add_logs(user, src, "emagged")
 	flick("mulebot-emagged", src)
 	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
 
@@ -262,10 +255,7 @@ var/global/mulebot_count = 0
 		if("report")
 			report_delivery = !report_delivery
 		if("ejectpai")
-			if(bot_core.allowed(user) && paicard)
-				speak("Ejecting personality chip.", radio_channel)
-				ejectpai(user)
-			return
+			ejectpairemote(user)
 
 // TODO: remove this; PDAs currently depend on it
 /mob/living/simple_animal/bot/mulebot/get_controls(mob/user)
@@ -659,7 +649,7 @@ var/global/mulebot_count = 0
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
-	if(client && emagged < 2)
+	if(client)
 		return
 
 	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")

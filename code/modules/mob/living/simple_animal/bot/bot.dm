@@ -263,13 +263,11 @@
 		if(open)
 			user << "<span class='warning'>Close the access panel before manipulating the personality slot!</span>"
 		else
-			var/T = user.loc
 			user << "<span class='notice'>You attempt to pull [paicard] free...</span>"
 			if(do_after(user, 30, target = src))
-				if(istype(src, /mob/living/simple_animal/bot) && user && W && T)
-					if(user.get_active_hand() == W && user.loc == T) //The insanity of sanity checks, folks.
-						user.visible_message("[user] uses [W] to pull [paicard] out of [bot_name]!","<span class='notice'>You pull [paicard] out of [bot_name] with [W].</span>")
-						ejectpai(user)
+				if (paicard)
+					user.visible_message("<span class='notice'>[user] uses [W] to pull [paicard] out of [bot_name]!</span>","<span class='notice'>You pull [paicard] out of [bot_name] with [W].</span>")
+					ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
@@ -624,11 +622,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if("patroloff")
 			bot_reset() //HOLD IT!!
 			auto_patrol = 0
-			return
 
 		if("patrolon")
 			auto_patrol = 1
-			return
 
 		if("summon")
 			bot_reset()
@@ -638,13 +634,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 			mode = BOT_SUMMON
 			speak("Responding.", radio_channel)
 			calc_summon_path()
-			return
 
 		if("ejectpai")
-			if(bot_core.allowed(user) && paicard)
-				speak("Ejecting personality chip.", radio_channel)
-				ejectpai(user)
-			return
+			ejectpairemote(user)
 	return
 
 //
@@ -865,6 +857,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 			paicard.pai << "<span class='notice'>You feel your control fade as [paicard] ejects from [bot_name].</span>"
 		paicard = null
 		name = bot_name
+
+/mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
+	if(bot_core.allowed(user) && paicard)
+		speak("Ejecting personality chip.", radio_channel)
+		ejectpai(user)
 
 /mob/living/simple_animal/bot/Login()
 	. = ..()
