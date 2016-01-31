@@ -1258,6 +1258,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 	character.name = character.real_name
 	if(character.dna)
 		character.dna.real_name = character.real_name
+		character.dna.b_type = b_type
 
 	character.flavor_text = flavor_text
 	character.med_record = med_record
@@ -1266,7 +1267,6 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 
 	character.setGender(gender)
 	character.age = age
-	character.b_type = b_type
 
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes
