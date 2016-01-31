@@ -218,14 +218,17 @@
 	var/datum/mind/M = usr.mind
 	if(!M) return
 	if(M.current.vampire_power(0, 1))
+		if(istype(M.current:glasses, /obj/item/clothing/glasses/sunglasses/blindfold))
+			to_chat(M.current, "<span class='warning'>You're blindfolded!</span>")
+			return
+		if(M.current.stat)
+			to_chat(M.current, "<span class='warning'>You're incapacitated, you can't do that right now!</span>")
+			return
 		M.current.visible_message("<span class='danger'>[M.current.name]'s eyes emit a blinding flash!</span>")
 		//M.vampire.bloodusable -= 10
 		M.current.verbs -= /client/proc/vampire_glare
 		spawn(300)
 			M.current.verbs += /client/proc/vampire_glare
-		if(istype(M.current:glasses, /obj/item/clothing/glasses/sunglasses/blindfold))
-			to_chat(M.current, "<span class='warning'>You're blindfolded!</span>")
-			return
 		var/list/close_mobs = list()
 		var/list/dist_mobs = list()
 		for(var/mob/living/carbon/C in view(1))
