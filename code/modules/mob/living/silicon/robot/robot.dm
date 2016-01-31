@@ -5,6 +5,8 @@
 	icon_state = "robot"
 	maxHealth = 100
 	health = 100
+	macro_default = "robot-default"
+	macro_hotkeys = "robot-hotkeys"
 	bubble_icon = "robot"
 	var/sight_mode = 0
 	var/custom_name = ""
