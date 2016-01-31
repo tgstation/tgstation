@@ -232,6 +232,7 @@
 #include "code\datums\diseases\advance\symptoms\itching.dm"
 #include "code\datums\diseases\advance\symptoms\kilkofhemorrhage.dm"
 #include "code\datums\diseases\advance\symptoms\lesserzombie.dm"
+#include "code\datums\diseases\advance\symptoms\lizarditis.dm"
 #include "code\datums\diseases\advance\symptoms\oxygen.dm"
 #include "code\datums\diseases\advance\symptoms\scalerot.dm"
 #include "code\datums\diseases\advance\symptoms\sensory_restoration.dm"
