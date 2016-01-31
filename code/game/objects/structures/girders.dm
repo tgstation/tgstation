@@ -2,7 +2,6 @@
 	icon_state = "girder"
 	anchored = 1
 	density = 1
-	layer = 2
 	var/state = 0
 	var/material = /obj/item/stack/sheet/metal
 
