@@ -39,6 +39,7 @@
 	client.reset_screen()				//remove hud items just in case
 	hud_used = new /datum/hud(src)
 	gui_icons = new /datum/ui_icons(src)
+	client.screen += catcher //Catcher of clicks
 
 	if(round_end_info == "")
 		winset(client, "rpane.round_end", "is-visible=false")
