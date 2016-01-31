@@ -230,11 +230,15 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
 		P.resulting_poster = src
 		P.loc = location
+		P.pixel_x = 0
+		P.pixel_y = 0
 		loc = P
 	else
 		var/obj/item/weapon/poster/legit/P = new(src, serial_number)
 		P.resulting_poster = src
 		P.loc = location
+		P.pixel_x = 0
+		P.pixel_y = 0
 		loc = P
 
 
