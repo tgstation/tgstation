@@ -42,7 +42,7 @@
 /obj/item/weapon/twohanded/required/ctf/attack_hand(mob/living/user)
 	if (!user)
 		return
-	if(user.faction == team)
+	if(team in user.faction)
 		user << "You can't move your own flag!"
 		return
 	if(loc == user)
@@ -161,7 +161,7 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(src))
 	new_team_member.prefs.copy_to(M)
 	M.key = new_team_member.key
-	M.faction = team
+	M.faction += team
 	M.equipOutfit(ctf_gear)
 
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
@@ -252,7 +252,7 @@
 	return
 
 /obj/structure/divine/trap/ctf/trap_effect(mob/living/L)
-	if(L.faction != src.team)
+	if(!(src.team in L.faction))
 		L << "<span class='danger'><B>Stay out of the enemy spawn!</B></span>"
 		L.dust()
 
@@ -330,7 +330,7 @@
 /obj/machinery/control_point/proc/capture(mob/user)
 	if(do_after(user, 30, target = src))
 		for(var/obj/machinery/capture_the_flag/CTF in machines)
-			if(CTF.ctf_enabled && user.faction == CTF.team)
+			if(CTF.ctf_enabled && user.ckey in CTF.team_members)
 				controlling = CTF
 				icon_state = "dominator-[CTF.team]"
 				break
