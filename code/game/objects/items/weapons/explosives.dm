@@ -69,10 +69,16 @@
 /obj/item/weapon/c4/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
 		return
-	if (ismob(AM) || istype(AM, /obj/item/weapon/storage/))
+	if (ismob(AM))
 		return
 	if(loc == AM)
 		return
+	if((istype(AM, /obj/item/weapon/storage/)) && (!istype(AM, /obj/item/weapon/storage/secure))) //secure storage is a special case handled below.
+		return
+	if(istype(AM,/obj/item/weapon/storage/secure))
+		var/obj/item/weapon/storage/secure/S = AM
+		if(!S.locked)
+			return
 
 	user << "<span class='notice'>You start planting the bomb...</span>"
 
