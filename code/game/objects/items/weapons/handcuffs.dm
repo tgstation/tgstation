@@ -123,9 +123,13 @@
 
 /obj/item/weapon/restraints/handcuffs/fake
 	name = "fake handcuffs"
-	desc = "Fake handcuffs for 'gag' purposes."
-	icon_state = "handcuffGag"
+	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 10 //Deciseconds = 1s
+
+/obj/item/weapon/restraints/handcuffs/fake/kinky
+	name = "kinky handcuffs"
+	desc = "Fake handcuffs meant for 'Gag' purposes."
+	icon_state = "handcuffGag"
 
 /obj/item/weapon/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()
