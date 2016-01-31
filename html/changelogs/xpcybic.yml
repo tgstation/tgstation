@@ -2,14 +2,12 @@ author: xpcybic
 delete-after: True
 
 changes:
-  - rscadd: (Taxi) Added spawn points for bluespace rifts.
-  - rscadd: (Meta) Added a lightswitch to medbay breakroom.
-  - tweak: (Meta) Cryo freezer is now off at round start.
-  - bugfix: (Meta) Fixed xenobio blast doors being transparent.
-  - tweak: (Meta) Added a delivery windoor to bridge MULEbot dropoff. Rearranged nearby objects to make room.
-  - bugfix: (Meta) Fixed access requirement on telescience privacy shutters.
-  - tweak: (Taxi) Chef, bartender, and botanists now have access to each other's departments.
-  - rscadd: (Taxi) Added emergency shutters in dorms and security.
-  - tweak: (Taxi) Added missing window panes in med/silicon minibridge and brig.
-  - rscadd: (Taxi) Added magboots to xenoarch.
-  - rscadd: (Taxi) Added all-in-one grinder to hydroponics backroom.
+  - tweak: Cameras at each taxi dock will now appear first in the security and AI camera list.
+  - bugfix: Fixed access on bar maintenance.
+  - bugfix: Fixed floating, broken APC in solars near cargo.
+  - bugfix: Fixed emergency shuttle brig not counting against the "escape alive and free" objective.
+  - bugfix: Fixed many, many cases of airless plating where there should be air - and some normal plating where there should be airless.
+  - bugfix: Fixed barricade walls on derelict where there should be window barricades.
+  - bugfix: Scientists now properly have access to xenoarch wing and research shuttle.
+  - bugfix: Fixed cabling on antimatter engine SMES.
+  - bugfix: Fixed med/silicon dock APC not being wired to grid.
