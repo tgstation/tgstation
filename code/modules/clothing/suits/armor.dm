@@ -239,6 +239,36 @@
 			M.adjustFireLoss(25)
 			playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		return 1
+
+/obj/item/clothing/suit/armor/reactive/pox/first
+	name = "pox"
+	desc = "Your body is covered in a painful pox. It is too painful to wear anything."
+	icon_state = "null"
+	flags = ABSTRACT | NODROP
+	unacidable = 1
+	hit_reaction_chance = 55
+
+/obj/item/clothing/suit/armor/reactive/pox/first/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	active = 1
+	if(prob(hit_reaction_chance))
+		owner.visible_message("<span class='danger'>[src]'s pox painfully brusts after contact from [attack_text]!</span>")
+		owner.adjustBruteLoss(10)
+		return 1
+
+/obj/item/clothing/suit/armor/reactive/pox/last
+	name = "pox"
+	desc = "Your body is covered in a painful pox. It is too painful to wear anything."
+	icon_state = "null"
+	flags = ABSTRACT | NODROP
+	unacidable = 1
+	hit_reaction_chance = 100
+
+/obj/item/clothing/suit/armor/reactive/pox/last/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	active = 1
+	if(prob(hit_reaction_chance))
+		owner.visible_message("<span class='danger'>[src]'s pox painfully brusts after contact from [attack_text]!</span>")
+		owner.adjustBruteLoss(20)
+		return 1
 //All of the armor below is mostly unused
 
 
