@@ -62,7 +62,10 @@
 		var/mob/living/carbon/human/M = location
 		if(M.l_hand == src || M.r_hand == src || M.head == src)
 			location = M.loc
-
+		for(var/datum/disease/A in M.viruses)
+			if(istype(A, /datum/disease/transformation/cake/))
+				return
+		M.ForceContractDisease(new /datum/disease/transformation/cake)
 	if (istype(location, /turf))
 		location.hotspot_expose(700, 1)
 
