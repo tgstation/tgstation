@@ -4,20 +4,22 @@
 	weight = 10
 
 /datum/round_event/portal_storm/syndicate_shocktroop
-	boss_type = /mob/living/simple_animal/hostile/syndicate/mecha_pilot //DEATH
-	hostile_type = /mob/living/simple_animal/hostile/syndicate/ranged/space
-	hostiles_number = 50
+	boss_types = list(/mob/living/simple_animal/hostile/syndicate/mecha_pilot = 1)
+	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space = 7,\
+						/mob/living/simple_animal/hostile/syndicate/ranged/space = 3)
 
 /datum/round_event/portal_storm
 	startWhen = 7
 	endWhen = 999
 	announceWhen = 1
 
-	var/turf/boss_spawn
-	var/boss_type
+	var/list/boss_spawn = list()
+	var/list/boss_types = list() //only configure this if you have hostiles
+	var/number_of_bosses
+	var/next_boss_spawn
 	var/list/hostiles_spawn = list()
-	var/hostile_type
-	var/hostiles_number = 0
+	var/list/hostile_types = list()
+	var/number_of_hostiles
 	var/list/station_areas = list()
 	var/image/storm
 
@@ -26,18 +28,29 @@
 
 	station_areas = get_areas_in_z(ZLEVEL_STATION)
 
-	if(boss_type)
-		boss_spawn = get_turf(safepick(generic_event_spawns))
-		if(!boss_spawn)
-			boss_spawn = safepick(get_area_turfs(safepick(station_areas)))
+	number_of_bosses = 0
+	for(var/boss in boss_types)
+		number_of_bosses += boss_types[boss]
 
-	if(hostile_type)
-		var/list/possible_spawns = generic_event_spawns.Copy()
-		while(hostiles_number > hostiles_spawn.len)
-			var/turf/T = get_turf(pick_n_take(possible_spawns))
-			if(!T)
-				T = safepick(get_area_turfs(safepick(station_areas)))
-			hostiles_spawn += T
+	number_of_hostiles = 0
+	for(var/hostile in hostile_types)
+		number_of_hostiles += hostile_types[hostile]
+
+	var/list/b_spawns = generic_event_spawns.Copy()
+	while(number_of_bosses > boss_spawn.len)
+		var/turf/F = pick_n_take(b_spawns)
+		if(!F)
+			F = safepick(get_area_turfs(pick(station_areas)))
+		boss_spawn += F
+
+	var/list/h_spawns = generic_event_spawns.Copy()
+	while(number_of_hostiles > hostiles_spawn.len)
+		var/turf/T = pick_n_take(h_spawns)
+		if(!T)
+			T = safepick(get_area_turfs(pick(station_areas)))
+		hostiles_spawn += T
+
+	next_boss_spawn = startWhen + Ceiling(2 * number_of_hostiles / number_of_bosses)
 
 /datum/round_event/portal_storm/announce()
 	set waitfor = 0
@@ -49,30 +62,60 @@
 
 /datum/round_event/portal_storm/tick()
 	spawn_effects()
-	if(IsMultiple(activeFor, 2))
-		spawn_mob()
-		if(!hostiles_spawn.len)
-			spawn_mob(1)
-			endWhen = activeFor
 
-/datum/round_event/portal_storm/proc/spawn_mob(boss=0)
-	if(boss)
-		if(boss_type && boss_spawn)
-			spawn_effects(boss_spawn)
-			new boss_type(boss_spawn)
-	else
-		var/turf/T = pick_n_take(hostiles_spawn)
-		if(hostile_type && T)
-			spawn_effects(T)
-			new hostile_type(T)
+	if(spawn_hostile())
+		var/type = safepick(hostile_types)
+		hostile_types[type] = hostile_types[type] - 1
+		spawn_mob(type, hostiles_spawn)
+		if(!hostile_types[type])
+			hostile_types -= type
+
+	if(spawn_boss())
+		var/type = safepick(boss_types)
+		boss_types[type] = boss_types[type] - 1
+		spawn_mob(type, boss_spawn)
+		if(!boss_types[type])
+			boss_types -= type
+
+	time_to_end()
+
+/datum/round_event/portal_storm/proc/spawn_mob(type, spawn_list)
+	if(!type)
+		return
+	var/turf/T = pick_n_take(spawn_list)
+	if(!T)
+		return
+	new type(T)
+	spawn_effects(T)
 
 /datum/round_event/portal_storm/proc/spawn_effects(turf/T)
 	if(T)
-		flick_overlay_better(storm, T, 15)
+		T = get_step(T, SOUTHWEST) //align center of image with turf
+		flick_overlay_static(storm, T, 15)
 		playsound(T, 'sound/magic/lightningbolt.ogg', 100, 1)
 	else
 		for(var/V in station_areas)
 			var/area/A = V
 			var/turf/F = get_turf(pick(A.contents))
-			flick_overlay_better(storm, F, 15)
+			flick_overlay_static(storm, F, 15)
 			playsound(F, 'sound/magic/lightningbolt.ogg', 100, 1)
+
+/datum/round_event/portal_storm/proc/spawn_hostile()
+	if(!hostile_types || !hostile_types.len)
+		return 0
+	return IsMultiple(activeFor, 2)
+
+/datum/round_event/portal_storm/proc/spawn_boss()
+	if(!boss_types || !boss_types.len)
+		return 0
+
+	if(activeFor == next_boss_spawn)
+		next_boss_spawn += Ceiling(number_of_hostiles / number_of_bosses)
+		return 1
+
+/datum/round_event/portal_storm/proc/time_to_end()
+	if(!hostile_types.len && !boss_types.len)
+		endWhen = activeFor
+
+	if(!number_of_hostiles && number_of_bosses)
+		endWhen = activeFor

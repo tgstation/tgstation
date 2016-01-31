@@ -1215,7 +1215,7 @@ B --><-- A
 		F.proximity_checkers |= checker
 	return 1
 
-/proc/flick_overlay_better(image/I, atom/A, duration) //todo :^) change flick_overlay() to this
+/proc/flick_overlay_static(image/I, atom/A, duration)
 	set waitfor = 0
 	if(!A || !I)
 		return
