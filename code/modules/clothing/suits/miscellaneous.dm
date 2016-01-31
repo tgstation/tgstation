@@ -507,6 +507,7 @@
 	item_state = "cjumper-green"
 
 /obj/item/clothing/suit/spaceblanket
+	w_class = 2
 	icon_state = "shittyuglyawfulBADblanket"
 	name = "space blanket"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
