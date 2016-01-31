@@ -1938,37 +1938,50 @@
 			M.stuttering = 20
 
 	else if(href_list["CentcommReply"])
-		var/mob/living/carbon/human/H = locate(href_list["CentcommReply"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
-			return
-		if(!istype(H.ears, /obj/item/device/radio/headset))
-			to_chat(usr, "The person you are trying to contact is not wearing a headset")
+		var/mob/M = locate(href_list["CentcommReply"])
+		var/receive_type
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(!istype(H.ears, /obj/item/device/radio/headset))
+				to_chat(usr, "The person you are trying to contact is not wearing a headset")
+				return
+			receive_type = "headset"
+		else if(istype(M, /mob/living/silicon))
+			receive_type = "official communication channel"
+		if(!receive_type)
+			to_chat(usr, "This mob type cannot be replied to")
 			return
 
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcomm", "")
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their [receive_type].","Outgoing message from The Syndicate", "")
 		if(!input)	return
 
-		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
-		log_admin("[src.owner] replied to [key_name(H)]'s Centcomm message with the message [input].")
-		message_admins("[src.owner] replied to [key_name(H)]'s Centcom message with: \"[input]\"")
-		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. <b>\"[input]\"</b>  Message ends.\"")
+		to_chat(src.owner, "You sent [input] to [M] via a secure channel.")
+		log_admin("[src.owner] replied to [key_name(M)]'s Centcomm message with the message [input].")
+		message_admins("[src.owner] replied to [key_name(M)]'s Centcom message with: \"[input]\"")
+		to_chat(M, "You hear something crackle from your [receive_type] for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. <b>\"[input]\"</b>  Message ends.\"")
 
 	else if(href_list["SyndicateReply"])
-		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
-			return
-		if(!istype(H.ears, /obj/item/device/radio/headset))
-			to_chat(usr, "The person you are trying to contact is not wearing a headset")
+		var/mob/M = locate(href_list["SyndicateReply"])
+		var/receive_type
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(!istype(H.ears, /obj/item/device/radio/headset))
+				to_chat(usr, "The person you are trying to contact is not wearing a headset")
+				return
+			receive_type = "headset"
+		else if(istype(M, /mob/living/silicon))
+			receive_type = "undetectable communications channel"
+		if(!receive_type)
+			to_chat(usr, "This mob type cannot be replied to")
 			return
 
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", "")
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their [receive_type].","Outgoing message from The Syndicate", "")
 		if(!input)	return
 
-		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
-		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
-		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\"")
+
+		to_chat(src.owner, "You sent [input] to [M] via a secure channel.")
+		log_admin("[src.owner] replied to [key_name(M)]'s Syndicate message with the message [input].")
+		to_chat(M, "You hear something crackle from your [receive_type] for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\"")
 
 	else if(href_list["CentcommFaxView"])
 		var/obj/item/weapon/paper/P = locate(href_list["CentcommFaxView"])
