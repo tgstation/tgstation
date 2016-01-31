@@ -117,7 +117,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 /obj/item/weapon/poster/legit
 	name = "motivational poster"
 	icon_state = "rolled_legit"
-	desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
+	desc = "An official Nanotrasen-issue poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
 	official = 1
 
 /obj/item/weapon/poster/New(turf/loc, given_serial = 0)
@@ -244,8 +244,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 
 //seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/simulated/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
-	if(!P.resulting_poster)
-		return
+	if(!P.resulting_poster)	return
 
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
@@ -270,8 +269,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 
 	if(do_after(user,D.placespeed,target=src))
-		if(!D)
-			return
+		if(!D)	return
 
 		if(istype(src,/turf/simulated/wall) && user && user.loc == temp_loc)	//Let's check if everything is still there
 			user << "<span class='notice'>You place the poster!</span>"
