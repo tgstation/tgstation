@@ -182,6 +182,7 @@
 	..()
 	SSshuttle.mobile += src
 
+/obj/docking_port/mobile/initialize()
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
 		areaInstance = A

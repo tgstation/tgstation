@@ -215,3 +215,12 @@ var/datum/subsystem/air/SSair
 		if (z_level && AM.z != z_level)
 			continue
 		AM.build_network()
+
+/datum/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
+	for(var/A in atmos_machines)
+		var/obj/machinery/atmospherics/AM = A
+		AM.atmosinit()
+
+	for(var/A in atmos_machines)
+		var/obj/machinery/atmospherics/AM = A
+		AM.build_network()
