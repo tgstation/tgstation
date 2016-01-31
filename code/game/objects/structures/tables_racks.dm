@@ -99,6 +99,12 @@
 	else
 		return !density
 
+/obj/structure/table/CanAStarPass(ID, dir, caller)
+	. = !density
+	if(ismovableatom(caller))
+		var/atom/movable/mover = caller
+		. = . || mover.checkpass(PASSTABLE)
+
 /obj/structure/table/MouseDrop_T(atom/movable/O, mob/user)
 	..()
 	if(ismob(O) && user == O && ishuman(user))
@@ -448,6 +454,12 @@
 		return 1
 	else
 		return 0
+
+/obj/structure/rack/CanAStarPass(ID, dir, caller)
+	. = !density
+	if(ismovableatom(caller))
+		var/atom/movable/mover = caller
+		. = . || mover.checkpass(PASSTABLE)
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
