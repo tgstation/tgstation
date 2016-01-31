@@ -9,6 +9,7 @@
 	icon_state = "yellow"
 	density = 1
 	var/health = 100
+	var/integrity = 3
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
 	var/canister_color = "yellow"
@@ -192,7 +193,7 @@ update_flag
 			update_icon()
 
 /obj/machinery/portable_atmospherics/canister/process()
-	src.updateDialog()
+	check_overpressure()
 	return ..()
 
 /obj/machinery/portable_atmospherics/canister/return_air()
@@ -368,3 +369,42 @@ update_flag
 	// PV = nRT
 	air_contents.gases["o2"][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases["n2"][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+
+/obj/machinery/portable_atmospherics/canister/proc/check_overpressure()
+	//Handle exploding, leaking, and rupturing of the tank
+
+	if(!air_contents)
+		return 0
+
+	var/pressure = air_contents.return_pressure()
+	if(pressure > CANISTER_FRAGMENT_PRESSURE)
+		message_admins("Explosive canister rupture! Last key to touch the tank was [src.fingerprintslast].")
+		log_game("Explosive canister rupture! Last key to touch the tank was [src.fingerprintslast].")
+
+		//world << "\blue[x],[y] tank is exploding: [pressure] kPa"
+
+		var/range = (pressure-CANISTER_FRAGMENT_PRESSURE)/CANISTER_FRAGMENT_SCALE
+		var/turf/epicenter = get_turf(loc)
+
+		//world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
+
+		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+		qdel(src)
+
+	else if(pressure > CANISTER_RUPTURE_PRESSURE)
+		//world << "\blue[x],[y] canister is rupturing: [pressure] kPa, integrity [integrity]"
+		if(integrity-- <= 0)
+			health = 0
+			healthcheck()
+
+	else if(pressure > CANISTER_LEAK_PRESSURE)
+		//world << "\blue[x],[y] canister is leaking: [pressure] kPa, integrity [integrity]"
+		if(integrity-- <= 0)
+			var/turf/simulated/T = get_turf(src)
+			if(!T)
+				return
+			var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
+			T.assume_air(leaked_gas)
+
+	else if(integrity < 3)
+		integrity++
