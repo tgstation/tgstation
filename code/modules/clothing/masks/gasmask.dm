@@ -111,20 +111,20 @@
 	action_button_name = "Adjust Mask"
 
 /obj/item/clothing/mask/gas/mime/ui_action_click()
-	toggle_mask(usr)
+	cycle_mask(usr)
 
 /obj/item/clothing/mask/gas/mime/AltClick(mob/user)
-	toggle_mask(user)
+	cycle_mask(user)
 
-/obj/item/clothing/mask/gas/mime/proc/toggle_mask(mob/user)
+/obj/item/clothing/mask/gas/mime/proc/cycle_mask(mob/user)
 	switch(icon_state)
-		if ("mime")
+		if("mime")
 			icon_state = "sadmime"
-		if ("sadmime")
+		if("sadmime")
 			icon_state = "scaredmime"
-		if ("scaredmime")
+		if("scaredmime")
 			icon_state = "sexymime"
-		if ("sexymime")
+		if("sexymime")
 			icon_state = "mime"
 	user.update_inv_wear_mask()
 	user << "<span class='notice'>You adjust your mask to portray a different emotion.</span>"
