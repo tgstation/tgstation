@@ -30,7 +30,8 @@
 	return (chambered.BB ? 1 : 0)
 
 /obj/item/weapon/gun/projectile/shotgun/attack_self(mob/living/user)
-	if(recentpump)	return
+	if(recentpump)
+		return
 	pump(user)
 	recentpump = 1
 	spawn(10)
@@ -52,7 +53,8 @@
 		chambered = null
 
 /obj/item/weapon/gun/projectile/shotgun/proc/pump_reload(mob/M)
-	if(!magazine.ammo_count())	return 0
+	if(!magazine.ammo_count())
+		return 0
 	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 	chambered = AC
 
@@ -217,6 +219,7 @@
 	sawn_desc = "I'm just here for the gasoline."
 	unique_rename = 0
 	unique_reskin = 0
+	var/slung = 0
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
 	..()
@@ -226,10 +229,17 @@
 			slot_flags = SLOT_BACK
 			icon_state = "ishotgunsling"
 			user << "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>"
+			slung = 1
 			update_icon()
 		else
 			user << "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>"
 			return
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/update_icon()
+	..()
+	if (slung && (slot_flags & SLOT_BELT) )
+		slung = 0
+		icon_state = "ishotgun-sawn"
 
 // Sawing guns related procs //
 

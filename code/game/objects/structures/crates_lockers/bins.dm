@@ -37,9 +37,6 @@
 	else if(istype(W, /obj/item/weapon/wrench))
 		anchored = !anchored
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-	else if(istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
-		src.MouseDrop_T(G.affecting, user)      //act like they were dragged onto the closet
 	else
 		..()
 

@@ -18,6 +18,11 @@
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
 
+	if(length(newplayer_start))
+		loc = pick(newplayer_start)
+	else
+		loc = locate(1,1,1)
+
 /mob/new_player/proc/new_player_panel()
 
 	var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
@@ -81,7 +86,8 @@
 	if(src != usr)
 		return 0
 
-	if(!client)	return 0
+	if(!client)
+		return 0
 
 	//Determines Relevent Population Cap
 	var/relevant_cap
@@ -107,7 +113,8 @@
 	if(href_list["observe"])
 
 		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
-			if(!client)	return 1
+			if(!client)
+				return 1
 			var/mob/dead/observer/observer = new()
 
 			spawning = 1

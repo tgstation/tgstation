@@ -50,7 +50,9 @@
 	var/burnmod = 1		// multiplier for burn damage
 	var/coldmod = 1		// multiplier for cold damage
 	var/heatmod = 1		// multiplier for heat damage
-	var/punchmod = 0	// adds to the punch damage
+	var/punchdamagelow = 0       //lowest possible punch damage
+	var/punchdamagehigh = 9      //highest possible punch damage
+	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
@@ -667,7 +669,8 @@
 	if( H.stat == DEAD )
 		H.sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		H.see_in_dark = 8
-		if(!H.druggy)		H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		if(!H.druggy)
+			H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	else
 		if(!(SEE_TURFS & H.permanent_sight_flags))
 			H.sight &= ~SEE_TURFS
@@ -721,7 +724,8 @@
 
 		if( H.disabilities & NEARSIGHT && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
 			H.client.screen += global_hud.vimpaired
-		if(H.eye_blurry)			H.client.screen += global_hud.blurry
+		if(H.eye_blurry)
+			H.client.screen += global_hud.blurry
 		if(H.druggy)
 			H.client.screen += global_hud.druggy
 			H.throw_alert("high", /obj/screen/alert/high)
@@ -730,8 +734,10 @@
 
 
 		if(H.eye_stat > 20)
-			if(H.eye_stat > 30)	H.client.screen += global_hud.darkMask
-			else				H.client.screen += global_hud.vimpaired
+			if(H.eye_stat > 30)
+				H.client.screen += global_hud.darkMask
+			else
+				H.client.screen += global_hud.vimpaired
 
 	return 1
 
@@ -741,18 +747,28 @@
 			H.healths.icon_state = "health7"
 		else
 			switch(H.hal_screwyhud)
-				if(1)	H.healths.icon_state = "health6"
-				if(2)	H.healths.icon_state = "health7"
-				if(5)	H.healths.icon_state = "health0"
+				if(1)
+					H.healths.icon_state = "health6"
+				if(2)
+					H.healths.icon_state = "health7"
+				if(5)
+					H.healths.icon_state = "health0"
 				else
 					switch(H.health - H.staminaloss)
-						if(100 to INFINITY)		H.healths.icon_state = "health0"
-						if(80 to 100)			H.healths.icon_state = "health1"
-						if(60 to 80)			H.healths.icon_state = "health2"
-						if(40 to 60)			H.healths.icon_state = "health3"
-						if(20 to 40)			H.healths.icon_state = "health4"
-						if(0 to 20)				H.healths.icon_state = "health5"
-						else					H.healths.icon_state = "health6"
+						if(100 to INFINITY)
+							H.healths.icon_state = "health0"
+						if(80 to 100)
+							H.healths.icon_state = "health1"
+						if(60 to 80)
+							H.healths.icon_state = "health2"
+						if(40 to 60)
+							H.healths.icon_state = "health3"
+						if(20 to 40)
+							H.healths.icon_state = "health4"
+						if(0 to 20)
+							H.healths.icon_state = "health5"
+						else
+							H.healths.icon_state = "health6"
 
 	if(H.healthdoll)
 		H.healthdoll.overlays.Cut()
@@ -928,7 +944,7 @@
 				if(H.lying)
 					atk_verb = "kick"
 
-				var/damage = rand(0, 9) + M.dna.species.punchmod
+				var/damage = rand(M.dna.species.punchdamagelow, M.dna.species.punchdamagehigh)
 
 				if(!damage)
 					playsound(H.loc, M.dna.species.miss_sound, 25, 1, -1)
@@ -946,7 +962,7 @@
 
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
 				add_logs(M, H, "punched")
-				if((H.stat != DEAD) && damage >= 9)
+				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold)
 					H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
 									"<span class='userdanger'>[M] has weakened [H]!</span>")
 					H.apply_effect(4, WEAKEN, armor_block)
@@ -1100,7 +1116,8 @@
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
-	if(!damage || blocked <= 0)	return 0
+	if(!damage || blocked <= 0)
+		return 0
 
 	var/obj/item/organ/limb/organ = null
 	if(islimb(def_zone))
@@ -1108,7 +1125,8 @@
 	else
 		if(!def_zone)	def_zone = ran_zone(def_zone)
 		organ = H.get_organ(check_zone(def_zone))
-	if(!organ)	return 0
+	if(!organ)
+		return 0
 
 	damage = (damage * blocked)
 
@@ -1155,7 +1173,8 @@
 		if(H.reagents.has_reagent("epinephrine"))
 			return
 		if(H.health >= config.health_threshold_crit)
-			if(NOBREATH in specflags)	return 1
+			if(NOBREATH in specflags)
+				return 1
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			H.failed_last_breath = 1
 		else
@@ -1168,10 +1187,14 @@
 
 	var/gas_breathed = 0
 
+	var/list/breath_gases = breath.gases
+
+	breath.assert_gases("o2", "plasma", "co2", "n2o")
+
 	//Partial pressures in our breath
-	var/O2_pp = breath.get_breath_partial_pressure(breath.oxygen)
-	var/Toxins_pp = breath.get_breath_partial_pressure(breath.toxins)
-	var/CO2_pp = breath.get_breath_partial_pressure(breath.carbon_dioxide)
+	var/O2_pp = breath.get_breath_partial_pressure(breath_gases["o2"][MOLES])
+	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases["plasma"][MOLES])
+	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases["co2"][MOLES])
 
 
 	//-- OXY --//
@@ -1179,7 +1202,7 @@
 	//Too much oxygen! //Yes, some species may not like it.
 	if(safe_oxygen_max)
 		if(O2_pp > safe_oxygen_max && !(NOBREATH in specflags))
-			var/ratio = (breath.oxygen/safe_oxygen_max) * 10
+			var/ratio = (breath_gases["o2"][MOLES]/safe_oxygen_max) * 10
 			H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
 			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
 		else
@@ -1188,17 +1211,17 @@
 	//Too little oxygen!
 	if(safe_oxygen_min)
 		if(O2_pp < safe_oxygen_min)
-			gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath.oxygen)
+			gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath_gases["o2"][MOLES])
 			H.throw_alert("oxy", /obj/screen/alert/oxy)
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath.oxygen/6
+			gas_breathed = breath_gases["o2"][MOLES]/6
 			H.clear_alert("oxy")
 
 	//Exhale
-	breath.oxygen -= gas_breathed
-	breath.carbon_dioxide += gas_breathed
+	breath_gases["o2"][MOLES] -= gas_breathed
+	breath_gases["co2"][MOLES] += gas_breathed
 	gas_breathed = 0
 
 
@@ -1225,17 +1248,17 @@
 	//Too little CO2!
 	if(safe_co2_min)
 		if(CO2_pp < safe_co2_min)
-			gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath.carbon_dioxide)
+			gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath_gases["co2"][MOLES])
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath.carbon_dioxide/6
+			gas_breathed = breath_gases["co2"][MOLES]/6
 			H.clear_alert("not_enough_co2")
 
 	//Exhale
-	breath.carbon_dioxide -= gas_breathed
-	breath.oxygen += gas_breathed
+	breath_gases["co2"][MOLES] -= gas_breathed
+	breath_gases["o2"][MOLES] += gas_breathed
 	gas_breathed = 0
 
 
@@ -1244,7 +1267,7 @@
 	//Too much toxins!
 	if(safe_toxins_max)
 		if(Toxins_pp > safe_toxins_max && !(NOBREATH in specflags))
-			var/ratio = (breath.toxins/safe_toxins_max) * 10
+			var/ratio = (breath_gases["plasma"][MOLES]/safe_toxins_max) * 10
 			if(H.reagents)
 				H.reagents.add_reagent("plasma", Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
 			H.throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
@@ -1255,34 +1278,33 @@
 	//Too little toxins!
 	if(safe_toxins_min)
 		if(Toxins_pp < safe_toxins_min && !(NOBREATH in specflags))
-			gas_breathed = handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath.toxins)
+			gas_breathed = handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath_gases["plasma"][MOLES])
 			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath.toxins/6
+			gas_breathed = breath_gases["plasma"][MOLES]/6
 			H.clear_alert("not_enough_tox")
 
 	//Exhale
-	breath.toxins -= gas_breathed
-	breath.carbon_dioxide += gas_breathed
+	breath_gases["plasma"][MOLES] -= gas_breathed
+	breath_gases["co2"][MOLES] += gas_breathed
 	gas_breathed = 0
 
 
 	//-- TRACES --//
 
-	if(breath.trace_gases.len && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
-		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-			var/SA_pp = breath.get_breath_partial_pressure(SA.moles)
-			if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-				H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
-				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-					H.sleeping = max(H.sleeping+2, 10)
-			else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-				if(prob(20))
-					H.emote(pick("giggle", "laugh"))
-
-	handle_breath_temperature(breath, H)
+	if(breath && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
+		var/SA_pp = breath.get_breath_partial_pressure(breath_gases["n2o"][MOLES])
+		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
+			H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
+			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
+				H.sleeping = max(H.sleeping+2, 10)
+		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+			if(prob(20))
+				H.emote(pick("giggle", "laugh"))
+		handle_breath_temperature(breath, H)
+		breath.garbage_collect()
 
 	return 1
 
@@ -1330,6 +1352,8 @@
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	if(!environment)
 		return
+	if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		return
 
 	var/loc_temp = H.get_temperature(environment)
 
@@ -1366,21 +1390,19 @@
 					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
 				else
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
-		if(!istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-			switch(H.bodytemperature)
-				if(200 to 260)
-					H.throw_alert("temp", /obj/screen/alert/cold, 1)
-					H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
-				if(120 to 200)
-					H.throw_alert("temp", /obj/screen/alert/cold, 2)
-					H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
-				if(-INFINITY to 120)
-					H.throw_alert("temp", /obj/screen/alert/cold, 3)
-					H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
-		else
-			H.clear_alert("temp")
+		switch(H.bodytemperature)
+			if(200 to 260)
+				H.throw_alert("temp", /obj/screen/alert/cold, 1)
+				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
+			if(120 to 200)
+				H.throw_alert("temp", /obj/screen/alert/cold, 2)
+				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
+			if(-INFINITY to 120)
+				H.throw_alert("temp", /obj/screen/alert/cold, 3)
+				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+			else
+				H.clear_alert("temp")
 
 	else
 		H.clear_alert("temp")

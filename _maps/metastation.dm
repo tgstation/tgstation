@@ -23,6 +23,7 @@ z7 = empty space
         #include "map_files\generic\z6.dmm"
         #include "map_files\generic\z7.dmm"
 
+		#define MAP_PATH "map_files/MetaStation"
         #define MAP_FILE "MetaStation.v41I.dmm"
         #define MAP_NAME "MetaStation"
 

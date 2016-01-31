@@ -1,4 +1,3 @@
-
 /datum/AI_Module
 	var/uses = 0
 	var/module_name
@@ -43,6 +42,10 @@
 	var/obj/machinery/doomsday_device/DOOM = new /obj/machinery/doomsday_device(src)
 	doomsday_device = DOOM
 	verbs -= /mob/living/silicon/ai/proc/nuke_station
+	for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
+		for(var/mob/living/silicon/ai/A in ai_list)
+			if((A.stat != DEAD) && A.nuking)
+				point.the_disk = A //The pinpointer now tracks the AI core
 
 /obj/machinery/doomsday_device
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
@@ -284,10 +287,10 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/alarm/A in machines)
-		if(A.z != ZLEVEL_STATION)
+	for(var/obj/machinery/airalarm/AA in machines)
+		if(AA.z != ZLEVEL_STATION)
 			continue
-		A.emagged = 1
+		AA.emagged = 1
 	src << "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode."
 	src.verbs -= /mob/living/silicon/ai/proc/break_air_alarms
 
@@ -340,6 +343,8 @@
 		return
 
 	if (istype(M, /obj/machinery))
+		if(!M.can_be_overridden())
+			src << "Can't override this device."
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
@@ -596,6 +601,7 @@
 					break
 
 			// Give the power and take away the money.
+			A.view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 			A.verbs += AM.power_type
 			A.current_modules += new AM.type
 			temp = AM.description

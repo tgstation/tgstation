@@ -66,18 +66,19 @@
 				see_invisible = see_override
 
 			var/area/home = get_area(src)
-			if(!home)	return//something to do with malf fucking things up I guess. <-- aisat is gone. is this still necessary? ~Carn
+			if(!home)
+				return//something to do with malf fucking things up I guess. <-- aisat is gone. is this still necessary? ~Carn
 			if(home.powered(EQUIP))
 				home.use_power(1000, EQUIP)
 
-			if (src:aiRestorePowerRoutine==2)
+			if (aiRestorePowerRoutine==2)
 				src << "Alert cancelled. Power has been restored without our assistance."
-				src:aiRestorePowerRoutine = 0
+				aiRestorePowerRoutine = 0
 				src.blind.layer = 0
 				return
-			else if (src:aiRestorePowerRoutine==3)
+			else if (aiRestorePowerRoutine==3)
 				src << "Alert cancelled. Power has been restored."
-				src:aiRestorePowerRoutine = 0
+				aiRestorePowerRoutine = 0
 				src.blind.layer = 0
 				return
 		else
@@ -93,8 +94,8 @@
 			src.see_invisible = SEE_INVISIBLE_LIVING
 
 			if (lacks_power())
-				if (src:aiRestorePowerRoutine==0)
-					src:aiRestorePowerRoutine = 1
+				if (aiRestorePowerRoutine==0)
+					aiRestorePowerRoutine = 1
 
 					src << "You've lost power!"
 //							world << "DEBUG CODE TIME! [loc] is the area the AI is sucking power from"
@@ -109,7 +110,7 @@
 						if (loc.master.power_equip)
 							if (!istype(T, /turf/space))
 								src << "Alert cancelled. Power has been restored without our assistance."
-								src.aiRestorePowerRoutine = 0
+								aiRestorePowerRoutine = 0
 								src.blind.layer = 0
 								return
 						src << "Fault confirmed: missing external power. Shutting down main control system to save power."
@@ -118,7 +119,7 @@
 						sleep(50)
 						if (istype(T, /turf/space))
 							src << "Unable to verify! No power connection detected!"
-							src:aiRestorePowerRoutine = 2
+							aiRestorePowerRoutine = 2
 							return
 						src << "Connection verified. Searching for APC in power network."
 						sleep(50)
@@ -142,12 +143,12 @@
 								switch(PRP)
 									if (1) src << "Unable to locate APC!"
 									else src << "Lost connection with the APC!"
-								src:aiRestorePowerRoutine = 2
+								aiRestorePowerRoutine = 2
 								return
 							if (loc.master.power_equip)
 								if (!istype(T, /turf/space))
 									src << "Alert cancelled. Power has been restored without our assistance."
-									src:aiRestorePowerRoutine = 0
+									aiRestorePowerRoutine = 0
 									src.blind.layer = 0 //This, too, is a fix to issue 603
 									return
 							switch(PRP)
@@ -163,7 +164,7 @@
 									apc_override = 1
 									theAPC.ui_interact(src, state = conscious_state)
 									apc_override = 0
-									src:aiRestorePowerRoutine = 3
+									aiRestorePowerRoutine = 3
 									src << "Here are your current laws:"
 									src.show_laws()
 							sleep(50)

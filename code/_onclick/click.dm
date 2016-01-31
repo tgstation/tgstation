@@ -73,7 +73,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(stat || paralysis || stunned || weakened)
+	if(stat || paralysis || stunned || weakened || sleeping)
 		return
 
 	face_atom(A)
@@ -221,10 +221,8 @@
 /mob/proc/CtrlClickOn(atom/A)
 	A.CtrlClick(src)
 	return
-/atom/proc/CtrlClick(mob/user)
-	return
 
-/atom/movable/CtrlClick(mob/living/user)
+/atom/proc/CtrlClick(mob/user)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
@@ -304,22 +302,31 @@
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/A)
-	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y ) return
+	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y )
+		return
 	var/dx = A.x - x
 	var/dy = A.y - y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
-		if(A.pixel_y > 16)		dir = NORTH
-		else if(A.pixel_y < -16)dir = SOUTH
-		else if(A.pixel_x > 16)	dir = EAST
-		else if(A.pixel_x < -16)dir = WEST
+		if(A.pixel_y > 16)
+			dir = NORTH
+		else if(A.pixel_y < -16)
+			dir = SOUTH
+		else if(A.pixel_x > 16)
+			dir = EAST
+		else if(A.pixel_x < -16)
+			dir = WEST
 		return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)	dir = NORTH
-		else		dir = SOUTH
+		if(dy > 0)
+			dir = NORTH
+		else
+			dir = SOUTH
 	else
-		if(dx > 0)	dir = EAST
-		else		dir = WEST
+		if(dx > 0)
+			dir = EAST
+		else
+			dir = WEST
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_full.dmi'

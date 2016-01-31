@@ -44,7 +44,8 @@
 			choices += C
 
 	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|choices
-	if(!M) return 0
+	if(!M)
+		return 0
 	if(CanFeedon(M))
 		Feedon(M)
 		return 1
@@ -95,8 +96,13 @@
 	else
 		src << "<span class='warning'><i>I have failed to latch onto the subject</i></span>"
 
-/mob/living/simple_animal/slime/proc/Feedstop(silent=0)
+/mob/living/simple_animal/slime/proc/Feedstop(silent=0, living=1)
 	if(buckled)
+		if(!living)
+			src << "<span class='warning'>[pick("This subject is incompatible", \
+			"This subject does not have life energy", "This subject is empty", \
+			"I am not satisified", "I can not feed from this subject", \
+			"I do not feel nourished", "This subject is not food")]!</span>"
 		if(!silent)
 			visible_message("<span class='warning'>[src] has let go of [buckled]!</span>", \
 							"<span class='notice'><i>I stopped feeding.</i></span>")
@@ -159,9 +165,11 @@
 					M.colour = slime_mutation[rand(1,4)]
 				else
 					M.colour = colour
-				if(ckey)	M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
+				if(ckey)
+					M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
-				if(i != 1) step_away(M,src)
+				if(i != 1)
+					step_away(M,src)
 				M.Friends = Friends.Copy()
 				babies += M
 				M.mutation_chance = Clamp(mutation_chance+(rand(5,-5)),0,100)

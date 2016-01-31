@@ -324,3 +324,38 @@ var/list/bloody_footprints_cache = list()
 //Bloodcrawling
 #define BLOODCRAWL 1
 #define BLOODCRAWL_EAT 2
+
+//Color Defines
+#define OOC_COLOR  "#002eb8"
+
+/////////////////////////////////////
+// atom.appearence_flags shortcuts //
+/////////////////////////////////////
+// Disabling certain features
+#define APPEARANCE_IGNORE_TRANSFORM			RESET_TRANSFORM
+#define APPEARANCE_IGNORE_COLOUR			RESET_COLOR
+#define	APPEARANCE_IGNORE_CLIENT_COLOUR		NO_CLIENT_COLOR
+#define APPEARANCE_IGNORE_COLOURING			RESET_COLOR|NO_CLIENT_COLOR
+#define APPEARANCE_IGNORE_ALPHA				RESET_ALPHA
+#define APPEARANCE_NORMAL_GLIDE				~LONG_GLIDE
+
+// Enabling certain features
+#define APPEARANCE_CONSIDER_TRANSFORM		~RESET_TRANSFORM
+#define APPEARANCE_CONSIDER_COLOUR			~RESET_COLOUR
+#define APPEARANCE_CONSIDER_CLIENT_COLOUR	~NO_CLIENT_COLOR
+#define APPEARANCE_CONSIDER_COLOURING		~RESET_COLOR|~NO_CLIENT_COLOR
+#define APPEARANCE_CONSIDER_ALPHA			~RESET_ALPHA
+#define APPEARANCE_LONG_GLIDE				LONG_GLIDE
+
+// Consider these images/atoms as part of the UI/HUD
+#define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA
+#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
+
+//Launching Shuttles to Centcomm
+#define NOLAUNCH -1
+#define UNLAUNCHED 0
+#define ENDGAME_LAUNCHED 1
+#define EARLY_LAUNCHED 2
+
+//Just space
+#define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"

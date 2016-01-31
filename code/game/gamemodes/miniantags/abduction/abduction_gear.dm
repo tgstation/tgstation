@@ -316,7 +316,7 @@
 /obj/item/device/firing_pin/alien/pin_auth(mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human") //stealth lizard buff go
+		if(H.dna.species.id != "abductor")
 			return 0
 	return 1
 
@@ -339,9 +339,9 @@
  2.Put the specimen on operating table<br>
  3.Apply surgical drapes preparing for dissection<br>
  4.Apply scalpel to specimen torso<br>
- 5.Stop the bleeders and retract skin<br>
- 6.Cut out organs you find with a scalpel<br>
- 7.Use your hands to remove the remaining organs<br>
+ 5.Retract skin from specimen's torso<br>
+ 6.Apply scalpel to specimen's torso<br>
+ 7.Search through the specimen's torso with your hands to remove any organs<br>
  8.Insert replacement gland (Retrieve one from gland storage)<br>
  9.Consider dressing the specimen back to not disturb the habitat <br>
  10.Put the specimen in the experiment machinery<br>
@@ -424,7 +424,14 @@ Congratulations! You are now trained for xenobiology research!"}
 	var/mob/living/L = target
 
 	user.do_attack_animation(L)
-	switch(mode)
+
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
+			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
+			return 0
+
+	switch (mode)
 		if(BATON_STUN)
 			StunAttack(L,user)
 		if(BATON_SLEEP)

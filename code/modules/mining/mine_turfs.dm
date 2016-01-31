@@ -16,6 +16,7 @@ var/global/list/rockTurfEdgeCache
 	opacity = 1
 	density = 1
 	blocks_air = 1
+	layer = TURF_LAYER + 0.05
 	temperature = TCMB
 	var/environment_type = "asteroid"
 	var/turf/simulated/floor/plating/asteroid/turf_type = /turf/simulated/floor/plating/asteroid //For basalt vs normal asteroid
@@ -89,7 +90,7 @@ var/global/list/rockTurfEdgeCache
 		icon_state = "rock"
 	return
 
-/turf/simulated/mineral/proc/Spread(turf/T)
+/turf/simulated/mineral/Spread(turf/T)
 	new src.type(T)
 
 /turf/simulated/mineral/random

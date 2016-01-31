@@ -26,6 +26,8 @@
 
 	flags = 0
 
+	var/list/proximity_checkers = list()
+
 	var/image/obscured	//camerachunks
 /turf/New()
 	..()
@@ -91,12 +93,9 @@
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/M)
-	var/loopsanity = 100
-	for(var/atom/A in range(1))
-		if(loopsanity == 0)
-			break
-		loopsanity--
-		A.HasProximity(M, 1)
+	for(var/A in proximity_checkers)
+		var/atom/B = A
+		B.HasProximity(M)
 
 /turf/proc/is_plasteel_floor()
 	return 0
@@ -120,10 +119,15 @@
 
 //Creates a new turf
 /turf/proc/ChangeTurf(path)
-	if(!path)			return
-	if(path == type)	return src
+	if(!path)
+		return
+	if(path == type)
+		return src
 
 	SSair.remove_from_active(src)
+
+	var/s_appearance = appearance
+	var/nocopy = density || smooth //dont copy walls or smooth turfs
 
 	var/turf/W = new path(src)
 	if(istype(W, /turf/simulated))
@@ -131,6 +135,10 @@
 		W.RemoveLattice()
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
+
+	if(W.smooth & SMOOTH_DIAGONAL)
+		if(!W.apply_fixed_underlay())
+			W.underlays += !nocopy ? s_appearance : DEFAULT_UNDERLAY_IMAGE
 
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
@@ -140,32 +148,35 @@
 //////Assimilate Air//////
 /turf/simulated/proc/Assimilate_Air()
 	if(air)
-		var/aoxy = 0//Holders to assimilate air from nearby turfs
-		var/anitro = 0
-		var/aco = 0
-		var/atox = 0
-		var/atemp = 0
+		var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
+		var/list/total_gases = total.gases
 		var/turf_count = 0
 
 		for(var/direction in cardinal)//Only use cardinals to cut down on lag
 			var/turf/T = get_step(src,direction)
+
 			if(istype(T,/turf/space))//Counted as no air
 				turf_count++//Considered a valid turf for air calcs
 				continue
-			else if(istype(T,/turf/simulated/floor))
+
+			if(istype(T,/turf/simulated/floor))
 				var/turf/simulated/S = T
 				if(S.air)//Add the air's contents to the holders
-					aoxy += S.air.oxygen
-					anitro += S.air.nitrogen
-					aco += S.air.carbon_dioxide
-					atox += S.air.toxins
-					atemp += S.air.temperature
-				turf_count ++
-		air.oxygen = (aoxy/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
-		air.nitrogen = (anitro/max(turf_count,1))
-		air.carbon_dioxide = (aco/max(turf_count,1))
-		air.toxins = (atox/max(turf_count,1))
-		air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
+					var/list/S_gases = S.air.gases
+					for(var/id in S_gases)
+						total.assert_gas(id)
+						total_gases[id][MOLES] += S_gases[id][MOLES]
+					total.temperature += S.air.temperature
+				turf_count++
+
+		air.copy_from(total)
+		if(turf_count) //if there weren't any open turfs, no need to update.
+			var/list/air_gases = air.gases
+			for(var/id in air_gases)
+				air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
+
+			air.temperature /= turf_count
+
 		SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
@@ -283,6 +294,23 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 
+/turf/proc/apply_fixed_underlay()
+	if(!fixed_underlay)
+		return
+	var/obj/O = new
+	O.layer = layer
+	if(fixed_underlay["icon"])
+		O.icon = fixed_underlay["icon"]
+		O.icon_state = fixed_underlay["icon_state"]
+	else if(fixed_underlay["space"])
+		O.icon = 'icons/turf/space.dmi'
+		O.icon_state = SPACE_ICON_STATE
+	else
+		O.icon = DEFAULT_UNDERLAY_ICON
+		O.icon_state = DEFAULT_UNDERLAY_ICON_STATE
+	underlays += O
+	return 1
+
 /turf/indestructible
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
@@ -290,6 +318,7 @@
 	blocks_air = 1
 	opacity = 1
 	explosion_block = 50
+	layer = TURF_LAYER + 0.05
 
 /turf/indestructible/splashscreen
 	name = "Space Station 13"

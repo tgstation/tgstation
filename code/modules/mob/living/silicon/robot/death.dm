@@ -39,7 +39,8 @@
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	update_icons()
 	tod = worldtime2text() //weasellos time of death patch
-	if(mind)	mind.store_memory("Time of death: [tod]", 0)
+	if(mind)
+		mind.store_memory("Time of death: [tod]", 0)
 
 	sql_report_cyborg_death(src)
 

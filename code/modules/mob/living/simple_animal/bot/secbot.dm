@@ -3,7 +3,6 @@
 	desc = "A little security robot.  He looks less than thrilled."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"
-	layer = 5
 	density = 0
 	anchored = 0
 	health = 25
@@ -11,7 +10,7 @@
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB
 
-	radio_key = /obj/item/device/encryptionkey/headset_sec
+	radio_key = /obj/item/device/encryptionkey/secbot //AI Priv + Security
 	radio_channel = "Security" //Security channel
 	bot_type = SEC_BOT
 	model = "Securitron"
@@ -153,9 +152,8 @@ Auto Patrol: []"},
 	if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		retaliate(user)
 
-/mob/living/simple_animal/bot/secbot/Emag(mob/user)
+/mob/living/simple_animal/bot/secbot/emag_act(mob/user)
 	..()
-
 	if(emagged == 2)
 		if(user)
 			user << "<span class='danger'>You short out [src]'s target assessment circuits.</span>"

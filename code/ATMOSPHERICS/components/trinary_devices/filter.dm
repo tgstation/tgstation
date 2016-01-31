@@ -1,33 +1,11 @@
-#define FILTER_NOTHING			-1
-#define FILTER_PLASMA			0
-#define FILTER_OXYGEN			1
-#define FILTER_NITROGEN			2
-#define FILTER_CARBONDIOXIDE	3
-#define FILTER_NITROUSOXIDE		4
-
 /obj/machinery/atmospherics/components/trinary/filter
+	name = "gas filter"
 	icon_state = "filter_off"
 	density = 0
-
-	name = "gas filter"
-
 	can_unwrench = 1
-
 	var/on = 0
-
 	var/target_pressure = ONE_ATMOSPHERE
-
-	var/filter_type = 0
-/*
-Filter types:
--1: Nothing
- 0: Plasma: Plasma Toxin, Oxygen Agent B
- 1: Oxygen: Oxygen ONLY
- 2: Nitrogen: Nitrogen ONLY
- 3: Carbon Dioxide: Carbon Dioxide ONLY
- 4: Sleeping Agent (N2O)
-*/
-
+	var/filter_type = ""
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 
@@ -108,39 +86,13 @@ Filter types:
 		var/datum/gas_mixture/filtered_out = new
 		filtered_out.temperature = removed.temperature
 
-		switch(filter_type)
-			if(FILTER_PLASMA)
-				filtered_out.toxins = removed.toxins
-				removed.toxins = 0
-
-				if(removed.trace_gases.len>0)
-					for(var/datum/gas/trace_gas in removed.trace_gases)
-						if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-							removed.trace_gases -= trace_gas
-							filtered_out.trace_gases += trace_gas
-
-			if(FILTER_OXYGEN)
-				filtered_out.oxygen = removed.oxygen
-				removed.oxygen = 0
-
-			if(FILTER_NITROGEN)
-				filtered_out.nitrogen = removed.nitrogen
-				removed.nitrogen = 0
-
-			if(FILTER_CARBONDIOXIDE)
-				filtered_out.carbon_dioxide = removed.carbon_dioxide
-				removed.carbon_dioxide = 0
-
-			if(FILTER_NITROUSOXIDE)
-				if(removed.trace_gases.len>0)
-					for(var/datum/gas/trace_gas in removed.trace_gases)
-						if(istype(trace_gas, /datum/gas/sleeping_agent))
-							removed.trace_gases -= trace_gas
-							filtered_out.trace_gases += trace_gas
-
-			else
-				filtered_out = null
-
+		if(filter_type && removed.gases[filter_type])
+			filtered_out.assert_gas(filter_type)
+			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
+			removed.gases[filter_type][MOLES] = 0
+			removed.garbage_collect()
+		else
+			filtered_out = null
 
 		air2.merge(filtered_out)
 		air3.merge(removed)
@@ -153,30 +105,17 @@ Filter types:
 	set_frequency(frequency)
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/filter/attack_hand(mob/user)
-	if(..() | !user)
-		return
-	interact(user)
-
-/obj/machinery/atmospherics/components/trinary/filter/interact(mob/user)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	if(!src.allowed(usr))
-		usr << "<span class='danger'>Access denied.</span>"
-		return
-	ui_interact(user)
-
 /obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "atmos_filter", name, 430, 140, master_ui, state)
+	if(!ui)
+		ui = new(user, src, ui_key, "atmos_filter", name, 470, 140, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/filter/get_ui_data()
 	var/data = list()
 	data["on"] = on
-	data["set_pressure"] = round(target_pressure)
+	data["pressure"] = round(target_pressure)
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 	data["filter_type"] = filter_type
 	return data
@@ -184,32 +123,33 @@ Filter types:
 /obj/machinery/atmospherics/components/trinary/filter/ui_act(action, params)
 	if(..())
 		return
-
 	switch(action)
 		if("power")
-			on=!on
+			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			. = TRUE
 		if("pressure")
-			switch(params["pressure"])
-				if("max")
-					target_pressure = MAX_OUTPUT_PRESSURE
-				if("custom")
-					target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", target_pressure)))
-			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+			var/pressure = params["pressure"]
+			if(pressure == "max")
+				pressure = MAX_OUTPUT_PRESSURE
+				. = TRUE
+			else if(pressure == "input")
+				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, target_pressure) as num|null
+				if(!isnull(pressure) && !..())
+					. = TRUE
+			else if(text2num(pressure) != null)
+				pressure = text2num(pressure)
+				. = TRUE
+			if(.)
+				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 		if("filter")
-			src.filter_type = text2num(params["mode"])
-			var/filtering_name = "nothing"
-			switch(filter_type)
-				if(FILTER_PLASMA)
-					filtering_name = "plasma"
-				if(FILTER_OXYGEN)
-					filtering_name = "oxygen"
-				if(FILTER_NITROGEN)
-					filtering_name = "nitrogen"
-				if(FILTER_CARBONDIOXIDE)
-					filtering_name = "carbon dioxide"
-				if(FILTER_NITROUSOXIDE)
-					filtering_name = "nitrous oxide"
-			investigate_log("was set to filter [filtering_name] by [key_name(usr)]", "atmos")
+			filter_type = ""
+			var/filter_name = "nothing"
+			var/mode = params["mode"]
+			if(mode in meta_gas_info)
+				filter_type = mode
+				filter_name	= meta_gas_info[mode][META_GAS_NAME]
+			investigate_log("was set to filter [filter_name] by [key_name(usr)]", "atmos")
+			. = TRUE
 	update_icon()
-	return 1

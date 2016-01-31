@@ -44,3 +44,7 @@ map DiscStation
 	friendlyname Disc Station
 	voteweight 0
 endmap
+
+map efficiencystation
+	friendlyname Efficiency Station
+endmap

@@ -11,9 +11,13 @@
 	var/datum/gas_mixture/air_contents = return_air()
 	if(!air_contents)
 		return 0
+
+	var/oxy = air_contents.gases["o2"] ? air_contents.gases["o2"][MOLES] : 0
+	var/tox = air_contents.gases["plasma"] ? air_contents.gases["plasma"][MOLES] : 0
+
 	if(active_hotspot)
 		if(soh)
-			if(air_contents.toxins > 0.5 && air_contents.oxygen > 0.5)
+			if(tox > 0.5 && oxy > 0.5)
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
@@ -22,11 +26,11 @@
 
 	var/igniting = 0
 
-	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && air_contents.toxins > 0.5)
+	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && tox > 0.5)
 		igniting = 1
 
 	if(igniting)
-		if(air_contents.oxygen < 0.5 || air_contents.toxins < 0.5)
+		if(oxy < 0.5 || tox < 0.5)
 			return 0
 
 		active_hotspot = PoolOrNew(/obj/effect/hotspot, src)
@@ -63,10 +67,13 @@
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/simulated/location = loc
-	if(!istype(location) || !(location.air))	return 0
+	if(!istype(location) || !(location.air))
+		return 0
 
-	if(volume > CELL_VOLUME*0.95)	bypassing = 1
-	else bypassing = 0
+	if(volume > CELL_VOLUME*0.95)
+		bypassing = 1
+	else
+		bypassing = 0
 
 	if(bypassing)
 		if(!just_spawned)
@@ -104,7 +111,7 @@
 		qdel(src)
 		return
 
-	if(!(location.air) || location.air.toxins < 0.5 || location.air.oxygen < 0.5)
+	if(!(location.air) || !location.air.gases["plasma"] || !location.air.gases["o2"] || location.air.gases["plasma"][MOLES] < 0.5 || location.air.gases["o2"][MOLES] < 0.5)
 		qdel(src)
 		return
 

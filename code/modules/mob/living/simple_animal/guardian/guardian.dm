@@ -1,15 +1,16 @@
 /mob/living/simple_animal/hostile/guardian
 	name = "Guardian Spirit"
 	real_name = "Guardian Spirit"
-	desc = "A mysterious being that stands by it's charge, ever vigilant."
+	desc = "A mysterious being that stands by its charge, ever vigilant."
 	speak_emote = list("hisses")
+	bubble_icon = "guardian"
 	response_help  = "passes through"
 	response_disarm = "flails at"
 	response_harm   = "punches"
 	icon = 'icons/mob/guardian.dmi'
-	icon_state = "guardianorange"
-	icon_living = "guardianorange"
-	icon_dead = "stand"
+	icon_state = "magicOrange"
+	icon_living = "magicOrange"
+	icon_dead = "magicOrange"
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
@@ -21,13 +22,13 @@
 	attacktext = "punches"
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
 	environment_smash = 0
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 	AIStatus = AI_OFF
 	var/cooldown = 0
-	var/damage_transfer = 1 //how much damage from each attack we transfer to the owner
 	var/mob/living/summoner
 	var/range = 10 //how far from the user the spirit can be
 	var/playstyle_string = "You are a standard Guardian. You shouldn't exist!"
@@ -36,6 +37,7 @@
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
+	updatehudhealth()
 	if(summoner)
 		if(summoner.stat == DEAD)
 			src << "<span class='danger'>Your summoner has died!</span>"
@@ -53,52 +55,73 @@
 		ghostize()
 		qdel(src)
 	if(summoner)
-		if (get_dist(get_turf(summoner),get_turf(src)) <= range)
+		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
 			return
 		else
 			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
-			loc = get_turf(summoner)
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
+			forceMove(get_turf(summoner))
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	..()
 	if(summoner)
-		if (get_dist(get_turf(summoner),get_turf(src)) <= range)
+		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
 			return
 		else
 			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
-			loc = get_turf(summoner)
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
+			forceMove(get_turf(summoner))
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
+
+/mob/living/simple_animal/hostile/guardian/AttackingTarget()
+	if(src.loc == summoner)
+		src << "<span class='danger'><B>You must be manifested to attack!</span></B>"
+		return 0
+	else
+		..()
+		return 1
 
 /mob/living/simple_animal/hostile/guardian/death()
 	..()
 	summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
 	summoner.death()
 
+/mob/living/simple_animal/hostile/guardian/proc/updatehudhealth()
+	if(summoner)
+		var/resulthealth
+		if(iscarbon(summoner))
+			resulthealth = round((abs(config.health_threshold_dead - summoner.health) / abs(config.health_threshold_dead - summoner.maxHealth)) * 100)
+		else
+			resulthealth = round((summoner.health / summoner.maxHealth) * 100)
+		hud_used.guardianhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>"
+
 /mob/living/simple_animal/hostile/guardian/adjustHealth(amount) //The spirit is invincible, but passes on damage to the summoner
-	var/damage = amount * damage_transfer
-	if (summoner)
+	. =  ..()
+	if(summoner)
 		if(loc == summoner)
-			return
-		summoner.adjustBruteLoss(damage)
-		if(damage)
+			return 0
+		summoner.adjustBruteLoss(amount)
+		if(amount)
 			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
 			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
 		if(summoner.stat == UNCONSCIOUS)
 			summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
-			summoner.adjustCloneLoss(damage/2)
+			summoner.adjustCloneLoss(amount*0.5) //dying hosts take 50% bonus damage as cloneloss
+		updatehudhealth()
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
-	switch (severity)
-		if (1)
+	switch(severity)
+		if(1)
 			gib()
 			return
-		if (2)
+		if(2)
 			adjustBruteLoss(60)
-
 		if(3)
 			adjustBruteLoss(30)
 
@@ -115,14 +138,16 @@
 	if(cooldown > world.time)
 		return
 	if(loc == summoner)
-		loc = get_turf(summoner)
+		forceMove(get_turf(summoner))
+		PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
 		cooldown = world.time + 30
 
 /mob/living/simple_animal/hostile/guardian/proc/Recall()
-	if(cooldown > world.time)
+	if(loc == summoner || cooldown > world.time)
 		return
-	loc = summoner
-	buckled = null
+	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
+	unbuckle_mob(force=1)
+	forceMove(summoner)
 	cooldown = world.time + 30
 
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
@@ -139,7 +164,7 @@
 	log_say("[src.real_name]/[src.key] : [input]")
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleMode()
-	src << "<span class='danger'><B>You dont have another mode!</span></B>"
+	src << "<span class='danger'><B>You don't have another mode!</span></B>"
 
 
 /mob/living/proc/guardian_comm()
@@ -192,8 +217,10 @@
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleLight()
 	if(!luminosity)
+		src << "<span class='notice'>You activate your light.</span>"
 		SetLuminosity(3)
 	else
+		src << "<span class='notice'>You deactivate your light.</span>"
 		SetLuminosity(0)
 
 
@@ -201,14 +228,13 @@
 
 
 //Fire. Low damage, low resistance, sets mobs on fire when bumping
-
 /mob/living/simple_animal/hostile/guardian/fire
 	a_intent = "help"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attack_sound = 'sound/items/Welder.ogg'
 	attacktext = "sears"
-	damage_transfer = 0.8
+	damage_coeff = list(BRUTE = 0.8, BURN = 0.8, TOX = 0.8, CLONE = 0.8, STAMINA = 0, OXY = 0.8)
 	range = 10
 	playstyle_string = "As a Chaos type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will randomly teleport enemies."
 	environment_smash = 1
@@ -222,12 +248,14 @@
 		summoner.adjust_fire_stacks(-20)
 
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
-	..()
-	if(prob(45))
-		if(istype(target, /atom/movable))
-			var/atom/movable/M = target
-			if(!M.anchored && M != summoner)
-				do_teleport(M, M, 10)
+	if(..())
+		if(prob(45))
+			if(istype(target, /atom/movable))
+				var/atom/movable/M = target
+				if(!M.anchored && M != summoner)
+					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
+					do_teleport(M, M, 10)
+					PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(M))
 
 /mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
 	..()
@@ -251,12 +279,11 @@
 /mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
 	..()
 	collision_ignite(AM)
-//Standard
 
+//Standard
 /mob/living/simple_animal/hostile/guardian/punch
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	damage_transfer = 0.5
 	playstyle_string = "As a standard type you have no special abilities, but have a high damage resistance and a powerful attack capable of smashing through walls."
 	environment_smash = 2
 	magic_fluff_string = "..And draw the Assistant, faceless and generic, but never to be underestimated."
@@ -284,11 +311,11 @@
 		playsound(loc, src.attack_sound, 50, 1, 1)
 
 //Healer
-
 /mob/living/simple_animal/hostile/guardian/healer
 	a_intent = "harm"
 	friendly = "heals"
 	speed = 0
+	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	playstyle_string = "As a Support type, you may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent mob will warp them to your bluespace beacon after a short delay."
@@ -304,24 +331,21 @@
 	medsensor.add_hud_to(src)
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
-	..()
-	if(toggle == TRUE)
-		if(src.loc == summoner)
-			src << "<span class='danger'><B>You must be manifested to heal!</span></B>"
-			return
-		if(iscarbon(target))
-			var/mob/living/carbon/C = target
-			C.adjustBruteLoss(-5)
-			C.adjustFireLoss(-5)
-			C.adjustOxyLoss(-5)
-			C.adjustToxLoss(-5)
+	if(..())
+		if(toggle == TRUE)
+			if(iscarbon(target))
+				var/mob/living/carbon/C = target
+				C.adjustBruteLoss(-5)
+				C.adjustFireLoss(-5)
+				C.adjustOxyLoss(-5)
+				C.adjustToxLoss(-5)
 
 /mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
 	if(src.loc == summoner)
 		if(toggle)
 			a_intent = "harm"
 			speed = 0
-			damage_transfer = 0.7
+			damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 			melee_damage_lower = 15
 			melee_damage_upper = 15
 			src << "<span class='danger'><B>You switch to combat mode.</span></B>"
@@ -329,7 +353,7 @@
 		else
 			a_intent = "help"
 			speed = 1
-			damage_transfer = 1
+			damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			melee_damage_lower = 0
 			melee_damage_upper = 0
 			src << "<span class='danger'><B>You switch to healing mode.</span></B>"
@@ -339,7 +363,7 @@
 
 
 /mob/living/simple_animal/hostile/guardian/healer/verb/Beacon()
-	set name = "Place Bluespsace Beacon"
+	set name = "Place Bluespace Beacon"
 	set category = "Guardian"
 	set desc = "Mark a floor as your beacon point, allowing you to warp targets to it. Your beacon will not work in unfavorable atmospheric conditions."
 	if(beacon_cooldown<world.time)
@@ -372,7 +396,7 @@
 		src << "<span class='danger'><B>You must be adjacent to your target!</span></B>"
 		return
 	if((A.anchored))
-		src << "<span class='danger'><B>Your target can not be anchored!</span></B>"
+		src << "<span class='danger'><B>Your target cannot be anchored!</span></B>"
 		return
 	src << "<span class='danger'><B>You begin to warp [A]</span></B>"
 	if(do_mob(src, A, 50))
@@ -380,11 +404,21 @@
 			if(src.beacon) //Check that the beacon still exists and is in a safe place. No instant kills.
 				if(beacon.air)
 					var/datum/gas_mixture/Z = beacon.air
-					if(Z.oxygen >= 16 && !Z.toxins && Z.carbon_dioxide < 10 && !Z.trace_gases.len)
+					var/list/Z_gases = Z.gases
+					var/trace_gases = FALSE
+
+					for(var/id in Z_gases)
+						if(id in hardcoded_gases)
+							continue
+						trace_gases = TRUE
+						break
+					if((Z_gases["o2"] && Z_gases["o2"][MOLES] >= 16) && !Z_gases["plasma"] && (!Z_gases["co2"] || Z_gases["co2"][MOLES] < 10) && !trace_gases)
 						if((Z.temperature > 270) && (Z.temperature < 360))
 							var/pressure = Z.return_pressure()
 							if((pressure > 20) && (pressure < 550))
+								PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(A))
 								do_teleport(A, beacon, 0)
+								PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(A))
 						else
 							src << "<span class='danger'><B>The beacon isn't in a safe location!</span></B>"
 					else
@@ -396,7 +430,6 @@
 
 
 ///////////////////Ranged
-
 /obj/item/projectile/guardian
 	name = "crystal spray"
 	icon_state = "guardian"
@@ -409,7 +442,7 @@
 	friendly = "quietly assesses"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	damage_transfer = 0.9
+	damage_coeff = list(BRUTE = 0.9, BURN = 0.9, TOX = 0.9, CLONE = 0.9, STAMINA = 0, OXY = 0.9)
 	projectiletype = /obj/item/projectile/guardian
 	ranged_cooldown_cap = 0
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
@@ -418,6 +451,8 @@
 	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit."
 	magic_fluff_string = "..And draw the Sentinel, an alien master of ranged combat."
 	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Holoparasite swarm online."
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 8
 	var/list/snares = list()
 	var/toggle = FALSE
 
@@ -443,6 +478,14 @@
 			toggle = TRUE
 	else
 		src << "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>"
+
+/mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
+	if(see_invisible == SEE_INVISIBLE_MINIMUM)
+		src << "<span class='notice'>You deactivate your night vision.</span>"
+		see_invisible = SEE_INVISIBLE_LIVING
+	else
+		src << "<span class='notice'>You activate your night vision.</span>"
+		see_invisible = SEE_INVISIBLE_MINIMUM
 
 /mob/living/simple_animal/hostile/guardian/ranged/verb/Snare()
 	set name = "Set Surveillance Trap"
@@ -486,11 +529,10 @@
 					G.summoner << "<span class='danger'><B>[AM] has crossed your surveillance trap at [get_area(snare_loc)].</span></B>"
 
 ////Bomb
-
 /mob/living/simple_animal/hostile/guardian/bomb
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	damage_transfer = 0.6
+	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
 	range = 13
 	playstyle_string = "As an explosive type, you have only moderate close combat abilities, but are capable of converting any adjacent item into a disguised bomb via alt click."
 	magic_fluff_string = "..And draw the Scientist, master of explosive death."
@@ -622,7 +664,7 @@
 	G.summoner = user
 	G.key = key
 	G << "You are a [mob_name] bound to serve [user.real_name]."
-	G << "You are capable of manifesting or recalling to your master with verbs in the Guardian tab. You will also find a verb to communicate with them privately there."
+	G << "You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with them privately there."
 	G << "While personally invincible, you will die if [user.real_name] does, and any damage dealt to you will have a portion passed on to them as you feed upon them to sustain yourself."
 	G << "[G.playstyle_string]"
 	G.faction = user.faction
@@ -630,19 +672,25 @@
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
 
-	var/picked_name = pick("Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces")
-	var/colour = pick("orange", "pink", "red", "blue", "green")
-	G.name = "[picked_name] [capitalize(colour)]"
-	G.real_name = "[picked_name] [capitalize(colour)]"
-	G.icon_living = "guardian[colour]"
-	G.icon_state = "guardian[colour]"
-	G.icon_dead = "guardian[colour]"
-
-	switch (theme)
+	var/colour
+	var/picked_name
+	switch(theme)
 		if("magic")
 			user << "[G.magic_fluff_string]."
+			colour = pick("Pink", "Red", "Orange", "Green", "Blue")
+			picked_name = pick("Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces")
 		if("tech")
 			user << "[G.tech_fluff_string]."
+			G.bubble_icon = "holo"
+			colour = pick("Rose", "Peony", "Lily", "Daisy", "Zinnia", "Ivy", "Iris", "Petunia", "Violet", "Lilac", "Orchid") //technically not colors, just flowers that can be specific colors
+			picked_name = pick("Gallium", "Indium", "Thallium", "Bismuth", "Aluminium", "Mercury", "Iron", "Silver", "Zinc", "Titanium", "Chromium", "Nickel", "Platinum", "Tellurium", "Palladium", "Rhodium", "Cobalt", "Osmium", "Tungsten", "Iridium")
+
+	G.name = "[picked_name] [colour]"
+	G.real_name = "[picked_name] [colour]"
+	G.icon_living = "[theme][colour]"
+	G.icon_state = "[theme][colour]"
+	G.icon_dead = "[theme][colour]"
+
 	G.mind.name = "[G.real_name]"
 
 /obj/item/weapon/guardiancreator/choose
@@ -650,7 +698,7 @@
 
 /obj/item/weapon/guardiancreator/tech
 	name = "holoparasite injector"
-	desc = "It contains alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
+	desc = "It contains an alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "combat_hypo"
 	theme = "tech"
@@ -665,19 +713,19 @@
 
 /obj/item/weapon/paper/guardian
 	name = "Holoparasite Guide"
-	icon_state = "alienpaper_words"
+	icon_state = "paper_words"
 	info = {"<b>A list of Holoparasite Types</b><br>
 
  <br>
- <b>Chaos</b>: Ignites mobs on touch. teleports them at random on attack. Automatically extinguishes the user if they catch fire.<br>
+ <b>Chaos</b>: Ignites enemies on touch and teleports them at random on attack. Automatically extinguishes the user if they catch on fire.<br>
  <br>
- <b>Standard</b>:Devestating close combat attacks and high damage resist. No special powers.<br>
+ <b>Standard</b>:Devastating close combat attacks and high damage resist. Can smash through weak walls.<br>
  <br>
- <b>Ranged</b>: Has two modes. Ranged: Extremely weak, highly spammable projectile attack. Scout: Can not attack, but can move through walls. Can lay surveillance snares in either mode.<br>
+ <b>Ranged</b>: Has two modes. Ranged; which fires a constant stream of weak, armor-ignoring projectiles. Scout; Cannot attack, but can move through walls and is quite hard to see. Can lay surveillance snares, which alert it when crossed, in either mode.<br>
  <br>
- <b>Support</b>:Has two modes. Combat: Medium power attacks and damage resist. Healer: Attacks heal damage, but low damage resist and slow movemen. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
+ <b>Support</b>:Has two modes. Combat; Medium power attacks and damage resist. Healer; Heals instead of attack, but has low damage resist and slow movement. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
  <br>
- <b>Explosive</b>: High damage resist and medium power attack. Can turn any object into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered.<br>
+ <b>Explosive</b>: High damage resist and medium power attack. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
 "}
 
 /obj/item/weapon/paper/guardian/update_icon()
@@ -700,6 +748,12 @@
 	adding = list()
 
 	var/obj/screen/using
+
+	guardianhealthdisplay = new /obj/screen/guardian()
+	guardianhealthdisplay.name = "summoner health"
+	guardianhealthdisplay.screen_loc = ui_health
+	guardianhealthdisplay.mouse_opacity = 0
+	adding += guardianhealthdisplay
 
 	using = new /obj/screen/guardian/Manifest()
 	using.screen_loc = ui_rhand
@@ -730,6 +784,7 @@
 
 /obj/screen/guardian
 	icon = 'icons/mob/guardian.dmi'
+	icon_state = "base"
 
 /obj/screen/guardian/Manifest
 	icon_state = "manifest"

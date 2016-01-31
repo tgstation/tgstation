@@ -178,7 +178,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 
 		var/t_color = w_uniform.item_color
-		if(!t_color)		t_color = w_uniform.icon_state
+		if(!t_color)
+			t_color = w_uniform.icon_state
 
 		var/image/standing
 
@@ -223,7 +224,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			client.screen += gloves					//Either way, add the item to the HUD
 
 		var/t_state = gloves.item_state
-		if(!t_state)	t_state = gloves.icon_state
+		if(!t_state)
+			t_state = gloves.icon_state
 
 		var/image/standing = gloves.build_worn_icon(state = t_state, default_layer = GLOVES_LAYER, default_icon_file = 'icons/mob/hands.dmi')
 
@@ -293,7 +295,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			client.screen += s_store
 
 		var/t_state = s_store.item_state
-		if(!t_state)	t_state = s_store.icon_state
+		if(!t_state)
+			t_state = s_store.icon_state
 		overlays_standing[SUIT_STORE_LAYER]	= image("icon"='icons/mob/belt_mirror.dmi', "icon_state"="[t_state]", "layer"=-SUIT_STORE_LAYER)
 
 	apply_overlay(SUIT_STORE_LAYER)
@@ -322,7 +325,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 
 		var/t_state = belt.item_state
-		if(!t_state)	t_state = belt.icon_state
+		if(!t_state)
+			t_state = belt.icon_state
 
 		var/image/standing = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER, default_icon_file = 'icons/mob/belt.dmi')
 		overlays_standing[BELT_LAYER] = standing
@@ -345,7 +349,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_standing[SUIT_LAYER]	= standing
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-			unEquip(handcuffed)
 			drop_l_hand()
 			drop_r_hand()
 

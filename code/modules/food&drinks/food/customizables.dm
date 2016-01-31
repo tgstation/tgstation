@@ -1,4 +1,3 @@
-
 #define INGREDIENTS_FILL 1
 #define INGREDIENTS_SCATTER 2
 #define INGREDIENTS_STACK 3
@@ -19,7 +18,7 @@
 
 	var/ingMax = 12
 	var/list/ingredients = list()
-	var/Ingredientsplacement = INGREDIENTS_FILL
+	var/ingredients_placement = INGREDIENTS_FILL
 	var/customname = "custom"
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/examine(mob/user)
@@ -102,7 +101,6 @@
 	qdel(BASE)
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/proc/mix_filling_color(obj/item/weapon/reagent_containers/food/snacks/S)
-
 	if(ingredients.len == 1)
 		filling_color = S.filling_color
 	else
@@ -116,15 +114,13 @@
 		filling_color = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3], rgbcolor[4])
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
-
 	var/image/I = new(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
 		I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
 	else
 		I.color = S.filling_color
 
-	switch(Ingredientsplacement)
-
+	switch(ingredients_placement)
 		if(INGREDIENTS_SCATTER)
 			I.pixel_x = rand(-1,1)
 			I.pixel_y = rand(-1,1)
@@ -173,7 +169,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/burger
 	name = "burger"
 	desc = "A timeless classic."
-	Ingredientsplacement = INGREDIENTS_STACKPLUSTOP
+	ingredients_placement = INGREDIENTS_STACKPLUSTOP
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "bun"
 
@@ -199,7 +195,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/kebab
 	name = "kebab"
 	desc = "Delicious food on a stick."
-	Ingredientsplacement = INGREDIENTS_LINE
+	ingredients_placement = INGREDIENTS_LINE
 	trash = /obj/item/stack/rods
 	list_reagents = list("nutriment" = 1)
 	ingMax = 6
@@ -209,7 +205,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pasta
 	name = "spaghetti"
 	desc = "Noodles. With stuff. Delicious."
-	Ingredientsplacement = INGREDIENTS_SCATTER
+	ingredients_placement = INGREDIENTS_SCATTER
 	ingMax = 6
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "spaghettiboiled"
@@ -225,7 +221,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza
 	name = "pizza"
 	desc = "A personalized pan pizza meant for only one person."
-	Ingredientsplacement = INGREDIENTS_SCATTER
+	ingredients_placement = INGREDIENTS_SCATTER
 	ingMax = 8
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom
 	slices_num = 6
@@ -245,7 +241,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
 	name = "toast"
 	desc = "A timeless classic."
-	Ingredientsplacement = INGREDIENTS_STACK
+	ingredients_placement = INGREDIENTS_STACK
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "breadslice"
 	var/finished = 0

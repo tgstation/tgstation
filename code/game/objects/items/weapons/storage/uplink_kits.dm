@@ -235,7 +235,7 @@
 /obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade
 	name = "boxed virus grenade kit"
 
-/obj/item/weapon/storage/box/virus_kit/tuberculosisgrenade/New()
+/obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade/New()
 	..()
 	new /obj/item/weapon/grenade/chem_grenade/tuberculosis(src)
 	for(var/i in 1 to 5)
@@ -247,7 +247,7 @@
 /obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
 	name = "boxed virus kit"
 
-/obj/item/weapon/storage/box/virus_kit/tuberculosiskit/New()
+/obj/item/weapon/storage/box/syndie_kit/tuberculosiskit/New()
 	..()
 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosis(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)

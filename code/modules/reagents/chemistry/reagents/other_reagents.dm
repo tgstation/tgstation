@@ -297,12 +297,18 @@
 				for(var/i=1, i<=len, i+=1)
 					var/ascii = text2ascii(N.dna.features["mcolor"],i)
 					switch(ascii)
-						if(48)		newcolor += "0"
-						if(49 to 57)	newcolor += ascii2text(ascii-1)	//numbers 1 to 9
-						if(97)		newcolor += "9"
-						if(98 to 102)	newcolor += ascii2text(ascii-1)	//letters b to f lowercase
-						if(65)		newcolor +="9"
-						if(66 to 70)	newcolor += ascii2text(ascii+31)	//letters B to F - translates to lowercase
+						if(48)
+							newcolor += "0"
+						if(49 to 57)
+							newcolor += ascii2text(ascii-1)	//numbers 1 to 9
+						if(97)
+							newcolor += "9"
+						if(98 to 102)
+							newcolor += ascii2text(ascii-1)	//letters b to f lowercase
+						if(65)
+							newcolor +="9"
+						if(66 to 70)
+							newcolor += ascii2text(ascii+31)	//letters B to F - translates to lowercase
 						else
 							break
 				N.dna.features["mcolor"] = newcolor

@@ -4,12 +4,11 @@
 	desc = "A little floor repairing robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "floorbot0"
-	layer = 5
 	density = 0
 	anchored = 0
 	health = 25
 	maxHealth = 25
-	
+
 	radio_channel = "Engineering"
 	bot_type = FLOOR_BOT
 	model = "Floorbot"
@@ -111,7 +110,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/bot/floorbot/Emag(mob/user)
+/mob/living/simple_animal/bot/floorbot/emag_act(mob/user)
 	..()
 	if(emagged == 2)
 		if(user)
@@ -120,7 +119,7 @@
 /mob/living/simple_animal/bot/floorbot/Topic(href, href_list)
 	if(..())
 		return 1
-	
+
 	switch(href_list["operation"])
 		if("replace")
 			replacetiles = !replacetiles
@@ -217,9 +216,9 @@
 		if(path.len == 0)
 			if(!istype(target, /turf/))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(loc, TL, src, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0)
+				path = get_path_to(src, TL, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0)
 			else
-				path = get_path_to(loc, target, src, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0)
+				path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0)
 
 			if(!bot_move(target))
 				add_to_ignore(target)

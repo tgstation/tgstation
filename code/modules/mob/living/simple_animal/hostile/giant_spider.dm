@@ -48,6 +48,26 @@
 	gold_core_spawnable = 1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 4
+    
+/mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
+	if(href_list["activate"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			humanize_spider(ghost)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
+	humanize_spider(user)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
+	if(key)//Someone is in it
+		return
+	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
+	if(spider_ask == "No" || !src || qdeleted(src))
+		return
+	if(key)
+		user << "<span class='notice'>Someone else already took this spider.</span>"
+		return
+	key = user.key
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse

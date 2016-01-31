@@ -25,7 +25,7 @@
 
 /obj/item/weapon/paper_bin/MouseDrop(atom/over_object)
 	var/mob/M = usr
-	if(M.restrained() || M.stat || !Adjacent(M))
+	if(M.incapacitated() || !Adjacent(M))
 		return
 
 	if(over_object == M)
