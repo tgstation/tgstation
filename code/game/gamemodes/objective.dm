@@ -287,6 +287,46 @@
 	return 1
 
 
+/datum/objective/purge
+	explanation_text = "Ensure no mutant humanoid species are present aboard the escape shuttle."
+	dangerrating = 25
+	martyr_compatible = 1
+
+/datum/objective/purge/check_completion()
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+		return 1
+
+	var/area/A = SSshuttle.emergency.areaInstance
+
+	for(var/mob/living/player in player_list)
+		if(get_area(player) == A && player.mind && player.stat != DEAD && istype(player, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = player
+			if(H.dna.species.id != "human")
+				return 0
+
+	return 1
+
+
+/datum/objective/robot_army
+	explanation_text = "Have at least eight active cyborgs synced to you."
+	dangerrating = 25
+	martyr_compatible = 0
+
+/datum/objective/robot_army/check_completion()
+	if(!istype(owner.current, /mob/living/silicon/ai))
+		return 0
+	var/mob/living/silicon/ai/A = owner.current
+
+	var/counter = 0
+
+	for(var/mob/living/silicon/robot/R in A.connected_robots)
+		if(R.stat != DEAD)
+			counter++
+
+	if(counter < 8)
+		return 0
+	return 1
+
 /datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
 	dangerrating = 5
