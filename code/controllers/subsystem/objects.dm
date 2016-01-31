@@ -17,13 +17,12 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects/Initialize(timeofday, zlevel)
 	setupGenetics()
-	for(var/atom/A in world)
+	for(var/V in world)
+		var/atom/A = V
 		if (zlevel && A.z != zlevel)
 			continue
 		A.initialize()
-	if (zlevel)
-		return ..()
-	..()
+	. = ..()
 
 
 /datum/subsystem/objects/stat_entry()
