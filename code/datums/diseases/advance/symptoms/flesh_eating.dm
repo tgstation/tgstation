@@ -19,9 +19,9 @@ Bonus
 
 	name = "Necrotizing Fasciitis"
 	stealth = -3
-	resistance = -4
+	resistance = -3
 	stage_speed = 0
-	transmittable = -4
+	transmittable = -2
 	level = 6
 	severity = 5
 
@@ -35,4 +35,3 @@ Bonus
 			if(4,5)
 				M << "<span class='userdanger'>[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>"
 				M.adjustBruteLoss(5)
-	return

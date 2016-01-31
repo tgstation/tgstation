@@ -19,8 +19,8 @@ Bonus
 
 	name = "Spontaneous Combustion"
 	stealth = 1
-	resistance = -4
-	stage_speed = -4
+	resistance = -3
+	stage_speed = -3
 	transmittable = -4
 	level = 6
 	severity = 5
@@ -44,4 +44,3 @@ Bonus
 				M << "<span class='userdanger'>Your skin erupts into an inferno!</span>"
 				M.adjustFireLoss(10)
 				M.emote("scream")
-	return

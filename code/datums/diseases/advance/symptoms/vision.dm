@@ -4,7 +4,7 @@
 Hyphema (Eye bleeding)
 
 	Slightly noticable.
-	Lowers resistance tremendously.
+	Lowers resistance.
 	Decreases stage speed tremendously.
 	Decreases transmittablity.
 	Critical Level.
@@ -14,12 +14,10 @@ Bonus
 
 //////////////////////////////////////
 */
-
 /datum/symptom/visionloss
-
 	name = "Hyphema"
 	stealth = -1
-	resistance = -4
+	resistance = -2
 	stage_speed = -4
 	transmittable = -3
 	level = 5
@@ -46,8 +44,6 @@ Bonus
 						M << "<span class='userdanger'>You go blind!</span>"
 						M.disabilities |= BLIND
 						M.eye_blind = 1
-	return
-
 
 /*
 //////////////////////////////////////
@@ -65,7 +61,6 @@ Bonus
 
 //////////////////////////////////////
 */
-
 /datum/symptom/visionaid
 
 	name = "Ocular Restoration"
@@ -86,4 +81,3 @@ Bonus
 			else
 				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
 					M << "<span class='notice'>[pick("Your eyes feel great.", "You are now blinking manually.", "You don't feel the need to blink.")]</span>"
-	return
