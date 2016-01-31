@@ -1198,7 +1198,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define ARENA_ENDGAME 3		//a game just finished and the arena is about to reset
 
 // Languages
-#define LANGUAGE_SOL_COMMON "Sol Common"
+#define LANGUAGE_GALACTIC_COMMON "Galactic Common"
+#define LANGUAGE_HUMAN "Sol Common"
 #define LANGUAGE_UNATHI "Sinta'unathi"
 #define LANGUAGE_SIIK_TAJR "Siik'tajr"
 #define LANGUAGE_SKRELLIAN "Skrellian"
@@ -1211,7 +1212,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define LANGUAGE_MONKEY "Monkey"
 #define LANGUAGE_VOX "Vox-pidgin"
 #define LANGUAGE_CULT "Cult"
-//#define LANGUAGE_MOUSE "Mouse" // This broke the code, so fuck it
+#define LANGUAGE_MOUSE "Mouse" // This broke the code, so fuck it
 
 //#define SAY_DEBUG 1
 #ifdef SAY_DEBUG
