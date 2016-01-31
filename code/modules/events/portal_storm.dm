@@ -4,9 +4,10 @@
 	weight = 5
 
 /datum/round_event/portal_storm/syndicate_shocktroop
-	boss_types = list(/mob/living/simple_animal/hostile/syndicate/mecha_pilot = 1)
-	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space = 7,\
-						/mob/living/simple_animal/hostile/syndicate/ranged/space = 3)
+	boss_types = list(/mob/living/simple_animal/hostile/syndicate/mecha_pilot = 1,\
+					/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 1)
+	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space = 8,\
+						/mob/living/simple_animal/hostile/syndicate/ranged/space = 5)
 
 /datum/round_event_control/portal_storm_narsie
 	name = "Portal Storm: Nar-sie"
