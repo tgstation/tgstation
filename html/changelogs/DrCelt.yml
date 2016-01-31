@@ -1,2 +1,3 @@
 author: DrCelt
-changes: []
+changes:
+- bugfix: fixed a bug where you would get nullspace'd if you were in a spacepod and it were to be destroyed in some manner

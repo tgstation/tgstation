@@ -48,6 +48,13 @@
 	pr_give_air = new /datum/global_iterator/pod_tank_give_air(list(src))
 	equipment_system = new(src)
 
+/obj/spacepod/Destroy()
+	if(src.occupant)
+		src.occupant.loc = src.loc
+		src.occupant.gib()
+		src.occupant = null
+	..()
+
 /obj/spacepod/proc/update_icons()
 	if(!pod_overlays)
 		pod_overlays = new/list(2)
