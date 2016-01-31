@@ -6,7 +6,7 @@ var/global/list/coldwarning_hard = list("Holy shit, it's freezing cold out here!
 		return NO_HYPOTHERMIA
 	else
 		var/mob/living/carbon/human/H = src
-		if(!H.species.can_be_hypothermic)
+		if(istype(H) && !H.species.can_be_hypothermic)
 			return NO_HYPOTHERMIA
 	if((status_flags & GODMODE) || (flags & INVULNERABLE) || istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 		return NO_HYPOTHERMIA
