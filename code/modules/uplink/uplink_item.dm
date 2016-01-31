@@ -941,6 +941,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 15
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/device_tools/potion
+	name = "Sentience Potion"
+	item = /obj/item/slimepotion/sentience
+	desc = "A potion recovered at great risk by undercover syndicate operatives. Using it will make any animal sentient, and bound to serve you."
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
 
 // Implants
 /datum/uplink_item/implants
