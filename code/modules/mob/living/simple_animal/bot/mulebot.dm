@@ -748,7 +748,7 @@ var/global/mulebot_count = 0
 
 /mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A)
 	if(isturf(A) && isturf(loc) && loc.Adjacent(A) && load)
-		unload(get_dir(loc, get_step_towards(loc,A)))
+		unload(get_dir(loc, A))
 	else
 		..()
 
