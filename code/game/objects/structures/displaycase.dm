@@ -19,6 +19,7 @@
 			if(istype(W, /obj/item/weapon/circuitboard/airlock) && W:icon_state != "door_electronics_smoked")
 				if(user.drop_item(W, src))
 					circuit=W
+					circuit.installed = 1
 					state++
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 			if(istype(W, /obj/item/weapon/crowbar))
@@ -44,6 +45,7 @@
 				return
 			if(istype(W, /obj/item/weapon/crowbar))
 				circuit.loc=T
+				circuit.installed = 0
 				circuit=null
 				state--
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
@@ -201,6 +203,7 @@
 		var/obj/item/weapon/circuitboard/airlock/C=circuit
 		if(!C)
 			C=new (src)
+			C.installed = 1
 		C.one_access=!(req_access && req_access.len>0)
 		if(!C.one_access)
 			C.conf_access=req_access
@@ -214,6 +217,7 @@
 			F.update_icon()
 		else
 			C.loc=T
+			C.installed = 0
 			circuit=null
 			new /obj/machinery/constructable_frame/machine_frame(T)
 		qdel(src)
