@@ -251,7 +251,7 @@ var/global/list/pipeID2State = list(
 			if(istype(user, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = C
 				H.vessel.remove_reagent("blood",560)
-		return(OXYLOSS)
+		return(OXYLOSS|BRUTELOSS)
 	else
 		return ..()
 
