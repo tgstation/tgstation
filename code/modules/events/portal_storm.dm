@@ -1,12 +1,22 @@
 /datum/round_event_control/portal_storm_syndicate
 	name = "Portal Storm: Syndicate Shocktroops"
 	typepath = /datum/round_event/portal_storm/syndicate_shocktroop
-	weight = 10
+	weight = 5
 
 /datum/round_event/portal_storm/syndicate_shocktroop
 	boss_types = list(/mob/living/simple_animal/hostile/syndicate/mecha_pilot = 1)
 	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space = 7,\
 						/mob/living/simple_animal/hostile/syndicate/ranged/space = 3)
+
+/datum/round_event_control/portal_storm_narsie
+	name = "Portal Storm: Nar-sie"
+	typepath = /datum/round_event/portal_storm/portal_storm_narsie
+	weight = 0
+
+/datum/round_event/portal_storm/portal_storm_narsie
+	boss_types = list(/obj/singularity/narsie/large = 1)
+	hostile_types = list(/mob/living/simple_animal/hostile/construct/armored/hostile = 10,\
+						/mob/living/simple_animal/hostile/construct/wraith/hostile = 10)
 
 /datum/round_event/portal_storm
 	startWhen = 7
@@ -25,6 +35,7 @@
 
 /datum/round_event/portal_storm/setup()
 	storm = image('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", layer=FLY_LAYER)
+	storm.color = "#00FF00"
 
 	station_areas = get_areas_in_z(ZLEVEL_STATION)
 
@@ -38,14 +49,14 @@
 
 	var/list/b_spawns = generic_event_spawns.Copy()
 	while(number_of_bosses > boss_spawn.len)
-		var/turf/F = pick_n_take(b_spawns)
+		var/turf/F = get_turf(pick_n_take(b_spawns))
 		if(!F)
 			F = safepick(get_area_turfs(pick(station_areas)))
 		boss_spawn += F
 
 	var/list/h_spawns = generic_event_spawns.Copy()
 	while(number_of_hostiles > hostiles_spawn.len)
-		var/turf/T = pick_n_take(h_spawns)
+		var/turf/T = get_turf(pick_n_take(h_spawns))
 		if(!T)
 			T = safepick(get_area_turfs(pick(station_areas)))
 		hostiles_spawn += T
