@@ -777,7 +777,7 @@ window "infowindow"
 	elem "info"
 		type = CHILD
 		pos = 0,30
-		size = 640x455
+		size = 640x445
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-vert = false
