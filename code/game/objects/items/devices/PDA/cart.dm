@@ -729,7 +729,7 @@ Code:
 		menu += "Location: [get_area(active_bot)]<BR>"
 		menu += "Mode: [active_bot.get_mode()]"
 		if(active_bot.allow_pai)
-			menu += "<BR>PAI: "
+			menu += "<BR>pAI: "
 			if(active_bot.paicard && active_bot.paicard.pai)
 				menu += "[active_bot.paicard.pai.name]"
 				if(active_bot.bot_core.allowed(usr))

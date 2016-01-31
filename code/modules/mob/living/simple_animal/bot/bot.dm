@@ -28,7 +28,6 @@
 	var/obj/item/device/paicard/paicard // Inserted pai card.
 	var/allow_pai = 1 // Are we even allowed to insert a pai card.
 	var/bot_name
-	var/pai_history = list()
 
 	var/list/player_access = list() //Additonal access the bots gets when player controlled
 	var/emagged = 0
@@ -81,8 +80,8 @@
 
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
-		if (paicard)
-			return "<b>PAI Controlled</b>"
+		if(paicard)
+			return "<b>pAI Controlled</b>"
 		else
 			return "<b>Autonomous</b>"
 	else if(!on)
@@ -170,8 +169,8 @@
 
 /mob/living/simple_animal/bot/examine(mob/user)
 	..()
-	if (health < maxHealth)
-		if (health > maxHealth/3)
+	if(health < maxHealth)
+		if(health > maxHealth/3)
 			user << "[src]'s parts look loose."
 		else
 			user << "[src]'s parts look very loose!"
@@ -253,15 +252,15 @@
 					src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
 					bot_name = name
 					name = paicard.pai.name
-					pai_history += text("\[[time_stamp()]\] [paicard.pai][(ismob(paicard.pai) && paicard.pai.ckey) ? "([paicard.pai.ckey])" : ""] added to [src.bot_name] by [user][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]")
+					add_logs(user, paicard.pai, "uploaded to [src.bot_name],")
 				else
 					user << "<span class='warning'>[W] is inactive.</span>"
 			else
 				user << "<span class='warning'>The personality slot is locked.</span>"
 		else
 			user << "<span class='warning'>[src] is not compatible with [W]</span>"
-	else if (istype(W, /obj/item/weapon/hemostat) && paicard)
-		if (open)
+	else if(istype(W, /obj/item/weapon/hemostat) && paicard)
+		if(open)
 			user << "<span class='warning'>Close the access panel before manipulating the personality slot!</span>"
 		else
 			var/T = user.loc
@@ -309,11 +308,11 @@
 		paicard.emp_act(severity)
 		src.visible_message("[paicard] is flies out of [bot_name]!","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")
 		ejectpai(0)
-	if (on)
+	if(on)
 		turn_off()
 	spawn(severity*300)
 		stat &= ~EMPED
-		if (was_on)
+		if(was_on)
 			turn_on()
 
 /mob/living/simple_animal/bot/proc/set_custom_texts() //Superclass for setting hack texts. Appears only if a set is not given to a bot locally.
@@ -372,7 +371,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 		if( (scan in ignore_list) || (scan == old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
 			continue
 		var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
-		if( scan_result )
+		if(scan_result)
 			final_result = scan_result
 		else
 			continue //The current element failed assessment, move on to the next.
@@ -386,7 +385,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 /mob/living/simple_animal/bot/proc/add_to_ignore(subject)
 	if(ignore_list.len < 50) //This will help keep track of them, so the bot is always trying to reach a blocked spot.
 		ignore_list |= subject
-	else if (ignore_list.len >= subject) //If the list is full, insert newest, delete oldest.
+	else if(ignore_list.len >= subject) //If the list is full, insert newest, delete oldest.
 		ignore_list -= ignore_list[1]
 		ignore_list |= subject
 
@@ -403,7 +402,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/turf/last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
 	if(get_turf(src) == dest) //We have arrived, no need to move again.
 		return 1
-	else if (dest != last_node) //The path should lead us to our given destination. If this is not true, we must stop.
+	else if(dest != last_node) //The path should lead us to our given destination. If this is not true, we must stop.
 		path = list()
 		return 0
 	var/step_count = move_speed ? move_speed : base_speed //If a value is passed into move_speed, use that instead of the default speed var.
@@ -468,7 +467,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/call_mode() //Handles preparing a bot for a call, as well as calling the move proc.
 //Handles the bot's movement during a call.
 	var/success = bot_move(ai_waypoint, 3)
-	if (!success)
+	if(!success)
 		if(calling_ai)
 			calling_ai << "\icon[src] [get_turf(src) == ai_waypoint ? "<span class='notice'>[src] successfully arrived to waypoint.</span>" : "<span class='danger'>[src] failed to reach waypoint.</span>"]"
 			calling_ai = null
@@ -765,7 +764,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	add_fingerprint(usr)
 
 	if((href_list["power"]) && (bot_core.allowed(usr) || !locked))
-		if (on)
+		if(on)
 			turn_off()
 		else
 			turn_on()
@@ -791,7 +790,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				usr << "<span class='notice'>[text_dehack]</span>"
 				bot_reset()
 		if("ejectpai")
-			if (paicard && (!locked || issilicon(usr) || IsAdminGhost(usr)))
+			if(paicard && (!locked || issilicon(usr) || IsAdminGhost(usr)))
 				usr << "<span class='notice'>You eject [paicard] from [bot_name]</span>"
 				ejectpai(usr)
 	update_controls()
@@ -840,7 +839,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 					eject += "<A href='?src=\ref[src];operation=ejectpai'>Active</A>"
 				else
 					eject += "<A href='?src=\ref[src];operation=ejectpai'>Inactive</A>"
-			else if (!allow_pai || key)
+			else if(!allow_pai || key)
 				eject += "Unavailable"
 			else
 				eject += "Not inserted"
@@ -852,16 +851,16 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(paicard)
 		if(mind && paicard.pai)
 			mind.transfer_to(paicard.pai)
-		else if (paicard.pai)
+		else if(paicard.pai)
 			paicard.pai.key = key
 		else
 			ghostize(0) // The pAI card that just got ejected was dead.
 		key = null
 		paicard.forceMove(loc)
-		if (user)
-			pai_history += text("\[[time_stamp()]\] [paicard.pai][(ismob(paicard.pai) && paicard.pai.ckey) ? "([paicard.pai.ckey])" : ""] removed from [src.bot_name] by [user][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]")
+		if(user)
+			add_logs(user, paicard.pai, "ejected from [src.bot_name],")
 		else
-			pai_history += text("\[[time_stamp()]\] [paicard.pai][(ismob(paicard.pai) && paicard.pai.ckey) ? "([paicard.pai.ckey])" : ""] force ejected from [src.bot_name]")
+			add_logs(src, paicard.pai, "ejected")
 		if(announce)
 			paicard.pai << "<span class='notice'>You feel your control fade as [paicard] ejects from [bot_name].</span>"
 		paicard = null
@@ -881,7 +880,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	update_icon()
 
 /mob/living/simple_animal/bot/ghost()
-	if (stat != DEAD) // Only ghost if we're doing this while alive, the pAI probably isn't dead yet.
+	if(stat != DEAD) // Only ghost if we're doing this while alive, the pAI probably isn't dead yet.
 		..()
-	if (paicard && !client)
+	if(paicard && !client)
 		ejectpai(0)

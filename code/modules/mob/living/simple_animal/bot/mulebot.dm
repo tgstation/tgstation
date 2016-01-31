@@ -71,7 +71,7 @@ var/global/mulebot_count = 0
 
 /mob/living/simple_animal/bot/mulebot/proc/set_suffix(suffix)
 	src.suffix = suffix
-	if (paicard)
+	if(paicard)
 		bot_name = "\improper MULEbot ([suffix])"
 	else
 		name = "\improper MULEbot ([suffix])"
@@ -115,12 +115,12 @@ var/global/mulebot_count = 0
 	return
 
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user)
-	if (emagged < 1)
+	if(emagged < 1)
 		emagged = 1
-	if (!open)
+	if(!open)
 		locked = !locked
 		user << "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>"
-	else if (emagged < 2)
+	else if(emagged < 2)
 		emagged = 2
 		if(!wires.is_cut(WIRE_AVOIDANCE))
 			wires.cut(WIRE_AVOIDANCE)
@@ -341,7 +341,7 @@ var/global/mulebot_count = 0
 	if(user.incapacitated() || user.lying)
 		return
 
-	if (!istype(AM))
+	if(!istype(AM))
 		return
 
 	load(AM)
@@ -430,7 +430,7 @@ var/global/mulebot_count = 0
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
 	var/area/dest_area
-	if (path && path.len)
+	if(path && path.len)
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
 		dest_area = get_area(target)
 		destination = format_text(dest_area.name)
@@ -708,7 +708,7 @@ var/global/mulebot_count = 0
 				calc_path()
 
 /mob/living/simple_animal/bot/mulebot/emp_act(severity)
-	if (cell)
+	if(cell)
 		cell.emp_act(severity)
 	if(load)
 		load.emp_act(severity)
@@ -723,7 +723,7 @@ var/global/mulebot_count = 0
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/cable_coil/cut(Tsec)
-	if (cell)
+	if(cell)
 		cell.loc = Tsec
 		cell.update_icon()
 		cell = null
