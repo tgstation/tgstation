@@ -123,4 +123,4 @@
 
 /obj/item/weapon/grenade/clusterbuster/soap
 	name = "Slipocalypse"
-	payload = /obj/item/weapon/soap/syndie
+	payload = /obj/item/weapon/grenade/spawnergrenade/syndiesoap
