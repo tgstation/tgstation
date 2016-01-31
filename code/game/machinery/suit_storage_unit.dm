@@ -236,7 +236,7 @@
 		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")
 		addtimer(src, "resist_open", 300, FALSE, user)
 	else
-		open_machine()
+		open_machine(dump = TRUE)
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == 0) // Check they're still here.
