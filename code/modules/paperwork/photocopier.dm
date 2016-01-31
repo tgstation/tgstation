@@ -64,7 +64,8 @@
 			for(var/i = 0, i < copies, i++)
 				if(toner > 0 && !busy && copy)
 					if(istype(copy, /obj/item/weapon/paper/contract/employment))
-						new /obj/item/weapon/paper/contract/employment (loc, copy.owner)
+						var/obj/item/weapon/paper/contract/employment/c = copy
+						new /obj/item/weapon/paper/contract/employment (loc, c.target)
 						toner--
 					else
 						var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)

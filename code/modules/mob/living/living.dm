@@ -943,3 +943,9 @@ Sorry Giacom. Please don't be mad :(
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
 	return 1
+
+/mob/living/proc/returnSoul()
+	return 0 //TODO:  Finish method stub
+
+/mob/living/proc/removeDemonBoons()
+	return 0 //TODO:  Finish method stub
