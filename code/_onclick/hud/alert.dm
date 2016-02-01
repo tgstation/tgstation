@@ -140,7 +140,7 @@ The box in your backpack has an oxygen tank and gas mask in it."
 
 /obj/screen/alert/starving
 	name = "Starving"
-	desc = "You're severely undernourished. The hunger pains make moving around a chore."
+	desc = "You're severely malnourished. The hunger pains make moving around a chore."
 	icon_state = "starving"
 
 /obj/screen/alert/hot
@@ -198,7 +198,7 @@ If you're feeling frisky, click yourself in help intent to pull the object out."
 /obj/screen/alert/weightless
 	name = "Weightless"
 	desc = "Gravity has ceased affecting you, and you're floating around aimlessly. You'll need something large and heavy, like a \
-wall or lattice structure, to push yourself off if you want to move. A jetpack would enable free range of motion. A pair of \
+wall or lattice, to push yourself off if you want to move. A jetpack would enable free range of motion. A pair of \
 magboots would let you walk around normally on the floor. Barring those, you can throw things, use a fire extinguisher, \
 or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "weightless"
@@ -238,12 +238,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /obj/screen/alert/emptycell
 	name = "Out of Power"
 	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged. \
-Recharging stations are available in robotics, the dormitory bathrooms. and the AI satellite."
+Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "emptycell"
 
 /obj/screen/alert/lowcell
 	name = "Low Charge"
-	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms. and the AI satellite."
+	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "lowcell"
 
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
