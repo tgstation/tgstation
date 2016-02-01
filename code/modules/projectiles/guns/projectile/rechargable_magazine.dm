@@ -18,6 +18,7 @@
  	caliber = "laser"
  	icon_state = "s-casing-live"
  	projectile_type = /obj/item/projectile/beam
+ 	fire_sound = 'sound/weapons/Laser.ogg'
 
 
 /obj/item/ammo_box/magazine/recharge/attack_self() //No popping out the "bullets"
