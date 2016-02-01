@@ -5,7 +5,8 @@
 	set category = "Object"
 	set src in view(1)
 	usr.set_machine(src)
-	if(!mapping)	return
+	if(!mapping)
+		return
 
 	log_game("[usr]([usr.key]) used station map L[z] in [src.loc.loc]")
 

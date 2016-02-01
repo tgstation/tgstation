@@ -1,6 +1,6 @@
-#define WHITE_TEAM "White"
-#define RED_TEAM "Red"
-#define BLUE_TEAM "Blue"
+#define WHITE_TEAM "white"
+#define RED_TEAM "red"
+#define BLUE_TEAM "blue"
 #define CTF_RESPAWN_COOLDOWN 150 // 15 seconds
 #define FLAG_RETURN_TIME 200 // 20 seconds
 
@@ -18,6 +18,7 @@
 	force = 200
 	armour_penetration = 100
 	anchored = TRUE
+	flags = HANDSLOW
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 	var/obj/effect/landmark/reset
@@ -34,24 +35,28 @@
 	if(world.time > reset_cooldown)
 		src.loc = get_turf(src.reset)
 		for(var/mob/M in player_list)
-			if (M.z == src.z)
+			var/area/mob_area = get_area(M)
+			if(istype(mob_area, /area/ctf))
 				M << "<span class='userdanger'>\The [src] has been returned to base!</span>"
 		SSobj.processing.Remove(src)
 
 /obj/item/weapon/twohanded/required/ctf/attack_hand(mob/living/user)
 	if (!user)
 		return
-	if(user.faction == team)
+	if(team in user.faction)
 		user << "You can't move your own flag!"
 		return
-
+	if(loc == user)
+		if(!user.unEquip(src))
+			return
 	anchored = FALSE
 	pickup(user)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 		return
 	for(var/mob/M in player_list)
-		if(M.z == user.z)
+		var/area/mob_area = get_area(M)
+		if(istype(mob_area, /area/ctf))
 			M << "<span class='userdanger'>\The [src] has been taken!</span>"
 	SSobj.processing.Remove(src)
 
@@ -59,7 +64,8 @@
 	reset_cooldown = world.time + 200 //20 seconds
 	SSobj.processing |= src
 	for(var/mob/M in player_list)
-		if (M.z == src.z)
+		var/area/mob_area = get_area(M)
+		if(istype(mob_area, /area/ctf))
 			M << "<span class='userdanger'>\The [src] has been dropped!</span>"
 	anchored = TRUE
 
@@ -87,17 +93,23 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	var/team = WHITE_TEAM
+	//Capture the Flag scoring
 	var/points = 0
 	var/points_to_win = 3
+	//Capture Point/King of the Hill scoring
+	var/control_points = 0
+	var/control_points_to_win = 180
 	var/list/team_members = list()
 	var/ctf_enabled = FALSE
 	var/ctf_gear = /datum/outfit/ctf
 
 /obj/machinery/capture_the_flag/New()
+	..()
 	poi_list |= src
 
 /obj/machinery/capture_the_flag/Destroy()
 	poi_list.Remove(src)
+	..()
 
 /obj/machinery/capture_the_flag/red
 	name = "Red CTF Controller"
@@ -116,14 +128,6 @@
 		return
 	if(ticker.current_state != GAME_STATE_PLAYING)
 		return
-	for(var/obj/machinery/capture_the_flag/CTF in machines)
-		if(CTF == src || CTF.ctf_enabled == FALSE)
-			continue
-		if(user.ckey in CTF.team_members)
-			user << "No switching teams while the round is going!"
-		if(CTF.team_members.len < src.team_members.len)
-			user << "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up."
-			return
 	if(user.ckey in team_members)
 		if(user.mind.current && user.mind.current.timeofdeath + CTF_RESPAWN_COOLDOWN > world.time)
 			user << "It must be more than 15 seconds from your last death to respawn!"
@@ -132,6 +136,16 @@
 		dust_old(user)
 		spawn_team_member(new_team_member)
 		return
+
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		if(CTF == src || CTF.ctf_enabled == FALSE)
+			continue
+		if(user.ckey in CTF.team_members)
+			user << "No switching teams while the round is going!"
+			return
+		if(CTF.team_members.len < src.team_members.len)
+			user << "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up."
+			return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
 	dust_old(user)
@@ -148,7 +162,7 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(src))
 	new_team_member.prefs.copy_to(M)
 	M.key = new_team_member.key
-	M.faction = team
+	M.faction += team
 	M.equipOutfit(ctf_gear)
 
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
@@ -159,7 +173,8 @@
 			flag.loc = get_turf(flag.reset)
 			points++
 			for(var/mob/M in player_list)
-				if(M.z == src.z)
+				var/area/mob_area = get_area(M)
+				if(istype(mob_area, /area/ctf))
 					M << "<span class='userdanger'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>"
 		if(points >= points_to_win)
 			victory()
@@ -168,9 +183,12 @@
 
 /obj/machinery/capture_the_flag/proc/victory()
 	for(var/mob/M in mob_list)
-		if (M.z == src.z)
+		var/area/mob_area = get_area(M)
+		if(istype(mob_area, /area/ctf))
 			M << "<span class='narsie'>[team] team wins!</span>"
 			M << "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>"
+			for(var/obj/item/weapon/twohanded/required/ctf/W in M)
+				M.unEquip(W)
 			M.dust()
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
 		if(CTF.ctf_enabled == TRUE)
@@ -225,6 +243,8 @@
 	name = "Spawn protection"
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
+	health = INFINITY
+	maxhealth = INFINITY
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
 	alpha = 255
@@ -233,7 +253,7 @@
 	return
 
 /obj/structure/divine/trap/ctf/trap_effect(mob/living/L)
-	if(L.faction != src.team)
+	if(!(src.team in L.faction))
 		L << "<span class='danger'><B>Stay out of the enemy spawn!</B></span>"
 		L.dust()
 
@@ -283,3 +303,35 @@
 
 /area/ctf/flag_room2
 	name = "Flag Room B"
+
+
+//Control Point
+
+/obj/machinery/control_point
+	name = "control point"
+	desc = "You should capture this."
+	icon = 'icons/obj/machines/dominator.dmi'
+	icon_state = "dominator"
+	var/obj/machinery/capture_the_flag/controlling
+	var/team = "none"
+	var/point_rate = 1
+
+/obj/machinery/control_point/process()
+	if(controlling)
+		controlling.control_points += point_rate
+		if(controlling.control_points >= controlling.control_points_to_win)
+			controlling.victory()
+
+/obj/machinery/control_point/attackby(mob/user, params)
+	capture(user)
+
+/obj/machinery/control_point/attack_hand(mob/user)
+	capture(user)
+
+/obj/machinery/control_point/proc/capture(mob/user)
+	if(do_after(user, 30, target = src))
+		for(var/obj/machinery/capture_the_flag/CTF in machines)
+			if(CTF.ctf_enabled && (user.ckey in CTF.team_members))
+				controlling = CTF
+				icon_state = "dominator-[CTF.team]"
+				break

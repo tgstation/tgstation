@@ -84,7 +84,8 @@
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
 			step(mob.control_object,direct)
-			if(!mob.control_object)	return
+			if(!mob.control_object)
+				return
 			mob.control_object.dir = direct
 		else
 			mob.control_object.loc = get_step(mob.control_object,direct)
@@ -113,7 +114,8 @@
 			Process_Incorpmove(direct)
 			return 0
 
-	if(Process_Grab())	return
+	if(Process_Grab())
+		return
 
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
@@ -281,7 +283,8 @@
 					spawn(0)
 						anim(T,L,'icons/mob/mob.dmi',,"shadow",,L.dir)
 					limit--
-					if(limit<=0)	break
+					if(limit<=0)
+						break
 			else
 				spawn(0)
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)

@@ -41,6 +41,7 @@
 	assembly.state = 4
 	cameranet.cameras += src
 	cameranet.addCamera(src)
+	add_to_proximity_list(src, 1) //1 was default of everything
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		var/list/tempnetwork = C.network&src.network

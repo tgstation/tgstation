@@ -49,13 +49,6 @@
 	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
 
-/obj/machinery/chem_dispenser/power_change()
-	if(powered())
-		stat &= ~NOPOWER
-	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
-
 /obj/machinery/chem_dispenser/process()
 
 	if(recharged < 0)
@@ -167,7 +160,7 @@
 
 	if(!user.drop_item()) // Can't let go?
 		return
-	
+
 	beaker = B
 	beaker.loc = src
 	user << "<span class='notice'>You add the beaker to the machine.</span>"

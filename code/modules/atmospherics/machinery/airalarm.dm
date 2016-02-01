@@ -344,7 +344,7 @@
 			. = TRUE
 		if("set_external_pressure")
 			var/target = input("New target pressure:", name, alarm_area.air_vent_info[device_id]["external"]) as num|null
-			if(target && !..())
+			if(!isnull(target) && !..())
 				send_signal(device_id, list("set_external_pressure" = target))
 				. = TRUE
 		if("reset_external_pressure")
@@ -357,7 +357,7 @@
 			if(isnull(tlv))
 				return
 			var/value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
-			if(value && !..())
+			if(!isnull(value) && !..())
 				if(value < 0)
 					tlv.vars[name] = -1
 				else

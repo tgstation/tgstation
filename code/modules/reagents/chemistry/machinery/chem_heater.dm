@@ -38,13 +38,6 @@
 			beaker.reagents.chem_temp = round(beaker.reagents.chem_temp)
 			beaker.reagents.handle_reactions()
 
-/obj/machinery/chem_heater/power_change()
-	if(powered())
-		stat &= ~NOPOWER
-	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
-
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
 	if(isrobot(user))
 		return
@@ -109,7 +102,7 @@
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
 				target = input("New target temperature:", name, target_temperature) as num|null
-				if(target && !..())
+				if(!isnull(target) && !..())
 					. = TRUE
 			else if(adjust)
 				target = target_temperature + adjust

@@ -153,7 +153,7 @@
 				var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
 				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
 				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
-				if(tune && !..())
+				if(!isnull(tune) && !..())
 					. = TRUE
 			else if(adjust)
 				tune = frequency + adjust * 10

@@ -72,10 +72,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	else
 		U.purchase_log += "<big>\icon[A]</big>"
 
-	if(ishuman(user))
+	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
-		H.put_in_hands(A)
-
+		if(H.put_in_hands(A))
+			H << "[A] materializes into your hands!"
+		else
+			H << "\The [A] materializes onto the floor."
 	return 1
 
 // Nuclear Operative (Special Offers)
@@ -574,16 +576,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 1
 	surplus = 50
 
-/datum/uplink_item/stealthy_weapons/traitor_virus_kit
-	name = "Virus Kit"
-	desc = "An active fungal pathogen in a sterile, compact box. Comes with one Bio Virus Antidote Kit (BVAK) \
-			autoinjector for rapid application on up to two targets each, a syringe, and a bottle containing \
-			the BVAK solution."
-	item = /obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
-	cost = 20
-	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear)
-
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
@@ -630,6 +622,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			your hand before use so it knows not to kill you."
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 1
+
+/datum/uplink_item/stealthy_weapons/soap_clusterbang
+	name = "Slipocalypse Clusterbang"
+	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
+	item = /obj/item/weapon/grenade/clusterbuster/soap
+	cost = 6
 
 /datum/uplink_item/stealthy_weapons/door_charge
 	name = "Explosive Airlock Charge"
@@ -939,6 +937,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 15
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/device_tools/potion
+	name = "Sentience Potion"
+	item = /obj/item/slimepotion/sentience
+	desc = "A potion recovered at great risk by undercover syndicate operatives. Using it will make any animal sentient, and bound to serve you."
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
 
 // Implants
 /datum/uplink_item/implants
@@ -1077,10 +1081,11 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse. Rumored to contain a valuable assortion of items, \
 			but you never know. Contents are sorted to always be worth 50 TC."
+	item = /obj/structure/closet/crate
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
-/datum/uplink_item/badass/surplus_crate/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)
 	var/list/uplink_items = get_uplink_items()
 
 	var/crate_value = 50
@@ -1104,6 +1109,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Random Item"
 	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't \
 			decided on a strategy yet."
+	item = /obj/item/weapon/paper
 	cost = 0
 
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
@@ -1121,5 +1127,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	if(possible_items.len)
 		var/datum/uplink_item/I = pick(possible_items)
 		U.telecrystals -= I.cost
+		U.spent_telecrystals += I.cost
 		feedback_add_details("traitor_uplink_items_bought","RN")
 		return new I.item(loc)

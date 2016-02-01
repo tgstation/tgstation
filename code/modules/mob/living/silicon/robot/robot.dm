@@ -132,7 +132,8 @@
 /mob/living/silicon/robot/Destroy()
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
-		if(T)	mmi.loc = T
+		if(T)
+			mmi.loc = T
 		if(mmi.brainmob)
 			mind.transfer_to(mmi.brainmob)
 			mmi.update_icon()
@@ -1179,3 +1180,11 @@
 	if(camera)
 		camera.c_tag = real_name
 	custom_name = newname
+
+/mob/living/silicon/robot/emp_act(severity)
+	switch(severity)
+		if(1)
+			Stun(8)
+		if(2)
+			Stun(3)
+	..()
