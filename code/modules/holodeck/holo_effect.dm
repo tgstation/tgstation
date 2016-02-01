@@ -9,9 +9,6 @@
 	icon_state = "x2"
 	invisibility = 101
 
-/obj/effect/holodeck_effect/proc/activate(var/obj/machinery/computer/holodeck/HC)
-	return
-
 /obj/effect/holodeck_effect/proc/deactivate(var/obj/machinery/computer/holodeck/HC)
 	qdel(src)
 	return

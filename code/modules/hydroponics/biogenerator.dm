@@ -184,7 +184,7 @@
 /obj/machinery/biogenerator/attack_hand(mob/user)
 	interact(user)
 
-/obj/machinery/biogenerator/proc/activate()
+/obj/machinery/biogenerator/activate()
 	if (usr.stat != 0)
 		return
 	if (src.stat != 0) //NOPOWER etc

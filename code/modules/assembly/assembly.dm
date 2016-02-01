@@ -77,7 +77,7 @@
 
 
 // What the device does when turned on
-/obj/item/device/assembly/proc/activate()
+/obj/item/device/assembly/activate()
 	if(!secured || (cooldown > 0))
 		return 0
 	cooldown = 2

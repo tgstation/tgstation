@@ -50,9 +50,6 @@
 	if(!uses)
 		active = 0
 
-/obj/item/organ/internal/gland/proc/activate()
-	return
-
 /obj/item/organ/internal/gland/heals
 	origin_tech = "materials=4;biotech=6"
 	cooldown_low = 200

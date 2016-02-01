@@ -290,7 +290,7 @@ RCD
 		src.spark_system.start()
 	return
 
-/obj/item/weapon/rcd/proc/activate()
+/obj/item/weapon/rcd/activate()
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 

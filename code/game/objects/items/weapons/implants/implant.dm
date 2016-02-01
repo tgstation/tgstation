@@ -12,15 +12,28 @@
 	var/allow_multiple = 0
 	var/uses = -1
 
+/obj/item/weapon/implant/New()
+	wires = new /datum/wires/simple_wire(src)
+
 
 /obj/item/weapon/implant/proc/trigger(emote, mob/source)
 	return
 
-/obj/item/weapon/implant/proc/activate()
-	return
-
 /obj/item/weapon/implant/ui_action_click()
 	activate("action_button")
+
+/obj/item/weapon/implant/attackby(obj/item/I, mob/user)
+	if(isassembly(I))
+		if(wires.attach_assembly(I))
+			user << "You attach [I] to [src]."
+			desc +=" It has [I] attached to it."
+		else
+			user << "[src] already has and assembly."
+
+/obj/item/weapon/implant/attack_self(mob/user)
+	var/obj/item/I = wires.detach_assembly(user)
+	if(I)
+		desc -=" It has [I] attached to it."
 
 
 //What does the implant do upon injection?
