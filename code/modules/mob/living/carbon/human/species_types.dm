@@ -74,10 +74,12 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 
 	return randname
 
+var/regex/lizard_hiss = new("s{1,2}(?!s)", "g")
+var/regex/lizard_hiSS = new("S{1,2}(?!S)", "g")
 /datum/species/lizard/handle_speech(message)
 	if(copytext(message, 1, 2) != "*")
-		message = replacetextEx(message, "s", "sss")
-		message = replacetextEx(message, "S", "SSS")
+		message = lizard_hiss.Replace(message, "sss")
+		message = lizard_hiSS.Replace(message, "SSS")
 	return message
 
 //I wag in death

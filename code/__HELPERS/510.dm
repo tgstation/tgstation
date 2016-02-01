@@ -2,7 +2,11 @@
 #if DM_VERSION < 510
 #define BYGEX "code/__HELPERS/bygex.dll"
 /proc/replacetext(text, replace, replacement)
-	return call(BYGEX, "regex_replaceallliteral")(text, replace, replacement)
+	if(istype(replace, /regex))
+		var/regex/R = replace
+		return R.Replace(text, replacement)
+	else
+		return call(BYGEX, "regex_replaceallliteral")(text, replace, replacement)
 
 /proc/replacetextEx(text, replace, replacement)
 	return call(BYGEX, "regEx_replaceallliteral")(text, replace, replacement)
@@ -246,8 +250,4 @@
 	#undef CannotBeFlat
 	#undef CannotBeAssoc
 	#undef BadList
-#else
-/regex/Replace()
-	..()
-	return text
 #endif
