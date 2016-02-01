@@ -28,18 +28,22 @@ Bonus
 					M << "<span class='notice'>[pick("Your scales feels awfully itchy", "Your tail hurts")]</span>"
 				if(2)
 					M << "<span class='notice'>[pick("You claw at your scales", "Your claws feel strange")]</span>"
-					M.adjustCloneLoss(15)
+					M.adjustCloneLoss(10)
 				if(3)
 					M << M.say(pick("Hiss?"))
-					M << "<span class='notice'>[pick("You painfully let out a hiss")]</span>"
-					M.adjustCloneLoss(30)
+					M << "<span class='danger'>[pick("You painfully let out a hiss")]</span>"
+					M.adjustCloneLoss(15)
 				if(4)
-					M << "<span class='notice'>[pick("Your scales rot away and reveal flesh")]</span>"
-					M.adjustCloneLoss(45)
+					M << "<span class='danger'>[pick("Your scales rot away and reveal flesh")]</span>"
+					M.adjustCloneLoss(20)
 				if(5)
-					M.dna.species = new /datum/species/human()
-					M.update_icons()
-					M.update_hair()
-					M << "<span class='notice'>[pick("You tear at your scales and rip off your scaley skin!")]</span>"
-					M.adjustCloneLoss(200)
-					M.adjustBruteLoss(200)
+					M.adjustCloneLoss(25)
+					M << "<span class='danger'>[pick("You tear at your scales and rip off your scaley skin!")]</span>"
+					if(M.stat == DEAD)
+						M.dna.species = new /datum/species/human()
+						M.update_icons()
+						M.update_hair()
+						M.visible_message("<span class='danger'>[M] rips away their rotting scales and writhes in pain!</span>")
+						M.adjustCloneLoss(25)
+						M.adjustBruteLoss(125)
+	return

@@ -61,7 +61,7 @@ var/list/diseases = subtypesof(/datum/disease)
 	var/permeability_mod = 1
 	var/severity =	NONTHREAT
 	var/list/required_organs = list()
-
+	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
 
 
@@ -92,7 +92,7 @@ var/list/diseases = subtypesof(/datum/disease)
 
 	. = 1
 	for(var/C_id in cures)
-		if(!affected_mob.reagents.has_reagent(C_id))
+		if(!affected_mob.reagents.has_reagent(C_id) && needs_all_cures)
 			.--
 			break //One missing cure is enough to fail
 

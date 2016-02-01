@@ -389,7 +389,7 @@
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
 	id = "mulligan"
-	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
+	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency identity change."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY
 
@@ -1102,6 +1102,19 @@
 	description = "Also known as sodium hydroxide."
 	reagent_state = LIQUID
 	color = "#FFFFD6" // very very light yellow
+
+/datum/reagent/lye/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	if(iscarbon(M) && M.stat != DEAD)
+		if(method in list(INGEST, VAPOR, INJECT))
+			M.adjustToxLoss(0.25*reac_volume)
+			M.adjustFireLoss(0.25*reac_volume)
+			if(show_message)
+				M << "<span class='warning'>You feel a burning stinging senstation!</span>"
+		else
+			M.adjustFireLoss(0.5*reac_volume)
+			if(show_message)
+				M << "<span class='danger'>You recieve horrible chemical burns!</span>"
+			M.emote("scream")
 
 /datum/reagent/drying_agent
 	name = "Drying agent"
