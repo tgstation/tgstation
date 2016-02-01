@@ -205,6 +205,8 @@
 	else if(isovermind(mymob))
 		blob_hud()
 
+	reload_fullscreen() // Reload any fullscreen overlays this mob has.
+
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0)
 	if(!ismob(mymob))
@@ -234,11 +236,6 @@
 			mymob.client.screen += mymob.internals
 			mymob.client.screen += lingstingdisplay
 			mymob.client.screen += lingchemdisplay
-
-			hidden_inventory_update()
-			persistant_inventory_update()
-			mymob.update_action_buttons()
-			reorganize_alerts()
 		if(HUD_STYLE_REDUCED)	//Reduced HUD
 			hud_shown = 0	//Governs behavior of other procs
 			if(adding)
@@ -258,11 +255,6 @@
 			mymob.client.screen += r_hand_hud_object	//we want the hands to be visible
 			mymob.client.screen += action_intent		//we want the intent swticher visible
 			action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
-
-			hidden_inventory_update()
-			persistant_inventory_update()
-			mymob.update_action_buttons()
-			reorganize_alerts()
 		if(HUD_STYLE_NOHUD)	//No HUD
 			hud_shown = 0	//Governs behavior of other procs
 			if(adding)
@@ -279,11 +271,11 @@
 			mymob.client.screen -= mymob.internals
 			mymob.client.screen -= lingstingdisplay
 			mymob.client.screen -= lingchemdisplay
+	hidden_inventory_update()
+	persistant_inventory_update()
+	mymob.update_action_buttons()
+	reorganize_alerts()
 
-			hidden_inventory_update()
-			persistant_inventory_update()
-			mymob.update_action_buttons()
-			reorganize_alerts()
 	hud_version = display_hud_version
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)

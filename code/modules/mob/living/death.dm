@@ -1,3 +1,16 @@
+/mob/living/death(gibbed)
+	eye_blind = max(eye_blind, 1)
+	timeofdeath = world.time
+
+	living_mob_list -= src
+	if(!gibbed)
+		dead_mob_list += src
+	else if(buckled)
+		buckled.unbuckle_mob()
+
+	clear_fullscreens()
+	..()
+
 /mob/living/gib(animation = 1)
 	var/prev_lying = lying
 	death(1)
@@ -33,17 +46,6 @@
 
 /mob/living/proc/dust_animation(animate, flick_name = "")
 	flick(flick_name, animate)
-
-/mob/living/death(gibbed)
-	eye_blind = max(eye_blind, 1)
-	timeofdeath = world.time
-
-	living_mob_list -= src
-	if(!gibbed)
-		dead_mob_list += src
-	else if(buckled)
-		buckled.unbuckle_mob()
-
 
 /mob/living/proc/setup_animation(animation, prev_lying)
 	var/atom/movable/overlay/animate = null

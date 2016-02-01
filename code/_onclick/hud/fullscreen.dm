@@ -1,10 +1,12 @@
+#define FULLSCREEN_LAYER 18
+#define DAMAGE_LAYER FULLSCREEN_LAYER + 0.1
+#define BLIND_LAYER DAMAGE_LAYER + 0.1
+#define CRIT_LAYER BLIND_LAYER + 0.1
+
 /mob
 	var/list/screens = list()
 
 /mob/proc/overlay_fullscreen(category, type, severity)
-	if(!category)
-		return
-
 	var/obj/screen/fullscreen/screen
 	if(screens[category])
 		screen = screens[category]
@@ -20,15 +22,14 @@
 	screen.severity = severity
 
 	screens[category] = screen
-	if(client && hud_used)
-		hud_used.update_fullscreen()
-
+	if(client)
+		client.screen += screen
 	return screen
 
 /mob/proc/clear_fullscreen(category, animate = 10)
 	var/obj/screen/fullscreen/screen = screens[category]
 	if(!screen)
-		return FALSE
+		return
 
 	if(animate)
 		animate(screen, alpha = 0, time = animate)
@@ -38,42 +39,44 @@
 	if(client)
 		client.screen -= screen
 	qdel(screen)
-	return TRUE
 
-/datum/hud/proc/update_fullscreen()
+/mob/proc/clear_fullscreens()
+	for(var/category in screens)
+		clear_fullscreen(category)
+
+/datum/hud/proc/reload_fullscreen()
 	var/list/screens = mymob.screens
-	if(hud_shown)
-		for(var/screen in screens)
-			mymob.client.screen |= screens[screen]
-	else
-		for(var/screen in screens)
-			mymob.client.screen -= screens[screen]
+	for(var/category in screens)
+		mymob.client.screen |= screens[category]
 
 /obj/screen/fullscreen
 	icon = 'icons/mob/screen_full.dmi'
 	icon_state = "default"
 	screen_loc = "CENTER-7,CENTER-7"
-	layer = 18
+	layer = FULLSCREEN_LAYER
 	mouse_opacity = 0
 	var/severity = 0
 
 /obj/screen/fullscreen/Destroy()
 	..()
 	severity = 0
-	screen_loc = ""
 	return QDEL_HINT_PUTINPOOL
 
 /obj/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
+	layer = DAMAGE_LAYER
 
 /obj/screen/fullscreen/oxy
 	icon_state = "oxydamageoverlay"
+	layer = DAMAGE_LAYER
 
 /obj/screen/fullscreen/crit
 	icon_state = "passage"
+	layer = CRIT_LAYER
 
 /obj/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"
+	layer = BLIND_LAYER
 
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"
@@ -97,3 +100,8 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
+
+#undef FULLSCREEN_LAYER
+#undef BLIND_LAYER
+#undef DAMAGE_LAYER
+#undef CRIT_LAYER
