@@ -140,4 +140,11 @@
 	C.chambers[C.current_chamber] = null
 	V.user = user
 	in_chamber = V
-	Fire(A,user,params, "struggle" = struggle)
+	if(Fire(A,user,params, "struggle" = struggle))
+		return
+	else
+		V.vial = null
+		I.loc = C
+		C.chambers[C.current_chamber] = I
+		qdel(V)
+		in_chamber = null

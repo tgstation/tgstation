@@ -290,25 +290,28 @@
 		else if(strength == 90)
 			B.penetration = 10
 		in_chamber = B
-		Fire(A,user,params, "struggle" = struggle)
-		rod_loaded = 0
-		fire_sound = initial(fire_sound)
-		var/obj/item/weapon/rail_assembly/R = rails
-		if(strength == 200)
-			to_chat(user, "<span class='warning'>\The [R] inside \the [src] melts!</span>")
-			to_chat(user, "<span class='warning'>\The [C] inside \the [src]'s capacitor bank melts!</span>")
-			rails = null
-			rails_secure = 0
-			qdel(R)
-			capacitor = null
-			qdel(C)
-		else
-			R.durability -= strength
-			if(R.durability <= 0)
-				to_chat(user, "<span class='warning'>\The [R] inside \the [src] [strength > 100 ? "shatters under" : "finally fractures from"] the stress!</span>")
+		if(Fire(A,user,params, "struggle" = struggle))
+			rod_loaded = 0
+			var/obj/item/weapon/rail_assembly/R = rails
+			if(strength == 200)
+				to_chat(user, "<span class='warning'>\The [R] inside \the [src] melts!</span>")
+				to_chat(user, "<span class='warning'>\The [C] inside \the [src]'s capacitor bank melts!</span>")
 				rails = null
 				rails_secure = 0
 				qdel(R)
+				capacitor = null
+				qdel(C)
+			else
+				R.durability -= strength
+				if(R.durability <= 0)
+					to_chat(user, "<span class='warning'>\The [R] inside \the [src] [strength > 100 ? "shatters under" : "finally fractures from"] the stress!</span>")
+					rails = null
+					rails_secure = 0
+					qdel(R)
+			fire_sound = initial(fire_sound)
+		else
+			qdel(B)
+			in_chamber = null
 
 		update_icon()
 		update_verbs()

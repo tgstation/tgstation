@@ -210,6 +210,8 @@
 	else
 		user.update_inv_r_hand()
 
+	return 1
+
 /obj/item/weapon/gun/proc/can_fire()
 	return process_chambered()
 

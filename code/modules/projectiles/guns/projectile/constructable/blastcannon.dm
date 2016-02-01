@@ -195,29 +195,31 @@
 			B.medium_damage_range = medium_damage_range
 			B.light_damage_range = light_damage_range
 			in_chamber = B
-			Fire(A,user,params, "struggle" = struggle)
+			if(Fire(A,user,params, "struggle" = struggle))
+				if(ismob(src.loc) && !isanimal(src.loc))
+					var/mob/living/M = src.loc
+					var/turf/Q = get_turf(M)
+					var/turf/target
+					var/throwdir = 1
+					switch(M.dir)
+						if(1)
+							throwdir = 2
+						if(2)
+							throwdir = 1
+						if(4)
+							throwdir = 8
+						if(8)
+							throwdir = 4
+					if(istype(Q, /turf/space)) // if ended in space, then range is unlimited
+						target = get_edge_target_turf(Q, throwdir)
+					else						// otherwise limit to 10 tiles
+						target = get_ranged_target_turf(Q, throwdir, 10)
+					M.throw_at(target,100,4)
+					if(!(M.flags & INVULNERABLE))
+						M.apply_effects(0, 2)
+						to_chat(user, "<span class='warning'>You're thrown back by the force of the blast!</span>")
 
-			if(ismob(src.loc) && !isanimal(src.loc))
-				var/mob/living/M = src.loc
-				var/turf/Q = get_turf(M)
-				var/turf/target
-				var/throwdir = 1
-				switch(M.dir)
-					if(1)
-						throwdir = 2
-					if(2)
-						throwdir = 1
-					if(4)
-						throwdir = 8
-					if(8)
-						throwdir = 4
-				if(istype(Q, /turf/space)) // if ended in space, then range is unlimited
-					target = get_edge_target_turf(Q, throwdir)
-				else						// otherwise limit to 10 tiles
-					target = get_ranged_target_turf(Q, throwdir, 10)
-				M.throw_at(target,100,4)
-				if(!(M.flags & INVULNERABLE))
-					M.apply_effects(0, 2)
-					to_chat(user, "<span class='warning'>You're thrown back by the force of the blast!</span>")
-
-			T.damaged = 1
+				T.damaged = 1
+			else
+				qdel(B)
+				in_chamber = null

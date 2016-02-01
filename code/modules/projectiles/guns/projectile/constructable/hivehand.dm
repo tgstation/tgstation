@@ -30,6 +30,10 @@
 	user.update_inv_l_hand()
 	processing_objects.Add(src)
 
+/obj/item/weapon/gun/projectile/hivehand/dropped(mob/user as mob)
+	..()
+	processing_objects.Remove(src)
+
 /obj/item/weapon/gun/projectile/hivehand/update_icon()
 	overlays.len = 0
 
@@ -89,14 +93,14 @@
 		return
 
 	if(flag)	return //we're placing gun on a table or in backpack
-	if(harm_labeled >= min_harm_label)
-		to_chat(user, "<span class='warning'>A label sticks the trigger to the trigger guard!</span>")//Such a new feature, the player might not know what's wrong if it doesn't tell them.
-		return
 
 	var/obj/item/projectile/bullet/stinger/S = new(null)
 	in_chamber = S
-	Fire(A,user,params, "struggle" = struggle)
-	shots_remaining -= 1
-	has_shot = 1
+	if(Fire(A,user,params, "struggle" = struggle))
+		shots_remaining -= 1
+		has_shot = 1
+	else
+		qdel(S)
+		in_chamber = null
 
 	update_icon()

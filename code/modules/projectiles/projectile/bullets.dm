@@ -388,6 +388,13 @@
 	var/user = null
 	var/hit_mob = 0
 
+/obj/item/projectile/bullet/vial/Destroy()
+	if(vial)
+		qdel(vial)
+		vial = null
+	if(user)
+		user = null
+
 /obj/item/projectile/bullet/vial/on_hit(var/atom/atarget, var/blocked = 0)
 	..()
 	if(!user)
