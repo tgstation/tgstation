@@ -28,6 +28,9 @@
 		if(prefs.muted & MUTE_OOC)
 			src << "<span class='danger'>You cannot use OOC (muted).</span>"
 			return
+		if(jobban_isbanned(src, "OOC"))
+			src << "<span class='danger'>You have been banned from OOC.</span>"
+			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
 		if(findtext(msg, "byond://"))
@@ -36,14 +39,20 @@
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	log_ooc("[mob.name]/[key] : [msg]")
+	var/raw_msg = msg
+
+	msg = emoji_parse(msg)
+
+	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
+		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
+			return
+			
+	log_ooc("[mob.name]/[key] : [raw_msg]")
 
 	var/keyname = key
 	if(prefs.unlock_content)
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
-
-	msg = emoji_parse(msg)
 
 	for(var/client/C in clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
@@ -55,7 +64,7 @@
 						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else
 					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
-			else
+			else if(!(key in C.prefs.ignoring))
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
 /proc/toggle_ooc(toggle = null)
@@ -138,3 +147,25 @@ var/global/normal_ooc_colour = "#002eb8"
 		return
 
 	show_note(usr, null, 1)
+
+/client/proc/ignore_key(client)
+	var/client/C = client
+	if(C.key in prefs.ignoring)
+		prefs.ignoring -= C.key
+	else
+		prefs.ignoring |= C.key
+	src << "You are [(C.key in prefs.ignoring) ? "now" : "no longer"] ignoring [C.key] on the OOC channel."
+	prefs.save_preferences()
+
+/client/verb/select_ignore()
+	set name = "Ignore"
+	set category = "OOC"
+	set desc ="Ignore a player's messages on the OOC channel"
+
+	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in sortKey(clients)
+	if(!selection)
+		return
+	if(selection == src)
+		src << "You can't ignore yourself."
+		return
+	ignore_key(selection)

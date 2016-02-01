@@ -3,7 +3,7 @@
 	icon = 'icons/obj/tank.dmi'
 	item_state = "assembly"
 	throwforce = 5
-	w_class = 3.0
+	w_class = 3
 	throw_speed = 2
 	throw_range = 4
 	flags = CONDUCT
@@ -108,7 +108,10 @@
 	return
 
 /obj/item/weapon/tank/proc/ignite()	//This happens when a bomb is told to explode
-	var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
+	air_contents.assert_gases("plasma", "o2")
+	var/fuel_moles = air_contents.gases["plasma"][MOLES] + air_contents.gases["o2"][MOLES]/6
+	air_contents.garbage_collect()
+
 	var/strength = 1
 
 	var/turf/ground_zero = get_turf(loc)

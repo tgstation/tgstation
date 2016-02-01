@@ -17,6 +17,9 @@
 /obj/machinery/door/poddoor/ert
 	desc = "A heavy duty blast door that only opens for dire emergencies."
 
+/obj/machinery/door/poddoor/shuttledock //special poddoors that open when emergency shuttle docks at centcom
+	var/checkdir = 4	//door won't open if turf in this dir is space
+
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(density)
 		return 0
@@ -90,25 +93,33 @@
 
 //"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
 /obj/machinery/door/poddoor/ex_act(severity, target)
+	if(target == src)
+		qdel(src)
+		return
 	switch(severity)
-		if(1.0)
+		if(1)
 			if(prob(80))
 				qdel(src)
 			else
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
-		if(2.0)
+		if(2)
 			if(prob(20))
 				qdel(src)
 			else
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
 
-		if(3.0)
+		if(3)
 			if(prob(80))
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
 
+/obj/machinery/door/poddoor/update_icon()
+	if(density)
+		icon_state = "closed"
+	else
+		icon_state = "open"

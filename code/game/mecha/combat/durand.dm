@@ -13,7 +13,7 @@
 	var/defence = 0
 	var/defence_deflect = 35
 	wreckage = /obj/structure/mecha_wreckage/durand
-	var/datum/action/mecha/mech_defence_mode/defense_action = new
+	var/datum/action/innate/mecha/mech_defence_mode/defense_action = new
 
 /obj/mecha/combat/durand/relaymove(mob/user,direction)
 	if(defence)
@@ -38,11 +38,11 @@
 	output += "<b>Defence mode:</b> [defence?"on":"off"]"
 	return output
 
-/datum/action/mecha/mech_defence_mode
+/datum/action/innate/mecha/mech_defence_mode
 	name = "Toggle Defense Mode"
 	button_icon_state = "mech_defense_mode_off"
 
-/datum/action/mecha/mech_defence_mode/Activate()
+/datum/action/innate/mecha/mech_defence_mode/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/combat/durand/D = chassis

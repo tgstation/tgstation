@@ -12,7 +12,7 @@ Contents:
 	set category = null
 	set name = "Make Space Ninja"
 
-	if(!ticker)
+	if (!ticker.mode)
 		alert("Wait until the game starts")
 		return
 

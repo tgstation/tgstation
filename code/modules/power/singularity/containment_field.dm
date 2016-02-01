@@ -19,7 +19,7 @@
 		FG1.cleanup()
 	if(FG2 && !FG2.clean_up)
 		FG2.cleanup()
-	..()
+	return ..()
 
 /obj/machinery/field/containment/attack_hand(mob/user)
 	if(get_dist(src, user) > 1)
@@ -92,10 +92,7 @@
 			var/stun = min(shock_damage, 15)
 			user.Stun(stun)
 			user.Weaken(10)
-			user.burn_skin(shock_damage)
-			user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
-			"<span class='userdanger'>You feel a powerful shock course through your body, sending you flying!</span>", \
-			"<span class='italics'>You hear a heavy electrical crack.</span>")
+			user.electrocute_act(shock_damage, src, 1)
 
 		else if(issilicon(user))
 			if(prob(20))
@@ -113,7 +110,7 @@
 	return
 
 /obj/machinery/field/proc/bump_field(atom/movable/AM as mob|obj)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, AM.loc)
 	s.start()
 	var/atom/target = get_edge_target_turf(AM, get_dir(src, get_step_away(AM, src)))

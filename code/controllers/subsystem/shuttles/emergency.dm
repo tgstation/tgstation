@@ -1,3 +1,7 @@
+#define UNLAUNCHED 0
+#define ENDGAME_LAUNCHED 1
+#define EARLY_LAUNCHED 2
+
 /obj/docking_port/mobile/emergency
 	name = "emergency shuttle"
 	id = "emergency"
@@ -7,6 +11,8 @@
 	height = 11
 	dir = 4
 	travelDir = -90
+	roundstart_move = "emergency_away"
+	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 
 /obj/docking_port/mobile/emergency/New()
 	..()
@@ -100,15 +106,26 @@
 						G.dom_attempts = min(1,G.dom_attempts)
 
 		if(SHUTTLE_DOCKED)
+
+			if(time_left <= 50 && !sound_played) //4 seconds left:REV UP THOSE ENGINES BOYS. - should sync up with the launch
+				sound_played = 1 //Only rev them up once.
+				for(var/area/shuttle/escape/E in world)
+					E << 'sound/effects/hyperspace_begin.ogg'
+
 			if(time_left <= 0 && SSshuttle.emergencyNoEscape)
-				priority_announce("Hostile enviroment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
+				priority_announce("Hostile environment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
+				sound_played = 0 //Since we didn't launch, we will need to rev up the engines again next pass.
 				mode = SHUTTLE_STRANDED
+
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
 				//move each escape pod to its corresponding transit dock
 				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
-					if(M.z == ZLEVEL_STATION) //Will not launch from the mine/planet
+					if(M.launch_status == UNLAUNCHED) //Will not launch from the mine/planet
+						M.launch_status = ENDGAME_LAUNCHED
 						M.enterTransit()
 				//now move the actual emergency shuttle to its transit dock
+				for(var/area/shuttle/escape/E in world)
+					E << 'sound/effects/hyperspace_progress.ogg'
 				enterTransit()
 				mode = SHUTTLE_ESCAPE
 				timer = world.time
@@ -117,20 +134,35 @@
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
 				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
-					M.dock(SSshuttle.getDock("[M.id]_away"))
+					if(M.launch_status == ENDGAME_LAUNCHED)
+						M.dock(SSshuttle.getDock("[M.id]_away"))
 				//now move the actual emergency shuttle to centcomm
+				for(var/area/shuttle/escape/E in world)
+					E << 'sound/effects/hyperspace_end.ogg'
 				dock(SSshuttle.getDock("emergency_away"))
 				mode = SHUTTLE_ENDGAME
 				timer = 0
+				open_dock()
 
+/obj/docking_port/mobile/emergency/proc/open_dock()
+	for(var/obj/machinery/door/poddoor/shuttledock/D in airlocks)
+		var/turf/T = get_step(D, D.checkdir)
+		if(!istype(T,/turf/space))
+			spawn(0)
+				D.open()
 
 /obj/docking_port/mobile/pod
 	name = "escape pod"
 	id = "pod"
-
 	dwidth = 1
 	width = 3
 	height = 4
+	var/launch_status = UNLAUNCHED
+
+/obj/docking_port/mobile/pod/request()
+	if((security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA) && launch_status == UNLAUNCHED)
+		launch_status = EARLY_LAUNCHED
+		return ..()
 
 /obj/docking_port/mobile/pod/New()
 	if(id == "pod")
@@ -139,13 +171,6 @@
 
 /obj/docking_port/mobile/pod/cancel()
 	return
-
-/*
-	findTransitDock()
-		. = SSshuttle.getDock("[id]_transit")
-		if(.)	return .
-		return ..()
-*/
 
 /obj/machinery/computer/shuttle/pod
 	name = "pod control computer"
@@ -159,14 +184,74 @@
 /obj/machinery/computer/shuttle/pod/update_icon()
 	return
 
-/obj/machinery/computer/shuttle/pod/emag_act(mob/user as mob)
-	user << "<span class='warning'> Access requirements overridden. The pod may now be launched manually at any time.</span>"
-	admin_controlled = 0
-	icon_state = "dorm_emag"
+/obj/docking_port/stationary/random
+	name = "escape pod"
+	id = "pod"
+	dwidth = 1
+	width = 3
+	height = 4
+	var/target_area = /area/mine/unexplored
 
 /obj/docking_port/stationary/random/initialize()
 	..()
-	var/target_area = /area/mine/unexplored
-	var/turfs = get_area_turfs(target_area)
-	var/T=pick(turfs)
+	var/list/turfs = get_area_turfs(target_area)
+	var/turf/T = pick(turfs)
 	src.loc = T
+
+//Pod suits/pickaxes
+
+
+/obj/item/clothing/head/helmet/space/orange
+	name = "emergency space helmet"
+	icon_state = "syndicate-helm-orange"
+	item_state = "syndicate-helm-orange"
+
+/obj/item/clothing/suit/space/orange
+	name = "emergency space suit"
+	icon_state = "syndicate-orange"
+	item_state = "syndicate-orange"
+	slowdown = 3
+
+/obj/item/weapon/pickaxe/emergency
+	name = "emergency disembarkation tool"
+	desc = "For extracting yourself from rough landings."
+
+/obj/item/weapon/storage/pod
+	name = "emergency space suits"
+	desc = "A wall mounted safe containing space suits. Will only open in emergencies."
+	anchored = 1
+	density = 0
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "safe"
+
+/obj/item/weapon/storage/pod/New()
+	..()
+	new /obj/item/clothing/head/helmet/space/orange(src)
+	new /obj/item/clothing/head/helmet/space/orange(src)
+	new /obj/item/clothing/suit/space/orange(src)
+	new /obj/item/clothing/suit/space/orange(src)
+	new /obj/item/clothing/mask/gas(src)
+	new /obj/item/clothing/mask/gas(src)
+	new /obj/item/weapon/tank/internals/air(src)
+	new /obj/item/weapon/tank/internals/air(src)
+	new /obj/item/weapon/pickaxe/emergency(src)
+	new /obj/item/weapon/pickaxe/emergency(src)
+	new /obj/item/weapon/survivalcapsule(src)
+
+/obj/item/weapon/storage/pod/attackby(obj/item/weapon/W, mob/user, params)
+	return
+
+/obj/item/weapon/storage/pod/MouseDrop(over_object, src_location, over_location)
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
+		return ..()
+	else
+		usr << "The storage unit will only unlock during a Red or Delta security alert."
+
+/obj/item/weapon/storage/pod/attack_hand(mob/user)
+	return
+
+
+
+#undef UNLAUNCHED
+#undef LAUNCHED
+#undef EARLY_LAUNCHED

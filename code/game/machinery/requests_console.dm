@@ -211,7 +211,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					dat += "<div class='notice'>Swipe your card to authenticate yourself</div><BR>"
 				dat += "<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>"
 				dat += "<A href='?src=\ref[src];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"
-				if (announceAuth && message)
+				if ((announceAuth || IsAdminGhost(user)) && message)
 					dat += "<A href='?src=\ref[src];sendAnnouncement=1'>Announce Message</A><BR>"
 				else
 					dat += "<span class='linkOff'>Announce Message</span><BR>"
@@ -334,7 +334,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
 		if (sending)
 			var/pass = 0
-			for (var/obj/machinery/message_server/MS in world)
+			for (var/obj/machinery/message_server/MS in machines)
 				if(!MS.active) continue
 				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
 				pass = 1

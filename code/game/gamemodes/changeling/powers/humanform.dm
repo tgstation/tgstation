@@ -25,11 +25,10 @@
 		return 0
 	user << "<span class='notice'>We transform our appearance.</span>"
 
-	user.humanize((TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPSRC), chosen_prof.name)
-
-	changeling_transform(user, chosen_prof)
-
 	changeling.purchasedpowers -= src
+
+	var/newmob = user.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS)
+
+	changeling_transform(newmob, chosen_prof)
 	feedback_add_details("changeling_powers","LFT")
-	qdel(user)
 	return 1

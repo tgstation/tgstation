@@ -61,6 +61,9 @@
 			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
 				newtonian_move(last_move)
 
+	if(. && buckled_mob && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob
+		. = 0
+
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	return 1
@@ -101,6 +104,8 @@
 			throwing = 0
 			throw_impact(A)
 			. = 1
+			if(!A || qdeleted(A))
+				return
 		A.Bumped(src)
 
 
@@ -155,10 +160,14 @@
 /atom/movable/proc/throw_impact(atom/hit_atom)
 	return hit_atom.hitby(src)
 
-/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1)
+/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
 	if(!anchored && hitpush)
 		step(src, AM.dir)
 	..()
+
+/atom/movable/proc/throw_at_fast(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+	set waitfor = 0
+	throw_at(target, range, speed, thrower, spin, diagonals_first)
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	if(!target || !src || (flags & NODROP))	return 0
@@ -272,3 +281,37 @@
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
 	return
+
+/atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
+	if(!buckled_mob.Move(newloc, direct))
+		loc = buckled_mob.loc
+		last_move = buckled_mob.last_move
+		inertia_dir = last_move
+		buckled_mob.inertia_dir = last_move
+		return 0
+	return 1
+
+/atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
+	if(buckled_mob == mover)
+		return 1
+	return ..()
+
+
+/atom/movable/proc/get_spacemove_backup()
+	var/atom/movable/dense_object_backup
+	for(var/A in orange(1, get_turf(src)))
+		if(isarea(A))
+			continue
+		else if(isturf(A))
+			var/turf/turf = A
+			if(!turf.density)
+				continue
+			return turf
+		else
+			var/atom/movable/AM = A
+			if(!AM.CanPass(src) || AM.density)
+				if(AM.anchored)
+					return AM
+				dense_object_backup = AM
+				break
+	. = dense_object_backup

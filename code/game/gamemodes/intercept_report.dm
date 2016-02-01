@@ -81,10 +81,6 @@
 			src.text = ""
 			src.build_traitor(correct_person)
 			return src.text
-		if("malf")
-			src.text = ""
-			src.build_malf(correct_person)
-			return src.text
 		if("changeling","traitorchan")
 			src.text = ""
 			src.build_changeling(correct_person)
@@ -251,13 +247,6 @@
 	src.text += "that is standard issue aboard your vessel may be a target. We recommend removal of this object, and it's storage in a safe "
 	src.text += "environment. As this may cause panic among the crew, all efforts should be made to keep this information a secret from all but "
 	src.text += "the most trusted crew-members."
-	src.text += "<BR><HR>"
-
-/datum/intercept_text/proc/build_malf(datum/mind/correct_person)
-	var/a_name = pick(src.anomalies)
-	src.text += "<BR><BR>A <B><U>[a_name]</U></B> was recently picked up by a nearby stations sensors in your sector. If it came into contact with your ship or "
-	src.text += "electrical equipment, it may have had hazardarous and unpredictable effect. Closely observe any non carbon based life forms "
-	src.text += "for signs of unusual behaviour, but keep this information discreet at all times due to this possibly dangerous scenario."
 	src.text += "<BR><HR>"
 
 /datum/intercept_text/proc/build_changeling(datum/mind/correct_person)

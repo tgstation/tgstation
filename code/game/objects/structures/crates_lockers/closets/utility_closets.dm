@@ -133,6 +133,7 @@
 
 /obj/structure/closet/radiation/New()
 	..()
+	new /obj/item/device/geiger_counter(src)
 	new /obj/item/clothing/suit/radiation(src)
 	new /obj/item/clothing/head/radiation(src)
 
@@ -173,11 +174,5 @@
 
 /obj/structure/closet/ammunitionlocker/New()
 	..()
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	for(var/i in 1 to 8)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)

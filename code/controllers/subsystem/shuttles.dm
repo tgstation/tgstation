@@ -52,13 +52,11 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	ordernum = rand(1,9000)
 
-	for(var/typepath in typesof(/datum/supply_packs))
-		if(typepath == /datum/supply_packs)
-			continue
+	for(var/typepath in subtypesof(/datum/supply_packs))
 		var/datum/supply_packs/P = new typepath()
 		if(P.name == "HEADER") continue		// To filter out group headers
 		supply_packs["[P.type]"] = P
-
+	initial_move()
 	..()
 
 
@@ -109,7 +107,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			user << "The emergency shuttle has been disabled by Centcom."
 			return
 
-	call_reason = html_encode(trim(call_reason))
+	call_reason = trim(html_encode(call_reason))
 
 	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH)
 		user << "You must provide a reason."
@@ -118,9 +116,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/area/signal_origin = get_area(user)
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
-		emergency.request(null, 0.5, signal_origin, emergency_reason, 1)
+		emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1)
 	else
-		emergency.request(null, 1, signal_origin, emergency_reason, 0)
+		emergency.request(null, 1, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.")
@@ -128,21 +126,23 @@ var/datum/subsystem/shuttle/SSshuttle
 	return
 
 /datum/subsystem/shuttle/proc/cancelEvac(mob/user)
+	if(canRecall())
+		emergency.cancel(get_area(user))
+		log_game("[key_name(user)] has recalled the shuttle.")
+		message_admins("[key_name_admin(user)] has recalled the shuttle.")
+		return 1
+
+/datum/subsystem/shuttle/proc/canRecall()
 	if(emergency.mode != SHUTTLE_CALL)
 		return
-
 	if(ticker.mode.name == "meteor")
 		return
-
-	if((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
+	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED)
 		if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
 			return
-	else if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
-		return
-
-	emergency.cancel(get_area(user))
-	log_game("[key_name(user)] has recalled the shuttle.")
-	message_admins("[key_name_admin(user)] has recalled the shuttle.")
+	else
+		if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+			return
 	return 1
 
 /datum/subsystem/shuttle/proc/autoEvac()
@@ -199,18 +199,17 @@ var/datum/subsystem/shuttle/SSshuttle
 			return 2
 	return 0	//dock successful
 
-
-/*
-/proc/push_mob_back(var/mob/living/L, var/dir)
-	if(iscarbon(L) && isturf(L.loc))
-		if(prob(88))
-			var/turf/T = get_step(L, dir)
-			if(T)
-				for(var/obj/O in T) // For doors and such (kinda ugly but we can't have people opening doors)
-					if(!O.CanPass(L, L.loc, 1))
-						return
-				L.Move(get_step(L, dir), dir)
-*/
+/datum/subsystem/shuttle/proc/initial_move()
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(!M.roundstart_move)
+			continue
+		for(var/obj/docking_port/stationary/S in stationary)
+			if(S.z != ZLEVEL_STATION && findtext(S.id, M.id))
+				S.width = M.width
+				S.height = M.height
+				S.dwidth = M.dwidth
+				S.dheight = M.dheight
+		moveShuttle(M.id, "[M.roundstart_move]", 0)
 
 /datum/supply_order
 	var/ordernum
@@ -231,7 +230,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	reqform.info += "RANK: [orderedbyRank]<br>"
 	reqform.info += "REASON: [comment]<br>"
 	reqform.info += "SUPPLY CRATE TYPE: [object.name]<br>"
-	reqform.info += "ACCESS RESTRICTION: [replacetext(get_access_desc(object.access))]<br>"
+	reqform.info += "ACCESS RESTRICTION: [get_access_desc(object.access)]<br>"
 	reqform.info += "CONTENTS:<br>"
 	reqform.info += object.manifest
 	reqform.info += "<hr>"
@@ -284,6 +283,12 @@ var/datum/subsystem/shuttle/SSshuttle
 			A:amount = object.amount
 		slip.info += "<li>[A.name]</li>"	//add the item to the manifest (even if it was misplaced)
 
+	if(istype(Crate, /obj/structure/closet/critter)) // critter crates do not actually spawn mobs yet and have no contains var, but the manifest still needs to list them
+		var/obj/structure/closet/critter/CritCrate = Crate
+		if(CritCrate.content_mob)
+			var/mob/crittername = CritCrate.content_mob
+			slip.info += "<li>[initial(crittername.name)]</li>"
+
 	if((errors & MANIFEST_ERROR_ITEM))
 		//secure and large crates cannot lose items
 		if(findtext("[object.containertype]", "/secure/") || findtext("[object.containertype]","/largecrate/"))
@@ -327,11 +332,3 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	return O
 
-/*
-/datum/subsystem/shuttle/proc/getShuttleFromArea(area/A)
-	if(!A)
-		return
-	for(var/obj/docking_port/mobile/M in SSshuttle.mobile)
-		if(M.areaInstance == A)
-			return M
-*/

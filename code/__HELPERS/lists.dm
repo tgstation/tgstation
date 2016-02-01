@@ -40,11 +40,6 @@
 			return L[index]
 	return
 
-/proc/islist(list/L)
-	if(istype(L))
-		return 1
-	return 0
-
 //Return either pick(list) or null if list is not of type /list or is empty
 /proc/safepick(list/L)
 	if(istype(L) && L.len)
@@ -343,3 +338,9 @@
 		if(D.vars.Find(varname))
 			if(D.vars[varname] == value)
 				return D
+
+//remove all nulls from a list
+/proc/removeNullsFromList(list/L)
+	while(L.Remove(null))
+		continue
+	return L

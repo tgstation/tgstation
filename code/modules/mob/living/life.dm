@@ -2,6 +2,9 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
+	if(digitalinvis)
+		handle_diginvis() //AI becomes unable to see mob
+
 	if (notransform)
 		return
 	if(!loc)
@@ -65,6 +68,14 @@
 
 /mob/living/proc/handle_chemicals_in_body()
 	return
+
+/mob/living/proc/handle_diginvis()
+	if(!digitaldisguise)
+		src.digitaldisguise = image(loc = src)
+	src.digitaldisguise.override = 1
+	for(var/mob/living/silicon/ai/AI in player_list)
+		AI.client.images |= src.digitaldisguise
+
 
 /mob/living/proc/handle_blood()
 	return
@@ -145,7 +156,7 @@
 	if(I.action_button_name)
 		if(!I.action)
 			if(istype(I, /obj/item/organ/internal))
-				I.action = new/datum/action/organ_action
+				I.action = new/datum/action/item_action/organ_action
 			else if(I.action_button_is_hands_free)
 				I.action = new/datum/action/item_action/hands_free
 			else
@@ -156,7 +167,7 @@
 
 	if(recursive)
 		for(var/obj/item/T in I)
-			give_action_button(I, recursive - 1)
+			give_action_button(T, recursive - 1)
 
 
 //this handles hud updates. Calls update_vision() and handle_hud_icons()
@@ -179,7 +190,7 @@
 		if(blind)
 			if(eye_blind)
 				blind.layer = 18
-				throw_alert("blind")
+				throw_alert("blind", /obj/screen/alert/blind)
 			else
 				blind.layer = 0
 				clear_alert("blind")
@@ -192,7 +203,7 @@
 
 				if (druggy)
 					client.screen += global_hud.druggy
-					throw_alert("high")
+					throw_alert("high", /obj/screen/alert/high)
 				else
 					clear_alert("high")
 
@@ -206,7 +217,7 @@
 			if (!( machine.check_eye(src) ))
 				reset_view(null)
 		else
-			if(!client.adminobs)
+			if(!remote_view && !client.adminobs)
 				reset_view(null)
 
 /mob/living/proc/update_sight()

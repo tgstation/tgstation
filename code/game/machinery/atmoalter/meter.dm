@@ -4,7 +4,7 @@
 	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
-	anchored = 1.0
+	anchored = 1
 	power_channel = ENVIRON
 	var/frequency = 0
 	var/id
@@ -21,7 +21,7 @@
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src
 	src.target = null
-	..()
+	return ..()
 
 /obj/machinery/meter/initialize()
 	if (!target)
@@ -59,7 +59,7 @@
 		icon_state = "meter4"
 
 	if(frequency)
-		var/datum/radio_frequency/radio_connection = radio_controller.return_frequency(frequency)
+		var/datum/radio_frequency/radio_connection = SSradio.return_frequency(frequency)
 
 		if(!radio_connection) return
 
@@ -95,15 +95,15 @@
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
-		if (do_after(user, 40, target = src))
+		if (do_after(user, 40/W.toolspeed, target = src))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You unfasten \the [src].</span>", \
 				"<span class='italics'>You hear ratchet.</span>")
 			new /obj/item/pipe_meter(src.loc)
 			qdel(src)
-		return
-	..()
+	else
+		..()
 
 /obj/machinery/meter/attack_ai(mob/user)
 	return src.attack_hand(user)

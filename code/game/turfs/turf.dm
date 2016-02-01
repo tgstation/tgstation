@@ -1,6 +1,6 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-	level = 1.0
+	level = 1
 
 	var/slowdown = 0 //negative for faster, positive for slower
 	var/intact = 1
@@ -26,22 +26,21 @@
 
 	flags = 0
 
+	var/image/obscured	//camerachunks
 /turf/New()
 	..()
 	for(var/atom/movable/AM in src)
 		Entered(AM)
-	return
-/turf/Destroy()
-	return QDEL_HINT_HARDDEL_NOW
 
-// Adds the adjacent turfs to the current atmos processing
-/turf/Del()
+/turf/Destroy()
+	// Adds the adjacent turfs to the current atmos processing
 	for(var/direction in cardinal)
 		if(atmos_adjacent_turfs & direction)
 			var/turf/simulated/T = get_step(src, direction)
 			if(istype(T))
 				SSair.add_to_active(T)
 	..()
+	return QDEL_HINT_HARDDEL_NOW
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
@@ -92,12 +91,6 @@
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/M)
-	if(ismob(M))
-		var/mob/O = M
-		if(!O.lastarea)
-			O.lastarea = get_area(O.loc)
-//		O.update_gravity(O.mob_has_gravity())
-
 	var/loopsanity = 100
 	for(var/atom/A in range(1))
 		if(loopsanity == 0)
@@ -147,32 +140,32 @@
 //////Assimilate Air//////
 /turf/simulated/proc/Assimilate_Air()
 	if(air)
-		var/aoxy = 0//Holders to assimilate air from nearby turfs
-		var/anitro = 0
-		var/aco = 0
-		var/atox = 0
-		var/atemp = 0
+		var/datum/gas_mixture/a_gas_mixture = new//Holders to assimilate air from nearby turfs
+		var/list/a_gases = a_gas_mixture.gases
 		var/turf_count = 0
 
 		for(var/direction in cardinal)//Only use cardinals to cut down on lag
 			var/turf/T = get_step(src,direction)
+
 			if(istype(T,/turf/space))//Counted as no air
 				turf_count++//Considered a valid turf for air calcs
 				continue
+
 			else if(istype(T,/turf/simulated/floor))
 				var/turf/simulated/S = T
 				if(S.air)//Add the air's contents to the holders
-					aoxy += S.air.oxygen
-					anitro += S.air.nitrogen
-					aco += S.air.carbon_dioxide
-					atox += S.air.toxins
-					atemp += S.air.temperature
-				turf_count ++
-		air.oxygen = (aoxy/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
-		air.nitrogen = (anitro/max(turf_count,1))
-		air.carbon_dioxide = (aco/max(turf_count,1))
-		air.toxins = (atox/max(turf_count,1))
-		air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
+					var/list/S_gases = S.air.gases
+					for(var/id in a_gases)
+						a_gases[id][MOLES] += S_gases[id][MOLES]
+					a_gas_mixture.temperature += S.air.temperature
+				turf_count++
+
+		air.copy_from(a_gas_mixture)
+		var/list/air_gases = air.gases
+		for(var/id in air_gases)
+			air_gases[id][MOLES] /= max(turf_count,1)//Averages contents of the turfs, ignoring walls and the like
+
+		air.temperature /= max(turf_count,1)
 		SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
@@ -196,7 +189,14 @@
 	flags |= NOJAUNT
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	if(src_object.contents.len)
+		usr << "<span class='notice'>You start dumping out the contents...</span>"
+		if(!do_after(usr,20,target=src_object))
+			return 0
 	for(var/obj/item/I in src_object)
+		if(user.s_active != src_object)
+			if(I.on_found(user))
+				return
 		src_object.remove_from_storage(I, src) //No check needed, put everything inside
 	return 1
 
@@ -258,8 +258,9 @@
 				spawn (i)
 					step(C, olddir)
 					C.spin(1,1)
-		if(C.lying != oldlying) //did we actually fall?
-			C.adjustBruteLoss(2)
+		if(C.lying != oldlying && lube) //did we actually fall?
+			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+			C.apply_damage(5, BRUTE, dam_zone)
 		return 1
 
 /turf/singularity_act()
@@ -278,6 +279,9 @@
 /turf/proc/can_lay_cable()
 	return can_have_cabling() & !intact
 
+/turf/proc/visibilityChanged()
+	if(ticker)
+		cameranet.updateVisibility(src)
 
 /turf/indestructible
 	name = "wall"
@@ -286,6 +290,7 @@
 	blocks_air = 1
 	opacity = 1
 	explosion_block = 50
+	layer = TURF_LAYER + 0.05
 
 /turf/indestructible/splashscreen
 	name = "Space Station 13"
@@ -305,8 +310,7 @@
 /turf/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
-	smooth = 1
-	canSmoothWith = null
+	smooth = SMOOTH_TRUE
 
 /turf/indestructible/abductor
 	icon_state = "alien1"
@@ -318,6 +322,23 @@
 
 /turf/indestructible/fakedoor
 	name = "Centcom Access"
-	icon = 'icons/obj/doors/Doorele.dmi'
-	icon_state = "door_closed"
+	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
+	icon_state = "fake_door"
 
+/turf/indestructible/rock
+	name = "dense rock"
+	desc = "An extremely densely-packed rock, most mining tools or explosives would never get through this."
+	icon = 'icons/turf/mining.dmi'
+	icon_state = "rock"
+
+/turf/indestructible/rock/snow
+	name = "mountainside"
+	desc = "An extremely densely-packed rock, sheeted over with centuries worth of ice and snow."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "snowrock"
+
+/turf/indestructible/rock/snow/ice
+	name = "iced rock"
+	desc = "Extremely densely-packed sheets of ice and rock, forged over the years of the harsh cold."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "icerock"

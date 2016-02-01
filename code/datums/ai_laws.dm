@@ -100,7 +100,7 @@
 				WARNING("Invalid custom AI laws, check silicon_laws.txt")
 				return
 		if(2)
-			var/datum/ai_laws/lawtype = pick(typesof(/datum/ai_laws/default) - /datum/ai_laws/default)
+			var/datum/ai_laws/lawtype = pick(subtypesof(/datum/ai_laws/default))
 			var/datum/ai_laws/templaws = new lawtype()
 			inherent = templaws.inherent
 

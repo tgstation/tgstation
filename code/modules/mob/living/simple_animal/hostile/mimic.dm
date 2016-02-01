@@ -26,12 +26,8 @@
 
 	faction = list("mimic")
 	move_to_delay = 9
-
-/mob/living/simple_animal/hostile/mimic/death()
-	..(1)
-	visible_message("[src] stops moving!")
-	ghostize()
-	qdel(src)
+	gold_core_spawnable = 1
+	del_on_death = 1
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
 /mob/living/simple_animal/hostile/mimic/crate
@@ -74,7 +70,7 @@
 		visible_message("<b>[src]</b> starts to move!")
 		attempt_open = 1
 
-/mob/living/simple_animal/hostile/mimic/crate/adjustBruteLoss(damage)
+/mob/living/simple_animal/hostile/mimic/crate/adjustHealth(damage)
 	trigger()
 	..(damage)
 
@@ -109,6 +105,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	var/mob/living/creator = null // the creator
 	var/destroy_objects = 0
 	var/knockdown_people = 0
+	var/image/googly_eyes = null
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/hostile/mimic/copy/New(loc, obj/copy, mob/living/creator, destroy_original = 0)
 	..(loc)
@@ -116,6 +114,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/Life()
 	..()
+	if(!target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
+		adjustBruteLoss(1)
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
 		death()
 
@@ -139,7 +139,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		return 1
 	return 0
 
-/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/creator, destroy_original = 0)
+/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/user, destroy_original = 0)
 	if(destroy_original || CheckObject(O))
 		O.loc = src
 		name = O.name
@@ -148,6 +148,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		icon_state = O.icon_state
 		icon_living = icon_state
 		overlays = O.overlays
+		googly_eyes = image('icons/mob/mob.dmi',"googly_eyes")
+		overlays += googly_eyes
 		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
 			health = (anchored * 50) + 50
 			destroy_objects = 1
@@ -162,8 +164,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			melee_damage_upper = 2 + I.force
 			move_to_delay = 2 * I.w_class + 1
 		maxHealth = health
-		if(creator)
-			creator = creator
+		if(user)
+			creator = user
 			faction += "\ref[creator]" // very unique
 		if(destroy_original)
 			qdel(O)
@@ -183,6 +185,9 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 				C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 						"<span class='userdanger'>\The [src] knocks you down!</span>")
 
+/mob/living/simple_animal/hostile/mimic/copy/Aggro()
+	..()
+	googly_eyes.dir = get_dir(src,target)
 
 
 /mob/living/simple_animal/hostile/mimic/copy/machine
@@ -227,8 +232,6 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		if(istype(G, /obj/item/weapon/gun/projectile))
 			Pewgun = G
 			var/obj/item/ammo_box/magazine/M = Pewgun.mag_type
-			var/obj/item/ammo_casing/A = initial(M.ammo_type)
-			projectiletype = initial(A.projectile_type)
 			casingtype = initial(M.ammo_type)
 		if(istype(G, /obj/item/weapon/gun/energy))
 			Zapgun = G

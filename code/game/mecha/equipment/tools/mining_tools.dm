@@ -39,18 +39,18 @@
 			if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
 				var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 				if(ore_box)
-					for(var/obj/item/weapon/ore/ore in range(chassis,1))
+					for(var/obj/item/weapon/ore/ore in range(1, chassis))
 						if(get_dir(chassis,ore)&chassis.dir)
 							ore.Move(ore_box)
 		else if(istype(target, /turf/simulated/floor/plating/asteroid))
-			for(var/turf/simulated/floor/plating/asteroid/M in range(chassis,1))
+			for(var/turf/simulated/floor/plating/asteroid/M in range(1, chassis))
 				if(get_dir(chassis,M)&chassis.dir)
 					M.gets_dug()
 			log_message("Drilled through [target]")
 			if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
 				var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 				if(ore_box)
-					for(var/obj/item/weapon/ore/ore in range(chassis,1))
+					for(var/obj/item/weapon/ore/ore in range(1, chassis))
 						if(get_dir(chassis,ore)&chassis.dir)
 							ore.Move(ore_box)
 		else
@@ -118,10 +118,13 @@
 		var/obj/mecha/working/mecha = loc
 		if(!mecha.occupant)
 			return
+		var/mob/pilot = mecha.occupant
 		var/list/occupant = list()
-		occupant |= mecha.occupant
+		occupant |= pilot
+		pilot.sight |= SEE_TURFS
 		scanning = 1
 		mineral_scan_pulse(occupant,get_turf(loc))
 		spawn(equip_cooldown)
 			scanning = 0
+			pilot.sight -= SEE_TURFS
 

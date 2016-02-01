@@ -6,6 +6,7 @@
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
 	desc = "Looks like it's been here a while.  Eew."
+	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/old/New()
 	..()
@@ -15,6 +16,7 @@
 /obj/effect/decal/cleanable/blood/gibs/old
 	name = "old rotting gibs"
 	desc = "Space Jesus, why didn't anyone clean this up?  It smells terrible."
+	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/gibs/old/New()
 	..()
@@ -42,7 +44,7 @@
 		return
 
 	// These look weird if you make them dirty
-	if(istype(src, /turf/simulated/floor/carpet) || istype(src, /turf/simulated/floor/grass) || istype(src, /turf/simulated/floor/plating/beach) || istype(src, /turf/simulated/floor/holofloor) || istype(src, /turf/simulated/floor/plating/snow) || istype(src, /turf/simulated/floor/plating/ironsand))
+	if(istype(src, /turf/simulated/floor/carpet) || istype(src, /turf/simulated/floor/grass) || istype(src, /turf/simulated/floor/plating/beach) || istype(src, /turf/simulated/floor/holofloor)|| istype(src, /turf/simulated/floor/plating/ironsand))
 		return
 
 	if(locate(/obj/structure/grille) in contents)
@@ -76,7 +78,7 @@
 				new /obj/effect/decal/cleanable/dirt(src)
 		return
 
-	if(istype(A, /area/crew_quarters/toilet) || istype(A, /area/crew_quarters/locker/locker_toilet) || istype(A, /area/crew_quarters/bar))
+	if(istype(A, /area/crew_quarters/toilet) || istype(A, /area/crew_quarters/locker/locker_toilet))
 		if(prob(40))
 			if(prob(90))
 				new /obj/effect/decal/cleanable/vomit/old(src)

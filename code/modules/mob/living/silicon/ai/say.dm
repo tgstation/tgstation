@@ -49,7 +49,7 @@
 
 	var/obj/machinery/hologram/holopad/T = current
 	if(istype(T) && T.masters[src])//If there is a hologram and its master is the user.
-		send_speech(message, 7, T, "R", get_spans())
+		send_speech(message, 7, T, "robot", get_spans())
 		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>"//The AI can "hear" its own message.
 	else
 		src << "No holopad connected."
@@ -69,6 +69,8 @@ var/const/VOX_DELAY = 600
 	set desc = "Display a list of vocal words to announce to the crew."
 	set category = "AI Commands"
 
+	if(usr.stat == 2)
+		return //won't work if dead
 
 	var/dat = "Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR> \
 	<UL><LI>You can also click on the word to preview it.</LI>\

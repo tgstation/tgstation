@@ -25,10 +25,6 @@
 	var/totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)
 
 	var/list/memory = list()	// stored memory
-	var/rawcode = ""	// the code to compile (raw text)
-
-	var/datum/TCS_Compiler/Compiler	// the compiler that compiles and runs the code
-	var/autoruncode = 0		// 1 if the code is set to run every time a signal is picked up
 
 	var/encryption = "null" // encryption key: ie "password"
 	var/salt = "null"		// encryption salt: ie "123comsat"
@@ -46,16 +42,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
-	Compiler = new()
-	Compiler.Holder = src
 	server_radio = new()
-
-/obj/machinery/telecomms/server/Destroy()
-	// Garbage collects all the NTSL datums.
-	if(Compiler)
-		Compiler.GC()
-		Compiler = null
-	..()
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(signal.data["message"])
@@ -103,33 +90,9 @@
 				var/identifier = num2text( rand(-1000,1000) + world.time )
 				log.name = "data packet ([md5(identifier)])"
 
-				if(Compiler && autoruncode)
-					Compiler.Run(signal)	// execute the code
-
 			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub")
 			if(!can_send)
 				relay_information(signal, "/obj/machinery/telecomms/broadcaster")
-
-
-/obj/machinery/telecomms/server/proc/setcode(t)
-	if(t)
-		if(istext(t))
-			rawcode = t
-
-/obj/machinery/telecomms/server/proc/admin_log(mob/mob)
-
-	var/msg="[key_name(mob)] has compiled a script to server [src]:"
-	diary << msg
-	diary << rawcode
-	src.investigate_log("[msg]<br>[rawcode]", "ntsl")
-	if(length(rawcode)) // Let's not bother the admins for empty code.
-		message_admins("[key_name_admin(mob)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has compiled and uploaded a NTSL script to [src.id]",0,1)
-
-/obj/machinery/telecomms/server/proc/compile(mob/user)
-
-	if(Compiler)
-		admin_log(user)
-		return Compiler.Compile(rawcode)
 
 /obj/machinery/telecomms/server/proc/update_logs()
 	// start deleting the very first log entry

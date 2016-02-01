@@ -1,10 +1,9 @@
 /obj/effect/decal/cleanable/crayon
 	name = "rune"
-	desc = "A rune drawn in crayon."
+	desc = "Graffiti. Damn kids."
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "rune1"
 	layer = 2.1
-	anchored = 1
 	var/do_icon_rotate = TRUE
 
 /obj/effect/decal/cleanable/crayon/examine()
@@ -18,7 +17,7 @@
 	loc = location
 
 	name = e_name
-	desc = "A [name] drawn in crayon."
+	desc = "A [name] vandalizing the station."
 	if(type == "poseur tag")
 		type = pick(gang_name_pool)
 	icon_state = type
@@ -29,6 +28,7 @@
 		src.transform = M
 
 	color = main
+
 
 /obj/effect/decal/cleanable/crayon/gang
 	layer = 3.6 //Harder to hide
@@ -56,4 +56,4 @@
 		gang.territory -= territory.type
 		gang.territory_new -= territory.type
 		gang.territory_lost |= list(territory.type = territory.name)
-	..()
+	return ..()

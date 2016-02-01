@@ -13,23 +13,60 @@
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/weakbullet2
 
-
 /obj/item/ammo_casing/c10mm
 	desc = "A 10mm bullet casing."
 	caliber = "10mm"
 	projectile_type = /obj/item/projectile/bullet/midbullet3
-
 
 /obj/item/ammo_casing/c9mm
 	desc = "A 9mm bullet casing."
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
+/obj/item/ammo_casing/c9mmap
+	desc = "A 9mm bullet casing."
+	caliber = "9mm"
+	projectile_type =/obj/item/projectile/bullet/armourpiercing
+
+/obj/item/ammo_casing/c9mmtox
+	desc = "A 9mm bullet casing."
+	caliber = "9mm"
+	projectile_type = /obj/item/projectile/bullet/toxinbullet
+
+/obj/item/ammo_casing/c9mminc
+	desc = "A 9mm bullet casing."
+	caliber = "9mm"
+	projectile_type = /obj/item/projectile/bullet/incendiary/firebullet
+
+/obj/item/ammo_casing/c46x30mm
+	desc = "A 4.6x30mm bullet casing."
+	caliber = "4.6x30mm"
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
+
+/obj/item/ammo_casing/c46x30mmap
+	desc = "A 4.6x30mm bullet casing."
+	caliber = "4.6x30mm"
+	projectile_type =/obj/item/projectile/bullet/armourpiercing
+
+/obj/item/ammo_casing/c46x30mmtox
+	desc = "A 4.6x30mm bullet casing."
+	caliber = "4.6x30mm"
+	projectile_type = /obj/item/projectile/bullet/toxinbullet
+
+/obj/item/ammo_casing/c46x30mminc
+	desc = "A 4.6x30mm bullet casing."
+	caliber = "4.6x30mm"
+	projectile_type = /obj/item/projectile/bullet/incendiary/firebullet
 
 /obj/item/ammo_casing/c45
 	desc = "A .45 bullet casing."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/midbullet
+
+/obj/item/ammo_casing/c45nostamina
+	desc = "A .45 bullet casing."
+	caliber = ".45"
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
@@ -45,7 +82,7 @@
 	desc = "A 12 gauge buckshot shell."
 	icon_state = "gshell"
 	projectile_type = /obj/item/projectile/bullet/pellet
-	pellets = 5
+	pellets = 6
 	variance = 0.8
 
 /obj/item/ammo_casing/shotgun/rubbershot
@@ -53,7 +90,7 @@
 	desc = "A shotgun casing filled with densely-packed rubber balls, used to incapacitate crowds from a distance."
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/rpellet
-	pellets = 5
+	pellets = 6
 	variance = 0.8
 	materials = list(MAT_METAL=4000)
 
@@ -84,7 +121,7 @@
 	projectile_type = /obj/item/projectile/bullet/pellet/random
 	materials = list(MAT_METAL=250)
 	pellets = 5
-	variance = 1.0
+	variance = 1
 
 /obj/item/ammo_casing/shotgun/improvised/overload/New()
 	..()
@@ -179,12 +216,6 @@
 	reagents.add_reagent("mutetoxin", 6) //;HELP OPS IN MAINT
 	reagents.add_reagent("coniine", 6)
 	reagents.add_reagent("sodium_thiopental", 6)
-
-/obj/item/ammo_casing/a762
-	desc = "A 7.62mm bullet casing."
-	icon_state = "762-casing"
-	caliber = "a762"
-	projectile_type = /obj/item/projectile/bullet
 
 /obj/item/ammo_casing/a556
 	desc = "A 5.56mm bullet casing."

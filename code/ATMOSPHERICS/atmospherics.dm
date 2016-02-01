@@ -9,7 +9,6 @@ Pipes -> Pipelines
 Pipelines + Other Objects -> Pipe network
 
 */
-
 /obj/machinery/atmospherics
 	anchored = 1
 	idle_power_usage = 0
@@ -25,7 +24,11 @@ Pipelines + Other Objects -> Pipe network
 
 	var/image/pipe_vision_img = null
 
+	var/device_type = 0
+	var/list/obj/machinery/atmospherics/nodes = list()
+
 /obj/machinery/atmospherics/New()
+	nodes.len = device_type
 	..()
 	SSair.atmos_machinery += src
 	SetInitDirections()
@@ -33,6 +36,9 @@ Pipelines + Other Objects -> Pipe network
 		stored = new(src, make_from=src)
 
 /obj/machinery/atmospherics/Destroy()
+	for(DEVICE_TYPE_LOOP)
+		nullifyNode(I)
+
 	SSair.atmos_machinery -= src
 	if(stored)
 		qdel(stored)
@@ -44,11 +50,43 @@ Pipelines + Other Objects -> Pipe network
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
 
-	..()
+	return ..()
+	//return QDEL_HINT_FINDREFERENCE
+
+/obj/machinery/atmospherics/proc/nullifyNode(I)
+	if(NODE_I)
+		var/obj/machinery/atmospherics/N = NODE_I
+		N.disconnect(src)
+		NODE_I = null
 
 //this is called just after the air controller sets up turfs
-/obj/machinery/atmospherics/proc/atmosinit()
-	return
+/obj/machinery/atmospherics/proc/atmosinit(var/list/node_connects)
+	if(!node_connects) //for pipes where order of nodes doesn't matter
+		node_connects = list()
+		node_connects.len = device_type
+
+		for(DEVICE_TYPE_LOOP)
+			for(var/D in cardinal)
+				if(D & GetInitDirections())
+					if(D in node_connects)
+						continue
+					node_connects[I] = D
+					break
+
+	for(DEVICE_TYPE_LOOP)
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
+			if(can_be_node(target, I))
+				NODE_I = target
+				break
+
+	update_icon()
+
+/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
+	if(target.initialize_directions & get_dir(target,src))
+		return 1
+
+/obj/machinery/atmospherics/proc/pipeline_expansion()
+	return nodes
 
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
@@ -73,7 +111,12 @@ Pipelines + Other Objects -> Pipe network
 	return
 
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
-	return
+	if(istype(reference, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/P = reference
+		qdel(P.parent)
+	var/I = nodes.Find(reference)
+	NODE_I = null
+	update_icon()
 
 /obj/machinery/atmospherics/update_icon()
 	return
@@ -97,38 +140,40 @@ Pipelines + Other Objects -> Pipe network
 			user << "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>"
 			unsafe_wrenching = TRUE //Oh dear oh dear
 
-		if (do_after(user, 20, target = src) && !gc_destroyed)
+		if (do_after(user, 20/W.toolspeed, target = src) && !gc_destroyed)
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You unfasten \the [src].</span>", \
 				"<span class='italics'>You hear ratchet.</span>")
 			investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
 
-			//You unwrenched a pipe full of pressure? let's splat you into the wall silly.
+			//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 			if(unsafe_wrenching)
-				unsafe_pressure_release(user,internal_pressure)
+				unsafe_pressure_release(user, internal_pressure)
 			Deconstruct()
 
 	else
 		return ..()
 
 
-//Called when an atmospherics object is unwrenched while having a large pressure difference
-//with it's locs air contents.
-/obj/machinery/atmospherics/proc/unsafe_pressure_release(mob/user,pressures)
+// Throws the user when they unwrench a pipe with a major difference between the internal and environmental pressure.
+/obj/machinery/atmospherics/proc/unsafe_pressure_release(mob/user, pressures = null)
 	if(!user)
 		return
-
 	if(!pressures)
 		var/datum/gas_mixture/int_air = return_air()
 		var/datum/gas_mixture/env_air = loc.return_air()
-		pressures = int_air.return_pressure()-env_air.return_pressure()
+		pressures = int_air.return_pressure() - env_air.return_pressure()
 
-	var/fuck_you_dir = get_dir(src,user)
-	var/turf/general_direction = get_edge_target_turf(user,fuck_you_dir)
+	var/fuck_you_dir = get_dir(src, user) // Because fuck you...
+	if(!fuck_you_dir)
+		fuck_you_dir = pick(cardinal)
+	var/turf/target = get_edge_target_turf(user, fuck_you_dir)
+	var/range = pressures/250
+	var/speed = range/5
+
 	user.visible_message("<span class='danger'>[user] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>")
-	//Values based on 2*ONE_ATMOS (the unsafe pressure), resulting in 20 range and 4 speed
-	user.throw_at(general_direction,pressures/10,pressures/50)
+	user.throw_at(target, range, speed)
 
 /obj/machinery/atmospherics/Deconstruct()
 	if(can_unwrench)
@@ -137,9 +182,6 @@ Pipelines + Other Objects -> Pipe network
 		stored = null
 
 	qdel(src)
-
-/obj/machinery/atmospherics/proc/nullifyPipenet(datum/pipeline/P)
-	P.other_atmosmch -= src
 
 /obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255))
 
@@ -206,7 +248,8 @@ Pipelines + Other Objects -> Pipe network
 			user.forceMove(target_move.loc) //handle entering and so on.
 			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 		else if(target_move.can_crawl_through())
-			if(returnPipenet() != target_move.returnPipenet())
+			var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
+			if(pipenetdiff.len)
 				user.update_pipe_vision(target_move)
 			user.loc = target_move
 			user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
@@ -232,3 +275,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/can_crawl_through()
 	return 1
+
+/obj/machinery/atmospherics/proc/returnPipenets()
+	return list()
+

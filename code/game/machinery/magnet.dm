@@ -36,16 +36,16 @@
 	center = T
 
 	spawn(10)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_controller.add_object(src, freq, RADIO_MAGNETS)
+		if(SSradio)
+			SSradio.add_object(src, freq, RADIO_MAGNETS)
 
 	spawn()
 		magnetic_process()
 
 /obj/machinery/magnetic_module/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, freq)
-	..()
+	if(SSradio)
+		SSradio.remove_object(src, freq)
+	. = ..()
 	center = null
 
 // update the invisibility and icon
@@ -204,7 +204,7 @@
 	icon = 'icons/obj/airlock_machines.dmi' // uses an airlock machine icon, THINK GREEN HELP THE ENVIRONMENT - RECYCLING!
 	icon_state = "airlock_control_standby"
 	density = 0
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 45
 	var/frequency = 1449
@@ -228,29 +228,29 @@
 	..()
 
 	if(autolink)
-		for(var/obj/machinery/magnetic_module/M in world)
+		for(var/obj/machinery/magnetic_module/M in machines)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
 
 	spawn(45)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_connection = radio_controller.add_object(src, frequency, RADIO_MAGNETS)
+		if(SSradio)
+			radio_connection = SSradio.add_object(src, frequency, RADIO_MAGNETS)
 
 
 	if(path) // check for default path
 		filter_path() // renders rpath
 
 /obj/machinery/magnetic_controller/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, frequency)
-	..()
+	if(SSradio)
+		SSradio.remove_object(src, frequency)
+	. = ..()
 	magnets = null
 	rpath = null
 
 /obj/machinery/magnetic_controller/process()
 	if(magnets.len == 0 && autolink)
-		for(var/obj/machinery/magnetic_module/M in world)
+		for(var/obj/machinery/magnetic_module/M in machines)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 

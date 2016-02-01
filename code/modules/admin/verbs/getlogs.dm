@@ -1,7 +1,7 @@
 /*
 	HOW DO I LOG RUNTIMES?
 	Firstly, start dreamdeamon if it isn't already running. Then select "world>Log Session" (or press the F3 key)
-	navigate the popup window to the data/logs/runtime/ folder from where your tgstation .dmb is located.
+	navigate the popup window to the data/logs/runtimes/ folder from where your tgstation .dmb is located.
 	(you may have to make this folder yourself)
 
 	OPTIONAL: 	you can select the little checkbox down the bottom to make dreamdeamon save the log everytime you
@@ -44,7 +44,7 @@
 	set desc = "Retrieve any session logfiles saved by dreamdeamon."
 	set category = null
 
-	var/path = browse_files("data/logs/runtime/")
+	var/path = browse_files("data/logs/runtimes/")
 	if(!path)
 		return
 

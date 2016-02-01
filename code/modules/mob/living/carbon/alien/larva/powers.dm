@@ -32,18 +32,19 @@
 		return
 	var/mob/living/carbon/alien/larva/L = user
 
-	if(L.stat != CONSCIOUS)
-		return
 	if(L.handcuffed || L.legcuffed) // Cuffing larvas ? Eh ?
 		user << "<span class='danger'>You cannot evolve when you are cuffed.</span>"
 
 	if(L.amount_grown >= L.max_grown)	//TODO ~Carn
 		L << "<span class='name'>You are growing into a beautiful alien! It is time to choose a caste.</span>"
 		L << "<span class='info'>There are three to choose from:"
-		L << "<span class='name'>Hunters</span> <span class='info'>are strong and agile, able to hunt away from the hive and rapidly move through ventilation shafts. Hunters generate plasma slowly and have low reserves.</span>"
-		L << "<span class='name'>Sentinels</span> <span class='info'>are tasked with protecting the hive and are deadly up close and at a range. They are not as physically imposing nor fast as the hunters.</span>"
-		L << "<span class='name'>Drones</span> <span class='info'>are the working class, offering the largest plasma storage and generation. They are the only caste which may evolve again, turning into the dreaded alien queen.</span>"
+		L << "<span class='name'>Hunters</span> <span class='info'>are the most agile caste tasked with hunting for hosts. They are faster than a human and can even pounce, but are not much tougher than a drone.</span>"
+		L << "<span class='name'>Sentinels</span> <span class='info'>are tasked with protecting the hive. With their ranged spit, invisibility, and high health, they make formidable guardians and acceptable secondhand hunters.</span>"
+		L << "<span class='name'>Drones</span> <span class='info'>are the weakest and slowest of the castes, but can grow into the queen if there is none, and are vital to maintaining a hive with their resin secretion abilities.</span>"
 		var/alien_caste = alert(L, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
+
+		if(user.incapacitated()) //something happened to us while we were choosing.
+			return
 
 		var/mob/living/carbon/alien/humanoid/new_xeno
 		switch(alien_caste)
@@ -53,8 +54,8 @@
 				new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(L.loc)
 			if("Drone")
 				new_xeno = new /mob/living/carbon/alien/humanoid/drone(L.loc)
-		if(L.mind)	L.mind.transfer_to(new_xeno)
-		qdel(L)
+
+		L.alien_evolve(new_xeno)
 		return 0
 	else
 		user << "<span class='danger'>You are not fully grown.</span>"

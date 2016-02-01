@@ -25,7 +25,7 @@
 	if (power_station)
 		power_station.teleporter_console = null
 		power_station = null
-	..()
+	return ..()
 
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
@@ -180,7 +180,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-		for (var/obj/item/weapon/implant/tracking/I in world)
+		for (var/obj/item/weapon/implant/tracking/I in tracked_implants)
 			if (!I.implanted || !ismob(I.loc))
 				continue
 			else
@@ -238,7 +238,7 @@
 	name = "teleport"
 	icon = 'icons/obj/stationobjs.dmi'
 	density = 1
-	anchored = 1.0
+	anchored = 1
 
 /obj/machinery/teleport/hub
 	name = "teleporter hub"
@@ -256,9 +256,9 @@
 	link_power_station()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/teleporter_hub(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
 
@@ -269,7 +269,7 @@
 	if (power_station)
 		power_station.teleporter_hub = null
 		power_station = null
-	..()
+	return ..()
 
 /obj/machinery/teleport/hub/RefreshParts()
 	var/A = 0
@@ -287,7 +287,9 @@
 	return power_station
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
-	if(power_station && power_station.engaged && !panel_open)
+	if(z == ZLEVEL_CENTCOM)
+		M << "You can't use this here."
+	if(is_ready())
 		teleport(M)
 		use_power(5000)
 	return
@@ -315,8 +317,8 @@
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
 						M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
-						hardset_dna(human, null, null, null, null, /datum/species/fly)
-						human.regenerate_icons()
+						human.set_species(/datum/species/fly)
+
 					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
 			calibrated = 0
 	return
@@ -324,10 +326,17 @@
 /obj/machinery/teleport/hub/update_icon()
 	if(panel_open)
 		icon_state = "tele-o"
-	else if(power_station && power_station.engaged)
+	else if(is_ready())
 		icon_state = "tele1"
 	else
 		icon_state = "tele0"
+
+/obj/machinery/teleport/hub/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/teleport/hub/proc/is_ready()
+	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
 
 /obj/machinery/teleport/hub/syndicate/New()
 	..()
@@ -352,8 +361,8 @@
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/teleporter_station(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
+	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
@@ -391,7 +400,7 @@
 	if (teleporter_console)
 		teleporter_console.power_station = null
 		teleporter_console = null
-	..()
+	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool) && !panel_open)

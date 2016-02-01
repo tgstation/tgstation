@@ -13,8 +13,7 @@
 
 /obj/structure/closet/crate/secure/loot/New()
 	..()
-	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
-
+	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "z")
 	code = ""
 	for(var/i = 0, i < codelen, i++)
 		var/dig = pick(digits)
@@ -43,7 +42,7 @@
 				new /obj/item/weapon/ore/diamond(src)
 		if(21 to 25)
 			for(var/i = 0, i < 5, i++)
-				new /obj/item/weapon/contraband/poster(src)
+				new /obj/item/weapon/poster/contraband(src)
 		if(26 to 30)
 			for(var/i = 0, i < 3, i++)
 				new /obj/item/weapon/reagent_containers/glass/beaker/noreact(src)
@@ -63,18 +62,18 @@
 		if(53 to 54)
 			new /obj/item/toy/balloon(src)
 		if(55 to 56)
-			var/newitem = pick(typesof(/obj/item/toy/prize) - /obj/item/toy/prize)
+			var/newitem = pick(subtypesof(/obj/item/toy/prize))
 			new newitem(src)
 		if(57 to 58)
 			new /obj/item/toy/syndicateballoon(src)
 		if(59 to 60)
-			new /obj/item/weapon/pickaxe/drill(src)
-			new /obj/item/device/taperecorder(src)
+			new /obj/item/weapon/gun/energy/kinetic_accelerator/hyper(src)
 			new /obj/item/clothing/suit/space(src)
 			new /obj/item/clothing/head/helmet/space(src)
 		if(61 to 62)
-			for(var/i = 0, i < 12, ++i)
+			for(var/i = 0, i < 5, ++i)
 				new /obj/item/clothing/head/kitty(src)
+				new /obj/item/clothing/tie/petcollar(src)
 		if(63 to 64)
 			var/t = rand(4,7)
 			for(var/i = 0, i < t, ++i)
@@ -82,14 +81,15 @@
 				new newcoin(src)
 		if(65 to 66)
 			new /obj/item/clothing/suit/ianshirt(src)
+			new /obj/item/clothing/suit/hooded/ian_costume(src)
 		if(67 to 68)
 			var/t = rand(4,7)
 			for(var/i = 0, i < t, ++i)
-				var /newitem = pick(typesof(/obj/item/weapon/stock_parts) - /obj/item/weapon/stock_parts - /obj/item/weapon/stock_parts/subspace)
+				var /newitem = pick(subtypesof(/obj/item/weapon/stock_parts) - /obj/item/weapon/stock_parts/subspace)
 				new newitem(src)
 		if(69 to 70)
 			for(var/i = 0, i < 5, ++i)
-				new /obj/item/bluespace_crystal(src)
+				new /obj/item/weapon/ore/bluespace_crystal(src)
 		if(71 to 72)
 			new /obj/item/weapon/pickaxe/drill(src)
 		if(73 to 74)
@@ -168,7 +168,7 @@
 				user << "<span class='notice'>You leave the crate alone.</span>"
 			else
 				user << "<span class='warning'>A red light flashes.</span>"
-				lastattempt = input
+				lastattempt = replacetext(input, 0, "z")
 				attempts--
 				if (attempts == 0)
 					user << "<span class='danger'>The crate's anti-tamper system activates!</span>"

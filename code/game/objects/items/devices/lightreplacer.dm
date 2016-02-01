@@ -98,6 +98,33 @@
 			user << "<span class='warning'>You need a working light!</span>"
 			return
 
+	if(istype(W, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = W
+		var/found_good_light = 0
+		var/replaced_something = 0
+
+		for(var/obj/item/I in S.contents)
+			if(istype(I,/obj/item/weapon/light))
+				var/obj/item/weapon/light/L = I
+				if(L.status == LIGHT_OK)
+					found_good_light = 1
+					if(src.uses < max_uses)
+						qdel(L)
+						AddUses(1)
+						replaced_something = 1
+					else
+						break
+
+		if(!found_good_light)
+			user << "<span class='warning'>\The [S] contains no useable lights!</span>"
+			return
+
+		if(!replaced_something && src.uses == max_uses)
+			user << "<span class='warning'>\The [src] is full!</span>"
+			return
+
+		user << "<span class='notice'>You fill \the [src] with lights from \the [S]. You have [uses] lights remaining.</span>"
+
 /obj/item/device/lightreplacer/emag_act()
 	if(!emagged)
 		Emag()

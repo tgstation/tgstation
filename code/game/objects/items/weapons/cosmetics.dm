@@ -89,7 +89,7 @@
 			else
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick...</span>")
-				if(do_after(user, 10, target = H) && do_after(H, 10, 5, 0))	//user needs to keep their active hand, H does not.
+				if(do_after(user, 10, target = H))
 					user.visible_message("[user] wipes [H]'s lipstick off with \the [src].", \
 										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
 					H.lip_style = null
@@ -120,9 +120,11 @@
 /obj/item/weapon/razor/attack(mob/M, mob/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-
 		var/location = user.zone_sel.selecting
 		if(location == "mouth")
+			if(!(H.dna.species.specflags & FACEHAIR))
+				user << "<span class='warning'>There is no facial hair to shave!</span>"
+				return
 			if(!get_location_accessible(H, location))
 				user << "<span class='warning'>The mask is in the way!</span>"
 				return
@@ -148,6 +150,9 @@
 						shave(H, location)
 
 		else if(location == "head")
+			if(!(H.dna.species.specflags & HAIR))
+				user << "<span class='warning'>There is no hair to shave!</span>"
+				return
 			if(!get_location_accessible(H, location))
 				user << "<span class='warning'>The headgear is in the way!</span>"
 				return

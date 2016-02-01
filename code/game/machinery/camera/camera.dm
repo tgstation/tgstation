@@ -1,3 +1,7 @@
+#define CAMERA_UPGRADE_XRAY 1
+#define CAMERA_UPGRADE_EMP_PROOF 2
+#define CAMERA_UPGRADE_MOTION 4
+
 /obj/machinery/camera
 	name = "security camera"
 	desc = "It's used to monitor rooms."
@@ -17,31 +21,32 @@
 	var/start_active = 0 //If it ignores the random chance to start broken on round start
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
-	var/obj/item/weapon/camera_assembly/assembly = null
+	var/obj/machinery/camera_assembly/assembly = null
 
 	//OTHER
 
 	var/view_range = 7
 	var/short_range = 2
 
-	var/light_disabled = 0
 	var/alarm_on = 0
 	var/busy = 0
 	var/emped = 0  //Number of consecutive EMP's on this camera
 
+	// Upgrades bitflag
+	var/upgrades = 0
+
 /obj/machinery/camera/New()
+	..()
 	assembly = new(src)
 	assembly.state = 4
-	assembly.anchored = 1
-	assembly.update_icon()
-
+	cameranet.cameras += src
+	cameranet.addCamera(src)
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		var/list/tempnetwork = C.network&src.network
 		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
 			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
-	..()
 
 /obj/machinery/camera/initialize()
 	if(z == 1 && prob(3) && !start_active)
@@ -58,9 +63,13 @@
 			bug.current = null
 		bug = null
 	cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
-	..()
+	cameranet.cameras -= src
+	cameranet.removeCamera(src)
+	return ..()
 
 /obj/machinery/camera/emp_act(severity)
+	if(!status)
+		return
 	if(!isEmpProof())
 		if(prob(150/severity))
 			icon_state = "[initial(icon_state)]emp"
@@ -97,10 +106,6 @@
 		return
 	else
 		..()
-	return
-
-/obj/machinery/camera/blob_act()
-	qdel(src)
 	return
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
@@ -151,7 +156,6 @@
 				assembly.loc = src.loc
 				assembly.state = 1
 				assembly.dir = src.dir
-				assembly.update_icon()
 				assembly = null
 				qdel(src)
 				return
@@ -200,6 +204,8 @@
 		for(var/mob/O in player_list)
 			if(istype(O, /mob/living/silicon/ai))
 				var/mob/living/silicon/ai/AI = O
+				if(AI.control_disabled || (AI.stat == DEAD))
+					return
 				if(U.name == "Unknown")
 					AI << "<b>[U]</b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ..."
 				else
@@ -239,6 +245,11 @@
 
 /obj/machinery/camera/proc/deactivate(mob/user, displaymessage = 1) //this should be called toggle() but doing a find and replace for this would be ass
 	status = !status
+	if(can_use())
+		cameranet.addCamera(src)
+	else
+		SetLuminosity(0)
+		cameranet.removeCamera(src)
 	cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
 	if(!status)
@@ -345,6 +356,16 @@
 		return 1
 	busy = 0
 	return 0
+
+/obj/machinery/camera/proc/Togglelight(on=0)
+	for(var/mob/living/silicon/ai/A in ai_list)
+		for(var/obj/machinery/camera/cam in A.lit_cameras)
+			if(cam == src)
+				return
+	if(on)
+		src.SetLuminosity(AI_CAMERA_LUMINOSITY)
+	else
+		src.SetLuminosity(0)
 
 /obj/machinery/camera/bullet_act(obj/item/projectile/proj)
 	if(proj.damage_type == BRUTE)

@@ -53,6 +53,12 @@
 	waterlevel = maxwater
 	nutrilevel = 3
 
+/obj/machinery/hydroponics/Destroy()
+	if(myseed)
+		qdel(myseed)
+		myseed = null
+	return ..()
+
 /obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "hydrotray3", "hydrotray3", I))
 		return
@@ -230,9 +236,9 @@
 	if (mutmod == 2)
 		if(prob(50))		//50%
 			mutate()
-		else if(prob(75))	//37.5%
+		else if(prob(50))	//25%
 			hardmutate()
-		else if(prob(10))	//1/80
+		else if(prob(50))	//12.5%
 			mutatespecie()
 		return
 	return
@@ -371,7 +377,7 @@
 	harvest = 0
 	weedlevel = 0 // Reset
 
-	spawn(5) // Wait a while
+	sleep(5) // Wait a while
 	update_icon()
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutated into [myseed.plantname]!</span>")
 
@@ -391,7 +397,7 @@
 		harvest = 0
 		weedlevel = 0 // Reset
 
-		spawn(5) // Wait a while
+		sleep(5) // Wait a while
 		update_icon()
 		visible_message("<span class='warning'>The mutated weeds in [src] spawned a [myseed.plantname]!</span>")
 	else
@@ -762,7 +768,7 @@
 			user.visible_message("[user] begins to wrench [src] into place.", \
 								"<span class='notice'>You begin to wrench [src] in place...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20, target = src))
+			if (do_after(user, 20/O.toolspeed, target = src))
 				if(anchored)
 					return
 				anchored = 1
@@ -772,7 +778,7 @@
 			user.visible_message("[user] begins to unwrench [src].", \
 								"<span class='notice'>You begin to unwrench [src]...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20, target = src))
+			if (do_after(user, 20/O.toolspeed, target = src))
 				if(!anchored)
 					return
 				anchored = 0
@@ -792,8 +798,7 @@
 				user << "<span class='notice'>You reconnect \the [src]'s hoses.</span>"
 
 			for(var/obj/machinery/hydroponics/h in range(1,src))
-				spawn()
-					h.update_icon()
+				h.update_icon()
 
 	return
 
@@ -897,7 +902,7 @@
 		podman.faction |= factions
 		if(!features["mcolor"])
 			features["mcolor"] = "#59CE00"
-		hardset_dna(podman,null,null,podman.real_name,blood_type,/datum/species/plant/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+		podman.hardset_dna(null,null,podman.real_name,blood_type,/datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two

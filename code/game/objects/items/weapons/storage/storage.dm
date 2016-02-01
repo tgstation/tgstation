@@ -8,7 +8,7 @@
 /obj/item/weapon/storage
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
-	w_class = 3.0
+	w_class = 3
 	var/silent = 0 // No message on putting items in
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
@@ -73,6 +73,9 @@
 //Object behaviour on storage dump
 /obj/item/weapon/storage/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	for(var/obj/item/I in src_object)
+		if(user.s_active != src_object)
+			if(I.on_found(user))
+				return
 		if(can_be_inserted(I,0,user))
 			src_object.remove_from_storage(I, src)
 	orient2hud(user)
@@ -309,7 +312,7 @@
 					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
 				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
 					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
-				else if(W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
+				else if(W && W.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
 					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
 
 		orient2hud(usr)
@@ -321,7 +324,7 @@
 
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
-/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location)
+/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location, burn = 0)
 	if(!istype(W)) return 0
 
 	if(istype(src, /obj/item/weapon/storage/fancy))
@@ -333,7 +336,8 @@
 			M.client.screen -= W
 
 	if(ismob(loc))
-		W.dropped(usr)
+		var/mob/M = loc
+		W.dropped(M)
 	W.layer = initial(W.layer)
 	W.loc = new_location
 
@@ -346,8 +350,14 @@
 	W.on_exit_storage(src)
 	update_icon()
 	W.mouse_opacity = initial(W.mouse_opacity)
+	if(burn)
+		W.fire_act()
 	return 1
 
+
+/obj/item/weapon/storage/empty_object_contents(burn, src.loc)
+	for(var/obj/item/Item in contents)
+		remove_from_storage(Item, src.loc, burn)
 
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W, mob/user, params)
@@ -463,7 +473,7 @@
 	close_all()
 	qdel(boxes)
 	qdel(closer)
-	..()
+	return ..()
 
 
 /obj/item/weapon/storage/emp_act(severity)

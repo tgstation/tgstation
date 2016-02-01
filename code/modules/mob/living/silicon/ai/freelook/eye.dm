@@ -6,9 +6,10 @@
 /mob/camera/aiEye
 	name = "Inactive AI Eye"
 
+	invisibility = 100
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
-
+	var/relay_speech = FALSE
 
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
@@ -38,7 +39,7 @@
 
 /mob/camera/aiEye/Destroy()
 	ai = null
-	..()
+	return ..()
 
 /atom/proc/move_camera_by_click()
 	if(istype(usr, /mob/living/silicon/ai))
@@ -78,7 +79,6 @@
 	if (user.camera_light_on)
 		user.light_cameras()
 
-
 // Return to the Core.
 /mob/living/silicon/ai/proc/view_core()
 
@@ -100,5 +100,11 @@
 	set category = "AI Commands"
 	set name = "Toggle Camera Acceleration"
 
+	if(usr.stat == 2)
+		return //won't work if dead
 	acceleration = !acceleration
 	usr << "Camera acceleration has been toggled [acceleration ? "on" : "off"]."
+
+/mob/camera/aiEye/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))
+		ai.relay_speech(message, speaker, message_langs, raw_message, radio_freq, spans)

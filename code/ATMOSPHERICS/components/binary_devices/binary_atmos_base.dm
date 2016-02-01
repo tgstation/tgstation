@@ -27,10 +27,8 @@ Housekeeping and pipe network stuff
 */
 
 /obj/machinery/atmospherics/components/binary/atmosinit()
-
 	var/node2_connect = dir
 	var/node1_connect = turn(dir, 180)
 
-	var/list/node_connects = new/list()
-	node_connects.Add(node1_connect, node2_connect)
+	var/list/node_connects = list(node1_connect, node2_connect)
 	..(node_connects)

@@ -4,12 +4,12 @@
 	icon_state = "gas_alt"
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
-	w_class = 3.0
+	w_class = 3
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 // **** Welding gas mask ****
 
@@ -73,7 +73,7 @@
 	icon_state = "clown"
 	item_state = "clown_hat"
 	flags_cover = MASKCOVERSEYES
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 
@@ -88,7 +88,7 @@
 
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]
-		M << "Your Clown Mask has now morphed into [choice], all praise the Honk Mother!"
+		M << "Your Clown Mask has now morphed into [choice], all praise the Honkmother!"
 		return 1
 
 /obj/item/clothing/mask/gas/sexyclown
@@ -98,7 +98,7 @@
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 	flags_cover = MASKCOVERSEYES
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -107,7 +107,7 @@
 	icon_state = "mime"
 	item_state = "mime"
 	flags_cover = MASKCOVERSEYES
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
@@ -116,7 +116,7 @@
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
 	flags_cover = MASKCOVERSEYES
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
@@ -125,7 +125,7 @@
 	icon_state = "sexymime"
 	item_state = "sexymime"
 	flags_cover = MASKCOVERSEYES
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"
@@ -136,7 +136,7 @@
 	name = "cyborg visor"
 	desc = "Beep boop."
 	icon_state = "death"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
@@ -144,7 +144,7 @@
 	icon_state = "owl"
 	flags = MASKINTERNALS
 	flags_cover = MASKCOVERSEYES
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/mask/gas/carp
 	name = "carp mask"

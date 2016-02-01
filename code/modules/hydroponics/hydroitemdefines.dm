@@ -24,7 +24,7 @@
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 3
 	throw_range = 10
 
@@ -41,12 +41,12 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "pest spray"
 	icon_state = "pestspray"
-	item_state = "spray"
+	item_state = "plantbgone"
 	volume = 100
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 3
 	throw_range = 10
 
@@ -65,9 +65,9 @@
 	icon_state = "cultivator"
 	item_state = "cultivator"
 	flags = CONDUCT
-	force = 5.0
-	throwforce = 7.0
-	w_class = 2.0
+	force = 5
+	throwforce = 7
+	w_class = 2
 	materials = list(MAT_METAL=50)
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -78,15 +78,16 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
 	flags = CONDUCT
-	force = 12.0
-	w_class = 1.0
-	throwforce = 15.0
+	force = 12
+	w_class = 1
+	throwforce = 15
 	throw_speed = 3
 	throw_range = 4
 	materials = list(MAT_METAL=15000)
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
 
 /obj/item/weapon/hatchet/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is chopping at \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -97,12 +98,13 @@
 	icon_state = "scythe0"
 	name = "scythe"
 	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
-	force = 13.0
-	throwforce = 5.0
+	force = 13
+	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
-	w_class = 4.0
-	flags = CONDUCT | NOSHIELD
+	w_class = 4
+	flags = CONDUCT
+	armour_penetration = 20
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
@@ -123,14 +125,14 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	volume = 50
-	w_class = 1.0
+	w_class = 1
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/New()
 	..()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-5, 5)
+	src.pixel_y = rand(-5, 5)
 
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez

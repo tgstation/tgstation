@@ -42,7 +42,6 @@
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/list/image/staticOverlays = list()
 	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)
-	var/list/datum/action/actions = list()
 
 	var/list/pipes_shown = list()
 	var/last_played_vent
@@ -51,5 +50,9 @@
 
 	var/list/say_log = list() //a log of what we've said, plain text, no spans or junk, essentially just each individual "message"
 
+	var/bubble_icon = "default" //what icon the mob uses for speechbubbles
+
 	var/last_bumped = 0
 	var/unique_name = 0 //if a mob's name should be appended with an id when created e.g. Mob (666)
+
+	var/list/butcher_results = null

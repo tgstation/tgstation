@@ -46,6 +46,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/human/handle_blood()
 
 	if(NOBLOOD in dna.species.specflags)
+		blood_max = 0
 		return
 
 	if(stat != DEAD && bodytemperature >= 170)	//Dead or cryosleep people do not pump the blood.
@@ -82,15 +83,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					update_body()
 					var/word = pick("dizzy","woozy","faint")
 					src << "<span class='warning'>You feel [word].</span>"
-				if(oxyloss < 20)
-					oxyloss += 3
+				oxyloss += max(0, (20-oxyloss)*0.2)
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = 1
 					update_body()
-				if(oxyloss < 50)
-					oxyloss += 10
-				oxyloss += 1
+				oxyloss += max(1, (50-oxyloss)*0.2)
 				if(prob(5))
 					eye_blurry += 6
 					var/word = pick("dizzy","woozy","faint")
@@ -121,6 +119,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				blood_max += 2
 		if(bleedsuppress)
 			blood_max = 0
+		if(reagents.has_reagent("heparin") && getBruteLoss()) //Heparin is a powerful toxin that causes bleeding
+			blood_max += 3
 		drip(blood_max)
 
 //Makes a blood drop, leaking amt units of blood from the mob
@@ -272,10 +272,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		source = M.get_blood(M.vessel)
 	else if(istype(source,/mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/donor = source
-		if(donor.dna)
-			source = new()
-			source.data["blood_DNA"] = donor.dna.unique_enzymes
-			source.data["blood_type"] = donor.dna.blood_type
+		source = new()
+		source.data["blood_DNA"] = donor.dna.unique_enzymes
+		source.data["blood_type"] = donor.dna.blood_type
 
 	// Are we dripping or splattering?
 	var/list/drips = list()

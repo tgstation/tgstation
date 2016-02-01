@@ -76,7 +76,7 @@
 // Used to get a properly sanitized input, of max_length
 /proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN)
 	var/name = input(user, message, title, default) as text|null
-	return html_encode(trim(name, max_length)) //trim is "inside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
+	return trim(html_encode(name), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
 // Used to get a properly sanitized multiline input, of max_length
 /proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN)

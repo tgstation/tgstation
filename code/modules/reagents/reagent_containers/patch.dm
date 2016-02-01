@@ -4,7 +4,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bandaid"
 	item_state = "bandaid"
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 	volume = 50
 	apply_type = PATCH
 	apply_method = "apply"

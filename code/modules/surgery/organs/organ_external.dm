@@ -68,7 +68,12 @@
 	max_damage = 75
 	body_part = LEG_RIGHT
 
-
+/obj/item/organ/severedtail
+	name = "tail"
+	desc = "A severed tail."
+	icon_state = "severedtail"
+	color = "#161"
+	var/markings = "Smooth"
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc

@@ -14,9 +14,14 @@
 
 
 /mob/living/carbon/human/New()
-	create_reagents(1000)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+
+	//initialize dna. for spawned humans; overwritten by other code
+	create_dna(src)
+	randomize_human(src)
+	dna.initialize_dna()
+
 	//initialise organs
 	organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/l_arm,
 					 /obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)
@@ -29,15 +34,9 @@
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.Insert(src)
 
-	// for spawned humans; overwritten by other code
-	ready_dna(src)
-	randomize_human(src)
-
 	make_blood()
 
 	..()
-	var/mob/M = src
-	faction |= "\ref[M]"
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -47,7 +46,7 @@
 	sec_hud_set_implants()
 	sec_hud_set_security_status()
 	//...and display them.
-	add_to_all_data_huds()
+	add_to_all_human_data_huds()
 
 /mob/living/carbon/human/Destroy()
 	for(var/atom/movable/organelle in organs)
@@ -61,11 +60,6 @@
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
-		if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
-			var/datum/game_mode/malfunction/malf = ticker.mode
-			if(malf.malf_mode_declared && (malf.apcs > 0))
-				stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
-
 		if (internal)
 			if (!internal.air_contents)
 				qdel(internal)
@@ -90,9 +84,8 @@
 				stat("Energy Charge:", "[round(SN.cell.charge/100)]%")
 				stat("Smoke Bombs:", "\Roman [SN.s_bombs]")
 				//Ninja status
-				if(dna)
-					stat("Fingerprints:", "[md5(dna.uni_identity)]")
-					stat("Unique Identity:", "[dna.unique_enzymes]")
+				stat("Fingerprints:", "[md5(dna.uni_identity)]")
+				stat("Unique Identity:", "[dna.unique_enzymes]")
 				stat("Overall Status:", "[stat > 1 ? "dead" : "[health]% healthy"]")
 				stat("Nutrition Status:", "[nutrition]")
 				stat("Oxygen Loss:", "[getOxyLoss()]")
@@ -113,7 +106,7 @@
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if (1)
 			b_loss += 500
 			if (prob(getarmor(null, "bomb")))
 				shred_clothing(1,150)
@@ -123,7 +116,7 @@
 				gib()
 				return
 
-		if (2.0)
+		if (2)
 			b_loss += 60
 
 			f_loss += 60
@@ -139,7 +132,7 @@
 			if (prob(70))
 				Paralyse(10)
 
-		if(3.0)
+		if(3)
 			b_loss += 30
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
@@ -174,6 +167,15 @@
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
+
+/mob/living/carbon/human/bullet_act()
+	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
+		if(!prob(martial_art.deflection_chance))
+			return ..()
+		if(!src.lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
+			src.visible_message("<span class='warning'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+			return 0
+	..()
 
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)
@@ -234,7 +236,7 @@
 	else
 		dat += "<tr><td><B>Uniform:</B></td><td><A href='?src=\ref[src];item=[slot_w_uniform]'>[(w_uniform && !(w_uniform.flags&ABSTRACT)) ? w_uniform : "<font color=grey>Empty</font>"]</A></td></tr>"
 
-	if(w_uniform == null || (slot_w_uniform in obscured) || (dna && dna.species.nojumpsuit))
+	if((w_uniform == null && !(dna && dna.species.nojumpsuit)) || (slot_w_uniform in obscured))
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Pockets:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>ID:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Belt:</B></font></td></tr>"
@@ -263,25 +265,40 @@
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
 /mob/living/carbon/human/Crossed(atom/movable/AM)
-	var/obj/machinery/bot/mulebot/MB = AM
+	var/mob/living/simple_animal/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOver(src)
 
 	spreadFire(AM)
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, safety = 0)
-	if(!safety)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0)
+	if(tesla_shock)
+		var/total_coeff = 1
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
-			siemens_coeff = G.siemens_coefficient
+			if(G.siemens_coefficient <= 0)
+				total_coeff -= 0.5
+		if(wear_suit)
+			var/obj/item/clothing/suit/S = wear_suit
+			if(S.siemens_coefficient <= 0)
+				total_coeff -= 0.95
+		siemens_coeff = total_coeff
+	else if(!safety)
+		var/gloves_siemens_coeff = 1
+		var/species_siemens_coeff = 1
+		if(gloves)
+			var/obj/item/clothing/gloves/G = gloves
+			gloves_siemens_coeff = G.siemens_coefficient
+		if(dna && dna.species)
+			species_siemens_coeff = dna.species.siemens_coeff
+		siemens_coeff = gloves_siemens_coeff * species_siemens_coeff
 	if(heart_attack)
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
 			heart_attack = 0
 			if(stat == CONSCIOUS)
 				src << "<span class='notice'>You feel your heart beating again!</span>"
-
-	. = ..(shock_damage,source,siemens_coeff)
+	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock)
 	if(.)
 		electrocution_animation(40)
 
@@ -541,7 +558,7 @@
 /mob/living/carbon/human/proc/canUseHUD()
 	return !(src.stat || src.weakened || src.stunned || src.restrained())
 
-/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone)
+/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_sel.selecting
@@ -550,10 +567,10 @@
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
 	if(above_neck(target_zone))
-		if(head && head.flags & THICKMATERIAL)
+		if(head && head.flags & THICKMATERIAL && !penetrate_thick)
 			. = 0
 	else
-		if(wear_suit && wear_suit.flags & THICKMATERIAL)
+		if(wear_suit && wear_suit.flags & THICKMATERIAL && !penetrate_thick)
 			. = 0
 	if(!. && error_msg && user)
 		// Might need re-wording.
@@ -583,7 +600,7 @@
 	else
 		return null
 
-/mob/living/carbon/human/assess_threat(obj/machinery/bot/secbot/judgebot, lasercolor)
+/mob/living/carbon/human/assess_threat(mob/living/simple_animal/bot/secbot/judgebot, lasercolor)
 	if(judgebot.emagged == 2)
 		return 10 //Everyone is a criminal!
 
@@ -664,7 +681,8 @@
 		facial_hair_style = "Shaved"
 	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
-	regenerate_icons()
+	update_body()
+	update_hair()
 
 /mob/living/carbon/human/singularity_act()
 	var/gain = 20
@@ -684,7 +702,7 @@
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && unEquip(hand))
 				step_towards(hand, src)
 				src << "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>"
-	irradiate(current_size * 3)
+	rad_act(current_size * 3)
 	if(mob_negates_gravity())
 		return
 	..()
@@ -833,3 +851,13 @@
 			if(M.client)
 				viewing += M.client
 		flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
+
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
+	if(incapacitated() || lying )
+		return
+	if(!Adjacent(M) && (M.loc != src))
+		if((be_close == 0) && (dna.check_mutation(TK)))
+			if(tkMaxRangeCheck(src, M))
+				return 1
+		return
+	return 1

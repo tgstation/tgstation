@@ -1,39 +1,24 @@
-import sys,pickle,socket, CORE_DATA
-#def pack():
-#    path = "/home/ski/Nanotrasen/message.txt"
-#    ip = sys.argv[1]
-#    dictionary = {"ip":ip,"data":1}
-#    try:
-#        targetfile = open(path,"r")
-#    except IOError:
-#        targetfile = open(path,"w")
-#        pickle.dump(dictionary,targetfile)
-#        targetfile.close()
-#        nudge()
-#    else:
-#        targetfile.close() #Professionals, have standards.
-#        pass
+#!/usr/bin/env python3
+import sys
+import pickle
+import socket
+
+
 def pack():
     ip = sys.argv[1]
     try:
-        data = sys.argv[2:] #The rest of the arguments is data
+        data = sys.argv[2:]
     except:
         data = "NO DATA SPECIFIED"
-    dictionary = {"ip":ip,"data":data}
-    pickled = pickle.dumps(dictionary)
-    nudge(pickled)
+
+    nudge(pickle.dumps({"ip": ip, "data": data}))
+
+
 def nudge(data):
-    if CORE_DATA.DISABLE_ALL_NON_MANDATORY_SOCKET_CONNECTIONS:
-        pass
-    else:
-        HOST = "localhost"
-        PORT = 45678
-        size = 1024
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((HOST,PORT))
-        s.send(data)
-        s.close()
-    
-if __name__ == "__main__" and len(sys.argv) > 1: # If not imported and more than one argument
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(("localhost", 45678))
+    s.send(data)
+    s.close()
+
+if __name__ == "__main__" and len(sys.argv) > 1:
     pack()
-    

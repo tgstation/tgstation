@@ -7,13 +7,22 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
+	//Dimensions of the icon file used when this item is worn, eg: hats.dmi
+	//eg: 32x32 sprite, 64x64 sprite, etc.
+	//allows inhands/worn sprites to be of any size, but still centered on a mob properly
+	var/worn_x_dimension = 32
+	var/worn_y_dimension = 32
+	//Same as above but for inhands, uses the lefthand_ and righthand_ file vars
+	var/inhand_x_dimension = 32
+	var/inhand_y_dimension = 32
+
 	//Not on /clothing because for some reason any /obj/item can technically be "worn" with enough fuckery.
 	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
 	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
 
 	var/hitsound = null
 	var/throwhitsound = null
-	var/w_class = 3.0
+	var/w_class = 3
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 3
@@ -32,7 +41,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
-	var/item_color = null
+
+	var/item_color = null //this needs deprecating, soonish
+
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
@@ -84,13 +95,37 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	)
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
+	var/heat = 0
+	var/sharpness = IS_BLUNT
+	var/toolspeed = 1
+
+	var/block_chance = 0
+	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
+
+	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
+	var/list/slot_equipment_priority = list( \
+			slot_back,\
+			slot_wear_id,\
+			slot_w_uniform,\
+			slot_wear_suit,\
+			slot_wear_mask,\
+			slot_head,\
+			slot_shoes,\
+			slot_gloves,\
+			slot_ears,\
+			slot_glasses,\
+			slot_belt,\
+			slot_s_store,\
+			slot_l_store,\
+			slot_r_store,\
+			slot_drone_storage\
+		)
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
 	else
 		return 1
-
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
@@ -138,17 +173,17 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	..()
 	var/size
 	switch(src.w_class)
-		if(1.0)
+		if(1)
 			size = "tiny"
-		if(2.0)
+		if(2)
 			size = "small"
-		if(3.0)
+		if(3)
 			size = "normal-sized"
-		if(4.0)
+		if(4)
 			size = "bulky"
-		if(5.0)
+		if(5)
 			size = "huge"
-		if(6.0)
+		if(6)
 			size = "gigantic"
 		else
 	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
@@ -161,10 +196,35 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	user << "[pronoun] a [size] item." //e.g. They are a small item. or It is a bulky item.
 
+	if(user.research_scanner) //Mob has a research scanner active.
+		var/msg = "*--------* <BR>"
+
+		if(origin_tech)
+			msg += "<span class='notice'>Testing potentials:</span><BR>"
+			var/list/techlvls = params2list(origin_tech)
+			for(var/T in techlvls) //This needs to use the better names.
+				msg += "Tech: [CallTechName(T)] | magnitude: [techlvls[T]] <BR>"
+			msg += "Research reliability: [reliability]% <BR>"
+			if(crit_fail)
+				msg += "<span class='danger'>Critical failure detected in subject!</span><BR>"
+		else
+			msg += "<span class='danger'>No tech origins detected.</span><BR>"
+
+
+		if(materials.len)
+			msg += "<span class='notice'>Extractable materials:<BR>"
+			for(var/mat in materials)
+				msg += "[CallMaterialName(mat)]<BR>" //Capitize first word, remove the "$"
+		else
+			msg += "<span class='danger'>No extractable materials detected.</span><BR>"
+		msg += "*--------*"
+		user << msg
+
+
 /obj/item/attack_hand(mob/user)
 	if (!user) return
 
-	if(burn_state == 1)
+	if(burn_state == ON_FIRE)
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
 			if(H.gloves && (H.gloves.max_heat_protection_temperature > 360))
@@ -189,17 +249,16 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if (loc == user)
 		if(!user.unEquip(src))
 			return
-	else
-		if(isliving(loc))
-			return
+
 	pickup(user)
 	add_fingerprint(user)
-	user.put_in_active_hand(src)
+	if(!user.put_in_active_hand(src))
+		dropped(user)
 	return
 
 
 /obj/item/attack_paw(mob/user)
-
+	var/picked_up = 0
 	if (istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
 			if (M.s_active == src.loc)
@@ -213,8 +272,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		if(istype(src.loc, /mob/living))
 			return
 		src.pickup(user)
+		picked_up = 1
 
-	user.put_in_active_hand(src)
+	if(!user.put_in_active_hand(src) && picked_up)
+		dropped(user)
 	return
 
 
@@ -275,6 +336,12 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
+/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(prob(final_block_chance))
+		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
+		return 1
+	return 0
+
 /obj/item/proc/talk_into(mob/M, input, channel, spans)
 	return
 
@@ -323,26 +390,14 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(usr.stat || usr.restrained() || !Adjacent(usr) || usr.stunned || usr.weakened || usr.lying)
 		return
 
-	if(ishuman(usr) || ismonkey(usr))
-		if(usr.get_active_hand() == null)
-			usr.UnarmedAttack(src) // Let me know if this has any problems -Giacom | Actually let me know now.  -Sayu
-		/*
-		if(usr.get_active_hand() == null)
-			src.attack_hand(usr)
-		else
-			usr << "\red You already have something in your hand."
-		*/
-	else
-		usr << "<span class='warning'>This mob type can't use this verb!</span>"
+	if(usr.get_active_hand() == null) // Let me know if this has any problems -Yota
+		usr.UnarmedAttack(src)
 
 //This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'action_button_name'.
 //The default action is attack_self().
 //Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click()
 	attack_self(usr)
-
-/obj/item/proc/IsShield()
-	return 0
 
 /obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 	return 0
@@ -382,6 +437,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
 							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
+		user.do_attack_animation(M)
 	else
 		user.visible_message( \
 			"<span class='danger'>[user] has stabbed themself in the eyes with [src]!</span>", \
@@ -436,10 +492,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		bloody_hands_mob = null
 
 /obj/item/singularity_pull(S, current_size)
-	spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
-		if(current_size >= STAGE_FOUR)
-			throw_at(S,14,3, spin=0)
-		else ..()
+	if(current_size >= STAGE_FOUR)
+		throw_at_fast(S,14,3, spin=0)
+	else ..()
 
 /obj/item/acid_act(acidpwr, acid_volume)
 	. = 1
@@ -491,3 +546,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		S.remove_from_storage(src,newLoc)
 		return 1
 	return 0
+
+/obj/item/proc/is_hot()
+	return heat
+
+/obj/item/proc/is_sharp()
+	return sharpness

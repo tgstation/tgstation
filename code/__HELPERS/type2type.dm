@@ -162,15 +162,19 @@
 //Converts a string into a list by splitting the string at each delimiter found. (discarding the seperator)
 /proc/text2list(text, delimiter="\n")
 	var/delim_len = length(delimiter)
-	if(delim_len < 1) return list(text)
 	. = list()
 	var/last_found = 1
-	var/found
-	do
-		found = findtext(text, delimiter, last_found, 0)
-		. += copytext(text, last_found, found)
-		last_found = found + delim_len
-	while(found)
+	var/found = 1
+	if(delim_len < 1)
+		var/text_len = length(text)
+		while(found++ <= text_len)
+			. += copytext(text,found-1, found)
+	else
+		do
+			found = findtext(text, delimiter, last_found, 0)
+			. += copytext(text, last_found, found)
+			last_found = found + delim_len
+		while(found)
 
 //Case Sensitive!
 /proc/text2listEx(text, delimiter="\n")
@@ -193,21 +197,21 @@
 //Turns a direction into text
 /proc/dir2text(direction)
 	switch(direction)
-		if(1.0)
+		if(1)
 			return "north"
-		if(2.0)
+		if(2)
 			return "south"
-		if(4.0)
+		if(4)
 			return "east"
-		if(8.0)
+		if(8)
 			return "west"
-		if(5.0)
+		if(5)
 			return "northeast"
-		if(6.0)
+		if(6)
 			return "southeast"
-		if(9.0)
+		if(9)
 			return "northwest"
-		if(10.0)
+		if(10)
 			return "southwest"
 		else
 	return
@@ -300,6 +304,8 @@
 	switch(ui_style)
 		if("Retro")		return 'icons/mob/screen_retro.dmi'
 		if("Plasmafire")	return 'icons/mob/screen_plasmafire.dmi'
+		if("Slimecore") return 'icons/mob/screen_slimecore.dmi'
+		if("Operative") return 'icons/mob/screen_operative.dmi'
 		else			return 'icons/mob/screen_midnight.dmi'
 
 //colour formats
@@ -625,6 +631,13 @@ for(var/t in test_times)
 					if(var_source.vars.Find(A))
 						. += A
 
-
+//assumes format #RRGGBB #rrggbb
+/proc/color_hex2num(A)
+	if(!A)
+		return 0
+	var/R = hex2num(copytext(A,2,4))
+	var/G = hex2num(copytext(A,4,6))
+	var/B = hex2num(copytext(A,6,0))
+	return R+G+B
 
 

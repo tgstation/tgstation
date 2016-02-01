@@ -13,7 +13,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=500)
@@ -47,19 +47,26 @@
 		else
 			user << "<span class='warning'>You fail to handcuff [C]!</span>"
 
-/obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user)
-	if(!target.handcuffed)
-		if(!user.drop_item())
-			return
-		//target.throw_alert("handcuffed", src) // Can't do this because escaping cuffs isn't standardized. Also zipties.
-		if(trashtype)
-			target.handcuffed = new trashtype(target)
-			qdel(src)
-		else
-			loc = target
-			target.handcuffed = src
-		target.update_inv_handcuffed(0)
+/obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
+	if(target.handcuffed)
 		return
+
+	if(!user.drop_item() && !dispense)
+		return
+
+	var/obj/item/weapon/restraints/handcuffs/cuffs = src
+	if(trashtype)
+		cuffs = new trashtype()
+	else if(dispense)
+		cuffs = new type()
+
+	cuffs.loc = target
+	target.handcuffed = cuffs
+
+	target.update_inv_handcuffed(0)
+	if(trashtype && !dispense)
+		qdel(src)
+	return
 
 /obj/item/weapon/restraints/handcuffs/cable
 	name = "cable restraints"
@@ -68,6 +75,24 @@
 	item_state = "coil_red"
 	breakouttime = 300 //Deciseconds = 30s
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+	var/datum/robot_energy_storage/wirestorage = null
+
+/obj/item/weapon/restraints/handcuffs/cable/attack(mob/living/carbon/C, mob/living/carbon/human/user)
+	if(!istype(C))
+		return
+	if(wirestorage && wirestorage.energy < 15)
+		user << "<span class='warning'>You need at least 15 wire to restrain [C]!</span>"
+		return
+	return ..()
+
+/obj/item/weapon/restraints/handcuffs/cable/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
+	if(wirestorage)
+		if(!wirestorage.use_charge(15))
+			user << "<span class='warning'>You need at least 15 wire to restrain [target]!</span>"
+			return
+		return ..(target, user, 1)
+
+	return ..()
 
 /obj/item/weapon/restraints/handcuffs/cable/red
 	icon_state = "cuff_red"
@@ -152,7 +177,7 @@
 	icon_state = "handcuff"
 	flags = CONDUCT
 	throwforce = 0
-	w_class = 3.0
+	w_class = 3
 	origin_tech = "materials=1"
 	slowdown = 7
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
@@ -221,7 +246,7 @@
 	..()
 	spawn(100)
 		if(!istype(loc, /mob))
-			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 			sparks.set_up(1, 1, src)
 			sparks.start()
 			qdel(src)

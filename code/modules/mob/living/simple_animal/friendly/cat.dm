@@ -14,12 +14,21 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
+	ventcrawler = 2
+	pass_flags = PASSTABLE
+	mob_size = MOB_SIZE_SMALL
+	minbodytemp = 200
+	maxbodytemp = 400
+	unsuitable_atmos_damage = 1
 	species = /mob/living/simple_animal/pet/cat
 	childtype = /mob/living/simple_animal/pet/cat/kitten
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
+	var/turns_since_scan = 0
+	var/mob/living/simple_animal/mouse/movement_target
+	gold_core_spawnable = 2
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/Runtime
@@ -29,10 +38,9 @@
 	icon_living = "cat"
 	icon_dead = "cat_dead"
 	gender = FEMALE
-	var/turns_since_scan = 0
-	var/mob/living/simple_animal/mouse/movement_target
+	gold_core_spawnable = 0
 
-/mob/living/simple_animal/pet/cat/Runtime/Life()
+/mob/living/simple_animal/pet/cat/Life()
 	//MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
@@ -43,6 +51,10 @@
 					movement_target = null
 					stop_automated_movement = 0
 					break
+			for(var/obj/item/toy/cattoy/T in view(1,src))
+				if (T.cooldown < (world.time - 400))
+					emote("me", 1, "bats \the [T] around with its paw!")
+					T.cooldown = world.time
 
 	..()
 
@@ -69,6 +81,7 @@
 
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"

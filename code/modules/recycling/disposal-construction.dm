@@ -16,6 +16,10 @@
 	var/dpdir = 0	// directions as disposalpipe
 	var/base_state = "pipe-s"
 
+/obj/structure/disposalconstruct/examine(mob/user)
+	..()
+	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+
 /obj/structure/disposalconstruct/New(var/loc, var/pipe_type, var/direction = 1)
 	..(loc)
 	if(pipe_type)
@@ -103,6 +107,16 @@
 
 	dir = turn(dir, -90)
 	update()
+
+/obj/structure/disposalconstruct/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		rotate()
 
 /obj/structure/disposalconstruct/verb/flip()
 	set name = "Flip Pipe"
@@ -223,7 +237,7 @@
 			if(W.remove_fuel(0,user))
 				playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "<span class='notice'>You start welding the [nicetype] in place...</span>"
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20/I.toolspeed, target = src))
 					if(!loc || !W.isOn())
 						return
 					user << "<span class='notice'>The [nicetype] has been welded in place.</span>"

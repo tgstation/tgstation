@@ -2,18 +2,18 @@
 	name = "jetpack (empty)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
-	w_class = 4.0
+	w_class = 4
 	item_state = "jetpack"
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	action_button_name = "Toggle Jetpack"
-	var/datum/effect/effect/system/ion_trail_follow/ion_trail
-	var/on = 0.0
+	var/datum/effect_system/trail_follow/ion/ion_trail
+	var/on = 0
 	var/stabilization_on = 0
 	var/volume_rate = 500              //Needed for borg jetpack transfer
 
 /obj/item/weapon/tank/jetpack/New()
 	..()
-	ion_trail = new /datum/effect/effect/system/ion_trail_follow()
+	ion_trail = new /datum/effect_system/trail_follow/ion()
 	ion_trail.set_up(src)
 
 
@@ -54,7 +54,7 @@
 
 	var/datum/gas_mixture/G = src.air_contents.remove(num)
 
-	var/allgases = G.carbon_dioxide + G.nitrogen + G.oxygen + G.toxins	//fuck trace gases	-Pete
+	var/allgases = G.total_moles()
 	if(allgases >= 0.005)
 		return 1
 
@@ -73,7 +73,8 @@
 
 /obj/item/weapon/tank/jetpack/void/New()
 	..()
-	air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("o2")
+	air_contents.gases["o2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
 
 /obj/item/weapon/tank/jetpack/oxygen
@@ -84,7 +85,8 @@
 
 /obj/item/weapon/tank/jetpack/oxygen/New()
 	..()
-	air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("o2")
+	air_contents.gases["o2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
 /obj/item/weapon/tank/jetpack/oxygen/harness
 	name = "jet harness (oxygen)"
@@ -95,6 +97,14 @@
 	throw_range = 7
 	w_class = 3
 
+/obj/item/weapon/tank/jetpack/oxygen/captain
+	name = "\improper Captain's jetpack"
+	desc = "A compact, lightweight jetpack containing a high amount of compressed oxygen."
+	icon_state = "jetpack-captain"
+	item_state = "jetpack-captain"
+	w_class = 3
+	volume = 90
+
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
@@ -104,9 +114,10 @@
 
 /obj/item/weapon/tank/jetpack/carbondioxide/New()
 	..()
-	ion_trail = new /datum/effect/effect/system/ion_trail_follow()
+	ion_trail = new /datum/effect_system/trail_follow/ion()
 	ion_trail.set_up(src)
-	air_contents.carbon_dioxide = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("co2")
+	air_contents.gases["co2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
 
 /obj/item/weapon/tank/jetpack/suit

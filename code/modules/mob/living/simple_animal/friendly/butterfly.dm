@@ -16,6 +16,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	ventcrawler = 2
 	mob_size = MOB_SIZE_TINY
+	gold_core_spawnable = 2
 
 /mob/living/simple_animal/butterfly/New()
 	..()

@@ -14,13 +14,15 @@
 	var/mob/event_confirmed_by
 	//1 = select event
 	//2 = authenticate
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
 
 /obj/machinery/keycard_auth/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return
 	user << "The station AI is not to interact with these devices."
 	return
 
@@ -106,7 +108,7 @@
 
 /obj/machinery/keycard_auth/proc/broadcast_request()
 	icon_state = "auth_on"
-	for(var/obj/machinery/keycard_auth/KA in world)
+	for(var/obj/machinery/keycard_auth/KA in machines)
 		if(KA == src) continue
 		KA.reset()
 		spawn()

@@ -19,6 +19,7 @@
 	ventcrawler = 2
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
+	gold_core_spawnable = 2
 
 /mob/living/simple_animal/crab/Life()
 	..()
@@ -41,3 +42,4 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "stomps"
+	gold_core_spawnable = 0

@@ -8,6 +8,12 @@
 	use_power = 0
 	level = 0
 
+/obj/machinery/atmospherics/components/unary/portables_connector/New()
+	..()
+	var/datum/gas_mixture/air_contents = AIR1
+
+	air_contents.volume = 0
+
 /obj/machinery/atmospherics/components/unary/portables_connector/visible
 	level = 2
 
@@ -19,7 +25,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/Destroy()
 	if(connected_device)
 		connected_device.disconnect()
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/portables_connector/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))

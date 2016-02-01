@@ -23,7 +23,7 @@
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in contents)
 		AM.loc = T
-	..()
+	return ..()
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/destTagger))
@@ -117,7 +117,7 @@
 	flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
-	burn_state = 0 //burnable
+	burn_state = FLAMMABLE
 
 
 /obj/item/stack/packageWrap/afterattack(obj/target, mob/user, proximity)
@@ -237,6 +237,6 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "c_tube"
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 5

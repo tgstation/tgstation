@@ -7,7 +7,7 @@
 		if(M.a_intent == "harm")
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/damage = rand(15, 30)
+			var/damage = prob(90) ? 20 : 0
 			if(!damage)
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
@@ -21,7 +21,7 @@
 				"<span class='userdanger'>[M] has slashed at [src]!</span>")
 
 			apply_damage(damage, BRUTE, affecting, armor_block)
-			if (damage >= 25)
+			if (prob(30))
 				visible_message("<span class='danger'>[M] has wounded [src]!</span>", \
 					"<span class='userdanger'>[M] has wounded [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)

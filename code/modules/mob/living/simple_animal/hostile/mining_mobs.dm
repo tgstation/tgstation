@@ -5,6 +5,7 @@
 	faction = list("mining")
 	environment_smash = 2
 	minbodytemp = 0
+	maxbodytemp = INFINITY
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "strikes"
@@ -77,6 +78,8 @@
 	aggro_vision_range = 9
 	idle_vision_range = 2
 	turns_per_move = 5
+	loot = list(/obj/item/weapon/ore/diamond{layer = 4.1},
+				/obj/item/weapon/ore/diamond{layer = 4.1})
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -97,20 +100,12 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			gib()
-		if(2.0)
+		if(2)
 			adjustBruteLoss(140)
-		if(3.0)
+		if(3)
 			adjustBruteLoss(110)
-
-/mob/living/simple_animal/hostile/asteroid/basilisk/death(gibbed)
-	var/counter
-	for(counter=0, counter<2, counter++)
-		var/obj/item/weapon/ore/diamond/D = new /obj/item/weapon/ore/diamond(src.loc)
-		D.layer = 4.1
-	..(gibbed)
-
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
@@ -141,24 +136,28 @@
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/uranium)
 
-	var/list/ore_types_eaten = list()
-	var/alerted = 0
-	var/ore_eaten = 1
 	var/chase_time = 100
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/New()
+	..()
+	deathmessage = "[src] spits up the contents of its stomach before dying!"
+	var/i = rand(1,3)
+	while(i)
+		loot += pick(/obj/item/weapon/ore/silver, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/diamond)
+		i--
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
 	target = new_target
 	if(target != null)
-		if(istype(target, /obj/item/weapon/ore))
+		if(istype(target, /obj/item/weapon/ore) && loot.len < 10)
 			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
-
 		else if(isliving(target))
 			Aggro()
 			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
 			retreat_distance = 10
 			minimum_distance = 10
-			Burrow()
-
+			spawn(chase_time)
+				Burrow()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -168,44 +167,21 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/targeted_ore)
 	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
-		ore_eaten++
-		if(!(O.type in ore_types_eaten))
-			ore_types_eaten += O.type
-		qdel(O)
-	if(ore_eaten > 5)//Limit the scope of the reward you can get, or else things might get silly
-		ore_eaten = 5
+		if(loot.len < 10)
+			loot += O.type
+			qdel(O)
 	visible_message("<span class='notice'>The ore was swallowed whole!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
-	if(!alerted)
-		alerted = 1
-		spawn(chase_time)
-		if(alerted)
-			visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
-			qdel(src)
-
-/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Reward()
-	if(!ore_eaten || ore_types_eaten.len == 0)
-		return
-	visible_message("<span class='danger'>[src] spits up the contents of its stomach before dying!</span>")
-	var/counter
-	for(var/R in ore_types_eaten)
-		for(counter=0, counter < ore_eaten, counter++)
-			new R(src.loc)
-	ore_types_eaten.Cut()
-	ore_eaten = 0
-
+	if(!stat)
+		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
+		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/death(gibbed)
-	alerted = 0
-	Reward()
-	..(gibbed)
-
-/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(damage)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(damage)
 	idle_vision_range = 9
 	..()
 
@@ -240,37 +216,59 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
+	loot = list(/obj/item/organ/internal/hivelord_core)
+	var/next_brood = 0
+	var/brood_cooldown = 20
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
-	A.GiveTarget(target)
-	A.friends = friends
-	A.faction = faction
+	if(world.time >= next_brood)
+		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
+		A.GiveTarget(target)
+		A.friends = friends
+		A.faction = faction
+		next_brood = world.time + brood_cooldown
 	return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
-	new /obj/item/asteroid/hivelord_core(src.loc)
 	mouse_opacity = 1
 	..(gibbed)
 
-/obj/item/asteroid/hivelord_core
+/obj/item/organ/internal/hivelord_core
 	name = "hivelord remains"
 	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "boiledrorocore"
+	icon_state = "roro core 2"
+	flags = NOBLUDGEON
+	slot = "hivecore"
+	force = 0
 	var/inert = 0
+	var/preserved = 0
 
-/obj/item/asteroid/hivelord_core/New()
-	spawn(1200)
-		inert = 1
-		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+/obj/item/organ/internal/hivelord_core/New()
+	..()
+	spawn(2400)
+		if(!owner && !preserved)
+			inert = 1
+			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 
-/obj/item/asteroid/hivelord_core/attack(mob/living/M, mob/living/user)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
+/obj/item/organ/internal/hivelord_core/on_life()
+	..()
+	if(owner)
+		owner.adjustBruteLoss(-1)
+		owner.adjustFireLoss(-1)
+		owner.adjustOxyLoss(-2)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list //Grab some blood
+		var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
+		if(B && blood_volume < 560 && blood_volume)
+			B.volume += 2 // Fast blood regen
+
+/obj/item/organ/internal/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
+	if(proximity_flag && ishuman(target))
+		var/mob/living/carbon/human/H = target
 		if(inert)
 			user << "<span class='notice'>[src] have become inert, its healing properties are no more.</span>"
 			return
@@ -285,6 +283,9 @@
 			H.revive()
 			qdel(src)
 	..()
+
+/obj/item/organ/internal/hivelord_core/prepare_eat()
+	return null
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	name = "hivelord brood"
@@ -311,14 +312,12 @@
 	throw_message = "falls right through the strange body of the"
 	environment_smash = 0
 	pass_flags = PASSTABLE
+	del_on_death = 1
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
 	spawn(100)
 		qdel(src)
-
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
-	qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
@@ -352,6 +351,7 @@
 	anchored = 1 //Stays anchored until death as to be unpullable
 	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
+	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()
@@ -374,6 +374,8 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
+	if(!(istype(tturf, /turf/simulated)))
+		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
 		new /obj/effect/goliath_tentacle/original(tturf)
@@ -382,7 +384,7 @@
 		pre_attack = 0
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(damage)
+/mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(damage)
 	ranged_cooldown--
 	handle_preattack()
 	..()
@@ -425,20 +427,15 @@
 
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)
+		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
 		M.Stun(5)
 		M.adjustBruteLoss(rand(10,15))
 		latched = 1
-		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
 	if(!latched)
 		qdel(src)
 	else
 		spawn(50)
 			qdel(src)
-
-/mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
-	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
-	G.layer = 4.1
-	..(gibbed)
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"
@@ -518,6 +515,7 @@
 	environment_smash = 0
 	var/wumbo = 0
 	var/inflate_cooldown = 0
+	loot = list(/obj/item/asteroid/fugu_gland{layer = 4.1})
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Life()
 	if(!wumbo)
@@ -526,7 +524,7 @@
 		Inflate()
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/fugu/adjustBruteLoss(var/damage)
+/mob/living/simple_animal/hostile/asteroid/fugu/adjustHealth(var/damage)
 	if(wumbo)
 		return
 	..()
@@ -584,14 +582,12 @@
 
 /mob/living/simple_animal/hostile/asteroid/fugu/death(gibbed)
 	Deflate()
-	var/obj/item/asteroid/fugu_gland/F = new /obj/item/asteroid/fugu_gland(src.loc)
-	F.layer = 4.1
 	..(gibbed)
 
 /obj/item/asteroid/fugu_gland
 	name = "wumborian fugu gland"
 	desc = "The key to the wumborian fugu's ability to increase its mass arbitrarily, this disgusting remnant can apply the same effect to other creatures, giving them great strength."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fugu_gland"
 	flags = NOBLUDGEON
 	w_class = 3
@@ -602,7 +598,7 @@
 /obj/item/asteroid/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && istype(target, /mob/living/simple_animal))
 		var/mob/living/simple_animal/A = target
-		if(A.buffed || A.type in banned_mobs || A.stat)
+		if(A.buffed || (A.type in banned_mobs) || A.stat)
 			user << "<span class='warning'>Something's interfering with the [src]'s effects. It's no use.</span>"
 			return
 		A.buffed++

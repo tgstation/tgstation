@@ -1,7 +1,7 @@
 //Hoods for winter coats and chaplain hoodie etc
 
 /obj/item/clothing/suit/hooded
-	var/obj/item/clothing/head/winterhood/hood
+	var/obj/item/clothing/head/hood
 	var/hoodtype = /obj/item/clothing/head/winterhood //so the chaplain hoodie or other hoodies can override this
 
 /obj/item/clothing/suit/hooded/New()
@@ -10,11 +10,11 @@
 
 /obj/item/clothing/suit/hooded/Destroy()
 	qdel(hood)
-	..()
+	return ..()
 
 /obj/item/clothing/suit/hooded/proc/MakeHood()
 	if(!hood)
-		var/obj/item/clothing/head/winterhood/W = new hoodtype(src)
+		var/obj/item/clothing/head/W = new hoodtype(src)
 		hood = W
 
 /obj/item/clothing/suit/hooded/ui_action_click()
@@ -90,7 +90,6 @@
 	user << "Alt-click on [src] to toggle the [togglename]."
 
 //Hardsuit toggle code
-
 /obj/item/clothing/suit/space/hardsuit/New()
 	MakeHelmet()
 	if(!jetpack)
@@ -98,15 +97,23 @@
 		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets
 	..()
 /obj/item/clothing/suit/space/hardsuit/Destroy()
-	qdel(helmet)
+	if(helmet)
+		helmet.suit = null
+		qdel(helmet)
 	qdel(jetpack)
-	..()
+	return ..()
+
+/obj/item/clothing/head/helmet/space/hardsuit/Destroy()
+	if(suit)
+		suit.helmet = null
+	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()
 	if(!helmettype)
 		return
 	if(!helmet)
 		var/obj/item/clothing/head/helmet/space/hardsuit/W = new helmettype(src)
+		W.suit = src
 		helmet = W
 
 /obj/item/clothing/suit/space/hardsuit/ui_action_click()
@@ -121,7 +128,7 @@
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/RemoveHelmet()
-	if(!helmettype)
+	if(!helmet)
 		return
 	suittoggled = 0
 	if(ishuman(helmet.loc))
@@ -130,6 +137,8 @@
 			helmet.attack_self(H)
 		H.unEquip(helmet, 1)
 		H.update_inv_wear_suit()
+		H << "<span class='notice'>The helmet on the hardsuit disengages.</span>"
+	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	helmet.loc = src
 
 /obj/item/clothing/suit/space/hardsuit/dropped()
@@ -138,6 +147,8 @@
 /obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()
 	var/mob/living/carbon/human/H = src.loc
 	if(!helmettype)
+		return
+	if(!helmet)
 		return
 	if(!suittoggled)
 		if(ishuman(src.loc))
@@ -154,6 +165,4 @@
 				H.update_inv_wear_suit()
 				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	else
-		H << "<span class='notice'>You disengage the helmet on the hardsuit.</span>"
-		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 		RemoveHelmet()
