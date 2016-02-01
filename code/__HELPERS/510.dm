@@ -1,27 +1,33 @@
 // Helpers for running 510 code on older versions of BYOND.
 #if DM_VERSION < 510
-
 #define BYGEX "code/__HELPERS/bygex.dll"
-/proc/replacetext(str, exp, fmt)
-	return call(BYGEX, "regex_replaceallliteral")(str, exp, fmt)
+/proc/replacetext(text, replace, replacement)
+	return call(BYGEX, "regex_replaceallliteral")(text, replace, replacement)
 
-/proc/replacetextEx(str, exp, fmt)
-	return call(BYGEX, "regEx_replaceallliteral")(str, exp, fmt)
+/proc/replacetextEx(text, replace, replacement)
+	return call(BYGEX, "regEx_replaceallliteral")(text, replace, replacement)
 
-/proc/regex(pattern)
-	return new /regex(pattern)
+/proc/regex(pattern, flags)
+	return new /regex(pattern, flags)
 
 /regex
 	var/pattern
+	var/list/flags
 	var/list/group
 
-/regex/New(pattern) // Does not support Flags.
+/regex/New(pattern, flags)
 	src.pattern = pattern
+	src.flags = splittext(flags, "")
 	group = list()
 
 /regex/proc/Find(text) // Does not support Start/End.
-	var/results = call(BYGEX, "regex_find")(text, pattern)
+	var/method
+	if("i" in flags)
+		method = "regex_find"
+	else
+		method = "regEx_find"
 
+	var/results = call(BYGEX, method)(text, pattern)
 	var/list/L = params2list(results)
 	var/list/M
 	var/i
@@ -34,8 +40,20 @@
 			var/len = text2num(M[j])
 			group += copytext(text, pos, pos + len)
 
+/regex/proc/Replace(text, replacement)
+	var/method
+	if("g" in flags)
+		if("i" in flags)
+			method = "regex_replaceall"
+		else
+			method = "regEx_replaceall"
+	else
+		if("i" in flags)
+			method = "regex_replace"
+		else
+			method = "regEx_replace"
+	return call(BYGEX, method)(text, pattern, replacement)
 #undef BYGEX
-
 
 // Formerly list2text
 /proc/jointext(list/ls, sep)
@@ -228,4 +246,8 @@
 	#undef CannotBeFlat
 	#undef CannotBeAssoc
 	#undef BadList
+#else
+/regex/Replace()
+	..()
+	return text
 #endif
