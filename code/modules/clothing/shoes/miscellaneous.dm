@@ -121,7 +121,7 @@
 	item_state = "jackboots"
 	strip_delay = 40
 	put_on_delay = 40
-	can_hold_knives = 1
+	can_hold_items = 1
 
 /obj/item/clothing/shoes/cult
 	name = "nar-sian invoker boots"
