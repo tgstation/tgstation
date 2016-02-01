@@ -71,10 +71,9 @@
 
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
-/datum/game_mode/proc/post_setup(report=0) //Gamemodes can override the intercept report. Passing a 1 as the argument will force a report. Passing any other non zero number will force no report.
-	if(report == 0)
-		if(config.intercept == 1)
-			report = 1
+/datum/game_mode/proc/post_setup(report=0) //Gamemodes can override the intercept report. Passing a 1 as the argument will force a report.
+	if(!report)
+		report = config.intercept
 	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
 		display_roundstart_logout_report()
 
@@ -84,7 +83,7 @@
 	if(revdata.revision)
 		feedback_set_details("revision","[revdata.revision]")
 	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
-	if(report == 1)
+	if(report)
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
 	start_state = new /datum/station_state()
