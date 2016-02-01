@@ -330,7 +330,7 @@
 /obj/machinery/control_point/proc/capture(mob/user)
 	if(do_after(user, 30, target = src))
 		for(var/obj/machinery/capture_the_flag/CTF in machines)
-			if(CTF.ctf_enabled && user.ckey in CTF.team_members)
+			if(CTF.ctf_enabled && (user.ckey in CTF.team_members))
 				controlling = CTF
 				icon_state = "dominator-[CTF.team]"
 				break
