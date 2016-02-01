@@ -1,7 +1,0 @@
-author: Erwgd
-delete-after: True
-changes: 
-  - rscadd: "The Kitchen Vending machine now stocks salt shakers and pepper mills!"
-  - rscadd: "The NutriMax now stocks spades, cultivators and plant analyzers."
-  - rscadd: "Rice seeds are now stocked in the MegaSeed Servitor, and the seeds supply crate now contains a pack of rice seeds."
-  - rscdel: "Botanists should be aware that wheat stalks can no longer mutate into rice."

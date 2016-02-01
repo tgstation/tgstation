@@ -1,4 +1,0 @@
-author: Fayrik
-delete-after: True
-changes: 
-  - rscadd: "pAI cards can now be inserted into simple robots, to allow for more robust robot personalities."
