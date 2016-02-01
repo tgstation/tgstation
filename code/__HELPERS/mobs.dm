@@ -128,25 +128,15 @@ Proc for attack log creation, because really why not
 
 proc/add_logs(mob/user, mob/target, what_done, var/admin=1, var/object=null, var/addition=null)
 	if(user && ismob(user))
-<<<<<<< d07d8b303c57f411d9eceea3f857507c89d5bc88
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition]</font>")
-	if(target && ismob(target))
-		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition]</font>")
-=======
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "]. [addition]</font>")
 	if(target && ismob(target))
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "]. [addition]</font>")
->>>>>>> eb4ef518cb9f64513ed7cca7416c97e946dd7d10
 		if(!iscarbon(user))
 			target.LAssailant = null
 		else
 			target.LAssailant = user
 	if(admin)
-<<<<<<< d07d8b303c57f411d9eceea3f857507c89d5bc88
-		log_attack("<font color='red'>[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(ismob(target) && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition]</font>")
-=======
 		log_attack("<font color='red'>[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(ismob(target) && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "]. [addition]</font>")
->>>>>>> eb4ef518cb9f64513ed7cca7416c97e946dd7d10
 
 proc/add_ghostlogs(var/mob/user, var/obj/target, var/what_done, var/admin=1, var/addition=null)
 	var/target_text = "NON-EXISTENT TARGET"
