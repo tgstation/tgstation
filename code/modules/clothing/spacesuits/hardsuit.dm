@@ -523,6 +523,8 @@
 	item_state = "ert_security"
 	item_color = "ert_security"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/red
+	shield_state = "shield-red"
+	shield_on = "shield-red"
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 	name = "blue shielded hardsuit"

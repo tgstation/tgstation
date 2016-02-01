@@ -576,16 +576,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 1
 	surplus = 50
 
-/datum/uplink_item/stealthy_weapons/traitor_virus_kit
-	name = "Virus Kit"
-	desc = "An active fungal pathogen in a sterile, compact box. Comes with one Bio Virus Antidote Kit (BVAK) \
-			autoinjector for rapid application on up to two targets each, a syringe, and a bottle containing \
-			the BVAK solution."
-	item = /obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
-	cost = 20
-	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear)
-
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
@@ -632,6 +622,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			your hand before use so it knows not to kill you."
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 1
+
+/datum/uplink_item/stealthy_weapons/soap_clusterbang
+	name = "Slipocalypse Clusterbang"
+	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
+	item = /obj/item/weapon/grenade/clusterbuster/soap
+	cost = 6
 
 /datum/uplink_item/stealthy_weapons/door_charge
 	name = "Explosive Airlock Charge"
@@ -941,6 +937,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 15
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/device_tools/potion
+	name = "Sentience Potion"
+	item = /obj/item/slimepotion/sentience
+	desc = "A potion recovered at great risk by undercover syndicate operatives. Using it will make any animal sentient, and bound to serve you."
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
 
 // Implants
 /datum/uplink_item/implants

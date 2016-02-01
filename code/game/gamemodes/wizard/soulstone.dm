@@ -34,9 +34,6 @@
 		return
 	add_logs(user, M, "captured [M.name]'s soul", src)
 
-	if(iscultist(user) && M && M.mind)
-		new /obj/item/summoning_orb(get_turf(M))
-
 	transfer_soul("VICTIM", M, user)
 	return
 
@@ -139,6 +136,8 @@
 						if(contents.len)
 							user << "<span class='userdanger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room."
 						else
+							if(iscultist(user))
+								new /obj/item/summoning_orb(get_turf(T))
 							for(var/obj/item/W in T)
 								T.unEquip(W)
 							init_shade(src, T, user, vic = 1)

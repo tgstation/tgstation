@@ -111,6 +111,12 @@
 		else
 			return !density
 
+/obj/structure/grille/CanAStarPass(ID, dir, caller)
+	. = !density
+	if(ismovableatom(caller))
+		var/atom/movable/mover = caller
+		. = . || mover.checkpass(PASSGRILLE)
+
 /obj/structure/grille/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)
 		return
