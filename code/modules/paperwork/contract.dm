@@ -19,7 +19,7 @@
 
 
 
-/obj/item/weapon/paper/contract/employment/New(mob/living/nOwner)
+/obj/item/weapon/paper/contract/employment/New(atom/loc, mob/living/nOwner)
 	..()
 	target = nOwner
 	update_text()
@@ -44,9 +44,11 @@
 		M.removeDemonBoons()
 		return
 	else
-		if(ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
-			M.adjustBrainLoss(10)
-			M << "<span class='danger'>You feel dumber.</span>"
+		if(ishuman(M))
+			var/mob/living/carbon/human/N = M
+			if(!istype(N.head, /obj/item/clothing/head/helmet))
+				N.adjustBrainLoss(10)
+				N << "<span class='danger'>You feel dumber.</span>"
 		M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 			"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
 
@@ -65,7 +67,7 @@
 	icon_state = "paper_words"
 	return
 
-/obj/item/weapon/paper/contract/infernal/New(var/incType, mob/living/nOwner, mob/living/nTarget)
+/obj/item/weapon/paper/contract/infernal/New(atom/loc, mob/living/nTarget, var/incType, mob/living/nOwner)
 	..()
 	owner = nOwner
 	target = nTarget
@@ -75,7 +77,7 @@
 /obj/item/weapon/paper/contract/infernal/suicide_act(mob/user)
 	if(signed && (user == target))
 		user.say("OH GREAT INFERNO!  I DEMAND YOU COLLECT YOUR BOUNTY IMMEDIATELY!")
-		user.visible_message("<span class='suicide'>[user] holds up a contract claiming his soul, then immediately catches fire.  Their corpse smelling of brimstone.</span>")
+		user.visible_message("<span class='suicide'>[user] holds up a contract claiming his soul, then immediately catches fire.</span>")
 		if(istype(user, /mob/living))
 			var/mob/living/U = user
 			U.adjust_fire_stacks(20)
