@@ -63,7 +63,6 @@ var/const/MAX_SAVE_SLOTS = 8
 	var/be_random_body = 0				//whether we'll have a random body every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
-	var/b_type = "A+"					//blood type (not-chooseable)
 	var/underwear = 1					//underwear type
 	var/backbag = 2						//backpack type
 	var/h_style = "Bald"				//Hair type
@@ -142,7 +141,6 @@ var/const/MAX_SAVE_SLOTS = 8
 	var/client/client
 
 /datum/preferences/New(client/C)
-	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 	client=C
 	if(istype(C))
 		if(!IsGuestKey(C.key))
@@ -175,7 +173,6 @@ var/const/MAX_SAVE_SLOTS = 8
 	<table width='100%'><tr><td width='24%' valign='top'>
 	<b>Species:</b> <a href='?_src_=prefs;preference=species;task=input'>[species]</a><BR>
 	<b>Secondary Language:</b> <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a><br>
-	<b>Blood Type:</b> <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><BR>
 	<b>Skin Tone:</b> <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a><BR>
 	<b>Handicaps:</b> <a href='byond://?src=\ref[user];task=input;preference=disabilities'><b>Set</a></b><br>
 	<b>Limbs:</b> <a href='byond://?src=\ref[user];preference=limbs;task=input'>Set</a><br>
@@ -939,11 +936,6 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 					if(new_metadata)
 						metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
-				if("b_type")
-					var/new_b_type = input(user, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
-					if(new_b_type)
-						b_type = new_b_type
-
 				if("hair")
 					if(species == "Human" || species == "Unathi")
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
@@ -1258,7 +1250,6 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 	character.name = character.real_name
 	if(character.dna)
 		character.dna.real_name = character.real_name
-		character.dna.b_type = b_type
 
 	character.flavor_text = flavor_text
 	character.med_record = med_record
