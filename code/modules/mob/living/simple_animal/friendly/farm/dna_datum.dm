@@ -106,6 +106,18 @@ proc/create_child_from_dna(var/mob/living/simple_animal/farm/mother_temp, var/mo
 		else
 			child_dna.add_trait(/datum/farm_animal_trait/mammal)
 
+	if(mother_dna.has_trait(/datum/farm_animal_trait/defensive) && father_dna.has_trait(/datum/farm_animal_trait/defensive))
+		child_dna.add_trait(/datum/farm_animal_trait/defensive)
+
+	else if(mother_dna.has_trait(/datum/farm_animal_trait/coward) && father_dna.has_trait(/datum/farm_animal_trait/coward))
+		child_dna.add_trait(/datum/farm_animal_trait/coward)
+
+	else if((mother_dna.has_trait(/datum/farm_animal_trait/defensive) && father_dna.has_trait(/datum/farm_animal_trait/coward)) || (mother_dna.has_trait(/datum/farm_animal_trait/coward) && father_dna.has_trait(/datum/farm_animal_trait/defensive)))
+		if(prob(50))
+			child_dna.add_trait(/datum/farm_animal_trait/defensive)
+		else
+			child_dna.add_trait(/datum/farm_animal_trait/coward)
+
 	return child_dna
 
 proc/create_child_from_scratch(var/mob/living/simple_animal/farm/self)
@@ -163,7 +175,13 @@ proc/create_child_from_scratch(var/mob/living/simple_animal/farm/self)
 			child_dna.add_trait(/datum/farm_animal_trait/mammal)
 	else
 		child_dna.add_trait(self.default_breeding_trait)
-
+	if(!self.default_retaliate_trait)
+		if(prob(50))
+			child_dna.add_trait(/datum/farm_animal_trait/defensive)
+		else
+			child_dna.add_trait(/datum/farm_animal_trait/coward)
+	else
+		child_dna.add_trait(self.default_retaliate_trait)
 	return child_dna
 
 /datum/farm_animal_dna
@@ -210,7 +228,7 @@ proc/create_child_from_scratch(var/mob/living/simple_animal/farm/self)
 /datum/farm_animal_dna/proc/has_trait(var/datum/farm_animal_trait/T)
 	for(var/datum/farm_animal_trait/TR in traits)
 		if(istype(TR, T))
-			return 1
+			return TR
 		else
 			continue
 	return 0

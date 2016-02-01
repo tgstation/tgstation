@@ -3,7 +3,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "trough"
 	density = 1
-	anchored = 1
+	anchored = 0
 	var/list/feed = list()
 	var/starting_reagent = "water"
 

@@ -11,6 +11,9 @@
 	if(M.stat)
 		return
 	if(walking_to_trough || eating_from_trough)
+		if(M.hunger >= M.hunger_threshold_hungry && M.thirst >= M.thirst_threshold_thirsty)
+			walking_to_trough = 0
+			eating_from_trough = 0
 		return
 	var/getting_water = 0
 	var/getting_food = 0
@@ -20,7 +23,7 @@
 		getting_food = 1
 	if(getting_water || getting_food)
 		var/list/usable_troughs = list()
-		for(var/obj/machinery/trough/T in orange(M,7))
+		for(var/obj/machinery/trough/T in oview(M,7))
 			if(T.feed.len <= 0 && getting_food)
 				continue
 			if(T.reagents.total_volume <= 0 && getting_water)
@@ -106,8 +109,14 @@
 /datum/farm_animal_trait/carnivore/on_priority_life(var/mob/living/simple_animal/farm/M)
 	if(M.stat)
 		return
-	if(drinking_from_trough)
-		return
+	if(walking_to_trough || drinking_from_trough || attacking_animal || eating_animal)
+		if(M.thirst >= M.thirst_threshold_thirsty)
+			walking_to_trough = FALSE
+			drinking_from_trough = FALSE
+		if(M.hunger >= M.hunger_threshold_hungry)
+			attacking_animal = FALSE
+			eating_animal = FALSE
+			target = null
 	var/getting_water = 0
 	var/getting_food = 0
 	if(M.thirst_threshold_thirsty >= M.thirst)
@@ -116,7 +125,7 @@
 		getting_food = 1
 	if(getting_water)
 		var/list/usable_troughs = list()
-		for(var/obj/machinery/trough/T in orange(M,7))
+		for(var/obj/machinery/trough/T in oview(M,7))
 			if(T.reagents.total_volume <= 0 && getting_water)
 				continue
 			usable_troughs += T
@@ -129,14 +138,14 @@
 				drinking_from_trough = TRUE
 				walk(M,0)
 				if(getting_water && picked_trough.reagents.total_volume >= M.amount_drank)
-					M.thirst += M.amount_drank * 2
+					M.thirst += M.amount_drank * 5
 					picked_trough.reagents.trans_to(M, M.amount_drank)
 					M.visible_message("[M] drinks from [picked_trough].")
 					if(M.thirst > M.thirst_max)
 						M.thirst = M.thirst_max
 				drinking_from_trough = FALSE
 	if(getting_food && !walking_to_trough && !drinking_from_trough)
-		var/list/orange_grab = orange(M,7)
+		var/list/orange_grab = oview(M,7)
 		var/list/potential_prey = list()
 		var/list/farm_animal_prey = list()
 		var/list/preferred_farm_animal_prey = list()
@@ -178,6 +187,7 @@
 				if(S && !M.Adjacent(target))
 					walk_to(M, S, 1)
 					spawn(30)
+						walk(M,0)
 						if(S && M.Adjacent(S))
 							eating_animal = FALSE
 							attacking_animal = FALSE
@@ -189,6 +199,7 @@
 							if(M.hunger > M.hunger_max)
 								M.hunger = M.hunger_max
 				else
+					walk(M,0)
 					if(S && M.Adjacent(S))
 						eating_animal = FALSE
 						attacking_animal = FALSE
@@ -204,10 +215,13 @@
 				if(T && !M.Adjacent(T))
 					walk_to(M, T, 1)
 					spawn(30)
+						walk(M,0)
 						if(T && M.Adjacent(T))
 							if(T.stat != DEAD)
 								T.attack_animal(M)
 								M.do_attack_animation(T)
+								for(var/datum/farm_animal_trait/TA in owner.traits)
+									TA.on_attack_mob(M, T)
 								return
 							else
 								eating_animal = TRUE
@@ -215,25 +229,31 @@
 								M.visible_message("[M] takes a bite out of [T].")
 								T.times_eaten_from++
 								M.hunger += 150
-								if(T.times_eaten_from >= M.amount_eaten_carnivore)
-									M.visible_message("[M] finishes eating [T].")
-									T.gib()
-									T = null
+								if(T)
+									if(T.times_eaten_from >= M.amount_eaten_carnivore)
+										M.visible_message("[M] finishes eating [T].")
+										T.gib()
+										T = null
 								return
 				else
+					walk(M,0)
 					if(T && T.stat != DEAD)
 						T.attack_animal(M)
 						M.do_attack_animation(T)
+						for(var/datum/farm_animal_trait/TA in owner.traits)
+							TA.on_attack_mob(M, T)
 					else if(T && T.stat == DEAD)
 						eating_animal = TRUE
 						attacking_animal = FALSE
 						M.visible_message("[M] takes a bite out of [T].")
 						T.times_eaten_from++
 						M.hunger += 150
-						if(T.times_eaten_from >= M.amount_eaten_carnivore)
-							M.visible_message("[M] finishes eating [T].")
-							T.gib()
-							T = null
+						if(T)
+							if(T.times_eaten_from >= M.amount_eaten_carnivore)
+								M.visible_message("[M] finishes eating [T].")
+								T.gib()
+								T = null
+						return
 	attacking_animal = FALSE
 	eating_animal = FALSE
 	return
@@ -399,10 +419,72 @@
 						F.dna = create_child_from_dna(M, mate, F) // i suggest application of CLF3 foam to all involved individuals and then a bullet through the skull to remove all memories
 						for(var/datum/farm_animal_trait/T in M.dna.traits)// i pledge allegiance to the flag of the United States of America,
 							T.on_create_young(E, M) // and to the republic for which it stands
-						return // one nation under God, indivisible, with liberty and justice for all.
+						return // one nation under God, indivisible, with liberty and justice for all
 	else
 		breeding_timer++
 		if(breeding_timer >= breed_max)
 			is_breeding = 1
 			breeding_timer = 0
 	return
+
+
+/datum/farm_animal_trait/defensive
+	name = "Defensive"
+	description = "This animal will defend itself if attacked, but will not seek out conflict unless it has to.."
+	manifest_probability = 0
+	continue_probability = 0
+	random_blacklist = 1
+	var/target
+
+/datum/farm_animal_trait/defensive/on_life(var/mob/living/simple_animal/farm/M)
+	if(M.stat)
+		return
+	if(target)
+		var/mob/living/T = target
+		if(T && !M.Adjacent(T))
+			walk_to(M, T, 1)
+			spawn(30)
+				if(T && M.Adjacent(T))
+					walk_to(M,0)
+					if(T.stat != DEAD)
+						T.attack_animal(M)
+						M.do_attack_animation(T)
+						for(var/datum/farm_animal_trait/TA in owner.traits)
+							TA.on_attack_mob(M, T)
+						return
+					else
+						target = null
+						return
+		else
+			if(T && M.Adjacent(T))
+				walk_to(M,0)
+				if(T.stat != DEAD)
+					T.attack_animal(M)
+					M.do_attack_animation(T)
+					for(var/datum/farm_animal_trait/TA in owner.traits)
+						TA.on_attack_mob(M, T)
+					return
+				else
+					target = null
+					return
+
+/datum/farm_animal_trait/defensive/on_attacked(var/mob/living/simple_animal/farm/M, var/mob/living/L)
+	attack_retaliate(M, L)
+	return
+
+/datum/farm_animal_trait/defensive/on_attack_by(var/mob/living/simple_animal/farm/M, obj/item/O, mob/living/user, params)
+	if(user.a_intent != "help" || O.force)
+		attack_retaliate(M, user)
+	return
+
+/datum/farm_animal_trait/defensive/proc/attack_retaliate(var/mob/living/simple_animal/farm/M, var/mob/living/L)
+	if(L)
+		target = L
+	return
+
+/datum/farm_animal_trait/coward
+	name = "Coward"
+	description = "This animal will not fight back when attacked."
+	manifest_probability = 0
+	continue_probability = 0
+	random_blacklist = 1

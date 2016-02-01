@@ -3,7 +3,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "incubator"
 	density = 1
-	anchored = 1
+	anchored = 0
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/incubated = null
 
 /obj/machinery/incubator/New()

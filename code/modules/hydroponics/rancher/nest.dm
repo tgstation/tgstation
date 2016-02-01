@@ -3,7 +3,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "nest"
 	density = 0
-	anchored = 1
+	anchored = 0
 
 /obj/machinery/nest/New()
 	..()

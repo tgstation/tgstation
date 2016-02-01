@@ -34,18 +34,14 @@
 /datum/farm_animal_trait/proc/on_hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	return
 
-/datum/farm_animal_trait/talkative
-	name = "Talkative"
-	description = "This animal will attempt to talk more often and mimic what others say."
-	manifest_probability = 55
-	continue_probability = 75
-
-/datum/farm_animal_trait/talkative/on_apply(var/mob/living/simple_animal/farm/M)
-	M.speak_chance = 15
+/datum/farm_animal_trait/proc/on_attack_by(var/mob/living/simple_animal/farm/M, obj/item/O, mob/living/user, params)
 	return
 
-/datum/farm_animal_trait/talkative/on_hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
-	if(speaker != owner.owner && prob(40)) //Dont imitate ourselves
-		if(owner.owner.speak.len >= 40)
-			owner.owner.speak -= pick(owner.owner.speak)
-		owner.owner.speak |= html_decode(raw_message)
+/datum/farm_animal_trait/proc/on_attacked(var/mob/living/simple_animal/farm/M, var/mob/living/L)
+	return
+
+/datum/farm_animal_trait/proc/on_attack_mob(var/mob/living/simple_animal/farm/M, var/mob/living/L)
+	return
+
+/datum/farm_animal_trait/proc/on_move(var/mob/living/simple_animal/farm/M)
+	return

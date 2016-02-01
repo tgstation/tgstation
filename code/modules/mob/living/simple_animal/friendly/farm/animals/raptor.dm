@@ -24,79 +24,7 @@
 	default_food_trait = null
 	can_buckle = 1
 	buckle_lying = 0
-	var/next_raptor_move = 0 //used for move delays
-	var/raptor_move_delay = 1 //tick delay between movements, lower = faster, higher = slower
-	var/pixel_x_offset = 0
-	var/pixel_y_offset = 4
-	var/auto_door_open = TRUE
-
-//APPEARANCE
-/mob/living/simple_animal/farm/raptor/proc/handle_raptor_layer()
-	if(dir != NORTH)
-		layer = MOB_LAYER+0.1
-	else
-		layer = OBJ_LAYER
-
-
-//Override this to set your vehicle's various pixel offsets
-//if they differ between directions, otherwise use the
-//generic variables
-/mob/living/simple_animal/farm/raptor/proc/handle_raptor_offsets()
-	if(buckled_mob)
-		buckled_mob.dir = dir
-		buckled_mob.pixel_x = pixel_x_offset
-		buckled_mob.pixel_y = pixel_y_offset
-
-/mob/living/simple_animal/farm/raptor/relaymove(mob/user, direction)
-	if(user.incapacitated())
-		unbuckle_mob()
-
-	if(!Process_Spacemove(direction) || !has_gravity(src.loc) || world.time < next_raptor_move || !isturf(loc))
-		return
-	next_raptor_move = world.time + raptor_move_delay
-
-	step(src, direction)
-
-	if(buckled_mob)
-		if(buckled_mob.loc != loc)
-			buckled_mob.buckled = null //Temporary, so Move() succeeds.
-			buckled_mob.buckled = src //Restoring
-
-	handle_raptor_layer()
-	handle_raptor_offsets()
-
-/mob/living/simple_animal/farm/raptor/user_buckle_mob(mob/living/M, mob/user)
-	if(user.incapacitated())
-		return
-	for(var/atom/movable/A in get_turf(src))
-		if(A.density)
-			if(A != src && A != M)
-				return
-	M.loc = get_turf(src)
-	..()
-	handle_raptor_offsets()
-
-/mob/living/simple_animal/farm/raptor/Move(NewLoc,Dir=0,step_x=0,step_y=0)
-	..()
-	handle_raptor_layer()
-	handle_raptor_offsets()
-
-/mob/living/simple_animal/farm/raptor/unbuckle_mob(force = 0)
-	if(buckled_mob)
-		buckled_mob.pixel_x = 0
-		buckled_mob.pixel_y = 0
-	. = ..()
-
-/mob/living/simple_animal/farm/raptor/Bump(atom/movable/M)
-	. = ..()
-	if(auto_door_open)
-		if(istype(M, /obj/machinery/door) && buckled_mob)
-			M.Bumped(buckled_mob)
-
-
-/mob/living/simple_animal/farm/raptor/New()
-	..()
-	handle_raptor_layer()
+	default_traits = list(/datum/farm_animal_trait/ridable)
 
 /mob/living/simple_animal/farm/raptor/yellow
 	name = "\improper yellow raptor"
@@ -167,7 +95,6 @@
 	adult_version = /mob/living/simple_animal/farm/raptor/yellow
 	default_breeding_trait = /datum/farm_animal_trait/egg_layer
 	default_food_trait = /datum/farm_animal_trait/herbivore
-
 
 
 /mob/living/simple_animal/farm/raptor_chick/New()

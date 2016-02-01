@@ -23,9 +23,7 @@
 	var/mob/living/simple_animal/farm/father
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
-	..()
 	incubation_tick++
-	world << "INCUBATING: [incubation_tick]"
 	if(incubation_tick >= incubation_threshold)
 		var/turf/T = get_turf(loc)
 		T.visible_message("[src] hatches!")
@@ -36,6 +34,19 @@
 			F.dna = create_child_from_scratch(F)
 		SSobj.processing.Remove(src)
 		qdel(src)
+	..()
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/goat
+	name = "goat egg"
+	contained_mob = /mob/living/simple_animal/farm/goat
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/carp
+	name = "space carp egg"
+	contained_mob = /mob/living/simple_animal/farm/carp
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/cow
+	name = "space carp egg"
+	contained_mob = /mob/living/simple_animal/farm/cow
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/raptor
 	name = "raptor egg"
@@ -52,12 +63,15 @@
 	contained_mob = pick(/mob/living/simple_animal/farm/raptor_chick/yellow, /mob/living/simple_animal/farm/raptor_chick/red, /mob/living/simple_animal/farm/raptor_chick/green)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/raptor/yellow
+	name = "yellow raptor egg"
 	contained_mob = /mob/living/simple_animal/farm/raptor_chick/yellow
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/raptor/red
+	name = "red raptor egg"
 	contained_mob = /mob/living/simple_animal/farm/raptor_chick/red
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/raptor/green
+	name = "green raptor egg"
 	contained_mob = /mob/living/simple_animal/farm/raptor_chick/green
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)

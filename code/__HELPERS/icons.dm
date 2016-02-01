@@ -920,12 +920,12 @@ var/global/list/humanoid_icon_cache = list()
 /proc/get_flat_human_icon(var/icon_id,var/outfit,var/datum/preferences/prefs)
 	if(!icon_id || !humanoid_icon_cache[icon_id])
 		var/mob/living/carbon/human/dummy/body = new()
-		
+
 		if(prefs)
 			prefs.copy_to(body)
 		if(outfit)
 			body.equipOutfit(outfit, TRUE)
-		
+
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 
 		body.dir = NORTH
@@ -945,9 +945,18 @@ var/global/list/humanoid_icon_cache = list()
 		out_icon.Insert(partial,dir=EAST)
 
 		qdel(body)
-		
+
 		humanoid_icon_cache[icon_id] = out_icon
 		return out_icon
 	else
 		return humanoid_icon_cache[icon_id]
+
+//What the mob looks like during a DISCO INFERNO
+/proc/getOnFireIcon(icon/A, safety=1)
+	var/icon/flat_icon = safety ? A : new(A)
+	flat_icon.Blend(rgb(255,255,255))
+	flat_icon.BecomeAlphaMask()
+	var/icon/static_icon = new/icon('icons/effects/effects.dmi', "on_fire_overlay")
+	static_icon.AddAlphaMask(flat_icon)
+	return static_icon
 
