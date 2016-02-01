@@ -158,7 +158,7 @@
 	return 1
 
 /obj/machinery/portable_atmospherics/pump/AltClick()
-	if(usr.canmove && !usr.isUnconscious() && !usr.restrained() && Adjacent(usr) && usr.dexterity_check())
+	if(!usr.incapacitated() && Adjacent(usr) && usr.dexterity_check())
 		eject_holding()
 		return
 	return ..()

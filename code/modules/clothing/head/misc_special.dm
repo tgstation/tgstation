@@ -37,7 +37,7 @@
 	set name = "Adjust welding mask"
 	set src in usr
 	if(!usr) return //PANIC
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.incapacitated())
 		if(src.up)
 			src.up = !src.up
 			src.body_parts_covered |= (EYES|MOUTH|EARS)

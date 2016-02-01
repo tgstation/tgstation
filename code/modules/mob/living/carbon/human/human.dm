@@ -561,7 +561,7 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 	var/pickpocket = 0
-	var/able = (!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && Adjacent(usr))
+	var/able = (!usr.incapacitated() && in_range(src, usr) && Adjacent(usr))
 
 	if(href_list["item"])
 		if (!able) return

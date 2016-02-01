@@ -396,7 +396,7 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canmove || usr.isUnconscious() || usr.restrained())
+	if(usr.incapacitated())
 		return
 
 	if(ishuman(usr) || isMoMMI(usr))

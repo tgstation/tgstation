@@ -24,7 +24,7 @@
 		set category = "Object"
 		set src in usr
 
-		if(!usr.canmove || usr.isUnconscious() || usr.restrained())
+		if(usr.incapacitated())
 			return 0
 
 		if(open)

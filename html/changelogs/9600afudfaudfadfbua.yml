@@ -32,4 +32,4 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-- bugfix: Fixed not being able to point at things while on a vehicle or buckled to a chair. Also fixes not being able to use the rightclick->pickup verb while on a vehicle for some fucked up reason, even though you could just click on the item.
+- bugfix: Fixed not being able to point at things, use some alt-click interactions, strip people, toggle your mask, and maybe use a few other verbs while on a vehicle or buckled to a chair.
