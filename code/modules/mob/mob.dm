@@ -1452,11 +1452,11 @@ var/list/slot_equipment_priority = list( \
 		lying = locked_to.locked_should_lie
 
 
-	else if( isUnconscious() || weakened || paralysis || resting || sleeping )
+	else if(isUnconscious() || weakened || paralysis || resting)
 		stop_pulling()
 		lying = 1
 		canmove = 0
-	else if( stunned )
+	else if(stunned)
 //		lying = 0
 		canmove = 0
 	else if(captured)
