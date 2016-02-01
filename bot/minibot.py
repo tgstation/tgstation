@@ -10,6 +10,8 @@ import socket
 import sys
 import threading
 
+global irc
+
 
 def print_err(*msg):
     print(*msg, file=sys.stderr)
@@ -46,7 +48,7 @@ def setup_nudge_socket():
     return s
 
 
-def nudge_handler(irc):
+def nudge_handler():
     nudge = setup_nudge_socket()
     message_queue = collections.deque()
     while 1:
@@ -75,7 +77,7 @@ def nudge_handler(irc):
             message_queue.append(message)
 
 
-def irc_handler(irc):
+def irc_handler():
     while 1:
         try:
             buf = irc.recv(1024).decode("UTF-8").split("\n")
@@ -100,13 +102,13 @@ def irc_handler(irc):
                             time.sleep(60)
                             irc = setup_irc_socket()
         except:
-            print("Lost connection to IRC server.")
+            print_err("Lost connection to IRC server.")
             irc = setup_irc_socket()
 
 
 if __name__ == "__main__":
     irc = setup_irc_socket()
-    t = threading.Thread(target=nudge_handler, args=(irc,))
+    t = threading.Thread(target=nudge_handler)
     t.daemon = True
     t.start()
-    irc_handler(irc)
+    irc_handler()
