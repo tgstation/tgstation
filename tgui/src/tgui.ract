@@ -11,6 +11,7 @@ component.exports = {
     'ui-bar': require('components/bar'),
     'ui-button': require('components/button'),
     'ui-display': require('components/display'),
+    'ui-input': require('components/input'),
     'ui-notice': require('components/notice'),
     'ui-section': require('components/section'),
     'ui-subdisplay': require('components/subdisplay'),

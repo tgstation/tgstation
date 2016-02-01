@@ -1,5 +1,9 @@
 <script>
+  import { filter } from 'util/filter'
   component.exports = {
+    data: {
+      filter: ''
+    },
     oninit () {
       this.on({
         hover (event) {
@@ -11,6 +15,10 @@
           this.set('hovered')
         }
       })
+      this.observe('filter', (newkey, oldkey, keypath) => {
+        const categories = this.findAll('.display:not(:first-child)')
+        filter(categories, this.get('filter').toLowerCase())
+      }, { init: false })
     }
   }
 </script>
@@ -20,12 +28,13 @@
     {{#if data.lockable}}
       <ui-button icon='lock' action='lock'>Lock</ui-button>
     {{/if}}
+    <ui-input value='{{filter}}' placeholder='Filter...'/>
   {{/partial}}
   <ui-section label='Telecrystals' right>
     <span class='{{data.telecrystals > 0 ? "good" : "bad"}}'>{{data.telecrystals}} TC</span>
   </ui-section>
 </ui-display>
-{{#each data.buyable}}
+{{#each data.categories}}
   <ui-display title='{{name}}'>
     {{#each items}}
       <ui-section label='{{name}}' candystripe right>

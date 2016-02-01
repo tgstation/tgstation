@@ -85,7 +85,7 @@
 		return // Bail if there is no client.
 
 	update_status(push = 0) // Update the window status.
-	if(status == UI_CLOSE)
+	if(status < UI_UPDATE)
 		return // Bail if we're not supposed to open.
 
 	if(!initial_data)
@@ -129,6 +129,7 @@
 	children.Cut()
 	state = null
 	master_ui = null
+	qdel(src)
 
  /**
   * public

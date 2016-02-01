@@ -1,11 +1,3 @@
-<script>
-  component.exports = {
-    data: {
-      text: require('util/text')
-    }
-  }
-</script>
-
 <ui-display title='Power' button>
   {{#partial button}}
     {{#if data.open}}
