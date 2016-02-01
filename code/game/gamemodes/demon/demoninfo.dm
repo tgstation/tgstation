@@ -1,8 +1,8 @@
-#define banesilver 0
-#define banesalt 1
-#define banelight 2
-#define baneiron 3
-#define banewhiteclothes 4
+#define BANESILVER 0
+#define BANESALT 1
+#define BANELIGHT 2
+#define BANEIRON 3
+#define BANEWHITECLOTHES 4
 
 /datum/demoninfo/
 	var/datum/mind/owner = null
@@ -84,16 +84,16 @@
 	return pick(
 		list("Silver, in all of it's forms shall be your downfall.",
 		"Silver seems to gravely injure this demon.",
-		banesilver),
+		BANESILVER),
 		list("Salt will disrupt your magical abilities.",
 		"Throwing salt at this demon will hinder his ability to use infernal powers temporarially.",
-		banesalt),
+		BANESALT),
 		list("Blinding lights will prevent you from using offensive powers for a time.",
 		"Bright flashes will disorient the demon, likely causing him to flee.",
-		banelight),
+		BANELIGHT),
 		list("Cold wrought iron shall act as poison to you, you can remove it in hellfire.",
 		"Cold iron will slowly injure him, until he can purge it from his system.",
-		baneiron),
+		BANEIRON),
 		list("Those clad in pristine white garments will strike you true.",
 		"Wearing clean white clothing will help ward off this demon.",
-		banewhiteclothes))
+		BANEWHITECLOTHES))
