@@ -443,6 +443,14 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
 
+/obj/item/weapon/circuitboard/deep_fryer
+	name = "circuit board (Deep Fryer)"
+	build_path = /obj/machinery/deepfryer
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1)
+
 /obj/item/weapon/circuitboard/tesla_coil
 	name = "circuit board (Tesla Coil)"
 	build_path = /obj/machinery/power/tesla_coil
