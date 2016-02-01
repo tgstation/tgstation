@@ -783,7 +783,8 @@ The _flatIcons list is a cache for generated icon files.
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
 	for(var/I in A.overlays)//For every image in overlays. var/image/I will not work, don't try it.
-		if(I:layer>A.layer)	continue//If layer is greater than what we need, skip it.
+		if(I:layer>A.layer)
+			continue//If layer is greater than what we need, skip it.
 		var/icon/image_overlay = new(I:icon,I:icon_state)//Blend only works with icon objects.
 		//Also, icons cannot directly set icon_state. Slower than changing variables but whatever.
 		alpha_mask.Blend(image_overlay,ICON_OR)//OR so they are lumped together in a nice overlay.
@@ -799,10 +800,14 @@ The _flatIcons list is a cache for generated icon files.
 	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
 		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
 		switch(i)//Now to determine offset so the result is somewhat blurred.
-			if(1)	I.pixel_x--
-			if(2)	I.pixel_x++
-			if(3)	I.pixel_y--
-			if(4)	I.pixel_y++
+			if(1)
+				I.pixel_x--
+			if(2)
+				I.pixel_x++
+			if(3)
+				I.pixel_y--
+			if(4)
+				I.pixel_y++
 		overlays += I//And finally add the overlay.
 
 /proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.

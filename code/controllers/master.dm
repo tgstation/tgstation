@@ -65,13 +65,14 @@ var/global/datum/controller/master/Master = new()
 
 /datum/controller/master/proc/Setup(zlevel)
 	// Per-Z-level subsystems.
-	if (zlevel && zlevel > 0 && zlevel <= world.maxz)
+	if(zlevel && zlevel > 0 && zlevel <= world.maxz)
 		for(var/datum/subsystem/SS in subsystems)
 			SS.Initialize(world.timeofday, zlevel)
 			sleep(-1)
 		return
 	world << "<span class='boldannounce'>Initializing subsystems...</span>"
 
+	preloadTemplates()
 	// Pick a random away mission.
 	createRandomZlevel()
 	// Generate asteroid.

@@ -27,9 +27,9 @@
 		return 0
 
 	//check for centcomm shuttles
-	for(var/centcom_shuttle in list("emergency", "pod1", "pod2", "pod3", "pod4", "ferry"))
-		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(centcom_shuttle)
-		if(T in M.areaInstance)
+	for(var/A in SSshuttle.mobile)
+		var/obj/docking_port/mobile/M = A
+		if(M.launch_status == ENDGAME_LAUNCHED && T in M.areaInstance)
 			return 1
 
 	//finally check for centcom itself
@@ -90,11 +90,11 @@
 
 /*//Convenience proc to see whether a container can be accessed in a certain way.
 
-	proc/can_subract_container()
-		return flags & EXTRACT_CONTAINER
+/atom/proc/can_subract_container()
+	return flags & EXTRACT_CONTAINER
 
-	proc/can_add_container()
-		return flags & INSERT_CONTAINER
+/atom/proc/can_add_container()
+	return flags & INSERT_CONTAINER
 */
 
 
@@ -302,11 +302,13 @@ var/list/blood_splatter_icons = list()
 			B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
 		else if(istype(M, /mob/living/carbon/alien))
 			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents
-			if(!B)	B = new(src)
+			if(!B)
+				B = new(src)
 			B.blood_DNA["UNKNOWN BLOOD"] = "X*"
 		else if(istype(M, /mob/living/silicon/robot))
 			var/obj/effect/decal/cleanable/oil/B = locate() in contents
-			if(!B)	B = new(src)
+			if(!B)
+				B = new(src)
 
 /atom/proc/clean_blood()
 	if(istype(blood_DNA, /list))
@@ -369,3 +371,7 @@ var/list/blood_splatter_icons = list()
 /atom/Stat()
 	. = ..()
 	sleep(1)
+
+//This will be called after the map and objects are loaded
+/atom/proc/initialize()
+	return

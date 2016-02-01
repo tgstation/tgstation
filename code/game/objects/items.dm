@@ -233,8 +233,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	ui_interact(user)
 
 /obj/item/ui_act(action, params)
-	..()
 	add_fingerprint(usr)
+	return ..()
 
 /obj/item/attack_hand(mob/user)
 	if(!user)

@@ -180,13 +180,9 @@ var/global/list/pipeID2State = list(
 		rotate()
 
 /obj/item/pipe/Move()
+	var/old_dir = dir
 	..()
-	if ((pipe_type in list (PIPE_SIMPLE, PIPE_HE)) && is_bent \
-		&& (src.dir in cardinal))
-		src.dir = src.dir|turn(src.dir, 90)
-	else if ((pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_MIXER)) && flipped)
-		src.dir = turn(src.dir, 45+90)
-	fixdir()
+	dir = old_dir //pipes changing direction when moved is just annoying and buggy
 
 /obj/item/pipe/proc/unflip(direction)
 	if(direction in diagonals)

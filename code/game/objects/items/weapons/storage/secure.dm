@@ -52,7 +52,8 @@
 				else
 					user.show_message("<span class='danger'>Unable to reset internal memory.</span>", 1)
 					src.l_hacking = 0
-			else	src.l_hacking = 0
+			else
+				src.l_hacking = 0
 			return
 		//At this point you have exhausted all the special things to do when locked
 		// ... but it's still locked.

@@ -1,22 +1,22 @@
 <script>
-component.exports = {
-  data: {
-    temperatureStatus (temp) {
-        if (temp < 225) return 'good'
-        else if (temp < 273.15) return 'average'
-        else return 'bad'
-    }
-  },
-  computed: {
-    occupantStatState () {
-      switch (this.get('data.occupant.stat')) {
-        case 0: return 'good'
-        case 1: return 'average'
-        default: return 'bad'
+  component.exports = {
+    data: {
+      temperatureStatus (temp) {
+          if (temp < 225) return 'good'
+          else if (temp < 273.15) return 'average'
+          else return 'bad'
+      }
+    },
+    computed: {
+      occupantStatState () {
+        switch (this.get('data.occupant.stat')) {
+          case 0: return 'good'
+          case 1: return 'average'
+          default: return 'bad'
+        }
       }
     }
   }
-}
 </script>
 
 <ui-display title='Occupant'>

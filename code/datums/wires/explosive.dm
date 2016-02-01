@@ -24,6 +24,7 @@
 	var/obj/item/weapon/c4/P = holder
 	P.explode()
 
+
 /datum/wires/explosive/pizza
 	holder_type = /obj/item/pizzabox
 	randomize = TRUE

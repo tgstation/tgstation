@@ -1,18 +1,18 @@
 <script>
-component.exports = {
-  computed: {
-    tankPressureState () {
-      const pressure = this.get('data.tankPressure')
-      if (pressure >= 200) return 'good'
-      else if (pressure >= 100) return 'average'
-      else return 'bad'
+  component.exports = {
+    computed: {
+      tankPressureState () {
+        const pressure = this.get('data.tankPressure')
+        if (pressure >= 200) return 'good'
+        else if (pressure >= 100) return 'average'
+        else return 'bad'
+      }
     }
   }
-}
 </script>
 
 <ui-notice>
-  <span>The regulator {{data.hasHoldingTank ? "is" : "is not"}} connected to a mask.</span>
+  <span>The regulator {{data.maskConnected ? "is" : "is not"}} connected to a mask.</span>
 </ui-notice>
 <ui-display>
   <ui-section label='Tank Pressure'>

@@ -636,26 +636,23 @@
 			nearby += M
 
 //END OF MODULES
-/mob/living/carbon/human/interactive/angry
-	New()
-		TRAITS |= TRAIT_ROBUST
-		TRAITS |= TRAIT_MEAN
-		faction = list("bot_angry")
-		..()
+/mob/living/carbon/human/interactive/angry/New()
+	TRAITS |= TRAIT_ROBUST
+	TRAITS |= TRAIT_MEAN
+	faction = list("bot_angry")
+	..()
 
-/mob/living/carbon/human/interactive/friendly
-	New()
-		TRAITS |= TRAIT_FRIENDLY
-		TRAITS |= TRAIT_UNROBUST
-		faction = list("bot_friendly")
-		..()
+/mob/living/carbon/human/interactive/friendly/New()
+	TRAITS |= TRAIT_FRIENDLY
+	TRAITS |= TRAIT_UNROBUST
+	faction = list("bot_friendly")
+	..()
 
-/mob/living/carbon/human/interactive/greytide
-	New()
-		TRAITS |= TRAIT_ROBUST
-		TRAITS |= TRAIT_MEAN
-		TRAITS |= TRAIT_THIEVING
-		TRAITS |= TRAIT_DUMB
-		faction = list("bot_grey")
-		graytide = 1
-		..()
+/mob/living/carbon/human/interactive/greytide/New()
+	TRAITS |= TRAIT_ROBUST
+	TRAITS |= TRAIT_MEAN
+	TRAITS |= TRAIT_THIEVING
+	TRAITS |= TRAIT_DUMB
+	faction = list("bot_grey")
+	graytide = 1
+	..()

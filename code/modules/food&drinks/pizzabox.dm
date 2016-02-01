@@ -81,7 +81,6 @@
 		audible_message("<span class='warning'>\icon[src] *beep*</span>")
 		bomb_active = TRUE
 		SSobj.processing |= src
-		process()
 	update_icon()
 
 /obj/item/pizzabox/attack_hand(mob/user)

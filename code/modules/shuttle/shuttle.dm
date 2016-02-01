@@ -176,10 +176,13 @@
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
 
+	var/launch_status = NOLAUNCH
+
 /obj/docking_port/mobile/New()
 	..()
 	SSshuttle.mobile += src
 
+/obj/docking_port/mobile/initialize()
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
 		areaInstance = A
@@ -416,7 +419,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(buckled)
+	if(!buckled)
 		Weaken(3)
 
 /*
@@ -584,15 +587,21 @@
 		return
 
 	if(href_list["move"])
+		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
+		if(M.launch_status == ENDGAME_LAUNCHED)
+			usr << "<span class='warning'>You've already escaped. Never going back to that place again!</span>"
+			return
 		if(no_destination_swap)
-			var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 			if(M.mode != SHUTTLE_IDLE)
 				usr << "<span class='warning'>Shuttle already in transit.</span>"
 				return
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
-			if(0)	usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
-			if(1)	usr << "<span class='warning'>Invalid shuttle requested.</span>"
-			else	usr << "<span class='notice'>Unable to comply.</span>"
+			if(0)
+				usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
+			if(1)
+				usr << "<span class='warning'>Invalid shuttle requested.</span>"
+			else
+				usr << "<span class='notice'>Unable to comply.</span>"
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(!emagged)

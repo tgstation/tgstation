@@ -26,7 +26,7 @@
 	)
 	var/style = "nanotrasen" // The style to be used for this UI.
 	var/interface // The interface (template) to be used for this UI.
-	var/auto_update = TRUE // Update the UI every MC tick.
+	var/autoupdate = TRUE // Update the UI every MC tick.
 	var/initialized = FALSE // If the UI has been initialized yet.
 	var/list/initial_data // The data (and datastructure) used to initialize the UI.
 	var/status = UI_INTERACTIVE // The status/visibility of the UI.
@@ -167,8 +167,8 @@
   *
   * required state bool Enable/disable auto-updating.
  **/
-/datum/tgui/proc/set_auto_update(state = 1)
-	auto_update = state
+/datum/tgui/proc/set_autoupdate(state = 1)
+	autoupdate = state
 
  /**
   * private
@@ -300,7 +300,7 @@
 		close()
 		return
 
-	if(status && (force || auto_update))
+	if(status && (force || autoupdate))
 		update() // Update the UI if the status and update settings allow it.
 	else
 		update_status(push = 1) // Otherwise only update status.
@@ -316,13 +316,12 @@
 /datum/tgui/proc/push_data(data, force = 0)
 	update_status(push = 0) // Update the window state.
 	if(!initialized)
-		return // Cannot upadte UI if it is not set up yet.
+		return // Cannot update UI if it is not set up yet.
 	if(status <= UI_DISABLED && !force)
 		return // Cannot update UI, we have no visibility.
 
 	// Send the new JSON to the update() Javascript function.
 	user << output(url_encode(get_json(data)), "[window_id].browser:update")
-
 
  /**
   * private
@@ -343,8 +342,7 @@
   * optional push bool Push an update to the UI (an update is always sent for UI_DISABLED).
  **/
 /datum/tgui/proc/update_status(push = 0)
-	var/datum/host = src_object.ui_host()
-	var/status = host.ui_status(user, state)
+	var/status = src_object.ui_status(user, state)
 	if(master_ui)
 		status = min(status, master_ui.status)
 

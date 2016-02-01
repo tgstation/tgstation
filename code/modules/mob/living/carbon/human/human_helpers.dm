@@ -66,10 +66,14 @@
 	var/obj/item/weapon/storage/wallet/wallet = wear_id
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
-	if(istype(wallet))		id = wallet.front_id
-	if(istype(id))			. = id.registered_name
-	else if(istype(pda))	. = pda.owner
-	if(!.) 					. = if_no_id	//to prevent null-names making the mob unclickable
+	if(istype(wallet))
+		id = wallet.front_id
+	if(istype(id))
+		. = id.registered_name
+	else if(istype(pda))
+		. = pda.owner
+	if(!.)
+		. = if_no_id	//to prevent null-names making the mob unclickable
 	return
 
 //gets ID card object from special clothes slot or null.
@@ -161,3 +165,20 @@
 			prot["head"] = max(1 - I.permeability_coefficient, prot["head"])
 	var/protection = (prot["head"] + prot["arms"] + prot["feet"] + prot["legs"] + prot["groin"] + prot["chest"] + prot["hands"])/7
 	return protection
+
+/mob/living/carbon/human/can_use_guns(var/obj/item/weapon/gun/G)
+	. = ..()
+
+	if(G.trigger_guard)
+		if(src.dna.check_mutation(HULK))
+			src << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
+			return 0
+		if(NOGUNS in src.dna.species.specflags)
+			src << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
+			return 0
+
+	if(martial_art && martial_art.name == "The Sleeping Carp") //great dishonor to famiry
+		src << "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>"
+		return 0
+
+	return .
