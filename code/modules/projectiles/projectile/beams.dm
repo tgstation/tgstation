@@ -8,24 +8,19 @@
 	flag = "laser"
 	eyeblur = 2
 
-
 /obj/item/projectile/beam/laser
-	name = "laser"
-	icon_state = "laser"
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 20
-	damage_type = BURN
-	hitsound = 'sound/weapons/sear.ogg'
-	flag = "laser"
-	eyeblur = 2
 
+/obj/item/projectile/beam/laser/heavylaser
+	name = "heavy laser"
+	icon_state = "heavylaser"
+	damage = 40
 
 /obj/item/projectile/beam/laser/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(iscarbon(target))
 		if (prob(33))
 			var/mob/living/carbon/M = target
-			M.adjust_fire_stacks(1)
+			M.adjust_fire_stacks(0.5)
 			M.IgniteMob()
 
 /obj/item/projectile/beam/practice
@@ -38,19 +33,6 @@
 	name = "laser pellet"
 	icon_state = "scatterlaser"
 	damage = 5
-
-
-/obj/item/projectile/beam/heavylaser
-	name = "heavy laser"
-	icon_state = "heavylaser"
-	damage = 40
-
-/obj/item/projectile/beam/heavylaser/on_hit(atom/target, blocked = 0)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(1)
-		M.IgniteMob()
 
 /obj/item/projectile/beam/xray
 	name = "xray beam"
@@ -110,7 +92,6 @@
 		if(istype(M.wear_suit))
 			if(M.wear_suit.type in suit_types)
 				M.adjustStaminaLoss(34)
-
 
 /obj/item/projectile/beam/lasertag/redtag
 	icon_state = "laser"

@@ -30,7 +30,7 @@
 	select_name = "scatter"
 
 /obj/item/ammo_casing/energy/laser/heavy
-	projectile_type = /obj/item/projectile/beam/heavylaser
+	projectile_type = /obj/item/projectile/beam/laser/heavylaser
 	select_name = "anti-vehicle"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 

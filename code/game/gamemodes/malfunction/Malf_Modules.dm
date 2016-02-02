@@ -138,7 +138,7 @@
 	for(var/obj/machinery/porta_turret/turret in machines)
 		if(turret.ai) //Make sure only the AI's turrets are affected.
 			turret.health += 30
-			turret.eprojectile = /obj/item/projectile/beam/heavylaser //Once you see it, you will know what it means to FEAR.
+			turret.eprojectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
 			turret.eshot_sound = 'sound/weapons/lasercannonfire.ogg'
 	src << "<span class='notice'>Turrets upgraded.</span>"
 
