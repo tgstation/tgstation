@@ -93,14 +93,17 @@
 	icon_state = "bluelaser"
 	suit_types = list(/obj/item/clothing/suit/redtag)
 
-/obj/item/projectile/beam/instagib
+/obj/item/projectile/beam/instakill
 	name = "instagib laser"
-	icon_state = "laser"
+	icon_state = "purple_laser"
 	damage = 200
 	damage_type = BURN
 
-/obj/item/projectile/beam/instagib/blue
-	icon_state = "bluelaser"
+/obj/item/projectile/beam/instakill/blue
+	icon_state = "blue_laser"
+
+/obj/item/projectile/beam/instakill/red
+	icon_state = "red_laser"
 
 /obj/item/projectile/beam/instakill/on_hit(atom/target)
 	. = ..()
