@@ -92,6 +92,7 @@
 	desc = "Used for running friendly games of capture the flag."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
+	anchored = 1
 	var/team = WHITE_TEAM
 	//Capture the Flag scoring
 	var/points = 0
@@ -316,6 +317,7 @@
 	desc = "You should capture this."
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
+	anchored = 1
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
 	var/point_rate = 1
