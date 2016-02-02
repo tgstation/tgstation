@@ -1,6 +1,6 @@
 // Helpers for running 510 code on older versions of BYOND.
 #if DM_VERSION < 510
-#define BYGEX "code/__HELPERS/bygex.dll"
+#define BYGEX "code/__HELPERS/bygex"
 /proc/replacetext(text, replace, replacement)
 	if(istype(replace, /regex))
 		var/regex/R = replace
