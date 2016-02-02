@@ -246,11 +246,6 @@ proc/checkhtml(var/t)
 /*
  * Text modification
  */
-/proc/replacetext(text, find, replacement)
-	return list2text(text2list(text, find), replacement)
-
-/proc/replacetextEx(text, find, replacement)
-	return list2text(text2listEx(text, find), replacement)
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
@@ -357,7 +352,7 @@ proc/checkhtml(var/t)
  */
 /proc/format_num(var/number, var/sep=",")
 	var/c="" // Current char
-	var/list/parts = text2list("[number]",".")
+	var/list/parts = splittext("[number]",".")
 	var/origtext = "[parts[1]]"
 	var/len      = length(origtext)
 	var/offset   = len % 3
@@ -473,8 +468,8 @@ var/list/number_units=list(
 				out = num2words(unit_number, zero, minus, hundred, digits, tens, units, recursion+1) + out
 			number /= 1000
 			i++
-	//testing(" ([recursion]) out=list("+list2text(out,", ")+")")
+	//testing(" ([recursion]) out=list("+jointext(out,", ")+")")
 	return out
 
 ///mob/verb/test_num2words(var/number as num)
-//	to_chat(usr, "\"[list2text(num2words(number), " ")]\"")
+//	to_chat(usr, "\"[jointext(num2words(number), " ")]\"")

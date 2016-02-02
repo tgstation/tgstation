@@ -327,7 +327,7 @@
 	name = "summoning"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "summoning"
-	mouse_opacity = 0
+	mouse_opacity = 1
 	density = 0
 	flags = 0
 	var/obj/effect/rune/summon_target = null
@@ -1283,7 +1283,7 @@
 		if(!nullblock)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
-				flick("e_flash", C.flash)
+				C.flash_eyes(visual = 1)
 				if(C.stuttering < 1 && (!(M_HULK in C.mutations)))
 					C.stuttering = 1
 				C.Weaken(1)

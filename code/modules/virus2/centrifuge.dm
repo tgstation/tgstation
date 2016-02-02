@@ -96,7 +96,7 @@
 			dat += "Please insert a container."
 		dat += "</td></tr></table><br>"
 		dat += "<hr>"
-	dat = list2text(dat)
+	dat = jointext(dat,"")
 	var/datum/browser/popup = new(user, "iso_centrifuge", "Isolation Centrifuge", 400, 300, src)
 	popup.set_content(dat)
 	popup.open()

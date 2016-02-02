@@ -59,7 +59,7 @@
 			where.Add("category = '[sanitizeSQL(category)]'")
 		if(title)
 			where.Add("title LIKE '%[sanitizeSQL(title)]%'")
-		return " WHERE "+list2text(where," AND ")
+		return " WHERE "+jointext(where," AND ")
 	return ""
 
 // So we can have catalogs of books that are programmatic, and ones that aren't.

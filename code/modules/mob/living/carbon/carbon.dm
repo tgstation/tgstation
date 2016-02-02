@@ -667,3 +667,7 @@
 		if(O in src.stomach_contents)
 			src.stomach_contents.Remove(O)
 			O.forceMove(target)
+
+/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	if(eyecheck() < intensity)
+		..()

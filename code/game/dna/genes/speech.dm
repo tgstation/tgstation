@@ -44,13 +44,13 @@
 	var/str_expr
 	var/broken = 0
 
-/datum/speech_filter_action/New(var/orig,var/list/args)
+/datum/speech_filter_action/New(var/orig, var/list/args)
 	str_expr = orig
-	expr = new(orig)
-	if(expr.error)
-		warning("Failed to compile expression [orig]: [expr.error]")
-		broken = 1
-		return
+	try
+		expr = regex(orig)
+	catch(var/exception/E)
+		world.Error(E)
+		broken = 1 // Blew it.
 
 /datum/speech_filter_action/proc/Run(var/text)
 	return "[type] has not overrode run()."
@@ -72,21 +72,22 @@
 /datum/speech_filter_action/pick_replace
 	var/list/replacements
 
-/datum/speech_filter_action/pick_replace/New(var/orig,var/list/args)
-	..(orig,args)
+/datum/speech_filter_action/pick_replace/New(var/orig, var/list/args)
+	..()
 	replacements = args
 
 /datum/speech_filter_action/pick_replace/Run(var/text)
 	if(expr.Find(text))
-		var/o=""
-		var/lastidx=1
+		.           = ""
+		var/lastidx = 1
 		do
-			o += copytext(text,lastidx,expr.match)
-			//<b>[copytext(text,R.match,expr.index)]</b>
-			o += pick(replacements)
-			//copytext(text,expr.index)
-			lastidx = expr.index // Move forwards
-		while(expr.FindNext(text))
-		o += copytext(text,expr.index)
-		return o
+			. += copytext(text,lastidx, expr.index)
+			//<b>[copytext(text, R.match, expr.index)]</b>
+			. += pick(replacements)
+			//copytext(text, expr.index)
+			lastidx = expr.index + length(expr.match) // Move forwards
+		while(expr.Find(text, lastidx))
+
+		. += copytext(text, expr.index)
+
 	return text

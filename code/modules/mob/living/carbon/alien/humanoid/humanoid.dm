@@ -36,7 +36,7 @@
 		return
 
 	if(!blinded)
-		flick("flash", flash)
+		flash_eyes(visual = 1)
 
 	var/shielded = 0
 
@@ -337,5 +337,3 @@ In all, this is a lot like the monkey code. /N
 	user << browse(dat, text("window=mob\ref[src];size=340x480"))
 	onclose(user, "mob\ref[src]")
 	return
-
-

@@ -320,7 +320,7 @@ var/global/list/loopModeNames=list(
 			if(can_change) t += "</A>"
 			t += "</td><td>[song.album]</td></tr>"
 		t += "</table>"
-	t = list2text(t)
+	t = jointext(t,"")
 	return t
 
 /obj/machinery/media/jukebox/proc/ScreenPayment(var/mob/user)

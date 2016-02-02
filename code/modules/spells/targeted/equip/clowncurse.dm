@@ -27,7 +27,7 @@
 /spell/targeted/equip_item/clowncurse/cast(list/targets, mob/user = usr)
 	..()
 	for(var/mob/living/carbon/human/target in targets)
-		flick("e_flash", target.flash)
+		target.flash_eyes(visual = 1)
 		target.dna.SetSEState(CLUMSYBLOCK,1)
 		genemutcheck(target,CLUMSYBLOCK,null,MUTCHK_FORCED)
 		target.update_mutations()

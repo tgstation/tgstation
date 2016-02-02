@@ -100,7 +100,7 @@ var/list/freqtoname = list(
 		say_testing(speech.speaker," We <i>do</i> understand this gentle\[wo\]man.")
 
 #ifdef SAY_DEBUG
-	var/enc_wrapclass=list2text(filtered_speech.wrapper_classes, ", ")
+	var/enc_wrapclass=jointext(filtered_speech.wrapper_classes, ", ")
 	say_testing(src, "render_speech() - wrapper_classes = \[[enc_wrapclass]\]")
 #endif
 	// Below, but formatted nicely.

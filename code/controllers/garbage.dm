@@ -18,7 +18,7 @@ var/soft_dels = 0
 	if(L.len == 1)
 		to_chat(usr, "No garbage collector deletions this round")
 		return
-	usr << browse(list2text(L),"window=harddellogs")
+	usr << browse(jointext(L,""),"window=harddellogs")
 
 /datum/garbage_collector
 	var/list/queue = new

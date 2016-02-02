@@ -236,7 +236,7 @@ mob/living/carbon/proc/handle_hallucinations()
 				to_chat(src, "<i>[pick(boo_phrases)]</i>")
 			if(81) //Fake flash
 				src << sound('sound/weapons/flash.ogg')
-				flick("e_flash", src.flash)
+				flash_eyes(visual = 1)
 
 				if(prob(20))
 					src.Weaken(10)

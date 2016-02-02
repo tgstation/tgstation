@@ -8,7 +8,6 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message("<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw...", 1)
 		update_canmove()
-		if(client)	blind.layer = 0
 		update_icons()
 
 	tod = worldtime2text() //weasellos time of death patch

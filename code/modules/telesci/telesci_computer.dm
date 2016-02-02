@@ -283,7 +283,7 @@
 			var/list/hostiles = typesof(/mob/living/simple_animal/hostile) - blocked
 			playsound(L, 'sound/effects/phasein.ogg', 100, 1, extrarange = 3, falloff = 5)
 			for(var/mob/living/carbon/human/M in viewers(L, null))
-				flick("e_flash", M.flash)
+				M.flash_eyes(visual = 1)
 			var/chosen = pick(hostiles)
 			var/mob/living/simple_animal/hostile/H = new chosen
 			H.loc = L

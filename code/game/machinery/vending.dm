@@ -104,7 +104,7 @@ var/global/num_vending_terminals = 1
 
 	wires = new(src)
 	spawn(4)
-		src.slogan_list = text2list(src.product_slogans, ";")
+		src.slogan_list = splittext(src.product_slogans, ";")
 
 		// So not all machines speak at the exact same time.
 		// The first time this machine says something will be at slogantime + this random value,

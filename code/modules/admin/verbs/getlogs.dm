@@ -153,7 +153,7 @@
 		return
 
 	var/datum/browser/clean/popup = new (usr, "\ref[M]_admin_log_viewer", "Attack logs of [M]", 300, 300)
-	popup.set_content(list2text(M.attack_log, "<br/>"))
+	popup.set_content(jointext(M.attack_log, "<br/>"))
 	popup.open()
 
 	feedback_add_details("admin_verb","VMAL")

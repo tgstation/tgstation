@@ -8,76 +8,52 @@
 
 	regular_hud_updates()
 
-	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask/*, global_hud.nvg*/)
-
 	update_action_buttons()
 
-	if(damageoverlay.overlays)
-		damageoverlay.overlays = list()
-
-	if(stat == UNCONSCIOUS)
-		//Critical damage passage overlay
-		if(health <= 0)
-			//var/image/I
-			switch(health)
-				if(-20 to -10)
-					damageoverlay.overlays += unconscious_overlays["1"]
-				if(-30 to -20)
-					damageoverlay.overlays += unconscious_overlays["2"]
-				if(-40 to -30)
-					damageoverlay.overlays += unconscious_overlays["3"]
-				if(-50 to -40)
-					damageoverlay.overlays += unconscious_overlays["4"]
-				if(-60 to -50)
-					damageoverlay.overlays += unconscious_overlays["5"]
-				if(-70 to -60)
-					damageoverlay.overlays += unconscious_overlays["6"]
-				if(-80 to -70)
-					damageoverlay.overlays += unconscious_overlays["7"]
-				if(-90 to -80)
-					damageoverlay.overlays += unconscious_overlays["8"]
-				if(-95 to -90)
-					damageoverlay.overlays += unconscious_overlays["9"]
-				if(-INFINITY to -95)
-					damageoverlay.overlays += unconscious_overlays["10"]
+	if(stat == UNCONSCIOUS && health <= config.health_threshold_crit)
+		var/severity = 0
+		switch(health)
+			if(-20 to -10) severity = 1
+			if(-30 to -20) severity = 2
+			if(-40 to -30) severity = 3
+			if(-50 to -40) severity = 4
+			if(-60 to -50) severity = 5
+			if(-70 to -60) severity = 6
+			if(-80 to -70) severity = 7
+			if(-90 to -80) severity = 8
+			if(-95 to -90) severity = 9
+			if(-INFINITY to -95) severity = 10
+		overlay_fullscreen("crit", /obj/screen/fullscreen/crit, severity)
 	else
-		//Oxygen damage overlay
+		clear_fullscreen("crit")
 		if(oxyloss)
-			//var/image/I
+			var/severity = 0
 			switch(oxyloss)
-				if(10 to 20)
-					damageoverlay.overlays += oxyloss_overlays["1"]
-				if(20 to 25)
-					damageoverlay.overlays += oxyloss_overlays["2"]
-				if(25 to 30)
-					damageoverlay.overlays += oxyloss_overlays["3"]
-				if(30 to 35)
-					damageoverlay.overlays += oxyloss_overlays["4"]
-				if(35 to 40)
-					damageoverlay.overlays += oxyloss_overlays["5"]
-				if(40 to 45)
-					damageoverlay.overlays += oxyloss_overlays["6"]
-				if(45 to INFINITY)
-					damageoverlay.overlays += oxyloss_overlays["7"]
-			//damageoverlay.overlays += I
+				if(10 to 20) severity = 1
+				if(20 to 25) severity = 2
+				if(25 to 30) severity = 3
+				if(30 to 35) severity = 4
+				if(35 to 40) severity = 5
+				if(40 to 45) severity = 6
+				if(45 to INFINITY) severity = 7
+			overlay_fullscreen("oxy", /obj/screen/fullscreen/oxy, severity)
+		else
+			clear_fullscreen("oxy")
 		//Fire and Brute damage overlay (BSSR)
 		var/hurtdamage = src.getBruteLoss() + src.getFireLoss() + damageoverlaytemp
-		damageoverlaytemp = 0 //We do this so we can detect if someone hits us or not.
+		damageoverlaytemp = 0 // We do this so we can detect if someone hits us or not.
 		if(hurtdamage)
-			//var/image/I
+			var/severity = 0
 			switch(hurtdamage)
-				if(10 to 25)
-					damageoverlay.overlays += brutefireloss_overlays["1"]
-				if(25 to 40)
-					damageoverlay.overlays += brutefireloss_overlays["2"]
-				if(40 to 55)
-					damageoverlay.overlays += brutefireloss_overlays["3"]
-				if(55 to 70)
-					damageoverlay.overlays += brutefireloss_overlays["4"]
-				if(70 to 85)
-					damageoverlay.overlays += brutefireloss_overlays["5"]
-				if(85 to INFINITY)
-					damageoverlay.overlays += brutefireloss_overlays["6"]
+				if(5 to 15) severity = 1
+				if(15 to 30) severity = 2
+				if(30 to 45) severity = 3
+				if(45 to 70) severity = 4
+				if(70 to 85) severity = 5
+				if(85 to INFINITY) severity = 6
+			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+		else
+			clear_fullscreen("brute")
 			//damageoverlay.overlays += I
 	if(stat == DEAD)
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
@@ -86,6 +62,7 @@
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 		if(healths)
 			healths.icon_state = "health7" //DEAD healthmeter
+		return
 	else
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 
@@ -254,50 +231,48 @@
 						bodytemp.icon_state = "temp-3"
 					if(0.4 to INFINITY)
 						bodytemp.icon_state = "temp-4"
-		if(blind)
-			if(blinded)
-				blind.layer = 18
-			else
-				blind.layer = 0
 
 		if(disabilities & NEARSIGHTED)	//This looks meh but saves a lot of memory by not requiring to add var/prescription
 			if(glasses)	//To every /obj/item
 				var/obj/item/clothing/glasses/G = glasses
 				if(!G.prescription)
-					client.screen += global_hud.vimpaired
+					overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+				else
+					clear_fullscreen("nearsighted")
 			else
-				client.screen += global_hud.vimpaired
-
+				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+		else
+			clear_fullscreen("nearsighted")
+		if(eye_blind || blinded)
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+		else
+			clear_fullscreen("blind")
 		if(eye_blurry)
-			if(!istype(global_hud.blurry,/obj/screen))
-				global_hud.blurry = getFromPool(/obj/screen)
-				global_hud.blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
-				global_hud.blurry.icon_state = "blurry"
-				global_hud.blurry.layer = 17
-				global_hud.blurry.mouse_opacity = 0
-			client.screen += global_hud.blurry
-
+			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+		else
+			clear_fullscreen("blurry")
 		if(druggy)
-			if(!istype(global_hud.druggy,/obj/screen))
-				global_hud.druggy = getFromPool(/obj/screen)
-				global_hud.druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
-				global_hud.druggy.icon_state = "druggy"
-				global_hud.druggy.layer = 17
-				global_hud.druggy.mouse_opacity = 0
-			client.screen += global_hud.druggy
+			overlay_fullscreen("high", /obj/screen/fullscreen/high)
+		else
+			clear_fullscreen("high")
 
 		var/masked = 0
-
 		if(istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
 			var/obj/item/clothing/head/welding/O = head
 			if(!O.up && tinted_weldhelh)
-				client.screen += global_hud.darkMask
+				overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
 				masked = 1
+			else
+				clear_fullscreen("tint")
+		else
+			clear_fullscreen("tint")
 
 		if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) && !istype(glasses, /obj/item/clothing/glasses/welding/superior))
 			var/obj/item/clothing/glasses/welding/O = glasses
 			if(!O.up && tinted_weldhelh)
-				client.screen += global_hud.darkMask
+				overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
+			else
+				clear_fullscreen("tint")
 
 		if(machine)
 			if(!machine.check_eye(src))

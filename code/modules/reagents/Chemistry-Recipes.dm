@@ -447,11 +447,11 @@ datum
 
 					if (get_dist(M, location) <= 3)
 						if(eye_safety < 1)
-							flick("e_flash", M.flash)
+							M.flash_eyes(visual = 1)
 							M.Weaken(15)
 					else if (get_dist(M, location) <= 5)
 						if(eye_safety < 1)
-							flick("e_flash", M.flash)
+							M.flash_eyes(visual = 1)
 							M.Stun(5)
 
 		napalm
@@ -1339,7 +1339,7 @@ datum
 					if (istype(O, /mob/living/carbon/human/))
 						var /mob/living/carbon/human/H = O
 						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
-							flick("e_flash", O.flash)
+							H.flash_eyes(visual = 1)
 							to_chat(O, "<span class='danger'>A flash blinds you while you start hearing terrifying noises !</span>")
 						else
 							to_chat(O, "<span class='danger'>You hear a rumbling as a troup of monsters phases into existence !</span>")
@@ -1394,7 +1394,7 @@ datum
 					if (istype(O, /mob/living/carbon/human/))
 						var /mob/living/carbon/human/H = O
 						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
-							flick("e_flash", O.flash)
+							H.flash_eyes(visual = 1)
 							to_chat(O, "<span class='rose'>A flash blinds and you can feel a new presence !</span>")
 						else
 							to_chat(O, "<span class='rose'>You hear a crackling as a creature manifests before you !</span>")
@@ -1486,7 +1486,7 @@ datum
 					if (istype(O, /mob/living/carbon/human/))
 						var /mob/living/carbon/human/H = O
 						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
-							flick("e_flash", O.flash)
+							H.flash_eyes(visual = 1)
 							to_chat(O, "<span class='caution'>A white light blinds you and you think you can smell some food nearby !</span>")
 						else
 							to_chat(O, "<span class='notice'>A bunch of snacks appears before your very eyes !</span>")
@@ -1539,7 +1539,7 @@ datum
 					if (istype(O, /mob/living/carbon/human/))
 						var /mob/living/carbon/human/H = O
 						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
-							flick("e_flash", O.flash)
+							H.flash_eyes(visual = 1)
 							to_chat(O, "<span class='caution'>A white light blinds you and you think you can hear bottles rolling on the floor !</span>")
 						else
 							to_chat(O, "<span class='notice'>A bunch of drinks appears before you !</span>")
@@ -2016,7 +2016,7 @@ datum
 					var/list/flashers = list()
 					for(var/mob/living/carbon/human/M in viewers(TO, null))
 						if((M.eyecheck() <= 0)&&(!istype(M.glasses, /obj/item/clothing/glasses/science)))
-							flick("e_flash", M.flash) // flash dose faggots
+							M.flash_eyes(visual = 1)
 							flashers += M
 
 					var/y_distance = TO.y - FROM.y

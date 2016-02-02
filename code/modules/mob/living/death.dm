@@ -6,6 +6,7 @@
 	//See code/datums/helper_datums/butchering.dm
 	init_butchering_list()
 
+	clear_fullscreens()
 	..()
 
 /mob/living/proc/init_butchering_list()

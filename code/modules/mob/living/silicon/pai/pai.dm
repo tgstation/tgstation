@@ -193,8 +193,7 @@
 	if(flags & INVULNERABLE)
 		return
 
-	if(!blinded)
-		flick("flash", src.flash)
+	flash_eyes(visual = 1, affects_silicon = 1)
 
 	switch(severity)
 		if(1.0)

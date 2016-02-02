@@ -32,7 +32,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	var/original_msg = msg
 
 	//explode the input msg into a list
-	var/list/msglist = text2list(msg, " ")
+	var/list/msglist = splittext(msg, " ")
 
 	//generate keywords lookup
 	var/list/surnames = list()
@@ -43,7 +43,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 		if(M.mind)	indexing += M.mind.name
 
 		for(var/string in indexing)
-			var/list/L = text2list(string, " ")
+			var/list/L = splittext(string, " ")
 			var/surname_found = 0
 			//surnames
 			for(var/i=L.len, i>=1, i--)

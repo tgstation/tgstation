@@ -142,21 +142,6 @@
 	mymob.pullin.name = "pull"
 	mymob.pullin.screen_loc = ui_borg_pull
 
-	mymob.blind = getFromPool(/obj/screen)
-	mymob.blind.icon = 'icons/mob/screen1_full.dmi'
-	mymob.blind.icon_state = "blackimageoverlay"
-	mymob.blind.name = ""
-	mymob.blind.screen_loc = "1,1"
-	mymob.blind.layer = 0
-	mymob.blind.mouse_opacity = 1
-
-	mymob.flash = getFromPool(/obj/screen)
-	mymob.flash.icon = 'icons/mob/screen1_robot.dmi'
-	mymob.flash.icon_state = "blank"
-	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = ui_entire_screen
-	mymob.flash.layer = 17
-
 	mymob.zone_sel = getFromPool(/obj/screen/zone_sel)
 	mymob.zone_sel.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.zone_sel.overlays.len = 0
@@ -184,7 +169,7 @@
 
 	mymob.client.reset_screen()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.gun_setting_icon) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 
 	return

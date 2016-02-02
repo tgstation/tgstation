@@ -301,11 +301,11 @@
 			subholder = list()
 			for(var/A in L)
 				subholder.Add(assemblies.Find(A))
-			midholder.Add(list2text(subholder, ";"))
+			midholder.Add(jointext(subholder, ";"))
 		else
 			midholder.Add("")
-		mainholder.Add(list2text(midholder, "|"))
-	return list2text(mainholder, "<br>")
+		mainholder.Add(jointext(midholder, "|"))
+	return jointext(mainholder, "<br>")
 
 /obj/item/device/assembly_frame/proc/debug_to_text() //Spawns a paper with the to_text data
 	var/obj/item/weapon/paper/P = new(get_turf(src))
@@ -382,10 +382,10 @@
 /obj/item/device/assembly_frame/proc/decompose_text(assembly_data)
 	if(!istext(assembly_data))
 		return null
-	var/list/mainholder = text2list(assembly_data, "<br>")
+	var/list/mainholder = splittext(assembly_data, "<br>")
 	. = list()
 	for(var/a_data in mainholder)
-		var/list/subholder = text2list(a_data, "|")
+		var/list/subholder = splittext(a_data, "|")
 		if(subholder.len != 4) //A valid string for this purpose will always contain exactly four chunks of information per assembly, even if some are empty.
 			return null
 		if(!subholder[1]) //This is the only part that cannot be empty. Note that this does not check if it is a valid assembly short_name; normally, that is either done in get_req_parts() or irrelevant because invalid short_names shouldn't appear.
@@ -405,7 +405,7 @@
 		else
 			rlistholder["values"] = list()
 		if(subholder[4]) //No connections? No problem.
-			var/list/connectionsholder_text = text2list(subholder[4], ";")
+			var/list/connectionsholder_text = splittext(subholder[4], ";")
 			var/list/connectionsholder_num = list()
 			for(var/num in connectionsholder_text)
 				var/numholder = text2num(num)

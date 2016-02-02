@@ -1382,3 +1382,22 @@ default behaviour is:
 
 /mob/proc/CheckSlip()
 	return 0
+
+
+
+/*
+	How this proc that I took from /tg/ works:
+	intensity determines the damage done to humans with eyes
+	visual determines whether the proc damages eyes (in the living/carbon/human proc). 1 for no damage
+	override_blindness_check = 1 means that it'll display a flash even if the mob is blind
+	affect_silicon = 0 means that the flash won't affect silicons at all.
+
+*/
+/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+	if(override_blindness_check || !(disabilities & BLIND))
+		// flick("e_flash", flash)
+		overlay_fullscreen("flash", type)
+		// addtimer(src, "clear_fullscreen", 25, FALSE, "flash", 25)
+		spawn(25)
+			clear_fullscreen("flash", 25)
+		return 1

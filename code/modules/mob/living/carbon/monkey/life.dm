@@ -716,22 +716,23 @@
 			else
 				bodytemp.icon_state = "temp-4"
 
-	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
-
-	if(blind && stat != DEAD)
-		if(blinded)
-			blind.layer = 18
+	if(stat != DEAD)
+		if(src.eye_blind || blinded)
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
-			blind.layer = 0
-
-			if(disabilities & NEARSIGHTED)
-				client.screen += global_hud.vimpaired
-
-			if(eye_blurry)
-				client.screen += global_hud.blurry
-
-			if(druggy)
-				client.screen += global_hud.druggy
+			clear_fullscreen("blind")
+		if (src.disabilities & NEARSIGHTED)
+			overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 2)
+		else
+			clear_fullscreen("impaired")
+		if (src.eye_blurry)
+			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+		else
+			clear_fullscreen("blurry")
+		if (src.druggy)
+			overlay_fullscreen("high", /obj/screen/fullscreen/high)
+		else
+			clear_fullscreen("high")
 
 	if (stat != 2)
 		if (machine)

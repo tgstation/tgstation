@@ -174,7 +174,7 @@
 			target.stat = UNCONSCIOUS
 			target.regenerate_icons()
 			target.update_canmove()
-			flick("e_flash",target.flash)
+			target.flash_eyes(visual = 1)
 			target.apply_effect(10, EYE_BLUR) //I'll still put this back in to avoid dumb "pounce back up" behavior
 			target.apply_effect(10, PARALYZE)
 			target.update_canmove()

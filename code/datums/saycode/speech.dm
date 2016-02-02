@@ -63,14 +63,14 @@
 	return clone
 
 /datum/speech/proc/render_wrapper_classes(var/sep=" ")
-	return list2text(wrapper_classes, sep)
+	return jointext(wrapper_classes, sep)
 
 /datum/speech/proc/render_message_classes(var/sep=" ")
-	return list2text(message_classes, sep)
+	return jointext(message_classes, sep)
 
 /datum/speech/proc/render_message()
 #ifdef SAY_DEBUG
-	to_chat(speaker, "[type]/render_message(): message_classes = {[list2text(message_classes, ", ")]}")
+	to_chat(speaker, "[type]/render_message(): message_classes = {[jointext(message_classes, ", ")]}")
 #endif
 	var/rendered=message
 	// Sanity
@@ -78,7 +78,7 @@
 		lquote="\""
 	if(!rquote)
 		rquote="\""
-	rendered="<span class='[list2text(message_classes, " ")]'>[lquote][html_encode(rendered)][rquote]</span>"
+	rendered="<span class='[jointext(message_classes, " ")]'>[lquote][html_encode(rendered)][rquote]</span>"
 	if(language)
 		rendered=language.render_speech(src, rendered)
 	else

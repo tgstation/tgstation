@@ -311,7 +311,7 @@ emp_act
 		return
 
 	if(!blinded && !noblind)
-		flick("flash", flash)
+		flash_eyes(visual = 1)
 
 	var/shielded = 0
 	var/b_loss = null

@@ -225,7 +225,7 @@
 
 	if(_range==-1)
 #ifdef BEAM_DEBUG
-		var/str_sources=list2text(sources,", ") // This will not work as an embedded statement.
+		var/str_sources=jointext(sources,", ") // This will not work as an embedded statement.
 		beam_testing("\ref[src] - emit(), sources=[str_sources]")
 #endif
 		_range=max_range

@@ -128,7 +128,6 @@
 		if(istype(container, /list) || istext(container))
 			return length(container)
 	return 0
-
 // BY DONKIE~
 // String stuff
 /proc/n_lower(var/string)
@@ -147,7 +146,7 @@
 
 proc/string_explode(var/string, var/separator = "")
 	if(istext(string) && (istext(separator) || isnull(separator)))
-		return text2list(string, separator)
+		return splittext(string, separator)
 
 proc/n_repeat(var/string, var/amount)
 	if(istext(string) && isnum(amount))
@@ -204,8 +203,6 @@ proc/n_round(var/num)
 			return round(num)
 		return n_ceil(num)
 
-// END OF BY DONKIE :(
-
 /proc/n_sin(var/const/x)
 	return sin(x)
 
@@ -224,3 +221,15 @@ proc/n_round(var/num)
 
 /proc/n_min(...)
 	return min(arglist(args))
+
+/proc/n_replacetext(Haystack, Needle, Replacement, Start = 1, End = 0)
+	try // Let's not cause runtimes due to people screwing up NTSL.
+		return replacetext(Haystack, Needle, Replacement, Start, End)
+	catch
+		return
+
+/proc/n_replacetextEx(Haystack, Needle, Replacement, Start = 1, End = 0)
+	try // Ditto.
+		return replacetextEx(Haystack, Needle, Replacement, Start, End)
+	catch
+		return

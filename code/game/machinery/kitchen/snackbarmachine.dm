@@ -67,7 +67,7 @@
 			dat += "<A href='?src=\ref[src];createbar=1'>Create snack bar (10 units max)</A>"
 		else
 			dat += "Buffer is empty.<BR>"
-	dat = list2text(dat)
+	dat = jointext(dat,"")
 	var/datum/browser/popup = new(usr, "[windowtype]", "[name]", 575, 400, src)
 	popup.set_content(dat)
 	popup.open()

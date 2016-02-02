@@ -85,7 +85,7 @@
 			dat += "<BR><BR><A href='?src=\ref[src];eject=1'>Eject disk</a>"
 		else
 			dat += "<BR>Please insert dish."
-	dat = list2text(dat)
+	dat = jointext(dat,"")
 	var/datum/browser/popup = new(user, "disease_splicer", "Disease Splicer", 400, 500, src)
 	popup.set_content(dat)
 	popup.open()

@@ -341,22 +341,16 @@
 		//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 		//blame the person who coded them. Temporary fix added.
 		if (client)
-			client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
+			clear_fullscreens()
 
-		if ((blind && stat != 2))
-			if ((blinded))
-				blind.layer = 18
-			else
-				blind.layer = 0
-
-				if (disabilities & NEARSIGHTED)
-					client.screen += global_hud.vimpaired
-
-				if (eye_blurry)
-					client.screen += global_hud.blurry
-
-				if (druggy)
-					client.screen += global_hud.druggy
+			if(src.eye_blind || src.blinded)
+				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+			if (src.disabilities & NEARSIGHTED)
+				overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired)
+			if (src.eye_blurry)
+				overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+			if (src.druggy)
+				overlay_fullscreen("high", /obj/screen/fullscreen/high)
 
 		if (stat != 2)
 			if (machine)

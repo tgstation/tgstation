@@ -220,7 +220,7 @@
 					tbl += "<td colspan='2' align='right'>N/C</td>"
 				tbl += "</tr>"
 
-		tbl = list2text(tbl)
+		tbl = jointext(tbl,"")
 		src.interface.updateContent("APCTable", tbl)
 
 #undef POWER_MONITOR_HIST_SIZE
