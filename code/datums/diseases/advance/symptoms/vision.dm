@@ -44,7 +44,6 @@ Bonus
 						M << "<span class='userdanger'>You go blind!</span>"
 						M.disabilities |= BLIND
 						M.eye_blind = 1
-
 /*
 //////////////////////////////////////
 

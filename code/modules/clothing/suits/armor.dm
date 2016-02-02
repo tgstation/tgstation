@@ -248,6 +248,9 @@
 	unacidable = 1
 	hit_reaction_chance = 55
 
+/obj/item/clothing/suit/armor/reactive/pox/first/dropped(mob/user)
+	qdel(src)
+
 /obj/item/clothing/suit/armor/reactive/pox/first/hit_reaction(mob/living/carbon/human/owner, attack_text)
 	active = 1
 	if(prob(hit_reaction_chance))
@@ -262,6 +265,9 @@
 	flags = ABSTRACT | NODROP
 	unacidable = 1
 	hit_reaction_chance = 100
+
+/obj/item/clothing/suit/armor/reactive/pox/last/dropped(mob/user)
+	qdel(src)
 
 /obj/item/clothing/suit/armor/reactive/pox/last/hit_reaction(mob/living/carbon/human/owner, attack_text)
 	active = 1

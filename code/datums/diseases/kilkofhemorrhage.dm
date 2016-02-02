@@ -54,7 +54,7 @@
 					var/obj/item/I = affected_mob.get_active_hand()
 					if(I && I.w_class == 1)
 						affected_mob.drop_item()
-		if(16, 17, 18, 19, 20)
+		if(16,17,18,19,20)
 			switch(rand(1,6))
 				if(1)
 					affected_mob << "<span class='warning'><b>Your eyes burn!</b></span>"
