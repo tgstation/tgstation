@@ -381,7 +381,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 3
 	item = /obj/item/ammo_box/magazine/m12g
 
-/datum/uplink_item/ammo/shotgun/slug
+/datum/uplink_item/ammo/shotgun/stun
 	name = "12 Stun Slug Drum"
 	desc = "An alternative 8-round stun slug magazine for use with the Bulldog shotgun. \
 			Saying that they're completely non-lethal would be lying."

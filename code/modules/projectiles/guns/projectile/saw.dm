@@ -82,8 +82,8 @@
 	armour_penetration = -10
 
 /obj/item/projectile/bullet/saw/ap
-	damage = 35
-	armour_penetration = 35
+	damage = 40
+	armour_penetration = 75
 
 /obj/item/projectile/bullet/saw/incen
 	damage = 7
