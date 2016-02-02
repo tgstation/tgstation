@@ -147,8 +147,9 @@
 		return
 
 	if(flag)
-		handle_suicide(user, target, params) //
-		return
+		if(user.zone_sel.selecting == "mouth")
+			handle_suicide(user, target, params)
+			return
 
 
 	//Exclude lasertag guns from the CLUMSY check.
