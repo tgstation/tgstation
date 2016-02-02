@@ -8,6 +8,26 @@
 	flag = "laser"
 	eyeblur = 2
 
+
+/obj/item/projectile/beam/laser
+	name = "laser"
+	icon_state = "laser"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	damage = 20
+	damage_type = BURN
+	hitsound = 'sound/weapons/sear.ogg'
+	flag = "laser"
+	eyeblur = 2
+
+
+/obj/item/projectile/beam/laser/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target))
+		if (prob(33))
+			var/mob/living/carbon/M = target
+			M.adjust_fire_stacks(1)
+			M.IgniteMob()
+
 /obj/item/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
@@ -24,6 +44,13 @@
 	name = "heavy laser"
 	icon_state = "heavylaser"
 	damage = 40
+
+/obj/item/projectile/beam/heavylaser/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(1)
+		M.IgniteMob()
 
 /obj/item/projectile/beam/xray
 	name = "xray beam"
