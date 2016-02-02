@@ -9,7 +9,7 @@
 	icon_state = "psiphon:0"
 	density = 1
 
-	var/on = 0
+	var/on = FALSE
 	var/direction = PUMP_OUT
 	var/obj/machinery/atmospherics/components/binary/pump/pump
 
@@ -23,6 +23,9 @@
 	pump.build_network()
 
 /obj/machinery/portable_atmospherics/pump/Destroy()
+	var/turf/T = get_turf(src)
+	T.assume_air(air_contents)
+	air_update_turf()
 	qdel(pump)
 	pump = null
 	return ..()
@@ -35,16 +38,6 @@
 		overlays += "siphon-open"
 	if(connected_port)
 		overlays += "siphon-connector"
-
-/obj/machinery/portable_atmospherics/pump/emp_act(severity)
-	if(is_operational())
-		if(prob(50 / severity))
-			on = !on
-		if(prob(100 / severity))
-			direction = PUMP_OUT
-		pump.target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
-		update_icon()
-	..(severity)
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
 	..()
@@ -62,6 +55,17 @@
 	pump.process_atmos() // Pump gas.
 	if(!holding)
 		air_update_turf() // Update the environment if needed.
+
+/obj/machinery/portable_atmospherics/pump/emp_act(severity)
+	if(is_operational())
+		if(prob(50 / severity))
+			on = !on
+		if(prob(100 / severity))
+			direction = PUMP_OUT
+		pump.target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
+		update_icon()
+	..()
+
 
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 														datum/tgui/master_ui = null, datum/ui_state/state = physical_state)

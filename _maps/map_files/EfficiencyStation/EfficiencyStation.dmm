@@ -1563,7 +1563,7 @@
 "aEc" = (/obj/structure/closet/secure_closet/personal/patient,/turf/simulated/floor/plasteel{dir = 8; icon_state = "whiteblue"},/area/medical/genetics)
 "aEd" = (/obj/structure/bed/chair/office/light,/obj/effect/landmark/start{name = "Geneticist"},/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/genetics)
 "aEe" = (/obj/item/device/radio/intercom{broadcasting = 1; frequency = 1485; listening = 0; name = "Station Intercom (Medbay)"; pixel_x = 28},/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/genetics)
-"aEf" = (/obj/machinery/computer/area_atmos,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/toxins/storage)
+"aEf" = (/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/toxins/storage)
 "aEg" = (/obj/structure/extinguisher_cabinet{pixel_x = 27},/obj/machinery/portable_atmospherics/canister/nitrogen,/turf/simulated/floor/plasteel{icon_state = "bot"},/area/toxins/storage)
 "aEh" = (/obj/machinery/door/firedoor/heavy,/obj/machinery/door/airlock/research{name = "Toxins Lab"; req_access_txt = "8"},/turf/simulated/floor/plasteel{icon_state = "white"},/area/toxins/mixing{name = "\improper Toxins Lab"})
 "aEi" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plating{broken = 1; icon_state = "platingdmg1"},/area/maintenance/fore)

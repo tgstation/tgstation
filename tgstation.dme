@@ -859,7 +859,6 @@
 #include "code\modules\atmospherics\machinery\components\unary_devices\unary_devices.dm"
 #include "code\modules\atmospherics\machinery\components\unary_devices\vent_pump.dm"
 #include "code\modules\atmospherics\machinery\components\unary_devices\vent_scrubber.dm"
-#include "code\modules\atmospherics\machinery\other\area_atmos_computer.dm"
 #include "code\modules\atmospherics\machinery\other\meter.dm"
 #include "code\modules\atmospherics\machinery\other\zvent.dm"
 #include "code\modules\atmospherics\machinery\pipes\manifold.dm"

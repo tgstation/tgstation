@@ -7085,7 +7085,7 @@
 "cGm" = (/obj/machinery/portable_atmospherics/canister/carbon_dioxide,/turf/simulated/floor/plasteel/bot,/area/toxins/storage)
 "cGn" = (/obj/machinery/portable_atmospherics/canister/nitrous_oxide,/turf/simulated/floor/plasteel/bot,/area/toxins/storage)
 "cGo" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/plasteel/bot,/area/toxins/storage)
-"cGp" = (/obj/machinery/computer/area_atmos,/obj/item/device/radio/intercom{broadcasting = 0; listening = 1; name = "Station Intercom (General)"; pixel_x = 26; pixel_y = -2; tag = "EAST"},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/toxins/storage)
+"cGp" = (/obj/item/device/radio/intercom{broadcasting = 0; listening = 1; name = "Station Intercom (General)"; pixel_x = 26; pixel_y = -2; tag = "EAST"},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/toxins/storage)
 "cGq" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{tag = "icon-manifold-b-f (WEST)"; dir = 8},/obj/structure/disposalpipe/segment,/turf/simulated/floor/plasteel{dir = 6; icon_state = "whitehall"},/area/medical/research{name = "Research Division"})
 "cGr" = (/turf/simulated/floor/plasteel/purple/side{tag = "icon-purple (SOUTHEAST)"; icon_state = "purple"; dir = 6},/obj/machinery/portable_atmospherics/canister,/obj/structure/window/reinforced,/turf/simulated/floor/plasteel/warningline{tag = "icon-warningline (SOUTHEAST)"; icon_state = "warningline"; dir = 6},/area/toxins/mixing)
 "cGs" = (/obj/machinery/atmospherics/components/unary/vent_pump{dir = 4; on = 1},/turf/simulated/floor/plasteel{icon_state = "white"},/area/toxins/mixing)

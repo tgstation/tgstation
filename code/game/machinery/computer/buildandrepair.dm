@@ -221,9 +221,6 @@
 	name = "circuit board (AI Integrity Restorer)"
 	build_path = /obj/machinery/computer/aifixer
 	origin_tech = "programming=3;biotech=2"
-/obj/item/weapon/circuitboard/area_atmos
-	name = "circuit board (Area Air Control)"
-	build_path = /obj/machinery/computer/area_atmos
 /*/obj/item/weapon/circuitboard/prison_shuttle
 	name = "circuit board (Prison Shuttle)"
 	build_path = /obj/machinery/computer/prison_shuttle*/

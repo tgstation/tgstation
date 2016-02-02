@@ -669,7 +669,7 @@
 "mS" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 5},/area/awaymission/centcomAway/hangar)
 "mT" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/centcomAway/hangar)
 "mU" = (/obj/structure/rack,/obj/item/weapon/storage/secure/briefcase,/obj/item/weapon/storage/belt/utility/full,/turf/simulated/floor/plasteel{icon_state = "grimy"},/area/awaymission/centcomAway/general)
-"mV" = (/obj/machinery/computer/area_atmos,/turf/simulated/floor/plasteel{icon_state = "redyellowfull"; dir = 5},/area/awaymission/centcomAway/thunderdome)
+"mV" = (/turf/simulated/floor/plasteel{icon_state = "redyellowfull"; dir = 5},/area/awaymission/centcomAway/thunderdome)
 "mW" = (/obj/structure/bed/stool{pixel_y = 8},/turf/simulated/floor/plasteel{icon_state = "redyellowfull"; dir = 5},/area/awaymission/centcomAway/thunderdome)
 "mX" = (/obj/machinery/door/airlock/centcom{name = "Thunderdome Administration"; opacity = 1; req_access_txt = "102"},/turf/simulated/floor/plasteel{icon_state = "redyellowfull"; dir = 5},/area/awaymission/centcomAway/thunderdome)
 "mY" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 5},/area/awaymission/centcomAway/thunderdome)

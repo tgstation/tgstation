@@ -4498,7 +4498,7 @@
 "bIz" = (/obj/machinery/portable_atmospherics/canister/carbon_dioxide,/turf/simulated/floor/plasteel{icon_state = "bot"},/area/toxins/storage)
 "bIA" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/plasteel{icon_state = "bot"},/area/toxins/storage)
 "bIB" = (/obj/machinery/portable_atmospherics/canister/nitrous_oxide,/turf/simulated/floor/plasteel{icon_state = "bot"},/area/toxins/storage)
-"bIC" = (/obj/machinery/computer/area_atmos,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/toxins/storage)
+"bIC" = (/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/toxins/storage)
 "bID" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/turf/simulated/floor/plasteel{dir = 5; icon_state = "whitehall"},/area/medical/research{name = "Research Division"})
 "bIE" = (/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/atmospherics/components/unary/vent_pump{dir = 8; on = 1},/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "bIF" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,/turf/simulated/floor/plasteel,/area/atmos)

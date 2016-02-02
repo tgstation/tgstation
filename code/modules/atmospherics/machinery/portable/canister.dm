@@ -8,7 +8,7 @@
 	icon_state = "yellow"
 	density = 1
 
-	var/valve_open = 0
+	var/valve_open = FALSE
 	var/obj/machinery/atmospherics/components/binary/pump/pump
 	var/release_log = ""
 
@@ -22,7 +22,6 @@
 	var/temperature_resistance = 1000 + T0C
 
 	var/update_flag = 0
-	var/canister_color = "yellow"
 	var/static/list/label2types = list(
 		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
 		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -37,25 +36,21 @@
 	name = "n2 canister"
 	desc = "Nitrogen gas. Reportedly useful for something."
 	icon_state = "red"
-	canister_color = "red"
 	gas_type = "n2"
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "o2 canister"
 	desc = "Oxygen. Necessary for human life."
 	icon_state = "blue"
-	canister_color = "blue"
 	gas_type = "o2"
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "co2 canister"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	icon_state = "black"
-	canister_color = "black"
 	gas_type = "co2"
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "plasma canister"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	icon_state = "orange"
-	canister_color = "orange"
 	gas_type = "plasma"
 /obj/machinery/portable_atmospherics/canister/agent_b
 	name = "agent b canister"
@@ -65,13 +60,11 @@
 	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
-	canister_color = "redws"
 	gas_type = "n2o"
 /obj/machinery/portable_atmospherics/canister/air
 	name = "air canister"
 	desc = "Pre-mixed air."
 	icon_state = "grey"
-	canister_color = "grey"
 
 /obj/machinery/portable_atmospherics/canister/New(loc)
 	..()
@@ -82,6 +75,11 @@
 	pump.build_network()
 	update_icon()
 
+/obj/machinery/portable_atmospherics/canister/Destroy()
+	qdel(pump)
+	pump = null
+	return ..()
+
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type)
 		air_contents.assert_gas(gas_type)
@@ -89,17 +87,14 @@
 
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
 	air_contents.assert_gases("o2","n2")
-	// PV = nRT
 	air_contents.gases["o2"][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases["n2"][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(destroyed)
 		overlays = 0
-		icon_state = text("[]-1", canister_color)
+		icon_state = "[initial(icon_state)]-1"
 		return
-	else
-		icon_state = canister_color
 
 	overlays.Cut()
 	if(holding)
@@ -229,7 +224,6 @@
 				if(newtype)
 					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc)
 					replacement.air_contents.copy_from(air_contents)
-					replacement.update_icon()
 					replacement.interact(usr)
 					qdel(src)
 		if("pressure")

@@ -5721,7 +5721,7 @@
 "cgc" = (/obj/structure/cable/pink{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plasteel,/area/toxins/storage)
 "cgd" = (/obj/machinery/portable_atmospherics/canister/nitrous_oxide,/turf/simulated/floor/plasteel{icon_state = "bot"},/area/toxins/storage)
 "cge" = (/obj/machinery/portable_atmospherics/canister/carbon_dioxide,/obj/machinery/light,/turf/simulated/floor/plasteel{icon_state = "bot"},/area/toxins/storage)
-"cgf" = (/obj/machinery/computer/area_atmos,/turf/simulated/floor/plasteel,/area/toxins/storage)
+"cgf" = (/turf/simulated/floor/plasteel,/area/toxins/storage)
 "cgg" = (/obj/structure/cable/pink{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "cgh" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "cgi" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/research)
