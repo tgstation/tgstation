@@ -21,7 +21,7 @@
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 
-	var/update_flag = 0
+	var/update = 0
 	var/static/list/label2types = list(
 		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
 		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -90,26 +90,57 @@
 	air_contents.gases["o2"][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases["n2"][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
+#define HOLDING 1
+#define CONNECTED 2
+#define EMPTY 4
+#define LOW 8
+#define FULL 16
+#define DANGER 32
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(destroyed)
-		overlays = 0
+		overlays.Cut()
 		icon_state = "[initial(icon_state)]-1"
 		return
 
-	overlays.Cut()
+	var/last_update = update
+	update = 0
+
 	if(holding)
-		overlays += "can-open"
+		update |= HOLDING
 	if(connected_port)
-		overlays += "can-connector"
+		update |= CONNECTED
 	var/pressure = air_contents.return_pressure()
 	if(pressure < 10)
-		overlays += "can-o0"
+		update |= EMPTY
 	else if(pressure < ONE_ATMOSPHERE)
-		overlays += "can-o1"
+		update |= LOW
 	else if(pressure < 15 * ONE_ATMOSPHERE)
-		overlays += "can-o2"
+		update |= FULL
 	else
+		update |= DANGER
+
+	if(update == last_update)
+		return
+
+	overlays.Cut()
+	if(update & HOLDING)
+		overlays += "can-open"
+	if(update & CONNECTED)
+		overlays += "can-connector"
+	if(update & EMPTY)
+		overlays += "can-o0"
+	else if(update & LOW)
+		overlays += "can-o1"
+	else if(update & FULL)
+		overlays += "can-o2"
+	else if(update & DANGER)
 		overlays += "can-o3"
+#undef HOLDING
+#undef CONNECTED
+#undef EMPTY
+#undef LOW
+#undef FULL
+#undef DANGER
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)

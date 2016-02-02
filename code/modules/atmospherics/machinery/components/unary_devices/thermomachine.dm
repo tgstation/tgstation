@@ -6,6 +6,7 @@
 	var/icon_state_open = "cold_off"
 	density = TRUE
 	anchored = TRUE
+	idle_power_usage = 25
 
 	var/on = FALSE
 	var/min_temperature = 0

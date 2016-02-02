@@ -97,18 +97,26 @@
 /obj/machinery/portable_atmospherics/scrubber/huge
 	name = "huge air scrubber"
 	icon_state = "scrubber:0"
-	anchored = 1
+	anchored = TRUE
+	active_power_usage = 500
+	idle_power_usage = 10
 
 	volume_rate = 1500
 	volume = 50000
+
+	var/movable = FALSE
+
+/obj/machinery/portable_atmospherics/scrubber/huge/movable
+	movable = TRUE
 
 /obj/machinery/portable_atmospherics/scrubber/huge/update_icon()
 	icon_state = "scrubber:[on]"
 
 /obj/machinery/portable_atmospherics/scrubber/huge/process_atmos()
-	if(!anchored)
+	if((!anchored && !movable) || !is_operational())
 		on = FALSE
 		update_icon()
+	use_power = 1 + on
 	if(!on)
 		return
 
@@ -120,6 +128,7 @@
 
 /obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/weapon/W, mob/user)
 	if(default_unfasten_wrench(user, W))
-		on = FALSE
+		if(!movable)
+			on = FALSE
 	else
 		..()
