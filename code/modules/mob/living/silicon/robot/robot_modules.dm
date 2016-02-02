@@ -36,10 +36,11 @@
 /obj/item/weapon/robot_module/New(var/mob/living/silicon/robot/R)
 	..()
 
-	languages = list(	LANGUAGE_SOL_COMMON = 1, LANGUAGE_TRADEBAND = 1, LANGUAGE_VOX = 0,
+	languages = list(	LANGUAGE_GALACTIC_COMMON = 1, LANGUAGE_TRADEBAND = 1, LANGUAGE_VOX = 0,
 						LANGUAGE_ROOTSPEAK = 0, LANGUAGE_GREY = 0, LANGUAGE_CLATTER = 0,
 						LANGUAGE_MONKEY = 0, LANGUAGE_UNATHI = 0, LANGUAGE_SIIK_TAJR = 0,
-						LANGUAGE_SKRELLIAN = 0, LANGUAGE_GUTTER = 0, LANGUAGE_MONKEY = 0)
+						LANGUAGE_SKRELLIAN = 0, LANGUAGE_GUTTER = 0, LANGUAGE_MONKEY = 0,
+						LANGUAGE_MOUSE = 0, LANGUAGE_HUMAN = 0)
 	added_languages = list()
 	if(!isMoMMI(R)) add_languages(R)
 	AddToProfiler()
@@ -296,7 +297,7 @@
 
 /obj/item/weapon/robot_module/butler/New()
 	languages = list(
-					LANGUAGE_SOL_COMMON	= 1,
+					LANGUAGE_GALACTIC_COMMON	= 1,
 					LANGUAGE_UNATHI		= 1,
 					LANGUAGE_SIIK_TAJR	= 1,
 					LANGUAGE_SKRELLIAN	= 1,

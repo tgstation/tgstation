@@ -70,7 +70,7 @@ var/list/ai_list = list()
 			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null
-	add_language(LANGUAGE_SOL_COMMON, 1)
+	add_language(LANGUAGE_GALACTIC_COMMON, 1)
 	add_language(LANGUAGE_UNATHI, 1)
 	add_language(LANGUAGE_SIIK_TAJR, 1)
 	add_language(LANGUAGE_SKRELLIAN, 1)
@@ -81,7 +81,9 @@ var/list/ai_list = list()
 	add_language(LANGUAGE_MONKEY, 1)
 	add_language(LANGUAGE_VOX, 1)
 	add_language(LANGUAGE_TRADEBAND, 1)
-	default_language = all_languages[LANGUAGE_SOL_COMMON]
+	add_language(LANGUAGE_MOUSE, 1)
+	add_language(LANGUAGE_HUMAN, 1)
+	default_language = all_languages[LANGUAGE_GALACTIC_COMMON]
 	real_name = pickedName
 	name = real_name
 	anchored = 1

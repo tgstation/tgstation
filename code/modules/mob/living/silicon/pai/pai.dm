@@ -79,7 +79,7 @@
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
 		pda.toff = 1
 
-	add_language("Sol Common", 1)
+	add_language("Galactic Common", 1)
 	add_language("Tradeband", 1)
 	add_language("Gutter", 1)
 

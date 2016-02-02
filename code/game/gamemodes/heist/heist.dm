@@ -90,7 +90,7 @@
 		vox.flavor_text = ""
 		vox.default_language = all_languages["Vox-pidgin"]
 		vox.species.default_language = "Vox-pidgin"
-		vox.remove_language(LANGUAGE_SOL_COMMON)
+		vox.remove_language(LANGUAGE_GALACTIC_COMMON)
 		vox.h_style = "Short Vox Quills"
 		vox.f_style = "Shaved"
 		for(var/datum/organ/external/limb in vox.organs)

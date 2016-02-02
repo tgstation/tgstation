@@ -420,7 +420,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	var/datum/speech/speech = create_speech("[mobname] has died in",1459,src)
 	speech.name="[mobname]'s Death Alarm"
 	speech.job="Death Alarm"
-	speech.set_language(LANGUAGE_SOL_COMMON)
+	speech.set_language(LANGUAGE_GALACTIC_COMMON)
 	switch (cause)
 		if("death")
 			if(!announcement_intercom || !istype(announcement_intercom))

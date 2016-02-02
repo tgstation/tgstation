@@ -126,7 +126,7 @@
 /mob/living/carbon/monkey/diona/say_understands(var/mob/other,var/datum/language/speaking = null)
 	if(other) other = other.GetSource()
 	if (istype(other, /mob/living/carbon/human))
-		if(speaking && speaking.name == "Sol Common")
+		if(speaking && speaking.name == "Galactic Common")
 			if(donors.len >= 2) // They have sucked down some blood.
 				return 1
 	return ..()
@@ -167,7 +167,7 @@
 		to_chat(src, "<span class='good'>You feel your awareness expand, and realize you know how to understand the creatures around you.</span>")
 	else if(donors.len == 4)
 		to_chat(src, "<span class='good'>You feel your vocal range expand, and realize you know how to speak with the creatures around you.</span>")
-		add_language("Sol Common")
+		add_language("Galactic Common")
 	else if(donors.len == 3)
 		to_chat(src, "<span class='good'>More blood seeps into you, continuing to expand your growing collection of memories.</span>")
 	else
