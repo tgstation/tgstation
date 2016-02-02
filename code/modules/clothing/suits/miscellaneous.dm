@@ -167,7 +167,7 @@
 
 /obj/item/clothing/suit/squallwalker
 	name = "squallwalker suit"
-	desc = "Cease-and-Desist incoming"
+	desc = "Made made from some sort cheap plastic. "
 	icon_state = "squallwalker"
 	item_state = "squallwalker"
 	body_parts_covered = CHEST|GROIN
