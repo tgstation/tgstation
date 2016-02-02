@@ -4370,14 +4370,14 @@
 	M.weakened = max(M.weakened, 15)
 	M.silent = max(M.silent, 15)
 
-/datum/reagent/ethanol/deadrum/bananahonk
+/datum/reagent/drink/bananahonk
 	name = "Banana Mama"
 	id = "bananahonk"
 	description = "A drink from Clown Heaven."
 	nutriment_factor = FOOD_METABOLISM
 	color = "#664300" //rgb: 102, 67, 0
 
-/datum/reagent/ethanol/deadrum/silencer
+/datum/reagent/drink/silencer
 	name = "Silencer"
 	id = "silencer"
 	description = "A drink from Mime Heaven."
