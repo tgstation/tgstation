@@ -13,7 +13,7 @@
 	var/datum/linked_node/next_node = null
 	var/datum/linked_node/previous_node = null
 
-/datum/linked_node/proc/iGiveHead()
+/datum/linked_list/proc/iGiveHead()
 	. = head
 
 /datum/linked_list/proc/IsEmpty()
