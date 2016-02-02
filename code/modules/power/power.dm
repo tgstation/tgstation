@@ -34,7 +34,7 @@
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return powernet.avail-powernet.load
+		return powernet.avail - powernet.load
 	else
 		return 0
 

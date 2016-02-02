@@ -625,7 +625,7 @@
 		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
-		"totalLoad" = lastused_equip + lastused_light + lastused_environ,
+		"totalLoad" = lastused_total,
 		"coverLocked" = coverlocked,
 		"siliconUser" = user.has_unlimited_silicon_privilege,
 		"malfStatus" = get_malf_status(user),
