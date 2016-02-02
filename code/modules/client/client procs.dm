@@ -51,6 +51,12 @@
 		cmd_admin_pm(C,null)
 		return
 
+	//Wiki shortcuts
+	if(href_list["getwiki"])
+		var/url = href_list["getwiki"]
+		usr << link(getVGWiki(url))
+		return
+
 	// Global Asset cache stuff.
 	if(href_list["asset_cache_confirm_arrival"])
 //		to_chat(src, "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED.")

@@ -11,7 +11,7 @@ var/global/list/special_roles = list(
 	ROLE_PLANT        = 1,
 	"infested monkey" = IS_MODE_COMPILED("monkey"),
 	ROLE_MALF         = IS_MODE_COMPILED("malfunction"),
-	ROLE_NINJA        = 1,
+	//ROLE_NINJA        = 1,
 	ROLE_OPERATIVE    = IS_MODE_COMPILED("nuclear"),
 	ROLE_PAI          = 1, // -- TLE
 	ROLE_POSIBRAIN    = 1,
@@ -20,6 +20,45 @@ var/global/list/special_roles = list(
 	ROLE_VAMPIRE      = IS_MODE_COMPILED("vampire"),
 	ROLE_VOXRAIDER    = IS_MODE_COMPILED("heist"),
 	ROLE_WIZARD       = 1,
+)
+
+var/list/antag_roles = list(
+	ROLE_ALIEN        = 1,
+	ROLE_BLOB         = 1,
+	ROLE_CHANGELING   = IS_MODE_COMPILED("changeling"),
+	ROLE_CULTIST      = IS_MODE_COMPILED("cult"),
+	ROLE_MALF         = IS_MODE_COMPILED("malfunction"),
+	ROLE_OPERATIVE    = IS_MODE_COMPILED("nuclear"),
+	ROLE_REV          = IS_MODE_COMPILED("revolution"),
+	ROLE_TRAITOR      = IS_MODE_COMPILED("traitor"),
+	ROLE_VAMPIRE      = IS_MODE_COMPILED("vampire"),
+	ROLE_VOXRAIDER    = IS_MODE_COMPILED("heist"),
+	ROLE_WIZARD       = 1,
+)
+
+var/list/nonantag_roles = list(
+	ROLE_BORER        = 1,
+	ROLE_PLANT        = 1,
+	ROLE_PAI          = 1,
+	ROLE_POSIBRAIN    = 1,
+)
+
+var/list/role_wiki=list(
+	ROLE_ALIEN		= "Xenomorph",
+	ROLE_BLOB		= "Blob",
+	ROLE_BORER		= "Cortical_Borer",
+	ROLE_CHANGELING	= "Changeling",
+	ROLE_CULTIST	= "Cult",
+	ROLE_PLANT		= "Dionaea",
+	ROLE_MALF		= "Guide_to_Malfunction",
+	ROLE_OPERATIVE	= "Nuclear_Agent",
+	ROLE_PAI		= "Personal_AI",
+	ROLE_POSIBRAIN	= "Guide_to_Silicon_Laws",
+	ROLE_REV		= "Revolution",
+	ROLE_TRAITOR	= "Traitor",
+	ROLE_VAMPIRE	= "Vampire",
+	ROLE_VOXRAIDER	= "Vox_Raider",
+	ROLE_WIZARD		= "Wizard",
 )
 
 var/const/MAX_SAVE_SLOTS = 8
@@ -238,15 +277,30 @@ var/const/MAX_SAVE_SLOTS = 8
 	if(jobban_isbanned(user, "Syndicate"))
 		dat += "<b>You are banned from antagonist roles.</b>"
 	else
-		for (var/i in special_roles)
-			if(special_roles[i]) //if mode is available on the server
+		for (var/i in antag_roles)
+			if(antag_roles[i]) //if mode is available on the server
 				if(jobban_isbanned(user, i))
 					dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
 				else if(i == "pai candidate")
 					if(jobban_isbanned(user, "pAI"))
 						dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
 				else
-					dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=toggle_role;role_id=[i]'><b>[roles[i] & ROLEPREF_ENABLE ? "Yes" : "No"]</b></a><br>"
+					var/wikiroute = role_wiki[i]
+					dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=toggle_role;role_id=[i]'><b>[roles[i] & ROLEPREF_ENABLE ? "Yes" : "No"]</b></a> [wikiroute ? "<a HREF='?src=\ref[user];getwiki=[wikiroute]'>wiki</a>" : ""]<br>"
+
+	dat += "</td><td width='300px' height='300px' valign='top'><h2>Special Roles Settings</h2>"
+
+	for (var/i in nonantag_roles)
+		if(nonantag_roles[i]) //if mode is available on the server
+			if(jobban_isbanned(user, i))
+				dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
+			else if(i == "pai candidate")
+				if(jobban_isbanned(user, "pAI"))
+					dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
+			else
+				var/wikiroute = role_wiki[i]
+				dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=toggle_role;role_id=[i]'><b>[roles[i] & ROLEPREF_ENABLE ? "Yes" : "No"]</b></a> [wikiroute ? "<a HREF='?src=\ref[user];getwiki=[wikiroute]'>wiki</a>" : ""]<br>"
+
 	dat += "</td></tr></table>"
 	return dat
 
@@ -428,7 +482,7 @@ var/const/MAX_SAVE_SLOTS = 8
 		</center></body></html>"}
 
 	//user << browse(dat, "window=preferences;size=560x580")
-	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 640)
+	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 680, 640)
 	popup.set_content(dat)
 	popup.open(0)
 
