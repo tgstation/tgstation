@@ -97,6 +97,14 @@
 	materials = list(MAT_METAL = 1750, MAT_GLASS = 400)
 	build_path = /obj/item/clothing/head/welding
 	category = list("initial","Tools")
+	
+/datum/design/welding_helmet
+	name = "Cable coil"
+	id = "cable_coil"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 20)
+	build_path = /obj/item/stack/cable_coil/random 
+	category = list("initial","Tools")
 
 /datum/design/console_screen
 	name = "Console screen"
