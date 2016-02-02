@@ -190,9 +190,13 @@
 			for(var/obj/item/weapon/twohanded/required/ctf/W in M)
 				M.unEquip(W)
 			M.dust()
+	for(var/obj/machinery/control_point/control in machines)
+		control.icon_state = "dominator"
+		control.controlling = null
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
 		if(CTF.ctf_enabled == TRUE)
 			CTF.points = 0
+			CTF.control_points = 0
 			CTF.ctf_enabled = FALSE
 			CTF.team_members = list()
 			spawn(300)
