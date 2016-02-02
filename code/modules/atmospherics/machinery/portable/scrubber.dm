@@ -1,7 +1,5 @@
 /obj/machinery/portable_atmospherics/scrubber
 	name = "portable air scrubber"
-
-	icon = 'icons/obj/atmos.dmi'
 	icon_state = "pscrubber:0"
 	density = 1
 
@@ -13,8 +11,6 @@
 
 	var/list/gases_to_scrub = list("plasma", "co2", "agent_b", "n2o") //datum var so we can VV it and maybe even change it in the future
 
-
-
 /obj/machinery/portable_atmospherics/scrubber/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
@@ -25,7 +21,6 @@
 		update_icon()
 
 	..(severity)
-
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
 	src.overlays = 0
@@ -44,16 +39,14 @@
 	return
 
 /obj/machinery/portable_atmospherics/scrubber/process_atmos()
-	..()
-
 	if(!on)
 		return
-	scrub(loc)
-	if (widenet)
-		var/turf/T = loc
-		if (istype(T))
-			for (var/turf/simulated/tile in T.GetAtmosAdjacentTurfs(alldir=1))
-				scrub(tile)
+
+	var/turf/T = get_turf(src)
+	scrub(T)
+	if(widenet)
+		for(var/turf/simulated/TT in T.GetAtmosAdjacentTurfs(alldir = TRUE))
+			scrub(TT)
 
 
 /obj/machinery/portable_atmospherics/scrubber/proc/scrub(var/turf/simulated/tile)
@@ -98,9 +91,6 @@
 	..()
 	src.updateDialog()
 	return
-
-/obj/machinery/portable_atmospherics/scrubber/return_air()
-	return air_contents
 
 /obj/machinery/portable_atmospherics/scrubber/attack_ai(mob/user)
 	return src.attack_hand(user)
