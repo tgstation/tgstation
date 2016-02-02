@@ -102,9 +102,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/nukeoffer/bulldog
 	name = "Bulldog bundle"
 	desc = "Lean and mean: Optimised for people that want to get up close and personal. Contains the popular \
-			Bulldog shotgun, two 12g drums, and an elite hardsuit."
+			Bulldog shotgun, two 12g drums, and a pair of Thermal imaging goggles."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle
-	cost = 16 // normally 20
+	cost = 13 // normally 16
 
 /datum/uplink_item/nukeoffer/medical
 	name = "Medical bundle"

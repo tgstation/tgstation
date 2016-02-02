@@ -447,7 +447,7 @@
 	new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
-	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
+	new /obj/item/clothing/glasses/thermal/syndi(src)
 	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
