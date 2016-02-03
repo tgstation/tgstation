@@ -45,9 +45,17 @@
 
 /obj/structure/table/ex_act(severity, target)
 	..()
-	if(severity == 3)
-		if(prob(25))
-			table_destroy(1)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			if(prob(50)
+				table_destroy(1)
+			else
+				qdel(src)
+		if(3)
+			if(prob(25))
+				table_destroy(1)
 
 /obj/structure/table/blob_act()
 	if(prob(75))
@@ -450,6 +458,10 @@
 	else if(prob(50))
 		rack_destroy()
 		return
+
+/obj/structure/rack/mech_melee_attack(/obj/mecha/M)
+	visible.message("<span class='danger'>[M.name] smashes [src] apart!</span>")
+	rack_destroy(1)
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1

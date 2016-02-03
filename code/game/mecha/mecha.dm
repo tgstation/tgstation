@@ -551,7 +551,8 @@
 					step(obstacle, dir)
 			else if(istype(obstacle, /mob))
 				step(obstacle, dir)
-
+	if(istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/rack))
+		obstacle.ex_act(2)
 
 
 
