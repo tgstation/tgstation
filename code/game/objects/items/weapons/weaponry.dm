@@ -9,6 +9,7 @@
 #define CHAINSAW "chainsaw hand"
 #define CLOWNDAGGER "clown dagger"
 #define WHIP "whip"
+#define FEDORA "athiests fedora"
 
 
 /obj/item/weapon/banhammer
@@ -44,19 +45,14 @@
 	throw_range = 4
 	throwforce = 10
 	w_class = 1
-	var/reskinned = 0
+	var/reskinned = FALSE
+	var/weapon_type = NULLROD
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/weapon/nullrod/AltClick(mob/user)
-	..()
-	if(!user.canUseTopic(user))
-		user << "<span class='warning'>You can't do that right now!</span>"
-		return
-	if(!in_range(src, user))
-		return
+/obj/item/weapon/nullrod/attack_hand(mob/user)
 	if(reskinned)
 		return
 	reskin_holy_weapon(user)
@@ -169,7 +165,22 @@
 				item_state = "chain"
 				attack_verb = list("whipped", "lashed")
 				hitsound = 'sound/weapons/slash.ogg' //no whip sounds exist
-		reskinned = 1
+			if(FEDORA)
+				name = "athiests fedora"
+				desc = "The brim of the hat is as sharp as your wit. Throwing it at someone would hurt almost as much as disproving the existence of God."
+				icon_state = "fedora"
+				item_state = "fedora"
+				slot_flags = SLOT_HEAD
+				icon = 'icons/obj/clothing/hats.dmi'
+				force = 0
+				throw_speed = 4
+				throw_range = 7
+				throwforce = 20
+				embed_chance = 100
+
+		weapon_type = choice
+		feedback_set_details("chaplain_weapon","[choice]")
+		reskinned = TRUE
 
 
 /obj/item/weapon/sord
@@ -456,3 +467,4 @@
 #undef CHAINSAW
 #undef CLOWNDAGGER
 #undef WHIP
+#undef FEDORA
