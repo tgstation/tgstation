@@ -118,18 +118,19 @@
 
 /datum/language/common
 	name = "Galactic Common"
-	desc = "A bastardized hybrid of informal English and elements of Mandarin Chinese; the common language of the Sol system."
+	desc = "The language no one would ever use is now the language every race uses."
 	key = "1"
-	flags = RESTRICTED
-
-/datum/language/human
-	name = "Sol Common"
-	desc = "The language no one would ever use is now the language every human uses."
-	key = "7"
 	flags = RESTRICTED
 	syllables = list("sa","lu","to","n","bo","na","ve","spe","ro","no","non","ki","el","vi","far","tas",
 	"ne","da","dan","ko","kon","ka","kaj","kin","de","ami","ko","kio","vin","nen","ne","nio","mi","gi","gis","per",
 	"po","vas","va","he","min","mi","cu","dig","di","gi","gis","nu","ven","as","kie","re","ven","dau")
+
+/datum/language/human
+	name = "Sol Common"
+	desc = "A bastardized hybrid of informal English and elements of Mandarin Chinese; the common language of the Sol system."
+	key = "7"
+	colour = "solcom"
+	flags = RESTRICTED
 
 /datum/language/human/monkey
 	name = "Monkey"
@@ -319,7 +320,7 @@
 	else
 		return ..()
 
-/datum/language/common/syllables = list(
+/datum/language/human/syllables = list(
 "a", "ai", "an", "ang", "ao", "ba", "bai", "ban", "bang", "bao", "bei", "ben", "beng", "bi", "bian", "biao",
 "bie", "bin", "bing", "bo", "bu", "ca", "cai", "can", "cang", "cao", "ce", "cei", "cen", "ceng", "cha", "chai",
 "chan", "chang", "chao", "che", "chen", "cheng", "chi", "chong", "chou", "chu", "chua", "chuai", "chuan", "chuang", "chui", "chun",
