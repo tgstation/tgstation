@@ -22,6 +22,14 @@
 	build_path = /obj/item/device/firing_pin/implant/loyalty
 	category = list("Firing Pins")
 
+/datum/design/nanomachine_injector
+	name = "Parasitic Nanomachine Injector"
+	desc = "Though powerful in combat, these nanomachines require a living host as a source of fuel and home base."
+	id = "parasitic_nano_injector"
+	req_tech = list("combat" = 5, "materials" = 4, "bluespace" = 4)
+	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_URANIUM = 1000, MAT_DIAMOND = 500)
+	build_path = /obj/item/weapon/guardiancreator/tech/choose
+
 /datum/design/stunrevolver
 	name = "Stun Revolver"
 	desc = "A high-tech revolver that fires internal, reusable taser cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
@@ -259,3 +267,4 @@
 	id = "mag_oldsmg_tx"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_URANIUM = 2000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wttx
+

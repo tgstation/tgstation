@@ -117,6 +117,7 @@
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	if(B && B.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
+		//Regen Symptom
 		var/damage_converter = locate(/datum/symptom/damage_converter) in D.symptoms
 		var/healer = locate(/datum/symptom/heal) in D.symptoms
 		if(damage_converter && healer)
@@ -124,6 +125,32 @@
 			D.RemoveSymptom(healer)
 			D.AddSymptom(new /datum/symptom/regen())
 			D.Refresh(1) //It needs to actually change the disease name for reasons
+		//scarab symptom
+		var/itching = locate(/datum/symptom/itching) in D.symptoms
+		var/hallucinogen = locate(/datum/symptom/hallucigen) in D.symptoms
+		var/vomit = locate(/datum/symptom/vomit) in D.symptoms
+		if(itching && hallucinogen && vomit)
+			D.RemoveSymptom(itching)
+			D.RemoveSymptom(hallucinogen)
+			D.RemoveSymptom(vomit)
+			D.AddSymptom(new /datum/symptom/scarab())
+			D.Refresh(1) //It needs to actually change the disease name for reasons
+		//explosive death
+		var/choking = locate(/datum/symptom/choking) in D.symptoms
+		var/asthmothia = locate(/datum/symptom/asthmothia) in D.symptoms
+		if(choking && asthmothia)
+			D.RemoveSymptom(choking)
+			D.RemoveSymptom(asthmothia)
+			D.AddSymptom(new /datum/symptom/explosive())
+			D.Refresh(1)
+		//purge virus
+		var/liggeritis = locate(/datum/symptom/liggeritis) in D.symptoms
+		var/metabolism = locate(/datum/symptom/heal/metabolism) in D.symptoms
+		if(liggeritis && metabolism)
+			D.RemoveSymptom(liggeritis)
+			D.RemoveSymptom(metabolism)
+			D.AddSymptom(new /datum/symptom/purge())
+			D.Refresh(1)
 
 /datum/chemical_reaction/mix_virus/rem_virus
 
