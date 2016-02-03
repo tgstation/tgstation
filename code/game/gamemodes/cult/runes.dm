@@ -296,7 +296,7 @@ var/list/teleport_other_runes = list()
 		return
 	if(offering.null_rod_check())
 		user << "<span class='warning'>Something is blocking the Geometer's magic!</span>"
-		log_game("Sacrifice rune failed - target has null rod")
+		log_game("Sacrifice rune failed - target has a holy weapon!")
 		fail_invoke()
 		rune_in_use = 0
 		return
@@ -794,7 +794,7 @@ var/list/teleport_other_runes = list()
 	for(var/mob/living/carbon/C in viewers(src))
 		if(!iscultist(C))
 			if(C.null_rod_check())
-				C << "<span class='userdanger'>The null rod suddenly burns hotly before returning to normal!</span>"
+				C << "<span class='userdanger'>The holy weapon suddenly burns hotly before returning to normal!</span>"
 				continue
 			C << "<span class='cultlarge'>Your blood boils in your veins!</span>"
 			C.take_overall_damage(51,51)

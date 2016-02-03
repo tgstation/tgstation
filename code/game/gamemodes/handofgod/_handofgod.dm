@@ -190,7 +190,7 @@ var/global/list/global_handofgod_structuretypes = list()
 		return 0
 	var/obj/item/weapon/nullrod/N = locate() in H
 	if(N)
-		H << "<span class='danger'>Your null rod prevented the [colour] deity from brainwashing you.</span>"
+		H << "<span class='danger'>Your holy weapon prevented the [colour] deity from brainwashing you.</span>"
 		return 0
 
 	if(colour == "red")

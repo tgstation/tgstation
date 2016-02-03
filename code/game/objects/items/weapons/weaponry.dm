@@ -31,10 +31,99 @@
 	throw_range = 4
 	throwforce = 10
 	w_class = 1
+	var/reskinned = 0
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|FIRELOSS)
+
+/obj/item/weapon/nullrod/AltClick(mob/user)
+	..()
+	if(!user.canUseTopic(user))
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	if(reskinned)
+		return
+	reskin_holy_weapon(user)
+
+/obj/item/weapon/nullrod/proc/reskin_holy_weapon(mob/M)
+	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in list("null rod", "god hand", "red staff", "blue staff", "claymore", "dark blade", "sord", "scythe")
+
+	if(src && choice && !M.stat && in_range(M,src) && !M.restrained() && M.canmove && !reskinned)
+		switch(choice)
+			if("null rod")
+				M << "On second thought, the null rod suits you just fine."
+			if("god hand")
+				icon_state = "disintegrate"
+				item_state = "disintegrate"
+				name = "god hand"
+				desc = "This hand of yours glows with an aweseome power."
+				flags = ABSTRACT | NODROP
+				w_class = 5
+			if("red staff")
+				icon_state = "godstaff-red"
+				item_state = "godstaff-red"
+				name = "holy staff"
+				desc = "It has a mysterious, protective aura."
+				w_class = 5
+				force = 5
+				slot_flags = SLOT_BACK
+				block_chance = 50
+			if("red staff")
+				icon_state = "godstaff-red"
+				item_state = "godstaff-red"
+				name = "holy staff"
+				desc = "It has a mysterious, protective aura."
+				w_class = 5
+				force = 5
+				slot_flags = SLOT_BACK
+				block_chance = 50
+			if("claymore")
+				icon_state = "claymore"
+				item_state = "claymore"
+				name = "holy claymore"
+				desc = "A weapon fit for a crusade!"
+				w_class = 5
+				force = 20
+				slot_flags = SLOT_BACK|SLOT_BELT
+				block_chance = 20
+				hitsound = 'sound/weapons/bladeslice.ogg'
+				attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+			if("dark blade")
+				icon_state = "cultblade"
+				item_state = "cultblade"
+				name = "dark blade"
+				desc = "Spread the glory of the dark gods!"
+				w_class = 5
+				force = 20
+				block_chance = 20
+				hitsound = 'sound/weapons/bladeslice.ogg'
+				attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+			if("sord")
+				name = "\improper SORD"
+				desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
+				icon_state = "sord"
+				item_state = "sord"
+				force = 2
+				throwforce = 1
+				w_class = 3
+				hitsound = 'sound/weapons/bladeslice.ogg'
+				attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+			if("scythe")
+				icon_state = "scythe0"
+				name = "reaper scythe"
+				desc = "Ask not for whom the bell tolls..."
+				force = 15
+				w_class = 4
+				armour_penetration = 100
+				slot_flags = SLOT_BACK
+				attack_verb = list("chopped", "sliced", "cut", "reaped")
+				hitsound = 'sound/weapons/bladeslice.ogg'
+		reskinned = 1
+		return
+
 
 /obj/item/weapon/sord
 	name = "\improper SORD"
