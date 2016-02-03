@@ -24,6 +24,7 @@
 	  "can_close" = TRUE,
 	  "auto_format" = FALSE
 	)
+	var/screen = "home" // The screen this UI is currently viewing (defaults to home).
 	var/style = "nanotrasen" // The style to be used for this UI.
 	var/interface // The interface (template) to be used for this UI.
 	var/autoupdate = TRUE // Update the UI every MC tick.
@@ -31,7 +32,7 @@
 	var/list/initial_data // The data (and datastructure) used to initialize the UI.
 	var/status = UI_INTERACTIVE // The status/visibility of the UI.
 	var/datum/ui_state/state = null // Topic state used to determine status/interactability.
-	var/datum/tgui/master_ui	 // The parent UI.
+	var/datum/tgui/master_ui // The parent UI.
 	var/list/datum/tgui/children = list() // Children of this UI.
 
  /**
@@ -144,6 +145,16 @@
  /**
   * public
   *
+  * Set the screen (page) for this UI.
+  *
+  * required screen string The screen to change to.
+ **/
+/datum/tgui/proc/set_screen(screen)
+	src.screen = lowertext(screen)
+
+ /**
+  * public
+  *
   * Set the style for this UI.
   *
   * required style string The new UI style.
@@ -213,6 +224,7 @@
 	var/list/config_data = list(
 			"title"     = title,
 			"status"    = status,
+			"screen"	= screen,
 			"style"     = style,
 			"interface" = interface,
 			"fancy"     = user.client.prefs.tgui_fancy,
@@ -266,26 +278,24 @@
 	var/action = href_list["action"]
 	var/params = href_list; params -= "action"
 
-	// Handle any special actions.
 	switch(action)
 		if("tgui:initialize")
 			user << output(url_encode(get_json(initial_data)), "[window_id].browser:initialize")
 			initialized = TRUE
-			return
+		if("tgui:view")
+			if(params["screen"])
+				screen = params["screen"]
+			SStgui.update_uis(src_object)
 		if("tgui:link")
 			user << link(params["url"])
-			return
 		if("tgui:fancy")
 			user.client.prefs.tgui_fancy = TRUE
-			return
 		if("tgui:nofrills")
 			user.client.prefs.tgui_fancy = FALSE
-			return
-
-	update_status(push = 0) // Update the window state.
-	var/update = src_object.ui_act(action, params, src, state) // Call ui_act() on the src_object.
-	if(src_object && update)
-		SStgui.update_uis(src_object) // If we have a src_object and its ui_act() told us to update.
+		else
+			update_status(push = 0) // Update the window state.
+			if(src_object.ui_act(action, params, src, state)) // Call ui_act() on the src_object.
+				SStgui.update_uis(src_object) // Update if the object requested it.
 
  /**
   * private
