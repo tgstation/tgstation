@@ -16,6 +16,63 @@
 	list_reagents = list("nutriment" = 1)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	filling_color = "#F0E68C"
+	var/incubation_tick = 0
+	var/incubation_threshold = 100
+	var/mob/living/simple_animal/farm/contained_mob = /mob/living/simple_animal/farm/chick
+	var/mob/living/simple_animal/farm/mother
+	var/mob/living/simple_animal/farm/father
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/process()
+	incubation_tick++
+	if(incubation_tick >= incubation_threshold)
+		var/turf/T = get_turf(loc)
+		T.visible_message("[src] hatches!")
+		var/mob/living/simple_animal/farm/F = new contained_mob(T)
+		if(mother && father)
+			F.dna = create_child_from_dna(mother, father, F)
+		else
+			F.dna = create_child_from_scratch(F)
+		SSobj.processing.Remove(src)
+		qdel(src)
+	..()
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/goat
+	name = "goat egg"
+	contained_mob = /mob/living/simple_animal/farm/goat
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/carp
+	name = "space carp egg"
+	contained_mob = /mob/living/simple_animal/farm/carp
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/cow
+	name = "space carp egg"
+	contained_mob = /mob/living/simple_animal/farm/cow
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/raptor
+	name = "raptor egg"
+	desc = "A raptor egg!"
+	icon = 'icons/mob/farm/raptor.dmi'
+	icon_state = "raptoregg"
+	list_reagents = list("nutriment" = 1)
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
+	filling_color = "#F0E68C"
+	contained_mob = /mob/living/simple_animal/farm/raptor_chick/yellow
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/random/New()
+	..()
+	contained_mob = pick(/mob/living/simple_animal/farm/raptor_chick/yellow, /mob/living/simple_animal/farm/raptor_chick/red, /mob/living/simple_animal/farm/raptor_chick/green)
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/yellow
+	name = "yellow raptor egg"
+	contained_mob = /mob/living/simple_animal/farm/raptor_chick/yellow
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/red
+	name = "red raptor egg"
+	contained_mob = /mob/living/simple_animal/farm/raptor_chick/red
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/green
+	name = "green raptor egg"
+	contained_mob = /mob/living/simple_animal/farm/raptor_chick/green
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?

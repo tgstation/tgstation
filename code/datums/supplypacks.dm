@@ -934,6 +934,29 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containername = "seeds crate"
 
+/datum/supply_packs/organic/hydroponics/seeds
+	name = "Raptor Rancher Crate"
+	contains = list(/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/yellow,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/yellow,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/yellow,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/green,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/green,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/green,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/red,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/red,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/red,
+					/obj/machinery/incubator,
+					/obj/machinery/incubator,
+					/obj/machinery/incubator,
+					/obj/machinery/nest,
+					/obj/machinery/nest,
+					/obj/machinery/nest,
+					/obj/machinery/trough,
+					/obj/machinery/trough,
+					/obj/machinery/trough)
+	cost = 30
+	containername = "seeds crate"
+
 /datum/supply_packs/organic/hydroponics/exoticseeds
 	name = "Exotic Seeds Crate"
 	contains = list(/obj/item/seeds/nettleseed,

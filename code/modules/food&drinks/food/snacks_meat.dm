@@ -1,5 +1,37 @@
 //Not only meat, actually, but also snacks that are almost meat, such as fish meat or tofu
 
+var/list/types_of_meat = list(/obj/item/weapon/reagent_containers/food/snacks/cubancarp,
+								/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
+								/obj/item/weapon/reagent_containers/food/snacks/carpmeat/imitation,
+								/obj/item/weapon/reagent_containers/food/snacks/fishfingers,
+								/obj/item/weapon/reagent_containers/food/snacks/fishandchips,
+								/obj/item/weapon/reagent_containers/food/snacks/spiderleg,
+								/obj/item/weapon/reagent_containers/food/snacks/cornedbeef,
+								/obj/item/weapon/reagent_containers/food/snacks/bearsteak,
+								/obj/item/weapon/reagent_containers/food/snacks/faggot,
+								/obj/item/weapon/reagent_containers/food/snacks/kebab,
+								/obj/item/weapon/reagent_containers/food/snacks/kebab/human,
+								/obj/item/weapon/reagent_containers/food/snacks/kebab/tail,
+								/obj/item/weapon/reagent_containers/food/snacks/monkeycube,
+								/obj/item/weapon/reagent_containers/food/snacks/enchiladas,
+								/obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg,
+								/obj/item/weapon/reagent_containers/food/snacks/spidereggsham,
+								/obj/item/weapon/reagent_containers/food/snacks/sashimi,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/slab,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/steak,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet,
+								/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet)
+
 
 ////////////////////////////////////////////FISH////////////////////////////////////////////
 
