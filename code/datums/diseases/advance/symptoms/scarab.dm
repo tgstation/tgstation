@@ -41,7 +41,7 @@ Bonus
 					"<span class='userdanger'>Your skin bursts like a bubble releasing the scarab!</span>")
 				M.confused = min(100, M.confused + 2)
 				M.adjustBruteLoss(-60)
-				var/obj/item/weapon/guardiancreator/biological/choose/spawn_scarab = new/obj/item/weapon/guardiancreator/biological/choose ( M.loc )
+				new/obj/item/weapon/guardiancreator/biological/choose ( M.loc )
 				A.cure()
 
 	return
