@@ -27,7 +27,7 @@
 		if(!ismob(loc))
 			return
 		C = loc
-	if(C.canmove && !C.stat && !C.restrained())
+	if(!C.incapacitated())
 		if(!src.on)
 			src.on = !src.on
 			eyeprot = 2
@@ -165,7 +165,7 @@
 		if(!ismob(loc))
 			return
 		C = loc
-	if(C.canmove && !C.stat && !C.restrained())
+	if(!C.incapacitated())
 		if(src.up)
 			src.up = !src.up
 			eyeprot = 2

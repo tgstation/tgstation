@@ -10,7 +10,7 @@
 	body_parts_covered = HEAD|EYES
 
 	proc/flip(var/mob/user as mob)
-		if(user.canmove && !user.stat && !user.restrained())
+		if(!user.incapacitated())
 			src.flipped = !src.flipped
 			if(src.flipped)
 				icon_state = "[_color]soft_flipped"

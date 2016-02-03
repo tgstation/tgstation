@@ -173,7 +173,7 @@ BLIND     // can't see anything
 	if(ignore_flip)
 		return
 	else
-		if(!usr.canmove || usr.isUnconscious() || usr.restrained())
+		if(usr.incapacitated())
 			return
 		if(!can_flip)
 			to_chat(usr, "You try pushing \the [src] out of the way, but it is very uncomfortable and you look like a fool. You push it back into place.")
@@ -449,5 +449,3 @@ BLIND     // can't see anything
 /obj/item/clothing/under/rank/New()
 	. = ..()
 	sensor_mode = pick(0, 1, 2, 3)
-
-

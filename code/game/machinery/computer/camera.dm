@@ -32,8 +32,7 @@ var/global/list/tv_monitors = list()
 
 
 /obj/machinery/computer/security/check_eye(var/mob/user as mob)
-	//To explain ( !user.canmove && !ischair(user.locked_to) ): when you're buckled, your canmove variable is 0. This is to allow using this computer from chairs and vehicles
-	if ((get_dist(user, src) > 1 || (!user.canmove && !ischair(user.locked_to)) || user.blinded || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
+	if ((!Adjacent(user) || user.isStunned() || user.blinded || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
 		return null
 	user.reset_view(current)
 	return 1
@@ -74,7 +73,7 @@ var/global/list/tv_monitors = list()
 	var/obj/machinery/camera/C = D[t]
 
 	if(C)
-		if ((get_dist(user, src) > 1 || user.machine != src || user.blinded ||  (!user.canmove && !ischair(user.locked_to)) || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
+		if ((!Adjacent(user) || user.machine != src || user.blinded || user.isStunned() || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
 			if(!C.can_use() && !isAI(user))
 				src.current = null
 			user.cancel_camera()

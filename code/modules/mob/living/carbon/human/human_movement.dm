@@ -123,8 +123,8 @@
 
 	. = ..(NewLoc, Dir, step_x, step_y)
 
-	if(status_flags & FAKEDEATH)
-		return 0
+	/*if(status_flags & FAKEDEATH)
+		return 0*/
 
 	if(.)
 		if (old_z != src.z) crewmonitor.queueUpdate(old_z)

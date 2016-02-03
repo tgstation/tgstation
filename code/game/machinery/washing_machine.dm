@@ -226,7 +226,7 @@
 	update_icon()
 
 /obj/machinery/washing_machine/AltClick()
-	if(usr.canmove && !usr.isUnconscious() && !usr.restrained() && Adjacent(usr) && usr.dexterity_check())
+	if(!usr.incapacitated() && Adjacent(usr) && usr.dexterity_check())
 		start()
 		return
 	return ..()

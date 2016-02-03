@@ -608,17 +608,14 @@ var/global/list/thermal_protection_value_list = list()
 /obj/item/can_pickup(mob/living/user)
 	if(!(user) || !isliving(user)) //BS12 EDIT
 		return 0
-	if(!user.canmove || user.stat || user.restrained() || !Adjacent(user))
+	if(user.incapacitated() || !Adjacent(user))
 		return 0
 	if((!istype(user, /mob/living/carbon) && !isMoMMI(user)) || istype(user, /mob/living/carbon/brain)) //Is not a carbon being, MoMMI, or is a brain
 		to_chat(user, "You can't pick things up!")
-	if( user.stat || user.restrained() )//Is not asleep/dead and is not restrained
-		to_chat(user, "<span class='warning'>You can't pick things up!</span>")
-		return 0
 	if(src.anchored) //Object isn't anchored
 		to_chat(user, "<span class='warning'>You can't pick that up!</span>")
 		return 0
-	if(!istype(src.loc, /turf)) //Object is on a turf
+	if(!istype(src.loc, /turf)) //Object is not on a turf
 		to_chat(user, "<span class='warning'>You can't pick that up!</span>")
 		return 0
 	return 1
