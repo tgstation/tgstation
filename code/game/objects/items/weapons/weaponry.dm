@@ -47,11 +47,11 @@
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-
+	
 /obj/item/weapon/sord/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] tries to impale \himself with the [src.name]... and isn't even cut! Wow, that's a shitty sword...</span>")
-	return
-
+	user.visible_message("<span class='suicide'>You try to impale yourself with the SORD... and isn't even cut! Wow, that's a shitty sword...</span>")
+	return(0)
+	
 /obj/item/weapon/claymore
 	name = "claymore"
 	desc = "What are you standing around staring at this for? Get to killing!"
