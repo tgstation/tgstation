@@ -148,7 +148,10 @@ proc/get_base_turf(var/z)
 
 proc/change_base_turf(var/choice,var/new_base_path,var/update_old_base = 0)
 	if(update_old_base)
+		var/count = 0
 		for(var/turf/T in turfs)
+			count++
+			if(!(count % 50000)) sleep(world.tick_lag)
 			if(T.type == get_base_turf(choice) && T.z == choice)
 				T.ChangeTurf(new_base_path)
 	var/datum/zLevel/L = map.zLevels[choice]
