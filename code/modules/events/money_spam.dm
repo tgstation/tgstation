@@ -55,7 +55,7 @@
 					"You have (1) new message!", \
 					"You have (2) new profile views!")
 				if(3)
-					sender = pick("Galactic Payments Association", "Better Business Bureau", "Tau Ceti E-Payments", "Nanotrasen Finance Deparmtent", "Luxury Replicas")
+					sender = pick("Galactic Payments Association", "Better Business Bureau", "Tau Ceti E-Payments", "Nanotrasen Finance Department", "Luxury Replicas")
 					message = pick("Luxury watches for Blowout sale prices!", \
 					"Watches, Jewelry & Accessories, Bags & Wallets !", \
 					"Deposit 100$ and get 300$ totally free!", \
