@@ -1,6 +1,6 @@
 /datum/disease/lizarditis
 	name = "Skin mutation"
-	max_stages = 7
+	max_stages = 8
 	spread_text = "On contact"
 	spread_flags = CONTACT_GENERAL
 	cure_text = "Sterilizine"
@@ -23,15 +23,15 @@
 			if(4)
 				affected_mob << "<span class='warning'>[pick("Your tailbone feels like it's going to burst!")]</span>"
 				affected_mob.adjustBruteLoss(10)
- 			if(5)
-	 			affected_mob << "<span class='userdanger'>[pick("Your skin violently blisters!")]</span>"
- 				affected_mob.adjustBruteLoss(10)
-	 		if(6)
- 				affected_mob << "<span class='userdanger'>[pick("Your skin feels as rough as sandpaper!")]</span>"
- 				affected_mob.adjustBruteLoss(20)
- 				affected_mob.reagents.add_reagent("itching_powder", 15)
-			if(7)
-				affected_mob.dna.species = new /datum/species/lizard()
+			if(5)
+				affected_mob << "<span class='userdanger'>[pick("Your skin violently blisters!")]</span>"
+				affected_mob.adjustBruteLoss(10)
+			if(6)
+				affected_mob << "<span class='userdanger'>[pick("Your skin feels as rough as sandpaper!")]</span>"
+				affected_mob.adjustBruteLoss(20)
+				affected_mob.reagents.add_reagent("itching_powder", 15)
+			if(8)
+				affected_mob.set_species(/datum/species/lizard)
 				affected_mob.update_icons()
 				affected_mob.update_hair()
 				affected_mob.adjustCloneLoss(50)
