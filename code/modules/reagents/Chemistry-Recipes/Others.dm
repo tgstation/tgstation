@@ -129,7 +129,7 @@
 		//scarab symptom
 		var/itching = locate(/datum/symptom/itching) in D.symptoms
 		var/hallucinogen = locate(/datum/symptom/hallucigen) in D.symptoms
-		var/vomit = locate(/datum/symptom/vomit) in D.symptoms
+		var/vomit = locate(/datum/symptomvomit/blood) in D.symptoms
 		if(itching && hallucinogen && vomit)
 			D.RemoveSymptom(itching)
 			D.RemoveSymptom(hallucinogen)
