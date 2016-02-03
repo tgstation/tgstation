@@ -54,6 +54,11 @@
 		table_destroy(1)
 		return
 
+/obj/structure/table/mech_melee_attack(obj/mecha/M)
+	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
+	playsound(src.loc, 'sound/weapons/punch4.ogg.ogg', 50, 1)
+	table_destroy(1)
+
 /obj/structure/table/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/weapons/bladeslice.ogg', 50, 1)
