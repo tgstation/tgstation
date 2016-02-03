@@ -59,7 +59,8 @@
 	var/timer = 450
 
 /obj/machinery/doomsday_device/process()
-	if(z != ZLEVEL_STATION)
+	var/turf/T = get_turf(src)
+	if(T && T.z != ZLEVEL_STATION)
 		minor_announce("DOOMSDAY DEVICE OUT OF RANGE OF STATION, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
 		SSshuttle.emergencyNoEscape = 0
 		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
@@ -70,7 +71,6 @@
 	if(!timing)
 		return
 	if(timer <= 0)
-		var/turf/T = get_turf(src)
 		timing = 0
 		detonate(T.z)
 		qdel(src)
