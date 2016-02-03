@@ -49,7 +49,7 @@
 		if(1)
 			qdel(src)
 		if(2)
-			if(prob(50)
+			if(prob(50))
 				table_destroy(1)
 			else
 				qdel(src)
@@ -459,8 +459,8 @@
 		rack_destroy()
 		return
 
-/obj/structure/rack/mech_melee_attack(/obj/mecha/M)
-	visible.message("<span class='danger'>[M.name] smashes [src] apart!</span>")
+/obj/structure/rack/mech_melee_attack(obj/mecha/M)
+	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 	rack_destroy(1)
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
