@@ -2,8 +2,8 @@
 server = "irc.rizon.net"
 port = 6667
 
-channels = ["#asdfgbus", "#botbus"]
-defaultchannel = "#asdfgbus"
+channels = ["#adminbus", "#coderbus"]
+defaultchannel = "#adminbus"
 
 nick = "minibot-testing-ss13"
 altnick = "minibot-testing-ss13_"
