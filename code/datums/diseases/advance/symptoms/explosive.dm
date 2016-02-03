@@ -34,7 +34,7 @@ Bonus
 				M << "<span class='notice'>[pick("Something snaps inside you.", "You hear a crunching sound coming from your lungs.")]</span>"
 			if(3,4)
 				M << "<span class='alert'>[pick("Everything feels hot around you!", "You smell sulphur and brimstone!")]</span>"
-				T.atmos_spawn_air(SPAWN_HEAT | SPAWN_CO2, 200)
+				M.atmos_spawn_air(SPAWN_HEAT | SPAWN_CO2, 200)
 				M.reagents.add_reagent("smoke_powder", 20) //should make some clouds of smoke. Hopefully anyway.
 			else
 				M << A.affected_mob.say("ALLAHU ACKBAR!")
