@@ -17,7 +17,7 @@ Bonus
 
 /datum/symptom/explosive
 
-	name = "Dizziness"
+	name = "Jihad Syndrome"
 	stealth = -2
 	resistance = -2
 	stage_speed = 3
