@@ -25,10 +25,12 @@
 
 <ui-display title='Uplink' button>
   {{#partial button}}
+    {{#if config.fancy}}
+      <ui-input value='{{filter}}' placeholder='Filter...'/>
+    {{/if}}
     {{#if data.lockable}}
       <ui-button icon='lock' action='lock'>Lock</ui-button>
     {{/if}}
-    <ui-input value='{{filter}}' placeholder='Filter...'/>
   {{/partial}}
   <ui-section label='Telecrystals' right>
     <span class='{{data.telecrystals > 0 ? "good" : "bad"}}'>{{data.telecrystals}} TC</span>

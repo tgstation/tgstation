@@ -40,10 +40,19 @@
 </script>
 
 <ui-display title='Network'>
-  <ui-linegraph points='{{graphData}}'
-      legend='["Available", "Used"]' colors='["rgb(0, 102, 0)", "rgb(153, 0, 0)"]'
-      xunit='seconds ago' xfactor='{{data.interval}}' yunit='W' yfactor='1'
-      xinc='{{data.stored / 10}}' yinc='9'>
+  {{#if config.fancy}}
+    <ui-linegraph points='{{graphData}}' height='500'
+        legend='["Available", "Load"]' colors='["rgb(0, 102, 0)", "rgb(153, 0, 0)"]'
+        xunit='seconds ago' xfactor='{{data.interval}}' yunit='W' yfactor='1'
+        xinc='{{data.stored / 10}}' yinc='9'/>
+  {{else}}
+    <ui-section label='Available'>
+      <span>{{data.supply}} W</span>
+    </ui-section>
+    <ui-section label='Load'>
+        <span>{{data.demand}} W</span>
+    </ui-section>
+  {{/if}}
 </ui-display>
 <ui-display title='Areas'>
   <ui-section nowrap>

@@ -3,8 +3,7 @@
     data: {
       graph: require('paths-js/smooth-line'),
       xaccessor: point => point.x,
-      yaccessor: point => point.y,
-      height: 600
+      yaccessor: point => point.y
     },
     computed: {
       size () {
