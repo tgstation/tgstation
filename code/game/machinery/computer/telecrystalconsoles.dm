@@ -134,7 +134,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	transferlog += ("<b>[worldtime2text()]</b> [logmessage]")
 
 /obj/machinery/computer/telecrystals/boss/proc/scanUplinkers()
-	for(var/obj/machinery/computer/telecrystals/uplinker/A in ultra_range(scanrange, src.loc))
+	for(var/obj/machinery/computer/telecrystals/uplinker/A in urange(scanrange, src.loc))
 		if(!A.linkedboss)
 			TCstations += A
 			A.linkedboss = src
