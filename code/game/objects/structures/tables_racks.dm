@@ -56,7 +56,7 @@
 
 /obj/structure/table/mech_melee_attack(obj/mecha/M)
 	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-	playsound(src.loc, 'sound/weapons/punch4.ogg.ogg', 50, 1)
+	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
 	table_destroy(1)
 
 /obj/structure/table/attack_alien(mob/living/user)
