@@ -96,10 +96,10 @@
 		for(var/obj/effect/blob/B in orange(pulse_range, src))
 			B.Be_Pulsed()
 	if(expand_range)
-		src.expand()
+		src.expand(null, 1)
 		for(var/obj/effect/blob/B in orange(expand_range, src))
-			if(prob(12))
-				B.expand()
+			if(prob(20 - get_dist(get_turf(src), get_turf(B)) * 4)) //expand falls off with range but is faster near the blob causing the expansion
+				B.expand(null, 1)
 	return
 
 /obj/effect/blob/proc/Be_Pulsed()
@@ -168,7 +168,7 @@
 			B.loc = T
 			B.update_icon()
 			if(B.overmind)
-				B.overmind.blob_reagent_datum.expand_reaction(B, T)
+				B.overmind.blob_reagent_datum.expand_reaction(B, src, T)
 			return B
 		else
 			T.blob_act() //if we can't move in hit the turf again

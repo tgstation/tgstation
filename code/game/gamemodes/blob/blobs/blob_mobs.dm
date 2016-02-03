@@ -42,6 +42,7 @@
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	speak_emote = list("pulses")
+	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/obj/effect/blob/factory/factory = null
 	var/list/human_overlays = list()
 	var/is_zombie = 0
@@ -80,6 +81,7 @@
 	desc = "A shambling corpse animated by the blob."
 	melee_damage_lower += 8
 	melee_damage_upper += 11
+	death_cloud_size = 0
 	icon = H.icon
 	speak_emote = list("groans")
 	icon_state = "zombie_s"
@@ -106,7 +108,7 @@
 
 	// Attach the smoke spreader and setup/start it.
 	S.attach(location)
-	S.set_up(reagents, 0, location, silent=1)
+	S.set_up(reagents, death_cloud_size, location, silent=1)
 	S.start()
 
 	ghostize()
@@ -137,6 +139,7 @@
 	maxHealth = 20
 	melee_damage_lower = 1
 	melee_damage_upper = 2
+	death_cloud_size = 0
 
 /////////////////
 // BLOBBERNAUT //
