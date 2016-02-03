@@ -264,10 +264,11 @@
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise //TODO: fix someone else's broken promise - duncathan
 		if(occupant.bodytemperature < T0C)
-			occupant.sleeping = max(5 / efficiency, (1 / occupant.bodytemperature) * 2000 / efficiency)
+			occupant.Sleeping(max(5 / efficiency, (1 / occupant.bodytemperature) * 2000 / efficiency))
 			occupant.Paralyse(max(5 / efficiency, (1 / occupant.bodytemperature) * 3000 / efficiency))
 			if(air_contents.oxygen > 2)
-				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
+				if(occupant.getOxyLoss())
+					occupant.adjustOxyLoss(-1)
 			else
 				occupant.adjustOxyLoss(-1)
 			// Severe damage should heal waaay slower without proper chemicals...

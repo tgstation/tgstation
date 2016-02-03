@@ -879,14 +879,8 @@ FIRE ALARM
 				src.alarm()			// added check of detector status here
 	return
 
-/obj/machinery/firealarm/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/firealarm/bullet_act(BLAH)
 	return src.alarm()
-
-/obj/machinery/firealarm/attack_paw(mob/user)
-	return src.attack_hand(user)
 
 /obj/machinery/firealarm/emp_act(severity)
 	if(prob(50/severity)) alarm()

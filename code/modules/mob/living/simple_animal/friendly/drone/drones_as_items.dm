@@ -56,7 +56,7 @@
 
 	contents -= drone
 	drone.loc = get_turf(src)
-	drone.reset_view()
+	drone.reset_perspective()
 	drone.dir = SOUTH //Looks better
 	drone.visible_message("<span class='warning'>[drone] uncurls!</span>")
 	drone = null

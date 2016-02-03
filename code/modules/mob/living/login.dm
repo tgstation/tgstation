@@ -10,6 +10,11 @@
 			if("sandbox")
 				CanBuild()
 
+	update_sight()
+	update_vision_overlays()
+	update_damage_hud()
+	update_health_hud()
+
 	//Vents
 	if(ventcrawler)
 		src << "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>"

@@ -76,7 +76,7 @@
 
 //you can wipe off lipstick with paper!
 /obj/item/weapon/paper/attack(mob/M, mob/user)
-	if(user.zone_sel.selecting == "mouth")
+	if(user.zone_selected == "mouth")
 		if(!ismob(M))
 			return
 
@@ -120,7 +120,7 @@
 /obj/item/weapon/razor/attack(mob/M, mob/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/location = user.zone_sel.selecting
+		var/location = user.zone_selected
 		if(location == "mouth")
 			if(!(H.dna.species.specflags & FACEHAIR))
 				user << "<span class='warning'>There is no facial hair to shave!</span>"

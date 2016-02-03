@@ -201,12 +201,12 @@
 	chemical_cost = 25
 	dna_cost = 1
 
-/obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "blind sting")
 	target << "<span class='danger'>Your eyes burn horrifically!</span>"
-	target.disabilities |= NEARSIGHT
-	target.eye_blind = 20
-	target.eye_blurry = 40
+	target.become_nearsighted()
+	target.set_blindness(20)
+	target.set_blurriness(40)
 	feedback_add_details("changeling_powers","BS")
 	return 1
 

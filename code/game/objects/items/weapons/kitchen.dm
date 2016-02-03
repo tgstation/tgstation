@@ -41,7 +41,7 @@
 		forkload = null
 		return
 
-	else if(user.zone_sel.selecting == "eyes")
+	else if(user.zone_selected == "eyes")
 		if(user.disabilities & CLUMSY && prob(50))
 			M = user
 		return eyestab(M,user)

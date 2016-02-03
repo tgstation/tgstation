@@ -258,12 +258,12 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set name = "Toggle Ghost HUD"
 	set category = "Preferences"
 	set desc = "Hide/Show Ghost HUD"
-	
+
 	prefs.ghost_hud = !prefs.ghost_hud
 	src << "Ghost HUD will now be [prefs.ghost_hud ? "visible" : "hidden"]."
 	prefs.save_preferences()
 	if(istype(mob,/mob/dead/observer))
-		mob.hud_used.ghost_hud()
+		mob.hud_used.show_hud()
 
 /client/verb/toggle_inquisition() // warning: unexpected inquisition
 	set name = "Toggle Inquisitiveness"

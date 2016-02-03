@@ -42,14 +42,6 @@
 /obj/item/organ/internal/brain/prepare_eat()
 	return // Too important to eat.
 
-/obj/item/organ/internal/brain/New()
-	..()
-	//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
-	spawn(5)
-		if(brainmob && brainmob.client)
-			brainmob.client.screen.len = null //clear the hud
-
-
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s brain"
 	brainmob = new(src)
@@ -68,11 +60,17 @@
 
 /obj/item/organ/internal/brain/examine(mob/user)
 	..()
-	if(brainmob && brainmob.client)
-		user << "You can feel the small spark of life still left in this one."
-	else
-		user << "This one seems particularly lifeless. Perhaps it will regain some of its luster later."
 
+	if(brainmob)
+		if(brainmob.client)
+			if(brainmob.health <= config.health_threshold_dead)
+				user << "It's lifeless and severely damaged."
+			else
+				user << "You can feel the small spark of life still left in this one."
+		else
+			user << "This one seems particularly lifeless. Perhaps it will regain some of its luster later."
+	else
+		user << "This one is completely devoid of life."
 
 /obj/item/organ/internal/brain/attack(mob/living/carbon/M, mob/user)
 	if(!istype(M))
@@ -80,7 +78,7 @@
 
 	add_fingerprint(user)
 
-	if(user.zone_sel.selecting != "head")
+	if(user.zone_selected != "head")
 		return ..()
 
 	var/mob/living/carbon/human/H = M

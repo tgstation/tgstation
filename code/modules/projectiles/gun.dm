@@ -135,7 +135,7 @@
 			return
 		if(!ismob(target) || user.a_intent == "harm") //melee attack
 			return
-		if(user.zone_sel.selecting == "mouth")
+		if(user.zone_selected == "mouth")
 			handle_suicide(user, target, params)
 			return
 		if(target == user) //so we can't shoot ourselves (unless mouth selected)
@@ -406,7 +406,7 @@ obj/item/weapon/gun/proc/newshot()
 
 	semicd = 1
 
-	if(!do_mob(user, target, 120) || user.zone_sel.selecting != "mouth")
+	if(!do_mob(user, target, 120) || user.zone_selected != "mouth")
 		if(user)
 			if(user == target)
 				user.visible_message("<span class='notice'>[user] decided life was worth living.</span>")

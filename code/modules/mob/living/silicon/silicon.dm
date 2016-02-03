@@ -7,6 +7,7 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
+	see_in_dark = 8
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
@@ -187,7 +188,7 @@
 		if(STUTTER)
 			stuttering = max(stuttering,(effect/(blocked+1)))
 		if(EYE_BLUR)
-			eye_blurry = max(eye_blurry,(effect/(blocked+1)))
+			set_blurriness(max(eye_blurry,(effect/(blocked+1))))
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect/(blocked+1)))
 	updatehealth()

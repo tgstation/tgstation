@@ -414,26 +414,25 @@
 
 
 /obj/machinery/suit_storage_unit/proc/eject_occupant(mob/user)
-	if (src.islocked)
+	if (islocked)
 		return
 
-	if (!src.OCCUPANT)
+	if (!OCCUPANT)
 		return
 
-	if (src.OCCUPANT.client)
+	if (OCCUPANT.client)
 		if(user != OCCUPANT)
 			OCCUPANT << "<span class='warning'>The machine kicks you out!</span>"
-		if(user.loc != src.loc)
+		if(user.loc != loc)
 			OCCUPANT << "<span class='warning'>You leave the not-so-cozy confines of [src].</span>"
 
-		src.OCCUPANT.client.eye = src.OCCUPANT.client.mob
-		src.OCCUPANT.client.perspective = MOB_PERSPECTIVE
-	if(src.OCCUPANT.loc == src)
-		src.OCCUPANT.loc = src.loc
-	src.OCCUPANT = null
+	if(OCCUPANT.loc == src)
+		OCCUPANT.loc = loc
+	OCCUPANT.reset_perspective(null)
+	OCCUPANT = null
 	if(!src.isopen)
 		src.isopen = 1
-	src.update_icon()
+	update_icon()
 	return
 
 
@@ -491,18 +490,15 @@
 		M.visible_message("<span class='warning'>[user] starts putting [M] into [src]!</span>", "<span class='userdanger'>[user] starts shoving you into [src]!</span>")
 	if(do_mob(user, M, 10))
 		user.stop_pulling()
-		if(M.client)
-			M.client.perspective = EYE_PERSPECTIVE
-			M.client.eye = src
 		M.loc = src
-		src.OCCUPANT = M
-		src.isopen = 0
-		src.update_icon()
+		M.reset_perspective(src)
+		OCCUPANT = M
+		isopen = 0
+		update_icon()
 
-		src.add_fingerprint(user)
-		src.updateUsrDialog()
-		return
-	return
+		add_fingerprint(user)
+		updateUsrDialog()
+
 
 /obj/machinery/suit_storage_unit/proc/fix()
 	audible_message("<span class='notice'>[src] beeps and comes back online!</span>")

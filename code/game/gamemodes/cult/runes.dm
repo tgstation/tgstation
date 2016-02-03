@@ -192,8 +192,6 @@ var/list/teleport_runes = list()
 		return
 
 	var/obj/effect/rune/selected_rune = pick(potential_runes)
-	if(user.buckled)
-		user.buckled.unbuckle_mob()
 	user.visible_message("<span class='warning'>[user] vanishes in a flash of red light!</span>", \
 						 "<span class='cult'>Your vision blurs, and you suddenly appear somewhere else.</span>")
 	user.forceMove(get_turf(selected_rune))
@@ -256,8 +254,7 @@ var/list/teleport_other_runes = list()
 			return
 	else
 		target = targets[targets.len]
-	if(target.buckled)
-		target.buckled.unbuckle_mob()
+
 	target.visible_message("<span class='warning'>[target] vanishes in a flash of red light!</span>", \
 						   "<span class='cult'>Your vision blurs, and you suddenly appear somewhere else.</span>")
 	target.forceMove(get_turf(selected_rune))
@@ -580,8 +577,8 @@ var/list/teleport_other_runes = list()
 			C << "<span class='cultlarge'>You feel oily shadows cover your senses.</span>"
 			C.adjustEarDamage(0,50)
 			C.flash_eyes(1, 1)
-			C.eye_blurry += 50
-			C.eye_blind += 20
+			C.adjust_blurriness(50)
+			C.adjust_blindness(20)
 			C.silent += 10
 	qdel(src)
 

@@ -181,7 +181,7 @@
 		if(!(locate(/obj/structure/transit_tube) in loc))
 			mob.loc = loc
 			mob.client.Move(get_step(loc, direction), direction)
-			mob.reset_view(null)
+			mob.reset_perspective(null)
 
 			//if(moving && istype(loc, /turf/space))
 				// Todo: If you get out of a moving pod in space, you should move as well.
@@ -195,7 +195,7 @@
 							if(station.icon_state == "open")
 								mob.loc = loc
 								mob.client.Move(get_step(loc, direction), direction)
-								mob.reset_view(null)
+								mob.reset_perspective(null)
 
 							else
 								station.open_animation()

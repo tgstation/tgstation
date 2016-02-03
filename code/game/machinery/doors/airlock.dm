@@ -581,7 +581,7 @@ About the new airlock wires panel:
 	// Otherwise it will runtime with this kind of error: null.Topic()
 	if(!nowindow)
 		..()
-	if((usr.stat || usr.restrained()) && !IsAdminGhost(usr))
+	if(usr.incapacitated() && !IsAdminGhost(usr))
 		return
 	add_fingerprint(usr)
 	if(href_list["close"])

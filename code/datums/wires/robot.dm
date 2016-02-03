@@ -39,7 +39,7 @@ var/const/BORG_WIRE_CAMERA = 16
 		if (BORG_WIRE_CAMERA)
 			if(!isnull(R.camera) && !R.scrambledcodes)
 				R.camera.status = mended
-				R.camera.deactivate(usr, 0) // Will kick anyone who is watching the Cyborg's camera.
+				R.camera.toggle_cam(usr, 0) // Will kick anyone who is watching the Cyborg's camera.
 
 		if(BORG_WIRE_LAWCHECK)	//Forces a law update if the borg is set to receive them. Since an update would happen when the borg checks its laws anyway, not much use, but eh
 			if (R.lawupdate)
@@ -82,9 +82,8 @@ var/const/BORG_WIRE_CAMERA = 16
 
 		if (BORG_WIRE_CAMERA)
 			if(!isnull(R.camera) && R.camera.can_use() && !R.scrambledcodes)
-				R.camera.deactivate(usr, 0) // Kick anyone watching the Cyborg's camera, doesn't display you disconnecting the camera.
-				R.visible_message("[R]'s camera lense focuses loudly.")
-				R << "Your camera lense focuses loudly."
+				R.camera.toggle_cam(usr, 0) // Kick anyone watching the Cyborg's camera, doesn't display you disconnecting the camera.
+				R.visible_message("<span class='notice'>[R]'s camera lense focuses loudly.</span>","<span class='notice'>Your camera lense focuses loudly.</span>")
 
 		if(BORG_WIRE_LOCKED_DOWN)
 			R.SetLockdown(!R.lockcharge) // Toggle

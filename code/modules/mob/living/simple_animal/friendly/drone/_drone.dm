@@ -88,9 +88,6 @@
 
 /mob/living/simple_animal/drone/Login()
 	..()
-	update_inv_hands()
-	update_inv_head()
-	update_inv_internal_storage()
 	check_laws()
 
 	updateSeeStaticMobs()
@@ -239,3 +236,17 @@
 
 /mob/living/simple_animal/drone/experience_pressure_difference(pressure_difference, direction)
 	return
+
+/mob/living/simple_animal/drone/revive()
+	adjustBruteLoss(-getBruteLoss()) //Heal all brute damage
+	stat = CONSCIOUS
+	updatehealth()
+	icon_state = icon_living
+	if(stat == DEAD)
+		dead_mob_list -= src
+		living_mob_list += src
+	update_sight()
+	update_vision_overlays()
+	update_canmove()
+
+

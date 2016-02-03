@@ -54,22 +54,22 @@
 		if(wizard.current.stat==UNCONSCIOUS)
 			if(wizard.current.health < 0)
 				wizard.current << "<font size='4'>The Space Wizard Federation is upset with your performance and have terminated your employment.</font>"
-				wizard.current.stat = 2
+				wizard.current.death()
 			continue
 		wizards_alive++
-	if(!time_checked) 
+	if(!time_checked)
 		time_checked = world.time
 	if(bullshit_mode)
 		if(world.time > time_checked + time_check)
 			max_mages = INFINITY
 			time_checked = world.time
-			make_more_mages()	
+			make_more_mages()
 			return ..()
 	if (wizards_alive)
 		if(world.time > time_checked + time_check && (mages_made < max_mages))
 			time_checked = world.time
 			make_more_mages()
-		
+
 	else
 		if(mages_made >= max_mages)
 			finished = 1

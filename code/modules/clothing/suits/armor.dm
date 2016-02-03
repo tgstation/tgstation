@@ -176,8 +176,6 @@
 		var/turf/picked = pick(turfs)
 		if(!isturf(picked))
 			return
-		if(H.buckled)
-			H.buckled.unbuckle_mob()
 		H.forceMove(picked)
 		return 1
 	return 0

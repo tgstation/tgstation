@@ -504,7 +504,7 @@ var/global/list/multiverse = list()
 			target.bodytemperature += 50
 			GiveHint(target)
 		else if(is_pointed(I))
-			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_sel.selecting)]!</span>"
+			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>"
 			target.Weaken(2)
 			GiveHint(target)
 		else if(istype(I,/obj/item/weapon/bikehorn))
@@ -525,14 +525,16 @@ var/global/list/multiverse = list()
 	..()
 
 /obj/item/voodoo/check_eye(mob/user)
-	return src.loc == user
+	if(loc != user)
+		user.reset_perspective(null)
+		user.unset_machine()
 
 /obj/item/voodoo/attack_self(mob/user)
 	if(!target && possible.len)
 		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
 		return
 
-	if(user.zone_sel.selecting == "chest")
+	if(user.zone_selected == "chest")
 		if(link)
 			target = null
 			link.loc = get_turf(src)
@@ -542,18 +544,16 @@ var/global/list/multiverse = list()
 			return
 
 	if(target && cooldown < world.time)
-		switch(user.zone_sel.selecting)
+		switch(user.zone_selected)
 			if("mouth")
 				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
 				target.say(wgw)
 				log_game("[user][user.key] made [target][target.key] say [wgw] with a voodoo doll.")
 			if("eyes")
 				user.set_machine(src)
-				if(user.client)
-					user.client.eye = target
-					user.client.perspective = EYE_PERSPECTIVE
+				user.reset_perspective(target)
 				spawn(100)
-					user.reset_view()
+					user.reset_perspective(null)
 					user.unset_machine()
 			if("r_leg","l_leg")
 				user << "<span class='notice'>You move the doll's legs around.</span>"

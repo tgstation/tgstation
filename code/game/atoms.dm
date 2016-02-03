@@ -72,8 +72,6 @@
 		return null
 
 /atom/proc/check_eye(mob/user)
-	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
-		return 1
 	return
 
 /atom/proc/on_reagent_change()
@@ -369,3 +367,12 @@ var/list/blood_splatter_icons = list()
 /atom/Stat()
 	. = ..()
 	sleep(1)
+
+
+//the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
+/atom/proc/get_vision_impairments(mob/user)
+	return
+
+//the sight changes to give to the mob whose perspective is set to that atom (e.g. A mob with nightvision loses its nightvision while looking through a normal camera)
+/atom/proc/update_remote_sight(mob/living/user)
+	return

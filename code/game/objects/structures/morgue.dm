@@ -90,9 +90,11 @@
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	for(var/atom/movable/A in connected.loc)
 		if(!A.anchored || A == connected)
-			A.loc = src
+			A.forceMove(loc)
 	update_icon()
 
+/obj/structure/bodycontainer/get_vision_impairments(mob/user)
+	return global_hud.darkMask
 /*
  * Morgue
  */

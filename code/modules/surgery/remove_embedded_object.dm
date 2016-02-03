@@ -14,9 +14,9 @@
 /datum/surgery_step/remove_object/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	L = surgery.organ
 	if(L)
-		user.visible_message("[user] looks for objects embedded in [target]'s [parse_zone(user.zone_sel.selecting)].", "<span class='notice'>You look for objects embedded in [target]'s [parse_zone(user.zone_sel.selecting)]...</span>")
+		user.visible_message("[user] looks for objects embedded in [target]'s [parse_zone(user.zone_selected)].", "<span class='notice'>You look for objects embedded in [target]'s [parse_zone(user.zone_selected)]...</span>")
 	else
-		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_sel.selecting)].", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_sel.selecting)]...</span>")
+		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
 
 
 /datum/surgery_step/remove_object/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -35,6 +35,6 @@
 				user << "<span class='warning'>You find no objects embedded in [H]'s [L.getDisplayName()]!</span>"
 
 	else
-		user << "<span class='warning'>You can't find [target]'s [parse_zone(user.zone_sel.selecting)], let alone any objects embedded in it!</span>"
+		user << "<span class='warning'>You can't find [target]'s [parse_zone(user.zone_selected)], let alone any objects embedded in it!</span>"
 
 	return 1
