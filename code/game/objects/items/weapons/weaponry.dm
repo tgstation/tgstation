@@ -1,3 +1,14 @@
+#define NULLROD "null rod"
+#define GODHAND "god hand"
+#define REDSTAFF "red staff"
+#define BLUESTAFF "blue staff"
+#define CLAYMORE "claymore"
+#define DARKBLADE "dark blade"
+#define SORD "sord"
+#define SCYTHE "scythe"
+#define CHAINSAW "chainsaw hand"
+
+
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
@@ -49,20 +60,24 @@
 	reskin_holy_weapon(user)
 
 /obj/item/weapon/nullrod/proc/reskin_holy_weapon(mob/M)
-	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in list("null rod", "god hand", "red staff", "blue staff", "claymore", "dark blade", "sord", "scythe")
+	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in list(NULLROD, GODHAND, REDSTAFF, BLUESTAFF, CLAYMORE, DARKBLADE, SORD, SCYTHE, CHAINSAW)
 
 	if(src && choice && !M.stat && in_range(M,src) && !M.restrained() && M.canmove && !reskinned)
 		switch(choice)
-			if("null rod")
+			if(NULLROD)
 				M << "On second thought, the null rod suits you just fine."
-			if("god hand")
+			if(GODHAND)
 				icon_state = "disintegrate"
 				item_state = "disintegrate"
 				name = "god hand"
-				desc = "This hand of yours glows with an aweseome power."
+				desc = "This hand of yours glows with an aweseome power!"
 				flags = ABSTRACT | NODROP
 				w_class = 5
-			if("red staff")
+				hitsound = 'sound/weapons/sear.ogg'
+				force = 20
+				damtype = BURN
+				attack_verb = list("punches", "cross counters", "pummels")
+			if(REDSTAFF)
 				icon_state = "godstaff-red"
 				item_state = "godstaff-red"
 				name = "holy staff"
@@ -71,16 +86,16 @@
 				force = 5
 				slot_flags = SLOT_BACK
 				block_chance = 50
-			if("red staff")
-				icon_state = "godstaff-red"
-				item_state = "godstaff-red"
+			if(BLUESTAFF)
+				icon_state = "godstaff-blue"
+				item_state = "godstaff-blue"
 				name = "holy staff"
 				desc = "It has a mysterious, protective aura."
 				w_class = 5
 				force = 5
 				slot_flags = SLOT_BACK
 				block_chance = 50
-			if("claymore")
+			if(CLAYMORE)
 				icon_state = "claymore"
 				item_state = "claymore"
 				name = "holy claymore"
@@ -91,7 +106,7 @@
 				block_chance = 20
 				hitsound = 'sound/weapons/bladeslice.ogg'
 				attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-			if("dark blade")
+			if(DARKBLADE)
 				icon_state = "cultblade"
 				item_state = "cultblade"
 				name = "dark blade"
@@ -101,7 +116,7 @@
 				block_chance = 20
 				hitsound = 'sound/weapons/bladeslice.ogg'
 				attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-			if("sord")
+			if(SORD)
 				name = "\improper SORD"
 				desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 				icon_state = "sord"
@@ -111,7 +126,7 @@
 				w_class = 3
 				hitsound = 'sound/weapons/bladeslice.ogg'
 				attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-			if("scythe")
+			if(SCYTHE)
 				icon_state = "scythe0"
 				name = "reaper scythe"
 				desc = "Ask not for whom the bell tolls..."
@@ -121,8 +136,18 @@
 				slot_flags = SLOT_BACK
 				attack_verb = list("chopped", "sliced", "cut", "reaped")
 				hitsound = 'sound/weapons/bladeslice.ogg'
+				name = "mounted chainsaw"
+			if(CHAINSAW)
+				name = "chainsaw hand"
+				desc = "Good? Bad? You're the guy with the chainsaw hand."
+				icon_state = "chainsaw_on"
+				item_state = "mounted_chainsaw"
+				flags = NODROP | ABSTRACT
+				force = 20
+				sharpness = IS_SHARP
+				attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+				hitsound = "sound/weapons/chainsawhit.ogg"
 		reskinned = 1
-		return
 
 
 /obj/item/weapon/sord
@@ -396,3 +421,14 @@
 	icon_state = "tailwhip"
 	origin_tech = "combat=1"
 	needs_permit = 0
+
+
+#undef NULLROD
+#undef GODHAND
+#undef REDSTAFF
+#undef BLUESTAFF
+#undef CLAYMORE
+#undef DARKBLADE
+#undef SORD
+#undef SCYTHE
+#undef CHAINSAW
