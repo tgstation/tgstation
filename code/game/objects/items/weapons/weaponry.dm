@@ -49,8 +49,8 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/sord/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	return(BRUTELOSS)
+	user.visible_message("<span class='suicide'>[user] tries to impale \himself with the [src.name]... and isn't even cut! Wow, that's a shitty sword...</span>")
+	return
 
 /obj/item/weapon/claymore
 	name = "claymore"
