@@ -168,7 +168,7 @@
 			B.loc = T
 			B.update_icon()
 			if(B.overmind)
-				B.overmind.blob_reagent_datum.expand_reaction(B, src, T)
+				B.overmind.blob_reagent_datum.expand_reaction(src, B, T)
 			return B
 		else
 			T.blob_act() //if we can't move in hit the turf again

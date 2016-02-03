@@ -66,7 +66,7 @@
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(T)
 		BS.overmind = B.overmind
 		BS.update_icons()
-		B.overmind.blob_mobs.Add(BS)
+		newB.overmind.blob_mobs.Add(BS)
 
 //does brute damage but can replicate when damaged and has a chance of expanding again
 /datum/reagent/blob/replicating_foam
@@ -91,7 +91,7 @@
 	return ..()
 
 /datum/reagent/blob/replicating_foam/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
-	B.expand() //do it again!
+	newB.expand() //do it again!
 
 //does low burn and a lot of stamina damage, reacts to stamina damage
 /datum/reagent/blob/energized_fibers
