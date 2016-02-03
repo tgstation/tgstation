@@ -151,6 +151,14 @@
 			D.RemoveSymptom(metabolism)
 			D.AddSymptom(new /datum/symptom/purge())
 			D.Refresh(1)
+		//sensory restoration
+		var/visionaid = locate(/datum/symptom/visionaid) in D.symptoms
+		var/youth = locate(/datum/symptom/heal/youth) in D.symptoms
+		if(visionaid && youth)
+			D.RemoveSymptom(visionaid)
+			D.RemoveSymptom(youth)
+			D.AddSymptom(new /datum/symptom/sensres())
+			D.Refresh(1)
 
 /datum/chemical_reaction/mix_virus/rem_virus
 
