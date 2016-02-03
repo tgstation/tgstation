@@ -10,6 +10,7 @@
 #define CLOWNDAGGER "clown dagger"
 #define WHIP "whip"
 #define FEDORA "athiests fedora"
+#define ARMBLADE "dark blessing"
 
 
 /obj/item/weapon/banhammer
@@ -39,7 +40,6 @@
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
-	slot_flags = SLOT_BELT
 	force = 15
 	throw_speed = 3
 	throw_range = 4
@@ -52,7 +52,7 @@
 	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/weapon/nullrod/attack_hand(mob/user)
+/obj/item/weapon/nullrod/attack_self(mob/user)
 	if(reskinned)
 		return
 	reskin_holy_weapon(user)
@@ -110,6 +110,7 @@
 				item_state = "cultblade"
 				name = "dark blade"
 				desc = "Spread the glory of the dark gods!"
+				slot_flags = SLOT_BELT
 				w_class = 5
 				force = 20
 				block_chance = 20
@@ -121,6 +122,7 @@
 				desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 				icon_state = "sord"
 				item_state = "sord"
+				slot_flags = SLOT_BELT
 				force = 2
 				throwforce = 1
 				w_class = 3
@@ -163,6 +165,7 @@
 				desc = "What a terrible night to be on Space Station 13."
 				icon_state = "chain"
 				item_state = "chain"
+				slot_flags = SLOT_BELT
 				attack_verb = list("whipped", "lashed")
 				hitsound = 'sound/weapons/slash.ogg' //no whip sounds exist
 			if(FEDORA)
@@ -177,6 +180,15 @@
 				throw_range = 7
 				throwforce = 20
 				embed_chance = 100
+			if(ARMBLADE)
+				name = "dark blessing"
+				desc = "Particularly twisted dieties grant gifts of dubious value."
+				icon_state = "arm_blade"
+				item_state = "arm_blade"
+				flags = ABSTRACT | NODROP
+				w_class = 5.0
+				force = 20
+				sharpness = IS_SHARP
 
 		weapon_type = choice
 		feedback_set_details("chaplain_weapon","[choice]")
@@ -468,3 +480,4 @@
 #undef CLOWNDAGGER
 #undef WHIP
 #undef FEDORA
+#undef ARMBLADE
