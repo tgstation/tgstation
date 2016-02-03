@@ -270,7 +270,10 @@
 /mob/living/remove_language(rem_language)
 	var/datum/language/L = all_languages[rem_language]
 	if(default_language == L)
-		default_language = null
+		if(all_languages.len)
+			default_language = all_languages[1]
+		else
+			default_language = null
 	return ..()
 
 // Can we speak this language, as opposed to just understanding it?
