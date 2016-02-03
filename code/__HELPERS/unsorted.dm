@@ -1175,6 +1175,19 @@ B --><-- A
 
 	return L
 
+/proc/get_areas_in_range(dist=0, atom/center=usr)
+	if(!dist)
+		var/turf/T = get_turf(center)
+		return T ? list(T.loc) : list()
+	if(!center)
+		return list()
+
+	var/list/turfs = RANGE_TURFS(dist, center)
+	var/list/areas = list()
+	for(var/V in turfs)
+		var/turf/T = V
+		areas |= T.loc
+	return areas
 
 /atom/proc/contains(var/atom/A)
 	if(!A)
