@@ -7,6 +7,8 @@
 #define SORD "sord"
 #define SCYTHE "scythe"
 #define CHAINSAW "chainsaw hand"
+#define CLOWNDAGGER "clown dagger"
+#define WHIP "whip"
 
 
 /obj/item/weapon/banhammer
@@ -60,7 +62,7 @@
 	reskin_holy_weapon(user)
 
 /obj/item/weapon/nullrod/proc/reskin_holy_weapon(mob/M)
-	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in list(NULLROD, GODHAND, REDSTAFF, BLUESTAFF, CLAYMORE, DARKBLADE, SORD, SCYTHE, CHAINSAW)
+	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in list(NULLROD, GODHAND, REDSTAFF, BLUESTAFF, CLAYMORE, DARKBLADE, SORD, SCYTHE, CHAINSAW, CLOWNDAGGER, WHIP)
 
 	if(src && choice && !M.stat && in_range(M,src) && !M.restrained() && M.canmove && !reskinned)
 		switch(choice)
@@ -76,7 +78,7 @@
 				hitsound = 'sound/weapons/sear.ogg'
 				force = 20
 				damtype = BURN
-				attack_verb = list("punches", "cross counters", "pummels")
+				attack_verb = list("punched", "cross counterd", "pummeled")
 			if(REDSTAFF)
 				icon_state = "godstaff-red"
 				item_state = "godstaff-red"
@@ -104,6 +106,7 @@
 				force = 20
 				slot_flags = SLOT_BACK|SLOT_BELT
 				block_chance = 20
+				sharpness = IS_SHARP
 				hitsound = 'sound/weapons/bladeslice.ogg'
 				attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 			if(DARKBLADE)
@@ -114,6 +117,7 @@
 				w_class = 5
 				force = 20
 				block_chance = 20
+				sharpness = IS_SHARP
 				hitsound = 'sound/weapons/bladeslice.ogg'
 				attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 			if(SORD)
@@ -134,6 +138,7 @@
 				w_class = 4
 				armour_penetration = 100
 				slot_flags = SLOT_BACK
+				sharpness = IS_SHARP
 				attack_verb = list("chopped", "sliced", "cut", "reaped")
 				hitsound = 'sound/weapons/bladeslice.ogg'
 				name = "mounted chainsaw"
@@ -142,11 +147,28 @@
 				desc = "Good? Bad? You're the guy with the chainsaw hand."
 				icon_state = "chainsaw_on"
 				item_state = "mounted_chainsaw"
+				w_class = 5
 				flags = NODROP | ABSTRACT
 				force = 20
 				sharpness = IS_SHARP
 				attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
-				hitsound = "sound/weapons/chainsawhit.ogg"
+				hitsound = 'sound/weapons/chainsawhit.ogg'
+			if(CLOWNDAGGER)
+				icon = 'icons/obj/wizard.dmi'
+				icon_state = "honkrender"
+				item_state = "render"
+				name = "clown dagger"
+				desc = "Used for absolutely hilarious sacrafices."
+				hitsound = 'sound/items/bikehorn.ogg'
+				sharpness = IS_SHARP
+				attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+			if(WHIP)
+				name = "holy whip"
+				desc = "What a terrible night to be on Space Station 13."
+				icon_state = "chain"
+				item_state = "chain"
+				attack_verb = list("whipped", "lashed")
+				hitsound = 'sound/weapons/slash.ogg' //no whip sounds exist
 		reskinned = 1
 
 
@@ -432,3 +454,5 @@
 #undef SORD
 #undef SCYTHE
 #undef CHAINSAW
+#undef CLOWNDAGGER
+#undef WHIP
