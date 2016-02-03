@@ -2,7 +2,6 @@
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
-	locked_should_lie = 0
 	lockflags = 0
 
 	sheet_amt = 1

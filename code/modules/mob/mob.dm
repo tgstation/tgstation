@@ -1449,7 +1449,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/update_canmove()
 	if(locked_to)
 		canmove = 0
-		lying = locked_to.locked_should_lie
+		lying = locked_to.lockflags & LOCKED_SHOULD_LIE
 
 
 	else if( isUnconscious() || weakened || paralysis || resting || sleeping )

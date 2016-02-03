@@ -13,8 +13,7 @@
 	icon_state = "bed"
 	icon = 'icons/obj/stools-chairs-beds.dmi'
 
-	locked_should_lie = 1
-	lockflags = 0
+	lockflags = LOCKED_SHOULD_LIE
 	anchored = 1
 	var/sheet_type = /obj/item/stack/sheet/metal
 	var/sheet_amt = 1

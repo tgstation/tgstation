@@ -1394,3 +1394,4 @@ var/proccalls = 1
 
 #define DENSE_WHEN_LOCKING 1
 #define DENSE_WHEN_LOCKED 2
+#define LOCKED_SHOULD_LIE 4
