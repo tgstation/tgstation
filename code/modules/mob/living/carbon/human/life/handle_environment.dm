@@ -32,13 +32,13 @@
 		// Update fire/cold overlay
 		var/temp_alert = (bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT) ? 1 : 2
 		fire_alert = max(fire_alert, temp_alert)
-
-		if (dna.mutantrace != "slime")
-			var/temp_damage = get_body_temperature_damage(bodytemperature)
-			var/temp_weapon = (bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT) ? WPN_LOW_BODY_TEMP : WPN_HIGH_BODY_TEMP
-			apply_damage(temp_damage, BURN, used_weapon = temp_weapon)
-		else // Slimed carbons get toxin instead of cold damage
-			adjustToxLoss(round(BODYTEMP_HEAT_DAMAGE_LIMIT - bodytemperature))
+		if(!(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)))
+			if (dna.mutantrace != "slime")
+				var/temp_damage = get_body_temperature_damage(bodytemperature)
+				var/temp_weapon = (bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT) ? WPN_LOW_BODY_TEMP : WPN_HIGH_BODY_TEMP
+				apply_damage(temp_damage, BURN, used_weapon = temp_weapon)
+			else // Slimed carbons get toxin instead of cold damage
+				adjustToxLoss(round(BODYTEMP_HEAT_DAMAGE_LIMIT - bodytemperature))
 	else
 		fire_alert = 0
 

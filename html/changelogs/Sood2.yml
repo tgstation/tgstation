@@ -1,0 +1,4 @@
+author: Sood
+delete-after: true
+changes:
+  - bugfix: Cryo no longer gives cold burns.
