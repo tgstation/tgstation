@@ -1,6 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-  - bugfix: Hypnotise costs 10 blood (instead of 0), bat form costs 30 blood (instead of 0), chiroptean screech costs 30 blood (instead of 10), shadowstep costs 20 blood (instead of 0)
