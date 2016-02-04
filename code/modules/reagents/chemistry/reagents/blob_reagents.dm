@@ -250,7 +250,7 @@
 
 /datum/reagent/blob/electromagnetic_web/death_reaction(obj/effect/blob/B, cause)
 	if(!isnull(cause))
-		empulse(B.loc, 2, 4) //less than screen range, so you can stand out of range to avoid it
+		empulse(B.loc, 2, 3) //less than screen range, so you can stand out of range to avoid it
 
 //does brute damage, bonus damage for each nearby blob, and spreads damage out
 /datum/reagent/blob/synchronous_mesh
