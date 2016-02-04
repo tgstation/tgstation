@@ -1,0 +1,4 @@
+author: octareenroon91
+delete-after: True
+changes: 
+  - rscadd: "Player-controlled medibots can examine a patient to know what chems are in the patient's body."

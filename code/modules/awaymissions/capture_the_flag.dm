@@ -92,6 +92,7 @@
 	desc = "Used for running friendly games of capture the flag."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
+	anchored = 1
 	var/team = WHITE_TEAM
 	//Capture the Flag scoring
 	var/points = 0
@@ -190,9 +191,13 @@
 			for(var/obj/item/weapon/twohanded/required/ctf/W in M)
 				M.unEquip(W)
 			M.dust()
+	for(var/obj/machinery/control_point/control in machines)
+		control.icon_state = "dominator"
+		control.controlling = null
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
 		if(CTF.ctf_enabled == TRUE)
 			CTF.points = 0
+			CTF.control_points = 0
 			CTF.ctf_enabled = FALSE
 			CTF.team_members = list()
 			spawn(300)
@@ -312,6 +317,7 @@
 	desc = "You should capture this."
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
+	anchored = 1
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
 	var/point_rate = 1
