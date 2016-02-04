@@ -172,7 +172,7 @@ MASS SPECTROMETER
 
 	// Time of death
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
-		user << "<span class='info'>Time of Death: [M.tod]</span>"
+		user << "<span class='info'>Time of Death:</span> [M.tod]"
 
 	for(var/datum/disease/D in M.viruses)
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
