@@ -11,7 +11,7 @@
 	antag_flag = ROLE_OPERATIVE
 	enemy_minimum_age = 14
 	var/const/agent_factor = 10
-	var/const/min_agents = 4
+	var/const/min_agents = 2
 	var/const/max_agents = 10
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
@@ -114,11 +114,15 @@
 	else
 		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
 
-	var/obj/item/device/radio/headset/syndicate/alt/A = locate() in synd_mind.current
-	if(A)
-		A.command = TRUE
+	var/obj/item/device/radio/headset/syndicate/alt/R = locate() in synd_mind.current
+	if(R)
+		R.command = TRUE
 
-	if (nuke_code)
+	var/obj/item/device/radio/uplink/U = locate() in synd_mind.current
+	if(U)
+		U.hidden_uplink.telecrystals += num_players()
+
+	if(nuke_code)
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"

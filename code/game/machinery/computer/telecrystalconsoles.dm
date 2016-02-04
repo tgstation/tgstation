@@ -124,7 +124,6 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	icon_state = "computer"
 	icon_screen = "tcboss"
 	icon_keyboard = "syndie_key"
-	var/virgin = 1
 	var/scanrange = 10
 	var/storedcrystals = 0
 	var/list/TCstations = list()
@@ -138,20 +137,6 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		if(!A.linkedboss)
 			TCstations += A
 			A.linkedboss = src
-	if(virgin)
-		getDangerous()
-		virgin = 0
-
-/obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
-	..()
-	var/danger
-	danger = joined_player_list.len - ticker.mode.syndicates.len
-	while(!IsMultiple(++danger,10))//Just round up to the nearest multiple of ten.
-	scaleTC(danger)
-
-/obj/machinery/computer/telecrystals/boss/proc/scaleTC(amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
-	storedcrystals += amt * NUKESCALINGMODIFIER
-
 /////////
 
 /obj/machinery/computer/telecrystals/boss/attack_hand(mob/user)
