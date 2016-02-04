@@ -45,7 +45,7 @@
 	if(message_verb)
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>")
-	apply_damage(I.force, I.damtype, def_zone) //apply damage after messages, so dying animals don't produce a message before dying
+	apply_damage(I.force, I.damtype, def_zone, threshold_check = 1)
 
 /mob/living/simple_animal/attacked_by(var/obj/item/I, var/mob/living/user)
 	if(!I.force)

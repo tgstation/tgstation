@@ -274,7 +274,7 @@
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		apply_damage(damage,M.melee_damage_type)
+		apply_damage(damage, M.melee_damage_type, threshold_check = 1)
 		return 1
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
@@ -330,7 +330,7 @@
 			M.do_attack_animation(src)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
-			apply_damage(harm_intent_damage)
+			apply_damage(harm_intent_damage, threshold_check = 1)
 			add_logs(M, src, "attacked")
 			updatehealth()
 			return 1
@@ -339,7 +339,7 @@
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
 			var/damage = rand(1, 3)
-			apply_damage(damage)
+			apply_damage(damage, threshold_check = 1)
 			return 1
 	if (M.a_intent == "help")
 		if (health > 0)
@@ -360,7 +360,7 @@
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 					"<span class='userdanger'>[M] has slashed at [src]!</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-			apply_damage(damage)
+			apply_damage(damage, threshold_check = 1)
 			add_logs(M, src, "attacked")
 		return 1
 
@@ -369,7 +369,7 @@
 		var/damage = rand(5, 10)
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-			apply_damage(damage)
+			apply_damage(damage, threshold_check = 1)
 		return 1
 
 /mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M)
@@ -377,12 +377,13 @@
 		var/damage = rand(15, 25)
 		if(M.is_adult)
 			damage = rand(20, 35)
-		apply_damage(damage)
+		apply_damage(damage, threshold_check = 1)
 		return 1
 
-/mob/living/simple_animal/apply_damage(damage = 0, damagetype = BRUTE)
-	if(damage <= force_threshold || !damage_coeff[damagetype])
-		visible_message("<span class='warning'>[src] looks unharmed.</span>")
+/mob/living/simple_animal/apply_damage(damage = 0, damagetype = BRUTE, threshold_check = 0)
+	if(!damage_coeff[damagetype] || threshold_check && damage <= force_threshold)
+		if(threshold_check) //if it's not checking the force threshold, it probably doesn't want a message to appear
+			visible_message("<span class='warning'>[src] looks unharmed.</span>")
 		return 0
 	else
 		return ..()
