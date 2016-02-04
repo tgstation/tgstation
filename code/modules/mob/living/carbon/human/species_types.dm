@@ -74,8 +74,8 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 
 	return randname
 
-var/regex/lizard_hiss = new("s{1,2}(?!s)", "g")
-var/regex/lizard_hiSS = new("S{1,2}(?!S)", "g")
+var/regex/lizard_hiss = new("s+", "g")
+var/regex/lizard_hiSS = new("S+", "g")
 /datum/species/lizard/handle_speech(message)
 	if(copytext(message, 1, 2) != "*")
 		message = lizard_hiss.Replace(message, "sss")
