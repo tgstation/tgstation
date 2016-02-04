@@ -80,7 +80,8 @@
 //It automatically updates health status
 /mob/living/carbon/human/heal_organ_damage(brute, burn)
 	var/list/obj/item/organ/limb/parts = get_damaged_organs(brute,burn)
-	if(!parts.len)	return
+	if(!parts.len)
+		return
 	var/obj/item/organ/limb/picked = pick(parts)
 	if(picked.heal_damage(brute,burn,0))
 		update_damage_overlays(0)
@@ -91,7 +92,8 @@
 //It automatically updates health status
 /mob/living/carbon/human/take_organ_damage(brute, burn)
 	var/list/obj/item/organ/limb/parts = get_damageable_organs()
-	if(!parts.len)	return
+	if(!parts.len)
+		return
 	var/obj/item/organ/limb/picked = pick(parts)
 	if(picked.take_damage(brute,burn))
 		update_damage_overlays(0)
@@ -122,7 +124,8 @@
 
 // damage MANY external organs, in random order
 /mob/living/carbon/human/take_overall_damage(brute, burn)
-	if(status_flags & GODMODE)	return	//godmode
+	if(status_flags & GODMODE)
+		return	//godmode
 
 	var/list/obj/item/organ/limb/parts = get_damageable_organs()
 	var/update = 0
@@ -154,7 +157,8 @@
 
 
 /mob/living/carbon/human/proc/get_organ(zone)
-	if(!zone)	zone = "chest"
+	if(!zone)
+		zone = "chest"
 	for(var/obj/item/organ/limb/O in organs)
 		if(O.name == zone)
 			return O

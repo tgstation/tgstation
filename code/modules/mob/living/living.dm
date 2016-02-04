@@ -24,6 +24,8 @@ Sorry Giacom. Please don't be mad :(
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
 
+	faction |= "\ref[src]"
+
 
 /mob/living/Destroy()
 	..()
@@ -160,10 +162,10 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Pull"
 	set category = "Object"
 
-	if(pulling == AM)
+	if(istype(AM) && AM.Adjacent(src))
+		start_pulling(AM)
+	else
 		stop_pulling()
-	else if(AM.Adjacent(src))
-		src.start_pulling(AM)
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
@@ -235,7 +237,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustBruteLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
 		return 0
-	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
+	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 
@@ -245,7 +247,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustOxyLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
 		return 0
-	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
+	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 
@@ -262,7 +264,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustToxLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
 		return 0
-	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
+	toxloss = Clamp(toxloss + amount, 0, maxHealth*2
 	if(updating_health)
 		updatehealth()
 
@@ -279,7 +281,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustFireLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
 		return 0
-	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
+	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 
@@ -289,7 +291,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustCloneLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
 		return 0
-	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
+	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 
@@ -306,8 +308,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return 0
-	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
-
+	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
 /mob/living/proc/setBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return 0
@@ -322,7 +323,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/carbon/adjustStaminaLoss(amount)
 	if(status_flags & GODMODE)
 		return 0
-	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
+	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
 	update_stamina()
 
 /mob/living/carbon/alien/adjustStaminaLoss(amount)
@@ -483,6 +484,7 @@ Sorry Giacom. Please don't be mad :(
 	eye_blurry = 0
 	ear_deaf = 0
 	ear_damage = 0
+	hallucination = 0
 	heal_overall_damage(1000, 1000)
 	ExtinguishMob()
 	fire_stacks = 0
@@ -769,8 +771,11 @@ Sorry Giacom. Please don't be mad :(
 	gib()
 	return(gain)
 
-/mob/living/singularity_pull(S)
-	step_towards(src,S)
+/mob/living/singularity_pull(S, current_size)
+	if(current_size >= STAGE_SIX)
+		throw_at_fast(S,14,3, spin=1)
+	else
+		step_towards(src,S)
 
 /mob/living/narsie_act()
 	if(client)
@@ -811,20 +816,22 @@ Sorry Giacom. Please don't be mad :(
 	var/image/I
 	if(hand && l_hand) // Attacked with item in left hand.
 		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 1)
-	else if (!hand && r_hand) // Attacked with item in right hand.
+	else if(!hand && r_hand) // Attacked with item in right hand.
 		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 1)
 	else // Attacked with a fist?
 		return
 
 	// Who can see the attack?
 	var/list/viewing = list()
-	for (var/mob/M in viewers(A))
-		if (M.client)
+	for(var/mob/M in viewers(A))
+		if(M.client)
 			viewing |= M.client
 	flick_overlay(I, viewing, 5) // 5 ticks/half a second
 
 	// Scale the icon.
 	I.transform *= 0.75
+	// The icon should not rotate.
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
 	// Set the direction of the icon animation.
 	var/direction = get_dir(src, A)
@@ -946,6 +953,11 @@ Sorry Giacom. Please don't be mad :(
 	else
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 	return
+/mob/living/proc/can_use_guns(var/obj/item/weapon/gun/G)
+	if (!IsAdvancedToolUser())
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return 0
+	return 1
 
 /mob/living/carbon/proc/update_stamina()
 	return

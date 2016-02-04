@@ -149,7 +149,8 @@
 
 //this handles hud updates.
 /mob/living/proc/handle_regular_hud_updates()
-	if(!client)	return 0
+	if(!client)
+		return 0
 	update_action_buttons()
 	return 1
 

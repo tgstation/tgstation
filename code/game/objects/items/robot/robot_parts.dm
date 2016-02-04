@@ -30,7 +30,7 @@
 	name = "cyborg torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	icon_state = "chest"
-	var/wires = 0
+	var/wired = 0
 	var/obj/item/weapon/stock_parts/cell/cell = null
 
 /obj/item/robot_parts/head
@@ -101,7 +101,8 @@
 			user << "<span class='warning'>You need one sheet of metal to start building ED-209!</span>"
 			return
 	if(istype(W, /obj/item/robot_parts/l_leg))
-		if(src.l_leg)	return
+		if(src.l_leg)
+			return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
@@ -109,7 +110,8 @@
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/r_leg))
-		if(src.r_leg)	return
+		if(src.r_leg)
+			return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
@@ -117,7 +119,8 @@
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/l_arm))
-		if(src.l_arm)	return
+		if(src.l_arm)
+			return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
@@ -125,7 +128,8 @@
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/r_arm))
-		if(src.r_arm)	return
+		if(src.r_arm)
+			return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
@@ -133,20 +137,22 @@
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/chest))
-		if(src.chest)	return
-		if(W:wires && W:cell)
+		if(src.chest)
+			return
+		if(W:wired && W:cell)
 			if(!user.unEquip(W))
 				return
 			W.loc = src
 			src.chest = W
 			src.updateicon()
-		else if(!W:wires)
+		else if(!W:wired)
 			user << "<span class='warning'>You need to attach wires to it first!</span>"
 		else
 			user << "<span class='warning'>You need to attach a cell to it first!</span>"
 
 	if(istype(W, /obj/item/robot_parts/head))
-		if(src.head)	return
+		if(src.head)
+			return
 		if(W:flash2 && W:flash1)
 			if(!user.unEquip(W))
 				return
@@ -190,7 +196,8 @@
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
-			if(!O)	return
+			if(!O)
+				return
 
 			if(!user.unEquip(W))
 				return
@@ -312,12 +319,12 @@
 			src.cell = W
 			user << "<span class='notice'>You insert the cell.</span>"
 	if(istype(W, /obj/item/stack/cable_coil))
-		if(src.wires)
+		if(src.wired)
 			user << "<span class='warning'>You have already inserted wire!</span>"
 			return
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.use(1))
-			src.wires = 1
+			src.wired = 1
 			user << "<span class='notice'>You insert the wire.</span>"
 		else
 			user << "<span class='warning'>You need one length of coil to wire it!</span>"

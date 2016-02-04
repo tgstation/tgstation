@@ -12,7 +12,8 @@
 	var/list/ckeys = list()
 	for(var/mob/M in mob_list)
 		var/list/indexing = list(M.real_name, M.name)
-		if(M.mind)	indexing += M.mind.name
+		if(M.mind)
+			indexing += M.mind.name
 
 		for(var/string in indexing)
 			var/list/L = text2list(string, " ")
@@ -52,7 +53,10 @@
 							mobs_found += found
 							if(!ai_found && isAI(found))
 								ai_found = 1
-							msg += "[original_word]<font size='1' color='black'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
+							var/is_antag = 0
+							if(found.mind && found.mind.special_role)
+								is_antag = 1
+							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
 							continue
 		msg += "[original_word] "
 	return msg
@@ -80,7 +84,8 @@
 		return
 
 	//clean the input msg
-	if(!msg)	return
+	if(!msg)
+		return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)	return
 	var/original_msg = msg
@@ -91,7 +96,8 @@
 
 	msg = keywords_lookup(msg)
 
-	if(!mob)	return						//this doesn't happen
+	if(!mob)
+		return						//this doesn't happen
 
 	var/ref_mob = "\ref[mob]"
 	var/ref_client = "\ref[src]"

@@ -68,14 +68,6 @@
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	return 1
 
-/atom/movable/Del()
-	if(isnull(gc_destroyed) && loc)
-		testing("GC: -- [type] was deleted via del() rather than qdel() --")
-//	else if(isnull(gc_destroyed))
-//		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
-//	else
-//		testing("GC: [type] was deleted via GC with qdel()")
-	..()
 
 /atom/movable/Destroy()
 	. = ..()
@@ -203,7 +195,8 @@
 	throw_at(target, range, speed, thrower, spin, diagonals_first)
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
-	if(!target || !src || (flags & NODROP))	return 0
+	if(!target || !src || (flags & NODROP))
+		return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
 	throwing = 1
@@ -328,3 +321,23 @@
 	if(buckled_mob == mover)
 		return 1
 	return ..()
+
+
+/atom/movable/proc/get_spacemove_backup()
+	var/atom/movable/dense_object_backup
+	for(var/A in orange(1, get_turf(src)))
+		if(isarea(A))
+			continue
+		else if(isturf(A))
+			var/turf/turf = A
+			if(!turf.density)
+				continue
+			return turf
+		else
+			var/atom/movable/AM = A
+			if(!AM.CanPass(src) || AM.density)
+				if(AM.anchored)
+					return AM
+				dense_object_backup = AM
+				break
+	. = dense_object_backup

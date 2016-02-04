@@ -1,151 +1,105 @@
+var/datum/events/keycard_events = new()
+
 /obj/machinery/keycard_auth
 	name = "Keycard Authentication Device"
 	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	var/active = 0 //This gets set to 1 on all devices except the one where the initial request was made.
-	var/event = ""
-	var/screen = 1
-	var/confirmed = 0 //This variable is set by the device that confirms the request.
-	var/confirm_delay = 20 //(2 seconds)
-	var/busy = 0 //Busy when waiting for authentication or an event request has been sent from this device.
-	var/obj/machinery/keycard_auth/event_source
-	var/mob/event_triggered_by
-	var/mob/event_confirmed_by
-	//1 = select event
-	//2 = authenticate
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
+	req_access = list(access_keycard_auth)
+	var/datum/event/ev
+	var/event = ""
+	var/obj/machinery/keycard_auth/event_source
+	var/mob/triggerer = null
+	var/waiting = 0
 
-/obj/machinery/keycard_auth/attack_ai(mob/user)
-	if(IsAdminGhost(user))
-		return
-	user << "The station AI is not to interact with these devices."
-	return
+/obj/machinery/keycard_auth/New()
+	. = ..()
+	ev = keycard_events.addEvent("triggerEvent", src, "triggerEvent")
 
-/obj/machinery/keycard_auth/attack_paw(mob/user)
-	user << "<span class='warning'>You are too primitive to use this device!</span>"
-	return
+/obj/machinery/keycard_auth/Destroy()
+	keycard_events.clearEvent("triggerEvent", ev)
+	qdel(ev)
+	. = ..()
 
 /obj/machinery/keycard_auth/attackby(obj/item/weapon/W, mob/user, params)
-	if(stat & (NOPOWER|BROKEN))
-		user << "This device is not powered."
-		return
-	if(istype(W,/obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/ID = W
-		if(access_keycard_auth in ID.access)
-			if(active == 1)
-				//This is not the device that made the initial request. It is the device confirming the request.
-				if(event_source)
-					event_source.confirmed = 1
-					event_source.event_confirmed_by = usr
-			else if(screen == 2)
-				event_triggered_by = usr
-				broadcast_request() //This is the device making the initial event request. It needs to broadcast to other devices
+	return
 
-/obj/machinery/keycard_auth/power_change()
-	if(powered(ENVIRON))
-		stat &= ~NOPOWER
-		icon_state = "auth_off"
+/obj/machinery/keycard_auth/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+					datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "keycard_auth", name, 375, 125, master_ui, state)
+		ui.open()
+
+/obj/machinery/keycard_auth/get_ui_data()
+	var/list/data = list()
+	data["waiting"] = waiting
+	data["auth_required"] = event_source ? event_source.event : 0
+	data["red_alert"] = (seclevel2num(get_security_level()) >= SEC_LEVEL_RED) ? 1 : 0
+	data["emergency_maint"] = emergency_access
+	return data
+
+/obj/machinery/keycard_auth/ui_status(mob/user)
+	if(isanimal(user))
+		user << "<span class='warning'>You are too primitive to use this device!</span>"
 	else
-		stat |= NOPOWER
+		return ..()
+	return UI_CLOSE
 
-/obj/machinery/keycard_auth/attack_hand(mob/user)
-	if(user.stat || stat & (NOPOWER|BROKEN))
-		user << "<span class='warning'>This device is not powered!</span>"
+/obj/machinery/keycard_auth/ui_act(action, params)
+	if(..() || waiting || !allowed(usr))
 		return
-	if(busy)
-		user << "<span class='warning'>This device is busy!</span>"
-		return
+	switch(action)
+		if("red_alert")
+			if(!event_source)
+				sendEvent("Red Alert")
+				. = TRUE
+		if("emergency_maint")
+			if(!event_source)
+				sendEvent("Emergency Maintenance Access")
+				. = TRUE
+		if("auth_swipe")
+			if(event_source)
+				event_source.trigger_event(usr)
+				event_source = null
+				. = TRUE
 
-	user.set_machine(src)
+/obj/machinery/keycard_auth/proc/sendEvent(event_type)
+	triggerer = usr
+	event = event_type
+	waiting = 1
+	keycard_events.fireEvent("triggerEvent", src)
+	addtimer(src, "eventSent", 20)
 
-	var/dat = "<h1>Keycard Authentication Device</h1>"
-
-	dat += "This device is used to trigger some high security events. It requires the simultaneous swipe of two high-level ID cards."
-	dat += "<br><hr><br>"
-
-	if(screen == 1)
-		dat += "Select an event to trigger:<ul>"
-		dat += "<li><A href='?src=\ref[src];triggerevent=Red alert'>Red alert</A></li>"
-		dat += "<li><A href='?src=\ref[src];triggerevent=Emergency Maintenance Access'>Emergency Maintenance Access</A></li>"
-		dat += "</ul>"
-		user << browse(dat, "window=keycard_auth;size=500x250")
-	if(screen == 2)
-		dat += "Please swipe your card to authorize the following event: <b>[event]</b>"
-		dat += "<p><A href='?src=\ref[src];reset=1'>Back</A>"
-		user << browse(dat, "window=keycard_auth;size=500x250")
-	return
-
-
-/obj/machinery/keycard_auth/Topic(href, href_list)
-	if(..())
-		return
-	if(busy)
-		usr << "This device is busy."
-		return
-	if(href_list["triggerevent"])
-		event = href_list["triggerevent"]
-		screen = 2
-	if(href_list["reset"])
-		reset()
-
-	updateUsrDialog()
-	return
-
-/obj/machinery/keycard_auth/proc/reset()
-	active = 0
+/obj/machinery/keycard_auth/proc/eventSent()
+	triggerer = null
 	event = ""
-	screen = 1
-	confirmed = 0
-	event_source = null
-	icon_state = "auth_off"
-	event_triggered_by = null
-	event_confirmed_by = null
+	waiting = 0
 
-/obj/machinery/keycard_auth/proc/broadcast_request()
+/obj/machinery/keycard_auth/proc/triggerEvent(source)
 	icon_state = "auth_on"
-	for(var/obj/machinery/keycard_auth/KA in machines)
-		if(KA == src) continue
-		KA.reset()
-		spawn()
-			KA.receive_request(src)
-
-	sleep(confirm_delay)
-	if(confirmed)
-		confirmed = 0
-		trigger_event(event)
-		log_game("[key_name(event_triggered_by)] triggered and [key_name(event_confirmed_by)] confirmed event [event]")
-		message_admins("[key_name(event_triggered_by)] triggered and [key_name(event_confirmed_by)] confirmed event [event]")
-	reset()
-
-/obj/machinery/keycard_auth/proc/receive_request(obj/machinery/keycard_auth/source)
-	if(stat & (BROKEN|NOPOWER))
-		return
 	event_source = source
-	busy = 1
-	active = 1
-	icon_state = "auth_on"
+	addtimer(src, "eventTriggered", 20)
 
-	sleep(confirm_delay)
-
-	event_source = null
+/obj/machinery/keycard_auth/proc/eventTriggered()
 	icon_state = "auth_off"
-	active = 0
-	busy = 0
+	event_source = null
 
-/obj/machinery/keycard_auth/proc/trigger_event()
+/obj/machinery/keycard_auth/proc/trigger_event(confirmer)
+	log_game("[key_name(triggerer)] triggered and [key_name(confirmer)] confirmed event [event]")
+	message_admins("[key_name(triggerer)] triggered and [key_name(confirmer)] confirmed event [event]")
 	switch(event)
-		if("Red alert")
+		if("Red Alert")
 			set_security_level(SEC_LEVEL_RED)
 			feedback_inc("alert_keycard_auth_red",1)
 		if("Emergency Maintenance Access")
 			make_maint_all_access()
 			feedback_inc("alert_keycard_auth_maint",1)
-
 
 
 /var/emergency_access = 0
@@ -164,4 +118,3 @@
 			D.update_icon(0)
 	minor_announce("Access restrictions in maintenance areas have been restored.", "Attention! Station-wide emergency rescinded:")
 	emergency_access = 0
-

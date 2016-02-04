@@ -39,6 +39,23 @@
 	spawn(duration)
 		qdel(src)
 
+/obj/effect/overlay/temp/blob
+	name = "blob"
+	icon_state = "blob_attack"
+	alpha = 140
+	randomdir = 0
+	duration = 6
+
+/obj/effect/overlay/temp/guardian
+	randomdir = 0
+
+/obj/effect/overlay/temp/guardian/phase
+	duration = 5
+	icon_state = "phasein"
+
+/obj/effect/overlay/temp/guardian/phase/out
+	icon_state = "phaseout"
+
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10
@@ -50,7 +67,7 @@
 /obj/effect/overlay/temp/cult/turf
 	name = "unholy glow"
 	icon_state = "wallglow"
-	layer = 2.01
+	layer = TURF_LAYER + 0.07
 
 /obj/effect/overlay/temp/cult/turf/floor
 	icon_state = "floorglow"

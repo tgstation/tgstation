@@ -16,7 +16,7 @@
 				continue
 			turfs.Add(T)
 
-	var/turf/T = pick_n_take(turfs)
+	var/turf/T = safepick(turfs)
 	if(!T)
 		src << "Nowhere to jump to!"
 		return
@@ -143,7 +143,10 @@
 		return
 	var/area/A = input(usr, "Pick an area.", "Pick an area") in sortedAreas|null
 	if(A && istype(A))
-		M.forceMove(pick(get_area_turfs(A)))
+		if(M.forceMove(safepick(get_area_turfs(A))))
+
+			log_admin("[key_name(usr)] teleported [key_name(M)] to [A]")
+			message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]")
+		else
+			src << "Failed to move mob to a valid location."
 		feedback_add_details("admin_verb","SMOB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		log_admin("[key_name(usr)] teleported [key_name(M)] to [A]")
-		message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]")

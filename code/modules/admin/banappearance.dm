@@ -81,7 +81,8 @@ DEBUG
 		log_admin("Updating appearancefile!")
 		// Updates bans.. Or fixes them. Either way.
 		for(var/T in appearance_keylist)
-			if(!T)	continue
+			if(!T)
+				continue
 		appearanceban_runonce++	//don't run this update again
 
 

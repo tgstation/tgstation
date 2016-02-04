@@ -8,6 +8,7 @@
 	density = 1
 	blocks_air = 1
 	explosion_block = 1
+	layer = TURF_LAYER + 0.05
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
@@ -138,7 +139,8 @@
 		return
 
 	//get the user's location
-	if( !istype(user.loc, /turf) )	return	//can't do this stuff whilst inside objects and such
+	if( !istype(user.loc, /turf) )
+		return	//can't do this stuff whilst inside objects and such
 
 	add_fingerprint(user)
 
@@ -232,11 +234,13 @@
 		F.icon_state = "wall_thermite"
 		F.add_hiddenprint(user)
 		spawn(max(100,300-thermite))
-			if(O)	qdel(O)
+			if(O)
+				qdel(O)
 	else
 		thermite = 0
 		spawn(50)
-			if(O)	qdel(O)
+			if(O)
+				qdel(O)
 	return
 
 /turf/simulated/wall/singularity_pull(S, current_size)

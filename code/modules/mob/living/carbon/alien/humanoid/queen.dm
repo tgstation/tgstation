@@ -5,8 +5,9 @@
 	ventcrawler = 0 //pull over that ass too fat
 	unique_name = 0
 	pixel_x = -16
+	bubble_icon = "alienroyal"
 	mob_size = MOB_SIZE_LARGE
-	layer = 6
+	layer = MOB_LAYER + 0.5 //above most mobs, but below speechbubbles
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 
@@ -26,8 +27,10 @@
 /mob/living/carbon/alien/humanoid/royal/queen/New()
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in living_mob_list)
-		if(Q == src)		continue
-		if(Q.stat == DEAD)	continue
+		if(Q == src)
+			continue
+		if(Q.stat == DEAD)
+			continue
 		if(Q.client)
 			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
 			break

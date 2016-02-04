@@ -52,6 +52,8 @@
 
 	var/list/say_log = list() //a log of what we've said, plain text, no spans or junk, essentially just each individual "message"
 
+	var/bubble_icon = "default" //what icon the mob uses for speechbubbles
+
 	var/last_bumped = 0
 	var/unique_name = 0 //if a mob's name should be appended with an id when created e.g. Mob (666)
 

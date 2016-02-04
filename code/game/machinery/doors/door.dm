@@ -75,9 +75,10 @@
 /obj/machinery/door/CanAtmosPass()
 	return !density
 
-//used in the AStar algorithm to determinate if the turf the door is on is passable
-/obj/machinery/door/proc/CanAStarPass(var/obj/item/weapon/card/id/ID)
-	return !density
+/obj/machinery/door/proc/CheckForMobs()
+	if(locate(/mob/living) in get_turf(src))
+		sleep(1)
+		open()
 
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)
@@ -114,9 +115,11 @@
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
-	if(isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
+	if(isrobot(user))
+		return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	src.add_fingerprint(user)
-	if(operating || emagged)	return
+	if(operating || emagged)
+		return
 	if(!Adjacent(user))
 		user = null
 	if(!src.requiresID())
@@ -221,6 +224,7 @@
 	update_icon()
 	if(visible && !glass)
 		SetOpacity(1)
+	CheckForMobs()
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()

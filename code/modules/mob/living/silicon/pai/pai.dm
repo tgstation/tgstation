@@ -152,6 +152,8 @@
 /mob/living/silicon/pai/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
 	return
 
+/mob/living/silicon/pai/canUseTopic(atom/movable/M)
+	return 1
 /*
 // Debug command - Maybe should be added to admin verbs later
 /mob/verb/makePAI(var/turf/t in view())

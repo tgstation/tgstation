@@ -92,13 +92,14 @@
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap."
 
 	equip_antag(M)
-	var/mob/living/carbon/human/H = usr
 	var/wizard_name_first = pick(wizard_first)
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
-	var/datum/objective/default/protect/new_objective = add_objective(M.mind, /datum/objective/default/protect)
-	new_objective.target = H.mind
-	new_objective.explanation_text = "Protect [H.real_name], the wizard."
+	var/datum/objective/protect/new_objective = new /datum/objective/protect
+	new_objective.owner = M:mind
+	new_objective:target = usr:mind
+	new_objective.explanation_text = "Protect [usr.real_name], the wizard."
+	M.mind.objectives += new_objective
 	ticker.mode.apprentices += M.mind
 	M.mind.special_role = "apprentice"
 	ticker.mode.update_wiz_icons_added(M.mind)
@@ -120,12 +121,6 @@
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(target), slot_back)
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/box(target), slot_in_backpack)
 	target.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll/apprentice(target), slot_r_store)
-
-
-
-
-
-
 ///////////BORGS AND OPERATIVES
 
 
@@ -175,13 +170,14 @@
 	if(nuke)
 		new_op_code = nuke.r_code
 	M.mind.make_Nuke(T, new_op_code, 0, FALSE)
-
-
+	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
+	M.mind.name = newname
+	M.real_name = newname
+	M.name = newname
 
 
 
 //////SYNDICATE BORG
-
 /obj/item/weapon/antag_spawner/nuke_ops/borg_tele
 	name = "syndicate cyborg teleporter"
 	desc = "A single-use teleporter designed to quickly reinforce operatives in the field.."
@@ -210,13 +206,7 @@
 
 
 
-
-
-
-
-
 ///////////SLAUGHTER DEMON
-
 
 /obj/item/weapon/antag_spawner/slaughter_demon //Warning edgiest item in the game
 	name = "vial of blood"
@@ -251,9 +241,11 @@
 	S.mind.assigned_role = "Slaughter Demon"
 	S.mind.special_role = "Slaughter Demon"
 	ticker.mode.traitors += S.mind
-	var/datum/objective/default/assassinate/new_objective = add_objective(S.mind, /datum/objective/default/assassinate)
+	var/datum/objective/assassinate/new_objective = new /datum/objective/assassinate
+	new_objective.owner = S.mind
 	new_objective.target = usr.mind
 	new_objective.explanation_text = "Kill [usr.real_name], the one who summoned you."
+	S.mind.objectives += new_objective
 	var/datum/objective/new_objective2 = new /datum/objective
 	new_objective2.owner = S.mind
 	new_objective2.explanation_text = "Kill everyone else while you're at it."

@@ -108,8 +108,8 @@
 			|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
-
-			occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
+			if(!occupant.suiciding && !(occupant.disabilities & NOCLONE))
+				occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
 
 		var/obj/machinery/computer/scan_consolenew/console
 		for(dir in list(NORTH,EAST,SOUTH,WEST))

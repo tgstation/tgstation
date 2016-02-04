@@ -95,9 +95,12 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 
 /obj/machinery/gateway/centerstation/proc/toggleon(mob/user)
-	if(!ready)			return
-	if(linked.len != 8)	return
-	if(!powered())		return
+	if(!ready)
+		return
+	if(linked.len != 8)
+		return
+	if(!powered())
+		return
 	if(!awaygate)
 		user << "<span class='notice'>Error: No destination found.</span>"
 		return
@@ -132,15 +135,15 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 //okay, here's the good teleporting stuff
 /obj/machinery/gateway/centerstation/Bumped(atom/movable/AM)
-	if(!ready)		
+	if(!ready)
 		return
-	if(!active)		
+	if(!active)
 		return
-	if(!awaygate || qdeleted(awaygate))	
+	if(!awaygate || qdeleted(awaygate))
 		return
 
 	if(awaygate.calibrated)
-		AM.loc = get_step(awaygate.loc, SOUTH)
+		AM.forceMove(get_step(awaygate.loc, SOUTH))
 		AM.dir = SOUTH
 		if (ismob(AM))
 			var/mob/M = AM
@@ -150,7 +153,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	else
 		var/obj/effect/landmark/dest = pick(awaydestinations)
 		if(dest)
-			AM.loc = dest.loc
+			AM.forceMove(get_turf(dest))
 			AM.dir = SOUTH
 			use_power(5000)
 		return
@@ -208,8 +211,10 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 
 /obj/machinery/gateway/centeraway/proc/toggleon(mob/user)
-	if(!ready)			return
-	if(linked.len != 8)	return
+	if(!ready)
+		return
+	if(linked.len != 8)
+		return
 	if(!stationgate)
 		user << "<span class='notice'>Error: No destination found.</span>"
 		return
@@ -240,18 +245,18 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 
 /obj/machinery/gateway/centeraway/Bumped(atom/movable/AM)
-	if(!ready)	
+	if(!ready)
 		return
-	if(!active)	
+	if(!active)
 		return
-	if(!stationgate || qdeleted(stationgate))	
+	if(!stationgate || qdeleted(stationgate))
 		return
 	if(istype(AM, /mob/living/carbon))
 		for(var/obj/item/weapon/implant/exile/E in AM)//Checking that there is an exile implant in the contents
 			if(E.imp_in == AM)//Checking that it's actually implanted vs just in their pocket
 				AM << "\black The station gate has detected your exile implant and is blocking your entry."
 				return
-	AM.loc = get_step(stationgate.loc, SOUTH)
+	AM.forceMove(get_step(stationgate.loc, SOUTH))
 	AM.dir = SOUTH
 	if (ismob(AM))
 		var/mob/M = AM

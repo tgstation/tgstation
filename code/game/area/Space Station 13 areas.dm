@@ -67,8 +67,8 @@ var/list/teleportlocs = list()
 	for(var/area/AR in world)
 		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station)) continue
 		if(teleportlocs.Find(AR.name)) continue
-		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == ZLEVEL_STATION)
+		var/turf/picked = safepick(get_area_turfs(AR.type))
+		if (picked && (picked.z == ZLEVEL_STATION))
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 
@@ -740,7 +740,7 @@ var/list/teleportlocs = list()
 	music = 'sound/ambience/signal.ogg'
 
 /area/medical/patients_rooms
-	name = "Patient's Rooms"
+	name = "Patients' Rooms"
 	icon_state = "patients"
 
 /area/medical/cmo
@@ -835,20 +835,20 @@ var/list/teleportlocs = list()
 	icon_state = "armory"
 
 /*
-	New()
-		..()
+/area/security/transfer/New()
+	..()
 
-		spawn(10) //let objects set up first
-			for(var/turf/turfToGrayscale in src)
-				if(turfToGrayscale.icon)
-					var/icon/newIcon = icon(turfToGrayscale.icon)
+	spawn(10) //let objects set up first
+		for(var/turf/turfToGrayscale in src)
+			if(turfToGrayscale.icon)
+				var/icon/newIcon = icon(turfToGrayscale.icon)
+				newIcon.GrayScale()
+				turfToGrayscale.icon = newIcon
+			for(var/obj/objectToGrayscale in turfToGrayscale) //1 level deep, means tables, apcs, locker, etc, but not locker contents
+				if(objectToGrayscale.icon)
+					var/icon/newIcon = icon(objectToGrayscale.icon)
 					newIcon.GrayScale()
-					turfToGrayscale.icon = newIcon
-				for(var/obj/objectToGrayscale in turfToGrayscale) //1 level deep, means tables, apcs, locker, etc, but not locker contents
-					if(objectToGrayscale.icon)
-						var/icon/newIcon = icon(objectToGrayscale.icon)
-						newIcon.GrayScale()
-						objectToGrayscale.icon = newIcon
+					objectToGrayscale.icon = newIcon
 */
 
 /area/security/nuke_storage
@@ -1142,7 +1142,7 @@ var/list/teleportlocs = list()
 	icon_state = "yellow"
 
 /area/construction/quarters
-	name = "Engineer's Quarters"
+	name = "Engineers' Quarters"
 	icon_state = "yellow"
 
 /area/construction/qmaint

@@ -131,14 +131,14 @@
 	build_path = /obj/item/weapon/circuitboard/atmos_alert
 	category = list("Computer Boards")
 
-/datum/design/air_management
+/datum/design/atmos_control
 	name = "Computer Design (Atmospheric Monitor)"
 	desc = "Allows for the construction of circuit boards used to build an Atmospheric Monitor."
-	id = "air_management"
+	id = "atmos_control"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/air_management
+	build_path = /obj/item/weapon/circuitboard/atmos_control
 	category = list("Computer Boards")
 
 /datum/design/robocontrol

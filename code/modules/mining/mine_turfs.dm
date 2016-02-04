@@ -16,6 +16,7 @@ var/global/list/rockTurfEdgeCache
 	opacity = 1
 	density = 1
 	blocks_air = 1
+	layer = TURF_LAYER + 0.05
 	temperature = TCMB
 	var/environment_type = "asteroid"
 	var/turf/simulated/floor/plating/asteroid/turf_type = /turf/simulated/floor/plating/asteroid //For basalt vs normal asteroid
@@ -89,7 +90,7 @@ var/global/list/rockTurfEdgeCache
 		icon_state = "rock"
 	return
 
-/turf/simulated/mineral/proc/Spread(turf/T)
+/turf/simulated/mineral/Spread(turf/T)
 	new src.type(T)
 
 /turf/simulated/mineral/random
@@ -683,7 +684,7 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/chasm/proc/drop(atom/movable/AM)
 	visible_message("[AM] falls into [src]!")
-	AM.Move(locate(drop_x, drop_y, drop_z))
+	AM.forceMove(locate(drop_x, drop_y, drop_z))
 	AM.visible_message("[AM] falls from above!")
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM
