@@ -65,6 +65,14 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 
+/datum/species/lizard/spec_life(mob/living/carbon/human/H)
+	if(!(mutations_list[COLDRES] in H.dna.mutations))
+		switch(H.bodytemperature)
+			if(151 to 200)
+				H.drowsyness += 1
+			if(-INFINITY to 150)
+				H.sleeping += 3
+
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_lizard_name(gender)
