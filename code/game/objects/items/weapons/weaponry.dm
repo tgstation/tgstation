@@ -11,6 +11,7 @@
 #define WHIP "whip"
 #define FEDORA "athiests fedora"
 #define ARMBLADE "dark blessing"
+#define CARP "carp-sie plushie"
 
 
 /obj/item/weapon/banhammer
@@ -55,10 +56,11 @@
 /obj/item/weapon/nullrod/attack_self(mob/user)
 	if(reskinned)
 		return
-	reskin_holy_weapon(user)
+	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+		reskin_holy_weapon(user)
 
 /obj/item/weapon/nullrod/proc/reskin_holy_weapon(mob/M)
-	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in list(NULLROD, GODHAND, REDSTAFF, BLUESTAFF, CLAYMORE, DARKBLADE, SORD, SCYTHE, CHAINSAW, CLOWNDAGGER, WHIP)
+	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in list(NULLROD, GODHAND, REDSTAFF, BLUESTAFF, CLAYMORE, DARKBLADE, SORD, SCYTHE, CHAINSAW, CLOWNDAGGER, WHIP, FEDORA, ARMBLADE, CARP)
 
 	if(src && choice && !M.stat && in_range(M,src) && !M.restrained() && M.canmove && !reskinned)
 		switch(choice)
@@ -68,13 +70,13 @@
 				icon_state = "disintegrate"
 				item_state = "disintegrate"
 				name = "god hand"
-				desc = "This hand of yours glows with an aweseome power!"
+				desc = "This hand of yours glows with an awesome power!"
 				flags = ABSTRACT | NODROP
 				w_class = 5
 				hitsound = 'sound/weapons/sear.ogg'
 				force = 20
 				damtype = BURN
-				attack_verb = list("punched", "cross counterd", "pummeled")
+				attack_verb = list("punched", "cross countered", "pummeled")
 			if(REDSTAFF)
 				icon_state = "godstaff-red"
 				item_state = "godstaff-red"
@@ -139,7 +141,6 @@
 				sharpness = IS_SHARP
 				attack_verb = list("chopped", "sliced", "cut", "reaped")
 				hitsound = 'sound/weapons/bladeslice.ogg'
-				name = "mounted chainsaw"
 			if(CHAINSAW)
 				name = "chainsaw hand"
 				desc = "Good? Bad? You're the guy with the chainsaw hand."
@@ -169,7 +170,7 @@
 				attack_verb = list("whipped", "lashed")
 				hitsound = 'sound/weapons/slash.ogg' //no whip sounds exist
 			if(FEDORA)
-				name = "athiests fedora"
+				name = "athiest's fedora"
 				desc = "The brim of the hat is as sharp as your wit. Throwing it at someone would hurt almost as much as disproving the existence of God."
 				icon_state = "fedora"
 				item_state = "fedora"
@@ -189,6 +190,14 @@
 				w_class = 5.0
 				force = 20
 				sharpness = IS_SHARP
+			if(CARP)
+				name = "carp-sie plushie"
+				desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp."
+				icon = 'icons/obj/toy.dmi'
+				icon_state = "carpplushie"
+				item_state = "carp_plushie"
+				attack_verb = list("bitten", "eaten", "fin slapped")
+				hitsound = 'sound/weapons/bite.ogg'
 
 		weapon_type = choice
 		feedback_set_details("chaplain_weapon","[choice]")
@@ -481,3 +490,4 @@
 #undef WHIP
 #undef FEDORA
 #undef ARMBLADE
+#undef CARP
