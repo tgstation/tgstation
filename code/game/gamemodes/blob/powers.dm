@@ -86,7 +86,7 @@
 	if(B.health < B.maxhealth*0.8) //if it's at less than 80% of its health, you can't blobbernaut it
 		src << "<span class='warning'>This factory blob is too damaged to produce a blobbernaut.</span>"
 		return
-	if(!can_buy(30))
+	if(!can_buy(40))
 		return
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
 	B.take_damage(B.maxhealth*0.8, CLONE, null, 0) //take a bunch of damage, so you can't produce tons of blobbernauts from a single factory
