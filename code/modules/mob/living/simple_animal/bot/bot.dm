@@ -18,6 +18,8 @@
 	speak_emote = list("states")
 	bubble_icon = "machine"
 
+	faction = list("neutral, silicon")
+
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
 	var/list/users = list() //for dialog updates
@@ -218,7 +220,7 @@
 /mob/living/simple_animal/bot/interact(mob/user)
 	show_controls(user)
 
-/mob/living/simple_animal/bot/attackby(obj/item/weapon/W, mob/user, params)
+/mob/living/simple_animal/bot/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(!locked)
 			open = !open
@@ -249,6 +251,7 @@
 					paicard = card
 					user.visible_message("[user] inserts [W] into [src]!","<span class='notice'>You insert [W] into [src].</span>")
 					paicard.pai.mind.transfer_to(src)
+					bot.faction = user.faction 
 					src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
 					bot_name = name
 					name = paicard.pai.name
@@ -857,6 +860,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			paicard.pai << "<span class='notice'>You feel your control fade as [paicard] ejects from [bot_name].</span>"
 		paicard = null
 		name = bot_name
+		bot.faction = list("silicon, neutral")
 
 /mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
 	if(bot_core.allowed(user) && paicard)
@@ -881,3 +885,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 		..()
 	if(paicard && (!client || stat == DEAD))
 		ejectpai(0)
+
+/mob/living/simple_animal/bot/sentience_act()
+	faction -= "silicon"
