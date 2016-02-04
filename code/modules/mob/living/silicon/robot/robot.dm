@@ -1432,6 +1432,8 @@
 	set category = "IC"
 	set src = usr
 
+	if(attack_delayer.blocked()) return
+
 	if(stat == DEAD) return
 	var/obj/item/W = get_active_hand()
 	if (W)
