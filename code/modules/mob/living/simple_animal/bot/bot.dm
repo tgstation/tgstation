@@ -860,7 +860,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			paicard.pai << "<span class='notice'>You feel your control fade as [paicard] ejects from [bot_name].</span>"
 		paicard = null
 		name = bot_name
-		bot.faction = initial(bot.faction)
+		bot.faction = list("silicon, neutral")
 
 /mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
 	if(bot_core.allowed(user) && paicard)
