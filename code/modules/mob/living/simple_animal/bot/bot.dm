@@ -18,6 +18,8 @@
 	speak_emote = list("states")
 	bubble_icon = "machine"
 
+	faction = list("neutral, silicon")
+
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
 	var/list/users = list() //for dialog updates
@@ -881,3 +883,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 		..()
 	if(paicard && (!client || stat == DEAD))
 		ejectpai(0)
+
+/mob/living/simple_animal/bot/sentience_act()
+	faction -= "silicon"
