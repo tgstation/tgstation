@@ -138,6 +138,62 @@ var/datum/global_hud/global_hud = new()
 /datum/hud/New(mob/owner)
 	mymob = owner
 
+/datum/hud/Destroy()
+	if(mymob.hud_used == src)
+		mymob.hud_used = null
+
+	qdel(hide_actions_toggle)
+	hide_actions_toggle = null
+
+	qdel(module_store_icon)
+	module_store_icon = null
+
+	if(static_inventory.len)
+		for(var/thing in static_inventory)
+			qdel(thing)
+		static_inventory.Cut()
+
+	r_hand_hud_object = null
+	l_hand_hud_object = null
+	action_intent = null
+	zone_select = null
+	pull_icon = null
+
+	if(toggleable_inventory.len)
+		for(var/thing in toggleable_inventory)
+			qdel(thing)
+		toggleable_inventory.Cut()
+
+	if(hotkeybuttons.len)
+		for(var/thing in hotkeybuttons)
+			qdel(thing)
+		hotkeybuttons.Cut()
+
+	throw_icon = null
+
+	if(infodisplay.len)
+		for(var/thing in infodisplay)
+			qdel(thing)
+		infodisplay.Cut()
+
+	healths = null
+	healthdoll = null
+	internals = null
+	lingchemdisplay = null
+	lingstingdisplay = null
+	blobpwrdisplay = null
+	alien_plasma_display = null
+	deity_power_display = null
+	deity_follower_display = null
+	nightvisionicon = null
+
+	if(screenoverlays.len)
+		for(var/thing in screenoverlays)
+			qdel(thing)
+		screenoverlays.Cut()
+	mymob = null
+	return ..()
+
 /mob/proc/create_mob_hud()
 	return
 
