@@ -187,6 +187,13 @@
 		update_mutcolor()
 		update_mutations_overlay()// no lizard with human hulk overlay please.
 
+/mob/proc/ensure_safe_species()
+	return
+
+/mob/living/carbon/ensure_safe_species(fallback = /datum/species/human)
+	if(has_dna() && dna.species.dangerous_existence)
+		set_species(fallback)
+
 
 /mob/proc/has_dna()
 	return

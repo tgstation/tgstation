@@ -10,7 +10,9 @@
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
 	enemy_minimum_age = 14
-	var/const/agents_possible = 5 //If we ever need more syndicate agents.
+	var/const/agent_factor = 10
+	var/const/min_agents = 4
+	var/const/max_agents = 10
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
@@ -23,33 +25,21 @@
 	world << "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!"
 
 /datum/game_mode/nuclear/pre_setup()
-	var/agent_number = 0
-	if(antag_candidates.len > agents_possible)
-		agent_number = agents_possible
-	else
-		agent_number = antag_candidates.len
+	var/agent_count = Clamp(num_players() / agent_factor, min_agents, max_agents)
 
-	var/n_players = num_players()
-	if(agent_number > n_players)
-		agent_number = n_players/2
+	var/agents_created = 0
+	while(agents_created < agent_count && antag_candidates.len)
+		syndicates += pick_n_take(antag_candidates)
+		agents_created++
 
-	while(agent_number > 0)
-		var/datum/mind/new_syndicate = pick(antag_candidates)
-		syndicates += new_syndicate
-		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
-		agent_number--
-
-	for(var/datum/mind/synd_mind in syndicates)
-		synd_mind.assigned_role = "Syndicate"
-		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
-		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
-		if(ishuman(synd_mind.current))//don't want operatives burning to death instantly.
-			var/mob/living/carbon/human/human = synd_mind.current
-			if(human.dna && human.dna.species.dangerous_existence)
-				human.set_species(/datum/species/human)
-
+	for(var/operative in syndicates)
+		var/datum/mind/M = operative
+		M.special_role = "Syndicate"
+		M.assigned_role = "Operative"
+		M.current.ensure_safe_species()
+		log_game("[M.key] has been selected as a nuclear operative.")
+	log_game("Created [syndicates.len] nuclear operatives.")
 	return 1
-
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -67,45 +57,41 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/game_mode/nuclear/post_setup()
-
-	var/list/turf/synd_spawn = list()
-
-	for(var/obj/effect/landmark/A in landmarks_list)
-		if(A.name == "Syndicate-Spawn")
-			synd_spawn += get_turf(A)
-			continue
-
-	var/nuke_code = "[rand(10000, 99999)]"
-	var/leader_selected = 0
-	var/agent_number = 1
-	var/spawnpos = 1
-
-	for(var/datum/mind/synd_mind in syndicates)
-		if(spawnpos > synd_spawn.len)
-			spawnpos = 2
-		synd_mind.current.loc = synd_spawn[spawnpos]
-
-		forge_syndicate_objectives(synd_mind)
-		greet_syndicate(synd_mind)
-		equip_syndicate(synd_mind.current)
-
-		if (nuke_code)
-			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
-
-		if(!leader_selected)
-			prepare_syndicate_leader(synd_mind, nuke_code)
-			leader_selected = 1
-		else
-			synd_mind.current.real_name = "[syndicate_name()] Operative #[agent_number]"
-			agent_number++
-		spawnpos++
-		update_synd_icons_added(synd_mind)
 	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
 	if(nuke)
-		nuke.r_code = nuke_code
-	return ..()
+		nuke.r_code = "[rand(10000, 99999)]"
 
+	var/list/turf/spawnpoints = list()
+	for(var/landmark in landmarks_list)
+		var/obj/effect/landmark/L = landmark
+		if(L.name == "Syndicate-Spawn")
+			spawnpoints += get_turf(L)
+
+	var/spawnpoint = 1
+	var/agent_number = 1
+	var/leader_selected = FALSE
+	for(var/operative in shuffle(syndicates))
+		if(spawnpoint > spawnpoints.len)
+			spawnpoint = 2
+
+		var/datum/mind/M = operative
+		M.current.forceMove(spawnpoints[spawnpoint++])
+
+		forge_syndicate_objectives(M)
+		greet_syndicate(M)
+		equip_syndicate(M)
+		update_synd_icons_added(M)
+
+		if(nuke)
+			M.store_memory("<B>Syndicate Nuclear Authorization Code</B>: [nuke.r_code]", 0, 0)
+			M.current << "The nuclear authorization code is: <B>[nuke.r_code]</B>"
+
+		if(!leader_selected)
+			prepare_syndicate_leader(M, nuke.r_code)
+			leader_selected = TRUE
+		else
+			M.current.real_name = "[syndicate_name()] Operative #[agent_number++]"
+	return ..()
 
 /datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
@@ -145,12 +131,10 @@
 	return
 
 
-
 /datum/game_mode/proc/forge_syndicate_objectives(datum/mind/syndicate)
 	var/datum/objective/nuclear/syndobj = new
 	syndobj.owner = syndicate
 	syndicate.objectives += syndobj
-
 
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1)
 	if (you_are)
