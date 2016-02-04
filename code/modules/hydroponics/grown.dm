@@ -1034,6 +1034,15 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 		reagents.add_reagent("oculine", 3+round(potency / 5, 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/carrot/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/hatchet))
+		user << "<span class='notice'>You sharpen the carrot into a shiv with [I].</span>"
+		var/obj/item/weapon/kitchen/knife/carrotshiv/Shiv = new /obj/item/weapon/kitchen/knife/carrotshiv
+		if(!remove_item_from_storage(user))
+			user.unEquip(src)
+		user.put_in_hands(Shiv)
+		qdel(src)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom
 	name = "mushroom"
 

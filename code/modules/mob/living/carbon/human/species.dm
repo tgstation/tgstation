@@ -117,6 +117,8 @@
 
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
 /datum/species/proc/qualifies_for_rank(rank, list/features)
+	if(rank in command_positions)
+		return 0
 	return 1
 
 /datum/species/proc/update_base_icon_state(mob/living/carbon/human/H)
@@ -884,9 +886,9 @@
 				. += H.shoes.slowdown
 			if(H.back)
 				. += H.back.slowdown
-			if(H.l_hand)
+			if(H.l_hand && (H.l_hand.flags & HANDSLOW))
 				. += H.l_hand.slowdown
-			if(H.r_hand)
+			if(H.r_hand && (H.r_hand.flags & HANDSLOW))
 				. += H.r_hand.slowdown
 
 			if((H.disabilities & FAT))

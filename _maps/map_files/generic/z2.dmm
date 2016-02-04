@@ -493,7 +493,7 @@
 "jy" = (/obj/item/clothing/head/collectable/paper,/turf/simulated/floor/plating/beach/coastline_b,/area/centcom/holding)
 "jz" = (/obj/item/weapon/paper{info = "GET DAT FUKKEN DISK"; name = "memo"},/obj/structure/noticeboard{pixel_x = -32; pixel_y = 0},/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
 "jA" = (/obj/structure/bed/stool,/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
-"jB" = (/mob/living/simple_animal/hostile/retaliate/bat{desc = "A Syndicate experiment in weaponized space carp technology. Its fangs seem to have been intentionally dulled down to prevent accidents."; faction = list("syndicate"); harm_intent_damage = 5; health = 50; icon_dead = "carp_dead"; icon_gib = "carp_gib"; icon_living = "carp"; icon_state = "carp"; name = "Cayenne"; real_name = "Cayenne"; response_disarm = "lightly brushes aside"; response_help = "pets"},/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
+"jB" = (/mob/living/simple_animal/hostile/carp/cayenne,/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
 "jC" = (/obj/machinery/door/airlock/centcom{name = "Restroom"; opacity = 1; req_access_txt = "150"},/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
 "jD" = (/turf/simulated/floor/plasteel/freezer{dir = 2},/area/syndicate_mothership)
 "jE" = (/obj/structure/mirror{pixel_x = 28},/turf/simulated/floor/plasteel/freezer{dir = 2},/area/syndicate_mothership)
