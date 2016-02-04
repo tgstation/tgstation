@@ -973,6 +973,7 @@ var/list/slot_equipment_priority = list( \
 	set category = "IC"
 	set src = usr
 
+	if(attack_delayer.blocked()) return
 
 	if(istype(loc,/obj/mecha)) return
 

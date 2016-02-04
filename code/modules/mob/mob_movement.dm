@@ -154,7 +154,7 @@
 
 /client/verb/attack_self()
 	set hidden = 1
-	if(mob && !mob.attack_delayer.blocked())
+	if(mob)
 		mob.mode()
 	return
 
