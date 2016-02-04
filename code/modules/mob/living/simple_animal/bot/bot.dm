@@ -220,7 +220,7 @@
 /mob/living/simple_animal/bot/interact(mob/user)
 	show_controls(user)
 
-/mob/living/simple_animal/bot/attackby(obj/item/weapon/W, mob/user, params)
+/mob/living/simple_animal/bot/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(!locked)
 			open = !open
