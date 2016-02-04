@@ -274,7 +274,7 @@
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		attack_threshold_check(damage,M.melee_damage_type)
+		apply_damage(damage,M.melee_damage_type)
 		return 1
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
@@ -330,7 +330,7 @@
 			M.do_attack_animation(src)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
-			attack_threshold_check(harm_intent_damage)
+			apply_damage(harm_intent_damage)
 			add_logs(M, src, "attacked")
 			updatehealth()
 			return 1
@@ -339,7 +339,7 @@
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
 			var/damage = rand(1, 3)
-			attack_threshold_check(damage)
+			apply_damage(damage)
 			return 1
 	if (M.a_intent == "help")
 		if (health > 0)
@@ -360,7 +360,7 @@
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 					"<span class='userdanger'>[M] has slashed at [src]!</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-			attack_threshold_check(damage)
+			apply_damage(damage)
 			add_logs(M, src, "attacked")
 		return 1
 
@@ -369,7 +369,7 @@
 		var/damage = rand(5, 10)
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-			attack_threshold_check(damage)
+			apply_damage(damage)
 		return 1
 
 /mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M)
@@ -377,15 +377,15 @@
 		var/damage = rand(15, 25)
 		if(M.is_adult)
 			damage = rand(20, 35)
-		attack_threshold_check(damage)
+		apply_damage(damage)
 		return 1
 
-/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE)
+/mob/living/simple_animal/apply_damage(damage = 0, damagetype = BRUTE)
 	if(damage <= force_threshold || !damage_coeff[damagetype])
 		visible_message("<span class='warning'>[src] looks unharmed.</span>")
+		return 0
 	else
-		adjustBruteLoss(damage)
-		updatehealth()
+		return ..()
 
 
 /mob/living/simple_animal/attackby(obj/item/O, mob/living/user, params) //Marker -Agouri
