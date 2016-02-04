@@ -663,6 +663,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			var/name = reject_bad_text(input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([amount_per_pill] units)") as null|text)
 			if(!name)
 				return
+
 			while(count--)
 				if((amount_per_pill == 0 || reagents.total_volume == 0) && !href_list["createempty"]) //Don't create empty pills unless "createempty" is 1!
 					break
@@ -684,18 +685,17 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 		else if (href_list["createbottle"] || href_list["createbottle_multiple"])
 			if(!condi)
-				var/name = reject_bad_text(input(usr,"Name:", "Name your bottle!", reagents.get_master_reagent_name()))
-				if(!name)
-					name = reagents.get_master_reagent_name()
 				var/count = 1
 				if(href_list["createbottle_multiple"])
 					count = isgoodnumber(input("Select the number of bottles to make.", 10, count) as num)
-				if(count > 4)
-					count = 4
-				if(count < 1)
-					count = 1
+				count = Clamp(count, 1, 4)
 				var/amount_per_bottle = reagents.total_volume > 0 ? reagents.total_volume/count : 0
 				amount_per_bottle = min(amount_per_bottle,max_bottle_size)
+
+				var/name = reject_bad_text(input(usr,"Name:", "Name your bottle!","[reagents.get_master_reagent_name()] ([amount_per_bottle] units)") as null|text)
+				if(!name)
+					return
+
 				while(count--)
 					var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc,max_bottle_size)
 					P.name = "[name] bottle"
@@ -775,6 +775,12 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		beaker = null
 		reagents.clear_reagents()
 		update_icon()
+
+/obj/machinery/chem_master/AltClick()
+	if(!usr.incapacitated() && Adjacent(usr) && beaker && !(stat & (NOPOWER|BROKEN) && usr.dexterity_check()))
+		detach()
+		return
+	return ..()
 
 /obj/machinery/chem_master/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
@@ -1477,13 +1483,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	return
 
 /obj/machinery/reagentgrinder/proc/detach()
-
-
-	if (usr.stat != 0)
-		return
 	if (!beaker)
 		return
-	beaker.loc = src.loc
+	beaker.forceMove(src.loc)
 	if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))
 		var/mob/living/silicon/robot/R = beaker:holder:loc
 		if(R.module_state_1 == beaker || R.module_state_2 == beaker || R.module_state_3 == beaker)
@@ -1493,9 +1495,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	beaker = null
 	update_icon()
 
+/obj/machinery/reagentgrinder/AltClick()
+	if(!usr.incapacitated() && Adjacent(usr) && beaker && !(stat & (NOPOWER|BROKEN) && usr.dexterity_check()))
+		detach()
+		return
+	return ..()
+
 /obj/machinery/reagentgrinder/proc/eject()
-
-
 	if (usr.stat != 0)
 		return
 	if (holdingitems && holdingitems.len == 0)
@@ -1885,7 +1891,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canmove || usr.isUnconscious() || usr.restrained() || !usr.dexterity_check()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
+	if(!usr.incapacitated() && Adjacent(usr) && usr.dexterity_check()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
 		return
 
 	if(!cans || !beaker)
@@ -1909,7 +1915,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return
 
 /obj/structure/centrifuge/AltClick()
-	if(Adjacent(usr))
+	if(Adjacent(usr)) //Further sanity in the verb itself
 		flush()
 		return
 	return ..()
