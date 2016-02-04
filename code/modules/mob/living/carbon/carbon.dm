@@ -722,6 +722,7 @@ var/const/GALOSHES_DONT_HELP = 4
 	eye_blurry = 0
 	ear_deaf = 0
 	ear_damage = 0
+	hallucination = 0
 	heal_overall_damage(1000, 1000)
 	ExtinguishMob()
 	fire_stacks = 0

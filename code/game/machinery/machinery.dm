@@ -175,12 +175,8 @@ Class Procs:
 			else
 				target = C
 	if(target && !target.buckled && !target.buckled_mob)
-		target.reset_perspective(src)
 		occupant = target
-		target.loc = src
-		target.stop_pulling()
-		if(target.pulledby)
-			target.pulledby.stop_pulling()
+		target.forceMove(src)
 	updateUsrDialog()
 	update_icon()
 

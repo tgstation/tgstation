@@ -264,7 +264,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustToxLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
 		return 0
-	toxloss = Clamp(toxloss + amount, 0, maxHealth*2
+	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 

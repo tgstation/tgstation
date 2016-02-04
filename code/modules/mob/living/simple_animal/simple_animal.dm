@@ -288,7 +288,7 @@
 	if(status_flags & GODMODE)
 		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth)
-	handle_regular_status_updates()
+	updatehealth()
 	return amount
 
 /mob/living/simple_animal/adjustBruteLoss(amount)

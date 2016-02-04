@@ -370,6 +370,11 @@
 	screen_loc = ui_internal
 	mouse_opacity = 0
 
+/obj/screen/healths/guardian
+	name = "summoner health"
+	screen_loc = ui_health
+	mouse_opacity = 0
+
 /obj/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll

@@ -3,6 +3,9 @@
 	..()
 	var/obj/screen/using
 
+	healths = new /obj/screen/healths/guardian()
+	infodisplay += healths
+
 	using = new /obj/screen/guardian/Manifest()
 	using.screen_loc = ui_rhand
 	static_inventory += using

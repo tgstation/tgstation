@@ -34,8 +34,8 @@
 
 /obj/screen/blob/Blobbernaut
 	icon_state = "ui_blobbernaut"
-	name = "Produce Blobbernaut (20)"
-	desc = "Produces a blobbernaut for 20 points."
+	name = "Produce Blobbernaut (30)"
+	desc = "Produces a blobbernaut for 30 points."
 
 /obj/screen/blob/Blobbernaut/Click()
 	if(isovermind(usr))
@@ -102,7 +102,7 @@
 	blobpwrdisplay.screen_loc = ui_health
 	blobpwrdisplay.mouse_opacity = 0
 	blobpwrdisplay.layer = 20
-	static_inventory += blobpwrdisplay
+	infodisplay += blobpwrdisplay
 
 	healths = new /obj/screen/healths/blob()
 	static_inventory += healths

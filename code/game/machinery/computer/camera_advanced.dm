@@ -143,8 +143,8 @@
 		C.reset_perspective(null)
 		if(remote_eye.visible_icon)
 			C.client.images -= remote_eye.user_image
-//		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
-//			C.client.images -= chunk.obscured
+		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
+			C.client.images -= chunk.obscured
 	C.remote_control = null
 	C.unset_machine()
 	src.Remove(C)

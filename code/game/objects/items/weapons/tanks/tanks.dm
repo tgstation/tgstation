@@ -169,14 +169,12 @@
 				return
 			if(user.internal == src)
 				user.internal = null
-				user.internals.icon_state = "internal0"
 				user << "<span class='notice'>You close the tank release valve.</span>"
 				user.update_internals_hud_icon(0)
 				. = TRUE
 			else
 				if(user.wear_mask && (user.wear_mask.flags & MASKINTERNALS))
 					user.internal = src
-					user.internals.icon_state = "internal1"
 					user << "<span class='notice'>You open \the [src] valve.</span>"
 					user.update_internals_hud_icon(1)
 					. = TRUE

@@ -113,7 +113,7 @@
 		if(summoner.stat == UNCONSCIOUS)
 			summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
 			summoner.adjustCloneLoss(amount*0.5) //dying hosts take 50% bonus damage as cloneloss
-		updatehudhealth()
+		update_health_hud()
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
