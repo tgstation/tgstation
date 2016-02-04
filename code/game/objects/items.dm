@@ -23,7 +23,6 @@
 	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
-	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 	var/_color = null
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
@@ -53,14 +52,16 @@
 var/global/list/thermal_protection_value_list = list()
 
 /obj/item/proc/return_thermal_protection()
-	if(thermal_protection_value_list["[body_parts_covered]"])
-		return thermal_protection_value_list["[body_parts_covered]"] * (1 - src.heat_conductivity)
+	var/true_body_parts_covered = body_parts_covered
+	true_body_parts_covered &= ~(EARS|IGNORE_INV|BEARD) // these don't affect thermal conductivity so no need for them here
+	if(thermal_protection_value_list["[true_body_parts_covered]"])
+		return thermal_protection_value_list["[true_body_parts_covered]"] * (1 - src.heat_conductivity)
 	else
 		var/total_protection = 0
 		for(var/body_part in THERMAL_BODY_PARTS)
-			if (body_part & src.body_parts_covered)
+			if (body_part & true_body_parts_covered)
 				total_protection += BODY_THERMAL_VALUE_LIST["[body_part]"]
-		thermal_protection_value_list["[body_parts_covered]"] = total_protection
+		thermal_protection_value_list["[true_body_parts_covered]"] = total_protection
 		return total_protection * (1 - src.heat_conductivity)
 
 /obj/item/Destroy()

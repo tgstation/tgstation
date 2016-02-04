@@ -358,8 +358,6 @@
 	desc = "A modernized pressure suit for Vox who've decided to work for the winning team."
 	icon_state = "vox-pressure-normal"
 	item_state = "vox-pressure-normal"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/weapon/pen,/obj/item/device/flashlight/pen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 10)
 	species_restricted = list("Vox")
@@ -369,7 +367,6 @@
 	icon_state = "vox-pressure-normal"
 	item_state = "vox-pressure-normal"
 	desc = "A very alien-looking helmet for Nanotrasen-hired Vox."
-	flags_inv = HIDEMASK
 	species_restricted = list("Vox")
 
 /obj/item/clothing/suit/space/vox/civ/old/engineer

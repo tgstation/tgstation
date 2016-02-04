@@ -6,6 +6,8 @@
 	var/storage_slots = 2 //The number of storage slots in this container.
 	var/obj/screen/storage/boxes = null
 	var/obj/screen/close/closer = null
+	body_parts_covered = FULL_TORSO|ARMS
+
 
 /obj/item/clothing/suit/storage/proc/return_inv()
 

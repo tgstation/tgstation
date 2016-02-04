@@ -129,7 +129,7 @@
 			msg += "<span class='warning'>[t_He] [t_has] \icon[gloves] [gloves.gender==PLURAL?"some":"a"] blood-stained [gloves.name] on [t_his] hands!</span>\n"
 		else
 			msg += "[t_He] [t_has] \icon[gloves] \a [gloves] on [t_his] hands.\n"
-	else if(blood_DNA && blood_DNA.len)
+	else if(blood_DNA && blood_DNA.len && !(slot_gloves in obscured))
 		msg += "<span class='warning'>[t_He] [t_has] blood-stained hands!</span>\n"
 
 	//handcuffed?

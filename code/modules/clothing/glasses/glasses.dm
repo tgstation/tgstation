@@ -33,13 +33,13 @@
 			eyeprot = 2
 			vision_flags |= SEE_TURFS
 			see_invisible |= SEE_INVISIBLE_MINIMUM
-			body_parts_covered |= EYES
+//			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
 			to_chat(C, "You turn [src] on.")
-		else //Mesons are like cyclops' visons. When off, your eyes are exposed
+		else
 			src.on = !src.on
 			eyeprot = 0
-			body_parts_covered &= ~EYES
+//			body_parts_covered &= ~EYES
 			vision_flags &= ~SEE_TURFS
 			see_invisible &= ~SEE_INVISIBLE_MINIMUM
 			icon_state = "[initial(icon_state)]off"

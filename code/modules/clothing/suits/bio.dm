@@ -6,8 +6,7 @@
 	permeability_coefficient = 0.01
 	flags = FPRINT
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = HEAD|EARS|EYES|MOUTH
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/suit/bio_suit
@@ -19,11 +18,10 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags = FPRINT
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 	slowdown = 1.0
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/weapon/pen,/obj/item/device/flashlight/pen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
-	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.9
 
 
@@ -84,7 +82,7 @@
 /obj/item/clothing/head/bio_hood/beekeeping
 	name = "beekeeping hood"
 	icon_state = "bio_beekeeping"
-	flags_inv = null
+
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
 
 

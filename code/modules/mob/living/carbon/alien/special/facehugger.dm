@@ -16,7 +16,6 @@ var/const/MAX_ACTIVE_TIME = 400
 	item_state = "facehugger"
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
 	flags = FPRINT  | MASKINTERNALS | PROXMOVE
-	body_parts_covered = HEAD|MOUTH|EYES
 	throw_range = 5
 	var/real = 1 //Facehuggers are real, toys are not.
 
