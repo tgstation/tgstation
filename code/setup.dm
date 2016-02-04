@@ -98,7 +98,7 @@ var/global/disable_vents     = 0
 
 // Heat Conductivity - 1 is fully conductive, 0 is fully insulative.
 #define ARMOUR_HEAT_CONDUCTIVITY		0.4	//For armour
-#define INS_ARMOUR_HEAT_CONDUCTIVITY 	0.2	//For heat insulated suits like hardsuits or jumpers.
+#define INS_ARMOUR_HEAT_CONDUCTIVITY 	0.01	//For heat insulated suits like hardsuits or jumpers.
 
 #define MASK_HEAT_CONDUCTIVITY			0.4	//For normal masks
 #define INS_MASK_HEAT_CONDUCTIVITY 		0.2	//For heat insulated masks such as a balaclavas, scarves & gas masks
@@ -110,7 +110,7 @@ var/global/disable_vents     = 0
 #define INS_SHOE_HEAT_CONDUCTIVITY		0.3	//For insulated shoes like jackboots or magboots.
 
 #define HELMET_HEAT_CONDUCTIVITY		0.4 //For helmets
-#define INS_HELMET_HEAT_CONDUCTIVITY	0.1 //For heat insulated helmets
+#define INS_HELMET_HEAT_CONDUCTIVITY	0.01 //For heat insulated helmets
 
 #define GLOVES_HEAT_CONDUCTIVITY		0.4	//For normal gloves.
 #define INS_GLOVES_HEAT_CONDUCTIVITY	0.2	//For some heat insulated gloves (black and yellow.)
@@ -375,7 +375,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
-var/global/list/THERMAL_BODY_PARTS = list(HEAD,UPPER_TORSO,LOWER_TORSO,LEG_LEFT,FOOT_LEFT,FOOT_RIGHT,ARM_LEFT,ARM_RIGHT,HAND_LEFT,HAND_RIGHT)
+var/global/list/THERMAL_BODY_PARTS = list(HEAD,EYES,MOUTH,UPPER_TORSO,LOWER_TORSO,LEG_LEFT,FOOT_LEFT,FOOT_RIGHT,ARM_LEFT,ARM_RIGHT,HAND_LEFT,HAND_RIGHT)
 var/global/list/BODY_THERMAL_VALUE_LIST=list("[HEAD]" = THERMAL_PROTECTION_HEAD,"[EYES]" = THERMAL_PROTECTION_EYES,"[MOUTH]" = THERMAL_PROTECTION_MOUTH, "[UPPER_TORSO]" = THERMAL_PROTECTION_UPPER_TORSO,"[LOWER_TORSO]" = THERMAL_PROTECTION_LOWER_TORSO,"[LEG_LEFT]" = THERMAL_PROTECTION_LEG_LEFT,"[LEG_RIGHT]" = THERMAL_PROTECTION_LEG_RIGHT,"[FOOT_LEFT]" = THERMAL_PROTECTION_FOOT_LEFT,"[FOOT_RIGHT]" = THERMAL_PROTECTION_FOOT_RIGHT,"[ARM_LEFT]" = THERMAL_PROTECTION_ARM_LEFT,"[ARM_RIGHT]" = THERMAL_PROTECTION_ARM_RIGHT,"[HAND_LEFT]" = THERMAL_PROTECTION_HAND_LEFT,"[HAND_RIGHT]" = THERMAL_PROTECTION_HAND_RIGHT)
 
 
