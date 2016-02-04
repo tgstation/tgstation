@@ -55,6 +55,8 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	say_mod = "hisses"
 	default_color = "00FF00"
 	roundstart = 1
+	heatmod = 0.9
+	coldmod = 1.2
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
 	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
