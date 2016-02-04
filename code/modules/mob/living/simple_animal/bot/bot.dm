@@ -251,6 +251,7 @@
 					paicard = card
 					user.visible_message("[user] inserts [W] into [src]!","<span class='notice'>You insert [W] into [src].</span>")
 					paicard.pai.mind.transfer_to(src)
+					bot.faction = user.faction 
 					src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
 					bot_name = name
 					name = paicard.pai.name
@@ -859,6 +860,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			paicard.pai << "<span class='notice'>You feel your control fade as [paicard] ejects from [bot_name].</span>"
 		paicard = null
 		name = bot_name
+		bot.faction = initial(bot.faction)
 
 /mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
 	if(bot_core.allowed(user) && paicard)
