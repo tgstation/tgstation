@@ -18,8 +18,6 @@
 		return 1	//Pure humans are always allowed in all roles.
 
 	//Mutants are not allowed in most roles.
-	if(rank in command_positions)
-		return 0
 	if(rank in security_positions) //This list does not include lawyers.
 		return 0
 	if(rank in science_positions)
@@ -30,7 +28,7 @@
 		return 0
 	if(rank == "Quartermaster") //QM is not contained in command_positions but we still want to bar mutants from it.
 		return 0
-	return 1
+	return ..()
 
 
 /datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
@@ -83,11 +81,6 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		randname += " [lastname]"
 
 	return randname
-
-/datum/species/lizard/qualifies_for_rank(rank, list/features)
-	if(rank in command_positions)
-		return 0
-	return 1
 
 /datum/species/lizard/handle_speech(message)
 
@@ -538,13 +531,11 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	return 0
 
 /datum/species/plasmaman/qualifies_for_rank(rank, list/features)
-	if(rank in command_positions)
-		return 0
 	if(rank in security_positions)
 		return 0
 	if(rank == "Clown" || rank == "Mime")//No funny bussiness
 		return 0
-	return 1
+	return ..()
 
 
 

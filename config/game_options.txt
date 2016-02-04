@@ -73,6 +73,9 @@ ALERT_DELTA Destruction of the station is imminent. All crew are instructed to o
 
 ### GAME MODES ###
 
+## Uncomment to not send a roundstart intercept report. Gamemodes may override this.
+#NO_INTERCEPT_REPORT
+
 ## Probablities for game modes chosen in 'secret' and 'random' modes.
 ## Default probablity is 1, increase to make that mode more likely to be picked.
 ## Set to 0 to disable that mode.
