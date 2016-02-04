@@ -24,7 +24,6 @@
 	  "can_close" = TRUE,
 	  "auto_format" = FALSE
 	)
-	var/screen = "home" // The screen this UI is currently viewing (defaults to home).
 	var/style = "nanotrasen" // The style to be used for this UI.
 	var/interface // The interface (template) to be used for this UI.
 	var/autoupdate = TRUE // Update the UI every MC tick.
@@ -145,16 +144,6 @@
  /**
   * public
   *
-  * Set the screen (page) for this UI.
-  *
-  * required screen string The screen to change to.
- **/
-/datum/tgui/proc/set_screen(screen)
-	src.screen = lowertext(screen)
-
- /**
-  * public
-  *
   * Set the style for this UI.
   *
   * required style string The new UI style.
@@ -224,7 +213,7 @@
 	var/list/config_data = list(
 			"title"     = title,
 			"status"    = status,
-			"screen"	= screen,
+			"screen"	= src_object.ui_screen,
 			"style"     = style,
 			"interface" = interface,
 			"fancy"     = user.client.prefs.tgui_fancy,
@@ -260,8 +249,8 @@
 	// Generate the JSON.
 	var/json = json_encode(json_data)
 	// Strip #255/improper.
-	json = replacetext(json, "\improper", "")
 	json = replacetext(json, "\proper", "")
+	json = replacetext(json, "\improper", "")
 	return json
 
  /**
@@ -284,7 +273,7 @@
 			initialized = TRUE
 		if("tgui:view")
 			if(params["screen"])
-				screen = params["screen"]
+				src_object.ui_screen = params["screen"]
 			SStgui.update_uis(src_object)
 		if("tgui:link")
 			user << link(params["url"])
