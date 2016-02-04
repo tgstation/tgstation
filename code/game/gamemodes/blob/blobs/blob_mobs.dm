@@ -148,8 +148,8 @@
 	icon_state = "blobbernaut"
 	icon_living = "blobbernaut"
 	icon_dead = "blobbernaut_dead"
-	health = 240
-	maxHealth = 240
+	health = 150
+	maxHealth = 150
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	attacktext = "slams"
