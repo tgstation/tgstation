@@ -91,6 +91,6 @@
 				to_chat(src, "<span class='warning'>Your hand won't respond properly, you drop what you're holding.</span>")
 				drop_item()
 		if(getBrainLoss() >= 50)
-			if(10 <= rn && rn <= 12) if(!lying)
+			if(10 <= rn && rn <= 12) if(canmove)
 				to_chat(src, "<span class='warning'>Your legs won't respond properly, you fall down.</span>")
-				resting = 1
+				emote("collapse")
