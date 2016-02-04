@@ -65,7 +65,8 @@
 
 /obj/screen/ai/announcement/Click()
 	var/mob/living/silicon/ai/AI = usr
-	AI.announcement()
+	var/obj/machinery/computer/communications/C = locate() in machines
+	C.make_announcement(AI, TRUE)
 
 /obj/screen/ai/call_shuttle
 	name = "Call Emergency Shuttle"
