@@ -88,7 +88,7 @@
 //The arg for get_clothing items is the list of equipment - this filters stuff like hands, pockets, suit_storage, etc
 //get_head_slots and get_body_slots do exactly what you think they do
 /mob/living/carbon/human/proc/check_hidden_head_flags(var/hidden_flags = 0)
-	return check_hidden_flags(get_clothing_items(get_head_slots()), hidden_flags,)
+	return check_hidden_flags(get_clothing_items(get_head_slots()), hidden_flags)
 
 /mob/living/carbon/human/proc/check_hidden_body_flags(var/hidden_flags = 0)
 	return check_hidden_flags(get_clothing_items(get_body_slots()), hidden_flags)

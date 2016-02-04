@@ -74,6 +74,10 @@
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
 			thermal_protection += THERMAL_PROTECTION_HEAD
+		if(thermal_protection_flags & EYES)
+			thermal_protection += THERMAL_PROTECTION_EYES
+		if(thermal_protection_flags & MOUTH)
+			thermal_protection += THERMAL_PROTECTION_MOUTH
 		if(thermal_protection_flags & UPPER_TORSO)
 			thermal_protection += THERMAL_PROTECTION_UPPER_TORSO
 		if(thermal_protection_flags & LOWER_TORSO)

@@ -328,7 +328,7 @@ var/global/list/damage_icon_parts = list()
 	overlays += O
 	obj_overlays[HAIR_LAYER] = O
 
-/mob/living/carbon/human/proc/update_beard(var/update_icons=1)
+	if(update_icons)   update_icons()
 
 /mob/living/carbon/human/update_mutations(var/update_icons=1)
 
@@ -742,7 +742,7 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_s_store(var/update_icons=1)
 	overlays -= obj_overlays[SUIT_STORE_LAYER]
-	if(s_store && !check_hidden_body_flags(HIDESUITSTORAGE))
+	if(s_store)
 		var/t_state = s_store.item_state
 		if(!t_state)	t_state = s_store.icon_state
 		var/obj/Overlays/O = obj_overlays[SUIT_STORE_LAYER]
@@ -1106,11 +1106,8 @@ var/global/list/damage_icon_parts = list()
 		update_inv_w_uniform()
 	if(is_slot_hidden(W.body_parts_covered,(HIDEEYES)))
 		update_inv_glasses()
-	if(is_slot_hidden(W.body_parts_covered, (HIDESUITSTORAGE)))
-		update_inv_s_store()
 	if(is_slot_hidden(W.body_parts_covered, (HIDEEARS)))
 		update_inv_ears()
-
 
 proc/is_slot_hidden(var/clothes, var/slot = -1,var/ignore_slot = 0)
 	if(!clothes)

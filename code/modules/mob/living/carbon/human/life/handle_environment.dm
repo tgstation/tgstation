@@ -85,6 +85,8 @@
 		return 0
 
 /mob/living/carbon/human/proc/get_thermal_loss(var/datum/gas_mixture/environment)
+	if(!environment)
+		environment = loc.return_air()
 	var/loc_temp = get_loc_temp(environment)
 	if(loc_temp < bodytemperature)
 		// We're going to try and just use exposed area(temperature difference)/cold divisor, and assume we're only conducting.
