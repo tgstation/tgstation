@@ -31,8 +31,9 @@
 	set category = "Malfunction"
 	set name = "Doomsday Device"
 
-	for(var/turf/simulated/floor/bluegrid/T in orange(5, src))
-		T.icon_state = "rcircuitanim" //Causes blue tiles near the AI to change to flashing red
+	for(var/N in nuke_tiles)
+		var/turf/T = N
+		T.icon_state = "rcircuitanim" //Causes blue tiles on the map the AI to change to flashing red
 
 	src << "<span class='notice'>Nuclear device armed.</span>"
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')

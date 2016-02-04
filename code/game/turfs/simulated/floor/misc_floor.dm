@@ -13,6 +13,14 @@
 	icon_state = "bcircuit"
 	floor_tile = /obj/item/stack/tile/plasteel
 
+/turf/simulated/floor/bluegrid/New()
+	..()
+	nuke_tiles += src
+
+/turf/simulated/floor/bluegrid/Destroy()
+	nuke_tiles -= src
+	return ..()
+
 /turf/simulated/floor/greengrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
