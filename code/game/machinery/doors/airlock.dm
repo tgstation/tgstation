@@ -1153,6 +1153,6 @@ var/list/airlock_overlays = list()
 	for(var/mob/living/silicon/ai/AI in living_mob_list)
 		if(!AI.client)
 			continue
-		AI << "<span class='info'>[user] is requesting you to open [src]<a href='?src=\ref[AI];remotedoor=\ref[src]'>(Open)</a></span>"
+		AI << "<span class='info'>[user.name] is requesting you to open [src]<a href='?src=\ref[AI];remotedoor=\ref[src]'>(Open)</a></span>"
 	request_cooldown = world.time + 100
 	user << "<span class='info'>Request sent.</span>"
