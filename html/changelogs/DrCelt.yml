@@ -1,11 +1,2 @@
 author: DrCelt
-changes: 
-  - rscadd: Merged flags_inv and body_parts_covered
-  - bugfix: Fixed clothing being contaminated undesirably
-  - bugfix: Fixes a bunch of unreported bugs due to the nature of the PR varying from the HoP jacket the riot suit and the stallhelm. If there is a bug where a sprite was overriding where it should not have this SHOULD fix that
-  - experimental: This SHOULD also prevent that type of bug ever happening again. Please bugreport if you notice any sprite errors
-  - rscadd: Adds is_slot_hidden proc
-  - tweak: Splits head thermal conductivity into three parts
-  - bugfix: Fixed a bug where agent gas masks would conceal identities when their mask should not have.
-  - bugfix: Fixed a bug where bloody hands were always visible on examine 
-  - tweak: You now lose heat to an environment if you have an exposed limb, no matter how wrapped up the other limbs are.
+changes: []
