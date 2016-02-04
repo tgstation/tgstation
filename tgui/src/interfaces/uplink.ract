@@ -1,5 +1,5 @@
 <script>
-  import { filter } from 'util/filter'
+  import { filterMulti } from 'util/filter'
   component.exports = {
     data: {
       filter: ''
@@ -17,7 +17,7 @@
       })
       this.observe('filter', (newkey, oldkey, keypath) => {
         const categories = this.findAll('.display:not(:first-child)')
-        filter(categories, this.get('filter').toLowerCase())
+        filterMulti(categories, this.get('filter').toLowerCase())
       }, { init: false })
     }
   }

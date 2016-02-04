@@ -1,5 +1,5 @@
 <script>
-  import { filter } from 'util/filter'
+  import { filterMulti } from 'util/filter'
   component.exports = {
     data: {
       filter: ''
@@ -7,7 +7,7 @@
     oninit () {
       this.observe('filter', (newkey, oldkey, keypath) => {
         const categories = this.findAll('.display:nth-child(n+4)')
-        filter(categories, this.get('filter').toLowerCase())
+        filterMulti(categories, this.get('filter').toLowerCase())
       }, { init: false })
     }
   }
@@ -56,6 +56,8 @@
           <ui-button icon='minus' action='remove' params='{"id": "{{id}}"}'/>
         </div>
       </ui-section>
+    {{else}}
+      <span>Nothing in Cart</span>
     {{/each}}
   </ui-display>
 {{/if}}
@@ -79,7 +81,9 @@
         </div>
       {{/if}}
     </ui-section>
-  {{/each}}
+    {{else}}
+      <span>No Requests</span>
+    {{/each}}
 </ui-display>
 {{#each data.supplies}}
   <ui-display title='{{name}}'>
