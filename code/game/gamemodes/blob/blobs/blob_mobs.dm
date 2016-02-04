@@ -21,6 +21,10 @@
 /mob/living/simple_animal/hostile/blob/blob_act()
 	return
 
+/mob/living/simple_animal/hostile/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	..()
+	adjustFireLoss(Clamp(0.01 * exposed_temperature, 1, 5))
+
 /mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target, height = 0)
 	if(istype(mover, /obj/effect/blob))
 		return 1
@@ -47,11 +51,6 @@
 	var/list/human_overlays = list()
 	var/is_zombie = 0
 	gold_core_spawnable = 1
-
-/mob/living/simple_animal/hostile/blob/blobspore/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	..()
-	adjustBruteLoss(Clamp(0.01 * exposed_temperature, 1, 5))
-
 
 /mob/living/simple_animal/hostile/blob/blobspore/New(loc, var/obj/effect/blob/factory/linked_node)
 	if(istype(linked_node))
@@ -151,27 +150,30 @@
 	icon_state = "blobbernaut"
 	icon_living = "blobbernaut"
 	icon_dead = "blobbernaut_dead"
-	health = 240
-	maxHealth = 240
+	health = 200
+	maxHealth = 200
+	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	attacktext = "slams"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	speak_emote = list("gurgles")
-	minbodytemp = 0
-	maxbodytemp = 360
 	force_threshold = 10
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
 
+/mob/living/simple_animal/hostile/blob/blobbernaut/New()
+	..()
+	verbs -= /mob/living/verb/pulled //no pulling people deep into the blob
+
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	if(isliving(target))
 		if(overmind)
 			var/mob/living/L = target
 			var/mob_protection = L.get_permeability_protection()
-			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 17.5, 0, mob_protection)//this will do between 7 and 17 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
+			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 20, 0, mob_protection)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 	if(target)
 		..()
 
