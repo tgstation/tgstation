@@ -236,7 +236,7 @@
 			var/obj/item/ammo_casing/AC = chambered
 			if(AC.fire(user, user))
 				playsound(user, fire_sound, 50, 1)
-				var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+				var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
 				var/limb_name = affecting.getDisplayName()
 				if(affecting.name == "head" || affecting.name == "eyes" || affecting.name == "mouth")
 					user.apply_damage(300, BRUTE, affecting)

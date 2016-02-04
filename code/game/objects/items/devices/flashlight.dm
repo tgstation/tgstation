@@ -46,7 +46,7 @@
 
 /obj/item/device/flashlight/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(on && user.zone_sel.selecting == "eyes")
+	if(on && user.zone_selected == "eyes")
 
 		if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
@@ -307,13 +307,13 @@ obj/item/device/flashlight/lamp/bananalamp
 		return 1
 
 /obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
+	if(on && user.zone_selected == "eyes") // call original attack proc only if aiming at the eyes
 		..()
 	return
 
 /obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity) return
-	if(istype(A, /obj/item/weapon/storage/) && A.loc == user) 
+	if(istype(A, /obj/item/weapon/storage/) && A.loc == user)
 		return
 	if (emp_cur_charges > 0)
 		emp_cur_charges -= 1

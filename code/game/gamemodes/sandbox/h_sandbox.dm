@@ -169,8 +169,7 @@ var/hsboxspawn = 1
 				P.back.layer = 20
 				P.update_inv_back()
 				P.internal = P.back
-				if(P.internals)
-					P.internals.icon_state = "internal1"
+				P.update_internals_hud_icon(1)
 
 			if("hsbscrubber") // This is beyond its normal capability but this is sandbox and you spawned one, I assume you need it
 				var/obj/hsb = new/obj/machinery/portable_atmospherics/scrubber{volume_rate=50*ONE_ATMOSPHERE;on=1}(usr.loc)

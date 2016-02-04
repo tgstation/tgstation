@@ -50,6 +50,7 @@
 	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
 	var/emagged = 0
 	var/list/icon/current = list() //the current hud icons
+	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	strip_delay = 20
 	put_on_delay = 25
 	burn_state = FIRE_PROOF
@@ -512,12 +513,6 @@ BLIND     // can't see anything
 	flash_protect ^= initial(flash_protect)
 	tint ^= initial(tint)
 
-	if(istype(src, /obj/item/clothing/head))			//makes the mob-overlays update //this is awful
-		usr.update_inv_head()
-	if(istype(src, /obj/item/clothing/glasses))
-		usr.update_inv_glasses()
-	if(istype(src, /obj/item/clothing/mask))
-		usr.update_inv_wear_mask()
 	if(istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
 		C.head_update(src, forced = 1)

@@ -92,6 +92,8 @@
 			AM.forceMove(src)
 	update_icon()
 
+/obj/structure/bodycontainer/get_vision_impairments(mob/user)
+	return global_hud.darkMask
 /*
  * Morgue
  */

@@ -231,7 +231,6 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	id = "slime"
 	default_color = "00FFFF"
 	darksight = 3
-	invis_sight = SEE_INVISIBLE_LEVEL_ONE
 	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE)
 	say_mod = "says"
 	eyes = "eyes"
@@ -443,7 +442,6 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	darksight = 3
 	say_mod = "gibbers"
 	sexes = 0
-	invis_sight = SEE_INVISIBLE_LEVEL_ONE
 	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE)
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
