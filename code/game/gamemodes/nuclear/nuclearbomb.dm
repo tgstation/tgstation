@@ -393,7 +393,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	if(loc == initial(loc))
 		for(var/N in nuke_tiles)
 			var/turf/T = N
-			T.icon_state = (timing ? "rcircuitanim" : "bcircuit")
+			T.icon_state = (timing ? "rcircuitanim" : initial(T.icon_state))
 
 /obj/machinery/nuclearbomb/selfdestruct/set_anchor()
 	return
