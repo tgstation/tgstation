@@ -77,7 +77,7 @@
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
 	flags = FPRINT
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 	item_state="cueball"
 
 /obj/item/clothing/head/that
@@ -101,7 +101,7 @@
 	icon_state = "cardborg_h"
 	item_state = "cardborg_h"
 	flags = FPRINT
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 	starting_materials = list(MAT_CARDBOARD = 3750)
 	w_type=RECYK_MISC
 
@@ -111,7 +111,7 @@
 	icon_state = "justicered"
 	item_state = "justicered"
 	flags = FPRINT
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
@@ -235,7 +235,7 @@
 	icon_state = "chickenhead"
 	item_state = "chickensuit"
 	flags = FPRINT
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/bearpelt
@@ -257,7 +257,7 @@
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
 	flags = FPRINT
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/batman

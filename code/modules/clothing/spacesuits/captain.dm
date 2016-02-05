@@ -27,4 +27,4 @@
 	slowdown = 1.5
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
 	siemens_coefficient = 0.7
-	heat_conductivity = INS_ARMOUR_HEAT_CONDUCTIVITY
+	heat_conductivity = SPACESUIT_HEAT_CONDUCTIVITY

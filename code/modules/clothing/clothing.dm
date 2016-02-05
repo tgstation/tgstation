@@ -249,9 +249,9 @@ BLIND     // can't see anything
 	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 	siemens_coefficient = 0.9
-	heat_conductivity = INS_HELMET_HEAT_CONDUCTIVITY
+	heat_conductivity = SPACESUIT_HEAT_CONDUCTIVITY
 	species_restricted = list("exclude","Diona","Muton")
 	eyeprot = 1
 	cold_breath_protection = 230
@@ -272,7 +272,7 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	siemens_coefficient = 0.9
 	species_restricted = list("exclude","Diona","Muton")
-	heat_conductivity = INS_ARMOUR_HEAT_CONDUCTIVITY
+	heat_conductivity = SPACESUIT_HEAT_CONDUCTIVITY
 
 //Under clothing
 /obj/item/clothing/under

@@ -64,7 +64,7 @@
 	icon_state = "bombsuit"
 	flags = FPRINT
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 	siemens_coefficient = 0
 	species_fit = list("Vox")
 
@@ -100,7 +100,7 @@
 	item_state = "advancedeod_helmet"
 	flags = FPRINT
 	armor = list(melee = 80, bullet = 80, laser = 40,energy = 20, bomb = 100, bio = 0, rad = 0)
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 	species_restricted = list("exclude","Vox")
 	siemens_coefficient = 0
 
