@@ -448,20 +448,23 @@ var/const/INJECT = 5 //injection
 		del_reagent(R.id)
 	return 0
 
-/datum/reagents/proc/reaction(atom/A, method=TOUCH, volume_modifier=1,show_message=1)
+/datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
 	if(isliving(A))
-		var/mob/living/L = A
 		var/touch_protection = 0
 		if(method == VAPOR)
+			var/mob/living/L = A
 			touch_protection = L.get_permeability_protection()
-		for(var/datum/reagent/R in reagent_list)
-			R.reaction_mob(L, method, R.volume*volume_modifier, show_message, touch_protection)
+		for(var/reagent in reagent_list)
+			var/datum/reagent/R = reagent
+			R.reaction_mob(A, method, R.volume * volume_modifier, show_message, touch_protection)
 	else if(isturf(A))
-		for(var/datum/reagent/R in reagent_list)
-			R.reaction_turf(A, R.volume*volume_modifier, show_message)
+		for(var/reagent in reagent_list)
+			var/datum/reagent/R = reagent
+			R.reaction_turf(A, R.volume * volume_modifier, show_message)
 	else if(isobj(A))
-		for(var/datum/reagent/R in reagent_list)
-			R.reaction_obj(A, R.volume*volume_modifier, show_message)
+		for(var/reagent in reagent_list)
+			var/datum/reagent/R = reagent
+			R.reaction_obj(A, R.volume * volume_modifier, show_message)
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
 	if(!isnum(amount) || !amount)
