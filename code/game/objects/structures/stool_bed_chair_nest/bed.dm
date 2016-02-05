@@ -112,7 +112,7 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
-	lockflags = DENSE_WHEN_LOCKING | DENSE_WHEN_LOCKED
+	lockflags = DENSE_WHEN_LOCKING | DENSE_WHEN_LOCKED | LOCKED_SHOULD_LIE
 
 /obj/item/roller
 	name = "roller bed"
