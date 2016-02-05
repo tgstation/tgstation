@@ -79,7 +79,7 @@
 	if(stat != 2)
 		var/reduce_nutrition_by = HUNGER_FACTOR
 		if(sleeping)
-			reduce_nutrition_by *= 0.1 //Reduce hunger factor by 90%
+			reduce_nutrition_by *= 0.75 //Reduce hunger factor by 25%
 		burn_calories(reduce_nutrition_by,1)
 
 	if(nutrition > 450)

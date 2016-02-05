@@ -111,7 +111,7 @@
 	desc = "Do you like hurting people?"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	icon_state = "richard"
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 
 /obj/item/clothing/head/helmet/megahelmet
 	name = "DRN-001 Helmet"
@@ -134,7 +134,7 @@
 	desc = "The product of twelve years of work by an eccentric and brilliant loner. A helmet belonging to the perfect man; an unbeatable machine."
 	icon_state = "breakhelmet"
 	flags = FPRINT
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 	item_state = "breakhelmet"
 	siemens_coefficient = 1
 
@@ -160,7 +160,7 @@
 	desc = "Helmet belonging to one of the many mass produced 'Joe' type robots."
 	icon_state = "joehelmet"
 	flags = FPRINT
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 	item_state = "joehelmet"
 	siemens_coefficient = 1
 
@@ -178,7 +178,7 @@
 	desc = "A classic metal helmet."
 	icon_state = "knight_green"
 	item_state = "knight_green"
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 	armor = list(melee = 20, bullet = 5, laser = 2,energy = 2, bomb = 2, bio = 2, rad = 0)
 	flags = FPRINT
 	siemens_coefficient = 1

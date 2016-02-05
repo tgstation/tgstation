@@ -26,7 +26,7 @@
 	icon_state = "capcap"
 	flags = FPRINT
 	body_parts_covered = HEAD
-	heat_conductivity = INS_HELMET_HEAT_CONDUCTIVITY
+	heat_conductivity = SPACESUIT_HEAT_CONDUCTIVITY
 	siemens_coefficient = 0.9
 
 //Chaplain

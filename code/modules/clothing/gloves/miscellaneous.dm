@@ -5,7 +5,8 @@
 	item_state = "captain"
 	siemens_coefficient = 0
 	_color = "captain"
-	heat_conductivity = INS_GLOVES_HEAT_CONDUCTIVITY
+	heat_conductivity = SPACESUIT_HEAT_CONDUCTIVITY
+	pressure_resistance = 200 * ONE_ATMOSPHERE
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_fit = list("Vox")
 
