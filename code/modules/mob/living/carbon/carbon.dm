@@ -169,9 +169,11 @@
 
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
-/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	var/damage = intensity - check_eye_prot()
 	if(..()) // we've been flashed
+		if(visual)
+			return
 		if(weakeyes)
 			Stun(2)
 		switch(damage)
@@ -202,7 +204,6 @@
 			else
 				src << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
 		return 1
-
 	else if(damage == 0) // just enough protection
 		if(prob(20))
 			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"

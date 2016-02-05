@@ -73,11 +73,6 @@ specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
 and the server should start up and be ready to join. It is also recommended that
 you set up the SQL backend (see below).
 
-###HOSTING ON LINUX
-We use BYGEX for some of our text replacement related code. Unfortunately, we
-only have a windows dll included right now. You can find a version known to compile on linux, along with some basic install instructions here
-https://github.com/optimumtact/byond-regex
-
 ##UPDATING
 
 To update an existing installation, first back up your /config and /data folders

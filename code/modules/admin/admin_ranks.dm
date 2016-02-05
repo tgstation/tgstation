@@ -177,7 +177,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				continue
 
 			//Split the line at every "="
-			var/list/List = text2list(line, "=")
+			var/list/List = splittext(line, "=")
 			if(!List.len)
 				continue
 

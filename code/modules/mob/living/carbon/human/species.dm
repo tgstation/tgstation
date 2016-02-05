@@ -668,78 +668,86 @@
 	return
 
 /datum/species/proc/handle_vision(mob/living/carbon/human/H)
-	if( H.stat == DEAD )
+	if(H.stat == DEAD)
 		H.sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		H.see_in_dark = 8
 		if(!H.druggy)
 			H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		return
+
+	if(!(SEE_TURFS & H.permanent_sight_flags))
+		H.sight &= ~SEE_TURFS
+	if(!(SEE_MOBS & H.permanent_sight_flags))
+		H.sight &= ~SEE_MOBS
+	if(!(SEE_OBJS & H.permanent_sight_flags))
+		H.sight &= ~SEE_OBJS
+
+	if(H.remote_view)
+		H.sight |= SEE_TURFS
+		H.sight |= SEE_MOBS
+		H.sight |= SEE_OBJS
+
+	H.see_in_dark = (H.sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : darksight
+	var/see_temp = H.see_invisible
+	H.see_invisible = invis_sight
+
+	if(H.glasses)
+		if(istype(H.glasses, /obj/item/clothing/glasses))
+			var/obj/item/clothing/glasses/G = H.glasses
+			H.sight |= G.vision_flags
+			H.see_in_dark = G.darkness_view
+			if(G.invis_override)
+				H.see_invisible = G.invis_override
+			else
+				H.see_invisible = min(G.invis_view, H.see_invisible)
+	if(H.druggy)	//Override for druggy
+		H.see_invisible = see_temp
+
+	if(H.see_override)	//Override all
+		H.see_invisible = H.see_override
+
+	//	This checks how much the mob's eyewear impairs their vision
+	if(H.tinttotal >= TINT_IMPAIR)
+		if(tinted_weldhelh)
+			H.overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
+		if(H.tinttotal >= TINT_BLIND)
+			H.eye_blind = max(H.eye_blind, 1)
 	else
-		if(!(SEE_TURFS & H.permanent_sight_flags))
-			H.sight &= ~SEE_TURFS
-		if(!(SEE_MOBS & H.permanent_sight_flags))
-			H.sight &= ~SEE_MOBS
-		if(!(SEE_OBJS & H.permanent_sight_flags))
-			H.sight &= ~SEE_OBJS
+		H.clear_fullscreen("tint")
 
-		if(H.remote_view)
-			H.sight |= SEE_TURFS
-			H.sight |= SEE_MOBS
-			H.sight |= SEE_OBJS
+	if(H.eye_stat > 30)
+		H.overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 2)
+	else if(H.eye_stat > 20)
+		H.overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
+	else
+		H.clear_fullscreen("impaired")
 
-		H.see_in_dark = (H.sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : darksight
-		var/see_temp = H.see_invisible
-		H.see_invisible = invis_sight
+	if(!H.client)//no client, no screen to update
+		return 1
 
-		if(H.glasses)
-			if(istype(H.glasses, /obj/item/clothing/glasses))
-				var/obj/item/clothing/glasses/G = H.glasses
-				H.sight |= G.vision_flags
-				H.see_in_dark = G.darkness_view
-				if(G.invis_override)
-					H.see_invisible = G.invis_override
-				else
-					H.see_invisible = min(G.invis_view, H.see_invisible)
-		if(H.druggy)	//Override for druggy
-			H.see_invisible = see_temp
+	if(H.eye_blind)
+		H.overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+		H.throw_alert("blind", /obj/screen/alert/blind)
+	else
+		H.clear_fullscreen("blind")
+		H.clear_alert("blind")
 
-		if(H.see_override)	//Override all
-			H.see_invisible = H.see_override
+	if(H.disabilities & NEARSIGHT && !istype(H.glasses, /obj/item/clothing/glasses/regular))
+		H.overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+	else
+		H.clear_fullscreen("nearsighted")
 
-		//	This checks how much the mob's eyewear impairs their vision
-		if(H.tinttotal >= TINT_IMPAIR)
-			if(tinted_weldhelh)
-				if(H.tinttotal >= TINT_BLIND)
-					H.eye_blind = max(H.eye_blind, 1)
-				if(H.client)
-					H.client.screen += global_hud.darkMask
+	if(H.eye_blurry)
+		H.overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+	else
+		H.clear_fullscreen("blurry")
 
-		if(H.blind)
-			if(H.eye_blind)
-				H.throw_alert("blind", /obj/screen/alert/blind)
-				H.blind.layer = 18
-			else
-				H.clear_alert("blind")
-				H.blind.layer = 0
-
-		if(!H.client)//no client, no screen to update
-			return 1
-
-		if( H.disabilities & NEARSIGHT && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
-			H.client.screen += global_hud.vimpaired
-		if(H.eye_blurry)
-			H.client.screen += global_hud.blurry
-		if(H.druggy)
-			H.client.screen += global_hud.druggy
-			H.throw_alert("high", /obj/screen/alert/high)
-		else
-			H.clear_alert("high")
-
-
-		if(H.eye_stat > 20)
-			if(H.eye_stat > 30)
-				H.client.screen += global_hud.darkMask
-			else
-				H.client.screen += global_hud.vimpaired
+	if(H.druggy)
+		H.overlay_fullscreen("high", /obj/screen/fullscreen/high)
+		H.throw_alert("high", /obj/screen/alert/high)
+	else
+		H.clear_fullscreen("high")
+		H.clear_alert("high")
 
 	return 1
 

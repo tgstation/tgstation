@@ -9,8 +9,6 @@
 		playsound(loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
 		visible_message("<span class='name'>[src]</span> lets out a waning guttural screech, green blood bubbling from its maw...")
 		update_canmove()
-		if(client)
-			blind.layer = 0
 		update_icons()
 		status_flags |=CANPUSH
 

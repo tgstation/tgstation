@@ -74,14 +74,12 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 
 	return randname
 
+var/regex/lizard_hiss = new("s+", "g")
+var/regex/lizard_hiSS = new("S+", "g")
 /datum/species/lizard/handle_speech(message)
-
 	if(copytext(message, 1, 2) != "*")
-		message = regEx_replaceall(message, "(?<!s)s(?!s)", "sss") //(?<!s) Not s before. (?!s) not s after. That way it only triples a single s instead of double ss.
-		message = regEx_replaceall(message, "(?<!s)ss(?!s)", "ssss")
-		message = regEx_replaceall(message, "(?<!S)S(?!S)", "SSS")
-		message = regEx_replaceall(message, "(?<!S)SS(?!S)", "SSSS")
-
+		message = lizard_hiss.Replace(message, "sss")
+		message = lizard_hiSS.Replace(message, "SSS")
 	return message
 
 //I wag in death
@@ -415,7 +413,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
 
 /datum/species/zombie/handle_speech(message)
-	var/list/message_list = text2list(message, " ")
+	var/list/message_list = splittext(message, " ")
 	var/maxchanges = max(round(message_list.len / 1.5), 2)
 
 	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
@@ -428,7 +426,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		if(prob(20) && message_list.len > 3)
 			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
 
-	return list2text(message_list, " ")
+	return jointext(message_list, " ")
 
 /datum/species/cosmetic_zombie
 	name = "Human"
