@@ -127,16 +127,16 @@
 	else if(istype(loc.loc, /mob/living/carbon))
 		user = loc.loc
 
-	if(user && user.internal == src)
-		data["valveOpen"] = TRUE
-	else
-		data["valveOpen"] = FALSE
+	data["valveOpen"] = FALSE
+	data["maskConnected"] = FALSE
+	if(!istype(user))
+		return data
 
-	if(user.wear_mask && (user.wear_mask.flags & MASKINTERNALS))
-		if(data["valveOpen"] || ((src in user) && !user.internal))
-			data["maskConnected"] = TRUE
-		else
-			data["maskConnected"] = FALSE
+	if(user.internal == src)
+		data["valveOpen"] = TRUE
+	if(user.wear_mask && (user.wear_mask.flags & MASKINTERNALS) && user.internal == src)
+		data["maskConnected"] = TRUE
+
 	return data
 
 /obj/item/weapon/tank/ui_act(action, params)

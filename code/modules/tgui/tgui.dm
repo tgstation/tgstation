@@ -80,7 +80,6 @@
   * Open this UI (and initialize it with data).
  **/
 /datum/tgui/proc/open()
-	set waitfor = 0 // Don't wait on sleep()s.
 	if(!user.client)
 		return // Bail if there is no client.
 
