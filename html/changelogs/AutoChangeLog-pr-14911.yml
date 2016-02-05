@@ -1,9 +1,0 @@
-author: MMMiracles
-delete-after: True
-changes: 
-  - tweak: "Bulldog now starts with stun-slugs instead of its usual 60-brute slugs. Slugs now cost 3 TC instead of 2."
-  - tweak: "Most SAW ammo has been slightly buffed in damage so maybe it'll be worth buying now along with a slight cost decrease for the gun itself."
-  - tweak: "Incen shells for the shotgun now apply extra firestacks on hit so it actually sets people on fire instead of turning them into a light show."
-  - tweak: "Incen rounds for the SAW now leave a fire trail similar to the bulldog's dragonsbreath round."
-  - rscadd: "Nuke Ops now have the ability to purchase breaching shells, a weaker variant of the meteorslugs that can still push back people/airlocks/mechs/corgis."
-  - bugfix: "SAW should now use its in-hand sprites for an open-closed magazine"
