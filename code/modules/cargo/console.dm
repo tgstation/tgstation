@@ -30,7 +30,7 @@
 		ui = new(user, src, ui_key, "cargo", name, 1000, 800, master_ui, state)
 		ui.open()
 
-/obj/machinery/computer/cargo/get_ui_data()
+/obj/machinery/computer/cargo/ui_data()
 	var/list/data = list()
 	data["requestonly"] = requestonly
 	data["location"] = SSshuttle.supply.getStatusText()

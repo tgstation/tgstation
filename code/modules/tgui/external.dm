@@ -30,7 +30,7 @@
   *
   * return list Data to be sent to the UI.
  **/
-/datum/proc/get_ui_data(mob/user)
+/datum/proc/ui_data(mob/user)
 	return list() // Not implemented.
 
 

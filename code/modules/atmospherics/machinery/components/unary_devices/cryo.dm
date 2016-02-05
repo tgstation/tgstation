@@ -198,7 +198,7 @@
 		ui = new(user, src, ui_key, "cryo", name, 400, 550, master_ui, state)
 		ui.open()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/get_ui_data()
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_data()
 	var/list/data = list()
 	data["isOperating"] = on
 	data["hasOccupant"] = occupant ? 1 : 0

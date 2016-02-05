@@ -68,7 +68,7 @@
 		ui = new(user, src, ui_key, "portable_scrubber", name, 420, 335, master_ui, state)
 		ui.open()
 
-/obj/machinery/portable_atmospherics/scrubber/get_ui_data()
+/obj/machinery/portable_atmospherics/scrubber/ui_data()
 	var/data = list()
 	data["on"] = on
 	data["connected"] = connected_port ? 1 : 0

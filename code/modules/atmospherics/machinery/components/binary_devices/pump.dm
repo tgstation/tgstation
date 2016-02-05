@@ -106,7 +106,7 @@ Thus, the two variables affect pump operation are set in New():
 		ui = new(user, src, ui_key, "atmos_pump", name, 335, 115, master_ui, state)
 		ui.open()
 
-/obj/machinery/atmospherics/components/binary/pump/get_ui_data()
+/obj/machinery/atmospherics/components/binary/pump/ui_data()
 	var/data = list()
 	data["on"] = on
 	data["pressure"] = round(target_pressure)

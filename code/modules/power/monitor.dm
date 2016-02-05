@@ -54,7 +54,7 @@
 		ui = new(user, src, ui_key, "power_monitor", name, 1200, 1000, master_ui, state)
 		ui.open()
 
-/obj/machinery/computer/monitor/get_ui_data()
+/obj/machinery/computer/monitor/ui_data()
 	var/list/data = list()
 	data["stored"] = record_size
 	data["interval"] = record_interval / 10

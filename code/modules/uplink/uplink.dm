@@ -40,7 +40,7 @@ var/global/list/uplinks = list()
 		ui.set_style("syndicate")
 		ui.open()
 
-/obj/item/device/uplink/get_ui_data(mob/user)
+/obj/item/device/uplink/ui_data(mob/user)
 	var/list/data = list()
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable

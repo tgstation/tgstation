@@ -117,7 +117,7 @@
 		ui = new(user, src, ui_key, "sleeper", name, 375, 550, master_ui, state)
 		ui.open()
 
-/obj/machinery/sleeper/get_ui_data()
+/obj/machinery/sleeper/ui_data()
 	var/list/data = list()
 	data["occupied"] = occupant ? 1 : 0
 	data["open"] = state_open

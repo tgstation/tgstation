@@ -116,7 +116,7 @@
 		ui = new(user, src, ui_key, "thermomachine", name, 400, 240, master_ui, state)
 		ui.open()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/get_ui_data(mob/user)
+/obj/machinery/atmospherics/components/unary/thermomachine/ui_data(mob/user)
 	var/list/data = list()
 	data["on"] = on
 

@@ -74,7 +74,7 @@
 		ui = new(user, src, ui_key, "portable_pump", name, 420, 415, master_ui, state)
 		ui.open()
 
-/obj/machinery/portable_atmospherics/pump/get_ui_data()
+/obj/machinery/portable_atmospherics/pump/ui_data()
 	var/data = list()
 	data["on"] = on
 	data["direction"] = direction

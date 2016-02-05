@@ -172,7 +172,7 @@
 		ui = new(user, src, ui_key, "airalarm", name, 440, 650, master_ui, state)
 		ui.open()
 
-/obj/machinery/airalarm/get_ui_data(mob/user)
+/obj/machinery/airalarm/ui_data(mob/user)
 	var/data = list(
 		"locked" = locked,
 		"siliconUser" = user.has_unlimited_silicon_privilege,

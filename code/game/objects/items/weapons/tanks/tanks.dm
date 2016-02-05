@@ -113,7 +113,7 @@
 		ui = new(user, src, ui_key, "tanks", name, 420, 200, master_ui, state)
 		ui.open()
 
-/obj/item/weapon/tank/get_ui_data()
+/obj/item/weapon/tank/ui_data()
 	var/list/data = list()
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)

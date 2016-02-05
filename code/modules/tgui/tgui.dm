@@ -88,7 +88,7 @@
 		return // Bail if we're not supposed to open.
 
 	if(!initial_data)
-		set_initial_data(src_object.get_ui_data(user)) // Get the UI data.
+		set_initial_data(src_object.ui_data(user)) // Get the UI data.
 
 	var/window_size = ""
 	if(width && height) // If we have a width and height, use them.

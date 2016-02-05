@@ -227,7 +227,7 @@
 		ui = new(user, src, ui_key, "canister", name, 420, 405, master_ui, state)
 		ui.open()
 
-/obj/machinery/portable_atmospherics/canister/get_ui_data()
+/obj/machinery/portable_atmospherics/canister/ui_data()
 	var/data = list()
 	data["portConnected"] = connected_port ? 1 : 0
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
