@@ -318,7 +318,7 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/proc/generateSupplyOrder(packId, _orderedby, _orderedbyRank, _comment)
 	if(!packId)
 		return
-	var/datum/supply_packs/P = supply_packs["[packId]"]
+	var/datum/supply_packs/P = supply_packs[packId]
 	if(!P)
 		return
 
@@ -328,8 +328,6 @@ var/datum/subsystem/shuttle/SSshuttle
 	O.orderedby = _orderedby
 	O.orderedbyRank = _orderedbyRank
 	O.comment = _comment
-
-	requestlist += O
 
 	return O
 

@@ -27,10 +27,11 @@ Pipelines + Other Objects -> Pipe network
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes = list()
 
-/obj/machinery/atmospherics/New()
+/obj/machinery/atmospherics/New(process = TRUE)
 	nodes.len = device_type
 	..()
-	SSair.atmos_machinery += src
+	if(process)
+		SSair.atmos_machinery += src
 	SetInitDirections()
 	if(can_unwrench)
 		stored = new(src, make_from=src)

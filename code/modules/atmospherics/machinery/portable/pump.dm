@@ -1,157 +1,139 @@
+#define PUMP_OUT "out"
+#define PUMP_IN "in"
+#define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 10)
+#define PUMP_MIN_PRESSURE (ONE_ATMOSPHERE / 10)
+#define PUMP_DEFAULT_PRESSURE (ONE_ATMOSPHERE)
+
 /obj/machinery/portable_atmospherics/pump
 	name = "portable air pump"
-
-	icon = 'icons/obj/atmos.dmi'
 	icon_state = "psiphon:0"
 	density = 1
 
-	var/on = 0
-	var/direction_out = 0 //0 = siphoning, 1 = releasing
-	var/target_pressure = 100
+	var/on = FALSE
+	var/direction = PUMP_OUT
+	var/obj/machinery/atmospherics/components/binary/pump/pump
 
 	volume = 1000
 
+/obj/machinery/portable_atmospherics/pump/New()
+	..()
+	pump = new(src, FALSE)
+	pump.on = TRUE
+	pump.stat = 0
+	pump.build_network()
+
+/obj/machinery/portable_atmospherics/pump/Destroy()
+	var/turf/T = get_turf(src)
+	T.assume_air(air_contents)
+	air_update_turf()
+	qdel(pump)
+	pump = null
+	return ..()
+
 /obj/machinery/portable_atmospherics/pump/update_icon()
-	src.overlays = 0
+	icon_state = "psiphon:[on]"
 
-	if(on)
-		icon_state = "psiphon:1"
-	else
-		icon_state = "psiphon:0"
-
+	overlays.Cut()
 	if(holding)
 		overlays += "siphon-open"
-
 	if(connected_port)
 		overlays += "siphon-connector"
 
-	return
-
-/obj/machinery/portable_atmospherics/pump/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
-		return
-
-	if(prob(50/severity))
-		on = !on
-
-	if(prob(100/severity))
-		direction_out = !direction_out
-
-	target_pressure = rand(0,1300)
-	update_icon()
-
-	..(severity)
-
 /obj/machinery/portable_atmospherics/pump/process_atmos()
 	..()
-	if(on)
-		var/datum/gas_mixture/environment
-		if(holding)
-			environment = holding.air_contents
-		else
-			environment = loc.return_air()
-		if(direction_out)
-			var/pressure_delta = target_pressure - environment.return_pressure()
-			//Can not have a pressure delta that would cause environment pressure > tank pressure
+	if(!on)
+		return
 
-			var/transfer_moles = 0
-			if(air_contents.temperature > 0)
-				transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+	var/turf/T = get_turf(src)
+	if(direction == PUMP_OUT) // Hook up the internal pump.
+		pump.AIR1 = holding ? holding.air_contents : air_contents
+		pump.AIR2 = holding ? air_contents : T.return_air()
+	else
+		pump.AIR1 = holding ? air_contents : T.return_air()
+		pump.AIR2 = holding ? holding.air_contents : air_contents
 
-				//Actually transfer the gas
-				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
+	pump.process_atmos() // Pump gas.
+	if(!holding)
+		air_update_turf() // Update the environment if needed.
 
-				if(holding)
-					environment.merge(removed)
-				else
-					loc.assume_air(removed)
-					air_update_turf()
-		else
-			var/pressure_delta = target_pressure - air_contents.return_pressure()
-			//Can not have a pressure delta that would cause environment pressure > tank pressure
-
-			var/transfer_moles = 0
-			if(environment.temperature > 0)
-				transfer_moles = pressure_delta*air_contents.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
-
-				//Actually transfer the gas
-				var/datum/gas_mixture/removed
-				if(holding)
-					removed = environment.remove(transfer_moles)
-				else
-					removed = loc.remove_air(transfer_moles)
-					air_update_turf()
-
-				air_contents.merge(removed)
-		//src.update_icon()
-/obj/machinery/portable_atmospherics/pump/process()
+/obj/machinery/portable_atmospherics/pump/emp_act(severity)
+	if(is_operational())
+		if(prob(50 / severity))
+			on = !on
+		if(prob(100 / severity))
+			direction = PUMP_OUT
+		pump.target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
+		update_icon()
 	..()
-	src.updateDialog()
-	return
 
-/obj/machinery/portable_atmospherics/pump/return_air()
-	return air_contents
 
-/obj/machinery/portable_atmospherics/pump/attack_ai(mob/user)
-	return src.attack_hand(user)
+/obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+														datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "portable_pump", name, 420, 415, master_ui, state)
+		ui.open()
 
-/obj/machinery/portable_atmospherics/pump/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/portable_atmospherics/pump/attack_hand(mob/user)
-
-	user.set_machine(src)
-	var/holding_text
+/obj/machinery/portable_atmospherics/pump/ui_data()
+	var/data = list()
+	data["on"] = on
+	data["direction"] = direction
+	data["connected"] = connected_port ? 1 : 0
+	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
+	data["target_pressure"] = round(pump.target_pressure ? pump.target_pressure : 0)
+	data["default_pressure"] = round(PUMP_DEFAULT_PRESSURE)
+	data["min_pressure"] = round(PUMP_MIN_PRESSURE)
+	data["max_pressure"] = round(PUMP_MAX_PRESSURE)
 
 	if(holding)
-		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
-<A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
-"}
-	var/output_text = {"<TT><B>[name]</B><BR>
-Pressure: [air_contents.return_pressure()] KPa<BR>
-Port Status: [(connected_port)?("Connected"):("Disconnected")]
-[holding_text]
-<BR>
-Power Switch: <A href='?src=\ref[src];power=1'>[on?("On"):("Off")]</A><BR>
-Pump Direction: <A href='?src=\ref[src];direction=1'>[direction_out?("Out"):("In")]</A><BR>
-Target Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=\ref[src];pressure_adj=-10'>-</A> <A href='?src=\ref[src];pressure_adj=-1'>-</A> [target_pressure] <A href='?src=\ref[src];pressure_adj=1'>+</A> <A href='?src=\ref[src];pressure_adj=10'>+</A> <A href='?src=\ref[src];pressure_adj=100'>+</A> <A href='?src=\ref[src];pressure_adj=1000'>+</A><BR>
-<HR>
-<A href='?src=\ref[user];mach_close=pump'>Close</A><BR>
-"}
+		data["holding"] = list()
+		data["holding"]["name"] = holding.name
+		data["holding"]["pressure"] = round(holding.air_contents.return_pressure())
+	return data
 
-	user << browse(output_text, "window=pump;size=600x300")
-	onclose(user, "pump")
-
-	return
-
-/obj/machinery/portable_atmospherics/pump/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained())
+/obj/machinery/portable_atmospherics/pump/ui_act(action, params)
+	if(..())
 		return
-
-	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		usr.set_machine(src)
-
-		if(href_list["power"])
+	switch(action)
+		if("power")
 			on = !on
-
-		if(href_list["direction"])
-			direction_out = !direction_out
-
-		if (href_list["remove_tank"])
+			if(on && !holding)
+				var/plasma = air_contents.gases["plasma"]
+				var/n2o = air_contents.gases["n2o"]
+				if(n2o || plasma)
+					message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [x], [y], [z]")
+			. = TRUE
+		if("direction")
+			if(direction == PUMP_OUT)
+				direction = PUMP_IN
+			else
+				direction = PUMP_OUT
+			. = TRUE
+		if("pressure")
+			var/pressure = params["pressure"]
+			if(pressure == "reset")
+				pressure = PUMP_DEFAULT_PRESSURE
+				. = TRUE
+			else if(pressure == "min")
+				pressure = PUMP_MIN_PRESSURE
+				. = TRUE
+			else if(pressure == "max")
+				pressure = PUMP_MAX_PRESSURE
+				. = TRUE
+			else if(pressure == "input")
+				pressure = input("New release pressure ([PUMP_MIN_PRESSURE]-[PUMP_MAX_PRESSURE] kPa):", name, pump.target_pressure) as num|null
+				if(!isnull(pressure) && !..())
+					. = TRUE
+			else if(text2num(pressure) != null)
+				pressure = text2num(pressure)
+				. = TRUE
+			if(.)
+				pump.target_pressure = Clamp(round(pressure), PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
+				investigate_log("was set to [pump.target_pressure] kPa by [key_name(usr)].", "atmos")
+		if("eject")
 			if(holding)
-				holding.loc = loc
+				holding.loc = get_turf(src)
 				holding = null
-
-		if (href_list["pressure_adj"])
-			var/diff = text2num(href_list["pressure_adj"])
-			target_pressure = min(10*ONE_ATMOSPHERE, max(0, target_pressure+diff))
-
-		src.updateUsrDialog()
-		src.add_fingerprint(usr)
-		update_icon()
-	else
-		usr << browse(null, "window=pump")
-		return
-	return
+				. = TRUE
+	update_icon()

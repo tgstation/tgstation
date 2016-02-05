@@ -333,7 +333,7 @@
 		ui = new(user, src, ui_key, "smes", name, 340, 440, master_ui, state)
 		ui.open()
 
-/obj/machinery/power/smes/get_ui_data()
+/obj/machinery/power/smes/ui_data()
 	var/list/data = list(
 		"capacityPercent" = round(100*charge/capacity, 0.1),
 		"capacity" = capacity,

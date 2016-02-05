@@ -9,15 +9,6 @@ import 'html5shiv'
 
 Object.assign(Math, require('util/math'))
 
-import WebFont from 'webfontloader'
-WebFont.load({
-  custom: {
-    families: [ 'FontAwesome' ],
-    urls: [ 'https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' ],
-    testStrings: { FontAwesome: '\uf240' }
-  }
-})
-
 import TGUI from 'tgui.ract'
 window.initialize = (dataString) => {
   if (window.tgui) return
@@ -27,6 +18,7 @@ window.initialize = (dataString) => {
       const initial = JSON.parse(dataString)
       return {
         constants: require('util/constants'),
+        text: require('util/text'),
         config: initial.config,
         data: initial.data,
         adata: initial.data
@@ -46,3 +38,12 @@ if (data !== '{}') { // If the JSON was inlined, load it.
 
 import { act } from 'util/byond'
 act(ref, 'tgui:initialize')
+
+import WebFont from 'webfontloader'
+WebFont.load({
+  custom: {
+    families: [ 'FontAwesome' ],
+    urls: [ 'https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' ],
+    testStrings: { FontAwesome: '\uf240' }
+  }
+})

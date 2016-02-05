@@ -42,12 +42,6 @@
 #define AALARM_MODE_CONTAMINATED 8 //Turns on all filtering and widenet scrubbing.
 #define AALARM_MODE_REFILL 9 //just like normal, but with triple the air output
 
-#define AALARM_SCREEN_MAIN    1
-#define AALARM_SCREEN_VENT    2
-#define AALARM_SCREEN_SCRUB   3
-#define AALARM_SCREEN_MODE    4
-#define AALARM_SCREEN_SENSORS 5
-
 #define AALARM_REPORT_TIMEOUT 100
 
 /obj/machinery/airalarm
@@ -74,7 +68,6 @@
 
 	var/mode = AALARM_MODE_SCRUBBING
 
-	var/screen = AALARM_SCREEN_MAIN
 	var/area_uid
 	var/area/alarm_area
 	var/danger_level = 0
@@ -179,148 +172,126 @@
 		ui = new(user, src, ui_key, "airalarm", name, 440, 650, master_ui, state)
 		ui.open()
 
-/obj/machinery/airalarm/get_ui_data(mob/user)
+/obj/machinery/airalarm/ui_data(mob/user)
 	var/data = list(
 		"locked" = locked,
 		"siliconUser" = user.has_unlimited_silicon_privilege,
-		"screen" = screen,
-		"emagged" = emagged
+		"emagged" = emagged,
+		"atmos_alarm" = alarm_area.atmosalm,
+		"fire_alarm" = alarm_area.fire,
+		"danger_level" = danger_level,
 	)
-	populate_status(data)
+
+	var/turf/T = get_turf(src)
+	var/datum/gas_mixture/environment = T.return_air()
+	var/datum/tlv/cur_tlv
+
+	data["environment_data"] = list()
+	var/pressure = environment.return_pressure()
+	cur_tlv = TLV["pressure"]
+	data["environment_data"] += list(list(
+							"name" = "Pressure",
+							"value" = pressure,
+							"unit" = "kPa",
+							"danger_level" = cur_tlv.get_danger_level(pressure)
+	))
+	var/temperature = environment.temperature
+	cur_tlv = TLV["temperature"]
+	data["environment_data"] += list(list(
+							"name" = "Temperature",
+							"value" = temperature,
+							"unit" = "K ([round(temperature - T0C, 0.1)]C)",
+							"danger_level" = cur_tlv.get_danger_level(temperature)
+	))
+	var/total_moles = environment.total_moles()
+	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
+	for(var/gas_id in environment.gases)
+		if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
+			continue
+		cur_tlv = TLV[gas_id]
+		data["environment_data"] += list(list(
+								"name" = environment.gases[gas_id][GAS_META][META_GAS_NAME],
+								"value" = environment.gases[gas_id][MOLES] / total_moles * 100,
+								"unit" = "%",
+								"danger_level" = cur_tlv.get_danger_level(environment.gases[gas_id][MOLES] * partial_pressure)
+		))
+
 	if(!locked || user.has_unlimited_silicon_privilege)
-		populate_controls(data)
-	return data
+		data["vents"] = list()
+		for(var/id_tag in alarm_area.air_vent_names)
+			var/long_name = alarm_area.air_vent_names[id_tag]
+			var/list/info = alarm_area.air_vent_info[id_tag]
+			if(!info || info["frequency"] != frequency)
+				continue
+			data["vents"] += list(list(
+					"id_tag"	= id_tag,
+					"long_name" = sanitize(long_name),
+					"power"		= info["power"],
+					"checks"	= info["checks"],
+					"excheck"	= info["checks"]&1,
+					"incheck"	= info["checks"]&2,
+					"direction"	= info["direction"],
+					"external"	= info["external"],
+					"extdefault"= (info["external"] == ONE_ATMOSPHERE)
+				))
+		data["scrubbers"] = list()
+		for(var/id_tag in alarm_area.air_scrub_names)
+			var/long_name = alarm_area.air_scrub_names[id_tag]
+			var/list/info = alarm_area.air_scrub_info[id_tag]
+			if(!info || info["frequency"] != frequency)
+				continue
+			data["scrubbers"] += list(list(
+					"id_tag"		= id_tag,
+					"long_name" 	= sanitize(long_name),
+					"power"			= info["power"],
+					"scrubbing"		= info["scrubbing"],
+					"widenet"		= info["widenet"],
+					"filter_co2"	= info["filter_co2"],
+					"filter_toxins"	= info["filter_toxins"],
+					"filter_n2o"	= info["filter_n2o"]
+				))
+		data["mode"] = mode
+		data["modes"] = list()
+		data["modes"] += list(list("name" = "Filtering - Scrubs out contaminants", 				"mode" = AALARM_MODE_SCRUBBING,		"selected" = mode == AALARM_MODE_SCRUBBING, 	"danger" = 0))
+		data["modes"] += list(list("name" = "Contaminated - Scrubs out ALL contaminants quickly","mode" = AALARM_MODE_CONTAMINATED,	"selected" = mode == AALARM_MODE_CONTAMINATED,	"danger" = 0))
+		data["modes"] += list(list("name" = "Draught - Siphons out air while replacing",		"mode" = AALARM_MODE_VENTING,		"selected" = mode == AALARM_MODE_VENTING,		"danger" = 0))
+		data["modes"] += list(list("name" = "Refill - Triple vent output",						"mode" = AALARM_MODE_REFILL,		"selected" = mode == AALARM_MODE_REFILL,		"danger" = 0))
+		data["modes"] += list(list("name" = "Cycle - Siphons air before replacing", 			"mode" = AALARM_MODE_REPLACEMENT,	"selected" = mode == AALARM_MODE_REPLACEMENT, 	"danger" = 1))
+		data["modes"] += list(list("name" = "Siphon - Siphons air out of the room", 			"mode" = AALARM_MODE_SIPHON,		"selected" = mode == AALARM_MODE_SIPHON, 		"danger" = 1))
+		data["modes"] += list(list("name" = "Panic Siphon - Siphons air out of the room quickly","mode" = AALARM_MODE_PANIC,		"selected" = mode == AALARM_MODE_PANIC, 		"danger" = 1))
+		data["modes"] += list(list("name" = "Off - Shuts off vents and scrubbers", 				"mode" = AALARM_MODE_OFF,			"selected" = mode == AALARM_MODE_OFF, 			"danger" = 0))
+		if(emagged)
+			data["modes"] += list(list("name" = "Flood - Shuts off scrubbers and opens vents",	"mode" = AALARM_MODE_FLOOD,			"selected" = mode == AALARM_MODE_FLOOD, 		"danger" = 1))
 
-/obj/machinery/airalarm/proc/populate_status(list/data)
-	var/turf/location = get_turf(src)
-	if(!location)
-		return
-	var/datum/gas_mixture/environment = location.return_air()
-	var/list/env_gases = environment.gases
-	var/total = environment.total_moles()
+		var/datum/tlv/selected
+		var/list/thresholds = list()
 
-	var/list/environment_data = list()
-	data["atmos_alarm"] = alarm_area.atmosalm
-	data["fire_alarm"] = (alarm_area.fire != null && alarm_area.fire)
-	data["danger_level"] = danger_level
-	if(total)
-		var/datum/tlv/cur_tlv
+		selected = TLV["pressure"]
+		thresholds += list(list("name" = "Pressure", "settings" = list()))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min2", "selected" = selected.min2))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min1", "selected" = selected.min1))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max1", "selected" = selected.max1))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max2", "selected" = selected.max2))
 
-		var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
+		selected = TLV["temperature"]
+		thresholds += list(list("name" = "Temperature", "settings" = list()))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min2", "selected" = selected.min2))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min1", "selected" = selected.min1))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max1", "selected" = selected.max1))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max2", "selected" = selected.max2))
 
-		var/pressure = environment.return_pressure()
-		cur_tlv = TLV["pressure"]
-		environment_data += list(list(
-								"name" = "Pressure",
-								"value" = pressure,
-								"unit" = "kPa",
-								"danger_level" = cur_tlv.get_danger_level(pressure)
-		))
-
-		var/temperature = environment.temperature
-		cur_tlv = TLV["temperature"]
-		environment_data += list(list(
-								"name" = "Temperature",
-								"value" = temperature,
-								"unit" = "K ([round(temperature - T0C, 0.1)]C)",
-								"danger_level" = cur_tlv.get_danger_level(temperature)
-		))
-
-		for(var/gas_id in env_gases)
+		for(var/gas_id in meta_gas_info)
 			if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
 				continue
-			cur_tlv = TLV[gas_id]
-			environment_data += list(list(
-									"name" = env_gases[gas_id][GAS_META][META_GAS_NAME],
-									"value" = env_gases[gas_id][MOLES] / total * 100,
-									"unit" = "%",
-									"danger_level" = cur_tlv.get_danger_level(env_gases[gas_id][MOLES] * partial_pressure)
-			))
+			selected = TLV[gas_id]
+			thresholds += list(list("name" = meta_gas_info[gas_id][META_GAS_NAME], "settings" = list()))
+			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min2", "selected" = selected.min2))
+			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min1", "selected" = selected.min1))
+			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max1", "selected" = selected.max1))
+			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max2", "selected" = selected.max2))
 
-
-		data["environment_data"] = environment_data
-
-/obj/machinery/airalarm/proc/populate_controls(list/data)
-	switch(screen)
-		if(AALARM_SCREEN_MAIN)
-			data["mode"] = mode
-		if(AALARM_SCREEN_VENT)
-			data["vents"] = list()
-			for(var/id_tag in alarm_area.air_vent_names)
-				var/long_name = alarm_area.air_vent_names[id_tag]
-				var/list/info = alarm_area.air_vent_info[id_tag]
-				if(!info || info["frequency"] != frequency)
-					continue
-				data["vents"] += list(list(
-						"id_tag"	= id_tag,
-						"long_name" = sanitize(long_name),
-						"power"		= info["power"],
-						"checks"	= info["checks"],
-						"excheck"	= info["checks"]&1,
-						"incheck"	= info["checks"]&2,
-						"direction"	= info["direction"],
-						"external"	= info["external"],
-						"extdefault"= (info["external"] == ONE_ATMOSPHERE)
-					))
-		if(AALARM_SCREEN_SCRUB)
-			data["scrubbers"] = list()
-			for(var/id_tag in alarm_area.air_scrub_names)
-				var/long_name = alarm_area.air_scrub_names[id_tag]
-				var/list/info = alarm_area.air_scrub_info[id_tag]
-				if(!info || info["frequency"] != frequency)
-					continue
-				data["scrubbers"] += list(list(
-						"id_tag"		= id_tag,
-						"long_name" 	= sanitize(long_name),
-						"power"			= info["power"],
-						"scrubbing"		= info["scrubbing"],
-						"widenet"		= info["widenet"],
-						"filter_co2"	= info["filter_co2"],
-						"filter_toxins"	= info["filter_toxins"],
-						"filter_n2o"	= info["filter_n2o"]
-					))
-		if(AALARM_SCREEN_MODE)
-			data["mode"] = mode
-			data["modes"] = list()
-			data["modes"] += list(list("name" = "Filtering - Scrubs out contaminants", 				"mode" = AALARM_MODE_SCRUBBING,		"selected" = mode == AALARM_MODE_SCRUBBING, 	"danger" = 0))
-			data["modes"] += list(list("name" = "Contaminated - Scrubs out ALL contaminants quickly","mode" = AALARM_MODE_CONTAMINATED,	"selected" = mode == AALARM_MODE_CONTAMINATED,	"danger" = 0))
-			data["modes"] += list(list("name" = "Draught - Siphons out air while replacing",		"mode" = AALARM_MODE_VENTING,		"selected" = mode == AALARM_MODE_VENTING,		"danger" = 0))
-			data["modes"] += list(list("name" = "Refill - Triple vent output",						"mode" = AALARM_MODE_REFILL,		"selected" = mode == AALARM_MODE_REFILL,		"danger" = 0))
-			data["modes"] += list(list("name" = "Cycle - Siphons air before replacing", 			"mode" = AALARM_MODE_REPLACEMENT,	"selected" = mode == AALARM_MODE_REPLACEMENT, 	"danger" = 1))
-			data["modes"] += list(list("name" = "Siphon - Siphons air out of the room", 			"mode" = AALARM_MODE_SIPHON,		"selected" = mode == AALARM_MODE_SIPHON, 		"danger" = 1))
-			data["modes"] += list(list("name" = "Panic Siphon - Siphons air out of the room quickly","mode" = AALARM_MODE_PANIC,		"selected" = mode == AALARM_MODE_PANIC, 		"danger" = 1))
-			data["modes"] += list(list("name" = "Off - Shuts off vents and scrubbers", 				"mode" = AALARM_MODE_OFF,			"selected" = mode == AALARM_MODE_OFF, 			"danger" = 0))
-			if (src.emagged)
-				data["modes"] += list(list("name" = "Flood - Shuts off scrubbers and opens vents",	"mode" = AALARM_MODE_FLOOD,			"selected" = mode == AALARM_MODE_FLOOD, 		"danger" = 1))
-		if(AALARM_SCREEN_SENSORS)
-			var/datum/tlv/selected
-			var/list/thresholds = list()
-
-			selected = TLV["pressure"]
-			thresholds += list(list("name" = "Pressure", "settings" = list()))
-			thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min2", "selected" = selected.min2))
-			thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min1", "selected" = selected.min1))
-			thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max1", "selected" = selected.max1))
-			thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max2", "selected" = selected.max2))
-
-			selected = TLV["temperature"]
-			thresholds += list(list("name" = "Temperature", "settings" = list()))
-			thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min2", "selected" = selected.min2))
-			thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min1", "selected" = selected.min1))
-			thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max1", "selected" = selected.max1))
-			thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max2", "selected" = selected.max2))
-
-			for (var/gas_id in meta_gas_info)
-				if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
-					continue
-				selected = TLV[gas_id]
-				thresholds += list(list("name" = meta_gas_info[gas_id][META_GAS_NAME], "settings" = list()))
-				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min2", "selected" = selected.min2))
-				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min1", "selected" = selected.min1))
-				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max1", "selected" = selected.max1))
-				thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max2", "selected" = selected.max2))
-
-			data["thresholds"] = thresholds
+		data["thresholds"] = thresholds
+	return data
 
 /obj/machinery/airalarm/ui_act(action, params)
 	if(..() || buildstage != 2)
@@ -363,9 +334,6 @@
 				else
 					tlv.vars[name] = round(value, 0.01)
 				. = TRUE
-		if("screen")
-			screen = text2num(params["screen"])
-			. = TRUE
 		if("mode")
 			mode = text2num(params["mode"])
 			apply_mode()
@@ -667,7 +635,6 @@
 					if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 						locked = !locked
 						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>"
-						src.updateUsrDialog()
 					else
 						user << "<span class='danger'>Access denied.</span>"
 				return
@@ -727,19 +694,12 @@
 	return ..()
 
 /obj/machinery/airalarm/power_change()
-	if(powered(power_channel))
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
-	spawn(rand(0,15))
-		if(loc)
-			update_icon()
-
+	..()
+	update_icon()
 
 /obj/machinery/airalarm/emag_act(mob/user)
-	if(!emagged)
-		src.emagged = 1
-		if(user)
-			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its safeties.</span>")
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+	if(emagged)
 		return
+	emagged = TRUE
+	visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its safeties.</span>")
+	playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)

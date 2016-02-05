@@ -112,7 +112,7 @@
 		ui = new(user, src, ui_key, "atmos_filter", name, 470, 140, master_ui, state)
 		ui.open()
 
-/obj/machinery/atmospherics/components/trinary/filter/get_ui_data()
+/obj/machinery/atmospherics/components/trinary/filter/ui_data()
 	var/data = list()
 	data["on"] = on
 	data["pressure"] = round(target_pressure)
