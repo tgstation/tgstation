@@ -33,7 +33,7 @@
 
 	for(var/N in nuke_tiles)
 		var/turf/T = N
-		T.icon_state = "rcircuitanim" //Causes blue tiles on the map the AI to change to flashing red
+		T.icon_state = "rcircuitanim" //This causes all blue "circuit" tiles on the map to change to animated red icon state.
 
 	src << "<span class='notice'>Nuclear device armed.</span>"
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
