@@ -1175,7 +1175,6 @@ B --><-- A
 
 	return L
 
-
 /atom/proc/contains(var/atom/A)
 	if(!A)
 		return 0
