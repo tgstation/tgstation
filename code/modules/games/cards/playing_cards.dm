@@ -181,7 +181,7 @@
 
 /obj/item/toy/cards/MouseDrop(atom/over_object)
 	var/mob/M = usr
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	if(Adjacent(usr))
 		if(over_object == M)

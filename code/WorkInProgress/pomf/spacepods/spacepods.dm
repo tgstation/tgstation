@@ -315,9 +315,9 @@
 	set name = "Enter Pod"
 	set src in oview(1)
 
-	if(usr.restrained() || usr.isUnconscious() || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
+	if(usr.incapacitated() || usr.lying) //are you cuffed, dying, lying, stunned or other
 		return
-	if (usr.stat || !ishuman(usr))
+	if (!ishuman(usr))
 		return
 	if (src.occupant)
 		to_chat(usr, "<span class='notice'><B>The [src.name] is already occupied!</B></span>")

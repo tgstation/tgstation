@@ -373,11 +373,8 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	return
 
 /mob/living/simple_animal/MouseDrop(mob/living/carbon/human/M)
-	if(M != usr)		return
-	if(!istype(M))		return
-	if(M.isUnconscious())return
-	if(M.restrained())	return
-	if(!Adjacent(M))	return
+	if(M != usr || !istype(M) || !Adjacent(M) || M.incapacitated())
+		return
 
 	var/strength_of_M = (M.size - 1) //Can only pick up mobs whose size is less or equal to this value. Normal human's size is 3, so his strength is 2 - he can pick up TINY and SMALL animals. Varediting human's size to 5 will allow him to pick up goliaths.
 

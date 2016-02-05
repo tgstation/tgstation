@@ -90,7 +90,7 @@
 			return
 		if(O.loc == user || !isturf(O.loc) || !isturf(user.loc)) //no you can't pull things out of your ass
 			return
-		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+		if(user.incapacitated() || user.lying) //are you cuffed, dying, lying, stunned or other
 			return
 		if(O.anchored || !Adjacent(user) || !user.Adjacent(src)) // is the mob anchored, too far away from you, or are you too far away from the source
 			return
