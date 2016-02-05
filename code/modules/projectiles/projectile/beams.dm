@@ -9,7 +9,7 @@
 	eyeblur = 2
 
 /obj/item/projectile/beam/practice
-	name = "laser"
+	name = "practice laser"
 	damage = 0
 	nodamage = 1
 
