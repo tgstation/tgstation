@@ -83,7 +83,7 @@ var/global/list/coldwarning_hard = list("Holy shit, it's freezing cold out here!
 				drop_item()
 			if(prob(1))
 				to_chat(src, "<span class='warning'>Your legs buckle underneath you, and you collapse!</span>")
-				say("*collapse")
+				emote("collapse")
 		if(SEVERE_HYPOTHERMIA) // unconcious, not shivering - we're going to burn up all you've eaten now.
 			// at this point, the pulse will go to rougly 30bpm, see handle_pulse for details.
 			// at this point, you are unconcious; see handle_regular_status_updates.dm for details.

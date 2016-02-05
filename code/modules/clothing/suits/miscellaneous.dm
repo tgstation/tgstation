@@ -40,7 +40,7 @@
 	item_state = "pirate"
 	flags = FPRINT
 	species_fit = list("Vox")
-
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|IGNORE_INV
 
 /obj/item/clothing/suit/hgpirate
 	name = "pirate captain coat"
@@ -49,6 +49,7 @@
 	item_state = "hgpirate"
 	flags = FPRINT
 	species_fit = list("Vox")
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|IGNORE_INV
 
 
 /obj/item/clothing/suit/cyborg_suit
