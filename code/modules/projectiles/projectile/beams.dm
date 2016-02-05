@@ -11,7 +11,6 @@
 /obj/item/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
-	hitsound = null
 	nodamage = 1
 
 /obj/item/projectile/beam/scatter
