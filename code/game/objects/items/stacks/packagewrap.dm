@@ -119,7 +119,7 @@
 /obj/item/delivery/New(turf/loc, var/obj/item/target = null, var/size = 2)
 	..()
 	wrapped = target
-	icon_state = "deliverycrate[size]"
+	icon_state = "deliverycrate[min(size,5)]"
 
 /obj/item/delivery/Destroy()
 	..()
