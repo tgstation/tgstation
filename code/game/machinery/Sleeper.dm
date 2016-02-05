@@ -246,7 +246,7 @@
 		return
 	if(O.loc == user || !isturf(O.loc) || !isturf(user.loc)) //no you can't pull things out of your ass
 		return
-	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+	if(user.incapacitated() || user.lying) //are you cuffed, dying, lying, stunned or other
 		return
 	if(O.anchored || !Adjacent(user) || !user.Adjacent(src) || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
 		return
@@ -300,7 +300,7 @@
 
 
 /obj/machinery/sleeper/MouseDrop(over_object, src_location, var/turf/over_location, src_control, over_control, params)
-	if(!ishuman(usr) && !isrobot(usr))
+	if(!ishuman(usr) && !isrobot(usr) || usr.incapacitated() || usr.lying)
 		return
 	if(!occupant)
 		to_chat(usr, "<span class='warning'>The sleeper is unoccupied!</span>")
@@ -313,9 +313,6 @@
 	if(!istype(over_location) || over_location.density)
 		return
 	if(!Adjacent(over_location))
-		return
-	var/mob/user = usr
-	if(user.restrained() || user.isUnconscious() || user.stunned || user.paralysis || user.resting) // If you're too disabled to put someone into it, you're too disabled to pull someone out of it.
 		return
 	if(!(occupant == usr) && (!Adjacent(usr) || !usr.Adjacent(over_location)))
 		return
@@ -542,7 +539,7 @@
 	if(src.occupant)
 		to_chat(usr, "<span class='notice'><B>\The [src] is already occupied!</B></span>")
 		return
-	if(usr.restrained() || usr.isUnconscious() || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
+	if(usr.incapacitated() || usr.lying) //are you cuffed, dying, lying, stunned or other
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)

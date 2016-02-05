@@ -15,7 +15,7 @@
 
 
 /obj/item/weapon/paper_bin/nano/MouseDrop(mob/user as mob)
-	if((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
+	if(user == usr && !usr.incapacitated() && (usr.contents.Find(src) || in_range(src, usr)))
 		if(!istype(usr, /mob/living/carbon/slime) && !istype(usr, /mob/living/simple_animal))
 			if( !usr.get_active_hand() )		//if active hand is empty
 				src.loc = user

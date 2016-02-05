@@ -1033,9 +1033,9 @@
 	set name = "Enter Exosuit"
 	set src in oview(1)
 
-	if(usr.restrained() || usr.isUnconscious() || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
+	if(usr.incapacitated() || usr.lying) //are you cuffed, dying, lying, stunned or other
 		return
-	if (usr.stat || !ishuman(usr))
+	if (!ishuman(usr))
 		return
 	src.log_message("[usr] tries to move in.")
 	if (src.occupant)
@@ -1200,7 +1200,7 @@
 	return
 
 /obj/mecha/MouseDrop(over_object, src_location, var/turf/over_location, src_control, over_control, params)
-	if(usr!=src.occupant)
+	if(usr != src.occupant || usr.incapacitated())
 		return
 	if(!istype(over_location) || over_location.density)
 		return

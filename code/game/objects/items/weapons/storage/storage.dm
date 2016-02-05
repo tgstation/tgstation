@@ -34,7 +34,7 @@
 		var/mob/M = usr
 		if(istype(over_object, /obj/structure/table) && M.Adjacent(over_object))
 			var/mob/living/L = usr
-			if(istype(L) && !(L.restrained() || L.stat || L.weakened || L.stunned || L.paralysis || L.resting))
+			if(istype(L) && !(L.incapacitated() || L.lying))
 				empty_contents_to(over_object)
 		if(!( istype(over_object, /obj/screen) ))
 			return ..()

@@ -38,7 +38,7 @@
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
 	if(isobserver(usr)) return
-	if(usr.stat) // Stop interacting with shit while dead pls
+	if(usr.incapacitated()) // Stop interacting with shit while dead pls
 		return
 	if(isanimal(usr))
 		return
