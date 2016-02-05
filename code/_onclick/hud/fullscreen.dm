@@ -27,6 +27,7 @@
 	return screen
 
 /mob/proc/clear_fullscreen(category, animate = 10)
+	set waitfor = 0
 	var/obj/screen/fullscreen/screen = screens[category]
 	if(!screen)
 		return
