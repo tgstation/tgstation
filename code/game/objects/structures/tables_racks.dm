@@ -44,7 +44,6 @@
 		smooth_icon_neighbors(src)
 
 /obj/structure/table/ex_act(severity, target)
-	..()
 	switch(severity)
 		if(1)
 			qdel(src)
