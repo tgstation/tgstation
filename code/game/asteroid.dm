@@ -143,7 +143,7 @@ var/global/max_secret_rooms = 6
 	possiblethemes -= theme //once a theme is selected, it's out of the running!
 	var/floor = pick(floortypes)
 
-	turfs = get_area_turfs(/area/mine/unexplored)
+	turfs = get_area_turfs(/area/mine/unexplored, ZLEVEL_MINING)
 
 	if(!turfs.len)
 		return 0
@@ -179,9 +179,9 @@ var/global/max_secret_rooms = 6
 
 		if(locate(/area/asteroid/artifactroom) in surroundings)
 			valid = 0
-			continue
+			continuef
 
-		if(locate(/turf/simulated/floor/plating/asteroid/airless) in range(5,T))//A little less strict than the other checks due to tunnels
+		if(locate(/turf/simulated/floor/plating/asteroid/airless) in range(4,T))//A little less strict than the other checks due to tunnels
 			valid = 0
 			continue
 
