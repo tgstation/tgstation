@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Anomalies, such as pyroclastic and vortex anomalies, now appear at the bottom of the ghost orbit and observe menus."
