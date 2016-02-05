@@ -129,6 +129,18 @@
 	if(!health && status)
 		deactivate(user, 0)
 
+/obj/machinery/camera/attack_animal(mob/living/simple_animal/user)
+	if(!istype(user))
+		return
+	if(user.melee_damage_upper >= 10)
+		if(user.attack_sound)
+			playsound(src.loc, user.attack_sound, 100, 1)
+		user.do_attack_animation(src)
+		user.changeNext_move(CLICK_CD_MELEE)
+		health = max(0, health - user.melee_damage_upper)
+		if(!health && status)
+			deactivate(user, 0)
+
 /obj/machinery/camera/attackby(obj/W, mob/living/user, params)
 	var/msg = "<span class='notice'>You attach [W] into the assembly's inner circuits.</span>"
 	var/msg2 = "<span class='notice'>[src] already has that upgrade!</span>"
