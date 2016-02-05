@@ -14,6 +14,9 @@
 				malfhacking = 0
 				malfhack = null
 
+		if(machine)
+			machine.check_eye(src)
+
 		// Handle power damage (oxy)
 		if(aiRestorePowerRoutine)
 			// Lost power

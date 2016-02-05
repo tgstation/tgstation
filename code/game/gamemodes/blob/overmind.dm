@@ -20,6 +20,7 @@
 	var/ghostimage = null
 
 /mob/camera/blob/New()
+	overminds += src
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
@@ -42,6 +43,7 @@
 	..()
 
 /mob/camera/blob/Destroy()
+	overminds -= src
 	if (ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
@@ -90,7 +92,7 @@
 		return
 
 	var/message_a = say_quote(message, get_spans())
-	var/rendered = "<span class='big'><font color=\"#EE4000\">Blob Telepathy, <b>[name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"
+	var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"
 
 	for(var/mob/M in mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))

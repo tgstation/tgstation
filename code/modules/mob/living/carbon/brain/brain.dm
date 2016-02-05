@@ -5,7 +5,6 @@
 	var/obj/item/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
-	var/revivable = 1 //
 	has_limbs = 0
 
 /mob/living/carbon/brain/Destroy()
