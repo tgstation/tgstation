@@ -244,7 +244,7 @@
 /obj/item/weapon/circuitboard/cargo/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/device/multitool))
 		contraband = !contraband
-		user << "Receiver spectrum set to [contraband ? "Broad" : "Standard"]."
+		user << "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>"
 
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/screwdriver))

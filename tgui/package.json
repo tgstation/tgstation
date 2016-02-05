@@ -46,7 +46,7 @@
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0",
     "watchify": "3.7.0",
-    "webfontloader": "1.6.20"
+    "webfontloader": "1.6.21"
   },
   "browser": {
     "ractive": "ractive/ractive-legacy.runtime"
