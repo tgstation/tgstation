@@ -1,0 +1,11 @@
+author: neersighted
+delete-after: True
+changes: 
+  - rscadd: "The Syndicate has stolen the latest tgui improvements from Nanotrasen! All uplinks now feature filtering/search."
+  - rscadd: "Nanotrasen is proud to announce its next generation sleepers, featuring tgui!"
+  - rscadd: "Portable atmospheric components have been overhauled to use the latest interface technology."
+  - rscdel: "The Area Atmosphere Computer has been removed."
+  - rscadd: "Huge scrubbers now require power."
+  - rscdel: "Borg jetpacks are now refilled from a recharger and not a canister."
+  - rscadd: "Power monitors now have a state of the art graph. Hopefully they're actually useful to someone."
+  - rscadd: "Cargo consoles have been redesigned and now feature search and a shopping cart!"
