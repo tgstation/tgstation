@@ -129,7 +129,7 @@
 		//scarab symptom
 		var/itching = locate(/datum/symptom/itching) in D.symptoms
 		var/hallucinogen = locate(/datum/symptom/hallucigen) in D.symptoms
-		var/vomit = locate(/datum/symptomvomit/blood) in D.symptoms
+		var/vomit = locate(/datum/symptom/vomit/blood) in D.symptoms
 		if(itching && hallucinogen && vomit)
 			D.RemoveSymptom(itching)
 			D.RemoveSymptom(hallucinogen)
@@ -154,7 +154,7 @@
 			D.Refresh(1)
 		//sensory restoration
 		var/visionaid = locate(/datum/symptom/visionaid) in D.symptoms
-		var/youth = locate(/datum/symptom/heal/youth) in D.symptoms
+		var/youth = locate(/datum/symptom/youth) in D.symptoms
 		if(visionaid && youth)
 			D.RemoveSymptom(visionaid)
 			D.RemoveSymptom(youth)
