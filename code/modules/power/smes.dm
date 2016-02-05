@@ -46,7 +46,7 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/smes(null)
 	for(var/i in 1 to 5)
-		component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
+		component_parts += new /obj/item/weapon/stock_parts/cell/high/empty(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 5)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	RefreshParts()
@@ -78,7 +78,7 @@
 		MC += PC.maxcharge
 		C += PC.charge
 	capacity = MC / (15000) * 1e6
-	if(!initial(charge))
+	if(!initial(charge) && !charge)
 		charge = C / 15000 * 1e6
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
