@@ -3,7 +3,7 @@
 /turf
 	var/pressure_difference = 0
 	var/pressure_direction = 0
-	var/atmos_adjacent_turfs = 0
+	var/atmos_adjacent_turfs = list()
 	var/atmos_adjacent_turfs_amount = 0
 	var/atmos_supeconductivity = 0
 
@@ -132,11 +132,8 @@
 
 	var/remove = 1 //set by non simulated turfs who are sharing with this turf
 
-	for(var/direction in cardinal)
-		if(!(atmos_adjacent_turfs & direction))
-			continue
-
-		var/turf/enemy_tile = get_step(src, direction)
+	for(var/t in atmos_adjacent_turfs)
+		var/turf/enemy_tile = t
 
 		if(istype(enemy_tile,/turf/simulated))
 			var/turf/simulated/enemy_simulated = enemy_tile
