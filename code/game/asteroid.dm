@@ -179,7 +179,7 @@ var/global/max_secret_rooms = 6
 
 		if(locate(/area/asteroid/artifactroom) in surroundings)
 			valid = 0
-			continuef
+			continue
 
 		if(locate(/turf/simulated/floor/plating/asteroid/airless) in range(4,T))//A little less strict than the other checks due to tunnels
 			valid = 0
