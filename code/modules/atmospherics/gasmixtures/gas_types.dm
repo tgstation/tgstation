@@ -1,7 +1,7 @@
 var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases, which were at one time hardcoded
 
 /proc/meta_gas_list()
-	var/meta_list = new /list
+	. = list()
 	for(var/gas_path in subtypesof(/datum/gas))
 		var/list/gas_info = new(4)
 		var/datum/gas/g = gas_path
@@ -11,9 +11,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 		gas_info[META_GAS_MOLES_VISIBLE] = initial(g.moles_visible)
 		if(gas_info[META_GAS_MOLES_VISIBLE] != null)
 			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas(initial(g.gas_overlay))
-
-		meta_list[initial(g.id)] = gas_info
-	. = meta_list
+		.[initial(g.id)] = gas_info
 
 /*||||||||||||||/----------\||||||||||||||*\
 ||||||||||||||||[GAS DATUMS]||||||||||||||||
