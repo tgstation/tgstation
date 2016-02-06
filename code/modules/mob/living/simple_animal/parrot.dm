@@ -335,6 +335,7 @@
 		user.drop_item()
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
+		speak_chance *= 2
 		user << "<span class='notice'>[src] eagerly devours the cracker.</span>"
 	..()
 	return
@@ -892,8 +893,8 @@
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
 	S["phrases"] 			>> speech_buffer
-	S["rounds survived"]	>> rounds_survived
-	S["longest survival"]	>> longest_survival
+	S["rounds_survived"]	>> rounds_survived
+	S["longest_survival"]	>> longest_survival
 
 	if(isnull(speech_buffer))
 		speech_buffer = list()
@@ -902,10 +903,10 @@
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
 	S["phrases"] 			<< speech_buffer
 	if(health > 0)
-		S["rounds survived"]	<< rounds_survived + 1
+		S["rounds_survived"]	<< rounds_survived + 1
 		if(rounds_survived == longest_survival)
-			S["longest survival"]	<< longest_survival + 1
+			S["longest_survival"]	<< longest_survival + 1
 	else
-		S["rounds survived"]	<< 0
+		S["rounds_survived"]	<< 0
 
 	memory_saved = 1
