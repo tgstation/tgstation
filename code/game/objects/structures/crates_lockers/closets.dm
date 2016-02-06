@@ -396,5 +396,6 @@
 		spawn(4) //overlays don't support flick so we have to cheat
 		update_icon()
 
-/obj/structure/closet/get_vision_impairments(mob/user)
-	return global_hud.vimpaired
+/obj/structure/closet/get_remote_view_fullscreens(mob/user)
+	if(!(user.sight & (SEEOBJS|SEEMOBS)))
+		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)

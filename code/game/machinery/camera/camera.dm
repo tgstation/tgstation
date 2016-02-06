@@ -389,10 +389,9 @@
 		cameranet.updatePortableCamera(src)
 		prev_turf = get_turf(src)
 
-/obj/machinery/camera/get_vision_impairments(mob/user)
-	. = list()
+/obj/machinery/camera/get_remote_view_fullscreens(mob/user)
 	if(view_range == short_range) //unfocused
-		. += global_hud.darkMask
+		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
 
 /obj/machinery/camera/update_remote_sight(mob/living/user)
 	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras

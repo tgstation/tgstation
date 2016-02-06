@@ -375,7 +375,7 @@ var/list/blood_splatter_icons = list()
 	return
 
 //the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
-/atom/proc/get_vision_impairments(mob/user)
+/atom/proc/get_remote_view_fullscreens(mob/user)
 	return
 
 //the sight changes to give to the mob whose perspective is set to that atom (e.g. A mob with nightvision loses its nightvision while looking through a normal camera)

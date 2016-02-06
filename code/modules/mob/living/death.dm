@@ -37,9 +37,6 @@
 /mob/living/death(gibbed)
 	unset_machine()
 	reset_perspective(null)
-	if(client)
-		if(damageoverlay)
-			damageoverlay.overlays.Cut()
 	timeofdeath = world.time
 	tod = worldtime2text()
 	if(mind)
@@ -49,15 +46,12 @@
 		dead_mob_list += src
 	else if(buckled)
 		buckled.unbuckle_mob()
-
 	paralysis = 0
 	stunned = 0
 	weakened = 0
 	sleeping = 0
 	update_sight()
 	update_vision_overlays()
-	clear_fullscreens()
-	update_damage_hud()
 	update_health_hud()
 	update_canmove()
 

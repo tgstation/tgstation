@@ -888,19 +888,15 @@ var/list/ai_list = list()
 		update_vision_overlays()
 
 
-/mob/living/silicon/ai/adjust_blurriness()
-	return
-
-/mob/living/silicon/ai/set_blindness()
-	return
-
 /mob/living/silicon/ai/update_vision_overlays()
 	if(!client)
 		return
-	client.screen.Remove(global_hud.blind)
 
 	if(stat == DEAD) //if dead we just remove all vision impairments
+		clear_fullscreens()
 		return
 
 	if(eye_blind)
-		client.screen += global_hud.blind
+		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+	else
+		clear_fullscreen("blind")

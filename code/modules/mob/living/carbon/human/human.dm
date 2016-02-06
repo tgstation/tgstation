@@ -910,45 +910,53 @@
 /mob/living/carbon/human/update_vision_overlays()
 	if(!client)
 		return
-	client.screen.Remove(global_hud.blind, global_hud.darkMask, global_hud.blurry, global_hud.druggy, global_hud.vimpaired)
 
 	if(stat == DEAD) //if dead we remove all vision impairments
+		clear_fullscreens()
 		return
-
-	var/list/impairments = list()
 
 	if(tinted_weldhelh)
 		if(tinttotal >= TINT_BLIND)
-			impairments |= global_hud.blind
+			overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
 		else if(tinttotal >= TINT_DARKENED)
-			impairments |= global_hud.darkMask
+			overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
+		else
+			clear_fullscreen("tint", 0)
 
 	if(eye_blind)
-		impairments |= global_hud.blind
+		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+	else
+		clear_fullscreen("blind")
 
-	if(disabilities & NEARSIGHT && !(glasses && glasses.vision_correction))
-		impairments |= global_hud.vimpaired
+	if((disabilities & NEARSIGHT) && !(glasses && glasses.vision_correction))
+		overlay_fullscreen("nearsight", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("nearsight")
 
 	if(eye_blurry)
-		impairments |= global_hud.blurry
+		overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+	else
+		clear_fullscreen("blurry")
 
 	if(druggy)
-		impairments |= global_hud.druggy
+		overlay_fullscreen("high", /obj/screen/fullscreen/high)
+	else
+		clear_fullscreen("high")
 
 	if(eye_stat > 20)
 		if(eye_stat > 30)
-			impairments |= global_hud.darkMask
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
 		else
-			impairments |= global_hud.vimpaired
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("eye_damage")
 
 	if(client.eye != src)
 		var/atom/A = client.eye
-		var/new_impairments = A.get_vision_impairments(src)
-		if(new_impairments)
-			impairments |= new_impairments
+		A.get_remote_view_fullscreens(src)
+	else
+		clear_fullscreen("remote_view", 0)
 
-	for(var/X in impairments)
-		client.screen += X
 
 /mob/living/carbon/human/update_health_hud()
 	if(!client || !hud_used)

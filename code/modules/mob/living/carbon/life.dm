@@ -141,7 +141,7 @@
 
 	else //Enough oxygen
 		failed_last_breath = 0
-		if(getOxyLoss())
+		if(oxyloss)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases["o2"][MOLES]/6
 		clear_alert("oxy")

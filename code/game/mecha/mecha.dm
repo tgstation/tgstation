@@ -1003,7 +1003,8 @@ var/year_integer = text2num(year) // = 2013???
 
 /obj/mecha/update_remote_sight(mob/living/user)
 	if(occupant_sight_flags)
-		user.sight |= occupant_sight_flags
+		if(user == occupant)
+			user.sight |= occupant_sight_flags
 
 //////////////////////////////////////// Action Buttons ///////////////////////////////////////////////
 

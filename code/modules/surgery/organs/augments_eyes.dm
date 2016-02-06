@@ -43,7 +43,7 @@
 		if(prob(10 * severity))
 			return
 	owner << "<span class='warning'>Static obfuscates your vision!</span>"
-	flick("e_flash", owner.flash)
+	owner.flash_eyes(visual = 1)
 
 /obj/item/organ/internal/cyberimp/eyes/xray
 	name = "X-ray implant"

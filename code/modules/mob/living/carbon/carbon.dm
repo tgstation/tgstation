@@ -671,42 +671,52 @@ var/const/GALOSHES_DONT_HELP = 4
 /mob/living/carbon/update_vision_overlays()
 	if(!client)
 		return
-	client.screen.Remove(global_hud.blind, global_hud.darkMask, global_hud.blurry, global_hud.druggy, global_hud.vimpaired)
 
-	if(stat == DEAD) //if dead we just remove all vision impairments
+	if(stat == DEAD) //if dead we remove all vision impairments
+		clear_fullscreens()
 		return
-
-	var/list/impairments = list()
 
 	if(tinted_weldhelh)
 		if(tinttotal >= TINT_BLIND)
-			impairments |= global_hud.blind
+			overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
 		else if(tinttotal >= TINT_DARKENED)
-			impairments |= global_hud.darkMask
+			overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
+		else
+			clear_fullscreen("tint", 0)
 
 	if(eye_blind)
-		impairments |= global_hud.blind
+		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+	else
+		clear_fullscreen("blind")
+
+	if(disabilities & NEARSIGHT)
+		overlay_fullscreen("nearsight", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("nearsight")
 
 	if(eye_blurry)
-		impairments |= global_hud.blurry
+		overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+	else
+		clear_fullscreen("blurry")
 
 	if(druggy)
-		impairments |= global_hud.druggy
+		overlay_fullscreen("high", /obj/screen/fullscreen/high)
+	else
+		clear_fullscreen("high")
 
 	if(eye_stat > 20)
 		if(eye_stat > 30)
-			impairments |= global_hud.darkMask
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
 		else
-			impairments |= global_hud.vimpaired
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("eye_damage")
 
 	if(client.eye != src)
 		var/atom/A = client.eye
-		var/new_impairments = A.get_vision_impairments(src)
-		if(new_impairments)
-			impairments |= new_impairments
-
-	for(var/A in impairments)
-		client.screen += A
+		A.get_remote_view_fullscreens(src)
+	else
+		clear_fullscreen("remote_view", 0)
 
 
 /mob/living/carbon/revive()
@@ -722,14 +732,6 @@ var/const/GALOSHES_DONT_HELP = 4
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
-	if(client)
-		if(eye_blind)
-			client.screen.Remove(global_hud.blind)
-			clear_alert("blind")
-		if(eye_blurry)
-			client.screen.Remove(global_hud.blurry)
-		client.screen.Remove(global_hud.darkMask)
-		client.screen.Remove(global_hud.vimpaired)
 	eye_stat = 0
 	disabilities = 0
 	eye_blind = 0
@@ -776,79 +778,50 @@ var/const/GALOSHES_DONT_HELP = 4
 	if(!client)
 		return
 
-	if(damageoverlay)
-		damageoverlay.overlays.Cut()
-		switch(stat)
-			if(UNCONSCIOUS)
-				//Critical damage passage overlay
-				if(health <= config.health_threshold_crit)
-					var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage0")
-					I.blend_mode = BLEND_OVERLAY //damageoverlay is BLEND_MULTIPLY
-					switch(health)
-						if(-20 to -10)
-							I.icon_state = "passage1"
-						if(-30 to -20)
-							I.icon_state = "passage2"
-						if(-40 to -30)
-							I.icon_state = "passage3"
-						if(-50 to -40)
-							I.icon_state = "passage4"
-						if(-60 to -50)
-							I.icon_state = "passage5"
-						if(-70 to -60)
-							I.icon_state = "passage6"
-						if(-80 to -70)
-							I.icon_state = "passage7"
-						if(-90 to -80)
-							I.icon_state = "passage8"
-						if(-95 to -90)
-							I.icon_state = "passage9"
-						if(-INFINITY to -95)
-							I.icon_state = "passage10"
-					damageoverlay.overlays += I
-			if(CONSCIOUS)
-				//Oxygen damage overlay
-				if(oxyloss)
-					var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay0")
-					switch(oxyloss)
-						if(10 to 20)
-							I.icon_state = "oxydamageoverlay1"
-						if(20 to 25)
-							I.icon_state = "oxydamageoverlay2"
-						if(25 to 30)
-							I.icon_state = "oxydamageoverlay3"
-						if(30 to 35)
-							I.icon_state = "oxydamageoverlay4"
-						if(35 to 40)
-							I.icon_state = "oxydamageoverlay5"
-						if(40 to 45)
-							I.icon_state = "oxydamageoverlay6"
-						if(45 to INFINITY)
-							I.icon_state = "oxydamageoverlay7"
-					damageoverlay.overlays += I
+	if(stat == UNCONSCIOUS && health <= config.health_threshold_crit)
+		var/severity = 0
+		switch(health)
+			if(-20 to -10) severity = 1
+			if(-30 to -20) severity = 2
+			if(-40 to -30) severity = 3
+			if(-50 to -40) severity = 4
+			if(-60 to -50) severity = 5
+			if(-70 to -60) severity = 6
+			if(-80 to -70) severity = 7
+			if(-90 to -80) severity = 8
+			if(-95 to -90) severity = 9
+			if(-INFINITY to -95) severity = 10
+		overlay_fullscreen("crit", /obj/screen/fullscreen/crit, severity)
+	else
+		clear_fullscreen("crit")
+		if(oxyloss)
+			var/severity = 0
+			switch(oxyloss)
+				if(10 to 20) severity = 1
+				if(20 to 25) severity = 2
+				if(25 to 30) severity = 3
+				if(30 to 35) severity = 4
+				if(35 to 40) severity = 5
+				if(40 to 45) severity = 6
+				if(45 to INFINITY) severity = 7
+			overlay_fullscreen("oxy", /obj/screen/fullscreen/oxy, severity)
+		else
+			clear_fullscreen("oxy")
 
-				//Fire and Brute damage overlay (BSSR)
-				var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
-				if(hurtdamage)
-					var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay0")
-					I.blend_mode = BLEND_ADD
-					switch(hurtdamage)
-						if(5 to 15)
-							I.icon_state = "brutedamageoverlay1"
-						if(15 to 30)
-							I.icon_state = "brutedamageoverlay2"
-						if(30 to 45)
-							I.icon_state = "brutedamageoverlay3"
-						if(45 to 70)
-							I.icon_state = "brutedamageoverlay4"
-						if(70 to 85)
-							I.icon_state = "brutedamageoverlay5"
-						if(85 to INFINITY)
-							I.icon_state = "brutedamageoverlay6"
-					var/image/black = image(I.icon, I.icon_state) //BLEND_ADD doesn't let us darken, so this is just to blacken the edge of the screen
-					black.color = "#170000"
-					damageoverlay.overlays += I
-					damageoverlay.overlays += black
+		//Fire and Brute damage overlay (BSSR)
+		var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
+		if(hurtdamage)
+			var/severity = 0
+			switch(hurtdamage)
+				if(5 to 15) severity = 1
+				if(15 to 30) severity = 2
+				if(30 to 45) severity = 3
+				if(45 to 70) severity = 4
+				if(70 to 85) severity = 5
+				if(85 to INFINITY) severity = 6
+			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+		else
+			clear_fullscreen("brute")
 
 /mob/living/carbon/update_health_hud(shown_health_amount)
 	if(!client || !hud_used)

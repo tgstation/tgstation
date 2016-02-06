@@ -469,14 +469,6 @@ Sorry Giacom. Please don't be mad :(
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
-	if(client)
-		if(eye_blind)
-			client.screen.Remove(global_hud.blind)
-			clear_alert("blind")
-		if(eye_blurry)
-			client.screen.Remove(global_hud.blurry)
-		client.screen.Remove(global_hud.darkMask)
-		client.screen.Remove(global_hud.vimpaired)
 	eye_stat = 0
 	disabilities = 0
 	eye_blind = 0
@@ -495,6 +487,7 @@ Sorry Giacom. Please don't be mad :(
 	updatehealth()
 	update_fire()
 	regenerate_icons()
+	update_vision_overlays()
 
 /mob/living/proc/update_damage_overlays()
 	return
@@ -982,17 +975,12 @@ Sorry Giacom. Please don't be mad :(
 		eye_blind += amount
 		if(!old_eye_blind)
 			throw_alert("blind", /obj/screen/alert/blind)
-			update_vision_overlays()//if we were not blind before, we update our vision overlays.
+			update_vision_overlays()//if we were not blind before, we update our blind overlays.
 		return
 	if(eye_blind)
 		var/blind_minimum = 0
 		if(stat == UNCONSCIOUS || (disabilities & BLIND))
 			blind_minimum = 1
-		if(client)
-			if(client.eye != src)
-				var/atom/A = client.eye
-				if(global_hud.blind in A.get_vision_impairments(src))
-					blind_minimum = 1
 		eye_blind = max(eye_blind+amount, blind_minimum)
 		if(!eye_blind)
 			clear_alert("blind")
@@ -1009,17 +997,12 @@ Sorry Giacom. Please don't be mad :(
 		var/old_eye_blind = eye_blind
 		eye_blind = amount
 		if(client && !old_eye_blind)
-			update_vision_overlays()
 			throw_alert("blind", /obj/screen/alert/blind)
+			update_vision_overlays()
 	else if(eye_blind)
 		var/blind_minimum = 0
 		if(stat == UNCONSCIOUS || (disabilities & BLIND))
 			blind_minimum = 1
-		if(client)
-			if(client.eye != src)
-				var/atom/A = client.eye
-				if(global_hud.blind in A.get_vision_impairments(src))
-					blind_minimum = 1
 		eye_blind = blind_minimum
 		if(!eye_blind)
 			clear_alert("blind")

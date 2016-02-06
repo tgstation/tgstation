@@ -1238,24 +1238,21 @@
 /mob/living/silicon/robot/update_vision_overlays()
 	if(!client)
 		return
-	client.screen.Remove(global_hud.blind)
 
 	if(stat == DEAD) //if dead we just remove all vision impairments
+		clear_fullscreens()
 		return
 
-	var/list/impairments = list()
-
 	if(eye_blind)
-		impairments |= global_hud.blind
+		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+	else
+		clear_fullscreen("blind")
 
 	if(client.eye != src)
 		var/atom/A = client.eye
-		var/new_impairments = A.get_vision_impairments(src)
-		if(new_impairments)
-			impairments |= new_impairments
-
-	for(var/A in impairments)
-		client.screen += A
+		A.get_remote_view_fullscreens(src)
+	else
+		clear_fullscreen("remote_view", 0)
 
 /mob/living/silicon/robot/fully_replace_character_name(oldname,newname)
 	..()

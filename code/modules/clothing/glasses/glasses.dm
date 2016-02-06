@@ -9,7 +9,7 @@
 		if(!(H.disabilities & BLIND))
 			if(H.glasses == src)
 				H << "<span class='danger'>The [src] overloads and blinds you!</span>"
-				flick("e_flash", H.flash)
+				H.flash_eyes(visual = 1)
 				H.set_blindness(3)
 				H.set_blurriness(5)
 				H.adjust_eye_stat(5)
