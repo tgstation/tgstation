@@ -31,7 +31,7 @@ var/list/gaslist_cache = null
 
 /datum/gas_mixture
 	var/list/gases
-	var/temperature // degrees Kelvin
+	var/temperature // Kelvins
 	var/tmp/temperature_archived
 	var/volume
 	var/last_share
@@ -48,41 +48,41 @@ var/list/gaslist_cache = null
 
 //listmos procs
 
-//assert_gas(gas_id) - used to guarantee that the gas list for this id exists.
-//Must be used before adding to a gas. May be used before reading from a gas.
+	//assert_gas(gas_id) - used to guarantee that the gas list for this id exists.
+	//Must be used before adding to a gas. May be used before reading from a gas.
 /datum/gas_mixture/proc/assert_gas(gas_id)
 	var/cached_gases = gases
 	if(cached_gases[gas_id])
 		return
 	cached_gases[gas_id] = gaslist(gas_id) //see ATMOSPHERICS/gas_types.dm
 
-//assert_gases(args) - shorthand for calling assert_gas() once for each gas type.
+	//assert_gases(args) - shorthand for calling assert_gas() once for each gas type.
 /datum/gas_mixture/proc/assert_gases()
 	for(var/id in args)
 		assert_gas(id)
 
-//add_gas(gas_id) - similar to assert_gas(), but does not check for an existing
-//gas list for this id. This can clobber existing gases.
-//Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
+	//add_gas(gas_id) - similar to assert_gas(), but does not check for an existing
+		//gas list for this id. This can clobber existing gases.
+	//Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
 /datum/gas_mixture/proc/add_gas(gas_id)
 	gases[gas_id] = gaslist(gas_id)
 
-//add_gases(args) - shorthand for calling add_gas() once for each gas_type.
+	//add_gases(args) - shorthand for calling add_gas() once for each gas_type.
 /datum/gas_mixture/proc/add_gases()
 	for(var/id in args)
 		add_gas(id)
 
-//garbage_collect() - removes any gas list which is empty.
-//Must be used after subtracting from a gas. Must be used after assert_gas()
-//if assert_gas() was called only to read from the gas.
-//By removing empty gases, processing speed is increased.
+	//garbage_collect() - removes any gas list which is empty.
+	//Must be used after subtracting from a gas. Must be used after assert_gas()
+		//if assert_gas() was called only to read from the gas.
+	//By removing empty gases, processing speed is increased.
 /datum/gas_mixture/proc/garbage_collect()
 	var/list/cached_gases = gases
 	for(var/id in cached_gases)
 		if(cached_gases[id][MOLES] <= 0 && cached_gases[id][ARCHIVE] <= 0)
 			cached_gases -= id
 
-//PV = nRT
+	//PV = nRT
 /datum/gas_mixture/proc/heat_capacity()
 	var/list/cached_gases = gases
 	. = 0
