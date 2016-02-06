@@ -67,20 +67,18 @@
 			else
 				M.visible_message("[M] directs [src] to \his eyes.", \
 									 "<span class='notice'>You wave the light in front of your eyes.</span>")
-			return
-
-		user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
-							 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
-		M << "<span class='danger'>[user] directs [src] to your eyes.</span>"
-
-		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
-			if(M.stat == DEAD || M.disabilities & BLIND)	//mob is dead or fully blind
-				user << "<span class='warning'>[M] pupils don't react to the light!</span>"
-			else if(M.dna.check_mutation(XRAY))	//mob has X-RAY vision
-				user << "<span class='danger'>[M] pupils give an eerie glow!</span>"
-			else	//they're okay!
-				if(M.flash_eyes(visual = 1))
-					user << "<span class='notice'>[M]'s pupils narrow.</span>"
+		else
+			user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
+								 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
+			var/mob/living/carbon/C = M
+			if(istype(C))
+				if(C.stat == DEAD || (C.disabilities & BLIND)) //mob is dead or fully blind
+					user << "<span class='warning'>[C] pupils don't react to the light!</span>"
+				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
+					user << "<span class='danger'>[C] pupils give an eerie glow!</span>"
+				else //they're okay!
+					if(C.flash_eyes(visual = 1))
+						user << "<span class='notice'>[C]'s pupils narrow.</span>"
 	else
 		return ..()
 
