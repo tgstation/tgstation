@@ -937,9 +937,3 @@ Sorry Giacom. Please don't be mad :(
 	else
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 	return
-
-/mob/living/proc/can_use_guns(var/obj/item/weapon/gun/G)
-	if (!IsAdvancedToolUser())
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
-		return 0
-	return 1
