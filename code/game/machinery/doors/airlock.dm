@@ -65,6 +65,8 @@ var/list/airlock_overlays = list()
 	var/image/old_weld_overlay
 	var/image/old_sparks_overlay
 
+	var/request_cooldown = 0 //To prevent spamming requests for the AI to open
+
 	explosion_block = 1
 
 /obj/machinery/door/airlock/New()
@@ -1129,3 +1131,28 @@ var/list/airlock_overlays = list()
 		locked = 1
 		loseMainPower()
 		loseBackupPower()
+
+
+/obj/machinery/door/airlock/AltClick(mob/living/user)
+	if(!istype(user))
+		user << "<span class='info'>Nice try, ghosts.</span>"
+		return
+
+	if (!user.canUseTopic(src))
+		user << "<span class='info'>You can't do this right now!</span>"
+		return
+
+	if(stat & (NOPOWER|BROKEN) || emagged)
+		user << "<span class='info'>The door isn't working!</span>"
+		return
+
+	if(request_cooldown > world.time)
+		user << "<span class='info'>The airlocks spam filter is blocking your request. Please wait at least 10 seconds between requests.</span>"
+		return
+
+	for(var/mob/living/silicon/ai/AI in living_mob_list)
+		if(!AI.client)
+			continue
+		AI << "<span class='info'>[user.name] is requesting you to open [src]<a href='?src=\ref[AI];remotedoor=\ref[src]'>(Open)</a></span>"
+	request_cooldown = world.time + 100
+	user << "<span class='info'>Request sent.</span>"
