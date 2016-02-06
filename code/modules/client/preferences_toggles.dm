@@ -279,3 +279,12 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		src << "<span class='notice'>You will now examine everything you click on.</span>"
 	else
 		src << "<span class='notice'>You will no longer examine things you click on.</span>"
+
+/client/verb/toggle_announcment_sound()
+	set name = "Hear/Silence Announcments"
+	set category = "Preferences"
+	set desc = ".Toggles hearing Central Command, Captain, VOX, and other announcment sounds"
+	prefs.toggles ^= SOUND_ANNOUNCMENTS
+	src << "You will now [(prefs.toggles & SOUND_ANNOUNCMENTS) ? "hear announcment sounds" : "no longer hear announcments"]."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
