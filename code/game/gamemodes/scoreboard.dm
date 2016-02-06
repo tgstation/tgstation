@@ -457,7 +457,7 @@
 		if(1000 to 4999) score["rating"] = "Promotions for Everyone"
 		if(5000 to 9999) score["rating"] = "Ambassadors of Discovery"
 		if(10000 to 49999) score["rating"] = "The Pride of Science Itself"
-		if(50000 to INFINITY) score["rating"] = "NanoTrasen's Finest"
+		if(50000 to INFINITY) score["rating"] = "Nanotrasen's Finest"
 	dat += "<B><U>RATING:</U></B> [score["rating"]]"
 
 	for(var/i = 1; i <= end_icons.len; i++)

@@ -2,7 +2,7 @@
 	name = "INVOICE"
 	desc = "An invoice.  Someone has angrily scrawled on it in red pen."
 	info = {"
-<b>NanoTrasen Construction Division</b><br />
+<b>Nanotrasen Construction Division</b><br />
 cheapships@nanotrasen.com<br />
 Slapshod Station 12<br />
 Biscin System<br />

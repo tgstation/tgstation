@@ -14,7 +14,7 @@ log transactions
 #define PRINT_DELAY 100
 
 /obj/machinery/atm
-	name = "NanoTrasen Automatic Teller Machine"
+	name = "Nanotrasen Automatic Teller Machine"
 	desc = "For all your monetary needs!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "atm"
@@ -125,7 +125,7 @@ log transactions
 		to_chat(user, "<span class='warning'>Your ghostly limb passes right through \the [src].</span>")
 		return
 	if(istype(user, /mob/living/silicon))
-		to_chat(user, "<span class='warning'>Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per NanoTrasen regulation #1005.</span>")
+		to_chat(user, "<span class='warning'>Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per Nanotrasen regulation #1005.</span>")
 		return
 	if(get_dist(src,user) <= 1)
 		//check to see if the user has low security enabled
@@ -133,9 +133,9 @@ log transactions
 			scan_user(user)
 
 		//js replicated from obj/machinery/computer/card
-		var/dat = {"<h1>NanoTrasen Automatic Teller Machine</h1>
+		var/dat = {"<h1>Nanotrasen Automatic Teller Machine</h1>
 			For all your monetary needs!<br>
-			<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br/>
+			<i>This terminal is</i> [machine_id]. <i>Report this code when contacting Nanotrasen IT Support</i><br/>
 			Card: <a href='?src=\ref[src];choice=insert_card'>[held_card ? held_card.name : "------"]</a><br><br><hr>"}
 
 		if(ticks_left_locked_down > 0)
@@ -233,7 +233,7 @@ log transactions
 				<input type='submit' value='Submit'><br>
 				</form>"}
 		else
-			dat += "<span class='warning'>Unable to connect to accounts database, please retry and if the issue persists contact NanoTrasen IT support.</span>"
+			dat += "<span class='warning'>Unable to connect to accounts database, please retry and if the issue persists contact Nanotrasen IT support.</span>"
 			reconnect_database()
 
 		user << browse(dat,"window=atm;size=550x650")

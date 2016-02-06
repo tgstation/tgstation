@@ -71,7 +71,7 @@
 		var/datum/objective/anti_revolution/demote/obj = new
 		obj.owner = head
 		obj.target = target
-		obj.explanation_text = "[target.current.real_name], the [target.assigned_role]  has been classified as harmful to NanoTrasen's goals. Demote them to assistant."
+		obj.explanation_text = "[target.current.real_name], the [target.assigned_role]  has been classified as harmful to Nanotrasen's goals. Demote them to assistant."
 		head.objectives += obj
 
 
