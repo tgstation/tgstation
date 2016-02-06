@@ -1,7 +1,6 @@
 #define WHITE_TEAM "white"
 #define RED_TEAM "red"
 #define BLUE_TEAM "blue"
-#define CTF_RESPAWN_COOLDOWN 150 // 15 seconds
 #define FLAG_RETURN_TIME 200 // 20 seconds
 
 
@@ -97,6 +96,7 @@
 	//Capture the Flag scoring
 	var/points = 0
 	var/points_to_win = 3
+	var/respawn_cooldown = 150 //15 seconds
 	//Capture Point/King of the Hill scoring
 	var/control_points = 0
 	var/control_points_to_win = 180
@@ -130,7 +130,7 @@
 	if(ticker.current_state != GAME_STATE_PLAYING)
 		return
 	if(user.ckey in team_members)
-		if(user.mind.current && user.mind.current.timeofdeath + CTF_RESPAWN_COOLDOWN > world.time)
+		if(user.mind.current && user.mind.current.timeofdeath + respawn_cooldown > world.time)
 			user << "It must be more than 15 seconds from your last death to respawn!"
 			return
 		var/client/new_team_member = user.client
@@ -228,9 +228,17 @@
 	ears = /obj/item/device/radio/headset/syndicate/alt
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
 
+/datum/outfit/ctf/red/instagib
+	r_hand = /obj/item/weapon/gun/energy/laser/instakill/red
+	shoes = /obj/item/clothing/shoes/jackboots/fast
+
 /datum/outfit/ctf/blue
 	ears = /obj/item/device/radio/headset/headset_cent/commander
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
+
+/datum/outfit/ctf/blue/instagib
+	r_hand = /obj/item/weapon/gun/energy/laser/instakill/blue
+	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
 	var/obj/item/device/radio/R = H.ears
@@ -340,4 +348,8 @@
 			if(CTF.ctf_enabled && (user.ckey in CTF.team_members))
 				controlling = CTF
 				icon_state = "dominator-[CTF.team]"
+				for(var/mob/M in player_list)
+					var/area/mob_area = get_area(M)
+					if(istype(mob_area, /area/ctf))
+						M << "<span class='userdanger'>[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!</span>"
 				break
