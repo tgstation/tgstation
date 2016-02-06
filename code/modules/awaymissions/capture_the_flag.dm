@@ -2,6 +2,8 @@
 #define RED_TEAM "red"
 #define BLUE_TEAM "blue"
 #define FLAG_RETURN_TIME 200 // 20 seconds
+#define INSTAGIB_RESPAWN 50 //5 seconds
+#define DEFAULT_RESPAWN 150 //15 seconds
 
 
 
@@ -96,13 +98,14 @@
 	//Capture the Flag scoring
 	var/points = 0
 	var/points_to_win = 3
-	var/respawn_cooldown = 150 //15 seconds
+	var/respawn_cooldown = DEFAULT_RESPAWN
 	//Capture Point/King of the Hill scoring
 	var/control_points = 0
 	var/control_points_to_win = 180
 	var/list/team_members = list()
 	var/ctf_enabled = FALSE
 	var/ctf_gear = /datum/outfit/ctf
+	var/instagib_gear = /datum/outfit/ctf/instagib
 
 /obj/machinery/capture_the_flag/New()
 	..()
@@ -117,12 +120,14 @@
 	icon_state = "syndbeacon"
 	team = RED_TEAM
 	ctf_gear = /datum/outfit/ctf/red
+	instagib_gear = /datum/outfit/ctf/red/instagib
 
 /obj/machinery/capture_the_flag/blue
 	name = "Blue CTF Controller"
 	icon_state = "bluebeacon"
 	team = BLUE_TEAM
 	ctf_gear = /datum/outfit/ctf/blue
+	instagib_gear = /datum/outfit/ctf/blue/instagib
 
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
@@ -131,7 +136,7 @@
 		return
 	if(user.ckey in team_members)
 		if(user.mind.current && user.mind.current.timeofdeath + respawn_cooldown > world.time)
-			user << "It must be more than 15 seconds from your last death to respawn!"
+			user << "It must be more than [respawn_cooldown/10] seconds from your last death to respawn!"
 			return
 		var/client/new_team_member = user.client
 		dust_old(user)
@@ -180,8 +185,6 @@
 		if(points >= points_to_win)
 			victory()
 
-
-
 /obj/machinery/capture_the_flag/proc/victory()
 	for(var/mob/M in mob_list)
 		var/area/mob_area = get_area(M)
@@ -203,6 +206,13 @@
 			spawn(300)
 				CTF.ctf_enabled = TRUE
 
+
+/obj/machinery/capture_the_flag/proc/instagib_mode()
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		if(CTF.ctf_enabled == TRUE)
+			CTF.ctf_gear = CTF.instagib_gear
+			CTF.respawn_cooldown = INSTAGIB_RESPAWN
+
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle/CTF
 	desc = "This looks like it could really hurt in melee."
 	force = 75
@@ -223,6 +233,10 @@
 	l_pocket = /obj/item/ammo_box/magazine/wt550m9
 	r_pocket = /obj/item/ammo_box/magazine/wt550m9
 	r_hand = /obj/item/weapon/gun/projectile/automatic/wt550/CTF
+
+/datum/outfit/ctf/instagib
+	r_hand = /obj/item/weapon/gun/energy/laser/instakill
+	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/red
 	ears = /obj/item/device/radio/headset/syndicate/alt
