@@ -294,8 +294,6 @@
 			pixel_x = oldPY
 			pixel_y = (oldPX*(-1))
 
-
-
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1)
@@ -330,8 +328,6 @@
 		rotation += (rotation % 90) //diagonal rotations not allowed, round up
 	rotation = SimplifyDegrees(rotation)
 
-
-
 	//remove area surrounding docking port
 	if(areaInstance.contents.len)
 		var/area/A0 = locate("[area_type]")
@@ -363,7 +359,7 @@
 			for(var/atom/movable/AM in T0)
 				AM.onShuttleMove(T1, rotation)
 
-		if (rotation)
+		if(rotation)
 			T1.shuttleRotate(rotation)
 
 		//lighting stuff
