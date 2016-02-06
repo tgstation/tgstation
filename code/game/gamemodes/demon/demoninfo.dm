@@ -4,6 +4,8 @@
 #define BANEIRON 3
 #define BANEWHITECLOTHES 4
 
+var/list/allDemons = list()
+
 /datum/demoninfo/
 	var/datum/mind/owner = null
 	var/obligationlaw
@@ -15,9 +17,9 @@
 	var/obligationlore
 	var/banetype
 
-/proc/randomDemonInfo()
+/proc/randomDemonInfo(var/name = randomDemonName())
 	var/datum/demoninfo/demon = new
-	demon.name = randomDemonName()
+	demon.name = name
 	var/temp = randomdemonbane()
 	demon.banelaw = temp[1]
 	demon.banelore = temp[2]
@@ -29,6 +31,16 @@
 	demon.banlaw = temp[1]
 	demon.banlore = temp[2]
 	return demon
+
+/proc/demonInfo(var/name)
+	if(allDemons[name])
+		return allDemons[name]
+	else
+		var/datum/demoninfo/demon = randomDemonInfo(name)
+		allDemons[name] = demon
+		return demon
+	
+	
 
 /proc/randomDemonName()
 	var/preTitle = ""
@@ -45,7 +57,7 @@
 		mainName += pick("hal", "ve", "odr", "neit", "ca", "quon", "mya", "folth", "wren", "gyer", "geyr", "hil", "niet", "twoe")
 		probability -= 25
 	if(prob(40))
-		suffix = pick(" the Red", " the Soulless", " the Master", ", the Lord of all things")
+		suffix = pick(" the Red", " the Soulless", " the Master", ", the Lord of all things", ", Jr.")
 	return preTitle + title + mainName + suffix
 
 

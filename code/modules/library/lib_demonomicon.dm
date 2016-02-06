@@ -1,0 +1,49 @@
+/obj/item/weapon/book/demonomicon
+	name = "Demonomicon"
+	icon = 'icons/obj/library.dmi'
+	icon_state ="book"
+	throw_speed = 1
+	throw_range = 10
+	burn_state = LAVA_PROOF
+	author = "Forces beyond your comprehension"
+	unique = 1
+	title = "The Demonomicon"
+
+
+
+
+
+/obj/item/weapon/book/demonomicon/attack_self(mob/user)
+	if(is_blind(user))
+		return
+	if(ismonkey(user))
+		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
+		return
+	if(ishuman(user))
+		var/mob/living/carbon/human/U = user
+		var/demonName = copytext(sanitize(input(user, "What demonic being do you wish to research?", "Demonomicon", null)  as text),1,MAX_MESSAGE_LEN)
+		var/speed = 300
+		var/correctness = 85
+		var/willpower = 80
+		if(U.job in list("Librarian")) // the librarian is both faster, and more accurate than normal crew members at research
+			speed = 45
+			correctness = 100
+			willpower = 95
+		if(U.job in list("Captain", "Security Officer", "Head of Security", "Detective", "Warden"))
+			willpower = 90
+		if(U.job in list("Clown")) // WHO GAVE THE CLOWN A DEMONOMICON?  BAD THINGS WILL HAPPEN!
+			willpower = 25
+		correctness -= U.getBrainLoss() *0.5 //Brain damage makes researching hard.
+		speed += U.getBrainLoss() * 3
+		user.visible_message("[user] opens [title] and begins reading intently.")
+		if(do_after(user, speed, 0, src))
+			var/usedName = demonName
+			if(!prob(correctness))
+				usedName += "x"
+			var/datum/demoninfo/demon = demonInfo(usedName)
+			user << browse("Information on [demonName]<br><br><br>[demon.banlore]<br>[demon.banelore]<br>[demon.obligationlore]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
+			sleep(10)
+			if(!prob(willpower))
+				U.influenceSin()
+		onclose(user, "book")
+
