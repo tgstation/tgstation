@@ -144,6 +144,7 @@
 			return
 
 	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can't shoot.
+		shoot_with_empty_chamber(user)
 		return
 
 	if(flag)
