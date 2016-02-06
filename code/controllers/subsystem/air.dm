@@ -24,7 +24,6 @@ var/datum/subsystem/air/SSair
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
 
-
 	//Special functions lists
 	var/list/turf/simulated/active_super_conductivity = list()
 	var/list/turf/simulated/high_pressure_delta = list()
