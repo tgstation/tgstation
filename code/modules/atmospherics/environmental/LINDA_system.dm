@@ -88,7 +88,7 @@
 	
 	var/adjacent_turfs = atmos_adjacent_turfs.Copy()
 	if (!alldir)
-		return adjacent_turfs()
+		return adjacent_turfs
 	var/turf/simulated/curloc = src
 
 	for (var/direction in diagonals)
