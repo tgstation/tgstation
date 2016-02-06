@@ -375,7 +375,7 @@ var/list/gaslist_cache = null
 		cached_gases[id][MOLES] = sample_gases[id][MOLES]
 	cached_gases &= sample_gases
 
-	return copy
+	return 1
 
 /datum/gas_mixture/copy_from_turf(turf/model)
 	var/list/cached_gases = gases
@@ -388,7 +388,7 @@ var/list/gaslist_cache = null
 	cached_gases["co2"][MOLES]		= model.carbon_dioxide
 	cached_gases &= hardcoded_gases
 
-	return copy
+	return 1
 
 /datum/gas_mixture/check_turf(turf/model, atmos_adjacent_turfs = 4)
 	var/datum/gas_mixture/copied = new
@@ -514,7 +514,7 @@ var/list/gaslist_cache = null
 	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars
 	var/list/cached_gases = gases
 
-	for(var/id in cached_gases | sample_gases) // only compare gases we both have
+	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
 		var/gas_moles = cached_gases[id] ? cached_gases[id][datatype] : 0
 		var/sample_moles = sample_gases[id] ? sample_gases[id][datatype] : 0
 		var/delta = abs(gas_moles - sample_moles)/(adjacents+1)
