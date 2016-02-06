@@ -194,7 +194,7 @@
 	if(maptext != new_text)
 		maptext = new_text
 
-/obj/machinery/door_timer/get_ui_data()
+/obj/machinery/door_timer/ui_data()
 	var/list/data = list()
 	var/time_left = time_left(seconds = TRUE)
 	data["seconds"] = round(time_left % 60)
