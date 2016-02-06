@@ -139,7 +139,8 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		health = max(0, health - user.melee_damage_upper)
 		if(!health && status)
-			deactivate(user, 0)
+			triggerCameraAlarm()
+			deactivate(user, 1)
 
 /obj/machinery/camera/attackby(obj/W, mob/living/user, params)
 	var/msg = "<span class='notice'>You attach [W] into the assembly's inner circuits.</span>"
