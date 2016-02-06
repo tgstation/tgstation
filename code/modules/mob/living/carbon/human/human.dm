@@ -929,9 +929,9 @@
 		clear_fullscreen("blind")
 
 	if((disabilities & NEARSIGHT) && !(glasses && glasses.vision_correction))
-		overlay_fullscreen("nearsight", /obj/screen/fullscreen/impaired, 1)
+		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
 	else
-		clear_fullscreen("nearsight")
+		clear_fullscreen("nearsighted")
 
 	if(eye_blurry)
 		overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
