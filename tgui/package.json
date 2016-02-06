@@ -16,6 +16,8 @@
     "bundle-collapser": "1.2.1",
     "dom4": "1.7.0",
     "es3ify": "0.2.0",
+    "fg-loadcss": "1.0.0-0",
+    "fontfaceobserver": "1.6.3",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-bytediff": "1.0.0",
     "gulp-cssnano": "2.1.0",
@@ -45,8 +47,7 @@
     "stylus": "0.53.0",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0",
-    "watchify": "3.7.0",
-    "webfontloader": "1.6.21"
+    "watchify": "3.7.0"
   },
   "browser": {
     "ractive": "ractive/ractive-legacy.runtime"
