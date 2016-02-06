@@ -147,9 +147,9 @@
 			filter_type = ""
 			var/filter_name = "nothing"
 			var/gas = params["mode"]
-			if(gas in gas_meta)
+			if(gas in meta_gas_info)
 				filter_type = gas
-				filter_name	= gas_meta[gas][META_GAS_NAME]
+				filter_name	= meta_gas_info[gas][META_GAS_NAME]
 			investigate_log("was set to filter [filter_name] by [key_name(usr)]", "atmos")
 			. = TRUE
 	update_icon()
