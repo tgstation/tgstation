@@ -13,7 +13,7 @@
 	materials = list(MAT_METAL=500)
 	origin_tech = "combat=1;plasmatech=1"
 	var/status = 0
-	var/throw_amount = 100
+	var/throw_amount = 0.75
 	var/lit = 0	//on or off
 	var/operating = 0//cooldown
 	var/obj/item/weapon/weldingtool/weldtool = null
@@ -63,11 +63,14 @@
 	if(flag) return // too close
 	// Make sure our user is still holding us
 	if(user && user.get_active_hand() == src)
-		var/turf/target_turf = get_turf(target)
-		if(target_turf)
-			var/turflist = getline(user, target_turf)
-			add_logs(user, target, "flamethrowered", src, "at [target.x],[target.y],[target.z]")
-			flame_turf(turflist)
+		if(lit && !operating)
+			var/turf/target_turf = get_turf(target)
+			if(target_turf)
+				operating = 1
+				var/turflist = getline(user, target_turf)
+				add_logs(user, target, "flamethrowered", src, "at [target.x],[target.y],[target.z]")
+				flame_turf(turflist,ptank.air_contents,1,throw_amount,5)
+				operating = 0
 
 /obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user, params)
 	if(user.stat || user.restrained() || user.lying)
@@ -130,7 +133,7 @@
 	if(!ptank)
 		user << "<span class='notice'>Attach a plasma tank first!</span>"
 		return
-	var/dat = text("<TT><B>Flamethrower (<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>\n Tank Pressure: [ptank.air_contents.return_pressure()]<BR>\nAmount to throw: <A HREF='?src=\ref[src];amount=-100'>-</A> <A HREF='?src=\ref[src];amount=-10'>-</A> <A HREF='?src=\ref[src];amount=-1'>-</A> [throw_amount] <A HREF='?src=\ref[src];amount=1'>+</A> <A HREF='?src=\ref[src];amount=10'>+</A> <A HREF='?src=\ref[src];amount=100'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove plasmatank</A> - <A HREF='?src=\ref[src];close=1'>Close</A></TT>")
+	var/dat = text("<TT><B>Flamethrower (<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>\n Tank Pressure: [ptank.air_contents.return_pressure()]<BR>\nAmount to throw: <A HREF='?src=\ref[src];amount=-1'>-</A> <A HREF='?src=\ref[src];amount=-0.1'>-</A> <A HREF='?src=\ref[src];amount=-0.01'>-</A> [throw_amount] <A HREF='?src=\ref[src];amount=0.01'>+</A> <A HREF='?src=\ref[src];amount=0.1'>+</A> <A HREF='?src=\ref[src];amount=1'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove plasmatank</A> - <A HREF='?src=\ref[src];close=1'>Close</A></TT>")
 	user << browse(dat, "window=flamethrower;size=600x300")
 	onclose(user, "flamethrower")
 	return
@@ -157,7 +160,7 @@
 				warned_admins = 1
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
-		throw_amount = max(50, min(5000, throw_amount))
+		throw_amount = Clamp(throw_amount,0.01,5)
 	if(href_list["remove"])
 		if(!ptank)
 			return
@@ -179,42 +182,6 @@
 	igniter.secured = 0
 	status = 1
 	update_icon()
-
-//Called from turf.dm turf/dblclick
-/obj/item/weapon/flamethrower/proc/flame_turf(turflist)
-	if(!lit || operating)
-		return
-	operating = 1
-	var/turf/previousturf = get_turf(src)
-	for(var/turf/simulated/T in turflist)
-		if(!T.air)
-			break
-		if(T == previousturf)
-			continue	//so we don't burn the tile we be standin on
-		if(!T.CanAtmosPass(previousturf))
-			break
-		ignite_turf(T)
-		sleep(1)
-		previousturf = T
-	operating = 0
-	for(var/mob/M in viewers(1, loc))
-		if((M.client && M.machine == src))
-			attack_self(M)
-	return
-
-
-/obj/item/weapon/flamethrower/proc/ignite_turf(turf/target, release_amount = 0.05)
-	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
-	//Transfer 5% of current tank air contents to turf
-	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(release_amount)
-	if(air_transfer.gases["plasma"])
-		air_transfer.gases["plasma"][MOLES] *= 5
-	target.assume_air(air_transfer)
-	//Burn it based on transfered gas
-	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
-	//location.hotspot_expose(1000,500,1)
-	SSair.add_to_active(target, 0)
-	return
 
 
 /obj/item/weapon/flamethrower/full/New(var/loc)
@@ -238,6 +205,57 @@
 	if(ptank && damage && attack_type == PROJECTILE_ATTACK && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits the fueltank on [owner]'s [src], rupturing it! What a shot!</span>")
 		var/target_turf = get_turf(owner)
-		ignite_turf(target_turf, 100)
+		ignite_turf(target_turf, ptank.air_contents.total_moles(),ptank.air_contents)
 		qdel(ptank)
 		return 1 //It hit the flamethrower, not them
+
+/obj/item/weapon/flamehand
+	name = "burning hand"
+	desc = "Got you to level 3."
+	flags = ABSTRACT
+	w_class = 5
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "fireball"
+
+/obj/item/weapon/flamehand/dropped(user)
+	qdel(src)
+
+/obj/item/weapon/flamehand/afterattack(atom/target, mob/user, flag)
+	if(flag) return
+	var/turf/startLoc = get_turf(src)
+	var/fireDir = get_dir(src,target)
+	var/fireDistance = get_dist(src,target)
+	var/list/targetTurfs = getCone(startLoc, fireDir, fireDistance)
+	flame_turf(targetTurfs,null,1,5)
+
+
+
+/atom/proc/flame_turf(turflist, gasmixture, delay, release_amount = 0.75, multiplier = 1)
+	var/turf/previousturf = get_turf(src)
+	for(var/turf/simulated/T in turflist)
+		if(!T.air)
+			break
+		if(T == previousturf)
+			continue	//so we don't burn the tile we be standin on
+		if(!T.CanAtmosPass(previousturf))
+			break
+		ignite_turf(T,release_amount,gasmixture,multiplier)
+		sleep(delay)
+		previousturf = T
+	return
+
+
+/atom/proc/ignite_turf(turf/simulated/target, release_amount, var/datum/gas_mixture/gasmixture, multiplier)
+	if(gasmixture)
+		var/datum/gas_mixture/removed = gasmixture.remove(release_amount)
+		if(removed)
+			removed.assert_gas("plasma")
+			removed.gases["plasma"][MOLES] *= multiplier
+			target.assume_air(removed)
+			//Burn it based on transfered gas
+			target.hotspot_expose((removed.temperature*2) + 380,500)
+	else
+		target.atmos_spawn_air(SPAWN_TOXINS | SPAWN_HEAT, release_amount*multiplier)
+		target.hotspot_expose(1000,500)
+	SSair.add_to_active(target, 0)
+	return

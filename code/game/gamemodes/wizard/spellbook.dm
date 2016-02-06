@@ -98,6 +98,11 @@
 	spell_type = /obj/effect/proc_holder/spell/dumbfire/fireball
 	log_name = "FB"
 
+/datum/spellbook_entry/burninghands
+	name = "Burning Hands"
+	spell_type = /obj/effect/proc_holder/spell/targeted/specialitem/burninghands
+	log_name = "BH"
+
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
 	spell_type = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile

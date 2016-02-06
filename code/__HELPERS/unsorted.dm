@@ -1022,6 +1022,38 @@ B --><-- A
 
 */
 
+/proc/getCone(var/turf/startPoint, var/dir, var/distance)
+	switch(dir)
+		if(1,2,4,8)
+			return getConeCardinal(startPoint, dir, distance)
+		else
+			return getConeDiagonal(startPoint, dir, distance)
+
+/proc/getConeCardinal(var/turf/startPoint, var/dir, var/distance)
+	var/up = turn(dir, 45)
+	var/down = turn(dir, -45)
+	var/list/turfs = new
+	var/turf/uppoint = startPoint
+	var/turf/downpoint = startPoint
+	turfs += startPoint
+	for(var/i=0, i<distance, i++) //Bad number for distance
+		uppoint = get_step(uppoint, up)
+		downpoint = get_step(downpoint,down)
+		turfs += block(uppoint, downpoint)
+	return turfs
+
+
+/proc/getConeDiagonal(var/turf/startPoint, var/dir, var/distance)
+	var/up = turn(dir, 45)
+	var/turf/highpoint = startPoint
+	var/list/turfs
+	for(var/i=0, i<distance, i++)
+		highpoint = get_step(highpoint, up)
+	var/across = turn(dir,-90)
+	for(var/i=0, i<distance, i++) // yes, it does need to be two loops.
+		turfs += block(startPoint, highpoint)
+		highpoint = get_step(highpoint, across)
+	return turfs
 
 //This is just so you can stop an orbit.
 //orbit() can run without it (swap orbiting for A)
