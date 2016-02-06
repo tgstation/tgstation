@@ -36,14 +36,14 @@
 		correctness -= U.getBrainLoss() *0.5 //Brain damage makes researching hard.
 		speed += U.getBrainLoss() * 3
 		user.visible_message("[user] opens [title] and begins reading intently.")
-		if(do_after(user, speed, 0, src))
+		if(do_after(U, speed, 0, U))
 			var/usedName = demonName
 			if(!prob(correctness))
 				usedName += "x"
 			var/datum/demoninfo/demon = demonInfo(usedName)
 			user << browse("Information on [demonName]<br><br><br>[demon.banlore]<br>[demon.banelore]<br>[demon.obligationlore]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
-			sleep(10)
-			if(!prob(willpower))
-				U.influenceSin()
+		sleep(10)
+		if(!prob(willpower))
+			U.influenceSin()
 		onclose(user, "book")
 
