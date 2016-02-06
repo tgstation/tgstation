@@ -1,9 +1,3 @@
-/obj/item/weapon/paper/manifest
-	name = "supply manifest"
-	var/erroneous = 0
-	var/points = 0
-	var/ordernumber = 0
-
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
 	id = "supply"
