@@ -11,19 +11,22 @@ var/list/meta_gas_info = meta_gas_list() //see ATMOSPHERICS/gas_types.dm
 
 var/list/gaslist_cache = null
 /proc/gaslist(id)
+	var/list/cached_gas
+
 	if(!gaslist_cache)
 		gaslist_cache = new(meta_gas_info.len)
+
 	if(!gaslist_cache[id])
 		if(!meta_gas_info[id])
 			CRASH("Gas [id] does not exist!")
+		cached_gas = new(3)
+		gaslist_cache[id] = cached_gas
 
-		var/list/gas = new(3)
-		gas[MOLES] = 0
-		gas[ARCHIVE] = 0
-		gas[meta_gas_info] = meta_gas_info[id]
-		gaslist_cache[id] = gas
-
-	var/list/cached_gas = gaslist_cache[id]
+		cached_gas[MOLES] = 0
+		cached_gas[ARCHIVE] = 0
+		cached_gas[GAS_META] = meta_gas_info[id]
+	else
+		cached_gas = gaslist_cache[id]
 	return cached_gas.Copy()
 
 /datum/gas_mixture
@@ -34,12 +37,12 @@ var/list/gaslist_cache = null
 	var/last_share
 	var/tmp/fuel_burnt
 
-/datum/gas_mixture/New(vol = CELL_VOLUME)
+/datum/gas_mixture/New(volume = CELL_VOLUME)
 	..()
 	gases = new
 	temperature = 0
 	temperature_archived = 0
-	volume = 0
+	src.volume = volume
 	last_share = 0
 	fuel_burnt = 0
 
@@ -99,9 +102,9 @@ var/list/gaslist_cache = null
 		. += cached_gases[id][MOLES]
 
 /datum/gas_mixture/proc/return_pressure()
-	. = 0
-	if(volume > 0)
-		. = total_moles() * R_IDEAL_GAS_EQUATION * temperature / volume
+	if(volume > 0) // to prevent division by zero
+		return total_moles() * R_IDEAL_GAS_EQUATION * temperature / volume
+	return 0
 
 /datum/gas_mixture/proc/return_temperature()
 	return temperature
@@ -379,9 +382,9 @@ var/list/gaslist_cache = null
 
 /datum/gas_mixture/copy_from_turf(turf/model)
 	var/list/cached_gases = gases
-	assert_gases(arglist(hardcoded_gases))
 
 	temperature = model.temperature
+	assert_gases(arglist(hardcoded_gases))
 	cached_gases["o2"][MOLES]		= model.oxygen
 	cached_gases["n2"][MOLES]		= model.nitrogen
 	cached_gases["plasma"][MOLES]	= model.toxins
