@@ -207,12 +207,6 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/lightning
 	log_name = "LB"
 
-/datum/spellbook_entry/infinite_guns
-	name = "Lesser Summon Guns"
-	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns
-	log_name = "IG"
-	cost = 4
-
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
 	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
