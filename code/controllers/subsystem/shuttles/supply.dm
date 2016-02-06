@@ -54,13 +54,14 @@
 	return ..()
 
 /obj/docking_port/mobile/supply/dock()
-	sell()
-	buy()
-	return ..()
+	if(getDockedId() == "supply_away") // Buy when we leave home.
+		buy()
+	if(..()) // Fly/enter transit.
+		return
+	if(getDockedId() == "supply_away") // Sell when we get home
+		sell()
 
 /obj/docking_port/mobile/supply/proc/buy()
-	if(z != ZLEVEL_CENTCOM)
-		return
 	if(!SSshuttle.shoppinglist.len)
 		return
 
@@ -91,9 +92,6 @@
 		SSshuttle.shoppinglist -= SO
 
 /obj/docking_port/mobile/supply/proc/sell()
-	if(z != ZLEVEL_STATION)
-		return
-
 	var/crates = 0
 	var/plasma = 0
 	var/intel = 0
@@ -107,109 +105,109 @@
 		SSshuttle.sold_atoms += " [AM.name]"
 
 		if(istype(AM, /obj/structure/closet/crate) || istype(AM, /obj/structure/closet/critter))
+			crates++
 			SSshuttle.sold_atoms += ":"
 			if(!AM.contents.len)
 				SSshuttle.sold_atoms += " (empty)"
-				continue
-			crates++
+			else
+				var/slip_found = FALSE
+				for(var/atom/movable/thing in AM)
+					SSshuttle.sold_atoms += " [thing.name]"
+					if(!slip_found && istype(thing, /obj/item/weapon/paper/manifest))
+						var/obj/item/weapon/paper/manifest/slip = thing
+						if(slip.stamped && slip.stamped.len)
+							slip_found = TRUE
+							var/denied = FALSE
+							for(var/stamp in slip.stamped)
+								if(stamp == /obj/item/weapon/stamp/denied)
+									denied = TRUE
+									break
+							if(slip.erroneous && denied) // Caught a mistake by Centcom.
+								pointsEarned = slip.points - SSshuttle.points_per_crate
+								SSshuttle.points += pointsEarned // Give a full refund (minus the crate).
+								msg += "[pointsEarned]: Station correctly denied package [slip.ordernumber]: "
+								if(slip.erroneous & MANIFEST_ERROR_NAME)
+									msg += "Destination station incorrect. "
+								else if(slip.erroneous & MANIFEST_ERROR_COUNT)
+									msg += "Packages incorrectly counted. "
+								else if(slip.erroneous & MANIFEST_ERROR_ITEM)
+									msg += "Package incomplete. "
+								msg += "Points refunded."
+							else if(!slip.erroneous && !denied) // Approved a slip correctly.
+								pointsEarned = SSshuttle.points_per_slip
+								SSshuttle.points += pointsEarned
+								msg += "+[pointsEarned]: Package [slip.ordernumber] accorded."
+							else if(slip.erroneous) // You done goofed.
+								pointsEarned = -SSshuttle.points_per_slip
+								SSshuttle.points += pointsEarned
+								msg += "[pointsEarned]: Station erroneously approved package [slip.ordernumber]: "
+								if(slip.erroneous & MANIFEST_ERROR_NAME)
+									msg += "Destination station incorrect."
+								else if(slip.erroneous & MANIFEST_ERROR_COUNT)
+									msg += "Packages incorrectly counted."
+								else if(slip.erroneous & MANIFEST_ERROR_ITEM)
+									msg += "We found unshipped items on our dock."
+								msg += " Be more vigilant."
+							else
+								pointsEarned = round(SSshuttle.points_per_crate - slip.points)
+								SSshuttle.points += pointsEarned
+								msg += "[pointsEarned]: Station erroneously denied package [slip.ordernumber]."
 
-			var/slip_found = FALSE
-			for(var/atom/movable/thing in AM)
-				SSshuttle.sold_atoms += " [thing.name]"
-				if(!slip_found && istype(thing, /obj/item/weapon/paper/manifest))
-					var/obj/item/weapon/paper/manifest/slip = thing
-					if(slip.stamped && slip.stamped.len)
-						slip_found = TRUE
-						var/denied = FALSE
-						for(var/stamp in slip.stamped)
-							if(stamp == /obj/item/weapon/stamp/denied)
-								denied = TRUE
-								break
-						if(slip.erroneous && denied) // Caught a mistake by Centcom.
-							pointsEarned = slip.points - SSshuttle.points_per_crate
-							SSshuttle.points += pointsEarned // Give a full refund (minus the crate).
-							msg += "[pointsEarned]: Station correctly denied package [slip.ordernumber]: "
-							if(slip.erroneous & MANIFEST_ERROR_NAME)
-								msg += "Destination station incorrect. "
-							else if(slip.erroneous & MANIFEST_ERROR_COUNT)
-								msg += "Packages incorrectly counted. "
-							else if(slip.erroneous & MANIFEST_ERROR_ITEM)
-								msg += "Package incomplete. "
-							msg += "Points refunded."
-						else if(!slip.erroneous && !denied) // Approved a slip correctly.
-							pointsEarned = SSshuttle.points_per_slip
-							SSshuttle.points += pointsEarned
-							msg += "+[pointsEarned]: Package [slip.ordernumber] accorded."
-						else if(slip.erroneous) // You done goofed.
-							pointsEarned = -SSshuttle.points_per_slip
-							SSshuttle.points -= pointsEarned
-							msg += "[pointsEarned]: Station erroneously approved package [slip.ordernumber]: "
-							if(slip.erroneous & MANIFEST_ERROR_NAME)
-								msg += "Destination station incorrect."
-							else if(slip.erroneous & MANIFEST_ERROR_COUNT)
-								msg += "Packages incorrectly counted."
-							else if(slip.erroneous & MANIFEST_ERROR_ITEM)
-								msg += "We found unshipped items on our dock."
-							msg += " Be more vigilant."
-						else
-							pointsEarned = round(SSshuttle.points_per_crate - slip.points)
-							SSshuttle.points += pointsEarned
-							msg += "[pointsEarned]: Station erroneously denied package [slip.ordernumber]."
+					// Sell plasma
+					if(istype(thing, /obj/item/stack/sheet/mineral/plasma))
+						var/obj/item/stack/sheet/mineral/plasma/P = thing
+						plasma += P.amount
 
-				// Sell plasma
-				if(istype(thing, /obj/item/stack/sheet/mineral/plasma))
-					var/obj/item/stack/sheet/mineral/plasma/P = thing
-					plasma += P.amount
+					// Sell syndicate intel
+					if(istype(thing, /obj/item/documents/syndicate))
+						intel++
 
-				// Sell syndicate intel
-				if(istype(thing, /obj/item/documents/syndicate))
-					intel++
+					// Sell tech levels
+					if(istype(thing, /obj/item/weapon/disk/tech_disk))
+						var/obj/item/weapon/disk/tech_disk/disk = thing
+						if(!disk.stored)
+							continue
+						var/datum/tech/tech = disk.stored
 
-				// Sell tech levels
-				if(istype(thing, /obj/item/weapon/disk/tech_disk))
-					var/obj/item/weapon/disk/tech_disk/disk = thing
-					if(!disk.stored)
-						continue
-					var/datum/tech/tech = disk.stored
+						var/cost = tech.getCost(SSshuttle.techLevels[tech.id])
+						if(cost)
+							SSshuttle.techLevels[tech.id] = tech.level
+							SSshuttle.points += cost
+							msg += "+[cost]: Data: [tech.name]."
 
-					var/cost = tech.getCost(SSshuttle.techLevels[tech.id])
-					if(cost)
-						SSshuttle.techLevels[tech.id] = tech.level
-						SSshuttle.points += cost
-						msg += "+[cost]: Data: [tech.name]."
+					// Sell max reliablity designs
+					if(istype(thing, /obj/item/weapon/disk/design_disk))
+						var/obj/item/weapon/disk/design_disk/disk = thing
+						if(!disk.blueprint)
+							continue
+						var/datum/design/design = disk.blueprint
+						if(design.id in SSshuttle.researchDesigns)
+							continue
 
-				// Sell max reliablity designs
-				if(istype(thing, /obj/item/weapon/disk/design_disk))
-					var/obj/item/weapon/disk/design_disk/disk = thing
-					if(!disk.blueprint)
-						continue
-					var/datum/design/design = disk.blueprint
-					if(design.id in SSshuttle.researchDesigns)
-						continue
+						if(initial(design.reliability) < 100 && design.reliability >= 100)
+							// Maxed out reliability designs only.
+							SSshuttle.points += SSshuttle.points_per_design
+							SSshuttle.researchDesigns += design.id
+							msg += "+[SSshuttle.points_per_design]: Design: [design.name]."
 
-					if(initial(design.reliability) < 100 && design.reliability >= 100)
-						// Maxed out reliability designs only.
-						SSshuttle.points += SSshuttle.points_per_design
-						SSshuttle.researchDesigns += design.id
-						msg += "+[SSshuttle.points_per_design]: Design: [design.name]."
-
-				// Sell exotic plants
-				if(istype(thing, /obj/item/seeds))
-					var/obj/item/seeds/S = thing
-					if(S.rarity == 0) // Mundane species
-						msg += "+0: We don't need samples of mundane species \"[capitalize(S.species)]\"."
-					else if(SSshuttle.discoveredPlants[S.type]) // This species has already been sent to CentComm
-						var/potDiff = S.potency - SSshuttle.discoveredPlants[S.type] // Compare it to the previous best
-						if(potDiff > 0) // This sample is better
+					// Sell exotic plants
+					if(istype(thing, /obj/item/seeds))
+						var/obj/item/seeds/S = thing
+						if(S.rarity == 0) // Mundane species
+							msg += "+0: We don't need samples of mundane species \"[capitalize(S.species)]\"."
+						else if(SSshuttle.discoveredPlants[S.type]) // This species has already been sent to CentComm
+							var/potDiff = S.potency - SSshuttle.discoveredPlants[S.type] // Compare it to the previous best
+							if(potDiff > 0) // This sample is better
+								SSshuttle.discoveredPlants[S.type] = S.potency
+								msg += "+[potDiff]: New sample of \"[capitalize(S.species)]\" is superior.  Good work."
+								SSshuttle.points += potDiff
+							else // This sample is worthless
+								msg += "+0: New sample of \"[capitalize(S.species)]\" is not more potent than existing sample ([SSshuttle.discoveredPlants[S.type]] potency)."
+						else // This is a new discovery!
 							SSshuttle.discoveredPlants[S.type] = S.potency
-							msg += "+[potDiff]: New sample of \"[capitalize(S.species)]\" is superior.  Good work."
-							SSshuttle.points += potDiff
-						else // This sample is worthless
-							msg += "+0: New sample of \"[capitalize(S.species)]\" is not more potent than existing sample ([SSshuttle.discoveredPlants[S.type]] potency)."
-					else // This is a new discovery!
-						SSshuttle.discoveredPlants[S.type] = S.potency
-						msg += "[S.rarity]: New species discovered: \"[capitalize(S.species)]\".  Excellent work."
-						SSshuttle.points += S.rarity // That's right, no bonus for potency.  Send a crappy sample first to "show improvement" later
+							msg += "[S.rarity]: New species discovered: \"[capitalize(S.species)]\".  Excellent work."
+							SSshuttle.points += S.rarity // That's right, no bonus for potency.  Send a crappy sample first to "show improvement" later
+					qdel(thing)
 		qdel(AM)
 		SSshuttle.sold_atoms += "."
 
