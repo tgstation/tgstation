@@ -337,13 +337,12 @@
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
-	l_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
-	r_pocket = /obj/item/weapon/gun/projectile/automatic/pistol
+	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
 	belt = /obj/item/weapon/storage/belt/military
 	r_hand = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/tank/jetpack/oxygen/harness=1,\
-		/obj/item/weapon/pinpointer/nukeop=1)
+		/obj/item/weapon/gun/projectile/automatic/pistol=1)
 
 /datum/outfit/syndicate/full/post_equip(mob/living/carbon/human/H)
 	..()
@@ -354,4 +353,4 @@
 	var/obj/item/clothing/head/helmet/space/hardsuit/syndi/helmet = H.head
 	helmet.attack_self(H)
 
-	H.internal = H.l_store
+	H.internal = H.r_store
