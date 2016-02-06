@@ -82,11 +82,11 @@
 
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type)
-		air_contents.assert_gas(gas_type)
+		air_contents.add_gas(gas_type)
 		air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
-	air_contents.assert_gases("o2","n2")
+	air_contents.add_gases("o2","n2")
 	air_contents.gases["o2"][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases["n2"][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
@@ -167,6 +167,7 @@
 			holding = null
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
+	..()
 	if(destroyed)
 		return PROCESS_KILL
 	if(!valve_open)
