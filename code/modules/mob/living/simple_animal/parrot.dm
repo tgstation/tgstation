@@ -375,7 +375,7 @@
 	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list. */
 /mob/living/simple_animal/parrot/handle_automated_speech()
 	..()
-	if(speech_buffer.len && prob(80)) //shuffle out a phrase and add in a new one
+	if(speech_buffer.len && prob(20)) //shuffle out a phrase and add in a new one
 		if(speak.len)
 			speak.Remove(pick(speak))
 
