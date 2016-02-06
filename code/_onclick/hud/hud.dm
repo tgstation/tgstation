@@ -1,94 +1,4 @@
 /*
-	The global hud:
-	Uses the same visual objects for all players.
-*/
-
-var/datum/global_hud/global_hud = new()
-
-/datum/global_hud
-	var/obj/screen/druggy
-	var/obj/screen/blurry
-	var/obj/screen/blind
-	var/list/vimpaired
-	var/list/darkMask
-
-/datum/global_hud/New()
-	//420erryday psychedellic colours screen overlay for when you are high
-	druggy = new /obj/screen()
-	druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	druggy.icon_state = "druggy"
-	druggy.blend_mode = BLEND_MULTIPLY
-	druggy.layer = 17
-	druggy.mouse_opacity = 0
-
-	//that white blurry effect you get when you eyes are damaged
-	blurry = new /obj/screen()
-	blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	blurry.icon_state = "blurry"
-	blurry.layer = 17
-	blurry.mouse_opacity = 0
-
-	blind = new /obj/screen()
-	blind.icon = 'icons/mob/screen_full.dmi'
-	blind.icon_state = "blackimageoverlay"
-	blind.screen_loc = "CENTER-7,CENTER-7"
-	blind.mouse_opacity = 0
-	blind.layer = 18
-
-	var/obj/screen/O
-	var/i
-	//that nasty looking dither you  get when you're short-sighted
-	vimpaired = newlist(/obj/screen,/obj/screen,/obj/screen,/obj/screen)
-	O = vimpaired[1]
-	O.screen_loc = "WEST,SOUTH to CENTER-3,NORTH"	//West dither
-	O = vimpaired[2]
-	O.screen_loc = "WEST,SOUTH to EAST,CENTER-3"	//South dither
-	O = vimpaired[3]
-	O.screen_loc = "CENTER+3,SOUTH to EAST,NORTH"	//East dither
-	O = vimpaired[4]
-	O.screen_loc = "WEST,CENTER+3 to EAST,NORTH"	//North dither
-
-	//welding mask overlay black/dither
-	darkMask = newlist(/obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen)
-	O = darkMask[1]
-	O.screen_loc = "CENTER-5,CENTER-5 to CENTER-3,CENTER+5" //West dither
-	O = darkMask[2]
-	O.screen_loc = "CENTER-5,CENTER-5 to CENTER+5,CENTER-3"	//South dither
-	O = darkMask[3]
-	O.screen_loc = "CENTER+3,CENTER-5 to CENTER+5,CENTER+5"	//East dither
-	O = darkMask[4]
-	O.screen_loc = "CENTER-5,CENTER+3 to CENTER+5,CENTER+5"	//North dither
-	O = darkMask[5]
-	O.screen_loc = "WEST,SOUTH to CENTER-5,NORTH"	//West black
-	O = darkMask[6]
-	O.screen_loc = "WEST,SOUTH to EAST,CENTER-5"	//South black
-	O = darkMask[7]
-	O.screen_loc = "CENTER+5,SOUTH to EAST,NORTH"	//East black
-	O = darkMask[8]
-	O.screen_loc = "WEST,CENTER+5 to EAST,NORTH"	//North black
-
-
-	for(i = 1, i <= 4, i++)
-		O = vimpaired[i]
-		O.icon_state = "dither50"
-		O.blend_mode = BLEND_MULTIPLY
-		O.layer = 17
-		O.mouse_opacity = 0
-
-		O = darkMask[i]
-		O.icon_state = "dither50"
-		O.blend_mode = BLEND_MULTIPLY
-		O.layer = 17
-		O.mouse_opacity = 0
-
-	for(i = 5, i <= 8, i++)
-		O = darkMask[i]
-		O.icon_state = "black"
-		O.blend_mode = BLEND_MULTIPLY
-		O.layer = 17
-		O.mouse_opacity = 0
-
-/*
 	The hud datum
 	Used to show and hide huds for all the different mob types,
 	including inventories and item quick actions.
@@ -259,13 +169,11 @@ var/datum/global_hud/global_hud = new()
 			if(infodisplay.len)
 				mymob.client.screen -= infodisplay
 
-	if(screenoverlays.len)
-		mymob.client.screen += screenoverlays
-	mymob.client.screen += mymob.client.void
 	hud_version = display_hud_version
 	persistant_inventory_update()
 	mymob.update_action_buttons()
 	reorganize_alerts()
+
 
 /datum/hud/human/show_hud(version = 0)
 	..()

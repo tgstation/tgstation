@@ -171,7 +171,7 @@ var/global/mulebot_count = 0
 		ui = new(user, src, ui_key, "mulebot", name, 600, 375, master_ui, state)
 		ui.open()
 
-/mob/living/simple_animal/bot/mulebot/get_ui_data(mob/user)
+/mob/living/simple_animal/bot/mulebot/ui_data(mob/user)
 	var/list/data = list()
 	data["on"] = on
 	data["locked"] = locked

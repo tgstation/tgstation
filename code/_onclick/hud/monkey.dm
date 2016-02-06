@@ -115,11 +115,6 @@
 	lingstingdisplay = new /obj/screen/ling/sting()
 	infodisplay += lingstingdisplay
 
-	mymob.damageoverlay = new /obj/screen/damageoverlay()
-	screenoverlays += mymob.damageoverlay
-
-	mymob.flash = new /obj/screen/flash()
-	screenoverlays += mymob.flash
 
 	zone_select = new /obj/screen/zone_sel()
 	zone_select.icon = ui_style

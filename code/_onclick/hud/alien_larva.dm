@@ -20,13 +20,9 @@
 	pull_icon.screen_loc = ui_pull_resist
 	hotkeybuttons += pull_icon
 
-	mymob.flash = new /obj/screen/flash()
-	screenoverlays += mymob.flash
-
 	zone_select = new /obj/screen/zone_sel/alien()
 	zone_select.update_icon(mymob)
 	static_inventory += zone_select
-
 
 /mob/living/carbon/alien/larva/create_mob_hud()
 	if(client && !hud_used)

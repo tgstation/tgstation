@@ -138,8 +138,6 @@
 	pull_icon.screen_loc = ui_borg_pull
 	hotkeybuttons += pull_icon
 
-	mymob.flash = new /obj/screen/flash()
-	screenoverlays += mymob.flash
 
 	zone_select = new /obj/screen/zone_sel/robot()
 	zone_select.update_icon(mymob)

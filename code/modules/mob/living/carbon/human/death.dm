@@ -29,7 +29,7 @@
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
-	dna.species.spec_death(gibbed,src)
+	dna.species.spec_death(gibbed, src)
 
 	if(ticker && ticker.mode)
 		sql_report_death(src)

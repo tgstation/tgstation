@@ -254,19 +254,17 @@
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
-
 	var/internal_temp_regulation = 1
 
 	if(internal_damage)
-
 		if(internal_damage & MECHA_INT_FIRE)
 			if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && prob(5))
 				clearInternalDamage(MECHA_INT_FIRE)
 			if(internal_tank)
-				if(internal_tank.return_pressure() > internal_tank.maximum_pressure && !(internal_damage & MECHA_INT_TANK_BREACH))
-					setInternalDamage(MECHA_INT_TANK_BREACH)
 				var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
-				if(int_tank_air && int_tank_air.return_volume()>0) //heat the air_contents
+				if(int_tank_air.return_pressure() > internal_tank.maximum_pressure && !(internal_damage & MECHA_INT_TANK_BREACH))
+					setInternalDamage(MECHA_INT_TANK_BREACH)
+				if(int_tank_air && int_tank_air.return_volume() > 0) //heat the air_contents
 					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(10,15))
 			if(cabin_air && cabin_air.return_volume()>0)
 				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(10,15))
@@ -553,7 +551,6 @@
 					step(obstacle, dir)
 			else if(istype(obstacle, /mob))
 				step(obstacle, dir)
-
 
 
 

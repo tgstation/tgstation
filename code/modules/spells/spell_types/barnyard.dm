@@ -47,4 +47,4 @@
 	target.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
 	playsound(get_turf(target), mSounds[randM], 50, 1)
 
-	flick("e_flash", target.flash)
+	target.flash_eyes()

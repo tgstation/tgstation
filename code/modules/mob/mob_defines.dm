@@ -10,9 +10,8 @@
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
-	var/obj/screen/flash = null
+
 	var/obj/screen/hands = null
-	var/obj/screen/damageoverlay = null
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
 	The current method unnecessarily clusters up the variable list, especially for humans (although rearranging won't really clean it up a lot but the difference will be noticable for other mobs).
@@ -20,6 +19,9 @@
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
 	var/zone_selected = null
+
+	var/macro_default = "default"
+	var/macro_hotkeys = "hotkeys"
 
 	var/damageoverlaytemp = 0
 	var/computer_id = null

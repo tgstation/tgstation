@@ -113,7 +113,7 @@
 		ui = new(user, src, ui_key, "tanks", name, 420, 200, master_ui, state)
 		ui.open()
 
-/obj/item/weapon/tank/get_ui_data()
+/obj/item/weapon/tank/ui_data()
 	var/list/data = list()
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
@@ -127,16 +127,16 @@
 	else if(istype(loc.loc, /mob/living/carbon))
 		user = loc.loc
 
-	if(user && user.internal == src)
-		data["valveOpen"] = TRUE
-	else
-		data["valveOpen"] = FALSE
+	data["valveOpen"] = FALSE
+	data["maskConnected"] = FALSE
+	if(!istype(user))
+		return data
 
-	if(user.wear_mask && (user.wear_mask.flags & MASKINTERNALS))
-		if(data["valveOpen"] || ((src in user) && !user.internal))
-			data["maskConnected"] = TRUE
-		else
-			data["maskConnected"] = FALSE
+	if(user.internal == src)
+		data["valveOpen"] = TRUE
+	if(user.wear_mask && (user.wear_mask.flags & MASKINTERNALS) && user.internal == src)
+		data["maskConnected"] = TRUE
+
 	return data
 
 /obj/item/weapon/tank/ui_act(action, params)

@@ -15,8 +15,8 @@
 
 	anchored = 0 //unbolt floorbolts
 	update_canmove()
-	if(src.eyeobj)
-		src.eyeobj.setLoc(get_turf(src))
+	if(eyeobj)
+		eyeobj.setLoc(get_turf(src))
 
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
@@ -42,7 +42,7 @@
 	for(var/obj/machinery/ai_status_display/O in world) //change status
 		if(src.key)
 			O.mode = 2
-			if (istype(loc, /obj/item/device/aicard))
+			if(istype(loc, /obj/item/device/aicard))
 				loc.icon_state = "aicard-404"
 
 	return ..()

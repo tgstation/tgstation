@@ -167,9 +167,11 @@
 
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
-/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	var/damage = intensity - check_eye_prot()
 	if(..()) // we've been flashed
+		if(visual)
+			return
 		if(weakeyes)
 			Stun(2)
 		switch(damage)
@@ -200,7 +202,6 @@
 			else
 				src << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
 		return 1
-
 	else if(damage == 0) // just enough protection
 		if(prob(20))
 			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
@@ -583,30 +584,43 @@ var/const/GALOSHES_DONT_HELP = 4
 
 	add_abilities_to_panel()
 
-/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood)
+/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1)
 	if(src.is_muzzled())
-		src << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
+		if(message)
+			src << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
 		return 0
-	Stun(4)
+	if(stun)
+		Stun(4)
 	if(nutrition < 100 && !blood)
-		visible_message("<span class='warning'>[src] dry heaves!</span>", \
-						"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
-		Weaken(10)
+		if(message)
+			visible_message("<span class='warning'>[src] dry heaves!</span>", \
+							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+		if(stun)
+			Weaken(10)
 	else
-		visible_message("<span class='danger'>[src] throws up!</span>", \
-						"<span class='userdanger'>You throw up!</span>")
+		if(message)
+			visible_message("<span class='danger'>[src] throws up!</span>", \
+							"<span class='userdanger'>You throw up!</span>")
 		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 		var/turf/T = get_turf(src)
-		if(blood)
-			if(T)
-				T.add_blood_floor(src)
-			adjustBruteLoss(3)
-		else
-			if(T)
-				T.add_vomit_floor(src)
-			nutrition -= lost_nutrition
-			adjustToxLoss(-3)
+		for(var/i=0 to distance)
+			if(blood)
+				if(T)
+					T.add_blood_floor(src)
+				if(stun)
+					adjustBruteLoss(3)
+			else
+				if(T)
+					T.add_vomit_floor(src)
+				nutrition -= lost_nutrition
+				if(stun)
+					adjustToxLoss(-3)
+			T = get_step(T, dir)
+			if (is_blocked_turf(T))
+				break
 	return 1
+
+
 
 /mob/living/carbon/fully_replace_character_name(oldname,newname)
 	..()

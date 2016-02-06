@@ -126,13 +126,9 @@
 	alien_plasma_display = new /obj/screen/alien/plasma_display()
 	infodisplay += alien_plasma_display
 
-	mymob.flash = new /obj/screen/flash()
-	screenoverlays += mymob.flash
-
 	zone_select = new /obj/screen/zone_sel/alien()
 	zone_select.update_icon(mymob)
 	static_inventory += zone_select
-
 
 /datum/hud/alien/persistant_inventory_update()
 	if(!mymob)

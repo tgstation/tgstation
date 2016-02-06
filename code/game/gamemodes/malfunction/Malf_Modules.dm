@@ -31,8 +31,9 @@
 	set category = "Malfunction"
 	set name = "Doomsday Device"
 
-	for(var/turf/simulated/floor/bluegrid/T in orange(5, src))
-		T.icon_state = "rcircuitanim" //Causes blue tiles near the AI to change to flashing red
+	for(var/N in nuke_tiles)
+		var/turf/T = N
+		T.icon_state = "rcircuitanim" //This causes all blue "circuit" tiles on the map to change to animated red icon state.
 
 	src << "<span class='notice'>Nuclear device armed.</span>"
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
@@ -59,18 +60,18 @@
 	var/timer = 450
 
 /obj/machinery/doomsday_device/process()
-	if(z != ZLEVEL_STATION)
-		minor_announce("DOOMSDAY DEVICE OUT OF RANGE OF STATION, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
+	var/turf/T = get_turf(src)
+	if(!T || T.z != ZLEVEL_STATION)
+		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
 		SSshuttle.emergencyNoEscape = 0
 		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
 			SSshuttle.emergency.mode = SHUTTLE_DOCKED
 			SSshuttle.emergency.timer = world.time
-			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-			qdel(src)
+			priority_announce("Hostile environment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+		qdel(src)
 	if(!timing)
 		return
 	if(timer <= 0)
-		var/turf/T = get_turf(src)
 		timing = 0
 		detonate(T.z)
 		qdel(src)
