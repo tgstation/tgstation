@@ -263,7 +263,6 @@
 	dna.species.handle_chemicals_in_body(src)
 
 /mob/living/carbon/human/handle_vision()
-	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 	if(machine)
 		if(!machine.check_eye(src))
 			reset_view(null)

@@ -304,6 +304,11 @@ obj/item/ammo_box/magazine/tommygunm45
 	icon_state = "m12gt"
 	ammo_type = /obj/item/ammo_casing/shotgun/dart/bioterror
 
+/obj/item/ammo_box/magazine/m12g/breach
+	name = "shotgun magazine (12g breacher slugs)"
+	icon_state = "m12gbc"
+	ammo_type = /obj/item/projectile/bullet/meteorshot/weak
+
 /obj/item/ammo_box/magazine/toy
 	name = "foam force META magazine"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart

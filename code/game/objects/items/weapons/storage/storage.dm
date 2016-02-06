@@ -470,8 +470,8 @@
 
 
 /obj/item/weapon/storage/Destroy()
-	for(var/obj/O in contents)
-		O.mouse_opacity = initial(O.mouse_opacity)
+	var/turf = get_turf(src)
+	empty_object_contents(0, turf)
 
 	close_all()
 	qdel(boxes)

@@ -80,7 +80,7 @@
 		ui = new(user, src, ui_key, "chem_dispenser", name, 550, 550, master_ui, state)
 		ui.open()
 
-/obj/machinery/chem_dispenser/get_ui_data()
+/obj/machinery/chem_dispenser/ui_data()
 	var/data = list()
 	data["amount"] = amount
 	data["energy"] = energy

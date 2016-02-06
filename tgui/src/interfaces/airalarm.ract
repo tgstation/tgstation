@@ -1,4 +1,3 @@
-<link rel='ractive' href='./airalarm/controls.ract'>
 <link rel='ractive' href='./airalarm/scrubbers.ract'>
 <link rel='ractive' href='./airalarm/status.ract'>
 <link rel='ractive' href='./airalarm/thresholds.ract'>
@@ -16,15 +15,37 @@
 </ui-notice>
 <status/>
 {{#if !data.locked || data.siliconUser}}
-  {{#if data.screen == 1}}
-    <controls/>
-	{{elseif data.screen == 2}}
+  {{#if config.screen == "home"}}
+      <ui-display title='Air Controls'>
+        <ui-section>
+          <ui-button icon='{{data.atmos_alarm ? "exclamation-triangle" : "exclamation"}}' style='{{data.atmos_alarm ? "caution" : null}}'
+              action='{{data.atmos_alarm ? "reset" : "alarm"}}'>Area Atmosphere Alarm</ui-button>
+        </ui-section>
+        <ui-section>
+          <ui-button icon='{{data.mode == 3 ? "exclamation-triangle" : "exclamation"}}' style='{{data.mode == 3 ? "danger" : null}}'
+            action='mode' params='{"mode": {{data.mode == 3 ? 1 : 3}}}'>Panic Siphon</ui-button>
+        </ui-section>
+        <br/>
+        <ui-section>
+          <ui-button icon='sign-out' action='tgui:view' params='{"screen": "vents"}'>Vent Controls</ui-button>
+        </ui-section>
+        <ui-section>
+          <ui-button icon='filter' action='tgui:view' params='{"screen": "scrubbers"}'>Scrubber Controls</ui-button>
+        </ui-section>
+        <ui-section>
+          <ui-button icon='cog' action='tgui:view' params='{"screen": "modes"}'>Operating Mode</ui-button>
+        </ui-section>
+        <ui-section>
+          <ui-button icon='bar-chart' action='tgui:view' params='{"screen": "thresholds"}'>Alarm Thresholds</ui-button>
+        </ui-section>
+      </ui-display>
+  {{elseif config.screen == "vents"}}
     <vents/>
-  {{elseif data.screen == 3}}
+  {{elseif config.screen == "scrubbers"}}
     <scrubbers/>
-  {{elseif data.screen == 4}}
+  {{elseif config.screen == "modes"}}
     <modes/>
-  {{elseif data.screen == 5}}
+  {{elseif config.screen == "thresholds"}}
     <thresholds/>
-	{{/if}}
+  {{/if}}
 {{/if}}

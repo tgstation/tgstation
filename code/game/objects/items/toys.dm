@@ -384,12 +384,12 @@
 	dat = ""
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
-	var/list/base = text2list(lowertext(text),"")
+	var/list/base = splittext(lowertext(text),"")
 	var/list/out = list()
 	for(var/a in base)
 		if(a in (letters|numerals))
 			out += a
-	return list2text(out)
+	return jointext(out, null)
 
 /obj/item/toy/crayon/Topic(href, href_list, hsrc)
 	var/temp = "a"

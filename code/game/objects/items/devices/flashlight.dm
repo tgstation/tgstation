@@ -61,8 +61,7 @@
 			return
 
 		if(M == user)	//they're using it on themselves
-			if(!M.eye_blind)
-				flick("flash", M.flash)
+			if(M.flash_eyes(visual = 1))
 				M.visible_message("[M] directs [src] to \his eyes.", \
 									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			else
@@ -80,8 +79,7 @@
 			else if(M.dna.check_mutation(XRAY))	//mob has X-RAY vision
 				user << "<span class='danger'>[M] pupils give an eerie glow!</span>"
 			else	//they're okay!
-				if(!M.eye_blind)
-					flick("flash", M.flash)	//flash the affected mob
+				if(M.flash_eyes(visual = 1))
 					user << "<span class='notice'>[M]'s pupils narrow.</span>"
 	else
 		return ..()
@@ -313,7 +311,7 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity) return
-	if(istype(A, /obj/item/weapon/storage/) && A.loc == user) 
+	if(istype(A, /obj/item/weapon/storage/) && A.loc == user)
 		return
 	if (emp_cur_charges > 0)
 		emp_cur_charges -= 1

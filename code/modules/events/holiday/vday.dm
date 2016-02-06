@@ -60,15 +60,27 @@
 	               "If I were the warden I'd always let you into my armory.",
 	               "The virologist is rogue, and the only cure is a kiss from you.",
 	               "Would you spend some time in my upgraded sleeper?",
-	               "You must be a silicon, because you've unbolted my heart."
-	               "Are you Nar-Sie? Because there's nar-one else I sie." )
+	               "You must be a silicon, because you've unbolted my heart.",
+	               "Are you Nar-Sie? Because there's nar-one else I sie.",
+	               "If you were a taser, you'd be set to stunning.",
+	               "Do you have stamina damage from running through my dreams?",
+	               "If I were an alien, would you let me hug you?",
+	               "My love for you is stronger than a reinforced wall.",
+	               "This must be the captain's office, because I see a fox.",
+	               "I'm not a highlander, but there can only be one for me.",
+	               "The floor is made of lava! Quick, get on my bed.",
+	               "If you were an abandoned station you'd be the DEARelict.",
+	               "If you had a pickaxe you'd be a shaft FINEr.",
+	               "Roses are red, tide is gray, if I were an assistant I'd steal you away.",
+	               "Roses are red, text is green, I love you more than cleanbots clean.",
+	               "If you were a carp I'd fi-lay you." )
 
 /obj/item/weapon/valentine/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/toy/crayon))
 		var/recipient = stripped_input(user, "Who is receiving this valentine?", "To:", null , 20)
 		var/sender = stripped_input(user, "Who is sending this valentine?", "From:", null , 20)
 		if(recipient && sender)
-			name = "valentine - To: [recipient] From [sender]"
+			name = "valentine - To: [recipient] From: [sender]"
 	..()
 
 /obj/item/weapon/valentine/examine(mob/user)
@@ -90,7 +102,7 @@
 	icon = 'icons/obj/holiday_misc.dmi'
 	icon_state = "candyheart"
 	desc = "A heart-shaped candy that reads: "
-	list_reagents = list("sugar" = 4)
+	list_reagents = list("sugar" = 2)
 	junkiness = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/candyheart/New()
@@ -108,4 +120,8 @@
                 "A heart-shaped candy that reads: Y-YOU T-TOO",
                 "A heart-shaped candy that reads: GOT WOOD",
                 "A heart-shaped candy that reads: TFW NO GF",
-                "A heart-shaped candy that reads: WAG MY TAIL")
+                "A heart-shaped candy that reads: WAG MY TAIL",
+                "A heart-shaped candy that reads: VALIDTINES",
+                "A heart-shaped candy that reads: FACEHUGGER",
+                "A heart-shaped candy that reads: DOMINATOR")
+	icon_state = pick("candyheart", "candyheart2", "candyheart3", "candyheart4")

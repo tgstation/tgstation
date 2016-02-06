@@ -107,7 +107,7 @@
 		ui = new(user, src, ui_key, "firealarm", name, 300, 150, master_ui, state)
 		ui.open()
 
-/obj/machinery/firealarm/get_ui_data(mob/user)
+/obj/machinery/firealarm/ui_data(mob/user)
 	var/list/data = list()
 	data["emagged"] = emagged
 	data["seclevel"] = get_security_level()

@@ -36,7 +36,7 @@ var/datum/events/keycard_events = new()
 		ui = new(user, src, ui_key, "keycard_auth", name, 375, 125, master_ui, state)
 		ui.open()
 
-/obj/machinery/keycard_auth/get_ui_data()
+/obj/machinery/keycard_auth/ui_data()
 	var/list/data = list()
 	data["waiting"] = waiting
 	data["auth_required"] = event_source ? event_source.event : 0

@@ -683,7 +683,7 @@ var/list/teleport_other_runes = list()
 		log_game("Talisman Imbue rune failed - no nearby runes")
 		return
 	var/obj/effect/rune/picked_rune = pick(nearby_runes)
-	var/list/split_rune_type = text2list("[picked_rune.type]", "/")
+	var/list/split_rune_type = splittext("[picked_rune.type]", "/")
 	var/imbue_type = split_rune_type[split_rune_type.len]
 	var/talisman_type = text2path("/obj/item/weapon/paper/talisman/[imbue_type]")
 	if(ispath(talisman_type))
