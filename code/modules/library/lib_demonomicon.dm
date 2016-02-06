@@ -1,7 +1,6 @@
 /obj/item/weapon/book/demonomicon
 	name = "Demonomicon"
-	icon = 'icons/obj/library.dmi'
-	icon_state ="book"
+	icon_state ="demonomicon"
 	throw_speed = 1
 	throw_range = 10
 	burn_state = LAVA_PROOF
