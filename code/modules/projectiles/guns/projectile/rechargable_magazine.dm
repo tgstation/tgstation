@@ -9,7 +9,7 @@
  	max_ammo = 20
 
 /obj/item/ammo_box/magazine/recharge/update_icon()
-	..()
+	desc = "[initial(desc)] It has [stored_ammo.len] shots\s left."
 	icon_state = "oldrifle-[round(ammo_count(),4)]"
 
 
@@ -44,6 +44,6 @@
 
 
 /obj/item/weapon/gun/projectile/automatic/laser/update_icon()
-	desc = "[initial(desc)] It has [stored_ammo.len] shots\s left."
+	..()
 	icon_state = "oldrifle[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""]"
 	return
