@@ -23,7 +23,6 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
 	languages = ALL
-	force_threshold = 5
 	response_help   = "passes through"
 	response_disarm = "swings through"
 	response_harm   = "punches through"
@@ -32,6 +31,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
+	harm_intent_damage = 0
 	friendly = "touches"
 	status_flags = 0
 	wander = 0

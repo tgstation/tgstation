@@ -25,6 +25,7 @@
 	I.attack(src, user)
 
 /mob/living/proc/attacked_by(obj/item/I, mob/living/user, def_zone)
+	apply_damage(I.force, I.damtype, def_zone)
 	if(I.damtype == "brute")
 		if(prob(33) && I.force)
 			var/turf/location = src.loc
@@ -45,14 +46,16 @@
 	if(message_verb)
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>")
-	apply_damage(I.force, I.damtype, def_zone, threshold_check = 1, threshold_message = 1)
 
 /mob/living/simple_animal/attacked_by(var/obj/item/I, var/mob/living/user)
 	if(!I.force)
 		user.visible_message("<span class='warning'>[user] gently taps [src] with [I].</span>",\
 						"<span class='warning'>This weapon is ineffective, it does no damage!</span>")
-	else
+	else if(I.force >= force_threshold && I.damtype != STAMINA)
 		..()
+	else
+		visible_message("<span class='warning'>[I] bounces harmlessly off of [src].</span>",\
+					"<span class='warning'>[I] bounces harmlessly off of [src]!</span>")
 
 
 
