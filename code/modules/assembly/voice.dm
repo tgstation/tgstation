@@ -64,6 +64,7 @@
 				. = 1
 
 /obj/item/device/assembly/voice/attackby(obj/item/weapon/W, mob/user, params)
+	..()
 	if(istype(W, /obj/item/device/multitool))
 		mode %= modes.len
 		mode++
