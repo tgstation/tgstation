@@ -213,8 +213,11 @@
 	set desc = "Replaces your chemical with a random, different one."
 	if(!can_buy(40))
 		return
-	var/datum/reagent/blob/B = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
-	blob_reagent_datum = new B
+	set_chemical()
+
+/mob/camera/blob/proc/set_chemical()
+	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
+	blob_reagent_datum = new BC
 	for(var/obj/effect/blob/BL in blobs)
 		BL.update_icon()
 	for(var/mob/living/simple_animal/hostile/blob/BLO)
