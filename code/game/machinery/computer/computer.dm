@@ -35,7 +35,6 @@
 	if(prob(20/severity)) set_broken()
 	..()
 
-
 /obj/machinery/computer/ex_act(severity, target)
 	if(target == src)
 		qdel(src)
@@ -111,10 +110,6 @@
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
-	return
-
-/obj/machinery/computer/attack_hand(user)
-	. = ..()
 	return
 
 /obj/machinery/computer/attack_paw(mob/living/user)

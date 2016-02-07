@@ -148,6 +148,7 @@
 		if(istype(src, /obj/structure/table/optable))
 			var/obj/structure/table/optable/OT = src
 			G.affecting.resting = 1
+			G.affecting.update_canmove()
 			visible_message("<span class='notice'>[G.assailant] has laid [G.affecting] on [src].</span>")
 			OT.patient = G.affecting
 			OT.check_patient()

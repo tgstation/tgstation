@@ -31,8 +31,9 @@
 	set category = "Malfunction"
 	set name = "Doomsday Device"
 
-	for(var/turf/simulated/floor/bluegrid/T in orange(5, src))
-		T.icon_state = "rcircuitanim" //Causes blue tiles near the AI to change to flashing red
+	for(var/N in nuke_tiles)
+		var/turf/T = N
+		T.icon_state = "rcircuitanim" //This causes all blue "circuit" tiles on the map to change to animated red icon state.
 
 	src << "<span class='notice'>Nuclear device armed.</span>"
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
@@ -484,7 +485,7 @@
 			var/initial_range = initial(C.view_range) //To prevent calling the proc twice
 			if(camera.uses > 0)
 				if(!C.status)
-					C.deactivate(src, 0) //Reactivates the camera based on status. Badly named proc.
+					C.toggle_cam(src, 0) //Reactivates the camera based on status. Badly named proc.
 					fixedcams++
 					camera.uses--
 				if(C.view_range != initial_range)

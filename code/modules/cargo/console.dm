@@ -77,7 +77,6 @@
 			"id" = SO.ordernum
 		))
 
-
 	return data
 
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)

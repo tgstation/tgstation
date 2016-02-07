@@ -85,8 +85,8 @@
 			return
 
 		if(occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-			occupant.sleeping = (occupant.bodytemperature / sleep_factor) * 100
-			occupant.paralysis = (occupant.bodytemperature / paralyze_factor) * 100
+			occupant.Sleeping((occupant.bodytemperature / sleep_factor) * 100)
+			occupant.Paralyse((occupant.bodytemperature / paralyze_factor) * 100)
 
 		if(beaker)
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.

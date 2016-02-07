@@ -225,10 +225,9 @@
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/M)
 	M.damageoverlaytemp = 60
-	M.eye_blurry = max(M.eye_blurry, 3)
+	M.update_damage_hud()
+	M.set_blurriness(max(M.eye_blurry, 3))
 	..()
-	return
-
 
 /datum/reagent/toxin/spore_burning
 	name = "Burning Spore Toxin"
@@ -257,9 +256,9 @@
 			M.confused += 2
 			M.drowsyness += 2
 		if(10 to 50)
-			M.sleeping += 1
+			M.AdjustSleeping(1)
 		if(51 to INFINITY)
-			M.sleeping += 1
+			M.AdjustSleeping(1)
 			M.adjustToxLoss((current_cycle - 50)*REM)
 	..()
 	return
@@ -274,12 +273,11 @@
 /datum/reagent/toxin/beer2/on_mob_life(mob/living/M)
 	switch(current_cycle)
 		if(1 to 50)
-			M.sleeping += 1
+			M.AdjustSleeping(1)
 		if(51 to INFINITY)
-			M.sleeping += 1
+			M.AdjustSleeping(1)
 			M.adjustToxLoss((current_cycle - 50)*REM)
 	..()
-	return
 
 /datum/reagent/toxin/coffeepowder
 	name = "Coffee Grounds"
@@ -349,7 +347,7 @@
 		switch(pick(1, 2, 3, 4))
 			if(1)
 				M << "<span class='danger'>You can barely see!</span>"
-				M.eye_blurry = 3
+				M.set_blurriness(max(M.eye_blurry, 3))
 			if(2)
 				M.emote("cough")
 			if(3)
@@ -414,7 +412,7 @@
 		M.adjustBrainLoss(1*REM)
 		M.adjustToxLoss(1*REM)
 	if(current_cycle >= 18)
-		M.sleeping += 1
+		M.AdjustSleeping(1)
 	..()
 
 /datum/reagent/toxin/cyanide
@@ -515,7 +513,7 @@
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/M)
 	if(current_cycle >= 10)
-		M.SetParalysis(1)
+		M.Paralyse(1)
 	if(prob(20))
 		M.losebreath += 4
 	..()
@@ -531,7 +529,7 @@
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/M)
 	if(current_cycle >= 10)
-		M.sleeping += 1
+		M.AdjustSleeping(1)
 	M.adjustStaminaLoss(10*REM)
 	..()
 
@@ -546,7 +544,7 @@
 
 /datum/reagent/toxin/sulfonal/on_mob_life(mob/living/M)
 	if(current_cycle >= 22)
-		M.sleeping += 1
+		M.AdjustSleeping(1)
 	..()
 
 /datum/reagent/toxin/amanitin

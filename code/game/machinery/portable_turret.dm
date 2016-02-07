@@ -9,7 +9,7 @@
 	icon_state = "grey_target_prism"
 	anchored = 1
 	layer = 3
-	invisibility = INVISIBILITY_LEVEL_TWO	//the turret is invisible if it's inside its cover
+	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
 	density = 1
 	use_power = 1				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
@@ -293,7 +293,7 @@
 		//This code handles moving the turret around. After all, it's a portable turret!
 		if(!anchored && !isinspace())
 			anchored = 1
-			invisibility = INVISIBILITY_LEVEL_TWO
+			invisibility = INVISIBILITY_OBSERVER
 			icon_state = "[base_icon_state][off_state]"
 			user << "<span class='notice'>You secure the exterior bolts on the turret.</span>"
 			if(has_cover)
@@ -910,7 +910,7 @@
 
 		if(!Parent_Turret.anchored)
 			Parent_Turret.anchored = 1
-			Parent_Turret.invisibility = INVISIBILITY_LEVEL_TWO
+			Parent_Turret.invisibility = INVISIBILITY_OBSERVER
 			Parent_Turret.icon_state = "grey_target_prism"
 			user << "<span class='notice'>You secure the exterior bolts on the turret.</span>"
 		else

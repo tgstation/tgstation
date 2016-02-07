@@ -41,21 +41,17 @@
 
 	update_gravity(mob_has_gravity())
 
-	update_pulling()
+	if(machine)
+		machine.check_eye(src)
 
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
 
-	if(handle_regular_status_updates()) // Status & health update, are we dead or alive etc.
+	if(stat != DEAD)
 		handle_disabilities() // eye, ear, brain damages
 		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
 
 	handle_actions()
 
-	update_canmove()
-
-	if(client)
-		handle_regular_hud_updates()
+	handle_regular_hud_updates()
 
 
 
@@ -89,51 +85,29 @@
 /mob/living/proc/handle_stomach()
 	return
 
-/mob/living/proc/update_pulling()
-	if(pulling)
-		if(incapacitated())
-			stop_pulling()
-
-//This updates the health and status of the mob (conscious, unconscious, dead)
-/mob/living/proc/handle_regular_status_updates()
-
-	updatehealth()
-
-	if(stat != DEAD)
-
-		if(paralysis)
-			stat = UNCONSCIOUS
-
-		else if (status_flags & FAKEDEATH)
-			stat = UNCONSCIOUS
-
-		else
-			stat = CONSCIOUS
-
-		return 1
-
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
 	if(paralysis)
-		paralysis = max(paralysis-1,0)
+		AdjustParalysis(-1)
 	if(stunned)
-		stunned = max(stunned-1,0)
-		if(!stunned)
-			update_icons()
-
+		AdjustStunned(-1)
 	if(weakened)
-		weakened = max(weakened-1,0)
-		if(!weakened)
-			update_icons()
+		AdjustWeakened(-1)
 
 /mob/living/proc/handle_disabilities()
 	//Eyes
-	if(disabilities & BLIND || stat)	//blindness from disability or unconsciousness doesn't get better on its own
-		eye_blind = max(eye_blind, 1)
-	else if(eye_blind)			//blindness, heals slowly over time
-		eye_blind = max(eye_blind-1,0)
+	if(eye_blind)			//blindness, heals slowly over time
+		if(!stat && !(disabilities & BLIND))
+			eye_blind = max(eye_blind-1,0)
+			if(client && !eye_blind)
+				clear_alert("blind")
+				update_vision_overlays()
+		else
+			eye_blind = max(eye_blind-1,1)
 	else if(eye_blurry)			//blurry eyes heal slowly
 		eye_blurry = max(eye_blurry-1, 0)
+		if(client && !eye_blurry)
+			update_vision_overlays()
 
 	//Ears
 	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
@@ -170,69 +144,15 @@
 			give_action_button(T, recursive - 1)
 
 
-//this handles hud updates. Calls update_vision() and handle_hud_icons()
+/mob/living/proc/update_damage_hud()
+	return
+
+//this handles hud updates.
 /mob/living/proc/handle_regular_hud_updates()
 	if(!client)
 		return 0
-
-	handle_vision()
-	handle_hud_icons()
 	update_action_buttons()
-
 	return 1
-
-/mob/living/proc/handle_vision()
-	update_sight()
-
-	if(stat == DEAD)
-		return
-	if(eye_blind)
-		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-		throw_alert("blind", /obj/screen/alert/blind)
-	else
-		clear_fullscreen("blind")
-		clear_alert("blind")
-
-		if(disabilities & NEARSIGHT)
-			overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-		else
-			clear_fullscreen("nearsighted")
-
-		if(eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-		else
-			clear_fullscreen("blurry")
-
-		if(druggy)
-			overlay_fullscreen("high", /obj/screen/fullscreen/high)
-			throw_alert("high", /obj/screen/alert/high)
-		else
-			clear_fullscreen("high")
-			clear_alert("high")
-
-		if(eye_stat > 30)
-			overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 2)
-		else if(eye_stat > 20)
-			overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
-		else
-			clear_fullscreen("impaired")
-
-	if(machine)
-		if (!( machine.check_eye(src) ))
-			reset_view(null)
-	else
-		if(!remote_view && !client.adminobs)
-			reset_view(null)
-
-/mob/living/proc/update_sight()
-	return
-
-/mob/living/proc/handle_hud_icons()
-	handle_hud_icons_health()
-	return
-
-/mob/living/proc/handle_hud_icons_health()
-	return
 
 /mob/living/update_action_buttons()
 	if(!hud_used) return

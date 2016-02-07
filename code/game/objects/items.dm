@@ -308,10 +308,12 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/attack_ai(mob/user)
 	if(istype(src.loc, /obj/item/weapon/robot_module))
 		//If the item is part of a cyborg module, equip it
-		if(!isrobot(user)) return
+		if(!isrobot(user))
+			return
 		var/mob/living/silicon/robot/R = user
-		R.activate_module(src)
-		R.hud_used.update_robot_modules_display()
+		if(!R.low_power_mode) //can't equip modules with an empty cell.
+			R.activate_module(src)
+			R.hud_used.update_robot_modules_display()
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
@@ -362,7 +364,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return
 
 /obj/item/proc/dropped(mob/user)
-	..()
+	return
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -469,27 +471,25 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
-	M.eye_blurry += rand(3,4)
-	M.eye_stat += rand(2,4)
-	if (M.eye_stat >= 10)
-		M.eye_blurry += 15+(0.1*M.eye_blurry)
-		if(M.stat != 2)
+	M.adjust_blurriness(3)
+	M.adjust_eye_stat(rand(2,4))
+	if(M.eye_stat >= 10)
+		M.adjust_blurriness(15)
+		if(M.stat != DEAD)
 			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
-		if (!(M.disabilities & (NEARSIGHT | BLIND)))
-			M.disabilities |= NEARSIGHT
-			M << "<span class='danger'>You become nearsighted!</span>"
+		if(!(M.disabilities & (NEARSIGHT | BLIND)))
+			if(M.become_nearsighted())
+				M << "<span class='danger'>You become nearsighted!</span>"
 		if(prob(50))
-			if(M.stat != 2)
+			if(M.stat != DEAD)
 				if(M.drop_item())
 					M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
-			M.eye_blurry += 10
+			M.adjust_blurriness(10)
 			M.Paralyse(1)
 			M.Weaken(2)
-		if (prob(M.eye_stat - 10 + 1) && !(M.disabilities & BLIND))
-			if(M.stat != 2)
+		if (prob(M.eye_stat - 10 + 1))
+			if(M.become_blind())
 				M << "<span class='danger'>You go blind!</span>"
-			M.disabilities |= BLIND
-	return
 
 /obj/item/clean_blood()
 	. = ..()

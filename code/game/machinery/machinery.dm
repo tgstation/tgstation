@@ -162,9 +162,7 @@ Class Procs:
 	var/turf/T = get_turf(src)
 	T.contents += contents
 	if(occupant)
-		if(occupant.client)
-			occupant.client.eye = occupant
-			occupant.client.perspective = MOB_PERSPECTIVE
+		occupant.reset_perspective(null)
 		occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
@@ -177,14 +175,8 @@ Class Procs:
 			else
 				target = C
 	if(target && !target.buckled && !target.buckled_mob)
-		if(target.client)
-			target.client.perspective = EYE_PERSPECTIVE
-			target.client.eye = src
 		occupant = target
-		target.loc = src
-		target.stop_pulling()
-		if(target.pulledby)
-			target.pulledby.stop_pulling()
+		target.forceMove(src)
 	updateUsrDialog()
 	update_icon()
 
@@ -242,10 +234,9 @@ Class Procs:
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/attack_ai(mob/user)
-	if(isrobot(user))
-		// For some reason attack_robot doesn't work
-		// This is to stop robots from using cameras to remotely control machines.
-		if(user.client && user.client.eye == user)
+	if(isrobot(user))// For some reason attack_robot doesn't work
+		var/mob/living/silicon/robot/R = user
+		if(R.client && R.client.eye == R && !R.low_power_mode)// This is to stop robots from using cameras to remotely control machines; and from using machines when the borg has no power.
 			return attack_hand(user)
 	else
 		return attack_hand(user)

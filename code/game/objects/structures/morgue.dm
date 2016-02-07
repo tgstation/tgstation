@@ -92,6 +92,9 @@
 			AM.forceMove(src)
 	update_icon()
 
+/obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
+	if(!(user.sight & (SEEOBJS|SEEMOBS)))
+		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
 /*
  * Morgue
  */
