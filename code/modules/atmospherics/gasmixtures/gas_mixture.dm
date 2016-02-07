@@ -80,9 +80,9 @@ var/list/gaslist_cache = null
 	//Must be used after subtracting from a gas. Must be used after assert_gas()
 		//if assert_gas() was called only to read from the gas.
 	//By removing empty gases, processing speed is increased.
-/datum/gas_mixture/proc/garbage_collect(list/tocheck = gases)
+/datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
-	for(var/id in cached_gases&tocheck)
+	for(var/id in (tocheck || cached_gases))
 		if(cached_gases[id][MOLES] <= 0 && cached_gases[id][ARCHIVE] <= 0)
 			cached_gases -= id
 
@@ -398,13 +398,20 @@ var/list/gaslist_cache = null
 
 /datum/gas_mixture/copy_from_turf(turf/model)
 	var/list/cached_gases = gases
-
+	
 	temperature = model.temperature
-	assert_gases(arglist(hardcoded_gases))
-	cached_gases["o2"][MOLES]		= model.oxygen
-	cached_gases["n2"][MOLES]		= model.nitrogen
-	cached_gases["plasma"][MOLES]	= model.toxins
-	cached_gases["co2"][MOLES]		= model.carbon_dioxide
+	if(model.oxygen)
+		assert_gas("o2")
+		cached_gases["o2"][MOLES]		= model.oxygen
+	if(model.nitrogen)
+		assert_gas("n2")
+		cached_gases["n2"][MOLES]		= model.nitrogen
+	if(model.toxins)
+		assert_gas("plasma")
+		cached_gases["plasma"][MOLES]	= model.toxins
+	if(model.carbon_dioxide)
+		assert_gas("co2")
+		cached_gases["co2"][MOLES]		= model.carbon_dioxide
 	//remove all gases not handled by turfs
 	cached_gases &= hardcoded_gases
 
@@ -479,13 +486,16 @@ var/list/gaslist_cache = null
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY)
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.10) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
-
+	
+	var/list/unique_gases = cached_gases ^ sharer_gases
+	if(unique_gases.len) //if all gases were present in both mixtures, we know that no gases are 0
+		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
+		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
+	
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
-		. = delta_pressure * R_IDEAL_GAS_EQUATION / volume
-
-	garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
-	sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
+		return delta_pressure * R_IDEAL_GAS_EQUATION / volume
+	
 
 /datum/gas_mixture/mimic(turf/model, atmos_adjacent_turfs = 4)
 	var/datum/gas_mixture/copied = new
