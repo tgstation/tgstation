@@ -169,12 +169,12 @@
 	if(!can_buy(5))
 		return
 	last_attack = world.time
-	OB.expand(T, 0, src)
+	OB.expand(T, src)
 	for(var/mob/living/L in T)
 		if("blob" in L.faction) //no friendly fire
 			continue
 		var/mob_protection = L.get_permeability_protection()
-		blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection)
+		blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection, src)
 		blob_reagent_datum.send_message(L)
 
 /mob/camera/blob/verb/rally_spores_power()
