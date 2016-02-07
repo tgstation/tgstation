@@ -265,7 +265,7 @@
 	if(reac_volume >= 15) //if it's not a spore cloud, bad time incoming
 		reac_volume = ..()
 		if(M)
-			M.apply_damage(0.2*reac_volume, BRUTE)
+			M.apply_damage(0.1*reac_volume, BRUTE)
 			var/obj/effect/overlay/temp/explosion/E = PoolOrNew(/obj/effect/overlay/temp/explosion, get_turf(M))
 			E.alpha = 150
 			for(var/mob/living/L in range(M, 1))
