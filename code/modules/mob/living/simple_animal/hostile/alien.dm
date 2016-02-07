@@ -160,9 +160,17 @@
 	friendly = "caresses"
 	environment_smash = 0
 	gold_core_spawnable = 1
+	icon_state = "maid"
+	icon_living = "maid"
+	icon_dead = "maid_dead"
 
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
 	if(istype(target, /atom/movable))
+		if(istype(target, /obj/effect/decal/cleanable))
+			visible_message("[src] cleans up the [target].")
+			qdel(target)
+			return
 		var/atom/movable/M = target
 		M.clean_blood()
 		visible_message("[src] polishes the [target].")
+
