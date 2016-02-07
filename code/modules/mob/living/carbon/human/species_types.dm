@@ -55,6 +55,8 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	say_mod = "hisses"
 	default_color = "00FF00"
 	roundstart = 1
+	heatmod = 0.9
+	coldmod = 1.2
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
 	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
@@ -62,6 +64,14 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
+
+/datum/species/lizard/spec_life(mob/living/carbon/human/H)
+	if(!(mutations_list[COLDRES] in H.dna.mutations))
+		switch(H.bodytemperature)
+			if(151 to 200)
+				H.drowsyness += 1
+			if(-INFINITY to 150)
+				H.sleeping += 3
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
