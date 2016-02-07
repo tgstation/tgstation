@@ -1,6 +1,6 @@
 /datum/disease/lesserzombie
 	name = "Andromeda blobitis"
-	max_stages = 15
+	max_stages = 13
 	spread_text = "Consumption of or contact with invasive organic material"
 	cure_text = "Phenol, Lye, Pest killer or Weed killer"
 	cures = list("phenol", "lye", "weedkiller", "pestkiller")
@@ -13,29 +13,29 @@
 /datum/disease/lesserzombie/stage_act()
 	..()
 	switch(stage)
-		if(2,4,6)
+		if(2,3,4)
 			affected_mob << "<span class='notice'>[pick("You momentarily lose control of your eyebrows.", "You impulsively pinch yourself.", "You almost bite your tongue.", "You lick your lips, for no reason")]</span>"
-		if(7)
+		if(5)
 			affected_mob << "<span class='notice'>Something is trying to control you.</span>"
-		if(8)
+		if(6)
 			affected_mob << "<span class='warning'>You feel a numbing coldness and difficulty controlling your body, but you fight on.</span>"
-		if(9,10)
+		if(7,8)
 			affected_mob.say(pick(list("Look at me!", "smh tbh fam", "I'm [affected_mob], your friend!", "I'm an employee!", "Bonk!", "Hue... Hue hue", "Nothing to see here, just me!") ) )
 			affected_mob.emote("wave")
 			affected_mob.visible_message("<span class='danger'>[affected_mob] starts hurting themselves! It looks like they're losing control of themselves!</span>")
 			affected_mob.adjustBruteLoss(10)
-		if(11)
+		if(9)
 			affected_mob << "<span class='danger'>You begin to feel really numb, and [pick("unwilling to fight on", "start manually breathing")].</span>"
 			affected_mob.adjustBruteLoss(10)
-		if(12)
+		if(10)
 			affected_mob << "<span class='danger'>Small butterflies begin surrounding your vision, and you [pick("feel unable to control yourself", "start breathing, manually")].</span>"
 			affected_mob.adjustBrainLoss(5)
 			affected_mob.adjustBruteLoss(10)
-		if(13)
+		if(11)
 			affected_mob << "<span class='userdanger'>You've almost lost control of yourself.</span>"
 			affected_mob.adjustBrainLoss(20)
 			affected_mob.adjustBruteLoss(10)
-		if(14)
+		if(12)
 			affected_mob.say(pick(list("CAPTAIN. I CAN WALK!", "I live and die by your orders HOS", "Tell the RD to suck a lemon.", "CMO, I never asked for this", "Let the HOP decide ", "Chaplain... Don't scatter my ashes to the cold, heartless space", "Tell the CE to get the shuttle called!") ) )
 			affected_mob.emote("salute")
 			affected_mob.visible_message("<span class='notice'>[affected_mob] suddenly salutes!</span>")
@@ -44,8 +44,8 @@
 			affected_mob.visible_message("<span class='danger'>[affected_mob] collapses and starts bleeding from the ears, eyes, and nose!</span>")
 			affected_mob.reagents.add_reagent("heparin", 90)
 			affected_mob.adjustBrainLoss(69)
-			stage = 15
-		if(15)
+			stage = 13
+		if(13)
 			affected_mob.adjustBruteLoss(200)
 			if(affected_mob.stat == DEAD)
 				affected_mob.visible_message("<span class='danger'>The corpse of [affected_mob] suddenly rises!</span>")

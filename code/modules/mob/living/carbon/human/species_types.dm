@@ -730,3 +730,32 @@ var/global/list/synth_flesh_disguises = list()
 			return ..()
 	else
 		return ..()
+
+/*
+ Scarabite
+*/
+
+/datum/species/scarabite
+	// A mutation caused by an injection of scarabas phermones, creating a scarab human hybrid
+	name = "scarabite"
+	id = "human"//placeholder
+	specflags = list(HEATRES,COLDRES,RADIMMUNE,VIRUSIMMUNE)
+	armor = 20
+	siemens_coeff = 0
+	punchdamagelow = 7
+	punchdamagehigh = 18
+	punchstunthreshold = 9 //~30% chance to stun
+	no_equip = list(slot_gloves, slot_w_uniform)
+	nojumpsuit = 1
+	default_color = "#964B00"
+	attack_verb = "swipe"
+	attack_sound = 'sound/weapons/slice.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	brutemod = 1.25//crush bugs
+
+/datum/species/scarabite/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "pestkiller")
+		H.adjustToxLoss(2)
+		H.adjustOxyLoss(3)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1

@@ -783,6 +783,16 @@
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		M.ForceContractDisease(new /datum/disease/tuberculosis(0))
 
+/datum/reagent/scarabite
+	name = "Sarcoptes Scarabaeus sacer venom"
+	id = "scarabite"
+	description = "Scarab eggs."
+	color = "#92D17D" // rgb: 146, 209, 125
+
+/datum/reagent/scarabite/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+		M.ForceContractDisease(new /datum/disease/scarabas(0))
+
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
 	id = "fluorosurfactant"

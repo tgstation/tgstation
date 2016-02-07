@@ -28,13 +28,13 @@
 				affected_mob.adjustBruteLoss(10)
 			if(6)
 				affected_mob << "<span class='userdanger'>[pick("Your skin feels as rough as sandpaper!")]</span>"
-				affected_mob.adjustBruteLoss(20)
+				affected_mob.adjustBruteLoss(10)
 				affected_mob.reagents.add_reagent("itching_powder", 15)
 			if(8)
 				affected_mob.set_species(/datum/species/lizard)
 				affected_mob.update_icons()
 				affected_mob.update_hair()
-				affected_mob.adjustCloneLoss(50)
+				affected_mob.adjustCloneLoss(25)
 				affected_mob << "<span class='danger'>You feel weak as your tailbone violently pops out of your jumpsuit and your blisters painfully dry up and harden into scales.</span>"
 	else
 		cure()
