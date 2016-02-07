@@ -98,7 +98,7 @@
 			continue
 		SSshuttle.sold_atoms += " [AM.name]"
 
-		if(istype(AM, /obj/structure/closet/crate) || istype(AM, /obj/structure/closet/critter))
+		if(istype(AM, /obj/structure/closet/crate))
 			crates++
 			SSshuttle.sold_atoms += ":"
 			if(!AM.contents.len)

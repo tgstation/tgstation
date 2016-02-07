@@ -121,6 +121,16 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containertype = /obj/structure/closet/crate
 	containername = "firefighting crate"
 
+/datum/supply_packs/emergency/radiation
+	name = "Radiation Protection Crate"
+	contains = list(/obj/item/clothing/head/radiation,
+					/obj/item/clothing/head/radiation,
+					/obj/item/clothing/suit/radiation,
+					/obj/item/clothing/suit/radiation)
+	cost = 10
+	containertype = /obj/structure/closet/crate/radiation
+	containername = "radiation protection crate"
+
 /datum/supply_packs/emergency/atmostank
 	name = "Firefighting Watertank"
 	contains = list(/obj/item/weapon/watertank/atmos)
@@ -136,7 +146,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/grenade/chem_grenade/antiweed,
 					/obj/item/weapon/grenade/chem_grenade/antiweed)
 	cost = 15
-	containertype = /obj/structure/closet/crate/secure/hydrosec
+	containertype = /obj/structure/closet/crate/secure/hydroponics
 	containername = "weed control crate"
 	access = access_hydroponics
 
@@ -441,7 +451,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "Fuel Tank Crate"
 	contains = list(/obj/structure/reagent_dispensers/fueltank)
 	cost = 8
-	containertype = /obj/structure/largecrate
+	containertype = /obj/structure/closet/crate/large
 	containername = "fuel tank crate"
 
 /datum/supply_packs/engineering/tools		//the most robust crate
@@ -838,55 +848,59 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 //////// livestock
 /datum/supply_packs/organic/cow
 	name = "Cow Crate"
+	contains = list(/mob/living/simple_animal/cow)
 	cost = 30
-	containertype = /obj/structure/closet/critter/cow
+	containertype = /obj/structure/closet/crate/critter
 	containername = "cow crate"
 
 /datum/supply_packs/organic/goat
 	name = "Goat Crate"
+	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
 	cost = 25
-	containertype = /obj/structure/closet/critter/goat
+	containertype = /obj/structure/closet/crate/critter
 	containername = "goat crate"
 
 /datum/supply_packs/organic/chicken
 	name = "Chicken Crate"
 	cost = 20
-	containertype = /obj/structure/closet/critter/chick
+	containertype = /obj/structure/closet/crate/critter/chick
 	containername = "chicken crate"
 
 /datum/supply_packs/organic/corgi
 	name = "Corgi Crate"
 	cost = 50
-	containertype = /obj/structure/closet/critter/corgi
 	contains = list(/obj/item/clothing/tie/petcollar)
+	containertype = /obj/structure/closet/crate/critter/corgi
 	containername = "corgi crate"
 
 /datum/supply_packs/organic/cat
 	name = "Cat Crate"
 	cost = 50 //Cats are worth as much as corgis.
-	containertype = /obj/structure/closet/critter/cat
 	contains = list(/obj/item/clothing/tie/petcollar,
                     /obj/item/toy/cattoy)
+	containertype = /obj/structure/closet/crate/critter/cat
 	containername = "cat crate"
 
 /datum/supply_packs/organic/pug
 	name = "Pug Crate"
 	cost = 50
-	containertype = /obj/structure/closet/critter/pug
-	contains = list(/obj/item/clothing/tie/petcollar)
+	contains = list(/mob/living/simple_animal/pet/dog/pug,
+					/obj/item/clothing/tie/petcollar)
+	containertype = /obj/structure/closet/crate/critter
 	containername = "pug crate"
 
 /datum/supply_packs/organic/fox
 	name = "Fox Crate"
 	cost = 55 //Foxes are cool.
-	containertype = /obj/structure/closet/critter/fox
-	contains = list(/obj/item/clothing/tie/petcollar)
+	contains = list(/mob/living/simple_animal/pet/fox,
+					/obj/item/clothing/tie/petcollar)
+	containertype = /obj/structure/closet/crate/critter
 	containername = "fox crate"
 
 /datum/supply_packs/organic/butterfly
 	name = "Butterflies Crate"
 	cost = 50
-	containertype = /obj/structure/closet/critter/butterfly
+	containertype = /obj/structure/closet/crate/critter/butterfly
 	containername = "butterflies crate"
 	contraband = 1
 
@@ -1045,7 +1059,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "MULEbot Crate"
 	contains = list(/mob/living/simple_animal/bot/mulebot)
 	cost = 20
-	containertype = /obj/structure/largecrate/mule
+	containertype = /obj/structure/closet/crate/large
 	containername = "\improper MULEbot Crate"
 
 /datum/supply_packs/misc/conveyor
@@ -1065,7 +1079,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "Water Tank Crate"
 	contains = list(/obj/structure/reagent_dispensers/watertank)
 	cost = 8
-	containertype = /obj/structure/largecrate
+	containertype = /obj/structure/closet/crate/large
 	containername = "water tank crate"
 
 /datum/supply_packs/misc/lasertag
@@ -1133,7 +1147,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "bureaucracy crate"
 
 /datum/supply_packs/misc/toner
-	name = "Toner Cartridges crate"
+	name = "Toner Cartridges Crate"
 	contains = list(/obj/item/device/toner,
 					/obj/item/device/toner,
 					/obj/item/device/toner,
@@ -1169,7 +1183,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/structure/janitorialcart,
 					/obj/item/clothing/shoes/galoshes)
 	cost = 10
-	containertype = /obj/structure/largecrate
+	containertype = /obj/structure/closet/crate/large
 	containername = "janitorial cart crate"
 
 /datum/supply_packs/misc/janitor/janitank
@@ -1238,6 +1252,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "wizard costume crate"
 
 /datum/supply_packs/misc/randomised
+	name = "Collectable hat crate!"
 	var/num_contained = 3 //number of items picked to be contained in a randomised crate
 	contains = list(/obj/item/clothing/head/collectable/chef,
 					/obj/item/clothing/head/collectable/paper,
@@ -1259,7 +1274,6 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/head/collectable/slime,
 					/obj/item/clothing/head/collectable/xenom,
 					/obj/item/clothing/head/collectable/petehat)
-	name = "Collectable hat crate!"
 	cost = 200
 	containername = "collectable hats crate! Brought to you by Bass.inc!"
 
@@ -1267,13 +1281,12 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	manifest += "Contains any [num_contained] of:"
 	..()
 
-
 /datum/supply_packs/misc/randomised/contraband
+	name = "Contraband Crate"
 	num_contained = 5
 	contains = list(/obj/item/weapon/poster/contraband,
 					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims)
-	name = "Contraband Crate"
 	cost = 30
 	containername = "crate"	//let's keep it subtle, eh?
 	contraband = 1
@@ -1296,7 +1309,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	                /obj/item/toy/redbutton)
 
 	cost = 50 // or play the arcade machines ya lazy bum
-	containername ="toy crate"
+	containername = "toy crate"
 
 /datum/supply_packs/misc/autodrobe
 	name = "Autodrobe Supply Crate"

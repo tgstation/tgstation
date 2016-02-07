@@ -33,6 +33,22 @@
 
 	return reqform
 
+/datum/subsystem/shuttle/proc/generateSupplyOrder(packId, _orderedby, _orderedbyRank, _comment)
+	if(!packId)
+		return
+	var/datum/supply_packs/P = supply_packs[packId]
+	if(!P)
+		return
+
+	var/datum/supply_order/O = new()
+	O.ordernum = ordernum++
+	O.object = P
+	O.orderedby = _orderedby
+	O.orderedbyRank = _orderedbyRank
+	O.comment = _comment
+
+	return O
+
 /datum/supply_order/proc/createObject(atom/_loc, errors=0)
 	if(!object)
 		return
@@ -77,15 +93,9 @@
 			A:amount = object.amount
 		slip.info += "<li>[A.name]</li>"	//add the item to the manifest (even if it was misplaced)
 
-	if(istype(Crate, /obj/structure/closet/critter)) // critter crates do not actually spawn mobs yet and have no contains var, but the manifest still needs to list them
-		var/obj/structure/closet/critter/CritCrate = Crate
-		if(CritCrate.content_mob)
-			var/mob/crittername = CritCrate.content_mob
-			slip.info += "<li>[initial(crittername.name)]</li>"
-
 	if((errors & MANIFEST_ERROR_ITEM))
 		//secure and large crates cannot lose items
-		if(findtext("[object.containertype]", "/secure/") || findtext("[object.containertype]","/largecrate/"))
+		if(findtext("[object.containertype]", "/secure/") || findtext("[object.containertype]","/large/"))
 			errors &= ~MANIFEST_ERROR_ITEM
 		else
 			var/lostAmt = max(round(Crate.contents.len/10), 1)
@@ -101,26 +111,5 @@
 		var/obj/structure/closet/crate/CR = Crate
 		CR.manifest = slip
 		CR.update_icon()
-	if(istype(Crate, /obj/structure/largecrate))
-		var/obj/structure/largecrate/LC = Crate
-		LC.manifest = slip
-		LC.update_icon()
 
 	return Crate
-
-/datum/subsystem/shuttle/proc/generateSupplyOrder(packId, _orderedby, _orderedbyRank, _comment)
-	if(!packId)
-		return
-	var/datum/supply_packs/P = supply_packs[packId]
-	if(!P)
-		return
-
-	var/datum/supply_order/O = new()
-	O.ordernum = ordernum++
-	O.object = P
-	O.orderedby = _orderedby
-	O.orderedbyRank = _orderedbyRank
-	O.comment = _comment
-
-	return O
-

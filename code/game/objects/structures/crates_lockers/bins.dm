@@ -1,15 +1,11 @@
 /obj/structure/closet/crate/bin
 	desc = "A trash bin, place your trash here for the janitor to collect."
 	name = "trash bin"
-	icon_crate = "largebins"
 	icon_state = "largebins"
-	anchored = 1
-	sound_effect_open = 'sound/effects/bin_open.ogg'
-	sound_effect_close = 'sound/effects/bin_close.ogg'
-	var/animation = "animate_largebins"
-	var/redlight = "largebinr"
-	var/greenlight = "largebing"
-	var/orangelight = "largebino"
+	open_sound = 'sound/effects/bin_open.ogg'
+	close_sound = 'sound/effects/bin_close.ogg'
+	anchored = TRUE
+	allow_mobs = TRUE
 
 /obj/structure/closet/crate/bin/New()
 	..()
@@ -19,11 +15,11 @@
 	..()
 	overlays.Cut()
 	if(contents.len == 0)
-		overlays += greenlight
+		overlays += "largebing"
 	else if(contents.len >= storage_capacity)
-		overlays += redlight
+		overlays += "largebinr"
 	else
-		overlays += orangelight
+		overlays += "largebino"
 
 /obj/structure/closet/crate/bin/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/storage/bag/trash))
@@ -54,23 +50,15 @@
 			user.visible_message("<span class='warning'>[user] stuffs [O] into[src].</span>", \
 							 	 "<span class='notice'>You stuff [O] into [src].</span>", \
 							 	 "<span class='italics'>You hear a loud metal bang.</span>")
-		insert(O, 1, !opened)
+		insert(O)
 		if(opened)
 			close()
 
-/obj/structure/closet/crate/bin/open()
-	. = ..()
-	update_icon()
-
-/obj/structure/closet/crate/bin/close()
-	. = ..()
-	update_icon()
-
 /obj/structure/closet/crate/bin/proc/do_animate()
-	playsound(src.loc, sound_effect_open, 15, 1, -3)
-	flick(animation, src)
+	playsound(src.loc, open_sound, 15, 1, -3)
+	flick("animate_largebins", src)
 	spawn(13)
-		playsound(src.loc, sound_effect_close, 15, 1, -3)
+		playsound(src.loc, close_sound, 15, 1, -3)
 		update_icon()
 
 /obj/structure/closet/crate/bin/insert(obj/item/I, include_mobs = 0, animate = 0)
