@@ -303,8 +303,9 @@
 	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 	siemens_coefficient = 2.0
 //swimsuit
-/obj/item/clothing/under/swimsuit/
+/obj/item/clothing/under/swimsuit
 	siemens_coefficient = 1
+	body_parts_covered = 0
 
 /obj/item/clothing/under/swimsuit/black
 	name = "black swimsuit"
@@ -353,6 +354,7 @@
 	desc = "Don't believe in yourself, dumbass. Believe in me. Believe in the Kamina who believes in you."
 	icon_state = "kaminacape"
 	item_state = "kaminacape"
+	body_parts_covered = 0
 
 /obj/item/clothing/suit/storage/bandolier
 	name = "bandolier"
