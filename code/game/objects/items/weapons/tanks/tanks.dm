@@ -169,17 +169,17 @@
 				return
 			if(user.internal == src)
 				user.internal = null
-				user.internals.icon_state = "internal0"
-				usr << "<span class='notice'>You close the tank release valve.</span>"
+				user << "<span class='notice'>You close the tank release valve.</span>"
+				user.update_internals_hud_icon(0)
 				. = TRUE
 			else
 				if(user.wear_mask && (user.wear_mask.flags & MASKINTERNALS))
 					user.internal = src
-					user.internals.icon_state = "internal1"
-					usr << "<span class='notice'>You open \the [src] valve.</span>"
+					user << "<span class='notice'>You open \the [src] valve.</span>"
+					user.update_internals_hud_icon(1)
 					. = TRUE
 				else
-					usr << "<span class='warning'>You need something to connect to [src]!</span>"
+					user << "<span class='warning'>You need something to connect to [src]!</span>"
 
 
 /obj/item/weapon/tank/remove_air(amount)

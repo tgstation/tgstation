@@ -394,7 +394,7 @@
 			else
 				recharge(60)
 			return
-		if(user.zone_sel && user.zone_sel.selecting == "chest")
+		if(user.zone_selected == "chest")
 			if(user.a_intent == "harm")
 				if(req_defib && defib.safety)
 					return
@@ -498,17 +498,20 @@
 						else
 							//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
 							if (H.health > halfwaycritdeath)
-								H.adjustOxyLoss(H.health - halfwaycritdeath)
+								H.adjustOxyLoss(H.health - halfwaycritdeath, 0)
 							else
 								var/overall_damage = total_brute + total_burn + H.getToxLoss() + H.getOxyLoss()
 								var/mobhealth = H.health
-								H.adjustOxyLoss((mobhealth - halfwaycritdeath) * (H.getOxyLoss() / overall_damage))
-								H.adjustToxLoss((mobhealth - halfwaycritdeath) * (H.getToxLoss() / overall_damage))
-								H.adjustFireLoss((mobhealth - halfwaycritdeath) * (total_burn / overall_damage))
-								H.adjustBruteLoss((mobhealth - halfwaycritdeath) * (total_brute / overall_damage))
+								H.adjustOxyLoss((mobhealth - halfwaycritdeath) * (H.getOxyLoss() / overall_damage), 0)
+								H.adjustToxLoss((mobhealth - halfwaycritdeath) * (H.getToxLoss() / overall_damage), 0)
+								H.adjustFireLoss((mobhealth - halfwaycritdeath) * (total_burn / overall_damage), 0)
+								H.adjustBruteLoss((mobhealth - halfwaycritdeath) * (total_brute / overall_damage), 0)
 							user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
 							playsound(get_turf(src), 'sound/machines/defib_success.ogg', 50, 0)
 							H.stat = UNCONSCIOUS
+							H.updatehealth()
+							H.update_sight()
+							H.update_vision_overlays()
 							dead_mob_list -= H
 							living_mob_list |= list(H)
 							H.emote("gasp")

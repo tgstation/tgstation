@@ -74,7 +74,7 @@
 		A.loc = active_dummy.loc
 		if(ismob(A))
 			var/mob/M = A
-			M.reset_view(null)
+			M.reset_perspective(null)
 
 /obj/effect/dummy/chameleon
 	name = ""

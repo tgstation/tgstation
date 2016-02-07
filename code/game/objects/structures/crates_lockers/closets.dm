@@ -95,9 +95,7 @@
 
 	for(var/mob/M in src)
 		M.loc = loc
-		if(M.client)
-			M.client.eye = M.client.mob
-			M.client.perspective = MOB_PERSPECTIVE
+		M.reset_perspective(null)
 		if(throwing)
 			step(M, dir)
 	if(throwing)
@@ -134,9 +132,7 @@
 				mobs_stored++
 				if(mobs_stored >= mob_storage_capacity)
 					return 0
-		if(L.client)
-			L.client.perspective = EYE_PERSPECTIVE
-			L.client.eye = src
+		L.reset_perspective(src)
 		L.stop_pulling()
 	else if(!istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
 		return 0
@@ -381,8 +377,7 @@
 			locked = !locked
 			add_fingerprint(user)
 			for(var/mob/O in viewers(user, 3))
-				if((O.client && !( O.eye_blind )))
-					O << "<span class='notice'>[user] has [locked ? null : "un"]locked the locker.</span>"
+				O.show_message("<span class='notice'>[user] has [locked ? null : "un"]locked the locker.</span>", 1)
 			update_icon()
 		else
 			user << "<span class='notice'>Access Denied</span>"
@@ -400,3 +395,7 @@
 		overlays += "sparking"
 		spawn(4) //overlays don't support flick so we have to cheat
 		update_icon()
+
+/obj/structure/closet/get_remote_view_fullscreens(mob/user)
+	if(!(user.sight & (SEEOBJS|SEEMOBS)))
+		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)

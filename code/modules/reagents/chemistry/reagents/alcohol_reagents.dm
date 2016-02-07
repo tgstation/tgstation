@@ -81,7 +81,7 @@
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
-	M.sleeping = max(0,M.sleeping-2)
+	M.AdjustSleeping(-2)
 	M.Jitter(5)
 	..()
 	return
@@ -103,7 +103,7 @@
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-7)
-	M.sleeping = max(0,M.sleeping-2)
+	M.AdjustSleeping(-2)
 	if (M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
@@ -144,9 +144,8 @@
 	boozepwr = 15
 
 /datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/M)
-	M.druggy = max(M.druggy, 50)
+	M.set_drugginess(50)
 	..()
-	return
 
 /datum/reagent/consumable/ethanol/gin
 	name = "Gin"
@@ -399,7 +398,7 @@
 	boozepwr = 15
 
 /datum/reagent/consumable/ethanol/manhattan_proj/on_mob_life(mob/living/M)
-	M.druggy = max(M.druggy, 30)
+	M.set_drugginess(30)
 	..()
 	return
 

@@ -148,7 +148,8 @@
 /datum/reagent/blob/hallucinogenic_nectar/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reac_volume = ..()
 	M.hallucination += 0.8*reac_volume
-	M.druggy += 0.8*reac_volume
+	M.adjust_drugginess(0.8*reac_volume)
+
 	if(M.reagents)
 		M.reagents.add_reagent("spore", 0.2*reac_volume)
 	if(M)

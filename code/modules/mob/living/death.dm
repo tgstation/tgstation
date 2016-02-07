@@ -1,16 +1,3 @@
-/mob/living/death(gibbed)
-	eye_blind = max(eye_blind, 1)
-	timeofdeath = world.time
-
-	living_mob_list -= src
-	if(!gibbed)
-		dead_mob_list += src
-	else if(buckled)
-		buckled.unbuckle_mob()
-
-	clear_fullscreens()
-	..()
-
 /mob/living/gib(animation = 1)
 	var/prev_lying = lying
 	death(1)
@@ -46,6 +33,28 @@
 
 /mob/living/proc/dust_animation(animate, flick_name = "")
 	flick(flick_name, animate)
+
+/mob/living/death(gibbed)
+	unset_machine()
+	reset_perspective(null)
+	timeofdeath = world.time
+	tod = worldtime2text()
+	if(mind)
+		mind.store_memory("Time of death: [tod]", 0)
+	living_mob_list -= src
+	if(!gibbed)
+		dead_mob_list += src
+	else if(buckled)
+		buckled.unbuckle_mob()
+	paralysis = 0
+	stunned = 0
+	weakened = 0
+	sleeping = 0
+	update_sight()
+	update_vision_overlays()
+	update_health_hud()
+	update_canmove()
+
 
 /mob/living/proc/setup_animation(animation, prev_lying)
 	var/atom/movable/overlay/animate = null

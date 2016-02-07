@@ -35,7 +35,7 @@
 					R.notify_ai(TRUE)
 		if(WIRE_CAMERA) // Pulse to disable the camera.
 			if(!isnull(R.camera) && !R.scrambledcodes)
-				R.camera.deactivate(usr, 0)
+				R.camera.toggle_cam(usr, 0)
 				R.visible_message("[R]'s camera lense focuses loudly.", "Your camera lense focuses loudly.")
 		if(WIRE_LAWSYNC) // Forces a law update if possible.
 			if(R.lawupdate)
@@ -60,7 +60,7 @@
 		if (WIRE_CAMERA) // Disable the camera.
 			if(!isnull(R.camera) && !R.scrambledcodes)
 				R.camera.status = mend
-				R.camera.deactivate(usr, 0)
+				R.camera.toggle_cam(usr, 0)
 				R.visible_message("[R]'s camera lense focuses loudly.", "Your camera lense focuses loudly.")
 		if(WIRE_LOCKDOWN) // Simple lockdown.
 			R.SetLockdown(!mend)

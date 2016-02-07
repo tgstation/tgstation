@@ -485,7 +485,7 @@
 			var/initial_range = initial(C.view_range) //To prevent calling the proc twice
 			if(camera.uses > 0)
 				if(!C.status)
-					C.deactivate(src, 0) //Reactivates the camera based on status. Badly named proc.
+					C.toggle_cam(src, 0) //Reactivates the camera based on status. Badly named proc.
 					fixedcams++
 					camera.uses--
 				if(C.view_range != initial_range)
