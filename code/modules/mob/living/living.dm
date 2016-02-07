@@ -961,6 +961,7 @@ Sorry Giacom. Please don't be mad :(
 		if(total_health <= config.health_threshold_crit && !stat)
 			src << "<span class='notice'>You're too exhausted to keep going...</span>"
 			Weaken(5)
+			setStaminaLoss(health - 2)
 		update_health_hud()
 
 /mob/proc/update_sight()

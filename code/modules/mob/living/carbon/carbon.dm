@@ -851,7 +851,7 @@ var/const/GALOSHES_DONT_HELP = 4
 
 /mob/living/carbon/proc/update_internals_hud_icon(internal_state = 0)
 	if(hud_used && hud_used.internals)
-		hud_used.internals = "internal[internal_state]"
+		hud_used.internals.icon_state = "internal[internal_state]"
 
 /mob/living/carbon/update_stat()
 	if(status_flags & GODMODE)
