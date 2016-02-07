@@ -35,7 +35,9 @@
 	var/gas_type = "o2"
 	var/on = 0
 	var/stabilization_on = 0
+
 	var/datum/effect_system/trail_follow/ion/ion_trail
+
 	var/datum/action/item_action/jetpack/cycle/cycle_action
 	var/cycle_action_type = /datum/action/item_action/jetpack/cycle
 
