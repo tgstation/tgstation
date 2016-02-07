@@ -64,7 +64,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		U.telecrystals -= cost
 		U.spent_telecrystals += cost
 
-	var/atom/A = spawn_item(get_turf(user), U)
+	var/atom/A = spawn_item(get_turf(user), U, user)
 	var/obj/item/weapon/storage/box/B = A
 	if(istype(B) && B.contents.len > 0)
 		for(var/obj/item/I in B)
@@ -1111,6 +1111,17 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		U.purchase_log += "<big>\icon[I.item]</big>"
 
 	return C
+
+/datum/uplink_item/badass/annoydrone
+	name = "Annoyance drone"
+	desc = "A drone designed to create minor annoyances, and agitate the crew.  Will attempt to not interfere with your work."
+	cost = 1
+	item = /obj/item/drone_shell/annoyingdrone
+
+/datum/uplink_item/badass/annoydrone/spawn_item(turf/loc, obj/item/device/uplink/U, mob/user)
+	if(item)
+		feedback_add_details("traitor_uplink_items_bought", "[item]")
+		return new item(loc, user)
 
 /datum/uplink_item/badass/random
 	name = "Random Item"

@@ -46,6 +46,15 @@
 	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(src)
 	W.implant(src)
 
+/mob/living/simple_animal/drone/annoying
+	desc = "An annoying drone, an expendable robot built to perform station agitation."
+
+/mob/living/simple_animal/drone/annoying/New(loc, ownerName)
+	laws = \
+	"1. You may not involve yourself in the matters of [ownerName], even if such matters conflict with Law Two or Law Three.\n"+\
+	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
+	"3. Your goals are to annoy, agitate, infuriate, anger, and interfere to the best of your abilities, You must never actively work against these goals."
+
 /obj/item/drone_shell/syndrone
 	name = "syndrone shell"
 	desc = "A shell of a syndrone, a modified maintenance drone designed to infiltrate and annihilate."
@@ -55,3 +64,12 @@
 /obj/item/drone_shell/syndrone/badass
 	name = "badass syndrone shell"
 	drone_type = /mob/living/simple_animal/drone/syndrone/badass
+
+/obj/item/drone_shell/annoyingdrone
+	owner = "George Mellons"
+	desc = "A shell of an annoying drone, an expendable robot built to perform station agitation."
+	drone_type = /mob/living/simple_animal/drone/annoying
+
+/obj/item/drone_shell/annoyingdrone/New(loc, ownerName)
+	..()
+	owner = ownerName
