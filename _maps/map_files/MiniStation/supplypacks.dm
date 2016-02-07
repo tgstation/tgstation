@@ -1,31 +1,30 @@
 /datum/supply_packs/engineering/oxygen
 	name = "Oxygen Canister"
-	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
 	cost = 15
-	containertype = /obj/structure/closet/crate/large
-	containername = "oxygen canister crate"
+	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
+	crate_name = "oxygen canister crate"
+	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_packs/engineering/toxins
-	name = "Toxins Canister"
-	contains = list(/obj/machinery/portable_atmospherics/canister/toxins)
+	name = "Plasma Canister"
 	cost = 30
-	containertype = /obj/structure/closet/crate/large
-	containername = "toxins canister crate"
+	contains = list(/obj/machinery/portable_atmospherics/canister/toxins)
+	crate_name = "plasma canister crate"
+	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_packs/engineering/nitrogen
 	name = "Nitrogen Canister"
-	contains = list(/obj/machinery/portable_atmospherics/canister/nitrogen)
 	cost = 20
-	containertype = /obj/structure/closet/crate/large
-	containername = "nitrogen canister crate"
+	contains = list(/obj/machinery/portable_atmospherics/canister/nitrogen)
+	crate_name = "nitrogen canister crate"
+	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_packs/engineering/carbon_dio
 	name = "Carbon Dioxide Canister"
-	contains = list(/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
 	cost = 35
-	containertype = /obj/structure/closet/crate/large
-	containername = "carbon dioxide canister crate"
-
+	contains = list(/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
+	crate_name = "carbon dioxide canister crate"
+	crate_type = /obj/structure/closet/crate/large
 
 /obj/machinery/hydroponics/constructable/unattached
 	anchored = 0
@@ -34,5 +33,5 @@
 	name = "Hydroponics Tray Kit"
 	contains = list(/obj/machinery/hydroponics/constructable/unattached)
 	cost = 10
-	containertype = /obj/structure/closet/crate/large
-	containername = "hydroponics kit"
+	crate_name = "hydroponics kit"
+	crate_type = /obj/structure/closet/crate/large
