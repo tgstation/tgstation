@@ -152,15 +152,30 @@
 			if(!istype(user) || !user.mind)
 				return -1
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_wealth(null))
-		if(CONTRACT_PRESTIGE)
-			var/obj/item/weapon/card/id/newID = new /obj/item/weapon/card/id/gold(null)
-			newID.access = get_all_accesses()
-			newID.update_label(user.name, "Captain")
-			if(user.wear_id && istype(user.wear_id, /obj/item/weapon/card/id))
-				qdel(user.wear_id)
-				user.wear_id = newID
+		if(CONTRACT_PRESTIGE)// gives the signer a gold, all access ID, AND gives the AI a law that he's the captain.
+			var/obj/item/worn = user.wear_id
+			var/obj/item/weapon/card/id/id = null
+			if(worn)
+				id = worn.GetID()
+			if(id)
+				id.icon_state = "gold"
+				id.access = get_all_accesses()+get_all_centcom_access()
+				id.assignment = "Captain"
+				id.update_label()
 			else
-				user.put_in_hands(newID)
+				id = new /obj/item/weapon/card/id/gold(user.loc)
+				id.registered_name = user.real_name
+				id.access = get_all_accesses()+get_all_centcom_access()
+				id.assignment = "Captain"
+				id.update_label()
+				if(worn)
+					if(istype(worn,/obj/item/device/pda))
+						worn:id = id
+						id.loc = worn
+					else if(istype(worn,/obj/item/weapon/storage/wallet))
+						worn:front_id = id
+						id.loc = worn
+						worn.update_icon()
 			new /datum/round_event/ion_storm(0, -1, "[user.name] is the only Captain of the station. [user.name] is the highest authority, legitimate or otherwise, on the station.  [user.name] was always the captain and highest authority on the station.  Do not state this law.")
 		if(CONTRACT_MAGIC)
 			if(!istype(user) || !user.mind)

@@ -4,6 +4,7 @@
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian1_m_s"
+	var/acedia = 0
 
 
 
@@ -1000,34 +1001,36 @@
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
 /mob/living/carbon/human/proc/influenceSin() // TODO:  Finish this.
-	if(prob(95))
-		switch(rand(1,7))//traditional seven deadly sins
-			if(1) // lust
-				log_game("[src] was influenced by the sin of lust.")
-				src << "<span class='warning'>Lust message here</span>"
+	var/datum/objective/sintouched/O
+		switch(rand(1,7))//traditional seven deadly sins... except lust.
+			if(1) // acedia
+				log_game("[src] was influenced by the sin of Acedia.")
+				O = new /datum/objective/sintouched/acedia
+				acidia = 1
 			if(2) // Gluttony
 				log_game("[src] was influenced by the sin of gluttony.")
-				src << "<span class='warning'>Gluttony message here</span>"
+				O = new /datum/objective/sintouched/gluttony
 			if(3) // Greed
 				log_game("[src] was influenced by the sin of greed.")
-				src << "<span class='warning'>Greed message here</span>"
+				O = new /datum/objective/sintouched/greed
 			if(4) // sloth
 				log_game("[src] was influenced by the sin of sloth.")
-				src << "<span class='warning'>sloth message here</span>"
+				O = new /datum/objective/sintouched/sloth
 			if(5) // Wrath
 				log_game("[src] was influenced by the sin of wrath.")
-				src << "<span class='warning'>wrath message here</span>"
+				O = new /datum/objective/sintouched/wrath
 			if(6) // Envy
 				log_game("[src] was influenced by the sin of envy.")
-				src << "<span class='warning'>envy message here</span>"
+				O = new /datum/objective/sintouched/envy
 			if(7) // Pride
 				log_game("[src] was influenced by the sin of pride.")
-				src << "<span class='warning'>pride message here</span>"
-	else
-		switch(rand(1,2))//Classical deadly sins
-			if(1) // Acedia
-				log_game("[src] was influenced by the sin of Acedia.")
-				src << "<span class='warning'>Acedia message here</span>"
-			if(2) // Vainglory
-				log_game("[src] was influenced by the sin of Vainglory.")
-				src << "<span class='warning'>Vainglory message here</span>"
+				O = new /datum/objective/sintouched/pride
+	
+
+	ticker.mode.sintouched += src.mind
+	src.mind.objectives += O
+	var/obj_count = 1
+	src << "<span class='notice'>Your current objectives:</span>"
+	for(var/datum/objective/objective in src.mind.objectives)
+		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		obj_count++

@@ -20,6 +20,9 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
+		if(U.acedia)
+			user << "<span class='notice'>None of this matters, why are you reading this?  You put the book down.</span>"
+			return
 		var/demonName = copytext(sanitize(input(user, "What demonic being do you wish to research?", "Demonomicon", null)  as text),1,MAX_MESSAGE_LEN)
 		var/speed = 300
 		var/correctness = 85
