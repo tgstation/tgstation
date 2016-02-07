@@ -101,10 +101,10 @@
 			resetTime -= M.rating
 	for(var/obj/item/weapon/stock_parts/scanning_module/M in component_parts)
 		badThingCoeff += M.rating*2
-		destroychance -= M.rating*12
+		destroychance -= M.rating*11
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
 		badThingCoeff += M.rating
-		destroychance -= M.rating*6
+		destroychance -= M.rating*5.5
 
 /obj/machinery/r_n_d/experimentor/proc/checkCircumstances(obj/item/O)
 	//snowflake check to only take "made" bombs
