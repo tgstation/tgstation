@@ -148,9 +148,9 @@
 						turns_since_move = 0
 			return 1
 
-/mob/living/simple_animal/proc/handle_automated_speech()
+/mob/living/simple_animal/proc/handle_automated_speech(var/override)
 	if(speak_chance)
-		if(rand(0,200) < speak_chance)
+		if(prob(speak_chance) || override)
 			if(speak && speak.len)
 				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
 					var/length = speak.len
