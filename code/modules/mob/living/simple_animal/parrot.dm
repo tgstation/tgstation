@@ -119,7 +119,7 @@
 /mob/living/simple_animal/parrot/examine(mob/user)
 	..()
 	if(stat)
-		user << pick("This parrot is no more", " This is a late parrot", "This is an ex-parrot")
+		user << pick("This parrot is no more", "This is a late parrot", "This is an ex-parrot")
 
 /mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)
