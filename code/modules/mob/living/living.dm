@@ -469,7 +469,7 @@ Sorry Giacom. Please don't be mad :(
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
-	eye_stat = 0
+	eye_damage = 0
 	disabilities = 0
 	eye_blind = 0
 	eye_blurry = 0
@@ -487,7 +487,7 @@ Sorry Giacom. Please don't be mad :(
 	updatehealth()
 	update_fire()
 	regenerate_icons()
-	update_vision_overlays()
+	reload_fullscreen()
 
 /mob/living/proc/update_damage_overlays()
 	return
@@ -966,39 +966,37 @@ Sorry Giacom. Please don't be mad :(
 /mob/proc/update_sight()
 	return
 
-/mob/proc/adjust_blindness()
-	return
+/mob/proc/blind_eyes(amount)
+	if(amount>0)
+		var/old_eye_blind = eye_blind
+		eye_blind = max(eye_blind, amount)
+		if(!old_eye_blind)
+			throw_alert("blind", /obj/screen/alert/blind)
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 
-/mob/living/adjust_blindness(amount)
+/mob/proc/adjust_blindness(amount)
 	if(amount>0)
 		var/old_eye_blind = eye_blind
 		eye_blind += amount
 		if(!old_eye_blind)
 			throw_alert("blind", /obj/screen/alert/blind)
-			update_vision_overlays()//if we were not blind before, we update our blind overlays.
-		return
-	if(eye_blind)
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+	else if(eye_blind)
 		var/blind_minimum = 0
 		if(stat == UNCONSCIOUS || (disabilities & BLIND))
 			blind_minimum = 1
 		eye_blind = max(eye_blind+amount, blind_minimum)
 		if(!eye_blind)
 			clear_alert("blind")
-			update_vision_overlays()//if we're no longer blind, we update our vision overlays.
-
+			clear_fullscreen("blind")
 
 /mob/proc/set_blindness(amount)
-	return
-
-/mob/living/set_blindness(amount)
 	if(amount>0)
-		if(eye_blind >= amount)
-			return
 		var/old_eye_blind = eye_blind
 		eye_blind = amount
 		if(client && !old_eye_blind)
 			throw_alert("blind", /obj/screen/alert/blind)
-			update_vision_overlays()
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 	else if(eye_blind)
 		var/blind_minimum = 0
 		if(stat == UNCONSCIOUS || (disabilities & BLIND))
@@ -1006,54 +1004,72 @@ Sorry Giacom. Please don't be mad :(
 		eye_blind = blind_minimum
 		if(!eye_blind)
 			clear_alert("blind")
-			update_vision_overlays()
+			clear_fullscreen("blind")
 
-/mob/proc/adjust_blurriness(amount)
+/mob/proc/blur_eyes(amount)
 	if(amount>0)
 		var/old_eye_blurry = eye_blurry
-		eye_blurry += amount
+		eye_blurry = max(amount, eye_blurry)
 		if(!old_eye_blurry)
-			update_vision_overlays()
-	else if(eye_blurry)
-		eye_blurry = max(eye_blurry+amount, 0)
-		if(!eye_blurry)
-			update_vision_overlays()
+			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+
+/mob/proc/adjust_blurriness(amount)
+	var/old_eye_blurry = eye_blurry
+	eye_blurry = max(eye_blurry+amount, 0)
+	if(amount>0)
+		if(!old_eye_blurry)
+			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+	else if(old_eye_blurry)
+		clear_fullscreen("blurry")
 
 /mob/proc/set_blurriness(amount)
 	var/old_eye_blurry = eye_blurry
-	eye_blurry = amount
+	eye_blurry = max(amount, 0)
 	if(amount>0)
 		if(!old_eye_blurry)
-			update_vision_overlays()
+			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
 	else if(old_eye_blurry)
-		update_vision_overlays()
+		clear_fullscreen("blurry")
 
 
-/mob/proc/set_eye_stat(amount)
+/mob/proc/damage_eyes(amount)
 	return
 
-/mob/living/carbon/set_eye_stat(amount)
-	var/old_eye_stat = eye_stat
+/mob/living/carbon/damage_eyes(amount)
 	if(amount>0)
-		eye_stat = amount
-		update_vision_overlays()
-	else if(old_eye_stat)
-		eye_stat = 0
-		update_vision_overlays()
+		eye_damage = amount
+		if(eye_damage > 20)
+			if(eye_damage > 30)
+				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+			else
+				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
 
-/mob/proc/adjust_eye_stat(amount)
+
+/mob/proc/set_eye_damage(amount)
 	return
 
-/mob/living/carbon/human/adjust_eye_stat(amount)
-	var/old_eye_stat = eye_stat
-	if(amount>0)
-		eye_stat += amount
-		if(!old_eye_stat)
-			update_vision_overlays()
-	else if(old_eye_stat)
-		eye_stat = max(eye_stat+amount, 0)
-		if(old_eye_stat && !eye_stat)
-			update_vision_overlays()
+/mob/living/carbon/set_eye_damage(amount)
+	eye_damage = max(amount,0)
+	if(eye_damage > 20)
+		if(eye_damage > 30)
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+		else
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("eye_damage")
+
+/mob/proc/adjust_eye_damage(amount)
+	return
+
+/mob/living/carbon/adjust_eye_damage(amount)
+	eye_damage = max(eye_damage+amount, 0)
+	if(eye_damage > 20)
+		if(eye_damage > 30)
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+		else
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("eye_damage")
 
 /mob/proc/adjust_drugginess(amount)
 	return
@@ -1063,12 +1079,12 @@ Sorry Giacom. Please don't be mad :(
 	if(amount>0)
 		druggy += amount
 		if(!old_druggy)
-			update_vision_overlays()
+			overlay_fullscreen("high", /obj/screen/fullscreen/high)
 			throw_alert("high", /obj/screen/alert/high)
 	else if(old_druggy)
 		druggy = max(eye_blurry+amount, 0)
 		if(!druggy)
-			update_vision_overlays()
+			clear_fullscreen("high")
 			clear_alert("high")
 
 /mob/proc/set_drugginess(amount)
@@ -1079,10 +1095,10 @@ Sorry Giacom. Please don't be mad :(
 	druggy = amount
 	if(amount>0)
 		if(!old_druggy)
-			update_vision_overlays()
+			overlay_fullscreen("high", /obj/screen/fullscreen/high)
 			throw_alert("high", /obj/screen/alert/high)
 	else if(old_druggy)
-		update_vision_overlays()
+		clear_fullscreen("high")
 		clear_alert("high")
 
 
@@ -1104,7 +1120,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/carbon/cure_nearsighted()
 	if(disabilities & NEARSIGHT)
 		disabilities &= ~NEARSIGHT
-		update_vision_overlays()
+		clear_fullscreen("nearsighted")
 		return 1
 
 /mob/proc/become_nearsighted()
@@ -1113,7 +1129,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/carbon/become_nearsighted()
 	if(!(disabilities & NEARSIGHT))
 		disabilities |= NEARSIGHT
-		update_vision_overlays()
+		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
 		return 1
 
 /mob/proc/become_blind()
@@ -1122,5 +1138,5 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/carbon/become_blind()
 	if(!(disabilities & BLIND))
 		disabilities |= BLIND
-		set_blindness(max(eye_blind, 1))
+		blind_eyes(1)
 		return 1

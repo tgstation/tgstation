@@ -23,7 +23,7 @@
 		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
-				set_blindness(1)
+				blind_eyes(1)
 				update_canmove()
 		else
 			if(stat == UNCONSCIOUS)

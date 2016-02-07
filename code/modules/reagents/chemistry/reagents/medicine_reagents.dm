@@ -605,18 +605,18 @@
 			M << "<span class='warning'>Your vision slowly returns...</span>"
 			M.cure_blind()
 			M.cure_nearsighted()
-			M.set_blurriness(35)
+			M.blur_eyes(35)
 
 	else if(M.disabilities & NEARSIGHT)
 		M << "<span class='warning'>The blackness in your peripheral vision fades.</span>"
 		M.cure_nearsighted()
-		M.set_blurriness(10)
+		M.blur_eyes(10)
 
 	else if(M.eye_blind || M.eye_blurry)
 		M.set_blindness(0)
 		M.set_blurriness(0)
-	else if(M.eye_stat > 0)
-		M.adjust_eye_stat(-1)
+	else if(M.eye_damage > 0)
+		M.adjust_eye_damage(-1)
 	..()
 	return
 
@@ -711,7 +711,7 @@
 				M.adjustToxLoss(-20)
 				if(M.health > config.health_threshold_dead && M.getorgan(/obj/item/organ/internal/brain))
 					M.stat = UNCONSCIOUS
-					M.set_blindness(1)
+					M.blind_eyes(1)
 					dead_mob_list -= M
 					living_mob_list |= list(M)
 					M.emote("gasp")

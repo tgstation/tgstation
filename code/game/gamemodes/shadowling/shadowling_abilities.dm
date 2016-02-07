@@ -420,7 +420,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 		M = holder.my_atom
 	if(!is_shadow_or_thrall(M))
 		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"
-		M.set_blindness(5)
+		M.blind_eyes(5)
 		if(prob(25))
 			M.visible_message("<b>[M]</b> claws at their eyes!")
 			M.Stun(3)

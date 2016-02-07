@@ -107,6 +107,12 @@
 		if(health < 1)
 			death()
 
+/mob/living/simple_animal/blind_eyes()
+	return
+
+/mob/living/simple_animal/blur_eyes()
+	return
+
 /mob/living/simple_animal/adjust_blindness()
 	return
 

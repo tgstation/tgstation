@@ -50,8 +50,8 @@
 		target.Paralyse(amt_paralysis)
 		target.Stun(amt_stunned)
 
-		target.set_blindness(max(target.eye_blind,amt_eye_blind))
-		target.set_blurriness(max(target.eye_blurry,amt_eye_blurry))
+		target.blind_eyes(amt_eye_blind)
+		target.blur_eyes(amt_eye_blurry)
 		//summoning
 		if(summon_type)
 			new summon_type(target.loc, target)

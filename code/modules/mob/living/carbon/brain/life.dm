@@ -62,7 +62,7 @@
 		if(emp_damage>15)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
-				set_blindness(1)
+				blind_eyes(1)
 		else
 			if(stat == UNCONSCIOUS)
 				stat = CONSCIOUS

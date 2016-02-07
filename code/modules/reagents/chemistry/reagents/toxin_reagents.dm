@@ -226,7 +226,7 @@
 /datum/reagent/toxin/spore/on_mob_life(mob/living/M)
 	M.damageoverlaytemp = 60
 	M.update_damage_hud()
-	M.set_blurriness(max(M.eye_blurry, 3))
+	M.blur_eyes(3)
 	..()
 
 /datum/reagent/toxin/spore_burning
@@ -347,7 +347,7 @@
 		switch(pick(1, 2, 3, 4))
 			if(1)
 				M << "<span class='danger'>You can barely see!</span>"
-				M.set_blurriness(max(M.eye_blurry, 3))
+				M.blur_eyes(3)
 			if(2)
 				M.emote("cough")
 			if(3)

@@ -205,8 +205,8 @@
 	add_logs(user, target, "stung", "blind sting")
 	target << "<span class='danger'>Your eyes burn horrifically!</span>"
 	target.become_nearsighted()
-	target.set_blindness(20)
-	target.set_blurriness(40)
+	target.blind_eyes(20)
+	target.blur_eyes(40)
 	feedback_add_details("changeling_powers","BS")
 	return 1
 

@@ -1225,7 +1225,7 @@
 		if(paralysis || stunned || weakened || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
-				set_blindness(1)
+				blind_eyes(1)
 				update_canmove()
 				update_headlamp()
 		else

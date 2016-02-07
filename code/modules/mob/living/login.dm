@@ -11,7 +11,7 @@
 				CanBuild()
 
 	update_sight()
-	update_vision_overlays()
+	reload_fullscreen()
 	update_damage_hud()
 	update_health_hud()
 

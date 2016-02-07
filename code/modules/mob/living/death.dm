@@ -51,7 +51,7 @@
 	weakened = 0
 	sleeping = 0
 	update_sight()
-	update_vision_overlays()
+	hide_fullscreens()
 	update_health_hud()
 	update_canmove()
 

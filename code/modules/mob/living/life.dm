@@ -101,13 +101,13 @@
 			eye_blind = max(eye_blind-1,0)
 			if(client && !eye_blind)
 				clear_alert("blind")
-				update_vision_overlays()
+				clear_fullscreen("blind")
 		else
 			eye_blind = max(eye_blind-1,1)
 	else if(eye_blurry)			//blurry eyes heal slowly
 		eye_blurry = max(eye_blurry-1, 0)
 		if(client && !eye_blurry)
-			update_vision_overlays()
+			clear_fullscreen("blurry")
 
 	//Ears
 	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
