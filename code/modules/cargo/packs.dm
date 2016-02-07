@@ -1,8 +1,8 @@
 /datum/supply_pack
-	var/name = ""
-	var/group = ""
+	var/name = null
+	var/group = supply_misc
 	var/hidden = FALSE
-	var/contraband = FALSE
+	var/contraband = FLASE
 	var/cost = 0
 	var/access = FALSE
 	var/list/contains = null
@@ -132,7 +132,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/security
-	group = "Security"
+	group "Security"
 	access = access_security
 	crate_type = /obj/structure/closet/crate/secure/gear
 
@@ -480,7 +480,7 @@
 /datum/supply_pack/engineering/engine
 	name = "Emitter Crate"
 	cost = 10
-	access = access_ce
+		access = access_ce
 	contains = list(/obj/machinery/power/emitter,
 					/obj/machinery/power/emitter)
 	crate_name = "emitter crate"
@@ -810,12 +810,11 @@
 					/obj/item/clothing/tie/petcollar)
 	crate_name = "corgi crate"
 
-/datum/supply_pack/organic/critter/corgi/generate(turf/T)
-	. = ..()
+/datum/supply_pack/organic/critter/corgi/New()
 	if(prob(50))
-		var/mob/living/simple_animal/pet/dog/corgi/D = locate() in .
-		qdel(D)
-		new /mob/living/simple_animal/pet/dog/corgi/Lisa(.)
+		contains -= /mob/living/simple_animal/pet/dog/corgi
+		conmtains += /mob/living/simple_animal/pet/dog/corgi/Lisa
+	..()
 
 /datum/supply_pack/organic/critter/cat
 	name = "Cat Crate"
@@ -825,12 +824,11 @@
                     /obj/item/toy/cattoy)
 	crate_name = "cat crate"
 
-/datum/supply_pack/organic/critter/cat/generate(turf/T)
-	. = ..()
+/datum/supply_pack/organic/critter/cat/New()
 	if(prob(50))
-		var/mob/living/simple_animal/pet/cat/C = locate() in .
-		qdel(C)
-		new /mob/living/simple_animal/pet/cat/Proc(.)
+		contains -= /mob/living/simple_animal/pet/cat
+		conmtains += /mob/living/simple_animal/pet/cat/Proc
+	..()
 
 /datum/supply_pack/organic/critter/pug
 	name = "Pug Crate"
@@ -853,10 +851,9 @@
 	contains = list(/mob/living/simple_animal/butterfly)
 	crate_name = "butterflies crate"
 
-/datum/supply_pack/organic/critter/butterfly/generate(turf/T)
-	. = ..()
-	for(var/i in 1 to 49)
-		new /mob/living/simple_animal/butterfly(.)
+/datum/supply_pack/organic/critter/butterfly/New()
+	for(var/i in 1 to 50)
+		contents += /mob/living/simple_animal/butterfly
 
 /datum/supply_pack/organic/hydroponics
 	name = "Hydroponics Crate"
@@ -1193,21 +1190,10 @@
 					/obj/item/clothing/head/wizard/fake)
 	crate_name = "wizard costume crate"
 
-/datum/supply_pack/misc/random
-	var/random_count = 1
-
-/datum/supply_pack/misc/random/generate(turf/T)
-	. = ..()
-
-	var/obj/structure/closet/crate/C = .
-	while(C.contents.len > random_count)
-		var/atom/A = pick(C.contents)
-		qdel(A)
-
-/datum/supply_pack/misc/random/hats
+/datum/supply_pack/misc/randomised
 	name = "Collectable Hats Crate!"
 	cost = 200
-	random_count = 3
+	var/num_contained = 3 //number of items picked to be contained in a randomised crate
 	contains = list(/obj/item/clothing/head/collectable/chef,
 					/obj/item/clothing/head/collectable/paper,
 					/obj/item/clothing/head/collectable/tophat,
@@ -1230,20 +1216,20 @@
 					/obj/item/clothing/head/collectable/petehat)
 	crate_name = "collectable hats crate"
 
-/datum/supply_pack/misc/random/contraband
+/datum/supply_pack/misc/randomised/contraband
 	name = "Contraband Crate"
 	contraband = TRUE
 	cost = 30
-	random_count = 5
+	num_contained = 5
 	contains = list(/obj/item/weapon/poster/contraband,
 					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims)
 	crate_name = "crate"
 
-/datum/supply_pack/misc/random/toys
+/datum/supply_pack/misc/randomised/toys
 	name = "Toy Crate"
 	cost = 50 // or play the arcade machines ya lazy bum
-	random_count = 5
+	num_contained = 5
 	contains = list(/obj/item/toy/spinningtoy,
 	                /obj/item/toy/sword,
 	                /obj/item/toy/foamblade,

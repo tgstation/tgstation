@@ -127,10 +127,7 @@
 				mobs_stored++
 				if(mobs_stored >= mob_storage_capacity)
 					return 0
-<<<<<<< ede93b63a61fbdfe3be0fe9569aa29b152e767bc
 		L.reset_perspective(src)
-=======
->>>>>>> Fix up crates
 		L.stop_pulling()
 	else if(!istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
 		return 0
@@ -346,18 +343,13 @@
 	else
 		togglelock(user)
 
-/obj/structure/closet/proc/togglelock(mob/user)
+/obj/structure/closet/proc/togglelock(mob/living/user)
 	if(secure && !broken)
 		if(allowed(user))
 			locked = !locked
 			add_fingerprint(user)
-<<<<<<< ede93b63a61fbdfe3be0fe9569aa29b152e767bc
-			for(var/mob/O in viewers(user, 3))
-				O.show_message("<span class='notice'>[user] has [locked ? null : "un"]locked the locker.</span>", 1)
-=======
-			visible_message("<span class='notice'>[user] [locked ? null : "un"]locks [src].</span>",
+			user.visible_message("<span class='notice'>[user] [locked ? null : "un"]locks [src].</span>",
 							"<span class='notice'>You [locked ? null : "un"]locks [src].</span>")
->>>>>>> Fix up crates
 			update_icon()
 		else
 			user << "<span class='notice'>Access Denied</span>"
@@ -374,11 +366,10 @@
 		locked = 0
 		update_icon()
 
-<<<<<<< ede93b63a61fbdfe3be0fe9569aa29b152e767bc
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)
 	if(!(user.sight & (SEEOBJS|SEEMOBS)))
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
-=======
+
 /obj/structure/closet/emp_act(severity)
 	for(var/obj/O in src)
 		O.emp_act(severity)
@@ -393,4 +384,3 @@
 				req_access = list()
 				req_access += pick(get_all_accesses())
 	..()
->>>>>>> Fix up crates

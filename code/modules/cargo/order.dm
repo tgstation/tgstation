@@ -1,115 +1,89 @@
 /obj/item/weapon/paper/manifest
-	name = "supply manifest"
-	var/erroneous = 0
-	var/points = 0
-	var/ordernumber = 0
+	var/order_cost = 0
+	var/order_id = 0
+	var/errors = 0
+
+/obj/item/weapon/paper/manifest/New(atom/A, id, cost)
+	..()
+	order_id = id
+	order_cost = cost
+
+	if(prob(MANIFEST_ERROR_CHANCE))
+		errors |= MANIFEST_ERROR_NAME
+	if(prob(MANIFEST_ERROR_CHANCE))
+		errors |= MANIFEST_ERROR_CONTENTS
+	if(prob(MANIFEST_ERROR_CHANCE))
+		errors |= MANIFEST_ERROR_ITEM
 
 /datum/supply_order
-	var/ordernum
-	var/datum/supply_packs/object = null
-	var/orderedby = null
-	var/orderedbyRank
-	var/comment = null
+	var/id
+	var/orderer
+	var/orderer_rank
+	var/reason
+	var/datum/supply_pack/pack
 
-/datum/supply_order/proc/generateRequisition(atom/_loc)
-	if(!object)
-		return
+/datum/supply_order/New(pack, orderer, orderer_rank, reason)
+	id = SSshuttle.ordernum++
+	src.pack = SSshuttle.supply_packs[pack]
+	src.orderer = orderer
+	src.orderer_rank = orderer_rank
+	src.reason = reason
 
-	var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(_loc)
-	reqform.name = "requisition form - [object.name]"
-	reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
-	reqform.info += "INDEX: #[ordernum]<br>"
-	reqform.info += "REQUESTED BY: [orderedby]<br>"
-	reqform.info += "RANK: [orderedbyRank]<br>"
-	reqform.info += "REASON: [comment]<br>"
-	reqform.info += "SUPPLY CRATE TYPE: [object.name]<br>"
-	reqform.info += "ACCESS RESTRICTION: [get_access_desc(object.access)]<br>"
-	reqform.info += "CONTENTS:<br>"
-	reqform.info += object.manifest
-	reqform.info += "<hr>"
-	reqform.info += "STAMP BELOW TO APPROVE THIS REQUISITION:<br>"
+/datum/supply_order/proc/generateRequisition(turf/T)
+	var/obj/item/weapon/paper/P = new(T)
 
-	reqform.update_icon()	//Fix for appearing blank when printed.
+	P.name = "requisition form - #[id] ([pack.name])"
+	P.info += "<h2>[station_name()] Supply Requisition</h2>"
+	P.info += "<hr/>"
+	P.info += "Order #[id]<br/>"
+	P.info += "Item: [pack.name]<br/>"
+	P.info += "Access Restrictions: [get_access_desc(pack.access)]<br/>"
+	P.info += "Requested by: [orderer]<br/>"
+	P.info += "Rank: [orderer_rank]<br/>"
+	P.info += "Comment: [reason]<br/>"
 
-	return reqform
+	P.update_icon()
+	return P
 
-/datum/subsystem/shuttle/proc/generateSupplyOrder(packId, _orderedby, _orderedbyRank, _comment)
-	if(!packId)
-		return
-	var/datum/supply_packs/P = supply_packs[packId]
-	if(!P)
-		return
+/datum/supply_order/proc/generateManifest(obj/structure/closet/crate/C)
+	var/obj/item/weapon/paper/manifest/P = new(C, id, pack.cost)
 
-	var/datum/supply_order/O = new()
-	O.ordernum = ordernum++
-	O.object = P
-	O.orderedby = _orderedby
-	O.orderedbyRank = _orderedbyRank
-	O.comment = _comment
+	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
-	return O
+	P.name = "shipping manifest - #[id] ([pack.name])"
+	P.info += "<h2>[command_name()] Shipping Manifest</h2>"
+	P.info += "<hr/>"
+	P.info += "Order #[id]<br/>"
+	P.info += "Destination: [station_name]<br/>"
+	P.info += "Item: [pack.name]<br/>"
+	P.info += "Contents: <br/>"
+	P.info += "<ul>"
+	for(var/atom/movable/AM in C.contents - P)
+		if((P.errors & MANIFEST_ERROR_CONTENTS))
+			if(prob(50))
+				P.info += "<li>[AM.name]</li>"
+			else
+				continue
+		P.info += "<li>[AM.name]</li>"
+	P.info += "</ul>"
+	P.info += "<h4>Stamp below to confirm receipt of goods:</h4>"
 
-/datum/supply_order/proc/createObject(atom/_loc, errors=0)
-	if(!object)
-		return
+	P.update_icon()
+	P.loc = C
+	C.manifest = P
+	C.update_icon()
 
-		//create the crate
-	var/atom/Crate = new object.containertype(_loc)
-	Crate.name = "[object.containername] [comment ? "([comment])":"" ]"
-	if(object.access)
-		Crate:req_access = list(text2num(object.access))
+	return P
 
-		//create the manifest slip
-	var/obj/item/weapon/paper/manifest/slip = new /obj/item/weapon/paper/manifest()
-	slip.erroneous = errors
-	slip.points = object.cost
-	slip.ordernumber = ordernum
+/datum/supply_order/proc/generate(turf/T)
+	var/obj/structure/closet/crate/C = pack.generate(T)
+	var/obj/item/weapon/paper/manifest/M = generateManifest(C)
 
-	var/stationName = (errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
-	var/packagesAmt = SSshuttle.shoppinglist.len + ((errors & MANIFEST_ERROR_COUNT) ? rand(1,2) : 0)
-
-	slip.info = "<h3>[command_name()] Shipping Manifest</h3><hr><br>"
-	slip.info +="Order #[ordernum]<br>"
-	slip.info +="Destination: [stationName]<br>"
-	slip.info +="[packagesAmt] PACKAGES IN THIS SHIPMENT<br>"
-	slip.info +="CONTENTS:<br><ul>"
-
-		//we now create the actual contents
-	var/list/contains
-	if(istype(object, /datum/supply_packs/misc/randomised))
-		var/datum/supply_packs/misc/randomised/SO = object
-		contains = list()
-		if(object.contains.len)
-			for(var/j=1, j<=SO.num_contained, j++)
-				contains += pick(object.contains)
-	else
-		contains = object.contains
-
-	for(var/typepath in contains)
-		if(!typepath)
-			continue
-		var/atom/A = new typepath(Crate)
-		if(object.amount && A.vars.Find("amount") && A:amount)
-			A:amount = object.amount
-		slip.info += "<li>[A.name]</li>"	//add the item to the manifest (even if it was misplaced)
-
-	if((errors & MANIFEST_ERROR_ITEM))
-		//secure and large crates cannot lose items
-		if(findtext("[object.containertype]", "/secure/") || findtext("[object.containertype]","/large/"))
-			errors &= ~MANIFEST_ERROR_ITEM
+	if(M.errors & MANIFEST_ERROR_ITEM)
+		if(istype(C, /obj/structure/closet/crate/secure) || istype(C, /obj/structure/closet/crate/large))
+			M.errors &= ~MANIFEST_ERROR_ITEM
 		else
-			var/lostAmt = max(round(Crate.contents.len/10), 1)
-			//lose some of the items
-			while(--lostAmt >= 0)
-				qdel(pick(Crate.contents))
-
-	//manifest finalisation
-	slip.info += "</ul><br>"
-	slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>" // And now this is actually meaningful.
-	slip.loc = Crate
-	if(istype(Crate, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/CR = Crate
-		CR.manifest = slip
-		CR.update_icon()
-
-	return Crate
+			var/lost = max(round(C.contents.len / 10), 1)
+			while(--lost >= 0)
+				qdel(pick(C.contents))
+	return C
