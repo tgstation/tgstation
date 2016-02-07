@@ -159,8 +159,8 @@
 
 /obj/machinery/capture_the_flag/proc/dust_old(mob/user)
 	if(user.mind && user.mind.current && user.mind.current.z == src.z)
-		new /obj/item/ammo_box/magazine/wt550m9 (get_turf(user.mind.current))
-		new /obj/item/ammo_box/magazine/wt550m9 (get_turf(user.mind.current))
+		new /obj/item/ammo_box/magazine/recharge/ctf (get_turf(user.mind.current))
+		new /obj/item/ammo_box/magazine/recharge/ctf (get_turf(user.mind.current))
 		user.mind.current.dust()
 
 
@@ -217,9 +217,19 @@
 	desc = "This looks like it could really hurt in melee."
 	force = 75
 
-/obj/item/weapon/gun/projectile/automatic/wt550/CTF
+/obj/item/weapon/gun/projectile/automatic/laser/ctf
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 50
+
+/obj/item/ammo_box/magazine/recharge/ctf
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
+
+/obj/item/ammo_casing/caseless/laser/ctf
+ 	projectile_type = /obj/item/projectile/beam/ctf
+
+/obj/item/projectile/beam/ctf
+	damage = 150
 
 /datum/outfit/ctf
 	name = "CTF"
@@ -230,9 +240,9 @@
 	gloves = /obj/item/clothing/gloves/combat
 	id = /obj/item/weapon/card/id/syndicate
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/CTF
-	l_pocket = /obj/item/ammo_box/magazine/wt550m9
-	r_pocket = /obj/item/ammo_box/magazine/wt550m9
-	r_hand = /obj/item/weapon/gun/projectile/automatic/wt550/CTF
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
+	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf
 
 /datum/outfit/ctf/instagib
 	r_hand = /obj/item/weapon/gun/energy/laser/instakill
