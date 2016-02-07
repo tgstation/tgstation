@@ -9,10 +9,10 @@
 			return
 		if(1)
 			interceptname = "Biohazard Alert"
-			intercepttext = {"<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>
+			intercepttext = {"<FONT size = 3><B>Nanotrasen Update</B>: Biohazard Alert.</FONT><HR>
 Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.
 Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.
-NanoTrasen has issued a directive 7-10 for [station_name()]. The station is to be considered quarantined.
+Nanotrasen has issued a directive 7-10 for [station_name()]. The station is to be considered quarantined.
 Orders for all [station_name()] personnel follows:
 <ol>
 	<li>Do not leave the quarantine area.</li>
@@ -33,7 +33,7 @@ Message ends."}
 					if(bomb.z == 1)
 						nukecode = bomb.r_code
 			interceptname = "Directive 7-12"
-			intercepttext = {"<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>
+			intercepttext = {"<FONT size = 3><B>Nanotrasen Update</B>: Biohazard Alert.</FONT><HR>
 Directive 7-12 has been issued for [station_name()].
 The biohazard has grown out of control and will soon reach critical mass.
 Your orders are as follows:

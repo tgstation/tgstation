@@ -347,7 +347,7 @@ var/shuttle_call/shuttle_calls[0]
 			list("name"="message",  "label"="Message",     "desc"="A custom message.")
 		),
 		"alerts"=list(
-			list("alert"="default",   "label"="NanoTrasen",  "desc"="Oh god."),
+			list("alert"="default",   "label"="Nanotrasen",  "desc"="Oh god."),
 			list("alert"="redalert",  "label"="Red Alert",   "desc"="Nothing to do with communists."),
 			list("alert"="lockdown",  "label"="Lockdown",    "desc"="Let everyone know they're on lockdown."),
 			list("alert"="biohazard", "label"="Biohazard",   "desc"="Great for virus outbreaks and parties."),

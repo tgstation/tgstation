@@ -61,7 +61,7 @@
 	if(get_dist(src,user) <= 1)
 
 		var/dat = {"<b>[eftpos_name]</b><br>
-<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br>"}
+<i>This terminal is</i> [machine_id]. <i>Report this code when contacting Nanotrasen IT Support</i><br>"}
 		if(transaction_locked)
 
 			dat += {"<a href='?src=\ref[src];choice=toggle_lock'>Reset[transaction_paid ? "" : " (authentication required)"]</a><br><br>
