@@ -172,5 +172,5 @@
 			return
 		var/atom/movable/M = target
 		M.clean_blood()
-		visible_message("[src] polishes the [target].")
+		visible_message("[src] polishes \the [target].")
 
