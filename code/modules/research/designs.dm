@@ -496,3 +496,43 @@ datum/design/diagnostic_hud_night
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
 	build_path = /obj/item/weapon/weldingtool/experimental
 	category = list("Equipment")
+
+/datum/design/awrench
+	name = "Advanced wrench"
+	desc = "A wrench with a self lubricating adjuster for maximum efficiency."
+	id = "awrench"
+	req_tech = list("materials" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_SILVER = 150)
+	build_path = /obj/item/weapon/wrench/advanced
+	category = list("Equipment")
+
+/datum/design/acrowbar
+	name = "Advanced crowbar"
+	desc = "A gyroscopically stabilized crowbar."
+	id = "acrowbar"
+	req_tech = list("materials" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_SILVER = 50)
+	build_path = /obj/item/weapon/crowbar/advanced
+	category = list("Equipment")
+
+/datum/design/awirecutters
+	name = "Advanced wirecutter"
+	desc = "A pair of wirecutters with a laser cut monomolecular edge."
+	id = "awirecutters"
+	req_tech = list("materials" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_SILVER = 80)
+	build_path = /obj/item/weapon/wirecutters/advanced
+	category = list("Equipment")
+
+/datum/design/ascrewdriver
+	name = "Advanced screwdriver"
+	desc = "Produces high powered micro vibrations to loosen stuck and stripped screws."
+	id = "ascrewdriver"
+	req_tech = list("materials" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_SILVER = 75)
+	build_path = /obj/item/weapon/screwdriver/advanced
+	category = list("Equipment")
