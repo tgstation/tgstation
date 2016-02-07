@@ -1,6 +1,4 @@
 	//Baseline hardsuits
-
-
 /obj/item/clothing/head/helmet/space/hardsuit
 	name = "hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
@@ -77,15 +75,15 @@
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
 	var/obj/item/weapon/tank/jetpack/suit/jetpack = null
 
-/obj/item/clothing/suit/space/hardsuit/verb/Jetpack()
-	set name = "Toggle Inbuilt Jetpack"
-	set category = "Object"
-	jetpack.toggle()
+/obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
+	..()
+	if(slot == slot_wear_suit && jetpack)
+		jetpack.cycle_action.Grant(user)
 
-/obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets()
-	set name = "Toggle Inbuilt Jetpack Stabilization"
-	set category = "Object"
-	jetpack.toggle_rockets()
+/obj/item/clothing/suit/space/hardsuit/dropped(mob/user)
+	..()
+	if(jetpack)
+		jetpack.cycle_action.Remove(user)
 
 	//Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/engine
