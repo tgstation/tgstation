@@ -21,6 +21,7 @@
 	power_channel = ENVIRON
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
+	var/alarm = FALSE //Is the alarm going off?
 
 /obj/machinery/firealarm/New(loc, dir, building)
 	..()
@@ -61,12 +62,12 @@
 		else
 			overlays += "overlay_fire"
 
-/obj/machinery/firealarm/bullet_act(BLAH)
-	if(prob(50))
+/obj/machinery/firealarm/bullet_act(BLAH) //quality var
+	if(prob(50) && !alarm)
 		alarm()
 
 /obj/machinery/firealarm/emp_act(severity)
-	if(prob(50 / severity))
+	if((prob(50 / severity)) && !alarm)
 		alarm()
 
 /obj/machinery/firealarm/emag_act(mob/user)
@@ -78,15 +79,19 @@
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if(!emagged && detecting && temperature > T0C + 200)
+	if(!alarm && !emagged && detecting && temperature > T0C + 200)
 		alarm()
 
 /obj/machinery/firealarm/proc/alarm()
+	set waitfor = 0
 	if(!is_operational())
 		return
 	var/area/A = get_area(src)
 	A.firealert(src)
-	playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
+	alarm = TRUE
+	while(alarm)
+		playsound(src.loc, 'sound/machines/fireAlarm.ogg', 75, 0)
+		sleep(50)
 
 /obj/machinery/firealarm/proc/alarm_in(time)
 	addtimer(src, "alarm", time, FALSE)
@@ -96,6 +101,7 @@
 		return
 	var/area/A = get_area(src)
 	A.firereset(src)
+	alarm = FALSE
 
 /obj/machinery/firealarm/proc/reset_in(time)
 	addtimer(src, "reset", time, FALSE)
