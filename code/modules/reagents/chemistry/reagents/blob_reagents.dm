@@ -294,7 +294,7 @@
 
 /datum/reagent/blob/reactive_gelatin/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	var/damage = rand(10, 35)/25
+	var/damage = rand(10, 30)/25
 	if(M)
 		M.apply_damage(damage*reac_volume, BRUTE)
 
@@ -391,7 +391,7 @@
 	name = "Penetrating Spines"
 	id = "penetrating_spines"
 	description = "will do medium brute damage through armor."
-	color = "#96938F"
+	color = "#408B80"
 	blobbernaut_message = "stabs"
 	message = "The blob stabs you"
 
