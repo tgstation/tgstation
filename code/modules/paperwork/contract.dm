@@ -118,13 +118,16 @@
 	..()
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if(user.IsAdvancedToolUser())
-			if(user.hasSoul)
-				user << "<span class='notice'>You quickly scrawl your name on the contract</span>"
-				FulfillContract(user)
-				return
+			if(user == target)
+				if(user.hasSoul)
+					user << "<span class='notice'>You quickly scrawl your name on the contract</span>"
+					FulfillContract()
+					return
+				else
+					user << "<span class='notice'>You are not in possession of your soul, you may not sell it.</span>"
+					return
 			else
-				user << "<span class='notice'>You are not in possession of your soul, you may not sell it.</span>"
-				return
+				user << "<span class='notice'>Your signature simply slides off of the sheet, it seems this contract is not meant for you to sign.</span>"
 		else
 			user << "<span class='notice'>You don't know how to read or write.</span>"
 			return
@@ -136,7 +139,39 @@
 		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>The [src] refuses to ignite!</span>")
 	add_fingerprint(user)
 
-/obj/item/weapon/paper/contract/infernal/proc/FulfillContract(mob/living/carbon/human/user)
+/obj/item/weapon/paper/contract/infernal/proc/FulfillContract(mob/living/carbon/human/user = target)
 	signed = 1
 	burn_timer += 10
 	update_text(user)
+	switch(contractType)
+		if(CONTRACT_POWER)
+			if(!user.dna)
+				return -1
+			user.dna.add_mutation(HULK)
+		if(CONTRACT_WEALTH)
+			if(!istype(user) || !user.mind)
+				return -1
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_wealth(null))
+		if(CONTRACT_PRESTIGE)
+			var/obj/item/weapon/card/id/newID = new /obj/item/weapon/card/id/gold(null)
+			newID.access = get_all_accesses()
+			newID.update_label(user.name, "Captain")
+			if(user.wear_id && istype(user.wear_id, /obj/item/weapon/card/id))
+				qdel(user.wear_id)
+				user.wear_id = newID
+			else
+				user.put_in_hands(newID)
+			new /datum/round_event/ion_storm(0, -1, "[user.name] is the only Captain of the station. [user.name] is the highest authority, legitimate or otherwise, on the station.  [user.name] was always the captain and highest authority on the station.  Do not state this law.")
+		if(CONTRACT_MAGIC)
+			if(!istype(user) || !user.mind)
+				return -1
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball(null))
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
+		//if(CONTRACT_SLAVE)
+			//TODO: implement this.
+		//if(CONTRACT_UNWILLING)
+			//TODO: implement this.
+	user.hasSoul = 0
+	user.damned = 1
+	//owner.soulBounties += user

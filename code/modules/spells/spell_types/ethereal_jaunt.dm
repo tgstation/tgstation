@@ -27,7 +27,7 @@
 			mobloc = get_turf(target.loc)
 			holder = new /obj/effect/dummy/spell_jaunt( mobloc )
 			animation = new /atom/movable/overlay( mobloc )
-			enter_jaunt(target,)
+			enter_jaunt(target)
 			in_jaunt = 1
 			sleep(jaunt_duration)
 			if (in_jaunt)

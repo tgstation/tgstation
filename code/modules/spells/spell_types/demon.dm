@@ -18,12 +18,35 @@
 /obj/effect/proc_holder/spell/targeted/summon_pitchfork/cast(list/targets, mob/user = usr)
 	if (summoned)
 		qdel(pitchfork)
+		summoned = 0
 	else
 		for(var/mob/living/carbon/C in targets)
-			C.drop_item()
-			pitchfork = new
-			C.put_in_hands(pitchfork)
-	summoned = !summoned
+			if(C.drop_item())
+				pitchfork = new
+				C.put_in_hands(pitchfork)
+				summoned = 1
+
+
+/obj/effect/proc_holder/spell/targeted/summon_contract
+	name = "Summon infernal contract"
+	desc = "Skip making a contract by hand, just do it by magic."
+	invocation_type = "whisper"
+	invocation = "Just sign on the dotted line."
+	include_user = 1
+	range = 5
+	clothes_req = 0
+
+	school = "conjuration"
+	charge_max = 150
+	cooldown_min = 10
+	action_icon_state = "bolt_action" //TODO: set icon
+
+/obj/effect/proc_holder/spell/targeted/summon_contract/cast(list/targets, mob/user = usr)
+	for(var/mob/living/carbon/C in targets)
+		if(user.drop_item())
+			var/obj/item/weapon/paper/contract/infernal/contract = new(user.loc, C, CONTRACT_POWER, user)
+			C.put_in_hands(contract)
+
 
 /obj/effect/proc_holder/spell/dumbfire/fireball/demonic
 	name = "Hellfire"
@@ -60,18 +83,25 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
-	jaunt_duration = 300 //in deciseconds
+	jaunt_duration = 300
 	action_icon_state = "jaunt" //TODO: better icon
 
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
 	if(!in_jaunt)
-		..()
+		playsound(get_turf(user), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
+		for(var/mob/living/target in targets)
+			target.notransform = 1
+			sleep(30)
+			mobloc = get_turf(target.loc)
+			holder = new /obj/effect/dummy/spell_jaunt( mobloc )
+			animation = new /atom/movable/overlay( mobloc )
+			enter_jaunt(target)
+			in_jaunt = 1
 	else
 		in_jaunt = 0
 		for(var/mob/living/target in targets)
 			var/turf/mobloc = get_turf(target.loc)
 			var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt( mobloc )
 			var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
-			user << "Bleep."
 			exit_jaunt(target, mobloc, holder, animation, user)
