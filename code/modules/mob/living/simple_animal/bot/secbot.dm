@@ -41,7 +41,7 @@
 	var/turf/Tsec = get_turf(src)
 	new /obj/item/weapon/stock_parts/cell/potato(Tsec)
 	var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
-	S.list_reagents = list("whiskey" = 15)
+	S.reagents.add_reagent("whiskey", 15)
 	S.on_reagent_change()
 	..()
 
