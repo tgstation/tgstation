@@ -109,23 +109,23 @@
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
 	if(M.stat != DEAD && M.bodytemperature < T0C) // Low temperatures are required to take effect.
 		M.status_flags &= ~DISFIGURED
-		M.adjustCloneLoss(-1)
+		M.adjustCloneLoss(-2)
 		if(M.health < 0)
 			M.adjustOxyLoss(-5)
 			M.adjustBruteLoss(-1)
 			M.adjustFireLoss(-1)
 			M.adjustToxLoss(-1)
 	if(M.stat != DEAD && M.bodytemperature < 225) // At lower temperatures (cryo) the full effect is boosted
-		M.adjustCloneLoss(-1)
+		M.adjustCloneLoss(-3)
 		if(M.health < 0)
-			M.adjustOxyLoss(-2)
+			M.adjustOxyLoss(-5)
 			M.adjustBruteLoss(-2)
 			M.adjustFireLoss(-2)
 			M.adjustToxLoss(-2)
 	if(M.stat != DEAD && M.bodytemperature < 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
-		M.adjustCloneLoss(-5)
+		M.adjustCloneLoss(-7)
 		if(M.health < 0)
-			M.adjustOxyLoss(-2)
+			M.adjustOxyLoss(-5)
 			M.adjustBruteLoss(-2)
 			M.adjustFireLoss(-2)
 			M.adjustToxLoss(-2)
