@@ -62,6 +62,8 @@
 	if(environment)	// More error checking -- TLE
 		handle_environment(environment)
 
+	handle_body_temperature()
+
 	//Check if we're on fire
 	handle_fire()
 
@@ -405,22 +407,61 @@
 
 	return 1
 
+/mob/living/carbon/monkey/get_thermal_protection_flags()
+	var/thermal_protection_flags = 0
+	if(hat)
+		thermal_protection_flags |= hat.body_parts_covered
+	if(wear_mask)
+		thermal_protection_flags |= wear_mask.body_parts_covered
+	if(uniform)
+		thermal_protection_flags |= uniform.body_parts_covered
+	return thermal_protection_flags
+
+/mob/living/carbon/monkey/get_cold_protection()
+
+	var/thermal_protection = 0.0
+
+	if(hat)
+		thermal_protection += hat.return_thermal_protection()
+	if(wear_mask)
+		thermal_protection += wear_mask.return_thermal_protection()
+	if(uniform)
+		thermal_protection += uniform.return_thermal_protection()
+
+	var/max_protection = get_thermal_protection(get_thermal_protection_flags())
+	return min(thermal_protection,max_protection)
+
+/mob/living/carbon/monkey/get_heat_protection_flags(temperature)
+	var/thermal_protection_flags = 0
+	if(hat && hat.max_heat_protection_temperature >= temperature)
+		thermal_protection_flags |= hat.body_parts_covered
+	if(wear_mask && wear_mask.max_heat_protection_temperature >= temperature)
+		thermal_protection_flags |= wear_mask.body_parts_covered
+	if(uniform && uniform.max_heat_protection_temperature >= temperature)
+		thermal_protection_flags |= uniform.body_parts_covered
+	return thermal_protection_flags
+
+
 /mob/living/carbon/monkey/proc/handle_environment(datum/gas_mixture/environment)
 	if(!environment || (flags & INVULNERABLE))
 		return
 	var/spaceproof = 0
 	if(hat && istype(hat, /obj/item/clothing/head/helmet/space) && uniform && istype(uniform, /obj/item/clothing/monkeyclothes/space))
 		spaceproof = 1	//quick and dirt cheap. no need for the Life() of monkeys to become as complicated as the Life() of humans. man that's deep.
-
+	var/loc_temp = get_loc_temp(environment)
 	var/environment_heat_capacity = environment.heat_capacity()
 	if(istype(get_turf(src), /turf/space))
 		var/turf/heat_turf = get_turf(src)
 		environment_heat_capacity = heat_turf.heat_capacity
 
-	if(!on_fire)
-		if((environment.temperature > (T0C + 50)) || ((environment.temperature < (T0C + 10)) && !spaceproof))
-			var/transfer_coefficient = 1
-			handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
+	if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
+		if(loc_temp < get_skin_temperature())
+			var/thermal_loss = get_thermal_loss(environment)
+			bodytemperature -= thermal_loss
+		else
+			var/thermal_protection = get_thermal_protection(get_heat_protection_flags(loc_temp)) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+			if(thermal_protection < 1)
+				bodytemperature += min((1 - thermal_protection) * ((loc_temp - get_skin_temperature()) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 	if(stat==DEAD)
 		bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
@@ -481,7 +522,7 @@
 			adjustBruteLoss(-1)
 			adjustToxLoss(-1)
 			adjustOxyLoss(-1)
-
+	burn_calories(HUNGER_FACTOR,1)
 	if(reagents) reagents.metabolize(src,alien)
 
 	if (drowsyness)
@@ -550,6 +591,8 @@
 			if(halloss > 0)
 				adjustHalLoss(-3)
 		//CONSCIOUS
+		else if(undergoing_hypothermia() >= SEVERE_HYPOTHERMIA)
+			stat = UNCONSCIOUS
 		else
 			stat = CONSCIOUS
 			if(halloss > 0)

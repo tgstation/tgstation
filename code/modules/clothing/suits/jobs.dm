@@ -49,6 +49,8 @@
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	species_fit = list("Vox")
+	body_parts_covered = FULL_TORSO|LEGS|ARMS|IGNORE_INV
+
 
 //Chaplain
 /obj/item/clothing/suit/nun

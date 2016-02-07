@@ -1283,7 +1283,6 @@
 #include "code\modules\mob\living\carbon\human\update_icons.dm"
 #include "code\modules\mob\living\carbon\human\whisper.dm"
 #include "code\modules\mob\living\carbon\human\catbeast\catbeast.dm"
-#include "code\modules\mob\living\carbon\human\life\handle_body_temperature.dm"
 #include "code\modules\mob\living\carbon\human\life\handle_breath.dm"
 #include "code\modules\mob\living\carbon\human\life\handle_changeling.dm"
 #include "code\modules\mob\living\carbon\human\life\handle_chemicals_in_body.dm"

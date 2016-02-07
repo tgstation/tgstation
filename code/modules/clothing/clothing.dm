@@ -193,7 +193,7 @@ BLIND     // can't see anything
 			permeability_coefficient = null
 			flags = 0
 			src.is_flipped = 2
-			body_parts_covered &= ~(MOUTH|HEAD)
+			body_parts_covered &= ~(MOUTH|HEAD|BEARD)
 		usr.update_inv_wear_mask()
 
 /obj/item/clothing/mask/attack_self()

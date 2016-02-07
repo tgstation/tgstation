@@ -10,6 +10,7 @@
 	throw_range = 5
 	w_class = 3.0
 	flags = FPRINT
+	body_parts_covered = FULL_BODY
 
 /obj/item/clothing/monkeyclothes/attack(mob/living/carbon/C as mob, mob/user as mob)	//I thought I'd give people a fast way to put clothes on monkey.
 	if(ismonkey(C))																	//They can do it by opening the monkey's "show inventory" like you'd do for an human as well.

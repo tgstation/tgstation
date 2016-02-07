@@ -26,7 +26,7 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 //This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, UPPER_TORSO, LOWER_TORSO, etc. See setup.dm for the full list)
-/mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
+/mob/living/carbon/human/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = 0
 	//Handle normal clothing
 	if(head)
@@ -50,7 +50,7 @@
 
 	return thermal_protection_flags
 
-/mob/living/carbon/human/proc/get_thermal_protection_flags()
+/mob/living/carbon/human/get_thermal_protection_flags()
 	var/thermal_protection_flags = 0
 	if(head)
 		thermal_protection_flags |= head.body_parts_covered
@@ -67,46 +67,12 @@
 
 	return thermal_protection_flags
 
-/mob/living/carbon/human/proc/get_thermal_protection(var/thermal_protection_flags) //Temperature is the temperature you're being exposed to.
-
-	var/thermal_protection = 0.0
-
-	if(thermal_protection_flags)
-		if(thermal_protection_flags & HEAD)
-			thermal_protection += THERMAL_PROTECTION_HEAD
-		if(thermal_protection_flags & EYES)
-			thermal_protection += THERMAL_PROTECTION_EYES
-		if(thermal_protection_flags & MOUTH)
-			thermal_protection += THERMAL_PROTECTION_MOUTH
-		if(thermal_protection_flags & UPPER_TORSO)
-			thermal_protection += THERMAL_PROTECTION_UPPER_TORSO
-		if(thermal_protection_flags & LOWER_TORSO)
-			thermal_protection += THERMAL_PROTECTION_LOWER_TORSO
-		if(thermal_protection_flags & LEG_LEFT)
-			thermal_protection += THERMAL_PROTECTION_LEG_LEFT
-		if(thermal_protection_flags & LEG_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_LEG_RIGHT
-		if(thermal_protection_flags & FOOT_LEFT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_LEFT
-		if(thermal_protection_flags & FOOT_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_RIGHT
-		if(thermal_protection_flags & ARM_LEFT)
-			thermal_protection += THERMAL_PROTECTION_ARM_LEFT
-		if(thermal_protection_flags & ARM_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_ARM_RIGHT
-		if(thermal_protection_flags & HAND_LEFT)
-			thermal_protection += THERMAL_PROTECTION_HAND_LEFT
-		if(thermal_protection_flags & HAND_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
-
-	return min(1, thermal_protection)
-
-/mob/living/carbon/human/proc/get_heat_protection(var/thermal_protection_flags) //Temperature is the temperature you're being exposed to.
+/mob/living/carbon/human/get_heat_protection(var/thermal_protection_flags) //Temperature is the temperature you're being exposed to.
 	if(M_RESIST_HEAT in mutations)
 		return 1
 	return get_thermal_protection(thermal_protection_flags)
 
-/mob/living/carbon/human/proc/get_cold_protection()
+/mob/living/carbon/human/get_cold_protection()
 
 	if(M_RESIST_COLD in mutations)
 		return 1 //Fully protected from the cold.

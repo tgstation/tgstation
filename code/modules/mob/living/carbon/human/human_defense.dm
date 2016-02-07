@@ -61,7 +61,7 @@ emp_act
 /mob/living/carbon/human/proc/checkarmor(var/datum/organ/external/def_zone, var/type)
 	if(!type)	return 0
 	var/protection = 0
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform)
+	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
 	for(var/bp in body_parts)
 		if(!bp)	continue
 		if(bp && istype(bp ,/obj/item/clothing))
