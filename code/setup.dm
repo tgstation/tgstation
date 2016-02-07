@@ -1409,6 +1409,6 @@ var/proccalls = 1
 
 #define STARVATION_OXY_HEAL_RATE 1 //While starving, THIS much oxygen damage is restored per life tick (instead of the default 5)
 
-#define DENSE_WHEN_LOCKING 1
-#define DENSE_WHEN_LOCKED 2
-#define LOCKED_SHOULD_LIE 4
+#define LOCKED_SHOULD_LIE 1
+#define DENSE_WHEN_LOCKING 2
+#define DENSE_WHEN_LOCKED 4
