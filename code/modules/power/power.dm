@@ -34,7 +34,7 @@
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return powernet.avail-powernet.load
+		return powernet.avail - powernet.load
 	else
 		return 0
 
@@ -50,10 +50,8 @@
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
 /obj/machinery/proc/powered(var/chan = -1) // defaults to power_channel
-
-	if(!src.loc)
+	if(!loc)
 		return 0
-
 	if(!use_power)
 		return 1
 

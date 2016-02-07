@@ -22,7 +22,7 @@
 		ui = get_open_ui(user, src_object, ui_key)
 
 	if(!isnull(ui))
-		var/data = src_object.get_ui_data(user) // Get data from the src_object.
+		var/data = src_object.ui_data(user) // Get data from the src_object.
 		if(!force_open) // UI is already open; update it.
 			ui.push_data(data)
 		else // Re-open it anyways.

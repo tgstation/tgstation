@@ -347,12 +347,12 @@ Code:
 				menu += "<span class='danger'>No connection<BR></span>"
 			else
 				var/list/L = list()
-				for(var/obj/machinery/power/terminal/term in powmonitor.powernet.nodes)
+				for(var/obj/machinery/power/terminal/term in powmonitor.attached.powernet.nodes)
 					if(istype(term.master, /obj/machinery/power/apc))
 						var/obj/machinery/power/apc/A = term.master
 						L += A
 
-				menu += "<PRE>Total power: [powmonitor.powernet.avail] W<BR>Total load:  [num2text(powmonitor.powernet.viewload,10)] W<BR>"
+				menu += "<PRE>Total power: [powmonitor.attached.powernet.viewavail] W<BR>Total load:  [num2text(powmonitor.attached.powernet.viewload,10)] W<BR>"
 
 				menu += "<FONT SIZE=-1>"
 
@@ -704,7 +704,7 @@ Code:
 			if("summon") //Args are in the correct order, they are stated here just as an easy reminder.
 				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= pda.GetAccess())
 			else //Forward all other bot commands to the bot itself!
-				active_bot.bot_control(command= href_list["op"])
+				active_bot.bot_control(command= href_list["op"], user= usr)
 
 	if(href_list["mule"]) //MULEbots are special snowflakes, and need different args due to how they work.
 
@@ -728,6 +728,14 @@ Code:
 		menu += "Model: [active_bot.model]<BR>"
 		menu += "Location: [get_area(active_bot)]<BR>"
 		menu += "Mode: [active_bot.get_mode()]"
+		if(active_bot.allow_pai)
+			menu += "<BR>pAI: "
+			if(active_bot.paicard && active_bot.paicard.pai)
+				menu += "[active_bot.paicard.pai.name]"
+				if(active_bot.bot_core.allowed(usr))
+					menu += " (<A href='byond://?src=\ref[src];op=ejectpai'><i>eject</i></A>)"
+			else
+				menu += "<i>none</i>"
 
 		//MULEs!
 		if(active_bot.bot_type == MULE_BOT)

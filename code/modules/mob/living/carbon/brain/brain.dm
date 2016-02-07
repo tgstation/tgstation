@@ -5,7 +5,6 @@
 	var/obj/item/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
-	var/alert = null
 	has_limbs = 0
 
 /mob/living/carbon/brain/Destroy()
@@ -30,13 +29,6 @@
 
 /mob/living/carbon/brain/blob_act()
 	return
-
-/mob/living/carbon/brain/on_forcemove(atom/newloc)
-	if(container)
-		container.loc = newloc
-	else //something went very wrong.
-		CRASH("Brainmob without container.")
-	loc = container
 
 /mob/living/carbon/brain/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
 	return

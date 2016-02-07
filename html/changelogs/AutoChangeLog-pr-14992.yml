@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Add laserguns with swappable, rechargeable magazines. They are adminspawn only."

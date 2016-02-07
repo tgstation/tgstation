@@ -9,7 +9,7 @@
 	icon_state = "grey_target_prism"
 	anchored = 1
 	layer = 3
-	invisibility = INVISIBILITY_LEVEL_TWO	//the turret is invisible if it's inside its cover
+	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
 	density = 1
 	use_power = 1				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
@@ -51,7 +51,6 @@
 	var/auth_weapons = 0	//checks if it can shoot people that have a weapon they aren't authorized to have
 	var/stun_all = 0		//if this is active, the turret shoots everything that isn't security or head of staff
 	var/check_anomalies = 1	//checks if it can shoot at unidentified lifeforms (ie xenos)
-	var/ai		 = 0 		//if active, will shoot at anything not an AI or cyborg
 
 	var/attacked = 0		//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
 
@@ -294,7 +293,7 @@
 		//This code handles moving the turret around. After all, it's a portable turret!
 		if(!anchored && !isinspace())
 			anchored = 1
-			invisibility = INVISIBILITY_LEVEL_TWO
+			invisibility = INVISIBILITY_OBSERVER
 			icon_state = "[base_icon_state][off_state]"
 			user << "<span class='notice'>You secure the exterior bolts on the turret.</span>"
 			if(has_cover)
@@ -408,8 +407,6 @@
 		criminals = pick(0, 1)
 		auth_weapons = pick(0, 1)
 		stun_all = pick(0, 0, 0, 0, 1)	//stun_all is a pretty big deal, so it's least likely to get turned on
-		if(prob(5))
-			emagged = 1
 
 		on=0
 		spawn(rand(60,600))
@@ -467,47 +464,50 @@
 			popDown()
 		return
 
-	var/list/targets = list()			//list of primary targets
-	var/turretview = view(scan_range, base)
-
-	if(check_anomalies)	//if it's set to check for xenos/simpleanimals
-		for(var/mob/living/simple_animal/SA in turretview)
-			if(SA.stat || (faction in SA.faction) || SA.has_unlimited_silicon_privilege) //don't target dead animals or NT maint drones.
-				continue
-			targets += SA
-
-	for(var/mob/living/carbon/C in turretview)	//loops through all carbon-based lifeforms in view(7)
-		if(emagged && C.stat != DEAD)	//if emagged, every living carbon is a target.
-			targets += C
-			continue
-
-		if(C.stat || C.handcuffed || (C.lying && !(C.buckled)))	//if the perp is handcuffed or lying or dead/dying, no need to bother really
-			continue
-
-		if(ai)	//If it's set to attack all nonsilicons, target them!
-			targets += C
-			continue
-
-		if(istype(C, /mob/living/carbon/human))	//if the target is a human, analyze threat level
-			if(assess_perp(C) >= 4)
-				targets += C
-
-		else if(check_anomalies)
-			if(!(faction in C.faction))
-				for(var/F in C.faction) //We target carbons without the portaturret's faction and who also have alien or slime faction.
-					if(F == "alien" || F == "slime")
-						targets += C
-						break
-
-	for(var/obj/mecha/M in turretview)
-		if(M.occupant)
-			if(ai || emagged || assess_perp(M.occupant) >= 4) // we target all occupied mechs if we're emagged or set to attack all non silicons.
-				targets += M
+	var/list/targets = calculate_targets()
 
 	if(!tryToShootAt(targets))
 		if(!always_up)
 			popDown() // no valid targets, close the cover
 
+/obj/machinery/porta_turret/proc/calculate_targets()
+	var/list/targets = list()
+	var/turretview = view(scan_range, base)
+	for(var/A in turretview)
+		if(check_anomalies)//if it's set to check for simple animals
+			if(istype(A, /mob/living/simple_animal))
+				var/mob/living/simple_animal/SA = A
+				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
+					continue
+				targets += SA
+
+		if(istype(A, /mob/living/carbon))
+			var/mob/living/carbon/C = A
+			//If not emagged, only target non downed carbons
+			if(!emagged && (C.stat || C.handcuffed || C.lying))
+				continue
+
+			//If emagged, target all but dead carbons
+			if(emagged && C.stat == DEAD)
+				continue
+
+			//if the target is a human and not in our faction, analyze threat level
+			if(istype(C, /mob/living/carbon/human) && !in_faction(C))
+				if(assess_perp(C) >= 4)
+					targets += C
+
+			else if(check_anomalies) //non humans who are not simple animals (xenos etc)
+				if(!in_faction(C))
+					targets += C
+
+		if(istype(A, /obj/mecha/))
+			var/obj/mecha/M = A
+			//If there is a user and they're not in our faction
+			if(M.occupant && !in_faction(M.occupant))
+				if(assess_perp(M.occupant) >= 4)
+					targets += M
+
+	return targets
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
@@ -608,6 +608,11 @@
 	return threatcount
 
 
+/obj/machinery/porta_turret/proc/in_faction(mob/target)
+	if(!(faction in target.faction))
+		return 0
+	return 1
+	
 /obj/machinery/porta_turret/proc/target(atom/movable/target)
 	if(disabled)
 		return
@@ -668,10 +673,6 @@
 		src.active_state = "Laser"
 	src.power_change()
 
-/*
-		Portable turret constructions
-		Known as "turret frame"s
-*/
 
 /obj/machinery/porta_turret_construct
 	name = "turret frame"
@@ -778,7 +779,6 @@
 				qdel(I)
 				return
 
-			//attack_hand() removes the gun
 
 		if(5)
 			if(istype(I, /obj/item/weapon/screwdriver))
@@ -787,7 +787,6 @@
 				user << "<span class='notice'>You close the internal access hatch.</span>"
 				return
 
-			//attack_hand() removes the prox sensor
 
 		if(6)
 			if(istype(I, /obj/item/stack/sheet/metal))
@@ -827,9 +826,6 @@
 					Turret.gun_charge = gun_charge
 					Turret.setup()
 
-//					Turret.cover=new/obj/machinery/porta_turret_cover(loc)
-//					Turret.cover.Parent_Turret=Turret
-//					Turret.cover.name = finish_name
 					qdel(src)
 
 			else if(istype(I, /obj/item/weapon/crowbar))
@@ -914,7 +910,7 @@
 
 		if(!Parent_Turret.anchored)
 			Parent_Turret.anchored = 1
-			Parent_Turret.invisibility = INVISIBILITY_LEVEL_TWO
+			Parent_Turret.invisibility = INVISIBILITY_OBSERVER
 			Parent_Turret.icon_state = "grey_target_prism"
 			user << "<span class='notice'>You secure the exterior bolts on the turret.</span>"
 		else
@@ -995,6 +991,10 @@
 	health = 40
 	projectile = /obj/item/projectile/bullet/weakbullet3
 	eprojectile = /obj/item/projectile/bullet/weakbullet3
+
+//Blame MSO
+/obj/machinery/porta_turret/ai
+	faction = "silicon"
 
 ////////////////////////
 //Turret Control Panel//

@@ -5,6 +5,8 @@
 	icon_state = "robot"
 	maxHealth = 100
 	health = 100
+	macro_default = "robot-default"
+	macro_hotkeys = "robot-hotkeys"
 	bubble_icon = "robot"
 	var/sight_mode = 0
 	var/custom_name = ""
@@ -24,10 +26,10 @@
 
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
-	var/module_active = null
-	var/module_state_1 = null
-	var/module_state_2 = null
-	var/module_state_3 = null
+	var/obj/item/module_active = null
+	var/obj/item/module_state_1 = null
+	var/obj/item/module_state_2 = null
+	var/obj/item/module_state_3 = null
 
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/weapon/stock_parts/cell/cell = null
@@ -46,11 +48,11 @@
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
 	var/modtype = "robot"
-	var/lower_mod = 0
 	var/jetpack = 0
 	var/datum/effect_system/trail_follow/ion/ion_trail = null
 	var/datum/effect_system/spark_spread/spark_system//So they can initialize sparks whenever/N
 	var/jeton = 0
+	var/low_power_mode = 0 //whether the robot has no charge left.
 
 	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
 	var/lockcharge //Boolean of whether the borg is locked down or not
@@ -676,7 +678,7 @@
 
 /mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime shock
-		flick("noise", flash)
+		flash_eyes()
 		var/stunprob = M.powerlevel * 7 + 10
 		if(prob(stunprob) && M.powerlevel >= 8)
 			adjustBruteLoss(M.powerlevel * rand(6,10))
@@ -756,7 +758,7 @@
 
 /mob/living/silicon/robot/update_icons()
 	overlays.Cut()
-	if(stat != DEAD && !(paralysis || stunned || weakened)) //Not dead, not stunned.
+	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
 		var/state_name = icon_state //For easy conversion and/or different names
 		switch(icon_state)
 			if("robot")
@@ -1033,7 +1035,7 @@
 	set_autosay()
 
 /mob/living/silicon/robot/proc/control_headlamp()
-	if(stat || lamp_recharging)
+	if(stat || lamp_recharging || low_power_mode)
 		src << "<span class='danger'>This function is currently offline.</span>"
 		return
 
@@ -1045,7 +1047,7 @@
 /mob/living/silicon/robot/proc/update_headlamp(var/turn_off = 0, var/cooldown = 100)
 	SetLuminosity(0)
 
-	if(lamp_intensity && (turn_off || stat))
+	if(lamp_intensity && (turn_off || stat || low_power_mode))
 		src << "<span class='danger'>Your headlamp has been deactivated.</span>"
 		lamp_intensity = 0
 		lamp_recharging = 1
@@ -1155,7 +1157,7 @@
 			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>"
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
-	if(stat || lockcharge || stunned || weakened)
+	if(stat || lockcharge || low_power_mode)
 		return
 	if(be_close && !in_range(M, src))
 		return
@@ -1172,6 +1174,85 @@
 			if(health < -maxHealth*0.5)
 				if(uneq_module(module_state_1))
 					src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
+	diag_hud_set_health()
+	diag_hud_set_status()
+	update_health_hud()
+
+
+/mob/living/silicon/robot/update_sight()
+	if(!client)
+		return
+	if(stat == DEAD)
+		sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_OBSERVER
+		return
+
+	see_invisible = initial(see_invisible)
+	see_in_dark = initial(see_in_dark)
+	sight = initial(sight)
+
+	if(client.eye != src)
+		var/atom/A = client.eye
+		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
+			return
+
+	if(sight_mode & BORGMESON)
+		sight |= SEE_TURFS
+		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
+		see_in_dark = 1
+
+	if(sight_mode & BORGXRAY)
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_invisible = SEE_INVISIBLE_LIVING
+		see_in_dark = 8
+
+	if(sight_mode & BORGTHERM)
+		sight |= SEE_MOBS
+		see_invisible = min(see_invisible, SEE_INVISIBLE_LIVING)
+		see_in_dark = 8
+
+	if(see_override)
+		see_invisible = see_override
+
+/mob/living/silicon/robot/update_stat()
+	if(status_flags & GODMODE)
+		return
+	if(stat != DEAD)
+		if(health <= -maxHealth) //die only once
+			death()
+			return
+		if(paralysis || stunned || weakened || getOxyLoss() > maxHealth*0.5)
+			if(stat == CONSCIOUS)
+				stat = UNCONSCIOUS
+				set_blindness(1)
+				update_canmove()
+				update_headlamp()
+		else
+			if(stat == UNCONSCIOUS)
+				stat = CONSCIOUS
+				adjust_blindness(-1)
+				update_canmove()
+				update_headlamp()
+
+/mob/living/silicon/robot/update_vision_overlays()
+	if(!client)
+		return
+
+	if(stat == DEAD) //if dead we just remove all vision impairments
+		clear_fullscreens()
+		return
+
+	if(eye_blind)
+		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+	else
+		clear_fullscreen("blind")
+
+	if(client.eye != src)
+		var/atom/A = client.eye
+		A.get_remote_view_fullscreens(src)
+	else
+		clear_fullscreen("remote_view", 0)
 
 /mob/living/silicon/robot/fully_replace_character_name(oldname,newname)
 	..()
@@ -1188,3 +1269,4 @@
 		if(2)
 			Stun(3)
 	..()
+
