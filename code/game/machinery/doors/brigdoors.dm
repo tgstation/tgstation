@@ -2,6 +2,11 @@
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
 #define FONT_STYLE "Arial Black"
+#define MAX_TIMER 9000
+
+#define PRESET_SHORT 1200
+#define PRESET_MEDIUM 3000
+#define PRESET_LONG 6000
 
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
@@ -19,13 +24,14 @@
 	icon_state = "frame"
 	desc = "A remote control for a door."
 	req_access = list(access_brig)
-	anchored = 1    		// can't pick it up
-	density = 0       		// can walk through it.
-	var/id = null     		// id of door it controls.
-	var/releasetime = 0		// when world.time reaches it - release the prisoneer
-	var/timelength = 0		// the length of time this door will be set for
-	var/timing = 0    		// boolean, true/1 timer is on, false/0 means it's not timing
-	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
+	anchored = 1
+	density = 0
+	var/id = null // id of linked machinery/lockers
+	
+	var/activation_time = 0
+	var/timer_duration = 0
+	
+	var/timing = FALSE		// boolean, true/1 timer is on, false/0 means it's not timing
 	var/list/obj/machinery/targets = list()
 	var/obj/item/device/radio/Radio //needed to send messages to sec radio
 
@@ -38,24 +44,22 @@
 	Radio = new/obj/item/device/radio(src)
 	Radio.listening = 0
 
-	spawn(20)
-		for(var/obj/machinery/door/window/brigdoor/M in ultra_range(20, src))
-			if (M.id == src.id)
-				targets += M
+/obj/machinery/door_timer/initialize()
+	for(var/obj/machinery/door/window/brigdoor/M in ultra_range(20, src))
+		if (M.id == id)
+			targets += M
 
-		for(var/obj/machinery/flasher/F in ultra_range(20, src))
-			if(F.id == src.id)
-				targets += F
+	for(var/obj/machinery/flasher/F in ultra_range(20, src))
+		if(F.id == id)
+			targets += F
 
-		for(var/obj/structure/closet/secure_closet/brig/C in ultra_range(20, src))
-			if(C.id == src.id)
-				targets += C
+	for(var/obj/structure/closet/secure_closet/brig/C in ultra_range(20, src))
+		if(C.id == id)
+			targets += C
 
-		if(targets.len==0)
-			stat |= BROKEN
-		update_icon()
-		return
-	return
+	if(!targets.len)
+		stat |= BROKEN
+	update_icon()
 
 
 //Main door timer loop, if it's timing and time is >0 reduce time by 1.
@@ -64,25 +68,16 @@
 /obj/machinery/door_timer/process()
 	if(stat & (NOPOWER|BROKEN))
 		return
+	
 	if(timing)
-		if(world.time > src.releasetime)
-			Radio.set_frequency(SEC_FREQ)
-			Radio.talk_into(src, "Timer has expired. Releasing prisoner.", SEC_FREQ)
-			src.timer_end() // open doors, reset timer, clear status screen
-			timing = 0
-			timeset(0)
-		src.updateUsrDialog()
-		src.update_icon()
-	else
-		timer_end()
-	return
-
+		if(world.time - activation_time >= timer_duration)
+			timer_end() // open doors, reset timer, clear status screen
+		update_icon()
 
 // has the door power sitatuation changed, if so update icon.
 /obj/machinery/door_timer/power_change()
 	..()
 	update_icon()
-	return
 
 
 // open/closedoor checks if door_timer has power, if so it checks if the
@@ -90,6 +85,9 @@
 /obj/machinery/door_timer/proc/timer_start()
 	if(stat & (NOPOWER|BROKEN))
 		return 0
+
+	activation_time = world.time
+	timing = TRUE
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(door.density)
@@ -107,9 +105,19 @@
 	return 1
 
 
-/obj/machinery/door_timer/proc/timer_end()
+/obj/machinery/door_timer/proc/timer_end(forced = FALSE)
+
 	if(stat & (NOPOWER|BROKEN))
 		return 0
+
+	if(!forced)
+		Radio.set_frequency(SEC_FREQ)
+		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", SEC_FREQ)
+
+	timing = FALSE
+	activation_time = null
+	set_timer(0)
+	update_icon()
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(!door.density)
@@ -128,96 +136,22 @@
 	return 1
 
 
-/obj/machinery/door_timer/proc/timeleft()
-	. = (timing ? (releasetime-world.time) : timelength)/10
-	if(. < 0)
-		. = 0
+/obj/machinery/door_timer/proc/time_left(seconds = FALSE)
+	. = max(0,timer_duration - (activation_time ? world.time - activation_time : 0))
+	if(seconds)
+		. /= 10
 
+/obj/machinery/door_timer/proc/set_timer(value) 
+	var/new_time = Clamp(value,0,MAX_TIMER)
+	. = new_time == timer_duration //return 1 on no change
+	timer_duration = new_time
 
-/obj/machinery/door_timer/proc/timeset(seconds)
-	if(timing)
-		releasetime=world.time+seconds*10
-	else
-		timelength=seconds*10
-	return
-
-//Allows AIs to use door_timer, see human attack_hand function below
-/obj/machinery/door_timer/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-
-//Allows humans to use door_timer
-//Opens dialog window when someone clicks on door timer
-// Allows altering timer and the timing boolean.
-// Flasher activation limited to 150 seconds
-/obj/machinery/door_timer/attack_hand(mob/user)
-	if(..())
-		return
-	var/second = round(timeleft() % 60)
-	var/minute = round((timeleft() - second) / 60)
-	user.set_machine(src)
-	var/dat = "<HTML><BODY><TT>"
-	dat += "<HR>Timer System:</hr>"
-	dat += "<b>Door [src.id] controls</b><br/>"
-	if (timing)
-		dat += "<a href='?src=\ref[src];timing=0'>Stop Timer and open door</a><br/>"
-	else
-		dat += "<a href='?src=\ref[src];timing=1'>Activate Timer and close door</a><br/>"
-
-	dat += "Time Left: [(minute ? text("[minute]:") : null)][second] <br/>"
-	dat += "<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"
-
-	for(var/obj/machinery/flasher/F in targets)
-		if(F.last_flash && (F.last_flash + 150) > world.time)
-			dat += "<br/><A href='?src=\ref[src];fc=1'>Flash Charging</A>"
-		else
-			dat += "<br/><A href='?src=\ref[src];fc=1'>Activate Flash</A>"
-
-	dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
-	dat += "</TT></BODY></HTML>"
-	user << browse(dat, "window=computer;size=400x500")
-	onclose(user, "computer")
-	return
-
-
-//Function for using door_timer dialog input, checks if user has permission
-// href_list to
-//  "timing" turns on timer
-//  "tp" value to modify timer
-//  "fc" activates flasher
-// Also updates dialog window and timer icon
-/obj/machinery/door_timer/Topic(href, href_list)
-	if(..())
-		return
-	if(!src.allowed(usr))
-		return
-
-	usr.set_machine(src)
-	if(href_list["timing"]) //switch between timing and not timing
-		var/timeleft = timeleft()
-		timeleft = min(max(round(timeleft), 0), 600)
-		timing = text2num(href_list["timing"])
-		timeset(timeleft)
-	else if(href_list["tp"]) //adjust timer
-		var/timeleft = timeleft()
-		var/tp = text2num(href_list["tp"])
-		timeleft += tp
-		timeleft = min(max(round(timeleft), 0), 600)
-		timeset(timeleft)
-		//src.timing = 1
-		//src.closedoor()
-	else if(href_list["fc"])
-		for(var/obj/machinery/flasher/F in targets)
-			F.flash()
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	src.update_icon()
-	if(timing)
-		src.timer_start()
-	else
-		src.timer_end()
-	return
-
+/obj/machinery/door_timer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "brig_timer", name, 300, 200, master_ui, state)
+		ui.open()
 
 //icon update function
 // if NOPOWER, display blank
@@ -227,13 +161,15 @@
 	if(stat & (NOPOWER))
 		icon_state = "frame"
 		return
+	
 	if(stat & (BROKEN))
 		set_picture("ai_bsod")
 		return
+	
 	if(timing)
 		var/disp1 = id
-		var/timeleft = timeleft()
-		var/disp2 = "[add_zero(num2text((timeleft / 60) % 60),2)]~[add_zero(num2text(timeleft % 60), 2)]"
+		var/time_left = time_left(seconds = TRUE)
+		var/disp2 = "[add_zero(num2text((time_left / 60) % 60),2)]~[add_zero(num2text(time_left % 60), 2)]"
 		if(length(disp2) > CHARS_PER_LINE)
 			disp2 = "Error"
 		update_display(disp1, disp2)
@@ -247,9 +183,8 @@
 /obj/machinery/door_timer/proc/set_picture(state)
 	if(maptext)
 		maptext = ""
-	picture_state = state
 	overlays.Cut()
-	overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
+	overlays += image('icons/obj/status_display.dmi', icon_state=state)
 
 
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
@@ -259,6 +194,58 @@
 	if(maptext != new_text)
 		maptext = new_text
 
+/obj/machinery/door_timer/ui_data()
+	var/list/data = list()
+	var/time_left = time_left(seconds = TRUE)
+	data["seconds"] = round(time_left % 60)
+	data["minutes"] = round((time_left - data["seconds"]) / 60)
+	data["timing"] = timing
+	data["flash_charging"] = FALSE
+	for(var/obj/machinery/flasher/F in targets)
+		if(F.last_flash && (F.last_flash + 150) > world.time)
+			data["flash_charging"] = TRUE
+			break
+	return data
+
+
+/obj/machinery/door_timer/ui_act(action, params)
+	if(..())
+		return
+	. = TRUE
+	switch(action)
+		if("time")
+			var/value = text2num(params["adjust"])
+			if(value)
+				. = set_timer(time_left()+value)
+		if("start")
+			timer_start()
+		if("stop")
+			timer_end(forced = TRUE)
+		if("flash")
+			for(var/obj/machinery/flasher/F in targets)
+				F.flash()
+		if("preset")
+			var/preset = params["preset"]
+			var/preset_time = time_left()
+			switch(preset)
+				if("short")
+					preset_time = PRESET_SHORT
+				if("medium")
+					preset_time = PRESET_MEDIUM
+				if("long")
+					preset_time = PRESET_LONG
+			. = set_timer(preset_time)
+			if(timing)
+				activation_time = world.time
+		else
+			. = FALSE
+
+
+#undef PRESET_SHORT
+#undef PRESET_MEDIUM
+#undef PRESET_LONG
+
+#undef MAX_TIMER
 #undef FONT_SIZE
 #undef FONT_COLOR
 #undef FONT_STYLE
