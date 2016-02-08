@@ -72,8 +72,8 @@
       <div class='content'>#{{id}}</div>
       <div class='content'>{{object}}</div>
       <div class='content'>{{cost}} Points</div>
-      <div class='content'>By {{orderedby}}</div>
-      <div class='content'>Comment: {{comment}}</div>
+      <div class='content'>By {{orderer}}</div>
+      <div class='content'>Comment: {{reason}}</div>
       {{#if !data.requestonly}}
         <div class='content'>
           <ui-button icon='check' action='approve' params='{"id": "{{id}}"}'/>
