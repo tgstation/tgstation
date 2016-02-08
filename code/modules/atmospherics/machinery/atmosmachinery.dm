@@ -45,8 +45,7 @@ Pipelines + Other Objects -> Pipe network
 		qdel(stored)
 		stored = null
 
-	for(var/mob/living/L in src)
-		L.forceMove(get_turf(src))
+	dropContents()
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
 
@@ -298,4 +297,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/update_remote_sight(mob/user)
 	user.sight |= (SEE_TURFS|BLIND)
-	user.update_pipe_vision(src)
+
+//Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
+/obj/machinery/atmospherics/proc/can_see_pipes()
+	return 1

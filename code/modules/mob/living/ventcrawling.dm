@@ -78,7 +78,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
-	if(!istype(starting_machine))
+	if(!istype(starting_machine) || !starting_machine.can_see_pipes())
 		return
 	var/list/totalMembers = list()
 

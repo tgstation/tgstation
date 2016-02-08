@@ -69,6 +69,7 @@
 				set_blindness(0)
 
 
+
 /* //currently unused feature, since brain outside a mmi is always dead.
 /mob/living/carbon/brain/proc/handle_brain_revival_life()
 	if(stat != DEAD)

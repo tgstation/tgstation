@@ -96,6 +96,7 @@
 	for(var/mob/M in src)
 		M.loc = loc
 		M.reset_perspective(null)
+		M.update_canmove() //to make the mob fall if he went unconscious inside the closet for example.
 		if(throwing)
 			step(M, dir)
 	if(throwing)

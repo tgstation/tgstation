@@ -284,6 +284,7 @@ var/next_mob_id = 0
 	if(..())
 		update_sight()
 		update_vision_overlays()
+		update_pipe_vision()
 
 
 /mob/proc/show_inv(mob/user)
