@@ -12,7 +12,6 @@ var/datum/subsystem/tgui/SStgui
 	var/list/processing_uis = list() // A list of processing UIs, ungrouped.
 	var/basehtml // The HTML base used for all UIs.
 
-
 /datum/subsystem/tgui/New()
 	basehtml = file2text('tgui/tgui.html') // Read the HTML from disk.
 

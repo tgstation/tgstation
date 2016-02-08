@@ -68,7 +68,6 @@
 			return
 		target.forceMove(src)
 		patient = target
-		target.reset_view(src)
 		SSobj.processing |= src
 		update_equip_info()
 		occupant_message("<span class='notice'>[target] successfully loaded into [src]. Life support functions engaged.</span>")
@@ -93,7 +92,6 @@
 	patient.forceMove(get_turf(src))
 	occupant_message("[patient] ejected. Life support functions disabled.")
 	log_message("[patient] ejected. Life support functions disabled.")
-	patient.reset_view()
 	SSobj.processing -= src
 	patient = null
 	update_equip_info()

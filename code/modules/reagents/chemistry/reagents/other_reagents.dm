@@ -297,17 +297,23 @@
 				for(var/i=1, i<=len, i+=1)
 					var/ascii = text2ascii(N.dna.features["mcolor"],i)
 					switch(ascii)
-						if(48)		newcolor += "0"
-						if(49 to 57)	newcolor += ascii2text(ascii-1)	//numbers 1 to 9
-						if(97)		newcolor += "9"
-						if(98 to 102)	newcolor += ascii2text(ascii-1)	//letters b to f lowercase
-						if(65)		newcolor +="9"
-						if(66 to 70)	newcolor += ascii2text(ascii+31)	//letters B to F - translates to lowercase
+						if(48)
+							newcolor += "0"
+						if(49 to 57)
+							newcolor += ascii2text(ascii-1)	//numbers 1 to 9
+						if(97)
+							newcolor += "9"
+						if(98 to 102)
+							newcolor += ascii2text(ascii-1)	//letters b to f lowercase
+						if(65)
+							newcolor +="9"
+						if(66 to 70)
+							newcolor += ascii2text(ascii+31)	//letters B to F - translates to lowercase
 						else
 							break
-				N.dna.features["mcolor"] = newcolor
-				N.regenerate_icons()
-			N.update_body()
+				if(ReadHSV(newcolor)[3] >= ReadHSV("#7F7F7F")[3])
+					N.dna.features["mcolor"] = newcolor
+			N.regenerate_icons()
 
 
 
@@ -328,11 +334,9 @@
 			N.skin_tone = "orange"
 			N.hair_style = "Spiky"
 			N.hair_color = "000"
-			N.update_hair()
 		if(MUTCOLORS in N.dna.species.specflags) //Aliens with custom colors simply get turned orange
 			N.dna.features["mcolor"] = "f80"
-			N.regenerate_icons()
-		N.update_body()
+		N.regenerate_icons()
 		if(prob(7))
 			if(N.w_uniform)
 				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes their arms."))

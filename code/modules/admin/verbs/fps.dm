@@ -4,7 +4,8 @@
 	set name = "Set fps"
 	set desc = "Sets game speed in frames-per-second. Can potentially break the game"
 
-	if(!check_rights(R_DEBUG))	return
+	if(!check_rights(R_DEBUG))
+		return
 
 	var/fps = round(input("Sets game frames-per-second. Can potentially break the game","FPS", config.fps) as num|null)
 

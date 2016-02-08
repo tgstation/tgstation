@@ -1,46 +1,46 @@
 <script>
-component.exports = {
-  data: {
-    powerState (status) {
-      switch (status) {
-        case 2: return 'good'
-        case 1: return 'average'
-        default: return 'bad'
-      }
-    }
-  },
-  computed: {
-    malfAction () {
-      switch (this.get('data.malfStatus')) {
-        case 1: return 'hack'
-        case 2: return 'occupy'
-        case 3: return 'deoccupy'
+  component.exports = {
+    data: {
+      powerState (status) {
+        switch (status) {
+          case 2: return 'good'
+          case 1: return 'average'
+          default: return 'bad'
+        }
       }
     },
-    malfButton () {
-      switch (this.get('data.malfStatus')) {
-        case 1: return 'Override Programming'
-        case 2:
-        case 4: return 'Shunt Core Process'
-        case 3: return 'Return to Main Core'
+    computed: {
+      malfAction () {
+        switch (this.get('data.malfStatus')) {
+          case 1: return 'hack'
+          case 2: return 'occupy'
+          case 3: return 'deoccupy'
+        }
+      },
+      malfButton () {
+        switch (this.get('data.malfStatus')) {
+          case 1: return 'Override Programming'
+          case 2:
+          case 4: return 'Shunt Core Process'
+          case 3: return 'Return to Main Core'
+        }
+      },
+      malfIcon () {
+        switch (this.get('data.malfStatus')) {
+          case 1: return 'terminal'
+          case 2:
+          case 4: return 'caret-square-o-down'
+          case 3: return 'caret-square-o-left'
+        }
+      },
+      powerCellStatusState () {
+        const status = this.get('data.powerCellStatus')
+        if (status > 50) return 'good'
+        else if (status > 25) return 'average'
+        else return 'bad'
       }
-    },
-    malfIcon () {
-      switch (this.get('data.malfStatus')) {
-        case 1: return 'terminal'
-        case 2:
-        case 4: return 'caret-square-o-down'
-        case 3: return 'caret-square-o-left'
-      }
-    },
-    powerCellStatusState () {
-      const status = this.get('data.powerCellStatus')
-      if (status > 50) return 'good'
-      else if (status > 25) return 'average'
-      else return 'bad'
     }
   }
-}
 </script>
 
 <ui-notice>

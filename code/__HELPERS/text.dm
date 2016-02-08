@@ -62,16 +62,23 @@
 
 //Returns null if there is any bad text in the string
 /proc/reject_bad_text(text, max_length=512)
-	if(length(text) > max_length)	return			//message too long
+	if(length(text) > max_length)
+		return			//message too long
 	var/non_whitespace = 0
 	for(var/i=1, i<=length(text), i++)
 		switch(text2ascii(text,i))
-			if(62,60,92,47)	return			//rejects the text if it contains these bad characters: <, >, \ or /
-			if(127 to 255)	return			//rejects weird letters like �
-			if(0 to 31)		return			//more weird stuff
-			if(32)			continue		//whitespace
-			else			non_whitespace = 1
-	if(non_whitespace)		return text		//only accepts the text if it has some non-spaces
+			if(62,60,92,47)
+				return			//rejects the text if it contains these bad characters: <, >, \ or /
+			if(127 to 255)
+				return			//rejects weird letters like �
+			if(0 to 31)
+				return			//more weird stuff
+			if(32)
+				continue		//whitespace
+			else
+				non_whitespace = 1
+	if(non_whitespace)
+		return text		//only accepts the text if it has some non-spaces
 
 // Used to get a properly sanitized input, of max_length
 /proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN)
@@ -103,47 +110,57 @@
 
 			// a  .. z
 			if(97 to 122)			//Lowercase Letters
-				if(last_char_group<2)		t_out += ascii2text(ascii_char-32)	//Force uppercase first character
-				else						t_out += ascii2text(ascii_char)
+				if(last_char_group<2)
+					t_out += ascii2text(ascii_char-32)	//Force uppercase first character
+				else
+					t_out += ascii2text(ascii_char)
 				number_of_alphanumeric++
 				last_char_group = 4
 
 			// 0  .. 9
 			if(48 to 57)			//Numbers
-				if(!last_char_group)		continue	//suppress at start of string
-				if(!allow_numbers)			continue
+				if(!last_char_group)
+					continue	//suppress at start of string
+				if(!allow_numbers)
+					continue
 				t_out += ascii2text(ascii_char)
 				number_of_alphanumeric++
 				last_char_group = 3
 
 			// '  -  .
 			if(39,45,46)			//Common name punctuation
-				if(!last_char_group) continue
+				if(!last_char_group)
+					continue
 				t_out += ascii2text(ascii_char)
 				last_char_group = 2
 
 			// ~   |   @  :  #  $  %  &  *  +
 			if(126,124,64,58,35,36,37,38,42,43)			//Other symbols that we'll allow (mainly for AI)
-				if(!last_char_group)		continue	//suppress at start of string
-				if(!allow_numbers)			continue
+				if(!last_char_group)
+					continue	//suppress at start of string
+				if(!allow_numbers)
+					continue
 				t_out += ascii2text(ascii_char)
 				last_char_group = 2
 
 			//Space
 			if(32)
-				if(last_char_group <= 1)	continue	//suppress double-spaces and spaces at start of string
+				if(last_char_group <= 1)
+					continue	//suppress double-spaces and spaces at start of string
 				t_out += ascii2text(ascii_char)
 				last_char_group = 1
 			else
 				return
 
-	if(number_of_alphanumeric < 2)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
+	if(number_of_alphanumeric < 2)
+		return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
 
 	if(last_char_group == 1)
 		t_out = copytext(t_out,1,length(t_out))	//removes the last character (in this case a space)
 
 	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai"))	//prevents these common metagamey names
-		if(cmptext(t_out,bad_name))	return	//(not case sensitive)
+		if(cmptext(t_out,bad_name))
+			return	//(not case sensitive)
 
 	return t_out
 
@@ -188,18 +205,6 @@
 	var/start = length(text) - length(suffix)
 	if(start)
 		return findtextEx(text, suffix, start, null)
-
-/*
- * Text modification
- */
-// See bygex.dm
-#ifndef USE_BYGEX
-/proc/replacetext(text, find, replacement)
-	return list2text(text2list(text, find), replacement)
-
-/proc/replacetextEx(text, find, replacement)
-	return list2text(text2listEx(text, find), replacement)
-#endif
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
@@ -345,8 +350,10 @@ var/list/binary = list("0","1")
 //This was coded to handle DNA gene-splicing.
 /proc/merge_text(into, from, null_char="_")
 	. = ""
-	if(!istext(into))	into = ""
-	if(!istext(from))	from = ""
+	if(!istext(into))
+		into = ""
+	if(!istext(from))
+		from = ""
 	var/null_ascii = istext(null_char) ? text2ascii(null_char,1) : null_char
 
 	var/previous = 0
@@ -379,7 +386,8 @@ var/list/binary = list("0","1")
 	var/len = length(needles)
 	for(var/i=1, i<=len, i++)
 		temp = findtextEx(haystack, ascii2text(text2ascii(needles,i)), start, end)	//Note: ascii2text(text2ascii) is faster than copytext()
-		if(temp)	end = temp
+		if(temp)
+			end = temp
 	return end
 
 
@@ -412,3 +420,8 @@ var/list/binary = list("0","1")
 	t = replacetext(t, "\[/list\]", "</ul>")
 
 	return t
+
+/proc/char_split(t)
+	. = list()
+	for(var/x in 1 to length(t))
+		. += copytext(t,x,x+1)

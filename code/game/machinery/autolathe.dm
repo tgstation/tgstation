@@ -101,15 +101,15 @@
 	if(exchange_parts(user, O))
 		return
 
-	if (panel_open)
+	if(panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			materials.retrieve_all()
 			default_deconstruction_crowbar(O)
 			return 1
-		else
-			attack_hand(user)
+		else if(is_wire_tool(O))
+			wires.interact(user)
 			return 1
-	if (stat)
+	if(stat)
 		return 1
 
 	var/material_amount = materials.get_item_material_amount(O)
@@ -139,16 +139,6 @@
 			qdel(O)
 	busy = 0
 	src.updateUsrDialog()
-
-/obj/machinery/autolathe/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/autolathe/attack_hand(mob/user)
-	if(panel_open && !isAI(user))
-		return wires.interact(user)
-	if(..(user, 0))
-		return
-	interact(user)
 
 /obj/machinery/autolathe/Topic(href, href_list)
 	if(..())
@@ -379,16 +369,13 @@
 	else
 		return 0
 
-/obj/machinery/autolathe/proc/adjust_hacked(hack)
-	hacked = hack
-
-	if(hack)
-		for(var/datum/design/D in files.possible_designs)
-			if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
-				files.known_designs += D
-	else
-		for(var/datum/design/D in files.known_designs)
-			if("hacked" in D.category)
+/obj/machinery/autolathe/proc/adjust_hacked(state)
+	hacked = state
+	for(var/datum/design/D in files.possible_designs)
+		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
+			if(hacked)
+				files.known_designs |= D
+			else
 				files.known_designs -= D
 
 //Called when the object is constructed by an autolathe

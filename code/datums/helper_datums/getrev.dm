@@ -9,8 +9,9 @@ var/global/datum/getrev/revdata = new()
 	var/list/head_log = file2list(".git/logs/HEAD", "\n")
 	for(var/line=head_log.len, line>=1, line--)
 		if(head_log[line])
-			var/list/last_entry = text2list(head_log[line], " ")
-			if(last_entry.len < 2)	continue
+			var/list/last_entry = splittext(head_log[line], " ")
+			if(last_entry.len < 2)
+				continue
 			revision = last_entry[2]
 			// Get date/time
 			if(last_entry.len >= 5)

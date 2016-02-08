@@ -17,5 +17,5 @@
 		while(!("SS13" in C.network))
 			C = pick(cameranet.cameras)
 		if(C.status)
-			C.deactivate(null, 0)
+			C.toggle_cam(null, 0)
 		iterations *= 2.5

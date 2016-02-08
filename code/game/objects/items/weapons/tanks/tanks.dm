@@ -113,7 +113,7 @@
 		ui = new(user, src, ui_key, "tanks", name, 420, 200, master_ui, state)
 		ui.open()
 
-/obj/item/weapon/tank/get_ui_data()
+/obj/item/weapon/tank/ui_data()
 	var/list/data = list()
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
@@ -127,16 +127,16 @@
 	else if(istype(loc.loc, /mob/living/carbon))
 		user = loc.loc
 
-	if(user && user.internal == src)
-		data["valveOpen"] = TRUE
-	else
-		data["valveOpen"] = FALSE
+	data["valveOpen"] = FALSE
+	data["maskConnected"] = FALSE
+	if(!istype(user))
+		return data
 
-	if(user.wear_mask && (user.wear_mask.flags & MASKINTERNALS))
-		if(data["valveOpen"] || ((src in user) && !user.internal))
-			data["maskConnected"] = TRUE
-		else
-			data["maskConnected"] = FALSE
+	if(user.internal == src)
+		data["valveOpen"] = TRUE
+	if(user.wear_mask && (user.wear_mask.flags & MASKINTERNALS) && user.internal == src)
+		data["maskConnected"] = TRUE
+
 	return data
 
 /obj/item/weapon/tank/ui_act(action, params)
@@ -146,37 +146,40 @@
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "reset")
-				distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+				pressure = TANK_DEFAULT_RELEASE_PRESSURE
 				. = TRUE
 			else if(pressure == "min")
-				distribute_pressure = TANK_MIN_RELEASE_PRESSURE
+				pressure = TANK_MIN_RELEASE_PRESSURE
 				. = TRUE
 			else if(pressure == "max")
-				distribute_pressure = TANK_MAX_RELEASE_PRESSURE
+				pressure = TANK_MAX_RELEASE_PRESSURE
 				. = TRUE
 			else if(pressure == "input")
 				pressure = input("New release pressure ([TANK_MIN_RELEASE_PRESSURE]-[TANK_MAX_RELEASE_PRESSURE] kPa):", name, distribute_pressure) as num|null
-				. = .(action, list("pressure" = pressure))
+				if(!isnull(pressure) && !..())
+					. = TRUE
 			else if(text2num(pressure) != null)
-				distribute_pressure = Clamp(round(text2num(pressure)), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
+				pressure = text2num(pressure)
 				. = TRUE
+			if(.)
+				distribute_pressure = Clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 		if("valve")
 			var/mob/living/carbon/user = loc
 			if(!istype(user))
 				return
 			if(user.internal == src)
 				user.internal = null
-				user.internals.icon_state = "internal0"
-				usr << "<span class='notice'>You close the tank release valve.</span>"
+				user << "<span class='notice'>You close the tank release valve.</span>"
+				user.update_internals_hud_icon(0)
 				. = TRUE
 			else
 				if(user.wear_mask && (user.wear_mask.flags & MASKINTERNALS))
 					user.internal = src
-					user.internals.icon_state = "internal1"
-					usr << "<span class='notice'>You open \the [src] valve.</span>"
+					user << "<span class='notice'>You open \the [src] valve.</span>"
+					user.update_internals_hud_icon(1)
 					. = TRUE
 				else
-					usr << "<span class='warning'>You need something to connect to [src]!</span>"
+					user << "<span class='warning'>You need something to connect to [src]!</span>"
 
 
 /obj/item/weapon/tank/remove_air(amount)

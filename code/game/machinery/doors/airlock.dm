@@ -556,7 +556,7 @@ var/list/airlock_overlays = list()
 	// Otherwise it will runtime with this kind of error: null.Topic()
 	if(!nowindow)
 		..()
-	if((usr.stat || usr.restrained()) && !IsAdminGhost(usr))
+	if(usr.incapacitated() && !IsAdminGhost(usr))
 		return
 	add_fingerprint(usr)
 	if(href_list["close"])
@@ -1026,7 +1026,8 @@ var/list/airlock_overlays = list()
 	return 1
 
 /obj/machinery/door/airlock/proc/prison_open()
-	if(emagged)	return
+	if(emagged)
+		return
 	src.locked = 0
 	src.open()
 	src.locked = 1
@@ -1055,7 +1056,8 @@ var/list/airlock_overlays = list()
 		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!in_range(src, usr) && src.loc != usr) || !W.use(user))	return
+	if((!in_range(src, usr) && src.loc != usr) || !W.use(user))
+		return
 	switch(paintjob)
 		if("Public")
 			icon = 'icons/obj/doors/airlocks/station/public.dmi'
@@ -1110,11 +1112,6 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID)
 //Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
 	return !density || (check_access(ID) && !locked && hasPower())
-
-/obj/machinery/door/airlock/HasProximity(atom/movable/AM as mob|obj)
-	for (var/obj/A in contents)
-		A.HasProximity(AM)
-	return
 
 /obj/machinery/door/airlock/emag_act(mob/user)
 	if(!operating && density && hasPower() && !emagged)
