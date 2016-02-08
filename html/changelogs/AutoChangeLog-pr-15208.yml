@@ -1,4 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "Operatives now get their pinpointers in their pocket when they spawn, meaning reinforcements automatically come with them (and hopefully people stop forgetting them in general)."

@@ -103,6 +103,9 @@
 	burn_state = FIRE_PROOF
 	can_hold_items = 1
 
+/obj/item/clothing/shoes/jackboots/fast
+	slowdown = -1
+
 /obj/item/clothing/shoes/winterboots
 	name = "winter boots"
 	desc = "Boots lined with 'synthetic' animal fur."
