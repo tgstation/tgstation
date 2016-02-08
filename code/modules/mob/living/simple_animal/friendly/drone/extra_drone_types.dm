@@ -50,6 +50,8 @@
 	desc = "An annoying drone, an expendable robot built to perform station agitation."
 
 /mob/living/simple_animal/drone/annoying/New(loc, ownerName)
+	default_hatmask = pick(/obj/item/clothing/mask/gas/clown_hat, /obj/item/clothing/mask/gas/sexyclown)
+	..()
 	laws = \
 	"1. You may not involve yourself in the matters of [ownerName], even if such matters conflict with Law Two or Law Three.\n"+\
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
