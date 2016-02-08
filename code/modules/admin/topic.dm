@@ -2681,13 +2681,17 @@
 				floorIsLava = 1
 
 				message_admins("[key_name_admin(usr)] made the floor LAVA! It'll last [length] seconds and it will deal [damage] damage to everyone.", 1)
-
+				var/count = 0
+				var/list/lavaturfs = list()
 				for(var/turf/simulated/floor/F in turfs)
+					count++
+					if(!(count % 50000)) sleep(world.tick_lag)
 					if(F.z == 1)
 						F.name = "lava"
 						F.desc = "The floor is LAVA!"
 						F.overlays += "lava"
 						F.lava = 1
+						lavaturfs += F
 
 				spawn(0)
 					for(var/i = i, i < length, i++) // 180 = 3 minutes
@@ -2707,7 +2711,7 @@
 
 						sleep(10)
 
-					for(var/turf/simulated/floor/F in turfs) // Reset everything.
+					for(var/turf/simulated/floor/F in lavaturfs) // Reset everything.
 						if(F.z == 1)
 							F.name = initial(F.name)
 							F.desc = initial(F.desc)
