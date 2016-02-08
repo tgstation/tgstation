@@ -105,30 +105,45 @@
 	id = "cryoxadone"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
+	var/brute_heal
+	var/oxy_heal
+	var/fire_heal
+	var/tox_heal
+	var/clone_heal
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
-	if(M.stat != DEAD && M.bodytemperature < T0C) // Low temperatures are required to take effect.
+	if(M.stat != DEAD ) // Low temperatures are required to take effect.
+		switch(M.body_temperature)
+        		if(0 to 100)
+        			brute_heal = 15
+				oxy_heal = 15
+				fire_heal = 15
+				tox_heal = 15
+				clone_heal = 15
+        		if(100 to 225)
+        			brute_heal = 10
+				oxy_heal = 10
+				fire_heal = 10
+				tox_heal = 10
+				clone_heal = 10	
+        		if(225 to T0C)
+        			brute_heal = 5
+				oxy_heal = 5
+				fire_heal = 5
+				tox_heal = 5
+				clone_heal = 5
 		M.status_flags &= ~DISFIGURED
-		M.adjustCloneLoss(-2)
+		M.adjustCloneLoss(-clone_heal)
 		if(M.health < 1)
-			M.adjustOxyLoss(-5)
-			M.adjustBruteLoss(-1)
-			M.adjustFireLoss(-1)
-			M.adjustToxLoss(-1)
-	if(M.stat != DEAD && M.bodytemperature < 225) // At lower temperatures (cryo) the full effect is boosted
-		M.adjustCloneLoss(-3)
-		if(M.health < 1)
-			M.adjustOxyLoss(-5)
-			M.adjustBruteLoss(-2)
-			M.adjustFireLoss(-2)
-			M.adjustToxLoss(-2)
-	if(M.stat != DEAD && M.bodytemperature < 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
-		M.adjustCloneLoss(-7)
-		if(M.health < 1)
-			M.adjustOxyLoss(-5)
-			M.adjustBruteLoss(-2)
-			M.adjustFireLoss(-2)
-			M.adjustToxLoss(-2)
+			M.adjustOxyLoss(-oxy_heal)
+			M.adjustBruteLoss(-brute_heal)
+			M.adjustFireLoss(-fire_heal)
+			M.adjustToxLoss(-tox_heal)
+	brute_heal = 0
+	oxy_heal = 0
+	fire_heal = 0
+	tox_heal = 0
+	clone_heal = 0
 	..()
 	return
 
