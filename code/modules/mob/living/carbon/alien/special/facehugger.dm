@@ -17,6 +17,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
 	flags = FPRINT  | MASKINTERNALS | PROXMOVE
 	throw_range = 5
+	health = 5
 	var/real = 1 //Facehuggers are real, toys are not.
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
@@ -26,9 +27,57 @@ var/const/MAX_ACTIVE_TIME = 400
 	var/strength = 5
 
 	var/attached = 0
+	var/target_time = 0.5 // seconds
+	var/walk_speed = 1
+	var/nextwalk = 0
+	var/mob/living/carbon/human/target = null
 
 /obj/item/clothing/mask/facehugger/can_contaminate()
 	return 0
+
+/obj/item/clothing/mask/facehugger/Destroy()
+	processing_objects.Remove(src)
+	target = null
+	..()
+
+
+/obj/item/clothing/mask/facehugger/process()
+	healthcheck()
+	followtarget()
+
+/obj/item/clothing/mask/facehugger/proc/findtarget()
+	for(var/mob/living/carbon/human/T in hearers(src,4))
+		if(!CanHug(T))
+			continue
+		if(T && (T.stat != DEAD && T.stat != UNCONSCIOUS) )
+
+			if(get_dist(src.loc, T.loc) <= 4)
+				target = T
+/obj/item/clothing/mask/facehugger/proc/followtarget()
+	if(attached == 0 && stat == 0 && nextwalk <= world.time)
+		nextwalk = world.time + walk_speed
+		var/dist = get_dist(src.loc, target.loc)
+		var/obj/item/mask = target.get_body_part_coverage(MOUTH)
+		if(target == null || target.stat == DEAD || target.stat == UNCONSCIOUS || dist > 4 || target.status_flags & XENO_HOST)
+			findtarget()
+			return
+		else if(mask && istype(mask, /obj/item/clothing/mask/facehugger))
+			findtarget()
+			return
+		else
+			step_towards(src, target, 0)
+			if(dist <= 1)
+				if(CanHug(target))
+					Attach(target)
+					return
+				else
+					target = null
+					walk(src,0)
+					findtarget()
+					return
+
+//END HUGGER MOVEMENT AI
+
 
 /obj/item/clothing/mask/facehugger/attack_paw(user as mob) //can be picked up by aliens
 	if(isalien(user))
@@ -42,9 +91,32 @@ var/const/MAX_ACTIVE_TIME = 400
 	if((stat == CONSCIOUS && !sterile) && !isalien(user))
 		Attach(user)
 		return
+
+	// Colonial Marines code related to alien carriers
+	// else
+	// 	var/mob/living/carbon/alien/humanoid/carrier/carr = user
+	//
+	// 	if(carr && istype(carr, /mob/living/carbon/alien/humanoid/carrier))
+	// 		if(carr.facehuggers >= 6)
+	// 			carr << "You can't hold anymore facehuggers. You pick it up"
+	// 			..()
+	// 			return
+	// 		if(stat != DEAD)
+	// 			carr << "You pick up a facehugger"
+	// 			carr.facehuggers += 1
+	// 			del(src)
+	//
+	// 		else
+	// 			user << "This facehugger is dead."
+	// 			..()
 	else
 		..()
 		return
+
+/obj/item/clothing/mask/facehugger/proc/healthcheck()
+	if(health <= 0)
+		icon_state = "[initial(icon_state)]_dead"
+		Die()
 
 /obj/item/clothing/mask/facehugger/attack(mob/living/M as mob, mob/user as mob)
 	..()
@@ -54,6 +126,8 @@ var/const/MAX_ACTIVE_TIME = 400
 /obj/item/clothing/mask/facehugger/New()
 	if(aliens_allowed)
 		..()
+		processing_objects.Add(src)
+
 	else
 		qdel(src)
 
@@ -68,13 +142,14 @@ var/const/MAX_ACTIVE_TIME = 400
 			to_chat(user, "<span class='danger'>\The [src] seems active.</span>")
 	if (sterile)
 		to_chat(user, "<span class='danger'>It looks like \the [src]'s proboscis has been removed.</span>")
+	return
 
 /obj/item/clothing/mask/facehugger/attackby()
 	Die()
 	return
 
-/obj/item/clothing/mask/facehugger/bullet_act()
-	Die()
+/obj/item/clothing/mask/facehugger/bullet_act(var/obj/item/projectile/Proj)
+	health -= Proj.damage
 	return
 
 /obj/item/clothing/mask/facehugger/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -85,7 +160,7 @@ var/const/MAX_ACTIVE_TIME = 400
 /obj/item/clothing/mask/facehugger/equipped(mob/M)
 	Attach(M)
 
-/obj/item/clothing/mask/facehugger/Crossed(atom/target)
+/obj/item/clothing/mask/facehugger/Crossed(atom/target) // Instead of HasEntered. Probably the right proc, probably.
 	HasProximity(target)
 	return
 
@@ -113,9 +188,13 @@ var/const/MAX_ACTIVE_TIME = 400
 		icon_state = "[initial(icon_state)]"
 		Attach(hit_atom)
 
-/obj/item/clothing/mask/facehugger/proc/Attach(M as mob)
+/obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M as mob)
+	var/preggers = rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME)
 	if( (!iscorgi(M) && !iscarbon(M)) || isalien(M))
 		return 0
+	if(iscarbon(M) && M.status_flags & XENO_HOST)
+		visible_message("<span class='danger'>An alien tries to place a facehugger on [M] but it refuses sloppy seconds!</span>")
+		return
 	if(attached)
 		return 0
 	else
@@ -132,16 +211,21 @@ var/const/MAX_ACTIVE_TIME = 400
 	if(!sterile)
 		L.take_organ_damage(strength, 0) //done here so that even borgs and humans in helmets take damage
 
-	L.visible_message("<span class='danger'>\The [src] leaps at [L]'s face !</span>")
+	L.visible_message("<span class='danger'>\The [src] leaps at [L]'s face!</span>")
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/obj/item/mouth_protection = H.get_body_part_coverage(MOUTH)
 		if(mouth_protection && mouth_protection != H.wear_mask) //can't be protected with your own mask, has to be a hat
-			H.visible_message("<span class='danger'>\The [src] smashes against [H]'s [mouth_protection] !</span>")
 			stat_collection.xeno.proper_head_protection++
-			Die()
-			return 0
+			H.visible_message("<span class='danger'>\The [src] smashes against [H]'s [mouth_protection], and rips it off in the process!</span>")
+			H.drop_from_inventory(mouth_protection)
+			if(prob(75))
+				Die()
+			else
+				H.visible_message("<span class='danger'>\The [src] bounces off of the [mouth_protection]!</span>")
+				GoIdle(15)
+			return
 
 	if(iscarbon(M))
 		var/mob/living/carbon/target = L
@@ -154,21 +238,23 @@ var/const/MAX_ACTIVE_TIME = 400
 				return 0
 			target.drop_from_inventory(W)
 
-			target.visible_message("<span class='danger'>\The [src] tears \the [W] off of [target]'s face !</span>")
+			target.visible_message("<span class='danger'>\The [src] tears \the [W] off of [target]'s face!</span>")
 
+		src.loc = target
 		target.equip_to_slot(src, slot_wear_mask)
+		target.update_inv_wear_mask()
 
-		if(!sterile) L.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
-	else if(iscorgi(M))
+		if(!sterile) L.Paralyse((preggers/10)+10) //something like 25 ticks = 20 seconds with the default settings
+	else if (iscorgi(M))
 		var/mob/living/simple_animal/corgi/C = M
 		src.loc = C
 		C.facehugger = src
 		C.wear_mask = src
 		//C.regenerate_icons()
 
-	GoIdle() //so it doesn't jump the people that tear it off
+	GoIdle(150) //so it doesn't jump the people that tear it off
 
-	spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
+	spawn(preggers)
 		Impregnate(L)
 
 	return 0
@@ -178,9 +264,12 @@ var/const/MAX_ACTIVE_TIME = 400
 		return
 
 	if(!sterile)
-		new /obj/item/alien_embryo(target)
+		var/obj/item/alien_embryo/E = new (target)
 		target.status_flags |= XENO_HOST
-
+		if(istype(target, /mob/living/carbon/human))
+			var/mob/living/carbon/human/T = target
+			var/datum/organ/external/chest/affected = T.get_organ("chest")
+			affected.implants += E
 		target.visible_message("<span class='danger'>\The [src] falls limp after violating [target]'s face !</span>")
 		stat_collection.xeno.faces_hugged++
 
@@ -203,29 +292,30 @@ var/const/MAX_ACTIVE_TIME = 400
 	icon_state = "[initial(icon_state)]"
 	return
 
-/obj/item/clothing/mask/facehugger/proc/GoIdle()
+/obj/item/clothing/mask/facehugger/proc/GoIdle(var/delay)
 	if(stat == DEAD || stat == UNCONSCIOUS)
 		return
 
 /*		RemoveActiveIndicators()	*/
-
+	target = null
 	stat = UNCONSCIOUS
 	icon_state = "[initial(icon_state)]_inactive"
-
-	spawn(rand(MIN_ACTIVE_TIME,MAX_ACTIVE_TIME))
+	if(!delay)
+		delay = rand(MIN_ACTIVE_TIME,MAX_ACTIVE_TIME)
+	spawn(delay)
 		GoActive()
 	return
 
 /obj/item/clothing/mask/facehugger/proc/Die()
 	if(stat == DEAD)
 		return
-
+	target = null
 /*		RemoveActiveIndicators()	*/
-
+	processing_objects.Remove(src)
 	icon_state = "[initial(icon_state)]_dead"
 	stat = DEAD
 
-	src.visible_message("<span class='danger'>\The [src] curls up into a ball !</span>")
+	src.visible_message("<span class='danger'>\The [src] curls up into a ball!</span>")
 
 	return
 
@@ -239,8 +329,6 @@ var/const/MAX_ACTIVE_TIME = 400
 		return 0
 
 	var/mob/living/carbon/C = M
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(H.check_body_part_coverage(MOUTH) || (locate(/obj/item/alien_embryo) in H))
-			return 0
+	if(C && (istype(C.wear_mask, /obj/item/clothing/mask/facehugger) || C.status_flags & XENO_HOST))
+		return 0
 	return 1
