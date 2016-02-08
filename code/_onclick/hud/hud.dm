@@ -105,8 +105,8 @@
 	return ..()
 
 /mob/proc/create_mob_hud()
-	return
-
+	if(client && !hud_used)
+		hud_used = new /datum/hud(src)
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0)

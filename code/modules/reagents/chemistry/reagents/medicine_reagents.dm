@@ -539,7 +539,7 @@
 	if(current_cycle >= 12 && current_cycle < 24)
 		M.drowsyness += 1
 	else if(current_cycle >= 24)
-		M.AdjustSleeping(1)
+		M.Sleeping(2)
 	..()
 
 /datum/reagent/medicine/morphine/overdose_process(mob/living/M)

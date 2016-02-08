@@ -20,6 +20,7 @@
 	maxHealth = INFINITY
 	layer = 5
 	healable = 0
+	sight = SEE_SELF
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
 	languages = ALL
