@@ -1113,9 +1113,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	return C
 
 /datum/uplink_item/badass/annoydrone
-	name = "Annoyance drone"
+	name = "Clown drone"
 	desc = "A drone designed to create minor annoyances, and agitate the crew.  Will attempt to not interfere with your work."
-	cost = 1
+	cost = 2
 	item = /obj/item/drone_shell/annoyingdrone
 
 /datum/uplink_item/badass/annoydrone/spawn_item(turf/loc, obj/item/device/uplink/U, mob/user)
