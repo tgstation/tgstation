@@ -245,7 +245,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A box that contains two EMP grenades, an EMP implant and a short ranged recharging device disguised \
 			as a flashlight. Useful to disrupt communication and silicon lifeforms."
 	item = /obj/item/weapon/storage/box/syndie_kit/emp
-	cost = 5
+	cost = 1
 
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
