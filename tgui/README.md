@@ -1,9 +1,11 @@
-<!-- TOC depth:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [tgui](#tgui)
-  - [Concepts](#concepts)
-  - <!-- /TOC -->
+	- [Concepts](#concepts)
+	- [Using It](#using-it)
+	- [Copypasta](#copypasta)
 
+<!-- /TOC -->
 
 # tgui
 tgui is the user interface library of /tg/station. It is rendered clientside,  based on JSON data sent from the server. Clicks are processed on the server, in  a similar method to native BYOND `Topic()`.
@@ -81,7 +83,9 @@ Finally, you have a template. This is also a source of confusion for many new us
 
 A template is regular HTML, with mustache for logic and built-in components to quickly build UIs. Here's how we might show some data (components will be elaborated on later).
 
-```
+In a template there are a few special values. `config` is always the same and is part of core tgui (it will be explained later), `data` is the data returned from `ui_data`, and `adata` is the same, but with certain values (numbers at this time) interpolated in order to allow animation.
+
+```html
 <ui-display>
   <ui-section label='Health'>
     <span>{{data.health}}</span>
@@ -93,3 +97,43 @@ A template is regular HTML, with mustache for logic and built-in components to q
 ```
 
 Templates can be very confusing at first, as ternary operators, computed properties, and iterators are used quite a bit in more complex interfaces. Start with the basics, and work your way up. Much of the complexity stems from performance concerns. If in doubt, take the simpler approach and refactor if performance becomes an issue.
+
+## Copypasta
+We all do it, even the best of us. If you just want to make a tgui **fast**, here's what you need (note that you'll probably be forced to clean your shit up upon code review):
+
+```DM
+/obj/copypasta/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state) // Remember to use the appropriate state.
+  ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+  if(!ui)
+    ui = new(user, src, ui_key, "copypasta", name, 300, 300, master_ui, state)
+    ui.open()
+
+/obj/copypasta/ui_data(mob/user)
+  var/list/data = list()
+  data["var"] = var
+
+  return data
+
+/obj/copypasta/ui_act(action, params)
+  if(..())
+    return
+  switch(action)
+    if("copypasta")
+      var/newvar = params["var"]
+      var = Clamp(newvar, min_val, max_val) // Just a demo of proper input sanitation.
+      . = TRUE
+  update_icon() // Not applicable to all objects.
+```
+
+And the template:
+
+```html
+<ui-display title='My Copypasta Section'>
+  <ui-section label='Var'>
+    <span>{{data.var}}</span>
+  </ui-section>
+  <ui-section label='Animated Var'>
+    <span>{{adata.var}}</span>
+  </ui-section>
+</ui-display>
+```
