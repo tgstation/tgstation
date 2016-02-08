@@ -576,3 +576,60 @@
 	icon_state = "cia"
 	item_state = "cia"
 	_color = "cia"
+
+/obj/item/clothing/under/greaser
+	name = "greaser outfit"
+	desc = "The one that you want!"
+	icon_state = "greaser_default"
+	item_state = "greaser_default"
+
+/obj/item/clothing/under/greaser/New()
+	var/greaser_colour = "default"
+	switch(rand(1,4))
+		if(1)
+			greaser_colour = "default"
+		if(2)
+			greaser_colour = "cult"
+		if(3)
+			greaser_colour = "spider"
+		if(4)
+			greaser_colour = "snakes"
+			desc = "Tunnel Snakes Rule!"
+	icon_state = "greaser_[greaser_colour]"
+	item_state = "greaser_[greaser_colour]"
+	_color = "greaser_[greaser_colour]"
+
+/obj/item/clothing/under/wintercasualwear
+	name = "winter casualwear"
+	desc = "Perfect for winter!"
+	icon_state = "shizunewinter"
+	item_state = "shizunewinter"
+	_color = "shizunewinter"
+	heat_conductivity = FULL_TORSO|ARMS
+
+/obj/item/clothing/under/casualwear
+	name = "spring casualwear"
+	desc = "Perfect for spring!"
+	icon_state = "shizunenormal"
+	item_state = "shizunenormal"
+	_color = "shizunenormal"
+	heat_conductivity = FULL_TORSO|ARMS
+
+/obj/item/clothing/under/keyholesweater
+	name = "keyhole sweater"
+	desc = "What is the point of this, anyway?"
+	icon_state = "keyholesweater"
+	item_state = "keyholesweater"
+	body_parts_covered = FULL_TORSO|ARMS
+
+/obj/item/clothing/under/casualhoodie
+	name = "casual hoodie"
+	desc = "Pefect for lounging about in."
+	icon_state = "hoodiejeans"
+	item_state = "hoodiejeans"
+	_color = "hoodiejeans"
+
+/obj/item/clothing/under/casualhoodie/skirt
+	icon_state = "hoodieskirt"
+	item_state = "hoodieskirt"
+	_color = "hoodieskirt"

@@ -382,3 +382,16 @@
 	desc = "A crappy paper hat that you are REQUIRED to wear."
 	flags = FPRINT
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/head/pajamahat
+	name = "pajama hat"
+	desc = "This looks pretty damn comfortable."
+	heat_conductivity = INS_HELMET_HEAT_CONDUCTIVITY
+
+/obj/item/clothing/head/pajamahat/red
+	icon_state = "pajamahat_red"
+	item_state = "pajamahat_red"
+
+/obj/item/clothing/head/pajamahat/blue
+	icon_state = "pajamahat_blue"
+	item_state = "pajamahat_blue"
