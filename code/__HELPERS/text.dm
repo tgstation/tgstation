@@ -420,3 +420,8 @@ var/list/binary = list("0","1")
 	t = replacetext(t, "\[/list\]", "</ul>")
 
 	return t
+
+/proc/char_split(t)
+	. = list()
+	for(var/x in 1 to length(t))
+		. += copytext(t,x,x+1)
