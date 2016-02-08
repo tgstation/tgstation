@@ -18,13 +18,13 @@
 /obj/item/device/mmi/update_icon()
 	if(brain)
 		if(istype(brain,/obj/item/organ/internal/brain/alien))
-			if(brain.brainmob && brain.brainmob.stat == DEAD)
+			if(brainmob && brainmob.stat == DEAD)
 				icon_state = "mmi_alien_dead"
 			else
 				icon_state = "mmi_alien"
 			braintype = "Xenoborg" //HISS....Beep.
 		else
-			if(brain.brainmob && brain.brainmob.stat == DEAD)
+			if(brainmob && brainmob.stat == DEAD)
 				icon_state = "mmi_dead"
 			else
 				icon_state = "mmi_full"
@@ -71,7 +71,7 @@
 
 		return
 
-	if(brainmob)
+	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
 		return
 	..()

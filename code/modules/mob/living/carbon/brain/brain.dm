@@ -38,3 +38,6 @@
 
 /mob/living/carbon/brain/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	return // no eyes, no flashing
+
+/mob/living/carbon/brain/update_damage_hud()
+	return //no red circles for brain
