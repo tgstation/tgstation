@@ -1,6 +1,0 @@
-author: phil235
-delete-after: True
-changes: 
-  - tweak: "The vision updates for mobs are now instantaneous (e.g. you don't have to wait one second to see again when removing your welding helmet)"
-  - tweak: "Your vision is now affected when you're inside something or viewing through a camera. You can no longer see mobs or objects when ventcrawling (unless you have xray for example), an xray user viewing through a camera do not see through walls around the camera. On the other hand, cameras with an xray upgrade let you see through walls. Unfocused camera now give you the same effect as when you are nearsighted. Being inside closets, morgue container and disposal bins give you some vision impairments."
-  - rscadd: "The ability to toggle your hud on and off (with f12) is now available to all mobs not just humans."

@@ -119,7 +119,7 @@
 /mob/living/simple_animal/parrot/examine(mob/user)
 	..()
 	if(stat)
-		user << pick("This parrot is no more", " This is a late parrot", "This is an ex-parrot")
+		user << pick("This parrot is no more", "This is a late parrot", "This is an ex-parrot")
 
 /mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)
@@ -882,19 +882,23 @@
 	..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
-	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+		rounds_survived += 1
+		if(rounds_survived > longest_survival)
+			longest_survival = rounds_survived
 		Write_Memory()
 	..()
 
 /mob/living/simple_animal/parrot/Poly/death(gibbed)
+	rounds_survived = 0
 	Write_Memory()
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
 	S["phrases"] 			>> speech_buffer
-	S["rounds_survived"]	>> rounds_survived
-	S["longest_survival"]	>> longest_survival
+	S["roundssurvived"]		>> rounds_survived
+	S["longestsurvival"]	>> longest_survival
 
 	if(isnull(speech_buffer))
 		speech_buffer = list()
@@ -902,11 +906,6 @@
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
 	S["phrases"] 			<< speech_buffer
-	if(health > 0)
-		S["rounds_survived"]	<< rounds_survived + 1
-		if(rounds_survived == longest_survival)
-			S["longest_survival"]	<< longest_survival + 1
-	else
-		S["rounds_survived"]	<< 0
-
+	S["roundssurvived"]		<< rounds_survived
+	S["longestsurvival"]	<< longest_survival
 	memory_saved = 1

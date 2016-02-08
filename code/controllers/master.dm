@@ -21,8 +21,10 @@ var/global/datum/controller/master/Master = new()
 	var/iteration = 0
 	// The cost (in deciseconds) of the MC loop.
 	var/cost = 0
+#if DM_VERSION < 510
 	// The old fps when we slow it down to prevent lag.
 	var/old_fps
+#endif
 	// A list of subsystems to process().
 	var/list/subsystems = list()
 	// The cost of running the subsystems (in deciseconds).
@@ -39,7 +41,6 @@ var/global/datum/controller/master/Master = new()
 		else
 			init_subtypes(/datum/subsystem, subsystems)
 		Master = src
-	processing_interval = calculate_gcd()
 
 /datum/controller/master/Destroy()
 	..()
@@ -109,7 +110,9 @@ var/global/datum/controller/master/Master = new()
 		SS.next_fire = world.time + rand(0, SS.wait) // Stagger subsystems.
 
 // Used to smooth out costs to try and avoid oscillation.
+#define MC_AVERAGE_FAST(average, current) (0.7 * (average) + 0.3 * (current))
 #define MC_AVERAGE(average, current) (0.8 * (average) + 0.2 * (current))
+#define MC_AVERAGE_SLOW(average, current) (0.9 * (average) + 0.1 * (current))
 /datum/controller/master/process()
 	if(!Failsafe)
 		new/datum/controller/failsafe() // (re)Start the failsafe.
@@ -129,29 +132,44 @@ var/global/datum/controller/master/Master = new()
 
 				var/ran_subsystems = 0
 				for(var/datum/subsystem/SS in subsystems)
+#if DM_VERSION >= 510
+					if (world.tick_usage > 80)
+#else
 					if(world.cpu >= 100)
-						//if world.cpu gets above 120,
-						//byond will pause most client updates for (about) 1.6 seconds.
-						//(1.6 seconds worth of ticks)
-						//We just stop running subsystems to avoid that.
+#endif
 						break
+
 					if(SS.can_fire > 0)
 						if(SS.next_fire <= world.time && SS.last_fire + (SS.wait * 0.75) <= world.time) // Check if it's time.
+#if DM_VERSION >= 510
+							if (world.tick_usage + SS.tick_usage > 80 && SS.last_fire + (SS.wait*1.25) > world.time)
+								continue
+#endif
 							ran_subsystems = 1
 							timer = world.timeofday
 							last_type_processed = SS.type
 							SS.last_fire = world.time
+#if DM_VERSION >= 510
+							var/tick_usage = world.tick_usage
+#endif
 							SS.fire() // Fire the subsystem and record the cost.
-							SS.cost = MC_AVERAGE(SS.cost, world.timeofday - timer)
+#if DM_VERSION >= 510
+							var/newusage = max(world.tick_usage - tick_usage, 0)
+							if (newusage < SS.tick_usage)
+								SS.tick_usage = MC_AVERAGE_SLOW(SS.tick_usage,world.tick_usage - tick_usage)
+							else
+								SS.tick_usage = MC_AVERAGE_FAST(SS.tick_usage,world.tick_usage - tick_usage)
+#endif
+							SS.cost = max(MC_AVERAGE(SS.cost, world.timeofday - timer), 0)
 							if(SS.dynamic_wait) // Adjust wait depending on lag.
 								var/oldwait = SS.wait
 								var/global_delta = (subsystem_cost - (SS.cost / (SS.wait / 10))) - 1
 								var/newwait = (SS.cost - SS.dwait_buffer + global_delta) * SS.dwait_delta
 								newwait = newwait * (world.cpu / 100 + 1)
-								newwait = MC_AVERAGE(oldwait, newwait)
+								//smooth out wait changes, but only if going down
+								if(newwait < oldwait)
+									newwait = MC_AVERAGE(oldwait, newwait)
 								SS.wait = Clamp(newwait, SS.dwait_lower, SS.dwait_upper)
-								if(oldwait != SS.wait)
-									processing_interval = calculate_gcd()
 								SS.next_fire = world.time + SS.wait
 							else
 								SS.next_fire += SS.wait
@@ -161,7 +179,7 @@ var/global/datum/controller/master/Master = new()
 								break
 							sleep(0)
 
-				cost = MC_AVERAGE(cost, world.timeofday - start_time)
+				cost = max(MC_AVERAGE(cost, world.timeofday - start_time), 0)
 				if(ran_subsystems)
 					var/oldcost = subsystem_cost
 					var/newcost = 0
@@ -172,13 +190,10 @@ var/global/datum/controller/master/Master = new()
 						subsystem_cost = MC_AVERAGE(oldcost, newcost)
 
 				var/extrasleep = 0
-				// If we caused BYOND to miss a tick, sleep a bit extra...
-				if(startingtick < world.time || start_time + 1 < world.timeofday)
-					extrasleep += world.tick_lag * 2
 				// If we are loading the server too much, sleep a bit extra...
 				if(world.cpu >= 75)
 					extrasleep += (extrasleep + processing_interval) * ((world.cpu-50)/10)
-
+#if DM_VERSION < 510
 				if(world.cpu >= 100)
 					if(!old_fps)
 						old_fps = world.fps
@@ -187,33 +202,16 @@ var/global/datum/controller/master/Master = new()
 				else if(old_fps && world.cpu < 50)
 					world.fps = old_fps
 					old_fps = null
-
+#endif
 				sleep(processing_interval + extrasleep)
 
 			else
 				sleep(50)
 #undef MC_AVERAGE
 
-// Determine the GCD of subsystem waits: the longest the MC can wait while still staying on schedule.
-/datum/controller/master/proc/calculate_gcd()
-	var/GCD
-	// The shortest possible fire rate is the lowest of two ticks or 1 decisecond.
-	var/minimumInterval = min(world.tick_lag * 2, 1)
-
-	// Loop over each subsystem and determine the GCD based on its wait value.
-	for(var/datum/subsystem/SS in subsystems)
-		if(SS.wait)
-			GCD = Gcd(round(SS.wait * 10), GCD)
-	GCD = round(GCD)
-	// If the GCD is less than the minimum, just use the minimum.
-	if(GCD < minimumInterval * 10)
-		GCD = minimumInterval * 10
-	// Return GCD.
-	return GCD / 10
-
 /datum/controller/master/proc/stat_entry()
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug("Initializing...", src)
 
-	stat("Master Controller:", statclick.update("[round(Master.cost, 0.001)]ds (Interval: [Master.processing_interval] | Iteration:[Master.iteration])"))
+	stat("Master Controller:", statclick.update("[round(Master.cost, 0.01)]ds (Interval: [Master.processing_interval] | Iteration:[Master.iteration])"))
 

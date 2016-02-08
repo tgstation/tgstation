@@ -57,6 +57,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	flags = CONDUCT
 	origin_tech = "materials=1"
 
+/obj/item/stack/sheet/metal/fifty
+	amount = 50
+
 /obj/item/stack/sheet/metal/cyborg
 	materials = list()
 	is_cyborg = 1
@@ -66,13 +69,12 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	recipes = metal_recipes
 	return ..()
 
-
 /*
  * Plasteel
  */
 var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
-	)
+)
 
 /obj/item/stack/sheet/plasteel
 	name = "plasteel"
@@ -86,8 +88,14 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
-		recipes = plasteel_recipes
-		return ..()
+	recipes = plasteel_recipes
+	return ..()
+
+/obj/item/stack/sheet/plasteel/twenty
+	amount = 20
+
+/obj/item/stack/sheet/plasteel/fifty
+	amount = 50
 
 /*
  * Wood
@@ -121,6 +129,9 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 /obj/item/stack/sheet/mineral/wood/New(var/loc, var/amount=null)
 	recipes = wood_recipes
 	return ..()
+
+/obj/item/stack/sheet/mineral/wood/fifty
+	amount = 50
 
 /*
  * Cloth
@@ -160,9 +171,12 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 		recipes = cardboard_recipes
 		return ..()
 
+/obj/item/stack/sheet/cardboard/fifty
+	amount = 50
+
 /*
  * Runed Metal
-*/
+ */
 
 var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	new/datum/stack_recipe("pylon", /obj/structure/cult/pylon, 4, time = 40, one_per_turf = 1, on_floor = 1), \

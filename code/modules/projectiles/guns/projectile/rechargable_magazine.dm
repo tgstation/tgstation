@@ -2,13 +2,14 @@
 
 /obj/item/ammo_box/magazine/recharge
  	name = "power pack"
+ 	desc = "A rechargeable, detachable battery that serves as a magazine for laser rifles."
  	icon_state = "oldrifle-20"
  	ammo_type = /obj/item/ammo_casing/caseless/laser
  	caliber = "laser"
  	max_ammo = 20
 
 /obj/item/ammo_box/magazine/recharge/update_icon()
-	..()
+	desc = "[initial(desc)] It has [stored_ammo.len] shots\s left."
 	icon_state = "oldrifle-[round(ammo_count(),4)]"
 
 
@@ -36,6 +37,7 @@
 	can_suppress = 0
 	burst_size = 0
 	action_button_name = null
+	fire_sound = 'sound/weapons/Laser.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/laser/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()
