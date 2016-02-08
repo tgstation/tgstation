@@ -12,10 +12,12 @@ var/list/meta_gas_info = meta_gas_list() //see ATMOSPHERICS/gas_types.dm
 var/list/gaslist_cache = null
 /proc/gaslist(id)
 	var/list/cached_gas
-
+	
+	//only instantiate the first time it's needed
 	if(!gaslist_cache)
 		gaslist_cache = new(meta_gas_info.len)
-
+	
+	//only setup the individual lists the first time they're needed
 	if(!gaslist_cache[id])
 		if(!meta_gas_info[id])
 			CRASH("Gas [id] does not exist!")
@@ -27,13 +29,14 @@ var/list/gaslist_cache = null
 		cached_gas[GAS_META] = meta_gas_info[id]
 	else
 		cached_gas = gaslist_cache[id]
+	//Copy() it because only GAS_META is static
 	return cached_gas.Copy()
 
 /datum/gas_mixture
 	var/list/gases
-	var/temperature // Kelvins
+	var/temperature //kelvins
 	var/tmp/temperature_archived
-	var/volume
+	var/volume //liters
 	var/last_share
 	var/tmp/fuel_burnt
 
@@ -54,7 +57,7 @@ var/list/gaslist_cache = null
 	var/cached_gases = gases
 	if(cached_gases[gas_id])
 		return
-	cached_gases[gas_id] = gaslist(gas_id) //see ATMOSPHERICS/gas_types.dm
+	cached_gases[gas_id] = gaslist(gas_id)
 
 	//assert_gases(args) - shorthand for calling assert_gas() once for each gas type.
 /datum/gas_mixture/proc/assert_gases()
@@ -73,46 +76,47 @@ var/list/gaslist_cache = null
 		add_gas(id)
 
 	//garbage_collect() - removes any gas list which is empty.
+	//If called with a list as an argument, only removes gas lists with IDs from that list.
 	//Must be used after subtracting from a gas. Must be used after assert_gas()
 		//if assert_gas() was called only to read from the gas.
 	//By removing empty gases, processing speed is increased.
-/datum/gas_mixture/proc/garbage_collect()
+/datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
-	for(var/id in cached_gases)
+	for(var/id in (tocheck || cached_gases))
 		if(cached_gases[id][MOLES] <= 0 && cached_gases[id][ARCHIVE] <= 0)
 			cached_gases -= id
 
 	//PV = nRT
-/datum/gas_mixture/proc/heat_capacity()
+/datum/gas_mixture/proc/heat_capacity() //joules per kelvin
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
 		. += cached_gases[id][MOLES] * cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
 
-/datum/gas_mixture/proc/heat_capacity_archived()
+/datum/gas_mixture/proc/heat_capacity_archived() //joules per kelvin
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
 		. += cached_gases[id][ARCHIVE] * cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
 
-/datum/gas_mixture/proc/total_moles()
+/datum/gas_mixture/proc/total_moles() //moles
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
 		. += cached_gases[id][MOLES]
 
-/datum/gas_mixture/proc/return_pressure()
+/datum/gas_mixture/proc/return_pressure() //kilopascals
 	if(volume > 0) // to prevent division by zero
 		return total_moles() * R_IDEAL_GAS_EQUATION * temperature / volume
 	return 0
 
-/datum/gas_mixture/proc/return_temperature()
+/datum/gas_mixture/proc/return_temperature() //kelvins
 	return temperature
 
-/datum/gas_mixture/proc/return_volume()
+/datum/gas_mixture/proc/return_volume() //liters
 	return max(0, volume)
 
-/datum/gas_mixture/proc/thermal_energy()
+/datum/gas_mixture/proc/thermal_energy() //joules
 	return temperature * heat_capacity()
 
 //Procedures used for very specific events
@@ -125,6 +129,7 @@ var/list/gaslist_cache = null
 		temperature = TCMB
 
 	if(cached_gases["agent_b"] && temperature > 900 && cached_gases["plasma"] && cached_gases["co2"])
+		//agent b converts hot co2 to o2 (endothermic)
 		if(cached_gases["plasma"][MOLES] > MINIMUM_HEAT_CAPACITY && cached_gases["co2"][MOLES] > MINIMUM_HEAT_CAPACITY)
 			var/reaction_rate = min(cached_gases["co2"][MOLES]*0.75, cached_gases["plasma"][MOLES]*0.25, cached_gases["agent_b"][MOLES]*0.05)
 
@@ -143,6 +148,7 @@ var/list/gaslist_cache = null
 	/*
 	if(thermal_energy() > (PLASMA_BINDING_ENERGY*10))
 		if(cached_gases["plasma"] && cached_gases["co2"] && cached_gases["plasma"][MOLES] > MINIMUM_HEAT_CAPACITY && cached_gases["co2"][MOLES] > MINIMUM_HEAT_CAPACITY && (cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])/total_moles() >= FUSION_PURITY_THRESHOLD)//Fusion wont occur if the level of impurities is too high.
+			//fusion converts plasma and co2 to o2 and n2 (exothermic)
 			//world << "pre [temperature, [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]]
 			var/old_heat_capacity = heat_capacity()
 			var/carbon_efficency = min(cached_gases["plasma"][MOLES]/cached_gases["co2"][MOLES],MAX_CARBON_EFFICENCY)
@@ -183,6 +189,7 @@ var/list/gaslist_cache = null
 	return reacting
 
 /datum/gas_mixture/proc/fire()
+	//combustion of plasma and volatile fuel, which both act as hydrocarbons (exothermic)
 	var/energy_released = 0
 	var/old_heat_capacity = heat_capacity()
 	var/list/cached_gases = gases //this speeds things up because accessing datum vars is slow
@@ -266,9 +273,11 @@ var/list/gaslist_cache = null
 
 /datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample)
 	//Copies variables from sample
+	//Returns: 1 in all cases
 
 /datum/gas_mixture/proc/copy_from_turf(turf/model)
 	//Copies all gas info from the turf into the gas list along with temperature
+	//Returns: 1 in all cases
 
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
 	//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
@@ -279,13 +288,17 @@ var/list/gaslist_cache = null
 	//Return: amount of gas exchanged
 
 /datum/gas_mixture/proc/check_turf(turf/model)
+	//Similar to compare(...), except for turfs without their own gas mixtures
 	//Returns: 0 if self-check failed or 1 if check passes
 
-/datum/gas_mixture/proc/temperature_mimic(turf/model, conduction_coefficient) //I want this proc to die a painful death
-
 /datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
+	//Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
 
-/datum/gas_mixture/proc/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
+/datum/gas_mixture/proc/temperature_mimic(turf/model, conduction_coefficient) //I want this proc to die a painful death
+	//Similar to temperature_share(...), except between a gas_mixture and a turf without its own gas_mixture
+
+/datum/gas_mixture/proc/temperature_turf_share(turf/simulated/sharer, conduction_coefficient) //I want this proc to die a painful death
+	//Similar to temperature_share(...), except between a gas_mixture and a simulated turf
 
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
 	//Compares sample to self to see if within acceptable ranges that group processing may be enabled
@@ -303,16 +316,18 @@ var/list/gaslist_cache = null
 /datum/gas_mixture/merge(datum/gas_mixture/giver)
 	if(!giver)
 		return 0
-
+	
+	//heat transfer
 	if(abs(temperature - giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity()
 		var/giver_heat_capacity = giver.heat_capacity()
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity)
 			temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
-
+	
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/giver_gases = giver.gases
+	//gas transfer
 	for(var/giver_id in giver_gases)
 		assert_gas(giver_id)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
@@ -376,19 +391,28 @@ var/list/gaslist_cache = null
 	for(var/id in sample_gases)
 		assert_gas(id)
 		cached_gases[id][MOLES] = sample_gases[id][MOLES]
+	//remove all gases not in the sample
 	cached_gases &= sample_gases
 
 	return 1
 
 /datum/gas_mixture/copy_from_turf(turf/model)
 	var/list/cached_gases = gases
-
+	
 	temperature = model.temperature
-	assert_gases(arglist(hardcoded_gases))
-	cached_gases["o2"][MOLES]		= model.oxygen
-	cached_gases["n2"][MOLES]		= model.nitrogen
-	cached_gases["plasma"][MOLES]	= model.toxins
-	cached_gases["co2"][MOLES]		= model.carbon_dioxide
+	if(model.oxygen)
+		assert_gas("o2")
+		cached_gases["o2"][MOLES]		= model.oxygen
+	if(model.nitrogen)
+		assert_gas("n2")
+		cached_gases["n2"][MOLES]		= model.nitrogen
+	if(model.toxins)
+		assert_gas("plasma")
+		cached_gases["plasma"][MOLES]	= model.toxins
+	if(model.carbon_dioxide)
+		assert_gas("co2")
+		cached_gases["co2"][MOLES]		= model.carbon_dioxide
+	//remove all gases not handled by turfs
 	cached_gases &= hardcoded_gases
 
 	return 1
@@ -462,13 +486,16 @@ var/list/gaslist_cache = null
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY)
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.10) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
-
+	
+	var/list/unique_gases = cached_gases ^ sharer_gases
+	if(unique_gases.len) //if all gases were present in both mixtures, we know that no gases are 0
+		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
+		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
+	
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
-		. = delta_pressure * R_IDEAL_GAS_EQUATION / volume
-
-	garbage_collect()
-	sharer.garbage_collect()
+		return delta_pressure * R_IDEAL_GAS_EQUATION / volume
+	
 
 /datum/gas_mixture/mimic(turf/model, atmos_adjacent_turfs = 4)
 	var/datum/gas_mixture/copied = new
@@ -490,6 +517,7 @@ var/list/gaslist_cache = null
 			sharer.temperature = max(sharer.temperature + heat/sharer_heat_capacity, TCMB)
 	//thermal energy of the system (self and sharer) is unchanged
 
+//see above
 /datum/gas_mixture/temperature_mimic(turf/model, conduction_coefficient)
 	var/temperature_delta = temperature - model.temperature
 	if(abs(temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
@@ -501,6 +529,7 @@ var/list/gaslist_cache = null
 
 			temperature = max(temperature - heat/self_heat_capacity, TCMB)
 
+//see above
 /datum/gas_mixture/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
 	var/temperature_delta = temperature_archived - sharer.temperature
 	if(abs(temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
