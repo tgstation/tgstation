@@ -196,8 +196,8 @@ var/list/employmentCabinets = list()
 
 
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
-	var/obj/item/weapon/paper/contract/employment/contract = new /obj/item/weapon/paper/contract/employment(src, employee)
-	world << "New paper added to filing cabinet, Name: [employee], paper name is: [contract]"
+	new /obj/item/weapon/paper/contract/employment(src, employee)
+
 
 /obj/structure/filingcabinet/employment/attack_hand(mob/user)
 	if(!cooldown)

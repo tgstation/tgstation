@@ -319,6 +319,7 @@
 
 /mob/new_player/proc/AddEmploymentContract(var/mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
+	sleep(30)
 	for(var/obj/structure/filingcabinet/employment/employmentCabinet in employmentCabinets)
 		employmentCabinet.addFile(employee)
 
