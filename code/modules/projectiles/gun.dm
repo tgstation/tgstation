@@ -39,7 +39,7 @@
 	var/fire_delay = 2
 	var/last_fired = 0
 
-	var/conventional_firearm = 1
+	var/conventional_firearm = 1	//Used to determine whether, when examined, an /obj/item/weapon/gun/projectile will display the amount of rounds remaining.
 
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)

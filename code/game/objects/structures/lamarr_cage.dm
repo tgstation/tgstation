@@ -95,7 +95,6 @@
 
 /obj/item/clothing/mask/facehugger/lamarr/New()//to prevent deleting it if aliums are disabled
 	create_reagents(15)
-	return
 
 /obj/item/clothing/mask/facehugger/lamarr/process()
 	if(!istype(loc, /mob/living/carbon/human))
@@ -106,14 +105,9 @@
 		for (var/datum/reagent/current_reagent in src.reagents.reagent_list)
 			if (current_reagent.id == "creatine")
 				to_chat(H, "<span class='warning'>[src]'s body contorts and expands!</span>")
-				var/hand = null
-				if(H.r_hand == src)
-					hand = "r"
-				else
-					hand = "l"
 				H.drop_item(src, force_drop = 1)
 				var/obj/item/weapon/gun/projectile/hivehand/I = new (get_turf(H))
-				if(hand == "r")
+				if(H.r_hand == src)
 					H.put_in_r_hand(I)
 				else
 					H.put_in_l_hand(I)
@@ -126,7 +120,5 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		if(src.loc == user && (user.l_hand == W || user.r_hand == W))
 			processing_objects.Add(src)
-		else
-			return
 	else
 		Die()

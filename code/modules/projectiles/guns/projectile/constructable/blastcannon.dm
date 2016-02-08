@@ -14,7 +14,8 @@
 	ammo_type = null
 	fire_sound = null
 	conventional_firearm = 0
-	var/bomb = null
+//	var/bomb = null
+	var/obj/item/device/transfer_valve/bomb
 	var/datum/gas_mixture/bomb_air_contents_1 = null
 	var/datum/gas_mixture/bomb_air_contents_2 = null
 	var/ignorecap = 0
@@ -33,11 +34,10 @@
 	if(!bomb)
 		return
 	else
-		var/obj/item/device/transfer_valve/T = bomb
-		T.loc = user.loc
-		user.put_in_hands(T)
+		bomb.loc = user.loc
+		user.put_in_hands(bomb)
+		to_chat(user, "You detach \the [bomb] from \the [src].")
 		bomb = null
-		to_chat(user, "You detach \the [T] from \the [src].")
 		bomb_appearance = null
 		name = "pipe gun"
 		desc = "A pipe welded onto a gun stock. You're not sure how you could even use this."
@@ -89,15 +89,12 @@
 		return
 
 	else
-		var/obj/item/device/transfer_valve/T = bomb
-		if(T.damaged)
+		if(bomb.damaged)
 			click_empty(user)
 			return
 
-		if(flag)	return //we're placing gun on a table or in backpack
-
-		bomb_air_contents_1 = T.tank_one.air_contents
-		bomb_air_contents_2 = T.tank_two.air_contents
+		bomb_air_contents_1 = bomb.tank_one.air_contents
+		bomb_air_contents_2 = bomb.tank_two.air_contents
 
 		bomb_air_contents_2.volume += bomb_air_contents_1.volume
 		var/datum/gas_mixture/temp
@@ -131,15 +128,15 @@
 				range = min(range, MAX_EXPLOSION_RANGE)
 			var/turf/epicenter = get_turf(loc)
 
-			var/transfer_moles1 = (T.tank_one.air_contents.return_pressure() * T.tank_one.air_contents.volume)/(T.tank_one.air_contents.temperature * R_IDEAL_GAS_EQUATION)
-			T.tank_one.air_contents.remove(transfer_moles1)
-			var/transfer_moles2 = (T.tank_two.air_contents.return_pressure() * T.tank_two.air_contents.volume)/(T.tank_two.air_contents.temperature * R_IDEAL_GAS_EQUATION)
-			T.tank_two.air_contents.remove(transfer_moles2)
+			var/transfer_moles1 = (bomb.tank_one.air_contents.return_pressure() * bomb.tank_one.air_contents.volume)/(bomb.tank_one.air_contents.temperature * R_IDEAL_GAS_EQUATION)
+			bomb.tank_one.air_contents.remove(transfer_moles1)
+			var/transfer_moles2 = (bomb.tank_two.air_contents.return_pressure() * bomb.tank_two.air_contents.volume)/(bomb.tank_two.air_contents.temperature * R_IDEAL_GAS_EQUATION)
+			bomb.tank_two.air_contents.remove(transfer_moles2)
 
 			bomb_air_contents_1 = null
 			bomb_air_contents_2 = null
 
-			user.visible_message("<span class='danger'>[user] opens \the [T] on \his [src.name] and fires a blast wave at \the [A]!</span>","<span class='danger'>You open \the [T] on your [src.name] and fire a blast wave at \the [A]!</span>")
+			user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [src.name] and fires a blast wave at \the [A]!</span>","<span class='danger'>You open \the [bomb] on your [src.name] and fire a blast wave at \the [A]!</span>")
 			var/sound = rand(1,6)
 			switch(sound)
 				if(1)
@@ -177,8 +174,8 @@
 					bhangmeter.sense_explosion(epicenter.x,epicenter.y,epicenter.z,round(uncapped*0.25), round(uncapped*0.5), round(uncapped),"???", cap)
 
 		else
-			user.visible_message("<span class='danger'>[user] opens \the [T] on \his [src.name]!</span>","<span class='danger'>You open \the [T] on your [src.name]!</span>")
-			user.visible_message("\The [T] on [user]'s [src.name] hisses pitifully.","\The [T] on your [src.name] hisses pitifully.")
+			user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [src.name]!</span>","<span class='danger'>You open \the [bomb] on your [src.name]!</span>")
+			user.visible_message("\The [bomb] on [user]'s [src.name] hisses pitifully.","\The [bomb] on your [src.name] hisses pitifully.")
 			to_chat(user, "<span class='warning'>The bomb is a dud!</span>")
 			var/ratio1 = bomb_air_contents_1.volume/bomb_air_contents_2.volume
 			var/datum/gas_mixture/temp2
@@ -186,8 +183,8 @@
 			bomb_air_contents_1.merge(temp2)
 			bomb_air_contents_2.volume -=  bomb_air_contents_1.volume
 
-			T.tank_one.air_contents = bomb_air_contents_1
-			T.tank_two.air_contents = bomb_air_contents_2
+			bomb.tank_one.air_contents = bomb_air_contents_1
+			bomb.tank_two.air_contents = bomb_air_contents_2
 
 		if(heavy_damage_range && medium_damage_range && light_damage_range)
 			var/obj/item/projectile/bullet/blastwave/B = new(null)
@@ -200,16 +197,7 @@
 					var/mob/living/M = src.loc
 					var/turf/Q = get_turf(M)
 					var/turf/target
-					var/throwdir = 1
-					switch(M.dir)
-						if(1)
-							throwdir = 2
-						if(2)
-							throwdir = 1
-						if(4)
-							throwdir = 8
-						if(8)
-							throwdir = 4
+					var/throwdir = turn(M.dir, 180)
 					if(istype(Q, /turf/space)) // if ended in space, then range is unlimited
 						target = get_edge_target_turf(Q, throwdir)
 					else						// otherwise limit to 10 tiles
@@ -219,7 +207,7 @@
 						M.apply_effects(0, 2)
 						to_chat(user, "<span class='warning'>You're thrown back by the force of the blast!</span>")
 
-				T.damaged = 1
+				bomb.damaged = 1
 			else
 				qdel(B)
 				in_chamber = null

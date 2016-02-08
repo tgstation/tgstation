@@ -604,7 +604,6 @@
 					qdel(src)
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
-			return
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"

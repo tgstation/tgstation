@@ -166,7 +166,7 @@
 		to_chat(user, "You [panelopen ? "close" : "open"] the panel on the side of \the [src].")
 		panelopen = !panelopen
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-		return
+
 	if(istype(I, /obj/item/stack/cable_coil))
 		if(!panelopen)
 			return
