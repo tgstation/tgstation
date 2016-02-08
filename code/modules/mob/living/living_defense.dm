@@ -184,7 +184,7 @@
 
 	add_logs(user, src, "grabbed", addition="passively")
 
-	if(anchored || !user.Adjacent(src))
+	if(anchored || !Adjacent(user))
 		return 0
 	if(buckled)
 		user << "<span class='warning'>You cannot grab [src], \he is buckled in!</span>"

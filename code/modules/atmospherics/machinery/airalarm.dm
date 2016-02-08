@@ -532,14 +532,13 @@
 	if((stat & (NOPOWER|BROKEN)) || shorted)
 		icon_state = "alarmp"
 		return
-	if(alarm_area)
-		switch(max(danger_level, alarm_area.atmosalm))
-			if (0)
-				src.icon_state = "alarm0"
-			if (1)
-				src.icon_state = "alarm2" //yes, alarm2 is yellow alarm
-			if (2)
-				src.icon_state = "alarm1"
+	switch(max(danger_level, alarm_area.atmosalm))
+		if (0)
+			src.icon_state = "alarm0"
+		if (1)
+			src.icon_state = "alarm2" //yes, alarm2 is yellow alarm
+		if (2)
+			src.icon_state = "alarm1"
 
 /obj/machinery/airalarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted)
