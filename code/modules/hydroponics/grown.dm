@@ -1042,7 +1042,8 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 			user.unEquip(src)
 		user.put_in_hands(Shiv)
 		qdel(src)
-
+	else
+		return ..()
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom
 	name = "mushroom"
 
