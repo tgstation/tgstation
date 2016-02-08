@@ -3,6 +3,7 @@
  *		Filing Cabinets
  *		Security Record Cabinets
  *		Medical Record Cabinets
+ *		Employment Contract Cabinets
  */
 
 
@@ -165,3 +166,44 @@
 /obj/structure/filingcabinet/medical/attack_tk()
 	populate()
 	..()
+
+/*
+ * Employment contract Cabinets
+ */
+
+var/list/employmentCabinets = list()
+
+/obj/structure/filingcabinet/employment
+	var/cooldown = 0
+
+/obj/structure/filingcabinet/employment/New()
+	employmentCabinets += src
+	fillCurrent()
+	return ..()
+
+/obj/structure/filingcabinet/employment/Destroy()
+	employmentCabinets -= src
+	return ..()
+
+/obj/structure/filingcabinet/employment/proc/fillCurrent()
+	//This proc fills the cabinet with the current crew.
+	world << "FillCurrent on a filing cabinet."
+	for(var/datum/data/record/G in data_core.locked)
+		if(!G)
+			continue
+		if(G.fields["reference"])
+			addFile(G.fields["reference"])
+
+
+/obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
+	var/obj/item/weapon/paper/contract/employment/contract = new /obj/item/weapon/paper/contract/employment(src, employee)
+	world << "New paper added to filing cabinet, Name: [employee], paper name is: [contract]"
+
+/obj/structure/filingcabinet/employment/attack_hand(mob/user)
+	if(!cooldown)
+		cooldown = 1
+		..()
+		sleep(100) // prevents the demon from just instantly emptying the cabinet, ensuring an easy win.
+		cooldown = 0
+	else
+		user << "<span class='warning'>The [src] is jammed, give it a few seconds.</span>"

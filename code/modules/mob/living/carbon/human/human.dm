@@ -1006,7 +1006,7 @@
 		if(1) // acedia
 			log_game("[src] was influenced by the sin of Acedia.")
 			O = new /datum/objective/sintouched/acedia
-			acidia = 1
+			acedia = 1
 		if(2) // Gluttony
 			log_game("[src] was influenced by the sin of gluttony.")
 			O = new /datum/objective/sintouched/gluttony

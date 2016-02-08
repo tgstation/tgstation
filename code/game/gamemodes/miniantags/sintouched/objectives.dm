@@ -38,7 +38,7 @@
 			jobs -= J
 	if(jobs.len > 0)
 		var/datum/job/target = pick(jobs)
-		explanation_text += "Those [target.title]s are always showing off their newest work.  Go knock them down a peg or two, preferably without physically harming them."
+		explanation_text = "Those [target.title]s are always showing off their newest work.  Go knock them down a peg or two, preferably without physically harming them."
 
 /datum/objective/sintouched/pride
 	explanation_text = "You are the BEST thing on the station.  Make sure everyone knows it."
