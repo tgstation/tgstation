@@ -1,24 +1,20 @@
 /datum/supply_pack
-	var/name = null
-	var/group = supply_misc
+	var/name = "Crate"
+	var/group = ""
 	var/hidden = FALSE
-	var/contraband = FLASE
-	var/cost = 0
+	var/contraband = FALSE
+	var/cost = 7 // Minimum cost, or infinite points are possible.
 	var/access = FALSE
 	var/list/contains = null
-	var/amount = 0
+	var/crate_name = "crate"
 	var/crate_type = /obj/structure/closet/crate
-	var/crate_name = null
 
 /datum/supply_pack/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = new crate_type(T)
 	C.name = crate_name
 
 	for(var/item in contains)
-		var/atom/A = new item(C)
-		if(amount && A.vars.Find("amount") && A:amount)
-			A:amount = amount
-
+		new item(C)
 	return C
 
 //////////////////////////////////////////////////////////////////////////////
@@ -132,7 +128,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/security
-	group "Security"
+	group = "Security"
 	access = access_security
 	crate_type = /obj/structure/closet/crate/secure/gear
 
@@ -480,7 +476,7 @@
 /datum/supply_pack/engineering/engine
 	name = "Emitter Crate"
 	cost = 10
-		access = access_ce
+	access = access_ce
 	contains = list(/obj/machinery/power/emitter,
 					/obj/machinery/power/emitter)
 	crate_name = "emitter crate"
@@ -810,11 +806,12 @@
 					/obj/item/clothing/tie/petcollar)
 	crate_name = "corgi crate"
 
-/datum/supply_pack/organic/critter/corgi/New()
+/datum/supply_pack/organic/critter/corgi/generate()
+	. = ..()
 	if(prob(50))
-		contains -= /mob/living/simple_animal/pet/dog/corgi
-		conmtains += /mob/living/simple_animal/pet/dog/corgi/Lisa
-	..()
+		var/mob/living/simple_animal/pet/dog/corgi/D = locate() in .
+		qdel(D)
+		new /mob/living/simple_animal/pet/dog/corgi/Lisa(.)
 
 /datum/supply_pack/organic/critter/cat
 	name = "Cat Crate"
@@ -824,11 +821,12 @@
                     /obj/item/toy/cattoy)
 	crate_name = "cat crate"
 
-/datum/supply_pack/organic/critter/cat/New()
+/datum/supply_pack/organic/critter/cat/generate()
+	. = ..()
 	if(prob(50))
-		contains -= /mob/living/simple_animal/pet/cat
-		conmtains += /mob/living/simple_animal/pet/cat/Proc
-	..()
+		var/mob/living/simple_animal/pet/cat/C = locate() in .
+		qdel(C)
+		new /mob/living/simple_animal/pet/cat/Proc(.)
 
 /datum/supply_pack/organic/critter/pug
 	name = "Pug Crate"
@@ -851,9 +849,10 @@
 	contains = list(/mob/living/simple_animal/butterfly)
 	crate_name = "butterflies crate"
 
-/datum/supply_pack/organic/critter/butterfly/New()
-	for(var/i in 1 to 50)
-		contents += /mob/living/simple_animal/butterfly
+/datum/supply_pack/organic/critter/butterfly/generate()
+	. = ..()
+	for(var/i in 1 to 49)
+		new /mob/living/simple_animal/butterfly(.)
 
 /datum/supply_pack/organic/hydroponics
 	name = "Hydroponics Crate"
@@ -956,43 +955,43 @@
 /datum/supply_pack/materials/metal50
 	name = "50 Metal Sheets"
 	cost = 10
-	contains = list(/obj/item/stack/sheet/metal)
-	amount = 50
+	contains = list(/obj/item/stack/sheet/metal/fifty)
 	crate_name = "metal sheets crate"
 
 /datum/supply_pack/materials/plasteel20
 	name = "20 Plasteel Sheets"
 	cost = 30
-	contains = list(/obj/item/stack/sheet/plasteel)
-	amount = 20
+	contains = list(/obj/item/stack/sheet/plasteel/twenty)
 	crate_name = "plasteel sheets crate"
 
 /datum/supply_pack/materials/plasteel50
 	name = "50 Plasteel Sheets"
 	cost = 50
-	contains = list(/obj/item/stack/sheet/plasteel)
-	amount = 50
+	contains = list(/obj/item/stack/sheet/plasteel/fifty)
 	crate_name = "plasteel sheets crate"
 
 /datum/supply_pack/materials/glass50
 	name = "50 Glass Sheets"
 	cost = 10
-	contains = list(/obj/item/stack/sheet/glass)
-	amount = 50
+	contains = list(/obj/item/stack/sheet/glass/fifty)
 	crate_name = "glass sheets crate"
+
+/datum/supply_pack/materials/wood50
+	name = "50 Wood Planks"
+	cost = 10
+	contains = list(/obj/item/stack/sheet/mineral/wood/fifty)
+	crate_name = "wood planks crate"
 
 /datum/supply_pack/materials/cardboard50
 	name = "50 Cardboard Sheets"
 	cost = 10
-	contains = list(/obj/item/stack/sheet/cardboard)
-	amount = 50
+	contains = list(/obj/item/stack/sheet/cardboard/fifty)
 	crate_name = "cardboard sheets crate"
 
 /datum/supply_pack/materials/sandstone30
 	name = "30 Sandstone Blocks"
 	cost = 20
-	contains = list(/obj/item/stack/sheet/mineral/sandstone)
-	amount = 30
+	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 	crate_name = "sandstone blocks crate"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1146,8 +1145,7 @@
 /datum/supply_pack/misc/noslipfloor
 	name = "High-traction Floor Tiles"
 	cost = 20
-	contains = list(/obj/item/stack/tile/noslip)
-	amount = 20
+	contains = list(/obj/item/stack/tile/noslip/thirty)
 	crate_name = "high-traction floor tiles"
 
 /datum/supply_pack/misc/plasmaman
