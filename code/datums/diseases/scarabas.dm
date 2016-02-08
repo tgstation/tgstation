@@ -20,7 +20,7 @@
 				affected_mob.faction = list("scarab")
 				affected_mob << "<span class='notice'>You feel something crawl under your skin.</span>"
 			if(3)
-				if(affected_mob.dna.species.id != "scarabite")
+				if(affected_mob.dna.species.id == "scarabite")
 					affected_mob.faction = list("scarab")
 					affected_mob.visible_message("<span class='danger'>[affected_mob] releases cockroaches!</span>")
 					new /mob/living/simple_animal/hostile/poison/giant_spider/scarab(affected_mob.loc)
