@@ -34,6 +34,14 @@
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
+/obj/item/weapon/wrench/advanced
+	name = "Advanced wrench"
+	desc = "A wrench with a self lubricating adjuster for maximum efficiency."
+	icon_state = "wrench_adv"
+	item_state = "wrench"
+	origin_tech = "materials=3;engineering=3"
+	toolspeed = 1.5
+
 /*
  * Screwdriver
  */
@@ -99,6 +107,17 @@
 		M = user
 	return eyestab(M,user)
 
+/obj/item/weapon/screwdriver/advanced
+	name = "Advanced screwdriver"
+	desc = "Produces high powered micro vibrations to loosen stuck and stripped screws."
+	icon_state = "screwdriver_adv"
+	item_state = "screwdriver_blue"
+	toolspeed = 1.5
+
+/obj/item/weapon/screwdriver/advanced/New(loc)
+	if (prob(75))
+		src.pixel_y = rand(0, 16)
+
 /*
  * Wirecutters
  */
@@ -141,6 +160,17 @@
 	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
 	return (BRUTELOSS)
+
+/obj/item/weapon/wirecutters/advanced
+	name = "Advanced wirecutter"
+	desc = "A pair of wirecutters with a laser cut monomolecular edge."
+	icon_state = "cutters_adv"
+	item_state = "cutters_adv"
+	origin_tech = "materials=3;engineering=3"
+	toolspeed = 1.5
+
+/obj/item/weapon/wirecutters/advanced/New(loc)
+	..(loc, "green")
 
 /*
  * Welding Tool
@@ -422,6 +452,7 @@
 	max_fuel = 80
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
 	origin_tech = "engineering=3"
+	toolspeed = 1.5
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
@@ -494,3 +525,11 @@
 	materials = list(MAT_METAL=70)
 	icon_state = "crowbar_large"
 	toolspeed = 2
+
+/obj/item/weapon/crowbar/advanced
+	name = "Advanced crowbar"
+	desc = "A gyroscopically stabilized crowbar."
+	item_state = "crowbar"
+	icon_state = "crowbar_adv"
+	origin_tech = "materials=3;engineering=3"
+	toolspeed = 1.5
