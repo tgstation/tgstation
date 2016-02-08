@@ -27,7 +27,7 @@
 	var/reskinned = FALSE
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is killing \himself with \the [src.name]! It looks like \he's trying get closer to god!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/nullrod/attack_self(mob/user)
@@ -37,48 +37,28 @@
 		reskin_holy_weapon(user)
 
 /obj/item/weapon/nullrod/proc/reskin_holy_weapon(mob/M)
-	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in list(NULLROD, GODHAND, REDSTAFF, BLUESTAFF, CLAYMORE, DARKBLADE, SORD, SCYTHE, CHAINSAW, CLOWNDAGGER, WHIP, FEDORA, ARMBLADE, CARP)
+	var/list/holy_weapons_list = typesof(/obj/item/weapon/nullrod)
+	var/list/display_names = list()
+	for(var/V in holy_weapons_list)
+		var/atom/A = V
+		display_names += initial(A.name)
 
-	var/obj/item/weapon/nullrod/holy_weapon
+	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
+	if(!src || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
+		return
 
-	if(src && choice && !M.stat && in_range(M,src) && !M.restrained() && M.canmove && !reskinned)
-		switch(choice)
-			if(NULLROD)
-				M << "On second thought, the null rod suits you just fine."
-			if(GODHAND)
-				holy_weapon = new /obj/item/weapon/nullrod/godhand
-			if(REDSTAFF)
-				holy_weapon = new /obj/item/weapon/nullrod/staff
-			if(BLUESTAFF)
-				holy_weapon = new /obj/item/weapon/nullrod/staff/blue
-			if(CLAYMORE)
-				holy_weapon = new /obj/item/weapon/nullrod/claymore
-			if(DARKBLADE)
-				holy_weapon = new /obj/item/weapon/nullrod/darkblade
-			if(SORD)
-				holy_weapon = new /obj/item/weapon/nullrod/sord
-			if(SCYTHE)
-				holy_weapon = new /obj/item/weapon/nullrod/scythe
-			if(CHAINSAW)
-				holy_weapon = new /obj/item/weapon/nullrod/chainsaw
-			if(CLOWNDAGGER)
-				holy_weapon = new /obj/item/weapon/nullrod/clown
-			if(WHIP)
-				holy_weapon = new /obj/item/weapon/nullrod/whip
-			if(FEDORA)
-				holy_weapon = new /obj/item/weapon/nullrod/fedora
-			if(ARMBLADE)
-				holy_weapon = new /obj/item/weapon/nullrod/armblade
-			if(CARP)
-				holy_weapon = new /obj/item/weapon/nullrod/carp
-		feedback_set_details("chaplain_weapon","[choice]")
+	var/index = display_names.Find(choice)
+	var/A = holy_weapons_list[index]
 
-		if(holy_weapon)
-			holy_weapon.reskinned = TRUE
-			M.unEquip(src)
-			M.put_in_active_hand(holy_weapon)
-			qdel(src)
+	var/obj/item/weapon/nullrod/holy_weapon = new A
 
+	feedback_set_details("chaplain_weapon","[choice]")
+
+	if(holy_weapon)
+		holy_weapon.reskinned = TRUE
+		M.unEquip(src)
+		M.put_in_active_hand(holy_weapon)
+		qdel(src)
 
 /obj/item/weapon/nullrod/godhand
 	icon_state = "disintegrate"
@@ -95,17 +75,24 @@
 /obj/item/weapon/nullrod/staff
 	icon_state = "godstaff-red"
 	item_state = "godstaff-red"
-	name = "holy staff"
+	name = "red holy staff"
 	desc = "It has a mysterious, protective aura."
 	w_class = 5
 	force = 5
 	slot_flags = SLOT_BACK
 	block_chance = 50
+	var/shield_icon = "shield-red"
 
+/obj/item/weapon/nullrod/staff/worn_overlays(isinhands)
+    . = list()
+    if(isinhands)
+        . += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
 
 /obj/item/weapon/nullrod/staff/blue
+	name = "blue holy staff"
 	icon_state = "godstaff-blue"
 	item_state = "godstaff-blue"
+	shield_icon = "shield-old"
 
 /obj/item/weapon/nullrod/claymore
 	icon_state = "claymore"
@@ -115,23 +102,25 @@
 	w_class = 5
 	force = 20
 	slot_flags = SLOT_BACK|SLOT_BELT
-	block_chance = 20
+	block_chance = 30
 	sharpness = IS_SHARP
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/weapon/nullrod/darkblade
+
+/obj/item/weapon/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight
+	return ..()
+
+
+/obj/item/weapon/nullrod/claymore/darkblade
 	icon_state = "cultblade"
 	item_state = "cultblade"
 	name = "dark blade"
 	desc = "Spread the glory of the dark gods!"
 	slot_flags = SLOT_BELT
-	w_class = 5
-	force = 20
-	block_chance = 20
-	sharpness = IS_SHARP
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	hitsound = 'sound/hallucinations/growl1.ogg'
 
 /obj/item/weapon/nullrod/sord
 	name = "\improper SORD"
