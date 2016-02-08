@@ -1,19 +1,3 @@
-#define NULLROD "null rod"
-#define GODHAND "god hand"
-#define REDSTAFF "red staff"
-#define BLUESTAFF "blue staff"
-#define CLAYMORE "claymore"
-#define DARKBLADE "dark blade"
-#define SORD "sord"
-#define SCYTHE "scythe"
-#define CHAINSAW "chainsaw hand"
-#define CLOWNDAGGER "clown dagger"
-#define WHIP "whip"
-#define FEDORA "athiests fedora"
-#define ARMBLADE "dark blessing"
-#define CARP "carp-sie plushie"
-
-
 /obj/item/weapon/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
@@ -205,20 +189,3 @@
 	item_state = "carp_plushie"
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	hitsound = 'sound/weapons/bite.ogg'
-
-
-
-#undef NULLROD
-#undef GODHAND
-#undef REDSTAFF
-#undef BLUESTAFF
-#undef CLAYMORE
-#undef DARKBLADE
-#undef SORD
-#undef SCYTHE
-#undef CHAINSAW
-#undef CLOWNDAGGER
-#undef WHIP
-#undef FEDORA
-#undef ARMBLADE
-#undef CARP
