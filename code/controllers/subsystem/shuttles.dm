@@ -38,12 +38,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/list/orderhistory = list()
 
 	var/datum/round_event/shuttle_loan/shuttle_loan
-	var/sold_atoms = ""
-
 
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
-
 
 /datum/subsystem/shuttle/Initialize(timeofday, zlevel)
 	if (zlevel)

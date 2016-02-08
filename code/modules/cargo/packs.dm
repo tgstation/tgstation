@@ -8,6 +8,7 @@
 	var/list/contains = null
 	var/crate_name = "crate"
 	var/crate_type = /obj/structure/closet/crate
+	var/dangerous = FALSE // Should we message admins?
 
 /datum/supply_pack/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = new crate_type(T)
@@ -122,6 +123,7 @@
 	contains = list(/obj/item/weapon/storage/box/syndicate)
 	crate_name = "crate"
 	crate_type = /obj/structure/closet/crate
+	dangerous = TRUE
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Security ////////////////////////////////////////
@@ -199,7 +201,6 @@
 	                /obj/item/toy/crayon/white,
 	                /obj/item/clothing/head/det_hat)
 	crate_name = "forensics crate"
-
 
 /datum/supply_pack/security/armory
 	access = access_armory
@@ -292,6 +293,7 @@
 					/obj/item/weapon/grenade/chem_grenade/incendiary)
 	crate_name = "incendiary weapons crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+	dangerous = TRUE
 
 /datum/supply_pack/security/armory/wt550
 	name = "WT-550 Auto Rifle Crate"
@@ -481,6 +483,7 @@
 					/obj/machinery/power/emitter)
 	crate_name = "emitter crate"
 	crate_type = /obj/structure/closet/crate/secure
+	dangerous = TRUE
 
 /datum/supply_pack/engineering/engine/field_gen
 	name = "Field Generator Crate"
@@ -522,6 +525,7 @@
 	contains = list(/obj/machinery/power/supermatter_shard)
 	crate_name = "supermatter shard crate"
 	crate_type = /obj/structure/closet/crate/secure
+	dangerous = TRUE
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
@@ -619,6 +623,7 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/mutagen)
 	crate_name = "virus crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+	dangerous = TRUE
 
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
@@ -721,6 +726,7 @@
 					/obj/item/device/transfer_valve)
 	crate_name = "tank transfer valves crate crate"
 	crate_type = /obj/structure/closet/crate/secure
+	dangerous = TRUE
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////

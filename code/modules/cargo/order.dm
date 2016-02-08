@@ -19,14 +19,16 @@
 	var/id
 	var/orderer
 	var/orderer_rank
+	var/orderer_ckey
 	var/reason
 	var/datum/supply_pack/pack
 
-/datum/supply_order/New(pack, orderer, orderer_rank, reason)
+/datum/supply_order/New(pack, orderer, orderer_rank, orderer_ckey, reason)
 	id = SSshuttle.ordernum++
 	src.pack = SSshuttle.supply_packs[pack]
 	src.orderer = orderer
 	src.orderer_rank = orderer_rank
+	src.orderer_ckey = orderer_ckey
 	src.reason = reason
 
 /datum/supply_order/proc/generateRequisition(turf/T)

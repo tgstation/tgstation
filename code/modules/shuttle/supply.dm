@@ -65,40 +65,52 @@
 			continue
 		empty_turfs += T
 
+	var/value = 0
+	var/purchases = 0
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
-			continue
+			break
 		if(SO.pack.cost > SSshuttle.points)
 			continue
 
 		SSshuttle.points -= SO.pack.cost
+		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO
 
 		SO.generate(pick_n_take(empty_turfs))
+		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", "cargo")
+		if(SO.pack.dangerous)
+			message_admins("\An [SO.pack.name] ordered by [key_name_admin(SO.orderer_ckey)]) has shipped.")
+		purchases++
+
+	investigate_log("[purchases] orders in this shipment, worth [value] points. [SSshuttle.points] points left.", "cargo")
 
 /obj/docking_port/mobile/supply/proc/sell()
+	var/presale_points = SSshuttle.points
+
+	var/pointsEarned = 0
 	var/crates = 0
 	var/plasma = 0
 	var/intel = 0
 
 	var/msg = ""
-	var/pointsEarned = 0
+	var/sold_atoms = ""
 
 	for(var/atom/movable/AM in areaInstance)
 		if(AM.anchored)
 			continue
-		SSshuttle.sold_atoms += " [AM.name]"
+		sold_atoms += " [AM.name]"
 
 		if(istype(AM, /obj/structure/closet/crate))
 			crates++
-			SSshuttle.sold_atoms += ":"
+			sold_atoms += ":"
 			if(!AM.contents.len)
-				SSshuttle.sold_atoms += " (empty)"
+				sold_atoms += " (empty)."
 			else
 				var/manifest_found = FALSE
 				for(var/atom/movable/thing in AM)
-					SSshuttle.sold_atoms += " [thing.name]"
+					sold_atoms += " [thing.name],"
 					if(!manifest_found && istype(thing, /obj/item/weapon/paper/manifest))
 						var/obj/item/weapon/paper/manifest/manifest = thing
 						if(manifest.stamped && manifest.stamped.len)
@@ -195,7 +207,7 @@
 							SSshuttle.points += S.rarity // That's right, no bonus for potency.  Send a crappy sample first to "show improvement" later
 					qdel(thing)
 		qdel(AM)
-		SSshuttle.sold_atoms += "."
+		sold_atoms += "."
 
 	if(plasma > 0)
 		pointsEarned = round(plasma * SSshuttle.points_per_plasma)
@@ -213,3 +225,4 @@
 		SSshuttle.points += pointsEarned
 
 	SSshuttle.centcom_message = msg
+	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] points. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")

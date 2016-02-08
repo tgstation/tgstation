@@ -91,9 +91,9 @@
 			if(SSshuttle.supply.getDockedId() == "supply_home")
 				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
 				say("The supply shuttle has departed.")
-				investigate_log("[key_name(usr)] has sent the supply shuttle away. Points: [SSshuttle.points]. Contents: [SSshuttle.sold_atoms].", "cargo")
+				investigate_log("[key_name(usr)] sent the supply shuttle away.", "cargo")
 			else
-				investigate_log("[key_name(usr)] has called the supply shuttle. Points: [SSshuttle.points].", "cargo") // TODO: more robust logging here
+				investigate_log("[key_name(usr)] called the supply shuttle.", "cargo")
 				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
 				SSshuttle.moveShuttle("supply", "supply_home", TRUE)
 			. = TRUE
@@ -111,6 +111,7 @@
 
 			var/name = "*None Provided*"
 			var/rank = "*None Provided*"
+			var/ckey = usr.ckey
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				name = H.get_authentification_name()
@@ -126,7 +127,7 @@
 					return
 
 			var/turf/T = get_turf(src)
-			var/datum/supply_order/SO = new(id, name, rank, reason)
+			var/datum/supply_order/SO = new(id, name, rank, ckey, reason)
 			SO.generateRequisition(T)
 			if(requestonly)
 				SSshuttle.requestlist += SO
