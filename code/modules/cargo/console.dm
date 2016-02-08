@@ -21,7 +21,7 @@
 /obj/machinery/computer/cargo/emag_act(mob/living/user)
 	if(!emagged)
 		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!",
-							"<span class='notice'>You emag [src], unlocking special supplies.</span>")
+							"<span class='notice'>You adjust [src]'s routing, unlocking special supplies.</span>")
 		emagged = TRUE
 
 /obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \

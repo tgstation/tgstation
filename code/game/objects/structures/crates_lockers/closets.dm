@@ -136,7 +136,7 @@
 		L.stop_pulling()
 	else if(istype(AM, /obj/structure/closet))
 		return
-	else
+	else if(isobj(AM))
 		if(!allow_objects && !istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
 			return
 		if(!allow_dense && AM.density)
@@ -369,7 +369,7 @@
 /obj/structure/closet/emag_act(mob/user)
 	if(secure && !broken)
 		user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
-						"<span class='warning'>You emag [src], breaking the lock!</span>",
+						"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
 						"<span class='italics'>You hear a faint electrical spark.</span>")
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 		broken = 1
