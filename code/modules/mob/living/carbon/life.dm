@@ -264,6 +264,8 @@
 			if(75 to 100)
 				radiation = max(radiation-3,0)
 				adjustToxLoss(3)
+			else
+				radiation = Clamp(radiation, 0, 100)
 
 
 /mob/living/carbon/handle_chemicals_in_body()
