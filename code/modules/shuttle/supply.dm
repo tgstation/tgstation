@@ -137,7 +137,7 @@
 							else
 								pointsEarned = round(SSshuttle.points_per_crate - manifest.order_cost)
 								SSshuttle.points += pointsEarned
-								msg += "[pointsEarned]: Station errorsly denied package #[manifest.order_id]."
+								msg += "[pointsEarned]: Station erroneously denied package #[manifest.order_id]."
 
 					// Sell plasma
 					if(istype(thing, /obj/item/stack/sheet/mineral/plasma))

@@ -203,10 +203,10 @@
 	else ..()
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user)
-	if(opened)
-		..()
-	else
+	if(locked)
 		boom(user)
+	else
+		..()
 
 /obj/structure/closet/crate/secure/loot/proc/boom(mob/user)
 	user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
