@@ -42,8 +42,8 @@
 	M.hallucination = 0
 	M.setBrainLoss(0)
 	M.disabilities = 0
-	M.eye_blurry = 0
-	M.eye_blind = 0
+	M.set_blurriness(0)
+	M.set_blindness(0)
 	M.SetWeakened(0)
 	M.SetStunned(0)
 	M.SetParalysis(0)
@@ -53,7 +53,7 @@
 	M.stuttering = 0
 	M.slurring = 0
 	M.confused = 0
-	M.sleeping = 0
+	M.SetSleeping(0)
 	M.jitteriness = 0
 	for(var/datum/disease/D in M.viruses)
 		if(D.severity == NONTHREAT)
@@ -107,13 +107,25 @@
 	color = "#0000C8"
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
-	if(M.stat != DEAD && M.bodytemperature < 270)
-		M.adjustCloneLoss(-4)
-		M.adjustOxyLoss(-10)
-		M.adjustBruteLoss(-3)
-		M.adjustFireLoss(-3)
-		M.adjustToxLoss(-3)
+	if(M.stat != DEAD && M.bodytemperature < T0C) // Low temperatures are required to take effect.
 		M.status_flags &= ~DISFIGURED
+		M.adjustCloneLoss(-1)
+		M.adjustOxyLoss(-5)
+		M.adjustBruteLoss(-1)
+		M.adjustFireLoss(-1)
+		M.adjustToxLoss(-1)
+	if(M.stat != DEAD && M.bodytemperature < 225) // At lower temperatures (cryo) the full effect is boosted
+		M.adjustCloneLoss(-1)
+		M.adjustOxyLoss(-2)
+		M.adjustBruteLoss(-2)
+		M.adjustFireLoss(-2)
+		M.adjustToxLoss(-2)
+	if(M.stat != DEAD && M.bodytemperature < 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
+		M.adjustCloneLoss(-5)
+		M.adjustOxyLoss(-2)
+		M.adjustBruteLoss(-2)
+		M.adjustFireLoss(-2)
+		M.adjustToxLoss(-2)
 	..()
 	return
 
@@ -527,9 +539,8 @@
 	if(current_cycle >= 12 && current_cycle < 24)
 		M.drowsyness += 1
 	else if(current_cycle >= 24)
-		M.sleeping += 1
+		M.AdjustSleeping(1)
 	..()
-	return
 
 /datum/reagent/medicine/morphine/overdose_process(mob/living/M)
 	if(prob(33))
@@ -539,7 +550,6 @@
 		M.Dizzy(2)
 		M.Jitter(2)
 	..()
-	return
 
 /datum/reagent/medicine/morphine/addiction_act_stage1(mob/living/M)
 	if(prob(33))
@@ -549,7 +559,7 @@
 		M.Dizzy(2)
 		M.Jitter(2)
 	..()
-	return
+
 /datum/reagent/medicine/morphine/addiction_act_stage2(mob/living/M)
 	if(prob(33))
 		var/obj/item/I = M.get_active_hand()
@@ -593,21 +603,20 @@
 	if(M.disabilities & BLIND)
 		if(prob(20))
 			M << "<span class='warning'>Your vision slowly returns...</span>"
-			M.disabilities &= ~BLIND
-			M.disabilities &= NEARSIGHT
-			M.eye_blurry = 35
+			M.cure_blind()
+			M.cure_nearsighted()
+			M.set_blurriness(35)
 
 	else if(M.disabilities & NEARSIGHT)
 		M << "<span class='warning'>The blackness in your peripheral vision fades.</span>"
-		M.disabilities &= ~NEARSIGHT
-		M.eye_blurry = 10
+		M.cure_nearsighted()
+		M.set_blurriness(10)
 
 	else if(M.eye_blind || M.eye_blurry)
-		M.eye_blind = 0
-		M.eye_blurry = 0
+		M.set_blindness(0)
+		M.set_blurriness(0)
 	else if(M.eye_stat > 0)
-		M.eye_stat -= 1
-		M.eye_stat = Clamp(M.eye_stat, 0, INFINITY)
+		M.adjust_eye_stat(-1)
 	..()
 	return
 
@@ -698,13 +707,15 @@
 				spawn (100) //so the ghost has time to re-enter
 					return
 			else
-				M.stat = 1
 				M.adjustOxyLoss(-20)
 				M.adjustToxLoss(-20)
-				dead_mob_list -= M
-				living_mob_list |= list(M)
-				M.emote("gasp")
-				add_logs(M, M, "revived", src)
+				if(M.health > config.health_threshold_dead && M.getorgan(/obj/item/organ/internal/brain))
+					M.stat = UNCONSCIOUS
+					M.set_blindness(1)
+					dead_mob_list -= M
+					living_mob_list |= list(M)
+					M.emote("gasp")
+					add_logs(M, M, "revived", src)
 	..()
 	return
 
@@ -827,7 +838,7 @@
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/M)
 	if(M.sleeping)
-		M.sleeping--
+		M.AdjustSleeping(-1)
 	M.reagents.remove_reagent("sugar", 3)
 	..()
 	return

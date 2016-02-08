@@ -10,24 +10,18 @@
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
-	var/obj/screen/flash = null
-	var/obj/screen/blind = null
+
 	var/obj/screen/hands = null
-	var/obj/screen/pullin = null
-	var/obj/screen/internals = null
-	var/obj/screen/i_select = null
-	var/obj/screen/m_select = null
-	var/obj/screen/healths = null
-	var/obj/screen/throw_icon = null
-	var/obj/screen/damageoverlay = null
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
 	The current method unnecessarily clusters up the variable list, especially for humans (although rearranging won't really clean it up a lot but the difference will be noticable for other mobs).
 	I'll make some notes on where certain variable defines should probably go.
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
-	var/obj/screen/zone_sel/zone_sel = null
-	var/obj/screen/healthdoll = null
+	var/zone_selected = null
+
+	var/macro_default = "default"
+	var/macro_hotkeys = "hotkeys"
 
 	var/damageoverlaytemp = 0
 	var/computer_id = null
@@ -46,7 +40,7 @@
 	var/eye_blurry = 0		//Carbon
 	var/ear_deaf = 0		//Carbon
 	var/ear_damage = 0		//Carbon
-	var/stuttering = null	//Carbon
+	var/stuttering = 0		//Carbon
 	var/slurring = 0		//Carbon
 	var/real_name = null
 	var/druggy = 0			//Carbon
@@ -56,7 +50,7 @@
 	var/lying = 0
 	var/lying_prev = 0
 	var/canmove = 1
-	var/eye_stat = null//Living, potentially Carbon
+	var/eye_stat = 0//Living, potentially Carbon
 	var/lastpuke = 0
 
 	var/name_archive //For admin things like possession
@@ -142,11 +136,9 @@
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
 
-	var/remote_view = 0 // Set to 1 to prevent view resets on Life
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 
 	var/list/permanent_huds = list()
-	var/permanent_sight_flags = 0
 
 	var/resize = 1 //Badminnery resize

@@ -124,8 +124,7 @@
 	MYPDA.ownjob = "Crew"
 	MYPDA.name = "PDA-[real_name] ([myjob.title])"
 	equip_to_slot_or_del(MYPDA, slot_belt)
-	zone_sel = new /obj/screen/zone_sel()
-	zone_sel.selecting = "chest"
+	zone_selected = "chest"
 	if(prob(10)) //my x is augmented
 		//arms
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
@@ -556,7 +555,7 @@
 	if(canmove)
 		if(prob(attitude) && (graytide || (TRAITS & TRAIT_MEAN)) || retal)
 			a_intent = "harm"
-			zone_sel.selecting = pick("chest","r_leg","l_leg","r_arm","l_arm","head")
+			zone_selected = pick("chest","r_leg","l_leg","r_arm","l_arm","head")
 			doing |= FIGHTING
 			if(retal)
 				TARGET = retal_target
@@ -636,26 +635,23 @@
 			nearby += M
 
 //END OF MODULES
-/mob/living/carbon/human/interactive/angry
-	New()
-		TRAITS |= TRAIT_ROBUST
-		TRAITS |= TRAIT_MEAN
-		faction = list("bot_angry")
-		..()
+/mob/living/carbon/human/interactive/angry/New()
+	TRAITS |= TRAIT_ROBUST
+	TRAITS |= TRAIT_MEAN
+	faction = list("bot_angry")
+	..()
 
-/mob/living/carbon/human/interactive/friendly
-	New()
-		TRAITS |= TRAIT_FRIENDLY
-		TRAITS |= TRAIT_UNROBUST
-		faction = list("bot_friendly")
-		..()
+/mob/living/carbon/human/interactive/friendly/New()
+	TRAITS |= TRAIT_FRIENDLY
+	TRAITS |= TRAIT_UNROBUST
+	faction = list("bot_friendly")
+	..()
 
-/mob/living/carbon/human/interactive/greytide
-	New()
-		TRAITS |= TRAIT_ROBUST
-		TRAITS |= TRAIT_MEAN
-		TRAITS |= TRAIT_THIEVING
-		TRAITS |= TRAIT_DUMB
-		faction = list("bot_grey")
-		graytide = 1
-		..()
+/mob/living/carbon/human/interactive/greytide/New()
+	TRAITS |= TRAIT_ROBUST
+	TRAITS |= TRAIT_MEAN
+	TRAITS |= TRAIT_THIEVING
+	TRAITS |= TRAIT_DUMB
+	faction = list("bot_grey")
+	graytide = 1
+	..()

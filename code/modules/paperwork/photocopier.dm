@@ -268,11 +268,6 @@
 			user << "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>"
 			anchored = !anchored
 
-	else if(istype(O, /obj/item/weapon/grab)) //For ass-copying.
-		var/obj/item/weapon/grab/G = O
-		if(ismob(G.affecting) && G.affecting != ass)
-			MouseDrop_T(G.affecting, user)
-
 /obj/machinery/photocopier/ex_act(severity, target)
 	switch(severity)
 		if(1)

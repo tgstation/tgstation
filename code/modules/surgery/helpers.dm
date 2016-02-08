@@ -2,7 +2,7 @@
 	if(istype(M))
 		var/mob/living/carbon/human/H
 		var/obj/item/organ/limb/affecting
-		var/selected_zone = user.zone_sel.selecting
+		var/selected_zone = user.zone_selected
 
 		if(istype(M, /mob/living/carbon/human))
 			H = M

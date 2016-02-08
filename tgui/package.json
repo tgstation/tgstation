@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "autoprefixer": "6.3.1",
-    "babel-core": "6.4.0",
+    "babel-core": "6.4.5",
     "babel-plugin-external-helpers": "6.4.0",
     "babel-polyfill": "6.3.14",
     "babel-preset-es2015": "6.3.13",
@@ -14,8 +14,8 @@
     "browserify": "13.0.0",
     "bulkify": "1.1.1",
     "bundle-collapser": "1.2.1",
-    "dom4": "1.6.0",
-    "es3ify": "0.1.4",
+    "dom4": "1.7.0",
+    "es3ify": "0.2.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-bytediff": "1.0.0",
     "gulp-cssnano": "2.1.0",
@@ -24,11 +24,13 @@
     "gulp-postcss": "6.0.1",
     "gulp-size": "2.0.0",
     "gulp-sourcemaps": "1.6.0",
-    "gulp-stylus": "2.2.0",
+    "gulp-stylus": "2.3.0",
     "gulp-uglify": "1.5.1",
+    "gulplog": "1.0.0",
     "html5shiv": "3.7.3",
-    "ie8": "0.3.0",
+    "ie8": "0.3.2",
     "minimist": "1.2.0",
+    "paths-js": "0.4.2",
     "pleeease-filters": "2.0.0",
     "postcss": "5.0.14",
     "postcss-color-rgba-fallback": "2.2.0",
@@ -36,7 +38,7 @@
     "postcss-font-weights": "2.0.1",
     "postcss-opacity": "3.0.0",
     "ractive": "0.7.3",
-    "ractive-componentify": "0.2.2",
+    "ractive-componentify": "0.2.3",
     "ractive-events-keys": "0.2.1",
     "ractive-transitions-fade": "0.3.1",
     "require-globify": "1.3.0",
@@ -44,7 +46,7 @@
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0",
     "watchify": "3.7.0",
-    "webfontloader": "1.6.20"
+    "webfontloader": "1.6.21"
   },
   "browser": {
     "ractive": "ractive/ractive-legacy.runtime"

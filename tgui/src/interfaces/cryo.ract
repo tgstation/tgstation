@@ -1,21 +1,22 @@
 <script>
-component.exports = {
-  computed: {
-    cellTemperatureState () {
-        const temp = this.get('data.cellTemperature')
-        if (temp < 225) return 'good'
-        else if (temp < 273.15) return 'average'
-        else return 'bad'
+  component.exports = {
+    data: {
+      temperatureStatus (temp) {
+          if (temp < 225) return 'good'
+          else if (temp < 273.15) return 'average'
+          else return 'bad'
+      }
     },
-    occupantStatState () {
-      switch (this.get('data.occupant.stat')) {
-        case 0: return 'good'
-        case 1: return 'average'
-        default: return 'bad'
+    computed: {
+      occupantStatState () {
+        switch (this.get('data.occupant.stat')) {
+          case 0: return 'good'
+          case 1: return 'average'
+          default: return 'bad'
+        }
       }
     }
   }
-}
 </script>
 
 <ui-display title='Occupant'>
@@ -27,7 +28,7 @@ component.exports = {
       <span class='{{occupantStatState}}'>{{data.occupant.stat == 0 ? "Conscious" : data.occupant.stat == 1 ? "Unconcious" : "Dead"}}</span>
   	</ui-section>
   	<ui-section label='Temperature'>
-  	  <span>{{Math.round(adata.occupant.bodyTemperature)}} K</span>
+  	  <span class='{{temperatureStatus(adata.occupant.bodyTemperature)}}'>{{Math.round(adata.occupant.bodyTemperature)}} K</span>
   	</ui-section>
     <ui-section label='Health'>
       <ui-bar min='{{data.occupant.minHealth}}' max='{{data.occupant.maxHealth}}' value='{{data.occupant.health}}'
@@ -48,7 +49,7 @@ component.exports = {
       action='power'>{{data.isOperating ? "On" : "Off"}}</ui-button>
   </ui-section>
   <ui-section label='Temperature'>
-		<span class='{{cellTemperatureState}}'>{{Math.round(adata.cellTemperature)}} K</span>
+		<span class='{{temperatureStatus(adata.cellTemperature)}}'>{{Math.round(adata.cellTemperature)}} K</span>
 	</ui-section>
 	<ui-section label='Door'>
     <ui-button icon='{{data.isOpen ? "unlock" : "lock"}}' action='door'>{{data.isOpen ? "Open" : "Closed"}}</ui-button>

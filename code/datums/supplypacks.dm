@@ -54,7 +54,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/New()
 	manifest += "<ul>"
 	for(var/path in contains)
-		if(!path)	continue
+		if(!path)
+			continue
 		var/atom/movable/AM = path
 		manifest += "<li>[initial(AM.name)]</li>"
 	manifest += "</ul>"
@@ -90,7 +91,6 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 35
 	containertype = /obj/structure/closet/crate/internals
 	containername = "emergency crate"
-	group = supply_emergency
 
 /datum/supply_packs/emergency/internals
 	name = "Internals Crate"
@@ -720,21 +720,21 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	access = access_robotics
 
 /datum/supply_packs/science/robotics/mecha_ripley
-	name = "Circuit Crate (\"Ripley\" APLU)"
+	name = "Circuit Crate (Ripley APLU)"
 	contains = list(/obj/item/weapon/book/manual/ripley_build_and_repair,
 					/obj/item/weapon/circuitboard/mecha/ripley/main, //TEMPORARY due to lack of circuitboard printer
 					/obj/item/weapon/circuitboard/mecha/ripley/peripherals) //TEMPORARY due to lack of circuitboard printer
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure
-	containername = "\improper APLU \"Ripley\" circuit crate"
+	containername = "\improper APLU Ripley circuit crate"
 
 /datum/supply_packs/science/robotics/mecha_odysseus
-	name = "Circuit Crate (\"Odysseus\")"
+	name = "Circuit Crate (Odysseus)"
 	contains = list(/obj/item/weapon/circuitboard/mecha/odysseus/peripherals, //TEMPORARY due to lack of circuitboard printer
 					/obj/item/weapon/circuitboard/mecha/odysseus/main) //TEMPORARY due to lack of circuitboard printer
 	cost = 25
 	containertype = /obj/structure/closet/crate/secure
-	containername = "\improper \"Odysseus\" circuit crate"
+	containername = "\improper Odysseus circuit crate"
 
 /datum/supply_packs/science/plasma
 	name = "Plasma Assembly Crate"
@@ -924,6 +924,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/seeds/tomatoseed,
 					/obj/item/seeds/soyaseed,
 					/obj/item/seeds/wheatseed,
+					/obj/item/seeds/riceseed,
 					/obj/item/seeds/carrotseed,
 					/obj/item/seeds/sunflowerseed,
 					/obj/item/seeds/chantermycelium,

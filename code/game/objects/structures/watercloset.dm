@@ -381,7 +381,7 @@
 	if(busy)
 		user << "<span class='notice'>Someone's already washing here.</span>"
 		return
-	var/selected_area = parse_zone(user.zone_sel.selecting)
+	var/selected_area = parse_zone(user.zone_selected)
 	var/washing_face = 0
 	if(selected_area in list("head", "mouth", "eyes"))
 		washing_face = 1
@@ -403,8 +403,7 @@
 			H.lip_style = null //Washes off lipstick
 			H.lip_color = initial(H.lip_color)
 			H.regenerate_icons()
-		user.drowsyness -= rand(2,3) //Washing your face wakes you up if you're falling asleep
-		user.drowsyness = Clamp(user.drowsyness, 0, INFINITY)
+		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
 	else
 		user.clean_blood()
 

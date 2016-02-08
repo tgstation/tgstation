@@ -45,13 +45,10 @@
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/smes(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	for(var/i in 1 to 5)
+		component_parts += new /obj/item/weapon/stock_parts/cell/high/empty(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 5)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	RefreshParts()
 	spawn(5)
 		dir_loop:
@@ -75,13 +72,13 @@
 	var/C
 	for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
 		IO += CP.rating
-	input_level_max = 200000 * IO
-	output_level_max = 200000 * IO
+	input_level_max = initial(input_level_max) * IO
+	output_level_max = initial(output_level_max) * IO
 	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
 		MC += PC.maxcharge
 		C += PC.charge
 	capacity = MC / (15000) * 1e6
-	if(!charge)
+	if(!initial(charge) && !charge)
 		charge = C / 15000 * 1e6
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
@@ -197,7 +194,8 @@
 
 /obj/machinery/power/smes/update_icon()
 	overlays.Cut()
-	if(stat & BROKEN)	return
+	if(stat & BROKEN)
+		return
 
 	if(panel_open)
 		return
@@ -239,7 +237,8 @@
 
 /obj/machinery/power/smes/process()
 
-	if(stat & BROKEN)	return
+	if(stat & BROKEN)
+		return
 
 	//store machine state to see if we need to update the icon overlays
 	var/last_disp = chargedisplay()
@@ -334,7 +333,7 @@
 		ui = new(user, src, ui_key, "smes", name, 340, 440, master_ui, state)
 		ui.open()
 
-/obj/machinery/power/smes/get_ui_data()
+/obj/machinery/power/smes/ui_data()
 	var/list/data = list(
 		"capacityPercent" = round(100*charge/capacity, 0.1),
 		"capacity" = capacity,
@@ -355,51 +354,66 @@
 	return data
 
 /obj/machinery/power/smes/ui_act(action, params)
+	if(..())
+		return
 	switch(action)
 		if("tryinput")
 			input_attempt = !input_attempt
 			log_smes(usr.ckey)
 			update_icon()
+			. = TRUE
 		if("tryoutput")
 			output_attempt = !output_attempt
 			log_smes(usr.ckey)
 			update_icon()
+			. = TRUE
 		if("input")
-			switch(params["input"])
-				if("custom")
-					var/custom = input(usr, "What rate would you like this SMES to attempt to charge at? Max is [input_level_max].") as null|num
-					if(custom)
-						input_level = custom
-				if("min")
-					input_level = 0
-				if("max")
-					input_level = input_level_max
-				if("plus")
-					input_level += 10000
-				if("minus")
-					input_level -= 10000
-			input_level = Clamp(input_level, 0, input_level_max)
-			log_smes(usr.ckey)
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "input")
+				target = input("New input target (0-[input_level_max]):", name, input_level) as num|null
+				if(!isnull(target) && !..())
+					. = TRUE
+			else if(target == "min")
+				target = 0
+				. = TRUE
+			else if(target == "max")
+				target = input_level_max
+				. = TRUE
+			else if(adjust)
+				target = input_level + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				input_level = Clamp(target, 0, input_level_max)
+				log_smes(usr.ckey)
 		if("output")
-			switch(params["output"])
-				if("custom")
-					var/custom = input(usr, "What rate would you like this SMES to attempt to output at? Max is [output_level_max].") as null|num
-					if(custom)
-						output_level = custom
-				if("min")
-					output_level = 0
-				if("max")
-					output_level = output_level_max
-				if("plus")
-					output_level += 10000
-				if("minus")
-					output_level -= 10000
-			output_level = Clamp(output_level, 0, output_level_max)
-			log_smes(usr.ckey)
-	return 1
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "input")
+				target = input("New output target (0-[output_level_max]):", name, output_level) as num|null
+				if(!isnull(target) && !..())
+					. = TRUE
+			else if(target == "min")
+				target = 0
+				. = TRUE
+			else if(target == "max")
+				target = output_level_max
+				. = TRUE
+			else if(adjust)
+				target = output_level + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				output_level = Clamp(target, 0, output_level_max)
+				log_smes(usr.ckey)
 
 /obj/machinery/power/smes/proc/log_smes(user = "")
-	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]","singulo")
+	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]", "singulo")
 
 
 /obj/machinery/power/smes/emp_act(severity)
@@ -422,10 +436,11 @@
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power."
-	process()
-		capacity = INFINITY
-		charge = INFINITY
-		..()
+
+/obj/machinery/power/smes/magical/process()
+	capacity = INFINITY
+	charge = INFINITY
+	..()
 
 
 #undef SMESRATE

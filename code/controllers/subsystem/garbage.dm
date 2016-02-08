@@ -22,7 +22,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	var/list/queue = list() 	// list of refID's of things that should be garbage collected
 								// refID's are associated with the time at which they time out and need to be manually del()
 								// we do this so we aren't constantly locating them and preventing them from being gc'd
-
+	
+	var/list/tobequeued = list()	//We store the references of things to be added to the queue seperately so we can spread out GC overhead over a few ticks
 
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
@@ -52,12 +53,23 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	..(msg)
 
 /datum/subsystem/garbage_collector/fire()
+	var/time_to_stop = world.timeofday + max_run_time
+	HandleToBeQueued(time_to_stop)
+	HandleQueue(time_to_stop)
+	
+//If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
+//Don't attempt to optimize, not worth the effort.
+/datum/subsystem/garbage_collector/proc/HandleToBeQueued(time_to_stop)
+	while(tobequeued.len && world.timeofday < time_to_stop)
+		var/ref = tobequeued[1]
+		Queue(ref)
+		tobequeued.Cut(1, 2)
+
+/datum/subsystem/garbage_collector/proc/HandleQueue(time_to_stop)
 	delslasttick = 0
 	gcedlasttick = 0
-	var/time_to_stop = world.timeofday + max_run_time
 	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
-
-
+	
 	while(queue.len && world.timeofday < time_to_stop)
 		var/refID = queue[1]
 		if (!refID)
@@ -85,15 +97,25 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				++totalgcs
 		queue.Cut(1, 2)
 
-
-/datum/subsystem/garbage_collector/proc/Queue(datum/A, harddel = 0)
-	if (!istype(A) || !isnull(A.gc_destroyed))
+/datum/subsystem/garbage_collector/proc/QueueForQueuing(datum/A)
+ 	if (!istype(A) || !isnull(A.gc_destroyed))
 		return
-	A.gc_destroyed = world.time
-	queue -= "\ref[A]" // Removing any previous references that were GC'd so that the current object will be at the end of the list.
-	queue["\ref[A]"] = world.time
+ 	tobequeued += A
 
-/datum/subsystem/garbage_collector/proc/HardQueue(datum/A, harddel = 0)
+/datum/subsystem/garbage_collector/proc/Queue(datum/A)
+	if (!istype(A) || !isnull(A.gc_destroyed))
+		return 
+	var/gctime = world.time
+	var/refid = "\ref[A]"
+	
+	A.gc_destroyed = gctime
+	
+	if (queue[refid])
+		queue -= "\ref[A]" // Removing any previous references that were GC'd so that the current object will be at the end of the list.
+	
+	queue[refid] = gctime
+
+/datum/subsystem/garbage_collector/proc/HardQueue(datum/A)
 	if (!istype(A) || !isnull(A.gc_destroyed))
 		return
 	A.gc_destroyed = world.time
@@ -103,50 +125,49 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
-/proc/qdel(var/datum/A)
-	if (!A)
+/proc/qdel(datum/D)
+	if(!D)
 		return
 #ifdef TESTING
 	SSgarbage.qdel_list += "[A.type]"
 #endif
-	if (!istype(A))
-		del(A)
-	else if (isnull(A.gc_destroyed))
-		// Let our friend know they're about to get fucked up.
-		var/hint = A.Destroy()
-		if (!A)
+	if(!istype(D))
+		del(D)
+	else if(isnull(D.gc_destroyed))
+		var/hint = D.Destroy() // Let our friend know they're about to get fucked up.
+		if(!D)
 			return
-		switch (hint)
+		switch(hint)
 			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
-				SSgarbage.Queue(A)
+				SSgarbage.QueueForQueuing(D)
 			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
 				return
 			if (QDEL_HINT_IWILLGC)		//functionally the same as the above. qdel should assume the object will gc on its own, and not check it.
 				return
 			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete using a hard reference to save time from the locate()
-				SSgarbage.HardQueue(A)
+				SSgarbage.HardQueue(D)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
-				del(A)
+				del(D)
 			if (QDEL_HINT_PUTINPOOL)	//qdel will put this object in the pool.
-				PlaceInPool(A,0)
+				PlaceInPool(D, 0)
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
-				SSgarbage.Queue(A)
+				SSgarbage.QueueForQueuing(D)
 				#ifdef TESTING
 				A.find_references()
 				#endif
 			else
-				if(!("[A.type]" in SSgarbage.noqdelhint))
-					SSgarbage.noqdelhint += "[A.type]"
-					testing("WARNING: [A.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
-				SSgarbage.Queue(A)
+				if(!("[D.type]" in SSgarbage.noqdelhint))
+					SSgarbage.noqdelhint += "[D.type]"
+					testing("WARNING: [D.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
+				SSgarbage.QueueForQueuing(D)
 
 // Returns 1 if the object has been queued for deletion.
-/proc/qdeleted(var/datum/A)
-	if (!istype(A))
-		return 0
-	if (A.gc_destroyed)
-		return 1
-	return 0
+/proc/qdeleted(datum/D)
+	if(!istype(D))
+		return FALSE
+	if(D.gc_destroyed)
+		return TRUE
+	return FALSE
 
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.

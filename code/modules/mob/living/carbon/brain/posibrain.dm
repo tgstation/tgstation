@@ -70,7 +70,7 @@ var/global/posibrain_notif_cooldown = 0
 			brainmob.dna = new /datum/dna(brainmob)
 		C.dna.copy_dna(brainmob.dna)
 	brainmob.timeofhostdeath = C.timeofdeath
-	brainmob.stat = 0
+	brainmob.stat = CONSCIOUS
 	if(brainmob.mind)
 		brainmob.mind.assigned_role = "Positronic Brain"
 	if(C.mind)
@@ -109,7 +109,8 @@ var/global/posibrain_notif_cooldown = 0
 
 	set src in oview()
 
-	if(!usr || !src)	return
+	if(!usr || !src)
+		return
 	if( (usr.disabilities & BLIND || usr.stat) && !istype(usr,/mob/dead/observer) )
 		usr << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
@@ -120,9 +121,12 @@ var/global/posibrain_notif_cooldown = 0
 	if(brainmob && brainmob.key)
 		switch(brainmob.stat)
 			if(CONSCIOUS)
-				if(!src.brainmob.client)	msg += "It appears to be in stand-by mode.\n" //afk
-			if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
-			if(DEAD)			msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+				if(!src.brainmob.client)
+					msg += "It appears to be in stand-by mode.\n" //afk
+			if(UNCONSCIOUS)
+				msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
+			if(DEAD)
+				msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
 	else
 		msg += "<span class='deadsay'>It appears to be completely inactive. The reset light is blinking.</span>\n"
 	msg += "<span class='info'>*---------*</span>"
@@ -135,8 +139,6 @@ var/global/posibrain_notif_cooldown = 0
 	brainmob.real_name = brainmob.name
 	brainmob.loc = src
 	brainmob.container = src
-	brainmob.stat = 0
-	brainmob.silent = 0
 	dead_mob_list -= brainmob
 	ping_ghosts("created")
 	..()

@@ -323,11 +323,9 @@
 		O.loc = src.loc
 	*/
 
-	if (occupant.client)
-		occupant.client.eye = occupant.client.mob
-		occupant.client.perspective = MOB_PERSPECTIVE
 	if(occupant.loc == src)
 		occupant.loc = loc
+	occupant.reset_perspective(null)
 	icon_state = "pod_0"
 	eject_wait = 0 //If it's still set somehow.
 	occupant.domutcheck() //Waiting until they're out before possible monkeyizing.

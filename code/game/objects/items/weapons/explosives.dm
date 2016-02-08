@@ -10,14 +10,13 @@
 	flags = NOBLUDGEON
 	w_class = 2
 	origin_tech = "syndicate=2"
-	var/datum/wires/explosive/c4/wires = null
 	var/timer = 10
 	var/atom/target = null
 	var/open_panel = 0
 	var/image_overlay = null
 
 /obj/item/weapon/c4/New()
-	wires = new(src)
+	wires = new /datum/wires/explosive/c4(src)
 	image_overlay = image('icons/obj/assemblies.dmi', "plastic-explosive2")
 	..()
 
@@ -55,8 +54,8 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		open_panel = !open_panel
 		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
-	else if(wires.IsInteractionTool(I))
-		wires.Interact(user)
+	else if(is_wire_tool(I))
+		wires.interact(user)
 	else
 		..()
 
@@ -70,10 +69,16 @@
 /obj/item/weapon/c4/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
 		return
-	if (ismob(AM) || istype(AM, /obj/item/weapon/storage/))
+	if (ismob(AM))
 		return
 	if(loc == AM)
 		return
+	if((istype(AM, /obj/item/weapon/storage/)) && !((istype(AM, /obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))) //If its storage but not secure storage OR a lockbox, then place it inside.
+		return
+	if((istype(AM,/obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))
+		var/obj/item/weapon/storage/secure/S = AM
+		if(!S.locked) //Literal hacks, this works for lockboxes despite incorrect type casting, because they both share the locked var. But if its unlocked, place it inside, otherwise PLANTING C4!
+			return
 
 	user << "<span class='notice'>You start planting the bomb...</span>"
 

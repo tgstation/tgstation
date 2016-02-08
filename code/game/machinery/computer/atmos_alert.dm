@@ -1,6 +1,6 @@
 /obj/machinery/computer/atmos_alert
 	name = "atmospheric alert console"
-	desc = "Used to access the station's atmospheric sensors."
+	desc = "Used to monitor the station's air alarms."
 	circuit = /obj/item/weapon/circuitboard/atmos_alert
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
@@ -25,7 +25,7 @@
 		ui = new(user, src, ui_key, "atmos_alert", name, 350, 300, master_ui, state)
 		ui.open()
 
-/obj/machinery/computer/atmos_alert/get_ui_data(mob/user)
+/obj/machinery/computer/atmos_alert/ui_data(mob/user)
 	var/list/data = list()
 
 	data["priority"] = list()
@@ -38,17 +38,20 @@
 	return data
 
 /obj/machinery/computer/atmos_alert/ui_act(action, params)
+	if(..())
+		return
 	switch(action)
 		if("clear")
 			var/zone = params["zone"]
 			if(zone in priority_alarms)
-				usr << "Priority Alarm for [zone] cleared."
+				usr << "Priority alarm for [zone] cleared."
 				priority_alarms -= zone
+				. = TRUE
 			if(zone in minor_alarms)
-				usr << "Minor Alarm for [zone] cleared."
+				usr << "Minor alarm for [zone] cleared."
 				minor_alarms -= zone
+				. = TRUE
 	update_icon()
-	return 1
 
 /obj/machinery/computer/atmos_alert/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, receive_frequency)
@@ -65,9 +68,9 @@
 
 	minor_alarms -= zone
 	priority_alarms -= zone
-	if(severity=="severe")
+	if(severity == "severe")
 		priority_alarms += zone
-	else if (severity=="minor")
+	else if (severity == "minor")
 		minor_alarms += zone
 	update_icon()
 	return

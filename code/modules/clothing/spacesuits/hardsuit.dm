@@ -25,8 +25,10 @@
 	icon_state = "[basestate][on]-[item_color]"
 	user.update_inv_head()	//so our mob-overlays update
 
-	if(on)	user.AddLuminosity(brightness_on)
-	else	user.AddLuminosity(-brightness_on)
+	if(on)
+		user.AddLuminosity(brightness_on)
+	else
+		user.AddLuminosity(-brightness_on)
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/pickup(mob/user)
@@ -68,7 +70,7 @@
 	icon_state = "hardsuit-engineering"
 	item_state = "eng_hardsuit"
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/t_scanner, /obj/item/weapon/rcd, /obj/item/weapon/pipe_dispenser)
 	siemens_coefficient = 0
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
 	action_button_name = "Toggle Helmet"
@@ -514,6 +516,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
 	armor = list(melee = 0, bullet = 30, laser = 30, energy = 30, bomb = 50, bio = 100, rad = 100)
 	slowdown = 0
+	max_charges = 5
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
 	name = "red shielded hardsuit"
@@ -521,6 +524,8 @@
 	item_state = "ert_security"
 	item_color = "ert_security"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/red
+	shield_state = "shield-red"
+	shield_on = "shield-red"
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 	name = "blue shielded hardsuit"

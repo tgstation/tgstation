@@ -72,10 +72,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	else
 		U.purchase_log += "<big>\icon[A]</big>"
 
-	if(ishuman(user))
+	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
-		H.put_in_any_hand_if_possible(A)
-
+		if(H.put_in_hands(A))
+			H << "[A] materializes into your hands!"
+		else
+			H << "\The [A] materializes onto the floor."
 	return 1
 
 // Nuclear Operative (Special Offers)
@@ -188,9 +190,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
-			This deadly weapon has a massive 50-round magazine of devastating 7.62x51mm ammunition."
+			This deadly weapon has a massive 50-round magazine of devastating 5.56x45mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
-	cost = 23
+	cost = 18
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -200,6 +202,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/gun/projectile/sniper_rifle/syndicate
 	cost = 16
 	surplus = 25
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/dangerous/bolt_action
+	name = "Surplus Rifle"
+	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
+	item = /obj/item/weapon/gun/projectile/shotgun/boltaction
+	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/crossbow
@@ -358,6 +367,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
 
+/datum/uplink_item/ammo/bolt_action
+	name = "Surplus Rifle Clip"
+	desc = "A stripper clip used to quickly load bolt action rifles. Contains 5 rounds."
+	item = 	/obj/item/ammo_box/a762
+	cost = 1
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/ammo/revolver
 	name = ".357 Speed Loader"
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
@@ -378,14 +394,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "12g Slug Drum"
 	desc = "An additional 8-round slug magazine for use with the Bulldog shotgun. \
 			Now 8 times less likely to shoot your pals."
-	item = /obj/item/ammo_box/magazine/m12g
+	cost = 3
+	item = /obj/item/ammo_box/magazine/m12g/slug
 
-/datum/uplink_item/ammo/shotgun/slug
-	name = "12 Stun Slug Drum"
+/datum/uplink_item/ammo/shotgun/stun
+	name = "12g Stun Slug Drum"
 	desc = "An alternative 8-round stun slug magazine for use with the Bulldog shotgun. \
 			Saying that they're completely non-lethal would be lying."
-	item = /obj/item/ammo_box/magazine/m12g/stun
-	cost = 3
+	item = /obj/item/ammo_box/magazine/m12g
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/dragon
@@ -393,6 +409,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
 			'I'm a fire starter, twisted fire starter!'"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/shotgun/breach
+	name = "12g Breaching Shells"
+	desc = "An economic variant of the CMC meteorshot slugs, not as effective for knocking \
+			down targets, but still great for blasting airlocks off their frames."
+	item = /obj/item/ammo_box/magazine/m12g/breach
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/bag
@@ -438,34 +461,34 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun/basic
-	name = "7.62x51mm Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use with the L6 SAW. \
+	name = "5.56x45mm Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use with the L6 SAW. \
 			By the time you need to use this, you'll already be on a pile of corpses."
-	item = /obj/item/ammo_box/magazine/m762
+	item = /obj/item/ammo_box/magazine/mm556x45
 
 /datum/uplink_item/ammo/machinegun/bleeding
-	name = "7.62x51mm (Bleeding) Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW; equipped with special properties \
+	name = "5.56x45mm (Bleeding) Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with special properties \
 			to induce internal bleeding on targets."
-	item = /obj/item/ammo_box/magazine/m762/bleeding
+	item = /obj/item/ammo_box/magazine/mm556x45/bleeding
 
 /datum/uplink_item/ammo/machinegun/hollow
-	name = "7.62x51mm (Hollow-Point) Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
+	name = "5.56x45mm (Hollow-Point) Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
 			with the unarmored masses of crew."
-	item = /obj/item/ammo_box/magazine/m762/hollow
+	item = /obj/item/ammo_box/magazine/mm556x45/hollow
 
 /datum/uplink_item/ammo/machinegun/ap
-	name = "7.62x51mm (Armor Penetrating) Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW; equipped with special properties \
+	name = "5.56x45mm (Armor Penetrating) Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with special properties \
 			to puncture even the most durable armor."
-	item = /obj/item/ammo_box/magazine/m762/ap
+	item = /obj/item/ammo_box/magazine/mm556x45/ap
 
 /datum/uplink_item/ammo/machinegun/incen
-	name = "7.62x51mm (Incendiary) Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW; tipped with a special flammable \
+	name = "5.56x45mm (Incendiary) Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; tipped with a special flammable \
 			mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
-	item = /obj/item/ammo_box/magazine/m762/incen
+	item = /obj/item/ammo_box/magazine/mm556x45/incen
 
 /datum/uplink_item/ammo/sniper
 	cost = 4
@@ -560,16 +583,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 1
 	surplus = 50
 
-/datum/uplink_item/stealthy_weapons/traitor_virus_kit
-	name = "Virus Kit"
-	desc = "An active fungal pathogen in a sterile, compact box. Comes with one Bio Virus Antidote Kit (BVAK) \
-			autoinjector for rapid application on up to two targets each, a syringe, and a bottle containing \
-			the BVAK solution."
-	item = /obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
-	cost = 20
-	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear)
-
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
@@ -604,9 +617,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/stealthy_weapons/pizza_bomb
 	name = "Pizza Bomb"
-	desc = "A pizza box with a bomb taped inside it. The timer needs to be set by opening the box; afterwards, \
-			opening the box again will trigger the detonation."
-	item = /obj/item/device/pizza_bomb
+	desc = "A pizza box with a bomb cunningly attached to the lid. The timer needs to be set by opening the box; afterwards, \
+			opening the box again will trigger the detonation after the timer has elapsed. Comes with free pizza, for you or your target!"
+	item = /obj/item/pizzabox/bomb
 	cost = 6
 	surplus = 8
 
@@ -616,6 +629,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			your hand before use so it knows not to kill you."
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 1
+
+/datum/uplink_item/stealthy_weapons/soap_clusterbang
+	name = "Slipocalypse Clusterbang"
+	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
+	item = /obj/item/weapon/grenade/clusterbuster/soap
+	cost = 6
 
 /datum/uplink_item/stealthy_weapons/door_charge
 	name = "Explosive Airlock Charge"
@@ -925,6 +944,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 15
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/device_tools/potion
+	name = "Sentience Potion"
+	item = /obj/item/slimepotion/sentience
+	desc = "A potion recovered at great risk by undercover syndicate operatives. Using it will make any animal sentient, and bound to serve you."
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
 
 // Implants
 /datum/uplink_item/implants
@@ -1020,21 +1045,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	category = "(Pointless) Badassery"
 	surplus = 0
 
-/datum/uplink_item/badass/syndiecigs
-	name = "Syndicate Smokes"
-	desc = "Strong flavor, dense smoke, infused with omnizine."
-	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
-	cost = 2
-
-/datum/uplink_item/badass/bundle
-	name = "Syndicate Bundle"
-	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. \
-			These items are collectively worth more than 20 telecrystals, but you do not know which specialisation \
-			you will receive."
-	item = /obj/item/weapon/storage/box/syndicate
-	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
 	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, \
@@ -1052,6 +1062,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/secure/briefcase/syndie
 	cost = 1
 
+/datum/uplink_item/badass/syndiecigs
+	name = "Syndicate Smokes"
+	desc = "Strong flavor, dense smoke, infused with omnizine."
+	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
+	cost = 2
+
 /datum/uplink_item/badass/balloon
 	name = "Syndicate Balloon"
 	desc = "For showing that you are THE BOSS: A useless red balloon with the Syndicate logo on it. \
@@ -1059,15 +1075,24 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
 
+/datum/uplink_item/badass/bundle
+	name = "Syndicate Bundle"
+	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. \
+			These items are collectively worth more than 20 telecrystals, but you do not know which specialisation \
+			you will receive."
+	item = /obj/item/weapon/storage/box/syndicate
+	cost = 20
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+
 /datum/uplink_item/badass/surplus
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse. Rumored to contain a valuable assortion of items, \
 			but you never know. Contents are sorted to always be worth 50 TC."
+	item = /obj/structure/closet/crate
 	cost = 20
-	item = /obj/item/weapon/storage/box/syndicate
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
-/datum/uplink_item/badass/surplus_crate/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)
 	var/list/uplink_items = get_uplink_items()
 
 	var/crate_value = 50
@@ -1077,7 +1102,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		var/item = pick(uplink_items[category])
 		var/datum/uplink_item/I = uplink_items[category][item]
 
-		if(!prob(I.surplus))
+		if(!I.surplus || prob(100 - I.surplus))
 			continue
 		if(crate_value < I.cost)
 			continue
@@ -1091,7 +1116,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Random Item"
 	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't \
 			decided on a strategy yet."
-	item = /obj/item/weapon/storage/box/syndicate
+	item = /obj/item/weapon/paper
 	cost = 0
 
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
@@ -1109,5 +1134,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	if(possible_items.len)
 		var/datum/uplink_item/I = pick(possible_items)
 		U.telecrystals -= I.cost
+		U.spent_telecrystals += I.cost
 		feedback_add_details("traitor_uplink_items_bought","RN")
 		return new I.item(loc)

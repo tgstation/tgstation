@@ -180,13 +180,9 @@ var/global/list/pipeID2State = list(
 		rotate()
 
 /obj/item/pipe/Move()
+	var/old_dir = dir
 	..()
-	if ((pipe_type in list (PIPE_SIMPLE, PIPE_HE)) && is_bent \
-		&& (src.dir in cardinal))
-		src.dir = src.dir|turn(src.dir, 90)
-	else if ((pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_MIXER)) && flipped)
-		src.dir = turn(src.dir, 45+90)
-	fixdir()
+	dir = old_dir //pipes changing direction when moved is just annoying and buggy
 
 /obj/item/pipe/proc/unflip(direction)
 	if(direction in diagonals)
@@ -243,6 +239,21 @@ var/global/list/pipeID2State = list(
 		"<span class='italics'>You hear ratchet.</span>")
 
 	qdel(src)
+
+/obj/item/pipe/suicide_act(mob/user)
+	if (pipe_type in list(PIPE_PUMP, PIPE_PASSIVE_GATE, PIPE_VOLUME_PUMP))
+		user.visible_message("<span class='suicide'>[user] shoved the [src] in \his mouth and turned it on!  It looks like \he's trying to commit suicide.</span>")
+		if(istype(user, /mob/living/carbon))
+			var/mob/living/carbon/C = user
+			for(var/i=1 to 20)
+				C.vomit(0,1,0,4,0)
+				sleep(5)
+			if(istype(user, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = C
+				H.vessel.remove_reagent("blood",560)
+		return(OXYLOSS|BRUTELOSS)
+	else
+		return ..()
 
 /obj/item/pipe_meter
 	name = "meter"

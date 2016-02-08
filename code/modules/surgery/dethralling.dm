@@ -20,7 +20,7 @@
 		user.visible_message("<span class='warning'><b>[target] suddenly slams upward and knocks down [user]!</span>", \
 							 "<span class='userdanger'>[target] suddenly bolts up and slams you with tremendous force!</span>")
 		user.resting = 0 //Remove all stuns
-		user.sleeping = 0
+		user.SetSleeping(0)
 		user.SetStunned(0)
 		user.SetWeakened(0)
 		user.SetParalysis(0)

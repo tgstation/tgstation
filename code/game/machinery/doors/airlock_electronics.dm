@@ -12,7 +12,7 @@
 		ui = new(user, src, ui_key, "airlock_electronics", name, 975, 420, master_ui, state)
 		ui.open()
 
-/obj/item/weapon/electronics/airlock/get_ui_data()
+/obj/item/weapon/electronics/airlock/ui_data()
 	var/list/data = list()
 	var/list/regions = list()
 
@@ -34,16 +34,20 @@
 	return data
 
 /obj/item/weapon/electronics/airlock/ui_act(action, params)
+	if(..())
+		return
 	switch(action)
 		if("clear")
 			accesses = list()
 			one_access = 0
+			. = TRUE
 		if("one_access")
 			one_access = !one_access
+			. = TRUE
 		if("set")
 			var/access = text2num(params["access"])
 			if (!(access in accesses))
 				accesses += access
 			else
 				accesses -= access
-	return 1
+			. = TRUE

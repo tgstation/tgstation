@@ -51,9 +51,6 @@
 	else
 		return null
 
-/atom/movable/proc/initialize()
-	return
-
 /obj/proc/updateUsrDialog()
 	if(in_use)
 		var/is_in_use = 0
@@ -106,7 +103,13 @@
 	return
 
 /mob/proc/unset_machine()
-	src.machine = null
+	if(machine)
+		machine.on_unset_machine(src)
+		machine = null
+
+//called when the user unsets the machine.
+/atom/movable/proc/on_unset_machine(mob/user)
+	return
 
 /mob/proc/set_machine(obj/O)
 	if(src.machine)
@@ -202,3 +205,5 @@
 
 /obj/proc/CanAStarPass()
 	. = !density
+
+

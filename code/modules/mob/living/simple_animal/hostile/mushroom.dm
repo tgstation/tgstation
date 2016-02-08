@@ -66,7 +66,7 @@
 		retreat_distance = 5
 		spawn(30)
 			retreat_distance = null
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)

@@ -85,13 +85,10 @@
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
 	..()
-	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
-			if(Proj.nodamage)
-				return
-			message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
-			log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
-			boom()
+	if(istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
+		message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
+		log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
+		boom()
 
 /obj/structure/reagent_dispensers/fueltank/proc/boom()
 	explosion(src.loc,0,1,5,7,10, flame_range = 5)
@@ -104,8 +101,6 @@
 
 /obj/structure/reagent_dispensers/fueltank/ex_act()
 	boom()
-
-
 
 /obj/structure/reagent_dispensers/fueltank/fire_act()
 	boom()

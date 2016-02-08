@@ -2,6 +2,18 @@
 	name = "glasses"
 	materials = list(MAT_GLASS = 250)
 
+//called when thermal glasses are emped.
+/obj/item/clothing/glasses/proc/thermal_overload()
+	if(ishuman(src.loc))
+		var/mob/living/carbon/human/H = src.loc
+		if(!(H.disabilities & BLIND))
+			if(H.glasses == src)
+				H << "<span class='danger'>The [src] overloads and blinds you!</span>"
+				H.flash_eyes(visual = 1)
+				H.set_blindness(3)
+				H.set_blurriness(5)
+				H.adjust_eye_stat(5)
+
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
@@ -84,6 +96,7 @@
 	desc = "Made by Nerd. Co."
 	icon_state = "glasses"
 	item_state = "glasses"
+	vision_correction = 1 //corrects nearsightedness
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "Prescription Glasses"
@@ -182,7 +195,7 @@
 	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
 	item_state = "blindfold"
-//	vision_flags = BLIND	//handled in life.dm/handle_regular_hud_updates()
+//	vision_flags = BLIND
 	flash_protect = 2
 	tint = 3			// to make them blind
 
@@ -201,17 +214,9 @@
 	invis_view = 2
 	flash_protect = 0
 
-	emp_act(severity)
-		if(istype(src.loc, /mob/living/carbon/human))
-			var/mob/living/carbon/human/M = src.loc
-			if(M.glasses == src)
-				M << "<span class='danger'>The Optical Thermal Scanner overloads and blinds you!</span>"
-				M.eye_blind = 3
-				M.eye_blurry = 5
-				M.disabilities |= NEARSIGHT
-				spawn(100)
-					M.disabilities &= ~NEARSIGHT
-		..()
+/obj/item/clothing/glasses/thermal/emp_act(severity)
+	thermal_overload()
+	..()
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "Chameleon Thermals"

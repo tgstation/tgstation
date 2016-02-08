@@ -9,6 +9,36 @@ import 'html5shiv'
 
 Object.assign(Math, require('util/math'))
 
+import TGUI from 'tgui.ract'
+window.initialize = (dataString) => {
+  if (window.tgui) return
+  window.tgui = new TGUI({
+    el: '#container',
+    data () {
+      const initial = JSON.parse(dataString)
+      return {
+        constants: require('util/constants'),
+        text: require('util/text'),
+        config: initial.config,
+        data: initial.data,
+        adata: initial.data
+      }
+    }
+  })
+  window.initialize = function () {}
+}
+
+const holder = document.getElementById('data')
+const data = holder.textContent
+const ref = holder.getAttribute('data-ref')
+if (data !== '{}') { // If the JSON was inlined, load it.
+  window.initialize(data)
+  holder.remove()
+}
+
+import { act } from 'util/byond'
+act(ref, 'tgui:initialize')
+
 import WebFont from 'webfontloader'
 WebFont.load({
   custom: {
@@ -17,27 +47,3 @@ WebFont.load({
     testStrings: { FontAwesome: '\uf240' }
   }
 })
-
-import TGUI from 'tgui.ract'
-window.initialize = (dataString) => {
-  if (window.tgui) return
-  window.tgui = new TGUI({
-    el: '#container',
-    data () {
-      const base = {
-        constants: require('util/constants')
-      }
-      const server = JSON.parse(dataString)
-      return Object.assign(base, server)
-    }
-  })
-}
-
-import { act } from 'util/byond'
-const holder = document.getElementById('data')
-if (holder.textContent !== '{}') { // If the JSON was inlined, load it.
-  window.initialize(holder.textContent)
-} else {
-  act(holder.getAttribute('data-ref'), 'tgui:initialize')
-  holder.remove()
-}

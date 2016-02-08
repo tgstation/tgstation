@@ -21,7 +21,8 @@ var/global/datum/controller/master/Master = new()
 	var/iteration = 0
 	// The cost (in deciseconds) of the MC loop.
 	var/cost = 0
-
+	// The old fps when we slow it down to prevent lag.
+	var/old_fps
 	// A list of subsystems to process().
 	var/list/subsystems = list()
 	// The cost of running the subsystems (in deciseconds).
@@ -64,13 +65,14 @@ var/global/datum/controller/master/Master = new()
 
 /datum/controller/master/proc/Setup(zlevel)
 	// Per-Z-level subsystems.
-	if (zlevel && zlevel > 0 && zlevel <= world.maxz)
+	if(zlevel && zlevel > 0 && zlevel <= world.maxz)
 		for(var/datum/subsystem/SS in subsystems)
 			SS.Initialize(world.timeofday, zlevel)
 			sleep(-1)
 		return
 	world << "<span class='boldannounce'>Initializing subsystems...</span>"
 
+	preloadTemplates()
 	// Pick a random away mission.
 	createRandomZlevel()
 	// Generate asteroid.
@@ -127,8 +129,14 @@ var/global/datum/controller/master/Master = new()
 
 				var/ran_subsystems = 0
 				for(var/datum/subsystem/SS in subsystems)
+					if(world.cpu >= 100)
+						//if world.cpu gets above 120,
+						//byond will pause most client updates for (about) 1.6 seconds.
+						//(1.6 seconds worth of ticks)
+						//We just stop running subsystems to avoid that.
+						break
 					if(SS.can_fire > 0)
-						if(SS.next_fire <= world.time && SS.last_fire + (SS.wait * 0.5) <= world.time) // Check if it's time.
+						if(SS.next_fire <= world.time && SS.last_fire + (SS.wait * 0.75) <= world.time) // Check if it's time.
 							ran_subsystems = 1
 							timer = world.timeofday
 							last_type_processed = SS.type
@@ -144,7 +152,9 @@ var/global/datum/controller/master/Master = new()
 								SS.wait = Clamp(newwait, SS.dwait_lower, SS.dwait_upper)
 								if(oldwait != SS.wait)
 									processing_interval = calculate_gcd()
-							SS.next_fire += SS.wait
+								SS.next_fire = world.time + SS.wait
+							else
+								SS.next_fire += SS.wait
 							++SS.times_fired
 							// If we caused BYOND to miss a tick, stop processing for a bit...
 							if(startingtick < world.time || start_time + 1 < world.timeofday)
@@ -166,9 +176,20 @@ var/global/datum/controller/master/Master = new()
 				if(startingtick < world.time || start_time + 1 < world.timeofday)
 					extrasleep += world.tick_lag * 2
 				// If we are loading the server too much, sleep a bit extra...
-				if(world.cpu > 80)
-					extrasleep += extrasleep + processing_interval
+				if(world.cpu >= 75)
+					extrasleep += (extrasleep + processing_interval) * ((world.cpu-50)/10)
+
+				if(world.cpu >= 100)
+					if(!old_fps)
+						old_fps = world.fps
+						//byond bug, if we go over 120 fps and world.fps is higher then 10, the bad things that happen are made worst.
+						world.fps = 10
+				else if(old_fps && world.cpu < 50)
+					world.fps = old_fps
+					old_fps = null
+
 				sleep(processing_interval + extrasleep)
+
 			else
 				sleep(50)
 #undef MC_AVERAGE

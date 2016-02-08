@@ -10,7 +10,6 @@
 	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
 	var/canhear_range = 3 // the range which mobs can hear this radio from
 	var/obj/item/device/radio/patch_link = null
-	var/datum/wires/radio/wires = null
 	var/list/secure_radio_connections
 	var/prison_radio = 0
 	var/b_stat = 0
@@ -48,9 +47,9 @@
 	frequency = add_radio(src, new_frequency)
 
 /obj/item/device/radio/New()
-	wires = new(src)
+	wires = new /datum/wires/radio(src)
 	if(prison_radio)
-		wires.CutWireIndex(WIRE_TRANSMIT)
+		wires.cut(WIRE_TX) // OH GOD WHY
 	secure_radio_connections = new
 	..()
 	if(SSradio)
@@ -106,12 +105,11 @@
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
-
 /obj/item/device/radio/interact(mob/user)
 	if (..())
 		return
 	if(b_stat && !istype(user, /mob/living/silicon/ai))
-		wires.Interact(user)
+		wires.interact(user)
 	else
 		ui_interact(user)
 
@@ -119,10 +117,10 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "radio", name, 830, 275, master_ui, state)
+		ui = new(user, src, ui_key, "radio", name, 370, 220 + channels.len * 22, master_ui, state)
 		ui.open()
 
-/obj/item/device/radio/get_ui_data(mob/user)
+/obj/item/device/radio/ui_data(mob/user)
 	var/list/data = list()
 
 	data["broadcasting"] = broadcasting
@@ -142,28 +140,39 @@
 
 	return data
 
-/obj/item/device/radio/ui_act(action, params)
+/obj/item/device/radio/ui_act(action, params, datum/tgui/ui)
+	if(..())
+		return
 	switch(action)
 		if("frequency")
-			if(!freqlock)
-				switch(params["change"])
-					if("custom")
-						var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
-						var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
-						var/custom = input(usr, "Adjust frequency ([min]-[max]):", name) as null|num
-						if(custom)
-							frequency = custom * 10
-					else
-						frequency = frequency + text2num(params["change"])
-				frequency = sanitize_frequency(frequency, freerange)
+			if(freqlock)
+				return
+			var/tune = params["tune"]
+			var/adjust = text2num(params["adjust"])
+			if(tune == "input")
+				var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
+				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
+				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
+				if(!isnull(tune) && !..())
+					. = TRUE
+			else if(adjust)
+				tune = frequency + adjust * 10
+				. = TRUE
+			else if(text2num(tune) != null)
+				tune = tune * 10
+				. = TRUE
+			if(.)
+				frequency = sanitize_frequency(tune, freerange)
 				set_frequency(frequency)
-				if(hidden_uplink && (frequency == traitor_frequency))
+				if(frequency == traitor_frequency && hidden_uplink)
 					hidden_uplink.interact(usr)
-					SStgui.close_uis(src)
+					ui.close()
 		if("listen")
 			listening = !listening
+			. = TRUE
 		if("broadcast")
 			broadcasting = !broadcasting
+			. = TRUE
 		if("channel")
 			var/channel = params["channel"]
 			if(!(channel in channels))
@@ -172,8 +181,10 @@
 				channels[channel] &= ~FREQ_LISTENING
 			else
 				channels[channel] |= FREQ_LISTENING
+			. = TRUE
 		if("command")
 			use_command = !use_command
+			. = TRUE
 		if("subspace")
 			if(subspace_switchable)
 				subspace_transmission = !subspace_transmission
@@ -181,16 +192,14 @@
 					channels = list()
 				else
 					recalculateChannels()
-	return 1
+				. = TRUE
 
 /obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
 
-	//  Uncommenting this. To the above comment:
-	// 	The permacell radios aren't suppose to be able to transmit, this isn't a bug and this "fix" is just making radio wires useless. -Giacom
-	if(wires.IsIndexCut(WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
+	if(wires.is_cut(WIRE_TX))
 		return
 
 	if(!M.IsVocal())
@@ -449,7 +458,7 @@
 	// what the range is in which mobs will hear the radio
 	// returns: -1 if can't receive, range otherwise
 
-	if (wires.IsIndexCut(WIRE_RECEIVE))
+	if (wires.is_cut(WIRE_RX))
 		return -1
 	if(!listening)
 		return -1

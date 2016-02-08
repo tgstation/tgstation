@@ -30,7 +30,7 @@
   *
   * return list Data to be sent to the UI.
  **/
-/datum/proc/get_ui_data(mob/user)
+/datum/proc/ui_data(mob/user)
 	return list() // Not implemented.
 
 
@@ -45,8 +45,9 @@
   *
   * return bool If the UI should be updated or not.
  **/
-/datum/proc/ui_act(action, list/params)
-	return 0 // Not implemented.
+/datum/proc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(!ui || ui.status != UI_INTERACTIVE)
+		return 1 // If UI is not interactive or usr calling Topic is not the UI user, bail.
 
 
  /**
@@ -58,6 +59,13 @@
  **/
 /datum/proc/ui_host()
 	return src // Default src.
+
+ /**
+  * global
+  *
+  * Used to track the current screen.
+ **/
+/datum/var/ui_screen = "home"
 
  /**
   * global
