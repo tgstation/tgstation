@@ -1,0 +1,7 @@
+author: neersighted
+delete-after: True
+changes: 
+  - rscadd: "Internals tanks now provide an action button"
+  - rscadd: "Jetpacks now emit the gas consumed for propulsion onto their turf"
+  - rscdel: "Jetpacks no longer have object verbs"
+  - rscdel: "tgui no longer has internals buttons"
