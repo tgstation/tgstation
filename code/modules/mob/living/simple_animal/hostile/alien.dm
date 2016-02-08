@@ -167,10 +167,10 @@
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
 	if(istype(target, /atom/movable))
 		if(istype(target, /obj/effect/decal/cleanable))
-			visible_message("[src] cleans up the [target].")
+			visible_message("[src] cleans up \the [target].")
 			qdel(target)
 			return
 		var/atom/movable/M = target
 		M.clean_blood()
-		visible_message("[src] polishes the [target].")
+		visible_message("[src] polishes \the [target].")
 
