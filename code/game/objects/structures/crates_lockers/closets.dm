@@ -17,6 +17,9 @@
 	var/breakout_time = 2
 	var/lastbang
 	var/can_weld_shut = 1
+	var/allow_mobs = TRUE
+	var/allow_objects = FALSE
+	var/allow_dense = FALSE
 	var/max_mob_size = MOB_SIZE_HUMAN //Biggest mob_size accepted by the container
 	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate then open it in a populated area to crash clients.
@@ -117,27 +120,34 @@
 	if(contents.len >= storage_capacity)
 		return -1
 
-	if(istype(AM, /mob/living))
-		var/mob/living/L = AM
-		if(L.buckled || L.buckled_mob || L.mob_size > max_mob_size) //buckled mobs, mobs with another mob attached, and mobs too big for the container don't get inside closets.
-			return 0
-		if(L.mob_size > MOB_SIZE_TINY) //decently sized mobs take more space than objects.
+	var/mob/living/L = AM
+	if(istype(L))
+		if(L.buckled || L.buckled_mob)
+			return
+		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
+			if(!allow_mobs)
+				return
+			if(L.mob_size > max_mob_size)
+				return
 			var/mobs_stored = 0
 			for(var/mob/living/M in contents)
-				mobs_stored++
-				if(mobs_stored >= mob_storage_capacity)
-					return 0
-		L.reset_perspective(src)
+				if(++mobs_stored >= mob_storage_capacity)
+					return
 		L.stop_pulling()
-	else if(!istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
-		return 0
-	else if(AM.density || AM.anchored)
-		return 0
-	else if(AM.flags & NODROP)
-		return 0
+	else if(istype(AM, /obj/structure/closet))
+		return
+	else
+		if(!allow_objects && !istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
+			return
+		if(!allow_dense && AM.density)
+			return
+		if(AM.anchored || AM.buckled_mob || (AM.flags & NODROP))
+			return
+
 	AM.forceMove(src)
 	if(AM.pulledby)
 		AM.pulledby.stop_pulling()
+
 	return 1
 
 /obj/structure/closet/proc/close()

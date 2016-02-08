@@ -4,7 +4,10 @@
 	icon = 'icons/obj/crates.dmi'
 	icon_state = "crate"
 	req_access = null
-	var/allow_mobs = FALSE
+	can_weld_shut = FALSE
+	allow_mobs = FALSE
+	allow_objects = TRUE
+	allow_dense = TRUE
 	var/obj/item/weapon/paper/manifest/manifest
 
 /obj/structure/closet/crate/New()
@@ -36,22 +39,6 @@
 		return
 	else if(!place(user, W))
 		attack_hand(user)
-
-/obj/structure/closet/crate/insert(atom/movable/AM)
-	if(contents.len >= storage_capacity)
-		return -1
-
-	if(istype(AM, /mob/living))
-		var/mob/living/L = AM
-		if(!allow_mobs || L.buckled || L.buckled_mob)
-			return
-		L.stop_pulling()
-	if(AM.flags & NODROP || AM.density || AM.anchored || AM.buckled_mob || istype(AM, /obj/structure/closet))
-		return
-	AM.forceMove(src)
-	if(AM.pulledby)
-		AM.pulledby.stop_pulling()
-	return 1
 
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	user << "<span class='notice'>You tear the manifest off of the crate.</span>"
