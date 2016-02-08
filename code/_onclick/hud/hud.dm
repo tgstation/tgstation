@@ -173,6 +173,7 @@
 	persistant_inventory_update()
 	mymob.update_action_buttons()
 	reorganize_alerts()
+	mymob.reload_fullscreen()
 
 
 /datum/hud/human/show_hud(version = 0)
