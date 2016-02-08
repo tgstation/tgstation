@@ -133,14 +133,9 @@
 	greaterform = "Tajaran"
 	add_language("Siik'tajr")
 
-/mob/living/carbon/monkey/diona/New()
 
-	..()
-	alien = 1
-	setGender(NEUTER)
-	dna.mutantrace = "plant"
-	greaterform = "Diona"
-	add_language("Rootspeak")
+///mob/living/carbon/monkey/diona/New()
+//Moved to it's duplicate declaration modules\mob\living\carbon\monkey\diona.dm
 
 /mob/living/carbon/monkey/show_inv(mob/living/carbon/user as mob)
 	user.set_machine(src)
