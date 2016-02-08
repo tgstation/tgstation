@@ -95,7 +95,6 @@
 					name = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
-
 	if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
 	loc = T
 
@@ -105,6 +104,7 @@
 
 	start_poltergeist_cooldown() //FUCK OFF GHOSTS
 	..()
+
 
 /mob/dead/observer/Destroy()
 	..()
