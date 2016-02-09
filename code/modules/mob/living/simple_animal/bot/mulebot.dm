@@ -347,10 +347,6 @@ var/global/mulebot_count = 0
 	var/obj/structure/closet/crate/CRATE
 	if(istype(AM,/obj/structure/closet/crate))
 		CRATE = AM
-	else
-		if(!wires.is_cut(WIRE_LOADCHECK))
-			buzz(SIGH)
-			return	// if not hacked, only allow crates to be loaded
 
 	if(CRATE) // if it's a crate, close before loading
 		CRATE.close()
@@ -609,13 +605,11 @@ var/global/mulebot_count = 0
 			// not loaded
 			if(auto_pickup) // find a crate
 				var/atom/movable/AM
-				if(wires.is_cut(WIRE_LOADCHECK)) // if hacked, load first unanchored thing we find
-					for(var/atom/movable/A in get_step(loc, loaddir))
-						if(!A.anchored)
-							AM = A
-							break
-				else			// otherwise, look for crates only
-					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
+				for(var/atom/movable/A in get_step(loc, loaddir))
+					if(!A.anchored)
+						AM = A
+						break
+
 				if(AM && AM.Adjacent(src))
 					load(AM)
 					if(report_delivery)
