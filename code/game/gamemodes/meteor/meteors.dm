@@ -305,3 +305,12 @@
 /obj/effect/meteor/Destroy()
 	walk(src, 0) //This cancels the walk_towards() proc
 	..()
+
+/obj/effect/meteor/gib    //non explosive meteor, appears to be a corpse spinning in space before impacting something and spraying gibs everywhere
+	name = "human corpse"
+	icon_state = "human"
+	pass_flags = PASSTABLE
+
+/obj/effect/meteor/gib/Bump(atom/A)
+	new /obj/effect/gibspawner/human(src.loc)
+	qdel(src)

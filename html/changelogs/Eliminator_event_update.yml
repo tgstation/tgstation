@@ -1,0 +1,20 @@
+author: TheEliminator16
+delete-after: True
+changes:
+  - rscadd: Added the "Hostile Infestation" event. Similar to the normal infestation event, though this time with hostile mobs
+  - soundadd: Added "bumpinthenight.ogg"
+  - rscadd: Added "Silent Meteors" event. Adminbus only, not random, allows for admins to send meteors without a command report. I'm sure this will never be abused, ever.
+  - rscadd: Added "Organic Debris Field" event. Similar to meteors except instead of killing everyone, it splatters the outside of the station with gore, body parts, organs, exploding corpses...
+  - rscadd: Added "Mass Drunkenness" event. Causes everyone on the station to be drunk for less than a minute.
+  - rscadd: Added "Mass Hallucination", "Silent Meteors", "Hostile Infestation", "Organic Debris Field", and "Mass Drunkenness" events to admin secrets panel. Any admin with +FUN can access them.
+  - rscadd: Made "Hostile Infestation", "Organic Debris Field", and "Mass Drunkenness" events possible to occur randomly.
+  - rscadd: Added a new type of meteor that appears to be a human corpse. Gibs on impact, does no damage.
+  - imageadd: Added "human" icon_state to meteor.dmi
+  - rscadd: Added "monster.dm", for a collection of various monsters added in this PR and any monsters added in the future.
+  - rscadd: Added necromorphs.
+  - imageadd: Added "monster_big.dmi" for creatures that are larger than 32x32
+  - tweak: Moved skrites from being a child of bear to being a child of monster.
+  - rscadd: Added "spider queen", a large version of the nurse spider with a projectile attack that creates web where it lands and a lot of health.
+  - tweak: Changed "alienqueen.dmi" to "giantmobs.dmi" to accomodate the new giant spider sprite.
+  - imageadd: Added "spider queen" and "dead queen" icon states to giantmobs.dmi.
+  - bugfix: Removed the spawning of heads in thing_storm to fix a runtime error involving hairstyles
