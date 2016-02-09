@@ -566,7 +566,7 @@
 /mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
-		target_zone = user.zone_sel.selecting
+		target_zone = user.zone_selected
 	if(dna && PIERCEIMMUNE in dna.species.specflags)
 		. = 0
 	// If targeting the head, see if the head item is thin enough.
@@ -882,3 +882,119 @@
 		var/datum/data/record/R = find_record("name", oldname, L)
 		if(R)
 			R.fields["name"] = newname
+
+/mob/living/carbon/human/update_sight()
+	if(!client)
+		return
+	if(stat == DEAD)
+		sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_OBSERVER
+		return
+
+	dna.species.update_sight(src)
+
+/mob/living/carbon/human/update_tinttotal()
+	if(!tinted_weldhelh)
+		return
+	tinttotal = 0
+	if(istype(head, /obj/item/clothing/head))
+		var/obj/item/clothing/head/HT = head
+		tinttotal += HT.tint
+	if(wear_mask)
+		tinttotal += wear_mask.tint
+	if(glasses)
+		tinttotal += glasses.tint
+	update_vision_overlays()
+
+/mob/living/carbon/human/update_vision_overlays()
+	if(!client)
+		return
+
+	if(stat == DEAD) //if dead we remove all vision impairments
+		clear_fullscreens()
+		return
+
+	if(tinted_weldhelh)
+		if(tinttotal >= TINT_BLIND)
+			overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
+		else if(tinttotal >= TINT_DARKENED)
+			overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
+		else
+			clear_fullscreen("tint", 0)
+
+	if(eye_blind)
+		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+	else
+		clear_fullscreen("blind")
+
+	if((disabilities & NEARSIGHT) && !(glasses && glasses.vision_correction))
+		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("nearsighted")
+
+	if(eye_blurry)
+		overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+	else
+		clear_fullscreen("blurry")
+
+	if(druggy)
+		overlay_fullscreen("high", /obj/screen/fullscreen/high)
+	else
+		clear_fullscreen("high")
+
+	if(eye_stat > 20)
+		if(eye_stat > 30)
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+		else
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("eye_damage")
+
+	if(client.eye != src)
+		var/atom/A = client.eye
+		A.get_remote_view_fullscreens(src)
+	else
+		clear_fullscreen("remote_view", 0)
+
+
+/mob/living/carbon/human/update_health_hud()
+	if(!client || !hud_used)
+		return
+	if(dna.species.update_health_hud())
+		return
+	else
+		if(hud_used.healths)
+			var/health_amount = health - staminaloss
+			if(..(health_amount)) //not dead
+				switch(hal_screwyhud)
+					if(1)
+						hud_used.healths.icon_state = "health6"
+					if(2)
+						hud_used.healths.icon_state = "health7"
+					if(5)
+						hud_used.healths.icon_state = "health0"
+		if(hud_used.healthdoll)
+			hud_used.healthdoll.overlays.Cut()
+			if(stat != DEAD)
+				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
+				for(var/obj/item/organ/limb/L in organs)
+					var/damage = L.burn_dam + L.brute_dam
+					var/comparison = (L.max_damage/5)
+					var/icon_num = 0
+					if(damage)
+						icon_num = 1
+					if(damage > (comparison))
+						icon_num = 2
+					if(damage > (comparison*2))
+						icon_num = 3
+					if(damage > (comparison*3))
+						icon_num = 4
+					if(damage > (comparison*4))
+						icon_num = 5
+					if(hal_screwyhud == 5)
+						icon_num = 0
+					if(icon_num)
+						hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
+			else
+				hud_used.healthdoll.icon_state = "healthdoll_DEAD"

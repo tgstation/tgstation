@@ -82,7 +82,10 @@
 			if(ghost.mind && ghost.mind.current == R)
 				R.key = ghost.key
 
-	R.stat = CONSCIOUS
+	R.stat = UNCONSCIOUS
+	R.update_stat()
+	if(R.camera && !R.wires.is_cut(WIRE_CAMERA))
+		R.camera.toggle_cam(R,0)
 	dead_mob_list -= R //please never forget this ever kthx
 	living_mob_list += R
 	R.notify_ai(1)
@@ -151,7 +154,7 @@
 
 	R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide(R.module)
 	for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
-		R.internals = src
+		R.internal = src
 	R.jetpackoverlay = 1
 	R.module.rebuild()
 	return 1

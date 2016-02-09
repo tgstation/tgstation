@@ -266,19 +266,25 @@ var/next_mob_id = 0
 
 	return 0
 
-/mob/proc/reset_view(atom/A)
-	if (client)
-		if (istype(A, /atom/movable))
+/mob/proc/reset_perspective(atom/A)
+	if(client)
+		if(istype(A, /atom/movable))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
-			if (isturf(loc))
+			if(isturf(loc))
 				client.eye = client.mob
 				client.perspective = MOB_PERSPECTIVE
 			else
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
-	return
+		return 1
+
+/mob/living/reset_perspective(atom/A)
+	if(..())
+		update_sight()
+		update_vision_overlays()
+		update_pipe_vision()
 
 
 /mob/proc/show_inv(mob/user)
@@ -337,8 +343,7 @@ var/next_mob_id = 0
 
 		src.pulling = AM
 		AM.pulledby = src
-		if(pullin)
-			pullin.update_icon(src)
+		update_pull_hud_icon()
 		if(ismob(AM))
 			var/mob/M = AM
 			if(!iscarbon(src))
@@ -354,8 +359,12 @@ var/next_mob_id = 0
 	if(pulling)
 		pulling.pulledby = null
 		pulling = null
-		if(pullin)
-			pullin.update_icon(src)
+		update_pull_hud_icon()
+
+/mob/proc/update_pull_hud_icon()
+	if(client && hud_used)
+		if(hud_used.pull_icon)
+			hud_used.pull_icon.update_icon(src)
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -484,15 +493,11 @@ var/next_mob_id = 0
 
 	if(client && mob_eye)
 		client.eye = mob_eye
-		if (is_admin)
-			client.adminobs = 1
-			if(mob_eye == client.mob || client.eye == client.mob)
-				client.adminobs = 0
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
 	set category = "OOC"
-	reset_view(null)
+	reset_perspective(null)
 	unset_machine()
 
 /mob/Topic(href, href_list)
@@ -600,7 +605,7 @@ var/next_mob_id = 0
 			else
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
-				stat("Subsystems:", "[round(Master.subsystem_cost, 0.001)]ds")
+				stat("Subsystems:", "[round(Master.subsystem_cost, 0.01)]ds")
 				stat(null)
 				for(var/datum/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
@@ -674,6 +679,9 @@ var/next_mob_id = 0
 	if(ko || resting || stunned)
 		drop_r_hand()
 		drop_l_hand()
+		unset_machine()
+		if(pulling)
+			stop_pulling()
 	else
 		lying = 0
 		canmove = 1
@@ -754,85 +762,96 @@ var/next_mob_id = 0
 	if(status_flags & CANSTUN)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
 		update_canmove()
-	return
 
 /mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
 	if(status_flags & CANSTUN)
 		stunned = max(amount,0)
 		update_canmove()
-	return
 
 /mob/proc/AdjustStunned(amount)
 	if(status_flags & CANSTUN)
 		stunned = max(stunned + amount,0)
 		update_canmove()
-	return
 
 /mob/proc/Weaken(amount, ignore_canweaken = 0)
 	if(status_flags & CANWEAKEN || ignore_canweaken)
 		weakened = max(max(weakened,amount),0)
 		update_canmove()	//updates lying, canmove and icons
-	return
 
 /mob/proc/SetWeakened(amount)
 	if(status_flags & CANWEAKEN)
 		weakened = max(amount,0)
 		update_canmove()	//updates lying, canmove and icons
-	return
 
 /mob/proc/AdjustWeakened(amount)
 	if(status_flags & CANWEAKEN)
 		weakened = max(weakened + amount,0)
 		update_canmove()	//updates lying, canmove and icons
-	return
 
 /mob/proc/Paralyse(amount)
 	if(status_flags & CANPARALYSE)
+		var/old_paralysis = paralysis
 		paralysis = max(max(paralysis,amount),0)
-		update_canmove()
-	return
+		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
+			update_stat()
 
 /mob/proc/SetParalysis(amount)
 	if(status_flags & CANPARALYSE)
+		var/old_paralysis = paralysis
 		paralysis = max(amount,0)
-		update_canmove()
-	return
+		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
+			update_stat()
 
 /mob/proc/AdjustParalysis(amount)
 	if(status_flags & CANPARALYSE)
+		var/old_paralysis = paralysis
 		paralysis = max(paralysis + amount,0)
-		update_canmove()
-	return
+		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
+			update_stat()
 
-/mob/proc/Sleeping(amount)
+/mob/proc/Sleeping(amount, updating_stat = 1)
+	var/old_sleeping = sleeping
 	sleeping = max(max(sleeping,amount),0)
-	update_canmove()
-	return
+	if(!old_sleeping && sleeping)
+		throw_alert("asleep", /obj/screen/alert/asleep)
+		if(updating_stat)
+			update_stat()
+	else if(old_sleeping && !sleeping)
+		clear_alert("asleep")
+		if(updating_stat)
+			update_stat()
 
 /mob/proc/SetSleeping(amount)
+	var/old_sleeping = sleeping
 	sleeping = max(amount,0)
-	update_canmove()
-	return
+	if(!old_sleeping && sleeping)
+		throw_alert("asleep", /obj/screen/alert/asleep)
+		update_stat()
+	else if(old_sleeping && !sleeping)
+		clear_alert("asleep")
+		update_stat()
 
 /mob/proc/AdjustSleeping(amount)
+	var/old_sleeping = sleeping
 	sleeping = max(sleeping + amount,0)
-	update_canmove()
-	return
+	if(!old_sleeping && sleeping)
+		throw_alert("asleep", /obj/screen/alert/asleep)
+		update_stat()
+	else if(old_sleeping && !sleeping)
+		clear_alert("asleep")
+		update_stat()
 
 /mob/proc/Resting(amount)
 	resting = max(max(resting,amount),0)
 	update_canmove()
-	return
 
 /mob/proc/SetResting(amount)
 	resting = max(amount,0)
 	update_canmove()
-	return
 
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount,0)
 	update_canmove()
-	return
 
 /mob/proc/assess_threat() //For sec bot threat assessment
 	return
@@ -1033,3 +1052,15 @@ var/next_mob_id = 0
 	if(aiPDA)
 		aiPDA.owner = newname
 		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"
+
+
+/mob/proc/update_stat()
+	return
+
+/mob/proc/update_health_hud()
+	return
+
+
+
+
+

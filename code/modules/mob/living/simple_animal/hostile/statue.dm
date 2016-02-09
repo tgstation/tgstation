@@ -58,7 +58,7 @@
 	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
 
 	// Give nightvision
-	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+	see_invisible = SEE_INVISIBLE_NOLIGHTING
 
 	// Set creator
 	if(creator)
@@ -183,7 +183,7 @@
 	for(var/mob/living/L in living_mob_list)
 		var/turf/T = get_turf(L.loc)
 		if(T && T in targets)
-			L.eye_blind = max(L.eye_blind, 4)
+			L.set_blindness(4)
 	return
 
 //Toggle Night Vision
@@ -203,7 +203,7 @@
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = target
 			if(H.dna.species.invis_sight == SEE_INVISIBLE_LIVING)
-				H.dna.species.invis_sight = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+				H.dna.species.invis_sight = SEE_INVISIBLE_NOLIGHTING
 				name = "Toggle Nightvision \[ON]"
 			else
 				H.dna.species.invis_sight = SEE_INVISIBLE_LIVING
@@ -211,7 +211,7 @@
 
 		else
 			if(target.see_invisible == SEE_INVISIBLE_LIVING)
-				target.see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+				target.see_invisible = SEE_INVISIBLE_NOLIGHTING
 				name = "Toggle Nightvision \[ON]"
 			else
 				target.see_invisible = SEE_INVISIBLE_LIVING

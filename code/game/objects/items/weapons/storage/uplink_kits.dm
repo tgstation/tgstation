@@ -243,14 +243,3 @@
 	new /obj/item/weapon/reagent_containers/syringe(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
 	return
-
-/obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
-	name = "boxed virus kit"
-
-/obj/item/weapon/storage/box/syndie_kit/tuberculosiskit/New()
-	..()
-	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosis(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
-	new /obj/item/weapon/reagent_containers/syringe(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
-	return

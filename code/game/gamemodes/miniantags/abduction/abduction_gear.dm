@@ -100,13 +100,10 @@
 		if(combat_cooldown != initial(combat_cooldown))
 			src.loc << "<span class='warning'>Combat injection is still recharging.</span>"
 		var/mob/living/carbon/human/M = src.loc
-		M.stat = 0
+		M.adjustStaminaLoss(-75)
 		M.SetParalysis(0)
 		M.SetStunned(0)
 		M.SetWeakened(0)
-		M.lying = 0
-		M.update_canmove()
-		M.adjustStaminaLoss(-75)
 		combat_cooldown = 0
 		SSobj.processing |= src
 
@@ -465,11 +462,10 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
 	if(L.stunned)
-		L.SetSleeping(60)
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-
+		L.Sleeping(60)
 		add_logs(user, L, "put to sleep")
 	else
 		L.drowsyness += 1
@@ -489,7 +485,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
-				C.update_inv_handcuffed(0)
+				C.update_handcuffed()
 				user << "<span class='notice'>You handcuff [C].</span>"
 				add_logs(user, C, "handcuffed")
 		else

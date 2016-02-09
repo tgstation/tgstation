@@ -116,6 +116,11 @@
 			  /mob/living/simple_animal/parrot/proc/perch_mob_player)
 
 
+/mob/living/simple_animal/parrot/examine(mob/user)
+	..()
+	if(stat)
+		user << pick("This parrot is no more", "This is a late parrot", "This is an ex-parrot")
+
 /mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)
 		held_item.loc = src.loc
@@ -285,6 +290,8 @@
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
+	if(!stat && M.a_intent == "help")
+		handle_automated_speech(1) //assured speak/emote
 	return
 
 /mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
@@ -328,6 +335,7 @@
 		user.drop_item()
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
+		speak_chance *= 2
 		user << "<span class='notice'>[src] eagerly devours the cracker.</span>"
 	..()
 	return
@@ -364,11 +372,10 @@
 //-----SPEECH
 	/* Parrot speech mimickry!
 	   Phrases that the parrot Hear()s get added to speach_buffer.
-	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list.
-	   Then it clears the buffer to make sure they dont magically remember something from hours ago. */
+	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list. */
 /mob/living/simple_animal/parrot/handle_automated_speech()
 	..()
-	if(speech_buffer.len && prob(10))
+	if(speech_buffer.len && prob(20)) //shuffle out a phrase and add in a new one
 		if(speak.len)
 			speak.Remove(pick(speak))
 
@@ -858,29 +865,47 @@
 	gold_core_spawnable = 0
 	speak_chance = 3
 	var/memory_saved = 0
+	var/rounds_survived = 0
+	var/longest_survival = 0
 
 /mob/living/simple_animal/parrot/Poly/New()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)
 	available_channels = list(":e")
 	Read_Memory()
+	if(rounds_survived == longest_survival)
+		speak += pick("...[longest_survival].", "The things I've seen!", "I have lived many lives!", "What are you before me?")
+		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
+	else if(rounds_survived > 0)
+		speak += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
+	else
+		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
 	..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
-	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+		rounds_survived += 1
+		if(rounds_survived > longest_survival)
+			longest_survival = rounds_survived
 		Write_Memory()
 	..()
 
 /mob/living/simple_animal/parrot/Poly/death(gibbed)
+	rounds_survived = 0
 	Write_Memory()
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
-	S["phrases"] 	>> speech_buffer
+	S["phrases"] 			>> speech_buffer
+	S["roundssurvived"]		>> rounds_survived
+	S["longestsurvival"]	>> longest_survival
+
 	if(isnull(speech_buffer))
 		speech_buffer = list()
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
-	S["phrases"] 	<< speech_buffer
+	S["phrases"] 			<< speech_buffer
+	S["roundssurvived"]		<< rounds_survived
+	S["longestsurvival"]	<< longest_survival
 	memory_saved = 1

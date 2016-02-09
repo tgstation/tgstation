@@ -112,9 +112,7 @@
 		src.add_fingerprint(user)
 		if(do_after(user, gibtime, target = src) && G && G.affecting && G.affecting == C && !C.buckled && !C.buckled_mob && !occupant)
 			user.visible_message("<span class='danger'>[user] stuffs [G.affecting] into the gibber!</span>")
-			if(C.client)
-				C.client.perspective = EYE_PERSPECTIVE
-				C.client.eye = src
+			C.reset_perspective(src)
 			C.loc = src
 			occupant = C
 			qdel(G)

@@ -68,7 +68,7 @@
 		ui = new(user, src, ui_key, "tank_dispenser", name, 275, 100, master_ui, state)
 		ui.open()
 
-/obj/structure/tank_dispenser/get_ui_data(mob/user)
+/obj/structure/tank_dispenser/ui_data(mob/user)
 	var/list/data = list()
 	data["oxygen"] = oxygentanks
 	data["plasma"] = plasmatanks

@@ -1,0 +1,15 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Blob mobs now heal for 2.5% of their maxhealth when blob_act()ed, basically whenever they're on blobs near a node or the core."
+  - tweak: "Blob expansion no longer has a chance to fail inversely proportional with the expanding blob's health. Blobs still, however, expand at roughly the same rate as they do currently."
+  - experiment: "Adds five new blob chemicals."
+  - rscadd: "Adds Penetrating Spines, which is sea green and does brute damage through armor. The damage can still be reduced by bio protection."
+  - rscadd: "Adds Explosive Lattice, which is dark orange and does brute damage to all mobs near the target. Explosive Lattice is very resistant to explosions."
+  - rscadd: "Adds Cyclonic Grid, which is a light blueish green and does oxygen damage, in addition to randomly throwing or pulling nearby objects."
+  - rscadd: "Adds Zombifying Feelers, which is a fleshy zombie color and does toxin damage, in addition to killing and reviving unconscious humans as blob zombies."
+  - rscadd: "Adds Regenerative Materia, which is light pink and does toxin damage, in addition to making the attacked mob think it is at full health."
+  - wip: "Tweaks some of the existing blob chemicals slightly."
+  - rscadd: "Sporing Pods can produce spores when killed by damage less than 21, from less than 20. This means lasers can produce spores."
+  - rscadd: "Reactive Gelatin has a slightly higher maximum damage and will attack the nearby area when hit with brute damage projectiles, from just when attacked by brute damage in melee."
+  - tweak: "Sorium, Dark Matter, and the new Cyclonic Grid will not throw mobs with the 'blob' faction, such as blobbernauts and spores."

@@ -262,7 +262,9 @@ Doesn't work on other aliens/AI.*/
 		for(var/atom/movable/A in user.stomach_contents)
 			user.stomach_contents.Remove(A)
 			A.loc = user.loc
-			A.update_pipe_vision()
+			if(isliving(A))
+				var/mob/M = A
+				M.reset_perspective()
 		user.visible_message("<span class='alertealien'>[user] hurls out the contents of their stomach!</span>")
 	return
 

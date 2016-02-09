@@ -157,13 +157,5 @@
 	user.update_inv_glasses()
 
 /obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)
-	if(istype(src.loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = src.loc
-		if(M.glasses == src)
-			M << "<span class='danger'>The [src] overloads and blinds you!</span>"
-			M.eye_blind = 3
-			M.eye_blurry = 5
-			M.disabilities |= NEARSIGHT
-			spawn(100)
-				M.disabilities &= ~NEARSIGHT
+	thermal_overload()
 	..()

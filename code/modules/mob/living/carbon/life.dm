@@ -7,10 +7,23 @@
 	if(!loc)
 		return
 
+	if(damageoverlaytemp)
+		damageoverlaytemp = 0
+		update_damage_hud()
+
 	if(..())
 		. = 1
+
 		for(var/obj/item/organ/internal/O in internal_organs)
 			O.on_life()
+
+	//grab processing
+	if(istype(l_hand, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = l_hand
+		G.process()
+	if(istype(r_hand, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = r_hand
+		G.process()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -94,7 +107,6 @@
 		adjustOxyLoss(1)
 		failed_last_breath = 1
 		throw_alert("oxy", /obj/screen/alert/oxy)
-
 		return 0
 
 	var/safe_oxy_min = 16
@@ -129,7 +141,8 @@
 
 	else //Enough oxygen
 		failed_last_breath = 0
-		adjustOxyLoss(-5)
+		if(oxyloss)
+			adjustOxyLoss(-5)
 		oxygen_used = breath_gases["o2"][MOLES]/6
 		clear_alert("oxy")
 
@@ -166,7 +179,7 @@
 		if(SA_partialpressure > SA_para_min)
 			Paralyse(3)
 			if(SA_partialpressure > SA_sleep_min)
-				sleeping = max(sleeping+2, 10)
+				Sleeping(max(sleeping+2, 10))
 		else if(SA_partialpressure > 0.01)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
@@ -188,12 +201,10 @@
 		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 			internal = null
 		if(internal)
-			if (internals)
-				internals.icon_state = "internal1"
+			update_internals_hud_icon(1)
 			return internal.remove_air_volume(volume_needed)
 		else
-			if (internals)
-				internals.icon_state = "internal0"
+			update_internals_hud_icon(0)
 	return
 
 
@@ -240,24 +251,21 @@
 
 		switch(radiation)
 			if(0 to 50)
-				radiation--
+				radiation = max(radiation-1,0)
 				if(prob(25))
 					adjustToxLoss(1)
-					updatehealth()
 
 			if(50 to 75)
-				radiation -= 2
+				radiation = max(radiation-2,0)
 				adjustToxLoss(1)
 				if(prob(5))
-					radiation -= 5
-				updatehealth()
+					radiation = max(radiation-5,0)
 
 			if(75 to 100)
-				radiation -= 3
+				radiation = max(radiation-3,0)
 				adjustToxLoss(3)
-				updatehealth()
-
-		radiation = Clamp(radiation, 0, 100)
+			else
+				radiation = Clamp(radiation, 0, 100)
 
 
 /mob/living/carbon/handle_chemicals_in_body()
@@ -271,8 +279,8 @@
 		if(M.loc != src)
 			stomach_contents.Remove(M)
 			continue
-		if(istype(M, /mob/living/carbon) && stat != 2)
-			if(M.stat == 2)
+		if(istype(M, /mob/living/carbon) && stat != DEAD)
+			if(M.stat == DEAD)
 				M.death(1)
 				stomach_contents.Remove(M)
 				qdel(M)
@@ -282,50 +290,21 @@
 					M.adjustBruteLoss(5)
 				nutrition += 10
 
-//This updates the health and status of the mob (conscious, unconscious, dead)
-/mob/living/carbon/handle_regular_status_updates()
-
-	if(..()) //alive
-
-		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
-			death()
-			return
-
-		if(getOxyLoss() > 50 || health <= config.health_threshold_crit)
-			Paralyse(3)
-			stat = UNCONSCIOUS
-
-		if(sleeping)
-			stat = UNCONSCIOUS
-
-		return 1
-
-/mob/living/carbon/proc/CheckStamina()
-	if(staminaloss)
-		var/total_health = (health - staminaloss)
-		if(total_health <= config.health_threshold_crit && !stat)
-			src << "<span class='notice'>You're too exhausted to keep going...</span>"
-			Weaken(5)
-			setStaminaLoss(health - 2)
-			return
-		setStaminaLoss(max((staminaloss - 2), 0))
-
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
 
-	CheckStamina()
+	if(staminaloss)
+		if(sleeping)
+			adjustStaminaLoss(-10)
+		else
+			adjustStaminaLoss(-2)
 
 	if(sleeping)
-		throw_alert("asleep", /obj/screen/alert/asleep)
 		handle_dreams()
-		adjustStaminaLoss(-10)
-		sleeping = max(sleeping-1, 0)
-		if( prob(10) && health && !hal_crit )
+		AdjustSleeping(-1)
+		if(prob(10) && health>config.health_threshold_crit)
 			emote("snore")
-	else
-		clear_alert("asleep")
-
 
 	var/restingpwr = 1 + 4 * resting
 
@@ -365,9 +344,9 @@
 
 	if(drowsyness)
 		drowsyness = max(drowsyness - restingpwr, 0)
-		eye_blurry = max(2, eye_blurry)
+		set_blurriness(max(2, eye_blurry))
 		if(prob(5))
-			sleeping += 1
+			AdjustSleeping(1)
 			Paralyse(5)
 
 	if(confused)
@@ -388,149 +367,11 @@
 		silent = max(silent-1, 0)
 
 	if(druggy)
-		druggy = max(druggy-1, 0)
+		adjust_drugginess(-1)
 
 	if(hallucination)
 		spawn handle_hallucinations()
-
-		if(hallucination<=2)
-			hallucination = 0
-		else
-			hallucination -= 2
-
-//this handles hud updates. Calls update_vision() and handle_hud_icons()
-/mob/living/carbon/handle_regular_hud_updates()
-	if(!client)
-		return 0
-
-	if(damageoverlay)
-		if(damageoverlay.overlays)
-			damageoverlay.overlays = list()
-
-		if(stat == UNCONSCIOUS)
-			//Critical damage passage overlay
-			if(health <= config.health_threshold_crit)
-				var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage0")
-				I.blend_mode = BLEND_OVERLAY //damageoverlay is BLEND_MULTIPLY
-				switch(health)
-					if(-20 to -10)
-						I.icon_state = "passage1"
-					if(-30 to -20)
-						I.icon_state = "passage2"
-					if(-40 to -30)
-						I.icon_state = "passage3"
-					if(-50 to -40)
-						I.icon_state = "passage4"
-					if(-60 to -50)
-						I.icon_state = "passage5"
-					if(-70 to -60)
-						I.icon_state = "passage6"
-					if(-80 to -70)
-						I.icon_state = "passage7"
-					if(-90 to -80)
-						I.icon_state = "passage8"
-					if(-95 to -90)
-						I.icon_state = "passage9"
-					if(-INFINITY to -95)
-						I.icon_state = "passage10"
-				damageoverlay.overlays += I
-		else
-			//Oxygen damage overlay
-			if(oxyloss)
-				var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay0")
-				switch(oxyloss)
-					if(10 to 20)
-						I.icon_state = "oxydamageoverlay1"
-					if(20 to 25)
-						I.icon_state = "oxydamageoverlay2"
-					if(25 to 30)
-						I.icon_state = "oxydamageoverlay3"
-					if(30 to 35)
-						I.icon_state = "oxydamageoverlay4"
-					if(35 to 40)
-						I.icon_state = "oxydamageoverlay5"
-					if(40 to 45)
-						I.icon_state = "oxydamageoverlay6"
-					if(45 to INFINITY)
-						I.icon_state = "oxydamageoverlay7"
-				damageoverlay.overlays += I
-
-			//Fire and Brute damage overlay (BSSR)
-			var/hurtdamage = src.getBruteLoss() + src.getFireLoss() + damageoverlaytemp
-			damageoverlaytemp = 0 // We do this so we can detect if someone hits us or not.
-			if(hurtdamage)
-				var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay0")
-				I.blend_mode = BLEND_ADD
-				switch(hurtdamage)
-					if(5 to 15)
-						I.icon_state = "brutedamageoverlay1"
-					if(15 to 30)
-						I.icon_state = "brutedamageoverlay2"
-					if(30 to 45)
-						I.icon_state = "brutedamageoverlay3"
-					if(45 to 70)
-						I.icon_state = "brutedamageoverlay4"
-					if(70 to 85)
-						I.icon_state = "brutedamageoverlay5"
-					if(85 to INFINITY)
-						I.icon_state = "brutedamageoverlay6"
-				var/image/black = image(I.icon, I.icon_state) //BLEND_ADD doesn't let us darken, so this is just to blacken the edge of the screen
-				black.color = "#170000"
-				damageoverlay.overlays += I
-				damageoverlay.overlays += black
-
-	..()
-
-	return 1
-
-/mob/living/carbon/update_sight()
-	if(stat == DEAD)
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else
-		if(!(SEE_TURFS & permanent_sight_flags))
-			sight &= ~SEE_TURFS
-		if(!(SEE_MOBS & permanent_sight_flags))
-			sight &= ~SEE_MOBS
-		if(!(SEE_OBJS & permanent_sight_flags))
-			sight &= ~SEE_OBJS
-		if(remote_view)
-			sight |= SEE_TURFS
-			sight |= SEE_MOBS
-			sight |= SEE_OBJS
-		see_in_dark = (sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : 2  //Xray flag combo
-		see_invisible = SEE_INVISIBLE_LIVING
-		if(see_override)
-			see_invisible = see_override
-
-
-/mob/living/carbon/handle_hud_icons()
-	return
-
-/mob/living/carbon/handle_hud_icons_health()
-	if(healths)
-		if (stat != DEAD)
-			switch(health)
-				if(100 to INFINITY)
-					healths.icon_state = "health0"
-				if(80 to 100)
-					healths.icon_state = "health1"
-				if(60 to 80)
-					healths.icon_state = "health2"
-				if(40 to 60)
-					healths.icon_state = "health3"
-				if(20 to 40)
-					healths.icon_state = "health4"
-				if(0 to 20)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
-
+		hallucination = max(hallucination-2,0)
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()

@@ -9,6 +9,7 @@
 	health = 25
 	maxHealth = 25
 
+	radio_key = /obj/item/device/encryptionkey/headset_eng
 	radio_channel = "Engineering"
 	bot_type = FLOOR_BOT
 	model = "Floorbot"
@@ -69,6 +70,7 @@
 /mob/living/simple_animal/bot/floorbot/get_controls(mob/user)
 	var/dat
 	dat += hack(user)
+	dat += showpai(user)
 	dat += "<TT><B>Floor Repairer Controls v1.1</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
@@ -84,7 +86,7 @@
 		dat += "Traction Magnets: <A href='?src=\ref[src];operation=anchor'>[anchored ? "Engaged" : "Disengaged"]</A><BR>"
 		dat += "Patrol Station: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
 		var/bmode
-		if (targetdirection)
+		if(targetdirection)
 			bmode = dir2text(targetdirection)
 		else
 			bmode = "disabled"
@@ -101,7 +103,7 @@
 		var/loaded = min(50-amount, T.amount)
 		T.use(loaded)
 		amount += loaded
-		if (loaded > 0)
+		if(loaded > 0)
 			user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [amount] tiles.</span>"
 			nagged = 0
 			update_icon()
@@ -152,7 +154,7 @@
 	update_controls()
 
 /mob/living/simple_animal/bot/floorbot/handle_automated_action()
-	if (!..())
+	if(!..())
 		return
 
 	if(mode == BOT_REPAIRING)
@@ -263,7 +265,7 @@
 
 /mob/living/simple_animal/bot/floorbot/proc/is_hull_breach(turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
 	var/area/t_area = get_area(t)
-	if (t_area && (t_area.name == "Space" || findtext(t_area.name, "huttle")))
+	if(t_area && (t_area.name == "Space" || findtext(t_area.name, "huttle")))
 		return 0
 	else
 		return 1
@@ -398,10 +400,10 @@
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
-	if (prob(50))
+	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
-	while (amount)//Dumps the tiles into the appropriate sized stacks
+	while(amount)//Dumps the tiles into the appropriate sized stacks
 		if(amount >= 16)
 			var/obj/item/stack/tile/plasteel/T = new (Tsec)
 			T.amount = 16

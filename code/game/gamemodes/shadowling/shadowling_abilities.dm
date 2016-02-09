@@ -416,10 +416,11 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	metabolization_rate = 100 //lel
 
 /datum/reagent/shadowling_blindness_smoke/on_mob_life(mob/living/M)
-	if(!M) M = holder.my_atom
+	if(!M)
+		M = holder.my_atom
 	if(!is_shadow_or_thrall(M))
 		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"
-		M.eye_blind = 5
+		M.set_blindness(5)
 		if(prob(25))
 			M.visible_message("<b>[M]</b> claws at their eyes!")
 			M.Stun(3)
