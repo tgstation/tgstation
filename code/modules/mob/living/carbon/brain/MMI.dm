@@ -18,13 +18,20 @@
 /obj/item/device/mmi/update_icon()
 	if(brain)
 		if(istype(brain,/obj/item/organ/internal/brain/alien))
-			icon_state = "mmi_alien"
+			if(brainmob && brainmob.stat == DEAD)
+				icon_state = "mmi_alien_dead"
+			else
+				icon_state = "mmi_alien"
 			braintype = "Xenoborg" //HISS....Beep.
 		else
-			icon_state = "mmi_full"
+			if(brainmob && brainmob.stat == DEAD)
+				icon_state = "mmi_dead"
+			else
+				icon_state = "mmi_full"
 			braintype = "Cyborg"
 	else
 		icon_state = "mmi_empty"
+
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -48,9 +55,11 @@
 		newbrain.brainmob = null
 		brainmob.loc = src
 		brainmob.container = src
-		brainmob.stat = 0
-		dead_mob_list -= brainmob //Update dem lists
-		living_mob_list += brainmob
+		if(brainmob.health > config.health_threshold_dead)
+			brainmob.stat = CONSCIOUS
+			brainmob.reset_perspective()
+			dead_mob_list -= brainmob //Update dem lists
+			living_mob_list += brainmob
 
 		newbrain.loc = src //P-put your brain in it
 		brain = newbrain
@@ -62,7 +71,7 @@
 
 		return
 
-	if(brainmob)
+	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
 		return
 	..()
@@ -75,6 +84,9 @@
 
 		brainmob.container = null //Reset brainmob mmi var.
 		brainmob.loc = brain //Throw mob into brain.
+		brainmob.stat = DEAD
+		brainmob.emp_damage = 0
+		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 		living_mob_list -= brainmob //Get outta here
 		brain.brainmob = brainmob //Set the brain to use the brainmob
 		brainmob = null //Set mmi brainmob var to null
@@ -137,11 +149,12 @@
 	else
 		switch(severity)
 			if(1)
-				brainmob.emp_damage += rand(20,30)
+				brainmob.emp_damage = min(brainmob.emp_damage + rand(20,30), 30)
 			if(2)
-				brainmob.emp_damage += rand(10,20)
+				brainmob.emp_damage = min(brainmob.emp_damage + rand(10,20), 30)
 			if(3)
-				brainmob.emp_damage += rand(0,10)
+				brainmob.emp_damage = min(brainmob.emp_damage + rand(0,10), 30)
+		brainmob.emote("alarm")
 	..()
 
 /obj/item/device/mmi/Destroy()

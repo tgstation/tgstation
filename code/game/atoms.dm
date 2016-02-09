@@ -27,9 +27,9 @@
 		return 0
 
 	//check for centcomm shuttles
-	for(var/centcom_shuttle in list("emergency", "pod1", "pod2", "pod3", "pod4", "ferry"))
-		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(centcom_shuttle)
-		if(T in M.areaInstance)
+	for(var/A in SSshuttle.mobile)
+		var/obj/docking_port/mobile/M = A
+		if(M.launch_status == ENDGAME_LAUNCHED && T in M.areaInstance)
 			return 1
 
 	//finally check for centcom itself
@@ -72,8 +72,6 @@
 		return null
 
 /atom/proc/check_eye(mob/user)
-	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
-		return 1
 	return
 
 /atom/proc/on_reagent_change()
@@ -371,3 +369,15 @@ var/list/blood_splatter_icons = list()
 /atom/Stat()
 	. = ..()
 	sleep(1)
+
+//This will be called after the map and objects are loaded
+/atom/proc/initialize()
+	return
+
+//the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
+/atom/proc/get_remote_view_fullscreens(mob/user)
+	return
+
+//the sight changes to give to the mob whose perspective is set to that atom (e.g. A mob with nightvision loses its nightvision while looking through a normal camera)
+/atom/proc/update_remote_sight(mob/living/user)
+	return

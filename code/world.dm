@@ -54,7 +54,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 	data_core = new /datum/datacore()
 
-	spawn(-1)
+	spawn(10)
 		Master.Setup()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
@@ -251,7 +251,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 		features += "hosted by <b>[config.hostedby]</b>"
 
 	if (features)
-		s += ": [list2text(features, ", ")]"
+		s += ": [jointext(features, ", ")]"
 
 	/* does this help? I do not know */
 	if (src.status != s)

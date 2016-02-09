@@ -24,7 +24,6 @@ var/datum/subsystem/air/SSair
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
 
-
 	//Special functions lists
 	var/list/turf/simulated/active_super_conductivity = list()
 	var/list/turf/simulated/high_pressure_delta = list()
@@ -214,4 +213,13 @@ var/datum/subsystem/air/SSair
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
 		if (z_level && AM.z != z_level)
 			continue
+		AM.build_network()
+
+/datum/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
+	for(var/A in atmos_machines)
+		var/obj/machinery/atmospherics/AM = A
+		AM.atmosinit()
+
+	for(var/A in atmos_machines)
+		var/obj/machinery/atmospherics/AM = A
 		AM.build_network()

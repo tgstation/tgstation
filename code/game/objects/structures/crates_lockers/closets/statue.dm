@@ -17,9 +17,7 @@
 	if(ishuman(L) || ismonkey(L) || iscorgi(L))
 		if(L.buckled)
 			L.buckled.unbuckle_mob()
-		if(L.client)
-			L.client.perspective = EYE_PERSPECTIVE
-			L.client.eye = src
+		L.reset_perspective(src)
 		L.loc = src
 		L.disabilities += MUTE
 		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
@@ -83,9 +81,7 @@
 		M.disabilities -= MUTE
 		M.take_overall_damage((M.health - health - 100),0) //any new damage the statue incurred is transfered to the mob
 		M.faction -= "mimic"
-		if(M.client)
-			M.client.eye = M.client.mob
-			M.client.perspective = MOB_PERSPECTIVE
+		M.reset_perspective(null)
 
 /obj/structure/closet/statue/take_contents()
 	return

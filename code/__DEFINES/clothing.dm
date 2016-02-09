@@ -95,3 +95,6 @@
 #define HEADCOVERSEYES		4		// feel free to realloc these numbers for other purposes
 #define MASKCOVERSMOUTH		8		// on other items, these are just for mask/head
 #define HEADCOVERSMOUTH		16
+
+#define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
+#define TINT_BLIND 3			//Threshold of tint level to obscure vision fully

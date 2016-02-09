@@ -154,9 +154,7 @@
 	if(health >= 0)
 
 		if(lying)
-			sleeping = max(0, sleeping - 5)
-			if(sleeping == 0)
-				resting = 0
+			AdjustSleeping(-5)
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
 							"<span class='notice'>You shake [src] trying to get \him up!</span>")
 		else
@@ -169,46 +167,45 @@
 
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
-/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	. = ..()
 	var/damage = intensity - check_eye_prot()
-	if(..()) // we've been flashed
+	if(.) // we've been flashed
+		if(visual)
+			return
 		if(weakeyes)
 			Stun(2)
 		switch(damage)
 			if(1)
 				src << "<span class='warning'>Your eyes sting a little.</span>"
 				if(prob(40))
-					eye_stat += 1
+					adjust_eye_stat(1)
 
 			if(2)
 				src << "<span class='warning'>Your eyes burn.</span>"
-				eye_stat += rand(2, 4)
+				adjust_eye_stat(rand(2, 4))
 
 			else
 				src << "<span class='warning'>Your eyes itch and burn severely!</span>"
-				eye_stat += rand(12, 16)
+				adjust_eye_stat(rand(12, 16))
 
 		if(eye_stat > 10)
-			eye_blind += damage
-			eye_blurry += damage * rand(3, 6)
+			set_blindness(damage)
+			set_blurriness(damage * rand(3, 6))
 
 			if(eye_stat > 20)
-				if (prob(eye_stat - 20))
-					src << "<span class='warning'>Your eyes start to burn badly!</span>"
-					disabilities |= NEARSIGHT
+				if(prob(eye_stat - 20))
+					if(become_nearsighted())
+						src << "<span class='warning'>Your eyes start to burn badly!</span>"
 				else if(prob(eye_stat - 25))
-					src << "<span class='warning'>You can't see anything!</span>"
-					disabilities |= BLIND
+					if(become_blind())
+						src << "<span class='warning'>You can't see anything!</span>"
 			else
 				src << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
 		return 1
-
 	else if(damage == 0) // just enough protection
 		if(prob(20))
 			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
-
-/mob/living/carbon/proc/tintcheck()
-	return 0
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
@@ -222,12 +219,14 @@
 
 /mob/living/carbon/proc/throw_mode_off()
 	in_throw_mode = 0
-	throw_icon.icon_state = "act_throw_off"
+	if(client && hud_used)
+		hud_used.throw_icon.icon_state = "act_throw_off"
 
 
 /mob/living/carbon/proc/throw_mode_on()
 	in_throw_mode = 1
-	throw_icon.icon_state = "act_throw_on"
+	if(client && hud_used)
+		hud_used.throw_icon.icon_state = "act_throw_on"
 
 /mob/proc/throw_item(atom/target)
 	return
@@ -322,12 +321,10 @@
 				if(do_mob(usr, src, POCKET_STRIP_DELAY))
 					if(internal)
 						internal = null
-						if(internals)
-							internals.icon_state = "internal0"
+						update_internals_hud_icon(0)
 					else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 						internal = ITEM
-						if(internals)
-							internals.icon_state = "internal1"
+						update_internals_hud_icon(1)
 
 					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>", \
 									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
@@ -439,7 +436,7 @@ var/const/GALOSHES_DONT_HELP = 4
 				handcuffed = null
 				if(buckled && buckled.buckle_requires_restraints)
 					buckled.unbuckle_mob()
-				update_inv_handcuffed()
+				update_handcuffed()
 				return
 			if(I == legcuffed)
 				legcuffed.loc = loc
@@ -464,7 +461,7 @@ var/const/GALOSHES_DONT_HELP = 4
 
 			if(I == handcuffed)
 				handcuffed = null
-				update_inv_handcuffed()
+				update_handcuffed()
 				return
 			else if(I == legcuffed)
 				legcuffed = null
@@ -480,7 +477,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		handcuffed = null
 		if (buckled && buckled.buckle_requires_restraints)
 			buckled.unbuckle_mob()
-		update_inv_handcuffed()
+		update_handcuffed()
 		if (client)
 			client.screen -= W
 		if (W)
@@ -588,32 +585,303 @@ var/const/GALOSHES_DONT_HELP = 4
 
 	add_abilities_to_panel()
 
-/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood)
+/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1)
 	if(src.is_muzzled())
-		src << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
+		if(message)
+			src << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
 		return 0
-	Stun(4)
+	if(stun)
+		Stun(4)
 	if(nutrition < 100 && !blood)
-		visible_message("<span class='warning'>[src] dry heaves!</span>", \
-						"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
-		Weaken(10)
+		if(message)
+			visible_message("<span class='warning'>[src] dry heaves!</span>", \
+							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+		if(stun)
+			Weaken(10)
 	else
-		visible_message("<span class='danger'>[src] throws up!</span>", \
-						"<span class='userdanger'>You throw up!</span>")
+		if(message)
+			visible_message("<span class='danger'>[src] throws up!</span>", \
+							"<span class='userdanger'>You throw up!</span>")
 		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 		var/turf/T = get_turf(src)
-		if(blood)
-			if(T)
-				T.add_blood_floor(src)
-			adjustBruteLoss(3)
-		else
-			if(T)
-				T.add_vomit_floor(src)
-			nutrition -= lost_nutrition
-			adjustToxLoss(-3)
+		for(var/i=0 to distance)
+			if(blood)
+				if(T)
+					T.add_blood_floor(src)
+				if(stun)
+					adjustBruteLoss(3)
+			else
+				if(T)
+					T.add_vomit_floor(src)
+				nutrition -= lost_nutrition
+				if(stun)
+					adjustToxLoss(-3)
+			T = get_step(T, dir)
+			if (is_blocked_turf(T))
+				break
 	return 1
+
+
 
 /mob/living/carbon/fully_replace_character_name(oldname,newname)
 	..()
 	if(dna)
 		dna.real_name = real_name
+
+/mob/living/carbon/update_sight()
+	if(!client)
+		return
+	if(stat == DEAD)
+		sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_OBSERVER
+		return
+
+	see_invisible = initial(see_invisible)
+	see_in_dark = initial(see_in_dark)
+	sight = initial(sight)
+
+	if(client.eye != src)
+		var/atom/A = client.eye
+		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
+			return
+
+	for(var/obj/item/organ/internal/cyberimp/eyes/E in internal_organs)
+		sight |= E.sight_flags
+		if(E.dark_view)
+			see_in_dark = max(see_in_dark,E.dark_view)
+		if(E.see_invisible)
+			see_invisible = min(see_invisible, E.see_invisible)
+
+	if(see_override)
+		see_invisible = see_override
+
+
+//to recalculate the mob's total tint from tinted equipment it's wearing.
+/mob/living/carbon/proc/update_tinttotal()
+	if(!tinted_weldhelh)
+		return
+	tinttotal = 0
+	if(istype(head, /obj/item/clothing/head))
+		var/obj/item/clothing/head/HT = head
+		tinttotal += HT.tint
+	if(wear_mask)
+		tinttotal += wear_mask.tint
+	update_vision_overlays()
+
+/mob/living/carbon/update_vision_overlays()
+	if(!client)
+		return
+
+	if(stat == DEAD) //if dead we remove all vision impairments
+		clear_fullscreens()
+		return
+
+	if(tinted_weldhelh)
+		if(tinttotal >= TINT_BLIND)
+			overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
+		else if(tinttotal >= TINT_DARKENED)
+			overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
+		else
+			clear_fullscreen("tint", 0)
+
+	if(eye_blind)
+		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+	else
+		clear_fullscreen("blind")
+
+	if(disabilities & NEARSIGHT)
+		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("nearsighted")
+
+	if(eye_blurry)
+		overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+	else
+		clear_fullscreen("blurry")
+
+	if(druggy)
+		overlay_fullscreen("high", /obj/screen/fullscreen/high)
+	else
+		clear_fullscreen("high")
+
+	if(eye_stat > 20)
+		if(eye_stat > 30)
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+		else
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("eye_damage")
+
+	if(client.eye != src)
+		var/atom/A = client.eye
+		A.get_remote_view_fullscreens(src)
+	else
+		clear_fullscreen("remote_view", 0)
+
+
+/mob/living/carbon/revive()
+	setToxLoss(0)
+	setOxyLoss(0)
+	setCloneLoss(0)
+	setBrainLoss(0)
+	setStaminaLoss(0)
+	SetParalysis(0)
+	SetStunned(0)
+	SetWeakened(0)
+	SetSleeping(0)
+	radiation = 0
+	nutrition = NUTRITION_LEVEL_FED + 50
+	bodytemperature = 310
+	eye_stat = 0
+	disabilities = 0
+	eye_blind = 0
+	eye_blurry = 0
+	ear_deaf = 0
+	ear_damage = 0
+	hallucination = 0
+	heal_overall_damage(1000, 1000)
+	ExtinguishMob()
+	fire_stacks = 0
+	suiciding = 0
+	handcuffed = initial(handcuffed)
+	for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
+		qdel(R)
+	update_handcuffed()
+	if(reagents)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			reagents.clear_reagents()
+		reagents.addiction_list = list()
+	for(var/datum/disease/D in viruses)
+		D.cure(0)
+	if(stat == DEAD)
+		dead_mob_list -= src
+		living_mob_list += src
+	stat = CONSCIOUS
+	if(ishuman(src))
+		var/mob/living/carbon/human/human_mob = src
+		human_mob.restore_blood()
+		human_mob.remove_all_embedded_objects()
+	updatehealth()
+	update_fire()
+	if(dna)
+		for(var/datum/mutation/human/HM in dna.mutations)
+			if(HM.quality != POSITIVE)
+				dna.remove_mutation(HM.name)
+	update_sight()
+	update_vision_overlays()
+	update_canmove()
+
+
+//this handles hud updates
+/mob/living/carbon/update_damage_hud()
+
+	if(!client)
+		return
+
+	if(stat == UNCONSCIOUS && health <= config.health_threshold_crit)
+		var/severity = 0
+		switch(health)
+			if(-20 to -10) severity = 1
+			if(-30 to -20) severity = 2
+			if(-40 to -30) severity = 3
+			if(-50 to -40) severity = 4
+			if(-60 to -50) severity = 5
+			if(-70 to -60) severity = 6
+			if(-80 to -70) severity = 7
+			if(-90 to -80) severity = 8
+			if(-95 to -90) severity = 9
+			if(-INFINITY to -95) severity = 10
+		overlay_fullscreen("crit", /obj/screen/fullscreen/crit, severity)
+	else
+		clear_fullscreen("crit")
+		if(oxyloss)
+			var/severity = 0
+			switch(oxyloss)
+				if(10 to 20) severity = 1
+				if(20 to 25) severity = 2
+				if(25 to 30) severity = 3
+				if(30 to 35) severity = 4
+				if(35 to 40) severity = 5
+				if(40 to 45) severity = 6
+				if(45 to INFINITY) severity = 7
+			overlay_fullscreen("oxy", /obj/screen/fullscreen/oxy, severity)
+		else
+			clear_fullscreen("oxy")
+
+		//Fire and Brute damage overlay (BSSR)
+		var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
+		if(hurtdamage)
+			var/severity = 0
+			switch(hurtdamage)
+				if(5 to 15) severity = 1
+				if(15 to 30) severity = 2
+				if(30 to 45) severity = 3
+				if(45 to 70) severity = 4
+				if(70 to 85) severity = 5
+				if(85 to INFINITY) severity = 6
+			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+		else
+			clear_fullscreen("brute")
+
+/mob/living/carbon/update_health_hud(shown_health_amount)
+	if(!client || !hud_used)
+		return
+	if(hud_used.healths)
+		if(stat != DEAD)
+			. = 1
+			if(!shown_health_amount)
+				shown_health_amount = health
+			if(shown_health_amount >= maxHealth)
+				hud_used.healths.icon_state = "health0"
+			else if(shown_health_amount > maxHealth*0.8)
+				hud_used.healths.icon_state = "health1"
+			else if(shown_health_amount > maxHealth*0.6)
+				hud_used.healths.icon_state = "health2"
+			else if(shown_health_amount > maxHealth*0.4)
+				hud_used.healths.icon_state = "health3"
+			else if(shown_health_amount > maxHealth*0.2)
+				hud_used.healths.icon_state = "health4"
+			else if(shown_health_amount > 0)
+				hud_used.healths.icon_state = "health5"
+			else
+				hud_used.healths.icon_state = "health6"
+		else
+			hud_used.healths.icon_state = "health7"
+
+/mob/living/carbon/proc/update_internals_hud_icon(internal_state = 0)
+	if(hud_used && hud_used.internals)
+		hud_used.internals.icon_state = "internal[internal_state]"
+
+/mob/living/carbon/update_stat()
+	if(status_flags & GODMODE)
+		return
+	if(stat != DEAD)
+		if(health<= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
+			death()
+			return
+		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
+			if(stat == CONSCIOUS)
+				stat = UNCONSCIOUS
+				set_blindness(1)
+				update_canmove()
+		else
+			if(stat == UNCONSCIOUS)
+				stat = CONSCIOUS
+				resting = 0
+				adjust_blindness(-1)
+				update_canmove()
+	update_damage_hud()
+	update_health_hud()
+
+//called when we get cuffed/uncuffed
+/mob/living/carbon/proc/update_handcuffed()
+	if(handcuffed)
+		drop_r_hand()
+		drop_l_hand()
+		stop_pulling()
+		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
+	else
+		clear_alert("handcuffed")
+	update_inv_handcuffed()
+	update_hud_handcuffed()

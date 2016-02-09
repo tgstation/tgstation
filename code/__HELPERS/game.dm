@@ -1,3 +1,10 @@
+//supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
+#define RANGE_TURFS(RADIUS, CENTER) \
+  block( \
+    locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
+    locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
+  )
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /proc/get_area(O)
@@ -23,6 +30,20 @@
 		if(A.name == N)
 			return A
 	return 0
+
+/proc/get_areas_in_range(dist=0, atom/center=usr)
+	if(!dist)
+		var/turf/T = get_turf(center)
+		return T ? list(T.loc) : list()
+	if(!center)
+		return list()
+
+	var/list/turfs = RANGE_TURFS(dist, center)
+	var/list/areas = list()
+	for(var/V in turfs)
+		var/turf/T = V
+		areas |= T.loc
+	return areas
 
 // Like view but bypasses luminosity check
 
@@ -423,10 +444,3 @@
 	new_character.key = G_found.key
 
 	return new_character
-
-//supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
-#define RANGE_TURFS(RADIUS, CENTER) \
-  block( \
-    locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
-    locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
-  )

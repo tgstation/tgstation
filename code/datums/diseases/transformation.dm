@@ -187,8 +187,8 @@
 	severity = BIOHAZARD
 	visibility_flags = 0
 	stage1	= list("You don't feel very well.")
-	stage2	= list("You are turning a little green.")
-	stage3	= list("<span class='danger'>Your limbs are getting oozy.</span>", "<span class='danger'>Your skin begins to peel away.</span>")
+	stage2	= list("Your skin feels a little slimy.")
+	stage3	= list("<span class='danger'>Your appendages are melting away.</span>", "<span class='danger'>Your limbs begin to lose their shape.</span>")
 	stage4	= list("<span class='danger'>You are turning into a slime.</span>")
 	stage5	= list("<span class='danger'>You have become a slime.</span>")
 	new_form = /mob/living/simple_animal/slime

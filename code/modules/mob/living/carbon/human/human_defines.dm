@@ -30,7 +30,7 @@
 	var/obj/item/shoes = null
 	var/obj/item/belt = null
 	var/obj/item/gloves = null
-	var/obj/item/glasses = null
+	var/obj/item/clothing/glasses/glasses = null
 	var/obj/item/ears = null
 	var/obj/item/wear_id = null
 	var/obj/item/r_store = null

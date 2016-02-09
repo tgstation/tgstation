@@ -150,29 +150,25 @@
 /obj/machinery/computer/holodeck/Topic(href, list/href_list)
 	if(..())
 		return
-	if(Adjacent(usr) || istype(usr, /mob/living/silicon))
-		usr.set_machine(src)
-		src.add_fingerprint(usr)
-		if(href_list["loadarea"])
-			var/typepath = text2path(href_list["loadarea"])
-			if(ispath(typepath,/area))
-				var/area/target = locate(typepath)
-				if(istype(target))
-					load_program(target)
-				else
-					world.log << "area not ready: [typepath]"
-			else
-				world.log << "bad area argument: [href_list["loadarea"]]"
-		else if("safety" in href_list)
-			var/oe = emagged
-			emagged = !text2num(href_list["safety"])
-			if(oe == emagged) return
-			if(program && !stat)
-				if(!emagged && program.restricted)
-					load_program(offline_program)
-				else
-					nerf(!emagged)
-		src.updateUsrDialog()
+	if(!Adjacent(usr) && !istype(usr, /mob/living/silicon))
+		return
+	usr.set_machine(src)
+	src.add_fingerprint(usr)
+	if(href_list["loadarea"])
+		var/areapath = text2path(href_list["loadarea"])
+		if(!ispath(areapath, /area/holodeck))
+			return
+		var/area/holodeck/area = locate(areapath)
+		if(!istype(area))
+			return
+		if((area in program_cache) || (emagged && (area in emag_programs)))
+			load_program(area)
+	else if("safety" in href_list)
+		var/safe = text2num(href_list["safety"])
+		if(!program)
+			return
+		nerf(safe)
+	src.updateUsrDialog()
 
 /obj/machinery/computer/holodeck/proc/nerf(active)
 	for(var/obj/item/I in spawned)

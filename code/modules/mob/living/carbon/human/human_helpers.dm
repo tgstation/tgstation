@@ -100,22 +100,6 @@
 	if((ears && (ears.flags & EARBANGPROTECT)) || (head && (head.flags & HEADBANGPROTECT)))
 		return 1
 
-///tintcheck()
-///Checks eye covering items for visually impairing tinting, such as welding masks
-///Checked in life.dm. 0 & 1 = no impairment, 2 = welding mask overlay, 3 = You can see jack, but you can't see shit.
-/mob/living/carbon/human/tintcheck()
-	var/tinted = 0
-	if(istype(src.head, /obj/item/clothing/head))
-		var/obj/item/clothing/head/HT = src.head
-		tinted += HT.tint
-	if(istype(src.glasses, /obj/item/clothing/glasses))
-		var/obj/item/clothing/glasses/GT = src.glasses
-		tinted += GT.tint
-	if(istype(src.wear_mask, /obj/item/clothing/mask))
-		var/obj/item/clothing/mask/MT = src.wear_mask
-		tinted += MT.tint
-	return tinted
-
 /mob/living/carbon/human/abiotic(full_body = 0)
 	if(full_body && ((l_hand && !( src.l_hand.flags&ABSTRACT )) || (r_hand && !( src.r_hand.flags&ABSTRACT )) || (back && !(back.flags&ABSTRACT)) || (wear_mask && !(wear_mask.flags&ABSTRACT)) || (head && !(head.flags&ABSTRACT)) || (shoes && !(shoes.flags&ABSTRACT)) || (w_uniform && !(w_uniform.flags&ABSTRACT)) || (wear_suit && !(wear_suit.flags&ABSTRACT)) || (glasses && !(glasses.flags&ABSTRACT)) || (ears && !(ears.flags&ABSTRACT)) || (gloves && !(gloves.flags&ABSTRACT)) ) )
 		return 1
@@ -165,3 +149,20 @@
 			prot["head"] = max(1 - I.permeability_coefficient, prot["head"])
 	var/protection = (prot["head"] + prot["arms"] + prot["feet"] + prot["legs"] + prot["groin"] + prot["chest"] + prot["hands"])/7
 	return protection
+
+/mob/living/carbon/human/can_use_guns(var/obj/item/weapon/gun/G)
+	. = ..()
+
+	if(G.trigger_guard)
+		if(src.dna.check_mutation(HULK))
+			src << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
+			return 0
+		if(NOGUNS in src.dna.species.specflags)
+			src << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
+			return 0
+
+	if(martial_art && martial_art.name == "The Sleeping Carp") //great dishonor to famiry
+		src << "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>"
+		return 0
+
+	return .

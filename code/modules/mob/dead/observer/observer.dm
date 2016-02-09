@@ -9,6 +9,9 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	density = 0
 	canmove = 0
 	anchored = 1	//  don't get pushed around
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+	see_invisible = SEE_INVISIBLE_OBSERVER
+	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
 	languages = ALL
 	var/can_reenter_corpse
@@ -27,11 +30,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 /mob/dead/observer/New(mob/body)
-	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	see_invisible = SEE_INVISIBLE_OBSERVER
-	see_in_dark = 100
 	verbs += /mob/dead/observer/proc/dead_tele
-	stat = DEAD
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage
@@ -312,11 +311,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/proc/updateghostsight()
 	if (!seedarkness)
-		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+		see_invisible = SEE_INVISIBLE_NOLIGHTING
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		if (!ghostvision)
-			see_invisible = SEE_INVISIBLE_LIVING;
+			see_invisible = SEE_INVISIBLE_LIVING
 	updateghostimages()
 
 /proc/updateallghostimages()

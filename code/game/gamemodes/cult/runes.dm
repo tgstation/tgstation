@@ -19,7 +19,7 @@ To draw a rune, use an arcane tome.
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	unacidable = 1
-	layer = TURF_LAYER
+	layer = TURF_LAYER + 0.08
 	color = rgb(255,0,0)
 	mouse_opacity = 2
 
@@ -192,8 +192,6 @@ var/list/teleport_runes = list()
 		return
 
 	var/obj/effect/rune/selected_rune = pick(potential_runes)
-	if(user.buckled)
-		user.buckled.unbuckle_mob()
 	user.visible_message("<span class='warning'>[user] vanishes in a flash of red light!</span>", \
 						 "<span class='cult'>Your vision blurs, and you suddenly appear somewhere else.</span>")
 	user.forceMove(get_turf(selected_rune))
@@ -256,8 +254,7 @@ var/list/teleport_other_runes = list()
 			return
 	else
 		target = targets[targets.len]
-	if(target.buckled)
-		target.buckled.unbuckle_mob()
+
 	target.visible_message("<span class='warning'>[target] vanishes in a flash of red light!</span>", \
 						   "<span class='cult'>Your vision blurs, and you suddenly appear somewhere else.</span>")
 	target.forceMove(get_turf(selected_rune))
@@ -580,8 +577,8 @@ var/list/teleport_other_runes = list()
 			C << "<span class='cultlarge'>You feel oily shadows cover your senses.</span>"
 			C.adjustEarDamage(0,50)
 			C.flash_eyes(1, 1)
-			C.eye_blurry += 50
-			C.eye_blind += 20
+			C.adjust_blurriness(50)
+			C.adjust_blindness(20)
 			C.silent += 10
 	qdel(src)
 
@@ -683,7 +680,7 @@ var/list/teleport_other_runes = list()
 		log_game("Talisman Imbue rune failed - no nearby runes")
 		return
 	var/obj/effect/rune/picked_rune = pick(nearby_runes)
-	var/list/split_rune_type = text2list("[picked_rune.type]", "/")
+	var/list/split_rune_type = splittext("[picked_rune.type]", "/")
 	var/imbue_type = split_rune_type[split_rune_type.len]
 	var/talisman_type = text2path("/obj/item/weapon/paper/talisman/[imbue_type]")
 	if(ispath(talisman_type))

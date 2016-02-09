@@ -1,0 +1,96 @@
+<script>
+  import { filterMulti } from 'util/filter'
+  component.exports = {
+    data: {
+      filter: ''
+    },
+    oninit () {
+      this.observe('filter', (newkey, oldkey, keypath) => {
+        const categories = this.findAll('.display:nth-child(n+4)')
+        filterMulti(categories, this.get('filter').toLowerCase())
+      }, { init: false })
+    }
+  }
+</script>
+
+<ui-display title='Cargo' button>
+  {{#partial button}}
+    {{#if config.fancy}}
+      <ui-input value='{{filter}}' placeholder='Filter...'/>
+    {{/if}}
+  {{/partial}}
+  <ui-section label='Shuttle'>
+    {{#if data.docked && !data.requestonly}}
+      <ui-button action='send'>{{data.location}}</ui-button>
+    {{else}}
+      <span>{{data.location}}</span>
+    {{/if}}
+  </ui-section>
+  <ui-section label='Points'>
+    <span>{{Math.floor(adata.points)}}</span>
+  </ui-section>
+  <ui-section label='Centcom Message'>
+      <span>{{data.message}}</span>
+  </ui-section>
+  {{#if data.loan && !data.requestonly}}
+    <ui-section label='Loan'>
+      {{#if !data.loan_dispatched}}
+        <ui-button action='loan'>Loan Shuttle</ui-button>
+      {{else}}
+        <span class='bad'>Loaned to Centcom</span>
+      {{/if}}
+    </ui-section>
+  {{/if}}
+</ui-display>
+{{#if !data.requestonly}}
+  <ui-display title='Cart' button>
+    {{#partial button}}
+      <ui-button icon='close' state='{{data.cart.length ? null : "disabled"}}' action='clear'>Clear</ui-button>
+    {{/partial}}
+    {{#each data.cart}}
+      <ui-section candystripe nowrap>
+        <div class='content'>#{{id}}</div>
+        <div class='content'>{{object}}</div>
+        <div class='content'>{{cost}} Points</div>
+        <div class='content'>
+          <ui-button icon='minus' action='remove' params='{"id": "{{id}}"}'/>
+        </div>
+      </ui-section>
+    {{else}}
+      <span>Nothing in Cart</span>
+    {{/each}}
+  </ui-display>
+{{/if}}
+<ui-display title='Requests' button>
+  {{#partial button}}
+    {{#if !data.requestonly}}
+      <ui-button icon='close' state='{{data.requests.length ? null : "disabled"}}' action='denyall'>Clear</ui-button>
+    {{/if}}
+  {{/partial}}
+  {{#each data.requests}}
+    <ui-section candystripe nowrap>
+      <div class='content'>#{{id}}</div>
+      <div class='content'>{{object}}</div>
+      <div class='content'>{{cost}} Points</div>
+      <div class='content'>By {{orderer}}</div>
+      <div class='content'>Comment: {{reason}}</div>
+      {{#if !data.requestonly}}
+        <div class='content'>
+          <ui-button icon='check' action='approve' params='{"id": "{{id}}"}'/>
+          <ui-button icon='close' action='deny' params='{"id": "{{id}}"}'/>
+        </div>
+      {{/if}}
+    </ui-section>
+    {{else}}
+      <span>No Requests</span>
+    {{/each}}
+</ui-display>
+{{#each data.supplies}}
+  <ui-display title='{{name}}'>
+    {{#each packs}}
+      <ui-section label='{{name}}' candystripe right>
+        <ui-button action='add' params='{"id": "{{id}}"}'>{{cost}} Points</ui-button>
+      </ui-section>
+    {{/each}}
+  </ui-display>
+{{/each}}

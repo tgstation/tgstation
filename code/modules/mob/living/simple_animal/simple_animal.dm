@@ -100,38 +100,38 @@
 			handle_automated_speech()
 		return 1
 
-/mob/living/simple_animal/handle_regular_status_updates()
-	if(..()) //alive
+/mob/living/simple_animal/update_stat()
+	if(status_flags & GODMODE)
+		return
+	if(stat != DEAD)
 		if(health < 1)
 			death()
-			return 0
-		return 1
 
-/mob/living/simple_animal/handle_disabilities()
-	//Eyes
-	if(disabilities & BLIND || stat)
-		eye_blind = max(eye_blind, 1)
-	else
-		if(eye_blind)
-			eye_blind = 0
-		if(eye_blurry)
-			eye_blurry = 0
-		if(eye_stat)
-			eye_stat = 0
+/mob/living/simple_animal/adjust_blindness()
+	return
 
-	//Ears
-	if(disabilities & DEAF)
-		setEarDamage(-1, max(ear_deaf, 1))
-	else if(ear_damage < 100)
-		setEarDamage(0, 0)
+/mob/living/simple_animal/adjust_blurriness()
+	return
+
+/mob/living/simple_animal/set_blindness()
+	return
+
+/mob/living/simple_animal/set_blurriness()
+	return
+
+/mob/living/simple_animal/become_blind()
+	return
+
+/mob/living/simple_animal/setEarDamage()
+	return
+
+/mob/living/simple_animal/adjustEarDamage()
+	return
 
 /mob/living/simple_animal/handle_status_effects()
 	..()
 	if(stuttering)
 		stuttering = 0
-
-	if(druggy)
-		druggy = 0
 
 /mob/living/simple_animal/proc/handle_automated_action()
 	return
@@ -148,9 +148,9 @@
 						turns_since_move = 0
 			return 1
 
-/mob/living/simple_animal/proc/handle_automated_speech()
+/mob/living/simple_animal/proc/handle_automated_speech(var/override)
 	if(speak_chance)
-		if(rand(0,200) < speak_chance)
+		if(prob(speak_chance) || override)
 			if(speak && speak.len)
 				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
 					var/length = speak.len
@@ -288,7 +288,7 @@
 	if(status_flags & GODMODE)
 		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth)
-	handle_regular_status_updates()
+	updatehealth()
 	return amount
 
 /mob/living/simple_animal/adjustBruteLoss(amount)
@@ -403,7 +403,6 @@
 
 /mob/living/simple_animal/Stat()
 	..()
-
 	if(statpanel("Status"))
 		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 		return 1
@@ -548,3 +547,21 @@
 
 /mob/living/simple_animal/proc/sentience_act() //Called when a simple animal gains sentience via gold slime potion
 	return
+
+/mob/living/simple_animal/update_sight()
+	if(!client)
+		return
+	if(stat == DEAD)
+		sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_OBSERVER
+		return
+
+	see_invisible = initial(see_invisible)
+	see_in_dark = initial(see_in_dark)
+	sight = initial(sight)
+
+	if(client.eye != src)
+		var/atom/A = client.eye
+		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
+			return

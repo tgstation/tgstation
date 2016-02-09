@@ -272,10 +272,10 @@ obj/item/ammo_box/magazine/tommygunm45
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/m12g
-	name = "shotgun magazine (12g slugs)"
+	name = "shotgun magazine (12g taser slugs)"
 	desc = "A drum magazine."
-	icon_state = "m12gb"
-	ammo_type = /obj/item/ammo_casing/shotgun
+	icon_state = "m12gs"
+	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
 	origin_tech = "combat=3;syndicate=1"
 	caliber = "shotgun"
 	max_ammo = 8
@@ -289,10 +289,10 @@ obj/item/ammo_box/magazine/tommygunm45
 	icon_state = "m12gb"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
-/obj/item/ammo_box/magazine/m12g/stun
-	name = "shotgun magazine (12g taser slugs)"
-	icon_state = "m12gs"
-	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
+/obj/item/ammo_box/magazine/m12g/slug
+	name = "shotgun magazine (12g slugs)"
+	icon_state = "m12gb"
+	ammo_type = /obj/item/ammo_casing/shotgun
 
 /obj/item/ammo_box/magazine/m12g/dragon
 	name = "shotgun magazine (12g dragon's breath)"
@@ -303,6 +303,11 @@ obj/item/ammo_box/magazine/tommygunm45
 	name = "shotgun magazine (12g bioterror)"
 	icon_state = "m12gt"
 	ammo_type = /obj/item/ammo_casing/shotgun/dart/bioterror
+
+/obj/item/ammo_box/magazine/m12g/breach
+	name = "shotgun magazine (12g breacher slugs)"
+	icon_state = "m12gbc"
+	ammo_type = /obj/item/projectile/bullet/meteorshot/weak
 
 /obj/item/ammo_box/magazine/toy
 	name = "foam force META magazine"

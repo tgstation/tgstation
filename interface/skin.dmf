@@ -1,7 +1,7 @@
 macro "default"
 	elem
 		name = "TAB"
-		command = ".winset \"mainwindow.macro=hotkeys mapwindow.map.focus=true input.background-color=#afafaf\""
+		command = ".winset \"mainwindow.macro=hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
 	elem
 		name = "CENTER+REP"
 		command = ".center"
@@ -324,7 +324,7 @@ macro "hotkeys"
 macro "robot-default"
 	elem
 		name = "TAB"
-		command = ".winset \"mainwindow.macro=robot-hotkeys mapwindow.map.focus=true input.background-color=#afafaf\""
+		command = ".winset \"mainwindow.macro=robot-hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
 	elem
 		name = "CENTER+REP"
 		command = ".center"
@@ -722,7 +722,7 @@ window "mainwindow"
 		anchor2 = 100,100
 		is-default = true
 		font-family = ""
-		font-size = 12
+		font-size = 10
 		font-style = ""
 		text-color = #000000
 		background-color = #d3b5b5
@@ -731,7 +731,7 @@ window "mainwindow"
 		type = BUTTON
 		button-type = pushbox
 		pos = 600,420
-		size = 40x20
+		size = 37x20
 		anchor1 = 100,100
 		anchor2 = none
 		is-flat = true
@@ -776,8 +776,8 @@ window "infowindow"
 		saved-params = "pos;size;is-minimized;is-maximized"
 	elem "info"
 		type = CHILD
-		pos = 0,20
-		size = 640x455
+		pos = 0,30
+		size = 640x445
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-vert = false
@@ -789,49 +789,55 @@ window "infowindow"
   elem "changelog"
 		type = BUTTON
 		button-type = pushbutton
-		pos = 0,0
-		size = 100x20
-		is-flat = true
+		pos = 16,5
+		size = 104x20
+		anchor1 = 3,0
+		anchor2 = 19,0
 		text = "Changelog"
 		command = "changelog"
 	elem "rules"
 		type = BUTTON
 		button-type = pushbutton
-		pos = 100,0
+		pos = 120,5
 		size = 100x20
-		is-flat = true
+		anchor1 = 19,0
+		anchor2 = 34,0
 		text = "Rules"
 		command = "rules"
 	elem "wiki"
 		type = BUTTON
 		button-type = pushbutton
-		pos = 200,0
+		pos = 220,5
 		size = 100x20
-		is-flat = true
+		anchor1 = 34,0
+		anchor2 = 50,0
 		text = "Wiki"
 		command = "wiki"
 	elem "forum"
 		type = BUTTON
 		button-type = pushbutton
-		pos = 300,0
+		pos = 320,5
 		size = 100x20
-		is-flat = true
+		anchor1 = 50,0
+		anchor2 = 66,0
 		text = "Forum"
 		command = "forum"
   elem "github"
 	  type = BUTTON
 	  button-type = pushbutton
-	  pos = 400,0
-	  size = 100x20
-	  is-flat = true
+		pos = 420,5
+		size = 100x20
+		anchor1 = 66,0
+		anchor2 = 81,0
 	  text = "Github"
 	  command = "github"
   elem "report-issue"
 	  type = BUTTON
 	  button-type = pushbutton
-	  pos = 500,0
-	  size = 100x20
-	  is-flat = true
+		pos = 520,5
+		size = 100x20
+		anchor1 = 81,0
+		anchor2 = 97,0
 	  text = "Report Issue"
 	  command = "report-issue"
 

@@ -102,6 +102,8 @@
 
 
 
+	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
+
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
 
 
@@ -136,7 +138,7 @@
 		if(isAI(M))
 			M.gib() //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. Forever.
 		else
-			M.Move(loc)
+			M.forceMove(loc)
 
 	if(prob(30))
 		explosion(get_turf(loc), 0, 0, 1, 3)
@@ -167,7 +169,7 @@
 			qdel(cell)
 		if(internal_tank)
 			qdel(internal_tank)
-	SSobj.processing.Remove(src)
+	SSobj.processing -= src
 	poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
@@ -252,19 +254,17 @@
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
-
 	var/internal_temp_regulation = 1
 
 	if(internal_damage)
-
 		if(internal_damage & MECHA_INT_FIRE)
 			if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && prob(5))
 				clearInternalDamage(MECHA_INT_FIRE)
 			if(internal_tank)
-				if(internal_tank.return_pressure() > internal_tank.maximum_pressure && !(internal_damage & MECHA_INT_TANK_BREACH))
-					setInternalDamage(MECHA_INT_TANK_BREACH)
 				var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
-				if(int_tank_air && int_tank_air.return_volume()>0) //heat the air_contents
+				if(int_tank_air.return_pressure() > internal_tank.maximum_pressure && !(internal_damage & MECHA_INT_TANK_BREACH))
+					setInternalDamage(MECHA_INT_TANK_BREACH)
+				if(int_tank_air && int_tank_air.return_volume() > 0) //heat the air_contents
 					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(10,15))
 			if(cabin_air && cabin_air.return_volume()>0)
 				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(10,15))
@@ -556,7 +556,6 @@
 
 
 
-
 ///////////////////////////////////
 ////////  Internal damage  ////////
 ///////////////////////////////////
@@ -816,8 +815,6 @@
 
 /obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
 	if(H && H.client && H in range(1))
-		H.reset_view(src)
-		H.stop_pulling()
 		H.forceMove(src)
 		occupant = H
 		add_fingerprint(H)
@@ -870,7 +867,7 @@
 			user << "<span class='warning'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
 		var/mob/brainmob = mmi_as_oc.brainmob
-		brainmob.reset_view(src)
+		brainmob.reset_perspective(src)
 		occupant = brainmob
 		brainmob.loc = src //should allow relaymove
 		brainmob.canmove = 1
@@ -918,14 +915,13 @@
 	occupant = null //we need it null when forceMove calls Exited().
 	if(mob_container.forceMove(newloc))//ejecting mob container
 		log_message("[mob_container] moved out.")
-		L.reset_view()
 		L << browse(null, "window=exosuit")
-
 
 		if(istype(mob_container, /obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
 				L.loc = mmi
+				L.reset_perspective()
 			mmi.mecha = null
 			mmi.update_icon()
 			L.canmove = 0
@@ -1005,6 +1001,10 @@ var/year_integer = text2num(year) // = 2013???
 /obj/mecha/allow_drop()
 	return 0
 
+/obj/mecha/update_remote_sight(mob/living/user)
+	if(occupant_sight_flags)
+		if(user == occupant)
+			user.sight |= occupant_sight_flags
 
 //////////////////////////////////////// Action Buttons ///////////////////////////////////////////////
 

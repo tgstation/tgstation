@@ -1,0 +1,4 @@
+author: neersighted
+delete-after: True
+changes: 
+  - bugfix: "Malf AI's flood ability now correctly sets vent pressure bounds -- the results are devastating... Try it!"

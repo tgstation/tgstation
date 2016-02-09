@@ -31,9 +31,6 @@
 		qdel(O)
 
 
-
-
-
 /obj/item/organ/internal/cyberimp/eyes/shield/ling
 	name = "protective membranes"
 	desc = "These variable transparency organic membranes will protect you from welders and flashes and heal your eye damage."
@@ -46,7 +43,7 @@
 
 /obj/item/organ/internal/cyberimp/eyes/shield/ling/on_life()
 	..()
-	if(owner.eye_blind || owner.eye_stat || owner.eye_blurry || (owner.disabilities & BLIND) || (owner.disabilities & NEARSIGHT))
+	if(owner.eye_blind>1 || (owner.eye_blind && owner.stat !=UNCONSCIOUS) || owner.eye_stat || owner.eye_blurry || (owner.disabilities & NEARSIGHT))
 		owner.reagents.add_reagent("oculine", 1)
 
 /obj/item/organ/internal/cyberimp/eyes/shield/ling/prepare_eat()

@@ -167,14 +167,14 @@
 	name = "circuit board (Mech Bay Power Control Console)"
 	build_path = /obj/machinery/computer/mech_bay_power_console
 	origin_tech = "programming=2;powerstorage=3"
-/obj/item/weapon/circuitboard/ordercomp
-	name = "circuit board (Supply Ordering Console)"
-	build_path = /obj/machinery/computer/ordercomp
-/obj/item/weapon/circuitboard/supplycomp
-	name = "circuit board (Supply shuttle console)"
-	build_path = /obj/machinery/computer/supplycomp
+/obj/item/weapon/circuitboard/cargo
+	name = "circuit board (Supply Console)"
+	build_path = /obj/machinery/computer/cargo
 	origin_tech = "programming=3"
-	var/contraband_enabled = 0
+	var/contraband = 0
+/obj/item/weapon/circuitboard/cargo/request
+	name = "circuit board (Supply Request Console)"
+	build_path = /obj/machinery/computer/cargo/request
 /obj/item/weapon/circuitboard/operating
 	name = "circuit board (Operating Computer)"
 	build_path = /obj/machinery/computer/operating
@@ -221,9 +221,6 @@
 	name = "circuit board (AI Integrity Restorer)"
 	build_path = /obj/machinery/computer/aifixer
 	origin_tech = "programming=3;biotech=2"
-/obj/item/weapon/circuitboard/area_atmos
-	name = "circuit board (Area Air Control)"
-	build_path = /obj/machinery/computer/area_atmos
 /*/obj/item/weapon/circuitboard/prison_shuttle
 	name = "circuit board (Prison Shuttle)"
 	build_path = /obj/machinery/computer/prison_shuttle*/
@@ -244,27 +241,10 @@
 			target_dept = dept_list.Find(choice)
 	return
 
-/obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/circuitboard/cargo/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/device/multitool))
-		var/catastasis = src.contraband_enabled
-		var/opposite_catastasis
-		if(catastasis)
-			opposite_catastasis = "STANDARD"
-			catastasis = "BROAD"
-		else
-			opposite_catastasis = "BROAD"
-			catastasis = "STANDARD"
-
-		switch( alert("Current receiver spectrum is set to: [catastasis]","Multitool-Circuitboard interface","Switch to [opposite_catastasis]","Cancel") )
-		//switch( alert("Current receiver spectrum is set to: " {(src.contraband_enabled) ? ("BROAD") : ("STANDARD")} , "Multitool-Circuitboard interface" , "Switch to " {(src.contraband_enabled) ? ("STANDARD") : ("BROAD")}, "Cancel") )
-			if("Switch to STANDARD","Switch to BROAD")
-				src.contraband_enabled = !src.contraband_enabled
-
-			if("Cancel")
-				return
-			else
-				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
-	return
+		contraband = !contraband
+		user << "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>"
 
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/screwdriver))
