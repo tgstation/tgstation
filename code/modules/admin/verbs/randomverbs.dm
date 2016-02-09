@@ -186,7 +186,7 @@
 	log_admin("[key_name(usr)] has [muteunmute] [key_name(whom)] from [mute_string]")
 	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(whom)] from [mute_string].")
 	if(C)
-		C << "You have been [muteunmute] from [mute_string]."
+		C << "You have been [muteunmute] from [mute_string] by [key_name(usr, include_name = FALSE)]."
 	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
