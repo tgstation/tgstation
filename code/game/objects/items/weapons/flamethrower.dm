@@ -221,7 +221,8 @@
 	qdel(src)
 
 /obj/item/weapon/flamehand/afterattack(atom/target, mob/user, flag)
-	if(flag) return
+	if(flag)
+		return
 	var/turf/startLoc = get_turf(src)
 	var/fireDir = get_dir(src,target)
 	var/fireDistance = get_dist(src,target)
@@ -249,8 +250,8 @@
 	if(gasmixture)
 		var/datum/gas_mixture/removed = gasmixture.remove(release_amount)
 		if(removed)
-			removed.assert_gas("plasma")
-			removed.gases["plasma"][MOLES] *= multiplier
+			if(removed.gases["plasma"][MOLES])
+				removed.gases["plasma"][MOLES] *= multiplier
 			target.assume_air(removed)
 			//Burn it based on transfered gas
 			target.hotspot_expose((removed.temperature*2) + 380,500)
