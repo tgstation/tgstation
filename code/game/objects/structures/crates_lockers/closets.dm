@@ -17,7 +17,7 @@
 	var/breakout_time = 2
 	var/lastbang
 	var/can_weld_shut = TRUE
-	var/horizontal = TRUE
+	var/horizontal = FALSE
 	var/allow_objects = FALSE
 	var/allow_dense = FALSE
 	var/max_mob_size = MOB_SIZE_HUMAN //Biggest mob_size accepted by the container
