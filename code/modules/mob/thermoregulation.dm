@@ -67,31 +67,33 @@
 
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
-			thermal_protection += THERMAL_PROTECTION_HEAD
+			thermal_protection += COVER_PROTECTION_HEAD
 		if(thermal_protection_flags & EYES)
-			thermal_protection += THERMAL_PROTECTION_EYES
+			thermal_protection += COVER_PROTECTION_EYES
 		if(thermal_protection_flags & MOUTH)
-			thermal_protection += THERMAL_PROTECTION_MOUTH
+			thermal_protection += COVER_PROTECTION_MOUTH
 		if(thermal_protection_flags & UPPER_TORSO)
-			thermal_protection += THERMAL_PROTECTION_UPPER_TORSO
+			thermal_protection += COVER_PROTECTION_UPPER_TORSO
 		if(thermal_protection_flags & LOWER_TORSO)
-			thermal_protection += THERMAL_PROTECTION_LOWER_TORSO
+			thermal_protection += COVER_PROTECTION_LOWER_TORSO
 		if(thermal_protection_flags & LEG_LEFT)
-			thermal_protection += THERMAL_PROTECTION_LEG_LEFT
+			thermal_protection += COVER_PROTECTION_LEG_LEFT
 		if(thermal_protection_flags & LEG_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_LEG_RIGHT
+			thermal_protection += COVER_PROTECTION_LEG_RIGHT
 		if(thermal_protection_flags & FOOT_LEFT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_LEFT
+			thermal_protection += COVER_PROTECTION_FOOT_LEFT
 		if(thermal_protection_flags & FOOT_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_RIGHT
+			thermal_protection += COVER_PROTECTION_FOOT_RIGHT
 		if(thermal_protection_flags & ARM_LEFT)
-			thermal_protection += THERMAL_PROTECTION_ARM_LEFT
+			thermal_protection += COVER_PROTECTION_ARM_LEFT
 		if(thermal_protection_flags & ARM_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_ARM_RIGHT
+			thermal_protection += COVER_PROTECTION_ARM_RIGHT
 		if(thermal_protection_flags & HAND_LEFT)
-			thermal_protection += THERMAL_PROTECTION_HAND_LEFT
+			thermal_protection += COVER_PROTECTION_HAND_LEFT
 		if(thermal_protection_flags & HAND_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
+			thermal_protection += COVER_PROTECTION_HAND_RIGHT
+		if(thermal_protection_flags & EARS)
+			thermal_protection += COVER_PROTECTION_EARS
 
 	return min(1, thermal_protection)
 
