@@ -639,6 +639,8 @@ var/global/mulebot_count = 0
 			if(istype(M,/mob/living/silicon/robot))
 				visible_message("<span class='danger'>[src] bumps into [M]!</span>")
 			else
+				if(paicard && client)
+					return ..()
 				add_logs(src, M, "knocked down")
 				visible_message("<span class='danger'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
@@ -649,7 +651,7 @@ var/global/mulebot_count = 0
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
-	if(client)
+	if(paicard && client)
 		return
 
 	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
