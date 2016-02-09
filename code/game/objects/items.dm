@@ -49,20 +49,8 @@
 	var/vending_cat = null// subcategory for vending machines.
 	var/list/dynamic_overlay[0] //For items which need to slightly alter their on-mob appearance while being worn.
 
-var/global/list/thermal_protection_value_list = list()
-
 /obj/item/proc/return_thermal_protection()
-	var/true_body_parts_covered = body_parts_covered
-	true_body_parts_covered &= ~(EARS|IGNORE_INV|BEARD) // these don't affect thermal conductivity so no need for them here
-	if(thermal_protection_value_list["[true_body_parts_covered]"])
-		return thermal_protection_value_list["[true_body_parts_covered]"] * (1 - src.heat_conductivity)
-	else
-		var/total_protection = 0
-		for(var/body_part in THERMAL_BODY_PARTS)
-			if (body_part & true_body_parts_covered)
-				total_protection += BODY_THERMAL_VALUE_LIST["[body_part]"]
-		thermal_protection_value_list["[true_body_parts_covered]"] = total_protection
-		return total_protection * (1 - src.heat_conductivity)
+	return return_cover_protection(body_parts_covered) * (1 - src.heat_conductivity)
 
 /obj/item/Destroy()
 	if(istype(src.loc, /mob))
