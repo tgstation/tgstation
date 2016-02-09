@@ -320,7 +320,7 @@
 	if(!ionpulse_on)
 		return
 
-	if(cell.charge < 0)
+	if(cell.charge <= 50)
 		toggle_ionpulse()
 		return
 

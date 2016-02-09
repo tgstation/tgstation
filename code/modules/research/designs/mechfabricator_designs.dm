@@ -649,8 +649,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_syndicate_module
-	name = "Cyborg Illegal Upgrades Module"
-	desc = "Allows for the construction of restricted upgrades for cyborgs"
+	name = "Cyborg Upgrade (Illegal Modules)"
 	id = "borg_syndicate_module"
 	build_type = MECHFAB
 	req_tech = list("combat" = 4, "syndicate" = 3)
