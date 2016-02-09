@@ -156,25 +156,6 @@
 			user << "\blue Right Mouse Button on obj/mob = Select target to copy"
 			user << "\blue ***********************************************************"
 
-
-/datum/buildmode/proc/pick_closest_path(value)
-	var/list/matches = get_fancy_list_of_types()
-	if (!isnull(value) && value!="")
-		matches = filter_fancy_list(matches, value)
-
-	if(matches.len==0)
-		return
-
-	var/chosen
-	if(matches.len==1)
-		chosen = matches[1]
-	else
-		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
-		if(!chosen)
-			return
-	chosen = matches[chosen]
-	return chosen
-
 /datum/buildmode/proc/change_settings(mob/user)
 	switch(mode)
 		if(BASIC_BUILDMODE)
@@ -237,10 +218,6 @@
 	cornerA = null
 	cornerB = null
 
-/datum/buildmode/proc/ClickOn(mob/user,params,A)
-	world << "[user] clicking on [A]. Interceptin"
-	return 1
-
 /proc/togglebuildmode(mob/M in player_list)
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
@@ -255,7 +232,7 @@
 			log_admin("[key_name(usr)] has entered build mode.")
 
 
-/datum/buildmode/ClickOn(user,params,atom/object) //Click Intercept
+/datum/buildmode/proc/ClickOn(user,params,atom/object) //Click Intercept
 	var/list/pa = params2list(params)
 	var/right_click = pa.Find("right")
 	var/left_click = pa.Find("left")
@@ -265,7 +242,7 @@
 	. = 1
 	switch(mode)
 		if(BASIC_BUILDMODE)
-			if(istype(object,/turf) && left_click && !alt_click && !ctrl_click )
+			if(istype(object,/turf) && left_click && !alt_click && !ctrl_click)
 				var/turf/T = object
 				if(istype(object,/turf/space))
 					T.ChangeTurf(/turf/simulated/floor/plasteel)
