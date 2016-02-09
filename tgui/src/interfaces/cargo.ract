@@ -1,24 +1,14 @@
 <script>
-  import { filterMulti } from 'util/filter'
   component.exports = {
-    data: {
-      filter: ''
-    },
-    oninit () {
-      this.observe('filter', (newkey, oldkey, keypath) => {
-        const categories = this.findAll('.display:nth-child(n+4)')
-        filterMulti(categories, this.get('filter').toLowerCase())
-      }, { init: false })
+    computed: {
+      tabs () {
+        return this.get('data.supplies').map(group => group.name)
+      }
     }
   }
 </script>
 
-<ui-display title='Cargo' button>
-  {{#partial button}}
-    {{#if config.fancy}}
-      <ui-input value='{{filter}}' placeholder='Filter...'/>
-    {{/if}}
-  {{/partial}}
+<ui-display title='Cargo'>
   <ui-section label='Shuttle'>
     {{#if data.docked && !data.requestonly}}
       <ui-button action='send'>{{data.location}}</ui-button>
@@ -85,12 +75,14 @@
       <span>No Requests</span>
     {{/each}}
 </ui-display>
-{{#each data.supplies}}
-  <ui-display title='{{name}}'>
-    {{#each packs}}
-      <ui-section label='{{name}}' candystripe right>
-        <ui-button action='add' params='{"id": "{{id}}"}'>{{cost}} Points</ui-button>
-      </ui-section>
-    {{/each}}
-  </ui-display>
-{{/each}}
+<ui-tabs tabs='{{tabs}}'>
+  {{#each data.supplies}}
+    <tab name='{{name}}'>
+      {{#each packs}}
+        <ui-section label='{{name}}' candystripe right>
+          <ui-button action='add' params='{"id": "{{id}}"}'>{{cost}} Points</ui-button>
+        </ui-section>
+      {{/each}}
+    </tab>
+  {{/each}}
+</ui-tabs>

@@ -16,6 +16,7 @@ component.exports = {
     'ui-notice': require('components/notice'),
     'ui-section': require('components/section'),
     'ui-subdisplay': require('components/subdisplay'),
+    'ui-tabs': require('components/tabs'),
   },
   events: {
     enter: require('ractive-events-keys').enter,
