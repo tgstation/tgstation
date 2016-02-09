@@ -25,6 +25,12 @@
 		return
 	return ..()
 
+
+/obj/item/weapon/tank/jetpack/verb/toggle_rockets()
+	set name = "Cycle Jet Pack Operation Mode"
+	set category = "Object"
+	cycle(usr)
+
 /obj/item/weapon/tank/jetpack
 	name = "jetpack (empty)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
