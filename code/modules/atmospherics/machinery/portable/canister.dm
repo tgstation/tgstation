@@ -9,7 +9,7 @@
 	density = 1
 
 	var/valve_open = FALSE
-	var/obj/machinery/atmospherics/components/binary/pump/pump
+	var/obj/machinery/atmospherics/components/binary/passive_gate/pump
 	var/release_log = ""
 
 	volume = 1000
