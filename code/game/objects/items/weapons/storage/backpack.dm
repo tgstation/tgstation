@@ -488,3 +488,10 @@
 	new /obj/item/ammo_box/foambox/riot(src)
 	new /obj/item/weapon/grenade/chem_grenade/bioterrorfoam(src)
 	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/c4/New()
+	..()
+	contents = list()
+	for(var/i in 1 to 10)
+		new /obj/item/weapon/c4(src)
+	return
