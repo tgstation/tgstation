@@ -292,7 +292,7 @@ SELECT
     body.eyes_green,
     body.eyes_blue,
     body.underwear,
-    body.backbag,
+    body.backbag
 FROM
     players
 INNER JOIN
@@ -660,7 +660,7 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	if(check.Execute(db))
 		if(!check.NextRow())
 			q.Add("INSERT INTO body (player_ckey,player_slot,hair_red,hair_green,hair_blue,facial_red,facial_green,facial_blue,skin_tone,hair_style_name,facial_style_name,eyes_red,eyes_green,eyes_blue,underwear,backbag) \
-					VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", ckey, slot, r_hair, g_hair, b_hair, r_facial, g_facial, b_facial, s_tone, h_style, f_style, r_eyes, g_eyes, b_eyes, underwear, backbag)
+					VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", ckey, slot, r_hair, g_hair, b_hair, r_facial, g_facial, b_facial, s_tone, h_style, f_style, r_eyes, g_eyes, b_eyes, underwear, backbag)
 			if(!q.Execute(db))
 				message_admins("Error #:[q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
