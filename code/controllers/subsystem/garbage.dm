@@ -166,7 +166,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		return FALSE
 	if(D.gc_destroyed)
 		return TRUE
-	if(SSgarbage && tobequeued && tobequeued.len && D in tobequeued)
+	if(SSgarbage && SSgarbage.tobequeued && SSgarbage.tobequeued.len && D in SSgarbage.tobequeued)
 		return  TRUE
 	return FALSE
 
