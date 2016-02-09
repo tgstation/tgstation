@@ -102,7 +102,6 @@
 	WHISPERBLOCK   = getAssignedBlock("WHISPER",    numsToAssign)
 	DIZZYBLOCK     = getAssignedBlock("DIZZY",      numsToAssign)
 	SANSBLOCK      = getAssignedBlock("SANS",       numsToAssign)
-	NOIRBLOCK      = getAssignedBlock("NOIR",       numsToAssign, good=1)
 
 
 	//
