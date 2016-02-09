@@ -99,7 +99,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 /datum/subsystem/garbage_collector/proc/QueueForQueuing(datum/A)
 	if (istype(A) && isnull(A.gc_destroyed))
- 		tobequeued += A
+		tobequeued += A
 
 /datum/subsystem/garbage_collector/proc/Queue(datum/A)
 	if (!istype(A) || !isnull(A.gc_destroyed))
