@@ -98,9 +98,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		queue.Cut(1, 2)
 
 /datum/subsystem/garbage_collector/proc/QueueForQueuing(datum/A)
- 	if (!istype(A) || !isnull(A.gc_destroyed))
-		return
- 	tobequeued += A
+	if (istype(A) && isnull(A.gc_destroyed))
+		tobequeued += A
 
 /datum/subsystem/garbage_collector/proc/Queue(datum/A)
 	if (!istype(A) || !isnull(A.gc_destroyed))
@@ -167,6 +166,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		return FALSE
 	if(D.gc_destroyed)
 		return TRUE
+	if(SSgarbage && SSgarbage.tobequeued && SSgarbage.tobequeued.len && D in SSgarbage.tobequeued)
+		return  TRUE
 	return FALSE
 
 // Default implementation of clean-up code.
