@@ -397,7 +397,6 @@
 	panel = "Mutant Powers"
 
 	charge_type = Sp_CHARGES
-	charge_max = 1
 
 	spell_flags = INCLUDEUSER | STATALLOWED
 	invocation_type = SpI_NONE
@@ -415,28 +414,11 @@
 			if(H.species && H.species.name == "Skellington")
 				to_chat(H, "<span class='warning'>You have no flesh left to melt!</span>")
 				return 0
-
-			H.visible_message("<span class='danger'>[H.name]'s flesh melts right off! Holy shit!</span>")
-			//if (H.gender == "female")
-			//	playsound(H.loc, 'female_fallscream.ogg', 50, 0)
-			//else
-			//	playsound(H.loc, 'male_fallscream.ogg', 50, 0)
-			//playsound(H.loc, 'bubbles.ogg', 50, 0)
-			//playsound(H.loc, 'loudcrunch2.ogg', 50, 0)
-			var/mob/living/carbon/human/skellington/nH = new /mob/living/carbon/human/skellington(H.loc, delay_ready_dna=1)
-			nH.lying = H.lying
-			//if(nH.has_brain())
-				//var/datum/organ/internal/brain/skellBrain = nH.internal_organs_by_name["brain"]
-				///del(skellBrain)
-			nH.real_name = H.real_name
-			nH.ckey = H.ckey
-			nH.name = "[H.name]'s skeleton"
-
-			if(H.mind)
-				H.mind.transfer_to(nH) //Transfer mind to the new body - to regain vampire/changeling/antag status!
-			//H.decomp_stage = 4
-			H.drop_all()
-			H.gib(1)
+			if(H.set_species("Skellington"))
+				H.regenerate_icons()
+				H.visible_message("<span class='danger'>[H.name]'s flesh melts right off! Holy shit!</span>")
+				H.drop_all()
+				gibs(H.loc, H.viruses, H.dna)
 		else
 			M.visible_message("<span class='danger'>[usr.name] melts into a pile of bloody viscera!</span>")
 			M.drop_all()
