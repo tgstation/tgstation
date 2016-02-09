@@ -33,8 +33,8 @@
 	w_class = 4
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	var/gas_type = "o2"
-	var/on = 0
-	var/stabilization_on = 0
+	var/on = FALSE
+	var/turbo = FALSE
 
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
@@ -63,16 +63,16 @@
 	if(user.incapacitated())
 		return
 
-	if(!on && !stabilization_on)
+	if(!on)
 		turn_on()
 		user << "<span class='notice'>You turn the thrusters on.</span>"
-	else if(on && !stabilization_on)
-		stabilization_on = TRUE
-		user << "<span class='notice'>You turn the stabilizers on.</span>"
-	else if(on && stabilization_on)
+	else if(!turbo)
+		turbo = TRUE
+		user << "<span class='notice'>You engage turbo mode.</span>"
+	else
 		turn_off()
-		stabilization_on = FALSE
-		user << "<span class='notice'>You turn the thrusters and stabilizers off.</span>"
+		turbo = FALSE
+		user << "<span class='notice'>You turn jetpack off.</span>"
 
 /obj/item/weapon/tank/jetpack/proc/turn_on()
 	on = TRUE
