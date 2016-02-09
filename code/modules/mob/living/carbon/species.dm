@@ -38,8 +38,8 @@ var/global/list/whitelisted_species = list("Human")
 
 	var/primitive											// Lesser form, if any (ie. monkey for humans)
 	var/tail												// Name of tail image in species effects icon file.
-	var/language = "Sol Common"								// Default racial language, if any.
-	var/default_language = "Sol Common"						// Default language is used when 'say' is used without modifiers.
+	var/language = "Galactic Common"								// Default racial language, if any.
+	var/default_language = "Galactic Common"						// Default language is used when 'say' is used without modifiers.
 	var/attack_verb = "punch"								// Empty hand hurt intent verb.
 	var/punch_damage = 0									// Extra empty hand attack damage.
 	var/punch_throw_range = 0
@@ -702,4 +702,3 @@ var/global/list/whitelisted_species = list("Human")
 	burn_mod = 2.5 //treeeeees
 
 	move_speed_mod = 7
-

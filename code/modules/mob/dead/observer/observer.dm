@@ -95,7 +95,6 @@
 					name = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
-
 	if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
 	loc = T
 
@@ -105,6 +104,7 @@
 
 	start_poltergeist_cooldown() //FUCK OFF GHOSTS
 	..()
+
 
 /mob/dead/observer/Destroy()
 	..()
@@ -504,7 +504,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(targetarea && targetarea.anti_ethereal && !isAdminGhost(usr))
 			to_chat(usr, "<span class='sinister'>You can sense a sinister force surrounding that mob, your spooky body itself refuses to follow it.</span>")
 			return
-		if(targetloc.holy && ((!invisibility) || (mind in ticker.mode.cult)))
+		if(targetloc && targetloc.holy && ((!invisibility) || (mind in ticker.mode.cult)))
 			to_chat(usr, "<span class='warning'>You cannot follow a mob standing on holy grounds!</span>")
 			return
 		if(target != src)

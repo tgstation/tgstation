@@ -8,7 +8,6 @@
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 	species_fit = list("Vox")
-	body_parts_covered = HEAD|MOUTH
 	can_flip = 1
 
 

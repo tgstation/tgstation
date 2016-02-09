@@ -24,7 +24,7 @@
 	return amount
 
 /obj/item/weapon/paper_bin/MouseDrop(over_object)
-	if(!usr.restrained() && !usr.stat && (usr.contents.Find(src) || Adjacent(usr)))
+	if(!usr.incapacitated() && (usr.contents.Find(src) || Adjacent(usr)))
 		if(!istype(usr, /mob/living/carbon/slime) && !istype(usr, /mob/living/simple_animal))
 			if(istype(over_object,/obj/screen)) //We're being dragged into the user's UI...
 				var/obj/screen/O = over_object

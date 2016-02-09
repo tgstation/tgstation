@@ -471,10 +471,10 @@
 	return
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
 /mob/living/carbon/human/proc/get_visible_name()
-	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) && !istype(wear_mask,/obj/item/clothing/mask/gas/golem))	//Wearing a mask which hides our face, use id-name if possible
+	if( wear_mask && (is_slot_hidden(wear_mask.body_parts_covered,HIDEFACE)) && !istype(wear_mask,/obj/item/clothing/mask/gas/golem))	//Wearing a mask which hides our face, use id-name if possible
 		return get_id_name("Unknown")
-	if( head && (head.flags_inv&HIDEFACE) )
-		return get_id_name("Unknown")		//Likewise for hats
+	if( head && (is_slot_hidden(head.body_parts_covered,HIDEFACE)))
+		return get_id_name("Unknown")	//Likewise for hats
 	if(mind && mind.vampire && (VAMP_SHADOW in mind.vampire.powers) && mind.vampire.ismenacing)
 		return get_id_name("Unknown")
 	var/face_name = get_face_name()
@@ -561,7 +561,7 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 	var/pickpocket = 0
-	var/able = (!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && Adjacent(usr))
+	var/able = (!usr.incapacitated() && in_range(src, usr) && Adjacent(usr))
 
 	if(href_list["item"])
 		if (!able) return
@@ -1098,7 +1098,7 @@
 	return 1
 
 /mob/living/carbon/human/proc/get_visible_gender()
-	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
+	if(wear_suit && is_slot_hidden(wear_suit.body_parts_covered,HIDEJUMPSUIT) && ((is_slot_hidden(head.body_parts_covered,HIDEMASK)) || is_slot_hidden(wear_mask.body_parts_covered,HIDEMASK)))
 		return NEUTER
 	return gender
 

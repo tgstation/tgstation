@@ -144,9 +144,10 @@
 		cell_component.installed = 1
 
 	playsound(loc, startup_sound, 75, 1)
-	add_language(LANGUAGE_SOL_COMMON)
+	add_language(LANGUAGE_GALACTIC_COMMON)
 	add_language(LANGUAGE_TRADEBAND)
 	add_language(LANGUAGE_VOX, 0)
+	add_language(LANGUAGE_HUMAN, 0)
 	add_language(LANGUAGE_ROOTSPEAK, 0)
 	add_language(LANGUAGE_GREY, 0)
 	add_language(LANGUAGE_CLATTER, 0)
@@ -156,7 +157,8 @@
 	add_language(LANGUAGE_SKRELLIAN, 0)
 	add_language(LANGUAGE_GUTTER, 0)
 	add_language(LANGUAGE_MONKEY, 0)
-	default_language = all_languages[LANGUAGE_SOL_COMMON]
+	add_language(LANGUAGE_MOUSE, 0)
+	default_language = all_languages[LANGUAGE_GALACTIC_COMMON]
 
 // setup the PDA and its name
 /mob/living/silicon/robot/proc/setup_PDA()
@@ -1429,6 +1431,8 @@
 	set name = "Activate Held Object"
 	set category = "IC"
 	set src = usr
+
+	if(attack_delayer.blocked()) return
 
 	if(stat == DEAD) return
 	var/obj/item/W = get_active_hand()

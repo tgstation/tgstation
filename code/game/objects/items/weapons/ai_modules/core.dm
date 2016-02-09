@@ -31,7 +31,7 @@
 		"You must protect your own existence as long as such does not conflict with the First or Second Law."
 	)
 
-/******************** NanoTrasen ********************/
+/******************** Nanotrasen ********************/
 // Bay stuff
 /obj/item/weapon/aiModule/core/nanotrasen
 	modname = "NT Default"

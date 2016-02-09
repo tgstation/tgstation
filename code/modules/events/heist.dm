@@ -88,7 +88,7 @@ var/global/list/datum/mind/raiders = list()  //Antags.
 		//vox.languages = HUMAN // Removing language from chargen.
 		vox.flavor_text = ""
 		vox.add_language("Vox-pidgin")
-		vox.remove_language(LANGUAGE_SOL_COMMON)
+		vox.remove_language(LANGUAGE_GALACTIC_COMMON)
 		vox.h_style = "Short Vox Quills"
 		vox.f_style = "Shaved"
 		for(var/datum/organ/external/limb in vox.organs)

@@ -37,7 +37,7 @@
 			return 0
 
 		if(ticker && ticker.mode && ticker.mode.name == "blob")
-			to_chat(usr, "Law uploads have been disabled by NanoTrasen!")
+			to_chat(usr, "Law uploads have been disabled by Nanotrasen!")
 			return 0
 
 		if (current.stat == 2 || current.control_disabled == 1)
@@ -82,7 +82,7 @@
 				return
 
 			if(ticker && ticker.mode && ticker.mode.name == "blob")
-				to_chat(usr, "Law uploads have been disabled by NanoTrasen!")
+				to_chat(usr, "Law uploads have been disabled by Nanotrasen!")
 				return
 
 			if (current.stat == 2 || current.control_disabled == 1)

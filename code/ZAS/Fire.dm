@@ -450,15 +450,15 @@ datum/gas_mixture/proc/calculate_firelevel(var/turf/T)
 			continue
 
 		if( C.max_heat_protection_temperature >= last_temperature )
-			if(C.body_parts_covered & HEAD)
+			if(!is_slot_hidden(C.body_parts_covered,FULL_HEAD))
 				head_exposure = 0
-			if(C.body_parts_covered & UPPER_TORSO)
+			if(!is_slot_hidden(C.body_parts_covered,UPPER_TORSO))
 				chest_exposure = 0
-			if(C.body_parts_covered & LOWER_TORSO)
+			if(!is_slot_hidden(C.body_parts_covered,LOWER_TORSO))
 				groin_exposure = 0
-			if(C.body_parts_covered & LEGS)
+			if(!is_slot_hidden(C.body_parts_covered,LEGS))
 				legs_exposure = 0
-			if(C.body_parts_covered & ARMS)
+			if(!is_slot_hidden(C.body_parts_covered,ARMS))
 				arms_exposure = 0
 	//minimize this for low-pressure enviroments
 	var/mx = 5 * firelevel/zas_settings.Get(/datum/ZAS_Setting/fire_firelevel_multiplier) * min(pressure / ONE_ATMOSPHERE, 1)

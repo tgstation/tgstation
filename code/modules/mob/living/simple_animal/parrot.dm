@@ -215,7 +215,7 @@
 /mob/living/simple_animal/parrot/Topic(href, href_list)
 
 	//Can the usr physically do this?
-	if(!usr.canmove || usr.stat || usr.restrained() || !usr.Adjacent(loc))
+	if(usr.incapacitated() || !usr.Adjacent(loc))
 		return
 
 	//Is the usr's mob type able to do this? (lolaliens)
@@ -393,8 +393,8 @@
 	if(client || stat)
 		return //Lets not force players or dead/incap parrots to move
 
-	if(!isturf(src.loc) || !canmove || locked_to)
-		return //If it can't move, dont let it move. (The locked_to check probably isn't necessary thanks to canmove)
+	if(!isturf(src.loc) || !canmove)
+		return //If it can't move, dont let it move.
 
 
 //-----SPEECH

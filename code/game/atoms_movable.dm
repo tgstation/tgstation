@@ -43,10 +43,6 @@
 	areaMaster = get_area_master(src)
 	if(flags & HEAR && !ismob(src))
 		getFromPool(/mob/virtualhearer, src)
-	var/icon/I = icon(icon, icon_state, dir)
-	if(I)
-		I.MapColors(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)
-		src.tempoverlay = I
 
 	locked_atoms = list()
 

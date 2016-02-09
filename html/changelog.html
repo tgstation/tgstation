@@ -80,6 +80,107 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">2016.02.08</h2>
+			<h3 class="author">9600bauds updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed Diona nymphs talking in monkey language, rather than in rootspeak.</li>
+			</ul>
+			<h3 class="author">DrCelt updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Adds a noir genetics block which the detective starts roundstart with if he has selected the "Gumshoe" alternate title. This block turns the client black and white except for blood.</li>
+			</ul>
+			<h3 class="author">NigglyWiggly updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Adds pajama hats, which you can now find in the PJ closet</li>
+				<li class="rscadd">Adds greaser outfits from the suit dispenser.</li>
+				<li class="imageadd">Adds casual hoodie and jeans or casual hoodie and skirt.</li>
+				<li class="imageadd">Adds a keyhole sweater</li>
+				<li class="imageadd">Adds winter casualwear and spring casualwear to the wintercrate and mixet closet respectively</li>
+			</ul>
+			<h3 class="author">Sood updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Facehuggers will no longer fight eachother over a person's face.</li>
+				<li class="tweak">Facehuggers will no longer impregnate hosts that are already impregnated.</li>
+				<li class="tweak">Facehuggers now have a health var. Currently this is only affected by bullets. They will die in most of the ways they died before.</li>
+				<li class="rscadd">Facehuggers will now acquire targets and walk to them, and hug them when they're close enough.</li>
+			</ul>
+
+			<h2 class="date">2016.02.05</h2>
+			<h3 class="author">9600bauds updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">When making bottles at a Chemmaster, you will now be prompted to input how many bottles you want to make before being prompted to name the bottles. This is to keep consistency with making pills (prevent bottles named '3'), and also allows the bottles to be automatically named after many units of chemicals they contain.</li>
+				<li class="rscadd">You can now alt-click Chemmasters and All-in-One Grinders to eject their beaker, if they have one loaded.</li>
+			</ul>
+
+			<h2 class="date">2016.02.04</h2>
+			<h3 class="author">DrCelt updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Merged flags_inv and body_parts_covered</li>
+				<li class="bugfix">Fixed clothing being contaminated undesirably</li>
+				<li class="bugfix">Fixes a bunch of unreported bugs due to the nature of the PR varying from the HoP jacket the riot suit and the stallhelm. If there is a bug where a sprite was overriding where it should not have this SHOULD fix that</li>
+				<li class="experimental">This SHOULD also prevent that type of bug ever happening again. Please bugreport if you notice any sprite errors</li>
+				<li class="rscadd">Adds is_slot_hidden proc</li>
+				<li class="tweak">Splits head thermal conductivity into three parts</li>
+				<li class="bugfix">Fixed a bug where agent gas masks would conceal identities when their mask should not have.</li>
+				<li class="bugfix">Fixed a bug where bloody hands were always visible on examine</li>
+				<li class="tweak">You now lose heat to an environment if you have an exposed limb, no matter how wrapped up the other limbs are.</li>
+			</ul>
+
+			<h2 class="date">2016.02.03</h2>
+			<h3 class="author">9600bauds updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed not being able to point at things, use some alt-click interactions, strip people, toggle your mask, and maybe use a few other verbs while on a vehicle or buckled to a chair.</li>
+			</ul>
+			<h3 class="author">Sood updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Sol Common is now blue, and uses its old syllables (Mandarin+English)</li>
+				<li class="tweak">Galactic Common is still the same color and font, but uses the Esperanto-esque syllables Sol originally used.</li>
+				<li class="bugfix">Cryo no longer gives cold burns.</li>
+			</ul>
+			<h3 class="author">Unid updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Hypnotise costs 10 blood (instead of 0), bat form costs 30 blood (instead of 0), chiroptean screech costs 30 blood (instead of 10), shadowstep costs 20 blood (instead of 0)</li>
+			</ul>
+
+			<h2 class="date">2016.02.02</h2>
+			<h3 class="author">9600bauds updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Better solution to the 'bone explodes immediately after being mended' syndrome. You will now once again be able to fix bones no matter the damage level of the limb. If the limb is so damaged that it would immediately break again after setting the bone, it will now heal to just under bone fracture levels. Note that this effectively lets you heal brute damage on dead people.</li>
+			</ul>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added a bunch of wiki links for every antag roles in the Character Setup window. Also separated actual antag roles from non-antag special roles.</li>
+			</ul>
+			<h3 class="author">Sood updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Sol Common is now Galactic Common.</li>
+				<li class="rscadd">Added a new human-unique language, Sol Common. (Doesn't actually look a thing like Esperanto but that's what it's based off of)</li>
+			</ul>
+			<h3 class="author">xpcybic updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">The following changes apply to Taxistation.</li>
+				<li class="tweak">Cameras at each taxi dock will now appear first in the security and AI camera list.</li>
+				<li class="bugfix">Fixed access on bar maintenance.</li>
+				<li class="bugfix">Fixed floating, broken APC in solars near cargo.</li>
+				<li class="bugfix">Fixed emergency shuttle brig not counting against the "escape alive and free" objective.</li>
+				<li class="bugfix">Fixed many, many cases of airless plating where there should be air - and some normal plating where there should be airless.</li>
+				<li class="bugfix">Fixed barricade walls on derelict where there should be window barricades.</li>
+				<li class="bugfix">Scientists now properly have access to xenoarch wing and research shuttle.</li>
+				<li class="bugfix">Fixed cabling on antimatter engine SMES.</li>
+				<li class="bugfix">Fixed med/silicon dock APC not being wired to grid.</li>
+			</ul>
+
+			<h2 class="date">2016.01.31</h2>
+			<h3 class="author">DrCelt updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fixed a bug where you could duplicate cables by rapidclicking light switches</li>
+				<li class="bugfix">Fixed a bug where a vampire could use glare while incapacitated</li>
+				<li class="bugfix">fixed a bug where you could duplicate cables by constructing and deconstructing telecomms servers</li>
+				<li class="tweak">You now pick up bells instead of using them when they are unanchored.</li>
+				<li class="bugfix">Fixed a bug where deskbells could be anchored inside of pockets or bags.</li>
+				<li class="bugfix">fixed a bug where you would get nullspace'd if you were in a spacepod and it were to be destroyed in some manner</li>
+			</ul>
+
 			<h2 class="date">2016.01.30</h2>
 			<h3 class="author">Zth updated:</h3>
 			<ul class="changes bgimages16">
@@ -1767,75 +1868,6 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<ul class="changes bgimages16">
 				<li class="bugfix">Jukebox can be wrenched to shuttle floors now</li>
 				<li class="bugfix">Fixed behaviour of AI-controlled status displays</li>
-			</ul>
-
-			<h2 class="date">2015.09.08</h2>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Feral Bees no cannot move through one-directional windows anymore.</li>
-				<li class="bugfix">Thirteen Loko cans no longer spawn empty</li>
-			</ul>
-
-			<h2 class="date">2015.09.07</h2>
-			<h3 class="author">Unid updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Asteroid shuttle on taxistation no longer requires science access to use</li>
-				<li class="tweak">Taxi computers can no longer be unwrenched</li>
-				<li class="tweak">All computers can now be wrenched on shuttles</li>
-			</ul>
-
-			<h2 class="date">2015.09.06</h2>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed fireballs and magic missiles. They now move like they used to.</li>
-				<li class="tweak">Doubled the price of hookshots from Mining vendors (from 1500 to 3000).</li>
-				<li class="tweak">Upped the Engineering tech requirement for Hookshots from 3 to 5.</li>
-				<li class="tweak">Increased the material cost of hookshots (from Iron=5000 to Iron=75000,Diamond=500. That means 20 sheets of iron and 1/4 sheet of diamond)</li>
-				<li class="tweak">Increased the material cost of gravity well gun (from Gold=7000,Glass=5000,Diamond=3000,Silver=7000,Uranium=12000 to Gold=10000,Glass=37500,Diamond=6000,Silver=10000,Uranium=26000. That means 5 sheets of gold, 10 sheets of glass, 3 sheets of diamonds, 5 sheets of silver and 13 sheets of uranium)</li>
-			</ul>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Skellingtons can now eat 1 food, raw meat.</li>
-			</ul>
-			<h3 class="author">Unid updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added a bunch of AI status images</li>
-				<li class="tweak">The AI can individually change any status display, making it display either text, image, emergency shuttle timer or supply shuttle timer.</li>
-			</ul>
-
-			<h2 class="date">2015.09.05</h2>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Crack the ack, skellingtons no longer selectable from round start.</li>
-				<li class="experiment">Skellingtons can no longer eat or drink things and they are just bones</li>
-				<li class="experiment">Skellingtons cannot be injected with anything, only way for them to get chems is being touched by them so smoke, cryo, or splashing</li>
-				<li class="experiment">Skellingtons have no skin or blood so you can skip skin and blood vessel related steps in surgery for them</li>
-				<li class="experiment">Changed movespeed modifiers, hyperzine and other magic sanic sources no longer make you the fastest around and merely give you a -10 tally for each you have so that means if you're fucked enough by cold pain or whatever you can still possibly move slower than you'd like while hopped up on stims. Diona's base speed is unchanged, skellingtons have a +3 modifier which makes them a bit less than half as slow as diona, muton have a +1 modifier.</li>
-			</ul>
-
-			<h2 class="date">2015.09.03</h2>
-			<h3 class="author">BarneyGumball updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Aliens now have a HUD show their current Plasma amount and maximum Plasma they can store.</li>
-				<li class="rscadd">Changelings now have a HUD showing their current amount of chems and total absorbed genomes.</li>
-			</ul>
-			<h3 class="author">PJB3005 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Strange rocks should work again.</li>
-				<li class="bugfix">You can no longer use airlock electronics on multiple windoor assemblies at once.</li>
-				<li class="bugfix">The CE's advanced toolbelt should be able to hold RCDs/RPDs/tile painters again.</li>
-			</ul>
-
-			<h2 class="date">2015.09.02</h2>
-			<h3 class="author">Unid updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Teeth of aliens and some other animals may be harvested now</li>
-				<li class="rscadd">Hitting a human in the mouth with a heavy object or punching him has a chance to knock some of his teeth out. Currently this doesn't negatively affect the victim.</li>
-				<li class="rscadd">Aliens and monkeys can be butchered and skinned. In addition, aliens can be declawed.</li>
-				<li class="tweak">Butchering non-animals (aliens and monkeys) requires you to use a new Butcher verb, and doesn't destroy their corpses.</li>
-				<li class="tweak">Species with claws (tajara) or beaks (vox) can butcher things faster, and can do so without any tools</li>
-				<li class="tweak">Examining now tells you whether a mob has been butchered in any way (including skinning)</li>
-				<li class="rscadd">Using 5 cable coils on an alien claw or a stack of teeth will create a necklace</li>
 			</ul>
 		</div>
 		<!--

@@ -135,9 +135,9 @@ var/savefile/panicfile
 	master_controller = new /datum/controller/game_controller()
 
 	spawn(1)
-		for(var/turf/T in world)
-			T.initialize()
-			turfs += T
+		turfs = new/list(maxx*maxy*maxz)
+		world.log << "DEBUG: TURFS LIST LENGTH [turfs.len]"
+		build_turfs_list()
 
 		processScheduler.deferSetupFor(/datum/controller/process/ticker)
 		processScheduler.setup()
@@ -475,3 +475,11 @@ proc/establish_old_db_connection()
 		return 1
 
 #undef FAILED_DB_CONNECTION_CUTOFF
+/world/proc/build_turfs_list()
+	var/count = 0
+	for(var/Z = 1 to world.maxz)
+		for(var/turf/T in block(locate(1,1,Z), locate(world.maxx, world.maxy, Z)))
+			if(!(count % 50000)) sleep(world.tick_lag)
+			count++
+			T.initialize()
+			turfs[count] = T

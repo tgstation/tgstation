@@ -86,7 +86,7 @@
 	var/server
 	var/banappeals
 	var/wikiurl = "http://baystation12.net/wiki/index.php?title=Main_Page"
-	var/vgws_base_url = "http://ss13.pomf.se" // No hanging slashes.
+	var/vgws_base_url = "http://ss13.moe" // No hanging slashes.
 	var/forumurl = "http://baystation12.net/forums/"
 
 	var/media_base_url = "" // http://ss13.nexisonline.net/media

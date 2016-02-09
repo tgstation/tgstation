@@ -6,6 +6,8 @@
 	var/storage_slots = 2 //The number of storage slots in this container.
 	var/obj/screen/storage/boxes = null
 	var/obj/screen/close/closer = null
+	body_parts_covered = FULL_TORSO|ARMS
+
 
 /obj/item/clothing/suit/storage/proc/return_inv()
 
@@ -161,7 +163,7 @@
 		if (!( istype(over_object, /obj/screen) ))
 			return ..()
 		playsound(get_turf(src), "rustle", 50, 1, -5)
-		if ((!( M.restrained() ) && !( M.stat ) && M.wear_suit == src))
+		if (M.wear_suit == src && !M.incapacitated())
 			if (over_object.name == "r_hand")
 				M.u_equip(src,0)
 				M.put_in_r_hand(src)

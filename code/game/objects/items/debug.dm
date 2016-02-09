@@ -14,7 +14,7 @@
 	w_class = 1
 
 	var/on=1
-	var/lang_id=LANGUAGE_SOL_COMMON
+	var/lang_id=LANGUAGE_GALACTIC_COMMON
 	var/list/things_to_say=list("FUCK","SHIT","PISS","BALLS","DICK","CUNT","ASS","PISS")
 
 /obj/item/debug/screamer/New(var/_loc)

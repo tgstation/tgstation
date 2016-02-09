@@ -2,7 +2,7 @@
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 50)
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/up = 0 //So Unathi helmets play nicely with the weldervision check.
-	heat_conductivity = INS_HELMET_HEAT_CONDUCTIVITY
+	heat_conductivity = SPACESUIT_HEAT_CONDUCTIVITY
 	species_restricted = list("Unathi")
 
 /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
@@ -358,8 +358,6 @@
 	desc = "A modernized pressure suit for Vox who've decided to work for the winning team."
 	icon_state = "vox-pressure-normal"
 	item_state = "vox-pressure-normal"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/weapon/pen,/obj/item/device/flashlight/pen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 10)
 	species_restricted = list("Vox")
@@ -369,7 +367,6 @@
 	icon_state = "vox-pressure-normal"
 	item_state = "vox-pressure-normal"
 	desc = "A very alien-looking helmet for Nanotrasen-hired Vox."
-	flags_inv = HIDEMASK
 	species_restricted = list("Vox")
 
 /obj/item/clothing/suit/space/vox/civ/old/engineer

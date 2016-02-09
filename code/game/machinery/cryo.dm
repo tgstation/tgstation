@@ -69,7 +69,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 		return
 	if(O.loc == user) //no you can't pull things out of your ass
 		return
-	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+	if(user.incapacitated() || user.lying) //are you cuffed, dying, lying, stunned or other
 		return
 	if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
 		return
@@ -108,7 +108,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 				user.pulling = null
 
 /obj/machinery/atmospherics/unary/cryo_cell/MouseDrop(over_object, src_location, var/turf/over_location, src_control, over_control, params)
-	if(!ishuman(usr) && !isrobot(usr) || occupant == usr)
+	if(!ishuman(usr) && !isrobot(usr) || occupant == usr || usr.incapacitated() || usr.lying)
 		return
 	if(!occupant)
 		to_chat(usr, "<span class='warning'>The sleeper is unoccupied!</span>")
@@ -132,6 +132,10 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
+
+	if(stat & NOPOWER)
+		on = 0
+
 	update_icon()
 	if(!node)
 		return
@@ -375,7 +379,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	if(occupant)
 		if(occupant.stat == 2)
 			return
-		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
+		occupant.bodytemperature += 20*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
 		occupant.stat = 1
 		if(occupant.bodytemperature < T0C)
@@ -490,7 +494,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	set name = "Move Inside"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.restrained() || usr.isUnconscious() || usr.weakened || usr.stunned || usr.paralysis || usr.resting || usr.locked_to) //are you cuffed, dying, lying, stunned or other
+	if(usr.incapacitated() || usr.lying || usr.locked_to) //are you cuffed, dying, lying, stunned or other
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)

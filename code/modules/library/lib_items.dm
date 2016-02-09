@@ -94,7 +94,7 @@
 	if(contents.len)
 		var/obj/item/weapon/book/choice = input("Which book would you like to remove from \the [src]?") as null|obj in contents
 		if(choice)
-			if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting || get_dist(user, src) > 1)
+			if(user.incapacitated() || user.lying || get_dist(user, src) > 1)
 				return
 			if(!user.get_active_hand())
 				user.put_in_hands(choice)

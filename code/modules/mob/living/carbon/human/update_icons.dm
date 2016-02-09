@@ -742,7 +742,7 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_s_store(var/update_icons=1)
 	overlays -= obj_overlays[SUIT_STORE_LAYER]
-	if(s_store && !check_hidden_body_flags(HIDESUITSTORAGE))
+	if(s_store)
 		var/t_state = s_store.item_state
 		if(!t_state)	t_state = s_store.icon_state
 		var/obj/Overlays/O = obj_overlays[SUIT_STORE_LAYER]
@@ -1038,7 +1038,7 @@ var/global/list/damage_icon_parts = list()
 	//overlays_standing[TAIL_LAYER] = null
 	overlays -= obj_overlays[TAIL_LAYER]
 	if(species.tail && species.flags & HAS_TAIL)
-		if(!wear_suit || !(wear_suit.flags_inv & HIDEJUMPSUIT) && !istype(wear_suit, /obj/item/clothing/suit/space))
+		if(!wear_suit || !is_slot_hidden(wear_suit.body_parts_covered,HIDEJUMPSUIT))
 			var/obj/Overlays/O = obj_overlays[TAIL_LAYER]
 			O.icon = 'icons/effects/species.dmi'
 			O.icon_state = "[species.tail]_s"
@@ -1094,16 +1094,31 @@ var/global/list/damage_icon_parts = list()
 	if(!W)
 		return
 
-	if(W.flags_inv & HIDEHAIR)
+	if(is_slot_hidden(W.body_parts_covered,HIDEHEADHAIR) || is_slot_hidden(W.body_parts_covered,HIDEBEARDHAIR))
 		update_hair()
-	if(W.flags_inv & (HIDEGLOVES | HIDEMASK))
+	if(is_slot_hidden(W.body_parts_covered,(HIDEMASK)))
 		update_inv_wear_mask()
+	if(is_slot_hidden(W.body_parts_covered,(HIDEGLOVES)))
 		update_inv_gloves()
-	if(W.flags_inv & HIDESHOES)
+	if(is_slot_hidden(W.body_parts_covered,HIDESHOES))
 		update_inv_shoes()
-	if(W.flags_inv & (HIDEJUMPSUIT | HIDEEYES))
+	if(is_slot_hidden(W.body_parts_covered,(HIDEJUMPSUIT)))
 		update_inv_w_uniform()
+	if(is_slot_hidden(W.body_parts_covered,(HIDEEYES)))
 		update_inv_glasses()
-	if(W.flags_inv & (HIDESUITSTORAGE | HIDEEARS))
-		update_inv_s_store()
+	if(is_slot_hidden(W.body_parts_covered, (HIDEEARS)))
 		update_inv_ears()
+
+proc/is_slot_hidden(var/clothes, var/slot = -1,var/ignore_slot = 0)
+	if(!clothes)
+		return 0
+	var/true_body_parts_covered = clothes
+	if(slot == -1)
+		slot = true_body_parts_covered
+	if(true_body_parts_covered & IGNORE_INV)
+		true_body_parts_covered = 0
+	if(true_body_parts_covered & ignore_slot)
+		true_body_parts_covered ^= ignore_slot
+	if((true_body_parts_covered & slot) == slot)
+		return 1
+	return 0

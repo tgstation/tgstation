@@ -147,7 +147,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	icon_state = "cig"
 	item_state = "cig"
 	w_class = 1
-	body_parts_covered = null
+	body_parts_covered = 0
 	attack_verb = list("burnt", "singed")
 	heat_production = 1000
 	light_color = LIGHT_COLOR_FIRE

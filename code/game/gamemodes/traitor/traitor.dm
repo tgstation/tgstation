@@ -168,6 +168,8 @@
 	to_chat(traitor.current, {"
 	<SPAN CLASS='big bold center red'>You are now a traitor!</SPAN>
 	"})
+	var/wikiroute = role_wiki[ROLE_TRAITOR]
+	to_chat(traitor.current, "<span class='info'><a HREF='?src=\ref[traitor.current];getwiki=[wikiroute]'>(Wiki Guide)</a></span>")
 
 	var/obj_count = 1
 

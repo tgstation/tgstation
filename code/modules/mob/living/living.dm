@@ -1050,7 +1050,7 @@ Thanks.
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
-	if(src.isUnconscious() || !src.canmove || src.restrained())
+	if(src.incapacitated())
 		return 0
 	if(!..())
 		return 0

@@ -336,6 +336,7 @@
 							feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(H))
 							add_spell(new/spell/aoe_turf/conjure/construct,H)
+							H.add_language("Cult")
 							temp = "You have purchased a belt full of soulstones and have learned the artificer spell."
 							max_uses--
 						if("armor")
@@ -557,7 +558,6 @@
 		to_chat(user, "<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>")
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
 		magichead.canremove = 0		//curses!
-		magichead.flags_inv = null	//so you can still see their face
 		magichead.voicechange = 1	//NEEEEIIGHH
 		user.drop_from_inventory(user.wear_mask)
 		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)

@@ -32,7 +32,9 @@
 	setGender(NEUTER)
 	dna.mutantrace = "plant"
 	greaterform = "Diona"
+	alien = 1
 	add_language("Rootspeak")
+	default_language = all_languages["Rootspeak"]
 
 //Verbs after this point.
 
@@ -126,7 +128,7 @@
 /mob/living/carbon/monkey/diona/say_understands(var/mob/other,var/datum/language/speaking = null)
 	if(other) other = other.GetSource()
 	if (istype(other, /mob/living/carbon/human))
-		if(speaking && speaking.name == "Sol Common")
+		if(speaking && speaking.name == "Galactic Common")
 			if(donors.len >= 2) // They have sucked down some blood.
 				return 1
 	return ..()
@@ -163,13 +165,15 @@
 	if(donors.len == 5)
 		ready_evolve = 1
 		to_chat(src, "<span class='good'>You feel ready to move on to your next stage of growth.</span>")
-	else if(donors.len == 2)
-		to_chat(src, "<span class='good'>You feel your awareness expand, and realize you know how to understand the creatures around you.</span>")
 	else if(donors.len == 4)
 		to_chat(src, "<span class='good'>You feel your vocal range expand, and realize you know how to speak with the creatures around you.</span>")
-		add_language("Sol Common")
+		add_language("Galactic Common")
+		default_language = all_languages["Galactic Common"]
 	else if(donors.len == 3)
 		to_chat(src, "<span class='good'>More blood seeps into you, continuing to expand your growing collection of memories.</span>")
+	else if(donors.len == 2)
+		to_chat(src, "<span class='good'>You feel your awareness expand, and realize you know how to understand the creatures around you.</span>")
+		//say_understands() effectively lets us understand common language at this point
 	else
 		to_chat(src, "<span class='good'>The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind.</span>")
 

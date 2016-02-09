@@ -54,8 +54,7 @@
 	desc = "It's unspeakably stylish"
 	icon_state = "hasturhood"
 	flags = FPRINT
-	flags_inv = HIDEHAIR
-	body_parts_covered = HEAD|EARS
+	body_parts_covered = EARS|HEAD
 
 /obj/item/clothing/head/nursehat
 	name = "nurse's hat"
@@ -71,7 +70,6 @@
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags = FPRINT
 	body_parts_covered = FULL_HEAD
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/cueball
@@ -79,9 +77,8 @@
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
 	flags = FPRINT
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 	item_state="cueball"
-	flags_inv = HIDEHAIR
 
 /obj/item/clothing/head/that
 	name = "sturdy top-hat"
@@ -89,7 +86,6 @@
 	icon_state = "tophat"
 	item_state = "that"
 	flags = FPRINT
-	flags_inv = 0
 
 
 /obj/item/clothing/head/greenbandana
@@ -98,7 +94,6 @@
 	icon_state = "greenbandana"
 	item_state = "greenbandana"
 	flags = FPRINT
-	flags_inv = 0
 
 /obj/item/clothing/head/cardborg
 	name = "cardborg helmet"
@@ -106,8 +101,7 @@
 	icon_state = "cardborg_h"
 	item_state = "cardborg_h"
 	flags = FPRINT
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-	body_parts_covered = FULL_HEAD
+	body_parts_covered = FULL_HEAD|BEARD
 	starting_materials = list(MAT_CARDBOARD = 3750)
 	w_type=RECYK_MISC
 
@@ -117,8 +111,7 @@
 	icon_state = "justicered"
 	item_state = "justicered"
 	flags = FPRINT
-	flags_inv = HIDEHAIR
-	body_parts_covered = HEAD|EYES|MOUTH
+	body_parts_covered = FULL_HEAD|BEARD
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
@@ -233,7 +226,7 @@
 	icon_state = "witch"
 	item_state = "witch"
 	flags = FPRINT
-	flags_inv = HIDEHAIR
+	body_parts_covered = EARS|HEAD
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/chicken
@@ -242,7 +235,7 @@
 	icon_state = "chickenhead"
 	item_state = "chickensuit"
 	flags = FPRINT
-	flags_inv = HIDEHAIR
+	body_parts_covered = FULL_HEAD|BEARD
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/bearpelt
@@ -251,7 +244,7 @@
 	icon_state = "bearpelt"
 	item_state = "bearpelt"
 	flags = FPRINT
-	flags_inv = HIDEHEADHAIR
+	body_parts_covered = EARS|HEAD
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/bearpelt/real
@@ -264,8 +257,7 @@
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
 	flags = FPRINT
-	body_parts_covered = FULL_HEAD
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	body_parts_covered = FULL_HEAD|BEARD
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/batman
@@ -274,8 +266,7 @@
 	icon_state = "bmhead"
 	item_state = "bmhead"
 	flags = FPRINT
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
-	body_parts_covered = HEAD|EYES|EARS
+	body_parts_covered = HEAD|EARS|EYES
 
 /obj/item/clothing/head/stalhelm
 	name = "Stalhelm"
@@ -283,7 +274,6 @@
 	icon_state = "stalhelm"
 	item_state = "stalhelm"
 	flags = FPRINT
-	flags_inv = HIDEEARS|HIDEHEADHAIR
 
 /obj/item/clothing/head/panzer
 	name = "Panzer Cap"
@@ -298,7 +288,6 @@
 	icon_state = "officercap"
 	item_state = "officercap"
 	flags = FPRINT
-	flags_inv = HIDEEARS|HIDEHEADHAIR
 
 /obj/item/clothing/head/russobluecamohat
 	name = "russian blue camo beret"
@@ -313,7 +302,6 @@
 	icon_state = "russofurhat"
 	item_state = "russofurhat"
 	flags = FPRINT
-	flags_inv = HIDEEARS|HIDEHEADHAIR
 
 /obj/item/clothing/head/lordadmiralhat
 	name = "lord admiral's hat"
@@ -327,7 +315,6 @@
 	icon_state = "jesterhat"
 	item_state = "jesterhat"
 	flags = FPRINT
-	flags_inv = HIDEEARS|HIDEHEADHAIR
 
 /obj/item/clothing/head/libertyhat
 	name = "liberty top hat"
@@ -393,6 +380,18 @@
 	icon_state = "xmashat"
 	item_state = "xmashat"
 	desc = "A crappy paper hat that you are REQUIRED to wear."
-	flags_inv = 0
 	flags = FPRINT
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/head/pajamahat
+	name = "pajama hat"
+	desc = "This looks pretty damn comfortable."
+	heat_conductivity = INS_HELMET_HEAT_CONDUCTIVITY
+
+/obj/item/clothing/head/pajamahat/red
+	icon_state = "pajamahat_red"
+	item_state = "pajamahat_red"
+
+/obj/item/clothing/head/pajamahat/blue
+	icon_state = "pajamahat_blue"
+	item_state = "pajamahat_blue"

@@ -109,6 +109,7 @@ var/LOUDBLOCK = 0
 var/WHISPERBLOCK = 0
 var/DIZZYBLOCK = 0
 var/SANSBLOCK = 0
+var/NOIRBLOCK = 0
 
 
 

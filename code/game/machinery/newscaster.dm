@@ -243,7 +243,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(NEWSCASTER_MENU)
 
 				dat += {"Welcome to Newscasting Unit #[src.unit_no].<BR> Interface & News networks Operational.
-					<BR><FONT SIZE=1>property of Nanotransen Inc</FONT>"}
+					<BR><FONT SIZE=1>property of Nanotrasen Inc</FONT>"}
 				if(news_network.wanted_issue)
 					dat+= "<HR><A href='?src=\ref[src];view_wanted=1'>Read Wanted Issue</A>"
 
@@ -1042,7 +1042,7 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 			if(NEWSPAPER_TITLE_PAGE) //Cover
 
 				dat += {"<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>
-					<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen� Space Facilities</FONT></div><HR>"}
+					<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen Space Facilities</FONT></div><HR>"}
 				if(isemptylist(src.news_content))
 					if(src.important_message)
 						dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [src.pages+2]\]</FONT><BR></ul>"

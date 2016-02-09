@@ -55,17 +55,15 @@
 			return
 		if (contents.len)
 			src.visible_message("<span class='warning'>[src] slams into [hit_atom] spilling its contents!</span>")
-		for (var/obj/item/clothing/mask/cigarette/O in contents)
-			contents -= O
-			O.loc = src.loc
+		for (var/obj/item/O in contents)
+			O.forceMove(src.loc)
 		icon_state = icon_empty
 	return ..()
 
 /obj/item/ashtray/proc/die()
 	src.visible_message("<span class='warning'>[src] shatters spilling its contents!</span>")
-	for (var/obj/item/clothing/mask/cigarette/O in contents)
-		contents -= O
-		O.loc = src.loc
+	for (var/obj/item/O in contents)
+		O.forceMove(src.loc)
 	icon_state = icon_broken
 
 /obj/item/ashtray/plastic

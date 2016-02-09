@@ -140,7 +140,7 @@
 	if(!user.client) return // Player has already been made into another mob before this one spawned, so don't make a new one
 	var/turf/T = get_turf(src)
 
-	var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi/soviet(T)
+	var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi(T)
 	if(!M)	return
 
 	M.invisibility = 0
@@ -163,7 +163,7 @@
 
 	M.mmi = new /obj/item/device/mmi(M)
 	M.mmi.transfer_identity(user)
-	//M.Namepick()
+	M.Namepick()
 	M.updatename()
 
 	qdel(user)

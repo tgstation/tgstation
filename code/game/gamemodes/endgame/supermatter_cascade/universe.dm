@@ -144,7 +144,10 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 		tcheck(80,1)
 
 /datum/universal_state/supermatter_cascade/OverlayAndAmbientSet()
+	var/count = 0
 	for(var/turf/T in turfs)
+		count++
+		if(!(count % 50000)) sleep(world.tick_lag)
 		if(istype(T, /turf/space))
 			T.overlays += "end01"
 		else
@@ -153,6 +156,8 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 		tcheck(80,1)
 
 	for(var/atom/movable/lighting_overlay/L in all_lighting_overlays)
+		count++
+		if(!(count % 50000)) sleep(world.tick_lag)
 		if(L.z != map.zCentcomm)
 			L.update_lumcount(0.15, 0.5, 0)
 		tcheck(80,1)

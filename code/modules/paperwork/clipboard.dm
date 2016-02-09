@@ -22,7 +22,7 @@
 		if(!(istype(over_object, /obj/screen) ))
 			return ..()
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
 					M.u_equip(src,0)
