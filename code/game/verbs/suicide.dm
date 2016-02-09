@@ -11,8 +11,9 @@
 		var/obj/item/held_item = get_active_hand()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
-			if(damagetype == 0)
+			if(damagetype == NODIE)
 				return //can't kill yourself with that, try something else.
+			suiciding = 1
 			if(damagetype)
 				var/damage_mod = 1
 				switch(damagetype) //Sorry about the magic numbers.
