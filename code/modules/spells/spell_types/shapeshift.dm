@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift
-	name = "Wild Shapeshift"
-	desc = "Take on the shape of an animal for a time to use their natural abilities. Once you've made your choice it cannot be changed."
+	name = "Shapechange"
+	desc = "Take on the shape of another for a time to use their natural abilities. Once you've made your choice it cannot be changed."
 	clothes_req = 0
 	human_req = 0
 	charge_max = 200
