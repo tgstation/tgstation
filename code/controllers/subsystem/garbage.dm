@@ -166,6 +166,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		return FALSE
 	if(D.gc_destroyed)
 		return TRUE
+	if(SSgarbage && tobequeued && tobequeued.len && D in tobequeued)
+		return  TRUE
 	return FALSE
 
 // Default implementation of clean-up code.
