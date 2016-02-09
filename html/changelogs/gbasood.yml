@@ -1,2 +1,6 @@
 author: Sood
-changes: []
+changes:
+ - tweak: Masks do not protect against facehuggers. Wear a face-covering helmet such as a RIG helmet or bio hood.
+ - experiment: Helmets have a 50% chance to be removed on facehugger attacks. This is a temporary balance change, but may stay if it this turns out to be enough.
+ - bugfix: Facehugger toys will not forcefully remove headgear or path on their own. They will still leap at you if you walk next to them though.
+ - bugfix: Sterile/non-real facehuggers will not protect against virile or real facehuggers.
