@@ -58,6 +58,10 @@
 	set category = "Object"
 	set src in range(0)
 
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
+
 	if(!loaded_item)
 		return
 	else
@@ -72,6 +76,10 @@
 	set name = "Empty blunderbuss fuel"
 	set category = "Object"
 	set src in range(0)
+
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
 
 	if(!fuel_level)
 		return
@@ -89,10 +97,17 @@
 		if(istype(W,prohibited_items[i]))
 			item_prohibited = 1
 	if(!loaded_item && istype(W,/obj/item) && !istype(W,/obj/item/weapon/reagent_containers) && !item_prohibited)
-		if(!user.drop_item(W, src))
-			to_chat(user, "<span class='warning'>You can't let go of \the [W]!</span>")
-			return 1
-		loaded_item = W
+		if(istype(W, /obj/item/stack))
+			var/obj/item/stack/S = W
+			S.use(1)
+			var/Y = W.type
+			new Y(src)
+			loaded_item = Y
+		else
+			if(!user.drop_item(W, src))
+				to_chat(user, "<span class='warning'>You can't let go of \the [W]!</span>")
+				return 1
+			loaded_item = W
 		user.visible_message("[user] jams \the [W] into the muzzle of the [src].","You jam \the [W] into the muzzle of \the [src].")
 		update_verbs()
 	else if(!loaded_item && item_prohibited)

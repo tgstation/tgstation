@@ -65,6 +65,7 @@
 		to_chat(user, "<span class='info'>\The [src]'s size suggests it has [shots_remaining] shots stored.</span>")
 
 /obj/item/weapon/gun/projectile/hivehand/process()
+	set waitfor = 0
 	if(shots_remaining >= 10)
 		return
 	if(has_shot)

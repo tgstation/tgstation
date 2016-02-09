@@ -32,18 +32,19 @@
 	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 50)
 	w_type = RECYK_ELECTRONIC
 	var/stored_charge = 0
-	var/maximum_charge = null
+	var/maximum_charge = 30000000
+	var/capacitor_type = "capacitor"
 
 /obj/item/weapon/stock_parts/capacitor/examine(mob/user)
 	..()
 	if(stored_charge)
 		to_chat(user, "<span class='notice'>\The [src.name] is charged to [stored_charge]W.</span>")
-		if(stored_charge == maximum_charge)
+		if(stored_charge >= maximum_charge)
 			to_chat(user, "<span class='info'>\The [src.name] has maximum charge!</span>")
 
 /obj/item/weapon/stock_parts/capacitor/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
-		if(src.loc == user)
+		if(!istype(src.loc, /turf))
 			to_chat(user, "<span class='warning'>\The [src] needs to be on the ground to be secured.</span>")
 			return
 		if(!istype(src.loc, /turf/simulated/floor)) //Prevent from anchoring this to shuttles / space
@@ -51,7 +52,7 @@
 			return
 		to_chat(user, "You discharge \the [src] and secure it to the floor.")
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-		switch(name)
+		switch(capacitor_type)
 			if("capacitor")
 				new /obj/machinery/power/secured_capacitor(get_turf(src.loc))
 			if("advanced capacitor")
@@ -101,6 +102,8 @@
 	origin_tech = "powerstorage=3"
 	rating = 2
 	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 50)
+	maximum_charge = 200000000
+	capacitor_type = "advanced capacitor"
 
 /obj/item/weapon/stock_parts/scanning_module/adv
 	name = "advanced scanning module"
@@ -143,6 +146,8 @@
 	origin_tech = "powerstorage=5;materials=4"
 	rating = 3
 	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 50)
+	maximum_charge = 1000000000
+	capacitor_type = "super capacitor"
 
 /obj/item/weapon/stock_parts/scanning_module/adv/phasic
 	name = "phasic scanning module"

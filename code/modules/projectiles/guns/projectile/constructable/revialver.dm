@@ -68,6 +68,10 @@
 	set category = "Object"
 	set src in range(0)
 
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
+
 	if(!cylinder)
 		return
 
@@ -86,6 +90,10 @@
 	set name = "Spin cylinder"
 	set category = "Object"
 	set src in range(0)
+
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
 
 	if(!cylinder)
 		return

@@ -238,6 +238,10 @@
 	set category = "Object"
 	set src in range(0)
 
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
+
 	if(current_blunt)
 		to_chat(usr, "<span class='notice'>You empty the crushed [blunt_name] out of \the [src].</span>")
 		not_burned_out = 1
@@ -368,6 +372,10 @@
 	set name = "Empty pipe"
 	set category = "Object"
 	set src in range(0)
+
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
 
 	if(current_blunt)
 		to_chat(usr, "<span class='notice'>You empty the crushed [blunt_name] out of \the [src].</span>")

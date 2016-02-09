@@ -120,6 +120,10 @@
 	set category = "Object"
 	set src in range(0)
 
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
+
 	if(!loaded_matter_bin)
 		return
 	else if(stored_items.len)

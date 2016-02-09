@@ -36,6 +36,10 @@
 	set category = "Object"
 	set src in oview(1)
 
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
+
 	if(!loaded_item)
 		return
 	else
@@ -49,6 +53,10 @@
 	set name = "Empty gunpowder"
 	set category = "Object"
 	set src in oview(1)
+
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
 
 	if(!fuel_level)
 		return

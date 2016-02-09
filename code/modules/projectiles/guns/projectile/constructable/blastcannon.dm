@@ -43,6 +43,14 @@
 		desc = "A pipe welded onto a gun stock. You're not sure how you could even use this."
 	update_icon()
 
+/obj/item/weapon/gun/projectile/blastcannon/pickup(mob/user as mob)
+	..()
+	update_icon()
+
+/obj/item/weapon/gun/projectile/blastcannon/dropped(mob/user as mob)
+	..()
+	update_icon()
+
 /obj/item/weapon/gun/projectile/blastcannon/update_icon()
 	overlays.len = 0
 	if(!bomb || !bomb_appearance)
@@ -50,6 +58,7 @@
 
 	var/image/bomb_icon = image('icons/obj/weaponsmithing.dmi', src, "nothing")
 	bomb_icon.appearance = bomb_appearance
+	bomb_icon.layer = src.layer
 	bomb_icon.pixel_x = 2
 	bomb_icon.pixel_y = 9
 

@@ -89,6 +89,10 @@
 	set category = "Object"
 	set src in range(0)
 
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
+
 	if(!rod_loaded)
 		return
 
@@ -106,6 +110,10 @@
 	set category = "Object"
 	set src in range(0)
 
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
+
 	if(!capacitor)
 		return
 
@@ -122,6 +130,10 @@
 	set name = "Remove rail assembly"
 	set category = "Object"
 	set src in range(0)
+
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
 
 	if(!rails)
 		return

@@ -835,6 +835,10 @@
 	set category = "Object"
 	set src in range(1)
 
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
+
 	charge = 0
 	power_states.len = 0
 	to_chat(usr, "<span class='notice'>You discharge \the [src.name]'s stored energy.</span>")
