@@ -117,6 +117,7 @@
 
 /obj/item/weapon/nullrod/scythe
 	icon_state = "scythe0"
+	item_state = "scythe0"
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
 	w_class = 4
