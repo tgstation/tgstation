@@ -71,6 +71,15 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 
+/obj/item/clothing/head/squallwalker
+	name = "squallwalker helmet"
+	desc = "is it black with white stripes, or white with black stripes?"
+	icon_state = "squallwalker"
+	item_state = "squallwalker"
+	flags = BLOCKHAIR
+	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+
 /obj/item/clothing/head/snowman
 	name = "Snowman Head"
 	desc = "A ball of white styrofoam. So festive."

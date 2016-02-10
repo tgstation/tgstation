@@ -165,6 +165,14 @@
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/squallwalker
+	name = "squallwalker suit"
+	desc = "Made made from some sort cheap plastic. "
+	icon_state = "squallwalker"
+	item_state = "squallwalker"
+	body_parts_covered = CHEST|GROIN
+	flags_inv = HIDEJUMPSUIT
+
 /obj/item/clothing/suit/snowman
 	name = "snowman outfit"
 	desc = "Two white spheres covered in white glitter. 'Tis the season."
