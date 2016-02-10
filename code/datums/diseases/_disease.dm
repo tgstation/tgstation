@@ -63,7 +63,6 @@ var/list/diseases = subtypesof(/datum/disease)
 	var/list/required_organs = list()
 	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
-	var/cureCheck = 1
 
 
 
@@ -93,10 +92,10 @@ var/list/diseases = subtypesof(/datum/disease)
 
 	. = cures.len
 	for(var/C_id in cures)
-		if(!affected_mob.has_reagent(C_id))
+		if(!affected_mob.reagents.has_reagent(C_id))
 			.--
 	if(!. || (needs_all_cures && . < cures.len))
-	return 0
+		return 0
 
 /datum/disease/proc/spread(atom/source, force_spread = 0)
 	if((spread_flags & SPECIAL || spread_flags & NON_CONTAGIOUS || spread_flags & BLOOD) && !force_spread)
