@@ -2,7 +2,7 @@
   component.exports = {
     computed: {
       tabs () {
-        return this.get('data.supplies').map(group => group.name)
+        return Object.keys(this.get('data.supplies'))
       }
     }
   }
