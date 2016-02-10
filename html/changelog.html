@@ -80,6 +80,13 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">2016.02.10</h2>
+			<h3 class="author">Zth updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="soundadd">Six sounds added.</li>
+				<li class="rscadd">Resisting fires now makes you roll on the floor.</li>
+			</ul>
+
 			<h2 class="date">2016.02.09</h2>
 			<h3 class="author">9600bauds updated:</h3>
 			<ul class="changes bgimages16">
@@ -1799,60 +1806,6 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 				<li class="tweak">Bike horns now play their honk sound when attacking</li>
 				<li class="tweak">Suiciding with a bike horn now gibs the player and honks</li>
 				<li class="tweak">Bike horns can now be honked at mobs at a distance</li>
-			</ul>
-
-			<h2 class="date">2015.09.18</h2>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Foam, Sprays and the like can now move through tables, racks, computers, vending machines, and R&D machines.</li>
-				<li class="bugfix">Fixes ranged simple_animals' projectiles not moving (basilisks, ranged russians/pirates/hivebots/syndicate agents/xenomorphs).</li>
-				<li class="bugfix">Fixes xenomorph queen's neurotoxin projectiles not moving.</li>
-				<li class="tweak">Viscerators now ignore the player who threw the grenade. If the player is a nuke op, they ignore other nuke ops as well.</li>
-				<li class="tweak">Viscerators now have their sprite change its offset dynamically, just like bees.</li>
-				<li class="tweak">Viscerators now have 66% chance to avoid projectiles (they'll still be hit if you clicked right on their sprite when you fired)</li>
-				<li class="bugfix">Singularities no longer try to pull lighting_overlays, and turfs no longer count toward the 100-items-pull-per-tick cap. AKA Fixed the "large singularities don't pull anything" bug.</li>
-				<li class="tweak">Sending bags of holding into singularities now creates EMPs instead of explosions. On top of that, it removes two thirds of the singularity's energy. If the Singularity is stage two or less (under 500 energy left) it will delete the singularity instead. In other words, Bags of Holding can now reliably destroy singularities, without blowing yourself up at the same time.</li>
-				<li class="tweak">Explosions themselves still affect singularities like they used to (increase their energy, with a small chance of deleting them instead)</li>
-				<li class="tweak">Hookshots no longer cause Beepsky or ED-209 bots to chase their users.</li>
-			</ul>
-			<h3 class="author">Duny updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="wip">Added some scrubbers and vents and removed a few firelocks to avoid confusing situations for air alarms and make cleaning specific areas less annoying.</li>
-				<li class="bugfix">Fixed that one firelock in medbay facing the wrong direction.</li>
-				<li class="tweak">Expanded the mechanics workshop, added disposals and maintenance access.</li>
-				<li class="tweak">Mechanics now have access to the specific engineering airlocks required to access telecomms.</li>
-				<li class="tweak">Removed the security officer locker in arrivals checkpoint.</li>
-				<li class="bugfix">The EVA doors leading to the bridge and heads of staff meeting room now properly require head access.</li>
-				<li class="wip">Attempted to make the threatment area in medbay less busy by compressing genetics and moving cryo away from the beds and closer to the entrance. Removed phalanximine from the map.</li>
-				<li class="bugfix">The AI core no longer eats half of the abandoned boxing ring.</li>
-				<li class="tweak">The abandoned incinerator has been given its own (empty) APC and area, similar to the diner. The output pump leading into space has been moved inside.</li>
-				<li class="bugfix">Added a request console to the CE's office.</li>
-				<li class="tweak">Added ion rifles and shotguns along with some ammo to the armory.</li>
-				<li class="tweak">Added a defibrilator to both stations on the asteroid.</li>
-				<li class="tweak">Added a message monitor console in the server room. Moved the accounts database there.</li>
-				<li class="wip">Moved robotics down to make room for a proper entrance to science, sadly this means robotics and rnd are no longer next to each other though still close. The door will also open to those with upload access and allows access to the AI upload. The core itself is still accessible only through robotics (or an additional door hack).</li>
-			</ul>
-			<h3 class="author">Intigracy updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Firing small items out of a fire extinguisher now takes the object's speed into account, rather than a default value for everything.</li>
-			</ul>
-			<h3 class="author">N3X15 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="wip">Borer Overhaul - Borers reworked to be beneficial symbiotes.</li>
-				<li class="wip">Borers have a new Evolve verb to unlock new chems and host abilities. Unlockables can have prerequisites.</li>
-				<li class="bugfix">Borers cannot suicide as host anymore.</li>
-				<li class="bugfix">Borers cannot kill their hosts anymore.</li>
-				<li class="bugfix">Captive brains can hear their host.</li>
-				<li class="bugfix">Borers can hear and see their host's emotes.</li>
-				<li class="bugfix">Ventcrawling as borer fixed.</li>
-				<li class="tweak">Borer thought-speak is more subtle.</li>
-				<li class="tweak">Borers can secrete more chemicals (some of which are unlockable).</li>
-				<li class="tweak">Borers now only have a survive objective.</li>
-				<li class="tweak">Borers are instructed to be helpful and non-dickish.</li>
-				<li class="rscdel">Forced-control on entering host is configurable. Add borer_takeover_immediately to gameconfig.txt to enable.  Default is off.</li>
-				<li class="rscdel">Removed borers' ability to multiply, for now. (Balancing)</li>
-				<li class="rscdel">Removed harmful chems and borer verbs.</li>
-				<li class="rscdel">Removed borer game-mode.  Borers now spawn in vermin events.</li>
 			</ul>
 		</div>
 		<!--
