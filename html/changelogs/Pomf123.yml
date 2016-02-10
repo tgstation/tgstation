@@ -1,2 +1,4 @@
 author: Pomf123
-changes: []
+changes:
+  - bugfix: Fixed russian revolvers acting stupid.
+  - bugfix: Fixed right clicking a job pref not decrementing the priority.
