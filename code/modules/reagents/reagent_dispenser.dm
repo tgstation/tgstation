@@ -88,22 +88,23 @@
 	if(istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
 		message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
 		log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
-		explosion(src.loc,-1,0,2, flame_range = 2)
+		tank_explode()
 
 
 /obj/structure/reagent_dispensers/fueltank/blob_act()
-	explosion(src.loc,0,1,5,7,10, flame_range = 5)
+	tank_explode()
 
 
 /obj/structure/reagent_dispensers/fueltank/ex_act()
-	explosion(src.loc,-1,0,2, flame_range = 2)
-	if(src)
-		qdel(src)
+	tank_explode()
 
 
 /obj/structure/reagent_dispensers/fueltank/fire_act()
-	blob_act() //saving a few lines of copypasta
+	tank_explode()
 
+/obj/structure/reagent_dispensers/fueltank/proc/tank_explode()
+	explosion(src.loc,-1,0,2, flame_range = 2)
+	qdel(src)
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
