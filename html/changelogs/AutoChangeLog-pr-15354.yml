@@ -1,6 +1,0 @@
-author: neersighted
-delete-after: True
-changes: 
-  - rscadd: "Horizontal (lying) mobs now fit into crates"
-  - rscadd: "Mobs may now be stuffed into crates, as with lockers"
-  - rscadd: "Stuffing into a locker deals a mild stun (the same as tabling)"
