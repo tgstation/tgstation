@@ -233,11 +233,11 @@ var/const/INJECT = 5 //injection
 				return total_transfered
 */
 
-/datum/reagents/proc/metabolize(mob/M, can_overdose = 0)
+/datum/reagents/proc/metabolize(mob/living/carbon/M, can_overdose = 0)
 	if(M)
 		chem_temp = M.bodytemperature
 		handle_reactions()
-
+	var/need_mob_update = 0
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
 		if(!R.holder)
@@ -250,19 +250,19 @@ var/const/INJECT = 5 //injection
 					if(R.overdose_threshold)
 						if(R.volume >= R.overdose_threshold && !R.overdosed)
 							R.overdosed = 1
-							R.overdose_start(M)
+							need_mob_update += R.overdose_start(M)
 					if(R.addiction_threshold)
 						if(R.volume >= R.addiction_threshold && !is_type_in_list(R, addiction_list))
 							var/datum/reagent/new_reagent = new R.type()
 							addiction_list.Add(new_reagent)
 					if(R.overdosed)
-						R.overdose_process(M)
+						need_mob_update += R.overdose_process(M)
 					if(is_type_in_list(R,addiction_list))
 						for(var/addiction in addiction_list)
 							var/datum/reagent/A = addiction
 							if(istype(R, A))
 								A.addiction_stage = -15 // you're satisfied for a good while.
-				R.on_mob_life(M)
+				need_mob_update += R.on_mob_life(M)
 
 	if(can_overdose)
 		if(addiction_tick == 6)
@@ -270,24 +270,24 @@ var/const/INJECT = 5 //injection
 			for(var/addiction in addiction_list)
 				var/datum/reagent/R = addiction
 				if(M && R)
-					if(R.addiction_stage <= 0)
-						R.addiction_stage++
-					if(R.addiction_stage > 0 && R.addiction_stage <= 10)
-						R.addiction_act_stage1(M)
-						R.addiction_stage++
-					if(R.addiction_stage > 10 && R.addiction_stage <= 20)
-						R.addiction_act_stage2(M)
-						R.addiction_stage++
-					if(R.addiction_stage > 20 && R.addiction_stage <= 30)
-						R.addiction_act_stage3(M)
-						R.addiction_stage++
-					if(R.addiction_stage > 30 && R.addiction_stage <= 40)
-						R.addiction_act_stage4(M)
-						R.addiction_stage++
-					if(R.addiction_stage > 40)
-						M << "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>"
-						addiction_list.Remove(R)
+					R.addiction_stage++
+					switch(R.addiction_stage)
+						if(1 to 10)
+							need_mob_update += R.addiction_act_stage1(M)
+						if(10 to 20)
+							need_mob_update += R.addiction_act_stage2(M)
+						if(20 to 30)
+							need_mob_update += R.addiction_act_stage3(M)
+						if(30 to 40)
+							need_mob_update += R.addiction_act_stage4(M)
+						if(40 to INFINITY)
+							M << "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>"
+							addiction_list.Remove(R)
 		addiction_tick++
+	if(M && need_mob_update)
+		M.updatehealth()
+		M.update_canmove()
+		M.update_stamina()
 	update_total()
 
 /datum/reagents/process()
