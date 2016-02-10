@@ -1,7 +1,7 @@
 // This file is a modified version of https://raw2.github.com/Baystation12/OldCode-BS12/master/code/TakePicture.dm
 
 #define NANOMAP_ICON_SIZE 4
-#define NANOMAP_MAX_ICON_DIMENSION 1024
+#define NANOMAP_MAX_ICON_DIMENSION 2000
 
 #define NANOMAP_TILES_PER_IMAGE (NANOMAP_MAX_ICON_DIMENSION / NANOMAP_ICON_SIZE)
 
@@ -70,7 +70,7 @@
 		sleep(3)
 		return NANOMAP_TERMINALERR
 
-	var/icon/Tile = icon(file("nano/mapbase1024.png"))
+	var/icon/Tile = icon(file("html/mapbase2000.png"))
 	if (Tile.Width() != NANOMAP_MAX_ICON_DIMENSION || Tile.Height() != NANOMAP_MAX_ICON_DIMENSION)
 		world.log << "NanoMapGen: <B>ERROR: BASE IMAGE DIMENSIONS ARE NOT [NANOMAP_MAX_ICON_DIMENSION]x[NANOMAP_MAX_ICON_DIMENSION]</B>"
 		sleep(3)
