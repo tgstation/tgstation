@@ -3,7 +3,7 @@
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
-	force = 15
+	force = 18
 	throw_speed = 3
 	throw_range = 4
 	throwforce = 10
@@ -52,7 +52,6 @@
 	flags = ABSTRACT | NODROP
 	w_class = 5
 	hitsound = 'sound/weapons/sear.ogg'
-	force = 20
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
 
@@ -84,7 +83,6 @@
 	name = "holy claymore"
 	desc = "A weapon fit for a crusade!"
 	w_class = 5
-	force = 20
 	slot_flags = SLOT_BACK|SLOT_BELT
 	block_chance = 30
 	sharpness = IS_SHARP
@@ -107,14 +105,13 @@
 	hitsound = 'sound/hallucinations/growl1.ogg'
 
 /obj/item/weapon/nullrod/sord
-	name = "\improper SORD"
-	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
+	name = "\improper UNREAL SORD"
+	desc = "This thing is so unspeakably HOLY you are having a hard time even holding it."
 	icon_state = "sord"
 	item_state = "sord"
 	slot_flags = SLOT_BELT
 	force = 2
 	throwforce = 1
-	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -122,7 +119,6 @@
 	icon_state = "scythe0"
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
-	force = 15
 	w_class = 4
 	armour_penetration = 100
 	slot_flags = SLOT_BACK
@@ -136,7 +132,6 @@
 	item_state = "mounted_chainsaw"
 	w_class = 5
 	flags = NODROP | ABSTRACT
-	force = 20
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
@@ -159,6 +154,16 @@
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed")
 
+/obj/item/weapon/nullrod/whip/afterattack(atom/movable/AM, mob/user, proximity)
+	if(!proximity)
+		return
+	if(istype(AM, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = AM
+		if(is_shadow(H))
+			var/phrase = pick("Die monster! You don't belong in this world!!!", "You steal men's souls and make them your slaves!!!", "Your words are as empty as your soul!!!", "Mankind ill needs a savior such as you!!!")
+			user.say("[phrase]")
+			H.adjustBruteLoss(8) //Bonus damage
+
 /obj/item/weapon/nullrod/fedora
 	name = "athiest's fedora"
 	desc = "The brim of the hat is as sharp as your wit. Throwing it at someone would hurt almost as much as disproving the existence of God."
@@ -177,15 +182,26 @@
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	flags = ABSTRACT | NODROP
-	w_class = 5.0
-	force = 20
+	w_class = 5
 	sharpness = IS_SHARP
 
 /obj/item/weapon/nullrod/carp
 	name = "carp-sie plushie"
-	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp."
+	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to recieve the blessing of Carp-Sie."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
 	item_state = "carp_plushie"
+	force = 15
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	hitsound = 'sound/weapons/bite.ogg'
+	var/used_blessing = FALSE
+
+
+/obj/item/weapon/nullrod/carp/attack_self(mob/living/user)
+	if(used_blessing)
+		return
+	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+		return
+	user << "You are blessed by Carp-Sie. Wild space carp will no longer attack you."
+	user.faction |= "carp"
+	used_blessing = TRUE
