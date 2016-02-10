@@ -47,5 +47,5 @@ Bonus
 						M.visible_message("<span class='danger'>[M] rips away their rotting scales and writhes in pain!</span>")
 						M.adjustCloneLoss(35)
 		else
-			stage = 1
+			A.stage = 1
 	return
