@@ -171,6 +171,8 @@
 	if(destroyed)
 		return PROCESS_KILL
 	if(!valve_open)
+		pump.AIR1 = null
+		pump.AIR2 = null
 		return
 
 	var/turf/T = get_turf(src)
