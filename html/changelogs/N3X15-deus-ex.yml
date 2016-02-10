@@ -1,0 +1,10 @@
+author: N3X15
+delete-after: true
+changes:
+  - experiment: "Deus Ex Update:"
+  - rscadd: Lungs are now fully modular and actually process gas for humans.  Lungs must be compatible with a species or they will die of suffocation.
+  - rscadd: Vox and Plasmamen have their own lungs.  These alien lungs are not available at organ printers, requiring stockpiling from donor monkey-humans.
+  - rscadd: All species currently exhale CO<sub>2</sub>.  Vox may be tweaked later to exhale N<sub>2</sub>O.
+  - rscadd: Robotics can make Advanced Lungs (programming 2, biomech 4), which are compatible with all species and filter out some gasses (N2O and plasma), up to certain partial pressures.
+  - rscadd: Livers are also modular and can be set to enhance "natural" removal rates of reagents. Nothing yet makes any use of this.
+  - rscadd: Eyes are modular and Advanced Type 1 eyes can grant enhanced nightvision and built-in welder goggles.

@@ -10,6 +10,15 @@
 
 	var/germ_level = 0 //INTERNAL germs inside the organ, this is BAD if it's greater than INFECTION_LEVEL_ONE
 
+/datum/organ/proc/CanInsert(var/mob/living/carbon/human/H, var/mob/surgeon=null, var/quiet=0)
+	return 1
+/datum/organ/proc/Insert(var/mob/living/carbon/human/H, var/mob/surgeon=null)
+	return 1
+/datum/organ/proc/CanRemove(var/mob/living/carbon/human/H, var/mob/surgeon=null, var/quiet=0)
+	return 1
+/datum/organ/proc/Remove(var/mob/living/carbon/human/H, var/mob/surgeon=null)
+	return 1
+
 /datum/organ/proc/process()
 	return 0
 
