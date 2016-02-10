@@ -100,23 +100,14 @@
 
 /obj/item/weapon/gun/projectile/russian/New()
 	..()
+	loaded = new/list(6)
+	loaded[1] = new ammo_type(src)
 	Spin()
 	update_icon()
 
 /obj/item/weapon/gun/projectile/russian/proc/Spin()
 
-
-	for(var/obj/item/ammo_casing/AC in loaded)
-		qdel(AC)
-		AC = null
-	loaded = list()
-	var/random = rand(1, max_shells)
-	for(var/i = 1; i <= max_shells; i++)
-		if(i != random)
-			loaded += i // Basically null
-		else
-			loaded += new ammo_type(src)
-
+	loaded = shuffle(loaded)
 
 /obj/item/weapon/gun/projectile/russian/attackby(var/obj/item/A as obj, mob/user as mob)
 
@@ -166,10 +157,17 @@
 			if(affecting == "head")
 
 				var/obj/item/ammo_casing/AC = loaded[1]
-				if(!process_chambered())
+				if(!AC || !AC.BB)
 					user.visible_message("<span class='warning'>*click*</span>", "<span class='warning'>*click*</span>")
 					playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+					loaded.Cut(1,2)
+					loaded += AC
 					return
+				if(AC.BB)
+					in_chamber = AC.BB //Load projectile into chamber.
+					AC.BB.loc = src //Set projectile loc to gun.
+					AC.BB = null //Empty casings
+					AC.update_icon()
 				if(!in_chamber)
 					return
 				var/obj/item/projectile/P = new AC.projectile_type
@@ -177,5 +175,8 @@
 				user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 				if(!P.nodamage)
 					user.apply_damage(300, BRUTE, affecting) // You are dead, dead, dead.
+				in_chamber = null
+				loaded.Cut(1,2)
+				loaded += AC
 				return
 	..()
