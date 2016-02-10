@@ -7,6 +7,8 @@
 
 
 /obj/structure/table/MouseDrop(mob/living/user)
+	if(!istype(user))
+		return
 	if(!user.IsAdvancedToolUser())
 		return
 	interact(user)
