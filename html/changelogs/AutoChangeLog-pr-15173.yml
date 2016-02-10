@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "The chaplain can now transform the null rod into a holy weapon of his choice by using it in hand. Each one has different strengths and drawbacks."
