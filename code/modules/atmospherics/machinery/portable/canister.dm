@@ -69,7 +69,7 @@
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
 	if(existing_mixture)
-		air_contents = existing_mixture
+		air_contents.copy_from(existing_mixture)
 	else
 		create_gas()
 
@@ -259,7 +259,7 @@
 			if(label && !..())
 				var/newtype = label2types[label]
 				if(newtype)
-					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc, air_contents.copy())
+					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc, air_contents)
 					replacement.interact(usr)
 					qdel(src)
 		if("pressure")
