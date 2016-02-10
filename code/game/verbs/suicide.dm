@@ -8,10 +8,12 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
 		var/obj/item/held_item = get_active_hand()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
+			if(damagetype == NODIE)
+				return //can't kill yourself with that, try something else.
+			suiciding = 1
 			if(damagetype)
 				var/damage_mod = 1
 				switch(damagetype) //Sorry about the magic numbers.
@@ -58,7 +60,7 @@
 							"[src] is holding \his breath! It looks like \he's trying to commit suicide.")
 
 		visible_message("<span class='danger'>[suicide_message]</span>", "<span class='userdanger'>[suicide_message]</span>")
-
+		suiciding = 1
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 		death(0)
