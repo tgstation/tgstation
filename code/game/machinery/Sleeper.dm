@@ -3,7 +3,7 @@
 /////////////////////////////////////////
 
 /obj/machinery/sleep_console
-	name = "Sleeper Console"
+	name = "\improper Sleeper Console"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeperconsole"
 	var/obj/machinery/sleeper/connected = null
@@ -51,38 +51,46 @@
 		return
 	if (src.connected)
 		var/mob/living/occupant = src.connected.occupant
-		var/dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>"
-		if (occupant)
-			var/t1
-			switch(occupant.stat)
-				if(0)
-					t1 = "Conscious"
-				if(1)
-					t1 = "<font color='blue'>Unconscious</font>"
-				if(2)
-					t1 = "<font color='red'>*dead*</font>"
-				else
-			dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
-			if(iscarbon(occupant))
-				var/mob/living/carbon/C = occupant
-				dat += text("[]\t-Pulse, bpm: []</FONT><BR>", (C.pulse == PULSE_NONE || C.pulse == PULSE_THREADY ? "<font color='red'>" : "<font color='blue'>"), C.get_pulse(GETPULSE_TOOL))
-			dat += text("[]\t-Brute Damage %: []</FONT><BR>", (occupant.getBruteLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getBruteLoss())
-			dat += text("[]\t-Respiratory Damage %: []</FONT><BR>", (occupant.getOxyLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getOxyLoss())
-			dat += text("[]\t-Toxin Content %: []</FONT><BR>", (occupant.getToxLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getToxLoss())
-			dat += text("[]\t-Burn Severity %: []</FONT><BR>", (occupant.getFireLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getFireLoss())
-			dat += text("<HR>Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
-			if(occupant.reagents)
-				for(var/chemical in connected.available_options)
-					dat += "[connected.available_options[chemical]]: [occupant.reagents.get_reagent_amount(chemical)] units<br>"
-			dat += "<HR><A href='?src=\ref[src];refresh=1'>Refresh meter readings each second</A><BR>"
-			for(var/chemical in connected.available_options)
-				dat += "Inject [connected.available_options[chemical]]: "
-				for(var/amount in connected.amounts)
-					dat += "<a href ='?src=\ref[src];chemical=[chemical];amount=[amount]'>[amount] units</a> "
-				dat += "<br>"
+		var/dat = list()
+		if(connected.on)
+			dat += "<font color='blue'><B>Performing anaesthesic emergence...</B></font>" //Best I could come up with
+			dat += "<HR><A href='?src=\ref[src];toggle_autoeject=1'>Auto-eject occupant: [connected.auto_eject_after ? "Yes" : "No"]</A><BR>"
 		else
-			dat += "The sleeper is empty."
-		dat += text("<BR><BR><A href='?src=\ref[];mach_close=sleeper'>Close</A>", user)
+			dat += "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>"
+			if (occupant)
+				var/t1
+				switch(occupant.stat)
+					if(0)
+						t1 = "Conscious"
+					if(1)
+						t1 = "<font color='blue'>Unconscious</font>"
+					if(2)
+						t1 = "<font color='red'>*dead*</font>"
+					else
+				dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
+				if(iscarbon(occupant))
+					var/mob/living/carbon/C = occupant
+					dat += text("[]\t-Pulse, bpm: []</FONT><BR>", (C.pulse == PULSE_NONE || C.pulse == PULSE_THREADY ? "<font color='red'>" : "<font color='blue'>"), C.get_pulse(GETPULSE_TOOL))
+				dat += text("[]\t-Brute Damage %: []</FONT><BR>", (occupant.getBruteLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getBruteLoss())
+				dat += text("[]\t-Respiratory Damage %: []</FONT><BR>", (occupant.getOxyLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getOxyLoss())
+				dat += text("[]\t-Toxin Content %: []</FONT><BR>", (occupant.getToxLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getToxLoss())
+				dat += text("[]\t-Burn Severity %: []</FONT><BR>", (occupant.getFireLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getFireLoss())
+				var/sleepytime = max(occupant.paralysis, occupant.sleeping)
+				dat += text("<HR>Paralysis Summary %: [] ([] seconds left!)<BR>", sleepytime, round(sleepytime*2))
+				dat += "<a href ='?src=\ref[src];wakeup=1'>Begin Wake-Up Cycle</a><br>"
+				if(occupant.reagents)
+					for(var/chemical in connected.available_options)
+						dat += "[connected.available_options[chemical]]: [occupant.reagents.get_reagent_amount(chemical)] units<br>"
+				dat += "<HR><A href='?src=\ref[src];refresh=1'>Refresh meter readings each second</A><BR>"
+				for(var/chemical in connected.available_options)
+					dat += "Inject [connected.available_options[chemical]]: "
+					for(var/amount in connected.amounts)
+						dat += "<a href ='?src=\ref[src];chemical=[chemical];amount=[amount]'>[amount] units</a> "
+					dat += "<br>"
+			else
+				dat += "The sleeper is empty."
+			dat += text("<BR><BR><A href='?src=\ref[];mach_close=sleeper'>Close</A>", user)
+		dat = list2text(dat)
 		user << browse(dat, "window=sleeper;size=400x500")
 		onclose(user, "sleeper")
 	return
@@ -115,10 +123,20 @@
 						to_chat(usr, "<span class='danger'>This person is not in good enough condition for sleepers to be effective! Use another means of treatment, such as cryogenics!</span>")
 					else
 						src.connected.inject_chemical(usr,href_list["chemical"],text2num(href_list["amount"]))
+		if (href_list["wakeup"])
+			connected.wakeup(usr)
+		if (href_list["toggle_autoeject"])
+			connected.auto_eject_after = !connected.auto_eject_after
 		if (href_list["refresh"])
-			src.updateUsrDialog()
+			src.process()
 		src.add_fingerprint(usr)
 	return
+
+/obj/machinery/sleep_console/AltClick()
+	if(connected && !usr.incapacitated() && Adjacent(usr) && !(stat & (NOPOWER|BROKEN) && usr.dexterity_check()))
+		if(connected.wakeup(usr))
+			visible_message("<span class='notice'>\The [connected] pings softly: 'Initiating wake-up cycle...' </span>")
+
 
 /obj/machinery/sleep_console/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -141,7 +159,7 @@
 /////////////////////////////////////////
 
 /obj/machinery/sleeper
-	name = "Sleeper"
+	name = "\improper Sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_0"
 	density = 1
@@ -174,6 +192,7 @@
 	var/target_time = 0
 	var/setting
 	var/automatic = 0
+	var/auto_eject_after = 1 //Boot the mooch off after waking 'em up
 	var/drag_delay = 20
 	var/cools = 0
 
@@ -182,7 +201,6 @@
 	RefreshParts()
 	spawn( 5 )
 		var/turf/t
-		world.log << "DEBUG: Beginning sleeper console checking/auto-generation for sleeper [src] at [src.loc.x],[src.loc.y],[src.loc.z]..."
 		if(orient == "RIGHT")
 			update_icon() // Only needs to update if it's orientation isn't default
 			t = get_step(get_turf(src), WEST)
@@ -196,7 +214,6 @@
 			connected = c
 			c.connected = src
 		else if (!connected)
-			world.log << "DEBUG: generating console at [t.loc.x],[t.loc.y],[t.loc.z] for sleeper at [src.loc.x],[src.loc.y],[src.loc.z]"
 			generate_console(t)
 		return
 	return
@@ -330,6 +347,9 @@
 /obj/machinery/sleeper/allow_drop()
 	return 0
 
+/obj/machinery/sleeper/AltClick()
+	if(connected)
+		return connected.AltClick()
 
 /obj/machinery/sleeper/process()
 	src.updateDialog()
@@ -429,6 +449,7 @@
 				qdel(src)
 				return
 	return
+
 /obj/machinery/sleeper/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
@@ -437,7 +458,7 @@
 		go_out()
 	..(severity)
 
-/obj/machinery/sleeper/alter_health(mob/living/M as mob)
+/obj/machinery/sleeper/alter_health(mob/living/M as mob) //Long since unused.
 	if (M.health > 0)
 		if (M.getOxyLoss() >= 10)
 			var/amount = max(0.15, 1)
@@ -464,6 +485,34 @@
 	setting = cook_setting
 	update_icon()
 
+/obj/machinery/sleeper/proc/wakeup(mob/living/user)
+	if(src.on)
+		to_chat(user, "<span class='warning'>\The [src] is busy.</span>")
+		return 0
+	if(!occupant)
+		to_chat(user, "<span class='warning'>There's no occupant in \the [src]!</span>")
+		return 0
+	if(occupant.stat == CONSCIOUS)
+		to_chat(user, "<span class='warning'>The occupant is already awake.</span>")
+		return 0
+	if(occupant.stat == DEAD)
+		to_chat(user, "<span class='warning'>Can't wake up.</span>")
+		return 0
+	. = 1 //Returning 1 means we successfully began the wake-up cycle. We will return immediately as the spawn() begins, not at the end.
+	src.on = 1
+	connected.process()
+	var/sleeptime = min(5 SECONDS, 4*max(occupant.sleeping, occupant.paralysis))
+	spawn(sleeptime)
+		if(!src || !src.on) //the !src check is redundant from the nature of spawn() if I understand correctly, but better be safe than sorry
+			return 0
+		if(occupant)
+			occupant.sleeping = 0
+			occupant.paralysis = 0
+		src.on = 0
+		if(auto_eject_after)
+			src.go_out()
+		connected.process()
+
 /obj/machinery/sleeper/proc/go_out(var/exit = src.loc)
 	if(!occupant)
 		return 0
@@ -476,7 +525,6 @@
 	occupant = null
 	update_icon()
 	return 1
-
 
 /obj/machinery/sleeper/proc/inject_chemical(mob/living/user as mob, chemical, amount)
 	if(!src.occupant)
@@ -492,31 +540,6 @@
 	to_chat(user, "<span class='notice'>Occupant now has [src.occupant.reagents.get_reagent_amount(chemical)] units of [available_options[chemical]] in their bloodstream.</span>")
 	return
 
-/obj/machinery/sleeper/proc/check(mob/living/user as mob)
-	if(src.occupant)
-		to_chat(user, text("<span class='notice'><B>Occupant ([]) Statistics:</B></span>", src.occupant))
-		var/t1
-		switch(src.occupant.stat)
-			if(0.0)
-				t1 = "Conscious"
-			if(1.0)
-				t1 = "Unconscious"
-			if(2.0)
-				t1 = "*dead*"
-			else
-		to_chat(user, text("[]\t Health %: [] ([])</span>", (src.occupant.health > 50 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.health, t1))
-		to_chat(user, text("[]\t -Core Temperature: []&deg;C ([]&deg;F)</FONT><BR></span>", (src.occupant.bodytemperature > 50 ? "<font color='blue'>" : "<font color='red'>"), src.occupant.bodytemperature-T0C, src.occupant.bodytemperature*1.8-459.67))
-		to_chat(user, text("[]\t -Brute Damage %: []</span>", (src.occupant.getBruteLoss() < 60 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.getBruteLoss()))
-		to_chat(user, text("[]\t -Respiratory Damage %: []</span>", (src.occupant.getOxyLoss() < 60 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.getOxyLoss()))
-		to_chat(user, text("[]\t -Toxin Content %: []</span>", (src.occupant.getToxLoss() < 60 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.getToxLoss()))
-		to_chat(user, text("[]\t -Burn Severity %: []</span>", (src.occupant.getFireLoss() < 60 ? "<span class='notice'>" : "<span class='warning'> "), src.occupant.getFireLoss()))
-		to_chat(user, "<span class='notice'>Expected time till occupant can safely awake: (note: If health is below 20% these times are inaccurate)</span>")
-		to_chat(user, text("<span class='notice'>\t [] second\s (if around 1 or 2 the sleeper is keeping them asleep.)</span>", src.occupant.paralysis / 5))
-	else
-		to_chat(user, "<span class='notice'>There is no one inside!</span>")
-	return
-
-
 /obj/machinery/sleeper/verb/eject()
 	set name = "Eject Sleeper"
 	set category = "Object"
@@ -527,7 +550,6 @@
 	add_fingerprint(usr)
 	set_light(0)
 	return
-
 
 /obj/machinery/sleeper/verb/move_inside()
 	set name = "Enter Sleeper"
