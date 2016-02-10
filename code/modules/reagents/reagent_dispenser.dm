@@ -88,7 +88,7 @@
 	if(istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
 		message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
 		log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
-		explosion(src.loc,-1,0,2, flame_range = 2)
+		explosion(src.loc,0,1,5,7,10, flame_range = 5)
 
 
 /obj/structure/reagent_dispensers/fueltank/blob_act()
@@ -96,7 +96,7 @@
 
 
 /obj/structure/reagent_dispensers/fueltank/ex_act()
-	explosion(src.loc,-1,0,2, flame_range = 2)
+	explosion(src.loc,0,1,5,7,10, flame_range = 5)
 	if(src)
 		qdel(src)
 
@@ -161,6 +161,13 @@
 /obj/structure/reagent_dispensers/beerkeg/New()
 	..()
 	reagents.add_reagent("beer",1000)
+
+/obj/structure/reagent_dispensers/beerkeg/bullet_act(obj/item/projectile/Proj)
+	..()
+	if(istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
+		message_admins("[key_name_admin(Proj.firer)] triggered a beer keg explosion.")
+		log_game("[key_name(Proj.firer)] triggered a beer keg explosion.")
+		explosion(src.loc,0,3,5,7,10)
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
 	explosion(src.loc,0,3,5,7,10)
