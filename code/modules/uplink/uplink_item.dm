@@ -742,6 +742,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "EMP Flashlight"
 	desc = "A small, self-charging, short-ranged EMP device disguised as a flashlight. \
 		Useful for disrupting headsets, cameras, and borgs during stealth operations."
+	item = /obj/item/device/flashlight/emp
 	cost = 2
 	surplus = 30
 
