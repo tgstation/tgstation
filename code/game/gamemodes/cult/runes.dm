@@ -297,7 +297,7 @@ var/list/teleport_other_runes = list()
 	var/obj/item/weapon/nullrod/N = offering.null_rod_check()
 	if(N)
 		user << "<span class='warning'>Something is blocking the Geometer's magic!</span>"
-		log_game("Sacrifice rune failed - target has a \[N]!")
+		log_game("Sacrifice rune failed - target has \a [N]!")
 		fail_invoke()
 		rune_in_use = 0
 		return
