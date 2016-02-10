@@ -13,25 +13,17 @@
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
 			if(damagetype)
-				var/damage_mod = 1
-				switch(damagetype) //Sorry about the magic numbers.
-								   //brute = 1, burn = 2, tox = 4, oxy = 8
-					if(15) //4 damage types
-						damage_mod = 4
+				if(damagetype & SHAME)
+					adjustStaminaLoss(200)
+					updatehealth()
+					suiciding = 0
+					return
+				var/damage_mod = 0
+				for(var/T in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
+					damage_mod += (T & damagetype) ? 1 : 0
+				damage_mod = max(1, damage_mod)
 
-					if(6, 11, 13, 14) //3 damage types
-						damage_mod = 3
-
-					if(3, 5, 7, 9, 10, 12) //2 damage types
-						damage_mod = 2
-
-					if(1, 2, 4, 8) //1 damage type
-						damage_mod = 1
-
-					else //This should not happen, but if it does, everything should still work
-						damage_mod = 1
-
-				//Do 175 damage divided by the number of damage types applied.
+				//Do 200 damage divided by the number of damage types applied.
 				if(damagetype & BRUTELOSS)
 					adjustBruteLoss(200/damage_mod)
 
