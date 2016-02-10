@@ -774,7 +774,7 @@ var/next_mob_id = 0
 		update_canmove()
 
 /mob/proc/Weaken(amount, ignore_canweaken = 0)
-	if(status_flags & CANWEAKEN || ignore_canweaken)
+	if((status_flags & CANWEAKEN) || ignore_canweaken)
 		weakened = max(max(weakened,amount),0)
 		update_canmove()	//updates lying, canmove and icons
 
@@ -783,8 +783,8 @@ var/next_mob_id = 0
 		weakened = max(amount,0)
 		update_canmove()	//updates lying, canmove and icons
 
-/mob/proc/AdjustWeakened(amount)
-	if(status_flags & CANWEAKEN)
+/mob/proc/AdjustWeakened(amount, ignore_canweaken = 0)
+	if((status_flags & CANWEAKEN) || ignore_canweaken)
 		weakened = max(weakened + amount,0)
 		update_canmove()	//updates lying, canmove and icons
 
