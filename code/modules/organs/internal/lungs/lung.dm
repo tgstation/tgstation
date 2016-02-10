@@ -38,7 +38,7 @@
 	// Next, we exhale. At the moment, only /datum/lung_gas/waste uses this.
 	for(var/datum/lung_gas/G in gasses)
 		G.set_context(src,breath,H)
-		G.handle_inhale()
+		G.handle_exhale()
 
 	if( (abs(310.15 - breath.temperature) > 50) && !(M_RESIST_HEAT in H.mutations)) // Hot air hurts :(
 		if(H.status_flags & GODMODE)	return 1	//godmode
