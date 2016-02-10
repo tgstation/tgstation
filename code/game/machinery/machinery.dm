@@ -127,8 +127,7 @@ Class Procs:
 /obj/machinery/Destroy()
 	machines.Remove(src)
 	SSmachine.processing -= src
-	if(occupant)
-		dropContents()
+	dropContents()
 	return ..()
 
 /obj/machinery/attackby(obj/item/weapon/W, mob/user, params)
@@ -160,10 +159,14 @@ Class Procs:
 
 /obj/machinery/proc/dropContents()
 	var/turf/T = get_turf(src)
+	for(var/mob/living/L in src)
+		L.loc = T
+		L.reset_perspective(null)
+		L.update_canmove() //so the mob falls if he became unconscious inside the machine.
+		. += L
+
 	T.contents += contents
-	if(occupant)
-		occupant.reset_perspective(null)
-		occupant = null
+	occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
 	state_open = 0
@@ -403,3 +406,15 @@ Class Procs:
 
 /obj/machinery/proc/can_be_overridden()
 	. = 1
+
+
+/obj/machinery/tesla_act(var/power)
+	..()
+	if(prob(85))
+		emp_act(2)
+	else if(prob(50))
+		ex_act(3)
+	else if(prob(90))
+		ex_act(2)
+	else
+		ex_act(1)

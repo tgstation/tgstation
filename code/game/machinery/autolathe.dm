@@ -40,7 +40,8 @@
 							"Security",
 							"Machinery",
 							"Medical",
-							"Misc"
+							"Misc",
+							"Imported"
 							)
 
 /obj/machinery/autolathe/New()
@@ -111,7 +112,19 @@
 			return 1
 	if(stat)
 		return 1
-
+	
+	if(istype(O, /obj/item/weapon/disk/design_disk))
+		user.visible_message("[user] begins to load \the [O] in \the [src]...",
+			"You begin to load a design from \the [O]...",
+			"You hear the chatter of a floppy drive.")
+		busy = 1
+		var/obj/item/weapon/disk/design_disk/D = O
+		if(do_after(user, 14.4, target = src))
+			files.AddDesign2Known(D.blueprint)
+		
+		busy = 0
+		return
+	
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!material_amount)
 		user << "<span class='warning'>This object does not contain sufficient amounts of metal or glass to be accepted by the autolathe.</span>"

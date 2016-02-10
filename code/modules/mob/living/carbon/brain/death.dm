@@ -1,15 +1,15 @@
 /mob/living/carbon/brain/death(gibbed)
 	if(stat == DEAD)
 		return
+	stat = DEAD
+
 	if(!gibbed && container && istype(container, /obj/item/device/mmi))//If not gibbed but in a container.
 		var/obj/item/device/mmi = container
 		mmi.visible_message("<span class='warning'>[src]'s MMI flatlines!</span>", \
 					"<span class='italics'>You hear something flatline.</span>")
 		mmi.update_icon()
 
-	stat = DEAD
-
-	return ..(gibbed)
+	return ..()
 
 /mob/living/carbon/brain/gib(animation = 0)
 	if(container && istype(container, /obj/item/device/mmi))

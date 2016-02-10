@@ -18,9 +18,10 @@
 	var/obj/item/weapon/circuitboard/cargo/board = circuit
 	contraband = board.contraband
 
-/obj/machinery/computer/cargo/emag_act(mob/user)
+/obj/machinery/computer/cargo/emag_act(mob/living/user)
 	if(!emagged)
-		user << "<span class='notice'>Special supplies unlocked.</span>"
+		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!",
+							"<span class='notice'>You adjust [src]'s routing, unlocking special supplies.</span>")
 		emagged = TRUE
 
 /obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
@@ -41,40 +42,38 @@
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
 	data["message"] = SSshuttle.centcom_message || "Remember to stamp and send back the supply manifests."
 
-	var/list/supplies = list()
-	supplies.len = all_supply_groups.len
-	for(var/group in all_supply_groups)
-		supplies[group] = list(
-			"name" = get_supply_group_name(group),
-			"packs" = list()
-		)
+	data["supplies"] = list()
 	for(var/pack in SSshuttle.supply_packs)
-		var/datum/supply_packs/P = SSshuttle.supply_packs[pack]
+		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
+		if(!data["supplies"][P.group])
+			data["supplies"][P.group] = list(
+				"name" = P.group,
+				"packs" = list()
+			)
 		if((P.hidden && !emagged) || (P.contraband && !contraband))
 			continue
-		supplies[P.group]["packs"] += list(list(
+		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
 			"cost" = P.cost,
 			"id" = pack
 		))
-	data["supplies"] = supplies
 
 	data["cart"] = list()
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		data["cart"] += list(list(
-			"object" = SO.object.name,
-			"cost" = SO.object.cost,
-			"id" = SO.ordernum
+			"object" = SO.pack.name,
+			"cost" = SO.pack.cost,
+			"id" = SO.id
 		))
 
 	data["requests"] = list()
 	for(var/datum/supply_order/SO in SSshuttle.requestlist)
 		data["requests"] += list(list(
-			"object" = SO.object.name,
-			"cost" = SO.object.cost,
-			"orderedby" = SO.orderedby,
-			"comment" = SO.comment,
-			"id" = SO.ordernum
+			"object" = SO.pack.name,
+			"cost" = SO.pack.cost,
+			"orderer" = SO.orderer,
+			"reason" = SO.reason,
+			"id" = SO.id
 		))
 
 	return data
@@ -92,9 +91,9 @@
 			if(SSshuttle.supply.getDockedId() == "supply_home")
 				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
 				say("The supply shuttle has departed.")
-				investigate_log("[key_name(usr)] has sent the supply shuttle away. Points: [SSshuttle.points]. Contents: [SSshuttle.sold_atoms].", "cargo")
+				investigate_log("[key_name(usr)] sent the supply shuttle away.", "cargo")
 			else
-				investigate_log("[key_name(usr)] has called the supply shuttle. Points: [SSshuttle.points].", "cargo") // TODO: more robust logging here
+				investigate_log("[key_name(usr)] called the supply shuttle.", "cargo")
 				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
 				SSshuttle.moveShuttle("supply", "supply_home", TRUE)
 			. = TRUE
@@ -112,6 +111,7 @@
 
 			var/name = "*None Provided*"
 			var/rank = "*None Provided*"
+			var/ckey = usr.ckey
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				name = H.get_authentification_name()
@@ -127,7 +127,7 @@
 					return
 
 			var/turf/T = get_turf(src)
-			var/datum/supply_order/SO = SSshuttle.generateSupplyOrder(id, name, rank, reason)
+			var/datum/supply_order/SO = new(id, name, rank, ckey, reason)
 			SO.generateRequisition(T)
 			if(requestonly)
 				SSshuttle.requestlist += SO
@@ -137,7 +137,7 @@
 		if("remove")
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
-				if(SO.ordernum == id)
+				if(SO.id == id)
 					SSshuttle.shoppinglist -= SO
 					. = TRUE
 					break
@@ -147,7 +147,7 @@
 		if("approve")
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.requestlist)
-				if(SO.ordernum == id)
+				if(SO.id == id)
 					SSshuttle.requestlist -= SO
 					SSshuttle.shoppinglist += SO
 					. = TRUE
@@ -155,7 +155,7 @@
 		if("deny")
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.requestlist)
-				if(SO.ordernum == id)
+				if(SO.id == id)
 					SSshuttle.requestlist -= SO
 					. = TRUE
 					break

@@ -52,6 +52,7 @@
 	sleeping = 0
 	update_sight()
 	hide_fullscreens()
+	update_damage_hud()
 	update_health_hud()
 	update_canmove()
 

@@ -1,6 +1,4 @@
 	//Baseline hardsuits
-
-
 /obj/item/clothing/head/helmet/space/hardsuit
 	name = "hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
@@ -70,22 +68,22 @@
 	icon_state = "hardsuit-engineering"
 	item_state = "eng_hardsuit"
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/t_scanner, /obj/item/weapon/rcd, /obj/item/weapon/pipe_dispenser)
 	siemens_coefficient = 0
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
 	action_button_name = "Toggle Helmet"
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
 	var/obj/item/weapon/tank/jetpack/suit/jetpack = null
 
-/obj/item/clothing/suit/space/hardsuit/verb/Jetpack()
-	set name = "Toggle Inbuilt Jetpack"
-	set category = "Object"
-	jetpack.toggle()
+/obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
+	..()
+	if(slot == slot_wear_suit && jetpack)
+		jetpack.cycle_action.Grant(user)
 
-/obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets()
-	set name = "Toggle Inbuilt Jetpack Stabilization"
-	set category = "Object"
-	jetpack.toggle_rockets()
+/obj/item/clothing/suit/space/hardsuit/dropped(mob/user)
+	..()
+	if(jetpack)
+		jetpack.cycle_action.Remove(user)
 
 	//Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/engine
@@ -516,6 +514,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
 	armor = list(melee = 0, bullet = 30, laser = 30, energy = 30, bomb = 50, bio = 100, rad = 100)
 	slowdown = 0
+	max_charges = 5
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
 	name = "red shielded hardsuit"
