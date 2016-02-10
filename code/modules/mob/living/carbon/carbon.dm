@@ -143,6 +143,7 @@
 
 	//if(src.stunned < shock_damage)	src.stunned = shock_damage
 
+	Jitter(20) //Shake that body, friend
 	Stun(10) // this should work for now, more is really silly and makes you lay there forever
 
 	//if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
