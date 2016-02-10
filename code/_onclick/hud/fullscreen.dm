@@ -55,7 +55,7 @@
 			client.screen -= screens[category]
 
 /mob/proc/reload_fullscreen()
-	if(client)
+	if(client && stat != DEAD) //dead mob do not see any of the fullscreen overlays that he has.
 		for(var/category in screens)
 			client.screen |= screens[category]
 
