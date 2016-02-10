@@ -67,9 +67,9 @@
 	var/shield_icon = "shield-red"
 
 /obj/item/weapon/nullrod/staff/worn_overlays(isinhands)
-    . = list()
-    if(isinhands)
-        . += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
+	. = list()
+	if(isinhands)
+		. += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
 
 /obj/item/weapon/nullrod/staff/blue
 	name = "blue holy staff"
