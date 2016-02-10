@@ -55,7 +55,7 @@ var/list/impact_master = list()
 	var/agony = 0
 	var/jittery = 0
 
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = null
 
 	var/destroy = 0	//if set to 1, will destroy wall, tables and racks on impact (or at least, has a chance to)
 
