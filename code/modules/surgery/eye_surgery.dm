@@ -19,8 +19,8 @@
 	target.cure_blind()
 	target.set_blindness(0)
 	target.cure_nearsighted()
-	target.set_blurriness(max(target.eye_blurry,35))	//this will fix itself slowly.
-	target.set_eye_stat(0)
+	target.blur_eyes(35)	//this will fix itself slowly.
+	target.set_eye_damage(0)
 	return 1
 
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

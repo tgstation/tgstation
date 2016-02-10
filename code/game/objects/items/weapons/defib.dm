@@ -511,7 +511,7 @@
 							H.stat = UNCONSCIOUS
 							H.updatehealth()
 							H.update_sight()
-							H.update_vision_overlays()
+							H.reload_fullscreen()
 							dead_mob_list -= H
 							living_mob_list |= list(H)
 							H.emote("gasp")

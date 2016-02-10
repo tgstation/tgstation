@@ -283,7 +283,11 @@ var/next_mob_id = 0
 /mob/living/reset_perspective(atom/A)
 	if(..())
 		update_sight()
-		update_vision_overlays()
+		if(client.eye != src)
+			var/atom/AT = client.eye
+			AT.get_remote_view_fullscreens(src)
+		else
+			clear_fullscreen("remote_view", 0)
 		update_pipe_vision()
 
 
@@ -1060,7 +1064,25 @@ var/next_mob_id = 0
 /mob/proc/update_health_hud()
 	return
 
-
-
-
-
+/mob/living/on_varedit(modified_var)
+	switch(modified_var)
+		if("weakened")
+			SetWeakened(weakened)
+		if("stunned")
+			SetStunned(stunned)
+		if("paralysis")
+			SetParalysis(paralysis)
+		if("sleeping")
+			SetSleeping(sleeping)
+		if("eye_blind")
+			set_blindness(eye_blind)
+		if("eye_damage")
+			set_eye_damage(eye_damage)
+		if("eye_blurry")
+			set_blurriness(eye_blurry)
+		if("ear_deaf")
+			setEarDamage(-1, ear_deaf)
+		if("ear_damage")
+			setEarDamage(ear_damage, -1)
+		if("maxHealth")
+			updatehealth()

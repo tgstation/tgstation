@@ -815,8 +815,8 @@
 
 /obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
 	if(H && H.client && H in range(1))
-		H.forceMove(src)
 		occupant = H
+		H.forceMove(src)
 		add_fingerprint(H)
 		GrantActions(H, human_occupant=1)
 		forceMove(loc)

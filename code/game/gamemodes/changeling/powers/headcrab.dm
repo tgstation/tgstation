@@ -17,8 +17,8 @@
 	for(var/mob/living/carbon/human/H in range(2,user))
 		H << "<span class='userdanger'>You are blinded by a shower of blood!</span>"
 		H.Stun(1)
-		H.set_blurriness(max(H.eye_blurry,20))
-		H.adjust_eye_stat(5)
+		H.blur_eyes(20)
+		H.adjust_eye_damage(5)
 		H.confused += 3
 	for(var/mob/living/silicon/S in range(2,user))
 		S << "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>"
