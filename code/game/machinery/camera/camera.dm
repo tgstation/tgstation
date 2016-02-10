@@ -121,26 +121,25 @@
 /obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user)
 	if(!istype(user))
 		return
-	user.do_attack_animation(src)
-	add_hiddenprint(user)
 	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	health = max(0, health - 30)
-	if(!health && status)
-		deactivate(user, 0)
+	lose_health(user, 30, 0)
 
 /obj/machinery/camera/attack_animal(mob/living/simple_animal/user)
 	if(!istype(user))
 		return
+	visible_message("<span class='warning'>\The [user] attacks the [src]!</span>")
 	if(user.melee_damage_upper >= 10)
-		if(user.attack_sound)
-			playsound(src.loc, user.attack_sound, 100, 1)
-		user.do_attack_animation(src)
-		user.changeNext_move(CLICK_CD_MELEE)
-		health = max(0, health - user.melee_damage_upper)
-		if(!health && status)
-			triggerCameraAlarm()
-			deactivate(user, 1)
+		lose_health(user, user.melee_damage_upper, 1)
+
+
+/obj/machinery/camera/proc/lose_health(mob/living/user, damage, alert = 1)
+	user.do_attack_animation(src)
+	add_hiddenprint(user)
+	health = max(0, health - damage)
+	if(!health && status)
+		deactivate(user, alert)
+
 
 /obj/machinery/camera/attackby(obj/W, mob/living/user, params)
 	var/msg = "<span class='notice'>You attach [W] into the assembly's inner circuits.</span>"
@@ -248,13 +247,8 @@
 
 	else
 		if(W.force >= 10) //fairly simplistic, but will do for now.
-			user.changeNext_move(CLICK_CD_MELEE)
 			visible_message("<span class='warning'>[user] hits [src] with [W]!</span>", "<span class='warning'>You hit [src] with [W]!</span>")
-			health = max(0, health - W.force)
-			user.do_attack_animation(src)
-			if(!health && status)
-				triggerCameraAlarm()
-				deactivate(user, 1)
+			lose_health(user, W.force, 1)
 	return
 
 /obj/machinery/camera/proc/deactivate(mob/user, displaymessage = 1) //this should be called toggle() but doing a find and replace for this would be ass
