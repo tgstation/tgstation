@@ -1,0 +1,7 @@
+author: Skullyton
+
+delete-after: True
+
+changes:
+- rscadd: Adds a space-worthy exploration suit only for greys. Sprites courtesy of Niggly.
+- rscadd: Adds vox, plasmaman, and grey spacesuit crates to cargo, so plasmamen hit by polyacid can finally get a replacement helmet and such.
