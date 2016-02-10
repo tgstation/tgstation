@@ -8,7 +8,7 @@
 	w_class = 3
 	origin_tech = "biotech=3"
 	var/braintype = "Cyborg"
-
+	var/obj/item/device/radio/radio = null //Let's give it a radio.
 	var/syndiemmi = 0 //Whether or not this is a Syndicate MMI
 	var/mob/living/carbon/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
@@ -31,6 +31,12 @@
 			braintype = "Cyborg"
 	else
 		icon_state = "mmi_empty"
+
+/obj/item/device/mmi/New()
+	..()
+	radio = new(src) //Spawns a radio inside the MMI.
+	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
+
 
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
@@ -78,7 +84,8 @@
 
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brain)
-		user << "<span class='warning'>You upend the MMI, but there's nothing in it!</span>"
+		radio.on = !radio.on
+		user << "<span class='notice'>You toggle the MMI's radio system [radio.on==1 ? "on" : "off"].</span>"
 	else
 		user << "<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>"
 
@@ -118,19 +125,8 @@
 	update_icon()
 	return
 
-/obj/item/device/mmi/radio_enabled
-	name = "Radio-enabled Man-Machine Interface"
-	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations. This one comes with a built-in radio."
-	origin_tech = "biotech=4"
 
-	var/obj/item/device/radio/radio = null //Let's give it a radio.
-
-/obj/item/device/mmi/radio_enabled/New()
-	..()
-	radio = new(src) //Spawns a radio inside the MMI.
-	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
-
-/obj/item/device/mmi/radio_enabled/verb/Toggle_Listening()
+/obj/item/device/mmi/verb/Toggle_Listening()
 	set name = "Toggle Listening"
 	set desc = "Toggle listening channel on or off."
 	set category = "MMI"
@@ -139,6 +135,9 @@
 
 	if(brainmob.stat)
 		brainmob << "<span class='warning'>Can't do that while incapacitated or dead!</span>"
+	if(!radio.on)
+		brainmob << "<span class='warning'>Your radio is disabled!</span>"
+		return
 
 	radio.listening = radio.listening==1 ? 0 : 1
 	brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
@@ -184,3 +183,7 @@
 	name = "Syndicate Man-Machine Interface"
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs created with it, but doesn't fit in Nanotrasen AI cores."
 	syndiemmi = 1
+
+/obj/item/device/mmi/syndie/New()
+	..()
+	radio.on = 0
