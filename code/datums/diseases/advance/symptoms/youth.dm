@@ -19,8 +19,8 @@ BONUS
 
 	name = "Eternal Youth"
 	stealth = 3
-	resistance = 4
-	stage_speed = 4
+	resistance = 5
+	stage_speed = 5
 	transmittable = -4
 	level = 5
 
@@ -51,5 +51,3 @@ BONUS
 					if(H.age > 21)
 						H.age = 21
 						H << "<span class='notice'>You feel like you can take on the world!</span>"
-
-	return

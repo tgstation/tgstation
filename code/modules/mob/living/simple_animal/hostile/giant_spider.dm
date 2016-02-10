@@ -37,7 +37,6 @@
 	health = 200
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	faction = list("spiders")
 	var/busy = 0
 	pass_flags = PASSTABLE
 	move_to_delay = 6
@@ -48,7 +47,7 @@
 	gold_core_spawnable = 1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 4
-    
+
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
 		var/mob/dead/observer/ghost = usr
@@ -277,6 +276,64 @@
 		adjustBruteLoss(20)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
+
+/mob/living/simple_animal/hostile/poison/scarab
+	name = "scarabite cockroach"
+	desc = "This station is just crawling with bugs. This one seems harder and more courageous than normal"
+	icon_state = "cockroach"
+	icon_dead = "cockroach"
+	maxHealth = 12
+	health = 12
+	speak_emote = list("chitters")
+	emote_hear = list("chitters")
+	speak_chance = 5
+	turns_per_move = 5
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 270
+	maxbodytemp = INFINITY
+	response_help  = "pokes"
+	response_disarm = "shoos"
+	response_harm   = "splats"
+	density = 0
+	melee_damage_lower = 5
+	melee_damage_upper = 10
+	poison_per_bite = 5
+	poison_type = "scarabite"
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	move_to_delay = 6
+	ventcrawler = 2
+	attacktext = "bites"
+	attack_sound = 'sound/weapons/bite.ogg'
+	unique_name = 1
+	gold_core_spawnable = 2
+	del_on_death = 1
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 4
+	faction = list("scarab")
+
+/mob/living/simple_animal/hostile/poison/giant_spider/scarab/death(gibbed)
+	if(ticker.cinematic) //If cockroaches are invulnerable to the nuke. then these badboys are too
+		return
+	..()
+
+/mob/living/simple_animal/hostile/poison/giant_spider/scarab/Crossed(var/atom/movable/AM)
+	var/squish_chance = 10
+	if(ismob(AM))
+		if(isliving(AM))
+			var/mob/living/A = AM
+			if(A.mob_size > MOB_SIZE_TINY)
+				if(prob(squish_chance))
+					A.visible_message("<span class='notice'>\The [A] squashed the [name].</span>", "<span class='notice'>You squashed the [name].</span>")
+				else
+					visible_message("<span class='notice'>\The [name] dodges your foot, and avoids getting crushed.</span>")
+	else
+		if(isobj(AM))
+			if(istype(AM,/obj/structure))
+				visible_message("<span class='notice'>As \the [AM] moved over \the [name], it was crushed.</span>")
+				death()
+
+/mob/living/simple_animal/hostile/poison/scarab/ex_act() //Explosions are a terrible way to handle a cockroach.
+	return
 
 #undef SPINNING_WEB
 #undef LAYING_EGGS

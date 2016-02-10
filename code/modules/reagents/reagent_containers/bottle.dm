@@ -306,6 +306,36 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure
 	name = "BVAK bottle"
-	desc = "A small bottle containing Bio Virus Antidote Kit."
+	desc = "A small bottle containing Tuberculosis Bio Virus Antidote Kit."
 	icon_state = "bottle5"
 	list_reagents = list("atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)
+
+/obj/item/weapon/reagent_containers/glass/bottle/bubonicscabies
+	name = "Scabiei gangrenosum bubo culture bottle"
+	desc = "A small bottle. Contains a sample of Cosmic Sarcoptes scabiei bubonicus."
+	icon_state = "bottle6"
+	spawned_disease = /datum/disease/bubonicscabies
+
+/obj/item/weapon/reagent_containers/glass/bottle/doxpox
+	name = "Medicus Dox Pox culture bottle"
+	desc = "A small bottle. Contains a sample of Gratias Doccus Poxviridae."
+	icon_state = "bottle7"
+	spawned_disease = /datum/disease/doxpox
+
+/obj/item/weapon/reagent_containers/glass/bottle/kilkofhemorrhage
+	name = "Kilkof Hemorrhagic fever culture bottle"
+	desc = "A small bottle. Contains a sample of Kilkof Unomegavirales."
+	icon_state = "bottle8"
+	spawned_disease = /datum/disease/kilkofhemorrhage
+
+/obj/item/weapon/reagent_containers/glass/bottle/lesserzombie
+	name = "Andromeda blobitis culture bottle"
+	desc = "A small bottle. Contains a sample of Haemophilic Andromeda Blobitic necrosis."
+	icon_state = "bottle9"
+	spawned_disease = /datum/disease/lesserzombie
+
+/obj/item/weapon/reagent_containers/glass/bottle/lizarditis
+	name = "Skin mutation culture bottle"
+	desc = "A small bottle. Contains a sample of Verruca Bullous congenital ichthyosiform erythroderma."
+	icon_state = "bottle10"
+	spawned_disease = /datum/disease/lizarditis
