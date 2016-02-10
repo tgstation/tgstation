@@ -232,6 +232,14 @@ proc/CallMaterialName(ID)
 	else if(href_list["copy_design"]) //Copy design data from the research holder to the design disk.
 		for(var/datum/design/D in files.known_designs)
 			if(href_list["copy_design_ID"] == D.id)
+				var/autolathe_friendly = 1
+				for(var/x in D.materials)
+					if( !(x in list(MAT_METAL, MAT_GLASS)))
+						autolathe_friendly = 0
+						D.category -= "Imported"
+				if(D.build_type & (AUTOLATHE|PROTOLATHE|CRAFTLATHE)) // Specifically excludes circuit imprinter and mechfab
+					D.build_type = autolathe_friendly ? (D.build_type | AUTOLATHE) : D.build_type
+					D.category |= "Imported"
 				d_disk.blueprint = D
 				break
 		screen = 1.4
