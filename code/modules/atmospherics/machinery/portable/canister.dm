@@ -66,13 +66,18 @@
 	desc = "Pre-mixed air."
 	icon_state = "grey"
 
-/obj/machinery/portable_atmospherics/canister/New(loc)
+/obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
-	create_gas()
+	if(existing_mixture)
+		air_contents = existing_mixture
+	else
+		create_gas()
+
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.stat = 0
 	pump.build_network()
+
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/Destroy()
@@ -109,7 +114,7 @@
 		update |= HOLDING
 	if(connected_port)
 		update |= CONNECTED
-	var/pressure = air_contents.return_pressure()
+	var/pressure = air_contents ? air_contents.return_pressure() : 0
 	if(pressure < 10)
 		update |= EMPTY
 	else if(pressure < ONE_ATMOSPHERE)
@@ -254,8 +259,7 @@
 			if(label && !..())
 				var/newtype = label2types[label]
 				if(newtype)
-					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc)
-					replacement.air_contents.copy_from(air_contents)
+					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc, air_contents.copy())
 					replacement.interact(usr)
 					qdel(src)
 		if("pressure")
