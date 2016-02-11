@@ -163,8 +163,16 @@
 
 	name = "Mix Virus 3"
 	id = "mixvirus3"
+	required_reagents = list("toxin" = 1)
+	level_min = 3
+	level_max = 5
+
+/datum/chemical_reaction/mix_virus/mix_virus_4
+
+	name = "Mix Virus 4"
+	id = "mixvirus4"
 	required_reagents = list("plasma" = 1)
-	level_min = 4
+	level_min = 5
 	level_max = 6
 
 /datum/chemical_reaction/mix_virus/rem_virus
