@@ -53,7 +53,7 @@
 /obj/effect/blob/core/check_health()
 	..()
 	if(overmind) //we should have an overmind, but...
-		overmind.update_health()
+		overmind.update_health_hud()
 
 /obj/effect/blob/core/Life()
 	if(!overmind)
@@ -64,7 +64,7 @@
 			overmind.add_points(point_rate)
 	health = min(maxhealth, health+core_regen)
 	if(overmind)
-		overmind.update_health()
+		overmind.update_health_hud()
 	Pulse_Area(overmind, 12, 4, 3)
 	for(var/b_dir in alldirs)
 		if(!prob(5))

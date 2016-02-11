@@ -5,8 +5,8 @@
   </ui-section>
   <ui-section label='Output Pressure'>
     <ui-button icon='pencil' action='pressure' params='{"pressure": "input"}'>Set</ui-button>
-    <ui-button icon='plus' state='{{data.set_pressure == data.max_pressure ? "disabled" : null}}' action='pressure' params='{"pressure": "max"}'>Max</ui-button>
-    <span>{{Math.round(adata.set_pressure)}} kPa</span>
+    <ui-button icon='plus' state='{{data.pressure == data.max_pressure ? "disabled" : null}}' action='pressure' params='{"pressure": "max"}'>Max</ui-button>
+    <span>{{Math.round(adata.pressure)}} kPa</span>
   </ui-section>
   <ui-section label='Filter'>
     <ui-button state='{{data.filter_type == "" ? "selected" : null}}'

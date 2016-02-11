@@ -1,6 +1,6 @@
 /obj/machinery/computer/atmos_alert
 	name = "atmospheric alert console"
-	desc = "Used to access the station's atmospheric sensors."
+	desc = "Used to monitor the station's air alarms."
 	circuit = /obj/item/weapon/circuitboard/atmos_alert
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
@@ -25,7 +25,7 @@
 		ui = new(user, src, ui_key, "atmos_alert", name, 350, 300, master_ui, state)
 		ui.open()
 
-/obj/machinery/computer/atmos_alert/get_ui_data(mob/user)
+/obj/machinery/computer/atmos_alert/ui_data(mob/user)
 	var/list/data = list()
 
 	data["priority"] = list()

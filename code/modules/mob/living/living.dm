@@ -193,15 +193,13 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/ex_act(severity, target)
 	..()
-	if(client && !eye_blind)
-		flick("flash", src.flash)
+	flash_eyes()
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
-		health = maxHealth
-		stat = CONSCIOUS
 		return
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+	update_stat()
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
@@ -235,81 +233,112 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/adjustBruteLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
-	handle_regular_status_updates() //we update our health right away.
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/adjustOxyLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
-/mob/living/proc/setOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/setOxyLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	oxyloss = amount
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getToxLoss()
 	return toxloss
 
-/mob/living/proc/adjustToxLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/adjustToxLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
-/mob/living/proc/setToxLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/setToxLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	toxloss = amount
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/adjustFireLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
-	handle_regular_status_updates() //we update our health right away.
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
-/mob/living/proc/adjustCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/adjustCloneLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
-/mob/living/proc/setCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/setCloneLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	cloneloss = amount
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getBrainLoss()
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
-	handle_regular_status_updates()
-
 /mob/living/proc/setBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	brainloss = amount
-	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
 /mob/living/proc/adjustStaminaLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	return
+
+/mob/living/carbon/adjustStaminaLoss(amount)
+	if(status_flags & GODMODE)
+		return 0
 	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
+	update_stamina()
+
+/mob/living/carbon/alien/adjustStaminaLoss(amount)
+	return
 
 /mob/living/proc/setStaminaLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	return
+
+/mob/living/carbon/setStaminaLoss(amount)
+	if(status_flags & GODMODE)
+		return 0
 	staminaloss = amount
+	update_stamina()
+
+/mob/living/carbon/alien/setStaminaLoss(amount)
+	return
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -328,7 +357,7 @@ Sorry Giacom. Please don't be mad :(
 		return
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
-			sleeping = 20 //Short nap
+			SetSleeping(20) //Short nap
 	update_canmove()
 
 /mob/proc/get_contents()
@@ -381,7 +410,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/get_organ_target()
 	var/mob/shooter = src
-	var/t = shooter:zone_sel.selecting
+	var/t = shooter.zone_selected
 	if ((t in list( "eyes", "mouth" )))
 		t = "head"
 	var/obj/item/organ/limb/def_zone = ran_zone(t)
@@ -400,28 +429,32 @@ Sorry Giacom. Please don't be mad :(
 		ear_deaf = deaf
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_organ_damage(brute, burn)
-	adjustBruteLoss(-brute)
-	adjustFireLoss(-burn)
-	src.updatehealth()
+/mob/living/proc/heal_organ_damage(brute, burn, updating_health=1)
+	adjustBruteLoss(-brute, updating_health)
+	adjustFireLoss(-burn, updating_health)
+	if(updating_health)
+		updatehealth()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_organ_damage(brute, burn)
+/mob/living/proc/take_organ_damage(brute, burn, updating_health=1)
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
-	src.updatehealth()
+	if(updating_health)
+		updatehealth()
 
 // heal MANY external organs, in random order
-/mob/living/proc/heal_overall_damage(brute, burn)
-	adjustBruteLoss(-brute)
-	adjustFireLoss(-burn)
-	src.updatehealth()
+/mob/living/proc/heal_overall_damage(brute, burn, updating_health=1)
+	adjustBruteLoss(-brute, updating_health)
+	adjustFireLoss(-burn, updating_health)
+	if(updating_health)
+		updatehealth()
 
 // damage MANY external organs, in random order
-/mob/living/proc/take_overall_damage(brute, burn)
-	adjustBruteLoss(brute)
-	adjustFireLoss(burn)
-	src.updatehealth()
+/mob/living/proc/take_overall_damage(brute, burn, updating_health=1)
+	adjustBruteLoss(brute, updating_health)
+	adjustFireLoss(burn, updating_health)
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/revive()
 	setToxLoss(0)
@@ -432,9 +465,11 @@ Sorry Giacom. Please don't be mad :(
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	SetSleeping(0)
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
+	eye_damage = 0
 	disabilities = 0
 	eye_blind = 0
 	eye_blurry = 0
@@ -445,32 +480,17 @@ Sorry Giacom. Please don't be mad :(
 	ExtinguishMob()
 	fire_stacks = 0
 	suiciding = 0
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		C.handcuffed = initial(C.handcuffed)
-		for(var/obj/item/weapon/restraints/R in C.contents) //actually remove cuffs from inventory
-			qdel(R)
-		if(C.reagents)
-			for(var/datum/reagent/R in C.reagents.reagent_list)
-				C.reagents.clear_reagents()
-			C.reagents.addiction_list = list()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
 	if(stat == DEAD)
 		dead_mob_list -= src
 		living_mob_list += src
 	stat = CONSCIOUS
-	if(ishuman(src))
-		var/mob/living/carbon/human/human_mob = src
-		human_mob.restore_blood()
-		human_mob.remove_all_embedded_objects()
-
+	updatehealth()
 	update_fire()
 	regenerate_icons()
+	reload_fullscreen()
 
 /mob/living/proc/update_damage_overlays()
 	return
-
 
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
@@ -692,9 +712,10 @@ Sorry Giacom. Please don't be mad :(
 		floating = 0
 
 //called when the mob receives a bright flash
-/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	if(check_eye_prot() < intensity && (override_blindness_check || !(disabilities & BLIND)))
-		flick("e_flash", flash)
+		overlay_fullscreen("flash", type)
+		addtimer(src, "clear_fullscreen", 25, FALSE, "flash", 25)
 		return 1
 
 //this returns the mob's protection against eye damage (number between -1 and 2)
@@ -743,8 +764,11 @@ Sorry Giacom. Please don't be mad :(
 	gib()
 	return(gain)
 
-/mob/living/singularity_pull(S)
-	step_towards(src,S)
+/mob/living/singularity_pull(S, current_size)
+	if(current_size >= STAGE_SIX)
+		throw_at_fast(S,14,3, spin=1)
+	else
+		step_towards(src,S)
 
 /mob/living/narsie_act()
 	if(client)
@@ -785,20 +809,22 @@ Sorry Giacom. Please don't be mad :(
 	var/image/I
 	if(hand && l_hand) // Attacked with item in left hand.
 		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 1)
-	else if (!hand && r_hand) // Attacked with item in right hand.
+	else if(!hand && r_hand) // Attacked with item in right hand.
 		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 1)
 	else // Attacked with a fist?
 		return
 
 	// Who can see the attack?
 	var/list/viewing = list()
-	for (var/mob/M in viewers(A))
-		if (M.client)
+	for(var/mob/M in viewers(A))
+		if(M.client)
 			viewing |= M.client
 	flick_overlay(I, viewing, 5) // 5 ticks/half a second
 
 	// Scale the icon.
 	I.transform *= 0.75
+	// The icon should not rotate.
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
 	// Set the direction of the icon animation.
 	var/direction = get_dir(src, A)
@@ -920,3 +946,198 @@ Sorry Giacom. Please don't be mad :(
 	else
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 	return
+/mob/living/proc/can_use_guns(var/obj/item/weapon/gun/G)
+	if (!IsAdvancedToolUser())
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return 0
+	return 1
+
+/mob/living/carbon/proc/update_stamina()
+	return
+
+/mob/living/carbon/human/update_stamina()
+	if(staminaloss)
+		var/total_health = (health - staminaloss)
+		if(total_health <= config.health_threshold_crit && !stat)
+			src << "<span class='notice'>You're too exhausted to keep going...</span>"
+			Weaken(5)
+			setStaminaLoss(health - 2)
+		update_health_hud()
+
+/mob/proc/update_sight()
+	return
+
+/mob/proc/blind_eyes(amount)
+	if(amount>0)
+		var/old_eye_blind = eye_blind
+		eye_blind = max(eye_blind, amount)
+		if(!old_eye_blind)
+			throw_alert("blind", /obj/screen/alert/blind)
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+
+/mob/proc/adjust_blindness(amount)
+	if(amount>0)
+		var/old_eye_blind = eye_blind
+		eye_blind += amount
+		if(!old_eye_blind)
+			throw_alert("blind", /obj/screen/alert/blind)
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+	else if(eye_blind)
+		var/blind_minimum = 0
+		if(stat == UNCONSCIOUS || (disabilities & BLIND))
+			blind_minimum = 1
+		eye_blind = max(eye_blind+amount, blind_minimum)
+		if(!eye_blind)
+			clear_alert("blind")
+			clear_fullscreen("blind")
+
+/mob/proc/set_blindness(amount)
+	if(amount>0)
+		var/old_eye_blind = eye_blind
+		eye_blind = amount
+		if(client && !old_eye_blind)
+			throw_alert("blind", /obj/screen/alert/blind)
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+	else if(eye_blind)
+		var/blind_minimum = 0
+		if(stat == UNCONSCIOUS || (disabilities & BLIND))
+			blind_minimum = 1
+		eye_blind = blind_minimum
+		if(!eye_blind)
+			clear_alert("blind")
+			clear_fullscreen("blind")
+
+/mob/proc/blur_eyes(amount)
+	if(amount>0)
+		var/old_eye_blurry = eye_blurry
+		eye_blurry = max(amount, eye_blurry)
+		if(!old_eye_blurry)
+			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+
+/mob/proc/adjust_blurriness(amount)
+	var/old_eye_blurry = eye_blurry
+	eye_blurry = max(eye_blurry+amount, 0)
+	if(amount>0)
+		if(!old_eye_blurry)
+			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+	else if(old_eye_blurry)
+		clear_fullscreen("blurry")
+
+/mob/proc/set_blurriness(amount)
+	var/old_eye_blurry = eye_blurry
+	eye_blurry = max(amount, 0)
+	if(amount>0)
+		if(!old_eye_blurry)
+			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+	else if(old_eye_blurry)
+		clear_fullscreen("blurry")
+
+
+/mob/proc/damage_eyes(amount)
+	return
+
+/mob/living/carbon/damage_eyes(amount)
+	if(amount>0)
+		eye_damage = amount
+		if(eye_damage > 20)
+			if(eye_damage > 30)
+				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+			else
+				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+
+
+/mob/proc/set_eye_damage(amount)
+	return
+
+/mob/living/carbon/set_eye_damage(amount)
+	eye_damage = max(amount,0)
+	if(eye_damage > 20)
+		if(eye_damage > 30)
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+		else
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("eye_damage")
+
+/mob/proc/adjust_eye_damage(amount)
+	return
+
+/mob/living/carbon/adjust_eye_damage(amount)
+	eye_damage = max(eye_damage+amount, 0)
+	if(eye_damage > 20)
+		if(eye_damage > 30)
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+		else
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("eye_damage")
+
+/mob/proc/adjust_drugginess(amount)
+	return
+
+/mob/living/carbon/adjust_drugginess(amount)
+	var/old_druggy = druggy
+	if(amount>0)
+		druggy += amount
+		if(!old_druggy)
+			overlay_fullscreen("high", /obj/screen/fullscreen/high)
+			throw_alert("high", /obj/screen/alert/high)
+	else if(old_druggy)
+		druggy = max(eye_blurry+amount, 0)
+		if(!druggy)
+			clear_fullscreen("high")
+			clear_alert("high")
+
+/mob/proc/set_drugginess(amount)
+	return
+
+/mob/living/carbon/set_drugginess(amount)
+	var/old_druggy = druggy
+	druggy = amount
+	if(amount>0)
+		if(!old_druggy)
+			overlay_fullscreen("high", /obj/screen/fullscreen/high)
+			throw_alert("high", /obj/screen/alert/high)
+	else if(old_druggy)
+		clear_fullscreen("high")
+		clear_alert("high")
+
+
+/mob/proc/update_vision_overlays()
+	return
+
+/mob/proc/cure_blind() //when we want to cure the BLIND disability only.
+	return
+
+/mob/living/carbon/cure_blind()
+	if(disabilities & BLIND)
+		disabilities &= ~BLIND
+		adjust_blindness(-1)
+		return 1
+
+/mob/proc/cure_nearsighted()
+	return
+
+/mob/living/carbon/cure_nearsighted()
+	if(disabilities & NEARSIGHT)
+		disabilities &= ~NEARSIGHT
+		clear_fullscreen("nearsighted")
+		return 1
+
+/mob/proc/become_nearsighted()
+	return
+
+/mob/living/carbon/become_nearsighted()
+	if(!(disabilities & NEARSIGHT))
+		disabilities |= NEARSIGHT
+		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+		return 1
+
+/mob/proc/become_blind()
+	return
+
+/mob/living/carbon/become_blind()
+	if(!(disabilities & BLIND))
+		disabilities |= BLIND
+		blind_eyes(1)
+		return 1

@@ -245,7 +245,6 @@
 	else
 		..()
 
-
 /obj/structure/girder/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
 		return 1
@@ -256,6 +255,12 @@
 			return prob(girderpasschance)
 		else
 			return 0
+
+/obj/structure/girder/CanAStarPass(ID, dir, caller)
+	. = !density
+	if(ismovableatom(caller))
+		var/atom/movable/mover = caller
+		. = . || mover.checkpass(PASSGRILLE)
 
 /obj/structure/girder/blob_act()
 	if(prob(40))

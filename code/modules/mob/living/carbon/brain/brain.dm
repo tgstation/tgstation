@@ -5,7 +5,6 @@
 	var/obj/item/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
-	var/alert = null
 	has_limbs = 0
 
 /mob/living/carbon/brain/Destroy()
@@ -16,8 +15,10 @@
 	return ..()
 
 /mob/living/carbon/brain/update_canmove()
-	if(in_contents_of(/obj/mecha))	canmove = 1
-	else							canmove = 0
+	if(in_contents_of(/obj/mecha))
+		canmove = 1
+	else
+		canmove = 0
 	return canmove
 
 /mob/living/carbon/brain/toggle_throw_mode()
@@ -29,13 +30,6 @@
 /mob/living/carbon/brain/blob_act()
 	return
 
-/mob/living/carbon/brain/on_forcemove(atom/newloc)
-	if(container)
-		container.loc = newloc
-	else //something went very wrong.
-		CRASH("Brainmob without container.")
-	loc = container
-
 /mob/living/carbon/brain/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
 	return
 
@@ -44,3 +38,6 @@
 
 /mob/living/carbon/brain/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	return // no eyes, no flashing
+
+/mob/living/carbon/brain/update_damage_hud()
+	return //no red circles for brain

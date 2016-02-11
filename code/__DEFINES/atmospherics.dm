@@ -12,15 +12,10 @@
 #define MOLES			1
 #define ARCHIVE			2
 #define GAS_META		3
-//this is kinda hacky... but it means I don't have to change every single time they're called.
 #define META_GAS_SPECIFIC_HEAT	1
 #define META_GAS_NAME			2
 #define META_GAS_OVERLAY		4
 #define META_GAS_MOLES_VISIBLE	3
-#define SPECIFIC_HEAT	GAS_META][META_GAS_SPECIFIC_HEAT
-#define GAS_NAME		GAS_META][META_GAS_NAME
-#define GAS_OVERLAY		GAS_META][META_GAS_OVERLAY
-#define MOLES_VISIBLE	GAS_META][META_GAS_MOLES_VISIBLE
 
 //stuff you should probably leave well alone!
 //ATMOS

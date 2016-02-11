@@ -4,11 +4,11 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'/>
     <meta charset='utf-8'/>
     <script>
-      var update = function (dataString) {
-      var data = JSON.parse(dataString);
-      if (window.tgui) {
-        window.tgui.set("config", data.config);
-        if (typeof data.data !== 'undefined') {
+      window.update = function (dataString) {
+        var data = JSON.parse(dataString);
+        if (window.tgui) {
+          window.tgui.set("config", data.config);
+          if (typeof data.data !== 'undefined') {
             window.tgui.set("data", data.data);
             window.tgui.animate("adata", data.data);
           }

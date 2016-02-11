@@ -91,8 +91,9 @@
 	return
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!istype(M))	return ..()
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+	if(!istype(M))
+		return ..()
+	if(user.zone_selected != "eyes" && user.zone_selected != "head")
 		return ..()
 	if(user.disabilities & CLUMSY && prob(50))
 		M = user
@@ -131,7 +132,7 @@
 		C.handcuffed = null
 		if(C.buckled && C.buckled.buckle_requires_restraints)
 			C.buckled.unbuckle_mob()
-		C.update_inv_handcuffed(0)
+		C.update_handcuffed()
 		return
 	else
 		..()
@@ -217,13 +218,14 @@
 	if(!istype(H))
 		return ..()
 
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
 
 	if(affecting.status == ORGAN_ROBOTIC && user.a_intent != "harm")
 		if(src.remove_fuel(1))
 			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.getDisplayName()].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.getDisplayName()].</span>")
-			if(!do_mob(user, H, 50))	return
+			if(!do_mob(user, H, 50))
+				return
 			item_heal_robotic(H, user, 5, 0)
 			return
 		else

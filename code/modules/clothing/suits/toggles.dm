@@ -92,10 +92,8 @@
 //Hardsuit toggle code
 /obj/item/clothing/suit/space/hardsuit/New()
 	MakeHelmet()
-	if(!jetpack)
-		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack
-		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets
 	..()
+
 /obj/item/clothing/suit/space/hardsuit/Destroy()
 	if(helmet)
 		helmet.suit = null
@@ -138,7 +136,7 @@
 		H.unEquip(helmet, 1)
 		H.update_inv_wear_suit()
 		H << "<span class='notice'>The helmet on the hardsuit disengages.</span>"
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	helmet.loc = src
 
 /obj/item/clothing/suit/space/hardsuit/dropped()

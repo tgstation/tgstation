@@ -26,12 +26,12 @@
 	)
 	var/style = "nanotrasen" // The style to be used for this UI.
 	var/interface // The interface (template) to be used for this UI.
-	var/auto_update = TRUE // Update the UI every MC tick.
+	var/autoupdate = TRUE // Update the UI every MC tick.
 	var/initialized = FALSE // If the UI has been initialized yet.
 	var/list/initial_data // The data (and datastructure) used to initialize the UI.
 	var/status = UI_INTERACTIVE // The status/visibility of the UI.
 	var/datum/ui_state/state = null // Topic state used to determine status/interactability.
-	var/datum/tgui/master_ui	 // The parent UI.
+	var/datum/tgui/master_ui // The parent UI.
 	var/list/datum/tgui/children = list() // Children of this UI.
 
  /**
@@ -80,16 +80,15 @@
   * Open this UI (and initialize it with data).
  **/
 /datum/tgui/proc/open()
-	set waitfor = 0 // Don't wait on sleep()s.
 	if(!user.client)
 		return // Bail if there is no client.
 
 	update_status(push = 0) // Update the window status.
-	if(status == UI_CLOSE)
+	if(status < UI_UPDATE)
 		return // Bail if we're not supposed to open.
 
 	if(!initial_data)
-		set_initial_data(src_object.get_ui_data(user)) // Get the UI data.
+		set_initial_data(src_object.ui_data(user)) // Get the UI data.
 
 	var/window_size = ""
 	if(width && height) // If we have a width and height, use them.
@@ -129,6 +128,7 @@
 	children.Cut()
 	state = null
 	master_ui = null
+	qdel(src)
 
  /**
   * public
@@ -167,8 +167,8 @@
   *
   * required state bool Enable/disable auto-updating.
  **/
-/datum/tgui/proc/set_auto_update(state = 1)
-	auto_update = state
+/datum/tgui/proc/set_autoupdate(state = 1)
+	autoupdate = state
 
  /**
   * private
@@ -212,6 +212,7 @@
 	var/list/config_data = list(
 			"title"     = title,
 			"status"    = status,
+			"screen"	= src_object.ui_screen,
 			"style"     = style,
 			"interface" = interface,
 			"fancy"     = user.client.prefs.tgui_fancy,
@@ -245,10 +246,10 @@
 		json_data["data"] = data
 
 	// Generate the JSON.
-	var/json = JSON.stringify(json_data)
+	var/json = json_encode(json_data)
 	// Strip #255/improper.
-	json = regex_replaceall(json, "\improper", "")
-	json = regex_replaceall(json, "\proper", "")
+	json = replacetext(json, "\proper", "")
+	json = replacetext(json, "\improper", "")
 	return json
 
  /**
@@ -265,26 +266,24 @@
 	var/action = href_list["action"]
 	var/params = href_list; params -= "action"
 
-	// Handle any special actions.
 	switch(action)
 		if("tgui:initialize")
 			user << output(url_encode(get_json(initial_data)), "[window_id].browser:initialize")
 			initialized = TRUE
-			return
+		if("tgui:view")
+			if(params["screen"])
+				src_object.ui_screen = params["screen"]
+			SStgui.update_uis(src_object)
 		if("tgui:link")
 			user << link(params["url"])
-			return
 		if("tgui:fancy")
 			user.client.prefs.tgui_fancy = TRUE
-			return
 		if("tgui:nofrills")
 			user.client.prefs.tgui_fancy = FALSE
-			return
-
-	update_status(push = 0) // Update the window state.
-	var/update = src_object.ui_act(action, params, src, state) // Call ui_act() on the src_object.
-	if(src_object && update)
-		SStgui.update_uis(src_object) // If we have a src_object and its ui_act() told us to update.
+		else
+			update_status(push = 0) // Update the window state.
+			if(src_object.ui_act(action, params, src, state)) // Call ui_act() on the src_object.
+				SStgui.update_uis(src_object) // Update if the object requested it.
 
  /**
   * private
@@ -300,7 +299,7 @@
 		close()
 		return
 
-	if(status && (force || auto_update))
+	if(status && (force || autoupdate))
 		update() // Update the UI if the status and update settings allow it.
 	else
 		update_status(push = 1) // Otherwise only update status.
@@ -316,13 +315,12 @@
 /datum/tgui/proc/push_data(data, force = 0)
 	update_status(push = 0) // Update the window state.
 	if(!initialized)
-		return // Cannot upadte UI if it is not set up yet.
+		return // Cannot update UI if it is not set up yet.
 	if(status <= UI_DISABLED && !force)
 		return // Cannot update UI, we have no visibility.
 
 	// Send the new JSON to the update() Javascript function.
 	user << output(url_encode(get_json(data)), "[window_id].browser:update")
-
 
  /**
   * private
@@ -343,8 +341,7 @@
   * optional push bool Push an update to the UI (an update is always sent for UI_DISABLED).
  **/
 /datum/tgui/proc/update_status(push = 0)
-	var/datum/host = src_object.ui_host()
-	var/status = host.ui_status(user, state)
+	var/status = src_object.ui_status(user, state)
 	if(master_ui)
 		status = min(status, master_ui.status)
 

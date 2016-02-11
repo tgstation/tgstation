@@ -537,7 +537,7 @@
 			for(var/id in env_gases)
 				var/gas_level = env_gases[id][MOLES]/total_moles
 				if(id in hardcoded_gases || gas_level > 0.01)
-					dat += "[env_gases[id][GAS_NAME]]: [round(gas_level*100)]%<br>"
+					dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100)]%<br>"
 		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 	dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
 	dat += "<br>"
@@ -626,7 +626,8 @@
 	dat += "<ul>"
 	if(!pda.toff)
 		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
-			if (P == src.pda)	continue
+			if (P == src.pda)
+				continue
 			dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
 			dat += "</li>"
 	dat += "</ul>"

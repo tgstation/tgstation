@@ -3,7 +3,6 @@
 	desc = "A little security robot.  He looks less than thrilled."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"
-	layer = 5
 	density = 0
 	anchored = 0
 	health = 25
@@ -18,6 +17,7 @@
 	bot_core_type = /obj/machinery/bot_core/secbot
 	window_id = "autosec"
 	window_name = "Automatic Security Unit v1.6"
+	allow_pai = 0
 
 	var/mob/living/carbon/target
 	var/oldtarget_name
@@ -41,7 +41,7 @@
 	var/turf/Tsec = get_turf(src)
 	new /obj/item/weapon/stock_parts/cell/potato(Tsec)
 	var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
-	S.list_reagents = list("whiskey" = 15)
+	S.reagents.add_reagent("whiskey", 15)
 	S.on_reagent_change()
 	..()
 
@@ -87,6 +87,7 @@
 /mob/living/simple_animal/bot/secbot/get_controls(mob/user)
 	var/dat
 	dat += hack(user)
+	dat += showpai(user)
 	dat += text({"
 <TT><B>Securitron v1.6 controls</B></TT><BR><BR>
 Status: []<BR>
@@ -166,7 +167,7 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
-			if (!Proj.nodamage && Proj.damage < src.health)
+			if(!Proj.nodamage && Proj.damage < src.health)
 				retaliate(Proj.firer)
 	..()
 
@@ -203,7 +204,7 @@ Auto Patrol: []"},
 			return
 		if(!C.handcuffed)
 			C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
-			C.update_inv_handcuffed(0)	//update the handcuffs overlay
+			C.update_handcuffed()
 			playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 			back_to_idle()
 
@@ -231,7 +232,7 @@ Auto Patrol: []"},
 							"<span class='userdanger'>[src] has stunned you!</span>")
 
 /mob/living/simple_animal/bot/secbot/handle_automated_action()
-	if (!..())
+	if(!..())
 		return
 
 	switch(mode)
@@ -289,7 +290,7 @@ Auto Patrol: []"},
 				return
 
 		if(BOT_ARREST)
-			if (!target)
+			if(!target)
 				anchored = 0
 				mode = BOT_IDLE
 				last_found = world.time
@@ -300,7 +301,7 @@ Auto Patrol: []"},
 				back_to_idle()
 				return
 
-			if( !Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && target.weakened < 2) ) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && target.weakened < 2)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
 				back_to_hunt()
 				return
 			else //Try arresting again if the target escapes.

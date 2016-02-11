@@ -38,7 +38,7 @@ var/next_mob_id = 0
 	for(var/id in environment.gases)
 		var/gas = environment.gases[id]
 		if(gas[MOLES])
-			t+="<span class='notice'>[gas[GAS_NAME]]: [gas[MOLES]] \n</span>"
+			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
 
 	usr << t
 
@@ -230,13 +230,6 @@ var/next_mob_id = 0
 
 	return 0
 
-/mob/proc/put_in_any_hand_if_possible(obj/item/W, qdel_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	if(equip_to_slot_if_possible(W, slot_l_hand, qdel_on_fail, disable_warning, redraw_mob))
-		return 1
-	else if(equip_to_slot_if_possible(W, slot_r_hand, qdel_on_fail, disable_warning, redraw_mob))
-		return 1
-	return 0
-
 //This is a SAFE proc. Use this instead of equip_to_splot()!
 //set qdel_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
@@ -273,19 +266,29 @@ var/next_mob_id = 0
 
 	return 0
 
-/mob/proc/reset_view(atom/A)
-	if (client)
-		if (istype(A, /atom/movable))
+/mob/proc/reset_perspective(atom/A)
+	if(client)
+		if(istype(A, /atom/movable))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
-			if (isturf(loc))
+			if(isturf(loc))
 				client.eye = client.mob
 				client.perspective = MOB_PERSPECTIVE
 			else
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
-	return
+		return 1
+
+/mob/living/reset_perspective(atom/A)
+	if(..())
+		update_sight()
+		if(client.eye != src)
+			var/atom/AT = client.eye
+			AT.get_remote_view_fullscreens(src)
+		else
+			clear_fullscreen("remote_view", 0)
+		update_pipe_vision()
 
 
 /mob/proc/show_inv(mob/user)
@@ -344,8 +347,7 @@ var/next_mob_id = 0
 
 		src.pulling = AM
 		AM.pulledby = src
-		if(pullin)
-			pullin.update_icon(src)
+		update_pull_hud_icon()
 		if(ismob(AM))
 			var/mob/M = AM
 			if(!iscarbon(src))
@@ -361,8 +363,12 @@ var/next_mob_id = 0
 	if(pulling)
 		pulling.pulledby = null
 		pulling = null
-		if(pullin)
-			pullin.update_icon(src)
+		update_pull_hud_icon()
+
+/mob/proc/update_pull_hud_icon()
+	if(client && hud_used)
+		if(hud_used.pull_icon)
+			hud_used.pull_icon.update_icon(src)
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -461,34 +467,6 @@ var/next_mob_id = 0
 //	M.Login()	//wat
 	return
 
-/client/verb/changes()
-	set name = "Changelog"
-	set category = "OOC"
-	getFiles(
-		'html/88x31.png',
-		'html/bug-minus.png',
-		'html/cross-circle.png',
-		'html/hard-hat-exclamation.png',
-		'html/image-minus.png',
-		'html/image-plus.png',
-		'html/music-minus.png',
-		'html/music-plus.png',
-		'html/tick-circle.png',
-		'html/wrench-screwdriver.png',
-		'html/spell-check.png',
-		'html/burn-exclamation.png',
-		'html/chevron.png',
-		'html/chevron-expand.png',
-		'html/changelog.css',
-		'html/changelog.js',
-		'html/changelog.html'
-		)
-	src << browse('html/changelog.html', "window=changes;size=675x650")
-	if(prefs.lastchangelog != changelog_hash)
-		prefs.lastchangelog = changelog_hash
-		prefs.save_preferences()
-		winset(src, "rpane.changelogb", "background-color=none;font-style=;")
-
 /mob/verb/observe()
 	set name = "Observe"
 	set category = "OOC"
@@ -519,15 +497,11 @@ var/next_mob_id = 0
 
 	if(client && mob_eye)
 		client.eye = mob_eye
-		if (is_admin)
-			client.adminobs = 1
-			if(mob_eye == client.mob || client.eye == client.mob)
-				client.adminobs = 0
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
 	set category = "OOC"
-	reset_view(null)
+	reset_perspective(null)
 	unset_machine()
 
 /mob/Topic(href, href_list)
@@ -568,10 +542,14 @@ var/next_mob_id = 0
 
 /mob/MouseDrop(mob/M)
 	..()
-	if(M != usr)	return
-	if(usr == src)	return
-	if(!Adjacent(usr))	return
-	if(istype(M, /mob/living/silicon/ai))	return
+	if(M != usr)
+		return
+	if(usr == src)
+		return
+	if(!Adjacent(usr))
+		return
+	if(istype(M, /mob/living/silicon/ai))
+		return
 	show_inv(usr)
 
 /mob/proc/is_active()
@@ -631,7 +609,7 @@ var/next_mob_id = 0
 			else
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
-				stat("Subsystems:", "[round(Master.subsystem_cost, 0.001)]ds")
+				stat("Subsystems:", "[round(Master.subsystem_cost, 0.01)]ds")
 				stat(null)
 				for(var/datum/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
@@ -680,13 +658,20 @@ var/next_mob_id = 0
 
 // facing verbs
 /mob/proc/canface()
-	if(!canmove)						return 0
-	if(client.moving)					return 0
-	if(world.time < client.move_delay)	return 0
-	if(stat==2)							return 0
-	if(anchored)						return 0
-	if(notransform)						return 0
-	if(restrained())					return 0
+	if(!canmove)
+		return 0
+	if(client.moving)
+		return 0
+	if(world.time < client.move_delay)
+		return 0
+	if(stat==2)
+		return 0
+	if(anchored)
+		return 0
+	if(notransform)
+		return 0
+	if(restrained())
+		return 0
 	return 1
 
 
@@ -698,6 +683,9 @@ var/next_mob_id = 0
 	if(ko || resting || stunned)
 		drop_r_hand()
 		drop_l_hand()
+		unset_machine()
+		if(pulling)
+			stop_pulling()
 	else
 		lying = 0
 		canmove = 1
@@ -725,7 +713,8 @@ var/next_mob_id = 0
 
 /mob/verb/eastface()
 	set hidden = 1
-	if(!canface())	return 0
+	if(!canface())
+		return 0
 	dir = EAST
 	client.move_delay += movement_delay()
 	return 1
@@ -733,7 +722,8 @@ var/next_mob_id = 0
 
 /mob/verb/westface()
 	set hidden = 1
-	if(!canface())	return 0
+	if(!canface())
+		return 0
 	dir = WEST
 	client.move_delay += movement_delay()
 	return 1
@@ -741,7 +731,8 @@ var/next_mob_id = 0
 
 /mob/verb/northface()
 	set hidden = 1
-	if(!canface())	return 0
+	if(!canface())
+		return 0
 	dir = NORTH
 	client.move_delay += movement_delay()
 	return 1
@@ -749,7 +740,8 @@ var/next_mob_id = 0
 
 /mob/verb/southface()
 	set hidden = 1
-	if(!canface())	return 0
+	if(!canface())
+		return 0
 	dir = SOUTH
 	client.move_delay += movement_delay()
 	return 1
@@ -774,85 +766,96 @@ var/next_mob_id = 0
 	if(status_flags & CANSTUN)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
 		update_canmove()
-	return
 
 /mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
 	if(status_flags & CANSTUN)
 		stunned = max(amount,0)
 		update_canmove()
-	return
 
 /mob/proc/AdjustStunned(amount)
 	if(status_flags & CANSTUN)
 		stunned = max(stunned + amount,0)
 		update_canmove()
-	return
 
 /mob/proc/Weaken(amount, ignore_canweaken = 0)
 	if(status_flags & CANWEAKEN || ignore_canweaken)
 		weakened = max(max(weakened,amount),0)
 		update_canmove()	//updates lying, canmove and icons
-	return
 
 /mob/proc/SetWeakened(amount)
 	if(status_flags & CANWEAKEN)
 		weakened = max(amount,0)
 		update_canmove()	//updates lying, canmove and icons
-	return
 
 /mob/proc/AdjustWeakened(amount)
 	if(status_flags & CANWEAKEN)
 		weakened = max(weakened + amount,0)
 		update_canmove()	//updates lying, canmove and icons
-	return
 
 /mob/proc/Paralyse(amount)
 	if(status_flags & CANPARALYSE)
+		var/old_paralysis = paralysis
 		paralysis = max(max(paralysis,amount),0)
-		update_canmove()
-	return
+		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
+			update_stat()
 
 /mob/proc/SetParalysis(amount)
 	if(status_flags & CANPARALYSE)
+		var/old_paralysis = paralysis
 		paralysis = max(amount,0)
-		update_canmove()
-	return
+		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
+			update_stat()
 
 /mob/proc/AdjustParalysis(amount)
 	if(status_flags & CANPARALYSE)
+		var/old_paralysis = paralysis
 		paralysis = max(paralysis + amount,0)
-		update_canmove()
-	return
+		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
+			update_stat()
 
-/mob/proc/Sleeping(amount)
+/mob/proc/Sleeping(amount, updating_stat = 1)
+	var/old_sleeping = sleeping
 	sleeping = max(max(sleeping,amount),0)
-	update_canmove()
-	return
+	if(!old_sleeping && sleeping)
+		throw_alert("asleep", /obj/screen/alert/asleep)
+		if(updating_stat)
+			update_stat()
+	else if(old_sleeping && !sleeping)
+		clear_alert("asleep")
+		if(updating_stat)
+			update_stat()
 
 /mob/proc/SetSleeping(amount)
+	var/old_sleeping = sleeping
 	sleeping = max(amount,0)
-	update_canmove()
-	return
+	if(!old_sleeping && sleeping)
+		throw_alert("asleep", /obj/screen/alert/asleep)
+		update_stat()
+	else if(old_sleeping && !sleeping)
+		clear_alert("asleep")
+		update_stat()
 
 /mob/proc/AdjustSleeping(amount)
+	var/old_sleeping = sleeping
 	sleeping = max(sleeping + amount,0)
-	update_canmove()
-	return
+	if(!old_sleeping && sleeping)
+		throw_alert("asleep", /obj/screen/alert/asleep)
+		update_stat()
+	else if(old_sleeping && !sleeping)
+		clear_alert("asleep")
+		update_stat()
 
 /mob/proc/Resting(amount)
 	resting = max(max(resting,amount),0)
 	update_canmove()
-	return
 
 /mob/proc/SetResting(amount)
 	resting = max(amount,0)
 	update_canmove()
-	return
 
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount,0)
 	update_canmove()
-	return
 
 /mob/proc/assess_threat() //For sec bot threat assessment
 	return
@@ -966,3 +969,120 @@ var/next_mob_id = 0
 		if(F in target.faction)
 			return 1
 	return 0
+
+
+//This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
+//Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
+/mob/proc/fully_replace_character_name(oldname,newname)
+	if(!newname)
+		return 0
+	real_name = newname
+	name = newname
+	if(mind)
+		mind.name = newname
+
+	if(oldname)
+		//update the datacore records! This is goig to be a bit costly.
+		replace_records_name(oldname,newname)
+
+		//update our pda and id if we have them on our person
+		replace_identification_name(oldname,newname)
+
+		for(var/datum/mind/T in ticker.minds)
+			for(var/datum/objective/obj in T.objectives)
+				// Only update if this player is a target
+				if(obj.target && obj.target.current && obj.target.current.real_name == name)
+					obj.update_explanation_text()
+	return 1
+
+/mob/living/carbon/fully_replace_character_name(oldname,newname)
+	..()
+	if(dna)
+		dna.real_name = real_name
+
+/mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
+	..()
+	if(oldname != real_name)
+		if(eyeobj)
+			eyeobj.name = "[newname] (AI Eye)"
+
+		// Notify Cyborgs
+		for(var/mob/living/silicon/robot/Slave in connected_robots)
+			Slave.show_laws()
+
+/mob/living/silicon/robot/fully_replace_character_name(oldname,newname)
+	..()
+	if(oldname != real_name)
+		notify_ai(3, oldname, newname)
+	if(camera)
+		camera.c_tag = real_name
+	custom_name = newname
+
+//Updates data_core records with new name , see mob/living/carbon/human
+/mob/proc/replace_records_name(oldname,newname)
+	return
+
+/mob/living/carbon/human/replace_records_name(oldname,newname) // Only humans have records right now, move this up if changed.
+	for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
+		var/datum/data/record/R = find_record("name", oldname, L)
+		if(R)
+			R.fields["name"] = newname
+
+/mob/proc/replace_identification_name(oldname,newname)
+	var/list/searching = GetAllContents()
+	var/search_id = 1
+	var/search_pda = 1
+
+	for(var/A in searching)
+		if( search_id && istype(A,/obj/item/weapon/card/id) )
+			var/obj/item/weapon/card/id/ID = A
+			if(ID.registered_name == oldname)
+				ID.registered_name = newname
+				ID.update_label()
+				if(!search_pda)
+					break
+				search_id = 0
+
+		else if( search_pda && istype(A,/obj/item/device/pda) )
+			var/obj/item/device/pda/PDA = A
+			if(PDA.owner == oldname)
+				PDA.owner = newname
+				PDA.update_label()
+				if(!search_id)
+					break
+				search_pda = 0
+
+/mob/living/silicon/ai/replace_identification_name(oldname,newname)
+	if(aiPDA)
+		aiPDA.owner = newname
+		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"
+
+
+/mob/proc/update_stat()
+	return
+
+/mob/proc/update_health_hud()
+	return
+
+/mob/living/on_varedit(modified_var)
+	switch(modified_var)
+		if("weakened")
+			SetWeakened(weakened)
+		if("stunned")
+			SetStunned(stunned)
+		if("paralysis")
+			SetParalysis(paralysis)
+		if("sleeping")
+			SetSleeping(sleeping)
+		if("eye_blind")
+			set_blindness(eye_blind)
+		if("eye_damage")
+			set_eye_damage(eye_damage)
+		if("eye_blurry")
+			set_blurriness(eye_blurry)
+		if("ear_deaf")
+			setEarDamage(-1, ear_deaf)
+		if("ear_damage")
+			setEarDamage(ear_damage, -1)
+		if("maxHealth")
+			updatehealth()

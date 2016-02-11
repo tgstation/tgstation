@@ -1,3 +1,5 @@
+
+
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
@@ -18,23 +20,6 @@
 	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
 	user << "<font color='red'>You have <b>BANNED</b> [M]</font>"
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
-
-
-/obj/item/weapon/nullrod
-	name = "null rod"
-	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
-	icon_state = "nullrod"
-	item_state = "nullrod"
-	slot_flags = SLOT_BELT
-	force = 15
-	throw_speed = 3
-	throw_range = 4
-	throwforce = 10
-	w_class = 1
-
-/obj/item/weapon/nullrod/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/sord
 	name = "\improper SORD"
@@ -117,7 +102,7 @@
 		qdel(I)
 		qdel(src)
 
-	else if(istype(I, /obj/item/weapon/wirecutters) && !(I.flags & NODROP))
+	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags & NODROP))
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 
 		if(!remove_item_from_storage(user))
@@ -125,7 +110,7 @@
 		user.unEquip(I)
 
 		user.put_in_hands(P)
-		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
+		user << "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>"
 		qdel(I)
 		qdel(src)
 
@@ -307,3 +292,4 @@
 	icon_state = "tailwhip"
 	origin_tech = "combat=1"
 	needs_permit = 0
+

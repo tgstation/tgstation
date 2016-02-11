@@ -73,10 +73,10 @@
 
 /mob/camera/god/update_icons()
 	icon_state = "[initial(icon_state)]-[side]"
-	
+
 	if(ghostimage)
 		ghost_darkness_images -= ghostimage
-	
+
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
@@ -104,9 +104,9 @@
 	update_health_hud()
 
 
-/mob/camera/god/proc/update_health_hud()
-	if(god_nexus && hud_used && hud_used.deity_health_display)
-		hud_used.deity_health_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='lime'>[god_nexus.health]   </font></div>"
+/mob/camera/god/update_health_hud()
+	if(god_nexus && hud_used && hud_used.healths)
+		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='lime'>[god_nexus.health]   </font></div>"
 
 
 /mob/camera/god/proc/add_faith(faith_amt)

@@ -4,7 +4,7 @@
 	icon_state = "helmet"
 	flags = HEADBANGPROTECT
 	item_state = "helmet"
-	armor = list(melee = 25, bullet = 15, laser = 25,energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 30, bullet = 25, laser = 25,energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
@@ -48,20 +48,20 @@
 	toggle_cooldown = 0
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
-/obj/item/clothing/head/helmet/attack_self()
-	if(usr.canmove && !usr.stat && !usr.restrained() && can_toggle)
+/obj/item/clothing/head/helmet/attack_self(mob/user)
+	if(can_toggle && !user.incapacitated())
 		if(world.time > cooldown + toggle_cooldown)
 			cooldown = world.time
-			up ^= 1
+			up = !up
 			flags ^= visor_flags
 			flags_inv ^= visor_flags_inv
 			flags_cover ^= initial(flags_cover)
 			icon_state = "[initial(icon_state)][up ? "up" : ""]"
-			usr << "[up ? alt_toggle_message : toggle_message] \the [src]"
+			user << "[up ? alt_toggle_message : toggle_message] \the [src]"
 
-			usr.update_inv_head()
-			if(istype(usr, /mob/living/carbon))
-				var/mob/living/carbon/C = usr
+			user.update_inv_head()
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
 				C.head_update(src, forced = 1)
 
 			if(active_sound)
