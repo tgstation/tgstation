@@ -158,6 +158,15 @@
 	recoil = 8
 	pin = /obj/item/device/firing_pin
 
+/obj/item/weapon/gun/projectile/revolver/nagant
+	name = "nagant revolver"
+	desc = "An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
+	icon_state = "pistol"
+	origin_tech = "combat=3"
+	can_suppress = 1
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev762
+
+
 // A gun to play Russian Roulette!
 // You can spin the chamber to randomize the position of the bullet.
 

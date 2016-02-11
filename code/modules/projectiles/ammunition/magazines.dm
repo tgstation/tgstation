@@ -71,6 +71,11 @@
 	caliber = "40mm"
 	max_ammo = 6
 
+/obj/item/ammo_box/magazine/internal/cylinder/rev762
+	name = "nagant revolver cylinder"
+	ammo_type = /obj/item/ammo_casing/n762
+	caliber = "n762"
+	max_ammo = 7
 
 // Shotgun internal mags
 /obj/item/ammo_box/magazine/internal/shot
