@@ -199,7 +199,6 @@
 	new /obj/item/weapon/grenade/empgrenade(src)
 	new /obj/item/weapon/grenade/empgrenade(src)
 	new /obj/item/weapon/implanter/emp(src)
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/chemical
 	name = "boxed chemical kit"
@@ -241,4 +240,3 @@
 		new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
 	new /obj/item/weapon/reagent_containers/syringe(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
-	return
