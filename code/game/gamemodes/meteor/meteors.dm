@@ -309,7 +309,6 @@
 /obj/effect/meteor/gib    //non explosive meteor, appears to be a corpse spinning in space before impacting something and spraying gibs everywhere
 	name = "human corpse"
 	icon_state = "human"
-	pass_flags = PASSTABLE
 
 /obj/effect/meteor/gib/Bump(atom/A)
 	new /obj/effect/gibspawner/human(src.loc)
