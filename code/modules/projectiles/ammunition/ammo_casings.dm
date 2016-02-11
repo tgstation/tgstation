@@ -9,6 +9,9 @@
 	caliber = "a762"
 	projectile_type = /obj/item/projectile/bullet
 
+/obj/item/ammo_casing/a762/enchanted
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
+
 /obj/item/ammo_casing/a50
 	desc = "A .50AE bullet casing."
 	caliber = ".50"
