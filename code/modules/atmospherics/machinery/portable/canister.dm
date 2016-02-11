@@ -114,7 +114,7 @@
 		update |= HOLDING
 	if(connected_port)
 		update |= CONNECTED
-	var/pressure = air_contents ? air_contents.return_pressure() : 0
+	var/pressure = air_contents.return_pressure()
 	if(pressure < 10)
 		update |= EMPTY
 	else if(pressure < ONE_ATMOSPHERE)
