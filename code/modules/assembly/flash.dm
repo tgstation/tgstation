@@ -88,7 +88,7 @@
 		if(M.flash_eyes(1, 1))
 			M.confused += power
 			terrible_conversion_proc(M, user)
-			M.Stun(1)
+			M.Weaken(rand(1,4))
 			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
 			user << "<span class='danger'>You blind [M] with the flash!</span>"
 			M << "<span class='userdanger'>[user] blinds you with the flash!</span>"
@@ -102,6 +102,8 @@
 	else
 		if(M.flash_eyes())
 			M.confused += power
+			if(prob(25))
+				M.Weaken(1)
 
 /obj/item/device/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))

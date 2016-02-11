@@ -3,7 +3,7 @@
 	desc = "The part of the gun that makes the laser go pew"
 	caliber = "energy"
 	projectile_type = /obj/item/projectile/energy
-	var/e_cost = 100 //The amount of energy a cell needs to expend to create this shot.
+	var/e_cost = 83 //The amount of energy a cell needs to expend to create this shot.
 	var/select_name = "energy"
 	fire_sound = 'sound/weapons/Laser.ogg'
 
@@ -11,13 +11,17 @@
 	projectile_type = /obj/item/projectile/beam
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/laser/egun
+	projectile_type = /obj/item/projectile/beam/egun
+	select_name = "kill"
+
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/item/projectile/beam
-	e_cost = 83
+	e_cost = 50
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hos
-	e_cost = 100
+	e_cost = 83
 
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/item/projectile/beam/practice
@@ -31,6 +35,7 @@
 
 /obj/item/ammo_casing/energy/laser/heavy
 	projectile_type = /obj/item/projectile/beam/heavylaser
+	e_cost = 100
 	select_name = "anti-vehicle"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
@@ -51,7 +56,19 @@
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/item/projectile/beam/xray
 	e_cost = 50
+	select_name = "xray"
 	fire_sound = 'sound/weapons/laser3.ogg'
+
+/obj/item/ammo_casing/energy/xray/scatter
+	e_cost = 50
+	variance = 0.8
+	pellets = 8
+	select_name = "scatter xray"
+
+/obj/item/ammo_casing/energy/lasergun/xray
+	e_cost = 25
+	select_name = "kill"
+
 
 /obj/item/ammo_casing/energy/electrode
 	projectile_type = /obj/item/projectile/energy/electrode
@@ -121,7 +138,7 @@
 /obj/item/ammo_casing/energy/disabler
 	projectile_type = /obj/item/projectile/beam/disabler
 	select_name  = "disable"
-	e_cost = 50
+	e_cost = 33.3
 	fire_sound = "sound/weapons/taser2.ogg"
 
 /obj/item/ammo_casing/energy/plasma

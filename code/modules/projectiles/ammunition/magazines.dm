@@ -93,7 +93,7 @@
 /obj/item/ammo_box/magazine/internal/shot/com
 	name = "combat shotgun internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
-	max_ammo = 6
+	max_ammo = 8
 
 /obj/item/ammo_box/magazine/internal/shot/dual
 	name = "double-barrel shotgun internal magazine"
@@ -165,7 +165,7 @@
 /obj/item/ammo_box/magazine/m45
 	name = "handgun magazine (.45)"
 	icon_state = "45-8"
-	ammo_type = /obj/item/ammo_casing/c45
+	ammo_type = /obj/item/ammo_casing/c45/rubber
 	caliber = ".45"
 	max_ammo = 8
 
@@ -178,7 +178,7 @@
 	icon_state = "46x30mmt-20"
 	ammo_type = /obj/item/ammo_casing/c46x30mm
 	caliber = "4.6x30mm"
-	max_ammo = 20
+	max_ammo = 30
 
 /obj/item/ammo_box/magazine/wt550m9/update_icon()
 	..()
@@ -354,3 +354,17 @@ obj/item/ammo_box/magazine/tommygunm45
 /obj/item/ammo_box/magazine/toy/m762/update_icon()
 	..()
 	icon_state = "a762-[round(ammo_count(),10)]"
+
+
+/obj/item/ammo_box/magazine/m45/standard
+	name = "handgun magazine (.45 Standard)"
+	ammo_type = /obj/item/ammo_casing/c45/standard
+/obj/item/ammo_box/magazine/m45/rubber
+	name = "handgun magazine (.45 Rubber)"
+	ammo_type = /obj/item/ammo_casing/c45/rubber
+/obj/item/ammo_box/magazine/m45/fmj
+	name = "handgun magazine (.45 FMJ)"
+	ammo_type = /obj/item/ammo_casing/c45/fmj
+/obj/item/ammo_box/magazine/m45/ap
+	name = "handgun magazine (.45 AP)"
+	ammo_type = /obj/item/ammo_casing/c45/ap

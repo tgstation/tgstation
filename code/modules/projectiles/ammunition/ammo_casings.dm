@@ -67,16 +67,6 @@
 	caliber = "4.6x30mm"
 	projectile_type = /obj/item/projectile/bullet/incendiary/firebullet
 
-/obj/item/ammo_casing/c45
-	desc = "A .45 bullet casing."
-	caliber = ".45"
-	projectile_type = /obj/item/projectile/bullet/midbullet
-
-/obj/item/ammo_casing/c45nostamina
-	desc = "A .45 bullet casing."
-	caliber = ".45"
-	projectile_type = /obj/item/projectile/bullet/weakbullet3
-
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
 	desc = "A 12 gauge lead slug."
@@ -311,3 +301,23 @@
 	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
+
+
+/obj/item/ammo_casing/c45
+	desc = "A .45 bullet casing."
+	caliber = ".45"
+	projectile_type = /obj/item/projectile/bullet/midbullet
+
+/obj/item/ammo_casing/c45nostamina
+	desc = "A .45 bullet casing."
+	caliber = ".45"
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
+
+/obj/item/ammo_casing/c45/rubber
+	projectile_type = /obj/item/projectile/bullet/b45/rubber
+/obj/item/ammo_casing/c45/standard
+	projectile_type = /obj/item/projectile/bullet/b45
+/obj/item/ammo_casing/c45/fmj
+	projectile_type = /obj/item/projectile/bullet/b45/fmj
+/obj/item/ammo_casing/c45/ap
+	projectile_type = /obj/item/projectile/bullet/b45/ap

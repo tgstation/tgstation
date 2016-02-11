@@ -12,7 +12,7 @@
 	var/stunforce = 7
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
-	var/hitcost = 1000
+	var/hitcost = 750
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
