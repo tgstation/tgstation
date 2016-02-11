@@ -16,7 +16,7 @@
 	reqs = list(/obj/item/weapon/gun = 1)
 	parts = list(/obj/item/weapon/gun = 1)
 	tools = list(/obj/item/weapon/gun/energy/plasmacutter, /obj/item/weapon/screwdriver, /obj/item/weapon/wirecutters)
-	time = 100
+	time = 50
 	category = CAT_WEAPON
 
 /datum/table_recipe/IED
@@ -27,7 +27,7 @@
 				/obj/item/device/assembly/igniter = 1,
 				/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1)
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1)
-	time = 30
+	time = 15
 	category = CAT_WEAPON
 
 /datum/table_recipe/lance
@@ -36,7 +36,7 @@
 	reqs = list(/obj/item/weapon/twohanded/spear = 1,
 				/obj/item/weapon/grenade = 1)
 	parts = list(/obj/item/weapon/grenade = 1)
-	time = 30
+	time = 15
 	category = CAT_WEAPON
 
 /datum/table_recipe/lance2
@@ -45,7 +45,7 @@
 	reqs = list(/obj/item/weapon/twohanded/spear = 1,
 				/obj/item/weapon/c4 = 1)
 	parts = list(/obj/item/weapon/c4 = 1)
-	time = 80
+	time = 40
 	category = CAT_WEAPON
 
 
@@ -55,7 +55,7 @@
 	reqs = list(/obj/item/weapon/reagent_containers/glass/rag = 1,
 				/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
-	time = 80
+	time = 40
 	category = CAT_WEAPON
 
 /datum/table_recipe/stunprod
@@ -65,7 +65,7 @@
 				/obj/item/stack/rods = 1,
 				/obj/item/device/assembly/igniter = 1,
 				/obj/item/weapon/stock_parts/cell = 1)
-	time = 80
+	time = 40
 	parts = list(/obj/item/weapon/stock_parts/cell = 1)
 	category = CAT_WEAPON
 
@@ -77,7 +77,7 @@
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/stock_parts/cell = 1,
 				/obj/item/weapon/ore/bluespace_crystal = 1)
-	time = 80
+	time = 40
 	parts = list(/obj/item/weapon/stock_parts/cell = 1)
 	category = CAT_WEAPON
 
@@ -86,7 +86,7 @@
 	result = /obj/item/weapon/tailclub
 	reqs = list(/obj/item/organ/severedtail = 1,
 	            /obj/item/stack/sheet/metal = 1)
-	time = 80
+	time = 40
 	category = CAT_WEAPON
 
 /datum/table_recipe/tailwhip
@@ -94,7 +94,7 @@
 	result = /obj/item/weapon/melee/chainofcommand/tailwhip
 	reqs = list(/obj/item/organ/severedtail = 1,
 	            /obj/item/stack/cable_coil = 1)
-	time = 80
+	time = 40
 	category = CAT_WEAPON
 
 /datum/table_recipe/ed209
@@ -112,7 +112,7 @@
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)
 	tools = list(/obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver)
-	time = 120
+	time = 60
 	category = CAT_ROBOT
 
 /datum/table_recipe/secbot
@@ -124,7 +124,7 @@
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)
 	tools = list(/obj/item/weapon/weldingtool)
-	time = 120
+	time = 60
 	category = CAT_ROBOT
 
 /datum/table_recipe/cleanbot
@@ -133,7 +133,7 @@
 	reqs = list(/obj/item/weapon/reagent_containers/glass/bucket = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)
-	time = 80
+	time = 40
 	category = CAT_ROBOT
 
 /datum/table_recipe/floorbot
@@ -143,7 +143,7 @@
 				/obj/item/stack/tile/plasteel = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)
-	time = 80
+	time = 40
 	category = CAT_ROBOT
 
 /datum/table_recipe/medbot
@@ -153,7 +153,7 @@
 				/obj/item/weapon/storage/firstaid = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)
-	time = 80
+	time = 40
 	category = CAT_ROBOT
 
 /datum/table_recipe/flamethrower
@@ -165,7 +165,7 @@
 	parts = list(/obj/item/device/assembly/igniter = 1,
 				/obj/item/weapon/weldingtool = 1)
 	tools = list(/obj/item/weapon/screwdriver)
-	time = 20
+	time = 10
 	category = CAT_WEAPON
 
 /datum/table_recipe/meteorshot
@@ -256,7 +256,7 @@
 				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/packageWrap = 5,)
 	tools = list(/obj/item/weapon/screwdriver)
-	time = 200
+	time = 100
 	category = CAT_WEAPON
 
 /datum/table_recipe/chainsaw
@@ -266,7 +266,7 @@
 				/obj/item/stack/cable_coil = 1,
 				/obj/item/stack/sheet/plasteel = 1)
 	tools = list(/obj/item/weapon/weldingtool)
-	time = 100
+	time = 50
 	category = CAT_WEAPON
 
 /datum/table_recipe/spooky_camera
@@ -281,13 +281,13 @@
 /datum/table_recipe/lizardhat
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
-	time = 20
+	time = 10
 	reqs = list(/obj/item/organ/severedtail = 1)
 	category = CAT_MISC
 
 /datum/table_recipe/lizardhat_alternate
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
-	time = 20
+	time = 10
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
 	category = CAT_MISC

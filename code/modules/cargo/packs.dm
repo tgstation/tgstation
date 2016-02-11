@@ -13,6 +13,8 @@
 /datum/supply_pack/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = new crate_type(T)
 	C.name = crate_name
+	if(access)
+		C.req_access = list(access)
 
 	for(var/item in contains)
 		new item(C)

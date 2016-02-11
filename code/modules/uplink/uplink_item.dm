@@ -102,9 +102,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/nukeoffer/bulldog
 	name = "Bulldog bundle"
 	desc = "Lean and mean: Optimised for people that want to get up close and personal. Contains the popular \
-			Bulldog shotgun, two 12g drums, and an elite hardsuit."
+			Bulldog shotgun, two 12g drums, and a pair of Thermal imaging goggles."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle
-	cost = 16 // normally 20
+	cost = 13 // normally 16
 
 /datum/uplink_item/nukeoffer/medical
 	name = "Medical bundle"
@@ -871,6 +871,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/c4
 	cost = 1
 
+/datum/uplink_item/device_tools/c4bag
+	name = "Bag of C-4 explosives"
+	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/c4
+	cost = 9 //10% discount!
+
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"
 	desc = "When screwed to wiring attached to a power grid and activated, this large device places excessive \
@@ -1007,6 +1013,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	category = "Cybernetic Implants"
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
+	if(item)
+		if(findtext(item, /obj/item/organ/internal/cyberimp))
+			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
+		else
+			return ..()
 
 /datum/uplink_item/cyber_implants/thermals
 	name = "Thermal Vision Implant"

@@ -249,7 +249,7 @@
 		dead_mob_list -= src
 		living_mob_list += src
 	update_sight()
-	update_vision_overlays()
+	reload_fullscreen()
 	update_canmove()
 
 

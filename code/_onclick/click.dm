@@ -52,9 +52,10 @@
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
-	if(client.buildmode)
-		build_click(src, client.buildmode, params, A)
-		return
+	
+	if(client.click_intercept)
+		if(call(client.click_intercept, "ClickOn")(src, params, A))
+			return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
@@ -342,5 +343,6 @@
 		C.swap_hand()
 	else
 		var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr))
-		T.Click(location, control, params)
+		if(T)
+			T.Click(location, control, params)
 	return 1

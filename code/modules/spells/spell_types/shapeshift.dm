@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift
-	name = "Shapeshift"
-	desc = "Change shapes"
+	name = "Shapechange"
+	desc = "Take on the shape of another for a time to use their natural abilities. Once you've made your choice it cannot be changed."
 	clothes_req = 0
 	human_req = 0
 	charge_max = 200
@@ -11,12 +11,26 @@
 	invocation_type = "shout"
 	action_icon_state = "shapeshift"
 
-	var/shapeshift_type = /mob/living/simple_animal/hostile/retaliate/goat
+	var/shapeshift_type
 	var/list/current_shapes = list()
 	var/list/current_casters = list()
+	var/list/possible_shapes = list(/mob/living/simple_animal/mouse,\
+		/mob/living/simple_animal/pet/dog/corgi,\
+		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
+		/mob/living/simple_animal/bot/ed209,\
+		/mob/living/simple_animal/hostile/construct/armored)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
 	for(var/mob/living/M in targets)
+		if(!shapeshift_type)
+			var/list/animal_list = list()
+			for(var/path in possible_shapes)
+				var/mob/living/simple_animal/A = path
+				animal_list[initial(A.name)] = path
+			shapeshift_type = input(M, "Choose Your Animal Form!", "It's Morphing Time!", null) as anything in animal_list
+			if(!shapeshift_type) //If you aren't gonna decide I am!
+				shapeshift_type = pick(animal_list)
+			shapeshift_type = animal_list[shapeshift_type]
 		if(M in current_shapes)
 			Restore(M)
 		else
@@ -57,16 +71,3 @@
 
 	shape.mind.transfer_to(caster)
 	qdel(shape) //Gib it maybe ?
-
-/obj/effect/proc_holder/spell/targeted/shapeshift/wild
-	name = "Wild Shapeshift"
-	desc = "Change into a variety of forms. Most of them deadly. Or inconspicious"
-
-	var/list/possible_shapes = list(/mob/living/simple_animal/pet/dog/corgi,\
-		/mob/living/simple_animal/hostile/poison/giant_spider/hunter,\
-		/mob/living/simple_animal/hostile/carp/megacarp,\
-		/mob/living/simple_animal/hostile/construct/armored)
-
-/obj/effect/proc_holder/spell/targeted/shapeshift/wild/New()
-	..()
-	shapeshift_type = pick(possible_shapes)

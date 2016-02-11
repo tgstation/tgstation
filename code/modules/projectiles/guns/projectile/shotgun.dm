@@ -146,6 +146,7 @@
 
 /obj/item/ammo_box/magazine/internal/boltaction/enchanted
 	max_ammo =1
+	ammo_type = /obj/item/ammo_casing/a762/enchanted
 
 
 

@@ -12,7 +12,7 @@
 </script>
 
 <ui-notice>
-  <span>The regulator {{data.maskConnected ? "is" : "is not"}} connected to a mask.</span>
+  <span>The regulator {{data.connected? "is" : "is not"}} connected to a mask.</span>
 </ui-notice>
 <ui-display>
   <ui-section label='Tank Pressure'>
@@ -31,9 +31,5 @@
     <ui-button icon='pencil' action='pressure' params='{"pressure": "input"}'>Set</ui-button>
     <ui-button icon='plus' state='{{data.releasePressure < data.maxReleasePressure ? null : "disabled"}}'
       action='pressure' params='{"pressure": "max"}'>Max</ui-button>
-  </ui-section>
-  <ui-section label='Valve'>
-    <ui-button icon='{{data.valveOpen ? "unlock" : "lock"}}' state='{{data.maskConnected ? null : "disabled"}}'
-      action='valve'>{{data.valveOpen ? "Open" : "Closed"}}</ui-button>
   </ui-section>
 </ui-display>

@@ -9,7 +9,7 @@
 	density = 1
 
 	var/valve_open = FALSE
-	var/obj/machinery/atmospherics/components/binary/pump/pump
+	var/obj/machinery/atmospherics/components/binary/passive_gate/pump
 	var/release_log = ""
 
 	volume = 1000
@@ -66,13 +66,18 @@
 	desc = "Pre-mixed air."
 	icon_state = "grey"
 
-/obj/machinery/portable_atmospherics/canister/New(loc)
+/obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
-	create_gas()
+	if(existing_mixture)
+		air_contents.copy_from(existing_mixture)
+	else
+		create_gas()
+
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.stat = 0
 	pump.build_network()
+
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/Destroy()
@@ -171,6 +176,8 @@
 	if(destroyed)
 		return PROCESS_KILL
 	if(!valve_open)
+		pump.AIR1 = null
+		pump.AIR2 = null
 		return
 
 	var/turf/T = get_turf(src)
@@ -254,8 +261,7 @@
 			if(label && !..())
 				var/newtype = label2types[label]
 				if(newtype)
-					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc)
-					replacement.air_contents.copy_from(air_contents)
+					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc, air_contents)
 					replacement.interact(usr)
 					qdel(src)
 		if("pressure")

@@ -152,7 +152,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /mob/proc/null_rod_check() //The null rod, if equipped, will protect the holder from the effects of most runes
 	var/obj/item/weapon/nullrod/N = locate() in src
 	if(N)
-		return 1
+		return N
 	return 0
 
 var/list/teleport_runes = list()
@@ -291,9 +291,10 @@ var/list/teleport_other_runes = list()
 	if(!offering)
 		rune_in_use = 0
 		return
-	if(offering.null_rod_check())
+	var/obj/item/weapon/nullrod/N = offering.null_rod_check()
+	if(N)
 		user << "<span class='warning'>Something is blocking the Geometer's magic!</span>"
-		log_game("Sacrifice rune failed - target has null rod")
+		log_game("Sacrifice rune failed - target has \a [N]!")
 		fail_invoke()
 		rune_in_use = 0
 		return
@@ -790,8 +791,9 @@ var/list/teleport_other_runes = list()
 	visible_message("<span class='warning'>[src] briefly bubbles before exploding!</span>")
 	for(var/mob/living/carbon/C in viewers(src))
 		if(!iscultist(C))
-			if(C.null_rod_check())
-				C << "<span class='userdanger'>The null rod suddenly burns hotly before returning to normal!</span>"
+			var/obj/item/weapon/nullrod/N = C.null_rod_check()
+			if(N)
+				C << "<span class='userdanger'>\The [N] suddenly burns hotly before returning to normal!</span>"
 				continue
 			C << "<span class='cultlarge'>Your blood boils in your veins!</span>"
 			C.take_overall_damage(51,51)

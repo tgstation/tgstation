@@ -131,8 +131,7 @@
 	. = ..()
 	if(client)
 		reset_perspective(destination)
-	if(pipes_shown.len && !istype(loc, /obj/machinery/atmospherics))
-		remove_ventcrawl()
+	update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
 /mob/living/carbon/brain/forceMove(atom/destination)
 	if(container)

@@ -84,7 +84,6 @@
 	emag.name = "Placeholder Emag Item"
 	return
 
-
 /obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	for(var/datum/robot_energy_storage/st in storages)
 		st.energy = min(st.max_energy, st.energy + coeff * st.recharge_rate)
@@ -99,10 +98,6 @@
 			var/obj/item/weapon/melee/baton/B = I
 			if(B.bcell)
 				B.bcell.charge = B.bcell.maxcharge
-		if(istype(I, /obj/item/weapon/tank/jetpack))
-			var/obj/item/weapon/tank/jetpack/J = I
-			J.air_contents.assert_gas("co2")
-			J.air_contents.gases["co2"][MOLES] = (6 * ONE_ATMOSPHERE) * J.volume / (R_IDEAL_GAS_EQUATION * T20C)
 
 	R.toner = R.tonermax
 
@@ -124,7 +119,6 @@
 
 /obj/item/weapon/robot_module/proc/on_emag()
 	return
-
 
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
@@ -209,8 +203,6 @@
 
 	fix_modules()
 
-
-
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
 
@@ -233,8 +225,6 @@
 			T.update_icon()
 		else
 			T.charge_tick = 0
-
-
 
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
@@ -312,8 +302,6 @@
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	fix_modules()
 
-
-
 /obj/item/weapon/robot_module/syndicate
 	name = "syndicate assault robot module"
 
@@ -323,7 +311,6 @@
 	modules += new /obj/item/weapon/gun/energy/printer(src)
 	modules += new /obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg(src)
 	modules += new /obj/item/weapon/card/emag(src)
-	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	modules += new /obj/item/weapon/crowbar/red(src)
 	modules += new /obj/item/weapon/pinpointer/operative(src)
 	emag = null
@@ -345,14 +332,11 @@
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg/saw(src) //Energy saw -- primary weapon
 	modules += new /obj/item/roller/robo(src)
 	modules += new /obj/item/weapon/card/emag(src)
-	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/pinpointer/operative(src)
 	emag = null
 
-
 	add_module(new /obj/item/stack/medical/gauze/cyborg())
-
 	fix_modules()
 
 /datum/robot_energy_storage

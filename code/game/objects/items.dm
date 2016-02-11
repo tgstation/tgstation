@@ -472,8 +472,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
 	M.adjust_blurriness(3)
-	M.adjust_eye_stat(rand(2,4))
-	if(M.eye_stat >= 10)
+	M.adjust_eye_damage(rand(2,4))
+	if(M.eye_damage >= 10)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
@@ -487,7 +487,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			M.adjust_blurriness(10)
 			M.Paralyse(1)
 			M.Weaken(2)
-		if (prob(M.eye_stat - 10 + 1))
+		if (prob(M.eye_damage - 10 + 1))
 			if(M.become_blind())
 				M << "<span class='danger'>You go blind!</span>"
 
