@@ -1,7 +1,0 @@
-author: neersighted
-delete-after: True
-changes: 
-  - rscdel: "Remove all cyborg jetpacks... They were awful..."
-  - rscadd: "Adds borg ion thrusters, which are available as an upgrade module for any borg."
-  - rscdel: "Jetpack stabilizers are always on, but now we have..."
-  - rscadd: "Jetpack turbo mode, to move at sanic speed in space."
