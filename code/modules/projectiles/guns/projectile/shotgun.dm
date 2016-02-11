@@ -10,6 +10,7 @@
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	var/recentpump = 0 // to prevent spammage
+	var/recent_pump_cooldown = 10
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/A, mob/user, params)
 	var/num_loaded = magazine.attackby(A, user, params, 1)
@@ -34,7 +35,7 @@
 		return
 	pump(user)
 	recentpump = 1
-	spawn(10)
+	spawn(recent_pump_cooldown)
 		recentpump = 0
 	return
 
@@ -66,21 +67,49 @@
 
 // RIOT SHOTGUN //
 
+/datum/action/item_action/riot_shotgun/fold_stock
+	name = "(Un)fold Stock"
+	button_icon_state = "bolt_action"
+
+/datum/action/item_action/riot_shotgun/fold_stock/Trigger()
+	if(!Checks())
+		return
+
+	var/obj/item/weapon/gun/projectile/shotgun/riot/R = target
+	if(R.stock_folded)
+		owner << "You unfold the stock for faster firing."
+		R.recent_pump_cooldown = 3
+		R.w_class = 4
+		R.stock_folded = 0
+	else
+		owner << "You fold the stock for easier carrying."
+		R.recent_pump_cooldown = 10
+		R.w_class = 2
+		R.stock_folded = 1
+	return 1
+
 /obj/item/weapon/gun/projectile/shotgun/riot //for spawn in the armory
 	name = "riot shotgun"
-	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
+	desc = "A sturdy shotgun with a longer magazine and a foldable tactical stock designed for non-lethal riot control."
 	icon_state = "riotshotgun"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
+	var/datum/action/item_action/riot_shotgun/fold_stock/stock_fold_action
+	var/stock_folded = 0
+	var/action_type_meme = /datum/action/item_action/riot_shotgun/fold_stock
+	w_class = 2
 
-/obj/item/weapon/gun/projectile/shotgun/riot/attackby(obj/item/A, mob/user, params)
+/obj/item/weapon/gun/projectile/shotgun/riot
 	..()
-	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/gun/energy/plasmacutter))
-		sawoff(user)
-	if(istype(A, /obj/item/weapon/melee/energy))
-		var/obj/item/weapon/melee/energy/W = A
-		if(W.active)
-			sawoff(user)
+	stock_fold_action = new/datum/action/item_action/riot_shotgun/fold_stock(src)
+
+/obj/item/weapon/gun/projectile/shotgun/riot/pickup(mob/user)
+	..()
+	stock_fold_action.Grant(user)
+
+/obj/item/weapon/gun/projectile/shotgun/riot/dropped(mob/user)
+	..()
+	stock_fold_action.Remove(user)
 
 ///////////////////////
 // BOLT ACTION RIFLE //

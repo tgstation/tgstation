@@ -180,3 +180,33 @@
 		weaken = 0
 		nodamage = 1
 	. = ..() // Execute the rest of the code.
+
+
+/obj/item/projectile/bullet/b45
+	name = ".45 bullet"
+	icon_state = "bullet"
+	damage = 30
+	damage_type = BRUTE
+	flag = "bullet"
+	var/stamina_damage = 0
+
+/obj/item/projectile/bullet/b45/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		if(stamina_damage)
+			M.adjustStaminaLoss(stamina_damage)
+
+/obj/item/projectile/bullet/b45/rubber
+	name = ".45 rubber bullet"
+	damage = 8
+	stamina_damage = 55
+/obj/item/projectile/bullet/b45/fmj
+	name = ".45 FMJ bullet"
+	damage = 20
+	stamina_damage = 65
+/obj/item/projectile/bullet/b45/ap
+	name = ".45 AP bullet"
+	damage = 25
+	stamina_damage = 40
+	armour_penetration = 60

@@ -298,6 +298,31 @@
 	build_path = /obj/item/ammo_box/c38
 	category = list("initial", "Security")
 
+/datum/design/m45_standard
+	name = "Handgun Magazine (.45)"
+	id = "m45_standard"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30000)
+	build_path = /obj/item/ammo_box/magazine/m45/standard
+	category = list("hacked", "Security")
+
+/datum/design/m45_ap
+	name = "Handgun Magazine (.45 AP)"
+	id = "m45_ap"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30000)
+	build_path = /obj/item/ammo_box/magazine/m45/ap
+	category = list("hacked", "Security")
+
+/datum/design/m45_rubber
+	name = "Handgun Magazine (.45 Rubber)"
+	id = "m45_rubber"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30000)
+	build_path = /obj/item/ammo_box/magazine/m45/rubber
+	category = list("initial", "Security")
+
+
 /datum/design/recorder
 	name = "Universal recorder"
 	id = "recorder"
@@ -529,14 +554,6 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30000)
 	build_path = /obj/item/ammo_box/c10mm
-	category = list("hacked", "Security")
-
-/datum/design/c45
-	name = "Ammo box (.45)"
-	id = "c45"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000)
-	build_path = /obj/item/ammo_box/c45
 	category = list("hacked", "Security")
 
 /datum/design/c9mm

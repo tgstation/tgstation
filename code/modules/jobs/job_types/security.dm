@@ -99,8 +99,10 @@ Warden
 	head = /obj/item/clothing/head/warden
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	l_pocket = /obj/item/device/assembly/flash/handheld
-	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
-	backpack_contents = list(/obj/item/weapon/restraints/handcuffs=1)
+	suit_store = /obj/item/weapon/gun/projectile/automatic/pistol/m1911
+	backpack_contents = list(/obj/item/weapon/restraints/handcuffs=1,
+							/obj/item/ammo_box/magazine/m45/rubber=2,
+							/obj/item/ammo_box/magazine/m45/standard=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel_sec
@@ -204,9 +206,11 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/device/assembly/flash/handheld
-	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
-	backpack_contents = list(/obj/item/weapon/restraints/handcuffs=1,\
-		/obj/item/weapon/melee/baton/loaded=1)
+	suit_store = /obj/item/weapon/gun/projectile/automatic/pistol/m1911
+	backpack_contents = list(/obj/item/weapon/restraints/handcuffs=1,
+							/obj/item/weapon/melee/baton/loaded=1,
+							/obj/item/ammo_box/magazine/m45/rubber=2,
+							/obj/item/ammo_box/magazine/m45/standard=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel_sec
