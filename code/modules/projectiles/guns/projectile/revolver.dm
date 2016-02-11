@@ -24,6 +24,9 @@
 	return ..(0, 1)
 
 /obj/item/weapon/gun/projectile/revolver/attackby(obj/item/A, mob/user, params)
+	. = ..()
+	if(.)
+		return
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>"
@@ -161,7 +164,7 @@
 /obj/item/weapon/gun/projectile/revolver/nagant
 	name = "nagant revolver"
 	desc = "An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
-	icon_state = "pistol"
+	icon_state = "revolver"
 	origin_tech = "combat=3"
 	can_suppress = 1
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev762
