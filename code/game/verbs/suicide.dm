@@ -15,7 +15,6 @@
 			if(damagetype)
 				if(damagetype & SHAME)
 					adjustStaminaLoss(200)
-					updatehealth()
 					suiciding = 0
 					return
 				var/damage_mod = 0
@@ -37,10 +36,9 @@
 					adjustOxyLoss(200/damage_mod)
 
 				//If something went wrong, just do normal oxyloss
-				if(!(damagetype | BRUTELOSS) && !(damagetype | FIRELOSS) && !(damagetype | TOXLOSS) && !(damagetype | OXYLOSS))
+				if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
 					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 
-				updatehealth()
 				death(0)
 				return
 
@@ -52,7 +50,6 @@
 		visible_message("<span class='danger'>[suicide_message]</span>", "<span class='userdanger'>[suicide_message]</span>")
 
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-		updatehealth()
 		death(0)
 
 /mob/living/carbon/brain/verb/suicide()
@@ -83,7 +80,6 @@
 		visible_message("<span class='danger'>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</span>")
 		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-		updatehealth()
 		death(0)
 
 /mob/living/silicon/ai/verb/suicide()
@@ -99,7 +95,6 @@
 				"<span class='userdanger'>[src] is powering down. It looks like \he's trying to commit suicide.</span>")
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-		updatehealth()
 		death(0)
 
 /mob/living/silicon/robot/verb/suicide()
@@ -115,7 +110,6 @@
 				"<span class='userdanger'>[src] is powering down. It looks like \he's trying to commit suicide.</span>")
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-		updatehealth()
 		death(0)
 
 /mob/living/silicon/pai/verb/suicide()
@@ -145,7 +139,6 @@
 				"<span class='italics'>You hear thrashing.</span>")
 		//put em at -175
 		adjustOxyLoss(max(200 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-		updatehealth()
 		death(0)
 
 /mob/living/simple_animal/verb/suicide()
