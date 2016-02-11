@@ -32,17 +32,15 @@
 	icon_state = "russianranged"
 	icon_living = "russianranged"
 	loot = list(/obj/effect/landmark/mobcorpse/russian/ranged,
-				/obj/item/weapon/gun/projectile/revolver/mateba)
+				/obj/item/weapon/gun/projectile/revolver/nagant)
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
 	projectilesound = 'sound/weapons/Gunshot.ogg'
-	casingtype = /obj/item/ammo_casing/a357
+	casingtype = /obj/item/ammo_casing/n762
 
-/mob/living/simple_animal/hostile/russian/ranged/New()
-	var/obj/item/weapon/gun/projectile/revolver/mateba/M
-	if(prob(50) && is_type_in_list(M, loot)) //to preserve varedits
-		loot = list(/obj/effect/landmark/mobcorpse/russian/ranged,
-					/obj/item/weapon/gun/projectile/shotgun/boltaction)
-		casingtype = /obj/item/ammo_casing/a762
-	..()
+
+/mob/living/simple_animal/hostile/russian/ranged/mosin
+	loot = list(/obj/effect/landmark/mobcorpse/russian/ranged,
+				/obj/item/weapon/gun/projectile/shotgun/boltaction)
+	casingtype = /obj/item/ammo_casing/a762
