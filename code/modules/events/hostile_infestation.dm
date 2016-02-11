@@ -25,7 +25,12 @@
 	var/monsterstring
 
 /datum/event/hostile_infestation/start()
-	to_chat(world, sound('sound/effects/bumpinthenight.ogg'))
+	var/z_level = 1
+	for(var/mob/M in player_list)
+		if(M.client)
+			var/turf/T = get_turf(M)
+			if(T.z == z_level)
+				to_chat(M, 'sound/effects/bumpinthenight.ogg')
 
 	var/location = pick(LOC_KITCHEN, LOC_ATMOS, LOC_INCIN, LOC_CHAPEL, LOC_LIBRARY, LOC_HYDRO, LOC_VAULT, LOC_TECH)
 	var/spawn_area_type
