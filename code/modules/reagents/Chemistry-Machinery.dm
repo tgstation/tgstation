@@ -1891,7 +1891,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.incapacitated() && Adjacent(usr) && usr.dexterity_check()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
+	if(usr.incapacitated() || !Adjacent(usr)) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
 		return
 
 	if(!cans || !beaker)
