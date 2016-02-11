@@ -111,7 +111,7 @@
 		return
 	else
 		var/obj/item/weapon/cell/C = cell
-		C.loc = usr.loc
+		C.forceMove(usr.loc)
 		usr.put_in_hands(C)
 		cell = null
 		desc = "A polaroid camera. The film chamber is filled with wire for some reason."

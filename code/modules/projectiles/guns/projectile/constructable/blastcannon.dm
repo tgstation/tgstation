@@ -34,7 +34,7 @@
 	if(!bomb)
 		return
 	else
-		bomb.loc = user.loc
+		bomb.forceMove(user.loc)
 		user.put_in_hands(bomb)
 		to_chat(user, "You detach \the [bomb] from \the [src].")
 		bomb = null

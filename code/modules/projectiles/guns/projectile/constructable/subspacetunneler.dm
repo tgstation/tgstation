@@ -83,7 +83,7 @@
 		return
 
 	var/obj/item/bluespace_crystal/B = loaded_crystal
-	B.loc = user.loc
+	B.forceMove(user.loc)
 	user.put_in_hands(B)
 	loaded_crystal = null
 	to_chat(user, "You unload \the [B] from \the [src].")
@@ -131,7 +131,7 @@
 		return
 	else
 		var/obj/item/weapon/stock_parts/matter_bin/M = loaded_matter_bin
-		M.loc = usr.loc
+		M.forceMove(usr.loc)
 		usr.put_in_hands(M)
 		loaded_matter_bin = null
 		to_chat(usr, "You remove \the [M] from \the [src].")
@@ -204,7 +204,7 @@
 		s.start()
 		var/choose = (stored_items.len > 1 ? rand(1,stored_items.len) : 1)
 		var/obj/O = stored_items[choose]
-		O.loc = T
+		O.forceMove(T)
 		var/mass = 0
 		if(istype(O, /obj/item))
 			var/obj/item/I = O
@@ -244,7 +244,7 @@
 			playsound(I, 'sound/effects/phasein.ogg', 50, 1)
 			var/turf/T = I.loc
 			anim(location = T,a_icon = 'icons/obj/weaponsmithing.dmi',flick_anim = "subspace_rift",name = "subspace rift")
-			I.loc = user.loc
+			I.forceMove(user.loc)
 			user.put_in_hands(I)
 			user.visible_message("[user] pulls \the [I] to \himself through a subspace rift!","You pull \the [I] to yourself through a subspace rift.")
 			consume_crystal(user)
@@ -278,12 +278,12 @@
 			var/turf/T = O.loc
 			anim(location = T,a_icon = 'icons/obj/weaponsmithing.dmi',flick_anim = "subspace_rift",name = "subspace rift")
 			if(istype(O, /obj/machinery/singularity))
-				O.loc = user.loc
+				O.forceMove(user.loc)
 				user.visible_message("<span class='danger'>[user]'s [src.name] implodes, failing to contain the power of \the [O]!</span>","<span class='danger'>Your [src.name] implodes, failing to contain the power of \the [O]!</span>")
 				qdel(src)
 				return
 			stored_items += O
-			O.loc = src
+			O.forceMove(src)
 			stored_item_mass += mass
 			consume_crystal(user)
 	update_verbs()

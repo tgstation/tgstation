@@ -42,7 +42,7 @@
 		return
 
 	var/obj/item/weapon/stock_parts/capacitor/C = capacitor
-	C.loc = user.loc
+	C.forceMove(user.loc)
 	user.put_in_hands(C)
 	capacitor = null
 	to_chat(user, "You remove \the [C] from the capacitor bank of \the [src].")
@@ -97,7 +97,7 @@
 		return
 
 	var/obj/item/stack/rods/R = new(null)
-	R.loc = usr.loc
+	R.forceMove(usr.loc)
 	usr.put_in_hands(R)
 	rod_loaded = 0
 	to_chat(usr, "You remove \the [R] from the barrel of \the [src].")
@@ -118,7 +118,7 @@
 		return
 
 	var/obj/item/weapon/stock_parts/capacitor/C = capacitor
-	C.loc = usr.loc
+	C.forceMove(usr.loc)
 	usr.put_in_hands(C)
 	capacitor = null
 	to_chat(usr, "You remove \the [C] from the capacitor bank of \the [src].")
@@ -139,7 +139,7 @@
 		return
 
 	var/obj/item/weapon/rail_assembly/R = rails
-	R.loc = usr.loc
+	R.forceMove(usr.loc)
 	usr.put_in_hands(R)
 	rails = null
 	to_chat(usr, "You remove \the [R] from the barrel of \the [src].")
@@ -344,7 +344,7 @@
 	user.visible_message("<span class='danger'>[user] fires \the [src] and launches \the [object] at [target]!</span>","<span class='danger'>You fire \the [src] and launch \the [object] at [target]!</span>")
 	log_attack("[user.name] ([user.ckey]) fired \the [src] (proj:[object.name]) at [target] [ismob(target) ? "([target:ckey])" : ""] ([target.x],[target.y],[target.z])" )
 
-	object.loc = user.loc
+	object.forceMove(user.loc)
 	object.throw_at(target,distance,speed)
 	rod_loaded = 0
 

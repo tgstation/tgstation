@@ -2220,36 +2220,6 @@
 	overdose = REAGENTS_OVERDOSE * 2 //No need for anyone to get suspicious.
 	custom_metabolism = 0.01
 
-/datum/reagent/potassiumnitrate
-	name = "Potassium Nitrate"
-	id = "potassiumnitrate"
-	description = "Also known as saltpeter, this ionic salt makes an excellent oxidizer."
-	reagent_state = SOLID
-	color = "#FFFFFF" //rgb: 255, 255, 255
-
-/datum/reagent/potassiumnitrate/on_mob_life(var/mob/living/M)
-	if(..()) return 1
-	M.adjustToxLoss(1)
-
-/datum/reagent/gunpowder //for use in cannons, and possibly other firearms
-	name = "Gunpowder"
-	id = "gunpowder"
-	description = "The earliest known chemical explosive, it remains useful for propulsion of bullets even today."
-	reagent_state = SOLID
-	color = "#383838" //rgb: 56, 56, 56
-/*
-/datum/reagent/gunpowder/reaction_obj(var/obj/O, var/volume)
-
-	var/datum/reagent/self = src
-	if(..()) return 1
-
-	var/turf/T = get_turf(O)
-	self.reaction_turf(T, volume)
-*/
-/datum/reagent/gunpowder/on_mob_life(var/mob/living/M)
-	if(..()) return 1
-	M.adjustToxLoss(1)
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagent/nanites

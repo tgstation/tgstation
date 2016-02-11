@@ -13,9 +13,10 @@
 	origin_tech = "materials=1;engineering=1;combat=1"
 	attack_verb = list("struck", "hit", "bashed")
 	mech_flags = MECH_SCAN_ILLEGAL
+	var/damage_multiplier = 2	//To allow easy modifications to the damage this weapon deals. At a value of 1, a metal rod fired with 10u of fuel deals 16 damage.
 	var/fuel_level = 0
 	var/max_fuel = 30
-	var/loaded_item = null
+	var/obj/item/loaded_item = null
 	var/list/prohibited_items = list( //Certain common items that, due to a combination of their throwforce and w_class, are too powerful to be allowed as ammunition.
 		/obj/item/weapon/shard,
 		/obj/item/weapon/batteringram,
@@ -65,11 +66,10 @@
 	if(!loaded_item)
 		return
 	else
-		var/obj/item/loaded = loaded_item
-		loaded.loc = usr.loc
-		usr.put_in_hands(loaded)
+		loaded_item.forceMove(usr.loc)
+		usr.put_in_hands(loaded_item)
 		loaded_item = null
-		to_chat(usr, "You remove \the [loaded] from \the [src].")
+		to_chat(usr, "You remove \the [loaded_item] from \the [src].")
 	update_verbs()
 
 /obj/item/weapon/blunderbuss/verb/empty_fuel() //Empty the fuel reservoir.
@@ -100,8 +100,7 @@
 		if(istype(W, /obj/item/stack))
 			var/obj/item/stack/S = W
 			S.use(1)
-			var/Y = W.type
-			new Y(src)
+			var/Y = new W.type(src)
 			loaded_item = Y
 		else
 			if(!user.drop_item(W, src))
@@ -159,7 +158,7 @@
 	if(fuel_level)
 		to_chat(user, "<span class='info'>It contains [fuel_level] units of fuel.</span>")
 	if(loaded_item)
-		to_chat(user, "<span class='info'>There is \a [loaded_item] jammed into the barrel.</span>")
+		to_chat(user, "<span class='info'>There [loaded_item.gender == PLURAL ? "are \a [loaded_item]s" : "is \a [loaded_item]"] jammed into the barrel.</span>")
 
 /obj/item/weapon/blunderbuss/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
 	if (istype(target, /obj/item/weapon/storage/backpack ))
@@ -229,31 +228,31 @@
 	if (!istype(targloc) || !istype(curloc))
 		return
 
-	var/fire_force = fuel_level*2
+	var/fire_force = fuel_level + (fuel_level * (1/(fuel_level/10)))
 
-	var/obj/item/object = loaded_item
 	var/speed
-	if(object.w_class > 1)
-		speed = ((fire_force*(4/object.w_class))/5) //projectile speed.
+	if(loaded_item.w_class > 1)
+		speed = ((fire_force*(4/loaded_item.w_class))/5) //projectile speed.
 	else
 		speed = ((fire_force*2)/5)
+
+	speed = speed * damage_multiplier
 	if(speed>80) speed = 80 //damage cap.
 
-	var/distance = round((20/object.w_class)*(fuel_level/10))
+	var/distance = round((20/loaded_item.w_class)*(fuel_level/10))
 
-	user.visible_message("<span class='danger'>[user] fires \the [src] and launches \the [object] at [target]!</span>","<span class='danger'>You fire \the [src] and launch \the [object] at [target]!</span>")
-	log_attack("[user.name] ([user.ckey]) fired \the [src] (proj:[object.name]) at [target] [ismob(target) ? "([target:ckey])" : ""] ([target.x],[target.y],[target.z])" )
+	user.visible_message("<span class='danger'>[user] fires \the [src] and launches \the [loaded_item] at [target]!</span>","<span class='danger'>You fire \the [src] and launch \the [loaded_item] at [target]!</span>")
+	log_attack("[user.name] ([user.ckey]) fired \the [src] (proj:[loaded_item.name]) at [target] [ismob(target) ? "([target:ckey])" : ""] ([target.x],[target.y],[target.z])" )
 
-	object.loc = user.loc
-	object.throw_at(target,distance,speed)
+	loaded_item.forceMove(user.loc)
+	loaded_item.throw_at(target,distance,speed)
 	playsound(user, 'sound/weapons/shotgun.ogg', 50, 1)
 	loaded_item = null
 	fuel_level = 0
 
 /obj/item/weapon/blunderbuss/proc/explode(mob/user)
 	to_chat(user, "<span class='danger'>\The [src]'s firing mechanism fails!</span>")
-	var/obj/item/object_drop = loaded_item
-	object_drop.loc = user.loc
+	loaded_item.forceMove(user.loc)
 	loaded_item = null
 	explosion(user, -1, 0, 2)
 	qdel(src)

@@ -361,7 +361,7 @@
 
 /obj/item/projectile/bullet/stinger
 	name = "alien stinger"
-	damage = 10
+	damage = 5
 	damage_type = TOX
 	flag = "bio"
 

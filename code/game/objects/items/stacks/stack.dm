@@ -240,6 +240,10 @@
 	if(amount && starting_materials)
 		for(var/matID in starting_materials)
 			materials.storage[matID] = max(0, starting_materials[matID]*amount)
+	if(amount < 2)
+		gender = NEUTER
+	else
+		gender = PLURAL
 
 /obj/item/stack/proc/can_stack_with(obj/item/other_stack)
 	if(ispath(other_stack)) return (src.type == other_stack)

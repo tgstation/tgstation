@@ -238,7 +238,7 @@
 		return
 
 	var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = chambers[current_chamber]
-	V.loc = user.loc
+	V.forceMove(user.loc)
 	user.put_in_hands(V)
 	chambers[current_chamber] = null
 	to_chat(user, "You remove \the [V] from \the [src].")

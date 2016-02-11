@@ -28,6 +28,12 @@
 	hypo = 0
 	overlays.len = 0
 
+/obj/item/weapon/sword/update_icon()
+	overlays.len = 0
+	if(hypo)
+		var/image/hypo_icon = image('icons/obj/weaponsmithing.dmi', src, "sword_hypo_overlay")
+		overlays += hypo_icon
+
 /obj/item/weapon/sword/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/metal_blade))
 		to_chat(user, "You attach \the [W] to \the [src].")
@@ -42,9 +48,7 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/hypospray))
 		to_chat(user, "You wrap \the [src]'s grip around \the [W], affixing it to the base of \the [src].")
 		hypo = 1
-		overlays.len = 0
-		var/image/hypo_icon = image('icons/obj/weaponsmithing.dmi', src, "sword_hypo_overlay")
-		overlays += hypo_icon
+		update_icon()
 		qdel(W)
 	if(hypo && istype(W, /obj/item/weapon/aluminum_cylinder))
 		to_chat(user, "You affix \the [W] to the bottom of \the [src]'s hypospray.")
@@ -123,7 +127,7 @@
 		return
 	else
 		var/obj/item/weapon/reagent_containers/glass/beaker/B = beaker
-		B.loc = user.loc
+		B.forceMove(user.loc)
 		user.put_in_hands(B)
 		beaker = null
 		to_chat(user, "You remove \the [B] from \the [src].")
@@ -145,6 +149,16 @@
 		to_chat(user, "You insert \the [W] into \the [src]'s beaker port.")
 		icon_state = "venom_sword_beaker"
 		update_color()
+	if(istype(W, /obj/item/weapon/crowbar))
+		to_chat(user, "You pry the aluminum cylinder off of \the [src].")
+		var/obj/item/weapon/sword/I = new (get_turf(src))
+		I.hypo = 1
+		I.update_icon()
+		if(src.loc == user)
+			user.drop_item(src, force_drop = 1)
+			user.put_in_hands(I)
+		new /obj/item/weapon/aluminum_cylinder(get_turf(src))
+		qdel(src)
 
 /obj/item/weapon/sword/venom/attack(mob/M as mob, mob/user as mob)
 	..()

@@ -76,7 +76,7 @@
 		return
 
 	var/obj/item/weapon/cylinder/C = cylinder
-	C.loc = usr.loc
+	C.forceMove(usr.loc)
 	usr.put_in_hands(C)
 	cylinder = null
 	to_chat(usr, "You remove \the [C] from \the [src].")
@@ -143,7 +143,7 @@
 	var/obj/item/projectile/bullet/vial/V = new(null)
 	var/obj/item/weapon/reagent_containers/glass/beaker/vial/I
 	I = C.chambers[C.current_chamber]
-	I.loc = V
+	I.forceMove(V)
 	V.vial = I
 	C.chambers[C.current_chamber] = null
 	V.user = user
@@ -152,7 +152,7 @@
 		return
 	else
 		V.vial = null
-		I.loc = C
+		I.forceMove(C)
 		C.chambers[C.current_chamber] = I
 		qdel(V)
 		in_chamber = null

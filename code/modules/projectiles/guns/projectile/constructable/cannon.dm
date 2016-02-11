@@ -1,6 +1,6 @@
 /obj/structure/bed/chair/vehicle/wheelchair/wheelchair_assembly/cannon
 	name = "cannon"
-	desc = "A makeshift cannon. This primitive gunpowder weapon uses centuries-old technology."
+	desc = "A makeshift cannon. This primitive weapon uses centuries-old technology."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "cannon"
 	flags = FPRINT
@@ -44,13 +44,13 @@
 		return
 	else
 		var/obj/item/loaded = loaded_item
-		loaded.loc = usr.loc
+		loaded.forceMove(usr.loc)
 		loaded_item = null
 		to_chat(usr, "You remove \the [loaded] from \the [src].")
 
 
-/obj/structure/bed/chair/vehicle/wheelchair/wheelchair_assembly/cannon/verb/empty_fuel() //Empty the gunpowder.
-	set name = "Empty gunpowder"
+/obj/structure/bed/chair/vehicle/wheelchair/wheelchair_assembly/cannon/verb/empty_fuel() //Empty the fuel.
+	set name = "Empty fuel"
 	set category = "Object"
 	set src in oview(1)
 
@@ -65,7 +65,7 @@
 		to_chat(usr, "<span class = 'warning'>You can't empty the fuel when there's an item in the barrel.</span>")
 	else
 		fuel_level = 0
-		to_chat(usr, "You clean the gunpowder out of \the [src].")
+		to_chat(usr, "You clean the fuel out of \the [src].")
 	update_verbs()
 
 /obj/structure/bed/chair/vehicle/wheelchair/wheelchair_assembly/cannon/verb/rotate_cw()
@@ -100,7 +100,7 @@
 		to_chat(user, "<span class='warning'>That won't fit into the barrel!</span>")
 		return 1
 	else if(loaded_item && istype(W,/obj/item/weapon/reagent_containers))
-		to_chat(user, "<span class='warning'>The gunpowder needs to be put in before the ammunition!</span>")
+		to_chat(user, "<span class='warning'>The fuel needs to be put in before the ammunition!</span>")
 		return 1
 	else if(!loaded_item && istype(W,/obj/item/weapon/reagent_containers))
 		transfer_fuel(W, user)
@@ -122,28 +122,28 @@
 		return
 	var/pure_fuel = 1
 	for (var/datum/reagent/current_reagent in S.reagents.reagent_list)
-		if (current_reagent.id != "gunpowder")
+		if (current_reagent.id != "fuel")
 			pure_fuel = 0
 	if(!pure_fuel)
-		to_chat(user, "<span class='warning'>\The [src] won't fire if you fill it with anything but pure gunpowder!</span>")
+		to_chat(user, "<span class='warning'>\The [src] won't fire if you fill it with anything but pure welding fuel!</span>")
 		return
 	var/transfer_amount = S.amount_per_transfer_from_this
 	var/full = 0
 	if((fuel_level + transfer_amount) >= max_fuel)
 		transfer_amount = max_fuel-fuel_level
 		full = 1
-	S.reagents.remove_reagent("gunpowder", transfer_amount)
+	S.reagents.remove_reagent("fuel", transfer_amount)
 	fuel_level += transfer_amount
 	if(full)
-		to_chat(user, "<span class='notice'>You fill \the [src] to the brim with gunpowder from \the [S].</span>")
+		to_chat(user, "<span class='notice'>You fill \the [src] to the brim with fuel from \the [S].</span>")
 	else
-		to_chat(user, "<span class='notice'>You pour [transfer_amount] units of gunpowder into \the [src].</span>")
+		to_chat(user, "<span class='notice'>You pour [transfer_amount] units of fuel into \the [src].</span>")
 	update_verbs()
 
 /obj/structure/bed/chair/vehicle/wheelchair/wheelchair_assembly/cannon/examine(mob/user)
 	..()
 	if(fuel_level)
-		to_chat(user, "<span class='info'>It contains [fuel_level] units of gunpowder.</span>")
+		to_chat(user, "<span class='info'>It contains [fuel_level] units of fuel.</span>")
 	if(loaded_item)
 		to_chat(user, "<span class='info'>There is \a [loaded_item] in the barrel.</span>")
 
@@ -200,7 +200,7 @@
 	user.visible_message("<span class='danger'>[user] fires \the [object] from \the [src]!</span>","<span class='danger'>You fire \the [object] from \the [src]!</span>")
 	log_attack("[user.name] ([user.ckey]) fired \the [src] (proj:[object.name]) at coordinates ([x],[y],[z])" )
 
-	object.loc = src.loc
+	object.forceMove(src.loc)
 	object.throw_at(target,distance,speed)
 	var/N = rand(1,3)
 	switch(N)
