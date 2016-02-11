@@ -5,12 +5,14 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "orebox"
 	name = "ore box"
-	desc = "It's heavy"
+	desc = "A heavy wooden box, which can be filled with a lot of ores."
 	density = 1
+	pressure_resistance = 5*ONE_ATMOSPHERE
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/ore))
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		W.loc = src
 	if (istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
@@ -20,7 +22,7 @@
 		user << "<span class='notice'>You empty the satchel into the box.</span>"
 	return
 
-/obj/structure/ore_box/attack_hand(mob/user as mob)
+/obj/structure/ore_box/attack_hand(mob/user)
 	var/amt_gold = 0
 	var/amt_silver = 0
 	var/amt_diamond = 0
@@ -29,6 +31,7 @@
 	var/amt_plasma = 0
 	var/amt_uranium = 0
 	var/amt_clown = 0
+	var/amt_bluespace = 0
 
 	for (var/obj/item/weapon/ore/C in contents)
 		if (istype(C,/obj/item/weapon/ore/diamond))
@@ -47,6 +50,8 @@
 			amt_uranium++;
 		if (istype(C,/obj/item/weapon/ore/bananium))
 			amt_clown++;
+		if (istype(C,/obj/item/weapon/ore/bluespace_crystal))
+			amt_bluespace++
 
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
 	if (amt_gold)
@@ -65,6 +70,8 @@
 		dat += text("Uranium ore: [amt_uranium]<br>")
 	if (amt_clown)
 		dat += text("Bananium ore: [amt_clown]<br>")
+	if (amt_bluespace)
+		dat += text("Bluespace crystals: [amt_bluespace]<br>")
 
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
 	user << browse("[dat]", "window=orebox")

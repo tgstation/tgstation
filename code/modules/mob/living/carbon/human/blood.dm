@@ -2,6 +2,7 @@
 				BLOOD SYSTEM
 ****************************************************/
 //Blood levels
+var/const/BLOOD_VOLUME_NORMAL = 560
 var/const/BLOOD_VOLUME_SAFE = 501
 var/const/BLOOD_VOLUME_OKAY = 336
 var/const/BLOOD_VOLUME_BAD = 224
@@ -12,7 +13,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 //Initializes blood vessels
 /mob/living/carbon/human/proc/make_blood()
-
 	if(vessel)
 		return
 
@@ -22,17 +22,25 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(NOBLOOD in dna.species.specflags)
 		return
 
-	vessel.add_reagent("blood",560)
-	spawn(1)
-		fixblood()
-
-//Resets blood data
-/mob/living/carbon/human/proc/fixblood()
+	vessel.add_reagent("blood", BLOOD_VOLUME_NORMAL)
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
 		if(B.id == "blood")
-			B.data = list("donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.blood_type,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"mutant_color"=null, "factions"=null)
+			B.data = list(
+			"donor" = src,
+			"viruses" = null,
+			"blood_DNA" = dna.unique_enzymes,
+			"blood_type" = dna.blood_type,
+			"resistances" = null,
+			"trace_chem" = null,
+			"mind" = null,
+			"ckey" = null,
+			"gender" = null,
+			"real_name" = null,
+			"cloneable" = null,
+			"features" = null,
+			"factions" = null)
 
-/mob/living/carbon/human/proc/suppress_bloodloss(var/amount)
+/mob/living/carbon/human/proc/suppress_bloodloss(amount)
 	if(bleedsuppress)
 		return
 	else
@@ -46,14 +54,14 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/human/handle_blood()
 
 	if(NOBLOOD in dna.species.specflags)
+		blood_max = 0
 		return
 
-	if(stat != DEAD && bodytemperature >= 170)	//Dead or cryosleep people do not pump the blood.
-
+	if(stat != DEAD && bodytemperature >= 225) // Dead or cryosleep people do not pump the blood.
 		var/blood_volume = round(vessel.get_reagent_amount("blood"))
 
 		//Blood regeneration if there is some space
-		if(blood_volume < 560 && blood_volume)
+		if(blood_volume < BLOOD_VOLUME_NORMAL)
 			var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
 			if(B) // Make sure there's some blood at all
 				if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
@@ -63,10 +71,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 							break
 
 				B.volume += 0.1 // regenerate blood VERY slowly
-				if (reagents.has_reagent("nutriment"))	//Getting food speeds it up
+				if(reagents.has_reagent("nutriment"))	//Getting food speeds it up
 					B.volume += 0.4
 					reagents.remove_reagent("nutriment", 0.1)
-				if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
+				if(reagents.has_reagent("iron"))	//Hematogen candy anyone?
 					B.volume += 0.4
 					reagents.remove_reagent("iron", 0.1)
 
@@ -82,17 +90,14 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					update_body()
 					var/word = pick("dizzy","woozy","faint")
 					src << "<span class='warning'>You feel [word].</span>"
-				if(oxyloss < 20)
-					oxyloss += 3
+				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 100)
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = 1
 					update_body()
-				if(oxyloss < 50)
-					oxyloss += 10
-				oxyloss += 1
+				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 50)
 				if(prob(5))
-					eye_blurry += 6
+					blur_eyes(6)
 					var/word = pick("dizzy","woozy","faint")
 					src << "<span class='warning'>You feel very [word].</span>"
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
@@ -121,23 +126,26 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				blood_max += 2
 		if(bleedsuppress)
 			blood_max = 0
+		if(reagents.has_reagent("heparin") && getBruteLoss()) //Heparin is a powerful toxin that causes bleeding
+			blood_max += 3
 		drip(blood_max)
 
 //Makes a blood drop, leaking amt units of blood from the mob
-/mob/living/carbon/human/proc/drip(var/amt as num)
+/mob/living/carbon/human/proc/drip(amt as num)
 
 	if(!amt)
 		return
 
 	vessel.remove_reagent("blood",amt)
-	blood_splatter(src,src)
+	if (isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
+		blood_splatter(src,src)
 
 /****************************************************
 				BLOOD TRANSFERS
 ****************************************************/
 
 //Gets blood from mob to the container, preserving all data in it.
-/mob/living/carbon/proc/take_blood(obj/item/weapon/reagent_containers/container, var/amount)
+/mob/living/carbon/proc/take_blood(obj/item/weapon/reagent_containers/container, amount)
 
 	var/datum/reagent/B = get_blood(container.reagents)
 	if(!B) B = new /datum/reagent/blood
@@ -153,7 +161,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	*/
 
 	for(var/datum/disease/D in src.viruses)
-		B.data["viruses"] += new D.type(0, D, 1)
+		B.data["viruses"] += D.Copy()
 
 	B.data["blood_DNA"] = copytext(src.dna.unique_enzymes,1,0)
 	if(src.resistances&&src.resistances.len)
@@ -171,12 +179,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	B.data["blood_type"] = copytext(src.dna.blood_type,1,0)
 	B.data["gender"] = src.gender
 	B.data["real_name"] = src.real_name
-	B.data["mutant_color"] = src.dna.mutant_color
+	B.data["features"] = src.dna.features
 	B.data["factions"] = src.faction
 	return B
 
 //For humans, blood does not appear from blue, it comes from vessels.
-/mob/living/carbon/human/take_blood(obj/item/weapon/reagent_containers/container, var/amount)
+/mob/living/carbon/human/take_blood(obj/item/weapon/reagent_containers/container, amount)
 
 	if(NOBLOOD in dna.species.specflags)
 		return null
@@ -188,7 +196,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	vessel.remove_reagent("blood",amount) // Removes blood if human
 
 //Transfers blood from container to vessels
-/mob/living/carbon/proc/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
+/mob/living/carbon/proc/inject_blood(obj/item/weapon/reagent_containers/container, amount)
 
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
 
@@ -204,7 +212,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	container.reagents.remove_reagent("blood", amount)
 
 //Transfers blood from container to vessels, respecting blood types compatibility.
-/mob/living/carbon/human/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
+/mob/living/carbon/human/inject_blood(obj/item/weapon/reagent_containers/container, amount)
 
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
 
@@ -237,7 +245,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					return D
 	return res
 
-proc/blood_incompatible(donor,receiver,donor_species,receiver_species)
+/proc/blood_incompatible(donor,receiver,donor_species,receiver_species)
 	if(!donor || !receiver) return 0
 
 	if(donor_species && receiver_species)
@@ -260,7 +268,7 @@ proc/blood_incompatible(donor,receiver,donor_species,receiver_species)
 		//AB is a universal receiver.
 	return 0
 
-proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
+/proc/blood_splatter(target,datum/reagent/blood/source,large)
 
 	var/obj/effect/decal/cleanable/blood/B
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
@@ -271,17 +279,16 @@ proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
 		source = M.get_blood(M.vessel)
 	else if(istype(source,/mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/donor = source
-		if(donor.dna)
-			source = new()
-			source.data["blood_DNA"] = donor.dna.unique_enzymes
-			source.data["blood_type"] = donor.dna.blood_type
+		source = new()
+		source.data["blood_DNA"] = donor.dna.unique_enzymes
+		source.data["blood_type"] = donor.dna.blood_type
 
 	// Are we dripping or splattering?
 	var/list/drips = list()
 	// Only a certain number of drips (or one large splatter) can be on a given turf.
 	for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
 		drips |= drop.drips
-		del(drop)
+		qdel(drop)
 	if(!large && drips.len < 3)
 		decal_type = /obj/effect/decal/cleanable/blood/drip
 

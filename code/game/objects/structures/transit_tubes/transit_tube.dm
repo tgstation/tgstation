@@ -3,11 +3,11 @@
 // Mappers: you can use "Generate Instances from Icon-states"
 //  to get the different pieces.
 /obj/structure/transit_tube
-	icon = 'icons/obj/pipes/transit_tube.dmi'
+	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "E-W"
 	density = 1
 	layer = 3.1
-	anchored = 1.0
+	anchored = 1
 	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs = null
 	var/exit_delay = 1
@@ -42,12 +42,12 @@ obj/structure/transit_tube/ex_act(severity, target)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(copytext(icon_state, 1, 3) != "D-") //decorative diagonals cannot be unwrenched directly
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
-				user << "<span class='notice'>Remove the pod first.</span>"
+				user << "<span class='warning'>Remove the pod first!</span>"
 				return
-			user.visible_message("<span class='warning'>[user] starts to deattach \the [src]!</span>", "<span class='notice'>You start deattaching the [name]...</span>")
+			user.visible_message("[user] starts to deattach \the [src].", "<span class='notice'>You start to deattach the [name]...</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if(do_after(user, 35))
-				user << "<span class='notice'>You deattach the [name]!</span>"
+			if(do_after(user, 35/W.toolspeed, target = src))
+				user << "<span class='notice'>You deattach the [name].</span>"
 				var/obj/structure/R = new tube_construction(src.loc)
 				R.icon_state = src.icon_state
 				src.transfer_fingerprints_to(R)
@@ -262,7 +262,7 @@ obj/structure/transit_tube/ex_act(severity, target)
 	if(text in direction_table)
 		return direction_table[text]
 
-	var/list/split_text = text2list(text, "-")
+	var/list/split_text = splittext(text, "-")
 
 	// If the first token is D, the icon_state represents
 	//  a purely decorative tube, and doesn't actually

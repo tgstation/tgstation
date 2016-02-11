@@ -1,6 +1,8 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
 	languages = HUMAN
+	sight = 0
+	see_in_dark = 2
 
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.
@@ -17,8 +19,6 @@
 
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
-	var/list/atom/hallucinations = list() //A list of hallucinated people that try to attack the mob. See /obj/effect/fake_attacker in hallucinations.dm
-
 
 	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 
@@ -27,19 +27,34 @@
 
 	var/list/surgeries = list()	//a list of surgery datums. generally empty, they're added when the player wants them.
 
-	var/now_pushing = null
+	var/now_pushing = null //used by living/Bump() and living/PushAM() to prevent potential infinite loop.
 
 	var/cameraFollow = null
 
 	var/tod = null // Time of death
-	var/update_slimes = 1
 
 	var/on_fire = 0 //The "Are we on fire?" var
 	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20
 
+	var/bloodcrawl = 0 //0 No blood crawling, BLOODCRAWL for bloodcrawling, BLOODCRAWL_EAT for crawling+mob devour
+	var/holder = null //The holder for blood crawling
 	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/floating = 0
 	var/mob_size = MOB_SIZE_HUMAN
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
-
 	var/list/image/staticOverlays = list()
+	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)
+
+	var/list/pipes_shown = list()
+	var/last_played_vent
+
+	var/smoke_delay = 0 //used to prevent spam with smoke reagent reaction on mob.
+
+	var/list/say_log = list() //a log of what we've said, plain text, no spans or junk, essentially just each individual "message"
+
+	var/bubble_icon = "default" //what icon the mob uses for speechbubbles
+
+	var/last_bumped = 0
+	var/unique_name = 0 //if a mob's name should be appended with an id when created e.g. Mob (666)
+
+	var/list/butcher_results = null

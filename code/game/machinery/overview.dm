@@ -5,13 +5,14 @@
 	set category = "Object"
 	set src in view(1)
 	usr.set_machine(src)
-	if(!mapping)	return
+	if(!mapping)
+		return
 
 	log_game("[usr]([usr.key]) used station map L[z] in [src.loc.loc]")
 
 	src.drawmap(usr)
 
-/obj/machinery/computer/security/proc/drawmap(var/mob/user as mob)
+/obj/machinery/computer/security/proc/drawmap(mob/user)
 
 	var/icx = round(world.maxx/16) + 1
 	var/icy = round(world.maxy/16) + 1
@@ -70,12 +71,6 @@
 					if("/turf/simulated/wall/r_wall")
 						colour = rgb(128,96,96)
 
-					if("/turf/unsimulated/floor")
-						colour  = rgb(240,240,240)
-
-					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
-						colour  = rgb(140,140,140)
-
 					else
 						colour = rgb(0,40,0)
 
@@ -93,7 +88,7 @@
 							else
 								colour = rgb(128,192,128)
 
-						if(istype(AM, /obj/machinery/alarm))
+						if(istype(AM, /obj/machinery/airalarm))
 							colour = rgb(0,255,0)
 							colour2 = colour
 							if(AM.icon_state=="alarm:1")
@@ -180,8 +175,8 @@
 		HI.Insert(I, frame=1, delay = 5)
 		HI.Insert(J, frame=2, delay = 5)
 
-		del(I)
-		del(J)
+		qdel(I)
+		qdel(J)
 		H.icon = HI
 		H.layer = 25
 		usr.mapobjs += H
@@ -225,12 +220,6 @@
 					if("/turf/simulated/wall/r_wall")
 						colour = rgb(128,96,96)
 
-					if("/turf/unsimulated/floor")
-						colour  = rgb(240,240,240)
-
-					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
-						colour  = rgb(140,140,140)
-
 					else
 						colour = rgb(0,40,0)
 
@@ -245,7 +234,7 @@
 							else
 								colour = rgb(96,192,128)
 
-						if(istype(AM, /obj/machinery/alarm))
+						if(istype(AM, /obj/machinery/airalarm))
 							colour = rgb(0,255,0)
 
 							if(AM.icon_state=="alarm:1")
@@ -306,7 +295,7 @@
 		var/icon/I = imap[i+1]
 
 		H.icon = I
-		del(I)
+		qdel(I)
 		H.layer = 25
 		usr.mapobjs += H
 
@@ -340,13 +329,13 @@
 
 		return
 
-proc/getr(col)
+/proc/getr(col)
 	return hex2num( copytext(col, 2,4))
 
-proc/getg(col)
+/proc/getg(col)
 	return hex2num( copytext(col, 4,6))
 
-proc/getb(col)
+/proc/getb(col)
 	return hex2num( copytext(col, 6))
 
 

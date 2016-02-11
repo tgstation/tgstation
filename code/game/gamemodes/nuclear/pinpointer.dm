@@ -4,17 +4,22 @@
 	icon_state = "pinoff"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	w_class = 2.0
+	w_class = 2
 	item_state = "electronic"
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 500
+	materials = list(MAT_METAL=500)
 	var/obj/item/weapon/disk/nuclear/the_disk = null
 	var/active = 0
 
+/obj/item/weapon/pinpointer/New()
+	..()
+	pinpointer_list += src
+
 /obj/item/weapon/pinpointer/Destroy()
 	active = 0
-	..()
+	pinpointer_list -= src
+	return ..()
 
 /obj/item/weapon/pinpointer/attack_self()
 	if(!active)
@@ -65,7 +70,7 @@
 
 /obj/item/weapon/pinpointer/examine(mob/user)
 	..()
-	for(var/obj/machinery/nuclearbomb/bomb in world)
+	for(var/obj/machinery/nuclearbomb/bomb in machines)
 		if(bomb.timing)
 			user << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
 
@@ -122,7 +127,7 @@
 
 			location = locate(locationx,locationy,Z.z)
 
-			usr << "You set the pinpointer to locate [locationx],[locationy]"
+			usr << "<span class='notice'>You set the pinpointer to locate [locationx],[locationy]</span>"
 
 
 			return attack_self()
@@ -140,18 +145,18 @@
 						return
 					target=locate(possible_items[targetitem])
 					if(!target)
-						usr << "Failed to locate [targetitem]!"
+						usr << "<span class='warning'>Failed to locate [targetitem]!</span>"
 						return
-					usr << "You set the pinpointer to locate [targetitem]"
+					usr << "<span class='notice'>You set the pinpointer to locate [targetitem].</span>"
 				if("DNA")
 					var/DNAstring = input("Input DNA string to search for." , "Please Enter String." , "")
 					if(!DNAstring)
 						return
-					for(var/mob/living/carbon/M in mob_list)
-						if(!M.dna)
+					for(var/mob/living/carbon/C in mob_list)
+						if(!C.dna)
 							continue
-						if(M.dna.unique_enzymes == DNAstring)
-							target = M
+						if(C.dna.unique_enzymes == DNAstring)
+							target = C
 							break
 
 			return attack_self()
@@ -167,15 +172,16 @@
 	var/obj/docking_port/mobile/home
 
 
-/obj/item/weapon/pinpointer/nukeop/attack_self(mob/user as mob)
+/obj/item/weapon/pinpointer/nukeop/attack_self(mob/user)
 	if(!active)
 		active = 1
+		var/mode_text = "Authentication Disk Locator mode"
 		if(!mode)
 			workdisk()
-			user << "<span class='notice'>Authentication Disk Locator active.</span>"
 		else
+			mode_text = "Shuttle Locator mode"
 			worklocation()
-			user << "<span class='notice'>Shuttle Locator active.</span>"
+		user << "<span class='notice'>You activate the pinpointer([mode_text]).</span>"
 	else
 		active = 0
 		icon_state = "pinoff"
@@ -191,7 +197,7 @@
 		mode = 1	//Ensures worklocation() continues to work
 		worklocation()
 		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)	//Plays a beep
-		visible_message("Shuttle Locator active.")			//Lets the mob holding it know that the mode has changed
+		visible_message("Shuttle Locator mode actived.")			//Lets the mob holding it know that the mode has changed
 		return		//Get outta here
 	scandisk()
 	if(!the_disk)
@@ -221,7 +227,7 @@
 		mode = 0
 		workdisk()
 		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-		visible_message("<span class='notice'>Authentication Disk Locator active.</span>")
+		visible_message("<span class='notice'>Authentication Disk Locator mode actived.</span>")
 		return
 	if(!home)
 		home = SSshuttle.getShuttle("syndicate")
@@ -252,6 +258,9 @@
 	var/mob/living/carbon/nearest_op = null
 
 /obj/item/weapon/pinpointer/operative/attack_self()
+	if(!usr.mind || !(usr.mind in ticker.mode.syndicates))
+		usr << "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>"
+		return 0
 	if(!active)
 		active = 1
 		workop()
@@ -262,20 +271,27 @@
 		usr << "<span class='notice'>You deactivate the pinpointer.</span>"
 
 /obj/item/weapon/pinpointer/operative/proc/scan_for_ops()
-	if(!nearest_op)
+	if(active)
+		nearest_op = null //Resets nearest_op every time it scans
+		var/closest_distance = 1000
 		for(var/mob/living/carbon/M in mob_list)
-			if(M.mind in ticker.mode.syndicates)
-				nearest_op = M
+			if(M.mind && (M.mind in ticker.mode.syndicates))
+				if(get_dist(M, get_turf(src)) < closest_distance) //Actually points toward the nearest op, instead of a random one like it used to
+					nearest_op = M
 
 /obj/item/weapon/pinpointer/operative/proc/workop()
-	scan_for_ops()
-	point_at(nearest_op, 0)
-	spawn(5)
-		.()
+	if(active)
+		scan_for_ops()
+		point_at(nearest_op, 0)
+		spawn(5)
+			.()
+	else
+		return 0
 
 /obj/item/weapon/pinpointer/operative/examine(mob/user)
 	..()
-	if(nearest_op != null)
-		user << "Nearest operative: <b>[nearest_op]</b>."
-	if(nearest_op == null && active)
-		user << "No operatives detected within scanning range."
+	if(active)
+		if(nearest_op)
+			user << "Nearest operative detected is <i>[nearest_op.real_name].</i>"
+		else
+			user << "No operatives detected within scanning range."

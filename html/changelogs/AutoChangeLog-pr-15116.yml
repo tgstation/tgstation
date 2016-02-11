@@ -1,0 +1,6 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Malf AIs can now get the objective to have a robot army by the end of the round."
+  - rscadd: "Malf AIs can now get the objective to ensure only human crew (no mutants) are on the shuttle at round end."
+  - rscadd: "Malf AIs can now get the objective to prevent a crewmember from escaping the station, while requiring that crewmember still be alive."

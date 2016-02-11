@@ -13,24 +13,24 @@
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
-	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
+	var/max_amount = 50 //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
 	var/is_cyborg = 0 // It's 1 if module is used by a cyborg, and uses its storage
 	var/datum/robot_energy_storage/source
 	var/cost = 1 // How much energy from storage it costs
+	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
 	if (amount)
 		src.amount = amount
+	if(!merge_type)
+		merge_type = src.type
 	return
 
 /obj/item/stack/Destroy()
-	if (is_cyborg)
-		return // Not supposed to be destroyed
 	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
-	src.loc = null
-	..()
+	return ..()
 
 /obj/item/stack/examine(mob/user)
 	..()
@@ -56,10 +56,10 @@
 	else
 		return (amount)
 
-/obj/item/stack/attack_self(mob/user as mob)
+/obj/item/stack/attack_self(mob/user)
 	interact(user)
 
-/obj/item/stack/interact(mob/user as mob)
+/obj/item/stack/interact(mob/user)
 	if (!recipes)
 		return
 	if (!src || get_amount() <= 0)
@@ -122,8 +122,8 @@
 		if(!building_checks(R, multiplier))
 			return
 		if (R.time)
-			usr << "<span class='notice'>Building [R.title] ...</span>"
-			if (!do_after(usr, R.time))
+			usr.visible_message("<span class='notice'>[usr] starts building [R.title].</span>", "<span class='notice'>You start building [R.title]...</span>")
+			if (!do_after(usr, R.time, target = usr))
 				return
 			if(!building_checks(R, multiplier))
 				return
@@ -136,7 +136,6 @@
 		if (R.max_res_amount > 1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
-			new_item.add_to_stacks(usr) //try to merge with existing stacks on current tile
 
 			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
 				return
@@ -160,15 +159,15 @@
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (src.get_amount() < R.req_amount*multiplier)
 		if (R.req_amount*multiplier>1)
-			usr << "<span class='danger'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
+			usr << "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
 		else
-			usr << "<span class='danger'>You haven't got enough [src] to build \the [R.title]!</span>"
+			usr << "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>"
 		return 0
 	if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-		usr << "<span class='danger'>There is another [R.title] here!</span>"
+		usr << "<span class='warning'>There is another [R.title] here!</span>"
 		return 0
 	if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
-		usr << "<span class='danger'>\The [R.title] must be constructed on the floor!</span>"
+		usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
 		return 0
 	return 1
 
@@ -185,40 +184,48 @@
 	return 1
 
 /obj/item/stack/proc/zero_amount()
-	if (amount < 1)
-		if(usr)
-			usr.unEquip(src, 1)
+	if(is_cyborg)
+		return source.energy < cost
+	if(amount < 1)
 		qdel(src)
 		return 1
 	return 0
 
-/obj/item/stack/proc/add(var/amount)
+/obj/item/stack/proc/add(amount)
 	if (is_cyborg)
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
 	update_icon()
 
-/obj/item/stack/proc/add_to_stacks(mob/usr as mob)
-	var/obj/item/stack/oldsrc = src
-	src = null
-	for (var/obj/item/stack/item in usr.loc)
-		if (item==oldsrc)
-			continue
-		if (!istype(item, oldsrc.type))
-			continue
-		if (item.amount>=item.max_amount)
-			continue
-		oldsrc.attackby(item, usr)
-		usr << "You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s."
-		if(oldsrc.amount <= 0)
-			break
-	oldsrc.update_icon()
+/obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
+	var/transfer = get_amount()
+	if(S.is_cyborg)
+		transfer = min(transfer, round((S.source.max_energy - S.source.energy) / S.cost))
+	else
+		transfer = min(transfer, S.max_amount - S.amount)
+	if(pulledby)
+		pulledby.start_pulling(S)
+	S.copy_evidences(src)
+	use(transfer)
+	S.add(transfer)
 
-/obj/item/stack/attack_hand(mob/user as mob)
+/obj/item/stack/Crossed(obj/o)
+	if(istype(o, merge_type) && !o.throwing)
+		merge(o)
+	return ..()
+
+/obj/item/stack/hitby(atom/movable/AM, skip, hitpush)
+	if(istype(AM, merge_type))
+		merge(AM)
+	return ..()
+
+/obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_hand() == src)
-		if(zero_amount())	return
-		var/obj/item/stack/F = new src.type( user, 1)
+		if(zero_amount())
+			return
+		var/obj/item/stack/F = new src.type(user, 1)
+		. = F
 		F.copy_evidences(src)
 		user.put_in_hands(F)
 		src.add_fingerprint(user)
@@ -230,35 +237,11 @@
 		..()
 	return
 
-/obj/item/stack/attackby(obj/item/W as obj, mob/user as mob, params)
-
-	if (istype(W, src.type))
-		if(zero_amount())	return
+/obj/item/stack/attackby(obj/item/W, mob/user, params)
+	if(istype(W, merge_type))
 		var/obj/item/stack/S = W
-		if (S.is_cyborg)
-			var/to_transfer = min(src.amount, round((S.source.max_energy - S.source.energy) / S.cost))
-			S.add(to_transfer)
-			if (S && usr.machine==S)
-				spawn(0) S.interact(usr)
-			src.use(to_transfer)
-			if (src && usr.machine==src)
-				spawn(0) src.interact(usr)
-		else
-			if (S.amount >= max_amount)
-				return
-			var/to_transfer as num
-			if (user.get_inactive_hand()==src)
-				to_transfer = 1
-			else
-				to_transfer = min(src.amount, S.max_amount-S.amount)
-			S.amount+=to_transfer
-			if (S && usr.machine==S)
-				spawn(0) S.interact(usr)
-			src.use(to_transfer)
-			if (src && usr.machine==src)
-				spawn(0) src.interact(usr)
-			S.update_icon()
-
+		merge(S)
+		user << "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>"
 	else
 		..()
 
@@ -281,12 +264,13 @@
 	var/time = 0
 	var/one_per_turf = 0
 	var/on_floor = 0
-	New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0)
-		src.title = title
-		src.result_type = result_type
-		src.req_amount = req_amount
-		src.res_amount = res_amount
-		src.max_res_amount = max_res_amount
-		src.time = time
-		src.one_per_turf = one_per_turf
-		src.on_floor = on_floor
+
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0)
+	src.title = title
+	src.result_type = result_type
+	src.req_amount = req_amount
+	src.res_amount = res_amount
+	src.max_res_amount = max_res_amount
+	src.time = time
+	src.one_per_turf = one_per_turf
+	src.on_floor = on_floor

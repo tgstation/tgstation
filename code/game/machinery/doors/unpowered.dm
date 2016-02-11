@@ -3,13 +3,15 @@
 
 
 /obj/machinery/door/unpowered/Bumped(atom/AM)
-	if(src.locked)	return
+	if(src.locked)
+		return
 	..()
 	return
 
 
-/obj/machinery/door/unpowered/attackby(obj/item/I as obj, mob/user as mob, params)
-	if(src.locked)	return
+/obj/machinery/door/unpowered/attackby(obj/item/I, mob/user, params)
+	if(src.locked)
+		return
 	..()
 	return
 
@@ -22,3 +24,4 @@
 	icon_state = "door1"
 	opacity = 1
 	density = 1
+	explosion_block = 1

@@ -5,6 +5,7 @@
 /obj/item/weapon/grown // Grown weapons
 	name = "grown_weapon"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
+	burn_state = FLAMMABLE
 	var/seed = null
 	var/plantname = ""
 	var/product	//a type path
@@ -48,7 +49,7 @@
 	icon_state = "logs"
 	force = 5
 	throwforce = 5
-	w_class = 3.0
+	w_class = 3
 	throw_speed = 2
 	throw_range = 3
 	plant_type = 2
@@ -65,9 +66,9 @@
 	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
 
 
-/obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
+	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/twohanded/required/chainsaw))
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
 		var/obj/item/stack/plank = new plank_type(user.loc, 1 + round(potency / 25))
 		var/old_plank_amount = plank.amount
@@ -75,7 +76,7 @@
 			if(ST != plank && istype(ST, plank_type) && ST.amount < ST.max_amount)
 				ST.attackby(plank, user) //we try to transfer all old unfinished stacks to the new stack we created.
 		if(plank.amount > old_plank_amount)
-			user << "You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name]."
+			user << "<span class='notice'>You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name].</span>"
 		qdel(src)
 
 	if(is_type_in_list(W,accepted))
@@ -89,7 +90,7 @@
 			qdel(src)
 			return
 		else
-			usr << "<span class ='warning'> You must dry this first.</span>"
+			usr << "<span class ='warning'>You must dry this first!</span>"
 
 /obj/item/weapon/grown/log/steel
 	seed = /obj/item/seeds/steelmycelium
@@ -109,13 +110,13 @@
 	force = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 1
 	throw_range = 3
 
-/obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/grown/sunflower/attack(mob/M, mob/user)
 	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
-	user << "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>"
+	user << "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'>strikes [M]</font>"
 
 
 /obj/item/weapon/grown/novaflower
@@ -127,7 +128,7 @@
 	force = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 0
@@ -140,30 +141,30 @@
 		reagents.add_reagent("condensedcapsaicin", round((potency / 4), 1))
 	force = round((5 + potency / 5), 1)
 
-/obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
 	if(istype(M, /mob/living))
 		M << "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>"
 		M.adjust_fire_stacks(potency / 20)
 		M.IgniteMob()
 
-/obj/item/weapon/grown/novaflower/afterattack(atom/A as mob|obj, mob/user as mob,proximity)
+/obj/item/weapon/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
 	if(!proximity) return
 	if(endurance > 0)
 		endurance -= rand(1, (endurance / 3) + 1)
 	else
-		usr << "All the petals have fallen off the [name] from violent whacking."
+		usr << "<span class='warning'>All the petals have fallen off the [name] from violent whacking!</span>"
 		usr.unEquip(src)
 		qdel(src)
 
-/obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user as mob)
+/obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user)
 	if(!user.gloves)
 		user << "<span class='danger'>The [name] burns your bare hand!</span>"
 		user.adjustFireLoss(rand(1, 5))
 
 
 /obj/item/weapon/grown/nettle //abstract type
-	name = "abstract nettle"
+	name = "nettle"
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "nettle"
@@ -171,7 +172,7 @@
 	force = 15
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throwforce = 5
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 1
@@ -182,7 +183,7 @@
 	user.visible_message("<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|TOXLOSS)
 
-/obj/item/weapon/grown/nettle/pickup(mob/living/user as mob)
+/obj/item/weapon/grown/nettle/pickup(mob/living/user)
 	if(!iscarbon(user))
 		return 0
 	var/mob/living/carbon/C = user
@@ -199,7 +200,7 @@
 	C << "<span class='userdanger'>The nettle burns your bare hand!</span>"
 	return 1
 
-/obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob,proximity)
+/obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
 	if(!proximity) return
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
@@ -211,7 +212,6 @@
 
 /obj/item/weapon/grown/nettle/basic
 	seed = /obj/item/seeds/nettleseed
-	name = "nettle"
 
 /obj/item/weapon/grown/nettle/basic/add_juice()
 	..()
@@ -233,19 +233,19 @@
 	reagents.add_reagent("facid", round((potency / 2), 1))
 	force = round((5 + potency / 2.5), 1)
 
-/obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/user as mob)
+/obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/user)
 	if(..())
 		if(prob(50))
 			user.Paralyse(5)
 			user << "<span class='userdanger'>You are stunned by the Deathnettle when you try picking it up!</span>"
 
-/obj/item/weapon/grown/nettle/death/attack(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/weapon/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
 	if(istype(M, /mob/living))
 		M << "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>"
-		add_logs(user, M, "attacked", object= "[src.name]")
+		add_logs(user, M, "attacked", src)
 
-		M.eye_blurry += force/7
+		M.adjust_blurriness(force/7)
 		if(prob(20))
 			M.Paralyse(force / 6)
 			M.Weaken(force / 15)
@@ -258,7 +258,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
-	w_class = 1.0
+	w_class = 1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -281,7 +281,8 @@
 	desc = "A synthetic banana peel."
 
 /obj/item/weapon/grown/bananapeel/specialpeel/Crossed(AM)
-	if(..())	qdel(src)
+	if(..())
+		qdel(src)
 
 /obj/item/weapon/grown/bananapeel/mimanapeel
 	name = "mimana peel"
@@ -295,14 +296,14 @@
 	desc = "A reminder of meals gone by."
 	icon_state = "corncob"
 	item_state = "corncob"
-	w_class = 1.0
+	w_class = 1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 
-/obj/item/weapon/grown/corncob/attackby(obj/item/weapon/grown/W as obj, mob/user as mob, params)
+/obj/item/weapon/grown/corncob/attackby(obj/item/weapon/grown/W, mob/user, params)
 	..()
-	if(is_sharp(W))
+	if(W.is_sharp())
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		user.unEquip(src)
@@ -310,11 +311,12 @@
 		return
 
 /obj/item/weapon/grown/snapcorn
+	seed = /obj/item/seeds/snapcornseed
 	name = "snap corn"
 	desc = "A cob with snap pops"
 	icon_state = "snapcorn"
 	item_state = "corncob"
-	w_class = 1.0
+	w_class = 1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -324,7 +326,7 @@
 	..()
 	snap_pops = max(round(potency/8), 1)
 
-/obj/item/weapon/grown/snapcorn/attack_self(mob/user as mob)
+/obj/item/weapon/grown/snapcorn/attack_self(mob/user)
 	..()
 	user << "<span class='notice'>You pick up a snap pops from the cob.</span>"
 	var/obj/item/toy/snappop/S = new /obj/item/toy/snappop(user.loc)

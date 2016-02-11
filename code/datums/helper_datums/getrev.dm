@@ -9,8 +9,9 @@ var/global/datum/getrev/revdata = new()
 	var/list/head_log = file2list(".git/logs/HEAD", "\n")
 	for(var/line=head_log.len, line>=1, line--)
 		if(head_log[line])
-			var/list/last_entry = text2list(head_log[line], " ")
-			if(last_entry.len < 2)	continue
+			var/list/last_entry = splittext(head_log[line], " ")
+			if(last_entry.len < 2)
+				continue
 			revision = last_entry[2]
 			// Get date/time
 			if(last_entry.len >= 5)
@@ -21,9 +22,10 @@ var/global/datum/getrev/revdata = new()
 	world.log << "Running /tg/ revision:"
 	world.log << date
 	world.log << revision
+	world.log << "Current map - [MAP_NAME]" //can't think of anywhere better to put it
 	return
 
-client/verb/showrevinfo()
+/client/verb/showrevinfo()
 	set category = "OOC"
 	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"
@@ -38,5 +40,15 @@ client/verb/showrevinfo()
 	src << "Protect Assistant Role From Traitor: [config.protect_assistant_from_antagonist]"
 	src << "Enforce Human Authority: [config.enforce_human_authority]"
 	src << "Allow Latejoin Antagonists: [config.allow_latejoin_antagonists]"
-	src << "Protect Assistant From Antagonist: [config.protect_assistant_from_antagonist]"
+	src << "Enforce Continuous Rounds: [config.continuous.len] of [config.modes.len] roundtypes"
+	src << "Allow Midround Antagonists: [config.midround_antag.len] of [config.modes.len] roundtypes"
+	if(config.show_game_type_odds)
+		src <<"<b>Game Mode Odds:</b>"
+		var/sum = 0
+		for(var/i=1,i<=config.probabilities.len,i++)
+			sum += config.probabilities[config.probabilities[i]]
+		for(var/i=1,i<=config.probabilities.len,i++)
+			if(config.probabilities[config.probabilities[i]] > 0)
+				var/percentage = round(config.probabilities[config.probabilities[i]] / sum * 100, 0.1)
+				src << "[config.probabilities[i]] [percentage]%"
 	return

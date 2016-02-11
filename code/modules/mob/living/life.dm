@@ -2,6 +2,9 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
+	if(digitalinvis)
+		handle_diginvis() //AI becomes unable to see mob
+
 	if (notransform)
 		return
 	if(!loc)
@@ -38,19 +41,17 @@
 
 	update_gravity(mob_has_gravity())
 
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
+	if(machine)
+		machine.check_eye(src)
 
-	if(handle_regular_status_updates()) // Status & health update, are we dead or alive etc.
+
+	if(stat != DEAD)
 		handle_disabilities() // eye, ear, brain damages
 		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
 
-	update_canmove()
+	handle_actions()
 
-	if(client)
-		handle_regular_hud_updates()
-
-	return .
+	handle_regular_hud_updates()
 
 
 
@@ -58,10 +59,19 @@
 	return
 
 /mob/living/proc/handle_mutations_and_radiation()
+	radiation = 0 //so radiation don't accumulate in simple animals
 	return
 
 /mob/living/proc/handle_chemicals_in_body()
 	return
+
+/mob/living/proc/handle_diginvis()
+	if(!digitaldisguise)
+		src.digitaldisguise = image(loc = src)
+	src.digitaldisguise.override = 1
+	for(var/mob/living/silicon/ai/AI in player_list)
+		AI.client.images |= src.digitaldisguise
+
 
 /mob/living/proc/handle_blood()
 	return
@@ -69,29 +79,11 @@
 /mob/living/proc/handle_random_events()
 	return
 
-/mob/living/proc/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/proc/handle_environment(datum/gas_mixture/environment)
 	return
 
 /mob/living/proc/handle_stomach()
 	return
-
-//This updates the health and status of the mob (conscious, unconscious, dead)
-/mob/living/proc/handle_regular_status_updates()
-
-	updatehealth()
-
-	if(stat != DEAD)
-
-		if(paralysis)
-			stat = UNCONSCIOUS
-
-		else if (status_flags & FAKEDEATH)
-			stat = UNCONSCIOUS
-
-		else
-			stat = CONSCIOUS
-
-		return 1
 
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
@@ -99,22 +91,23 @@
 		AdjustParalysis(-1)
 	if(stunned)
 		AdjustStunned(-1)
-		if(!stunned)
-			update_icons()
-
 	if(weakened)
-		AdjustWeakened(-1)
-		if(!weakened)
-			update_icons()
+		AdjustWeakened(-1, ignore_canweaken=1)
 
 /mob/living/proc/handle_disabilities()
 	//Eyes
-	if(disabilities & BLIND || stat)	//blindness from disability or unconsciousness doesn't get better on its own
-		eye_blind = max(eye_blind, 1)
-	else if(eye_blind)			//blindness, heals slowly over time
-		eye_blind = max(eye_blind-1,0)
+	if(eye_blind)			//blindness, heals slowly over time
+		if(!stat && !(disabilities & BLIND))
+			eye_blind = max(eye_blind-1,0)
+			if(client && !eye_blind)
+				clear_alert("blind")
+				clear_fullscreen("blind")
+		else
+			eye_blind = max(eye_blind-1,1)
 	else if(eye_blurry)			//blurry eyes heal slowly
 		eye_blurry = max(eye_blurry-1, 0)
+		if(client && !eye_blurry)
+			clear_fullscreen("blurry")
 
 	//Ears
 	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
@@ -124,57 +117,92 @@
 		if(ear_damage < 100)
 			adjustEarDamage(-0.05,-1)
 
+/mob/living/proc/handle_actions()
+	//Pretty bad, i'd use picked/dropped instead but the parent calls in these are nonexistent
+	for(var/datum/action/A in actions)
+		if(A.CheckRemoval(src))
+			A.Remove(src)
+	for(var/obj/item/I in src)
+		give_action_button(I, 1)
+	return
 
-//this handles hud updates. Calls update_vision() and handle_hud_icons()
+/mob/living/proc/give_action_button(var/obj/item/I, recursive = 0)
+	if(I.action_button_name)
+		if(!I.action)
+			if(istype(I, /obj/item/organ/internal))
+				I.action = new/datum/action/item_action/organ_action
+			else if(I.action_button_is_hands_free)
+				I.action = new/datum/action/item_action/hands_free
+			else
+				I.action = new/datum/action/item_action
+			I.action.name = I.action_button_name
+			I.action.target = I
+		I.action.Grant(src)
+
+	if(recursive)
+		for(var/obj/item/T in I)
+			give_action_button(T, recursive - 1)
+
+
+/mob/living/proc/update_damage_hud()
+	return
+
+//this handles hud updates.
 /mob/living/proc/handle_regular_hud_updates()
-	if(!client)	return 0
-
-	handle_vision()
-	handle_hud_icons()
-
+	if(!client)
+		return 0
+	update_action_buttons()
 	return 1
 
-/mob/living/proc/handle_vision()
+/mob/living/update_action_buttons()
+	if(!hud_used) return
+	if(!client) return
 
-	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
+	if(hud_used.hud_shown != 1)	//Hud toggled to minimal
+		return
 
-	update_sight()
+	client.screen -= hud_used.hide_actions_toggle
+	for(var/datum/action/A in actions)
+		if(A.button)
+			client.screen -= A.button
 
-	if(stat != DEAD)
-		if(blind)
-			if(eye_blind)
-				blind.layer = 18
-			else
-				blind.layer = 0
+	if(hud_used.action_buttons_hidden)
+		if(!hud_used.hide_actions_toggle)
+			hud_used.hide_actions_toggle = new(hud_used)
+			hud_used.hide_actions_toggle.UpdateIcon()
 
-				if (disabilities & NEARSIGHT)
-					client.screen += global_hud.vimpaired
+		if(!hud_used.hide_actions_toggle.moved)
+			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(1)
+			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,1)
 
-				if (eye_blurry)
-					client.screen += global_hud.blurry
+		client.screen += hud_used.hide_actions_toggle
+		return
 
-				if (druggy)
-					client.screen += global_hud.druggy
+	var/button_number = 0
+	for(var/datum/action/A in actions)
+		button_number++
+		if(A.button == null)
+			var/obj/screen/movable/action_button/N = new(hud_used)
+			N.owner = A
+			A.button = N
 
-				if(eye_stat > 20)
-					if(eye_stat > 30)
-						client.screen += global_hud.darkMask
-					else
-						client.screen += global_hud.vimpaired
+		var/obj/screen/movable/action_button/B = A.button
 
-		if(machine)
-			if (!( machine.check_eye(src) ))
-				reset_view(null)
-		else
-			if(!client.adminobs)
-				reset_view(null)
+		B.UpdateIcon()
 
-/mob/living/proc/update_sight()
-	return
+		B.name = A.UpdateName()
 
-/mob/living/proc/handle_hud_icons()
-	handle_hud_icons_health()
-	return
+		client.screen += B
 
-/mob/living/proc/handle_hud_icons_health()
-	return
+		if(!B.moved)
+			B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
+			//hud_used.SetButtonCoords(B,button_number)
+
+	if(button_number > 0)
+		if(!hud_used.hide_actions_toggle)
+			hud_used.hide_actions_toggle = new(hud_used)
+			hud_used.hide_actions_toggle.InitialiseIcon(src)
+		if(!hud_used.hide_actions_toggle.moved)
+			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
+			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
+		client.screen += hud_used.hide_actions_toggle

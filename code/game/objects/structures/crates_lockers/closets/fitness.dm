@@ -1,8 +1,7 @@
 /obj/structure/closet/athletic_mixed
 	name = "athletic wardrobe"
 	desc = "It's a storage unit for athletic wear."
-	icon_state = "mixed"
-	icon_closed = "mixed"
+	icon_door = "mixed"
 
 /obj/structure/closet/athletic_mixed/New()
 	..()
@@ -40,32 +39,26 @@
 /obj/structure/closet/lasertag/red
 	name = "red laser tag equipment"
 	desc = "It's a storage unit for laser tag equipment."
-	icon_state = "red"
-	icon_closed = "red"
+	icon_door = "red"
 
 /obj/structure/closet/lasertag/red/New()
 	..()
-	new /obj/item/weapon/gun/energy/laser/redtag(src)
-	new /obj/item/weapon/gun/energy/laser/redtag(src)
-	new /obj/item/weapon/gun/energy/laser/redtag(src)
-	new /obj/item/clothing/suit/redtag(src)
-	new /obj/item/clothing/suit/redtag(src)
-	new /obj/item/clothing/suit/redtag(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/gun/energy/laser/redtag(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/suit/redtag(src)
 	new /obj/item/clothing/head/helmet/redtaghelm(src)
 
 
 /obj/structure/closet/lasertag/blue
 	name = "blue laser tag equipment"
 	desc = "It's a storage unit for laser tag equipment."
-	icon_state = "blue"
-	icon_closed = "blue"
+	icon_door = "blue"
 
 /obj/structure/closet/lasertag/blue/New()
 	..()
-	new /obj/item/weapon/gun/energy/laser/bluetag(src)
-	new /obj/item/weapon/gun/energy/laser/bluetag(src)
-	new /obj/item/weapon/gun/energy/laser/bluetag(src)
-	new /obj/item/clothing/suit/bluetag(src)
-	new /obj/item/clothing/suit/bluetag(src)
-	new /obj/item/clothing/suit/bluetag(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/gun/energy/laser/bluetag(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/suit/bluetag(src)
 	new /obj/item/clothing/head/helmet/bluetaghelm(src)

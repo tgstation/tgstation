@@ -43,12 +43,7 @@
 		process_occupant()
 	return 1
 
-
-/obj/machinery/recharge_station/allow_drop()
-	return 0
-
-
-/obj/machinery/recharge_station/relaymove(mob/user as mob)
+/obj/machinery/recharge_station/relaymove(mob/user)
 	if(user.stat)
 		return
 	open_machine()
@@ -67,13 +62,13 @@
 		open_machine()
 	..()
 
-/obj/machinery/recharge_station/attack_paw(user as mob)
+/obj/machinery/recharge_station/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/recharge_station/attack_ai(user as mob)
+/obj/machinery/recharge_station/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/recharge_station/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/machinery/recharge_station/attackby(obj/item/P, mob/user, params)
 	if(state_open)
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
 			return
@@ -86,7 +81,7 @@
 
 	default_deconstruction_crowbar(P)
 
-/obj/machinery/recharge_station/attack_hand(user as mob)
+/obj/machinery/recharge_station/attack_hand(mob/user)
 	if(..(user,1,set_machine = 0))
 		return
 
@@ -106,11 +101,7 @@
 /obj/machinery/recharge_station/close_machine()
 	if(!panel_open)
 		for(var/mob/living/silicon/robot/R in loc)
-			R.stop_pulling()
-			if(R.client)
-				R.client.eye = src
-				R.client.perspective = EYE_PERSPECTIVE
-			R.loc = src
+			R.forceMove(src)
 			occupant = R
 			use_power = 2
 			add_fingerprint(R)
@@ -144,52 +135,6 @@
 /obj/machinery/recharge_station/proc/restock_modules()
 	if(occupant)
 		var/mob/living/silicon/robot/R = occupant
-		if(R.module && R.module.modules)
-			var/list/um = R.contents|R.module.modules // Makes single list of active (R.contents) and inactive (R.module.modules) modules
-			var/coeff = recharge_speed / 200
-			for (var/datum/robot_energy_storage/st in R.module.storages)
-				st.energy = min(st.max_energy, st.energy + coeff * st.recharge_rate)
-			for(var/obj/O in um)
-				//General
-				if(istype(O,/obj/item/device/flash))
-					var/obj/item/device/flash/F = O
-					if(F.broken)
-						F.broken = 0
-						F.times_used = 0
-						F.icon_state = "flash"
-				// Engineering
-				// Security
-				if(istype(O,/obj/item/weapon/gun/energy/gun/advtaser/cyborg))
-					var/obj/item/weapon/gun/energy/gun/advtaser/cyborg/T = O
-					if(T.power_supply.charge < T.power_supply.maxcharge)
-						var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-						T.power_supply.give(S.e_cost * coeff)
-						T.update_icon()
-					else
-						T.charge_tick = 0
-				if(istype(O,/obj/item/weapon/melee/baton))
-					var/obj/item/weapon/melee/baton/B = O
-					if(B.bcell)
-						B.bcell.charge = B.bcell.maxcharge
-				//Service
-				if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
-					if(O.reagents.get_reagent_amount("enzyme") < 50)
-						O.reagents.add_reagent("enzyme", 2 * coeff)
-				//Janitor
-				if(istype(O, /obj/item/device/lightreplacer))
-					var/obj/item/device/lightreplacer/LR = O
-					var/i = 1
-					for(1, i <= coeff, i++)
-						LR.Charge(R)
-
-			if(R && R.module)
-				R.module.respawn_consumable(R)
-
-			//Emagged items for janitor and medical borg
-			if(R.module.emag)
-				if(istype(R.module.emag, /obj/item/weapon/reagent_containers/spray))
-					var/obj/item/weapon/reagent_containers/spray/S = R.module.emag
-					if(S.name == "Fluacid spray")
-						S.reagents.add_reagent("facid", 2 * coeff)
-					else if(S.name == "lube spray")
-						S.reagents.add_reagent("lube", 2 * coeff)
+		if(R && R.module)
+			var/coeff = recharge_speed * 0.005
+			R.module.respawn_consumable(R, coeff)

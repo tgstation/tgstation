@@ -3,7 +3,8 @@
 /obj/machinery/computer/secure_data//TODO:SANITY
 	name = "security records console"
 	desc = "Used to view and edit personnel's security records"
-	icon_state = "security"
+	icon_screen = "security"
+	icon_keyboard = "security_key"
 	req_one_access = list(access_security, access_forensics_lockers)
 	circuit = /obj/item/weapon/circuitboard/secure_data
 	var/obj/item/weapon/card/id/scan = null
@@ -23,17 +24,18 @@
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
 
-/obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob, params)
+/obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
-		usr.drop_item()
+		if(!user.drop_item())
+			return
 		O.loc = src
 		scan = O
-		user << "You insert [O]."
+		user << "<span class='notice'>You insert [O].</span>"
 	else
 		..()
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
-/obj/machinery/computer/secure_data/attack_hand(mob/user as mob)
+/obj/machinery/computer/secure_data/attack_hand(mob/user)
 	if(..())
 		return
 	if(src.z > 6)
@@ -47,7 +49,7 @@
 		dat = text("Confirm Identity: <A href='?src=\ref[];choice=Confirm Identity'>[]</A><HR>", src, (scan ? text("[]", scan.name) : "----------"))
 		if(authenticated)
 			switch(screen)
-				if(1.0)
+				if(1)
 
 					//body tag start + onload and onkeypress (onkeyup) javascript event calls
 					dat += "<body onload='selectTextField(); updateSearch();' onkeyup='updateSearch();'>"
@@ -154,10 +156,10 @@
 						<hr width='75%' />"}
 					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
 					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
-				if(2.0)
+				if(2)
 					dat += "<B>Records Maintenance</B><HR>"
 					dat += "<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"
-				if(3.0)
+				if(3)
 					dat += "<font size='4'><b>Security Record</b></font><br>"
 					if(istype(active1, /datum/data/record) && data_core.general.Find(active1))
 						if(istype(active1.fields["photo_front"], /obj/item/weapon/photo))
@@ -264,7 +266,7 @@ What a mess.*/
 		active1 = null
 	if(!( data_core.security.Find(active2) ))
 		active2 = null
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		switch(href_list["choice"])
 // SORTING!
@@ -298,7 +300,8 @@ What a mess.*/
 				else
 					var/obj/item/I = usr.get_active_hand()
 					if(istype(I, /obj/item/weapon/card/id))
-						usr.drop_item()
+						if(!usr.drop_item())
+							return
 						I.loc = src
 						scan = I
 
@@ -315,6 +318,12 @@ What a mess.*/
 					active2 = null
 					authenticated = borg.name
 					rank = "AI"
+					screen = 1
+				else if(IsAdminGhost(usr))
+					active1 = null
+					active2 = null
+					authenticated = usr.client.holder.admin_signature
+					rank = "Central Command"
 					screen = 1
 				else if(istype(scan, /obj/item/weapon/card/id))
 					active1 = null
@@ -415,7 +424,7 @@ What a mess.*/
 			if("Purge All Records")
 				investigate_log("[usr.name] ([usr.key]) has purged all the security records.", "records")
 				for(var/datum/data/record/R in data_core.security)
-					del(R)
+					qdel(R)
 				data_core.security.Cut()
 				temp = "All Security records deleted."
 
@@ -518,7 +527,7 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if(istype(active1, /datum/data/record) || istype(active2, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please input name:", "Secure. records", active1.fields["name"], null)
+							var/t1 = copytext(sanitize(input("Please input name:", "Secure. records", active1.fields["name"], null)  as text),1,MAX_MESSAGE_LEN)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1, /datum/data/record))
@@ -623,7 +632,7 @@ What a mess.*/
 							temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=released'>Discharged</a></li>"
 							temp += "</ul>"
 					if("rank")
-						var/list/L = list( "Head of Personnel", "Captain", "AI" )
+						var/list/L = list( "Head of Personnel", "Captain", "AI", "Central Command" )
 						//This was so silly before the change. Now it actually works without beating your head against the keyboard. /N
 						if((istype(active1, /datum/data/record) && L.Find(rank)))
 							temp = "<h5>Rank:</h5>"
@@ -664,7 +673,8 @@ What a mess.*/
 						investigate_log("[usr.name] ([usr.key]) has deleted the security records for [active1.fields["name"]].", "records")
 						if(active2)
 							data_core.security -= active2
-							del(active2)
+							qdel(active2)
+							active2 = null
 
 					if("Delete Record (ALL) Execute")
 						if(active1)
@@ -672,14 +682,16 @@ What a mess.*/
 							for(var/datum/data/record/R in data_core.medical)
 								if((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
 									data_core.medical -= R
-									del(R)
+									qdel(R)
 									break
 							data_core.general -= active1
-							del(active1)
+							qdel(active1)
+							active1 = null
 
 						if(active2)
 							data_core.security -= active2
-							del(active2)
+							qdel(active2)
+							active2 = null
 					else
 						temp = "This function does not appear to be working at the moment. Our apologies."
 
@@ -687,7 +699,7 @@ What a mess.*/
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/secure_data/proc/get_photo(var/mob/user)
+/obj/machinery/computer/secure_data/proc/get_photo(mob/user)
 	var/obj/item/weapon/photo/P = null
 	if(istype(user, /mob/living/silicon))
 		var/mob/living/silicon/tempAI = user
@@ -708,7 +720,10 @@ What a mess.*/
 		if(prob(10/severity))
 			switch(rand(1,8))
 				if(1)
-					R.fields["name"] = "[pick(pick(first_names_male), pick(first_names_female))] [pick(last_names)]"
+					if(prob(10))
+						R.fields["name"] = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
+					else
+						R.fields["name"] = "[pick(pick(first_names_male), pick(first_names_female))] [pick(last_names)]"
 				if(2)
 					R.fields["sex"] = pick("Male", "Female")
 				if(3)
@@ -728,7 +743,7 @@ What a mess.*/
 			continue
 
 		else if(prob(1))
-			del(R)
+			qdel(R)
 			continue
 
 	..(severity)
@@ -743,7 +758,3 @@ What a mess.*/
 					if(!record2 || record2 == active2)
 						return 1
 	return 0
-
-/obj/machinery/computer/secure_data/detective_computer
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "messyfiles"

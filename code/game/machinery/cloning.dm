@@ -44,6 +44,8 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
 		speed_coeff += P.rating
 	heal_level = (efficiency * 15) + 10
+	if(heal_level > 100)
+		heal_level = 100
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -52,13 +54,13 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
-	w_class = 1.0
+	w_class = 1
 	var/list/fields = list()
 	var/read_only = 0 //Well,it's still a floppy disk
 
 
 //Find a dead mob with a brain and client.
-/proc/find_dead_player(var/find_key)
+/proc/find_dead_player(find_key)
 	if (isnull(find_key))
 		return
 
@@ -68,7 +70,7 @@
 		if ((M.stat != 2) || (!M.client))
 			continue
 		//They need a brain!
-		if (ishuman(M) && !M.getorgan(/obj/item/organ/brain))
+		if (ishuman(M) && !M.getorgan(/obj/item/organ/internal/brain))
 			continue
 
 		if (M.ckey == find_key)
@@ -81,9 +83,9 @@
 	..()
 	icon_state = "datadisk[pick(0,1,2)]"
 
-/obj/item/weapon/disk/data/attack_self(mob/user as mob)
+/obj/item/weapon/disk/data/attack_self(mob/user)
 	read_only = !read_only
-	user << "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"]."
+	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
 
 /obj/item/weapon/disk/data/examine(mob/user)
 	..()
@@ -107,11 +109,10 @@
 			src.healthstring = "ERROR"
 		return src.healthstring
 
-/obj/machinery/clonepod/attack_ai(mob/user as mob)
-	return attack_hand(user)
-/obj/machinery/clonepod/attack_paw(mob/user as mob)
-	return attack_hand(user)
-/obj/machinery/clonepod/attack_hand(mob/user as mob)
+//Clonepod
+
+/obj/machinery/clonepod/examine(mob/user)
+	..()
 	if (isnull(src.occupant) || !is_operational())
 		return
 	if ((!isnull(src.occupant)) && (src.occupant.stat != 2))
@@ -119,10 +120,11 @@
 		user << "Current clone cycle is [round(completion)]% complete."
 	return
 
-//Clonepod
+/obj/machinery/clonepod/attack_ai(mob/user)
+	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace, var/mcolor, var/factions)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions)
 	if(panel_open)
 		return 0
 	if(mess || attempting)
@@ -183,12 +185,13 @@
 	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
-	hardset_dna(H, ui, se, null, null, mrace, mcolor)
-	H.faction |= factions
+	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
+	if(H)
+		H.faction |= factions
 
-	H.set_cloned_appearance()
+		H.set_cloned_appearance()
 
-	H.suiciding = 0
+		H.suiciding = 0
 	src.attempting = 0
 	return 1
 
@@ -242,7 +245,7 @@
 	return
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
-/obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/clonepod/attackby(obj/item/weapon/W, mob/user, params)
 	if(!(occupant || mess || locked))
 		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
 			return
@@ -267,15 +270,15 @@
 	else
 		..()
 
-/obj/machinery/clonepod/emag_act(user as mob)
+/obj/machinery/clonepod/emag_act(mob/user)
 	if (isnull(src.occupant))
 		return
-	user << "You force an emergency ejection."
+	user << "<span class='notice'>You force an emergency ejection.</span>"
 	src.locked = 0
 	src.go_out()
 
 //Put messages in the connected computer's temp var for display.
-/obj/machinery/clonepod/proc/connected_message(var/message)
+/obj/machinery/clonepod/proc/connected_message(message)
 	if ((isnull(src.connected)) || (!istype(src.connected, /obj/machinery/computer/cloning)))
 		return 0
 	if (!message)
@@ -299,13 +302,13 @@
 	return
 
 /obj/machinery/clonepod/proc/go_out()
-	if (src.locked)
+	if (locked)
 		return
 
-	if (src.mess) //Clean that mess and dump those gibs!
-		src.mess = 0
-		gibs(src.loc)
-		src.icon_state = "pod_0"
+	if (mess) //Clean that mess and dump those gibs!
+		mess = 0
+		gibs(loc)
+		icon_state = "pod_0"
 
 		/*
 		for(var/obj/O in src)
@@ -313,22 +316,20 @@
 		*/
 		return
 
-	if (!(src.occupant))
+	if (!occupant)
 		return
 	/*
 	for(var/obj/O in src)
 		O.loc = src.loc
 	*/
 
-	if (src.occupant.client)
-		src.occupant.client.eye = src.occupant.client.mob
-		src.occupant.client.perspective = MOB_PERSPECTIVE
 	if(occupant.loc == src)
-		src.occupant.loc = src.loc
-	src.icon_state = "pod_0"
-	src.eject_wait = 0 //If it's still set somehow.
-	domutcheck(src.occupant) //Waiting until they're out before possible monkeyizing.
-	src.occupant = null
+		occupant.loc = loc
+	occupant.reset_perspective(null)
+	icon_state = "pod_0"
+	eject_wait = 0 //If it's still set somehow.
+	occupant.domutcheck() //Waiting until they're out before possible monkeyizing.
+	occupant = null
 	return
 
 /obj/machinery/clonepod/proc/malfunction()
@@ -341,7 +342,7 @@
 			qdel(src.occupant)
 	return
 
-/obj/machinery/clonepod/relaymove(mob/user as mob)
+/obj/machinery/clonepod/relaymove(mob/user)
 	if (user.stat)
 		return
 	src.go_out()

@@ -6,7 +6,7 @@
 	item_state = ""	//no inhands
 	item_color = "bluetie"
 	slot_flags = 0
-	w_class = 2.0
+	w_class = 2
 
 /obj/item/clothing/tie/blue
 	name = "blue tie"
@@ -45,12 +45,14 @@
 /obj/item/clothing/tie/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
 		if(user.a_intent == "help")
-			var/body_part = parse_zone(user.zone_sel.selecting)
+			var/body_part = parse_zone(user.zone_selected)
 			if(body_part)
 				var/their = "their"
 				switch(M.gender)
-					if(MALE)	their = "his"
-					if(FEMALE)	their = "her"
+					if(MALE)
+						their = "his"
+					if(FEMALE)
+						their = "her"
 
 				var/sound = "pulse"
 				var/sound_strength
@@ -84,6 +86,8 @@
 	desc = "A bronze medal."
 	icon_state = "bronze"
 	item_color = "bronze"
+	materials = list(MAT_METAL=1000)
+	burn_state = FIRE_PROOF
 
 //Pinning medals on people
 /obj/item/clothing/tie/medal/attack(mob/living/carbon/human/M, mob/living/user)
@@ -100,15 +104,15 @@
 				if(user == M)
 					user << "<span class='notice'>You attach [src] to [U].</span>"
 				else
-					user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
+					user.visible_message("[user] pins \the [src] on [M]'s chest.", \
 										 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 
-		else user << "<span class='warning'>Medals can only be pinned on jumpsuits.</span>"
+		else user << "<span class='warning'>Medals can only be pinned on jumpsuits!</span>"
 	else ..()
 
 /obj/item/clothing/tie/medal/conduct
 	name = "distinguished conduct medal"
-	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is most basic award given by Nanotrasen. It is often awarded by a captain to a member of his crew."
+	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is the most basic award given by Nanotrasen. It is often awarded by a captain to a member of his crew."
 
 /obj/item/clothing/tie/medal/bronze_heart
 	name = "bronze heart medal"
@@ -124,6 +128,7 @@
 	desc = "A silver medal."
 	icon_state = "silver"
 	item_color = "silver"
+	materials = list(MAT_SILVER=1000)
 
 /obj/item/clothing/tie/medal/silver/valor
 	name = "medal of valor"
@@ -138,6 +143,7 @@
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
 	item_color = "gold"
+	materials = list(MAT_GOLD=1000)
 
 /obj/item/clothing/tie/medal/gold/captain
 	name = "medal of captaincy"
@@ -145,7 +151,7 @@
 
 /obj/item/clothing/tie/medal/gold/heroism
 	name = "medal of exceptional heroism"
-	desc = "An extremely rare golden medal awarded only by Centcom. To recieve such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
+	desc = "An extremely rare golden medal awarded only by Centcom. To receive such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
 
 ////////////
 //Armbands//
@@ -280,10 +286,23 @@
 
 /obj/item/clothing/tie/petcollar //don't really wear this though please c'mon seriously guys
 	name = "pet collar"
+	desc = "It's for pets. Though you probably could wear it yourself, you'd doubtless be the subject of ridicule."
 	icon_state = "petcollar"
 	item_color = "petcollar"
 	var/tagname = null
 
-/obj/item/clothing/tie/petcollar/attack_self(mob/user as mob)
+/obj/item/clothing/tie/petcollar/attack_self(mob/user)
 	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
+
+//////////////
+//DOPE BLING//
+//////////////
+
+/obj/item/clothing/tie/dope_necklace
+	name = "gold necklace"
+	desc = "Damn, it feels good to be a gangster."
+	icon = 'icons/obj/clothing/ties.dmi'
+	icon_state = "bling"
+	item_state = ""	//no inhands
+	item_color = "bling"

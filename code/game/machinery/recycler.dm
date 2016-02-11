@@ -1,7 +1,7 @@
 var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler
-	name = "crusher"
+	name = "recycler"
 	desc = "A large crushing machine which is used to recycle small items ineffeciently; there are lights on the side of it."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "grinder-o0"
@@ -13,11 +13,30 @@ var/const/SAFETY_COOLDOWN = 100
 	var/icon_name = "grinder-o"
 	var/blood = 0
 	var/eat_dir = WEST
+	var/amount_produced = 1
+	var/datum/material_container/materials
 
 /obj/machinery/recycler/New()
 	// On us
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/recycler(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	materials = new /datum/material_container(src, list(MAT_METAL=1, MAT_GLASS=1, MAT_PLASMA=1, MAT_SILVER=1, MAT_GOLD=1, MAT_DIAMOND=1, MAT_URANIUM=1, MAT_BANANIUM=1))
+	RefreshParts()
 	update_icon()
+
+/obj/machinery/recycler/RefreshParts()
+	var/amt_made = 0
+	var/mat_mod = 0
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+		mat_mod = 2 * B.rating
+	mat_mod *= 50000
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		amt_made = 25 * M.rating //% of materials salvaged
+	materials.max_amount = mat_mod
+	amount_produced = min(100, amt_made)
 
 /obj/machinery/recycler/examine(mob/user)
 	..()
@@ -30,18 +49,25 @@ var/const/SAFETY_COOLDOWN = 100
 	update_icon()
 
 
-/obj/machinery/recycler/attackby(var/obj/item/I, var/mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		if(emagged)
-			emagged = 0
-			update_icon()
-			user << "<span class='notice'>You reset the crusher to its default factory settings.</span>"
-	else
-		..()
+/obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
-	add_fingerprint(user)
 
-/obj/machinery/recycler/emag_act(user as mob)
+	if(exchange_parts(user, I))
+		return
+
+	if(default_pry_open(I))
+		return
+
+	if(default_unfasten_wrench(user, I))
+		return
+
+	default_deconstruction_crowbar(I)
+	..()
+	add_fingerprint(user)
+	return
+
+/obj/machinery/recycler/emag_act(mob/user)
 	if(!emagged)
 		emagged = 1
 		if(safety_mode)
@@ -58,24 +84,19 @@ var/const/SAFETY_COOLDOWN = 100
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
 // This is purely for admin possession !FUN!.
-/obj/machinery/recycler/Bump(var/atom/movable/AM)
+/obj/machinery/recycler/Bump(atom/movable/AM)
 	..()
 	if(AM)
 		Bumped(AM)
 
 
-/obj/machinery/recycler/Bumped(var/atom/movable/AM)
+/obj/machinery/recycler/Bumped(atom/movable/AM)
 
 	if(stat & (BROKEN|NOPOWER))
 		return
-	if(safety_mode)
+	if(!anchored)
 		return
-	// If we're not already grinding something.
-	if(!grinding)
-		grinding = 1
-		spawn(1)
-			grinding = 0
-	else
+	if(safety_mode)
 		return
 
 	var/move_dir = get_dir(loc, AM.loc)
@@ -91,22 +112,23 @@ var/const/SAFETY_COOLDOWN = 100
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 			AM.loc = src.loc
 
-/obj/machinery/recycler/proc/recycle(var/obj/item/I, var/sound = 1)
+/obj/machinery/recycler/proc/recycle(obj/item/I, sound = 1)
 	I.loc = src.loc
-	qdel(I)
-	if(prob(15))
-		new /obj/item/stack/sheet/metal(loc)
-	if(prob(10))
-		new /obj/item/stack/sheet/glass(loc)
-	if(prob(2))
-		new /obj/item/stack/sheet/plasteel(loc)
-	if(prob(1))
-		new /obj/item/stack/sheet/rglass(loc)
+	if(!istype(I))
+		return
+
 	if(sound)
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	var/material_amount = materials.get_item_material_amount(I)
+	if(!material_amount)
+		qdel(I)
+		return
+	materials.insert_item(I, multiplier = (amount_produced / 100))
+	qdel(I)
+	materials.retrieve_all()
 
 
-/obj/machinery/recycler/proc/stop(var/mob/living/L)
+/obj/machinery/recycler/proc/stop(mob/living/L)
 	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	safety_mode = 1
 	update_icon()
@@ -117,7 +139,7 @@ var/const/SAFETY_COOLDOWN = 100
 		safety_mode = 0
 		update_icon()
 
-/obj/machinery/recycler/proc/eat(var/mob/living/L)
+/obj/machinery/recycler/proc/eat(mob/living/L)
 
 	L.loc = src.loc
 

@@ -5,7 +5,7 @@
 	dna_cost = 2
 	chemical_cost = -1
 
-/obj/effect/proc_holder/changeling/glands/on_purchase(var/mob/user)
+/obj/effect/proc_holder/changeling/glands/on_purchase(mob/user)
 	..()
 	var/datum/changeling/changeling=user.mind.changeling
 	changeling.chem_storage += 25

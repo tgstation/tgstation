@@ -20,6 +20,9 @@
 	var/alertadmins = 1			//should we let the admins know this event is firing
 								//should be disabled on events that fire a lot
 
+	var/list/gamemode_blacklist = list() // Event won't happen in these gamemodes
+	var/list/gamemode_whitelist = list() // Event will happen ONLY in these gamemodes if not empty
+
 /datum/round_event_control/wizard
 	wizardevent = 1
 
@@ -28,6 +31,7 @@
 		return PROCESS_KILL
 	var/datum/round_event/E = new typepath()
 	E.control = src
+	feedback_add_details("event_ran","[E]")
 	occurrences++
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
@@ -86,7 +90,7 @@
 
 //Do not override this proc, instead use the appropiate procs.
 //This proc will handle the calls to the appropiate procs.
-/datum/round_event/proc/process()
+/datum/round_event/process()
 	if(!processing)
 		return
 

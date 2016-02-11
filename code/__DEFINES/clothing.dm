@@ -44,6 +44,7 @@
 #define slot_s_store		17
 #define slot_in_backpack	18
 #define slot_legcuffed		19
+#define slot_drone_storage	20
 
 //Cant seem to find a mob bitflags area other than the powers one
 
@@ -86,3 +87,14 @@
 #define NO_FEMALE_UNIFORM			0
 #define FEMALE_UNIFORM_FULL			1
 #define FEMALE_UNIFORM_TOP			2
+
+
+//flags for covering body parts
+#define GLASSESCOVERSEYES	1
+#define MASKCOVERSEYES		2		// get rid of some of the other retardation in these flags
+#define HEADCOVERSEYES		4		// feel free to realloc these numbers for other purposes
+#define MASKCOVERSMOUTH		8		// on other items, these are just for mask/head
+#define HEADCOVERSMOUTH		16
+
+#define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
+#define TINT_BLIND 3			//Threshold of tint level to obscure vision fully

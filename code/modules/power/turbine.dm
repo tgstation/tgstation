@@ -25,7 +25,7 @@
 /obj/machinery/power/compressor
 	name = "compressor"
 	desc = "The compressor stage of a gas turbine generator."
-	icon = 'icons/obj/pipes.dmi'
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "compressor"
 	anchored = 1
 	density = 1
@@ -43,7 +43,7 @@
 /obj/machinery/power/turbine
 	name = "gas turbine generator"
 	desc = "A gas turbine used for backup power generation."
-	icon = 'icons/obj/pipes.dmi'
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "turbine"
 	anchored = 1
 	density = 1
@@ -56,10 +56,8 @@
 /obj/machinery/computer/turbine_computer
 	name = "gas turbine control computer"
 	desc = "A computer to remotely control a gas turbine"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "turbinecomp"
-	anchored = 1
-	density = 1
+	icon_screen = "turbinecomp"
+	icon_keyboard = "tech_key"
 	circuit = /obj/item/weapon/circuitboard/turbine_computer
 	var/obj/machinery/power/compressor/compressor
 	var/id = 0
@@ -83,10 +81,12 @@
 	gas_contained = new
 	inturf = get_step(src, dir)
 
-	spawn(5)
-		locate_machinery()
-		if(!turbine)
-			stat |= BROKEN
+
+/obj/machinery/power/compressor/initialize()
+	..()
+	locate_machinery()
+	if(!turbine)
+		stat |= BROKEN
 
 
 #define COMPFRICTION 5e5
@@ -132,7 +132,7 @@
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/compressor/CanAtmosPass(var/turf/T)
+/obj/machinery/power/compressor/CanAtmosPass(turf/T)
 	return !density
 
 /obj/machinery/power/compressor/process()
@@ -170,13 +170,13 @@
 
 
 	if(rpm>50000)
-		overlays += image('icons/obj/pipes.dmi', "comp-o4", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o4", FLY_LAYER)
 	else if(rpm>10000)
-		overlays += image('icons/obj/pipes.dmi', "comp-o3", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o3", FLY_LAYER)
 	else if(rpm>2000)
-		overlays += image('icons/obj/pipes.dmi', "comp-o2", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o2", FLY_LAYER)
 	else if(rpm>500)
-		overlays += image('icons/obj/pipes.dmi', "comp-o1", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o1", FLY_LAYER)
 	 //TODO: DEFERRED
 
 // These are crucial to working of a turbine - the stats modify the power output. TurbGenQ modifies how much raw energy can you get from
@@ -202,22 +202,12 @@
 
 	outturf = get_step(src, dir)
 
-	spawn(5)
 
-// compressor is found in the opposite direction
-
-		locate_machinery()
-		if(!compressor)
-			stat |= BROKEN
-
-
-// THIS MAKES IT WORK!!!!!
-
-// OLD FIX . Dunno how other engines handle this but this is how it should work: Turbine and compressor should be
-// treated as walls to avoid conductivity and gas spread. This was the problem of the original turbine which was just
-// a machinery - it didn't block the gas passage.
-// /obj/machinery/power/turbine/CanPass(atom/movable/mover, turf/target, height=0)
-//		return !density
+/obj/machinery/power/turbine/initialize()
+	..()
+	locate_machinery()
+	if(!compressor)
+		stat |= BROKEN
 
 /obj/machinery/power/turbine/RefreshParts()
 	var/P = 0
@@ -232,7 +222,7 @@
 	if(compressor)
 		compressor.locate_machinery()
 
-/obj/machinery/power/turbine/CanAtmosPass(var/turf/T)
+/obj/machinery/power/turbine/CanAtmosPass(turf/T)
 	return !density
 
 /obj/machinery/power/turbine/process()
@@ -270,7 +260,7 @@
 // If it works, put an overlay that it works!
 
 	if(lastgen > 100)
-		overlays += image('icons/obj/pipes.dmi', "turb-o", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "turb-o", FLY_LAYER)
 
 	updateDialog()
 
@@ -352,13 +342,13 @@
 
 
 
-/obj/machinery/computer/turbine_computer/New()
+/obj/machinery/computer/turbine_computer/initialize()
 	..()
-	spawn(5)
+	spawn(10)
 		locate_machinery()
 
 /obj/machinery/computer/turbine_computer/locate_machinery()
-	compressor = locate(/obj/machinery/power/compressor) in range(5)
+	compressor = locate(/obj/machinery/power/compressor) in range(5, src)
 
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
 	if(..())

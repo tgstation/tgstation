@@ -4,23 +4,24 @@
 	icon_state = "larva0"
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
+	density = 0
 
 	maxHealth = 25
 	health = 25
-	storedPlasma = 50
-	max_plasma = 50
 
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth
 
+	rotate_on_lying = 0
+
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/New()
-	create_reagents(100)
-	if(name == "alien larva")
-		name = "alien larva ([rand(1, 1000)])"
-	real_name = name
 	regenerate_icons()
+	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
+
+	AddAbility(new/obj/effect/proc_holder/alien/hide(null))
+	AddAbility(new/obj/effect/proc_holder/alien/larva_evolve(null))
 	..()
 
 //This needs to be fixed
@@ -29,8 +30,8 @@
 	if(statpanel("Status"))
 		stat(null, "Progress: [amount_grown]/[max_grown]")
 
-/mob/living/carbon/alien/larva/adjustToxLoss(amount)
-	if(stat != DEAD)
+/mob/living/carbon/alien/larva/adjustPlasma(amount)
+	if(stat != DEAD && amount > 0)
 		amount_grown = min(amount_grown + 1, max_grown)
 	..(amount)
 
@@ -49,12 +50,12 @@
 			step_away(src,user,15)
 		return 1
 
-/mob/living/carbon/alien/larva/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/alien/larva/attack_hand(mob/living/carbon/human/M)
 	if(..())
 		var/damage = rand(1, 9)
 		if (prob(90))
 			playsound(loc, "punch", 25, 1, -1)
-			add_logs(M, src, "attacked", admin=0)
+			add_logs(M, src, "attacked")
 			visible_message("<span class='danger'>[M] has kicked [src]!</span>", \
 					"<span class='userdanger'>[M] has kicked [src]!</span>")
 			if ((stat != DEAD) && (damage > 4.9))

@@ -5,12 +5,13 @@
 /obj/item/tapeproj
 	icon = 'icons/obj/holotape.dmi'
 	icon_state = "rollstart"
-	w_class = 2.0
+	w_class = 2
 	var/turf/start
 	var/turf/end
 	var/tape_type = /obj/item/holotape
 	var/icon_base
 	var/charging = 0
+	origin_tech = "materials=1;engineering=1"
 
 /obj/item/holotape
 	icon = 'icons/obj/holotape.dmi'
@@ -55,7 +56,7 @@
 		start = null
 		return
 
-/obj/item/tapeproj/attack_self(var/mob/user)
+/obj/item/tapeproj/attack_self(mob/user)
 	if(charging)
 		usr << "<span class='warning'>[src] is recharging!</span>"
 		return
@@ -113,8 +114,7 @@
 				P.icon_state = "[P.icon_base]_[dir]"
 			cur = get_step_towards(cur,end)
 
-		usr << "<span class='notice'>You finish project the legnth of [icon_base] holotape.</span>"
-		user.visible_message("<span class='warning'>[user] finishes projecting the length of [icon_base] holotape.</span>")
+		user.visible_message("[user] finishes projecting the length of [icon_base] holotape.", "<span class='notice'>You finish projecting the length of [icon_base] holotape.</span>")
 
 		charging = 1
 		spawn(40)
@@ -138,7 +138,7 @@
 			if(!(W.dir == 5) || !(W.fulltile == 1))
 				return
 
-		user << "<span class='notice'>You start projecting the [icon_base] holotape onto [target].</span>"
+		user << "<span class='notice'>You start projecting the [icon_base] holotape onto [target]...</span>"
 
 		if(!do_mob(user, target, 30))
 			return
@@ -153,7 +153,9 @@
 		spawn(40)
 			charging = 0
 
-/obj/item/holotape/Bumped(var/mob/M)
+/obj/item/holotape/Bumped(mob/M)
+	if(!ismob(M))
+		return
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.m_intent == "walk")
@@ -177,8 +179,8 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
-	user.visible_message("<span class='warning'>[user] hits [src].</span>", \
-						 "<span class='warning'>You hit [src].</span>" )
+	user.visible_message("<span class='danger'>[user] hits [src].</span>", \
+						 "<span class='danger'>You hit [src].</span>" )
 
 	health -= rand(1,2)
 	healthcheck()
@@ -196,7 +198,7 @@
 /obj/item/holotape/attack_paw(mob/living/user)
 	attack_hand(user)
 
-/obj/item/holotape/bullet_act(var/obj/item/projectile/Proj)
+/obj/item/holotape/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
 	..()
@@ -204,7 +206,7 @@
 		breaktape()
 	return
 
-/obj/item/holotape/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/holotape/attackby(obj/item/weapon/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	health -= W.force * 0.3
@@ -215,7 +217,6 @@
 
 /obj/item/holotape/hitby(AM as mob|obj)
 	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 5
@@ -228,11 +229,11 @@
 
 /obj/item/holotape/proc/breaktape()
 	var/dir[2]
-	var/icon_dir = src.icon_state
-	if(icon_dir == "[src.icon_base]_h")
+	var/icon_dir = icon_state
+	if(icon_dir == "[icon_base]_h")
 		dir[1] = EAST
 		dir[2] = WEST
-	if(icon_dir == "[src.icon_base]_v")
+	if(icon_dir == "[icon_base]_v")
 		dir[1] = NORTH
 		dir[2] = SOUTH
 
@@ -244,10 +245,10 @@
 			for (var/obj/item/holotape/P in cur)
 				if(P.icon_state == icon_dir)
 					N = 0
-					del(P)
+					qdel(P)
 			cur = get_step(cur,dir[i])
 
-	del(src)
+	qdel(src)
 	return
 
 #undef MAX_TAPE_RANGE

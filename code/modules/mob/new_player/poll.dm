@@ -1,47 +1,3 @@
-
-/mob/new_player/proc/handle_privacy_poll()
-	establish_db_connection()
-	if(!dbcon.IsConnected())
-		return
-	var/voted = 0
-
-	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("privacy")] WHERE ckey='[src.ckey]'")
-	query.Execute()
-	while(query.NextRow())
-		voted = 1
-		break
-
-	if(!voted)
-		privacy_poll()
-
-/mob/new_player/proc/privacy_poll()
-	var/output = "<div align='center'><B>Player poll</B>"
-	output +="<hr>"
-	output += "<b>We would like to expand our stats gathering.</b>"
-	output += "<br>This however involves gathering data about player behavior, play styles, unique player numbers, play times, etc. Data like that cannot be gathered fully anonymously, which is why we're asking you how you'd feel if player-specific data was gathered. Prior to any of this actually happening, a privacy policy will be discussed, but before that can begin, we'd preliminarily like to know how you feel about the concept."
-	output +="<hr>"
-	output += "How do you feel about the game gathering player-specific statistics? This includes statistics about individual players as well as in-game polling/opinion requests."
-
-	output += "<p><a href='byond://?src=\ref[src];privacy_poll=signed'>Signed stats gathering</A>"
-	output += "<br>Pick this option if you think usernames should be logged with stats. This allows us to have personalized stats as well as polls."
-
-	output += "<p><a href='byond://?src=\ref[src];privacy_poll=anonymous'>Anonymous stats gathering</A>"
-	output += "<br>Pick this option if you think only hashed (indecipherable) usernames should be logged with stats. This doesn't allow us to have personalized stats, as we can't tell who is who (hashed values aren't readable), we can however have ingame polls."
-
-	output += "<p><a href='byond://?src=\ref[src];privacy_poll=nostats'>No stats gathering</A>"
-	output += "<br>Pick this option if you don't want player-specific stats gathered. This does not allow us to have player-specific stats or polls."
-
-	output += "<p><a href='byond://?src=\ref[src];privacy_poll=later'>Ask again later</A>"
-	output += "<br>This poll will be brought up again next round."
-
-	output += "<p><a href='byond://?src=\ref[src];privacy_poll=abstain'>Don't ask again</A>"
-	output += "<br>Only pick this if you are fine with whatever option wins."
-
-	output += "</div>"
-
-	src << browse(output,"window=privacypoll;size=600x500")
-	return
-
 /datum/polloption
 	var/optionid
 	var/optiontext
@@ -79,7 +35,7 @@
 
 
 
-/mob/new_player/proc/poll_player(var/pollid = -1)
+/mob/new_player/proc/poll_player(pollid = -1)
 	if(pollid == -1) return
 	establish_db_connection()
 	if(dbcon.IsConnected())
@@ -108,7 +64,7 @@
 
 		switch(polltype)
 			//Polls that have enumerated options
-			if("OPTION")
+			if(POLLTYPE_OPTION)
 				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
 				voted_query.Execute()
 
@@ -138,7 +94,7 @@
 					output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
 					output += "<input type='hidden' name='src' value='\ref[src]'>"
 					output += "<input type='hidden' name='votepollid' value='[pollid]'>"
-					output += "<input type='hidden' name='votetype' value='OPTION'>"
+					output += "<input type='hidden' name='votetype' value=[POLLTYPE_OPTION]>"
 
 				output += "<table><tr><td>"
 				for(var/datum/polloption/O in options)
@@ -149,7 +105,7 @@
 							else
 								output += "[O.optiontext]<br>"
 						else
-							output += "<input type='radio' name='voteoptionid' value='[O.optionid]'> [O.optiontext]<br>"
+							output += "<input type='radio' name='voteoptionid' value='[O.optionid]'>[O.optiontext]<br>"
 				output += "</td></tr></table>"
 
 				if(!voted)	//Only make this a form if we have not voted yet
@@ -161,7 +117,7 @@
 				src << browse(output,"window=playerpoll;size=500x250")
 
 			//Polls with a text input
-			if("TEXT")
+			if(POLLTYPE_TEXT)
 				var/DBQuery/voted_query = dbcon.NewQuery("SELECT replytext FROM [format_table_name("poll_textreply")] WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
 				voted_query.Execute()
 
@@ -182,7 +138,7 @@
 					output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
 					output += "<input type='hidden' name='src' value='\ref[src]'>"
 					output += "<input type='hidden' name='votepollid' value='[pollid]'>"
-					output += "<input type='hidden' name='votetype' value='TEXT'>"
+					output += "<input type='hidden' name='votetype' value=[POLLTYPE_TEXT]>"
 
 					output += "<font size='2'>Please provide feedback below. You can use any letters of the English alphabet, numbers and the symbols: . , ! ? : ; -</font><br>"
 					output += "<textarea name='replytext' cols='50' rows='14'></textarea>"
@@ -193,7 +149,7 @@
 					output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
 					output += "<input type='hidden' name='src' value='\ref[src]'>"
 					output += "<input type='hidden' name='votepollid' value='[pollid]'>"
-					output += "<input type='hidden' name='votetype' value='TEXT'>"
+					output += "<input type='hidden' name='votetype' value=[POLLTYPE_TEXT]>"
 					output += "<input type='hidden' name='replytext' value='ABSTAIN'>"
 					output += "<input type='submit' value='Abstain'>"
 					output += "</form>"
@@ -203,7 +159,7 @@
 				src << browse(output,"window=playerpoll;size=500x500")
 
 			//Polls with a text input
-			if("NUMVAL")
+			if(POLLTYPE_RATING)
 				var/DBQuery/voted_query = dbcon.NewQuery("SELECT o.text, v.rating FROM [format_table_name("poll_option")] o, [format_table_name("poll_vote")] v WHERE o.pollid = [pollid] AND v.ckey = '[usr.ckey]' AND o.id = v.optionid")
 				voted_query.Execute()
 
@@ -225,7 +181,7 @@
 					output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
 					output += "<input type='hidden' name='src' value='\ref[src]'>"
 					output += "<input type='hidden' name='votepollid' value='[pollid]'>"
-					output += "<input type='hidden' name='votetype' value='NUMVAL'>"
+					output += "<input type='hidden' name='votetype' value=[POLLTYPE_RATING]>"
 
 					var/minid = 999999
 					var/maxid = 0
@@ -272,7 +228,7 @@
 					output += "</form>"
 
 				src << browse(output,"window=playerpoll;size=500x500")
-			if("MULTICHOICE")
+			if(POLLTYPE_MULTI)
 				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
 				voted_query.Execute()
 
@@ -311,7 +267,7 @@
 					output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
 					output += "<input type='hidden' name='src' value='\ref[src]'>"
 					output += "<input type='hidden' name='votepollid' value='[pollid]'>"
-					output += "<input type='hidden' name='votetype' value='MULTICHOICE'>"
+					output += "<input type='hidden' name='votetype' value=[POLLTYPE_MULTI]>"
 					output += "<input type='hidden' name='maxoptionid' value='[maxoptionid]'>"
 					output += "<input type='hidden' name='minoptionid' value='[minoptionid]'>"
 
@@ -324,7 +280,7 @@
 							else
 								output += "[O.optiontext]<br>"
 						else
-							output += "<input type='checkbox' name='option_[O.optionid]' value='[O.optionid]'> [O.optiontext]<br>"
+							output += "<input type='checkbox' name='option_[O.optionid]' value='[O.optionid]'>[O.optiontext]<br>"
 				output += "</td></tr></table>"
 
 				if(!voted)	//Only make this a form if we have not voted yet
@@ -336,7 +292,7 @@
 				src << browse(output,"window=playerpoll;size=500x250")
 		return
 
-/mob/new_player/proc/vote_on_poll(var/pollid = -1, var/optionid = -1, var/multichoice = 0)
+/mob/new_player/proc/vote_on_poll(pollid = -1, optionid = -1, multichoice = 0)
 	if(pollid == -1 || optionid == -1)
 		return
 
@@ -352,7 +308,7 @@
 		var/multiplechoiceoptions = 0
 
 		while(select_query.NextRow())
-			if(select_query.item[4] != "OPTION" && select_query.item[4] != "MULTICHOICE")
+			if(select_query.item[4] != POLLTYPE_OPTION && select_query.item[4] != POLLTYPE_MULTI)
 				return
 			validpoll = 1
 			if(select_query.item[5])
@@ -406,7 +362,7 @@
 		usr << browse(null,"window=playerpoll")
 
 
-/mob/new_player/proc/log_text_poll_reply(var/pollid = -1, var/replytext = "")
+/mob/new_player/proc/log_text_poll_reply(pollid = -1, replytext = "")
 	if(pollid == -1 || replytext == "")
 		return
 
@@ -421,7 +377,7 @@
 		var/validpoll = 0
 
 		while(select_query.NextRow())
-			if(select_query.item[4] != "TEXT")
+			if(select_query.item[4] != POLLTYPE_TEXT)
 				return
 			validpoll = 1
 			break
@@ -464,7 +420,7 @@
 		usr << browse(null,"window=playerpoll")
 
 
-/mob/new_player/proc/vote_on_numval_poll(var/pollid = -1, var/optionid = -1, var/rating = null)
+/mob/new_player/proc/vote_on_numval_poll(pollid = -1, optionid = -1, rating = null)
 	if(pollid == -1 || optionid == -1)
 		return
 
@@ -479,7 +435,7 @@
 		var/validpoll = 0
 
 		while(select_query.NextRow())
-			if(select_query.item[4] != "NUMVAL")
+			if(select_query.item[4] != POLLTYPE_RATING)
 				return
 			validpoll = 1
 			break

@@ -21,7 +21,7 @@ Contents:
 /obj/item/clothing/mask/gas/voice/space_ninja/speechModification(message)
 	if(voice == "Unknown")
 		if(copytext(message, 1, 2) != "*")
-			var/list/temp_message = text2list(message, " ")
+			var/list/temp_message = splittext(message, " ")
 			var/list/pick_list = list()
 			for(var/i = 1, i <= temp_message.len, i++)
 				pick_list += i
@@ -30,7 +30,7 @@ Contents:
 				if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
 				temp_message[H] = ninjaspeak(temp_message[H])
 				pick_list -= H
-			message = list2text(temp_message, " ")
+			message = jointext(temp_message, " ")
 
 			//The Alternate speech mod is now the main one.
 			message = replacetext(message, "l", "r")
@@ -114,7 +114,9 @@ Contents:
 		switch(chance)
 			if(1 to 50)//High chance of a regular name.
 				voice = "[rand(0,1) == 1 ? pick(first_names_female) : pick(first_names_male)] [pick(last_names)]"
-			if(51 to 80)//Smaller chance of a clown name.
+			if(51 to 70)//Smaller chance of a lizard name.
+				voice = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
+			if(71 to 80)//Small chance of a clown name.
 				voice = "[pick(clown_names)]"
 			if(81 to 90)//Small chance of a wizard name.
 				voice = "[pick(wizard_first)] [pick(wizard_second)]"

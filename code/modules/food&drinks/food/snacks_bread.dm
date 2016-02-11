@@ -1,13 +1,18 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread
+	icon = 'icons/obj/food/burgerbread.dmi'
+	volume = 80
 	slices_num = 5
 
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
+	icon = 'icons/obj/food/burgerbread.dmi'
 	bitesize = 2
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
 	filling_color = "#FFA500"
-	slot_flags = SLOT_HEAD // i'm going to kill myself. i'm going to murder my own self.
+	list_reagents = list("nutriment" = 2)
+	slot_flags = SLOT_HEAD
+	customfoodfilling = 0 //to avoid infinite bread-ception
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
@@ -22,6 +27,7 @@
 	name = "bread slice"
 	desc = "A slice of home."
 	icon_state = "breadslice"
+	customfoodfilling = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/meat
 	name = "meatbread loaf"
@@ -112,6 +118,21 @@
 	filling_color = "#FF8C00"
 	list_reagents = list("nutriment" = 4, "vitamin" = 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/store/bread/mimana
+	name = "mimana bread"
+	desc = "Best eaten in silence."
+	icon_state = "mimanabread"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/mimana
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 5)
+	list_reagents = list("nutriment" = 20, "mutetoxin" = 5, "nothing" = 5, "vitamin" = 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/breadslice/mimana
+	name = "mimana bread slice"
+	desc = "A slice of silence!"
+	icon_state = "mimanabreadslice"
+	filling_color = "#C0C0C0"
+	list_reagents = list("nutriment" = 2, "mutetoxin" = 1, "nothing" = 1, "vitamin" = 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/custom
 	name = "bread slice"
 	icon_state = "tofubreadslice"
@@ -120,6 +141,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/baguette
 	name = "baguette"
 	desc = "Bon appetit!"
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "baguette"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)

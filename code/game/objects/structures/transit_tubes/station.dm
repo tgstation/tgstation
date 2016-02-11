@@ -4,7 +4,7 @@
 //  one.
 /obj/structure/transit_tube/station
 	name = "station tube station"
-	icon = 'icons/obj/pipes/transit_tube_station.dmi'
+	icon = 'icons/obj/atmospherics/pipes/transit_tube_station.dmi'
 	icon_state = "closed"
 	exit_delay = 1
 	enter_delay = 2
@@ -23,7 +23,7 @@
 
 /obj/structure/transit_tube/station/Destroy()
 	SSobj.processing -= src
-	..()
+	return ..()
 
 // Stations which will send the tube in the opposite direction after their stop.
 /obj/structure/transit_tube/station/reverse
@@ -42,7 +42,7 @@
 
 
 //pod insertion
-/obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R as obj, mob/user as mob)
+/obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R, mob/user)
 	if(!user.canmove || user.stat || user.restrained())
 		return
 	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
@@ -54,11 +54,11 @@
 	T.add_fingerprint(user)
 	T.loc = src.loc
 	T.dir = turn(src.dir, -90)
-	user.visible_message("<span class='notice'>[user] inserts the [R].</span>", "<span class='notice'>You insert the [R].</span>")
+	user.visible_message("[user] inserts the [R].", "<span class='notice'>You insert the [R].</span>")
 	qdel(R)
 
 
-/obj/structure/transit_tube/station/attack_hand(mob/user as mob)
+/obj/structure/transit_tube/station/attack_hand(mob/user)
 	if(!pod_moving)
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(!pod.moving && pod.dir in directions())
@@ -67,8 +67,8 @@
 
 				else if(icon_state == "open")
 					if(pod.contents.len && user.loc != pod)
-						user.visible_message("<span class='warning'>[user] starts emptying [pod]'s contents onto the floor!</span>")
-						if(do_after(user, 10)) //So it doesn't default to close_animation() on fail
+						user.visible_message("[user] starts emptying [pod]'s contents onto the floor.", "<span class='notice'>You start emptying [pod]'s contents onto the floor...</span>")
+						if(do_after(user, 10, target = src)) //So it doesn't default to close_animation() on fail
 							if(pod.loc == loc)
 								for(var/atom/movable/AM in pod)
 									AM.loc = get_turf(user)
@@ -88,7 +88,7 @@
 			var/mob/GM = G.affecting
 			for(var/obj/structure/transit_tube_pod/pod in loc)
 				pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
-				if(do_after(user, 15) && GM && G && G.affecting == GM)
+				if(do_after(user, 15, target = src) && GM && G && G.affecting == GM)
 					GM.Weaken(5)
 					src.Bumped(GM)
 					qdel(G)
@@ -96,9 +96,9 @@
 	if(istype(W, /obj/item/weapon/crowbar))
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(pod.contents)
-				user << "<span class='notice'>Empty the pod first.</span>"
+				user << "<span class='warning'>Empty the pod first!</span>"
 				return
-			user.visible_message("<span class='notice'>[user] removes the [pod].</span>", "<span class='notice'>You remove the [pod].</span>")
+			user.visible_message("[user] removes the [pod].", "<span class='notice'>You remove the [pod].</span>")
 			var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(src.loc)
 			pod.transfer_fingerprints_to(R)
 			R.add_fingerprint(user)
@@ -128,13 +128,12 @@
 		return
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		if(!pod.moving && turn(pod.dir, (reverse_launch ? 180 : 0)) in directions())
-			spawn(0)
-				pod_moving = 1
-				close_animation()
-				sleep(CLOSE_DURATION + 2)
-				if(icon_state == "closed" && pod)
-					pod.follow_tube(reverse_launch)
-				pod_moving = 0
+			pod_moving = 1
+			close_animation()
+			sleep(CLOSE_DURATION + 2)
+			if(icon_state == "closed" && pod)
+				pod.follow_tube(reverse_launch)
+			pod_moving = 0
 			return 1
 	return 0
 

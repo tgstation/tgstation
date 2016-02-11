@@ -6,8 +6,9 @@
 
 /obj/effect/landmark/corpse
 	name = "Unknown"
-	var/mobname = "Unknown"  //Unused now but it'd fuck up maps to remove it now
+	var/mobname = "default"  //Use for the ghost spawner variant, so they don't come out named "sleeper"
 	var/mobgender = MALE //Set to male by default due to the patriarchy. Other options include FEMALE and NEUTER
+	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
 	var/corpsesuit = null
 	var/corpseshoes = null
@@ -27,17 +28,38 @@
 	var/corpsehusk = null
 	var/corpsebrute = null //set brute damage on the corpse
 	var/corpseoxy = null //set suffocation damage on the corpse
+	var/roundstart = TRUE
+	var/death = TRUE
+	var/flavour_text = "The mapper forgot to set this!"
+	var/faction = null
+	var/list/implants = list()
+	density = 1
 
 /obj/effect/landmark/corpse/initialize()
-	createCorpse()
+	if(roundstart)
+		createCorpse(death = src.death)
+	else
+		return
 
-/obj/effect/landmark/corpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
+/obj/effect/landmark/corpse/New()
+	..()
+	invisibility = 0
+
+/obj/effect/landmark/corpse/proc/createCorpse(death, ckey) //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
-	M.real_name = src.name
+	if(mobname != "default")
+		M.real_name = mobname
+	else
+		M.real_name = src.name
 	M.gender = src.mobgender
-	M.death(1) //Kills the new mob
-	if(src.corpsehusk)
-		M.Drain()
+	if(mob_species)
+		M.set_species(mob_species)
+	if(death)
+		M.death(1) //Kills the new mob
+		if(src.corpsehusk)
+			M.Drain()
+	if(faction)
+		M.faction = list(src.faction)
 	M.adjustBruteLoss(src.corpsebrute)
 	M.adjustOxyLoss(src.corpseoxy)
 	if(src.corpseuniform)
@@ -84,6 +106,14 @@
 		W.registered_name = M.real_name
 		W.update_label()
 		M.equip_to_slot_or_del(W, slot_wear_id)
+
+	for(var/I in implants)
+		var/obj/item/weapon/implant/X = new I
+		X.implant(M)
+
+	if(ckey)
+		M.ckey = ckey
+		M << "[flavour_text]"
 	qdel(src)
 
 /obj/effect/landmark/corpse/AICorpse/createCorpse() //Creates a corrupted AI
@@ -196,7 +226,7 @@
 	corpseidaccess = "Station Engineer"
 
 /obj/effect/landmark/corpse/engineer/rig
-	corpsesuit = /obj/item/clothing/suit/space/hardsuit
+	corpsesuit = /obj/item/clothing/suit/space/hardsuit/engine
 	corpsemask = /obj/item/clothing/mask/breath
 
 /obj/effect/landmark/corpse/clown
@@ -237,7 +267,16 @@
 	corpsemask = /obj/item/clothing/mask/breath
 
 
-/////////////////Officers//////////////////////
+/obj/effect/landmark/corpse/plasmaman
+	mob_species = /datum/species/plasmaman
+	corpsehelmet = /obj/item/clothing/head/helmet/space/plasmaman
+	corpseuniform = /obj/item/clothing/under/plasmaman
+	corpseback = /obj/item/weapon/tank/internals/plasmaman/full
+	corpsemask = /obj/item/clothing/mask/breath
+
+
+
+/////////////////Officers+Nanotrasen Security//////////////////////
 
 /obj/effect/landmark/corpse/bridgeofficer
 	name = "Bridge Officer"
@@ -260,7 +299,76 @@
 	corpsehelmet = /obj/item/clothing/head/centhat
 	corpsegloves = /obj/item/clothing/gloves/combat
 	corpseshoes = /obj/item/clothing/shoes/combat/swat
-	corpsepocket1 = /obj/item/weapon/lighter/zippo
+	corpsepocket1 = /obj/item/weapon/lighter
 	corpseid = 1
 	corpseidjob = "Commander"
 	corpseidaccess = "Captain"
+
+/obj/effect/landmark/corpse/nanotrasensoldier
+	name = "Nanotrasen Private Security Officer"
+	corpseuniform = /obj/item/clothing/under/rank/security
+	corpsesuit = /obj/item/clothing/suit/armor/vest
+	corpseshoes = /obj/item/clothing/shoes/combat
+	corpsegloves = /obj/item/clothing/gloves/combat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/gas/sechailer/swat
+	corpsehelmet = /obj/item/clothing/head/helmet/swat/nanotrasen
+	corpseback = /obj/item/weapon/storage/backpack/security
+	corpseid = 1
+	corpseidjob = "Private Security Force"
+	corpseidaccess = "Security Officer"
+
+
+/obj/effect/landmark/corpse/commander/alive
+	death = FALSE
+	roundstart = FALSE
+	mobname = "Nanotrasen Commander"
+	name = "sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	flavour_text = "You are a Nanotrasen Commander!"
+
+/obj/effect/landmark/corpse/attack_ghost(mob/user)
+	if(ticker.current_state != GAME_STATE_PLAYING)
+		return
+	var/ghost_role = alert("Become [mobname]? (Warning, You can no longer be cloned!)",,"Yes","No")
+	if(ghost_role == "No")
+		return
+	createCorpse(death = src.death, ckey = user.ckey)
+
+/////////////////Spooky Undead//////////////////////
+
+/obj/effect/landmark/corpse/skeleton
+	name = "skeletal remains"
+	mobname = "skeleton"
+	mob_species = /datum/species/skeleton
+	mobgender = NEUTER
+
+
+/obj/effect/landmark/corpse/skeleton/alive
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	flavour_text = "By unknown powers, your skeletal remains have been reanimated! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
+
+
+/obj/effect/landmark/corpse/zombie
+	name = "rotting corpse"
+	mobname = "zombie"
+	mob_species = /datum/species/zombie
+
+/obj/effect/landmark/corpse/zombie/alive
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	flavour_text = "By unknown powers, your rotting remains have been resurrected! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
+
+
+/obj/effect/landmark/corpse/abductor
+	name = "abductor"
+	mobname = "???"
+	mob_species = /datum/species/abductor
+	corpseuniform = /obj/item/clothing/under/color/grey
+	corpseshoes = /obj/item/clothing/shoes/combat

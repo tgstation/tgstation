@@ -1,4 +1,4 @@
-/client/proc/air_status(turf/target as turf)
+/client/proc/air_status(turf/target)
 	set category = "Debug"
 	set name = "Display Air Status"
 
@@ -6,15 +6,17 @@
 		return
 
 	var/datum/gas_mixture/GM = target.return_air()
+	var/list/GM_gases
 	var/burning = 0
 	if(istype(target, /turf/simulated))
 		var/turf/simulated/T = target
 		if(T.active_hotspot)
 			burning = 1
 
-	usr << "<span class='adminnotice'>@[target.x],[target.y]: O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]</span>"
-	for(var/datum/gas/trace_gas in GM.trace_gases)
-		usr << "[trace_gas.type]: [trace_gas.moles]"
+	usr << "<span class='adminnotice'>@[target.x],[target.y]: [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]</span>"
+	for(var/id in GM_gases)
+		if(id in hardcoded_gases || GM_gases[id][MOLES])
+			usr << "[GM_gases[id][GAS_META][META_GAS_NAME]]: [GM_gases[id][MOLES]]"
 	feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/fix_next_move()
@@ -64,9 +66,9 @@
 		"_default" = "NO_FILTER"
 		)
 	var/output = "<b>Radio Report</b><hr>"
-	for (var/fq in radio_controller.frequencies)
+	for (var/fq in SSradio.frequencies)
 		output += "<b>Freq: [fq]</b><br>"
-		var/list/datum/radio_frequency/fqs = radio_controller.frequencies[fq]
+		var/list/datum/radio_frequency/fqs = SSradio.frequencies[fq]
 		if (!fqs)
 			output += "&nbsp;&nbsp;<b>ERROR</b><br>"
 			continue
@@ -89,34 +91,13 @@
 	set name = "Reload Admins"
 	set category = "Admin"
 
-	if(!src.holder)	return
+	if(!src.holder)
+		return
 
 	var/confirm = alert(src, "Are you sure you want to reload all admins?", "Confirm", "Yes", "No")
-	if(confirm !="Yes") return
+	if(confirm !="Yes")
+		return
 
 	message_admins("[key_name_admin(usr)] manually reloaded admins")
 	load_admins()
 	feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/print_jobban_old()
-	set name = "Print Jobban Log"
-	set desc = "This spams all the active jobban entries for the current round to standard output."
-	set category = "Debug"
-
-	usr << "<b>Jobbans active in this round.</b>"
-	for(var/t in jobban_keylist)
-		usr << "[t]"
-
-/client/proc/print_jobban_old_filter()
-	set name = "Search Jobban Log"
-	set desc = "This searches all the active jobban entries for the current round and outputs the results to standard output."
-	set category = "Debug"
-
-	var/filter = input("Contains what?","Filter") as text|null
-	if(!filter)
-		return
-
-	usr << "<b>Jobbans active in this round.</b>"
-	for(var/t in jobban_keylist)
-		if(findtext(t, filter))
-			usr << "[t]"

@@ -9,12 +9,12 @@ var/datum/subsystem/diseases/SSdisease
 /datum/subsystem/diseases/New()
 	NEW_SS_GLOBAL(SSdisease)
 
+/datum/subsystem/diseases/stat_entry(msg)
+	..("P:[processing.len]")
 
 /datum/subsystem/diseases/fire()
-	var/i=1
 	for(var/thing in processing)
 		if(thing)
 			thing:process()
-			++i
 			continue
-		processing.Cut(i,i+1)
+		processing.Remove(thing)

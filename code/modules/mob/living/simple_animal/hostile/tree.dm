@@ -23,33 +23,44 @@
 	melee_damage_upper = 12
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
+	speak_emote = list("pines")
+	emote_taunt = list("growls")
+	taunt_chance = 20
 
-	//Space carp aren't affected by atmos.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 2, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 5
 	minbodytemp = 0
+	maxbodytemp = 1200
 
 	faction = list("hostile")
-	var/drop_type = /obj/item/stack/sheet/mineral/wood
+	loot = list(/obj/item/stack/sheet/mineral/wood)
+	gold_core_spawnable = 1
+	del_on_death = 1
 
-/mob/living/simple_animal/hostile/tree/FindTarget()
-	. = ..()
-	if(.)
-		emote("me", 1, "growls at [.].")
+/mob/living/simple_animal/hostile/tree/Life()
+	..()
+	if(istype(src.loc, /turf/simulated))
+		var/turf/simulated/T = src.loc
+		if(T.air && T.air.gases["co2"])
+			var/co2 = T.air.gases["co2"][MOLES]
+			if(co2 > 0)
+				if(prob(25))
+					var/amt = min(co2, 9)
+					T.air.gases["co2"][MOLES] -= amt
+					T.atmos_spawn_air(SPAWN_OXYGEN, amt)
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	..()
-	if(isliving(target))
-		var/mob/living/L = target
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
 		if(prob(15))
-			L.Weaken(3)
-			L.visible_message("<span class='danger'>\The [src] knocks down \the [L]!</span>")
+			C.Weaken(3)
+			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
-/mob/living/simple_animal/hostile/tree/death(gibbed)
-	..(1)
-	visible_message("<span class='danger'>[src] is hacked into pieces!</span>")
-	new drop_type(loc)
-	ghostize()
-	qdel(src)
+/mob/living/simple_animal/hostile/tree/New()
+	..()
+	deathmessage = "[src] is hacked into pieces!"
 
 /mob/living/simple_animal/hostile/tree/festivus
 	name = "festivus pole"
@@ -58,5 +69,5 @@
 	icon_living = "festivus_pole"
 	icon_dead = "festivus_pole"
 	icon_gib = "festivus_pole"
-	drop_type = /obj/item/stack/rods
-
+	loot = list(/obj/item/stack/rods)
+	speak_emote = list("polls")

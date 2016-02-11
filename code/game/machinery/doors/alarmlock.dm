@@ -1,7 +1,8 @@
 /obj/machinery/door/airlock/alarmlock
 
 	name = "glass alarm airlock"
-	icon = 'icons/obj/doors/Doorglass.dmi'
+	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
 	opacity = 0
 	doortype = /obj/structure/door_assembly/door_assembly_glass
 	glass = 1
@@ -15,14 +16,15 @@
 	air_connection = new
 
 /obj/machinery/door/airlock/alarmlock/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src,air_frequency)
-	..()
+	if(SSradio)
+		SSradio.remove_object(src,air_frequency)
+	air_connection = null
+	return ..()
 
 /obj/machinery/door/airlock/alarmlock/initialize()
 	..()
-	radio_controller.remove_object(src, air_frequency)
-	air_connection = radio_controller.add_object(src, air_frequency, RADIO_TO_AIRALARM)
+	SSradio.remove_object(src, air_frequency)
+	air_connection = SSradio.add_object(src, air_frequency, RADIO_TO_AIRALARM)
 	open()
 
 /obj/machinery/door/airlock/alarmlock/receive_signal(datum/signal/signal)

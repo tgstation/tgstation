@@ -1,11 +1,10 @@
 /datum/round_event_control/meteor_wave/dust
 	name = "Minor Space Dust"
 	typepath = /datum/round_event/meteor_wave/dust
-	weight = 300
+	weight = 200
 	max_occurrences = 1000
 	earliest_start = 0
 	alertadmins = 0
-
 
 /datum/round_event/meteor_wave/dust
 	startWhen		= 1

@@ -287,6 +287,7 @@
 	name = "Mentoring your Experiments"
 	icon_state = "rdbook"
 	author = "Dr. H.P. Kritz"
+	title = "Mentoring your Experiments"
 	dat = {"<html>
 		<head>
 		<style>
@@ -686,7 +687,8 @@
 				All doughs can be microwaved.<br>
 				<b>Bowl:</b> Add water to it for soup preparation.<br>
 				<b>Meat:</b> Microwave it, process it, slice it into microwavable cutlets with your knife, or use it raw.<br>
-				<b>Cheese:</b> Add 5u universal enzyme (catalyst) to milk and soy milk to prepare cheese (sliceable) and tofu.
+				<b>Cheese:</b> Add 5u universal enzyme (catalyst) to milk and soy milk to prepare cheese (sliceable) and tofu.<br>
+				<b>Rice:</b> Mix 10u rice with 10u water in a bowl then microwave it.
 
 				<h2>Custom food:</h2>
 				Add ingredients to a base item to prepare a custom meal.<br>
@@ -707,7 +709,7 @@
 
 				<h2>Microwave:</h2>
 				Use it to cook or boil food ingredients (meats, doughs, egg, spaghetti, donkpocket, etc...).
-				It can cook multiple items at once. Use the higher power settings for faster (and riskier) cooking.
+				It can cook multiple items at once.
 
 				<h2>Processor:</h2>
 				Use it to process certain ingredients (meat into faggot, doughslice into spaghetti, potato into fries,etc...)
@@ -731,9 +733,12 @@
 				<b>Donuts:</b> 1u sugar + 1 pastry base<br>
 				<b>Fries:</b> Process potato.
 
+				<h2>Sharing your food:</h2>
+				You can put your meals on your kitchen counter or load them in the snack vending machines.
 				</body>
 				</html>
 			"}
+
 
 /obj/item/weapon/book/manual/barman_recipes
 	name = "Barman Recipes"
@@ -901,6 +906,13 @@
 			</html>
 
 			"}
+
+/obj/item/weapon/book/manual/wiki/chemistry
+	name = "Chemistry Textbook"
+	icon_state ="chemistrybook"
+	author = "Nanotrasen"
+	title = "Chemistry Textbook"
+	page_link = "Guide_to_chemistry"
 
 /obj/item/weapon/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"

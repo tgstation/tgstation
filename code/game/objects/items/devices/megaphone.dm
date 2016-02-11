@@ -12,17 +12,16 @@
 	var/insults = 0
 	var/list/insultmsg = list("FUCK EVERYONE!", "DEATH TO LIZARDS!", "ALL SECURITY TO SHOOT ME ON SIGHT!", "I HAVE A BOMB!", "CAPTAIN IS A COMDOM!", "FOR THE SYNDICATE!", "VIVA!", "HONK!")
 
-/obj/item/device/megaphone/attack_self(mob/living/carbon/human/user as mob)
+/obj/item/device/megaphone/attack_self(mob/living/carbon/human/user)
 	if(user.client)
 		if(user.client.prefs.muted & MUTE_IC)
 			src << "<span class='warning'>You cannot speak in IC (muted).</span>"
 			return
+
 	if(!ishuman(user))
 		user << "<span class='warning'>You don't know how to use this!</span>"
 		return
-	if(user.can_speak())
-		user << "<span class='warning'>You find yourself unable to speak at all.</span>"
-		return
+
 	if(spamcheck > world.time)
 		user << "<span class='warning'>\The [src] needs to recharge!</span>"
 		return
@@ -30,16 +29,21 @@
 	var/message = copytext(sanitize(input(user, "Shout a message?", "Megaphone", null)  as text),1,MAX_MESSAGE_LEN)
 	if(!message)
 		return
+
 	message = capitalize(message)
+	if(!user.can_speak(message))
+		user << "<span class='warning'>You find yourself unable to speak at all!</span>"
+		return
+
 	if ((src.loc == user && user.stat == 0))
 		if(emagged)
 			if(insults)
-				user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>", null, 1) // 2 stands for hearable message
+				user.audible_message("<B>[user.GetVoice()]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>")
 				insults--
 			else
 				user << "<span class='warning'>*BZZZZzzzzzt*</span>"
 		else
-			user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>", null, 1) // 2 stands for hearable message
+			user.audible_message("<B>[user.GetVoice()]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>")
 
 		playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
 		spamcheck = world.time + 50

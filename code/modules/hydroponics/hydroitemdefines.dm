@@ -7,7 +7,7 @@
 	item_state = "analyzer"
 	origin_tech = "magnets=1;biotech=1"
 
-/obj/item/device/analyzer/plant_analyzer/attack_self(mob/user as mob)
+/obj/item/device/analyzer/plant_analyzer/attack_self(mob/user)
 	return 0
 
 // *************************************
@@ -24,7 +24,7 @@
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 3
 	throw_range = 10
 
@@ -41,12 +41,12 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "pest spray"
 	icon_state = "pestspray"
-	item_state = "spray"
+	item_state = "plantbgone"
 	volume = 100
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 3
 	throw_range = 10
 
@@ -58,19 +58,62 @@
 	viewers(user) << "<span class='suicide'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>"
 	return (TOXLOSS)
 
-/obj/item/weapon/minihoe // -- Numbers
-	name = "mini hoe"
+/obj/item/weapon/cultivator
+	name = "cultivator"
 	desc = "It's used for removing weeds or scratching your back."
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "hoe"
-	item_state = "hoe"
+	icon_state = "cultivator"
+	item_state = "cultivator"
 	flags = CONDUCT
-	force = 5.0
-	throwforce = 7.0
-	w_class = 2.0
-	m_amt = 50
+	force = 5
+	throwforce = 7
+	w_class = 2
+	materials = list(MAT_METAL=50)
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/hatchet
+	name = "hatchet"
+	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "hatchet"
+	flags = CONDUCT
+	force = 12
+	w_class = 1
+	throwforce = 15
+	throw_speed = 3
+	throw_range = 4
+	materials = list(MAT_METAL=15000)
+	origin_tech = "materials=2;combat=1"
+	attack_verb = list("chopped", "torn", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
+
+/obj/item/weapon/hatchet/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is chopping at \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return (BRUTELOSS)
+
+/obj/item/weapon/scythe
+	icon_state = "scythe0"
+	name = "scythe"
+	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
+	force = 13
+	throwforce = 5
+	throw_speed = 2
+	throw_range = 3
+	w_class = 4
+	flags = CONDUCT
+	armour_penetration = 20
+	slot_flags = SLOT_BACK
+	origin_tech = "materials=2;combat=2"
+	attack_verb = list("chopped", "sliced", "cut", "reaped")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/scythe/suicide_act(mob/user)  // maybe later i'll actually figure out how to make it behead them
+	user.visible_message("<span class='suicide'>[user] is beheading \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return (BRUTELOSS)
 
 // *************************************
 // Nutrient defines for hydroponics
@@ -82,14 +125,14 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	volume = 50
-	w_class = 1.0
+	w_class = 1
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/New()
 	..()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-5, 5)
+	src.pixel_y = rand(-5, 5)
 
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez

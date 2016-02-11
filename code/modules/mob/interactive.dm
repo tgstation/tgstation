@@ -1,24 +1,3 @@
-#define INTERACTING 2
-#define TRAVEL 4
-#define FIGHTING 8
-
-//TRAITS
-
-#define TRAIT_ROBUST 2
-#define TRAIT_UNROBUST 4
-#define TRAIT_SMART 8
-#define TRAIT_DUMB 16
-#define TRAIT_MEAN 32
-#define TRAIT_FRIENDLY 64
-#define TRAIT_THIEVING 128
-
-//defines
-#define MAX_RANGE_FIND 32
-#define MIN_RANGE_FIND 16
-#define FUZZY_CHANCE_HIGH 85
-#define FUZZY_CHANCE_LOW 50
-#define CHANCE_TALK 15
-
 /*
 	NPC VAR EXPLANATIONS (for modules and other things)
 
@@ -69,6 +48,7 @@
 	var/obj/item/other_hand
 	var/TRAITS = 0
 	var/datum/job/myjob
+	faction = list("station")
 	//trait vars
 	var/robustness = 50
 	var/smartness = 50
@@ -79,83 +59,100 @@
 	//modules
 	var/list/functions = list("nearbyscan","combat","doorscan","shitcurity","chatter")
 
+//botPool funcs
+/mob/living/carbon/human/interactive/proc/takeDelegate(mob/living/carbon/human/interactive/from,doReset=TRUE)
+	eye_color = "red"
+	if(from == src)
+		return FALSE
+	TARGET = from.TARGET
+	LAST_TARGET = from.LAST_TARGET
+	retal = from.retal
+	retal_target = from.retal_target
+	doing = from.doing
+	//
+	timeout = 0
+	inactivity_period = 0
+	interest = 100
+	//
+	if(doReset)
+		from.TARGET = null
+		from.LAST_TARGET = null
+		from.retal = 0
+		from.retal_target = null
+		from.doing = 0
+	return TRUE
+
+//end pool funcs
+
 /mob/living/carbon/human/interactive/proc/random()
 	//this is here because this has no client/prefs/brain whatever.
-	underwear = random_underwear(gender)
-	skin_tone = random_skin_tone()
-	hair_style = random_hair_style(gender)
-	facial_hair_style = random_facial_hair_style(gender)
-	hair_color = random_short_color()
-	facial_hair_color = hair_color
-	eye_color = random_eye_color()
 	age = rand(AGE_MIN,AGE_MAX)
-	ready_dna(src,random_blood_type())
 	//job handling
-	var/list/jobs = SSjob.occupations
-	for(var/datum/job/J in jobs)
+	var/list/jobs = SSjob.occupations.Copy()
+	for(var/job in jobs)
+		var/datum/job/J = job
 		if(J.title == "Cyborg" || J.title == "AI" || J.title == "Chaplain" || J.title == "Mime")
 			jobs -= J
 	myjob = pick(jobs)
+	job = myjob.title
 	if(!graytide)
 		myjob.equip(src)
 	myjob.apply_fingerprints(src)
-	src.job = myjob
 
-/mob/living/carbon/human/interactive/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
+/mob/living/carbon/human/interactive/attacked_by(obj/item/I, mob/living/user, def_zone)
 	..()
 	retal = 1
 	retal_target = user
 
+/mob/living/carbon/human/interactive/bullet_act(var/obj/item/projectile/P)
+	var/potentialAssault = locate(/mob/living) in view(2,P.starting)
+	if(potentialAssault)
+		retal = 1
+		retal_target = potentialAssault
+	..()
+
 /mob/living/carbon/human/interactive/New()
 	..()
-	gender = pick(MALE,FEMALE)
-	if(gender == MALE)
-		name = "[pick(first_names_male)] [pick(last_names)]"
-		real_name = name
-	else
-		name = "[pick(first_names_female)] [pick(last_names)]"
-		real_name = name
 	random()
 	MYID = new(src)
 	MYID.name = "[src.real_name]'s ID Card ([myjob.title])"
 	MYID.assignment = "[myjob.title]"
 	MYID.registered_name = src.real_name
 	MYID.access = myjob.access
-	src.equip_to_slot_or_del(MYID, slot_wear_id)
+	equip_to_slot_or_del(MYID, slot_wear_id)
 	MYPDA = new(src)
-	MYPDA.owner = src.real_name
+	MYPDA.owner = real_name
 	MYPDA.ownjob = "Crew"
-	MYPDA.name = "PDA-[src.real_name] ([myjob.title])"
-	src.equip_to_slot_or_del(MYPDA, slot_belt)
-	zone_sel = new /obj/screen/zone_sel()
-	zone_sel.selecting = "chest"
+	MYPDA.name = "PDA-[real_name] ([myjob.title])"
+	equip_to_slot_or_del(MYPDA, slot_belt)
+	zone_selected = "chest"
 	if(prob(10)) //my x is augmented
 		//arms
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in organs
-			del(R)
+			qdel(R)
 			organs += new /obj/item/organ/limb/robot/r_arm
 		else
 			var/obj/item/organ/limb/l_arm/L = locate(/obj/item/organ/limb/l_arm) in organs
-			del(L)
+			qdel(L)
 			organs += new /obj/item/organ/limb/robot/l_arm
 		//legs
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			var/obj/item/organ/limb/r_leg/R = locate(/obj/item/organ/limb/r_leg) in organs
-			del(R)
+			qdel(R)
 			organs += new /obj/item/organ/limb/robot/r_leg
 		else
 			var/obj/item/organ/limb/l_leg/L = locate(/obj/item/organ/limb/l_leg) in organs
-			del(L)
+			qdel(L)
 			organs += new /obj/item/organ/limb/robot/l_leg
 		//chest and head
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			var/obj/item/organ/limb/chest/R = locate(/obj/item/organ/limb/chest) in organs
-			del(R)
+			qdel(R)
 			organs += new /obj/item/organ/limb/robot/chest
 		else
 			var/obj/item/organ/limb/head/L = locate(/obj/item/organ/limb/head) in organs
-			del(L)
+			qdel(L)
 			organs += new /obj/item/organ/limb/robot/head
 		for(var/obj/item/organ/limb/LIMB in organs)
 			LIMB.owner = src
@@ -174,7 +171,7 @@
 	if(TRAITS & TRAIT_SMART)
 		smartness = 25
 	else if(TRAITS & TRAIT_DUMB)
-		mutations |= CLUMSY
+		disabilities |= CLUMSY
 		smartness = 75
 
 	if(TRAITS & TRAIT_MEAN)
@@ -185,8 +182,10 @@
 	if(TRAITS & TRAIT_THIEVING)
 		slyness = 75
 
+	SSnpc.insertBot(src)
 
-/mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M as mob)
+
+/mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M)
 	..()
 	if (health > 0)
 		if(M.a_intent == "help")
@@ -196,7 +195,7 @@
 			retal_target = M
 
 //THESE EXIST FOR DEBUGGING OF THE DOING/INTEREST SYSTEM EASILY
-/mob/living/carbon/human/interactive/proc/doing2string(var/doin)
+/mob/living/carbon/human/interactive/proc/doing2string(doin)
 	var/toReturn = ""
 	if(!doin)
 		toReturn = "not doing anything"
@@ -208,7 +207,7 @@
 		toReturn += "and going somewhere"
 	return toReturn
 
-/mob/living/carbon/human/interactive/proc/interest2string(var/inter)
+/mob/living/carbon/human/interactive/proc/interest2string(inter)
 	var/toReturn = "Flatlined"
 	if(inter >= 0 && inter <= 25)
 		toReturn = "Very Bored"
@@ -220,10 +219,10 @@
 		toReturn = "Excited"
 	return toReturn
 //END DEBUG
-/mob/living/carbon/human/interactive/proc/isnotfunc()
+/mob/living/carbon/human/interactive/proc/isnotfunc(checkDead = TRUE)
 	if(!canmove)
 		return 1
-	if(health <= 0)
+	if(health <= 0 && checkDead)
 		return 1
 	if(restrained())
 		return 1
@@ -255,7 +254,7 @@
 	main_hand = other_hand
 	other_hand = T
 
-/mob/living/carbon/human/interactive/proc/take_to_slot(var/obj/item/G)
+/mob/living/carbon/human/interactive/proc/take_to_slot(obj/item/G)
 	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_l_hand,"right hand" = slot_r_hand)
 	G.loc = src
 	if(G.force && G.force > best_force)
@@ -274,9 +273,14 @@
 		unEquip(I,TRUE)
 	update_hands = 1
 
+/mob/living/carbon/human/interactive/proc/targetRange(towhere)
+	return get_dist(get_turf(towhere), get_turf(src))
+
 /mob/living/carbon/human/interactive/Life()
 	..()
-	if(isnotfunc()) return
+	if(isnotfunc())
+		walk(src,0)
+		return
 	if(a_intent != "disarm")
 		a_intent = "disarm"
 	//---------------------------
@@ -320,8 +324,8 @@
 	//proc functions
 	for(var/Proc in functions)
 		if(!isnotfunc())
-			spawn(1)
-				call(src,Proc)(src)
+			callfunction(Proc)
+
 
 	//target interaction stays hardcoded
 
@@ -352,9 +356,7 @@
 						if(!l_hand || !r_hand)
 							var/obj/item/clothing/C = TARGET
 							take_to_slot(C)
-							if(equip_to_appropriate_slot(C))
-								C.update_icon()
-							else
+							if(!equip_to_appropriate_slot(C))
 								var/obj/item/I = get_item_by_slot(C)
 								unEquip(I)
 								equip_to_appropriate_slot(C)
@@ -365,7 +367,6 @@
 									equip_to_appropriate_slot(MYPDA)
 								if(MYID in src.loc)
 									equip_to_appropriate_slot(MYID)
-							update_icons()
 			//THIEVING SKILLS END
 			//-------------TOUCH ME
 			if(istype(TARGET,/obj/structure))
@@ -394,23 +395,26 @@
 		doing |= TRAVEL
 		if(nearby.len > 4)
 			//i'm crowded, time to leave
-			TARGET = pick(target_filter(orange(MAX_RANGE_FIND,src)))
+			TARGET = pick(target_filter(ultra_range(MAX_RANGE_FIND,src,1)))
 		else if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			//chance to chase an item
-			TARGET = locate(/obj/item) in orange(MIN_RANGE_FIND,src)
+			TARGET = locate(/obj/item) in ultra_range(MIN_RANGE_FIND,src,1)
 		else if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			//chance to leave
-			TARGET = locate(/obj/machinery/door) in orange(MIN_RANGE_FIND,src) // this is a sort of fix for the current pathing.
+			TARGET = locate(/obj/machinery/door) in ultra_range(MIN_RANGE_FIND,src,1) // this is a sort of fix for the current pathing.
 		else
 			//else, target whatever, or go to our department
 			if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
-				TARGET = pick(target_filter(orange(MIN_RANGE_FIND,src)))
+				TARGET = pick(target_filter(ultra_range(MIN_RANGE_FIND,src,1)))
 			else
-				TARGET = pick(get_area_turfs(job2area(myjob)))
+				TARGET = safepick(get_area_turfs(job2area(myjob)))
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 
-/mob/living/carbon/human/interactive/proc/tryWalk(var/turf/TARGET)
+/mob/living/carbon/human/interactive/proc/callfunction(Proc)
+	set waitfor = 0
+	call(src,Proc)(src)
+/mob/living/carbon/human/interactive/proc/tryWalk(turf/TARGET)
 	if(!isnotfunc())
 		if(!walk2derpless(TARGET))
 			timeout++
@@ -418,8 +422,10 @@
 		timeout++
 
 
-/mob/living/carbon/human/interactive/proc/walk2derpless(var/target)
+/mob/living/carbon/human/interactive/proc/walk2derpless(target)
 	set background = 1
+	if(!target)
+		return 0
 	var/turf/T = get_turf(target)
 	var/turf/D = get_step(src,dir)
 	if(D)
@@ -435,7 +441,7 @@
 		doing = doing & ~TRAVEL
 		return 0
 
-/mob/living/carbon/human/interactive/proc/job2area(var/target)
+/mob/living/carbon/human/interactive/proc/job2area(target)
 	var/datum/job/T = target
 	if(T.title == "Assistant")
 		return /area/hallway/primary
@@ -454,14 +460,14 @@
 	else
 		return pick(/area/hallway,/area/crew_quarters)
 
-/mob/living/carbon/human/interactive/proc/target_filter(var/target)
+/mob/living/carbon/human/interactive/proc/target_filter(target)
 	var/list/L = target
 	for(var/atom/A in target)
-		if(istype(A,/area) || istype(A,/turf/unsimulated) || istype(A,/turf/space))
+		if(istype(A,/area) || istype(A,/turf/space))
 			L -= A
 	return L
 
-/mob/living/carbon/human/interactive/proc/denied_filter(var/target)
+/mob/living/carbon/human/interactive/proc/denied_filter(target)
 	var/list/denied = list(/obj/structure/window,/obj/structure/table) //expand me
 	for(var/a in denied)
 		if(istype(target,a))
@@ -550,7 +556,7 @@
 	if(canmove)
 		if(prob(attitude) && (graytide || (TRAITS & TRAIT_MEAN)) || retal)
 			a_intent = "harm"
-			zone_sel.selecting = pick("chest","r_leg","l_leg","r_arm","l_arm","head")
+			zone_selected = pick("chest","r_leg","l_leg","r_arm","l_arm","head")
 			doing |= FIGHTING
 			if(retal)
 				TARGET = retal_target
@@ -566,7 +572,7 @@
 	if((TARGET && (doing & FIGHTING)) || graytide) // this is a redundancy check
 		var/mob/living/M = TARGET
 		if(istype(M,/mob/living))
-			if(M in range(FUZZY_CHANCE_LOW,src))
+			if(targetRange(M) <= FUZZY_CHANCE_LOW)
 				if(M.health > 1)
 					if(main_hand)
 						if(main_hand.force != 0)
@@ -596,14 +602,14 @@
 										W.attack(TARGET,src)
 							sleep(1)
 					else
-						if(get_dist(src,TARGET) > 2)
+						if(targetRange(TARGET) > 2)
 							tryWalk(TARGET)
 						else
 							if(Adjacent(TARGET))
 								M.attack_hand(src)
 								sleep(1)
 				timeout++
-			else if(timeout >= 10 || M.health <= 1 || !(M in range(14,src)))
+			else if(timeout >= 10 || M.health <= 1 || !(targetRange(M) > 14))
 				doing = doing & ~FIGHTING
 				timeout = 0
 				TARGET = null
@@ -630,34 +636,23 @@
 			nearby += M
 
 //END OF MODULES
-/mob/living/carbon/human/interactive/angry
-	New()
-		TRAITS |= TRAIT_ROBUST
-		TRAITS |= TRAIT_MEAN
-		..()
+/mob/living/carbon/human/interactive/angry/New()
+	TRAITS |= TRAIT_ROBUST
+	TRAITS |= TRAIT_MEAN
+	faction = list("bot_angry")
+	..()
 
-/mob/living/carbon/human/interactive/friendly
-	New()
-		TRAITS |= TRAIT_FRIENDLY
-		TRAITS |= TRAIT_UNROBUST
-		..()
+/mob/living/carbon/human/interactive/friendly/New()
+	TRAITS |= TRAIT_FRIENDLY
+	TRAITS |= TRAIT_UNROBUST
+	faction = list("bot_friendly")
+	..()
 
-/mob/living/carbon/human/interactive/greytide
-	New()
-		TRAITS |= TRAIT_ROBUST
-		TRAITS |= TRAIT_MEAN
-		TRAITS |= TRAIT_THIEVING
-		TRAITS |= TRAIT_DUMB
-		graytide = 1
-		..()
-
-#undef INTERACTING
-#undef TRAVEL
-#undef FIGHTING
-#undef TRAIT_ROBUST
-#undef TRAIT_UNROBUST
-#undef TRAIT_SMART
-#undef TRAIT_DUMB
-#undef TRAIT_MEAN
-#undef TRAIT_FRIENDLY
-#undef TRAIT_THIEVING
+/mob/living/carbon/human/interactive/greytide/New()
+	TRAITS |= TRAIT_ROBUST
+	TRAITS |= TRAIT_MEAN
+	TRAITS |= TRAIT_THIEVING
+	TRAITS |= TRAIT_DUMB
+	faction = list("bot_grey")
+	graytide = 1
+	..()

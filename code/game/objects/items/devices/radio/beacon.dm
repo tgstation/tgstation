@@ -2,7 +2,7 @@
 	name = "tracking beacon"
 	desc = "A beacon used by a teleporter."
 	icon_state = "beacon"
-	item_state = "signaler"
+	item_state = "beacon"
 	var/code = "electronic"
 	origin_tech = "bluespace=1"
 
@@ -26,7 +26,7 @@
 	return
 
 /*
-/obj/item/device/radio/beacon/bacon //Probably a better way of doing this, I'm lazy.
-	proc/digest_delay()
-		spawn(600)
-			qdel(src)*/ //Bacon beacons are no more rip in peace
+//Probably a better way of doing this, I'm lazy.
+/obj/item/device/radio/beacon/bacon/proc/digest_delay()
+	spawn(600)
+		qdel(src)*/ //Bacon beacons are no more rip in peace

@@ -1,12 +1,11 @@
 /obj/machinery/computer/operating
 	name = "operating computer"
 	desc = "Used to monitor the vitals of a patient during surgery."
-	icon_state = "operating"
-	density = 1
-	anchored = 1.0
+	icon_screen = "crew"
+	icon_keyboard = "med_key"
 	circuit = /obj/item/weapon/circuitboard/operating
 	var/mob/living/carbon/human/patient = null
-	var/obj/structure/optable/table = null
+	var/obj/structure/table/optable/table = null
 
 
 /obj/machinery/computer/operating/New()
@@ -19,7 +18,7 @@
 
 /obj/machinery/computer/operating/proc/find_table()
 	for(var/dir in cardinal)
-		table = locate(/obj/structure/optable, get_step(src, dir))
+		table = locate(/obj/structure/table/optable, get_step(src, dir))
 		if(table)
 			table.computer = src
 			break
@@ -50,7 +49,7 @@
 /obj/machinery/computer/operating/proc/get_patient_info()
 	var/dat = {"
 				<div class='statusLabel'>Patient:</div> [patient.stat ? "<span class='bad'>Non-Responsive</span>" : "<span class='good'>Stable</span>"]<BR>
-				<div class='statusLabel'>Blood Type:</div> [patient.blood_type]
+				<div class='statusLabel'>Blood Type:</div> [patient.dna.blood_type]
 
 				<BR>
 				<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [max(patient.health, 0)]%;' class='progressFill good'></div></div><div class='statusValue'>[patient.health]%</div></div>
@@ -61,8 +60,10 @@
 
 				"}
 	if(patient.surgeries.len)
-		dat += "<BR><B>Initiated Procedures</B><div class='statusDisplay'>"
+		dat += "<BR><BR><B>Initiated Procedures</B><div class='statusDisplay'>"
 		for(var/datum/surgery/procedure in patient.surgeries)
 			dat += "[capitalize(procedure.name)]<BR>"
+			var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
+			dat += "Next step: [capitalize(surgery_step.name)]<BR>"
 		dat += "</div>"
 	return dat

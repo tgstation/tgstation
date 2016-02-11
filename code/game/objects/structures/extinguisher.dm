@@ -1,7 +1,7 @@
 /obj/structure/extinguisher_cabinet
 	name = "extinguisher cabinet"
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
-	icon = 'icons/obj/closet.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "extinguisher_closed"
 	anchored = 1
 	density = 0
@@ -11,16 +11,16 @@
 
 /obj/structure/extinguisher_cabinet/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if(prob(50))
 				if(has_extinguisher)
 					has_extinguisher.loc = src.loc
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			return
 
 
@@ -29,7 +29,8 @@
 		return
 	if(istype(O, /obj/item/weapon/extinguisher))
 		if(!has_extinguisher && opened)
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			contents += O
 			has_extinguisher = O
 			user << "<span class='notice'>You place [O] in [src].</span>"

@@ -7,7 +7,7 @@
 	invisibility = 101 // nope cant see this shit
 	anchored = 1
 
-/obj/effect/step_trigger/proc/Trigger(var/atom/movable/A)
+/obj/effect/step_trigger/proc/Trigger(atom/movable/A)
 	return 0
 
 /obj/effect/step_trigger/Crossed(H as mob|obj)
@@ -20,6 +20,17 @@
 		return
 	Trigger(H)
 
+/* Sends a message to mob when triggered*/
+
+/obj/effect/step_trigger/message
+	var/message	//the message to give to the mob
+	var/once = 1
+
+/obj/effect/step_trigger/message/Trigger(mob/M)
+	if(M.client)
+		M << "<span class='info'>[message]</span>"
+		if(once)
+			qdel(src)
 
 /* Tosses things in a certain direction */
 
@@ -32,7 +43,7 @@
 	var/nostop = 0 // if 1: will only be stopped by teleporters
 	var/list/affecting = list()
 
-/obj/effect/step_trigger/thrower/Trigger(var/atom/A)
+/obj/effect/step_trigger/thrower/Trigger(atom/A)
 	if(!A || !istype(A, /atom/movable))
 		return
 	var/atom/movable/AM = A
@@ -95,7 +106,7 @@
 	var/teleport_y = 0
 	var/teleport_z = 0
 
-/obj/effect/step_trigger/teleporter/Trigger(var/atom/movable/A)
+/obj/effect/step_trigger/teleporter/Trigger(atom/movable/A)
 	if(teleport_x && teleport_y && teleport_z)
 
 		A.x = teleport_x
@@ -109,7 +120,7 @@
 	var/teleport_y_offset = 0
 	var/teleport_z_offset = 0
 
-/obj/effect/step_trigger/teleporter/random/Trigger(var/atom/movable/A)
+/obj/effect/step_trigger/teleporter/random/Trigger(atom/movable/A)
 	if(teleport_x && teleport_y && teleport_z)
 		if(teleport_x_offset && teleport_y_offset && teleport_z_offset)
 
@@ -117,6 +128,42 @@
 			A.y = rand(teleport_y, teleport_y_offset)
 			A.z = rand(teleport_z, teleport_z_offset)
 
+/* Fancy teleporter, creates sparks and smokes when used */
+
+/obj/effect/step_trigger/teleport_fancy
+	var/locationx
+	var/locationy
+	var/uses = 1	//0 for infinite uses
+	var/entersparks = 0
+	var/exitsparks = 0
+	var/entersmoke = 0
+	var/exitsmoke = 0
+
+/obj/effect/step_trigger/teleport_fancy/Trigger(mob/M)
+	var/dest = locate(locationx, locationy, z)
+	M.Move(dest)
+
+	if(entersparks)
+		var/datum/effect_system/spark_spread/s = new
+		s.set_up(4, 1, src)
+		s.start()
+	if(exitsparks)
+		var/datum/effect_system/spark_spread/s = new
+		s.set_up(4, 1, dest)
+		s.start()
+
+	if(entersmoke)
+		var/datum/effect_system/smoke_spread/s = new
+		s.set_up(4, 1, src, 0)
+		s.start()
+	if(exitsmoke)
+		var/datum/effect_system/smoke_spread/s = new
+		s.set_up(4, 1, dest, 0)
+		s.start()
+
+	uses--
+	if(uses == 0)
+		qdel(src)
 
 /* Simple sound player, Mapper friendly! */
 
@@ -129,7 +176,7 @@
 	var/triggerer_only = 0 //Whether the triggerer is the only person who hears this
 
 
-/obj/effect/step_trigger/sound_effect/Trigger(var/atom/movable/A)
+/obj/effect/step_trigger/sound_effect/Trigger(atom/movable/A)
 	var/turf/T = get_turf(A)
 
 	if(!T)

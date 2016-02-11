@@ -27,7 +27,7 @@ It is possible to destroy the net by the occupant or someone else.
 			var/mob/living/carbon/M = affecting
 			M.anchored = 0
 			for(var/mob/O in viewers(src, 3))
-				O.show_message("[M.name] was recovered from the energy net!", 1, "You hear a grunt.", 2)
+				O.show_message("[M.name] was recovered from the energy net!", 1, "<span class='italics'>You hear a grunt.</span>", 2)
 			if(!isnull(master))//As long as they still exist.
 				master << "<span class='userdanger'>ERROR</span>: unable to initiate transport protocol. Procedure terminated."
 		qdel(src)
@@ -35,10 +35,13 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/process(var/mob/living/carbon/M as mob)
+/obj/effect/energy_net/process(mob/living/carbon/M)
 	var/check = 30//30 seconds before teleportation. Could be extended I guess.
 	var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
 	//The person can still try and attack the net when inside.
+
+	M.notransform = 1 //No moving for you!
+
 	while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 30 seconds have not passed.
 		check--
 		sleep(10)
@@ -47,6 +50,7 @@ It is possible to destroy the net by the occupant or someone else.
 		if(!isnull(master))//As long as they still exist.
 			master << "<span class='userdanger'>ERROR</span>: unable to locate \the [mob_name]. Procedure terminated."
 		qdel(src)//Get rid of the net.
+		M.notransform = 0
 		return
 
 	if(!isnull(src))//As long as both net and person exist.
@@ -57,8 +61,10 @@ It is possible to destroy the net by the occupant or someone else.
 		health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
 		for(var/obj/item/W in M)
 			if(istype(M,/mob/living/carbon/human))
-				if(W==M:w_uniform)	continue//So all they're left with are shoes and uniform.
-				if(W==M:shoes)	continue
+				if(W==M:w_uniform)
+					continue//So all they're left with are shoes and uniform.
+				if(W==M:shoes)
+					continue
 			M.unEquip(W)
 
 		spawn(0)
@@ -69,7 +75,7 @@ It is possible to destroy the net by the occupant or someone else.
 		M << "<span class='danger'>You appear in a strange place!</span>"
 
 		spawn(0)
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 			spark_system.set_up(5, 0, M.loc)
 			spark_system.start()
 			playsound(M.loc, 'sound/effects/phasein.ogg', 25, 1)
@@ -78,20 +84,20 @@ It is possible to destroy the net by the occupant or someone else.
 			qdel(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
 
 		for(var/mob/O in viewers(src, 3))
-			O.show_message("[M] vanished!", 1, "You hear sparks flying!", 2)
+			O.show_message("[M] vanishes!", 1, "<span class='italics'>You hear sparks flying!</span>", 2)
 
 		if(!isnull(master))//As long as they still exist.
 			master << "<span class='notice'><b>SUCCESS</b>: transport procedure of \the [affecting] complete.</span>"
-
-		M.anchored = 0//Important.
+		M.notransform = 0
 
 	else//And they are free.
 		M << "<span class='notice'>You are free of the net!</span>"
+		M.notransform = 0
 	return
 
 
 
-/obj/effect/energy_net/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/energy_net/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	healthcheck()
 	..()
@@ -100,11 +106,11 @@ It is possible to destroy the net by the occupant or someone else.
 
 /obj/effect/energy_net/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			health-=50
-		if(2.0)
+		if(2)
 			health-=50
-		if(3.0)
+		if(3)
 			health-=prob(50)?50:25
 	healthcheck()
 	return
@@ -120,7 +126,6 @@ It is possible to destroy the net by the occupant or someone else.
 
 /obj/effect/energy_net/hitby(AM as mob|obj)
 	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10
@@ -148,7 +153,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/attack_alien(mob/living/user as mob)
+/obj/effect/energy_net/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	if (islarva(user))
 		return
@@ -165,7 +170,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/effect/energy_net/attackby(obj/item/weapon/W, mob/user, params)
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	healthcheck()

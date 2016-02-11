@@ -22,12 +22,12 @@
 
 /datum/song/Destroy()
 	instrumentObj = null
-	..()
+	return ..()
 
 // note is a number from 1-7 for A-G
 // acc is either "b", "n", or "#"
 // oct is 1-8 (or 9 for C)
-/datum/song/proc/playnote(var/note, var/acc as text, var/oct)
+/datum/song/proc/playnote(note, acc as text, oct)
 	// handle accidental -> B<>C of E<>F
 	if(acc == "b" && (note == 3 || note == 6)) // C or F
 		if(note == 3)
@@ -63,7 +63,7 @@
 			continue
 		M.playsound_local(source, soundfile, 100, falloff = 5)
 
-/datum/song/proc/updateDialog(mob/user as mob)
+/datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
 
 /datum/song/proc/shouldStopPlaying(mob/user)
@@ -74,7 +74,7 @@
 	else
 		return 1
 
-/datum/song/proc/playsong(mob/user as mob)
+/datum/song/proc/playsong(mob/user)
 	while(repeat >= 0)
 		var/cur_oct[7]
 		var/cur_acc[7]
@@ -84,10 +84,10 @@
 
 		for(var/line in lines)
 			//world << line
-			for(var/beat in text2list(lowertext(line), ","))
+			for(var/beat in splittext(lowertext(line), ","))
 				//world << "beat: [beat]"
-				var/list/notes = text2list(beat, "/")
-				for(var/note in text2list(notes[1], "-"))
+				var/list/notes = splittext(beat, "/")
+				for(var/note in splittext(notes[1], "-"))
 					//world << "note: [note]"
 					if(!playing || shouldStopPlaying(user))//If the instrument is playing, or special case
 						playing = 0
@@ -119,7 +119,7 @@
 	repeat = 0
 	updateDialog(user)
 
-/datum/song/proc/interact(mob/user as mob)
+/datum/song/proc/interact(mob/user)
 	var/dat = ""
 
 	if(lines.len > 0)
@@ -204,7 +204,7 @@
 
 		//split into lines
 		spawn()
-			lines = text2list(t, "\n")
+			lines = splittext(t, "\n")
 			if(copytext(lines[1],1,6) == "BPM: ")
 				tempo = sanitize_tempo(600 / text2num(copytext(lines[1],6)))
 				lines.Cut(1,2)
@@ -285,7 +285,7 @@
 // subclass for handheld instruments, like violin
 /datum/song/handheld
 
-/datum/song/handheld/updateDialog(mob/user as mob)
+/datum/song/handheld/updateDialog(mob/user)
 	instrumentObj.interact(user)
 
 /datum/song/handheld/shouldStopPlaying()
@@ -322,47 +322,47 @@
 /obj/structure/piano/Destroy()
 	qdel(song)
 	song = null
-	..()
+	return ..()
 
 /obj/structure/piano/initialize()
 	song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
 	..()
 
-/obj/structure/piano/attack_hand(mob/user as mob)
+/obj/structure/piano/attack_hand(mob/user)
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 	interact(user)
 
-/obj/structure/piano/attack_paw(mob/user as mob)
+/obj/structure/piano/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/piano/interact(mob/user as mob)
+/obj/structure/piano/interact(mob/user)
 	if(!user || !anchored)
 		return
 
 	user.set_machine(src)
 	song.interact(user)
 
-/obj/structure/piano/attackby(obj/item/O as obj, mob/user as mob, params)
+/obj/structure/piano/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'> You begin to tighten \the [src] to the floor...</span>"
-			if (do_after(user, 20))
+			if (do_after(user, 20/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \
-					"<span class='notice'> You have tightened \the [src]'s casters. Now it can be played again.</span>", \
-					"You hear ratchet.")
+					"<span class='notice'>You tighten \the [src]'s casters. Now it can be played again.</span>", \
+					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 1
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'> You begin to loosen \the [src]'s casters...</span>"
-			if (do_after(user, 40))
+			if (do_after(user, 40/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] loosens \the [src]'s casters.", \
-					"<span class='notice'> You have loosened \the [src]. Now it can be pulled somewhere else.</span>", \
-					"You hear ratchet.")
+					"<span class='notice'>You loosen \the [src]. Now it can be pulled somewhere else.</span>", \
+					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 0
 	else
 		..()

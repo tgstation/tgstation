@@ -22,7 +22,7 @@
 /obj/item/weapon/greentext/
 	name = "greentext"
 	desc = "No one knows what this massive tome does, but it feels <i><font color='green'>desirable</font></i> all the same..."
-	w_class = 4.0
+	w_class = 4
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "greentext"
 	var/mob/living/last_holder
@@ -63,7 +63,7 @@
 		new_holder.mind.objectives += O
 		new_holder.attack_log += "\[[time_stamp()]\] <font color='green'>Won with greentext!!!</font>"
 		color_altered_mobs -= new_holder
-		Destroy()
+		qdel(src)
 
 	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped
 		last_holder << "<span class='warning'>A sudden wave of failure washes over you...</span>"
@@ -78,4 +78,4 @@
 			M.color = initial(M.color)
 		message += "...</span>"
 		M << message
-	..()
+	return ..()

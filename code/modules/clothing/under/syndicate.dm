@@ -6,6 +6,7 @@
 	item_color = "syndicate"
 	has_sensor = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	alt_covers_chest = 1
 
 /obj/item/clothing/under/syndicate/tacticool
 	name = "tacticool turtleneck"
@@ -13,3 +14,11 @@
 	icon_state = "tactifool"
 	item_state = "bl_suit"
 	item_color = "tactifool"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/under/syndicate/sniper
+	name = "Tactical turtleneck suit"
+	desc = "A double seamed tactical turtleneck disguised as a civillian grade silk suit. Intended for the most formal operator. The collar is really sharp"
+	icon_state = "really_black_suit"
+	item_state = "bl_suit"
+	item_color = "black_suit"

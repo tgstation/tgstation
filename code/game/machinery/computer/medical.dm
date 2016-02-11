@@ -3,7 +3,8 @@
 /obj/machinery/computer/med_data//TODO:SANITY
 	name = "medical records console"
 	desc = "This can be used to check medical records."
-	icon_state = "medcomp"
+	icon_screen = "medcomp"
+	icon_keyboard = "med_key"
 	req_one_access = list(access_medical, access_forensics_lockers)
 	circuit = /obj/item/weapon/circuitboard/med_data
 	var/obj/item/weapon/card/id/scan = null
@@ -19,16 +20,17 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
-/obj/machinery/computer/med_data/attackby(obj/item/O as obj, user as mob, params)
+/obj/machinery/computer/med_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
-		usr.drop_item()
+		if(!user.drop_item())
+			return
 		O.loc = src
 		scan = O
-		user << "You insert [O]."
+		user << "<span class='notice'>You insert [O].</span>"
 	else
 		..()
 
-/obj/machinery/computer/med_data/attack_hand(mob/user as mob)
+/obj/machinery/computer/med_data/attack_hand(mob/user)
 	if(..())
 		return
 	var/dat
@@ -38,7 +40,7 @@
 		dat = text("Confirm Identity: <A href='?src=\ref[];scan=1'>[]</A><HR>", src, (src.scan ? text("[]", src.scan.name) : "----------"))
 		if(src.authenticated)
 			switch(src.screen)
-				if(1.0)
+				if(1)
 					dat += {"
 <A href='?src=\ref[src];search=1'>Search Records</A>
 <BR><A href='?src=\ref[src];screen=2'>List Records</A>
@@ -49,7 +51,7 @@
 <BR><A href='?src=\ref[src];screen=3'>Record Maintenance</A>
 <BR><A href='?src=\ref[src];logout=1'>{Log Out}</A><BR>
 "}
-				if(2.0)
+				if(2)
 					dat += {"
 </p>
 <table style="text-align:center;" cellspacing="0" width="100%">
@@ -99,9 +101,9 @@
 //							dat += "<A href='?src=\ref[src];d_rec=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<BR>"
 //							//Foreach goto(132)
 					dat += text("<HR><A href='?src=\ref[];screen=1'>Back</A>", src)
-				if(3.0)
+				if(3)
 					dat += text("<B>Records Maintenance</B><HR>\n<A href='?src=\ref[];back=1'>Backup To Disk</A><BR>\n<A href='?src=\ref[];u_load=1'>Upload From Disk</A><BR>\n<A href='?src=\ref[];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[];screen=1'>Back</A>", src, src, src, src)
-				if(4.0)
+				if(4)
 
 					dat += "<table><tr><td><b><font size='4'>Medical Record</font></b></td></tr>"
 					if(active1 in data_core.general)
@@ -153,7 +155,7 @@
 					dat += "<tr><td><A href='?src=\ref[src];print_p=1'>Print Record</A></td></tr>"
 					dat += "<tr><td><A href='?src=\ref[src];screen=2'>Back</A></td></tr>"
 					dat += "</table>"
-				if(5.0)
+				if(5)
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
 					for(var/Dt in typesof(/datum/disease/))
 						var/datum/disease/Dis = new Dt(0)
@@ -163,13 +165,14 @@
 							continue
 						dat += "<br><a href='?src=\ref[src];vir=[Dt]'>[Dis.name]</a>"
 					dat += "<br><a href='?src=\ref[src];screen=1'>Back</a>"
-				if(6.0)
+				if(6)
 					dat += "<center><b>Medical Robot Monitor</b></center>"
 					dat += "<a href='?src=\ref[src];screen=1'>Back</a>"
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
-					for(var/obj/machinery/bot/medbot/M in world)
-						if(M.z != src.z)	continue	//only find medibots on the same z-level as the computer
+					for(var/mob/living/simple_animal/bot/medbot/M in living_mob_list)
+						if(M.z != src.z)
+							continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
 						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
 							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
@@ -203,18 +206,22 @@
 	if(!(active2 in data_core.medical))
 		src.active2 = null
 
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		if(href_list["temp"])
 			src.temp = null
 		if(href_list["scan"])
 			if(src.scan)
-				src.scan.loc = src.loc
+				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
+					usr.put_in_hands(scan)
+				else
+					scan.loc = get_turf(src)
 				src.scan = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if(istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
+					if(!usr.drop_item())
+						return
 					I.loc = src
 					src.scan = I
 		else if(href_list["logout"])
@@ -241,6 +248,12 @@
 				src.active2 = null
 				src.authenticated = 1
 				src.rank = "AI"
+				src.screen = 1
+			else if(IsAdminGhost(usr))
+				src.active1 = null
+				src.active2 = null
+				src.authenticated = 1
+				src.rank = "Central Command"
 				src.screen = 1
 			else if(istype(src.scan, /obj/item/weapon/card/id))
 				src.active1 = null
@@ -508,7 +521,7 @@
 					else
 						//Foreach continue //goto(3229)
 				if(!( src.active2 ))
-					src.temp = text("Could not locate record [].", t1)
+					src.temp = text("Could not locate record [].", sanitize(t1))
 				else
 					for(var/datum/data/record/E in data_core.general)
 						if((E.fields["name"] == src.active2.fields["name"] || E.fields["id"] == src.active2.fields["id"]))
@@ -558,7 +571,10 @@
 		if(prob(10/severity))
 			switch(rand(1,6))
 				if(1)
-					R.fields["name"] = random_name(R.fields["sex"],1)
+					if(prob(10))
+						R.fields["name"] = random_unique_lizard_name(R.fields["sex"],1)
+					else
+						R.fields["name"] = random_unique_name(R.fields["sex"],1)
 				if(2)
 					R.fields["sex"]	= pick("Male", "Female")
 				if(3)
@@ -572,7 +588,7 @@
 			continue
 
 		else if(prob(1))
-			del(R)
+			qdel(R)
 			continue
 
 	..(severity)
@@ -590,4 +606,6 @@
 /obj/machinery/computer/med_data/laptop
 	name = "medical laptop"
 	desc = "A cheap Nanotrasen medical laptop, it functions as a medical records computer. It's bolted to the table."
-	icon_state = "medlaptop"
+	icon_state = "laptop"
+	icon_screen = "medlaptop"
+	icon_keyboard = "laptop_key"

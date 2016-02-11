@@ -7,22 +7,26 @@
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	action_button_name = "Change"
 	origin_tech = "syndicate=3"
+	sensor_mode = 0 //Hey who's this guy on the Syndicate Shuttle??
+	random_sensor = 0
 	var/list/clothing_choices = list()
 	var/malfunctioning = 0
+	burn_state = FIRE_PROOF
+	armor = list(melee = 10, bullet = 10, laser = 10,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/chameleon/New()
 	..()
-	for(var/U in typesof(/obj/item/clothing/under/color)-(/obj/item/clothing/under/color))
+	for(var/U in subtypesof(/obj/item/clothing/under/color))
 		var/obj/item/clothing/under/V = new U
 		src.clothing_choices += V
 
-	for(var/U in typesof(/obj/item/clothing/under/rank)-(/obj/item/clothing/under/rank))
+	for(var/U in subtypesof(/obj/item/clothing/under/rank))
 		var/obj/item/clothing/under/V = new U
 		src.clothing_choices += V
 	return
 
 
-/obj/item/clothing/under/chameleon/attackby(obj/item/clothing/under/U as obj, mob/user as mob, params)
+/obj/item/clothing/under/chameleon/attackby(obj/item/clothing/under/U, mob/user, params)
 	..()
 	if(istype(U, /obj/item/clothing/under/chameleon))
 		user << "\<span class='notice'>Nothing happens.</span>"
@@ -80,6 +84,7 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	item_color = A.item_color
+	suit_color = A.suit_color
 	usr.update_inv_w_uniform()	//so our overlays update.
 
 

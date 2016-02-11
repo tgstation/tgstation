@@ -1,6 +1,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger
 	filling_color = "#CD853F"
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "hburger"
 	bitesize = 3
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
@@ -13,9 +14,14 @@
 /obj/item/weapon/reagent_containers/food/snacks/burger/human
 	var/hname = ""
 	var/job = null
-	name = "-burger"
+	name = "human burger"
 	desc = "A bloody burger."
 	bonus_reagents = list("vitamin" = 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/corgi
+	name = "corgi burger"
+	desc = "You monster."
+	bonus_reagents = list("vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/appendix
 	name = "appendix burger"
@@ -163,4 +169,18 @@
 	bonus_reagents = list("vitamin" = 10)
 	list_reagents = list("nutriment" = 40, "vitamin" = 5)
 	w_class = 3
-	volume = 80
+	bitesize = 7
+	volume = 100
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/fivealarm
+	name = "five alarm burger"
+	desc = "HOT! HOT!"
+	icon_state = "fivealarmburger"
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 5)
+	list_reagents = list("nutriment" = 6, "capsaicin" = 5, "condensedcapsaicin" = 5, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/rat
+	name = "rat burger"
+	desc = "Pretty much what you'd expect..."
+	icon_state = "ratburger"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
