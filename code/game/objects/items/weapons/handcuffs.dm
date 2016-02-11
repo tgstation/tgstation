@@ -62,7 +62,7 @@
 	cuffs.loc = target
 	target.handcuffed = cuffs
 
-	target.update_inv_handcuffed(0)
+	target.update_handcuffed()
 	if(trashtype && !dispense)
 		qdel(src)
 	return
@@ -121,6 +121,16 @@
 /obj/item/weapon/restraints/handcuffs/alien
 	icon_state = "handcuffAlien"
 
+/obj/item/weapon/restraints/handcuffs/fake
+	name = "fake handcuffs"
+	desc = "Fake handcuffs meant for gag purposes."
+	breakouttime = 10 //Deciseconds = 1s
+
+/obj/item/weapon/restraints/handcuffs/fake/kinky
+	name = "kinky handcuffs"
+	desc = "Fake handcuffs meant for erotic roleplay."
+	icon_state = "handcuffGag"
+
 /obj/item/weapon/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/rods))
@@ -145,7 +155,7 @@
 			if(do_mob(user, C, 30))
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
-					C.update_inv_handcuffed(0)
+					C.update_handcuffed()
 					user << "<span class='notice'>You handcuff [C].</span>"
 					add_logs(user, C, "handcuffed")
 			else

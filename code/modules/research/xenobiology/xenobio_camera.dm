@@ -68,7 +68,6 @@
 	var/mob/living/carbon/C = target
 	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/origin = remote_eye.origin
-	C.remote_view = 0
 	origin.current_user = null
 	origin.jump_action.Remove(C)
 	origin.slime_place_action.Remove(C)
@@ -76,10 +75,9 @@
 	origin.feed_slime_action.Remove(C)
 	origin.monkey_recycle_action.Remove(C)
 	//All of this stuff below could probably be a proc for all advanced cameras, only the action removal needs to be camera specific
-	remote_eye.user = null
+	remote_eye.eye_user = null
+	C.reset_perspective(null)
 	if(C.client)
-		C.client.perspective = MOB_PERSPECTIVE
-		C.client.eye = src
 		C.client.images -= remote_eye.user_image
 		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
 			C.client.images -= chunk.obscured

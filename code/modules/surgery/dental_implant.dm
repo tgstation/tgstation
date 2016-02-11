@@ -28,7 +28,7 @@
 	return 1
 
 /datum/action/item_action/hands_free/activate_pill
-	name = "activate pill"
+	name = "Activate Pill"
 
 /datum/action/item_action/hands_free/activate_pill/Trigger()
 	if(!..() || CheckRemoval(owner))

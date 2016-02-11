@@ -69,6 +69,7 @@
 /obj/screen/act_intent
 	name = "intent"
 	icon_state = "help"
+	screen_loc = ui_acti
 
 /obj/screen/act_intent/Click(location, control, params)
 	if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
@@ -91,9 +92,18 @@
 	else
 		usr.a_intent_change("right")
 
+/obj/screen/act_intent/alien
+	icon = 'icons/mob/screen_alien.dmi'
+	screen_loc = ui_movi
+
+/obj/screen/act_intent/robot
+	icon = 'icons/mob/screen_cyborg.dmi'
+	screen_loc = ui_borg_intents
+
 /obj/screen/internals
 	name = "toggle internals"
 	icon_state = "internal0"
+	screen_loc = ui_internal
 
 /obj/screen/internals/Click()
 	if(iscarbon(usr))
@@ -268,12 +278,24 @@
 							selecting = "eyes"
 
 	if(old_selecting != selecting)
-		update_icon()
+		update_icon(usr)
 	return 1
 
-/obj/screen/zone_sel/update_icon()
+/obj/screen/zone_sel/update_icon(mob/user)
 	overlays.Cut()
 	overlays += image('icons/mob/screen_gen.dmi', "[selecting]")
+	user.zone_selected = selecting
+
+/obj/screen/zone_sel/alien
+	icon = 'icons/mob/screen_alien.dmi'
+
+/obj/screen/zone_sel/alien/update_icon(mob/user)
+	overlays.Cut()
+	overlays += image('icons/mob/screen_alien.dmi', "[selecting]")
+	user.zone_selected = selecting
+
+/obj/screen/zone_sel/robot
+	icon = 'icons/mob/screen_cyborg.dmi'
 
 /obj/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -307,3 +329,52 @@
 				usr.update_inv_l_hand(0)
 				usr.update_inv_r_hand(0)
 	return 1
+
+/obj/screen/flash
+	name = "flash"
+	icon_state = "blank"
+	blend_mode = BLEND_ADD
+	screen_loc = "WEST,SOUTH to EAST,NORTH"
+	layer = 17
+
+/obj/screen/damageoverlay
+	icon = 'icons/mob/screen_full.dmi'
+	icon_state = "oxydamageoverlay0"
+	name = "dmg"
+	blend_mode = BLEND_MULTIPLY
+	screen_loc = "CENTER-7,CENTER-7"
+	mouse_opacity = 0
+	layer = 18.1 //The black screen overlay sets layer to 18 to display it, this one has to be just on top.
+
+/obj/screen/healths
+	name = "health"
+	icon_state = "health0"
+	screen_loc = ui_health
+
+/obj/screen/healths/alien
+	icon = 'icons/mob/screen_alien.dmi'
+	screen_loc = ui_alien_health
+
+/obj/screen/healths/robot
+	icon = 'icons/mob/screen_cyborg.dmi'
+	screen_loc = ui_borg_health
+
+/obj/screen/healths/deity
+	name = "Nexus Health"
+	icon_state = "deity_nexus"
+	screen_loc = ui_deityhealth
+
+/obj/screen/healths/blob
+	name = "blob health"
+	icon_state = "block"
+	screen_loc = ui_internal
+	mouse_opacity = 0
+
+/obj/screen/healths/guardian
+	name = "summoner health"
+	screen_loc = ui_health
+	mouse_opacity = 0
+
+/obj/screen/healthdoll
+	name = "health doll"
+	screen_loc = ui_healthdoll

@@ -11,9 +11,12 @@ component.exports = {
     'ui-bar': require('components/bar'),
     'ui-button': require('components/button'),
     'ui-display': require('components/display'),
+    'ui-input': require('components/input'),
+    'ui-linegraph': require('components/linegraph'),
     'ui-notice': require('components/notice'),
     'ui-section': require('components/section'),
     'ui-subdisplay': require('components/subdisplay'),
+    'ui-tabs': require('components/tabs'),
   },
   events: {
     enter: require('ractive-events-keys').enter,

@@ -70,7 +70,7 @@ var/global/posibrain_notif_cooldown = 0
 			brainmob.dna = new /datum/dna(brainmob)
 		C.dna.copy_dna(brainmob.dna)
 	brainmob.timeofhostdeath = C.timeofdeath
-	brainmob.stat = 0
+	brainmob.stat = CONSCIOUS
 	if(brainmob.mind)
 		brainmob.mind.assigned_role = "Positronic Brain"
 	if(C.mind)
@@ -139,8 +139,6 @@ var/global/posibrain_notif_cooldown = 0
 	brainmob.real_name = brainmob.name
 	brainmob.loc = src
 	brainmob.container = src
-	brainmob.stat = 0
-	brainmob.silent = 0
 	dead_mob_list -= brainmob
 	ping_ghosts("created")
 	..()

@@ -49,4 +49,4 @@
 				temp.prison_open()
 			else if(istype(O,/obj/machinery/door_timer))
 				var/obj/machinery/door_timer/temp = O
-				temp.releasetime = 1
+				temp.timer_end(forced = TRUE)

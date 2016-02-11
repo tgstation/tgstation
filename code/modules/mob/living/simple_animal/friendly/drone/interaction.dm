@@ -34,11 +34,7 @@
 								return
 							D.visible_message("<span class='notice'>[D] begins to reactivate [src].</span>", "<span class='notice'>You begin to reactivate [src]...</span>")
 							if(do_after(user,30, 1, target = src))
-								adjustBruteLoss(-getBruteLoss()) //Heal all brute damage
-								stat = CONSCIOUS
-								icon_state = icon_living
-								dead_mob_list -= src
-								living_mob_list += src
+								revive()
 								D.visible_message("<span class='notice'>[D] reactivates [src]!</span>", "<span class='notice'>You reactivate [src].</span>")
 								alert_drones(DRONE_NET_CONNECT)
 								if(G)

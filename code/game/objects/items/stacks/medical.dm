@@ -71,7 +71,7 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+		var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
 		if(stop_bleeding)
 			if(!H.bleedsuppress) //so you can't stack bleed suppression
 				H.suppress_bloodloss(stop_bleeding)

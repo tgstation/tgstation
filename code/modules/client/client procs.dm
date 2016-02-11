@@ -201,12 +201,12 @@ var/next_external_rsc = 0
 		else
 			winset(src, "infowindow.changelog", "font-style=bold")
 
-	if (ckey in clientmessages)
-		for (var/message in clientmessages[ckey])
+	if(ckey in clientmessages)
+		for(var/message in clientmessages[ckey])
 			src << message
 		clientmessages.Remove(ckey)
 
-	if (config && config.autoconvert_notes)
+	if(config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
 
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.

@@ -395,8 +395,6 @@ var/datum/subsystem/job/SSjob
 		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 	if(config.minimal_access_threshold)
 		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
-
-	H.update_hud() 	// Tmp fix for Github issue 1006. TODO: make all procs in update_icons.dm do client.screen |= equipment no matter what.
 	return 1
 
 
@@ -428,10 +426,10 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/LoadJobs()
 	var/jobstext = return_file_text("config/jobs.txt")
 	for(var/datum/job/J in occupations)
-		var/regex = "[J.title]=(-1|\\d+),(-1|\\d+)"
-		var/datum/regex/results = regex_find(jobstext, regex)
-		J.total_positions = text2num(results.str(2))
-		J.spawn_positions = text2num(results.str(3))
+		var/regex/jobs = new("[J.title]=(-1|\\d+),(-1|\\d+)")
+		jobs.Find(jobstext)
+		J.total_positions = text2num(jobs.group[2])
+		J.spawn_positions = text2num(jobs.group[3])
 
 /datum/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)

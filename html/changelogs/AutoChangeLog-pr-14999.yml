@@ -1,5 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "Added a special AI upgrade disk that allows normal AIs to use malf modules and hack APCs. It is admin only."
-  - rscadd: "Added an AI upgrade disk that grants AIs the lipreading power. It is admin only."

@@ -89,7 +89,8 @@
 	age = rand(AGE_MIN,AGE_MAX)
 	//job handling
 	var/list/jobs = SSjob.occupations.Copy()
-	for(var/datum/job/J in jobs)
+	for(var/job in jobs)
+		var/datum/job/J = job
 		if(J.title == "Cyborg" || J.title == "AI" || J.title == "Chaplain" || J.title == "Mime")
 			jobs -= J
 	myjob = pick(jobs)
@@ -124,8 +125,7 @@
 	MYPDA.ownjob = "Crew"
 	MYPDA.name = "PDA-[real_name] ([myjob.title])"
 	equip_to_slot_or_del(MYPDA, slot_belt)
-	zone_sel = new /obj/screen/zone_sel()
-	zone_sel.selecting = "chest"
+	zone_selected = "chest"
 	if(prob(10)) //my x is augmented
 		//arms
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
@@ -556,7 +556,7 @@
 	if(canmove)
 		if(prob(attitude) && (graytide || (TRAITS & TRAIT_MEAN)) || retal)
 			a_intent = "harm"
-			zone_sel.selecting = pick("chest","r_leg","l_leg","r_arm","l_arm","head")
+			zone_selected = pick("chest","r_leg","l_leg","r_arm","l_arm","head")
 			doing |= FIGHTING
 			if(retal)
 				TARGET = retal_target

@@ -150,10 +150,10 @@
 	temp_change = (temperature - current)
 	return temp_change
 
-/mob/living/simple_animal/slime/handle_regular_status_updates()
-	if(..())
-		if(prob(30))
-			adjustBruteLoss(-1)
+/mob/living/simple_animal/slime/handle_status_effects()
+	..()
+	if(prob(30))
+		adjustBruteLoss(-1)
 
 /mob/living/simple_animal/slime/proc/handle_feeding()
 	if(!ismob(buckled))

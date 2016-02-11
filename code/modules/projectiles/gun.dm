@@ -135,7 +135,7 @@
 			return
 		if(!ismob(target) || user.a_intent == "harm") //melee attack
 			return
-		if(target == user && user.zone_sel.selecting != "mouth") //so we can't shoot ourselves (unless mouth selected)
+		if(target == user && user.zone_selected != "mouth") //so we can't shoot ourselves (unless mouth selected)
 			return
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
@@ -144,11 +144,13 @@
 			return
 
 	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can't shoot.
+		shoot_with_empty_chamber(user)
 		return
 
 	if(flag)
-		handle_suicide(user, target, params) //
-		return
+		if(user.zone_selected == "mouth")
+			handle_suicide(user, target, params)
+			return
 
 
 	//Exclude lasertag guns from the CLUMSY check.
@@ -395,7 +397,7 @@ obj/item/weapon/gun/proc/newshot()
 
 	semicd = 1
 
-	if(!do_mob(user, target, 120) || user.zone_sel.selecting != "mouth")
+	if(!do_mob(user, target, 120) || user.zone_selected != "mouth")
 		if(user)
 			if(user == target)
 				user.visible_message("<span class='notice'>[user] decided life was worth living.</span>")

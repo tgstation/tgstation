@@ -123,10 +123,7 @@
 	if(do_mob(user, target, 20))
 		if (!loc)
 			return
-		if (target.client)
-			target.client.perspective = EYE_PERSPECTIVE
-			target.client.eye = src
-		target.loc = src
+		target.forceMove(src)
 		if(user == target)
 			user.visible_message("[user] climbs into [src].", \
 									"<span class='notice'>You climb into [src].</span>")
@@ -157,10 +154,8 @@
 // leave the disposal
 /obj/machinery/disposal/proc/go_out(mob/user)
 
-	if (user.client)
-		user.client.eye = user.client.mob
-		user.client.perspective = MOB_PERSPECTIVE
 	user.loc = src.loc
+	user.reset_perspective(null)
 	update()
 	return
 
@@ -479,6 +474,10 @@
 		update()
 	return
 
+/obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
+	if(!(user.sight & (SEEOBJS|SEEMOBS)))
+		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+
 
 //Delivery Chute
 
@@ -518,7 +517,7 @@
 		if(prob(2)) // to prevent mobs being stuck in infinite loops
 			M << "<span class='warning'>You hit the edge of the chute.</span>"
 			return
-		M.loc = src
+		M.forceMove(src)
 	flush()
 
 /atom/movable/proc/disposalEnterTry()

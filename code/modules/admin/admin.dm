@@ -619,21 +619,7 @@ var/global/BSACooldown = 0
 	if(!check_rights(R_SPAWN))
 		return
 
-	var/list/matches = get_fancy_list_of_types()
-	if (!isnull(object) && object!="")
-		matches = filter_fancy_list(matches, object)
-
-	if(matches.len==0)
-		return
-
-	var/chosen
-	if(matches.len==1)
-		chosen = matches[1]
-	else
-		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
-		if(!chosen)
-			return
-	chosen = matches[chosen]
+	var/chosen = pick_closest_path(object)
 
 	if(ispath(chosen,/turf))
 		var/turf/T = get_turf(usr.loc)

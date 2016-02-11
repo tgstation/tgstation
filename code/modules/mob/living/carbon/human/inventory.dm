@@ -70,6 +70,13 @@
 			update_inv_ears()
 		if(slot_glasses)
 			glasses = I
+			var/obj/item/clothing/glasses/G = I
+			if(G.tint)
+				update_tint()
+			if(G.vision_correction)
+				clear_fullscreen("nearsighted")
+			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view)
+				update_sight()
 			update_inv_glasses()
 		if(slot_gloves)
 			gloves = I
@@ -127,6 +134,14 @@
 		update_inv_gloves()
 	else if(I == glasses)
 		glasses = null
+		var/obj/item/clothing/glasses/G = I
+		if(G.tint)
+			update_tint()
+		if(G.vision_correction)
+			if(disabilities & NEARSIGHT)
+				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view)
+			update_sight()
 		update_inv_glasses()
 	else if(I == ears)
 		ears = null
@@ -151,12 +166,11 @@
 		s_store = null
 		update_inv_s_store()
 
-/mob/living/carbon/human/wear_mask_update(obj/item/I, unequip = 1)
-	if(I.flags & BLOCKHAIR)
+/mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, unequip = 1)
+	if(C.flags & BLOCKHAIR)
 		update_hair()
 	if(unequip && internal)
-		if(internals)
-			internals.icon_state = "internal0"
+		update_internals_hud_icon(0)
 		internal = null
 	sec_hud_set_security_status()
 	..()
