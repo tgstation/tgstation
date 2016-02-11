@@ -27,9 +27,9 @@
 		//has_gravity = 0    // Space has gravity.  Because.. because.
 
 	if(!requires_power)
-		power_light = 0			//rastaf0
-		power_equip = 0			//rastaf0
-		power_environ = 0		//rastaf0
+		power_light = 1
+		power_equip = 1
+		power_environ = 1 
 
 	..()
 
