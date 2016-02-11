@@ -275,6 +275,26 @@
 	corpsemask = /obj/item/clothing/mask/breath
 
 
+/obj/effect/landmark/corpse/bartender
+	mobname = "Space Bartender"
+	corpseuniform = /obj/item/clothing/under/rank/bartender
+	corpseback = /obj/item/weapon/storage/backpack
+	corpseshoes = /obj/item/clothing/shoes/sneakers/black
+	corpsesuit = /obj/item/clothing/suit/armor
+	corpseglasses = /obj/item/clothing/glasses/sunglasses/reagent
+	corpseid = 1
+	corpseidjob = "Bartender"
+	corpseidaccess = "Bartender"
+
+
+/obj/effect/landmark/corpse/bartender/alive
+	death = FALSE
+	roundstart = FALSE
+	mobname = "Space Bartender"
+	name = "sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	flavour_text = "You are a space bartender!"
 
 /////////////////Officers+Nanotrasen Security//////////////////////
 
