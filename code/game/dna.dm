@@ -172,8 +172,8 @@
 /mob/proc/set_species(datum/species/mrace, icon_update = 1)
 	return
 
-/mob/living/carbon/set_species(datum/species/mrace, icon_update = 1)
-	if(has_dna())
+/mob/living/carbon/set_species(datum/species/mrace = null, icon_update = 1)
+	if(mrace && has_dna())
 		if(dna.species.exotic_blood)
 			var/datum/reagent/EB = dna.species.exotic_blood
 			reagents.del_reagent(initial(EB.id))

@@ -343,5 +343,6 @@
 		C.swap_hand()
 	else
 		var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr))
-		T.Click(location, control, params)
+		if(T)
+			T.Click(location, control, params)
 	return 1

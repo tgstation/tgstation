@@ -89,7 +89,8 @@
 	age = rand(AGE_MIN,AGE_MAX)
 	//job handling
 	var/list/jobs = SSjob.occupations.Copy()
-	for(var/datum/job/J in jobs)
+	for(var/job in jobs)
+		var/datum/job/J = job
 		if(J.title == "Cyborg" || J.title == "AI" || J.title == "Chaplain" || J.title == "Mime")
 			jobs -= J
 	myjob = pick(jobs)
