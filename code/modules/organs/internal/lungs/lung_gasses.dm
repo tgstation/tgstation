@@ -180,7 +180,9 @@
 						ratio = 0
 		if(ratio)
 			if(H.reagents)
-				H.reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
+				// H.reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
+				// no this is bad n3x pls no
+				H.adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
 			H.toxins_alert = max(H.toxins_alert, 1)
 	else
 		H.toxins_alert = 0

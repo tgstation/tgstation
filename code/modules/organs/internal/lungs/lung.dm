@@ -110,7 +110,7 @@
 
 
 /datum/organ/internal/lungs/plasmaman
-	name = "weird pink lungs"
+	name = "\improper Plasmaman lungs"
 	removed_type = /obj/item/organ/lungs/plasmaman
 
 	gasses = list(
