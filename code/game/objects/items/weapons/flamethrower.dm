@@ -223,11 +223,9 @@
 /obj/item/weapon/flamehand/afterattack(atom/target, mob/user, flag)
 	if(flag)
 		return
-	var/turf/startLoc = get_turf(src)
-	var/fireDir = get_dir(src,target)
-	var/fireDistance = get_dist(src,target)
-	var/list/targetTurfs = getCone(startLoc, fireDir, fireDistance)
-	flame_turf(targetTurfs,null,1,5)
+	var/turf/targetTurf = get_turf(target)
+	var/turfList = getline(user, targetTurf)
+	flame_turf(turfList,null,1,5)
 
 
 
