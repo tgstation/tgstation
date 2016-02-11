@@ -168,9 +168,6 @@
 	icon_living = "spider_queen1"
 	icon_dead = "spider_queen_dead"
 	pixel_x = -16
-	pixel_y = -16
-	bound_width = 64
-	bound_height = 64
 	maxHealth = 500
 	health = 500
 	melee_damage_lower = 30
