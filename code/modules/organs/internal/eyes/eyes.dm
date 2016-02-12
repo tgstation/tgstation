@@ -38,4 +38,5 @@
 	name = "advanced eyes"
 	welding_proof=1
 	see_in_dark=5
+	robotic=2
 	removed_type = /obj/item/organ/eyes/adv_1
