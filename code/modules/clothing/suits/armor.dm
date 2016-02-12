@@ -89,19 +89,19 @@
 	strip_delay = 80
 	put_on_delay = 60
 
-/obj/item/clothing/suit/armor/eod
-	name = "EOD suit"
+/obj/item/clothing/suit/armor/combatsuit
+	name = "combat suit"
 	desc = "A full suit of armor designed to protect against most forms of attack. Looks like it can impair movement."
 	icon_state = "riot"
 	item_state = "swat_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 60, bullet = 80, laser = 40, energy = 30, bomb = 100, bio = 50, rad = 0)
+	armor = list(melee = 50, bullet = 60, laser = 40, energy = 30, bomb = 60, bio = 50, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 80
 	put_on_delay = 60
-	slowdown = 1
+	slowdown = 2
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"

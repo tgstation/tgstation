@@ -69,13 +69,13 @@
 					playsound(src.loc, "[active_sound]", 100, 0, 4)
 					sleep(15)
 
-/obj/item/clothing/head/helmet/eod
-	name = "EOD helmet"
+/obj/item/clothing/head/helmet/combatsuit
+	name = "combat helmet"
 	desc = "It's a helmet specifically designed to protect against most attacks."
 	icon_state = "riot"
 	item_state = "helmet"
 	flags = HEADBANGPROTECT
-	armor = list(melee = 70, bullet = 80, laser = 40, energy = 30, bomb = 100, bio = 50, rad = 0)
+	armor = list(melee = 60, bullet = 60, laser = 40, energy = 30, bomb = 60, bio = 50, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	strip_delay = 80
 
