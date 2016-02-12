@@ -52,6 +52,7 @@
 	w_class = 3
 	origin_tech = "combat=3;materials=2;syndicate=3"
 	mag_type = /obj/item/ammo_box/magazine/pistolm9mm
+	can_suppress = 0
 	burst_size = 3
 	fire_delay = 2
 	action_button_name = "Toggle Firemode"
