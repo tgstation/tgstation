@@ -1611,3 +1611,21 @@
 		to_chat(src, "<i>[pick(boo_phrases)]</i>")
 	else
 		to_chat(src, "<b><font color='[pick("red","orange","yellow","green","blue")]'>[pick(boo_phrases_drugs)]</font></b>")
+
+// Makes all robotic limbs organic.
+/mob/living/carbon/human/proc/make_robot_limbs_organic()
+	for(var/datum/organ/external/O in src.organs)
+		if(O.is_robotic())
+			O &= ~ORGAN_ROBOT
+	update_icons()
+
+// Makes all robot internal organs organic.
+/mob/living/carbon/human/proc/make_robot_internals_organic()
+	for(var/datum/organ/internal/O in src.organs)
+		if(O.robotic)
+			O.robotic = 0
+
+// Makes all robot organs, internal and external, organic.
+/mob/living/carbon/human/proc/make_all_robot_parts_organic()
+	make_robot_limbs_organic()
+	make_robot_internals_organic()
