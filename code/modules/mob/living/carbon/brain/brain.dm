@@ -2,7 +2,7 @@
 
 /mob/living/carbon/brain
 	languages = HUMAN
-	var/obj/item/container = null
+	var/obj/item/device/mmi/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	has_limbs = 0
@@ -21,6 +21,7 @@
 		if(stat!=DEAD)	//If not dead.
 			death(1)	//Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA
 		ghostize()		//Ghostize checks for key so nothing else is necessary.
+	container = null
 	return ..()
 
 /mob/living/carbon/brain/update_canmove()

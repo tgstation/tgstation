@@ -187,7 +187,7 @@
 				user << "<span class='warning'>The mmi indicates that their mind is currently inactive; it might change!</span>"
 				return
 
-			if(BM.stat == DEAD || BM.health <= config.health_threshold_dead)
+			if(BM.stat == DEAD || (M.brain && M.brain.damaged_brain))
 				user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>"
 				return
 

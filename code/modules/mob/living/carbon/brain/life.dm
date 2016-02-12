@@ -8,15 +8,19 @@
 /mob/living/carbon/brain/handle_environment(datum/gas_mixture/environment)
 	return
 
-/mob/living/carbon/brain/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
-	return
-
 /mob/living/carbon/brain/update_stat()
 	if(status_flags & GODMODE)
 		return
-	if(stat != DEAD)
-		if(health <= config.health_threshold_dead)
+	if(health <= config.health_threshold_dead)
+		if(stat != DEAD)
 			death()
+		var/obj/item/organ/internal/brain/BR
+		if(container && container.brain)
+			BR = container.brain
+		else if(istype(loc, /obj/item/organ/internal/brain))
+			BR = loc
+		if(BR)
+			BR.damaged_brain = 1 //beaten to a pulp
 
 /* //currently unused feature, since brain outside a mmi is always dead.
 /mob/living/carbon/brain/proc/handle_brain_revival_life()

@@ -61,9 +61,9 @@
 		newbrain.brainmob = null
 		brainmob.loc = src
 		brainmob.container = src
-		if(brainmob.health > config.health_threshold_dead)
-			brainmob.stat = CONSCIOUS
-			dead_mob_list -= brainmob //Update dem lists
+		if(!newbrain.damaged_brain) // the brain organ hasn't beaten to death.
+			brainmob.stat = CONSCIOUS //we manually revive the brain mob
+			dead_mob_list -= brainmob
 			living_mob_list += brainmob
 
 		brainmob.reset_perspective()
