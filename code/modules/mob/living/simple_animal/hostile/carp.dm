@@ -139,27 +139,23 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/F = W
 
-		if(F.food_flags & FOOD_MEAT) //Any meaty dish goes!
+		if((F.food_flags & FOOD_MEAT) && (growth_stage < req_growth_to_grow_up)) //Any meaty dish goes!
+			playsound(get_turf(src),'sound/items/eatfood.ogg', rand(10,50), 1)
+			visible_message("<span class='info'>\The [src] gobbles up \the [W]!")
+			user.drop_item(F, force_drop = 1)
 
-			if(growth_stage < req_growth_to_grow_up)
-				playsound(get_turf(src),'sound/items/eatfood.ogg', rand(10,50), 1)
-				visible_message("<span class='info'>\The [src] gobbles up \the [W]!")
-				user.drop_item(F, force_drop = 1)
+			if(prob(25))
+				friends.Add(user)
 
-				if(prob(25))
-					friends.Add(user)
+			if(F.reagents)
+				for(var/datum/reagent/N in F.reagents.reagent_list)
+					reagent_act(N.id, INGEST, N.volume)
 
-				if(F.reagents)
-					for(var/datum/reagent/N in F.reagents.reagent_list)
-						reagent_act(N.id, INGEST, N.volume)
+			qdel(F)
 
-				increase_growth_stage(1)
+		else
 
-				qdel(F)
-
-			else
-
-				to_chat(user, "<span class='info'>\The [src] gracefully refuses \the [W].")
+			to_chat(user, "<span class='info'>\The [src] gracefully refuses \the [W].")
 
 	return 1
 
@@ -173,6 +169,12 @@
 		desc = "[initial(desc)] <span class='notice'>It ate a lot recently, and it appears to be ready to grow up.</span>"
 		spawn(rand(5 SECONDS, 30 SECONDS))
 			grow_up()
+
+/mob/living/simple_animal/hostile/carp/baby/reagent_act(id, method, volume)
+	..()
+
+	if(id == "nutriment" && method == INGEST)
+		increase_growth_stage(volume)
 
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"

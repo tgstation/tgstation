@@ -646,7 +646,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 
 		var/mob/living/simple_animal/child = new childtype(loc)
 		if(istype(child))
-			child.faction = src.faction
+			child.inherit_mind(src)
 
 /mob/living/simple_animal/proc/grow_up()
 	if(src.type == species_type) //Already grown up
