@@ -14,8 +14,8 @@
 	ammo_type = null
 	fire_sound = null
 	conventional_firearm = 0
-//	var/bomb = null
-	var/obj/item/device/transfer_valve/bomb
+	silenced = 1
+	var/obj/item/device/transfer_valve/bomb = null
 	var/datum/gas_mixture/bomb_air_contents_1 = null
 	var/datum/gas_mixture/bomb_air_contents_2 = null
 	var/ignorecap = 0

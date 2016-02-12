@@ -26,13 +26,13 @@
 /mob/living/proc/sweat(var/amount,var/forcesweat = 0)
 	if((status_flags & GODMODE) || (flags & INVULNERABLE))
 		return 1
+	/* buggy as fug
 	if(istype(src,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
-		/* buggy as fug
 		if(!H.species.has_sweat_glands)
 			return 1
-			
-		*/
+
+	*/
 	if(forcesweat && ticker && ticker.hardcore_mode)
 		forcesweat = 0
 	var/sustenance = amount / 50

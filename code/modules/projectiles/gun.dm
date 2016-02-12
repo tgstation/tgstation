@@ -174,9 +174,9 @@
 	else
 		if(fire_sound)
 			playsound(user, fire_sound, 50, 1)
-			user.visible_message("<span class='warning'>[user] fires [src][reflex ? " by reflex":""]!</span>", \
-			"<span class='warning'>You fire [src][reflex ? "by reflex":""]!</span>", \
-			"You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+		user.visible_message("<span class='warning'>[user] fires [src][reflex ? " by reflex":""]!</span>", \
+		"<span class='warning'>You fire [src][reflex ? "by reflex":""]!</span>", \
+		"You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 
 	in_chamber.original = target
 	in_chamber.loc = get_turf(user)

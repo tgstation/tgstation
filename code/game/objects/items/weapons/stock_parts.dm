@@ -33,7 +33,6 @@
 	w_type = RECYK_ELECTRONIC
 	var/stored_charge = 0
 	var/maximum_charge = 30000000
-	var/capacitor_type = "capacitor"
 
 /obj/item/weapon/stock_parts/capacitor/examine(mob/user)
 	..()
@@ -52,12 +51,12 @@
 			return
 		to_chat(user, "You discharge \the [src] and secure it to the floor.")
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-		switch(capacitor_type)
-			if("capacitor")
+		switch(src.type)
+			if(/obj/item/weapon/stock_parts/capacitor)
 				new /obj/machinery/power/secured_capacitor(get_turf(src.loc))
-			if("advanced capacitor")
+			if(/obj/item/weapon/stock_parts/capacitor/adv)
 				new /obj/machinery/power/secured_capacitor/adv(get_turf(src.loc))
-			if("super capacitor")
+			if(/obj/item/weapon/stock_parts/capacitor/adv/super)
 				new /obj/machinery/power/secured_capacitor/adv/super(get_turf(src.loc))
 		qdel(src)
 
@@ -103,7 +102,6 @@
 	rating = 2
 	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 50)
 	maximum_charge = 200000000
-	capacitor_type = "advanced capacitor"
 
 /obj/item/weapon/stock_parts/scanning_module/adv
 	name = "advanced scanning module"
@@ -147,7 +145,6 @@
 	rating = 3
 	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 50)
 	maximum_charge = 1000000000
-	capacitor_type = "super capacitor"
 
 /obj/item/weapon/stock_parts/scanning_module/adv/phasic
 	name = "phasic scanning module"

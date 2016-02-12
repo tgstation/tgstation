@@ -56,12 +56,10 @@
 			user.drop_item(src, force_drop = 1)
 			var/obj/item/weapon/wrench_wired/I = new (get_turf(user))
 			user.put_in_hands(I)
-			qdel(src)
-			qdel(W)
 		else
 			new /obj/item/weapon/wrench_wired(get_turf(src.loc))
-			qdel(src)
-			qdel(W)
+		qdel(src)
+		qdel(W)
 
 //we inherit a lot from wrench, so we change very little
 /obj/item/weapon/wrench/socket
