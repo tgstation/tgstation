@@ -44,3 +44,14 @@
 	desc = "A Deagle brand Deagle for operators operating operationally. Uses .50 AE ammo."
 	icon_state = "deaglecamo"
 	item_state = "deagleg"
+
+/obj/item/weapon/gun/projectile/automatic/pistol/APS
+	name = "stechkin APS pistol"
+	desc = "The original russian version of a widely used Syndicate sidearm. Uses 9mm ammo."
+	icon_state = "pistol"
+	w_class = 3
+	origin_tech = "combat=3;materials=2;syndicate=3"
+	mag_type = /obj/item/ammo_box/magazine/pistolm9mm
+	burst_size = 3
+	fire_delay = 2
+	action_button_name = "Toggle Firemode"

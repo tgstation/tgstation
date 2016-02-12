@@ -231,6 +231,17 @@
 	name = "SMG Magazine (Incindiary 9mm)"
 	ammo_type = /obj/item/ammo_casing/c9mminc
 
+/obj/item/ammo_box/magazine/pistolm9mm
+	name = "pistol magazine (9mm)"
+	icon_state = "9x19p-8"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = "9mm"
+	max_ammo = 12
+
+/obj/item/ammo_box/magazine/pistolm9mm/update_icon()
+	..()
+	icon_state = "9x19p-[ammo_count() ? "8" : "0"]"
+
 /obj/item/ammo_box/magazine/smgm45
 	name = "SMG magazine (.45)"
 	icon_state = "c20r45-20"
