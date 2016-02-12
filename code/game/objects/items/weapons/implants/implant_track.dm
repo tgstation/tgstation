@@ -3,7 +3,6 @@
 	desc = "Track with this."
 	activated = 0
 	origin_tech = "materials=2;magnets=2;programming=2;biotech=2"
-	var/id = 1	//this should be redundent now but I'm leaving it incase its still used somewhere in the spaghetti we call ss13 code
 
 
 /obj/item/weapon/implant/tracking/New()
