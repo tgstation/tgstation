@@ -12,7 +12,11 @@
 	return
 
 /mob/living/carbon/brain/update_stat()
-	return
+	if(status_flags & GODMODE)
+		return
+	if(stat != DEAD)
+		if(health <= config.health_threshold_dead)
+			death()
 
 /* //currently unused feature, since brain outside a mmi is always dead.
 /mob/living/carbon/brain/proc/handle_brain_revival_life()
