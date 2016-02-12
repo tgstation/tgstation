@@ -452,7 +452,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 		playsound(get_turf(src), 'sound/machines/pressurehiss.ogg', 40, 1)
 		modify_occupant_bodytemp() //Start to heat them up a little bit immediately
 		nanomanager.update_uis(src)
-		spawn(3 SECONDS)
+		spawn(4 SECONDS)
 			if(!src || !src.ejecting)
 				return
 			ejecting = 0

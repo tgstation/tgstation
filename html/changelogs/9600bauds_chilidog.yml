@@ -32,5 +32,5 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-- rscadd: Cryo cells now have a short regulation cycle when ejecting a hypothermic occupant, which brings their temperature back to safe levels. This is intended to bring it back to it's classic functioning, where it ejected patients at safe temperatures anyways.
+- rscadd: Cryo cells now pop you out at a safe temperature once again, though just cold enough to give you the jitters for a few seconds. However, it takes 4 seconds to eject somebody from a Cryo cell. Essentially, the Mancrowave's body heat regulation functionality was directly implemented into Cryo.
 - rscadd: Cryo cells now also give a short period of grace to non-oxygen-breathing races after being ejected from Cryo, in which they won't breathe (and Plasmamen won't combust) so that they may be given internals safely. This is to replace the effects of post-cryo Hypothermia, which made people not breathe.
