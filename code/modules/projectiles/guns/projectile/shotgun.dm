@@ -67,6 +67,9 @@
 	if (chambered)
 		user << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
 
+/obj/item/weapon/gun/projectile/shotgun/lethal
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/lethal
+
 // RIOT SHOTGUN //
 
 /obj/item/weapon/gun/projectile/shotgun/riot //for spawn in the armory

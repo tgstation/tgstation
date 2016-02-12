@@ -85,6 +85,9 @@
 	max_ammo = 4
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/shot/lethal
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+
 /obj/item/ammo_box/magazine/internal/shot/ammo_count(countempties = 1)
 	if (!countempties)
 		var/boolets = 0

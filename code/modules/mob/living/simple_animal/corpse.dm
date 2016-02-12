@@ -172,6 +172,16 @@
 /obj/effect/landmark/mobcorpse/russian/ranged
 	corpsehelmet = /obj/item/clothing/head/ushanka
 
+/obj/effect/landmark/mobcorpse/russian/ranged/trooper
+	name = "Russian"
+	corpseuniform = /obj/item/clothing/under/syndicate/camo
+	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
+	corpseshoes = /obj/item/clothing/shoes/combat
+	corpsegloves = /obj/item/clothing/gloves/combat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/balaclava
+	corpsehelmet = /obj/item/clothing/head/helmet/alt
+
 /obj/effect/landmark/mobcorpse/wizard
 	name = "Space Wizard"
 	corpseuniform = /obj/item/clothing/under/color/lightpurple

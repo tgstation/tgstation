@@ -44,3 +44,12 @@
 	loot = list(/obj/effect/landmark/mobcorpse/russian/ranged,
 				/obj/item/weapon/gun/projectile/shotgun/boltaction)
 	casingtype = /obj/item/ammo_casing/a762
+
+/mob/living/simple_animal/hostile/russian/ranged/trooper
+	icon_state = "russianrangedelite"
+	icon_living = "russianrangedelite"
+	maxHealth = 150
+	health = 150
+	casingtype = /obj/item/ammo_casing/shotgun/buckshot
+	loot = list(/obj/effect/landmark/mobcorpse/russian/ranged/trooper,
+				/obj/item/weapon/gun/projectile/shotgun/lethal)
