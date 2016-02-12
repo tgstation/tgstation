@@ -18,9 +18,6 @@
 	SSobj.processing -= src
 	return ..()
 
-/obj/item/device/radio/intercom/attack_paw(mob/user)
-	return // Does nothing; so this cannot be picked up.
-
 /obj/item/device/radio/intercom/attack_ai(mob/user)
 	interact(user)
 
