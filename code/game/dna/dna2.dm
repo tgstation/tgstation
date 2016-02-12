@@ -32,7 +32,7 @@
 #define DNA_UI_HAIR_STYLE  13
 #define DNA_UI_LENGTH      13 // Update this when you add something, or you WILL break shit.
 
-#define DNA_SE_LENGTH 54 // Was STRUCDNASIZE, size 27. 15 new blocks added = 42, plus room to grow.
+// see DNA_SE_LENGTH in global.dm - you MUST change this if you are adding a new power.
 
 // Defines which values mean "on" or "off".
 //  This is to make some of the more OP superpowers a larger PITA to activate,

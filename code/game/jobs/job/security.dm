@@ -113,7 +113,7 @@
 
 	access = list(access_weapons, access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court, access_eva)
 	minimal_access = list(access_weapons, access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
-	alt_titles = list("Forensic Technician")
+	alt_titles = list("Forensic Technician","Gumshoe")
 
 	minimal_player_age = 7
 
@@ -158,6 +158,9 @@
 		L.part = affected
 		H.dna.SetSEState(SOBERBLOCK,1)
 		H.mutations += M_SOBER
+		if(H.mind.role_alt_title == "Gumshoe")
+			H.mutations += M_NOIR
+			H.dna.SetSEState(NOIRBLOCK,1)
 		H.check_mutations = 1
 		return 1
 

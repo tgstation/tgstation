@@ -410,6 +410,8 @@ var/global/list/BODY_COVER_VALUE_LIST=list("[HEAD]" = COVER_PROTECTION_HEAD,"[EY
 // MUTATIONS
 ///////////////////////////////////////
 
+
+
 // Generic mutations:
 #define	M_TK			1
 #define M_RESIST_COLD	2
@@ -469,6 +471,7 @@ var/global/list/BODY_COVER_VALUE_LIST=list("[HEAD]" = COVER_PROTECTION_HEAD,"[EY
 #define M_DIZZY		210		// Trippy.
 #define M_SANS		211		// IF YOU SEE THIS WHILST BROWSING CODE, YOU HAVE BEEN VISITED BY: THE FONT OF SHITPOSTING. GREAT LUCK AND WEALTH WILL COME TO YOU, BUT ONLY IF YOU SAY 'fuck comic sans' IN YOUR PR.
 #define M_FARSIGHT	212		// Increases mob's view range by 2
+#define M_NOIR		213		// aww yis detective noir
 
 // Bustanuts
 #define M_HARDCORE      300
