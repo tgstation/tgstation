@@ -1,20 +1,17 @@
 /obj/vehicle/scooter
 	name = "scooter"
-	desc = "A popular child's toy back on the planets, handcrafted by some greyshirt."
+	desc = "A popular child's toy back on the planets, but handcrafted with pipes and metal."
 	icon_state = "scooter"
-	vehicle_move_delay = 2.2 //slightly slower than other vehicles, due to being made with pipes, rods, and metal
-	var/pipetype = 1 //so the pipe created on deconstruction doesn't have a blank icon_state, changes on construction of the scooter
-	var/pipename	 //same
+	var/pipe_cache = list()
+
 /obj/vehicle/scooter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to remove the pipe..</span>"
 		if(do_after(user, 40/I.toolspeed, target = src))
-			new/obj/item/scooter_frame(get_turf(src))
-			var/obj/item/pipe/Q = new/obj/item/pipe
-			Q.pipe_type = pipetype
-			Q.pipename = pipename
-			user.put_in_hands(Q)
-			new/obj/item/stack/sheet/metal(get_turf(src),2)
+			new /obj/item/scooter_frame(get_turf(src))
+			for(var/obj/item/pipe/L in pipe_cache)
+				L.loc = get_turf(src)
+			new /obj/item/stack/sheet/metal(get_turf(src),2)
 			user << "<span class='warning'>It all falls apart!</span>"
 			qdel(src)
 
@@ -54,11 +51,11 @@
 
 		if(istype(I, /obj/item/weapon/wrench))
 			user << "<span class='notice'>You deconstruct the [src].</span>"
-			new/obj/item/stack/rods(get_turf(src),2)
+			new /obj/item/stack/rods(get_turf(src),2)
 			qdel(src)
 			return
 
-		if(istype(I, /obj/item/stack/sheet/metal))
+		else if(istype(I, /obj/item/stack/sheet/metal))
 			var/obj/item/stack/sheet/metal/P = I
 			if(P.get_amount() < 2)
 				user << "<span class='warning'>You need at least 2 shets of metal!</span>"
@@ -69,19 +66,20 @@
 			icon_state = "scooter_frame_2"
 			return
 
-	if(construction_state == SCOOTER_STATE_WHEELS)
+	else if(construction_state == SCOOTER_STATE_WHEELS)
 
 		if(istype(I, /obj/item/weapon/screwdriver))
 			user << "<span class='notice'>You remove the wheels from the [src].</span>"
-			new/obj/item/stack/sheet/metal(get_turf(src),2)
+			new /obj/item/stack/sheet/metal(get_turf(src),2)
 			construction_state = SCOOTER_STATE_FRAME
 			icon_state = "scooter_frame_1"
 
-		if(istype(I, /obj/item/pipe))
+		else if(istype(I, /obj/item/pipe))
 			var/obj/item/pipe/C = I
 			user << "<span class='notice'>You add the pipe to the [src].</span>"
 			var/obj/vehicle/scooter/M = new/obj/vehicle/scooter(get_turf(src))
-			M.pipetype = C.pipe_type
-			M.pipename = C.pipename
+			C.pipe_type = I:pipe_type //I KNOW ABOUT THE COLON OPERATOR AND IT'S ISSUES BUT THIS IS LITERALLY THE ONLY WAY TO DO THIS REEEE
+			C.pipename = I:pipename
+			M.pipe_cache += C
 			qdel(I)
 			qdel(src)
