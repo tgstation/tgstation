@@ -133,7 +133,7 @@
 /obj/screen/storage/Click(location, control, params)
 	if(usr.attack_delayer.blocked())
 		return
-	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
+	if(usr.incapacitated())
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
@@ -792,7 +792,7 @@
 	// We don't even know if it's a middle click
 	if(usr.attack_delayer.blocked())
 		return
-	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
+	if(usr.incapacitated())
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1

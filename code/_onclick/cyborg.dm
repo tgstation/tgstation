@@ -15,7 +15,7 @@
 		build_click(src, client.buildmode, params, A)
 		return
 
-	if(stat || lockcharge || weakened || stunned || paralysis)
+	if(incapacitated() || lockcharge)
 		return
 
 	var/list/modifiers = params2list(params)

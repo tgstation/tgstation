@@ -125,7 +125,7 @@
 			for (var/mob/living/carbon/C in range(viewrange-2,src.loc))
 				if (C.stat == 2 || !can_see(src,C,viewrange) || istype(C, /mob/living/carbon/human/zombie) || istype(C, /mob/living/carbon/monkey))
 					continue
-				if(C:stunned || C:paralysis || C:weakened)
+				if(C.incapacitated())
 					target = C
 					break
 				if(C:health < last_health)

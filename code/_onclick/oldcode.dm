@@ -115,7 +115,7 @@
 		return
 
 	// ------- PARALYSIS, STUN, WEAKENED, DEAD, (And not AI) -------
-	if (((usr.paralysis || usr.stunned || usr.weakened) && !istype(usr, /mob/living/silicon/ai)) || usr.stat != 0)
+	if ((user.incapacitated() && !istype(usr, /mob/living/silicon/ai)))
 		return
 
 	// ------- CLICKING STUFF IN CONTAINERS -------

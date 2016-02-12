@@ -377,9 +377,9 @@
 	if (!istype(target) || target.locked_to || !Adjacent(user) || !user.Adjacent(target) || user.stat || istype(user, /mob/living/silicon/ai) || target == ass || copier_blocked(user))
 		return
 	src.add_fingerprint(user)
-	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+	if(target == user && !(user.incapacitated()))
 		visible_message("<span class='warning'>[usr] jumps onto the photocopier!</span>")
-	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+	else if(target != user && !user.incapacitated())
 		if(target.anchored) return
 		if(!ishuman(user) && !ismonkey(user)) return
 		visible_message("<span class='warning'>[usr] drags [target.name] onto the photocopier!</span>")
