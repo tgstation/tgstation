@@ -43,7 +43,6 @@
 	desc = "Yarr."
 	icon_state = "hgpirate"
 	item_state = "hgpirate"
-	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
 
 
