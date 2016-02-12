@@ -94,7 +94,7 @@
 			monsterstring = "monstrous size"
 			max_number = 1
 
-	var/number = rand(0, max_number)
+	var/number = rand(1, max_number)
 
 	for(var/i = 1, i <= number, i++)
 		var/area/A = locate(spawn_area_type)
