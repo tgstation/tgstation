@@ -37,6 +37,7 @@
 			client.screen -= spell_master
 
 	client.reset_screen()				//remove hud items just in case
+	client.color = null
 	hud_used = new /datum/hud(src)
 	gui_icons = new /datum/ui_icons(src)
 	client.screen += catcher //Catcher of clicks
