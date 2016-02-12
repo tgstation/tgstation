@@ -25,6 +25,13 @@
 	see &= enemies // Remove all entries that aren't in enemies
 	return see
 
+/mob/living/simple_animal/hostile/retaliate/inherit_mind(mob/living/simple_animal/from)
+	..()
+
+	var/mob/living/simple_animal/hostile/retaliate/R = from
+	if(istype(R))
+		src.friends = R.friends.Copy()
+
 /mob/living/simple_animal/hostile/retaliate/proc/Retaliate()
 	if(stat) //can't attack if we're dead - no point in targeting
 		return

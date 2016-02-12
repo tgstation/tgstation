@@ -648,6 +648,21 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 		if(istype(child))
 			child.faction = src.faction
 
+/mob/living/simple_animal/proc/grow_up()
+	if(src.type == species_type) //Already grown up
+		return
+
+	forceMove(get_turf(src))
+	var/mob/living/simple_animal/new_animal = new species_type(src.loc)
+
+	new_animal.inherit_mind(src)
+	new_animal.ckey = src.ckey
+	new_animal.key = src.key
+	qdel(src)
+
+/mob/living/simple_animal/proc/inherit_mind(mob/living/simple_animal/from)
+	src.faction = from.faction
+
 /mob/living/simple_animal/say_understands(var/mob/other,var/datum/language/speaking = null)
 	if(other) other = other.GetSource()
 	if(issilicon(other))
