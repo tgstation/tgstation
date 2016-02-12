@@ -26,7 +26,7 @@
 /obj/machinery/conveyor/auto/New(loc, newdir)
 	..(loc, newdir)
 	operating = 1
-	setmove()
+	update_move_direction()
 
 /obj/machinery/conveyor/auto/update()
 	if(stat & BROKEN)
@@ -46,9 +46,9 @@
 	..(loc)
 	if(newdir)
 		dir = newdir
-	setmove()
+	update_move_direction()
 
-/obj/machinery/conveyor/proc/setmove()
+/obj/machinery/conveyor/proc/update_move_direction()
 	switch(dir)
 		if(NORTH)
 			forwards = NORTH
@@ -129,7 +129,7 @@
 		if(!(stat & BROKEN))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			dir = turn(dir,-45)
-			setmove()
+			update_move_direction()
 			user << "<span class='notice'>You rotate [src].</span>"
 			return
 	if(isrobot(user))
@@ -239,7 +239,7 @@
 
 	for(var/obj/machinery/conveyor/C in conveyors)
 		C.operating = position
-		C.setmove()
+		C.update_move_direction()
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
