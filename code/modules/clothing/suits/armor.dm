@@ -77,8 +77,21 @@
 	item_state = "capspacesuit"
 
 /obj/item/clothing/suit/armor/riot
+	name = "riot suit"
+	desc = "A suit of armor with heavy padding to protect against melee attacks."
+	icon_state = "riot"
+	item_state = "swat_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor = list(melee = 70, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
+	flags_inv = HIDEJUMPSUIT
+	strip_delay = 80
+	put_on_delay = 60
+
+/obj/item/clothing/suit/armor/eod
 	name = "EOD suit"
-	desc = "A suit of armor with heavy padding to protect against most attacks. Looks like it might impair movement."
+	desc = "A full suit of armor designed to protect against most forms of attack. Looks like it can impair movement."
 	icon_state = "riot"
 	item_state = "swat_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -88,7 +101,7 @@
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 80
 	put_on_delay = 60
-	slowdown = 3
+	slowdown = 1
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"

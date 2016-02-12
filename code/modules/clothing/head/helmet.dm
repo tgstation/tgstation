@@ -32,15 +32,15 @@
 	armor = list(melee = 15, bullet = 40, laser = 10, energy = 10, bomb = 40, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/riot
-	name = "EOD helmet"
-	desc = "It's a helmet specifically designed to protect against most attacks."
+	name = "riot helmet"
+	desc = "It's a helmet specifically designed to protect against melee attacks."
 	icon_state = "riot"
 	item_state = "helmet"
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
 	flags = HEADBANGPROTECT
-	armor = list(melee = 70, bullet = 80, laser = 40, energy = 30, bomb = 100, bio = 50, rad = 0)
+	armor = list(melee = 80, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	strip_delay = 80
 	action_button_name = "Toggle Helmet Visor"
@@ -68,6 +68,16 @@
 				while(up)
 					playsound(src.loc, "[active_sound]", 100, 0, 4)
 					sleep(15)
+
+/obj/item/clothing/head/helmet/eod
+	name = "EOD helmet"
+	desc = "It's a helmet specifically designed to protect against most attacks."
+	icon_state = "riot"
+	item_state = "helmet"
+	flags = HEADBANGPROTECT
+	armor = list(melee = 70, bullet = 80, laser = 40, energy = 30, bomb = 100, bio = 50, rad = 0)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	strip_delay = 80
 
 /obj/item/clothing/head/helmet/justice
 	name = "helmet of justice"
