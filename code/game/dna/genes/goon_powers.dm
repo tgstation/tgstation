@@ -361,12 +361,12 @@
 	var/atom/movable/the_item = targets[1]
 	if(!the_item || !the_item.Adjacent(user))
 		return
-	if(istype(the_item, /obj/item/weapon/organ/head))
-		to_chat(user, "<span class='warning'>You try to put the [the_item] in your mouth, but the ears tickle your throat!</span>")
-		return 0
-	else if(isbrain(the_item))
-		to_chat(user, "<span class='warning'>You try to put [the_item] in your mouth, but the texture makes you gag!</span>")
-		return 0
+	// if(istype(the_item, /obj/item/weapon/organ/head))
+	// 	to_chat(user, "<span class='warning'>You try to put the [the_item] in your mouth, but the ears tickle your throat!</span>")
+	// 	return 0
+	// else if(isbrain(the_item))
+	// 	to_chat(user, "<span class='warning'>You try to put [the_item] in your mouth, but the texture makes you gag!</span>")
+	// 	return 0
 	else if(ishuman(the_item))
 		//My gender
 		var/m_his = "its"
