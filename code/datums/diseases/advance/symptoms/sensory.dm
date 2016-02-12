@@ -87,9 +87,9 @@ Bonus
 				M.reagents.add_reagent("ethanol", 10)
 				M << "<span class='warning'><b>You feel absolutely hammered.</b></span>"
 			if(4,5)
-				M.reagents.add_reagent_list(list("ethanol","mindbreaker" 10))
+				M.reagents.add_reagent_list(list("ethanol","mindbreaker", 10))
 				M << "<span class='warning'><b>You try to focus on not dying.</b></span>"
 			if(6)
-				M.reagents.add_reagent_list(list("impedrezene","ethanol","mindbreaker" 10))
+				M.reagents.add_reagent_list(list("impedrezene","ethanol","mindbreaker", 10))
 				M << "<span class='warning'><b>u can count 2 potato!</b></span>"
 	return
