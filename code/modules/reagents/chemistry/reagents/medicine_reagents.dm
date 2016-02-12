@@ -181,6 +181,7 @@
 
 /datum/reagent/medicine/silver_sulfadiazine/on_mob_life(mob/living/M)
 	M.adjustFireLoss(-2*REM)
+	M.visible_message("<span class='warning'>[M]'s burns rapidly fade away...</span>")
 	..()
 
 /datum/reagent/medicine/oxandrolone
@@ -229,6 +230,7 @@
 
 /datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/M)
 	M.adjustBruteLoss(-2*REM)
+	M.visible_message("<span class='warning'>[M]'s wounds rapidly weave back together...</span>")
 	..()
 
 /datum/reagent/medicine/salglu_solution
