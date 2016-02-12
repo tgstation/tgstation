@@ -758,8 +758,8 @@
 		if(!has_gravity(H))
 			// If there's no gravity we have the option of sanic speed.
 			var/obj/item/weapon/tank/jetpack/J = H.back
-			if(!istype(J))
-				var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
+			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
+			if(!istype(J) && istype(C))
 				J = C.jetpack
 
 			if(istype(J) && J.turbo && J.allow_thrust(0.01, H))
