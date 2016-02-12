@@ -5,7 +5,7 @@
 	icon_state = "crate"
 	req_access = null
 	can_weld_shut = FALSE
-	allow_mobs = FALSE
+	horizontal = TRUE
 	allow_objects = TRUE
 	allow_dense = TRUE
 	var/obj/item/weapon/paper/manifest/manifest
@@ -28,17 +28,6 @@
 		return
 	if(!toggle())
 		togglelock(user)
-
-/obj/structure/closet/crate/attackby(obj/item/weapon/W, mob/user, params)
-	if(opened)
-		if(isrobot(user))
-			return
-		if(user.drop_item())
-			W.Move(loc)
-	else if(istype(W, /obj/item/stack/packageWrap))
-		return
-	else if(!place(user, W))
-		attack_hand(user)
 
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	user << "<span class='notice'>You tear the manifest off of the crate.</span>"

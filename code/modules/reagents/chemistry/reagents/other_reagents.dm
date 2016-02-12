@@ -365,25 +365,27 @@
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
 	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3)
-	sleep(30)
-	//var/list/blacklisted_species = list(
-
-	var/list/possible_morphs = list()
-	for(var/type in subtypesof(/datum/species))
-		var/datum/species/S = type
-		if(initial(S.blacklisted))
-			continue
-		possible_morphs += S
-	var/datum/species/mutation = pick(possible_morphs)
-	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
-		H << "<span class='danger'>The pain subsides. You feel... different.</span>"
-		H.set_species(mutation)
-		if(mutation.id == "slime")
-			H.faction |= "slime"
+	spawn(30)
+		if(!H || qdeleted(H))
+			return
+		//var/list/blacklisted_species = list(
+		var/list/possible_morphs = list()
+		for(var/type in subtypesof(/datum/species))
+			var/datum/species/S = type
+			if(initial(S.blacklisted))
+				continue
+			possible_morphs += S
+		var/datum/species/mutation = pick(possible_morphs)
+		if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
+			H << "<span class='danger'>The pain subsides. You feel... different.</span>"
+			H.set_species(mutation)
+			if(mutation.id == "slime")
+				H.faction |= "slime"
+			else
+				H.faction -= "slime"
 		else
-			H.faction -= "slime"
-	else
-		H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
+			H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
+
 	return 1
 
 /datum/reagent/mulligan

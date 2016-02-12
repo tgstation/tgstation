@@ -27,7 +27,7 @@ Pipelines + Other Objects -> Pipe network
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes = list()
 
-/obj/machinery/atmospherics/New(process = TRUE)
+/obj/machinery/atmospherics/New(loc, process = TRUE)
 	nodes.len = device_type
 	..()
 	if(process)

@@ -395,7 +395,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return
 
 /proc/IsAdminGhost(var/mob/user)
-	if(check_rights_for(user.client, R_ADMIN) && istype(user, /mob/dead/observer) && user.client.AI_Interact)
-		return 1
-	else
-		return 0
+	if(!user.client) // Do they have a client?
+		return
+	if(!isobserver(user)) // Are they a ghost?
+		return
+	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
+		return
+	if(!user.client.AI_Interact) // Do they have it enabled?
+		return
+	return TRUE

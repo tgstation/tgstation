@@ -166,9 +166,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					underwear = "Tankini"
 				if(13)
 					underwear = "Nude"
-		if(!(pref_species in species_list))
-			pref_species = new /datum/species/human()
-	return
+
+	if(!(pref_species in species_list))
+		pref_species = new /datum/species/human()
+
+	if(current_version < 13 || !istext(backbag))
+		switch(backbag)
+			if(2)
+				backbag = GSATCHEL
+			else
+				backbag = GBACKPACK
+
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)

@@ -95,7 +95,6 @@
 	if(tableclimber && tableclimber != user)
 		tableclimber.Weaken(2)
 		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You're knocked off the table!", "You see [tableclimber.name] get knocked off the table</span>")
-	..()
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return

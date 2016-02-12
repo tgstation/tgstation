@@ -267,7 +267,6 @@
 			else
 				radiation = Clamp(radiation, 0, 100)
 
-
 /mob/living/carbon/handle_chemicals_in_body()
 	if(reagents)
 		reagents.metabolize(src)
@@ -344,7 +343,7 @@
 
 	if(drowsyness)
 		drowsyness = max(drowsyness - restingpwr, 0)
-		set_blurriness(max(2, eye_blurry))
+		blur_eyes(2)
 		if(prob(5))
 			AdjustSleeping(1)
 			Paralyse(5)

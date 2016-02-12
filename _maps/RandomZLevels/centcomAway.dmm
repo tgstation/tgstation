@@ -486,7 +486,7 @@
 "jr" = (/obj/structure/table,/obj/item/weapon/firstaid_arm_assembly,/turf/simulated/floor/plasteel{icon_state = "vault"},/area/awaymission/centcomAway/hangar)
 "js" = (/obj/structure/table,/obj/item/device/assembly/flash/handheld,/obj/item/device/assembly/flash/handheld,/turf/simulated/floor/plasteel{icon_state = "vault"},/area/awaymission/centcomAway/hangar)
 "jt" = (/obj/structure/table,/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/sheet/metal{amount = 50},/turf/simulated/floor/plasteel{icon_state = "vault"},/area/awaymission/centcomAway/hangar)
-"ju" = (/obj/structure/table,/obj/item/device/mmi/radio_enabled,/turf/simulated/floor/plasteel{icon_state = "vault"},/area/awaymission/centcomAway/hangar)
+"ju" = (/obj/structure/table,/obj/item/device/mmi,/turf/simulated/floor/plasteel{icon_state = "vault"},/area/awaymission/centcomAway/hangar)
 "jv" = (/obj/structure/table,/obj/item/weapon/storage/toolbox/mechanical,/turf/simulated/floor/plasteel{icon_state = "vault"},/area/awaymission/centcomAway/hangar)
 "jw" = (/obj/machinery/door/airlock/maintenance_hatch{req_access_txt = "101"},/turf/simulated/floor/plating,/area/awaymission/centcomAway/general)
 "jx" = (/obj/machinery/door/window,/obj/machinery/door/window/northright,/turf/simulated/floor/plasteel{icon_state = "floor"},/area/awaymission/centcomAway/general)

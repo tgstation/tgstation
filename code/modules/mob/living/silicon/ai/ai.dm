@@ -885,7 +885,11 @@ var/list/ai_list = list()
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
 		update_sight()
-		update_vision_overlays()
+		if(client.eye != src)
+			var/atom/AT = client.eye
+			AT.get_remote_view_fullscreens(src)
+		else
+			clear_fullscreen("remote_view", 0)
 
 
 /mob/living/silicon/ai/update_vision_overlays()
