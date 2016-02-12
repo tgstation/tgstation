@@ -67,36 +67,36 @@
 	switch(monster)
 		if(MONSTER_BEAR)
 			spawn_monster_type = pick(/mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/bear/panda, /mob/living/simple_animal/hostile/bear/polarbear)
-			max_number = 1
+			max_number = 2
 			monsterstring = "fur"
 		if(MONSTER_CREATURE)
 			spawn_monster_type = /mob/living/simple_animal/hostile/creature
-			max_number = 1
+			max_number = 2
 			monsterstring = "slime"
 		if(MONSTER_XENO)
 			spawn_monster_type = pick(/mob/living/simple_animal/hostile/alien, /mob/living/simple_animal/hostile/alien/drone, /mob/living/simple_animal/hostile/alien/sentinel, /mob/living/simple_animal/hostile/alien/queen, /mob/living/simple_animal/hostile/alien/queen/large)
-			max_number = 0
+			max_number = 1
 			monsterstring = "a cuticle"
 		if(MONSTER_HIVEBOT)
 			spawn_monster_type = pick(/mob/living/simple_animal/hostile/hivebot, /mob/living/simple_animal/hostile/hivebot/range, /mob/living/simple_animal/hostile/hivebot/rapid, /mob/living/simple_animal/hostile/hivebot/tele)
-			max_number = 5
+			max_number = 6
 			monsterstring = "a synthetic covering"
 		if(MONSTER_ZOMBIE)
-			spawn_monster_type = /mob/living/simple_animal/hostile/necro/zombie
-			max_number = 2
+			spawn_monster_type = pick(/mob/living/simple_animal/hostile/necro/zombie, /mob/living/simple_animal/hostile/monster/necromorph)
+			max_number = 3
 			monsterstring = "extreme decay"
 		if(MONSTER_SKRITE)
 			spawn_monster_type = /mob/living/simple_animal/hostile/monster/skrite
 			monsterstring = "fleshy bare skin"
-			max_number = 1
+			max_number = 2
 		if(MONSTER_SQUEEN)
 			spawn_monster_type = /mob/living/simple_animal/hostile/giant_spider/nurse/queen_spider
 			monsterstring = "monstrous size"
-			max_number = 0
+			max_number = 1
 
 	var/number = rand(0, max_number)
 
-	for(var/i = 0, i <= number, i++)
+	for(var/i = 1, i <= number, i++)
 		var/area/A = locate(spawn_area_type)
 		var/list/turf/simulated/floor/valid = list()
 		//Loop through each floor in the supply drop area
