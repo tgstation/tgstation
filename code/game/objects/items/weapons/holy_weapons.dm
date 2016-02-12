@@ -89,12 +89,10 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-
 /obj/item/weapon/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
-
 
 /obj/item/weapon/nullrod/claymore/darkblade
 	icon_state = "cultblade"
@@ -103,6 +101,22 @@
 	desc = "Spread the glory of the dark gods!"
 	slot_flags = SLOT_BELT
 	hitsound = 'sound/hallucinations/growl1.ogg'
+
+/obj/item/weapon/nullrod/claymore/chainsaw_sword
+	icon_state = "chainswordon"
+	item_state = "chainswordon"
+	name = "sacred chainsaw sword"
+	desc = "Suffer not a heretic to live."
+	slot_flags = SLOT_BELT
+	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+	hitsound = 'sound/weapons/chainsawhit.ogg'
+
+/obj/item/weapon/nullrod/claymore/glowing
+	icon_state = "swordon"
+	item_state = "swordon"
+	name = "force weapon"
+	desc = "The blade glows with the power of faith. Or possibly a battery."
+	slot_flags = SLOT_BELT
 
 /obj/item/weapon/nullrod/sord
 	name = "\improper UNREAL SORD"
@@ -124,6 +138,15 @@
 	slot_flags = SLOT_BACK
 	sharpness = IS_SHARP
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
+
+/obj/item/weapon/nullrod/hammmer
+	icon_state = "hammeron"
+	item_state = "hammeron"
+	name = "relic war hammer"
+	desc = "This war hammer cost the chaplain fourty thousand space dollars."
+	slot_flags = SLOT_BELT
+	w_class = 5
+	attack_verb = list("smashed", "bashed", "hammered", "crunched")
 
 /obj/item/weapon/nullrod/chainsaw
 	name = "chainsaw hand"
@@ -195,7 +218,6 @@
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	hitsound = 'sound/weapons/bite.ogg'
 	var/used_blessing = FALSE
-
 
 /obj/item/weapon/nullrod/carp/attack_self(mob/living/user)
 	if(used_blessing)
