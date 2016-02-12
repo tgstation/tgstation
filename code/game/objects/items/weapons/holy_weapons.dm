@@ -67,9 +67,9 @@
 	var/shield_icon = "shield-red"
 
 /obj/item/weapon/nullrod/staff/worn_overlays(isinhands)
-    . = list()
-    if(isinhands)
-        . += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
+	. = list()
+	if(isinhands)
+		. += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
 
 /obj/item/weapon/nullrod/staff/blue
 	name = "blue holy staff"
@@ -117,6 +117,7 @@
 
 /obj/item/weapon/nullrod/scythe
 	icon_state = "scythe0"
+	item_state = "scythe0"
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
 	w_class = 4

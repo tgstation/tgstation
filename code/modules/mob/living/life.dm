@@ -92,7 +92,7 @@
 	if(stunned)
 		AdjustStunned(-1)
 	if(weakened)
-		AdjustWeakened(-1)
+		AdjustWeakened(-1, ignore_canweaken=1)
 
 /mob/living/proc/handle_disabilities()
 	//Eyes
