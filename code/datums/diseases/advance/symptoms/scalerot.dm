@@ -67,7 +67,10 @@ Bonus
 						M.set_species(/datum/species/human)
 						M.update_icons()
 						M.update_hair()
-						M.visible_message("<span class='danger'>[M] rips away their rotting scales and writhes in pain!</span>")
+						if(M.dna.species.id == "lizard")
+							M.visible_message("<span class='danger'>[M] rips away their rotting scales and writhes in pain!</span>")
+						if(M.dna.species.id == "fly")
+							M.visible_message("<span class='danger'>[M] rips away their sticky, leathery chitin and writhes in pain!</span>")
 						M.adjustCloneLoss(35)
 						M.sleeping += 10
 		else
