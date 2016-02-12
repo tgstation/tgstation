@@ -208,7 +208,7 @@ var/datum/subsystem/pai/SSpai
 	if(response == "Yes")
 		recruitWindow(C.mob)
 	else if (response == "Never for this round")
-		prefs.be_special -= ROLE_PAI
+		C.prefs.be_special -= ROLE_PAI
 
 /datum/paiCandidate
 	var/name
