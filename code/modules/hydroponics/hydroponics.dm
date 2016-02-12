@@ -886,17 +886,23 @@
 						make_podman = 1
 						break
 				else
-					if(M.ckey == ckey && M.stat == 2 && !M.suiciding && !M.hellbound)
+					if(M.ckey == ckey && M.stat == 2 && !M.suiciding)
 						make_podman = 1
+						if(istype(M, /mob/living))
+							var/mob/living/L = M
+							make_podman = !L.hellbound
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
 			for(var/mob/M in player_list)
-				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == 2 && !M.suiciding && !M.hellbound)
+				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == 2 && !M.suiciding)
 					if(istype(M, /mob/dead/observer))
 						var/mob/dead/observer/O = M
 						if(!O.can_reenter_corpse)
 							break
 					make_podman = 1
+					if(istype(M, /mob/living))
+						var/mob/living/L = M
+						make_podman = !L.hellbound
 					ckey_holder = M.ckey
 					break
 

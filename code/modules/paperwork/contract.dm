@@ -3,7 +3,9 @@
 #define CONTRACT_PRESTIGE 3
 #define CONTRACT_MAGIC 4
 #define CONTRACT_SLAVE 5
-#define CONTRACT_UNWILLING 6
+#define CONTRACT_REVIVE 6
+#define CONTRACT_KNOWLEDGE 7
+#define CONTRACT_UNWILLING 8
 
 
 /* For employment contracts and demonic contracts */
@@ -109,25 +111,35 @@
 		if(CONTRACT_SLAVE)
 			name = "paper- Contract for slave"
 			info = "<center><B>Contract for slave</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner], in exchange for the ability to bend a single human to my will.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+		if(CONTRACT_REVIVE)
+			name = "paper- Contract for resurrection"
+			info = "<center><B>Contract for resurrection</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner], in exchange for resurrection and curing of all injuries.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+		if(CONTRACT_KNOWLEDGE)
+			name = "paper- Contract for knowledge"
+			info = "<center><B>Contract for knowledge</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner], in exchange for boundless knowledge.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
 		if(CONTRACT_UNWILLING)
 			name = "paper- Contract for soul"
 			info = "<center><B>Contract for slave</B></center><BR><BR><BR>I, [target], hereby offer my soul to the infernal hells by way of the infernal agent [owner].  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
 
 
 /obj/item/weapon/paper/contract/infernal/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
-	..()
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if(user.IsAdvancedToolUser())
 			if(user == target)
 				if(user.hasSoul)
-					user << "<span class='notice'>You quickly scrawl your name on the contract</span>"
-					FulfillContract()
-					return
+					if (contractType == CONTRACT_REVIVE)
+						user << "<span class='notice'>You are already alive, this contract would do nothing.</span>"
+						return
+					else
+						user << "<span class='notice'>You quickly scrawl your name on the contract</span>"
+						FulfillContract()
+						return
 				else
 					user << "<span class='notice'>You are not in possession of your soul, you may not sell it.</span>"
 					return
 			else
 				user << "<span class='notice'>Your signature simply slides off of the sheet, it seems this contract is not meant for you to sign.</span>"
+				return
 		else
 			user << "<span class='notice'>You don't know how to read or write.</span>"
 			return
@@ -187,6 +199,8 @@
 			//TODO: implement this.
 		//if(CONTRACT_UNWILLING)
 			//TODO: implement this.
+		//if(CONTRACT_KNOWLEDGE)
+			//TODO: implement this
 	user.hasSoul = 0
 	user.hellbound = 1
 	//owner.soulBounties += user
