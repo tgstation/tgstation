@@ -21,6 +21,7 @@
 	icon_state = "wizmobile"
 	//nick = "TRUE POWER"
 	keytype = /obj/item/key/wizmobile
+	overrideghostspin = 1
 	can_spacemove=1
 	//ethereal=1 // NERF
 	var/can_move=1
