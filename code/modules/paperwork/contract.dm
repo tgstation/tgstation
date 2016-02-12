@@ -188,5 +188,5 @@
 		//if(CONTRACT_UNWILLING)
 			//TODO: implement this.
 	user.hasSoul = 0
-	user.damned = 1
+	user.hellbound = 1
 	//owner.soulBounties += user

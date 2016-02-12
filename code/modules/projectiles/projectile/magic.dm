@@ -48,6 +48,8 @@
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
+	if(target.hellbound)
+		return
 	if(ismob(target))
 		var/old_stat = target.stat
 		target.revive()

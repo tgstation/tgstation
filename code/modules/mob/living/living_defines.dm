@@ -60,4 +60,4 @@
 	var/list/butcher_results = null
 
 	var/hasSoul = 1
-	var/damned = 0
+	var/hellbound = 0
