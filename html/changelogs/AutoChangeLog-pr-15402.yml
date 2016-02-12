@@ -1,0 +1,7 @@
+author: octareenroon91
+delete-after: True
+changes: 
+  - rscdel: "You can no longer kill yourself with the SORD"
+  - rscdel: "You can no longer kill yourself with the SORD"
+  - rscadd: "Suicide attempts with the SORD will inflict 200 stamina damage. You will only die of shame."
+  - bugfix: "Cleanup to suicide verb code."
