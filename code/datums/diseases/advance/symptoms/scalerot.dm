@@ -40,15 +40,11 @@ Bonus
 					if(M.dna.species.id == "lizard")
 						M << M.say("Hiss?")
 						M << "<span class='danger'>You painfully let out a hiss</span>"
-						M.adjustCloneLoss(5)
-						M.adjustBruteLoss(10)
 					if(M.dna.species.id == "fly")
 						M << M.say("Buzz?")
 						M << "<span class='danger'>You make a pathetic attempt to buzz</span>"
-						M.adjustCloneLoss(5)
-						M.adjustBruteLoss(10)
-					else
-						A.stage = 1
+					M.adjustCloneLoss(5)
+					M.adjustBruteLoss(10)
 				if(5)
 					if(M.dna.species.id == "lizard")
 						M << "<span class='danger'>Your scales rot away and reveal flesh</span>"
