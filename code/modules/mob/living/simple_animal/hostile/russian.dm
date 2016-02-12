@@ -53,3 +53,19 @@
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot
 	loot = list(/obj/effect/landmark/mobcorpse/russian/ranged/trooper,
 				/obj/item/weapon/gun/projectile/shotgun/lethal)
+
+/mob/living/simple_animal/hostile/russian/ranged/officer
+	name = "Russian Officer"
+	icon_state = "russianofficer"
+	icon_living = "russianofficer"
+	maxHealth = 65
+	health = 65
+	rapid = 1
+	casingtype = /obj/item/ammo_casing/c9mm
+	loot = list(/obj/effect/landmark/mobcorpse/russian/ranged/officer,
+				/obj/item/weapon/gun/projectile/automatic/pistol/APS)
+
+/mob/living/simple_animal/hostile/russian/ranged/officer/Aggro()
+	..()
+	summon_backup(15)
+	say("NEED BACKUP!!")
