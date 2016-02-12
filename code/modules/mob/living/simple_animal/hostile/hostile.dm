@@ -262,12 +262,12 @@
 	..()
 	walk(src, 0)
 
-/mob/living/simple_animal/hostile/inherit_mind(mob/living/simple_animal/hostile/from)
+/mob/living/simple_animal/hostile/inherit_mind(mob/living/simple_animal/from)
 	..()
 
 	var/mob/living/simple_animal/hostile/H = from
 	if(istype(H))
-		src.friends = H.friends.Copy()
+		src.friends |= H.friends
 
 /mob/living/simple_animal/hostile/proc/OpenFire(var/target)
 

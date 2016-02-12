@@ -622,8 +622,8 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	var/alone = 1
 	var/mob/living/simple_animal/partner
 	var/children = 0
-	for(var/mob/M in oview(7, src))
-		if(M.stat != CONSCIOUS) //Check if it's concious FIRSTER.
+	for(var/mob/living/M in oview(7, src))
+		if(M.isUnconscious()) //Check if it's concious FIRSTER.
 			continue
 		else if(istype(M, childtype)) //Check for children FIRST.
 			children++
@@ -642,11 +642,13 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 /mob/living/simple_animal/proc/give_birth()
 	for(var/i=1; i<=child_amount; i++)
 		if(animal_count[childtype] > ANIMAL_CHILD_CAP)
-			break
+			return 0
 
 		var/mob/living/simple_animal/child = new childtype(loc)
 		if(istype(child))
 			child.inherit_mind(src)
+
+	return 1
 
 /mob/living/simple_animal/proc/grow_up()
 	if(src.type == species_type) //Already grown up

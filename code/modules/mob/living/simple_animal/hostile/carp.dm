@@ -65,10 +65,12 @@
 		if(!src) return
 
 		src.death(0)
+
 		sleep(30)
-		src.visible_message("<span class='danger'>[src]'s body explodes in a shower of gore as its offspring burst out!</span>")
-		..()
-		src.gib(meat=0)
+
+		if(..())
+			src.gib(meat=0)
+			src.visible_message("<span class='danger'>[src]'s body explodes in a shower of gore as its offspring burst out!</span>")
 
 /mob/living/simple_animal/hostile/carp/Process_Spacemove(var/check_drift = 0)
 	return 1	//No drifting in space for space carp!	//original comments do not steal
@@ -145,7 +147,10 @@
 			user.drop_item(F, force_drop = 1)
 
 			if(prob(25))
-				friends.Add(user)
+				if(!friends.Find(user))
+					friends.Add(user)
+					to_chat(user, "<span class='info'>You have gained \the [src]'s trust.</span>")
+					flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(user.client), 20)
 
 			if(F.reagents)
 				for(var/datum/reagent/N in F.reagents.reagent_list)
@@ -155,7 +160,7 @@
 
 		else
 
-			to_chat(user, "<span class='info'>\The [src] gracefully refuses \the [W].")
+			to_chat(user, "<span class='info'>\The [src] gracefully refuses \the [W].</span>")
 
 	return 1
 
@@ -179,6 +184,8 @@
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
 	icon_living = "holocarp"
+
+	species_type = /mob/living/simple_animal/hostile/carp/holocarp
 	can_breed = 0
 	pheromones_act = PHEROMONES_NO_EFFECT
 	holder_type = null
