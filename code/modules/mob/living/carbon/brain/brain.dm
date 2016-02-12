@@ -6,6 +6,15 @@
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	has_limbs = 0
+	stat = DEAD //we start dead by default
+
+/mob/living/carbon/brain/New(loc)
+	..()
+	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
+		var/obj/item/organ/internal/brain/OB = new(loc) //we create a new brain organ for it.
+		src.loc = OB
+		OB.brainmob = src
+
 
 /mob/living/carbon/brain/Destroy()
 	if(key)				//If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.

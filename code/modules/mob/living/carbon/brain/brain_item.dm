@@ -57,6 +57,9 @@
 		L.mind.transfer_to(brainmob)
 	brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>"
 
+/obj/item/organ/internal/brain/attackby(obj/item/O, mob/user, params)
+	if(brainmob)
+		O.attack(brainmob, user) //Oh noooeeeee
 
 /obj/item/organ/internal/brain/examine(mob/user)
 	..()
