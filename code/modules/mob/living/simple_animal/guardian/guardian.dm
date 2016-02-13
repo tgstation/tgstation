@@ -542,14 +542,12 @@
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
 	if(!istype(A))
 		return
-	if(src.loc == summoner)
-		src << "<span class='danger'><B>You must be manifested to create bombs!</span></B>"
-		return
 	if(istype(A, /obj/))
 		if(bomb_cooldown <= world.time && !stat)
 			var/obj/item/weapon/guardian_bomb/B = new /obj/item/weapon/guardian_bomb(get_turf(A))
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(A))
 			src << "<span class='danger'><B>Success! Bomb armed!</span></B>"
-			bomb_cooldown = world.time + 200
+			bomb_cooldown = world.time + 100
 			B.spawner = src
 			B.disguise (A)
 		else
