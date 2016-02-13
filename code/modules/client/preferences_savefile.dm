@@ -167,7 +167,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				if(13)
 					underwear = "Nude"
 
-	if(!(pref_species in species_list))
+	if(pref_species && !(pref_species.id in roundstart_species))
 		pref_species = new /datum/species/human()
 
 	if(current_version < 13 || !istext(backbag))
