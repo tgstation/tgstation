@@ -91,10 +91,12 @@
 	set name = "Reload Admins"
 	set category = "Admin"
 
-	if(!src.holder)	return
+	if(!src.holder)
+		return
 
 	var/confirm = alert(src, "Are you sure you want to reload all admins?", "Confirm", "Yes", "No")
-	if(confirm !="Yes") return
+	if(confirm !="Yes")
+		return
 
 	message_admins("[key_name_admin(usr)] manually reloaded admins")
 	load_admins()

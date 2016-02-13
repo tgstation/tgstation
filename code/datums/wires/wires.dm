@@ -4,7 +4,6 @@ var/list/wire_colors = list( // http://www.crockford.com/wrrrld/color.html
 	"aqua",
 	"aquamarine",
 	"beige",
-	"black",
 	"blanchedalmond",
 	"blue",
 	"blueviolet",
@@ -154,12 +153,11 @@ var/list/wire_color_directory = list()
 	if(randomize)
 		randomize()
 	else
-		var/list/global_colors = wire_color_directory[holder_type]
 		if(!wire_color_directory[holder_type])
 			randomize()
-			global_colors = colors.Copy()
+			wire_color_directory[holder_type] = colors
 		else
-			colors = global_colors.Copy()
+			colors = wire_color_directory[holder_type]
 
 /datum/wires/Destroy()
 	holder = null
@@ -174,7 +172,7 @@ var/list/wire_color_directory = list()
 		wires += dud
 
 /datum/wires/proc/randomize()
-	var/list/possible_colors = shuffle(wire_colors.Copy())
+	var/list/possible_colors = wire_colors.Copy()
 
 	for(var/wire in shuffle(wires))
 		colors[pick_n_take(possible_colors)] = wire
@@ -293,7 +291,7 @@ var/list/wire_color_directory = list()
 		ui = new(user, src, ui_key, "wires", "[holder.name] wires", 350, 150 + wires.len * 30, master_ui, state)
 		ui.open()
 
-/datum/wires/get_ui_data(mob/user)
+/datum/wires/ui_data(mob/user)
 	var/list/data = list()
 	var/list/payload = list()
 	for(var/color in colors)

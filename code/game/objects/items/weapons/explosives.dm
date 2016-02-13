@@ -69,10 +69,16 @@
 /obj/item/weapon/c4/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
 		return
-	if (ismob(AM) || istype(AM, /obj/item/weapon/storage/))
+	if (ismob(AM))
 		return
 	if(loc == AM)
 		return
+	if((istype(AM, /obj/item/weapon/storage/)) && !((istype(AM, /obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))) //If its storage but not secure storage OR a lockbox, then place it inside.
+		return
+	if((istype(AM,/obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))
+		var/obj/item/weapon/storage/secure/S = AM
+		if(!S.locked) //Literal hacks, this works for lockboxes despite incorrect type casting, because they both share the locked var. But if its unlocked, place it inside, otherwise PLANTING C4!
+			return
 
 	user << "<span class='notice'>You start planting the bomb...</span>"
 

@@ -69,7 +69,6 @@
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	H.emote("scream") // It is painful
 	H.adjustBruteLoss(max(0, 80 - H.getBruteLoss())) // Hurt the human, don't try to kill them though.
-	H.handle_regular_hud_updates() // Make sure they see the pain.
 
 	// Sleep for a couple of ticks to allow the human to see the pain
 	sleep(5)

@@ -29,7 +29,8 @@
 	var/unwieldsound = null
 
 /obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user)
-	if(!wielded || !user) return
+	if(!wielded || !user)
+		return
 	wielded = 0
 	if(force_unwielded)
 		force = force_unwielded
@@ -53,7 +54,8 @@
 	return
 
 /obj/item/weapon/twohanded/proc/wield(mob/living/carbon/user)
-	if(wielded) return
+	if(wielded)
+		return
 	if(istype(user,/mob/living/carbon/monkey) )
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
@@ -272,13 +274,11 @@
 	if(wielded)
 		return 1
 
-/obj/item/weapon/twohanded/dualsaber/green
-	New()
-		item_color = "green"
+/obj/item/weapon/twohanded/dualsaber/green/New()
+	item_color = "green"
 
-/obj/item/weapon/twohanded/dualsaber/red
-	New()
-		item_color = "red"
+/obj/item/weapon/twohanded/dualsaber/red/New()
+	item_color = "red"
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user, params)
 	..()

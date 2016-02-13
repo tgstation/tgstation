@@ -120,7 +120,7 @@
 		ui = new(user, src, ui_key, "radio", name, 370, 220 + channels.len * 22, master_ui, state)
 		ui.open()
 
-/obj/item/device/radio/get_ui_data(mob/user)
+/obj/item/device/radio/ui_data(mob/user)
 	var/list/data = list()
 
 	data["broadcasting"] = broadcasting
@@ -153,15 +153,16 @@
 				var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
 				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
 				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
-				. = .(action, list("tune" = tune))
-			else if(text2num(tune) != null)
-				frequency = tune * 10
-				. = TRUE
+				if(!isnull(tune) && !..())
+					. = TRUE
 			else if(adjust)
-				frequency += adjust * 10
+				tune = frequency + adjust * 10
+				. = TRUE
+			else if(text2num(tune) != null)
+				tune = tune * 10
 				. = TRUE
 			if(.)
-				frequency = sanitize_frequency(frequency, freerange)
+				frequency = sanitize_frequency(tune, freerange)
 				set_frequency(frequency)
 				if(frequency == traitor_frequency && hidden_uplink)
 					hidden_uplink.interact(usr)

@@ -40,7 +40,6 @@ map dreamstation
 	friendlyname Dream Station
 endmap
 
-map DiscStation
-	friendlyname Disc Station
-	voteweight 0
+map efficiencystation
+	friendlyname Efficiency Station
 endmap

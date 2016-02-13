@@ -1,5 +1,9 @@
 <script>
+  import { filterMulti } from 'util/filter'
   component.exports = {
+    data: {
+      filter: ''
+    },
     oninit () {
       this.on({
         hover (event) {
@@ -11,12 +15,19 @@
           this.set('hovered')
         }
       })
+      this.observe('filter', (newkey, oldkey, keypath) => {
+        const categories = this.findAll('.display:not(:first-child)')
+        filterMulti(categories, this.get('filter').toLowerCase())
+      }, { init: false })
     }
   }
 </script>
 
 <ui-display title='Uplink' button>
   {{#partial button}}
+    {{#if config.fancy}}
+      <ui-input value='{{filter}}' placeholder='Filter...'/>
+    {{/if}}
     {{#if data.lockable}}
       <ui-button icon='lock' action='lock'>Lock</ui-button>
     {{/if}}
@@ -25,7 +36,7 @@
     <span class='{{data.telecrystals > 0 ? "good" : "bad"}}'>{{data.telecrystals}} TC</span>
   </ui-section>
 </ui-display>
-{{#each data.buyable}}
+{{#each data.categories}}
   <ui-display title='{{name}}'>
     {{#each items}}
       <ui-section label='{{name}}' candystripe right>

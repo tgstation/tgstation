@@ -25,7 +25,8 @@
 		HMN.regenerate_icons()
 	if(aug_message && !special)
 		owner << "<span class='notice'>[aug_message]</span>"
-	M.sight |= sight_flags
+
+	owner.update_sight()
 
 /obj/item/organ/internal/cyberimp/eyes/Remove(var/mob/living/carbon/M, var/special = 0)
 	M.sight ^= sight_flags
@@ -35,30 +36,14 @@
 		HMN.regenerate_icons()
 	..()
 
-/obj/item/organ/internal/cyberimp/eyes/on_life()
-	..()
-	owner.sight |= sight_flags
-	if(dark_view)
-		owner.see_in_dark = dark_view
-	if(see_invisible)
-		owner.see_invisible = see_invisible
-
 /obj/item/organ/internal/cyberimp/eyes/emp_act(severity)
 	if(!owner)
 		return
 	if(severity > 1)
 		if(prob(10 * severity))
 			return
-	var/save_sight = owner.sight
-	owner.sight &= 0
-	owner.disabilities |= BLIND
 	owner << "<span class='warning'>Static obfuscates your vision!</span>"
-	spawn(60 / severity)
-		if(owner)
-			owner.sight |= save_sight
-			owner.disabilities ^= BLIND
-
-
+	owner.flash_eyes(visual = 1)
 
 /obj/item/organ/internal/cyberimp/eyes/xray
 	name = "X-ray implant"

@@ -245,7 +245,7 @@
 		M << "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>"
 		add_logs(user, M, "attacked", src)
 
-		M.eye_blurry += force/7
+		M.adjust_blurriness(force/7)
 		if(prob(20))
 			M.Paralyse(force / 6)
 			M.Weaken(force / 15)
@@ -281,7 +281,8 @@
 	desc = "A synthetic banana peel."
 
 /obj/item/weapon/grown/bananapeel/specialpeel/Crossed(AM)
-	if(..())	qdel(src)
+	if(..())
+		qdel(src)
 
 /obj/item/weapon/grown/bananapeel/mimanapeel
 	name = "mimana peel"

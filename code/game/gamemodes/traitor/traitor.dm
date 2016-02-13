@@ -87,11 +87,35 @@
 	if(istype(traitor.current, /mob/living/silicon))
 		var/objective_count = 0
 
-		if(prob(10))
-			var/datum/objective/block/block_objective = new
-			block_objective.owner = traitor
-			traitor.objectives += block_objective
-			objective_count++
+		if(prob(30))
+			var/special_pick = rand(1,4)
+			switch(special_pick)
+				if(1)
+					var/datum/objective/block/block_objective = new
+					block_objective.owner = traitor
+					traitor.objectives += block_objective
+					objective_count++
+				if(2)
+					var/datum/objective/purge/purge_objective = new
+					purge_objective.owner = traitor
+					traitor.objectives += purge_objective
+					objective_count++
+				if(3)
+					var/datum/objective/robot_army/robot_objective = new
+					robot_objective.owner = traitor
+					traitor.objectives += robot_objective
+					objective_count++
+				if(4) //Protect and strand a target
+					var/datum/objective/protect/yandere_one = new
+					yandere_one.owner = traitor
+					traitor.objectives += yandere_one
+					yandere_one.find_target()
+					objective_count++
+					var/datum/objective/maroon/yandere_two = new
+					yandere_two.owner = traitor
+					yandere_two.target = yandere_one.target
+					traitor.objectives += yandere_two
+					objective_count++
 
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
 			var/datum/objective/assassinate/kill_objective = new
@@ -208,11 +232,7 @@
 	give_codewords(killer)
 	killer.set_syndie_radio()
 	killer << "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!"
-	killer << "In the top right corner of the screen you will find the Malfunctions tab, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices."
-	killer << "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds."
-	killer.view_core() //A BYOND bug requires you to be viewing your core before your verbs update
-	killer.verbs += /mob/living/silicon/ai/proc/choose_modules
-	killer.malf_picker = new /datum/module_picker
+	killer.add_malf_picker()
 	killer.show_laws()
 
 /datum/game_mode/proc/auto_declare_completion_traitor()

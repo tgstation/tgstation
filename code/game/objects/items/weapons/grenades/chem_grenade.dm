@@ -143,9 +143,6 @@
 /obj/item/weapon/grenade/chem_grenade/receive_signal()
 	prime()
 
-/obj/item/weapon/grenade/chem_grenade/HasProximity(atom/movable/AM)
-	if(nadeassembly)
-		nadeassembly.HasProximity(AM)
 
 /obj/item/weapon/grenade/chem_grenade/Crossed(atom/movable/AM)
 	if(nadeassembly)
@@ -180,7 +177,6 @@
 
 	var/turf/DT = get_turf(src)
 	var/area/DA = get_area(DT)
-	message_admins("A grenade detonated at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[DT.x];Y=[DT.y];Z=[DT.z]'>[DA.name] (JMP)</a>.")
 	log_game("A grenade detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")
 
 	update_mob()

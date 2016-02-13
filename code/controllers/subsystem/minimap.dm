@@ -23,6 +23,7 @@ var/datum/subsystem/minimap/SSminimap
 	for(var/z in z_levels)
 		generate(z)
 		register_asset("minimap_[z].png", fcopy_rsc(map_path(z)))
+	fdel(hash_path())
 	text2file(hash, hash_path())
 	..()
 
@@ -42,8 +43,10 @@ var/datum/subsystem/minimap/SSminimap
 	// Scale it up to our target size.
 	minimap.Scale(MINIMAP_SIZE, MINIMAP_SIZE)
 	var/list/obj_icons = list() 
+	var/counter = 255
 	// Loop over turfs and generate icons.
 	for(var/T in block(locate(x1, y1, z), locate(x2, y2, z)))
+		
 		var/turf/tile = T
 		var/icon/tile_icon
 		var/obj/obj
@@ -85,6 +88,15 @@ var/datum/subsystem/minimap/SSminimap
 			tile_icon.Scale(TILE_SIZE, TILE_SIZE)
 			// Add the tile to the minimap.
 			minimap.Blend(tile_icon, ICON_OVERLAY, ((tile.x - 1) * TILE_SIZE), ((tile.y - 1) * TILE_SIZE))
+		
+		//byond bug, this fixes OOM crashes by flattening and reseting the minimap icon holder every 255 tiles
+		counter--
+		if (counter <= 0)
+			counter = 255
+			var/icon/flatten = new /icon()
+			flatten.Insert(minimap, "", SOUTH, 1, 0)
+			del(minimap)
+			minimap = flatten
 
 	// Create a new icon and insert the generated minimap, so that BYOND doesn't generate different directions.
 	var/icon/final = new /icon()

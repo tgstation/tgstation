@@ -33,7 +33,7 @@
 		return
 
 	// Robots can interact with anything they can see.
-	if(get_dist(src, src_object) <= src.client.view)
+	if(get_dist(src, src_object) <= client.view)
 		return UI_INTERACTIVE
 	return UI_DISABLED // Otherwise they can keep the UI open.
 
@@ -43,7 +43,7 @@
 		return
 
 	// The AI can interact with anything it can see nearby, or with cameras.
-	if((get_dist(src, src_object) <= src.client.view) || cameranet.checkTurfVis(get_turf_pixel(src_object)))
+	if((get_dist(src, src_object) <= client.view) || cameranet.checkTurfVis(get_turf_pixel(src_object)))
 		return UI_INTERACTIVE
 	return UI_CLOSE
 

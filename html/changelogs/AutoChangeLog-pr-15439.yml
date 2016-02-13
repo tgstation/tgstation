@@ -1,0 +1,4 @@
+author: Malkevin
+delete-after: True
+changes: 
+  - tweak: "Tracking implants have been upgraded. The old clunky manually adjusted number system has been replaced with an automated ID scanner, this will show the implant carrier's name on both the Prisoner Management Console and the hand tracker. Happy deep striking!"

@@ -1,8 +1,6 @@
 //Updates the mob's health from organs and mob damage variables
 /mob/living/carbon/human/updatehealth()
 	if(status_flags & GODMODE)
-		health = maxHealth
-		stat = CONSCIOUS
 		return
 	var/total_burn	= 0
 	var/total_brute	= 0
@@ -10,13 +8,13 @@
 		total_brute	+= O.brute_dam
 		total_burn	+= O.burn_dam
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+	update_stat()
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD )
 		ChangeToHusk()
 		if(on_fire)
 			shred_clothing()
 	med_hud_set_health()
 	med_hud_set_status()
-	return
 
 
 //These procs fetch a cumulative total damage from all organs
@@ -34,12 +32,16 @@
 
 
 /mob/living/carbon/human/adjustBruteLoss(amount)
+	if(status_flags & GODMODE)
+		return 0
 	if(amount > 0)
 		take_overall_damage(amount, 0)
 	else
 		heal_overall_damage(-amount, 0)
 
 /mob/living/carbon/human/adjustFireLoss(amount)
+	if(status_flags & GODMODE)
+		return 0
 	if(amount > 0)
 		take_overall_damage(0, amount)
 	else
@@ -78,7 +80,8 @@
 //It automatically updates health status
 /mob/living/carbon/human/heal_organ_damage(brute, burn)
 	var/list/obj/item/organ/limb/parts = get_damaged_organs(brute,burn)
-	if(!parts.len)	return
+	if(!parts.len)
+		return
 	var/obj/item/organ/limb/picked = pick(parts)
 	if(picked.heal_damage(brute,burn,0))
 		update_damage_overlays(0)
@@ -89,16 +92,16 @@
 //It automatically updates health status
 /mob/living/carbon/human/take_organ_damage(brute, burn)
 	var/list/obj/item/organ/limb/parts = get_damageable_organs()
-	if(!parts.len)	return
+	if(!parts.len)
+		return
 	var/obj/item/organ/limb/picked = pick(parts)
 	if(picked.take_damage(brute,burn))
 		update_damage_overlays(0)
-
 	updatehealth()
 
 
 //Heal MANY external organs, in random order
-/mob/living/carbon/human/heal_overall_damage(brute, burn)
+/mob/living/carbon/human/heal_overall_damage(brute, burn, updating_health=1)
 	var/list/obj/item/organ/limb/parts = get_damaged_organs(brute,burn)
 
 	var/update = 0
@@ -114,12 +117,15 @@
 		burn -= (burn_was-picked.burn_dam)
 
 		parts -= picked
-	updatehealth()
-	if(update)	update_damage_overlays(0)
+	if(updating_health)
+		updatehealth()
+		if(update)
+			update_damage_overlays(0)
 
 // damage MANY external organs, in random order
 /mob/living/carbon/human/take_overall_damage(brute, burn)
-	if(status_flags & GODMODE)	return	//godmode
+	if(status_flags & GODMODE)
+		return	//godmode
 
 	var/list/obj/item/organ/limb/parts = get_damageable_organs()
 	var/update = 0
@@ -138,10 +144,9 @@
 		burn	-= (picked.burn_dam - burn_was)
 
 		parts -= picked
-
 	updatehealth()
-
-	if(update)	update_damage_overlays(0)
+	if(update)
+		update_damage_overlays(0)
 
 /mob/living/carbon/human/proc/restore_blood()
 	if(!(NOBLOOD in dna.species.specflags))
@@ -152,7 +157,8 @@
 
 
 /mob/living/carbon/human/proc/get_organ(zone)
-	if(!zone)	zone = "chest"
+	if(!zone)
+		zone = "chest"
 	for(var/obj/item/organ/limb/O in organs)
 		if(O.name == zone)
 			return O

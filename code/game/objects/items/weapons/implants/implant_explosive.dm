@@ -25,7 +25,8 @@
 		activate("death")
 
 /obj/item/weapon/implant/explosive/activate(cause)
-	if(!cause || !imp_in)	return 0
+	if(!cause || !imp_in)
+		return 0
 	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your microbomb implant? This will cause you to explode!", "Microbomb Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
 	heavy = round(heavy)
@@ -82,7 +83,8 @@
 	delay = 70
 
 /obj/item/weapon/implant/explosive/macro/activate(cause)
-	if(!cause || !imp_in)	return 0
+	if(!cause || !imp_in)
+		return 0
 	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your macrobomb implant? This will cause you to explode and gib!", "Macrobomb Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
 	imp_in << "<span class='notice'>You activate your macrobomb implant.</span>"
