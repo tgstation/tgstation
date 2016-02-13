@@ -548,6 +548,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "Anyone who reads the sleeping carp scroll will learn secrets of the sleeping carp martial arts style."
 	item = /obj/item/weapon/sleeping_carp_scroll
 	cost = 17
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_weapons/throwingstars
 	name = "Box of Throwing Stars"
