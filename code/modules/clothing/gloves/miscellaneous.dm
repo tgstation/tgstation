@@ -130,3 +130,10 @@
 	bonus_knockout = 3
 	damage_added = 5
 	force = 7
+
+/obj/item/clothing/gloves/anchor_arms
+	name = "Anchor Arms"
+	desc = "When you're a jerk, everybody loves you."
+	icon_state = "anchorarms"
+	item_state = "anchorarms"
+	species_fit = list("Vox")

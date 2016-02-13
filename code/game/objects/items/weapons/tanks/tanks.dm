@@ -102,6 +102,19 @@
 		var/obj/item/latexballon/LB = W
 		LB.blow(src)
 		src.add_fingerprint(user)
+	else if (istype(W, /obj/item/clothing/gloves/latex))
+		if(air_contents.return_pressure())
+			to_chat(user, "You inflate \the [W] using \the [src].")
+			qdel(W)
+			var/obj/item/latexballon/LB1 = new (get_turf(user))
+			LB1.blow(src)
+			user.put_in_hands(LB1)
+			var/obj/item/latexballon/LB2 = new (get_turf(user))
+			LB2.blow(src)
+			user.put_in_hands(LB2)
+		else
+			to_chat(user, "<span class='warning'>There's no gas in the tank.</span>")
+
 
 	if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)
