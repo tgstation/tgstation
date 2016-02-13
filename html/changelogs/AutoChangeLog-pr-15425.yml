@@ -1,0 +1,5 @@
+author: Zerrien
+delete-after: True
+changes: 
+  - rscadd: "Conveyor pieces can be placed as corner pieces when building in non-cardinal directions."
+  - rscadd: "Using a wrench on a conveyor rotates it while in place."
