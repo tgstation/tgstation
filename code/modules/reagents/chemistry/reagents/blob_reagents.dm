@@ -9,7 +9,7 @@
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
 
 /datum/reagent/blob/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.
+	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any protbelow 0.5 means 100% volume.
 
 /datum/reagent/blob/proc/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause) //when the blob takes damage, do this
 	return damage
@@ -354,10 +354,7 @@
 	if(M)
 		for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 2.4*reac_volume bonus damage, total of 2.5*reac_volume
 			if(M)
-				var/obj/effect/overlay/temp/blob/OV = PoolOrNew(/obj/effect/overlay/temp/blob, B.loc)
-				if(B.overmind)
-					OV.color = B.overmind.blob_reagent_datum.color
-				OV.do_attack_animation(M) //show them they're getting a bad time
+				B.blob_attack_animation(M) //show them they're getting a bad time
 				M.apply_damage(0.3*reac_volume, BRUTE)
 
 /datum/reagent/blob/synchronous_mesh/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
@@ -430,8 +427,8 @@
 	message = "You feel a thrum as the blob strikes you, and everything flies at you"
 
 /datum/reagent/blob/dark_matter/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reagent_vortex(M, 0, reac_volume)
 	reac_volume = ..()
+	reagent_vortex(M, 0, reac_volume)
 	M.apply_damage(0.4*reac_volume, BRUTE)
 
 //does brute damage and throws or pushes nearby objects away from the target
@@ -443,9 +440,9 @@
 	message = "The blob slams into you and sends you flying"
 
 /datum/reagent/blob/b_sorium/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reagent_vortex(M, 1, reac_volume)
 	reac_volume = ..()
-	M.apply_damage(0.5*reac_volume, BRUTE)
+	reagent_vortex(M, 1, reac_volume)
+	M.apply_damage(0.4*reac_volume, BRUTE)
 
 /datum/reagent/blob/proc/reagent_vortex(mob/living/M, setting_type, reac_volume)
 	if(M)
