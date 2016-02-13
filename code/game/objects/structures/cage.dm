@@ -9,7 +9,7 @@
 
 /obj/structure/cage
 	name = "cage"
-	desc = "A large and heavy plasteel structure, used to store dangerous animals and humans. It has two doors - the outer \"cover\", and the inner \"bars\". The cover is a thin plasteel sheet with tiny holes in the corners to let air through. The bars consist of thick plasteel rods, evenly spaced apart."
+	desc = "A large and heavy plasteel box, used to store dangerous animals and humans. It has two doors - the outer \"cover\", and the inner \"bars\". The cover is a thin plasteel sheet with tiny holes in the corners to let air through. The bars consist of thick plasteel rods, evenly spaced apart."
 
 	density = 1
 	anchored = 0
@@ -50,9 +50,9 @@
 /obj/structure/cage/examine(mob/user)
 	..()
 
-	to_chat(user, "<span class='info'>Ctrl + click opens/closes the cage's cover.</span>")
+	to_chat(user, "<span class='info'>Alt + click opens/closes the cage's cover.</span>")
 
-/obj/structure/cage/CtrlClick()
+/obj/structure/cage/AltClick()
 	if(Adjacent(usr) && !usr.incapacitated() && !mob_is_inside(usr))
 		toggle_cover(usr)
 
@@ -73,22 +73,23 @@
 
 		return 1
 
+/obj/structure/cage/relaymove(mob/living/user)
+	if(!istype(user)) return
+
+	if(cover_state == C_CLOSED)
+		var/time = 30 SECONDS
+		time -= ((user.get_strength() - 1) * 12.5) //Being strong reduces the time needed, down to 5 seconds
+
+		to_chat(user, "<span class='info'>You attempt to open \the [src]'s cover from inside. This will take around [(time / 10)] seconds.</span>")
+		if(do_after(user, src, time + rand(-5 SECONDS, 5 SECONDS)))
+			if(cover_state == C_CLOSED)
+				toggle_cover(user)
+
 /obj/structure/cage/attack_hand(mob/living/user)
 	if(!istype(user)) return
 
 	if(mob_is_inside(user)) //Inside the cage
-		if(cover_state == C_CLOSED)
-
-			var/time = 30 SECONDS
-			time -= ((user.get_strength() - 1) * 12.5) //Being strong reduces the time needed, down to 5 seconds
-
-			to_chat(user, "<span class='info'>You attempt to open \the [src]'s cover from inside. This will take around [(time / 10)] seconds.</span>")
-			if(do_after(user, src, time + rand(-5 SECONDS, 5 SECONDS)))
-				if(cover_state == C_CLOSED)
-					toggle_cover(user)
-
-		else if(door_state == C_CLOSED)
-
+		if(door_state == C_CLOSED)
 			var/time = 180 SECONDS
 			time -= ((user.get_strength() - 1) * 60) //Being strong reduces the time needed, down to 60 seconds
 
@@ -117,6 +118,9 @@
 //When it's closed, mobs are stored in the cage's contents. This causes them to be unable to interact with the outside world or move
 //When it's opened, mobs are atom locked to the cage. This causes them to be able to interact with the outside world, but they still can't move
 /obj/structure/cage/proc/toggle_cover(mob/user)
+	if(door_state == C_OPENED) //Only when door is opened
+		return
+
 	if(cover_state == C_OPENED)
 		cover_state = C_CLOSED
 		if(user) user.visible_message("<span class='info'>\The [user] closes \the [src]'s cover.</span>")
@@ -152,7 +156,7 @@
 				unlock_atom(L)
 				L.forceMove(get_turf(src))
 
-	if(door_state != cover_state)
+	if(cover_state != door_state)
 		toggle_cover()
 
 	update_icon()
