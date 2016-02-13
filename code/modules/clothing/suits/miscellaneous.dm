@@ -251,6 +251,31 @@
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEEARS
 
+/obj/item/clothing/suit/hooded/bloated_human	//OH MY GOD WHAT HAVE YOU DONE!?!?!?
+	name = "bloated human suit"
+	desc = "A horribly bloated suit made from human skins."
+	icon_state = "lingspacesuit"
+	item_state = "labcoat"
+	body_parts_covered = CHEST|GROIN|ARMS
+	allowed = list(,)
+	hooded = 1
+	action_button_name = "Toggle Human Head"
+	hoodtype = /obj/item/clothing/head/human_head
+
+/obj/item/clothing/head/human_head
+	name = "bloated human head"
+	desc = "A horribly bloated and mismatched human head."
+	icon_state = "lingspacehelmet"
+	body_parts_covered = HEAD
+	flags = NODROP
+
+/obj/item/clothing/suit/security/officer/russian
+	name = "russian officer's jacket"
+	desc = "This jacket is for those special occasions when a russian officer isn't required to wear their armor."
+	icon_state = "officertanjacket"
+	item_state = "officertanjacket"
+	body_parts_covered = CHEST|ARMS
+
 /*
  * Misc
  */

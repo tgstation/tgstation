@@ -65,7 +65,6 @@
 						"<span class='userdanger'>[src]'s brain is growing dull and lifeless. It looks like it's lost the will to live.</span>")
 		spawn(50)
 			death(0)
-			suiciding = 0
 
 /mob/living/carbon/monkey/verb/suicide()
 	set hidden = 1

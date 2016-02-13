@@ -1,4 +1,0 @@
-author: neersighted
-delete-after: True
-changes: 
-  - tweak: "Slowdown factors are ignored when in zero gravity."
