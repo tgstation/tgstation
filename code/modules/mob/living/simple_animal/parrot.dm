@@ -335,7 +335,7 @@
 		user.drop_item()
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
-		speak_chance *= 2
+		speak_chance = min(speak_chance*2, 100)
 		user << "<span class='notice'>[src] eagerly devours the cracker.</span>"
 	..()
 	return
