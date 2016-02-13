@@ -289,16 +289,6 @@ mob/living/carbon/proc/handle_hallucinations()
 
 	handling_hal = 0
 
-/mob/verb/turn_screen()
-	var/current_client_dir = client.dir
-	var/duration = rand(10 SECONDS, 40 SECONDS)
-
-	client.dir = turn(client.dir, pick(90, 180, 270))
-
-	spawn(duration)
-		client.dir = current_client_dir
-
-
 /*obj/machinery/proc/mockpanel(list/buttons,start_txt,end_txt,list/mid_txts)
 
 
