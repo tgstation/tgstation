@@ -1,0 +1,5 @@
+author: PKPenguin321
+delete-after: True
+changes: 
+  - tweak: "Traitor EMP kits have had their cost reduced from 5 to 2, and no longer contain the EMP flashlight.
+rcsadd: EMP flashlights can now be bought separately for 2 TCs."
