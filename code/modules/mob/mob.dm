@@ -1000,38 +1000,9 @@ var/next_mob_id = 0
 					obj.update_explanation_text()
 	return 1
 
-/mob/living/carbon/fully_replace_character_name(oldname,newname)
-	..()
-	if(dna)
-		dna.real_name = real_name
-
-/mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
-	..()
-	if(oldname != real_name)
-		if(eyeobj)
-			eyeobj.name = "[newname] (AI Eye)"
-
-		// Notify Cyborgs
-		for(var/mob/living/silicon/robot/Slave in connected_robots)
-			Slave.show_laws()
-
-/mob/living/silicon/robot/fully_replace_character_name(oldname,newname)
-	..()
-	if(oldname != real_name)
-		notify_ai(3, oldname, newname)
-	if(camera)
-		camera.c_tag = real_name
-	custom_name = newname
-
 //Updates data_core records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)
 	return
-
-/mob/living/carbon/human/replace_records_name(oldname,newname) // Only humans have records right now, move this up if changed.
-	for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
-		var/datum/data/record/R = find_record("name", oldname, L)
-		if(R)
-			R.fields["name"] = newname
 
 /mob/proc/replace_identification_name(oldname,newname)
 	var/list/searching = GetAllContents()
@@ -1056,12 +1027,6 @@ var/next_mob_id = 0
 				if(!search_id)
 					break
 				search_pda = 0
-
-/mob/living/silicon/ai/replace_identification_name(oldname,newname)
-	if(aiPDA)
-		aiPDA.owner = newname
-		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"
-
 
 /mob/proc/update_stat()
 	return

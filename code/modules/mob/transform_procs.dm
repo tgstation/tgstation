@@ -320,33 +320,41 @@
 	for(var/t in organs)
 		qdel(t)
 
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
+	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(loc)
 
 	// cyborgs produced by Robotize get an automatic power cell
-	O.cell = new(O)
-	O.cell.maxcharge = 7500
-	O.cell.charge = 7500
+	R.cell = new(R)
+	R.cell.maxcharge = 7500
+	R.cell.charge = 7500
 
 
-	O.gender = gender
-	O.invisibility = 0
+	R.gender = gender
+	R.invisibility = 0
 
 
 	if(mind)		//TODO
-		mind.transfer_to(O)
+		mind.transfer_to(R)
 		if(mind.special_role)
-			O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+			R.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 	else
-		O.key = key
+		R.key = key
 
 	if (config.rename_cyborg)
-		O.rename_self("cyborg")
+		R.rename_self("cyborg")
 
-	O.loc = loc
-	O.job = "Cyborg"
-	O.notify_ai(1)
+	if(R.mmi)
+		R.mmi.name = "Man-Machine Interface: [real_name]"
+		if(R.mmi.brain)
+			R.mmi.brain.name = "[real_name]'s brain"
+		if(R.mmi.brainmob)
+			R.mmi.brainmob.real_name = real_name //the name of the brain inside the cyborg is the robotized human's name.
+			R.mmi.brainmob.name = real_name
 
-	. = O
+	R.loc = loc
+	R.job = "Cyborg"
+	R.notify_ai(1)
+
+	. = R
 	qdel(src)
 
 //human -> alien
