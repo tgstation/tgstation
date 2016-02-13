@@ -758,38 +758,38 @@
 		if(!has_gravity(H))
 			// If there's no gravity we have the option of sanic speed.
 			var/obj/item/weapon/tank/jetpack/J = H.back
-			if(!istype(J))
-				var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
+			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
+			if(!istype(J) && istype(C))
 				J = C.jetpack
 
 			if(istype(J) && J.turbo && J.allow_thrust(0.01, H))
-				return -2 // Turbo mode. Gotta go fast.
+				. -= 2 // Turbo mode. Gotta go fast.
+		else
+			var/health_deficiency = (100 - H.health + H.staminaloss)
+			if(health_deficiency >= 40)
+				. += (health_deficiency / 25)
 
-		var/health_deficiency = (100 - H.health + H.staminaloss)
-		if(health_deficiency >= 40)
-			. += (health_deficiency / 25)
+			var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
+			if(hungry >= 70)
+				. += hungry / 50
 
-		var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
-		if(hungry >= 70)
-			. += hungry / 50
+			if(H.wear_suit)
+				. += H.wear_suit.slowdown
+			if(H.shoes)
+				. += H.shoes.slowdown
+			if(H.back)
+				. += H.back.slowdown
+			if(H.l_hand && (H.l_hand.flags & HANDSLOW))
+				. += H.l_hand.slowdown
+			if(H.r_hand && (H.r_hand.flags & HANDSLOW))
+				. += H.r_hand.slowdown
 
-		if(H.wear_suit)
-			. += H.wear_suit.slowdown
-		if(H.shoes)
-			. += H.shoes.slowdown
-		if(H.back)
-			. += H.back.slowdown
-		if(H.l_hand && (H.l_hand.flags & HANDSLOW))
-			. += H.l_hand.slowdown
-		if(H.r_hand && (H.r_hand.flags & HANDSLOW))
-			. += H.r_hand.slowdown
+			if((H.disabilities & FAT))
+				. += 1.5
+			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 
-		if((H.disabilities & FAT))
-			. += 1.5
-		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
-
-		. += speedmod
+			. += speedmod
 
 //////////////////
 // ATTACK PROCS //
