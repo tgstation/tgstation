@@ -68,11 +68,11 @@
 /mob/living/simple_animal/pet/cat/Life()
 	if(!stat && !buckled)
 		if(prob(1))
-			emote("me", 1, pick("stretches out for a belly rub.", "wags \his tail."))
+			emote("me", 1, pick("stretches out for a belly rub.", "wags its tail."))
 			icon_state = "[icon_living]_rest"
 			resting = 1
 		else if (prob(1))
-			emote("me", 1, pick("sits down.", "crouches on \his hind legs."))
+			emote("me", 1, pick("sits down.", "crouches on its hind legs."))
 			icon_state = "[icon_living]_sit"
 			resting = 1
 		else if (prob(1))
@@ -81,7 +81,7 @@
 				icon_state = "[icon_living]"
 				resting = 0
 			else
-				emote("me", 1, pick("grooms \his fur.", "twitches \his whiskers."))
+				emote("me", 1, pick("grooms its fur.", "twitches its whiskers."))
 
 	//MICE!
 	if((src.loc) && isturf(src.loc))
