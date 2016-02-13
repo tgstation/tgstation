@@ -226,6 +226,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
@@ -248,6 +249,7 @@
 	//cold_protection = HEAD
 	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEEARS
 
 /*
  * Misc
@@ -357,6 +359,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/hooded/wintercoat/captain
 	name = "captain's winter coat"

@@ -168,11 +168,23 @@
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
-
+	if(H.disabilities & HUSK)
+		return
 	var/datum/sprite_accessory/S
-	var/list/standing	= list()
+	var/list/standing = list()
+	var/hair_hidden = 0
+	var/facialhair_hidden = 0
+	//we check if our hat or helmet hides our facial hair.
+	if(H.head)
+		var/obj/item/I = H.head
+		if(I.flags_inv & HIDEFACIALHAIR)
+			facialhair_hidden = 1
+	if(H.wear_mask)
+		var/obj/item/clothing/mask/M = H.wear_mask
+		if(M.flags_inv & HIDEFACIALHAIR)
+			facialhair_hidden = 1
 
-	if(H.facial_hair_style && FACEHAIR in specflags)
+	if(H.facial_hair_style && (FACEHAIR in specflags) && !facialhair_hidden)
 		S = facial_hair_styles_list[H.facial_hair_style]
 		if(S)
 			var/image/img_facial_s
@@ -192,44 +204,46 @@
 
 			img_facial_s.alpha = hair_alpha
 
-			standing	+= img_facial_s
+			standing += img_facial_s
 
-	//Applies the debrained overlay if there is no brain
-	if(!H.getorgan(/obj/item/organ/internal/brain))
-		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
+	//we check if our hat or helmet hides our hair.
+	if(H.head)
+		var/obj/item/I = H.head
+		if(I.flags_inv & HIDEHAIR)
+			hair_hidden = 1
+	if(H.wear_mask)
+		var/obj/item/clothing/mask/M = H.wear_mask
+		if(M.flags_inv & HIDEHAIR)
+			hair_hidden = 1
+	if(!hair_hidden)
+		if(!H.getorgan(/obj/item/organ/internal/brain)) //Applies the debrained overlay if there is no brain
+			standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
 
-	if((H.wear_suit) && (H.wear_suit.hooded) && (H.wear_suit.suittoggled == 1))
-		if(standing.len)
-			H.overlays_standing[HAIR_LAYER]    = standing
-		H.apply_overlay(HAIR_LAYER)
-		return
+		else if(H.hair_style && (HAIR in specflags))
+			S = hair_styles_list[H.hair_style]
+			if(S)
+				var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 
-	else if(H.hair_style && HAIR in specflags)
-		S = hair_styles_list[H.hair_style]
-		if(S)
-			var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+				img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 
-			img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
-
-			if(!forced_colour)
-				if(hair_color)
-					if(hair_color == "mutcolor")
-						img_hair_s.color = "#" + H.dna.features["mcolor"]
+				if(!forced_colour)
+					if(hair_color)
+						if(hair_color == "mutcolor")
+							img_hair_s.color = "#" + H.dna.features["mcolor"]
+						else
+							img_hair_s.color = "#" + hair_color
 					else
-						img_hair_s.color = "#" + hair_color
+						img_hair_s.color = "#" + H.hair_color
 				else
-					img_hair_s.color = "#" + H.hair_color
-			else
-				img_hair_s.color = forced_colour
-			img_hair_s.alpha = hair_alpha
+					img_hair_s.color = forced_colour
+				img_hair_s.alpha = hair_alpha
 
-			standing	+= img_hair_s
+				standing += img_hair_s
 
 	if(standing.len)
 		H.overlays_standing[HAIR_LAYER]	= standing
 
 	H.apply_overlay(HAIR_LAYER)
-	return
 
 /datum/species/proc/handle_body(mob/living/carbon/human/H)
 	H.remove_overlay(BODY_LAYER)
@@ -328,11 +342,11 @@
 			bodyparts_to_add -= "frills"
 
 	if("horns" in mutant_bodyparts)
-		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
+		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)))
 			bodyparts_to_add -= "horns"
 
 	if("ears" in mutant_bodyparts)
-		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
+		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)))
 			bodyparts_to_add -= "ears"
 
 	if(!bodyparts_to_add)
