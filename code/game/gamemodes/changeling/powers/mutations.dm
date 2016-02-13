@@ -350,8 +350,6 @@
 	icon_state = "lingarmorhelmet"
 	flags = BLOCKHAIR | NODROP
 	armor = list(melee = 30, bullet = 30, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
-	flags_inv = HIDEEARS
-	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/helmet/changeling/dropped()
 	qdel(src)

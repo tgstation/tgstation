@@ -5,7 +5,7 @@
 	flags = HEADBANGPROTECT
 	item_state = "helmet"
 	armor = list(melee = 30, bullet = 25, laser = 25,energy = 10, bomb = 25, bio = 0, rad = 0)
-	flags_inv = HIDEEARS|HIDEEYES
+	flags_inv = HIDEEARS
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -41,10 +41,10 @@
 	can_toggle = 1
 	flags = HEADBANGPROTECT
 	armor = list(melee = 41, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE
 	strip_delay = 80
 	action_button_name = "Toggle Helmet Visor"
-	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE
+	visor_flags_inv = HIDEMASK|HIDEFACE
 	toggle_cooldown = 0
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
@@ -151,7 +151,6 @@
 	item_state = "redtaghelm"
 	armor = list(melee = 15, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
-	flags_inv = HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/bluetaghelm
 	name = "blue laser tag helmet"
@@ -161,7 +160,6 @@
 	item_state = "bluetaghelm"
 	armor = list(melee = 15, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
-	flags_inv = HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/knight
 	name = "medieval helmet"
