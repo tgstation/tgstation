@@ -142,6 +142,8 @@
 /obj/structure/cage/proc/toggle_door(mob/user)
 	switch(door_state)
 		if(C_OPENED) //Close the door
+			if(cover_state == C_OPENED) toggle_cover() //Close the cover, too
+
 			door_state = C_CLOSED
 			density = 1
 
@@ -149,15 +151,14 @@
 				add_mob(L)
 
 		if(C_CLOSED) //Open the door
+			if(cover_state == C_CLOSED) toggle_cover() //Open the cover, too
+
 			door_state = C_OPENED
 			density = 0
 
 			for(var/mob/living/L in (contents + locked_atoms))
 				unlock_atom(L)
 				L.forceMove(get_turf(src))
-
-	if(cover_state != door_state)
-		toggle_cover()
 
 	update_icon()
 
