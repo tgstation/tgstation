@@ -77,18 +77,14 @@
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
 /obj/item/clothing/gloves/black
-	desc = "These gloves are fire-resistant."
+	desc = "These gloves are quite comfortable, and will keep you warm!"
 	name = "black gloves"
 	icon_state = "black"
 	item_state = "black"
 	_color = "black"
 	species_fit = list("Vox")
-
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
-
+	heat_conductivity = INS_GLOVES_HEAT_CONDUCTIVITY
 
 /obj/item/clothing/gloves/black/hos
 	_color = "hosred"			//Exists for washing machines. Is not different from black gloves in any way.
@@ -193,7 +189,7 @@
 	name = "brown gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "brown"
-	item_state = "browngloves"
+	item_state = "brown"
 	_color="brown"
 	species_fit = list("Vox")
 

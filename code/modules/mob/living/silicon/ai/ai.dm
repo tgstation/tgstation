@@ -70,7 +70,7 @@ var/list/ai_list = list()
 			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null
-	add_language(LANGUAGE_SOL_COMMON, 1)
+	add_language(LANGUAGE_GALACTIC_COMMON, 1)
 	add_language(LANGUAGE_UNATHI, 1)
 	add_language(LANGUAGE_SIIK_TAJR, 1)
 	add_language(LANGUAGE_SKRELLIAN, 1)
@@ -81,7 +81,9 @@ var/list/ai_list = list()
 	add_language(LANGUAGE_MONKEY, 1)
 	add_language(LANGUAGE_VOX, 1)
 	add_language(LANGUAGE_TRADEBAND, 1)
-	default_language = all_languages[LANGUAGE_SOL_COMMON]
+	add_language(LANGUAGE_MOUSE, 1)
+	add_language(LANGUAGE_HUMAN, 1)
+	default_language = all_languages[LANGUAGE_GALACTIC_COMMON]
 	real_name = pickedName
 	name = real_name
 	anchored = 1
@@ -262,11 +264,8 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/ai_alerts()
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\ai\ai.dm:195: var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	var/dat = {"<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n
 <A HREF='?src=\ref[src];mach_close=aialerts'>Close</A><BR><BR>"}
-	// END AUTOFIX
 	for (var/cat in alarms)
 		dat += text("<B>[]</B><BR>\n", cat)
 		var/list/L = alarms[cat]

@@ -29,7 +29,7 @@
 	var/wrenching = 0
 
 /obj/item/device/deskbell/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/wrench))
+	if(istype(W,/obj/item/weapon/wrench) && isturf(src.loc))
 		user.visible_message(
 			"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",
 			"You begin to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts..."
@@ -77,7 +77,8 @@
 	return
 
 /obj/item/device/deskbell/attack_hand(var/mob/user)
-	ring()
+	if(anchored)
+		ring()
 	add_fingerprint(user)
 	return
 
@@ -90,7 +91,7 @@
 	return 0
 
 /obj/item/device/deskbell/MouseDrop(mob/user as mob)
-	if((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
+	if(user == usr && !usr.incapacitated() && (usr.contents.Find(src) || in_range(src, usr)))
 		if(istype(user, /mob/living/carbon/human) || istype(user, /mob/living/carbon/monkey))
 			if(anchored)
 				to_chat(user, "You must undo the securing bolts before you can pick it up.")

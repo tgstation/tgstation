@@ -1,10 +1,13 @@
 //Refer to life.dm for caller
 
 /mob/living/carbon/human/proc/handle_pulse()
-
-
 	if(life_tick % 5)
 		return pulse //Update pulse every 5 life ticks (~1 tick/sec, depending on server load)
+
+	if(undergoing_hypothermia() == SEVERE_HYPOTHERMIA)
+		return PULSE_2SLOW
+	if(undergoing_hypothermia() == PROFOUND_HYPOTHERMIA)
+		return PULSE_NONE
 
 	if(species && species.flags & NO_BLOOD) return PULSE_NONE //No blood, no pulse.
 

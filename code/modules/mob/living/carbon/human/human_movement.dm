@@ -66,10 +66,8 @@
 			return -1	// slimes become supercharged at high temperatures
 		if (bodytemperature < 183.222)
 			tally += (283.222 - bodytemperature) / 10 * 1.75
-	else if (bodytemperature < 283.222)
-
-		tally += (283.222 - bodytemperature) / 10 * 1.75
-
+	else if (undergoing_hypothermia())
+		tally += 2*undergoing_hypothermia()
 	var/skate_bonus = 0
 	var/disease_slow = 0
 	for(var/obj/item/weapon/bomberman/dispenser in src)
@@ -125,8 +123,8 @@
 
 	. = ..(NewLoc, Dir, step_x, step_y)
 
-	if(status_flags & FAKEDEATH)
-		return 0
+	/*if(status_flags & FAKEDEATH)
+		return 0*/
 
 	if(.)
 		if (old_z != src.z) crewmonitor.queueUpdate(old_z)

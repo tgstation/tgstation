@@ -277,8 +277,8 @@
 		C.Weaken(1)
 		C.Stun(1)
 		playsound(C.loc, "swing_hit", 50, 1)
-		if(C.bodytemperature >= 265)
-			C.bodytemperature -= 5
+		if(C.bodytemperature >= T0C+30)
+			C.bodytemperature -= 0.5
 	else if(istype(hit_atom,/mob/living/simple_animal/hostile/retaliate/snowman))
 		var/mob/living/simple_animal/hostile/retaliate/snowman/S = hit_atom
 		playsound(S.loc, "swing_hit", 50, 1)
@@ -294,7 +294,7 @@
 			S.say(pick("A fight? With pleasure.","Don't forget that you're the one who started it all."))
 			S.Retaliate()
 		if(S.bodytemperature >= COSMICSNOW_MINIMALTEMP)
-			S.bodytemperature -= 5
+			S.bodytemperature -= 2
 	else	..()
 
 var/global/list/datum/stack_recipe/snow_recipes = list (

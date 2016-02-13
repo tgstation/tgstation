@@ -13,8 +13,7 @@
 	icon_state = "bed"
 	icon = 'icons/obj/stools-chairs-beds.dmi'
 
-	locked_should_lie = 1
-	dense_when_locking = 0
+	lockflags = LOCKED_SHOULD_LIE
 	anchored = 1
 	var/sheet_type = /obj/item/stack/sheet/metal
 	var/sheet_amt = 1
@@ -66,7 +65,7 @@
 			"<span class='notice'>[M] unbuckled \himself!</span>",\
 			"You unbuckle yourself from \the [src].",\
 			"You hear metal clanking.")
-
+	playsound(get_turf(src), 'sound/misc/buckle_unclick.ogg', 50, 1)
 	unlock_atom(M)
 
 	add_fingerprint(user)
@@ -98,6 +97,7 @@
 			"You are buckled in to [src] by [user.name].",\
 			"You hear metal clanking.")
 
+	playsound(get_turf(src), 'sound/misc/buckle_click.ogg', 50, 1)
 	add_fingerprint(user)
 
 	lock_atom(M)
@@ -113,7 +113,7 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
-	dense_when_locking = 1
+	lockflags = DENSE_WHEN_LOCKING | DENSE_WHEN_LOCKED | LOCKED_SHOULD_LIE
 
 /obj/item/roller
 	name = "roller bed"
@@ -144,7 +144,7 @@
 /obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
 	..()
 	if(over_object == usr && Adjacent(usr))
-		if(!ishuman(usr))
+		if(!ishuman(usr) || usr.incapacitated() || usr.lying)
 			return
 
 		if(locked_atoms.len)

@@ -16,14 +16,10 @@
 
 	if(.)
 		if(nutrition && stat != DEAD)
-			nutrition -= HUNGER_FACTOR / 10
+			burn_calories(HUNGER_FACTOR / 20)
 
 			if(m_intent == "run")
-				nutrition -= HUNGER_FACTOR / 10
-
-		if((M_FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
-			bodytemperature += 2
-
+				burn_calories(HUNGER_FACTOR / 20)
 		update_minimap()
 
 /mob/living/carbon/attack_animal(mob/living/simple_animal/M as mob)//humans and slimes have their own
@@ -147,6 +143,7 @@
 
 	//if(src.stunned < shock_damage)	src.stunned = shock_damage
 
+	Jitter(20) //Shake that body, friend
 	Stun(10) // this should work for now, more is really silly and makes you lay there forever
 
 	//if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
@@ -509,6 +506,9 @@
 	switch(src.pulse)
 		if(PULSE_NONE)
 			return "0"
+		if(PULSE_2SLOW)
+			temp = rand(20, 40)
+			return num2text(method ? temp : temp + rand(-10, 10))
 		if(PULSE_SLOW)
 			temp = rand(40, 60)
 			return num2text(method ? temp : temp + rand(-10, 10))
@@ -530,7 +530,7 @@
 	set category = "IC"
 
 	if(usr.sleeping)
-		to_chat(usr, "<span class='warning'>You are already sleeping</span>")
+		to_chat(usr, "<span class='warning'>You are already sleeping.</span>")
 		return
 	if(alert(src,"Are you sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 		usr.sleeping = 150 //Long nap of 5 minutes. Those are MC TICKS. Don't get fooled

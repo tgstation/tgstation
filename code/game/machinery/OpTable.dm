@@ -90,7 +90,7 @@
 			return
 		if(O.loc == user || !isturf(O.loc) || !isturf(user.loc)) //no you can't pull things out of your ass
 			return
-		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+		if(user.incapacitated() || user.lying) //are you cuffed, dying, lying, stunned or other
 			return
 		if(O.anchored || !Adjacent(user) || !user.Adjacent(src)) // is the mob anchored, too far away from you, or are you too far away from the source
 			return
@@ -140,12 +140,13 @@
 
 	if (ishuman(C))
 		victim = C
-		C.resting = 1
+		C.resting = 1 //This probably shouldn't be using this variable
+		C.update_canmove() //but for as long as it does we're adding sanity to it
 
 	if (C == user)
 		user.visible_message("[user] climbs on the operating table.","You climb on the operating table.")
 	else
-		visible_message("<span class='warning'>[C] has been laid on the operating table by [user].</span>", 2) //spooky
+		visible_message("<span class='warning'>[C] has been laid on the operating table by [user].</span>")
 
 	add_fingerprint(user)
 
@@ -180,5 +181,5 @@
 			returnToPool(W)
 			return
 	if(isrobot(user)) return
-	user.drop_item(W, src.loc)
+	//user.drop_item(W, src.loc) why?
 	return

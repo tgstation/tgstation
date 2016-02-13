@@ -34,7 +34,7 @@
 		var/mob/M = usr
 		if(istype(over_object, /obj/structure/table) && M.Adjacent(over_object))
 			var/mob/living/L = usr
-			if(istype(L) && !(L.restrained() || L.stat || L.weakened || L.stunned || L.paralysis || L.resting))
+			if(istype(L) && !(L.incapacitated() || L.lying))
 				empty_contents_to(over_object)
 		if(!( istype(over_object, /obj/screen) ))
 			return ..()
@@ -391,11 +391,9 @@
 				to_chat(user, "<span class='warning'>The tray won't fit in \the [src].</span>")
 				return
 			else
-				W.loc = user.loc
-				if ((user.client && user.s_active != src))
-					user.client.screen -= W
-				W.dropped(user)
+				user.drop_item(W, user.loc)
 				to_chat(user, "<span class='warning'>God damnit!</span>")
+				return
 
 	return handle_item_insertion(W)
 
@@ -405,7 +403,7 @@
 /obj/item/weapon/storage/MouseDrop(over_object, src_location, over_location)
 	..()
 	orient2hud(usr)
-	if ((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
+	if (over_object == usr && (in_range(src, usr) || find_holder(src) == usr))
 		if (usr.s_active)
 			usr.s_active.close(usr)
 		src.show_to(usr)

@@ -72,7 +72,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if((usr.canmove || occupant == usr) && !usr.isUnconscious() && !usr.restrained() && Adjacent(usr) && usr.dexterity_check())
+	if(!usr.incapacitated() && Adjacent(usr) && usr.dexterity_check())
 		mybag.forceMove(get_turf(usr))
 		usr.put_in_hands(mybag)
 		mybag = null

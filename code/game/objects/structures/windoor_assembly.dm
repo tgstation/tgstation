@@ -180,6 +180,7 @@ obj/structure/windoor_assembly/Destroy()
 						to_chat(user, "<span class='notice'>You've installed the airlock electronics!</span>")
 						src.name = "Near finished Windoor Assembly"
 						src.electronics = W
+						src.electronics.installed = 1
 					else
 						W.forceMove(src.loc)
 
@@ -194,6 +195,7 @@ obj/structure/windoor_assembly/Destroy()
 					src.name = "Wired Windoor Assembly"
 					var/obj/item/weapon/circuitboard/airlock/ae
 					ae = electronics
+					ae.installed = 0
 					electronics = null
 					ae.loc = src.loc
 

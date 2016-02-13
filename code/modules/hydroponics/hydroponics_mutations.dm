@@ -520,6 +520,7 @@
 	lastcycle = world.time
 	harvest = 0
 	weedlevel = 0 //Why is this here?
+	sampled = 0
 
 	update_icon()
 	visible_message("<span class='alert'>The</span> <span class='info'>[previous_plant]</span> <span class='alert'>has suddenly mutated into</span> <span class='info'>[seed.display_name]!</span>")

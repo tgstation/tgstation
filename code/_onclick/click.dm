@@ -59,7 +59,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(stat || paralysis || stunned || weakened)
+	if(isStunned())
 		return
 
 	face_atom(A) // change direction to face what you clicked on
@@ -239,7 +239,7 @@
 	return
 
 /atom/proc/AltClick(var/mob/user)
-	if(!(isrobot(user)) && ishuman(src) && user.Adjacent(src))
+	if(!(user == src) && !(isrobot(user)) && ishuman(src) && user.Adjacent(src))
 		src:give_item(user)
 		return
 	var/turf/T = get_turf(src)
@@ -269,7 +269,7 @@
 	var/obj/item/projectile/beam/LE = getFromPool(/obj/item/projectile/beam, loc)
 	LE.icon = 'icons/effects/genetics.dmi'
 	LE.icon_state = "eyelasers"
-	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
+	playsound(usr.loc, 'sound/weapons/laser2.ogg', 75, 1)
 
 	LE.firer = src
 	LE.def_zone = get_organ_target()
@@ -286,9 +286,9 @@
 		LE.process()
 
 /mob/living/carbon/human/LaserEyes()
-	if(nutrition>0)
+	if(burn_calories(0.5))
+		nutrition = max(0,nutrition-2)
 		..()
-		nutrition = max(nutrition - rand(1,5),0)
 		handle_regular_hud_updates()
 	else
 		to_chat(src, "<span class='warning'>You're out of energy!  You need food!</span>")

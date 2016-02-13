@@ -72,29 +72,34 @@
 			if (src:aiRestorePowerRoutine==2)
 				to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
 				src:aiRestorePowerRoutine = 0
-				src.blind.layer = 0
+				if(src.blind)
+					src.blind.layer = 0
 				return
 			else if (src:aiRestorePowerRoutine==3)
 				to_chat(src, "Alert cancelled. Power has been restored.")
 				src:aiRestorePowerRoutine = 0
-				src.blind.layer = 0
+				if(src.blind)
+					src.blind.layer = 0
 				return
 			else if (src.aiRestorePowerRoutine == -1)
 				to_chat(src, "Alert cancelled. External power source detected.")
 				src:aiRestorePowerRoutine = 0
-				src.blind.layer = 0
+				if(src.blind)
+					src.blind.layer = 0
 				return
 
 		else
 
 			//stage = 6
-			src.blind.screen_loc = "1,1 to 15,15"
-			if (src.blind.layer!=18)
-				src.blind.layer = 18
-			src.sight = src.sight&~SEE_TURFS
-			src.sight = src.sight&~SEE_MOBS
-			src.sight = src.sight&~SEE_OBJS
-			src.see_in_dark = 0
+			if(client)
+				if(src.blind)
+					src.blind.screen_loc = "1,1 to 15,15"
+					if (src.blind.layer!=18)
+						src.blind.layer = 18
+				src.sight = src.sight&~SEE_TURFS
+				src.sight = src.sight&~SEE_MOBS
+				src.sight = src.sight&~SEE_OBJS
+				src.see_in_dark = 0
 			src.see_invisible = SEE_INVISIBLE_LIVING
 
 			if (((!loc.power_equip) || istype(T, /turf/space)) && !istype(src.loc,/obj/item))
@@ -121,7 +126,8 @@
 							if (!istype(T, /turf/space))
 								to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
 								src:aiRestorePowerRoutine = 0
-								src.blind.layer = 0
+								if(src.blind)
+									src.blind.layer = 0
 								return
 						to_chat(src, "Fault confirmed: missing external power. Shutting down main control system to save power.")
 						sleep(20)
@@ -170,7 +176,8 @@
 								if (!istype(T, /turf/space))
 									to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
 									src:aiRestorePowerRoutine = 0
-									src.blind.layer = 0 //This, too, is a fix to issue 603
+									if(src.blind)
+										src.blind.layer = 0 //This, too, is a fix to issue 603
 									return
 							switch(PRP)
 								if (1) to_chat(src, "APC located. Optimizing route to APC to avoid needless power waste.")

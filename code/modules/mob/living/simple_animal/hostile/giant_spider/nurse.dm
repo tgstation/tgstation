@@ -159,3 +159,29 @@
 		else
 			busy = 0
 			stop_automated_movement = 0
+
+/mob/living/simple_animal/hostile/giant_spider/nurse/queen_spider
+	name = "spider queen"
+	desc = "Massive, dark, and very furry. This is an absolutely massive spider. Its fangs are almost as big as you!"
+	icon = 'icons/mob/giantmobs.dmi'			//Both the alien queen sprite and the queen spider sprite are 64x64, it seemed pointless to make a new file for two new states
+	icon_state = "spider_queen1"
+	icon_living = "spider_queen1"
+	icon_dead = "spider_queen_dead"
+	pixel_x = -16
+	maxHealth = 500
+	health = 500
+	melee_damage_lower = 30
+	melee_damage_upper = 40
+	speed = 5
+	projectiletype = /obj/item/projectile/web
+	projectilesound = 'sound/weapons/pierce.ogg'
+	ranged = 1
+
+/obj/item/projectile/web
+	icon_state = "web"
+	damage = 5
+	damage_type = BRUTE
+
+/obj/item/projectile/web/Bump(atom/A)
+	new /obj/effect/spider/stickyweb(src.loc)
+	qdel(src)

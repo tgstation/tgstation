@@ -345,7 +345,7 @@ var/list/department_radio_keys = list(
 	if(getBrainLoss() >= 60)
 		speech.message = derpspeech(speech.message, stuttering)
 
-	if(stuttering)
+	if(stuttering || (undergoing_hypothermia() == MODERATE_HYPOTHERMIA && prob(25)) )
 		speech.message = stutter(speech.message)
 
 /mob/living/proc/radio(var/datum/speech/speech, var/message_mode)
@@ -406,7 +406,9 @@ var/list/department_radio_keys = list(
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
 	spawn(0)
-		flick_overlay(image('icons/mob/talk.dmi', find_holder(src), "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+		var/image/speech_bubble = image('icons/mob/talk.dmi', find_holder(src), "h[bubble_type][say_test(message)]",MOB_LAYER+1)
+		speech_bubble.appearance_flags = RESET_COLOR
+		flick_overlay(speech_bubble, speech_bubble_recipients, 30)
 
 /mob/proc/addSpeechBubble(image/speech_bubble)
 	if(client)

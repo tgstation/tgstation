@@ -32,6 +32,5 @@
 	if(istype(new_item, /obj/item/clothing/mask/horsehead))
 		var/obj/item/clothing/mask/horsehead/magichead = new_item
 		magichead.canremove = 0		//curses!
-		magichead.flags_inv = null	//so you can still see their face
 		magichead.voicechange = 1	//NEEEEIIGHH
 	return new_item

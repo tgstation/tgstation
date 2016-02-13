@@ -48,15 +48,16 @@
 /turf/simulated/shuttle/floor/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			new/obj/effect/decal/cleanable/soot(src)
+			if(!(locate(/obj/effect/decal/cleanable/soot) in src))
+				new /obj/effect/decal/cleanable/soot(src)
 		if(2.0)
 			if(prob(65))
-				new/obj/effect/decal/cleanable/soot(src)
+				if(!(locate(/obj/effect/decal/cleanable/soot) in src))
+					new /obj/effect/decal/cleanable/soot(src)
 		if(3.0)
 			if(prob(20))
-				new/obj/effect/decal/cleanable/soot(src)
-			return
-	return
+				if(!(locate(/obj/effect/decal/cleanable/soot) in src))
+					new /obj/effect/decal/cleanable/soot(src)
 
 /turf/simulated/shuttle/floor/cultify()
 	if((icon_state != "cult")&&(icon_state != "cult-narsie"))

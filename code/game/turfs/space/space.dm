@@ -13,9 +13,11 @@
 	can_border_transition = 1
 
 /turf/space/New()
-	turfs |= src
-	if(!istype(src, /turf/space/transit))
-		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+	if(loc)
+		var/area/A = loc
+		A.area_turfs += src
+
+	icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
 
 /turf/space/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

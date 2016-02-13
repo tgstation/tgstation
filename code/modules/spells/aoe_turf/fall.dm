@@ -175,8 +175,8 @@
 		oureffects -= S
 	for(var/atom/everything in affected)
 		if(!istype(everything)) continue
-		var/icon/I = everything.tempoverlay
-		everything.overlays.Remove(I)
+		everything.appearance = everything.tempoverlay
+		everything.tempoverlay = null
 		everything.ignoreinvert = initial(everything.ignoreinvert)
 		everything.timestopped = 0
 	affected.len = 0
@@ -211,35 +211,8 @@
 /proc/invertcolor(atom/A)
 //	to_chat(world, "invert color start")
 	if(A.ignoreinvert) return
-//	to_chat(world, "not ignoring")
-	if(A.forceinvertredraw)
-//		to_chat(world, "force redraw")
-		var/icon/I = icon(A.icon, A.icon_state, A.dir)
-//		to_chat(world, "got \icon[I]")
-		if(!istype(I) || ishuman(A))
-//			to_chat(world, "[ishuman(A) ? "we're human so getting flat icon" : "our icon is not good enough, getting flat icon"]")
-			I = getFlatIcon(A, A.dir, cache = 2)
-//			to_chat(world, "get flat icon done")
-//		to_chat(world, "starting color mapping")
-		I.MapColors(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)
-		if(iscarbon(A))
-			var/mob/living/carbon/C = A
-			if(C.lying || C.weakened || C.stat || C.sleeping || C.paralysis)
-				I.Turn(-90)
-//		to_chat(world, "color mapping done")
-//				to_chat(world, "done turning")
-//		to_chat(world, "setting vars")
-		A.tempoverlay = I
-		A.overlays += I
-//		to_chat(world, "done setting vars")
-	else
-//		to_chat(world, "not being forced")
-		var/icon/I = A.tempoverlay
-		//if(everything.icon_state != initial(everything.icon_state))
-			//I = icon(I, everything.icon_state, everything.dir)
-//		to_chat(world, "setting vars")
-		A.overlays += I
-		A.tempoverlay = I
-//		to_chat(world, "done settings vars")
-	A.ignoreinvert = 1
-//	to_chat(world, "invertcolor return")
+	A.tempoverlay = A.appearance
+	A.color=	  list(-1,0,0,
+						0,-1,0,
+						0,0,-1,
+						1,1,1)

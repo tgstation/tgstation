@@ -50,7 +50,7 @@
 			else
 				toscan += D
 
-		visible_message("<span class='notice'>[user.name] inserts the [D.name] in the [src.name].</span>", 2) //spooky
+		visible_message("<span class='notice'>[user.name] inserts the [D.name] in the [src.name].</span>")
 		src.updateUsrDialog()
 
 /obj/machinery/disease2/diseaseanalyser/proc/PrintPaper(var/obj/item/weapon/virusdish/D)

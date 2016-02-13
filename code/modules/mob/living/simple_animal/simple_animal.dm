@@ -164,7 +164,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 
 	//Movement
 	if((!client||deny_client_move) && !stop_automated_movement && wander && !anchored && (ckey == null) && !(flags & INVULNERABLE))
-		if(isturf(src.loc) && !resting && !locked_to && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if(isturf(src.loc) && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Soma animals don't move when pulled
@@ -373,11 +373,8 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	return
 
 /mob/living/simple_animal/MouseDrop(mob/living/carbon/human/M)
-	if(M != usr)		return
-	if(!istype(M))		return
-	if(M.isUnconscious())return
-	if(M.restrained())	return
-	if(!Adjacent(M))	return
+	if(M != usr || !istype(M) || !Adjacent(M) || M.incapacitated())
+		return
 
 	var/strength_of_M = (M.size - 1) //Can only pick up mobs whose size is less or equal to this value. Normal human's size is 3, so his strength is 2 - he can pick up TINY and SMALL animals. Varediting human's size to 5 will allow him to pick up goliaths.
 
@@ -606,7 +603,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 /mob/living/simple_animal/update_fire()
 	return
 /mob/living/simple_animal/IgniteMob()
-	return
+	return 0
 /mob/living/simple_animal/ExtinguishMob()
 	return
 

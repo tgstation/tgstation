@@ -10,6 +10,7 @@
 	layer = 4
 	stat = DEAD
 	density = 0
+	lockflags = 0 //Neither dense when locking or dense when locked to something
 	canmove = 0
 	blinded = 0
 	anchored = 1	//  don't get pushed around
@@ -101,6 +102,8 @@
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
+
+	start_poltergeist_cooldown() //FUCK OFF GHOSTS
 	..()
 
 /mob/dead/observer/Destroy()
@@ -472,6 +475,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			to_chat(usr, "No area available.")
 
 	usr.loc = pick(L)
+	if(locked_to)
+		manual_stop_follow(locked_to)
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
@@ -499,7 +504,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(targetarea && targetarea.anti_ethereal && !isAdminGhost(usr))
 			to_chat(usr, "<span class='sinister'>You can sense a sinister force surrounding that mob, your spooky body itself refuses to follow it.</span>")
 			return
-		if(targetloc.holy && ((!invisibility) || (mind in ticker.mode.cult)))
+		if(targetloc && targetloc.holy && ((!invisibility) || (mind in ticker.mode.cult)))
 			to_chat(usr, "<span class='warning'>You cannot follow a mob standing on holy grounds!</span>")
 			return
 		if(target != src)
@@ -550,6 +555,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
 				A.loc = T
+				if(locked_to)
+					manual_stop_follow(locked_to)
 			else
 				to_chat(A, "This mob is not located in the game world.")
 

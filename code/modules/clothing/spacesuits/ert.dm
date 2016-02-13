@@ -1,12 +1,11 @@
 /obj/item/clothing/head/helmet/space/ert
 	name = "emergency response team helmet"
-	desc = "A helmet worn by members of the NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant."
+	desc = "A helmet worn by members of the Nanotrasen Emergency Response Team. Armoured, space ready and fire resistant."
 	icon_state = "ert_commander"
 	item_state = "helm-command"
 	armor = list(melee = 50, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
 	siemens_coefficient = 0.6
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
-	heat_protection = HEAD
 	flags = FPRINT  | PLASMAGUARD
 	var/obj/machinery/camera/camera
 	species_restricted = list("exclude","Vox")
@@ -30,7 +29,7 @@
 
 /obj/item/clothing/suit/space/ert
 	name = "emergency response team suit"
-	desc = "A suit worn by members of the NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant."
+	desc = "A suit worn by members of the Nanotrasen Emergency Response Team. Armoured, space ready and fire resistant."
 	icon_state = "ert_commander"
 	item_state = "suit-command"
 	w_class = 4
@@ -44,20 +43,19 @@
 	/obj/item/weapon/gun/energy/taser, /obj/item/weapon/melee/baton, /obj/item/weapon/gun/energy/gun)
 	siemens_coefficient = 0.6
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	species_restricted = list("exclude","Vox")
 
 //Commander
 /obj/item/clothing/head/helmet/space/ert/commander
 	name = "emergency response team commander helmet"
-	desc = "A helmet worn by the commander of a NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant."
+	desc = "A helmet worn by the commander of a Nanotrasen Emergency Response Team. Armoured, space ready and fire resistant."
 	icon_state = "ert_commander"
 	item_state = "helm-command"
 	species_restricted = list("exclude","Vox")
 
 /obj/item/clothing/suit/space/ert/commander
 	name = "emergency response team commander suit"
-	desc = "A suit worn by the commander of a NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant."
+	desc = "A suit worn by the commander of a Nanotrasen Emergency Response Team. Armoured, space ready and fire resistant."
 	icon_state = "ert_commander"
 	item_state = "suit-command"
 	slowdown = 0
@@ -65,39 +63,39 @@
 //Security
 /obj/item/clothing/head/helmet/space/ert/security
 	name = "emergency response team security helmet"
-	desc = "A helmet worn by the security members of a NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant."
+	desc = "A helmet worn by the security members of a Nanotrasen Emergency Response Team. Armoured, space ready and fire resistant."
 	icon_state = "ert_security"
 	item_state = "syndicate-helm-black-red"
 	species_restricted = list("exclude","Vox")
 
 /obj/item/clothing/suit/space/ert/security
 	name = "emergency response team security suit"
-	desc = "A suit worn by the security members of a NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant."
+	desc = "A suit worn by the security members of a Nanotrasen Emergency Response Team. Armoured, space ready and fire resistant."
 	icon_state = "ert_security"
 	item_state = "syndicate-black-red"
 
 //Engineer
 /obj/item/clothing/head/helmet/space/ert/engineer
 	name = "emergency response team engineer helmet"
-	desc = "A helmet worn by the engineering members of a NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant. This one is radiation resistant as well."
+	desc = "A helmet worn by the engineering members of a Nanotrasen Emergency Response Team. Armoured, space ready and fire resistant. This one is radiation resistant as well."
 	icon_state = "ert_engineer"
 	species_restricted = list("exclude","Vox")
 	armor = list(melee = 50, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 100)
 
 /obj/item/clothing/suit/space/ert/engineer
 	name = "emergency response team engineer suit"
-	desc = "A suit worn by the engineering members of a NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant."
+	desc = "A suit worn by the engineering members of a Nanotrasen Emergency Response Team. Armoured, space ready and fire resistant."
 	icon_state = "ert_engineer"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 100)
 
 //Medical
 /obj/item/clothing/head/helmet/space/ert/medical
 	name = "emergency response team medical helmet"
-	desc = "A helmet worn by the medical members of a NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant."
+	desc = "A helmet worn by the medical members of a Nanotrasen Emergency Response Team. Armoured, space ready and fire resistant."
 	icon_state = "ert_medical"
 	species_restricted = list("exclude","Vox")
 
 /obj/item/clothing/suit/space/ert/medical
 	name = "emergency response team medical suit"
-	desc = "A suit worn by the medical members of a NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant."
+	desc = "A suit worn by the medical members of a Nanotrasen Emergency Response Team. Armoured, space ready and fire resistant."
 	icon_state = "ert_medical"

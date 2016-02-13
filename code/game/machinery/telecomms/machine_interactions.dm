@@ -143,11 +143,8 @@
 				continue
 			dat += "<li>\ref[T] [T.name] ([T.id])  <a href='?src=\ref[src];unlink=[i]'>\[X\]</a></li>"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\\machine_interactions.dm:140: dat += "</ol>"
 		dat += {"</ol>
 			<h2>Filtering Frequencies:</h2>"}
-		// END AUTOFIX
 		i = 0
 		if(length(freq_listening))
 			dat += "<ul>"
@@ -158,11 +155,8 @@
 			dat += "<li>NONE</li>"
 
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\\machine_interactions.dm:155: dat += "<br>  <a href='?src=\ref[src];input=freq'>\[Add Filter\]</a>"
 		dat += {"<p><a href='?src=\ref[src];input=freq'>\[Add Filter\]</a></p>
 			<hr />"}
-		// END AUTOFIX
 
 	return dat
 
@@ -227,11 +221,8 @@
 	if(src.z == TELECOMM_Z)
 		dat += "<br>Signal Locked to Station: <A href='?src=\ref[src];change_listening=1'>[listening_level == STATION_Z ? "TRUE" : "FALSE"]</a>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\telecomms\\machine_interactions.dm:236: dat += "<br>Broadcasting: <A href='?src=\ref[src];broadcast=1'>[broadcasting ? "YES" : "NO"]</a>"
 	dat += {"<br>Broadcasting: <A href='?src=\ref[src];broadcast=1'>[broadcasting ? "YES" : "NO"]</a>
 		<br>Receiving:    <A href='?src=\ref[src];receive=1'>[receiving ? "YES" : "NO"]</a>"}
-	// END AUTOFIX
 	return dat
 
 /obj/machinery/telecomms/relay/Options_Topic(href, href_list)

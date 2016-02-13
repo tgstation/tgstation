@@ -144,9 +144,10 @@
 		cell_component.installed = 1
 
 	playsound(loc, startup_sound, 75, 1)
-	add_language(LANGUAGE_SOL_COMMON)
+	add_language(LANGUAGE_GALACTIC_COMMON)
 	add_language(LANGUAGE_TRADEBAND)
 	add_language(LANGUAGE_VOX, 0)
+	add_language(LANGUAGE_HUMAN, 0)
 	add_language(LANGUAGE_ROOTSPEAK, 0)
 	add_language(LANGUAGE_GREY, 0)
 	add_language(LANGUAGE_CLATTER, 0)
@@ -156,7 +157,8 @@
 	add_language(LANGUAGE_SKRELLIAN, 0)
 	add_language(LANGUAGE_GUTTER, 0)
 	add_language(LANGUAGE_MONKEY, 0)
-	default_language = all_languages[LANGUAGE_SOL_COMMON]
+	add_language(LANGUAGE_MOUSE, 0)
+	default_language = all_languages[LANGUAGE_GALACTIC_COMMON]
 
 // setup the PDA and its name
 /mob/living/silicon/robot/proc/setup_PDA()
@@ -446,11 +448,8 @@
 /mob/living/silicon/robot/proc/robot_alerts()
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\robot\robot.dm:322: var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	var/dat = {"<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n
 <A HREF='?src=\ref[src];mach_close=robotalerts'>Close</A><BR><BR>"}
-	// END AUTOFIX
 	for (var/cat in alarms)
 		dat += text("<B>[cat]</B><BR>\n")
 		var/list/L = alarms[cat]
@@ -699,7 +698,7 @@
 
 
 /mob/living/silicon/robot/emag_act(mob/user as mob)
-	if(!user != src)
+	if(user != src)
 		if(!opened)
 			if(locked)
 				if(prob(90))
@@ -711,12 +710,10 @@
 						to_chat(src, "Hack attempt detected.")
 			else
 				to_chat(user, "The cover is already open.")
-			return
-		if(opened)
-			if(emagged == 1) return
+		else
+			if(emagged == 1) return 1
 			if(wiresexposed)
 				to_chat(user, "The wires get in your way.")
-				return
 			else
 				if(prob(50))
 					sleep(6)
@@ -752,10 +749,12 @@
 					to_chat(src, "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>")
 					SetLockdown(0)
 					update_icons()
+					return 0
 				else
 					to_chat(user, "You fail to unlock [src]'s interface.")
 					if(prob(25))
 						to_chat(src, "Hack attempt detected.")
+	return 1
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -1432,6 +1431,8 @@
 	set name = "Activate Held Object"
 	set category = "IC"
 	set src = usr
+
+	if(attack_delayer.blocked()) return
 
 	if(stat == DEAD) return
 	var/obj/item/W = get_active_hand()

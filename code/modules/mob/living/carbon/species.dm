@@ -38,8 +38,8 @@ var/global/list/whitelisted_species = list("Human")
 
 	var/primitive											// Lesser form, if any (ie. monkey for humans)
 	var/tail												// Name of tail image in species effects icon file.
-	var/language = "Sol Common"								// Default racial language, if any.
-	var/default_language = "Sol Common"						// Default language is used when 'say' is used without modifiers.
+	var/language = "Galactic Common"								// Default racial language, if any.
+	var/default_language = "Galactic Common"						// Default language is used when 'say' is used without modifiers.
 	var/attack_verb = "punch"								// Empty hand hurt intent verb.
 	var/punch_damage = 0									// Extra empty hand attack damage.
 	var/punch_throw_range = 0
@@ -123,6 +123,8 @@ var/global/list/whitelisted_species = list("Human")
 	var/has_mutant_race = 1
 
 	var/move_speed_mod = 0 //Higher value is slower, lower is faster.
+	var/can_be_hypothermic = 1
+	var/has_sweat_glands = 1
 
 /datum/species/proc/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
 	if(H.dna)
@@ -287,11 +289,8 @@ var/global/list/whitelisted_species = list("Human")
 					spawn(0) H.emote(pick("giggle", "laugh"))
 			SA.moles = 0
 
-	if( (abs(310.15 - breath.temperature) > 50) && !(M_RESIST_HEAT in H.mutations)) // Hot air hurts :(
+	if( (breath.temperature - 310.15 > 50) && !(M_RESIST_HEAT in H.mutations)) // Hot air hurts :(
 		if(H.status_flags & GODMODE)	return 1	//godmode
-		if(breath.temperature < cold_level_1)
-			if(prob(20))
-				to_chat(H, "<span class='warning'>You feel your face freezing and an icicle forming in your lungs!</span>")
 		else if(breath.temperature > heat_level_1)
 			if(prob(20))
 				if(H.dna.mutantrace == "slime")
@@ -310,13 +309,7 @@ var/global/list/whitelisted_species = list("Human")
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Cold")
 					H.fire_alert = max(H.fire_alert, 1)
 
-				if(cold_level_3 to cold_level_2)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Cold")
-					H.fire_alert = max(H.fire_alert, 1)
-
-				if(cold_level_2 to cold_level_1)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Cold")
-					H.fire_alert = max(H.fire_alert, 1)
+				// there was once behaviour for higher levels of cold, no longer.
 
 				if(heat_level_1 to heat_level_2)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Heat")
@@ -384,7 +377,7 @@ var/global/list/whitelisted_species = list("Human")
 	heat_level_1 = 420 //Default 360 - Higher is better
 	heat_level_2 = 480 //Default 400
 	heat_level_3 = 1100 //Default 1000
-
+	has_sweat_glands = 0
 	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
 
 	flesh_color = "#34AF10"
@@ -399,7 +392,7 @@ var/global/list/whitelisted_species = list("Human")
 	deform = 'icons/mob/human_races/r_skeleton.dmi'  // TODO: Need deform.
 	language = "Clatter"
 	attack_verb = "punch"
-
+	has_sweat_glands = 0
 	flags = IS_WHITELISTED | HAS_LIPS | NO_BREATHE | NO_BLOOD | NO_SKIN
 
 	chem_flags = NO_DRINK | NO_EAT | NO_INJECT
@@ -709,4 +702,3 @@ var/global/list/whitelisted_species = list("Human")
 	burn_mod = 2.5 //treeeeees
 
 	move_speed_mod = 7
-

@@ -722,6 +722,10 @@
 	icon_state = "wood_tableparts"
 	flags = 0
 
+/obj/item/weapon/table_parts/wood/poker
+	name = "gambling table parts"
+	icon_state = "gambling_tableparts"
+
 /obj/item/weapon/table_parts/wood/cultify()
 	return
 

@@ -215,11 +215,8 @@ var/savefile/Banlistjob
 		dat += text("<tr><td><A href='?src=\ref[src];unjobbanf=[Banlistjob["key"]][Banlistjob["id"]][Banlistjob["rank"]]'>(U)</A> Key: <B>[Banlistjob["key"]] </B>Rank: <B>[Banlistjob["rank"]]</B></td><td> ([Banlistjob["temp"] ? "[GetBanExpjob(Banlistjob["minutes"]) ? GetBanExpjob(Banlistjob["minutes"]) : "Removal pending" ]" : "Permaban"])</td><td>(By: [Banlistjob["bannedby"]])</td><td>(Reason: [Banlistjob["reason"]])</td></tr>")
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\newbanjob.dm:216: dat += "</table>"
 	dat += {"</table>
 		<HR><B>Bans:</B> <FONT COLOR=blue>(U) = Unban , </FONT> - <FONT COLOR=green>([count] Bans)</FONT><HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >[dat]"}
-	// END AUTOFIX
 	usr << browse(dat, "window=unbanp;size=875x400")
 
 /*/datum/admins/proc/permjobban(ckey, computerid, reason, bannedby, temp, minutes, rank)

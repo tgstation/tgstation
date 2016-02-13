@@ -602,7 +602,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!input)
 		return
 	if(!customname)
-		customname = "NanoTrasen Update"
+		customname = "Nanotrasen Update"
 	for (var/obj/machinery/computer/communications/C in machines)
 		if(! (C.stat & (BROKEN|NOPOWER) ) )
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
@@ -616,9 +616,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if("Yes")
 			command_alert(input, customname);
 		if("No")
-			to_chat(world, "<span class='warning'>New NanoTrasen Update available at all communication consoles.</span>")
+			to_chat(world, "<span class='warning'>New Nanotrasen Update available at all communication consoles.</span>")
 
-	to_chat(world, sound('sound/AI/commandreport.ogg'))
+	to_chat(world, sound('sound/AI/commandreport.ogg', volume = 60))
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report", 1)
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

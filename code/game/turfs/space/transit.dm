@@ -2,7 +2,9 @@
 	var/pushdirection // push things that get caught in the transit tile this direction
 
 /turf/space/transit/New()
-	turfs |= src
+	if(loc)
+		var/area/A = loc
+		A.area_turfs += src
 	var/dira=""
 	var/i=0
 	switch(pushdirection)

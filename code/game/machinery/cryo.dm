@@ -69,7 +69,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 		return
 	if(O.loc == user) //no you can't pull things out of your ass
 		return
-	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+	if(user.incapacitated() || user.lying) //are you cuffed, dying, lying, stunned or other
 		return
 	if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
 		return
@@ -101,14 +101,14 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 			return
 	if(put_mob(L))
 		if(L == user)
-			visible_message("[user] climbs into \the [src].", 2) //spooky
+			visible_message("[user] climbs into \the [src].")
 		else
-			visible_message("[user] puts [L.name] into \the [src].", 2) //spooky
+			visible_message("[user] puts [L.name] into \the [src].")
 			if(user.pulling == L)
 				user.pulling = null
 
 /obj/machinery/atmospherics/unary/cryo_cell/MouseDrop(over_object, src_location, var/turf/over_location, src_control, over_control, params)
-	if(!ishuman(usr) && !isrobot(usr) || occupant == usr)
+	if(!ishuman(usr) && !isrobot(usr) || occupant == usr || usr.incapacitated() || usr.lying)
 		return
 	if(!occupant)
 		to_chat(usr, "<span class='warning'>The sleeper is unoccupied!</span>")
@@ -127,11 +127,15 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 			if((A == src) || istype(A, /mob))
 				continue
 			return
-	visible_message("[usr] removes [occupant.name] from \the [src].", 2) //spooky
+	visible_message("[usr] removes [occupant.name] from \the [src].")
 	go_out(over_location)
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
+
+	if(stat & NOPOWER)
+		on = 0
+
 	update_icon()
 	if(!node)
 		return
@@ -375,7 +379,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	if(occupant)
 		if(occupant.stat == 2)
 			return
-		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
+		occupant.bodytemperature += 20*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
 		occupant.stat = 1
 		if(occupant.bodytemperature < T0C)
@@ -431,8 +435,8 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	else
 		occupant.forceMove(exit)
 	occupant.reset_view()
-	if (occupant.bodytemperature < 261 && occupant.bodytemperature > 140) //Patch by Aranclanos to stop people from taking burn damage after being ejected
-		occupant.bodytemperature = 261
+	if (occupant.bodytemperature < T0C+23)
+		occupant.bodytemperature = T0C+23
 //	occupant.metabslow = 0
 	occupant = null
 	update_icon()
@@ -473,11 +477,12 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	if(usr == occupant)//If the user is inside the tube...
 		if (usr.isDead())//and he's not dead....
 			return
-		to_chat(usr, "<span class='notice'>Release sequence activated. This will take two minutes.</span>")
-		sleep(1200)
+		to_chat(usr, "<span class='notice'>Release sequence activated. This will take thirty seconds.</span>")
+		sleep(300)
 		if(!src || !usr || !occupant || (occupant != usr)) //Check if someone's released/replaced/bombed him already
 			return
 		go_out()//and release him from the eternal prison.
+		occupant.bodytemperature = T0C+25 // because they've suffered enough.
 	else
 		if (usr.isUnconscious() || istype(usr, /mob/living/simple_animal))
 			return
@@ -489,7 +494,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	set name = "Move Inside"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.restrained() || usr.isUnconscious() || usr.weakened || usr.stunned || usr.paralysis || usr.resting || usr.locked_to) //are you cuffed, dying, lying, stunned or other
+	if(usr.incapacitated() || usr.lying || usr.locked_to) //are you cuffed, dying, lying, stunned or other
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)

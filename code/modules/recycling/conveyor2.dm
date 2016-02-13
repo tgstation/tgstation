@@ -301,7 +301,11 @@
 
 	anchored = 1
 
-/obj/machinery/conveyor_switch/oneway  // Kept in for mapping legacy because I am too lazy to actually fix the maps.
+/obj/machinery/conveyor_switch/oneway //Use these instances for mapping
+	convdir = 1
+
+/obj/machinery/conveyor_switch/oneway/reverse
+	convdir = -1
 
 /obj/machinery/conveyor_switch/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return

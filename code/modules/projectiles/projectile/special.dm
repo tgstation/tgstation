@@ -77,7 +77,10 @@
 		var/mob/living/M = target
 		if(M.flags & INVULNERABLE)
 			return 0
-		M.bodytemperature = temperature
+		if(istype(M,/mob/living/carbon/human))
+			M.bodytemperature -= 2*((temperature-T0C)/(-T0C))
+		else
+			M.bodytemperature = temperature
 		if(temperature > 500)//emagged
 			M.adjust_fire_stacks(0.5)
 			M.on_fire = 1
@@ -157,7 +160,7 @@
 			M.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	else if(istype(target, /mob/living/carbon/))
 	//	for (var/mob/V in viewers(src))
-	//		V.show_message("The radiation beam dissipates harmlessly through [M]", 2) //spooky
+	//		V.show_message("The radiation beam dissipates harmlessly through [M]")
 		M.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	else
 		return 1

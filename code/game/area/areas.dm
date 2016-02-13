@@ -6,12 +6,15 @@
 	var/global/global_uid = 0
 	var/uid
 	var/obj/machinery/power/apc/areaapc = null
+	var/list/area_turfs
 
 /area/New()
+	area_turfs = list()
 	icon_state = ""
 	layer = 10
 	uid = ++global_uid
-	areas |= src
+	if (x) // If we're actually located in the world
+		areas |= src
 
 	if(isspace(src))	// override defaults for space. TODO: make space areas of type /area/space rather than /area
 		requires_power = 1
@@ -24,9 +27,9 @@
 		//has_gravity = 0    // Space has gravity.  Because.. because.
 
 	if(!requires_power)
-		power_light = 0			//rastaf0
-		power_equip = 0			//rastaf0
-		power_environ = 0		//rastaf0
+		power_light = 1
+		power_equip = 1
+		power_environ = 1 
 
 	..()
 

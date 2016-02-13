@@ -391,7 +391,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	get_data()
 		var/dat = {"
 <b>Implant Specifications:</b><BR>
-<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
+<b>Name:</b> Nanotrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
 <b>Life:</b> Activates upon death.<BR>
 <b>Important Notes:</b> Alerts crew to crewmember death.<BR>
 <HR>
@@ -420,7 +420,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	var/datum/speech/speech = create_speech("[mobname] has died in",1459,src)
 	speech.name="[mobname]'s Death Alarm"
 	speech.job="Death Alarm"
-	speech.set_language(LANGUAGE_SOL_COMMON)
+	speech.set_language(LANGUAGE_GALACTIC_COMMON)
 	switch (cause)
 		if("death")
 			if(!announcement_intercom || !istype(announcement_intercom))
@@ -472,7 +472,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	get_data()
 		var/dat = {"
 <b>Implant Specifications:</b><BR>
-<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
+<b>Name:</b> Nanotrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
 <b>Life:</b> Activates upon death.<BR>
 <b>Important Notes:</b> Alerts crew to crewmember death.<BR>
 <HR>

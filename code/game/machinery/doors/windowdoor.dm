@@ -135,6 +135,7 @@
 	if (src.health <= 0)
 		getFromPool(shard, loc)
 		getFromPool(/obj/item/stack/cable_coil,src.loc,2)
+		eject_electronics()
 		qdel(src)
 		return
 
@@ -290,17 +291,23 @@
 	WA.fingerprintslast = user.ckey
 
 	// Pop out electronics
+	eject_electronics()
+
+/obj/machinery/door/window/proc/eject_electronics()
 	var/obj/item/weapon/circuitboard/airlock/AE = (src.electronics ? src.electronics : new /obj/item/weapon/circuitboard/airlock(src.loc))
 	if (src.electronics)
 		src.electronics = null
-		AE.loc = src.loc
+		AE.installed = 0
 	else
+		if(operating == -1)
+			AE.icon_state = "door_electronics_smoked"
 		// Straight from /obj/machinery/door/airlock/attackby()
 		if (src.req_access && src.req_access.len > 0)
 			AE.conf_access = src.req_access
 		else if (src.req_one_access && src.req_one_access.len > 0)
 			AE.conf_access = src.req_one_access
 			AE.one_access = 1
+	AE.loc = src.loc
 
 /obj/machinery/door/window/brigdoor
 	name = "Secure Window Door"

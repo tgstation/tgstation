@@ -33,12 +33,13 @@
 		D.cure(0)
 		D.holder = null
 
-	if(counts_as_blood && ticker.mode && ticker.mode.name == "cult")
-		var/datum/game_mode/cult/mode_ticker = ticker.mode
-		var/turf/T = get_turf(src)
-		if(T && (T.z == map.zMainStation))
-			mode_ticker.bloody_floors -= T
-			mode_ticker.blood_check()
+	if(counts_as_blood)
+		var/datum/game_mode/cult/cult_round = find_active_mode("cult")
+		if(cult_round)
+			var/turf/T = get_turf(src)
+			if(T && (T.z == map.zMainStation))
+				cult_round.bloody_floors -= T
+				cult_round.blood_check()
 	..()
 
 /obj/effect/decal/cleanable/proc/dry()
@@ -81,14 +82,15 @@
 	blood_list += src
 	update_icon()
 
-	if(counts_as_blood && ticker && ticker.mode && ticker.mode.name == "cult")
-		var/datum/game_mode/cult/mode_ticker = ticker.mode
-		var/turf/T = get_turf(src)
-		if(T && (T.z == map.zMainStation))//F I V E   T I L E S
-			if(!(locate("\ref[T]") in mode_ticker.bloody_floors))
-				mode_ticker.bloody_floors += T
-				mode_ticker.bloody_floors[T] = T
-				mode_ticker.blood_check()
+	if(counts_as_blood)
+		var/datum/game_mode/cult/cult_round = find_active_mode("cult")
+		if(cult_round)
+			var/turf/T = get_turf(src)
+			if(T && (T.z == map.zMainStation))//F I V E   T I L E S
+				if(!(locate("\ref[T]") in cult_round.bloody_floors))
+					cult_round.bloody_floors += T
+					cult_round.bloody_floors[T] = T
+					cult_round.blood_check()
 		if(src.loc && isturf(src.loc))
 			for(var/obj/effect/decal/cleanable/C in src.loc)
 				if(C.type in absorbs_types && C != src)

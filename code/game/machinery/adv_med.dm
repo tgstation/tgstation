@@ -94,7 +94,7 @@
 		return
 	if(O.loc == user || !isturf(O.loc) || !isturf(user.loc)) //no you can't pull things out of your ass
 		return
-	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+	if(user.incapacitated() || user.lying) //are you cuffed, dying, lying, stunned or other
 		return
 	if(O.anchored || !Adjacent(user) || !user.Adjacent(src) || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
 		return
@@ -140,7 +140,7 @@
 	return
 
 /obj/machinery/bodyscanner/MouseDrop(over_object, src_location, var/turf/over_location, src_control, over_control, params)
-	if(!ishuman(usr) && !isrobot(usr))
+	if(!ishuman(usr) && !isrobot(usr) || usr.incapacitated() || usr.lying)
 		return
 	if(!occupant)
 		to_chat(usr, "<span class='warning'>The scanner is unoccupied!</span>")
@@ -162,9 +162,9 @@
 				continue
 			return
 	if(occupant == usr)
-		visible_message("[usr] climbs out of \the [src].", 2) //spooky
+		visible_message("[usr] climbs out of \the [src].")
 	else
-		visible_message("[usr] removes [occupant.name] from \the [src].", 2) //spooky
+		visible_message("[usr] removes [occupant.name] from \the [src].")
 	go_out(over_location)
 
 /obj/machinery/bodyscanner/relaymove(mob/user as mob)

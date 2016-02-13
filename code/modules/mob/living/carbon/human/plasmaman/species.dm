@@ -4,6 +4,7 @@
 	deform = 'icons/mob/human_races/r_plasmaman_pb.dmi'  // TODO: Need deform.
 	language = "Clatter"
 	attack_verb = "punch"
+	has_sweat_glands = 0
 
 	//flags = IS_WHITELISTED /*| HAS_LIPS | HAS_TAIL | NO_EAT | NO_BREATHE | NON_GENDERED*/ | NO_BLOOD
 	// These things are just really, really griefy. IS_WHITELISTED removed for now - N3X
@@ -147,6 +148,11 @@
 		H.adjustOxyLoss(-5)
 		plasma_used = breath.toxins/6
 		H.oxygen_alert = 0
+		if(!H.on_fire) // then the plasma can regulate him.
+			if(H.bodytemperature < T0C+37)
+				H.bodytemperature = min(H.bodytemperature+0.5,T0C+37)
+			else
+				H.bodytemperature = min(H.bodytemperature-0.5,T0C+37)
 
 	breath.toxins -= plasma_used
 	breath.nitrogen -= nitrogen_used
@@ -184,9 +190,6 @@
 	if( (abs(310.15 - breath.temperature) > 50) && !(M_RESIST_HEAT in H.mutations)) // Hot air hurts :(
 		if(H.status_flags & GODMODE)
 			return 1	//godmode
-		if(breath.temperature < cold_level_1)
-			if(prob(20))
-				to_chat(src, "<span class='warning'>You feel your face freezing and an icicle forming in your lungs!</span>")
 		else if(breath.temperature > heat_level_1)
 			if(prob(20))
 				if(H.dna.mutantrace == "slime")

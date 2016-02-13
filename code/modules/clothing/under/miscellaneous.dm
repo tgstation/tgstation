@@ -86,9 +86,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = FPRINT
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS //Needs gloves and shoes with cold protection to be fully protected.
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_conductivity = INS_JUMPSUIT_HEAT_CONDUCTIVITY
 
 /obj/item/clothing/under/acj
 	name = "administrative cybernetic jumpsuit"
@@ -99,11 +97,9 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags = FPRINT
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
+	heat_conductivity = INS_JUMPSUIT_HEAT_CONDUCTIVITY
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
@@ -186,7 +182,7 @@
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
 	_color = "blackskirt"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	body_parts_covered = FULL_TORSO|ARMS
 
 /obj/item/clothing/under/schoolgirl
 	name = "schoolgirl uniform"
@@ -194,7 +190,7 @@
 	icon_state = "schoolgirl"
 	item_state = "schoolgirl"
 	_color = "schoolgirl"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	body_parts_covered = FULL_TORSO|ARMS
 
 /obj/item/clothing/under/overalls
 	name = "laborer's overalls"
@@ -232,7 +228,6 @@
 	icon_state = "kilt"
 	item_state = "kilt"
 	_color = "kilt"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|FEET
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
@@ -240,7 +235,6 @@
 	icon_state = "sexymime"
 	item_state = "sexymime"
 	_color = "sexymime"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/gladiator
 	name = "gladiator uniform"
@@ -248,9 +242,12 @@
 	icon_state = "gladiator"
 	item_state = "gladiator"
 	_color = "gladiator"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	body_parts_covered = LOWER_TORSO|ARM_LEFT|HAND_LEFT
 
 //dress
+
+/obj/item/clothing/under/dress
+	body_parts_covered = FULL_TORSO|ARMS
 
 /obj/item/clothing/under/dress/dress_fire
 	name = "flame dress"
@@ -332,40 +329,38 @@
 
 //wedding stuff
 
+/obj/item/clothing/under/wedding
+	body_parts_covered = FULL_TORSO|LEGS|FEET|ARMS
+
 /obj/item/clothing/under/wedding/bride_orange
 	name = "orange wedding dress"
 	desc = "A big and puffy orange dress."
 	icon_state = "bride_orange"
 	_color = "bride_orange"
-	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/wedding/bride_purple
 	name = "purple wedding dress"
 	desc = "A big and puffy purple dress."
 	icon_state = "bride_purple"
 	_color = "bride_purple"
-	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/wedding/bride_blue
 	name = "blue wedding dress"
 	desc = "A big and puffy blue dress."
 	icon_state = "bride_blue"
 	_color = "bride_blue"
-	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/wedding/bride_red
 	name = "red wedding dress"
 	desc = "A big and puffy red dress."
 	icon_state = "bride_red"
 	_color = "bride_red"
-	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/wedding/bride_white
 	name = "white wedding dress"
 	desc = "A white wedding gown made from the finest silk."
 	icon_state = "bride_white"
 	_color = "bride_white"
-	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/sundress
 	name = "sundress"
@@ -373,7 +368,7 @@
 	icon_state = "sundress"
 	item_state = "sundress"
 	_color = "sundress"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	body_parts_covered = FULL_TORSO
 
 /obj/item/clothing/under/roman
 	name = "roman armor"
@@ -397,7 +392,6 @@
 	desc = "You are the night."
 	icon_state = "bmuniform"
 	_color = "bmuniform"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/officeruniform
 	name = "officer's uniform"
@@ -582,3 +576,61 @@
 	icon_state = "cia"
 	item_state = "cia"
 	_color = "cia"
+
+/obj/item/clothing/under/greaser
+	name = "greaser outfit"
+	desc = "The one that you want!"
+	icon_state = "greaser_default"
+	item_state = "greaser_default"
+
+/obj/item/clothing/under/greaser/New()
+	var/greaser_colour = "default"
+	switch(rand(1,4))
+		if(1)
+			greaser_colour = "default"
+		if(2)
+			greaser_colour = "cult"
+		if(3)
+			greaser_colour = "spider"
+		if(4)
+			greaser_colour = "snakes"
+			desc = "Tunnel Snakes Rule!"
+	icon_state = "greaser_[greaser_colour]"
+	item_state = "greaser_[greaser_colour]"
+	_color = "greaser_[greaser_colour]"
+
+/obj/item/clothing/under/wintercasualwear
+	name = "winter casualwear"
+	desc = "Perfect for winter!"
+	icon_state = "shizunewinter"
+	item_state = "shizunewinter"
+	_color = "shizunewinter"
+	body_parts_covered = FULL_TORSO|ARMS
+
+/obj/item/clothing/under/casualwear
+	name = "spring casualwear"
+	desc = "Perfect for spring!"
+	icon_state = "shizunenormal"
+	item_state = "shizunenormal"
+	_color = "shizunenormal"
+	body_parts_covered = FULL_TORSO|ARMS
+
+/obj/item/clothing/under/keyholesweater
+	name = "keyhole sweater"
+	desc = "What is the point of this, anyway?"
+	icon_state = "keyholesweater"
+	item_state = "keyholesweater"
+	_color = "keyholesweater"
+	body_parts_covered = FULL_TORSO|ARMS
+
+/obj/item/clothing/under/casualhoodie
+	name = "casual hoodie"
+	desc = "Pefect for lounging about in."
+	icon_state = "hoodiejeans"
+	item_state = "hoodiejeans"
+	_color = "hoodiejeans"
+
+/obj/item/clothing/under/casualhoodie/skirt
+	icon_state = "hoodieskirt"
+	item_state = "hoodieskirt"
+	_color = "hoodieskirt"

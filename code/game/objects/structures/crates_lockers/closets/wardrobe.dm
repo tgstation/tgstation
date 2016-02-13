@@ -228,6 +228,10 @@
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/shoes/slippers(src)
 	new /obj/item/clothing/shoes/slippers(src)
+	new /obj/item/clothing/head/pajamahat/blue(src)
+	new /obj/item/clothing/head/pajamahat/blue(src)
+	new /obj/item/clothing/head/pajamahat/red(src)
+	new /obj/item/clothing/head/pajamahat/red(src)
 	AddToProfiler()
 	return
 
@@ -406,5 +410,6 @@
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/purple(src)
 	new /obj/item/clothing/shoes/leather(src)
+	new /obj/item/clothing/under/casualwear(src)
 	AddToProfiler()
 	return

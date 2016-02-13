@@ -1195,12 +1195,43 @@
 		if (ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		master_mode = href_list["c_mode2"]
-		log_admin("[key_name(usr)] set the mode as [master_mode].")
-		message_admins("<span class='notice'>[key_name_admin(usr)] set the mode as [master_mode].</span>", 1)
-		to_chat(world, "<span class='notice'><b>The mode is now: [master_mode]</b></span>")
-		Game() // updates the main game menu
-		world.save_mode(master_mode)
-		.(href, list("c_mode"=1))
+		if((master_mode != "mixed") || alert("Do you wish to specify which game modes to be mixed?","Specify Mixed","Yes","No")=="No")
+			mixed_modes = list()
+			log_admin("[key_name(usr)] set the mode as [master_mode].")
+			message_admins("<span class='notice'>[key_name_admin(usr)] set the mode as [master_mode].</span>", 1)
+			to_chat(world, "<span class='notice'><b>The mode is now: [master_mode]</b></span>")
+			Game() // updates the main game menu
+			world.save_mode(master_mode)
+			.(href, list("c_mode"=1))
+		else
+			var/list/possible = list()
+			possible += mixed_allowed
+			possible += "DONE"
+			possible += "CANCEL"
+			if(possible.len < 3)
+				return alert(usr, "Not enough possible game modes.", null, null, null, null)
+			var/mixed_mode_added = null
+			while(possible.len >= 3)
+				var/mixed_mode_add = input("Pick game modes to add to the mix. ([mixed_mode_added])", "Specify Mixed") in possible
+				possible -= mixed_mode_add
+				if(mixed_mode_add == "CANCEL")
+					return
+				else if(mixed_mode_add == "DONE")
+					break
+				else
+					mixed_modes += mixed_mode_add
+					possible -= mixed_mode_add
+					if(!mixed_mode_added)
+						mixed_mode_added = mixed_mode_add
+					else
+						mixed_mode_added = "[mixed_mode_added], [mixed_mode_add]"
+
+			log_admin("[key_name(usr)] set the mode as [master_mode] with the following modes: [mixed_mode_added].")
+			message_admins("<span class='notice'>[key_name_admin(usr)] set the mode as [master_mode] with the following modes: [mixed_mode_added].</span>", 1)
+			to_chat(world, "<span class='notice'><b>The mode is now: [master_mode] ([mixed_mode_added])</b></span>")
+			Game() // updates the main game menu
+			world.save_mode(master_mode)
+			.(href, list("c_mode"=1))
 
 	else if(href_list["f_secret2"])
 		if(!check_rights(R_ADMIN|R_SERVER))	return
@@ -1210,10 +1241,40 @@
 		if(master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
 		secret_force_mode = href_list["f_secret2"]
-		log_admin("[key_name(usr)] set the forced secret mode as [secret_force_mode].")
-		message_admins("<span class='notice'>[key_name_admin(usr)] set the forced secret mode as [secret_force_mode].</span>", 1)
-		Game() // updates the main game menu
-		.(href, list("f_secret"=1))
+
+		if((secret_force_mode != "mixed") || alert("Do you wish to specify which game modes to be mixed?","Specify Secret Mixed","Yes","No")=="No")
+			mixed_modes = list()
+			log_admin("[key_name(usr)] set the forced secret mode as [secret_force_mode].")
+			message_admins("<span class='notice'>[key_name_admin(usr)] set the forced secret mode as [secret_force_mode].</span>", 1)
+			Game() // updates the main game menu
+			.(href, list("f_secret"=1))
+		else
+			var/list/possible = list()
+			possible += mixed_allowed
+			possible += "DONE"
+			possible += "CANCEL"
+			if(possible.len < 3)
+				return alert(usr, "Not enough possible game modes.", null, null, null, null)
+			var/mixed_mode_added = null
+			while(possible.len >= 3)
+				var/mixed_mode_add = input("Pick game modes to add to the secret mix. ([mixed_mode_added])", "Specify Secret Mixed") in possible
+				possible -= mixed_mode_add
+				if(mixed_mode_add == "CANCEL")
+					return
+				else if(mixed_mode_add == "DONE")
+					break
+				else
+					mixed_modes += mixed_mode_add
+					possible -= mixed_mode_add
+					if(!mixed_mode_added)
+						mixed_mode_added = mixed_mode_add
+					else
+						mixed_mode_added = "[mixed_mode_added], [mixed_mode_add]"
+
+			log_admin("[key_name(usr)] set the mode as [secret_force_mode] with the following modes: [mixed_mode_added].")
+			message_admins("<span class='notice'>[key_name_admin(usr)] set the forced secret mode as [secret_force_mode] with the following modes: [mixed_mode_added].</span>", 1)
+			Game() // updates the main game menu
+			.(href, list("f_secret"=1))
 
 	else if(href_list["monkeyone"])
 		if(!check_rights(R_SPAWN))	return
@@ -1699,8 +1760,12 @@
 		if(alert(usr, "Validate the current Cult objective and unlock the next one?", "Cult Cheat Code", "Yes", "No") != "Yes")
 			return
 
-		var/datum/game_mode/cult/mode_ticker = ticker.mode
-		mode_ticker.bypass_phase()
+		var/datum/game_mode/cult/cult_round = find_active_mode("cult")
+		if(!cult_round)
+			alert("Couldn't locate cult mode datum! This shouldn't ever happen, tell a coder!")
+			return
+
+		cult_round.bypass_phase()
 		message_admins("Admin [key_name_admin(usr)] has unlocked the Cult's next objective.")
 		log_admin("Admin [key_name_admin(usr)] has unlocked the Cult's next objective.")
 		check_antagonists()
@@ -1873,37 +1938,50 @@
 			M.stuttering = 20
 
 	else if(href_list["CentcommReply"])
-		var/mob/living/carbon/human/H = locate(href_list["CentcommReply"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
-			return
-		if(!istype(H.ears, /obj/item/device/radio/headset))
-			to_chat(usr, "The person you are trying to contact is not wearing a headset")
+		var/mob/M = locate(href_list["CentcommReply"])
+		var/receive_type
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(!istype(H.ears, /obj/item/device/radio/headset))
+				to_chat(usr, "The person you are trying to contact is not wearing a headset")
+				return
+			receive_type = "headset"
+		else if(istype(M, /mob/living/silicon))
+			receive_type = "official communication channel"
+		if(!receive_type)
+			to_chat(usr, "This mob type cannot be replied to")
 			return
 
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcomm", "")
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their [receive_type].","Outgoing message from The Syndicate", "")
 		if(!input)	return
 
-		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
-		log_admin("[src.owner] replied to [key_name(H)]'s Centcomm message with the message [input].")
-		message_admins("[src.owner] replied to [key_name(H)]'s Centcom message with: \"[input]\"")
-		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. <b>\"[input]\"</b>  Message ends.\"")
+		to_chat(src.owner, "You sent [input] to [M] via a secure channel.")
+		log_admin("[src.owner] replied to [key_name(M)]'s Centcomm message with the message [input].")
+		message_admins("[src.owner] replied to [key_name(M)]'s Centcom message with: \"[input]\"")
+		to_chat(M, "You hear something crackle from your [receive_type] for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. <b>\"[input]\"</b>  Message ends.\"")
 
 	else if(href_list["SyndicateReply"])
-		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
-			return
-		if(!istype(H.ears, /obj/item/device/radio/headset))
-			to_chat(usr, "The person you are trying to contact is not wearing a headset")
+		var/mob/M = locate(href_list["SyndicateReply"])
+		var/receive_type
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(!istype(H.ears, /obj/item/device/radio/headset))
+				to_chat(usr, "The person you are trying to contact is not wearing a headset")
+				return
+			receive_type = "headset"
+		else if(istype(M, /mob/living/silicon))
+			receive_type = "undetectable communications channel"
+		if(!receive_type)
+			to_chat(usr, "This mob type cannot be replied to")
 			return
 
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", "")
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their [receive_type].","Outgoing message from The Syndicate", "")
 		if(!input)	return
 
-		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
-		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
-		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\"")
+
+		to_chat(src.owner, "You sent [input] to [M] via a secure channel.")
+		log_admin("[src.owner] replied to [key_name(M)]'s Syndicate message with the message [input].")
+		to_chat(M, "You hear something crackle from your [receive_type] for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\"")
 
 	else if(href_list["CentcommFaxView"])
 		var/obj/item/weapon/paper/P = locate(href_list["CentcommFaxView"])
@@ -2603,13 +2681,17 @@
 				floorIsLava = 1
 
 				message_admins("[key_name_admin(usr)] made the floor LAVA! It'll last [length] seconds and it will deal [damage] damage to everyone.", 1)
-
+				var/count = 0
+				var/list/lavaturfs = list()
 				for(var/turf/simulated/floor/F in turfs)
+					count++
+					if(!(count % 50000)) sleep(world.tick_lag)
 					if(F.z == 1)
 						F.name = "lava"
 						F.desc = "The floor is LAVA!"
 						F.overlays += "lava"
 						F.lava = 1
+						lavaturfs += F
 
 				spawn(0)
 					for(var/i = i, i < length, i++) // 180 = 3 minutes
@@ -2629,7 +2711,7 @@
 
 						sleep(10)
 
-					for(var/turf/simulated/floor/F in turfs) // Reset everything.
+					for(var/turf/simulated/floor/F in lavaturfs) // Reset everything.
 						if(F.z == 1)
 							F.name = initial(F.name)
 							F.desc = initial(F.desc)
@@ -2713,7 +2795,7 @@
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
 				command_alert("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.")
-				to_chat(world, sound('sound/AI/commandreport.ogg'))
+				to_chat(world, sound('sound/AI/commandreport.ogg', volume = 60))
 			if("dorf")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","DF")
@@ -2980,6 +3062,31 @@
 						hardcore_mode = 0
 						to_chat(world, "<h5><span class='danger'>Hardcore mode has been disabled</span></h5>")
 						to_chat(world, "<span class='info'>Starvation will no longer kill player-controlled characters.</span>")
+			if("hostile_infestation")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","HI")
+				message_admins("[key_name_admin(usr)] has triggered an infestation of hostile creatures.", 1)
+				new /datum/event/hostile_infestation
+			if("mass_hallucination")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","MH")
+				message_admins("[key_name_admin(usr)] made the whole crew trip balls.", 1)
+				new /datum/event/mass_hallucination
+			if("meaty_gores")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","ODF")
+				message_admins("[key_name_admin(usr)] has sent the station careening through a cloud of gore.", 1)
+				new /datum/event/thing_storm/meaty_gore
+			if("silent_meteors")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","SILM")
+				message_admins("[key_name_admin(usr)] has spawned meteors without a command alert.", 1)
+				new /datum/event/meteor_shower/meteor_quiet
+			if("mass_drunk")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","MASD")
+				message_admins("[key_name_admin(usr)] gave the station a vodka enema.", 1)
+				new /datum/event/mass_drunk
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if(ok)

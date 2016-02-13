@@ -171,10 +171,10 @@
 					else
 						H.visible_message("<span class='warning'>A cloud of fine ice crystals engulfs [H]!</span>",
 											"<span class='warning'>A cloud of fine ice crystals cover your [H.head]'s visor and make it into your air vents!.</span>")
-						H.bodytemperature = max(0, H.bodytemperature - 50)
+						H.bodytemperature = max(T0C + 31, H.bodytemperature - 3)
 						H.adjustFireLoss(5)
 		if(!handle_suit)
-			target.bodytemperature = max(0, target.bodytemperature - 100)
+			target.bodytemperature = max(T0C + 29, target.bodytemperature - 5)
 			target.adjustFireLoss(10)
 			target.ExtinguishMob()
 
@@ -361,7 +361,13 @@
 	var/atom/movable/the_item = targets[1]
 	if(!the_item || !the_item.Adjacent(user))
 		return
-	if(ishuman(the_item))
+	// if(istype(the_item, /obj/item/weapon/organ/head))
+	// 	to_chat(user, "<span class='warning'>You try to put the [the_item] in your mouth, but the ears tickle your throat!</span>")
+	// 	return 0
+	// else if(isbrain(the_item))
+	// 	to_chat(user, "<span class='warning'>You try to put [the_item] in your mouth, but the texture makes you gag!</span>")
+	// 	return 0
+	else if(ishuman(the_item))
 		//My gender
 		var/m_his = "its"
 		if(user.gender == MALE)
@@ -391,11 +397,16 @@
 		else
 			user.visible_message("<span class='danger'>[user] eats [the_item]'s [limb.display_name].</span>", \
 			"<span class='danger'>You eat [the_item]'s [limb.display_name].</span>")
+			playsound(get_turf(user), 'sound/items/eatfood.ogg', 50, 0)
+			message_admins("[user] ate [the_item]'s [limb]: (<A href='?src=\ref[src];jumpto=\ref[user]'><b>Jump to</b></A>)")
+			log_game("[user] ate \the [the_item]'s [limb] at [user.x], [user.y], [user.z]")
 			limb.droplimb("override" = 1, "spawn_limb" = 0)
 			doHeal(user)
 	else
 		user.visible_message("<span class='warning'>[usr] eats \the [the_item].")
 		playsound(get_turf(user), 'sound/items/eatfood.ogg', 50, 0)
+		message_admins("[user] ate \the [the_item]: (<A href='?src=\ref[src];jumpto=\ref[user]'><b>Jump to</b></A>)")
+		log_game("[user] ate \the [the_item] at [user.x], [user.y], [user.z]")
 		qdel(the_item)
 		doHeal(usr)
 	return

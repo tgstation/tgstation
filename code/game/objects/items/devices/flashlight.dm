@@ -15,6 +15,9 @@
 	action_button_name = "Toggle Light"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
+	var/has_sound = 1 //The CLICK sound when turning on/off
+	var/sound_on = 'sound/items/flashlight_on.ogg'
+	var/sound_off = 'sound/items/flashlight_off.ogg'
 
 /obj/item/device/flashlight/initialize()
 	..()
@@ -29,9 +32,13 @@
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)
+		if(has_sound)
+			playsound(get_turf(src), sound_on, 50, 1)
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
+		if(has_sound)
+			playsound(get_turf(src), sound_off, 50, 1)
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -95,6 +102,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	brightness_on = 2
+	has_sound = 0
 
 
 // the desk lamps are a bit special
@@ -141,6 +149,8 @@
 	icon_state = "flare"
 	item_state = "flare"
 	action_button_name = null //just pull it manually, neckbeard.
+	sound_on = "sound/items/flare_on.ogg"
+	sound_off = ""
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
@@ -215,6 +225,7 @@
 	light_color = LIGHT_COLOR_SLIME_LAMP
 	on = 0
 	luminosity = 2
+	has_sound = 0
 	var/brightness_max = 6
 	var/brightness_min = 2
 

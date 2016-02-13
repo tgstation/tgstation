@@ -124,12 +124,9 @@
 
 	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\mind.dm:110: out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
 	out += {"Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>
 		Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>
 		Factions and special roles:<br>"}
-	// END AUTOFIX
 	var/list/sections = list(
 		"revolution",
 		"cult",
@@ -157,11 +154,8 @@
 			text += "head|<b>OFFICER</b>|employee|headre|rev"
 		else if (src in ticker.mode.head_revolutionaries)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\mind.dm:137: text = "head|officer|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
 			text = {"head|officer|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>
 				<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"}
-			// END AUTOFIX
 			var/list/L = current.get_contents()
 			var/obj/item/device/flash/flash = locate() in L
 			if (flash)
@@ -192,11 +186,8 @@
 			text += "head|<b>OFFICER</b>|employee|cultist"
 		else if (src in ticker.mode.cult)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\mind.dm:169: text += "head|officer|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
 			text += {"head|officer|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>
 				<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."}
-			// END AUTOFIX
 /*
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
@@ -212,11 +203,8 @@
 		text = "<i><b>[text]</b></i>: "
 		if (src in ticker.mode.wizards)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\mind.dm:185: text += "<b>YES</b>|<a href='?src=\ref[src];wizard=clear'>no</a>"
 			text += {"<b>YES</b>|<a href='?src=\ref[src];wizard=clear'>no</a>
 				<br><a href='?src=\ref[src];wizard=lair'>To lair</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];wizard=dressup'>dress up</a>, <a href='?src=\ref[src];wizard=name'>let choose name</a>."}
-			// END AUTOFIX
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];wizard=autoobjectives'>Randomize!</a>"
 		else
@@ -269,11 +257,8 @@
 		text = "<i><b>[text]</b></i>: "
 		if (src in ticker.mode.syndicates)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\mind.dm:217: text += "<b>OPERATIVE</b>|<a href='?src=\ref[src];nuclear=clear'>nanotrasen</a>"
 			text += {"<b>OPERATIVE</b>|<a href='?src=\ref[src];nuclear=clear'>nanotrasen</a>
 				<br><a href='?src=\ref[src];nuclear=lair'>To shuttle</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];nuclear=dressup'>dress up</a>."}
-			// END AUTOFIX
 			var/code
 			for (var/obj/machinery/nuclearbomb/bombue in machines)
 				if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
@@ -420,11 +405,8 @@
 			out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a> <a href='?src=\ref[src];obj_completed=\ref[objective]'><font color=[objective.completed ? "green" : "red"]>Toggle Completion</font></a><br>"
 			obj_count++
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\mind.dm:338: out += "<a href='?src=\ref[src];obj_add=1'>Add objective</a><br><br>"
 	out += {"<a href='?src=\ref[src];obj_add=1'>Add objective</a><br><br>
 		<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"}
-	// END AUTOFIX
 	usr << browse(out, "window=edit_memory[src]")
 
 /datum/mind/Topic(href, href_list)
@@ -690,6 +672,8 @@
 					special_role = "Cultist"
 					to_chat(current, "<span class='sinister'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>")
 					to_chat(current, "<span class='sinister'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</span>")
+					var/wikiroute = role_wiki[ROLE_CULTIST]
+					to_chat(current, "<span class='info'><a HREF='?src=\ref[current];getwiki=[wikiroute]'>(Wiki Guide)</a></span>")
 					to_chat(current, "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>")
 					current.add_language("Cult")
 					var/datum/game_mode/cult/cult = ticker.mode
@@ -734,6 +718,8 @@
 					special_role = "Wizard"
 					//ticker.mode.learn_basic_spells(current)
 					to_chat(current, "<span class='danger'>You are the Space Wizard!</span>")
+					var/wikiroute = role_wiki[ROLE_WIZARD]
+					to_chat(current, "<span class='info'><a HREF='?src=\ref[current];getwiki=[wikiroute]'>(Wiki Guide)</a></span>")
 					ticker.mode.update_wizard_icons_added(src)
 					log_admin("[key_name_admin(usr)] has wizard'ed [current].")
 			if("lair")
@@ -766,6 +752,8 @@
 					ticker.mode.grant_changeling_powers(current)
 					special_role = "Changeling"
 					to_chat(current, "<B><font color='red'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</font></B>")
+					var/wikiroute = role_wiki[ROLE_CHANGELING]
+					to_chat(current, "<span class='info'><a HREF='?src=\ref[current];getwiki=[wikiroute]'>(Wiki Guide)</a></span>")
 					log_admin("[key_name_admin(usr)] has changeling'ed [current].")
 			if("autoobjectives")
 				ticker.mode.forge_changeling_objectives(src)
@@ -806,6 +794,8 @@
 					ticker.mode.grant_vampire_powers(current)
 					special_role = "Vampire"
 					to_chat(current, "<B><font color='red'>Your powers are awoken. Your lust for blood grows... You are a Vampire!</font></B>")
+					var/wikiroute = role_wiki[ROLE_VAMPIRE]
+					to_chat(current, "<span class='info'><a HREF='?src=\ref[current];getwiki=[wikiroute]'>(Wiki Guide)</a></span>")
 					log_admin("[key_name_admin(usr)] has vampired [current].")
 			if("autoobjectives")
 				ticker.mode.forge_vampire_objectives(src)
@@ -832,6 +822,8 @@
 						current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 					special_role = "Syndicate"
 					to_chat(current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
+					var/wikiroute = role_wiki[ROLE_OPERATIVE]
+					to_chat(current, "<span class='info'><a HREF='?src=\ref[current];getwiki=[wikiroute]'>(Wiki Guide)</a></span>")
 					ticker.mode.forge_syndicate_objectives(src)
 					ticker.mode.greet_syndicate(src)
 					log_admin("[key_name_admin(usr)] has nuke op'ed [current].")
@@ -1142,6 +1134,8 @@ proc/clear_memory(var/silent = 1)
 		laws.malfunction()
 		A.show_laws()
 		to_chat(A, "<b>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>")
+		var/wikiroute = role_wiki[ROLE_MALF]
+		to_chat(A, "<span class='info'><a HREF='?src=\ref[A];getwiki=[wikiroute]'>(Wiki Guide)</a></span>")
 		special_role = "malfunction"
 		A.icon_state = "ai-malf"
 

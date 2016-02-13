@@ -45,7 +45,7 @@
 	set src in oview(1)
 
 	if( wash_state != 4 )
-		to_chat(usr, "The washing machine cannot run in this state.")
+		to_chat(usr, "\The [src] cannot run in this state.")
 		return
 
 	if( locate(/mob,contents) )
@@ -226,7 +226,7 @@
 	update_icon()
 
 /obj/machinery/washing_machine/AltClick()
-	if(usr.canmove && !usr.isUnconscious() && !usr.restrained() && Adjacent(usr) && usr.dexterity_check())
+	if(!usr.incapacitated() && Adjacent(usr) && usr.dexterity_check())
 		start()
 		return
 	return ..()
@@ -316,7 +316,7 @@
 			else
 				to_chat(user, "<span class='notice'>You can't put the item in right now.</span>")
 		else
-			to_chat(user, "<span class='notice'>The washing machine is full.</span>")
+			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 	update_icon()
 
 /obj/machinery/washing_machine/attack_hand(mob/user as mob)
@@ -339,7 +339,7 @@
 			crayon = null
 			wash_state = 1
 		if(5)
-			to_chat(user, "<span class='warning'>The [src] is busy.</span>")
+			to_chat(user, "<span class='warning'>\The [src] is busy.</span>")
 		if(6)
 			wash_state = 7
 		if(7)

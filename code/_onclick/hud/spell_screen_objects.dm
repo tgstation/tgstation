@@ -4,16 +4,13 @@
 	icon_state = "wiz_spell_ready"
 	var/list/obj/screen/spell/spell_objects = list()
 	var/showing = 0
-
+	globalscreen = 1
 	var/open_state = "master_open"
 	var/closed_state = "master_closed"
 
 	screen_loc = ui_spell_master
 
 	var/mob/spell_holder
-
-/obj/screen/movable/spell_master/pool_on_reset()
-	. = 0
 
 /obj/screen/movable/spell_master/Destroy()
 	..()
@@ -153,15 +150,12 @@
 	icon_state = "wiz_spell_base"
 	var/spell_base = "wiz"
 	var/last_charge = 0 //not a time, but the last remembered charge value
-
+	globalscreen = 1
 	var/spell/spell = null
 	var/handle_icon_updates = 0
 	var/obj/screen/movable/spell_master/spellmaster
 
 	var/icon/last_charged_icon
-
-/obj/screen/spell/pool_on_reset()
-	. = 0
 
 /obj/screen/spell/Destroy()
 	..()

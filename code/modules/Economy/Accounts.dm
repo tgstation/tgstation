@@ -97,8 +97,6 @@ var/global/list/all_money_accounts = list()
 		P.wrapped = R
 		R.name = "Account information: [M.owner_name]"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:94: R.info = "<b>Account details (confidential)</b><br><hr><br>"
 		R.info = {"<b>Account details (confidential)</b><br><hr><br>
 			<i>Account holder:</i> [M.owner_name]<br>
 			<i>Account number:</i> [M.account_number]<br>
@@ -107,7 +105,6 @@ var/global/list/all_money_accounts = list()
 			<i>Date and time:</i> [worldtime2text()], [current_date_string]<br><br>
 			<i>Creation terminal ID:</i> [source_db.machine_id]<br>
 			<i>Authorised NT officer overseeing creation:</i> [source_db.held_card.registered_name]<br>"}
-		// END AUTOFIX
 		//stamp the paper
 		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 		stampoverlay.icon_state = "paper_stamp-cent"
@@ -200,22 +197,14 @@ var/global/list/all_money_accounts = list()
 	if(ishuman(user) && !user.stat && get_dist(src,user) <= 1)
 		var/dat = "<b>Accounts Database</b><br>"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:171: dat += "<i>[machine_id]</i><br>"
 		dat += {"<i>[machine_id]</i><br>
 			Confirm identity: <a href='?src=\ref[src];choice=insert_card'>[held_card ? held_card : "-----"]</a><br>"}
-		// END AUTOFIX
 		if(access_level > 0)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:175: dat += "<a href='?src=\ref[src];toggle_activated=1'>[activated ? "Disable" : "Enable"] remote access</a><br>"
 			dat += {"<a href='?src=\ref[src];toggle_activated=1'>[activated ? "Disable" : "Enable"] remote access</a><br>
 				You may not edit accounts at this terminal, only create and view them.<br>"}
-			// END AUTOFIX
 			if(creating_new_account)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:178: dat += "<br>"
 				dat += {"<br>
 					<a href='?src=\ref[src];choice=view_accounts_list;'>Return to accounts list</a>
 					<form name='create_account' action='?src=\ref[src]' method='get'>
@@ -227,12 +216,9 @@ var/global/list/all_money_accounts = list()
 					<b>Ensure that the station account has enough money to create the account, or it will not be created</b>
 					<input type='submit' value='Create'><br>
 					</form>"}
-				// END AUTOFIX
 			else
 				if(detailed_account_view)
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:190: dat += "<br>"
 					dat += {"<br>
 						<a href='?src=\ref[src];choice=view_accounts_list;'>Return to accounts list</a><hr>
 						<b>Account number:</b> #[detailed_account_view.account_number]<br>
@@ -247,11 +233,8 @@ var/global/list/all_money_accounts = list()
 						<td><b>Value</b></td>
 						<td><b>Source terminal ID</b></td>
 						</tr>"}
-					// END AUTOFIX
 					for(var/datum/transaction/T in detailed_account_view.transaction_log)
 
-						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:205: dat += "<tr>"
 						dat += {"<tr>
 							<td>[T.date]</td>
 							<td>[T.time]</td>
@@ -260,26 +243,19 @@ var/global/list/all_money_accounts = list()
 							<td>$[T.amount]</td>
 							<td>[T.source_terminal]</td>
 							</tr>"}
-						// END AUTOFIX
 					dat += "</table>"
 				else
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:215: dat += "<a href='?src=\ref[src];choice=create_account;'>Create new account</a><br><br>"
 					dat += {"<a href='?src=\ref[src];choice=create_account;'>Create new account</a><br><br>
 						<table border=1 style='width:100%'>"}
-					// END AUTOFIX
 					for(var/i=1, i<=all_money_accounts.len, i++)
 						var/datum/money_account/D = all_money_accounts[i]
 
-						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:219: dat += "<tr>"
 						dat += {"<tr>
 							<td>#[D.account_number]</td>
 							<td>[D.owner_name]</td>
 							<td><a href='?src=\ref[src];choice=view_account_detail;account_index=[i]'>View in detail</a></td>
 							</tr>"}
-						// END AUTOFIX
 					dat += "</table>"
 		user << browse(dat,"window=account_db;size=700x650")
 	else

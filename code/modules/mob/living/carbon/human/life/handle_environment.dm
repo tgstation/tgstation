@@ -3,19 +3,7 @@
 /mob/living/carbon/human/proc/handle_environment(datum/gas_mixture/environment)
 	if(!environment || (flags & INVULNERABLE))
 		return
-	var/loc_temp = T0C
-	if(istype(loc, /obj/mecha))
-		var/obj/mecha/M = loc
-		loc_temp =  M.return_temperature()
-	//else if(istype(get_turf(src), /turf/space))
-	if(istype(loc, /obj/spacepod))
-		var/obj/spacepod/S = loc
-		loc_temp = S.return_temperature()
-	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-		var/obj/machinery/atmospherics/unary/cryo_cell/CC = loc
-		loc_temp = CC.air_contents.temperature
-	else
-		loc_temp = environment.temperature
+	var/loc_temp = get_loc_temp(environment)
 
 //	to_chat(world, "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)] - Heat capacity: [environment_heat_capacity] - Location: [loc] - src: [src]")
 
@@ -26,14 +14,13 @@
 
 	//After then, it reacts to the surrounding atmosphere based on your thermal protection
 	if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
-		if(loc_temp < bodytemperature)
-			var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				bodytemperature += min((1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
+		if(loc_temp < get_skin_temperature())
+			var/thermal_loss = get_thermal_loss(environment)
+			bodytemperature -= thermal_loss
 		else
-			var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+			var/thermal_protection = get_heat_protection(get_heat_protection_flags(loc_temp)) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(thermal_protection < 1)
-				bodytemperature += min((1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
+				bodytemperature += min((1 - thermal_protection) * ((loc_temp - get_skin_temperature()) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 	if (status_flags & GODMODE)
 		fire_alert = 0
@@ -45,13 +32,13 @@
 		// Update fire/cold overlay
 		var/temp_alert = (bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT) ? 1 : 2
 		fire_alert = max(fire_alert, temp_alert)
-
-		if (dna.mutantrace != "slime")
-			var/temp_damage = get_body_temperature_damage(bodytemperature)
-			var/temp_weapon = (bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT) ? WPN_LOW_BODY_TEMP : WPN_HIGH_BODY_TEMP
-			apply_damage(temp_damage, BURN, used_weapon = temp_weapon)
-		else // Slimed carbons get toxin instead of cold damage
-			adjustToxLoss(round(BODYTEMP_HEAT_DAMAGE_LIMIT - bodytemperature))
+		if(!(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)))
+			if (dna.mutantrace != "slime")
+				var/temp_damage = get_body_temperature_damage(bodytemperature)
+				var/temp_weapon = (bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT) ? WPN_LOW_BODY_TEMP : WPN_HIGH_BODY_TEMP
+				apply_damage(temp_damage, BURN, used_weapon = temp_weapon)
+			else // Slimed carbons get toxin instead of cold damage
+				adjustToxLoss(round(BODYTEMP_HEAT_DAMAGE_LIMIT - bodytemperature))
 	else
 		fire_alert = 0
 

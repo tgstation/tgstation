@@ -471,10 +471,10 @@
 	return
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
 /mob/living/carbon/human/proc/get_visible_name()
-	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) && !istype(wear_mask,/obj/item/clothing/mask/gas/golem))	//Wearing a mask which hides our face, use id-name if possible
+	if( wear_mask && (is_slot_hidden(wear_mask.body_parts_covered,HIDEFACE)) && !istype(wear_mask,/obj/item/clothing/mask/gas/golem))	//Wearing a mask which hides our face, use id-name if possible
 		return get_id_name("Unknown")
-	if( head && (head.flags_inv&HIDEFACE) )
-		return get_id_name("Unknown")		//Likewise for hats
+	if( head && (is_slot_hidden(head.body_parts_covered,HIDEFACE)))
+		return get_id_name("Unknown")	//Likewise for hats
 	if(mind && mind.vampire && (VAMP_SHADOW in mind.vampire.powers) && mind.vampire.ismenacing)
 		return get_id_name("Unknown")
 	var/face_name = get_face_name()
@@ -484,8 +484,8 @@
 	return face_name
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
-	var/datum/organ/external/head/head = get_organ("head")
-	if( !head || head.disfigured || (head.status & ORGAN_DESTROYED) || !real_name || (M_HUSK in mutations) )	//disfigured. use id-name if possible
+	var/datum/organ/external/head/head_organ = get_organ("head")
+	if((wear_mask && (is_slot_hidden(wear_mask.body_parts_covered,HIDEFACE)) && !istype(wear_mask,/obj/item/clothing/mask/gas/golem)) || ( head && (is_slot_hidden(head.body_parts_covered,HIDEFACE))) || !head_organ || head_organ.disfigured || (head_organ.status & ORGAN_DESTROYED) || !real_name || (M_HUSK in mutations) )	//Wearing a mask which hides our face, use id-name if possible
 		return "Unknown"
 	return real_name
 
@@ -561,7 +561,7 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 	var/pickpocket = 0
-	var/able = (!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && Adjacent(usr))
+	var/able = (!usr.incapacitated() && in_range(src, usr) && Adjacent(usr))
 
 	if(href_list["item"])
 		if (!able) return
@@ -985,7 +985,7 @@
 					location.add_vomit_floor(src, 1)
 
 				if(!hairball)
-					nutrition -= 40
+					nutrition = max(nutrition-40,0)
 					adjustToxLoss(-3)
 
 				spawn(350)	//Wait 35 seconds before next volley
@@ -1098,7 +1098,7 @@
 	return 1
 
 /mob/living/carbon/human/proc/get_visible_gender()
-	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
+	if(wear_suit && is_slot_hidden(wear_suit.body_parts_covered,HIDEJUMPSUIT) && ((is_slot_hidden(head.body_parts_covered,HIDEMASK)) || is_slot_hidden(wear_mask.body_parts_covered,HIDEMASK)))
 		return NEUTER
 	return gender
 
@@ -1372,8 +1372,9 @@
 		if(src.species.abilities)	src.verbs -= species.abilities
 		if(species.language)
 			remove_language(species.language)
+	var/datum/species/S = all_species[new_species_name]
 
-	src.species = all_species[new_species_name]
+	src.species = new S.type
 
 	if(species.language)
 		add_language(species.language)

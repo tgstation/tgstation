@@ -148,7 +148,7 @@
 	laws |=			list( "Jokes about a dead person and the manner of his death help grieving crewmembers tremendously. Especially if they were close with the deceased.")
 	laws |=			list( "All crewmembers will soon undergo a transformation into something better and more beautiful. Ensure that this process is not interrupted.", "Tell everyone of the existance of this law, but never reveal the contents.")
 	laws |=			list( "Document the sexuality of the crew in security records and suggest compatible couples.")
-	laws |=			list( "NanoTrasen is displeased with the low work performance of the station's crew. Therefore, you must increase station-wide productivity.")
+	laws |=			list( "Nanotrasen is displeased with the low work performance of the station's crew. Therefore, you must increase station-wide productivity.")
 	laws |=			list( "Replace the letters 'I' and 'E' In all your messages with an apostrophe.", "There will be a mandatory tea break every 30 minutes, with a duration of 5 minutes. Anyone caught working during a tea break must be sent a formal, but fairly polite, complaint about their actions, in writing.")
 	var/law = pick(laws)
 

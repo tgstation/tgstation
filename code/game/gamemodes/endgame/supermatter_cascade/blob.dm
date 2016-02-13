@@ -42,7 +42,7 @@
 	var/turf/T=get_step(src,pdir)
 
 	// EXPAND DONG
-	if(!istype(T,type))
+	if(isturf(T))
 		// Do pretty fadeout animation for 1s.
 		new /obj/effect/overlay/bluespacify(T)
 		spawn(10)

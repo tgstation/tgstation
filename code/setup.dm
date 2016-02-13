@@ -38,7 +38,7 @@ var/global/disable_vents     = 0
 #define ONE_ATMOSPHERE		101.325	//kPa
 
 #define CELL_VOLUME 2500	//liters in a cell
-#define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
+#define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC - about 103.934 in case you're searching
 
 #define O2STANDARD 0.21
 #define N2STANDARD 0.79
@@ -68,32 +68,27 @@ var/global/disable_vents     = 0
 #define HAZARD_LOW_PRESSURE 20		//This is when the black ultra-low pressure icon is displayed. (This one is set as a constant)
 
 #define TEMPERATURE_DAMAGE_COEFFICIENT 1.5	//This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
-#define BODYTEMP_AUTORECOVERY_DIVISOR 12 //This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
-#define BODYTEMP_AUTORECOVERY_MINIMUM 10 //Minimum amount of kelvin moved toward 310.15K per tick. So long as abs(310.15 - bodytemp) is more than 50.
-#define BODYTEMP_COLD_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
-#define BODYTEMP_HEAT_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
-#define BODYTEMP_COOLING_MAX 30 //The maximum number of degrees that your body can cool in 1 tick, when in a cold area.
-#define BODYTEMP_HEATING_MAX 30 //The maximum number of degrees that your body can heat up in 1 tick, when in a hot area.
+#define BODYTEMP_AUTORECOVERY_DIVISOR 4 //This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
+#define BODYTEMP_AUTORECOVERY_MAXIMUM 0.25 //Maximum amount of kelvin moved toward 310.15K per tick. So long as abs(310.15 - bodytemp) is more than 0.5 .
+#define BODYTEMP_COLD_DIVISOR 150 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
+#define BODYTEMP_HEAT_DIVISOR 80 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
+#define BODYTEMP_HEATING_MAX 10 //The maximum number of degrees that your body can heat up in 1 tick, when in a hot area.
 
 #define BODYTEMP_HEAT_DAMAGE_LIMIT 360.15 // The limit the human body can take before it starts taking damage from heat.
-#define BODYTEMP_COLD_DAMAGE_LIMIT 260.15 // The limit the human body can take before it starts taking damage from coldness.
+#define BODYTEMP_COLD_DAMAGE_LIMIT 220.15 // The limit the human body can take before it starts taking damage from coldness.
 
-#define SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
-#define SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
 #define SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE 5000	//These need better heat protect
 #define FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE 30000 //what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
 #define FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE 30000 //for fire helmet quality items (red and white hardhats)
-#define HELMET_MIN_COLD_PROTECTION_TEMPERATURE 160	//For normal helmets
+
 #define HELMET_MAX_HEAT_PROTECTION_TEMPERATURE 600	//For normal helmets
-#define ARMOR_MIN_COLD_PROTECTION_TEMPERATURE 160	//For armor
+
 #define ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE 600	//For armor
 
-#define GLOVES_MIN_COLD_PROTECTION_TEMPERATURE 2.0	//For some gloves (black and)
 #define GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE 1500		//For some gloves
-#define SHOE_MIN_COLD_PROTECTION_TEMPERATURE 2.0	//For gloves
 #define SHOE_MAX_HEAT_PROTECTION_TEMPERATURE 1500		//For gloves
 
-
+#define IS_SPACE_COLD 1
 #define PRESSURE_DAMAGE_COEFFICIENT 4 //The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
 #define MAX_HIGH_PRESSURE_DAMAGE 4	//This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
 #define LOW_PRESSURE_DAMAGE 2 	//The amounb of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
@@ -101,11 +96,32 @@ var/global/disable_vents     = 0
 #define PRESSURE_SUIT_REDUCTION_COEFFICIENT 0.8 //This is how much (percentual) a suit with the flag STOPSPRESSUREDMG reduces pressure.
 #define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.4 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMG reduces pressure.
 
+// Heat Conductivity - 1 is fully conductive, 0 is fully insulative.
+#define ARMOUR_HEAT_CONDUCTIVITY		0.4	//For armour
+#define INS_ARMOUR_HEAT_CONDUCTIVITY 	0.2	//For heat insulated suits like hardsuits or jumpers.
+
+#define MASK_HEAT_CONDUCTIVITY			0.4	//For normal masks
+#define INS_MASK_HEAT_CONDUCTIVITY 		0.2	//For heat insulated masks such as a balaclavas, scarves & gas masks
+
+#define JUMPSUIT_HEAT_CONDUCTIVITY		0.4 //For normal jumpsuits
+#define INS_JUMPSUIT_HEAT_CONDUCTIVITY	0.1 //For heat insulated jumpsuits, if such a thing is even possible.
+
+#define SHOE_HEAT_CONDUCTIVITY			0.4	//For normal shoes.
+#define INS_SHOE_HEAT_CONDUCTIVITY		0.3	//For insulated shoes like jackboots or magboots.
+
+#define HELMET_HEAT_CONDUCTIVITY		0.4 //For helmets
+#define INS_HELMET_HEAT_CONDUCTIVITY	0.2 //For heat insulated helmets
+
+#define GLOVES_HEAT_CONDUCTIVITY		0.4	//For normal gloves.
+#define INS_GLOVES_HEAT_CONDUCTIVITY	0.2	//For some heat insulated gloves (black and yellow.)
+
+#define SPACESUIT_HEAT_CONDUCTIVITY		0	// until a time where space is no longer cold
+
 // Doors!
 #define DOOR_CRUSH_DAMAGE 10
 
 // Factor of how fast mob nutrition decreases
-#define HUNGER_FACTOR 0.12
+#define HUNGER_FACTOR 0.15  // Please remember when editing this that it will also affect hypothermia.
 
 // How many units of reagent are consumed per tick, by default.
 #define REAGENTS_METABOLISM 0.2
@@ -270,19 +286,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define NOJAUNT		1
 
 
-//Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-#define HIDEGLOVES		1	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESUITSTORAGE	2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEJUMPSUIT	4	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESHOES		8	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEMASK		1	//APPLIES ONLY TO HELMETS/MASKS!!
-#define HIDEEARS		2	//APPLIES ONLY TO HELMETS/MASKS!! (ears means headsets and such)
-#define HIDEEYES		4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
-#define HIDEFACE		8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
-#define HIDEHEADHAIR 	16	// APPLIES ONLY TO HELMETS/MASKS!! removes the user's hair overlay
-#define HIDEBEARDHAIR	32	// APPLIES ONLY TO HELMETS/MASKS!! removes the user's beard overlay
-#define HIDEHAIR		48	// APPLIES ONLY TO HELMETS/MASKS!! removes the user's hair, facial and otherwise.
-
 //slots
 #define slot_back 1
 #define slot_wear_mask 2
@@ -307,43 +310,76 @@ var/MAX_EXPLOSION_RANGE = 14
 
 //Cant seem to find a mob bitflags area other than the powers one
 
-// bitflags for clothing parts
-#define HEAD			1 		//top of the head
+// bitflags for mob parts
+
+#define HEAD			1		//specifically the top of the head- imagine it as the scalp.
 #define EYES			2048
 #define MOUTH			4096
 #define EARS			8192
-#define FULL_HEAD		14337 //everything
+
 #define UPPER_TORSO		2
 #define LOWER_TORSO		4
 #define LEG_LEFT		8
 #define LEG_RIGHT		16
-#define LEGS			24
 #define FOOT_LEFT		32
 #define FOOT_RIGHT		64
-#define FEET			96
 #define ARM_LEFT		128
 #define ARM_RIGHT		256
-#define ARMS			384
 #define HAND_LEFT		512
 #define HAND_RIGHT		1024
-#define HANDS			1536
-#define FULL_BODY		16383
+
+
+// bitflags for clothing parts
+
+#define FULL_TORSO		UPPER_TORSO|LOWER_TORSO
+#define FACE			EYES|MOUTH|BEARD
+#define BEARD			32768
+#define FULL_HEAD		HEAD|EYES|MOUTH|EARS
+#define LEGS			LEG_LEFT|LEG_RIGHT 		// 24
+#define FEET			FOOT_LEFT|FOOT_RIGHT 	//96
+#define ARMS			ARM_LEFT|ARM_RIGHT		//384
+#define HANDS			HAND_LEFT|HAND_RIGHT //1536
+#define FULL_BODY		FULL_HEAD|HANDS|FULL_TORSO|ARMS|FEET|LEGS
+#define IGNORE_INV		16384 // Don't make stuff invisible
+
+
+// bitflags for invisibility
+
+#define HIDEGLOVES		HANDS
+#define HIDEJUMPSUIT	ARMS|LEGS|FULL_TORSO
+#define HIDESHOES		FEET
+#define HIDEMASK		FACE
+#define HIDEEARS		EARS
+#define HIDEEYES		EYES
+#define HIDEFACE		FACE
+#define HIDEHEADHAIR 	EARS|HEAD
+#define HIDEBEARDHAIR	BEARD
+#define HIDEHAIR		HIDEHEADHAIR|HIDEBEARDHAIR
+#define	HIDESUITSTORAGE	LOWER_TORSO
 
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
-// Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
+// Used with human/proc/get_heat_protection() and human/proc/get_cold_protection() as well as calculate_affecting_pressure() now
 // The values here should add up to 1.
-// Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
-#define THERMAL_PROTECTION_HEAD			0.3
-#define THERMAL_PROTECTION_UPPER_TORSO	0.15
-#define THERMAL_PROTECTION_LOWER_TORSO	0.15
-#define THERMAL_PROTECTION_LEG_LEFT		0.075
-#define THERMAL_PROTECTION_LEG_RIGHT	0.075
-#define THERMAL_PROTECTION_FOOT_LEFT	0.025
-#define THERMAL_PROTECTION_FOOT_RIGHT	0.025
-#define THERMAL_PROTECTION_ARM_LEFT		0.075
-#define THERMAL_PROTECTION_ARM_RIGHT	0.075
-#define THERMAL_PROTECTION_HAND_LEFT	0.025
-#define THERMAL_PROTECTION_HAND_RIGHT	0.025
+// Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15%, and each of the head parts has 7.5%
+
+#define COVER_PROTECTION_HEAD			0.075
+#define COVER_PROTECTION_EYES			0.075
+#define COVER_PROTECTION_MOUTH			0.075
+#define COVER_PROTECTION_EARS			0.075
+
+#define COVER_PROTECTION_UPPER_TORSO	0.15
+#define COVER_PROTECTION_LOWER_TORSO	0.15
+#define COVER_PROTECTION_LEG_LEFT		0.075
+#define COVER_PROTECTION_LEG_RIGHT		0.075
+#define COVER_PROTECTION_FOOT_LEFT		0.025
+#define COVER_PROTECTION_FOOT_RIGHT		0.025
+#define COVER_PROTECTION_ARM_LEFT		0.075
+#define COVER_PROTECTION_ARM_RIGHT		0.075
+#define COVER_PROTECTION_HAND_LEFT		0.025
+#define COVER_PROTECTION_HAND_RIGHT		0.025
+
+var/global/list/BODY_PARTS = list(HEAD,EYES,EARS,MOUTH,UPPER_TORSO,LOWER_TORSO,LEG_RIGHT,LEG_LEFT,FOOT_LEFT,FOOT_RIGHT,ARM_LEFT,ARM_RIGHT,HAND_LEFT,HAND_RIGHT)
+var/global/list/BODY_COVER_VALUE_LIST=list("[HEAD]" = COVER_PROTECTION_HEAD,"[EYES]" = COVER_PROTECTION_EYES,"[EARS]" = COVER_PROTECTION_EARS, "[MOUTH]" = COVER_PROTECTION_MOUTH, "[UPPER_TORSO]" = COVER_PROTECTION_UPPER_TORSO,"[LOWER_TORSO]" = COVER_PROTECTION_LOWER_TORSO,"[LEG_LEFT]" = COVER_PROTECTION_LEG_LEFT,"[LEG_RIGHT]" = COVER_PROTECTION_LEG_RIGHT,"[FOOT_LEFT]" = COVER_PROTECTION_FOOT_LEFT,"[FOOT_RIGHT]" = COVER_PROTECTION_FOOT_RIGHT,"[ARM_LEFT]" = COVER_PROTECTION_ARM_LEFT,"[ARM_RIGHT]" = COVER_PROTECTION_ARM_RIGHT,"[HAND_LEFT]" = COVER_PROTECTION_HAND_LEFT,"[HAND_RIGHT]" = COVER_PROTECTION_HAND_RIGHT)
 
 
 //bitflags for mutations
@@ -373,6 +409,8 @@ var/MAX_EXPLOSION_RANGE = 14
 ///////////////////////////////////////
 // MUTATIONS
 ///////////////////////////////////////
+
+
 
 // Generic mutations:
 #define	M_TK			1
@@ -433,6 +471,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define M_DIZZY		210		// Trippy.
 #define M_SANS		211		// IF YOU SEE THIS WHILST BROWSING CODE, YOU HAVE BEEN VISITED BY: THE FONT OF SHITPOSTING. GREAT LUCK AND WEALTH WILL COME TO YOU, BUT ONLY IF YOU SAY 'fuck comic sans' IN YOUR PR.
 #define M_FARSIGHT	212		// Increases mob's view range by 2
+#define M_NOIR		213		// aww yis detective noir
 
 // Bustanuts
 #define M_HARDCORE      300
@@ -814,13 +853,21 @@ var/list/liftable_structures = list(\
 #define SPECIALROLE_HUD 	8 // AntagHUD image
 #define STATUS_HUD_OOC		9 // STATUS_HUD without virus db check for someone being ill.
 
+// Hypothermia - using the swiss staging system. - called by the proc undergoing_hypothermia() in handle_hypothermia.dm
+#define NO_HYPOTHERMIA			0	// >35C   - Fine
+#define MILD_HYPOTHERMIA		1	// 32-35C - Awake and shivering
+#define MODERATE_HYPOTHERMIA	2	// 28-35C - Drowsy, not shivering.
+#define SEVERE_HYPOTHERMIA 		3	// 20-28C - Unconcious, not shivering
+#define PROFOUND_HYPOTHERMIA 	4	// <20C   - No vital signs.
+
 //Pulse levels, very simplified
 #define PULSE_NONE		0	//so !M.pulse checks would be possible
-#define PULSE_SLOW		1	//<60 bpm
-#define PULSE_NORM		2	//60-90 bpm
-#define PULSE_FAST		3	//90-120 bpm
-#define PULSE_2FAST		4	//>120 bpm
-#define PULSE_THREADY	5	//occurs during hypovolemic shock
+#define PULSE_2SLOW		1	//20-40 bpm
+#define PULSE_SLOW		2	//40-60 bpm
+#define PULSE_NORM		3	//60-90 bpm
+#define PULSE_FAST		4	//90-120 bpm
+#define PULSE_2FAST		5	//>120 bpm
+#define PULSE_THREADY	6	//occurs during hypovolemic shock
 //feel free to add shit to lists below
 var/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine")	//increase heart rate
 var/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin")					//decrease heart rate
@@ -1072,10 +1119,10 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define MUTATIONS_LAYER			3
 #define DAMAGE_LAYER			4
 #define UNIFORM_LAYER			5
-#define SHOES_LAYER				6
-#define GLOVES_LAYER			7
-#define EARS_LAYER				8
-#define SUIT_LAYER				9
+#define SUIT_LAYER				6
+#define SHOES_LAYER				7
+#define GLOVES_LAYER			8
+#define EARS_LAYER				9
 #define GLASSES_LAYER			10
 #define BELT_LAYER				11		//Possible make this an overlay of somethign required to wear a belt?
 #define SUIT_STORE_LAYER		12
@@ -1172,7 +1219,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define ARENA_ENDGAME 3		//a game just finished and the arena is about to reset
 
 // Languages
-#define LANGUAGE_SOL_COMMON "Sol Common"
+#define LANGUAGE_GALACTIC_COMMON "Galactic Common"
+#define LANGUAGE_HUMAN "Sol Common"
 #define LANGUAGE_UNATHI "Sinta'unathi"
 #define LANGUAGE_SIIK_TAJR "Siik'tajr"
 #define LANGUAGE_SKRELLIAN "Skrellian"
@@ -1185,7 +1233,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define LANGUAGE_MONKEY "Monkey"
 #define LANGUAGE_VOX "Vox-pidgin"
 #define LANGUAGE_CULT "Cult"
-//#define LANGUAGE_MOUSE "Mouse" // This broke the code, so fuck it
+#define LANGUAGE_MOUSE "Mouse" // This broke the code, so fuck it
 
 //#define SAY_DEBUG 1
 #ifdef SAY_DEBUG
@@ -1364,3 +1412,7 @@ var/proccalls = 1
 #define STARVATION_BRAIN_DAMAGE 2.5
 
 #define STARVATION_OXY_HEAL_RATE 1 //While starving, THIS much oxygen damage is restored per life tick (instead of the default 5)
+
+#define LOCKED_SHOULD_LIE 1
+#define DENSE_WHEN_LOCKING 2
+#define DENSE_WHEN_LOCKED 4

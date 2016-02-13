@@ -985,12 +985,13 @@ About the new airlock wires panel:
 	return dat
 
 /obj/machinery/door/airlock/attack_hand(mob/user as mob)
-	if (!istype(user, /mob/living/silicon) && !isobserver(user))
+	if (!istype(user, /mob/living/silicon) && !isobserver(user) && Adjacent(user))
 		if (isElectrified())
 			// TODO: analyze the called proc
 			if (shock(user, 100))
 				return
-	if (!panel_open)
+	//Basically no open panel, not opening already, door has power, area has power, door isn't bolted
+	if (!panel_open && !operating && arePowerSystemsOn() && !(stat & (NOPOWER|BROKEN)) && !locked)
 		..(user)
 	//else
 	//	// TODO: logic for adding fingerprints when interacting with wires
@@ -1134,7 +1135,6 @@ About the new airlock wires panel:
 
 	if (!electronics)
 		A = new/obj/item/weapon/circuitboard/airlock(loc)
-
 		if(req_access && req_access.len)
 			A.conf_access = req_access
 		else if(req_one_access && req_one_access.len)
@@ -1144,6 +1144,7 @@ About the new airlock wires panel:
 		A = electronics
 		electronics = null
 		A.loc = loc
+		A.installed = 0
 
 	if (operating == -1)
 		A.icon_state = "door_electronics_smoked"

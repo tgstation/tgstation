@@ -655,7 +655,7 @@ Thanks.
 		stop_pulling()
 		. = ..()
 
-	if ((s_active && !( s_active in contents ) ))
+	if ((s_active && ( find_holder(s_active) != src ) ))
 		s_active.close(src)
 
 	if(update_slimes)
@@ -917,9 +917,15 @@ Thanks.
 	//putting out a fire
 		if(CM.on_fire && CM.canmove)
 			CM.fire_stacks -= 5
-			CM.weakened = 5
+			CM.SetWeakened(3)
+			playsound(CM.loc, 'sound/effects/bodyfall.ogg', 50, 1)
 			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>",
 							   "<span class='warning'>You stop, drop, and roll!</span>")
+
+			for(var/i = 1 to rand(8,12))
+				CM.dir = turn(CM.dir, pick(-90, 90))
+				sleep(2)
+
 			if(fire_stacks <= 0)
 				CM.visible_message("<span class='danger'>[CM] has successfully extinguished themselves!</span>",
 								   "<span class='notice'>You extinguish yourself.</span>")
@@ -1050,7 +1056,7 @@ Thanks.
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
-	if(src.isUnconscious() || !src.canmove || src.restrained())
+	if(src.incapacitated())
 		return 0
 	if(!..())
 		return 0
@@ -1133,8 +1139,8 @@ default behaviour is:
 				if(dense) break
 			if((tmob.a_intent == I_HELP || tmob.restrained()) && (a_intent == I_HELP || src.restrained()) && tmob.canmove && canmove && !dense && can_move_mob(tmob, 1, 0)) // mutual brohugs all around!
 				var/turf/oldloc = loc
-				loc = tmob.loc
-				tmob.loc = oldloc
+				forceMove(tmob.loc)
+				tmob.forceMove(oldloc)
 				now_pushing = 0
 				for(var/mob/living/carbon/slime/slime in view(1,tmob))
 					if(slime.Victim == tmob)

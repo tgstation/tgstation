@@ -9,7 +9,6 @@
 	var/on = 0
 	_color = "yellow" //Determines used sprites: hardhat[on]_[_color] and hardhat[on]_[_color]2 (lying down sprite)
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
-	flags_inv = 0
 	action_button_name = "Toggle Helmet Light"
 	siemens_coefficient = 0.9
 
@@ -35,7 +34,7 @@
 	_color = "red"
 	name = "firefighter helmet"
 	flags = FPRINT
-	heat_protection = HEAD
+	heat_conductivity = INS_HELMET_HEAT_CONDUCTIVITY
 	pressure_resistance = 3 * ONE_ATMOSPHERE
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
@@ -45,7 +44,6 @@
 	_color = "white"
 	name = "white hard hat"
 	flags = FPRINT
-	heat_protection = HEAD
 	pressure_resistance = 3 * ONE_ATMOSPHERE
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 

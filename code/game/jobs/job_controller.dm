@@ -328,6 +328,7 @@ var/global/datum/controller/occupations/job_master
 	//For ones returning to lobby
 	for(var/mob/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
+			to_chat(player, "<span class='danger'>You have not been placed in the game due to job related restrictions.")
 			player.ready = 0
 			unassigned -= player
 	return 1

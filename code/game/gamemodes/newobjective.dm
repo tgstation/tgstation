@@ -681,7 +681,7 @@ datum
 
 			/*burger
 				steal_target = /obj/item/weapon/reagent_containers/food/snacks/human/burger
-				explanation_text = "Steal a burger made out of human organs, this will be presented as proof of NanoTrasen's chronic lack of standards."
+				explanation_text = "Steal a burger made out of human organs, this will be presented as proof of Nanotrasen's chronic lack of standards."
 				weight = 60
 
 				get_points(var/job)
@@ -725,7 +725,7 @@ datum
 
 			/*magboots
 				steal_target = /obj/item/clothing/shoes/magboots
-				explanation_text = "Steal a pair of \"NanoTrasen\" brand magboots."
+				explanation_text = "Steal a pair of \"Nanotrasen\" brand magboots."
 				weight = 20
 
 				get_points(var/job)

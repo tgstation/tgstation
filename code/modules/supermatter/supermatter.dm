@@ -99,16 +99,17 @@
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
-		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
-		new /turf/unsimulated/wall/supermatter(get_turf(src))
-		SetUniversalState(/datum/universal_state/supermatter_cascade)
-		qdel(src)
+	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+	new /turf/unsimulated/wall/supermatter(get_turf(src))
+	SetUniversalState(/datum/universal_state/supermatter_cascade)
+	empulse(get_turf(src), 100, 200, 1)
+	qdel(src)
 
 /obj/machinery/power/supermatter/shard/explode()
-		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
-		empulse(get_turf(src), 100, 200, 1)
-		qdel(src)
-		return
+	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+	empulse(get_turf(src), 100, 200, 1)
+	qdel(src)
+	return
 
 /obj/machinery/power/supermatter/ex_act(severity)
 	switch(severity)
@@ -136,6 +137,11 @@
 	message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
 	qdel(src)
 	return 20000
+
+/obj/machinery/power/supermatter/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(istype(mover,/obj/structure/closet/crate/secure/large/reinforced))
+		return 1
+	. = ..()
 
 /obj/machinery/power/supermatter/process()
 
@@ -375,6 +381,12 @@
 
 
 /obj/machinery/power/supermatter/Bumped(atom/AM as mob|obj)
+	if(istype(AM, /obj/machinery/power/supermatter))
+		AM.visible_message("<span class='sinister'>As \the [src] bumps into \the [AM] an otherworldly resonance ringing begins to shake the room, you ponder for a moment all the incorrect choices in your life that led you here, to this very moment, to witness this. You take one final sigh before it all ends.</span>")
+		sleep(10) //Adds to the hilarity
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+		explode()
+		return
 	if(istype(AM, /mob/living))
 		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\

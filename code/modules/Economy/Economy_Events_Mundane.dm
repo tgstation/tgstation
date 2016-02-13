@@ -26,17 +26,17 @@
 			if(RESEARCH_BREAKTHROUGH)
 				newMsg.body = "A major breakthough in the field of [pick("plasma research","super-compressed materials","nano-augmentation","bluespace research","volatile power manipulation")] \
 				was announced [pick("yesterday","a few days ago","last week","earlier this month")] by a private firm on [affected_dest.name]. \
-				NanoTrasen declined to comment as to whether this could impinge on profits."
+				Nanotrasen declined to comment as to whether this could impinge on profits."
 
 			if(ELECTION)
 				newMsg.body = "The pre-selection of an additional candidates was announced for the upcoming [pick("supervisors council","advisory board","governership","board of inquisitors")] \
 				election on [affected_dest.name] was announced earlier today, \
 				[pick("media mogul","web celebrity", "industry titan", "superstar", "famed chef", "popular gardener", "ex-army officer", "multi-billionaire")] \
 				[random_name(pick(MALE,FEMALE))]. In a statement to the media they said '[pick("My only goal is to help the [pick("sick","poor","children")]",\
-				"I will maintain NanoTrasen's record profits","I believe in our future","We must return to our moral core","Just like... chill out dudes")]'."
+				"I will maintain Nanotrasen's record profits","I believe in our future","We must return to our moral core","Just like... chill out dudes")]'."
 
 			if(RESIGNATION)
-				newMsg.body = "NanoTrasen regretfully announces the resignation of [pick("Sector Admiral","Division Admiral","Ship Admiral","Vice Admiral")] [random_name(pick(MALE,FEMALE))]."
+				newMsg.body = "Nanotrasen regretfully announces the resignation of [pick("Sector Admiral","Division Admiral","Ship Admiral","Vice Admiral")] [random_name(pick(MALE,FEMALE))]."
 				if(prob(25))
 					var/locstring = pick("Segunda","Salusa","Cepheus","Andromeda","Gruis","Corona","Aquila","Asellus") + " " + pick("I","II","III","IV","V","VI","VII","VIII")
 					newMsg.body += " In a ceremony on [affected_dest.name] this afternoon, they will be awarded the \
@@ -119,11 +119,8 @@
 					[random_name(pick(MALE,FEMALE))] at [pick("a society ball","a new opening","a launch","a club")] on [affected_dest.name] yesterday, pundits are shocked."
 				else
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Economy_Events_Mundane.dm:119: newMsg.body += "is recovering from plastic surgery in a clinic on [affected_dest.name] for the [pick("second","third","fourth")] time, reportedly having made the decision in response to "
 					newMsg.body += {"is recovering from plastic surgery in a clinic on [affected_dest.name] for the [pick("second","third","fourth")] time, reportedly having made the decision in response to
 						[pick("unkind comments by an ex","rumours started by jealous friends","the decision to be dropped by a major sponsor","a disasterous interview on Tau Ceti Tonight")]."}
-					// END AUTOFIX
 			if(TOURISM)
 				newMsg.body += "Tourists are flocking to [affected_dest.name] after the surprise announcement of [pick("major shopping bargains by a wily retailer",\
 				"a huge new ARG by a popular entertainment company","a secret tour by popular artiste [random_name(pick(MALE,FEMALE))]")]. \

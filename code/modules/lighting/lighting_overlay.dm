@@ -115,6 +115,7 @@
 
 	color = "#000000"
 
+	invisibility = INVISIBILITY_LIGHTING // Fuck you whoever put invisibility = 101 in the parent Destroy().
 
 	needs_update = 0
 

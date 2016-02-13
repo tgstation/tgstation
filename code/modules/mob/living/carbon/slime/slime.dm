@@ -979,13 +979,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS|HEAD
 	slowdown = 1.0
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	flags = FPRINT  | ONESIZEFITSALL
 	pressure_resistance = 200 * ONE_ATMOSPHERE
-	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS | HEAD
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS | HEAD
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_conductivity = SPACESUIT_HEAT_CONDUCTIVITY
 	canremove = 0
 	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
 
@@ -1027,9 +1024,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	unacidable = 1
 	flags = FPRINT
 	pressure_resistance = 200 * ONE_ATMOSPHERE
-	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
+	heat_conductivity = SPACESUIT_HEAT_CONDUCTIVITY
 
 /obj/effect/golem_rune
 	anchored = 1
@@ -1141,6 +1138,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		rabid.friends += M
 
 	qdel (src)
+
+/mob/living/carbon/slime/IgniteMob()
+	return 0
 
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 

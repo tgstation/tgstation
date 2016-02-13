@@ -41,11 +41,27 @@
 /datum/event/meteor_shower/end()
 	command_alert("The station has cleared the meteor shower.", "Meteor Alert")
 
+//Meteor wave that doesn't trigger an announcement. Perfect for adminbus involving extended meteor bombardments without spamming the crew with Meteor alerts.
+/datum/event/meteor_shower/meteor_quiet
+	startWhen       =0
+	endWhen         =30
+
+/datum/event/meteor_shower/meteor_quiet/announce()
+
+/datum/event/meteor_shower/meteor_quiet/tick()
+	meteor_wave(rand(7, 10), max_size = 2) //Good balance of sizes and abundance between shower and storm
+
+/datum/event/meteor_shower/meteor_quiet/end()
+
 var/global/list/thing_storm_types = list(
 	"meaty gore storm" = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/carpmeat,
-		/obj/item/weapon/organ/head,
+		/obj/item/organ/eyes,
+		/obj/item/organ/kidneys,
+		/obj/item/organ/heart,
+		/obj/item/organ/liver,
+		/obj/effect/decal/cleanable/blood/gibs,
+		/obj/effect/meteor/gib,
 		/obj/item/weapon/organ/r_arm,
 		/obj/item/weapon/organ/l_arm,
 		/obj/item/weapon/organ/r_leg,
@@ -84,3 +100,18 @@ var/global/list/thing_storm_types = list(
 
 /datum/event/thing_storm/end()
 	command_alert("The station has cleared the [storm_name].", "Meteor Alert")
+
+/datum/event/thing_storm/meaty_gore
+
+/datum/event/thing_storm/meaty_gore/setup()
+	endWhen = rand(30, 60) + 10
+	storm_name="meaty gore storm"
+
+/datum/event/thing_storm/meaty_gore/tick()
+	meteor_wave(rand(45, 60), types = thing_storm_types[storm_name])
+
+/datum/event/thing_storm/meaty_gore/announce()
+	command_alert("The station is about to pass through an unknown organic debris field. No hull breaches are likely.", "Organic Debris Field")
+
+/datum/event/thing_storm/meaty_gore/end()
+	command_alert("The station has cleared the organic debris field.", "Organic Debris Field")

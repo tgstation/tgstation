@@ -190,8 +190,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 /mob/living/silicon/robot/mommi/emag_act(mob/user as mob)
 	if(user == src && emagged != 1)//Dont shitpost inside the game, thats just going too far
 		to_chat(user, "<span class='warning'>Nanotrasen Patented Anti-Emancipation Override initiated.</span>")
-		return
-	..()
+		return 1
+	if(..())
+		return 1
 	remove_static_overlays()
 	updateicon()
 

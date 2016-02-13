@@ -33,8 +33,6 @@
 		dat = "[temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
 	else
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\gamemodes\wizard\spellbook.dm:22: dat = "<B>The Book of Spells:</B><BR>"
 		dat = {"<B>The Book of Spells:</B><BR>
 			Spells left to memorize: [uses]<BR>
 			<HR>
@@ -118,7 +116,6 @@
 			<A href='byond://?src=\ref[src];spell_choice=scrying'>Scrying Orb</A><BR>
 			<I>An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you x-ray vision.</I><BR>
 			<HR>"}
-		// END AUTOFIX
 		if(op)
 			dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
 	user << browse(dat, "window=radio")
@@ -339,6 +336,7 @@
 							feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(H))
 							add_spell(new/spell/aoe_turf/conjure/construct,H)
+							H.add_language("Cult")
 							temp = "You have purchased a belt full of soulstones and have learned the artificer spell."
 							max_uses--
 						if("armor")
@@ -452,13 +450,11 @@
 	icon_state ="booksmoke"
 	desc = "This book is overflowing with the dank arts."
 
-/obj/item/weapon/spellbook/oneuse/smoke/recoil(mob/user as mob)
+/obj/item/weapon/spellbook/oneuse/smoke/recoil(mob/living/user as mob)
 	..()
 	to_chat(user, "<span class='caution'>Your stomach rumbles...</span>")
 	if(user.nutrition)
-		user.nutrition -= 200
-		if(user.nutrition <= 0)
-			user.nutrition = 0
+		user.nutrition = max(user.nutrition - 200,0)
 
 /obj/item/weapon/spellbook/oneuse/blind
 	spell = /spell/targeted/genetic/blind
@@ -562,7 +558,6 @@
 		to_chat(user, "<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>")
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
 		magichead.canremove = 0		//curses!
-		magichead.flags_inv = null	//so you can still see their face
 		magichead.voicechange = 1	//NEEEEIIGHH
 		user.drop_from_inventory(user.wear_mask)
 		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)

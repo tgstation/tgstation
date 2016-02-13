@@ -89,6 +89,7 @@ datum/controller/game_controller/proc/setup()
 		global.garbageCollector = new
 		garbageCollector = global.garbageCollector
 */
+
 	setup_objects() // Most log_startup spam happens here
 	setupgenetics()
 	setupfactions()
@@ -101,10 +102,12 @@ datum/controller/game_controller/proc/setup()
 
 	buildcamlist()
 
-	watch=start_watch()
-	log_startup_progress("Caching jukebox playlists...")
-	load_juke_playlists()
-	log_startup_progress("  Finished caching jukebox playlists in [stop_watch(watch)]s.")
+	if(config.media_base_url)
+		watch = start_watch()
+		log_startup_progress("Caching jukebox playlists...")
+		load_juke_playlists()
+		log_startup_progress("  Finished caching jukebox playlists in [stop_watch(watch)]s.")
+
 	//if(map && map.dorf)
 		//mining_surprises = typesof(/mining_surprise/dorf) - /mining_surprise/dorf
 		//max_secret_rooms += 2
@@ -473,4 +476,3 @@ datum/controller/game_controller/recover()		//Mostly a placeholder for now.
 				else
 					msg += "\t [varname] = [varval]\n"
 	world.log << msg
-

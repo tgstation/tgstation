@@ -355,7 +355,7 @@
 
 
 				if(istype(usr, /mob/living/carbon/human))
-					usr:nutrition -= rand(1,5)
+					usr:burn_calories(rand(1,5))
 					usr:handle_regular_hud_updates()
 
 				var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( usr.loc )

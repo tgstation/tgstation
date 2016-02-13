@@ -190,9 +190,6 @@
 	if(O.is_open_container())
 		return 0
 
-	if(..())
-		return 1
-
 	if (istype(O, /obj/item/seeds))
 
 		if(!seed)
@@ -350,15 +347,8 @@
 	else if(istype(O, /obj/item/weapon/tank))
 		return // Maybe someday make it draw atmos from it so you don't need a whoopin canister, but for now, nothing.
 
-	else if(istype(O, /obj/item/weapon/wrench))
-
-		//If there's a connector here, the portable_atmospherics setup can handle it.
-		if(locate(/obj/machinery/atmospherics/unary/portables_connector/) in loc)
-			return ..()
-
-		/*playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		anchored = !anchored
-		to_chat(user, "You [anchored ? "wrench" : "unwrench"] \the [src].")*/
+	else if(istype(O, /obj/item/weapon/wrench) && istype(src, /obj/machinery/portable_atmospherics/hydroponics/soil)) //Soil isn't a portable atmospherics machine by any means
+		return //Don't call parent. I mean, soil shouldn't be a child of portable_atmospherics at all, but that's not very feasible.
 
 	else if(istype(O, /obj/item/apiary))
 
@@ -380,6 +370,9 @@
 
 	else if(O.is_sharp() && harvest)
 		attack_hand(user)
+
+	else
+		return ..()
 
 /obj/machinery/portable_atmospherics/hydroponics/attack_tk(mob/user as mob)
 

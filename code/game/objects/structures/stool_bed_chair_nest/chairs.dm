@@ -2,8 +2,7 @@
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
-	locked_should_lie = 0
-	dense_when_locking = 0
+	lockflags = 0
 
 	sheet_amt = 1
 
@@ -30,7 +29,7 @@
 
 	if(iswrench(W))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-		getFromPool(sheet_type, get_turf(src), 2)
+		getFromPool(sheet_type, get_turf(src), sheet_amt)
 		qdel(src)
 		return
 
@@ -52,7 +51,7 @@
 
 /obj/structure/bed/chair/verb/rotate()
 	set name = "Rotate Chair"
-	set category = "Object"
+	set category = null //So it's only accessible from the right click menu
 	set src in oview(1)
 
 	if(!usr || !isturf(usr.loc))

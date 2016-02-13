@@ -11,7 +11,7 @@ var/global/list/special_roles = list(
 	ROLE_PLANT        = 1,
 	"infested monkey" = IS_MODE_COMPILED("monkey"),
 	ROLE_MALF         = IS_MODE_COMPILED("malfunction"),
-	ROLE_NINJA        = 1,
+	//ROLE_NINJA        = 1,
 	ROLE_OPERATIVE    = IS_MODE_COMPILED("nuclear"),
 	ROLE_PAI          = 1, // -- TLE
 	ROLE_POSIBRAIN    = 1,
@@ -20,6 +20,45 @@ var/global/list/special_roles = list(
 	ROLE_VAMPIRE      = IS_MODE_COMPILED("vampire"),
 	ROLE_VOXRAIDER    = IS_MODE_COMPILED("heist"),
 	ROLE_WIZARD       = 1,
+)
+
+var/list/antag_roles = list(
+	ROLE_ALIEN        = 1,
+	ROLE_BLOB         = 1,
+	ROLE_CHANGELING   = IS_MODE_COMPILED("changeling"),
+	ROLE_CULTIST      = IS_MODE_COMPILED("cult"),
+	ROLE_MALF         = IS_MODE_COMPILED("malfunction"),
+	ROLE_OPERATIVE    = IS_MODE_COMPILED("nuclear"),
+	ROLE_REV          = IS_MODE_COMPILED("revolution"),
+	ROLE_TRAITOR      = IS_MODE_COMPILED("traitor"),
+	ROLE_VAMPIRE      = IS_MODE_COMPILED("vampire"),
+	ROLE_VOXRAIDER    = IS_MODE_COMPILED("heist"),
+	ROLE_WIZARD       = 1,
+)
+
+var/list/nonantag_roles = list(
+	ROLE_BORER        = 1,
+	ROLE_PLANT        = 1,
+	ROLE_PAI          = 1,
+	ROLE_POSIBRAIN    = 1,
+)
+
+var/list/role_wiki=list(
+	ROLE_ALIEN		= "Xenomorph",
+	ROLE_BLOB		= "Blob",
+	ROLE_BORER		= "Cortical_Borer",
+	ROLE_CHANGELING	= "Changeling",
+	ROLE_CULTIST	= "Cult",
+	ROLE_PLANT		= "Dionaea",
+	ROLE_MALF		= "Guide_to_Malfunction",
+	ROLE_OPERATIVE	= "Nuclear_Agent",
+	ROLE_PAI		= "Personal_AI",
+	ROLE_POSIBRAIN	= "Guide_to_Silicon_Laws",
+	ROLE_REV		= "Revolution",
+	ROLE_TRAITOR	= "Traitor",
+	ROLE_VAMPIRE	= "Vampire",
+	ROLE_VOXRAIDER	= "Vox_Raider",
+	ROLE_WIZARD		= "Wizard",
 )
 
 var/const/MAX_SAVE_SLOTS = 8
@@ -238,17 +277,62 @@ var/const/MAX_SAVE_SLOTS = 8
 	if(jobban_isbanned(user, "Syndicate"))
 		dat += "<b>You are banned from antagonist roles.</b>"
 	else
-		for (var/i in special_roles)
-			if(special_roles[i]) //if mode is available on the server
+		for (var/i in antag_roles)
+			if(antag_roles[i]) //if mode is available on the server
 				if(jobban_isbanned(user, i))
 					dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
 				else if(i == "pai candidate")
 					if(jobban_isbanned(user, "pAI"))
 						dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
 				else
-					dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=toggle_role;role_id=[i]'><b>[roles[i] & ROLEPREF_ENABLE ? "Yes" : "No"]</b></a><br>"
+					var/wikiroute = role_wiki[i]
+					dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=toggle_role;role_id=[i]'><b>[roles[i] & ROLEPREF_ENABLE ? "Yes" : "No"]</b></a> [wikiroute ? "<a HREF='?src=\ref[user];getwiki=[wikiroute]'>wiki</a>" : ""]<br>"
+
+	dat += "</td><td width='300px' height='300px' valign='top'><h2>Special Roles Settings</h2>"
+
+	for (var/i in nonantag_roles)
+		if(nonantag_roles[i]) //if mode is available on the server
+			if(jobban_isbanned(user, i))
+				dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
+			else if(i == "pai candidate")
+				if(jobban_isbanned(user, "pAI"))
+					dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
+			else
+				var/wikiroute = role_wiki[i]
+				dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=toggle_role;role_id=[i]'><b>[roles[i] & ROLEPREF_ENABLE ? "Yes" : "No"]</b></a> [wikiroute ? "<a HREF='?src=\ref[user];getwiki=[wikiroute]'>wiki</a>" : ""]<br>"
+
 	dat += "</td></tr></table>"
 	return dat
+/datum/preferences/proc/getPrefLevelText(var/datum/job/job)
+	if(GetJobDepartment(job, 1) & job.flag)
+		return "High"
+	else if(GetJobDepartment(job, 2) & job.flag)
+		return "Medium"
+	else if(GetJobDepartment(job, 3) & job.flag)
+		return "Low"
+	else
+		return "NEVER"
+/datum/preferences/proc/getPrefLevelUpOrDown(var/datum/job/job, var/inc)
+	if(GetJobDepartment(job, 1) & job.flag)
+		if(inc)
+			return "NEVER"
+		else
+			return "Medium"
+	else if(GetJobDepartment(job, 2) & job.flag)
+		if(inc)
+			return "High"
+		else
+			return "Low"
+	else if(GetJobDepartment(job, 3) & job.flag)
+		if(inc)
+			return "Medium"
+		else
+			return "NEVER"
+	else
+		if(inc)
+			return "Low"
+		else
+			return "High"
 
 /datum/preferences/proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer", "AI"), widthPerColumn = 295, height = 620)
 	if(!job_master)
@@ -262,11 +346,28 @@ var/const/MAX_SAVE_SLOTS = 8
 
 
 	var/HTML = "<link href='./common.css' rel='stylesheet' type='text/css'><body>"
-	HTML += "<script type='text/javascript'>function setJobPrefRedirect(level, rank) { window.location.href='?_src_=prefs;preference=job;task=input;level=' + level + ';text=' + encodeURIComponent(rank); return false; }</script>"
+	HTML += {"<script type='text/javascript'>function setJobPrefRedirect(level, rank) { window.location.href='?_src_=prefs;preference=job;task=input;level=' + level + ';text=' + encodeURIComponent(rank); return false; }
+			function mouseDown(event,levelup,leveldown,rank){
+				return false;
+				}
+			
+			function mouseUp(event,levelup,leveldown,rank){
+				if(event.button == 0){
+					//alert("left click " + levelup + " " + rank);
+					setJobPrefRedirect(1, rank);
+					return false;
+					}
+				if(event.button == 2){
+					//alert("right click " + leveldown + " " + rank);
+					setJobPrefRedirect(0, rank);
+					return false;
+					}
+
+				return true;
+				}
+			</script>"}
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\client\\\preferences.dm:386: HTML += "<tt><center>"
 	HTML += {"<center>
 		<b>Choose occupation chances</b><br>
 		<div align='center'>Left-click to raise an occupation preference, right-click to lower it.<br><div>
@@ -275,7 +376,6 @@ var/const/MAX_SAVE_SLOTS = 8
 		<table width='100%' cellpadding='1' cellspacing='0'>"}
 
 
-	// END AUTOFIX
 	var/index = -1
 
 	//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
@@ -318,8 +418,6 @@ var/const/MAX_SAVE_SLOTS = 8
 				HTML += "<span class='dark'>[rank]</span>"
 
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\client\\\preferences.dm:426: HTML += "</td><td width='40%'>"
 		HTML += "</td><td width='40%'>"
 
 
@@ -350,7 +448,7 @@ var/const/MAX_SAVE_SLOTS = 8
 			prefUpperLevel = 3
 			prefLowerLevel = 1
 
-		HTML += "<a class='white' href='?_src_=prefs;preference=job;task=input;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
+		HTML += "<a class='white' onmouseup='javascript:return mouseUp(event,[prefUpperLevel],[prefLowerLevel], \"[rank]\");' oncontextmenu='javascript:return mouseDown(event,[prefUpperLevel],[prefLowerLevel], \"[rank]\");'>"
 
 
 		if(rank == "Assistant")//Assistant is special
@@ -368,11 +466,8 @@ var/const/MAX_SAVE_SLOTS = 8
 
 	for(var/i = 1, i < (limit - index), i += 1)
 		HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\client\\\preferences.dm:450: HTML += "</td'></tr></table>"
 	HTML += {"</td'></tr></table>
 		</center></table>"}
-	// END AUTOFIX
 	switch(alternate_option)
 		if(GET_RANDOM_JOB)
 			HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>Get random job if preferences unavailable</a></center><br>"
@@ -382,11 +477,8 @@ var/const/MAX_SAVE_SLOTS = 8
 			HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>Return to lobby if preference unavailable</a></center><br>"
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\client\\\preferences.dm:462: HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a></center>"
 	HTML += {"<center><a href='?_src_=prefs;preference=job;task=reset'>Reset</a></center>
 		</tt>"}
-	// END AUTOFIX
 	user << browse(null, "window=preferences")
 	//user << browse(HTML, "window=mob_occupation;size=[width]x[height]")
 	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Occupation Preferences</div>", width, height)
@@ -439,7 +531,7 @@ var/const/MAX_SAVE_SLOTS = 8
 		</center></body></html>"}
 
 	//user << browse(dat, "window=preferences;size=560x580")
-	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 640)
+	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 680, 640)
 	popup.set_content(dat)
 	popup.open(0)
 
@@ -451,11 +543,8 @@ var/const/MAX_SAVE_SLOTS = 8
 /datum/preferences/proc/SetDisabilities(mob/user)
 	var/HTML = "<body>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\client\\\preferences.dm:474: HTML += "<tt><center>"
 	HTML += {"<tt><center>
 		<b>Choose disabilities</b><ul>"}
-	// END AUTOFIX
 	HTML += ShowDisabilityState(user,DISABILITY_FLAG_NEARSIGHTED,"Needs Glasses")
 	HTML += ShowDisabilityState(user,DISABILITY_FLAG_FAT,        "Obese")
 	HTML += ShowDisabilityState(user,DISABILITY_FLAG_EPILEPTIC,  "Seizures")
@@ -464,13 +553,10 @@ var/const/MAX_SAVE_SLOTS = 8
 	HTML += ShowDisabilityState(user,DISABILITY_FLAG_TOURETTES,   "Tourettes") Still working on it! -Angelite*/
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\client\\\preferences.dm:481: HTML += "</ul>"
 	HTML += {"</ul>
 		<a href=\"?_src_=prefs;task=close;preference=disabilities\">\[Done\]</a>
 		<a href=\"?_src_=prefs;task=reset;preference=disabilities\">\[Reset\]</a>
 		</center></tt>"}
-	// END AUTOFIX
 	user << browse(null, "window=preferences")
 	user << browse(HTML, "window=disabil;size=350x300")
 	return
@@ -478,12 +564,9 @@ var/const/MAX_SAVE_SLOTS = 8
 /datum/preferences/proc/SetRecords(mob/user)
 	var/HTML = "<body>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\client\\\preferences.dm:492: HTML += "<tt><center>"
 	HTML += {"<tt><center>
 		<b>Set Character Records</b><br>
 		<a href=\"byond://?src=\ref[user];preference=records;task=med_record\">Medical Records</a><br>"}
-	// END AUTOFIX
 	if(length(med_record) <= 40)
 		HTML += "[med_record]"
 	else
@@ -504,12 +587,9 @@ var/const/MAX_SAVE_SLOTS = 8
 		HTML += "[copytext(sec_record, 1, 37)]...<br>"
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\client\\\preferences.dm:516: HTML += "<br>"
 	HTML += {"<br>
 		<a href=\"byond://?src=\ref[user];preference=records;records=-1\">\[Done\]</a>
 		</center></tt>"}
-	// END AUTOFIX
 	user << browse(null, "window=preferences")
 	user << browse(HTML, "window=records;size=350x300")
 	return
@@ -528,7 +608,7 @@ var/const/MAX_SAVE_SLOTS = 8
 	if(job.title != new_title)
 		player_alt_titles[job.title] = new_title
 
-/datum/preferences/proc/SetJob(mob/user, role)
+/datum/preferences/proc/SetJob(mob/user, role, inc)
 	var/datum/job/job = job_master.GetJob(role)
 	if(!job)
 		user << browse(null, "window=mob_occupation")
@@ -542,16 +622,34 @@ var/const/MAX_SAVE_SLOTS = 8
 			job_civilian_low |= job.flag
 		SetChoices(user)
 		return 1
+	if(inc == null)
+		if(GetJobDepartment(job, 1) & job.flag)
+			SetJobDepartment(job, 1)
+		else if(GetJobDepartment(job, 2) & job.flag)
+			SetJobDepartment(job, 2)
+		else if(GetJobDepartment(job, 3) & job.flag)
+			SetJobDepartment(job, 3)
+		else//job = Never
+			SetJobDepartment(job, 4)
+	else
+		inc = text2num(inc)
+		var/desiredLevel = getPrefLevelUpOrDown(job,inc)
+		while(getPrefLevelText(job) != desiredLevel)
+			if(GetJobDepartment(job, 1) & job.flag)
+				SetJobDepartment(job, 1)
+			else if(GetJobDepartment(job, 2) & job.flag)
+				SetJobDepartment(job, 2)
+			else if(GetJobDepartment(job, 3) & job.flag)
+				SetJobDepartment(job, 3)
+			else//job = Never
+				SetJobDepartment(job, 4)
 
-	if(GetJobDepartment(job, 1) & job.flag)
-		SetJobDepartment(job, 1)
-	else if(GetJobDepartment(job, 2) & job.flag)
-		SetJobDepartment(job, 2)
-	else if(GetJobDepartment(job, 3) & job.flag)
-		SetJobDepartment(job, 3)
-	else//job = Never
-		SetJobDepartment(job, 4)
-
+		/*if(level < 4)
+			to_chat(world,"setting [job] to [level+1]")
+			SetJobDepartment(job,level+1)
+		else
+			to_chat(world,"setting [job] to 1");SetJobDepartment(job,1)
+*/
 	SetChoices(user)
 	return 1
 /datum/preferences/proc/ResetJobs()
@@ -742,7 +840,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 						SetPlayerAltTitle(job, choice)
 						SetChoices(user)
 			if("input")
-				SetJob(user, href_list["text"])
+				SetJob(user, href_list["text"], href_list["level"])
 			else
 				SetChoices(user)
 		return 1
@@ -1378,10 +1476,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 		message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
 		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\client\\\preferences.dm:1283: var/dat = "<body>"
 	var/dat = {"<body><tt><center>"}
-	// END AUTOFIX
 	dat += "<b>Select a character slot to load</b><hr>"
 	var/counter = 1
 	while(counter <= MAX_SAVE_SLOTS)
@@ -1394,12 +1489,9 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 				dat += "<a href='?_src_=prefs;preference=changeslot;num=[counter];'>[name_list[counter]]</a><br>"
 		counter++
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\client\\\preferences.dm:1228: dat += "<hr>"
 	dat += {"<hr>
 		<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>
 		</center></tt>"}
-	// END AUTOFIX
 	user << browse(dat, "window=saves;size=300x390")
 
 /datum/preferences/proc/close_load_dialog(mob/user)

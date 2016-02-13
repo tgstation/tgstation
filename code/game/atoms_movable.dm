@@ -33,7 +33,7 @@
 	var/list/locked_atoms
 	var/atom/movable/locked_to
 	var/locked_should_lie = 0	//Whether locked mobs should lie down, used by beds.
-	var/dense_when_locking = 1
+	var/lockflags = DENSE_WHEN_LOCKING | DENSE_WHEN_LOCKED
 
 	// Can we send relaymove() if gravity is disabled or we are in space? (Should be handled by relaymove, but shitcode abounds)
 	var/internal_gravity = 0
@@ -43,10 +43,6 @@
 	areaMaster = get_area_master(src)
 	if(flags & HEAR && !ismob(src))
 		getFromPool(/mob/virtualhearer, src)
-	var/icon/I = icon(icon, icon_state, dir)
-	if(I)
-		I.MapColors(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)
-		src.tempoverlay = I
 
 	locked_atoms = list()
 
@@ -216,7 +212,7 @@
 
 	AM.anchored = 1
 
-	if(dense_when_locking)
+	if((lockflags & DENSE_WHEN_LOCKING) && (AM.lockflags & DENSE_WHEN_LOCKED))
 		density = 1
 
 	return 1
@@ -234,7 +230,7 @@
 
 	AM.anchored = initial(AM.anchored)
 
-	if(dense_when_locking)
+	if((lockflags & DENSE_WHEN_LOCKING) && (AM.lockflags && DENSE_WHEN_LOCKED))
 		density = initial(density)
 
 	return 1

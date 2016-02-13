@@ -143,12 +143,9 @@
 		return
 	if(src.panel_open) //The maintenance panel is open. Time for some shady stuff
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\suit_storage_unit.dm:100: dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
 		dat += {"<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>
 			<Font color ='black'><B>Maintenance panel controls</B></font><HR>
 			<font color ='grey'>The panel is ridden with controls, button and meters, labeled in strange signs and symbols that <BR>you cannot understand. Probably the manufactoring world's language.<BR> Among other things, a few controls catch your eye.<BR><BR>"}
-		// END AUTOFIX
 		dat+= text("<font color ='black'>A small dial with a \"ë\" symbol embroidded on it. It's pointing towards a gauge that reads []</font>.<BR> <font color='blue'><A href='?src=\ref[];toggleUV=1'> Turn towards []</A><BR>",(src.issuperUV ? "15nm" : "185nm"),src,(src.issuperUV ? "185nm" : "15nm") )
 		dat+= text("<font color ='black'>A thick old-style button, with 2 grimy LED lights next to it. The [] LED is on.</font><BR><font color ='blue'><A href='?src=\ref[];togglesafeties=1'>Press button</a></font>",(src.safetieson? "<font color='green'><B>GREEN</B></font>" : "<font color='red'><B>RED</B></font>"),src)
 		dat+= text("<HR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close panel</A>", user)
@@ -156,11 +153,8 @@
 		//onclose(user, "ssu_m_panel")
 	else if(src.isUV) //The thing is running its cauterisation cycle. You have to wait.
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\suit_storage_unit.dm:109: dat += "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
 		dat += {"<HEAD><TITLE>Suit storage unit</TITLE></HEAD>
 			<font color ='red'><B>Unit is cauterising contents with selected UV ray intensity. Please wait.</font></B><BR>"}
-		// END AUTOFIX
 		//dat+= "<font colr='black'><B>Cycle end in: [src.cycletimeleft()] seconds. </font></B>"
 		//user << browse(dat, "window=ssu_cycling_panel;size=400x500")
 		//onclose(user, "ssu_cycling_panel")
@@ -168,12 +162,9 @@
 	else
 		if(!(stat & BROKEN))
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\suit_storage_unit.dm:117: dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
 			dat += {"<HEAD><TITLE>Suit storage unit</TITLE></HEAD>
 				<font color='blue'><font size = 4><B>U-Stor-It Suit Storage Unit, model DS1900</B></FONT><BR>
 				<B>Welcome to the Unit control panel.</B><HR>"}
-			// END AUTOFIX
 			dat+= text("<font color='black'>Helmet storage compartment: <B>[]</B></font><BR>",(src.HELMET ? HELMET.name : "</font><font color ='grey'>No helmet detected.") )
 			if(HELMET && src.isopen)
 				dat+=text("<A href='?src=\ref[];dispense_helmet=1'>Dispense helmet</A><BR>",src)
@@ -188,11 +179,8 @@
 				dat+=text("<A href='?src=\ref[];dispense_boots=1'>Dispense boots</A><BR>",src)
 			if(src.OCCUPANT)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\suit_storage_unit.dm:130: dat+= "<HR><B><font color ='red'>WARNING: Biological entity detected inside the Unit's storage. Please remove.</B></font><BR>"
 				dat += {"<HR><B><font color ='red'>WARNING: Biological entity detected inside the Unit's storage. Please remove.</B></font><BR>
 					<A href='?src=\ref[src];eject_guy=1'>Eject extra load</A>"}
-				// END AUTOFIX
 			dat+= text("<HR><font color='black'>Unit is: [] - <A href='?src=\ref[];toggle_open=1'>[] Unit</A></font> ",(src.isopen ? "Open" : "Closed"),src,(src.isopen ? "Close" : "Open"))
 			if(src.isopen)
 				dat+="<HR>"
@@ -205,11 +193,8 @@
 			//onclose(user, "Suit Storage Unit")
 		else //Ohhhh shit it's dirty or broken! Let's inform the guy.
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\suit_storage_unit.dm:143: dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
 			dat += {"<HEAD><TITLE>Suit storage unit</TITLE></HEAD>
 				<font color='maroon'><B>Unit chamber is too contaminated to continue usage. Please call for a qualified individual to perform maintenance.</font></B><BR><BR>"}
-			// END AUTOFIX
 			dat+= text("<HR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close control panel</A>", user)
 			//user << browse(dat, "window=suit_storage_unit;size=400x500")
 			//onclose(user, "suit_storage_unit")
@@ -445,7 +430,7 @@
 					src.MASK = null
 				if(src.BOOTS)
 					src.BOOTS = null
-				visible_message("<font color='red'>With a loud whining noise, the Suit Storage Unit's door grinds open. Puffs of ashen smoke come out of its chamber.</font>", 2) //spooky
+				visible_message("<font color='red'>With a loud whining noise, the Suit Storage Unit's door grinds open. Puffs of ashen smoke come out of its chamber.</font>")
 				stat |= BROKEN
 				src.isopen = 1
 				src.islocked = 0
@@ -509,7 +494,7 @@
 	if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) || BOOTS )
 		to_chat(usr, "<font color='red'>It's too cluttered inside for you to fit in!</font>")
 		return
-	visible_message("[usr] starts squeezing into the suit storage unit!", 2) //spooky
+	visible_message("[usr] starts squeezing into the suit storage unit!")
 	if(do_after(usr, src, 10))
 		usr.stop_pulling()
 		usr.client.perspective = EYE_PERSPECTIVE
@@ -567,7 +552,7 @@
 		if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) || BOOTS) //Unit needs to be absolutely empty
 			to_chat(user, "<font color='red'>The unit's storage area is too cluttered.</font>")
 			return
-		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 2) //spooky
+		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.")
 		if(do_after(user, src, 20))
 			if(!G || !G.affecting) return //derpcheck
 			var/mob/M = G.affecting

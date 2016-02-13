@@ -30,6 +30,8 @@
 		return 0
 
 	if(!l_hand)
+		if(W.prepickup(src))
+			return 0
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
 		W.layer = 20	//TODO: move to equipped?
@@ -50,6 +52,8 @@
 		return 0
 
 	if(!r_hand)
+		if(W.prepickup(src))
+			return 0
 		W.loc = src
 		r_hand = W
 		W.layer = 20

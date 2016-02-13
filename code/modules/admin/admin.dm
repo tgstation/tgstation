@@ -42,19 +42,13 @@ var/global/floorIsLava = 0
 		return
 
 	checkSessionKey()
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\admin.dm:40: var/body = "<html><head><title>Options for [M.key]</title></head>"
 	var/body = {"<html><head><title>Options for [M.key]</title></head>
 <body>Options panel for <b>[M]</b>"}
-	// END AUTOFIX
 	var/species_description
 	if(M.client)
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\admin.dm:43: body += " played by <b>[M.client]</b> "
 		body += {"played by <b>[M.client]</b>
 			\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"}
-		// END AUTOFIX
 	if(istype(M, /mob/new_player))
 		body += " <B>Hasn't Entered Game</B> "
 	else
@@ -109,12 +103,9 @@ var/global/floorIsLava = 0
 	if (M.client)
 		if(!istype(M, /mob/new_player))
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\admin.dm:90: body += "<br><br>"
 			body += {"<br><br>
 				<b>Transformation:</b>
 				<br>"}
-			// END AUTOFIX
 			//Monkey
 			if(ismonkey(M))
 				body += "<B>Monkeyized</B> | "
@@ -731,19 +722,24 @@ var/global/floorIsLava = 0
 			<BR>
 			<A href='?src=\ref[src];secretsfun=gravity'>Toggle station artificial gravity</A><BR>
 			<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors (aka lagocolyptic shower)</A><BR>
+			<A href='?src=\ref[src];secretsfun=silent_meteors'>Spawn a wave of meteors with no warning</A><BR>
 			<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (aka lagitational anomolag)</A><BR>
 			<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes</A><BR>
 			<A href='?src=\ref[src];secretsfun=goblob'>Spawn blob</A><BR>
 			<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=alien_silent'>Spawn an Alien silently</A><BR>
 			<A href='?src=\ref[src];secretsfun=spiders'>Trigger a Spider infestation</A><BR>
+			<A href='?src=\ref[src];secretsfun=hostile_infestation'>Spawn a hostile creature infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=striketeam'>Send in a strike team</A><BR>
 			<A href='?src=\ref[src];secretsfun=carp'>Trigger a Carp migration</A><BR>
 			<A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
 			<A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
 			<A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
 			<A href='?src=\ref[src];secretsfun=immovable'>Spawn an Immovable Rod</A><BR>
+			<A href='?src=\ref[src];secretsfun=meaty_gores'>Trigger an Organic Debris Field</A><BR>
 			<A href='?src=\ref[src];secretsfun=lightsout'>Toggle a "lights out" event</A><BR>
+			<A href='?src=\ref[src];secretsfun=mass_hallucination'>Cause the crew to hallucinate</A><BR>
+			<A href='?src=\ref[src];secretsfun=mass_drunk'>Cause the crew to become drunk</A><BR>
 			<A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
 			<A href='?src=\ref[src];secretsfun=spacevines'>Spawn Space-Vines</A><BR>
 			<A href='?src=\ref[src];secretsfun=comms_blackout'>Trigger a communication blackout</A><BR>

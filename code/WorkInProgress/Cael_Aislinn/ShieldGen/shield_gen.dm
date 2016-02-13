@@ -111,8 +111,6 @@
 		t += "<i>Swipe your ID card to begin.</i>"
 	else
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\ShieldGen\shield_gen.dm:102: t += "[owned_capacitor ? "<font color=green>Charge capacitor connected.</font>" : "<font color=red>Unable to locate charge capacitor!</font>"]<br>"
 		t += {"[owned_capacitor ? "<font color=green>Charge capacitor connected.</font>" : "<font color=red>Unable to locate charge capacitor!</font>"]<br>
 			This generator is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>
 			[time_since_fail > 2 ? "<font color=green>Field is stable.</font>" : "<font color=red>Warning, field is unstable!</font>"]<br>
@@ -140,12 +138,9 @@
 		<a href='?src=\ref[src];max_field_strength=100'>\[max\]</a><br>"}
 		// END NOT-AUTOFIX
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\ShieldGen\shield_gen.dm:127: t += "<hr>"
 	t += {"<hr>
 		<A href='?src=\ref[src]'>Refresh</A>
 		<A href='?src=\ref[src];close=1'>Close</A><BR>"}
-	// END AUTOFIX
 	user << browse(t, "window=shield_generator;size=500x800")
 	user.set_machine(src)
 

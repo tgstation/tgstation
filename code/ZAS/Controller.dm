@@ -105,6 +105,7 @@ Class Procs:
 
 	for(var/turf/simulated/S in turfs)
 		simulated_turf_count++
+		if(!(simulated_turf_count % 50000)) sleep(world.tick_lag)
 		S.update_air_properties()
 
 	to_chat(world, {"<font color='red'><b>Geometry initialized in [round(0.1*(world.timeofday-start_time),0.1)] seconds.</b>

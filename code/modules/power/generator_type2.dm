@@ -107,14 +107,11 @@
 	var/t = "<h2>Thermo-Electric Generator Mk. 2</h2>"
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\\power\generator_type2.dm:113: t += "Output : [round(lastgen)] W<BR><BR>"
 	t += {"Output : [round(lastgen)] W<BR><BR>
 [get_loop_state("Cold",input1_dir,input1)]
 [get_loop_state("Hot",input2_dir,input2)]
 <BR><HR><A href='?src=\ref[src];close=1'>Close</A>
 | <A href='?src=\ref[src];reconnect=1'>Refresh Inputs</A>"}
-	// END AUTOFIX
 	user << browse(t, "window=teg;size=460x300")
 	onclose(user, "teg")
 	return 1

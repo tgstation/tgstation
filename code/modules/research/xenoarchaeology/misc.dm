@@ -3,7 +3,7 @@
 #define ARTIFACT_SPAWN_CHANCE 20
 
 proc/SetupXenoarch()
-	for(var/turf/unsimulated/mineral/M in block(locate(1,1,1), locate(world.maxx, world.maxy, world.maxz)))
+	for(var/turf/unsimulated/mineral/M in mineral_turfs)
 		if(!prob(XENOARCH_SPAWN_CHANCE))
 			continue
 

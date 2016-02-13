@@ -129,7 +129,7 @@
 			msg += "<span class='warning'>[t_He] [t_has] \icon[gloves] [gloves.gender==PLURAL?"some":"a"] blood-stained [gloves.name] on [t_his] hands!</span>\n"
 		else
 			msg += "[t_He] [t_has] \icon[gloves] \a [gloves] on [t_his] hands.\n"
-	else if(blood_DNA && blood_DNA.len)
+	else if(blood_DNA && blood_DNA.len && !(slot_gloves in obscured))
 		msg += "<span class='warning'>[t_He] [t_has] blood-stained hands!</span>\n"
 
 	//handcuffed?
@@ -442,11 +442,8 @@
 							criminal = R.fields["criminal"]
 
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\carbon\human\examine.dm:411: msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
 			msg += {"<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>
 <span class = 'deptradio'>Security records:</span> <a href='?src=\ref[src];secrecord=`'>\[View\]</a>  <a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>\n"}
-			// END AUTOFIX
 	if(hasHUD(user,"medical"))
 		var/perpname = "wot"
 		var/medical = "None"
@@ -467,11 +464,8 @@
 						medical = R.fields["p_stat"]
 
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\carbon\human\examine.dm:433: msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
 		msg += {"<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n
 			<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"}
-		// END AUTOFIX
 	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
 	msg += "*---------*</span>"

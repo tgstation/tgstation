@@ -108,7 +108,9 @@ proc/process_sec_hud(var/mob/M, var/advanced_mode,var/mob/eye)
 					C.images += holder
 					break
 
-		var/perpname = perp.get_face_name(perp.get_id_name(""))
+		var/perpname = perp.get_face_name()
+		if(lowertext(perpname) == "unknown" || !perpname)
+			perpname = perp.get_id_name("Unknown")
 		if(perpname)
 			var/datum/data/record/R = find_record("name", perpname, data_core.security)
 			if(R)
