@@ -8,15 +8,7 @@
 	back = /obj/item/weapon/tank/jetpack/oxygen
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/space/post_equip(mob/living/carbon/human/H)
-	var/obj/item/weapon/tank/jetpack/J = H.back
-	J.toggle()
-	J.Topic(null, list("stat" = 1))
-
-
 /datum/outfit/tournament
-
-/datum/outfit/tournament/
 	name = "tournament standard red"
 
 	uniform = /obj/item/clothing/under/color/red
@@ -27,14 +19,14 @@
 	l_hand = /obj/item/weapon/kitchen/knife
 	r_pocket = /obj/item/weapon/grenade/smokebomb
 
-
-/datum/outfit/tournament/red
+/datum/outfit/tournament/green
 	name = "tournament standard green"
 
 	uniform = /obj/item/clothing/under/color/green
 
 /datum/outfit/tournament/gangster
 	name = "tournament gangster"
+
 	uniform = /obj/item/clothing/under/rank/det
 	suit = /obj/item/clothing/suit/det_suit
 	glasses = /obj/item/clothing/glasses/thermal/monocle

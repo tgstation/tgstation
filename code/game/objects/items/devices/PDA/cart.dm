@@ -501,13 +501,13 @@ Code:
 			menu += "<BR>Current approved orders: <BR><ol>"
 			for(var/S in SSshuttle.shoppinglist)
 				var/datum/supply_order/SO = S
-				menu += "<li>#[SO.ordernum] - [SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]</li>"
+				menu += "<li>#[SO.id] - [SO.pack.name] approved by [SO.orderer] [SO.reason ? "([SO.reason])":""]</li>"
 			menu += "</ol>"
 
 			menu += "Current requests: <BR><ol>"
 			for(var/S in SSshuttle.requestlist)
 				var/datum/supply_order/SO = S
-				menu += "<li>#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]</li>"
+				menu += "<li>#[SO.id] - [SO.pack.name] requested by [SO.orderer]</li>"
 			menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
 
 		if (49) //janitorial locator

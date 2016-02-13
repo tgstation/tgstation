@@ -3,13 +3,11 @@
 /obj/structure/closet/crate/secure/loot
 	name = "abandoned crate"
 	desc = "What could be inside?"
-	icon_crate = "securecrate"
 	icon_state = "securecrate"
 	var/code = null
 	var/lastattempt = null
 	var/attempts = 10
 	var/codelen = 4
-	locked = 1
 
 /obj/structure/closet/crate/secure/loot/New()
 	..()
@@ -38,13 +36,13 @@
 		if(11 to 15)
 			new /obj/item/weapon/reagent_containers/glass/beaker/bluespace(src)
 		if(16 to 20)
-			for(var/i = 0, i < 10, i++)
+			for(var/i in 1 to 10)
 				new /obj/item/weapon/ore/diamond(src)
 		if(21 to 25)
-			for(var/i = 0, i < 5, i++)
+			for(var/i in 1 to 5)
 				new /obj/item/weapon/poster/contraband(src)
 		if(26 to 30)
-			for(var/i = 0, i < 3, i++)
+			for(var/i in 1 to 3)
 				new /obj/item/weapon/reagent_containers/glass/beaker/noreact(src)
 		if(31 to 35)
 			new /obj/item/seeds/cashseed(src)
@@ -55,7 +53,7 @@
 			new /obj/item/clothing/under/shorts/blue(src)
 		if(46 to 50)
 			new /obj/item/clothing/under/chameleon(src)
-			for(var/i = 0, i < 7, i++)
+			for(var/i in 1 to 7)
 				new /obj/item/clothing/tie/horrible(src)
 		if(51 to 52) // 2% chance
 			new /obj/item/weapon/melee/classic_baton(src)
@@ -71,24 +69,22 @@
 			new /obj/item/clothing/suit/space(src)
 			new /obj/item/clothing/head/helmet/space(src)
 		if(61 to 62)
-			for(var/i = 0, i < 5, ++i)
+			for(var/i in 1 to 5)
 				new /obj/item/clothing/head/kitty(src)
 				new /obj/item/clothing/tie/petcollar(src)
 		if(63 to 64)
-			var/t = rand(4,7)
-			for(var/i = 0, i < t, ++i)
+			for(var/i in 1 to rand(4, 7))
 				var/newcoin = pick(/obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/gold, /obj/item/weapon/coin/diamond, /obj/item/weapon/coin/plasma, /obj/item/weapon/coin/uranium)
 				new newcoin(src)
 		if(65 to 66)
 			new /obj/item/clothing/suit/ianshirt(src)
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
 		if(67 to 68)
-			var/t = rand(4,7)
-			for(var/i = 0, i < t, ++i)
+			for(var/i in 1 to rand(4, 7))
 				var /newitem = pick(subtypesof(/obj/item/weapon/stock_parts) - /obj/item/weapon/stock_parts/subspace)
 				new newitem(src)
 		if(69 to 70)
-			for(var/i = 0, i < 5, ++i)
+			for(var/i in 1 to 5)
 				new /obj/item/weapon/ore/bluespace_crystal(src)
 		if(71 to 72)
 			new /obj/item/weapon/pickaxe/drill(src)
@@ -163,40 +159,32 @@
 				user << "<span class='notice'>The crate unlocks!</span>"
 				locked = 0
 				overlays.Cut()
-				overlays += greenlight
+				overlays += "securecrateg"
 			else if (input == null || length(input) != codelen)
 				user << "<span class='notice'>You leave the crate alone.</span>"
 			else
 				user << "<span class='warning'>A red light flashes.</span>"
 				lastattempt = replacetext(input, 0, "z")
 				attempts--
-				if (attempts == 0)
-					user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
-					var/turf/T = get_turf(src.loc)
-					explosion(T, -1, -1, 1, 1)
-					qdel(src)
-					return
+				if(attempts == 0)
+					boom(user)
 	else
 		return ..()
 
-/obj/structure/closet/crate/secure/loot/attack_animal()
-	qdel(src)
+/obj/structure/closet/crate/secure/loot/attack_animal(mob/user)
+	boom(user)
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
-		if (istype(W, /obj/item/weapon/card/emag))
-			user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
-			var/turf/T = get_turf(src.loc)
-			explosion(T, -1, -1, 1, 1)
-			qdel(src)
-			return
-		if (istype(W, /obj/item/device/multitool))
+		if(istype(W, /obj/item/weapon/card/emag))
+			boom(user)
+		if(istype(W, /obj/item/device/multitool))
 			user << "<span class='notice'>DECA-CODE LOCK REPORT:</span>"
-			if (attempts == 1)
+			if(attempts == 1)
 				user << "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>"
 			else
 				user << "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>"
-			if (lastattempt != null)
+			if(lastattempt != null)
 				var/list/guess = list()
 				var/bulls = 0
 				var/cows = 0
@@ -213,3 +201,17 @@
 				user << "<span class='notice'>Last code attempt had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>"
 		else ..()
 	else ..()
+
+/obj/structure/closet/crate/secure/loot/togglelock(mob/user)
+	if(locked)
+		boom(user)
+	else
+		..()
+
+/obj/structure/closet/crate/secure/loot/proc/boom(mob/user)
+	user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
+	for(var/atom/movable/AM in src)
+		qdel(AM)
+	var/turf/T = get_turf(src)
+	explosion(T, -1, -1, 1, 1)
+	qdel(src)

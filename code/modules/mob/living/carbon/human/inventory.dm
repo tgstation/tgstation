@@ -72,9 +72,9 @@
 			glasses = I
 			var/obj/item/clothing/glasses/G = I
 			if(G.tint)
-				update_tinttotal()
+				update_tint()
 			if(G.vision_correction)
-				update_vision_overlays()
+				clear_fullscreen("nearsighted")
 			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view)
 				update_sight()
 			update_inv_glasses()
@@ -136,9 +136,10 @@
 		glasses = null
 		var/obj/item/clothing/glasses/G = I
 		if(G.tint)
-			update_tinttotal()
+			update_tint()
 		if(G.vision_correction)
-			update_vision_overlays()
+			if(disabilities & NEARSIGHT)
+				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
 		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view)
 			update_sight()
 		update_inv_glasses()

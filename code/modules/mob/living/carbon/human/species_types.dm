@@ -11,6 +11,7 @@
 	mutant_bodyparts = list("tail_human", "ears")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
 	use_skintones = 1
+	skinned_type = /obj/item/stack/sheet/animalhide/human
 
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
@@ -62,6 +63,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
+	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -626,7 +628,7 @@ var/global/list/synth_flesh_disguises = list()
 
 
 /datum/species/synth/proc/handle_disguise(mob/living/carbon/human/H)
-	if(H)
+	if(H && fake_species) // Obviously we only are disguise when we're... disguised.
 		H.updatehealth()
 		var/add_overlay = FALSE
 		if(H.health < disguise_fail_health)

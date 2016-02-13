@@ -36,14 +36,13 @@
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_module(3)
 
-
 /obj/screen/robot/radio
 	name = "radio"
 	icon_state = "radio"
 
 /obj/screen/robot/radio/Click()
 	var/mob/living/silicon/robot/R = usr
-	R.radio_menu()
+	R.radio.interact(R)
 
 /obj/screen/robot/store
 	name = "store"
@@ -61,9 +60,17 @@
 	var/mob/living/silicon/robot/R = usr
 	R.control_headlamp()
 
+/obj/screen/robot/thrusters
+	name = "ion thrusters"
+	icon_state = "ionpulse0"
+
+/obj/screen/robot/thrusters/Click()
+	var/mob/living/silicon/robot/R = usr
+	R.toggle_ionpulse()
 
 /datum/hud/robot/New(mob/owner)
 	..()
+	var/mob/living/silicon/robot/mymobR = mymob
 	var/obj/screen/using
 
 //Radio
@@ -72,9 +79,6 @@
 	static_inventory += using
 
 //Module select
-
-	var/mob/living/silicon/robot/mymobR = mymob
-
 	using = new /obj/screen/robot/module1()
 	using.screen_loc = ui_inv1
 	static_inventory += using
@@ -93,7 +97,6 @@
 //End of module select
 
 //Photography stuff
-
 	using = new /obj/screen/ai/image_take()
 	using.screen_loc = ui_borg_camera
 	static_inventory += using
@@ -112,6 +115,12 @@
 	using.screen_loc = ui_borg_lamp
 	static_inventory += using
 	mymobR.lamp_button = using
+
+//Thrusters
+	using = new /obj/screen/robot/thrusters()
+	using.screen_loc = ui_borg_thrusters
+	static_inventory += using
+	mymobR.thruster_button = using
 
 //Intent
 	using = new /obj/screen/act_intent/robot()

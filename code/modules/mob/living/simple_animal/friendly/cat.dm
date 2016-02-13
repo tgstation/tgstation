@@ -30,6 +30,27 @@
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = 2
 
+/mob/living/simple_animal/pet/cat/space
+	name = "space cat"
+	desc = "It's a cat... in space!"
+	icon_state = "spacecat"
+	icon_living = "spacecat"
+	icon_dead = "spacecat_dead"
+	unsuitable_atmos_damage = 0
+	minbodytemp = TCMB
+	maxbodytemp = T0C + 40
+
+/mob/living/simple_animal/pet/cat/kitten
+	name = "kitten"
+	desc = "D'aaawwww"
+	icon_state = "kitten"
+	icon_living = "kitten"
+	icon_dead = "kitten_dead"
+	gender = NEUTER
+	density = 0
+	pass_flags = PASSMOB
+	mob_size = MOB_SIZE_SMALL
+
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/Runtime
 	name = "Runtime"
@@ -38,6 +59,10 @@
 	icon_living = "cat"
 	icon_dead = "cat_dead"
 	gender = FEMALE
+	gold_core_spawnable = 0
+
+/mob/living/simple_animal/pet/cat/Proc
+	name = "Proc"
 	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/cat/Life()
@@ -96,34 +121,19 @@
 				stop_automated_movement = 1
 				walk_to(src,movement_target,0,3)
 
-/mob/living/simple_animal/pet/cat/Proc
-	name = "Proc"
-	gold_core_spawnable = 0
-
-/mob/living/simple_animal/pet/cat/kitten
-	name = "kitten"
-	desc = "D'aaawwww"
-	icon_state = "kitten"
-	icon_living = "kitten"
-	icon_dead = "kitten_dead"
-	gender = NEUTER
-	density = 0
-	pass_flags = PASSMOB
-	mob_size = MOB_SIZE_SMALL
-
 /mob/living/simple_animal/pet/cat/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	switch(M.a_intent)
 		if("help")
-			wuv(1,M)
+			wuv(1, M)
 		if("harm")
-			wuv(-1,M)
+			wuv(-1, M)
 
 /mob/living/simple_animal/pet/cat/proc/wuv(change, mob/M)
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD)
-				flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(M.client), 20)
+				flick_overlay(image('icons/mob/animal.dmi', src, "heart-ani2", MOB_LAYER+1), list(M.client), 20)
 				emote("me", 1, "purrs!")
 		else
 			if(M && stat != DEAD)

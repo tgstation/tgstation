@@ -25,6 +25,7 @@
 		overlays += "scrubber-connector"
 
 /obj/machinery/portable_atmospherics/scrubber/process_atmos()
+	..()
 	if(!on)
 		return
 
@@ -44,7 +45,7 @@
 
 	filtered.temperature = filtering.temperature
 	for(var/gas in filtering.gases & scrubbing)
-		filtered.assert_gas(gas)
+		filtered.add_gas(gas)
 		filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
 		filtering.gases[gas][MOLES] = 0
 	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.

@@ -894,69 +894,10 @@
 
 	dna.species.update_sight(src)
 
-/mob/living/carbon/human/update_tinttotal()
-	if(!tinted_weldhelh)
-		return
-	tinttotal = 0
-	if(istype(head, /obj/item/clothing/head))
-		var/obj/item/clothing/head/HT = head
-		tinttotal += HT.tint
-	if(wear_mask)
-		tinttotal += wear_mask.tint
+/mob/living/carbon/human/get_total_tint()
+	. = ..()
 	if(glasses)
-		tinttotal += glasses.tint
-	update_vision_overlays()
-
-/mob/living/carbon/human/update_vision_overlays()
-	if(!client)
-		return
-
-	if(stat == DEAD) //if dead we remove all vision impairments
-		clear_fullscreens()
-		return
-
-	if(tinted_weldhelh)
-		if(tinttotal >= TINT_BLIND)
-			overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
-		else if(tinttotal >= TINT_DARKENED)
-			overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
-		else
-			clear_fullscreen("tint", 0)
-
-	if(eye_blind)
-		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else
-		clear_fullscreen("blind")
-
-	if((disabilities & NEARSIGHT) && !(glasses && glasses.vision_correction))
-		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("nearsighted")
-
-	if(eye_blurry)
-		overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else
-		clear_fullscreen("blurry")
-
-	if(druggy)
-		overlay_fullscreen("high", /obj/screen/fullscreen/high)
-	else
-		clear_fullscreen("high")
-
-	if(eye_stat > 20)
-		if(eye_stat > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("eye_damage")
-
-	if(client.eye != src)
-		var/atom/A = client.eye
-		A.get_remote_view_fullscreens(src)
-	else
-		clear_fullscreen("remote_view", 0)
-
+		. += glasses.tint
 
 /mob/living/carbon/human/update_health_hud()
 	if(!client || !hud_used)

@@ -31,13 +31,12 @@
 	diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/handle_regular_hud_updates()
-
 	if(!client)
 		return
 
 	update_cell_hud_icon()
 
-	if (syndicate)
+	if(syndicate)
 		if(ticker.mode.name == "traitor")
 			for(var/datum/mind/tra in ticker.mode.traitors)
 				if(tra.current)

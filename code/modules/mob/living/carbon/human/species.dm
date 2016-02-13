@@ -33,6 +33,7 @@
 	var/need_nutrition = 1  //Does it need to eat food on a regular basis?
 	var/exotic_blood = null	// If your race wants to bleed something other than bog standard blood, change this.
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
+	var/skinned_type = /obj/item/stack/sheet/animalhide/generic
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
 	var/blacklisted = 0 //Flag to exclude from green slime core species.
@@ -749,34 +750,27 @@
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0
 
+	if(H.status_flags & GOTTAGOFAST)
+		. -= 1
+	if(H.status_flags & GOTTAGOREALLYFAST)
+		. -= 2
+
 	if(!(H.status_flags & IGNORESLOWDOWN))
+		if(!has_gravity(H))
+			// If there's no gravity we have the option of sanic speed.
+			var/obj/item/weapon/tank/jetpack/J = H.back
+			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
+			if(!istype(J) && istype(C))
+				J = C.jetpack
 
-		var/grav = has_gravity(H)
-		var/hasjetpack = 0
-		if(!grav)
-			var/obj/item/weapon/tank/jetpack/J
-			var/obj/item/weapon/tank/jetpack/P
-
-			if(istype(H.back, /obj/item/weapon/tank/jetpack))
-				J = H.back
-			if(istype(H.wear_suit,/obj/item/clothing/suit/space/hardsuit)) //copypasta but faster implementation currently
-				var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
-				P = C.jetpack
-			if(J)
-				if(J.allow_thrust(0.01, H))
-					hasjetpack = 1
-			else if(P)
-				if(P.allow_thrust(0.01, H))
-					hasjetpack = 1
-
-			. = -1 - hasjetpack
-
-		if(grav || !hasjetpack)
+			if(istype(J) && J.turbo && J.allow_thrust(0.01, H))
+				. -= 2 // Turbo mode. Gotta go fast.
+		else
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
 				. += (health_deficiency / 25)
 
-			var/hungry = (500 - H.nutrition) / 5	//So overeat would be 100 and default level would be 80
+			var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
 			if(hungry >= 70)
 				. += hungry / 50
 
@@ -797,13 +791,6 @@
 				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 
 			. += speedmod
-
-		if(grav)
-			if(H.status_flags & GOTTAGOFAST)
-				. -= 1
-
-			if(H.status_flags & GOTTAGOREALLYFAST)
-				. -= 2
 
 //////////////////
 // ATTACK PROCS //

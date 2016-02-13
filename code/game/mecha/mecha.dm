@@ -169,7 +169,7 @@
 			qdel(cell)
 		if(internal_tank)
 			qdel(internal_tank)
-	SSobj.processing.Remove(src)
+	SSobj.processing -= src
 	poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
@@ -815,8 +815,8 @@
 
 /obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
 	if(H && H.client && H in range(1))
-		H.forceMove(src)
 		occupant = H
+		H.forceMove(src)
 		add_fingerprint(H)
 		GrantActions(H, human_occupant=1)
 		forceMove(loc)
@@ -867,9 +867,9 @@
 			user << "<span class='warning'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
 		var/mob/brainmob = mmi_as_oc.brainmob
-		brainmob.reset_perspective(src)
 		occupant = brainmob
 		brainmob.loc = src //should allow relaymove
+		brainmob.reset_perspective(src)
 		brainmob.canmove = 1
 		mmi_as_oc.loc = src
 		mmi_as_oc.mecha = src

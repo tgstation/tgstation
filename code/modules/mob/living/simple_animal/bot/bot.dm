@@ -18,7 +18,7 @@
 	speak_emote = list("states")
 	bubble_icon = "machine"
 
-	faction = list("neutral, silicon")
+	faction = list("neutral", "silicon")
 
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
@@ -282,7 +282,7 @@
 				return
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0, user))
-				health = min(maxHealth, health+10)
+				adjustHealth(-10)
 				user.visible_message("[user] repairs [src]!","<span class='notice'>You repair [src].</span>")
 			else
 				user << "<span class='warning'>The welder must be on for this task!</span>"

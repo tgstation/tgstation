@@ -3,7 +3,8 @@
 //////////////////////////////////////////////////////////////
 
 //global datum that will preload variables on atoms instanciation
-var/global/dmm_suite/preloader/_preloader = null
+var/global/use_preloader = FALSE
+var/global/dmm_suite/preloader/_preloader = new
 
 
 /**
@@ -174,14 +175,14 @@ var/global/dmm_suite/preloader/_preloader = null
 	//first instance the /area and remove it from the members list
 	index = members.len
 	var/atom/instance
-	_preloader = new(members_attributes[index])//preloader for assigning  set variables on atom creation
+	_preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
 
 	instance = locate(members[index])
 	var/turf/crds = locate(xcrd,ycrd,zcrd)
 	if(crds)
 		instance.contents.Add(crds)
 
-	if(_preloader && instance)
+	if(use_preloader && instance)
 		_preloader.load(instance)
 
 	members.Remove(members[index])
@@ -216,13 +217,13 @@ var/global/dmm_suite/preloader/_preloader = null
 //Instance an atom at (x,y,z) and gives it the variables in attributes
 /dmm_suite/proc/instance_atom(path,list/attributes, x, y, z)
 	var/atom/instance
-	_preloader = new(attributes, path)
+	_preloader.setup(attributes, path)
 
 	var/turf/T = locate(x,y,z)
 	if(T)
 		instance = new path (T)//first preloader pass
 
-	if(_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
+	if(use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 		_preloader.load(instance)
 
 	return instance
@@ -321,7 +322,7 @@ var/global/dmm_suite/preloader/_preloader = null
 
 //atom creation method that preloads variables at creation
 /atom/New()
-	if(_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
 
 	. = ..()
@@ -339,15 +340,13 @@ var/global/dmm_suite/preloader/_preloader = null
 	var/list/attributes
 	var/target_path
 
-/dmm_suite/preloader/New(list/the_attributes, path)
-	.=..()
-	if(!the_attributes.len)
-		qdel(src)
-		return
-	attributes = the_attributes
-	target_path = path
+/dmm_suite/preloader/proc/setup(list/the_attributes, path)
+	if(the_attributes.len)
+		use_preloader = TRUE
+		attributes = the_attributes
+		target_path = path
 
 /dmm_suite/preloader/proc/load(atom/what)
 	for(var/attribute in attributes)
 		what.vars[attribute] = attributes[attribute]
-	qdel(src)
+	use_preloader = FALSE

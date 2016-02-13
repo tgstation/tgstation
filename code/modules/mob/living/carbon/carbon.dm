@@ -179,25 +179,25 @@
 			if(1)
 				src << "<span class='warning'>Your eyes sting a little.</span>"
 				if(prob(40))
-					adjust_eye_stat(1)
+					adjust_eye_damage(1)
 
 			if(2)
 				src << "<span class='warning'>Your eyes burn.</span>"
-				adjust_eye_stat(rand(2, 4))
+				adjust_eye_damage(rand(2, 4))
 
 			else
 				src << "<span class='warning'>Your eyes itch and burn severely!</span>"
-				adjust_eye_stat(rand(12, 16))
+				adjust_eye_damage(rand(12, 16))
 
-		if(eye_stat > 10)
-			set_blindness(damage)
-			set_blurriness(damage * rand(3, 6))
+		if(eye_damage > 10)
+			blind_eyes(damage)
+			blur_eyes(damage * rand(3, 6))
 
-			if(eye_stat > 20)
-				if(prob(eye_stat - 20))
+			if(eye_damage > 20)
+				if(prob(eye_damage - 20))
 					if(become_nearsighted())
 						src << "<span class='warning'>Your eyes start to burn badly!</span>"
-				else if(prob(eye_stat - 25))
+				else if(prob(eye_damage - 25))
 					if(become_blind())
 						src << "<span class='warning'>You can't see anything!</span>"
 			else
@@ -657,68 +657,25 @@ var/const/GALOSHES_DONT_HELP = 4
 		see_invisible = see_override
 
 
-//to recalculate the mob's total tint from tinted equipment it's wearing.
-/mob/living/carbon/proc/update_tinttotal()
+//to recalculate and update the mob's total tint from tinted equipment it's wearing.
+/mob/living/carbon/proc/update_tint()
 	if(!tinted_weldhelh)
 		return
-	tinttotal = 0
+	tinttotal = get_total_tint()
+	if(tinttotal >= TINT_BLIND)
+		overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
+	else if(tinttotal >= TINT_DARKENED)
+		overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
+	else
+		clear_fullscreen("tint", 0)
+
+/mob/living/carbon/proc/get_total_tint()
+	. = 0
 	if(istype(head, /obj/item/clothing/head))
 		var/obj/item/clothing/head/HT = head
-		tinttotal += HT.tint
+		. += HT.tint
 	if(wear_mask)
-		tinttotal += wear_mask.tint
-	update_vision_overlays()
-
-/mob/living/carbon/update_vision_overlays()
-	if(!client)
-		return
-
-	if(stat == DEAD) //if dead we remove all vision impairments
-		clear_fullscreens()
-		return
-
-	if(tinted_weldhelh)
-		if(tinttotal >= TINT_BLIND)
-			overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
-		else if(tinttotal >= TINT_DARKENED)
-			overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
-		else
-			clear_fullscreen("tint", 0)
-
-	if(eye_blind)
-		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else
-		clear_fullscreen("blind")
-
-	if(disabilities & NEARSIGHT)
-		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("nearsighted")
-
-	if(eye_blurry)
-		overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else
-		clear_fullscreen("blurry")
-
-	if(druggy)
-		overlay_fullscreen("high", /obj/screen/fullscreen/high)
-	else
-		clear_fullscreen("high")
-
-	if(eye_stat > 20)
-		if(eye_stat > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("eye_damage")
-
-	if(client.eye != src)
-		var/atom/A = client.eye
-		A.get_remote_view_fullscreens(src)
-	else
-		clear_fullscreen("remote_view", 0)
-
+		. += wear_mask.tint
 
 /mob/living/carbon/revive()
 	setToxLoss(0)
@@ -733,7 +690,7 @@ var/const/GALOSHES_DONT_HELP = 4
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
-	eye_stat = 0
+	eye_damage = 0
 	disabilities = 0
 	eye_blind = 0
 	eye_blurry = 0
@@ -769,7 +726,7 @@ var/const/GALOSHES_DONT_HELP = 4
 			if(HM.quality != POSITIVE)
 				dna.remove_mutation(HM.name)
 	update_sight()
-	update_vision_overlays()
+	reload_fullscreen()
 	update_canmove()
 
 
@@ -851,7 +808,7 @@ var/const/GALOSHES_DONT_HELP = 4
 
 /mob/living/carbon/proc/update_internals_hud_icon(internal_state = 0)
 	if(hud_used && hud_used.internals)
-		hud_used.internals = "internal[internal_state]"
+		hud_used.internals.icon_state = "internal[internal_state]"
 
 /mob/living/carbon/update_stat()
 	if(status_flags & GODMODE)
@@ -863,7 +820,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
-				set_blindness(1)
+				blind_eyes(1)
 				update_canmove()
 		else
 			if(stat == UNCONSCIOUS)

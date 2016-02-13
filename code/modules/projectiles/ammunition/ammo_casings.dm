@@ -9,6 +9,9 @@
 	caliber = "a762"
 	projectile_type = /obj/item/projectile/bullet
 
+/obj/item/ammo_casing/a762/enchanted
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
+
 /obj/item/ammo_casing/a50
 	desc = "A .50AE bullet casing."
 	caliber = ".50"
@@ -73,6 +76,11 @@
 	desc = "A .45 bullet casing."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/weakbullet3
+
+/obj/item/ammo_casing/n762
+	desc = "A 7.62x38mmR bullet casing."
+	caliber = "n762"
+	projectile_type = /obj/item/projectile/bullet
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"

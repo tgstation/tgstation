@@ -488,9 +488,12 @@
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return. Further attempts futile.</span>"
 						else if(total_burn >= 180 || total_brute >= 180)
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Severe tissue damage makes recovery of patient impossible via defibrillator. Further attempts futile.</span>"
-						else if(H.get_ghost() || !H.getorgan(/obj/item/organ/internal/brain))
+						else if(H.get_ghost())
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - No activity in patient's brain. Further attempts may be successful.</span>"
-
+						else
+							var/obj/item/organ/internal/brain/BR = H.getorgan(/obj/item/organ/internal/brain)
+							if(!BR || BR.damaged_brain)
+								failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's brain is missing or damaged beyond point of no return. Further attempts futile.</span>"
 
 						if(failed)
 							user.visible_message(failed)
@@ -511,7 +514,7 @@
 							H.stat = UNCONSCIOUS
 							H.updatehealth()
 							H.update_sight()
-							H.update_vision_overlays()
+							H.reload_fullscreen()
 							dead_mob_list -= H
 							living_mob_list |= list(H)
 							H.emote("gasp")

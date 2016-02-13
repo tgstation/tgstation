@@ -300,3 +300,14 @@ Contains:
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/New()
 	..()
 	new /obj/item/weapon/nullrod(src)
+
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
+	name = "inquisitor's hardsuit"
+	icon_state = "hardsuit-inq"
+	item_state = "hardsuit-inq"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor
+	name = "inquisitor's helmet"
+	icon_state = "hardsuit0-inq"
+	item_state = "hardsuit0-inq"

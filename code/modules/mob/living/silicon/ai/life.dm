@@ -46,7 +46,7 @@
 
 		else if(!aiRestorePowerRoutine)
 			aiRestorePowerRoutine = 1
-			set_blindness(1)
+			blind_eyes(1)
 			update_sight()
 			src << "You've lost power!"
 			spawn(20)

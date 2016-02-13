@@ -9,7 +9,7 @@
 	density = 1
 
 	var/valve_open = FALSE
-	var/obj/machinery/atmospherics/components/binary/pump/pump
+	var/obj/machinery/atmospherics/components/binary/passive_gate/pump
 	var/release_log = ""
 
 	volume = 1000
@@ -66,13 +66,18 @@
 	desc = "Pre-mixed air."
 	icon_state = "grey"
 
-/obj/machinery/portable_atmospherics/canister/New(loc)
+/obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
-	create_gas()
+	if(existing_mixture)
+		air_contents.copy_from(existing_mixture)
+	else
+		create_gas()
+
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.stat = 0
 	pump.build_network()
+
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/Destroy()
@@ -82,11 +87,11 @@
 
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type)
-		air_contents.assert_gas(gas_type)
+		air_contents.add_gas(gas_type)
 		air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
-	air_contents.assert_gases("o2","n2")
+	air_contents.add_gases("o2","n2")
 	air_contents.gases["o2"][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases["n2"][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
@@ -167,9 +172,12 @@
 			holding = null
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
+	..()
 	if(destroyed)
 		return PROCESS_KILL
 	if(!valve_open)
+		pump.AIR1 = null
+		pump.AIR2 = null
 		return
 
 	var/turf/T = get_turf(src)
@@ -253,8 +261,7 @@
 			if(label && !..())
 				var/newtype = label2types[label]
 				if(newtype)
-					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc)
-					replacement.air_contents.copy_from(air_contents)
+					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc, air_contents)
 					replacement.interact(usr)
 					qdel(src)
 		if("pressure")

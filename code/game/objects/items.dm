@@ -239,6 +239,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/attack_hand(mob/user)
 	if(!user)
 		return
+	if(anchored)
+		return
 
 	if(burn_state == ON_FIRE)
 		var/mob/living/carbon/human/H = user
@@ -256,12 +258,12 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		else
 			extinguish()
 
-	if(istype(src.loc, /obj/item/weapon/storage))
+	if(istype(loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out
-		var/obj/item/weapon/storage/S = src.loc
+		var/obj/item/weapon/storage/S = loc
 		S.remove_from_storage(src, user.loc)
 
-	src.throwing = 0
+	throwing = 0
 	if(loc == user)
 		if(!user.unEquip(src))
 			return
@@ -270,30 +272,27 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
-	return
 
 
 /obj/item/attack_paw(mob/user)
-	var/picked_up = 0
-	if (istype(src.loc, /obj/item/weapon/storage))
-		for(var/mob/M in range(1, src.loc))
-			if (M.s_active == src.loc)
-				if (M.client)
-					M.client.screen -= src
-	src.throwing = 0
-	if (src.loc == user)
+	if(!user)
+		return
+	if(anchored)
+		return
+
+	if(istype(loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = loc
+		S.remove_from_storage(src, user.loc)
+
+	throwing = 0
+	if(loc == user)
 		if(!user.unEquip(src))
 			return
-	else
-		if(istype(src.loc, /mob/living))
-			return
-		src.pickup(user)
-		picked_up = 1
 
-	if(!user.put_in_active_hand(src) && picked_up)
+	pickup(user)
+	add_fingerprint(user)
+	if(!user.put_in_active_hand(src))
 		dropped(user)
-	return
-
 
 /obj/item/attack_alien(mob/user)
 	var/mob/living/carbon/alien/A = user
@@ -472,8 +471,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
 	M.adjust_blurriness(3)
-	M.adjust_eye_stat(rand(2,4))
-	if(M.eye_stat >= 10)
+	M.adjust_eye_damage(rand(2,4))
+	if(M.eye_damage >= 10)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
@@ -487,7 +486,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			M.adjust_blurriness(10)
 			M.Paralyse(1)
 			M.Weaken(2)
-		if (prob(M.eye_stat - 10 + 1))
+		if (prob(M.eye_damage - 10 + 1))
 			if(M.become_blind())
 				M << "<span class='danger'>You go blind!</span>"
 

@@ -19,6 +19,7 @@
 		color = overmind.blob_reagent_datum.color
 
 /mob/living/simple_animal/hostile/blob/blob_act()
+	adjustHealth(-maxHealth*0.025)
 	return
 
 /mob/living/simple_animal/hostile/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -60,7 +61,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
 	if(!is_zombie && isturf(src.loc))
-		for(var/mob/living/carbon/human/H in oview(src,1)) //Only for corpse right next to/on same tile
+		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == DEAD)
 				Zombify(H)
 				break
@@ -89,7 +90,7 @@
 	human_overlays = H.overlays
 	update_icons()
 	H.loc = src
-	loc.visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
+	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
 	..(1)
@@ -173,7 +174,7 @@
 		if(overmind)
 			var/mob/living/L = target
 			var/mob_protection = L.get_permeability_protection()
-			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 20, 0, mob_protection)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
+			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 20, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 	if(target)
 		..()
 

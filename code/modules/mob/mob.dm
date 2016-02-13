@@ -283,7 +283,12 @@ var/next_mob_id = 0
 /mob/living/reset_perspective(atom/A)
 	if(..())
 		update_sight()
-		update_vision_overlays()
+		if(client.eye != src)
+			var/atom/AT = client.eye
+			AT.get_remote_view_fullscreens(src)
+		else
+			clear_fullscreen("remote_view", 0)
+		update_pipe_vision()
 
 
 /mob/proc/show_inv(mob/user)
@@ -328,30 +333,35 @@ var/next_mob_id = 0
 
 //this and stop_pulling really ought to be /mob/living procs
 /mob/proc/start_pulling(atom/movable/AM)
-	if ( !AM || !src || src==AM || !isturf(AM.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+	if(!AM || !src)
 		return
-	if (!( AM.anchored ))
-		AM.add_fingerprint(src)
+	if(AM == src || !isturf(AM.loc))
+		return
+	if(AM.anchored)
+		return
 
-		// If we're pulling something then drop what we're currently pulling and pull this instead.
-		if(pulling)
-			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
-			if(AM == pulling)
-				return
-			stop_pulling()
+	AM.add_fingerprint(src)
 
-		src.pulling = AM
-		AM.pulledby = src
-		update_pull_hud_icon()
-		if(ismob(AM))
-			var/mob/M = AM
-			if(!iscarbon(src))
-				M.LAssailant = null
-			else
-				M.LAssailant = usr
+	// If we're pulling something then drop what we're currently pulling and pull this instead.
+	if(pulling)
+		// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
+		if(AM == pulling)
+			return
+		stop_pulling()
+
+	pulling = AM
+	AM.pulledby = src
+
+	update_pull_hud_icon()
+
+	if(ismob(AM))
+		var/mob/M = AM
+		if(!iscarbon(src))
+			M.LAssailant = null
+		else
+			M.LAssailant = usr
 
 /mob/verb/stop_pulling()
-
 	set name = "Stop Pulling"
 	set category = "IC"
 
@@ -604,7 +614,7 @@ var/next_mob_id = 0
 			else
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
-				stat("Subsystems:", "[round(Master.subsystem_cost, 0.001)]ds")
+				stat("Subsystems:", "[round(Master.subsystem_cost, 0.01)]ds")
 				stat(null)
 				for(var/datum/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
@@ -773,7 +783,7 @@ var/next_mob_id = 0
 		update_canmove()
 
 /mob/proc/Weaken(amount, ignore_canweaken = 0)
-	if(status_flags & CANWEAKEN || ignore_canweaken)
+	if((status_flags & CANWEAKEN) || ignore_canweaken)
 		weakened = max(max(weakened,amount),0)
 		update_canmove()	//updates lying, canmove and icons
 
@@ -782,8 +792,8 @@ var/next_mob_id = 0
 		weakened = max(amount,0)
 		update_canmove()	//updates lying, canmove and icons
 
-/mob/proc/AdjustWeakened(amount)
-	if(status_flags & CANWEAKEN)
+/mob/proc/AdjustWeakened(amount, ignore_canweaken = 0)
+	if((status_flags & CANWEAKEN) || ignore_canweaken)
 		weakened = max(weakened + amount,0)
 		update_canmove()	//updates lying, canmove and icons
 
@@ -990,38 +1000,9 @@ var/next_mob_id = 0
 					obj.update_explanation_text()
 	return 1
 
-/mob/living/carbon/fully_replace_character_name(oldname,newname)
-	..()
-	if(dna)
-		dna.real_name = real_name
-
-/mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
-	..()
-	if(oldname != real_name)
-		if(eyeobj)
-			eyeobj.name = "[newname] (AI Eye)"
-
-		// Notify Cyborgs
-		for(var/mob/living/silicon/robot/Slave in connected_robots)
-			Slave.show_laws()
-
-/mob/living/silicon/robot/fully_replace_character_name(oldname,newname)
-	..()
-	if(oldname != real_name)
-		notify_ai(3, oldname, newname)
-	if(camera)
-		camera.c_tag = real_name
-	custom_name = newname
-
 //Updates data_core records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)
 	return
-
-/mob/living/carbon/human/replace_records_name(oldname,newname) // Only humans have records right now, move this up if changed.
-	for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
-		var/datum/data/record/R = find_record("name", oldname, L)
-		if(R)
-			R.fields["name"] = newname
 
 /mob/proc/replace_identification_name(oldname,newname)
 	var/list/searching = GetAllContents()
@@ -1047,19 +1028,31 @@ var/next_mob_id = 0
 					break
 				search_pda = 0
 
-/mob/living/silicon/ai/replace_identification_name(oldname,newname)
-	if(aiPDA)
-		aiPDA.owner = newname
-		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"
-
-
 /mob/proc/update_stat()
 	return
 
 /mob/proc/update_health_hud()
 	return
 
-
-
-
-
+/mob/living/on_varedit(modified_var)
+	switch(modified_var)
+		if("weakened")
+			SetWeakened(weakened)
+		if("stunned")
+			SetStunned(stunned)
+		if("paralysis")
+			SetParalysis(paralysis)
+		if("sleeping")
+			SetSleeping(sleeping)
+		if("eye_blind")
+			set_blindness(eye_blind)
+		if("eye_damage")
+			set_eye_damage(eye_damage)
+		if("eye_blurry")
+			set_blurriness(eye_blurry)
+		if("ear_deaf")
+			setEarDamage(-1, ear_deaf)
+		if("ear_damage")
+			setEarDamage(ear_damage, -1)
+		if("maxHealth")
+			updatehealth()

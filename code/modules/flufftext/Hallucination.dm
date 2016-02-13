@@ -431,7 +431,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(20))
-						my_target.set_blurriness(max(my_target.eye_blurry,3))
+						my_target.blur_eyes(3)
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)

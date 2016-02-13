@@ -46,8 +46,6 @@
 	conduction_coefficient = initial(conduction_coefficient) * C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
-	var/turf/T = loc
-	T.contents += contents
 	beaker = null
 	return ..()
 
@@ -128,7 +126,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
-	container_resist()
+	container_resist(user)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
@@ -143,13 +141,11 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/user)
-	usr << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot.</span>"
+	user << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>"
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
-	addtimer(src, "resist_open", 300, FALSE, user)
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/resist_open(mob/user)
-	if(occupant && (user in src)) // Check they're still here.
-		open_machine()
+	if(do_after(user, 300))
+		if(occupant == user) // Check they're still here.
+			open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
 	..()
@@ -256,3 +252,15 @@
 				beaker = null
 				. = TRUE
 	update_icon()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
+	return //we don't see the pipe network while inside cryo.
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
+	user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/can_crawl_through()
+	return //can't ventcrawl in or out of cryo.
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
+	return 0 //you can't see the pipe network when inside a cryo cell.

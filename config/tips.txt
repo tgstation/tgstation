@@ -16,7 +16,6 @@ The resist button will allow you to resist out of handcuffs, being buckled to a 
 You can move an item out of the way by dragging it and then clicking on an adjacent tile with an empty hand.
 You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon.
 Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
-Your emergency oxygen tank delivers 21 kPa by default, which is more air than you need to survive! Click the tank in an open hand to adjust the pressure.
 Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
 There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
 Crates can be booby-trapped by adding wire, shocking anyone who tries to open them.

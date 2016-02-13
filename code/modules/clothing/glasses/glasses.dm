@@ -10,9 +10,9 @@
 			if(H.glasses == src)
 				H << "<span class='danger'>The [src] overloads and blinds you!</span>"
 				H.flash_eyes(visual = 1)
-				H.set_blindness(3)
-				H.set_blurriness(5)
-				H.adjust_eye_stat(5)
+				H.blind_eyes(3)
+				H.blur_eyes(5)
+				H.adjust_eye_damage(5)
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
