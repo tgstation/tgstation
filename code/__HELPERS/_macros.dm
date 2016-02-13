@@ -131,6 +131,10 @@
 
 #define isdeathsquad(H) (H.mind in ticker.mode.deathsquads)
 
+
+#define ishulk(H) (M_HULK in H.mutations)
+
+
 //Macro for AREAS!
 
 #define isspace(A) (A.type == /area)

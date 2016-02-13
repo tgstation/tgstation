@@ -755,6 +755,7 @@
 #include "code\game\objects\structures\barricade.dm"
 #include "code\game\objects\structures\barsign.dm"
 #include "code\game\objects\structures\bedsheet_bin.dm"
+#include "code\game\objects\structures\cage.dm"
 #include "code\game\objects\structures\catwalk.dm"
 #include "code\game\objects\structures\coatrack.dm"
 #include "code\game\objects\structures\displaycase.dm"
