@@ -335,7 +335,7 @@
 		user.drop_item()
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
-		speak_chance *= 2
+		speak_chance = 100 - (0.7 * (100 - speak_chance)) // Chance to NOT talk decays exponentially
 		user << "<span class='notice'>[src] eagerly devours the cracker.</span>"
 	..()
 	return
