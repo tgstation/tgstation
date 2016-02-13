@@ -266,6 +266,14 @@
 	icon_state = "lingspacehelmet"
 	body_parts_covered = HEAD
 	flags = NODROP
+
+/obj/item/clothing/suit/security/officer/russian
+	name = "russian officer's jacket"
+	desc = "This jacket is for those special occasions when a russian officer isn't required to wear their armor."
+	icon_state = "officertanjacket"
+	item_state = "officertanjacket"
+	body_parts_covered = CHEST|ARMS
+
 /*
  * Misc
  */

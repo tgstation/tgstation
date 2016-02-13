@@ -50,6 +50,13 @@
 	max_ammo = 5
 	multiple_sprites = 1
 
+/obj/item/ammo_box/n762
+	name = "ammo box (7.62x38mmR)"
+	icon_state = "10mmbox"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/n762
+	max_ammo = 14
+
 /obj/item/ammo_box/foambox
 	name = "ammo box (Foam Darts)"
 	icon = 'icons/obj/guns/toy.dmi'
