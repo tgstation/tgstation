@@ -8,10 +8,11 @@
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 15
+	var/popped = 0
 	var/datum/gas_mixture/air_contents = null
 
 /obj/item/latexballon/proc/blow(obj/item/weapon/tank/tank)
-	if (icon_state == "latexballoon_bursted")
+	if(popped)
 		return
 	src.air_contents = tank.remove_air_volume(3)
 	icon_state = "latexballoon_blow"
@@ -25,6 +26,7 @@
 	playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
 	icon_state = "latexballoon_bursted"
 	item_state = "lgloves"
+	popped = 1
 	loc.assume_air(air_contents)
 
 /obj/item/latexballon/ex_act(severity)
