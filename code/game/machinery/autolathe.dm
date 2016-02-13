@@ -119,8 +119,9 @@
 			"You hear the chatter of a floppy drive.")
 		busy = 1
 		var/obj/item/weapon/disk/design_disk/D = O
-		if(do_after(user, 14.4, target = src))
+		if(D.blueprint && do_after(user, 14.4, target = src))
 			files.AddDesign2Known(D.blueprint)
+			say("New design added: [D.blueprint.name].")
 		
 		busy = 0
 		return
