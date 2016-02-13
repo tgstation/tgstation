@@ -1,0 +1,4 @@
+author: Buggy123
+delete-after: True
+changes: 
+  - rscadd: "You can now build cable coils using the autolathe."
