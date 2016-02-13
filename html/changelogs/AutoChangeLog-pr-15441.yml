@@ -1,5 +1,0 @@
-author: phil235
-delete-after: True
-changes: 
-  - rscadd: "Brains can no longer be blinded."
-  - bugfix: "Fixes brain being immortal. They are immune to everything but melee weapon attacks. Brains not inside a MMI can now be attacked just like MMIs. Damaged brain can't be put into a robot, they can still be put inside a brainless humanoid corpse and cloned, but deffibing the corpse always fails (can't revive someone with a brain beaten to a pulp)."

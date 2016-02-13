@@ -1,4 +1,0 @@
-author: Fox McCloud
-delete-after: True
-changes: 
-  - bugfix: "Fixes the sleeping carp martial arts grab not being an instant aggressive grab"
