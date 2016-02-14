@@ -32,7 +32,7 @@
 	desc = "Skip making a contract by hand, just do it by magic."
 	invocation_type = "whisper"
 	invocation = "Just sign on the dotted line."
-	include_user = 1
+	include_user = 0
 	range = 5
 	clothes_req = 0
 
@@ -42,10 +42,28 @@
 	action_icon_state = "spell_default" //TODO: set icon
 
 /obj/effect/proc_holder/spell/targeted/summon_contract/cast(list/targets, mob/user = usr)
+	var/contractTypeName = input(user, "What type of contract?") in list ("Power", "Wealth", "Prestige", "Magic", "Revive", "Knowledge")
+	var/contractType = CONTRACT_POWER
+	switch(contractTypeName)
+		if("Power")
+			contractType = CONTRACT_POWER
+		if("Wealth")
+			contractType = CONTRACT_WEALTH
+		if("Prestige")
+			contractType = CONTRACT_PRESTIGE
+		if("Magic")
+			contractType = CONTRACT_MAGIC
+		if("Revive")
+			contractType = CONTRACT_REVIVE
+		if("Knowledge")
+			contractType = CONTRACT_KNOWLEDGE
 	for(var/mob/living/carbon/C in targets)
 		if(user.drop_item())
-			var/obj/item/weapon/paper/contract/infernal/contract = new(user.loc, C, CONTRACT_POWER, user)
-			C.put_in_hands(contract)
+			var/obj/item/weapon/paper/contract/infernal/contract = new(user.loc, C, contractType, user)
+			if(contractType == CONTRACT_REVIVE)
+				user.put_in_hands(contract)
+			else
+				C.put_in_hands(contract)
 
 
 /obj/effect/proc_holder/spell/dumbfire/fireball/demonic
