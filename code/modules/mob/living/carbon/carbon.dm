@@ -173,7 +173,7 @@
 		for(var/obj/effect/proc_holder/spell/S in mind.spell_list)
 			if (!istype(S, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt))
 				S.charge_counter = -200
-			spawn (200)
+			spawn (600)
 				if (!istype(S, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt))
 					S.charge_counter = 0
 				

@@ -243,7 +243,7 @@
 	if(M.mind && M.mind.demoninfo && M.mind.demoninfo.banetype == BANESALT)
 		for(var/obj/effect/proc_holder/spell/S in M.mind.spell_list)
 			S.charge_counter = -10
-		sleep(600)
+		sleep(200)
 		for(var/obj/effect/proc_holder/spell/S in M.mind.spell_list)
 			S.charge_counter = 0
 	..()
