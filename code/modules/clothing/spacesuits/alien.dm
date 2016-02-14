@@ -421,3 +421,23 @@
 	item_state = "vox-pressure-security"
 	desc = "A very alien-looking helmet for Nanotrasen-hired Vox. This one is for shitcurity."
 */
+
+//Grey spacesuit
+
+/obj/item/clothing/head/helmet/space/grey
+	name = "grey pressure helmet"
+	icon_state = "grey-fishbowl-helm"
+	item_state = "grey-fishbowl-helm"
+	desc = "A strange globe-like structure. Despite looking like a decent glare would break it, it is surprisingly durable. Emough thinking room for a Grey."
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 10, bio = 100, rad = 50)
+	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	heat_conductivity = SPACESUIT_HEAT_CONDUCTIVITY
+	species_restricted = list("Grey")
+
+/obj/item/clothing/suit/space/grey
+	name = "grey pressure suit"
+	icon_state = "grey-pressure-suit"
+	item_state = "grey-pressure-suit"
+	desc = "A strange suit comprised of a series of tubes. Despite looking like a decent wind could tear it apart, it is surprisingly durable. Too thin for anything but a Grey to wear it."
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 10, bio = 100, rad = 50)
+	species_restricted = list("Grey")

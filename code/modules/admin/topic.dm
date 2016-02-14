@@ -3062,6 +3062,31 @@
 						hardcore_mode = 0
 						to_chat(world, "<h5><span class='danger'>Hardcore mode has been disabled</span></h5>")
 						to_chat(world, "<span class='info'>Starvation will no longer kill player-controlled characters.</span>")
+			if("hostile_infestation")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","HI")
+				message_admins("[key_name_admin(usr)] has triggered an infestation of hostile creatures.", 1)
+				new /datum/event/hostile_infestation
+			if("mass_hallucination")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","MH")
+				message_admins("[key_name_admin(usr)] made the whole crew trip balls.", 1)
+				new /datum/event/mass_hallucination
+			if("meaty_gores")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","ODF")
+				message_admins("[key_name_admin(usr)] has sent the station careening through a cloud of gore.", 1)
+				new /datum/event/thing_storm/meaty_gore
+			if("silent_meteors")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","SILM")
+				message_admins("[key_name_admin(usr)] has spawned meteors without a command alert.", 1)
+				new /datum/event/meteor_shower/meteor_quiet
+			if("mass_drunk")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","MASD")
+				message_admins("[key_name_admin(usr)] gave the station a vodka enema.", 1)
+				new /datum/event/mass_drunk
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if(ok)

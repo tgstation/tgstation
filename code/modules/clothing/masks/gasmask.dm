@@ -12,6 +12,7 @@
 	siemens_coefficient = 0.9
 	species_fit = list("Vox")
 	body_parts_covered = FACE
+	pressure_resistance = ONE_ATMOSPHERE
 	var/stage = 0
 
 

@@ -605,7 +605,7 @@
 	icon_state = "shizunewinter"
 	item_state = "shizunewinter"
 	_color = "shizunewinter"
-	heat_conductivity = FULL_TORSO|ARMS
+	body_parts_covered = FULL_TORSO|ARMS
 
 /obj/item/clothing/under/casualwear
 	name = "spring casualwear"
@@ -613,13 +613,14 @@
 	icon_state = "shizunenormal"
 	item_state = "shizunenormal"
 	_color = "shizunenormal"
-	heat_conductivity = FULL_TORSO|ARMS
+	body_parts_covered = FULL_TORSO|ARMS
 
 /obj/item/clothing/under/keyholesweater
 	name = "keyhole sweater"
 	desc = "What is the point of this, anyway?"
 	icon_state = "keyholesweater"
 	item_state = "keyholesweater"
+	_color = "keyholesweater"
 	body_parts_covered = FULL_TORSO|ARMS
 
 /obj/item/clothing/under/casualhoodie

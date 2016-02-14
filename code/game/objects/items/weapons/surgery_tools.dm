@@ -31,11 +31,11 @@
 
 /obj/item/weapon/retractor/manager
 	name = "surgical incision manager"
-	desc = "A true extension of the surgeon's body, this marvel instantly cuts the organ, clamps any bleeding, and retract the skin, allowing for the immediate commencement of therapeutic steps."
+	desc = "A true extension of the surgeon's body, this marvel instantly cuts the organ, clamps any bleeding, and retracts the skin, allowing for the immediate commencement of therapeutic steps."
 	icon_state = "incisionmanager"
 	item_state = "incisionmanager"
 	force = 7.5
-	surgery_speed = 0.75
+	surgery_speed = 0.5
 	origin_tech = "materials=5;biotech=5;engineering=4"
 
 /obj/item/weapon/retractor/manager/New()
@@ -399,7 +399,7 @@ LOOK FOR SURGERY.DM*/
 	flags = FPRINT
 	siemens_coefficient = 1
 	force = 15.0
-	w_class = 1.0
+	w_class = 3.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 
@@ -692,7 +692,7 @@ LOOK FOR SURGERY.DM*/
 	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions and built-in cautery. This one looks basic and could be improved."
 	icon_state = "scalpel_laser1"
 	item_state = "laserscalpel1"
-	surgery_speed = 0.8
+	surgery_speed = 0.6
 
 /obj/item/weapon/scalpel/laser/tier1/New()
 	..()
@@ -704,7 +704,7 @@ LOOK FOR SURGERY.DM*/
 	icon_state = "scalpel_laser2"
 	item_state = "laserscalpel2"
 	force = 15.0
-	surgery_speed = 0.5
+	surgery_speed = 0.4
 
 /obj/item/weapon/scalpel/laser/tier2/New()
 	..()
@@ -723,7 +723,7 @@ LOOK FOR SURGERY.DM*/
 	siemens_coefficient = 1
 	sharpness = 1
 	force = 15.0
-	w_class = 1.0
+	w_class = 3.0
 	throwforce = 9.0
 	throw_speed = 3
 	throw_range = 5
@@ -897,6 +897,7 @@ LOOK FOR SURGERY.DM*/
 	item_state = "bonegel"
 	force = 0
 	throwforce = 1.0
+	w_class = 1.0
 
 	suicide_act(mob/user)
 		to_chat(viewers(user), "<span class='danger'>[user] is eating the [src.name]! It looks like \he's  trying to commit suicide!</span>")//Don't eat glue kids.
@@ -911,6 +912,7 @@ LOOK FOR SURGERY.DM*/
 	item_state = "fixovein"
 	force = 0
 	throwforce = 1.0
+	w_class = 1.0
 	origin_tech = "materials=1;biotech=3"
 	var/usage_amount = 10
 
@@ -921,6 +923,7 @@ LOOK FOR SURGERY.DM*/
 	item_state = "bonesetter"
 	force = 8.0
 	throwforce = 9.0
+	w_class = 1.0
 	throw_speed = 3
 	throw_range = 5
 	attack_verb = list("attacked", "hit", "bludgeoned")

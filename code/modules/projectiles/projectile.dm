@@ -55,6 +55,8 @@ var/list/impact_master = list()
 	var/agony = 0
 	var/jittery = 0
 
+	hitsound = null
+
 	var/destroy = 0	//if set to 1, will destroy wall, tables and racks on impact (or at least, has a chance to)
 
 	var/reflected = 0
@@ -109,6 +111,7 @@ var/list/impact_master = list()
 	L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 	if(jittery)
 		L.Jitter(jittery)
+	playsound(loc, hitsound, 35, 1)
 	return 1
 
 /obj/item/projectile/proc/check_fire(var/mob/living/target as mob, var/mob/living/user as mob)  //Checks if you can hit them or not.

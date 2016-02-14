@@ -19,7 +19,7 @@
 
 		if(istype(M,/mob/living/simple_animal/chicken) && M.dna)
 			var/datum/dna/chicken_dna = M.dna
-			if(chicken_dna.SE[54] < 800)
+			if(chicken_dna.SE[DNA_SE_LENGTH] < 800)
 				chicken_dna.chicken2vox(M,chicken_dna)//havinagiggle.tiff
 
 		domutation(gene, M, connected, flags)

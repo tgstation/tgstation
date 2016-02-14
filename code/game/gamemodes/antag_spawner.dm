@@ -129,6 +129,9 @@
 	M.mind.objectives += new_objective
 	ticker.mode.traitors += M.mind
 	M.mind.special_role = "apprentice"
+	for(var/datum/organ/internal/O in M.organs)
+		if(O.robotic == 2)
+			O.robotic = 0
 
 /obj/item/weapon/antag_spawner/contract/equip_antag(mob/target as mob)
 	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), slot_ears)

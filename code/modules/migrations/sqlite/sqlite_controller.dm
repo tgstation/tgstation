@@ -67,7 +67,8 @@ CREATE TABLE IF NOT EXISTS [TABLE_NAME] (
 	return FALSE
 
 /datum/migration_controller/sqlite/hasTable(var/tableName)
-	return hasResult("SELECT name FROM sqlite_master WHERE type='[tableName]'")
+	var/exists = hasResult("SELECT name FROM sqlite_master WHERE type='table' AND name='[tableName]';")
+	return exists
 
 #ifdef DEBUG_SQLITE_MIGCON
 #undef _DEBUG

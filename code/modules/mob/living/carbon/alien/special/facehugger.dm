@@ -46,6 +46,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	followtarget()
 
 /obj/item/clothing/mask/facehugger/proc/findtarget()
+	if(!real) return
 	for(var/mob/living/carbon/human/T in hearers(src,4))
 		if(!CanHug(T))
 			continue
@@ -54,16 +55,21 @@ var/const/MAX_ACTIVE_TIME = 400
 			if(get_dist(src.loc, T.loc) <= 4)
 				target = T
 /obj/item/clothing/mask/facehugger/proc/followtarget()
-	if(attached == 0 && stat == 0 && nextwalk <= world.time)
+	if(!real) return // Why are you trying to path stupid toy
+	if(!target || target.stat == DEAD || target.stat == UNCONSCIOUS || target.status_flags & XENO_HOST)
+		findtarget()
+		return
+	if(src.loc && src.loc == get_turf(src) && attached == 0 && stat == 0 && nextwalk <= world.time)
 		nextwalk = world.time + walk_speed
 		var/dist = get_dist(src.loc, target.loc)
+		if(dist > 4)
+			return //We'll let the facehugger do nothing for a bit, since it's fucking up.
 		var/obj/item/mask = target.get_body_part_coverage(MOUTH)
-		if(target == null || target.stat == DEAD || target.stat == UNCONSCIOUS || dist > 4 || target.status_flags & XENO_HOST)
-			findtarget()
-			return
-		else if(mask && istype(mask, /obj/item/clothing/mask/facehugger))
-			findtarget()
-			return
+		if(mask && istype(mask, /obj/item/clothing/mask/facehugger))
+			var/obj/item/clothing/mask/facehugger/F = mask
+			if(F.sterile) // Toy's won't prevent real huggers
+				findtarget()
+				return
 		else
 			step_towards(src, target, 0)
 			if(dist <= 1)
@@ -126,7 +132,8 @@ var/const/MAX_ACTIVE_TIME = 400
 /obj/item/clothing/mask/facehugger/New()
 	if(aliens_allowed)
 		..()
-		processing_objects.Add(src)
+		if(real) // Lamarr still tries to couple with heads, but toys won't
+			processing_objects.Add(src)
 
 	else
 		qdel(src)
@@ -216,16 +223,24 @@ var/const/MAX_ACTIVE_TIME = 400
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/obj/item/mouth_protection = H.get_body_part_coverage(MOUTH)
+		if(!real && mouth_protection)
+			return //Toys really shouldn't be forcefully removing gear
+		var/obj/item/clothing/mask/facehugger/hugger = H.wear_mask
+		if(istype(hugger) && !hugger.sterile && !src.sterile) // Lamarr won't fight over faces and neither will normal huggers.
+			return
+			
 		if(mouth_protection && mouth_protection != H.wear_mask) //can't be protected with your own mask, has to be a hat
 			stat_collection.xeno.proper_head_protection++
-			H.visible_message("<span class='danger'>\The [src] smashes against [H]'s [mouth_protection], and rips it off in the process!</span>")
-			H.drop_from_inventory(mouth_protection)
-			if(prob(75))
-				Die()
+			if(prob(50)) // Temporary balance change, all mouth-covering hats will be more effective
+				H.visible_message("<span class='danger'>\The [src] smashes against [H]'s [mouth_protection], and rips it off in the process!</span>")
+				H.drop_from_inventory(mouth_protection)
 			else
 				H.visible_message("<span class='danger'>\The [src] bounces off of the [mouth_protection]!</span>")
-				GoIdle(15)
-			return
+				if(prob(75))
+					Die()
+				else
+					GoIdle(15)
+					return
 
 	if(iscarbon(M))
 		var/mob/living/carbon/target = L

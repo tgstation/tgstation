@@ -1,0 +1,45 @@
+<!-- 
+Title: SCP 294
+Used In File(s): /obj/machinery/chem_dispenser/scp_294
+ -->
+<div class="item">
+	<div class="itemLabel">
+		Recipient Contents
+	</div>
+	<div class="itemContent">
+		{{:helper.link(data.glass ? 'Eject Glass' : 'Eject Recipient', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled', 'floatRight')}}
+		{{:helper.link('Input', 'circle-arrow-s', {'input' : 1}, data.isBeakerLoaded ? null : 'disabled', 'floatRight')}}
+	</div>
+</div>
+
+<div class="statusDisplay" style="min-height: 180px;">
+	<div class="item">
+		<div class="itemContent" style="width: 100%;">
+			{{if data.isBeakerLoaded}}
+				<b>Volume:&nbsp;{{:data.beakerCurrentVolume}}&nbsp;/&nbsp;{{:data.beakerMaxVolume}}</b><br>
+				{{for data.beakerContents}}
+					<span class="highlight">{{:value.volume}} units of {{:value.name}}</span><br>
+				{{empty}}
+					<span class="bad">
+						{{if data.glass}}
+							Glass
+						{{else}}
+							Recipient
+						{{/if}}
+						 is empty
+					</span>
+				{{/for}}
+			{{else}}
+				<span class="average"><i>
+					No 
+					{{if data.glass}}
+						Glass
+					{{else}}
+						Recipient
+					{{/if}} 
+					loaded
+				</i></span>
+			{{/if}}
+		</div>
+	</div>
+</div>

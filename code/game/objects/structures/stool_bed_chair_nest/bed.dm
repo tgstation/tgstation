@@ -65,7 +65,6 @@
 			"<span class='notice'>[M] unbuckled \himself!</span>",\
 			"You unbuckle yourself from \the [src].",\
 			"You hear metal clanking.")
-			
 	playsound(get_turf(src), 'sound/misc/buckle_unclick.ogg', 50, 1)
 	unlock_atom(M)
 

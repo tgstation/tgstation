@@ -115,14 +115,14 @@ var/global/list/unstackable_pipes = list(PIPE_LAYER_MANIFOLD)
 /obj/item/pipe/singularity_act()
 	returnToPool(src)
 	return 2
-
+var/list/bent_dirs = list(NORTH|SOUTH, WEST|EAST)
 /obj/item/pipe/New(var/loc, var/pipe_type as num, var/dir as num, var/obj/machinery/atmospherics/make_from = null)
 	..()
 	if (make_from)
 		src.dir = make_from.dir
 		src.pipename = make_from.name
 		var/is_bent
-		if  (make_from.initialize_directions in list(NORTH|SOUTH, WEST|EAST))
+		if  (make_from.initialize_directions in bent_dirs)
 			is_bent = 0
 		else
 			is_bent = 1
@@ -291,7 +291,9 @@ var/global/list/nlist = list( \
 // place the pipe on the turf, setting pipe level to 1 (underfloor) if the turf is not intact
 
 // rotate the pipe item clockwise
-
+var/list/straight_pipes = list(PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE)
+var/list/bent_pipes = list(PIPE_SIMPLE_BENT, PIPE_HE_BENT, PIPE_INSULATED_BENT)
+var/list/manifold_pipes = list(PIPE_MANIFOLD4W, PIPE_INSUL_MANIFOLD4W)
 /obj/item/pipe/verb/rotate()
 	set category = "Object"
 	set name = "Rotate Pipe"
@@ -302,19 +304,19 @@ var/global/list/nlist = list( \
 
 	src.dir = turn(src.dir, -90)
 
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
+	if (pipe_type in straight_pipes)
 		dir=rotate_pipe_straight(dir)
-	else if (pipe_type in list(PIPE_MANIFOLD4W, PIPE_INSUL_MANIFOLD4W))
+	else if (pipe_type in manifold_pipes)
 		dir = 2
 	//src.pipe_dir = get_pipe_dir()
 	return
 
 /obj/item/pipe/Move()
 	..()
-	if ((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_HE_BENT, PIPE_INSULATED_BENT)) \
+	if ((pipe_type in bent_pipes) \
 		&& (src.dir in cardinal))
 		src.dir = src.dir|turn(src.dir, 90)
-	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
+	else if (pipe_type in straight_pipes)
 		dir=rotate_pipe_straight(dir)
 	return
 
@@ -356,6 +358,7 @@ var/global/list/nlist = list( \
 			return flip
 	return 0
 
+var/list/heat_pipes = list(PIPE_HE_STRAIGHT, PIPE_HE_BENT, PIPE_JUNCTION)
 /obj/item/pipe/proc/get_pdir() //endpoints for regular pipes
 
 
@@ -363,7 +366,7 @@ var/global/list/nlist = list( \
 //	var/cw = turn(dir, -90)
 //	var/acw = turn(dir, 90)
 
-	if (!(pipe_type in list(PIPE_HE_STRAIGHT, PIPE_HE_BENT, PIPE_JUNCTION)))
+	if (!(pipe_type in heat_pipes))
 		return get_pipe_dir()
 	switch(pipe_type)
 		if(PIPE_HE_STRAIGHT,PIPE_HE_BENT)
@@ -399,9 +402,9 @@ var/global/list/nlist = list( \
 		return ..()
 	if (!isturf(src.loc))
 		return 1
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
+	if (pipe_type in straight_pipes)
 		dir=rotate_pipe_straight(dir)
-	else if (pipe_type in list(PIPE_MANIFOLD4W, PIPE_INSUL_MANIFOLD4W))
+	else if (pipe_type in manifold_pipes)
 		dir = 2
 	var/pipe_dir = get_pipe_dir()
 
@@ -420,6 +423,7 @@ var/global/list/nlist = list( \
 
 		if(PIPE_HE_STRAIGHT, PIPE_HE_BENT)
 			P=new/obj/machinery/atmospherics/pipe/simple/heat_exchanging(loc)
+			investigation_log(I_ATMOS,"was created by [user]/([user.ckey]) at [formatJumpTo(loc)].")
 
 		if(PIPE_CONNECTOR)		// connector
 			P=new/obj/machinery/atmospherics/unary/portables_connector(loc)
@@ -432,6 +436,7 @@ var/global/list/nlist = list( \
 
 		if(PIPE_JUNCTION)
 			P=new /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction( src.loc )
+			investigation_log(I_ATMOS,"was created by [user]/([user.ckey]) at [formatJumpTo(loc)].")
 
 		if(PIPE_UVENT)		//unary vent
 			P=new /obj/machinery/atmospherics/unary/vent_pump( src.loc )
