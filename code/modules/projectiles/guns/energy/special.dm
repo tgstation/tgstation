@@ -108,6 +108,105 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	projectile_type = "/obj/item/projectile/animate"
 	charge_cost = 100
 
+/obj/item/weapon/gun/energy/staff/destruction_wand
+	name = "wand of destruction"
+	desc = "A wand imbued with raw destructive force, capable of erasing nearly anything from existence."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "nullrod"
+	item_state = "nullrod"
+	flags = FPRINT
+	slot_flags = SLOT_BELT
+	force = 15
+	throw_speed = 1
+	throw_range = 4
+	throwforce = 10
+	w_class = 1
+	charge_cost = 1000
+	var/lifekiller = 0
+	var/power_notice = 0
+
+/obj/item/weapon/gun/energy/staff/destruction_wand/lifekiller
+	lifekiller = 1
+
+/obj/item/weapon/gun/energy/staff/destruction_wand/process()
+	..()
+	if(power_supply.charge == power_supply.maxcharge && !lifekiller && !power_notice)
+		if(istype(src.loc, /mob/living/carbon))
+			var/mob/living/carbon/C = src.loc
+			to_chat(C, "<span class='notice'>[src] pulses, full of energy.</span>")
+			power_notice = 1
+	else if(power_supply.charge < power_supply.maxcharge)
+		power_notice = 0
+
+/obj/item/weapon/gun/energy/staff/destruction_wand/attack(atom/target as mob|obj|turf|area, mob/living/user as mob, def_zone)
+	if(target == user && !mouthshoot)
+		if(!(power_supply.charge == charge_cost || lifekiller))
+			if(!lifekiller)
+				to_chat(user, "<span class='notice'>[src] fizzles quietly.</span>")
+			else
+				to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
+			return
+		mouthshoot = 1
+		target.visible_message("<span class='warning'>[user] turns [src] on themself, ready to invoke its power...</span>")
+		if(!do_after(user,src, 40))
+			target.visible_message("<span class='notice'>[user] decided life was worth living</span>")
+			mouthshoot = 0
+			return
+		user.visible_message("<span class = 'warning'>[user] destroys themself!</span>")
+		playsound(user, fire_sound, 50, 1)
+		user.gib()
+		power_supply.use(charge_cost)
+		mouthshoot = 0
+		return
+	else
+		src.Fire(target,user,0,0,0)
+
+/obj/item/weapon/gun/energy/staff/destruction_wand/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0, struggle = 0)
+	if(power_supply.charge == charge_cost || lifekiller)
+		if(!istype(target, /turf/simulated/wall) && !istype(target, /turf/simulated/floor))
+			if(!istype(target, /mob/living))
+				if(!target.singularity_act())
+					to_chat(user, "<span class='notice'>This entity is too powerful to be destroyed!</span>")
+					return
+			else if(target.flags & INVULNERABLE)
+				to_chat(user, "<span class='notice'>This entity is too powerful to be destroyed!</span>")
+				return
+		if(istype(target, /mob/living))
+			if(!lifekiller)
+				to_chat(user, "<span class='notice'>[src] fizzles quietly.</span>")
+				return
+			var/mob/living/L = target
+			log_attack("[user.name] ([user.ckey]) gibbed [target] [ismob(target) ? "([target:ckey])" : ""] with [src] at ([target.x],[target.y],[target.z])[struggle ? " due to being disarmed." :""]" )
+			L.gib()
+			user.visible_message("<span class='warning'>[user] destroys [target] with [src]!</span>", \
+								 "<span class='warning'>You destroy [target] with [src]!</span>")
+			playsound(user, fire_sound, 50, 1)
+			power_supply.use(charge_cost)
+		else if(istype(target, /turf))
+			if(istype(target, /turf/simulated/wall))
+				user.visible_message("<span class='warning'>[user] erases the [target.name] with [src]!</span>", \
+									 "<span class='warning'>You erase the [target.name] with [src]!</span>")
+				playsound(user, fire_sound, 50, 1)
+				power_supply.use(charge_cost)
+				if(istype(target, /turf/simulated/wall/r_wall))
+					target.ex_act(1.0)
+				else
+					var/turf/simulated/wall/W = target
+					W.dismantle_wall(1,1)
+			else if(istype(target, /turf/simulated/floor))
+				to_chat(user, "<span class='notice'>[src] fizzles quietly.</span>")
+				return
+			else
+				return
+		else
+			user.visible_message("<span class='warning'>[user] erases the [target.name] with [src]!</span>", \
+								 "<span class='warning'>You erase the [target.name] with [src]!</span>")
+			playsound(user, fire_sound, 50, 1)
+			power_supply.use(charge_cost)
+			qdel(target)
+	else
+		to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
+
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
