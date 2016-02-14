@@ -5065,7 +5065,7 @@
 "bTu" = (/obj/structure/bed/chair/office/dark,/turf/simulated/floor/wood,/area/library)
 "bTv" = (/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/simulated/floor/wood{icon_state = "wood-broken"},/area/library)
 "bTw" = (/obj/machinery/computer/security/telescreen/entertainment{pixel_x = 30; pixel_y = 0},/obj/machinery/photocopier,/turf/simulated/floor/wood,/area/library)
-"bTx" = (/obj/structure/table/wood,/obj/item/weapon/paper_bin{pixel_x = -3; pixel_y = 7},/obj/item/weapon/pen/invisible,/turf/simulated/floor/plasteel{icon_state = "cult"; dir = 2},/area/library)
+"bTx" = (/obj/structure/table/wood,/obj/item/weapon/paper_bin{pixel_x = -3; pixel_y = 7},/obj/item/weapon/pen/invisible,/obj/item/weapon/book/demonomicon,/turf/simulated/floor/plasteel{icon_state = "cult"; dir = 2},/area/library)
 "bTy" = (/obj/item/device/taperecorder{pixel_y = 0},/obj/item/device/camera,/obj/item/device/radio/intercom{pixel_y = -25},/obj/structure/table/wood,/turf/simulated/floor/plasteel{icon_state = "cult"; dir = 2},/area/library)
 "bTz" = (/obj/structure/bookcase{name = "Forbidden Knowledge"},/turf/simulated/floor/plasteel{icon_state = "cult"; dir = 2},/area/library)
 "bTA" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 27},/turf/simulated/floor/plasteel{dir = 4; icon_state = "neutralcorner"},/area/hallway/primary/central)
