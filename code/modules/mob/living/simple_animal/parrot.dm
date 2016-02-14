@@ -880,7 +880,7 @@
 		color = "#EEEE22"
 	else if(rounds_survived == longest_deathstreak)
 		speak += pick("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
-		desc += " The squawks of [rounds_survived * -1] dead parrots ring out in your ears..."
+		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
 		color = "#BB7777"
 	else if(rounds_survived > 0)
 		speak += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
@@ -939,7 +939,7 @@
 	speak_chance = 20
 	status_flags = GODMODE
 	incorporeal_move = 1
-	butcher_results = list(/obj/item/weapon/ectoplasm/ = 1)
+	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 
 /mob/living/simple_animal/parrot/Poly/ghost/New()
 	memory_saved = 1 //At this point nothing is saved
