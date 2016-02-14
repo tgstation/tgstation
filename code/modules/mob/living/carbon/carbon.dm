@@ -708,11 +708,11 @@ var/const/GALOSHES_DONT_HELP = 4
 		reagents.addiction_list = list()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	if(stat == DEAD)
-		dead_mob_list -= src
-		living_mob_list += src
 	var/obj/item/organ/internal/brain/BR = getorgan(/obj/item/organ/internal/brain)
 	if(BR) //can't revive if the mob has no brain
+		if(stat == DEAD)
+			dead_mob_list -= src
+			living_mob_list += src
 		stat = CONSCIOUS
 		BR.damaged_brain = 0 //if the brain itself is damaged we heal it
 	set_blindness(0)
