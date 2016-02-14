@@ -695,7 +695,7 @@
 		user << "<span class='notice'>You press the button on [src].</span>"
 		cooldown = 1
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		src.loc.visible_message("<span class='danger'>\icon[src]Some fun facts about: [demon.name]</span>")
+		src.loc.visible_message("<span class='danger'>\icon[src]Some fun facts about: [demon.truename]</span>")
 		src.loc.visible_message("<span class='danger'>[demon.banelore]</span>")
 		src.loc.visible_message("<span class='danger'>[demon.obligationlore]</span>")
 		src.loc.visible_message("<span class='danger'>[demon.banlore]</span>")

@@ -500,6 +500,13 @@
 		count++
 	return text
 
+/datum/game_mode/proc/printdemoninfo(datum/mind/ply)
+	var/text = "The demon's true name is: [ply.demoninfo.truename]</br>"
+	text += "The demon's bans were:</br>"
+	text += "	[ply.demoninfo.banlore]"
+	text += "	[ply.demoninfo.banelore]"
+	text += "	[ply.demoninfo.obligationlore]"
+
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/game_mode/proc/age_check(client/C)
 	if(get_remaining_days(C) == 0)

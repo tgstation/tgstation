@@ -14,7 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
-#include "_maps\tgstation2.dm"
+#include "_maps\ministation.dm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
@@ -27,6 +27,7 @@
 #include "code\__DEFINES\bots.dm"
 #include "code\__DEFINES\clothing.dm"
 #include "code\__DEFINES\combat.dm"
+#include "code\__DEFINES\contracts.dm"
 #include "code\__DEFINES\flags.dm"
 #include "code\__DEFINES\genetics.dm"
 #include "code\__DEFINES\hud.dm"
@@ -293,7 +294,9 @@
 #include "code\game\gamemodes\cult\runes.dm"
 #include "code\game\gamemodes\cult\talisman.dm"
 #include "code\game\gamemodes\demon\demon.dm"
+#include "code\game\gamemodes\demon\demon_game_mode.dm"
 #include "code\game\gamemodes\demon\demoninfo.dm"
+#include "code\game\gamemodes\demon\objectives.dm"
 #include "code\game\gamemodes\extended\extended.dm"
 #include "code\game\gamemodes\gang\dominator.dm"
 #include "code\game\gamemodes\gang\gang.dm"

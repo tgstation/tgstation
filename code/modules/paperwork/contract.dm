@@ -1,13 +1,3 @@
-#define CONTRACT_POWER 1
-#define CONTRACT_WEALTH 2
-#define CONTRACT_PRESTIGE 3
-#define CONTRACT_MAGIC 4
-#define CONTRACT_SLAVE 5
-#define CONTRACT_REVIVE 6
-#define CONTRACT_KNOWLEDGE 7
-#define CONTRACT_UNWILLING 8
-
-
 /* For employment contracts and demonic contracts */
 
 /obj/item/weapon/paper/contract
@@ -195,6 +185,8 @@
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball(null))
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
+		if(CONTRACT_REVIVE)
+			return -1 // should never happen, but just incase.
 		//if(CONTRACT_SLAVE)
 			//TODO: implement this.
 		//if(CONTRACT_UNWILLING)
@@ -202,5 +194,6 @@
 		//if(CONTRACT_KNOWLEDGE)
 			//TODO: implement this
 	user.hasSoul = 0
-	user.hellbound = 1
-	//owner.soulBounties += user
+	user.hellbound = contractType
+	user.soulOwner = owner.mind
+	owner.mind.demoninfo.soulsOwned += user.mind

@@ -61,3 +61,4 @@
 
 	var/hasSoul = 1
 	var/hellbound = 0
+	var/datum/mind/soulOwner

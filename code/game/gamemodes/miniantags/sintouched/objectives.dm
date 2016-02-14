@@ -1,6 +1,3 @@
-/datum/game_mode
-	var/list/datum/mind/sintouched = list()
-
 /datum/objective/sintouched
 	dangerrating = 5
 	completed = 1

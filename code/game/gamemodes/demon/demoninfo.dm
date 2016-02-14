@@ -11,15 +11,16 @@ var/list/allDemons = list()
 	var/obligationlaw
 	var/banlaw
 	var/banelaw
-	var/name
+	var/truename
 	var/banlore
 	var/banelore
 	var/obligationlore
 	var/banetype
+	var/list/datum/mind/soulsOwned = new
 
 /proc/randomDemonInfo(var/name = randomDemonName())
 	var/datum/demoninfo/demon = new
-	demon.name = name
+	demon.truename = name
 	var/temp = randomdemonbane()
 	demon.banelaw = temp[1]
 	demon.banelore = temp[2]
