@@ -323,7 +323,7 @@
 	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup><br>"
 
 	for(var/v in matching_designs)
-		var/datum/design/D = files.known_designs[v]
+		var/datum/design/D = v
 		if(disabled || !can_build(D))
 			dat += "<span class='linkOff'>[D.name]</span>"
 		else
