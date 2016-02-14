@@ -1248,25 +1248,6 @@
 				update_canmove()
 				update_headlamp()
 
-/mob/living/silicon/robot/update_vision_overlays()
-	if(!client)
-		return
-
-	if(stat == DEAD) //if dead we just remove all vision impairments
-		clear_fullscreens()
-		return
-
-	if(eye_blind)
-		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else
-		clear_fullscreen("blind")
-
-	if(client.eye != src)
-		var/atom/A = client.eye
-		A.get_remote_view_fullscreens(src)
-	else
-		clear_fullscreen("remote_view", 0)
-
 /mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
 	..()
 	if(oldname != real_name)

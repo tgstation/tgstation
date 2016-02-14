@@ -890,17 +890,3 @@ var/list/ai_list = list()
 			AT.get_remote_view_fullscreens(src)
 		else
 			clear_fullscreen("remote_view", 0)
-
-
-/mob/living/silicon/ai/update_vision_overlays()
-	if(!client)
-		return
-
-	if(stat == DEAD) //if dead we just remove all vision impairments
-		clear_fullscreens()
-		return
-
-	if(eye_blind)
-		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else
-		clear_fullscreen("blind")
