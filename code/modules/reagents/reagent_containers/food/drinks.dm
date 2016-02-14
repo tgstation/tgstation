@@ -196,6 +196,9 @@
 	if (!adjacency_flag)
 		return
 
+	if(!reagents)
+		return
+
 	// Attempt to transfer to our glass
 	if (transfer(target, user, can_send = FALSE, can_receive = TRUE))
 		return
@@ -614,6 +617,20 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans
 	vending_cat = "carbonated drinks"
+
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/weapon/wirecutters))
+		to_chat(user, "You cut out the top and bottom of \the [src] with \the [W].")
+		playsound(user, 'sound/items/Wirecutter.ogg', 50, 1)
+		if(src.loc == user)
+			user.drop_item(src, force_drop = 1)
+			var/obj/item/weapon/aluminum_cylinder/I = new (get_turf(user))
+			user.put_in_hands(I)
+			qdel(src)
+		else
+			new /obj/item/weapon/aluminum_cylinder(get_turf(src.loc))
+			qdel(src)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"

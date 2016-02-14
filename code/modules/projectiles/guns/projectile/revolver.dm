@@ -141,6 +141,7 @@
 /obj/item/weapon/gun/projectile/russian/attack_self(mob/user as mob)
 
 	user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
+	playsound(user, 'sound/weapons/revolver_spin.ogg', 50, 1)
 	if(getAmmo() > 0)
 		Spin()
 

@@ -19,6 +19,16 @@
 	. = ..()
 	wheel_overlay = image("icons/obj/objects.dmi", "[icon_state]_overlay", MOB_LAYER + 0.1)
 
+/obj/structure/bed/chair/vehicle/wheelchair/attackby(obj/item/weapon/W, mob/user)
+	if(occupant)
+		return
+	if(istype(W, /obj/item/weapon/gun_barrel))
+		to_chat(user, "You place \the [W] on \the [src].")
+		var/obj/structure/bed/chair/vehicle/wheelchair/wheelchair_assembly/I = new (get_turf(src.loc))
+		I.dir = dir
+		qdel(src)
+		qdel(W)
+
 /obj/structure/bed/chair/vehicle/wheelchair/unlock_atom(var/atom/movable/AM)
 	. = ..()
 	density = 1

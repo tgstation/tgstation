@@ -44,3 +44,9 @@
 	desc = "An artificially made bluespace crystal, it looks delicate."
 	origin_tech = "bluespace=2"
 	blink_range = 4 // Not as good as the organic stuff!
+
+/obj/item/bluespace_crystal/flawless //Specifically for use with the subspace tunneler
+	name = "flawless bluespace crystal"
+	desc = "A glowing bluespace crystal, not much is known about how they work. This one appears to be of particularly high quality."
+	var/infinite = 1 //Infinite uses by default.
+	var/uses = 50 //Can be varedited to any finite number of uses.

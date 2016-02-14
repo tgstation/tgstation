@@ -48,6 +48,19 @@
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
+/obj/item/weapon/wrench/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/weapon/handcuffs/cable) && !istype(src, /obj/item/weapon/wrench/socket))
+		to_chat(user, "<span class='notice'>You wrap the cable restraint around the top of the wrench.</span>")
+		if(src.loc == user)
+			user.drop_item(src, force_drop = 1)
+			var/obj/item/weapon/wrench_wired/I = new (get_turf(user))
+			user.put_in_hands(I)
+		else
+			new /obj/item/weapon/wrench_wired(get_turf(src.loc))
+		qdel(src)
+		qdel(W)
+
 //we inherit a lot from wrench, so we change very little
 /obj/item/weapon/wrench/socket
 	name = "socket wrench"

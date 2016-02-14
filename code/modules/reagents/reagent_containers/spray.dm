@@ -16,11 +16,31 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 	amount_per_transfer_from_this = 10
 	volume = 250
 	possible_transfer_amounts = null
+	var/melted = 0
 
 	var/delay_spraying = TRUE // Whether to delay the next attack after using it
 
 	//! List of things to avoid spraying on close range. TODO Remove snowflake, handle this in every attackby() properly.
 	var/list/ignore_spray_types = list(/obj/item/weapon/storage, /obj/structure/table, /obj/structure/rack, /obj/structure/closet, /obj/structure/sink)
+
+/obj/item/weapon/reagent_containers/spray/attackby(obj/item/weapon/W, mob/user)
+	if(!melted)
+		if(W.is_hot())
+			to_chat(user, "You slightly melt the plastic on the top of \the [src] with \the [W].")
+			melted = 1
+	if(melted)
+		if(istype(W, /obj/item/stack/rods))
+			to_chat(user, "You press \the [W] into the melted plastic on the top of \the [src].")
+			var/obj/item/stack/rods/R = W
+			if(src.loc == user)
+				user.drop_item(src, force_drop = 1)
+				var/obj/item/weapon/gun_assembly/I = new (get_turf(user), "spraybottle_assembly")
+				user.put_in_hands(I)
+			else
+				new /obj/item/weapon/gun_assembly(get_turf(src.loc), "spraybottle_assembly")
+			R.use(1)
+			qdel(src)
+
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user as mob, var/adjacency_flag, var/click_params)
 	if (adjacency_flag && is_type_in_list(A, ignore_spray_types))

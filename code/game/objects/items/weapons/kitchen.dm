@@ -187,6 +187,23 @@
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/weapon/kitchen/utensil/knife/large/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.remove_fuel(0, user))
+			to_chat(user, "You slice the handle off of \the [src].")
+			playsound(user, 'sound/items/Welder.ogg', 50, 1)
+			if(src.loc == user)
+				user.drop_item(src, force_drop = 1)
+				var/obj/item/weapon/metal_blade/I = new (get_turf(user))
+				user.put_in_hands(I)
+			else
+				new /obj/item/weapon/metal_blade(get_turf(src.loc))
+			qdel(src)
+		else
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+
 /obj/item/weapon/kitchen/utensil/knife/large/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='danger'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \

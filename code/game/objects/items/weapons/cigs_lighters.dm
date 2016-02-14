@@ -158,6 +158,8 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	var/brightness_on = 1 //Barely enough to see where you're standing, it's a boring old cigarette
 	var/smoketime = 300
 	var/chem_volume = 15
+	var/inside_item = 0 //For whether the cigarette is contained inside another item.
+	var/filling = null //To alter the name if it's a special kind of cigarette
 
 /obj/item/clothing/mask/cigarette/New()
 	..()
@@ -176,12 +178,12 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 	switch(lit)
 		if(1)
-			name = "lit [initial(name)]"
+			name = filling ? "lit [filling] [initial(name)]" : "lit [initial(name)]"
 			item_state = "[initial(item_state)]on"
 			icon_state = "[initial(icon_state)]on"
 			damtype = BURN
 		if(0)
-			name = "[initial(name)]"
+			name = filling ? "[filling] [initial(name)]" : "[initial(name)]"
 			item_state = "[initial(item_state)]off"
 			icon_state = "[initial(icon_state)]off"
 			damtype = BRUTE
@@ -322,12 +324,13 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/process()
 	var/turf/location = get_turf(src)
-	var/mob/living/M = loc
+	var/mob/living/M = find_holder_of_type(src,/mob/living)
 	if(isliving(loc))
 		M.IgniteMob()
 	smoketime--
 	if(smoketime <= 0)
-		new type_butt(location) //Spawn the cigarette butt
+		if(!inside_item)
+			new type_butt(location) //Spawn the cigarette butt
 		lit = 0 //Actually unlight the cigarette so that the lighting can update correctly
 		update_brightness()
 		if(ismob(loc))
@@ -339,7 +342,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		location.hotspot_expose(700, 5, surfaces = istype(loc, /turf))
 	//Oddly specific and snowflakey reagent transfer system below
 	if(reagents && reagents.total_volume)	//Check if it has any reagents at all
-		if(iscarbon(M) && (src == M.wear_mask)) //If it's in the human/monkey mouth, transfer reagents to the mob
+		if(iscarbon(M) && ((src == M.wear_mask) || (loc == M.wear_mask))) //If it's in the human/monkey mouth, transfer reagents to the mob
 			if(M.reagents.has_reagent("lexorin") || M_NO_BREATH in M.mutations || istype(M.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				reagents.remove_any(REAGENTS_METABOLISM)
 			else

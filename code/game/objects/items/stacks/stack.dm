@@ -1,4 +1,4 @@
-#define CORRECT_STACK_NAME(stack) ((stack.irregular_plural && stack.amount > 1) ? stack.irregular_plural : "[stack.singular_name]\s")
+#define CORRECT_STACK_NAME(stack) ((stack.irregular_plural && stack.amount > 1) ? stack.irregular_plural : "[stack.singular_name]")
 
 /* Stack type objects!
  * Contains:
@@ -38,7 +38,7 @@
 	var/be = "are"
 	if(amount == 1) be = "is"
 
-	to_chat(user, "<span class='info'>There [be] [src.amount] [CORRECT_STACK_NAME(src)] in the stack.</span>")
+	to_chat(user, "<span class='info'>There [be] [src.amount] [CORRECT_STACK_NAME(src)][amount == 1 ? " in" : "s in"] the stack.</span>")
 
 /obj/item/stack/attack_self(mob/user as mob)
 	list_recipes(user)
@@ -240,6 +240,10 @@
 	if(amount && starting_materials)
 		for(var/matID in starting_materials)
 			materials.storage[matID] = max(0, starting_materials[matID]*amount)
+	if(amount < 2)
+		gender = NEUTER
+	else
+		gender = PLURAL
 
 /obj/item/stack/proc/can_stack_with(obj/item/other_stack)
 	if(ispath(other_stack)) return (src.type == other_stack)

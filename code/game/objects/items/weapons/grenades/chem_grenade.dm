@@ -1,5 +1,5 @@
 /obj/item/weapon/grenade/chem_grenade
-	name = "Grenade Casing"
+	name = "grenade casing"
 	icon_state = "chemg"
 	item_state = "flashbang"
 	desc = "A hand made chemical grenade."
@@ -127,6 +127,18 @@
 				to_chat(user, "<span class='warning'> \the [W] is empty.</span>")
 	else if (istype(W,/obj/item/slime_extract))
 		to_chat(user, "<span class='warning'> This grenade case is too small for a slime core to fit in it.</span>")
+	else if(istype(W, /obj/item/weapon/crowbar))
+		to_chat(user, "You begin pressing \the [W] into \the [src].")
+		if(do_after(user, src, 30))
+			to_chat(user, "You poke a hole in \the [src].")
+			if(src.loc == user)
+				user.drop_item(src, force_drop = 1)
+				var/obj/item/weapon/fuel_reservoir/I = new (get_turf(user))
+				user.put_in_hands(I)
+				qdel(src)
+			else
+				new /obj/item/weapon/fuel_reservoir(get_turf(src.loc))
+				qdel(src)
 
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	..()

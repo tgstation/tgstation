@@ -21,6 +21,7 @@
 	harm_label_examine = list("<span class='info'>A label is stuck to the trigger, but it is too small to get in the way.</span>", "<span class='warning'>A label firmly sticks the trigger to the guard!</span>")
 
 	var/fire_sound = 'sound/weapons/Gunshot.ogg'
+	var/empty_sound = 'sound/weapons/empty.ogg'
 	var/obj/item/projectile/in_chamber = null
 	var/list/caliber //the ammo the gun will accept. Now multiple types (make sure to set them to =1)
 	var/silenced = 0
@@ -37,6 +38,8 @@
 						//1 for keep shooting until aim is lowered
 	var/fire_delay = 2
 	var/last_fired = 0
+
+	var/conventional_firearm = 1	//Used to determine whether, when examined, an /obj/item/weapon/gun/projectile will display the amount of rounds remaining.
 
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
@@ -166,9 +169,11 @@
 			step(user, user.inertia_dir)
 
 	if(silenced)
-		playsound(user, fire_sound, 10, 1)
+		if(fire_sound)
+			playsound(user, fire_sound, 10, 1)
 	else
-		playsound(user, fire_sound, 50, 1)
+		if(fire_sound)
+			playsound(user, fire_sound, 50, 1)
 		user.visible_message("<span class='warning'>[user] fires [src][reflex ? " by reflex":""]!</span>", \
 		"<span class='warning'>You fire [src][reflex ? "by reflex":""]!</span>", \
 		"You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
@@ -205,6 +210,8 @@
 	else
 		user.update_inv_r_hand()
 
+	return 1
+
 /obj/item/weapon/gun/proc/can_fire()
 	return process_chambered()
 
@@ -214,10 +221,10 @@
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
 	if (user)
 		user.visible_message("*click click*", "<span class='danger'>*click*</span>")
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(user, empty_sound, 100, 1)
 	else
 		src.visible_message("*click click*")
-		playsound(get_turf(src), 'sound/weapons/empty.ogg', 100, 1)
+		playsound(get_turf(src), empty_sound, 100, 1)
 
 /obj/item/weapon/gun/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 	//Suicide handling.
@@ -234,9 +241,11 @@
 		if (process_chambered())
 			user.visible_message("<span class = 'warning'>[user] pulls the trigger.</span>")
 			if(silenced)
-				playsound(user, fire_sound, 10, 1)
+				if(fire_sound)
+					playsound(user, fire_sound, 10, 1)
 			else
-				playsound(user, fire_sound, 50, 1)
+				if(fire_sound)
+					playsound(user, fire_sound, 50, 1)
 			in_chamber.on_hit(M)
 			if (!in_chamber.nodamage)
 				user.apply_damage(in_chamber.damage*2.5, in_chamber.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [in_chamber]")

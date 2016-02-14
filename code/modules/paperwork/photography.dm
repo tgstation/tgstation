@@ -119,6 +119,8 @@
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
 	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info
 
+	var/panelopen = 0
+
 /obj/item/device/camera/sepia
 	name = "camera"
 	desc = "This one takes pictures in sepia."
@@ -131,6 +133,8 @@
 /obj/item/device/camera/examine(mob/user)
 	..()
 	to_chat(user, "<span class='info'>It has [pictures_left] photos left.</span>")
+	if(panelopen)
+		to_chat(user, "<span class='notice'>There is an open panel on the side.</span>")
 
 
 /obj/item/device/camera/ai_camera //camera AI can take pictures with
@@ -158,6 +162,28 @@
 
 
 /obj/item/device/camera/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		to_chat(user, "You [panelopen ? "close" : "open"] the panel on the side of \the [src].")
+		panelopen = !panelopen
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+
+	if(istype(I, /obj/item/stack/cable_coil))
+		if(!panelopen)
+			return
+		var/obj/item/stack/cable_coil/C = I
+		if(C.amount < 5)
+			to_chat(user, "You don't have enough cable to alter \the [src].")
+			return
+		to_chat(user, "You attach [C.amount > 5 ? "some" : "the"] wires to \the [src]'s flash circuit.")
+		if(src.loc == user)
+			user.drop_item(src, force_drop = 1)
+			var/obj/item/device/blinder/Q = new (get_turf(user))
+			user.put_in_hands(Q)
+		else
+			new /obj/item/device/blinder(get_turf(src.loc))
+		C.use(5)
+		qdel(src)
+
 	if(istype(I, /obj/item/device/camera_film))
 		if(pictures_left)
 			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")

@@ -154,6 +154,7 @@
 	throwforce = 35
 	throw_speed = 5
 	throw_range = 10
+	sharpness = 2
 	w_class = 4.0
 	flags = FPRINT | TWOHANDABLE
 	origin_tech = "magnets=4;combat=5"
@@ -162,6 +163,7 @@
 	..()
 	item_state = "hfrequency[wielded ? 1 : 0]"
 	force = wielded ? 200 : 50
+	sharpness = wielded ? 100 : 2
 	if(user)
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()

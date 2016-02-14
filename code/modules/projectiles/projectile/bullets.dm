@@ -315,3 +315,149 @@
 	else
 		BEE.newTarget()
 	bullet_die()
+
+/obj/item/projectile/bullet/APS //Armor-piercing sabot round. Metal rods become this when fired from a railgun.
+	name = "armor-piercing sabot round"
+	icon_state = "APS"
+	damage = 10 //Default damage, actual damage is determined per-shot in railgun.dm
+	kill_count = 20 //This will be increased when the round is fired, based on the strength of the shot
+	stun = 0
+	weaken = 0
+	stutter = 0
+	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS|PROJREACT_MOBS|PROJREACT_BLOB
+	penetration = 0 //By default. Higher-power shots will have penetration.
+	var/superspeed = 0
+
+/obj/item/projectile/bullet/APS/on_hit(var/atom/atarget, var/blocked = 0)
+	if(istype(atarget, /mob/living) && damage == 200)
+		var/mob/living/M = atarget
+		M.gib()
+	else ..()
+
+/obj/item/projectile/bullet/APS/OnFired()
+	..()
+	if(damage >= 100)
+		superspeed = 1
+		for (var/mob/M in player_list)
+			if(M && M.client)
+				var/turf/M_turf = get_turf(M)
+				if(M_turf && (M_turf.z == starting.z))
+					M.playsound_local(starting, 'sound/weapons/hecate_fire_far.ogg', 25, 1)
+
+/obj/item/projectile/bullet/APS/OnDeath()
+	var/turf/T = get_turf(src)
+	new /obj/item/stack/rods(T)
+
+/obj/item/projectile/bullet/APS/bresenham_step(var/distA, var/distB, var/dA, var/dB)
+	if(..())
+		if(superspeed)
+			superspeed = 0
+			return 1
+		else
+			superspeed = 1
+			return 0
+	else
+		return 0
+
+/obj/item/projectile/bullet/stinger
+	name = "alien stinger"
+	damage = 5
+	damage_type = TOX
+	flag = "bio"
+
+/obj/item/projectile/bullet/stinger/OnFired()
+	var/choice = rand(1,4)
+	switch(choice)
+		if(1)
+			stutter = 2
+		if(2)
+			eyeblur = 2
+		if(3)
+			agony = 2
+		if(4)
+			jittery = 2
+	..()
+
+/obj/item/projectile/bullet/vial
+	name = "vial"
+	icon_state = "vial"
+	damage = 0
+	penetration = 0
+	embed = 0
+	var/vial = null
+	var/user = null
+	var/hit_mob = 0
+
+/obj/item/projectile/bullet/vial/Destroy()
+	if(vial)
+		qdel(vial)
+		vial = null
+	if(user)
+		user = null
+
+/obj/item/projectile/bullet/vial/on_hit(var/atom/atarget, var/blocked = 0)
+	..()
+	if(!user)
+		return
+	if(vial)
+		var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = vial
+		if(!V.is_open_container())
+			V.flags |= OPENCONTAINER
+		if(!V.is_empty())
+			hit_mob = 1
+			atarget.visible_message("<span class='warning'>\The [V] shatters, dousing [atarget] in its contents!</span>",
+								"<span class='warning'>\The [V] shatters, dousing you in its contents!</span>")
+
+		V.transfer(atarget, user, TRUE, FALSE, V.reagents.total_volume)
+
+		qdel(V)
+		vial = null
+		user = null
+
+/obj/item/projectile/bullet/vial/OnDeath()
+	if(!hit_mob)
+		src.visible_message("<span class='warning'>The vial shatters!</span>")
+	playsound(get_turf(src), "shatter", 20, 1)
+
+/obj/item/projectile/bullet/blastwave
+	name = "blast wave"
+	icon_state = null
+	damage = 0
+	penetration = 100
+	embed = 0
+	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS|PROJREACT_MOBS|PROJREACT_BLOB
+	var/heavy_damage_range = 0
+	var/medium_damage_range = 0
+	var/light_damage_range = 0
+
+/obj/item/projectile/bullet/blastwave/OnFired()
+	..()
+	if(!heavy_damage_range || !medium_damage_range || !light_damage_range)
+		bullet_die()
+		return
+
+/obj/item/projectile/bullet/blastwave/process_step()
+	..()
+	var/turf/T = get_turf(src)
+	if(light_damage_range)
+		if(medium_damage_range)
+			if(heavy_damage_range)
+				for(var/atom/movable/A in T.contents)
+					A.ex_act(1)
+				T.ex_act(1)
+				heavy_damage_range -= 1
+			else
+				for(var/atom/movable/A in T.contents)
+					A.ex_act(2)
+				T.ex_act(2)
+				medium_damage_range -= 1
+		else
+			for(var/atom/movable/A in T.contents)
+				A.ex_act(3)
+			T.ex_act(3)
+			light_damage_range -= 1
+	else
+		bullet_die()
+
+/obj/item/projectile/bullet/blastwave/ex_act()
+	return

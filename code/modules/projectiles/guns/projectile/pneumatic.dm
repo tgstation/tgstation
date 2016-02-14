@@ -54,7 +54,7 @@
 /obj/item/weapon/storage/pneumatic/attackby(obj/item/W as obj, mob/user as mob)
 	if(!tank && istype(W,/obj/item/weapon/tank))
 		if(!user.drop_item(W, src.tank_container))
-			user << "<span class='warning'>You can't let go of \the [W]!</span>"
+			to_chat(user, "<span class='warning'>You can't let go of \the [W]!</span>")
 			return
 
 		tank = W

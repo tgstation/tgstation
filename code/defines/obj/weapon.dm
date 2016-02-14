@@ -585,6 +585,26 @@
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
 
+/obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.remove_fuel(0, user))
+			to_chat(user, "You begin slicing through \the [src].")
+			playsound(user, 'sound/items/Welder.ogg', 50, 1)
+			if(do_after(user, src, 60))
+				to_chat(user, "You cut \the [src] into a gun stock.")
+				if(src.loc == user)
+					user.drop_item(src, force_drop = 1)
+					var/obj/item/weapon/metal_gun_stock/I = new (get_turf(user))
+					user.put_in_hands(I)
+					qdel(src)
+				else
+					new /obj/item/weapon/metal_gun_stock(get_turf(src.loc))
+					qdel(src)
+		else
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
 	desc = "Used for communication, it appears."
