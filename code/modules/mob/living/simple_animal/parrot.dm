@@ -72,6 +72,7 @@
 	var/parrot_stuck_threshold = 10 //if this == parrot_stuck, it'll force the parrot back to wandering
 
 	var/list/speech_buffer = list()
+	var/speech_shuffle_rate = 20
 	var/list/available_channels = list()
 
 	//Headset for Poly to yell at engineers :)
@@ -336,6 +337,7 @@
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
 		speak_chance *= 2
+		speech_shuffle_rate += 10
 		user << "<span class='notice'>[src] eagerly devours the cracker.</span>"
 	..()
 	return
@@ -375,7 +377,7 @@
 	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list. */
 /mob/living/simple_animal/parrot/handle_automated_speech()
 	..()
-	if(speech_buffer.len && prob(20)) //shuffle out a phrase and add in a new one
+	if(speech_buffer.len && prob(speech_shuffle_rate)) //shuffle out a phrase and add in a new one
 		if(speak.len)
 			speak.Remove(pick(speak))
 
