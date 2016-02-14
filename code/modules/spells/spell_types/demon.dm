@@ -39,7 +39,7 @@
 	school = "conjuration"
 	charge_max = 150
 	cooldown_min = 10
-	action_icon_state = "bolt_action" //TODO: set icon
+	action_icon_state = "spell_default" //TODO: set icon
 
 /obj/effect/proc_holder/spell/targeted/summon_contract/cast(list/targets, mob/user = usr)
 	for(var/mob/living/carbon/C in targets)

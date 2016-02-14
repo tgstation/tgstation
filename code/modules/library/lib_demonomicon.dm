@@ -7,6 +7,7 @@
 	author = "Forces beyond your comprehension"
 	unique = 1
 	title = "The Demonomicon"
+	var/inUse = 0
 
 
 
@@ -18,11 +19,14 @@
 	if(ismonkey(user))
 		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
 		return
+	if(inUse)
+		user << "<span class='notice'>Someone else is reading it.</span>"
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
 		if(U.acedia)
 			user << "<span class='notice'>None of this matters, why are you reading this?  You put the book down.</span>"
 			return
+		inUse = 1
 		var/demonName = copytext(sanitize(input(user, "What demonic being do you wish to research?", "Demonomicon", null)  as text),1,MAX_MESSAGE_LEN)
 		var/speed = 300
 		var/correctness = 85
@@ -44,6 +48,7 @@
 				usedName += "x"
 			var/datum/demoninfo/demon = demonInfo(usedName, 0)
 			user << browse("Information on [demonName]<br><br><br>[demon.banlore]<br>[demon.banelore]<br>[demon.obligationlore]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
+		inUse = 0
 		sleep(10)
 		if(!prob(willpower))
 			U.influenceSin()
