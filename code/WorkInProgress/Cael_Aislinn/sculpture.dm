@@ -13,6 +13,7 @@
 	response_disarm = "pushes the"
 	response_harm   = "hits the"
 	meat_type = null
+	see_in_dark = 8 //Needs to see in darkness to snap in darkness
 	var/response_snap = "snapped the neck of" //Past tense because it "happened before you could see it"
 	var/response_snap_target = "In the blink of an eye, something grabs you and snaps your neck!"
 	var/snap_sound = list('sound/scp/firstpersonsnap.ogg','sound/scp/firstpersonsnap2.ogg','sound/scp/firstpersonsnap3.ogg')
@@ -128,6 +129,9 @@
 			for(var/obj/structure/table/O in next_turf)
 				O.ex_act(1)
 				sleep(5)
+			for(var/obj/structure/closet/C in next_turf)
+				C.ex_act(1)
+				sleep(5)
 			for(var/obj/structure/grille/G in next_turf)
 				G.ex_act(1)
 				sleep(5)
@@ -141,7 +145,7 @@
 				sleep(5)
 			if(!next_turf.CanPass(src, next_turf)) //Once we cleared everything we could, check one last time if we can pass
 				break
-			loc = next_turf
+			forceMove(next_turf)
 			dir = get_dir(src, target)
 			next_turf = get_step(src, get_dir(next_turf,target))
 			num_turfs--
@@ -176,6 +180,9 @@
 				for(var/obj/structure/table/O in next_turf)
 					O.ex_act(1)
 					sleep(5)
+				for(var/obj/structure/closet/C in next_turf)
+					C.ex_act(1)
+					sleep(5)
 				for(var/obj/structure/grille/G in next_turf)
 					G.ex_act(1)
 					sleep(5)
@@ -189,7 +196,7 @@
 					sleep(5)
 				if(!next_turf.CanPass(src, next_turf)) //Once we cleared everything we could, check one last time if we can pass
 					break
-				loc = next_turf
+				forceMove(next_turf)
 				dir = get_dir(src, target_turf)
 				next_turf = get_step(src, get_dir(next_turf,target_turf))
 				num_turfs--
@@ -198,8 +205,8 @@
 
 	//Do we have a vent ? Good, let's take a look
 	for(entry_vent in view(1, src))
-		if(prob(50))
-			return //Ignore that vent for this tick
+		if(prob(90)) //10 % chance to consider a vent, to try and avoid constant vent switching
+			return
 		visible_message("<span class='danger'>\The [src] starts trying to slide itself into the vent!</span>")
 		sleep(50) //Let's stop SCP-173 for five seconds to do his parking job
 		..()
@@ -219,17 +226,14 @@
 				var/travel_time = round(get_dist(loc, exit_vent.loc)/2)
 				spawn(travel_time)
 					if(!exit_vent || exit_vent.welded)
-						loc = entry_vent
+						forceMove(get_turf(entry_vent))
 						entry_vent = null
 						visible_message("<span class='danger'>\The [src] suddenly appears from the vent!</span>")
 						return
 
-					loc = exit_vent.loc
+					forceMove(get_turf(exit_vent))
 					entry_vent = null
 					visible_message("<span class='danger'>\The [src] suddenly appears from the vent!</span>")
-					var/area/new_area = get_area(loc)
-					if(new_area)
-						new_area.Entered(src)
 		else
 			entry_vent = null
 

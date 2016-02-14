@@ -70,6 +70,8 @@
 /obj/structure/morgue/attack_hand(mob/user as mob)
 	if (src.connected)
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
+			if(istype(A, /mob/living/simple_animal/sculpture)) //I have no shame. Until someone rewrites this shitcode extroadinaire, I'll just snowflake over it
+				continue
 			if (!( A.anchored ))
 				A.loc = src
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
@@ -170,6 +172,8 @@
 /obj/structure/m_tray/attack_hand(mob/user as mob)
 	if (src.connected)
 		for(var/atom/movable/A as mob|obj in src.loc)
+			if(istype(A, /mob/living/simple_animal/sculpture)) //I have no shame. Until someone rewrites this shitcode extroadinaire, I'll just snowflake over it
+				continue
 			if (!( A.anchored ))
 				A.loc = src.connected
 			//Foreach goto(26)
@@ -337,7 +341,9 @@
 		if (locate(/obj/item/weapon/disk/nuclear) in inside)
 			to_chat(user, "<SPAN CLASS='warning'>You get the feeling that you shouldn't cremate one of the items in the cremator.</SPAN>")
 			return
-
+		if(locate(/mob/living/simple_animal/sculpture) in inside)
+			to_chat(user, "<span class='warning'>You try to toggle the crematorium on, but all you hear is scrapping stone.</span>")
+			return
 		for (var/mob/M in viewers(src))
 			if(!M.hallucinating())
 				M.show_message("<span class='warning'>You hear a roar as the crematorium activates.</span>", 1)
