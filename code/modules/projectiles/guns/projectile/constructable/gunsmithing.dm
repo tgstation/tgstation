@@ -140,8 +140,8 @@
 		return
 	..()
 	to_chat(user, "You detach the metal blades from each other.")
-	new /obj/item/weapon/large_metal_blade(get_turf(user.loc))
-	new /obj/item/weapon/large_metal_blade(get_turf(user.loc))
+	new /obj/item/weapon/metal_blade(get_turf(user.loc))
+	new /obj/item/weapon/metal_blade(get_turf(user.loc))
 	qdel(src)
 
 /obj/item/weapon/large_metal_blade/attackby(obj/item/weapon/W, mob/user)
