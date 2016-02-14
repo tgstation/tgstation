@@ -230,7 +230,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	if(holder)
 		holder.rank = newrank
 	else
-		holder = new /datum/admins(newrank,ckey)
+		holder = new /datum/admins(newrank, ckey)
 	remove_admin_verbs()
 	holder.associate(src)
 
@@ -238,7 +238,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	if(holder)
 		holder.rank.rights = newrights
 	else
-		holder = new /datum/admins("testing", newrights,ckey)
+		holder = new /datum/admins("testing", newrights, ckey)
 	remove_admin_verbs()
 	holder.associate(src)
 #endif
