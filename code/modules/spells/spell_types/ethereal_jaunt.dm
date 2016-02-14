@@ -56,6 +56,8 @@
 			if(!qdeleted(target))
 				jaunt_reappear(animation, target)
 			sleep(5)
+			qdel(animation)
+			qdel(holder)
 			if(!qdeleted(target))
 				if(mobloc.density)
 					for(var/direction in list(1,2,4,8,5,6,9,10))
@@ -64,10 +66,6 @@
 							if(target.Move(T))
 								break
 				target.canmove = 1
-				target.reset_perspective()
-				target.update_canmove() //if the caster became unconscious mid-jaunt we must make him fall down.
-			qdel(animation)
-			qdel(holder)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(atom/movable/overlay/animation, mob/living/target)
 	animation.icon_state = "liquify"
@@ -97,7 +95,7 @@
 /obj/effect/dummy/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow
 	for(var/atom/movable/AM in src)
-		AM.loc = get_turf(src)
+		AM.forceMove(get_turf(src))
 	return ..()
 
 /obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
