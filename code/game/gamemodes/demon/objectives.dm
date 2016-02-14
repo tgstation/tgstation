@@ -12,7 +12,7 @@
 /datum/objective/demon/soulquantity/check_completion()
 	var/count = 0
 	for(var/datum/mind/L in owner.demoninfo.soulsOwned)
-		if(!L.hasSoul)
+		if(L.soulOwner != L)
 			count++
 	return count>=quantity
 
@@ -48,13 +48,16 @@
 /datum/objective/demon/soulquality/check_completion()
 	var/count = 0
 	for(var/datum/mind/L in owner.demoninfo.soulsOwned)
-		if(!L.hasSoul && L.hellbound == contractType)
+		if(L.soulOwner != L && L.damnation_type == contractType)
 			count++
 	return count>=quantity
 
+/datum/objective/demon/sintouch
+	var/quantity
+
 /datum/objective/demon/sintouch/New()
-	var/quantity = pick(4,5)
+	quantity = pick(4,5)
 	explanation_text = "Ensure at least [quantity] mortals are sintouched."
 
 /datum/objective/demon/sintouch/check_completion()
-	return quantity>=sintouched.len
+	return quantity>=ticker.mode.sintouched.len

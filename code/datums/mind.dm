@@ -57,9 +57,12 @@
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
 	var/datum/demoninfo/demoninfo //Information about the demon, if any.
+	var/damnation_type = 0
+	var/datum/mind/soulOwner
 
 /datum/mind/New(var/key)
 	src.key = key
+	soulOwner = src
 
 
 /datum/mind/proc/transfer_to(mob/new_character)
@@ -525,7 +528,7 @@
 			text += "|Disabled in Prefs"
 
 		sections["monkey"] = text
-	
+
 	/** DEMON ***/
 	text = "demon"
 	if(ticker.mode.config_tag == "demon")

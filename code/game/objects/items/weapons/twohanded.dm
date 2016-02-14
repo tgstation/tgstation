@@ -467,7 +467,7 @@
 /obj/item/weapon/twohanded/pitchfork/pickup(mob/user)
 	if(istype(user, /mob/living))
 		var/mob/living/U = user
-		if(U.hasSoul)
+		if(!U.mind.damnation_type)
 			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
 				"<span class='warning'>\"As you pick up the [src] your arms ignite, reminding you of all your past sins.\"</span>")
 			if(ishuman(U))
@@ -478,7 +478,7 @@
 		return
 
 /obj/item/weapon/twohanded/pitchfork/attack(mob/target, mob/living/carbon/human/user)
-	if(user.hasSoul)
+	if(!user.mind.damnation_type)
 		user << "<span class ='warning'>The [src] burns in your hands.</span>"
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
 	..()

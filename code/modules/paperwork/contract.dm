@@ -24,7 +24,7 @@
 
 /obj/item/weapon/paper/contract/employment/attack(mob/living/M, mob/living/carbon/human/user)
 	var/deconvert = 0
-	if((M == target) && !target.hasSoul)
+	if((M == target) && target.mind.soulOwner != target.mind)
 		if(user.mind && (user.mind.assigned_role == "Lawyer"))
 			deconvert = prob (25)
 		if (user.mind && (user.mind.assigned_role =="Head of Personnel") || (user.mind.assigned_role == "Centcom Commander"))
@@ -88,35 +88,32 @@
 	switch(contractType)
 		if(CONTRACT_POWER)
 			name = "paper- Contract for infernal power"
-			info = "<center><B>Contract for infernal power</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.mind.truename], in exchange for power and physical strength.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+			info = "<center><B>Contract for infernal power</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.mind.demoninfo.truename], in exchange for power and physical strength.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
 		if(CONTRACT_WEALTH)
 			name = "paper- Contract for unlimited wealth"
-			info = "<center><B>Contract for unlimited wealth</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.mind.truename], in exchange for a pocket that never runs out of valuable resources.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+			info = "<center><B>Contract for unlimited wealth</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.mind.demoninfo.truename], in exchange for a pocket that never runs out of valuable resources.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
 		if(CONTRACT_PRESTIGE)
 			name = "paper- Contract for prestige"
-			info = "<center><B>Contract for prestige</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.mind.truename], in exchange for prestige and esteem among my peers.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+			info = "<center><B>Contract for prestige</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.mind.demoninfo.truename], in exchange for prestige and esteem among my peers.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
 		if(CONTRACT_MAGIC)
 			name = "paper- Contract for magic"
-			info = "<center><B>Contract for magic</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.mind.truename], in exchange for arcane abilities beyond normal human ability.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
-		if(CONTRACT_SLAVE)
-			name = "paper- Contract for slave"
-			info = "<center><B>Contract for slave</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.mind.truename], in exchange for the ability to bend a single human to my will.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+			info = "<center><B>Contract for magic</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.mind.demoninfo.truename], in exchange for arcane abilities beyond normal human ability.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
 		if(CONTRACT_REVIVE)
 			name = "paper- Contract for resurrection"
-			info = "<center><B>Contract for resurrection</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.mind.truename], in exchange for resurrection and curing of all injuries.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+			info = "<center><B>Contract for resurrection</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.mind.demoninfo.truename], in exchange for resurrection and curing of all injuries.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
 		if(CONTRACT_KNOWLEDGE)
 			name = "paper- Contract for knowledge"
-			info = "<center><B>Contract for knowledge</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.mind.truename], in exchange for boundless knowledge.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+			info = "<center><B>Contract for knowledge</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.mind.demoninfo.truename], in exchange for boundless knowledge.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
 		if(CONTRACT_UNWILLING)
 			name = "paper- Contract for soul"
-			info = "<center><B>Contract for slave</B></center><BR><BR><BR>I, [target], hereby offer my soul to the infernal hells by way of the infernal agent [owner.mind.truename].  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+			info = "<center><B>Contract for slave</B></center><BR><BR><BR>I, [target], hereby offer my soul to the infernal hells by way of the infernal agent [owner.mind.demoninfo.truename].  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
 
 
 /obj/item/weapon/paper/contract/infernal/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if(user.IsAdvancedToolUser())
 			if(user == target)
-				if(user.hasSoul)
+				if(user.mind.soulOwner == user.mind)
 					if (contractType == CONTRACT_REVIVE)
 						user << "<span class='notice'>You are already alive, this contract would do nothing.</span>"
 						return
@@ -140,6 +137,34 @@
 	else if(P.is_hot())
 		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>The [src] refuses to ignite!</span>")
 	add_fingerprint(user)
+
+/obj/item/weapon/paper/contract/infernal/attack(mob/M, mob/living/user)
+	if (contractType == CONTRACT_REVIVE && target == M)
+		if(M.stat == DEAD)
+			var/mob/living/carbon/human/H = M
+			H.notify_ghost_cloning("A demon has offered you revival, at the cost of your soul.")
+			H.setOxyLoss(0)
+			H.adjustToxLoss(0)
+			H.adjustBruteLoss(0)
+			H.adjustFireLoss(0)
+			H.adjustCloneLoss(0)
+			H.setBrainLoss(0)
+			H.stat = CONSCIOUS
+			H.updatehealth()
+			H.update_sight()
+			H.reload_fullscreen()
+			dead_mob_list -= H
+			living_mob_list |= list(H)
+			H.emote("gasp")
+			add_logs(user, H, "demonically revived")
+			user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
+			H.adjust_fire_stacks(1)
+			sleep(10)
+			H.ExtinguishMob()
+			H.adjustFireLoss(0)
+	else
+		..()
+
 
 /obj/item/weapon/paper/contract/infernal/proc/FulfillContract(mob/living/carbon/human/user = target)
 	signed = 1
@@ -192,7 +217,7 @@
 			for(var/datum/atom_hud/H in huds)
 				if(istype(H, /datum/atom_hud/antag) || istype(H, /datum/atom_hud/data/human/security/advanced))
 					H.add_hud_to(usr)
-	user.hasSoul = 0
+	user.mind.soulOwner = owner.mind
 	user.hellbound = contractType
-	user.soulOwner = owner.mind
+	user.mind.damnation_type = contractType
 	owner.mind.demoninfo.soulsOwned += user.mind
