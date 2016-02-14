@@ -129,7 +129,7 @@ var/list/valid_secondary_effect_types = list(\
 			if(pulledby.pulling == src)
 				pulledby.stop_pulling()
 			pulledby = null
-		else if(pulledby.stat || pulledby.sleeping || pulledby.lying || pulledby.weakened || pulledby.stunned) //To prevent getting stuck stunned forever due to not being able to break the pull.
+		else if(pulledby.incapacitated()) //To prevent getting stuck stunned forever due to not being able to break the pull.
 			if(pulledby.pulling == src)
 				pulledby.stop_pulling()
 			pulledby = null

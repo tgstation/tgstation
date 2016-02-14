@@ -276,7 +276,7 @@ var/global/list/alert_overlays_global = list()
 		if(!istype(user.locked_to, /obj/structure/bed/chair/vehicle))
 			to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
 			return
-	if(user.stat || user.stunned || user.weakened || user.paralysis || get_dist(src, user) > 1)
+	if(user.incapacitated() || get_dist(src, user) > 1)
 		to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
 		return
 

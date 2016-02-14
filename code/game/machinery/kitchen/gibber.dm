@@ -170,7 +170,7 @@ obj/machinery/gibber/New()
 		update_icon()
 
 /obj/machinery/gibber/MouseDrop_T(mob/target, mob/user)
-	if(target != user || !istype(user, /mob/living/carbon/human) || user.stat || user.weakened || user.stunned || user.paralysis || user.locked_to || get_dist(user, src) > 1)
+	if(target != user || !istype(user, /mob/living/carbon/human) || user.incapacitated() || get_dist(user, src) > 1)
 		return
 	if(!anchored)
 		to_chat(user, "<span class='warning'>[src] must be anchored first!</span>")

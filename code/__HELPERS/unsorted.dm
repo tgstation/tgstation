@@ -699,7 +699,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 					if(user && user.client) user.client.images -= progbar
 					if(progbar) progbar.loc = null
 			return 0
-		if ( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || ( user.stat ) || ( user.stunned || user.weakened || user.paralysis || user.lying ) )
+		if ( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated())
 			if(progbar)
 				progbar.icon_state = "prog_bar_stopped"
 				spawn(2)
@@ -741,7 +741,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 		sleep(delayfraction)
 		//if(user.client && progbar.icon_state != oldstate)
 			//user.client.images.Remove(progbar)
-		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == Location))
+		if(!user || user.incapacitated() || !(user.loc == Location))
 			if(progbar)
 				progbar.icon_state = "prog_bar_stopped"
 				spawn(2)

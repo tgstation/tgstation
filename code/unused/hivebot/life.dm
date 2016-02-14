@@ -63,7 +63,7 @@
 				src.stat = 1
 
 		update_canmove()
-			if(paralysis || stunned || weakened || buckled) canmove = 0
+			if(incapacitated()) canmove = 0
 			else canmove = 1
 
 
@@ -76,7 +76,7 @@
 
 			if (src.stat != 2) //Alive.
 
-				if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
+				if (src.incapacitated()) //Stunned etc.
 					if (src.stunned > 0)
 						src.stunned--
 						src.stat = 0

@@ -300,7 +300,7 @@ var/global/list/crate_mimic_disguises = list(\
 	return ..()
 
 /mob/living/simple_animal/hostile/mimic/crate/chest/relaymove(mob/user)
-	if(user.stat || user.stunned || user.weakened || user.paralysis)
+	if(user.incapacitated())
 		return
 
 	if(user.loc == src) //We're inside the chest

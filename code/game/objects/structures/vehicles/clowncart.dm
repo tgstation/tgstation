@@ -252,7 +252,7 @@
 				to_chat(user, "Selected color: Boring Black")
 
 /obj/structure/bed/chair/vehicle/clowncart/relaymove(mob/user, direction)
-	if(user.stat || user.stunned || user.weakened || user.paralysis  || destroyed)
+	if(user.incapacitated() || destroyed)
 		unlock_atom(user)
 		return
 	if(empstun > 0)
