@@ -211,8 +211,6 @@ var/global/obj/screen/fuckstat/FUCK = new
 	if(flags & HEAR_ALWAYS)
 		getFromPool(/mob/virtualhearer, src)
 
-	src.on_moved.Add(src, "update_verbs_onmove")
-
 /mob/proc/is_muzzled()
 	return 0
 
@@ -1286,38 +1284,6 @@ var/list/slot_equipment_priority = list( \
 		if(istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			H.handle_regular_hud_updates()
-
-/mob/verb/rotate_chair() //To allow for actually sensible chair selection.
-	set name = "Rotate Chair"
-	set popup_menu = 0 //You know, I'm not actually sure if this is necessary for mob verbs with src = usr but better safe than sorry
-	set category = "Object" //Takes the place of the chair's rotate chair verb in the verbs panel
-	if(src.locked_to)
-		if(istype(src.locked_to, /obj/structure/bed/chair)) //If you're buckled to a chair, rotate that one
-			var/obj/structure/bed/chair/C = src.locked_to
-			C.rotate()
-			return
-	for(var/obj/structure/bed/chair/C in get_turf(src)) //Rotate the first chair found on your tile, if there is one
-		C.rotate()
-		return
-	for(var/checkdir in list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)) //Arbitrary, really. May change this order later or even scrap a hardcoded order for something a bit smarter.
-		var/turf/checkturf = get_step(src, checkdir)
-		for(var/obj/structure/bed/chair/C in checkturf)
-			C.rotate()
-			return
-
-/mob/proc/update_verbs_onmove() //Should probably be given more functionality later (mob verbs are faster than object verbs and all that jazz) but right now I'm writing this for one god damn feature
-	//Update rotate_chair
-	if(client) //This check could be a bit slow, but since only playermobs can actually rotate chairs there's no need to perform it for all mobs.
-		chair_check: //BREAKING NEWS: BYOND has shit label syntax. I would just make it return except that would obviously break things badly if someone put something after this in this proc.
-			for(var/checkdir in list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)) //Still arbitrary.
-				var/turf/checkturf = get_step(src, checkdir)
-				for(var/obj/structure/bed/chair/C in checkturf)
-					verbs |= /mob/verb/rotate_chair
-					break chair_check
-			for(var/obj/structure/bed/chair/C in get_turf(src))
-				verbs |= /mob/verb/rotate_chair
-				break chair_check
-			verbs -= /mob/verb/rotate_chair
 
 /mob/Topic(href,href_list[])
 	if(href_list["mach_close"])

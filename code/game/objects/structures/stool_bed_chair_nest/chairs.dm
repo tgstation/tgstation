@@ -51,7 +51,7 @@
 
 /obj/structure/bed/chair/verb/rotate()
 	set name = "Rotate Chair"
-	set category = null //So it's only accessible from the right click menu
+	set category = "Object"
 	set src in oview(1)
 
 	if(!usr || !isturf(usr.loc))
