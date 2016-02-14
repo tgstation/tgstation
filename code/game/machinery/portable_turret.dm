@@ -554,6 +554,8 @@
 	invisibility = 2
 	icon_state = "[base_icon_state][off_state]"
 
+/obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
+	return 10 //AI turrets shoot at everything not in their faction
 
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0	//the integer returned
