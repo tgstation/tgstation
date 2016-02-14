@@ -522,6 +522,7 @@
 
 	var/upgradedcams = 0
 	see_override = SEE_INVISIBLE_MINIMUM //Night-vision, without which X-ray would be very limited in power.
+	update_sight()
 
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		if(C.assembly)

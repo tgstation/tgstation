@@ -120,11 +120,10 @@
 		mmi.brain.name = "[real_name]'s brain"
 		mmi.icon_state = "mmi_full"
 		mmi.name = "Man-Machine Interface: [real_name]"
-		mmi.brainmob = new(src)
+		mmi.brainmob = new(mmi)
 		mmi.brainmob.name = src.real_name
 		mmi.brainmob.real_name = src.real_name
 		mmi.brainmob.container = mmi
-		mmi.contents += mmi.brainmob
 
 	updatename()
 
@@ -140,6 +139,10 @@
 		if(T)
 			mmi.loc = T
 		if(mmi.brainmob)
+			if(mmi.brainmob.stat == DEAD)
+				mmi.brainmob.stat = CONSCIOUS
+				dead_mob_list -= mmi.brainmob
+				living_mob_list += mmi.brainmob
 			mind.transfer_to(mmi.brainmob)
 			mmi.update_icon()
 		else
