@@ -62,21 +62,15 @@
 	return 0
 
 /turf/proc/CalculateAdjacentTurfs()
-	atmos_adjacent_turfs_amount = 0
 	for(var/direction in cardinal)
 		var/turf/T = get_step(src, direction)
 		if(!istype(T))
 			continue
 		if(CanAtmosPass(T))
-			atmos_adjacent_turfs_amount += 1
 			atmos_adjacent_turfs |= T
-			if(!(src in T.atmos_adjacent_turfs))
-				T.atmos_adjacent_turfs_amount += 1
 			T.atmos_adjacent_turfs |= src
 		else
 			atmos_adjacent_turfs -= T
-			if(src in T.atmos_adjacent_turfs)
-				T.atmos_adjacent_turfs_amount -= 1
 			T.atmos_adjacent_turfs -= src
 
 //returns a list of adjacent turfs that can share air with this one.
