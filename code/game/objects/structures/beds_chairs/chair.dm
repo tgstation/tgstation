@@ -141,9 +141,31 @@
 /obj/structure/bed/chair/office
 	anchored = 0
 	buildstackamount = 5
+	var/wheels = 1
+	var/chair_type
 
 /obj/structure/bed/chair/office/light
 	icon_state = "officechair_white"
 
 /obj/structure/bed/chair/office/dark
 	icon_state = "officechair_dark"
+
+/obj/structure/bed/chair/office/New()
+	..()
+	chair_type = "[icon_state]"
+
+/obj/structure/bed/chair/office/attackby(obj/item/weapon/W, mob/user, params)
+	..()
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(wheels)
+			anchored = 1
+			new /obj/item/wheel(get_turf(src))
+			new /obj/item/wheel(get_turf(src))
+			user << "<span class='notice'>You screw the wheels off.</span>"
+			icon_state = "[chair_type]_nowheels"
+			wheels = 0
+			buildstackamount = 4
+			return
+		else
+			user << "<span class='warning'>There is no wheels!</span>"
+			return
