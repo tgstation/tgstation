@@ -154,7 +154,7 @@
 	name = "circuit Board (RD Console)"
 	build_path = /obj/machinery/computer/rdconsole/core
 /obj/item/weapon/circuitboard/mecha_control
-	name = "circuit Board (Exosuit Control Console)"
+	name = "circuit board (Exosuit Control Console)"
 	build_path = /obj/machinery/computer/mecha
 /obj/item/weapon/circuitboard/rdservercontrol
 	name = "circuit Board (R&D Server Control)"
