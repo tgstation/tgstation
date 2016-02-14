@@ -9,9 +9,6 @@
 	apply_type = PATCH
 	apply_method = "apply"
 
-/obj/item/weapon/reagent_containers/pill/patch/New()
-	..()
-
 /obj/item/weapon/reagent_containers/pill/patch/afterattack(obj/target, mob/user , proximity)
 	return // thanks inheritance again
 
