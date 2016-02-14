@@ -52,7 +52,7 @@
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
-	
+
 	if(client.click_intercept)
 		if(call(client.click_intercept, "ClickOn")(src, params, A))
 			return
@@ -293,13 +293,6 @@
 	LE.yo = U.y - T.y
 	LE.xo = U.x - T.x
 	LE.fire()
-
-/mob/living/carbon/human/LaserEyes()
-	if(nutrition>0)
-		..()
-		nutrition = max(nutrition - rand(1,5),0)
-	else
-		src << "<span class='danger'>You're out of energy!  You need food!</span>"
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/A)

@@ -512,7 +512,7 @@
 		weakened = max(amount,0)
 		update_stat()
 
-/mob/living/silicon/AdjustWeakened(amount)
-	if(status_flags & CANWEAKEN)
+/mob/living/silicon/AdjustWeakened(amount, ignore_canweaken = 0)
+	if(status_flags & CANWEAKEN || ignore_canweaken)
 		weakened = max(weakened + amount,0)
 		update_stat()
