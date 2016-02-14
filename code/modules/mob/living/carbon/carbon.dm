@@ -173,6 +173,10 @@
 		for(var/obj/effect/proc_holder/spell/S in mind.spell_list)
 			if (!istype(S, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt))
 				S.charge_counter = -200
+			spawn (200)
+				if (!istype(S, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt))
+					S.charge_counter = 0
+				
 	var/damage = intensity - check_eye_prot()
 	if(.) // we've been flashed
 		if(visual)
