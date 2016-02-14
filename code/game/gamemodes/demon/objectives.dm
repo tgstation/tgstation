@@ -11,7 +11,7 @@
 
 /datum/objective/demon/soulquantity/check_completion()
 	var/count = 0
-	for(var/mob/living/L in owner.demoninfo.soulsOwned)
+	for(var/datum/mind/L in owner.demoninfo.soulsOwned)
 		if(!L.hasSoul)
 			count++
 	return count>=quantity
@@ -25,7 +25,7 @@
 	var/quantity
 
 /datum/objective/demon/soulquality/New()
-	contractType = pick(CONTRACT_POWER, CONTRACT_WEALTH, CONTRACT_PRESTIGE, CONTRACT_MAGIC, CONTRACT_SLAVE, CONTRACT_REVIVE, CONTRACT_KNOWLEDGE/*, CONTRACT_UNWILLING*/)
+	contractType = pick(CONTRACT_POWER, CONTRACT_WEALTH, CONTRACT_PRESTIGE, CONTRACT_MAGIC, CONTRACT_REVIVE, CONTRACT_KNOWLEDGE/*, CONTRACT_UNWILLING*/)
 	var/contractName
 	var/quantity = pick(1,2)
 	switch(contractType)
@@ -37,8 +37,6 @@
 			contractName = "for prestige"
 		if(CONTRACT_MAGIC)
 			contractName = "for arcane power"
-		if(CONTRACT_SLAVE)
-			contractName = "of slavery"
 		if(CONTRACT_REVIVE)
 			contractName = "of revival"
 		if(CONTRACT_KNOWLEDGE)
@@ -49,7 +47,7 @@
 
 /datum/objective/demon/soulquality/check_completion()
 	var/count = 0
-	for(var/mob/living/L in owner.demoninfo.soulsOwned)
+	for(var/datum/mind/L in owner.demoninfo.soulsOwned)
 		if(!L.hasSoul && L.hellbound == contractType)
 			count++
 	return count>=quantity
@@ -57,3 +55,6 @@
 /datum/objective/demon/sintouch/New()
 	var/quantity = pick(4,5)
 	explanation_text = "Ensure at least [quantity] mortals are sintouched."
+
+/datum/objective/demon/sintouch/check_completion()
+	return quantity>=sintouched.len
