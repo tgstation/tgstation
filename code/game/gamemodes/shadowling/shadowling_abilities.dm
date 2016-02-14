@@ -123,13 +123,22 @@
 	user.SetWeakened(0)
 	user.incorporeal_move = 1
 	user.alpha = 0
+	user.ExtinguishMob()
+	var/turf/T = get_turf(user)
+	user.forceMove(T) //to properly move the mob out of a potential container
 	if(user.buckled)
 		user.buckled.unbuckle_mob()
+	if(user.pulledby)
+		user.pulledby.stop_pulling()
+	user.stop_pulling()
+	if(user.buckled_mob)
+		user.unbuckle_mob(force=1)
 	sleep(40) //4 seconds
-	user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The rift's pressure forces you back to corporeality.</span>")
-	user.incorporeal_move = 0
-	user.alpha = 255
-
+	if(!qdeleted(user))
+		user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The rift's pressure forces you back to corporeality.</span>")
+		user.incorporeal_move = 0
+		user.alpha = 255
+		user.forceMove(user.loc)
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze //Stuns and freezes nearby people - a bit more effective than a changeling's cryosting
 	name = "Icy Veins"
@@ -726,12 +735,13 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	active = !active
 	if(active)
 		user << "<span class='notice'>You shift the nerves in your eyes, allowing you to see in the dark.</span>"
-		user.see_in_dark = 8
+		user.dna.species.darksight = 8
 		user.dna.species.invis_sight = SEE_INVISIBLE_MINIMUM
 	else
 		user << "<span class='notice'>You return your vision to normal.</span>"
-		user.see_in_dark = 0
+		user.dna.species.darksight = 0
 		user.dna.species.invis_sight = initial(user.dna.species.invis_sight)
+	user.update_sight()
 
 
 /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind //Lets a thrall talk with their allies

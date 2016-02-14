@@ -39,6 +39,7 @@
 				target.unbuckle_mob(force=1)
 			jaunt_disappear(animation, target)
 			target.loc = holder
+			target.reset_perspective(holder)
 			target.notransform=0 //mob is safely inside holder now, no need for protection.
 			jaunt_steam(mobloc)
 			sleep(jaunt_duration)
@@ -52,16 +53,19 @@
 			holder.reappearing = 1
 			playsound(get_turf(user), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
 			sleep(20)
-			jaunt_reappear(animation, target)
+			if(!qdeleted(target))
+				jaunt_reappear(animation, target)
 			sleep(5)
-			if(mobloc.density)
-				for(var/direction in list(1,2,4,8,5,6,9,10))
-					var/turf/T = get_step(mobloc, direction)
-					if(T)
-						if(target.Move(T))
-							break
-			target.canmove = 1
-			target.client.eye = target
+			if(!qdeleted(target))
+				if(mobloc.density)
+					for(var/direction in list(1,2,4,8,5,6,9,10))
+						var/turf/T = get_step(mobloc, direction)
+						if(T)
+							if(target.Move(T))
+								break
+				target.canmove = 1
+				target.reset_perspective()
+				target.update_canmove() //if the caster became unconscious mid-jaunt we must make him fall down.
 			qdel(animation)
 			qdel(holder)
 
