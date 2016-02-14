@@ -1,9 +1,3 @@
-#define BANESILVER 0
-#define BANESALT 1
-#define BANELIGHT 2
-#define BANEIRON 3
-#define BANEWHITECLOTHES 4
-
 var/list/allDemons = list()
 
 /datum/demoninfo/
@@ -21,17 +15,17 @@ var/list/allDemons = list()
 /proc/randomDemonInfo(var/name = randomDemonName(), var/saveDetails = 0)
 	var/datum/demoninfo/demon = new
 	demon.truename = name
-	var/temp = randomdemonbane()
-	demon.banelore = temp[2]
-	temp = randomdemonobligation()
-	demon.obligationlore = temp[2]
-	temp = randomdemonban()
-	demon.banlore = temp[2]
-		if(saveDetails)
-		demon.banelaw = temp[1]
-		demon.banlaw = temp[1]
-		demon.obligationlaw = temp[1]
-		demon.banetype = temp[3]
+	var/tempbane = randomdemonbane()
+	demon.banelore = tempbane[2]
+	var/tempobligation = randomdemonobligation()
+	demon.obligationlore = tempobligation[2]
+	var/tempban = randomdemonban()
+	demon.banlore = tempban[2]
+	if(saveDetails != 0) //Why store three extra strings if they don't get used?
+		demon.banelaw = tempbane[1]
+		demon.banetype = tempbane[3]
+		demon.banlaw = tempban[1]
+		demon.obligationlaw = tempobligation[1]
 	return demon
 
 /proc/demonInfo(var/name, var/saveDetails = 1)
@@ -41,8 +35,8 @@ var/list/allDemons = list()
 		var/datum/demoninfo/demon = randomDemonInfo(name, saveDetails)
 		allDemons[name] = demon
 		return demon
-	
-	
+
+
 
 /proc/randomDemonName()
 	var/preTitle = ""

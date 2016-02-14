@@ -237,6 +237,14 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
 
+/datum/reagent/consumable/sodiumchloride/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
+	if(!istype(M, /mob/living))
+		return
+	if(M.mind && M.mind.demoninfo && M.mind.demoninfo.banetype == BANESALT)
+		for(var/obj/effect/proc_holder/spell/S in M.mind.spell_list)
+			S.charge_counter = -120
+	..()
+
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
 	id = "blackpepper"

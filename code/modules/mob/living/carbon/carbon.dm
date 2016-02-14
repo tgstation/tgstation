@@ -206,6 +206,10 @@
 	else if(damage == 0) // just enough protection
 		if(prob(20))
 			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
+	if(mind && mind.demoninfo && mind.demoninfo.banetype == BANELIGHT)
+		for(var/obj/effect/proc_holder/spell/S in mind.spell_list)
+			if (!istype(S, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt))
+				S.charge_counter = -200
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()

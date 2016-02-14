@@ -605,7 +605,16 @@
 	id = "iron"
 	description = "Pure iron is a metal."
 	reagent_state = SOLID
+
 	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M, /mob/living))
+		return
+	if(M.mind && M.mind.demoninfo && M.mind.demoninfo.banetype == BANEIRON)
+		if(holder && holder.chem_temp < 100) // COLD iron.
+			M.reagents.add_reagent("toxin", reac_volume)
+	..()
 
 /datum/reagent/gold
 	name = "Gold"
@@ -620,6 +629,21 @@
 	description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
 	reagent_state = SOLID
 	color = "#D0D0D0" // rgb: 208, 208, 208
+
+/datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
+	if(!istype(M, /mob/living))
+		return
+	if(method == TOUCH)
+		if(M.mind && M.mind.demoninfo && M.mind.demoninfo.banetype == BANESILVER)
+			method = VAPOR
+	..()
+
+/datum/reagent/silver/on_mob_life(mob/living/M)
+	if(!istype(M, /mob/living))
+		return
+	if(M.mind && M.mind.demoninfo && M.mind.demoninfo.banetype == BANESILVER)
+		M.apply_effect(1/M.metabolism_efficiency,IRRADIATE,0)
+	..()
 
 /datum/reagent/uranium
 	name ="Uranium"
