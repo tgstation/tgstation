@@ -462,3 +462,75 @@
 
 /obj/item/projectile/bullet/blastwave/ex_act()
 	return
+
+/obj/item/projectile/bullet/fire_plume
+	name = "fire plume"
+//	icon_state = null
+	damage = 0
+	penetration = -1
+	embed = 0
+	phase_type = PROJREACT_MOBS|PROJREACT_BLOB
+	var/has_O2_in_mix = 0
+	var/datum/gas_mixture/gas_jet = null
+	var/max_range = 10
+	var/stepped_range = 0
+	var/burn_strength = 0
+	var/has_reacted = 0
+	var/burn_damage = 0
+
+/obj/item/projectile/bullet/fire_plume/OnFired()
+	..()
+	if(!gas_jet)
+		bullet_die()
+
+/obj/item/projectile/bullet/fire_plume/proc/calculate_burn_strength(var/turf/T = null)
+	if(!gas_jet)
+		return
+
+	if(!has_O2_in_mix && T)
+		var/turf/location = get_turf(src)
+		var/datum/gas_mixture/turf_gases = location.return_air()
+		var/turf_total_moles = turf_gases.total_moles()
+		if(turf_total_moles)
+			var/o2_concentration = turf_gases.oxygen/turf_total_moles
+			if(!(o2_concentration > 0.01))
+				return
+		var/datum/gas_mixture/temp_gas_jet = new()
+		temp_gas_jet.copy_from(gas_jet)
+		temp_gas_jet.merge(turf_gases)
+//		to_chat(world, "PLUME CONTAINS [temp_gas_jet.oxygen] O2 AND [temp_gas_jet.toxins] PLASMA")
+		if(temp_gas_jet.temperature < 373.15)
+			temp_gas_jet.temperature = 383.15
+			temp_gas_jet.update_values()
+		for(var/i = 1; i <= 20; i++)
+			temp_gas_jet.react()
+		burn_strength = temp_gas_jet.temperature
+		to_chat(world, "[burn_strength]")
+
+	else
+//		to_chat(world, "PLUME CONTAINS [gas_jet.oxygen] O2 AND [gas_jet.toxins] PLASMA")
+		if(!has_reacted)
+			if(gas_jet.temperature < 373.15)
+				gas_jet.temperature = 383.15
+				gas_jet.update_values()
+			for(var/i = 1; i <= 20; i++)
+				gas_jet.react()
+			has_reacted = 1
+		burn_strength = gas_jet.temperature
+		to_chat(world, "[burn_strength]")
+
+	burn_damage = burn_strength/100
+	if(burn_damage > 50)
+		burn_damage = burn_damage/4
+	new /obj/effect/fire_blast(get_turf(src.loc), burn_damage)
+
+/obj/item/projectile/bullet/fire_plume/process_step()
+	..()
+	if(stepped_range <= max_range)
+		stepped_range++
+	else
+		bullet_die()
+	calculate_burn_strength(get_turf(src))
+
+/obj/item/projectile/bullet/fire_plume/ex_act()
+	return
