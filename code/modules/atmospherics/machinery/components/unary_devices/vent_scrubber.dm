@@ -10,6 +10,7 @@
 	active_power_usage = 60
 	can_unwrench = 1
 	welded = 0
+	level = 1
 
 	var/id_tag = null
 	var/on = 0

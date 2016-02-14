@@ -52,7 +52,7 @@
 
 	add_logs(A, D, "punched")
 
-	if((D.stat != DEAD) && damage >= 9)
+	if((D.stat != DEAD) && damage >= A.dna.species.punchstunthreshold)
 		D.visible_message("<span class='danger'>[A] has weakened [D]!!</span>", \
 								"<span class='userdanger'>[A] has weakened [D]!</span>")
 		D.apply_effect(4, WEAKEN, armor_block)
@@ -381,7 +381,7 @@
 	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return 1
-	..()
+	D.grabbedby(A,1)
 	var/obj/item/weapon/grab/G = A.get_active_hand()
 	if(G)
 		G.state = GRAB_AGGRESSIVE //Instant aggressive grab

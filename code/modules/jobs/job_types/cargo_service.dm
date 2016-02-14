@@ -86,6 +86,7 @@ Shaft Miner
 
 	backpack = /obj/item/weapon/storage/backpack/industrial
 	satchel = /obj/item/weapon/storage/backpack/satchel_eng
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
 	box = /obj/item/weapon/storage/box/engineer
 
 /*
@@ -185,6 +186,9 @@ Botanist
 	suit = /obj/item/clothing/suit/apron
 	gloves  =/obj/item/clothing/gloves/botanic_leather
 	suit_store = /obj/item/device/analyzer/plant_analyzer
+
+	backpack = /obj/item/weapon/storage/backpack/botany
+	satchel = /obj/item/weapon/storage/backpack/satchel_hyd
 
 
 /*

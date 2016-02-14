@@ -336,7 +336,7 @@
 		user.drop_item()
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
-		speak_chance *= 2
+		speak_chance *= 1.27 // 20 crackers to go from 1% to 100%
 		speech_shuffle_rate += 10
 		user << "<span class='notice'>[src] eagerly devours the cracker.</span>"
 	..()
