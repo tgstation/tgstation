@@ -83,6 +83,7 @@
 	if(!dna)
 		dna = new /datum/dna(null)
 		dna.species=species.name
+		dna.b_type = random_blood_type()
 
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
 	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")

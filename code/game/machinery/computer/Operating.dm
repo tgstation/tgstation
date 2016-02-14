@@ -62,7 +62,7 @@
 <BR>
 <B>Name:</B> [src.victim.real_name]<BR>
 <B>Age:</B> [src.victim.age]<BR>
-<B>Blood Type:</B> [src.victim.b_type]<BR>
+<B>Blood Type:</B> [src.victim.dna.b_type]<BR>
 <BR>
 <B>Health:</B> [src.victim.health]<BR>
 <B>Brute Damage:</B> [src.victim.getBruteLoss()]<BR>

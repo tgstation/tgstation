@@ -292,8 +292,7 @@ SELECT
     body.eyes_green,
     body.eyes_blue,
     body.underwear,
-    body.backbag,
-    body.b_type
+    body.backbag
 FROM
     players
 INNER JOIN
@@ -374,7 +373,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 
 	underwear			= text2num(preference_list["underwear"])
 	backbag				= text2num(preference_list["backbag"])
-	b_type				= preference_list["b_type"]
 
 	organ_data["l_arm"] = preference_list["l_arm"]
 	organ_data["r_arm"] = preference_list["r_arm"]
@@ -431,7 +429,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 
 	underwear		= sanitize_integer(underwear, 1, underwear_m.len, initial(underwear))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
-	b_type			= sanitize_text(b_type, initial(b_type))
 	//be_special      = sanitize_integer(be_special, 0, 65535, initial(be_special))
 
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
@@ -496,7 +493,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	S["eyes_blue"]			>> b_eyes
 	S["underwear"]			>> underwear
 	S["backbag"]			>> backbag
-	S["b_type"]				>> b_type
 
 	//Jobs
 	S["alternate_option"]	>> alternate_option
@@ -550,7 +546,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	b_eyes			= sanitize_integer(b_eyes, 0, 255, initial(b_eyes))
 	underwear		= sanitize_integer(underwear, 1, underwear_m.len, initial(underwear))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
-	b_type			= sanitize_text(b_type, initial(b_type))
 
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -664,16 +659,16 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	check.Add("SELECT player_ckey FROM body WHERE player_ckey = ? AND player_slot = ?", ckey, slot)
 	if(check.Execute(db))
 		if(!check.NextRow())
-			q.Add("INSERT INTO body (player_ckey,player_slot,hair_red,hair_green,hair_blue,facial_red,facial_green,facial_blue,skin_tone,hair_style_name,facial_style_name,eyes_red,eyes_green,eyes_blue,underwear,backbag,b_type) \
-					VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", ckey, slot, r_hair, g_hair, b_hair, r_facial, g_facial, b_facial, s_tone, h_style, f_style, r_eyes, g_eyes, b_eyes, underwear, backbag, b_type)
+			q.Add("INSERT INTO body (player_ckey,player_slot,hair_red,hair_green,hair_blue,facial_red,facial_green,facial_blue,skin_tone,hair_style_name,facial_style_name,eyes_red,eyes_green,eyes_blue,underwear,backbag) \
+					VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", ckey, slot, r_hair, g_hair, b_hair, r_facial, g_facial, b_facial, s_tone, h_style, f_style, r_eyes, g_eyes, b_eyes, underwear, backbag)
 			if(!q.Execute(db))
 				message_admins("Error #:[q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 			to_chat(user, "Created Body")
 		else
-			q.Add("UPDATE body SET hair_red=?,hair_green=?,hair_blue=?,facial_red=?,facial_green=?,facial_blue=?,skin_tone=?,hair_style_name=?,facial_style_name=?,eyes_red=?,eyes_green=?,eyes_blue=?,underwear=?,backbag=?,b_type=? WHERE player_ckey = ? AND player_slot = ?",\
-									r_hair, g_hair, b_hair, r_facial, g_facial, b_facial, s_tone, h_style, f_style, r_eyes, g_eyes, b_eyes, underwear, backbag, b_type, ckey, slot)
+			q.Add("UPDATE body SET hair_red=?,hair_green=?,hair_blue=?,facial_red=?,facial_green=?,facial_blue=?,skin_tone=?,hair_style_name=?,facial_style_name=?,eyes_red=?,eyes_green=?,eyes_blue=?,underwear=?,backbag=? WHERE player_ckey = ? AND player_slot = ?",\
+									r_hair, g_hair, b_hair, r_facial, g_facial, b_facial, s_tone, h_style, f_style, r_eyes, g_eyes, b_eyes, underwear, backbag, ckey, slot)
 			if(!q.Execute(db))
 				message_admins("Error #:[q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
@@ -798,7 +793,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	S["eyes_blue"]             << b_eyes
 	S["underwear"]             << underwear
 	S["backbag"]               << backbag
-	S["b_type"]                << b_type
 
 	//Jobs
 	S["alternate_option"]      << alternate_option

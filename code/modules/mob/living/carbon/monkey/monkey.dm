@@ -81,14 +81,14 @@
 			setGender(pick(MALE, FEMALE))
 		dna = new /datum/dna( null )
 		dna.real_name = real_name
-		dna.b_type = pick("A+","A-","AB+","AB-","O+","O-")
+		dna.b_type = random_blood_type()
 		dna.ResetSE()
 		dna.ResetUI()
 		//dna.uni_identity = "00600200A00E0110148FC01300B009"
 		//dna.SetUI(list(0x006,0x002,0x00A,0x00E,0x011,0x014,0x8FC,0x013,0x00B,0x009))
 		//dna.struc_enzymes = "43359156756131E13763334D1C369012032164D4FE4CD61544B6C03F251B6C60A42821D26BA3B0FD6"
 		//dna.SetSE(list(0x433,0x591,0x567,0x561,0x31E,0x137,0x633,0x34D,0x1C3,0x690,0x120,0x321,0x64D,0x4FE,0x4CD,0x615,0x44B,0x6C0,0x3F2,0x51B,0x6C6,0x0A4,0x282,0x1D2,0x6BA,0x3B0,0xFD6))
-		dna.unique_enzymes = md5(name)
+		dna.unique_enzymes = md5(name) //Possibly not working?
 
 		// We're a monkey
 		dna.SetSEState(MONKEYBLOCK,   1)

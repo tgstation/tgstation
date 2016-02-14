@@ -167,3 +167,16 @@ proc/add_ghostlogs(var/mob/user, var/obj/target, var/what_done, var/admin=1, var
 
 /mob/proc/isVentCrawling()
 	return (istype(loc, /obj/machinery/atmospherics)) // Crude but no other situation would put them inside of this
+
+/proc/random_blood_type()
+	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+	//https://en.wikipedia.org/wiki/Blood_type_distribution_by_country
+	/*return pick(\
+		41.9; "O+",\
+		31.2; "A+",\
+		15.4; "B+",\
+		4.8; "AB+",\
+		2.9; "O-",\
+		2.7; "A-",\
+		0.8; "B-",\
+		0.3; "AB-")*/

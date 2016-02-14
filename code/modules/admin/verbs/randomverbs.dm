@@ -445,7 +445,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.setGender(record_found.fields["sex"])
 		new_character.age = record_found.fields["age"]
-		new_character.b_type = record_found.fields["b_type"]
 	else
 		new_character.setGender(pick(MALE,FEMALE))
 		var/datum/preferences/A = new()
@@ -467,6 +466,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(record_found)//Pull up their name from database records if they did have a mind.
 		new_character.dna = new()//Let's first give them a new DNA.
 		new_character.dna.unique_enzymes = record_found.fields["b_dna"]//Enzymes are based on real name but we'll use the record for conformity.
+		new_character.dna.b_type = record_found.fields["b_type"]
 
 		// I HATE BYOND.  HATE.  HATE. - N3X
 		var/list/newSE= record_found.fields["enzymes"]
