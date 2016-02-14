@@ -8,7 +8,20 @@
 	icon_state = "0"
 	var/state = 0
 	var/obj/item/weapon/circuitboard/circuit = null
+	var/computerframepasschance = 20
 //	weight = 1.0E8
+
+
+/obj/structure/computerframe/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0)
+		return 1
+	if(istype(mover) && mover.checkpass(PASSGRILLE))
+		return prob(computerframepasschance)
+	else
+		if(istype(mover, /obj/item/projectile))
+			return prob(computerframepasschance)
+		else
+			return 0
 
 /obj/item/weapon/circuitboard
 	density = 0
