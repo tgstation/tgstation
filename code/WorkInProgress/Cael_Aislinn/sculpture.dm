@@ -237,6 +237,20 @@
 		else
 			entry_vent = null
 
+//This performs an immediate neck snap check, meant to avoid people cheesing SCP-173 by just running faster than Life() refresh
+/mob/living/simple_animal/sculpture/proc/check_snap_neck()
+
+	//See if we're able to strangle anyone
+	for(var/mob/living/carbon/human/M in get_turf(src))
+		if(M.stat == CONSCIOUS && check_los())
+			snap_neck(M)
+			break
+
+/mob/living/simple_animal/sculpture/forceMove(atom/destination, var/no_tp = 0)
+
+	..()
+	check_snap_neck()
+
 /mob/living/simple_animal/sculpture/proc/snap_neck(var/mob/living/target)
 
 	if(!check_los())
@@ -271,5 +285,22 @@
 	if(!check_los())
 		snap_neck(AM)
 
+//You cannot destroy SCP-173, fool!
 /mob/living/simple_animal/sculpture/ex_act(var/severity)
-	//You cannot destroy SCP-173, fool!
+
+//But seriously, you just can't
+/mob/living/simple_animal/sculpture/Del()
+
+	replace_SCP()
+	..()
+
+//Someone tried to use a cheese to kill SCP, warp him at any blob start (nuke disk method
+/mob/living/simple_animal/sculpture/proc/replace_SCP()
+	if(blobstart.len)
+		visible_message("<span class='sinister'>\The [src] appears as if it was destroyed, but as you sigh with relief, rumbling stone echoes through your mind.</span>")
+		var/picked_turf = get_turf(pick(blobstart))
+		var/picked_area = formatLocation(picked_turf)
+		var/log_message = "[type] has been 'destroyed'. Creating one at"
+		log_game("[log_message] [picked_area]")
+		message_admins("[log_message] [formatJumpTo(picked_turf, picked_area)]")
+		new /mob/living/simple_animal/sculpture(picked_turf)
