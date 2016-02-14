@@ -42,7 +42,7 @@
 			var/usedName = demonName
 			if(!prob(correctness))
 				usedName += "x"
-			var/datum/demoninfo/demon = demonInfo(usedName)
+			var/datum/demoninfo/demon = demonInfo(usedName, 0)
 			user << browse("Information on [demonName]<br><br><br>[demon.banlore]<br>[demon.banelore]<br>[demon.obligationlore]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		sleep(10)
 		if(!prob(willpower))

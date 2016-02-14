@@ -18,26 +18,27 @@ var/list/allDemons = list()
 	var/banetype
 	var/list/datum/mind/soulsOwned = new
 
-/proc/randomDemonInfo(var/name = randomDemonName())
+/proc/randomDemonInfo(var/name = randomDemonName(), var/saveDetails = 0)
 	var/datum/demoninfo/demon = new
 	demon.truename = name
 	var/temp = randomdemonbane()
-	demon.banelaw = temp[1]
 	demon.banelore = temp[2]
-	demon.banetype = temp[3]
 	temp = randomdemonobligation()
-	demon.obligationlaw = temp[1]
 	demon.obligationlore = temp[2]
 	temp = randomdemonban()
-	demon.banlaw = temp[1]
 	demon.banlore = temp[2]
+		if(saveDetails)
+		demon.banelaw = temp[1]
+		demon.banlaw = temp[1]
+		demon.obligationlaw = temp[1]
+		demon.banetype = temp[3]
 	return demon
 
-/proc/demonInfo(var/name)
+/proc/demonInfo(var/name, var/saveDetails = 1)
 	if(allDemons[name])
 		return allDemons[name]
 	else
-		var/datum/demoninfo/demon = randomDemonInfo(name)
+		var/datum/demoninfo/demon = randomDemonInfo(name, saveDetails)
 		allDemons[name] = demon
 		return demon
 	
