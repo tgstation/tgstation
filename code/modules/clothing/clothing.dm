@@ -330,7 +330,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/New()
 	if(random_sensor)
-		sensor_mode = pick(0,1,1,2,2,2,3,3,3,3)
+		sensor_mode = pickweight(list(0 = 1, 1 = 2, 2 = 3, 3 = 4))
 	adjusted = 0
 	suit_color = item_color
 	..()
