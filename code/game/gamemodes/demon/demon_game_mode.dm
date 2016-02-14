@@ -25,3 +25,18 @@
 		text += "<br>"
 
 /datum/game_mode/demon
+
+
+/datum/game_mode/proc/finalize_demon(datum/mind/demon_mind)
+	var/mob/living/carbon/human/S = demon_mind.current
+	demon_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon(null))
+	demon_mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/demonic(null))
+	demon_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_contract(null))
+	demon_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork(null))
+	var/trueName= randomDemonName()
+	demon_mind.demoninfo = demonInfo(trueName, 1)
+	spawn(0)
+		update_shadow_icons_added(demon_mind)
+		if(demon_mind.assigned_role == "Clown")
+			S << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
+			S.dna.remove_mutation(CLOWNMUT)

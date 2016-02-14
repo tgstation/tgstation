@@ -15,10 +15,10 @@
 		if(L.soulOwner != L)
 			count++
 	return count>=quantity
-
-/datum/objective/demon/ascend
+/*
+/datum/objective/demon/ascend		//Ascension is not implemented yet.
 	explanation_text = "Ascend to an archdemon."
-
+*/
 /datum/objective/demon/soulquality
 	explanation_text = "You shouldn't see this text.  Error:Demon2"
 	var/contractType

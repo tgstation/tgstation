@@ -1162,6 +1162,48 @@
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 				log_admin("[key_name(usr)] has thrall'ed [current].")
 
+	else if(href_list["demon"])
+		switch(href_list["demon"])
+			if("clear")
+				if(src in ticker.mode.demons)
+					ticker.mode.demons -= src
+					special_role = null
+					current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a demon!</span>"
+					remove_spell(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon)
+					remove_spell(/obj/effect/proc_holder/spell/dumbfire/fireball/demonic)
+					remove_spell(/obj/effect/proc_holder/spell/targeted/summon_contract)
+					remove_spell(/obj/effect/proc_holder/spell/targeted/summon_pitchfork)
+					message_admins("[key_name_admin(usr)] has de-demon'ed [current].")
+					log_admin("[key_name(usr)] has de-demon'ed [current].")
+				else if(src in ticker.mode.sintouched)
+					ticker.mode.sintouched -= src
+					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")
+					log_admin("[key_name(usr)] has de-sintouch'ed [current].")
+			if("demon")
+				if(!ishuman(current))
+					usr << "<span class='warning'>This only works on humans!</span>"
+					return
+				ticker.mode.demons += src
+				special_role = "Demon"
+				ticker.mode.finalize_demon(src)
+				current << "<span class='warning'><b>You remember your link to the infernal.  You are [src.demoninfo.truename], an agent of hell, a demon.  And you were sent to the plane of creation for a reason.  A greater  \
+				purpose.  Convince the crew to sin, and embroiden Hell's grasp. \
+				</b></span>"
+				current << "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>"
+				current << src.demoninfo.banelaw
+				current << src.demoninfo.banlaw
+				current << src.demoninfo.obligationlaw
+				current << "<br/><br/> <span class='warning'>Remember, the crew can research your weaknesses if they find out your demon name.</span>"
+			if("sintouched")
+				if(ishuman(current))
+					ticker.mode.sintouched += src
+					var/mob/living/carbon/human/H = current
+					H.influenceSin()
+					message_admins("[key_name_admin(usr)] has sintouch'ed [current].")
+				else
+					usr << "<span class='warning'>This only works on humans!</span>"
+					return
+
 	else if(href_list["abductor"])
 		switch(href_list["abductor"])
 			if("clear")
