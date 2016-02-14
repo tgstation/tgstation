@@ -11,28 +11,27 @@
 
 /obj/item/weapon/sharpener/attackby(obj/item/I, mob/user, params)
 	if(used)
-		user << "<span class='notice'>The sharpening block is too dull to use again.</span>"
+		user << "<span class='notice'>The sharpening block is too worn to use again.</span>"
 		return
 	if(I.force >= max || I.throwforce >= max)
 		user << "<span class='notice'>[I] is much too powerful to sharpen further.</span>"
 		return
+	if(I.block_chance > 0)
+		user << "<span class='notice'>Sharpening [I] would make it completely ineffective at blocking. You decide against it.</span>"//blame zilenan
+		return
 	if(istype(I, /obj/item/weapon))
-		user << "<span class='notice'>You sharpen [I] with [src], making it much more deadly than before.</span>"
+		user.visible_message("<span class='notice'>[user] sharpens [I] with [src]!</span>", "<span class='notice'>You sharpen [I], making it much more deadly than before.</span>")
 		I.sharpness = IS_SHARP
-		I.force = (I.force + increment)
-		I.throwforce = (I.throwforce + increment)
+		I.force = Clamp(I.force + increment, 0, max)
+		I.throwforce = Clamp(I.throwforce + increment, 0, max)
 		I.name = "[prefix] [I.name]"
-		src.name = "dull [src.name]"
-		src.desc = "[src.desc] At least, it used to."
+		name = "worn out [name]"
+		desc = "[desc] At least, it used to."
 		used = 1
-		if(I.force > max)//if the item's force exceeds 15 after 5 force is added,
-			I.force = max//set it back to 15
-		if(I.throwforce > max)//do this again for throwforce
-			I.throwforce = max
 
 /obj/item/weapon/sharpener/super
 	name = "super sharpening block"
-	desc = "A block that will make your weapon sharper than Einstein on adderol."
+	desc = "A block that will make your weapon sharper than Einstein on adderall."
 	increment = 200
 	max = 200
 	prefix = "super-sharpened"
