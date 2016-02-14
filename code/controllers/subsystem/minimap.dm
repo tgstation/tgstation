@@ -98,7 +98,7 @@ var/datum/subsystem/minimap/SSminimap
 			flatten.Insert(minimap, "", SOUTH, 1, 0)
 			del(minimap)
 			minimap = flatten
-			sleep -1
+			sleep(-1)
 
 	// Create a new icon and insert the generated minimap, so that BYOND doesn't generate different directions.
 	var/icon/final = new /icon()
