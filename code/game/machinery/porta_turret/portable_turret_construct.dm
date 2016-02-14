@@ -82,18 +82,15 @@
 
 		if(PTURRET_INTERNAL_ARMOUR_ON)
 			if(istype(I, /obj/item/weapon/gun/energy)) //the gun installation part
-
-				if(isrobot(user))
-					return
-				var/obj/item/weapon/gun/energy/E = I //typecasts the item to an energy gun
+				var/obj/item/weapon/gun/energy/E = I
 				if(!user.unEquip(I))
 					user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
 					return
-				installation = I.type //installation becomes I.type
+				installation = I.type
 				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
 				user << "<span class='notice'>You add [I] to the turret.</span>"
 				build_step = PTURRET_GUN_EQUIPPED
-				qdel(I) //delete the gun :(
+				qdel(I)
 				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
