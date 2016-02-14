@@ -162,10 +162,12 @@
 		return
 
 	client.screen -= hud_used.hide_actions_toggle
-	for(var/datum/action/A in actions)
+	for(var/action in actions)
+		var/datum/action/A = action
 		if(A.button)
 			client.screen -= A.button
-
+			contents -= A.button
+	var/hidden = 0
 	if(hud_used.action_buttons_hidden)
 		if(!hud_used.hide_actions_toggle)
 			hud_used.hide_actions_toggle = new(hud_used)
@@ -176,27 +178,25 @@
 			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,1)
 
 		client.screen += hud_used.hide_actions_toggle
-		return
+		hidden = 1
 
 	var/button_number = 0
-	for(var/datum/action/A in actions)
+	for(var/action in actions)
 		button_number++
-		if(A.button == null)
-			var/obj/screen/movable/action_button/N = new(hud_used)
-			N.owner = A
-			A.button = N
+		var/datum/action/A = action
 
+		//speed up processing by making this local.
 		var/obj/screen/movable/action_button/B = A.button
-
 		B.UpdateIcon()
 
 		B.name = A.UpdateName()
 
-		client.screen += B
-
-		if(!B.moved)
-			B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
-			//hud_used.SetButtonCoords(B,button_number)
+		contents += B
+		if (!hidden)
+			client.screen += B
+			if(!B.moved)
+				B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
+				//hud_used.SetButtonCoords(B,button_number)
 
 	if(button_number > 0)
 		if(!hud_used.hide_actions_toggle)
