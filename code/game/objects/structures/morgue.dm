@@ -343,7 +343,7 @@
 			return
 		if(locate(/mob/living/simple_animal/sculpture) in inside)
 			to_chat(user, "<span class='warning'>You try to toggle the crematorium on, but all you hear is scrapping stone.</span>")
-
+			return
 		for (var/mob/M in viewers(src))
 			if(!M.hallucinating())
 				M.show_message("<span class='warning'>You hear a roar as the crematorium activates.</span>", 1)
