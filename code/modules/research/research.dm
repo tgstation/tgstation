@@ -129,14 +129,14 @@ research holder datum.
 
 /datum/research/proc/UpdateDesigns(obj/item/I, list/temp_tech)
 	for(var/T in temp_tech)
-		if(temp_tech[T] - 1 >= known_tech[T])
-			for(var/datum/design/D in known_designs)
-				if(D.req_tech[T])
-					D.reliability = min(100, D.reliability + 1)
-					if(D.build_path == I.type)
-						D.reliability = min(100, D.reliability + rand(1,3))
-						if(I.crit_fail)
-							D.reliability = min(100, D.reliability + rand(3, 5))
+		for(var/v in known_designs)
+			var/datum/design/D = known_designs[v]
+			if(D.req_tech[T])
+				D.reliability = min(100, D.reliability + 1)
+				if(D.build_path == I.type)
+					D.reliability = min(100, D.reliability + rand(1,3))
+					if(I.crit_fail)
+						D.reliability = min(100, D.reliability + rand(3, 5))
 
 /datum/research/proc/FindDesignByID(id)
 	return known_designs[id]
