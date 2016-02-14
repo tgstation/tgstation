@@ -24,7 +24,7 @@ mob/living/carbon/proc/handle_hallucinations()
 	handling_hal = 1
 	while(hallucination > 20)
 		sleep(rand(200,500)/(hallucination/25))
-		var/halpick = rand(1,104)
+		var/halpick = rand(1,106)
 		switch(halpick)
 			if(0 to 15)
 				//Screwy HUD
@@ -277,9 +277,17 @@ mob/living/carbon/proc/handle_hallucinations()
 						spawn(duration)
 							if(C)
 								C.images.Remove(foodie) //Remove the image from hallucinating mob
+			if(87 to 88) //Turns your screen
+				var/current_client_dir = client.dir
+				var/duration = rand(10 SECONDS, 40 SECONDS)
+
+				client.dir = turn(client.dir, pick(90, 180, 270))
+				to_chat(src, "<span class='danger'>[pick("You feel lost.", "The walls suddenly start moving.", "Everything around you shifts and distorts.")]</span>")
+
+				spawn(duration)
+					client.dir = current_client_dir
 
 	handling_hal = 0
-
 
 /*obj/machinery/proc/mockpanel(list/buttons,start_txt,end_txt,list/mid_txts)
 
