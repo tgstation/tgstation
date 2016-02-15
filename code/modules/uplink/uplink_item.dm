@@ -770,7 +770,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "The Syndicate surgery dufflebag is a toolkit containing all surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, and a muzzle."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
-	cost = 4
+	cost = 3
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Military Belt"
