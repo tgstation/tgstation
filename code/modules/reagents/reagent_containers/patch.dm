@@ -2,8 +2,8 @@
 	name = "chemical patch"
 	desc = "A chemical patch for touch based applications."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bandaid_generic"
-	item_state = "bandaid_generic"
+	icon_state = "bandaid"
+	item_state = "bandaid"
 	possible_transfer_amounts = list()
 	volume = 50
 	apply_type = PATCH
