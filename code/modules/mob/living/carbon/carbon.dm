@@ -690,10 +690,7 @@ var/const/GALOSHES_DONT_HELP = 4
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
-	eye_damage = 0
 	disabilities = 0
-	eye_blind = 0
-	eye_blurry = 0
 	ear_deaf = 0
 	ear_damage = 0
 	hallucination = 0
@@ -711,10 +708,16 @@ var/const/GALOSHES_DONT_HELP = 4
 		reagents.addiction_list = list()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	if(stat == DEAD)
-		dead_mob_list -= src
-		living_mob_list += src
-	stat = CONSCIOUS
+	var/obj/item/organ/internal/brain/BR = getorgan(/obj/item/organ/internal/brain)
+	if(BR) //can't revive if the mob has no brain
+		if(stat == DEAD)
+			dead_mob_list -= src
+			living_mob_list += src
+		stat = CONSCIOUS
+		BR.damaged_brain = 0 //if the brain itself is damaged we heal it
+	set_blindness(0)
+	set_blurriness(0)
+	set_eye_damage(0)
 	if(ishuman(src))
 		var/mob/living/carbon/human/human_mob = src
 		human_mob.restore_blood()

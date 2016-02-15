@@ -1,4 +1,15 @@
 
+/mob/living/carbon/brain/Life()
+	set invisibility = 0
+	set background = BACKGROUND_ENABLED
+
+	if (notransform)
+		return
+	if(!loc)
+		return
+	. = ..()
+	handle_emp_damage()
+
 /mob/living/carbon/brain/handle_breathing()
 	return
 
@@ -30,9 +41,15 @@
 				death()
 */
 
-/mob/living/carbon/brain/handle_status_effects()
+/mob/living/carbon/brain/proc/handle_emp_damage()
 	if(emp_damage)
-		emp_damage = max(emp_damage-1, 0)
+		if(stat == DEAD)
+			emp_damage = 0
+		else
+			emp_damage = max(emp_damage-1, 0)
+
+/mob/living/carbon/brain/handle_status_effects()
+	return
 
 /mob/living/carbon/brain/handle_disabilities()
 	return

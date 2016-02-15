@@ -469,10 +469,7 @@ Sorry Giacom. Please don't be mad :(
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
-	eye_damage = 0
 	disabilities = 0
-	eye_blind = 0
-	eye_blurry = 0
 	ear_deaf = 0
 	ear_damage = 0
 	hallucination = 0
@@ -484,6 +481,9 @@ Sorry Giacom. Please don't be mad :(
 		dead_mob_list -= src
 		living_mob_list += src
 	stat = CONSCIOUS
+	set_blindness(0)
+	set_blurriness(0)
+	set_eye_damage(0)
 	updatehealth()
 	update_fire()
 	regenerate_icons()
@@ -962,7 +962,7 @@ Sorry Giacom. Please don't be mad :(
 			src << "<span class='notice'>You're too exhausted to keep going...</span>"
 			Weaken(5)
 			setStaminaLoss(health - 2)
-		update_health_hud()
+	update_health_hud()
 
 /mob/proc/update_sight()
 	return
@@ -1101,10 +1101,6 @@ Sorry Giacom. Please don't be mad :(
 	else if(old_druggy)
 		clear_fullscreen("high")
 		clear_alert("high")
-
-
-/mob/proc/update_vision_overlays()
-	return
 
 /mob/proc/cure_blind() //when we want to cure the BLIND disability only.
 	return
