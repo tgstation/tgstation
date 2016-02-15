@@ -591,8 +591,18 @@
 					return 0
 				return 1
 		return 0 //Unsupported slot
-
 		//END MONKEY
+
+	else if(isMoMMI(M))
+		//START MOMMI ALSO THIS SO FUCKING SILLY
+		var/mob/living/silicon/robot/mommi/MoM = M
+		switch(slot)
+			if(slot_head)
+				if(MoM.head_state)
+					return 0
+				return 1
+		return 0 //Unsupported slot
+		//END MOMMI
 
 /obj/item/can_pickup(mob/living/user)
 	if(!(user) || !isliving(user)) //BS12 EDIT
