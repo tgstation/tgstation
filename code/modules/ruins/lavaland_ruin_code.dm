@@ -5,7 +5,6 @@
 
 //lavaland_surface_seed_vault.dmm
 //Seed Vault
-/obj/item/seeds/gatfruit
 
 /obj/effect/spawner/lootdrop/seed_vault
 	name = "seed vault seeds"
