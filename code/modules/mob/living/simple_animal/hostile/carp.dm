@@ -129,8 +129,7 @@
 	//Handle eating
 	if(isliving(target))
 		var/mob/living/L = target
-
-		if(!L.can_butcher) return
+		
 		if(!L.meat_type) return
 
 		increase_growth_stage(1)
