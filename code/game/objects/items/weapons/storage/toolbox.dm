@@ -1,6 +1,6 @@
 /obj/item/weapon/storage/toolbox
 	name = "toolbox"
-	desc = "Danger. Very robust."
+	desc = "A small metal box to keep your tools safe."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "red"
 	item_state = "toolbox_red"
@@ -9,7 +9,7 @@
 	throwforce = 10
 	throw_speed = 2
 	throw_range = 7
-	w_class = 4
+	w_class = 3
 	materials = list(MAT_METAL = 500)
 	origin_tech = "combat=1"
 	attack_verb = list("robusted")
@@ -67,6 +67,41 @@
 	else
 		new /obj/item/stack/cable_coil(src,30,color)
 
+/obj/item/weapon/storage/toolbox/big
+	name = "big toolbox"
+	desc = "A large metal box for keeping lots of tools. Danger. Very Robust."
+	icon_state = "blue"
+	item_state = "toolbox_blue"
+	w_class = 4
+	force = 15
+	throwforce = 18
+	max_combined_w_class = 42 //Only holds 2 w_class items though. 3 rows of 7.
+
+/obj/item/weapon/storage/toolbox/big/New()
+	..()
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/stack/cable_coil(src,30,"red")
+	new /obj/item/stack/cable_coil(src,30,"red")
+	new /obj/item/stack/cable_coil(src,30,"yellow")
+	new /obj/item/device/multitool(src)
+	new /obj/item/device/t_scanner(src)
+	new /obj/item/device/analyzer(src)
+
+
 /obj/item/weapon/storage/toolbox/syndicate
 	name = "suspicious looking toolbox"
 	icon_state = "syndicate"
@@ -75,6 +110,7 @@
 	silent = 1
 	force = 15
 	throwforce = 18
+	flags = CONDUCT
 
 /obj/item/weapon/storage/toolbox/syndicate/New()
 	..()
