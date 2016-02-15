@@ -1917,7 +1917,7 @@
 "aKS" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/wood,/area/lawoffice)
 "aKT" = (/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,/obj/structure/disposalpipe/segment,/obj/machinery/door/firedoor,/turf/simulated/floor/plasteel{dir = 8; icon_state = "neutralcorner"},/area/hallway/primary/port{name = "Port Hallway"})
 "aKU" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/apc{dir = 2; name = "Law Office APC"; pixel_y = -24},/turf/simulated/floor/wood,/area/lawoffice)
-"aKV" = (/obj/structure/filingcabinet/chestdrawer,/obj/machinery/status_display{pixel_y = -32},/obj/machinery/camera{c_tag = "Law Office"; dir = 1},/turf/simulated/floor/wood,/area/lawoffice)
+"aKV" = (/obj/machinery/status_display{pixel_y = -32},/obj/machinery/camera{c_tag = "Law Office"; dir = 1},/obj/structure/filingcabinet/employment,/turf/simulated/floor/wood,/area/lawoffice)
 "aKW" = (/obj/structure/table/wood,/obj/item/weapon/folder/red,/obj/machinery/light,/obj/machinery/newscaster{pixel_y = -32},/obj/item/weapon/book/manual/wiki/security_space_law,/turf/simulated/floor/wood,/area/lawoffice)
 "aKX" = (/obj/structure/grille,/obj/machinery/door/poddoor/shutters/preopen{id = "law"; layer = 2.9},/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating,/area/lawoffice)
 "aKY" = (/obj/structure/transit_tube{icon_state = "E-W-Pass"},/turf/simulated/floor/plating/airless,/area/space/nearstation)
