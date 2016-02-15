@@ -17,12 +17,13 @@
 /datum/game_mode/proc/auto_declare_completion_demons()
 	/var/text = ""
 	if(demons.len)
-		text += "<br><span class='big'><b>The sintouched were:</b></span>"
+		text += "<br><span class='big'><b>The demons were:</b></span>"
 		for(var/datum/mind/demon in demons)
 			text += printplayer(demon)
 			text += printdemoninfo(demon)
 			text += printobjectives(demon)
 		text += "<br>"
+	world << text
 
 /datum/game_mode/demon
 
@@ -34,6 +35,12 @@
 	demon_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_contract(null))
 	demon_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork(null))
 	var/trueName= randomDemonName()
+	var/datum/objective/demon/soulquantity/soulquant = new
+	soulquant.owner = demon_mind
+	var/datum/objective/demon/soulquality/soulqual = new
+	soulqual.owner = demon_mind
+	demon_mind.objectives += soulqual
+	demon_mind.objectives += soulquant
 	demon_mind.demoninfo = demonInfo(trueName, 1)
 	spawn(0)
 		update_shadow_icons_added(demon_mind)
