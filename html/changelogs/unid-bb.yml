@@ -34,3 +34,4 @@ delete-after: True
 changes: 
 - rscadd: Baby carps now attack unconscious mobs. When they attack living mobs enough times, they grow up.
 - rscadd: Baby carps can be fed by attacking them with meat. Feeding them has a slight chance of making them your friend, and will eventually cause them to grow up.
+- rscadd: Baby animals now consider their mother's friends their friends. This applies to space carps, too
