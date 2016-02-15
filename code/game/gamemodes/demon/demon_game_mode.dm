@@ -42,7 +42,7 @@
 	demon_mind.objectives += soulqual
 	demon_mind.objectives += soulquant
 	demon_mind.demoninfo = demonInfo(trueName, 1)
-	demon_mind.store_memory(printdemoninfo(demon))
+	demon_mind.store_memory(printdemoninfo(demon_mind))
 	spawn(0)
 		update_shadow_icons_added(demon_mind)
 		if(demon_mind.assigned_role == "Clown")
