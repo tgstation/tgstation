@@ -1,19 +1,19 @@
-#define PTURRET_UNSECURED = 0
-#define PTURRET_BOLTED = 1
-#define PTURRET_START_INTERNAL_ARMOUR = 2
-#define PTURRET_INTERNAL_ARMOUR_ON = 3
-#define PTURRET_GUN_EQUIPPED = 4
-#define PTURRET_SENSORS_ON = 5
-#define PTURRET_CLOSED = 6
-#define PTURRET_START_EXTERNAL_ARMOUR = 7
-#define PTURRET_EXTERNAL_ARMOUR_ON = 8
+#define PTURRET_UNSECURED  0
+#define PTURRET_BOLTED  1
+#define PTURRET_START_INTERNAL_ARMOUR  2
+#define PTURRET_INTERNAL_ARMOUR_ON  3
+#define PTURRET_GUN_EQUIPPED  4
+#define PTURRET_SENSORS_ON  5
+#define PTURRET_CLOSED  6
+#define PTURRET_START_EXTERNAL_ARMOUR  7
+#define PTURRET_EXTERNAL_ARMOUR_ON  8
 /obj/machinery/porta_turret_construct
 	name = "turret frame"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turret_frame"
-	density=1
+	density = 1
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
-	var/finish_name="turret"	//the name applied to the product turret
+	var/finish_name = "turret"	//the name applied to the product turret
 	var/installation = null		//the gun type installed
 	var/gun_charge = 0			//the gun charge of the gun type installed
 
@@ -73,7 +73,8 @@
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				user << "<span class='notice'>You start to remove the turret's interior metal armor...</span>"
 				if(do_after(user, 20/I.toolspeed, target = src))
-					if(!src || !WT.remove_fuel(5, user)) return
+					if(!WT.isOn() || !WT.remove_fuel(5, user)) 
+						return
 					build_step = PTURRET_BOLTED
 					user << "<span class='notice'>You remove the turret's interior metal armor.</span>"
 					new /obj/item/stack/sheet/metal( loc, 2)
@@ -83,8 +84,7 @@
 		if(PTURRET_INTERNAL_ARMOUR_ON)
 			if(istype(I, /obj/item/weapon/gun/energy)) //the gun installation part
 				var/obj/item/weapon/gun/energy/E = I
-				if(!user.unEquip(I))
-					user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
+				if(!user.drop_item())
 					return
 				installation = I.type
 				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
@@ -102,8 +102,7 @@
 		if(PTURRET_GUN_EQUIPPED)
 			if(isprox(I))
 				build_step = PTURRET_SENSORS_ON
-				if(!user.unEquip(I))
-					user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
+				if(!user.drop_item())
 					return
 				user << "<span class='notice'>You add the proximity sensor to the turret.</span>"
 				qdel(I)
@@ -137,24 +136,25 @@
 		if(PTURRET_START_EXTERNAL_ARMOUR)
 			if(istype(I, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = I
-				if(!WT.isOn()) return
+				if(!WT.isOn()) 
+					return
 				if(WT.get_fuel() < 5)
 					user << "<span class='warning'>You need more fuel to complete this task!</span>"
 
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				user << "<span class='notice'>You begin to weld the turret's armor down...</span>"
 				if(do_after(user, 30/I.toolspeed, target = src))
-					if(!src || !WT.remove_fuel(5, user))
+					if(!WT.isOn() || !WT.remove_fuel(5, user))
 						return
 					build_step = PTURRET_EXTERNAL_ARMOUR_ON
 					user << "<span class='notice'>You weld the turret's armor down.</span>"
 
 					//The final step: create a full turret
-					var/obj/machinery/porta_turret/Turret = new/obj/machinery/porta_turret(loc)
-					Turret.name = finish_name
-					Turret.installation = installation
-					Turret.gun_charge = gun_charge
-					Turret.setup()
+					var/obj/machinery/porta_turret/turret = new/obj/machinery/porta_turret(loc)
+					turret.name = finish_name
+					turret.installation = installation
+					turret.gun_charge = gun_charge
+					turret.setup()
 
 					qdel(src)
 
@@ -169,7 +169,7 @@
 		var/t = stripped_input(user, "Enter new turret name", name, finish_name)
 		if(!t)
 			return
-		if(!in_range(src, usr) && loc != usr)
+		if(!Adjacent(user))
 			return
 
 		finish_name = t

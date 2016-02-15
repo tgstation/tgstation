@@ -71,7 +71,7 @@
 
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
-		cover.Parent_Turret = src
+		cover.parent_turret = src
 	setup()
 	if(!has_cover)
 		popUp()
@@ -293,7 +293,7 @@
 			user << "<span class='notice'>You secure the exterior bolts on the turret.</span>"
 			if(has_cover)
 				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
-				cover.Parent_Turret = src //make the cover's parent src
+				cover.parent_turret = src //make the cover's parent src
 		else if(anchored)
 			anchored = 0
 			user << "<span class='notice'>You unsecure the exterior bolts on the turret.</span>"
@@ -445,7 +445,7 @@
 		else
 			if(has_cover)
 				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
-				cover.Parent_Turret = src	//assign the cover its Parent_Turret, which would be this (src)
+				cover.parent_turret = src	//assign the cover its parent_turret, which would be this (src)
 
 	if(stat & (NOPOWER|BROKEN))
 		if(!always_up)
