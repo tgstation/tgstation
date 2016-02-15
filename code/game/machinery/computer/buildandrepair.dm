@@ -151,13 +151,13 @@
 	name = "circuit board (Prisoner Management Console)"
 	build_path = /obj/machinery/computer/prisoner
 /obj/item/weapon/circuitboard/rdconsole
-	name = "circuit Board (RD Console)"
+	name = "circuit board (RD Console)"
 	build_path = /obj/machinery/computer/rdconsole/core
 /obj/item/weapon/circuitboard/mecha_control
-	name = "circuit Board (Exosuit Control Console)"
+	name = "circuit board (Exosuit Control Console)"
 	build_path = /obj/machinery/computer/mecha
 /obj/item/weapon/circuitboard/rdservercontrol
-	name = "circuit Board (R&D Server Control)"
+	name = "circuit board (R&D Server Control)"
 	build_path = /obj/machinery/computer/rdservercontrol
 /obj/item/weapon/circuitboard/crew
 	name = "circuit board (Crew Monitoring Console)"
@@ -196,22 +196,22 @@
 	var/shuttleId
 	var/possible_destinations = ""
 /obj/item/weapon/circuitboard/labor_shuttle
-	name = "circuit Board (Labor Shuttle)"
+	name = "circuit board (Labor Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/labor
 /obj/item/weapon/circuitboard/labor_shuttle/one_way
-	name = "circuit Board (Prisoner Shuttle Console)"
+	name = "circuit board (Prisoner Shuttle Console)"
 	build_path = /obj/machinery/computer/shuttle/labor/one_way
 /obj/item/weapon/circuitboard/ferry
-	name = "circuit Board (Transport Ferry)"
+	name = "circuit board (Transport Ferry)"
 	build_path = /obj/machinery/computer/shuttle/ferry
 /obj/item/weapon/circuitboard/ferry/request
-	name = "circuit Board (Transport Ferry Console)"
+	name = "circuit board (Transport Ferry Console)"
 	build_path = /obj/machinery/computer/shuttle/ferry/request
 /obj/item/weapon/circuitboard/mining_shuttle
-	name = "circuit Board (Mining Shuttle)"
+	name = "circuit board (Mining Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/mining
 /obj/item/weapon/circuitboard/white_ship
-	name = "circuit Board (White Ship)"
+	name = "circuit board (White Ship)"
 	build_path = /obj/machinery/computer/shuttle/white_ship
 /obj/item/weapon/circuitboard/holodeck// Not going to let people get this, but it's just here for future
 	name = "circuit board (Holodeck Control)"
