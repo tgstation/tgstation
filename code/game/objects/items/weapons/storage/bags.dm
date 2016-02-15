@@ -80,6 +80,10 @@
 		var/mob/living/carbon/human/H = loc
 		if(H.head == src) //If worn
 			return 0
+	else if(isMoMMI(loc))
+		var/mob/living/silicon/robot/mommi/MoM = loc
+		if(MoM.head_state == src) //If worn
+			return 0
 	return ..()
 
 /obj/item/weapon/storage/bag/plasticbag/suicide_act(mob/user)

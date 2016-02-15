@@ -414,7 +414,11 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if((H.l_store == src || H.r_store == src) && !H.get_active_hand())	//Prevents opening if it's in a pocket.
+		if((H.l_store == src || H.r_store == src || H.head == src) && !H.get_active_hand())	//Prevents opening if it's in a pocket or head slot. Terrible kludge, I'm sorry.
+			return ..()
+	else if(isMoMMI(user))
+		var/mob/living/silicon/robot/mommi/MoM = user
+		if(MoM.head_state == src) //I'm so sorry. We have exactly one storage item that goes on head, and it can't hold any items while equipped. This is so you can actually take it off.
 			return ..()
 
 	src.orient2hud(user)
