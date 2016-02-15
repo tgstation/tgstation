@@ -16,6 +16,8 @@
 
 	if(!species_type)
 		species_type = src.type
+	if(can_butcher && !meat_amount)
+		meat_amount = size
 
 /mob/living/Destroy()
 	for(var/mob/living/silicon/robot/mommi/MoMMI in player_list)
@@ -1312,7 +1314,7 @@ default behaviour is:
 	src.meat_taken++
 	src.being_butchered = 0
 
-	if(src.meat_taken < src.size)
+	if(src.meat_taken < src.meat_amount)
 		to_chat(user, "<span class='info'>You cut a chunk of meat out of \the [src].</span>")
 		return
 

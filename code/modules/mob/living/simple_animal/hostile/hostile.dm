@@ -151,7 +151,7 @@
 		if((istype(L,/mob/living/simple_animal/corgi/Ian) || istype(L,/mob/living/carbon/human/dummy)) && (faction == "adminbus mob"))
 			return 0
 		//WE DON'T ATTACK OUR FRIENDS (used by lazarus injectors, and rabid slimes)
-		if(L in friends)
+		if(friends.Find(L))
 			return 0
 		return 1
 	if(isobj(the_target))
@@ -261,6 +261,13 @@
 	LoseAggro()
 	..()
 	walk(src, 0)
+
+/mob/living/simple_animal/hostile/inherit_mind(mob/living/simple_animal/from)
+	..()
+
+	var/mob/living/simple_animal/hostile/H = from
+	if(istype(H))
+		src.friends |= H.friends
 
 /mob/living/simple_animal/hostile/proc/OpenFire(var/target)
 

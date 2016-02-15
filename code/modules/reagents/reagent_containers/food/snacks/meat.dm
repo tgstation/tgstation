@@ -4,6 +4,8 @@
 	name = "meat"
 	desc = "A slab of meat."
 	icon_state = "meat"
+	food_flags = FOOD_MEAT
+
 	var/obj/item/poisonsacs = null //This is what will contain the poison
 	New()
 		..()

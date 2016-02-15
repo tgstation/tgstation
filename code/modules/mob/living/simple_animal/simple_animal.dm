@@ -622,8 +622,8 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	var/alone = 1
 	var/mob/living/simple_animal/partner
 	var/children = 0
-	for(var/mob/M in oview(7, src))
-		if(M.stat != CONSCIOUS) //Check if it's concious FIRSTER.
+	for(var/mob/living/M in oview(7, src))
+		if(M.isUnconscious()) //Check if it's concious FIRSTER.
 			continue
 		else if(istype(M, childtype)) //Check for children FIRST.
 			children++
@@ -642,11 +642,34 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 /mob/living/simple_animal/proc/give_birth()
 	for(var/i=1; i<=child_amount; i++)
 		if(animal_count[childtype] > ANIMAL_CHILD_CAP)
-			break
+			return 0
 
 		var/mob/living/simple_animal/child = new childtype(loc)
 		if(istype(child))
-			child.faction = src.faction
+			child.inherit_mind(src)
+
+	return 1
+
+/mob/living/simple_animal/proc/grow_up()
+	if(src.type == species_type) //Already grown up
+		return
+	
+	var/mob/living/simple_animal/new_animal = new species_type(src.loc)
+	
+	if(locked_to) //Handle atom locking
+		var/atom/movable/A = locked_to
+		A.unlock_atom(src)
+		A.lock_atom(new_animal)
+	
+	new_animal.inherit_mind(src)
+	new_animal.ckey = src.ckey
+	new_animal.key = src.key
+	
+	forceMove(get_turf(src))
+	qdel(src)
+
+/mob/living/simple_animal/proc/inherit_mind(mob/living/simple_animal/from)
+	src.faction = from.faction
 
 /mob/living/simple_animal/say_understands(var/mob/other,var/datum/language/speaking = null)
 	if(other) other = other.GetSource()

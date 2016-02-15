@@ -20,6 +20,7 @@
 	health = 25
 	size = SIZE_SMALL
 
+	species_type = /mob/living/simple_animal/hostile/carp
 	can_breed = 1
 	childtype = /mob/living/simple_animal/hostile/carp/baby
 	child_amount = 1
@@ -64,10 +65,12 @@
 		if(!src) return
 
 		src.death(0)
+
 		sleep(30)
-		src.visible_message("<span class='danger'>[src]'s body explodes in a shower of gore as its offspring burst out!</span>")
-		..()
-		src.gib(meat=0)
+
+		if(..())
+			src.gib(meat=0)
+			src.visible_message("<span class='danger'>[src]'s body explodes in a shower of gore as its offspring burst out!</span>")
 
 /mob/living/simple_animal/hostile/carp/Process_Spacemove(var/check_drift = 0)
 	return 1	//No drifting in space for space carp!	//original comments do not steal
@@ -113,9 +116,75 @@
 
 	pheromones_act = PHEROMONES_FOLLOW
 
+	//Baby carps grow up when they attack a living mob enough times
+	//Unlike adults, they'll attack unconscious mobs (but not dead ones)
+	stat_attack = UNCONSCIOUS
+
+	var/growth_stage = 1 //Increased when the baby carp attacks or eats meat.
+	var/const/req_growth_to_grow_up = 15 //Baby carps have to attack a living mob 15 times to grow up
+
+/mob/living/simple_animal/hostile/carp/baby/AttackingTarget()
+	..()
+
+	//Handle eating
+	if(isliving(target))
+		var/mob/living/L = target
+		
+		if(!L.meat_type) return
+
+		increase_growth_stage(1)
+
+/mob/living/simple_animal/hostile/carp/baby/attackby(obj/W, mob/user)
+	..()
+
+	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
+		var/obj/item/weapon/reagent_containers/food/snacks/F = W
+
+		if((F.food_flags & FOOD_MEAT) && (growth_stage < req_growth_to_grow_up)) //Any meaty dish goes!
+			playsound(get_turf(src),'sound/items/eatfood.ogg', rand(10,50), 1)
+			visible_message("<span class='info'>\The [src] gobbles up \the [W]!")
+			user.drop_item(F, force_drop = 1)
+
+			if(prob(25))
+				if(!friends.Find(user))
+					friends.Add(user)
+					to_chat(user, "<span class='info'>You have gained \the [src]'s trust.</span>")
+					flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(user.client), 20)
+
+			if(F.reagents)
+				for(var/datum/reagent/N in F.reagents.reagent_list)
+					reagent_act(N.id, INGEST, N.volume)
+
+			qdel(F)
+
+		else
+
+			to_chat(user, "<span class='info'>\The [src] gracefully refuses \the [W].</span>")
+
+	return 1
+
+/mob/living/simple_animal/hostile/carp/baby/proc/increase_growth_stage(by = 1)
+	if(growth_stage >= req_growth_to_grow_up) return
+
+	growth_stage += by
+
+	if(growth_stage >= req_growth_to_grow_up)
+		//Start growing up
+		desc = "[initial(desc)] <span class='notice'>It ate a lot recently, and it appears to be ready to grow up.</span>"
+		spawn(rand(5 SECONDS, 30 SECONDS))
+			grow_up()
+
+/mob/living/simple_animal/hostile/carp/baby/reagent_act(id, method, volume)
+	..()
+
+	if(id == "nutriment" && method == INGEST)
+		increase_growth_stage(volume)
+
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
 	icon_living = "holocarp"
+
+	species_type = /mob/living/simple_animal/hostile/carp/holocarp
 	can_breed = 0
 	pheromones_act = PHEROMONES_NO_EFFECT
 	holder_type = null
