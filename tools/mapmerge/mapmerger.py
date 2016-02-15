@@ -5,8 +5,8 @@ import ast
 import re
 import collections
 import functools
-import time
-import traceback
+import dmm2tgm
+
 
 maxx = 0
 maxy = 0
@@ -17,7 +17,6 @@ def main(map_folder, tgm=0):
     list_of_files = list()
     for root, directories, filenames in os.walk(map_folder):
         for filename in [f for f in filenames if f.endswith(".dmm")]:
-        #for filename in filenames:
             list_of_files.append(pathlib.Path(root, filename))
 
     for i in range(0, len(list_of_files)):
@@ -50,21 +49,25 @@ def main(map_folder, tgm=0):
     else:
         for i in valid_indices:
             try:
+                print("MERGING: {}".format(str(list_of_files[i])))
                 if merge_map(str(list_of_files[i]), str(list_of_files[i]) + ".backup") != 1:
                     print("ERROR MERGING: {}".format(list_of_files[i]))
                 if tgm == "1":
-                    try:
-                        if os.system("..\dmm2tgm\dmm2tgm.exe \"{}\"".format(str(list_of_files[i]))) != 0:
-                            print("Conversion to tgm failed. ({})".format(str(list_of_files[i])))
-                    except:
-                        print("ERROR: call to dmm2tgm.exe failed. ({})".format(str(list_of_files[i])))
+                    dmm2tgm.convert_map(str(list_of_files[i]))
             except FileNotFoundError:
                 print("\nERROR: File not found! Make sure you run 'Prepare Maps.bat' before merging.")
                 print(str(list_of_files[i]) + " || " + str(list_of_files[i])+".backup")
-    print("\nFinished merging.")
-            
 
-def merge_map(newfile, backupfile): #JUST CLEAN MY SHIT UP
+    print("\nFinished merging.")
+
+def merge_map(newfile, backupfile):
+    global key_length
+    global maxx
+    global maxy
+    key_length = 1
+    maxx = 1
+    maxy = 1
+
     shitmap = parse_map(newfile)
     shitDict = shitmap["dictionary"] #key to tile data dictionary
     shitGrid = shitmap["grid"] #x,y coords to tiles (keys) dictionary (the map's layout)
@@ -75,7 +78,6 @@ def merge_map(newfile, backupfile): #JUST CLEAN MY SHIT UP
 
     mergeGrid = dict() #final map layout
     new_keys = dict() #mapping new keys to original keys
-    obsolete_keys = list() #mapping original keys to a newly generated key
     tempGrid = dict() #saving tiles with newly generated keys for later processing
     temp_keys = dict() #mapping new keys to newly generated keys
     unused_keys = list(originalDict.keys()) #list with all existing keys that aren't being used
@@ -84,7 +86,7 @@ def merge_map(newfile, backupfile): #JUST CLEAN MY SHIT UP
     for y in range(1,maxy):
         for x in range(1,maxx):
             shitKey = shitGrid[x,y]
-            
+
             #if this key was seen before, add it to the pile immediately
             if shitKey in new_keys:
                 mergeGrid[x,y] = new_keys[shitKey]
@@ -112,6 +114,9 @@ def merge_map(newfile, backupfile): #JUST CLEAN MY SHIT UP
                     unused_keys.remove(newKey)
                 else:
                     newKey = generate_new_key(originalDict)
+                    if newKey == "OVERFLOW": #if this happens, merging is impossible
+                        print("ERROR: Key overflow detected.")
+                        return 0
                     tempGrid[x,y] = newKey
                     temp_keys[shitKey] = newKey
                     originalDict[newKey] = shitData
