@@ -11,7 +11,7 @@
 	school = "conjuration"
 	charge_max = 150
 	cooldown_min = 10
-	action_icon_state = "bolt_action" //TODO: set icon
+	action_icon_state = "pitchfork"
 
 
 
