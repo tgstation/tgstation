@@ -1193,7 +1193,12 @@
 				current << src.demoninfo.banelaw
 				current << src.demoninfo.banlaw
 				current << src.demoninfo.obligationlaw
-				current << "<br/><br/> <span class='warning'>Remember, the crew can research your weaknesses if they find out your demon name.</span>"
+				current << "<br/><br/> <span class='warning'>Remember, the crew can research your weaknesses if they find out your demon name.</span><br>"
+				var/obj_count = 1
+				current << "<span class='notice'>Your current objectives:</span>"
+				for(var/datum/objective/objective in objectives)
+					current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+					obj_count++
 			if("sintouched")
 				if(ishuman(current))
 					ticker.mode.sintouched += src

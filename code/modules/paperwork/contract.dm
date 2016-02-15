@@ -139,29 +139,23 @@
 	add_fingerprint(user)
 
 /obj/item/weapon/paper/contract/infernal/attack(mob/M, mob/living/user)
-	if (contractType == CONTRACT_REVIVE && target == M)
-		if(M.stat == DEAD)
-			var/mob/living/carbon/human/H = M
-			H.notify_ghost_cloning("A demon has offered you revival, at the cost of your soul.")
-			H.setOxyLoss(0)
-			H.adjustToxLoss(0)
-			H.adjustBruteLoss(0)
-			H.adjustFireLoss(0)
-			H.adjustCloneLoss(0)
-			H.setBrainLoss(0)
-			H.stat = CONSCIOUS
-			H.updatehealth()
-			H.update_sight()
-			H.reload_fullscreen()
-			dead_mob_list -= H
-			living_mob_list |= list(H)
-			H.emote("gasp")
-			add_logs(user, H, "demonically revived")
-			user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
-			H.adjust_fire_stacks(1)
-			sleep(10)
-			H.ExtinguishMob()
-			H.adjustFireLoss(0)
+	if (contractType == CONTRACT_REVIVE && target == M && M.stat == DEAD && M.mind.soulOwner == M.mind)
+		var/mob/living/carbon/human/H = M
+		var/mob/dead/observer/ghost = H.get_ghost()
+		if(ghost)
+			ghost.notify_cloning("A demon has offered you revival, at the cost of your soul.",'sound/effects/genetics.ogg', H)
+			var/response = tgalert(ghost, "A demon is offering you another chance at life, at the price of your soul, do you accept?", "Infernal Resurrection", "Yes", "No", "Never for this round", 0, 200)
+			if(!ghost)
+				return		//handle logouts that happen whilst the alert is waiting for a response.
+			if(response == "Yes")
+				H.revive()
+				add_logs(user, H, "demonically revived")
+				user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
+				H.adjust_fire_stacks(20)
+				FulfillContract(H)
+				sleep(10)
+				H.ExtinguishMob()
+				H.adjustFireLoss(0)
 	else
 		..()
 
@@ -210,8 +204,8 @@
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball(null))
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
-		if(CONTRACT_REVIVE)
-			return -1 // should never happen, but just incase.
+		//if(CONTRACT_REVIVE)
+		//	return -1
 		if(CONTRACT_KNOWLEDGE)
 			user.dna.add_mutation(XRAY)
 			for(var/datum/atom_hud/H in huds)
