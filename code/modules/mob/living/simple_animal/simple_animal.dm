@@ -653,13 +653,19 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 /mob/living/simple_animal/proc/grow_up()
 	if(src.type == species_type) //Already grown up
 		return
-
-	forceMove(get_turf(src))
+	
 	var/mob/living/simple_animal/new_animal = new species_type(src.loc)
-
+	
+	if(locked_to) //Handle atom locking
+		var/atom/movable/A = locked_to
+		A.unlock_atom(src)
+		A.lock_atom(new_animal)
+	
 	new_animal.inherit_mind(src)
 	new_animal.ckey = src.ckey
 	new_animal.key = src.key
+	
+	forceMove(get_turf(src))
 	qdel(src)
 
 /mob/living/simple_animal/proc/inherit_mind(mob/living/simple_animal/from)
