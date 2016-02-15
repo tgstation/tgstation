@@ -42,9 +42,8 @@
 	demon_mind.objectives += soulqual
 	demon_mind.objectives += soulquant
 	demon_mind.demoninfo = demonInfo(trueName, 1)
-	demon_mind.store_memory(printdemoninfo(demon_mind))
-	spawn(0)
-		update_shadow_icons_added(demon_mind)
+	demon_mind.store_memory("Your demonic true name is [demon_mind.demoninfo.truename]<br>[demon_mind.demoninfo.banlaw]<br>[demon_mind.demoninfo.banelaw]<br>[demon_mind.demoninfo.obligationlaw]<br>")
+	spawn(10)
 		if(demon_mind.assigned_role == "Clown")
 			S << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
 			S.dna.remove_mutation(CLOWNMUT)
