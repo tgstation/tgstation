@@ -130,7 +130,7 @@
 	hitsound = 'sound/weapons/blade1.ogg'
 	icon_state = "swordblue"
 	item_state = "swordblue"
-	desc = "If you strike me down, I shall adminhelp more obnoxiously than you can possibly imagine."
+	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
 	slot_flags = SLOT_BELT
 
 /obj/item/weapon/nullrod/claymore/saber/red
@@ -138,12 +138,6 @@
 	icon_state = "swordred"
 	item_state = "swordred"
 	desc = "Woefully ineffective when used on steep terrain."
-
-/obj/item/weapon/nullrod/claymore/saber/red/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
-	if(prob(20))
-		var/phrase = pick("No...no no, YOU will die!!!", "YEAAAAAAAARGH!!!", "I'm too weak, please, don't kill me!!!", "It's treason, then!")
-		owner.say("[phrase]")
-	..()
 
 /obj/item/weapon/nullrod/sord
 	name = "\improper UNREAL SORD"
@@ -261,7 +255,7 @@
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, now used to harass the clown."
 	w_class = 4
 	force = 15
-	block_chance = 40 //Doesn't fit on your back, so a bit better at blocking
+	block_chance = 40
 	slot_flags = SLOT_BACK
 	sharpness = IS_BLUNT
 	hitsound = "swing_hit"
