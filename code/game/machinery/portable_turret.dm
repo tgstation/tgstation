@@ -1,8 +1,3 @@
-/*		Portable Turrets:
-		Constructed from metal, a gun of choice, and a prox sensor.
-		This code is slightly more documented than normal, as requested by XSI on IRC.
-*/
-
 /obj/machinery/porta_turret
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
@@ -43,8 +38,8 @@
 	var/has_cover = 1		//Hides the cover
 
 	var/obj/machinery/porta_turret_cover/cover = null	//the cover that is covering this turret
-	var/last_fired = 0		//1: if the turret is cooling down from a shot, 0: turret is ready to fire
-	var/shot_delay = 15		//1.5 seconds between each shot
+	var/last_fired = 0		//world.time the turret last fired
+	var/shot_delay = 15		//ticks until next shot (1.5 ?)
 
 	var/check_records = 1	//checks if it can use the security records
 	var/criminals = 1		//checks if it can shoot people on arrest
@@ -627,37 +622,33 @@
 	return
 
 /obj/machinery/porta_turret/proc/shootAt(atom/movable/target)
-	if(!emagged)	//if it hasn't been emagged, it has to obey a cooldown rate
-		if(last_fired || !raised)	//prevents rapid-fire shooting, unless it's been emagged
+	if(!raised) //the turret has to be raised in order to fire - makes sense, right?
+		return
+
+	if(!emagged)	//if it hasn't been emagged, cooldown before shooting again
+		if(last_fired + shot_delay > world.time)
 			return
-		last_fired = 1
-		spawn()
-			sleep(shot_delay)
-			last_fired = 0
+		last_fired = world.time
 
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
 	if(!istype(T) || !istype(U))
 		return
 
-	if(!raised) //the turret has to be raised in order to fire - makes sense, right?
-		return
-
-	//any emagged turrets will shoot extremely fast! This not only is deadly, but drains a lot power!
 	icon_state = "[base_icon_state][active_state]"
 	var/obj/item/projectile/A
-	if(emagged)
-		A = new eprojectile(T)
-		playsound(loc, eshot_sound, 75, 1)
-	else
-		A = new projectile(T)
-		playsound(loc, shot_sound, 75, 1)
-	A.original = target
+	//any emagged turrets drains 2x power and uses a different projectile?
 	if(!emagged)
 		use_power(reqpower)
+		A = new projectile(T)
+		playsound(loc, shot_sound, 75, 1)
 	else
 		use_power(reqpower * 2)
+		A = new eprojectile(T)
+		playsound(loc, eshot_sound, 75, 1)
+
 	//Shooting Code:
+	A.original = target
 	A.current = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x

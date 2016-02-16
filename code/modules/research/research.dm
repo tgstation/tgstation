@@ -128,15 +128,15 @@ research holder datum.
 			KT.level = max((KT.level + 1), (level - 1))
 
 /datum/research/proc/UpdateDesigns(obj/item/I, list/temp_tech)
-	for(var/T in temp_tech)
-		if(temp_tech[T] - 1 >= known_tech[T])
-			for(var/datum/design/D in known_designs)
-				if(D.req_tech[T])
-					D.reliability = min(100, D.reliability + 1)
-					if(D.build_path == I.type)
-						D.reliability = min(100, D.reliability + rand(1,3))
-						if(I.crit_fail)
-							D.reliability = min(100, D.reliability + rand(3, 5))
+	for(var/v in known_designs)
+		var/datum/design/D = known_designs[v]
+		var/shared_tech = length(temp_tech & D.req_tech)
+		if(shared_tech)
+			D.reliability = min(100, D.reliability + shared_tech)
+			if(D.build_path == I.type)
+				D.reliability = min(100, D.reliability + shared_tech * rand(1,3))
+				if(I.crit_fail)
+					D.reliability = min(100, D.reliability + shared_tech * rand(3, 5))
 
 /datum/research/proc/FindDesignByID(id)
 	return known_designs[id]
