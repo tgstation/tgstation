@@ -31,7 +31,7 @@
     </ui-section>
     <ui-section label='Laws'>
       {{#each data.laws}}
-        <span class='highlight'>{{.}}</span>
+        <span class='highlight'>{{.}}</span><br/>
       {{/each}}
     </ui-section>
     <ui-section label='Settings'>
