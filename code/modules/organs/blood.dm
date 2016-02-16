@@ -99,7 +99,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				else
 					if(prob(3))
 						var/word = pick("dizzy","woosey","faint")
-						to_chat(src, "<span class='danger'>You very [word].</span>")
+						to_chat(src, "<span class='danger'>You feel very [word].</span>")
 				if(oxyloss < 20)
 					oxyloss += 2
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
