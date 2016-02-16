@@ -25,6 +25,7 @@
 		/obj/item/weapon/gun,
 		/obj/item/weapon/blunderbuss,
 		/obj/item/weapon/storage/pneumatic,
+		/obj/item/device/detective_scanner,
 		)
 	var/flawless = 0
 	var/dont_shoot = 0 //I couldn't get attack() to play nice with afterattack() for some reason, so I'm jury-rigging the melee stuff.
