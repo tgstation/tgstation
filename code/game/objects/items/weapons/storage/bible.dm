@@ -7,7 +7,7 @@
 	w_class = 3.0
 	force = 2.5 //A big book, solely used for non-Chaplains trying to use it on people
 	flags = FPRINT
-	attack_verb = list("whack", "slap", "slam")
+	attack_verb = list("whacked", "slapped", "slammed")
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 
