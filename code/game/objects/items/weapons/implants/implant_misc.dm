@@ -48,6 +48,24 @@
 	imp_in.reagents.add_reagent("omnizine", 10)
 	imp_in.reagents.add_reagent("stimulants", 10)
 
+/obj/item/weapon/implant/adrenalin/deathsquad
+	name = "adrenal implant"
+	desc = "Removes all stuns and knockdowns."
+	icon_state = "adrenal"
+	origin_tech = "bluespace=4;biotech=10;combat=10;syndicate=4"
+	uses = 300
+
+/obj/item/weapon/implant/adrenalin/deathsquad/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Cybersun Industries Military Grade Adrenaline Implant<BR>
+				<b>Life:</b> N/A<BR>
+				<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+				<HR>
+				<b>Implant Details:</b> A secret, more robust implant developed for military applications.<BR>
+				<b>Function:</b> Removes stuns, increases speed, and has a mild healing effect.<BR>
+				<b>Integrity:</b> Implant holds over 500 uses thanks to specialized bluespace holding technology."}
+	return dat
+
 
 /obj/item/weapon/implant/emp
 	name = "emp implant"
