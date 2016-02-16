@@ -12,6 +12,7 @@
 		/obj/item/weapon/batteringram,
 		/obj/item/weapon/hatchet,
 		/obj/item/weapon/storage/pneumatic,
+		/obj/item/device/detective_scanner,
 		)
 
 /obj/structure/bed/chair/vehicle/wheelchair/wheelchair_assembly/cannon/Destroy()
