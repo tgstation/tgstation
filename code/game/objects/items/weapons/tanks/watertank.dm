@@ -183,40 +183,6 @@
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
 	user << "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 
-
-//Operator backpack spray
-/obj/item/weapon/watertank/janitor/operator
-	name = "backpack water tank"
-	desc = "A New Russian backpack spray for systematic cleansing of carbon lifeforms."
-	icon_state = "waterbackpackjani"
-	item_state = "waterbackpackjani"
-	w_class = 2
-
-/obj/item/weapon/watertank/janitor/operator/New()
-	..()
-	reagents.add_reagent("mutagen",350)
-	reagents.add_reagent("napalm",125)
-	reagents.add_reagent("welding_fuel",125)
-	reagents.add_reagent("clf3",300)
-	reagents.add_reagent("cryptobiolin",350)
-	reagents.add_reagent("plasma",250)
-	reagents.add_reagent("condensedcapsaicin",500)
-
-
-/obj/item/weapon/reagent_containers/spray/mister/janitor/operator
-	name = "janitor spray nozzle"
-	desc = "A mister nozzle attached to several extended water tank. It suspiciously has a compressor in the system and is labelled entirely in New Cyrillic."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "waterbackpackjani"
-	item_state = "waterbackpackjani"
-	w_class = 4
-	amount_per_transfer_from_this = 100
-	possible_transfer_amounts = list(75,100,150)
-	volume = 2000
-
-/obj/item/weapon/watertank/operator/make_noz()
-	return new /obj/item/weapon/reagent_containers/spray/mister/janitor/operator(src)
-
 //ATMOS FIRE FIGHTING BACKPACK
 
 #define EXTINGUISHER 0
@@ -471,3 +437,36 @@
 	..()
 	reagents.add_reagent("stimulants_longterm", 300)
 	update_filling()
+
+//Operator backpack spray
+/obj/item/weapon/watertank/janitor/operator
+	name = "backpack water tank"
+	desc = "A New Russian backpack spray for systematic cleansing of carbon lifeforms."
+	icon_state = "waterbackpackjani"
+	item_state = "waterbackpackjani"
+	w_class = 2
+
+/obj/item/weapon/watertank/janitor/operator/New()
+	..()
+	reagents.add_reagent("mutagen",350)
+	reagents.add_reagent("napalm",125)
+	reagents.add_reagent("welding_fuel",125)
+	reagents.add_reagent("clf3",300)
+	reagents.add_reagent("cryptobiolin",350)
+	reagents.add_reagent("plasma",250)
+	reagents.add_reagent("condensedcapsaicin",500)
+
+
+/obj/item/weapon/reagent_containers/spray/mister/janitor/operator
+	name = "janitor spray nozzle"
+	desc = "A mister nozzle attached to several extended water tank. It suspiciously has a compressor in the system and is labelled entirely in New Cyrillic."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "waterbackpackjani"
+	item_state = "waterbackpackjani"
+	w_class = 4
+	amount_per_transfer_from_this = 100
+	possible_transfer_amounts = list(75,100,150)
+	volume = 2000
+
+/obj/item/weapon/watertank/operator/make_noz()
+	return new /obj/item/weapon/reagent_containers/spray/mister/janitor/operator(src)
