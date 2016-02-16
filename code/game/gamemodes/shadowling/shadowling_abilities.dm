@@ -607,12 +607,12 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 				playsound(thrallToRevive, 'sound/machines/defib_zap.ogg', 50, 1)
 				user.Beam(thrallToRevive,icon_state="red_lightning",icon='icons/effects/effects.dmi',time=1)
 				sleep(10)
-				thrallToRevive.revive()
-				thrallToRevive.visible_message("<span class='boldannounce'>[thrallToRevive] heaves in breath, dim red light shining in their eyes.</span>", \
+				if(thrallToRevive.revive(full_heal = 1))
+					thrallToRevive.visible_message("<span class='boldannounce'>[thrallToRevive] heaves in breath, dim red light shining in their eyes.</span>", \
 											   "<span class='shadowling'><b><i>You have returned. One of your masters has brought you from the darkness beyond.</b></i></span>")
-				thrallToRevive.Weaken(4)
-				thrallToRevive.emote("gasp")
-				playsound(thrallToRevive, "bodyfall", 50, 1)
+					thrallToRevive.Weaken(4)
+					thrallToRevive.emote("gasp")
+					playsound(thrallToRevive, "bodyfall", 50, 1)
 			else
 				revert_cast()
 				return

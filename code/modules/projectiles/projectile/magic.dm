@@ -49,18 +49,15 @@
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
 	if(ismob(target))
-		var/old_stat = target.stat
-		target.revive()
-		target.suiciding = 0
-		if(!target.ckey)
-			for(var/mob/dead/observer/ghost in player_list)
-				if(target.real_name == ghost.real_name)
-					ghost.reenter_corpse()
-					break
-		if(old_stat != DEAD)
-			target << "<span class='notice'>You feel great!</span>"
-		else
+		if(target.revive(full_heal = 1))
+			if(!target.ckey)
+				for(var/mob/dead/observer/ghost in player_list)
+					if(target.real_name == ghost.real_name)
+						ghost.reenter_corpse()
+						break
 			target << "<span class='notice'>You rise with a start, you're alive!!!</span>"
+		else if(stat != DEAD)
+			target << "<span class='notice'>You feel great!</span>"
 
 /obj/item/projectile/magic/teleport
 	name = "bolt of teleportation"

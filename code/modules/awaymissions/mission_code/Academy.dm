@@ -234,7 +234,7 @@
 			C.name = "Cookie of Fate"
 		if(12)
 			//Healing
-			user.revive()
+			user.revive(full_heal = 1, admin_revive = 1)
 		if(13)
 			//Mad Dosh
 			var/turf/Start = get_turf(src)

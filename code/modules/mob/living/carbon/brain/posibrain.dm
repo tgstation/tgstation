@@ -39,7 +39,7 @@ var/global/posibrain_notif_cooldown = 0
 		spawn(askDelay) //Seperate from the global cooldown.
 			notified = 0
 			update_icon()
-			if(brainmob.stat == CONSCIOUS && brainmob.client)
+			if(brainmob.client)
 				visible_message("<span class='notice'>The positronic brain pings, and its lights start flashing. Success!</span>")
 			else
 				visible_message("<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
@@ -99,6 +99,9 @@ var/global/posibrain_notif_cooldown = 0
 	brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
 	brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
 	brainmob.mind.assigned_role = "Positronic Brain"
+	brainmob.stat = CONSCIOUS
+	dead_mob_list -= brainmob
+	living_mob_list += brainmob
 
 	visible_message("<span class='notice'>The positronic brain chimes quietly.</span>")
 	update_icon()
@@ -123,8 +126,6 @@ var/global/posibrain_notif_cooldown = 0
 			if(CONSCIOUS)
 				if(!src.brainmob.client)
 					msg += "It appears to be in stand-by mode.\n" //afk
-			if(UNCONSCIOUS)
-				msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
 			if(DEAD)
 				msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
 	else
@@ -139,7 +140,6 @@ var/global/posibrain_notif_cooldown = 0
 	brainmob.real_name = brainmob.name
 	brainmob.loc = src
 	brainmob.container = src
-	dead_mob_list -= brainmob
 	ping_ghosts("created")
 	..()
 

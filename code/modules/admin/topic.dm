@@ -1487,7 +1487,7 @@
 			usr << "This can only be used on instances of type /mob/living"
 			return
 
-		L.revive()
+		L.revive(full_heal = 1, admin_revive = 1)
 		message_admins("<span class='danger'>Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!</span>")
 		log_admin("[key_name(usr)] healed / Revived [key_name(L)]")
 
