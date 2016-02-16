@@ -28,8 +28,6 @@
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/teargas(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/syndie/med(src)
-	for(var/i in 1 to 5)
-		new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/device/pda/syndicate(src)
 	return
 

@@ -281,7 +281,7 @@
 				loc = get_turf(user)
 			if(user.client && user.client.eye != src)
 				src.loc = get_turf(user)
-				user.reset_view(src)
+				user.reset_perspective(src)
 				user.set_machine(src)
 			var/atom/step = get_step(src, direction)
 			if(step)
@@ -300,10 +300,11 @@
 		qdel(src)
 
 /obj/effect/chronos_cam/check_eye(mob/user)
-	if(user == holder)
-		return 1
-	user.unset_machine()
-	user.reset_view(null)
+	if(user != holder)
+		user.unset_machine()
+
+/obj/effect/chronos_cam/on_unset_machine(mob/user)
+	user.reset_perspective(null)
 
 /obj/effect/chronos_cam/Destroy()
 	if(holder)
@@ -311,7 +312,6 @@
 			holder.remote_control = null
 		if(holder.client && (holder.client.eye == src))
 			holder.unset_machine()
-			holder.reset_view(null)
 	return ..()
 
 /obj/screen/chronos_target

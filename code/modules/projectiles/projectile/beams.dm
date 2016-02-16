@@ -26,7 +26,6 @@
 /obj/item/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
-	hitsound = null
 	nodamage = 1
 
 /obj/item/projectile/beam/scatter
@@ -100,3 +99,22 @@
 /obj/item/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"
 	suit_types = list(/obj/item/clothing/suit/redtag)
+
+/obj/item/projectile/beam/instakill
+	name = "instagib laser"
+	icon_state = "purple_laser"
+	damage = 200
+	damage_type = BURN
+
+/obj/item/projectile/beam/instakill/blue
+	icon_state = "blue_laser"
+
+/obj/item/projectile/beam/instakill/red
+	icon_state = "red_laser"
+
+/obj/item/projectile/beam/instakill/on_hit(atom/target)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
+		M.gib()

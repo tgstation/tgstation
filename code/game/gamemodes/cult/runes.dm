@@ -152,7 +152,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /mob/proc/null_rod_check() //The null rod, if equipped, will protect the holder from the effects of most runes
 	var/obj/item/weapon/nullrod/N = locate() in src
 	if(N)
-		return 1
+		return N
 	return 0
 
 var/list/teleport_runes = list()
@@ -192,8 +192,6 @@ var/list/teleport_runes = list()
 		return
 
 	var/obj/effect/rune/selected_rune = pick(potential_runes)
-	if(user.buckled)
-		user.buckled.unbuckle_mob()
 	user.visible_message("<span class='warning'>[user] vanishes in a flash of red light!</span>", \
 						 "<span class='cult'>Your vision blurs, and you suddenly appear somewhere else.</span>")
 	user.forceMove(get_turf(selected_rune))
@@ -256,8 +254,7 @@ var/list/teleport_other_runes = list()
 			return
 	else
 		target = targets[targets.len]
-	if(target.buckled)
-		target.buckled.unbuckle_mob()
+
 	target.visible_message("<span class='warning'>[target] vanishes in a flash of red light!</span>", \
 						   "<span class='cult'>Your vision blurs, and you suddenly appear somewhere else.</span>")
 	target.forceMove(get_turf(selected_rune))
@@ -294,9 +291,10 @@ var/list/teleport_other_runes = list()
 	if(!offering)
 		rune_in_use = 0
 		return
-	if(offering.null_rod_check())
+	var/obj/item/weapon/nullrod/N = offering.null_rod_check()
+	if(N)
 		user << "<span class='warning'>Something is blocking the Geometer's magic!</span>"
-		log_game("Sacrifice rune failed - target has null rod")
+		log_game("Sacrifice rune failed - target has \a [N]!")
 		fail_invoke()
 		rune_in_use = 0
 		return
@@ -580,8 +578,8 @@ var/list/teleport_other_runes = list()
 			C << "<span class='cultlarge'>You feel oily shadows cover your senses.</span>"
 			C.adjustEarDamage(0,50)
 			C.flash_eyes(1, 1)
-			C.eye_blurry += 50
-			C.eye_blind += 20
+			C.adjust_blurriness(50)
+			C.adjust_blindness(20)
 			C.silent += 10
 	qdel(src)
 
@@ -683,7 +681,7 @@ var/list/teleport_other_runes = list()
 		log_game("Talisman Imbue rune failed - no nearby runes")
 		return
 	var/obj/effect/rune/picked_rune = pick(nearby_runes)
-	var/list/split_rune_type = text2list("[picked_rune.type]", "/")
+	var/list/split_rune_type = splittext("[picked_rune.type]", "/")
 	var/imbue_type = split_rune_type[split_rune_type.len]
 	var/talisman_type = text2path("/obj/item/weapon/paper/talisman/[imbue_type]")
 	if(ispath(talisman_type))
@@ -793,8 +791,9 @@ var/list/teleport_other_runes = list()
 	visible_message("<span class='warning'>[src] briefly bubbles before exploding!</span>")
 	for(var/mob/living/carbon/C in viewers(src))
 		if(!iscultist(C))
-			if(C.null_rod_check())
-				C << "<span class='userdanger'>The null rod suddenly burns hotly before returning to normal!</span>"
+			var/obj/item/weapon/nullrod/N = C.null_rod_check()
+			if(N)
+				C << "<span class='userdanger'>\The [N] suddenly burns hotly before returning to normal!</span>"
 				continue
 			C << "<span class='cultlarge'>Your blood boils in your veins!</span>"
 			C.take_overall_damage(51,51)

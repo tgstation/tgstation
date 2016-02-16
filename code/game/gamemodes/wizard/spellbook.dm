@@ -211,7 +211,7 @@
 	name = "Lesser Summon Guns"
 	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns
 	log_name = "IG"
-	cost = 4
+	cost = 3
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
@@ -227,7 +227,7 @@
 
 /datum/spellbook_entry/shapeshift
 	name = "Wild Shapeshift"
-	spell_type = /obj/effect/proc_holder/spell/targeted/shapeshift/wild
+	spell_type = /obj/effect/proc_holder/spell/targeted/shapeshift
 	log_name = "WS"
 	category = "Assistance"
 	cost = 1
@@ -724,7 +724,7 @@
 /obj/item/weapon/spellbook/oneuse/blind/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>You go blind!</span>"
-	user.eye_blind = 10
+	user.blind_eyes(10)
 
 /obj/item/weapon/spellbook/oneuse/mindswap
 	spell = /obj/effect/proc_holder/spell/targeted/mind_transfer

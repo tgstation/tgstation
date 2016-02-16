@@ -16,7 +16,6 @@ The resist button will allow you to resist out of handcuffs, being buckled to a 
 You can move an item out of the way by dragging it and then clicking on an adjacent tile with an empty hand.
 You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon.
 Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
-Your emergency oxygen tank delivers 21 kPa by default, which is more air than you need to survive! Click the tank in an open hand to adjust the pressure.
 Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
 There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
 Crates can be booby-trapped by adding wire, shocking anyone who tries to open them.
@@ -133,12 +132,13 @@ As an Alien, the facehugger is by far your most powerful weapon because of its a
 As an Alien, you are unable to pick up or use any human items or machinery. Instead, you should focus on sabotaging APCs, computers, cameras and either stowing, spacing, or melting any weapons you find.
 As the Blob, you will spawn from your character from between a minute to 5 minutes after the round starts. Use this time to find a safe and well hidden location and evaluate where you will strike!
 As the Blob, you can do various sabotage before you spawn, such as spacing the armory or disabling R&D.
-As the Blob, keep your core some distance from space, as it is both expensive to expand onto space and easy to be attacked from. Emitter platforms built in space are especially dangerous.
-As the Blob, the split consciousness ability will create a second blob core, from a node, controlled by another player with a different reagent of their own. Coordinate and communicate your attacks and reactions with them!
+As the Blob, keep your core some distance from space, as it is both expensive to expand onto space, easy to be attacked from, and does not count towards your win condition. Emitter platforms built in space are especially dangerous.
 As the Blob, you can randomly repick your reagent type if the crew has adapted and protected themselves against your current one.
 As the Blob, you fight a war of attrition: Take out medbay and fight in chokepoints to prevent continued assaults and coordinated burst damage attacks!
 As the Blob, remember that you can only expand onto tiles from cardinal directions, while the crew can attack you diagonally. Fight in narrow corridors or expand and widen across the width of the hallway to force confrontations where you can hit them!
 As the Blob, don't neglect the creation of factories. These create spores that carry your reagent and can chase crewmembers far further than you. Spores can also be rallied to swarm the crew and cause panic, and can even take over corpses to create much more dangerous blob zombies!
+As the Blob, you can expand by clicking, create strong blobs with ctrl-click, rally spores with middle-click, and remove blobs with alt-click.
+As the Blob, removing strong blobs, resource nodes, factories, and nodes will give you 2, 15, 25, and 25 resources back, respectively.
 As a Revolutionary, you cannot convert a head of staff or someone who has a loyalty implant, such as a security officer or those they implant. Implants can however be surgically removed, and do not carry over with cloning. Take control of medbay to keep control of conversions!
 As a Revolutionary, cargo can be your best friend or your worst nightmare. In the best case scenario you will be able to order a limitless amount of guns and armor, in the worst case scenario security will take control and order a limitless number of loyalty implants to turn your fellow revolutionaries against you.
 As a Revolutionary, your main power comes from how quickly you spread. Convert people as fast as you can and overwhelm the heads of staff before security can arm up.

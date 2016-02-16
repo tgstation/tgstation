@@ -187,7 +187,7 @@
 				user << "<span class='warning'>The mmi indicates that their mind is currently inactive; it might change!</span>"
 				return
 
-			if(BM.stat == DEAD)
+			if(BM.stat == DEAD || (M.brain && M.brain.damaged_brain))
 				user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>"
 				return
 
@@ -210,7 +210,6 @@
 			O.invisibility = 0
 			//Transfer debug settings to new mob
 			O.custom_name = created_name
-			O.updatename("Default")
 			O.locked = panel_locked
 			if(!aisync)
 				lawsync = 0
@@ -237,7 +236,9 @@
 			chest.cell.loc = O
 			chest.cell = null
 			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
-			O.mmi = W
+			if(O.mmi) //we delete the mmi created by robot/New()
+				qdel(O.mmi)
+			O.mmi = W //and give the real mmi to the borg.
 			O.updatename()
 
 			feedback_inc("cyborg_birth",1)

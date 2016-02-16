@@ -114,6 +114,8 @@
 	turf_type = /turf/simulated/floor/noslip
 	origin_tech = "materials=3"
 
+/obj/item/stack/tile/noslip/thirty
+	amount = 30
 
 //Plasteel (normal)
 /obj/item/stack/tile/plasteel

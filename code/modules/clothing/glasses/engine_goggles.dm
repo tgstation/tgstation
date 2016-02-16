@@ -30,6 +30,10 @@
 		loc << "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>"
 		invis_update()
 
+	if(istype(loc,/mob/living/carbon))
+		var/mob/living/carbon/C = loc
+		C.update_sight()
+
 	update_icon()
 
 /obj/item/clothing/glasses/meson/engine/process()

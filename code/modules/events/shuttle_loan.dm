@@ -12,12 +12,12 @@
 	earliest_start = 4000
 
 /datum/round_event/shuttle_loan
+	announceWhen = 1
 	endWhen = 500
-	var/dispatch_type = 4
+	var/dispatched = 0
+	var/dispatch_type = 0
 	var/bonus_points = 100
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
-	var/dispatched = 0
-	announceWhen	= 1
 
 /datum/round_event/shuttle_loan/start()
 	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED)
@@ -73,8 +73,6 @@
 		else
 			endWhen = activeFor + 1
 
-//whomever coded this didn't even bother to follow the supply ordering code as an example.
-//So I had to waste time rewriting it. Thanks for that >:[
 /datum/round_event/shuttle_loan/end()
 	if(SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched)
 		//make sure the shuttle was dispatched in time
@@ -91,7 +89,9 @@
 		var/list/shuttle_spawns = list()
 		switch(dispatch_type)
 			if(HIJACK_SYNDIE)
-				add_crates(list(/datum/supply_packs/emergency/specialops), empty_shuttle_turfs)
+				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/emergency/specialops]
+				pack.generate(pick_n_take(empty_shuttle_turfs))
+
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
 				if(prob(75))
@@ -100,7 +100,9 @@
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
 
 			if(RUSKY_PARTY)
-				add_crates(list(/datum/supply_packs/organic/party), empty_shuttle_turfs)
+				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/organic/party]
+				pack.generate(pick_n_take(empty_shuttle_turfs))
+
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian/ranged)	//drops a mateba
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear)
@@ -110,7 +112,9 @@
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear)
 
 			if(SPIDER_GIFT)
-				add_crates(list(/datum/supply_packs/emergency/specialops), empty_shuttle_turfs)
+				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/emergency/specialops]
+				pack.generate(pick_n_take(empty_shuttle_turfs))
+
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/nurse)
@@ -135,7 +139,6 @@
 				T = pick(empty_shuttle_turfs)
 				new /obj/effect/spider/stickyweb(T)
 
-
 			if(ANTIDOTE_NEEDED)
 				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
 				var/turf/T
@@ -158,22 +161,23 @@
 
 			if(DEPARTMENT_RESUPPLY)
 				var/list/crate_types = list(
-					/datum/supply_packs/emergency/evac,
-					/datum/supply_packs/security/supplies,
-					/datum/supply_packs/organic/food,
-					/datum/supply_packs/emergency/weedcontrol,
-					/datum/supply_packs/engineering/tools,
-					/datum/supply_packs/engineering/engiequipment,
-					/datum/supply_packs/science/robotics,
-					/datum/supply_packs/science/plasma,
-					/datum/supply_packs/medical/supplies
+					/datum/supply_pack/emergency/equipment,
+					/datum/supply_pack/security/supplies,
+					/datum/supply_pack/organic/food,
+					/datum/supply_pack/emergency/weedcontrol,
+					/datum/supply_pack/engineering/tools,
+					/datum/supply_pack/engineering/engiequipment,
+					/datum/supply_pack/science/robotics,
+					/datum/supply_pack/science/plasma,
+					/datum/supply_pack/medical/supplies
 					)
-				add_crates(crate_types, empty_shuttle_turfs)
+				for(var/crate in crate_types)
+					var/datum/supply_pack/pack = SSshuttle.supply_packs[crate]
+					pack.generate(pick_n_take(empty_shuttle_turfs))
 
-				for(var/i=0,i<5,i++)
-					var/turf/T = pick(empty_shuttle_turfs)
-					var/spawn_type = pick(/obj/effect/decal/cleanable/flour, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/oil)
-					new spawn_type(T)
+				for(var/i in 1 to 5)
+					var/decal = pick(/obj/effect/decal/cleanable/flour, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/oil)
+					new decal(pick_n_take(empty_shuttle_turfs))
 
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
@@ -185,18 +189,8 @@
 			var/spawn_type = pick_n_take(shuttle_spawns)
 			new spawn_type(T)
 
-/datum/round_event/shuttle_loan/proc/add_crates(list/crate_types, list/turfs)
-	for(var/crate_type in crate_types)
-		var/turf/T = pick_n_take(turfs)
-		var/datum/supply_packs/sp_obj = new crate_type()
-		var/atom/Crate = new sp_obj.containertype(T)
-		Crate.name = sp_obj.containername
-		for(var/type_path in sp_obj.contains)
-			var/atom/A = new type_path(Crate)
-			if(sp_obj.amount && A.vars.Find("amount") && A:amount)
-				A:amount = sp_obj.amount
-
 #undef HIJACK_SYNDIE
 #undef RUSKY_PARTY
 #undef SPIDER_GIFT
 #undef DEPARTMENT_RESUPPLY
+#undef ANTIDOTE_NEEDED

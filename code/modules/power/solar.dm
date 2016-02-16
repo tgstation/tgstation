@@ -363,7 +363,7 @@
 		ui = new(user, src, ui_key, "solar_control", name, 500, 400, master_ui, state)
 		ui.open()
 
-/obj/machinery/power/solar_control/get_ui_data()
+/obj/machinery/power/solar_control/ui_data()
 	var/data = list()
 
 	data["generated"] = round(lastgen)

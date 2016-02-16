@@ -85,13 +85,14 @@
 	if (href_list["fix"])
 		src.active = 1
 		while (src.occupier.health < 100)
-			src.occupier.adjustOxyLoss(-1)
-			src.occupier.adjustFireLoss(-1)
-			src.occupier.adjustToxLoss(-1)
-			src.occupier.adjustBruteLoss(-1)
+			src.occupier.adjustOxyLoss(-1, 0)
+			src.occupier.adjustFireLoss(-1, 0)
+			src.occupier.adjustToxLoss(-1, 0)
+			src.occupier.adjustBruteLoss(-1, 0)
 			src.occupier.updatehealth()
 			if (src.occupier.health >= 0 && src.occupier.stat == 2)
-				src.occupier.stat = 0
+				src.occupier.stat = CONSCIOUS
+				src.occupier.adjust_blindness(-1)
 				src.occupier.lying = 0
 				dead_mob_list -= src.occupier
 				living_mob_list += src.occupier

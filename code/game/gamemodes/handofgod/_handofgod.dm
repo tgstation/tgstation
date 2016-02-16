@@ -188,9 +188,9 @@ var/global/list/global_handofgod_structuretypes = list()
 	if((follower_mind in red_deity_followers) || (follower_mind in red_deity_prophets) || (follower_mind in blue_deity_followers) || (follower_mind in blue_deity_prophets))
 		H << "<span class='danger'>You already belong to a deity. Your strong faith has blocked out the conversion attempt by the followers of the [colour] deity.</span>"
 		return 0
-	var/obj/item/weapon/nullrod/N = locate() in H
+	var/obj/item/weapon/nullrod/N = H.null_rod_check()
 	if(N)
-		H << "<span class='danger'>Your null rod prevented the [colour] deity from brainwashing you.</span>"
+		H << "<span class='danger'>Your holy weapon prevented the [colour] deity from brainwashing you.</span>"
 		return 0
 
 	if(colour == "red")

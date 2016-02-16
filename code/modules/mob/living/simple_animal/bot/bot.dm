@@ -18,6 +18,8 @@
 	speak_emote = list("states")
 	bubble_icon = "machine"
 
+	faction = list("neutral", "silicon")
+
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
 	var/list/users = list() //for dialog updates
@@ -252,6 +254,7 @@
 					src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
 					bot_name = name
 					name = paicard.pai.name
+					faction = user.faction
 					add_logs(user, paicard.pai, "uploaded to [src.bot_name],")
 				else
 					user << "<span class='warning'>[W] is inactive.</span>"
@@ -279,7 +282,7 @@
 				return
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0, user))
-				health = min(maxHealth, health+10)
+				adjustHealth(-10)
 				user.visible_message("[user] repairs [src]!","<span class='notice'>You repair [src].</span>")
 			else
 				user << "<span class='warning'>The welder must be on for this task!</span>"
@@ -857,6 +860,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			paicard.pai << "<span class='notice'>You feel your control fade as [paicard] ejects from [bot_name].</span>"
 		paicard = null
 		name = bot_name
+		faction = initial(faction)
 
 /mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
 	if(bot_core.allowed(user) && paicard)
@@ -881,3 +885,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 		..()
 	if(paicard && (!client || stat == DEAD))
 		ejectpai(0)
+
+/mob/living/simple_animal/bot/sentience_act()
+	faction -= "silicon"

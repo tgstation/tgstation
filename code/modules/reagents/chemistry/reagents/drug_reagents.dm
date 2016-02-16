@@ -13,14 +13,13 @@
 	overdose_threshold = 30
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/M)
-	M.druggy = max(M.druggy, 15)
+	M.set_drugginess(15)
 	if(isturf(M.loc) && !istype(M.loc, /turf/space))
 		if(M.canmove)
 			if(prob(10)) step(M, pick(cardinal))
 	if(prob(7))
 		M.emote(pick("twitch","drool","moan","giggle"))
 	..()
-	return
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
 	M << "<span class='userdanger'>You start tripping hard!</span>"
@@ -30,7 +29,6 @@
 	if(M.hallucination < volume && prob(20))
 		M.hallucination += 5
 	..()
-	return
 
 /datum/reagent/drug/nicotine
 	name = "Nicotine"

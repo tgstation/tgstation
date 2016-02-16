@@ -83,7 +83,7 @@
 	if(!B)
 		src << "<span class='warning'>You must be on a factory blob!</span>"
 		return
-	if(B.health < B.maxhealth*0.8) //if it's at less than 80% of its health, you can't blobbernaut it
+	if(B.health <= B.maxhealth*0.8) //if it's at less than 80% of its health, you can't blobbernaut it
 		src << "<span class='warning'>This factory blob is too damaged to produce a blobbernaut.</span>"
 		return
 	if(!can_buy(30))
@@ -92,6 +92,7 @@
 	B.take_damage(B.maxhealth*0.8, CLONE, null, 0) //take a bunch of damage, so you can't produce tons of blobbernauts from a single factory
 	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 	B.spore_delay = world.time + 600 //one minute before it can spawn spores again
+	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
 	blobber.overmind = src
 	blobber.update_icons()
 	blobber.AIStatus = AI_OFF
@@ -104,6 +105,7 @@
 		blobber << 'sound/effects/blobattack.ogg'
 		blobber << 'sound/effects/attackblob.ogg'
 		blobber << "<b>You are a blobbernaut!</b>"
+		blobber << "You can communicate with other blobbernauts and overminds via <b>:b</b>"
 		blobber << "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 		blobber << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
 	else
@@ -168,12 +170,12 @@
 	if(!can_buy(5))
 		return
 	last_attack = world.time
-	OB.expand(T, 0, src)
+	OB.expand(T, src)
 	for(var/mob/living/L in T)
 		if("blob" in L.faction) //no friendly fire
 			continue
 		var/mob_protection = L.get_permeability_protection()
-		blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection)
+		blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection, src)
 		blob_reagent_datum.send_message(L)
 
 /mob/camera/blob/verb/rally_spores_power()
@@ -212,8 +214,11 @@
 	set desc = "Replaces your chemical with a random, different one."
 	if(!can_buy(40))
 		return
-	var/datum/reagent/blob/B = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
-	blob_reagent_datum = new B
+	set_chemical()
+
+/mob/camera/blob/proc/set_chemical()
+	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
+	blob_reagent_datum = new BC
 	for(var/obj/effect/blob/BL in blobs)
 		BL.update_icon()
 	for(var/mob/living/simple_animal/hostile/blob/BLO)

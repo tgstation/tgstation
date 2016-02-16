@@ -30,9 +30,8 @@
 			return
 		Remove(owner)
 	owner = T
-	owner.actions.Add(src)
-	owner.update_action_buttons()
-	return
+	T.actions += src
+	T.update_action_buttons()
 
 /datum/action/proc/Remove(mob/living/T)
 	if(button)
@@ -40,10 +39,9 @@
 			T.client.screen -= button
 		qdel(button)
 		button = null
-	T.actions.Remove(src)
+	T.actions -= src
 	T.update_action_buttons()
 	owner = null
-	return
 
 /datum/action/proc/Trigger()
 	if(!Checks())
@@ -86,7 +84,7 @@
 	current_button.overlays.Cut()
 	if(button_icon && button_icon_state)
 		var/image/img
-		img = image(button_icon,current_button,button_icon_state)
+		img = image(button_icon, current_button, button_icon_state)
 		img.pixel_x = 0
 		img.pixel_y = 0
 		current_button.overlays += img
@@ -151,7 +149,7 @@
 
 /obj/screen/movable/action_button/hide_toggle/UpdateIcon()
 	overlays.Cut()
-	var/image/img = image(icon,src,hidden?"show":"hide")
+	var/image/img = image(icon, src, hidden ? "show" : "hide")
 	overlays += img
 	return
 
@@ -171,11 +169,11 @@
 #define AB_MAX_COLUMNS 10
 
 /datum/hud/proc/ButtonNumberToScreenCoords(number) // TODO : Make this zero-indexed for readabilty
-	var/row = round((number-1)/AB_MAX_COLUMNS)
+	var/row = round((number - 1)/AB_MAX_COLUMNS)
 	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
 
 	var/coord_col = "+[col-1]"
-	var/coord_col_offset = 4+2*col
+	var/coord_col_offset = 4 + 2 * col
 
 	var/coord_row = "[row ? -row : "+0"]"
 
@@ -289,7 +287,7 @@
 /datum/action/innate/proc/Deactivate()
 	return
 
-//Preset for action that call specific procs (consider innate)
+//Preset for action that call specific procs (consider innate).
 /datum/action/generic
 	check_flags = 0
 	var/procname
@@ -298,7 +296,7 @@
 	if(!..())
 		return 0
 	if(target && procname)
-		call(target,procname)(usr)
+		call(target, procname)(usr)
 	return 1
 
 
@@ -312,12 +310,12 @@
 /datum/action/innate/scan_mode/Activate()
 	active = 1
 	owner.research_scanner = 1
-	owner << "<span class='notice'> Research analyzer is now active.</span>"
+	owner << "<span class='notice'>Research analyzer is now active.</span>"
 
 /datum/action/innate/scan_mode/Deactivate()
 	active = 0
 	owner.research_scanner = 0
-	owner << "<span class='notice'> Research analyzer deactivated.</span>"
+	owner << "<span class='notice'>Research analyzer deactivated.</span>"
 
 /datum/action/innate/scan_mode/Grant(mob/living/T)
 	..(T)
