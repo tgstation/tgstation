@@ -62,7 +62,7 @@
 				calc *= R.sport
 		if(M_HULK in runner.mutations) calc *= 5
 		count_power += calc
-		if(runner.bodytemperature > 99)
+		if(runner.bodytemperature > T0C + 99)
 			if(prob(5))
 				runner.emote("collapse")
 			if(prob(10))
