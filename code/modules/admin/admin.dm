@@ -620,7 +620,8 @@ var/global/BSACooldown = 0
 		return
 
 	var/chosen = pick_closest_path(object)
-
+	if(!chosen)
+		return
 	if(ispath(chosen,/turf))
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
