@@ -97,6 +97,9 @@
 	if(!bomb)
 		return
 
+	if(!can_Fire(user, 1))
+		return
+
 	else
 		if(bomb.damaged)
 			click_empty(user)

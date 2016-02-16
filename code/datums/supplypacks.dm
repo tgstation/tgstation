@@ -531,7 +531,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 
 /datum/supply_packs/eweapons
 	name = "Incendiary weapons crate"
-	contains = list(/obj/item/weapon/flamethrower/full,
+	contains = list(/obj/item/weapon/gun/projectile/flamethrower/full,
 					/obj/item/weapon/tank/plasma,
 					/obj/item/weapon/tank/plasma,
 					/obj/item/weapon/tank/plasma,
