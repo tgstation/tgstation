@@ -194,7 +194,7 @@ This prevents nesting levels from getting deeper then they need to be.
 * Do not divide when you can easily convert it to a multiplication. (ie `4/2` should be done as `4*0.5`)
 
 ####Enforced not enforced
-The following different coding styles are not only not enforced, but it is generally frown upon to change them over from one to the other for little reason:
+The following different coding styles are not only not enforced, but it is generally frowned upon to change them over from one to the other for little reason:
 
 * English/British spelling on var/proc names
 	* Color/Colour nobody cares,
