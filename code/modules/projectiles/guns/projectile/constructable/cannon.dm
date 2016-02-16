@@ -7,6 +7,7 @@
 	var/fuel_level = 0
 	var/max_fuel = 10
 	var/loaded_item = null
+	var/damage_multiplier = 2
 	var/list/prohibited_items = list( //Certain common items that, due to a combination of their throwforce and w_class, are too powerful to be allowed as ammunition.
 		/obj/item/weapon/shard,
 		/obj/item/weapon/batteringram,
@@ -195,6 +196,8 @@
 		speed = (((fire_force*(4/object.w_class))/5)*2) //projectile speed.
 	else
 		speed = (((fire_force*2)/5)*2)
+		
+	speed = speed * damage_multiplier
 
 	var/distance = round(((20/object.w_class)*(fuel_level/10))*1.5)
 
