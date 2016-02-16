@@ -79,7 +79,13 @@
 	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
 	armor = list(melee = 50, bullet = 5, laser = 25,energy = 10, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
+	var/noir = 0
 
+/obj/item/clothing/head/det_hat/noir
+	desc = "This hat's been with you for some time now. It was a gift from your ex, and you wore it during the war. Thinking back on it, the war was prettier."
+	icon_state = "detective_noir"
+	item_state = "detective_noir"
+	noir = 1
 /*
  * Head of Security
  */

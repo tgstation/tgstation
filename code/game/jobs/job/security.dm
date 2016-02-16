@@ -128,18 +128,27 @@
 			if(2) H.equip_or_collect(new /obj/item/weapon/storage/backpack(H), slot_back)
 			if(3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
 			if(4) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-		H.equip_or_collect(new /obj/item/clothing/under/det(H), slot_w_uniform)
-		H.equip_or_collect(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 		//H.equip_or_collect(new /obj/item/device/pda/detective(H), slot_belt)
 /*		var/obj/item/clothing/mask/cigarette/CIG = new /obj/item/clothing/mask/cigarette(H)
 		CIG.light("")
 		H.equip_or_collect(CIG, slot_wear_mask)	*/
 		H.equip_or_collect(new /obj/item/clothing/gloves/black(H), slot_gloves)
-		if(H.mind.role_alt_title && H.mind.role_alt_title == "Forensic Technician")
-			H.equip_or_collect(new /obj/item/clothing/suit/storage/forensics/blue(H), slot_wear_suit)
-		else
-			H.equip_or_collect(new /obj/item/clothing/suit/storage/det_suit(H), slot_wear_suit)
-			H.equip_or_collect(new /obj/item/clothing/head/det_hat(H), slot_head)
+		H.equip_or_collect(new /obj/item/clothing/under/det(H), slot_w_uniform)
+		if(H.mind.role_alt_title)
+			switch(H.mind.role_alt_title)
+				if("Forensic Technician")
+					H.equip_or_collect(new /obj/item/clothing/suit/storage/forensics/blue(H), slot_wear_suit)
+					H.equip_or_collect(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+				if("Gumshoe")
+					H.mutations += M_NOIR
+					H.dna.SetSEState(NOIRBLOCK,1)
+					H.equip_or_collect(new /obj/item/clothing/suit/storage/det_suit/noir(H), slot_wear_suit)
+					H.equip_or_collect(new /obj/item/clothing/head/det_hat/noir(H), slot_head)
+					H.equip_or_collect(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
+				if("Detective")
+					H.equip_or_collect(new /obj/item/clothing/suit/storage/det_suit(H), slot_wear_suit)
+					H.equip_or_collect(new /obj/item/clothing/head/det_hat(H), slot_head)
+					H.equip_or_collect(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 		H.equip_or_collect(new /obj/item/weapon/lighter/zippo(H), slot_l_store)
 
 		if(H.backbag == 1)//Why cant some of these things spawn in his office?
@@ -158,9 +167,6 @@
 		L.part = affected
 		H.dna.SetSEState(SOBERBLOCK,1)
 		H.mutations += M_SOBER
-		if(H.mind.role_alt_title == "Gumshoe")
-			H.mutations += M_NOIR
-			H.dna.SetSEState(NOIRBLOCK,1)
 		H.check_mutations = 1
 		return 1
 
