@@ -219,12 +219,19 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		add_logs(M, src, "attacked", admin=0)
+
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+
 		if(M.zone_sel && M.zone_sel.selecting)
 			dam_zone = M.zone_sel.selecting
+
+		if(check_shields(damage)) //Shield check
+			return
+
 		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
-		var/armor = run_armor_check(affecting, "melee")
+		var/armor = run_armor_check(affecting, "melee") //Armor check
+
 		apply_damage(damage, M.melee_damage_type, affecting, armor)
 		src.visible_message("<span class='danger'>[M] [M.attacktext] [src] in \the [affecting.display_name]!</span>")
 
