@@ -493,9 +493,9 @@
 	M.slurring += 3
 	switch(current_cycle)
 		if(51 to 200)
-			M.AdjustSleeping(1)
+			M.Sleeping(5)
 		if(201 to INFINITY)
-			M.AdjustSleeping(1)
+			M.AdjustSleeping(2)
 			M.adjustToxLoss(2)
 	..()
 	return
