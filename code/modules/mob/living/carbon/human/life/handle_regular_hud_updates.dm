@@ -124,7 +124,7 @@
 			var/obj/item/clothing/glasses/G = glasses
 			if(istype(G))
 				if(G.see_in_dark)
-					see_in_dark = min(see_in_dark, G.see_in_dark)
+					see_in_dark = max(see_in_dark, G.see_in_dark)
 				see_in_dark += G.darkness_view
 				if(G.vision_flags) //MESONS
 					sight |= G.vision_flags
