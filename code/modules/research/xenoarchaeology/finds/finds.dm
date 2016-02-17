@@ -491,6 +491,15 @@
 			possible_spawns += /obj/item/weapon/dice/d20/cursed
 			var/new_type = pick(possible_spawns)
 			new_item = new new_type(src.loc)
+		if(37)
+			//space suit
+			apply_material_decorations = 0
+			var/list/possible_spawns=list()
+			possible_spawns += /obj/item/clothing/suit/space/ancient
+			possible_spawns += /obj/item/clothing/head/helmet/space/ancient
+			var/new_type = pick(possible_spawns)
+			new_item = new new_type(src.loc)
+
 
 	var/decorations = ""
 	if(apply_material_decorations)

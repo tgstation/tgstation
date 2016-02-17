@@ -53,3 +53,17 @@
 	siemens_coefficient = 0.9
 
 
+/obj/item/clothing/suit/space/ancient
+	name = "ancient space suit"
+	icon_state = "nasa"
+	item_state = "nasa"
+	desc = "Drifting, falling, floating, weightless, coming home."
+	species_restricted = list("Human")
+
+/obj/item/clothing/head/helmet/space/ancient
+	name = "ancient space helmet"
+	icon_state = "nasa"
+	item_state = "nasa"
+	desc = "Take your protein pills and put your helmet on."
+	species_restricted =list("Human")
+
