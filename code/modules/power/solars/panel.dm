@@ -45,7 +45,7 @@
 				solar_assembly.give_glass()
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] takes the [initial(G.name)] off the [src].</span>",\
-			"<span class='notice'>You takes the [initial(G.name)] off the [src].</span>")
+			"<span class='notice'>You take the [initial(G.name)] off the [src].</span>")
 			qdel(src)
 	else if(W)
 		add_fingerprint(user)
