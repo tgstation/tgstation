@@ -1,4 +1,4 @@
-var/global/list/coldwarning_light = list("You begin to feel cold","Your nose feels numb","It's pretty cold!","You should probably wrap up some more.","You start to feel cold","You feel like taking a nap.")
+var/global/list/coldwarning_light = list("You feel cold","Your nose feels numb","It's pretty cold!","You should probably wrap up some more.","You feel pretty cold","You feel like taking a nap.")
 var/global/list/coldwarning_hard = list("Holy shit, it's freezing cold!","You should probably get warmed up quickly!","You can't feel your hands!","You can't feel anything!","You're absolutely exhausted!")
 
 /mob/living/proc/undergoing_hypothermia()
