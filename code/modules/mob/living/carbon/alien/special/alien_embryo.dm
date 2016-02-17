@@ -128,7 +128,7 @@
 			picked = affected_mob.key //Pick the person who was infected
 		else
 			for(var/mob/dead/observer/O in candidates)
-				to_chat(O, "<span class=\"recruit\">[affected_mob] is about to burst from \a [src]!. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>")
+				to_chat(O, "<span class=\"recruit\">\a [src] is about to burst out of \the [affected_mob]!(<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>")
 
 	else
 		picked = ghostpicked.key
@@ -136,7 +136,7 @@
 		stage = 4 // Let's try again later.
 		var/list/candidates = get_active_candidates(ROLE_ALIEN, buffer=ALIEN_SELECT_AFK_BUFFER, poll=1)
 		for(var/mob/dead/observer/O in candidates) //Shiggy
-			to_chat(O, "<span class=\"recruit\">[affected_mob] is about to burst from \a [src]!. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>")
+			to_chat(O, "<span class=\"recruit\">\a [src] is about to burst out of \the [affected_mob]!(<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>")
 		return
 
 	if(affected_mob.lying)
