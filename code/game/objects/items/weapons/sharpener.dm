@@ -1,11 +1,11 @@
 /obj/item/weapon/sharpener
 	name = "sharpening block"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "recharger0"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "sharpener"
 	desc = "A block that makes things sharp."
 	var/used = 0
-	var/increment = 5
-	var/max = 15
+	var/increment = 4
+	var/max = 12
 	var/prefix = "sharpened"
 
 
