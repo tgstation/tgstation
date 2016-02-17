@@ -951,11 +951,11 @@ var/list/WALLITEMS_INVERSE = list(
 
 
 /proc/screen_loc2turf(scr_loc, turf/origin)
-	var/tX = text2list(scr_loc, ",")
-	var/tY = text2list(tX[2], ":")
+	var/tX = splittext(scr_loc, ",")
+	var/tY = splittext(tX[2], ":")
 	var/tZ = origin.z
 	tY = tY[1]
-	tX = text2list(tX[1], ":")
+	tX = splittext(tX[1], ":")
 	tX = tX[1]
 	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
 	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
@@ -1175,7 +1175,6 @@ B --><-- A
 
 	return L
 
-
 /atom/proc/contains(var/atom/A)
 	if(!A)
 		return 0
@@ -1215,6 +1214,7 @@ B --><-- A
 		F.proximity_checkers |= checker
 	return 1
 
+<<<<<<< HEAD
 /proc/flick_overlay_static(image/I, atom/A, duration)
 	set waitfor = 0
 	if(!A || !I)
@@ -1235,3 +1235,38 @@ B --><-- A
 				break
 		if(validarea)
 			. += A
+=======
+/proc/get_closest_atom(type, list, source)
+	var/closest_atom
+	var/closest_distance
+	for(var/A in list)
+		if(!istype(A, type))
+			continue
+		var/distance = get_dist(source, A)
+		if(!closest_distance)
+			closest_distance = distance
+			closest_atom = A
+		else
+			if(closest_distance > distance)
+				closest_distance = distance
+				closest_atom = A
+	return closest_atom
+
+proc/pick_closest_path(value)
+	var/list/matches = get_fancy_list_of_types()
+	if (!isnull(value) && value!="")
+		matches = filter_fancy_list(matches, value)
+
+	if(matches.len==0)
+		return
+
+	var/chosen
+	if(matches.len==1)
+		chosen = matches[1]
+	else
+		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
+		if(!chosen)
+			return
+	chosen = matches[chosen]
+	return chosen
+>>>>>>> upstream/master

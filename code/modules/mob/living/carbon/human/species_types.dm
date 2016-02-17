@@ -11,6 +11,7 @@
 	mutant_bodyparts = list("tail_human", "ears")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
 	use_skintones = 1
+	skinned_type = /obj/item/stack/sheet/animalhide/human
 
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
@@ -18,8 +19,6 @@
 		return 1	//Pure humans are always allowed in all roles.
 
 	//Mutants are not allowed in most roles.
-	if(rank in command_positions)
-		return 0
 	if(rank in security_positions) //This list does not include lawyers.
 		return 0
 	if(rank in science_positions)
@@ -30,7 +29,7 @@
 		return 0
 	if(rank == "Quartermaster") //QM is not contained in command_positions but we still want to bar mutants from it.
 		return 0
-	return 1
+	return ..()
 
 
 /datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
@@ -64,6 +63,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
+	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -76,19 +76,12 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 
 	return randname
 
-/datum/species/lizard/qualifies_for_rank(rank, list/features)
-	if(rank in command_positions)
-		return 0
-	return 1
-
+var/regex/lizard_hiss = new("s+", "g")
+var/regex/lizard_hiSS = new("S+", "g")
 /datum/species/lizard/handle_speech(message)
-
 	if(copytext(message, 1, 2) != "*")
-		message = regEx_replaceall(message, "(?<!s)s(?!s)", "sss") //(?<!s) Not s before. (?!s) not s after. That way it only triples a single s instead of double ss.
-		message = regEx_replaceall(message, "(?<!s)ss(?!s)", "ssss")
-		message = regEx_replaceall(message, "(?<!S)S(?!S)", "SSS")
-		message = regEx_replaceall(message, "(?<!S)SS(?!S)", "SSSS")
-
+		message = lizard_hiss.Replace(message, "sss")
+		message = lizard_hiSS.Replace(message, "SSS")
 	return message
 
 //I wag in death
@@ -238,7 +231,6 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	id = "slime"
 	default_color = "00FFFF"
 	darksight = 3
-	invis_sight = SEE_INVISIBLE_LEVEL_ONE
 	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE)
 	say_mod = "says"
 	eyes = "eyes"
@@ -422,7 +414,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
 
 /datum/species/zombie/handle_speech(message)
-	var/list/message_list = text2list(message, " ")
+	var/list/message_list = splittext(message, " ")
 	var/maxchanges = max(round(message_list.len / 1.5), 2)
 
 	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
@@ -435,7 +427,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		if(prob(20) && message_list.len > 3)
 			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
 
-	return list2text(message_list, " ")
+	return jointext(message_list, " ")
 
 /datum/species/cosmetic_zombie
 	name = "Human"
@@ -450,7 +442,6 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	darksight = 3
 	say_mod = "gibbers"
 	sexes = 0
-	invis_sight = SEE_INVISIBLE_LEVEL_ONE
 	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE)
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
@@ -530,13 +521,11 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	return 0
 
 /datum/species/plasmaman/qualifies_for_rank(rank, list/features)
-	if(rank in command_positions)
-		return 0
 	if(rank in security_positions)
 		return 0
 	if(rank == "Clown" || rank == "Mime")//No funny bussiness
 		return 0
-	return 1
+	return ..()
 
 
 
@@ -639,7 +628,7 @@ var/global/list/synth_flesh_disguises = list()
 
 
 /datum/species/synth/proc/handle_disguise(mob/living/carbon/human/H)
-	if(H)
+	if(H && fake_species) // Obviously we only are disguise when we're... disguised.
 		H.updatehealth()
 		var/add_overlay = FALSE
 		if(H.health < disguise_fail_health)

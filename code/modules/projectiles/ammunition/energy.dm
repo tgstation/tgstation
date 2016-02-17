@@ -166,3 +166,14 @@ obj/item/ammo_casing/energy/net
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/item/projectile/energy/trap
 	select_name = "snare"
+
+/obj/item/ammo_casing/energy/instakill
+	projectile_type = /obj/item/projectile/beam/instakill
+	e_cost = 0
+	select_name = "DESTROY"
+
+/obj/item/ammo_casing/energy/instakill/blue
+	projectile_type = /obj/item/projectile/beam/instakill/blue
+
+/obj/item/ammo_casing/energy/instakill/red
+	projectile_type = /obj/item/projectile/beam/instakill/red

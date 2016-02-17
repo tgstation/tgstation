@@ -186,7 +186,7 @@
 	log_admin("[key_name(usr)] has [muteunmute] [key_name(whom)] from [mute_string]")
 	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(whom)] from [mute_string].")
 	if(C)
-		C << "You have been [muteunmute] from [mute_string]."
+		C << "You have been [muteunmute] from [mute_string] by [key_name(usr, include_name = FALSE)]."
 	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -388,15 +388,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					ninja_spawn += L
 			new_character.equip_space_ninja()
 			new_character.internal = new_character.s_store
-			new_character.internals.icon_state = "internal1"
+			new_character.update_internals_hud_icon(1)
 			if(ninja_spawn.len)
 				var/obj/effect/landmark/ninja_spawn_here = pick(ninja_spawn)
 				new_character.loc = ninja_spawn_here.loc
-/* DEATH SQUADS
-		if("Death Commando")//Leaves them at late-join spawn.
-			new_character.equip_death_commando()
-			new_character.internal = new_character.s_store
-			new_character.internals.icon_state = "internal1"*/
 
 		else//They may also be a cyborg or AI.
 			switch(new_character.mind.assigned_role)

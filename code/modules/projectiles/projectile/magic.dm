@@ -25,9 +25,15 @@
 	nodamage = 0
 
 /obj/item/projectile/magic/fireball/Range()
-	var/mob/living/L = locate(/mob/living) in (range(src, 1) - firer)
+	var/turf/T1 = get_step(src,turn(dir, -45))
+	var/turf/T2 = get_step(src,turn(dir, 45))
+	var/mob/living/L = locate(/mob/living) in T1 //if there's a mob alive in our front right diagonal, we hit it.
 	if(L && L.stat != DEAD)
 		Bump(L) //Magic Bullet #teachthecontroversy
+		return
+	L = locate(/mob/living) in T2
+	if(L && L.stat != DEAD)
+		Bump(L)
 		return
 	..()
 
@@ -164,7 +170,6 @@
 						new_mob.invisibility = 0
 						new_mob.job = "Cyborg"
 						var/mob/living/silicon/robot/Robot = new_mob
-						Robot.mmi = new /obj/item/device/mmi(new_mob)
 						Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 					else
 						new_mob.languages |= HUMAN

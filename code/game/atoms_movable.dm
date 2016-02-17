@@ -108,6 +108,10 @@
 			oldloc.Exited(src, destination)
 		loc = destination
 		destination.Entered(src, oldloc)
+		var/area/old_area = get_area(oldloc)
+		var/area/destarea = get_area(destination)
+		if(old_area != destarea)
+			destarea.Entered(src)
 		for(var/atom/movable/AM in destination)
 			if(AM == src)
 				continue
@@ -115,6 +119,33 @@
 		Moved(oldloc, 0)
 		return 1
 	return 0
+
+/mob/living/forceMove(atom/destination)
+	stop_pulling()
+	if(pulledby)
+		pulledby.stop_pulling()
+	if(buckled)
+		buckled.unbuckle_mob()
+	if(buckled_mob)
+		unbuckle_mob(force=1)
+	. = ..()
+	if(client)
+		reset_perspective(destination)
+	update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
+
+/mob/living/carbon/brain/forceMove(atom/destination)
+	if(container)
+		container.forceMove(destination)
+	else //something went very wrong.
+		CRASH("Brainmob without container.")
+
+
+/mob/living/silicon/pai/forceMove(atom/destination)
+	if(card)
+		card.forceMove(destination)
+	else //something went very wrong.
+		CRASH("pAI without card")
+
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below

@@ -36,7 +36,7 @@
 
 		hands_overlays += r_hand_image
 
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			r_hand.layer = 20
 			r_hand.screen_loc = ui_rhand
 			client.screen |= r_hand
@@ -53,7 +53,7 @@
 
 		hands_overlays += l_hand_image
 
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.layer = 20
 			l_hand.screen_loc = ui_lhand
 			client.screen |= l_hand
@@ -65,7 +65,7 @@
 
 
 /mob/living/simple_animal/drone/proc/update_inv_internal_storage()
-	if(internal_storage && client && hud_used)
+	if(internal_storage && client && hud_used && hud_used.hud_shown)
 		internal_storage.screen_loc = ui_drone_storage
 		client.screen += internal_storage
 
@@ -74,7 +74,7 @@
 	remove_overlay(DRONE_HEAD_LAYER)
 
 	if(head)
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_shown)
 			head.screen_loc = ui_drone_head
 			client.screen += head
 

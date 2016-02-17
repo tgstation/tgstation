@@ -165,17 +165,7 @@ Actual Adjacent procs :
 
 //Returns adjacent turfs in cardinal directions that are reachable via atmos
 /turf/proc/reachableAdjacentAtmosTurfs()
-	var/list/L = new()
-	var/turf/simulated/T
-
-	for(var/dir in cardinal)
-		if(dir & atmos_adjacent_turfs)
-			T = get_step(src,dir)
-			if(!istype(T))
-				continue
-			if(CanAtmosPass(T))
-				L.Add(T)
-	return L
+	return atmos_adjacent_turfs
 
 /turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
 	var/adir = get_dir(src, T)

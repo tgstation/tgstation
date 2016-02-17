@@ -9,9 +9,9 @@
 	turns_per_move = 5
 	response_help = "pokes"
 	response_disarm = "gently pushes aside"
-	response_harm = "hits"
+	response_harm = "robusts"
 	speak = list("HONK", "Honk!", "Welcome to clown planet!")
-	emote_see = list("honks")
+	emote_see = list("honks", "squeaks")
 	speak_chance = 1
 	a_intent = "harm"
 	maxHealth = 75
@@ -36,3 +36,7 @@
 		adjustBruteLoss(10)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(15)
+
+/mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/M)
+	..()
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)

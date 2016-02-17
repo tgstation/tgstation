@@ -22,6 +22,7 @@
 		user <<"<span class='notice'>You apply the enhancer to the slime extract. It may now be reused one more time.</span>"
 		Uses++
 		qdel(O)
+	..()
 
 /obj/item/slime_extract/New()
 		..()

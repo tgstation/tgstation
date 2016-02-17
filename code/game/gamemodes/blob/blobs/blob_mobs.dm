@@ -9,9 +9,11 @@
 	pass_flags = PASSBLOB
 	faction = list("blob")
 	bubble_icon = "blob"
+	speak_emote = null //so we use verb_yell/verb_say/etc
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 360
+	unique_name = 1
 	var/mob/camera/blob/overmind = null
 
 /mob/living/simple_animal/hostile/blob/update_icons()
@@ -19,12 +21,33 @@
 		color = overmind.blob_reagent_datum.color
 
 /mob/living/simple_animal/hostile/blob/blob_act()
+	adjustHealth(-maxHealth*0.025)
 	return
+
+/mob/living/simple_animal/hostile/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	..()
+	adjustFireLoss(Clamp(0.01 * exposed_temperature, 1, 5))
 
 /mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target, height = 0)
 	if(istype(mover, /obj/effect/blob))
 		return 1
 	return ..()
+
+/mob/living/simple_animal/hostile/blob/handle_inherent_channels(message, message_mode)
+	if(message_mode == MODE_BINARY)
+		blob_chat(message)
+		return ITALICS | REDUCE_RANGE
+	else
+		..()
+
+/mob/living/simple_animal/hostile/blob/proc/blob_chat(msg)
+	var/spanned_message = say_quote(msg, get_spans())
+	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
+	for(var/M in mob_list)
+		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
+			M << rendered
+		if(isobserver(M))
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
 
 ////////////////
 // BLOB SPORE //
@@ -37,20 +60,20 @@
 	icon_living = "blobpod"
 	health = 40
 	maxHealth = 40
+	verb_say = "psychically pulses"
+	verb_ask = "psychically probes"
+	verb_exclaim = "psychically yells"
+	verb_yell = "psychically screams"
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
-	speak_emote = list("pulses")
+
+	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/obj/effect/blob/factory/factory = null
 	var/list/human_overlays = list()
 	var/is_zombie = 0
 	gold_core_spawnable = 1
-
-/mob/living/simple_animal/hostile/blob/blobspore/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	..()
-	adjustBruteLoss(Clamp(0.01 * exposed_temperature, 1, 5))
-
 
 /mob/living/simple_animal/hostile/blob/blobspore/New(loc, var/obj/effect/blob/factory/linked_node)
 	if(istype(linked_node))
@@ -60,7 +83,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
 	if(!is_zombie && isturf(src.loc))
-		for(var/mob/living/carbon/human/H in oview(src,1)) //Only for corpse right next to/on same tile
+		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == DEAD)
 				Zombify(H)
 				break
@@ -80,15 +103,15 @@
 	desc = "A shambling corpse animated by the blob."
 	melee_damage_lower += 8
 	melee_damage_upper += 11
+	death_cloud_size = 0
 	icon = H.icon
-	speak_emote = list("groans")
 	icon_state = "zombie_s"
 	H.hair_style = null
 	H.update_hair()
 	human_overlays = H.overlays
 	update_icons()
 	H.loc = src
-	loc.visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
+	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
 	..(1)
@@ -106,7 +129,7 @@
 
 	// Attach the smoke spreader and setup/start it.
 	S.attach(location)
-	S.set_up(reagents, 0, location, silent=1)
+	S.set_up(reagents, death_cloud_size, location, silent=1)
 	S.start()
 
 	ghostize()
@@ -137,6 +160,7 @@
 	maxHealth = 20
 	melee_damage_lower = 1
 	melee_damage_upper = 2
+	death_cloud_size = 0
 
 /////////////////
 // BLOBBERNAUT //
@@ -148,27 +172,33 @@
 	icon_state = "blobbernaut"
 	icon_living = "blobbernaut"
 	icon_dead = "blobbernaut_dead"
-	health = 240
-	maxHealth = 240
+	health = 200
+	maxHealth = 200
+	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	attacktext = "slams"
 	attack_sound = 'sound/effects/blobattack.ogg'
-	speak_emote = list("gurgles")
-	minbodytemp = 0
-	maxbodytemp = 360
+	verb_say = "gurgles"
+	verb_ask = "demands"
+	verb_exclaim = "roars"
+	verb_yell = "bellows"
 	force_threshold = 10
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
 
+/mob/living/simple_animal/hostile/blob/blobbernaut/New()
+	..()
+	verbs -= /mob/living/verb/pulled //no pulling people deep into the blob
+
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	if(isliving(target))
 		if(overmind)
 			var/mob/living/L = target
 			var/mob_protection = L.get_permeability_protection()
-			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 17.5, 0, mob_protection)//this will do between 7 and 17 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
+			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 20, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 	if(target)
 		..()
 

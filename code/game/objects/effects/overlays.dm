@@ -39,6 +39,14 @@
 	spawn(duration)
 		qdel(src)
 
+/obj/effect/overlay/temp/explosion
+	name = "explosion"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "explosion"
+	pixel_x = -32
+	pixel_y = -32
+	duration = 8
+
 /obj/effect/overlay/temp/blob
 	name = "blob"
 	icon_state = "blob_attack"

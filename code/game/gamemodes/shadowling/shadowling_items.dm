@@ -96,6 +96,7 @@
 	if(H.dna.species.id != "shadowling")
 		user << "<span class='warning'>You aren't sure how to do this...</span>"
 		return
+	H.dna.species.darksight = 0 //so our species' vision in the dark doesn't interfere.
 	var/new_dark_view
 	new_dark_view = (input(user, "Enter the radius of tiles to see with night vision.", "Night Vision", "[new_dark_view]") as num)
 	new_dark_view = Clamp(new_dark_view,min_darkness_view,max_darkness_view)
@@ -105,4 +106,4 @@
 		else
 			user << "<span class='notice'>You shift your night vision capabilities to see [new_dark_view] tiles away.</span>"
 	darkness_view = new_dark_view
-	return
+	user.update_sight()

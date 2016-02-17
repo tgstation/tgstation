@@ -44,7 +44,7 @@
 		ui = new(user, src, ui_key, "intellicard", name, 500, 500, master_ui, state)
 		ui.open()
 
-/obj/item/device/aicard/get_ui_data()
+/obj/item/device/aicard/ui_data()
 	var/list/data = list()
 	if(AI)
 		data["name"] = AI.name

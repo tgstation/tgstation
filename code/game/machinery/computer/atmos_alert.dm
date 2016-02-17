@@ -25,7 +25,7 @@
 		ui = new(user, src, ui_key, "atmos_alert", name, 350, 300, master_ui, state)
 		ui.open()
 
-/obj/machinery/computer/atmos_alert/get_ui_data(mob/user)
+/obj/machinery/computer/atmos_alert/ui_data(mob/user)
 	var/list/data = list()
 
 	data["priority"] = list()

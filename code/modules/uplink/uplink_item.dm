@@ -102,9 +102,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/nukeoffer/bulldog
 	name = "Bulldog bundle"
 	desc = "Lean and mean: Optimised for people that want to get up close and personal. Contains the popular \
-			Bulldog shotgun, two 12g drums, and an elite hardsuit."
+			Bulldog shotgun, two 12g drums, and a pair of Thermal imaging goggles."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle
-	cost = 16 // normally 20
+	cost = 13 // normally 16
 
 /datum/uplink_item/nukeoffer/medical
 	name = "Medical bundle"
@@ -190,9 +190,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
-			This deadly weapon has a massive 50-round magazine of devastating 7.62x51mm ammunition."
+			This deadly weapon has a massive 50-round magazine of devastating 5.56x45mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
-	cost = 23
+	cost = 18
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -241,11 +241,11 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 8
 
 /datum/uplink_item/dangerous/emp
-	name = "EMP Kit"
-	desc = "A box that contains two EMP grenades, an EMP implant and a short ranged recharging device disguised \
-			as a flashlight. Useful to disrupt communication and silicon lifeforms."
+	name = "EMP Grenades and Implanter Kit"
+	desc = "A box that contains two EMP grenades and an EMP implant. Useful to disrupt communication, \
+			security's energy weapons, and silicon lifeforms when you're in a tight spot."
 	item = /obj/item/weapon/storage/box/syndie_kit/emp
-	cost = 5
+	cost = 2
 
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
@@ -394,14 +394,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "12g Slug Drum"
 	desc = "An additional 8-round slug magazine for use with the Bulldog shotgun. \
 			Now 8 times less likely to shoot your pals."
-	item = /obj/item/ammo_box/magazine/m12g
+	cost = 3
+	item = /obj/item/ammo_box/magazine/m12g/slug
 
-/datum/uplink_item/ammo/shotgun/slug
-	name = "12 Stun Slug Drum"
+/datum/uplink_item/ammo/shotgun/stun
+	name = "12g Stun Slug Drum"
 	desc = "An alternative 8-round stun slug magazine for use with the Bulldog shotgun. \
 			Saying that they're completely non-lethal would be lying."
-	item = /obj/item/ammo_box/magazine/m12g/stun
-	cost = 3
+	item = /obj/item/ammo_box/magazine/m12g
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/dragon
@@ -409,6 +409,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
 			'I'm a fire starter, twisted fire starter!'"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/shotgun/breach
+	name = "12g Breaching Shells"
+	desc = "An economic variant of the CMC meteorshot slugs, not as effective for knocking \
+			down targets, but still great for blasting airlocks off their frames."
+	item = /obj/item/ammo_box/magazine/m12g/breach
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/bag
@@ -454,34 +461,34 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun/basic
-	name = "7.62x51mm Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use with the L6 SAW. \
+	name = "5.56x45mm Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use with the L6 SAW. \
 			By the time you need to use this, you'll already be on a pile of corpses."
-	item = /obj/item/ammo_box/magazine/m762
+	item = /obj/item/ammo_box/magazine/mm556x45
 
 /datum/uplink_item/ammo/machinegun/bleeding
-	name = "7.62x51mm (Bleeding) Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW; equipped with special properties \
+	name = "5.56x45mm (Bleeding) Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with special properties \
 			to induce internal bleeding on targets."
-	item = /obj/item/ammo_box/magazine/m762/bleeding
+	item = /obj/item/ammo_box/magazine/mm556x45/bleeding
 
 /datum/uplink_item/ammo/machinegun/hollow
-	name = "7.62x51mm (Hollow-Point) Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
+	name = "5.56x45mm (Hollow-Point) Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
 			with the unarmored masses of crew."
-	item = /obj/item/ammo_box/magazine/m762/hollow
+	item = /obj/item/ammo_box/magazine/mm556x45/hollow
 
 /datum/uplink_item/ammo/machinegun/ap
-	name = "7.62x51mm (Armor Penetrating) Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW; equipped with special properties \
+	name = "5.56x45mm (Armor Penetrating) Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with special properties \
 			to puncture even the most durable armor."
-	item = /obj/item/ammo_box/magazine/m762/ap
+	item = /obj/item/ammo_box/magazine/mm556x45/ap
 
 /datum/uplink_item/ammo/machinegun/incen
-	name = "7.62x51mm (Incendiary) Box Magazine"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW; tipped with a special flammable \
+	name = "5.56x45mm (Incendiary) Box Magazine"
+	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; tipped with a special flammable \
 			mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
-	item = /obj/item/ammo_box/magazine/m762/incen
+	item = /obj/item/ammo_box/magazine/mm556x45/incen
 
 /datum/uplink_item/ammo/sniper
 	cost = 4
@@ -623,6 +630,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 1
 
+/datum/uplink_item/stealthy_weapons/soap_clusterbang
+	name = "Slipocalypse Clusterbang"
+	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
+	item = /obj/item/weapon/grenade/clusterbuster/soap
+	cost = 6
+
 /datum/uplink_item/stealthy_weapons/door_charge
 	name = "Explosive Airlock Charge"
 	desc = "A small, easily concealable device. It can be applied to an open airlock panel, booby-trapping it. \
@@ -724,6 +737,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	surplus = 30
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	
+/datum/uplink_item/stealthy_tools/emplight
+	name = "EMP Flashlight"
+	desc = "A small, self-charging, short-ranged EMP device disguised as a flashlight. \
+		Useful for disrupting headsets, cameras, and borgs during stealth operations."
+	item = /obj/item/device/flashlight/emp
+	cost = 2
+	surplus = 30
 
 // Devices and Tools
 /datum/uplink_item/device_tools
@@ -749,7 +770,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "The Syndicate surgery dufflebag is a toolkit containing all surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, and a muzzle."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
-	cost = 4
+	cost = 3
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Military Belt"
@@ -858,6 +879,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/c4
 	cost = 1
 
+/datum/uplink_item/device_tools/c4bag
+	name = "Bag of C-4 explosives"
+	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/c4
+	cost = 9 //10% discount!
+
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"
 	desc = "When screwed to wiring attached to a power grid and activated, this large device places excessive \
@@ -931,6 +958,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 15
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/device_tools/potion
+	name = "Sentience Potion"
+	item = /obj/item/slimepotion/sentience
+	desc = "A potion recovered at great risk by undercover syndicate operatives. Using it will make any animal sentient, and bound to serve you."
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
 
 // Implants
 /datum/uplink_item/implants
@@ -988,6 +1021,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	category = "Cybernetic Implants"
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
+	if(item)
+		if(findtext(item, /obj/item/organ/internal/cyberimp))
+			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
+		else
+			return ..()
 
 /datum/uplink_item/cyber_implants/thermals
 	name = "Thermal Vision Implant"

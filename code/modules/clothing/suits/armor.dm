@@ -182,8 +182,6 @@
 		var/turf/picked = pick(turfs)
 		if(!isturf(picked))
 			return
-		if(H.buckled)
-			H.buckled.unbuckle_mob()
 		H.forceMove(picked)
 		H.rad_act(rad_amount)
 		return 1

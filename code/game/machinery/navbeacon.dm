@@ -45,7 +45,7 @@
 
 	codes = new()
 
-	var/list/entries = text2list(codes_txt, ";")	// entries are separated by semicolons
+	var/list/entries = splittext(codes_txt, ";")	// entries are separated by semicolons
 
 	for(var/e in entries)
 		var/index = findtext(e, "=")		// format is "key=value"

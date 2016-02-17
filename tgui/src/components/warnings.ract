@@ -1,25 +1,25 @@
 <script>
-const versions = [11, 10, 9, 8]
+  const versions = [11, 10, 9, 8]
 
-component.exports = {
-  data: {
-    userAgent: navigator.userAgent
-  },
-  computed: {
-    ie () {
-      if (document.documentMode) return document.documentMode
-      for (let version in versions) {
-        const div = document.createElement('div')
-        div.innerHTML = `<!--[if IE ${version}]><span></span><![endif]-->`
-        if (div.getElementsByTagName('span').length) return version
+  component.exports = {
+    data: {
+      userAgent: navigator.userAgent
+    },
+    computed: {
+      ie () {
+        if (document.documentMode) return document.documentMode
+        for (let version in versions) {
+          const div = document.createElement('div')
+          div.innerHTML = `<!--[if IE ${version}]><span></span><![endif]-->`
+          if (div.getElementsByTagName('span').length) return version
+        }
+        return undefined
       }
-      return undefined
+    },
+    oninit () {
+      this.on('debug', () => this.toggle('debug'))
     }
-  },
-  oninit () {
-    this.on('debug', () => this.toggle('debug'))
   }
-}
 </script>
 
 

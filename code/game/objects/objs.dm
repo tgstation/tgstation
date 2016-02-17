@@ -103,7 +103,13 @@
 	return
 
 /mob/proc/unset_machine()
-	src.machine = null
+	if(machine)
+		machine.on_unset_machine(src)
+		machine = null
+
+//called when the user unsets the machine.
+/atom/movable/proc/on_unset_machine(mob/user)
+	return
 
 /mob/proc/set_machine(obj/O)
 	if(src.machine)
@@ -192,8 +198,12 @@
 	being_shocked = 1
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
-	spawn(10)
-		being_shocked = 0
+	addtimer(src, "reset_shocked", 10)
+
+/obj/proc/reset_shocked()
+	being_shocked = 0
 
 /obj/proc/CanAStarPass()
 	. = !density
+
+

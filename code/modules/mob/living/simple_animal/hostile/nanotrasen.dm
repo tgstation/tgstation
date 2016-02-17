@@ -5,7 +5,7 @@
 	icon_living = "nanotrasen"
 	icon_dead = null
 	icon_gib = "syndicate_gib"
-	speak_chance = 25
+	speak_chance = 12
 	turns_per_move = 5
 	response_help = "pokes"
 	response_disarm = "shoves"
