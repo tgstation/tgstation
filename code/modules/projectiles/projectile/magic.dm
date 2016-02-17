@@ -62,7 +62,7 @@
 						ghost.reenter_corpse()
 						break
 			target << "<span class='notice'>You rise with a start, you're alive!!!</span>"
-		else if(stat != DEAD)
+		else if(target.stat != DEAD)
 			target << "<span class='notice'>You feel great!</span>"
 
 /obj/item/projectile/magic/teleport

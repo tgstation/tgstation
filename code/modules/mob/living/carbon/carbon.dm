@@ -153,16 +153,18 @@
 	if(health >= 0)
 
 		if(lying)
-			AdjustSleeping(-5)
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
 							"<span class='notice'>You shake [src] trying to get \him up!</span>")
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make \him feel better!</span>", \
 						"<span class='notice'>You hug [src] to make \him feel better!</span>")
-
+		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)
 		AdjustWeakened(-3)
+		if(resting)
+			resting = 0
+			update_canmove()
 
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 

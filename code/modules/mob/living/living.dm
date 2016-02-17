@@ -978,7 +978,7 @@ Sorry Giacom. Please don't be mad :(
 			src << "<span class='notice'>You're too exhausted to keep going...</span>"
 			Weaken(5)
 			setStaminaLoss(health - 2)
-		update_health_hud()
+	update_health_hud()
 
 /mob/proc/update_sight()
 	return
