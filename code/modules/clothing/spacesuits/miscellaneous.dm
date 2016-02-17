@@ -284,6 +284,7 @@ Contains:
 	item_state = "hardsuit0-prt"
 	item_color = "knight_grey"
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	action_button_name = null
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	name = "paranormal response team suit"
