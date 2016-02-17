@@ -210,6 +210,7 @@
 	force = 8
 	throwforce = 10
 	throw_range = 3
+	hitsound = 'sound/items/trayhit1.ogg'
 
 	var/origin_type = /obj/structure/chair
 
