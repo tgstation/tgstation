@@ -112,17 +112,18 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	..()
-	addtimer(src, "reload", overheat_time)
+	spawn(overheat_time)
+		reload()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload(mob/living/user)
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
 	power_supply.give(500)
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
-	else if(user)
-		user << "<span class='warning'>You silently charge [src].<span>"
+	else
+		loc << "<span class='warning'>[src] silently charges up.<span>"
 	update_icon()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
