@@ -4,15 +4,14 @@
 	weight = 5
 
 /datum/round_event/portal_storm/syndicate_shocktroop
-	boss_types = list(/mob/living/simple_animal/hostile/syndicate/mecha_pilot = 1,\
-					/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 1)
-	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space = 8,\
-						/mob/living/simple_animal/hostile/syndicate/ranged/space = 5)
+	boss_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 2)
+	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/noloot = 8,\
+						/mob/living/simple_animal/hostile/syndicate/ranged/space/noloot = 2)
 
 /datum/round_event_control/portal_storm_narsie
 	name = "Portal Storm: Nar-sie"
 	typepath = /datum/round_event/portal_storm/portal_storm_narsie
-	weight = 0
+	weight = -1
 
 /datum/round_event/portal_storm/portal_storm_narsie
 	boss_types = list(/obj/singularity/narsie/large = 1)
@@ -110,7 +109,7 @@
 			var/area/A = V
 			var/turf/F = get_turf(pick(A.contents))
 			flick_overlay_static(storm, F, 15)
-			playsound(F, 'sound/magic/lightningbolt.ogg', 100, 1)
+			playsound(F, 'sound/magic/lightningbolt.ogg', 80, 1)
 
 /datum/round_event/portal_storm/proc/spawn_hostile()
 	if(!hostile_types || !hostile_types.len)
