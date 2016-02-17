@@ -3,9 +3,8 @@
 	desc = "LOADSAMONEY"
 	icon_state = "balaclava"
 	item_state = "balaclava"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
-	visor_flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 	w_class = 2
 	action_button_name = "Adjust Balaclava"
 	ignore_maskadjust = 0
@@ -18,8 +17,7 @@
 	desc = "Worn by robust fighters, flying high to defeat their foes!"
 	icon_state = "luchag"
 	item_state = "luchag"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = 2
 
 /obj/item/clothing/mask/luchador/speechModification(message)

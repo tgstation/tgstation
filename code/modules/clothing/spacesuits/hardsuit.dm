@@ -11,8 +11,6 @@
 	var/obj/item/clothing/suit/space/hardsuit/suit
 	item_color = "engineering" //Determines used sprites: hardsuit[on]-[color] and hardsuit[on]-[color]2 (lying down sprite)
 	action_button_name = "Toggle Helmet Light"
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
@@ -184,11 +182,11 @@
 	item_state = "syndie_helm"
 	item_color = "syndi"
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
-	on = 0
+	on = 1
 	var/obj/item/clothing/suit/space/hardsuit/syndi/linkedsuit = null
 	action_button_name = "Toggle Helmet Mode"
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	visor_flags = STOPSPRESSUREDMAGE
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
 	icon_state = "hardsuit[on]-[item_color]"
@@ -208,18 +206,18 @@
 		name = initial(name)
 		desc = initial(desc)
 		user.AddLuminosity(brightness_on)
-		flags |= STOPSPRESSUREDMAGE
+		flags |= visor_flags
 		flags_cover |= HEADCOVERSEYES | HEADCOVERSMOUTH
-		flags_inv |= HIDEMASK|HIDEEYES|HIDEFACE
+		flags_inv |= visor_flags_inv
 		cold_protection |= HEAD
 	else
 		user << "<span class='notice'>You switch your hardsuit to combat mode.</span>"
 		name += " (combat)"
 		desc = alt_desc
 		user.AddLuminosity(-brightness_on)
-		flags &= ~(STOPSPRESSUREDMAGE)
+		flags &= ~visor_flags
 		flags_cover &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
-		flags_inv &= ~(HIDEMASK|HIDEEYES|HIDEFACE)
+		flags_inv &= ~visor_flags_inv
 		cold_protection &= ~HEAD
 	update_icon()
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
@@ -278,6 +276,9 @@
 	armor = list(melee = 60, bullet = 60, laser = 50, energy = 25, bomb = 55, bio = 100, rad = 70)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	visor_flags_inv = 0
+	visor_flags = 0
+	on = 0
 
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
@@ -300,7 +301,9 @@
 	icon_state = "hardsuit1-owl"
 	item_state = "s_helmet"
 	item_color = "owl"
-
+	visor_flags_inv = 0
+	visor_flags = 0
+	on = 0
 
 /obj/item/clothing/suit/space/hardsuit/syndi/owl
 	name = "owl hardsuit"
@@ -346,7 +349,6 @@
 	item_state = "medical_helm"
 	item_color = "medical"
 	flash_protect = 0
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
 	scan_reagents = 1
 

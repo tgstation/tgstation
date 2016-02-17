@@ -600,6 +600,10 @@
 		if(head.flags_inv & HIDEEARS)
 			obscured |= slot_ears
 
+	if(wear_mask)
+		if(wear_mask.flags_inv & HIDEEYES)
+			obscured |= slot_glasses
+
 	if(obscured.len > 0)
 		return obscured
 	else
