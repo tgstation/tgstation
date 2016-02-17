@@ -308,7 +308,7 @@
 	var/mob/living/carbon/C = M.current.vampire_active(300, 0, 1)
 	if(!C) return
 	M.current.visible_message("<span class='warning'>[M.current.name] bites [C.name]'s neck!</span>", "<span class='warning'>You bite [C.name]'s neck and begin the flow of power.</span>")
-	to_chat(C, "<span class='sinister'>You feel the tendrils of evil [VAMP_CHARISMA in M.vampire.powers ? "aggressively" : "slowly"] invade your mind.</span>")
+	to_chat(C, "<span class='sinister'>You feel the tendrils of evil [(VAMP_CHARISMA in M.vampire.powers) ? "aggressively" : "slowly"] invade your mind.</span>")
 	if(!ishuman(C))
 		to_chat(M.current, "<span class='warning'>You can only enthrall humanoids.</span>")
 		return
