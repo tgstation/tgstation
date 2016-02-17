@@ -133,9 +133,7 @@ var/list/ai_list = list()
 			src << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
 			src << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
 			src << "To use something, simply click on it."
-			src << "Use say :b to speak to your cyborgs through binary."
-			src << "For department channels, use the following say commands:"
-			src << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
+			src << "Use say :b to speak to your cyborgs through binary or say :o to speak over the AI private intercom network."
 			show_laws()
 			src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 

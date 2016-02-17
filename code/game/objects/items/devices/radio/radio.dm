@@ -17,7 +17,6 @@
 	var/listening = 1
 	var/translate_binary = 0
 	var/translate_hive = 0
-	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
 	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
 	var/obj/item/device/encryptionkey/keyslot //To allow the radio to accept encryption keys.
 	var/subspace_switchable = 0
@@ -99,7 +98,7 @@
 	return ..()
 
 /obj/item/device/radio/initialize()
-	frequency = sanitize_frequency(frequency, freerange)
+	frequency = sanitize_frequency(frequency)
 	set_frequency(frequency)
 
 	for(var/ch_name in channels)
@@ -126,8 +125,8 @@
 	data["broadcasting"] = broadcasting
 	data["listening"] = listening
 	data["frequency"] = frequency
-	data["minFrequency"] = freerange ? MIN_FREE_FREQ : MIN_FREQ
-	data["maxFrequency"] = freerange ? MAX_FREE_FREQ : MAX_FREQ
+	data["minFrequency"] = MIN_FREQ
+	data["maxFrequency"] = MAX_FREQ
 	data["freqlock"] = freqlock
 	data["channels"] = list()
 	for(var/channel in channels)
@@ -150,8 +149,8 @@
 			var/tune = params["tune"]
 			var/adjust = text2num(params["adjust"])
 			if(tune == "input")
-				var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
-				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
+				var/min = format_frequency(MIN_FREQ)
+				var/max = format_frequency(MAX_FREQ)
 				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
 				if(!isnull(tune) && !..())
 					. = TRUE
@@ -162,7 +161,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				frequency = sanitize_frequency(tune, freerange)
+				frequency = sanitize_frequency(tune)
 				set_frequency(frequency)
 				if(frequency == traitor_frequency && hidden_uplink)
 					hidden_uplink.interact(usr)
