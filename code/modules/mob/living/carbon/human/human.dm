@@ -566,7 +566,7 @@
 /mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
-		target_zone = user.zone_sel.selecting
+		target_zone = user.zone_selected
 	if(dna && PIERCEIMMUNE in dna.species.specflags)
 		. = 0
 	// If targeting the head, see if the head item is thin enough.
@@ -882,3 +882,60 @@
 		var/datum/data/record/R = find_record("name", oldname, L)
 		if(R)
 			R.fields["name"] = newname
+
+/mob/living/carbon/human/update_sight()
+	if(!client)
+		return
+	if(stat == DEAD)
+		sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_OBSERVER
+		return
+
+	dna.species.update_sight(src)
+
+/mob/living/carbon/human/get_total_tint()
+	. = ..()
+	if(glasses)
+		. += glasses.tint
+
+/mob/living/carbon/human/update_health_hud()
+	if(!client || !hud_used)
+		return
+	if(dna.species.update_health_hud())
+		return
+	else
+		if(hud_used.healths)
+			var/health_amount = health - staminaloss
+			if(..(health_amount)) //not dead
+				switch(hal_screwyhud)
+					if(1)
+						hud_used.healths.icon_state = "health6"
+					if(2)
+						hud_used.healths.icon_state = "health7"
+					if(5)
+						hud_used.healths.icon_state = "health0"
+		if(hud_used.healthdoll)
+			hud_used.healthdoll.overlays.Cut()
+			if(stat != DEAD)
+				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
+				for(var/obj/item/organ/limb/L in organs)
+					var/damage = L.burn_dam + L.brute_dam
+					var/comparison = (L.max_damage/5)
+					var/icon_num = 0
+					if(damage)
+						icon_num = 1
+					if(damage > (comparison))
+						icon_num = 2
+					if(damage > (comparison*2))
+						icon_num = 3
+					if(damage > (comparison*3))
+						icon_num = 4
+					if(damage > (comparison*4))
+						icon_num = 5
+					if(hal_screwyhud == 5)
+						icon_num = 0
+					if(icon_num)
+						hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
+			else
+				hud_used.healthdoll.icon_state = "healthdoll_DEAD"

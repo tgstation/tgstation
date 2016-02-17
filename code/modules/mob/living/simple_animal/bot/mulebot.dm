@@ -17,8 +17,8 @@ var/global/mulebot_count = 0
 	density = 1
 	anchored = 1
 	animate_movement=1
-	health = 150
-	maxHealth = 150
+	health = 50
+	maxHealth = 50
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	a_intent = "harm" //No swapping
 	buckle_lying = 0
@@ -171,7 +171,7 @@ var/global/mulebot_count = 0
 		ui = new(user, src, ui_key, "mulebot", name, 600, 375, master_ui, state)
 		ui.open()
 
-/mob/living/simple_animal/bot/mulebot/get_ui_data(mob/user)
+/mob/living/simple_animal/bot/mulebot/ui_data(mob/user)
 	var/list/data = list()
 	data["on"] = on
 	data["locked"] = locked
@@ -649,9 +649,6 @@ var/global/mulebot_count = 0
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
-	if(client)
-		return
-
 	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
 					"<span class='userdanger'>[src] drives over you!<span>")

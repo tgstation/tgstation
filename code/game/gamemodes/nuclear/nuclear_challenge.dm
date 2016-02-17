@@ -10,8 +10,11 @@
 	desc = "Use to send a declaration of hostilities to the target, delaying your shuttle departure for 20 minutes while they prepare for your assault.  \
 			Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals.  \
 			Must be used within five minutes, or your benefactors will lose interest."
+	var/declaring_war = 0
 
 /obj/item/device/nuclear_challenge/attack_self(mob/living/user)
+	if(declaring_war)
+		return
 	if(player_list.len < CHALLENGE_MIN_PLAYERS)
 		user << "The enemy crew is too small to be worth declaring war on."
 		return
@@ -23,9 +26,11 @@
 		user << "It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make  do with what you have on hand."
 		return
 
+	declaring_war = 1
 	var/are_you_sure = alert(user, "Consult your team carefully before you declare war on [station_name()]]. Are you sure you want to alert the enemy crew?", "Declare war?", "Yes", "No")
 	if(are_you_sure == "No")
 		user << "On second thought, the element of surprise isn't so bad after all."
+		declaring_war = 0
 		return
 
 	var/war_declaration = "[user.real_name] has declared his intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop them."

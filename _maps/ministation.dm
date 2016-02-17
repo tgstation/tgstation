@@ -67,7 +67,7 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
 		#if !defined(MAP_OVERRIDE_FILES)
 				#define MAP_OVERRIDE_FILES
 				#include "map_files\MiniStation\misc.dm"
-		        #include "map_files\MiniStation\supplypacks.dm"
+		        #include "map_files\MiniStation\cargopacks.dm"
 		        #include "map_files\MiniStation\telecomms.dm"
 		        #include "map_files\MiniStation\uplink_item.dm"
 		        #include "map_files\MiniStation\job\jobs.dm"

@@ -41,7 +41,7 @@
 		add_logs(A, D, "attempted to [atk_verb]")
 		return 0
 
-	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
+	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
@@ -52,7 +52,7 @@
 
 	add_logs(A, D, "punched")
 
-	if((D.stat != DEAD) && damage >= 9)
+	if((D.stat != DEAD) && damage >= A.dna.species.punchstunthreshold)
 		D.visible_message("<span class='danger'>[A] has weakened [D]!!</span>", \
 								"<span class='userdanger'>[A] has weakened [D]!</span>")
 		D.apply_effect(4, WEAKEN, armor_block)
@@ -106,7 +106,7 @@
 		return 0
 
 
-	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
+	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
@@ -181,7 +181,7 @@
 	D.grabbedby(A,1)
 	D.visible_message("<span class='danger'>[A] holds [D] down!</span>", \
 								"<span class='userdanger'>[A] holds [D] down!</span>")
-	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
+	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")
 	D.apply_damage(10, STAMINA, affecting, armor_block)
 	return 1
@@ -381,7 +381,7 @@
 	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return 1
-	..()
+	D.grabbedby(A,1)
 	var/obj/item/weapon/grab/G = A.get_active_hand()
 	if(G)
 		G.state = GRAB_AGGRESSIVE //Instant aggressive grab
@@ -568,7 +568,7 @@
 				if(total_health <= config.health_threshold_crit && !H.stat)
 					H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking them out cold!</span>", \
 										   "<span class='userdanger'>[user] knocks you unconscious!</span>")
-					H.sleeping += 30
+					H.SetSleeping(30)
 					H.adjustBrainLoss(25)
 			return
 		else

@@ -320,11 +320,11 @@ REACTIONARY_EXPLOSIONS
 ## eg: If you give the number 20. The bomb cap will be 5,10,20.
 ## Can be any number between 4 and 128, some examples are provided below.
 
-## Default (3,7,14)
-BOMBCAP 14
-## One 'step' up (4,8,16) (recommended if you enable REACTIONARY_EXPLOSIONS above)
-#BOMBCAP 16
-## LagHell (7,14,28)
+## Small (3, 7, 14)
+#BOMBCAP 14
+## Default (5, 10, 20) (recommended if you enable REACTIONARY_EXPLOSIONS above)
+BOMBCAP 20
+## LagHell (7, 14, 28)
 #BOMBCAP 28
 
 

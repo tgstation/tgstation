@@ -123,7 +123,7 @@
 		ui = new(user, src, ui_key, "atmos_mixer", name, 370, 165, master_ui, state)
 		ui.open()
 
-/obj/machinery/atmospherics/components/trinary/mixer/get_ui_data()
+/obj/machinery/atmospherics/components/trinary/mixer/ui_data()
 	var/data = list()
 	data["on"] = on
 	data["set_pressure"] = round(target_pressure)

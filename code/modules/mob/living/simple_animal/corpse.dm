@@ -33,7 +33,7 @@
 /obj/effect/landmark/mobcorpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
 	M.real_name = src.name
-	M.stat = 2 //Kills the new mob
+	M.death() //Kills the new mob
 	if(src.corpseuniform)
 		M.equip_to_slot_or_del(new src.corpseuniform(M), slot_w_uniform)
 	if(src.corpsesuit)
@@ -170,6 +170,23 @@
 	corpsehelmet = /obj/item/clothing/head/bearpelt
 
 /obj/effect/landmark/mobcorpse/russian/ranged
+	corpsehelmet = /obj/item/clothing/head/ushanka
+
+/obj/effect/landmark/mobcorpse/russian/ranged/trooper
+	corpseuniform = /obj/item/clothing/under/syndicate/camo
+	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
+	corpseshoes = /obj/item/clothing/shoes/combat
+	corpsegloves = /obj/item/clothing/gloves/combat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/balaclava
+	corpsehelmet = /obj/item/clothing/head/helmet/alt
+
+/obj/effect/landmark/mobcorpse/russian/ranged/officer
+	name = "Russian Officer"
+	corpseuniform = /obj/item/clothing/under/rank/security/navyblue/russian
+	corpsesuit = /obj/item/clothing/suit/security/officer/russian
+	corpseshoes = /obj/item/clothing/shoes/laceup
+	corpseradio = /obj/item/device/radio/headset
 	corpsehelmet = /obj/item/clothing/head/ushanka
 
 /obj/effect/landmark/mobcorpse/wizard
