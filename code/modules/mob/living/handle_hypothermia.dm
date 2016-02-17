@@ -1,5 +1,5 @@
-var/global/list/coldwarning_light = list("It's a wee bit chilly, isn't it?","Your nose feels numb","It's pretty cold!","You should probably wrap up some more.","You can see your breath!","You feel like taking a nap.")
-var/global/list/coldwarning_hard = list("Holy shit, it's freezing cold out here!","You should probably get warmed up quickly!","You can't feel your hands!","You can't feel anything!","You're absolutely exhausted!")
+var/global/list/coldwarning_light = list("You begin to feel cold","Your nose feels numb","It's pretty cold!","You should probably wrap up some more.","You start to feel cold","You feel like taking a nap.")
+var/global/list/coldwarning_hard = list("Holy shit, it's freezing cold!","You should probably get warmed up quickly!","You can't feel your hands!","You can't feel anything!","You're absolutely exhausted!")
 
 /mob/living/proc/undergoing_hypothermia()
 	if((status_flags & GODMODE) || (flags & INVULNERABLE) || istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
