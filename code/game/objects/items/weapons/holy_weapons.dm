@@ -262,6 +262,7 @@
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bostaff0"
+	item_state = "bostaff0"
 
 /obj/item/weapon/nullrod/tribal_knife
 	icon_state = "crysknife"
