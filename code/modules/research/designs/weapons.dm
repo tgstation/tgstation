@@ -8,8 +8,7 @@
 	reliability_base = 76
 	category = "Weapons"
 	build_path = /obj/item/device/modkit/aeg_parts
-	locked = 1
-	req_lock_access = list(access_armory)
+	
 
 /datum/design/stunrevolver
 	name = "Stun Revolver"
