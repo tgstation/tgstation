@@ -65,7 +65,7 @@ var/list/datum/power/changeling/powerinstances = list()
 /datum/power/changeling/horror_form
 	name = "Horror Form"
 	desc = "This costly evolution allows us to transform into an all-consuming abomination. We are extremely strong, to the point that we can force airlocks open and devour humans whole, and immune to stuns."
-	genomecost = 30
+	genomecost = 15
 	verbpath = /mob/proc/changeling_horror_form
 
 /datum/power/changeling/deaf_sting
@@ -101,7 +101,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	name = "Extract DNA"
 	desc = "We stealthily sting a target and extract the DNA from them."
 	helptext = "Will give you the DNA of your target, allowing you to transform into them. Does not count towards absorb objectives."
-	genomecost = 4
+	genomecost = 3
 	allowduringlesserform = 1
 	verbpath = /mob/proc/changeling_extract_dna_sting
 
@@ -128,7 +128,7 @@ var/list/datum/power/changeling/powerinstances = list()
 /datum/power/changeling/DeathSting
 	name = "Death Sting"
 	desc = "We silently sting a human, filling him with potent chemicals. His rapid death is all but assured."
-	genomecost = 10
+	genomecost = 8
 	verbpath = /mob/proc/changeling_DEATHsting
 
 /datum/power/changeling/unfat_sting
@@ -189,7 +189,6 @@ var/list/datum/power/changeling/powerinstances = list()
 	helptext = "Heals a moderate amount of damage every tick."
 	genomecost = 8
 	verbpath = /mob/proc/changeling_rapidregen
-
 
 
 // Modularchangling, totally stolen from the new player panel.  YAYY

@@ -937,7 +937,7 @@ var/list/datum/dna/hivemind_bank = list()
 	T.silent = 10
 	T.Paralyse(10)
 	T.Jitter(1000)
-	if(T.reagents)	T.reagents.add_reagent("lexorin", 40)
+	if(T.reagents)	T.reagents.add_reagent("cyanide", 20)
 	feedback_add_details("changeling_powers","DTHS")
 	return 1
 
@@ -962,3 +962,4 @@ var/list/datum/dna/hivemind_bank = list()
 
 	feedback_add_details("changeling_powers","ED")
 	return 1
+	
