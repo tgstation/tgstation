@@ -39,7 +39,7 @@ effective or pretty fucking useless.
 
 	add_logs(user, null, "knocked down people in the area", src)
 
-	for(var/mob/living/carbon/human/M in ultra_range(10, user, 1))
+	for(var/mob/living/carbon/human/M in urange(10, user, 1))
 		if(prob(50))
 
 			M.Weaken(rand(10,20))
