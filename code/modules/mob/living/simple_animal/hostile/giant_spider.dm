@@ -70,6 +70,18 @@
 		return
 	key = user.key
 
+/mob/living/simple_animal/hostile/poison/giant_spider/araneus
+	name = "Sergeant Araneus"
+	desc = "A fierce companion for any person of power, this spider has been carefully trained by NanoTrasen specialists. Its beady, staring eyes send shivers down your spine."
+	turns_per_move = 10
+	maxHealth = 250
+	health = 250
+	faction = list("Station", "neutral")
+	gold_core_spawnable = 0
+	environment_smash = 0
+
+
+
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes."
