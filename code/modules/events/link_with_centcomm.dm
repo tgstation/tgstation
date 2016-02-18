@@ -14,8 +14,5 @@ proc/link_to_centcomm()
 
 proc/unlink_from_centcomm()
 	if(map.linked_to_centcomm)
+		command_alert("This is an automated announcement. The link with central command has been lost. Repeat: The link with central command has been lost. Attempting to re-establish communications in T-10.","Automated announcement",1,alert='sound/AI/loss.ogg')
 		map.linked_to_centcomm = 0
-		command_alert("This is an automated announcement. The link with central command has been lost. Repeat: The link with central command has been lost. Attempting to re-establish communications in T-10.","Automated announcement",1)
-		for(var/mob/M in player_list)
-			if(!istype(M,/mob/new_player) && M.client)
-				M << sound('sound/AI/loss.ogg')

@@ -2803,7 +2803,6 @@
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
 				command_alert("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.")
-				to_chat(world, sound('sound/AI/commandreport.ogg', volume = 60))
 			if("dorf")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","DF")
@@ -2818,8 +2817,7 @@
 				message_admins("[key_name_admin(usr)] triggered an ion storm")
 				var/show_log = alert(usr, "Show ion message?", "Message", "Yes", "No")
 				if(show_log == "Yes")
-					command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
-					to_chat(world, sound('sound/AI/ionstorm.ogg'))
+					command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert",alert='sound/AI/ionstorm.ogg')
 			if("spacevines")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","K")
@@ -2908,32 +2906,28 @@
 					log_admin("[key_name_admin(usr)] triggered a FAKE Biohzard Alert.")
 					return
 				if(choice == "Lifesigns") //MUH ALIUMS
-					command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-					to_chat(world, sound('sound/AI/aliens.ogg'))
+					command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert",alert='sound/AI/aliens.ogg')
 					message_admins("[key_name_admin(usr)] triggered a FAKE Lifesign Alert.")
 					log_admin("[key_name_admin(usr)] triggered a FAKE Lifesign Alert.")
 					return
 				if(choice == "Malfunction") //BLOW EVERYTHING
 					var/salertchoice = input("Do you wish to include the Hostile Runtimes warning to have an authentic Malfunction Takeover Alert ?", "Nanotrasen Alert Level Monitor") in list("Yes", "No")
 					if(salertchoice == "Yes")
-						command_alert("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert")
+						command_alert("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert",alert='sound/AI/aimalf.ogg')
 					to_chat(world, "<font size=4 color='red'>Attention! Delta security level reached!</font>")//Don't ACTUALLY set station alert to Delta to avoid fucking shit up for real
 
 					to_chat(world, "<font color='red'>[config.alert_desc_delta]</font>")
-					to_chat(world, sound('sound/AI/aimalf.ogg'))//AI got valid
 
 					message_admins("[key_name_admin(usr)] triggered a FAKE Malfunction Takeover Alert (Hostile Runtimes alert [salertchoice == "Yes" ? "included":"excluded"])")
 					log_admin("[key_name_admin(usr)] triggered a FAKE Malfunction Takeover Alert (Hostile Runtimes alert [salertchoice == "Yes" ? "included":"excluded"])")
 					return
 				if(choice == "Ion")
-					command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
-					to_chat(world, sound('sound/AI/ionstorm.ogg'))
+					command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert",alert='sound/AI/ionstorm.ogg')
 					message_admins("[key_name_admin(usr)] triggered a FAKE Ion Alert.")
 					log_admin("[key_name_admin(usr)] triggered a FAKE Ion Alert.")
 					return
 				if(choice == "Meteor Wave")
-					command_alert("A meteor storm has been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert")
-					to_chat(world, sound('sound/AI/meteors.ogg'))
+					command_alert("A meteor storm has been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert",alert='sound/AI/meteors.ogg')
 					message_admins("[key_name_admin(usr)] triggered a FAKE Meteor Alert.")
 					log_admin("[key_name_admin(usr)] triggered a FAKE Meteor Alert.")
 					return

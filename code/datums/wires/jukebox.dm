@@ -58,7 +58,7 @@ var/const/JUKE_SETTING = 128 //Cut shocks. Pulse toggles settings menu.
 			sleep(50)
 			interference = 0
 		if(JUKE_CONFIG)
-			playsound(J.loc, 'sound/effects/IAMERROR.ogg', 100, 1)
+			playsound(J.loc, pick(static_list), 100, 1)
 		if(JUKE_SETTING)
 			J.access_unlocked = !J.access_unlocked
 

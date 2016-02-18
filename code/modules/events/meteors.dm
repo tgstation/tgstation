@@ -12,8 +12,7 @@
 	endWhen = rand(45, 90) //More drawn out than the shower, but not too powerful. Supposed to be a devastating event
 
 /datum/event/meteor_wave/announce()
-	command_alert("A meteor storm has been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert")
-	to_chat(world, sound('sound/AI/meteors.ogg'))
+	command_alert("A meteor storm has been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert",alert='sound/AI/meteors.ogg')
 
 //Two to three waves. So 40 to 120
 /datum/event/meteor_wave/tick()

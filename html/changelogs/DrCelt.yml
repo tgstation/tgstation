@@ -1,8 +1,9 @@
 author: DrCelt
 changes:
 - experiment: Adds "linked_to_centcomm" variable to maps.
-- rscadd: Adds new event where the link with central command is broken for 
+- rscadd: Adds new event where the link with central command is broken for 5 minutes.
 - rscadd: Admins can make or break the link with Central command Indefinitely with the secrets panel
-- rscadd: You cannot do the following while the link is broken Call the shuttle, Recall the shuttle, Fax Central command, Recieve messages from Central command, Send messages to Central Command, Call or Send the Cargo Shuttle
-- rscadd: An admin may send a message to the crew even when the link is broken, but he will be prompted first asking if he is sure.
+- rscadd: You cannot do the following while the link is broken Call the shuttle, Recall the shuttle, Fax Central command, Send messages to Central Command, Call or Send the Cargo Shuttle
+- rscadd: Recieving normal messages from central command when the link is broken will appear gibberish and have a static sound.
+- rscadd: An admin may send an ungibberish message to the crew even when the link is broken, but he will be prompted first asking if he is sure.
 - rscadd: Blob alerts ignore whether or not the link with central command is broken

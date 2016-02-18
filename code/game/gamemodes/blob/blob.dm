@@ -166,10 +166,8 @@ You must kill it all while minimizing the damage to the station."})
 			return
 
 		if (1)
-			command_alert("Biohazard outbreak alert status upgraded to level 9.  [station_name()] is now locked down, under Directive 7-10, until further notice.", "Directive 7-10 Initiated",1)
+			command_alert("Biohazard outbreak alert status upgraded to level 9.  [station_name()] is now locked down, under Directive 7-10, until further notice.", "Directive 7-10 Initiated",1,alert='sound/AI/blob_confirmed.ogg')
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player) && M.client)
-					M << sound('sound/AI/blob_confirmed.ogg')
 				var/T = M.loc
 				if((istype(T, /turf/space)) || ((istype(T, /turf)) && (M.z!=1)))
 					pre_escapees += M
