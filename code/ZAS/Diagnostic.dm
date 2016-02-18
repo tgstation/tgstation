@@ -232,7 +232,7 @@ client/proc/Test_ZAS_Connection(var/turf/simulated/T as turf)
 
 	return final_arrangement*/
 
-/* VG - We rolled our own.
+/* /vg/ - We rolled our own.
 client/proc/ZASSettings()
 	set category = "Debug"
 

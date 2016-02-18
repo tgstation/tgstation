@@ -22,7 +22,7 @@ What are the archived variables for?
 #define GRAPHICS_N2O      2
 #define GRAPHICS_REAGENTS 4  // Not used.  Yet.
 #define GRAPHICS_COLD     8
-// END VGSHIT
+// END /vg/SHIT
 
 /hook/startup/proc/createGasOverlays()
 	plmaster = new /obj/effect/overlay()
