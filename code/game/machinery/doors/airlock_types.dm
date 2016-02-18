@@ -210,7 +210,6 @@
 	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
 	opacity = 0
 	doortype = /obj/structure/door_assembly/door_assembly_glass
-	doorsound = 'sound/machines/windowdoor.ogg'
 	glass = 1
 
 //////////////////////////////////
