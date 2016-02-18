@@ -303,6 +303,13 @@ datum/shuttle_controller/emergency_shuttle/process()
 
 				captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
 
+				// "preload" the assets for when they're needed for the map vote.
+				if(config.map_voting && vote)
+					for(var/client/C in clients)
+						spawn
+							vote.interface.sendAssets(C)
+					
+				
 				return 1
 
 		else
@@ -355,3 +362,4 @@ datum/shuttle_controller/emergency_shuttle/process()
 			S.direction = spawndir
 			spawn()
 				S.startmove()
+

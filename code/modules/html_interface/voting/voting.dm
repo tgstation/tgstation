@@ -293,6 +293,7 @@ var/global/datum/controller/vote/vote = new()
 		else
 			if(istype(usr) && usr.client)
 				interact(usr.client)
+
 		to_chat(world, "<font color='purple'><b>[text]</b><br>Type vote to place your votes.<br>You have [ismapvote && ismapvote.len ? "60" : config.vote_period/10] seconds to vote.</font>")
 		switch(vote_type)
 			if("crew_transfer")
@@ -323,9 +324,14 @@ var/global/datum/controller/vote/vote = new()
 
 
 /datum/controller/vote/proc/interact(client/user)
+	set waitfor = FALSE // So we don't wait for each individual client's assets to be sent.
+
 	if(!user || !initialized)
 		return
-	if(ismob(user)) user = user:client
+
+	if(ismob(user))
+		user = user:client
+
 	voting |= user
 	interface.show(user)
 	var/list/client_data = list()
