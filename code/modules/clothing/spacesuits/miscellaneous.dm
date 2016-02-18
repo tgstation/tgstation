@@ -53,11 +53,13 @@
 	siemens_coefficient = 0.9
 
 
-/obj/item/clothing/suit/space/ancient
+/obj/item/clothing/suit/space/ancient //slightly better then an anomalist's space suit
 	name = "ancient space suit"
 	icon_state = "nasa"
 	item_state = "nasa"
 	desc = "Drifting, falling, floating, weightless, coming home."
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank)
+	armor = list(melee = 10, bullet = 10, laser = 10,energy = 10, bomb = 50, bio = 100, rad = 100)
 	species_restricted = list("Human")
 
 /obj/item/clothing/head/helmet/space/ancient
@@ -65,5 +67,6 @@
 	icon_state = "nasa"
 	item_state = "nasa"
 	desc = "Take your protein pills and put your helmet on."
+	armor = list(melee = 10, bullet = 10, laser = 10,energy = 10, bomb = 50, bio = 100, rad = 100)
 	species_restricted =list("Human")
 
