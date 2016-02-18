@@ -47,7 +47,7 @@ var/global/list/comparison_circuit_operations = list("EQUAL TO", "LESS THAN", "M
 	var/value_2 = 0
 	if(isnum(check_against))
 		value_2 = check_against
-	else if(check_this)
+	else if(check_against)
 		value_2 = check_against.get_value(checked_value_2)
 
 	var/result = 0
