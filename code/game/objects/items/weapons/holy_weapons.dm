@@ -268,7 +268,7 @@
 	item_state = "crysknife"
 	name = "arrhythmic knife"
 	w_class = 5
-	desc = "They say fear is the true mind killer, but stabbing them in the head works too."
+	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
 	slot_flags = SLOT_BELT
 	sharpness = IS_SHARP
 	flags = HANDSLOW
