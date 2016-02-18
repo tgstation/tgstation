@@ -1,6 +1,6 @@
 /datum/design/nuclear_gun
 	name = "Advanced Energy Gun Modkit"
-	desc = "Can be used on an energy gun to grant it an experimental miniaturized reactor."
+	desc = "Can be used on an energy gun to grant it the ability to recharge itself over time."
 	id = "nuclear_gun"
 	req_tech = list("combat" = 3, "materials" = 5, "powerstorage" = 3)
 	build_type = PROTOLATHE
