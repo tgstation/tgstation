@@ -2,6 +2,7 @@
  * Contains:
  * 		Beds
  *		Roller beds
+ *		Wheels from the roller beds
  */
 
 /*
@@ -63,6 +64,7 @@
 		if(buildstacktype)
 			new buildstacktype(loc, buildstackamount)
 		qdel(src)
+		return
 
 /obj/structure/bed/MouseDrop(over_object, src_location, over_location)
 	. = ..()
@@ -86,8 +88,30 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
+	var/wheels = 1
 	burn_state = FIRE_PROOF
 	foldabletype = /obj/item/roller
+
+/obj/structure/bed/roller/attackby(obj/item/weapon/W, mob/user, params)
+	..()
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(wheels)
+			anchored = 1
+			new /obj/item/wheel(get_turf(src))
+			new /obj/item/wheel(get_turf(src))
+			wheels = 0
+			user << "<span class='notice'>You screw the wheels off.</span>"
+			icon_state = "nowheels"
+			desc = "This is used to lie in, sleep in or strap on. There are no wheels!"
+			return
+		else
+			user << "<span class='warning'>There is no wheels!</span>"
+			return
+
+/obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
+	if(wheels == 0)
+		return
+	..()
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
@@ -100,6 +124,10 @@
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 
+/obj/item/wheel //these belong to the rollebed, and once screwed off can be used to make scooters
+	name = "wheels"
+	icon = 'icons/obj/vehicles.dmi'
+	icon_state = "wheel"
 
 /obj/item/roller
 	name = "roller bed"
@@ -113,6 +141,7 @@
 	var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
 	R.add_fingerprint(user)
 	qdel(src)
+
 
 /obj/item/roller/robo //ROLLER ROBO DA!
 	name = "roller bed dock"
