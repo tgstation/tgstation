@@ -4,7 +4,7 @@
 	id = "nuclear_gun"
 	req_tech = list("combat" = 3, "materials" = 5, "powerstorage" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_IRON = 5000, MAT_GLASS = 1500, MAT_URANIUM = 750)
+	materials = list(MAT_IRON = 5000, MAT_GLASS = 1000, MAT_URANIUM = 500)
 	reliability_base = 76
 	category = "Weapons"
 	build_path = /obj/item/device/modkit/aeg_parts
