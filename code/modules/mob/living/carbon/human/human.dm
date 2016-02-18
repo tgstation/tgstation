@@ -601,6 +601,10 @@
 		if(head.flags_inv & HIDEEARS)
 			obscured |= slot_ears
 
+	if(wear_mask)
+		if(wear_mask.flags_inv & HIDEEYES)
+			obscured |= slot_glasses
+
 	if(obscured.len > 0)
 		return obscured
 	else
@@ -973,3 +977,8 @@
 	for(var/datum/objective/objective in src.mind.objectives)
 		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
+		
+/mob/living/carbon/human/fully_heal(admin_revive = 0)
+	restore_blood()
+	remove_all_embedded_objects()
+	..()

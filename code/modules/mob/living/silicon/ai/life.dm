@@ -64,7 +64,6 @@
 	if(!fire_res_on_core)
 		health -= getFireLoss()
 	update_stat()
-	diag_hud_set_status()
 	diag_hud_set_health()
 
 /mob/living/silicon/ai/update_stat()
@@ -74,6 +73,10 @@
 		if(health <= config.health_threshold_dead)
 			death()
 			return
+		else if(stat == UNCONSCIOUS)
+			stat = CONSCIOUS
+			adjust_blindness(-1)
+	diag_hud_set_status()
 
 /mob/living/silicon/ai/update_sight()
 	see_invisible = initial(see_invisible)

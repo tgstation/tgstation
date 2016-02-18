@@ -36,7 +36,7 @@ var/global/list/animated_spines_list = list()
 #define DBACKPACK "Department Backpack"
 #define DSATCHEL "Department Satchel"
 #define DDUFFLEBAG "Department Dufflebag"
-var/global/list/backbaglist = list(GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL, DBACKPACK, DSATCHEL, DDUFFLEBAG)
+var/global/list/backbaglist = list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL)
 	//Female Uniforms
 var/global/list/female_clothing_icons = list()
 

@@ -118,6 +118,27 @@
 	desc = "The blade glows with the power of faith. Or possibly a battery."
 	slot_flags = SLOT_BELT
 
+/obj/item/weapon/nullrod/claymore/katana
+	name = "hanzo steel"
+	desc = "Capable of cutting clean through a holy claymore."
+	icon_state = "katana"
+	item_state = "katana"
+	slot_flags = SLOT_BELT | SLOT_BACK
+
+/obj/item/weapon/nullrod/claymore/saber
+	name = "light energy sword"
+	hitsound = 'sound/weapons/blade1.ogg'
+	icon_state = "swordblue"
+	item_state = "swordblue"
+	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
+	slot_flags = SLOT_BELT
+
+/obj/item/weapon/nullrod/claymore/saber/red
+	name = "dark energy sword"
+	icon_state = "swordred"
+	item_state = "swordred"
+	desc = "Woefully ineffective when used on steep terrain."
+
 /obj/item/weapon/nullrod/sord
 	name = "\improper UNREAL SORD"
 	desc = "This thing is so unspeakably HOLY you are having a hard time even holding it."
@@ -228,3 +249,17 @@
 	user << "You are blessed by Carp-Sie. Wild space carp will no longer attack you."
 	user.faction |= "carp"
 	used_blessing = TRUE
+
+/obj/item/weapon/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking
+	name = "monk's staff"
+	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, now used to harass the clown."
+	w_class = 4
+	force = 15
+	block_chance = 40
+	slot_flags = SLOT_BACK
+	sharpness = IS_BLUNT
+	hitsound = "swing_hit"
+	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bostaff0"
+

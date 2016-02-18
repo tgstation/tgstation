@@ -229,8 +229,8 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 					var/obj/machinery/camera/C = locate(/obj/machinery/camera) in range(5, tile)
 
-					if (!C) C = locate(/obj/machinery/camera) in ultra_range(10, tile)
-					if (!C) C = locate(/obj/machinery/camera) in ultra_range(15, tile)
+					if (!C) C = locate(/obj/machinery/camera) in urange(10, tile)
+					if (!C) C = locate(/obj/machinery/camera) in urange(15, tile)
 
 					if (C)
 						var/turf/current_loc = AI.eyeobj.loc

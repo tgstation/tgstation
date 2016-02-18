@@ -95,7 +95,7 @@
 	for(var/mob/living/carbon/H in orange(4,T))
 		if(H == owner)
 			continue
-		H << "<span class='alien'>You hear a buzz in your head </span>"
+		H << "<span class='alien'>You hear a buzz in your head.</span>"
 		H.confused += 20
 
 /obj/item/organ/internal/gland/pop
