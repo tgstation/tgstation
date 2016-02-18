@@ -81,4 +81,38 @@
 	"You are a crab. Do crab things."
 	heavy_emp_damage = 0 //Crab not robotic
 	seeStatic = 0 //Crab can see.
-	hacked = 1
+	default_storage = null
+	dir = 2
+	visualAppearence = SCOUTDRONE
+	speed = 3
+	melee_damage_upper = 5
+	melee_damage_lower = 5
+	a_intent = "harm"
+	attacktext = "pinches"
+
+/mob/living/simple_animal/drone/crab/New()
+	..()
+	access_card = null //No captain access.
+	scanner.Remove(src) //No research scanner.
+	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
+	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
+
+
+
+
+/mob/living/simple_animal/drone/crab/face_atom()
+	dir = 2
+
+/mob/living/simple_animal/drone/crab/Move()
+	..()
+	dir = 2
+
+/mob/living/simple_animal/drone/crab/update_drone_icon()
+	return
+
+/mob/living/simple_animal/drone/crab/emp_act(severity)
+	for(var/obj/item/I in contents)
+		I.emp_act(severity)
+
+/mob/living/simple_animal/drone/crab/update_drone_hack()
+	return
