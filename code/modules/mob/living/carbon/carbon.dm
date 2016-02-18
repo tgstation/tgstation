@@ -125,7 +125,7 @@
 	if(damage <= 0)
 		damage = 0
 
-	if(take_overall_damage(0, damage, "[source]") == 0) // godmode
+	if(take_overall_damage(0, damage, used_weapon = "[source]") == 0) // godmode
 		return 0
 
 	//src.burn_skin(shock_damage)
