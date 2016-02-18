@@ -46,6 +46,7 @@
 	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(src)
 	W.implant(src)
 
+
 /obj/item/drone_shell/syndrone
 	name = "syndrone shell"
 	desc = "A shell of a syndrone, a modified maintenance drone designed to infiltrate and annihilate."
@@ -55,3 +56,29 @@
 /obj/item/drone_shell/syndrone/badass
 	name = "badass syndrone shell"
 	drone_type = /mob/living/simple_animal/drone/syndrone/badass
+
+
+/mob/living/simple_animal/drone/crab
+	name = "crab"
+	desc = "Free crabs!"
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "crab"
+	icon_living = "crab"
+	icon_dead = "crab_dead"
+	picked = TRUE
+	unsuitable_atmos_damage = 0
+	wander = 1
+	ventcrawler = 2
+	healable = 1
+	sight = 0
+	voice_name = "chitters"
+	speak_emote = list("chitters")
+	bubble_icon = "default"
+	languages = HUMAN
+	has_unlimited_silicon_privilege = 0
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 0)
+	laws = \
+	"You are a crab. Do crab things."
+	heavy_emp_damage = 0 //Crab not robotic
+	seeStatic = 0 //Crab can see.
+	hacked = 1
