@@ -119,6 +119,8 @@
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
 	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info
 
+	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
+
 	var/panelopen = 0
 
 /obj/item/device/camera/sepia
@@ -129,6 +131,12 @@
 	icon_on = "sepia-camera"
 	icon_off = "sepia-camera_off"
 	mech_flags = MECH_SCAN_FAIL
+
+/obj/item/device/camera/5x5
+	photo_size = 5
+
+/obj/item/device/camera/7x7
+	photo_size = 7
 
 /obj/item/device/camera/examine(mob/user)
 	..()
@@ -219,15 +227,27 @@
 				break
 		sorted.Insert(j+1, c)
 
-	var/icon/res = icon('icons/effects/96x96.dmi', "")
+	var/icon/res
+	switch(photo_size)
+		if(1)
+			res = icon('icons/effects/32x32.dmi', "")
+		if(3)
+			res = icon('icons/effects/96x96.dmi', "")
+		if(5)
+			res = icon('icons/effects/160x160.dmi', "")
+		if(7)
+			res = icon('icons/effects/224x224.dmi', "")
+		else
+			return
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A,A.dir,0)
 		if(istype(A, /mob/living) && A:lying)
 			img.Turn(A:lying)
 
-		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
-		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
+		var/offX = (photo_size-1)*16 + (A.x - center.x) + A.pixel_x
+		var/offY = (photo_size-1)*16 + (A.x - center.x) + A.pixel_x
+
 		if(istype(A, /atom/movable))
 			offX += A:step_x
 			offY += A:step_y
@@ -267,7 +287,18 @@
 				break
 		sorted.Insert(j+1, c)
 
-	var/icon/res = icon('icons/effects/96x96.dmi', "")
+	var/icon/res
+	switch(photo_size)
+		if(1)
+			res = icon('icons/effects/32x32.dmi', "")
+		if(3)
+			res = icon('icons/effects/96x96.dmi', "")
+		if(5)
+			res = icon('icons/effects/160x160.dmi', "")
+		if(7)
+			res = icon('icons/effects/224x224.dmi', "")
+		else
+			return
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A,A.dir,0)
@@ -358,7 +389,18 @@
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	if(min_harm_label && harm_labeled >= min_harm_label)
-		printpicture(user, icon('icons/effects/96x96.dmi',"blocked"), "You can't see a thing.", flag)
+		var/icon/I
+		switch(photo_size)
+			if(1)
+				I = icon('icons/effects/32x32.dmi', "blocked")
+			if(3)
+				I = icon('icons/effects/96x96.dmi', "blocked")
+			if(5)
+				I = icon('icons/effects/160x160.dmi', "blocked")
+			if(7)
+				I = icon('icons/effects/224x224.dmi', "blocked")
+
+		printpicture(user, I, "You can't see a thing.", flag)
 		return
 	var/mobs = ""
 	var/list/seen
@@ -371,7 +413,7 @@
 		seen = get_hear(world.view, target)
 
 	var/list/turfs = list()
-	for(var/turf/T in range(1, target))
+	for(var/turf/T in range(round(photo_size * 0.5), target))
 		if(T in seen)
 			if(isAI(user) && !cameranet.checkTurfVis(T))
 				continue
@@ -379,7 +421,16 @@
 				turfs += T
 				mobs += camera_get_mobs(T)
 
-	var/icon/temp = icon('icons/effects/96x96.dmi',"")
+	var/icon/temp
+	switch(photo_size)
+		if(1)
+			temp = icon('icons/effects/32x32.dmi', "")
+		if(3)
+			temp = icon('icons/effects/96x96.dmi', "")
+		if(5)
+			temp = icon('icons/effects/160x160.dmi', "")
+		if(7)
+			temp = icon('icons/effects/224x224.dmi', "")
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
