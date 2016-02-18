@@ -135,7 +135,7 @@
 	
 /obj/item/device/modkit/aeg_parts
 	name = "advanced energy gun modkit"
-	desc = "A kit containing all the needed tools and parts to modify an item into another one"
+	desc = "A kit containing all the needed tools and parts to modify an energy gun into an advanced energy gun, granting it the ability to recharge itself."
 	icon_state = "modkit"
 
 /obj/item/device/modkit/aeg_parts/New()
