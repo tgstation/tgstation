@@ -21,10 +21,11 @@ def merge_map(newfile, backupfile):
     originalGrid = originalmap["grid"]
 
     mergeGrid = dict() #final map layout
-    new_keys = dict() #mapping new keys to original keys
+    known_keys = dict() #mapping known keys to original keys
     tempGrid = dict() #saving tiles with newly generated keys for later processing
-    temp_keys = dict() #mapping new keys to newly generated keys
+    temp_keys = dict() #mapping known keys to newly generated keys
     unused_keys = list(originalDict.keys()) #list with all existing keys that aren't being used
+    tempDict = collections.OrderedDict() #mapping new keys to new data
     originalDict_size = len(originalDict)
 
     for y in range(1,maxy):
@@ -32,8 +33,8 @@ def merge_map(newfile, backupfile):
             shitKey = shitGrid[x,y]
 
             #if this key was seen before, add it to the pile immediately
-            if shitKey in new_keys:
-                mergeGrid[x,y] = new_keys[shitKey]
+            if shitKey in known_keys:
+                mergeGrid[x,y] = known_keys[shitKey]
                 continue
             #if this key was seen before, add it to the pile immediately
             if shitKey in temp_keys:
@@ -47,42 +48,76 @@ def merge_map(newfile, backupfile):
             #if new tile data at x,y is the same as original tile data at x,y, add to the pile
             if set(shitData) == frozenset(originalData):
                 mergeGrid[x,y] = originalKey
-                new_keys[shitKey] = originalKey
+                known_keys[shitKey] = originalKey
                 unused_keys.remove(originalKey)
             else:
                 #search for the new tile data in the original dictionary, if a key is found add it to the pile, else generate a new key
                 newKey = search_data(originalDict, shitData)
                 if newKey != None:
                     mergeGrid[x,y] = newKey
-                    new_keys[shitKey] = newKey
+                    known_keys[shitKey] = newKey
                     unused_keys.remove(newKey)
                 else:
-                    newKey = generate_new_key(originalDict)
+                    if len(tempDict) == 0:
+                        newKey = generate_new_key(originalDict)
+                    else:
+                        newKey = generate_new_key(tempDict)
                     if newKey == "OVERFLOW": #if this happens, merging is impossible
                         print("ERROR: Key overflow detected.")
                         return 0
                     tempGrid[x,y] = newKey
                     temp_keys[shitKey] = newKey
-                    originalDict[newKey] = shitData
+                    tempDict[newKey] = shitData
+
+    sort = 0
+    #find gaps in the dictionary keys sequence and add the missing keys to be recycled
+    dict_list = list(originalDict.keys())
+    for index in range(0, len(dict_list)):
+        if index + 1 == len(dict_list):
+            break
+
+        key = dict_list[index]
+        next_key = dict_list[index+1]
+
+        difference = key_difference(key, next_key)
+        if difference > 1:
+            i = 0
+            nextnew = key
+            while i < difference:
+                nextnew = get_next_key(nextnew)
+                unused_keys.append(nextnew)
+                i += 1
+            sort = 1
+
 
     #Recycle outdated keys with any new tile data, starting from the bottom of the dictionary
     i = 0
-    while i < (len(originalDict) - originalDict_size):
-        last_key = next(reversed(originalDict))
-        recycled_key = last_key
+    for key in reversed(tempDict):
+        recycled_key = key
         if len(unused_keys) > 0:
             recycled_key = unused_keys.pop()
 
         for entry in tempGrid:
-            if tempGrid[entry] == last_key:
+            if tempGrid[entry] == None:
+                continue
+            if tempGrid[entry] == key:
                 mergeGrid[entry] = recycled_key
-                
-        originalDict[recycled_key] = originalDict[last_key]
-        if recycled_key != last_key:
-            originalDict.pop(last_key, None)
-        else:
-            i += 1
-    
+                tempGrid[entry] = None
+
+        originalDict[recycled_key] = tempDict[key]
+
+    #if gaps in the key sequence were found, sort the dictionary for cleanliness
+    if sort == 1:
+        sorted_dict = collections.OrderedDict()
+        next_key = get_next_key("")
+        while len(sorted_dict) < len(originalDict):
+            try:
+                sorted_dict[next_key] = originalDict[next_key]
+            except KeyError:
+                pass
+            next_key = get_next_key(next_key)
+        originalDict = sorted_dict
+
     write_dictionary(newfile, originalDict)
     write_grid(newfile, mergeGrid)
     return 1
@@ -99,10 +134,13 @@ def write_grid(filename, grid):
 
         for y in range(1, maxy):
             for x in range(1, maxx):
-                output.write(grid[x,y])
+                try:
+                    output.write(grid[x,y])
+                except KeyError:
+                    print("Key error: ({},{})".format(x,y))
             output.write("\n")
         output.write("\"}")
-        output.write("\n\n")
+        output.write("\n")
 
 def search_data(dictionary, data):
     for entry in dictionary:
@@ -240,6 +278,25 @@ def parse_map(map_file): #supports only one z level per file
         data["maxx"] = maxx
         data["maxy"] = maxy
         return data
+
+#subtract keyB from keyA
+def key_difference(keyA, keyB):
+    if len(keyA) != len(keyB):
+        return "you fucked up" #visions of fuckup...
+
+    Ayek = keyA[::-1]
+    Byek = keyB[::-1]
+    difference = 0
+    result = 0
+    for i in range(0, len(keyA)):
+        base = 52**i
+
+        A = 26 if Ayek[i].isupper() else 0
+        B = 26 if Byek[i].isupper() else 0
+
+        difference = ( (ord(Byek[i].lower()) + B) - (ord(Ayek[i].lower()) + A) ) * base
+        result += difference
+    return result
 
 def key_compare(keyA, keyB): #thanks byond for not respecting ascii
     pos = 0
