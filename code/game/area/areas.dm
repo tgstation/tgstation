@@ -29,7 +29,7 @@
 	if(!requires_power)
 		power_light = 1
 		power_equip = 1
-		power_environ = 1 
+		power_environ = 1
 
 	..()
 
@@ -87,7 +87,7 @@
 		a.triggerAlarm("Power", src, null, src)
 
 /////////////////////////////////////////
-// BEGIN /VG/ UNFUCKING OF AIR ALARMS
+// BEGIN /vg/ UNFUCKING OF AIR ALARMS
 /////////////////////////////////////////
 
 /area/proc/updateDangerLevel()

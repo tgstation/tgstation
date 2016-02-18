@@ -307,7 +307,7 @@ This function restores all organs.
 
 	//Embedded projectile code.
 	if(!organ) return
-/*VG EDIT
+/*/vg/ EDIT
 	if(istype(used_weapon,/obj/item/weapon))
 		var/obj/item/weapon/W = used_weapon  //Sharp objects will always embed if they do enough damage.
 		if( (damage > (10*W.w_class)) && ( (sharp && !ismob(W.loc)) || prob(damage/W.w_class) ) )
