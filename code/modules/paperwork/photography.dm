@@ -132,14 +132,17 @@
 	icon_off = "sepia-camera_off"
 	mech_flags = MECH_SCAN_FAIL
 
-/obj/item/device/camera/tiny_photos
-	photo_size = 1
-
 /obj/item/device/camera/big_photos
 	photo_size = 5
 
+/obj/item/device/camera/big_photos/set_zoom()
+	return
+
 /obj/item/device/camera/huge_photos
 	photo_size = 7
+
+/obj/item/device/camera/huge_photos/set_zoom()
+	return
 
 /obj/item/device/camera/examine(mob/user)
 	..()
@@ -147,6 +150,34 @@
 	if(panelopen)
 		to_chat(user, "<span class='notice'>There is an open panel on the side.</span>")
 
+/obj/item/device/camera/proc/get_base_photo_icon(new_icon_state = "")
+	var/icon/res
+	switch(photo_size)
+		if(1)
+			res = icon('icons/effects/32x32.dmi', new_icon_state)
+		if(3)
+			res = icon('icons/effects/96x96.dmi', new_icon_state)
+		if(5)
+			res = icon('icons/effects/160x160.dmi', new_icon_state)
+		if(7)
+			res = icon('icons/effects/224x224.dmi', new_icon_state)
+		else
+			res = icon('icons/effects/32x32.dmi', new_icon_state)
+
+	return res
+
+/obj/item/device/camera/verb/set_zoom()
+	set name = "Set Camera Zoom"
+	set category = "Object"
+
+	if(usr.incapacitated()) return
+
+	if(photo_size == 3)
+		photo_size = 1
+		usr.simple_message("<span class='info'>You zoom the camera in.</span>", "<span class='danger'>You drink from the mysterious bottle labeled \"DRINK ME\". Everything feels huge!</span>") //Second message is shown when hallucinating
+	else
+		photo_size = 3
+		usr.simple_message("<span class='info'>You zoom the camera out.</span>", "<span class='danger'>You take a bite of the mysterious mushroom. Everything feels so tiny!</span>") //Second message is shown when hallucinating
 
 /obj/item/device/camera/ai_camera //camera AI can take pictures with
 	name = "AI photo camera"
@@ -230,26 +261,15 @@
 				break
 		sorted.Insert(j+1, c)
 
-	var/icon/res
-	switch(photo_size)
-		if(1)
-			res = icon('icons/effects/32x32.dmi', "")
-		if(3)
-			res = icon('icons/effects/96x96.dmi', "")
-		if(5)
-			res = icon('icons/effects/160x160.dmi', "")
-		if(7)
-			res = icon('icons/effects/224x224.dmi', "")
-		else
-			return
+	var/icon/res = get_base_photo_icon()
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A,A.dir,0)
 		if(istype(A, /mob/living) && A:lying)
 			img.Turn(A:lying)
 
-		var/offX = (photo_size-1)*16 + (A.x - center.x) * 32 + A.pixel_x
-		var/offY = (photo_size-1)*16 + (A.x - center.x) * 32 + A.pixel_x
+		var/offX = 1 + (photo_size-1)*16 + (A.x - center.x) * 32 + A.pixel_x
+		var/offY = 1 + (photo_size-1)*16 + (A.y - center.y) * 32 + A.pixel_y
 
 		if(istype(A, /atom/movable))
 			offX += A:step_x
@@ -290,18 +310,7 @@
 				break
 		sorted.Insert(j+1, c)
 
-	var/icon/res
-	switch(photo_size)
-		if(1)
-			res = icon('icons/effects/32x32.dmi', "")
-		if(3)
-			res = icon('icons/effects/96x96.dmi', "")
-		if(5)
-			res = icon('icons/effects/160x160.dmi', "")
-		if(7)
-			res = icon('icons/effects/224x224.dmi', "")
-		else
-			return
+	var/icon/res = get_base_photo_icon()
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A,A.dir,0)
@@ -392,19 +401,11 @@
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	if(min_harm_label && harm_labeled >= min_harm_label)
-		var/icon/I
-		switch(photo_size)
-			if(1)
-				I = icon('icons/effects/32x32.dmi', "blocked")
-			if(3)
-				I = icon('icons/effects/96x96.dmi', "blocked")
-			if(5)
-				I = icon('icons/effects/160x160.dmi', "blocked")
-			if(7)
-				I = icon('icons/effects/224x224.dmi', "blocked")
+		var/icon/I = get_base_photo_icon("blocked")
 
 		printpicture(user, I, "You can't see a thing.", flag)
 		return
+
 	var/mobs = ""
 	var/list/seen
 	if(!isAI(user)) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
@@ -424,16 +425,8 @@
 				turfs += T
 				mobs += camera_get_mobs(T)
 
-	var/icon/temp
-	switch(photo_size)
-		if(1)
-			temp = icon('icons/effects/32x32.dmi', "")
-		if(3)
-			temp = icon('icons/effects/96x96.dmi', "")
-		if(5)
-			temp = icon('icons/effects/160x160.dmi', "")
-		if(7)
-			temp = icon('icons/effects/224x224.dmi', "")
+	var/icon/temp = get_base_photo_icon()
+
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
