@@ -132,10 +132,13 @@
 	icon_off = "sepia-camera_off"
 	mech_flags = MECH_SCAN_FAIL
 
-/obj/item/device/camera/5x5
+/obj/item/device/camera/tiny_photos
+	photo_size = 1
+
+/obj/item/device/camera/big_photos
 	photo_size = 5
 
-/obj/item/device/camera/7x7
+/obj/item/device/camera/huge_photos
 	photo_size = 7
 
 /obj/item/device/camera/examine(mob/user)
@@ -245,8 +248,8 @@
 		if(istype(A, /mob/living) && A:lying)
 			img.Turn(A:lying)
 
-		var/offX = (photo_size-1)*16 + (A.x - center.x) + A.pixel_x
-		var/offY = (photo_size-1)*16 + (A.x - center.x) + A.pixel_x
+		var/offX = (photo_size-1)*16 + (A.x - center.x) * 32 + A.pixel_x
+		var/offY = (photo_size-1)*16 + (A.x - center.x) * 32 + A.pixel_x
 
 		if(istype(A, /atom/movable))
 			offX += A:step_x
