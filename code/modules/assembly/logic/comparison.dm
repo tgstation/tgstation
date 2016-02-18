@@ -8,7 +8,7 @@ var/global/list/comparison_circuit_operations = list("EQUAL TO", "LESS THAN", "M
 /obj/item/device/assembly/comparison
 	name = "comparison circuit"
 
-	desc = "A tiny circuit intended for use in assembly frames. When it receives a signal, it checks the first assembly connected to it. If the condition is true, it emits a pulse to the second connected assembly. Otherwise, it emits a pulse to the third connected assembly."
+	desc = "A tiny circuit intended for use in assembly frames. When it receives a signal, it checks whether the condition is true or false, and sends a pulse to the the corresponding assembly."
 	icon_state = "circuit_="
 	starting_materials = list(MAT_IRON = 100, MAT_GLASS = 25)
 	w_type = RECYK_ELECTRONIC
@@ -47,8 +47,8 @@ var/global/list/comparison_circuit_operations = list("EQUAL TO", "LESS THAN", "M
 	var/value_2 = 0
 	if(isnum(check_against))
 		value_2 = check_against
-	else if(check_this)
-		value_2 = check_this.get_value(checked_value_2)
+	else if(check_against)
+		value_2 = check_against.get_value(checked_value_2)
 
 	var/result = 0
 
