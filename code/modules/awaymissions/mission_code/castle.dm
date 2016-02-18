@@ -4,7 +4,8 @@
 
 /*
  *This mission bases heavily around two kingdoms in a never-ending battle powered by ghosts. Crew is dropped somewhere in the middle of it and need to escape
- *the mission while avoding becoming another casuality inbetween the two kingdom's eternal fued.
+ *the mission while avoding becoming another casuality inbetween the two kingdom's eternal fued. Getting out requires the crew to either
+ *sneak past the lich boss to a portal or outright killing him.
  */
 
 
@@ -85,6 +86,7 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(src))
 	new_team_member.prefs.copy_to(M)
 	M.key = new_team_member.key
+	M.set_species(/datum/species/skeleton)
 	M.faction += team
 	M.equipOutfit(gear)
 
@@ -127,8 +129,70 @@
 		L.dust()
 
 
+/*
+ * Mission Items
+ */
 
-//DARK WIZARD BOSS MOB
+/obj/machinery/door/poddoor/woodengate
+	name = "wooden gate"
+	desc = "A sturdy wooden gate built from heavy logs. Do not stand under."
+	icon = 'icons/obj/doors/woodengate.dmi'
+	icon_state = "closed"
+	opacity = 0
+	explosion_block = 0
+	heat_proof = 0
+
+/obj/structure/signpost/portal
+	name = "Mystic Portal"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "bhole3"
+
+/obj/effect/spawner/lootdrop/castle //1 random staff/magic artifact on the death of the lich boss
+	name = "boss loot drop"
+	lootdoubles = 0
+	lootcount = 1
+	loot = list(/obj/item/weapon/gun/magic/staff/healing = 25,
+	/obj/item/weapon/gun/magic/staff/change = 15,
+	/obj/item/weapon/gun/magic/staff/chaos = 5,
+	/obj/item/device/necromantic_stone = 45,
+	/obj/item/voodoo = 35)
+
+/obj/effect/landmark/corpse/lichwizardspawn //actual wizard spawn
+	name = "Old Coffin"
+	desc = "An extremely old but durable coffin. I wonder whats inside.."
+	icon = 'icons/obj/closet.dmi'
+	icon_state = "coffin_door"
+	flavour_text = {"You are a lich wizard! Watch your subjects fight for your own amusement from the safety of your den, or if
+	you're feeling extra cruel, pay them a vist and mix up the fight a little!"}
+	death = FALSE
+	roundstart = FALSE
+
+/obj/effect/landmark/corpse/lichwizardspawn/createCorpse()
+	var/A = locate(/mob/living/simple_animal/hostile/boss/dark_wizard) in loc
+	if(A)
+		return
+
+/*
+ *Mission Areas
+ */
+
+/area/awaymission/castle
+	name = "Castle Field"
+	icon_state = "away"
+	requires_power = 0
+	luminosity = 1
+	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
+
+/area/awaymission/castle/ripu
+	name = "Purgatory"
+	icon_state = "away2"
+
+/area/awaymission/castle/bossden
+	name = "Mystic Cave"
+	icon_state = "away3"
+
+
+//DARK WIZARD BOSS MOB -thanks remie
 //The evil guy getting his kicks watching the two kingdoms fight for eternity
 /mob/living/simple_animal/hostile/boss/dark_wizard
 	name = "Dark Wizard"
@@ -138,7 +202,9 @@
 	del_on_death = TRUE
 	loot = list(/obj/item/clothing/suit/wizrobe/black,
 				/obj/item/clothing/head/wizard/black,
-				/obj/effect/decal/remains/human)
+				/obj/effect/decal/remains/human,
+				/obj/structure/signpost/portal,
+				/obj/effect/spawner/lootdrop/castle)
 	icon_state = "dark_wizard"
 	ranged = 1
 	minimum_distance = 3

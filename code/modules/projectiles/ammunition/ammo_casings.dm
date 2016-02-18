@@ -279,6 +279,15 @@
 	throwforce = 15 //still deadly when thrown
 	throw_speed = 3
 
+/obj/item/ammo_casing/caseless/crossbolt
+	name = "crossbolt"
+	desc = "A arrow with a metallic tip for extra penetration."
+	projectile_type = /obj/item/projectile/bullet/reusable/crossbolt
+	caliber = "crossbolt"
+	icon_state = "magspear"
+	throwforce = 10
+	throw_speed = 4
+
 /obj/item/ammo_casing/caseless/foam_dart
 	name = "foam dart"
 	desc = "Its nerf or nothing! Ages 8 and up."
