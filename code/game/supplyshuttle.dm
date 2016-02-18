@@ -607,7 +607,9 @@ var/list/mechtoys = list(
 		return 1
 	//Calling the shuttle
 	if(href_list["send"])
-		if(!supply_shuttle.can_move())
+		if(!map.linked_to_centcomm)
+			temp = "You aren't able to establish contact with central command, so the shuttle won't move. <BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		else if(!supply_shuttle.can_move())
 			temp = "For safety reasons the automated supply shuttle cannot transport live organisms, classified nuclear weaponry or homing beacons.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		else if(supply_shuttle.at_station)
 			supply_shuttle.moving = -1

@@ -117,9 +117,10 @@ var/list/alldepartments = list("Central Command")
 /obj/machinery/faxmachine/Topic(href, href_list)
 	if(href_list["send"])
 		if(tofax)
-
-			log_game("([usr]/([usr.ckey]) sent a fax titled [tofax] to [dpt] - contents: [tofax.info]")
 			if((dpt == "Central Command") | (dpt == "Nanotrasen HR"))
+				if(!map.linked_to_centcomm)
+					to_chat(usr, "<span class='danger'>\The [src] displays a 404 error: Central Command not found</span>")
+					return
 				if(dpt == "Central Command")
 					Centcomm_fax(tofax, tofax.name, usr)
 				if(dpt == "Nanotrasen HR")
@@ -131,7 +132,7 @@ var/list/alldepartments = list("Central Command")
 
 			else
 				SendFax(tofax.info, tofax.name, usr, dpt)
-
+			log_game("([usr]/([usr.ckey]) sent a fax titled [tofax] to [dpt] - contents: [tofax.info]")
 			to_chat(usr, "Message transmitted successfully.")
 			faxtime = world.timeofday + cooldown_time
 
@@ -229,7 +230,7 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/centcomm)
 					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( F.loc )
 					if (centcomm)
 						P.name = "[command_name()]- [sentname]"
-					else//probably a 
+					else//probably a
 						P.name = "[sentname]"
 					P.info = "[sent]"
 					P.update_icon()

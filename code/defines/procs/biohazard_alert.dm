@@ -10,7 +10,7 @@ var/global/list/outbreak_level_words=list(
 /proc/biohazard_alert(var/level=0)
 	if(!level)
 		level = rand(4,7)
-	command_alert("Confirmed outbreak of level [level] biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+	command_alert("Confirmed outbreak of level [level] biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert",1)
 	var/list/vox_sentence=list(
 		'sound/AI/outbreak_before.ogg',
 		outbreak_level_words[level],

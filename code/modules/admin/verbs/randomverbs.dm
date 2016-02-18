@@ -597,6 +597,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
+	if(!map.linked_to_centcomm)
+		var/confirmation = alert("The station is not linked to central command by a relay. Ruin immersion?",,"Yes","No")
+		if(confirmation == "No")
+			return
 	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
 	var/customname = input(usr, "Pick a title for the report.", "Title") as text|null
 	if(!input)
@@ -614,7 +618,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	switch(alert("Should this be announced to the general population?",,"Yes","No"))
 		if("Yes")
-			command_alert(input, customname);
+			command_alert(input, customname,1);
 		if("No")
 			to_chat(world, "<span class='warning'>New Nanotrasen Update available at all communication consoles.</span>")
 
