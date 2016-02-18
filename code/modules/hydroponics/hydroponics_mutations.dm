@@ -85,7 +85,7 @@
 			4;					"chemical_exotic", \
 			6;					"fruit_exotic", \
 			2;					"change_appearance", \
-			S.spread ? 0.1 : 2;	"trait_creepspread"
+			S.spread ? 0.1 : 1;	"trait_creepspread"
 			)
 		if(MUTCAT_BAD)
 			mutation_type = pick(\
@@ -349,7 +349,7 @@
 					newseed.spread = 2
 					var/turf/T = get_turf(src)
 					new /obj/effect/plantsegment(T, newseed)
-					msg_admin_attack("a random chance hydroponics mutation has space vines ([newseed.display_name]). <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a>")
+					msg_admin_attack("a random chance hydroponics mutation has spawned space vines ([newseed.display_name]). <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a>")
 
 		if("change_appearance")
 			seed.randomize_icon(change_packet=0)
@@ -372,6 +372,18 @@
 			else
 				visible_message("<span class='notice'>\The [seed.display_name]'s red roots slowly wash their color out...</span>")
 
+		if("trait_creepspread")
+			seed.spread = seed.spread ? 0 : 1
+			generic_mutation_message("spasms visibly, shifting in the tray!")
+
+		if("trait_vinespread")
+			switch(seed.spread)
+				if(0 to 1)
+					seed.spread = 2
+				if(2)
+					seed.spread = 0
+			generic_mutation_message("spasms visibly, shifting in the tray!")
+
 		if("trait_teleporting")
 			seed.teleporting = !seed.teleporting
 			if(seed.teleporting)
@@ -381,10 +393,17 @@
 
 		if("trait_ligneous")
 			seed.ligneous = !seed.ligneous
-			if(seed.hematophage)
+			if(seed.ligneous)
 				visible_message("<span class='notice'>\The [seed.display_name] seems to grow a cover of robust bark.</span>")
 			else
 				visible_message("<span class='notice'>\The [seed.display_name]'s bark slowly sheds away...</span>")
+
+		if("trait_parasitic")
+			seed.parasite = !seed.parasite
+			if(seed.parasite)
+				generic_mutation_message("shudders hungrily.")
+			else
+				generic_mutation_message("seems to mellow down...")
 
 		if("trait_juicy")
 			seed.juicy = seed.juicy ? 0 : 1
@@ -398,7 +417,7 @@
 					seed.juicy = 0
 			generic_mutation_message("wobbles!")
 
-		if("trait_thorny")
+		if("trait_thorns")
 			seed.thorny = !seed.thorny
 			if(seed.thorny)
 				visible_message("<span class='notice'>\The [seed.display_name] spontaneously develops mean-looking thorns!</span>")
@@ -414,7 +433,7 @@
 
 		if("trait_carnivorous")
 			seed.carnivorous = seed.carnivorous ? 0 : 1
-			if(seed.stinging)
+			if(seed.carnivorous)
 				generic_mutation_message("shudders hungrily.")
 			else
 				generic_mutation_message("seems to mellow down...")

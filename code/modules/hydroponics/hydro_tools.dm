@@ -184,13 +184,13 @@
 		dat += "<br>It is a ligneous plant with strong and robust stems."
 
 	if(grown_seed.thorny)
-		dat += "<br>It posesses a cover of sharp thorns."
+		dat += "<br>It possesses a cover of sharp thorns."
 
 	if(grown_seed.stinging)
-		dat += "<br>It posesses a cover of fine stingers capable of releasing chemicals on touch."
+		dat += "<br>It possesses a cover of fine stingers capable of releasing chemicals on touch."
 
 	if(grown_seed.teleporting)
-		dat += "<br>It posesses a high degree of temporal/spatial instability and may cause spontaneous bluespace disruptions."
+		dat += "<br>It possesses a high degree of temporal/spatial instability and may cause spontaneous bluespace disruptions."
 
 	switch(grown_seed.juicy)
 		if(1)
