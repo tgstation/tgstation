@@ -890,3 +890,8 @@ var/list/ai_list = list()
 			AT.get_remote_view_fullscreens(src)
 		else
 			clear_fullscreen("remote_view", 0)
+
+/mob/living/silicon/ai/revive(full_heal = 0, admin_revive = 0)
+	if(..()) //successfully ressuscitated from death
+		icon_state = "ai"
+		. = 1

@@ -51,10 +51,6 @@
 	..(gibbed)
 	regenerate_icons()
 
-/mob/living/simple_animal/pet/dog/corgi/revive()
-	..()
-	regenerate_icons()
-
 /mob/living/simple_animal/pet/dog/corgi/show_inv(mob/user)
 	user.set_machine(src)
 	if(user.stat) return
