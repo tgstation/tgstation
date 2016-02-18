@@ -180,3 +180,9 @@
 		weaken = 0
 		nodamage = 1
 	. = ..() // Execute the rest of the code.
+
+/obj/item/projectile/bullet/apfsds
+	name ="apfsds bolt"
+	icon_state= "bolter"
+	damage = 50
+	armour_penetration = 40

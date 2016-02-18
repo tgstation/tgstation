@@ -44,3 +44,27 @@
 	icon_state = "foamdart_riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
 	stamina = 25
+
+/obj/item/projectile/bullet/reusable/crossbowbolt
+	name = "crossbow bolt"
+	desc = "plain, crossbow bolt"
+	damage = 60
+	icon = 'icons/obj/guns/toy.dmi'
+	icon_state = "crossbowbolt"
+	ammo_type = /obj/item/ammo_casing/caseless/crossbowbolt
+
+/obj/item/projectile/bullet/reusable/crossbowbolt/broadbolt
+	name = "broad tipped bolts"
+	desc = "crossbow bolts with a wider than normal tip"
+	damage = 50
+	armour_penetration = 20
+	icon_state = "broadcrossbowbolt"
+	ammo_type = /obj/item/ammo_casing/caseless/crossbowbolt/broadbolt
+
+/obj/item/projectile/bullet/reusable/crossbowbolt/expandingbolt
+	name = "expanding bolt"
+	desc = "a bolt that expands upon puncturing"
+	damage = 85
+	armour_penetration = -30
+	icon_state = "expandingcrossbowbolt"
+	ammo_type = /obj/item/ammo_casing/caseless/crossbowbolt/expandingbolt
