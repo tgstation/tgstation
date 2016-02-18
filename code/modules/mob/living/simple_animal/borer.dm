@@ -673,6 +673,9 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Alien"
 
+	if(isUnconscious())
+		return
+
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
 		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
