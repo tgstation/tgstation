@@ -11,14 +11,10 @@
 	var/obj/item/weapon/card/id/ID
 	var/datum/job/wand_access = "Assistant" //This is for access. See access.dm for which jobs give what access. Use "Captain" if you want the wand to work on all doors.
 
-
-
 /obj/item/weapon/control_wand/New()
 	..()
 	ID = new /obj/item/weapon/card/id
 	ID.access = wand_access.get_access()
-
-
 
 /obj/item/weapon/control_wand/attack_self(mob/user)
 	switch(mode)
@@ -34,6 +30,7 @@
 	if(!istype(D))
 		return
 	if(!(D.hasPower()))
+		user << "[D] has no power!"
 		return
 	if(D.check_access(src.ID))
 		switch(mode)
@@ -53,8 +50,8 @@
 				else
 					D.emergency = 1
 				D.update_icon()
-
-
+	else
+		user << "Your [src] does not have access to this door."
 
 /obj/item/weapon/control_wand/captain
 	name = "omni wand"
@@ -80,7 +77,6 @@
 /obj/item/weapon/control_wand/chief_medical_officer
 	name = "medical control wand"
 	wand_access = "Chief Medical Officer"
-
 
 #undef WAND_OPEN
 #undef WAND_BOLT
