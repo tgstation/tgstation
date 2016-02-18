@@ -1214,7 +1214,6 @@ B --><-- A
 		F.proximity_checkers |= checker
 	return 1
 
-<<<<<<< HEAD
 /proc/flick_overlay_static(image/I, atom/A, duration)
 	set waitfor = 0
 	if(!A || !I)
@@ -1235,7 +1234,7 @@ B --><-- A
 				break
 		if(validarea)
 			. += A
-=======
+
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
 	var/closest_distance
@@ -1269,4 +1268,3 @@ proc/pick_closest_path(value)
 			return
 	chosen = matches[chosen]
 	return chosen
->>>>>>> upstream/master
