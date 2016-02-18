@@ -104,8 +104,10 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health < 1)
+		if(health <= 0)
 			death()
+		else
+			stat = CONSCIOUS
 
 /mob/living/simple_animal/blind_eyes()
 	return
@@ -466,17 +468,22 @@
 
 /mob/living/simple_animal/update_fire()
 	return
+
 /mob/living/simple_animal/IgniteMob()
 	return
+
 /mob/living/simple_animal/ExtinguishMob()
 	return
 
-/mob/living/simple_animal/revive()
+/mob/living/simple_animal/revive(full_heal = 0, admin_revive = 0)
+	if(..()) //successfully ressuscitated from death
+		icon = initial(icon)
+		icon_state = icon_living
+		density = initial(density)
+		. = 1
+
+/mob/living/simple_animal/fully_heal(admin_revive = 0)
 	health = maxHealth
-	icon = initial(icon)
-	icon_state = icon_living
-	density = initial(density)
-	update_canmove()
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3

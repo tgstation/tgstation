@@ -115,7 +115,7 @@
 
 /obj/singularity/proc/admin_investigate_setup()
 	last_warning = world.time
-	var/count = locate(/obj/machinery/field/containment) in ultra_range(30, src, 1)
+	var/count = locate(/obj/machinery/field/containment) in urange(30, src, 1)
 	if(!count)
 		message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
 	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
@@ -236,7 +236,7 @@
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	var/list/L = grav_pull > 8 ? ultra_range(grav_pull, src, 1) : orange(grav_pull, src)
+	var/list/L = grav_pull > 8 ? urange(grav_pull, src, 1) : orange(grav_pull, src)
 	for(var/atom/X in L)
 		var/dist = get_dist(X, src)
 		var/obj/singularity/S = src
@@ -372,7 +372,7 @@
 
 
 /obj/singularity/proc/combust_mobs()
-	for(var/mob/living/carbon/C in ultra_range(20, src, 1))
+	for(var/mob/living/carbon/C in urange(20, src, 1))
 		C.visible_message("<span class='warning'>[C]'s skin bursts into flame!</span>", \
 						  "<span class='userdanger'>You feel an inner fire as your skin bursts into flames!</span>")
 		C.adjust_fire_stacks(5)

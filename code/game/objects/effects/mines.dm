@@ -133,7 +133,7 @@
 	victim.drop_r_hand()
 	victim.drop_l_hand()
 	victim.put_in_hands(chainsaw)
-	
+
 	victim.reagents.add_reagent("adminordrazine",25)
 
 	victim.client.color = pure_red
@@ -154,7 +154,7 @@
 	if(!victim.client || !istype(victim))
 		return
 	victim << "<span class='notice'>You feel great!</span>"
-	victim.revive()
+	victim.revive(full_heal = 1, admin_revive = 1)
 
 /obj/effect/mine/pickup/speed
 	name = "Yellow Orb"

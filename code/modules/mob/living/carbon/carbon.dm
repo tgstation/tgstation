@@ -14,7 +14,6 @@
 /mob/living/carbon/updatehealth()
 	..()
 	med_hud_set_health()
-	med_hud_set_status()
 
 /mob/living/carbon/Destroy()
 	for(var/atom/movable/guts in internal_organs)
@@ -154,16 +153,18 @@
 	if(health >= 0)
 
 		if(lying)
-			AdjustSleeping(-5)
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
 							"<span class='notice'>You shake [src] trying to get \him up!</span>")
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make \him feel better!</span>", \
 						"<span class='notice'>You hug [src] to make \him feel better!</span>")
-
+		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)
 		AdjustWeakened(-3)
+		if(resting)
+			resting = 0
+			update_canmove()
 
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
@@ -677,59 +678,6 @@ var/const/GALOSHES_DONT_HELP = 4
 	if(wear_mask)
 		. += wear_mask.tint
 
-/mob/living/carbon/revive()
-	setToxLoss(0)
-	setOxyLoss(0)
-	setCloneLoss(0)
-	setBrainLoss(0)
-	setStaminaLoss(0)
-	SetParalysis(0)
-	SetStunned(0)
-	SetWeakened(0)
-	SetSleeping(0)
-	radiation = 0
-	nutrition = NUTRITION_LEVEL_FED + 50
-	bodytemperature = 310
-	eye_damage = 0
-	disabilities = 0
-	eye_blind = 0
-	eye_blurry = 0
-	ear_deaf = 0
-	ear_damage = 0
-	hallucination = 0
-	heal_overall_damage(1000, 1000)
-	ExtinguishMob()
-	fire_stacks = 0
-	suiciding = 0
-	handcuffed = initial(handcuffed)
-	for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
-		qdel(R)
-	update_handcuffed()
-	if(reagents)
-		for(var/datum/reagent/R in reagents.reagent_list)
-			reagents.clear_reagents()
-		reagents.addiction_list = list()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
-	if(stat == DEAD)
-		dead_mob_list -= src
-		living_mob_list += src
-	stat = CONSCIOUS
-	if(ishuman(src))
-		var/mob/living/carbon/human/human_mob = src
-		human_mob.restore_blood()
-		human_mob.remove_all_embedded_objects()
-	updatehealth()
-	update_fire()
-	if(dna)
-		for(var/datum/mutation/human/HM in dna.mutations)
-			if(HM.quality != POSITIVE)
-				dna.remove_mutation(HM.name)
-	update_sight()
-	reload_fullscreen()
-	update_canmove()
-
-
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
 
@@ -830,6 +778,7 @@ var/const/GALOSHES_DONT_HELP = 4
 				update_canmove()
 	update_damage_hud()
 	update_health_hud()
+	med_hud_set_status()
 
 //called when we get cuffed/uncuffed
 /mob/living/carbon/proc/update_handcuffed()
@@ -842,3 +791,30 @@ var/const/GALOSHES_DONT_HELP = 4
 		clear_alert("handcuffed")
 	update_inv_handcuffed()
 	update_hud_handcuffed()
+
+/mob/living/carbon/fully_heal(admin_revive = 0)
+	if(reagents)
+		reagents.clear_reagents()
+	var/obj/item/organ/internal/brain/B = getorgan(/obj/item/organ/internal/brain)
+	if(B)
+		B.damaged_brain = 0
+	if(admin_revive)
+		handcuffed = initial(handcuffed)
+		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
+			qdel(R)
+		update_handcuffed()
+		if(reagents)
+			reagents.addiction_list = list()
+
+		for(var/datum/disease/D in viruses)
+			D.cure(0)
+		if(dna)
+			for(var/datum/mutation/human/HM in dna.mutations)
+				if(HM.quality != POSITIVE)
+					dna.remove_mutation(HM.name)
+	..()
+
+/mob/living/carbon/can_be_revived()
+	. = ..()
+	if(!getorgan(/obj/item/organ/internal/brain))
+		return 0

@@ -45,6 +45,9 @@
 	..()
 	invisibility = 0
 
+/obj/effect/landmark/corpse/proc/special(mob/new_spawn)
+	return
+
 /obj/effect/landmark/corpse/proc/createCorpse(death, ckey) //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
 	if(mobname != "default")
@@ -114,6 +117,7 @@
 	if(ckey)
 		M.ckey = ckey
 		M << "[flavour_text]"
+		special(M)
 	qdel(src)
 
 /obj/effect/landmark/corpse/AICorpse/createCorpse() //Creates a corrupted AI
@@ -318,7 +322,6 @@
 	corpseidjob = "Private Security Force"
 	corpseidaccess = "Security Officer"
 
-
 /obj/effect/landmark/corpse/commander/alive
 	death = FALSE
 	roundstart = FALSE
@@ -372,3 +375,21 @@
 	mob_species = /datum/species/abductor
 	corpseuniform = /obj/item/clothing/under/color/grey
 	corpseshoes = /obj/item/clothing/shoes/combat
+
+///Prisoner
+
+/obj/effect/landmark/corpse/prisoner_transport
+	name = "prisoner sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	corpseuniform = /obj/item/clothing/under/rank/prisoner
+	corpsemask = /obj/item/clothing/mask/breath
+	corpseshoes = /obj/item/clothing/shoes/sneakers/orange
+	corpsepocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
+	roundstart = FALSE
+	death = FALSE
+	flavour_text = {"You were a prisoner, sentenced to hard labour in one of Nanotrasen's harsh gulags, but judging by the explosive crash you just survived, fate may have other plans for. First thing is first though: Find a way to survive this mess."}
+
+/obj/effect/landmark/corpse/prisoner_transport/special(mob/living/new_spawn)
+	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "syndicate collaboration", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting your manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
+	new_spawn << "You were convincted of: [crime]."

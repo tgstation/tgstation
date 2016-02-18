@@ -17,7 +17,8 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
-	gender = pick(MALE, FEMALE)
+	if(unique_name) //used to exclude pun pun
+		gender = pick(MALE, FEMALE)
 	real_name = name
 	if(good_mutations.len) //genetic mutations have been set up.
 		initialize()
