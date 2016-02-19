@@ -203,7 +203,7 @@
 
 
 /obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
-	return
+	return afterattack(M, user)
 
 
 /obj/item/device/camera/attackby(obj/item/I, mob/user)
@@ -549,7 +549,7 @@
 	del P    //so 10 thousdand pictures items are not left in memory should an AI take them and then view them all.
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || get_dist(src, target) < 1) return
+	if(!on || !pictures_left || (!isturf(target) && !isturf(target.loc))) return
 	captureimage(target, user, flag)
 
 	playsound(loc, "polaroid", 75, 1, -3)
