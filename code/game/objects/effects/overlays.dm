@@ -46,7 +46,7 @@
 
 /obj/effect/overlay/temp/heal/New()
 	..()
-	pixel_x = rand(-14, 14)
+	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)
 
 /obj/effect/overlay/temp/explosion
