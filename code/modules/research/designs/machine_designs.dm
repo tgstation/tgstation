@@ -186,7 +186,7 @@
 	name = "Computer Design (Cloning Machine Console)"
 	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
 	id = "clonecontrol"
-	req_tech = list("programming" = 3, "biotech" = 3)
+	req_tech = list("programming" = 4, "biotech" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/cloning
@@ -196,7 +196,7 @@
 	name = "Machine Design (Clone Pod)"
 	desc = "Allows for the construction of circuit boards used to build a Cloning Pod."
 	id = "clonepod"
-	req_tech = list("programming" = 3, "biotech" = 3)
+	req_tech = list("programming" = 4, "biotech" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/clonepod
@@ -206,7 +206,7 @@
 	name = "Machine Design (Cloning Scanner)"
 	desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."
 	id = "clonescanner"
-	req_tech = list("programming" = 3, "biotech" = 3)
+	req_tech = list("programming" = 4, "biotech" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/clonescanner
