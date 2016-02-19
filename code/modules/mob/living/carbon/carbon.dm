@@ -338,7 +338,7 @@
 			src.throw_item(target, offhand.wielding)
 			return
 
-	if (istype(item, /obj/item/weapon/grab))
+	else if (istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
 		item = G.toss() //throw the person instead of the grab
 		if(ismob(item))
@@ -362,7 +362,7 @@
 
 	var/obj/item/I = item
 	if(istype(I) && I.cant_drop > 0)
-		usr << "<span class='warning'>It's stuck to your hand!</span>"
+		to_chat(usr, "<span class='warning'>It's stuck to your hand!</span>")
 		return
 
 	remove_from_mob(item)

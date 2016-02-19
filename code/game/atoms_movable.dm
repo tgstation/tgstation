@@ -307,6 +307,8 @@
 	return 0
 
 /atom/movable/proc/hit_check(var/speed, mob/user)
+	. = 1
+
 	if(src.throwing)
 		for(var/atom/A in get_turf(src))
 			if(A == src) continue
@@ -318,11 +320,13 @@
 
 				if(src.throwing == 1) //If throwing == 1, the throw was weak and will stop when it hits a dude. If a hulk throws this item, throwing is set to 2 (so the item will pass through multiple mobs)
 					src.throwing = 0
+					. = 0
 
 			else if(isobj(A))
 				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
 					src.throw_impact(A, speed, user)
 					src.throwing = 0
+					. = 0
 
 /atom/movable/proc/throw_at(atom/target, range, speed, override = 1)
 	if(!target || !src)	return 0
@@ -357,6 +361,9 @@
 	var/dist_travelled = 0
 	var/dist_since_sleep = 0
 	var/area/a = get_area(src.loc)
+
+	. = 1
+
 	if(dist_x > dist_y)
 		var/error = dist_x/2 - dist_y
 
@@ -375,9 +382,11 @@
 			if(error < 0)
 				var/atom/step = get_step(src, dy)
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+					. = 0
 					break
+
 				src.Move(step)
-				hit_check(speed, user)
+				. = hit_check(speed, user)
 				error += dist_x
 				dist_travelled++
 				dist_since_sleep++
@@ -387,9 +396,11 @@
 			else
 				var/atom/step = get_step(src, dx)
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+					. = 0
 					break
+
 				src.Move(step)
-				hit_check(speed, user)
+				. = hit_check(speed, user)
 				error -= dist_y
 				dist_travelled++
 				dist_since_sleep++
@@ -407,9 +418,11 @@
 			if(error < 0)
 				var/atom/step = get_step(src, dx)
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+					. = 0
 					break
+
 				src.Move(step)
-				hit_check(speed, user)
+				. = hit_check(speed, user)
 				error += dist_y
 				dist_travelled++
 				dist_since_sleep++
@@ -419,9 +432,11 @@
 			else
 				var/atom/step = get_step(src, dy)
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+					. = 0
 					break
+
 				src.Move(step)
-				hit_check(speed, user)
+				. = hit_check(speed, user)
 				error -= dist_x
 				dist_travelled++
 				dist_since_sleep++
