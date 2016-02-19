@@ -4083,7 +4083,7 @@
 "bAA" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{req_access_txt = 1},/obj/structure/disposalpipe/segment,/turf/simulated/floor/plasteel{dir = 4; icon_state = "neutralcorner"},/area/hallway/primary/central)
 "bAB" = (/obj/machinery/porta_turret/ai{dir = 2},/obj/machinery/flasher{id = "AI"; pixel_x = 0; pixel_y = 24},/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 8},/area/turret_protected/ai)
 "bAC" = (/obj/effect/landmark/start{name = "Bartender"},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
-"bAD" = (/mob/living/carbon/monkey{name = "Pun Pun"},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
+"bAD" = (/mob/living/carbon/monkey/punpun,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "bAE" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/landmark/start{name = "Bartender"},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "bAF" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock{name = "Bar Access"; req_access_txt = "25"},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "bAG" = (/turf/simulated/floor/wood,/area/crew_quarters/bar)

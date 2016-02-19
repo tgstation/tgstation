@@ -2796,7 +2796,7 @@
 "bbO" = (/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,/obj/structure/disposalpipe/segment,/turf/simulated/floor/plasteel{icon_state = "neutral"; dir = 4},/area/hallway/primary/starboard{name = "Starboard Hallway"})
 "bbP" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "bbQ" = (/obj/effect/landmark/start{name = "Bartender"},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
-"bbR" = (/mob/living/carbon/monkey{name = "Pun Pun"},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
+"bbR" = (/mob/living/carbon/monkey/punpun,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "bbS" = (/obj/machinery/door/airlock/glass{desc = "The workplace of the diligent station chef, with enough ingredients to work up a masterpiece."; name = "Kitchen"; req_access_txt = "0"; req_one_access_txt = "25, 28"},/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
 "bbT" = (/obj/machinery/atmospherics/components/unary/vent_pump{dir = 4; on = 1},/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
 "bbU" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/wood,/area/lawoffice)
