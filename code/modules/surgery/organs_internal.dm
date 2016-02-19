@@ -261,8 +261,7 @@
 
 	target.op_stage.current_organ = organ_to_remove
 
-	var/datum/organ/internal/I = target.internal_organs_by_name[target.op_stage.current_organ]
-	return ..() && organ_to_remove && I && istype(I) && I.CanRemove(target, user)
+	return ..() && organ_to_remove
 
 /datum/surgery_step/internal/detatch_organ/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 
@@ -278,8 +277,7 @@
 	"<span class='notice'>You have separated [target]'s [target.op_stage.current_organ] with \the [tool].</span>")
 
 	var/datum/organ/internal/I = target.internal_organs_by_name[target.op_stage.current_organ]
-	if(I && istype(I) && I.CanRemove(target, user, quiet=1))
-		I.Remove(target, user)
+	if(I && istype(I))
 		I.status |= ORGAN_CUT_AWAY
 
 /datum/surgery_step/internal/detatch_organ/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
