@@ -160,7 +160,7 @@
 
 //crossbow
 /obj/item/ammo_box/magazine/internal/shot/crossbow
-	ammo_type = /obj/item/ammo_casing/caseless/crossbowbolt && /obj/item/ammo_casing/apfsdsbolt
+	ammo_type = /obj/item/ammo_casing/caseless/crossbowbolt
 	caliber = "crossbowbolt"
 	max_ammo = 1
 

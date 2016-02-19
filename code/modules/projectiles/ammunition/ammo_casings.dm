@@ -319,7 +319,7 @@
 
 //Crossbow bolts
 
-/obj/item/ammo_casing/apfsdsbolt
+/obj/item/ammo_casing/caseless/crossbowbolt/apfsdsbolt
 	name = "crossbow bolt with fins"
 	desc = "Fins are dispersed after being shot"
 	icon = 'icons/obj/ammo.dmi'
