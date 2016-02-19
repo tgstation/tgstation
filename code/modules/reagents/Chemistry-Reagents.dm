@@ -99,14 +99,6 @@
 
 	src = null
 
-/datum/reagent/proc/metabolize(var/mob/living/carbon/human/H)
-	if(H)
-		var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
-		if(L)
-			L.metabolize_reagent(H, src.id, custom_metabolism)
-			return
-	holder.remove_reagent(src.id, custom_metabolism) //By default it slowly disappears.
-
 /datum/reagent/proc/on_mob_life(var/mob/living/M, var/alien)
 	set waitfor = 0
 
@@ -119,7 +111,9 @@
 	if(overdose && volume >= overdose) //This is the current overdose system
 		M.adjustToxLoss(overdose_dam)
 
-	metabolize(M)
+	holder.remove_reagent(src.id, custom_metabolism) //Trigger metabolism
+	if(!holder) // We might be out of the holder list and holder might be nulled, but if we don't do this then the reagent keeps on reacting
+		return 1
 
 /datum/reagent/proc/on_plant_life(var/obj/machinery/portable_atmospherics/hydroponics/T)
 	if(!holder)

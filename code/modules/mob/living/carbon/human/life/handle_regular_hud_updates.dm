@@ -88,14 +88,7 @@
 			healths.icon_state = "health7" //DEAD healthmeter
 	else
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-
-		var/datum/organ/internal/eyes/E = src.internal_organs_by_name["eyes"]
-		if(E)
-			see_in_dark = E.see_in_dark //species.darksight
-		else
-			see_in_dark = species.darksight
-			// You should really be blind but w/e.
-
+		see_in_dark = species.darksight
 		see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 		if(dna)
 			switch(dna.mutantrace)
@@ -119,12 +112,11 @@
 				see_invisible = SEE_INVISIBLE_LIVING
 				seer = 0
 
-
 		if(glasses)
 			var/obj/item/clothing/glasses/G = glasses
 			if(istype(G))
 				if(G.see_in_dark)
-					see_in_dark = max(see_in_dark, G.see_in_dark)
+					see_in_dark = G.see_in_dark
 				see_in_dark += G.darkness_view
 				if(G.vision_flags) //MESONS
 					sight |= G.vision_flags
@@ -151,7 +143,6 @@
 
 		else if(!seer)
 			see_invisible = SEE_INVISIBLE_LIVING
-
 
 		if(healths)
 			healths.overlays.len = 0
