@@ -22,7 +22,7 @@
 /obj/item/weapon/sword/attack_self(mob/user as mob)
 	if(!hypo)
 		return
-	to_chat(user, "You remove the hypospray from \the [src].")
+	to_chat(user, "You remove \the [hypo] from \the [src].")
 	hypo.forceMove(get_turf(user.loc))
 	user.put_in_hands(hypo)
 	hypo = null
@@ -45,14 +45,14 @@
 			new /obj/item/weapon/sword/executioner(get_turf(src.loc))
 		qdel(src)
 		qdel(W)
-	if(istype(W, /obj/item/weapon/reagent_containers/hypospray) && W.type != /obj/item/weapon/reagent_containers/hypospray/autoinjector)
+	if(W.type == /obj/item/weapon/reagent_containers/hypospray || W.type == /obj/item/weapon/reagent_containers/hypospray/creatine)
 		to_chat(user, "You wrap \the [src]'s grip around \the [W], affixing it to the base of \the [src].")
 		user.drop_item(W, force_drop = 1)
 		hypo = W
 		W.forceMove(src)
 		update_icon()
 	if(hypo && istype(W, /obj/item/weapon/aluminum_cylinder))
-		to_chat(user, "You affix \the [W] to the bottom of \the [src]'s hypospray.")
+		to_chat(user, "You affix \the [W] to the bottom of \the [src]'s [hypo.name].")
 		if(src.loc == user)
 			user.drop_item(src, force_drop = 1)
 			var/obj/item/weapon/sword/venom/I = new (get_turf(user))
