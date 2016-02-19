@@ -40,7 +40,7 @@
 	spawn()
 		while(src)
 			if(!throwing) //This stops the spinning if the item is no longer flying
-				animate(src, transform = null)
+				transform = null
 				break
 			else
 				animate(src, transform = turn(transform, 120), time = 5, loop = -1) //Spin forever
