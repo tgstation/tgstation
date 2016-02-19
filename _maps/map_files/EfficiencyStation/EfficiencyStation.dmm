@@ -3110,7 +3110,7 @@
 "bhP" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
 "bhQ" = (/obj/structure/sink/kitchen{pixel_y = 28},/obj/machinery/camera{c_tag = "Kitchen"},/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
 "bhR" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 6},/turf/simulated/floor/wood,/area/crew_quarters/theatre)
-"bhS" = (/mob/living/carbon/monkey{name = "Pun Pun"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/crew_quarters/bar{name = "\improper Maltese Falcon"})
+"bhS" = (/mob/living/carbon/monkey/punpun,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/crew_quarters/bar{name = "\improper Maltese Falcon"})
 "bhT" = (/obj/structure/bookcase/random/reference,/turf/simulated/floor/wood,/area/library)
 "bhU" = (/obj/structure/bookcase/random/fiction,/turf/simulated/floor/wood,/area/library)
 "bhV" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/atmospherics/components/unary/vent_pump{dir = 8; on = 1},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/wood,/area/crew_quarters/theatre)

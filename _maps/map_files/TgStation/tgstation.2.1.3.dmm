@@ -2317,7 +2317,7 @@
 "aSC" = (/turf/simulated/floor/plasteel{dir = 4; icon_state = "greencorner"},/area/bridge)
 "aSD" = (/obj/structure/chair{dir = 1; name = "Crew Station"},/turf/simulated/floor/plasteel,/area/bridge)
 "aSE" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/fancy/donut_box,/turf/simulated/floor/plasteel,/area/bridge)
-"aSF" = (/mob/living/carbon/monkey{name = "Pun Pun"; real_name = "Pun Pun"; unique_name = 0},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
+"aSF" = (/mob/living/carbon/monkey/punpun,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "aSG" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "aSH" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/hologram/holopad,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "aSI" = (/obj/machinery/door/airlock/glass{name = "Kitchen"; req_access_txt = "28"},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/kitchen)
