@@ -8,4 +8,6 @@ changes:
   - rscadd: Most species currently exhale CO<sub>2</sub>.  Vox may be tweaked later to exhale N<sub>2</sub>O. Plasmamen exhale oxygen, though.
   - rscadd: Robotics can make Advanced Lungs (programming 2, biomech 4), which are compatible with all species and filter out some gasses (N2O and plasma), up to certain partial pressures.
   - rscadd: Livers are also modular and can be set to enhance "natural" removal rates of reagents. Nothing yet makes any use of this, so all livers are standard UNTIL YOU CODE IT.
+  - rscadd: Livers which are bruised will deal toxin damage to their owner if the user has any toxic reagents in their system. Ethanol with a bruised liver is extremely dangerous.
+  - rscadd: Livers become damaged over time if their owner has a lot of toxin damage. Doctors beware.
   - rscadd: Eyes are modular and Advanced Type 1 eyes can grant enhanced nightvision and built-in welder goggles.
