@@ -1,8 +1,8 @@
-author: N3X15
+author: Sood
 delete-after: true
 changes:
   - experiment: "Deus Ex Update:"
-  - tweak: (Deus Ex Update hijacked by Sood)
+  - tweak: (Deus Ex Update hijacked by Sood from N3X15)
   - rscadd: Lungs are now fully modular and actually process gas for humans.  Lungs must be compatible with a species or they will die of suffocation.
   - rscadd: Vox and Plasmamen have their own lungs.
   - rscadd: Most species currently exhale CO<sub>2</sub>.  Vox may be tweaked later to exhale N<sub>2</sub>O. Plasmamen exhale oxygen, though.
