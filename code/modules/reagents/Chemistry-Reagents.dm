@@ -103,7 +103,7 @@
 	if(H)
 		var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
 		if(L)
-			L.metabolize_reagent(H, src.id, custom_metabolism)
+			L.metabolize_reagent(src.id, custom_metabolism)
 			return
 	holder.remove_reagent(src.id, custom_metabolism) //By default it slowly disappears.
 
