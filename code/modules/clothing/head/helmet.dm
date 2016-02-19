@@ -4,7 +4,7 @@
 	icon_state = "helmet"
 	flags = HEADBANGPROTECT
 	item_state = "helmet"
-	armor = list(melee = 30, bullet = 25, laser = 25,energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 35, bullet = 25, laser = 35, energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEEARS
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
@@ -40,7 +40,7 @@
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
 	flags = HEADBANGPROTECT
-	armor = list(melee = 41, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
+	armor = list(melee = 80, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE
 	strip_delay = 80
 	action_button_name = "Toggle Helmet Visor"
@@ -68,6 +68,16 @@
 				while(up)
 					playsound(src.loc, "[active_sound]", 100, 0, 4)
 					sleep(15)
+
+/obj/item/clothing/head/helmet/combatsuit
+	name = "combat helmet"
+	desc = "It's a helmet specifically designed to protect against most attacks."
+	icon_state = "riot"
+	item_state = "helmet"
+	flags = HEADBANGPROTECT
+	armor = list(melee = 60, bullet = 60, laser = 40, energy = 30, bomb = 60, bio = 50, rad = 0)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	strip_delay = 80
 
 /obj/item/clothing/head/helmet/justice
 	name = "helmet of justice"
