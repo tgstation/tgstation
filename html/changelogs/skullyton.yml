@@ -3,7 +3,7 @@ author: Skullyton
 delete-after: True
 
 changes:
-- rscadd: The following changes are to Defficiency:
+- rscadd: The following changes are to Defficiency
 - rscadd: Ported over metaclubs Centcomm, so ERT and Deathsquad can exist and more room for bus
 - rscadd: Added the Vox Skipjack from box, so now Vox Raiders can happen on Defficiency
 - rscadd: Added the salvage shuttle to Z level 6, but as Defficiency is defficient of an aux-docking port, it cant dock to the station properly.
