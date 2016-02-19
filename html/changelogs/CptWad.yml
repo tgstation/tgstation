@@ -13,7 +13,10 @@ changes:
 - rscadd: New Holopads in CMO and HoS offices.
 - rscadd: Pen and paper in Chemistry
 - rscadd: Added all but one of Nigglys pets to their respective homes.
+- rscadd: Viro expanded a tad, new newscaster.
+- rscadd: Added 1 pill collector and 2 more antibody scanners.
 - bugfix: Turned that one vent at arrivals on that should have been on in the first place.
 - bugfix: Repaired the pipes at cryo.
+- bugfix: The lightswitch in atmospherics is now reachable.
 - tweak: Moved the Phalanximine out of the CMO's office. You can still find it however.
   
