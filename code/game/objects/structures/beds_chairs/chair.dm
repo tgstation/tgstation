@@ -227,7 +227,7 @@
 /obj/item/chair/attack_self(mob/user)
 	plant(user)
 
-/obj/item/chair/proc/plant(user)
+/obj/item/chair/proc/plant(mob/user)
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
 	C.dir = dir
