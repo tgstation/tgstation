@@ -33,4 +33,5 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
 - rscadd: Cameras can take both 1x1 and 3x3 photos. Use the new Set Camera Zoom verb (or alt-click) to switch between the modes.
+- bugfix: Fixed being unable to take photos of yourself. Fixed AIs being unable to photograph mobs.
 - wip: Added admin-spawnable cameras that take 5x5 and 7x7 photos. They are experimental and may lag.
