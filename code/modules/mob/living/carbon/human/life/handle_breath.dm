@@ -157,4 +157,8 @@
 
 		return 0
 
-	return species.handle_breath(breath, src)
+	// Lungs now handle processing atmos shit.
+	for(var/datum/organ/internal/lungs/L in internal_organs)
+		L.handle_breath(breath,src)
+
+	return 1
