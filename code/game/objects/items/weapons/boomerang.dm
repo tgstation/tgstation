@@ -25,6 +25,7 @@
 	w_class = 2.0
 
 	throwforce = 2
+	force = 1
 
 /obj/item/weapon/boomerang/throw_at(atom/target, range, speed, override = 1)
 	if(!usr)
