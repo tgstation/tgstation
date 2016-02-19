@@ -26,54 +26,64 @@
 		* Passing through in this case ignores anything with the throwpass flag, such as tables, racks, and morgue trays.
 */
 /turf/Adjacent(var/atom/neighbor, var/atom/target = null)
-	var/turf/T0 = get_turf(neighbor)
+	var/list/turf/T0list
+	if(istype(neighbor, /atom/movable) && isturf(neighbor.loc))
+		var/atom/movable/neighborholder = neighbor
+		T0list = neighborholder.locs
+	else
+		T0list = list(get_turf(neighbor))
+	for(var/turf/T0 in T0list)
 
-	if(T0 == src) //same turf
-		return 1
+		if(T0 == src) //same turf
+			return 1
 
-	if(get_dist(src,T0) > 1) //too far
-		return 0
+		if(get_dist(src, T0) > 1) //too far
+			continue
 
-	// Non diagonal case
-	if(T0.x == x || T0.y == y)
-		// Window snowflake code
-		if(neighbor.flags & ON_BORDER && neighbor.dir == get_dir(T0, src)) return 1
-		// Check for border blockages
-		return T0.ClickCross(get_dir(T0,src), border_only = 1) && src.ClickCross(get_dir(src,T0), border_only = 1, target_atom = target)
+		// Non diagonal case
+		if(T0.x == x || T0.y == y)
+			// Window snowflake code
+			if(neighbor.flags & ON_BORDER && neighbor.dir == get_dir(T0, src)) return 1
+			// Check for border blockages
+			if(T0.ClickCross(get_dir(T0,src), border_only = 1) && src.ClickCross(get_dir(src,T0), border_only = 1, target_atom = target))
+				return 1
+			continue
 
-	// Diagonal case
-	var/in_dir = get_dir(T0,src) // eg. northwest (1+8) = 9 (00001001)
-	var/d1 = in_dir&3		     // eg. north	  (1+8)&3 (0000 0011) = 1 (0000 0001)
-	var/d2 = in_dir&12			 // eg. west	  (1+8)&12 (0000 1100) = 8 (0000 1000)
+		// Diagonal case
+		var/in_dir = get_dir(T0,src) // eg. northwest (1+8) = 9 (00001001)
+		var/d1 = in_dir&3		     // eg. north	  (1+8)&3 (0000 0011) = 1 (0000 0001)
+		var/d2 = in_dir&12			 // eg. west	  (1+8)&12 (0000 1100) = 8 (0000 1000)
 
-	for(var/d in list(d1,d2))
-		if(!T0.ClickCross(d, border_only = 1) && !(neighbor.flags & ON_BORDER && neighbor.dir == d))
-			continue // could not leave T0 in that direction
+		for(var/d in list(d1,d2))
+			if(!T0.ClickCross(d, border_only = 1) && !(neighbor.flags & ON_BORDER && neighbor.dir == d))
+				continue // could not leave T0 in that direction
 
-		var/turf/T1 = get_step(T0,d)
-		if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0) | get_dir(T1,src), border_only = 0)) //let's check both directions at once
-			continue // couldn't enter or couldn't leave T1
+			var/turf/T1 = get_step(T0,d)
+			if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0) | get_dir(T1,src), border_only = 0)) //let's check both directions at once
+				continue // couldn't enter or couldn't leave T1
 
-		if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target))
-			continue // could not enter src
+			if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target))
+				continue // could not enter src
 
-		return 1 // we don't care about our own density
-
+			return 1 // we don't care about our own density
 	return 0
 
 /*
 	Adjacency (to anything else):
 	* Must be on a turf
 	* In the case of a multiple-tile object, all valid locations are checked for adjacency.
-
-	Note: Multiple-tile objects are created when the bound_width and bound_height are creater than the tile size.
-	This is not used in stock /tg/station currently.
 */
 /atom/movable/Adjacent(var/atom/neighbor)
 	if(neighbor == loc) return 1
 	if(!isturf(loc)) return 0
-	var/turf/T = get_turf(src)
-	if(T.Adjacent(neighbor,src)) return 1
+	if(locs.len > 1)
+		for(var/turf/T in locs)
+			if(T.Adjacent(neighbor, src))
+				return 1
+	else
+		var/turf/T = loc
+		if(T.Adjacent(neighbor, src))
+			return 1
 	return 0
 
 // This is necessary for storage items not on your person.
