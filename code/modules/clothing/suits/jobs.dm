@@ -40,6 +40,7 @@
 	icon_state = "chaplain_hood"
 	body_parts_covered = HEAD
 	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
 //Chaplain
 /obj/item/clothing/suit/nun

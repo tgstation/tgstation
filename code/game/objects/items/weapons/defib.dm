@@ -511,12 +511,7 @@
 								H.adjustBruteLoss((mobhealth - halfwaycritdeath) * (total_brute / overall_damage), 0)
 							user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
 							playsound(get_turf(src), 'sound/machines/defib_success.ogg', 50, 0)
-							H.stat = UNCONSCIOUS
-							H.updatehealth()
-							H.update_sight()
-							H.reload_fullscreen()
-							dead_mob_list -= H
-							living_mob_list |= list(H)
+							H.revive()
 							H.emote("gasp")
 							if(tplus > tloss)
 								H.setBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))))

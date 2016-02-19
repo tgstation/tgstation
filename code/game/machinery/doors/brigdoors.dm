@@ -27,10 +27,10 @@
 	anchored = 1
 	density = 0
 	var/id = null // id of linked machinery/lockers
-	
+
 	var/activation_time = 0
 	var/timer_duration = 0
-	
+
 	var/timing = FALSE		// boolean, true/1 timer is on, false/0 means it's not timing
 	var/list/obj/machinery/targets = list()
 	var/obj/item/device/radio/Radio //needed to send messages to sec radio
@@ -45,15 +45,15 @@
 	Radio.listening = 0
 
 /obj/machinery/door_timer/initialize()
-	for(var/obj/machinery/door/window/brigdoor/M in ultra_range(20, src))
+	for(var/obj/machinery/door/window/brigdoor/M in urange(20, src))
 		if (M.id == id)
 			targets += M
 
-	for(var/obj/machinery/flasher/F in ultra_range(20, src))
+	for(var/obj/machinery/flasher/F in urange(20, src))
 		if(F.id == id)
 			targets += F
 
-	for(var/obj/structure/closet/secure_closet/brig/C in ultra_range(20, src))
+	for(var/obj/structure/closet/secure_closet/brig/C in urange(20, src))
 		if(C.id == id)
 			targets += C
 
@@ -68,7 +68,7 @@
 /obj/machinery/door_timer/process()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	
+
 	if(timing)
 		if(world.time - activation_time >= timer_duration)
 			timer_end() // open doors, reset timer, clear status screen
@@ -141,7 +141,7 @@
 	if(seconds)
 		. /= 10
 
-/obj/machinery/door_timer/proc/set_timer(value) 
+/obj/machinery/door_timer/proc/set_timer(value)
 	var/new_time = Clamp(value,0,MAX_TIMER)
 	. = new_time == timer_duration //return 1 on no change
 	timer_duration = new_time
@@ -161,11 +161,11 @@
 	if(stat & (NOPOWER))
 		icon_state = "frame"
 		return
-	
+
 	if(stat & (BROKEN))
 		set_picture("ai_bsod")
 		return
-	
+
 	if(timing)
 		var/disp1 = id
 		var/time_left = time_left(seconds = TRUE)

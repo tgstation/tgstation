@@ -88,7 +88,10 @@
 		update_inv_legcuffed()
 
 //handle stuff to update when a mob equips/unequips a mask.
-/mob/living/carbon/proc/wear_mask_update(obj/item/clothing/C, unequip = 1)
+/mob/living/proc/wear_mask_update(obj/item/clothing/C, unequip = 1)
+	update_inv_wear_mask()
+
+/mob/living/carbon/wear_mask_update(obj/item/clothing/C, unequip = 1)
 	if(C.tint || initial(C.tint))
 		update_tint()
 	update_inv_wear_mask()

@@ -1188,9 +1188,6 @@
 			if(health < -maxHealth*0.5)
 				if(uneq_module(module_state_1))
 					src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
-	diag_hud_set_health()
-	diag_hud_set_status()
-	update_health_hud()
 
 /mob/living/silicon/robot/update_sight()
 	if(!client)
@@ -1247,6 +1244,9 @@
 				adjust_blindness(-1)
 				update_canmove()
 				update_headlamp()
+	diag_hud_set_status()
+	diag_hud_set_health()
+	update_health_hud()
 
 /mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
 	..()
@@ -1264,3 +1264,12 @@
 			Stun(3)
 	..()
 
+/mob/living/silicon/robot/revive(full_heal = 0, admin_revive = 0)
+	if(..()) //successfully ressuscitated from death
+		if(camera && !wires.is_cut(WIRE_CAMERA))
+			camera.toggle_cam(src,0)
+		update_headlamp()
+		if(admin_revive)
+			locked = 1
+		notify_ai(1)
+		. = 1

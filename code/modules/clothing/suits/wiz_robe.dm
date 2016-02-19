@@ -48,7 +48,7 @@
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
-	flags = BLOCKHAIR
+	flags_inv = HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"

@@ -45,8 +45,7 @@
 	desc = "A rubber pig mask."
 	icon_state = "pig"
 	item_state = "pig"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = 2
 	action_button_name = "Toggle Voice Box"
 	var/voicechange = 0
@@ -65,8 +64,7 @@
 	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!" //It's only ever going to be attached to your face.
 	icon_state = "pig"
 	item_state = "pig"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = 2
 	var/voicechange = 1
 
@@ -81,8 +79,7 @@
 	icon = 'icons/mob/mask.dmi'
 	icon_state = "cowmask"
 	item_state = "cowmask"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = 2
 	var/voicechange = 1
 
@@ -96,8 +93,7 @@
 	desc = "A mask made of soft vinyl and latex, representing the head of a horse."
 	icon_state = "horsehead"
 	item_state = "horsehead"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEYES|HIDEEARS
 	w_class = 2
 	var/voicechange = 1
 
@@ -111,8 +107,8 @@
 	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
 	w_class = 1
 	flags_cover = MASKCOVERSMOUTH
-	flags_inv = HIDEFACE
-	visor_flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 	slot_flags = SLOT_MASK
 	ignore_maskadjust = 0
 	adjusted_flags = SLOT_HEAD

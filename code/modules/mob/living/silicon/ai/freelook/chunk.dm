@@ -140,7 +140,7 @@
 	src.y = y
 	src.z = z
 
-	for(var/obj/machinery/camera/c in ultra_range(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
+	for(var/obj/machinery/camera/c in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
 		if(c.can_use())
 			cameras += c
 

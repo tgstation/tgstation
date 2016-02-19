@@ -61,7 +61,7 @@
 		newbrain.brainmob = null
 		brainmob.loc = src
 		brainmob.container = src
-		if(!newbrain.damaged_brain) // the brain organ hasn't beaten to death.
+		if(!newbrain.damaged_brain) // the brain organ hasn't been beaten to death.
 			brainmob.stat = CONSCIOUS //we manually revive the brain mob
 			dead_mob_list -= brainmob
 			living_mob_list += brainmob
