@@ -8,7 +8,7 @@
 	parent_organ = "chest"
 	removed_type = /obj/item/organ/lungs
 
-	// VG now delegates breathing to the appropriate organ.
+	// /vg/ now delegates breathing to the appropriate organ.
 
 	// DEFAULTS FOR HUMAN LUNGS:
 	var/list/datum/lung_gas/gasses = list(
