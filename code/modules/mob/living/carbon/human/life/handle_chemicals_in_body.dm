@@ -7,6 +7,10 @@
 
 		var/alien = 0 //Not the best way to handle it, but neater than checking this for every single reagent proc.
 		if(src.species)
+			if(src.species.has_organ["liver"])
+				var/datum/organ/internal/liver/L = src.internal_organs_by_name["liver"]
+				if(!L)
+					src.adjustToxLoss(1)
 			switch(src.species.type)
 				if(/datum/species/diona)	alien = IS_DIONA
 				if(/datum/species/vox)	alien = IS_VOX

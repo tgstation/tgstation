@@ -21,12 +21,15 @@
 	var/stored_matter = 200
 	var/loaded_dna //Blood sample for DNA hashing.
 	var/list/products = list(
-		"heart" =   list(/obj/item/organ/heart,  50),
-		"lungs" =   list(/obj/item/organ/lungs,  40),
-		"kidneys" = list(/obj/item/organ/kidneys,20),
-		"eyes" =    list(/obj/item/organ/eyes,   30),
-		"liver" =   list(/obj/item/organ/liver,  50)
-		)
+		"heart"            = list(/obj/item/organ/heart,  50),
+		"human lungs"      = list(/obj/item/organ/lungs,  30),
+		"vox lungs"        = list(/obj/item/organ/lungs/vox,  30),
+		"plasmaman lungs"  = list(/obj/item/organ/lungs/plasmaman,  30),
+		"kidneys"          = list(/obj/item/organ/kidneys,20),
+		"human eyes"       = list(/obj/item/organ/eyes,   30),
+		"grey eyes"        = list(/obj/item/organ/eyes/grey,   30),
+		"liver"            = list(/obj/item/organ/liver,  50)
+	)
 
 /obj/machinery/bioprinter/New()
 	. = ..()
