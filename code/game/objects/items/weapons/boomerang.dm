@@ -11,6 +11,9 @@
 
 	force = 7
 
+	autoignition_temperature = AUTOIGNITION_WOOD
+	fire_fuel = 3
+
 /obj/item/weapon/boomerang/Destroy()
 	..()
 
@@ -26,6 +29,9 @@
 
 	throwforce = 2
 	force = 1
+
+	starting_materials = list(MAT_PLASTIC = 1200)
+	melt_temperature = MELTPOINT_PLASTIC
 
 /obj/item/weapon/boomerang/throw_at(atom/target, range, speed, override = 1)
 	if(!usr)
