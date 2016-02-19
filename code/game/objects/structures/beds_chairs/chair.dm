@@ -211,6 +211,7 @@
 	throwforce = 10
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
+	hit_reaction_chance = 50
 
 	var/origin_type = /obj/structure/chair
 
@@ -221,16 +222,13 @@
 	icon_state = "[origin.icon_state]_toppled"
 	item_state = origin.hold_icon
 	origin_type = origin.type
-	hit_reaction_chance = 50
+
 
 /obj/item/chair/attack_hand(mob/user)
-	if(user.a_intent == "help")
-		user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [src.name].</span>")
-		plant()
-	else
-		..()
+	plant(user)
 
-/obj/item/chair/proc/plant()
+/obj/item/chair/proc/plant(user)
+	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
 	C.dir = dir
 	qdel(src)
