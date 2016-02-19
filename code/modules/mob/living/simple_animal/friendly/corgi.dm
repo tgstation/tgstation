@@ -178,6 +178,7 @@
 					//The objects that corgis can wear on their backs.
 					var/list/allowed_types = list(
 						/obj/item/clothing/suit/armor/vest,
+						/obj/item/clothing/suit/armor/vest/security,
 						/obj/item/device/radio,
 						/obj/item/device/radio/off,
 						/obj/item/clothing/suit/cardborg,
@@ -236,6 +237,11 @@
 		if(/obj/item/clothing/head/helmet)
 			name = "Sergeant [real_name]"
 			desc = "The ever-loyal, the ever-vigilant."
+			valid = 1
+
+		if(/obj/item/clothing/head/helmet/swat)
+			name = "Lieutenant [real_name]"
+			desc = "When the going gets ruff..."
 			valid = 1
 
 		if(/obj/item/clothing/head/chefhat,	/obj/item/clothing/head/collectable/chef)
@@ -348,8 +354,8 @@
 			valid = 1
 
 		if(/obj/item/clothing/head/helmet/space/rig)
-			name = "Spessman [real_name]"
-			desc = "Boldly going where no Corgi has gone before!"
+			name = "Station Engineer [real_name]"
+			desc = "Ian want a cracker! ...Wait."
 			valid = 1
 			min_oxy = 0
 			minbodytemp = 0
