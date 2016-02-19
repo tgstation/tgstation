@@ -376,6 +376,9 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	if(M != usr || !istype(M) || !Adjacent(M) || M.incapacitated())
 		return
 
+	if(locked_to) //Atom locking
+		return
+
 	var/strength_of_M = (M.size - 1) //Can only pick up mobs whose size is less or equal to this value. Normal human's size is 3, so his strength is 2 - he can pick up TINY and SMALL animals. Varediting human's size to 5 will allow him to pick up goliaths.
 
 	if((M.a_intent != I_HELP) && (src.size <= strength_of_M) && (isturf(src.loc)) && (src.holder_type))

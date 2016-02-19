@@ -131,6 +131,7 @@
 
 #define isdeathsquad(H) (H.mind in ticker.mode.deathsquads)
 
+
 //Macro for AREAS!
 
 #define isspace(A) (A.type == /area)
