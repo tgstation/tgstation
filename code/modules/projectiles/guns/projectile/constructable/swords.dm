@@ -13,7 +13,7 @@
 	throwforce = 10
 	sharpness = 1.2
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	var/hypo = 0
+	var/obj/item/weapon/reagent_containers/hypospray/hypo = null
 
 	suicide_act(mob/user)
 		to_chat(viewers(user), "<span class='danger'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -22,10 +22,10 @@
 /obj/item/weapon/sword/attack_self(mob/user as mob)
 	if(!hypo)
 		return
-	to_chat(user, "You remove the hypospray from \the [src].")
-	var/obj/item/weapon/reagent_containers/hypospray/H = new (get_turf(user.loc))
-	user.put_in_hands(H)
-	hypo = 0
+	to_chat(user, "You remove \the [hypo] from \the [src].")
+	hypo.forceMove(get_turf(user.loc))
+	user.put_in_hands(hypo)
+	hypo = null
 	overlays.len = 0
 
 /obj/item/weapon/sword/update_icon()
@@ -45,21 +45,32 @@
 			new /obj/item/weapon/sword/executioner(get_turf(src.loc))
 		qdel(src)
 		qdel(W)
-	if(istype(W, /obj/item/weapon/reagent_containers/hypospray))
+	if(W.type == /obj/item/weapon/reagent_containers/hypospray || W.type == /obj/item/weapon/reagent_containers/hypospray/creatine)
 		to_chat(user, "You wrap \the [src]'s grip around \the [W], affixing it to the base of \the [src].")
-		hypo = 1
+		user.drop_item(W, force_drop = 1)
+		hypo = W
+		W.forceMove(src)
 		update_icon()
-		qdel(W)
 	if(hypo && istype(W, /obj/item/weapon/aluminum_cylinder))
-		to_chat(user, "You affix \the [W] to the bottom of \the [src]'s hypospray.")
+		to_chat(user, "You affix \the [W] to the bottom of \the [src]'s [hypo.name].")
 		if(src.loc == user)
 			user.drop_item(src, force_drop = 1)
 			var/obj/item/weapon/sword/venom/I = new (get_turf(user))
+			hypo.reagents.clear_reagents()
+			I.HY = hypo
+			hypo.forceMove(I)
+			hypo = null
 			user.put_in_hands(I)
 		else
 			new /obj/item/weapon/sword/venom(get_turf(src.loc))
 		qdel(src)
 		qdel(W)
+
+/obj/item/weapon/sword/Destroy()
+	if(hypo)
+		qdel(hypo)
+		hypo = null
+	..()
 
 /obj/item/weapon/sword/venom
 	name = "venom sword"
@@ -67,11 +78,15 @@
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/swords_axes.dmi', "right_hand" = 'icons/mob/in-hand/right/swords_axes.dmi')
 	icon_state = "venom_sword"
 	var/beaker = null
+	var/obj/item/weapon/reagent_containers/hypospray/HY = null
 
 /obj/item/weapon/sword/venom/Destroy()
 	if(beaker)
 		qdel(beaker)
 		beaker = null
+	if(HY)
+		qdel(HY)
+		HY = null
 	..()
 
 /obj/item/weapon/sword/venom/proc/update_color()
@@ -152,7 +167,14 @@
 	if(istype(W, /obj/item/weapon/crowbar))
 		to_chat(user, "You pry the aluminum cylinder off of \the [src].")
 		var/obj/item/weapon/sword/I = new (get_turf(src))
-		I.hypo = 1
+		if(HY)
+			I.hypo = HY
+			HY.forceMove(I)
+			HY = null
+		else
+			var/obj/item/weapon/reagent_containers/hypospray/H = new (I)
+			H.reagents.clear_reagents()
+			I.hypo = H
 		I.update_icon()
 		if(src.loc == user)
 			user.drop_item(src, force_drop = 1)
