@@ -25,6 +25,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/creatine/New() // TESTING!
 	..()
+	reagents.remove_reagent("doctorsdelight", 30)
 	reagents.add_reagent("creatine", 30)
 	return
 
@@ -80,13 +81,6 @@
 	item_state = "autoinjector"
 	amount_per_transfer_from_this = 5
 	volume = 5
-
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/New()
-	..()
-	reagents.remove_reagent("tricordrazine", 30)
-	reagents.add_reagent("inaprovaline", 5)
-	update_icon()
-	return
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/attack(mob/M as mob, mob/user as mob)
 	..()

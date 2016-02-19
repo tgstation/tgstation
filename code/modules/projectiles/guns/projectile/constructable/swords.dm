@@ -24,6 +24,7 @@
 		return
 	to_chat(user, "You remove the hypospray from \the [src].")
 	var/obj/item/weapon/reagent_containers/hypospray/H = new (get_turf(user.loc))
+	H.reagents.remove_reagent("doctorsdelight", 30)
 	user.put_in_hands(H)
 	hypo = 0
 	overlays.len = 0
@@ -45,7 +46,7 @@
 			new /obj/item/weapon/sword/executioner(get_turf(src.loc))
 		qdel(src)
 		qdel(W)
-	if(istype(W, /obj/item/weapon/reagent_containers/hypospray))
+	if(istype(W, /obj/item/weapon/reagent_containers/hypospray) && W.type != /obj/item/weapon/reagent_containers/hypospray/autoinjector)
 		to_chat(user, "You wrap \the [src]'s grip around \the [W], affixing it to the base of \the [src].")
 		hypo = 1
 		update_icon()
