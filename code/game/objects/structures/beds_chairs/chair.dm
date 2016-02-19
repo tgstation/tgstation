@@ -224,7 +224,7 @@
 	origin_type = origin.type
 
 
-/obj/item/chair/attack_hand(mob/user)
+/obj/item/chair/attack_self(mob/user)
 	plant(user)
 
 /obj/item/chair/proc/plant(user)
