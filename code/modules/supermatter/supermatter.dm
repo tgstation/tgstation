@@ -204,6 +204,8 @@
 
 		if(damage > explosion_point)
 			for(var/mob/living/mob in living_mob_list)
+				if(mob.z != src.z)//only make it effect mobs on the current Z level.
+					continue
 				if(istype(mob, /mob/living/carbon/human))
 					//Hilariously enough, running into a closet should make you get hit the hardest.
 					mob:hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
