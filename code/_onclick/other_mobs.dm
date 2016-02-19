@@ -10,10 +10,31 @@
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
-	if(ismob(A))
-		delayNextAttack(10)
 	if(proximity && istype(G) && G.Touch(A, src, 1))
 		return
+
+	if(a_intent == "hurt" && A.loc != src)
+
+		switch(attack_type) //Special attacks - kicks, bites
+			if(ATTACK_KICK)
+				if(can_kick())
+					delayNextAttack(10)
+					A.kick_act(src)
+					return
+				else
+					set_attack_type() //Reset attack type
+					return
+			if(ATTACK_BITE)
+				if(can_bite())
+					delayNextAttack(10)
+					A.bite_act(src)
+					return
+				else
+					set_attack_type() //Reset attack type
+					return
+
+	if(ismob(A))
+		delayNextAttack(10)
 
 	if(src.can_use_hand())
 		A.attack_hand(src, params)

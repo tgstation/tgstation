@@ -129,6 +129,15 @@
 	health -= rand(30, 50)
 	healthcheck()
 
+/obj/structure/window/kick_act(mob/living/carbon/human/H)
+	playsound(get_turf(src), 'sound/effects/glassknock.ogg', 100, 1)
+
+	H.visible_message("<span class='danger'>\The [H] kicks \the [src].</span>", \
+	"<span class='danger'>You kick \the [src].</span>")
+
+	health -= (rand(1,7)) * H.get_strength()
+	healthcheck()
+
 /obj/structure/window/CheckExit(var/atom/movable/O, var/turf/target)
 
 	if(istype(O) && O.checkpass(PASSGLASS))

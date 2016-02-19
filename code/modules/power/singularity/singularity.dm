@@ -570,3 +570,6 @@
 /obj/machinery/singularity/Destroy()
 	..()
 	power_machines -= src
+
+/obj/machinery/singularity/bite_act()
+

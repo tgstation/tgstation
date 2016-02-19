@@ -220,6 +220,12 @@ var/global/list/ghdel_profiling = list()
 /atom/proc/emp_act(var/severity)
 	return
 
+/atom/proc/kick_act(mob/living/carbon/human/user) //Kicked
+	return
+
+/atom/proc/bite_act(mob/living/carbon/human/user) //Bitten
+	return
+
 /atom/proc/singuloCanEat()
 	return 1
 

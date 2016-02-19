@@ -80,6 +80,8 @@ Hotkey-Mode: (hotkey-mode must be on)
 \t2 = disarm-intent
 \t3 = grab-intent
 \t4 = harm-intent
+\t5 = kick
+\t6 = bite
 </font>"}
 
 	var/other = {"<font color='purple'>
@@ -99,6 +101,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+2 = disarm-intent
 \tCtrl+3 = grab-intent
 \tCtrl+4 = harm-intent
+\tCtrl+5 = kick
+\tCtrl+6 = bite
 \tDEL = pull
 \tINS = cycle-intents-right
 \tHOME = drop

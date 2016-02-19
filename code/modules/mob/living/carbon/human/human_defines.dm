@@ -46,6 +46,9 @@
 	var/obj/item/l_ear	 = null
 	var/obj/item/r_ear	 = null
 
+	//Special attacks (bite, kicks, ...)
+	var/attack_type = NORMAL_ATTACK
+
 	var/used_skillpoints = 0
 	var/skill_specialization = null
 	var/list/skills = null

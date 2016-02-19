@@ -474,7 +474,7 @@ var/global/list/whitelisted_species = list("Human")
 	eyes = "vox_eyes_s"
 	breath_type = "nitrogen"
 
-	default_mutations = list(M_BEAK)
+	default_mutations = list(M_BEAK, M_TALONS)
 	flags = IS_WHITELISTED | NO_SCAN
 
 	blood_color = "#2299FC"

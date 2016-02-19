@@ -16,6 +16,8 @@
 	var/obj/screen/blind = null
 	var/obj/screen/hands = null
 	var/obj/screen/pullin = null
+	var/obj/screen/kick_icon = null
+	var/obj/screen/bite_icon = null
 	var/obj/screen/visible = null
 	var/obj/screen/purged = null
 	var/obj/screen/internals = null

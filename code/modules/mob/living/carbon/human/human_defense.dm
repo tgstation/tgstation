@@ -263,8 +263,9 @@ emp_act
 	if(!istype(T) || T.amount == 0) return
 
 	var/amount = rand(1,3)
-	if(L && M_HULK in L.mutations) //just like the mountain
-		amount += 8
+	if(user)
+		if(M_HULK in L.mutations) //just like the mountain
+			amount += 8
 
 	var/obj/item/stack/teeth/teeth = T.spawn_result(get_turf(src), src, amount)
 
