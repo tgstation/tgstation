@@ -179,6 +179,9 @@
 		photo_size = 3
 		usr.simple_message("<span class='info'>You zoom the camera out.</span>", "<span class='danger'>You take a bite of the mysterious mushroom. Everything feels so tiny!</span>") //Second message is shown when hallucinating
 
+/obj/item/device/camera/AltClick()
+	set_zoom()
+
 /obj/item/device/camera/ai_camera //camera AI can take pictures with
 	name = "AI photo camera"
 	var/in_camera_mode = 0

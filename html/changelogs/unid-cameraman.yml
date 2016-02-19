@@ -32,5 +32,5 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-- rscadd: Cameras can take both 1x1 and 3x3 photos. Use the new Set Camera Zoom verb to switch between the modes.
+- rscadd: Cameras can take both 1x1 and 3x3 photos. Use the new Set Camera Zoom verb (or alt-click) to switch between the modes.
 - wip: Added admin-spawnable cameras that take 5x5 and 7x7 photos. They are experimental and may lag.
