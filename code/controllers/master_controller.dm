@@ -219,7 +219,7 @@ datum/controller/game_controller/proc/cachedamageicons()
 	spawn()
 		watch = start_watch()
 		log_startup_progress("Generating in-game minimaps...")
-		//generateMiniMaps()
+		generateMiniMaps()
 		log_startup_progress("  Finished minimaps in [stop_watch(watch)]s.")
 
 	log_startup_progress("Finished initializations in [stop_watch(overwatch)]s.")
