@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - imageadd: "Blobbernauts and blob spores now have a visual healing effect when being healed by the blob."
