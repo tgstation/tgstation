@@ -137,6 +137,19 @@ var/global/list/whitelisted_species = list("Human")
 					return 0
 	return 1
 
+/datum/species/proc/clear_organs(var/mob/living/carbon/human/H)
+	if(H.organs)
+		H.organs.len=0
+	if(H.internal_organs)
+		for(var/datum/organ/internal/I in H.internal_organs)
+			I.Remove(H, quiet=1) // GET OUT REEEEEEE
+		H.internal_organs.len=0
+	if(H.organs_by_name)
+		H.organs_by_name.len=0
+	if(H.internal_organs_by_name)
+		H.internal_organs_by_name.len=0
+
+
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 
 
@@ -157,7 +170,10 @@ var/global/list/whitelisted_species = list("Human")
 	H.internal_organs = list()
 	for(var/organ in has_organ)
 		var/organ_type = has_organ[organ]
-		H.internal_organs_by_name[organ] = new organ_type(H)
+		var/datum/organ/internal/O = new organ_type(H)
+		if(O.CanInsert(H))
+			H.internal_organs_by_name[organ] = O
+			O.Insert(H)
 
 	for(var/name in H.organs_by_name)
 		H.organs += H.organs_by_name[name]
@@ -175,154 +191,25 @@ var/global/list/whitelisted_species = list("Human")
 /datum/species/proc/handle_post_spawn(var/mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
 
-/datum/species/proc/handle_breath(var/datum/gas_mixture/breath, var/mob/living/carbon/human/H)
-	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
-	//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
-	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-	var/safe_toxins_max = 0.5
-	var/safe_toxins_mask = 5
-	var/SA_para_min = 1
-	var/SA_sleep_min = 5
-	var/oxygen_used = 0
-	var/nitrogen_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
-	var/vox_oxygen_max = 1 // For vox.
-
-	//Partial pressure of the O2 in our breath
-	var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
-	// Same, but for the toxins
-	var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
-	// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-	var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
-	// Nitrogen, for Vox.
-	var/Nitrogen_pp = (breath.nitrogen/breath.total_moles())*breath_pressure
-
-	// TODO: Split up into Voxs' own proc.
-	if(O2_pp < safe_oxygen_min && name != "Vox") 	// Too little oxygen
-		if(prob(20))
-			spawn(0)
-				H.emote("gasp")
-		if(O2_pp > 0)
-			var/ratio = safe_oxygen_min/O2_pp
-			H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
-			H.failed_last_breath = 1
-			oxygen_used = breath.oxygen*ratio/6
-		else
-			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-			H.failed_last_breath = 1
-		H.oxygen_alert = max(H.oxygen_alert, 1)
-	else if(Nitrogen_pp < safe_oxygen_min && name == "Vox")  //Vox breathe nitrogen, not oxygen.
-
-		if(prob(20))
-			spawn(0) H.emote("gasp")
-		if(Nitrogen_pp > 0)
-			var/ratio = safe_oxygen_min/Nitrogen_pp
-			H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS))
-			H.failed_last_breath = 1
-			nitrogen_used = breath.nitrogen*ratio/6
-		else
-			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-			H.failed_last_breath = 1
-		H.oxygen_alert = max(H.oxygen_alert, 1)
-
-	else								// We're in safe limits
+// Sent from /datum/lung_gas/metabolizable.
+/datum/species/proc/receiveGas(var/gas_id, var/ratio, var/moles, var/mob/living/carbon/human/H)
+	//testing("receiveGas: [gas_id] ? [breath_type] - ratio=[ratio], moles=[moles]")
+	if(ratio <= 0 || gas_id != breath_type)
+		//testing("  ratio is 0 or gas_id doesn't match up, adding oxyLoss.")
+		H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+		H.failed_last_breath = 1
+		return 0
+	else if(ratio >= 1)
+		//testing("  we cool")
 		H.failed_last_breath = 0
-
-		var/oxy_restored = 5
-
-		if(hardcore_mode_on && eligible_for_hardcore_mode(H)) //HARDCORE MODE stuff
-			if(H.nutrition < STARVATION_MIN) //Starvation makes oxygen damage heal at a slower rate!
-				oxy_restored = STARVATION_OXY_HEAL_RATE //Defined as 1
-
-		H.adjustOxyLoss(-oxy_restored)
-		oxygen_used = breath.oxygen/6
+		H.adjustOxyLoss(-5)
 		H.oxygen_alert = 0
-
-	breath.oxygen -= oxygen_used
-	breath.nitrogen -= nitrogen_used
-	breath.carbon_dioxide += oxygen_used
-
-	//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
-	if(CO2_pp > safe_co2_max)
-		if(!H.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
-			H.co2overloadtime = world.time
-		else if(world.time - H.co2overloadtime > 120)
-			H.Paralyse(3)
-			H.adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
-			if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
-				H.adjustOxyLoss(8)
-		if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
-			spawn(0) H.emote("cough")
-
+		return moles/6
 	else
-		H.co2overloadtime = 0
-
-	if(Toxins_pp > safe_toxins_max) // Too much toxins
-		var/ratio = (breath.toxins/safe_toxins_max) * 10
-		//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
-		if(H.wear_mask)
-			if(H.wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
-				if(breath.toxins > safe_toxins_mask)
-					ratio = (breath.toxins/safe_toxins_mask) * 10
-				else
-					ratio = 0
-		if(ratio)
-			if(H.reagents)
-				H.reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-			H.toxins_alert = max(H.toxins_alert, 1)
-	else if(O2_pp > vox_oxygen_max && name == "Vox") //Oxygen is toxic to vox.
-		var/ratio = (breath.oxygen/vox_oxygen_max) * 1000
-		H.adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-		H.toxins_alert = max(H.toxins_alert, 1)
-	else
-		H.toxins_alert = 0
-
-	if(breath.trace_gases.len)	// If there's some other shit in the air lets deal with it here.
-		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-			var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
-			if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-				H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
-				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-					H.sleeping = min(H.sleeping+2, 10)
-			else if(SA_pp > 0.15)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-				if(prob(20))
-					spawn(0) H.emote(pick("giggle", "laugh"))
-			SA.moles = 0
-
-	if( (breath.temperature - 310.15 > 50) && !(M_RESIST_HEAT in H.mutations)) // Hot air hurts :(
-		if(H.status_flags & GODMODE)	return 1	//godmode
-		else if(breath.temperature > heat_level_1)
-			if(prob(20))
-				if(H.dna.mutantrace == "slime")
-					to_chat(H, "<span class='warning'>You feel supercharged by the extreme heat!</span>")
-				else
-					to_chat(H, "<span class='warning'>You feel your face burning and a searing heat in your lungs!</span>")
-
-		if(H.dna.mutantrace == "slime")
-			if(breath.temperature < cold_level_1)
-				H.adjustToxLoss(round(cold_level_1 - breath.temperature))
-				H.fire_alert = max(H.fire_alert, 1)
-
-		if(H.dna.mutantrace != "slime")
-			switch(breath.temperature)
-				if(-INFINITY to cold_level_3)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Cold")
-					H.fire_alert = max(H.fire_alert, 1)
-
-				// there was once behaviour for higher levels of cold, no longer.
-
-				if(heat_level_1 to heat_level_2)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Heat")
-					H.fire_alert = max(H.fire_alert, 2)
-
-				if(heat_level_2 to heat_level_3)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Heat")
-					H.fire_alert = max(H.fire_alert, 2)
-
-				if(heat_level_3 to INFINITY)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
-					H.fire_alert = max(H.fire_alert, 2)
-	return 1
+		//testing("  ratio < 1, adding oxyLoss.")
+		H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
+		H.failed_last_breath = 1
+		return moles*ratio/6
 
 // Used for species-specific names (Vox, etc)
 /datum/species/proc/makeName(var/gender,var/mob/living/carbon/C=null)
@@ -440,6 +327,16 @@ var/global/list/whitelisted_species = list("Human")
 
 	var/datum/speech_filter/filter = new
 
+	has_organ = list(
+		"heart" =    /datum/organ/internal/heart,
+		"lungs" =    /datum/organ/internal/lungs,
+		"liver" =    /datum/organ/internal/liver,
+		"kidneys" =  /datum/organ/internal/kidney,
+		"brain" =    /datum/organ/internal/brain,
+		"appendix" = /datum/organ/internal/appendix,
+		"eyes" =     /datum/organ/internal/eyes/tajaran
+	)
+
 /datum/species/tajaran/New()
 	// Combining all the worst shit the world has ever offered.
 
@@ -496,6 +393,16 @@ var/global/list/whitelisted_species = list("Human")
 
 	has_mutant_race = 0
 
+	has_organ = list(
+		"heart" =    /datum/organ/internal/heart,
+		"lungs" =    /datum/organ/internal/lungs,
+		"liver" =    /datum/organ/internal/liver,
+		"kidneys" =  /datum/organ/internal/kidney,
+		"brain" =    /datum/organ/internal/brain,
+		"appendix" = /datum/organ/internal/appendix,
+		"eyes" =     /datum/organ/internal/eyes/grey
+	)
+
 /datum/species/muton // /vg/
 	name = "Muton"
 	icobase = 'icons/mob/human_races/r_muton.dmi'
@@ -517,10 +424,22 @@ var/global/list/whitelisted_species = list("Human")
 
 	has_mutant_race = 0
 
-	equip(var/mob/living/carbon/human/H)
-		// Unequip existing suits and hats.
-		H.u_equip(H.wear_suit,1)
-		H.u_equip(H.head,1)
+	has_organ = list(
+		"heart" =    /datum/organ/internal/heart,
+		"lungs" =    /datum/organ/internal/lungs,
+		"liver" =    /datum/organ/internal/liver,
+		"kidneys" =  /datum/organ/internal/kidney,
+		"brain" =    /datum/organ/internal/brain,
+		"appendix" = /datum/organ/internal/appendix,
+		"eyes" =     /datum/organ/internal/eyes/muton
+	)
+
+	move_speed_mod = 1
+
+/datum/species/muton/equip(var/mob/living/carbon/human/H)
+	// Unequip existing suits and hats.
+	H.u_equip(H.wear_suit,1)
+	H.u_equip(H.head,1)
 
 	move_speed_mod = 1
 
@@ -574,6 +493,15 @@ var/global/list/whitelisted_species = list("Human")
 //	back_icons      = 'icons/mob/back.dmi'
 
 	has_mutant_race = 0
+	has_organ = list(
+		"heart" =    /datum/organ/internal/heart,
+		"lungs" =    /datum/organ/internal/lungs/vox,
+		"liver" =    /datum/organ/internal/liver,
+		"kidneys" =  /datum/organ/internal/kidney,
+		"brain" =    /datum/organ/internal/brain,
+		"appendix" = /datum/organ/internal/appendix,
+		"eyes" =     /datum/organ/internal/eyes
+	)
 
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.
