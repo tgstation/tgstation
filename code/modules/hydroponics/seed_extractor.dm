@@ -174,10 +174,10 @@ obj/machinery/seed_extractor/interact(mob/user as mob)
 			if(P.seed.hematophage)  	dat += "<span title=\"This plant is a highly specialized hematophage that will only draw nutrients from blood.\">BLOOD </span>"
 			if(P.seed.alter_temp)   	dat += "<span title=\"This plant will gradually alter the local room temperature to match it's ideal habitat.\">TEMP </span>"
 			if(P.seed.exude_gasses.len) dat += "<span title=\"This plant will exude gas into the environment.\">GAS </span>"
-			if(P.seed.thorny)    		dat += "<span title=\"This plant posesses a cover of sharp thorns.\">THORN </span>"
-			if(P.seed.stinging)			dat += "<span title=\"This plant posesses a cover of fine stingers capable of releasing chemicals on touch.\">STING </span>"
+			if(P.seed.thorny)    		dat += "<span title=\"This plant possesses a cover of sharp thorns.\">THORN </span>"
+			if(P.seed.stinging)			dat += "<span title=\"This plant possesses a cover of fine stingers capable of releasing chemicals on touch.\">STING </span>"
 			if(P.seed.ligneous)   		dat += "<span title=\"This is a ligneous plant with strong and robust stems.\">WOOD </span>"
-			if(P.seed.teleporting) 		dat += "<span title=\"This plant posesses a high degree of temporal/spatial instability and may cause spontaneous bluespace disruptions.\">TELE </span>"
+			if(P.seed.teleporting) 		dat += "<span title=\"This plant possesses a high degree of temporal/spatial instability and may cause spontaneous bluespace disruptions.\">TELE </span>"
 			dat += "</td>"
 		dat += "</table>"
 	dat = list2text(dat)
