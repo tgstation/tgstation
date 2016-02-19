@@ -198,15 +198,10 @@
 	if(internal)
 		if (!contents.Find(internal))
 			internal = null
-		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
-			internal = null
-		if(internal)
+			update_internals_hud_icon(0)
+		else
 			update_internals_hud_icon(1)
 			return internal.remove_air_volume(volume_needed)
-		else
-			update_internals_hud_icon(0)
-	return
-
 
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used)
