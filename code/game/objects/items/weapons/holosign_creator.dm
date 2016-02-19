@@ -88,11 +88,6 @@
 	anchored = 1
 	var/holo_integrity = 1
 
-/obj/effect/overlay/holograph/wetsign
-	name = "wet floor sign"
-	desc = "The words flicker as if they mean nothing."
-	icon_state = "holosign"
-
 /obj/effect/overlay/holograph/attackby(obj/item/weapon/W, mob/user, params)
 	if(!W.force || (W.flags & (ABSTRACT|NOBLUDGEON)))
 		return
@@ -134,11 +129,29 @@
 	if(holo_integrity <= 0)
 		qdel(src)
 
+/obj/effect/overlay/holograph/hitby(atom/movable/AM)
+	..()
+	var/tforce = 1
+	if(ismob(AM))
+		tforce = 5
+	else if(isobj(AM))
+		var/obj/item/I = AM
+		tforce = max(1, I.throwforce * 0.2)
+	playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+	holo_integrity -= tforce
+	if(holo_integrity <= 0)
+		qdel(src)
+
 /obj/effect/overlay/holograph/bullet_act(obj/item/projectile/P)
 	if((P.damage_type == BRUTE || P.damage_type == BURN))
 		holo_integrity -= P.damage * 0.5
 		if(holo_integrity <= 0)
 			qdel(src)
+
+/obj/effect/overlay/holograph/wetsign
+	name = "wet floor sign"
+	desc = "The words flicker as if they mean nothing."
+	icon_state = "holosign"
 
 /obj/effect/overlay/holograph/barrier
 	name = "holo barrier"
