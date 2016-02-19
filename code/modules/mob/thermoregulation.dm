@@ -9,6 +9,7 @@
 		sweat(recovery_amt,1)
 
 /mob/living/proc/burn_calories(var/amount,var/forceburn = 0)
+	var/cached_max_temp = max(bodytemperature,T0C+50)
 	if((status_flags & GODMODE) || (flags & INVULNERABLE))
 		return 1
 	if(forceburn && ticker && ticker.hardcore_mode)
@@ -18,10 +19,19 @@
 		nutrition = max(nutrition - amount,0)
 		if((M_FAT in mutations))
 			heatmodifier = heatmodifier*2
-		bodytemperature += amount * heatmodifier
+		bodytemperature = min(bodytemperature + (amount * heatmodifier), cached_max_temp)	// until we have a proper hyperthermia system
 		return 1
 	else
 		return 0
+
+/mob/living/silicon/burn_calories(var/amount,var/forceburn = 0)
+	return 1	// ideally this'd call their cell charge thing but whatever
+
+/mob/living/simple_animal/burn_calories(var/amount,var/forceburn = 0)
+	return 1
+
+/mob/living/carbon/alien/burn_calories(var/amount,var/forceburn = 0)
+	return 1	// figure this out later
 
 /mob/living/proc/sweat(var/amount,var/forcesweat = 0)
 	if((status_flags & GODMODE) || (flags & INVULNERABLE))

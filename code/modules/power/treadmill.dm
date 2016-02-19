@@ -12,7 +12,7 @@
 	icon_state = "treadmill"
 	density = 1
 	flags = ON_BORDER
-	machine_flags = SCREWTOGGLE | WRENCHMOVE
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | EMAGGABLE
 	anchored = 1
 	use_power = 0
 	idle_power_usage = 0
@@ -62,16 +62,19 @@
 				calc *= R.sport
 		if(M_HULK in runner.mutations) calc *= 5
 		count_power += calc
-		if(runner.bodytemperature > T0C + 99)
-			if(prob(5))
-				runner.emote("collapse")
-			if(prob(10))
-				to_chat(runner,"<span class='warning'>You really should take a rest!</span>")
-			if(prob(5))
-				to_chat(runner,"<span class='warning'>Your legs really hurt!</span>")
-				runner.apply_damage(5, BRUTE, "l_leg")
-				runner.apply_damage(5, BRUTE, "r_leg")
-			runner.bodytemperature = max(99,cached_temp)
+		if(emagged && ishuman(runner))
+			runner.bodytemperature += 1
+			if(runner.bodytemperature > T0C + 100)
+				switch(rand(1,100))
+					if(1 to 5)
+						runner.emote("collapse")
+					if(5 to 10)
+						to_chat(runner,"<span class='warning'>You really should take a rest!</span>")
+					if(10 to 20)
+						to_chat(runner,"<span class='warning'>Your legs really hurt!</span>")
+						runner.apply_damage(5, BRUTE, "l_leg")
+						runner.apply_damage(5, BRUTE, "r_leg")
+				runner.bodytemperature = max(T0C + 100,cached_temp)
 	else to_chat(runner,"<span class='warning'>You're exhausted! You can't run anymore!</span>")
 
 /obj/machinery/power/treadmill/CheckExit(var/atom/movable/O, var/turf/target)
@@ -95,3 +98,9 @@
 	..()
 	if(anchored) connect_to_network()
 	else disconnect_from_network()
+
+/obj/machinery/power/treadmill/emag()
+	..()
+	emagged = 1
+	name = "\improper DREADMILL"
+	desc = "FEEL THE BURN"
