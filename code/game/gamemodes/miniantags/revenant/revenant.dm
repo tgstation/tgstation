@@ -408,12 +408,17 @@
 	dangerrating = 0
 
 /datum/objective/revenantFluff/New()
-	var/list/explanationTexts = list("Cause as much chaos and anger as you can without being killed.", \
-									 "Assist existing threats, such as traitorous crew, at critical moments.", \
-									 "Remain nonlethal and only absorb bodies that have already died.", \
-									 "Use your environments to eliminate isolated people.", \
-									 "If there is a chaplain aboard the station, ensure they are killed.", \
-									 "Hinder the crew while attempting to avoid being noticed.")
+	var/list/explanationTexts = list("Assist and exacerbate existing threats at critical moments.", \
+									 "Avoid killing in plain sight.", \
+									 "Cause as much chaos and anger as you can without being killed.", \
+									 "Damage and render as much of the station rusted and unusable as possible.", \
+									 "Disable and cause malfunctions in as many machines as possible.", \
+									 "Ensure that any holy weapons are rendered unusable.", \
+									 "Hinder the crew while attempting to avoid being noticed.", \
+									 "Make the crew as miserable as possible.", \
+									 "Make the clown as miserable as possible.", \
+									 "Make the captain as miserable as possible.", \
+									 "Prevent the use of energy weapons where possible.")
 	explanation_text = pick(explanationTexts)
 	..()
 

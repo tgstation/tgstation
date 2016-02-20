@@ -22,7 +22,7 @@
 	draining = 1
 	essence_drained += rand(15, 20)
 	src << "<span class='revennotice'>You search for the soul of [target].</span>"
-	if(do_after(src, rand(10, 15), 0, target)) //did they get deleted in that second?
+	if(do_after(src, rand(10, 20), 0, target)) //did they get deleted in that second?
 		if(target.ckey)
 			src << "<span class='revennotice'>Their soul burns with intelligence.</span>"
 			essence_drained += rand(20, 30)
@@ -41,7 +41,7 @@
 					src << "<span class='revenboldnotice'>Such a feast! [target] will yield much essence to you.</span>"
 				if(90 to INFINITY)
 					src << "<span class='revenbignotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>"
-			if(do_after(src, rand(15, 20), 0, target)) //how about now
+			if(do_after(src, rand(15, 25), 0, target)) //how about now
 				if(!target.stat)
 					src << "<span class='revenwarning'>They are now powerful enough to fight off your draining.</span>"
 					target << "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>"
