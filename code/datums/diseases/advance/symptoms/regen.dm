@@ -5,7 +5,7 @@
 	resistance = 3
 	stage_speed = -2
 	transmittable = -4
-	level = 7
+	level = 10
 
 /datum/symptom/regen/Activate(var/datum/disease/advance/A)
 	..()
