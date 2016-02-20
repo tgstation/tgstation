@@ -228,6 +228,14 @@
 	plant(user)
 
 /obj/item/chair/proc/plant(mob/user)
+	for(var/obj/A in get_turf(loc))
+		if(istype(A,/obj/structure/chair))
+			user << "<span class='danger'>There is already a chair here.</span>"
+			return
+		if(A.density)
+			user << "<span class='danger'>There is already something here.</span>"
+			return
+
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
 	C.dir = dir
