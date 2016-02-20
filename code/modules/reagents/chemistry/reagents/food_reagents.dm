@@ -202,8 +202,8 @@
 		else if ( mouth_covered )	// Reduced effects if partially protected
 			if(prob(5))
 				victim.emote("scream")
-			victim.adjust_blurriness(3)
-			victim.adjust_blindness(1)
+			victim.blur_eyes(3)
+			victim.blind_eyes(2)
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
 			victim.Weaken(3)
@@ -216,8 +216,8 @@
 		else // Oh dear :D
 			if(prob(5))
 				victim.emote("scream")
-			victim.adjust_blurriness(5)
-			victim.adjust_blindness(2)
+			victim.blur_eyes(5)
+			victim.blind_eyes(3)
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
 			victim.Weaken(5)

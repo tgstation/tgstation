@@ -260,3 +260,16 @@
 
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
+
+//generic event spawns
+/obj/effect/landmark/event_spawn
+	name = "generic event spawn"
+	icon_state = "x4"
+
+/obj/effect/landmark/event_spawn/New()
+	..()
+	generic_event_spawns += src
+
+/obj/effect/landmark/event_spawn/Destroy()
+	generic_event_spawns -= src
+	return ..()

@@ -135,7 +135,8 @@ BLIND     // can't see anything
 	if(!ignore_maskadjust)
 		if(user.incapacitated())
 			return
-		if(mask_adjusted == 1)
+		mask_adjusted = !mask_adjusted
+		if(!mask_adjusted)
 			src.icon_state = initial(icon_state)
 			gas_transfer_coefficient = initial(gas_transfer_coefficient)
 			permeability_coefficient = initial(permeability_coefficient)
@@ -143,7 +144,6 @@ BLIND     // can't see anything
 			flags_inv |= visor_flags_inv
 			flags_cover = initial(flags_cover)
 			user << "<span class='notice'>You push \the [src] back into place.</span>"
-			src.mask_adjusted = 0
 			slot_flags = initial(slot_flags)
 		else
 			icon_state += "_up"
@@ -153,10 +153,9 @@ BLIND     // can't see anything
 			flags &= ~visor_flags
 			flags_inv &= ~visor_flags_inv
 			flags_cover &= 0
-			src.mask_adjusted = 1
 			if(adjusted_flags)
 				slot_flags = adjusted_flags
-		user.wear_mask_update(src, unequip = 0)
+		user.wear_mask_update(src, toggle_off = mask_adjusted)
 
 
 

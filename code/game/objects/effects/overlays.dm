@@ -39,6 +39,16 @@
 	spawn(duration)
 		qdel(src)
 
+/obj/effect/overlay/temp/heal //color is white by default, set to whatever is needed
+	name = "healing glow"
+	icon_state = "heal"
+	duration = 15
+
+/obj/effect/overlay/temp/heal/New()
+	..()
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(-9, 0)
+
 /obj/effect/overlay/temp/explosion
 	name = "explosion"
 	icon = 'icons/effects/96x96.dmi'

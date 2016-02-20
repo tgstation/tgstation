@@ -467,9 +467,9 @@ var/list/admin_verbs_hideable = list(
 	set name = "Drop Bomb"
 	set desc = "Cause an explosion of varying strength at your location."
 
-	var/turf/epicenter = mob.loc
 	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Custom Bomb")
 	var/choice = input("What size explosion would you like to produce?") in choices
+	var/turf/epicenter = mob.loc
 	switch(choice)
 		if(null)
 			return 0
@@ -492,6 +492,7 @@ var/list/admin_verbs_hideable = list(
 			var/flash_range = input("Flash range (in tiles):") as null|num
 			if(flash_range == null)
 				return
+			epicenter = mob.loc //We need to reupdate as they may have moved again
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
