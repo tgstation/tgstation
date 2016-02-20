@@ -43,6 +43,36 @@
 	//Fuck the preprocessor
 	var/dorf = 0
 
+	// List of package tagger locations. Due to legacy shitcode you can only append or replace ones with null, or you'll break stuff.
+	var/list/default_tagger_locations = list(
+		DISP_DISPOSALS,
+		DISP_CARGO_BAY,
+		DISP_QM_OFFICE,
+		DISP_ENGINEERING,
+		DISP_CE_OFFICE,
+		DISP_ATMOSPHERICS,
+		DISP_SECURITY,
+		DISP_HOS_OFFICE,
+		DISP_MEDBAY,
+		DISP_CMO_OFFICE,
+		DISP_CHEMISTRY,
+		DISP_RESEARCH,
+		DISP_RD_OFFICE,
+		DISP_ROBOTICS,
+		DISP_HOP_OFFICE,
+		DISP_LIBRARY,
+		DISP_CHAPEL,
+		DISP_THEATRE,
+		DISP_BAR,
+		DISP_KITCHEN,
+		DISP_HYDROPONICS,
+		DISP_JANITOR_CLOSET,
+		DISP_GENETICS,
+		DISP_TELECOMMS,
+		DISP_MECHANICS,
+		DISP_TELESCIENCE
+	)
+
 /datum/map/New()
 
 	. = ..()
