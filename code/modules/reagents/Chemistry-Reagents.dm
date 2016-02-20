@@ -99,13 +99,14 @@
 
 	src = null
 
-/datum/reagent/proc/metabolize(var/mob/living/carbon/human/H)
-	if(H)
+/datum/reagent/proc/metabolize(var/mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
 		var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
 		if(L)
 			L.metabolize_reagent(src.id, custom_metabolism)
 			return
-	holder.remove_reagent(src.id, custom_metabolism) //By default it slowly disappears.
+	holder.remove_reagent(src.id, custom_metabolism) // If we aren't human, we don't have a liver, so just metabolize it the old fashioned way.
 
 /datum/reagent/proc/on_mob_life(var/mob/living/M, var/alien)
 	set waitfor = 0

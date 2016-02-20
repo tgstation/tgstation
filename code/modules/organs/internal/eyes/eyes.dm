@@ -9,11 +9,11 @@
 	var/see_in_dark=2
 
 /datum/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
-	if(is_bruised())
-		owner.eye_blurry = 20
 	if(is_broken())
-		owner.eye_blind = 20
-
+		owner.eye_blind = 2
+	if(is_bruised())
+		owner.eye_blind = 0
+		owner.eye_blurry = 2
 
 /datum/organ/internal/eyes/tajaran
 	name = "feline eyes"
