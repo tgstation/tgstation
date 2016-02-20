@@ -181,7 +181,7 @@
 	parent_organ = "groin"
 	removed_type = /obj/item/organ/appendix
 
-/datum/organ/internal/proc/remove(var/mob/user)
+/datum/organ/internal/proc/remove(var/mob/user, var/quiet=0)
 
 
 	if(!removed_type) return 0
