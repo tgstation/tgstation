@@ -96,6 +96,8 @@ var/list/impact_master = list()
 	animate_movement = 0
 	var/linear_movement = 1
 
+	var/penetration_message = 1 //Message that is shown when a projectile penetrates an object
+
 /obj/item/projectile/proc/on_hit(var/atom/atarget, var/blocked = 0)
 	if(blocked >= 2)		return 0//Full block
 	if(!isliving(atarget))	return 0
@@ -302,7 +304,8 @@ var/list/impact_master = list()
 			penetration = 0
 			bullet_die()
 			return 1
-		A.visible_message("<span class='warning'>\The [src] goes right through \the [A]!</span>")
+		if(penetration_message)
+			A.visible_message("<span class='warning'>\The [src] goes right through \the [A]!</span>")
 		src.forceMove(get_step(src.loc,dir))
 		if(linear_movement)
 			update_pixel()

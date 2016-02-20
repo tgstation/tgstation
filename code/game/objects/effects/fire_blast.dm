@@ -13,18 +13,13 @@
 
 /obj/effect/fire_blast/New(turf/T, var/damage = 0, var/current_step = 0, var/age = 1, var/pressure = 0, var/blast_temperature = 0)
 	..(T)
-	if(prob(33))
-		icon_state = "2"
-	else if(prob(33))
-		icon_state = "3"
+	icon_state = "[rand(1,3)]"
 
 	blast_age = age
 
 	if(damage)
 		fire_damage = damage
 	set_light(3)
-
-//	to_chat(world, "CREATING FIRE BLAST THAT DEALS [fire_damage] BURN DAMAGE EVERY 2/10ths OF A SECOND")
 
 	var/spread_start = 100
 	pressure = round(pressure)
@@ -103,18 +98,33 @@
 
 		qdel(src)
 
-/obj/effect/plasma_puff
-	name = "plasma puff"
-	desc = "A small puff of plasma gas."
+/obj/effect/gas_puff
+	name = "gas puff"
+	desc = "A small puff of gas."
 	icon = 'icons/effects/plasma.dmi'
-	icon_state = "onturf-purple"
+	icon_state = null
 	density = 0
 	unacidable = 1
 	anchored = 1.0
 	w_type=NOT_RECYCLABLE
 
-/obj/effect/plasma_puff/New(turf/T)
+/obj/effect/gas_puff/New(turf/T, var/datum/gas_mixture/stored_gas = null, var/type_of_gas)
 	..(T)
+
+	if(type_of_gas)
+		switch(type_of_gas)
+			if("plasma")
+				icon_state = "onturf-purple"
+				name = "plasma puff"
+				desc = "A small puff of plasma gas."
+			if("N2O")
+				icon_state = "sl_gas"
+				name = "N2O puff"
+				desc = "A small puff of nitrogen dioxide gas."
+		update_icon()
+
+	if(stored_gas)
+		loc.assume_air(stored_gas)
 
 	spawn()
 		for(var/i = 1; i <= 5; i++)

@@ -22,6 +22,7 @@
 	fire_sound = null
 	conventional_firearm = 0
 	silenced = 1
+	recoil = 0
 	var/status = 0
 	var/throw_percent = 20
 	var/lit = 0	//on or off
@@ -30,6 +31,7 @@
 	var/obj/item/weapon/weldingtool/weldtool = null
 	var/obj/item/device/assembly/igniter/igniter = null
 	var/obj/item/weapon/tank/plasma/ptank = null
+	var/window_open = 0
 
 
 /obj/item/weapon/gun/projectile/flamethrower/Destroy()
@@ -115,7 +117,7 @@
 		in_chamber = null
 		return
 
-	if(pressure <= 101.3)
+	if(pressure <= ONE_ATMOSPHERE)
 		to_chat(user, "\The [src] hisses.")
 		to_chat(user, "<span class='warning'>It sounds like the tank is empty.</span>")
 		qdel(B)
@@ -128,6 +130,7 @@
 	if(Fire(target,user))
 		user.visible_message("<span class='danger'>[user] shoots a jet of gas from \his [src.name]!</span>","<span class='danger'>You shoot a jet of gas from your [src.name]!</span>")
 		playsound(user, 'sound/weapons/flamethrower.ogg', 50, 1)
+		src.updateUsrDialog()
 		flamethrower_window(user)
 
 /obj/item/weapon/gun/projectile/flamethrower/attackby(obj/item/W as obj, mob/user as mob)
@@ -169,6 +172,7 @@
 		if(user.drop_item(W, src))
 			ptank = W
 			update_icon()
+			src.updateUsrDialog()
 			flamethrower_window(user)
 			return
 
@@ -183,19 +187,22 @@
 
 /obj/item/weapon/gun/projectile/flamethrower/attack_self(mob/user as mob)
 	if(user.stat || user.restrained() || user.lying)	return
+	window_open = 1
 	flamethrower_window(user)
 	return
 
-/obj/item/weapon/gun/projectile/flamethrower/proc/flamethrower_window(mob/user as mob)
-	user.set_machine(src)
-	var/dat = text("<TT><B>Flamethrower (<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>\n Tank Pressure: [ptank ? "[ptank.air_contents.return_pressure()]" : "No tank loaded."]<BR>\nPercentage to throw: <A HREF='?src=\ref[src];amount=-100'>-</A> <A HREF='?src=\ref[src];amount=-10'>-</A> <A HREF='?src=\ref[src];amount=-1'>-</A> [throw_percent] <A HREF='?src=\ref[src];amount=1'>+</A> <A HREF='?src=\ref[src];amount=10'>+</A> <A HREF='?src=\ref[src];amount=100'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove plasmatank</A> - <A HREF='?src=\ref[src];close=1'>Close</A></TT>")
-	user << browse(dat, "window=flamethrower;size=600x300")
-	onclose(user, "flamethrower")
+/obj/item/weapon/gun/projectile/flamethrower/proc/flamethrower_window(mob/user)
+	if(window_open)
+		user.set_machine(src)
+		var/dat = text("<TT><B>Flamethrower (<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>\n Tank Pressure: [ptank ? "[ptank.air_contents.return_pressure()]" : "No tank loaded."]<BR>\nPercentage to throw: <A HREF='?src=\ref[src];amount=-100'>-</A> <A HREF='?src=\ref[src];amount=-10'>-</A> <A HREF='?src=\ref[src];amount=-1'>-</A> [throw_percent] <A HREF='?src=\ref[src];amount=1'>+</A> <A HREF='?src=\ref[src];amount=10'>+</A> <A HREF='?src=\ref[src];amount=100'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove plasmatank</A> - <A HREF='?src=\ref[src];close=1'>Close</A></TT>")
+		user << browse(dat, "window=flamethrower;size=600x300")
+		onclose(user, "flamethrower", src)
 
 /obj/item/weapon/gun/projectile/flamethrower/Topic(href,href_list[])
 	if(href_list["close"])
-		usr.unset_machine()
 		usr << browse(null, "window=flamethrower")
+		usr.unset_machine()
+		window_open = 0
 		return
 	if(usr.stat || usr.restrained() || usr.lying)	return
 	usr.set_machine(src)
