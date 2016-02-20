@@ -611,7 +611,7 @@
 /datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M, /mob/living))
 		return
-	if(M.mind && M.mind.demoninfo && M.mind.demoninfo.banetype == BANEIRON)
+	if(M.has_bane(BANE_IRON)) //If the target is weak to cold iron, then poison them.
 		if(holder && holder.chem_temp < 100) // COLD iron.
 			M.reagents.add_reagent("toxin", reac_volume)
 	..()
@@ -630,19 +630,11 @@
 	reagent_state = SOLID
 	color = "#D0D0D0" // rgb: 208, 208, 208
 
-/datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
+/datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M, /mob/living))
 		return
-	if(method == TOUCH)
-		if(M.mind && M.mind.demoninfo && M.mind.demoninfo.banetype == BANESILVER)
-			method = VAPOR
-	..()
-
-/datum/reagent/silver/on_mob_life(mob/living/M)
-	if(!istype(M, /mob/living))
-		return
-	if(M.mind && M.mind.demoninfo && M.mind.demoninfo.banetype == BANESILVER)
-		M.apply_effect(1/M.metabolism_efficiency,IRRADIATE,0)
+	if(M.has_bane(BANE_SILVER))
+		M.reagents.add_reagent("toxin", reac_volume)
 	..()
 
 /datum/reagent/uranium

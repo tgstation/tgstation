@@ -1154,8 +1154,23 @@ Sorry Giacom. Please don't be mad :(
 		blind_eyes(1)
 		return 1
 
-/mob/living/proc/returnSoul()
-	return 0 //TODO:  Finish method stub
+/mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
+	// This proc is simply a multiplier on damage when attacked by an object, or by a specific person, or such.
+	return 1
 
-/mob/living/proc/removeDemonBoons()
-	return 0 //TODO:  Finish method stub
+/mob/living/proc/owns_soul()
+	if(mind)
+		return mind.soulOwner == mind
+	return 1
+
+/mob/living/proc/return_soul()
+	if(mind)
+		mind.soulOwner = mind
+
+/mob/living/proc/has_bane(var/banetype)
+	if(mind)
+		if(mind.demoninfo)
+			return mind.demoninfo.bane == banetype
+		//if(mind.sininfo)
+		//	return mind.sininfo.bane == banetype
+

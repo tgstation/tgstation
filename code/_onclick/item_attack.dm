@@ -25,13 +25,7 @@
 	I.attack(src, user)
 
 /mob/living/proc/attacked_by(obj/item/I, mob/living/user, def_zone)
-	var/damage = I.force
-	if(mind && mind.demoninfo && mind.demoninfo.banetype == BANEWHITECLOTHES) // Sorry for the snowflake check.
-		if(istype(user, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			if(istype(H.w_uniform, /obj/item/clothing/under/color/white))
-				damage *= 3
-	apply_damage(damage, I.damtype, def_zone)
+	apply_damage(I.force, I.damtype, def_zone)
 	if(I.damtype == "brute")
 		if(prob(33) && I.force)
 			var/turf/location = src.loc

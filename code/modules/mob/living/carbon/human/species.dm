@@ -950,7 +950,8 @@
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
-	apply_damage(I.force, I.damtype, affecting, armor_block, H)
+	var/weakness = H.check_weakness(I, user)
+	apply_damage(I.force * weakness, I.damtype, affecting, armor_block, H)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))

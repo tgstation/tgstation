@@ -1190,9 +1190,9 @@
 				purpose.  Convince the crew to sin, and embroiden Hell's grasp. \
 				</b></span>"
 				current << "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>"
-				current << src.demoninfo.banelaw
-				current << src.demoninfo.banlaw
-				current << src.demoninfo.obligationlaw
+				current << src.demoninfo.banelaw()
+				current << src.demoninfo.banlaw()
+				current << src.demoninfo.obligationlaw()
 				current << "<br/><br/> <span class='warning'>Remember, the crew can research your weaknesses if they find out your demon name.</span><br>"
 				var/obj_count = 1
 				current << "<span class='notice'>Your current objectives:</span>"
@@ -1646,6 +1646,19 @@
 			spell.action.background_icon_state = spell.action_background_icon_state
 		spell.action.Grant(new_character)
 	return
+
+/datum/mind/proc/disrupt_spells(var/delay, var/list/exceptions = New())
+	for(var/obj/effect/proc_holder/spell/S in spell_list)
+		var/found = 0
+		for(var/type in spells)
+			if(istype(S, type))
+				found = 1
+				break
+		if(!found)
+			S.charge_counter = delay
+			spawn(0)
+				S.start_recharge()
+
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

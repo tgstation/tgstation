@@ -977,8 +977,13 @@
 	for(var/datum/objective/objective in src.mind.objectives)
 		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
-		
+
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
 	restore_blood()
 	remove_all_embedded_objects()
 	..()
+
+/mob/living/check_weakness(obj/item/weapon, mob/living/attacker)
+	if(mind && mind.demoninfo)
+		return check_demon_bane_multiplier(weapon, attacker)
+	return 1
