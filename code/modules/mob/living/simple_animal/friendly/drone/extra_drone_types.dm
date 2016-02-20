@@ -46,6 +46,7 @@
 	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(src)
 	W.implant(src)
 
+
 /obj/item/drone_shell/syndrone
 	name = "syndrone shell"
 	desc = "A shell of a syndrone, a modified maintenance drone designed to infiltrate and annihilate."
@@ -55,3 +56,63 @@
 /obj/item/drone_shell/syndrone/badass
 	name = "badass syndrone shell"
 	drone_type = /mob/living/simple_animal/drone/syndrone/badass
+
+
+/mob/living/simple_animal/drone/crab
+	name = "crab"
+	desc = "Free crabs!"
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "crab"
+	icon_living = "crab"
+	icon_dead = "crab_dead"
+	picked = TRUE
+	unsuitable_atmos_damage = 0
+	wander = 1
+	ventcrawler = 2
+	healable = 1
+	sight = 0
+	voice_name = "chitters"
+	speak_emote = list("chitters")
+	bubble_icon = "default"
+	languages = HUMAN
+	has_unlimited_silicon_privilege = 0
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 0)
+	laws = \
+	"You are a crab. Do crab things."
+	heavy_emp_damage = 0 //Crab not robotic
+	seeStatic = 0 //Crab can see.
+	default_storage = null
+	dir = 2
+	visualAppearence = SCOUTDRONE
+	speed = 3
+	melee_damage_upper = 5
+	melee_damage_lower = 5
+	a_intent = "harm"
+	attacktext = "pinches"
+
+/mob/living/simple_animal/drone/crab/New()
+	..()
+	access_card = null //No captain access.
+	scanner.Remove(src) //No research scanner.
+	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
+	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
+
+
+
+
+/mob/living/simple_animal/drone/crab/face_atom()
+	dir = 2
+
+/mob/living/simple_animal/drone/crab/Move()
+	..()
+	dir = 2
+
+/mob/living/simple_animal/drone/crab/update_drone_icon()
+	return
+
+/mob/living/simple_animal/drone/crab/emp_act(severity)
+	for(var/obj/item/I in contents)
+		I.emp_act(severity)
+
+/mob/living/simple_animal/drone/crab/update_drone_hack()
+	return
