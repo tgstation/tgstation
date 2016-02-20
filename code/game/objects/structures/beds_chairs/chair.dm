@@ -117,21 +117,21 @@
 
 // Chair types
 /obj/structure/chair/wood
+	icon_state = "wooden_chair"
+	name = "wooden chair"
+	desc = "Old is never too old to not be in fashion."
 	burn_state = FLAMMABLE
 	burntime = 20
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
-	item_chair = null
+	item_chair = /obj/item/chair/wood
 
-/obj/structure/chair/wood/normal
-	icon_state = "wooden_chair"
-	name = "wooden chair"
-	desc = "Old is never too old to not be in fashion."
+/obj/structure/chair/wood/normal //Kept for map compatibility
+
 
 /obj/structure/chair/wood/wings
 	icon_state = "wooden_chair_wings"
-	name = "wooden chair"
-	desc = "Old is never too old to not be in fashion."
+	item_chair = /obj/item/chair/wood/wings
 
 /obj/structure/chair/comfy
 	name = "comfy chair"
@@ -243,7 +243,7 @@
 	var/remaining_mats = initial(origin_type.buildstackamount)
 	remaining_mats-- //Part of the chair was rendered completely unusable. It magically dissapears. Maybe make some dirt?
 	if(remaining_mats)
-		for(var/M=0 to remaining_mats)
+		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
 	user.unEquip(src,1) //Even NODROP chairs are destroyed.
 	qdel(src)
@@ -276,3 +276,17 @@
 	item_state = "stool"
 	origin_type = /obj/structure/chair/stool
 	break_chance = 0 //It's too sturdy.
+
+/obj/item/chair/wood
+	name = "wooden chair"
+	icon_state = "wooden_chair_toppled"
+	item_state = "woodenchair"
+	burn_state = FLAMMABLE
+	burntime = 20
+	hitsound = 'sound/weapons/genhit1.ogg'
+	origin_type = /obj/structure/chair/wood
+	break_chance = 50
+
+/obj/item/chair/wood/wings
+	icon_state = "wooden_chair_wings_toppled"
+	origin_type = /obj/structure/chair/wood/wings
