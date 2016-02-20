@@ -12,7 +12,7 @@
 /datum/round_event_control/portal_storm_narsie
 	name = "Portal Storm: Nar-sie"
 	typepath = /datum/round_event/portal_storm/portal_storm_narsie
-	weight = -1
+	weight = 0
 
 /datum/round_event/portal_storm/portal_storm_narsie
 	boss_types = list(/obj/singularity/narsie/large = 1)
