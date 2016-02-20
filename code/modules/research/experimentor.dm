@@ -1,4 +1,4 @@
-f//this is designed to replace the destructive analyzer
+//this is designed to replace the destructive analyzer
 
 #define SCANTYPE_POKE 1
 #define SCANTYPE_IRRADIATE 2
