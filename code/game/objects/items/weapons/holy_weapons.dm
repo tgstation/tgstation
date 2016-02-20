@@ -270,8 +270,8 @@
 	name = "arrhythmic knife"
 	w_class = 5
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
-	slot_flags = SLOT_BELT
 	sharpness = IS_SHARP
+	slot_flags = null
 	flags = HANDSLOW
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
