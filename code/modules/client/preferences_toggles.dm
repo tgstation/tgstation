@@ -285,6 +285,6 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set category = "Preferences"
 	set desc = ".Toggles hearing Central Command, Captain, VOX, and other announcment sounds"
 	prefs.toggles ^= SOUND_ANNOUNCMENTS
-	src << "You will now [(prefs.toggles & SOUND_ANNOUNCMENTS) ? "hear announcment sounds" : "no longer hear announcments"]."
+	src << "You will now [(prefs.toggles & SOUND_ANNOUNCMENTS) ? "no longer hear announcments" : "hear announcment sounds"]."
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
