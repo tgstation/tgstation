@@ -147,7 +147,7 @@
 
 			if(client) to_chat(src, "<i>This subject does not have a strong enough life energy anymore...</i>")
 		else
-			M.canmove = 1
+			M.update_canmove()
 
 			if(client) to_chat(src, "<i>I have stopped feeding...</i>")
 	else
