@@ -9,7 +9,7 @@
 	burn_state = FIRE_PROOF
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
-	var/hold_icon = "chair" // if null it can't be picked up
+	var/item_chair = /obj/item/chair // if null it can't be picked up
 
 /obj/structure/chair/New()
 	..()
@@ -121,7 +121,7 @@
 	burntime = 20
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
-	hold_icon = null
+	item_chair = null
 
 /obj/structure/chair/wood/normal
 	icon_state = "wooden_chair"
@@ -142,7 +142,7 @@
 	burntime = 30
 	buildstackamount = 2
 	var/image/armrest = null
-	hold_icon = null
+	item_chair = null
 
 /obj/structure/chair/comfy/New()
 	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
@@ -175,7 +175,7 @@
 /obj/structure/chair/office
 	anchored = 0
 	buildstackamount = 5
-	hold_icon = null
+	item_chair = null
 
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"
@@ -191,37 +191,32 @@
 	icon_state = "stool"
 	can_buckle = 0
 	buildstackamount = 1
-	hold_icon = "stool"
+	item_chair = /obj/item/chair/stool
 
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!hold_icon || !ishuman(usr) || buckled_mob)
+		if(!item_chair || !ishuman(usr) || buckled_mob)
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
-		var/obj/item/chair/C = new /obj/item/chair(get_turf(src),src)
+		var/C = new item_chair(loc)
 		usr.put_in_hands(C)
 		qdel(src)
 
 /obj/item/chair
 	name = "chair"
 	desc = "Bar brawl essential."
+	icon = 'icons/obj/chairs.dmi'
+	icon_state = "chair_toppled"
+	item_state = "chair"
 	w_class = 5
 	force = 8
 	throwforce = 10
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
-
-	var/origin_type = /obj/structure/chair
-
-/obj/item/chair/New(loc,obj/structure/chair/origin)
-	..()
-	name = origin.name
-	icon = origin.icon
-	icon_state = "[origin.icon_state]_toppled"
-	item_state = origin.hold_icon
-	origin_type = origin.type
+	var/break_chance = 5 //Likely hood of smashing the chair.
+	var/obj/structure/chair/origin_type = /obj/structure/chair
 
 
 /obj/item/chair/attack_self(mob/user)
@@ -241,8 +236,43 @@
 	C.dir = dir
 	qdel(src)
 
+/obj/item/chair/proc/smash(mob/living/user)
+	var/stack_type = initial(origin_type.buildstacktype)
+	if(!stack_type)
+		return
+	var/remaining_mats = initial(origin_type.buildstackamount)
+	remaining_mats-- //Part of the chair was rendered completely unusable. It magically dissapears. Maybe make some dirt?
+	if(remaining_mats)
+		for(var/M=0 to remaining_mats)
+			new stack_type(get_turf(loc))
+	user.unEquip(src,1) //Even NODROP chairs are destroyed.
+	qdel(src)
+
+
+
+
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message("<span class='danger'>[owner] fends off [attack_text] with [src]!</span>")
 		return 1
 	return 0
+
+/obj/item/chair/afterattack(atom/target, mob/living/carbon/user, proximity)
+	..()
+	if(!proximity)
+		return
+	if(prob(break_chance))
+		user.visible_message("<span class='danger'>[user] smashes \the [src] to pieces against \the [target]</span>")
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			if(C.health < (C.maxHealth*0.5))
+				C.Weaken(1)
+		smash(user)
+
+
+/obj/item/chair/stool
+	name = "stool"
+	icon_state = "stool_toppled"
+	item_state = "stool"
+	origin_type = /obj/structure/chair/stool
+	break_chance = 0 //It's too sturdy.
