@@ -1659,7 +1659,7 @@
 		if(ATTACK_BITE)
 			bite_icon.icon_state = "act_bite_on"
 
-/mob/living/carbon/human/proc/can_kick()
+/mob/living/carbon/human/proc/can_kick(atom/target)
 	//Need two feet to kick!
 
 	if(legcuffed)
@@ -1679,7 +1679,12 @@
 
 	return 1
 
-/mob/living/carbon/human/proc/can_bite()
+/mob/living/carbon/human/proc/can_bite(atom/target)
+	//Need a mouth to bite
+
+	if(!hasmouth)
+		return 0
+
 	//Need at least two teeth or a beak to bite
 
 	if(check_body_part_coverage(MOUTH))

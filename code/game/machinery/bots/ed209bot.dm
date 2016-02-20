@@ -233,6 +233,18 @@ Auto Patrol: []"},
 						src.shootAt(user)
 					src.mode = SECBOT_HUNT
 
+/obj/machinery/bot/ed209/kick_act(mob/living/H)
+	..()
+
+	threatlevel = H.assess_threat(src)
+	threatlevel += 6
+
+	if(threatlevel > 0)
+		src.target = H
+		if(lasercolor)
+			src.shootAt(H)
+		src.mode = SECBOT_HUNT
+
 /obj/machinery/bot/ed209/Emag(mob/user as mob)
 	..()
 	if(open && !locked)

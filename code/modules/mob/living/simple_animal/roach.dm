@@ -264,3 +264,14 @@
 	switch(id)
 		if("toxin")
 			Die(gore = 0)
+
+/mob/living/simple_animal/cockroach/bite_act(mob/living/carbon/human/H)
+	if(size >= H.size) return
+
+	playsound(get_turf(H),'sound/items/eatfood.ogg', rand(10,50), 1)
+	H.visible_message("<span class='notice'>[H] eats \the [src]!</span>", "<span class='notice'>You eat \the [src]!</span>")
+
+	Die(gore = 1)
+	qdel(src)
+
+	H.vomit()

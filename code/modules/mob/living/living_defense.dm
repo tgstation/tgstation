@@ -139,7 +139,7 @@
 
 //BITES
 /mob/living/bite_act(mob/living/carbon/human/M as mob)
-	var/damage = rand(0, 7)
+	var/damage = rand(1, 5)
 
 	if(M_BEAK in M.mutations) //Beaks = stronger bites
 		damage += 4
@@ -165,14 +165,19 @@
 		return
 
 	var/stomping = 0
+	var/attack_verb = "kicked"
 
-	if(M.size >= size && !flying) //On the ground, the kicker is bigger than/equal size of the victim = stomp
+	if(M.size > size && !flying) //On the ground, the kicker is bigger than/equal size of the victim = stomp
 		stomping = 1
 
-	var/damage = rand(0,9)
+	var/damage = rand(0,7)
 
 	if(stomping) //Stomps = more damage and armor bypassing
-		damage += rand(0,9)
+		damage += rand(0,7)
+		attack_verb = "stomped on"
+	else if(M.reagents && M.reagents.has_reagent("gyro"))
+		damage += rand(0,4)
+		attack_verb = "roundhouse kicked"
 
 	if(!damage)
 		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -188,10 +193,8 @@
 		damage += rand(1,6)
 
 	playsound(loc, "punch", 30, 1, -1)
-	if(stomping)
-		visible_message("<span class='danger'>\The [M] has stomped on \the [src]!</span>", "<span class='userdanger'>\The [M] stomps on you!</span>")
-	else
-		visible_message("<span class='danger'>\The [M] has kicked \the [src]!</span>", "<span class='userdanger'>\The [M] kicks you!</span>")
+
+	visible_message("<span class='danger'>\The [M] has [attack_verb] \the [src]!</span>", "<span class='userdanger'>\The [M] [attack_verb] you!</span>")
 
 	if(M.size != size) //The bigger the kicker, the more damage
 		damage = max(damage + (rand(1,5) * (1 + M.size - size)), 0)

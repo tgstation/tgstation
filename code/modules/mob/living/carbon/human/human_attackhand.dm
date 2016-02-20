@@ -27,7 +27,7 @@
 //end vampire codes
 
 	var/armor_modifier = 30
-	var/damage = rand(1, 7)
+	var/damage = rand(1, 5)
 
 	if(M_BEAK in M.mutations) //Beaks = stronger bites
 		armor_modifier = 5
@@ -75,21 +75,32 @@
 		return
 
 	var/stomping = 0
+	var/attack_verb = "kicked"
 
 	if(lying && (M.size >= size)) //On the ground, the kicker is bigger than/equal size of the victim = stomp
 		stomping = 1
 
 	var/armor_modifier = 1
-	var/damage = rand(0,9)
+	var/damage = rand(0,7)
+	var/knockout = damage
 
 	if(stomping) //Stomps = more damage and armor bypassing
 		armor_modifier = 0.5
-		damage += rand(0,9)
+		damage += rand(0,7)
+		attack_verb = "stomped on"
+	else if(M.reagents && M.reagents.has_reagent("gyro"))
+		damage += rand(0,4)
+		knockout += rand(0,3)
+		attack_verb = "roundhouse kicked"
 
 	if(!damage)
 		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 		visible_message("<span class='danger'>\The [M] has attempted to kick \the [src]!</span>")
 		return 0
+
+	if(M_HULK in M.mutations)
+		damage +=  3
+		knockout += 3
 
 	//Handle shoes
 	var/obj/item/clothing/shoes/S = M.shoes
@@ -100,10 +111,7 @@
 		damage += rand(1,6)
 
 	playsound(loc, "punch", 30, 1, -1)
-	if(stomping)
-		visible_message("<span class='danger'>\The [M] has stomped on \the [src]!</span>", "<span class='userdanger'>\The [M] stomps on you!</span>")
-	else
-		visible_message("<span class='danger'>\The [M] has kicked \the [src]!</span>", "<span class='userdanger'>\The [M] kicks you!</span>")
+	visible_message("<span class='danger'>[M] has [attack_verb] \the [src]!</span>", "<span class='userdanger'>[M] [attack_verb] you!</span>")
 
 	if(M.size != size) //The bigger the kicker, the more damage
 		damage = max(damage + (rand(1,5) * (1 + M.size - size)), 0)
@@ -117,10 +125,27 @@
 		if(2) //Full block
 			damage = max(0, damage - rand(1,10))
 
+	if(knockout >= 7 && prob(33))
+		visible_message("<span class='danger'>[M] has weakened [src]!</span>")
+		apply_effect(3, WEAKEN, armorblock)
+
 	apply_damage(damage, BRUTE, affecting)
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='red'>[stomping ? "stomped on" : "kicked"] [src.name] ([src.ckey]) for [damage] damage</font>")
-	src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [stomping ? "stomped on" : "kicked"] by [M.name] ([M.ckey]) for [damage] damage</font>")
+	if(!stomping) //Kicking somebody while holding them with a grab sends the victim flying
+		var/obj/item/weapon/grab/G = M.get_inactive_hand()
+		if(istype(G) && G.affecting == src)
+			spawn()
+				returnToPool(G)
+
+				var/throw_dir = M.dir
+				if(M.loc != src.loc) throw_dir = get_dir(M, src)
+
+				var/turf/T = get_edge_target_turf(get_turf(src), throw_dir)
+				var/throw_strength = 3 * M.get_strength()
+				throw_at(T, throw_strength, 1)
+
+	M.attack_log += text("\[[time_stamp()]\] <font color='red'>[attack_verb] [src.name] ([src.ckey]) for [damage] damage</font>")
+	src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [attack_verb] by [M.name] ([M.ckey]) for [damage] damage</font>")
 	if(!iscarbon(M))
 		LAssailant = null
 	else

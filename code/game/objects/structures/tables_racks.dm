@@ -241,6 +241,11 @@
 		else
 	return
 
+/obj/structure/table/kick_act()
+	..()
+
+	if(!usr) return
+	do_flip()
 
 /obj/structure/table/blob_act()
 	if(prob(75))

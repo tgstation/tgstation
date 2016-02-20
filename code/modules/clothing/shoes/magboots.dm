@@ -28,6 +28,9 @@
 				to_chat(user, "<span class='info'>There is a table in the way!</span>")
 				return
 
+			user.attack_log += "\[[time_stamp()]\] Magboot-stomped <b>[user] ([user.ckey])</b>"
+			victim.attack_log += "\[[time_stamp()]\] Was magboot-stomped by <b>[src] ([victim.ckey])</b>"
+
 			victim.visible_message("<span class='danger'>\The [user] crushes \the [victim] with the activated [src.name]!", "<span class='userdanger'>\The [user] crushes you with \his [src.name]!</span>")
 			victim.adjustBruteLoss(stomp_attack_power)
 			playsound(get_turf(victim), 'sound/effects/gib3.ogg', 100, 1)
