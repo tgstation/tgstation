@@ -71,9 +71,11 @@
 						stomach_contents.Remove(A)
 					src.gib()
 
-/mob/living/carbon/gib(animation = 1)
+/mob/living/carbon/gib(animation = 1, var/no_brain = 0)
 	death(1)
 	for(var/obj/item/organ/internal/I in internal_organs)
+		if(no_brain && istype(I, /obj/item/organ/internal/brain))
+			continue
 		if(I)
 			I.Remove(src)
 			I.loc = get_turf(src)
