@@ -185,7 +185,7 @@
 
 
 /obj/item/weapon/dice/d20/fate/proc/effect(var/mob/living/carbon/human/user,roll)
-	if(reusable = 0)
+	if(!reusable)
 		used = 1
 	visible_message("<span class='userdanger'>The die flare briefly.</span>")
 	switch(roll)
