@@ -13,6 +13,7 @@
 	name = "Portal Storm: Nar-sie"
 	typepath = /datum/round_event/portal_storm/portal_storm_narsie
 	weight = 0
+	max_occurrences = 0
 
 /datum/round_event/portal_storm/portal_storm_narsie
 	boss_types = list(/obj/singularity/narsie/large = 1)
