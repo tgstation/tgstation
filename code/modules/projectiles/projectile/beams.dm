@@ -18,10 +18,8 @@
 /obj/item/projectile/beam/laser/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(iscarbon(target))
-		if (prob(33))
-			var/mob/living/carbon/M = target
-			M.adjust_fire_stacks(0.5)
-			M.IgniteMob()
+		var/mob/living/carbon/M = target
+		M.IgniteMob()
 
 /obj/item/projectile/beam/practice
 	name = "practice laser"
