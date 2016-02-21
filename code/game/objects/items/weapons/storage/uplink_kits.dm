@@ -256,4 +256,5 @@
 	new /obj/item/weapon/storage/backpack/chameleon(src)
 	new /obj/item/device/radio/headset/chameleon(src)
 	new /obj/item/weapon/stamp/chameleon(src)
+	new /obj/item/device/pda/chameleon(src)
 	new /obj/item/weapon/gun/energy/laser/chameleon(src)

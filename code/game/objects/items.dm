@@ -163,11 +163,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return
 
 /obj/item/proc/chameleon_change(user)
-	var/obj/item/clothing/under/A
+	var/obj/item/A
 	A = input("Select [chameleon_name] to change it to", "Chameleon [chameleon_name]", A) in chameleon_list
 	if(!A)
 		return
-	if(istype(user, /mob/living/carbon))
+	if(iscarbon(user))
 		var/mob/living/C = user
 		if(C.stat != CONSCIOUS)
 			return

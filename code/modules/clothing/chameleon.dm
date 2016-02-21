@@ -72,6 +72,12 @@
 	burn_state = FIRE_PROOF
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
 
+	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+
 	chameleon_type = /obj/item/clothing/mask
 	chameleon_name = "Mask"
 	var/vchange = 1
@@ -120,3 +126,8 @@
 /obj/item/device/radio/headset/chameleon
 	chameleon_type = /obj/item/device/radio/headset
 	chameleon_name = "Headset"
+
+/obj/item/device/pda/chameleon
+	chameleon_blacklist = list(/obj/item/device/pda/ai)
+	chameleon_type = /obj/item/device/pda
+	chameleon_name = "PDA"

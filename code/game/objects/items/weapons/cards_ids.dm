@@ -132,6 +132,8 @@ update_label("John Doe", "Clowny")
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate)
 	origin_tech = "syndicate=3"
+	chameleon_type = /obj/item/weapon/card/id
+	chameleon_name = "ID Card"
 
 /obj/item/weapon/card/id/syndicate/afterattack(obj/item/weapon/O, mob/user, proximity)
 	if(!proximity)

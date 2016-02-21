@@ -654,7 +654,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
 	item = /obj/item/clothing/under/chameleon
-	cost = 2
+	cost = 4
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
@@ -665,7 +665,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
-	name = "Tactical No-Slip Brown Shoes"
+	name = "Tactical No-Slip Chameleon Shoes"
 	desc = "These allow you to run on wet floors. They do not work on heavily lubricated surfaces, but the \
 			manufacturer guarantees they're somehow better than the normal ones."
 	cost = 4
