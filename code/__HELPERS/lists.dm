@@ -33,7 +33,7 @@
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/L, index)
 	if(istype(L))
-		if(isnum(index))
+		if(isnum(index) && IsInteger(index))
 			if(IsInRange(index,1,L.len))
 				return L[index]
 		else if(index in L)
