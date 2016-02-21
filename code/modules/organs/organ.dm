@@ -19,6 +19,10 @@
 /datum/organ/proc/Remove(var/mob/living/carbon/human/H, var/mob/surgeon=null)
 	return 1
 
+/datum/organ/Destroy()
+	owner = null
+	..()
+
 /datum/organ/proc/process()
 	return 0
 
