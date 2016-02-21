@@ -1,0 +1,10 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Revenants now have an essence display on their HUD"
+  - rscadd: "Revenants retain the essence cap from the previous revenant when reforming, minus any perfect souls."
+  - rscadd: "Revenants can now toggle their night vision."
+  - tweak: "Revenant Defile has one tile more of range, but does less damage to windows."
+  - tweak: "Revenant Blight kills space vines and glowshrooms slightly more rapidly."
+  - tweak: "Delays before appearing when harvesting are slightly randomized."
+  - tweak: "Revenant fluff objectives have been changed to be slightly more interesting."
