@@ -708,6 +708,7 @@ var/next_mob_id = 0
 		if(layer == MOB_LAYER - 0.2)
 			layer = initial(layer)
 	update_transform()
+	update_action_buttons_icon()
 	lying_prev = lying
 	return canmove
 

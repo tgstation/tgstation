@@ -70,35 +70,40 @@
 	update_icon()
 
 /obj/item/weapon/defibrillator/ui_action_click()
-	if(usr.get_item_by_slot(slot_back) == src)
-		toggle_paddles()
-	else
-		usr << "<span class='warning'>Put the defibrillator on your back first!</span>"
-	return
+	toggle_paddles()
 
 /obj/item/weapon/defibrillator/attack_hand(mob/user)
-	if(src.loc == user)
-		ui_action_click()
+	if(loc == user)
+		if(slot_flags == SLOT_BACK)
+			if(user.get_item_by_slot(slot_back) == src)
+				ui_action_click()
+			else
+				user << "<span class='warning'>Put the defibrillator on your back first!</span>"
+
+		else if(slot_flags == SLOT_BELT)
+			if(user.get_item_by_slot(slot_belt) == src)
+				ui_action_click()
+			else
+				user << "<span class='warning'>Strap the defibrillator's belt on first!</span>"
 		return
 	..()
 
 /obj/item/weapon/defibrillator/MouseDrop(obj/over_object)
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/H = src.loc
+	if(ismob(src.loc))
+		var/mob/M = src.loc
 		switch(over_object.name)
 			if("r_hand")
-				if(H.r_hand)
+				if(M.r_hand)
 					return
-				if(!H.unEquip(src))
+				if(!M.unEquip(src))
 					return
-				H.put_in_r_hand(src)
+				M.put_in_r_hand(src)
 			if("l_hand")
-				if(H.l_hand)
+				if(M.l_hand)
 					return
-				if(!H.unEquip(src))
+				if(!M.unEquip(src))
 					return
-				H.put_in_l_hand(src)
-	return
+				M.put_in_l_hand(src)
 
 /obj/item/weapon/defibrillator/attackby(obj/item/weapon/W, mob/user, params)
 	if(W == paddles)
@@ -172,15 +177,21 @@
 		remove_paddles(user)
 
 	update_icon()
-	return
+	if(action && action.button)
+		action.button.UpdateIcon()
 
 /obj/item/weapon/defibrillator/proc/make_paddles()
 	return new /obj/item/weapon/twohanded/shockpaddles(src)
 
 /obj/item/weapon/defibrillator/equipped(mob/user, slot)
-	if(slot != slot_back)
+	..()
+	if((slot_flags == SLOT_BACK && slot != slot_back) || (slot_flags == SLOT_BELT && slot != slot_belt))
 		remove_paddles(user)
 		update_icon()
+
+/obj/item/weapon/defibrillator/item_action_slot_check(slot, mob/user)
+	if(slot == user.getBackSlot())
+		return 1
 
 /obj/item/weapon/defibrillator/proc/remove_paddles(mob/user)
 	var/mob/living/carbon/human/M = user
@@ -230,12 +241,9 @@
 	slot_flags = SLOT_BELT
 	origin_tech = "biotech=4"
 
-/obj/item/weapon/defibrillator/compact/ui_action_click()
-	if(usr.get_item_by_slot(slot_belt) == src)
-		toggle_paddles()
-	else
-		usr << "<span class='warning'>Strap the defibrillator's belt on first!</span>"
-	return
+/obj/item/weapon/defibrillator/compact/item_action_slot_check(slot, mob/user)
+	if(slot == user.getBeltSlot())
+		return 1
 
 /obj/item/weapon/defibrillator/compact/loaded/New()
 	..()
@@ -322,7 +330,7 @@
 	if(!req_defib)
 		return ..()
 	if(user)
-		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
+		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(istype(O))
 			O.unwield()
 		user << "<span class='notice'>The paddles snap back into the main unit.</span>"

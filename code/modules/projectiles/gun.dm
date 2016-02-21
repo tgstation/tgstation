@@ -272,6 +272,13 @@ obj/item/weapon/gun/proc/newshot()
 				update_icon()
 				update_gunlight(user)
 				verbs += /obj/item/weapon/gun/proc/toggle_gunlight
+				action_button_name = "Toggle Gunlight"
+				if(loc == user)
+					if(!action)
+						action = new
+						action.name = action_button_name
+						action.target = src
+					action.Grant(user)
 
 	if(istype(A, /obj/item/weapon/screwdriver))
 		if(F)
@@ -283,6 +290,9 @@ obj/item/weapon/gun/proc/newshot()
 				S.update_brightness(user)
 				update_icon()
 				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
+				action_button_name = null
+				if(action && loc == user)
+					action.Remove(user)
 
 	if(unique_rename)
 		if(istype(A, /obj/item/weapon/pen))
@@ -311,7 +321,6 @@ obj/item/weapon/gun/proc/newshot()
 
 /obj/item/weapon/gun/proc/update_gunlight(mob/user = null)
 	if(F)
-		action_button_name = "Toggle Gunlight"
 		if(F.on)
 			if(loc == user)
 				user.AddLuminosity(F.brightness_on)
@@ -324,14 +333,16 @@ obj/item/weapon/gun/proc/newshot()
 				SetLuminosity(0)
 		update_icon()
 	else
-		action_button_name = null
 		if(loc == user)
 			user.AddLuminosity(-5)
 		else if(isturf(loc))
 			SetLuminosity(0)
-		return
+	if(action && action.button)
+		action.button.UpdateIcon()
+
 
 /obj/item/weapon/gun/pickup(mob/user)
+	..()
 	if(F)
 		if(F.on)
 			user.AddLuminosity(F.brightness_on)
@@ -340,6 +351,7 @@ obj/item/weapon/gun/proc/newshot()
 		azoom.Grant(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
+	..()
 	if(F)
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
@@ -426,7 +438,7 @@ obj/item/weapon/gun/proc/newshot()
 
 /datum/action/toggle_scope_zoom
 	name = "Toggle Scope"
-	check_flags = AB_CHECK_ALIVE|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING
 	button_icon_state = "sniper_zoom"
 	var/obj/item/weapon/gun/gun = null
 
@@ -441,7 +453,6 @@ obj/item/weapon/gun/proc/newshot()
 /datum/action/toggle_scope_zoom/Remove(mob/living/L)
 	gun.zoom(L, FALSE)
 	..()
-
 
 
 /obj/item/weapon/gun/proc/zoom(mob/living/user, forced_zoom)

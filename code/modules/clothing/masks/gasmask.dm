@@ -111,11 +111,8 @@
 	burn_state = FLAMMABLE
 	action_button_name = "Adjust Mask"
 
-/obj/item/clothing/mask/gas/mime/ui_action_click()
+/obj/item/clothing/mask/gas/mime/attack_self(mob/user)
 	cycle_mask(usr)
-
-/obj/item/clothing/mask/gas/mime/AltClick(mob/user)
-	cycle_mask(user)
 
 /obj/item/clothing/mask/gas/mime/proc/cycle_mask(mob/user)
 	switch(icon_state)

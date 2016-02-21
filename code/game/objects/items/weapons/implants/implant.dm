@@ -2,7 +2,6 @@
 	name = "implant"
 	icon = 'icons/obj/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
-	action_button_is_hands_free = 1
 	origin_tech = "materials=2;biotech=3;programming=2"
 
 	var/activated = 1 //1 for implant types that can be activated, 0 for ones that are "always on" like loyalty implants
@@ -40,12 +39,16 @@
 		else
 			return 0
 
-
-	if(activated)
-		action_button_name = "Activate [src.name]"
 	src.loc = source
 	imp_in = source
 	implanted = 1
+	if(activated)
+		action_button_name = "Activate [src.name]"
+		if(!action)
+			action = new /datum/action/item_action/hands_free
+		action.name = action_button_name
+		action.target = src
+		action.Grant(source)
 	if(istype(source, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = source
 		H.sec_hud_set_implants()
@@ -59,7 +62,8 @@
 	src.loc = null
 	imp_in = null
 	implanted = 0
-
+	if(action)
+		action.Remove(source)
 	if(istype(source, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = source
 		H.sec_hud_set_implants()
@@ -76,6 +80,7 @@
 	return "No information available"
 
 /obj/item/weapon/implant/dropped(mob/user)
+	..()
 	. = 1
 	qdel(src)
-	return .
+

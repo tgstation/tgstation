@@ -25,21 +25,30 @@
 		user.AddLuminosity(brightness_on)
 	else
 		user.AddLuminosity(-brightness_on)
+	if(action && action.button)
+		action.button.UpdateIcon()
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/pickup(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(brightness_on)
 		SetLuminosity(0)
 
 /obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
 	if(suit)
 		suit.RemoveHelmet()
 
+/obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot)
+	if(slot == slot_head)
+		return 1
+
 /obj/item/clothing/head/helmet/space/hardsuit/equipped(mob/user, slot)
+	..()
 	if(slot != slot_head)
 		if(suit)
 			suit.RemoveHelmet()
@@ -75,13 +84,18 @@
 
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	..()
-	if(slot == slot_wear_suit && jetpack)
-		jetpack.cycle_action.Grant(user)
+	if(jetpack)
+		if(slot == slot_wear_suit)
+			jetpack.cycle_action.Grant(user)
 
 /obj/item/clothing/suit/space/hardsuit/dropped(mob/user)
 	..()
 	if(jetpack)
 		jetpack.cycle_action.Remove(user)
+
+/obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot)
+	if(slot == slot_wear_suit) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
+		return 1
 
 	//Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/engine

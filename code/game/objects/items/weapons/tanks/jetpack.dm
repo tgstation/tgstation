@@ -2,7 +2,7 @@
 	name = "Jetpack Mode"
 
 /datum/action/item_action/jetpack/cycle/Trigger()
-	if(!Checks())
+	if(!IsAvailable())
 		return
 
 	var/obj/item/weapon/tank/jetpack/J = target
@@ -11,19 +11,6 @@
 
 /datum/action/item_action/jetpack/cycle/suit
 	name = "Internal Jetpack Mode"
-
-/datum/action/item_action/jetpack/cycle/suit/New()
-	..()
-	check_flags &= ~AB_CHECK_INSIDE // The jetpack is inside the suit.
-
-/datum/action/item_action/jetpack/cycle/suit/CheckRemoval(mob/living/user)
-	return !(target.loc in user) // Check that the suit is on the user.
-
-/datum/action/item_action/jetpack/cycle/suit/IsAvailable()
-	var/mob/living/carbon/human/H = owner
-	if(!H.wear_suit)
-		return
-	return ..()
 
 /obj/item/weapon/tank/jetpack
 	name = "jetpack (empty)"

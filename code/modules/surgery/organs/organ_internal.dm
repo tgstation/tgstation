@@ -20,8 +20,11 @@
 	M.internal_organs |= src
 	loc = null
 	if(organ_action_name)
-		action_button_name = organ_action_name
-
+		if(!action)
+			action = new/datum/action/item_action/organ_action
+			action.name = organ_action_name
+			action.target = src
+		action.Grant(src)
 
 /obj/item/organ/internal/proc/Remove(mob/living/carbon/M, special = 0)
 	owner = null
@@ -29,9 +32,9 @@
 		M.internal_organs -= src
 		if(vital && !special)
 			M.death()
-
 	if(organ_action_name)
-		action_button_name = null
+		if(action)
+			action.Remove(M)
 
 /obj/item/organ/internal/proc/on_find(mob/living/finder)
 	return

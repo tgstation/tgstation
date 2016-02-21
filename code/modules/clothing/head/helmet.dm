@@ -229,6 +229,13 @@
 				update_icon()
 				update_helmlight(user)
 				verbs += /obj/item/clothing/head/helmet/proc/toggle_helmlight
+				action_button_name = "Toggle Helmetlight"
+				if(loc == user)
+					if(!action)
+						action = new
+						action.name = action_button_name
+						action.target = src
+					action.Grant(user)
 		return
 
 	if(istype(A, /obj/item/weapon/screwdriver))
@@ -242,10 +249,12 @@
 				update_icon()
 				usr.update_inv_head()
 				verbs -= /obj/item/clothing/head/helmet/proc/toggle_helmlight
+				action_button_name = null
+				if(action && loc == user)
+					action.Remove(user)
 			return
 
 	..()
-	return
 
 /obj/item/clothing/head/helmet/proc/toggle_helmlight()
 	set name = "Toggle Helmetlight"
@@ -269,7 +278,6 @@
 
 /obj/item/clothing/head/helmet/proc/update_helmlight(mob/user = null)
 	if(F)
-		action_button_name = "Toggle Helmetlight"
 		if(F.on)
 			if(loc == user)
 				user.AddLuminosity(F.brightness_on)
@@ -281,15 +289,18 @@
 			else if(isturf(loc))
 				SetLuminosity(0)
 		update_icon()
+
 	else
-		action_button_name = null
 		if(loc == user)
 			user.AddLuminosity(-5)
 		else if(isturf(loc))
 			SetLuminosity(0)
-		return
+		action_button_name = null
+	if(action && action.button)
+		action.button.UpdateIcon()
 
 /obj/item/clothing/head/helmet/pickup(mob/user)
+	..()
 	if(F)
 		if(F.on)
 			user.AddLuminosity(F.brightness_on)
@@ -297,6 +308,7 @@
 
 
 /obj/item/clothing/head/helmet/dropped(mob/user)
+	..()
 	if(F)
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)

@@ -24,13 +24,17 @@
 		turn_on(user)
 	else
 		turn_off(user)
+	if(action && action.button)
+		action.button.UpdateIcon()
 
 /obj/item/clothing/head/hardhat/pickup(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(brightness_on)
 		SetLuminosity(0)
 
 /obj/item/clothing/head/hardhat/dropped(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)

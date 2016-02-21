@@ -84,7 +84,7 @@
 	flash_protect = -1
 	unacidable = 1
 	action_button_name = "Shift Nerves"
-	action_button_is_hands_free = 1
+	action_button_type = /datum/action/item_action/hands_free
 	var/max_darkness_view = 8
 	var/min_darkness_view = 0
 	flags = ABSTRACT | NODROP

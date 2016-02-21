@@ -87,6 +87,7 @@
 	return ..()
 
 /obj/item/weapon/twohanded/dropped(mob/user)
+	..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
@@ -411,6 +412,8 @@
 	if(src == user.get_active_hand()) //update inhands
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()
+	if(action && action.button)
+		action.button.UpdateIcon()
 
 
 //GREY TIDE

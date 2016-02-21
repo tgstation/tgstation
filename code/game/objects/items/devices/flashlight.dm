@@ -41,6 +41,8 @@
 		return 0
 	on = !on
 	update_brightness(user)
+	if(action && action.button)
+		action.button.UpdateIcon()
 	return 1
 
 
@@ -84,12 +86,14 @@
 
 
 /obj/item/device/flashlight/pickup(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(brightness_on)
 		SetLuminosity(0)
 
 
 /obj/item/device/flashlight/dropped(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)

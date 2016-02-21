@@ -134,6 +134,7 @@
 	pump()
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/dropped()
+	..()
 	guns_left = 0
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)

@@ -7,10 +7,6 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/spell_action/alien
 
-/datum/action/spell_action/alien/UpdateName()
-	var/obj/effect/proc_holder/alien/ab = target
-	return ab.name
-
 /datum/action/spell_action/alien/IsAvailable()
 	if(!target)
 		return 0
@@ -22,16 +18,6 @@ Doesn't work on other aliens/AI.*/
 		if(owner)
 			return ab.cost_check(ab.check_turf,owner,1)
 	return 1
-
-/datum/action/spell_action/alien/CheckRemoval()
-	if(!iscarbon(owner))
-		return 1
-
-	var/mob/living/carbon/C = owner
-	if(target.loc && !(target.loc in C.internal_organs))
-		return 1
-
-	return 0
 
 
 /obj/effect/proc_holder/alien
@@ -319,6 +305,11 @@ Doesn't work on other aliens/AI.*/
 	if(!vessel) return 0
 	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
 	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
+	for(var/X in abilities)
+		var/obj/effect/proc_holder/alien/APH = X
+		if(APH.action && APH.action.button)
+			var/obj/screen/movable/action_button/AB = APH.action.button
+			AB.UpdateIcon()
 	return 1
 
 /mob/living/carbon/alien/adjustPlasma(amount)

@@ -35,8 +35,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	//If this is set, The item will make an action button on the player's HUD when picked up.
 	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
-	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
-	var/action_button_internal = 0 //If 1, bypass the inside check action buttons test for
+	var/action_button_type = null //if we want a special type of item action, not the standard one.
 	var/datum/action/item_action/action = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
@@ -363,11 +362,13 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return
 
 /obj/item/proc/dropped(mob/user)
-	return
+	if(action)
+		action.Remove(user)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
 	return
+
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
@@ -387,7 +388,20 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
-	return
+	if(action_button_name)
+		if(!action)
+			if(action_button_type)
+				action = new action_button_type
+			else
+				action = new/datum/action/item_action
+			action.name = action_button_name
+			action.target = src
+		if(item_action_slot_check(slot, user)) //some items only give their action button when in a specific slot.
+			action.Grant(user)
+
+//sometimes we only want to grant the item's action if it's equipped in a specific slot.
+obj/item/proc/item_action_slot_check(slot, mob/user)
+	return 1
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.

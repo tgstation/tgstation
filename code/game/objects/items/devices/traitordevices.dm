@@ -168,6 +168,10 @@ effective or pretty fucking useless.
 			Deactivate()
 	return
 
+/obj/item/device/shadowcloak/item_action_slot_check(slot, mob/user)
+	if(slot == slot_belt)
+		return 1
+
 /obj/item/device/shadowcloak/proc/Activate(mob/living/carbon/human/user)
 	if(!user)
 		return
@@ -186,6 +190,7 @@ effective or pretty fucking useless.
 	user = null
 
 /obj/item/device/shadowcloak/dropped(mob/user)
+	..()
 	if(user && user.get_item_by_slot(slot_belt) != src)
 		Deactivate()
 

@@ -67,7 +67,8 @@
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_icon()
-	return
+	if(action && action.button)
+		action.button.UpdateIcon()
 
 /obj/item/weapon/gun/projectile/automatic/can_shoot()
 	return get_ammo()

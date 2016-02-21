@@ -17,6 +17,7 @@
 	erased_minds += M
 
 /obj/item/weapon/chrono_eraser/dropped()
+	..()
 	if(PA)
 		qdel(PA)
 
@@ -33,7 +34,9 @@
 			PA = new(src)
 			user.put_in_hands(PA)
 
-
+/obj/item/weapon/chrono_eraser/item_action_slot_check(slot, mob/user)
+	if(slot == slot_back)
+		return 1
 
 /obj/item/weapon/gun/energy/chrono_gun
 	name = "T.E.D. Projection Apparatus"
@@ -59,6 +62,7 @@
 		qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/dropped()
+	..()
 	qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/update_icon()

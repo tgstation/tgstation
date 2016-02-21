@@ -516,6 +516,8 @@ BLIND     // can't see anything
 	if(istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
 		C.head_update(src, forced = 1)
+	if(action && action.button)
+		action.button.UpdateIcon()
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))

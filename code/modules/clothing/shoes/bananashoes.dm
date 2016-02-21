@@ -72,3 +72,5 @@
 	else
 		icon_state = "clown_prototype_off"
 	usr.update_inv_shoes()
+	if(action && action.button)
+		action.button.UpdateIcon()

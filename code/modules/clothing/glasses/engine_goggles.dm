@@ -10,10 +10,7 @@
 	var/invis_objects = list()
 	var/range = 1
 
-/obj/item/clothing/glasses/meson/engine/attack_self()
-	ui_action_click()
-
-/obj/item/clothing/glasses/meson/engine/ui_action_click()
+/obj/item/clothing/glasses/meson/engine/attack_self(mob/user)
 	mode = !mode
 
 	if(mode)
@@ -21,7 +18,7 @@
 		vision_flags = 0
 		darkness_view = 2
 		invis_view = SEE_INVISIBLE_LIVING
-		loc << "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>"
+		user << "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>"
 	else
 		SSobj.processing.Remove(src)
 		vision_flags = SEE_TURFS
@@ -30,11 +27,14 @@
 		loc << "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>"
 		invis_update()
 
-	if(istype(loc,/mob/living/carbon))
-		var/mob/living/carbon/C = loc
-		C.update_sight()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.glasses == src)
+			H.update_sight()
 
 	update_icon()
+	if(action && action.button)
+		action.button.UpdateIcon()
 
 /obj/item/clothing/glasses/meson/engine/process()
 	if(!mode)
@@ -115,18 +115,20 @@
 		if(user.glasses == src)
 			user.update_inv_glasses()
 
-/obj/item/clothing/glasses/meson/engine/tray/ui_action_click()
+/obj/item/clothing/glasses/meson/engine/tray/attack_self(mob/user)
 	on = !on
 
 	if(on)
 		SSobj.processing |= src
-		loc << "<span class='notice'>You turn the goggles on.</span>"
+		user << "<span class='notice'>You turn the goggles on.</span>"
 	else
 		SSobj.processing.Remove(src)
-		loc << "<span class='notice'>You turn the goggles off.</span>"
+		user << "<span class='notice'>You turn the goggles off.</span>"
 		invis_update()
 
 	update_icon()
+	if(action && action.button)
+		action.button.UpdateIcon()
 
 /obj/item/clothing/glasses/meson/engine/tray/t_ray_on()
 	return on && ..()

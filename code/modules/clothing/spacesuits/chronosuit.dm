@@ -331,16 +331,13 @@
 /datum/action/innate/chrono_teleport
 	name = "Teleport Now"
 	button_icon_state = "chrono_phase"
-	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_CONSCIOUS //|AB_CHECK_INSIDE
 	var/obj/item/clothing/suit/space/chronos/chronosuit = null
 
 /datum/action/innate/chrono_teleport/IsAvailable()
-	return (!CheckRemoval(owner) && !chronosuit.teleporting)
+	return (chronosuit && chronosuit.activated && chronosuit.camera && !chronosuit.teleporting)
 
 /datum/action/innate/chrono_teleport/Activate()
 	if(IsAvailable())
 		if(chronosuit.camera)
 			chronosuit.chronowalk(chronosuit.camera)
-
-/datum/action/innate/chrono_teleport/CheckRemoval()
-	return (..() && !(chronosuit && chronosuit.activated && chronosuit.camera))

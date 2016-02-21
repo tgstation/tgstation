@@ -1,8 +1,7 @@
 #define AB_CHECK_RESTRAINED 1
 #define AB_CHECK_STUNNED 2
 #define AB_CHECK_LYING 4
-#define AB_CHECK_ALIVE 8
-#define AB_CHECK_INSIDE 16
+#define AB_CHECK_CONSCIOUS 8
 
 
 /datum/action
@@ -31,6 +30,13 @@
 		Remove(owner)
 	owner = T
 	T.actions += src
+
+	if(!button)
+		button = new
+		button.linked_action = src
+		button.name = UpdateName()
+		if(T.client)
+			T.client.screen += button
 	T.update_action_buttons()
 
 /datum/action/proc/Remove(mob/living/T)
@@ -44,36 +50,27 @@
 	owner = null
 
 /datum/action/proc/Trigger()
-	if(!Checks())
+	if(!IsAvailable())
 		return 0
 	return 1
 
 /datum/action/proc/Process()
 	return
 
-/datum/action/proc/CheckRemoval(mob/living/user) // 1 if action is no longer valid for this mob and should be removed
-	return 0
-
 /datum/action/proc/IsAvailable()
-	return Checks()
-
-/datum/action/proc/Checks()// returns 1 if all checks pass
 	if(!owner)
 		return 0
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())
 			return 0
 	if(check_flags & AB_CHECK_STUNNED)
-		if(owner.stunned)
+		if(owner.stunned || owner.weakened)
 			return 0
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying)
 			return 0
-	if(check_flags & AB_CHECK_ALIVE)
+	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
-			return 0
-	if(check_flags & AB_CHECK_INSIDE)
-		if(!(target in owner) && !(target.action_button_internal))
 			return 0
 	return 1
 
@@ -90,8 +87,8 @@
 		current_button.overlays += img
 
 /obj/screen/movable/action_button
-	var/datum/action/owner
-	screen_loc = "WEST,NORTH"
+	var/datum/action/linked_action
+	screen_loc = null
 
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
@@ -100,18 +97,18 @@
 		return 1
 	if(usr.next_move >= world.time) // Is this needed ?
 		return
-	owner.Trigger()
+	linked_action.Trigger()
 	return 1
 
 /obj/screen/movable/action_button/proc/UpdateIcon()
-	if(!owner)
+	if(!linked_action)
 		return
-	icon = owner.button_icon
-	icon_state = owner.background_icon_state
+	icon = linked_action.button_icon
+	icon_state = linked_action.background_icon_state
 
-	owner.ApplyIcon(src)
+	linked_action.ApplyIcon(src)
 
-	if(!owner.IsAvailable())
+	if(!linked_action.IsAvailable())
 		color = rgb(128,0,0,128)
 	else
 		color = rgb(255,255,255,255)
@@ -163,7 +160,11 @@
 
 
 //This is the proc used to update all the action buttons. Properly defined in /mob/living/
-/mob/proc/update_action_buttons()
+/mob/proc/update_action_buttons(reload_screen)
+	return
+
+//used to update the buttons icon.
+/mob/proc/update_action_buttons_icon()
 	return
 
 #define AB_MAX_COLUMNS 10
@@ -191,7 +192,7 @@
 
 //Presets for item actions
 /datum/action/item_action
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_ALIVE|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 
 /datum/action/item_action/Trigger()
 	if(!..())
@@ -200,9 +201,6 @@
 		var/obj/item/item = target
 		item.ui_action_click()
 	return 1
-
-/datum/action/item_action/CheckRemoval(mob/living/user)
-	return !(target in user)
 
 /datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
 	current_button.overlays.Cut()
@@ -214,17 +212,10 @@
 		I.layer = old
 
 /datum/action/item_action/hands_free
-	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/item_action/organ_action
-	check_flags = AB_CHECK_ALIVE
-
-/datum/action/item_action/organ_action/CheckRemoval(mob/living/carbon/user)
-	if(!iscarbon(user))
-		return 1
-	if(target in user.internal_organs)
-		return 0
-	return 1
+	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/item_action/organ_action/IsAvailable()
 	var/obj/item/organ/internal/I = target
@@ -246,8 +237,7 @@
 		return 1
 
 /datum/action/spell_action/UpdateName()
-	var/obj/effect/proc_holder/spell/spell = target
-	return spell.name
+	return target.name
 
 /datum/action/spell_action/IsAvailable()
 	if(!target)
@@ -260,12 +250,6 @@
 		if(owner)
 			return spell.can_cast(owner)
 	return 1
-
-/datum/action/spell_action/CheckRemoval()
-	if(owner.mind)
-		if(target in owner.mind.spell_list)
-			return 0
-	return !(target in owner.mob_spell_list)
 
 //Preset for general and toggled actions
 /datum/action/innate
@@ -304,7 +288,7 @@
 /datum/action/innate/scan_mode
 	name = "Toggle Research Scanner"
 	button_icon_state = "scan_mode"
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_ALIVE
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 	var/devices = 0 //How may enabled scanners the mob has
 
 /datum/action/innate/scan_mode/Activate()
@@ -319,11 +303,6 @@
 
 /datum/action/innate/scan_mode/Grant(mob/living/T)
 	..(T)
-
-/datum/action/innate/scan_mode/CheckRemoval(mob/living/user)
-	if(devices)
-		return 0
-	return 1
 
 /datum/action/innate/scan_mode/Remove(mob/living/T)
 	owner.research_scanner = 0

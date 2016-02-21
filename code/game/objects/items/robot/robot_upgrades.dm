@@ -236,7 +236,11 @@
 	cyborg = R
 	icon_state = "selfrepair_off"
 	action_button_name = "Toggle Self-Repair"
-
+	if(!action)
+		action = new
+		action.name = action_button_name
+		action.target = src
+		action.Grant(R)
 	return 1
 
 /obj/item/borg/upgrade/selfrepair/ui_action_click()
@@ -252,6 +256,8 @@
 /obj/item/borg/upgrade/selfrepair/update_icon()
 	if(cyborg)
 		icon_state = "selfrepair_[on ? "on" : "off"]"
+		if(action && action.button)
+			action.button.UpdateIcon()
 	else
 		icon_state = "cyborg_upgrade5"
 

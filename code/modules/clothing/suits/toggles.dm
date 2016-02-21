@@ -20,6 +20,10 @@
 /obj/item/clothing/suit/hooded/ui_action_click()
 	ToggleHood()
 
+/obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user)
+	if(slot == slot_wear_suit)
+		return 1
+
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
 	if(slot != slot_wear_suit)
 		RemoveHood()
@@ -33,8 +37,11 @@
 		H.unEquip(hood, 1)
 		H.update_inv_wear_suit()
 	hood.loc = src
+	if(action && action.button)
+		action.button.UpdateIcon()
 
 /obj/item/clothing/suit/hooded/dropped()
+	..()
 	RemoveHood()
 
 /obj/item/clothing/suit/hooded/proc/ToggleHood()
@@ -52,6 +59,8 @@
 				suittoggled = 1
 				src.icon_state = "[initial(icon_state)]_t"
 				H.update_inv_wear_suit()
+				if(action && action.button)
+					action.button.UpdateIcon()
 	else
 		RemoveHood()
 
@@ -84,6 +93,8 @@
 		src.icon_state = "[initial(icon_state)]_t"
 		src.suittoggled = 1
 	usr.update_inv_wear_suit()
+	if(action && action.button)
+		action.button.UpdateIcon()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
 	..()
@@ -140,6 +151,7 @@
 	helmet.loc = src
 
 /obj/item/clothing/suit/space/hardsuit/dropped()
+	..()
 	RemoveHelmet()
 
 /obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()

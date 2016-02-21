@@ -11,6 +11,7 @@
 		H.add_hud_to(user)
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
+	..()
 	if(hud_type && istype(user) && user.glasses == src)
 		var/datum/atom_hud/H = huds[hud_type]
 		H.remove_hud_from(user)

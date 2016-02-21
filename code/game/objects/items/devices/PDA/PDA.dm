@@ -210,11 +210,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
  *	The Actual PDA
  */
 /obj/item/device/pda/pickup(mob/user)
+	..()
 	if(fon)
 		SetLuminosity(0)
 		user.AddLuminosity(f_lum)
 
 /obj/item/device/pda/dropped(mob/user)
+	..()
 	if(fon)
 		user.AddLuminosity(-f_lum)
 		SetLuminosity(f_lum)
