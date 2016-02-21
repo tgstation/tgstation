@@ -130,8 +130,6 @@
 			return
 
 		var/obj/item/stack/sheet/S = W
-		switch(S.type)
-
 		if(istype(S,/obj/item/stack/sheet/metal))
 			if(state == GIRDER_DISPLACED)
 				if(S.get_amount() < 2)
