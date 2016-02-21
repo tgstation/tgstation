@@ -62,6 +62,7 @@
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	w_class = 4.0
 	sharpness = 1.2
+	force = 10
 	slot_flags = SLOT_BACK
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	flags = FPRINT | TWOHANDABLE
@@ -69,7 +70,7 @@
 /obj/item/weapon/fireaxe/update_wield(mob/user)
 	..()
 	item_state = "fireaxe[wielded ? 1 : 0]"
-	force = wielded ? 40 : 10
+	force = wielded ? 40 : initial(force)
 	if(user)
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()
