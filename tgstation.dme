@@ -13,6 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
+#include "tgstation.2.1.3.dmm"
 #include "_maps\__MAP_DEFINES.dm"
 #include "_maps\tgstation2.dm"
 #include "code\_compile_options.dm"
@@ -904,6 +905,7 @@
 #include "code\modules\client\preferences.dm"
 #include "code\modules\client\preferences_savefile.dm"
 #include "code\modules\client\preferences_toggles.dm"
+#include "code\modules\clothing\chameleon.dm"
 #include "code\modules\clothing\clothing.dm"
 #include "code\modules\clothing\glasses\engine_goggles.dm"
 #include "code\modules\clothing\glasses\glasses.dm"
@@ -943,7 +945,6 @@
 #include "code\modules\clothing\suits\toggles.dm"
 #include "code\modules\clothing\suits\utility.dm"
 #include "code\modules\clothing\suits\wiz_robe.dm"
-#include "code\modules\clothing\under\chameleon.dm"
 #include "code\modules\clothing\under\color.dm"
 #include "code\modules\clothing\under\miscellaneous.dm"
 #include "code\modules\clothing\under\pants.dm"

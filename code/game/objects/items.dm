@@ -122,6 +122,63 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			slot_drone_storage\
 		)
 
+
+	var/list/chameleon_blacklist = list()
+	var/list/chameleon_list = list()
+	var/chameleon_type = null
+	var/chameleon_name = "Item"
+	var/datum/action/item_action/chameleon/change/chameleon_change_action
+	var/chameleon_action_type = /datum/action/item_action/chameleon/change
+
+/datum/action/item_action/chameleon/change
+	name = "Chameleon Change"
+
+/datum/action/item_action/chameleon/change/Trigger()
+	if(!Checks())
+		return
+
+	var/obj/item/I = target
+	I.chameleon_change(owner)
+	return 1
+
+/obj/item/New()
+	..()
+	if(chameleon_type)
+		chameleon_change_action = new chameleon_action_type(src)
+		chameleon_change_action.name = "Change [chameleon_name] Appearance"
+		chameleon_blacklist += type
+		for(var/U in typesof(chameleon_type)-chameleon_blacklist)
+			var/obj/item/V = new U
+			chameleon_list += V
+
+/obj/item/pickup(mob/user)
+	..()
+	if(chameleon_type)
+		chameleon_change_action.Grant(user)
+
+/obj/item/dropped(mob/user)
+	..()
+	if(chameleon_type)
+		chameleon_change_action.Remove(user)
+
+/obj/item/proc/chameleon_change(user)
+	var/obj/item/clothing/under/A
+	A = input("Select [chameleon_name] to change it to", "Chameleon [chameleon_name]", A) in chameleon_list
+	if(!A)
+		return
+	if(istype(user, /mob/living/carbon))
+		var/mob/living/C = user
+		if(C.stat != CONSCIOUS)
+			return
+
+		desc = A.desc
+		name = A.name
+		icon_state = A.icon_state
+		item_state = A.item_state
+		icon = A.icon
+
+		C.update_icons()	//so our overlays update.
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0

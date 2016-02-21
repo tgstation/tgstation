@@ -650,27 +650,17 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_tools
 	category = "Stealth and Camouflage Items"
 
-/datum/uplink_item/stealthy_tools/chameleon_jumpsuit
-	name = "Chameleon Jumpsuit"
-	desc = "A jumpsuit used to imitate the uniforms of Nanotrasen crewmembers. It can change form at any time \
-			to resemble another jumpsuit. May react unpredictably to electromagnetic disruptions."
+/datum/uplink_item/stealthy_tool/chameleon
+	name = "Chameleon Kit"
+	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
 	item = /obj/item/clothing/under/chameleon
 	cost = 2
 
-/datum/uplink_item/stealthy_tools/chameleon_stamp
-	name = "Chameleon Stamp"
-	desc = "A stamp that can be activated to imitate an official Nanotrasen Stamp. The disguised stamp will \
-			work exactly like the real stamp and will allow you to forge false documents to gain access or equipment; \
-			it can also be used in a washing machine to forge clothing."
-	item = /obj/item/weapon/stamp/chameleon
-	cost = 1
-	surplus = 35
-
 /datum/uplink_item/stealthy_tools/syndigaloshes
-	name = "No-Slip Brown Shoes"
+	name = "No-Slip Chameleon Shoes"
 	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
 			They do not work on heavily lubricated surfaces."
-	item = /obj/item/clothing/shoes/sneakers/syndigaloshes
+	item = /obj/item/clothing/shoes/chameleon
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
 
@@ -690,12 +680,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			with these cards."
 	item = /obj/item/weapon/card/id/syndicate
 	cost = 2
-
-/datum/uplink_item/stealthy_tools/voice_changer
-	name = "Voice Changer"
-	desc = "A conspicuous gas mask that mimics the voice named on your identification card. It can be toggled on and off."
-	item = /obj/item/clothing/mask/gas/voice
-	cost = 3
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon Projector"
@@ -737,7 +721,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	surplus = 30
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-	
+
 /datum/uplink_item/stealthy_tools/emplight
 	name = "EMP Flashlight"
 	desc = "A small, self-charging, short-ranged EMP device disguised as a flashlight. \

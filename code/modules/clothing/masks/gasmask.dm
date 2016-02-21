@@ -53,20 +53,6 @@
 	icon_state = "syndicate"
 	strip_delay = 60
 
-/obj/item/clothing/mask/gas/voice
-	name = "gas mask"
-	//desc = "A face-covering mask that can be connected to an air supply. It seems to house some odd electronics."
-	var/mode = 0// 0==Scouter | 1==Night Vision | 2==Thermal | 3==Meson
-	var/voice = "Unknown"
-	var/vchange = 0//This didn't do anything before. It now checks if the mask has special functions/N
-	origin_tech = "syndicate=4"
-	action_button_name = "Toggle mask"
-
-/obj/item/clothing/mask/gas/voice/attack_self(mob/user)
-	vchange = !vchange
-	user << "<span class='notice'>The voice changer is now [vchange ? "on" : "off"]!</span>"
-
-
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
