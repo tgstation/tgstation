@@ -132,7 +132,7 @@
 		var/obj/item/stack/sheet/S = W
 		switch(S.type)
 
-			if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
+			if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg, /obj/item/stack/sheet/metal/fifty)
 				if(state == GIRDER_DISPLACED)
 					if(S.get_amount() < 2)
 						user << "<span class='warning'>You need two sheets of metal to create a false wall!</span>"
