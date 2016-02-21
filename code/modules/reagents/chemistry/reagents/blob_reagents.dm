@@ -3,12 +3,15 @@
 	name = "Unknown"
 	description = "shouldn't exist and you should adminhelp immediately."
 	color = "#FFFFFF"
+	var/complementary_color = "#000000" //a color that's complementary to the normal blob color
 	var/shortdesc = null //just damage and on_mob effects, doesn't include special, blob-tile only effects
 	var/blobbernaut_message = "slams" //blobbernaut attack verb
 	var/message = "The blob strikes you" //message sent to any mob hit by the blob
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
 
 /datum/reagent/blob/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	if(istype(M, /mob/living/simple_animal/hostile/blob))
+		return 0 //the blob mobs do not cause effects when hitting themselves or other blob mobs
 	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.
 
 /datum/reagent/blob/proc/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause) //when the blob takes damage, do this
@@ -26,6 +29,7 @@
 	id = "ripping_tendrils"
 	description = "will do medium brute and stamina damage."
 	color = "#991010"
+	complementary_color = "#109999"
 	blobbernaut_message = "rips"
 	message_living = ", and you feel your skin ripping and tearing off"
 
@@ -44,6 +48,7 @@
 	description = "will do low toxin damage and produce fragile spores when killed or on expanding."
 	shortdesc = "will do low toxin damage."
 	color = "#E88D5D"
+	complementary_color = "#5DB8E8"
 	message_living = ", and you feel sick"
 
 /datum/reagent/blob/sporing_pods/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
@@ -73,6 +78,7 @@
 	description = "will do medium brute damage and replicate when damaged."
 	shortdesc = "will do medium brute damage."
 	color = "#7B5A57"
+	complementary_color = "#57787B"
 
 /datum/reagent/blob/replicating_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
@@ -98,6 +104,7 @@
 	description = "will do low burn and high stamina damage, and react to stamina damage."
 	shortdesc = "will do low burn and high stamina damage."
 	color = "#EFD65A"
+	complementary_color = "#5A73EF"
 	blobbernaut_message = "shocks"
 	message_living = ", and you feel a strong tingling sensation"
 
@@ -119,6 +126,7 @@
 	id = "boiling_oil"
 	description = "will do medium burn damage and set targets on fire."
 	color = "#B68D00"
+	complementary_color = "#0029B6"
 	blobbernaut_message = "splashes"
 	message = "The blob splashes you with burning oil"
 	message_living = ", and you feel your skin char and melt"
@@ -137,6 +145,7 @@
 	id = "regenerative_materia"
 	description = "will do low toxin damage and cause targets to believe they are fully healed."
 	color = "#C8A5DC"
+	complementary_color = "#B9DCA5"
 	message_living = ", and you feel <i>alive</i>"
 
 /datum/reagent/blob/regenerative_materia/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
@@ -164,6 +173,7 @@
 	id = "hallucinogenic_nectar"
 	description = "will do low toxin damage, vivid hallucinations, and inject targets with toxins."
 	color = "#CD7794"
+	complementary_color = "#77CDB0"
 	blobbernaut_message = "splashes"
 	message = "The blob splashes you with sticky nectar"
 	message_living = ", and you feel really good"
@@ -183,6 +193,7 @@
 	id = "zombifying_feelers"
 	description = "will cause medium toxin damage and turn sleeping targets into blob zombies."
 	color = "#828264"
+	complementary_color = "#646482"
 	message_living = ", and you feel tired"
 
 /datum/reagent/blob/zombifying_feelers/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
@@ -202,6 +213,7 @@
 	id = "envenomed_filaments"
 	description = "will cause medium toxin and stamina damage, and inject targets with toxins."
 	color = "#9ACD32"
+	complementary_color = "#6532CD"
 	message_living = ", and you feel sick and nauseated"
 
 /datum/reagent/blob/envenomed_filaments/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
@@ -218,6 +230,7 @@
 	id = "cyclonic_grid"
 	description = "will cause high oxygen damage and randomly throw targets to or from it."
 	color = "#9BCD9B"
+	complementary_color = "#CD9BCD"
 	message = "The blob blasts you with a gust of air"
 	message_living = ", and you can't catch your breath"
 
@@ -233,6 +246,7 @@
 	id = "lexorin_jelly"
 	description = "will cause low brute and high oxygen damage, and cause targets to be unable to breathe."
 	color = "#00E5B1"
+	complementary_color = "#E50034"
 	message_living = ", and your lungs feel heavy and weak"
 
 /datum/reagent/blob/lexorin_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
@@ -249,12 +263,13 @@
 	description = "will do brute damage in an area around targets and is resistant to explosions."
 	shortdesc = "will do brute damage in an area around targets."
 	color = "#8B2500"
+	complementary_color = "#00668B"
 	blobbernaut_message = "blasts"
 	message = "The blob blasts you"
 
 /datum/reagent/blob/explosive_lattice/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	if(reac_volume >= 15) //if it's not a spore cloud, bad time incoming
-		reac_volume = ..()
+	reac_volume = ..()
+	if(reac_volume >= 10) //if it's not a spore cloud, bad time incoming
 		var/obj/effect/overlay/temp/explosion/E = PoolOrNew(/obj/effect/overlay/temp/explosion, get_turf(M))
 		E.alpha = 150
 		for(var/mob/living/L in range(M, 1))
@@ -264,7 +279,6 @@
 		if(M)
 			M.apply_damage(0.1*reac_volume, BRUTE)
 	else
-		reac_volume = ..()
 		M.apply_damage(0.8*reac_volume, BRUTE)
 
 /datum/reagent/blob/explosive_lattice/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
@@ -279,6 +293,7 @@
 	description = "will do high brute damage and react to brute damage."
 	shortdesc = "will do high brute damage."
 	color = "#FFA500"
+	complementary_color = "#005AFF"
 	blobbernaut_message = "pummels"
 	message = "The blob pummels you"
 
@@ -301,6 +316,7 @@
 	id = "cryogenic_liquid"
 	description = "will do low burn and stamina damage, and cause targets to freeze."
 	color = "#8BA6E9"
+	complementary_color = "#E9CE8B"
 	blobbernaut_message = "splashes"
 	message = "The blob splashes you with an icy liquid"
 	message_living = ", and you feel cold and tired"
@@ -321,6 +337,7 @@
 	description = "will do low burn damage and EMP targets, but is somewhat fragile."
 	shortdesc = "will do low burn damage and EMP targets."
 	color = "#83ECEC"
+	complementary_color = "#EC8383"
 	blobbernaut_message = "lashes"
 	message = "The blob lashes you"
 	message_living = ", and you hear a faint buzzing"
@@ -345,19 +362,17 @@
 	description = "will do brute damage for each nearby blob and spread damage between nearby blobs."
 	shortdesc = "will do brute damage for each nearby blob."
 	color = "#65ADA2"
+	complementary_color = "#AD6570"
 	blobbernaut_message = "synchronously strikes"
 	message = "The blobs strike you"
 
 /datum/reagent/blob/synchronous_mesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	M.apply_damage(0.1*reac_volume, BRUTE)
-	if(M)
+	if(M && reac_volume)
 		for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 2.4*reac_volume bonus damage, total of 2.5*reac_volume
 			if(M)
-				var/obj/effect/overlay/temp/blob/OV = PoolOrNew(/obj/effect/overlay/temp/blob, B.loc)
-				if(B.overmind)
-					OV.color = B.overmind.blob_reagent_datum.color
-				OV.do_attack_animation(M) //show them they're getting a bad time
+				B.blob_attack_animation(M) //show them they're getting a bad time
 				M.apply_damage(0.3*reac_volume, BRUTE)
 
 /datum/reagent/blob/synchronous_mesh/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
@@ -379,6 +394,7 @@
 	id = "penetrating_spines"
 	description = "will do medium brute damage through armor."
 	color = "#408B80"
+	complementary_color = "#8B404B"
 	blobbernaut_message = "stabs"
 	message = "The blob stabs you"
 
@@ -393,6 +409,7 @@
 	description = "will do low brute, oxygen, and stamina damage, and wet tiles when damaged or killed."
 	shortdesc = "will do low brute, oxygen, and stamina damage, and wet tiles under targets."
 	color = "#AAAABB"
+	complementary_color = "#BBBBAA"
 	blobbernaut_message = "emits slime at"
 	message = "The blob splashes into you"
 	message_living = ", and you gasp for breath"
@@ -427,11 +444,12 @@
 	id = "dark_matter"
 	description = "will do medium brute damage and pull nearby objects and enemies at the target."
 	color = "#61407E"
+	complementary_color = "#5D7E40"
 	message = "You feel a thrum as the blob strikes you, and everything flies at you"
 
 /datum/reagent/blob/dark_matter/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reagent_vortex(M, 0, reac_volume)
 	reac_volume = ..()
+	reagent_vortex(M, 0, reac_volume)
 	M.apply_damage(0.4*reac_volume, BRUTE)
 
 //does brute damage and throws or pushes nearby objects away from the target
@@ -440,15 +458,16 @@
 	id = "b_sorium"
 	description = "will do medium brute damage and throw nearby objects and enemies away from the target."
 	color = "#808000"
+	complementary_color = "#000080"
 	message = "The blob slams into you and sends you flying"
 
 /datum/reagent/blob/b_sorium/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reagent_vortex(M, 1, reac_volume)
 	reac_volume = ..()
-	M.apply_damage(0.5*reac_volume, BRUTE)
+	reagent_vortex(M, 1, reac_volume)
+	M.apply_damage(0.4*reac_volume, BRUTE)
 
 /datum/reagent/blob/proc/reagent_vortex(mob/living/M, setting_type, reac_volume)
-	if(M)
+	if(M && reac_volume)
 		var/turf/pull = get_turf(M)
 		var/range_power = Clamp(round(reac_volume/5, 1), 1, 5)
 		for(var/atom/movable/X in range(range_power,pull))

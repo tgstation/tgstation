@@ -47,11 +47,6 @@
 	for(var/i in 1 to I)
 		available_chems |= possible_chems[i]
 
-/obj/machinery/sleeper/Destroy()
-	var/turf/T = loc
-	T.contents += contents
-	return ..()
-
 /obj/machinery/sleeper/update_icon()
 	if(state_open)
 		icon_state = "sleeper-open"

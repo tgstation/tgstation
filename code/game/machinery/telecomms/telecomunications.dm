@@ -146,7 +146,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	if(autolinkers.len)
 		// Links nearby machines
 		if(!long_range_link)
-			for(var/obj/machinery/telecomms/T in ultra_range(20, src, 1))
+			for(var/obj/machinery/telecomms/T in urange(20, src, 1))
 				add_link(T)
 		else
 			for(var/obj/machinery/telecomms/T in telecomms_list)

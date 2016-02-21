@@ -95,18 +95,17 @@
 
 
 /obj/item/weapon/storage/proc/show_to(mob/user)
+	if(!user.client)
+		return
 	if(user.s_active != src && (user.stat == CONSCIOUS))
 		for(var/obj/item/I in src)
 			if(I.on_found(user))
 				return
 	if(user.s_active)
 		user.s_active.hide_from(user)
-	user.client.screen -= boxes
-	user.client.screen -= closer
-	user.client.screen -= contents
-	user.client.screen += boxes
-	user.client.screen += closer
-	user.client.screen += contents
+	user.client.screen |= boxes
+	user.client.screen |= closer
+	user.client.screen |= contents
 	user.s_active = src
 	is_seeing |= user
 
@@ -114,7 +113,6 @@
 /obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin)
 	close_all()
 	return ..()
-
 
 /obj/item/weapon/storage/proc/hide_from(mob/user)
 	if(!user.client)

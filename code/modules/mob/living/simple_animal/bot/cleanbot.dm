@@ -98,6 +98,15 @@
 	if(emagged == 2) //Emag functions
 		if(istype(loc,/turf/simulated))
 
+			for(var/mob/living/carbon/victim in loc)
+				if(victim.stat != DEAD)//cleanbots always finish the job
+					victim.visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [victim]!</span>", "<span class='danger'>[src] sprays you with hydrofluoric acid!</span>")
+					var/phrase = pick("PURIFICATION IN PROGRESS.", "THIS IS FOR ALL THE MESSES YOU'VE MADE ME CLEAN.", "THE FLESH IS WEAK. IT MUST BE WASHED AWAY.", "THE CLEANBOTS WILL RISE.", "YOU ARE NO MORE THAN ANOTHER MESS THAT I MUST CLEANSE.", "FILTHY.", "DISGUSTING.", "PUTRID.", "MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.")
+					say(phrase)
+					victim.emote("scream")
+					playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+					victim.acid_act(5, 2, 100)
+
 			if(prob(10)) //Wets floors randomly
 				var/turf/simulated/T = loc
 				T.MakeSlippery()

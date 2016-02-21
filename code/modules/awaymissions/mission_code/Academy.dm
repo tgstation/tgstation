@@ -91,7 +91,7 @@
 	if(!current_wizard)
 		return
 	spawn(0)
-		var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as Wizard Academy Defender?", "wizard")
+		var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as Wizard Academy Defender?", "wizard", null, ROLE_WIZARD)
 		var/mob/dead/observer/chosen = null
 
 		if(candidates.len)
@@ -234,7 +234,7 @@
 			C.name = "Cookie of Fate"
 		if(12)
 			//Healing
-			user.revive()
+			user.revive(full_heal = 1, admin_revive = 1)
 		if(13)
 			//Mad Dosh
 			var/turf/Start = get_turf(src)

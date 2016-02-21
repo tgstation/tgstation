@@ -126,11 +126,8 @@
 		//Possible spread due to radiated heat
 		if(location.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
 			var/radiated_temperature = location.air.temperature*FIRE_SPREAD_RADIOSITY_SCALE
-			for(var/direction in cardinal)
-				if(!(location.atmos_adjacent_turfs & direction))
-					continue
-				var/turf/simulated/T = get_step(src, direction)
-				if(istype(T) && T.active_hotspot)
+			for(var/turf/simulated/T in location.atmos_adjacent_turfs)
+				if(T.active_hotspot)
 					T.hotspot_expose(radiated_temperature, CELL_VOLUME/4)
 
 	else

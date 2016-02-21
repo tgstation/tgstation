@@ -3,7 +3,7 @@
 	icon = 'icons/obj/atmos.dmi'
 	use_power = 0
 
-	var/datum/gas_mixture/air_contents = new
+	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
 	var/obj/item/weapon/tank/holding
 
@@ -15,21 +15,26 @@
 /obj/machinery/portable_atmospherics/New()
 	..()
 	SSair.atmos_machinery += src
+
+	air_contents = new
 	air_contents.volume = volume
 	air_contents.temperature = T20C
+
 	return 1
+
+/obj/machinery/portable_atmospherics/Destroy()
+	SSair.atmos_machinery -= src
+
+	qdel(air_contents)
+	air_contents = null
+
+	return ..()
 
 /obj/machinery/portable_atmospherics/process_atmos()
 	if(!connected_port) // Pipe network handles reactions if connected.
 		air_contents.react()
 	else
 		update_icon()
-
-/obj/machinery/portable_atmospherics/Destroy()
-	qdel(air_contents)
-	air_contents = null
-	SSair.atmos_machinery -= src
-	return ..()
 
 /obj/machinery/portable_atmospherics/return_air()
 	return air_contents

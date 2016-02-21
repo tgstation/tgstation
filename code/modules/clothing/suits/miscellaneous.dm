@@ -43,7 +43,6 @@
 	desc = "Yarr."
 	icon_state = "hgpirate"
 	item_state = "hgpirate"
-	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
 
 
@@ -227,6 +226,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
@@ -249,6 +249,32 @@
 	//cold_protection = HEAD
 	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEEARS
+
+/obj/item/clothing/suit/hooded/bloated_human	//OH MY GOD WHAT HAVE YOU DONE!?!?!?
+	name = "bloated human suit"
+	desc = "A horribly bloated suit made from human skins."
+	icon_state = "lingspacesuit"
+	item_state = "labcoat"
+	body_parts_covered = CHEST|GROIN|ARMS
+	allowed = list(,)
+	hooded = 1
+	action_button_name = "Toggle Human Head"
+	hoodtype = /obj/item/clothing/head/human_head
+
+/obj/item/clothing/head/human_head
+	name = "bloated human head"
+	desc = "A horribly bloated and mismatched human head."
+	icon_state = "lingspacehelmet"
+	body_parts_covered = HEAD
+	flags = NODROP
+
+/obj/item/clothing/suit/security/officer/russian
+	name = "russian officer's jacket"
+	desc = "This jacket is for those special occasions when a russian officer isn't required to wear their armor."
+	icon_state = "officertanjacket"
+	item_state = "officertanjacket"
+	body_parts_covered = CHEST|ARMS
 
 /*
  * Misc
@@ -358,6 +384,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/hooded/wintercoat/captain
 	name = "captain's winter coat"

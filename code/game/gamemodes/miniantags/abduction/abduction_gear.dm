@@ -575,6 +575,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	item_state = "alienhelmet"
 	blockTracking = 1
 	origin_tech = "materials=6;magnets=5"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 // Operating Table / Beds / Lockers
 

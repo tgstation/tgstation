@@ -6,35 +6,27 @@
 #define RELEASING	1
 
 /obj/machinery/atmospherics/components/unary/vent_pump
-	icon_state = "vent_map"
-
 	name = "air vent"
 	desc = "Has a valve and pump attached to it"
+	icon_state = "vent_map"
 	use_power = 1
-
 	can_unwrench = 1
-
 	welded = 0
-
-	var/area/initial_loc
 	level = 1
-	var/area_uid
-	var/id_tag = null
 
+	var/id_tag = null
 	var/on = 0
 	var/pump_direction = RELEASING
 
+	var/pressure_checks = EXT_BOUND
 	var/external_pressure_bound = ONE_ATMOSPHERE
 	var/internal_pressure_bound = 0
-
-	var/pressure_checks = EXT_BOUND
 	//EXT_BOUND: Do not pass external_pressure_bound
 	//INT_BOUND: Do not pass internal_pressure_bound
 	//NO_BOUND: Do not pass either
 
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
-
 	var/radio_filter_out
 	var/radio_filter_in
 
@@ -51,22 +43,19 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
-	initial_loc = get_area(loc)
-	if (initial_loc.master)
-		initial_loc = initial_loc.master
-	area_uid = initial_loc.uid
-	if (!id_tag)
+	if(!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
+	var/area/A = get_area_master(src)
+	A.air_vent_names -= id_tag
+	A.air_vent_info -= id_tag
+
 	if(SSradio)
 		SSradio.remove_object(src,frequency)
 	radio_connection = null
-	if(initial_loc)
-		initial_loc.air_vent_info -= id_tag
-		initial_loc.air_vent_names -= id_tag
-		initial_loc = null
+
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
@@ -164,24 +153,23 @@
 	signal.source = src
 
 	signal.data = list(
-		"area" = src.area_uid,
-		"tag" = src.id_tag,
+		"tag" = id_tag,
 		"frequency" = frequency,
 		"device" = "VP",
+		"timestamp" = world.time,
 		"power" = on,
-		"direction" = pump_direction?("release"):("siphon"),
+		"direction" = pump_direction ? "release" : "siphon",
 		"checks" = pressure_checks,
 		"internal" = internal_pressure_bound,
 		"external" = external_pressure_bound,
-		"timestamp" = world.time,
 		"sigtype" = "status"
 	)
 
-	if(!initial_loc.air_vent_names[id_tag])
-		var/new_name = "\improper [initial_loc.name] vent pump #[initial_loc.air_vent_names.len+1]"
-		initial_loc.air_vent_names[id_tag] = new_name
-		src.name = new_name
-	initial_loc.air_vent_info[id_tag] = signal.data
+	var/area/A = get_area_master(src)
+	if(!A.air_vent_names[id_tag])
+		name = "\improper [A.name] vent pump #[A.air_vent_names.len + 1]"
+		A.air_vent_names[id_tag] = name
+	A.air_vent_info[id_tag] = signal.data
 
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
@@ -285,10 +273,7 @@
 		user << "It seems welded shut."
 
 /obj/machinery/atmospherics/components/unary/vent_pump/power_change()
-	if(powered(power_channel))
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
+	..()
 	update_icon_nopipes()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()

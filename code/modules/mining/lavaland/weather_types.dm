@@ -52,6 +52,9 @@
 		if(stage == MAIN_STAGE)
 			A.invisibility = 0
 			A.opacity = 1
+			A.layer = overlay_layer
+			A.icon = 'icons/effects/weather_effects.dmi'
+			A.icon_state = start_up_overlay
 		else
 			A.invisibility = 100
 			A.opacity = 0

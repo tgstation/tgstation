@@ -166,17 +166,19 @@
 		s_store = null
 		update_inv_s_store()
 
-/mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, unequip = 1)
-	if(C.flags & BLOCKHAIR)
+/mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
+	if((C.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(C.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_hair()
-	if(unequip && internal)
+	if(toggle_off && internal)
 		update_internals_hud_icon(0)
 		internal = null
+	if(C.flags_inv & HIDEEYES)
+		update_inv_glasses()
 	sec_hud_set_security_status()
 	..()
 
 /mob/living/carbon/human/head_update(obj/item/I, forced)
-	if(I.flags & BLOCKHAIR || forced)
+	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || forced)
 		update_hair()
 	if(I.flags_inv & HIDEEYES || forced)
 		update_inv_glasses()

@@ -973,6 +973,8 @@
 						log_admin("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes")
 						feedback_inc("ban_job_tmp",1)
 						DB_ban_record(BANTYPE_JOB_TEMP, M, mins, reason, job)
+						if(M.client)
+							jobban_buildcache(M.client)
 						feedback_add_details("ban_job_tmp","- [job]")
 						if(!msg)
 							msg = job
@@ -994,6 +996,8 @@
 							log_admin("[key_name(usr)] perma-banned [key_name(M)] from [job]")
 							feedback_inc("ban_job",1)
 							DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, job)
+							if(M.client)
+								jobban_buildcache(M.client)
 							feedback_add_details("ban_job","- [job]")
 							if(!msg)
 								msg = job
@@ -1022,6 +1026,8 @@
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 						log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
 						DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, job)
+						if(M.client)
+							jobban_buildcache(M.client)
 						feedback_inc("ban_job_unban",1)
 						feedback_add_details("ban_job_unban","- [job]")
 						if(!msg)
@@ -1487,7 +1493,7 @@
 			usr << "This can only be used on instances of type /mob/living"
 			return
 
-		L.revive()
+		L.revive(full_heal = 1, admin_revive = 1)
 		message_admins("<span class='danger'>Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!</span>")
 		log_admin("[key_name(usr)] healed / Revived [key_name(L)]")
 

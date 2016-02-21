@@ -42,8 +42,6 @@
 
 	name = (gangname ? gangname : pick(gang_name_pool))
 	gang_name_pool -= name
-	if(name == "Sleeping Carp")
-		fighting_style = "martial"
 
 	ganghud = new()
 	log_game("The [name] Gang has been created. Their gang color is [color].")

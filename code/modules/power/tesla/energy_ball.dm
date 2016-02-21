@@ -28,7 +28,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	grav_pull = 0
 	contained = 0
 	density = 1
-
+	energy = 0
 	var/list/orbiting_balls = list()
 	var/produced_power
 	var/energy_to_raise = 32
@@ -90,6 +90,8 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 15)
 		spawn(100)
+			if (!loc)
+				return
 			var/obj/singularity/energy_ball/EB = new(loc)
 
 			EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
@@ -125,6 +127,8 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 	if (istype(target))
 		target.orbiting_balls -= src
+	if (!loc)
+		qdel(src)
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
 	if(istype(A, /mob/living/carbon))
@@ -208,7 +212,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5)
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
-			. = closest_atom
+			. = zapdir
 
 	//per type stuff:
 	if(closest_tesla_coil)

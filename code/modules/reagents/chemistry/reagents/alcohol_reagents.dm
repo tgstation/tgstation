@@ -323,7 +323,7 @@
 	metabolization_rate = 0.8
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/M)
-	M.Stun(1)
+	M.Stun(2)
 	..()
 	return
 

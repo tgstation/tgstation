@@ -600,6 +600,10 @@
 		if(head.flags_inv & HIDEEARS)
 			obscured |= slot_ears
 
+	if(wear_mask)
+		if(wear_mask.flags_inv & HIDEEYES)
+			obscured |= slot_glasses
+
 	if(obscured.len > 0)
 		return obscured
 	else
@@ -939,3 +943,8 @@
 						hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
+
+/mob/living/carbon/human/fully_heal(admin_revive = 0)
+	restore_blood()
+	remove_all_embedded_objects()
+	..()

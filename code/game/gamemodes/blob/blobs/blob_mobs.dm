@@ -9,9 +9,11 @@
 	pass_flags = PASSBLOB
 	faction = list("blob")
 	bubble_icon = "blob"
+	speak_emote = null //so we use verb_yell/verb_say/etc
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 360
+	unique_name = 1
 	var/mob/camera/blob/overmind = null
 
 /mob/living/simple_animal/hostile/blob/update_icons()
@@ -19,8 +21,14 @@
 		color = overmind.blob_reagent_datum.color
 
 /mob/living/simple_animal/hostile/blob/blob_act()
-	adjustHealth(-maxHealth*0.025)
-	return
+	if(health < maxHealth)
+		for(var/i in 1 to 2)
+			var/obj/effect/overlay/temp/heal/H = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(src)) //hello yes you are being healed
+			if(overmind)
+				H.color = overmind.blob_reagent_datum.complementary_color
+			else
+				H.color = "#000000"
+		adjustHealth(-maxHealth*0.025)
 
 /mob/living/simple_animal/hostile/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
@@ -30,6 +38,22 @@
 	if(istype(mover, /obj/effect/blob))
 		return 1
 	return ..()
+
+/mob/living/simple_animal/hostile/blob/handle_inherent_channels(message, message_mode)
+	if(message_mode == MODE_BINARY)
+		blob_chat(message)
+		return ITALICS | REDUCE_RANGE
+	else
+		..()
+
+/mob/living/simple_animal/hostile/blob/proc/blob_chat(msg)
+	var/spanned_message = say_quote(msg, get_spans())
+	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
+	for(var/M in mob_list)
+		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
+			M << rendered
+		if(isobserver(M))
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
 
 ////////////////
 // BLOB SPORE //
@@ -42,11 +66,15 @@
 	icon_living = "blobpod"
 	health = 40
 	maxHealth = 40
+	verb_say = "psychically pulses"
+	verb_ask = "psychically probes"
+	verb_exclaim = "psychically yells"
+	verb_yell = "psychically screams"
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
-	speak_emote = list("pulses")
+
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/obj/effect/blob/factory/factory = null
 	var/list/human_overlays = list()
@@ -83,7 +111,6 @@
 	melee_damage_upper += 11
 	death_cloud_size = 0
 	icon = H.icon
-	speak_emote = list("groans")
 	icon_state = "zombie_s"
 	H.hair_style = null
 	H.update_hair()
@@ -158,7 +185,10 @@
 	melee_damage_upper = 20
 	attacktext = "slams"
 	attack_sound = 'sound/effects/blobattack.ogg'
-	speak_emote = list("gurgles")
+	verb_say = "gurgles"
+	verb_ask = "demands"
+	verb_exclaim = "roars"
+	verb_yell = "bellows"
 	force_threshold = 10
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 1
