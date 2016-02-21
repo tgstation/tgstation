@@ -121,7 +121,8 @@
 						return
 					else
 						user << "<span class='notice'>You quickly scrawl your name on the contract</span>"
-						FulfillContract()
+						if(FulfillContract()>=0)
+							user << "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>"
 						return
 				else
 					user << "<span class='notice'>You are not in possession of your soul, you may not sell it.</span>"
@@ -172,7 +173,7 @@
 				return -1
 			user.dna.add_mutation(HULK)
 		if(CONTRACT_WEALTH)
-			if(!istype(user) || !user.mind)
+			if(!istype(user) || !user.mind) // How in the hell could that happen?
 				return -1
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_wealth(null))
 		if(CONTRACT_PRESTIGE)// gives the signer a gold, all access ID, AND gives the AI a law that he's the captain.
@@ -206,8 +207,8 @@
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball(null))
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
-		//if(CONTRACT_REVIVE)
-		//	return -1
+		if(CONTRACT_REVIVE)
+			return -1
 		if(CONTRACT_KNOWLEDGE)
 			user.dna.add_mutation(XRAY)
 			for(var/datum/atom_hud/H in huds)
@@ -216,4 +217,4 @@
 	user.mind.soulOwner = owner
 	user.hellbound = contractType
 	user.mind.damnation_type = contractType
-	owner.demoninfo.soulsOwned += user.mind
+	owner.demoninfo.add_soul(user.mind)

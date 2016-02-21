@@ -1,3 +1,7 @@
+#define THRESHOLD_ONE 3
+#define THRESHOLD_TWO 6
+#define THRESHOLD_THREE 9
+
 var/list/allDemons = list()
 
 /datum/demoninfo/
@@ -7,6 +11,7 @@ var/list/allDemons = list()
 	var/bane
 	var/truename
 	var/list/datum/mind/soulsOwned = new
+	var/reviveNumber = 0
 
 /proc/randomDemonInfo(var/name = randomDemonName())
 	var/datum/demoninfo/demon = new
@@ -154,3 +159,23 @@ var/list/allDemons = list()
 			return "Presenting the labors of a harvest will disrupt the demon."
 		if(BANE_TOOLBOX)
 			return "That which holds the means of creation also holds the means of the demon's undoing."
+
+/datum/demoninfo/proc/add_soul(var/datum/mind/soul)
+	if(!soulsOwned.Find(soul))
+		return
+	soulsOwned += soul
+	switch (soulsOwned.len)
+		if(THRESHOLD_ONE)
+			first_transformation()
+		if(THRESHOLD_TWO)
+			second_transformation()
+		if(THRESHOLD_THREE)
+			third_transformation()
+			
+
+/datum/demoninfo/proc/first_transformation() //TODO LORDPIDEY: finish this.
+	return 1
+/datum/demoninfo/proc/second_transformation()
+	return 1
+/datum/demoninfo/proc/third_transformation()
+	return 1
