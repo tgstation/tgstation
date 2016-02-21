@@ -28,6 +28,12 @@
 	icon_state = "magspear"
 	ammo_type = /obj/item/ammo_casing/caseless/magspear
 
+/obj/item/projectile/bullet/reusable/crossbolt
+	name = "crossbolt"
+	desc = "Maybe if you throw enough of them, one of them will actually hit me!"
+	icon_state = "magspear"
+	ammo_type = /obj/item/ammo_casing/caseless/crossbolt
+
 /obj/item/projectile/bullet/reusable/foam_dart
 	name = "foam dart"
 	desc = "I hope you're wearing eye protection."

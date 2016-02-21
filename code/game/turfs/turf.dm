@@ -373,3 +373,8 @@
 	desc = "Extremely densely-packed sheets of ice and rock, forged over the years of the harsh cold."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "icerock"
+
+/turf/indestructible/brick
+	name = "brick wall"
+	icon_state = "brick"
+	desc = "A sturdy brick wall."

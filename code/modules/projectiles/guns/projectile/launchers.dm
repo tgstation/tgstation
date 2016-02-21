@@ -63,6 +63,7 @@
 	fire_delay = 0
 	select = 0
 	action_button_name = null
+	var/ammo = "spear"
 
 /obj/item/weapon/gun/projectile/automatic/speargun/update_icon()
 	return
@@ -76,6 +77,15 @@
 /obj/item/weapon/gun/projectile/automatic/speargun/attackby(obj/item/A, mob/user, params)
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
-		user << "<span class='notice'>You load [num_loaded] spear\s into \the [src].</span>"
+		user << "<span class='notice'>You load [num_loaded] [ammo]\s into \the [src].</span>"
 		update_icon()
 		chamber_round()
+
+ /obj/item/weapon/gun/projectile/automatic/speargun/crossbow
+	name = "crossbow"
+	desc = "An ancient but effective weapon, point sharp end towards target."
+	icon_state = "speargun"
+	item_state = "speargun"
+	force = 15
+	mag_type = /obj/item/ammo_box/magazine/internal/speargun/crossbow
+	ammo = "bolt"

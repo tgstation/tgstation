@@ -320,3 +320,12 @@
 		// Change our allegiance!
 		var/mob/living/simple_animal/hostile/mimic/copy/C = change
 		C.ChangeOwner(firer)
+
+
+/obj/item/projectile/magic/pain
+	name = "bolt of pain"
+	icon_state = "energy"
+	damage = 20
+	damage_type = BRUTE
+	armour_penetration = 100
+	nodamage = 0
