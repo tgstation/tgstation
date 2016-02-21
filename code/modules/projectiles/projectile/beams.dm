@@ -10,6 +10,11 @@
 
 /obj/item/projectile/beam/laser
 
+/obj/item/projectile/beam/laser/lightlaser
+	name = "light laser"
+	icon_state = "bluelaser"
+	damage = 10
+
 /obj/item/projectile/beam/laser/heavylaser
 	name = "heavy laser"
 	icon_state = "heavylaser"
