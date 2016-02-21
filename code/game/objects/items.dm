@@ -147,19 +147,20 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		chameleon_change_action = new chameleon_action_type(src)
 		chameleon_change_action.name = "Change [chameleon_name] Appearance"
 		chameleon_blacklist += type
-		for(var/U in typesof(chameleon_type)-chameleon_blacklist)
+		var/list/temp_list = typesof(chameleon_type)
+		for(var/U in temp_list - (chameleon_blacklist))
 			var/obj/item/V = new U
 			chameleon_list += V
 
-/obj/item/pickup(mob/user)
-	..()
+/obj/item/proc/pickup(mob/user)
 	if(chameleon_type)
 		chameleon_change_action.Grant(user)
+	return
 
-/obj/item/dropped(mob/user)
-	..()
+/obj/item/proc/dropped(mob/user)
 	if(chameleon_type)
 		chameleon_change_action.Remove(user)
+	return
 
 /obj/item/proc/chameleon_change(user)
 	var/obj/item/clothing/under/A
@@ -177,7 +178,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		item_state = A.item_state
 		icon = A.icon
 
-		C.update_icons()	//so our overlays update.
+		C.regenerate_icons()	//so our overlays update.
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -417,13 +418,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return 0
 
 /obj/item/proc/talk_into(mob/M, input, channel, spans)
-	return
-
-/obj/item/proc/dropped(mob/user)
-	return
-
-// called just as an item is picked up (loc is not yet changed)
-/obj/item/proc/pickup(mob/user)
 	return
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.

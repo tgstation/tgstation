@@ -332,6 +332,7 @@ obj/item/weapon/gun/proc/newshot()
 		return
 
 /obj/item/weapon/gun/pickup(mob/user)
+	..()
 	if(F)
 		if(F.on)
 			user.AddLuminosity(F.brightness_on)
@@ -340,6 +341,7 @@ obj/item/weapon/gun/proc/newshot()
 		azoom.Grant(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
+	..()
 	if(F)
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)

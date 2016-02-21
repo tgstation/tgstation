@@ -5,7 +5,6 @@
 	item_state = "bl_suit"
 	item_color = "black"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
-	action_button_name = "Change"
 	origin_tech = "syndicate=3"
 	sensor_mode = 0 //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = 0
@@ -70,7 +69,6 @@
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
-
 	burn_state = FIRE_PROOF
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
 
@@ -110,3 +108,15 @@
 
 	chameleon_type = /obj/item/weapon/gun
 	chameleon_name = "Gun"
+
+/obj/item/weapon/gun/energy/laser/chameleon/New()
+	chameleon_blacklist = typesof(/obj/item/weapon/gun/magic)
+	..()
+
+/obj/item/weapon/storage/backpack/chameleon
+	chameleon_type = /obj/item/weapon/storage/backpack
+	chameleon_name = "Backpack"
+
+/obj/item/device/radio/headset/chameleon
+	chameleon_type = /obj/item/device/radio/headset
+	chameleon_name = "Headset"
