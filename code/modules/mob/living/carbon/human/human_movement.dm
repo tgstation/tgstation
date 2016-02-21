@@ -11,7 +11,7 @@
 
 	// Do we have a jetpack (and is it on)?
 	var/obj/item/weapon/tank/jetpack/J = back
-	if(!istype(J))
+	if(!istype(J) && istype(wear_suit, /obj/item/clothing/suit/space/hardsuit))
 		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
 		J = C.jetpack
 	if(istype(J) && J.allow_thrust(0.01, src))

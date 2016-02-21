@@ -116,3 +116,7 @@
 			if ("gunshot")
 				soundin = pick('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
 	return soundin
+
+/proc/playsound_global(file, repeat=0, wait, channel, volume)
+	for(var/V in clients)
+		V << sound(file, repeat, wait, channel, volume)
