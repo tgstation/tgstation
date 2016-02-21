@@ -265,7 +265,7 @@
 		user.visible_message("<span class='danger'>[user] smashes \the [src] to pieces against \the [target]</span>")
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
-			if(C.health < (C.maxHealth*0.5))
+			if(C.health < C.maxHealth*0.5)
 				C.Weaken(1)
 		smash(user)
 
