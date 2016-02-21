@@ -105,7 +105,7 @@
 					say(phrase)
 					victim.emote("scream")
 					playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
-					victim.acid_act(5, 120, 100)
+					victim.acid_act(5, 2, 100)
 
 			if(prob(10)) //Wets floors randomly
 				var/turf/simulated/T = loc
