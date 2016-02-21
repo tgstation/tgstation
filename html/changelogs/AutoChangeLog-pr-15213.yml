@@ -1,4 +1,0 @@
-author: xxalpha
-delete-after: True
-changes: 
-  - rscadd: "Kinetic accelerators now reload automatically."
