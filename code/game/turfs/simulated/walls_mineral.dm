@@ -13,6 +13,13 @@
 	walltype = "wood"
 	mineral = "wood"
 
+/turf/simulated/wall/mineral/brick
+	name = "Brick Wall"
+	desc = "A wall with brick siding, it looks nice"
+	icon_state = "Brick 0"
+	walltype = "brick"
+	mineral = "brick"
+
 /turf/simulated/wall/mineral/gold
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
