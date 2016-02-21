@@ -290,6 +290,7 @@
 		return
 
 /obj/item/clothing/head/helmet/pickup(mob/user)
+	..()
 	if(F)
 		if(F.on)
 			user.AddLuminosity(F.brightness_on)

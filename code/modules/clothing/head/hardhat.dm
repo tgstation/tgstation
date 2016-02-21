@@ -26,6 +26,7 @@
 		turn_off(user)
 
 /obj/item/clothing/head/hardhat/pickup(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(brightness_on)
 		SetLuminosity(0)

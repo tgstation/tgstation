@@ -28,11 +28,13 @@
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/pickup(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(brightness_on)
 		SetLuminosity(0)
 
 /obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
