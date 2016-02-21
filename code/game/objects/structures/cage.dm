@@ -83,9 +83,9 @@
 
 		else
 			if(W.force < 20) //Force
-				to_chat(user, "<span class='info'>\The [W] won't \the [src]'s bars well.</span>")
+				to_chat(user, "<span class='info'>\The [W] won't damage \the [src]'s bars.</span>")
 			else //No sharpness/hotness
-				to_chat(user, "<span class='info'>\The [W] doesn't have enough cutting power to damage \the [src]'s bars!</span>")
+				to_chat(user, "<span class='info'>\The [W] isn't sharp or hot enough to cut through \the [src]'s bars!</span>")
 
 /obj/structure/cage/relaymove(mob/living/user)
 	if(!istype(user)) return
