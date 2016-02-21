@@ -31,18 +31,6 @@
 /obj/screen/inventory
 	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
 
-
-/obj/screen/close
-	name = "close"
-
-/obj/screen/close/Click()
-	if(master)
-		if(istype(master, /obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = master
-			S.close(usr)
-	return 1
-
-
 /obj/screen/drop
 	name = "drop"
 	icon = 'icons/mob/screen_midnight.dmi'

@@ -17,7 +17,6 @@
 	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	var/storage_slots = 7 //The number of storage slots in this container.
 	var/obj/screen/storage/boxes = null
-	var/obj/screen/close/closer = null
 	var/use_to_pickup	//Set this to make it possible to use this item in an inverse way, so you can have the item in your hand and click items on the floor to pick them up.
 	var/display_contents_with_number	//Set this to make the storage item group contents of the same type and display them as a number.
 	var/allow_quick_empty	//Set this variable to allow the object to have the 'empty' verb, which dumps all the contents on the floor.
@@ -104,7 +103,6 @@
 	if(user.s_active)
 		user.s_active.hide_from(user)
 	user.client.screen |= boxes
-	user.client.screen |= closer
 	user.client.screen |= contents
 	user.s_active = src
 	is_seeing |= user
@@ -118,7 +116,6 @@
 	if(!user.client)
 		return
 	user.client.screen -= boxes
-	user.client.screen -= closer
 	user.client.screen -= contents
 	if(user.s_active == src)
 		user.s_active = null
@@ -159,7 +156,6 @@
 		if(cx > mx)
 			cx = tx
 			cy--
-	closer.screen_loc = "[mx+1],[my]"
 
 
 //This proc draws out the inventory and places the items on it. It uses the standard position.
@@ -188,7 +184,6 @@
 			if(cx > (4+cols))
 				cx = 4
 				cy--
-	closer.screen_loc = "[4+cols+1]:16,2:16"
 
 
 /datum/numbered_display
@@ -379,6 +374,12 @@
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user)
+
+	if(user.s_active == src && loc == user) //if you're already looking inside the storage item
+		user.s_active.close(user)
+		close(user)
+		return
+
 	playsound(loc, "rustle", 50, 1, -5)
 
 	if(ishuman(user))
@@ -460,11 +461,6 @@
 	boxes.icon_state = "block"
 	boxes.screen_loc = "7,7 to 10,8"
 	boxes.layer = 19
-	closer = new /obj/screen/close()
-	closer.master = src
-	closer.icon_state = "x"
-	closer.layer = 20
-	orient2hud()
 
 
 /obj/item/weapon/storage/Destroy()
@@ -473,7 +469,6 @@
 
 	close_all()
 	qdel(boxes)
-	qdel(closer)
 	return ..()
 
 
