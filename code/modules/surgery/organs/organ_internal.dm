@@ -6,7 +6,18 @@
 	var/zone = "chest"
 	var/slot
 	var/vital = 0
-	var/organ_action_name = null
+	var/organ_action_name = null //This needs to die, like the rest of the old action_button_name system
+	var/datum/action/organ_actions = list() //List of typepaths, becomes a list of datums after New()
+
+
+/obj/item/organ/internal/New()
+	..()
+	for(var/action_path in organ_actions)
+		organ_actions -= action_path
+		var/datum/action/A = new action_path()
+		A.target = src
+		organ_actions += A
+
 
 /obj/item/organ/internal/proc/Insert(mob/living/carbon/M, special = 0)
 	if(!iscarbon(M) || owner == M)
@@ -22,6 +33,10 @@
 	if(organ_action_name)
 		action_button_name = organ_action_name
 
+	for(var/action in organ_actions)
+		var/datum/action/A = action
+		A.Grant(M)
+
 
 /obj/item/organ/internal/proc/Remove(mob/living/carbon/M, special = 0)
 	owner = null
@@ -32,6 +47,10 @@
 
 	if(organ_action_name)
 		action_button_name = null
+
+	for(var/action in organ_actions)
+		var/datum/action/A = action
+		A.Remove(M)
 
 /obj/item/organ/internal/proc/on_find(mob/living/finder)
 	return
@@ -89,12 +108,13 @@
 	origin_tech = "biotech=3"
 	vital = 1
 	var/beating = 1
+	var/icon_base = "heart"
 
 /obj/item/organ/internal/heart/update_icon()
 	if(beating)
-		icon_state = "heart-on"
+		icon_state = "[icon_base]-on"
 	else
-		icon_state = "heart-off"
+		icon_state = "[icon_base]-off"
 
 /obj/item/organ/internal/heart/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -111,6 +131,39 @@
 	var/obj/S = ..()
 	S.icon_state = "heart-off"
 	return S
+
+
+/obj/item/organ/internal/heart/cursed
+	name = "cursed heart"
+	icon_state = "cursedheart-on"
+	icon_base = "cursedheart"
+	origin_tech = "biotech=5"
+	organ_actions = list(/datum/action/item_action/organ_action/cursed_heart)
+	var/last_pump = 0
+	var/pump_delay = 30
+	var/blood_loss = 100 //600 blood is human default, so 5 failures (below 122 blood is where humans die because reasons?)
+
+/obj/item/organ/internal/heart/cursed/on_life()
+	if(world.time > (last_pump + pump_delay))
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.vessel.remove_reagent("blood",blood_loss)
+			H << "<span class = 'userdanger'>You have to keep pumping your blood!</span>"
+
+/obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/M, special = 0)
+	..()
+	if(owner)
+		owner << "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>"
+
+/datum/action/item_action/organ_action/cursed_heart
+	name = "pump your blood"
+
+//You are now brea- pumping blood manually
+/datum/action/item_action/organ_action/cursed_heart/Trigger()
+	if(..() && istype(target,/obj/item/organ/internal/heart/cursed))
+		var/obj/item/organ/internal/heart/cursed/cursed_heart = target
+		cursed_heart.last_pump = world.time
+		playsound(owner,'sound/effects/singlebeat.ogg',40,1)
 
 
 
