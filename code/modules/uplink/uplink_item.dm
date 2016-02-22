@@ -300,6 +300,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
+/datum/uplink_item/dangerous/guardian
+	name = "Holoparasites"
+	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
+			organic host as a home base and source of fuel."
+	item = /obj/item/weapon/storage/box/syndie_kit/guardian
+	cost = 12
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+
 /datum/uplink_item/stealthy_weapons/virus_grenade
 	name = "Fungal Tuberculosis Grenade"
 	desc = "A primed bio-grenade packed into a compact box. Comes with five Bio Virus Antidote Kit (BVAK) \
@@ -309,14 +317,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 12
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/support/guardian
-	name = "Holoparasites"
-	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
-			organic host as a home base and source of fuel."
-	item = /obj/item/weapon/storage/box/syndie_kit/guardian
-	cost = 12
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 // Ammunition
 /datum/uplink_item/ammo
@@ -924,12 +924,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "An advanced hardsuit with superior armor and mobility to the standard Syndicate Hardsuit."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	cost = 8
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/space_suits/hardsuit/shielded
 	name = "Shielded Hardsuit"
 	desc = "An advanced hardsuit with built in energy shielding. The shields will rapidly recharge when not under fire."
 	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
 	cost = 30
+	include_modes = list(/datum/game_mode/nuclear)
 
 // Mechs & Support
 /datum/uplink_item/support
