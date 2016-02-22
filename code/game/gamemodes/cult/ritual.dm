@@ -246,7 +246,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.apply_damage(0.1, BRUTE, pick("l_arm", "r_arm"))
-	if(entered_rune_name == "Call Forth The Geometer")
+	if("Call Forth The Geometer" == entered_rune_name)
 		C.apply_damage(40, BRUTE, pick("l_arm", "r_arm"))
 		var/area/A = get_area(src)
 		var/locname = initial(A.name)
