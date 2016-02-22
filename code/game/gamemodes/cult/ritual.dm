@@ -139,7 +139,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 
 	text += "<font color='red'><b>Disguise Runes</b></font><br>Many crewmen enjoy drawing runes in crayon that resemble spell circles in order to play pranks on their fellow crewmen. The Rite of \
 	False Truths takes advantage of this very joke. When invoked, all nearby runes will appear dull, precisely resembling those drawn in crayon. They still cannot be cleaned by conventional means, so \
-	anyone trying to clean up the rune may become suspicious as it does not respond.<br><br>".<br><br>"
+	anyone trying to clean up the rune may become suspicious as it does not respond.<br><br>"
 
 	text += "<font color='red'><b>Electromagnetic Disruption</b></font><br>Robotic lifeforms have time and time again been the downfall of fledgling cults. The Rite of Disruption may allow you to gain the upper \
 	hand against these pests. By using the rune, a large electromagnetic pulse will be emitted from the rune's location.<br><br>"
