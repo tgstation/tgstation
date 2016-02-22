@@ -2,13 +2,14 @@
 	set category = "Debug"
 	set name = "Map template - Place"
 
-
 	var/datum/map_template/template
 
 	var/turf/T = get_turf(mob)
 	if(!T)
 		return
-
+	var/map = input(usr, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template") as null|anything in map_templates
+	if(!map)
+		return
 	template = map_templates[map]
 
 	var/list/preview = list()
