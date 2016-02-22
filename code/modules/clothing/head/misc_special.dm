@@ -48,8 +48,7 @@
 	icon_state = "hardhat0_cakehat"
 	item_state = "hardhat0_cakehat"
 	item_color = "cakehat"
-	flags = BLOCKHAIR
-	flags_inv = HIDEEARS
+	flags_inv = HIDEEARS|HIDEHAIR
 	action_button_name = "Toggle Candle"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 2 //luminosity when on
@@ -90,7 +89,7 @@
 	desc = "Perfect for winter in Siberia, da?"
 	icon_state = "ushankadown"
 	item_state = "ushankadown"
-	flags_inv = HIDEEARS
+	flags_inv = HIDEEARS|HIDEHAIR
 	var/earflaps = 1
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
@@ -116,8 +115,7 @@
 	icon_state = "hardhat0_pumpkin"
 	item_state = "hardhat0_pumpkin"
 	item_color = "pumpkin"
-	flags = BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	action_button_name = "Toggle Pumpkin Light"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 2 //luminosity when on

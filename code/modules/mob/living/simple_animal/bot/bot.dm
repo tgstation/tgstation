@@ -876,9 +876,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	bot_reset()
 
-/mob/living/simple_animal/bot/revive()
-	..()
-	update_icon()
+/mob/living/simple_animal/bot/revive(full_heal = 0, admin_revive = 0)
+	if(..())
+		update_icon()
+		. = 1
 
 /mob/living/simple_animal/bot/ghost()
 	if(stat != DEAD) // Only ghost if we're doing this while alive, the pAI probably isn't dead yet.

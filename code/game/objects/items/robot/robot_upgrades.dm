@@ -87,15 +87,7 @@
 			if(ghost.mind && ghost.mind.current == R)
 				R.key = ghost.key
 
-	R.notify_ai(1)
-
-	R.stat = UNCONSCIOUS
-	R.update_stat()
-	if(R.camera && !R.wires.is_cut(WIRE_CAMERA))
-		R.camera.toggle_cam(R,0)
-
-	dead_mob_list -= R //please never forget this ever kthx
-	living_mob_list += R
+	R.revive()
 
 	return 1
 

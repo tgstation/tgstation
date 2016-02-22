@@ -212,7 +212,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5)
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
-			. = closest_atom
+			. = zapdir
 
 	//per type stuff:
 	if(closest_tesla_coil)

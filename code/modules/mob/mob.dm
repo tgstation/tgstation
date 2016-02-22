@@ -1056,3 +1056,5 @@ var/next_mob_id = 0
 			setEarDamage(ear_damage, -1)
 		if("maxHealth")
 			updatehealth()
+		if("resize")
+			update_transform()

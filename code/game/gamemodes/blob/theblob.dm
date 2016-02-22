@@ -93,7 +93,7 @@
 /obj/effect/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
 	src.Be_Pulsed()
 	if(claim_range)
-		for(var/obj/effect/blob/B in ultra_range(claim_range, src, 1))
+		for(var/obj/effect/blob/B in urange(claim_range, src, 1))
 			if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
 				B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
 				B.update_icon()
