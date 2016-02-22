@@ -26,8 +26,7 @@
 	new /obj/item/clothing/gloves/color/captain(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/gun/energy/gun(src)
-	if(config && config.door_remote)
-		new /obj/item/weapon/control_wand/captain(src)
+	new /obj/item/weapon/control_wand/captain(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
@@ -79,8 +78,7 @@
 	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/weapon/gun/energy/gun/hos(src)
-	if(config && config.door_remote)
-		new /obj/item/weapon/control_wand/head_of_security(src)
+	new /obj/item/weapon/control_wand/head_of_security(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"

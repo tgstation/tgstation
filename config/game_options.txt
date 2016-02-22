@@ -189,10 +189,6 @@ ALLOW_RANDOM_EVENTS
 ## Allow the AI job to be picked.
 ALLOW_AI
 
-
-## Allow heads of staff to start with door remotes, to remotely control doors like a pseudo AI.
-#DOOR_REMOTE
-
 ### AWAY MISSIONS ###
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
