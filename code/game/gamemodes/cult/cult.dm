@@ -23,7 +23,7 @@
 		if(is_sacrifice_target(mind))	return 0
 	return 1
 
--/proc/cultist_commune(mob/living/user, clear = 0, say = 0, message)
+/proc/cultist_commune(mob/living/user, clear = 0, say = 0, message)
 	if(!message)
 		return
 	if(say)
