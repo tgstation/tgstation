@@ -269,8 +269,9 @@ Rite of Disorientation
 -			if(iscarbon(target))
 -				var/mob/living/carbon/C = target
 -				C.silent += 2
-				C.stutter += 9
-				C.jitter += 9
+				C.stutter += 15
+				C.cultslur += 15
+				C.jitter += 15
 -		user.drop_item()
 -		qdel(src)
 -		return
