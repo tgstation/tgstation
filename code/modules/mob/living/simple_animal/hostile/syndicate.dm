@@ -79,6 +79,9 @@
 				/obj/item/weapon/shield/energy)
 	speed = 1
 
+/mob/living/simple_animal/hostile/syndicate/melee/space/noloot
+	loot = list()
+
 /mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(movement_dir = 0)
 	return 1
 
@@ -117,6 +120,9 @@
 	loot = list(/obj/effect/landmark/mobcorpse/syndicatecommando,
 				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
 				/obj/item/weapon/shield/energy)
+
+/mob/living/simple_animal/hostile/syndicate/ranged/space/noloot
+	loot = list()
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
 	return 1

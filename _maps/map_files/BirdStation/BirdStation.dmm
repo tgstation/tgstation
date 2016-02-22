@@ -1693,7 +1693,7 @@
 "aGC" = (/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/turf/simulated/floor/plasteel/whitegreen/side{icon_state = "whitegreen"; dir = 6},/area/hydroponics)
 "aGD" = (/obj/structure/cable/cyan{icon_state = "1-2"},/obj/structure/extinguisher_cabinet{pixel_x = -27},/turf/simulated/floor/plasteel,/area/hallway/primary/central)
 "aGE" = (/obj/structure/table/wood,/turf/simulated/floor/wood,/area/crew_quarters/bar{name = "\improper Bar and Kitchen"})
-"aGF" = (/mob/living/carbon/monkey{name = "Pun Pun"; unique_name = 0},/turf/simulated/floor/wood,/area/crew_quarters/bar{name = "\improper Bar and Kitchen"})
+"aGF" = (/mob/living/carbon/monkey/punpun,/turf/simulated/floor/wood,/area/crew_quarters/bar{name = "\improper Bar and Kitchen"})
 "aGG" = (/obj/structure/disposalpipe/segment,/obj/machinery/light,/obj/machinery/door/poddoor/shutters/preopen{id = "kitchen shutter"; name = "kitchen shutter"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/crew_quarters/bar{name = "\improper Bar and Kitchen"})
 "aGH" = (/obj/effect/landmark/start{name = "Cook"},/turf/simulated/floor/plasteel/white,/area/crew_quarters/bar{name = "\improper Bar and Kitchen"})
 "aGI" = (/obj/machinery/power/apc{name = "Bar and Kitchen APC"; pixel_y = -24},/obj/structure/cable/cyan{icon_state = "0-4"},/turf/simulated/floor/plasteel/white,/area/crew_quarters/bar{name = "\improper Bar and Kitchen"})

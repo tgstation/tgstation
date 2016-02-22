@@ -203,7 +203,7 @@
 	name = "laser slug"
 	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a laser weapon in a ballistic package."
 	icon_state = "lshell"
-	projectile_type = /obj/item/projectile/beam
+	projectile_type = /obj/item/projectile/beam/laser
 
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"

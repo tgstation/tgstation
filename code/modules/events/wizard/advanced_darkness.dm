@@ -7,8 +7,11 @@
 
 /datum/round_event/wizard/darkness
 	endWhen = 0
+	var/started = FALSE
+
 
 /datum/round_event/wizard/darkness/start()
-	var/datum/weather/advanced_darkness/darkness = new
-	darkness.weather_start_up()
-	return
+	if(!started)
+		started = TRUE
+		var/datum/weather/advanced_darkness/darkness = new
+		darkness.weather_start_up()

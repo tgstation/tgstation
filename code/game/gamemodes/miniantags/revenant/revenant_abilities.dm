@@ -1,3 +1,99 @@
+
+//Harvest; activated ly clicking the target, will try to drain their essence.
+/mob/living/simple_animal/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
+	A.examine(src)
+	if(ishuman(A))
+		if(A in drained_mobs)
+			src << "<span class='revenwarning'>[A]'s soul is dead and empty.</span>" //feedback at any range
+		else if(in_range(src, A))
+			Harvest(A)
+
+/mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
+	if(!castcheck(0))
+		return
+	if(draining)
+		src << "<span class='revenwarning'>You are already siphoning the essence of a soul!</span>"
+		return
+	if(!target.stat)
+		src << "<span class='revennotice'>This being's soul is too strong to harvest.</span>"
+		if(prob(10))
+			target << "You feel as if you are being watched."
+		return
+	draining = 1
+	essence_drained += rand(15, 20)
+	src << "<span class='revennotice'>You search for the soul of [target].</span>"
+	if(do_after(src, rand(10, 20), 0, target)) //did they get deleted in that second?
+		if(target.ckey)
+			src << "<span class='revennotice'>Their soul burns with intelligence.</span>"
+			essence_drained += rand(20, 30)
+		if(target.stat != DEAD)
+			src << "<span class='revennotice'>Their soul blazes with life!</span>"
+			essence_drained += rand(40, 50)
+		else
+			src << "<span class='revennotice'>Their soul is weak and faltering.</span>"
+		if(do_after(src, rand(15, 20), 0, target)) //did they get deleted NOW?
+			switch(essence_drained)
+				if(1 to 30)
+					src << "<span class='revennotice'>[target] will not yield much essence. Still, every bit counts.</span>"
+				if(30 to 70)
+					src << "<span class='revennotice'>[target] will yield an average amount of essence.</span>"
+				if(70 to 90)
+					src << "<span class='revenboldnotice'>Such a feast! [target] will yield much essence to you.</span>"
+				if(90 to INFINITY)
+					src << "<span class='revenbignotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>"
+			if(do_after(src, rand(15, 25), 0, target)) //how about now
+				if(!target.stat)
+					src << "<span class='revenwarning'>They are now powerful enough to fight off your draining.</span>"
+					target << "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>"
+					draining = 0
+					essence_drained = 0
+					return //hey, wait a minute...
+				src << "<span class='revenminor'>You begin siphoning essence from [target]'s soul.</span>"
+				if(target.stat != DEAD)
+					target << "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>"
+				reveal(46)
+				stun(46)
+				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
+				Beam(target,icon_state="drain_life",icon='icons/effects/effects.dmi',time=46)
+				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
+					change_essence_amount(essence_drained, 0, target)
+					if(essence_drained <= 90 && target.stat != DEAD)
+						essence_regen_cap += 5
+						src << "<span class='revenboldnotice'>The absorption of [target]'s living soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>"
+					if(essence_drained > 90)
+						essence_regen_cap += 15
+						perfectsouls += 1
+						src << "<span class='revenboldnotice'>The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>"
+					src << "<span class='revennotice'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>"
+					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
+										   "<span class='revenwarning'>Violets lights, dancing in your vision, getting clo--</span>")
+					drained_mobs.Add(target)
+					target.death(0)
+				else
+					src << "<span class='revenwarning'>[target ? "[target] has":"They have"] been drawn out of your grasp. The link has been broken.</span>"
+					draining = 0
+					essence_drained = 0
+					if(target) //Wait, target is WHERE NOW?
+						target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
+											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
+					return
+			else
+				src << "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"their"] soul. The link has been broken.</span>"
+				draining = 0
+				essence_drained = 0
+				return
+	draining = 0
+	essence_drained = 0
+	return
+
+//Toggle night vision: lets the revenant toggle its night vision
+/obj/effect/proc_holder/spell/targeted/night_vision/revenant
+	charge_max = 0
+	panel = "Revenant Abilities"
+	message = "<span class='revennotice'>You toggle your night vision.</span>"
+	action_icon_state = "r_nightvision"
+	action_background_icon_state = "bg_revenant"
+
 //Transmit: the revemant's only direct way to communicate. Sends a single message silently to a single mob
 /obj/effect/proc_holder/spell/targeted/revenant_transmit
 	name = "Transmit"
@@ -126,7 +222,7 @@
 	name = "Defile"
 	desc = "Twists and corrupts the nearby area as well as dispelling holy auras on floors."
 	charge_max = 150
-	range = 3
+	range = 4
 	stun = 10
 	reveal = 40
 	unlock_amount = 75
@@ -147,10 +243,10 @@
 					floor.broken = 0
 					floor.burnt = 0
 					floor.make_plating(1)
-				if(!istype(T, /turf/simulated/wall/shuttle) && !istype(T, /turf/simulated/wall/cult) && !istype(T, /turf/simulated/wall/rust) && !istype(T, /turf/simulated/wall/r_wall) && istype(T, /turf/simulated/wall) && prob(15))
+				if(T.type == /turf/simulated/wall && prob(15))
 					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
 					T.ChangeTurf(/turf/simulated/wall/rust)
-				if(!istype(T, /turf/simulated/wall/r_wall/rust) && istype(T, /turf/simulated/wall/r_wall) && prob(15))
+				if(T.type == /turf/simulated/wall/r_wall && prob(10))
 					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
 					T.ChangeTurf(/turf/simulated/wall/r_wall/rust)
 				for(var/obj/structure/closet/closet in T.contents)
@@ -161,7 +257,7 @@
 				for(var/obj/machinery/dna_scannernew/dna in T.contents)
 					dna.open_machine()
 				for(var/obj/structure/window/window in T.contents)
-					window.hit(rand(50,90))
+					window.hit(rand(30,80))
 					if(window && window.fulltile)
 						PoolOrNew(/obj/effect/overlay/temp/revenant/cracks, window.loc)
 				for(var/obj/machinery/light/light in T.contents)
@@ -257,13 +353,13 @@
 				for(var/obj/effect/spacevine/vine in T.contents) //Fucking with botanists, the ability.
 					vine.color = "#823abb"
 					PoolOrNew(/obj/effect/overlay/temp/revenant, vine.loc)
-					spawn(20)
+					spawn(10)
 						if(vine)
 							qdel(vine)
 				for(var/obj/effect/glowshroom/shroom in T.contents)
 					shroom.color = "#823abb"
 					PoolOrNew(/obj/effect/overlay/temp/revenant, shroom.loc)
-					spawn(20)
+					spawn(10)
 						if(shroom)
 							qdel(shroom)
 				for(var/obj/machinery/hydroponics/tray in T.contents)
