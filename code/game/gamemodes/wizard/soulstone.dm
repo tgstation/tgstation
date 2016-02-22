@@ -124,11 +124,11 @@
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
 			if(ticker.mode.name == "cult" && T.mind == ticker.mode:sacrifice_target)
--				if(iscultist(user))
--					user << "<span class='danger'>The Geometer of blood wants this mortal sacrificed with the rune.</span>"
--				else
--					user << "<span class='danger'>The soul stone doesn't work for no apparent reason.</span>"
--				return 0
+				if(iscultist(user))
+					user << "<span class='danger'>The Geometer of blood wants this mortal sacrificed with the rune.</span>"
+				else
+					user << "<span class='danger'>The soul stone doesn't work for no apparent reason.</span>"
+				return 0
 			if(imprinted != "empty")
 				user << "<span class='userdanger'>Capture failed!</span>: The soul stone has already been imprinted with [imprinted]'s mind!"
 			else
