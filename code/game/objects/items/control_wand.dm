@@ -10,12 +10,13 @@
 	desc = "Remotely controls airlocks."
 	var/mode = WAND_OPEN
 	var/obj/item/weapon/card/id/ID
-	var/datum/job/wand_access = "Assistant" //This is for access. See access.dm for which jobs give what access. Use "Captain" if you want the wand to work on all doors.
+	var/wand_access = /datum/job/assistant //This is for access. See access.dm for which jobs give what access. Use "Captain" if you want the wand to work on all doors.
 
 /obj/item/weapon/control_wand/New()
 	..()
+	var/datum/job/J = new wand_access
 	ID = new /obj/item/weapon/card/id
-	ID.access = wand_access.get_access()
+	ID.access = J.get_access()
 
 /obj/item/weapon/control_wand/attack_self(mob/user)
 	switch(mode)
@@ -58,31 +59,31 @@
 	name = "omni door remote"
 	desc = "This control wand can access any door on the station."
 	icon_state = "gangtool-yellow"
-	wand_access = "Captain"
+	wand_access = /datum/job/captain
 
 /obj/item/weapon/control_wand/chief_engineer
 	name = "engineering door remote"
-	wand_access = "Chief Engineer"
+	wand_access = /datum/job/chief_engineer
 	icon_state = "gangtool-orange"
 
 /obj/item/weapon/control_wand/research_director
 	name = "research door remote"
-	wand_access = "Research Director"
+	wand_access = /datum/job/rd
 	icon_state = "gangtool-purple"
 
 /obj/item/weapon/control_wand/head_of_security
 	name = "security door remote"
-	wand_access = "Head of Security"
+	wand_access = /datum/job/hos
 	icon_state = "gangtool-red"
 
 /obj/item/weapon/control_wand/quartermaster
 	name = "supply door remote"
-	wand_access = "Quartermaster"
+	wand_access = /datum/job/qm
 	icon_state = "gangtool-green"
 
 /obj/item/weapon/control_wand/chief_medical_officer
 	name = "medical door remote"
-	wand_access = "Chief Medical Officer"
+	wand_access = /datum/job/cmo
 	icon_state = "gangtool-blue"
 
 #undef WAND_OPEN
