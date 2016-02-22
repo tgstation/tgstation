@@ -451,9 +451,7 @@ Alien plants should do something if theres a lot of poison
 			if(!child)
 				src.visible_message("<span class='warning'>The egg bursts apart, revealing nothing!</span>")
 				status = "GROWN"
-				new /obj/effect/decal/cleanable/blood/xeno(src)
-				var/obj/effect/decal/cleanable/blood/xeno/O = getFromPool(/obj/effect/decal/cleanable/blood/xeno, src)
-				O.New(src)
+				getFromPool(/obj/effect/decal/cleanable/blood/xeno, src)
 				return
 			child.forceMove(loc)
 			if(kill && istype(child))
