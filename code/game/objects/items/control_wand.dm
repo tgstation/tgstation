@@ -4,7 +4,7 @@
 
 /obj/item/weapon/control_wand
 	icon_state = "gangtool-white"
-	item_state = "walkietalkie"
+	item_state = "electronic"
 	icon = 'icons/obj/device.dmi'
 	name = "control wand"
 	desc = "Remotely controls airlocks."
