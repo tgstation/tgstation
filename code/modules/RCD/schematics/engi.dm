@@ -80,7 +80,7 @@
 
 	var/turf/simulated/floor/T = A
 	to_chat(user, "Building wall")
-	playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+	playsound(get_turf(master), 'sound/machines/click.ogg', 50, 1)
 	if(do_after(user, A, 20))
 		if(master.get_energy(user) < energy_cost)
 			return 1

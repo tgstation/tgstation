@@ -402,66 +402,65 @@ Alien plants should do something if theres a lot of poison
 
 	flags = PROXMOVE
 
-	New()
-		if(aliens_allowed)
-			..()
-			spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
-				Grow()
-		else
-			qdel(src)
+/obj/effect/alien/egg/New()
+	if(aliens_allowed)
+		..()
+		spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
+			Grow()
+	else
+		qdel(src)
 
-	attack_paw(user as mob)
-		if(isalien(user))
-			switch(status)
-				if(BURST)
-					to_chat(user, "<span class='warning'>You clear the hatched egg.</span>")
-					qdel(src)
-					return
-				if(GROWING)
-					to_chat(user, "<span class='warning'>The child is not developed yet.</span>")
-					return
-				if(GROWN)
-					to_chat(user, "<span class='warning'>You retrieve the child.</span>")
-					Burst(0)
-					return
-		else
-			return attack_hand(user)
+/obj/effect/alien/egg/attack_paw(user as mob)
+	if(isalien(user))
+		switch(status)
+			if(BURST)
+				to_chat(user, "<span class='warning'>You clear the hatched egg.</span>")
+				qdel(src)
+				return
+			if(GROWING)
+				to_chat(user, "<span class='warning'>The child is not developed yet.</span>")
+				return
+			if(GROWN)
+				to_chat(user, "<span class='warning'>You retrieve the child.</span>")
+				Burst(0)
+				return
+	else
+		return attack_hand(user)
 
-	attack_hand(user as mob)
-		to_chat(user, "It feels slimy.")
-		return
+/obj/effect/alien/egg/attack_hand(user as mob)
+	to_chat(user, "It feels slimy.")
+	return
 
-	proc/GetFacehugger()
-		return locate(/obj/item/clothing/mask/facehugger) in contents
+/obj/effect/alien/egg/proc/GetFacehugger()
+	return locate(/obj/item/clothing/mask/facehugger) in contents
 
-	proc/Grow()
-		icon_state = "egg"
-		status = GROWN
-		new /obj/item/clothing/mask/facehugger(src)
-		return
+/obj/effect/alien/egg/proc/Grow()
+	icon_state = "egg"
+	status = GROWN
+	new /obj/item/clothing/mask/facehugger(src)
+	return
 
-	proc/Burst(var/kill = 1) //drops and kills the hugger if any is remaining
-		if(status == GROWN || status == GROWING)
-			var/obj/item/clothing/mask/facehugger/child = GetFacehugger()
-			icon_state = "egg_hatched"
-			flick("egg_opening", src)
-			status = BURSTING
-			spawn(15)
-				status = BURST
-				if(!child)
-					src.visible_message("<span class='warning'>The egg bursts apart revealing nothing</span>")
-					status = "GROWN"
-					new /obj/effect/decal/cleanable/blood/xeno(src)
-					var/obj/effect/decal/cleanable/blood/xeno/O = getFromPool(/obj/effect/decal/cleanable/blood/xeno, src)
-					O.New(src)
-				child.loc = loc
-				if(kill && istype(child))
-					child.Die()
-				else
-					for(var/mob/M in range(1,src))
-						if(CanHug(M))
-							child.Attach(M)
-							break
+/obj/effect/alien/egg/proc/Burst(var/kill = 1) //drops and kills the hugger if any is remaining
+	if(status == GROWN || status == GROWING)
+		var/obj/item/clothing/mask/facehugger/child = GetFacehugger()
+		icon_state = "egg_hatched"
+		flick("egg_opening", src)
+		status = BURSTING
+		spawn(15)
+			status = BURST
+			if(!child)
+				src.visible_message("<span class='warning'>The egg bursts apart, revealing nothing!</span>")
+				status = "GROWN"
+				getFromPool(/obj/effect/decal/cleanable/blood/xeno, src)
+				return
+			child.forceMove(loc)
+			if(kill && istype(child))
+				child.Die()
+			else
+				for(var/mob/M in range(1,src))
+					if(CanHug(M))
+						child.Attach(M)
+						break
 
 
 /obj/effect/alien/egg/bullet_act(var/obj/item/projectile/Proj)
