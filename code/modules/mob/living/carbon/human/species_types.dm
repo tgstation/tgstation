@@ -45,30 +45,6 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
 
-//Inspired by the Syndicate agents of Bullfrog's Syndicate masterpiece
-//The corporate post-human
-/datum/species/corporate
-	name = "Corporate Agent"
-	id = "agent"
-	hair_alpha = 0//The procedure left them bald
-	need_nutrition = 0//They don't need to eat
-	say_mod = "asserts"//Their word is law
-	speedmod = 1//The cybernetic limbs cost a fortune
-	brutemod = 0.5//and it cost them their humanity
-	burnmod = 0.5//but they were worth everything
-	coldmod = 0
-	heatmod = 0//they can walk through a plasmafire, naked, unphased
-	punchdamagelow = 20
-	punchdamagehigh = 50//they are inhumanly strong
-	punchstunthreshold = 100
-	attack_verb = "smash"
-	attack_sound = "sound/weapons/resonator_blast.ogg"
-	blacklisted = 1
-	use_skintones = 0
-	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR)
-	sexes = 0
-
-
 /*
  LIZARDPEOPLE
 */
