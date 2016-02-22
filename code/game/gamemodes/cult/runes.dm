@@ -423,7 +423,6 @@ var/list/teleport_other_runes = list()
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
-	grammar = "veri certum ego"
 	var/used
 
 /obj/effect/rune/narsie/invoke(mob/living/user)
