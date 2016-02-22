@@ -190,6 +190,8 @@ ALLOW_RANDOM_EVENTS
 ALLOW_AI
 
 
+## Allow heads of staff to start with door remotes, to remotely control doors like a pseudo AI.
+#DOOR_REMOTE
 
 ### AWAY MISSIONS ###
 

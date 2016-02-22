@@ -23,6 +23,8 @@
 	new /obj/item/device/multitool(src)
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
+	if(config && config.door_remote)
+		new /obj/item/weapon/control_wand/chief_engineer(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"
@@ -40,7 +42,7 @@
 		new /obj/item/weapon/electronics/apc(src)
 	for(var/i in 1 to 3)
 		new /obj/item/device/multitool(src)
-	
+
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "welding supplies locker"
 	req_access = list(access_engine_equip)
@@ -53,7 +55,7 @@
 		new /obj/item/clothing/head/welding(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/weldingtool/largetank(src)
-	
+
 /obj/structure/closet/secure_closet/engineering_personal
 	name = "engineer's locker"
 	req_access = list(access_engine_equip)

@@ -17,3 +17,5 @@
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/clothing/head/soft(src)
+	if(config && config.door_remote)
+		new /obj/item/weapon/control_wand/quartermaster(src)

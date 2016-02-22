@@ -3,8 +3,9 @@
 #define WAND_EMERGENCY "Toggle Emergency Access"
 
 /obj/item/weapon/control_wand
-	icon_state = "chainswordon"
-	item_state = "chainswordon"
+	icon_state = "gangtool-white"
+	item_state = "walkietalkie"
+	icon = 'icons/obj/device.dmi'
 	name = "control wand"
 	desc = "Remotely controls airlocks."
 	var/mode = WAND_OPEN
@@ -54,29 +55,35 @@
 		user << "Your [src] does not have access to this door."
 
 /obj/item/weapon/control_wand/captain
-	name = "omni wand"
+	name = "omni door remote"
 	desc = "This control wand can access any door on the station."
+	icon_state = "gangtool-yellow"
 	wand_access = "Captain"
 
 /obj/item/weapon/control_wand/chief_engineer
-	name = "engineering control wand"
+	name = "engineering door remote"
 	wand_access = "Chief Engineer"
+	icon_state = "gangtool-orange"
 
 /obj/item/weapon/control_wand/research_director
-	name = "research control wand"
+	name = "research door remote"
 	wand_access = "Research Director"
+	icon_state = "gangtool-purple"
 
 /obj/item/weapon/control_wand/head_of_security
-	name = "security control wand"
+	name = "security door remote"
 	wand_access = "Head of Security"
+	icon_state = "gangtool-red"
 
 /obj/item/weapon/control_wand/quartermaster
-	name = "supply control wand"
+	name = "supply door remote"
 	wand_access = "Quartermaster"
+	icon_state = "gangtool-green"
 
 /obj/item/weapon/control_wand/chief_medical_officer
-	name = "medical control wand"
+	name = "medical door remote"
 	wand_access = "Chief Medical Officer"
+	icon_state = "gangtool-blue"
 
 #undef WAND_OPEN
 #undef WAND_BOLT
