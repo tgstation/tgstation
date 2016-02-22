@@ -18,7 +18,7 @@
 			new /datum/lung_gas/sleep_agent("/datum/gas/sleeping_agent", trace_gas=1, min_giggle_pp=1, min_para_pp=5, min_sleep_pp=10),
 		),
 		"plasma" = list(
-			new /datum/lung_gas/metabolizable("plasma", min_pp=16, max_pp=280),
+			new /datum/lung_gas/metabolizable("toxins", min_pp=16, max_pp=280),
 			new /datum/lung_gas/waste("oxygen",         max_pp=10),
 			new /datum/lung_gas/sleep_agent("/datum/gas/sleeping_agent", trace_gas=1, min_giggle_pp=1, min_para_pp=5, min_sleep_pp=10),
 		)
