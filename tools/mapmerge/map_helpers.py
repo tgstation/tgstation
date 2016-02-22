@@ -92,19 +92,19 @@ def merge_map(newfile, backupfile):
 
     #Recycle outdated keys with any new tile data, starting from the bottom of the dictionary
     i = 0
-    for key in reversed(tempDict):
+    for key, value in reversed(tempDict):
         recycled_key = key
         if len(unused_keys) > 0:
             recycled_key = unused_keys.pop()
 
-        for entry in tempGrid:
-            if tempGrid[entry] == None:
+        for coord, gridkey in tempGrid:
+            if gridkey == None:
                 continue
-            if tempGrid[entry] == key:
-                mergeGrid[entry] = recycled_key
-                tempGrid[entry] = None
+            if gridkey == key:
+                mergeGrid[coord] = recycled_key
+                tempGrid[coord] = None
 
-        originalDict[recycled_key] = tempDict[key]
+        originalDict[recycled_key] = value
 
     #if gaps in the key sequence were found, sort the dictionary for cleanliness
     if sort == 1:
@@ -124,8 +124,8 @@ def merge_map(newfile, backupfile):
 
 def write_dictionary(filename, dictionary):
     with open(filename, "w") as output:
-        for entry in dictionary:
-            output.write("\"{}\" = ({})\n".format(entry, ",".join(dictionary[entry])))
+        for key, value in dictionary.items():
+            output.write("\"{}\" = ({})\n".format(key, ",".join(value)))
 
 def write_grid(filename, grid):
     with open(filename, "a") as output:
@@ -143,10 +143,10 @@ def write_grid(filename, grid):
         output.write("\n")
 
 def search_data(dictionary, data):
-    for entry in dictionary:
-        if len(dictionary[entry]) == len(data):
-            if set(dictionary[entry]) == frozenset(data):
-                return entry
+    for key, value in dictionary.items():
+        if len(value) == len(data):
+            if set(value) == frozenset(data):
+                return key
 
 def generate_new_key(dictionary):
     last_key = next(reversed(dictionary))
@@ -275,27 +275,22 @@ def parse_map(map_file): #supports only one z level per file
         data = dict()
         data["dictionary"] = dictionary
         data["grid"] = grid
-        data["maxx"] = maxx
-        data["maxy"] = maxy
         return data
 
 #subtract keyB from keyA
 def key_difference(keyA, keyB):
     if len(keyA) != len(keyB):
-        return "you fucked up" #visions of fuckup...
+        return "you fucked up"
 
     Ayek = keyA[::-1]
     Byek = keyB[::-1]
-    difference = 0
+
     result = 0
     for i in range(0, len(keyA)):
         base = 52**i
-
         A = 26 if Ayek[i].isupper() else 0
         B = 26 if Byek[i].isupper() else 0
-
-        difference = ( (ord(Byek[i].lower()) + B) - (ord(Ayek[i].lower()) + A) ) * base
-        result += difference
+        result += ( (ord(Byek[i].lower()) + B) - (ord(Ayek[i].lower()) + A) ) * base
     return result
 
 def key_compare(keyA, keyB): #thanks byond for not respecting ascii
