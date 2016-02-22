@@ -19,7 +19,12 @@ var/list/admin_verbs_default = list(
 	/client/proc/reestablish_db_connection,/*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
-	/client/proc/stop_sounds
+	/client/proc/stop_sounds,
+	/client/proc/jumptoarea,
+	/client/proc/jumptokey,				/*allows us to jump to the location of a mob with a certain ckey*/
+	/client/proc/jumptomob,				/*allows us to jump to a specific mob*/
+	/client/proc/jumptoturf,			/*allows us to jump to a specific turf*/
+	/client/proc/jumptocoord			/*we ghost and jump to a coordinate*/
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
@@ -46,22 +51,16 @@ var/list/admin_verbs_admin = list(
 	/client/proc/giveruntimelog,		/*allows us to give access to runtime logs to somebody*/
 	/client/proc/getruntimelog,			/*allows us to access runtime logs to somebody*/
 	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
-	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
 	/client/proc/Getmob,				/*teleports a mob to our location*/
 	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
 //	/client/proc/sendmob,				/*sends a mob somewhere*/ -Removed due to it needing two sorting procs to work, which were executed every time an admin right-clicked. ~Errorage
-	/client/proc/jumptoarea,
-	/client/proc/jumptokey,				/*allows us to jump to the location of a mob with a certain ckey*/
-	/client/proc/jumptomob,				/*allows us to jump to a specific mob*/
-	/client/proc/jumptoturf,			/*allows us to jump to a specific turf*/
 	/client/proc/admin_call_shuttle,	/*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle,	/*allows us to cancel the emergency shuttle, sending it back to centcom*/
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_local_narrate,	/*sends text to all mobs within view of atom*/
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
-	/client/proc/toggle_AI_interact /*toggle admin ability to interact with machines as an AI*/
+	/client/proc/toggle_antag_hud 	/*toggle display of the admin antag hud*/
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -74,7 +73,6 @@ var/list/admin_verbs_sounds = list(
 	/client/proc/set_round_end_sound,
 	)
 var/list/admin_verbs_fun = list(
-	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
 	/client/proc/cinematic,
@@ -89,11 +87,13 @@ var/list/admin_verbs_fun = list(
 	/client/proc/forceEvent,
 	/client/proc/bluespace_artillery,
 	/client/proc/admin_change_sec_level,
-	/client/proc/toggle_nuke
+	/client/proc/toggle_nuke,
+	/client/proc/toggle_AI_interact /*toggle admin ability to interact with machines as an AI*/
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
-	/client/proc/respawn_character
+	/client/proc/respawn_character,
+	/client/proc/cmd_admin_dress,
 	)
 var/list/admin_verbs_server = list(
 	/datum/admins/proc/startnow,
@@ -115,13 +115,17 @@ var/list/admin_verbs_server = list(
 
 	)
 var/list/admin_verbs_debug = list(
+	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/restart_controller,
+	/client/proc/getruntimelog,			/*allows us to access runtime logs to somebody*/
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/cmd_debug_make_powernets,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_debug_del_all,
+	/client/proc/Getmob,				/*teleports a mob to our location*/
+	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
 	/client/proc/callproc,
