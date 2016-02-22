@@ -247,10 +247,11 @@ This file contains the arcane tome files as well as innate cultist emergency com
 		var/mob/living/carbon/C = user
 		C.apply_damage(0.1, BRUTE, pick("l_arm", "r_arm"))
 	if(entered_rune_name == "Call Forth The Geometer")
+		C.apply_damage(40, BRUTE, pick("l_arm", "r_arm"))
 		var/area/A = get_area(src)
 		var/locname = initial(A.name)
-		priority_announce("Figments from an eldritch god have begun pouring into [locname] from an unknown dimension. Disrupt the ritual before it reaches a critical point.","Central Command Higher Dimensionsal Affairs")
-		if(!do_after(user, 300, target = get_turf(user)))
+		priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual before it reaches a critical point.","Central Command Higher Dimensionsal Affairs")
+		if(!do_after(user, 500, target = get_turf(user)))
 		return
 	if(!do_after(user, 50, target = get_turf(user)))
 		return
