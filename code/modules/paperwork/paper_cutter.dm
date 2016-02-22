@@ -5,7 +5,8 @@
 	icon_state = "papercutter-cutter"
 	var/obj/item/weapon/paper/storedpaper = null
 	var/obj/item/weapon/hatchet/cutterblade/storedcutter = null
-	var/cuttersecured = 1
+	var/cuttersecured = TRUE
+	pass_flags = PASSTABLE
 
 
 /obj/structure/papercutter/New()
