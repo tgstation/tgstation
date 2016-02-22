@@ -1,6 +1,11 @@
-#define THRESHOLD_ONE 3
-#define THRESHOLD_TWO 6
-#define THRESHOLD_THREE 9
+#define POWERUPTHRESHOLD 3 //How many souls are needed per stage.
+
+#define BASIC_DEMON 0
+#define BLOOD_LIZARD 1
+#define TRUE_DEMON 2
+#define ARCH_DEMON 3
+
+#define SOULVALUE soulsOwned.len-reviveNumber
 
 var/list/allDemons = list()
 
@@ -12,6 +17,7 @@ var/list/allDemons = list()
 	var/truename
 	var/list/datum/mind/soulsOwned = new
 	var/reviveNumber = 0
+	var/form = 0
 
 /proc/randomDemonInfo(var/name = randomDemonName())
 	var/datum/demoninfo/demon = new
@@ -161,21 +167,49 @@ var/list/allDemons = list()
 			return "That which holds the means of creation also holds the means of the demon's undoing."
 
 /datum/demoninfo/proc/add_soul(var/datum/mind/soul)
-	if(!soulsOwned.Find(soul))
+	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul
-	switch (soulsOwned.len)
-		if(THRESHOLD_ONE)
-			first_transformation()
-		if(THRESHOLD_TWO)
-			second_transformation()
-		if(THRESHOLD_THREE)
-			third_transformation()
+	if((SOULVALUE)%POWERUPTHRESHOLD == 0)
+		increase_form()
+
+/datum/demoninfo/proc/remove_soul(var/datum/mind/soul)
+	if(soulsOwned.Remove(soul))
+		check_regression()
+
+/datum/demoninfo/proc/check_regression()
+	if((SOULVALUE)<0)
+		//TODO LORDPIDEY: bad things happen when a demon has negative soul power
+	if((SOULVALUE)%POWERUPTHRESHOLD == POWERUPTHRESHOLD - 1)
+		regress()
+
+/datum/demoninfo/proc/increase_form()
+	switch(form)
+		if(BASIC_DEMON)
+			remove_basic()
+			set_blood_lizard()
+		if(BLOOD_LIZARD)
+			remove_blood_lizard()
+			set_true_demon()
+		if(TRUE_DEMON)
+			remove_true_demon()
+			set_arch_demon()
+
+/datum/demoninfo/proc/regress()
+	switch(form)
+		if(BLOOD_LIZARD)
+			remove_blood_lizard()
+			set_basic()
+		if(TRUE_DEMON)
+			remove_true_demon()
+			set_blood_lizard()
+
+/datum/demoninfo/proc/remove_basic()
+/datum/demoninfo/proc/remove_blood_lizard()
+/datum/demoninfo/proc/remove_true_demon()
+/datum/demoninfo/proc/set_basic()
+/datum/demoninfo/proc/set_blood_lizard()
+/datum/demoninfo/proc/set_true_demon()
+/datum/demoninfo/proc/set_arch_demon()
 			
 
-/datum/demoninfo/proc/first_transformation() //TODO LORDPIDEY: finish this.
-	return 1
-/datum/demoninfo/proc/second_transformation()
-	return 1
-/datum/demoninfo/proc/third_transformation()
-	return 1
