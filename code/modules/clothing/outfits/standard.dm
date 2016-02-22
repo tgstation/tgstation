@@ -356,11 +356,14 @@
 	var/obj/item/device/radio/R = H.ears
 	R.set_frequency(CENTCOM_FREQ)
 	R.freqlock = 1
-
+	H.set_species(/datum/species/corporate)
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)//Here you go Deuryn
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
+
+	var/obj/item/weapon/implant/adrenalin/deathsquad/A = new/obj/item/weapon/implant/adrenalin/deathsquad(H)
+	A.implant(H)
 
 
 	var/obj/item/weapon/card/id/W = H.wear_id
