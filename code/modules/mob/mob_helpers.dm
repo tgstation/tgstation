@@ -115,7 +115,7 @@
 		newphrase+="[newletter]";counter-=1
 	return newphrase
 	
-/proc/cultslur(n)
+/proc/cultslur(n) // Inflicted on victims of a stun talisman
 	var/phrase = html_decode(n)
 	var/leng = lentext(phrase)
 	var/counter=lentext(phrase)
