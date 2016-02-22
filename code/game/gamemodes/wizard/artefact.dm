@@ -599,3 +599,19 @@ var/global/list/multiverse = list()
 		target.IgniteMob()
 		GiveHint(target,1)
 	return ..()
+
+
+//Provides a decent heal, need to pump every 6 seconds
+/obj/item/organ/internal/heart/cursed/wizard
+	pump_delay = 60
+	heal_brute = 25
+	heal_burn = 25
+	heal_oxy = 25
+
+/obj/item/organ/internal/heart/cursed/wizard/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
+	if(H == user && istype(H))
+		playsound(user,'sound/effects/singlebeat.ogg',40,1)
+		user.drop_item()
+		Insert(user)
+	else
+		return ..()
