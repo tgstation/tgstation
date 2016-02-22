@@ -719,3 +719,24 @@ var/global/list/synth_flesh_disguises = list()
 			return ..()
 	else
 		return ..()
+
+/***********************************************************************/
+/datum/species/gangun
+	name = "Gangun"
+	id = "gangun"
+	say_mod = "annoys"
+	specflags = list(LIPS)
+	eyes = null
+	sexes = 0
+	roundstart = 1
+
+/datum/species/gangun/qualifies_for_rank(rank, list/features)
+	if(rank == "Assistant")
+		return 1
+	return 0
+
+/datum/species/gangun/handle_speech(message)
+	message = replacetext(message, "me", "me-sa")
+	message = replacetext(message, "you", "you-sa")
+	return message
+
