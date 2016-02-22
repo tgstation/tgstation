@@ -719,6 +719,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 	var/delayfraction = round(delay/numticks)
 	var/Location = user.loc
 	var/holding = user.get_active_hand()
+	var/target_location = target.loc
 	var/image/progbar
 	//var/image/barbar
 	if(user && user.client && user.client.prefs.progress_bars && target)
@@ -741,7 +742,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 		sleep(delayfraction)
 		//if(user.client && progbar.icon_state != oldstate)
 			//user.client.images.Remove(progbar)
-		if(!user || user.isStunned() || !(user.loc == Location))
+		if(!user || user.isStunned() || !(user.loc == Location) || !(target.loc == target_location))
 			if(progbar)
 				progbar.icon_state = "prog_bar_stopped"
 				spawn(2)
