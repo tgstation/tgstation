@@ -184,7 +184,7 @@
 		M.stuttering += 4
 		M.Dizzy(5)
 		if(iscultist(M) && prob(5))
--			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
+			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
 	if(data >= 75 && prob(33))	// 30 units, 135 seconds
 		if (!M.confused) M.confused = 1
 		M.confused += 3
