@@ -539,7 +539,7 @@ var/list/teleport_other_runes = list()
 	mob_to_revive.Beam(mob_to_sacrifice,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=20)
 	sleep(20)
 	if(mob_to_sacrifice)
-	mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice] disintegrates into a pile of bones[mob_to_revive ? ", the glowing tendril sinking into [mob_to_revive]'s body":""].</span>")
+	mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice] disintegrates into a pile of bones</span>")
 		return
 	mob_to_sacrifice.dust()
 	if(!mob_to_revive || mob_to_revive.stat != DEAD)
