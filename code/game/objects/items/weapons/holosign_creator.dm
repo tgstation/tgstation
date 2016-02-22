@@ -1,6 +1,6 @@
 /obj/item/weapon/holosign_creator
 	name = "holographic sign projector"
-	desc = "A handy-dandy hologaphic projector that displays a janitorial sign."
+	desc = "A handy-dandy holographic projector that displays a janitorial sign."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "signmaker"
 	item_state = "electronic"
@@ -28,10 +28,7 @@
 			signs.Remove(H)
 			qdel(H)
 		else
-			if(!T.density) //can't put holograms on a tile that has dense stuff
-				for(var/atom/movable/AM in T)
-					if(AM.density)
-						return
+			if(!is_blocked_turf(T)) //can't put holograms on a tile that has dense stuff
 				if(holocreator_busy)
 					user << "<span class='notice'>[src] is busy creating a hologram.</span>"
 					return
@@ -43,11 +40,10 @@
 							holocreator_busy = 0
 							return
 						holocreator_busy = 0
-						if(signs.len >= max_signs || T.density)
+						if(signs.len >= max_signs)
 							return
-						for(var/atom/movable/AM in T) //don't try to sneak dense stuff on our tile during the wait.
-							if(AM.density)
-								return
+						if(is_blocked_turf(T)) //don't try to sneak dense stuff on our tile during the wait.
+							return
 					H = new holosign_type(get_turf(target))
 					signs += H
 					user << "<span class='notice'>You create \a [H] with [src].</span>"
@@ -68,7 +64,7 @@
 
 /obj/item/weapon/holosign_creator/security
 	name = "security holobarrier projector"
-	desc = "A hologaphic projector that creates holographic security barriers."
+	desc = "A holographic projector that creates holographic security barriers."
 	icon_state = "signmaker_sec"
 	holosign_type = /obj/effect/overlay/holograph/barrier
 	creation_time = 30
@@ -76,7 +72,7 @@
 
 /obj/item/weapon/holosign_creator/engineering
 	name = "engineering holobarrier projector"
-	desc = "A hologaphic projector that creates holographic engineering barriers."
+	desc = "A holographic projector that creates holographic engineering barriers."
 	icon_state = "signmaker_engi"
 	holosign_type = /obj/effect/overlay/holograph/barrier/engineering
 	creation_time = 30
@@ -175,15 +171,3 @@
 
 /obj/effect/overlay/holograph/barrier/engineering
 	icon_state = "holosign_engi"
-
-/obj/item/weapon/caution
-	desc = "Caution! Wet Floor!"
-	name = "wet floor sign"
-	icon = 'icons/obj/janitor.dmi'
-	icon_state = "caution"
-	force = 1
-	throwforce = 3
-	throw_speed = 2
-	throw_range = 5
-	w_class = 2
-	attack_verb = list("warned", "cautioned", "smashed")
