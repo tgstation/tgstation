@@ -20,7 +20,6 @@
 	spawn(10) qdel(src)
 
 /obj/effect/overlay/temp
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	anchored = 1
 	layer = 4.1

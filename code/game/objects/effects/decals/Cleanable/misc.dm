@@ -23,7 +23,6 @@
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "dirt"
 	gender = PLURAL
 	density = 0
@@ -36,7 +35,6 @@
 	gender = PLURAL
 	density = 0
 	layer = 2
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "flour"
 
 /obj/effect/decal/cleanable/greenglow
@@ -46,7 +44,6 @@
 	density = 0
 	layer = 2
 	luminosity = 1
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "greenglow"
 
 /obj/effect/decal/cleanable/greenglow/ex_act()
@@ -57,7 +54,6 @@
 	desc = "Somebody should remove that."
 	density = 0
 	layer = 3
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb1"
 	burntime = 1
 
@@ -77,7 +73,6 @@
 	desc = "Somebody should remove that."
 	density = 0
 	layer = 3
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb2"
 
 //Vomit (sorry)
@@ -132,7 +127,6 @@
 /obj/effect/decal/cleanable/shreds
 	name = "shreds"
 	desc = "The shredded remains of what appears to be clothing."
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "shreds"
 	gender = PLURAL
 	density = 0
