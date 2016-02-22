@@ -268,7 +268,7 @@ Rite of Disorientation
 -				S.emp_act(1)
 -			if(iscarbon(target))
 -				var/mob/living/carbon/C = target
--				C.silent += 2
+-				C.silent += 4
 				C.stutter += 15
 				C.cultslur += 15
 				C.jitter += 15
