@@ -55,6 +55,7 @@
 		var/obj/item/organ/internal/brain/B = C_target.getorgan(/obj/item/organ/internal/brain)
 		if(B)
 			B.loc = get_turf(C_target)
+			M.death() //B.transfer_identity requires that the source mob is dead.
 			B.transfer_identity(C_target)
 			C_target.internal_organs -= B
 	var/datum/effect_system/spark_spread/sparks = new
