@@ -36,7 +36,7 @@
 	if(istype(P, /obj/item/weapon/hatchet/cutterblade) && !storedcutter)
 		if(!user.drop_item())
 			return
-		user << "<span class='notice'>You replace the [src]'s [P].</span>"
+		user << "<span class='notice'>You replace [src]'s [P].</span>"
 		P.loc = src
 		storedcutter = P
 		update_icon()
@@ -57,7 +57,7 @@
 		return
 
 	if(storedcutter && !cuttersecured)
-		user << "<span class='notice'>You remove \the [src]'s [storedcutter].</span>"
+		user << "<span class='notice'>You remove [src]'s [storedcutter].</span>"
 		user.put_in_hands(storedcutter)
 		storedcutter = null
 		update_icon()
