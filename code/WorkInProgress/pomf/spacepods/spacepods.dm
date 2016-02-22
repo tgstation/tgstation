@@ -143,7 +143,7 @@
 				to_chat(user, "<span class='notice'>The pod already has a weapon system, remove it first.</span>")
 				return
 			else
-				if(user.drop_item(W, equipment_system))
+				if(user.drop_item(W, src))
 					to_chat(user, "<span class='notice'>You insert \the [W] into the equipment system.</span>")
 					equipment_system.weapon_system = W
 					equipment_system.weapon_system.my_atom = src
