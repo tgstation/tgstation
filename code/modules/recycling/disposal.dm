@@ -1007,7 +1007,10 @@
 /obj/structure/disposalpipe/sortjunction/New()
 	. = ..()
 	if(sortType && !sort_tag)
-		sort_tag = uppertext(DEFAULT_TAGGER_LOCATIONS[sortType])
+		sort_tag = uppertext(map.default_tagger_locations[sortType])
+
+	else if(sort_tag)
+		sort_tag = uppertext(sort_tag)
 
 	updatedir()
 	updatedesc()
@@ -1062,84 +1065,162 @@
 	return P
 
 ////////////////// SortJunctionSubtypes//////////////////
-//Box
+
 /obj/structure/disposalpipe/sortjunction/Disposals
-	sortType = 1
+	sort_tag = DISP_DISPOSALS
+
+/obj/structure/disposalpipe/sortjunction/Disposals/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Cargo
-	sortType = 2
+	sort_tag = DISP_CARGO_BAY
+
+/obj/structure/disposalpipe/sortjunction/Cargo/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/QM
-	sortType = 3
+	sort_tag = DISP_QM_OFFICE
+
+/obj/structure/disposalpipe/sortjunction/QM/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Engineering
-	sortType = 4
+	sort_tag = DISP_ENGINEERING
+
+/obj/structure/disposalpipe/sortjunction/Engineering/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/CE
-	sortType = 5
+	sort_tag = DISP_CE_OFFICE
+
+/obj/structure/disposalpipe/sortjunction/CE/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Atmos
-	sortType = 6
+	sort_tag = DISP_ATMOSPHERICS
+
+/obj/structure/disposalpipe/sortjunction/Atmos/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Security
-	sortType = 7
+	sort_tag = DISP_SECURITY
+
+/obj/structure/disposalpipe/sortjunction/Security/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/HoS
-	sortType = 8
+	sort_tag = DISP_HOS_OFFICE
+
+/obj/structure/disposalpipe/sortjunction/HoS/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Medbay
-	sortType = 9
+	sort_tag = DISP_MEDBAY
+
+/obj/structure/disposalpipe/sortjunction/Medbay/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/CMO
-	sortType = 10
+	sort_tag = DISP_CMO_OFFICE
+
+/obj/structure/disposalpipe/sortjunction/CMO/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Chemistry
-	sortType = 11
+	sort_tag = DISP_CHEMISTRY
+
+/obj/structure/disposalpipe/sortjunction/Chemistry/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Research
-	sortType = 12
+		sort_tag = DISP_RESEARCH
+
+/obj/structure/disposalpipe/sortjunction/Research/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/RD
-	sortType = 13
+		sort_tag = DISP_RD_OFFICE
+
+/obj/structure/disposalpipe/sortjunction/RD/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Robotics
-	sortType = 14
+		sort_tag = DISP_ROBOTICS
+
+/obj/structure/disposalpipe/sortjunction/Robotics/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/HoP
-	sortType = 15
+		sort_tag = DISP_HOP_OFFICE
+
+/obj/structure/disposalpipe/sortjunction/HoP/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Library
-	sortType = 16
+		sort_tag = DISP_LIBRARY
+
+/obj/structure/disposalpipe/sortjunction/Library/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Chapel
-	sortType = 17
+		sort_tag = DISP_CHAPEL
+
+/obj/structure/disposalpipe/sortjunction/Chapel/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Theatre
-	sortType = 18
+		sort_tag = DISP_THEATRE
+
+/obj/structure/disposalpipe/sortjunction/Theatre/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Bar
-	sortType = 19
+		sort_tag = DISP_BAR
+
+/obj/structure/disposalpipe/sortjunction/Bar/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Kitchen
-	sortType = 20
+		sort_tag = DISP_KITCHEN
+
+/obj/structure/disposalpipe/sortjunction/Kitchen/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Hydroponics
-	sortType = 21
+		sort_tag = DISP_HYDROPONICS
+
+/obj/structure/disposalpipe/sortjunction/Hydroponics/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Janitor
-	sortType = 22
+		sort_tag = DISP_JANITOR_CLOSET
+
+/obj/structure/disposalpipe/sortjunction/Janitor/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Genetics
-	sortType = 23
+		sort_tag = DISP_GENETICS
+
+/obj/structure/disposalpipe/sortjunction/Genetics/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Telecomms
-	sortType = 24
+		sort_tag = DISP_TELECOMMS
+
+/obj/structure/disposalpipe/sortjunction/Telecomms/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Mechanics
-	sortType = 25
+		sort_tag = DISP_MECHANICS
+
+/obj/structure/disposalpipe/sortjunction/Mechanics/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/sortjunction/Telescience
-	sortType = 26
+		sort_tag = DISP_TELESCIENCE
+
+/obj/structure/disposalpipe/sortjunction/Telescience/mirrored
+	icon_state = "pipe-j2s"
 
 //////////////////
 //a three-way junction that sorts objects destined for the mail office mail table (tomail = 1)
@@ -1150,6 +1231,9 @@
 	var/posdir = 0
 	var/negdir = 0
 	var/sortdir = 0
+
+/obj/structure/disposalpipe/wrapsortjunction/mirrored
+	icon_state = "pipe-j2s"
 
 /obj/structure/disposalpipe/wrapsortjunction/New()
 	. = ..()

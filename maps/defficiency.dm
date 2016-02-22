@@ -25,10 +25,38 @@
 			},
 		)
 
+	default_tagger_locations = list(
+		DISP_DISPOSALS,
+		DISP_CARGO_BAY,
+		DISP_QM_OFFICE,
+		DISP_ENGINEERING,
+		DISP_CE_OFFICE,
+		DISP_ATMOSPHERICS,
+		DISP_SECURITY,
+		DISP_HOS_OFFICE,
+		DISP_MEDBAY,
+		DISP_CMO_OFFICE,
+		DISP_CHEMISTRY,
+		DISP_RESEARCH,
+		DISP_RD_OFFICE,
+		DISP_ROBOTICS,
+		DISP_HOP_OFFICE,
+		DISP_LIBRARY,
+		DISP_CHAPEL,
+		DISP_THEATRE,
+		DISP_BAR,
+		DISP_KITCHEN,
+		DISP_HYDROPONICS,
+		DISP_JANITOR_CLOSET,
+		DISP_GENETICS,
+		null,
+		DISP_MECHANICS,
+		null
+	)
 
 //The central shuttle leads to both outposts
 /datum/map/active/New()
-	.=..()
+	. = ..()
 
 	mining_shuttle.name = "Asteroid Shuttle" //There is only one shuttle on defficiency now - the asteroid shuttle
 	mining_shuttle.req_access = list() //It's shared by miners and researchers, so remove access requirements
