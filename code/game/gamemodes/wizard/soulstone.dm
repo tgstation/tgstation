@@ -231,7 +231,7 @@
 	S.cancel_camera()
 	C.icon_state = "soulstone2"
 	C.name = "Soul Stone: [S.real_name]"
-	if(U && iswizard(U) || usability)
+	if(U && (iswizard(U) || usability))
 		S << "Your soul has been captured! You are now bound to [U.real_name]'s will. Help them succeed in their goals at all costs."
 	else if(U && iscultist(U))
 		S << "Your soul has been captured! You are now bound to the cult's will. Help them succeed in their goals at all costs."
