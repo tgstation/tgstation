@@ -92,12 +92,12 @@ def merge_map(newfile, backupfile):
 
     #Recycle outdated keys with any new tile data, starting from the bottom of the dictionary
     i = 0
-    for key, value in reversed(tempDict):
+    for key, value in reversed(tempDict.items()):
         recycled_key = key
         if len(unused_keys) > 0:
             recycled_key = unused_keys.pop()
 
-        for coord, gridkey in tempGrid:
+        for coord, gridkey in tempGrid.items():
             if gridkey == None:
                 continue
             if gridkey == key:
@@ -143,10 +143,12 @@ def write_grid(filename, grid):
         output.write("\n")
 
 def search_data(dictionary, data):
-    for key, value in dictionary.items():
-        if len(value) == len(data):
-            if set(value) == frozenset(data):
-                return key
+    found_data = None
+    try:
+        found_data = dictionary.values()[list(dictionary.keys()).index(data)]
+    except:
+        pass
+    return found_data
 
 def generate_new_key(dictionary):
     last_key = next(reversed(dictionary))
