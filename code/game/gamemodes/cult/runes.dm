@@ -450,7 +450,7 @@ var/list/teleport_other_runes = list()
 				log_game("Summon Nar-Sie rune failed - sacrifice not complete")
 				return
 		if(!cult_mode.eldergod)
-			for(var/mob/living/M in range(1,src))
+			for(var/mob/living/M in orange(1,src))
 				if(iscultist(M))
 					M << "<span class='warning'>The avatar of Nar-Sie is already on this plane!</span>"
 				log_game("Summon Nar-Sie rune failed - already summoned")
