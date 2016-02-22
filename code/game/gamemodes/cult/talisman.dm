@@ -252,30 +252,30 @@ Rite of Disorientation
 		
 /obj/item/weapon/paper/talisman/stun/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
--		user.whisper(invocation)
--		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", \
--							 "<span class='cultitalic'>You stun [target] with the talisman!</span>")
--		var/obj/item/weapon/weapons/holy_weapons = locate() in target
--		if(N)
--			target.visible_message("<span class='warning'>[target]'s holy weapon absorbs the talisman's light!</span>", \
--								   "<span class='userdanger'>Your null rod absorbs the blinding light!</span>")
--		else
--			target.Weaken(9)
--			target.Stun(9)
--			target.flash_eyes(1,1)
--			if(issilicon(target))
--				var/mob/living/silicon/S = target
--				S.emp_act(1)
--			if(iscarbon(target))
--				var/mob/living/carbon/C = target
--				C.silent += 4
+		user.whisper(invocation)
+		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", \
+							 "<span class='cultitalic'>You stun [target] with the talisman!</span>")
+		var/obj/item/weapon/weapons/holy_weapons = locate() in target
+		if(N)
+			target.visible_message("<span class='warning'>[target]'s holy weapon absorbs the talisman's light!</span>", \
+								   "<span class='userdanger'>Your null rod absorbs the blinding light!</span>")
+		else
+			target.Weaken(9)
+			target.Stun(9)
+			target.flash_eyes(1,1)
+			if(issilicon(target))
+				var/mob/living/silicon/S = target
+				S.emp_act(1)
+			if(iscarbon(target))
+				var/mob/living/carbon/C = target
+				C.silent += 4
 				C.stutter += 15
 				C.cultslur += 15
 				C.jitter += 15
--		user.drop_item()
--		qdel(src)
--		return
--	..()
+		user.drop_item()
+		qdel(src)
+		return
+	..()
 
 /obj/item/weapon/paper/talisman/armor/invoke(mob/living/user)
 	user.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [user]!</span>", \
