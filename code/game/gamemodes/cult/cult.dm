@@ -39,10 +39,10 @@
 		user.whisper(message)
 	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
 	for(var/mob/M in mob_list)
-		if(clear || !ishuman(user))
-				M << "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
-		else //Emergency comms
-				M << "<span class='purple'><i>Acolyte ???:</i> <b>[message]</b></span>"
+	if(clear || !ishuman(user))
+		M << "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
+	else //Emergency comms
+		M << "<span class='purple'><i>Acolyte ???:</i> <b>[message]</b></span>"
 	log_say("[user.real_name]/[user.key] : [message]")
 
 
