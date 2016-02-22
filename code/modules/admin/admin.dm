@@ -44,7 +44,10 @@ var/global/BSACooldown = 0
 	body += "<A href='?_src_=holder;boot2=\ref[M]'>Kick</A> | "
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
-	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "
+	if(jobban_isbanned(M, "appearance"))
+		body += "<A href='?_src_=holder;jobban3=appearance;jobban4=\ref[M]'><font color='red'>Appearance Ban</font></A> | "
+	else
+		body += "<A href='?_src_=holder;jobban3=appearance;jobban4=\ref[M]'>Appearance Ban</A> | "
 	if(jobban_isbanned(M, "OOC"))
 		body+= "<A href='?_src_=holder;jobban3=OOC;jobban4=\ref[M]'><font color=red>OOCBan</font></A> | "
 	else
