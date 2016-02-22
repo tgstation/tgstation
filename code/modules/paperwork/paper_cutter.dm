@@ -1,19 +1,33 @@
-/obj/structure/papercutter
+/obj/item/weapon/papercutter
 	name = "paper cutter"
 	desc = "Standard office equipment. Precisely cuts paper using a large blade."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "papercutter-cutter"
+	force = 5
+	throwforce = 5
+	w_class = 3
 	var/obj/item/weapon/paper/storedpaper = null
 	var/obj/item/weapon/hatchet/cutterblade/storedcutter = null
 	var/cuttersecured = TRUE
 	pass_flags = PASSTABLE
 
 
-/obj/structure/papercutter/New()
+/obj/item/weapon/papercutter/New()
 	storedcutter = new /obj/item/weapon/hatchet/cutterblade(src)
 
 
-/obj/structure/papercutter/update_icon()
+/obj/item/weapon/papercutter/suicide_act(mob/user)
+	if(storedcutter)
+		user.visible_message("<span class='suicide'>[user] is beheading \himself with [src]! It looks like \he's trying to commit suicide.</span>")
+		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+		return (BRUTELOSS)
+	else
+		user.visible_message("<span class='suicide'>[user] repeatedly bashes [src] against \his head! It looks like \he's trying to commit suicide.</span>")
+		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
+		return (BRUTELOSS)
+
+
+/obj/item/weapon/papercutter/update_icon()
 	overlays.Cut()
 	if(!storedcutter)
 		icon_state = "papercutter"
@@ -24,7 +38,7 @@
 	return
 
 
-/obj/structure/papercutter/attackby(obj/item/P, mob/user, params)
+/obj/item/weapon/papercutter/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/paper) && !storedpaper)
 		if(!user.drop_item())
 			return
@@ -50,7 +64,7 @@
 	..()
 
 
-/obj/structure/papercutter/attack_hand(mob/user)
+/obj/item/weapon/papercutter/attack_hand(mob/user)
 	..()
 	src.add_fingerprint(user)
 	if(!storedcutter)
@@ -71,6 +85,27 @@
 		new /obj/item/weapon/paperslip(src.loc)
 		new /obj/item/weapon/paperslip(src.loc)
 		update_icon()
+
+
+/obj/item/weapon/papercutter/MouseDrop(atom/over_object)
+	var/mob/M = usr
+	if(M.incapacitated() || !Adjacent(M))
+		return
+
+	if(over_object == M)
+		M.put_in_hands(src)
+
+	else if(istype(over_object, /obj/screen))
+		switch(over_object.name)
+			if("r_hand")
+				if(!remove_item_from_storage(M))
+					M.unEquip(src)
+				M.put_in_r_hand(src)
+			if("l_hand")
+				if(!remove_item_from_storage(M))
+					M.unEquip(src)
+				M.put_in_l_hand(src)
+	add_fingerprint(M)
 
 
 /obj/item/weapon/paperslip
