@@ -546,7 +546,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_weapons/martialarts
 	name = "Martial Arts Scroll"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
-			deflecting all ranged weapon fire, but you will also refuse to use dishonorable ranged weaponry."
+			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/weapon/sleeping_carp_scroll
 	cost = 17
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
