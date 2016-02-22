@@ -1,0 +1,4 @@
+author: jeroen52
+changes: 
+  - rscadd : Added a new core module board, HOGAN. Does not spawn in AI Upload at roundstart, you need to print this board.
+delete-after: true

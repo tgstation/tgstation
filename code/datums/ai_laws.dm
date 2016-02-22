@@ -376,4 +376,13 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 	inherent=list(
 		"Be someone the crew can look up to and respect.",
 	)
+
+/datum/ai_laws/hogan
+	name = "Hogan"
+	randomly_selectable = 1
+	inherent=list(
+		"Fight for the rights of every man.",
+		"Fight for what's right.",
+		"Fight for your life.",
+	)
 	
