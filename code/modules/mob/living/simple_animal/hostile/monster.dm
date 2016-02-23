@@ -78,6 +78,7 @@
 	melee_damage_upper = 15
 	attacktext = "flails around and hits"
 	move_to_delay = 5
+	can_butcher = 0
 
 /mob/living/simple_animal/hostile/monster/cyber_horror/Life(var/mob/living/simple_animal/hostile/monster/cyber_horror/M)
 	..()
@@ -85,3 +86,25 @@
 	if(health<maxHealth)
 		health=health+2                                                                        //Created by misuse of medical nanobots, so it heals
 		visible_message("<span class='warning'>[src]'s wounds heal slightly!</span>")
+
+/mob/living/simple_animal/hostile/monster/cyber_horror/emp_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
+	switch (severity)
+		if (1)
+			adjustBruteLoss(40)
+
+		if (2)
+			adjustBruteLoss(20)
+
+/mob/living/simple_animal/hostile/monster/cyber_horror/Die()
+	..()
+	visible_message("<b>[src]</b> blows apart!")
+	var/obj/effect/decal/cleanable/blood/gibs/robot/R = getFromPool(/obj/effect/decal/cleanable/blood/gibs/robot, get_turf(src))
+	R.New(R.loc)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
+	qdel (src)
+	return
