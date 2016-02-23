@@ -13,7 +13,7 @@
 	template = map_templates[map]
 
 	var/list/preview = list()
-	for(var/turf/S in template.get_affected_turfs(T,centered = TRUE))
+	for(var/S in template.get_affected_turfs(T,centered = TRUE))
 		preview += image('icons/turf/overlays.dmi',S,"greenOverlay")
 	usr.client.images += preview
 	if(alert(usr,"Confirm location.","Template Confirm","Yes","No") == "Yes")
