@@ -249,7 +249,7 @@
 	list_reagents = list("mulligan" = 1)
 
 /obj/item/weapon/reagent_containers/syringe/gluttony
-	name = "Gluttony's Blesssing"
+	name = "Gluttony's Blessing"
 	desc = "A syringe recovered from a dread place. It probably isn't wise to use."
 	amount_per_transfer_from_this = 1
 	volume = 1

@@ -65,7 +65,7 @@
 
 /obj/effect/gluttony
 	name = "gluttony's wall"
-	desc = "Only those who truely indulge may pass."
+	desc = "Only those who truly indulge may pass."
 	anchored = 1
 	density = 1
 	icon_state = "blob"
@@ -96,3 +96,6 @@
 	T.ChangeTurf(/turf/simulated/chasm/straight_down)
 	var/turf/simulated/chasm/straight_down/C = T
 	C.drop(user)
+
+//Sloth - I'll finish this item later
+
