@@ -180,8 +180,10 @@ var/list/allDemons = list()
 /datum/demoninfo/proc/check_regression()
 	if((SOULVALUE)<0)
 		//TODO LORDPIDEY: bad things happen when a demon has negative soul power
+		return
 	if((SOULVALUE)%POWERUPTHRESHOLD == POWERUPTHRESHOLD - 1)
 		regress()
+		return
 
 /datum/demoninfo/proc/increase_form()
 	switch(form)
@@ -210,6 +212,53 @@ var/list/allDemons = list()
 /datum/demoninfo/proc/set_basic()
 /datum/demoninfo/proc/set_blood_lizard()
 /datum/demoninfo/proc/set_true_demon()
+
+
+/datum/demoninfo/proc/set_true_demon()  //TODO LORDPIDEY: Finish these procs
+	user << "<span class='warning'>You feel as though your form is about to ascend."
+	sleep(50)
+	H.underwear = "Nude"
+	H.undershirt = "Nude"
+	H.socks = "Nude"
+	H.faction |= "hell"
+
+/*
 /datum/demoninfo/proc/set_arch_demon()
-			
+	var/mob/living/H = user
+	user << "<span class='warning'>You feel as though your form is about to ascend."
+	sleep(50)
+	H.visible_message("<span class='warning'>[H]'s skin begins to erupt with spikes.</span>", \
+		"<span class='warning'>Your flesh begins creating a shield around yourself.</span>")
+	sleep(100)
+	H.visible_message("<span class='warning'>The horns on [H]'s head slowly grow and elongate.</span>", \
+		"<span class='warning'>Your body continues to mutate. Your telepathic abilities grow.</span>") //y-your horns are so big, senpai...!~
+	sleep(90)
+	H.visible_message("<span class='warning'>[H]'s body begins to violently stretch and contort.</span>", \
+		"<span class='warning'>You begin to rend apart the final barriers to ultimate power.</span>")
+	sleep(40)
+	H << "<i><b>Yes!</b></i>"
+	sleep(10)
+	H << "<i><b><span class='big'>YES!!</span></b></i>"
+	sleep(10)
+	H << "<i><b><span class='reallybig'>YE--</span></b></i>"
+	sleep(1)
+	world << "<font size=5><span class='danger'><b>\"SLOTH, WRATH, GLUTTONY, ACEDIA, ENVY, GREED, PRIDE! FIRES OF HELL AWAKEN!!\"</font></span>"
+	world << 'sound/hallucinations/veryfar_noise.ogg'
+	var/mob/A = new /mob/living/simple_animal/ascendant_shadowling/arch_demon(H.loc)
+	for(var/obj/effect/proc_holder/spell/S in H.mind.spell_list)
+		H.mind.remove_spell(S)
+	//TODO LORDPIDEY: add appropriate spells here.
+	H.mind.transfer_to(A)
+	A.name = truename
+	A.real_name = truename
+	H.invisibility = 60
+	H.loc = A
+	sleep(50)
+	if(!ticker.mode.demon_ascended)
+		SSshuttle.emergency.request(null, 0.3)
+	ticker.mode.demon_ascended = 1
+	qdel(H)
+	*/
+
+
 
