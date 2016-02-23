@@ -39,10 +39,11 @@
 		user.whisper(message)
 	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
 	for(var/mob/M in mob_list)
-	if(clear || !ishuman(user))
-		M << "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
-	else //Emergency comms
-		M << "<span class='purple'><i>Acolyte ???:</i> <b>[message]</b></span>"
+		if(iscultist(M) || (M in dead_mob_list))
+			if(clear || !ishuman(user))
+				M << "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
+			else //Emergency comms
+				M << "<span class='purple'><i>Acolyte ???:</i> <b>[message]</b></span>"
 	log_say("[user.real_name]/[user.key] : [message]")
 
 
@@ -116,17 +117,11 @@ var/finished = 0
 		else
 			message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
 
-	for(var/datum/mind/cult_mind in cult)
-		equip_cultist(cult_mind.current)
-		update_cult_icons_added(cult_mind)
-		cult_mind.current << "<span class='userdanger'>You are a member of the cult!</span>"
-		memorize_cult_objectives(cult_mind)
-	..()
 
 
 /datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
 	for(var/obj_count = 1,obj_count <= cult_objectives.len,obj_count++)
-	var/explanation
+		var/explanation
 		switch(cult_objectives[obj_count])
 			if("survive")
 				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
@@ -246,9 +241,10 @@ var/finished = 0
 		return 0
 	else
 		return 1
-
+		
 
 /datum/game_mode/cult/declare_completion()
+
 	if(!check_cult_victory())
 		feedback_set_details("round_end_result","win - cult win")
 		feedback_set("round_end_result",acolytes_survived)
@@ -257,6 +253,7 @@ var/finished = 0
 		feedback_set_details("round_end_result","loss - staff stopped the cult")
 		feedback_set("round_end_result",acolytes_survived)
 		world << "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>"
+
 	var/text = ""
 
 	if(cult_objectives.len)
