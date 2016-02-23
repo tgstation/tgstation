@@ -271,7 +271,7 @@ Rite of Disorientation
 				C.silent += 4
 				C.stuttering += 15
 				C.cultslurring += 15
-				C.Jitter(15)
+				C.jitter(15)
 		user.drop_item()
 		qdel(src)
 		return
