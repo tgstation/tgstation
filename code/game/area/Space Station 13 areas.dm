@@ -788,6 +788,14 @@ proc/process_adminbus_teleport_locs()
 	name = "Ghetto Bar"
 	icon_state = "ghettobar"
 
+/area/maintenance/ghettotheatre
+	name = "Ghetto Theatre"
+	icon_state = "ghettotheatre"
+
+/area/maintenance/ghettomorgue
+	name = "Ghetto Morgue"
+	icon_state = "ghettomorgue"
+
 //Hallway
 
 /area/hallway/primary/fore
