@@ -65,6 +65,7 @@
 	var/acolytes_survived = 0
 
 	var/datum/mind/sacrifice_target = null//The target to be sacrificed
+	
 
 /datum/game_mode/cult/announce()
 	world << "<B>The current game mode is - Cult!</B>"
@@ -98,6 +99,22 @@
 	return (cult.len>=required_enemies)
 
 
+/datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
+	for(var/obj_count = 1,obj_count <= cult_objectives.len,obj_count++)
+		var/explanation
+		switch(cult_objectives[obj_count])
+			if("survive")
+				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
+			if("sacrifice")
+				if(sacrifice_target)
+					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the Sacrifice rune and three acolytes to do so."
+				else
+					explanation = "Free objective."
+			if("eldergod")
+				explanation = "Summon Nar-Sie via the rune 'Call Forth The Geometer'. It will only work if nine acolytes stand on and around it."
+		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
+		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
+
 /datum/game_mode/cult/post_setup()
 	modePlayer += cult
 	if("sacrifice" in cult_objectives)
@@ -116,23 +133,6 @@
 		else
 			message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
 
-
-
-/datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
-	for(var/obj_count = 1,obj_count <= cult_objectives.len,obj_count++)
-		var/explanation
-		switch(cult_objectives[obj_count])
-			if("survive")
-				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
-			if("sacrifice")
-				if(sacrifice_target)
-					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the Sacrifice rune and three acolytes to do so."
-				else
-					explanation = "Free objective."
-			if("eldergod")
-				explanation = "Summon Nar-Sie via the rune 'Call Forth The Geometer'. It will only work if nine acolytes stand on and around it."
-		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
-		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
