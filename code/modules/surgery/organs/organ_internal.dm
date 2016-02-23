@@ -151,12 +151,14 @@
 
 /obj/item/organ/internal/heart/cursed/on_life()
 	if(world.time > (last_pump + pump_delay))
-		if(ishuman(owner))
+		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/H = owner
 			H.vessel.remove_reagent("blood",blood_loss)
 			H << "<span class = 'userdanger'>You have to keep pumping your blood!</span>"
 			if(H.client)
 				H.client.color = "red" //bloody screen so real
+		else
+			last_pump = world.time //lets be extra fair *sigh*
 
 /obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/M, special = 0)
 	..()
