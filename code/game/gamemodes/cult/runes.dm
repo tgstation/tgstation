@@ -586,8 +586,7 @@ var/list/teleport_other_runes = list()
 	invocation = "Nikt'o barada kla'atu!"
 	icon_state = "4"
 	color = rgb(255, 255, 255)
-	grammar = "karazet geeri nahlizet"
-
+	
 /obj/effect/rune/true_sight/invoke()
 	visible_message("<span class='warning'>[src] explodes in a flash of blinding light!</span>")
 	for(var/mob/dead/observer/O in orange(3,src))
@@ -605,8 +604,7 @@ var/list/teleport_other_runes = list()
 	invocation = "By'o isit!"
 	icon_state = "4"
 	color = rgb(0, 150, 0)
-	grammar = "geeri nahlizet jatkaa"
-
+	
 /obj/effect/rune/make_runes_fake/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] flares brightly, then slowly dulls and appears mundane.</span>")
 	for(var/obj/effect/rune/R in range(3,src))
