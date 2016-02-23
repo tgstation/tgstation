@@ -116,7 +116,7 @@ var/next_mob_id = 0
 		if(!M.client)
 			continue
 		var/msg = message
-		if(M.see_invisible<invisibility || T != loc)//if src is inside something or invisible to us,
+		if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
 			if(blind_message) // then people see blind message if there is one, otherwise nothing.
 				msg = blind_message
 			else
