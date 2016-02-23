@@ -2322,8 +2322,9 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				to_chat(H, "<b><span class='warning'>Something doesn't feel right...</span></b>")
-				spawn(6)
+				spawn(60)
 					to_chat(H, "<b><span class='warning'>Something bursts out from inside you!</span></b>")
+					message_admins("[key_name(M)] has gibbed and spawned a new cyber horror due to nanobots. ([formatJumpTo(M)])")
 					H.visible_message("<b><span class='warning'>[H]'s body rips aparts to reveal something underneath!</b></span>")
 					new /mob/living/simple_animal/hostile/monster/cyber_horror(H.loc)
 					H.gib()

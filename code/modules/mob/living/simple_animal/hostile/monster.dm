@@ -79,6 +79,7 @@
 	attacktext = "flails around and hits"
 	move_to_delay = 5
 	can_butcher = 0
+	attack_sound = 'sound/weapons/hivehand_empty.ogg'
 
 /mob/living/simple_animal/hostile/monster/cyber_horror/Life(var/mob/living/simple_animal/hostile/monster/cyber_horror/M)
 	..()
