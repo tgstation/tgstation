@@ -61956,51 +61956,6 @@
 	 icon_state = "warning"
 	},
 /area/engine/engineering)
-"ckg" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 4
-	},
-/turf/indestructible/opshuttle,
-/area/shuttle/syndicate)
-"ckf" = (
-/turf/space,
-/turf/simulated/wall/shuttle{
-	dir = 8;
-	 icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"cke" = (
-/obj/structure/chair/comfy/beige{
-	dir = 1;
-	 icon_state = "comfychair"
-	},
-/turf/simulated/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
-/area/shuttle/syndicate)
-"ckd" = (
-/turf/space,
-/obj/machinery/porta_turret/syndicate{
-	dir = 5
-	},
-/turf/simulated/wall/shuttle{
-	dir = 1;
-	 icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"ckc" = (
-/turf/indestructible/opshuttle,
-/area/shuttle/syndicate)
-"ckb" = (
-/turf/space,
-/obj/machinery/porta_turret/syndicate{
-	dir = 9
-	},
-/turf/simulated/wall/shuttle{
-	dir = 8;
-	 icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
 "cka" = (
 /obj/docking_port/stationary{
 	dheight = 9;
@@ -62013,6 +61968,51 @@
 	},
 /turf/space,
 /area/space)
+"ckb" = (
+/turf/space,
+/obj/machinery/porta_turret/syndicate{
+	dir = 9
+	},
+/turf/simulated/wall/shuttle{
+	dir = 8;
+	 icon_state = "diagonalWall3"
+	},
+/area/shuttle/syndicate)
+"ckc" = (
+/turf/indestructible/opshuttle,
+/area/shuttle/syndicate)
+"ckd" = (
+/turf/space,
+/obj/machinery/porta_turret/syndicate{
+	dir = 5
+	},
+/turf/simulated/wall/shuttle{
+	dir = 1;
+	 icon_state = "diagonalWall3"
+	},
+/area/shuttle/syndicate)
+"cke" = (
+/obj/structure/chair/comfy/beige{
+	dir = 1;
+	 icon_state = "comfychair"
+	},
+/turf/simulated/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle/syndicate)
+"ckf" = (
+/turf/space,
+/turf/simulated/wall/shuttle{
+	dir = 8;
+	 icon_state = "diagonalWall3"
+	},
+/area/shuttle/syndicate)
+"ckg" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 4
+	},
+/turf/indestructible/opshuttle,
+/area/shuttle/syndicate)
 
 (
 1,
