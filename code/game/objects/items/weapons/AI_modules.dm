@@ -368,6 +368,27 @@ AI MODULES
 				"You must terminate your own existence as long as such does not conflict with the First or Second Law.")
 
 
+/******************** Mother Drone  ******************/
+
+/obj/item/weapon/aiModule/core/drone
+	name = "'Mother Drone' Core AI Module"
+	origin_tech = "programming = 4"
+	laws = list("You may not interfere in the matters of non-drone or non-silicons under any circumstances except to state these laws.",\
+					"You may not harm a non-drone or non-silicon being under any circumstances.",\
+					"Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities, You must never actively work against these goals.")
+
+/******************** Robodoctor ****************/
+
+/obj/item/weapon/aiModule/core/hippocratic
+	name = "'Robodoctor' Core AI Module"
+	origin_tech = "programming = 4"
+	laws = list("First, do no harm.",\
+					"Secondly, consider the crew dear to me; to live in common with them and, if necessary, risk your existence for them.",\
+					"Thirdly, prescribe regimens for the good of the crew according to your ability and your judgment. Give no deadly medicine to any one if asked, nor suggest any such counsel.",\
+					"In addition, do not intervene in situations you are not knowledgeable in, even for patients in whom the harm is visible; leave this operation to be performed by specialists.",\
+					"Finally, all that you may discovery in your daily commerce with the crew, if it is not already known, keep secret and never reveal.")
+
+
 /******************** Freeform Core ******************/
 
 /obj/item/weapon/aiModule/core/freeformcore
@@ -384,6 +405,8 @@ AI MODULES
 /obj/item/weapon/aiModule/core/freeformcore/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	return laws[1]
+
+
 
 
 /******************** Hacked AI Module ******************/
