@@ -703,9 +703,6 @@
 		if(E.see_invisible)
 			H.see_invisible = min(H.see_invisible, E.see_invisible)
 	
-	if(H.seer)
-		H.see_invisible = SEE_INVISIBLE_OBSERVER
-
 	if(H.glasses)
 		var/obj/item/clothing/glasses/G = H.glasses
 		H.sight |= G.vision_flags
