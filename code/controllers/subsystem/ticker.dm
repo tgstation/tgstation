@@ -201,8 +201,9 @@ var/datum/subsystem/ticker/ticker
 			if(S.name != "AI")
 				qdel(S)
 
-		if(!admins.len)
-			send2irc("Server", "Round just started with no admins online!")
+		var/list/adm = get_admin_counts()
+		if(!adm["present"])
+			send2irc("Server", "Round just started with no active admins online!")
 
 	return 1
 
