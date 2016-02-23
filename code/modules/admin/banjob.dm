@@ -10,7 +10,7 @@
 			return
 		if(query.NextRow())
 			var/reason = query.item[1]
-			return reason ? reason : 1 //we don't want to return "" if there is no ban reason, as that would evaluate to false
+			return reason || 1 //we don't want to return "" if there is no ban reason, as that would evaluate to false
 		else
 			return 0
 
@@ -19,7 +19,7 @@
 
 	if(rank in M.client.jobbancache)
 		var/reason = M.client.jobbancache[rank]
-		return (reason) ? reason : 1 //see above for why we need to do this
+		return reason || 1 //see above for why we need to do this
 	return 0
 
 /proc/jobban_buildcache(client/C)
