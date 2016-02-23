@@ -9,6 +9,11 @@
 	density = 1
 	pixel_x = -16
 	layer = 9
+	var/cut = FALSE
+	var/log_amount = 10
+
+/obj/structure/flora/tree/attackby(obj/item/weapon/W, mob/user, params)
+	if(W.sharpness ==
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"
@@ -21,7 +26,6 @@
 
 /obj/structure/flora/tree/pine/xmas
 	name = "xmas tree"
-	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_c"
 
 /obj/structure/flora/tree/pine/xmas/New()
@@ -32,7 +36,7 @@
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
 
-/obj/structure/flora/tree/festivus
+/obj/structure/festivus
 	name = "festivus pole"
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "festivus_pole"
