@@ -227,7 +227,6 @@
 			H.update_body()
 			H.update_mutations_overlay() //(hulk male/female)
 
-
 		if("hair")
 			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
 
@@ -251,3 +250,8 @@
 				H.eye_color = sanitize_hexcolor(new_eye_color)
 				H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 				H.update_body()
+	if(choice)
+		curse(user)
+
+/obj/structure/mirror/magic/proc/curse(mob/living/user)
+	return
