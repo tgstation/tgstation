@@ -656,12 +656,13 @@
 
 /obj/item/toy/minimeteor
 	name = "Mini Meteor"
-	desc = "Relive the horror of a meteor shower! SweetMeat-eor. Co is not responsible for any injury caused by Mini Meteor"
+	desc = "Relive the horrors of a meteor storm! Space Weather Incorporated is not responsible for any injuries caused by Mini Meteor."
 	icon = 'icons/obj/meteor.dmi'
-	icon_state = "flaming"
+	icon_state = "small"
 
-	attack_self(mob/user as mob)
-		playsound(user, 'sound/effects/bamf.ogg', 20, 1)
+/obj/item/toy/minimeteor/attack_self(mob/user as mob)
+
+	playsound(user, 'sound/effects/bamf.ogg', 20, 1)
 
 /obj/item/device/whisperphone
 	name = "whisperphone"
