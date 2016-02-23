@@ -88,8 +88,8 @@
 
 	check_breath(breath)
 
-	if(breath)
-		loc.assume_air(breath)
+	/*if(breath)
+		loc.assume_air(breath)*/
 
 /mob/living/carbon/proc/has_smoke_protection()
 	return 0
