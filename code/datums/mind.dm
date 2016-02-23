@@ -983,18 +983,18 @@
 					ticker.mode.add_cultist(src)
 					message_admins("[key_name_admin(usr)] has cult'ed [current].")
 					log_admin("[key_name(usr)] has cult'ed [current].")
-		if("tome")	
-			var/mob/living/carbon/human/H = current
+			if("tome")	
+				var/mob/living/carbon/human/H = current
 				if (istype(H))
 					var/obj/item/weapon/tome/T = new(H)
-
+				
 					var/list/slots = list (
 						"backpack" = slot_in_backpack,
 						"left pocket" = slot_l_store,
 						"right pocket" = slot_r_store,
 						"left hand" = slot_l_hand,
 						"right hand" = slot_r_hand,
-					)
+						)
 					var/where = H.equip_in_one_of_slots(T, slots)
 					if (!where)
 						usr << "<span class='danger'>Spawning tome failed!</span>"
@@ -1005,9 +1005,9 @@
 							B.orient2hud(H)
 							B.show_to(H)
 							
-		if("amulet")
-			if (!ticker.mode.equip_cultist(current))
-				usr << "<span class='danger'>Spawning amulet failed!</span>"					
+			if("amulet")
+				if (!ticker.mode.equip_cultist(current))
+					usr << "<span class='danger'>Spawning amulet failed!</span>"					
 							
 				
 	else if (href_list["wizard"])
