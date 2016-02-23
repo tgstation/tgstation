@@ -1,620 +1,867 @@
 macro "default"
-	elem
+	elem 
 		name = "TAB"
 		command = ".winset \"mainwindow.macro=hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
-	elem
+		is-disabled = false
+	elem 
 		name = "CENTER+REP"
 		command = ".center"
-	elem
+		is-disabled = false
+	elem 
 		name = "NORTHEAST"
 		command = ".northeast"
-	elem
+		is-disabled = false
+	elem 
 		name = "SOUTHEAST"
 		command = ".southeast"
-	elem
+		is-disabled = false
+	elem 
 		name = "SOUTHWEST"
 		command = ".southwest"
-	elem
+		is-disabled = false
+	elem 
 		name = "NORTHWEST"
 		command = ".northwest"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+WEST"
 		command = "westface"
-	elem
+		is-disabled = false
+	elem 
 		name = "WEST+REP"
 		command = ".west"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+NORTH"
 		command = "northface"
-	elem
+		is-disabled = false
+	elem 
 		name = "NORTH+REP"
 		command = ".north"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+EAST"
 		command = "eastface"
-	elem
+		is-disabled = false
+	elem 
 		name = "EAST+REP"
 		command = ".east"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+SOUTH"
 		command = "southface"
-	elem
+		is-disabled = false
+	elem 
 		name = "SOUTH+REP"
 		command = ".south"
-	elem
+		is-disabled = false
+	elem 
 		name = "INSERT"
 		command = "a-intent right"
-	elem
+		is-disabled = false
+	elem 
 		name = "DELETE"
 		command = "delete-key-pressed"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+1"
 		command = "a-intent help"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+2"
 		command = "a-intent disarm"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+3"
 		command = "a-intent grab"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+4"
 		command = "a-intent harm"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+A+REP"
 		command = ".west"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+B"
 		command = "resist"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+D+REP"
 		command = ".east"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+E"
 		command = "quick-equip"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+F"
 		command = "a-intent left"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+G"
 		command = "a-intent right"
-	elem
-		name = "CTRL+Q"
-		command = ".northwest"
-	elem
-		name = "CTRL+R"
-		command = ".southwest"
-	elem
-		name = "CTRL+S+REP"
-		command = ".south"
-	elem
-		name = "CTRL+W+REP"
-		command = ".north"
-	elem
-		name = "CTRL+X"
-		command = ".northeast"
-	elem
-		name = "CTRL+Y"
-		command = "Activate-Held-Object"
-	elem
-		name = "CTRL+Z"
-		command = "Activate-Held-Object"
-	elem
-		name = "F1"
-		command = "adminhelp"
-	elem
-		name = "CTRL+SHIFT+F1+REP"
-		command = ".options"
-	elem
-		name = "F2+REP"
-		command = ".screenshot auto"
-	elem
-		name = "SHIFT+F2+REP"
-		command = ".screenshot"
-	elem
-		name = "F5"
-		command = "Aghost"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+O"
 		command = "ooc"
-	elem
+		is-disabled = false
+	elem 
+		name = "CTRL+Q"
+		command = ".northwest"
+		is-disabled = false
+	elem 
+		name = "CTRL+R"
+		command = ".southwest"
+		is-disabled = false
+	elem 
+		name = "CTRL+S+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "CTRL+W+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "CTRL+X"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "F1"
+		command = "adminhelp"
+		is-disabled = false
+	elem 
+		name = "CTRL+SHIFT+F1+REP"
+		command = ".options"
+		is-disabled = false
+	elem 
+		name = "F2"
+		command = "ooc"
+		is-disabled = false
+	elem 
+		name = "F2+REP"
+		command = ".screenshot auto"
+		is-disabled = false
+	elem 
+		name = "SHIFT+F2+REP"
+		command = ".screenshot"
+		is-disabled = false
+	elem 
+		name = "F3"
+		command = "say"
+		is-disabled = false
+	elem 
+		name = "F4"
+		command = "me"
+		is-disabled = false
+	elem 
+		name = "F5"
+		command = "Asay"
+		is-disabled = false
+	elem 
 		name = "F6"
 		command = "Player-Panel"
-	elem
+		is-disabled = false
+	elem 
 		name = "F7"
 		command = "Admin-PM"
-	elem
+		is-disabled = false
+	elem 
 		name = "F8"
 		command = "Invisimin"
-	elem
+		is-disabled = false
+	elem 
 		name = "F12"
-		command = "F12"
+		command = "Aghost"
+		is-disabled = false
 
 macro "hotkeys"
-	elem
+	elem 
 		name = "TAB"
 		command = ".winset \"mainwindow.macro=default input.focus=true input.background-color=#d3b5b5\""
-	elem
+		is-disabled = false
+	elem 
 		name = "CENTER+REP"
 		command = ".center"
-	elem
+		is-disabled = false
+	elem 
 		name = "NORTHEAST"
 		command = ".northeast"
-	elem
+		is-disabled = false
+	elem 
 		name = "SOUTHEAST"
 		command = ".southeast"
-	elem
+		is-disabled = false
+	elem 
 		name = "SOUTHWEST"
 		command = ".southwest"
-	elem
+		is-disabled = false
+	elem 
 		name = "NORTHWEST"
 		command = ".northwest"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+WEST"
 		command = "westface"
-	elem
+		is-disabled = false
+	elem 
 		name = "WEST+REP"
 		command = ".west"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+NORTH"
 		command = "northface"
-	elem
+		is-disabled = false
+	elem 
 		name = "NORTH+REP"
 		command = ".north"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+EAST"
 		command = "eastface"
-	elem
+		is-disabled = false
+	elem 
 		name = "EAST+REP"
 		command = ".east"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+SOUTH"
 		command = "southface"
-	elem
+		is-disabled = false
+	elem 
 		name = "SOUTH+REP"
 		command = ".south"
-	elem
+		is-disabled = false
+	elem 
 		name = "INSERT"
 		command = "a-intent right"
-	elem
+		is-disabled = false
+	elem 
 		name = "DELETE"
 		command = "delete-key-pressed"
-	elem
+		is-disabled = false
+	elem 
 		name = "1"
 		command = "a-intent help"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+1"
 		command = "a-intent help"
-	elem
+		is-disabled = false
+	elem 
 		name = "2"
 		command = "a-intent disarm"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+2"
 		command = "a-intent disarm"
-	elem
+		is-disabled = false
+	elem 
 		name = "3"
 		command = "a-intent grab"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+3"
 		command = "a-intent grab"
-	elem
+		is-disabled = false
+	elem 
 		name = "4"
 		command = "a-intent harm"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+4"
 		command = "a-intent harm"
-	elem
+		is-disabled = false
+	elem 
 		name = "A+REP"
 		command = ".west"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+A+REP"
 		command = ".west"
-	elem
+		is-disabled = false
+	elem 
 		name = "B"
 		command = "resist"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+B"
 		command = "resist"
-	elem
+		is-disabled = false
+	elem 
 		name = "D+REP"
 		command = ".east"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+D+REP"
 		command = ".east"
-	elem
+		is-disabled = false
+	elem 
 		name = "E"
 		command = "quick-equip"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+E"
 		command = "quick-equip"
-	elem
+		is-disabled = false
+	elem 
 		name = "F"
 		command = "a-intent left"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+F"
 		command = "a-intent left"
-	elem
+		is-disabled = false
+	elem 
 		name = "G"
 		command = "a-intent right"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+G"
 		command = "a-intent right"
-	elem
+		is-disabled = false
+	elem 
 		name = "M"
 		command = "me"
-	elem
+		is-disabled = false
+	elem 
 		name = "O"
 		command = "ooc"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+O"
 		command = "ooc"
-	elem
+		is-disabled = false
+	elem 
 		name = "Q"
 		command = ".northwest"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+Q"
 		command = ".northwest"
-	elem
+		is-disabled = false
+	elem 
 		name = "R"
 		command = ".southwest"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+R"
 		command = ".southwest"
+		is-disabled = false
 	elem "s_key"
 		name = "S+REP"
 		command = ".south"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+S+REP"
 		command = ".south"
-	elem
+		is-disabled = false
+	elem 
 		name = "T"
 		command = "say"
+		is-disabled = false
 	elem "w_key"
 		name = "W+REP"
 		command = ".north"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+W+REP"
 		command = ".north"
-	elem
+		is-disabled = false
+	elem 
 		name = "X"
 		command = ".northeast"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+X"
 		command = ".northeast"
-	elem
+		is-disabled = false
+	elem 
 		name = "Y"
 		command = "Activate-Held-Object"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+Y"
 		command = "Activate-Held-Object"
-	elem
+		is-disabled = false
+	elem 
 		name = "Z"
 		command = "Activate-Held-Object"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
-	elem
+		is-disabled = false
+	elem 
 		name = "F1"
 		command = "adminhelp"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+SHIFT+F1+REP"
 		command = ".options"
-	elem
+		is-disabled = false
+	elem 
+		name = "F2"
+		command = "ooc"
+		is-disabled = false
+	elem 
 		name = "F2+REP"
 		command = ".screenshot auto"
-	elem
+		is-disabled = false
+	elem 
 		name = "SHIFT+F2+REP"
 		command = ".screenshot"
-	elem
+		is-disabled = false
+	elem 
+		name = "F3"
+		command = "say"
+		is-disabled = false
+	elem 
+		name = "F4"
+		command = "me"
+		is-disabled = false
+	elem 
 		name = "F5"
-		command = "Aghost"
-	elem
+		command = "Asay"
+		is-disabled = false
+	elem 
 		name = "F6"
 		command = "Player-Panel"
-	elem
+		is-disabled = false
+	elem 
 		name = "F7"
 		command = "Admin-PM"
-	elem
+		is-disabled = false
+	elem 
 		name = "F8"
 		command = "Invisimin"
-	elem
+		is-disabled = false
+	elem 
 		name = "F12"
-		command = "F12"
-
+		command = "Aghost"
+		is-disabled = false
 
 macro "robot-default"
-	elem
+	elem 
 		name = "TAB"
 		command = ".winset \"mainwindow.macro=robot-hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
-	elem
+		is-disabled = false
+	elem 
 		name = "CENTER+REP"
 		command = ".center"
-	elem
+		is-disabled = false
+	elem 
 		name = "NORTHEAST"
 		command = ".northeast"
-	elem
+		is-disabled = false
+	elem 
 		name = "SOUTHEAST"
 		command = ".southeast"
-	elem
+		is-disabled = false
+	elem 
 		name = "NORTHWEST"
 		command = "unequip-module"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+WEST"
 		command = "westface"
-	elem
+		is-disabled = false
+	elem 
 		name = "WEST+REP"
 		command = ".west"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+NORTH"
 		command = "northface"
-	elem
+		is-disabled = false
+	elem 
 		name = "NORTH+REP"
 		command = ".north"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+EAST"
 		command = "eastface"
-	elem
+		is-disabled = false
+	elem 
 		name = "EAST+REP"
 		command = ".east"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+SOUTH"
 		command = "southface"
-	elem
+		is-disabled = false
+	elem 
 		name = "SOUTH+REP"
 		command = ".south"
-	elem
+		is-disabled = false
+	elem 
 		name = "INSERT"
 		command = "a-intent right"
-	elem
+		is-disabled = false
+	elem 
 		name = "DELETE"
 		command = "delete-key-pressed"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+1"
 		command = "toggle-module 1"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+2"
 		command = "toggle-module 2"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+3"
 		command = "toggle-module 3"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+4"
 		command = "a-intent left"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+A+REP"
 		command = ".west"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+B"
 		command = "resist"
-	elem
-		name = "CTRL+O"
-		command = "ooc"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+D+REP"
 		command = ".east"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+F"
 		command = "a-intent left"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+G"
 		command = "a-intent right"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+Q"
 		command = "unequip-module"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+S+REP"
 		command = ".south"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+W+REP"
 		command = ".north"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+X"
 		command = ".northeast"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+Y"
 		command = "Activate-Held-Object"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
-	elem
+		is-disabled = false
+	elem 
 		name = "F1"
 		command = "adminhelp"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+SHIFT+F1+REP"
 		command = ".options"
-	elem
+		is-disabled = false
+	elem 
+		name = "F2"
+		command = "ooc"
+		is-disabled = false
+	elem 
 		name = "F2+REP"
 		command = ".screenshot auto"
-	elem
+		is-disabled = false
+	elem 
 		name = "SHIFT+F2+REP"
 		command = ".screenshot"
-	elem
+		is-disabled = false
+	elem 
+		name = "F3"
+		command = "say"
+		is-disabled = false
+	elem 
+		name = "F4"
+		command = "me"
+		is-disabled = false
+	elem 
 		name = "F5"
-		command = "Aghost"
-	elem
+		command = "Asay"
+		is-disabled = false
+	elem 
 		name = "F6"
 		command = "Player-Panel"
-	elem
+		is-disabled = false
+	elem 
 		name = "F7"
 		command = "Admin-PM"
-	elem
+		is-disabled = false
+	elem 
 		name = "F8"
 		command = "Invisimin"
-	elem
+		is-disabled = false
+	elem 
 		name = "F12"
-		command = "F12"
+		command = "Aghost"
+		is-disabled = false
 
 macro "robot-hotkeys"
-	elem
+	elem 
 		name = "TAB"
 		command = ".winset \"mainwindow.macro=robot-default input.focus=true input.background-color=#d3b5b5\""
-	elem
+		is-disabled = false
+	elem 
 		name = "CENTER+REP"
 		command = ".center"
-	elem
+		is-disabled = false
+	elem 
 		name = "NORTHEAST"
 		command = ".northeast"
-	elem
+		is-disabled = false
+	elem 
 		name = "SOUTHEAST"
 		command = ".southeast"
-	elem
+		is-disabled = false
+	elem 
 		name = "NORTHWEST"
 		command = "unequip-module"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+WEST"
 		command = "westface"
-	elem
+		is-disabled = false
+	elem 
 		name = "WEST+REP"
 		command = ".west"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+NORTH"
 		command = "northface"
-	elem
+		is-disabled = false
+	elem 
 		name = "NORTH+REP"
 		command = ".north"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+EAST"
 		command = "eastface"
-	elem
+		is-disabled = false
+	elem 
 		name = "EAST+REP"
 		command = ".east"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+SOUTH"
 		command = "southface"
-	elem
+		is-disabled = false
+	elem 
 		name = "SOUTH+REP"
 		command = ".south"
-	elem
+		is-disabled = false
+	elem 
 		name = "INSERT"
 		command = "a-intent right"
-	elem
+		is-disabled = false
+	elem 
 		name = "DELETE"
 		command = "delete-key-pressed"
-	elem
+		is-disabled = false
+	elem 
 		name = "1"
 		command = "toggle-module 1"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+1"
 		command = "toggle-module 1"
-	elem
+		is-disabled = false
+	elem 
 		name = "2"
 		command = "toggle-module 2"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+2"
 		command = "toggle-module 2"
-	elem
+		is-disabled = false
+	elem 
 		name = "3"
 		command = "toggle-module 3"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+3"
 		command = "toggle-module 3"
-	elem
+		is-disabled = false
+	elem 
 		name = "4"
 		command = "a-intent left"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+4"
 		command = "a-intent left"
-	elem
+		is-disabled = false
+	elem 
 		name = "A+REP"
 		command = ".west"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+A+REP"
 		command = ".west"
-	elem
+		is-disabled = false
+	elem 
 		name = "B"
 		command = "resist"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+B"
 		command = "resist"
-	elem
-		name = "O"
-		command = "ooc"
-	elem
-		name = "CTRL+O"
-		command = "ooc"
-	elem
+		is-disabled = false
+	elem 
 		name = "D+REP"
 		command = ".east"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+D+REP"
 		command = ".east"
-	elem
+		is-disabled = false
+	elem 
 		name = "F"
 		command = "a-intent left"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+F"
 		command = "a-intent left"
-	elem
+		is-disabled = false
+	elem 
 		name = "G"
 		command = "a-intent right"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+G"
 		command = "a-intent right"
-	elem
+		is-disabled = false
+	elem 
+		name = "O"
+		command = "ooc"
+		is-disabled = false
+	elem 
+		name = "CTRL+O"
+		command = "ooc"
+		is-disabled = false
+	elem 
 		name = "Q"
 		command = "unequip-module"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+Q"
 		command = "unequip-module"
+		is-disabled = false
 	elem "s_key"
 		name = "S+REP"
 		command = ".south"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+S+REP"
 		command = ".south"
-	elem
+		is-disabled = false
+	elem 
 		name = "T"
 		command = "say"
+		is-disabled = false
 	elem "w_key"
 		name = "W+REP"
 		command = ".north"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+W+REP"
 		command = ".north"
-	elem
+		is-disabled = false
+	elem 
 		name = "X"
 		command = ".northeast"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+X"
 		command = ".northeast"
-	elem
+		is-disabled = false
+	elem 
 		name = "Y"
 		command = "Activate-Held-Object"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+Y"
 		command = "Activate-Held-Object"
-	elem
+		is-disabled = false
+	elem 
 		name = "Z"
 		command = "Activate-Held-Object"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
-	elem
+		is-disabled = false
+	elem 
 		name = "F1"
 		command = "adminhelp"
-	elem
+		is-disabled = false
+	elem 
 		name = "CTRL+SHIFT+F1+REP"
 		command = ".options"
-	elem
+		is-disabled = false
+	elem 
+		name = "F2"
+		command = "ooc"
+		is-disabled = false
+	elem 
 		name = "F2+REP"
 		command = ".screenshot auto"
-	elem
+		is-disabled = false
+	elem 
 		name = "SHIFT+F2+REP"
 		command = ".screenshot"
-	elem
+		is-disabled = false
+	elem 
+		name = "F3"
+		command = "say"
+		is-disabled = false
+	elem 
+		name = "F4"
+		command = "me"
+		is-disabled = false
+	elem 
 		name = "F5"
-		command = "Aghost"
-	elem
+		command = "Asay"
+		is-disabled = false
+	elem 
 		name = "F6"
 		command = "Player-Panel"
-	elem
+		is-disabled = false
+	elem 
 		name = "F7"
 		command = "Admin-PM"
-	elem
+		is-disabled = false
+	elem 
 		name = "F8"
 		command = "Invisimin"
-	elem
+		is-disabled = false
+	elem 
 		name = "F12"
-		command = "F12"
+		command = "Aghost"
+		is-disabled = false
+
 
 
 menu "menu"
