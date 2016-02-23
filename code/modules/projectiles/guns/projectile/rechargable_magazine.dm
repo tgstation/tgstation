@@ -9,7 +9,7 @@
  	max_ammo = 20
 
 /obj/item/ammo_box/magazine/recharge/update_icon()
-	desc = "[initial(desc)] It has [stored_ammo.len] shots\s left."
+	desc = "[initial(desc)] It has [stored_ammo.len] shot\s left."
 	icon_state = "oldrifle-[round(ammo_count(),4)]"
 
 

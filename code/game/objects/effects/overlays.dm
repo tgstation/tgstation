@@ -20,7 +20,6 @@
 	spawn(10) qdel(src)
 
 /obj/effect/overlay/temp
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	anchored = 1
 	layer = 4.1
@@ -38,6 +37,16 @@
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
 	spawn(duration)
 		qdel(src)
+
+/obj/effect/overlay/temp/heal //color is white by default, set to whatever is needed
+	name = "healing glow"
+	icon_state = "heal"
+	duration = 15
+
+/obj/effect/overlay/temp/heal/New()
+	..()
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(-9, 0)
 
 /obj/effect/overlay/temp/explosion
 	name = "explosion"

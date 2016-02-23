@@ -203,7 +203,6 @@
 			update_internals_hud_icon(1)
 			return internal.remove_air_volume(volume_needed)
 
-
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used)
 		if(mind.changeling)
@@ -293,7 +292,7 @@
 		if(sleeping)
 			adjustStaminaLoss(-10)
 		else
-			adjustStaminaLoss(-2)
+			adjustStaminaLoss(-3)
 
 	if(sleeping)
 		handle_dreams()

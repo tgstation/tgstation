@@ -54,7 +54,7 @@
 	next_click = world.time + 1
 
 	if(client.click_intercept)
-		if(call(client.click_intercept, "ClickOn")(src, params, A))
+		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
 			return
 
 	var/list/modifiers = params2list(params)

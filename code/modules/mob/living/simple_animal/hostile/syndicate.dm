@@ -47,9 +47,7 @@
 	melee_damage_upper = 30
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
-	loot = list(/obj/effect/landmark/mobcorpse/syndicatesoldier,
-				/obj/item/weapon/melee/energy/sword/saber/red,
-				/obj/item/weapon/shield/energy)
+	loot = list(/obj/effect/gibspawner/human)
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	armour_penetration = 28
@@ -74,10 +72,11 @@
 	icon_state = "syndicatemeleespace"
 	icon_living = "syndicatemeleespace"
 	name = "Syndicate Commando"
-	loot = list(/obj/effect/landmark/mobcorpse/syndicatecommando,
-				/obj/item/weapon/melee/energy/sword/saber/red,
-				/obj/item/weapon/shield/energy)
+	loot = list(/obj/effect/gibspawner/human)
 	speed = 1
+
+/mob/living/simple_animal/hostile/syndicate/melee/space/noloot
+	loot = list()
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -103,9 +102,7 @@
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/c45nostamina
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
-	loot = list(/obj/effect/landmark/mobcorpse/syndicatesoldier,
-				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
-				/obj/item/weapon/shield/energy)
+	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space
 	icon_state = "syndicaterangedspace"
@@ -114,9 +111,10 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	loot = list(/obj/effect/landmark/mobcorpse/syndicatecommando,
-				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
-				/obj/item/weapon/shield/energy)
+	loot = list(/obj/effect/gibspawner/human)
+
+/mob/living/simple_animal/hostile/syndicate/ranged/space/noloot
+	loot = list()
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
 	return 1
