@@ -1295,6 +1295,12 @@
 	hasinner = 1
 	color_src = HAIR
 
+/datum/sprite_accessory/ears/glorf
+	name = "Glorf"
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+	icon_state = "glorf"
+
+
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 
