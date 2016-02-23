@@ -255,10 +255,6 @@ Rite of Disorientation
 		user.whisper(invocation)
 		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", \
 							 "<span class='cultitalic'>You stun [target] with the talisman!</span>")
-		var/obj/item/weapon/weapons/holy_weapons = locate() in target
-		if(N)
-			target.visible_message("<span class='warning'>[target]'s holy weapon absorbs the talisman's light!</span>", \
-								   "<span class='userdanger'>Your null rod absorbs the blinding light!</span>")
 		else
 			target.Weaken(9)
 			target.Stun(9)
@@ -269,9 +265,9 @@ Rite of Disorientation
 			if(iscarbon(target))
 				var/mob/living/carbon/C = target
 				C.silent += 4
-				C.stutter += 15
-				C.cultslur += 15
-				C.jitter += 15
+				C.stuttering(15)
+				C.cultslur(15)
+				C.jitter(15)
 		user.drop_item()
 		qdel(src)
 		return
