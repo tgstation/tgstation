@@ -119,6 +119,8 @@
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
 	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info
 
+	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
+
 	var/panelopen = 0
 
 /obj/item/device/camera/sepia
@@ -130,12 +132,55 @@
 	icon_off = "sepia-camera_off"
 	mech_flags = MECH_SCAN_FAIL
 
+/obj/item/device/camera/big_photos
+	photo_size = 5
+
+/obj/item/device/camera/big_photos/set_zoom()
+	return
+
+/obj/item/device/camera/huge_photos
+	photo_size = 7
+
+/obj/item/device/camera/huge_photos/set_zoom()
+	return
+
 /obj/item/device/camera/examine(mob/user)
 	..()
 	to_chat(user, "<span class='info'>It has [pictures_left] photos left.</span>")
 	if(panelopen)
 		to_chat(user, "<span class='notice'>There is an open panel on the side.</span>")
 
+/obj/item/device/camera/proc/get_base_photo_icon(new_icon_state = "")
+	var/icon/res
+	switch(photo_size)
+		if(1)
+			res = icon('icons/effects/32x32.dmi', new_icon_state)
+		if(3)
+			res = icon('icons/effects/96x96.dmi', new_icon_state)
+		if(5)
+			res = icon('icons/effects/160x160.dmi', new_icon_state)
+		if(7)
+			res = icon('icons/effects/224x224.dmi', new_icon_state)
+		else
+			res = icon('icons/effects/32x32.dmi', new_icon_state)
+
+	return res
+
+/obj/item/device/camera/verb/set_zoom()
+	set name = "Set Camera Zoom"
+	set category = "Object"
+
+	if(usr.incapacitated()) return
+
+	if(photo_size == 3)
+		photo_size = 1
+		usr.simple_message("<span class='info'>You zoom the camera in.</span>", "<span class='danger'>You drink from the mysterious bottle labeled \"DRINK ME\". Everything feels huge!</span>") //Second message is shown when hallucinating
+	else
+		photo_size = 3
+		usr.simple_message("<span class='info'>You zoom the camera out.</span>", "<span class='danger'>You take a bite of the mysterious mushroom. Everything feels so tiny!</span>") //Second message is shown when hallucinating
+
+/obj/item/device/camera/AltClick()
+	set_zoom()
 
 /obj/item/device/camera/ai_camera //camera AI can take pictures with
 	name = "AI photo camera"
@@ -158,7 +203,7 @@
 
 
 /obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
-	return
+	return afterattack(M, user)
 
 
 /obj/item/device/camera/attackby(obj/item/I, mob/user)
@@ -219,15 +264,16 @@
 				break
 		sorted.Insert(j+1, c)
 
-	var/icon/res = icon('icons/effects/96x96.dmi', "")
+	var/icon/res = get_base_photo_icon()
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A,A.dir,0)
 		if(istype(A, /mob/living) && A:lying)
 			img.Turn(A:lying)
 
-		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
-		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
+		var/offX = 1 + (photo_size-1)*16 + (A.x - center.x) * 32 + A.pixel_x
+		var/offY = 1 + (photo_size-1)*16 + (A.y - center.y) * 32 + A.pixel_y
+
 		if(istype(A, /atom/movable))
 			offX += A:step_x
 			offY += A:step_y
@@ -267,7 +313,7 @@
 				break
 		sorted.Insert(j+1, c)
 
-	var/icon/res = icon('icons/effects/96x96.dmi', "")
+	var/icon/res = get_base_photo_icon()
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A,A.dir,0)
@@ -358,8 +404,11 @@
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	if(min_harm_label && harm_labeled >= min_harm_label)
-		printpicture(user, icon('icons/effects/96x96.dmi',"blocked"), "You can't see a thing.", flag)
+		var/icon/I = get_base_photo_icon("blocked")
+
+		printpicture(user, I, "You can't see a thing.", flag)
 		return
+
 	var/mobs = ""
 	var/list/seen
 	if(!isAI(user)) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
@@ -371,7 +420,7 @@
 		seen = get_hear(world.view, target)
 
 	var/list/turfs = list()
-	for(var/turf/T in range(1, target))
+	for(var/turf/T in range(round(photo_size * 0.5), target))
 		if(T in seen)
 			if(isAI(user) && !cameranet.checkTurfVis(T))
 				continue
@@ -379,7 +428,8 @@
 				turfs += T
 				mobs += camera_get_mobs(T)
 
-	var/icon/temp = icon('icons/effects/96x96.dmi',"")
+	var/icon/temp = get_base_photo_icon()
+
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
@@ -499,7 +549,7 @@
 	del P    //so 10 thousdand pictures items are not left in memory should an AI take them and then view them all.
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || get_dist(src, target) < 1) return
+	if(!on || !pictures_left || (!isturf(target) && !isturf(target.loc))) return
 	captureimage(target, user, flag)
 
 	playsound(loc, "polaroid", 75, 1, -3)
