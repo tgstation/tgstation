@@ -12,6 +12,7 @@
 	color = "#FFFF00"
 	damage = 30
 	damage_type = STAMINA
+	armour_penetration = 100
 	stutter = 5
 	jitter = 15
 	hitsound = 'sound/weapons/taserhit.ogg'
