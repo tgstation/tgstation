@@ -1196,7 +1196,7 @@
 	desc = "Sour seeds."
 	icon_state = "seed-orange"
 	species = "orange"
-	plantname = "Orange Tree"
+	plantname = "orange Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange
 	lifespan = 60
 	endurance = 50

@@ -416,7 +416,7 @@
 		if(access_cent_thunder)
 			return "Code Yellow"
 		if(access_cent_storage)
-			return "Code Orange"
+			return "Code orange"
 		if(access_cent_living)
 			return "Code Green"
 		if(access_cent_medical)

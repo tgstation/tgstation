@@ -677,7 +677,7 @@
 	switch(theme)
 		if("magic")
 			user << "[G.magic_fluff_string]."
-			colour = pick("Pink", "Red", "Orange", "Green", "Blue")
+			colour = pick("Pink", "Red", "orange", "Green", "Blue")
 			picked_name = pick("Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces")
 		if("tech")
 			user << "[G.tech_fluff_string]."
