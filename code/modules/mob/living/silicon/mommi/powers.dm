@@ -38,5 +38,5 @@
 	set category = "Robot Commands"
 	var/mob/living/silicon/robot/mommi/R = src
 	R.anchored=!R.anchored
-	R.canmove=!R.anchored
+	R.update_canmove()
 	updateicon()

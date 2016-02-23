@@ -601,6 +601,11 @@ var/global/list/protected_objects = list(
 			move_to_delay = 2 * I.w_class
 
 		maxHealth = health
+
+		for(var/atom/movable/AM in O.locked_atoms) //What could go wrong
+			O.unlock_atom(AM)
+			src.lock_atom(AM)
+
 		if(creator)
 			src.creator = creator
 			faction = "\ref[creator]" // very unique

@@ -1416,3 +1416,32 @@ var/proccalls = 1
 #define LOCKED_SHOULD_LIE 1
 #define DENSE_WHEN_LOCKING 2
 #define DENSE_WHEN_LOCKED 4
+
+// Disposals destinations.
+
+#define DISP_DISPOSALS      "Disposals"
+#define DISP_CARGO_BAY      "Cargo Bay"
+#define DISP_QM_OFFICE      "QM Office"
+#define DISP_ENGINEERING    "Engineering"
+#define DISP_CE_OFFICE      "CE Office"
+#define DISP_ATMOSPHERICS   "Atmospherics"
+#define DISP_SECURITY       "Security"
+#define DISP_HOS_OFFICE     "HoS Office"
+#define DISP_MEDBAY         "Medbay"
+#define DISP_CMO_OFFICE     "CMO Office"
+#define DISP_CHEMISTRY      "Chemistry"
+#define DISP_RESEARCH       "Research"
+#define DISP_RD_OFFICE      "RD Office"
+#define DISP_ROBOTICS       "Robotics"
+#define DISP_HOP_OFFICE     "HoP Office"
+#define DISP_LIBRARY        "Library"
+#define DISP_CHAPEL         "Chapel"
+#define DISP_THEATRE        "Theatre"
+#define DISP_BAR            "Bar"
+#define DISP_KITCHEN        "Kitchen"
+#define DISP_HYDROPONICS    "Hydroponics"
+#define DISP_JANITOR_CLOSET "Janitor Closet"
+#define DISP_GENETICS       "Genetics"
+#define DISP_TELECOMMS      "Telecomms"
+#define DISP_MECHANICS      "Mechanics"
+#define DISP_TELESCIENCE    "Telescience"

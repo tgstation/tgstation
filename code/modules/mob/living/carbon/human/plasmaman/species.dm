@@ -12,7 +12,7 @@
 
 	//default_mutations=list(SKELETON) // This screws things up
 
-	breath_type = "plasma"
+	breath_type = "toxins"
 
 	heat_level_1 = 350  // Heat damage level 1 above this point.
 	heat_level_2 = 400  // Heat damage level 2 above this point.
