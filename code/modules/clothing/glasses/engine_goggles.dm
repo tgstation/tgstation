@@ -4,7 +4,7 @@
 	name = "Engineering Scanner Goggles"
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
 	icon_state = "trayson-meson"
-	action_button_name = "Change Scanning Mode"
+	actions_types = list(/datum/action/item_action/toggle_mode)
 
 	var/mode = 0	//0 - regular mesons mode	1 - t-ray mode
 	var/invis_objects = list()
@@ -33,8 +33,9 @@
 			H.update_sight()
 
 	update_icon()
-	if(action && action.button)
-		action.button.UpdateIcon()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/clothing/glasses/meson/engine/process()
 	if(!mode)
@@ -94,7 +95,6 @@
 	name = "Optical T-Ray Scanner"
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	icon_state = "trayson-tray_off"
-	action_button_name = "Toggle Scanner Power"
 
 	mode = 1
 	var/on = 0
@@ -127,8 +127,9 @@
 		invis_update()
 
 	update_icon()
-	if(action && action.button)
-		action.button.UpdateIcon()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/clothing/glasses/meson/engine/tray/t_ray_on()
 	return on && ..()

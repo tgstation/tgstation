@@ -8,7 +8,7 @@
 	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
-	action_button_name = "Toggle Mister"
+	actions_types = list(/datum/action/item_action/toggle_mister)
 
 	var/obj/item/weapon/noz
 	var/on = 0
@@ -341,7 +341,7 @@
 	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
-	action_button_name = "Activate Injector"
+	actions_types = list(/datum/action/item_action/activate_injector)
 
 	var/on = 0
 	volume = 300

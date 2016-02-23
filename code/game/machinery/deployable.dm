@@ -134,7 +134,7 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
 	item_state = "flashbang"
-	action_button_name = "Toggle Barrier Spread"
+	actions_types = list(/datum/action/item_action/toggle_barrier_spread)
 	var/mode = SINGLE
 
 /obj/item/weapon/grenade/barrier/AltClick(mob/user)
@@ -172,8 +172,8 @@
 				new /obj/structure/barricade/security(target_turf2)
 	qdel(src)
 
-/obj/item/weapon/grenade/barrier/ui_action_click()
-	toggle_mode(usr)
+/obj/item/weapon/grenade/barrier/ui_action_click(mob/user)
+	toggle_mode(user)
 
 
 #undef SINGLE

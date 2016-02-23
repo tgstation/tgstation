@@ -79,8 +79,8 @@
 	name = "[initial(name)] ([cast_amount]E)"
 	user.reveal(reveal)
 	user.stun(stun)
-	if(action && action.button)
-		action.button.UpdateIcon()
+	if(action)
+		action.UpdateButtonIcon()
 	return 1
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.

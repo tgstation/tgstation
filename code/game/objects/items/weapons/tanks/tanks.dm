@@ -9,33 +9,42 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
-	action_button_name = "Set Internals"
+	actions_types = list(/datum/action/item_action/set_internals)
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
 
-/obj/item/weapon/tank/ui_action_click()
-	var/mob/living/carbon/human/H = action.owner
+/obj/item/weapon/tank/ui_action_click(mob/user)
+	toggle_internals(user)
+
+/obj/item/weapon/tank/proc/toggle_internals(mob/user)
+	var/mob/living/carbon/human/H = user
 	if(!istype(H))
 		return
 
-	if(!H.wear_mask)
-		H << "<span class='warning'>You need a mask!</span>"
-		return
-	if(H.wear_mask.mask_adjusted)
-		H.wear_mask.adjustmask(H)
-	if(!(H.wear_mask.flags & MASKINTERNALS))
-		H << "<span class='warning'>[H.wear_mask] can't use [src]!</span>"
-		return
 	if(H.internal == src)
+		H << "<span class='notice'>You close [src] valve.</span>"
 		H.internal = null
-		H << "<span class='notice'>You close \the [src] valve.</span>"
 		H.update_internals_hud_icon(0)
-	else if(H.wear_mask && (H.wear_mask.flags & MASKINTERNALS))
+	else
+		if(!H.wear_mask)
+			H << "<span class='warning'>You need a mask!</span>"
+			return
+		if(H.wear_mask.mask_adjusted)
+			H.wear_mask.adjustmask(H)
+		if(!(H.wear_mask.flags & MASKINTERNALS))
+			H << "<span class='warning'>[H.wear_mask] can't use [src]!</span>"
+			return
+
+		if(H.internal)
+			H << "<span class='notice'>You switch your internals to [src].</span>"
+		else
+			H << "<span class='notice'>You open [src] valve.</span>"
 		H.internal = src
-		H << "<span class='notice'>You open \the [src] valve.</span>"
 		H.update_internals_hud_icon(1)
+	H.update_action_buttons_icon()
+
 
 /obj/item/weapon/tank/New()
 	..()

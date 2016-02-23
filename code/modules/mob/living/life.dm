@@ -116,47 +116,4 @@
 /mob/living/proc/update_damage_hud()
 	return
 
-/mob/living/update_action_buttons_icon()
-	for(var/X in actions)
-		var/datum/action/A = X
-		if(A.button)
-			A.button.UpdateIcon()
-
-/mob/living/update_action_buttons(reload_screen)
-	if(!hud_used || !client)
-		return
-
-	if(hud_used.hud_shown != HUD_STYLE_STANDARD)
-		return
-
-	var/button_number = 0
-
-	if(hud_used.action_buttons_hidden)
-		for(var/datum/action/A in actions)
-			A.button.screen_loc = null
-			if(reload_screen)
-				client.screen += A.button
-	else
-		for(var/datum/action/A in actions)
-			button_number++
-			var/obj/screen/movable/action_button/B = A.button
-			B.UpdateIcon()
-			if(!B.moved)
-				B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
-			else
-				B.screen_loc = B.moved
-			if(reload_screen)
-				client.screen += B
-
-		if(!button_number)
-			hud_used.hide_actions_toggle.screen_loc = null
-			return
-
-	if(!hud_used.hide_actions_toggle.moved)
-		hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
-	else
-		hud_used.hide_actions_toggle.screen_loc = hud_used.hide_actions_toggle.moved
-	if(reload_screen)
-		client.screen += hud_used.hide_actions_toggle
-
 

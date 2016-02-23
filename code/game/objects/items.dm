@@ -33,10 +33,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
 	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
-	//If this is set, The item will make an action button on the player's HUD when picked up.
-	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
-	var/action_button_type = null //if we want a special type of item action, not the standard one.
-	var/datum/action/item_action/action = null
+	var/list/actions = list() //list of /datum/action's that this item has.
+	var/list/actions_types = list() //list of paths of action datums to give to the item on New().
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -130,10 +128,17 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
+/obj/item/New()
+	..()
+	for(var/path in actions_types)
+		new path(src)
+
 /obj/item/Destroy()
 	if(ismob(loc))
 		var/mob/m = loc
 		m.unEquip(src, 1)
+	for(var/X in actions)
+		qdel(X)
 	return ..()
 
 /obj/item/blob_act()
@@ -362,8 +367,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return
 
 /obj/item/proc/dropped(mob/user)
-	if(action)
-		action.Remove(user)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.Remove(user)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -388,16 +394,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
-	if(action_button_name)
-		if(!action)
-			if(action_button_type)
-				action = new action_button_type
-			else
-				action = new/datum/action/item_action
-			action.name = action_button_name
-			action.target = src
-		if(item_action_slot_check(slot, user)) //some items only give their action button when in a specific slot.
-			action.Grant(user)
+	for(var/X in actions)
+		var/datum/action/A = X
+		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
+			A.Grant(user)
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 obj/item/proc/item_action_slot_check(slot, mob/user)
@@ -423,11 +423,11 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(usr.get_active_hand() == null) // Let me know if this has any problems -Yota
 		usr.UnarmedAttack(src)
 
-//This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'action_button_name'.
+//This proc is executed when someone clicks the on-screen UI button.
 //The default action is attack_self().
 //Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
-/obj/item/proc/ui_action_click()
-	attack_self(usr)
+/obj/item/proc/ui_action_click(mob/user, actiontype)
+	attack_self(user)
 
 /obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 	return 0

@@ -11,7 +11,7 @@
 	throwforce = 6
 	w_class = 4
 	origin_tech = "biotech=4"
-	action_button_name = "Toggle Paddles"
+	actions_types = list(/datum/action/item_action/toggle_paddles)
 
 	var/on = 0 //if the paddles are equipped (1) or on the defib (0)
 	var/safety = 1 //if you can zap people with the defibs on harm mode
@@ -177,8 +177,9 @@
 		remove_paddles(user)
 
 	update_icon()
-	if(action && action.button)
-		action.button.UpdateIcon()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/weapon/defibrillator/proc/make_paddles()
 	return new /obj/item/weapon/twohanded/shockpaddles(src)

@@ -37,8 +37,9 @@
 		H.unEquip(hood, 1)
 		H.update_inv_wear_suit()
 	hood.loc = src
-	if(action && action.button)
-		action.button.UpdateIcon()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/hooded/dropped()
 	..()
@@ -59,8 +60,9 @@
 				suittoggled = 1
 				src.icon_state = "[initial(icon_state)]_t"
 				H.update_inv_wear_suit()
-				if(action && action.button)
-					action.button.UpdateIcon()
+				for(var/X in actions)
+					var/datum/action/A = X
+					A.UpdateButtonIcon()
 	else
 		RemoveHood()
 
@@ -93,8 +95,9 @@
 		src.icon_state = "[initial(icon_state)]_t"
 		src.suittoggled = 1
 	usr.update_inv_wear_suit()
-	if(action && action.button)
-		action.button.UpdateIcon()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
 	..()

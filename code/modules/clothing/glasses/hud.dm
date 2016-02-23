@@ -114,7 +114,7 @@
 /obj/item/clothing/glasses/hud/toggle
 	name = "Toggle Hud"
 	desc = "A hud with multiple functions."
-	action_button_name = "Switch HUD"
+	actions_types = list(/datum/action/item_action/switch_hud)
 
 /obj/item/clothing/glasses/hud/toggle/attack_self(mob/user)
 	if(!ishuman(user))

@@ -50,16 +50,11 @@
 	item_state = "glasses"
 	origin_tech = "magnets=2;engineering=2"
 	scan_reagents = 1 //You can see reagents while wearing science goggles
+	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 
-/obj/item/clothing/glasses/science/equipped(mob/user, slot)
+/obj/item/clothing/glasses/science/item_action_slot_check(slot)
 	if(slot == slot_glasses)
-		user.scanner.devices += 1
-		user.scanner.Grant(user)
-	..(user, slot)
-
-/obj/item/clothing/glasses/science/dropped(mob/user)
-	user.scanner.devices = max(0, user.scanner.devices - 1)
-	..()
+		return 1
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"
@@ -170,7 +165,7 @@
 	desc = "Protects the eyes from welders; approved by the mad scientist association."
 	icon_state = "welding-g"
 	item_state = "welding-g"
-	action_button_name = "Toggle Welding Goggles"
+	actions_types = list(/datum/action/item_action/toggle)
 	materials = list(MAT_METAL = 250)
 	flash_protect = 2
 	tint = 2

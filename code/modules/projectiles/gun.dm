@@ -257,30 +257,26 @@ obj/item/weapon/gun/proc/newshot()
 	else
 		return
 
-/obj/item/weapon/gun/attackby(obj/item/A, mob/user, params)
-	if(istype(A, /obj/item/device/flashlight/seclite))
-		var/obj/item/device/flashlight/seclite/S = A
+/obj/item/weapon/gun/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/flashlight/seclite))
+		var/obj/item/device/flashlight/seclite/S = I
 		if(can_flashlight)
 			if(!F)
-				if(!user.unEquip(A))
+				if(!user.unEquip(I))
 					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)
 					SetLuminosity(0)
 				F = S
-				A.loc = src
+				I.loc = src
 				update_icon()
 				update_gunlight(user)
 				verbs += /obj/item/weapon/gun/proc/toggle_gunlight
-				action_button_name = "Toggle Gunlight"
+				var/datum/action/A = new /datum/action/item_action/toggle_gunlight(src)
 				if(loc == user)
-					if(!action)
-						action = new
-						action.name = action_button_name
-						action.target = src
-					action.Grant(user)
+					A.Grant(user)
 
-	if(istype(A, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
 		if(F)
 			for(var/obj/item/device/flashlight/seclite/S in src)
 				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
@@ -290,16 +286,13 @@ obj/item/weapon/gun/proc/newshot()
 				S.update_brightness(user)
 				update_icon()
 				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
-				action_button_name = null
-				if(action && loc == user)
-					action.Remove(user)
+			for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
+				qdel(TGL)
 
 	if(unique_rename)
-		if(istype(A, /obj/item/weapon/pen))
+		if(istype(I, /obj/item/weapon/pen))
 			rename_gun(user)
-
 	..()
-	return
 
 /obj/item/weapon/gun/proc/toggle_gunlight()
 	set name = "Toggle Gunlight"
@@ -337,8 +330,9 @@ obj/item/weapon/gun/proc/newshot()
 			user.AddLuminosity(-5)
 		else if(isturf(loc))
 			SetLuminosity(0)
-	if(action && action.button)
-		action.button.UpdateIcon()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 
 /obj/item/weapon/gun/pickup(mob/user)

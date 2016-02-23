@@ -158,10 +158,10 @@ effective or pretty fucking useless.
 	var/max_charge = 300
 	var/on = 0
 	var/old_alpha = 0
-	action_button_name = "Toggle Cloaker"
+	actions_types = list(/datum/action/item_action/toggle)
 
-/obj/item/device/shadowcloak/ui_action_click()
-	if(usr.get_item_by_slot(slot_belt) == src)
+/obj/item/device/shadowcloak/ui_action_click(mob/user)
+	if(user.get_item_by_slot(slot_belt) == src)
 		if(!on)
 			Activate(usr)
 		else

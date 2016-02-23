@@ -196,16 +196,12 @@
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)
-		if (!contents.Find(internal))
+		if(internal.loc != src)
 			internal = null
-		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
-			internal = null
-		if(internal)
+			update_internals_hud_icon(0)
+		else
 			update_internals_hud_icon(1)
 			return internal.remove_air_volume(volume_needed)
-		else
-			update_internals_hud_icon(0)
-	return
 
 
 /mob/living/carbon/proc/handle_changeling()
