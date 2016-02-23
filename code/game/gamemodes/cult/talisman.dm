@@ -255,19 +255,19 @@ Rite of Disorientation
 		user.whisper(invocation)
 		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", \
 							 "<span class='cultitalic'>You stun [target] with the talisman!</span>")
-		else
-			target.Weaken(9)
-			target.Stun(9)
-			target.flash_eyes(1,1)
-			if(issilicon(target))
-				var/mob/living/silicon/S = target
-				S.emp_act(1)
-			if(iscarbon(target))
-				var/mob/living/carbon/C = target
-				C.silent += 4
-				C.stuttering(15)
-				C.cultslur(15)
-				C.jitter(15)
+		
+		target.Weaken(9)
+		target.Stun(9)
+		target.flash_eyes(1,1)
+		if(issilicon(target))
+			var/mob/living/silicon/S = target
+			S.emp_act(1)
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			C.silent += 4
+			C.stuttering(15)
+			C.cultslur(15)
+			C.jittering(15)
 		user.drop_item()
 		qdel(src)
 		return
