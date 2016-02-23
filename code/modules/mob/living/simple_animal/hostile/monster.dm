@@ -19,6 +19,17 @@
 	size = SIZE_BIG
 	move_to_delay = 4
 
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
+	var/stance_step = 0
+
 /mob/living/simple_animal/hostile/monster/skrite
 	name = "skrite"
 	desc = "A highly predatory being with two dripping claws."
@@ -49,3 +60,28 @@
 	damage = 10
 	damage_type = TOX
 	icon_state = "toxin"
+
+/mob/living/simple_animal/hostile/monster/cyber_horror
+	name = "cyber horror"
+	desc = "What was once a man, twisted and warped by machine."
+	icon_state = "cyber_horror"
+	icon_dead = "cyber_horror_dead"
+	icon_gib = "cyber_horror_dead"
+	speak = list("H@!#$$P M@!$#", "GHAA!@@#", "KR@!!N")
+	speak_emote = list("emits", "groans")
+	speak_chance = 15
+	turns_per_move = 5
+	see_in_dark = 6
+	maxHealth = 70
+	health = 70
+	melee_damage_lower = 5
+	melee_damage_upper = 15
+	attacktext = "flails around and hits"
+	move_to_delay = 5
+
+/mob/living/simple_animal/hostile/monster/cyber_horror/Life(var/mob/living/simple_animal/hostile/monster/cyber_horror/M)
+	..()
+
+	if(health<maxHealth)
+		health=health+2                                                                        //Created by misuse of medical nanobots, so it heals
+		visible_message("<span class='warning'>[src]'s wounds heal slightly!</span>")
