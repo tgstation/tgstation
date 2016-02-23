@@ -10,9 +10,7 @@
 	name = "electrode"
 	icon_state = "spark"
 	color = "#FFFF00"
-	damage = 30
-	damage_type = STAMINA
-	armour_penetration = 100
+	nodamage = 1
 	stutter = 5
 	jitter = 15
 	hitsound = 'sound/weapons/taserhit.ogg'
@@ -20,12 +18,13 @@
 
 /obj/item/projectile/energy/electrode/on_hit(atom/target, blocked = 0)
 	. = ..()
-	if(!ismob(target) || blocked >= 2) //Fully blocked by mob or collided with dense object - burst into sparks!
+	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - burst into sparks!
 		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 		sparks.set_up(1, 1, src)
 		sparks.start()
 	else if(iscarbon(target))
 		var/mob/living/carbon/C = target
+		C.adjustStaminaLoss(30)
 		if(C.dna && C.dna.check_mutation(HULK))
 			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else if(C.status_flags & CANWEAKEN)
