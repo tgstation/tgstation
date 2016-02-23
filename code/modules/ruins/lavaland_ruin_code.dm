@@ -99,3 +99,30 @@
 
 //Sloth - I'll finish this item later
 
+//Envy
+
+/obj/item/weapon/knife/envy
+	name = "envy's knife"
+	desc = "Their success will be yours."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "render"
+	item_state = "render"
+	force = 18
+	throwforce = 10
+	w_class = 3
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
+	..()
+	if(!proximity)
+		return
+	if(!istype(user))
+		return
+	if(istype(AM, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = AM
+		if(user.real_name != H.dna.real_name)
+			user.real_name = H.dna.real_name
+			H.dna.transfer_identity(user, transfer_SE=1)
+			user.updateappearance(mutcolor_update=1)
+			user.domutcheck()
+			user << "You assume the face of [H]. Are you satisfied?"
