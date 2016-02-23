@@ -200,6 +200,7 @@
 #include "code\datums\diseases\advance\symptoms\sneeze.dm"
 #include "code\datums\diseases\advance\symptoms\stimulant.dm"
 #include "code\datums\diseases\advance\symptoms\symptoms.dm"
+#include "code\datums\diseases\advance\symptoms\viral.dm"
 #include "code\datums\diseases\advance\symptoms\vision.dm"
 #include "code\datums\diseases\advance\symptoms\voice_change.dm"
 #include "code\datums\diseases\advance\symptoms\vomit.dm"
