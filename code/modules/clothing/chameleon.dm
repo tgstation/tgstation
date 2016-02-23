@@ -33,8 +33,8 @@
 		if(C.stat != CONSCIOUS)
 			return
 
-		target.desc = initial(picked_item.desc)
 		target.name = initial(picked_item.name)
+		target.desc = initial(picked_item.desc)
 		target.icon_state = initial(picked_item.icon_state)
 		target.item_state = initial(picked_item.item_state)
 		target.icon = initial(picked_item.icon)
