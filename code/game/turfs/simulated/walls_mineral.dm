@@ -16,7 +16,7 @@
 /turf/simulated/wall/mineral/brick
 	name = "brick wall"
 	desc = "A wall with brick siding, it looks nice"
-	icon_state = "Brick 0"
+	icon_state = "Brick0"
 	walltype = "brick"
 	mineral = "brick"
 
