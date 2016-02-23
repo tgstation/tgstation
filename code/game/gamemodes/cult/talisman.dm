@@ -190,7 +190,7 @@ Rite of Disorientation
 	for(var/obj/effect/rune/R in orange(3,user))
 		R.visible_message("<span class='danger'>[R] fades away.</span>")
 		R.invisibility = INVISIBILITY_OBSERVER
-		
+
 //Rite of True Sight: Same as rune, but doesn't work on ghosts
 /obj/item/weapon/paper/talisman/true_sight
 	cultist_name = "Talisman of Revealing"
@@ -217,7 +217,7 @@ Rite of Disorientation
 						 "<span class='cultitalic'>You speak the words of the talisman, making nearby runes appear fake.</span>")
 	for(var/obj/effect/rune/R in orange(3,user))
 		R.desc = "A rune drawn in crayon."
-		
+
 //Rite of Disruption: Same as rune
 /obj/item/weapon/paper/talisman/emp
 	cultist_name = "Talisman of Electromagnetic Pulse"
@@ -232,7 +232,7 @@ Rite of Disorientation
 
 //Rite of Disorientation: Stuns and inhibit speech on a single target for quite some time
 /obj/item/weapon/paper/talisman/stun
-	cultist_name = "Talisman of Stunning" 
+	cultist_name = "Talisman of Stunning"
 	cultist_desc = "A talisman that will stun and inhibit speech on a single target. To use, attack target directly."
 	invocation = "Fuu ma'jin!"
 	health_cost = 15
@@ -249,25 +249,29 @@ Rite of Disorientation
 		user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
 	else
 		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
-		
+
 /obj/item/weapon/paper/talisman/stun/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
 		user.whisper(invocation)
 		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", \
 							 "<span class='cultitalic'>You stun [target] with the talisman!</span>")
-		
-		target.Weaken(9)
-		target.Stun(9)
-		target.flash_eyes(1,1)
-		if(issilicon(target))
-			var/mob/living/silicon/S = target
-			S.emp_act(1)
-		if(iscarbon(target))
-			var/mob/living/carbon/C = target
-			C.silent += 4
-			C.stuttering(15)
-			C.cultslur(15)
-			C.jittering(15)
+		var/obj/item/weapon/nullrod/N = locate() in target
+		if(N)
+			target.visible_message("<span class='warning'>[target]'s holy weapon absorbs the talisman's light!</span>", \
+								   "<span class='userdanger'>Your holy weapon absorbs the blinding light!</span>")
+		else
+			target.Weaken(9)
+			target.Stun(9)
+			target.flash_eyes(1,1)
+			if(issilicon(target))
+				var/mob/living/silicon/S = target
+				S.emp_act(1)
+			if(iscarbon(target))
+				var/mob/living/carbon/C = target
+				C.silent += 4
+				C.stuttering += 15
+				C.cultslurring += 15
+				C.Jitter(15)
 		user.drop_item()
 		qdel(src)
 		return

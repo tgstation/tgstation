@@ -235,6 +235,9 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(stuttering)
 		message = stutter(message)
 
+	if(cultslurring)
+		message = cultslur(message)
+
 	if(slurring)
 		message = slur(message)
 

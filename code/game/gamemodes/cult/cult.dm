@@ -37,7 +37,6 @@
 		user.say(message)
 	else
 		user.whisper(message)
-	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
 	for(var/mob/M in mob_list)
 		if(iscultist(M) || (M in dead_mob_list))
 			if(clear || !ishuman(user))
@@ -59,9 +58,7 @@
 	recommended_enemies = 4
 	enemy_minimum_age = 14
 
-
 	var/finished = 0
-	
 	var/eldergod = 1 //for the summon god objective
 
 	var/acolytes_needed = 10 //for the survive objective
@@ -78,7 +75,7 @@
 /datum/game_mode/cult/pre_setup()
 	cult_objectives += "sacrifice"
 	cult_objectives += "eldergod"
-	
+
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -87,7 +84,7 @@
 
 	//cult scaling goes here
 	recommended_enemies = 3 + round(num_players()/20)
-	
+
 
 	for(var/cultists_number = 1 to recommended_enemies)
 		if(!antag_candidates.len)
@@ -211,7 +208,7 @@
 	var/datum/atom_hud/antag/culthud = huds[ANTAG_HUD_CULT]
 	culthud.leave_hud(cult_mind.current)
 	set_antag_hud(cult_mind.current, null)
-	
+
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in player_list)
@@ -234,7 +231,7 @@
 
 
 /datum/game_mode/cult/proc/check_survive()
-	acolytes_survived = 0
+	var/acolytes_survived = 0
 	for(var/datum/mind/cult_mind in cult)
 		if (cult_mind.current && cult_mind.current.stat != DEAD)
 			if(cult_mind.current.onCentcom() || cult_mind.current.onSyndieBase())
@@ -243,7 +240,7 @@
 		return 0
 	else
 		return 1
-		
+
 
 /datum/game_mode/cult/declare_completion()
 

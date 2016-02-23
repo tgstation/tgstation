@@ -269,7 +269,7 @@ var/list/teleport_other_runes = list()
 	invocation = "N'ath reth sh'yro eth d'raggathnor!"
 	icon_state = "5"
 	color = rgb(0, 0, 255)
-	
+
 
 /obj/effect/rune/summon_tome/invoke(mob/living/user)
 	visible_message("<span class='warning'>A frayed tome materializes on the surface of [src], which dissolves into nothing.</span>")
@@ -412,7 +412,7 @@ var/list/teleport_other_runes = list()
 			playsound(T, 'sound/magic/Disintegrate.ogg', 100, 1)
 			T.gib()
 	rune_in_use = 0
-	
+
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar-Sie upon the station.
 /obj/effect/rune/narsie
 	cultist_name = "Call Forth The Geometer"
@@ -596,7 +596,7 @@ var/list/teleport_other_runes = list()
 		R.invisibility = 0
 		R.alpha = initial(R.alpha)
 	qdel(src)
-	
+
  //Rite of False Truths: Makes runes appear like crayon ones
 /obj/effect/rune/make_runes_fake
 	cultist_name = "Disguise Runes"
