@@ -131,12 +131,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/proc/pickup(mob/user)
 	if(action)
 		action.Grant(user)
-	return
 
 /obj/item/proc/dropped(mob/user)
 	if(action)
 		action.Remove(user)
-	return
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
