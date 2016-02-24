@@ -237,7 +237,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			pocketed when inactive. Activating it produces a loud, distinctive noise. One can combine two \
 			energy swords to create a double energy sword, which must be wielded in two hands but is more robust \
 			and deflects all energy projectiles."
-	item = /obj/item/weapon/melee/energy/sword/saber
+	item = /obj/item/weapon/toggle/energy/sword/saber
 	cost = 8
 
 /datum/uplink_item/dangerous/emp
@@ -745,7 +745,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	surplus = 30
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-	
+
 /datum/uplink_item/stealthy_tools/emplight
 	name = "EMP Flashlight"
 	desc = "A small, self-charging, short-ranged EMP device disguised as a flashlight. \

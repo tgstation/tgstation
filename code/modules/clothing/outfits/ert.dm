@@ -35,7 +35,7 @@
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/weapon/gun/energy/gun=1)
-	l_pocket = /obj/item/weapon/switchblade
+	l_pocket = /obj/item/weapon/toggle/switchblade
 
 /datum/outfit/ert/commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -54,7 +54,7 @@
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin=1)
-	l_pocket = /obj/item/weapon/melee/energy/sword/saber
+	l_pocket = /obj/item/weapon/toggle/energy/sword/saber
 
 /datum/outfit/ert/security
 	name = "ERT Security"

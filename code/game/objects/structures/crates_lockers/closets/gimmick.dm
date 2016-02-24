@@ -63,7 +63,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/tdome/red(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/melee/energy/sword/saber(src)
+		new /obj/item/weapon/toggle/energy/sword/saber(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/gun/energy/laser(src)
 	for(var/i in 1 to 3)
@@ -72,7 +72,7 @@
 		new /obj/item/weapon/storage/box/flashbangs(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/helmet/thunderdome(src)
-	
+
 /obj/structure/closet/thunderdome/tdgreen
 	name = "green-team Thunderdome closet"
 	icon_door = "green"
@@ -82,7 +82,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/tdome/green(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/melee/energy/sword/saber(src)
+		new /obj/item/weapon/toggle/energy/sword/saber(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/gun/energy/laser(src)
 	for(var/i in 1 to 3)
@@ -91,7 +91,7 @@
 		new /obj/item/weapon/storage/box/flashbangs(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/helmet/thunderdome(src)
-	
+
 /obj/structure/closet/malf/suits
 	desc = "It's a storage unit for operational gear."
 	icon_state = "syndicate"

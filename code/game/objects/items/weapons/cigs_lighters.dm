@@ -155,7 +155,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lighting_text = "<span class='notice'>After some fiddling, [user] manages to light their [name] with [O].</span>"
 	else if(istype(O, /obj/item/weapon/lighter))
 		lighting_text = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights their [name] with [O]. Damn they're cool.</span>"
-	else if(istype(O, /obj/item/weapon/melee/energy))
+	else if(istype(O, /obj/item/weapon/toggle/energy))
 		lighting_text = "<span class='warning'>[user] swings their [O], barely missing their nose. They light their [name] in the process.</span>"
 	else if(istype(O, /obj/item/device/assembly/igniter))
 		lighting_text = "<span class='notice'>[user] fiddles with [O], and manages to light their [name].</span>"
