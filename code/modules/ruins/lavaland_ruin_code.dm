@@ -42,8 +42,6 @@
 		return
 	if(in_use)
 		return
-	if(!ishuman(user))
-		return
 	in_use = TRUE
 	user << "<span class='danger'><B>You feel your very life draining away as you pull the lever...it'll be worth it though, right?</B></span>"
 	user.adjustCloneLoss(20)
@@ -85,7 +83,7 @@
 
 //Pride
 
-/obj/structure/mirror/magic
+/obj/structure/mirror/magic/pride
 	name = "pride's mirror"
 	desc = "Pride cometh before the..."
 	icon_state = "magic_mirror"
