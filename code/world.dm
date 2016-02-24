@@ -234,6 +234,10 @@ var/savefile/panicfile
 
 
 /world/Reboot(reason)
+	if(reason == 1)
+		if(usr && usr.client)
+			if(!usr.client.holder)
+				return 0
 	if(config.map_voting)
 		//testing("we have done a map vote")
 		if(fexists(vote.chosen_map))
