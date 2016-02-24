@@ -5,7 +5,7 @@
 
 	w_class = 3.0
 
-	throwforce = 25
+	throwforce = 16
 	throw_range = 7
 	throw_speed = 5
 
@@ -37,10 +37,12 @@
 	if(!usr)
 		return ..()
 
-	animate(src, transform = turn(transform, 180), time = 5, loop = -1)
-	animate(transform = turn(transform, 180), time = 5, loop = -1)
 	spawn()
-		while(!throwing) //Wait until the boomerang is no longer flying. Check on 0.5-second intervals
+		animate(src, transform = turn(matrix(), 120), time = 5, loop = -1)
+		animate(transform = turn(matrix(), 240), time = 5)
+		animate(transform = null, time = 5)
+
+		while(throwing) //Wait until the boomerang is no longer flying. Check on 0.5-second intervals
 			sleep(5)
 
 		animate(src) //Stop the animation
