@@ -6,17 +6,6 @@
 	var/zone = "chest"
 	var/slot
 	var/vital = 0
-	var/organ_action_name = null //This needs to die, like the rest of the old action_button_name system
-	var/datum/action/organ_actions = list() //List of typepaths, becomes a list of datums after New()
-
-
-/obj/item/organ/internal/New()
-	..()
-	for(var/action_path in organ_actions)
-		organ_actions -= action_path
-		var/datum/action/A = new action_path()
-		A.target = src
-		organ_actions += A
 
 
 /obj/item/organ/internal/proc/Insert(mob/living/carbon/M, special = 0)
@@ -30,11 +19,8 @@
 	owner = M
 	M.internal_organs |= src
 	loc = null
-	if(organ_action_name)
-		action_button_name = organ_action_name
-
-	for(var/action in organ_actions)
-		var/datum/action/A = action
+	for(var/X in actions)
+		var/datum/action/A = X
 		A.Grant(M)
 
 
@@ -44,13 +30,10 @@
 		M.internal_organs -= src
 		if(vital && !special)
 			M.death()
-
-	if(organ_action_name)
-		action_button_name = null
-
-	for(var/action in organ_actions)
-		var/datum/action/A = action
+	for(var/X in actions)
+		var/datum/action/A = X
 		A.Remove(M)
+
 
 /obj/item/organ/internal/proc/on_find(mob/living/finder)
 	return
@@ -94,6 +77,9 @@
 				qdel(src)
 	else
 		..()
+
+/obj/item/organ/internal/item_action_slot_check(slot,mob/user)
+	return //so we don't grant the organ's action to mobs who pick up the organ.
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
@@ -139,7 +125,7 @@
 	icon_state = "cursedheart-off"
 	icon_base = "cursedheart"
 	origin_tech = "biotech=5"
-	organ_actions = list(/datum/action/item_action/organ_action/cursed_heart)
+	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
 	var/last_pump = 0
 	var/pump_delay = 30 //you can pump 1 second early, for lag, but no more (otherwise you could spam heal)
 	var/blood_loss = 100 //600 blood is human default, so 5 failures (below 122 blood is where humans die because reasons?)
@@ -148,6 +134,15 @@
 	var/heal_brute = 0
 	var/heal_burn = 0
 	var/heal_oxy = 0
+
+
+/obj/item/organ/internal/heart/cursed/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
+	if(H == user && istype(H))
+		playsound(user,'sound/effects/singlebeat.ogg',40,1)
+		user.drop_item()
+		Insert(user)
+	else
+		return ..()
 
 /obj/item/organ/internal/heart/cursed/on_life()
 	if(world.time > (last_pump + pump_delay))

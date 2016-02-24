@@ -608,10 +608,3 @@ var/global/list/multiverse = list()
 	heal_burn = 25
 	heal_oxy = 25
 
-/obj/item/organ/internal/heart/cursed/wizard/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
-	if(H == user && istype(H))
-		playsound(user,'sound/effects/singlebeat.ogg',40,1)
-		user.drop_item()
-		Insert(user)
-	else
-		return ..()

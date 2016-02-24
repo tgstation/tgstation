@@ -6,21 +6,9 @@
 #define GROWTH_NEEDED		1
 
 /datum/action/innate/slime
-	check_flags = AB_CHECK_ALIVE
+	check_flags = AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_alien"
-	var/adult_action = SIZE_DOESNT_MATTER
 	var/needs_growth = NO_GROWTH_NEEDED
-
-/datum/action/innate/slime/CheckRemoval()
-	if(!isslime(owner))
-		return 1
-	var/mob/living/simple_animal/slime/S = owner
-	if(adult_action != SIZE_DOESNT_MATTER)
-		if(adult_action == ADULTS_ONLY && !S.is_adult)
-			return 1
-		else if(adult_action == BABIES_ONLY && S.is_adult)
-			return 1
-	return 0
 
 /datum/action/innate/slime/IsAvailable()
 	if(..())
@@ -120,6 +108,8 @@
 			is_adult = 1
 			maxHealth = 200
 			amount_grown = 0
+			for(var/datum/action/innate/slime/evolve/E in actions)
+				E.Remove(src)
 			regenerate_icons()
 			name = text("[colour] [is_adult ? "adult" : "baby"] slime ([number])")
 		else
@@ -130,7 +120,6 @@
 /datum/action/innate/slime/evolve
 	name = "Evolve"
 	button_icon_state = "slimegrow"
-	adult_action = BABIES_ONLY
 	needs_growth = GROWTH_NEEDED
 
 /datum/action/innate/slime/evolve/Activate()
@@ -191,7 +180,6 @@
 /datum/action/innate/slime/reproduce
 	name = "Reproduce"
 	button_icon_state = "slimesplit"
-	adult_action = ADULTS_ONLY
 	needs_growth = GROWTH_NEEDED
 
 /datum/action/innate/slime/reproduce/Activate()

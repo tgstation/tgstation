@@ -9,6 +9,8 @@
 			M.regenerate_icons()
 			is_adult = 0
 			maxHealth = 150
+			for(var/datum/action/innate/slime/reproduce/R in actions)
+				R.Remove(src)
 			var/datum/action/innate/slime/evolve/E = new
 			E.Grant(src)
 			revive(full_heal = 1)

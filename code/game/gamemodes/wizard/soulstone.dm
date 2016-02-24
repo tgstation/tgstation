@@ -14,6 +14,7 @@
 	usability = 1
 
 /obj/item/device/soulstone/pickup(mob/living/user)
+	..()
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		user << "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>"
 		user.Dizzy(120)
@@ -224,18 +225,19 @@
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	S.key = T.key
-	S.faction |= "\ref[U]" //Add the master as a faction, allowing inter-mob cooperation
-	if(iscultist(U))
+	if(U)
+		S.faction |= "\ref[U]" //Add the master as a faction, allowing inter-mob cooperation
+	if(U && iscultist(U))
 		ticker.mode.add_cultist(S.mind,2)
 	S.cancel_camera()
 	C.icon_state = "soulstone2"
 	C.name = "Soul Stone: [S.real_name]"
-	if(iswizard(U) || usability)
+	if(U && (iswizard(U) || usability))
 		S << "Your soul has been captured! You are now bound to [U.real_name]'s will. Help them succeed in their goals at all costs."
-	else if(iscultist(U))
+	else if(U && iscultist(U))
 		S << "Your soul has been captured! You are now bound to the cult's will. Help them succeed in their goals at all costs."
 	C.imprinted = "[S.name]"
-	if(vic)
+	if(vic && U)
 		U << "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from their body and stored within the soul stone."
 		U << "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls."
 

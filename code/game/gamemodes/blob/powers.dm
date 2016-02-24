@@ -248,14 +248,6 @@
 /datum/action/innate/blob
 	background_icon_state = "bg_alien"
 
-/datum/action/innate/blob/CheckRemoval()
-	if(ticker.mode.name != "blob" || !ishuman(owner))
-		return 1
-	var/datum/game_mode/blob/B = ticker.mode
-	if(!owner.mind || !(owner.mind in B.infected_crew))
-		return 1
-	return 0
-
 /datum/action/innate/blob/earlyhelp
 	name = "Blob Help"
 	button_icon_state = "blob"

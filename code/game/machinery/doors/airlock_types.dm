@@ -297,6 +297,13 @@
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_shuttle
 
+/obj/machinery/door/airlock/abductor
+	name = "alien airlock"
+	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
+	doortype = /obj/structure/door_assembly/door_assembly_abductor
+	opacity = 1
+	explosion_block = 2
 
 //////////////////////////////////
 /*
