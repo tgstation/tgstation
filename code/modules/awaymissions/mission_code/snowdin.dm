@@ -140,7 +140,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/weapon/dnainjector/lasereyesmut = 7,
 				/obj/item/weapon/gun/magic/wand/fireball/inert = 3,
 				/obj/item/weapon/pneumatic_cannon = 15,
-				/obj/item/weapon/melee/energy/sword = 7,
+				/obj/item/weapon/melee/toggle/energy/sword = 7,
 				/obj/item/weapon/spellbook/oneuse/knock = 15,
 				/obj/item/weapon/spellbook/oneuse/summonitem = 20,
 				/obj/item/weapon/spellbook/oneuse/forcewall = 17,
