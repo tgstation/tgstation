@@ -17,6 +17,8 @@
 	icon = 'icons/obj/cage.dmi'
 	icon_state = "cage_base"
 
+	lockflags = LOCKED_CAN_LIE_AND_STAND | CANT_BE_MOVED_BY_LOCKED_MOBS
+
 	var/cover_state = C_OPENED
 	var/door_state = C_CLOSED
 

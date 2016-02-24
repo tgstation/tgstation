@@ -328,7 +328,7 @@
 					src.throwing = 0
 					. = 0
 
-/atom/movable/proc/throw_at(atom/target, range, speed, override = 1)
+/atom/movable/proc/throw_at(atom/target, range, speed, override = 1, var/fly_speed = 0) //fly_speed parameter: if 0, does nothing. Otherwise, changes how fast the object flies WITHOUT affecting damage!
 	if(!target || !src)	return 0
 	if(override)
 		sound_override = 1
@@ -337,6 +337,8 @@
 	throwing = 1
 	if(!speed)
 		speed = throw_speed
+	if(!fly_speed)
+		fly_speed = speed
 
 	var/mob/user
 	if(usr)
@@ -390,7 +392,7 @@
 				error += dist_x
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= speed)
+				if(dist_since_sleep >= fly_speed)
 					dist_since_sleep = 0
 					sleep(1)
 			else
@@ -404,7 +406,7 @@
 				error -= dist_y
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= speed)
+				if(dist_since_sleep >= fly_speed)
 					dist_since_sleep = 0
 					sleep(1)
 			a = get_area(src.loc)
@@ -426,7 +428,7 @@
 				error += dist_y
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= speed)
+				if(dist_since_sleep >= fly_speed)
 					dist_since_sleep = 0
 					sleep(1)
 			else
@@ -440,7 +442,7 @@
 				error -= dist_x
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= speed)
+				if(dist_since_sleep >= fly_speed)
 					dist_since_sleep = 0
 					sleep(1)
 

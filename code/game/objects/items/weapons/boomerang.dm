@@ -7,7 +7,7 @@
 
 	throwforce = 25
 	throw_range = 7
-	throw_speed = 1
+	throw_speed = 5
 
 	force = 7
 
@@ -37,12 +37,13 @@
 	if(!usr)
 		return ..()
 
+	animate(src, transform = turn(transform, 180), time = 5, loop = -1)
+	animate(transform = turn(transform, 180), time = 5, loop = -1)
 	spawn()
-		while(throwing)
-			animate(src, transform = turn(transform, 120), time = 5, loop = -1)
+		while(!throwing) //Wait until the boomerang is no longer flying. Check on 0.5-second intervals
 			sleep(5)
 
-		transform = null
+		animate(src) //Stop the animation
 
 	var/turf/original = get_turf(usr)
 	//HOW THIS WORKS
@@ -66,12 +67,12 @@
 		points.Add(T)
 
 	for(var/turf/T in points)
-		if(!..(T, range, speed, override))
+		if(!..(T, range, speed, override, fly_speed = 1))
 			return
 		if(istype(loc, /turf/space)) //Boomerangs don't work in space
 			return
 
-	..(original, range, speed, override)
+	..(original, range, speed, override, fly_speed = 1)
 
 /obj/item/weapon/boomerang/throw_impact(atom/hit_atom, var/speed, user)
 	if(iscarbon(hit_atom) && !isslime(hit_atom))

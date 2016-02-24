@@ -202,7 +202,9 @@
 */
 
 
-/obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
+/obj/item/device/camera/attack(atom/movable/M, mob/user)
+	if(istype(M, /obj/structure/table/)) return //Stop taking photos of tables while putting cameras on them
+
 	return afterattack(M, user)
 
 
