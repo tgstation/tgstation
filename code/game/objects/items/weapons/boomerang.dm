@@ -38,14 +38,11 @@
 		return ..()
 
 	spawn()
-		while(src)
-			if(!throwing) //This stops the spinning if the item is no longer flying
-				transform = null
-				break
-			else
-				animate(src, transform = turn(transform, 120), time = 5, loop = -1) //Spin forever
-
+		while(throwing)
+			animate(src, transform = turn(transform, 120), time = 5, loop = -1)
 			sleep(5)
+
+		transform = null
 
 	var/turf/original = get_turf(usr)
 	//HOW THIS WORKS
