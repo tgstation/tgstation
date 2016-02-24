@@ -81,7 +81,7 @@ def merge_map(newfile, backupfile):
 
         difference = key_difference(key, next_key)
         if difference > 1:
-            i = 0
+            i = 1
             nextnew = key
             while i < difference:
                 nextnew = get_next_key(nextnew)
@@ -118,14 +118,66 @@ def merge_map(newfile, backupfile):
             next_key = get_next_key(next_key)
         originalDict = sorted_dict
 
-    write_dictionary(newfile, originalDict)
-    write_grid(newfile, mergeGrid)
+    write_dictionary_tgm(newfile, originalDict)
+    write_grid_coord(newfile, mergeGrid)
     return 1
+
+def write_dictionary_tgm(filename, dictionary): #write dictionary in tgm format
+    with open(filename, "w") as output:
+        output.write("//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE \n")
+        for key, list_ in dictionary.items():
+            output.write("\"{}\" = (\n".format(key))
+
+            for thing in list_:
+                buffer = ""
+                in_quote_block = False
+                escaping_quote = False
+                in_varedit_block = False
+                for char in thing:
+                    
+                    if in_quote_block:
+                        if char == "\"":
+                            in_quote_block = False
+                        buffer = buffer + char
+                        continue
+                    elif char == "\"":
+                        in_quote_block = True
+                        buffer = buffer + char
+                        continue
+
+                    if not in_varedit_block:
+                        if char == "{":
+                            in_varedit_block = True
+                            buffer = buffer + "{\n\t"
+                            continue
+                    else:
+                        if char == ";":
+                            buffer = buffer + ";\n\t"
+                            continue
+                        elif char == "}":
+                            buffer = buffer + "\n\t}"
+                            in_varedit_block = False
+                            continue
+
+                    buffer = buffer + char
+                
+                if list_.index(thing) != len(list_) - 1:
+                    buffer = buffer + ",\n"
+                output.write(buffer)
+                        
+            output.write(")\n")
 
 def write_dictionary(filename, dictionary):
     with open(filename, "w") as output:
         for key, value in dictionary.items():
             output.write("\"{}\" = ({})\n".format(key, ",".join(value)))
+
+def write_grid_coord(filename, grid):
+    with open(filename, "a") as output:
+        output.write("\n")
+        for y in range(1, maxy):
+            for x in range(1, maxx):
+                output.write("({},{},1) = {{\"{}\"}}\n".format(x, y, grid[x,y]))
 
 def write_grid(filename, grid):
     with open(filename, "a") as output:
@@ -179,101 +231,198 @@ def get_next_key(key):
             carry -= 1
     return new_key[::-1]
 
-def parse_map(map_file): #supports only one z level per file
+def parse_map(map_file):
     with open(map_file, "r") as map_input:
         characters = map_input.read()
 
-        in_dictionary_block = True #the key = data part of the file
-        in_key_block = False #"aaa"
-        in_data_block = False # (/thing)"
+        in_quote_block = False
+        escaping_quote = False
+        in_key_block = False
+        in_data_block = False
+        in_varedit_block = False
         after_data_block = False
-        parenthesis_counter = 0
-
-        in_grid_block = False #the map layout part of the file
-        global key_length
-        key_length = 1
-
-        curr_x = 0
-        curr_y = 0
-        global maxx
-        global maxy
+        escaping_parenthesis = 0
+        escaping = False
 
         dictionary = collections.OrderedDict()
+        curr_key = ""
+        curr_datum = ""
+        curr_data = list()
+
+        in_map_block = False
+        in_coord_block = False
+        in_map_string = False
+        adjust_y = True
+
+        curr_num = ""
+        reading_coord = "x"
+
+        global key_length
+        global maxx
+        global maxy
+        curr_x = 0
+        curr_y = 0
+        curr_z = 1
         grid = dict()
 
-        curr_key = ""
-        curr_data = ""
+        for char in characters:
+    
+            if not in_map_block:
 
-        for c in characters:
-            if in_dictionary_block:
-
-                if c == "\n" or c == "\t" or c == "\r":
-                    continue
-                
-                if after_data_block:
-                    if c == "(":
-                        in_dictionary_block = False
-                        after_data_block = False
-                        curr_key = ""
-                        curr_data = ""
-                        continue
-                if not in_key_block and not in_data_block:
-                    if c == "\"":
-                        in_key_block = True
-                        after_data_block = False
-                    elif c == "(":
-                        in_data_block = True
-                    continue
-
-                if in_key_block:
-                    if c == "\"":
-                        in_key_block = False
-                        continue
-                    curr_key = curr_key + c
+                if char == "\n" or char == "\t":
                     continue
 
                 if in_data_block:
-                    if c == ")":
-                        if parenthesis_counter == 0:
-                            in_data_block = False
-                            after_data_block = True
-                            dictionary[curr_key] = curr_data.split(",")
-                            key_length = len(curr_key)
-                            curr_key = ""
-                            curr_data = ""
+
+                    if in_varedit_block:
+
+                        if in_quote_block:
+                            if char == "\\":
+                                curr_datum = curr_datum + char
+                                escaping = True
+                                continue
+
+                            if escaping:
+                                curr_datum = curr_datum + char
+                                escaping = False
+                                continue
+                            
+                            if char == "\"":
+                                curr_datum = curr_datum + char
+                                in_quote_block = False
+                                continue
+
+                            curr_datum = curr_datum + char
                             continue
-                        else:
-                            parenthesis_counter -= 1
-                    if c == "(":
-                        parenthesis_counter += 1
-                    curr_data = curr_data + c
-                continue
+                            
+                        if char == "\"":
+                            curr_datum = curr_datum + char
+                            in_quote_block = True
+                            continue
 
-            if not in_grid_block:
-                if c == "\"":
-                    in_grid_block = True
+                        if char == "}":
+                            curr_datum = curr_datum + char
+                            in_varedit_block = False
+                            continue
+
+                        curr_datum = curr_datum + char
+                        continue
+
+                    if char == "{":
+                        curr_datum = curr_datum + char
+                        in_varedit_block = True
+                        continue
+
+                    if char == ",":
+                        curr_data.append(curr_datum)
+                        curr_datum = ""
+                        continue
+
+                    if char == ")":
+                        curr_data.append(curr_datum)
+                        dictionary[curr_key] = curr_data
+                        curr_data = list()
+                        curr_datum = ""
+                        curr_key = ""
+                        in_data_block = False
+                        after_data_block = True
+                        continue
+
+                    curr_datum = curr_datum + char
                     continue
+                                
+                if in_key_block:
+                    if char == "\"":
+                        in_key_block = False
+                        key_length = len(curr_key)
+                    else:
+                        curr_key = curr_key + char
+                    continue    
+                #else we're looking for a key block, a data block or the map block
+
+                if char == "\"":
+                    in_key_block = True
+                    after_data_block = False
+                    continue
+
+                if char == "(":
+                    if after_data_block:
+                        in_map_block = True
+                        in_coord_block = True
+                        after_data_block = False
+                        curr_key = ""
+                        continue
+                    else:
+                        in_data_block = True
+                        after_data_block = False
+                        continue
+                
             else:
-                if c == "\n":
-                    curr_y += 1
 
-                    if curr_x > maxx:
-                        maxx = curr_x
-                    curr_x = 1
-                    continue
-                if c == "\"":
-                    break
+                if in_coord_block:
+                    if char == ",":
+                        if reading_coord == "x":
+                            curr_x = string_to_num(curr_num)
+                            if curr_x > maxx:
+                                maxx = curr_x
+                            curr_num = ""
+                            reading_coord = "y"
+                        elif reading_coord == "y":
+                            curr_y = string_to_num(curr_num)
+                            if curr_y > maxy:
+                                maxy = curr_y
+                            curr_num = ""
+                            reading_coord = "z"
+                        else:
+                            pass
+                        continue
 
-                curr_key = curr_key + c
-                if len(curr_key) == key_length:
-                    grid[curr_x,curr_y] = curr_key
-                    curr_key = ""
-                    curr_x += 1
+                    if char == ")":
+                        in_coord_block = False
+                        reading_coord = "x"
+                        curr_num = ""
+                        #read z here if needed
+                        continue
+
+                    curr_num = curr_num + char
                     continue
-        
+
+                if in_map_string:
+
+                    if char == "\"":
+                        in_map_string = False
+                        continue
+
+                    if char == "\n":
+                        if adjust_y:
+                            adjust_y = False
+                        else:
+                            curr_y += 1
+                        if curr_x > maxx:
+                            maxx = curr_x
+                        curr_x = 1
+                        continue
+
+                    curr_key = curr_key + char
+                    if len(curr_key) == key_length:
+                        grid[curr_x, curr_y] = curr_key
+                        curr_key = ""
+                        curr_x += 1
+                    continue
+                
+
+                #else look for coordinate block or a map string
+
+                if char == "(":
+                    in_coord_block = True
+                    continue
+                if char == "\"":
+                    in_map_string = True
+                    continue
+
         if curr_y > maxy:
             maxy = curr_y
-            
+
         data = dict()
         data["dictionary"] = dictionary
         data["grid"] = grid
@@ -321,3 +470,9 @@ def key_compare(keyA, keyB): #thanks byond for not respecting ascii
                     return 1
                 break
     return 0
+
+def string_to_num(s):
+    try:
+        return int(s)
+    except ValueError:
+        return -1
