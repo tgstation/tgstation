@@ -119,6 +119,10 @@
 		var/obj/mecha/R = src.loc //R is for GIANT ROBOT
 		R.shock_n_boot()
 
+	else if(istype(src.loc, /obj/item/assembly/shock_kit) && on)
+		var/obj/item/assembly/shock_kit/SK = src.loc
+		SK.receive_signal()
+
 	else if(ismob(loc) && on)
 		var/mob/M = loc
 		var/turf/T = M.loc

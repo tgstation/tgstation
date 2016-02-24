@@ -14,9 +14,6 @@
 /obj/structure/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/assembly/shock_kit))
 		var/obj/item/assembly/shock_kit/SK = W
-		if(!SK.status)
-			to_chat(user, "<span class='notice'>[SK] is not ready to be attached!</span>")
-			return
 		if(user.drop_item(W))
 			var/obj/structure/bed/chair/e_chair/E = new /obj/structure/bed/chair/e_chair(src.loc)
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
