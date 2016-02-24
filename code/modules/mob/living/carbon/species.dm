@@ -209,6 +209,7 @@ var/global/list/whitelisted_species = list("Human")
 		//testing("  ratio < 1, adding oxyLoss.")
 		H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
 		H.failed_last_breath = 1
+		H.oxygen_alert = 1
 		return moles*ratio/6
 
 // Used for species-specific names (Vox, etc)
