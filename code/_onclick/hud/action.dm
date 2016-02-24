@@ -18,6 +18,7 @@
 
 /datum/action/New(var/Target)
 	target = Target
+	button = new (null, src)
 
 /datum/action/Destroy()
 	if(owner)
@@ -31,14 +32,16 @@
 		Remove(owner)
 	owner = T
 	T.actions += src
+	if (button)
+		button.moved = 0
 	T.update_action_buttons()
 
 /datum/action/proc/Remove(mob/living/T)
 	if(button)
 		if(T.client)
 			T.client.screen -= button
-		qdel(button)
-		button = null
+		T.contents -= button
+		button.moved = 0
 	T.actions -= src
 	T.update_action_buttons()
 	owner = null
@@ -78,6 +81,8 @@
 	return 1
 
 /datum/action/proc/UpdateName()
+	if (button)
+		button.UpdateVerb()
 	return name
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
@@ -92,6 +97,29 @@
 /obj/screen/movable/action_button
 	var/datum/action/owner
 	screen_loc = "WEST,NORTH"
+	var/obj/screen/movable/action_button/verb/button_verb
+
+/obj/screen/movable/action_button/New(loc, datum/action/Owner)
+	if(istype(Owner))
+		owner = Owner
+		UpdateVerb()
+
+/obj/screen/movable/action_button/proc/UpdateVerb()
+	if(!istype(owner))
+		return
+	if(!button_verb || button_verb.name != owner.name)
+		if (button_verb)
+			verbs -= button_verb
+		button_verb = new /obj/screen/movable/action_button/proc/verb_action (src, owner.name, "")
+
+/obj/screen/movable/action_button/proc/verb_action()
+	set category = null
+
+	if(usr.next_move >= world.time) // Is this needed ?
+		return
+
+	owner.Trigger()
+
 
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
