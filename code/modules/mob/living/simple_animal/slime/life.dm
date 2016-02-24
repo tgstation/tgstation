@@ -150,10 +150,10 @@
 	temp_change = (temperature - current)
 	return temp_change
 
-/mob/living/simple_animal/slime/handle_regular_status_updates()
-	if(..())
-		if(prob(30))
-			adjustBruteLoss(-1)
+/mob/living/simple_animal/slime/handle_status_effects()
+	..()
+	if(prob(30))
+		adjustBruteLoss(-1)
 
 /mob/living/simple_animal/slime/proc/handle_feeding()
 	if(!ismob(buckled))
@@ -230,6 +230,7 @@
 	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		nutrition -= 20
 		amount_grown++
+		update_action_buttons_icon()
 
 	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD && !buckled && !Target && !ckey)
 		if(is_adult)

@@ -51,10 +51,10 @@
 
 /obj/machinery/camera/initialize()
 	if(z == 1 && prob(3) && !start_active)
-		deactivate()
+		toggle_cam()
 
 /obj/machinery/camera/Destroy()
-	deactivate(null, 0) //kick anyone viewing out
+	toggle_cam(null, 0) //kick anyone viewing out
 	if(assembly)
 		qdel(assembly)
 		assembly = null
@@ -97,7 +97,7 @@
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
-					O.reset_view(null)
+					O.reset_perspective(null)
 					O << "The screen bursts into static."
 			..()
 
@@ -127,7 +127,7 @@
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 	health = max(0, health - 30)
 	if(!health && status)
-		deactivate(user, 0)
+		toggle_cam(user, 0)
 
 /obj/machinery/camera/attackby(obj/W, mob/living/user, params)
 	var/msg = "<span class='notice'>You attach [W] into the assembly's inner circuits.</span>"
@@ -142,7 +142,7 @@
 
 	if(panel_open)
 		if(istype(W, /obj/item/weapon/wirecutters)) //enable/disable the camera
-			deactivate(user, 1)
+			toggle_cam(user, 1)
 			health = initial(health) //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
 
 		else if(istype(W, /obj/item/device/multitool)) //change focus
@@ -241,10 +241,10 @@
 			user.do_attack_animation(src)
 			if(!health && status)
 				triggerCameraAlarm()
-				deactivate(user, 1)
+				toggle_cam(user, 1)
 	return
 
-/obj/machinery/camera/proc/deactivate(mob/user, displaymessage = 1) //this should be called toggle() but doing a find and replace for this would be ass
+/obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
 	status = !status
 	if(can_use())
 		cameranet.addCamera(src)
@@ -277,7 +277,7 @@
 	for(var/mob/O in player_list)
 		if (O.client && O.client.eye == src)
 			O.unset_machine()
-			O.reset_view(null)
+			O.reset_perspective(null)
 			O << "The screen bursts into static."
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
@@ -373,7 +373,7 @@
 		health = max(0, health - proj.damage)
 		if(!health && status)
 			triggerCameraAlarm()
-			deactivate(null, 1)
+			toggle_cam(null, 1)
 
 /obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
 	var/turf/prev_turf
@@ -388,3 +388,17 @@
 	if(cameranet && get_turf(src) != prev_turf)
 		cameranet.updatePortableCamera(src)
 		prev_turf = get_turf(src)
+
+/obj/machinery/camera/get_remote_view_fullscreens(mob/user)
+	if(view_range == short_range) //unfocused
+		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+
+/obj/machinery/camera/update_remote_sight(mob/living/user)
+	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
+	if(isXRay())
+		user.sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		user.see_in_dark = max(user.see_in_dark, 8)
+	else
+		user.sight = 0
+		user.see_in_dark = 2
+	return 1

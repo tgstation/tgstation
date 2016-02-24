@@ -294,8 +294,6 @@
 			pixel_x = oldPY
 			pixel_y = (oldPX*(-1))
 
-
-
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1)
@@ -330,8 +328,6 @@
 		rotation += (rotation % 90) //diagonal rotations not allowed, round up
 	rotation = SimplifyDegrees(rotation)
 
-
-
 	//remove area surrounding docking port
 	if(areaInstance.contents.len)
 		var/area/A0 = locate("[area_type]")
@@ -363,7 +359,7 @@
 			for(var/atom/movable/AM in T0)
 				AM.onShuttleMove(T1, rotation)
 
-		if (rotation)
+		if(rotation)
 			T1.shuttleRotate(rotation)
 
 		//lighting stuff
@@ -529,112 +525,7 @@
 			dst = previous
 		else
 			dst = destination
-		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)]mins)"
-
-/obj/machinery/computer/shuttle
-	name = "Shuttle Console"
-	icon_screen = "shuttle"
-	icon_keyboard = "tech_key"
-	req_access = list( )
-	circuit = /obj/item/weapon/circuitboard/shuttle
-	var/shuttleId
-	var/possible_destinations = ""
-	var/admin_controlled
-	var/no_destination_swap = 0
-
-/obj/machinery/computer/shuttle/New(location, obj/item/weapon/circuitboard/shuttle/C)
-	..()
-	if(istype(C))
-		possible_destinations = C.possible_destinations
-		shuttleId = C.shuttleId
-
-/obj/machinery/computer/shuttle/attack_hand(mob/user)
-	if(..(user))
-		return
-	src.add_fingerprint(usr)
-
-	var/list/options = params2list(possible_destinations)
-	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-	var/dat = "Status: [M ? M.getStatusText() : "*Missing*"]<br><br>"
-	if(M)
-		var/destination_found
-		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
-			if(!options.Find(S.id))
-				continue
-			if(M.canDock(S))
-				continue
-			destination_found = 1
-			dat += "<A href='?src=\ref[src];move=[S.id]'>Send to [S.name]</A><br>"
-		if(!destination_found)
-			dat += "<B>Shuttle Locked</B><br>"
-			if(admin_controlled)
-				dat += "Authorized personnel only<br>"
-				dat += "<A href='?src=\ref[src];request=1]'>Request Authorization</A><br>"
-	dat += "<a href='?src=\ref[user];mach_close=computer'>Close</a>"
-
-	var/datum/browser/popup = new(user, "computer", M ? M.name : "shuttle", 300, 200)
-	popup.set_content("<center>[dat]</center>")
-	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
-
-/obj/machinery/computer/shuttle/Topic(href, href_list)
-	if(..())
-		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
-	if(!allowed(usr))
-		usr << "<span class='danger'>Access denied.</span>"
-		return
-
-	if(href_list["move"])
-		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-		if(M.launch_status == ENDGAME_LAUNCHED)
-			usr << "<span class='warning'>You've already escaped. Never going back to that place again!</span>"
-			return
-		if(no_destination_swap)
-			if(M.mode != SHUTTLE_IDLE)
-				usr << "<span class='warning'>Shuttle already in transit.</span>"
-				return
-		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
-			if(0)
-				usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
-			if(1)
-				usr << "<span class='warning'>Invalid shuttle requested.</span>"
-			else
-				usr << "<span class='notice'>Unable to comply.</span>"
-
-/obj/machinery/computer/shuttle/emag_act(mob/user)
-	if(!emagged)
-		src.req_access = list()
-		emagged = 1
-		user << "<span class='notice'>You fried the consoles ID checking system.</span>"
-
-/obj/machinery/computer/shuttle/ferry
-	name = "transport ferry console"
-	circuit = /obj/item/weapon/circuitboard/ferry
-	shuttleId = "ferry"
-	possible_destinations = "ferry_home;ferry_away"
-
-
-/obj/machinery/computer/shuttle/ferry/request
-	name = "ferry console"
-	circuit = /obj/item/weapon/circuitboard/ferry/request
-	var/cooldown //prevents spamming admins
-	possible_destinations = "ferry_home"
-	admin_controlled = 1
-
-/obj/machinery/computer/shuttle/ferry/request/Topic(href, href_list)
-	..()
-	if(href_list["request"])
-		if(cooldown)
-			return
-		cooldown = 1
-		usr << "<span class='notice'>Your request has been recieved by Centcom.</span>"
-		admins << "<b>FERRY: <font color='blue'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) (<A HREF='?_src_=holder;secrets=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to Centcom.</font>"
-		spawn(600) //One minute cooldown
-			cooldown = 0
-
-
+		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
 #undef DOCKING_PORT_HIGHLIGHT
 
 

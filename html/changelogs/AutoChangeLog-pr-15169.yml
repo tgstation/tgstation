@@ -1,5 +1,0 @@
-author: Lzimann
-delete-after: True
-changes: 
-  - tweak: "Combat Mechas now have a increased chance of destroying a wall with punches (40% for walls and 20% for reinforced walls)!"
-  - rscadd: "Combat mechas can now destroy tables and racks with a punch!"

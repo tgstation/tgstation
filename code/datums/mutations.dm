@@ -204,19 +204,13 @@
 /datum/mutation/human/x_ray/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	on_life(owner)
 
-/datum/mutation/human/x_ray/on_life(mob/living/carbon/human/owner)
-	owner.sight |= SEE_MOBS|SEE_OBJS|SEE_TURFS
-	owner.see_in_dark = 8
+	owner.update_sight()
 
 /datum/mutation/human/x_ray/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	if((SEE_MOBS & owner.permanent_sight_flags) && (SEE_OBJS & owner.permanent_sight_flags) && (SEE_TURFS & owner.permanent_sight_flags)) //Xray flag combo
-		return
-	owner.see_in_dark = initial(owner.see_in_dark)
-	owner.sight = initial(owner.sight)
+	owner.update_sight()
 
 /datum/mutation/human/nearsight
 
@@ -227,12 +221,12 @@
 /datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities |= NEARSIGHT
+	owner.become_nearsighted()
 
 /datum/mutation/human/nearsight/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities &= ~NEARSIGHT
+	owner.cure_nearsighted()
 
 /datum/mutation/human/epilepsy
 
@@ -241,7 +235,7 @@
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
-	if((prob(1) && owner.paralysis < 1))
+	if(prob(1) && !owner.paralysis)
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Paralyse(10)
 		owner.Jitter(1000)
@@ -286,22 +280,22 @@
 	quality = POSITIVE
 	get_chance = 15
 	lowest_value = 256 * 12
-	text_gain_indication = "<span class='notice'>Everything around you seems to grow..</span>"
-	text_lose_indication = "<span class='notice'>Everything around you seems to shrink..</span>"
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	owner.resize = 0.8
+	owner.update_transform()
 	owner.pass_flags |= PASSTABLE
-	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>")
+	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	owner.resize = 1.25
+	owner.update_transform()
 	owner.pass_flags &= ~PASSTABLE
-	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>")
+	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
 
 /datum/mutation/human/clumsy
 
@@ -375,15 +369,15 @@
 /datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities |= BLIND
+	owner.become_blind()
 
 /datum/mutation/human/blind/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities &= ~BLIND
+	owner.cure_blind()
+
 
 /datum/mutation/human/race
-
 	name = "Monkified"
 	quality = NEGATIVE
 	time_coeff = 2

@@ -5,34 +5,6 @@ These are general powers. Specific powers are stored under the appropriate alien
 /*Alien spit now works like a taser shot. It won't home in on the target but will act the same once it does hit.
 Doesn't work on other aliens/AI.*/
 
-/datum/action/spell_action/alien
-
-/datum/action/spell_action/alien/UpdateName()
-	var/obj/effect/proc_holder/alien/ab = target
-	return ab.name
-
-/datum/action/spell_action/alien/IsAvailable()
-	if(!target)
-		return 0
-	var/obj/effect/proc_holder/alien/ab = target
-
-	if(usr)
-		return ab.cost_check(ab.check_turf,usr,1)
-	else
-		if(owner)
-			return ab.cost_check(ab.check_turf,owner,1)
-	return 1
-
-/datum/action/spell_action/alien/CheckRemoval()
-	if(!iscarbon(owner))
-		return 1
-
-	var/mob/living/carbon/C = owner
-	if(target.loc && !(target.loc in C.internal_organs))
-		return 1
-
-	return 0
-
 
 /obj/effect/proc_holder/alien
 	name = "Alien Power"
@@ -45,6 +17,10 @@ Doesn't work on other aliens/AI.*/
 	var/action_icon = 'icons/mob/actions.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_alien"
+
+/obj/effect/proc_holder/alien/New()
+	..()
+	action = new(src)
 
 /obj/effect/proc_holder/alien/Click()
 	if(!istype(usr,/mob/living/carbon))
@@ -262,7 +238,9 @@ Doesn't work on other aliens/AI.*/
 		for(var/atom/movable/A in user.stomach_contents)
 			user.stomach_contents.Remove(A)
 			A.loc = user.loc
-			A.update_pipe_vision()
+			if(isliving(A))
+				var/mob/M = A
+				M.reset_perspective()
 		user.visible_message("<span class='alertealien'>[user] hurls out the contents of their stomach!</span>")
 	return
 
@@ -317,6 +295,10 @@ Doesn't work on other aliens/AI.*/
 	if(!vessel) return 0
 	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
 	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
+	for(var/X in abilities)
+		var/obj/effect/proc_holder/alien/APH = X
+		if(APH.has_action)
+			APH.action.UpdateButtonIcon()
 	return 1
 
 /mob/living/carbon/alien/adjustPlasma(amount)

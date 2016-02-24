@@ -102,7 +102,7 @@
 		ui = new(user, src, ui_key, "atmos_control", name, 400, 925, master_ui, state)
 		ui.open()
 
-/obj/machinery/computer/atmos_control/get_ui_data(mob/user)
+/obj/machinery/computer/atmos_control/ui_data(mob/user)
 	var/data = list()
 
 	data["sensors"] = list()
@@ -188,7 +188,7 @@
 		ui = new(user, src, ui_key, "atmos_control", name, 500, 305, master_ui, state)
 		ui.open()
 
-/obj/machinery/computer/atmos_control/tank/get_ui_data(mob/user)
+/obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()
 	data["tank"] = TRUE
 	data["inputting"] = input_info ? input_info["power"] : FALSE

@@ -158,6 +158,7 @@
 		qdel(src)
 
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user)
+	..()
 	if(!user.gloves)
 		user << "<span class='danger'>The [name] burns your bare hand!</span>"
 		user.adjustFireLoss(rand(1, 5))
@@ -184,6 +185,7 @@
 	return (BRUTELOSS|TOXLOSS)
 
 /obj/item/weapon/grown/nettle/pickup(mob/living/user)
+	..()
 	if(!iscarbon(user))
 		return 0
 	var/mob/living/carbon/C = user
@@ -245,7 +247,7 @@
 		M << "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>"
 		add_logs(user, M, "attacked", src)
 
-		M.eye_blurry += force/7
+		M.adjust_blurriness(force/7)
 		if(prob(20))
 			M.Paralyse(force / 6)
 			M.Weaken(force / 15)

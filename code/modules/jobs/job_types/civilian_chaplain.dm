@@ -15,8 +15,8 @@ Chaplain
 
 	outfit = /datum/outfit/job/chaplain
 
-	access = list(access_morgue, access_chapel_office, access_crematorium)
-	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
+	access = list(access_morgue, access_chapel_office, access_crematorium, access_theatre)
+	minimal_access = list(access_morgue, access_chapel_office, access_crematorium, access_theatre)
 
 /datum/outfit/job/chaplain
 	name = "Chaplain"
@@ -24,6 +24,8 @@ Chaplain
 	belt = /obj/item/device/pda/chaplain
 	uniform = /obj/item/clothing/under/rank/chaplain
 	backpack_contents = list(/obj/item/device/camera/spooky = 1)
+	backpack = /obj/item/weapon/storage/backpack/cultpack
+	satchel = /obj/item/weapon/storage/backpack/cultpack
 
 
 /datum/outfit/job/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

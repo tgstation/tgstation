@@ -102,9 +102,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/nukeoffer/bulldog
 	name = "Bulldog bundle"
 	desc = "Lean and mean: Optimised for people that want to get up close and personal. Contains the popular \
-			Bulldog shotgun, two 12g drums, and an elite hardsuit."
+			Bulldog shotgun, two 12g drums, and a pair of Thermal imaging goggles."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle
-	cost = 16 // normally 20
+	cost = 13 // normally 16
 
 /datum/uplink_item/nukeoffer/medical
 	name = "Medical bundle"
@@ -241,11 +241,11 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 8
 
 /datum/uplink_item/dangerous/emp
-	name = "EMP Kit"
-	desc = "A box that contains two EMP grenades, an EMP implant and a short ranged recharging device disguised \
-			as a flashlight. Useful to disrupt communication and silicon lifeforms."
+	name = "EMP Grenades and Implanter Kit"
+	desc = "A box that contains two EMP grenades and an EMP implant. Useful to disrupt communication, \
+			security's energy weapons, and silicon lifeforms when you're in a tight spot."
 	item = /obj/item/weapon/storage/box/syndie_kit/emp
-	cost = 5
+	cost = 2
 
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
@@ -395,13 +395,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "An additional 8-round slug magazine for use with the Bulldog shotgun. \
 			Now 8 times less likely to shoot your pals."
 	cost = 3
-	item = /obj/item/ammo_box/magazine/m12g
+	item = /obj/item/ammo_box/magazine/m12g/slug
 
 /datum/uplink_item/ammo/shotgun/stun
-	name = "12 Stun Slug Drum"
+	name = "12g Stun Slug Drum"
 	desc = "An alternative 8-round stun slug magazine for use with the Bulldog shotgun. \
 			Saying that they're completely non-lethal would be lying."
-	item = /obj/item/ammo_box/magazine/m12g/stun
+	item = /obj/item/ammo_box/magazine/m12g
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/dragon
@@ -542,6 +542,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 // Stealthy Weapons
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
+
+/datum/uplink_item/stealthy_weapons/martialarts
+	name = "Martial Arts Scroll"
+	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
+			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
+	item = /obj/item/weapon/sleeping_carp_scroll
+	cost = 17
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_weapons/throwingstars
 	name = "Box of Throwing Stars"
@@ -737,6 +745,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	surplus = 30
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	
+/datum/uplink_item/stealthy_tools/emplight
+	name = "EMP Flashlight"
+	desc = "A small, self-charging, short-ranged EMP device disguised as a flashlight. \
+		Useful for disrupting headsets, cameras, and borgs during stealth operations."
+	item = /obj/item/device/flashlight/emp
+	cost = 2
+	surplus = 30
 
 // Devices and Tools
 /datum/uplink_item/device_tools
@@ -762,7 +778,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "The Syndicate surgery dufflebag is a toolkit containing all surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, and a muzzle."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
-	cost = 4
+	cost = 3
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Military Belt"
@@ -870,6 +886,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			minimum setting of 10 seconds."
 	item = /obj/item/weapon/c4
 	cost = 1
+
+/datum/uplink_item/device_tools/c4bag
+	name = "Bag of C-4 explosives"
+	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/c4
+	cost = 9 //10% discount!
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"
@@ -1007,6 +1029,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	category = "Cybernetic Implants"
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
+	if(item)
+		if(findtext(item, /obj/item/organ/internal/cyberimp))
+			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
+		else
+			return ..()
 
 /datum/uplink_item/cyber_implants/thermals
 	name = "Thermal Vision Implant"

@@ -5,13 +5,14 @@
 	item_state = "bl_suit"
 	item_color = "black"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
-	action_button_name = "Change"
+	actions_types = list(/datum/action/item_action/change)
 	origin_tech = "syndicate=3"
 	sensor_mode = 0 //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = 0
 	var/list/clothing_choices = list()
 	var/malfunctioning = 0
 	burn_state = FIRE_PROOF
+	armor = list(melee = 10, bullet = 10, laser = 10,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/chameleon/New()
 	..()

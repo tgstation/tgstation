@@ -49,7 +49,7 @@
 
 				var/y_distance = TO.y - FROM.y
 				var/x_distance = TO.x - FROM.x
-				for (var/atom/movable/A in ultra_range(12, FROM )) // iterate thru list of mobs in the area
+				for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
 					if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
 					if(A.anchored) continue
 

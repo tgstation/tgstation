@@ -76,15 +76,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 //HAIR OVERLAY
 /mob/living/carbon/human/update_hair()
-	//Reset our hair
-	remove_overlay(HAIR_LAYER)
-
-	if( (disabilities & HUSK) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
-		return
-
-	if((wear_suit) && (wear_suit.hooded) && (wear_suit.suittoggled == 1))
-		return
-
 	dna.species.handle_hair(src)
 
 /mob/living/carbon/human/proc/update_mutcolor()
@@ -153,8 +144,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 		update_inv_wear_suit()
 		update_inv_pockets()
 		update_transform()
-		//Hud Stuff
-		update_hud()
 		// Mutantrace colors
 		update_mutcolor()
 		//mutations
@@ -204,8 +193,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/update_inv_wear_id()
 	remove_overlay(ID_LAYER)
 	if(wear_id)
-		wear_id.screen_loc = ui_id	//TODO
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_shown)
+			wear_id.screen_loc = ui_id
 			client.screen += wear_id
 
 		//TODO: add an icon file for ID slot stuff, so it's less snowflakey
@@ -248,7 +237,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 				glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
 			client.screen += glasses				//Either way, add the item to the HUD
 
-		if(!(head && (head.flags_inv & HIDEEYES)))
+		if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
 
 			var/image/standing = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/eyes.dmi')
 			overlays_standing[GLASSES_LAYER] = standing
@@ -290,8 +279,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(SUIT_STORE_LAYER)
 
 	if(s_store)
-		s_store.screen_loc = ui_sstore1		//TODO
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_shown)
+			s_store.screen_loc = ui_sstore1
 			client.screen += s_store
 
 		var/t_state = s_store.item_state
@@ -304,25 +293,17 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 
 /mob/living/carbon/human/update_inv_head()
-	var/obj/item/H = ..()
-	if(H)
-		if(client && hud_used && hud_used.hud_shown)
-			if(hud_used.inventory_shown)				//if the inventory is open ...
-				H.screen_loc = ui_head		//TODO	//...draw the item in the inventory screen
-			client.screen += H						//Either way, add the item to the HUD
-
+	..()
 	update_mutant_bodyparts()
-	apply_overlay(HEAD_LAYER)
 
 
 /mob/living/carbon/human/update_inv_belt()
 	remove_overlay(BELT_LAYER)
 
 	if(belt)
-		belt.screen_loc = ui_belt
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_shown)
 			client.screen += belt
-
+			belt.screen_loc = ui_belt
 
 		var/t_state = belt.item_state
 		if(!t_state)
@@ -352,44 +333,31 @@ Please contact me on #coderbus IRC. ~Carnie x
 			drop_l_hand()
 			drop_r_hand()
 
-	src.update_hair()
-	src.update_mutant_bodyparts()
+	update_hair()
+	update_mutant_bodyparts()
 
 	apply_overlay(SUIT_LAYER)
 
 
 /mob/living/carbon/human/update_inv_pockets()
 	if(l_store)
-		l_store.screen_loc = ui_storage1	//TODO
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_shown)
 			client.screen += l_store
+			l_store.screen_loc = ui_storage1
 	if(r_store)
-		r_store.screen_loc = ui_storage2	//TODO
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_shown)
 			client.screen += r_store
+			r_store.screen_loc = ui_storage2
+
 
 
 /mob/living/carbon/human/update_inv_wear_mask()
-	var/obj/item/clothing/mask/M = ..()
-	if(M)
-		if(client && hud_used && hud_used.hud_shown)
-			if(hud_used.inventory_shown)				//if the inventory is open ...
-				M.screen_loc = ui_mask	//TODO	//...draw the item in the inventory screen
-			client.screen += M					//Either way, add the item to the HUD
+	..()
 	update_mutant_bodyparts()
-	apply_overlay(FACEMASK_LAYER)
-
-
-/mob/living/carbon/human/update_inv_back()
-	var/obj/item/B = ..()
-	if(B)
-		B.screen_loc = ui_back
-		if(client && hud_used && hud_used.hud_shown)
-			client.screen += B
-	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/human/update_inv_handcuffed()
-	if(..())
+	remove_overlay(HANDCUFF_LAYER)
+	if(handcuffed)
 		overlays_standing[HANDCUFF_LAYER] = image("icon"='icons/mob/mob.dmi', "icon_state"="handcuff1", "layer"=-HANDCUFF_LAYER)
 		apply_overlay(HANDCUFF_LAYER)
 
@@ -400,13 +368,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_standing[LEGCUFF_LAYER] = image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /obj/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
-
-
-/mob/living/carbon/human/update_hud()	//TODO: do away with this if possible
-	if(..())
-		if(hud_used)
-			hud_used.hidden_inventory_update() 	//Updates the screenloc of the items on the 'other' inventory bar
-
 
 /proc/wear_female_version(t_color, icon, layer, type)
 	var/index = t_color
@@ -426,6 +387,27 @@ Please contact me on #coderbus IRC. ~Carnie x
 	return out
 
 
+//human HUD updates for items in our inventory
+
+//update whether our head item appears on our hud.
+/mob/living/carbon/human/update_hud_head(obj/item/I)
+	if(client && hud_used && hud_used.hud_shown)
+		if(hud_used.inventory_shown)
+			I.screen_loc = ui_head
+		client.screen += I
+
+//update whether our mask item appears on our hud.
+/mob/living/carbon/human/update_hud_wear_mask(obj/item/I)
+	if(client && hud_used && hud_used.hud_shown)
+		if(hud_used.inventory_shown)
+			I.screen_loc = ui_mask
+		client.screen += I
+
+//update whether our back item appears on our hud.
+/mob/living/carbon/human/update_hud_back(obj/item/I)
+	if(client && hud_used && hud_used.hud_shown)
+		I.screen_loc = ui_back
+		client.screen += I
 
 
 /*

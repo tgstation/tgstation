@@ -27,6 +27,8 @@
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player) && !M.ear_deaf)
 			M << announcement
+			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
+				continue
 			M << sound(sound)
 
 /proc/print_command_report(text = "", title = "Central Command Update")
@@ -45,6 +47,8 @@
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player) && !M.ear_deaf)
 			M << "<b><font size = 3><font color = red>[title]</font color><BR>[message]</font size></b><BR>"
+			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
+				continue
 			if(alert)
 				M << sound('sound/misc/notice1.ogg')
 			else

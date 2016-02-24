@@ -34,9 +34,8 @@
 	..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
-	spawn(2)
-		update_icon()
-		updateinfolinks()
+	update_icon()
+	updateinfolinks()
 
 
 /obj/item/weapon/paper/update_icon()
@@ -79,6 +78,7 @@
 	if(H.disabilities & CLUMSY && prob(25))
 		H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
 		H.damageoverlaytemp = 9001
+		H.update_damage_hud()
 		return
 	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == 0))

@@ -18,6 +18,8 @@
 	speak_emote = list("states")
 	bubble_icon = "machine"
 
+	faction = list("neutral", "silicon")
+
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
 	var/list/users = list() //for dialog updates
@@ -252,6 +254,7 @@
 					src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
 					bot_name = name
 					name = paicard.pai.name
+					faction = user.faction
 					add_logs(user, paicard.pai, "uploaded to [src.bot_name],")
 				else
 					user << "<span class='warning'>[W] is inactive.</span>"
@@ -279,7 +282,7 @@
 				return
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0, user))
-				health = min(maxHealth, health+10)
+				adjustHealth(-10)
 				user.visible_message("[user] repairs [src]!","<span class='notice'>You repair [src].</span>")
 			else
 				user << "<span class='warning'>The welder must be on for this task!</span>"
@@ -405,7 +408,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return 0
 	var/step_count = move_speed ? move_speed : base_speed //If a value is passed into move_speed, use that instead of the default speed var.
 
-	if(step_count >= 1 && tries < 4)
+	if(step_count >= 1 && tries < BOT_STEP_MAX_RETRIES)
 		for(var/step_number = 0, step_number < step_count,step_number++)
 			spawn(BOT_STEP_DELAY*step_number)
 				bot_step(dest)
@@ -421,6 +424,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		step_towards(src, path[1])
 		if(get_turf(src) == path[1]) //Successful move
 			path -= path[1]
+			tries = 0
 		else
 			tries++
 			return 0
@@ -500,7 +504,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/start_patrol()
 
-	if(tries >= 4) //Bot is trapped, so stop trying to patrol.
+	if(tries >= BOT_STEP_MAX_RETRIES) //Bot is trapped, so stop trying to patrol.
 		auto_patrol = 0
 		tries = 0
 		speak("Unable to start patrol.")
@@ -545,32 +549,15 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 
 		var/moved = bot_move(patrol_target)//step_towards(src, next)	// attempt to move
-		if(moved)	// successful move
-			blockcount = 0
-
-		else		// failed to move
-			blockcount++
-
-			if(blockcount > 5)	// attempt 5 times before recomputing
-				// find new path excluding blocked turf
-
-				spawn(2)
-					calc_path(next)
-					if(path.len == 0)
-						find_patrol_target() //Start looking for the next nearest beacon
-						tries++
-					else
-						blockcount = 0
-						tries = 0
-
-				return
-
-			return
+		if(!moved) //Couldn't proceed the next step of the path BOT_STEP_MAX_RETRIES times
+			spawn(2)
+				calc_path()
+				if(path.len == 0)
+					find_patrol_target()
+				tries = 0
 
 	else	// no path, so calculate new one
 		mode = BOT_START_PATROL
-
-	return
 
 // finds the nearest beacon to self
 /mob/living/simple_animal/bot/proc/find_patrol_target()
@@ -587,7 +574,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/get_next_patrol_target()
 	// search the beacon list for the next target in the list.
-	for(var/obj/machinery/navbeacon/NB in navbeacons)
+	for(var/obj/machinery/navbeacon/NB in navbeacons["[z]"])
 		if(NB.location == next_destination) //Does the Beacon location text match the destination?
 			destination = new_destination //We now know the name of where we want to go.
 			patrol_target = NB.loc //Get its location and set it as the target.
@@ -595,7 +582,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			return 1
 
 /mob/living/simple_animal/bot/proc/find_nearest_beacon()
-	for(var/obj/machinery/navbeacon/NB in navbeacons)
+	for(var/obj/machinery/navbeacon/NB in navbeacons["[z]"])
 		var/dist = get_dist(src, NB)
 		if(nearest_beacon) //Loop though the beacon net to find the true closest beacon.
 			//Ignore the beacon if were are located on it.
@@ -662,10 +649,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 		else
 			src << "<span class='warning'>Unidentified control sequence recieved:[command]</span>"
 
-/mob/living/simple_animal/bot/proc/bot_summon()
-		// summoned to PDA
+/mob/living/simple_animal/bot/proc/bot_summon() // summoned to PDA
 	summon_step()
-	return
 
 // calculates a path to the current destination
 // given an optional turf to avoid
@@ -677,7 +662,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	check_bot_access()
 	spawn()
 		path = get_path_to(src, summon_target, /turf/proc/Distance_cardinal, 0, 150, id=access_card, exclude=avoid)
-		if(!path.len || tries >= 5) //Cannot reach target. Give up and announce the issue.
+		if(!path.len) //Cannot reach target. Give up and announce the issue.
 			speak("Summon command failed, destination unreachable.",radio_channel)
 			bot_reset()
 
@@ -697,26 +682,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 			return
 
 		var/moved = bot_move(summon_target, 3)	// Move attempt
-		if(moved)
-			blockcount = 0
-
-		else		// failed to move
-			blockcount++
-
-			if(blockcount > 5)	// attempt 5 times before recomputing
-				// find new path excluding blocked turf
-				spawn(2)
-					calc_summon_path(next)
-					tries++
-					return
-
-				return
+		if(!moved)
+			spawn(2)
+				calc_summon_path()
+				tries = 0
 
 	else	// no path, so calculate new one
 		calc_summon_path()
-
-	return
-
 
 /mob/living/simple_animal/bot/Bump(M as mob|obj) //Leave no door unopened!
 	. = ..()
@@ -857,6 +829,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			paicard.pai << "<span class='notice'>You feel your control fade as [paicard] ejects from [bot_name].</span>"
 		paicard = null
 		name = bot_name
+		faction = initial(faction)
 
 /mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
 	if(bot_core.allowed(user) && paicard)
@@ -872,12 +845,16 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	bot_reset()
 
-/mob/living/simple_animal/bot/revive()
-	..()
-	update_icon()
+/mob/living/simple_animal/bot/revive(full_heal = 0, admin_revive = 0)
+	if(..())
+		update_icon()
+		. = 1
 
 /mob/living/simple_animal/bot/ghost()
 	if(stat != DEAD) // Only ghost if we're doing this while alive, the pAI probably isn't dead yet.
 		..()
 	if(paicard && (!client || stat == DEAD))
 		ejectpai(0)
+
+/mob/living/simple_animal/bot/sentience_act()
+	faction -= "silicon"

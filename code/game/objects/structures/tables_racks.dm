@@ -95,7 +95,6 @@
 	if(tableclimber && tableclimber != user)
 		tableclimber.Weaken(2)
 		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You're knocked off the table!", "You see [tableclimber.name] get knocked off the table</span>")
-	..()
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
@@ -148,6 +147,7 @@
 		if(istype(src, /obj/structure/table/optable))
 			var/obj/structure/table/optable/OT = src
 			G.affecting.resting = 1
+			G.affecting.update_canmove()
 			visible_message("<span class='notice'>[G.assailant] has laid [G.affecting] on [src].</span>")
 			OT.patient = G.affecting
 			OT.check_patient()

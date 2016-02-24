@@ -26,14 +26,15 @@ Thus, the two variables affect pump operation are set in New():
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+/obj/machinery/atmospherics/components/binary/pump/on
+	on = 1
+
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
 	if(SSradio)
 		SSradio.remove_object(src,frequency)
 	if(radio_connection)
 		radio_connection = null
 	return ..()
-/obj/machinery/atmospherics/components/binary/pump/on
-	on = 1
 
 /obj/machinery/atmospherics/components/binary/pump/update_icon_nopipes()
 	if(stat & NOPOWER)
@@ -105,7 +106,7 @@ Thus, the two variables affect pump operation are set in New():
 		ui = new(user, src, ui_key, "atmos_pump", name, 335, 115, master_ui, state)
 		ui.open()
 
-/obj/machinery/atmospherics/components/binary/pump/get_ui_data()
+/obj/machinery/atmospherics/components/binary/pump/ui_data()
 	var/data = list()
 	data["on"] = on
 	data["pressure"] = round(target_pressure)

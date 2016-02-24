@@ -142,15 +142,27 @@
 
 	var/backpack = /obj/item/weapon/storage/backpack
 	var/satchel  = /obj/item/weapon/storage/backpack/satchel_norm
+	var/dufflebag = /obj/item/weapon/storage/backpack/dufflebag
 	var/box = /obj/item/weapon/storage/box/survival
 
 	var/pda_slot = slot_belt
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(H.backbag == 1) //Backpack
-		back =  backpack
-	else //Satchel
-		back = satchel
+	switch(H.backbag)
+		if(GBACKPACK)
+			back = /obj/item/weapon/storage/backpack //Grey backpack
+		if(GSATCHEL)
+			back = /obj/item/weapon/storage/backpack/satchel_norm //Grey satchel
+		if(GDUFFLEBAG)
+			back = /obj/item/weapon/storage/backpack/dufflebag //Grey Dufflebag
+		if(LSATCHEL)
+			back = /obj/item/weapon/storage/backpack/satchel //Leather Satchel
+		if(DSATCHEL)
+			back = satchel //Department satchel
+		if(DDUFFLEBAG)
+			back = dufflebag //Department dufflebag
+		else
+			back = backpack //Department backpack
 
 	backpack_contents[box] = 1
 

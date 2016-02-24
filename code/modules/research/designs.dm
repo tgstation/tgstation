@@ -41,6 +41,7 @@ other types of metals and chemistry for reagents).
 	var/build_path = ""					//The file path of the object that gets created
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
 	var/list/reagents = list()			//List of reagents. Format: "id" = amount.
+	var/maxstack = 1
 
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.

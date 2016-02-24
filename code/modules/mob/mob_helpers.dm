@@ -114,7 +114,7 @@
 				newletter+="[newletter][newletter]"
 		newphrase+="[newletter]";counter-=1
 	return newphrase
-
+	
 /proc/stutter(n)
 	var/te = html_decode(n)
 	var/t = ""//placed before the message. Not really sure what it's for.
@@ -285,10 +285,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
 
 		if(hud_used && hud_used.action_intent)
-			if(a_intent == "harm")
-				hud_used.action_intent.icon_state = "harm"
-			else
-				hud_used.action_intent.icon_state = "help"
+			hud_used.action_intent.icon_state = "[a_intent]"
 
 /proc/is_blind(A)
 	if(ismob(A))
@@ -375,7 +372,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 						A.overlays += alert_overlay
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute, burn)
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
 
 	var/dam //changes repair text based on how much brute/burn was supplied
 
@@ -398,7 +395,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return
 
 /proc/IsAdminGhost(var/mob/user)
-	if(check_rights_for(user.client, R_ADMIN) && istype(user, /mob/dead/observer) && user.client.AI_Interact)
-		return 1
-	else
-		return 0
+	if(!user.client) // Do they have a client?
+		return
+	if(!isobserver(user)) // Are they a ghost?
+		return
+	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
+		return
+	if(!user.client.AI_Interact) // Do they have it enabled?
+		return
+	return TRUE

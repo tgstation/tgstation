@@ -22,33 +22,42 @@
 	screen.severity = severity
 
 	screens[category] = screen
-	if(client)
+	if(client && stat != DEAD)
 		client.screen += screen
 	return screen
 
-/mob/proc/clear_fullscreen(category, animate = 10)
-	set waitfor = 0
+/mob/proc/clear_fullscreen(category, animated = 10)
 	var/obj/screen/fullscreen/screen = screens[category]
 	if(!screen)
 		return
 
-	if(animate)
-		animate(screen, alpha = 0, time = animate)
-		sleep(animate)
-
 	screens -= category
-	if(client)
-		client.screen -= screen
-	qdel(screen)
+
+	if(animated)
+		spawn(0)
+			animate(screen, alpha = 0, time = animated)
+			sleep(animated)
+			if(client)
+				client.screen -= screen
+			qdel(screen)
+	else
+		if(client)
+			client.screen -= screen
+		qdel(screen)
 
 /mob/proc/clear_fullscreens()
 	for(var/category in screens)
 		clear_fullscreen(category)
 
-/datum/hud/proc/reload_fullscreen()
-	var/list/screens = mymob.screens
-	for(var/category in screens)
-		mymob.client.screen |= screens[category]
+/mob/proc/hide_fullscreens()
+	if(client)
+		for(var/category in screens)
+			client.screen -= screens[category]
+
+/mob/proc/reload_fullscreen()
+	if(client && stat != DEAD) //dead mob do not see any of the fullscreen overlays that he has.
+		for(var/category in screens)
+			client.screen |= screens[category]
 
 /obj/screen/fullscreen
 	icon = 'icons/mob/screen_full.dmi'

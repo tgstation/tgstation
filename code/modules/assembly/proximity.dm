@@ -78,6 +78,7 @@
 	handle_move(get_turf(loc))
 
 /obj/item/device/assembly/prox_sensor/dropped()
+	..()
 	if(scanning)
 		spawn(0)
 			sense()

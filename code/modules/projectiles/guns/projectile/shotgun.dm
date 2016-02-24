@@ -12,6 +12,9 @@
 	var/recentpump = 0 // to prevent spammage
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/A, mob/user, params)
+	. = ..()
+	if(.)
+		return
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
@@ -63,6 +66,9 @@
 	..()
 	if (chambered)
 		user << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
+
+/obj/item/weapon/gun/projectile/shotgun/lethal
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/lethal
 
 // RIOT SHOTGUN //
 
@@ -128,6 +134,7 @@
 	pump()
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/dropped()
+	..()
 	guns_left = 0
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
@@ -146,6 +153,7 @@
 
 /obj/item/ammo_box/magazine/internal/boltaction/enchanted
 	max_ammo =1
+	ammo_type = /obj/item/ammo_casing/a762/enchanted
 
 
 
@@ -298,13 +306,13 @@
 	item_state = "bulldog"
 	w_class = 3
 	origin_tech = "combat=5;materials=4;syndicate=6"
-	mag_type = /obj/item/ammo_box/magazine/m12g/stun
+	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/Gunshot.ogg'
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
 	pin = /obj/item/device/firing_pin/implant/pindicate
-	action_button_name = null
+	actions_types = list()
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted
 	pin = /obj/item/device/firing_pin

@@ -184,13 +184,14 @@
 
 	add_logs(user, src, "grabbed", addition="passively")
 
-	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(user, src)
+	if(anchored || !Adjacent(user))
+		return 0
 	if(buckled)
 		user << "<span class='warning'>You cannot grab [src], \he is buckled in!</span>"
 		return 0
-	if(!G)	//the grab will delete itself in New if src is anchored
-		return 0
-	user.put_in_active_hand(G)
+	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(user, src)
+	if(!user.put_in_active_hand(G)) //if we can't put the grab in our hand for some reason, we delete it.
+		qdel(G)
 	G.synch()
 	LAssailant = user
 

@@ -1,8 +1,9 @@
 #define WHITE_TEAM "white"
 #define RED_TEAM "red"
 #define BLUE_TEAM "blue"
-#define CTF_RESPAWN_COOLDOWN 150 // 15 seconds
 #define FLAG_RETURN_TIME 200 // 20 seconds
+#define INSTAGIB_RESPAWN 50 //5 seconds
+#define DEFAULT_RESPAWN 150 //15 seconds
 
 
 
@@ -61,6 +62,7 @@
 	SSobj.processing.Remove(src)
 
 /obj/item/weapon/twohanded/required/ctf/dropped(mob/user)
+	..()
 	reset_cooldown = world.time + 200 //20 seconds
 	SSobj.processing |= src
 	for(var/mob/M in player_list)
@@ -97,12 +99,14 @@
 	//Capture the Flag scoring
 	var/points = 0
 	var/points_to_win = 3
+	var/respawn_cooldown = DEFAULT_RESPAWN
 	//Capture Point/King of the Hill scoring
 	var/control_points = 0
 	var/control_points_to_win = 180
 	var/list/team_members = list()
 	var/ctf_enabled = FALSE
 	var/ctf_gear = /datum/outfit/ctf
+	var/instagib_gear = /datum/outfit/ctf/instagib
 
 /obj/machinery/capture_the_flag/New()
 	..()
@@ -117,12 +121,14 @@
 	icon_state = "syndbeacon"
 	team = RED_TEAM
 	ctf_gear = /datum/outfit/ctf/red
+	instagib_gear = /datum/outfit/ctf/red/instagib
 
 /obj/machinery/capture_the_flag/blue
 	name = "Blue CTF Controller"
 	icon_state = "bluebeacon"
 	team = BLUE_TEAM
 	ctf_gear = /datum/outfit/ctf/blue
+	instagib_gear = /datum/outfit/ctf/blue/instagib
 
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
@@ -130,8 +136,8 @@
 	if(ticker.current_state != GAME_STATE_PLAYING)
 		return
 	if(user.ckey in team_members)
-		if(user.mind.current && user.mind.current.timeofdeath + CTF_RESPAWN_COOLDOWN > world.time)
-			user << "It must be more than 15 seconds from your last death to respawn!"
+		if(user.mind.current && user.mind.current.timeofdeath + respawn_cooldown > world.time)
+			user << "It must be more than [respawn_cooldown/10] seconds from your last death to respawn!"
 			return
 		var/client/new_team_member = user.client
 		dust_old(user)
@@ -154,8 +160,8 @@
 
 /obj/machinery/capture_the_flag/proc/dust_old(mob/user)
 	if(user.mind && user.mind.current && user.mind.current.z == src.z)
-		new /obj/item/ammo_box/magazine/wt550m9 (get_turf(user.mind.current))
-		new /obj/item/ammo_box/magazine/wt550m9 (get_turf(user.mind.current))
+		new /obj/item/ammo_box/magazine/recharge/ctf (get_turf(user.mind.current))
+		new /obj/item/ammo_box/magazine/recharge/ctf (get_turf(user.mind.current))
 		user.mind.current.dust()
 
 
@@ -180,8 +186,6 @@
 		if(points >= points_to_win)
 			victory()
 
-
-
 /obj/machinery/capture_the_flag/proc/victory()
 	for(var/mob/M in mob_list)
 		var/area/mob_area = get_area(M)
@@ -203,13 +207,30 @@
 			spawn(300)
 				CTF.ctf_enabled = TRUE
 
+
+/obj/machinery/capture_the_flag/proc/instagib_mode()
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		if(CTF.ctf_enabled == TRUE)
+			CTF.ctf_gear = CTF.instagib_gear
+			CTF.respawn_cooldown = INSTAGIB_RESPAWN
+
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle/CTF
 	desc = "This looks like it could really hurt in melee."
 	force = 75
 
-/obj/item/weapon/gun/projectile/automatic/wt550/CTF
+/obj/item/weapon/gun/projectile/automatic/laser/ctf
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 50
+
+/obj/item/ammo_box/magazine/recharge/ctf
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
+
+/obj/item/ammo_casing/caseless/laser/ctf
+ 	projectile_type = /obj/item/projectile/beam/ctf
+
+/obj/item/projectile/beam/ctf
+	damage = 150
 
 /datum/outfit/ctf
 	name = "CTF"
@@ -220,17 +241,29 @@
 	gloves = /obj/item/clothing/gloves/combat
 	id = /obj/item/weapon/card/id/syndicate
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/CTF
-	l_pocket = /obj/item/ammo_box/magazine/wt550m9
-	r_pocket = /obj/item/ammo_box/magazine/wt550m9
-	r_hand = /obj/item/weapon/gun/projectile/automatic/wt550/CTF
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
+	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf
+
+/datum/outfit/ctf/instagib
+	r_hand = /obj/item/weapon/gun/energy/laser/instakill
+	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/red
 	ears = /obj/item/device/radio/headset/syndicate/alt
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
 
+/datum/outfit/ctf/red/instagib
+	r_hand = /obj/item/weapon/gun/energy/laser/instakill/red
+	shoes = /obj/item/clothing/shoes/jackboots/fast
+
 /datum/outfit/ctf/blue
 	ears = /obj/item/device/radio/headset/headset_cent/commander
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
+
+/datum/outfit/ctf/blue/instagib
+	r_hand = /obj/item/weapon/gun/energy/laser/instakill/blue
+	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
 	var/obj/item/device/radio/R = H.ears
@@ -340,4 +373,8 @@
 			if(CTF.ctf_enabled && (user.ckey in CTF.team_members))
 				controlling = CTF
 				icon_state = "dominator-[CTF.team]"
+				for(var/mob/M in player_list)
+					var/area/mob_area = get_area(M)
+					if(istype(mob_area, /area/ctf))
+						M << "<span class='userdanger'>[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!</span>"
 				break

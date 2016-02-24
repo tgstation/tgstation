@@ -27,6 +27,7 @@ var/list/preferences_datums = list()
 
 
 	var/UI_style = "Midnight"
+	var/hotkeys = FALSE
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/toggles = TOGGLES_DEFAULT
@@ -48,7 +49,7 @@ var/list/preferences_datums = list()
 	var/underwear = "Nude"				//underwear type
 	var/undershirt = "Nude"				//undershirt type
 	var/socks = "Nude"					//socks type
-	var/backbag = 1						//backpack type
+	var/backbag = DBACKPACK				//backpack type
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
 	var/facial_hair_style = "Shaved"	//Face hair type
@@ -192,7 +193,7 @@ var/list/preferences_datums = list()
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
-			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR></td>"
+			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR></td>"
 
 			if(pref_species.use_skintones)
 
@@ -328,6 +329,7 @@ var/list/preferences_datums = list()
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>General Settings</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
+			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
@@ -733,7 +735,7 @@ var/list/preferences_datums = list()
 				if("s_tone")
 					skin_tone = random_skin_tone()
 				if("bag")
-					backbag = rand(1,2)
+					backbag = pick(backbaglist)
 				if("all")
 					random_character()
 
@@ -932,7 +934,7 @@ var/list/preferences_datums = list()
 				if("bag")
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
 					if(new_backbag)
-						backbag = backbaglist.Find(new_backbag)
+						backbag = new_backbag
 
 				if("clown_name")
 					var/new_clown_name = reject_bad_name( input(user, "Choose your character's clown name:", "Character Preference")  as text|null )
@@ -1020,6 +1022,9 @@ var/list/preferences_datums = list()
 							UI_style = "Operative"
 						else
 							UI_style = "Midnight"
+
+				if("hotkeys")
+					hotkeys = !hotkeys
 
 				if("tgui_fancy")
 					tgui_fancy = !tgui_fancy

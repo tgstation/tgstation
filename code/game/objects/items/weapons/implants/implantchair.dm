@@ -89,18 +89,16 @@
 
 
 /obj/machinery/implantchair/go_out(mob/M)
-	if(!( src.occupant ))
+	if(!occupant)
 		return
 	if(M == occupant) // so that the guy inside can't eject himself -Agouri
 		return
-	if (src.occupant.client)
-		src.occupant.client.eye = src.occupant.client.mob
-		src.occupant.client.perspective = MOB_PERSPECTIVE
-	src.occupant.loc = src.loc
+	occupant.loc = loc
+	occupant.reset_perspective(null)
 	if(injecting)
 		implant(src.occupant)
 		injecting = 0
-	src.occupant = null
+	occupant = null
 	icon_state = "implantchair"
 	return
 
@@ -112,11 +110,9 @@
 	if(src.occupant)
 		usr << "<span class='warning'>The [src.name] is already occupied!</span>"
 		return
-	if(M.client)
-		M.client.perspective = EYE_PERSPECTIVE
-		M.client.eye = src
 	M.stop_pulling()
 	M.loc = src
+	M.reset_perspective(src)
 	src.occupant = M
 	src.add_fingerprint(usr)
 	icon_state = "implantchair_on"

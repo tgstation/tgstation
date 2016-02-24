@@ -3,7 +3,7 @@
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	w_class = 3
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
@@ -22,7 +22,8 @@
 	tint = 2
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	origin_tech = "materials=2;engineering=2"
-	action_button_name = "Toggle Welding Mask"
+	actions_types = list(/datum/action/item_action/toggle)
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
 
@@ -59,7 +60,7 @@
 	var/voice = "Unknown"
 	var/vchange = 0//This didn't do anything before. It now checks if the mask has special functions/N
 	origin_tech = "syndicate=4"
-	action_button_name = "Toggle mask"
+	actions_types = list(/datum/action/item_action/toggle)
 
 /obj/item/clothing/mask/gas/voice/attack_self(mob/user)
 	vchange = !vchange
@@ -108,13 +109,10 @@
 	item_state = "mime"
 	flags_cover = MASKCOVERSEYES
 	burn_state = FLAMMABLE
-	action_button_name = "Adjust Mask"
+	actions_types = list(/datum/action/item_action/adjust)
 
-/obj/item/clothing/mask/gas/mime/ui_action_click()
+/obj/item/clothing/mask/gas/mime/attack_self(mob/user)
 	cycle_mask(usr)
-
-/obj/item/clothing/mask/gas/mime/AltClick(mob/user)
-	cycle_mask(user)
 
 /obj/item/clothing/mask/gas/mime/proc/cycle_mask(mob/user)
 	switch(icon_state)

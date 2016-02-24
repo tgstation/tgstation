@@ -40,7 +40,8 @@
 							"Security",
 							"Machinery",
 							"Medical",
-							"Misc"
+							"Misc",
+							"Imported"
 							)
 
 /obj/machinery/autolathe/New()
@@ -112,6 +113,18 @@
 	if(stat)
 		return 1
 
+	if(istype(O, /obj/item/weapon/disk/design_disk))
+		user.visible_message("[user] begins to load \the [O] in \the [src]...",
+			"You begin to load a design from \the [O]...",
+			"You hear the chatter of a floppy drive.")
+		busy = 1
+		var/obj/item/weapon/disk/design_disk/D = O
+		if(do_after(user, 14.4, target = src))
+			files.AddDesign2Known(D.blueprint)
+
+		busy = 0
+		return
+
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!material_amount)
 		user << "<span class='warning'>This object does not contain sufficient amounts of metal or glass to be accepted by the autolathe.</span>"
@@ -162,7 +175,7 @@
 
 			//multiplier checks : only stacks can have one and its value is 1, 10 ,25 or max_multiplier
 			var/multiplier = text2num(href_list["multiplier"])
-			var/max_multiplier = min(50, being_built.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/being_built.materials[MAT_METAL]):INFINITY,being_built.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/being_built.materials[MAT_GLASS]):INFINITY)
+			var/max_multiplier = min(being_built.maxstack, being_built.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/being_built.materials[MAT_METAL]):INFINITY,being_built.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/being_built.materials[MAT_GLASS]):INFINITY)
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
 
 			if(!is_stack && (multiplier > 1))
@@ -188,27 +201,13 @@
 						var/list/materials_used = list(MAT_METAL=metal_cost*multiplier, MAT_GLASS=glass_cost*multiplier)
 						materials.use_amount(materials_used)
 
-						for(var/obj/item/stack/S in T)
-							if(multiplier <= 0)
-								break
-							if(S.amount >= S.max_amount)
-								continue
-							var/to_transfer = S.max_amount - S.amount
-							if(to_transfer < multiplier)
-								S.amount += to_transfer
-								multiplier -= to_transfer
-								S.update_icon()
-								continue
-							else
-								S.amount += multiplier
-								multiplier = 0
-								S.update_icon()
-								break
-						if(multiplier)
-							var/obj/item/stack/N = new being_built.build_path(T)
-							N.amount = multiplier
-							N.update_icon()
-							N.autolathe_crafted(src)
+						var/obj/item/stack/N = new being_built.build_path(T, multiplier)
+						N.update_icon()
+						N.autolathe_crafted(src)
+
+						for(var/obj/item/stack/S in T.contents - N)
+							if(istype(S, N.merge_type))
+								N.merge(S)
 					else
 						var/list/materials_used = list(MAT_METAL=metal_cost/coeff, MAT_GLASS=glass_cost/coeff)
 						materials.use_amount(materials_used)
@@ -221,7 +220,8 @@
 		if(href_list["search"])
 			matching_designs.Cut()
 
-			for(var/datum/design/D in files.known_designs)
+			for(var/v in files.known_designs)
+				var/datum/design/D = files.known_designs[v]
 				if(findtext(D.name,href_list["to_search"]))
 					matching_designs.Add(D)
 	else
@@ -276,7 +276,8 @@
 	dat += "<b>Metal amount:</b> [materials.amount(MAT_METAL)] cm<sup>3</sup><br>"
 	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup><br>"
 
-	for(var/datum/design/D in files.known_designs)
+	for(var/v in files.known_designs)
+		var/datum/design/D = files.known_designs[v]
 		if(!(selected_category in D.category))
 			continue
 
@@ -286,7 +287,7 @@
 			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[D.name]</a>"
 
 		if(ispath(D.build_path, /obj/item/stack))
-			var/max_multiplier = min(50, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY)
+			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -306,14 +307,15 @@
 	dat += "<b>Metal amount:</b> [materials.amount(MAT_METAL)] cm<sup>3</sup><br>"
 	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup><br>"
 
-	for(var/datum/design/D in matching_designs)
+	for(var/v in matching_designs)
+		var/datum/design/D = v
 		if(disabled || !can_build(D))
 			dat += "<span class='linkOff'>[D.name]</span>"
 		else
 			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[D.name]</a>"
 
 		if(ispath(D.build_path, /obj/item/stack))
-			var/max_multiplier = min(50, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY)
+			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -374,9 +376,9 @@
 	for(var/datum/design/D in files.possible_designs)
 		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
 			if(hacked)
-				files.known_designs |= D
+				files.AddDesign2Known(D)
 			else
-				files.known_designs -= D
+				files.known_designs -= D.id
 
 //Called when the object is constructed by an autolathe
 //Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes

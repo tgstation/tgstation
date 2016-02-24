@@ -52,9 +52,10 @@
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
-	if(client.buildmode)
-		build_click(src, client.buildmode, params, A)
-		return
+
+	if(client.click_intercept)
+		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
+			return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
@@ -293,13 +294,6 @@
 	LE.xo = U.x - T.x
 	LE.fire()
 
-/mob/living/carbon/human/LaserEyes()
-	if(nutrition>0)
-		..()
-		nutrition = max(nutrition - rand(1,5),0)
-	else
-		src << "<span class='danger'>You're out of energy!  You need food!</span>"
-
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/A)
 	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y )
@@ -342,5 +336,6 @@
 		C.swap_hand()
 	else
 		var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr))
-		T.Click(location, control, params)
+		if(T)
+			T.Click(location, control, params)
 	return 1

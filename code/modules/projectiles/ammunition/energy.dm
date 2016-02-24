@@ -8,11 +8,11 @@
 	fire_sound = 'sound/weapons/Laser.ogg'
 
 /obj/item/ammo_casing/energy/laser
-	projectile_type = /obj/item/projectile/beam
+	projectile_type = /obj/item/projectile/beam/laser
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun
-	projectile_type = /obj/item/projectile/beam
+	projectile_type = /obj/item/projectile/beam/laser
 	e_cost = 83
 	select_name = "kill"
 
@@ -30,7 +30,7 @@
 	select_name = "scatter"
 
 /obj/item/ammo_casing/energy/laser/heavy
-	projectile_type = /obj/item/projectile/beam/heavylaser
+	projectile_type = /obj/item/projectile/beam/laser/heavylaser
 	select_name = "anti-vehicle"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
@@ -166,3 +166,14 @@ obj/item/ammo_casing/energy/net
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/item/projectile/energy/trap
 	select_name = "snare"
+
+/obj/item/ammo_casing/energy/instakill
+	projectile_type = /obj/item/projectile/beam/instakill
+	e_cost = 0
+	select_name = "DESTROY"
+
+/obj/item/ammo_casing/energy/instakill/blue
+	projectile_type = /obj/item/projectile/beam/instakill/blue
+
+/obj/item/ammo_casing/energy/instakill/red
+	projectile_type = /obj/item/projectile/beam/instakill/red

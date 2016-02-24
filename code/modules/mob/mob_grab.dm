@@ -19,13 +19,8 @@
 
 /obj/item/weapon/grab/New(mob/user, mob/victim)
 	..()
-	loc = user
 	assailant = user
 	affecting = victim
-
-	if(affecting.anchored || !user.Adjacent(victim))
-		qdel(src)
-		return
 
 	hud = new /obj/screen/grab(src)
 	hud.icon_state = "reinforce"
@@ -216,6 +211,7 @@
 	add_logs(user, affecting, "attempted to put", src, "into [M]")
 
 /obj/item/weapon/grab/dropped()
+	..()
 	qdel(src)
 
 #undef UPGRADE_COOLDOWN

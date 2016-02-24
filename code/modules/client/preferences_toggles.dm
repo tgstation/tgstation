@@ -266,7 +266,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	src << "Ghost HUD will now be [prefs.ghost_hud ? "visible" : "hidden"]."
 	prefs.save_preferences()
 	if(istype(mob,/mob/dead/observer))
-		mob.hud_used.ghost_hud()
+		mob.hud_used.show_hud()
 
 /client/verb/toggle_inquisition() // warning: unexpected inquisition
 	set name = "Toggle Inquisitiveness"
@@ -279,3 +279,12 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		src << "<span class='notice'>You will now examine everything you click on.</span>"
 	else
 		src << "<span class='notice'>You will no longer examine things you click on.</span>"
+
+/client/verb/toggle_announcement_sound()
+	set name = "Hear/Silence Announcements"
+	set category = "Preferences"
+	set desc = ".Toggles hearing Central Command, Captain, VOX, and other announcement sounds"
+	prefs.toggles ^= SOUND_ANNOUNCEMENTS
+	src << "You will now [(prefs.toggles & SOUND_ANNOUNCEMENTS) ? "no longer hear announcements" : "hear announcement sounds"]."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

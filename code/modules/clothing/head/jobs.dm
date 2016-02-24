@@ -47,7 +47,7 @@
 	name = "nun hood"
 	desc = "Maximum piety in this star system."
 	icon_state = "nun_hood"
-	flags = BLOCKHAIR
+	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/det_hat
@@ -101,7 +101,7 @@
 	name = "security beret"
 	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficent protection."
 	icon_state = "beret_badge"
-	armor = list(melee = 25, bullet = 15, laser = 25,energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 30, bullet = 25, laser = 25,energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec/navyhos

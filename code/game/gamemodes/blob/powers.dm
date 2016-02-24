@@ -105,6 +105,7 @@
 		blobber << 'sound/effects/blobattack.ogg'
 		blobber << 'sound/effects/attackblob.ogg'
 		blobber << "<b>You are a blobbernaut!</b>"
+		blobber << "You can communicate with other blobbernauts and overminds via <b>:b</b>"
 		blobber << "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 		blobber << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
 	else
@@ -169,12 +170,12 @@
 	if(!can_buy(5))
 		return
 	last_attack = world.time
-	OB.expand(T, 0, src)
+	OB.expand(T, src)
 	for(var/mob/living/L in T)
 		if("blob" in L.faction) //no friendly fire
 			continue
 		var/mob_protection = L.get_permeability_protection()
-		blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection)
+		blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection, src)
 		blob_reagent_datum.send_message(L)
 
 /mob/camera/blob/verb/rally_spores_power()
@@ -213,8 +214,11 @@
 	set desc = "Replaces your chemical with a random, different one."
 	if(!can_buy(40))
 		return
-	var/datum/reagent/blob/B = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
-	blob_reagent_datum = new B
+	set_chemical()
+
+/mob/camera/blob/proc/set_chemical()
+	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
+	blob_reagent_datum = new BC
 	for(var/obj/effect/blob/BL in blobs)
 		BL.update_icon()
 	for(var/mob/living/simple_animal/hostile/blob/BLO)
@@ -243,14 +247,6 @@
 
 /datum/action/innate/blob
 	background_icon_state = "bg_alien"
-
-/datum/action/innate/blob/CheckRemoval()
-	if(ticker.mode.name != "blob" || !ishuman(owner))
-		return 1
-	var/datum/game_mode/blob/B = ticker.mode
-	if(!owner.mind || !(owner.mind in B.infected_crew))
-		return 1
-	return 0
 
 /datum/action/innate/blob/earlyhelp
 	name = "Blob Help"
