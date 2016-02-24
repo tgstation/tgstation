@@ -45,12 +45,12 @@
 	if(!ishuman(user))
 		return
 	in_use = TRUE
-	user << "You feel your very life draining away as you pull the lever...it'll be worth it though, right?"
+	user << "<span class='danger'><B>You feel your very life draining away as you pull the lever...it'll be worth it though, right?</B></span>"
 	user.adjustCloneLoss(20)
 	if(user.stat)
 		user.gib()
 	icon_state = "slots2"
-	sleep(5)
+	sleep(50)
 	icon_state = "slots1"
 	in_use = FALSE
 	if(prob(win_prob))
@@ -60,7 +60,7 @@
 			qdel(src)
 	else
 		if(user)
-			user << "Looks like you didn't win anything this time...next time though, right?"
+			user << "<span class='danger'>Looks like you didn't win anything this time...next time though, right?</span>"
 //Gluttony
 
 /obj/effect/gluttony
@@ -79,7 +79,7 @@
 		if(H.nutrition >= NUTRITION_LEVEL_FAT)
 			return 1
 		else
-			H << "You're not gluttonous enough to pass this barrier!"
+			H << "<span class='danger'><B>You're not gluttonous enough to pass this barrier!</B></span>"
 	else
 		return 0
 
