@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagent/consumable/orangejuice
-	name = "Orange juice"
+	name = "orange juice"
 	id = "orangejuice"
 	description = "Both delicious AND rich in Vitamin C, what more do you need?"
 	color = "#E78108" // rgb: 231, 129, 8

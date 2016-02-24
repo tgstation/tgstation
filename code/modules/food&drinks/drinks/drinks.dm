@@ -257,7 +257,7 @@
 	list_reagents = list("sodawater" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime
-	name = "Orange Soda"
+	name = "orange Soda"
 	desc = "You wanted ORANGE. It gave you Lemon Lime."
 	icon_state = "lemon-lime"
 	list_reagents = list("lemon_lime" = 30)

@@ -852,7 +852,7 @@
 	colorname = "red"
 
 /datum/reagent/crayonpowder/orange
-	name = "Orange Crayon Powder"
+	name = "orange Crayon Powder"
 	id = "orangecrayonpowder"
 	colorname = "orange"
 	color = "#FF9300" // orange

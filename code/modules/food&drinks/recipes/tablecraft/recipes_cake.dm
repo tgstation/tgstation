@@ -31,7 +31,7 @@
 	category = CAT_FOOD
 
 /datum/table_recipe/orangecake
-	name = "Orange cake"
+	name = "orange cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = 2
