@@ -2230,7 +2230,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagent/nanites
-	name = "Nanomachines"
+	name = "Nanites"
 	id = "nanites"
 	description = "Microscopic construction robots."
 	reagent_state = LIQUID
