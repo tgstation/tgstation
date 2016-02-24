@@ -71,9 +71,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(!(src in user.mob_spell_list))
 			return 0
 
-	if(user.z == ZLEVEL_CENTCOM && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
-		return 0
-	if(user.z == ZLEVEL_CENTCOM && ticker.mode.name == "ragin' mages")
+	var/turf/T = get_turf(user)
+	if(T.z == ZLEVEL_CENTCOM && (!centcom_cancast || ticker.mode.name == "ragin' mages")) //Certain spells are not allowed on the centcom zlevel
 		return 0
 
 	if(!skipcharge)
