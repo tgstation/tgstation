@@ -76,3 +76,32 @@
 			adjustFireLoss(M.powerlevel * rand(6,10))
 			updatehealth()
 		return 1
+
+/mob/living/carbon/proc/try_dismember(var/obj/item/I, zone)
+	if(organsystem && ishuman(src))
+		if(zone == "mouth")
+			zone = "head"
+		var/datum/organ/limb/L = get_organ(zone)
+		if(!L.exists())
+			return 0
+		else
+			var/datum/organ/O = I.handle_dismemberment(L)
+			if(O)
+				visible_message("<span class='danger'>[src]'s [O.name] goes flying off!</span>", "<span class='userdanger'>Your [O.name] goes flying off!</span>")
+				var/turf/location = src.loc
+				if(istype(location, /turf/simulated))
+					location.add_blood_floor(src)
+				return 1	//Dismemberment succesful
+			else
+				return 0 //Attack continues normally
+	else
+		return 0 //If the mob has no organsystem, dismemberment is not possible.
+
+/mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
+	if(try_dismember(P, def_zone))
+		P.nodamage = 1	//So it won't deal damage after dismemberment
+	return (..(P , def_zone))
+
+/mob/living/carbon/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
+	if(!try_dismember(I, def_zone))
+		..(I, user, def_zone) //If dismemberment fails, continue with the attack

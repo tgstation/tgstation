@@ -323,8 +323,10 @@
 	var/colour = "#FF0000" //RGB
 	var/drawmat = "crayon"
 	var/drawtype = "rune"
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","50blessings", "poseur tag")
+	var/text_buffer = ""
+	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","50blessings", "star", "poseur tag")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+	var/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
 	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
@@ -358,7 +360,8 @@
 
 /obj/item/toy/crayon/proc/update_window(mob/living/user as mob)
 	dat += "<center><h2>Currently selected: [drawtype]</h2><br>"
-	dat += "<a href='?src=\ref[src];type=random_letter'>Random letter</a><a href='?src=\ref[src];type=letter'>Pick letter</a>"
+	dat += "<a href='?src=\ref[src];type=random_letter'>Random letter or number</a><a href='?src=\ref[src];type=letter'>Pick letter/number</a>"
+	dat += "<a href='?src=\ref[src];buffer=1'>Write</a>"
 	dat += "<hr>"
 	dat += "<h3>Runes:</h3><br>"
 	dat += "<a href='?src=\ref[src];type=random_rune'>Random rune</a>"
@@ -383,19 +386,30 @@
 	popup.open()
 	dat = ""
 
+/obj/item/toy/crayon/proc/crayon_text_strip(text)
+	var/list/base = text2list(lowertext(text),"")
+	var/list/out = list()
+	for(var/a in base)
+		if(a in (letters|numerals))
+			out += a
+	return list2text(out)
+
 /obj/item/toy/crayon/Topic(href, href_list, hsrc)
 	var/temp = "a"
-	switch(href_list["type"])
-		if("random_letter")
-			temp = pick(letters)
-		if("letter")
-			temp = input("Choose the letter.", "Scribbles") in letters
-		if("random_rune")
-			temp = "rune[rand(1,6)]"
-		if("random_graffiti")
-			temp = pick(graffiti)
-		else
-			temp = href_list["type"]
+	if(href_list["buffer"])
+		text_buffer = crayon_text_strip(stripped_input(usr,"Choose what to write.", "Scribbles",default = text_buffer))
+	if(href_list["type"])
+		switch(href_list["type"])
+			if("random_letter")
+				temp = pick(letters)
+			if("letter")
+				temp = input("Choose what to write.", "Scribbles") in (letters|numerals)
+			if("random_rune")
+				temp = "rune[rand(1,6)]"
+			if("random_graffiti")
+				temp = pick(graffiti)
+			else
+				temp = href_list["type"]
 	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
 	drawtype = temp
@@ -416,6 +430,8 @@
 			temp = "letter"
 		else if(graffiti.Find(drawtype))
 			temp = "graffiti"
+		else if(numerals.Find(drawtype))
+			temp = "number"
 
 		////////////////////////// GANG FUNCTIONS
 		var/area/territory
@@ -456,6 +472,10 @@
 		if(instant)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		if((instant>0) || do_after(user, 50, target = target))
+
+			if(length(text_buffer))
+				drawtype = copytext(text_buffer,1,2)
+				text_buffer = copytext(text_buffer,2)
 
 			//Gang functions
 			if(gangID)
@@ -1175,51 +1195,60 @@
 
 /obj/item/toy/ducks/attack_self(mob/user)
 	if (cooldown < world.time)
-		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
+		cooldown = (world.time + 100) // Sets cooldown at 10 seconds
 		if(tied)
 			var/obj/item/stack/cable_coil/C = new /obj/item/stack/cable_coil(get_turf(src))
 			C.amount = 1
+			tied = 0
 			spawn(30) //countdown so you can throw it to a safe distance
 				if(number_of_ducks<4)
 					playsound(loc, 'sound/items/ducks/Annoying_duck.ogg', number_of_ducks * 30, 0) //standard one
 				else
 					playsound(loc, 'sound/items/ducks/DuckArmy.ogg', (number_of_ducks-3)*50, 0) //horrible one. Volume is either 50 or 100 for 5 ducks
-			tied = 0
-			icon_state = "[number_of_ducks]"
+				icon_state = "[number_of_ducks]"
+				for(var/mob/living/M in viewers(7,loc))
+					if(number_of_ducks<4)
+						M << "<span class='warning'><b>[src]</b> screams as if in pain!</span>"
+					else
+						M << "<span class='danger'><b>[src]</b> wails and unleashes a hellish sound!</span>"
+					if(!M.check_ear_prot())
+						M.setEarDamage(M.ear_damage + (number_of_ducks*2), max(M.ear_deaf,20))
 
 		else
 			playsound(loc, 'sound/items/ducks/Annoying_duck.ogg', number_of_ducks * 30, 0) //standard one
-	for(var/mob/M in viewers(7, user.loc))
-		if(number_of_ducks<4)
-			M << "<span class='warning'><b>[src]</b> screams as if in pain!</span>"
-		else
-			M << "<span class='danger'><b>[src]</b> wails and unleashes a hellish sound!</span>"
-		var/mob/living/L = M
-		if( istype(L) && !L.check_ear_prot())
-			M.setEarDamage(M.ear_damage + (number_of_ducks*2), max(M.ear_deaf,20))
+			for(var/mob/living/M in viewers(7,loc))
+				if(number_of_ducks<4)
+					M << "<span class='warning'><b>[src]</b> screams as if in pain!</span>"
+				else
+					M << "<span class='danger'><b>[src]</b> wails and unleashes a hellish sound!</span>"
+
+				if(!M.check_ear_prot())
+					M.setEarDamage(M.ear_damage + (number_of_ducks*2), max(M.ear_deaf,20))
 
 /obj/item/toy/ducks/attackby(obj/item/C, mob/living/user, params)
 	if(istype(C,/obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = C
-		if (coil.use(1))
-			if(!tied)
+		if(!tied)
+			var/obj/item/stack/cable_coil/coil = C
+			if (coil.use(1))
 				tied = 1
 				icon_state = "[number_of_ducks]-tied"
 				user << "<span class='notice'>You tie the stack of ducks.</span>"
 			else
-				user << "<span class='notice'>The stack of ducks is already tied!</span>"
+				user << "<span class='notice'>You don't have enough wires!</span>"
 		else
-			user << "<span class='notice'>You don't have enough wires!</span>"
+			user << "<span class='notice'>The stack of ducks is already tied!</span>"
 
 	else if(istype(C,/obj/item/toy/ducks))
 		var/obj/item/toy/ducks/D = C
-		if(D.number_of_ducks + number_of_ducks <=4)
+		if(number_of_ducks<4)
 			if(!tied)
-				number_of_ducks += D.number_of_ducks
+				var/ducks_transfer = min(D.number_of_ducks,5-number_of_ducks)
+				number_of_ducks += ducks_transfer
 				icon_state = "[number_of_ducks]"
-				user.drop_item()
-				qdel(C) //stop duck breeding
-				user << "<span class='notice'>You combine the ducks into a single stack.</span>"
+				D.number_of_ducks -= ducks_transfer
+				if(D.number_of_ducks <1)
+					qdel(D) //stop duck breeding
+				user << "<span class='notice'>You add another duck to the stack.</span>"
 			else
 				user << "<span class='notice'>The stack of ducks is tied!</span>"
 		else
@@ -1230,9 +1259,10 @@
 		if(tied)
 			attack_self(user)
 			return
-		var/mob/M = loc
-		M.put_in_hands(new /obj/item/toy/ducks)
-		number_of_ducks -= 1
-		icon_state = "[number_of_ducks]"
-		usr << "<span class='notice'>You remove one duck from the stack.</span>"
+		if(number_of_ducks >1)
+			var/mob/M = loc
+			M.put_in_hands(new /obj/item/toy/ducks)
+			number_of_ducks -= 1
+			icon_state = "[number_of_ducks]"
+			usr << "<span class='notice'>You remove one duck from the stack.</span>"
 	..()

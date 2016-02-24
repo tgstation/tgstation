@@ -6,7 +6,7 @@
 
 /datum/surgery/borer_removal/can_start(mob/user, mob/living/carbon/target)
 	if(locate(/mob/living/simple_animal/borer) in target)
-		return 1
+		return ..()
 	else return 0
 
 //remove slug from premises

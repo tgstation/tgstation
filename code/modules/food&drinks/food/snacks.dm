@@ -160,6 +160,13 @@
 
 //Called when you finish tablecrafting a snack.
 /obj/item/weapon/reagent_containers/food/snacks/CheckParts()
+	if( bonus_reagents.len ) // Fill in any un[der]populated bonus_reagents lists.
+		for(var/RID in list_reagents)
+			if( !(RID in bonus_reagents) )
+				bonus_reagents[RID] = list_reagents[RID]
+	else // copy all entries into the already empty bonus_reagents.
+		bonus_reagents += list_reagents
+	
 	if(bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
 			var/amount = bonus_reagents[r_id]

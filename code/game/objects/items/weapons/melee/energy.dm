@@ -7,7 +7,7 @@
 	var/attack_verb_off = null // This is hacked in, but it's as sound as the code it replaces.
 	w_class = 2
 	var/w_class_on = 4
-
+	dismember_class = new/datum/dismember_class/medium/nobleed
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \

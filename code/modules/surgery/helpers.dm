@@ -1,12 +1,15 @@
 /proc/attempt_initiate_surgery(obj/item/I, mob/living/M, mob/user)
 	if(istype(M))
-		var/mob/living/carbon/human/H
+		var/mob/living/carbon/C
 		var/obj/item/organ/limb/affecting
 		var/selected_zone = user.zone_sel.selecting
+		var/datum/organ/organdata
 
-		if(istype(M, /mob/living/carbon/human))
-			H = M
-			affecting = H.get_organ(check_zone(selected_zone))
+		if(istype(M, /mob/living/carbon/))
+			C = M
+			var/datum/organ/limb/limbdata = C.get_organ(check_zone(selected_zone))
+			organdata = C.get_organ(selected_zone)	//This can be eyes, mouth or groin too
+			affecting = limbdata.organitem
 
 		if(M.lying || isslime(M))	//if they're prone or a slime
 			var/datum/surgery/current_surgery
@@ -22,9 +25,9 @@
 				for(var/datum/surgery/S in all_surgeries)
 					if(!S.possible_locs.Find(selected_zone))
 						continue
-					if(affecting && S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
+					if(affecting && S.requires_organic_bodypart && affecting.organtype == ORGAN_ROBOTIC)
 						continue
-					if(!S.can_start(user, M))
+					if(!S.can_start(user, M, organdata))
 						continue
 
 					for(var/path in S.species)

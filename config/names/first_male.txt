@@ -1,4 +1,5 @@
 Abel
+Adolf
 Adolph
 Alan
 Alden
@@ -14,6 +15,8 @@ Art
 Arthur
 Baldric
 Bartholomew
+Benjamin
+Benito
 Bill
 Blake
 Brayden

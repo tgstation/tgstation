@@ -13,6 +13,8 @@
 	attack_verb = list("drilled")
 	hitsound = 'sound/weapons/circsawhit.ogg'
 
+	augmenttype = null
+
 /obj/item/weapon/pickaxe/excavationdrill/attack_self(mob/user as mob)
 	var/depth = input("Put the desired depth (1-30 centimeters).", "Set Depth", excavation_amount*2) as num
 	if(depth>30 || depth<1)

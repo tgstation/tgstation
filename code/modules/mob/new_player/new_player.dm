@@ -274,19 +274,15 @@
 
 	SSjob.AssignRole(src, rank, 1)
 
-	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
-	SSjob.EquipRank(character, rank, 1)					//equips the human
+	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
+	character = SSjob.EquipRank(character, rank, 1)					//equips the human
 	character.loc = pick(latejoin)
 	character.lastarea = get_area(loc)
 
-	if(character.mind.assigned_role != "Cyborg" || character.mind.assigned_role != "Mobile MMI")
+	if( !( character.mind.assigned_role in list( "Cyborg" ,  "Mobile MMI" , "AI") ) )
 		data_core.manifest_inject(character)
 		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 		AnnounceArrival(character, rank)
-	else if (character.mind.assigned_role != "Cyborg")
-		character.Robotize()
-	else if (character.mind.assigned_role != "Mobile MMI")
-		character.Mommize()
 
 	joined_player_list += character.ckey
 
@@ -387,6 +383,8 @@
 	ready_dna(new_character, client.prefs.blood_type)
 
 	new_character.key = key		//Manually transfer the key to log them in
+
+	new_character.set_skin_tone(new_character.skin_tone)	//Let's see if this fixes it
 
 	new_character.regenerate_icons()
 

@@ -26,6 +26,8 @@
 	var/list/mutations = list()   //All mutations are from now on here
 	var/mob/living/carbon/holder
 
+	var/obj/item/organ/holder_organ
+
 /datum/dna/New(mob/living/carbon/new_holder)
 	if(new_holder && istype(new_holder))
 		holder = new_holder
@@ -38,6 +40,16 @@
 		hardset_dna(destination, null, null, null, null, species.type)
 		destination.dna.real_name = real_name
 		destination.dna.mutations = mutations
+
+/datum/dna/proc/copy_dna(datum/dna/new_dna)
+	unique_enzymes = new_dna.unique_enzymes
+	struc_enzymes = new_dna.struc_enzymes
+	uni_identity = new_dna.uni_identity
+	blood_type = new_dna.blood_type
+	mutant_color = new_dna.mutant_color
+	species = new new_dna.species.type
+	real_name = new_dna.real_name
+	mutations = new_dna.mutations
 
 /datum/dna/proc/add_mutation(mutation_name)
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
@@ -148,6 +160,9 @@
 
 	check_dna_integrity(owner)
 
+	if(owner.organsystem)
+		owner.organsystem.set_dna(owner.dna)
+
 	owner.regenerate_icons()
 	return
 
@@ -178,6 +193,10 @@
 	character.dna.uni_identity = character.dna.generate_uni_identity(character)
 	character.dna.struc_enzymes = character.dna.generate_struc_enzymes(character)
 	character.dna.unique_enzymes = character.dna.generate_unique_enzymes(character)
+
+	if(character.organsystem)
+		character.organsystem.set_dna(character.dna)
+
 	return character.dna
 
 /proc/create_dna(mob/living/carbon/C, datum/species/S) //don't use this unless you're about to use hardset_dna or ready_dna
@@ -190,6 +209,9 @@
 	for(var/datum/mutation/human/M in mutations)
 		spans |= M.get_spans()
 	return spans
+
+/datum/dna/proc/get_eye_color()	//Let's just hope this doesn't need sanity checks
+	return sanitize_hexcolor(getblock(uni_identity, DNA_EYE_COLOR_BLOCK))
 
 
 /////////////////////////// DNA DATUM
@@ -284,7 +306,7 @@
 		var/mob/living/carbon/human/H = C
 		H.hair_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
 		H.facial_hair_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
-		H.skin_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
+		H.set_skin_tone(skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)])
 		H.eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
 		H.facial_hair_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
 		H.hair_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
@@ -292,6 +314,8 @@
 		H.update_body()
 		H.update_hair()
 	return 1
+
+
 
 /proc/domutcheck(mob/living/carbon/M)
 	if(!check_dna_integrity(M))

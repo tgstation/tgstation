@@ -122,7 +122,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/debugNatureMapGenerator,
 	/client/proc/check_bomb_impacts,
 	/proc/machine_upgrade,
-	/client/proc/populate_world
+	/client/proc/populate_world,
+	/client/proc/map_template_load
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

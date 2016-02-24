@@ -520,9 +520,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(!istype(H))
 		return ..()
 
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+	var/datum/organ/limb/limbdata = H.get_organ(check_zone(user.zone_sel.selecting))
+	var/obj/item/organ/limb/affecting = limbdata.organitem
 
-	if(user && affecting.status == ORGAN_ROBOTIC)
+	if(user && affecting.organtype == ORGAN_ROBOTIC)
 		if(H != user)
 			user.visible_message("<span class='green'>[user] fixes some of the burnt wires on [H].</span>", "<span class='green'>You fix some of the burnt wires on [H].</span>")
 		else

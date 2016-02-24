@@ -59,7 +59,7 @@
 	if(src in owner.dna.mutations)
 		return 1
 	owner.dna.mutations.Add(src)
-	gain_indication(owner)
+	//gain_indication(owner)
 	owner << text_gain_indication
 
 /datum/mutation/human/proc/gain_indication(mob/living/carbon/human/owner)
@@ -88,7 +88,7 @@
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner && owner.dna.mutations.Remove(src))
-		lose_indication(owner)
+		//lose_indication(owner)
 		owner << text_lose_indication
 		return 0
 	return 1

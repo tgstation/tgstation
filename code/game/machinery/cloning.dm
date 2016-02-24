@@ -70,10 +70,8 @@
 		//Dead people only thanks!
 		if ((M.stat != 2) || (!M.client))
 			continue
-		//They need a brain!
-		if (ishuman(M) && !M.getorgan(/obj/item/organ/internal/brain))
+		if(!M.exists("brain"))//They need a brain!
 			continue
-
 		if (M.ckey == find_key)
 			selected = M
 			break

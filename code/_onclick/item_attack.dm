@@ -44,7 +44,6 @@
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>")
 
-
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -75,6 +74,13 @@
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
+
+	if(!def_zone)
+		def_zone = user.zone_sel.selecting
+		if(!def_zone)
+			def_zone = ran_zone(def_zone)
+			def_zone = check_zone(def_zone)
+
 	M.attacked_by(src, user, def_zone)
 	add_fingerprint(user)
 	return 1

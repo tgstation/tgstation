@@ -319,6 +319,23 @@ to destroy them and players will be able to make replacements.
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 2)
 
+/obj/item/weapon/circuitboard/rapidsexchanger
+	name = "circuit board (Auto-Doc)"
+	build_path = /obj/machinery/rapidsexchanger
+	board_type = "machine"
+	origin_tech = "programming=3;biotech=2;engineering=3;materials=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/scanning_module = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/stack/cable_coil = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/retractor = 1,
+							/obj/item/weapon/hemostat = 1,
+							/obj/item/weapon/cautery = 1,
+							/obj/item/weapon/surgicaldrill = 1,
+							/obj/item/weapon/scalpel = 1,
+							/obj/item/weapon/circular_saw = 1)
+
 /obj/item/weapon/circuitboard/cryo_tube
 	name = "circuit board (Cryotube)"
 	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
@@ -410,7 +427,7 @@ to destroy them and players will be able to make replacements.
 	origin_tech = "programming=1"
 	req_components = list(
 							/obj/item/weapon/stock_parts/scanning_module = 1)
-							
+
 /obj/item/weapon/circuitboard/processor
 	name = "circuit board (Food processor)"
 	build_path = /obj/machinery/processor

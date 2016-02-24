@@ -4,7 +4,7 @@ var/datum/map_config/MiniStation = new()
 
 /datum/map_config/New()
 	..()
-	accessible_z_levels = list(1,4,5) // Restrict the map to the non-empty z levels, which were all combined in MiniStation
+	accessible_z_levels = list(1,3,4,5) // Restrict the map to the non-empty z levels, which were all combined in MiniStation
 
 // Enable all headsets by default in MiniStation, we don't worry about spam here.
 // Also both heads are in charge of everything, give them all department channels.
@@ -17,3 +17,12 @@ var/datum/map_config/MiniStation = new()
 /obj/item/weapon/paper/generator
 	name = "paper - 'generator instructions'"
 	info = "<h2>How to setup the Thermo-Generator</h2><ol>	<li>To the top right is a room full of canisters; to the bottom there is a room full of pipes. Connect C02 canisters to the pipe room's top connector ports, the cansisters will help act as a buffer so only remove them when refilling the gas..</li>	<li>Connect 3 plasma and 2 oxygen canisters to the bottom ports of the pipe room.</li>	<li>Turn on all the pumps and valves in the room except for the one connected to the yellow pipe and red pipe, no adjustments to the pump strength needed.</li>	<li>Look into the camera monitor to see the burn chamber. When it is full of plasma, press the igniter button.</li>	<li>Setup the SMES cells in the North West of Engineering and set an input of half the max; and an output that is half the input.</li></ol>Well done, you should have a functioning generator generating power. If the generator stops working, and there is enough gas and it's hot and cold, it might mean there is too much pressure and you need to turn on the pump that is connected to the red and yellow pipes to release the pressure. Make sure you don't take out too much pressure though.<br>You optimize the generator you must work out how much power your station is using and lowering the circulation pumps enough so that the generator doesn't create excess power, and it will allow the generator to powering the station for a longer duration, without having to replace the canisters. "
+
+/area/tcommsat
+	has_gravity = 1
+
+/area/turret_protected/tcomsat
+	has_gravity = 1
+
+/area/turret_protected/tcomfoyer
+	has_gravity = 1

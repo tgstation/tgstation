@@ -13,14 +13,15 @@
 				visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
 					"<span class='userdanger'>[M] has lunged at [src]!</span>")
 				return 0
-			var/obj/item/organ/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee","","",10)
+			var/zone = ran_zone(M.zone_sel.selecting)
+			zone = check_zone(zone)
+			var/armor_block = run_armor_check(zone, "melee","","",10)
 
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 				"<span class='userdanger'>[M] has slashed at [src]!</span>")
 
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			apply_damage(damage, BRUTE, zone, armor_block)
 			if (damage >= 25)
 				visible_message("<span class='danger'>[M] has wounded [src]!</span>", \
 					"<span class='userdanger'>[M] has wounded [src]!</span>")

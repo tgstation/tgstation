@@ -120,6 +120,8 @@
 		return 1
 	if((I.flags & NODROP) && !force)
 		return 0
+	if(!active_hand_exists())
+		return 0 //Cannot unequip with a hand that does not exist. |- Ricotez
 	return 1
 
 /mob/proc/unEquip(obj/item/I, force) //Force overrides NODROP for things like wizarditis and admin undress.

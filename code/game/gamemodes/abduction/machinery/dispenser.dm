@@ -14,7 +14,7 @@
 	return rgb(rand(0,255),rand(0,255),rand(0,255))
 
 /obj/machinery/abductor/gland_dispenser/New()
-	gland_types = typesof(/obj/item/organ/internal/gland) - /obj/item/organ/internal/gland
+	gland_types = typesof(/obj/item/organ/internal/heart/gland) - /obj/item/organ/internal/heart/gland
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)
@@ -59,7 +59,7 @@
 	return
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/organ/internal/gland))
+	if(istype(W, /obj/item/organ/internal/heart/gland))
 		user.drop_item()
 		W.loc = src
 		for(var/i=1,i<=gland_colors.len,i++)

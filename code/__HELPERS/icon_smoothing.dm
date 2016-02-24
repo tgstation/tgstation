@@ -184,3 +184,14 @@
 			return SOUTH_EAST
 		if(SOUTHWEST)
 			return SOUTH_WEST
+
+/proc/smooth_zlevel(var/zlevel)
+	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
+	for(var/V in away_turfs)
+		var/turf/T = V
+		if(T.smooth)
+			smooth_icon(T)
+		for(var/R in T)
+			var/atom/A = R
+			if(A.smooth)
+				smooth_icon(A)

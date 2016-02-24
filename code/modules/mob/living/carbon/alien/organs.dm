@@ -4,6 +4,8 @@
 	icon_state = "xgibmid2"
 	var/list/alien_powers = list()
 
+	organtype = ORGAN_ALIEN
+
 /obj/item/organ/internal/alien/New()
 	for(var/A in alien_powers)
 		if(ispath(A))
@@ -11,15 +13,15 @@
 			alien_powers += new A(src)
 	..()
 
-/obj/item/organ/internal/alien/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/alien/on_insertion()
 	..()
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)
-		M.AddAbility(P)
+		owner.AddAbility(P)
 
 
-/obj/item/organ/internal/alien/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/alien/Remove(special = 0)
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)
-		M.RemoveAbility(P)
+		owner.RemoveAbility(P)
 	..()
 
 /obj/item/organ/internal/alien/prepare_eat()
@@ -30,6 +32,7 @@
 
 /obj/item/organ/internal/alien/plasmavessel
 	name = "plasma vessel"
+	hardpoint = "plasmavessel"
 	origin_tech = "biotech=5;plasma=2"
 	w_class = 3
 	zone = "chest"
@@ -72,7 +75,7 @@
 
 /obj/item/organ/internal/alien/plasmavessel/on_life()
 	//If there are alien weeds on the ground then heal if needed or give some plasma
-	if(locate(/obj/structure/alien/weeds) in owner.loc)
+	if(owner && locate(/obj/structure/alien/weeds) in owner.loc)
 		if(owner.health >= owner.maxHealth)
 			owner.adjustPlasma(plasma_rate)
 		else
@@ -86,10 +89,10 @@
 			owner.adjustCloneLoss(-heal_amt)
 
 
-/obj/item/organ/internal/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/alien/plasmavessel/on_insertion()
 	..()
-	if(isalien(M))
-		var/mob/living/carbon/alien/A = M
+	if(isalien(owner))
+		var/mob/living/carbon/alien/A = owner
 		A.updatePlasmaDisplay()
 
 /obj/item/organ/internal/alien/plasmavessel/Remove(mob/living/carbon/M, special = 0)
@@ -101,16 +104,17 @@
 
 /obj/item/organ/internal/alien/hivenode
 	name = "hive node"
+	hardpoint = "hivenode"
 	zone = "head"
 	slot = "hivenode"
 	origin_tech = "biotech=5;magnets=4;bluespace=3"
 	w_class = 1
 	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
 
-/obj/item/organ/internal/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/alien/hivenode/on_insertion()
 	..()
-	M.faction |= "alien"
-	M.languages |= ALIEN
+	owner.faction |= "alien"
+	owner.languages |= ALIEN
 
 /obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
 	M.faction -= "alien"
@@ -120,6 +124,7 @@
 
 /obj/item/organ/internal/alien/resinspinner
 	name = "resin spinner"
+	hardpoint = "resinspinner"
 	zone = "mouth"
 	slot = "resinspinner"
 	origin_tech = "biotech=5;materials=4"
@@ -128,6 +133,7 @@
 
 /obj/item/organ/internal/alien/acid
 	name = "acid gland"
+	hardpoint = "acidgland"
 	zone = "mouth"
 	slot = "acidgland"
 	origin_tech = "biotech=5;materials=2;combat=2"
@@ -136,6 +142,7 @@
 
 /obj/item/organ/internal/alien/neurotoxin
 	name = "neurotoxin gland"
+	hardpoint = "toxingland"
 	zone = "mouth"
 	slot = "neurotoxingland"
 	origin_tech = "biotech=5;combat=5"
@@ -144,6 +151,7 @@
 
 /obj/item/organ/internal/alien/eggsac
 	name = "egg sac"
+	hardpoint = "eggsac"
 	zone = "groin"
 	slot = "eggsac"
 	w_class = 4

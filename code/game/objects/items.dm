@@ -454,17 +454,34 @@
 
 
 /obj/item/throw_impact(A)
+	if(iscarbon(A))
+		var/mob/living/carbon/C = A
+		var/zone = pick(C.list_limbs())
+		if(C.try_dismember(src, zone))
+			var/volume = vol_by_throwforce_and_or_w_class(src)	//Copypasted throw sound code
+			if (throwhitsound)
+				playsound(loc, throwhitsound, volume, 1, -1)
+			else if(hitsound)
+				playsound(loc, hitsound, volume, 1, -1)
+			else
+				playsound(loc, 'sound/weapons/genhit.ogg',volume, 1, -1)
+			return
+
 	if(throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 		if(istype(A, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = A
 			if(can_embed(src))
 				if(prob(embed_chance))
-					var/obj/item/organ/limb/L = pick(H.organs)
+					var/list/organlist = null
+					for(var/datum/organ/limb/LI in H.get_limbs())
+						if(LI.exists())
+							organlist += LI.organitem
+					var/obj/item/organ/limb/L = pick(organlist)
 					L.embedded_objects |= src
 					add_blood(H)//it embedded itself in you, of course it's bloody!
 					loc = H
 					L.take_damage(w_class*embedded_impact_pain_multiplier)
-					H.visible_message("<span class='danger'>\the [name] embeds itself in [H]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [name] embeds itself in your [L.getDisplayName()]!</span>")
+					H.visible_message("<span class='danger'>\the [name] embeds itself in [H]'s [L]!</span>","<span class='userdanger'>\the [name] embeds itself in your [L]!</span>")
 					return
 
 	//Reset regardless of if we hit a human.

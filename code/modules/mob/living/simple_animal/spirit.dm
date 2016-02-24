@@ -601,8 +601,8 @@
 /obj/item/weapon/guardiancreator/biological
 	name = "scarab egg cluster"
 	desc = "A parasitic species that will nest in the closest living creature upon birth. While not great for your health, they'll defend their new 'hive' to the death."
-	icon = 'icons/obj/syringe.dmi'
-	icon_state = "combat_hypo"
+	icon = 'icons/obj/virology.dmi'
+	icon_state = "scarab"
 	theme = "bio"
 	mob_name = "Scarab Swarm"
 	use_message = "The eggs begin to twitch..."

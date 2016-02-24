@@ -72,7 +72,7 @@
 /obj/effect/decal/cleanable/blood/gibs/body
 	random_icon_states = list("gibhead", "gibtorso")
 
-/obj/effect/decal/cleanable/blood/gibs/limb
+/obj/effect/decal/cleanable/blood/gibs/limb		//Only for gibs on map. If people get gibbed their actual limbs fly off
 	random_icon_states = list("gibleg", "gibarm")
 
 /obj/effect/decal/cleanable/blood/gibs/core

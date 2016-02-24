@@ -12,7 +12,7 @@
 	disease_flags = CAN_CARRY|CAN_RESIST
 	spread_flags = NON_CONTAGIOUS
 	visibility_flags = HIDDEN_PANDEMIC
-	required_organs = list(/obj/item/organ/limb/chest)
+	required_organs = list(/obj/item/organ/internal/appendix)
 
 
 /datum/disease/appendicitis/stage_act()
@@ -23,9 +23,12 @@
 			if(prob(5))
 				affected_mob.emote("cough")
 		if(2)
-			var/obj/item/organ/internal/appendix/A = affected_mob.getorgan(/obj/item/organ/internal/appendix)
+			var/obj/item/organ/internal/appendix/A = null
+			var/datum/organ/internal/appendix/appendix = affected_mob.get_organ("appendix")
+			if(appendix && appendix.exists())
+				A = appendix.organitem
 			if(A)
-				A.inflamed = 1
+				A.dysfunctional = 1
 				A.update_icon()
 			if(prob(3))
 				affected_mob << "<span class='warning'>You feel a stabbing pain in your abdomen!</span>"

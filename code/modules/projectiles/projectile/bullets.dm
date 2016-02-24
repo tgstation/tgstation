@@ -31,6 +31,7 @@
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
 	damage = 15
+	dismember_class = new /datum/dismember_class/low/shotgun
 
 /obj/item/projectile/bullet/pellet/weak
 	damage = 3

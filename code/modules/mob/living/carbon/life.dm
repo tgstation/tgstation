@@ -9,8 +9,10 @@
 
 	if(..())
 		. = 1
-		for(var/obj/item/organ/internal/O in internal_organs)
-			O.on_life()
+		for(var/datum/organ/internal/OR in get_all_internal_organs())
+			if(OR && OR.exists())
+				var/obj/item/organ/internal/O = OR.organitem
+				O.on_life()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -292,11 +294,18 @@
 		silent = 0
 	else
 		updatehealth()
-		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
+		if(health <= config.health_threshold_dead)
 			death()
 			eye_blind = max(eye_blind, 1)
 			silent = 0
 			return 1
+		else if(organsystem)
+			var/datum/organ/B = get_organ("brain")
+			if(!(B && B.exists()))
+				death()
+				eye_blind = max(eye_blind, 1)
+				silent = 0
+				return 1
 
 		if(getOxyLoss() > 50 || health <= config.health_threshold_crit)
 			Paralyse(3)
@@ -581,5 +590,9 @@
 
 /mob/living/carbon/handle_actions()
 	..()
-	for(var/obj/item/I in internal_organs)
-		give_action_button(I, 1)
+	if(organsystem)
+		for(var/datum/organ/org in get_all_internal_organs())
+			give_action_button(org.organitem)	//Recursion isn't needed in the new organsystem
+		var/datum/organ/cavity/CAV = get_organ("cavity")
+		if(CAV && CAV.exists() && !isorgan(CAV.organitem))	//Last one's there so you can't just cavity implant cybernetic implants
+			give_action_button(CAV.organitem)

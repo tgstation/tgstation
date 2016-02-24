@@ -5,6 +5,7 @@
 	name = "Toxin"
 	id = "toxin"
 	synth_cost = 5
+	can_synth = 1
 	description = "A toxic chemical."
 	color = "#CF3600" // rgb: 207, 54, 0
 	var/toxpwr = 1.5
@@ -12,6 +13,8 @@
 /datum/reagent/toxin/on_mob_life(var/mob/living/M as mob)
 	if(toxpwr)
 		M.adjustToxLoss(toxpwr*REM)
+		if((M.getToxLoss() >= 50) && !(/datum/disease/kidney_failure/ in M.viruses))
+			M.ForceContractDisease(new /datum/disease/kidney_failure)
 	..()
 	return
 
@@ -19,6 +22,7 @@
 	name = "Amatoxin"
 	id = "amatoxin"
 	synth_cost = 10
+	can_synth = 2
 	description = "A powerful poison derived from certain species of mushroom."
 	color = "#792300" // rgb: 121, 35, 0
 	toxpwr = 1
@@ -56,6 +60,7 @@
 	name = "Plasma"
 	id = "plasma"
 	synth_cost = 10
+	can_synth = 0 //no, plasma is a limiting factor in the gameplay
 	description = "Plasma in its liquid form."
 	color = "#500064" // rgb: 80, 0, 100
 	toxpwr = 3
@@ -93,6 +98,7 @@
 	name = "Lexorin"
 	id = "lexorin"
 	synth_cost = 3
+	can_synth = 2
 	description = "Lexorin temporarily stops respiration. Causes tissue damage."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	toxpwr = 0
@@ -112,6 +118,7 @@
 	name = "Slime Jelly"
 	id = "slimejelly"
 	synth_cost = 5
+	can_synth = 0
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
 	color = "#801E28" // rgb: 128, 30, 40
 	toxpwr = 0
@@ -129,6 +136,7 @@
 	name = "Mint Toxin"
 	id = "minttoxin"
 	synth_cost = 5
+	can_synth = 0
 	description = "Useful for dealing with undesirable customers."
 	color = "#CF3600" // rgb: 207, 54, 0
 	toxpwr = 0
@@ -151,6 +159,7 @@
 	name = "Zombie Powder"
 	id = "zombiepowder"
 	synth_cost = 5
+	can_synth = 2
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
@@ -185,7 +194,7 @@
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
 	id = "plantbgone"
-	synth_cost = 2
+	synth_cost = 1
 	description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
@@ -218,6 +227,7 @@
 /datum/reagent/toxin/pestkiller
 	name = "Pest Killer"
 	id = "pestkiller"
+	synth_cost = 1
 	description = "A harmful toxic mixture to kill pests. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
 	toxpwr = 1
@@ -315,6 +325,7 @@
 	name = "Mute Toxin"
 	id = "mutetoxin"
 	synth_cost = 5
+	can_synth = 2
 	description = "A toxin that temporarily paralyzes the vocal cords."
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
@@ -326,7 +337,6 @@
 /datum/reagent/toxin/staminatoxin
 	name = "Tirizene"
 	id = "tirizene"
-	synth_cost = 2
 	description = "A toxin that affects the stamina of a person when injected into the bloodstream."
 	color = "#6E2828"
 	data = 13
@@ -341,6 +351,7 @@
 	name = "Polonium"
 	id = "polonium"
 	synth_cost = 10
+	can_synth = 2
 	description = "Cause significant Radiation damage over time."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -404,6 +415,7 @@
 	name = "Venom"
 	id = "venom"
 	synth_cost = 2
+	can_synth = 2
 	description = "Will deal scaling amounts of Toxin and Brute damage over time. 15% chance to decay into 5-10 histamine."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -422,6 +434,7 @@
 	name = "Neurotoxin"
 	id = "neurotoxin2"
 	synth_cost = 4
+	can_synth = 2
 	description = "Deals toxin and brain damage up to 60 before it slows down, causing confusion and a knockout after 18 elapsed cycles."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -439,7 +452,7 @@
 /datum/reagent/toxin/cyanide
 	name = "Cyanide"
 	id = "cyanide"
-	synth_cost = 4
+	synth_cost = 2
 	description = "Deals toxin damage, alongside some oxygen loss. 8% chance of stun and some extra toxin damage."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -497,6 +510,7 @@
 	name = "Initropidril"
 	id = "initropidril"
 	synth_cost = 4
+	can_synth = 2
 	description = "Causes some toxin damage, 5% chances to cause stunning, suffocation, or immediate heart failure."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -528,6 +542,7 @@
 	name = "Pancuronium"
 	id = "pancuronium"
 	synth_cost = 5
+	can_synth = 2
 	description = "Knocks you out after 10 seconds, 7% chance to cause some oxygen loss."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -545,6 +560,7 @@
 	name = "Sodium Thiopental"
 	id = "sodium_thiopental"
 	synth_cost = 5
+	can_synth = 2
 	description = "Puts you to sleep after 30 seconds, along with some major stamina loss."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -561,6 +577,7 @@
 	name = "Sulfonal"
 	id = "sulfonal"
 	synth_cost = 5
+	can_synth = 2
 	description = "Deals some toxin damage, and puts you to sleep after 66 seconds."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -576,6 +593,7 @@
 	name = "Amanitin"
 	id = "amanitin"
 	synth_cost = 5
+	can_synth = 2
 	description = "On the last second that it's in you, it hits you with a stack of toxin damage based on how long it's been in you. The more you use, the longer it takes before anything happens, but the harder it hits when it does."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -591,6 +609,7 @@
 	name = "Coniine"
 	id = "coniine"
 	synth_cost = 5
+	can_synth = 2
 	description = "Does moderate toxin damage and oxygen loss."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -605,6 +624,7 @@
 	name = "Curare"
 	id = "curare"
 	synth_cost = 5
+	can_synth = 2
 	description = "Does some oxygen and toxin damage, weakens you after 11 seconds."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -659,6 +679,7 @@
 	name = "Fluorosulfuric acid"
 	id = "facid"
 	synth_cost = 3
+	can_synth = 2
 	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
@@ -668,6 +689,7 @@
 	name = "Polytrinic acid"
 	id = "pacid"
 	synth_cost = 3
+	can_synth = 2
 	description = "Polytrinic acid is a an extremely corrosive chemical substance."
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
@@ -716,6 +738,7 @@
 	name = "Viral Readaption"
 	id = "viral_readaption"
 	synth_cost = 10
+	can_synth = 0
 	description = "???"
 	color = "#13BC5E" // rgb: 207, 54, 0
 

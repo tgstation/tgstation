@@ -23,6 +23,7 @@
 	var/turn_angle = 0
 	var/current_dirt = 0 //current dirtyness of the panel
 	var/obj/machinery/power/solar_control/control = null
+	var/maintenance_mode = 0 //if set to 1, they will rotate and clean themselves
 
 /obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc)
@@ -142,12 +143,24 @@
 		return
 	if(!control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed
 		return
-	if(prob(DIRTRATE))
+	if(prob(DIRTRATE) && current_dirt <= DIRTLIMIT)
 		current_dirt += 1
 		if(current_dirt > DIRTLIMIT /2)
 			update_icon()
-	if(current_dirt >= DIRTLIMIT)
-		stat |= BROKEN
+	//if(current_dirt >= DIRTLIMIT) //comented out for now. Renable if needed.
+	//	stat |= BROKEN
+	if(maintenance_mode && current_dirt>0)
+		adir += 60 //should take 6 ticks = 10 seconds to fully rotate.
+		if(adir > 360)
+			adir -= 360
+		update_icon()
+		current_dirt -= 2 //it takes a maximum of 2 minutes to clean a compeltly dirt solar panel.
+		return //maintenance mode means no power is produced
+
+	if(maintenance_mode && current_dirt<=0)
+		current_dirt = max(current_dirt,0) //so we don't get negative dirt
+		maintenance_mode = 0
+
 	if(powernet)
 		if(powernet == control.powernet)//check if the panel is still connected to the computer
 			if(obscured) //get no light from the sun, so don't generate power
@@ -461,7 +474,10 @@
 /obj/machinery/power/solar_control/Topic(href, href_list)
 	if(..())
 		return
-
+	if(href_list["auto_clean"])
+		if(connected_tracker)
+			for(var/obj/machinery/power/solar/S in connected_panels)
+				S.maintenance_mode = 1 //beings maintenance mode on the panels
 	if(href_list["rate_control"])
 		if(href_list["cdir"])
 			src.cdir = dd_range(0,359,(360+src.cdir+text2num(href_list["cdir"]))%360)

@@ -5,9 +5,9 @@
 	possible_locs = list("chest")
 
 
-/datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target, datum/organ/organdata)
 	if(target.disabilities & FAT)
-		return 1
+		return ..()
 	return 0
 
 //cut fat

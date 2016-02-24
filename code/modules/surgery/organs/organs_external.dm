@@ -40,7 +40,7 @@
 	body_part = HEAD
 
 
-/obj/item/organ/limb/l_arm
+/obj/item/organ/limb/arm/l_arm
 	name = "l_arm"
 	desc = "why is it detached..."
 	icon_state = "l_arm"
@@ -48,7 +48,7 @@
 	body_part = ARM_LEFT
 
 
-/obj/item/organ/limb/l_leg
+/obj/item/organ/limb/leg/l_leg
 	name = "l_leg"
 	desc = "why is it detached..."
 	icon_state = "l_leg"
@@ -56,7 +56,7 @@
 	body_part = LEG_LEFT
 
 
-/obj/item/organ/limb/r_arm
+/obj/item/organ/limb/arm/r_arm
 	name = "r_arm"
 	desc = "why is it detached..."
 	icon_state = "r_arm"
@@ -64,7 +64,7 @@
 	body_part = ARM_RIGHT
 
 
-/obj/item/organ/limb/r_leg
+/obj/item/organ/limb/leg/r_leg
 	name = "r_leg"
 	desc = "why is it detached..."
 	icon_state = "r_leg"

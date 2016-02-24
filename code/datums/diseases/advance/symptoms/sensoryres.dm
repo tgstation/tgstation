@@ -22,7 +22,7 @@ Bonus
 	resistance = -3
 	stage_speed = -3
 	transmittable = -4
-	level = 6
+	level = 10
 	severity = 0
 
 /datum/symptom/sensres/Activate(var/datum/disease/advance/A)

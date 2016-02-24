@@ -9,7 +9,7 @@
 	ventcrawler = 0 //pull over that ass too fat
 
 
-/mob/living/carbon/alien/humanoid/queen/New()
+/mob/living/carbon/alien/humanoid/queen/New(loc, var/datum/organsystem/humanoid/alien/drone/oldorgans)
 	create_reagents(100)
 
 	//there should only be one queen
@@ -22,13 +22,9 @@
 
 	real_name = src.name
 
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large/queen
-	internal_organs += new /obj/item/organ/internal/alien/resinspinner
-	internal_organs += new /obj/item/organ/internal/alien/acid
-	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
-	internal_organs += new /obj/item/organ/internal/alien/eggsac
+	organsystem = new/datum/organsystem/humanoid/alien/queen(src, oldorgans)
 
-	..()
+	..(loc)
 
 /mob/living/carbon/alien/humanoid/queen/handle_hud_icons_health()
 	if (src.healths)

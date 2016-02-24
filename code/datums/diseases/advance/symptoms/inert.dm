@@ -13,7 +13,7 @@ BONUS
 
 /datum/symptom/inert
 
-	name = "Facial Hypertrichosis"
+	name = "Inert Virus"
 	stealth = 1
 	resistance = 0
 	stage_speed = 0
@@ -21,6 +21,6 @@ BONUS
 	level = 10 //so it's not on the random rotation
 	severity = 1
 
-/datum/symptom/beard/Activate(var/datum/disease/advance/A)
+/datum/symptom/inert/Activate(var/datum/disease/advance/A)
 	..()
 	return

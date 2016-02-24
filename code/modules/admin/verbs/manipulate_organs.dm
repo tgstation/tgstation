@@ -6,14 +6,15 @@
 	var/list/organs = list()
 	switch(operation)
 		if("add organ")
-			for(var/path in typesof(/obj/item/organ/internal) - /obj/item/organ/internal)
+			for(var/path in typesof(/obj/item/organ) - /obj/item/organ)
 				var/dat = replacetext("[path]", "/obj/item/organ/internal/", ":")
 				organs[dat] = path
 
 			var/obj/item/organ/internal/organ = input("Select organ type:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
 			organ = new organ
-			organ.Insert(C)
+			if(!organ.Insert(C))
+				src << "[C] has no room for [organ] in his [organ.hardpoint]!"
 
 		if("add implant")
 			for(var/path in typesof(/obj/item/weapon/implant) - /obj/item/weapon/implant)
@@ -26,26 +27,28 @@
 			organ.implant(C)
 
 		if("drop organ/implant", "remove organ/implant")
-			for(var/obj/item/organ/internal/I in C.internal_organs)
-				organs["[I.name] ([I.type])"] = I
+			if(C.organsystem)
+				for(var/organname in C.organsystem.organlist)
+					var/datum/organ/ORG = C.get_organ(organname)
+					if(ORG && ORG.exists())
+						organs["[ORG.organitem] ([ORG.organitem.type])"] = ORG
 
 			for(var/obj/item/weapon/implant/I in C)
 				organs["[I.name] ([I.type])"] = I
 
-			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null) in organs
+			var/organ = input("Select organ/implant:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
 			if(!organ) return
-			var/obj/item/organ/internal/O
+			var/datum/organ/internal/O
 			var/obj/item/weapon/implant/I
 
-			if(isorgan(organ))
+			if(istype(organ, /datum/organ/))
 				O = organ
-				O.Remove(C)
+				organ = O.dismember(ORGAN_REMOVED)
 			else
 				I = organ
 				I.removed(C)
-
-			organ.loc = get_turf(C)
+				I.loc = get_turf(C)
 
 			if(operation == "remove organ/implant")
 				qdel(organ)
@@ -54,3 +57,4 @@
 				case.imp = I
 				I.loc = case
 				case.update_icon()
+	C.update_body_parts()

@@ -52,12 +52,14 @@
 		sight |= SEE_MOBS
 		sight &= ~SEE_TURFS
 		sight &= ~SEE_OBJS
+/*	Should be handled by the power
 		if(nightvision)
 			see_in_dark = 8
 			see_invisible = SEE_INVISIBLE_MINIMUM
 		else if(!nightvision)
 			see_in_dark = 4
 			see_invisible = 45
+*/
 		if(see_override)
 			see_invisible = see_override
 

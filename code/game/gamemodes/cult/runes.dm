@@ -340,8 +340,13 @@ proc/set_runecults( setELDERGOD_CULTS = null, setCONVERT_CULTS = null, setSACRIF
 		usr << "<span class='danger'>You require a restless spirit which clings to this world. Beckon their prescence with the sacred chants of Nar-Sie.</span>"
 		return fizzle()
 
-	for(var/obj/item/organ/limb/affecting in corpse_to_raise.organs)
-		affecting.heal_damage(1000, 1000, 0)
+	for(var/datum/organ/limb/LI in corpse_to_raise.get_limbs())
+		if(LI.exists())
+			var/obj/item/organ/limb/affecting = LI.organitem
+			affecting.heal_damage(1000, 1000, 0)
+		else
+			LI.regenerate_organitem(corpse_to_raise.dna)
+
 	corpse_to_raise.setToxLoss(0)
 	corpse_to_raise.setOxyLoss(0)
 	corpse_to_raise.SetParalysis(0)

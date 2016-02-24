@@ -1,4 +1,4 @@
-/mob/proc/getorgan(typepath)
+/mob/proc/get_organ(typepath)
 	return
 
 /mob/proc/getorganszone(zone)
@@ -8,7 +8,7 @@
 	return
 
 
-/mob/living/carbon/getorgan(typepath)
+/mob/living/carbon/get_organ(typepath)
 	return (locate(typepath) in internal_organs)
 
 /mob/living/carbon/getorganszone(zone, var/subzones = 0)

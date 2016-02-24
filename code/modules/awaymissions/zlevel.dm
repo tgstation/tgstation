@@ -4,7 +4,11 @@ proc/createRandomZlevel()
 
 	var/list/potentialRandomZlevels = list()
 	world << "<span class='userdanger'>Searching for away missions...</span>"
-	var/list/Lines = file2list("_maps/RandomZLevels/fileList.txt")
+	var/list/Lines = file2list("config/awaymissionconfig.txt")
+
+	if(!Lines.len) // failback to old awaymission file.
+		Lines += file2list("_maps/RandomZLevels/fileList.txt")
+
 	if(!Lines.len)	return
 	for (var/t in Lines)
 		if (!t)
@@ -45,6 +49,8 @@ proc/createRandomZlevel()
 			if (L.name != "awaystart")
 				continue
 			awaydestinations.Add(L)
+
+		smooth_zlevel(world.maxz)
 
 		world << "<span class='userdanger'>Away mission loaded.</span>"
 

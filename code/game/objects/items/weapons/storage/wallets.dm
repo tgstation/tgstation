@@ -17,31 +17,43 @@
 		/obj/item/weapon/disk,
 		/obj/item/weapon/implanter,
 		/obj/item/weapon/lighter,
+		/obj/item/weapon/lipstick,
 		/obj/item/weapon/match,
 		/obj/item/weapon/paper,
 		/obj/item/weapon/pen,
 		/obj/item/weapon/photo,
 		/obj/item/weapon/reagent_containers/dropper,
+		/obj/item/weapon/reagent_containers/syringe,
 		/obj/item/weapon/screwdriver,
 		/obj/item/weapon/stamp)
 	slot_flags = SLOT_ID
 
 	var/obj/item/weapon/card/id/front_id = null
+	var/list/combined_access = list()
 
 
-/obj/item/weapon/storage/wallet/remove_from_storage(obj/item/W as obj, atom/new_location)
+/obj/item/weapon/storage/wallet/remove_from_storage(obj/item/W, atom/new_location)
 	. = ..(W, new_location)
 	if(.)
-		if(W == front_id)
-			front_id = null
+		if(istype(W, /obj/item/weapon/card/id))
+			if(W == front_id)
+				front_id = null
+			refreshID()
 			update_icon()
 
-/obj/item/weapon/storage/wallet/handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
+/obj/item/weapon/storage/wallet/proc/refreshID()
+	combined_access.Cut()
+	for(var/obj/item/weapon/card/id/I in contents)
+		if(!front_id)
+			front_id = I
+			update_icon()
+		combined_access |= I.access
+
+/obj/item/weapon/storage/wallet/handle_item_insertion(obj/item/W, prevent_warning = 0)
 	. = ..(W, prevent_warning)
 	if(.)
-		if(!front_id && istype(W, /obj/item/weapon/card/id))
-			front_id = W
-			update_icon()
+		if(istype(W, /obj/item/weapon/card/id))
+			refreshID()
 
 /obj/item/weapon/storage/wallet/update_icon()
 
@@ -66,9 +78,8 @@
 	return front_id
 
 /obj/item/weapon/storage/wallet/GetAccess()
-	var/obj/item/I = GetID()
-	if(I)
-		return I.GetAccess()
+	if(combined_access.len) 
+		return combined_access
 	else
 		return ..()
 
@@ -78,6 +89,8 @@
 	var/item2_type
 	if(prob(50))
 		item2_type = pick( /obj/item/weapon/spacecash/c10,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c20,/obj/item/weapon/spacecash/c200,/obj/item/weapon/spacecash/c50, /obj/item/weapon/spacecash/c500)
+	else if(prob(50))
+		item2_type = /obj/item/weapon/pen/fourcolor
 	var/item3_type = pick( /obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/gold, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron )
 
 	spawn(2)

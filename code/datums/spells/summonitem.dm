@@ -54,7 +54,7 @@
 			var/infinite_recursion = 0 //I don't want to know how someone could put something inside itself but these are wizards so let's be safe
 
 			if(!item_to_retrive.loc)
-				if(isorgan(item_to_retrive)) // Organs are usually stored in nullspace
+				if(isinternalorgan(item_to_retrive)) // Organs are usually stored in nullspace
 					var/obj/item/organ/internal/organ = item_to_retrive
 					if(organ.owner)
 						// If this code ever runs I will be happy
