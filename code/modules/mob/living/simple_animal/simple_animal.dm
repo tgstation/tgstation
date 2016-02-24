@@ -318,8 +318,9 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [M.attacktext] by [M.name] ([M.ckey])</font>")
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='warning'><B>\The [M]</B> [M.attacktext] [src]!</span>", 1)
+
+		visible_message("<span class='warning'><B>\The [M]</B> [M.attacktext] \the [src]!</span>")
+
 		add_logs(M, src, "attacked", admin=0)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage,M.melee_damage_type)
@@ -656,18 +657,18 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 /mob/living/simple_animal/proc/grow_up()
 	if(src.type == species_type) //Already grown up
 		return
-	
+
 	var/mob/living/simple_animal/new_animal = new species_type(src.loc)
-	
+
 	if(locked_to) //Handle atom locking
 		var/atom/movable/A = locked_to
 		A.unlock_atom(src)
 		A.lock_atom(new_animal)
-	
+
 	new_animal.inherit_mind(src)
 	new_animal.ckey = src.ckey
 	new_animal.key = src.key
-	
+
 	forceMove(get_turf(src))
 	qdel(src)
 
