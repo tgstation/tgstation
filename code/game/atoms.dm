@@ -280,13 +280,6 @@ var/list/blood_splatter_icons = list()
 		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
 		if(M.reagents)
 			M.reagents.trans_to(this, M.reagents.total_volume / 10)
-			for(var/datum/reagent/R in reagents.reagent_list)		//clears the stomach of anything that might be digested as food
-				if (istype(R, /datum/reagent/consumable))
-					var/datum/reagent/consumable/nutri_check = R
-					if(nutri_check.nutriment_factor >0)
-						reagents.add_reagent(R.id,R.volume)
-						M.reagents.remove_reagent(R.id,R.volume)
-
 		// Make toxins vomit look different
 		if(toxvomit)
 			this.icon_state = "vomittox_[pick(1,4)]"
@@ -388,3 +381,25 @@ var/list/blood_splatter_icons = list()
 //the sight changes to give to the mob whose perspective is set to that atom (e.g. A mob with nightvision loses its nightvision while looking through a normal camera)
 /atom/proc/update_remote_sight(mob/living/user)
 	return
+
+/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
+		if(istype(src,/turf/simulated) )
+				var/obj/effect/decal/cleanable/vomit/this = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
+				if(M.reagents)
+				// make a new proc that does everything below.
+						M.reagents.trans_to(this, M.reagents.total_volume / 10)
+						for(var/datum/reagent/R in reagents.reagent_list)                //clears the stomach of anything that might be digested as food
+							if(istype(R, /datum/reagent/consumable))
+								var/datum/reagent/consumable/nutri_check = R
+								if(nutri_check.nutriment_factor >0)
+									reagents.add_reagent(R.id,R.volume)
+									M.reagents.remove_reagent(R.id,R.volume)
+
+/datum/reagent/proc/lose_lunch(var/atom/splat)
+	if( ! splat.reagents)
+	return
+	for(var/datum/reagent/consumable/lunch in reagent_list)
+		if(lunch.nutriment_factor > 0 )
+			splat.reagents.add_reagent(lunch.id, lunch.volume)
+			remove_reagent(lunch.id, lunch.volume)
+	trans_to(splat, total_volume/10)
