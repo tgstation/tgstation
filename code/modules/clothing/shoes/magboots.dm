@@ -5,7 +5,7 @@
 	var/magboot_state = "magboots"
 	var/magpulse = 0
 	var/slowdown_active = 2
-	action_button_name = "Toggle Magboots"
+	actions_types = list(/datum/action/item_action/toggle)
 	strip_delay = 70
 	put_on_delay = 70
 	burn_state = FIRE_PROOF

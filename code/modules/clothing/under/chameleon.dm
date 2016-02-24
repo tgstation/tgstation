@@ -5,7 +5,7 @@
 	item_state = "bl_suit"
 	item_color = "black"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
-	action_button_name = "Change"
+	actions_types = list(/datum/action/item_action/change)
 	origin_tech = "syndicate=3"
 	sensor_mode = 0 //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = 0

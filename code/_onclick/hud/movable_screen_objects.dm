@@ -43,7 +43,7 @@
 		var/pix_Y = text2num(screen_loc_Y[2]) - 16
 		screen_loc = "[screen_loc_X[1]]:[pix_X],[screen_loc_Y[1]]:[pix_Y]"
 
-	moved = TRUE
+	moved = screen_loc
 
 
 //Debug procs
