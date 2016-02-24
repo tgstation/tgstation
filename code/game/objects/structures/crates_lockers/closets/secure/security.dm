@@ -73,7 +73,7 @@
 	new /obj/item/device/megaphone/sec(src)
 	new /obj/item/weapon/holosign_creator/security(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
-	new /obj/item/weapon/shield/riot/tele(src)
+	new /obj/item/weapon/toggle/tele_shield(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/weapon/gun/energy/gun/hos(src)

@@ -31,7 +31,7 @@
 	new /obj/item/weapon/storage/box/teargas(src)
 	new /obj/item/weapon/storage/box/flashes(src)
 	new /obj/item/weapon/storage/box/handcuffs(src)
-	new /obj/item/weapon/shield/riot/tele(src)
+	new /obj/item/weapon/toggle/tele_shield(src)
 
 /obj/structure/closet/secure_closet/ertMed
 	name = "medical closet"
@@ -62,5 +62,5 @@
 	new /obj/item/stack/sheet/glass(src, 50)
 	new /obj/item/clothing/shoes/magboots(src)
 	new /obj/item/weapon/storage/box/metalfoam(src)
-	for(var/i in 1 to 3)	
+	for(var/i in 1 to 3)
 		new /obj/item/weapon/rcd_ammo/large(src)
