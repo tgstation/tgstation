@@ -4,16 +4,13 @@
 	name = "Engineering Scanner Goggles"
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
 	icon_state = "trayson-meson"
-	action_button_name = "Change Scanning Mode"
+	actions_types = list(/datum/action/item_action/toggle_mode)
 
 	var/mode = 0	//0 - regular mesons mode	1 - t-ray mode
 	var/invis_objects = list()
 	var/range = 1
 
-/obj/item/clothing/glasses/meson/engine/attack_self()
-	ui_action_click()
-
-/obj/item/clothing/glasses/meson/engine/ui_action_click()
+/obj/item/clothing/glasses/meson/engine/attack_self(mob/user)
 	mode = !mode
 
 	if(mode)
@@ -21,7 +18,7 @@
 		vision_flags = 0
 		darkness_view = 2
 		invis_view = SEE_INVISIBLE_LIVING
-		loc << "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>"
+		user << "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>"
 	else
 		SSobj.processing.Remove(src)
 		vision_flags = SEE_TURFS
@@ -30,11 +27,15 @@
 		loc << "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>"
 		invis_update()
 
-	if(istype(loc,/mob/living/carbon))
-		var/mob/living/carbon/C = loc
-		C.update_sight()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.glasses == src)
+			H.update_sight()
 
 	update_icon()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/clothing/glasses/meson/engine/process()
 	if(!mode)
@@ -94,7 +95,6 @@
 	name = "Optical T-Ray Scanner"
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	icon_state = "trayson-tray_off"
-	action_button_name = "Toggle Scanner Power"
 
 	mode = 1
 	var/on = 0
@@ -115,18 +115,21 @@
 		if(user.glasses == src)
 			user.update_inv_glasses()
 
-/obj/item/clothing/glasses/meson/engine/tray/ui_action_click()
+/obj/item/clothing/glasses/meson/engine/tray/attack_self(mob/user)
 	on = !on
 
 	if(on)
 		SSobj.processing |= src
-		loc << "<span class='notice'>You turn the goggles on.</span>"
+		user << "<span class='notice'>You turn the goggles on.</span>"
 	else
 		SSobj.processing.Remove(src)
-		loc << "<span class='notice'>You turn the goggles off.</span>"
+		user << "<span class='notice'>You turn the goggles off.</span>"
 		invis_update()
 
 	update_icon()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/clothing/glasses/meson/engine/tray/t_ray_on()
 	return on && ..()

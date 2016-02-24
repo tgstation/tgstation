@@ -80,7 +80,6 @@
 		equip_to_slot_or_del(I, slot_head)
 
 	access_card.flags |= NODROP
-	scanner.Grant(src)
 
 	alert_drones(DRONE_NET_CONNECT)
 

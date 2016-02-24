@@ -409,7 +409,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	if(href_list["orderbyid"])
 		var/orderid = input("Enter your order:") as num|null
 		if(orderid)
-			if(isnum(orderid))
+			if(isnum(orderid) && IsInteger(orderid))
 				href_list["targetid"] = orderid
 	if(href_list["targetid"])
 		var/sqlid = sanitizeSQL(href_list["targetid"])

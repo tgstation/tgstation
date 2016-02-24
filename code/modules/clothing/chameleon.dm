@@ -6,7 +6,8 @@
 	var/chameleon_name = "Item"
 
 /datum/action/item_action/chameleon/change/proc/initialize_disguises()
-	name = "Change [chameleon_name] Appearance"
+	if(button)
+		button.name = "Change [chameleon_name] Appearance"
 	chameleon_blacklist += target.type
 	var/list/temp_list = typesof(chameleon_type)
 	for(var/V in temp_list - (chameleon_blacklist))
@@ -36,13 +37,16 @@
 		target.name = initial(picked_item.name)
 		target.desc = initial(picked_item.desc)
 		target.icon_state = initial(picked_item.icon_state)
-		target.item_state = initial(picked_item.item_state)
+		if(istype(target, /obj/item))
+			var/obj/item/I = target
+			I.item_state = initial(picked_item.item_state)
 		target.icon = initial(picked_item.icon)
 
 		C.regenerate_icons()	//so our overlays update.
+	UpdateButtonIcon()
 
 /datum/action/item_action/chameleon/change/Trigger()
-	if(!Checks())
+	if(!IsAvailable())
 		return
 
 	update_look(owner)
@@ -63,12 +67,10 @@
 
 /obj/item/clothing/under/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new
-	chameleon_action.target = src
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/under
 	chameleon_action.chameleon_name = "Jumpsuit"
 	chameleon_action.initialize_disguises()
-	action = chameleon_action
 
 /obj/item/clothing/suit/chameleon
 	name = "armor"
@@ -82,12 +84,10 @@
 
 /obj/item/clothing/suit/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new
-	chameleon_action.target = src
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/suit
 	chameleon_action.chameleon_name = "Suit"
 	chameleon_action.initialize_disguises()
-	action = chameleon_action
 
 /obj/item/clothing/glasses/chameleon
 	name = "Optical Meson Scanner"
@@ -101,12 +101,10 @@
 
 /obj/item/clothing/glasses/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new
-	chameleon_action.target = src
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
 	chameleon_action.chameleon_name = "Glasses"
 	chameleon_action.initialize_disguises()
-	action = chameleon_action
 
 /obj/item/clothing/gloves/chameleon
 	desc = "These gloves will protect the wearer from electric shock."
@@ -119,12 +117,10 @@
 
 /obj/item/clothing/gloves/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new
-	chameleon_action.target = src
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/gloves
 	chameleon_action.chameleon_name = "Gloves"
 	chameleon_action.initialize_disguises()
-	action = chameleon_action
 
 /obj/item/clothing/head/chameleon
 	name = "grey cap"
@@ -137,12 +133,10 @@
 
 /obj/item/clothing/head/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new
-	chameleon_action.target = src
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/head
 	chameleon_action.chameleon_name = "Hat"
 	chameleon_action.initialize_disguises()
-	action = chameleon_action
 
 /obj/item/clothing/mask/chameleon
 	name = "gas mask"
@@ -162,12 +156,10 @@
 
 /obj/item/clothing/mask/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new
-	chameleon_action.target = src
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/mask
 	chameleon_action.chameleon_name = "Mask"
 	chameleon_action.initialize_disguises()
-	action = chameleon_action
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
 	vchange = !vchange
@@ -188,12 +180,10 @@
 
 /obj/item/clothing/shoes/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new
-	chameleon_action.target = src
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/shoes
 	chameleon_action.chameleon_name = "Shoes"
 	chameleon_action.initialize_disguises()
-	action = chameleon_action
 
 /obj/item/weapon/gun/energy/laser/chameleon
 	name = "practice laser gun"
@@ -206,47 +196,39 @@
 
 /obj/item/weapon/gun/energy/laser/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new
-	chameleon_action.target = src
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/weapon/gun
 	chameleon_action.chameleon_name = "Gun"
 	chameleon_action.chameleon_blacklist = typesof(/obj/item/weapon/gun/magic)
 	chameleon_action.initialize_disguises()
-	action = chameleon_action
 
 /obj/item/weapon/storage/backpack/chameleon
 	name = "chameleon backpack"
 
 /obj/item/weapon/storage/backpack/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new
-	chameleon_action.target = src
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/weapon/storage/backpack
 	chameleon_action.chameleon_name = "Backpack"
 	chameleon_action.initialize_disguises()
-	action = chameleon_action
 
 /obj/item/device/radio/headset/chameleon
 	name = "chameleon headset"
 
 /obj/item/device/radio/headset/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new
-	chameleon_action.target = src
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/device/radio/headset
 	chameleon_action.chameleon_name = "Headset"
 	chameleon_action.initialize_disguises()
-	action = chameleon_action
 
 /obj/item/device/pda/chameleon
 	name = "chameleon PDA"
 
 /obj/item/device/pda/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new
-	chameleon_action.target = src
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/device/pda
 	chameleon_action.chameleon_name = "PDA"
 	chameleon_action.chameleon_blacklist = list(/obj/item/device/pda/ai)
 	chameleon_action.initialize_disguises()
-	action = chameleon_action

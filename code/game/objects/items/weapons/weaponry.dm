@@ -273,6 +273,7 @@
 	hitsound = "sound/weapons/chainsawhit.ogg"
 
 /obj/item/weapon/mounted_chainsaw/dropped()
+	..()
 	new /obj/item/weapon/twohanded/required/chainsaw(get_turf(src))
 	qdel(src)
 

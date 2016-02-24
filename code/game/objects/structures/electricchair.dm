@@ -4,7 +4,7 @@
 	icon_state = "echair0"
 	var/obj/item/assembly/shock_kit/part = null
 	var/last_time = 1
-	hold_icon = null
+	item_chair = null
 
 /obj/structure/chair/e_chair/New()
 	..()
