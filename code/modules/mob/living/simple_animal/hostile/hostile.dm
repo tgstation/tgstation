@@ -177,19 +177,22 @@
 	if(!target || !CanAttack(target))
 		LoseTarget()
 		return
-	if(target in ListTargets())
-		var/target_distance = get_dist(src,target)
-		if(ranged)//We ranged? Shoot at em
-			if(target_distance >= 2 && ranged_cooldown <= 0)//But make sure they're a tile away at least, and our range attack is off cooldown
-				OpenFire(target)
-		if(isturf(loc) && target.Adjacent(src))	//If they're next to us, attack
-			AttackingTarget()
-		if(canmove)
-			if(retreat_distance != null && target_distance <= retreat_distance) //If we have a retreat distance, check if we need to run from our target
-				walk_away(src,target,retreat_distance,move_to_delay)
-			else
-				Goto(target,move_to_delay,minimum_distance)//Otherwise, get to our minimum distance so we chase them
-		return
+
+	if(isturf(loc))
+		if(target in ListTargets())
+			var/target_distance = get_dist(src,target)
+			if(ranged)//We ranged? Shoot at em
+				if(target_distance >= 2 && ranged_cooldown <= 0)//But make sure they're a tile away at least, and our range attack is off cooldown
+					OpenFire(target)
+			if(target.Adjacent(src))	//If they're next to us, attack
+				AttackingTarget()
+			if(canmove)
+				if(retreat_distance != null && target_distance <= retreat_distance) //If we have a retreat distance, check if we need to run from our target
+					walk_away(src,target,retreat_distance,move_to_delay)
+				else
+					Goto(target,move_to_delay,minimum_distance)//Otherwise, get to our minimum distance so we chase them
+			return
+
 	if(target.loc != null && get_dist(src, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
 		if(FindHidden(target) && environment_smash)//Check if he tried to hide in something to lose us
 			var/atom/A = target.loc
@@ -200,6 +203,8 @@
 			return
 		else
 			LostTarget()
+			return
+
 	LostTarget()
 
 /mob/living/simple_animal/hostile/proc/Goto(var/target, var/delay, var/minimum_distance)

@@ -1416,6 +1416,8 @@ var/proccalls = 1
 #define LOCKED_SHOULD_LIE 1
 #define DENSE_WHEN_LOCKING 2
 #define DENSE_WHEN_LOCKED 4
+#define CANT_BE_MOVED_BY_LOCKED_MOBS 8
+#define LOCKED_CAN_LIE_AND_STAND 16
 
 // Disposals destinations.
 

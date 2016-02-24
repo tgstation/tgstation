@@ -96,6 +96,11 @@
 						// Skip things we can't wrap
 						if(istype(O, /mob/living/simple_animal/hostile/giant_spider))
 							continue
+
+						//Don't cocoon the box we're stored in
+						if(loc == O || locked_to == O)
+							continue
+
 						cocoon_target = O
 						busy = MOVING_TO_TARGET
 						stop_automated_movement = 1

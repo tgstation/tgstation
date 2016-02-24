@@ -586,10 +586,10 @@ Thanks.
 
 /mob/living/Move(atom/newloc, direct)
 	if (locked_to && locked_to.loc != newloc)
-		if (!locked_to.anchored)
-			return locked_to.Move(newloc, direct)
-		else
+		if(locked_to.anchored || (locked_to.lockflags & CANT_BE_MOVED_BY_LOCKED_MOBS))
 			return 0
+		else
+			return locked_to.Move(newloc, direct)
 
 	if (restrained())
 		stop_pulling()
