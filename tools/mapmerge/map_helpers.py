@@ -4,7 +4,7 @@ maxx = 0
 maxy = 0
 key_length = 1
 
-def merge_map(newfile, backupfile):
+def merge_map(newfile, backupfile, tgm):
     global key_length
     global maxx
     global maxy
@@ -28,8 +28,8 @@ def merge_map(newfile, backupfile):
     tempDict = collections.OrderedDict() #mapping new keys to new data
     originalDict_size = len(originalDict)
 
-    for y in range(1,maxy):
-        for x in range(1,maxx):
+    for y in range(1,maxy+1):
+        for x in range(1,maxx+1):
             shitKey = shitGrid[x,y]
 
             #if this key was seen before, add it to the pile immediately
@@ -118,11 +118,16 @@ def merge_map(newfile, backupfile):
             next_key = get_next_key(next_key)
         originalDict = sorted_dict
 
-    write_dictionary_tgm(newfile, originalDict)
-    write_grid_coord(newfile, mergeGrid)
+    if tgm:
+        write_dictionary_tgm(newfile, originalDict)
+        write_grid_coord_small(newfile, mergeGrid)
+    else:
+        write_dictionary(newfile, originalDict)
+        write_grid(newfile, originalDict)
     return 1
 
-def write_dictionary_tgm(filename, dictionary): #write dictionary in tgm format
+#write dictionary in tgm format
+def write_dictionary_tgm(filename, dictionary): 
     with open(filename, "w") as output:
         output.write("//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE \n")
         for key, list_ in dictionary.items():
@@ -167,32 +172,16 @@ def write_dictionary_tgm(filename, dictionary): #write dictionary in tgm format
                         
             output.write(")\n")
 
-def write_dictionary(filename, dictionary):
-    with open(filename, "w") as output:
-        for key, value in dictionary.items():
-            output.write("\"{}\" = ({})\n".format(key, ",".join(value)))
-
-def write_grid_coord(filename, grid):
+#thanks to YotaXP for finding out about this one
+def write_grid_coord_small(filename, grid):
     with open(filename, "a") as output:
         output.write("\n")
-        for y in range(1, maxy):
-            for x in range(1, maxx):
-                output.write("({},{},1) = {{\"{}\"}}\n".format(x, y, grid[x,y]))
 
-def write_grid(filename, grid):
-    with open(filename, "a") as output:
-        output.write("\n")
-        output.write("(1,1,1) = {\"\n")
-
-        for y in range(1, maxy):
-            for x in range(1, maxx):
-                try:
-                    output.write(grid[x,y])
-                except KeyError:
-                    print("Key error: ({},{})".format(x,y))
-            output.write("\n")
-        output.write("\"}")
-        output.write("\n")
+        for x in range(1, maxx+1):
+            output.write("({},{},1) = {{\"\n".format(x, 1, 1))
+            for y in range(1, maxy):
+                output.write("{}\n".format(grid[x,y]))
+            output.write("{}\n\"}}\n".format(grid[x,maxy-1]))
 
 def search_data(dictionary, data):
     found_data = None
@@ -231,6 +220,7 @@ def get_next_key(key):
             carry -= 1
     return new_key[::-1]
 
+#still does not support more than one z level per file, but should parse any format
 def parse_map(map_file):
     with open(map_file, "r") as map_input:
         characters = map_input.read()
@@ -252,6 +242,7 @@ def parse_map(map_file):
         in_map_block = False
         in_coord_block = False
         in_map_string = False
+        iter_x = 0
         adjust_y = True
 
         curr_num = ""
@@ -365,6 +356,7 @@ def parse_map(map_file):
                             curr_x = string_to_num(curr_num)
                             if curr_x > maxx:
                                 maxx = curr_x
+                            iter_x = 0
                             curr_num = ""
                             reading_coord = "y"
                         elif reading_coord == "y":
@@ -391,6 +383,8 @@ def parse_map(map_file):
 
                     if char == "\"":
                         in_map_string = False
+                        adjust_y = True
+                        curr_y -= 1
                         continue
 
                     if char == "\n":
@@ -400,14 +394,20 @@ def parse_map(map_file):
                             curr_y += 1
                         if curr_x > maxx:
                             maxx = curr_x
-                        curr_x = 1
+                        if iter_x > 1:
+                            curr_x = 1
+                        iter_x = 0
                         continue
 
+                    
                     curr_key = curr_key + char
                     if len(curr_key) == key_length:
+                        iter_x += 1
+                        if iter_x > 1:
+                            curr_x += 1
+
                         grid[curr_x, curr_y] = curr_key
                         curr_key = ""
-                        curr_x += 1
                     continue
                 
 
@@ -444,6 +444,44 @@ def key_difference(keyA, keyB):
         result += ( (ord(Byek[i].lower()) + B) - (ord(Ayek[i].lower()) + A) ) * base
     return result
 
+def string_to_num(s):
+    try:
+        return int(s)
+    except ValueError:
+        return -1
+
+#unused functions
+
+#writes a tile data dictionary the same way Dreammaker does
+def write_dictionary(filename, dictionary):
+    with open(filename, "w") as output:
+        for key, value in dictionary.items():
+            output.write("\"{}\" = ({})\n".format(key, ",".join(value)))
+
+#writes a map grid the same way Dreammaker does
+def write_grid(filename, grid):
+    with open(filename, "a") as output:
+        output.write("\n")
+        output.write("(1,1,1) = {\"\n")
+
+        for y in range(1, maxy+1):
+            for x in range(1, maxx+1):
+                try:
+                    output.write(grid[x,y])
+                except KeyError:
+                    print("Key error: ({},{})".format(x,y))
+            output.write("\n")
+        output.write("\"}")
+        output.write("\n")
+
+#inflated map grid
+def write_grid_coord(filename, grid):
+    with open(filename, "a") as output:
+        output.write("\n")
+        for y in range(1, maxy+1):
+            for x in range(1, maxx+1):
+                output.write("({},{},1) = {{\"{}\"}}\n".format(x, y, grid[x,y]))
+
 def key_compare(keyA, keyB): #thanks byond for not respecting ascii
     pos = 0
     for a in keyA:
@@ -470,9 +508,3 @@ def key_compare(keyA, keyB): #thanks byond for not respecting ascii
                     return 1
                 break
     return 0
-
-def string_to_num(s):
-    try:
-        return int(s)
-    except ValueError:
-        return -1
