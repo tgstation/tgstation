@@ -129,9 +129,9 @@ Sorry Giacom. Please don't be mad :(
 	if(!(M.status_flags & CANPUSH))
 		return 1
 	//anti-riot equipment is also anti-push
-	if(M.r_hand && (prob(M.r_hand.block_chance * 2)))
+	if(M.r_hand && (prob(M.r_hand.block_chance * 2)) && !istype(M.r_hand, /obj/item/clothing))
 		return 1
-	if(M.l_hand && (prob(M.l_hand.block_chance * 2)))
+	if(M.l_hand && (prob(M.l_hand.block_chance * 2)) && !istype(M.l_hand, /obj/item/clothing))
 		return 1
 
 //Called when we bump onto an obj
