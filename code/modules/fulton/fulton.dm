@@ -73,11 +73,14 @@ var/list/total_extraction_beacons = list()
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
 			holder_obj.appearance = A.appearance
 			A.loc = holder_obj
-			balloon = image(icon,"extraction_balloon")
+			balloon = image('icons/obj/fulton_balloon.dmi',"fulton_expand")
 			balloon.pixel_y = 10
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.overlays += balloon
 			playsound(holder_obj.loc, 'sound/items/fulext_deploy.wav', 50, 1, -3)
+			sleep(4)
+			balloon = null
+			balloon = image('icons/obj/fulton_balloon.dmi', "fulton_balloon")
 			animate(holder_obj, pixel_z = 10, time = 20)
 			sleep(20)
 			animate(holder_obj, pixel_z = 15, time = 10)
@@ -107,6 +110,9 @@ var/list/total_extraction_beacons = list()
 			sleep(10)
 			animate(holder_obj, pixel_z = 10, time = 10)
 			sleep(10)
+			balloon = null
+			balloon = image('icons/obj/fulton_balloon.dmi', "fulton_retract")
+			sleep(4)
 			holder_obj.overlays -= balloon
 			A.anchored = 0 // An item has to be unanchored to be extracted in the first place.
 			A.density = initial(A.density)
