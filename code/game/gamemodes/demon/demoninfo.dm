@@ -165,6 +165,13 @@ var/list/allDemons = list()
 			return "Presenting the labors of a harvest will disrupt the demon."
 		if(BANE_TOOLBOX)
 			return "That which holds the means of creation also holds the means of the demon's undoing."
+		if(BANE_DIETYNAME)
+			return "He will recoil at the sound of a diety's name."
+		if(BANE_GOATBLOOD)
+			return "The blood from a goat will surpress his powers."
+		if(BANE_WOOD)
+			return "Wooden weapons will strike him true."
+
 
 /datum/demoninfo/proc/add_soul(var/datum/mind/soul)
 	if(soulsOwned.Find(soul))
@@ -211,19 +218,33 @@ var/list/allDemons = list()
 /datum/demoninfo/proc/remove_true_demon()
 /datum/demoninfo/proc/set_basic()
 /datum/demoninfo/proc/set_blood_lizard()
-/datum/demoninfo/proc/set_true_demon()
-
-
-/datum/demoninfo/proc/set_true_demon()  //TODO LORDPIDEY: Finish these procs
-	user << "<span class='warning'>You feel as though your form is about to ascend."
-	sleep(50)
+	user << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard."
+	H.set_species("lizard", icon_update=0)
 	H.underwear = "Nude"
 	H.undershirt = "Nude"
 	H.socks = "Nude"
-	H.faction |= "hell"
+	H.dna.features["mcolor"] = "511" //A deep red
+	for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
+		owner.remove_spell(S)
 
-/*
+
+
+/datum/demoninfo/proc/set_true_demon()  //TODO LORDPIDEY: Finish these procs
+	user << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a true demon."
+	sleep(50)
+	var/mob/A = new /mob/living/simple_animal/ascendant_shadowling/arch_demon(H.loc)
+	A.faction |= "hell"
+	owner.transfer_to(A)
+	for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
+		owner.remove_spell(S)
+	//TODO LORDPIDEY: add appropriate spells here.
+	H.loc = A
+
+
+
+
 /datum/demoninfo/proc/set_arch_demon()
+/*
 	var/mob/living/H = user
 	user << "<span class='warning'>You feel as though your form is about to ascend."
 	sleep(50)
@@ -231,7 +252,7 @@ var/list/allDemons = list()
 		"<span class='warning'>Your flesh begins creating a shield around yourself.</span>")
 	sleep(100)
 	H.visible_message("<span class='warning'>The horns on [H]'s head slowly grow and elongate.</span>", \
-		"<span class='warning'>Your body continues to mutate. Your telepathic abilities grow.</span>") //y-your horns are so big, senpai...!~
+		"<span class='warning'>Your body continues to mutate. Your telepathic abilities grow.</span>")
 	sleep(90)
 	H.visible_message("<span class='warning'>[H]'s body begins to violently stretch and contort.</span>", \
 		"<span class='warning'>You begin to rend apart the final barriers to ultimate power.</span>")
@@ -259,6 +280,3 @@ var/list/allDemons = list()
 	ticker.mode.demon_ascended = 1
 	qdel(H)
 	*/
-
-
-

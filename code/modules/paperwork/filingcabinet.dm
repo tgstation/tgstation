@@ -175,6 +175,7 @@ var/list/employmentCabinets = list()
 
 /obj/structure/filingcabinet/employment
 	var/cooldown = 0
+	icon_state = "employmentcabinet"
 
 /obj/structure/filingcabinet/employment/New()
 	employmentCabinets += src
@@ -207,3 +208,16 @@ var/list/employmentCabinets = list()
 		cooldown = 0
 	else
 		user << "<span class='warning'>The [src] is jammed, give it a few seconds.</span>"
+
+
+
+
+/obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
+	if(istype(P, /obj/item/weapon/wrench))
+		user << "<span class='notice'>You begin to [anchored ? "wrench" : "unwrench"] [src].</span>"
+		if (do_after(user,300,user))
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			anchored = !anchored
+			user << "<span class='notice'>You successfully [anchored ? "wrench" : "unwrench"] [src].</span>"
+	else
+		return ..()
