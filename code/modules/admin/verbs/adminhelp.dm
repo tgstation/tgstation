@@ -140,7 +140,7 @@
 		if(!adm["afk"] && !adm["stealth"] && !adm["noflags"])
 			send2irc(source, "[msg] - No admins online")
 		else
-			send2irc(source, "[msg] - All admins AFK ([adm["afk"]]/[adm["total"]]), stealthminned ([adm["stealth"]]/[adm["total"]]), or lack [requiredflags] ([adm["noflags"]]/[adm["total"]])")
+			send2irc(source, "[msg] - All admins AFK ([adm["afk"]]/[adm["total"]]), stealthminned ([adm["stealth"]]/[adm["total"]]), or lack[rights2text(requiredflags, " ")] ([adm["noflags"]]/[adm["total"]])")
 
 /proc/send2irc(msg,msg2)
 	if(config.useircbot)
