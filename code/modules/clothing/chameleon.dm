@@ -29,7 +29,7 @@
 			picked_item = V
 	if(!picked_item)
 		return
-	if(iscarbon(user))
+	if(isliving(user))
 		var/mob/living/C = user
 		if(C.stat != CONSCIOUS)
 			return
@@ -40,6 +40,10 @@
 		if(istype(target, /obj/item))
 			var/obj/item/I = target
 			I.item_state = initial(picked_item.item_state)
+			if(istype(I, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
+				var/obj/item/clothing/CL = I
+				var/obj/item/clothing/PCL = picked_item
+				CL.flags_cover = initial(PCL.flags_cover)
 		target.icon = initial(picked_item.icon)
 
 		C.regenerate_icons()	//so our overlays update.
