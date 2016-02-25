@@ -127,7 +127,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/weapon/c4 = 7,
 				/obj/item/weapon/grenade/clusterbuster/smoke = 15,
 				/obj/item/clothing/under/chameleon = 13,
-				/obj/item/clothing/shoes/sneakers/syndigaloshes = 10,
+				/obj/item/clothing/shoes/chameleon = 10,
 				/obj/item/borg/upgrade/ddrill = 3,
 				/obj/item/borg/upgrade/soh = 3)
 
@@ -167,7 +167,6 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/weapon/twohanded/dualsaber = 15,
 				/obj/item/organ/internal/heart/demon = 7,
 				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted = 16,
-				/obj/item/weapon/dice/d20/fate = 4,
 				/obj/item/weapon/gun/magic/wand/resurrection/inert = 15,
 				/obj/item/weapon/gun/magic/wand/resurrection = 10,
 				/obj/item/device/radio/uplink/old = 2,

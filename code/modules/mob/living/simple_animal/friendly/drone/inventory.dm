@@ -115,3 +115,9 @@
 
 /mob/living/simple_animal/drone/stripPanelEquip(obj/item/what, mob/who, where)
 	..(what, who, where, 1)
+
+/mob/living/simple_animal/drone/getBackSlot()
+	return slot_drone_storage
+
+/mob/living/simple_animal/drone/getBeltSlot()
+	return slot_drone_storage

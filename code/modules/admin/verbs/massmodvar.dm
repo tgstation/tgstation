@@ -412,12 +412,12 @@
 						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
-				else if(istype(O.type, /obj))
+				else if(istype(O, /obj))
 					for(var/obj/A in world)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
-				else if(istype(O.type, /turf))
+				else if(istype(O, /turf))
 					for(var/turf/A in world)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]

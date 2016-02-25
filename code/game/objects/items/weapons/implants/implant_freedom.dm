@@ -8,14 +8,13 @@
 
 
 /obj/item/weapon/implant/freedom/activate()
-	if(uses == 0)
-		return 0
-	if(uses != -1)
-		uses--
+	uses--
 	imp_in << "You feel a faint click."
 	if(iscarbon(imp_in))
 		var/mob/living/carbon/C_imp_in = imp_in
 		C_imp_in.uncuff()
+	if(!uses)
+		qdel(src)
 
 
 /obj/item/weapon/implant/freedom/get_data()

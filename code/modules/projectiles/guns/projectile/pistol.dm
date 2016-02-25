@@ -8,7 +8,7 @@
 	can_suppress = 1
 	burst_size = 1
 	fire_delay = 0
-	action_button_name = null
+	actions_types = list()
 
 /obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
 	..()
@@ -55,4 +55,4 @@
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 2
-	action_button_name = "Toggle Firemode"
+	actions_types = list(/datum/action/item_action/toggle_firemode)

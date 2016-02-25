@@ -555,13 +555,6 @@ var/const/GALOSHES_DONT_HELP = 4
 	abilities.Add(A)
 	A.on_gain(src)
 	if(A.has_action)
-		if(!A.action)
-			A.action = new/datum/action/spell_action/alien
-			A.action.target = A
-			A.action.name = A.name
-			A.action.button_icon = A.action_icon
-			A.action.button_icon_state = A.action_icon_state
-			A.action.background_icon_state = A.action_background_icon_state
 		A.action.Grant(src)
 	sortInsert(abilities, /proc/cmp_abilities_cost, 0)
 
@@ -789,6 +782,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
 	else
 		clear_alert("handcuffed")
+	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 
