@@ -81,12 +81,14 @@
 	can_butcher = 0
 	attack_sound = 'sound/weapons/hivehand_empty.ogg'
 
+	var/emp_damage = 0
+
 /mob/living/simple_animal/hostile/monster/cyber_horror/Life(var/mob/living/simple_animal/hostile/monster/cyber_horror/M)
 	..()
 
-	if(prob(90) && health<maxHealth)
-		health=health+2                                                                        //Created by misuse of medical nanobots, so it heals
-		if(prob(25))
+	if(prob(90) && health+emp_damage<maxHealth)
+		health+=2                                                                        //Created by misuse of medical nanobots, so it heals
+		if(prob(15))
 			visible_message("<span class='warning'>[src]'s wounds heal slightly!</span>")
 
 /mob/living/simple_animal/hostile/monster/cyber_horror/emp_act(severity)
@@ -96,9 +98,13 @@
 	switch (severity)
 		if (1)
 			adjustBruteLoss(40)
+			emp_damage+=40
+			emote("lets out a horrible digital scream!")
 
 		if (2)
 			adjustBruteLoss(20)
+			emp_damage+=20
+			emote("lets out a horrible digital scream!")
 
 /mob/living/simple_animal/hostile/monster/cyber_horror/Die()
 	..()
