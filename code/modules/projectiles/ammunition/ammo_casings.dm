@@ -316,3 +316,35 @@
 	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
+
+//Crossbow bolts
+
+/obj/item/ammo_casing/caseless/crossbowbolt/apfsdsbolt
+	name = "crossbow bolt with fins"
+	desc = "Fins are dispersed after being shot"
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "apfsds"
+	caliber = "crossbowbolt"
+	projectile_type = /obj/item/projectile/bullet/apfsds
+
+/obj/item/ammo_casing/caseless/crossbowbolt
+	name = "crossbow bolt"
+	desc = "A deadly, plain, crossbow bolt"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "crossbowbolt"
+	caliber = "crossbowbolt"
+	projectile_type = /obj/item/projectile/bullet/reusable/crossbowbolt
+
+/obj/item/ammo_casing/caseless/crossbowbolt/broadbolt
+	name = "crossbow bolt"
+	desc = "A crossbow bolt with a wider than normal tip"
+	icon_state = "broadcrossbowbolt"
+	caliber = "crossbowbolt"
+	projectile_type = /obj/item/projectile/bullet/reusable/crossbowbolt/broadbolt
+
+/obj/item/ammo_casing/caseless/crossbowbolt/expandingbolt
+	name = "crossbow bolt"
+	desc = "A bolt that expands upon puncturing"
+	icon_state = "expandingcrossbowbolt"
+	caliber = "crossbowbolt"
+	projectile_type = /obj/item/projectile/bullet/reusable/crossbowbolt/expandingbolt

@@ -158,6 +158,12 @@
 /obj/item/ammo_box/magazine/internal/shot/toy/crossbow
 	max_ammo = 5
 
+//crossbow
+/obj/item/ammo_box/magazine/internal/shot/crossbow
+	ammo_type = /obj/item/ammo_casing/caseless/crossbowbolt
+	caliber = "crossbowbolt"
+	max_ammo = 1
+
 ///////////EXTERNAL MAGAZINES////////////////
 
 /obj/item/ammo_box/magazine/m10mm

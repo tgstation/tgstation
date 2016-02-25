@@ -352,3 +352,15 @@
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = 5
+
+//crossbow//
+/obj/item/weapon/gun/projectile/shotgun/crossbow
+	name = "crossbow"
+	desc = "placeholder description crossbow"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "foamcrossbow"
+	item_state = "crossbow"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/crossbow
+	fire_sound = 'sound/items/syringeproj.ogg'
+	slot_flags = SLOT_BELT
+	w_class = 2
