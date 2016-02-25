@@ -67,9 +67,9 @@
 	icon_state = "cyber_horror"
 	icon_dead = "cyber_horror_dead"
 	icon_gib = "cyber_horror_dead"
-	speak = list("H@!#$$P M@!$#", "GHAA!@@#", "KR@!!N")
+	speak = list("H@!#$$P M@!$#", "GHAA!@@#", "KR@!!N", "K!@@##L!@@ %!@#E", "G@#!$ H@!#%, H!@%%@ @!E")
 	speak_emote = list("emits", "groans")
-	speak_chance = 15
+	speak_chance = 30
 	turns_per_move = 5
 	see_in_dark = 6
 	maxHealth = 70
@@ -84,9 +84,10 @@
 /mob/living/simple_animal/hostile/monster/cyber_horror/Life(var/mob/living/simple_animal/hostile/monster/cyber_horror/M)
 	..()
 
-	if(health<maxHealth)
+	if(prob(90) && health<maxHealth)
 		health=health+2                                                                        //Created by misuse of medical nanobots, so it heals
-		visible_message("<span class='warning'>[src]'s wounds heal slightly!</span>")
+		if(prob(25))
+			visible_message("<span class='warning'>[src]'s wounds heal slightly!</span>")
 
 /mob/living/simple_animal/hostile/monster/cyber_horror/emp_act(severity)
 	if(flags & INVULNERABLE)
@@ -102,10 +103,6 @@
 /mob/living/simple_animal/hostile/monster/cyber_horror/Die()
 	..()
 	visible_message("<b>[src]</b> blows apart!")
-	var/obj/effect/decal/cleanable/blood/gibs/robot/R = getFromPool(/obj/effect/decal/cleanable/blood/gibs/robot, get_turf(src))
-	R.New(R.loc)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
-	qdel (src)
+	new /obj/effect/gibspawner/robot(src.loc)
+	qdel(src)
 	return
