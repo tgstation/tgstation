@@ -53,7 +53,7 @@
 	antag_flag = ROLE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
-	required_players = 20
+	required_players = 35
 	required_enemies = 4
 	recommended_enemies = 4
 	enemy_minimum_age = 14
@@ -83,7 +83,7 @@
 		restricted_jobs += "Assistant"
 
 	//cult scaling goes here
-	recommended_enemies = 3 + round(num_players()/20)
+	recommended_enemies = 3 + round(num_players()/30)
 
 
 	for(var/cultists_number = 1 to recommended_enemies)
@@ -142,8 +142,12 @@
 		if (mob.mind.assigned_role == "Clown")
 			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 			mob.dna.remove_mutation(CLOWNMUT)
+			
+	. += cult_give_item(/obj/item/weapon/tome, mob)
+	. += cult_give_item(/obj/item/weapon/paper/talisman/supply, mob)
+	mob << "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>"
 
-	var/obj/item/weapon/paper/talisman/supply/T = new(mob)
+/datum/game_mode/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
 	var/list/slots = list(
 		"backpack" = slot_in_backpack,
 		"left pocket" = slot_l_store,
@@ -151,12 +155,15 @@
 		"left hand" = slot_l_hand,
 		"right hand" = slot_r_hand,
 	)
-
+	
+	var/T = new item_path(mob)
+	var/item_name = initial(item_path.name)
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	if(!where)
-		mob << "<span class='userdanger'>Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately.</span>"
+		mob << "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>"
+		return 0
 	else
-		mob << "<span class='danger'>You have a talisman in your [where], one that will help you start the cult on this station. Use it well, and remember - you are not the only one.</span>"
+		mob << "<span class='danger'>You have a [item_name] in your [where]."
 		mob.update_icons()
 		if(where == "backpack")
 			var/obj/item/weapon/storage/B = mob.back
