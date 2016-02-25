@@ -158,15 +158,19 @@ effective or pretty fucking useless.
 	var/max_charge = 300
 	var/on = 0
 	var/old_alpha = 0
-	action_button_name = "Toggle Cloaker"
+	actions_types = list(/datum/action/item_action/toggle)
 
-/obj/item/device/shadowcloak/ui_action_click()
-	if(usr.get_item_by_slot(slot_belt) == src)
+/obj/item/device/shadowcloak/ui_action_click(mob/user)
+	if(user.get_item_by_slot(slot_belt) == src)
 		if(!on)
 			Activate(usr)
 		else
 			Deactivate()
 	return
+
+/obj/item/device/shadowcloak/item_action_slot_check(slot, mob/user)
+	if(slot == slot_belt)
+		return 1
 
 /obj/item/device/shadowcloak/proc/Activate(mob/living/carbon/human/user)
 	if(!user)
@@ -186,6 +190,7 @@ effective or pretty fucking useless.
 	user = null
 
 /obj/item/device/shadowcloak/dropped(mob/user)
+	..()
 	if(user && user.get_item_by_slot(slot_belt) != src)
 		Deactivate()
 

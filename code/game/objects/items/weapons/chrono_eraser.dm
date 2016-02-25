@@ -9,7 +9,7 @@
 	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
-	action_button_name = "Equip/Unequip TED Gun"
+	actions_types = list(/datum/action/item_action/equip_unequip_TED_Gun)
 	var/obj/item/weapon/gun/energy/chrono_gun/PA = null
 	var/list/erased_minds = list() //a collection of minds from the dead
 
@@ -17,6 +17,7 @@
 	erased_minds += M
 
 /obj/item/weapon/chrono_eraser/dropped()
+	..()
 	if(PA)
 		qdel(PA)
 
@@ -24,16 +25,19 @@
 	dropped()
 	return ..()
 
-/obj/item/weapon/chrono_eraser/ui_action_click()
-	var/mob/living/carbon/user = src.loc
-	if(iscarbon(user) && (user.back == src))
-		if(PA)
-			qdel(PA)
-		else
-			PA = new(src)
-			user.put_in_hands(PA)
+/obj/item/weapon/chrono_eraser/ui_action_click(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.back == src)
+			if(PA)
+				qdel(PA)
+			else
+				PA = new(src)
+				user.put_in_hands(PA)
 
-
+/obj/item/weapon/chrono_eraser/item_action_slot_check(slot, mob/user)
+	if(slot == slot_back)
+		return 1
 
 /obj/item/weapon/gun/energy/chrono_gun
 	name = "T.E.D. Projection Apparatus"
@@ -59,6 +63,7 @@
 		qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/dropped()
+	..()
 	qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/update_icon()

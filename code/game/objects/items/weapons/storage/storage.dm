@@ -374,10 +374,6 @@
 	handle_item_insertion(W, 0 , user)
 	return 1
 
-
-/obj/item/weapon/storage/dropped(mob/user)
-	return
-
 /obj/item/weapon/storage/attack_hand(mob/user)
 	playsound(loc, "rustle", 50, 1, -5)
 

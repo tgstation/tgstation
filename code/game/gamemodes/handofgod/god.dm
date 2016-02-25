@@ -22,7 +22,7 @@
 	var/list/conduits = list()
 	var/prophets_sacrificed_in_name = 0
 	var/image/ghostimage = null //For observer with darkness off visiblity
-
+	var/list/prophet_hats = list()
 
 /mob/camera/god/New()
 	..()
@@ -51,6 +51,10 @@
 	for(var/datum/mind/F in followers)
 		if(F.current)
 			F.current << "<span class='danger'>Your god is DEAD!</span>"
+	for(var/X in prophet_hats)
+		var/obj/item/clothing/head/helmet/plate/crusader/prophet/P = X
+		if(P.speak2god && P.speak2god.god == src)
+			qdel(P.speak2god)
 	ghost_darkness_images -= ghostimage
 	updateallghostimages()
 	return ..()

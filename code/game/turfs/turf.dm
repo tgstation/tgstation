@@ -346,6 +346,9 @@
 /turf/indestructible/abductor
 	icon_state = "alien1"
 
+/turf/indestructible/opshuttle
+	icon_state = "wall3"
+
 /turf/indestructible/fakeglass
 	name = "window"
 	icon_state = "fakewindows"

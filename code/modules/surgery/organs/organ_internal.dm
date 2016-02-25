@@ -6,7 +6,7 @@
 	var/zone = "chest"
 	var/slot
 	var/vital = 0
-	var/organ_action_name = null
+
 
 /obj/item/organ/internal/proc/Insert(mob/living/carbon/M, special = 0)
 	if(!iscarbon(M) || owner == M)
@@ -19,8 +19,9 @@
 	owner = M
 	M.internal_organs |= src
 	loc = null
-	if(organ_action_name)
-		action_button_name = organ_action_name
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.Grant(M)
 
 
 /obj/item/organ/internal/proc/Remove(mob/living/carbon/M, special = 0)
@@ -29,9 +30,10 @@
 		M.internal_organs -= src
 		if(vital && !special)
 			M.death()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.Remove(M)
 
-	if(organ_action_name)
-		action_button_name = null
 
 /obj/item/organ/internal/proc/on_find(mob/living/finder)
 	return
@@ -76,6 +78,9 @@
 	else
 		..()
 
+/obj/item/organ/internal/item_action_slot_check(slot,mob/user)
+	return //so we don't grant the organ's action to mobs who pick up the organ.
+
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
 
@@ -89,12 +94,13 @@
 	origin_tech = "biotech=3"
 	vital = 1
 	var/beating = 1
+	var/icon_base = "heart"
 
 /obj/item/organ/internal/heart/update_icon()
 	if(beating)
-		icon_state = "heart-on"
+		icon_state = "[icon_base]-on"
 	else
-		icon_state = "heart-off"
+		icon_state = "[icon_base]-off"
 
 /obj/item/organ/internal/heart/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -111,6 +117,75 @@
 	var/obj/S = ..()
 	S.icon_state = "heart-off"
 	return S
+
+
+/obj/item/organ/internal/heart/cursed
+	name = "cursed heart"
+	desc = "it needs to be pumped..."
+	icon_state = "cursedheart-off"
+	icon_base = "cursedheart"
+	origin_tech = "biotech=5"
+	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
+	var/last_pump = 0
+	var/pump_delay = 30 //you can pump 1 second early, for lag, but no more (otherwise you could spam heal)
+	var/blood_loss = 100 //600 blood is human default, so 5 failures (below 122 blood is where humans die because reasons?)
+
+	//How much to heal per pump, negative numbers would HURT the player
+	var/heal_brute = 0
+	var/heal_burn = 0
+	var/heal_oxy = 0
+
+
+/obj/item/organ/internal/heart/cursed/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
+	if(H == user && istype(H))
+		playsound(user,'sound/effects/singlebeat.ogg',40,1)
+		user.drop_item()
+		Insert(user)
+	else
+		return ..()
+
+/obj/item/organ/internal/heart/cursed/on_life()
+	if(world.time > (last_pump + pump_delay))
+		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
+			var/mob/living/carbon/human/H = owner
+			H.vessel.remove_reagent("blood",blood_loss)
+			H << "<span class = 'userdanger'>You have to keep pumping your blood!</span>"
+			if(H.client)
+				H.client.color = "red" //bloody screen so real
+		else
+			last_pump = world.time //lets be extra fair *sigh*
+
+/obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/M, special = 0)
+	..()
+	if(owner)
+		owner << "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>"
+
+/datum/action/item_action/organ_action/cursed_heart
+	name = "pump your blood"
+
+//You are now brea- pumping blood manually
+/datum/action/item_action/organ_action/cursed_heart/Trigger()
+	. = ..()
+	if(. && istype(target,/obj/item/organ/internal/heart/cursed))
+		var/obj/item/organ/internal/heart/cursed/cursed_heart = target
+
+		if(world.time < (cursed_heart.last_pump + (cursed_heart.pump_delay-10))) //no spam
+			owner << "<span class='userdanger'>Too soon!</span>"
+			return
+
+		cursed_heart.last_pump = world.time
+		playsound(owner,'sound/effects/singlebeat.ogg',40,1)
+		owner << "<span class = 'notice'>Your heart beats.</span>"
+
+		var/mob/living/carbon/human/H = owner
+		if(istype(H))
+			H.vessel.add_reagent("blood",(cursed_heart.blood_loss*0.5))//gain half the blood back from a failure
+			if(owner.client)
+				owner.client.color = ""
+
+			H.adjustBruteLoss(-cursed_heart.heal_brute)
+			H.adjustFireLoss(-cursed_heart.heal_burn)
+			H.adjustOxyLoss(-cursed_heart.heal_oxy)
 
 
 

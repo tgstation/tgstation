@@ -147,7 +147,12 @@
 	else
 		speak2god = new()
 	speak2god.god = G
+	G.prophet_hats += src
 
+/obj/item/clothing/head/helmet/plate/crusader/prophet/Destroy()
+	if(speak2god)
+		qdel(speak2god)
+	return ..()
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/equipped(mob/user, slot)
 	if(slot == slot_head)

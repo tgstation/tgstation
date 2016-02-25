@@ -6,7 +6,7 @@
 	icon_state = "clown_prototype_off"
 	var/on = 0
 	var/datum/material_container/bananium
-	action_button_name = "Toggle Shoes"
+	actions_types = list(/datum/action/item_action/toggle)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/New()
 	..()
@@ -58,13 +58,13 @@
 	var/ban_amt = bananium.amount(MAT_BANANIUM)
 	user << "<span class='notice'>The shoes are [on ? "enabled" : "disabled"]. There is [ban_amt ? ban_amt : "no"] bananium left.</span>"
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click()
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
 	if(bananium.amount(MAT_BANANIUM))
 		on = !on
 		update_icon()
-		loc << "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>"
+		user << "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>"
 	else
-		loc << "<span class='warning'>You need bananium to turn the prototype shoes on!</span>"
+		user << "<span class='warning'>You need bananium to turn the prototype shoes on!</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/update_icon()
 	if(on)
@@ -72,3 +72,6 @@
 	else
 		icon_state = "clown_prototype_off"
 	usr.update_inv_shoes()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
