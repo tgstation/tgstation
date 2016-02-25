@@ -27,6 +27,7 @@
 		var/obj/item/I = V
 		if(initial(I.name) == picked_name)
 			picked_item = V
+			break
 	if(!picked_item)
 		return
 	if(isliving(user))
