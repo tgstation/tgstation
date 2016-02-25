@@ -75,7 +75,7 @@
 /obj/item/ammo_casing/c45nostamina
 	desc = "A .45 bullet casing."
 	caliber = ".45"
-	projectile_type = /obj/item/projectile/bullet/weakbullet3
+	projectile_type = /obj/item/projectile/bullet/midbullet3
 
 /obj/item/ammo_casing/n762
 	desc = "A 7.62x38mmR bullet casing."
