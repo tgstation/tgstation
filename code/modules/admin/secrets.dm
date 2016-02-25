@@ -528,6 +528,7 @@
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
+
 		if("ctfbutton")
 			if(!check_rights(R_ADMIN))
 				return
@@ -536,6 +537,7 @@
 				ctf_enabled = !CTF.ctf_enabled
 				CTF.ctf_enabled = !CTF.ctf_enabled
 			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
+
 	if(E)
 		E.processing = 0
 		if(E.announceWhen>0)
