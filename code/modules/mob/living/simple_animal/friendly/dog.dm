@@ -530,10 +530,7 @@
 	icon_state = "void_puppy"
 	icon_living = "void_puppy"
 	icon_dead = "void_puppy_dead"
-	density = 0
 	nofur = 1
-	pass_flags = PASSMOB
-	mob_size = MOB_SIZE_SMALL
 
 
 //LISA! SQUEEEEEEEEE~
