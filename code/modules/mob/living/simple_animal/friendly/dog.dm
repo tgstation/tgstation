@@ -91,6 +91,7 @@
 			return
 		if (nofur)
 			user << "<span class='warning'> You can't shave this corgi, it doesn't have a fur coat!</span>"
+			return
 		user.visible_message("[user] starts to shave [src] using \the [O].", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50, target = src))
 			user.visible_message("[user] shaves [src]'s hair using \the [O].")
