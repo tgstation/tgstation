@@ -24,11 +24,13 @@
 	gender = MALE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = /mob/living/simple_animal/pet/dog/corgi/puppy
+	rarechildtype = /mob/living/simple_animal/pet/dog/corgi/puppy/void
 	species = /mob/living/simple_animal/pet/dog
 	var/shaved = 0
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
+	var/nofur = 0 		//Corgis that have risen past the material plane of existence.
 	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/dog/pug
@@ -87,6 +89,8 @@
 		if (shaved)
 			user << "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>"
 			return
+		if (nofur)
+			user << "<span class='warning'> You can't shave this corgi, it doesn't have a fur coat!</span>"
 		user.visible_message("[user] starts to shave [src] using \the [O].", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50, target = src))
 			user.visible_message("[user] shaves [src]'s hair using \the [O].")
@@ -516,6 +520,19 @@
 		usr << "<span class='warning'>You can't fit this on [src]!</span>"
 		return
 	..()
+
+
+/mob/living/simple_animal/pet/dog/corgi/puppy/void		//Tribute to the corgis born in nullspace
+	name = "\improper void puppy"
+	real_name = "voidy"
+	desc = "A corgi puppy that has been infused with deep space energy."
+	icon_state = "void_puppy"
+	icon_living = "void_puppy"
+	icon_dead = "void_puppy_dead"
+	density = 0
+	nofur = 1
+	pass_flags = PASSMOB
+	mob_size = MOB_SIZE_SMALL
 
 
 //LISA! SQUEEEEEEEEE~

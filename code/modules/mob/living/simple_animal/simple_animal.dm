@@ -55,6 +55,7 @@
 
 	//Hot simple_animal baby making vars
 	var/childtype = null
+	var/rarechildtype = null	//Special children
 	var/scan_ready = 1
 	var/species //Sorry, no spider+corgi buttbabies.
 
@@ -509,7 +510,10 @@
 			alone = 0
 			continue
 	if(alone && partner && children < 3)
-		new childtype(loc)
+		if(prob(5) && rarechildtype)
+			new rarechildtype(loc)
+		else
+			new childtype(loc)
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
 	if(!child_override)
