@@ -15,6 +15,7 @@
 	nick = "pimpin' ride"
 	keytype = /obj/item/key/janicart
 	flags = OPENCONTAINER
+	overrideghostspin = 0
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/weapon/storage/bag/trash/mybag	= null
 

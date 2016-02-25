@@ -9,6 +9,7 @@
 	icon_state = "gokart0"
 	//nick = "TRUE POWER"
 	keytype = /obj/item/key/gokart
+	overrideghostspin = 0
 
 /obj/structure/bed/chair/vehicle/gokart/unlock_atom(var/atom/movable/AM)
 	. = ..()
