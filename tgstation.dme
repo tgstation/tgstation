@@ -614,6 +614,7 @@
 #include "code\game\objects\items\weapons\RPD.dm"
 #include "code\game\objects\items\weapons\RSF.dm"
 #include "code\game\objects\items\weapons\scrolls.dm"
+#include "code\game\objects\items\weapons\sharpener.dm"
 #include "code\game\objects\items\weapons\shields.dm"
 #include "code\game\objects\items\weapons\signs.dm"
 #include "code\game\objects\items\weapons\singularityhammer.dm"
