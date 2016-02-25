@@ -28,14 +28,15 @@
 		H.internal = null
 		H.update_internals_hud_icon(0)
 	else
-		if(!H.wear_mask)
-			H << "<span class='warning'>You need a mask!</span>"
-			return
-		if(H.wear_mask.mask_adjusted)
-			H.wear_mask.adjustmask(H)
-		if(!(H.wear_mask.flags & MASKINTERNALS))
-			H << "<span class='warning'>[H.wear_mask] can't use [src]!</span>"
-			return
+		if(!H.getorganslot("breathing_tube"))
+			if(!H.wear_mask)
+				H << "<span class='warning'>You need a mask!</span>"
+				return
+			if(H.wear_mask.mask_adjusted)
+				H.wear_mask.adjustmask(H)
+			if(!(H.wear_mask.flags & MASKINTERNALS))
+				H << "<span class='warning'>[H.wear_mask] can't use [src]!</span>"
+				return
 
 		if(H.internal)
 			H << "<span class='notice'>You switch your internals to [src].</span>"
