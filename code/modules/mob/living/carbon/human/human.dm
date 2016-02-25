@@ -160,7 +160,7 @@
 		if(!prob(martial_art.deflection_chance))
 			return ..()
 		if(!src.lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-			src.visible_message("<span class='warning'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+			src.visible_message("<span class='danger'>[src] deflects the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 			return 0
 	..()
 
@@ -945,6 +945,11 @@
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
+/mob/living/carbon/human/fully_heal(admin_revive = 0)
+	restore_blood()
+	remove_all_embedded_objects()
+	..()
+
 /mob/living/carbon/human/proc/influenceSin() // TODO:  Finish this.
 	var/datum/objective/sintouched/O
 	switch(rand(1,7))//traditional seven deadly sins... except lust.
@@ -977,11 +982,6 @@
 	for(var/datum/objective/objective in src.mind.objectives)
 		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
-
-/mob/living/carbon/human/fully_heal(admin_revive = 0)
-	restore_blood()
-	remove_all_embedded_objects()
-	..()
 
 /mob/living/check_weakness(obj/item/weapon, mob/living/attacker)
 	if(mind && mind.demoninfo)

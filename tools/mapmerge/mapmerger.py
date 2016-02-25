@@ -28,8 +28,10 @@ def main(map_folder, tgm=0):
 
     if tgm == "1":
         print("\nMaps will be converted to tgm.")
+        tgm = True
     else:
         print("\nMaps will not be converted to tgm.")
+        tgm = False
 
     print("\nMerging these maps:")
     for i in valid_indices:
@@ -42,11 +44,9 @@ def main(map_folder, tgm=0):
         for i in valid_indices:
             path_str = str(list_of_files[i])
             try:
-                if map_helpers.merge_map(path_str, path_str + ".backup") != 1:
+                if map_helpers.merge_map(path_str, path_str + ".backup", tgm) != 1:
                     print("ERROR MERGING: {}".format(list_of_files[i]))
                     continue
-                if tgm == "1":
-                    dmm2tgm.convert_map(path_str)
                 print("MERGED: {}".format(path_str))
             except FileNotFoundError:
                 print("\nERROR: File not found! Make sure you run 'Prepare Maps.bat' before merging.")

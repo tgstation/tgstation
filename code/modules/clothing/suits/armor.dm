@@ -131,7 +131,7 @@
 	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
-	action_button_name = "Toggle Armor"
+	actions_types = list(/datum/action/item_action/toggle)
 	unacidable = 1
 	hit_reaction_chance = 50
 

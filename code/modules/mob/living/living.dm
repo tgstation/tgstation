@@ -142,6 +142,8 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
 		return 1
+	if(!client && (mob_size < MOB_SIZE_SMALL))
+		return
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
