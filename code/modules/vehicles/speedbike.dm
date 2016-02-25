@@ -14,21 +14,19 @@
 	overlay.layer = MOB_LAYER + 0.1
 	overlays += overlay
 
-/obj/effect/particle_effect/speedbike_trail
+/obj/effect/overlay/temp/speedbike_trail
 	name = "speedbike trails"
-	icon_state = ""
-	anchored = 1
+	icon_state = "ion_fade"
+	duration = 20
+	randomdir = 0
 
-/obj/effect/particle_effect/speedbike_trail/New(loc,move_dir)
+/obj/effect/overlay/temp/speedbike_trail/New(loc,move_dir)
 	..()
 	dir = move_dir
-	flick("ion_fade",src)
-	spawn(20)
-		qdel(src)
 
 /obj/vehicle/space/speedbike/Move(newloc,move_dir)
 	if(buckled_mob)
-		PoolOrNew(/obj/effect/particle_effect/speedbike_trail,list(loc,move_dir))
+		PoolOrNew(/obj/effect/overlay/temp/speedbike_trail,list(loc,move_dir))
 	. = ..()
 
 /obj/vehicle/space/speedbike/handle_vehicle_layer()
