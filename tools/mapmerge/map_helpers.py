@@ -136,7 +136,6 @@ def write_dictionary_tgm(filename, dictionary):
             for thing in list_:
                 buffer = ""
                 in_quote_block = False
-                escaping_quote = False
                 in_varedit_block = False
                 for char in thing:
                     
@@ -226,13 +225,12 @@ def parse_map(map_file):
         characters = map_input.read()
 
         in_quote_block = False
-        escaping_quote = False
         in_key_block = False
         in_data_block = False
         in_varedit_block = False
         after_data_block = False
-        escaping_parenthesis = 0
         escaping = False
+        skip_whitespace = False
 
         dictionary = collections.OrderedDict()
         curr_key = ""
@@ -285,10 +283,20 @@ def parse_map(map_file):
 
                             curr_datum = curr_datum + char
                             continue
+
+                        if skip_whitespace and char == " ":
+                            skip_whitespace = False
+                            continue
+                        skip_whitespace = False
                             
                         if char == "\"":
                             curr_datum = curr_datum + char
                             in_quote_block = True
+                            continue
+
+                        if char == ";":
+                            skip_whitespace = True
+                            curr_datum = curr_datum + char
                             continue
 
                         if char == "}":

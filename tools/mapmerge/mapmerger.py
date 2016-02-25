@@ -1,7 +1,6 @@
 import sys
 import os
 import pathlib
-import dmm2tgm
 import map_helpers
 
 #main("../../_maps/")
