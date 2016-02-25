@@ -13,7 +13,7 @@
 "m" = (/turf/indestructible/abductor{icon_state = "alien18"},/area/ruin/unpowered)
 "n" = (/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/turf/indestructible/abductor{icon_state = "alien19"},/area/lavaland/surface/outdoors)
 "o" = (/obj/item/weapon/hemostat/alien,/turf/simulated/floor/plating/abductor{baseturf = /turf/simulated/floor/plating/lava/smooth; nitrogen = 23; oxygen = 16; temperature = 300},/area/ruin/unpowered)
-"p" = (/obj/effect/landmark/corpse/abductor,/turf/simulated/floor/plating/abductor{baseturf = /turf/simulated/floor/plating/lava/smooth; nitrogen = 23; oxygen = 16; temperature = 300},/area/ruin/unpowered)
+"p" = (obj/effect/mob_spawn/human/abductor,/turf/simulated/floor/plating/abductor{baseturf = /turf/simulated/floor/plating/lava/smooth; nitrogen = 23; oxygen = 16; temperature = 300},/area/ruin/unpowered)
 "q" = (/obj/structure/closet/abductor,/turf/simulated/floor/plating/abductor{baseturf = /turf/simulated/floor/plating/lava/smooth; nitrogen = 23; oxygen = 16; temperature = 300},/area/ruin/unpowered)
 "r" = (/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/turf/indestructible/abductor{icon_state = "alien14"},/area/ruin/unpowered)
 "s" = (/obj/structure/table/optable/abductor,/obj/item/weapon/cautery/alien,/turf/simulated/floor/plating/abductor{baseturf = /turf/simulated/floor/plating/lava/smooth; nitrogen = 23; oxygen = 16; temperature = 300},/area/ruin/unpowered)
