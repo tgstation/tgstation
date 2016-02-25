@@ -728,11 +728,12 @@ Glorfs - Gungan lookalikes
 	name = "Glorf"
 	id = "glorf"
 	say_mod = "yammers"
-	mutant_bodyparts = list("ears")
-	default_features = list("mcolor" = "FFF","ears" = "Glorf")
+	mutant_bodyparts = list("glorfears")
+	default_features = list("mcolor" = "FFF", "glorfears" = "Glorf")
 	specflags = list(LIPS,EYECOLOR)
 	sexes = 0
 	roundstart = 1
+
 
 /datum/species/glorf/qualifies_for_rank(rank, list/features)
 	if(rank == "Assistant")
