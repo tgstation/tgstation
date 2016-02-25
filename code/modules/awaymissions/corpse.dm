@@ -1,8 +1,163 @@
-//These are meant for spawning on maps, namely Away Missions.
-
 //If someone can do this in a neater way, be my guest-Kor
 
 //To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
+
+/obj/effect/mob_spawn
+	name = "Unknown"
+	var/mob_type = null
+	var/mob_name = ""
+	var/mob_gender = MALE
+	var/death = TRUE //Kill the mob
+	var/roundstart = TRUE //fires on initialize
+	var/instant = FALSE	//fires on New
+	var/flavour_text = "The mapper forgot to set this!"
+	var/faction = null
+	var/objectives = null
+	var/brute_damage = 0
+	var/oxy_damage = 0
+	density = 1
+
+/obj/effect/mob_spawn/attack_ghost(mob/user)
+	if(ticker.current_state != GAME_STATE_PLAYING)
+		return
+	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
+	if(ghost_role == "No")
+		return
+	log_game("[user.ckey] became [mob_name]")
+	create(ckey = user.ckey)
+
+/obj/effect/mob_spawn/initialize()
+	if(roundstart)
+		create()
+
+/obj/effect/mob_spawn/New()
+	..()
+	if(instant)
+		create()
+
+/obj/effect/mob_spawn/proc/special(mob/M)
+	return
+
+/obj/effect/mob_spawn/proc/equip(mob/M)
+	return
+
+/obj/effect/mob_spawn/proc/create(ckey)
+	var/mob/living/M = new mob_type(loc) //living mobs only
+	M.real_name = mob_name ? mob_name : M.name
+	M.gender = mob_gender
+	if(faction)
+		M.faction = list(faction)
+	if(death)
+		M.death(1) //Kills the new mob
+	
+	M.adjustOxyLoss(oxy_damage)
+	M.adjustBruteLoss(brute_damage)
+	equip(M)
+
+	if(ckey)
+		M.ckey = ckey
+		M << "[flavour_text]"
+		if(objectives)
+			var/datum/mind/MM = M.mind
+			for(var/objective in objectives)
+				MM.objectives += new/datum/objective(objective)
+		special(M)
+	qdel(src)
+
+// Base version - place these on maps/templates.
+/obj/effect/mob_spawn/human
+	mob_type = /mob/living/carbon/human
+	//Human specific stuff.
+	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
+	var/uniform = null //Set this to an object path to have the slot filled with said object on the corpse.
+	var/suit = null
+	var/shoes = null
+	var/gloves = null
+	var/radio = null
+	var/glasses = null
+	var/mask = null
+	var/helmet = null
+	var/belt = null
+	var/pocket1 = null
+	var/pocket2 = null
+	var/back = null
+	var/has_id = 0     //Just set to 1 if you want them to have an ID
+	var/id_job = null // Needs to be in quotes, such as "Clown" or "Chef." This just determines what the ID reads as, not their access
+	var/id_access = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
+	var/id_icon = null //For setting it to be a gold, silver, centcom etc ID
+	var/husk = null
+	var/outfit_type = null // Will start with this if exists then apply specific slots
+	var/list/implants = list()
+
+/obj/effect/mob_spawn/human/equip(mob/living/carbon/human/H)
+	if(mob_species)
+		H.set_species(mob_species)
+	if(husk)
+		H.Drain()
+	if(outfit_type)
+		H.equipOutfit(outfit_type)
+	if(uniform)
+		H.equip_to_slot_or_del(new uniform(H), slot_w_uniform)
+	if(suit)
+		H.equip_to_slot_or_del(new suit(H), slot_wear_suit)
+	if(shoes)
+		H.equip_to_slot_or_del(new shoes(H), slot_shoes)
+	if(gloves)
+		H.equip_to_slot_or_del(new gloves(H), slot_gloves)
+	if(radio)
+		H.equip_to_slot_or_del(new radio(H), slot_ears)
+	if(glasses)
+		H.equip_to_slot_or_del(new glasses(H), slot_glasses)
+	if(mask)
+		H.equip_to_slot_or_del(new mask(H), slot_wear_mask)
+	if(helmet)
+		H.equip_to_slot_or_del(new helmet(H), slot_head)
+	if(belt)
+		H.equip_to_slot_or_del(new belt(H), slot_belt)
+	if(pocket1)
+		H.equip_to_slot_or_del(new pocket1(H), slot_r_store)
+	if(pocket2)
+		H.equip_to_slot_or_del(new pocket2(H), slot_l_store)
+	if(back)
+		H.equip_to_slot_or_del(new back(H), slot_back)
+	if(has_id)
+		var/obj/item/weapon/card/id/W = new(H)
+		if(id_icon)
+			W.icon_state = id_icon
+		if(id_access)
+			var/datum/job/jobdatum
+			for(var/jobtype in typesof(/datum/job))
+				var/datum/job/J = new jobtype
+				if(J.title == id_access)
+					jobdatum = J
+					break
+			if(jobdatum)
+				W.access = jobdatum.get_access()
+			else
+				W.access = list()
+		if(id_job)
+			W.assignment = id_job
+		W.registered_name = H.real_name
+		W.update_label()
+		H.equip_to_slot_or_del(W, slot_wear_id)
+
+	for(var/I in implants)
+		var/obj/item/weapon/implant/X = new I
+		X.implant(H)
+
+//Instant version - use when spawning corpses during runtime
+/obj/effect/mob_spawn/human/corpse
+	roundstart = FALSE
+	instant = TRUE
+
+/obj/effect/mob_spawn/human/alive
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	death = FALSE
+	roundstart = FALSE //you could use these for alive fake humans on roundstart but this is more common scenario
+
+
+//Non-human spawners
 
 /obj/effect/mob_spawn/AICorpse/create() //Creates a corrupted AI
 	var/A = locate(/mob/living/silicon/ai) in loc 
@@ -281,156 +436,4 @@
 
 //NEWCODE
 
-/obj/effect/mob_spawn
-	name = "Unknown"
-	var/mob_type = null
-	var/mob_name = ""
-	var/mob_gender = MALE
-	var/death = TRUE //Kill the mob
-	var/roundstart = TRUE //fires on initialize
-	var/instant = FALSE	//fires on New
-	var/flavour_text = "The mapper forgot to set this!"
-	var/faction = null
-	var/objectives = null
-	var/brute_damage = 0
-	var/oxy_damage = 0
-	density = 1
-
-/obj/effect/mob_spawn/attack_ghost(mob/user)
-	if(ticker.current_state != GAME_STATE_PLAYING)
-		return
-	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(ghost_role == "No")
-		return
-	log_game("[user.ckey] became [mob_name]")
-	create(ckey = user.ckey)
-
-/obj/effect/mob_spawn/initialize()
-	if(roundstart)
-		create()
-
-/obj/effect/mob_spawn/New()
-	..()
-	if(instant)
-		create()
-
-/obj/effect/mob_spawn/proc/special(mob/M)
-	return
-
-/obj/effect/mob_spawn/proc/equip(mob/M)
-	return
-
-/obj/effect/mob_spawn/proc/create(ckey)
-	var/mob/living/M = new mob_type(loc) //living mobs only
-	M.real_name = mob_name ? mob_name : M.name
-	M.gender = mob_gender
-	if(faction)
-		M.faction = list(faction)
-	if(death)
-		M.death(1) //Kills the new mob
-	
-	M.adjustOxyLoss(oxy_damage)
-	M.adjustBruteLoss(brute_damage)
-	equip(M)
-
-	if(ckey)
-		M.ckey = ckey
-		M << "[flavour_text]"
-		if(objectives)
-			var/datum/mind/MM = M.mind
-			for(var/objective in objectives)
-				MM.objectives += new/datum/objective(objective)
-		special(M)
-	qdel(src)
-
-/obj/effect/mob_spawn/human
-	mob_type = /mob/living/carbon/human
-	//Human specific stuff.
-	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
-	var/uniform = null //Set this to an object path to have the slot filled with said object on the corpse.
-	var/suit = null
-	var/shoes = null
-	var/gloves = null
-	var/radio = null
-	var/glasses = null
-	var/mask = null
-	var/helmet = null
-	var/belt = null
-	var/pocket1 = null
-	var/pocket2 = null
-	var/back = null
-	var/has_id = 0     //Just set to 1 if you want them to have an ID
-	var/id_job = null // Needs to be in quotes, such as "Clown" or "Chef." This just determines what the ID reads as, not their access
-	var/id_access = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
-	var/id_icon = null //For setting it to be a gold, silver, centcom etc ID
-	var/husk = null
-	var/outfit_type = null // Will start with this if exists then apply specific slots
-	var/list/implants = list()
-
-/obj/effect/mob_spawn/human/equip(mob/living/carbon/human/H)
-	if(mob_species)
-		H.set_species(mob_species)
-	if(husk)
-		H.Drain()
-	if(outfit_type)
-		H.equipOutfit(outfit_type)
-	if(uniform)
-		H.equip_to_slot_or_del(new uniform(H), slot_w_uniform)
-	if(suit)
-		H.equip_to_slot_or_del(new suit(H), slot_wear_suit)
-	if(shoes)
-		H.equip_to_slot_or_del(new shoes(H), slot_shoes)
-	if(gloves)
-		H.equip_to_slot_or_del(new gloves(H), slot_gloves)
-	if(radio)
-		H.equip_to_slot_or_del(new radio(H), slot_ears)
-	if(glasses)
-		H.equip_to_slot_or_del(new glasses(H), slot_glasses)
-	if(mask)
-		H.equip_to_slot_or_del(new mask(H), slot_wear_mask)
-	if(helmet)
-		H.equip_to_slot_or_del(new helmet(H), slot_head)
-	if(belt)
-		H.equip_to_slot_or_del(new belt(H), slot_belt)
-	if(pocket1)
-		H.equip_to_slot_or_del(new pocket1(H), slot_r_store)
-	if(pocket2)
-		H.equip_to_slot_or_del(new pocket2(H), slot_l_store)
-	if(back)
-		H.equip_to_slot_or_del(new back(H), slot_back)
-	if(has_id)
-		var/obj/item/weapon/card/id/W = new(H)
-		if(id_icon)
-			W.icon_state = id_icon
-		if(id_access)
-			var/datum/job/jobdatum
-			for(var/jobtype in typesof(/datum/job))
-				var/datum/job/J = new jobtype
-				if(J.title == id_access)
-					jobdatum = J
-					break
-			if(jobdatum)
-				W.access = jobdatum.get_access()
-			else
-				W.access = list()
-		if(id_job)
-			W.assignment = id_job
-		W.registered_name = H.real_name
-		W.update_label()
-		H.equip_to_slot_or_del(W, slot_wear_id)
-
-	for(var/I in implants)
-		var/obj/item/weapon/implant/X = new I
-		X.implant(H)
-
-//Instant version
-/obj/effect/mob_spawn/human/corpse
-	roundstart = FALSE
-	instant = TRUE
-
-/obj/effect/mob_spawn/human/alive
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-	death = FALSE
-	roundstart = FALSE //you could use these for alive fake humans on roundstart but this is more common scenario
 
