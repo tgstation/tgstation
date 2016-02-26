@@ -10,6 +10,9 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human = 1
 	)
+	parts = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human = 1
+	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/human
 	category = CAT_FOOD
 

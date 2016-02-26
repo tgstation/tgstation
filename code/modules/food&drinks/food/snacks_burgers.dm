@@ -12,11 +12,25 @@
 	bonus_reagents = list("vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/human
-	var/hname = ""
-	var/job = null
+	var/subjectname = ""
+	var/subjectjob = null
 	name = "human burger"
 	desc = "A bloody burger."
 	bonus_reagents = list("vitamin" = 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/human/CheckParts()
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/M = locate(/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human) in contents
+	if(M)
+		subjectname = M.subjectname
+		subjectjob = M.subjectjob
+		if(subjectname)
+			name = "[subjectname] burger"
+		else if(subjectjob)
+			name = "[subjectjob] burger"
+		qdel(M)
+
+	..()
+
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/corgi
 	name = "corgi burger"
