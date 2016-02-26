@@ -54,7 +54,7 @@
 	desc = "Triggers an EMP."
 	icon_state = "emp"
 	origin_tech = "materials=2;biotech=3;magnets=4;syndicate=4"
-	uses = 2
+	uses = 3
 
 /obj/item/weapon/implant/emp/activate()
 	uses--
