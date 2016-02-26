@@ -84,7 +84,6 @@ CREATE TABLE `ban` (
   `serverip` varchar(32) NOT NULL,
   `reason` text NOT NULL,
   `job` varchar(32) DEFAULT NULL,
-  `rounds` int(11) DEFAULT NULL,
   `expiration_time` datetime DEFAULT NULL,
   `ckey` varchar(32) NOT NULL,
   `computerid` varchar(32) NOT NULL,
