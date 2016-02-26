@@ -137,7 +137,9 @@
 	actions_types = list(/datum/action/item_action/toggle_barrier_spread)
 	var/mode = SINGLE
 
-/obj/item/weapon/grenade/barrier/AltClick(mob/user)
+/obj/item/weapon/grenade/barrier/AltClick(mob/living/user)
+	if(!istype(user) || user.incapacitated())
+		return
 	toggle_mode(user)
 
 /obj/item/weapon/grenade/barrier/proc/toggle_mode(mob/user)
