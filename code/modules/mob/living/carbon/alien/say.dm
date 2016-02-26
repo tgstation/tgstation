@@ -22,3 +22,9 @@
 
 /mob/living/carbon/hivecheck()
 	return getorgan(/obj/item/organ/internal/alien/hivenode)
+
+/mob/living/carbon/alien/humanoid/hivecheck()
+	if(recent_queen_death) //No hiss-hiss for you if you let your queen die!
+		return 0
+	else
+		return ..()

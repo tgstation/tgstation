@@ -25,7 +25,10 @@
 
 	action_icon_state = "alien_evolve_drone"
 
-/obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/humanoid/user)
+	if(user.recent_queen_death)
+		user << "<span class='danger'>Your thoughts are still too scattered to take up the position of leadership.</span>"
+		return 0
 	if(!isturf(user.loc))
 		user << "<span class='notice'>You can't evolve here!</span>"
 		return 0

@@ -19,3 +19,13 @@
 		mind.store_memory("Time of death: [tod]", 0)
 
 	return ..(gibbed)
+
+//When the alien queen dies, all others must pay the price for letting her die.
+/mob/living/carbon/alien/humanoid/royal/queen/death(gibbed)
+	if(stat == DEAD)
+		return
+
+	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
+		A.queen_death() //SCREEEEEEEEE!!
+
+	return ..(gibbed)

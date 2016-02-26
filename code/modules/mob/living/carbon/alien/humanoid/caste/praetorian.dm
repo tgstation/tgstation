@@ -52,7 +52,10 @@
 
 	action_icon_state = "alien_evolve_praetorian"
 
-/obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/alien/humanoid/user)
+	if(user.recent_queen_death)
+		user << "<span class='danger'>You are still too burdened with guilt to evolve into a queen.</span>"
+		return 0
 	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen))
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
