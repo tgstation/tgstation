@@ -133,7 +133,7 @@
 			var/ratio = safe_oxy_min/O2_partialpressure
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
-			oxygen_used = breath_gases["o2"][MOLES]*ratio/6
+			oxygen_used = breath_gases["o2"][MOLES]*ratio
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
@@ -143,7 +143,7 @@
 		failed_last_breath = 0
 		if(oxyloss)
 			adjustOxyLoss(-5)
-		oxygen_used = breath_gases["o2"][MOLES]/6
+		oxygen_used = breath_gases["o2"][MOLES]
 		clear_alert("oxy")
 
 	breath_gases["o2"][MOLES] -= oxygen_used
@@ -196,7 +196,7 @@
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)
-		if (!contents.Find(internal))
+		if(internal.loc != src)
 			internal = null
 			update_internals_hud_icon(0)
 		else
@@ -382,9 +382,3 @@
 		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
 			//We totally need a sweat system cause it totally makes sense...~
 			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
-
-
-/mob/living/carbon/handle_actions()
-	..()
-	for(var/obj/item/I in internal_organs)
-		give_action_button(I, 1)

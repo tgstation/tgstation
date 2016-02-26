@@ -119,11 +119,13 @@ update_label("John Doe", "Clowny")
 	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
 
 /obj/item/weapon/card/id/silver
+	name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
 	item_state = "silver_id"
 
 /obj/item/weapon/card/id/gold
+	name = "gold identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
@@ -132,6 +134,13 @@ update_label("John Doe", "Clowny")
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate)
 	origin_tech = "syndicate=3"
+
+/obj/item/weapon/card/id/syndicate/New()
+	..()
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/weapon/card/id
+	chameleon_action.chameleon_name = "ID Card"
+	chameleon_action.initialize_disguises()
 
 /obj/item/weapon/card/id/syndicate/afterattack(obj/item/weapon/O, mob/user, proximity)
 	if(!proximity)

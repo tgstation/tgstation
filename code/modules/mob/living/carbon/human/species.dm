@@ -119,6 +119,12 @@
 		return 0
 	return 1
 
+/datum/species/proc/on_species_loss(mob/living/carbon/C)
+	if(C.dna.species)
+		if(C.dna.species.exotic_blood)
+			var/datum/reagent/EB = C.dna.species.exotic_blood
+			C.reagents.del_reagent(initial(EB.id))
+
 /datum/species/proc/update_base_icon_state(mob/living/carbon/human/H)
 	if(H.disabilities & HUSK)
 		H.remove_overlay(SPECIES_LAYER) // races lose their color
@@ -1120,7 +1126,7 @@
 			H.failed_last_breath = 0
 			if(H.getOxyLoss())
 				H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["o2"][MOLES]/6
+			gas_breathed = breath_gases["o2"][MOLES]
 			H.clear_alert("oxy")
 
 	//Exhale
@@ -1157,7 +1163,7 @@
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["co2"][MOLES]/6
+			gas_breathed = breath_gases["co2"][MOLES]
 			H.clear_alert("not_enough_co2")
 
 	//Exhale
@@ -1187,7 +1193,7 @@
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["plasma"][MOLES]/6
+			gas_breathed = breath_gases["plasma"][MOLES]
 			H.clear_alert("not_enough_tox")
 
 	//Exhale

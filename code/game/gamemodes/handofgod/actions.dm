@@ -4,7 +4,7 @@
 /datum/action/innate/godspeak
 	name = "Godspeak"
 	button_icon_state = "godspeak"
-	check_flags = AB_CHECK_ALIVE
+	check_flags = AB_CHECK_CONSCIOUS
 	var/mob/camera/god/god = null
 
 /datum/action/innate/godspeak/IsAvailable()
@@ -19,3 +19,7 @@
 		return
 	god << "<span class='notice'><B>[owner]:</B> [msg]</span>"
 	owner << "You say: [msg]"
+
+/datum/action/innate/godspeak/Destroy()
+	god = null
+	return ..()

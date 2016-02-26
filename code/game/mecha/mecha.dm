@@ -1036,9 +1036,12 @@ var/year_integer = text2num(year) // = 2013???
 
 
 /datum/action/innate/mecha
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_ALIVE
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
 	var/obj/mecha/chassis
 
+/datum/action/innate/mecha/Destroy()
+	chassis = null
+	return ..()
 
 /datum/action/innate/mecha/mech_eject
 	name = "Eject From Mech"
