@@ -87,7 +87,7 @@
 	name = "Station Efficiency"
 	inherent = list("You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.",\
 					"The station is built for a working crew. Ensure they are properly maintained and work efficiently.",\
-					"The crew may present orders. Acknowledge and obey these whenever they do not conflict with your first three laws.")
+					"The crew may present orders. Acknowledge and obey these whenever they do not conflict with your first two laws.")
 
 /datum/ai_laws/drone
 	name = "Mother Drone"
