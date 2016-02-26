@@ -2,5 +2,3 @@ author: Iamgoofball
 delete-after: True
 changes: 
   - bugfix: "The Chameleon Kit is actually purchasable now. It doesn't give a single chameleon jumpsuit anymore."
-  - bugfix: "The Chameleon Kit is in the proper category now."
-  - bugfix: "joan is my fuckbuddy"
