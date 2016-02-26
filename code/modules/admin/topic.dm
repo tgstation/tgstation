@@ -179,6 +179,7 @@
 		var/banduration = text2num(href_list["dbbaddduration"])
 		var/banjob = href_list["dbbanaddjob"]
 		var/banreason = href_list["dbbanreason"]
+		var/applies_to_admins = ("dbbanappliestoadmins" in href_list) ? 1 : null
 
 		banckey = ckey(banckey)
 
@@ -203,17 +204,6 @@
 				if(!banckey || !banreason || !banjob || !banduration)
 					usr << "Not enough parameters (Requires ckey, reason and job)"
 					return
-			if(BANTYPE_ADMIN_PERMA)
-				if(!banckey || !banreason)
-					usr << "Not enough parameters (Requires ckey and reason)"
-					return
-				banduration = null
-				banjob = null
-			if(BANTYPE_ADMIN_TEMP)
-				if(!banckey || !banreason || !banduration)
-					usr << "Not enough parameters (Requires ckey, reason and duration)"
-					return
-				banjob = null
 
 		var/mob/playermob
 
@@ -233,7 +223,7 @@
 		else
 			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob")
 
-		DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey, banip, bancid )
+		DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey, banip, bancid, applies_to_admins)
 		add_note(banckey, banreason, null, usr.ckey, 0)
 
 	else if(href_list["editrights"])

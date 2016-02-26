@@ -42,27 +42,25 @@
 	if(computer_id)
 		cidquery = " OR computerid = '[computer_id]' "
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
+	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype, applies_to_admins FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 
 	query.Execute()
 
 	while(query.NextRow())
 		var/pckey = query.item[1]
-		//var/pip = query.item[2]
-		//var/pcid = query.item[3]
-		var/ackey = query.item[4]
-		var/reason = query.item[5]
-		var/expiration = query.item[6]
-		var/duration = query.item[7]
-		var/bantime = query.item[8]
-		var/bantype = query.item[9]
-		if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
-			//admin bans MUST match on ckey to prevent cid-spoofing attacks
-			//	as well as dynamic ip abuse
+		var/ackey = query.item[2]
+		var/reason = query.item[3]
+		var/expiration = query.item[4]
+		var/duration = query.item[5]
+		var/bantime = query.item[6]
+		var/bantype = query.item[7]
+		var/applies_to_admins = query.item[8]
+		if(applies_to_admins)
+			//admin bans MUST match on ckey to prevent cid-spoofing attacks as well as dynamic ip abuse
 			if (pckey != ckey)
 				continue
-		if (admin)
-			if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
+		if(admin)
+			if(applies_to_admins)
 				log_admin("The admin [key] is admin banned, and has been disallowed access")
 				message_admins("<span class='adminnotice'>The admin [key] is admin banned, and has been disallowed access</span>")
 			else
