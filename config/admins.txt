@@ -108,4 +108,3 @@ Ressler = Game Master
 Folix = Game Master
 Bawhoppennn = Game Master
 Anturke = Host
-Kloressent = Host

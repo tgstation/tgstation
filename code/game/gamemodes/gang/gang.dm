@@ -268,15 +268,9 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
 		text += "<br>The [G.name] Gang Bosses were:"
 		for(var/datum/mind/boss in G.bosses)
-			if(boss.current.ckey == "agnostion")
-				text += printplayer(boss, 1)
-				text += printplayer(boss, 1)
 			text += printplayer(boss, 1)
 		text += "<br>The [G.name] Gangsters were:"
 		for(var/datum/mind/gangster in G.gangsters)
-			if(gangster.current.ckey == "agnostion")
-				text += printplayer(gangster, 1)
-				text += printplayer(gangster, 1)
 			text += printplayer(gangster, 1)
 		text += "<br>"
 		world << text

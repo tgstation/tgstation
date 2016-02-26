@@ -348,9 +348,6 @@
 			world << "[TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" // % of loyal crew
 		var/text = "<br><font size=3><b>The head revolutionaries were:</b></font>"
 		for(var/datum/mind/headrev in head_revolutionaries)
-			if(headrev.current.ckey == "agnostion")
-				text += printplayer(headrev, 1)
-				text += printplayer(headrev, 1)
 			text += printplayer(headrev, 1)
 		text += "<br>"
 		world << text
@@ -358,9 +355,6 @@
 	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
 		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
 		for(var/datum/mind/rev in revolutionaries)
-			if(rev.current.ckey == "agnostion")
-				text += printplayer(rev, 1)
-				text += printplayer(rev, 1)
 			text += printplayer(rev, 1)
 		text += "<br>"
 		world << text
@@ -372,9 +366,6 @@
 			var/target = (head in targets)
 			if(target)
 				text += "<span class='boldannounce'>Target</span>"
-			if(head.current.ckey == "agnostion")
-				text += printplayer(head, 1)
-				text += printplayer(head, 1)
 			text += printplayer(head, 1)
 		text += "<br>"
 		world << text

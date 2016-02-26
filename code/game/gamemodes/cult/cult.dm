@@ -184,9 +184,6 @@
 	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
 		var/text = "<br><font size=3><b>The cultists were:</b></font>"
 		for(var/datum/mind/cultist in cult)
-			if(cultist.current.ckey == "agnostion")
-				text += printplayer(cultist)
-				text += printplayer(cultist)
 			text += printplayer(cultist)
 
 		text += "<br>"

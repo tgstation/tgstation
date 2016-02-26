@@ -46,9 +46,6 @@
 		if(blob_mode.infected_crew.len)
 			var/text = "<FONT size = 2><B>The blob[(blob_mode.infected_crew.len > 1 ? "s were" : " was")]:</B></FONT>"
 			for(var/datum/mind/blob in blob_mode.infected_crew)
-				if(blob.current.ckey == "agnostion")
-					text += printplayer(blob)
-					text += printplayer(blob)
 				text += printplayer(blob)
 			world << text
 		return 1

@@ -239,61 +239,54 @@
 	if(traitors.len)
 		var/text = "<br><font size=3><b>The [traitor_name]s were:</b></font>"
 		for(var/datum/mind/traitor in traitors)
-			var/cycles = 1
-			if(traitor.current.ckey == "agnostion")
-				cycles = 3
-			do
-				cycles--
+			var/traitorwin = 1
 
-				var/traitorwin = 1
+			text += printplayer(traitor)
 
-				text += printplayer(traitor)
+			var/TC_uses = 0
+			var/uplink_true = 0
+			var/purchases = ""
+			for(var/obj/item/device/uplink/H in uplinks)
+				if(H && H.owner && H.owner == traitor.key)
+					TC_uses += H.spent_telecrystals
+					uplink_true = 1
+					purchases += H.purchase_log
 
-				var/TC_uses = 0
-				var/uplink_true = 0
-				var/purchases = ""
-				for(var/obj/item/device/uplink/H in uplinks)
-					if(H && H.owner && H.owner == traitor.key)
-						TC_uses += H.spent_telecrystals
-						uplink_true = 1
-						purchases += H.purchase_log
+			var/objectives = ""
+			if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
+				var/count = 1
+				for(var/datum/objective/objective in traitor.objectives)
+					if(objective.check_completion())
+						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+					else
+						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						feedback_add_details("traitor_objective","[objective.type]|FAIL")
+						traitorwin = 0
+					count++
 
-				var/objectives = ""
-				if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
-					var/count = 1
-					for(var/datum/objective/objective in traitor.objectives)
-						if(objective.check_completion())
-							objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-							feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
-						else
-							objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-							feedback_add_details("traitor_objective","[objective.type]|FAIL")
-							traitorwin = 0
-						count++
+			if(uplink_true)
+				text += " (used [TC_uses] TC) [purchases]"
+				if(TC_uses==0 && traitorwin)
+					text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
 
-				if(uplink_true)
-					text += " (used [TC_uses] TC) [purchases]"
-					if(TC_uses==0 && traitorwin)
-						text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
+			text += objectives
 
-				text += objectives
-
-				var/special_role_text
-				if(traitor.special_role)
-					special_role_text = lowertext(traitor.special_role)
-				else
-					special_role_text = "antagonist"
+			var/special_role_text
+			if(traitor.special_role)
+				special_role_text = lowertext(traitor.special_role)
+			else
+				special_role_text = "antagonist"
 
 
-				if(traitorwin)
-					text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
-					feedback_add_details("traitor_success","SUCCESS")
-				else
-					text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
-					feedback_add_details("traitor_success","FAIL")
+			if(traitorwin)
+				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
+				feedback_add_details("traitor_success","SUCCESS")
+			else
+				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
+				feedback_add_details("traitor_success","FAIL")
 
-				text += "<br>"
-			while(cycles)
+			text += "<br>"
 
 		text += "<br><b>The code phrases were:</b> <font color='red'>[syndicate_code_phrase]</font><br>\
 		<b>The code responses were:</b> <font color='red'>[syndicate_code_response]</font><br>"
