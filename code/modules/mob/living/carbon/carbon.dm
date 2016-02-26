@@ -812,3 +812,17 @@ var/const/GALOSHES_DONT_HELP = 4
 	. = ..()
 	if(!getorgan(/obj/item/organ/internal/brain))
 		return 0
+
+/mob/living/carbon/harvest(mob/living/user)
+	if(qdeleted(src))
+		return
+	var/organs_amt = 0
+	for(var/obj/item/organ/internal/O in internal_organs)
+		if(prob(50))
+			organs_amt++
+			O.Remove(src)
+			O.loc = get_turf(src)
+	if(organs_amt)
+		user << "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>"
+
+	..()
