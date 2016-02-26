@@ -140,7 +140,7 @@ var/list/NOIRLIST = list(0.3,0.3,0.3,0,\
 
 /datum/dna/gene/basic/noir/OnMobLife(var/mob/M)
 	..()
-	if(M.client != NOIRLIST)
+	if(M.client && M.client.color != NOIRLIST)
 		M.client.color = NOIRLIST
 
 /datum/dna/gene/basic/noir/deactivate(var/mob/M,var/connected,var/flags)
