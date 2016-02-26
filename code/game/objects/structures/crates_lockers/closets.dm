@@ -121,8 +121,11 @@
 	if(contents.len >= storage_capacity)
 		return -1
 
-	var/mob/living/L = AM
-	if(istype(L))
+
+	if(ismob(AM))
+		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
+			return
+		var/mob/living/L = AM
 		if(L.buckled || L.buckled_mob)
 			return
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
