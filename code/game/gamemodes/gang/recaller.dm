@@ -190,7 +190,7 @@
 					pointcost = 5
 			if("switchblade")
 				if(gang.points >= 10)
-					item_type = /obj/item/weapon/switchblade
+					item_type = /obj/item/weapon/toggle/switchblade
 					pointcost = 10
 			if("necklace")
 				if(gang.points >=1)

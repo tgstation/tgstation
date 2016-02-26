@@ -50,7 +50,7 @@
 	req_tech = list("combat" = 4, "materials" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 5000, MAT_SILVER = 300)
-	build_path = /obj/item/weapon/shield/riot/tele
+	build_path = /obj/item/weapon/toggle/tele_shield
 	category = list("Weapons")
 
 /datum/design/lasercannon

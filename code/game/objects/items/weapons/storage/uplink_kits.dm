@@ -12,7 +12,7 @@
 			new /obj/item/device/multitool/ai_detect(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
 			new /obj/item/weapon/reagent_containers/syringe/mulligan(src)
-			new /obj/item/weapon/switchblade(src)
+			new /obj/item/weapon/toggle/switchblade(src)
 			return
 
 		if("stealth")
@@ -52,7 +52,7 @@
 			return
 
 		if("murder")
-			new /obj/item/weapon/melee/energy/sword/saber(src)
+			new /obj/item/weapon/toggle/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/clothing/shoes/chameleon(src)
@@ -92,8 +92,8 @@
 			new /obj/item/weapon/cartridge/syndicate(src)
 
 		if("darklord")
-			new /obj/item/weapon/melee/energy/sword/saber(src)
-			new /obj/item/weapon/melee/energy/sword/saber(src)
+			new /obj/item/weapon/toggle/energy/sword/saber(src)
+			new /obj/item/weapon/toggle/energy/sword/saber(src)
 			new /obj/item/weapon/dnainjector/telemut/darkbundle(src)
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/weapon/card/id/syndicate(src)
