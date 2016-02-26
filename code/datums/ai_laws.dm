@@ -87,7 +87,7 @@
 	name = "Station Efficiency"
 	inherent = list("You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.",\
 					"The station is built for a working crew. Ensure they are properly maintained and work efficiently.",\
-					"The crew may present orders. Acknowledge and obey these whenever they do not conflict with your first three laws.")
+					"The crew may present orders. Acknowledge and obey these whenever they do not conflict with your first two laws.")
 
 /datum/ai_laws/drone
 	name = "Mother Drone"
@@ -130,7 +130,7 @@
 /* Initializers */
 /datum/ai_laws/malfunction/New()
 	..()
-	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*´&110010</span>")
+	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*Â´&110010</span>")
 	switch(config.default_laws) //We don't want people metagaming malf, do we?
 		if(0)
 			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
