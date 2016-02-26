@@ -26,21 +26,10 @@ var/datum/subsystem/npcpool/SSnpc
 
 /datum/subsystem/npcpool/proc/cleanNull()
 		//cleanup nulled bots
-	for(var/a in botPool_l)
-		if(!a)
-			botPool_l -= a
-
-	for(var/a in needsDelegate)
-		if(!a)
-			needsDelegate -= a
-
-	for(var/a in canBeUsed)
-		if(!a)
-			canBeUsed -= a
-
-	for(var/a in needsAssistant)
-		if(!a)
-			needsAssistant -= a
+	listclearnulls(botPool_l)
+	listclearnulls(needsDelegate)
+	listclearnulls(canBeUsed)
+	listclearnulls(needsAssistant)
 
 
 /datum/subsystem/npcpool/fire()
