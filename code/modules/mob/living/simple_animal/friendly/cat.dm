@@ -54,7 +54,7 @@
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/Runtime
 	name = "Runtime"
-	desc = "GCAT"
+	desc = "Tends to show up in the strangest of places."
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"
@@ -65,6 +65,8 @@
 	var/memory_saved = 0
 
 /mob/living/simple_animal/pet/cat/Runtime/New()
+	if(lives > 9)
+		desc += " Looks like a cat with [lives] lives left."
 	Read_Memory()
 	..()
 
@@ -96,7 +98,7 @@
 
 	for(var/cat_type in family)
 		if(family[cat_type] > 0)
-			for(var/i = 0, i < family[cat_type], i++)
+			for(var/i in 1 to family[cat_type])
 				new cat_type(loc)
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
@@ -105,7 +107,7 @@
 		S["lives"] 				<< lives - 1
 	family = list()
 	for(var/mob/living/simple_animal/pet/cat/C in mob_list)
-		if(istype(C,type) || C.stat)
+		if(istype(C,type) || C.stat || !C.butcher_results) //That last one is a work around for hologram cats
 			continue
 		if(C.type in family)
 			family[C.type] += 1
