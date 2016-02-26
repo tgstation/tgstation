@@ -178,7 +178,7 @@
 		if("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist")
 			favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/storage/firstaid, /obj/item/stack/medical, /obj/item/weapon/reagent_containers/syringe)
 		if("Research Director","Scientist","Roboticist")
-			return /area/toxins
+			favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/stack, /obj/item/weapon/reagent_containers)
 		if("Head of Security","Warden","Security Officer","Detective")
 			favoured_types = list(/obj/item/clothing, /obj/item/weapon, /obj/item/weapon/restraints)
 		if("Janitor")
