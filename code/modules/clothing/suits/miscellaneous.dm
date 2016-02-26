@@ -266,6 +266,8 @@
 	icon_state = "lingspacehelmet"
 	body_parts_covered = HEAD
 	flags = NODROP
+	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/security/officer/russian
 	name = "russian officer's jacket"
