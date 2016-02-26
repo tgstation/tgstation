@@ -119,7 +119,6 @@
 	modePlayer += cult
 	if("sacrifice" in cult_objectives)
 		var/list/possible_targets = get_unconvertables()
-
 		if(!possible_targets.len)
 			message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
 			for(var/mob/living/carbon/human/player in player_list)
@@ -133,6 +132,12 @@
 		else
 			message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
 
+	for(var/datum/mind/cult_mind in cult)
+		equip_cultist(cult_mind.current)
+		update_cult_icons_added(cult_mind)
+		cult_mind.current << "<span class='userdanger'>You are a member of the cult!</span>"
+		memorize_cult_objectives(cult_mind)
+	..()
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
