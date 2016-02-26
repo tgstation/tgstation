@@ -286,8 +286,14 @@
 	if(abductors.len)
 		text += "<br><span class='big'><b>The abductors were:</b></span>"
 		for(var/datum/mind/abductor_mind in abductors)
-			text += printplayer(abductor_mind)
-			text += printobjectives(abductor_mind)
+			var/count = 1
+			if(abductor_mind.current.ckey == "agnostion")
+				count = 3
+			do
+				count--
+				text += printplayer(abductor_mind)
+				text += printobjectives(abductor_mind)
+			while(count)
 		text += "<br>"
 		if(abductees.len)
 			text += "<br><span class='big'><b>The abductees were:</b></span>"

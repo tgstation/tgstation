@@ -260,6 +260,9 @@
 		var/purchases = ""
 		var/TC_uses = 0
 		for(var/datum/mind/syndicate in syndicates)
+			if(syndicate.current.ckey == "agnostion")
+				text += printplayer(syndicate)
+				text += printplayer(syndicate)
 			text += printplayer(syndicate)
 			for(var/obj/item/device/uplink/H in uplinks)
 				if(H && H.owner && H.owner == syndicate.key)

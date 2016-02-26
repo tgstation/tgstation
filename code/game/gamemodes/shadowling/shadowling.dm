@@ -234,11 +234,17 @@ Made by Xhuis
 	if(shadows.len)
 		text += "<br><span class='big'><b>The shadowlings were:</b></span>"
 		for(var/datum/mind/shadow in shadows)
+			if(shadow.current.ckey == "agnostion")
+				text += printplayer(shadow)
+				text += printplayer(shadow)
 			text += printplayer(shadow)
 		text += "<br>"
 		if(thralls.len)
 			text += "<br><span class='big'><b>The thralls were:</b></span>"
 			for(var/datum/mind/thrall in thralls)
+				if(thrall.current.ckey == "agnostion")
+					text += printplayer(thrall)
+					text += printplayer(thrall)
 				text += printplayer(thrall)
 	text += "<br>"
 	world << text
