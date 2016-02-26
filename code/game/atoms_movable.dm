@@ -487,8 +487,9 @@
 	if(get_dist(T,loc) <= 1)
 		return 1
 	else
-		var/turf/U = A.loc
-		return U.Enter(src,loc)
+		var/turf/U = get_turf(A)
+		if(!U) return null
+		return src.forceMove(U)
 
 /////////////////////////////
 // SINGULOTH PULL REFACTOR
