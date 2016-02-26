@@ -223,7 +223,7 @@
 		else
 			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob")
 
-		DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey, banip, bancid, applies_to_admins)
+		DB_ban_record(bantype, playermob, banduration, banreason, banjob, banckey, banip, bancid, applies_to_admins)
 		add_note(banckey, banreason, null, usr.ckey, 0)
 
 	else if(href_list["editrights"])
