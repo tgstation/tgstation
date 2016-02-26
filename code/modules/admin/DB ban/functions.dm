@@ -1,7 +1,7 @@
 #define MAX_ADMIN_BANS_PER_ADMIN 1
 
 //Either pass the mob you wish to ban in the 'banned_mob' attribute, or the banckey, banip and bancid variables. If both are passed, the mob takes priority! If a mob is not passed, banckey is the minimum that needs to be passed! banip and bancid are optional.
-/datum/admins/proc/DB_ban_record(bantype, mob/banned_mob, duration = -1, reason, job = "", banckey = null, banip = null, bancid = null, applies_to_admins = null)
+/datum/admins/proc/DB_ban_record(bantype, mob/banned_mob, duration = -1, reason, job = null, banckey = null, banip = null, bancid = null, applies_to_admins = null)
 
 	if(!check_rights(R_BAN))
 		return
@@ -13,7 +13,6 @@
 	var/serverip = "[world.internet_address]:[world.port]"
 	var/bantype_pass = 0
 	var/bantype_str
-	var/blockselfban		//Used to prevent the banning of yourself.
 	var/kickbannedckey		//Defines whether this proc should kick the banned person, if they are connected (if banned_mob is defined).
 							//some ban types kick players after this proc passes (tempban, permaban), but some are specific to db_ban, so
 							//they should kick within this proc.
@@ -22,21 +21,11 @@
 			bantype_str = "PERMABAN"
 			duration = -1
 			bantype_pass = 1
-			blockselfban = 1
 		if(BANTYPE_TEMP)
 			bantype_str = "TEMPBAN"
 			bantype_pass = 1
-			blockselfban = 1
-		if(BANTYPE_JOB_PERMA)
-			bantype_str = "JOB_PERMABAN"
-			duration = -1
-			bantype_pass = 1
-		if(BANTYPE_JOB_TEMP)
-			bantype_str = "JOB_TEMPBAN"
-			bantype_pass = 1
 
 	if(applies_to_admins)
-		blockselfban = 1
 		kickbannedckey = 1
 
 	if( !bantype_pass ) return
@@ -79,10 +68,9 @@
 		a_computerid = src.owner:computer_id
 		a_ip = src.owner:address
 
-	if(blockselfban)
-		if(a_ckey == ckey)
-			usr << "<span class='danger'>You cannot apply this ban type on yourself.</span>"
-			return
+	if(!job && (a_ckey == ckey))
+		usr << "<span class='danger'>You cannot server ban yourself.</span>"
+		return
 
 	var/who
 	for(var/client/C in clients)
@@ -100,8 +88,8 @@
 
 	reason = sanitizeSQL(reason)
 
-	if(applies_to_admins)
-		var/DBQuery/adm_query = dbcon.NewQuery("SELECT count(id) AS num FROM [format_table_name("ban")] WHERE (a_ckey = '[a_ckey]') AND applies_to_admins = 1 AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+	if(applies_to_admins) //damage control against rogue admins
+		var/DBQuery/adm_query = dbcon.NewQuery("SELECT count(id) AS num FROM [format_table_name("ban")] WHERE (a_ckey = '[a_ckey]') AND applies_to_admins = 1 AND isnull(job) AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 		adm_query.Execute()
 		if(adm_query.NextRow())
 			var/adm_bans = text2num(adm_query.item[1])
@@ -113,7 +101,7 @@
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
 	usr << "<span class='adminnotice'>Ban saved to database.</span>"
-	message_admins("[key_name_admin(usr)] has added a [applies_to_admins ? "ADMIN " : ""][bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.",1)
+	message_admins("[key_name_admin(usr)] has added a [applies_to_admins ? "ADMIN " : ""][job ? "Job " : ""][bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.",1)
 
 	if(applies_to_admins)
 		send2irc("BAN ALERT","[a_ckey] applied a [bantype_str] on [ckey]")
@@ -123,7 +111,7 @@
 			del(banned_mob.client)
 
 
-/datum/admins/proc/DB_ban_unban(ckey, bantype, job = "", applies_to_admins = null)
+/datum/admins/proc/DB_ban_unban(ckey, bantype, job = null, applies_to_admins = null)
 
 	if(!check_rights(R_BAN))
 		return
@@ -138,12 +126,6 @@
 			if(BANTYPE_TEMP)
 				bantype_str = "TEMPBAN"
 				bantype_pass = 1
-			if(BANTYPE_JOB_PERMA)
-				bantype_str = "JOB_PERMABAN"
-				bantype_pass = 1
-			if(BANTYPE_JOB_TEMP)
-				bantype_str = "JOB_TEMPBAN"
-				bantype_pass = 1
 			if(BANTYPE_ANY_FULLBAN)
 				bantype_str = "ANY"
 				bantype_pass = 1
@@ -156,18 +138,20 @@
 	if(bantype_str == "ANY")
 		bantype_sql = "(bantype = 'PERMABAN' OR (bantype = 'TEMPBAN' AND expiration_time > Now() ) )"
 	else if(bantype_str == "ANYJOB")
-		bantype_sql = "(bantype = 'JOB_PERMABAN' OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now() ) )"
+		bantype_sql = "NOT isnull(job) AND (bantype = 'PERMABAN' OR (bantype = 'TEMPBAN' AND expiration_time > Now()))"
 	else
 		bantype_sql = "bantype = '[bantype_str]'"
 
 	var/sql = "SELECT id FROM [format_table_name("ban")] WHERE ckey = '[ckey]' AND [bantype_sql] AND (unbanned is null OR unbanned = false)"
 
-	if(job)
+	if(job == 0)
+		sql += " AND isnull(job)"
+	else if(job)
 		sql += " AND job = '[job]'"
 
 	if(applies_to_admins == 0)
 		sql += " AND isnull(applies_to_admins)"
-	else if(applies_to_admins != null)
+	else if(applies_to_admins)
 		sql += " AND applies_to_admins = 1"
 
 	establish_db_connection()
@@ -340,15 +324,13 @@
 	output += "<option value=''>--</option>"
 	output += "<option value='[BANTYPE_PERMA]'>PERMABAN</option>"
 	output += "<option value='[BANTYPE_TEMP]'>TEMPBAN</option>"
-	output += "<option value='[BANTYPE_JOB_PERMA]'>JOB PERMABAN</option>"
-	output += "<option value='[BANTYPE_JOB_TEMP]'>JOB TEMPBAN</option>"
 	output += "</select></td>"
 	output += "<td><b>Ckey:</b> <input type='text' name='dbbanaddckey'></td></tr>"
 	output += "<tr><td><b>IP:</b> <input type='text' name='dbbanaddip'></td>"
 	output += "<td><b>Computer id:</b> <input type='text' name='dbbanaddcid'></td></tr>"
 	output += "<tr><td><b>Duration:</b> <input type='text' name='dbbaddduration'></td>"
 	output += "<td><b>Job:</b><select name='dbbanaddjob'>"
-	output += "<option value=''>--</option>"
+	output += "<option value=''>Server</option>"
 	for(var/j in get_all_jobs())
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in nonhuman_positions)
@@ -426,18 +408,20 @@
 				lcolor = ulcolor
 				dcolor = udcolor
 
-			var/typedesc =""
+			var/title = ""
+			var/smallprint = ""
 			switch(bantype)
 				if("PERMABAN")
-					typedesc = "<font color='red'><b>PERMABAN</b></font>"
+					title = "<font color='red'><b>PERMABAN</b></font>"
 				if("TEMPBAN")
-					typedesc = "<b>TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
-				if("JOB_PERMABAN")
-					typedesc = "<b>JOBBAN</b><br><font size='2'>([job])"
-				if("JOB_TEMPBAN")
-					typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([duration] minutes<br>Expires [expiration]"
+					title = "<b>TEMPBAN</b>"
+					smallprint = "<br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
+			if(job)
+				title = "<b>JOB</b> " + title
+				smallprint = "<br><font size='2'>([job])</font>" + smallprint
 			if(applies_to_admins)
-				typedesc = "<b>ADMIN</b> " + typedesc
+				title = "<b>ADMIN</b> " + title
+			var/typedesc = title + smallprint
 
 			output += "<tr bgcolor='[dcolor]'>"
 			output += "<td align='center'>[typedesc]</td>"

@@ -183,6 +183,9 @@
 
 		banckey = ckey(banckey)
 
+		if(!banjob)
+			banjob = null
+
 		switch(bantype)
 			if(BANTYPE_PERMA)
 				if(!banckey || !banreason)
@@ -195,15 +198,6 @@
 					usr << "Not enough parameters (Requires ckey, reason and duration)"
 					return
 				banjob = null
-			if(BANTYPE_JOB_PERMA)
-				if(!banckey || !banreason || !banjob)
-					usr << "Not enough parameters (Requires ckey, reason and job)"
-					return
-				banduration = null
-			if(BANTYPE_JOB_TEMP)
-				if(!banckey || !banreason || !banjob || !banduration)
-					usr << "Not enough parameters (Requires ckey, reason and job)"
-					return
 
 		var/mob/playermob
 
@@ -211,7 +205,6 @@
 			if(M.ckey == banckey)
 				playermob = M
 				break
-
 
 		banreason = "(MANUAL BAN) "+banreason
 
@@ -842,7 +835,7 @@
 						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [reason]")
 						log_admin("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes")
 						feedback_inc("ban_job_tmp",1)
-						DB_ban_record(BANTYPE_JOB_TEMP, M, mins, reason, job)
+						DB_ban_record(BANTYPE_TEMP, M, mins, reason, job)
 						if(M.client)
 							jobban_buildcache(M.client)
 						feedback_add_details("ban_job_tmp","- [job]")
@@ -865,7 +858,7 @@
 							ban_unban_log_save("[key_name(usr)] perma-jobbanned [key_name(M)] from [job]. reason: [reason]")
 							log_admin("[key_name(usr)] perma-banned [key_name(M)] from [job]")
 							feedback_inc("ban_job",1)
-							DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, job)
+							DB_ban_record(BANTYPE_PERMA, M, -1, reason, job)
 							if(M.client)
 								jobban_buildcache(M.client)
 							feedback_add_details("ban_job","- [job]")
