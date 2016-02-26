@@ -133,7 +133,7 @@
 			var/ratio = safe_oxy_min/O2_partialpressure
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
-			oxygen_used = breath_gases["o2"][MOLES]*ratio/6
+			oxygen_used = breath_gases["o2"][MOLES]*ratio
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
@@ -143,7 +143,7 @@
 		failed_last_breath = 0
 		if(oxyloss)
 			adjustOxyLoss(-5)
-		oxygen_used = breath_gases["o2"][MOLES]/6
+		oxygen_used = breath_gases["o2"][MOLES]
 		clear_alert("oxy")
 
 	breath_gases["o2"][MOLES] -= oxygen_used
