@@ -58,6 +58,7 @@
 	var/graytide = 0
 	var/list/favoured_types = list() // allow a mob to favour a type, and hold onto them
 	var/chattyness = CHANCE_TALK
+	var/targetInterestShift = 10 // how much a good action should "reward" the npc
 	//modules
 	var/list/functions = list("nearbyscan","combat","doorscan","shitcurity","chatter")
 
@@ -165,25 +166,26 @@
 	hand = 0
 
 	//job specific favours
-	if(myjob.title == "Assistant")
-		favoured_types = list(/obj/item/clothing, /obj/item/weapon)
-	if(myjob.title == "Captain" || myjob.title == "Head of Personnel")
-		favoured_types = list(/obj/item/clothing, /obj/item/weapon/stamp/captain,/obj/item/weapon/disk/nuclear)
-	if(myjob.title == "Bartender" || myjob.title == "Chef")
-		favoured_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
-	if(myjob.title == "Station Engineer" || myjob.title == "Chief Engineer" || myjob.title == "Atmospheric Technician")
-		favoured_types = list(/obj/item/stack, /obj/item/weapon, /obj/item/clothing)
-	if(myjob.title == "Chief Medical Officer" || myjob.title == "Medical Doctor" || myjob.title == "Chemist" || myjob.title == "Virologist" || myjob.title == "Geneticist")
-		favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/storage/firstaid, /obj/item/stack/medical, /obj/item/weapon/reagent_containers/syringe)
-	if(myjob.title == "Research Director" || myjob.title == "Scientist" || myjob.title == "Roboticist")
-		return /area/toxins
-	if(myjob.title == "Head of Security" || myjob.title == "Warden" || myjob.title == "Security Officer" || myjob.title == "Detective")
-		favoured_types = list(/obj/item/clothing, /obj/item/weapon, /obj/item/weapon/restraints)
-	if(myjob.title == "Janitor")
-		favoured_types = list(/obj/item/weapon/mop, /obj/item/weapon/reagent_containers/glass/bucket, /obj/item/weapon/reagent_containers/spray/cleaner, /obj/effect/decal/cleanable)
-		functions += "dojanitor"
-	else
-		favoured_types = list(/obj/item/clothing)
+	switch(myjob.title)
+		if("Assistant")
+			favoured_types = list(/obj/item/clothing, /obj/item/weapon)
+		if("Captain","Head of Personnel")
+			favoured_types = list(/obj/item/clothing, /obj/item/weapon/stamp/captain,/obj/item/weapon/disk/nuclear)
+		if("Bartender","Chef")
+			favoured_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
+		if("Station Engineer","Chief Engineer","Atmospheric Technician")
+			favoured_types = list(/obj/item/stack, /obj/item/weapon, /obj/item/clothing)
+		if("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist")
+			favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/storage/firstaid, /obj/item/stack/medical, /obj/item/weapon/reagent_containers/syringe)
+		if("Research Director","Scientist","Roboticist")
+			return /area/toxins
+		if("Head of Security","Warden","Security Officer","Detective")
+			favoured_types = list(/obj/item/clothing, /obj/item/weapon, /obj/item/weapon/restraints)
+		if("Janitor")
+			favoured_types = list(/obj/item/weapon/mop, /obj/item/weapon/reagent_containers/glass/bucket, /obj/item/weapon/reagent_containers/spray/cleaner, /obj/effect/decal/cleanable)
+			functions += "dojanitor"
+		else
+			favoured_types = list(/obj/item/clothing)
 
 
 	if(TRAITS & TRAIT_ROBUST)
@@ -414,7 +416,7 @@
 					STR.attackby(W, src)
 				else
 					STR.attack_hand(src)
-		interest = interest + 10
+		interest += targetInterestShift
 		doing = doing & ~INTERACTING
 		timeout = 0
 		TARGET = null
@@ -659,6 +661,16 @@
 					TARGET = M
 				if(!M)
 					doing = doing & ~FIGHTING
+
+	//no infighting
+	if(retal)
+		if(retal_target)
+			if(retal_target.faction == src.faction)
+				if(prob(FUZZY_CHANCE_HIGH+FUZZY_CHANCE_LOW))	//high chance to forgive
+					retal = 0
+					retal_target = null
+					TARGET = null
+					doing = 0
 
 	//ensure we're using the best object possible
 
