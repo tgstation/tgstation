@@ -11,8 +11,6 @@
 //Some constants for DB_Ban
 #define BANTYPE_PERMA		1
 #define BANTYPE_TEMP		2
-#define BANTYPE_JOB_PERMA	3
-#define BANTYPE_JOB_TEMP	4
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
 #define BANTYPE_ANY_JOB		6 //used to remove jobbans
 

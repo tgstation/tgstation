@@ -42,7 +42,7 @@
 	if(computer_id)
 		cidquery = " OR computerid = '[computer_id]' "
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, TIMESTAMPDIFF(MINUTE,bantime,expiration_time), bantime, bantype, applies_to_admins FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, TIMESTAMPDIFF(MINUTE,bantime,expiration_time), bantime, bantype, applies_to_admins FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND isnull(job) AND (bantype = 'PERMABAN' OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 
 	query.Execute()
 
