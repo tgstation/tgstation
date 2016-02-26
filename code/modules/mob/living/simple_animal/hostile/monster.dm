@@ -82,6 +82,7 @@
 	attack_sound = 'sound/weapons/hivehand_empty.ogg'
 
 	var/emp_damage = 0
+	var/nanobot_chance = 20
 
 /mob/living/simple_animal/hostile/monster/cyber_horror/Life(var/mob/living/simple_animal/hostile/monster/cyber_horror/M)
 	..()
@@ -105,6 +106,13 @@
 			adjustBruteLoss(20)
 			emp_damage+=20
 			emote("lets out a horrible digital scream!")
+
+/mob/living/simple_animal/hostile/monster/cyber_horror/AttackingTarget()
+	..()
+	var/mob/living/L = target
+	if(prob(nanobot_chance))
+		visible_message("<b><span class='warning'>The [src] injects something from its flailing arm!</span>")
+		L.reagents.add_reagent("mednanobots", 2)
 
 /mob/living/simple_animal/hostile/monster/cyber_horror/Die()
 	..()

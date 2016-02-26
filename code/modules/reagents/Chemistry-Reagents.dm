@@ -2264,7 +2264,7 @@
 	reagent_state = LIQUID
 	color = "#3E3959" //rgb: 62, 57, 89
 
-/datum/reagent/mednanobots  //Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage.
+/datum/reagent/mednanobots  //Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage. Causes you to gib and turn into a cyber monster if you inject over 5 units.
 	name = "Medical Nanobots"
 	id = "mednanobots"
 	description = "Microscopic robots intended for use in humans. Configured for rapid healing upon infiltration into the body."
@@ -2280,54 +2280,56 @@
 		if(1 to 5)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				var/datum/organ/external/affecting = H.get_organ()
-				for(var/datum/wound/W in affecting.wounds)
-					spawn(1)
-						affecting.wounds -= W
-						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
-				if(H.getOxyLoss()>0 && prob(90))
-					if(holder.has_reagent("mednanobots"))
-						H.adjustOxyLoss(-4)
-						holder.remove_reagent("mednanobots", 4/40)
-					else
-				if(H.getBruteLoss()>0 && prob(90))
-					if(holder.has_reagent("mednanobots"))
-						H.heal_organ_damage(5, 0)
-						holder.remove_reagent("mednanobots", 5/40)
-					else
-				if(H.getFireLoss()>0 && prob(90))
-					if(holder.has_reagent("mednanobots"))
-						H.heal_organ_damage(0, 5)
-						holder.remove_reagent("mednanobots", 5/40)
-					else
-				if(H.getToxLoss()>0 && prob(50))
-					if(holder.has_reagent("mednanobots"))
-						H.adjustToxLoss(-2)
-						holder.remove_reagent("mednanobots", 2/40)
-					else
-				if(H.getCloneLoss()>0 && prob(60))
-					if(holder.has_reagent("mednanobots"))
-						H.adjustCloneLoss(-2)
-						holder.remove_reagent("mednanobots", 2/40)
-				if(H.dizziness != 0)
-					H.dizziness = max(0, H.dizziness - 15)
-				if(H.confused != 0)
-					H.confused = max(0, H.confused - 5)
-				for(var/datum/disease/D in M.viruses)
-					D.spread = "Remissive"
-					D.stage--
-					if(D.stage < 1)
-						D.cure()
+				if(H.species.name != "Dionae")
+					var/datum/organ/external/affecting = H.get_organ()
+					for(var/datum/wound/W in affecting.wounds)
+						spawn(1)
+							affecting.wounds -= W
+							H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
+					if(H.getOxyLoss()>0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustOxyLoss(-4)
+							holder.remove_reagent("mednanobots", 4/40)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+						else
+					if(H.getBruteLoss()>0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.heal_organ_damage(5, 0)
+							holder.remove_reagent("mednanobots", 5/40)
+						else
+					if(H.getFireLoss()>0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.heal_organ_damage(0, 5)
+							holder.remove_reagent("mednanobots", 5/40)
+						else
+					if(H.getToxLoss()>0 && prob(50))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustToxLoss(-2)
+							holder.remove_reagent("mednanobots", 2/40)
+						else
+					if(H.getCloneLoss()>0 && prob(60))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustCloneLoss(-2)
+							holder.remove_reagent("mednanobots", 2/40)
+					if(H.dizziness != 0)
+						H.dizziness = max(0, H.dizziness - 15)
+					if(H.confused != 0)
+						H.confused = max(0, H.confused - 5)
+					for(var/datum/disease/D in M.viruses)
+						D.spread = "Remissive"
+						D.stage--
+						if(D.stage < 1)
+							D.cure()
 		if(5 to INFINITY)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				to_chat(H, "<b><span class='warning'>Something doesn't feel right...</span></b>")
+				to_chat(H, pick("<b><span class='warning'>Something doesn't feel right...</span></b>", "<b><span class='warning'>Something is growing inside you!</span></b>", "<b><span class='warning'>You feel your insides rearrange!</span></b>"))
 				spawn(60)
 					to_chat(H, "<b><span class='warning'>Something bursts out from inside you!</span></b>")
-					message_admins("[key_name(M)] has gibbed and spawned a new cyber horror due to nanobots. ([formatJumpTo(M)])")
+					message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. ([formatJumpTo(H)])")
 					H.visible_message("<b><span class='warning'>[H]'s body rips aparts to reveal something underneath!</b></span>")
 					new /mob/living/simple_animal/hostile/monster/cyber_horror(H.loc)
 					H.gib()
+
 
 /datum/reagent/comnanobots
 	name = "Combat Nanobots"
@@ -2381,8 +2383,6 @@
 							to_chat(H, "The nanobots supercharge your body!")
 					else if(H.hulk_time<world.time && has_been_armstrong) //TIME'S UP
 						dehulk(H)
-					//else if(prob(1))
-						//H.say(pick("NANOMACHINES, SON", "DON'T FUCK WITH THIS SENATOR"))
 		if(10 to INFINITY)
 			to_chat(M, "<b><big>The nanobots tear your body apart!</b></big>")
 			M.gib()
