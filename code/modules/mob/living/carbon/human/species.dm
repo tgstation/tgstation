@@ -1079,8 +1079,6 @@
 		return
 
 	var/lungs = H.getorganslot("lungs")
-	if(!lungs)
-		H.adjustOxyLoss(1)
 
 	if(!breath || (breath.total_moles() == 0) || !lungs)
 		if(H.reagents.has_reagent("epinephrine") && lungs)
@@ -1089,6 +1087,8 @@
 			if(NOBREATH in specflags)
 				return 1
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+			if(!lungs)
+				H.adjustOxyLoss(1)
 			H.failed_last_breath = 1
 		else
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
