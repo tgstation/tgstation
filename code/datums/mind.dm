@@ -58,7 +58,7 @@
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
 	var/datum/demoninfo/demoninfo //Information about the demon, if any.
 	var/damnation_type = 0
-	var/datum/mind/soulOwner
+	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -1600,6 +1600,11 @@
 	ticker.mode.greet_hog_follower(src,colour)
 	ticker.mode.update_hog_icons_added(src, colour)
 
+/datum/mind/proc/checkDemonInfo() //TODO LORDPIDEY: Delete this testproc
+	if(demoninfo)
+		world <<"MEEP: Demoninfo found!"
+	else
+		world <<"MEEP: DEMONINFO NOT FOUND!"
 
 /datum/mind/proc/make_Handofgod_god(colour)
 	switch(colour)
@@ -1757,4 +1762,3 @@
 	..()
 	mind.assigned_role = "[initial(name)]"
 	mind.special_role = "Cultist"
-

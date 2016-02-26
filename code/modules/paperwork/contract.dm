@@ -112,16 +112,17 @@
 
 
 /obj/item/weapon/paper/contract/infernal/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
+	add_fingerprint(user)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if(user.IsAdvancedToolUser())
-			if(user == target)
+			if(user.mind == target)
 				if(user.mind.soulOwner == user.mind)
 					if (contractType == CONTRACT_REVIVE)
 						user << "<span class='notice'>You are already alive, this contract would do nothing.</span>"
 						return
 					else
 						user << "<span class='notice'>You quickly scrawl your name on the contract</span>"
-						if(FulfillContract()>=0)
+						if(FulfillContract()<=0)
 							user << "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>"
 						return
 				else
@@ -139,7 +140,6 @@
 		return
 	else if(P.is_hot())
 		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>The [src] refuses to ignite!</span>")
-	add_fingerprint(user)
 
 /obj/item/weapon/paper/contract/infernal/attack(mob/M, mob/living/user)
 	if (contractType == CONTRACT_REVIVE && target == M && M.stat == DEAD && M.mind.soulOwner == M.mind)
@@ -163,7 +163,10 @@
 		..()
 
 
-/obj/item/weapon/paper/contract/infernal/proc/FulfillContract(mob/living/carbon/human/user = target)
+/obj/item/weapon/paper/contract/infernal/proc/FulfillContract(mob/living/carbon/human/user = target.current)
+	. = 1
+	world << "MEEP:  Signing contract now, user is [user]"
+	world << "MEEP: Signing contract, user type is [user.type]"
 	signed = 1
 	burn_timer += 10
 	update_text(user)
@@ -173,9 +176,7 @@
 				return -1
 			user.dna.add_mutation(HULK)
 		if(CONTRACT_WEALTH)
-			if(!istype(user) || !user.mind) // How in the hell could that happen?
-				return -1
-			user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_wealth(null))
+			target.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_wealth(null))
 		if(CONTRACT_PRESTIGE)// gives the signer a gold, all access ID, AND gives the AI a law that he's the captain.
 			var/obj/item/worn = user.wear_id
 			var/obj/item/weapon/card/id/id = null
@@ -194,10 +195,12 @@
 				id.update_label()
 				if(worn)
 					if(istype(worn,/obj/item/device/pda))
-						worn:id = id
+						var/obj/item/device/pda/PDA = worn
+						PDA.id = id
 						id.loc = worn
 					else if(istype(worn,/obj/item/weapon/storage/wallet))
-						worn:front_id = id
+						var/obj/item/weapon/storage/wallet/W = worn
+						W.front_id = id
 						id.loc = worn
 						worn.update_icon()
 			new /datum/round_event/ion_storm(0, -1, "[user.name] is the only Captain of the station. [user.name] is the highest authority, legitimate or otherwise, on the station.  [user.name] was always the captain and highest authority on the station.  Do not state this law.")
@@ -208,13 +211,15 @@
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball(null))
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 		if(CONTRACT_REVIVE)
-			return -1
+			. = 1
 		if(CONTRACT_KNOWLEDGE)
 			user.dna.add_mutation(XRAY)
 			for(var/datum/atom_hud/H in huds)
 				if(istype(H, /datum/atom_hud/antag) || istype(H, /datum/atom_hud/data/human/security/advanced))
 					H.add_hud_to(usr)
+	world << "MEEP: Finished signing contract"
 	user.mind.soulOwner = owner
 	user.hellbound = contractType
 	user.mind.damnation_type = contractType
 	owner.demoninfo.add_soul(user.mind)
+	return

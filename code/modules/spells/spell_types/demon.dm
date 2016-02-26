@@ -58,13 +58,16 @@
 		if("Knowledge")
 			contractType = CONTRACT_KNOWLEDGE
 	for(var/mob/living/carbon/C in targets)
-		if(user.drop_item())
-			var/obj/item/weapon/paper/contract/infernal/contract = new(user.loc, C, contractType, user)
-			if(contractType == CONTRACT_REVIVE)
-				user.put_in_hands(contract)
-			else
-				C.put_in_hands(contract)
-
+		if(C.mind && user.mind)
+			if(user.drop_item())
+				var/obj/item/weapon/paper/contract/infernal/contract = new(user.loc, C.mind, contractType, user.mind)
+				if(contractType == CONTRACT_REVIVE)
+					user.put_in_hands(contract)
+				else
+					C.put_in_hands(contract)
+		else
+			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for them.</span>"
+			
 
 /obj/effect/proc_holder/spell/dumbfire/fireball/demonic
 	name = "Hellfire"

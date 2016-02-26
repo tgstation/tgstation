@@ -165,18 +165,19 @@ var/list/allDemons = list()
 			return "Presenting the labors of a harvest will disrupt the demon."
 		if(BANE_TOOLBOX)
 			return "That which holds the means of creation also holds the means of the demon's undoing."
-		if(BANE_DIETYNAME)
+		/*if(BANE_DIETYNAME)
 			return "He will recoil at the sound of a diety's name."
 		if(BANE_GOATBLOOD)
 			return "The blood from a goat will surpress his powers."
 		if(BANE_WOOD)
-			return "Wooden weapons will strike him true."
+			return "Wooden weapons will strike him true."*/
 
 
 /datum/demoninfo/proc/add_soul(var/datum/mind/soul)
 	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul
+	world << "Added a soul, current SOULVALUE is: [SOULVALUE]"
 	if((SOULVALUE)%POWERUPTHRESHOLD == 0)
 		increase_form()
 
@@ -218,19 +219,21 @@ var/list/allDemons = list()
 /datum/demoninfo/proc/remove_true_demon()
 /datum/demoninfo/proc/set_basic()
 /datum/demoninfo/proc/set_blood_lizard()
-	user << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard."
-	H.set_species("lizard", icon_update=0)
-	H.underwear = "Nude"
-	H.undershirt = "Nude"
-	H.socks = "Nude"
-	H.dna.features["mcolor"] = "511" //A deep red
-	for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
-		owner.remove_spell(S)
+	if(istype(owner.current, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = owner.current
+		H << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard."
+		H.set_species("lizard", icon_update=0)
+		H.underwear = "Nude"
+		H.undershirt = "Nude"
+		H.socks = "Nude"
+		H.dna.features["mcolor"] = "511" //A deep red
+		for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
+			owner.remove_spell(S)
 
 
 
 /datum/demoninfo/proc/set_true_demon()  //TODO LORDPIDEY: Finish these procs
-	user << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a true demon."
+/*	user << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a true demon."
 	sleep(50)
 	var/mob/A = new /mob/living/simple_animal/ascendant_shadowling/arch_demon(H.loc)
 	A.faction |= "hell"
@@ -238,7 +241,7 @@ var/list/allDemons = list()
 	for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
 		owner.remove_spell(S)
 	//TODO LORDPIDEY: add appropriate spells here.
-	H.loc = A
+	H.loc = A */
 
 
 
