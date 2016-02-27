@@ -13,6 +13,7 @@
 
 
 /obj/item/weapon/papercutter/New()
+	..()
 	storedcutter = new /obj/item/weapon/hatchet/cutterblade(src)
 
 
@@ -28,8 +29,9 @@
 
 
 /obj/item/weapon/papercutter/update_icon()
+	..()
 	overlays.Cut()
-	icon_state = (storedcutter ? "papercutter-cutter" : "papercutter")
+	icon_state = (storedcutter ? "[initial(icon_state)]-cutter" : "[initial(icon_state)]")
 	if(storedpaper)
 		overlays += "paper"
 
