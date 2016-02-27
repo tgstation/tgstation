@@ -528,7 +528,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			for hit-and-run style attacks. This model lacks a method of space propulsion, and therefore it is \
 			advised to utilize the drop pod if you wish to make use of it."
 	item = /obj/mecha/combat/gygax/dark/loaded
-	cost = 80)
+	cost = 80
 
 /datum/uplink_item/support/mauler
 	name = "Mauler Exosuit"
