@@ -1,0 +1,39 @@
+################################
+# Example Changelog File
+#
+# Note: This file, and files beginning with ".", and files that don't end in ".yml" will not be read. If you change this file, you will look really dumb.
+#
+# Your changelog will be merged with a master changelog. (New stuff added only, and only on the date entry for the day it was merged.)
+# When it is, any changes listed below will disappear.
+#
+# Valid Prefixes: 
+#   bugfix
+#   wip (For works in progress)
+#   tweak
+#   soundadd
+#   sounddel
+#   rscadd (general adding of nice things)
+#   rscdel (general deleting of nice things)
+#   imageadd
+#   imagedel
+#   spellcheck (typo fixes)
+#   experiment
+#################################
+
+# Your name.  
+author: Robustin
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+# Any changes you've made.  See valid prefix list above.
+# INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
+# SCREW THIS UP AND IT WON'T WORK.
+# Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
+# Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
+changes: 
+  - rscadd: "Old Cult is back baby!"
+  - tweak: "Cult survival objective disabled"
+  - tweak: "Imbuing talismans now consumes the imbue rune"
+  - tweak: "Invoking the stun talisman now hurts the cultist more"
+  - tweak: "The stun talisman duration is nerfed by 10%, mute is nerfed by 60% but a stutter and special new slur effect will last much longer"
+  - tweak: "The old cult has retained the rune of time stop, now requiring 3 cultists to invoke"
+  - rscdel: "New Cult is removed!"
