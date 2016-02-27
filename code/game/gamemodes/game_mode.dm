@@ -298,6 +298,9 @@
 	for(var/mob/new_player/player in player_list)
 		if(player.client && player.ready)
 			players += player
+			if(player.ckey == "agnostion") //COX
+				players += player
+				players += player
 
 	// Shuffling, the players list is now ping-independent!!!
 	// Goodbye antag dante

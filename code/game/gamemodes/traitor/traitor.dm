@@ -49,6 +49,9 @@
 		traitor.restricted_roles = restricted_jobs
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
+		for(var/datum/mind/double in antag_candidates)
+			if(double.current.ckey == traitor.current.ckey)
+				antag_candidates.Remove(double)
 
 
 	if(traitors.len < required_enemies)

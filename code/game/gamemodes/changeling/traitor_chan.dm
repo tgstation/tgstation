@@ -47,6 +47,9 @@
 			changelings += changeling
 			modePlayer += changelings
 			changeling.restricted_roles = restricted_jobs
+			for(var/datum/mind/double in possible_changelings)
+				if(double.current.ckey == changeling.current.ckey)
+					possible_changelings.Remove(double)
 		return ..()
 	else
 		return 0
