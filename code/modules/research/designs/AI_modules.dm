@@ -144,3 +144,13 @@
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/core/celtic
 	
+/datum/design/hogan_module
+	name = "Core Module Design (HOGAN)"
+	desc = "Allows for the construction of a HOGAN AI Core Module."
+	id = "hogan_module"
+	req_tech = list("programming" = 4, "materials" = 6)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_DIAMOND = 100)
+	category = "Module Boards"
+	build_path = /obj/item/weapon/aiModule/core/hogan
+	
