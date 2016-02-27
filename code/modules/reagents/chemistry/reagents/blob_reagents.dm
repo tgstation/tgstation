@@ -115,31 +115,31 @@
 		newB.expand() //do it again!
 
 //does brute damage, shifts away when damaged
-/datum/reagent/blob/shifting_materia
-	name = "Shifting Materia"
-	id = "shifting_materia"
+/datum/reagent/blob/shifting_fragments
+	name = "Shifting Fragments"
+	id = "shifting_fragments"
 	description = "will do medium brute damage and shift away from damage."
 	shortdesc = "will do medium brute damage."
 	color = "#C8963C"
 	complementary_color = "#3C6EC8"
 
-/datum/reagent/blob/shifting_materia/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/shifting_fragments/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	M.apply_damage(0.6*reac_volume, BRUTE)
 
-/datum/reagent/blob/shifting_materia/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
+/datum/reagent/blob/shifting_fragments/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
 	if(istype(B, /obj/effect/blob/normal) || istype(B, /obj/effect/blob/shield))
 		newB.forceMove(get_turf(B))
 		B.forceMove(T)
 
-/datum/reagent/blob/shifting_materia/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+/datum/reagent/blob/shifting_fragments/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(cause && prob(40))
 		var/list/blobstopick = list()
 		for(var/obj/effect/blob/OB in range(1, B))
 			blobstopick += OB
 		if(blobstopick.len)
 			var/obj/effect/blob/targeted = pick(blobstopick) //randomize the blob chosen, because otherwise it'd tend to the lower left
-			if(istype(B, /obj/effect/blob/normal) || istype(B, /obj/effect/blob/shield))
+			if(istype(targeted, /obj/effect/blob/normal) || istype(targeted, /obj/effect/blob/shield))
 				var/turf/T = get_turf(targeted)
 				targeted.forceMove(get_turf(B))
 				B.forceMove(T) //swap the blobs
@@ -531,24 +531,6 @@
 	for(var/turf/simulated/T in range(1, B))
 		if(prob(50))
 			T.MakeSlippery(TURF_WET_WATER)
-
-//does low toxin damage, irradiates, and teleports targets around
-/datum/reagent/blob/bluespace_dust
-	name = "Bluespace Dust"
-	id = "bluespace_dust"
-	description = "will do low toxin damage, irradiate the target, and may teleport the target away."
-	color = "#5AB419"
-	complementary_color = "#7319B4"
-	blobbernaut_message = "warps"
-	message_living = ", and you feel disoriented"
-
-/datum/reagent/blob/bluespace_dust/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reac_volume = ..()
-	if(prob(2*reac_volume))
-		do_teleport(M, M, max(rand(0.3, 0.1)*reac_volume, rand(2, 3)))
-	M.apply_damage(0.4*reac_volume, TOX)
-	if(M)
-		M.apply_effect(0.2*reac_volume, IRRADIATE)
 
 //does brute damage and throws or pulls nearby objects at the target
 /datum/reagent/blob/dark_matter
