@@ -284,6 +284,19 @@
 		M.slip(stun, weaken, src)
 		return 1
 
+/obj/item/weapon/grown/bananapeel/bluespace
+	name = "bluespace banana peel"
+	desc = "A peel from a bluespace banana."
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "banana_peel_blue"
+	origin_tech = "bluespace=3"
+
+/obj/item/weapon/grown/bananapeel/bluespace/Crossed(AM as mob|obj)
+	if(..())
+		var/teleport_radius = potency / 10
+		do_teleport(AM, get_turf(AM), teleport_radius)
+		qdel(src)    //let's not make one peel infinitely reusable
+
 /obj/item/weapon/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
 	name = "synthesized banana peel"
 	desc = "A synthetic banana peel."
