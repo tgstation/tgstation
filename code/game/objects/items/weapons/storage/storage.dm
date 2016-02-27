@@ -14,6 +14,7 @@
 	//  = - Strict type matching.  Will NOT check for subtypes.
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
+	var/list/ignore_w_class = new/list() //List of objects which will fit in this item, regardless of size. AKA can_hold_too.
 	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
 	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
@@ -262,9 +263,22 @@
 			return 0
 
 	if (W.w_class > max_w_class)
-		if(!stop_messages)
-			to_chat(usr, "<span class='notice'>\The [W] is too big for \the [src].</span>")
-		return 0
+		var/yeh = 0
+		if(ignore_w_class.len)
+			for(var/A in ignore_w_class)
+				if(dd_hasprefix(A,"="))
+					// Force strict matching of type.
+					// No subtypes allowed.
+					if("[W.type]"==copytext(A,2))
+						yeh = 1
+						break
+				else if(istype(W, text2path(A) ))
+					yeh = 1
+					break
+		if(!yeh)
+			if(!stop_messages)
+				to_chat(usr, "<span class='notice'>\The [W] is too big for \the [src].</span>")
+			return 0
 
 	var/sum_w_class = W.w_class
 	for(var/obj/item/I in contents)

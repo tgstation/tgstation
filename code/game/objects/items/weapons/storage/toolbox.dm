@@ -17,7 +17,24 @@
 	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "combat=1"
 	attack_verb = list("robusted", "battered", "staved in")
-
+	storage_slots = 14
+	max_combined_w_class = 28
+	ignore_w_class = list(
+		"/obj/item/weapon/weldingtool/hugetank",
+		"/obj/item/device/rcd/matter/engineering",
+		"/obj/item/device/rcd/rpd",
+		"/obj/item/device/rcd/tile_painter",
+		"/obj/item/blueprints",
+		"/obj/item/device/lightreplacer",
+		"/obj/item/weapon/rcl",
+		"/obj/item/weapon/cell",
+		"/obj/item/stack/rods",
+		"/obj/item/stack/tile",
+		"/obj/item/stack/sheet/metal",
+		"/obj/item/stack/sheet/glass",
+		"/obj/item/stack/sheet/mineral",
+		"/obj/item/stack/sheet/wood"
+		)
 
 /obj/item/weapon/storage/toolbox/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='danger'>[user] is [pick("staving","robusting")] \his head in with the [src.name]! It looks like \he's  trying to commit suicide!</span>")
