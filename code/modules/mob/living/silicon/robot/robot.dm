@@ -256,6 +256,7 @@
 			module_sprites["Marina-SD"] = "marinaSD"
 			module_sprites["Sleek"] = "sleekstandard"
 			module_sprites["#11"] = "servbot"
+			module_sprites["Spider"] = "spider-standard"
 			speed = 0
 
 		if("Service")
