@@ -35,7 +35,7 @@
 		if(volume >= boozepwr*3.8)
 			M.adjustToxLoss(1, 0)
 			. = 1
-	return ..() | .
+	return ..() || .
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
 	if(istype(O,/obj/item/weapon/paper))
@@ -134,7 +134,7 @@
 	if(M.getBruteLoss() && prob(10))
 		M.heal_organ_damage(1,0, 0)
 		. = 1
-	return ..() | .
+	return ..() || .
 
 /datum/reagent/consumable/ethanol/threemileisland
 	name = "Three Mile Island Iced Tea"
@@ -604,7 +604,7 @@
 	if( ( istype(M, /mob/living/carbon/human) && M.job in list("Clown") ) || istype(M, /mob/living/carbon/monkey) )
 		M.heal_organ_damage(1,1, 0)
 		. = 1
-	return ..() | .
+	return ..() || .
 
 /datum/reagent/consumable/ethanol/silencer
 	name = "Silencer"
@@ -618,7 +618,7 @@
 	if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
 		M.heal_organ_damage(1,1)
 		. = 1
-	return ..() | .
+	return ..() || .
 
 /datum/reagent/consumable/ethanol/drunkenblumpkin
 	name = "Drunken Blumpkin"

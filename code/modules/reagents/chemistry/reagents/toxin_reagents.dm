@@ -510,7 +510,7 @@
 						H.losebreath += 10
 						H.adjustOxyLoss(rand(5,25), 0)
 						. = 1
-	return ..() | .
+	return ..() || .
 
 /datum/reagent/toxin/pancuronium
 	name = "Pancuronium"
@@ -632,7 +632,7 @@
 		H.blood_max += 2
 		H.adjustBruteLoss(1, 0) //Brute damage increases with the amount they're bleeding
 		. = 1
-	return ..() | .
+	return ..() || .
 
 /datum/reagent/toxin/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
 	name = "Teslium"
