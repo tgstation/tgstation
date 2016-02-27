@@ -348,6 +348,7 @@
 	mymob.kick_icon.screen_loc = ui_kick_bite
 	mymob.kick_icon.color = ui_color
 	mymob.kick_icon.alpha = ui_alpha
+	src.hotkeybuttons += mymob.kick_icon
 
 	mymob.bite_icon = getFromPool(/obj/screen)
 	mymob.bite_icon.name = "bite"
@@ -356,6 +357,7 @@
 	mymob.bite_icon.screen_loc = ui_kick_bite
 	mymob.bite_icon.color = ui_color
 	mymob.bite_icon.alpha = ui_alpha
+	src.hotkeybuttons += mymob.bite_icon
 
 	mymob.oxygen = getFromPool(/obj/screen)
 	mymob.oxygen.icon = ui_style
