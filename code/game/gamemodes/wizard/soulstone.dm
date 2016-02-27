@@ -124,6 +124,12 @@
 
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
+			if(ticker.mode.name == "cult" && T.mind == ticker.mode:sacrifice_target)
+				if(iscultist(user))
+					user << "<span class='danger'>The Geometer of blood wants this mortal sacrificed with the rune.</span>"
+				else
+					user << "<span class='danger'>The soul stone doesn't work for no apparent reason.</span>"
+				return 0
 			if(imprinted != "empty")
 				user << "<span class='userdanger'>Capture failed!</span>: The soul stone has already been imprinted with [imprinted]'s mind!"
 			else
@@ -137,8 +143,6 @@
 						if(contents.len)
 							user << "<span class='userdanger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room."
 						else
-							if(iscultist(user))
-								new /obj/item/summoning_orb(get_turf(T))
 							for(var/obj/item/W in T)
 								T.unEquip(W)
 							init_shade(src, T, user, vic = 1)
@@ -204,7 +208,7 @@
 	if(stoner && iswizard(stoner))
 		newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 	else if(stoner && iscultist(stoner))
-		newstruct << "<B>You are still bound to serve the cult, follow their orders and help them summon the Geometer at all costs.</B>"
+		newstruct << "<B>You are still bound to serve the cult, follow their orders and help them complete their goals at all costs.</B>"
 	else newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 	newstruct.cancel_camera()
 
