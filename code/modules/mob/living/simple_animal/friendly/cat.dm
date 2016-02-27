@@ -54,7 +54,7 @@
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/Runtime
 	name = "Runtime"
-	desc = "Tends to show up in the strangest of places."
+	desc = "GCAT"
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"
@@ -66,7 +66,7 @@
 
 /mob/living/simple_animal/pet/cat/Runtime/New()
 	if(lives < 9)
-		desc += " Looks like a cat with [lives] lives left."
+		desc += ". Looks like a cat with [lives] lives left."
 	Read_Memory()
 	..()
 
