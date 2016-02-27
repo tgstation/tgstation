@@ -9,10 +9,8 @@
 #define MUTE_ALL		31
 
 //Some constants for DB_Ban
-#define BANTYPE_PERMA		1
-#define BANTYPE_TEMP		2
-#define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
-#define BANTYPE_ANY_JOB		6 //used to remove jobbans
+#define BANTYPE_ANY_FULLBAN	1 //used to locate stuff to unban.
+#define BANTYPE_ANY_JOB		2 //used to remove jobbans
 
 //Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions

@@ -42,7 +42,7 @@
 	if(computer_id)
 		cidquery = " OR computerid = '[computer_id]' "
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, TIMESTAMPDIFF(MINUTE,bantime,expiration_time), bantime, bantype, applies_to_admins FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND isnull(job) AND (bantype = 'PERMABAN' OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, TIMESTAMPDIFF(MINUTE,bantime,expiration_time), bantime, applies_to_admins FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND isnull(job) AND (isnull(expiration_time) OR expiration_time > Now()) AND isnull(unbanned)")
 
 	query.Execute()
 
@@ -53,8 +53,7 @@
 		var/expiration = query.item[4]
 		var/duration = query.item[5]
 		var/bantime = query.item[6]
-		var/bantype = query.item[7]
-		var/applies_to_admins = query.item[8]
+		var/applies_to_admins = query.item[7]
 		if(applies_to_admins)
 			//admin bans MUST match on ckey to prevent cid-spoofing attacks as well as dynamic ip abuse
 			if (pckey != ckey)
@@ -72,11 +71,11 @@
 		if(text2num(duration) > 0)
 			expires = " The ban is for [duration] minutes and expires on [expiration] (server time)."
 		else
-			expires = " The is a permanent ban."
+			expires = " This is a permanent ban."
 
 		var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban was applied by [ackey] on [bantime], [expires]"
 
-		. = list("reason"="[bantype]", "desc"="[desc]")
+		. = list("reason"="[expiration ? "TEMPBAN" : "PERMABAN"]", "desc"="[desc]")
 
 
 		log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")

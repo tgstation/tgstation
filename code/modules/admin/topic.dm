@@ -172,7 +172,6 @@
 
 	else if(href_list["dbbanaddtype"])
 
-		var/bantype = text2num(href_list["dbbanaddtype"])
 		var/banckey = href_list["dbbanaddckey"]
 		var/banip = href_list["dbbanaddip"]
 		var/bancid = href_list["dbbanaddcid"]
@@ -185,19 +184,8 @@
 
 		if(!banjob)
 			banjob = null
-
-		switch(bantype)
-			if(BANTYPE_PERMA)
-				if(!banckey || !banreason)
-					usr << "Not enough parameters (Requires ckey and reason)"
-					return
-				banduration = null
-				banjob = null
-			if(BANTYPE_TEMP)
-				if(!banckey || !banreason || !banduration)
-					usr << "Not enough parameters (Requires ckey, reason and duration)"
-					return
-				banjob = null
+		if(!banduration)
+			banduration = null
 
 		var/mob/playermob
 
@@ -216,7 +204,7 @@
 		else
 			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob")
 
-		DB_ban_record(bantype, playermob, banduration, banreason, banjob, banckey, banip, bancid, applies_to_admins)
+		DB_ban_record(playermob, banduration, banreason, banjob, banckey, banip, bancid, applies_to_admins)
 		add_note(banckey, banreason, null, usr.ckey, 0)
 
 	else if(href_list["editrights"])
@@ -835,7 +823,7 @@
 						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [reason]")
 						log_admin("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes")
 						feedback_inc("ban_job_tmp",1)
-						DB_ban_record(BANTYPE_TEMP, M, mins, reason, job)
+						DB_ban_record(M, mins, reason, job)
 						if(M.client)
 							jobban_buildcache(M.client)
 						feedback_add_details("ban_job_tmp","- [job]")
@@ -858,7 +846,7 @@
 							ban_unban_log_save("[key_name(usr)] perma-jobbanned [key_name(M)] from [job]. reason: [reason]")
 							log_admin("[key_name(usr)] perma-banned [key_name(M)] from [job]")
 							feedback_inc("ban_job",1)
-							DB_ban_record(BANTYPE_PERMA, M, -1, reason, job)
+							DB_ban_record(M, null, reason, job)
 							if(M.client)
 								jobban_buildcache(M.client)
 							feedback_add_details("ban_job","- [job]")
@@ -986,7 +974,7 @@
 				M << "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>"
 				M << "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes.</span>"
 				feedback_inc("ban_tmp",1)
-				DB_ban_record(BANTYPE_TEMP, M, mins, reason)
+				DB_ban_record(M, mins, reason)
 				feedback_inc("ban_tmp_mins",mins)
 				if(config.banappeals)
 					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
@@ -1012,7 +1000,7 @@
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 				message_admins("<span class='adminnotice'>[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.</span>")
 				feedback_inc("ban_perma",1)
-				DB_ban_record(BANTYPE_PERMA, M, -1, reason)
+				DB_ban_record(M, null, reason)
 
 				del(M.client)
 				//qdel(M)
