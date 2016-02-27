@@ -142,7 +142,8 @@ var/global/list/whitelisted_species = list("Human")
 		H.organs.len=0
 	if(H.internal_organs)
 		for(var/datum/organ/internal/I in H.internal_organs)
-			I.Remove(H, quiet=1) // GET OUT REEEEEEE
+			// I.Remove(H) // THIS DOES NOTHING AT THE MOMENT
+			qdel(I) // These don't get special garbage collection as is so they never get gotten from pool
 		H.internal_organs.len=0
 	if(H.organs_by_name)
 		H.organs_by_name.len=0
