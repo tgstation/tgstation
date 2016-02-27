@@ -193,6 +193,7 @@
 	name = "Flammable Goo"
 	id = "flammable_goo"
 	description = "will do low burn damage, medium toxin damage, and ignite when burned."
+	shortdesc = "will do low burn damage and medium toxin damage."
 	color = "#BE5532"
 	complementary_color = "#329BBE"
 	blobbernaut_message = "splashes"
@@ -305,6 +306,7 @@
 	description = "will inject targets with poison."
 	color = "#7D6EB4"
 	complementary_color = "#A5B46E"
+	blobbernaut_message = "injects"
 	message_living = ", and you feel like your insides are melting"
 
 /datum/reagent/blob/poisonous_strands/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
