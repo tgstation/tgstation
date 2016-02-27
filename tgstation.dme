@@ -1378,6 +1378,7 @@
 #include "code\modules\paperwork\folders.dm"
 #include "code\modules\paperwork\handlabeler.dm"
 #include "code\modules\paperwork\paper.dm"
+#include "code\modules\paperwork\paper_cutter.dm"
 #include "code\modules\paperwork\paperbin.dm"
 #include "code\modules\paperwork\pen.dm"
 #include "code\modules\paperwork\photocopier.dm"
