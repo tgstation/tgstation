@@ -947,4 +947,7 @@
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
 	restore_blood()
 	remove_all_embedded_objects()
+	for(var/datum/mutation/human/HM in dna.mutations)
+		if(HM.quality != POSITIVE)
+			dna.remove_mutation(HM.name)
 	..()
