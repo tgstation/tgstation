@@ -111,7 +111,7 @@
 	..()
 	var/mob/living/L = target
 	if(prob(nanobot_chance))
-		visible_message("<b><span class='warning'>The [src] injects something from its flailing arm!</span>")
+		visible_message("<b><span class='warning'>[src] injects something from its flailing arm!</span>")
 		L.reagents.add_reagent("mednanobots", 2)
 
 /mob/living/simple_animal/hostile/monster/cyber_horror/Die()
