@@ -120,9 +120,20 @@
 			enter_jaunt(target)
 			in_jaunt = 1
 	else
-		in_jaunt = 0
 		for(var/mob/living/target in targets)
-			var/turf/mobloc = get_turf(target.loc)
-			var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt( mobloc )
-			var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
-			exit_jaunt(target, mobloc, holder, animation, user)
+			var/continuing = 0
+			for(/mob/living/carbon/C in orange(2, get_turf(target.loc)))
+				if (C.mind && C.mind.soulOwner = C.mind)
+					continuing = 1
+					break
+			if(continuing)
+				in_jaunt = 0
+				var/turf/mobloc = get_turf(target.loc)
+				var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt( mobloc )
+				var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
+				exit_jaunt(target, mobloc, holder, animation, user)
+			else
+				target << "<<span class='warning'>You can only re-appear near a potential signer."
+				revert_cast()
+				return ..()
+	return ..()

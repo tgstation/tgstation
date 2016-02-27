@@ -69,9 +69,9 @@
 	update_text()
 
 /obj/item/weapon/paper/contract/infernal/suicide_act(mob/user)
-	if(signed && (user == target))
+	if(signed && (user == target.current))
 		user.say("OH GREAT INFERNO!  I DEMAND YOU COLLECT YOUR BOUNTY IMMEDIATELY!")
-		user.visible_message("<span class='suicide'>[user] holds up a contract claiming his soul, then immediately catches fire.</span>")
+		user.visible_message("<span class='suicide'>[user] holds up a contract claiming his soul, then immediately catches fire.  It looks like \he's trying to commit suicide!</span>")
 		if(istype(user, /mob/living))
 			var/mob/living/U = user
 			U.adjust_fire_stacks(20)
@@ -176,7 +176,9 @@
 				return -1
 			user.dna.add_mutation(HULK)
 		if(CONTRACT_WEALTH)
-			target.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_wealth(null))
+			if(!istype(user) || !user.mind) // How in the hell could that happen?
+				return -1
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_wealth(null))
 		if(CONTRACT_PRESTIGE)// gives the signer a gold, all access ID, AND gives the AI a law that he's the captain.
 			var/obj/item/worn = user.wear_id
 			var/obj/item/weapon/card/id/id = null
@@ -211,7 +213,7 @@
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball(null))
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 		if(CONTRACT_REVIVE)
-			. = 1
+			. = -1
 		if(CONTRACT_KNOWLEDGE)
 			user.dna.add_mutation(XRAY)
 			for(var/datum/atom_hud/H in huds)

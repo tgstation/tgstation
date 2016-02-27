@@ -17,7 +17,7 @@ var/list/allDemons = list()
 	var/truename
 	var/list/datum/mind/soulsOwned = new
 	var/reviveNumber = 0
-	var/form = 0
+	var/form = BASIC_DEMON
 
 /proc/randomDemonInfo(var/name = randomDemonName())
 	var/datum/demoninfo/demon = new
@@ -194,6 +194,7 @@ var/list/allDemons = list()
 		return
 
 /datum/demoninfo/proc/increase_form()
+	world << "MEEP: now increasing form."
 	switch(form)
 		if(BASIC_DEMON)
 			remove_basic()
@@ -219,16 +220,18 @@ var/list/allDemons = list()
 /datum/demoninfo/proc/remove_true_demon()
 /datum/demoninfo/proc/set_basic()
 /datum/demoninfo/proc/set_blood_lizard()
+	world << "MEEP: now setting blood lizard traits"
 	if(istype(owner.current, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner.current
 		H << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard."
-		H.set_species("lizard", icon_update=0)
+		H.set_species(/datum/species/lizard, 1)
 		H.underwear = "Nude"
 		H.undershirt = "Nude"
 		H.socks = "Nude"
 		H.dna.features["mcolor"] = "511" //A deep red
 		for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
 			owner.remove_spell(S)
+		H.regenerate_icons()
 
 
 
