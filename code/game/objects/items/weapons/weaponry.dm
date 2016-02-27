@@ -152,8 +152,6 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 					prefix = "sharp"
 				if(20 to 27)
 					prefix = "exceptional"
-				if(28)
-					prefix = "masterwork"
 				if(29 to INFINITY)
 					prefix = "legendary"
 
