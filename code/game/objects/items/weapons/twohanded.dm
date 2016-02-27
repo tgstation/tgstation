@@ -449,16 +449,23 @@
 /obj/item/weapon/twohanded/pitchfork
 	icon_state = "pitchfork0"
 	name = "pitchfork"
-	desc = "A red pitchfork, it looks like the work of the devil."
-	force = 19
-	throwforce = 24
+	desc = "A simple tool used for moving hay."
+	force = 7
+	throwforce = 15
 	w_class = 4
-	slot_flags = SLOT_BACK
-	force_unwielded = 19
-	force_wielded = 25
+	force_unwielded = 7
+	force_wielded = 15
 	attack_verb = list("attacked", "impaled", "pierced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+
+/obj/item/weapon/twohanded/pitchfork/demoninfo
+	name = "demonic pitchfork"
+	desc = "A red pitchfork, it looks like the work of the devil."
+	force = 19
+	throwforce = 24
+	force_unwielded = 19
+	force_wielded = 25
 
 /obj/item/weapon/twohanded/pitchfork/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "pitchfork[wielded]"
@@ -468,7 +475,7 @@
 	user.visible_message("<span class='suicide'>[user] impales \himself in \his abdomen with [src]! It looks like \he's trying to commit suicide..</span>")
 	return (BRUTELOSS)
 
-/obj/item/weapon/twohanded/pitchfork/pickup(mob/user)
+/obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
 	if(istype(user, /mob/living))
 		var/mob/living/U = user
 		if(!U.mind.demoninfo)
@@ -481,7 +488,7 @@
 				U.adjustFireLoss(rand(force/2,force))
 		return
 
-/obj/item/weapon/twohanded/pitchfork/attack(mob/target, mob/living/carbon/human/user)
+/obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
 	if(!user.mind.demoninfo)
 		user << "<span class ='warning'>The [src] burns in your hands.</span>"
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
