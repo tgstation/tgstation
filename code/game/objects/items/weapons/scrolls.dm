@@ -10,6 +10,7 @@
 	throw_speed = 4
 	throw_range = 20
 	origin_tech = "bluespace=4"
+	mech_flags = MECH_SCAN_FAIL // Because why should the crew be able to make scrolls out of nothing
 
 /obj/item/weapon/teleportation_scroll/apprentice
 	name = "lesser scroll of teleportation"
