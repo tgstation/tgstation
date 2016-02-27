@@ -1,7 +1,6 @@
 import sys
 import os
 import pathlib
-import dmm2tgm
 import map_helpers
 
 #main("../../_maps/")
@@ -23,7 +22,7 @@ def main(map_folder, tgm=0):
     valid_indices = list()
     for m in in_list:
         index = string_to_num(m)
-        if index > 0 and index < len(list_of_files):
+        if index >= 0 and index < len(list_of_files):
             valid_indices.append(index)
 
     if tgm == "1":

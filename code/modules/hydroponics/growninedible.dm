@@ -68,7 +68,7 @@
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/twohanded/required/chainsaw))
+	if(W.sharpness)
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
 		var/obj/item/stack/plank = new plank_type(user.loc, 1 + round(potency / 25))
 		var/old_plank_amount = plank.amount
@@ -91,6 +91,11 @@
 			return
 		else
 			usr << "<span class ='warning'>You must dry this first!</span>"
+
+/obj/item/weapon/grown/log/tree
+	seed = null
+	name = "wood log"
+	desc = "TIMMMMM-BERRRRRRRRRRR!"
 
 /obj/item/weapon/grown/log/steel
 	seed = /obj/item/seeds/steelmycelium

@@ -50,13 +50,6 @@
 	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
 		return
 	var/mob/M = target
-	if(ishuman(M) || ismonkey(M))
-		var/mob/living/carbon/C_target = M
-		var/obj/item/organ/internal/brain/B = C_target.getorgan(/obj/item/organ/internal/brain)
-		if(B)
-			B.loc = get_turf(C_target)
-			B.transfer_identity(C_target)
-			C_target.internal_organs -= B
 	var/datum/effect_system/spark_spread/sparks = new
 	sparks.set_up(4, 0, M.loc) //no idea what the 0 is
 	sparks.start()

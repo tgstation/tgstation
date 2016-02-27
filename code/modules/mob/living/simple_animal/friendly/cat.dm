@@ -60,6 +60,62 @@
 	icon_dead = "cat_dead"
 	gender = FEMALE
 	gold_core_spawnable = 0
+	var/list/family = list()
+	var/lives = 9
+	var/memory_saved = 0
+
+/mob/living/simple_animal/pet/cat/Runtime/New()
+	if(lives < 9)
+		desc += ". Looks like a cat with [lives] lives left."
+	Read_Memory()
+	..()
+
+/mob/living/simple_animal/pet/cat/Runtime/Life()
+	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+		Write_Memory()
+	..()
+
+/mob/living/simple_animal/pet/cat/Runtime/death()
+	if(!memory_saved)
+		Write_Memory(1)
+	..()
+
+/mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
+	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
+	S["family"] 			>> family
+	S["lives"]				>> lives
+
+	if(isnull(family))
+		family = list()
+
+	if(isnull(lives))
+		lives = 9
+
+	if(lives <= 0)
+		lives = 10 //Lowers to 9 in Write_Memory
+		Write_Memory(1)
+		qdel(src)
+
+	for(var/cat_type in family)
+		if(family[cat_type] > 0)
+			for(var/i in 1 to family[cat_type])
+				new cat_type(loc)
+
+/mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
+	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
+	if(dead)
+		S["lives"] 				<< lives - 1
+	family = list()
+	for(var/mob/living/simple_animal/pet/cat/C in mob_list)
+		if(istype(C,type) || C.stat || !C.butcher_results) //That last one is a work around for hologram cats
+			continue
+		if(C.type in family)
+			family[C.type] += 1
+		else
+			family[C.type] = 1
+	S["family"]				<< family
+	memory_saved = 1
+
 
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"

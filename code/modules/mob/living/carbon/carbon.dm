@@ -70,7 +70,16 @@
 						stomach_contents.Remove(A)
 					src.gib()
 
-/mob/living/carbon/gib(animation = 1)
+/mob/living/carbon/gib(animation = 1, var/no_brain = 0)
+	death(1)
+	for(var/obj/item/organ/internal/I in internal_organs)
+		if(no_brain && istype(I, /obj/item/organ/internal/brain))
+			continue
+		if(I)
+			I.Remove(src)
+			I.loc = get_turf(src)
+			I.throw_at_fast(get_edge_target_turf(src,pick(alldirs)),rand(1,3),5)
+
 	for(var/mob/M in src)
 		if(M in stomach_contents)
 			stomach_contents.Remove(M)
@@ -818,3 +827,17 @@ var/const/GALOSHES_DONT_HELP = 4
 	. = ..()
 	if(!getorgan(/obj/item/organ/internal/brain))
 		return 0
+
+/mob/living/carbon/harvest(mob/living/user)
+	if(qdeleted(src))
+		return
+	var/organs_amt = 0
+	for(var/obj/item/organ/internal/O in internal_organs)
+		if(prob(50))
+			organs_amt++
+			O.Remove(src)
+			O.loc = get_turf(src)
+	if(organs_amt)
+		user << "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>"
+
+	..()

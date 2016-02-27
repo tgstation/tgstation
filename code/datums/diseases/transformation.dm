@@ -228,3 +228,19 @@
 		if(4)
 			if (prob(20))
 				affected_mob.say(pick("Bark!", "AUUUUUU"))
+
+/datum/disease/transformation/morph
+	name = "Gluttony's Blessing"
+	cure_text = "nothing"
+	cures = list("adminordrazine")
+	agent = "Gluttony's Blessing"
+	desc = "A 'gift' from somewhere terrible."
+	stage_prob = 20
+	severity = BIOHAZARD
+	visibility_flags = 0
+	stage1	= list("Your stomach rumbles.")
+	stage2	= list("Your skin feels saggy.")
+	stage3	= list("<span class='danger'>Your appendages are melting away.</span>", "<span class='danger'>Your limbs begin to lose their shape.</span>")
+	stage4	= list("<span class='danger'>You're ravenous.</span>")
+	stage5	= list("<span class='danger'>You have become a morph.</span>")
+	new_form = /mob/living/simple_animal/hostile/morph

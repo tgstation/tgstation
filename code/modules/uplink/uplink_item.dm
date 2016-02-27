@@ -92,13 +92,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle
 	cost = 14 // normally 16
 
-/datum/uplink_item/nukeoffer/m90gl
-	name = "M-90gl bundle"
-	desc = "A premium offer: Pick up the M-90gl, along with a magazine, some grenades, and a pack of cigarettes \
-			for a 'killer' price."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle
-	cost = 15 // normally 18
-
 /datum/uplink_item/nukeoffer/bulldog
 	name = "Bulldog bundle"
 	desc = "Lean and mean: Optimised for people that want to get up close and personal. Contains the popular \
@@ -172,19 +165,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/dangerous/smg/unrestricted
 	item = /obj/item/weapon/gun/projectile/automatic/c20r/unrestricted
-	include_modes = list(/datum/game_mode/gang)
-
-/datum/uplink_item/dangerous/carbine
-	name = "M-90gl Carbine"
-	desc = "A fully-loaded, specialized three-round burst carbine that fires 30-round 5.56mm magazines with a togglable \
-			underslung 40mm grenade launcher."
-	item = /obj/item/weapon/gun/projectile/automatic/m90
-	cost = 12
-	surplus = 50
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/dangerous/carbine/unrestricted
-	item = /obj/item/weapon/gun/projectile/automatic/m90/unrestricted
 	include_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/dangerous/machinegun
@@ -439,22 +419,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/carbine
-	name = "5.56 Toploader Magazine"
-	desc = "An additional 30-round 5.56 magazine; sutable for use with the M-90gl carbine. \
-			These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
-	item = /obj/item/ammo_box/magazine/m556
-	cost = 4
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-
-/datum/uplink_item/ammo/a40mm
-	name = "40mm Grenade Box"
-	desc = "A box of 4 additional 40mm HE grenades for use with the M-90gl's underbarrel grenade launcher. \
-			Your teammates will ask you to not shoot these down small hallways."
-	item = /obj/item/ammo_box/a40mm
-	cost = 5
-	include_modes = list(/datum/game_mode/nuclear)
-
 /datum/uplink_item/ammo/machinegun
 	cost = 6
 	surplus = 0
@@ -658,10 +622,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_tools
 	category = "Stealth and Camouflage Items"
 
-/datum/uplink_item/stealthy_tool/chameleon
+/datum/uplink_item/stealthy_tools/chameleon
 	name = "Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
-	item = /obj/item/clothing/under/chameleon
+	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 4
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
