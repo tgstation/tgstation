@@ -146,13 +146,13 @@
 			user << "<span class='warning'>You need one rod to make a wired rod!</span>"
 			return
 	else if(istype(I, /obj/item/stack/sheet/metal))
-		var/obj/item/weapon/restraints/legcuffs/bola/S = new /obj/item/weapon/restraints/legcuffs/bola
 		var/obj/item/stack/sheet/metal/M = I
 		if(M.amount < 6)
 			user << "<span class='warning'>You need at least six metal sheets to make good enough weights!</span>"
 			return
-		user << "<span class='notice'>You begin to apply [I] the [src]...</span>"
+		user << "<span class='notice'>You begin to apply [I] to [src]...</span>"
 		if(do_after(user, 35, target = src))
+			var/obj/item/weapon/restraints/legcuffs/bola/S = new /obj/item/weapon/restraints/legcuffs/bola
 			M.use(6)
 			user.put_in_hands(S)
 			user << "<span class='notice'>You make some weights out of [I] and tie them to [src].</span>"
@@ -286,6 +286,7 @@
 	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
 	icon_state = "bola"
 	breakouttime = 35//easy to apply, easy to break out of
+	gender = NEUTER
 
 /obj/item/weapon/restraints/legcuffs/bola/throw_impact(atom/hit_atom)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
