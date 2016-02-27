@@ -1,33 +1,198 @@
-"a" = (/turf/space,/area/space)
-"b" = (/turf/space,/turf/simulated/wall/shuttle{tag = "icon-swall_f6"; icon_state = "swall_f6"},/area/space)
-"c" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/simulated/floor/plating/airless,/area/space)
-"d" = (/turf/space,/turf/simulated/wall/shuttle{tag = "icon-swall_f10"; icon_state = "swall_f10"},/area/space)
-"e" = (/turf/simulated/wall/shuttle{tag = "icon-swall3"; icon_state = "swall3"},/area/space)
-"f" = (/turf/simulated/floor/plasteel/shuttle,/area/space)
-"g" = (/obj/structure/chair{dir = 1},/turf/simulated/floor/plasteel/shuttle,/area/space)
-"h" = (/turf/simulated/wall/shuttle{tag = "icon-swall13"; icon_state = "swall13"},/area/space)
-"i" = (/turf/simulated/wall/shuttle{tag = "icon-swall8"; icon_state = "swall8"},/area/space)
-"j" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor/plasteel/shuttle,/area/space)
-"k" = (/turf/simulated/wall/shuttle{tag = "icon-swall4"; icon_state = "swall4"},/area/space)
-"l" = (/obj/structure/chair{dir = 4},/turf/simulated/floor/plasteel/shuttle,/area/space)
-"m" = (/obj/structure/chair{dir = 8},/turf/simulated/floor/plasteel/shuttle,/area/space)
-"n" = (/obj/structure/shuttle/engine/heater,/turf/simulated/floor/plating/airless,/area/space)
-"o" = (/turf/space,/turf/simulated/wall/shuttle{tag = "icon-swall_f5"; icon_state = "swall_f5"},/area/space)
-"p" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/simulated/floor/plating/airless,/area/space)
-"q" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating/airless,/area/space)
-"r" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_r"},/turf/simulated/floor/plating/airless,/area/space)
-"s" = (/turf/space,/turf/simulated/wall/shuttle{tag = "icon-swall_f9"; icon_state = "swall_f9"},/area/space)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/space,
+/area/space)
+"b" = (
+/turf/space,
+/turf/simulated/wall/shuttle{
+	tag = "icon-swall_f6";
+	icon_state = "swall_f6"
+	},
+/area/space)
+"c" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"d" = (
+/turf/space,
+/turf/simulated/wall/shuttle{
+	tag = "icon-swall_f10";
+	icon_state = "swall_f10"
+	},
+/area/space)
+"e" = (
+/turf/simulated/wall/shuttle{
+	tag = "icon-swall3";
+	icon_state = "swall3"
+	},
+/area/space)
+"f" = (
+/turf/simulated/floor/plasteel/shuttle,
+/area/space)
+"g" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/simulated/floor/plasteel/shuttle,
+/area/space)
+"h" = (
+/turf/simulated/wall/shuttle{
+	tag = "icon-swall13";
+	icon_state = "swall13"
+	},
+/area/space)
+"i" = (
+/turf/simulated/wall/shuttle{
+	tag = "icon-swall8";
+	icon_state = "swall8"
+	},
+/area/space)
+"j" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/plasteel/shuttle,
+/area/space)
+"k" = (
+/turf/simulated/wall/shuttle{
+	tag = "icon-swall4";
+	icon_state = "swall4"
+	},
+/area/space)
+"l" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/simulated/floor/plasteel/shuttle,
+/area/space)
+"m" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/simulated/floor/plasteel/shuttle,
+/area/space)
+"n" = (
+/obj/structure/shuttle/engine/heater,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"o" = (
+/turf/space,
+/turf/simulated/wall/shuttle{
+	tag = "icon-swall_f5";
+	icon_state = "swall_f5"
+	},
+/area/space)
+"p" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion_l"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"q" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"r" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion_r"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"s" = (
+/turf/space,
+/turf/simulated/wall/shuttle{
+	tag = "icon-swall_f9";
+	icon_state = "swall_f9"
+	},
+/area/space)
 
 (1,1,1) = {"
-abcccda
-aefgfea
-aefffea
-bhijkhd
-elfffme
-elfffme
-jfffffj
-jfffffj
-efffffe
-ennnnne
-opqqqrs
+a
+a
+a
+b
+e
+e
+j
+j
+e
+e
+e
+"}
+(2,1,1) = {"
+b
+e
+e
+h
+l
+l
+f
+f
+f
+n
+n
+"}
+(3,1,1) = {"
+c
+f
+f
+i
+f
+f
+f
+f
+f
+n
+n
+"}
+(4,1,1) = {"
+c
+g
+f
+j
+f
+f
+f
+f
+f
+n
+n
+"}
+(5,1,1) = {"
+c
+f
+f
+k
+f
+f
+f
+f
+f
+n
+n
+"}
+(6,1,1) = {"
+d
+e
+e
+h
+m
+m
+f
+f
+f
+n
+n
+"}
+(7,1,1) = {"
+a
+a
+a
+d
+e
+e
+j
+j
+e
+e
+e
 "}
