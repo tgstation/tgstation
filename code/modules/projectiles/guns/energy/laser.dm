@@ -22,7 +22,8 @@
 	desc = "A laser pistol issued to high ranking members of a certain shadow corporation."
 	icon_state = "xcomlaserpistol"
 	item_state = null
-	projectile_type = /obj/item/projectile/beam
+	w_class = 1.0
+	projectile_type = /obj/item/projectile/beam/lightlaser
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	charge_cost = 100 // holds less "ammo" then the rifle variant.
 
@@ -193,9 +194,9 @@ obj/item/weapon/gun/energy/laser/retro
 	desc = "A state of the art pistol utilizing plasma in a uranium-235 lined core to output searing bolts of energy."
 	icon_state = "alienpistol"
 	item_state = null
-	w_class = 2.0
+	w_class = 1.0
 	projectile_type = /obj/item/projectile/energy/plasma/pistol
-	charge_cost = 50
+	charge_cost = 100
 
 /obj/item/weapon/gun/energy/plasma/light
 	name = "plasma rifle"
@@ -203,7 +204,7 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "lightalienrifle"
 	item_state = null
 	projectile_type = /obj/item/projectile/energy/plasma/light
-	charge_cost = 100
+	charge_cost = 50
 
 /obj/item/weapon/gun/energy/plasma/rifle
 	name = "plasma cannon"

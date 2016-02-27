@@ -537,6 +537,12 @@ var/list/beam_master = list()
 		var/message = pick("\the [src] narrowly whizzes past [L]!","\the [src] almost hits [L]!","\the [src] straight up misses its target.","[L]'s hair is singed off by \the [src]!","\the [src] misses [L] by a millimetre!","\the [src] doesn't hit","\the [src] misses its intended target.","[L] has a lucky escape from \the [src]!")
 		target.loc.visible_message("<span class='danger'>[message]</span>")
 
+/obj/item/projectile/beam/lightlaser
+	name = "light laser"
+	icon_state = "light laser"
+	damage = 25
+
+
 /obj/item/projectile/beam/heavylaser
 	name = "heavy laser"
 	icon_state = "heavylaser"
