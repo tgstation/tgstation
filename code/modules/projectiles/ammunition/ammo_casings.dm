@@ -70,7 +70,7 @@
 /obj/item/ammo_casing/c45
 	desc = "A .45 bullet casing."
 	caliber = ".45"
-	projectile_type = /obj/item/projectile/bullet/midbullet
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
 /obj/item/ammo_casing/c45nostamina
 	desc = "A .45 bullet casing."
@@ -240,7 +240,7 @@
 /obj/item/ammo_casing/a556
 	desc = "A 5.56mm bullet casing."
 	caliber = "a556"
-	projectile_type = /obj/item/projectile/bullet/heavybullet
+	projectile_type = /obj/item/projectile/bullet/midbullet
 
 /obj/item/ammo_casing/caseless
 	desc = "A caseless bullet casing."
