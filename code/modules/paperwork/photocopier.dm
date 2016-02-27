@@ -63,21 +63,26 @@
 		if(copy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 0 && !busy && copy)
-					var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
-					if(length(copy.info) > 0)	//Only print and add content if the copied doc has words on it
-						if(toner > 10)	//lots of toner, make it dark
-							c.info = "<font color = #101010>"
-						else			//no toner? shitty copies for you!
-							c.info = "<font color = #808080>"
-						var/copied = copy.info
-						copied = replacetext(copied, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=")	//state of the art techniques in action
-						copied = replacetext(copied, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
-						c.info += copied
-						c.info += "</font>"
-						c.name = copy.name
-						c.fields = copy.fields
-						c.updateinfolinks()
+					if(istype(copy, /obj/item/weapon/paper/contract/employment))
+						var/obj/item/weapon/paper/contract/employment/c = copy
+						new /obj/item/weapon/paper/contract/employment (loc, c.target)
 						toner--
+					else
+						var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
+						if(length(copy.info) > 0)	//Only print and add content if the copied doc has words on it
+							if(toner > 10)	//lots of toner, make it dark
+								c.info = "<font color = #101010>"
+							else			//no toner? shitty copies for you!
+								c.info = "<font color = #808080>"
+							var/copied = copy.info
+							copied = replacetext(copied, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=")	//state of the art techniques in action
+							copied = replacetext(copied, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+							c.info += copied
+							c.info += "</font>"
+							c.name = copy.name
+							c.fields = copy.fields
+							c.updateinfolinks()
+							toner--
 					busy = 1
 					sleep(15)
 					busy = 0
@@ -223,13 +228,17 @@
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
-			if(!user.drop_item())
-				return
-			copy = O
-			O.loc = src
-			user << "<span class='notice'>You insert [O] into [src].</span>"
-			flick("photocopier1", src)
-			updateUsrDialog()
+			if(istype(O,/obj/item/weapon/paper/contract/infernal))
+				user << "<span class='warning'>The photocopier catches fire, smelling of brimstone!</span>"
+				burn_state = ON_FIRE
+			else
+				if(!user.drop_item())
+					return
+				copy = O
+				O.loc = src
+				user << "<span class='notice'>You insert [O] into [src].</span>"
+				flick("photocopier1", src)
+				updateUsrDialog()
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 

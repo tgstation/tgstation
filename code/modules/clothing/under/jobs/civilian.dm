@@ -7,6 +7,7 @@
 	item_state = "bar_suit"
 	item_color = "barman"
 	alt_covers_chest = 1
+	whiteness = 1
 
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
@@ -48,6 +49,7 @@
 	icon_state = "chef"
 	item_color = "chef"
 	alt_covers_chest = 1
+	whiteness = 1
 
 
 /obj/item/clothing/under/rank/clown

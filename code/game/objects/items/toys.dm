@@ -681,6 +681,28 @@
 		return
 	..()
 
+/obj/item/toy/demonologist
+	name = "toy demonologist"
+	desc = "A tool to help you write fictional demons!"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "librarian"
+	w_class = 2
+	var/cooldown = 0
+
+/obj/item/toy/demonologist/attack_self(mob/user)
+	if(!cooldown)
+		var/datum/demoninfo/demon = randomDemonInfo()
+		user << "<span class='notice'>You press the button on [src].</span>"
+		cooldown = 1
+		playsound(user, 'sound/machines/click.ogg', 20, 1)
+		src.loc.visible_message("<span class='danger'>\icon[src]Some fun facts about: [demon.truename]</span>")
+		src.loc.visible_message("<span class='danger'>[demon.banelore()]</span>")
+		src.loc.visible_message("<span class='danger'>[demon.obligationlore()]</span>")
+		src.loc.visible_message("<span class='danger'>[demon.banlore()]</span>")
+		spawn(60) cooldown = 0
+		return
+	..()
+
 /obj/item/toy/owl
 	name = "owl action figure"
 	desc = "An action figure modeled after 'The Owl', defender of justice."
