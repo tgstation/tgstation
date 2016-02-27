@@ -53,6 +53,7 @@ To draw a rune, use an arcane tome.
 		qdel(src)
 		return
 	else if(istype(I, /obj/item/weapon/nullrod))
+		user.say("BEGONE FOUL MAGIKS!!")
 		user << "<span class='danger'>You disrupt the magic of [src] with [I].</span>"
 		qdel(src)
 		return
@@ -470,6 +471,20 @@ var/list/teleport_other_runes = list()
 		log_game("Summon Nar-Sie rune failed - gametype is not cult")
 		return
 
+/obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
+	if((istype(I, /obj/item/weapon/tome) && iscultist(user)))
+		user.visible_message("<span class='warning'>[user.name] begins erasing the [src]...</span>", "<span class='notice'>You begin erasing the [src]...</span>")
+		if(do_after(user, 50, target = src))	//Prevents accidental erasures.
+			log_game("Summon Narsie rune erased by [user.mind.key] (ckey) with a tome")
+			message_admins("[key_name_admin(user)] erased a Narsie rune with a tome")
+			..()
+			return
+	else
+		if(istype(I, /obj/item/weapon/nullrod))	//Begone foul magiks. You cannot hinder me.
+			log_game("Summon Narsie rune erased by [user.mind.key] (ckey) using a null rod")
+			message_admins("[key_name_admin(user)] erased a Narsie rune with a null rod")
+			..()
+	return
 
 //Rite of Resurrection: Requires two corpses. Revives one and gibs the other.
 /obj/effect/rune/raise_dead
@@ -968,7 +983,7 @@ var/list/teleport_other_runes = list()
 		return
 	var/list/ghosts_on_rune = list()
 	for(var/mob/dead/observer/O in get_turf(src))
-		if(O.client)
+		if(O.client && !jobban_isbanned(O, ROLE_CULTIST))
 			ghosts_on_rune.Add(O)
 	if(!ghosts_on_rune.len)
 		user << "<span class='cultitalic'>There are no spirits near [src]!</span>"
