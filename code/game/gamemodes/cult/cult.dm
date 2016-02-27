@@ -147,8 +147,7 @@
 		if (mob.mind.assigned_role == "Clown")
 			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 			mob.dna.remove_mutation(CLOWNMUT)
-			
-	. += cult_give_item(/obj/item/weapon/tome, mob)
+
 	. += cult_give_item(/obj/item/weapon/paper/talisman/supply, mob)
 	mob << "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>"
 
