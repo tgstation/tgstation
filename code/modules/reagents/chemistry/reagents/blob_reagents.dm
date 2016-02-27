@@ -41,6 +41,23 @@
 	if(iscarbon(M))
 		M.emote("scream")
 
+//does brute and drains blood from humans
+/datum/reagent/blob/draining_spikes
+	name = "Draining Spikes"
+	id = "draining_spikes"
+	description = "will do medium brute damage and drain blood."
+	color = "#AF4150"
+	complementary_color = "#41AFA0"
+	blobbernaut_message = "drains"
+	message_living = ", and you feel lightheaded"
+
+/datum/reagent/blob/draining_spikes/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	reac_volume = ..()
+	M.apply_damage(0.6*reac_volume, BRUTE)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.drip(reac_volume) //will kill at 18 hits(no bio protection) and cause bad effects before that
+
 //does low toxin damage, but creates fragile spores when expanding or killed by weak attacks
 /datum/reagent/blob/sporing_pods
 	name = "Sporing Pods"
@@ -85,7 +102,7 @@
 	M.apply_damage(0.6*reac_volume, BRUTE)
 
 /datum/reagent/blob/replicating_foam/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(damage > 0 && original_health - damage > 0)
+	if(damage > 0 && original_health - damage > 0 && prob(75))
 		var/obj/effect/blob/newB = B.expand()
 		if(newB)
 			newB.health = original_health - damage
@@ -96,6 +113,37 @@
 /datum/reagent/blob/replicating_foam/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
 	if(prob(50))
 		newB.expand() //do it again!
+
+//does brute damage, shifts away when damaged
+/datum/reagent/blob/shifting_materia
+	name = "Shifting Materia"
+	id = "shifting_materia"
+	description = "will do medium brute damage and shift away from damage."
+	shortdesc = "will do medium brute damage."
+	color = "#C8963C"
+	complementary_color = "#3C6EC8"
+
+/datum/reagent/blob/shifting_materia/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	reac_volume = ..()
+	M.apply_damage(0.6*reac_volume, BRUTE)
+
+/datum/reagent/blob/shifting_materia/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
+	if(istype(B, /obj/effect/blob/normal) || istype(B, /obj/effect/blob/shield))
+		newB.forceMove(get_turf(B))
+		B.forceMove(T)
+
+/datum/reagent/blob/shifting_materia/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	if(cause && prob(40))
+		var/list/blobstopick = list()
+		for(var/obj/effect/blob/OB in range(1, B))
+			blobstopick += OB
+		if(blobstopick.len)
+			var/obj/effect/blob/targeted = pick(blobstopick) //randomize the blob chosen, because otherwise it'd tend to the lower left
+			if(istype(B, /obj/effect/blob/normal) || istype(B, /obj/effect/blob/shield))
+				var/turf/T = get_turf(targeted)
+				targeted.forceMove(get_turf(B))
+				B.forceMove(T) //swap the blobs
+	return ..()
 
 //does low burn and a lot of stamina damage, reacts to stamina damage
 /datum/reagent/blob/energized_fibers
@@ -140,6 +188,32 @@
 	if(iscarbon(M))
 		M.emote("scream")
 
+//does burn and toxin damage, explodes into flame when hit with burn damage
+/datum/reagent/blob/flammable_goo
+	name = "Flammable Goo"
+	id = "flammable_goo"
+	description = "will do low burn damage, medium toxin damage, and ignite when burned."
+	color = "#BE5532"
+	complementary_color = "#329BBE"
+	blobbernaut_message = "splashes"
+	message = "The blob splashes you with a thin goo"
+	message_living = ", and you smell a faint, sweet scent"
+
+/datum/reagent/blob/flammable_goo/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	reac_volume = ..()
+	M.apply_damage(0.4*reac_volume, TOX)
+	if(M)
+		M.apply_damage(0.2*reac_volume, BURN)
+
+/datum/reagent/blob/flammable_goo/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	if(cause && damage_type == BURN)
+		for(var/turf/T in range(1, B))
+			if(prob(80))
+				PoolOrNew(/obj/effect/hotspot, T)
+		return damage * 1.3
+	return ..()
+
+//does toxin damage, targets think they're not hurt at all
 /datum/reagent/blob/regenerative_materia
 	name = "Regenerative Materia"
 	id = "regenerative_materia"
@@ -223,6 +297,26 @@
 	M.apply_damage(0.6*reac_volume, TOX)
 	if(M)
 		M.adjustStaminaLoss(0.4*reac_volume)
+
+//does brute, fire, and toxin over a few seconds
+/datum/reagent/blob/poisonous_strands
+	name = "Poisonous Strands"
+	id = "poisonous_strands"
+	description = "will inject targets with poison."
+	color = "#7D6EB4"
+	complementary_color = "#A5B46E"
+	message_living = ", and you feel like your insides are melting"
+
+/datum/reagent/blob/poisonous_strands/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	reac_volume = ..()
+	if(M.reagents)
+		M.reagents.add_reagent("poisonous_strands", 0.12*reac_volume)
+
+/datum/reagent/blob/poisonous_strands/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(1.5*REM)
+	M.adjustFireLoss(1.5*REM)
+	M.adjustToxLoss(1.5*REM)
+	..()
 
 //does oxygen damage, randomly pushes or pulls targets
 /datum/reagent/blob/cyclonic_grid
@@ -352,7 +446,7 @@
 	return damage * 1.2 //a laser will do 24 damage, which will kill any recently-made normal blob
 
 /datum/reagent/blob/electromagnetic_web/death_reaction(obj/effect/blob/B, cause)
-	if(!isnull(cause))
+	if(cause)
 		empulse(B.loc, 2, 3) //less than screen range, so you can stand out of range to avoid it
 
 //does brute damage, bonus damage for each nearby blob, and spreads damage out
@@ -393,8 +487,8 @@
 	name = "Penetrating Spines"
 	id = "penetrating_spines"
 	description = "will do medium brute damage through armor."
-	color = "#408B80"
-	complementary_color = "#8B404B"
+	color = "#6E4664"
+	complementary_color = "#466E50"
 	blobbernaut_message = "stabs"
 	message = "The blob stabs you"
 
@@ -437,6 +531,24 @@
 	for(var/turf/simulated/T in range(1, B))
 		if(prob(50))
 			T.MakeSlippery(TURF_WET_WATER)
+
+//does low toxin damage, irradiates, and teleports targets around
+/datum/reagent/blob/bluespace_dust
+	name = "Bluespace Dust"
+	id = "bluespace_dust"
+	description = "will do low toxin damage, irradiate the target, and may teleport the target away."
+	color = "#5AB419"
+	complementary_color = "#7319B4"
+	blobbernaut_message = "warps"
+	message_living = ", and you feel disoriented"
+
+/datum/reagent/blob/bluespace_dust/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	reac_volume = ..()
+	if(prob(2*reac_volume))
+		do_teleport(M, M, max(rand(0.3, 0.1)*reac_volume, rand(2, 3)))
+	M.apply_damage(0.4*reac_volume, TOX)
+	if(M)
+		M.apply_effect(0.2*reac_volume, IRRADIATE)
 
 //does brute damage and throws or pulls nearby objects at the target
 /datum/reagent/blob/dark_matter
