@@ -26542,7 +26542,6 @@
 	},
 /obj/structure/window/reinforced,
 /obj/item/weapon/aiModule/core/full/corp,
-
 /obj/structure/window/reinforced{
 	dir = 1
 	},

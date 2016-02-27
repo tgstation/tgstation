@@ -25595,7 +25595,6 @@
 /obj/item/weapon/aiModule/core/full/asimov,
 /obj/item/weapon/aiModule/core/freeformcore,
 /obj/item/weapon/aiModule/core/full/corp,
-
 /obj/item/weapon/aiModule/core/full/custom,
 /turf/simulated/floor/bluegrid,
 /area/turret_protected/ai_upload)
