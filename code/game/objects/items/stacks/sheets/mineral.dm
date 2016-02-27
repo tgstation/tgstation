@@ -2,6 +2,7 @@
 Mineral Sheets
 	Contains:
 		- Sandstone
+		- Brick
 		- Diamond
 		- Uranium
 		- Plasma
@@ -51,6 +52,21 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 /obj/item/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
 	recipes = sandstone_recipes
 	..()
+
+/*
+ * Brick
+ */
+/obj/item/stack/sheet/mineral/brick
+	name ="brick"
+	singular_name = "brick"
+	icon_state = "sheet-brick"
+	force = 5.0
+	throwforce = 5
+	throw_range = 3
+	throw_speed = 3
+	w_class = 3.0
+	melt_temperature = 2473.15
+	sheettype = "brick"
 
 /*
  * Diamond
