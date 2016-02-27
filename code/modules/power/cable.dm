@@ -215,6 +215,11 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	src.add_fingerprint(user)
 
+/obj/structure/cable/bite_act(mob/living/carbon/human/H)
+	H.visible_message("<span class='danger'>[H] bites \the [src]!</span>", "<span class='userdanger'>You bite \the [src]!</span></span>")
+
+	shock(H, 100, 2.0)
+
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)
 	if((get_powernet()) && (powernet.avail > 1000))

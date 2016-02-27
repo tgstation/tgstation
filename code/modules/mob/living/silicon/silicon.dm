@@ -308,3 +308,11 @@
 
 /mob/living/silicon/spook()
 	to_chat(src, "<i>[pick(boo_phrases_silicon)]</i>")
+
+/mob/living/silicon/bite_act(mob/living/carbon/human/H)
+	if(H.hallucinating() || (M_BEAK in H.mutations)) //If we're hallucinating, bite the silicon and lose some of our teeth. Doesn't apply to vox who have beaks
+		..()
+
+		H.knock_out_teeth()
+	else
+		to_chat(H, "<span class='info'>Your self-preservation instinct prevents you from breaking your teeth on \the [src].</span>")

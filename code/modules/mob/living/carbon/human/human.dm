@@ -1648,3 +1648,61 @@
 /mob/living/carbon/human/proc/make_all_robot_parts_organic()
 	make_robot_limbs_organic()
 	make_robot_internals_organic()
+
+/mob/living/carbon/human/proc/set_attack_type(new_type = NORMAL_ATTACK)
+	kick_icon.icon_state = "act_kick"
+	bite_icon.icon_state = "act_bite"
+
+	if(attack_type == new_type)
+		attack_type = NORMAL_ATTACK
+		return
+
+	attack_type = new_type
+	switch(attack_type)
+		if(NORMAL_ATTACK)
+
+		if(ATTACK_KICK)
+			kick_icon.icon_state = "act_kick_on"
+		if(ATTACK_BITE)
+			bite_icon.icon_state = "act_bite_on"
+
+/mob/living/carbon/human/proc/can_kick(atom/target)
+	//Need two feet to kick!
+
+	if(legcuffed)
+		return 0
+
+	var/datum/organ/external/left_foot = get_organ("l_foot")
+	if(!left_foot)
+		return 0
+	else if(left_foot.status & ORGAN_DESTROYED)
+		return 0
+
+	var/datum/organ/external/right_foot = get_organ("r_foot")
+	if(!right_foot)
+		return 0
+	else if(right_foot.status & ORGAN_DESTROYED)
+		return 0
+
+	return 1
+
+/mob/living/carbon/human/proc/can_bite(atom/target)
+	//Need a mouth to bite
+
+	if(!hasmouth)
+		return 0
+
+	//Need at least two teeth or a beak to bite
+
+	if(check_body_part_coverage(MOUTH))
+		if(!isvampire(src)) //Vampires can bite through masks
+			return 0
+
+	if(M_BEAK in mutations)
+		return 1
+
+	var/datum/butchering_product/teeth/T = locate(/datum/butchering_product/teeth) in src.butchering_drops
+	if(T && T.amount >= 2)
+		return 1
+
+	return 0

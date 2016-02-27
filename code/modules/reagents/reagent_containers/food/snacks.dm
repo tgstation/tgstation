@@ -63,6 +63,9 @@
 	attack(user, user) //This is painful, but it works, I guess
 	return
 
+/obj/item/weapon/reagent_containers/food/snacks/bite_act(mob/user) //nom nom
+	attack_self(user)
+
 /obj/item/weapon/reagent_containers/food/snacks/New()
 
 	..()

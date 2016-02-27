@@ -339,6 +339,16 @@
 	else
 		attack_ai(user)
 
+/obj/machinery/power/supermatter/kick_act(mob/living/H)
+	..()
+
+	Consume(H)
+
+/obj/machinery/power/supermatter/bite_act(mob/living/H)
+	H.visible_message("<span class='danger'>[H] attempts to bite \the [src]!</span>", "<span class='userdanger'>You attempt to take a bite out of \the [src]. Your last thought before you burn to ashes is \"Touching it would've been a much wiser decision.\"")
+
+	Consume(H)
+
 /obj/machinery/power/supermatter/attack_ghost(mob/user as mob)
 	attack_ai(user)
 

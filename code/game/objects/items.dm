@@ -869,3 +869,34 @@ var/global/list/image/blood_overlays = list()
 //Gets the rating of the item, used in stuff like machine construction.
 /obj/item/proc/get_rating()
 	return 0
+
+/obj/item/kick_act(mob/living/carbon/human/H) //Kick items around!
+	if(!isturf(loc)) return 1
+
+	if(anchored || w_class > 3)
+		H.visible_message("<span class='danger'>[H] attempts to kick \the [src]!</span>", "<span class='danger'>You attempt to kick \the [src]!</span>")
+		if(prob(70))
+			to_chat(H, "<span class='danger'>Dumb move! You strain a muscle.</span>")
+
+			H.apply_damage(rand(1,4), BRUTE, pick("r_leg", "l_leg", "r_foot", "l_foot"))
+		return
+
+	var/turf/T = get_edge_target_turf(loc, get_dir(H, src))
+
+	var/kick_power = (10 - (w_class ** 2)) * H.get_strength()
+
+	H.visible_message("<span class='danger'>[H] kicks \the [src]!</span>", "<span class='danger'>You kick \the [src]!</span>")
+
+	if(kick_power > 6) //Fly in an arc!
+		spawn()
+			var/original_pixel_y = pixel_y
+			animate(src, pixel_y = original_pixel_y + 32, time = 10, easing = CUBIC_EASING)
+
+			while(loc)
+				if(!throwing)
+					animate(src, pixel_y = original_pixel_y, time = 5, easing = ELASTIC_EASING)
+					break
+				sleep(5)
+
+	throw_at(T, kick_power, 1)
+	Crossed(H) //So you can't kick shards while naked without suffering

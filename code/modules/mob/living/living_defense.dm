@@ -10,13 +10,15 @@
 	1 - halfblock
 	2 - fullblock
 */
-/mob/living/proc/run_armor_check(var/def_zone = null, var/attack_flag = "melee", var/absorb_text = null, var/soften_text = null)
+/mob/living/proc/run_armor_check(var/def_zone = null, var/attack_flag = "melee", var/absorb_text = null, var/soften_text = null, modifier = 1)
 	var/armor = getarmor(def_zone, attack_flag)
 	var/absorb = 0
-	if(prob(armor))
+
+	if(prob(armor * modifier))
 		absorb += 1
-	if(prob(armor))
+	if(prob(armor * modifier))
 		absorb += 1
+
 	if(absorb >= 2)
 		if(absorb_text)
 			show_message("[absorb_text]")
@@ -135,6 +137,69 @@
 			src.LAssailant = M
 
 
+//BITES
+/mob/living/bite_act(mob/living/carbon/human/M as mob)
+	var/damage = rand(1, 5)
+
+	if(M_BEAK in M.mutations) //Beaks = stronger bites
+		damage += 4
+
+	if(!damage)
+		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+		visible_message("<span class='danger'>\The [M] has attempted to bite \the [src]!</span>")
+		return 0
+
+	playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+	src.visible_message("<span class='danger'>\The [M] has bitten \the [src]!</span>", "<span class='userdanger'>You were bitten by \the [M]!</span>")
+
+	adjustBruteLoss(damage)
+	return
+
+//KICKS
+/mob/living/kick_act(mob/living/carbon/human/M)
+	M.delayNextAttack(20) //Kicks are slow
+
+	if((M_CLUMSY in M.mutations) && prob(20)) //Kicking yourself (or being clumsy) = stun
+		M.visible_message("<span class='notice'>\The [M] tripped while attempting to kick \the [src]!</span>", "<span class='userdanger'>While attempting to kick \the [src], you tripped and fell!</span>")
+		M.Weaken(rand(1,10))
+		return
+
+	var/stomping = 0
+	var/attack_verb = "kicked"
+
+	if(M.size > size && !flying) //On the ground, the kicker is bigger than/equal size of the victim = stomp
+		stomping = 1
+
+	var/damage = rand(0,7)
+
+	if(stomping) //Stomps = more damage and armor bypassing
+		damage += rand(0,7)
+		attack_verb = "stomped on"
+	else if(M.reagents && M.reagents.has_reagent("gyro"))
+		damage += rand(0,4)
+		attack_verb = "roundhouse kicked"
+
+	if(!damage)
+		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+		visible_message("<span class='danger'>\The [M] has attempted to kick \the [src]!</span>")
+		return 0
+
+	//Handle shoes
+	var/obj/item/clothing/shoes/S = M.shoes
+	if(istype(S))
+		damage += S.bonus_kick_damage
+		S.on_kick(M, src)
+	else if(M_TALONS in M.mutations) //Not wearing shoes and having talons = bonus 1-6 damage
+		damage += rand(1,6)
+
+	playsound(loc, "punch", 30, 1, -1)
+
+	visible_message("<span class='danger'>\The [M] has [attack_verb] \the [src]!</span>", "<span class='userdanger'>\The [M] [attack_verb] you!</span>")
+
+	if(M.size != size) //The bigger the kicker, the more damage
+		damage = max(damage + (rand(1,5) * (1 + M.size - size)), 0)
+
+	adjustBruteLoss(damage)
 
 /mob/living/proc/near_wall(var/direction,var/distance=1)
 	var/turf/T = get_step(get_turf(src),direction)

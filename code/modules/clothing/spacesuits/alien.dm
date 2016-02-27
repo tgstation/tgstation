@@ -127,6 +127,8 @@
 	icon_state = "boots-vox"
 	species_restricted = list("Vox")
 
+	stomp_attack_power = 0
+
 /obj/item/clothing/shoes/magboots/vox/toggle()
 	//set name = "Toggle Floor Grip"
 	if(usr.isUnconscious())

@@ -84,6 +84,16 @@
 	if((M.a_intent == I_HURT) || (M.a_intent == I_DISARM))
 		panic_attack(M)
 
+/mob/living/simple_animal/bee/kick_act(mob/living/carbon/human/H)
+	if(prob(10)) ..()
+
+	panic_attack(H)
+
+/mob/living/simple_animal/bee/bite_act(mob/living/carbon/human/H)
+	if(prob(10)) ..()
+
+	panic_attack(H)
+
 /mob/living/simple_animal/bee/proc/panic_attack(mob/damagesource)
 	for(var/mob/living/simple_animal/bee/B in range(src,3))
 		B.feral = 15

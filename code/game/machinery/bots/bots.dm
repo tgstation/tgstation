@@ -131,6 +131,15 @@
 		else
 			..()
 
+/obj/machinery/bot/kick_act(mob/living/H)
+	..()
+
+	if(flags & INVULNERABLE)
+		return
+
+	health -= rand(1,8) * brute_dam_coeff
+	healthcheck()
+
 /obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)
 	if(flags & INVULNERABLE)
 		return

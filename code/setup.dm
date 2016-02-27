@@ -426,6 +426,7 @@ var/global/list/BODY_COVER_VALUE_LIST=list("[HEAD]" = COVER_PROTECTION_HEAD,"[EY
 #define M_LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
 #define M_CLAWS			10	// Deal extra damage with punches (but without gloves), can butcher animals without tools
 #define M_BEAK			11	// Can buther animals without tools
+#define M_TALONS		12  // Bonus kick damage
 //#define HEAL			12 	// (Not implemented) healing people with hands
 //#define SHADOW		13 	// (Not implemented) shadow teleportation (create in/out portals anywhere) (25%)
 //#define SCREAM		14 	// (Not implemented) supersonic screaming (25%)
@@ -1447,3 +1448,8 @@ var/proccalls = 1
 #define DISP_TELECOMMS      "Telecomms"
 #define DISP_MECHANICS      "Mechanics"
 #define DISP_TELESCIENCE    "Telescience"
+
+//Human attack types
+#define NORMAL_ATTACK 0
+#define ATTACK_BITE 1
+#define ATTACK_KICK 2

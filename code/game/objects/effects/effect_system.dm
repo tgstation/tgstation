@@ -926,6 +926,11 @@ steam.start() -- spawns the effect
 		to_chat(user, "<span class='notice'>You hit the metal foam but bounce off it.</span>")
 	return
 
+/obj/structure/foamedmetal/kick_act()
+	..()
+
+	if(prob(75 - metal*25))
+		qdel(src)
 
 /obj/structure/foamedmetal/attackby(var/obj/item/I, var/mob/user)
 	user.delayNextAttack(10)

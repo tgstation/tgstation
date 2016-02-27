@@ -220,6 +220,12 @@ var/global/list/ghdel_profiling = list()
 /atom/proc/emp_act(var/severity)
 	return
 
+/atom/proc/kick_act(mob/living/carbon/human/user) //Called when this atom is kicked. If returns 1, normal click action will be performed after calling this (so attack_hand() in most cases)
+	return 1
+
+/atom/proc/bite_act(mob/living/carbon/human/user) //Called when this atom is bitten. If returns 1, same as kick_act()
+	return 1
+
 /atom/proc/singuloCanEat()
 	return 1
 

@@ -111,7 +111,8 @@
 			to_chat(user, "You carefully place \the [I] into the cistern.")
 			return
 
-
+/obj/structure/toilet/bite_act(mob/user)
+	user.simple_message("<span class='notice'>That would be disgusting.</span>", "<span class='info'>You're not high enough for that... Yet.</span>") //Second message 4 hallucinations
 
 /obj/structure/urinal
 	name = "urinal"
@@ -134,6 +135,9 @@
 				GM.adjustBruteLoss(8)
 			else
 				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
+
+/obj/structure/urinal/bite_act(mob/user)
+	user.simple_message("<span class='notice'>That would be disgusting.</span>", "<span class='info'>You're not high enough for that... Yet.</span>") //Second message 4 hallucinations
 
 /obj/machinery/shower
 	name = "shower"

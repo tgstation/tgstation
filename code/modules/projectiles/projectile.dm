@@ -609,3 +609,6 @@ var/list/impact_master = list()
 		if((!( ttarget ) || loc == ttarget))
 			ttarget = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
 		step_towards(src, ttarget)
+
+/obj/item/projectile/kick_act() //Can't be kicked around
+	return

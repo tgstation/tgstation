@@ -1,0 +1,36 @@
+################################
+# Example Changelog File
+#
+# Note: This file, and files beginning with ".", and files that don't end in ".yml" will not be read.  If you change this file, you will look really dumb.
+#
+# Your changelog will be merged with a master changelog. (New stuff added only, and only on the date entry for the day it was merged.)
+# When it is, any changes listed below will disappear.
+#
+# Valid Prefixes: 
+#   bugfix
+#   wip (For works in progress)
+#   tweak
+#   soundadd
+#   sounddel
+#   rscdel (general deleting of nice things)
+#   rscadd (general adding of nice things)
+#   imageadd
+#   imagedel
+#   spellcheck (typo fixes)
+#   experiment
+#   tgs (TG-ported fixes?)
+#################################
+
+author: Unid
+
+delete-after: True
+
+changes: 
+- experiment: Added two special attacks - kicks and bites. Players can now select their preferred attack type on their HUD (the buttons are next to throw and drop). Hotkey for kicking is 5 or CTRL 5. Hotkey for biting is 6 or CTRL 6.
+- experiment: Special attacks proc when clicking something on harm intent. You need both of your feet to perform a kick. You need at least two teeth or a beak to bite. Kicks have 2x the normal attack delay.
+- tweak: Kicking a vending machine now requires you to enable the Kick special attack.
+- tweak: Kicking a lying human turns the attack into a stomp, dealing double damage.
+- tweak: Kicking a small item sends it flying.
+- tweak: SWAT shoes, combat boots and jackboots increase kick damage. Stomping on somebody while wearing magboots deals a lot of damage.
+- tweak: Talons increase kick damage if not wearing shoes. Vox now have talons.
+- rscadd: Vampires have to enable the Bite special attack to drain blood. Vampires can bite while wearing masks.

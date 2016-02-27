@@ -468,3 +468,9 @@ var/list/camera_names=list()
 
 /obj/machinery/camera/arena/attack_pai(mob/user as mob)
 	return
+
+/obj/machinery/camera/kick_act(mob/living/carbon/human/H)
+	to_chat(H, "<span class='info'>You attempt to kick \the [src].</span>")
+	to_chat(H, "<span class='notice'>Dumb move! You strain a muscle.</span>")
+
+	H.apply_damage(rand(1,2), BRUTE, pick("r_leg", "l_leg", "r_foot", "l_foot"))

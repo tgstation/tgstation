@@ -116,6 +116,16 @@
 			"<span class='notice'>[user] honks \the [src] at \the [target].</span>",\
 			"[user] honks \the [src] at you.")
 
+/obj/item/weapon/bikehorn/kick_act(mob/living/H)
+	if(..()) return 1
+
+	honk()
+
+/obj/item/weapon/bikehorn/bite_act(mob/living/H)
+	H.visible_message("<span class='danger'>[H] bites \the [src]!</span>", "<span class='danger'>You bite \the [src].</span>")
+
+	honk()
+
 /obj/item/weapon/bikehorn/proc/honk()
 	if(world.time - last_honk_time >= honk_delay)
 		last_honk_time = world.time

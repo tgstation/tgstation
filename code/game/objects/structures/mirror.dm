@@ -138,3 +138,7 @@
 		return
 	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
 	shatter()
+
+/obj/structure/mirror/kick_act()
+	..()
+	shatter()

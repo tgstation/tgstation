@@ -70,6 +70,7 @@
 	species_fit = list("Vox")
 	siemens_coefficient = 0.6
 	heat_conductivity = INS_SHOE_HEAT_CONDUCTIVITY
+	bonus_kick_damage = 3
 
 /obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
 	name = "combat boots"
@@ -81,6 +82,7 @@
 	siemens_coefficient = 0.6
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 	heat_conductivity = INS_SHOE_HEAT_CONDUCTIVITY
+	bonus_kick_damage = 3
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -232,6 +234,7 @@
 	siemens_coefficient = 0.7
 	species_fit = list("Vox")
 	heat_conductivity = INS_SHOE_HEAT_CONDUCTIVITY
+	bonus_kick_damage = 3
 
 /obj/item/clothing/shoes/jackboots/batmanboots
 	name = "batboots"

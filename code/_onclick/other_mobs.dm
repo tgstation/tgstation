@@ -10,10 +10,40 @@
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
-	if(ismob(A))
-		delayNextAttack(10)
 	if(proximity && istype(G) && G.Touch(A, src, 1))
 		return
+
+	if(a_intent == "hurt" && A.loc != src)
+
+		switch(attack_type) //Special attacks - kicks, bites
+			if(ATTACK_KICK)
+				if(can_kick())
+
+					delayNextAttack(10)
+
+					if(!A.kick_act(src)) //kick_act returns 1 if the kick failed or couldn't be done
+						return
+
+					delayNextAttack(-10) //This is only called when the kick fails
+				else
+					to_chat(src, "<span class='warning'>You can't kick!</span>")
+					set_attack_type() //Reset attack type
+
+			if(ATTACK_BITE)
+				if(can_bite())
+
+					delayNextAttack(10)
+
+					if(!A.bite_act(src)) //bite_act returns 1 if the bite failed or couldn't be done
+						return
+
+					delayNextAttack(-10) //This is only called when the bite fails
+				else
+					to_chat(src, "<span class='warning'>You can't bite!</span>")
+					set_attack_type() //Reset attack type
+
+	if(ismob(A))
+		delayNextAttack(10)
 
 	if(src.can_use_hand())
 		A.attack_hand(src, params)

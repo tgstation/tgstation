@@ -80,6 +80,14 @@ macro "macro"
 		command = "a-intent harm"
 		is-disabled = false
 	elem 
+		name = "CTRL+5"
+		command = "a-kick"
+		is-disabled = false
+	elem 
+		name = "CTRL+6"
+		command = "a-bite"
+		is-disabled = false
+	elem 
 		name = "CTRL+A+REP"
 		command = ".west"
 		is-disabled = false
@@ -276,6 +284,22 @@ macro "hotkeymode"
 	elem 
 		name = "CTRL+4"
 		command = "a-intent hurt"
+		is-disabled = false
+	elem 
+		name = "5"
+		command = "a-kick"
+		is-disabled = false
+	elem 
+		name = "CTRL+5"
+		command = "a-kick"
+		is-disabled = false
+	elem 
+		name = "6"
+		command = "a-bite"
+		is-disabled = false
+	elem 
+		name = "CTRL+6"
+		command = "a-bite"
 		is-disabled = false
 	elem 
 		name = "A+REP"

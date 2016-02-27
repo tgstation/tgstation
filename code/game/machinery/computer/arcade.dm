@@ -304,3 +304,15 @@
 		A = new
 		export_game_data(A)
 	..(toggleitem, user, A)
+
+/obj/machinery/computer/arcade/kick_act()
+	..()
+
+	if(!emagged && prob(5)) //Bug
+		temp = "|eW R0vnb##[rand(0,9)]#"
+		player_hp = rand(1,30)
+		player_mp = rand(1,10)
+		enemy_hp = rand(1,60)
+		enemy_mp = rand(1,40)
+		gameover = 0
+		turtle = 0
