@@ -180,11 +180,13 @@
 	data++
 	M.jitteriness = max(M.jitteriness-5,0)
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
-		if (!M.stuttering) M.stuttering = 1
+		if(!M.stuttering)
+			M.stuttering = 1
 		M.stuttering += 4
 		M.Dizzy(5)
 	if(data >= 75 && prob(33))	// 30 units, 135 seconds
-		if (!M.confused) M.confused = 1
+		if (!M.confused)
+			M.confused = 1
 		M.confused += 3
 		if((is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
 			ticker.mode.remove_hog_follower(M.mind)
@@ -194,7 +196,6 @@
 			M.confused = 0
 			return
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
-	return
 
 /datum/reagent/water/holywater/reaction_turf(turf/simulated/T, reac_volume)
 	..()
@@ -214,15 +215,16 @@
 	if(iscultist(M))
 		M.status_flags |= GOTTAGOFAST
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustParalysis(-2)
-		M.AdjustStunned(-2)
-		M.AdjustWeakened(-2)
+		M.AdjustParalysis(-2, 0)
+		M.AdjustStunned(-2, 0)
+		M.AdjustWeakened(-2, 0)
 	else
-		M.adjustToxLoss(2)
-		M.adjustFireLoss(2)
-		M.adjustOxyLoss(2)
-		M.adjustBruteLoss(2)
+		M.adjustToxLoss(2, 0)
+		M.adjustFireLoss(2, 0)
+		M.adjustOxyLoss(2, 0)
+		M.adjustBruteLoss(2, 0)
 	holder.remove_reagent(src.id, 1)
+	. = 1
 
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
 	name = "Hell Water"
@@ -232,8 +234,8 @@
 /datum/reagent/hellwater/on_mob_life(mob/living/M)
 	M.fire_stacks = min(5,M.fire_stacks + 3)
 	M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
-	M.adjustToxLoss(1)
-	M.adjustFireLoss(1)		//Hence the other damages... ain't I a bastard?
+	M.adjustToxLoss(1, 0)
+	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?
 	M.adjustBrainLoss(5)
 	holder.remove_reagent(src.id, 1)
 
@@ -396,11 +398,10 @@
 	metabolization_rate = INFINITY
 
 /datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
-	..()
 	H << "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>"
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	randomize_human(H)
-	return 1
+	..()
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
@@ -430,9 +431,9 @@
 
 /datum/reagent/serotrotium/on_mob_life(mob/living/M)
 	if(ishuman(M))
-		if(prob(7)) M.emote(pick("twitch","drool","moan","gasp"))
+		if(prob(7))
+			M.emote(pick("twitch","drool","moan","gasp"))
 	..()
-	return
 
 /datum/reagent/oxygen
 	name = "Oxygen"
@@ -502,7 +503,6 @@
 		M.emote(pick("twitch","drool","moan"))
 	M.adjustBrainLoss(2)
 	..()
-	return
 
 /datum/reagent/sulfur
 	name = "Sulfur"
@@ -532,9 +532,9 @@
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/chlorine/on_mob_life(mob/living/M)
-	M.take_organ_damage(1*REM, 0)
+	M.take_organ_damage(1*REM, 0, 0)
+	. = 1
 	..()
-	return
 
 /datum/reagent/fluorine
 	name = "Fluorine"
@@ -544,9 +544,9 @@
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/fluorine/on_mob_life(mob/living/M)
-	M.adjustToxLoss(1*REM)
+	M.adjustToxLoss(1*REM, 0)
+	. = 1
 	..()
-	return
 
 /datum/reagent/sodium
 	name = "Sodium"
@@ -575,7 +575,6 @@
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-	return
 
 /datum/reagent/glycerol
 	name = "Glycerol"
@@ -593,7 +592,6 @@
 /datum/reagent/radium/on_mob_life(mob/living/M)
 	M.apply_effect(2*REM/M.metabolism_efficiency,IRRADIATE,0)
 	..()
-	return
 
 /datum/reagent/radium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
@@ -678,7 +676,8 @@
 	..()
 
 /datum/reagent/fuel/on_mob_life(mob/living/M)
-	M.adjustToxLoss(1)
+	M.adjustToxLoss(1, 0)
+	. = 1
 	..()
 
 /datum/reagent/space_cleaner
@@ -748,7 +747,6 @@
 		M.confused = 1
 	M.confused = max(M.confused, 20)
 	..()
-	return
 
 /datum/reagent/impedrezene
 	name = "Impedrezene"
@@ -758,11 +756,13 @@
 
 /datum/reagent/impedrezene/on_mob_life(mob/living/M)
 	M.jitteriness = max(M.jitteriness-5,0)
-	if(prob(80)) M.adjustBrainLoss(1*REM)
-	if(prob(50)) M.drowsyness = max(M.drowsyness, 3)
-	if(prob(10)) M.emote("drool")
+	if(prob(80))
+		M.adjustBrainLoss(1*REM)
+	if(prob(50))
+		M.drowsyness = max(M.drowsyness, 3)
+	if(prob(10))
+		M.emote("drool")
 	..()
-	return
 
 /datum/reagent/nanites
 	name = "Nanomachines"
@@ -910,9 +910,9 @@
 
 /datum/reagent/plantnutriment/on_mob_life(mob/living/M)
 	if(prob(tox_prob))
-		M.adjustToxLoss(1*REM)
+		M.adjustToxLoss(1*REM, 0)
+		. = 1
 	..()
-	return
 
 /datum/reagent/plantnutriment/eznutriment
 	name = "E-Z-Nutrient"
