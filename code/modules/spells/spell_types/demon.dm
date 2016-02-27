@@ -67,7 +67,7 @@
 					C.put_in_hands(contract)
 		else
 			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for them.</span>"
-			
+
 
 /obj/effect/proc_holder/spell/dumbfire/fireball/demonic
 	name = "Hellfire"
@@ -108,7 +108,7 @@
 	action_icon_state = "jaunt" //TODO: better icon
 
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon/cast(list/targets,mob/user = usr)
 	if(!in_jaunt)
 		playsound(get_turf(user), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
 		for(var/mob/living/target in targets)
@@ -122,8 +122,8 @@
 	else
 		for(var/mob/living/target in targets)
 			var/continuing = 0
-			for(/mob/living/carbon/C in orange(2, get_turf(target.loc)))
-				if (C.mind && C.mind.soulOwner = C.mind)
+			for(var/mob/living/C in orange(2, get_turf(target.loc)))
+				if (C.mind && C.mind.soulOwner == C.mind)
 					continuing = 1
 					break
 			if(continuing)
