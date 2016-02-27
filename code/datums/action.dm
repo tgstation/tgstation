@@ -163,7 +163,7 @@
 		if(iscarbon(owner))
 			var/mob/living/carbon/C = owner
 			if(target == C.internal)
-				button.icon_state = "bg_internals_on"
+				button.icon_state = "bg_default_on"
 
 /datum/action/item_action/toggle_mister
 	name = "Toggle Mister"
