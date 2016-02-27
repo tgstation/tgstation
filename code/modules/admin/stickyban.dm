@@ -1,5 +1,6 @@
 /datum/admins/proc/stickyban(action,data)
-	if(!check_rights(R_BAN))
+	return
+/*	if(!check_rights(R_BAN))
 		return
 	switch (action)
 		if ("show")
@@ -124,9 +125,10 @@
 
 			log_admin("[key_name(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]</span>")
-
+*/
 /datum/admins/proc/stickyban_gethtml(ckey, ban)
-	. = "<a href='?_src_=holder;stickyban=remove&ckey=[ckey]'>\[-\]</a><b>[ckey]</b><br />"
+	return
+/*	. = "<a href='?_src_=holder;stickyban=remove&ckey=[ckey]'>\[-\]</a><b>[ckey]</b><br />"
 	. += "[ban["message"]] <b><a href='?_src_=holder;stickyban=edit&ckey=[ckey]'>\[Edit\]</a></b><br />"
 	if (ban["admin"])
 		. += "[ban["admin"]]<br />"
@@ -138,9 +140,10 @@
 			continue
 		. += "<li><a href='?_src_=holder;stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>[key]</li>"
 	. += "</ol>\n"
-
+*/
 /datum/admins/proc/stickyban_show()
-	if(!check_rights(R_BAN))
+	return
+/*	if(!check_rights(R_BAN))
 		return
 	var/list/bans = sortList(world.GetConfig("ban"))
 	var/banhtml = ""
@@ -160,9 +163,10 @@
 	</body>
 	"}
 	usr << browse(html,"window=stickybans;size=700x400")
-
+*/
 /proc/get_stickyban_from_ckey(var/ckey)
-	if (!ckey)
+	return
+/*	if (!ckey)
 		return null
 	ckey = ckey(ckey)
 	. = null
@@ -170,19 +174,21 @@
 		if (ckey(key) == ckey)
 			. = stickyban2list(world.GetConfig("ban",key))
 			break
-
+*/
 /proc/stickyban2list(var/ban)
-	if (!ban)
+	return
+/*	if (!ban)
 		return null
 	. = params2list(ban)
 	.["keys"] = splittext(.["keys"], ",")
 	.["type"] = splittext(.["type"], ",")
 	.["IP"] = splittext(.["IP"], ",")
 	.["computer_id"] = splittext(.["computer_id"], ",")
-
+*/
 
 /proc/list2stickyban(var/list/ban)
-	if (!ban || !islist(ban))
+	return
+/*	if (!ban || !islist(ban))
 		return null
 	. = ban.Copy()
 	if (.["keys"])
@@ -194,11 +200,13 @@
 	if (.["computer_id"])
 		.["computer_id"] = jointext(.["computer_id"], ",")
 	. = list2params(.)
-
+*/
 
 /client/proc/stickybanpanel()
-	set name = "Sticky Ban Panel"
+	return
+/*	set name = "Sticky Ban Panel"
 	set category = "Admin"
 	if (!holder)
 		return
 	holder.stickyban_show()
+*/
