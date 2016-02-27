@@ -546,7 +546,7 @@
 "akz" = (/obj/machinery/turretid{control_area = "AI Upload Chamber"; pixel_x = 28; pixel_y = 0},/turf/simulated/floor/plasteel/black,/area/turret_protected/ai_upload)
 "akA" = (/obj/machinery/porta_turret/ai,/turf/simulated/floor/plasteel/black,/area/turret_protected/ai_upload)
 "akB" = (/obj/structure/table,/obj/item/weapon/aiModule/reset,/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plasteel/black,/area/turret_protected/ai_upload)
-"akC" = (/obj/structure/table,/obj/item/weapon/aiModule/core/full/asimov,/obj/item/weapon/aiModule/core/full/asimovpp,/obj/item/weapon/aiModule/core/full/corp,/obj/item/weapon/aiModule/core/full/paladin,/obj/item/weapon/aiModule/core/full/robocop,/turf/simulated/floor/plasteel/black,/area/turret_protected/ai_upload)
+"akC" = (/obj/structure/table,/obj/item/weapon/aiModule/core/full/asimov,/obj/item/weapon/aiModule/core/full/asimovpp,/obj/item/weapon/aiModule/core/full/corp,/turf/simulated/floor/plasteel/black,/area/turret_protected/ai_upload)
 "akD" = (/obj/structure/flora/kirbyplants{icon_state = "plant-02"; layer = 4.1},/turf/simulated/floor/plasteel/warning{icon_state = "warning"; dir = 4},/area/gateway)
 "akE" = (/obj/machinery/gateway{dir = 9},/turf/simulated/floor/plasteel/vault{icon_state = "vault"; dir = 1},/area/gateway)
 "akF" = (/obj/machinery/gateway{dir = 1},/turf/simulated/floor/plasteel/vault{icon_state = "vault"; dir = 8},/area/gateway)
