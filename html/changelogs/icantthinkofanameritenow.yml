@@ -1,0 +1,5 @@
+author: Icantthinkofanameritenow
+delete-after: True
+changes: 
+- tweak: Laser and plasma pistols now fit in pockets, but deal less damage.
+- rscadd: Plasma pistols, plasma rifles, and plasma cannons now deal more damage.
