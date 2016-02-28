@@ -62,20 +62,21 @@
 	flags_cover = MASKCOVERSEYES
 	burn_state = FLAMMABLE
 
-/obj/item/clothing/mask/gas/clown_hat/AltClick(mob/user)
-
-	var/mob/M = usr
+/obj/item/clothing/mask/gas/clown_hat/AltClick(mob/living/user)
+	if(!istype(user) || user.incapacitated())
+		return
+	
 	var/list/options = list()
 	options["True Form"] = "clown"
 	options["The Feminist"] = "sexyclown"
 	options["The Madman"] = "joker"
 	options["The Rainbow Color"] ="rainbow"
 
-	var/choice = input(M,"To what form do you wish to Morph this mask?","Morph Mask") in options
+	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in options
 
-	if(src && choice && !M.stat && in_range(M,src))
+	if(src && choice && !user.stat && in_range(user,src))
 		icon_state = options[choice]
-		M << "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>"
+		user << "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>"
 		return 1
 
 /obj/item/clothing/mask/gas/sexyclown

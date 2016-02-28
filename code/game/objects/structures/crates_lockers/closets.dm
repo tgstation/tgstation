@@ -238,10 +238,10 @@
 		else
 			togglelock(user)
 
-/obj/structure/closet/MouseDrop_T(atom/movable/O, mob/user)
+/obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /obj/screen))
 		return
-	if(user.incapacitated() || user.lying)
+	if(!istype(user) || user.incapacitated() || user.lying)
 		return
 	if(!Adjacent(user) || !user.Adjacent(O))
 		return
