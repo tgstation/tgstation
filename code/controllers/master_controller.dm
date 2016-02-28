@@ -216,11 +216,14 @@ datum/controller/game_controller/proc/cachedamageicons()
 			count++
 	log_startup_progress("  Initialized [count] atmos devices in [stop_watch(watch)]s.")
 
-	spawn()
-		watch = start_watch()
-		log_startup_progress("Generating in-game minimaps...")
-		generateMiniMaps()
-		log_startup_progress("  Finished minimaps in [stop_watch(watch)]s.")
+	if(!config.skip_minimap_generation)
+		spawn()
+			watch = start_watch()
+			log_startup_progress("Generating in-game minimaps...")
+			generateMiniMaps()
+			log_startup_progress("  Finished minimaps in [stop_watch(watch)]s.")
+	else
+		log_startup_progress("Not generating minimaps - SKIP_MINIMAP_GENERATION found in config/config.txt")
 
 	log_startup_progress("Finished initializations in [stop_watch(overwatch)]s.")
 

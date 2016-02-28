@@ -276,3 +276,7 @@ RENDERS_URL http://ss13.pomf.se/img/map-renders
 ## MOMMI_STATIC
 ## Uncomment to enable scrambling the image of mobs for MoMMIs
 #MOMMI_STATIC
+
+## SKIP_MINIMAP_GENERATION
+## Uncomment to disable generation of minimaps (makes the server start faster!)
+SKIP_MINIMAP_GENERATION
