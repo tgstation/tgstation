@@ -719,36 +719,43 @@
 			if(M.health > 1)
 				if(main_hand)
 					if(main_hand.force != 0)
-						if(istype(main_hand,/obj/item/weapon/gun/projectile))
-							var/obj/item/weapon/gun/projectile/P = main_hand
-							if(!P.chambered)
-								P.chamber_round()
-								P.update_icon()
-							else if(P.get_ammo(1) == 0)
-								P.update_icon()
-								blacklistItems += P
-								P.loc = get_turf(src) // drop item works inconsistently
+						if(istype(main_hand,/obj/item/weapon/gun))
+							var/obj/item/weapon/gun/G = main_hand
+							if(G.can_trigger_gun(src))
+								if(istype(main_hand,/obj/item/weapon/gun/projectile))
+									var/obj/item/weapon/gun/projectile/P = main_hand
+									if(!P.chambered)
+										P.chamber_round()
+										P.update_icon()
+									else if(P.get_ammo(1) == 0)
+										P.update_icon()
+										blacklistItems += P
+										P.loc = get_turf(src) // drop item works inconsistently
+										enforce_hands()
+										update_icons()
+									else
+										P.afterattack(TARGET, src)
+								else if(istype(main_hand,/obj/item/weapon/gun/energy))
+									var/obj/item/weapon/gun/energy/P = main_hand
+									if(P.power_supply.charge <= 10) // can shoot seems to bug out for tasers, using this hacky method instead
+										P.update_icon()
+										blacklistItems += P
+										P.loc = get_turf(src) // likewise
+										enforce_hands()
+										update_icons()
+									else
+										P.afterattack(TARGET, src)
+								else
+									if(get_dist(src,TARGET) > 2)
+										if(!walk2derpless(TARGET))
+											timeout++
+									else
+										var/obj/item/weapon/W = main_hand
+										W.attack(TARGET,src)
+							else
+								G.loc = get_turf(src) // drop item works inconsistently
 								enforce_hands()
 								update_icons()
-							else
-								P.afterattack(TARGET, src)
-						else if(istype(main_hand,/obj/item/weapon/gun/energy))
-							var/obj/item/weapon/gun/energy/P = main_hand
-							if(P.power_supply.charge <= 10) // can shoot seems to bug out for tasers, using this hacky method instead
-								P.update_icon()
-								blacklistItems += P
-								P.loc = get_turf(src) // likewise
-								enforce_hands()
-								update_icons()
-							else
-								P.afterattack(TARGET, src)
-						else
-							if(get_dist(src,TARGET) > 2)
-								if(!walk2derpless(TARGET))
-									timeout++
-							else
-								var/obj/item/weapon/W = main_hand
-								W.attack(TARGET,src)
 				else
 					if(targetRange(TARGET) > (istype(main_hand,/obj/item/weapon/gun) ? 6 : 2))
 						tryWalk(TARGET)
