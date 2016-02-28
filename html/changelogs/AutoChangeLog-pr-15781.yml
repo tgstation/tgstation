@@ -1,0 +1,13 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Replicating Foam has a lower chance to expand when hit."
+  - tweak: "Penetrating Spines is now purple instead of sea green."
+  - imageadd: "Blobbernauts now have a brief animation when produced."
+  - experiment: "Adds five new blob chemicals. This is a total of 25 blob chemicals. Will it ever stop?"
+  - rscadd: "Draining Spikes, which is reddish pink and does medium brute damage, and drains blood from targets."
+  - rscadd: "Shifting Fragments, which is tan and does medium brute damage, and shifts position when attacked."
+  - rscadd: "Flammable Goo, which is reddish orange and does low burn and toxin damage, and when hit with burn damage, emits a burst of flame. It takes more damage from burn, though."
+  - rscadd: "Poisonous Strands, which is lavender and does burn, fire, and toxin damage over a few seconds, instead of instantly."
+  - rscadd: "Adaptive Nexuses, which is dark blue and does medium brute damage, and reaps 5-10 resources from unconscious humans, killing them in the process."
+  - wip: "Confused about what the chemical you're fighting does? Look at https://tgstation13.org/wiki/Blob#Blob_Chemicals"
