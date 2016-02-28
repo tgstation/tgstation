@@ -633,13 +633,14 @@
 			M = A
 	if(shouldTryHeal)
 		for(var/mob/living/carbon/C in nearby)
-			if(C.health <= 75)
-				if(get_dist(src,C) <= 2)
-					src.say("Wait, [C], let me heal you!")
-					M.attack(C,src)
-					sleep(25)
-				else
-					tryWalk(get_turf(C))
+			if(istype(C,/mob/living/carbon)) //I haven't the foggiest clue why this is turning up non-carbons but sure here whatever
+				if(C.health <= 75)
+					if(get_dist(src,C) <= 2)
+						src.say("Wait, [C], let me heal you!")
+						M.attack(C,src)
+						sleep(25)
+					else
+						tryWalk(get_turf(C))
 
 /mob/living/carbon/human/interactive/proc/dojanitor(obj)
 	if(istype(main_hand,/obj/item/weapon/mop))
