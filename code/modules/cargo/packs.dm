@@ -372,7 +372,7 @@
 
 /datum/supply_pack/security/justiceinbound
 	name = "Standard Justice Enforcer Crate"
-	cost = 80 //justice comes at a price. An expensive, noisy price.
+	cost = 60 //justice comes at a price. An expensive, noisy price.
 	contraband = TRUE
 	contains = list(/obj/item/clothing/head/helmet/justice,
 					/obj/item/clothing/mask/gas/sechailer)
