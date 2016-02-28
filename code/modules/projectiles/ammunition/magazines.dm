@@ -117,14 +117,20 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
 	max_ammo = 6
 
-
-
-
 /obj/item/ammo_box/magazine/internal/grenadelauncher
 	name = "grenade launcher internal magazine"
 	ammo_type = /obj/item/ammo_casing/a40mm
 	caliber = "40mm"
 	max_ammo = 1
+
+/obj/item/ammo_box/magazine/internal/grenadelauncher/mgl
+	name = "multiple grenade launcher internal magazine"
+	ammo_type = /obj/item/ammo_casing/a40mm
+	caliber = "40mm"
+	max_ammo = 6
+
+/obj/item/ammo_box/magazine/internal/grenadelauncher/mgl/four
+	max_ammo = 4
 
 /obj/item/ammo_box/magazine/internal/speargun
 	name = "speargun internal magazine"
@@ -327,6 +333,15 @@ obj/item/ammo_box/magazine/tommygunm45
 	name = "shotgun magazine (12g breacher slugs)"
 	icon_state = "m12gbc"
 	ammo_type = /obj/item/ammo_casing/shotgun/breaching
+
+/obj/item/ammo_box/magazine/m762dmr
+	name = "marksman rounds (7.62)"
+	icon_state = "m762dmr"
+	origin_tech = "combat=4;syndicate=2"
+	ammo_type = /obj/item/ammo_casing/a762
+	caliber = "a762"
+	max_ammo = 10
+	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/toy
 	name = "foam force META magazine"
