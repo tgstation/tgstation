@@ -23,8 +23,7 @@
 	icon_dead = "corgi_dead"
 	gender = MALE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
-	childtype = /mob/living/simple_animal/pet/dog/corgi/puppy
-	rarechildtype = /mob/living/simple_animal/pet/dog/corgi/puppy/void
+	childtype = list(/mob/living/simple_animal/pet/dog/corgi/puppy = 95, /mob/living/simple_animal/pet/dog/corgi/puppy/void = 5)
 	species = /mob/living/simple_animal/pet/dog
 	var/shaved = 0
 	var/obj/item/inventory_head
@@ -526,11 +525,17 @@
 /mob/living/simple_animal/pet/dog/corgi/puppy/void		//Tribute to the corgis born in nullspace
 	name = "\improper void puppy"
 	real_name = "voidy"
-	desc = "A corgi puppy that has been infused with deep space energy."
+	desc = "A corgi puppy that has been infused with deep space energy. It's staring back.."
 	icon_state = "void_puppy"
 	icon_living = "void_puppy"
 	icon_dead = "void_puppy_dead"
 	nofur = 1
+	unsuitable_atmos_damage = 0
+	minbodytemp = TCMB
+	maxbodytemp = T0C + 40
+
+/mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
+	return 1	//Void puppies can navigate space.
 
 
 //LISA! SQUEEEEEEEEE~
