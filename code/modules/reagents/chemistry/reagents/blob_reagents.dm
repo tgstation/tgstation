@@ -498,6 +498,24 @@
 	reac_volume = ..()
 	M.adjustBruteLoss(0.6*reac_volume)
 
+/datum/reagent/blob/adaptive_nexuses
+	name = "Adaptive Nexuses"
+	id = "adaptive_nexuses"
+	description = "will do medium brute damage and kill unconscious targets, giving you bonus resources."
+	shortdesc = "will do medium brute damage and kill unconscious targets, giving your overmind bonus resources."
+	color = "#31458C"
+	complementary_color = "#823ABB"
+
+/datum/reagent/blob/adaptive_nexuses/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	reac_volume = ..()
+	M.apply_damage(0.6*reac_volume, BRUTE)
+	if(O && ishuman(M) && M.stat == UNCONSCIOUS)
+		PoolOrNew(/obj/effect/overlay/temp/revenant, get_turf(M))
+		var/points = rand(5, 10)
+		O.add_points(points)
+		O << "<span class='notice'>Gained [points] resources from the death of [M].</span>"
+		M.death()
+
 //does low brute damage, oxygen damage, and stamina damage and wets tiles when damaged
 /datum/reagent/blob/pressurized_slime
 	name = "Pressurized Slime"
