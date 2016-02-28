@@ -39,10 +39,8 @@
 	if(atmosblock)
 		atmosblock = 0
 		air_update_turf(1)
-	var/area/Ablob = get_area(loc)
-	if(Ablob.blob_allowed) //Only remove for blobs in areas that counted for the win
-		blobs_legit -= src
-	blobs -= src //It's still removed from the normal list
+	blobs_legit -= src  //if it was in the legit blobs list, it isn't now
+	blobs -= src //it's no longer in the all blobs list either
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
 

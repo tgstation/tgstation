@@ -1,0 +1,7 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Adds 'Support and Mechanized Exosuits' and 'Space Suits and Hardsuits' categories to the syndicate uplink."
+  - rscadd: "Nuke op reinforcements and mechs have been moved to the first category. Syndicate space suits and hardsuits have been moved to the second category."
+  - bugfix: "Traitors can now properly buy the blood-red hardsuit for 8 TC."
+  - tweak: "Nuke ops can no longer buy the blood-red hardsuit, as the elite hardsuit costs the same amount while being absolutely better."
