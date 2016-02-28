@@ -1260,3 +1260,6 @@ About the new airlock wires panel:
 		open(1)
 		return 1
 	return 0
+
+/obj/machinery/door/airlock/shake()
+	return //Kinda snowflakish, to stop airlocks from shaking when kicked. I'll be refactorfing the whole thing anyways
