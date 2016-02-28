@@ -184,6 +184,7 @@ var/global/list/available_paintings = list(
 	icon = 'icons/obj/paintings.dmi'
 	icon_state = "blank"
 	autoignition_temperature = AUTOIGNITION_WOOD
+	anchored = 1
 
 /obj/structure/painting/New()
 	..()
