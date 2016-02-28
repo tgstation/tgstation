@@ -100,9 +100,13 @@
 	if((status_flags & GODMODE))
 		return
 
+	var/lungs = getorganslot("lungs")
+	if(!lungs)
+		adjustOxyLoss(2)
+
 	//CRIT
-	if(!breath || (breath.total_moles() == 0))
-		if(reagents.has_reagent("epinephrine"))
+	if(!breath || (breath.total_moles() == 0) || !lungs)
+		if(reagents.has_reagent("epinephrine") && lungs)
 			return
 		adjustOxyLoss(1)
 		failed_last_breath = 1

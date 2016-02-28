@@ -132,8 +132,9 @@
 		return 1
 	..()
 
-/obj/item/device/geiger_counter/AltClick()
-	..()
+/obj/item/device/geiger_counter/AltClick(mob/living/user)
+	if(!istype(user) || user.incapacitated())
+		return ..()
 	if(!scanning)
 		usr << "<span class='warning'>[src] must be on to reset its radiation level!</span>"
 		return 0
