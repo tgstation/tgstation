@@ -28,11 +28,7 @@
 	var/next_dest
 	var/next_dest_loc
 
-/proc/stack_trace(msg)
-	CRASH(msg)
-
 /mob/living/simple_animal/bot/cleanbot/New()
-	stack_trace("Cleanbot is being instantiated")
 	..()
 	get_targets()
 	icon_state = "cleanbot[on]"
