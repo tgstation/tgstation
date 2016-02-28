@@ -1,6 +1,6 @@
 /*
 //////////////////////////////////////
-asthmosthia
+asthmothia
 	Very very Noticable.
 	Decreases resistance.
 	Decreases stage speed.
@@ -42,7 +42,7 @@ BONUS
 
 /*
 //////////////////////////////////////
-asthmosthia traitor
+asthmothia traitor
 	Very very Noticable.
 	Decreases resistance.
 	Decreases stage speed.
