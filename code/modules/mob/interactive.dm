@@ -160,8 +160,9 @@
 		var/obj/item/organ/limb/head/L = locate(/obj/item/organ/limb/head) in organs
 		qdel(L)
 		organs += new /obj/item/organ/limb/robot/head
-	for(var/obj/item/organ/limb/LIMB in organs)
-		LIMB.owner = src
+	for(var/LIMB in organs)
+		var/obj/item/organ/limb/L = LIMB
+		L.owner = src
 	update_icons()
 	update_damage_overlays(0)
 	update_augments()
@@ -551,9 +552,10 @@
 		return pick(/area/hallway,/area/crew_quarters)
 
 /mob/living/carbon/human/interactive/proc/target_filter(target)
+	var/list/filtered_targets = list(/area, /turf, /obj/machinery/door, /atom/movable/light, /obj/structure/cable, /obj/machinery/atmospherics)
 	var/list/L = target
 	for(var/atom/A in target) // added a bunch of "junk" that clogs up the general find procs
-		if(istype(A,/area) || istype(A,/turf) || istype(A,/obj/machinery/door) || istype(A,/atom/movable/light) || istype(A,/obj/structure/cable) || istype(A,/obj/machinery/atmospherics))
+		if(is_type_in_list(A,filtered_targets))
 			L -= A
 	return L
 
@@ -763,7 +765,7 @@
 						if(Adjacent(TARGET))
 							M.attack_hand(src)
 			timeout++
-		else if(timeout >= 10 || M.health <= 1 || !(targetRange(M) > 14))
+		else if(timeout >= 10 || !(targetRange(M) > 14))
 			doing = doing & ~FIGHTING
 			timeout = 0
 			TARGET = null
