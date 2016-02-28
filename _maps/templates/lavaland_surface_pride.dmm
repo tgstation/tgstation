@@ -1,32 +1,270 @@
-"a" = (/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"b" = (/turf/simulated/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
-"c" = (/turf/simulated/floor/plating/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
-"d" = (/turf/simulated/wall/mineral/diamond{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"e" = (/obj/structure/mirror{pixel_x = -32},/turf/simulated/floor/mineral/silver{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"f" = (/obj/structure/mirror{pixel_x = 32},/turf/simulated/floor/mineral/silver{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"g" = (/turf/simulated/floor/mineral/silver{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"h" = (/obj/structure/mirror/magic/pride,/turf/simulated/wall/mineral/diamond{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"i" = (/obj/machinery/door/airlock/diamond,/turf/simulated/floor/mineral/silver{baseturf = /turf/simulated/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/powered)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"b" = (
+/turf/simulated/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"c" = (
+/turf/simulated/floor/plating/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"d" = (
+/turf/simulated/wall/mineral/diamond{
+	baseturf = /turf/simulated/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"e" = (
+/obj/structure/mirror{
+	pixel_x = -32
+	},
+/turf/simulated/floor/mineral/silver{
+	baseturf = /turf/simulated/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"f" = (
+/obj/structure/mirror{
+	pixel_x = 32
+	},
+/turf/simulated/floor/mineral/silver{
+	baseturf = /turf/simulated/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"g" = (
+/turf/simulated/floor/mineral/silver{
+	baseturf = /turf/simulated/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"h" = (
+/obj/structure/mirror/magic/pride,
+/turf/simulated/wall/mineral/diamond{
+	baseturf = /turf/simulated/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"i" = (
+/obj/machinery/door/airlock/diamond,
+/turf/simulated/floor/mineral/silver{
+	baseturf = /turf/simulated/floor/plating/lava/smooth;
+	blocks_air = 1
+	},
+/area/ruin/powered)
 
 (1,1,1) = {"
-aabcccccbb
-aaccdddccb
-accdddddcc
-acdddddddc
-acdddddddc
-acdedddfdc
-acdeghgfdc
-acdegggfdc
-acdegggfdc
-acdegggfdc
-acdegggfdc
-acdegggfdc
-acdegggfdc
-acdegggfdc
-acdegggfdc
-acdegggfdc
-acdegggfdc
-acdddidddc
-acccaacccc
-aaaaaaaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+"}
+(3,1,1) = {"
+b
+c
+c
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+c
+c
+"}
+(4,1,1) = {"
+c
+c
+d
+d
+d
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+d
+c
+c
+"}
+(5,1,1) = {"
+c
+d
+d
+d
+d
+d
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+d
+a
+a
+"}
+(6,1,1) = {"
+c
+d
+d
+d
+d
+d
+h
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+i
+a
+a
+"}
+(7,1,1) = {"
+c
+d
+d
+d
+d
+d
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+d
+c
+c
+"}
+(8,1,1) = {"
+c
+c
+d
+d
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+d
+c
+c
+"}
+(9,1,1) = {"
+b
+c
+c
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+c
+c
+"}
+(10,1,1) = {"
+b
+b
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 "}
