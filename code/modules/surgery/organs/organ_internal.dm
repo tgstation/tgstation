@@ -188,6 +188,19 @@
 			H.adjustOxyLoss(-cursed_heart.heal_oxy)
 
 
+/obj/item/organ/internal/lungs
+	name = "lungs"
+	icon_state = "lungs"
+	zone = "chest"
+	slot = "lungs"
+	gender = PLURAL
+	w_class = 3
+
+/obj/item/organ/internal/lungs/prepare_eat()
+	var/obj/S = ..()
+	S.reagents.add_reagent("salbutamol", 5)
+	return S
+
 
 /obj/item/organ/internal/appendix
 	name = "appendix"

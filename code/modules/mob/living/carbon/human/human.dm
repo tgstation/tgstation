@@ -28,6 +28,7 @@
 	for(var/obj/item/organ/limb/O in organs)
 		O.owner = src
 	internal_organs += new /obj/item/organ/internal/appendix
+	internal_organs += new /obj/item/organ/internal/lungs
 	internal_organs += new /obj/item/organ/internal/heart
 	internal_organs += new /obj/item/organ/internal/brain
 
@@ -945,6 +946,9 @@
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
+	if(!getorganslot("lungs"))
+		var/obj/item/organ/internal/lungs/L = new()
+		L.Insert(src)
 	restore_blood()
 	remove_all_embedded_objects()
 	..()
