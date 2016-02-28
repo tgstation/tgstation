@@ -725,3 +725,5 @@ Class Procs:
 				for(var/i = 2 to strength)
 					if(!Move(get_step(loc, kick_dir))) break
 					sleep(3)
+	else
+		src.shake(1, 3) //1 means x movement, 3 means intensity

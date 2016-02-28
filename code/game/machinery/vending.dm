@@ -552,7 +552,6 @@ var/global/num_vending_terminals = 1
 		src.icon_state = "[initial(icon_state)]"
 
 /obj/machinery/vending/proc/damaged()
-	src.shake(1, 3) //1 means x movement, 3 means intensity
 	src.health -= 4
 	if(src.health <= 0)
 		stat |= BROKEN

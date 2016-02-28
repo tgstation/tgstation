@@ -871,9 +871,7 @@ var/global/list/image/blood_overlays = list()
 	return 0
 
 /obj/item/kick_act(mob/living/carbon/human/H) //Kick items around!
-	if(!isturf(loc)) return 1
-
-	if(anchored || w_class > 3)
+	if(anchored || w_class > 3 + H.get_strength())
 		H.visible_message("<span class='danger'>[H] attempts to kick \the [src]!</span>", "<span class='danger'>You attempt to kick \the [src]!</span>")
 		if(prob(70))
 			to_chat(H, "<span class='danger'>Dumb move! You strain a muscle.</span>")
@@ -881,9 +879,12 @@ var/global/list/image/blood_overlays = list()
 			H.apply_damage(rand(1,4), BRUTE, pick("r_leg", "l_leg", "r_foot", "l_foot"))
 		return
 
-	var/turf/T = get_edge_target_turf(loc, get_dir(H, src))
+	var/kick_dir = get_dir(H, src)
+	if(H.loc == src.loc) kick_dir = H.dir
 
-	var/kick_power = (10 - (w_class ** 2)) * H.get_strength()
+	var/turf/T = get_edge_target_turf(loc, kick_dir)
+
+	var/kick_power = max((H.get_strength() * 10 - (w_class ** 2)), 1) //The range of the kick is (strength)*10. Strength ranges from 1 to 3, depending on the kicker's genes. Range is reduced by w_class^2, and can't be reduced below 1.
 
 	H.visible_message("<span class='danger'>[H] kicks \the [src]!</span>", "<span class='danger'>You kick \the [src]!</span>")
 
