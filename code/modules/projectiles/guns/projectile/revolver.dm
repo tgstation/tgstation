@@ -89,8 +89,8 @@
 	user << "[get_ammo(0,0)] of those are live rounds."
 
 /obj/item/weapon/gun/projectile/revolver/detective
-	name = "\improper .38 Mars Special"
-	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .357"
+	name = "Mars Special"
+	desc = "A cheap Martian knock-off of a classic law enforcement firearm."
 	icon_state = "detective"
 	origin_tech = "combat=2;materials=2"
 	unique_rename = 1
