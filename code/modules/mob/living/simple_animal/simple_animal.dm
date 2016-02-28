@@ -82,7 +82,7 @@
 	if(!real_name)
 		real_name = name
 	if(!loc)
-		stack_trace(Simple animal being instantiated in nullspace)
+		stack_trace("Simple animal being instantiated in nullspace")
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
