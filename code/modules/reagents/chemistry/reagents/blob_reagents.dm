@@ -503,7 +503,7 @@
 	id = "adaptive_nexuses"
 	description = "will do medium brute damage and kill unconscious targets, giving you bonus resources."
 	shortdesc = "will do medium brute damage and kill unconscious targets, giving your overmind bonus resources."
-	color = "#31458C"
+	color = "#4A64C0"
 	complementary_color = "#823ABB"
 
 /datum/reagent/blob/adaptive_nexuses/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
