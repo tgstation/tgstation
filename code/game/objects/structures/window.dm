@@ -135,8 +135,16 @@
 	H.visible_message("<span class='danger'>\The [H] kicks \the [src].</span>", \
 	"<span class='danger'>You kick \the [src].</span>")
 
-	health -= (rand(1,7)) * H.get_strength()
-	healthcheck()
+	var/damage = rand(1,7) * (H.get_strength() - reinforced) //By default, humanoids can't damage windows with kicks. Being strong or a hulk changes that
+	var/obj/item/clothing/shoes/S = H.shoes
+	if(istype(S))
+		damage += S.bonus_kick_damage //Unless they're wearing heavy boots
+	else if(M_TALONS in H.mutations)
+		damage += rand(1,6) //Or they have talons and they don't have shoes
+
+	if(damage > 0)
+		health -= damage
+		healthcheck()
 
 /obj/structure/window/CheckExit(var/atom/movable/O, var/turf/target)
 
