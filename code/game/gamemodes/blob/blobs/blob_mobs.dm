@@ -74,7 +74,7 @@
 	melee_damage_upper = 4
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
-
+	flying = 1
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/obj/effect/blob/factory/factory = null
 	var/list/human_overlays = list()
@@ -109,6 +109,7 @@
 	desc = "A shambling corpse animated by the blob."
 	melee_damage_lower += 8
 	melee_damage_upper += 11
+	flying = 0
 	death_cloud_size = 0
 	icon = H.icon
 	icon_state = "zombie_s"
