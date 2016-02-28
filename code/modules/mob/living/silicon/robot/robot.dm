@@ -166,7 +166,11 @@
 	if(module)
 		return
 
-	designation = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	if(config.allow_secborg)
+		modulelist += "Security"
+
+	designation = input("Please, select a module!", "Robot", null, null) in modulelist
 	var/animation_length = 0
 
 	if(module)
@@ -222,6 +226,9 @@
 			feedback_inc("cyborg_medical",1)
 
 		if("Security")
+			if(!config.allow_secborg)
+				src << "spam class = 'warning'>ERROR: NANOTRASEN HAS DISABLED THIS MODULE. PLEASE SELECT A DIFFERENT ONE!</span>"
+				return
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
 			icon_state = "secborg"
