@@ -553,7 +553,7 @@ var/list/teleport_other_runes = list()
 	mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice]'s body rises into the air, connected to [mob_to_revive] by a glowing tendril!</span>")
 	mob_to_revive.Beam(mob_to_sacrifice,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=20)
 	sleep(20)
-	if(mob_to_sacrifice)
+	if(!mob_to_sacrifice || !in_range(mob_to_sacrifice, src))
 		mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice] disintegrates into a pile of bones</span>")
 		return
 	mob_to_sacrifice.dust()

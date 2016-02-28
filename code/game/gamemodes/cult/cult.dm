@@ -37,12 +37,18 @@
 		user.say(message)
 	else
 		user.whisper(message)
+	var/my_message = "Error, message null. You should probably report this."
 	for(var/mob/M in mob_list)
 		if(iscultist(M) || (M in dead_mob_list))
 			if(clear || !ishuman(user))
-				M << "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
+				my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
 			else //Emergency comms
-				M << "<span class='purple'><i>Acolyte ???:</i> <b>[message]</b></span>"
+				my_message = "<span class='purple'><i>Acolyte ???:</i> <b>[message]</b></span>"
+			if(M in dead_mob_list)
+				M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [my_message]"
+			else
+				M << my_message
+
 	log_say("[user.real_name]/[user.key] : [message]")
 
 
@@ -135,7 +141,7 @@
 		cult_mind.current << "<span class='userdanger'>You are a member of the cult!</span>"
 		memorize_cult_objectives(cult_mind)
 	..()
-/datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
+/datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob,tome = 0)
 	if(!istype(mob))
 		return
 	mob.cult_add_comm()
@@ -144,7 +150,10 @@
 			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 			mob.dna.remove_mutation(CLOWNMUT)
 
-	. += cult_give_item(/obj/item/weapon/paper/talisman/supply, mob)
+	if(tome)
+		. += cult_give_item(/obj/item/weapon/tome, mob)
+	else
+		. += cult_give_item(/obj/item/weapon/paper/talisman/supply, mob)
 	mob << "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>"
 
 /datum/game_mode/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)

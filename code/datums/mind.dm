@@ -983,26 +983,8 @@
 					message_admins("[key_name_admin(usr)] has cult'ed [current].")
 					log_admin("[key_name(usr)] has cult'ed [current].")
 			if("tome")
-				var/mob/living/carbon/human/H = current
-				if (istype(H))
-					var/obj/item/weapon/tome/T = new(H)
-
-					var/list/slots = list (
-						"backpack" = slot_in_backpack,
-						"left pocket" = slot_l_store,
-						"right pocket" = slot_r_store,
-						"left hand" = slot_l_hand,
-						"right hand" = slot_r_hand,
-						)
-					var/where = H.equip_in_one_of_slots(T, slots)
-					if (!where)
-						usr << "<span class='danger'>Spawning tome failed!</span>"
-					else
-						H << "A tome, a message from your new master, appears in your [where]."
-						if(where == "backpack")
-							var/obj/item/weapon/storage/B = H.back
-							B.orient2hud(H)
-							B.show_to(H)
+				if (!ticker.mode.equip_cultist(current,1))
+					usr << "<span class='danger'>Spawning tome failed!</span>"
 
 			if("amulet")
 				if (!ticker.mode.equip_cultist(current))
@@ -1388,21 +1370,6 @@
 			current.memory += "The convert rune is join blood self<BR>"
 
 	var/mob/living/carbon/human/H = current
-	if (istype(H))
-		var/obj/item/weapon/tome/T = new(H)
-
-		var/list/slots = list (
-			"backpack" = slot_in_backpack,
-			"left pocket" = slot_l_store,
-			"right pocket" = slot_r_store,
-			"left hand" = slot_l_hand,
-			"right hand" = slot_r_hand,
-		)
-		var/where = H.equip_in_one_of_slots(T, slots)
-		if (!where)
-		else
-			H << "A tome, a message from your new master, appears in your [where]."
-
 	if (!ticker.mode.equip_cultist(current))
 		H << "Spawning an amulet from your Master failed."
 
