@@ -291,11 +291,15 @@
 	icon_state = "banana_peel_blue"
 	origin_tech = "bluespace=3"
 
-/obj/item/weapon/grown/bananapeel/bluespace/Crossed(AM as mob|obj)
+/obj/item/weapon/grown/bananapeel/bluespace/Crossed(AM)
 	if(..())
 		var/teleport_radius = potency / 10
 		do_teleport(AM, get_turf(AM), teleport_radius)
-		qdel(src)    //let's not make one peel infinitely reusable
+		AM << "<span class='notice'>You slip through spacetime!</span>"
+		if(prob(50))
+			do_teleport(src, get_turf(src), teleport_radius)
+		else
+			qdel(src)
 
 /obj/item/weapon/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
 	name = "synthesized banana peel"
