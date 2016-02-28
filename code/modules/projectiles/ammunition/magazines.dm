@@ -60,10 +60,17 @@
 	return 0
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev38
-	name = "d-tiv revolver cylinder"
+	name = "detective revolver cylinder"
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = "38"
 	max_ammo = 6
+
+/obj/item/ammo_box/magazine/internal/cylinder/rev38/can_load(mob/user)
+	user << "<span class='notice'>You start reloading \the [src]...</span>"
+	if(!do_after(user, 30))
+		user << "<span class='danger'>You didn't manage to reload \the [src]!</span>"
+		return 0
+	return 1
 
 /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
 	name = "grenade launcher internal magazine"
