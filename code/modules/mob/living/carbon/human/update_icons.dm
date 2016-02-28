@@ -665,6 +665,26 @@ var/global/list/limb_icon_cache = list()
 	else sm_type = "non-human"
 	return sm_type
 
+/obj/item/organ/limb/proc/has_color()
+
+	if(dna)
+		var/datum/species/race = dna ? dna.species : null
+		if(race)
+			if(MUTCOLORS in race.specflags)
+				return 1
+	return 0
+
+/obj/item/organ/limb/proc/has_gender()
+
+	//Robot limbs have gendered appearance, but no DNA
+	if(organtype == ORGAN_ROBOTIC)
+		return 1
+	if(dna)
+		var/datum/species/race = dna ? dna.species : null
+		if(race)
+			return race.sexes
+	return 0
+
 //produces a key based on the human's limbs
 /mob/living/carbon/human/proc/generate_icon_render_key()
 	. += "-[gender]"
@@ -719,10 +739,10 @@ var/global/list/limb_icon_cache = list()
 	var/race = LI.get_race() //simplified physical appearence of mob
 	var/should_draw_greyscale = FALSE
 
-	if(affecting.body_part == HEAD || affecting.body_part == CHEST)
+	if((affecting.body_part == HEAD || affecting.body_part == CHEST) && LI.has_gender())
 		should_draw_gender = TRUE
 
-	if(race == "human" || race == "plant" || race == "lizard")	//+pod, jelly and slime
+	if(LI.has_color())
 		should_draw_greyscale = TRUE
 
 	if(LI.organtype == ORGAN_ROBOTIC)
