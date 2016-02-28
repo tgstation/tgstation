@@ -129,9 +129,9 @@
 			H.co2overloadtime = world.time
 		else if(world.time - H.co2overloadtime > 120)
 			H.Paralyse(3)
-			H.adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
-			if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
-				H.adjustOxyLoss(8)
+			H.adjustOxyLoss(1) // Lets hurt em a little, let them know we mean business
+			if(world.time - H.co2overloadtime > 600) // They've been in here 60s now, lets start to kill them for their own good!
+				H.adjustOxyLoss(3)
 		if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
 			H.emote("cough")
 	else
