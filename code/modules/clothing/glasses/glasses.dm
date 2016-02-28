@@ -116,6 +116,8 @@
 	var/obj/item/weapon/shard/S = new(get_turf(src))
 	S.Crossed() //To punish user for stomping on sunglasses without shoes
 
+	qdel(src)
+
 /obj/item/clothing/glasses/regular/hipster
 	name = "Prescription Glasses"
 	desc = "Made by Uncool. Co."
@@ -146,6 +148,8 @@
 
 	var/obj/item/weapon/shard/S = new(get_turf(src))
 	S.Crossed() //To punish user for stomping on sunglasses without shoes
+
+	qdel(src)
 
 /obj/item/clothing/glasses/virussunglasses
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
