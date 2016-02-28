@@ -93,7 +93,6 @@
 	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .357"
 	icon_state = "detective"
 	origin_tech = "combat=2;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	unique_rename = 1
 	unique_reskin = 1
 
