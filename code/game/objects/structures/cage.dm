@@ -30,7 +30,7 @@
 	update_icon()
 
 /obj/structure/cage/Destroy()
-	for(var/atom/M in contents)
+	for(var/atom/movable/M in contents)
 		M.forceMove(src.loc)
 
 	..()
