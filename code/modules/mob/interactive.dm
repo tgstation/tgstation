@@ -42,13 +42,16 @@
 	var/mob/retal_target = null
 	var/update_hands = 0
 	var/list/blacklistItems = list() // items we should be ignoring
+	var/maxStepsTick = 3
 	//Job and mind data
 	var/obj/item/weapon/card/id/MYID
 	var/obj/item/device/pda/MYPDA
 	var/obj/item/main_hand
 	var/obj/item/other_hand
 	var/TRAITS = 0
+	var/obj/item/weapon/card/id/Path_ID
 	var/datum/job/myjob
+	var/list/myPath = list()
 	faction = list("station")
 	//trait vars
 	var/robustness = 50
@@ -60,7 +63,7 @@
 	var/chattyness = CHANCE_TALK
 	var/targetInterestShift = 10 // how much a good action should "reward" the npc
 	//modules
-	var/list/functions = list("nearbyscan","combat","doorscan","shitcurity","chatter")
+	var/list/functions = list("nearbyscan","combat","doorscan","shitcurity","chatter","healpeople")
 
 //botPool funcs
 /mob/living/carbon/human/interactive/proc/takeDelegate(mob/living/carbon/human/interactive/from,doReset=TRUE)
@@ -164,6 +167,11 @@
 	update_augments()
 
 	hand = 0
+
+	Path_ID = new /obj/item/weapon/card/id(src)
+
+	var/datum/job/captain/C = new/datum/job/captain
+	Path_ID.access = C.get_access()
 
 	//job specific favours
 	switch(myjob.title)
@@ -328,7 +336,6 @@
 	if(interest > 100)
 		interest = 100
 	//---------------------------
-	nearby = list()
 	//VIEW FUNCTIONS
 
 	if(!l_hand || !r_hand)
@@ -432,10 +439,11 @@
 	if(inactivity_period > 0)
 		inactivity_period--
 
-	if(interest <= 0 || timeout >= 25) // facilitate boredom functions
+	if(interest <= 0 || timeout >= 10) // facilitate boredom functions
 		TARGET = null
 		doing = 0
 		timeout = 0
+		myPath = list()
 
 	//this is boring, lets move
 	if(!doing && !IsDeadOrIncap() && !TARGET)
@@ -444,22 +452,17 @@
 			//i'm crowded, time to leave
 			TARGET = pick(target_filter(urange(MAX_RANGE_FIND,src,1)))
 		else
-			var/choice = pick(1,2,3,4,5,6)
+			var/choice = rand(1,50)
 			switch(choice)
-				if(1)
+				if(1 to 10)
 					//chance to chase an item
 					TARGET = locate(/obj/item) in favouredObjIn(oview(MIN_RANGE_FIND,src))
-				if(2)
-					//chance to leave
-					TARGET = locate(/obj/machinery/door) in urange(MAX_RANGE_FIND,src,1) // this is a sort of fix for the current pathing.
-				if(3)
+				if(11 to 21)
 					TARGET = safepick(get_area_turfs(job2area(myjob)))
-				if(4)
-					TARGET = pick(favouredObjIn(urange(MAX_RANGE_FIND,src,1)))
-				if(5)
+				if(22 to 41)
+					TARGET = pick(target_filter(favouredObjIn(urange(MAX_RANGE_FIND,src,1))))
+				if(42 to 50)
 					TARGET = pick(target_filter(oview(MIN_RANGE_FIND,src)))
-				if(6)
-					TARGET = locate(/turf) in urange(MAX_RANGE_FIND,src,1)
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 
@@ -484,7 +487,7 @@
 	else
 		timeout++
 
-/mob/living/carbon/human/interactive/proc/getGoodPath(target,var/maxtries=30)
+/mob/living/carbon/human/interactive/proc/getGoodPath(target,var/maxtries=512)
 	set background = 1
 	var/turf/end = get_turf(target)
 
@@ -495,7 +498,11 @@
 	while(current != end && tries < maxtries)
 		var/turf/shortest = current
 		for(var/turf/T in view(current,1))
-			if(T.density == 0)
+			var/foundDense = 0
+			for(var/atom/A in T)
+				if(A.density)
+					foundDense = 1
+			if(T.density == 0 && !foundDense)
 				if(get_dist(T, target) < get_dist(shortest,target))
 					shortest = T
 				else
@@ -510,12 +517,17 @@
 	set background = 1
 	if(!target)
 		return 0
-	var/list/myPath = getGoodPath(target)
+
+	if(myPath.len <= 0)
+		myPath = get_path_to(src, get_turf(target), /turf/proc/Distance, MAX_RANGE_FIND + 1, 250,1, id=Path_ID)
 
 	if(myPath)
 		if(myPath.len > 0)
-			walk_to(src,myPath[1],0,5)
 			doing = doing & ~TRAVEL
+			for(var/i = 0; i < maxStepsTick; ++i)
+				if(myPath.len >= 1)
+					walk_to(src,myPath[1],0,5)
+					myPath -= myPath[1]
 			return 1
 	return 0
 
@@ -540,17 +552,10 @@
 
 /mob/living/carbon/human/interactive/proc/target_filter(target)
 	var/list/L = target
-	for(var/atom/A in target)
-		if(istype(A,/area) || istype(A,/turf/space))
+	for(var/atom/A in target) // added a bunch of "junk" that clogs up the general find procs
+		if(istype(A,/area) || istype(A,/turf) || istype(A,/obj/machinery/door) || istype(A,/atom/movable/light) || istype(A,/obj/structure/cable) || istype(A,/obj/machinery/atmospherics))
 			L -= A
 	return L
-
-/mob/living/carbon/human/interactive/proc/denied_filter(target)
-	var/list/denied = list(/obj/structure/window,/obj/structure/table) //expand me
-	for(var/a in denied)
-		if(istype(target,a))
-			return 1
-	return 0
 
 ///BUILT IN MODULES
 /mob/living/carbon/human/interactive/proc/chatter(obj)
@@ -610,8 +615,33 @@
 				I.attack(TARGET,src)
 				sleep(25)
 
+/mob/living/carbon/human/interactive/proc/healpeople(obj)
+	var/shouldTryHeal = 0
+	var/obj/item/stack/medical/M
+
+	var/list/allContents = list()
+
+	for(var/atom/A in contents)
+		allContents += A
+		if(A.contents.len > 0)
+			for(var/atom/B in A)
+				allContents += B
+
+	for(var/A in allContents)
+		if(istype(A,/obj/item/stack/medical))
+			shouldTryHeal = 1
+			M = A
+	if(shouldTryHeal)
+		for(var/mob/living/carbon/C in nearby)
+			if(C.health <= 75)
+				if(get_dist(src,C) <= 2)
+					src.say("Wait, [C], let me heal you!")
+					M.attack(C,src)
+					sleep(25)
+				else
+					tryWalk(get_turf(C))
+
 /mob/living/carbon/human/interactive/proc/dojanitor(obj)
-	favoured_types = list(/obj/item/weapon/mop, /obj/item/weapon/reagent_containers/glass/bucket, /obj/item/weapon/reagent_containers/spray/cleaner, /obj/effect/decal/cleanable)
 	if(istype(main_hand,/obj/item/weapon/mop))
 		var/obj/item/weapon/mop/M = main_hand
 		if(M)
@@ -621,26 +651,9 @@
 				TARGET = locate(/obj/effect/decal/cleanable) in urange(MAX_RANGE_FIND,src,1)
 			if(targetRange(TARGET) <= 2)
 				M.afterattack(TARGET,src)
+				sleep(25)
 			else
 				tryWalk(TARGET)
-
-/mob/living/carbon/human/interactive/proc/sidestep(obj)
-	var/shift = 0
-	for(var/dir in cardinal)
-		var/turf/T = get_step(src,dir)
-		if(T)
-			for(var/obj/A in T.contents)
-				if(denied_filter(A))
-					shift = 1
-			if(T.density)
-				shift = 1
-			if(shift)
-				if(src.dir == NORTH || SOUTH)
-					var/towalk = pick(EAST,WEST)
-					walk_to(src,get_step(src,towalk),0,5)
-				else
-					var/towalk = pick(NORTH,SOUTH)
-					walk_to(src,get_step(src,towalk),0,5)
 
 /mob/living/carbon/human/interactive/proc/combat(obj)
 	set background = 1
@@ -675,26 +688,27 @@
 	//ensure we're using the best object possible
 
 	var/obj/item/weapon/best
-
+	var/foundFav = 0
 	for(var/test in src.contents)
 		for(var/a in favoured_types)
 			if(ispath(test,a) && !(doing & FIGHTING)) // if we're not in combat and we find our favourite things, use them (for people like janitor and doctors)
 				best = test
+				foundFav = 1
 				return
-
-		if(istype(test,/obj/item/weapon))
-			var/obj/item/weapon/R = test
-			if(R.force > 2) // make sure we don't equip any non-weaponlike items, ie bags and stuff
-				if(!best)
-					best = R
-				else
-					if(best.force < R.force)
+		if(!foundFav)
+			if(istype(test,/obj/item/weapon))
+				var/obj/item/weapon/R = test
+				if(R.force > 2) // make sure we don't equip any non-weaponlike items, ie bags and stuff
+					if(!best)
 						best = R
-				if(istype(R,/obj/item/weapon/gun))
-					var/obj/item/weapon/gun/G = R
-					if(G.can_shoot())
-						best = R
-						break // gun with ammo? screw the rest
+					else
+						if(best.force < R.force)
+							best = R
+					if(istype(R,/obj/item/weapon/gun))
+						var/obj/item/weapon/gun/G = R
+						if(G.can_shoot())
+							best = R
+							break // gun with ammo? screw the rest
 	if(best)
 		take_to_slot(best,1)
 
@@ -756,13 +770,13 @@
 		if(T)
 			for(var/obj/machinery/door/D in T.contents)
 				if(D.check_access(MYID) && !istype(D,/obj/machinery/door/poddoor) && D.density)
-					//layer 3.1 is "closed" for most doors, this is just a hacky !open check because i cannot find an open var
-					spawn(1)
+					spawn(0)
 						D.open()
 						sleep(5)
 						walk_to(src,T,0,5)
 
 /mob/living/carbon/human/interactive/proc/nearbyscan(obj)
+	nearby = list()
 	for(var/mob/living/M in view(4,src))
 		if(M != src)
 			nearby += M
