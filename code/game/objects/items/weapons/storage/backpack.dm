@@ -501,7 +501,7 @@
 /obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter/New()
 	..()
 	new /obj/item/clothing/under/syndicate/soviet(src)
-	new /obj/item/weapon/watertank/janitor/operator(src)
+	new /obj/item/weapon/watertank/operator(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
 	new /obj/item/weapon/gun/projectile/automatic/pistol/APS(src)
 	new /obj/item/ammo_box/magazine/pistolm9mm(src)
