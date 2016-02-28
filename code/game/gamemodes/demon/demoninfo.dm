@@ -154,7 +154,7 @@ var/list/allDemons = list()
 		if(BANE_SILVER)
 			return "Silver seems to gravely injure this demon."
 		if(BANE_SALT)
-			return "Throwing salt at this demon will hinder his ability to use infernal powers temporarially."
+			return "Throwing salt at this demon will hinder his ability to use infernal powers temporarily."
 		if(BANE_LIGHT)
 			return "Bright flashes will disorient the demon, likely causing him to flee."
 		if(BANE_IRON)

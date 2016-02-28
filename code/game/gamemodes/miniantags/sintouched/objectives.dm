@@ -17,7 +17,7 @@
 	explanation_text = "Everything is so delicious. Go eat everything."
 
 /datum/objective/sintouched/greed
-	explanation_text = "You want MORE, more money, more wealth, more riches.  Go get it, but avoid hurting people over it if you can."
+	explanation_text = "You want MORE, more money, more wealth, more riches.  Go get it, but don't hurt people for it."
 
 /datum/objective/sintouched/sloth
 	explanation_text = "You just get tired randomly.  Go take a nap at a time that would inconvenience other people."
@@ -35,7 +35,7 @@
 			jobs -= J
 	if(jobs.len > 0)
 		var/datum/job/target = pick(jobs)
-		explanation_text = "Those [target.title]s are always showing off their newest work.  Go knock them down a peg or two, preferably without physically harming them."
+		explanation_text = "Those [target.title]s are always showing off their newest work.  Go knock them down a peg or two, without physically harming them."
 
 /datum/objective/sintouched/pride
 	explanation_text = "You are the BEST thing on the station.  Make sure everyone knows it."

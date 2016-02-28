@@ -6,7 +6,7 @@
 	range = -1
 	clothes_req = 0
 	var/summoned = 0
-	var/obj/item/weapon/twohanded/pitchfork/pitchfork/demonic
+	var/obj/item/weapon/twohanded/pitchfork/demonic/pitchfork
 
 	school = "conjuration"
 	charge_max = 150
