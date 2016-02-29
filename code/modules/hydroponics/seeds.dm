@@ -217,7 +217,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
-	mutatelist = list(/obj/item/seeds/mimanaseed)
+	mutatelist = list(/obj/item/seeds/mimanaseed, /obj/item/seeds/bluespacebananaseed)
 
 /obj/item/seeds/bluespacebananaseed
 	name = "pack of bluespace banana seeds"
