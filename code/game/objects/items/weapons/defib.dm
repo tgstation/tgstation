@@ -548,7 +548,7 @@
 
 /obj/item/weapon/twohanded/shockpaddles/syndicate
 	name = "syndicate defibrillator paddles"
-	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and todeliver powerful shocks offensively."
+	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
 	combat = 1
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "defibpaddles0"

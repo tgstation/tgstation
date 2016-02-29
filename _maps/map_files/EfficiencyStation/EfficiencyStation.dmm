@@ -4311,7 +4311,6 @@
 	 d2 = 2;
 	 icon_state = "1-2"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint{
 	name = "Medical Maintenance"
@@ -5914,7 +5913,6 @@
 	name = "Research Division"
 	})
 "akv" = (
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating{
 	icon_state = "warnplate";
 	 dir = 4
@@ -6424,7 +6422,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint{
 	name = "Medical Maintenance"
@@ -6658,7 +6655,6 @@
 	name = "\improper Toxins Lab"
 	})
 "alH" = (
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	 icon_state = "warning"
@@ -9105,7 +9101,6 @@
 "apw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fore)
 "apx" = (
@@ -9410,7 +9405,6 @@
 	 icon_state = "1-2";
 	 pixel_y = 0
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -10102,7 +10096,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fore)
 "arl" = (
@@ -10130,7 +10123,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -10229,7 +10221,6 @@
 /turf/simulated/floor/plasteel,
 /area/toxins/misc_lab)
 "art" = (
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -11163,7 +11154,6 @@
 	name = "\improper Toxins Lab"
 	})
 "atf" = (
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -11791,7 +11781,6 @@
 /obj/effect/decal/cleanable/robot_debris{
 	icon_state = "gib6"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating{
 	broken = 1;
 	 icon_state = "platingdmg1"
@@ -12618,7 +12607,6 @@
 	 name = "Medbay Maintenance APC";
 	 pixel_y = -24
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint{
 	name = "Medical Maintenance"
@@ -13645,7 +13633,6 @@
 /area/maintenance/fore)
 "axu" = (
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fore)
 "axv" = (
@@ -13657,7 +13644,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/remains/human,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating{
 	broken = 1;
 	 icon_state = "platingdmg3"
@@ -15638,7 +15624,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/candy,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fore)
 "aAN" = (
@@ -17072,7 +17057,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fore)
 "aDs" = (
@@ -17694,7 +17678,6 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating{
 	broken = 1;
 	 icon_state = "platingdmg1"
@@ -18129,7 +18112,6 @@
 	 d2 = 2;
 	 icon_state = "1-2"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating{
 	broken = 1;
 	 icon_state = "platingdmg1"
@@ -18191,7 +18173,6 @@
 /obj/machinery/light_switch{
 	pixel_x = 23
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -18344,7 +18325,6 @@
 /area/storage/tech)
 "aFL" = (
 /obj/item/stack/rods,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fore)
 "aFM" = (
@@ -20473,7 +20453,6 @@
 	 name = "Station Intercom (General)";
 	 pixel_x = 27
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -20507,7 +20486,6 @@
 /turf/simulated/floor/plating,
 /area/storage/tech)
 "aJu" = (
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/storage/tech)
 "aJv" = (
@@ -21807,7 +21785,6 @@
 	 icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fore)
 "aLT" = (
@@ -23053,7 +23030,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating{
 	broken = 1;
 	 icon_state = "platingdmg1"
@@ -25127,7 +25103,6 @@
 "aRY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/rods,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fore)
 "aRZ" = (
@@ -29127,7 +29102,6 @@
 	 d2 = 4;
 	 icon_state = "1-4"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating{
 	burnt = 1;
 	 icon_state = "panelscorched"
@@ -33482,7 +33456,6 @@
 	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
 	 name = "maint grille or trash spawner"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating{
 	broken = 1;
 	 icon_state = "platingdmg2"
@@ -34493,7 +34466,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -34525,7 +34497,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/sheet/cardboard,
 /obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint{
 	name = "Medical Maintenance"
@@ -34622,7 +34593,6 @@
 	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
 	 name = "maint grille or trash spawner"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint2)
 "bkG" = (
@@ -35034,7 +35004,6 @@
 "bls" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint{
 	name = "Medical Maintenance"
@@ -36742,7 +36711,6 @@
 /obj/machinery/light_construct/small{
 	dir = 1
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	broken = 1;
 	 dir = 4;
@@ -37321,7 +37289,6 @@
 /obj/machinery/light_construct/small{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	burnt = 1;
 	 dir = 4;
@@ -37726,7 +37693,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint2)
 "bqD" = (
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint2)
 "bqE" = (
@@ -38179,7 +38145,6 @@
 	icon_state = "gib6"
 	},
 /obj/item/weapon/reagent_containers/syringe,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/starboard)
 "brq" = (
@@ -38857,7 +38822,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/shard,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	broken = 1;
 	 dir = 4;
@@ -40297,7 +40261,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating{
 	broken = 1;
 	 icon_state = "platingdmg3"
@@ -41698,7 +41661,6 @@
 	},
 /area/crew_quarters/sleep)
 "byi" = (
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel,
 /area/crew_quarters/sleep)
 "byj" = (
@@ -42164,7 +42126,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "hydrofloor"
 	},
@@ -43552,7 +43513,6 @@
 "bBx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint2)
 "bBy" = (
@@ -45231,7 +45191,6 @@
 /area/maintenance/starboard)
 "bEE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/starboard)
 "bEF" = (
@@ -46034,7 +45993,6 @@
 	 icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/starboard)
 "bGb" = (
@@ -47106,7 +47064,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/rods,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/port{
 	name = "Chapel Maintenance"
@@ -48473,7 +48430,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/crowbar,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/port{
 	name = "Chapel Maintenance"
@@ -49152,7 +49108,6 @@
 	 on = 1;
 	 pressure_checks = 1
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -49777,7 +49732,6 @@
 	 d2 = 8;
 	 icon_state = "4-8"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/port{
 	name = "Chapel Maintenance"
@@ -50325,7 +50279,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating{
 	broken = 1;
 	 icon_state = "platingdmg3"
@@ -50463,7 +50416,6 @@
 /obj/item/weapon/newspaper,
 /obj/item/weapon/cigbutt,
 /obj/item/clothing/glasses/sunglasses,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating{
 	burnt = 1;
 	 icon_state = "panelscorched"
@@ -51629,7 +51581,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -53573,7 +53524,6 @@
 "bTK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -53684,7 +53634,6 @@
 	 d2 = 2;
 	 icon_state = "1-2"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/port{
 	name = "Chapel Maintenance"
@@ -54689,7 +54638,6 @@
 /area/maintenance/starboard)
 "bVQ" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "cafeteria"
 	},
@@ -56478,7 +56426,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/maintenance/starboard)
 "bZa" = (
@@ -56663,7 +56610,6 @@
 	 pixel_y = -28;
 	 prison_radio = 1
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/security/prison)
 "bZs" = (
@@ -57747,7 +57693,6 @@
 /turf/simulated/floor/plating,
 /area/security/prison)
 "cbB" = (
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -58669,7 +58614,6 @@
 	 d2 = 2;
 	 icon_state = "1-2"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -61275,7 +61219,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
 /turf/simulated/floor/plating{
 	broken = 1;
 	 icon_state = "platingdmg3"

@@ -100,9 +100,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 /datum/subsystem/garbage_collector/proc/QueueForQueuing(datum/A)
 	if (istype(A) && isnull(A.gc_destroyed))
 		tobequeued += A
+		A.gc_destroyed = -1
 
 /datum/subsystem/garbage_collector/proc/Queue(datum/A)
-	if (!istype(A) || !isnull(A.gc_destroyed))
+	if (!istype(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
 		return 
 	var/gctime = world.time
 	var/refid = "\ref[A]"
@@ -110,7 +111,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	A.gc_destroyed = gctime
 	
 	if (queue[refid])
-		queue -= "\ref[A]" // Removing any previous references that were GC'd so that the current object will be at the end of the list.
+		queue -= refid // Removing any previous references that were GC'd so that the current object will be at the end of the list.
 	
 	queue[refid] = gctime
 
@@ -166,8 +167,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		return FALSE
 	if(D.gc_destroyed)
 		return TRUE
-	if(SSgarbage && SSgarbage.tobequeued && SSgarbage.tobequeued.len && D in SSgarbage.tobequeued)
-		return  TRUE
 	return FALSE
 
 // Default implementation of clean-up code.
