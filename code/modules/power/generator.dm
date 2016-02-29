@@ -22,6 +22,8 @@
 	var/effective_gen		= 0
 	var/lastgenlev			= 0
 	var/max_power			= 500000 //Amount of W produced at which point the meter caps.
+	var/startup_ticks		= 5 // Amount of ticks needed of continuous thermal power generation to actually emit power.
+	var/startup_ticks_max	= 5
 
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
@@ -312,7 +314,7 @@
 		if(delta_temperature > 0 && air1_heat_capacity > 0 && air2_heat_capacity > 0)
 			var/energy_transfer = delta_temperature * air2_heat_capacity * air1_heat_capacity / (air2_heat_capacity + air1_heat_capacity)
 			var/heat = energy_transfer * (1 - thermal_efficiency)
-			last_thermal_gen = energy_transfer * thermal_efficiency
+			last_thermal_gen = energy_transfer * thermal_efficiency / 4
 
 			if(air2.temperature > air1.temperature)
 				air2.temperature = air2.temperature - energy_transfer/air2_heat_capacity
@@ -350,7 +352,17 @@
 		lastgenlev = genlev
 		update_icon()
 
-	add_avail(effective_gen)
+	// Make it so dorks have to actually keep the TEG producing power for more than 5 ticks before it starts producing power.
+	// No more making power with a jamming TEG.
+	if(last_thermal_gen)
+		if(startup_ticks <= 0)
+			add_avail(effective_gen)
+
+		else
+			startup_ticks--
+
+	else
+		startup_ticks = startup_ticks_max
 
 	updateUsrDialog()
 
