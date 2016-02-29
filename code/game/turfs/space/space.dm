@@ -1,7 +1,7 @@
 /turf/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
-	icon_state = "0"
+	icon_state = SPACE_ICON_STATE
 	intact = 0
 
 	temperature = TCMB
@@ -12,9 +12,10 @@
 	var/destination_x
 	var/destination_y
 
+	var/global/datum/gas_mixture/space/space_gas = new
+
 /turf/space/New()
-	if(!istype(src, /turf/space/transit))
-		icon_state = SPACE_ICON_STATE
+	air = space_gas
 
 /turf/space/Destroy()
 	return QDEL_HINT_LETMELIVE

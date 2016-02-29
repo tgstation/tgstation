@@ -6,27 +6,6 @@
 	var/list/atmos_adjacent_turfs = list()
 	var/atmos_supeconductivity = 0
 
-/turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
-	qdel(giver)
-	return 0
-
-/turf/return_air()
-	//Create gas mixture to hold data for passing
-	var/datum/gas_mixture/GM = new
-
-	GM.copy_from_turf(src)
-
-	return GM
-
-/turf/remove_air(amount)
-	var/datum/gas_mixture/GM = return_air()
-
-	GM.remove(amount)
-
-	return GM
-
-
-/turf/simulated
 	var/datum/excited_group/excited_group
 	var/excited = 0
 	var/recently_active = 0
@@ -40,7 +19,7 @@
 
 	var/atmos_overlay_types = list() //gas IDs of current active overlays
 
-/turf/simulated/New()
+/turf/New()
 	..()
 	levelupdate()
 	if(smooth)
@@ -50,13 +29,13 @@
 		air = new
 		air.copy_from_turf(src)
 
-/turf/simulated/Destroy()
+/turf/Destroy()
 	visibilityChanged()
 	if(active_hotspot)
 		qdel(active_hotspot)
 	return ..()
 
-/turf/simulated/assume_air(datum/gas_mixture/giver)
+/turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
 	if(!giver)
 		return 0
 	var/datum/gas_mixture/receiver = air
@@ -68,37 +47,33 @@
 
 		return 1
 
-	else return ..()
+	qdel(giver)
+	return 0
 
-/turf/simulated/proc/copy_air_with_tile(turf/simulated/T)
+/turf/proc/copy_air_with_tile(turf/simulated/T)
 	if(istype(T) && T.air && air)
 		air.copy_from(T.air)
 
-/turf/simulated/proc/copy_air(datum/gas_mixture/copy)
+/turf/proc/copy_air(datum/gas_mixture/copy)
 	if(air && copy)
 		air.copy_from(copy)
 
-/turf/simulated/return_air()
+/turf/return_air()
 	if(air)
 		return air
 
-	else
-		return ..()
+	var/datum/gas_mixture/GM = new
+	GM.copy_from_turf(src)
+	return GM
 
-/turf/simulated/remove_air(amount as num)
-	if(air)
-		var/datum/gas_mixture/removed = null
+/turf/remove_air(amount)
+	var/datum/gas_mixture/ours = return_air()
+	var/datum/gas_mixture/removed = ours.remove(amount)
+	update_visuals()
+	return removed
 
-		removed = air.remove(amount)
 
-		update_visuals()
-
-		return removed
-
-	else
-		return ..()
-
-/turf/simulated/proc/mimic_temperature_solid(turf/model, conduction_coefficient)
+/turf/proc/mimic_temperature_solid(turf/model, conduction_coefficient) //to be understood
 	var/delta_temperature = (temperature_archived - model.temperature)
 	if((heat_capacity > 0) && (abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER))
 
@@ -106,7 +81,7 @@
 			(heat_capacity*model.heat_capacity/(heat_capacity+model.heat_capacity))
 		temperature -= heat/heat_capacity
 
-/turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduction_coefficient)
+/turf/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduction_coefficient) //to be understood
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && heat_capacity && sharer.heat_capacity)
 
@@ -123,8 +98,7 @@
 
 
 
-/turf/simulated/proc/process_cell(fire_count)
-
+/turf/proc/process_cell(fire_count)
 	if(archived_cycle < fire_count) //archive self if not already done
 		archive()
 
@@ -218,17 +192,17 @@
 	if(!our_excited_group && remove == 1)
 		SSair.remove_from_active(src)
 
-/turf/simulated/temperature_expose()
+/turf/temperature_expose()
 	if(temperature > heat_capacity)
 		to_be_destroyed = 1
 
-/turf/simulated/proc/archive()
+/turf/proc/archive()
 	if(air) //For open space like floors
 		air.archive()
 	temperature_archived = temperature
 	archived_cycle = SSair.times_fired
 
-/turf/simulated/proc/update_visuals()
+/turf/proc/update_visuals()
 	var/list/new_overlay_types = tile_graphic()
 
 	for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
@@ -240,7 +214,7 @@
 
 	atmos_overlay_types = new_overlay_types
 
-/turf/simulated/proc/tile_graphic()
+/turf/proc/tile_graphic()
 	. = new /list
 	var/list/gases = air.gases
 	for(var/id in gases)
@@ -248,9 +222,7 @@
 		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
 			. += gas[GAS_META][META_GAS_OVERLAY]
 
-/turf/simulated/proc/share_air(turf/simulated/T, fire_count, adjacent_turfs_length)
-	if(T.current_cycle < fire_count)
-		var/difference
+/turf/proc/share_air(turf/simulated/T, fire_count, adjacent_turfs_length)	if(T.current_cycle < fire_count)		var/difference
 		difference = air.share(T.air, adjacent_turfs_length)
 		if(difference)
 			if(difference > 0)
@@ -265,7 +237,7 @@
 		pressure_direction = get_dir(src, T)
 		pressure_difference = difference
 
-/turf/simulated/proc/last_share_check()
+/turf/proc/last_share_check()
 	if(air.last_share > MINIMUM_AIR_TO_SUSPEND)
 		excited_group.reset_cooldowns()
 
@@ -355,7 +327,7 @@
 
 
 
-/turf/simulated/proc/super_conduct()
+/turf/proc/super_conduct()
 	var/conductivity_directions = 0
 	if(blocks_air)
 		//Does not participate in air exchange, so will conduct heat across all four borders at this time
@@ -422,7 +394,7 @@
 			SSair.active_super_conductivity -= src
 			return 0
 
-/turf/simulated/proc/consider_superconductivity(starting)
+/turf/proc/consider_superconductivity(starting)
 	if(!thermal_conductivity)
 		return 0
 
@@ -438,9 +410,9 @@
 	SSair.active_super_conductivity |= src
 	return 1
 
-/turf/simulated/proc/radiate_to_spess() //Radiate excess tile heat to space
+/turf/proc/radiate_to_spess() //Radiate excess tile heat to space
 	if(temperature > T0C) //Considering 0 degC as te break even point for radiation in and out
-		var/delta_temperature = (temperature_archived - 2.7) //hardcoded space temperature
+		var/delta_temperature = (temperature_archived - TCMB) //hardcoded space temperature
 		if((heat_capacity > 0) && (abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER))
 
 			var/heat = thermal_conductivity*delta_temperature* \

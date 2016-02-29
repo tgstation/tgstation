@@ -19,6 +19,8 @@
 
 	//Properties for both
 	var/temperature = T20C
+	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
+	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
 	var/blocks_air = 0
 
@@ -28,7 +30,12 @@
 
 	var/list/proximity_checkers = list()
 
+	var/wet = 0
+	var/image/wet_overlay = null
 	var/image/obscured	//camerachunks
+
+	var/thermite = 0
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM in src)
@@ -93,6 +100,17 @@
 	for(var/A in proximity_checkers)
 		var/atom/B = A
 		B.HasProximity(M)
+	//slipping
+	if (istype(A,/mob/living/carbon))
+		var/mob/living/carbon/M = A
+		switch(wet)
+			if(TURF_WET_WATER)
+				if(!M.slip(3, 1, null, NO_SLIP_WHEN_WALKING))
+					M.inertia_dir = 0
+			if(TURF_WET_LUBE)
+				M.slip(0, 7, null, (SLIDE|GALOSHES_DONT_HELP))
+			if(TURF_WET_ICE)
+				M.slip(0, 4, null, (SLIDE|NO_SLIP_WHEN_WALKING))
 
 /turf/proc/is_plasteel_floor()
 	return 0
@@ -140,10 +158,12 @@
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
 			C.Deconstruct()
+
+	smooth_icon_neighbors(src)
 	return W
 
 //////Assimilate Air//////
-/turf/simulated/proc/Assimilate_Air()
+/turf/proc/Assimilate_Air()
 	if(air)
 		var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
 		var/list/total_gases = total.gases
@@ -307,6 +327,54 @@
 		O.icon_state = DEFAULT_UNDERLAY_ICON_STATE
 	underlays += O
 	return 1
+
+/turf/proc/burn_tile()
+
+/turf/proc/MakeSlippery(wet_setting = TURF_WET_WATER) // 1 = Water, 2 = Lube, 3 = Ice
+	if(wet >= wet_setting)
+		return
+	wet = wet_setting
+	if(wet_setting != TURF_DRY)
+		if(wet_overlay)
+			overlays -= wet_overlay
+			wet_overlay = null
+		var/turf/simulated/floor/F = src
+		if(istype(F))
+			wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
+		else
+			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
+		overlays += wet_overlay
+
+	spawn(rand(790, 820)) // Purely so for visual effect
+		if(!istype(src, /turf/simulated)) //Because turfs don't get deleted, they change, adapt, transform, evolve and deform. they are one and they are all.
+			return
+		MakeDry(wet_setting)
+
+/turf/proc/MakeDry(wet_setting = TURF_WET_WATER)
+	if(wet > wet_setting)
+		return
+	wet = TURF_DRY
+	if(wet_overlay)
+		overlays -= wet_overlay
+
+/turf/proc/is_shielded()
+
+/turf/contents_explosion(severity, target)
+	var/affecting_level
+	if(severity == 1)
+		affecting_level = 1
+	else if(is_shielded())
+		affecting_level = 3
+	else if(intact)
+		affecting_level = 2
+	else
+		affecting_level = 1
+
+	for(var/V in contents)
+		var/atom/A = V
+		if(A.level >= affecting_level)
+			A.ex_act(severity, target)
+
 
 /turf/indestructible
 	name = "wall"
