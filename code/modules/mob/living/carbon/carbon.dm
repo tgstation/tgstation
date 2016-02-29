@@ -811,10 +811,6 @@ var/const/GALOSHES_DONT_HELP = 4
 
 		for(var/datum/disease/D in viruses)
 			D.cure(0)
-		if(dna)
-			for(var/datum/mutation/human/HM in dna.mutations)
-				if(HM.quality != POSITIVE)
-					dna.remove_mutation(HM.name)
 	..()
 
 /mob/living/carbon/can_be_revived()
