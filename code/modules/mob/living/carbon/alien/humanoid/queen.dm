@@ -22,9 +22,13 @@
 	maxHealth = 400
 	health = 400
 	icon_state = "alienq"
+	var/shuttleblocker = FALSE
 
 
 /mob/living/carbon/alien/humanoid/royal/queen/New()
+	if(loc.z == 1)
+		SSshuttle.alienNoEscape = 1 //Fuck no we don't want that shit hijacking the shuttle - Centcom
+		src.shuttleblocker = TRUE
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in living_mob_list)
 		if(Q == src)
@@ -45,6 +49,15 @@
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
 	..()
+
+/mob/living/carbon/alien/humanoid/royal/queen/death()
+	if(shuttleblocker)
+		SSshuttle.alienNoEscape = 0
+		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+			SSshuttle.emergency.mode = SHUTTLE_DOCKED
+			SSshuttle.emergency.timer = world.time
+			priority_announce("Hostile organisms eliminated. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+	
 
 /mob/living/carbon/alien/humanoid/royal/queen/movement_delay()
 	. = ..()
