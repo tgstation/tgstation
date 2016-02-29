@@ -20,16 +20,17 @@
 	var/ghostimage = null
 
 /mob/camera/blob/New()
+	overminds += src
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
 	last_attack = world.time
 	var/list/possible_reagents = list()
-	for(var/type in (typesof(/datum/reagent/blob) - /datum/reagent/blob))
+	for(var/type in (subtypesof(/datum/reagent/blob)))
 		possible_reagents.Add(new type)
 	blob_reagent_datum = pick(possible_reagents)
 	if(blob_core)
-		blob_core.adjustcolors(blob_reagent_datum.color)
+		blob_core.update_icon()
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
@@ -42,6 +43,7 @@
 	..()
 
 /mob/camera/blob/Destroy()
+	overminds -= src
 	if (ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
@@ -53,19 +55,12 @@
 	..()
 	sync_mind()
 	src << "<span class='notice'>You are the overmind!</span>"
-	src << "Your randomly chosen reagent is: <b>[blob_reagent_datum.name]</b>!"
-	src << "You are the overmind and can control the blob! You can expand, which will attack people, and place new blob pieces such as..."
-	src << "<b>Normal Blob</b> will expand your reach and allow you to upgrade into special blobs that perform certain functions."
-	src << "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires."
-	src << "<b>Resource Blob</b> is a blob which will collect more resources for you, try to build these earlier to get a strong income. It will benefit from being near your core or multiple nodes, by having an increased resource rate; put it alone and it won't create resources at all."
-	src << "<b>Node Blob</b> is a blob which will grow, like the core. Unlike the core it won't give you a small income but it can power resource and factory blobs to increase their rate."
-	src << "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. Putting this nearby nodes and your core will increase the spawn rate; put it alone and it will not spawn any spores."
-	src << "<b>Shortcuts:</b> CTRL Click = Expand Blob / Middle Mouse Click = Rally Spores / Alt Click = Create Shield"
-	update_health()
+	blob_help()
+	update_health_hud()
 
-/mob/camera/blob/proc/update_health()
+/mob/camera/blob/update_health_hud()
 	if(blob_core)
-		hud_used.blobhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
+		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
 
 /mob/camera/blob/proc/add_points(points)
 	if(points != 0)
@@ -97,11 +92,13 @@
 		return
 
 	var/message_a = say_quote(message, get_spans())
-	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]([blob_reagent_datum.name])</span> <span class='message'>[message_a]</span></span></i></font>"
+	var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"
 
-	for (var/mob/M in mob_list)
-		if(isovermind(M) || isobserver(M))
-			M.show_message(rendered, 2)
+	for(var/mob/M in mob_list)
+		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
+			M << rendered
+		if(isobserver(M))
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
 
 /mob/camera/blob/emote(act,m_type=1,message = null)
 	return
@@ -125,4 +122,3 @@
 
 /mob/camera/blob/proc/can_attack()
 	return (world.time > (last_attack + CLICK_CD_RANGE))
-

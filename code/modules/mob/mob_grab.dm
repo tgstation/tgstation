@@ -19,13 +19,8 @@
 
 /obj/item/weapon/grab/New(mob/user, mob/victim)
 	..()
-	loc = user
 	assailant = user
 	affecting = victim
-
-	if(affecting.anchored || !user.Adjacent(victim))
-		qdel(src)
-		return
 
 	hud = new /obj/screen/grab(src)
 	hud.icon_state = "reinforce"
@@ -105,15 +100,18 @@
 		if(!affecting.buckled)
 			affecting.loc = assailant.loc
 
+	var/breathing_tube = affecting.getorganslot("breathing_tube")
+
 	if(state >= GRAB_NECK)
 		affecting.Stun(5)	//It will hamper your voice, being choked and all.
-		if(isliving(affecting))
+		if(isliving(affecting) && !breathing_tube)
 			var/mob/living/L = affecting
 			L.adjustOxyLoss(1)
 
 	if(state >= GRAB_KILL)
 		affecting.Weaken(5)	//Should keep you down unless you get help.
-		affecting.losebreath = min(affecting.losebreath + 2, 3)
+		if(!breathing_tube)
+			affecting.losebreath = min(affecting.losebreath + 2, 3)
 
 /obj/item/weapon/grab/attack_self(mob/user)
 	s_click(hud)
@@ -122,8 +120,6 @@
 	if(!affecting)
 		return
 	if(state == GRAB_UPGRADING)
-		return
-	if(assailant.next_move > world.time)
 		return
 	if(world.time < (last_upgrade + UPGRADE_COOLDOWN))
 		return
@@ -136,16 +132,16 @@
 	if(state < GRAB_AGGRESSIVE)
 		if(!allow_upgrade)
 			return
-		assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively (now hands)!</span>")
+		assailant.visible_message("<span class='warning'>[assailant] grabs [affecting] aggressively!</span>")
 		state = GRAB_AGGRESSIVE
 		icon_state = "grabbed1"
 	else
 		if(state < GRAB_NECK)
 			if(isslime(affecting))
-				assailant << "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>"
+				assailant << "<span class='warning'>You squeeze [affecting], but nothing interesting happens!</span>"
 				return
 
-			assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
+			assailant.visible_message("<span class='warning'>[assailant] moves \his grip to [affecting]'s neck!</span>")
 			state = GRAB_NECK
 			icon_state = "grabbed+1"
 			if(!affecting.buckled)
@@ -168,14 +164,15 @@
 						qdel(src)
 						return
 					state = GRAB_KILL
-					assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
+					assailant.visible_message("<span class='danger'>[assailant] tightens \his grip on [affecting]'s neck!</span>")
 					add_logs(assailant, affecting, "strangled")
 
 					assailant.changeNext_move(CLICK_CD_TKSTRANGLE)
-					affecting.losebreath += 1
+					if(!affecting.getorganslot("breathing_tube"))
+						affecting.losebreath += 1
 				else
 					if(assailant)
-						assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
+						assailant.visible_message("<span class='warning'>[assailant] is unable to tighten \his grip on [affecting]'s neck!</span>")
 						hud.icon_state = "disarm/kill"
 						state = GRAB_NECK
 
@@ -215,8 +212,10 @@
 			attacker.stomach_contents.Add(affecting)
 			qdel(src)
 
+	add_logs(user, affecting, "attempted to put", src, "into [M]")
 
 /obj/item/weapon/grab/dropped()
+	..()
 	qdel(src)
 
 #undef UPGRADE_COOLDOWN

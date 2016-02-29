@@ -8,7 +8,8 @@
 	return 0
 
 /proc/check_zone(zone)
-	if(!zone)	return "chest"
+	if(!zone)
+		return "chest"
 	switch(zone)
 		if("eyes")
 			zone = "head"
@@ -36,12 +37,18 @@
 
 	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
 	switch(t)
-		if(1)		 return "head"
-		if(2)		 return "chest"
-		if(3 to 6)	 return "l_arm"
-		if(7 to 10)	 return "r_arm"
-		if(11 to 14) return "l_leg"
-		if(15 to 18) return "r_leg"
+		if(1)
+			return "head"
+		if(2)
+			return "chest"
+		if(3 to 6)
+			return "l_arm"
+		if(7 to 10)
+			return "r_arm"
+		if(11 to 14)
+			return "l_leg"
+		if(15 to 18)
+			return "r_leg"
 
 	return zone
 
@@ -83,21 +90,31 @@
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
 		if(rand(1,3)==3)
-			if(lowertext(newletter)=="o")	newletter="u"
-			if(lowertext(newletter)=="s")	newletter="ch"
-			if(lowertext(newletter)=="a")	newletter="ah"
-			if(lowertext(newletter)=="u")	newletter="oo"
-			if(lowertext(newletter)=="c")	newletter="k"
+			if(lowertext(newletter)=="o")
+				newletter="u"
+			if(lowertext(newletter)=="s")
+				newletter="ch"
+			if(lowertext(newletter)=="a")
+				newletter="ah"
+			if(lowertext(newletter)=="u")
+				newletter="oo"
+			if(lowertext(newletter)=="c")
+				newletter="k"
 		if(rand(1,20)==20)
-			if(newletter==" ")	newletter="...huuuhhh..."
-			if(newletter==".")	newletter=" *BURP*."
+			if(newletter==" ")
+				newletter="...huuuhhh..."
+			if(newletter==".")
+				newletter=" *BURP*."
 		switch(rand(1,20))
-			if(1)	newletter+="'"
-			if(10)	newletter+="[newletter]"
-			if(20)	newletter+="[newletter][newletter]"
+			if(1)
+				newletter+="'"
+			if(10)
+				newletter+="[newletter]"
+			if(20)
+				newletter+="[newletter][newletter]"
 		newphrase+="[newletter]";counter-=1
 	return newphrase
-
+	
 /proc/stutter(n)
 	var/te = html_decode(n)
 	var/t = ""//placed before the message. Not really sure what it's for.
@@ -187,20 +204,21 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	spawn(0)
-		if(!M || !M.client || M.shakecamera)
-			return
-		var/oldeye=M.client.eye
-		var/x
-		M.shakecamera = 1
-		for(x=0; x<duration, x++)
-			if(M && M.client)
-				M.client.eye = locate(dd_range(1,M.loc.x+rand(-strength,strength),world.maxx),dd_range(1,M.loc.y+rand(-strength,strength),world.maxy),M.loc.z)
-				sleep(1)
-		if(M)
-			M.shakecamera = 0
-			if(M.client)
-				M.client.eye=oldeye
+	if(!M || !M.client || duration <= 0)
+		return
+	var/client/C = M.client
+	var/oldx = C.pixel_x
+	var/oldy = C.pixel_y
+	var/max = strength*world.icon_size
+	var/min = -(strength*world.icon_size)
+
+	for(var/i in 0 to duration-1)
+		if (i == 0)
+			animate(C, pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
+		else
+			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
+	animate(pixel_x=oldx, pixel_y=oldy, time=1)
+
 
 
 /proc/findname(msg)
@@ -221,16 +239,24 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)
-			if("help")		return 0
-			if("disarm")	return 1
-			if("grab")		return 2
-			else			return 3
+			if("help")
+				return 0
+			if("disarm")
+				return 1
+			if("grab")
+				return 2
+			else
+				return 3
 	else
 		switch(argument)
-			if(0)			return "help"
-			if(1)			return "disarm"
-			if(2)			return "grab"
-			else			return "harm"
+			if(0)
+				return "help"
+			if(1)
+				return "disarm"
+			if(2)
+				return "grab"
+			else
+				return "harm"
 
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
@@ -259,10 +285,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
 
 		if(hud_used && hud_used.action_intent)
-			if(a_intent == "harm")
-				hud_used.action_intent.icon_state = "harm"
-			else
-				hud_used.action_intent.icon_state = "help"
+			hud_used.action_intent.icon_state = "[a_intent]"
 
 /proc/is_blind(A)
 	if(ismob(A))
@@ -289,8 +312,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		else if(isAI(M))
 			var/mob/living/silicon/ai/A = M
 			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
-				if(ticker.mode.config_tag == "malfunction" && M.mind in ticker.mode.malf_ai)//Malf law is a law 0
-					return 2
 				return 1
 		return 0
 	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
@@ -310,6 +331,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if("wizard")
 				if(M.mind in ticker.mode.wizards)
 					return 2
+			if("apprentice")
+				if(M.mind in ticker.mode.apprentices)
+					return 2
 			if("monkey")
 				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
 					return 2
@@ -326,17 +350,18 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/atom/source = null, var/image/alert_overlay = null) //Easy notification of ghosts.
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/attack_not_jump = 0) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
-			O << "<span class='ghostalert'>[message]<span>"
+			O << "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>"
 			if(ghost_sound)
 				O << sound(ghost_sound)
 			if(source)
 				var/obj/screen/alert/notify_jump/A = O.throw_alert("\ref[source]_notify_jump", /obj/screen/alert/notify_jump)
 				if(A)
 					A.desc = message
-					A.jump_target = get_turf(source)
+					A.attack_not_jump = attack_not_jump
+					A.jump_target = source
 					if(!alert_overlay)
 						var/old_layer = source.layer
 						source.layer = FLOAT_LAYER
@@ -347,7 +372,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 						A.overlays += alert_overlay
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute, burn)
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
 
 	var/dam //changes repair text based on how much brute/burn was supplied
 
@@ -369,3 +394,13 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	else
 		return
 
+/proc/IsAdminGhost(var/mob/user)
+	if(!user.client) // Do they have a client?
+		return
+	if(!isobserver(user)) // Are they a ghost?
+		return
+	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
+		return
+	if(!user.client.AI_Interact) // Do they have it enabled?
+		return
+	return TRUE

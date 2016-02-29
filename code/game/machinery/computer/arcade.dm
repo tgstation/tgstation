@@ -36,6 +36,7 @@
 							/obj/item/weapon/coin/antagtoken						= 2,
 							/obj/item/stack/tile/fakespace/loaded					= 2,
 							/obj/item/toy/toy_xeno									= 2,
+							/obj/item/weapon/restraints/handcuffs/fake              = 2
 							)
 
 /obj/machinery/computer/arcade/New()
@@ -43,7 +44,7 @@
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
-		var/choice = pick(typesof(/obj/item/weapon/circuitboard/arcade) - /obj/item/weapon/circuitboard/arcade)
+		var/choice = pick(subtypesof(/obj/item/weapon/circuitboard/arcade))
 		var/obj/item/weapon/circuitboard/CB = new choice()
 		new CB.build_path(loc, CB)
 		qdel(src)
@@ -1033,7 +1034,9 @@
 	name = "Spaceport Security"
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
-	corpse = /obj/effect/landmark/mobcorpse/orionsecurity
+	loot = list(/obj/effect/landmark/mobcorpse/orionsecurity,
+				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
+				/obj/item/weapon/shield/energy)
 
 /obj/effect/landmark/mobcorpse/orionsecurity
 	name = "Spaceport Security"

@@ -43,6 +43,9 @@
 		// Changeling egg can survive in aliens!
 		var/mob/living/carbon/C = target
 		if(C.stat == DEAD)
+			if(C.status_flags & XENO_HOST)
+				src << "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>"
+				return
 			Infect(target)
 			src << "<span class='userdanger'>With our egg laid, our death approaches rapidly...</span>"
 			spawn(100)
@@ -75,12 +78,12 @@
 	for(var/obj/item/organ/internal/I in src)
 		I.Insert(M, 1)
 
-	if(origin)
+	if(origin && origin.current && (origin.current.stat == DEAD))
 		origin.transfer_to(M)
 		if(!origin.changeling)
 			M.make_changeling()
 		if(origin.changeling.can_absorb_dna(M, owner))
-			origin.changeling.add_profile(owner, M)
+			origin.changeling.add_new_profile(owner, M)
 
 		origin.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 		M.key = origin.key

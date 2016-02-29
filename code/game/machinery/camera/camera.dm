@@ -1,4 +1,4 @@
-#define CAMERA_UPGRADE_XRAY 1 
+#define CAMERA_UPGRADE_XRAY 1
 #define CAMERA_UPGRADE_EMP_PROOF 2
 #define CAMERA_UPGRADE_MOTION 4
 
@@ -28,7 +28,6 @@
 	var/view_range = 7
 	var/short_range = 2
 
-	var/light_disabled = 0
 	var/alarm_on = 0
 	var/busy = 0
 	var/emped = 0  //Number of consecutive EMP's on this camera
@@ -42,6 +41,7 @@
 	assembly.state = 4
 	cameranet.cameras += src
 	cameranet.addCamera(src)
+	add_to_proximity_list(src, 1) //1 was default of everything
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		var/list/tempnetwork = C.network&src.network
@@ -51,10 +51,10 @@
 
 /obj/machinery/camera/initialize()
 	if(z == 1 && prob(3) && !start_active)
-		deactivate()
+		toggle_cam()
 
 /obj/machinery/camera/Destroy()
-	deactivate(null, 0) //kick anyone viewing out
+	toggle_cam(null, 0) //kick anyone viewing out
 	if(assembly)
 		qdel(assembly)
 		assembly = null
@@ -69,6 +69,8 @@
 	return ..()
 
 /obj/machinery/camera/emp_act(severity)
+	if(!status)
+		return
 	if(!isEmpProof())
 		if(prob(150/severity))
 			icon_state = "[initial(icon_state)]emp"
@@ -95,7 +97,7 @@
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
-					O.reset_view(null)
+					O.reset_perspective(null)
 					O << "The screen bursts into static."
 			..()
 
@@ -105,10 +107,6 @@
 		return
 	else
 		..()
-	return
-
-/obj/machinery/camera/blob_act()
-	qdel(src)
 	return
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
@@ -129,7 +127,7 @@
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 	health = max(0, health - 30)
 	if(!health && status)
-		deactivate(user, 0)
+		toggle_cam(user, 0)
 
 /obj/machinery/camera/attackby(obj/W, mob/living/user, params)
 	var/msg = "<span class='notice'>You attach [W] into the assembly's inner circuits.</span>"
@@ -144,7 +142,7 @@
 
 	if(panel_open)
 		if(istype(W, /obj/item/weapon/wirecutters)) //enable/disable the camera
-			deactivate(user, 1)
+			toggle_cam(user, 1)
 			health = initial(health) //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
 
 		else if(istype(W, /obj/item/device/multitool)) //change focus
@@ -207,6 +205,8 @@
 		for(var/mob/O in player_list)
 			if(istype(O, /mob/living/silicon/ai))
 				var/mob/living/silicon/ai/AI = O
+				if(AI.control_disabled || (AI.stat == DEAD))
+					return
 				if(U.name == "Unknown")
 					AI << "<b>[U]</b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ..."
 				else
@@ -241,16 +241,16 @@
 			user.do_attack_animation(src)
 			if(!health && status)
 				triggerCameraAlarm()
-				deactivate(user, 1)
+				toggle_cam(user, 1)
 	return
 
-/obj/machinery/camera/proc/deactivate(mob/user, displaymessage = 1) //this should be called toggle() but doing a find and replace for this would be ass
+/obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
+	status = !status
 	if(can_use())
 		cameranet.addCamera(src)
 	else
 		SetLuminosity(0)
 		cameranet.removeCamera(src)
-	status = !status
 	cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
 	if(!status)
@@ -277,7 +277,7 @@
 	for(var/mob/O in player_list)
 		if (O.client && O.client.eye == src)
 			O.unset_machine()
-			O.reset_view(null)
+			O.reset_perspective(null)
 			O << "The screen bursts into static."
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
@@ -358,12 +358,22 @@
 	busy = 0
 	return 0
 
+/obj/machinery/camera/proc/Togglelight(on=0)
+	for(var/mob/living/silicon/ai/A in ai_list)
+		for(var/obj/machinery/camera/cam in A.lit_cameras)
+			if(cam == src)
+				return
+	if(on)
+		src.SetLuminosity(AI_CAMERA_LUMINOSITY)
+	else
+		src.SetLuminosity(0)
+
 /obj/machinery/camera/bullet_act(obj/item/projectile/proj)
 	if(proj.damage_type == BRUTE)
 		health = max(0, health - proj.damage)
 		if(!health && status)
 			triggerCameraAlarm()
-			deactivate(null, 1)
+			toggle_cam(null, 1)
 
 /obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
 	var/turf/prev_turf
@@ -378,3 +388,17 @@
 	if(cameranet && get_turf(src) != prev_turf)
 		cameranet.updatePortableCamera(src)
 		prev_turf = get_turf(src)
+
+/obj/machinery/camera/get_remote_view_fullscreens(mob/user)
+	if(view_range == short_range) //unfocused
+		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+
+/obj/machinery/camera/update_remote_sight(mob/living/user)
+	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
+	if(isXRay())
+		user.sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		user.see_in_dark = max(user.see_in_dark, 8)
+	else
+		user.sight = 0
+		user.see_in_dark = 2
+	return 1

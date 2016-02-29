@@ -108,6 +108,12 @@
 	doortype = /obj/structure/door_assembly/door_assembly_viro/glass
 	glass = 1
 
+/obj/machinery/door/airlock/glass_maintenance
+	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
+	opacity = 0
+	doortype = /obj/structure/door_assembly/door_assembly_mai/glass
+	glass = 1
+
 //////////////////////////////////
 /*
 	Station Airlocks Mineral
@@ -177,6 +183,7 @@
 	desc = "Honkhonkhonk"
 	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
 	var/mineral = "bananium"
+	doorsound = 'sound/items/bikehorn.ogg'
 	doortype = /obj/structure/door_assembly/door_assembly_clown
 
 /obj/machinery/door/airlock/sandstone
@@ -215,6 +222,14 @@
 	icon = 'icons/obj/doors/airlocks/external/external.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_ext
+
+/obj/machinery/door/airlock/glass_external
+	name = "external airlock"
+	icon = 'icons/obj/doors/airlocks/external/external.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
+	doortype = /obj/structure/door_assembly/door_assembly_ext/glass
+	opacity = 0
+	glass = 1
 
 //////////////////////////////////
 /*
@@ -282,6 +297,13 @@
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_shuttle
 
+/obj/machinery/door/airlock/abductor
+	name = "alien airlock"
+	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
+	doortype = /obj/structure/door_assembly/door_assembly_abductor
+	opacity = 1
+	explosion_block = 2
 
 //////////////////////////////////
 /*

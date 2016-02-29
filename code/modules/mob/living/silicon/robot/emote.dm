@@ -5,7 +5,6 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
-
 	switch(act)//01000001011011000111000001101000011000010110001001100101011101000110100101111010011001010110010000100001 (Seriously please keep it that way.)
 		if ("aflap")
 			if (!src.restrained())
@@ -79,6 +78,13 @@
 				m_type = 2
 
 		if ("custom")
+			if(jobban_isbanned(src, "emote"))
+				src << "You cannot send custom emotes (banned)"
+				return
+			if(src.client)
+				if(client.prefs.muted & MUTE_IC)
+					src << "You cannot send IC messages (muted)."
+					return
 			var/input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
 			if (!input)
 				return
@@ -135,6 +141,9 @@
 				message = "<B>[src]</B> looks."
 
 		if ("me")
+			if(jobban_isbanned(src, "emote"))
+				src << "You cannot send custom emotes (banned)"
+				return
 			if (src.client)
 				if(client.prefs.muted & MUTE_IC)
 					src << "You cannot send IC messages (muted)."
@@ -230,3 +239,14 @@
 		else
 			audible_message(message)
 	return
+
+/mob/living/silicon/robot/verb/powerwarn()
+	set category = "Robot Commands"
+	set name = "Power Warning"
+
+	if(!cell || !cell.charge)
+		visible_message("The power warning light on <span class='name'>[src]</span> flashes urgently.",\
+						 "You announce you are operating in low power mode.")
+		playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+	else
+		src << "<span class='warning'>You can only use this emote when you're out of charge.</span>"

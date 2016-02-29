@@ -2,7 +2,6 @@
 /obj/effect/spider
 	name = "web"
 	desc = "it's stringy and sticky"
-	icon = 'icons/effects/effects.dmi'
 	anchored = 1
 	density = 0
 	var/health = 15
@@ -79,6 +78,7 @@
 	var/player_spiders = 0
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
+	var/list/faction = list("spiders")
 
 /obj/effect/spider/eggcluster/New()
 	pixel_x = rand(3,-3)
@@ -93,6 +93,7 @@
 			var/obj/effect/spider/spiderling/S = new /obj/effect/spider/spiderling(src.loc)
 			S.poison_type = poison_type
 			S.poison_per_bite = poison_per_bite
+			S.faction = faction.Copy()
 			if(player_spiders)
 				S.player_spiders = 1
 		qdel(src)
@@ -111,6 +112,7 @@
 	var/player_spiders = 0
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
+	var/list/faction = list("spiders")
 
 /obj/effect/spider/spiderling/New()
 	pixel_x = rand(6,-6)
@@ -197,37 +199,11 @@
 			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
 			S.poison_per_bite = poison_per_bite
 			S.poison_type = poison_type
+			S.faction = faction.Copy()
 			if(player_spiders)
-				var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
-
-				shuffle(candidates)
-
-				var/time_passed = world.time
-				var/list/consenting_candidates = list()
-
-				for(var/candidate in candidates)
-
-					spawn(0)
-						switch(alert(candidate, "Would you like to play as [S.name]? Please choose quickly!","Confirmation","Yes","No"))
-							if("Yes")
-								if((world.time-time_passed)>=50 || !src)
-									return
-								consenting_candidates += candidate
-
-				sleep(50)
-
-				if(!src)
-					return
-
-				listclearnulls(consenting_candidates) //some candidates might have left during sleep(50)
-
-
-				if(consenting_candidates.len)
-					var/client/C = null
-					C = pick(consenting_candidates)
-					S.key = C.key
+				S.playable_spider = TRUE
+				notify_ghosts("Spider [S.name] can be controlled", null, enter_link="<a href=?src=\ref[S];activate=1>(Click to play)</a>", source=S, attack_not_jump = 1)
 			qdel(src)
-
 
 
 

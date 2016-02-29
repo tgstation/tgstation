@@ -97,7 +97,7 @@
 	//human/alien mobs
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(user.zone_sel.selecting == "eyes")
+		if(user.zone_selected == "eyes")
 			add_logs(user, C, "shone in the eyes", src)
 
 			var/severity = 1
@@ -114,12 +114,12 @@
 			else
 				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at their eyes!</span>"
 
-	//robots and AI
-	else if(issilicon(target))
+	//robots
+	else if(isrobot(target))
 		var/mob/living/silicon/S = target
 		//20% chance to actually hit the sensors
 		if(prob(effectchance * diode.rating))
-			flick("e_flash", S.flash)
+			S.flash_eyes(affect_silicon = 1)
 			S.Weaken(rand(5,10))
 			S << "<span class='danger'>Your sensors were overloaded by a laser!</span>"
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"

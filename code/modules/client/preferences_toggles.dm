@@ -58,7 +58,8 @@
 	set name = "Hear/Silence Adminhelps"
 	set category = "Preferences"
 	set desc = "Toggle hearing a notification when admin PMs are received"
-	if(!holder)	return
+	if(!holder)
+		return
 	prefs.toggles ^= SOUND_ADMINHELP
 	prefs.save_preferences()
 	usr << "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive."
@@ -68,7 +69,8 @@
 	set name = "Do/Don't Announce Login"
 	set category = "Preferences"
 	set desc = "Toggle if you want an announcement to admins when you login during a round"
-	if(!holder)	return
+	if(!holder)
+		return
 	prefs.toggles ^= ANNOUNCE_LOGIN
 	prefs.save_preferences()
 	usr << "You will [(prefs.toggles & ANNOUNCE_LOGIN) ? "now" : "no longer"] have an announcement to other admins when you login."
@@ -205,8 +207,7 @@
 		src.ambience_playing = 0
 	feedback_add_details("admin_verb", "SAmbi") //If you are copy-pasting this, I bet you read this comment expecting to see the same thing :^)
 
-
-var/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
+var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
 							"ghost_cyan","ghost_dblue","ghost_dred","ghost_dgreen", \
 							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
@@ -215,13 +216,30 @@ var/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_
 	set name = "Choose Ghost Form"
 	set category = "Preferences"
 	set desc = "Choose your preferred ghostly appearance."
-	if(!is_content_unlocked())	return
+	if(!is_content_unlocked())
+		return
 	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
 	if(new_form)
 		prefs.ghost_form = new_form
 		prefs.save_preferences()
 		if(istype(mob,/mob/dead/observer))
 			mob.icon_state = new_form
+
+var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON)
+
+/client/verb/pick_ghost_orbit()
+	set name = "Choose Ghost Orbit"
+	set category = "Preferences"
+	set desc = "Choose your preferred ghostly orbit."
+	if(!is_content_unlocked())
+		return
+	var/new_orbit = input(src, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND",null) as null|anything in ghost_orbits
+	if(new_orbit)
+		prefs.ghost_orbit = new_orbit
+		prefs.save_preferences()
+		if(istype(mob, /mob/dead/observer))
+			var/mob/dead/observer/O = mob
+			O.ghost_orbit = new_orbit
 
 /client/verb/toggle_intent_style()
 	set name = "Toggle Intent Selection Style"
@@ -238,3 +256,35 @@ var/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_
 	set desc = "Allows you to access the Setup Character screen. Changes to your character won't take effect until next round, but other changes will."
 	prefs.current_tab = 1
 	prefs.ShowChoices(usr)
+
+/client/verb/toggle_ghost_hud_pref()
+	set name = "Toggle Ghost HUD"
+	set category = "Preferences"
+	set desc = "Hide/Show Ghost HUD"
+
+	prefs.ghost_hud = !prefs.ghost_hud
+	src << "Ghost HUD will now be [prefs.ghost_hud ? "visible" : "hidden"]."
+	prefs.save_preferences()
+	if(istype(mob,/mob/dead/observer))
+		mob.hud_used.show_hud()
+
+/client/verb/toggle_inquisition() // warning: unexpected inquisition
+	set name = "Toggle Inquisitiveness"
+	set desc = "Sets whether your ghost examines everything on click by default"
+	set category = "Preferences"
+
+	prefs.inquisitive_ghost = !prefs.inquisitive_ghost
+	prefs.save_preferences()
+	if(prefs.inquisitive_ghost)
+		src << "<span class='notice'>You will now examine everything you click on.</span>"
+	else
+		src << "<span class='notice'>You will no longer examine things you click on.</span>"
+
+/client/verb/toggle_announcement_sound()
+	set name = "Hear/Silence Announcements"
+	set category = "Preferences"
+	set desc = ".Toggles hearing Central Command, Captain, VOX, and other announcement sounds"
+	prefs.toggles ^= SOUND_ANNOUNCEMENTS
+	src << "You will now [(prefs.toggles & SOUND_ANNOUNCEMENTS) ? "no longer hear announcements" : "hear announcement sounds"]."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

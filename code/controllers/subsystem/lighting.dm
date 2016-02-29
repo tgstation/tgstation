@@ -4,10 +4,11 @@ var/datum/subsystem/lighting/SSlighting
 
 /datum/subsystem/lighting
 	name = "Lighting"
-	wait = 5
 	priority = 1
+	wait = 5
 	dynamic_wait = 1
 	dwait_delta = 3
+	display = 5
 
 	var/list/changed_lights = list()		//list of all datum/light_source that need updating
 	var/changed_lights_workload = 0			//stats on the largest number of lights (max changed_lights.len)
@@ -108,7 +109,8 @@ var/datum/subsystem/lighting/SSlighting
 	var/msg = "## DEBUG: [time2text(world.timeofday)] [name] subsystem restarted. Reports:\n"
 	for(var/varname in SSlighting.vars)
 		switch(varname)
-			if("tag","bestF","type","parent_type","vars")	continue
+			if("tag","bestF","type","parent_type","vars")
+				continue
 			else
 				var/varval1 = SSlighting.vars[varname]
 				var/varval2 = vars[varname]

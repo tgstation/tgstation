@@ -56,18 +56,18 @@
 	dir = turn(NORTH, -angle - 22.5)	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
 
 	if(powernet && (powernet == control.powernet)) //update if we're still in the same powernet
-		control.cdir = angle
+		control.currentdir = angle
 
 /obj/machinery/power/tracker/attackby(obj/item/weapon/W, mob/user, params)
 
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar tracker.", "<span class='notice'>You begin to take the glass off the solar tracker...</span>")
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 50/W.toolspeed, target = src))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
-				S.give_glass()
+				S.give_glass(stat & BROKEN)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the tracker.", "<span class='notice'>You take the glass off the tracker.</span>")
 			qdel(src)

@@ -76,7 +76,7 @@
 
 /obj/machinery/power/supermatter_shard/proc/explode()
 	investigate_log("has exploded.", "supermatter")
-	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1, 1)
 	qdel(src)
 	return
 
@@ -138,7 +138,13 @@
 	damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
 	//Ok, 100% oxygen atmosphere = best reaction
 	//Maxes out at 100% oxygen pressure
-	oxygen = max(min((removed.oxygen - (removed.nitrogen * NITROGEN_RETARDATION_FACTOR)) / MOLES_CELLSTANDARD, 1), 0)
+	var/removed_nitrogen = 0
+	if(removed.gases["n2"])
+		removed_nitrogen = (removed.gases["n2"][MOLES] * NITROGEN_RETARDATION_FACTOR)
+
+	removed.assert_gases("o2", "plasma")
+
+	oxygen = max(min((removed.gases["o2"][MOLES] - removed_nitrogen) / MOLES_CELLSTANDARD, 1), 0)
 
 	var/temp_factor = 50
 
@@ -169,9 +175,9 @@
 	removed.temperature = max(0, min(removed.temperature, 2500))
 
 	//Calculate how much gas to release
-	removed.toxins += max(device_energy / PLASMA_RELEASE_MODIFIER, 0)
+	removed.gases["plasma"][MOLES] += max(device_energy / PLASMA_RELEASE_MODIFIER, 0)
 
-	removed.oxygen += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+	removed.gases["o2"][MOLES] += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
 	env.merge(removed)
 
@@ -281,10 +287,10 @@
 /obj/machinery/power/supermatter_shard/proc/Consume(atom/movable/AM)
 	if(istype(AM, /mob/living))
 		var/mob/living/user = AM
-		user.dust()
-		power += 200
 		message_admins("[src] has consumed [key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
 		investigate_log("has consumed [key_name(user)].", "supermatter")
+		user.dust()
+		power += 200
 	else if(isobj(AM) && !istype(AM, /obj/effect))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)

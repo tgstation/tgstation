@@ -26,8 +26,9 @@
 
 	flags = 0
 
-	var/image/obscured	//camerachunks
+	var/list/proximity_checkers = list()
 
+	var/image/obscured	//camerachunks
 /turf/New()
 	..()
 	for(var/atom/movable/AM in src)
@@ -35,11 +36,8 @@
 
 /turf/Destroy()
 	// Adds the adjacent turfs to the current atmos processing
-	for(var/direction in cardinal)
-		if(atmos_adjacent_turfs & direction)
-			var/turf/simulated/T = get_step(src, direction)
-			if(istype(T))
-				SSair.add_to_active(T)
+	for(var/turf/simulated/T in atmos_adjacent_turfs)
+		SSair.add_to_active(T)
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -92,12 +90,9 @@
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/M)
-	var/loopsanity = 100
-	for(var/atom/A in range(1))
-		if(loopsanity == 0)
-			break
-		loopsanity--
-		A.HasProximity(M, 1)
+	for(var/A in proximity_checkers)
+		var/atom/B = A
+		B.HasProximity(M)
 
 /turf/proc/is_plasteel_floor()
 	return 0
@@ -121,10 +116,15 @@
 
 //Creates a new turf
 /turf/proc/ChangeTurf(path)
-	if(!path)			return
-	if(path == type)	return src
+	if(!path)
+		return
+	if(path == type)
+		return src
 
 	SSair.remove_from_active(src)
+
+	var/s_appearance = appearance
+	var/nocopy = density || smooth //dont copy walls or smooth turfs
 
 	var/turf/W = new path(src)
 	if(istype(W, /turf/simulated))
@@ -132,6 +132,10 @@
 		W.RemoveLattice()
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
+
+	if(W.smooth & SMOOTH_DIAGONAL)
+		if(!W.apply_fixed_underlay())
+			W.underlays += !nocopy ? s_appearance : DEFAULT_UNDERLAY_IMAGE
 
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
@@ -141,32 +145,35 @@
 //////Assimilate Air//////
 /turf/simulated/proc/Assimilate_Air()
 	if(air)
-		var/aoxy = 0//Holders to assimilate air from nearby turfs
-		var/anitro = 0
-		var/aco = 0
-		var/atox = 0
-		var/atemp = 0
+		var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
+		var/list/total_gases = total.gases
 		var/turf_count = 0
 
 		for(var/direction in cardinal)//Only use cardinals to cut down on lag
 			var/turf/T = get_step(src,direction)
+
 			if(istype(T,/turf/space))//Counted as no air
 				turf_count++//Considered a valid turf for air calcs
 				continue
-			else if(istype(T,/turf/simulated/floor))
+
+			if(istype(T,/turf/simulated/floor))
 				var/turf/simulated/S = T
 				if(S.air)//Add the air's contents to the holders
-					aoxy += S.air.oxygen
-					anitro += S.air.nitrogen
-					aco += S.air.carbon_dioxide
-					atox += S.air.toxins
-					atemp += S.air.temperature
-				turf_count ++
-		air.oxygen = (aoxy/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
-		air.nitrogen = (anitro/max(turf_count,1))
-		air.carbon_dioxide = (aco/max(turf_count,1))
-		air.toxins = (atox/max(turf_count,1))
-		air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
+					var/list/S_gases = S.air.gases
+					for(var/id in S_gases)
+						total.assert_gas(id)
+						total_gases[id][MOLES] += S_gases[id][MOLES]
+					total.temperature += S.air.temperature
+				turf_count++
+
+		air.copy_from(total)
+		if(turf_count) //if there weren't any open turfs, no need to update.
+			var/list/air_gases = air.gases
+			for(var/id in air_gases)
+				air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
+
+			air.temperature /= turf_count
+
 		SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
@@ -284,6 +291,23 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 
+/turf/proc/apply_fixed_underlay()
+	if(!fixed_underlay)
+		return
+	var/obj/O = new
+	O.layer = layer
+	if(fixed_underlay["icon"])
+		O.icon = fixed_underlay["icon"]
+		O.icon_state = fixed_underlay["icon_state"]
+	else if(fixed_underlay["space"])
+		O.icon = 'icons/turf/space.dmi'
+		O.icon_state = SPACE_ICON_STATE
+	else
+		O.icon = DEFAULT_UNDERLAY_ICON
+		O.icon_state = DEFAULT_UNDERLAY_ICON_STATE
+	underlays += O
+	return 1
+
 /turf/indestructible
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
@@ -291,12 +315,19 @@
 	blocks_air = 1
 	opacity = 1
 	explosion_block = 50
+	layer = TURF_LAYER + 0.05
 
 /turf/indestructible/splashscreen
 	name = "Space Station 13"
 	icon = 'icons/misc/fullscreen.dmi'
 	icon_state = "title"
 	layer = FLY_LAYER
+	var/titlescreen = TITLESCREEN
+
+/turf/indestructible/splashscreen/New()
+	..()
+	if(titlescreen)
+		icon_state = titlescreen
 
 /turf/indestructible/riveted
 	icon_state = "riveted"
@@ -315,6 +346,9 @@
 /turf/indestructible/abductor
 	icon_state = "alien1"
 
+/turf/indestructible/opshuttle
+	icon_state = "wall3"
+
 /turf/indestructible/fakeglass
 	name = "window"
 	icon_state = "fakewindows"
@@ -325,3 +359,20 @@
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	icon_state = "fake_door"
 
+/turf/indestructible/rock
+	name = "dense rock"
+	desc = "An extremely densely-packed rock, most mining tools or explosives would never get through this."
+	icon = 'icons/turf/mining.dmi'
+	icon_state = "rock"
+
+/turf/indestructible/rock/snow
+	name = "mountainside"
+	desc = "An extremely densely-packed rock, sheeted over with centuries worth of ice and snow."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "snowrock"
+
+/turf/indestructible/rock/snow/ice
+	name = "iced rock"
+	desc = "Extremely densely-packed sheets of ice and rock, forged over the years of the harsh cold."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "icerock"

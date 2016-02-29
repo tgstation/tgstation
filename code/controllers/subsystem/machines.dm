@@ -3,6 +3,7 @@ var/datum/subsystem/machines/SSmachine
 /datum/subsystem/machines
 	name = "Machines"
 	priority = 9
+	display = 3
 
 	var/list/processing = list()
 	var/list/powernets = list()
@@ -44,3 +45,10 @@ var/datum/subsystem/machines/SSmachine
 			continue
 		processing.Remove(thing)
 
+/datum/subsystem/machines/proc/setup_template_powernets(list/cables)
+	for(var/A in cables)
+		var/obj/structure/cable/PC = A
+		if(!PC.powernet)
+			var/datum/powernet/NewPN = new()
+			NewPN.add_cable(PC)
+			propagate_network(PC,PC.powernet)

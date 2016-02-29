@@ -33,7 +33,7 @@
 /obj/effect/landmark/mobcorpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
 	M.real_name = src.name
-	M.stat = 2 //Kills the new mob
+	M.death() //Kills the new mob
 	if(src.corpseuniform)
 		M.equip_to_slot_or_del(new src.corpseuniform(M), slot_w_uniform)
 	if(src.corpsesuit)
@@ -117,6 +117,22 @@
 
 
 
+/obj/effect/landmark/mobcorpse/syndicatestormtrooper
+	name = "Syndicate Stormtrooper"
+	corpseuniform = /obj/item/clothing/under/syndicate
+	corpsesuit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	corpseshoes = /obj/item/clothing/shoes/combat
+	corpsegloves = /obj/item/clothing/gloves/combat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/gas/syndicate
+	corpsehelmet = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
+	corpseback = /obj/item/weapon/tank/jetpack/oxygen/harness
+	corpseid = 1
+	corpseidjob = "Operative"
+	corpseidaccess = "Syndicate"
+
+
+
 /obj/effect/landmark/mobcorpse/clown
 	name = "Clown"
 	corpseuniform = /obj/item/clothing/under/rank/clown
@@ -155,3 +171,42 @@
 
 /obj/effect/landmark/mobcorpse/russian/ranged
 	corpsehelmet = /obj/item/clothing/head/ushanka
+
+/obj/effect/landmark/mobcorpse/russian/ranged/trooper
+	corpseuniform = /obj/item/clothing/under/syndicate/camo
+	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
+	corpseshoes = /obj/item/clothing/shoes/combat
+	corpsegloves = /obj/item/clothing/gloves/combat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/balaclava
+	corpsehelmet = /obj/item/clothing/head/helmet/alt
+
+/obj/effect/landmark/mobcorpse/russian/ranged/officer
+	name = "Russian Officer"
+	corpseuniform = /obj/item/clothing/under/rank/security/navyblue/russian
+	corpsesuit = /obj/item/clothing/suit/security/officer/russian
+	corpseshoes = /obj/item/clothing/shoes/laceup
+	corpseradio = /obj/item/device/radio/headset
+	corpsehelmet = /obj/item/clothing/head/ushanka
+
+/obj/effect/landmark/mobcorpse/wizard
+	name = "Space Wizard"
+	corpseuniform = /obj/item/clothing/under/color/lightpurple
+	corpsesuit = /obj/item/clothing/suit/wizrobe
+	corpseshoes = /obj/item/clothing/shoes/sandal
+	corpsehelmet = /obj/item/clothing/head/wizard
+
+
+/obj/effect/landmark/mobcorpse/nanotrasensoldier
+	name = "Nanotrasen Private Security Officer"
+	corpseuniform = /obj/item/clothing/under/rank/security
+	corpsesuit = /obj/item/clothing/suit/armor/vest
+	corpseshoes = /obj/item/clothing/shoes/combat
+	corpsegloves = /obj/item/clothing/gloves/combat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/gas/sechailer/swat
+	corpsehelmet = /obj/item/clothing/head/helmet/swat/nanotrasen
+	corpseback = /obj/item/weapon/storage/backpack/security
+	corpseid = 1
+	corpseidjob = "Private Security Force"
+	corpseidaccess = "Security Officer"

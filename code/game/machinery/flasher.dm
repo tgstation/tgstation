@@ -26,6 +26,10 @@
 	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	bulb = new /obj/item/device/assembly/flash/handheld(src)
 
+/obj/machinery/flasher/Move()
+	remove_from_proximity_list(src, range)
+	..()
+
 /obj/machinery/flasher/power_change()
 	if (powered() && anchored && bulb)
 		stat &= ~NOPOWER
@@ -43,7 +47,7 @@
 		if (bulb)
 			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			if(do_after(user, 30, target = src) && bulb)
+			if(do_after(user, 30/W.toolspeed, target = src) && bulb)
 				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
 				bulb.loc = src.loc
 				bulb = null
@@ -127,11 +131,13 @@
 			overlays += "[base_state]-s"
 			anchored = 1
 			power_change()
+			add_to_proximity_list(src, range)
 		else
 			user << "<span class='notice'>[src] can now be moved.</span>"
 			overlays.Cut()
 			anchored = 0
 			power_change()
+			remove_from_proximity_list(src, range)
 
 	else
 		..()

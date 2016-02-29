@@ -3,9 +3,6 @@
 //NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
 
 
-#define TINT_IMPAIR 2			//Threshold of tint level to apply weld mask overlay
-#define TINT_BLIND 3			//Threshold of tint level to obscure vision fully
-
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
 #define HEAT_DAMAGE_LEVEL_3 10 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
@@ -23,10 +20,6 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
-/mob/living/carbon/human
-	var/tinttotal = 0				// Total level of visualy impairing items
-
-
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -34,8 +27,6 @@
 
 	if (notransform)
 		return
-
-	tinttotal = tintcheck() //here as both hud updates and status updates call it
 
 	if(..())
 		for(var/datum/mutation/human/HM in dna.mutations)
@@ -60,17 +51,23 @@
 
 
 /mob/living/carbon/human/handle_disabilities()
-	..()
-	//Eyes
-	if(!(disabilities & BLIND))
-		if(tinttotal >= TINT_BLIND)		//covering your eyes heals blurry eyes faster
-			eye_blurry = max(eye_blurry-2, 0)
+	if(eye_blind)			//blindness, heals slowly over time
+		if(tinttotal >= TINT_BLIND) //covering your eyes heals blurry eyes faster
+			adjust_blindness(-3)
+		else
+			adjust_blindness(-1)
+	else if(eye_blurry)			//blurry eyes heal slowly
+		adjust_blurriness(-1)
 
 	//Ears
-	if(!(disabilities & DEAF))
+	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
+		setEarDamage(-1, max(ear_deaf, 1))
+	else
 		if(istype(ears, /obj/item/clothing/ears/earmuffs)) // earmuffs rest your ears, healing ear_deaf faster and ear_damage, but keeping you deaf.
 			setEarDamage(max(ear_damage-0.10, 0), max(ear_deaf - 1, 1))
-
+		// deafness heals slowly over time, unless ear_damage is over 100
+		if(ear_damage < 100)
+			adjustEarDamage(-0.05,-1)
 
 	if (getBrainLoss() >= 60 && stat != DEAD)
 		if (prob(3))
@@ -84,16 +81,12 @@
 				if(4)
 					emote("drool")
 				if(5)
-					say(pick("REMOVE SINGULARITY", "INSTLL TEG", "TURBIN IS BEST ENGIENE", "SOLIRS CAN POWER THE HOLE STATION ANEWAY", "parasteng was best"))
+					say(pick("REMOVE SINGULARITY", "INSTLL TEG", "TURBIN IS BEST ENGIENE", "SOLIRS CAN POWER THE HOLE STATION ANEWAY", "parasteng was best", "Tajaran has warrrres, if you have coin"))
 
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
 		..()
-
-/mob/living/carbon/human/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src, can_overdose=1)
 
 /mob/living/carbon/human/breathe()
 	if(!dna.species.breathe(src))
@@ -110,14 +103,8 @@
 	if(!dna || !dna.species.handle_fire(src))
 		..()
 	if(on_fire)
-		var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
-		if(wear_suit)
-			if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
-				thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
-		if(head)
-			if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
-				thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
-		thermal_protection = round(thermal_protection)
+		var/thermal_protection = get_thermal_protection()
+
 		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
 			return
 		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
@@ -125,6 +112,16 @@
 		else
 			bodytemperature += (BODYTEMP_HEATING_MAX + (fire_stacks * 12))
 
+/mob/living/carbon/human/proc/get_thermal_protection()
+	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
+	if(wear_suit)
+		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
+			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
+	if(head)
+		if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
+			thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
+	thermal_protection = round(thermal_protection)
+	return thermal_protection
 
 /mob/living/carbon/human/IgniteMob()
 	if(!dna || !dna.species.IgniteMob(src))
@@ -258,20 +255,9 @@
 
 
 /mob/living/carbon/human/handle_chemicals_in_body()
-	..()
+	if(reagents)
+		reagents.metabolize(src, can_overdose=1)
 	dna.species.handle_chemicals_in_body(src)
-
-/mob/living/carbon/human/handle_vision()
-	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
-	if(machine)
-		if(!machine.check_eye(src))		reset_view(null)
-	else
-		if(!remote_view && !client.adminobs)			reset_view(null)
-
-	dna.species.handle_vision(src)
-
-/mob/living/carbon/human/handle_hud_icons()
-	dna.species.handle_hud_icons(src)
 
 /mob/living/carbon/human/handle_random_events()
 	// Puke if toxloss is too high
@@ -305,6 +291,8 @@
 	if(head)
 		if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
 			. = 1
+	if(NOBREATH in dna.species.specflags)
+		. = 1
 	return .
 /mob/living/carbon/human/proc/handle_embedded_objects()
 	for(var/obj/item/organ/limb/L in organs)

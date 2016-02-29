@@ -16,8 +16,6 @@ var/global/list/undershirt_m = list()	 //stores only undershirt name
 var/global/list/undershirt_f = list()	 //stores only undershirt name
 	//Socks
 var/global/list/socks_list = list()		//stores /datum/sprite_accessory/socks indexed by name
-var/global/list/socks_m = list()	 //stores only socks name
-var/global/list/socks_f = list()	 //stores only socks name
 	//Lizard Bits (all datum lists indexed by name)
 var/global/list/body_markings_list = list()
 var/global/list/tails_list_lizard = list()
@@ -31,7 +29,14 @@ var/global/list/frills_list = list()
 var/global/list/spines_list = list()
 var/global/list/animated_spines_list = list()
 	//Backpacks
-var/global/list/backbaglist = list("Backpack", "Satchel")
+#define GBACKPACK "Grey Backpack"
+#define GSATCHEL "Grey Satchel"
+#define GDUFFLEBAG "Grey Dufflebag"
+#define LSATCHEL "Leather Satchel"
+#define DBACKPACK "Department Backpack"
+#define DSATCHEL "Department Satchel"
+#define DDUFFLEBAG "Department Dufflebag"
+var/global/list/backbaglist = list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL)
 	//Female Uniforms
 var/global/list/female_clothing_icons = list()
 

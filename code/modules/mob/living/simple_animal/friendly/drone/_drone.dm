@@ -35,9 +35,12 @@
 	status_flags = (CANPUSH | CANSTUN | CANWEAKEN)
 	gender = NEUTER
 	voice_name = "synthesized chirp"
+	speak_emote = list("chirps")
+	bubble_icon = "machine"
 	languages = DRONE
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	staticOverlays = list()
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter")
@@ -71,12 +74,12 @@
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
-		equip_to_slot_or_del(I, "drone_storage_slot")
+		equip_to_slot_or_del(I, slot_drone_storage)
 	if(default_hatmask)
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, slot_head)
 
-	scanner.Grant(src)
+	access_card.flags |= NODROP
 
 	alert_drones(DRONE_NET_CONNECT)
 
@@ -87,9 +90,6 @@
 
 /mob/living/simple_animal/drone/Login()
 	..()
-	update_inv_hands()
-	update_inv_head()
-	update_inv_internal_storage()
 	check_laws()
 
 	updateSeeStaticMobs()
@@ -238,3 +238,8 @@
 
 /mob/living/simple_animal/drone/experience_pressure_difference(pressure_difference, direction)
 	return
+
+/mob/living/simple_animal/drone/fully_heal(admin_revive = 0)
+	adjustBruteLoss(-getBruteLoss()) //Heal all brute damage
+
+

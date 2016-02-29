@@ -10,7 +10,7 @@
 /obj/item/weapon/ore/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
-		if(W.remove_fuel(15))
+		if(W.remove_fuel(15) && refined_type)
 			new refined_type(get_turf(src.loc))
 			qdel(src)
 		else if(W.isOn())
@@ -21,7 +21,7 @@
 	name = "uranium ore"
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
-	points = 18
+	points = 30
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
@@ -64,7 +64,7 @@
 	name = "plasma ore"
 	icon_state = "Plasma ore"
 	origin_tech = "plasmatech=2;materials=2"
-	points = 36
+	points = 15
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
@@ -81,7 +81,7 @@
 	name = "silver ore"
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
-	points = 18
+	points = 16
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
@@ -97,7 +97,7 @@
 	name = "diamond ore"
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
-	points = 36
+	points = 50
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
@@ -105,7 +105,7 @@
 	name = "bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
-	points = 27
+	points = 60
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
@@ -122,12 +122,10 @@
 	item_state = "Gibtonite ore"
 	w_class = 4
 	throw_range = 0
-	anchored = 1 //Forces people to carry it by hand, no pulling!
 	var/primed = 0
 	var/det_time = 100
 	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
 	var/attacher = "UNKNOWN"
-	var/datum/wires/explosive/gibtonite/wires
 
 /obj/item/weapon/twohanded/required/gibtonite/Destroy()
 	qdel(wires)
@@ -137,15 +135,15 @@
 /obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/device/assembly/igniter))
 		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
-		wires = new(src)
+		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
 		qdel(I)
 		overlays += "Gibtonite_igniter"
 		return
 
 	if(wires && !primed)
-		if(wires.IsInteractionTool(I))
-			wires.Interact(user)
+		if(is_wire_tool(I))
+			wires.interact(user)
 			return
 
 	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator) || I.force >= 10)
@@ -162,7 +160,7 @@
 
 /obj/item/weapon/twohanded/required/gibtonite/attack_self(user)
 	if(wires)
-		wires.Interact(user)
+		wires.interact(user)
 	else
 		..()
 
@@ -341,6 +339,9 @@
 
 /obj/item/weapon/coin/attack_self(mob/user)
 	if(cooldown < world.time - 15)
+		if(string_attached) //does the coin have a wire attached
+			user << "<span class='warning'>The coin won't flip very well with something attached!</span>" //Tell user it will not flip
+			return //do not flip the coin
 		var/coinflip = pick(sideslist)
 		cooldown = world.time
 		flick("coin_[cmineral]_flip", src)
@@ -350,5 +351,5 @@
 		sleep(15)
 		if(loc == oldloc && user && !user.incapacitated())
 			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
-								 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
-								 "<span class='italics'>You hear the clattering of loose change.</span>")
+ 							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
+							 "<span class='italics'>You hear the clattering of loose change.</span>")

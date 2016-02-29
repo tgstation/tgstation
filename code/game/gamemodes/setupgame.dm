@@ -3,7 +3,7 @@
 	for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
 		avnums[i] = i
 
-	for(var/A in typesof(/datum/mutation/human) - /datum/mutation/human)
+	for(var/A in subtypesof(/datum/mutation/human))
 		var/datum/mutation/human/B = new A()
 		if(B.dna_block == NON_SCANNABLE)
 			continue

@@ -58,14 +58,15 @@
 	cap_dead.color = cap_color
 	UpdateMushroomCap()
 	health = maxHealth
+	deathmessage = "[src] fainted."
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/adjustBruteLoss(damage)//Possibility to flee from a fight just to make it more visually interesting
+/mob/living/simple_animal/hostile/mushroom/adjustHealth(damage)//Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
 		spawn(30)
 			retreat_distance = null
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
@@ -84,14 +85,13 @@
 		qdel(src)
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/revive()
-	..()
-	icon_state = "mushroom_color"
-	UpdateMushroomCap()
+/mob/living/simple_animal/hostile/mushroom/revive(full_heal = 0, admin_revive = 0)
+	if(..())
+		icon_state = "mushroom_color"
+		UpdateMushroomCap()
+		. = 1
 
 /mob/living/simple_animal/hostile/mushroom/death(gibbed)
-	if(!gibbed)
-		visible_message("[src] fainted.")
 	..(gibbed)
 	UpdateMushroomCap()
 
@@ -105,7 +105,7 @@
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message("[src] slowly begins to recover.")
 	faint_ticker = 0
-	revive()
+	revive(full_heal = 1)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
 	spawn(300)

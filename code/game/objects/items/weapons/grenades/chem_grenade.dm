@@ -143,9 +143,6 @@
 /obj/item/weapon/grenade/chem_grenade/receive_signal()
 	prime()
 
-/obj/item/weapon/grenade/chem_grenade/HasProximity(atom/movable/AM)
-	if(nadeassembly)
-		nadeassembly.HasProximity(AM)
 
 /obj/item/weapon/grenade/chem_grenade/Crossed(atom/movable/AM)
 	if(nadeassembly)
@@ -177,6 +174,10 @@
 		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] ([T.x], [T.y], [T.z])")
 
 	playsound(loc, 'sound/effects/bamf.ogg', 50, 1)
+
+	var/turf/DT = get_turf(src)
+	var/area/DA = get_area(DT)
+	log_game("A grenade detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")
 
 	update_mob()
 
@@ -421,6 +422,44 @@
 	beakers += B1
 	beakers += B2
 
+/obj/item/weapon/grenade/chem_grenade/bioterrorfoam
+	name = "Bio terror foam grenade"
+	desc = "Tiger Cooperative chemical foam grenade. Causes temporary irration, blindness, confusion, mutism, and mutations to carbon based life forms. Contains additional spore toxin"
+	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/bioterrorfoam/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
+
+	B1.reagents.add_reagent("cryptobiolin", 75)
+	B1.reagents.add_reagent("water", 50)
+	B1.reagents.add_reagent("mutetoxin", 50)
+	B1.reagents.add_reagent("spore", 75)
+	B1.reagents.add_reagent("itching_powder", 50)
+	B2.reagents.add_reagent("fluorosurfactant", 150)
+	B2.reagents.add_reagent("mutagen", 150)
+	beakers += B1
+	beakers += B2
+
+/obj/item/weapon/grenade/chem_grenade/tuberculosis
+ 	name = "Fungal tuberculosis grenade"
+ 	desc = "WARNING: GRENADE WILL RELEASE DEADLY SPORES CONTAINING ACTIVE AGENTS. SEAL SUIT AND AIRFLOW BEFORE USE."
+ 	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/tuberculosis/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
+
+	B1.reagents.add_reagent("potassium", 50)
+	B1.reagents.add_reagent("phosphorus", 50)
+	B1.reagents.add_reagent("fungalspores", 200)
+	B2.reagents.add_reagent("blood", 250)
+	B2.reagents.add_reagent("sugar", 50)
+
+	beakers += B1
+	beakers += B2
 
 #undef EMPTY
 #undef WIRED

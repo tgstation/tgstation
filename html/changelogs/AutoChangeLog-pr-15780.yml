@@ -1,0 +1,5 @@
+author: PKPenguin321
+delete-after: True
+changes: 
+  - rscadd: "Bolas are now in the game. They're a simple device fashioned from a cable and two weights on the end, designed to entangle enemies by wrapping around their legs upon being thrown at them. The victim can remove them rather quickly, however."
+  - rscadd: "Bolas can be crafted by applying 6 metal sheets to cablecuffs. They can also be tablecrafted."

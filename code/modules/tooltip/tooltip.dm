@@ -32,71 +32,71 @@ Notes:
 
 
 /datum/tooltip
-	var
-		client/owner
-		control = "mainwindow.tooltip"
-		file = 'code/modules/tooltip/tooltip.html'
-		showing = 0
-		queueHide = 0
-		init = 0
+	var/client/owner
+	var/control = "mainwindow.tooltip"
+	var/file = 'code/modules/tooltip/tooltip.html'
+	var/showing = 0
+	var/queueHide = 0
+	var/init = 0
 
 
-	New(client/C)
-		if (C)
-			src.owner = C
-			src.owner << browse(file2text(src.file), "window=[src.control]")
+/datum/tooltip/New(client/C)
+	if (C)
+		src.owner = C
+		src.owner << browse(file2text(src.file), "window=[src.control]")
 
-		..()
-
-
-	proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
-		if (!thing || !params || (!title && !content) || !src.owner || !isnum(world.icon_size)) return 0
-		if (!src.init)
-			//Initialize some vars
-			src.init = 1
-			src.owner << output(list2params(list(world.icon_size, src.control)), "[src.control]:tooltip.init")
-
-		src.showing = 1
-
-		if (title && content)
-			title = "<h1>[title]</h1>"
-			content = "<p>[content]</p>"
-		else if (title && !content)
-			title = "<p>[title]</p>"
-		else if (!title && content)
-			content = "<p>[content]</p>"
-
-		//Make our dumb param object
-		params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
-
-		//Send stuff to the tooltip
-		src.owner << output(list2params(list(params, src.owner.view, "[title][content]", theme, special)), "[src.control]:tooltip.update")
-
-		//If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
-		src.showing = 0
-		if (src.queueHide)
-			src.hide()
-
-		return 1
+	..()
 
 
-	proc/hide()
-		if (src.queueHide)
-			spawn(1)
-				winshow(src.owner, src.control, 0)
-		else
+/datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
+	if (!thing || !params || (!title && !content) || !src.owner || !isnum(world.icon_size))
+		return 0
+	if (!src.init)
+		//Initialize some vars
+		src.init = 1
+		src.owner << output(list2params(list(world.icon_size, src.control)), "[src.control]:tooltip.init")
+
+	src.showing = 1
+
+	if (title && content)
+		title = "<h1>[title]</h1>"
+		content = "<p>[content]</p>"
+	else if (title && !content)
+		title = "<p>[title]</p>"
+	else if (!title && content)
+		content = "<p>[content]</p>"
+
+	//Make our dumb param object
+	params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
+
+	//Send stuff to the tooltip
+	src.owner << output(list2params(list(params, src.owner.view, "[title][content]", theme, special)), "[src.control]:tooltip.update")
+
+	//If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
+	src.showing = 0
+	if (src.queueHide)
+		src.hide()
+
+	return 1
+
+
+/datum/tooltip/proc/hide()
+	if (src.queueHide)
+		spawn(1)
 			winshow(src.owner, src.control, 0)
+	else
+		winshow(src.owner, src.control, 0)
 
-		src.queueHide = src.showing ? 1 : 0
+	src.queueHide = src.showing ? 1 : 0
 
-		return 1
+	return 1
 
 
 /* TG SPECIFIC CODE */
 
 
 //Open a tooltip for user, at a location based on params
-//Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class based on the user's UI_style (Midnight, Plasmafire, Retro)
+//Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class based on the user's UI_style (Midnight, Plasmafire, Retro, etc)
 //Includes sanity.checks
 /proc/openToolTip(mob/user = null, atom/movable/tip_src = null, params = null,title = "",content = "",theme = "")
 	if(istype(user))

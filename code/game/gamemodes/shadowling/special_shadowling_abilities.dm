@@ -9,8 +9,10 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	clothes_req = 0
 	action_icon_state = "hatch"
 
-/obj/effect/proc_holder/spell/self/shadowling_hatch/cast(mob/living/carbon/human/H)
-	if(usr.stat || !ishuman(usr) || !usr || !is_shadow(usr)) return
+/obj/effect/proc_holder/spell/self/shadowling_hatch/cast(list/targets,mob/user = usr)
+	if(user.stat || !ishuman(user) || !user || !is_shadow(user || isinspace(user))) 
+		return
+	var/mob/living/carbon/human/H = user
 	var/hatch_or_no = alert(H,"Are you sure you want to hatch? You cannot undo this!",,"Yes","No")
 	switch(hatch_or_no)
 		if("No")
@@ -18,7 +20,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			charge_counter = charge_max
 			return
 		if("Yes")
-			H.Stun(INFINITY) //This is bad but notransform won't work.
+			H.stunned = INFINITY //This is bad but hulks can't be stunned with the actual procs. I'm sorry.
 			H.visible_message("<span class='warning'>[H]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
 							"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you.</span>")
 
@@ -27,12 +29,14 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			sleep(50)
 			var/turf/simulated/floor/F
-			var/turf/shadowturf = get_turf(usr)
-			for(F in orange(1, usr))
+			var/turf/shadowturf = get_turf(user)
+			for(F in orange(1, user))
 				new /obj/structure/alien/resin/wall/shadowling(F)
 			for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf) //extremely hacky
 				qdel(R)
 				new /obj/structure/alien/weeds/node(shadowturf) //Dim lighting in the chrysalis -- removes itself afterwards
+			var/temp_flags = H.status_flags
+			H.status_flags |= GODMODE //Can't die while hatching
 
 			H.visible_message("<span class='warning'>A chrysalis forms around [H], sealing them inside.</span>", \
 							"<span class='shadowling'>You create your chrysalis and begin to contort within.</span>")
@@ -54,14 +58,14 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			sleep(10)
 			playsound(H.loc, 'sound/weapons/slice.ogg', 25, 1)
 			H << "<i><b>You are free!</b></i>"
-
+			H.status_flags = temp_flags
 			sleep(10)
 			playsound(H.loc, 'sound/effects/ghost.ogg', 100, 1)
 			var/newNameId = pick(possibleShadowlingNames)
 			possibleShadowlingNames.Remove(newNameId)
 			H.real_name = newNameId
-			H.name = usr.real_name
-			H.SetStunned(0)
+			H.name = user.real_name
+			H.stunned = 0 //Same as above. Due to hulks.
 			H << "<i><b><font size=3>YOU LIVE!!!</i></b></font>"
 
 			for(var/obj/structure/alien/resin/wall/shadowling/W in orange(1, H))
@@ -107,7 +111,8 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	clothes_req = 0
 	action_icon_state = "ascend"
 
-/obj/effect/proc_holder/spell/self/shadowling_ascend/cast(mob/living/carbon/human/H)
+/obj/effect/proc_holder/spell/self/shadowling_ascend/cast(list/targets,mob/user = usr)
+	var/mob/living/carbon/human/H = user
 	if(!shadowling_check(H))
 		return
 	var/hatch_or_no = alert(H,"It is time to ascend. Are you sure about this?",,"Yes","No")

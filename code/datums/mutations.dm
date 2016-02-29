@@ -19,6 +19,7 @@
 	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
 	var/list/species_allowed = list() //to restrict mutation to only certain species
 	var/health_req //minimum health required to acquire the mutation
+	var/time_coeff = 1 //coefficient for timed mutations
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
 	set_block(owner)
@@ -29,7 +30,8 @@
 	. = on_losing(owner)
 
 /datum/mutation/human/proc/set_se(se_string, on = 1)
-	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)	return
+	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
+		return
 	var/before = copytext(se_string, 1, ((dna_block - 1) * DNA_BLOCK_SIZE) + 1)
 	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, lowest_value - 1), DNA_BLOCK_SIZE)
 	var/after = copytext(se_string, (dna_block * DNA_BLOCK_SIZE) + 1, 0)
@@ -40,7 +42,8 @@
 		owner.dna.struc_enzymes = set_se(owner.dna.struc_enzymes, on)
 
 /datum/mutation/human/proc/check_block_string(se_string)
-	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)	return 0
+	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
+		return 0
 	if(hex2num(getblock(se_string, dna_block)) >= lowest_value)
 		return 1
 
@@ -136,11 +139,9 @@
 	return visual_indicators[g]
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
-	if(owner.health < 25)
+	if(owner.health < 0)
 		on_losing(owner)
 		owner << "<span class='danger'>You suddenly feel very weak.</span>"
-		owner.Weaken(3)
-		owner.emote("collapse")
 
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -177,6 +178,7 @@
 	get_chance = 25
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
+	time_coeff = 5
 
 /datum/mutation/human/cold_resistance/New()
 	..()
@@ -197,23 +199,18 @@
 	get_chance = 25
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
+	time_coeff = 2
 
 /datum/mutation/human/x_ray/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	on_life(owner)
 
-/datum/mutation/human/x_ray/on_life(mob/living/carbon/human/owner)
-	owner.sight |= SEE_MOBS|SEE_OBJS|SEE_TURFS
-	owner.see_in_dark = 8
+	owner.update_sight()
 
 /datum/mutation/human/x_ray/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	if((SEE_MOBS & owner.permanent_sight_flags) && (SEE_OBJS & owner.permanent_sight_flags) && (SEE_TURFS & owner.permanent_sight_flags)) //Xray flag combo
-		return
-	owner.see_in_dark = initial(owner.see_in_dark)
-	owner.sight = initial(owner.sight)
+	owner.update_sight()
 
 /datum/mutation/human/nearsight
 
@@ -224,12 +221,12 @@
 /datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities |= NEARSIGHT
+	owner.become_nearsighted()
 
 /datum/mutation/human/nearsight/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities &= ~NEARSIGHT
+	owner.cure_nearsighted()
 
 /datum/mutation/human/epilepsy
 
@@ -238,7 +235,7 @@
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
-	if((prob(1) && owner.paralysis < 1))
+	if(prob(1) && !owner.paralysis)
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Paralyse(10)
 		owner.Jitter(1000)
@@ -283,20 +280,22 @@
 	quality = POSITIVE
 	get_chance = 15
 	lowest_value = 256 * 12
-	text_gain_indication = "<span class='notice'>Everything around you seems to grow..</span>"
-	text_lose_indication = "<span class='notice'>Everything around you seems to shrink..</span>"
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
-	if(..())	return
+	if(..())
+		return
 	owner.resize = 0.8
+	owner.update_transform()
 	owner.pass_flags |= PASSTABLE
-	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>")
+	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
-	if(..())	return
+	if(..())
+		return
 	owner.resize = 1.25
+	owner.update_transform()
 	owner.pass_flags &= ~PASSTABLE
-	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>")
+	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
 
 /datum/mutation/human/clumsy
 
@@ -305,7 +304,8 @@
 	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
 
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
-	if(..())	return
+	if(..())
+		return
 	owner.disabilities |= CLUMSY
 
 /datum/mutation/human/clumsy/on_losing(mob/living/carbon/human/owner)
@@ -351,7 +351,8 @@
 	text_gain_indication = "<span class='danger'>You can't seem to hear anything.</span>"
 
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
-	if(..())	return
+	if(..())
+		return
 	owner.disabilities |= DEAF
 
 /datum/mutation/human/deaf/on_losing(mob/living/carbon/human/owner)
@@ -366,18 +367,20 @@
 	text_gain_indication = "<span class='danger'>You can't seem to see anything.</span>"
 
 /datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
-	if(..())	return
-	owner.disabilities |= BLIND
+	if(..())
+		return
+	owner.become_blind()
 
 /datum/mutation/human/blind/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities &= ~BLIND
+	owner.cure_blind()
+
 
 /datum/mutation/human/race
-
 	name = "Monkified"
 	quality = NEGATIVE
+	time_coeff = 2
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -388,31 +391,6 @@
 	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
 		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
-
-/datum/mutation/human/stealth
-	name = "Cloak Of Darkness"
-	quality = POSITIVE
-	get_chance = 25
-	lowest_value = 256 * 12
-	text_gain_indication = "<span class='notice'>You begin to fade into the shadows.</span>"
-	text_lose_indication = "<span class='notice'>You become fully visible.</span>"
-
-
-/datum/mutation/human/stealth/on_life(mob/living/carbon/human/owner)
-	var/turf/simulated/T = get_turf(owner)
-	if(!istype(T))
-		return
-	if(T.lighting_lumcount <= 2)
-		owner.alpha -= 25
-	else
-		if(!owner.dna.check_mutation(CHAMELEON))
-			owner.alpha = round(255 * 0.80)
-
-/datum/mutation/human/stealth/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	owner.alpha = 255
-
 /datum/mutation/human/chameleon
 	name = "Chameleon"
 	quality = POSITIVE
@@ -420,6 +398,7 @@
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>You feel one with your surroundings.</span>"
 	text_lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
+	time_coeff = 5
 
 /datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -535,7 +514,7 @@
 		else
 			prefix=""
 
-		var/list/words = text2list(message," ")
+		var/list/words = splittext(message," ")
 		var/list/rearranged = list()
 		for(var/i=1;i<=words.len;i++)
 			var/cword = pick(words)
@@ -546,7 +525,7 @@
 				suffix = copytext(cword,length(cword)-1,length(cword)  )
 			if(length(cword))
 				rearranged += cword
-		message = "[prefix][uppertext(list2text(rearranged," "))]!!"
+		message = "[prefix][uppertext(jointext(rearranged," "))]!!"
 	return message
 
 /datum/mutation/human/swedish

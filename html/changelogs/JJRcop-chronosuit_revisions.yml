@@ -1,6 +1,0 @@
-author: JJRcop
-delete-after: True
-changes:
-  - tweak: "Chronosuits have had their movement revised, they now take time to teleport depending on how far you've traveled, and don't teleport automatically anymore unless you stop moving for a short moment, or press the new '
-  Teleport Now' button."
-  - rscadd: "Added new outfit that allows admins to dress people up in the chrono equipment easier."

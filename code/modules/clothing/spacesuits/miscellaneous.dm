@@ -3,6 +3,7 @@
 Contains:
  - Captain's spacesuit
  - Death squad's hardsuit
+ - SWAT suit
  - Officer's beret/spacesuit
  - NASA Voidsuit
  - Father Christmas' magical clothes
@@ -19,7 +20,7 @@ Contains:
 	icon_state = "capspace"
 	item_state = "capspacehelmet"
 	desc = "A special helmet designed for only the most fashionable of military figureheads."
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEEARS|HIDEHAIR
 	permeability_coefficient = 0.01
 	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
 
@@ -43,7 +44,7 @@ Contains:
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
-	action_button_name = null
+	actions_types = list()
 
 /obj/item/clothing/head/helmet/space/hardsuit/deathsquad/attack_self(mob/user)
 	return
@@ -53,12 +54,22 @@ Contains:
 	desc = "A heavily armored, advanced space suit that protects against most forms of damage."
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
 	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	unacidable = 1
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
+
+	//NEW SWAT suit
+/obj/item/clothing/suit/space/swat
+	name = "SWAT armor"
+	desc = "Space-proof tactical SWAT armor."
+	icon_state = "heavy"
+	item_state = "swat_suit"
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
+	armor = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20)
+	strip_delay = 120
 
 /obj/item/clothing/head/helmet/space/beret
 	name = "officer's beret"
@@ -107,7 +118,7 @@ Contains:
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE
+	flags = STOPSPRESSUREDMAGE
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/suit/space/santa
@@ -127,7 +138,7 @@ Contains:
 	icon_state = "pirate"
 	item_state = "pirate"
 	armor = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE
+	flags = STOPSPRESSUREDMAGE
 	strip_delay = 40
 	put_on_delay = 20
 	flags_cover = HEADCOVERSEYES
@@ -154,9 +165,8 @@ Contains:
 	item_color = "ert_commander"
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
 	strip_delay = 130
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
+	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
 	brightness_on = 7
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/suit/space/hardsuit/ert
 	name = "emergency response team suit"
@@ -252,10 +262,8 @@ Contains:
 	item_state = "syndicate"
 	armor = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 75)	//As whimpy as a space carp
 	brightness_on = 0 //luminosity when on
-	action_button_name = ""
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
+	actions_types = list()
+	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
 
 
 /obj/item/clothing/suit/space/hardsuit/carp
@@ -267,3 +275,37 @@ Contains:
 	armor = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 75) //As whimpy whimpy whoo
 	allowed = list(/obj/item/weapon/tank/internals, /obj/item/weapon/gun/projectile/automatic/speargun)	//I'm giving you a hint here
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
+
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
+	name = "paranormal response unit helmet"
+	desc = "A helmet worn by those who deal with paranormal threats for a living."
+	icon_state = "hardsuit0-prt"
+	item_state = "hardsuit0-prt"
+	item_color = "knight_grey"
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	actions_types = list()
+
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal
+	name = "paranormal response team suit"
+	desc = "Powerful wards are built into this hardsuit, protecting the user from all manner of paranormal threats."
+	icon_state = "knight_grey"
+	item_state = "knight_grey"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+
+
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/New()
+	..()
+	new /obj/item/weapon/nullrod(src)
+
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
+	name = "inquisitor's hardsuit"
+	icon_state = "hardsuit-inq"
+	item_state = "hardsuit-inq"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor
+	name = "inquisitor's helmet"
+	icon_state = "hardsuit0-inq"
+	item_state = "hardsuit0-inq"

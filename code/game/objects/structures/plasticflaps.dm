@@ -7,6 +7,17 @@
 	anchored = 1
 	layer = 4
 
+/obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
+	if(istype(caller, /mob/living))
+		if(istype(caller,/mob/living/simple_animal/bot/mulebot))
+			return 1
+
+		var/mob/living/M = caller
+		if(!M.ventcrawler && M.mob_size != MOB_SIZE_TINY)
+			return 0
+
+	return 1 //diseases, stings, etc can pass
+
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))
 		return prob(60)
@@ -22,7 +33,9 @@
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(M.buckled && istype(M.buckled, /obj/machinery/bot/mulebot)) // mulebot passenger gets a free pass.
+		if(istype(A,/mob/living/simple_animal/bot/mulebot)) //mulebots can pass
+			return 1
+		if(M.buckled && istype(M.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
 			return 1
 		if(!M.lying && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return 0

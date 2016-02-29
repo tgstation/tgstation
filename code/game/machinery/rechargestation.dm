@@ -101,11 +101,7 @@
 /obj/machinery/recharge_station/close_machine()
 	if(!panel_open)
 		for(var/mob/living/silicon/robot/R in loc)
-			R.stop_pulling()
-			if(R.client)
-				R.client.eye = src
-				R.client.perspective = EYE_PERSPECTIVE
-			R.loc = src
+			R.forceMove(src)
 			occupant = R
 			use_power = 2
 			add_fingerprint(R)
@@ -140,5 +136,5 @@
 	if(occupant)
 		var/mob/living/silicon/robot/R = occupant
 		if(R && R.module)
-			var/coeff = recharge_speed / 200
+			var/coeff = recharge_speed * 0.005
 			R.module.respawn_consumable(R, coeff)

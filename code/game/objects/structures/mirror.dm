@@ -61,6 +61,7 @@
 
 
 /obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
+	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(I.damtype == STAMINA)
 		return
@@ -70,7 +71,7 @@
 			if(WT.remove_fuel(0, user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
-				if(do_after(user, 10, target = src))
+				if(do_after(user, 10/I.toolspeed, target = src))
 					if(!user || !WT || !WT.isOn())
 						return
 					user << "<span class='notice'>You repair [src].</span>"
@@ -90,6 +91,7 @@
 
 
 /obj/structure/mirror/attack_alien(mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(islarva(user))
 		return
@@ -106,6 +108,7 @@
 	var/mob/living/simple_animal/M = user
 	if(M.melee_damage_upper <= 0)
 		return
+	user.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
@@ -115,6 +118,7 @@
 
 
 /obj/structure/mirror/attack_slime(mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
@@ -131,7 +135,7 @@
 
 /obj/structure/mirror/magic/New()
 	if(!choosable_races.len)
-		for(var/speciestype in typesof(/datum/species) - /datum/species)
+		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = new speciestype()
 			if(!(S.id in races_blacklist))
 				choosable_races += S.id
@@ -142,7 +146,7 @@
 	..()
 
 /obj/structure/mirror/magic/badmin/New()
-	for(var/speciestype in typesof(/datum/species) - /datum/species)
+	for(var/speciestype in subtypesof(/datum/species))
 		var/datum/species/S = new speciestype()
 		choosable_races += S.id
 	..()
@@ -155,15 +159,21 @@
 
 	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "race", "gender", "hair", "eyes")
 
+	if(!Adjacent(user))
+		return
+
 	switch(choice)
 		if("name")
 			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
 
 			if(!newname)
 				return
-
+			if(!Adjacent(user))
+				return
 			H.real_name = newname
 			H.name = newname
+			if(H.dna)
+				H.dna.real_name = newname
 			if(H.mind)
 				H.mind.name = newname
 
@@ -174,7 +184,8 @@
 
 			if(!newrace)
 				return
-
+			if(!Adjacent(user))
+				return
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
@@ -203,7 +214,8 @@
 		if("gender")
 			if(!(H.gender in list("male", "female"))) //blame the patriarchy
 				return
-
+			if(!Adjacent(user))
+				return
 			if(H.gender == "male")
 				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "female"
@@ -221,10 +233,10 @@
 			H.update_body()
 			H.update_mutations_overlay() //(hulk male/female)
 
-
 		if("hair")
 			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
-
+			if(!Adjacent(user))
+				return
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				..()
 			else
@@ -241,7 +253,14 @@
 
 		if("eyes")
 			var/new_eye_color = input(H, "Choose your eye color", "Eye Color") as null|color
+			if(!Adjacent(user))
+				return
 			if(new_eye_color)
 				H.eye_color = sanitize_hexcolor(new_eye_color)
 				H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 				H.update_body()
+	if(choice)
+		curse(user)
+
+/obj/structure/mirror/magic/proc/curse(mob/living/user)
+	return

@@ -62,6 +62,10 @@
 
 #define islimb(A) (istype(A, /obj/item/organ/limb))
 
+#define isbot(A) (istype(A, /mob/living/simple_animal/bot))
+
+#define ismovableatom(A) (istype(A, /atom/movable))
+
 // ASSEMBLY HELPERS
 
 #define isassembly(O) (istype(O, /obj/item/device/assembly))

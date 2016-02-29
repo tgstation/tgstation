@@ -23,10 +23,6 @@
 	update_icon()
 	return
 
-/obj/item/weapon/melee/baton/CheckParts()
-	bcell = locate(/obj/item/weapon/stock_parts/cell) in contents
-	update_icon()
-
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
 	..()
 	bcell = new(src)
@@ -123,8 +119,9 @@
 			if(baton_stun(L, user))
 				user.do_attack_animation(L)
 				return
-		L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was off.</span>", \
-						"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
+		else
+			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was off.</span>", \
+							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
 		if(status)
 			baton_stun(L, user)
@@ -132,6 +129,11 @@
 
 
 /obj/item/weapon/melee/baton/proc/baton_stun(mob/living/L, mob/user)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
+			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
+			return 0
 	if(isrobot(loc))
 		var/mob/living/silicon/robot/R = loc
 		if(!R || !R.cell || !R.cell.use(hitcost))
@@ -175,3 +177,12 @@
 	stunforce = 5
 	hitcost = 2500
 	slot_flags = null
+	var/obj/item/device/assembly/igniter/sparkler = 0
+
+/obj/item/weapon/melee/baton/cattleprod/New()
+	..()
+	sparkler = new (src)
+
+/obj/item/weapon/melee/baton/cattleprod/baton_stun()
+	if(sparkler.activate())
+		..()

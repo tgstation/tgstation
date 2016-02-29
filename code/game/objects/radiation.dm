@@ -4,10 +4,6 @@
 	if(!istype(epicenter, /turf))
 		epicenter = get_turf(epicenter.loc)
 
-	if(log)
-		message_admins("Radiation pulse with size ([heavy_range], [light_range]) and severity [severity] in area [epicenter.loc.name] ")
-		log_game("Radiation pulse with size ([heavy_range], [light_range]) and severity [severity] in area [epicenter.loc.name] ")
-
 	if(heavy_range > light_range)
 		light_range = heavy_range
 
@@ -25,6 +21,9 @@
 				T.rad_act(light_severity)
 		else if(distance <= light_range)
 			T.rad_act(light_severity)
+
+	if(log)
+		log_game("Radiation pulse with size ([heavy_range], [light_range]) and severity [severity] in area [epicenter.loc.name] ")
 	return 1
 
 /atom/proc/rad_act(var/severity)

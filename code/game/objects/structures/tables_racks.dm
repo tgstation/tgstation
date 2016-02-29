@@ -28,6 +28,7 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/mob/tableclimber
+	var/deconstructable = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
 
@@ -43,15 +44,27 @@
 		smooth_icon_neighbors(src)
 
 /obj/structure/table/ex_act(severity, target)
-	..()
-	if(severity == 3)
-		if(prob(25))
-			table_destroy(1)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			if(prob(50))
+				table_destroy(1)
+			else
+				qdel(src)
+		if(3)
+			if(prob(25))
+				table_destroy(1)
 
 /obj/structure/table/blob_act()
 	if(prob(75))
 		table_destroy(1)
 		return
+
+/obj/structure/table/mech_melee_attack(obj/mecha/M)
+	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
+	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
+	table_destroy(1)
 
 /obj/structure/table/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
@@ -83,7 +96,6 @@
 		tableclimber.Weaken(2)
 		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You're knocked off the table!", "You see [tableclimber.name] get knocked off the table</span>")
 
-
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
 
@@ -98,7 +110,14 @@
 	else
 		return !density
 
+/obj/structure/table/CanAStarPass(ID, dir, caller)
+	. = !density
+	if(ismovableatom(caller))
+		var/atom/movable/mover = caller
+		. = . || mover.checkpass(PASSTABLE)
+
 /obj/structure/table/MouseDrop_T(atom/movable/O, mob/user)
+	..()
 	if(ismob(O) && user == O && ishuman(user))
 		if(user.canmove)
 			climb_table(user)
@@ -125,6 +144,15 @@
 		if(!G.confirm())
 			return 0
 		G.affecting.loc = src.loc
+		if(istype(src, /obj/structure/table/optable))
+			var/obj/structure/table/optable/OT = src
+			G.affecting.resting = 1
+			G.affecting.update_canmove()
+			visible_message("<span class='notice'>[G.assailant] has laid [G.affecting] on [src].</span>")
+			OT.patient = G.affecting
+			OT.check_patient()
+			qdel(I)
+			return 1
 		G.affecting.Weaken(2)
 		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
 									"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
@@ -137,26 +165,26 @@
 	if (istype(I, /obj/item/weapon/grab))
 		tablepush(I, user)
 		return
-
-	if (istype(I, /obj/item/weapon/screwdriver))
-		if(istype(src, /obj/structure/table/reinforced))
-			var/obj/structure/table/reinforced/RT = src
-			if(RT.status == 1)
+	if(!(flags&NODECONSTRUCT))
+		if (istype(I, /obj/item/weapon/screwdriver))
+			if(istype(src, /obj/structure/table/reinforced))
+				var/obj/structure/table/reinforced/RT = src
+				if(RT.status == 1)
+					table_destroy(2, user)
+					return
+			else
 				table_destroy(2, user)
 				return
-		else
-			table_destroy(2, user)
-			return
 
-	if (istype(I, /obj/item/weapon/wrench))
-		if(istype(src, /obj/structure/table/reinforced))
-			var/obj/structure/table/reinforced/RT = src
-			if(RT.status == 1)
+		if (istype(I, /obj/item/weapon/wrench))
+			if(istype(src, /obj/structure/table/reinforced))
+				var/obj/structure/table/reinforced/RT = src
+				if(RT.status == 1)
+					table_destroy(3, user)
+					return
+			else
 				table_destroy(3, user)
 				return
-		else
-			table_destroy(3, user)
-			return
 
 	if (istype(I, /obj/item/weapon/storage/bag/tray))
 		var/obj/item/weapon/storage/bag/tray/T = I
@@ -195,6 +223,8 @@
 #define TBL_DECONSTRUCT 3
 
 /obj/structure/table/proc/table_destroy(destroy_type, mob/user)
+	if(!deconstructable || (flags&NODECONSTRUCT))
+		return
 
 	if(destroy_type == TBL_DESTROY)
 		for(var/i = 1, i <= framestackamount, i++)
@@ -297,7 +327,7 @@
 	frame = /obj/structure/table_frame/wood
 	framestack = /obj/item/stack/sheet/mineral/wood
 	buildstack = /obj/item/stack/sheet/mineral/wood
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 20
 	canSmoothWith = list(/obj/structure/table/wood, /obj/structure/table/wood/poker)
 
@@ -328,14 +358,14 @@
 			if(src.status == 2)
 				user << "<span class='notice'>You start weakening the reinforced table...</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
+				if (do_after(user, 50/W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You weaken the table.</span>"
 					src.status = 1
 			else
 				user << "<span class='notice'>You start strengthening the reinforced table...</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
+				if (do_after(user, 50/W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You strengthen the table.</span>"
 					src.status = 2
@@ -356,6 +386,43 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		user << text("<span class='notice'>You kick [src].</span>")
 	return 1
+
+/*
+ * Surgery Tables
+ */
+
+/obj/structure/table/optable
+	name = "operating table"
+	desc = "Used for advanced medical procedures."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "optable"
+	buildstack = /obj/item/stack/sheet/mineral/silver
+	smooth = SMOOTH_FALSE
+	can_buckle = 1
+	buckle_lying = 1
+	buckle_requires_restraints = 1
+	var/mob/living/carbon/human/patient = null
+	var/obj/machinery/computer/operating/computer = null
+
+/obj/structure/table/optable/New()
+	..()
+	for(var/dir in cardinal)
+		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
+		if(computer)
+			computer.table = src
+			break
+
+/obj/structure/table/optable/proc/check_patient()
+	var/mob/M = locate(/mob/living/carbon/human, loc)
+	if(M)
+		if(M.resting)
+			patient = M
+			return 1
+	else
+		patient = null
+		return 0
+
+
 
 /*
  * Racks
@@ -391,6 +458,10 @@
 		rack_destroy()
 		return
 
+/obj/structure/rack/mech_melee_attack(obj/mecha/M)
+	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
+	rack_destroy(1)
+
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
@@ -399,6 +470,12 @@
 		return 1
 	else
 		return 0
+
+/obj/structure/rack/CanAStarPass(ID, dir, caller)
+	. = !density
+	if(ismovableatom(caller))
+		var/atom/movable/mover = caller
+		. = . || mover.checkpass(PASSTABLE)
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
@@ -413,7 +490,7 @@
 	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		rack_destroy()
 		return
@@ -468,9 +545,10 @@
  */
 
 /obj/structure/rack/proc/rack_destroy()
-	density = 0
-	var/obj/item/weapon/rack_parts/newparts = new(loc)
-	transfer_fingerprints_to(newparts)
+	if(!(flags&NODECONSTRUCT))
+		density = 0
+		var/obj/item/weapon/rack_parts/newparts = new(loc)
+		transfer_fingerprints_to(newparts)
 	qdel(src)
 
 

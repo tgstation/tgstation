@@ -24,6 +24,9 @@
 	return ..(0, 1)
 
 /obj/item/weapon/gun/projectile/revolver/attackby(obj/item/A, mob/user, params)
+	. = ..()
+	if(.)
+		return
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>"
@@ -122,7 +125,7 @@
 				afterattack(user, user)	//you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
 				return
-			if(do_after(user, 30, target = src))
+			if(do_after(user, 30/A.toolspeed, target = src))
 				if(magazine.ammo_count())
 					user << "<span class='warning'>You can't modify it!</span>"
 					return
@@ -135,7 +138,7 @@
 				afterattack(user, user)	//and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
 				return
-			if(do_after(user, 30, target = src))
+			if(do_after(user, 30/A.toolspeed, target = src))
 				if(magazine.ammo_count())
 					user << "<span class='warning'>You can't modify it!</span>"
 					return
@@ -149,6 +152,22 @@
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
 	icon_state = "mateba"
 	origin_tech = "combat=2;materials=2"
+
+/obj/item/weapon/gun/projectile/revolver/golden
+	name = "\improper Golden revolver"
+	desc = "This ain't no game, ain't never been no show, And I'll gladly gun down the oldest lady you know. Uses .357 ammo."
+	icon_state = "goldrevolver"
+	fire_sound = 'sound/weapons/resonator_blast.ogg'
+	recoil = 8
+	pin = /obj/item/device/firing_pin
+
+/obj/item/weapon/gun/projectile/revolver/nagant
+	name = "nagant revolver"
+	desc = "An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
+	icon_state = "nagant"
+	origin_tech = "combat=3"
+	can_suppress = 1
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev762
 
 
 // A gun to play Russian Roulette!
@@ -229,14 +248,29 @@
 			var/obj/item/ammo_casing/AC = chambered
 			if(AC.fire(user, user))
 				playsound(user, fire_sound, 50, 1)
-				var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+				var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
 				var/limb_name = affecting.getDisplayName()
 				if(affecting.name == "head" || affecting.name == "eyes" || affecting.name == "mouth")
-					user.apply_damage(300, BRUTE, affecting)
-					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
+					shoot_self(user, affecting)
 				else
 					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at \his [limb_name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [limb_name]!</span>", "<span class='italics'>You hear a gunshot!</span>")
 				return
 
 		user.visible_message("<span class='danger'>*click*</span>")
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+
+/obj/item/weapon/gun/projectile/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = "head")
+	user.apply_damage(300, BRUTE, affecting)
+	user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
+
+/obj/item/weapon/gun/projectile/revolver/russian/soul
+	name = "cursed russian revolver"
+	desc = "To play with this revolver requires wagering your very soul."
+
+/obj/item/weapon/gun/projectile/revolver/russian/soul/shoot_self(mob/living/user)
+	..()
+	var/obj/item/device/soulstone/anybody/SS = new /obj/item/device/soulstone/anybody(get_turf(src))
+	if(!SS.transfer_soul("FORCE", user)) //Something went wrong
+		qdel(SS)
+		return
+	user.visible_message("<span class='danger'>[user.name]'s soul is captured by \the [src]!</span>", "<span class='userdanger'>You've lost the gamble! Your soul is forfiet!</span>")

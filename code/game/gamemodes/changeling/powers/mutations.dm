@@ -227,6 +227,7 @@
 	flags = ABSTRACT | NODROP
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
+	block_chance = 50
 
 	var/remaining_uses //Set by the changeling ability.
 
@@ -238,7 +239,7 @@
 /obj/item/clothing/head/helmet/space/changeling/dropped()
 	qdel(src)
 
-/obj/item/weapon/shield/changeling/IsShield()
+/obj/item/weapon/shield/changeling/hit_reaction()
 	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
@@ -248,7 +249,7 @@
 		return 0
 	else
 		remaining_uses--
-		return 1
+		return ..()
 
 
 /***************************************\
@@ -297,7 +298,7 @@
 	name = "flesh mass"
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | NODROP //Again, no THICKMATERIAL.
+	flags = STOPSPRESSUREDMAGE | NODROP //Again, no THICKMATERIAL.
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
@@ -347,10 +348,9 @@
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
-	flags = BLOCKHAIR | NODROP
+	flags = NODROP
 	armor = list(melee = 30, bullet = 30, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
-	flags_inv = HIDEEARS
-	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE
 
 /obj/item/clothing/head/helmet/changeling/dropped()
 	qdel(src)

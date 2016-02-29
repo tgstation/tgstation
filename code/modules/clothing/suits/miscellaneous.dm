@@ -16,7 +16,7 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/weapon/gun/energy/laser/bluetag)
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/suit/redtag
 	name = "red laser tag armor"
@@ -26,7 +26,7 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/weapon/gun/energy/laser/redtag)
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /*
  * Costume
@@ -43,7 +43,6 @@
 	desc = "Yarr."
 	icon_state = "hgpirate"
 	item_state = "hgpirate"
-	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
 
 
@@ -91,7 +90,7 @@
 	w_class = 3
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/suit/hastur
 	name = "\improper Hastur's robe"
@@ -137,7 +136,7 @@
 	togglename = "wings"
 	body_parts_covered = ARMS|CHEST
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/device/flashlight/seclite,/obj/item/weapon/melee/classic_baton/telescopic)
-	action_button_name = "Toggle Owl Wings"
+	actions_types = list(/datum/action/item_action/toggle_wings)
 
 /obj/item/clothing/suit/toggle/owlwings/griffinwings
 	name = "griffon cloak"
@@ -162,6 +161,14 @@
 	desc = "An ordinary cardboard box with holes cut in the sides."
 	icon_state = "cardborg"
 	item_state = "cardborg"
+	body_parts_covered = CHEST|GROIN
+	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/snowman
+	name = "snowman outfit"
+	desc = "Two white spheres covered in white glitter. 'Tis the season."
+	icon_state = "snowman"
+	item_state = "snowman"
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 
@@ -208,7 +215,6 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT	//Space carp like space, so you should too
 	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/gun/projectile/automatic/speargun)
 	hooded = 1
-	action_button_name = "Toggle Carp Hood"
 	hoodtype = /obj/item/clothing/head/carp_hood
 
 /obj/item/clothing/head/carp_hood
@@ -219,6 +225,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
@@ -230,7 +237,6 @@
 	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list(,)
 	hooded = 1
-	action_button_name = "Toggle Ian Hood"
 	hoodtype = /obj/item/clothing/head/ian_hood
 
 /obj/item/clothing/head/ian_hood
@@ -241,6 +247,34 @@
 	//cold_protection = HEAD
 	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEEARS
+
+/obj/item/clothing/suit/hooded/bloated_human	//OH MY GOD WHAT HAVE YOU DONE!?!?!?
+	name = "bloated human suit"
+	desc = "A horribly bloated suit made from human skins."
+	icon_state = "lingspacesuit"
+	item_state = "labcoat"
+	body_parts_covered = CHEST|GROIN|ARMS
+	allowed = list(,)
+	hooded = 1
+	actions_types = list(/datum/action/item_action/toggle_human_head)
+	hoodtype = /obj/item/clothing/head/human_head
+
+/obj/item/clothing/head/human_head
+	name = "bloated human head"
+	desc = "A horribly bloated and mismatched human head."
+	icon_state = "lingspacehelmet"
+	body_parts_covered = HEAD
+	flags = NODROP
+	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/suit/security/officer/russian
+	name = "russian officer's jacket"
+	desc = "This jacket is for those special occasions when a russian officer isn't required to wear their armor."
+	icon_state = "officertanjacket"
+	item_state = "officertanjacket"
+	body_parts_covered = CHEST|ARMS
 
 /*
  * Misc
@@ -254,6 +288,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	strip_delay = 60
+	breakouttime = 3000
 
 /obj/item/clothing/suit/ianshirt
 	name = "worn shirt"
@@ -282,7 +317,7 @@
 	desc = "Pompadour not included."
 	icon_state = "leatherjacket"
 	item_state = "hostrench"
-	burn_state = -1 //Not Burnable
+	burn_state = FIRE_PROOF
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective)
 
@@ -339,7 +374,6 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
 	hooded = 1
-	action_button_name = "Toggle Winter Hood"
 
 /obj/item/clothing/head/winterhood
 	name = "winter hood"
@@ -349,6 +383,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/hooded/wintercoat/captain
 	name = "captain's winter coat"

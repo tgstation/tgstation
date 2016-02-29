@@ -31,6 +31,7 @@
 
 	faction = list("carp")
 	flying = 1
+	pressure_resistance = 200
 	gold_core_spawnable = 1
 
 /mob/living/simple_animal/hostile/carp/Process_Spacemove(movement_dir = 0)
@@ -47,12 +48,7 @@
 	icon_living = "holocarp"
 	maxbodytemp = INFINITY
 	gold_core_spawnable = 0
-
-/mob/living/simple_animal/hostile/carp/holocarp/death()
-	..(1)
-	ghostize()
-	qdel(src)
-	return
+	del_on_death = 1
 
 /mob/living/simple_animal/hostile/carp/megacarp
 	icon = 'icons/mob/alienqueen.dmi'
@@ -69,3 +65,12 @@
 
 	melee_damage_lower = 20
 	melee_damage_upper = 20
+
+
+/mob/living/simple_animal/hostile/carp/cayenne
+	name = "Cayenne"
+	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
+	speak_emote = list("squeaks")
+	gold_core_spawnable = 0
+	faction = list("syndicate")
+	AIStatus = AI_OFF

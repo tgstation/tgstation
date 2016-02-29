@@ -1,9 +1,7 @@
 /mob/living/carbon/human/examine(mob/user)
 
 	var/list/obscured = check_obscured_slots()
-	var/skipface = 0
-	if(wear_mask)
-		skipface |= wear_mask.flags_inv & HIDEFACE
+	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
 	var/t_He = "It" //capitalised for use at the start of each line.
@@ -14,15 +12,13 @@
 
 	var/msg = "<span class='info'>*---------*\nThis is "
 
-	if( slot_w_uniform in obscured && skipface ) //big suits/masks/helmets make it hard to tell their gender
+	if( (slot_w_uniform in obscured) && skipface ) //big suits/masks/helmets make it hard to tell their gender
 		t_He = "They"
 		t_his = "their"
 		t_him = "them"
 		t_has = "have"
 		t_is = "are"
 	else
-		if(icon)
-			msg += "\icon[src] " //note, should we ever go back to runtime-generated icons (please don't), you will need to change this to \icon[icon] to prevent crashes.
 		switch(gender)
 			if(MALE)
 				t_He = "He"
@@ -241,8 +237,14 @@
 
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
-	else if(blood_max)
-		msg += "<B>[t_He] [t_is] bleeding!</B>\n"
+	if(blood_max)
+		if(reagents.has_reagent("heparin"))
+			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
+		else
+			msg += "<B>[t_He] [t_is] bleeding!</B>\n"
+
+	if(reagents.has_reagent("teslium"))
+		msg += "[t_He] is emitting a gentle blue glow!\n"
 
 	msg += "</span>"
 

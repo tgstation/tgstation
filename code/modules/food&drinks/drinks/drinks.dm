@@ -8,9 +8,9 @@
 	icon_state = null
 	flags = OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
-	possible_transfer_amounts = list(5,10,25)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
-	burn_state = -1
+	burn_state = FIRE_PROOF
 
 /obj/item/weapon/reagent_containers/food/drinks/New()
 	..()
@@ -230,7 +230,7 @@
 	name = "soda can"
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
-	if(M == user && !src.reagents.total_volume && user.a_intent == "harm" && user.zone_sel.selecting == "head")
+	if(M == user && !src.reagents.total_volume && user.a_intent == "harm" && user.zone_selected == "head")
 		user.visible_message("<span class='warning'>[user] crushes the can of [src] on \his forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
 		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)

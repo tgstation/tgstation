@@ -23,8 +23,7 @@
 		user << "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
-		spawn(0)
-			user << "<span class='info'>\icon [I] It has \the [I] loaded.</span>"
+		user << "<span class='info'>\icon [I] It has \the [I] loaded.</span>"
 	if(tank)
 		user << "<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>"
 
@@ -89,9 +88,6 @@
 	if(!istype(user) && !target)
 		return
 	var/discharge = 0
-	if(is_in_gang(user, "Sleeping Carp"))
-		user << "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>"
-		return
 	if(!loadedItems || !loadedWeightClass)
 		user << "<span class='warning'>\The [src] has nothing loaded.</span>"
 		return
@@ -116,12 +112,11 @@
 	add_logs(user, target, "fired at", src)
 	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	for(var/obj/item/ITD in loadedItems) //Item To Discharge
-		spawn(0)
-			loadedItems.Remove(ITD)
-			loadedWeightClass -= ITD.w_class
-			ITD.throw_speed = pressureSetting * 2
-			ITD.loc = get_turf(src)
-			ITD.throw_at(target, pressureSetting * 5, pressureSetting * 2,user)
+		loadedItems.Remove(ITD)
+		loadedWeightClass -= ITD.w_class
+		ITD.throw_speed = pressureSetting * 2
+		ITD.loc = get_turf(src)
+		ITD.throw_at_fast(target, pressureSetting * 5, pressureSetting * 2,user)
 	if(pressureSetting >= 3 && user)
 		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
 		user.Weaken(3)

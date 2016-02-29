@@ -54,7 +54,7 @@ Contents:
 
 	//selecting a candidate player
 	if(!key)
-		var/list/candidates = get_candidates(BE_NINJA)
+		var/list/candidates = get_candidates(ROLE_NINJA)
 		if(!candidates.len)
 			return kill()
 		var/client/C = pick(candidates)
@@ -151,8 +151,7 @@ Contents:
 		N.randomize_param()
 
 	Ninja.internal = Ninja.s_store
-	if(Ninja.internals)
-		Ninja.internals.icon_state = "internal1"
+	Ninja.update_internals_hud_icon(1)
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
 		throw EXCEPTION("Ninja created with incorrect mind")
@@ -203,7 +202,7 @@ Contents:
 	equip_to_slot_or_del(theSuit, slot_wear_suit)
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(src), slot_gloves)
 	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/space_ninja(src), slot_head)
-	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/voice/space_ninja(src), slot_wear_mask)
+	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/space_ninja(src), slot_wear_mask)
 	equip_to_slot_or_del(new /obj/item/clothing/glasses/night(src), slot_glasses)
 	equip_to_slot_or_del(EK, slot_belt)
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_r_store)

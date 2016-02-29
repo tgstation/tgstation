@@ -163,9 +163,12 @@
 			T.air_update_turf()
 			for(var/obj/effect/hotspot/H in T)
 				qdel(H)
-				if(G.toxins)
-					G.nitrogen += (G.toxins)
-					G.toxins = 0
+				var/list/G_gases = G.gases
+				if(G_gases["plasma"])
+					G.assert_gas("n2")
+					G_gases["n2"][MOLES] += (G_gases["plasma"][MOLES])
+					G_gases["plasma"][MOLES] = 0
+					G.garbage_collect()
 		for(var/obj/machinery/atmospherics/components/unary/U in T)
 			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
 				U.welded = 1
@@ -200,7 +203,7 @@
 /obj/effect/particle_effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
 	if(..())
 		M.drop_item()
-		M.sleeping = max(M.sleeping,10)
+		M.Sleeping(max(M.sleeping,10))
 		M.emote("cough")
 		return 1
 

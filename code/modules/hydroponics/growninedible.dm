@@ -5,7 +5,7 @@
 /obj/item/weapon/grown // Grown weapons
 	name = "grown_weapon"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	var/seed = null
 	var/plantname = ""
 	var/product	//a type path
@@ -68,7 +68,7 @@
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/twohanded/required/chainsaw))
+	if(W.sharpness)
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
 		var/obj/item/stack/plank = new plank_type(user.loc, 1 + round(potency / 25))
 		var/old_plank_amount = plank.amount
@@ -91,6 +91,11 @@
 			return
 		else
 			usr << "<span class ='warning'>You must dry this first!</span>"
+
+/obj/item/weapon/grown/log/tree
+	seed = null
+	name = "wood log"
+	desc = "TIMMMMM-BERRRRRRRRRRR!"
 
 /obj/item/weapon/grown/log/steel
 	seed = /obj/item/seeds/steelmycelium
@@ -158,6 +163,7 @@
 		qdel(src)
 
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user)
+	..()
 	if(!user.gloves)
 		user << "<span class='danger'>The [name] burns your bare hand!</span>"
 		user.adjustFireLoss(rand(1, 5))
@@ -184,6 +190,7 @@
 	return (BRUTELOSS|TOXLOSS)
 
 /obj/item/weapon/grown/nettle/pickup(mob/living/user)
+	..()
 	if(!iscarbon(user))
 		return 0
 	var/mob/living/carbon/C = user
@@ -234,6 +241,7 @@
 	force = round((5 + potency / 2.5), 1)
 
 /obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/user)
+	..()
 	if(..())
 		if(prob(50))
 			user.Paralyse(5)
@@ -245,7 +253,7 @@
 		M << "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>"
 		add_logs(user, M, "attacked", src)
 
-		M.eye_blurry += force/7
+		M.adjust_blurriness(force/7)
 		if(prob(20))
 			M.Paralyse(force / 6)
 			M.Weaken(force / 15)
@@ -281,7 +289,8 @@
 	desc = "A synthetic banana peel."
 
 /obj/item/weapon/grown/bananapeel/specialpeel/Crossed(AM)
-	if(..())	qdel(src)
+	if(..())
+		qdel(src)
 
 /obj/item/weapon/grown/bananapeel/mimanapeel
 	name = "mimana peel"

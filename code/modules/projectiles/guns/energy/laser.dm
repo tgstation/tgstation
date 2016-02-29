@@ -23,7 +23,6 @@
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	ammo_x_offset = 3
 
-
 /obj/item/weapon/gun/energy/laser/captain
 	name = "antique laser gun"
 	icon_state = "caplaser"
@@ -31,41 +30,24 @@
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
 	origin_tech = null
-	var/charge_tick = 0
 	ammo_x_offset = 3
+	selfcharge = 1
 
-/obj/item/weapon/gun/energy/laser/captain/New()
-	..()
-	SSobj.processing |= src
-
-
-/obj/item/weapon/gun/energy/laser/captain/Destroy()
-	SSobj.processing.Remove(src)
-	return ..()
-
-
-/obj/item/weapon/gun/energy/laser/captain/process()
-	charge_tick++
-	if(charge_tick < 4) return 0
-	charge_tick = 0
-	if(!power_supply) return 0
-	power_supply.give(100)
-	update_icon()
-	return 1
+/obj/item/weapon/gun/energy/laser/captain/scattershot
+	name = "scatter shot laser rifle"
+	icon_state = "lasercannon"
+	item_state = "laser"
+	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lense to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theorically infinite use."
+	origin_tech = "combat=5;materials=4;powerstorage=4"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/weapon/gun/energy/laser/cyborg
 	can_charge = 0
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
 
 /obj/item/weapon/gun/energy/laser/cyborg/newshot()
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-			if(R.cell.use(shot.e_cost))
-				chambered = shot
-				chambered.newshot()
-	return
+	..()
+	robocharge()
 
 /obj/item/weapon/gun/energy/laser/cyborg/emp_act()
 	return
@@ -73,12 +55,7 @@
 /obj/item/weapon/gun/energy/laser/scatter
 	name = "scatter laser gun"
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."
-	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
-
-/obj/item/weapon/gun/energy/laser/scatter/attack_self(mob/living/user as mob)
-	select_fire(user)
-	update_icon()
-
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/weapon/gun/energy/lasercannon
 	name = "laser cannon"
@@ -114,29 +91,9 @@
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	needs_permit = 0
-	var/charge_tick = 0
 	pin = /obj/item/device/firing_pin/tag/blue
 	ammo_x_offset = 2
-
-/obj/item/weapon/gun/energy/laser/bluetag/New()
-	..()
-	SSobj.processing |= src
-
-/obj/item/weapon/gun/energy/laser/bluetag/Destroy()
-	SSobj.processing.Remove(src)
-	return ..()
-
-/obj/item/weapon/gun/energy/laser/bluetag/process()
-	charge_tick++
-	if(charge_tick < 4)
-		return 0
-	charge_tick = 0
-	if(!power_supply)
-		return 0
-	power_supply.give(100)
-	update_icon()
-	return 1
-
+	selfcharge = 1
 
 /obj/item/weapon/gun/energy/laser/redtag
 	name = "laser tag gun"
@@ -146,25 +103,6 @@
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	needs_permit = 0
-	var/charge_tick = 0
 	pin = /obj/item/device/firing_pin/tag/red
 	ammo_x_offset = 2
-
-/obj/item/weapon/gun/energy/laser/redtag/New()
-	..()
-	SSobj.processing |= src
-
-/obj/item/weapon/gun/energy/laser/redtag/Destroy()
-	SSobj.processing.Remove(src)
-	return ..()
-
-/obj/item/weapon/gun/energy/laser/redtag/process()
-	charge_tick++
-	if(charge_tick < 4)
-		return 0
-	charge_tick = 0
-	if(!power_supply)
-		return 0
-	power_supply.give(100)
-	update_icon()
-	return 1
+	selfcharge = 1

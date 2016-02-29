@@ -1,6 +1,7 @@
 var/datum/subsystem/objects/SSobj
 
 /datum/proc/process()
+	set waitfor = 0
 	SSobj.processing.Remove(src)
 	return 0
 
@@ -16,15 +17,12 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects/Initialize(timeofday, zlevel)
 	setupGenetics()
-	for(var/atom/movable/AM in world)
-		if (zlevel && AM.z != zlevel)
+	for(var/V in world)
+		var/atom/A = V
+		if (zlevel && A.z != zlevel)
 			continue
-		AM.initialize()
-	if (zlevel)
-		return ..()
-	for(var/turf/simulated/floor/F in world)
-		F.MakeDirty()
-	..()
+		A.initialize()
+	. = ..()
 
 
 /datum/subsystem/objects/stat_entry()
@@ -38,8 +36,13 @@ var/datum/subsystem/objects/SSobj
 			continue
 		SSobj.processing.Remove(thing)
 	for(var/obj/burningobj in SSobj.burning)
-		if(burningobj && (burningobj.burn_state == 1))
+		if(burningobj && (burningobj.burn_state == ON_FIRE))
 			if(burningobj.burn_world_time < world.time)
 				burningobj.burn()
 		else
 			SSobj.burning.Remove(burningobj)
+
+/datum/subsystem/objects/proc/setup_template_objects(list/objects)
+	for(var/A in objects)
+		var/atom/B = A
+		B.initialize()

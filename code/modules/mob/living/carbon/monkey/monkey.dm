@@ -17,12 +17,14 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
-	gender = pick(MALE, FEMALE)
+	if(unique_name) //used to exclude pun pun
+		gender = pick(MALE, FEMALE)
 	real_name = name
 	if(good_mutations.len) //genetic mutations have been set up.
 		initialize()
 
 	internal_organs += new /obj/item/organ/internal/appendix
+	internal_organs += new /obj/item/organ/internal/lungs
 	internal_organs += new /obj/item/organ/internal/heart
 	internal_organs += new /obj/item/organ/internal/brain
 
@@ -96,10 +98,8 @@
 					damage = rand(10, 15)
 					if ( (paralysis < 5)  && (health > 0) )
 						Paralyse(rand(10, 15))
-						spawn( 0 )
-							visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
+						visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
 									"<span class='userdanger'>[M] has knocked out [name]!</span>")
-							return
 				adjustBruteLoss(damage)
 				add_logs(M, src, "attacked")
 				updatehealth()
@@ -107,7 +107,6 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to punch [name]!</span>", \
 						"<span class='userdanger'>[M] has attempted to punch [name]!</span>")
-
 		if("disarm")
 			if (!( paralysis ))
 				M.do_attack_animation(src)
@@ -122,7 +121,6 @@
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
 								"<span class='userdanger'>[M] has disarmed [src]!</span>")
-	return
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
@@ -236,7 +234,7 @@
 /mob/living/carbon/monkey/canBeHandcuffed()
 	return 1
 
-/mob/living/carbon/monkey/assess_threat(obj/machinery/bot/secbot/judgebot, lasercolor)
+/mob/living/carbon/monkey/assess_threat(mob/living/simple_animal/bot/secbot/judgebot, lasercolor)
 	if(judgebot.emagged == 2)
 		return 10 //Everyone is a criminal!
 	var/threatcount = 0
@@ -303,3 +301,14 @@
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
 	return number
+
+/mob/living/carbon/monkey/fully_heal(admin_revive = 0)
+	if(!getorganslot("lungs"))
+		var/obj/item/organ/internal/lungs/L = new()
+		L.Insert(src)
+	..()
+
+/mob/living/carbon/monkey/IsVocal()
+	if(!getorganslot("lungs"))
+		return 0
+	return 1

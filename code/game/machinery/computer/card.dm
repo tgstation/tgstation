@@ -102,7 +102,8 @@ var/time_last_changed_position = 0
 
 	user.set_machine(src)
 	var/dat
-	if(!ticker)	return
+	if(!ticker)
+		return
 	if (mode == 1) // accessing crew manifest
 		var/crew = ""
 		for(var/datum/data/record/t in sortRecord(data_core.general))
@@ -391,7 +392,7 @@ var/time_last_changed_position = 0
 						t1 = newJob
 
 				else if(t1 == "Unassigned")
-					modify.access = list()
+					modify.access -= get_all_accesses()
 
 				else
 					var/datum/job/jobdatum

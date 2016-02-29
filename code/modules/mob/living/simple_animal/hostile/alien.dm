@@ -19,6 +19,7 @@
 	melee_damage_upper = 25
 	attacktext = "slashes"
 	speak_emote = list("hisses")
+	bubble_icon = "alien"
 	a_intent = "harm"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -29,7 +30,7 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	unique_name = 1
-	gold_core_spawnable = 1
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
@@ -125,6 +126,7 @@
 	icon_state = "alienq"
 	icon_living = "alienq"
 	icon_dead = "alienq_dead"
+	bubble_icon = "alienroyal"
 	move_to_delay = 4
 	maxHealth = 400
 	health = 400
@@ -148,3 +150,27 @@
 		adjustBruteLoss(2)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
+
+
+/mob/living/simple_animal/hostile/alien/maid
+	name = "lusty xenomorph maid"
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	a_intent = "help"
+	friendly = "caresses"
+	environment_smash = 0
+	gold_core_spawnable = 1
+	icon_state = "maid"
+	icon_living = "maid"
+	icon_dead = "maid_dead"
+
+/mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
+	if(istype(target, /atom/movable))
+		if(istype(target, /obj/effect/decal/cleanable))
+			visible_message("[src] cleans up \the [target].")
+			qdel(target)
+			return
+		var/atom/movable/M = target
+		M.clean_blood()
+		visible_message("[src] polishes \the [target].")
+

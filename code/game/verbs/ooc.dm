@@ -6,13 +6,15 @@
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 
-	if(!mob)	return
+	if(!mob)
+		return
 	if(IsGuestKey(key))
 		src << "Guests may not use OOC."
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	if(!msg)	return
+	if(!msg)
+		return
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
 		src << "<span class='danger'>You have OOC muted.</span>"
@@ -39,14 +41,20 @@
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	log_ooc("[mob.name]/[key] : [msg]")
+	var/raw_msg = msg
+
+	msg = emoji_parse(msg)
+
+	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
+		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
+			return
+
+	log_ooc("[mob.name]/[key] : [raw_msg]")
 
 	var/keyname = key
 	if(prefs.unlock_content)
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
-
-	msg = emoji_parse(msg)
 
 	for(var/client/C in clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
@@ -71,7 +79,7 @@
 		ooc_allowed = !ooc_allowed
 	world << "<B>The OOC channel has been globally [ooc_allowed ? "enabled" : "disabled"].</B>"
 
-var/global/normal_ooc_colour = "#002eb8"
+var/global/normal_ooc_colour = OOC_COLOR
 
 /client/proc/set_ooc(newColor as color)
 	set name = "Set Player OOC Color"
@@ -83,14 +91,15 @@ var/global/normal_ooc_colour = "#002eb8"
 	set name = "Reset Player OOC Color"
 	set desc = "Returns player OOC Color to default"
 	set category = "Fun"
-	normal_ooc_colour = initial(normal_ooc_colour)
+	normal_ooc_colour = OOC_COLOR
 
 /client/verb/colorooc()
 	set name = "Set Your OOC Color"
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())	return
+		if(!is_content_unlocked())
+			return
 
 	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
 	if(new_ooccolor)
@@ -105,7 +114,8 @@ var/global/normal_ooc_colour = "#002eb8"
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())	return
+		if(!is_content_unlocked())
+			return
 
 		prefs.ooccolor = initial(prefs.ooccolor)
 		prefs.save_preferences()

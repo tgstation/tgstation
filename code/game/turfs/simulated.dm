@@ -13,11 +13,11 @@
 
 /turf/simulated/proc/burn_tile()
 
-/turf/simulated/proc/MakeSlippery(wet_setting = TURF_WET_WATER) // 1 = Water, 2 = Lube
+/turf/simulated/proc/MakeSlippery(wet_setting = TURF_WET_WATER) // 1 = Water, 2 = Lube, 3 = Ice
 	if(wet >= wet_setting)
 		return
 	wet = wet_setting
-	if(wet_setting == TURF_WET_WATER)
+	if(wet_setting != TURF_DRY)
 		if(wet_overlay)
 			overlays -= wet_overlay
 			wet_overlay = null
@@ -46,12 +46,35 @@
 		var/mob/living/carbon/M = A
 		switch(wet)
 			if(TURF_WET_WATER)
-				if(!M.slip(4, 2, null, NO_SLIP_WHEN_WALKING))
+				if(!M.slip(3, 1, null, NO_SLIP_WHEN_WALKING))
 					M.inertia_dir = 0
 				return
 			if(TURF_WET_LUBE)
 				M.slip(0, 7, null, (SLIDE|GALOSHES_DONT_HELP))
+				return
+			if(TURF_WET_ICE)
+				M.slip(0, 4, null, (SLIDE|NO_SLIP_WHEN_WALKING))
+				return
+
 
 /turf/simulated/ChangeTurf(var/path)
 	. = ..()
 	smooth_icon_neighbors(src)
+
+/turf/simulated/proc/is_shielded()
+
+/turf/simulated/contents_explosion(severity, target)
+	var/affecting_level
+	if(severity == 1)
+		affecting_level = 1
+	else if(is_shielded())
+		affecting_level = 3
+	else if(intact)
+		affecting_level = 2
+	else
+		affecting_level = 1
+
+	for(var/V in contents)
+		var/atom/A = V
+		if(A.level >= affecting_level)
+			A.ex_act(severity, target)

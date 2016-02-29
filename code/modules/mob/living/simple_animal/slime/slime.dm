@@ -17,6 +17,7 @@
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("chirps")
+	bubble_icon = "slime"
 
 	layer = 5
 
@@ -70,9 +71,16 @@
 	var/list/slime_mutation[4]
 
 /mob/living/simple_animal/slime/New()
+	var/datum/action/innate/slime/feed/F = new
+	F.Grant(src)
 	if(is_adult)
+		var/datum/action/innate/slime/reproduce/R = new
+		R.Grant(src)
 		health = 200
 		maxHealth = 200
+	else
+		var/datum/action/innate/slime/evolve/E = new
+		E.Grant(src)
 	create_reagents(100)
 	spawn (0)
 		number = rand(1, 1000)
@@ -126,12 +134,18 @@
 	if(!client && powerlevel > 0)
 		var/probab = 10
 		switch(powerlevel)
-			if(1 to 2)	probab = 20
-			if(3 to 4)	probab = 30
-			if(5 to 6)	probab = 40
-			if(7 to 8)	probab = 60
-			if(9)		probab = 70
-			if(10)		probab = 95
+			if(1 to 2)
+				probab = 20
+			if(3 to 4)
+				probab = 30
+			if(5 to 6)
+				probab = 40
+			if(7 to 8)
+				probab = 60
+			if(9)
+				probab = 70
+			if(10)
+				probab = 95
 		if(prob(probab))
 			if(istype(O, /obj/structure/window) || istype(O, /obj/structure/grille))
 				if(nutrition <= get_hunger_nutrition() && !Atkcool)
@@ -149,7 +163,7 @@
 
 		if(!docile)
 			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
-		if(amount_grown >= 10)
+		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 			if(is_adult)
 				stat(null, "You can reproduce!")
 			else
@@ -223,7 +237,7 @@
 
 /mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
-		adjustBruteLoss(10)
+		adjustBruteLoss(15)
 		discipline_slime(user)
 
 

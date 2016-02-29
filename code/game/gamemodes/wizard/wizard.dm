@@ -1,10 +1,11 @@
 /datum/game_mode
 	var/list/datum/mind/wizards = list()
+	var/list/datum/mind/apprentices = list()
 
 /datum/game_mode/wizard
 	name = "wizard"
 	config_tag = "wizard"
-	antag_flag = BE_WIZARD
+	antag_flag = ROLE_WIZARD
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
@@ -38,10 +39,10 @@
 		log_game("[wizard.key] (ckey) has been selected as a Wizard")
 		equip_wizard(wizard.current)
 		forge_wizard_objectives(wizard)
-		name_wizard(wizard.current)
-		greet_wizard(wizard)
 		if(use_huds)
 			update_wiz_icons_added(wizard)
+		greet_wizard(wizard)
+		name_wizard(wizard.current)
 	..()
 	return
 
@@ -276,7 +277,6 @@ Made a proc so this is not repeated 14 (or more) times.*/
 	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]
 	wizhud.join_hud(wiz_mind.current)
 	set_antag_hud(wiz_mind.current, ((wiz_mind in wizards) ? "wizard" : "apprentice"))
-
 
 /datum/game_mode/proc/update_wiz_icons_removed(datum/mind/wiz_mind)
 	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]

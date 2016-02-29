@@ -181,7 +181,7 @@
 
 
 /obj/item/weapon/reagent_containers/syringe/update_icon()
-	var/rounded_vol = min(max(round(reagents.total_volume,5),5),15)
+	var/rounded_vol = Clamp(round(reagents.total_volume,5), 0, 15)
 	overlays.Cut()
 	if(ismob(loc))
 		var/injoverlay
@@ -240,3 +240,17 @@
 
 /obj/item/weapon/reagent_containers/syringe/lethal/choral
 	list_reagents = list("chloralhydrate" = 50)
+
+/obj/item/weapon/reagent_containers/syringe/mulligan
+	name = "Mulligan"
+	desc = "A syringe used to completely change the users identity."
+	amount_per_transfer_from_this = 1
+	volume = 1
+	list_reagents = list("mulligan" = 1)
+
+/obj/item/weapon/reagent_containers/syringe/gluttony
+	name = "Gluttony's Blessing"
+	desc = "A syringe recovered from a dread place. It probably isn't wise to use."
+	amount_per_transfer_from_this = 1
+	volume = 1
+	list_reagents = list("gluttonytoxin" = 1)

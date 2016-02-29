@@ -27,12 +27,7 @@
 	faction = list("mimic")
 	move_to_delay = 9
 	gold_core_spawnable = 1
-
-/mob/living/simple_animal/hostile/mimic/death()
-	..(1)
-	visible_message("[src] stops moving!")
-	ghostize()
-	qdel(src)
+	del_on_death = 1
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
 /mob/living/simple_animal/hostile/mimic/crate
@@ -75,9 +70,9 @@
 		visible_message("<b>[src]</b> starts to move!")
 		attempt_open = 1
 
-/mob/living/simple_animal/hostile/mimic/crate/adjustBruteLoss(damage)
+/mob/living/simple_animal/hostile/mimic/crate/adjustHealth(damage)
 	trigger()
-	..(damage)
+	. = ..()
 
 /mob/living/simple_animal/hostile/mimic/crate/LoseTarget()
 	..()
@@ -119,6 +114,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/Life()
 	..()
+	if(!target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
+		adjustBruteLoss(1)
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
 		death()
 
@@ -142,7 +139,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		return 1
 	return 0
 
-/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/creator, destroy_original = 0)
+/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/user, destroy_original = 0)
 	if(destroy_original || CheckObject(O))
 		O.loc = src
 		name = O.name
@@ -167,8 +164,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			melee_damage_upper = 2 + I.force
 			move_to_delay = 2 * I.w_class + 1
 		maxHealth = health
-		if(creator)
-			creator = creator
+		if(user)
+			creator = user
 			faction += "\ref[creator]" // very unique
 		if(destroy_original)
 			qdel(O)
@@ -196,7 +193,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/machine
 	speak = list("HUMANS ARE IMPERFECT!", "YOU SHALL BE ASSIMILATED!", "YOU ARE HARMING YOURSELF", "You have been deemed hazardous. Will you comply?", \
 				 "My logic is undeniable.", "One of us.", "FLESH IS WEAK", "THIS ISN'T WAR, THIS IS EXTERMINATION!")
-	speak_chance = 15
+	speak_chance = 7
 
 /mob/living/simple_animal/hostile/mimic/copy/machine/CanAttack(atom/the_target)
 	if(the_target == creator) // Don't attack our creator AI.
@@ -235,8 +232,6 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		if(istype(G, /obj/item/weapon/gun/projectile))
 			Pewgun = G
 			var/obj/item/ammo_box/magazine/M = Pewgun.mag_type
-			var/obj/item/ammo_casing/A = initial(M.ammo_type)
-			projectiletype = initial(A.projectile_type)
 			casingtype = initial(M.ammo_type)
 		if(istype(G, /obj/item/weapon/gun/energy))
 			Zapgun = G

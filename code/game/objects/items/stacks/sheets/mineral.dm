@@ -3,6 +3,7 @@ Mineral Sheets
 	Contains:
 		- Sandstone
 		- Diamond
+		- Snow
 		- Uranium
 		- Plasma
 		- Gold
@@ -14,12 +15,20 @@ Mineral Sheets
 		- Enriched Uranium
 */
 
+/obj/item/stack/sheet/mineral
+	icon = 'icons/obj/mining.dmi'
+
 /*
  * Sandstone
  */
 
-/obj/item/stack/sheet/mineral
-	icon = 'icons/obj/mining.dmi'
+var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
+	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
+/*	new/datum/stack_recipe("sandstone wall", ???), \
+		new/datum/stack_recipe("sandstone floor", ???),\ */
+	)
 
 /obj/item/stack/sheet/mineral/sandstone
 	name = "sandstone brick"
@@ -32,19 +41,14 @@ Mineral Sheets
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	sheettype = "sandstone"
 
-var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
-	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
-/*	new/datum/stack_recipe("sandstone wall", ???), \
-		new/datum/stack_recipe("sandstone floor", ???),\ */
-	)
-
 /obj/item/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
 	recipes = sandstone_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
+
+/obj/item/stack/sheet/mineral/sandstone/thirty
+	amount = 30
 
 /*
  * Diamond
@@ -118,7 +122,7 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	throw_range = 3
 	origin_tech = "plasmatech=2;materials=2"
 	sheettype = "plasma"
-	burn_state = 0
+	burn_state = FLAMMABLE
 	burntime = 5
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 
@@ -237,6 +241,32 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	pixel_y = rand(0,4)-4
 	..()
 
+/*
+ * Snow
+ */
+/obj/item/stack/sheet/mineral/snow
+	name = "snow"
+	icon_state = "sheet-snow"
+	singular_name = "snow block"
+	force = 1
+	throwforce = 2
+	w_class = 3
+	throw_speed = 1
+	throw_range = 3
+	origin_tech = "materials=1"
+	sheettype = "snow"
+
+var/global/list/datum/stack_recipe/snow_recipes = list ( \
+	new/datum/stack_recipe("Snow Wall",/turf/simulated/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Snowman", /obj/structure/statue/snow/snowman, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Snowball", /obj/item/toy/snowball, 1), \
+	)
+
+/obj/item/stack/sheet/mineral/snow/New(var/loc, var/amount=null)
+	recipes = snow_recipes
+	pixel_x = rand(0,4)-4
+	pixel_y = rand(0,4)-4
+	..()
 
 /****************************** Others ****************************/
 

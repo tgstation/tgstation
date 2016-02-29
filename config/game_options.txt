@@ -73,6 +73,9 @@ ALERT_DELTA Destruction of the station is imminent. All crew are instructed to o
 
 ### GAME MODES ###
 
+## Uncomment to not send a roundstart intercept report. Gamemodes may override this.
+#NO_INTERCEPT_REPORT
+
 ## Probablities for game modes chosen in 'secret' and 'random' modes.
 ## Default probablity is 1, increase to make that mode more likely to be picked.
 ## Set to 0 to disable that mode.
@@ -250,7 +253,35 @@ DEFAULT_LAWS 1
 SILICON_MAX_LAW_AMOUNT 12
 
 ## Uncomment to give players the choice of their species before they join the game
-#JOIN_WITH_MUTANT_RACE
+JOIN_WITH_MUTANT_RACE
+
+
+## Roundstart Races
+##-------------------------------------------------------------------------------------------
+## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on
+
+## Disabling humans is possible but a bit buggy. Some code relies on the notion that white people exist in space.
+ROUNDSTART_RACES human
+
+## Races that are strictly worse than humans that could probably be turned on without balance concerns
+ROUNDSTART_RACES lizard
+#ROUNDSTART_RACES fly
+ROUNDSTART_RACES plasmaman
+#ROUNDSTART_RACES shadow
+#ROUNDSTART_RACES shadowling
+
+## Races that are better than humans in some ways, but worse in others
+#ROUNDSTART_RACES jelly
+#ROUNDSTART_RACES golem
+#ROUNDSTART_RACES adamantine
+#ROUNDSTART_RACES abductor
+
+## Races that are straight upgrades. If these are on expect powergamers to always pick them
+#ROUNDSTART_RACES skeleton
+#ROUNDSTART_RACES zombie
+#ROUNDSTART_RACES slime
+#ROUNDSTART_RACES pod
+##-------------------------------------------------------------------------------------------
 
 ## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
 #JOIN_WITH_MUTANT_HUMANS
@@ -289,11 +320,11 @@ REACTIONARY_EXPLOSIONS
 ## eg: If you give the number 20. The bomb cap will be 5,10,20.
 ## Can be any number between 4 and 128, some examples are provided below.
 
-## Default (3,7,14)
-BOMBCAP 14
-## One 'step' up (4,8,16) (recommended if you enable REACTIONARY_EXPLOSIONS above)
-#BOMBCAP 16
-## LagHell (7,14,28)
+## Small (3, 7, 14)
+#BOMBCAP 14
+## Default (5, 10, 20) (recommended if you enable REACTIONARY_EXPLOSIONS above)
+BOMBCAP 20
+## LagHell (7, 14, 28)
 #BOMBCAP 28
 
 

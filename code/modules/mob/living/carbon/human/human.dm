@@ -28,6 +28,7 @@
 	for(var/obj/item/organ/limb/O in organs)
 		O.owner = src
 	internal_organs += new /obj/item/organ/internal/appendix
+	internal_organs += new /obj/item/organ/internal/lungs
 	internal_organs += new /obj/item/organ/internal/heart
 	internal_organs += new /obj/item/organ/internal/brain
 
@@ -37,8 +38,6 @@
 	make_blood()
 
 	..()
-	var/mob/M = src
-	faction |= "\ref[M]"
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -62,11 +61,6 @@
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
-		if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
-			var/datum/game_mode/malfunction/malf = ticker.mode
-			if(malf.malf_mode_declared && (malf.apcs > 0))
-				stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
-
 		if (internal)
 			if (!internal.air_contents)
 				qdel(internal)
@@ -148,27 +142,13 @@
 			if (prob(50))
 				Paralyse(10)
 
-	var/update = 0
-	for(var/obj/item/organ/limb/temp in organs)
-		switch(temp.name)
-			if("head")
-				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2)
-			if("chest")
-				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4)
-			if("l_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-			if("r_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-			if("l_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-			if("r_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-	if(update)	update_damage_overlays(0)
+	take_overall_damage(b_loss,f_loss)
 
 	..()
 
 /mob/living/carbon/human/blob_act()
-	if(stat == DEAD)	return
+	if(stat == DEAD)
+		return
 	show_message("<span class='userdanger'>The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
@@ -180,7 +160,7 @@
 		if(!prob(martial_art.deflection_chance))
 			return ..()
 		if(!src.lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-			src.visible_message("<span class='warning'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+			src.visible_message("<span class='danger'>[src] deflects the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 			return 0
 	..()
 
@@ -243,7 +223,7 @@
 	else
 		dat += "<tr><td><B>Uniform:</B></td><td><A href='?src=\ref[src];item=[slot_w_uniform]'>[(w_uniform && !(w_uniform.flags&ABSTRACT)) ? w_uniform : "<font color=grey>Empty</font>"]</A></td></tr>"
 
-	if(w_uniform == null || (slot_w_uniform in obscured) || (dna && dna.species.nojumpsuit))
+	if((w_uniform == null && !(dna && dna.species.nojumpsuit)) || (slot_w_uniform in obscured))
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Pockets:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>ID:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Belt:</B></font></td></tr>"
@@ -272,24 +252,40 @@
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
 /mob/living/carbon/human/Crossed(atom/movable/AM)
-	var/obj/machinery/bot/mulebot/MB = AM
+	var/mob/living/simple_animal/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOver(src)
 
 	spreadFire(AM)
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0)
-	if(!safety)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0)
+	if(tesla_shock)
+		var/total_coeff = 1
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
-			siemens_coeff = G.siemens_coefficient
+			if(G.siemens_coefficient <= 0)
+				total_coeff -= 0.5
+		if(wear_suit)
+			var/obj/item/clothing/suit/S = wear_suit
+			if(S.siemens_coefficient <= 0)
+				total_coeff -= 0.95
+		siemens_coeff = total_coeff
+	else if(!safety)
+		var/gloves_siemens_coeff = 1
+		var/species_siemens_coeff = 1
+		if(gloves)
+			var/obj/item/clothing/gloves/G = gloves
+			gloves_siemens_coeff = G.siemens_coefficient
+		if(dna && dna.species)
+			species_siemens_coeff = dna.species.siemens_coeff
+		siemens_coeff = gloves_siemens_coeff * species_siemens_coeff
 	if(heart_attack)
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
 			heart_attack = 0
 			if(stat == CONSCIOUS)
 				src << "<span class='notice'>You feel your heart beating again!</span>"
-	. = ..(shock_damage,source,siemens_coeff,safety,override)
+	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock)
 	if(.)
 		electrocution_animation(40)
 
@@ -369,8 +365,10 @@
 				var/datum/data/record/R = find_record("name", perpname, data_core.general)
 				if(href_list["photo_front"] || href_list["photo_side"])
 					if(R)
-						if(!H.canUseHUD()) return
-						else if(!istype(H.glasses, /obj/item/clothing/glasses/hud)) return
+						if(!H.canUseHUD())
+							return
+						else if(!istype(H.glasses, /obj/item/clothing/glasses/hud))
+							return
 						var/obj/item/weapon/photo/P = null
 						if(href_list["photo_front"])
 							P = R.fields["photo_front"]
@@ -384,16 +382,20 @@
 						if(href_list["p_stat"])
 							var/health = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
 							if(R)
-								if(!H.canUseHUD()) return
-								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health)) return
+								if(!H.canUseHUD())
+									return
+								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
+									return
 								if(health && health != "Cancel")
 									R.fields["p_stat"] = health
 							return
 						if(href_list["m_stat"])
 							var/health = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
 							if(R)
-								if(!H.canUseHUD()) return
-								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health)) return
+								if(!H.canUseHUD())
+									return
+								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
+									return
 								if(health && health != "Cancel")
 									R.fields["m_stat"] = health
 							return
@@ -474,8 +476,10 @@
 
 								if(href_list["view"])
 									if(R)
-										if(!H.canUseHUD()) return
-										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
+										if(!H.canUseHUD())
+											return
+										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+											return
 										usr << "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]"
 										usr << "<b>Minor Crimes:</b>"
 										for(var/datum/data/crime/c in R.fields["mi_crim"])
@@ -499,9 +503,12 @@
 												var/t1 = stripped_input("Please input minor crime names:", "Security HUD", "", null)
 												var/t2 = stripped_multiline_input("Please input minor crime details:", "Security HUD", "", null)
 												if(R)
-													if (!t1 || !t2 || !allowed_access) return
-													else if(!H.canUseHUD()) return
-													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
+													if (!t1 || !t2 || !allowed_access)
+														return
+													else if(!H.canUseHUD())
+														return
+													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+														return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMinorCrime(R.fields["id"], crime)
 													usr << "<span class='notice'>Successfully added a minor crime.</span>"
@@ -511,9 +518,12 @@
 												var/t1 = stripped_input("Please input major crime names:", "Security HUD", "", null)
 												var/t2 = stripped_multiline_input("Please input major crime details:", "Security HUD", "", null)
 												if(R)
-													if (!t1 || !t2 || !allowed_access) return
-													else if (!H.canUseHUD()) return
-													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
+													if (!t1 || !t2 || !allowed_access)
+														return
+													else if (!H.canUseHUD())
+														return
+													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+														return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMajorCrime(R.fields["id"], crime)
 													usr << "<span class='notice'>Successfully added a major crime.</span>"
@@ -521,8 +531,10 @@
 
 								if(href_list["view_comment"])
 									if(R)
-										if(!H.canUseHUD()) return
-										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
+										if(!H.canUseHUD())
+											return
+										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+											return
 										usr << "<b>Comments/Log:</b>"
 										var/counter = 1
 										while(R.fields[text("com_[]", counter)])
@@ -535,9 +547,12 @@
 									if(R)
 										var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
 										if(R)
-											if (!t1 || !allowed_access) return
-											else if(!H.canUseHUD()) return
-											else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
+											if (!t1 || !allowed_access)
+												return
+											else if(!H.canUseHUD())
+												return
+											else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+												return
 											var/counter = 1
 											while(R.fields[text("com_[]", counter)])
 												counter++
@@ -552,7 +567,7 @@
 /mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
-		target_zone = user.zone_sel.selecting
+		target_zone = user.zone_selected
 	if(dna && PIERCEIMMUNE in dna.species.specflags)
 		. = 0
 	// If targeting the head, see if the head item is thin enough.
@@ -586,12 +601,16 @@
 		if(head.flags_inv & HIDEEARS)
 			obscured |= slot_ears
 
+	if(wear_mask)
+		if(wear_mask.flags_inv & HIDEEYES)
+			obscured |= slot_glasses
+
 	if(obscured.len > 0)
 		return obscured
 	else
 		return null
 
-/mob/living/carbon/human/assess_threat(obj/machinery/bot/secbot/judgebot, lasercolor)
+/mob/living/carbon/human/assess_threat(mob/living/simple_animal/bot/secbot/judgebot, lasercolor)
 	if(judgebot.emagged == 2)
 		return 10 //Everyone is a criminal!
 
@@ -800,9 +819,11 @@
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		..(I, cuff_break = 1)
+		if(..(I, cuff_break = 1))
+			unEquip(I)
 	else
-		..()
+		if(..())
+			unEquip(I)
 
 /mob/living/carbon/human/clean_blood()
 	var/mob/living/carbon/human/H = src
@@ -842,3 +863,95 @@
 			if(M.client)
 				viewing += M.client
 		flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
+
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
+	if(incapacitated() || lying )
+		return
+	if(!Adjacent(M) && (M.loc != src))
+		if((be_close == 0) && (dna.check_mutation(TK)))
+			if(tkMaxRangeCheck(src, M))
+				return 1
+		return
+	return 1
+
+/mob/living/carbon/human/resist_restraints()
+	if(wear_suit && wear_suit.breakouttime)
+		changeNext_move(CLICK_CD_BREAKOUT)
+		last_special = world.time + CLICK_CD_BREAKOUT
+		cuff_resist(wear_suit)
+	else
+		..()
+
+/mob/living/carbon/human/replace_records_name(oldname,newname) // Only humans have records right now, move this up if changed.
+	for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
+		var/datum/data/record/R = find_record("name", oldname, L)
+		if(R)
+			R.fields["name"] = newname
+
+/mob/living/carbon/human/update_sight()
+	if(!client)
+		return
+	if(stat == DEAD)
+		sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_OBSERVER
+		return
+
+	dna.species.update_sight(src)
+
+/mob/living/carbon/human/get_total_tint()
+	. = ..()
+	if(glasses)
+		. += glasses.tint
+
+/mob/living/carbon/human/update_health_hud()
+	if(!client || !hud_used)
+		return
+	if(dna.species.update_health_hud())
+		return
+	else
+		if(hud_used.healths)
+			var/health_amount = health - staminaloss
+			if(..(health_amount)) //not dead
+				switch(hal_screwyhud)
+					if(1)
+						hud_used.healths.icon_state = "health6"
+					if(2)
+						hud_used.healths.icon_state = "health7"
+					if(5)
+						hud_used.healths.icon_state = "health0"
+		if(hud_used.healthdoll)
+			hud_used.healthdoll.overlays.Cut()
+			if(stat != DEAD)
+				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
+				for(var/obj/item/organ/limb/L in organs)
+					var/damage = L.burn_dam + L.brute_dam
+					var/comparison = (L.max_damage/5)
+					var/icon_num = 0
+					if(damage)
+						icon_num = 1
+					if(damage > (comparison))
+						icon_num = 2
+					if(damage > (comparison*2))
+						icon_num = 3
+					if(damage > (comparison*3))
+						icon_num = 4
+					if(damage > (comparison*4))
+						icon_num = 5
+					if(hal_screwyhud == 5)
+						icon_num = 0
+					if(icon_num)
+						hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
+			else
+				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
+
+/mob/living/carbon/human/fully_heal(admin_revive = 0)
+	if(!getorganslot("lungs"))
+		var/obj/item/organ/internal/lungs/L = new()
+		L.Insert(src)
+	restore_blood()
+	remove_all_embedded_objects()
+	for(var/datum/mutation/human/HM in dna.mutations)
+		if(HM.quality != POSITIVE)
+			dna.remove_mutation(HM.name)
+	..()

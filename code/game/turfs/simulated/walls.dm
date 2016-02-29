@@ -8,6 +8,7 @@
 	density = 1
 	blocks_air = 1
 	explosion_block = 1
+	layer = TURF_LAYER + 0.05
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
@@ -90,7 +91,7 @@
 	if(M.damtype == "brute")
 		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>")
-		if(prob(5) && M.force > 20)
+		if(prob(hardness) && M.force > 20)
 			dismantle_wall(1)
 			visible_message("<span class='warning'>[src.name] smashes through the wall!</span>")
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
@@ -138,7 +139,8 @@
 		return
 
 	//get the user's location
-	if( !istype(user.loc, /turf) )	return	//can't do this stuff whilst inside objects and such
+	if( !istype(user.loc, /turf) )
+		return	//can't do this stuff whilst inside objects and such
 
 	add_fingerprint(user)
 
@@ -178,7 +180,7 @@
 		if( WT.remove_fuel(0,user) )
 			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			if(do_after(user, slicing_duration, target = src))
+			if(do_after(user, slicing_duration/W.toolspeed, target = src))
 				if( !istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T )
 					return 1
 				if( user.loc == T && user.get_active_hand() == WT )
@@ -232,11 +234,13 @@
 		F.icon_state = "wall_thermite"
 		F.add_hiddenprint(user)
 		spawn(max(100,300-thermite))
-			if(O)	qdel(O)
+			if(O)
+				qdel(O)
 	else
 		thermite = 0
 		spawn(50)
-			if(O)	qdel(O)
+			if(O)
+				qdel(O)
 	return
 
 /turf/simulated/wall/singularity_pull(S, current_size)

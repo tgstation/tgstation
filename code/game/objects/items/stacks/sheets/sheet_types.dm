@@ -12,10 +12,10 @@
  * Metal
  */
 var/global/list/datum/stack_recipe/metal_recipes = list ( \
-	new/datum/stack_recipe("stool", /obj/structure/bed/stool, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("chair", /obj/structure/bed/chair, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("swivel chair", /obj/structure/bed/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("comfy chair", /obj/structure/bed/chair/comfy/beige, 2, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("stool", /obj/structure/chair/stool, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("chair", /obj/structure/chair, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("swivel chair", /obj/structure/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("comfy chair", /obj/structure/chair/comfy/beige, 2, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("bed", /obj/structure/bed, 2, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/rack_parts), \
@@ -40,7 +40,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("small light fixture frame", /obj/item/wallframe/light_fixture/small, 1), \
 	null, \
 	new/datum/stack_recipe("apc frame", /obj/item/wallframe/apc, 2), \
-	new/datum/stack_recipe("air alarm frame", /obj/item/wallframe/alarm, 2), \
+	new/datum/stack_recipe("air alarm frame", /obj/item/wallframe/airalarm, 2), \
 	new/datum/stack_recipe("fire alarm frame", /obj/item/wallframe/firealarm, 2), \
 	new/datum/stack_recipe("button frame", /obj/item/wallframe/button, 1), \
 	null, \
@@ -57,6 +57,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	flags = CONDUCT
 	origin_tech = "materials=1"
 
+/obj/item/stack/sheet/metal/fifty
+	amount = 50
+
 /obj/item/stack/sheet/metal/cyborg
 	materials = list()
 	is_cyborg = 1
@@ -66,13 +69,12 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	recipes = metal_recipes
 	return ..()
 
-
 /*
  * Plasteel
  */
 var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
-	)
+)
 
 /obj/item/stack/sheet/plasteel
 	name = "plasteel"
@@ -86,8 +88,14 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
-		recipes = plasteel_recipes
-		return ..()
+	recipes = plasteel_recipes
+	return ..()
+
+/obj/item/stack/sheet/plasteel/twenty
+	amount = 20
+
+/obj/item/stack/sheet/plasteel/fifty
+	amount = 50
 
 /*
  * Wood
@@ -97,7 +105,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
 	new/datum/stack_recipe("wood table frame", /obj/structure/table_frame/wood, 2, time = 10), \
 	new/datum/stack_recipe("rifle stock", /obj/item/weaponcrafting/stock, 10, time = 40), \
-	new/datum/stack_recipe("wooden chair", /obj/structure/bed/chair/wood/normal, 3, time = 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("wooden chair", /obj/structure/chair/wood/normal, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = 1, on_floor = 1), \
@@ -105,6 +113,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("wooden buckler", /obj/item/weapon/shield/riot/buckler, 20, time = 40), \
 	)
 
 /obj/item/stack/sheet/mineral/wood
@@ -115,11 +124,14 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	icon = 'icons/obj/items.dmi'
 	origin_tech = "materials=1;biotech=1"
 	sheettype = "wood"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/stack/sheet/mineral/wood/New(var/loc, var/amount=null)
 	recipes = wood_recipes
 	return ..()
+
+/obj/item/stack/sheet/mineral/wood/fifty
+	amount = 50
 
 /*
  * Cloth
@@ -130,7 +142,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	singular_name = "cloth roll"
 	icon_state = "sheet-cloth"
 	origin_tech = "materials=2"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /*
  * Cardboard
@@ -153,15 +165,18 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	singular_name = "cardboard sheet"
 	icon_state = "sheet-card"
 	origin_tech = "materials=1"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes
 		return ..()
 
+/obj/item/stack/sheet/cardboard/fifty
+	amount = 50
+
 /*
  * Runed Metal
-*/
+ */
 
 var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	new/datum/stack_recipe("pylon", /obj/structure/cult/pylon, 4, time = 40, one_per_turf = 1, on_floor = 1), \
@@ -187,3 +202,18 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 		user << "<span class='warning'>You aren't able to think of anything [src] could build...</span>"
 		return
 	..()
+
+/obj/item/stack/sheet/lessergem
+	name = "lesser gems"
+	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."
+	singular_name = "lesser gem"
+	icon_state = "sheet-lessergem"
+	origin_tech = "materials=4"
+
+
+/obj/item/stack/sheet/greatergem
+	name = "greater gems"
+	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."
+	singular_name = "greater gem"
+	icon_state = "sheet-greatergem"
+	origin_tech = "materials=8"

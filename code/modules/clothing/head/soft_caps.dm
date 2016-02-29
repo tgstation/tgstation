@@ -6,16 +6,16 @@
 	item_color = "cargo"
 	var/flipped = 0
 
-	dropped()
-		src.icon_state = "[item_color]soft"
-		src.flipped=0
-		..()
+/obj/item/clothing/head/soft/dropped()
+	src.icon_state = "[item_color]soft"
+	src.flipped=0
+	..()
 
-	verb/flipcap()
-		set category = "Object"
-		set name = "Flip cap"
+/obj/item/clothing/head/soft/verb/flipcap()
+	set category = "Object"
+	set name = "Flip cap"
 
-		flip(usr)
+	flip(usr)
 
 
 /obj/item/clothing/head/soft/AltClick(mob/user)
@@ -109,7 +109,7 @@
 	desc = "It's a robust baseball hat in tasteful red colour."
 	icon_state = "secsoft"
 	item_color = "sec"
-	armor = list(melee = 30, bullet = 25, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 30, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
 
 /obj/item/clothing/head/soft/emt

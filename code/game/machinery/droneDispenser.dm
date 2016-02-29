@@ -58,6 +58,12 @@
 	cooldownTime = 100 //If we're gonna be a jackass, go the full mile - 10 second recharge timer
 	end_create_message = "dispenses a suspicious drone shell."
 
+/obj/machinery/droneDispenser/syndrone/badass //Please forgive me
+	name = "badass syndrone shell dispenser"
+	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with metal and glass. Disgusting. This one seems ominous."
+	dispense_type = /obj/item/drone_shell/syndrone/badass
+	end_create_message = "dispenses a ominous suspicious drone shell."
+
 /obj/machinery/droneDispenser/hivebot //An example of a custom drone dispenser. This one requires no materials and creates basic hivebots
 	name = "hivebot fabricator"
 	desc = "A large, bulky machine that whirs with activity, steam hissing from vents in its sides."
@@ -135,32 +141,32 @@
 	if(work_sound)
 		playsound(src, work_sound, 50, 1)
 	icon_state = icon_creating
-	spawn(30)
+	sleep(30)
+	icon_state = icon_on
+	metal -= metal_cost
+	glass -= glass_cost
+	if(metal < 0)
+		metal = 0
+	if(glass < 0)
+		glass = 0
+	if(power_used)
+		use_power(power_used)
+	new dispense_type(loc)
+	if(create_sound)
+		playsound(src, create_sound, 50, 1)
+	if(end_create_message)
+		visible_message("<span class='notice'>[src] [end_create_message]</span>")
+	icon_state = icon_recharging
+	sleep(cooldownTime)
+	if(stat != BROKEN)
 		icon_state = icon_on
-		metal -= metal_cost
-		glass -= glass_cost
-		if(metal < 0)
-			metal = 0
-		if(glass < 0)
-			glass = 0
-		if(power_used)
-			use_power(power_used)
-		new dispense_type(loc)
-		if(create_sound)
-			playsound(src, create_sound, 50, 1)
-		if(end_create_message)
-			visible_message("<span class='notice'>[src] [end_create_message]</span>")
-		icon_state = icon_recharging
-		spawn(cooldownTime)
-			if(stat != BROKEN)
-				icon_state = icon_on
-			else
-				icon_state = icon_off
-			droneMadeRecently = 0
-			if(recharge_sound)
-				playsound(src, recharge_sound, 50, 1)
-			if(recharge_message)
-				visible_message("<span class='notice'>[src] [recharge_message]</span>")
+	else
+		icon_state = icon_off
+	droneMadeRecently = 0
+	if(recharge_sound)
+		playsound(src, recharge_sound, 50, 1)
+	if(recharge_message)
+		visible_message("<span class='notice'>[src] [recharge_message]</span>")
 
 /obj/machinery/droneDispenser/attackby(obj/item/O, mob/living/user)
 	if(istype(O, /obj/item/stack))
@@ -201,7 +207,7 @@
 		playsound(src, 'sound/items/Welder.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] begins patching up [src] with [WT].</span>", \
 							 "<span class='notice'>You begin restoring the damage to [src]...</span>")
-		if(!do_after(user, 40, target = src))
+		if(!do_after(user, 40/O.toolspeed, target = src))
 			return
 		if(!src || !WT.remove_fuel(1, user)) return
 		user.visible_message("<span class='notice'>[user] fixes [src]!</span>", \

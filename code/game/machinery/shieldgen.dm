@@ -295,7 +295,8 @@
 
 	var/obj/structure/cable/C = T.get_cable_node()
 	var/datum/powernet/PN
-	if(C)	PN = C.powernet		// find the powernet of the connected cable
+	if(C)
+		PN = C.powernet		// find the powernet of the connected cable
 
 	if(!PN)
 		power = 0
@@ -500,6 +501,9 @@
 	src.gen_secondary = B
 	if(A && B)
 		needs_power = 1
+	for(var/mob/living/L in get_turf(src.loc))
+		visible_message("<span class='danger'>\The [src] is suddenly occupying the same space as \the [L]'s organs!</span>")
+		L.gib()
 
 /obj/machinery/shieldwall/attack_hand(mob/user)
 	return

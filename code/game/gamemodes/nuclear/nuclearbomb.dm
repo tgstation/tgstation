@@ -75,7 +75,7 @@ var/bomb_set
 			if(istype(I, /obj/item/weapon/screwdriver/nuke))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				user << "<span class='notice'>You start removing [src]'s front panel's screws...</span>"
-				if(do_after(user, 60,target=src))
+				if(do_after(user, 60/I.toolspeed,target=src))
 					deconstruction_state = NUKESTATE_UNSCREWED
 					user << "<span class='notice'>You remove the screws from [src]'s front panel.</span>"
 					update_icon()
@@ -84,7 +84,7 @@ var/bomb_set
 			if(istype(I, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You start removing [src]'s front panel...</span>"
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-				if(do_after(user,30,target=src))
+				if(do_after(user,30/I.toolspeed,target=src))
 					user << "<span class='notice'>You remove [src]'s front panel.</span>"
 					deconstruction_state = NUKESTATE_PANEL_REMOVED
 					update_icon()
@@ -95,7 +95,7 @@ var/bomb_set
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 				user << "<span class='notice'>You start cutting [src]'s inner plate...</span>"
 				if(welder.remove_fuel(1,user))
-					if(do_after(user,80,target=src))
+					if(do_after(user,80/I.toolspeed,target=src))
 						user << "<span class='notice'>You cut [src]'s inner plate.</span>"
 						deconstruction_state = NUKESTATE_WELDED
 						update_icon()
@@ -104,7 +104,7 @@ var/bomb_set
 			if(istype(I, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You start prying off [src]'s inner plate...</span>"
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-				if(do_after(user,50,target=src))
+				if(do_after(user,50/I.toolspeed,target=src))
 					user << "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>"
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
 					update_icon()
@@ -379,7 +379,8 @@ var/bomb_set
 		ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
 														//kinda shit but I couldn't  get permission to do what I wanted to do.
 		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-			world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
+			spawn()
+				world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
 			return
 	return
 
@@ -390,13 +391,18 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/machinery/nuclearbomb/selfdestruct/proc/SetTurfs()
 	if(loc == initial(loc))
-		for(var/turf/simulated/floor/bluegrid/T in orange(src, 1))
-			T.icon_state = (timing ? "rcircuitanim" : "bcircuit")
+		for(var/N in nuke_tiles)
+			var/turf/simulated/floor/T = N
+			T.icon_state = (timing ? "rcircuitanim" : T.icon_regular_floor)
 
 /obj/machinery/nuclearbomb/selfdestruct/set_anchor()
 	return
 
 /obj/machinery/nuclearbomb/selfdestruct/set_active()
+	..()
+	SetTurfs()
+
+/obj/machinery/nuclearbomb/selfdestruct/set_safety()
 	..()
 	SetTurfs()
 
@@ -411,6 +417,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
+	poi_list |= src
 	SSobj.processing |= src
 
 /obj/item/weapon/disk/nuclear/process()
@@ -421,6 +428,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/nuclear/Destroy()
 	if(blobstart.len > 0)
+		poi_list.Remove(src)
 		var/obj/item/weapon/disk/nuclear/NEWDISK = new(pick(blobstart))
 		transfer_fingerprints_to(NEWDISK)
 		var/turf/diskturf = get_turf(src)

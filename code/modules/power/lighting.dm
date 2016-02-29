@@ -60,7 +60,7 @@
 			if(istype(W, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				usr << "<span class='notice'>You begin deconstructing [src]...</span>"
-				if (!do_after(usr, 30, target = src))
+				if (!do_after(usr, 30/W.toolspeed, target = src))
 					return
 				new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 				user.visible_message("[user.name] deconstructs [src].", \
@@ -161,7 +161,8 @@
 
 
 /obj/machinery/light/Move()
-	if(status != LIGHT_BROKEN)	broken(1)
+	if(status != LIGHT_BROKEN)
+		broken(1)
 	return ..()
 
 /obj/machinery/light/built/New()
@@ -219,7 +220,7 @@
 
 	update_icon()
 	if(on)
-		if(!light || light.radius != brightness)
+		if(!light || light.luminosity != brightness)
 			switchcount++
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
@@ -365,18 +366,18 @@
 	return A.master.lightswitch && A.master.power_light
 
 /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
+	set waitfor = 0
 	if(flickering) return
 	flickering = 1
-	spawn(0)
-		if(on && status == LIGHT_OK)
-			for(var/i = 0; i < amount; i++)
-				if(status != LIGHT_OK) break
-				on = !on
-				update(0)
-				sleep(rand(5, 15))
-			on = (status == LIGHT_OK)
+	if(on && status == LIGHT_OK)
+		for(var/i = 0; i < amount; i++)
+			if(status != LIGHT_OK) break
+			on = !on
 			update(0)
-		flickering = 0
+			sleep(rand(5, 15))
+		on = (status == LIGHT_OK)
+		update(0)
+	flickering = 0
 
 // ai attack - make lights flicker, because why not
 
@@ -396,7 +397,8 @@
 	return
 
 /obj/machinery/light/attack_animal(mob/living/simple_animal/M)
-	if(M.melee_damage_upper == 0)	return
+	if(M.melee_damage_upper == 0)
+		return
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
 		M << "<span class='danger'>That object is useless to you.</span>"
 		return
@@ -524,14 +526,6 @@
 				if(prob(25))
 					broken()
 
-//blob effect
-
-/obj/machinery/light/blob_act()
-	if(prob(75))
-		broken()
-
-
-
 // called when area power state changes
 /obj/machinery/light/power_change()
 	var/area/A = get_area(src)
@@ -547,13 +541,13 @@
 // explode the light
 
 /obj/machinery/light/proc/explode()
+	set waitfor = 0
 	var/turf/T = get_turf(src.loc)
-	spawn(0)
-		broken()	// break it first to give a warning
-		sleep(2)
-		explosion(T, 0, 0, 2, 2)
-		sleep(1)
-		qdel(src)
+	broken()	// break it first to give a warning
+	sleep(2)
+	explosion(T, 0, 0, 2, 2)
+	sleep(1)
+	qdel(src)
 
 // the light item
 // can be tube or bulb subtypes

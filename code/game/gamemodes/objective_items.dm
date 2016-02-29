@@ -59,8 +59,8 @@
 	difficulty = 5
 	excludefromjob = list("Captain")
 
-/datum/objective_item/steal/ablative
-	name = "an ablative armor vest"
+/datum/objective_item/steal/reflector
+	name = "a reflector vest"
 	targetitem = /obj/item/clothing/suit/armor/laserproof
 	difficulty = 3
 	excludefromjob = list("Head of Security", "Warden")
@@ -94,7 +94,7 @@
 /datum/objective_item/steal/plasma/check_special_completion(obj/item/weapon/tank/T)
 	var/target_amount = text2num(name)
 	var/found_amount = 0
-	found_amount += T.air_contents.toxins
+	found_amount += T.air_contents.gases["plasma"] ? T.air_contents.gases["plasma"][MOLES] : 0
 	return found_amount>=target_amount
 
 

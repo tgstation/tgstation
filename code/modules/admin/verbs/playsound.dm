@@ -4,7 +4,8 @@ var/sound/admin_sound
 /client/proc/play_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Global Sound"
-	if(!check_rights(R_SOUNDS))	return
+	if(!check_rights(R_SOUNDS))
+		return
 
 	admin_sound = sound(S, repeat = 0, wait = 1, channel = SOUND_CHANNEL_ADMIN)
 	admin_sound.priority = 250
@@ -29,7 +30,8 @@ var/sound/admin_sound
 /client/proc/play_local_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Local Sound"
-	if(!check_rights(R_SOUNDS))	return
+	if(!check_rights(R_SOUNDS))
+		return
 
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]")
@@ -39,7 +41,8 @@ var/sound/admin_sound
 /client/proc/set_round_end_sound(S as sound)
 	set category = "Fun"
 	set name = "Set Round End Sound"
-	if(!check_rights(R_SOUNDS))	return
+	if(!check_rights(R_SOUNDS))
+		return
 
 	if(ticker)
 		ticker.round_end_sound = fcopy_rsc(S)
@@ -53,7 +56,8 @@ var/sound/admin_sound
 /client/proc/stop_sounds()
 	set category = "Debug"
 	set name = "Stop All Playing Sounds"
-	if(!src.holder) return
+	if(!src.holder)
+		return
 
 	log_admin("[key_name(src)] stopped all currently playing sounds.")
 	message_admins("[key_name_admin(src)] stopped all currently playing sounds.")

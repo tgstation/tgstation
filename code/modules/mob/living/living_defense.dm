@@ -8,8 +8,7 @@
 			src << "<span class='userdanger'>[penetrated_text]</span>"
 		else
 			src << "<span class='userdanger'>Your armor was penetrated!</span>"
-
-	if(armor >= 100)
+	else if(armor >= 100)
 		if(absorb_text)
 			src << "<span class='userdanger'>[absorb_text]</span>"
 		else
@@ -127,7 +126,7 @@
 	return
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
+	fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 
@@ -142,7 +141,7 @@
 		ExtinguishMob()
 		return
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.oxygen < 1)
+	if(!G.gases["o2"] || G.gases["o2"][MOLES] < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
@@ -184,12 +183,14 @@
 
 	add_logs(user, src, "grabbed", addition="passively")
 
-	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(user, src)
+	if(anchored || !Adjacent(user))
+		return 0
 	if(buckled)
 		user << "<span class='warning'>You cannot grab [src], \he is buckled in!</span>"
-	if(!G)	//the grab will delete itself in New if src is anchored
 		return 0
-	user.put_in_active_hand(G)
+	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(user, src)
+	if(!user.put_in_active_hand(G)) //if we can't put the grab in our hand for some reason, we delete it.
+		qdel(G)
 	G.synch()
 	LAssailant = user
 

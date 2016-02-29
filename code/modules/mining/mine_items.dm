@@ -52,6 +52,7 @@
 	circuit = /obj/item/weapon/circuitboard/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away"
+	no_destination_swap = 1
 
 /*********************Pickaxe & Drills**************************/
 
@@ -74,11 +75,19 @@
 /obj/item/weapon/pickaxe/proc/playDigSound()
 	playsound(src, pick(digsound),50,1)
 
+/obj/item/weapon/pickaxe/silver
+	name = "silver-plated pickaxe"
+	icon_state = "spickaxe"
+	item_state = "spickaxe"
+	digspeed = 30 //mines faster than a normal pickaxe, bought from mining vendor
+	origin_tech = "materials=3;engineering=2"
+	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
+
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	digspeed = 20 //mines twice as fast as a normal pickaxe, bought from mining vendor
+	digspeed = 20
 	origin_tech = "materials=4;engineering=3"
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 
@@ -153,8 +162,8 @@
 /obj/structure/closet/crate/miningcar
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
 	name = "Mining car (not for rails)"
-	icon_crate = "miningcar"
 	icon_state = "miningcar"
+
 /*****************************Survival Pod********************************/
 
 
@@ -167,8 +176,8 @@
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"
 	desc = "An emergency shelter stored within a pocket of bluespace."
-	icon_state = "pill3"
-	icon = 'icons/obj/chemical.dmi'
+	icon_state = "capsule"
+	icon = 'icons/obj/mining.dmi'
 	w_class = 1
 	var/used = FALSE
 
@@ -183,6 +192,7 @@
 		qdel(src)
 
 /obj/item/weapon/survivalcapsule/proc/load()
+	var/list/blacklist = list(/area/shuttle) //Shuttles move based on area, and we'd like not to break them
 	var/turf/start_turf = get_turf(src.loc)
 	var/turf/cur_turf
 	var/x_size = 5
@@ -207,11 +217,11 @@
 	new /obj/item/weapon/storage/pill_bottle/dice(cur_turf)
 
 	cur_turf = locate(start_turf.x+1, start_turf.y-1, start_turf.z)
-	var/obj/structure/bed/chair/comfy/C = new /obj/structure/bed/chair/comfy(cur_turf)
+	var/obj/structure/chair/comfy/C = new /obj/structure/chair/comfy(cur_turf)
 	C.dir = 1
 
 	cur_turf = locate(start_turf.x+1, start_turf.y+1, start_turf.z)
-	new /obj/structure/bed/chair/comfy(cur_turf)
+	new /obj/structure/chair/comfy(cur_turf)
 
 	cur_turf = locate(start_turf.x-1, start_turf.y-1, start_turf.z)
 	var/obj/machinery/sleeper/S = new /obj/machinery/sleeper(cur_turf)
@@ -235,7 +245,9 @@
 	threshhold.nitrogen = 82
 	threshhold.carbon_dioxide = 0
 	threshhold.toxins = 0
-	L.contents += threshhold
+	var/area/ZZ = get_area(threshhold)
+	if(!is_type_in_list(ZZ, blacklist))
+		L.contents += threshhold
 	threshhold.overlays.Cut()
 
 	var/list/turfs = room["floors"]
@@ -246,12 +258,9 @@
 		A.nitrogen = 82
 		A.carbon_dioxide = 0
 		A.toxins = 0
-		A.air.oxygen = 21
-		A.air.carbon_dioxide = 0
-		A.air.nitrogen = 82
-		A.air.toxins = 0
-		A.air.temperature = 293.15
+		A.air.copy_from_turf(A)
 		SSair.add_to_active(A)
 		A.overlays.Cut()
-
-		L.contents += A
+		var/area/Z = get_area(A)
+		if(!is_type_in_list(Z, blacklist))
+			L.contents += A
