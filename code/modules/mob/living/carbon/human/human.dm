@@ -952,6 +952,9 @@
 		L.Insert(src)
 	restore_blood()
 	remove_all_embedded_objects()
+	for(var/datum/mutation/human/HM in dna.mutations)
+		if(HM.quality != POSITIVE)
+			dna.remove_mutation(HM.name)
 	..()
 
 /mob/living/carbon/human/proc/influenceSin() // TODO:  Finish this.

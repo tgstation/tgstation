@@ -200,7 +200,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				. += "[procname] returned an associative list:"
 				for(var/key in returnedlist)
 					. += "\n[key] = [returnedlist[key]]"
-				
+
 			else
 				. += "[procname] returned a list:"
 				for(var/elem in returnedlist)
@@ -644,8 +644,15 @@ var/global/list/g_fancy_list_of_types = null
 			E.active = 1
 
 	for(var/obj/machinery/field/generator/F in machines)
-		if(F.anchored)
-			F.Varedit_start = 1
+		if(F.active == 0)
+			F.active = 1
+			F.state = 2
+			F.power = 250
+			F.anchored = 1
+			F.warming_up = 3
+			F.start_fields()
+			F.update_icon()
+
 	spawn(30)
 		for(var/obj/machinery/the_singularitygen/G in machines)
 			if(G.anchored)

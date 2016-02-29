@@ -7,13 +7,13 @@
 	requires_organic_bodypart = 0
 
 /datum/surgery/organ_manipulation/soft
-	possible_locs = list("groin", "eyes", "mouth")
+	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders,
 	/datum/surgery_step/incise, /datum/surgery_step/manipulate_organs)
 
 /datum/surgery/organ_manipulation/alien
 	name = "alien organ manipulation"
-	possible_locs = list("chest", "head", "groin", "eyes", "mouth")
+	possible_locs = list("chest", "head", "groin", "eyes", "mouth", "l_arm", "r_arm")
 	species = list(/mob/living/carbon/alien/humanoid)
 	steps = list(/datum/surgery_step/saw, /datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/manipulate_organs)
 

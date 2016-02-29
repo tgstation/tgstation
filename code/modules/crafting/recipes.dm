@@ -77,6 +77,14 @@
 	time = 40
 	category = CAT_WEAPON
 
+/datum/table_recipe/bola
+	name = "Bola"
+	result = /obj/item/weapon/restraints/legcuffs/bola
+	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
+				/obj/item/stack/sheet/metal = 6)
+	time = 20//15 faster than crafting them by hand!
+	category= CAT_WEAPON
+
 /datum/table_recipe/tailclub
 	name = "Tail Club"
 	result = /obj/item/weapon/tailclub
