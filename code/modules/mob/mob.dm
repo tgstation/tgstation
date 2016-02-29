@@ -771,7 +771,8 @@ var/next_mob_id = 0
 /mob/proc/Stun(amount, updating_canmove = 1)
 	if(status_flags & CANSTUN)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		update_canmove()
+		if(updating_canmove)
+			update_canmove()
 
 /mob/proc/SetStunned(amount, updating_canmove = 1) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
 	if(status_flags & CANSTUN)
