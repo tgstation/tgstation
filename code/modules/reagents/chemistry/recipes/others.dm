@@ -133,41 +133,41 @@
 	required_reagents = list("water" = 5, "milk" = 5)
 	result_amount = 15
 
-/datum/chemical_reaction/virus_food_mutation
+/datum/chemical_reaction/virus_food_mutagen
 	name = "mutagenic agar"
 	id = "mutagenvirusfood"
 	result = "mutagenvirusfood"
-	required_reagents = list("mutagen" = 1)
-	required_catalysts = list("virusfood" = 1)
+	required_reagents = list("mutagen" = 1, "virusfood" = 1)
 
-/datum/chemical_reaction/virus_food_mutation/synaptizine
+/datum/chemical_reaction/virus_food_synaptizine
 	name = "virus rations"
 	id = "synaptizinevirusfood"
 	result = "synaptizinevirusfood"
-	required_reagents = list("synaptizine" = 1)
+	required_reagents = list("synaptizine" = 1, "virusfood" = 1)
 
-/datum/chemical_reaction/virus_food_mutation/plasma
+/datum/chemical_reaction/virus_food_plasma
 	name = "virus plasma"
 	id = "plasmavirusfood"
 	result = "plasmavirusfood"
-	required_reagents = list("plasma" = 1)
+	required_reagents = list("plasma" = 1, "virusfood" = 1)
 
-/datum/chemical_reaction/virus_food_mutation/plasma/synaptizine
+/datum/chemical_reaction/virus_food_plasma_synaptizine
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	result = "weakplasmavirusfood"
-	required_catalysts = list("plasmavirusfood" = 1)
-	required_reagents = list("synaptizine" = 1)
+	required_reagents = list("synaptizine" = 1, "plasmavirusfood" = 1)
 
-/datum/chemical_reaction/virus_food_mutation/sugar
+/datum/chemical_reaction/virus_food_mutagen_sugar
 	name = "sucrose agar"
 	id = "sugarvirusfood"
 	result = "sugarvirusfood"
-	required_catalysts = list("mutagenvirusfood" = 1)
-	required_reagents = list("sugar" = 1)
+	required_reagents = list("sugar" = 1, "mutagenvirusfood" = 1)
 
-/datum/chemical_reaction/virus_food_mutation/sugar/salineglucose
-	required_reagents = list("salglu_solution" = 1)
+/datum/chemical_reaction/virus_food_mutagen_salineglucose
+	name = "sucrose agar"
+	id = "salineglucosevirusfood"
+	result = "sugarvirusfood"
+	required_reagents = list("salglu_solution" = 1, "mutagenvirusfood" = 1)
 
 /datum/chemical_reaction/mix_virus
 	name = "Mix Virus"
