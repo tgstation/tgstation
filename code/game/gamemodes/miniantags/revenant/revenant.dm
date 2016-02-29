@@ -169,8 +169,10 @@
 						"<span class='revendanger'>As \the [W] passes through you, you feel your essence draining away!</span>")
 		adjustBruteLoss(25) //hella effective
 		inhibited = 1
+		update_action_buttons_icon()
 		spawn(30)
 			inhibited = 0
+			update_action_buttons_icon()
 	..()
 
 /mob/living/simple_animal/revenant/adjustHealth(amount)

@@ -1553,6 +1553,15 @@
 	spell_list += S
 	S.action.Grant(current)
 
+//To remove a specific spell from a mind
+/datum/mind/proc/remove_spell(var/obj/effect/proc_holder/spell/spell)
+	if(!spell) return
+	for(var/X in spell_list)
+		var/obj/effect/proc_holder/spell/S = X
+		if(istype(S, spell))
+			qdel(S)
+			spell_list -= S
+
 /datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)
 		for(var/datum/action/A in current.actions)
