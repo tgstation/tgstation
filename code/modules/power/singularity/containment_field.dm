@@ -15,10 +15,8 @@
 	var/obj/machinery/field/generator/FG2 = null
 
 /obj/machinery/field/containment/Destroy()
-	if(FG1 && !FG1.clean_up)
-		FG1.cleanup()
-	if(FG2 && !FG2.clean_up)
-		FG2.cleanup()
+	FG1.fields -= src
+	FG2.fields -= src
 	return ..()
 
 /obj/machinery/field/containment/attack_hand(mob/user)
