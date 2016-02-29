@@ -720,3 +720,29 @@ var/global/list/synth_flesh_disguises = list()
 			return ..()
 	else
 		return ..()
+
+/*
+Glorfs - Gungan lookalikes
+*/
+
+/datum/species/glorf
+	name = "Glorf"
+	id = "glorf"
+	say_mod = "yammers"
+	mutant_bodyparts = list("glorfears")
+	default_features = list("mcolor" = "FFF", "glorfears" = "Glorf")
+	specflags = list(LIPS,EYECOLOR)
+	sexes = 0
+	roundstart = 1
+
+
+/datum/species/glorf/qualifies_for_rank(rank, list/features)
+	if(rank == "Assistant")
+		return 1
+	return 0
+
+/datum/species/glorf/handle_speech(message)
+	message = replacetext(message, "me", "me-sa")
+	message = replacetext(message, "you", "you-sa")
+	return message
+

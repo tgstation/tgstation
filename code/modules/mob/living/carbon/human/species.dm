@@ -356,6 +356,10 @@
 		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)))
 			bodyparts_to_add -= "ears"
 
+	if("glorfears" in mutant_bodyparts)
+		if(!H.dna.features["ears"] || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)))
+			bodyparts_to_add -= "glorfears"
+
 	if(!bodyparts_to_add)
 		return
 
@@ -389,6 +393,8 @@
 					S = ears_list[H.dna.features["ears"]]
 				if("body_markings")
 					S = body_markings_list[H.dna.features["body_markings"]]
+				if("glorfears")
+					S = glorfears_list[H.dna.features["glorfears"]]
 
 			if(!S || S.icon_state == "none")
 				continue
@@ -423,6 +429,8 @@
 							I.color = "#[H.facial_hair_color]"
 						if(EYECOLOR)
 							I.color = "#[H.eye_color]"
+						else
+							I.color = S.color_src
 				else
 					I.color = forced_colour
 			standing += I
