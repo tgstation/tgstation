@@ -1111,10 +1111,10 @@
 					ticker.mode.shadows -= src
 					special_role = null
 					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
-					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
-					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
-					remove_spell(/obj/effect/proc_holder/spell/targeted/enthrall)
-					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/enthrall)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
 					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
 					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
 				else if(src in ticker.mode.thralls)
@@ -1554,7 +1554,7 @@
 	S.action.Grant(current)
 
 //To remove a specific spell from a mind
-/datum/mind/proc/remove_spell(var/obj/effect/proc_holder/spell/spell)
+/datum/mind/proc/RemoveSpell(var/obj/effect/proc_holder/spell/spell)
 	if(!spell) return
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
