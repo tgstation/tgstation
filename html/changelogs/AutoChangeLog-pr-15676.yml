@@ -1,4 +1,0 @@
-author: RemieRichards
-delete-after: True
-changes: 
-  - rscadd: "Cursed heart item for wizards, allows them to heal themselves in exchange for having to MANUALLY beat their heart every 6 seconds. Heals 25 brute/burn/oxy damage per correctly timed pump."
