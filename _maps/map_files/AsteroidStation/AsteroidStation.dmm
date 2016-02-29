@@ -667,7 +667,7 @@
 "amQ" = (/turf/simulated/floor/bluegrid,/area/turret_protected/ai_upload)
 "amR" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 8},/area/turret_protected/ai_upload)
 "amS" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 8},/area/turret_protected/ai_upload)
-"amT" = (/obj/structure/table,/obj/item/weapon/aiModule/core/full/paladin,/obj/item/weapon/aiModule/core/full/corp,/obj/item/weapon/aiModule/core/freeformcore,/obj/item/weapon/aiModule/core/full/asimov,/obj/machinery/door/window/southright{layer = 2.9; name = "Core Modules"; req_access_txt = "20"},/obj/item/weapon/aiModule/core/full/robocop,/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/turret_protected/ai_upload)
+"amT" = (/obj/structure/table,/obj/item/weapon/aiModule/core/full/corp,/obj/item/weapon/aiModule/core/freeformcore,/obj/item/weapon/aiModule/core/full/asimov,/obj/machinery/door/window/southright{layer = 2.9; name = "Core Modules"; req_access_txt = "20"},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/turret_protected/ai_upload)
 "amU" = (/obj/machinery/power/apc{dir = 8; name = "Fore Starboard Solar APC"; pixel_x = -25; pixel_y = 3},/obj/structure/cable,/turf/simulated/floor/plating,/area/maintenance/auxsolarstarboard)
 "amV" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/maintenance/auxsolarstarboard)
 "amW" = (/obj/structure/chair/stool,/obj/machinery/camera{c_tag = "Fore Starboard Solar Control"; dir = 1},/turf/simulated/floor/plating,/area/maintenance/auxsolarstarboard)

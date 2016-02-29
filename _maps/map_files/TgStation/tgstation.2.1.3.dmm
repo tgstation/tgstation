@@ -26539,14 +26539,12 @@
 	},
 /obj/structure/window/reinforced,
 /obj/item/weapon/aiModule/core/full/corp,
-/obj/item/weapon/aiModule/core/full/paladin,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/aiModule/core/full/robocop,
 /obj/item/weapon/aiModule/core/full/custom,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
