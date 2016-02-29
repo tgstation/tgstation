@@ -105,7 +105,7 @@
 				say("The supply shuttle has been loaned to Centcom.")
 				. = TRUE
 		if("add")
-			var/id = params["id"]
+			var/id = text2path(params["id"])
 			if(!SSshuttle.supply_packs[id])
 				return
 
