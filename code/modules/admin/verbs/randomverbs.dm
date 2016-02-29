@@ -482,6 +482,19 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(src)] has created a command report")
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_change_command_name()
+	set category = "Special Verbs"
+	set name = "Change Command Name"
+	if(!holder)
+		src << "Only administrators may use this command."
+		return
+	var/input = input(usr, "Please input a new name for Central Command.", "What?", "") as text|null
+	if(!input)
+		return
+	change_command_name(input)
+	message_admins("[key_name_admin(src)] has changed Central Command's name to [input]")
+	log_admin("[key_name(src)] has changed the Central Command name to: [input]")
+
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
 	set category = "Admin"
 	set name = "Delete"
