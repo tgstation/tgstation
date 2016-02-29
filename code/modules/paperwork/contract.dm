@@ -187,6 +187,8 @@
 	if(!user.dna)
 		return -1
 	user.dna.add_mutation(HULK)
+	var/obj/item/organ/internal/hivelord_core/organ = new /obj/item/organ/internal/hivelord_core
+	organ.Insert(user)
 	return ..()
 
 /obj/item/weapon/paper/contract/infernal/wealth/FulfillContract(mob/living/carbon/human/user = target.current)
@@ -227,9 +229,6 @@
 /obj/item/weapon/paper/contract/infernal/magic/FulfillContract(mob/living/carbon/human/user = target.current)
 	if(!istype(user) || !user.mind)
 		return -1
-	var/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/MM = new (null)
-	MM.clothes_req = 0
-	user.mind.AddSpell(MM)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball(null))
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	return ..()
