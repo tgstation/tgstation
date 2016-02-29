@@ -138,36 +138,42 @@
 	id = "mutagenvirusfood"
 	result = "mutagenvirusfood"
 	required_reagents = list("mutagen" = 1, "virusfood" = 1)
+	result_amount = 1
 
 /datum/chemical_reaction/virus_food_synaptizine
 	name = "virus rations"
 	id = "synaptizinevirusfood"
 	result = "synaptizinevirusfood"
 	required_reagents = list("synaptizine" = 1, "virusfood" = 1)
+	result_amount = 1
 
 /datum/chemical_reaction/virus_food_plasma
 	name = "virus plasma"
 	id = "plasmavirusfood"
 	result = "plasmavirusfood"
 	required_reagents = list("plasma" = 1, "virusfood" = 1)
+	result_amount = 1
 
 /datum/chemical_reaction/virus_food_plasma_synaptizine
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	result = "weakplasmavirusfood"
 	required_reagents = list("synaptizine" = 1, "plasmavirusfood" = 1)
+	result_amount = 2
 
 /datum/chemical_reaction/virus_food_mutagen_sugar
 	name = "sucrose agar"
 	id = "sugarvirusfood"
 	result = "sugarvirusfood"
 	required_reagents = list("sugar" = 1, "mutagenvirusfood" = 1)
+	result_amount = 2
 
 /datum/chemical_reaction/virus_food_mutagen_salineglucose
 	name = "sucrose agar"
 	id = "salineglucosevirusfood"
 	result = "sugarvirusfood"
 	required_reagents = list("salglu_solution" = 1, "mutagenvirusfood" = 1)
+	result_amount = 2
 
 /datum/chemical_reaction/mix_virus
 	name = "Mix Virus"
