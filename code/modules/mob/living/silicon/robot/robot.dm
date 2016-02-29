@@ -453,7 +453,7 @@
 		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 			if(src == user)
 				user << "<span class='notice'>You start fixing youself...</span>"
-				if(!do_after(user, 50/W.toolspeed, target = src))
+				if(!do_after(user, 50, target = src))
 					return
 
 			adjustBruteLoss(-30)

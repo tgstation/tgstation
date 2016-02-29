@@ -112,3 +112,6 @@
 	..()
 	if(M.mind)
 		M.mind.remove_spell(/obj/effect/proc_holder/spell/bloodcrawl)
+
+/obj/item/organ/internal/heart/demon/Stop()
+	return 0 // Always beating.

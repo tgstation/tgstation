@@ -98,6 +98,12 @@
 	origin_tech = "materials=2;combat=4"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
 
+/obj/item/weapon/kitchen/knife/combat/cyborg
+	name = "cyborg knife"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "knife"
+	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
+
 /obj/item/weapon/kitchen/knife/carrotshiv
 	name = "carrot shiv"
 	icon_state = "carrotshiv"
