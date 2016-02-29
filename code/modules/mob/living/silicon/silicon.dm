@@ -369,12 +369,9 @@
 
 /mob/living/silicon/proc/sensor_mode()
 	set name = "Set Sensor Augmentation"
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Diagnostic","Disable")
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Medical","Diagnostic","Disable")
 	remove_med_sec_hud()
 	switch(sensor_type)
-		if ("Security")
-			add_sec_hud()
-			src << "<span class='notice'>Security records overlay enabled.</span>"
 		if ("Medical")
 			add_med_hud()
 			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
