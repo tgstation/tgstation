@@ -59,6 +59,11 @@
 		M.bodytemperature = temperature
 	return 1
 
+
+/obj/item/projectile/temp/neutral
+	name = "neutral beam"
+	temperature = 293
+
 /obj/item/projectile/temp/hot
 	name = "heat beam"
 	temperature = 1000
