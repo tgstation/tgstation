@@ -70,6 +70,7 @@
 			qdel(tool)
 			H.update_damage_overlays(0)
 			H.update_augments() //Gives them the Cyber limb overlay
+			H.updatehealth()
 			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		user << "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>"
