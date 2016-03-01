@@ -619,6 +619,23 @@
 	user.visible_message("<B>[user]</B> laughs so hard they begin to suffocate!")
 	return (OXYLOSS)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacebanana
+	seed = /obj/item/seeds/bluespacebananaseed
+	name = "bluespace banana"
+	desc = "It's an excellent prank for a clown."
+	icon_state = "banana_blue"
+	trash = /obj/item/weapon/grown/bananapeel/bluespace
+	filling_color = "#0000FF"
+	origin_tech = "bluespace=3"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacebanana/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
+		reagents.add_reagent("banana", 1 + round((potency / 10), 1))
+		reagents.add_reagent("vitamin", 1 + round((potency / 25), 1))
+		reagents.add_reagent("singulo", 1 + round((potency / 5), 1))
+		bitesize = 5
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mimana
 	seed = /obj/item/seeds/mimanaseed
 	name = "mimana"

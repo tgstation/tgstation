@@ -284,6 +284,23 @@
 		M.slip(stun, weaken, src)
 		return 1
 
+/obj/item/weapon/grown/bananapeel/bluespace
+	name = "bluespace banana peel"
+	desc = "A peel from a bluespace banana."
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "banana_peel_blue"
+	origin_tech = "bluespace=3"
+
+/obj/item/weapon/grown/bananapeel/bluespace/Crossed(AM)
+	if(..())
+		var/teleport_radius = potency / 10
+		do_teleport(AM, get_turf(AM), teleport_radius)
+		AM << "<span class='notice'>You slip through spacetime!</span>"
+		if(prob(50))
+			do_teleport(src, get_turf(src), teleport_radius)
+		else
+			qdel(src)
+
 /obj/item/weapon/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
 	name = "synthesized banana peel"
 	desc = "A synthetic banana peel."
