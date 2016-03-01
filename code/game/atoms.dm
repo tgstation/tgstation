@@ -275,20 +275,6 @@ var/list/blood_splatter_icons = list()
 /atom/proc/rejects_blood()
 	return 0
 
-/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if( istype(src, /turf/simulated) )
-		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
-		if(M.reagents)
-			M.reagents.trans_to(this, M.reagents.total_volume / 10)
-		// Make toxins vomit look different
-		if(toxvomit)
-			this.icon_state = "vomittox_[pick(1,4)]"
-
-		/*for(var/datum/disease/D in M.viruses)
-			var/datum/disease/newDisease = D.Copy(1)
-			this.viruses += newDisease
-			newDisease.holder = this*/
-
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M)
 	if(istype(src, /turf/simulated))
@@ -383,23 +369,16 @@ var/list/blood_splatter_icons = list()
 	return
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-		if(istype(src,/turf/simulated) )
-				var/obj/effect/decal/cleanable/vomit/this = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
-				if(M.reagents)
-				// make a new proc that does everything below.
-						M.reagents.trans_to(this, M.reagents.total_volume / 10)
-						for(var/datum/reagent/R in reagents.reagent_list)                //clears the stomach of anything that might be digested as food
-							if(istype(R, /datum/reagent/consumable))
-								var/datum/reagent/consumable/nutri_check = R
-								if(nutri_check.nutriment_factor >0)
-									reagents.add_reagent(R.id,R.volume)
-									M.reagents.remove_reagent(R.id,R.volume)
+	if(istype(src,/turf/simulated) )
+		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
+		if(M.reagents)
+			clear_reagents_to_vomit_pool(M,V)
 
-/datum/reagent/proc/lose_lunch(var/atom/splat)
-	if( ! splat.reagents)
-	return
-	for(var/datum/reagent/consumable/lunch in reagent_list)
-		if(lunch.nutriment_factor > 0 )
-			splat.reagents.add_reagent(lunch.id, lunch.volume)
-			remove_reagent(lunch.id, lunch.volume)
-	trans_to(splat, total_volume/10)
+/atom/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
+	M.reagents.trans_to(V, M.reagents.total_volume / 10)
+	for(var/datum/reagent/R in reagents.reagent_list)                //clears the stomach of anything that might be digested as food
+		if(istype(R, /datum/reagent/consumable))
+			var/datum/reagent/consumable/nutri_check = R
+			if(nutri_check.nutriment_factor >0)
+				reagents.add_reagent(R.id,R.volume)
+				M.reagents.remove_reagent(R.id,R.volume)
