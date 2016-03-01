@@ -15,7 +15,6 @@
 		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
 		J = C.jetpack
 	if(istype(J) && J.allow_thrust(0.01, src))
-		pass_flags |= PASSTABLE
 		return 1
 
 /mob/living/carbon/human/slip(s_amount, w_amount, obj/O, lube)
