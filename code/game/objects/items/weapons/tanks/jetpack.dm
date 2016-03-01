@@ -9,6 +9,7 @@
 	var/gas_type = "o2"
 	var/on = FALSE
 	var/turbo = FALSE
+	var/flying = 0 // Needed to control the PASSTABLE flag
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/weapon/tank/jetpack/New()
@@ -29,7 +30,6 @@
 /obj/item/weapon/tank/jetpack/proc/cycle(mob/user)
 	if(user.incapacitated())
 		return
-
 	if(!on)
 		turn_on()
 		user << "<span class='notice'>You turn the thrusters on.</span>"
@@ -39,7 +39,7 @@
 	else
 		turn_off()
 		turbo = FALSE
-		user << "<span class='notice'>You turn jetpack off.</span>"
+		user << "<span class='notice'>You turn the jetpack off.</span>"
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -52,6 +52,9 @@
 
 /obj/item/weapon/tank/jetpack/proc/turn_off()
 	on = FALSE
+	var/mob/living/C = usr
+	if(C.pass_flags & PASSTABLE)
+		C.pass_flags -= PASSTABLE // no keeping PASSTABLE
 	icon_state = initial(icon_state)
 	ion_trail.stop()
 
