@@ -66,7 +66,7 @@
 
 /obj/item/projectile/temp/hot
 	name = "heat beam"
-	temperature = 1000
+	temperature = 800
 
 /obj/item/projectile/meteor
 	name = "meteor"
