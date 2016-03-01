@@ -14,6 +14,8 @@
 	var/pellets = 0								//Pellets for spreadshot
 	var/variance = 0							//Variance for inaccuracy fundamental to the casing
 	var/delay = 0								//Delay for energy weapons
+	var/e_cost = null //The amount of energy a cell needs to expend to create this shot.
+	var/temperature = null
 
 /obj/item/ammo_casing/New()
 	..()
