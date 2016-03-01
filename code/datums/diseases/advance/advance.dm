@@ -424,4 +424,9 @@ var/list/advance_cures = 	list(
 		src << "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>"
 */
 
+/datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
+	var/get_damage = sqrt(20-"stage_rate")*(2+rand())
+	M.adjustToxLoss(-get_damage)
+	return 1
+
 #undef RANDOM_STARTING_LEVEL
