@@ -193,6 +193,7 @@
 	var/obj/item/wallframe/flasher/frame = new(src)
 	frame.id = id
 	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/weapon/screwdriver(src)
 
 
 /obj/item/weapon/storage/box/teargas

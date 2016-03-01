@@ -172,7 +172,7 @@
 
 /obj/item/wallframe/flasher/examine(mob/user)
 	..()
-	user << "<span class='notice'>It's channel ID is '[id]'.</span>"
+	user << "<span class='notice'>Its channel ID is '[id]'.</span>"
 
 /obj/item/wallframe/flasher/after_attach(var/obj/O)
 	..()
