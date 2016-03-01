@@ -101,7 +101,7 @@
 	id = "temp_gun"
 	req_tech = list("combat" = 3, "materials" = 4, "powerstorage" = 3, "magnets" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 500, MAT_SILVER = 3000)
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 500)
 	build_path = /obj/item/weapon/gun/energy/temperature
 	category = list("Weapons")
 
