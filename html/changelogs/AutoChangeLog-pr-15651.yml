@@ -1,0 +1,4 @@
+author: lordpidey
+delete-after: True
+changes: 
+  - rscadd: "New virology symptom, projectile vomiting.  It is a level four symptom."
