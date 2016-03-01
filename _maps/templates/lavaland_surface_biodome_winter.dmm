@@ -23,12 +23,11 @@
 "w" = (/obj/structure/displaycase/captain,/turf/simulated/floor/wood{baseturf = /turf/simulated/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered)
 "x" = (/obj/structure/bed/dogbed,/turf/simulated/floor/wood{baseturf = /turf/simulated/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered)
 "y" = (/obj/structure/flora/tree/pine/xmas,/turf/simulated/floor/plating/asteroid/snow{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"z" = (/obj/structure/flora/grass/brown{step_x = -1},/turf/simulated/floor/plating/asteroid/snow{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"A" = (/obj/machinery/door/airlock/hatch,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/powered)
-"B" = (/obj/machinery/door/airlock/silver,/turf/indestructible/fakeglass{tag = "icon-fakewindows2 (SOUTHEAST)"; icon_state = "fakewindows2"; dir = 6},/area/ruin/powered)
-"C" = (/obj/structure/flora/rock/pile/icy,/turf/simulated/floor/plating/asteroid/snow{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"D" = (/turf/simulated/floor/wood{baseturf = /turf/simulated/floor/plating/lava/smooth; name = "bridge"},/area/ruin/powered)
-"E" = (/turf/simulated/wall/r_wall{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"z" = (/obj/machinery/door/airlock/hatch,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/powered)
+"A" = (/obj/machinery/door/airlock/silver,/turf/indestructible/fakeglass{tag = "icon-fakewindows2 (SOUTHEAST)"; icon_state = "fakewindows2"; dir = 6},/area/ruin/powered)
+"B" = (/obj/structure/flora/rock/pile/icy,/turf/simulated/floor/plating/asteroid/snow{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"C" = (/turf/simulated/floor/wood{baseturf = /turf/simulated/floor/plating/lava/smooth; name = "bridge"},/area/ruin/powered)
+"D" = (/turf/simulated/wall/r_wall{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -45,20 +44,20 @@ bceggigfffgggggggjjjjrrjjjjecb
 bcegggggffgggghggggggggggggecb
 bcegngggfffnggggiggggggggygecb
 bcegggggfffggqgogggggggggggecb
-bcezgggggffffgggggngggniiggecb
-AcBgCgnggfffffggggggqggggggecb
+bceogggggffffgggggngggniiggecb
+zcAgBgnggfffffggggggqggggggecb
 bceggggggggffggngggiggohgggecb
 bcegggqggigfffgggggggggggngecb
 bcegnggggngffffggggnggqggggecb
-bcegggghggDDDDDDgqggggggoggecb
-bceggoiiggDDDDDDgggghgiggggecb
+bcegggghggCCCCCCgqggggggoggecb
+bceggoiiggCCCCCCgggghgiggggecb
 bcegggigggggfffggggggigggggecb
-bceggggoqgigggfffgggggngCngecb
+bceggggoqgigggfffgggggngBngecb
 bceggggggggggiggffgnggiigggecb
 bceigngggignggggffgggoiiggiecb
 bcegggggggggiigigfffggggqggecb
 bceiiggngggggqgggggffggggggecb
 bcdeeeeeeeeeeeeeeeeeeeeeeeedcb
 bccccccccccccccccccccccccccccb
-bbbbbEbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbDbbbbbbbbbbbbbbbbbbbbbbbb
 "}
