@@ -65,7 +65,27 @@
 		active = 0
 		toggleFireplace()
 
+/obj/structure/fireplace/fire_act()
+	if(!active)
+		active = 1
+		toggleFireplace()
 
+/obj/machinery/recycler/lumbermill
+	name = "lumbermill saw"
+	desc = "Faster then the cartoons!"
+	emagged = 2 //Always grinds people
+
+/obj/machinery/recycler/lumbermill/recycle(obj/item/weapon/grown/log/L, sound = 1)
+	L.loc = src.loc
+	if(!istype(L))
+		return
+	if(sound)
+		playsound(src.loc, 'sound/weapons/chainsawhit.ogg', 100, 1)
+	new L.plank_type(src.loc, 1 + round(L.potency / 25))
+	qdel(L)
+
+
+/*Cabin's forest*/
 /datum/mapGenerator/snowy
 	modules = list(/datum/mapGeneratorModule/snow/pineTrees, \
 	/datum/mapGeneratorModule/snow/deadTrees, \
