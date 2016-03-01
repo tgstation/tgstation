@@ -123,7 +123,7 @@ def merge_map(newfile, backupfile, tgm):
         write_grid_coord_small(newfile, mergeGrid)
     else:
         write_dictionary(newfile, originalDict)
-        write_grid(newfile, originalDict)
+        write_grid(newfile, mergeGrid)
     return 1
 
 #write dictionary in tgm format
