@@ -1130,3 +1130,33 @@
 		var/t_loc = get_turf(O)
 		qdel(O)
 		new /obj/item/clothing/shoes/galoshes/dry(t_loc)
+
+// Virology virus food chems.
+
+/datum/reagent/toxin/mutagen/mutagenvirusfood
+	name = "mutagenic agar"
+	id = "mutagenvirusfood"
+	description = "mutates blood"
+	color = "#A3C00F" // rgb: 163,192,15
+
+/datum/reagent/toxin/mutagen/mutagenvirusfood/sugar
+	name = "sucrose agar"
+	id = "sugarvirusfood"
+	color = "#41B0C0" // rgb: 65,176,192
+
+/datum/reagent/medicine/synaptizine/synaptizinevirusfood
+	name = "virus rations"
+	id = "synaptizinevirusfood"
+	description = "mutates blood"
+	color = "#D18AA5" // rgb: 209,138,165
+
+/datum/reagent/toxin/plasma/plasmavirusfood
+	name = "virus plasma"
+	id = "plasmavirusfood"
+	description = "mutates blood"
+	color = "#A69DA9" // rgb: 166,157,169
+
+/datum/reagent/toxin/plasma/plasmavirusfood/weak
+	name = "weakened virus plasma"
+	id = "weakplasmavirusfood"
+	color = "#CEC3C6" // rgb: 206,195,198
