@@ -23,9 +23,9 @@
 	var/reason
 	var/datum/supply_pack/pack
 
-/datum/supply_order/New(pack, orderer, orderer_rank, orderer_ckey, reason)
+/datum/supply_order/New(datum/supply_pack/pack, orderer, orderer_rank, orderer_ckey, reason)
 	id = SSshuttle.ordernum++
-	src.pack = SSshuttle.supply_packs[pack]
+	src.pack = pack
 	src.orderer = orderer
 	src.orderer_rank = orderer_rank
 	src.orderer_ckey = orderer_ckey
