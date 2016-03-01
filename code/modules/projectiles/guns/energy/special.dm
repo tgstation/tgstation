@@ -276,6 +276,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 	cell_type = "/obj/item/weapon/stock_parts/cell/high"
 	pin = null
+	selfcharge = 1
 
 /obj/item/weapon/gun/energy/laser/instakill
 	name = "instakill rifle"
