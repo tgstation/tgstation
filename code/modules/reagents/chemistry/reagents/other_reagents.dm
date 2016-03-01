@@ -1118,60 +1118,30 @@
 
 // Virology virus food chems.
 
-/datum/reagent/mutagenvirusfood
+/datum/reagent/toxin/mutagen/mutagenvirusfood
 	name = "mutagenic agar"
 	id = "mutagenvirusfood"
 	description = "mutates blood"
-	reagent_state = LIQUID
 	color = "#A3C00F" // rgb: 163,192,15
 
-/datum/reagent/mutagenvirusfood/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
-	if(!..())
-		return
-	if(!M.has_dna())
-		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
-		randmuti(M)
-		if(prob(90))
-			randmutb(M)
-		else
-			randmutg(M)
-		M.updateappearance()
-		M.domutcheck()
-	..()
+/datum/reagent/toxin/mutagen/mutagenvirusfood/sugar
+	name = "sucrose agar"
+	id = "sugarvirusfood"
+	color = "#41B0C0" // rgb: 65,176,192
 
-/datum/reagent/synaptizinevirusfood
+/datum/reagent/medicine/synaptizine/synaptizinevirusfood
 	name = "virus rations"
 	id = "synaptizinevirusfood"
 	description = "mutates blood"
-	reagent_state = LIQUID
 	color = "#D18AA5" // rgb: 209,138,165
 
-/datum/reagent/synaptizinevirusfood/on_mob_life(mob/living/M)
-	M.drowsyness = max(M.drowsyness-3, 0)
-	M.AdjustWeakened(-1)
-	if(holder.has_reagent("mindbreaker"))
-		holder.remove_reagent("mindbreaker", 5)
-	M.hallucination = max(0, M.hallucination - 5)
-	return
-
-/datum/reagent/plasmavirusfood
+/datum/reagent/toxin/plasma/plasmavirusfood
 	name = "virus plasma"
 	id = "plasmavirusfood"
 	description = "mutates blood"
-	reagent_state = LIQUID
 	color = "#A69DA9" // rgb: 166,157,169
 
-/datum/reagent/weakplasmavirusfood
+/datum/reagent/toxin/plasma/plasmavirusfood/weak
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
-	description = "mutates blood"
-	reagent_state = LIQUID
 	color = "#CEC3C6" // rgb: 206,195,198
-
-/datum/reagent/sugarvirusfood
-	name = "sucrose agar"
-	id = "sugarvirusfood"
-	description = "mutates blood"
-	reagent_state = LIQUID
-	color = "#41B0C0" // rgb: 65,176,192
