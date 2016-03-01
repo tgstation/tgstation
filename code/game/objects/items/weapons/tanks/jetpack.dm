@@ -9,7 +9,6 @@
 	var/gas_type = "o2"
 	var/on = FALSE
 	var/turbo = FALSE
-	var/flying = 0 // Needed to control the PASSTABLE flag
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/weapon/tank/jetpack/New()
