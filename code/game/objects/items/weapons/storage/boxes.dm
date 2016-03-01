@@ -177,6 +177,24 @@
 	for(var/i in 1 to 6)
 		new /obj/item/device/assembly/flash/handheld(src)
 
+/obj/item/weapon/storage/box/wall_flash
+	name = "wall-mounted flash kit"
+	desc = "This box contains everything neccesary to build a wall-mounted flash. <B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
+	icon_state = "flashbang"
+
+/obj/item/weapon/storage/box/wall_flash/New()
+	..()
+	var/id = rand(1000, 9999)
+
+	new /obj/item/wallframe/button(src)
+	new /obj/item/weapon/electronics/airlock(src)
+	var/obj/item/device/assembly/control/flasher/remote = new(src)
+	remote.id = id
+	var/obj/item/wallframe/flasher/frame = new(src)
+	frame.id = id
+	new /obj/item/device/assembly/flash/handheld(src)
+
+
 /obj/item/weapon/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause blindness and skin irritation.</B>"
