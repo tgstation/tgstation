@@ -1,0 +1,17 @@
+author: LanCartwright
+delete-after: True
+changes: 
+  - rscadd: "Adds Uranium to Virus reaction. Will create a random symptom between 5 and 6 when mixed with blood."
+  - rscadd: "Adds Virus rations, which creates a level 1 symptom when mixed with blood."
+  - rscadd: "Adds Mutagenic agar, which creates a level 3 symptom."
+  - rscadd: "Adds Sucrose agar which creates a level 4 symptom."
+  - rscadd: "Adds Weak virus plasma, which creates a level 5 symptom."
+  - rscadd: "Adds Virus plasma, which creates a level 6 symptom."
+  - rscadd: "Adds Virus food and Mutagen reaction, creating Mutagenic agar."
+  - rscadd: "Adds Virus food and Synaptizine reaction, creating Virus rations."
+  - rscadd: "Adds Virus food and Plasma reaction, creating Virus plasma."
+  - rscadd: "Adds Synaptizine and Virus plasma reaction, creating weakened virus plasma."
+  - rscadd: "Adds Sugar and Mutagenic agar reaction, creating sucrose agar."
+  - rscadd: "Adds Saline glucose solution and Mutagenic agar reaction, creating sucrose agar."
+  - rscadd: "Adds Viral self-adaptation symptom, which boosts stealth and resistance, but lowers stage speed."
+  - rscadd: "Adds Viral evolutionary acceleration, which bosts stage speed and transmittability, but lowers stealth and resistance."
