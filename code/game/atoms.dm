@@ -371,6 +371,9 @@ var/list/blood_splatter_icons = list()
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
 	if(istype(src,/turf/simulated) )
 		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
+		// Make toxins vomit look different
+		if(toxvomit)
+			V.icon_state = "vomittox_[pick(1,4)]"
 		if(M.reagents)
 			clear_reagents_to_vomit_pool(M,V)
 
@@ -380,5 +383,4 @@ var/list/blood_splatter_icons = list()
 		if(istype(R, /datum/reagent/consumable))
 			var/datum/reagent/consumable/nutri_check = R
 			if(nutri_check.nutriment_factor >0)
-				reagents.add_reagent(R.id,R.volume)
 				M.reagents.remove_reagent(R.id,R.volume)
