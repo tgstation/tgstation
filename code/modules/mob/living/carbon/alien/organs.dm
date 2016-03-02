@@ -141,9 +141,11 @@
 	recent_queen_death = 1
 	owner.throw_alert("alien_noqueen", /obj/screen/alert/alien_vulnerable)
 	spawn(2400) //four minutes
-		if(qdeleted(src) || !owner) //In case the node is deleted or removed from the host
+		if(qdeleted(src)) //In case the node is deleted
 			return
 		recent_queen_death = 0
+		if(!owner) //In case the xeno is butchered or subjected to surgery after death.
+			return
 		owner << "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>"
 		owner.clear_alert("alien_noqueen")
 
