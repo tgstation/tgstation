@@ -1,5 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "Added door control remotes. Clicking on doors while holding them will let you open/bolt/toggle emergency access depending on the mode. They will not work on doors that have their IDscan disabled (rogue AIs take note!)"
-  - rscadd: "The Captain, RD, CE, HoS, CMO, and QM all now have door control remotes in their lockers."

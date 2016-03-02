@@ -1,8 +1,0 @@
-author: CoreOverload
-delete-after: True
-changes: 
-  - rscadd: "A new \"breathing tube\" mouth implant. It allows you to use internals without a mask and protects you from being choked. It doesn't protect you from the grab itself."
-  - tweak: "Arm cannon implants are now actually implanted into the arms, not into the chest."
-  - bugfix: "Arm cannons have an action button again."
-  - tweak: "Heart removal is no longer instakill. It puts you in condition similar to heart attack instead. You can fix it by installing a new heart and applying defibrillator if it wasn't beating."
-  - rscadd: "You can now make a stopped heart beat again by squeezing it. It will stop beating very soon, so you better be quick if you want to install it without using defibrillator."
