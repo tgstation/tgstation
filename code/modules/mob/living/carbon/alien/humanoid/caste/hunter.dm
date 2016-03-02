@@ -25,7 +25,7 @@
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
 	update_icons()
 	if(message)
-		src << "<span class='noticealien'>You will now [leap_on_click ? "leap at":"slash at"] enemies!</span>"
+		src << "<span class='noticealien'>You will now [leap_on_click ? "metabolize plasma to leap at":"slash at"] enemies!</span>"
 	else
 		return
 
@@ -53,7 +53,8 @@
 		//It's also extremely buggy visually, so it's balance+bugfix
 		return
 
-	else //Maybe uses plasma in the future, although that wouldn't make any sense...
+	else // Added plasma cost for balance
+		plasma_cost = 15
 		leaping = 1
 		update_icons()
 		throw_at(A,MAX_ALIEN_LEAP_DIST,1, spin=0, diagonals_first = 1)
