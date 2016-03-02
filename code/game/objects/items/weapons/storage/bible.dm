@@ -120,10 +120,14 @@
 		if(iscult(H)) //The user is a Cultist. We are thus deconverting him
 			if(prob(20))
 				to_chat(H, "<span class='notice'>The power of [deity_name] suddenly clears your mind of heresy. Your allegiance to Nar'Sie wanes!</span>")
-				to_chat(user, "<span class='notice'>You see [H]'s eyes become clear. Nar'Sie no longer controls his mind, [deity_name] saved him!</span>")
+				to_chat(user, "<span class='notice'>You see [H]'s eyes become clear. Nar'Sie no longer controls his mind, [deity_name] saved \him!</span>")
 				ticker.mode.remove_cultist(H.mind)
 			else //We aren't deconverting him this time, give the Cultist a fair warning
 				to_chat(H, "<span class='warning'>The power of [deity_name] is overwhelming you. Your mind feverishly questions Nar'Sie's teachings!</span>")
+		if(H.mind && H.mind.special_role == "VampThrall")
+			ticker.mode.remove_vampire_mind(H.mind, H.mind)
+			H.visible_message("<span class='notice'>[H] suddenly becomes calm and collected again, \his eyes clear up.</span>",
+			"<span class='notice'>Your blood cools down and you are inhabited by a sensation of untold calmness.</span>")
 
 
 		bless_mob(user, H) //Let's outsource the healing code, because we can

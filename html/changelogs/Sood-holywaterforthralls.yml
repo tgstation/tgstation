@@ -1,0 +1,5 @@
+author: Sood
+delete-after: true
+changes:
+ - tweak: Holy water and bibles can now be used to de-thrall vamp thralls.
+ - tweak: Holy water deconversion occurs in on_mob_life, so splashing them with it might not be as effective as injecting/ingesting.
