@@ -262,9 +262,9 @@ Made a proc so this is not repeated 14 (or more) times.*/
 	else
 		return 1
 
-
+//returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)
+	return istype(M) && M.mind && ticker && ticker.mode && ((M.mind in ticker.mode.wizards) || (M.mind in ticker.mode.apprentices))
 
 
 /datum/game_mode/proc/update_wiz_icons_added(datum/mind/wiz_mind)
