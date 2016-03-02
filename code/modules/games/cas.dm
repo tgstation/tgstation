@@ -142,6 +142,7 @@
 	"The space gods",
 	"Double dongs",
 	"Shapely severed lizard tails",
+	"An unknown assistant with a gas mask, yellow gloves and toolbelt",
 	"Forcibly exile implanting lizards",
 	"A double-bladed energy sword, noslips, thermals, adrenal implants and a healing virus",
 	"Horrible cloning accidents",
