@@ -119,29 +119,34 @@
 		retal_target = potentialAssault
 	..()
 
-/mob/living/carbon/human/interactive/verb/customiseSNPC()
+/client/proc/customiseSNPC(var/mob/A in world)
 	set name = "Customize SNPC"
 	set desc = "Customise the SNPC"
 	set category = "Admin"
-
-	set src in view()
-
-	var/cjob = input("Choose Job") as null|anything in SSjob.occupations.Copy()
-
-	if(cjob)
-		myjob = cjob
-		job = myjob.title
-		for(var/obj/item/W in src)
-			src.unEquip(W, 1)
-			qdel(W)
-		myjob.equip(src)
-		myjob.apply_fingerprints(src)
-		doSetup()
-
-	var/doTele = input("Place the SNPC in their department?") as null|anything in list("Yes","No")
-	if(doTele)
-		if(doTele == "Yes")
-			src.loc = pick(get_area_turfs(job2area(myjob)))
+	
+	if(!holder)
+		return
+	
+	if(A)
+		if(!istype(A,/mob/living/carbon/human/interactive))
+			return
+		var/mob/living/carbon/human/interactive/T = A
+		var/cjob = input("Choose Job") as null|anything in SSjob.occupations.Copy()
+	
+		if(cjob)
+			T.myjob = cjob
+			T.job = T.myjob.title
+			for(var/obj/item/W in T)
+				T.unEquip(W, 1)
+				qdel(W)
+			T.myjob.equip(T)
+			T.myjob.apply_fingerprints(T)
+			T.doSetup()
+	
+		var/doTele = input("Place the SNPC in their department?") as null|anything in list("Yes","No")
+		if(doTele)
+			if(doTele == "Yes")
+				T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
 
 /mob/living/carbon/human/interactive/proc/doSetup()
 	Path_ID = new /obj/item/weapon/card/id(src)
