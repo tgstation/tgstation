@@ -344,6 +344,7 @@
 				var/mob/selected = find_dead_player("[C.ckey]")
 				if(!selected)
 					temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
+					src.updateUsrDialog()
 					return
 				selected << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
 				var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
