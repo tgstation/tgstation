@@ -171,7 +171,7 @@
 /obj/item/projectile/bullet/neurotoxin
 	name = "neurotoxin spit"
 	icon_state = "neurotoxin"
-	damage = 10
+	damage = 15
 	damage_type = TOX
 	weaken = 3
 
