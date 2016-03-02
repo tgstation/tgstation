@@ -298,8 +298,8 @@
 #define BURSTING 1
 #define GROWING 2
 #define GROWN 3
-#define MIN_GROWTH_TIME 1800	//time it takes to grow a hugger
-#define MAX_GROWTH_TIME 3000
+#define MIN_GROWTH_TIME 1200	//time it takes to grow a hugger
+#define MAX_GROWTH_TIME 2100
 
 /obj/structure/alien/egg
 	name = "egg"
