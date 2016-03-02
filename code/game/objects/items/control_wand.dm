@@ -32,10 +32,10 @@
 	if(!istype(D))
 		return
 	if(!(D.hasPower()))
-		user << "[D] has no power!"
+		user << "<span class='danger'>[D] has no power!</span>"
 		return
 	if(!D.requiresID())
-		user << "[D]'s ID scan is disabled!"
+		user << "<span class='danger'>[D]'s ID scan is disabled!</span>"
 		return
 	if(D.check_access(src.ID))
 		switch(mode)
@@ -56,7 +56,7 @@
 					D.emergency = 1
 				D.update_icon()
 	else
-		user << "[src] does not have access to this door."
+		user << "<span class='danger'>[src] does not have access to this door.</span>"
 
 /obj/item/weapon/door_remote/omni
 	name = "omni door remote"
