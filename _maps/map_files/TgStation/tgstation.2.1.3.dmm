@@ -15465,12 +15465,13 @@
 "aFA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/computer/pod/old{
+	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
-	 icon_state = "airlock_control_standby";
-	 id = "chapelgun";
-	 name = "Mass Driver Controller";
-	 pixel_x = 24;
-	 pixel_y = 0
+	icon_state = "airlock_control_standby";
+	id = "chapelgun";
+	name = "Mass Driver Controller";
+	pixel_x = 24;
+	pixel_y = 0
 	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
