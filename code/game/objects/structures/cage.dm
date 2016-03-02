@@ -29,6 +29,12 @@
 
 	update_icon()
 
+/obj/structure/cage/Destroy()
+	for(var/atom/movable/M in contents)
+		M.forceMove(src.loc)
+
+	..()
+
 /obj/structure/cage/update_icon()
 	overlays = list()
 
