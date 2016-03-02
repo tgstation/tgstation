@@ -1108,6 +1108,14 @@
 
 // Pasta ///////////////////////////////////////////////////////
 
+/datum/recipe/mommispaghetti // Same as roburger, but for mommis
+	reagents = list("flour" = 5)
+	items = list(
+		/obj/item/pipe,
+		/obj/item/stack/sheet/mineral/plasma,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/mommispaghetti
+
 /datum/recipe/boiledspaghetti
 	reagents = list("water" = 5)
 	items = list(/obj/item/weapon/reagent_containers/food/snacks/spaghetti)

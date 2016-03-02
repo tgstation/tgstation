@@ -1878,6 +1878,15 @@
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/mommispaghetti
+	name = "bowl of MoMMi spaghetti "
+	desc = "You can feel the autism in this one."
+	icon_state = "spaghettiboiled"
+	New()
+		..()
+		reagents.add_reagent("autistnanites", 2)
+		bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
 	name = "Boiled Spaghetti"
 	desc = "A plain dish of noodles, this sucks."
