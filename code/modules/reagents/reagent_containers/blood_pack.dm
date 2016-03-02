@@ -18,7 +18,7 @@
 	update_icon()
 	if(reagents.total_volume == 0 && name != "Empty Bloodback")
 		name = "Empty Bloodpack"
-		desc = "Empty bloodpacks are good in vampire movies, but bad in hospitals."
+		desc = "Seems pretty useless... Maybe if there were a way to fill it?"
 	else if (reagents.reagent_list.len > 0)
 		var/target_type = null
 		var/the_volume = 0
@@ -79,7 +79,7 @@
 	blood_type = "O-"
 
 /obj/item/weapon/reagent_containers/blood/empty
-	name = "Empty BloodPack"
+	name = "Empty Bloodpack"
 	desc = "Seems pretty useless... Maybe if there were a way to fill it?"
 	icon_state = "empty"
 	New()
