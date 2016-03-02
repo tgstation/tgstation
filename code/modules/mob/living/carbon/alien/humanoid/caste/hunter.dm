@@ -18,6 +18,9 @@
 //Hunter verbs
 
 /mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(message = 1)
+	if(pounce_cooldown)
+		src << "<span class='alertalien'>You are too fatigued to pounce right now!</span>"
+		return
 	leap_on_click = !leap_on_click
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
 	update_icons()
