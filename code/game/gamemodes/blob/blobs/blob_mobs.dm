@@ -21,7 +21,7 @@
 		color = overmind.blob_reagent_datum.color
 
 /mob/living/simple_animal/hostile/blob/blob_act()
-	if(health < maxHealth)
+	if(stat != DEAD && health < maxHealth)
 		for(var/i in 1 to 2)
 			var/obj/effect/overlay/temp/heal/H = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(src)) //hello yes you are being healed
 			if(overmind)
@@ -191,14 +191,32 @@
 	verb_exclaim = "roars"
 	verb_yell = "bellows"
 	force_threshold = 10
+	pressure_resistance = 40
 	mob_size = MOB_SIZE_LARGE
-	gold_core_spawnable = 1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/New()
 	..()
 	verbs -= /mob/living/verb/pulled //no pulling people deep into the blob
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/Life()
+	if(..())
+		if(!(locate(/obj/effect/blob) in range(2, src)))
+			adjustHealth(maxHealth*0.025) //take 2.5% maxhealth as damage when not near the blob
+			var/list/viewing = list()
+			for(var/mob/M in viewers(src))
+				if(M.client)
+					viewing += M.client
+			flick_overlay(image('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.1), viewing, 8)
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount)
+	. = ..()
+	update_health_hud()
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/update_health_hud()
+	if(hud_used)
+		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round((health / maxHealth) * 100, 0.5)]%</font></div>"
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	if(isliving(target))
