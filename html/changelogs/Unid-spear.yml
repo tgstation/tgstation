@@ -1,8 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-  - tweak: The damage spears deal is now affected by the sharpness of the shard used to create it
-  - tweak: Creation of a spear now takes some time, and can be interrupted
-  - tweak: Changed how throwing a glass shard at a wall affects the shard's damage (now damage is either randomly increased or decreased)
