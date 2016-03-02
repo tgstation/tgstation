@@ -14,6 +14,41 @@
 	if(isStunned() || restrained())
 		return 1
 
+/mob/proc/should_have_colour()
+	if(!client)
+		return 0
+	if(M_NOIR in mutations)
+		return NOIRMATRIX
+
+/mob/dead/observer/should_have_colour()
+	return default_colour_matrix
+
+/mob/living/simple_animal/should_have_colour()
+	. = ..()
+	if(.)
+		return .
+	else if(src.colourmatrix.len)
+		return src.colourmatrix
+
+/mob/living/carbon/human/should_have_colour()
+	. = ..()
+	if(.)
+		return .
+	var/datum/organ/internal/eyes/eyes = internal_organs_by_name["eyes"]
+	if(eyes.colourmatrix.len && !(eyes.robotic == 2))
+		return eyes.colourmatrix
+	else return default_colour_matrix
+
+/mob/proc/update_colour(var/time = 50)
+	if(!client ||  client.updating_colour)
+		return
+	var/colour_to_apply = should_have_colour()
+	if(client.color != colour_to_apply)
+		client.updating_colour = 1
+		client.colour_transition(colour_to_apply,time = time)
+		sleep(time)
+		client.updating_colour = 0
+
 /proc/RemoveAllFactionIcons(var/datum/mind/M)
 	ticker.mode.update_cult_icons_removed(M)
 	ticker.mode.update_rev_icons_removed(M)

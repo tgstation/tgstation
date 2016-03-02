@@ -57,3 +57,4 @@
 
 	var/filling = 0 //SOME STUPID SHIT POMF IS DOING
 	var/haszoomed = 0
+	var/updating_colour = 0

@@ -34,11 +34,14 @@
 	var/obj/item/inventory_back
 	var/facehugger
 	var/list/spin_emotes = list("dances around","chases its tail")
+	colourmatrix = list(1,0.0,0.0,0,\
+						0,0.5,0.5,0,\
+						0,0.5,0.5,0,\
+						0,0.0,0.0,1,)
 
 /mob/living/simple_animal/corgi/Life()
 	if(timestopped) return 0 //under effects of time magick
 	spinaroo(spin_emotes)
-
 	. = ..()
 	if(.)
 		if(fire)
