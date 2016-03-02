@@ -54,7 +54,7 @@
 	var/speed = 1 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
 	//Hot simple_animal baby making vars
-	var/childtype = null
+	var/list/childtype = null
 	var/scan_ready = 1
 	var/species //Sorry, no spider+corgi buttbabies.
 
@@ -511,7 +511,8 @@
 			alone = 0
 			continue
 	if(alone && partner && children < 3)
-		new childtype(loc)
+		var/childspawn = pickweight(childtype)
+		new childspawn(loc)
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
 	if(!child_override)
