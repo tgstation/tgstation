@@ -20,38 +20,38 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "<span class='danger'>[user] is smashing \his face into the [src.name]! It looks like \he's  trying to commit suicide!</span>")
-		return (BRUTELOSS)
+/obj/item/weapon/shield/riot/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='danger'>[user] is smashing \his face into the [src.name]! It looks like \he's  trying to commit suicide!</span>")
+	return (BRUTELOSS)
 
-	IsShield()
-		return 1
+/obj/item/weapon/shield/riot/IsShield()
+	return 1
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/melee/baton))
-			if(cooldown < world.time - 25)
-				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
-				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
-				cooldown = world.time
-		else
-			..()
+/obj/item/weapon/shield/riot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/melee/baton))
+		if(cooldown < world.time - 25)
+			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+			cooldown = world.time
+	else
+		..()
 
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 
-	IsShield()
-		return 1
+/obj/item/weapon/shield/riot/roman/IsShield()
+	return 1
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/spear))
-			if(cooldown < world.time - 25)
-				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
-				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
-				cooldown = world.time
-		else
-			..()
+/obj/item/weapon/shield/riot/roman/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/spear))
+		if(cooldown < world.time - 25)
+			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+			cooldown = world.time
+	else
+		..()
 
 
 
@@ -143,17 +143,18 @@
 	desc = "Doubles as a sled!"
 	icon_state = "protoshield"
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/shields.dmi', "right_hand" = 'icons/mob/in-hand/right/shields.dmi')
-	IsShield()
-		return 1
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/spear))
-			if(cooldown < world.time - 25)
-				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
-				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
-				cooldown = world.time
-		else
-			..()
+/obj/item/weapon/shield/riot/proto/IsShield()
+	return 1
+
+/obj/item/weapon/shield/riot/proto/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/spear))
+		if(cooldown < world.time - 25)
+			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+			cooldown = world.time
+	else
+		..()
 
 
 /obj/item/weapon/shield/riot/joe
@@ -161,14 +162,15 @@
 	desc = "Very useful for close-quarters sniping, regardless of how stupid that idea is."
 	icon_state = "joeshield"
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/shields.dmi', "right_hand" = 'icons/mob/in-hand/right/shields.dmi')
-	IsShield()
-		return 1
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/spear))
-			if(cooldown < world.time - 25)
-				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
-				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
-				cooldown = world.time
-		else
-			..()
+/obj/item/weapon/shield/riot/joe/IsShield()
+	return 1
+
+/obj/item/weapon/shield/riot/joe/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/spear))
+		if(cooldown < world.time - 25)
+			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+			cooldown = world.time
+	else
+		..()
