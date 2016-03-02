@@ -7,17 +7,6 @@
 		playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
 	return(BRUTELOSS)
 
-/obj/item/clothing/shoes/sneakers/syndigaloshes
-	desc = "A pair of brown shoes."
-	name = "brown shoes"
-	icon_state = "brown"
-	item_state = "brown"
-	permeability_coefficient = 0.05
-	flags = NOSLIP
-	origin_tech = "syndicate=3"
-	burn_state = FIRE_PROOF
-	can_hold_items = 1
-
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
 	icon_state = "mime"

@@ -68,7 +68,7 @@
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/twohanded/required/chainsaw))
+	if(W.sharpness)
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
 		var/obj/item/stack/plank = new plank_type(user.loc, 1 + round(potency / 25))
 		var/old_plank_amount = plank.amount
@@ -91,6 +91,11 @@
 			return
 		else
 			usr << "<span class ='warning'>You must dry this first!</span>"
+
+/obj/item/weapon/grown/log/tree
+	seed = null
+	name = "wood log"
+	desc = "TIMMMMM-BERRRRRRRRRRR!"
 
 /obj/item/weapon/grown/log/steel
 	seed = /obj/item/seeds/steelmycelium
@@ -158,6 +163,7 @@
 		qdel(src)
 
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user)
+	..()
 	if(!user.gloves)
 		user << "<span class='danger'>The [name] burns your bare hand!</span>"
 		user.adjustFireLoss(rand(1, 5))
@@ -184,6 +190,7 @@
 	return (BRUTELOSS|TOXLOSS)
 
 /obj/item/weapon/grown/nettle/pickup(mob/living/user)
+	..()
 	if(!iscarbon(user))
 		return 0
 	var/mob/living/carbon/C = user
@@ -234,6 +241,7 @@
 	force = round((5 + potency / 2.5), 1)
 
 /obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/user)
+	..()
 	if(..())
 		if(prob(50))
 			user.Paralyse(5)
@@ -275,6 +283,23 @@
 		var/weaken = Clamp(potency / 20, 0.5, 5)
 		M.slip(stun, weaken, src)
 		return 1
+
+/obj/item/weapon/grown/bananapeel/bluespace
+	name = "bluespace banana peel"
+	desc = "A peel from a bluespace banana."
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "banana_peel_blue"
+	origin_tech = "bluespace=3"
+
+/obj/item/weapon/grown/bananapeel/bluespace/Crossed(AM)
+	if(..())
+		var/teleport_radius = potency / 10
+		do_teleport(AM, get_turf(AM), teleport_radius)
+		AM << "<span class='notice'>You slip through spacetime!</span>"
+		if(prob(50))
+			do_teleport(src, get_turf(src), teleport_radius)
+		else
+			qdel(src)
 
 /obj/item/weapon/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
 	name = "synthesized banana peel"

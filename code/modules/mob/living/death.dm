@@ -1,6 +1,7 @@
 /mob/living/gib(animation = 1)
 	var/prev_lying = lying
-	death(1)
+	if(stat != DEAD)
+		death(1)
 
 	if(buckled)
 		buckled.unbuckle_mob() //to update alien nest overlay.
@@ -52,6 +53,7 @@
 	blind_eyes(1)
 	reset_perspective(null)
 	hide_fullscreens()
+	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()
 	update_canmove()

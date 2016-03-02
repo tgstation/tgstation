@@ -95,12 +95,14 @@
 	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
 	blobber.overmind = src
 	blobber.update_icons()
-	blobber.AIStatus = AI_OFF
+	flick("blobbernaut_produce", blobber)
+	blobber.notransform = 1 //stop the naut from moving around
 	blob_mobs.Add(blobber)
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
 	var/client/C = null
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
 		C = pick(candidates)
+		blobber.notransform = 0
 		blobber.key = C.key
 		blobber << 'sound/effects/blobattack.ogg'
 		blobber << 'sound/effects/attackblob.ogg'
@@ -109,7 +111,7 @@
 		blobber << "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 		blobber << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
 	else
-		blobber.AIStatus = AI_ON //otherwise, they reactivate AI and continue
+		blobber.notransform = 0 //otherwise, just let it move
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
@@ -223,6 +225,9 @@
 		BL.update_icon()
 	for(var/mob/living/simple_animal/hostile/blob/BLO)
 		BLO.update_icons()
+		if(BLO.overmind == src) //If it's getting a new chemical, tell it what it does!
+			BLO << "Your overmind's blob reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
+			BLO << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
 	src << "Your reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 	src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
 
@@ -247,14 +252,6 @@
 
 /datum/action/innate/blob
 	background_icon_state = "bg_alien"
-
-/datum/action/innate/blob/CheckRemoval()
-	if(ticker.mode.name != "blob" || !ishuman(owner))
-		return 1
-	var/datum/game_mode/blob/B = ticker.mode
-	if(!owner.mind || !(owner.mind in B.infected_crew))
-		return 1
-	return 0
 
 /datum/action/innate/blob/earlyhelp
 	name = "Blob Help"

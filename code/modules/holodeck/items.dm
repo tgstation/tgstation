@@ -88,18 +88,6 @@
 // Structures
 //
 
-/obj/structure/stool/bed/chair/holo/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/wrench))
-		user << "It's holographic!  There's no taking it apart."
-		return
-	..()
-
-/obj/structure/stool/bed/chair/holo/comfy
-	name = "comfy chair"
-	desc = "It looks comfy."
-	icon_state = "comfychair"
-	color = rgb(255,113,0)
-
 /obj/structure/holohoop
 	name = "basketball hoop"
 	desc = "Boom, shakalaka!"

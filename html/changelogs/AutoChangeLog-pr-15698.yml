@@ -1,0 +1,6 @@
+author: LanCartwright
+delete-after: True
+changes: 
+  - rscadd: "Flypeople now vomit when they eat nutriment."
+  - rscadd: "Flypeople can now suck the vomit off the floor to gain it's nutritional content."
+  - rscadd: "Flypeople now must suck puke chunks and vomit to fill themselves of food content."

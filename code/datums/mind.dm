@@ -1111,10 +1111,10 @@
 					ticker.mode.shadows -= src
 					special_role = null
 					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
-					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
-					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
-					remove_spell(/obj/effect/proc_holder/spell/targeted/enthrall)
-					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/enthrall)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
 					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
 					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
 				else if(src in ticker.mode.thralls)
@@ -1549,34 +1549,29 @@
 	return 1
 
 
-/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/spell)
-	spell_list += spell
-	if(!spell.action)
-		spell.action = new/datum/action/spell_action
-		spell.action.target = spell
-		spell.action.name = spell.name
-		spell.action.button_icon = spell.action_icon
-		spell.action.button_icon_state = spell.action_icon_state
-		spell.action.background_icon_state = spell.action_background_icon_state
-	spell.action.Grant(current)
-	return
+/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
+	spell_list += S
+	S.action.Grant(current)
+
+//To remove a specific spell from a mind
+/datum/mind/proc/RemoveSpell(var/obj/effect/proc_holder/spell/spell)
+	if(!spell) return
+	for(var/X in spell_list)
+		var/obj/effect/proc_holder/spell/S = X
+		if(istype(S, spell))
+			qdel(S)
+			spell_list -= S
+
 /datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)
 		for(var/datum/action/A in current.actions)
 			A.Grant(new_character)
 	transfer_mindbound_actions(new_character)
 
-/datum/mind/proc/transfer_mindbound_actions(var/mob/living/new_character)
-	for(var/obj/effect/proc_holder/spell/spell in spell_list)
-		if(!spell.action) // Unlikely but whatever
-			spell.action = new/datum/action/spell_action
-			spell.action.target = spell
-			spell.action.name = spell.name
-			spell.action.button_icon = spell.action_icon
-			spell.action.button_icon_state = spell.action_icon_state
-			spell.action.background_icon_state = spell.action_background_icon_state
-		spell.action.Grant(new_character)
-	return
+/datum/mind/proc/transfer_mindbound_actions(mob/living/new_character)
+	for(var/X in spell_list)
+		var/obj/effect/proc_holder/spell/S = X
+		S.action.Grant(new_character)
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

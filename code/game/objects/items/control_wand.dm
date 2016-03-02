@@ -12,7 +12,6 @@
 	var/mode = WAND_OPEN
 	var/region_access = 1 //See access.dm
 	var/obj/item/weapon/card/id/ID
-	var/wand_access = /datum/job/assistant //This is for access. See access.dm for which jobs give what access. Use "Captain" if you want the wand to work on all doors.
 
 /obj/item/weapon/door_remote/New()
 	..()
@@ -59,42 +58,46 @@
 	else
 		user << "[src] does not have access to this door."
 
-/obj/item/weapon/door_remote/captain
+/obj/item/weapon/door_remote/omni
 	name = "omni door remote"
 	desc = "This control wand can access any door on the station."
 	icon_state = "gangtool-yellow"
-	wand_access = /datum/job/captain
 	region_access = 0
+
+/obj/item/weapon/door_remote/captain
+	name = "command door remote"
+	icon_state = "gangtool-yellow"
+	region_access = 7
 
 /obj/item/weapon/door_remote/chief_engineer
 	name = "engineering door remote"
-	wand_access = /datum/job/chief_engineer
 	icon_state = "gangtool-orange"
 	region_access = 5
 
 /obj/item/weapon/door_remote/research_director
 	name = "research door remote"
-	wand_access = /datum/job/rd
 	icon_state = "gangtool-purple"
 	region_access = 4
 
 /obj/item/weapon/door_remote/head_of_security
 	name = "security door remote"
-	wand_access = /datum/job/hos
 	icon_state = "gangtool-red"
 	region_access = 2
 
 /obj/item/weapon/door_remote/quartermaster
 	name = "supply door remote"
-	wand_access = /datum/job/qm
 	icon_state = "gangtool-green"
 	region_access = 6
 
 /obj/item/weapon/door_remote/chief_medical_officer
 	name = "medical door remote"
-	wand_access = /datum/job/cmo
 	icon_state = "gangtool-blue"
 	region_access = 3
+
+/obj/item/weapon/door_remote/civillian
+	name = "civillian door remote"
+	icon_state = "gangtool-white"
+	region_access = 1
 
 #undef WAND_OPEN
 #undef WAND_BOLT

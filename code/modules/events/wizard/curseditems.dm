@@ -31,7 +31,7 @@
 			loadout[6] = /obj/item/clothing/gloves/boxing
 			ruins_spaceworthiness = 1
 		if("voicemodulators")
-			loadout[4] = /obj/item/clothing/mask/gas/voice
+			loadout[4] = /obj/item/clothing/mask/chameleon
 		if("catgirls2015")
 			loadout[3] = /obj/item/clothing/head/kitty
 			ruins_spaceworthiness = 1

@@ -1,0 +1,8 @@
+author: Malkevin
+delete-after: True
+changes: 
+  - tweak: "Sec officers have two sets of cuffs again (one on spawn, one in locker)"
+  - tweak: "Done some optimisation of sec spawn equipment lists and lockers to remove some of the repetitive clicking, sec belts are now preloaded with equipment."
+  - tweak: "HoS has a full baton instead of the collapsible one"
+  - tweak: "Detective has a classic police baton and pepper spray instead of the collapsible baton (someone made police batons shit, so don't get overly happy)"
+  - bugfix: "pop scaled additional lockers spawned were the wrong type, changed them to the right type which has batons now (actually belts now that I've changed them)."

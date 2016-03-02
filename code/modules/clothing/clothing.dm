@@ -116,7 +116,6 @@ BLIND     // can't see anything
 	strip_delay = 40
 	put_on_delay = 40
 	var/mask_adjusted = 0
-	var/ignore_maskadjust = 1
 	var/adjusted_flags = null
 
 
@@ -132,31 +131,32 @@ BLIND     // can't see anything
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
 /obj/item/clothing/mask/proc/adjustmask(mob/living/user)
-	if(!ignore_maskadjust)
-		if(user.incapacitated())
-			return
-		if(mask_adjusted == 1)
-			src.icon_state = initial(icon_state)
-			gas_transfer_coefficient = initial(gas_transfer_coefficient)
-			permeability_coefficient = initial(permeability_coefficient)
-			flags |= visor_flags
-			flags_inv |= visor_flags_inv
-			flags_cover = initial(flags_cover)
-			user << "<span class='notice'>You push \the [src] back into place.</span>"
-			src.mask_adjusted = 0
-			slot_flags = initial(slot_flags)
-		else
-			icon_state += "_up"
-			user << "<span class='notice'>You push \the [src] out of the way.</span>"
-			gas_transfer_coefficient = null
-			permeability_coefficient = null
-			flags &= ~visor_flags
-			flags_inv &= ~visor_flags_inv
-			flags_cover &= 0
-			src.mask_adjusted = 1
-			if(adjusted_flags)
-				slot_flags = adjusted_flags
-		user.wear_mask_update(src, unequip = 0)
+	if(user.incapacitated())
+		return
+	mask_adjusted = !mask_adjusted
+	if(!mask_adjusted)
+		src.icon_state = initial(icon_state)
+		gas_transfer_coefficient = initial(gas_transfer_coefficient)
+		permeability_coefficient = initial(permeability_coefficient)
+		flags |= visor_flags
+		flags_inv |= visor_flags_inv
+		flags_cover = initial(flags_cover)
+		user << "<span class='notice'>You push \the [src] back into place.</span>"
+		slot_flags = initial(slot_flags)
+	else
+		icon_state += "_up"
+		user << "<span class='notice'>You push \the [src] out of the way.</span>"
+		gas_transfer_coefficient = null
+		permeability_coefficient = null
+		flags &= ~visor_flags
+		flags_inv &= ~visor_flags_inv
+		flags_cover &= 0
+		if(adjusted_flags)
+			slot_flags = adjusted_flags
+	user.wear_mask_update(src, toggle_off = mask_adjusted)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 
 
@@ -330,7 +330,8 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/New()
 	if(random_sensor)
-		sensor_mode = pick(0,1,2,3)
+		//make the sensor mode favor higher levels, except coords.
+		sensor_mode = pickweight(list(0 = 1, 1 = 2, 2 = 3, 3 = 2))
 	adjusted = 0
 	suit_color = item_color
 	..()
@@ -516,6 +517,9 @@ BLIND     // can't see anything
 	if(istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
 		C.head_update(src, forced = 1)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))

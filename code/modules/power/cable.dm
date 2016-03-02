@@ -490,7 +490,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	update_icon()
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
-	if(locate(/obj/structure/bed/stool) in user.loc)
+	if(locate(/obj/structure/chair/stool) in get_turf(user))
 		user.visible_message("<span class='suicide'>[user] is making a noose with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	else
 		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")

@@ -97,6 +97,7 @@
 	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/New()
+	..()
 	wires = new /datum/wires/suit_storage_unit(src)
 	if(suit_type)
 		suit = new suit_type(src)

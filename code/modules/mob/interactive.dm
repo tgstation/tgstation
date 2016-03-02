@@ -41,13 +41,17 @@
 	var/retal = 0
 	var/mob/retal_target = null
 	var/update_hands = 0
+	var/list/blacklistItems = list() // items we should be ignoring
+	var/maxStepsTick = 3
 	//Job and mind data
 	var/obj/item/weapon/card/id/MYID
 	var/obj/item/device/pda/MYPDA
 	var/obj/item/main_hand
 	var/obj/item/other_hand
 	var/TRAITS = 0
+	var/obj/item/weapon/card/id/Path_ID
 	var/datum/job/myjob
+	var/list/myPath = list()
 	faction = list("station")
 	//trait vars
 	var/robustness = 50
@@ -55,9 +59,11 @@
 	var/attitude = 50
 	var/slyness = 50
 	var/graytide = 0
+	var/list/favoured_types = list() // allow a mob to favour a type, and hold onto them
 	var/chattyness = CHANCE_TALK
+	var/targetInterestShift = 10 // how much a good action should "reward" the npc
 	//modules
-	var/list/functions = list("nearbyscan","combat","doorscan","shitcurity","chatter")
+	var/list/functions = list("nearbyscan","combat","doorscan","shitcurity","chatter","healpeople")
 
 //botPool funcs
 /mob/living/carbon/human/interactive/proc/takeDelegate(mob/living/carbon/human/interactive/from,doReset=TRUE)
@@ -74,6 +80,7 @@
 	inactivity_period = 0
 	interest = 100
 	//
+	update_icons()
 	if(doReset)
 		from.TARGET = null
 		from.LAST_TARGET = null
@@ -126,41 +133,69 @@
 	MYPDA.name = "PDA-[real_name] ([myjob.title])"
 	equip_to_slot_or_del(MYPDA, slot_belt)
 	zone_selected = "chest"
-	if(prob(10)) //my x is augmented
-		//arms
-		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
-			var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in organs
-			qdel(R)
-			organs += new /obj/item/organ/limb/robot/r_arm
-		else
-			var/obj/item/organ/limb/l_arm/L = locate(/obj/item/organ/limb/l_arm) in organs
-			qdel(L)
-			organs += new /obj/item/organ/limb/robot/l_arm
-		//legs
-		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
-			var/obj/item/organ/limb/r_leg/R = locate(/obj/item/organ/limb/r_leg) in organs
-			qdel(R)
-			organs += new /obj/item/organ/limb/robot/r_leg
-		else
-			var/obj/item/organ/limb/l_leg/L = locate(/obj/item/organ/limb/l_leg) in organs
-			qdel(L)
-			organs += new /obj/item/organ/limb/robot/l_leg
-		//chest and head
-		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
-			var/obj/item/organ/limb/chest/R = locate(/obj/item/organ/limb/chest) in organs
-			qdel(R)
-			organs += new /obj/item/organ/limb/robot/chest
-		else
-			var/obj/item/organ/limb/head/L = locate(/obj/item/organ/limb/head) in organs
-			qdel(L)
-			organs += new /obj/item/organ/limb/robot/head
-		for(var/obj/item/organ/limb/LIMB in organs)
-			LIMB.owner = src
+	//arms
+	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
+		var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in organs
+		qdel(R)
+		organs += new /obj/item/organ/limb/robot/r_arm
+	else
+		var/obj/item/organ/limb/l_arm/L = locate(/obj/item/organ/limb/l_arm) in organs
+		qdel(L)
+		organs += new /obj/item/organ/limb/robot/l_arm
+	//legs
+	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
+		var/obj/item/organ/limb/r_leg/R = locate(/obj/item/organ/limb/r_leg) in organs
+		qdel(R)
+		organs += new /obj/item/organ/limb/robot/r_leg
+	else
+		var/obj/item/organ/limb/l_leg/L = locate(/obj/item/organ/limb/l_leg) in organs
+		qdel(L)
+		organs += new /obj/item/organ/limb/robot/l_leg
+	//chest and head
+	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
+		var/obj/item/organ/limb/chest/R = locate(/obj/item/organ/limb/chest) in organs
+		qdel(R)
+		organs += new /obj/item/organ/limb/robot/chest
+	else
+		var/obj/item/organ/limb/head/L = locate(/obj/item/organ/limb/head) in organs
+		qdel(L)
+		organs += new /obj/item/organ/limb/robot/head
+	for(var/LIMB in organs)
+		var/obj/item/organ/limb/L = LIMB
+		L.owner = src
 	update_icons()
 	update_damage_overlays(0)
 	update_augments()
 
 	hand = 0
+
+	Path_ID = new /obj/item/weapon/card/id(src)
+
+	var/datum/job/captain/C = new/datum/job/captain
+	Path_ID.access = C.get_access()
+
+	//job specific favours
+	switch(myjob.title)
+		if("Assistant")
+			favoured_types = list(/obj/item/clothing, /obj/item/weapon)
+		if("Captain","Head of Personnel")
+			favoured_types = list(/obj/item/clothing, /obj/item/weapon/stamp/captain,/obj/item/weapon/disk/nuclear)
+		if("Bartender","Chef")
+			favoured_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
+		if("Station Engineer","Chief Engineer","Atmospheric Technician")
+			favoured_types = list(/obj/item/stack, /obj/item/weapon, /obj/item/clothing)
+		if("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist")
+			favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/storage/firstaid, /obj/item/stack/medical, /obj/item/weapon/reagent_containers/syringe)
+		if("Research Director","Scientist","Roboticist")
+			favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/stack, /obj/item/weapon/reagent_containers)
+		if("Head of Security","Warden","Security Officer","Detective")
+			favoured_types = list(/obj/item/clothing, /obj/item/weapon, /obj/item/weapon/restraints)
+		if("Janitor")
+			favoured_types = list(/obj/item/weapon/mop, /obj/item/weapon/reagent_containers/glass/bucket, /obj/item/weapon/reagent_containers/spray/cleaner, /obj/effect/decal/cleanable)
+			functions += "dojanitor"
+		else
+			favoured_types = list(/obj/item/clothing)
+
 
 	if(TRAITS & TRAIT_ROBUST)
 		robustness = 75
@@ -219,7 +254,8 @@
 		toReturn = "Excited"
 	return toReturn
 //END DEBUG
-/mob/living/carbon/human/interactive/proc/isnotfunc(checkDead = TRUE)
+
+/mob/living/carbon/human/interactive/proc/IsDeadOrIncap(checkDead = TRUE)
 	if(!canmove)
 		return 1
 	if(health <= 0 && checkDead)
@@ -237,6 +273,12 @@
 	return 0
 
 /mob/living/carbon/human/interactive/proc/enforce_hands()
+	if(main_hand)
+		if(main_hand.loc != src)
+			main_hand = null
+	if(other_hand)
+		if(other_hand.loc != src)
+			other_hand = null
 	if(hand)
 		if(!l_hand)
 			main_hand = null
@@ -254,8 +296,10 @@
 	main_hand = other_hand
 	other_hand = T
 
-/mob/living/carbon/human/interactive/proc/take_to_slot(obj/item/G)
+/mob/living/carbon/human/interactive/proc/take_to_slot(obj/item/G, var/hands=0)
 	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_l_hand,"right hand" = slot_r_hand)
+	if(hands)
+		slots = list ("left hand" = slot_l_hand,"right hand" = slot_r_hand)
 	G.loc = src
 	if(G.force && G.force > best_force)
 		best_force = G.force
@@ -278,7 +322,7 @@
 
 /mob/living/carbon/human/interactive/Life()
 	..()
-	if(isnotfunc())
+	if(IsDeadOrIncap())
 		walk(src,0)
 		return
 	if(a_intent != "disarm")
@@ -293,7 +337,6 @@
 	if(interest > 100)
 		interest = 100
 	//---------------------------
-	nearby = list()
 	//VIEW FUNCTIONS
 
 	if(!l_hand || !r_hand)
@@ -323,13 +366,17 @@
 
 	//proc functions
 	for(var/Proc in functions)
-		if(!isnotfunc())
+		if(!IsDeadOrIncap())
 			callfunction(Proc)
 
 
 	//target interaction stays hardcoded
 
-	if((TARGET && (TARGET in view(1))) || timeout >= 2)
+	if(TARGET) // don't use blacklisted items
+		if(TARGET in blacklistItems)
+			TARGET = null
+
+	if((TARGET && (TARGET in view(1))))
 		if((TARGET in view(1,src)))//this is a bit redundant but it saves two if blocks
 			doing |= INTERACTING
 			//--------DOORS
@@ -342,31 +389,32 @@
 					tryWalk(T)
 			//THIEVING SKILLS
 			if(prob(slyness))
-				//---------TOOLS
-				if(istype(TARGET, /obj/item/weapon))
-					var/obj/item/weapon/W = TARGET
-					if(W.force >= best_force || prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
-						if(!l_hand || !r_hand)
-							take_to_slot(W)
-						else
-							insert_into_backpack()
-				//---------FASHION
-				if(istype(TARGET,/obj/item/clothing))
-					if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
-						if(!l_hand || !r_hand)
-							var/obj/item/clothing/C = TARGET
-							take_to_slot(C)
+				if(!TARGET in blacklistItems)
+					//---------TOOLS
+					if(istype(TARGET, /obj/item/weapon))
+						var/obj/item/weapon/W = TARGET
+						if(W.force >= best_force || prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
+							if(!l_hand || !r_hand)
+								take_to_slot(W)
+							else
+								insert_into_backpack()
+					//---------FASHION
+					if(istype(TARGET,/obj/item/clothing))
+						var/obj/item/clothing/C = TARGET
+						drop_item()
+						spawn(5)
+							take_to_slot(C,1)
 							if(!equip_to_appropriate_slot(C))
 								var/obj/item/I = get_item_by_slot(C)
 								unEquip(I)
-								equip_to_appropriate_slot(C)
-							update_hands = 1
-							drop_item()
-							if(MYPDA in src.loc || MYID in src.loc)
-								if(MYPDA in src.loc)
-									equip_to_appropriate_slot(MYPDA)
-								if(MYID in src.loc)
-									equip_to_appropriate_slot(MYID)
+								spawn(5)
+									equip_to_appropriate_slot(C)
+						update_hands = 1
+						if(MYPDA in src.loc || MYID in src.loc)
+							if(MYPDA in src.loc)
+								equip_to_appropriate_slot(MYPDA)
+							if(MYID in src.loc)
+								equip_to_appropriate_slot(MYID)
 			//THIEVING SKILLS END
 			//-------------TOUCH ME
 			if(istype(TARGET,/obj/structure))
@@ -376,70 +424,113 @@
 					STR.attackby(W, src)
 				else
 					STR.attack_hand(src)
-		interest = interest + 25
+		interest += targetInterestShift
 		doing = doing & ~INTERACTING
 		timeout = 0
 		TARGET = null
 	else
 		tryWalk(TARGET)
 		timeout++
-	if(!doing)
+
+	if(doing == 0)
 		interest--
 	else
 		interest++
+
 	if(inactivity_period > 0)
 		inactivity_period--
 
+	if(interest <= 0 || timeout >= 10) // facilitate boredom functions
+		TARGET = null
+		doing = 0
+		timeout = 0
+		myPath = list()
+
 	//this is boring, lets move
-	if(!doing && !isnotfunc() && !TARGET)
+	if(!doing && !IsDeadOrIncap() && !TARGET)
 		doing |= TRAVEL
 		if(nearby.len > 4)
 			//i'm crowded, time to leave
 			TARGET = pick(target_filter(urange(MAX_RANGE_FIND,src,1)))
-		else if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
-			//chance to chase an item
-			TARGET = locate(/obj/item) in urange(MIN_RANGE_FIND,src,1)
-		else if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
-			//chance to leave
-			TARGET = locate(/obj/machinery/door) in urange(MIN_RANGE_FIND,src,1) // this is a sort of fix for the current pathing.
 		else
-			//else, target whatever, or go to our department
-			if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
-				TARGET = pick(target_filter(urange(MIN_RANGE_FIND,src,1)))
-			else
-				TARGET = safepick(get_area_turfs(job2area(myjob)))
+			var/choice = rand(1,50)
+			switch(choice)
+				if(1 to 10)
+					//chance to chase an item
+					TARGET = locate(/obj/item) in favouredObjIn(oview(MIN_RANGE_FIND,src))
+				if(11 to 21)
+					TARGET = safepick(get_area_turfs(job2area(myjob)))
+				if(22 to 41)
+					TARGET = pick(target_filter(favouredObjIn(urange(MAX_RANGE_FIND,src,1))))
+				if(42 to 50)
+					TARGET = pick(target_filter(oview(MIN_RANGE_FIND,src)))
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
+
+/mob/living/carbon/human/interactive/proc/favouredObjIn(var/list/inList)
+	var/list/outList = list()
+	for(var/i in inList)
+		for(var/path in favoured_types)
+			if(ispath(i,path))
+				outList += i
+	if(outList.len <= 0)
+		outList = inList
+	return outList
 
 /mob/living/carbon/human/interactive/proc/callfunction(Proc)
 	set waitfor = 0
 	call(src,Proc)(src)
+
 /mob/living/carbon/human/interactive/proc/tryWalk(turf/TARGET)
-	if(!isnotfunc())
+	if(!IsDeadOrIncap())
 		if(!walk2derpless(TARGET))
 			timeout++
 	else
 		timeout++
 
+/mob/living/carbon/human/interactive/proc/getGoodPath(target,var/maxtries=512)
+	set background = 1
+	var/turf/end = get_turf(target)
+
+	var/turf/current = get_turf(src)
+
+	var/list/path = list()
+	var/tries = 0
+	while(current != end && tries < maxtries)
+		var/turf/shortest = current
+		for(var/turf/T in view(current,1))
+			var/foundDense = 0
+			for(var/atom/A in T)
+				if(A.density)
+					foundDense = 1
+			if(T.density == 0 && !foundDense)
+				if(get_dist(T, target) < get_dist(shortest,target))
+					shortest = T
+				else
+					tries++
+			else
+				tries++
+		current = shortest
+		path += shortest
+	return path
 
 /mob/living/carbon/human/interactive/proc/walk2derpless(target)
 	set background = 1
 	if(!target)
 		return 0
-	var/turf/T = get_turf(target)
-	var/turf/D = get_step(src,dir)
-	if(D)
-		if(!D.density)
-			walk_to(src,T,0,5)
+
+	if(myPath.len <= 0)
+		myPath = get_path_to(src, get_turf(target), /turf/proc/Distance, MAX_RANGE_FIND + 1, 250,1, id=Path_ID)
+
+	if(myPath)
+		if(myPath.len > 0)
 			doing = doing & ~TRAVEL
+			for(var/i = 0; i < maxStepsTick; ++i)
+				if(myPath.len >= 1)
+					walk_to(src,myPath[1],0,5)
+					myPath -= myPath[1]
 			return 1
-		else
-			sidestep(D)
-			doing = doing & ~TRAVEL
-			return 0
-	else
-		doing = doing & ~TRAVEL
-		return 0
+	return 0
 
 /mob/living/carbon/human/interactive/proc/job2area(target)
 	var/datum/job/T = target
@@ -461,18 +552,12 @@
 		return pick(/area/hallway,/area/crew_quarters)
 
 /mob/living/carbon/human/interactive/proc/target_filter(target)
+	var/list/filtered_targets = list(/area, /turf, /obj/machinery/door, /atom/movable/light, /obj/structure/cable, /obj/machinery/atmospherics)
 	var/list/L = target
-	for(var/atom/A in target)
-		if(istype(A,/area) || istype(A,/turf/space))
+	for(var/atom/A in target) // added a bunch of "junk" that clogs up the general find procs
+		if(is_type_in_list(A,filtered_targets))
 			L -= A
 	return L
-
-/mob/living/carbon/human/interactive/proc/denied_filter(target)
-	var/list/denied = list(/obj/structure/window,/obj/structure/table) //expand me
-	for(var/a in denied)
-		if(istype(target,a))
-			return 1
-	return 0
 
 ///BUILT IN MODULES
 /mob/living/carbon/human/interactive/proc/chatter(obj)
@@ -527,34 +612,58 @@
 /mob/living/carbon/human/interactive/proc/shitcurity(obj)
 	if(retal && TARGET)
 		for(var/obj/item/I in src.contents)
-			if(istype(I,/obj/item/weapon/restraints/handcuffs))
+			if(istype(I,/obj/item/weapon/restraints))
 				take_to_slot(I)
 				I.attack(TARGET,src)
 				sleep(25)
 
-/mob/living/carbon/human/interactive/proc/sidestep(obj)
-	var/shift = 0
-	for(var/dir in cardinal)
-		var/turf/T = get_step(src,dir)
-		if(T)
-			for(var/obj/A in T.contents)
-				if(denied_filter(A))
-					shift = 1
-			if(T.density)
-				shift = 1
-			if(shift)
-				if(src.dir == NORTH || SOUTH)
-					var/towalk = pick(EAST,WEST)
-					walk_to(src,get_step(src,towalk),0,5)
-				else
-					var/towalk = pick(NORTH,SOUTH)
-					walk_to(src,get_step(src,towalk),0,5)
+/mob/living/carbon/human/interactive/proc/healpeople(obj)
+	var/shouldTryHeal = 0
+	var/obj/item/stack/medical/M
+
+	var/list/allContents = list()
+
+	for(var/atom/A in contents)
+		allContents += A
+		if(A.contents.len > 0)
+			for(var/atom/B in A)
+				allContents += B
+
+	for(var/A in allContents)
+		if(istype(A,/obj/item/stack/medical))
+			shouldTryHeal = 1
+			M = A
+	if(shouldTryHeal)
+		for(var/mob/living/carbon/C in nearby)
+			if(istype(C,/mob/living/carbon)) //I haven't the foggiest clue why this is turning up non-carbons but sure here whatever
+				if(C.health <= 75)
+					if(get_dist(src,C) <= 2)
+						src.say("Wait, [C], let me heal you!")
+						M.attack(C,src)
+						sleep(25)
+					else
+						tryWalk(get_turf(C))
+
+/mob/living/carbon/human/interactive/proc/dojanitor(obj)
+	if(istype(main_hand,/obj/item/weapon/mop))
+		var/obj/item/weapon/mop/M = main_hand
+		if(M)
+			if(M.reagents.total_volume <= 5)
+				M.reagents.add_reagent("water", 25) // bluespess water delivery for AI
+			if(!istype(TARGET,/obj/effect/decal/cleanable))
+				TARGET = locate(/obj/effect/decal/cleanable) in urange(MAX_RANGE_FIND,src,1)
+			if(targetRange(TARGET) <= 2)
+				M.afterattack(TARGET,src)
+				sleep(25)
+			else
+				tryWalk(TARGET)
 
 /mob/living/carbon/human/interactive/proc/combat(obj)
 	set background = 1
 	enforce_hands()
 	if(canmove)
 		if(prob(attitude) && (graytide || (TRAITS & TRAIT_MEAN)) || retal)
+			interest = interest + 10
 			a_intent = "harm"
 			zone_selected = pick("chest","r_leg","l_leg","r_arm","l_arm","head")
 			doing |= FIGHTING
@@ -569,68 +678,115 @@
 				if(!M)
 					doing = doing & ~FIGHTING
 
+	//no infighting
+	if(retal)
+		if(retal_target)
+			if(retal_target.faction == src.faction)
+				if(prob(FUZZY_CHANCE_HIGH+FUZZY_CHANCE_LOW))	//high chance to forgive
+					retal = 0
+					retal_target = null
+					TARGET = null
+					doing = 0
+
+	//ensure we're using the best object possible
+
+	var/obj/item/weapon/best
+	var/foundFav = 0
+	for(var/test in src.contents)
+		for(var/a in favoured_types)
+			if(ispath(test,a) && !(doing & FIGHTING)) // if we're not in combat and we find our favourite things, use them (for people like janitor and doctors)
+				best = test
+				foundFav = 1
+				return
+		if(!foundFav)
+			if(istype(test,/obj/item/weapon))
+				var/obj/item/weapon/R = test
+				if(R.force > 2) // make sure we don't equip any non-weaponlike items, ie bags and stuff
+					if(!best)
+						best = R
+					else
+						if(best.force < R.force)
+							best = R
+					if(istype(R,/obj/item/weapon/gun))
+						var/obj/item/weapon/gun/G = R
+						if(G.can_shoot())
+							best = R
+							break // gun with ammo? screw the rest
+	if(best)
+		take_to_slot(best,1)
+
 	if((TARGET && (doing & FIGHTING)) || graytide) // this is a redundancy check
 		var/mob/living/M = TARGET
 		if(istype(M,/mob/living))
-			if(targetRange(M) <= FUZZY_CHANCE_LOW)
-				if(M.health > 1)
-					if(main_hand)
-						if(main_hand.force != 0)
-							if(istype(main_hand,/obj/item/weapon/gun/projectile))
-								var/obj/item/weapon/gun/projectile/P = main_hand
-								if(!P.chambered)
-									P.chamber_round()
-									P.update_icon()
-								else if(P.get_ammo(1) == 0)
-									P.attack_self(src)
+			if(M.health > 1)
+				if(main_hand)
+					if(main_hand.force != 0)
+						if(istype(main_hand,/obj/item/weapon/gun))
+							var/obj/item/weapon/gun/G = main_hand
+							if(G.can_trigger_gun(src))
+								if(istype(main_hand,/obj/item/weapon/gun/projectile))
+									var/obj/item/weapon/gun/projectile/P = main_hand
+									if(!P.chambered)
+										P.chamber_round()
+										P.update_icon()
+									else if(P.get_ammo(1) == 0)
+										P.update_icon()
+										blacklistItems += P
+										P.loc = get_turf(src) // drop item works inconsistently
+										enforce_hands()
+										update_icons()
+									else
+										P.afterattack(TARGET, src)
+								else if(istype(main_hand,/obj/item/weapon/gun/energy))
+									var/obj/item/weapon/gun/energy/P = main_hand
+									if(P.power_supply.charge <= 10) // can shoot seems to bug out for tasers, using this hacky method instead
+										P.update_icon()
+										blacklistItems += P
+										P.loc = get_turf(src) // likewise
+										enforce_hands()
+										update_icons()
+									else
+										P.afterattack(TARGET, src)
 								else
-									P.afterattack(TARGET, src)
-							else if(istype(main_hand,/obj/item/weapon/gun/energy))
-								var/obj/item/weapon/gun/energy/P = main_hand
-								if(!P.can_shoot())
-									P.update_icon()
-									drop_item()
-								else
-									P.afterattack(TARGET, src)
-							else
-								if(get_dist(src,TARGET) > 2)
-									if(!walk2derpless(TARGET))
-										timeout++
-								else
-									var/obj/item/weapon/W = main_hand
-									if(prob(robustness))
+									if(get_dist(src,TARGET) > 2)
+										if(!walk2derpless(TARGET))
+											timeout++
+									else
+										var/obj/item/weapon/W = main_hand
 										W.attack(TARGET,src)
-							sleep(1)
+							else
+								G.loc = get_turf(src) // drop item works inconsistently
+								enforce_hands()
+								update_icons()
+				else
+					if(targetRange(TARGET) > (istype(main_hand,/obj/item/weapon/gun) ? 6 : 2))
+						tryWalk(TARGET)
 					else
-						if(targetRange(TARGET) > 2)
-							tryWalk(TARGET)
-						else
-							if(Adjacent(TARGET))
-								M.attack_hand(src)
-								sleep(1)
-				timeout++
-			else if(timeout >= 10 || M.health <= 1 || !(targetRange(M) > 14))
-				doing = doing & ~FIGHTING
-				timeout = 0
-				TARGET = null
-				retal = 0
-				retal_target = null
+						if(Adjacent(TARGET))
+							M.attack_hand(src)
+			timeout++
+		else if(timeout >= 10 || !(targetRange(M) > 14))
+			doing = doing & ~FIGHTING
+			timeout = 0
+			TARGET = null
+			retal = 0
+			retal_target = null
 		else
 			timeout++
 
 /mob/living/carbon/human/interactive/proc/doorscan(obj)
-	for(var/dir in cardinal)
+	for(var/dir in alldirs)
 		var/turf/T = get_step(src,dir)
 		if(T)
 			for(var/obj/machinery/door/D in T.contents)
 				if(D.check_access(MYID) && !istype(D,/obj/machinery/door/poddoor) && D.density)
-					//layer 3.1 is "closed" for most doors, this is just a hacky !open check because i cannot find an open var
-					spawn(1)
+					spawn(0)
 						D.open()
 						sleep(5)
-						walk2derpless(get_step(D,dir))
+						walk_to(src,T,0,5)
 
 /mob/living/carbon/human/interactive/proc/nearbyscan(obj)
+	nearby = list()
 	for(var/mob/living/M in view(4,src))
 		if(M != src)
 			nearby += M

@@ -21,8 +21,14 @@
 		color = overmind.blob_reagent_datum.color
 
 /mob/living/simple_animal/hostile/blob/blob_act()
-	adjustHealth(-maxHealth*0.025)
-	return
+	if(health < maxHealth)
+		for(var/i in 1 to 2)
+			var/obj/effect/overlay/temp/heal/H = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(src)) //hello yes you are being healed
+			if(overmind)
+				H.color = overmind.blob_reagent_datum.complementary_color
+			else
+				H.color = "#000000"
+		adjustHealth(-maxHealth*0.025)
 
 /mob/living/simple_animal/hostile/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
@@ -68,7 +74,7 @@
 	melee_damage_upper = 4
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
-
+	flying = 1
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/obj/effect/blob/factory/factory = null
 	var/list/human_overlays = list()
@@ -103,6 +109,7 @@
 	desc = "A shambling corpse animated by the blob."
 	melee_damage_lower += 8
 	melee_damage_upper += 11
+	flying = 0
 	death_cloud_size = 0
 	icon = H.icon
 	icon_state = "zombie_s"

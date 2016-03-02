@@ -280,7 +280,7 @@
 				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
 			else
 				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
-			H.revive(fully_heal = 1)
+			H.revive(full_heal = 1)
 			qdel(src)
 	..()
 

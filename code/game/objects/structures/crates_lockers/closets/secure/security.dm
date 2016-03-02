@@ -50,6 +50,7 @@
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/clothing/tie/petcollar(src)
+	new /obj/item/weapon/door_remote/civillian(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
@@ -69,16 +70,16 @@
 	new /obj/item/clothing/head/HoS(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars(src)
-	new /obj/item/weapon/storage/lockbox/loyalty(src)
-	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/device/megaphone/sec(src)
-	new /obj/item/tapeproj/security(src)
+	new /obj/item/weapon/holosign_creator/security(src)
+	new /obj/item/weapon/storage/lockbox/loyalty(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
+	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/shield/riot/tele(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/weapon/gun/energy/gun/hos(src)
 	new /obj/item/weapon/door_remote/head_of_security(src)
+	new /obj/item/device/flashlight/seclite(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -94,13 +95,12 @@
 	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
 	new /obj/item/clothing/under/rank/warden/navyblue(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/weapon/holosign_creator/security(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
-	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/zipties(src)
-	new /obj/item/tapeproj/security(src)
-	new /obj/item/weapon/reagent_containers/spray/pepper(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
+	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
+	new /obj/item/device/flashlight/seclite(src)
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
@@ -110,20 +110,16 @@
 /obj/structure/closet/secure_closet/security/New()
 	..()
 	new /obj/item/clothing/suit/armor/vest(src)
-	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/device/radio/headset/headset_sec/alt(src)
-	new /obj/item/weapon/reagent_containers/spray/pepper(src)
-	new /obj/item/device/assembly/flash/handheld(src)
-	new /obj/item/weapon/grenade/flashbang(src)
-	new /obj/item/weapon/storage/belt/security/full(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/clothing/head/helmet/sec(src)
+	new /obj/item/device/radio/headset/headset_sec/alt(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/device/flashlight/seclite(src)
 
 /obj/structure/closet/secure_closet/security/sec
 
 /obj/structure/closet/secure_closet/security/sec/New()
 	..()
-	new /obj/item/weapon/melee/baton/loaded(src)
+	new /obj/item/weapon/storage/belt/security/full(src)
 
 /obj/structure/closet/secure_closet/security/cargo
 
@@ -175,7 +171,8 @@
 	new /obj/item/device/radio/headset/headset_sec/alt(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
-	new /obj/item/tapeproj/security(src)
+	new /obj/item/weapon/holosign_creator/security(src)
+	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/ammo_box/c38(src)
 	new /obj/item/ammo_box/c38(src)

@@ -1,131 +1,170 @@
-//These are meant for spawning on maps, namely Away Missions.
-
 //If someone can do this in a neater way, be my guest-Kor
 
 //To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
 
-/obj/effect/landmark/corpse
+/obj/effect/mob_spawn
 	name = "Unknown"
-	var/mobname = "default"  //Use for the ghost spawner variant, so they don't come out named "sleeper"
-	var/mobgender = MALE //Set to male by default due to the patriarchy. Other options include FEMALE and NEUTER
-	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
-	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
-	var/corpsesuit = null
-	var/corpseshoes = null
-	var/corpsegloves = null
-	var/corpseradio = null
-	var/corpseglasses = null
-	var/corpsemask = null
-	var/corpsehelmet = null
-	var/corpsebelt = null
-	var/corpsepocket1 = null
-	var/corpsepocket2 = null
-	var/corpseback = null
-	var/corpseid = 0     //Just set to 1 if you want them to have an ID
-	var/corpseidjob = null // Needs to be in quotes, such as "Clown" or "Chef." This just determines what the ID reads as, not their access
-	var/corpseidaccess = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
-	var/corpseidicon = null //For setting it to be a gold, silver, centcom etc ID
-	var/corpsehusk = null
-	var/corpsebrute = null //set brute damage on the corpse
-	var/corpseoxy = null //set suffocation damage on the corpse
-	var/roundstart = TRUE
-	var/death = TRUE
+	var/mob_type = null
+	var/mob_name = ""
+	var/mob_gender = MALE
+	var/death = TRUE //Kill the mob
+	var/roundstart = TRUE //fires on initialize
+	var/instant = FALSE	//fires on New
 	var/flavour_text = "The mapper forgot to set this!"
 	var/faction = null
-	var/list/implants = list()
+	var/objectives = null
+	var/brute_damage = 0
+	var/oxy_damage = 0
 	density = 1
 
-/obj/effect/landmark/corpse/initialize()
-	if(roundstart)
-		createCorpse(death = src.death)
-	else
+/obj/effect/mob_spawn/attack_ghost(mob/user)
+	if(ticker.current_state != GAME_STATE_PLAYING)
 		return
+	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
+	if(ghost_role == "No")
+		return
+	log_game("[user.ckey] became [mob_name]")
+	create(ckey = user.ckey)
 
-/obj/effect/landmark/corpse/New()
+/obj/effect/mob_spawn/initialize()
+	if(roundstart)
+		create()
+
+/obj/effect/mob_spawn/New()
 	..()
-	invisibility = 0
+	if(instant)
+		create()
 
-/obj/effect/landmark/corpse/proc/special(mob/new_spawn)
+/obj/effect/mob_spawn/proc/special(mob/M)
 	return
 
-/obj/effect/landmark/corpse/proc/createCorpse(death, ckey) //Creates a mob and checks for gear in each slot before attempting to equip it.
-	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
-	if(mobname != "default")
-		M.real_name = mobname
-	else
-		M.real_name = src.name
-	M.gender = src.mobgender
-	if(mob_species)
-		M.set_species(mob_species)
+/obj/effect/mob_spawn/proc/equip(mob/M)
+	return
+
+/obj/effect/mob_spawn/proc/create(ckey)
+	var/mob/living/M = new mob_type(loc) //living mobs only
+	M.real_name = mob_name ? mob_name : M.name
+	M.gender = mob_gender
+	if(faction)
+		M.faction = list(faction)
 	if(death)
 		M.death(1) //Kills the new mob
-		if(src.corpsehusk)
-			M.Drain()
-	if(faction)
-		M.faction = list(src.faction)
-	M.adjustBruteLoss(src.corpsebrute)
-	M.adjustOxyLoss(src.corpseoxy)
-	if(src.corpseuniform)
-		M.equip_to_slot_or_del(new src.corpseuniform(M), slot_w_uniform)
-	if(src.corpsesuit)
-		M.equip_to_slot_or_del(new src.corpsesuit(M), slot_wear_suit)
-	if(src.corpseshoes)
-		M.equip_to_slot_or_del(new src.corpseshoes(M), slot_shoes)
-	if(src.corpsegloves)
-		M.equip_to_slot_or_del(new src.corpsegloves(M), slot_gloves)
-	if(src.corpseradio)
-		M.equip_to_slot_or_del(new src.corpseradio(M), slot_ears)
-	if(src.corpseglasses)
-		M.equip_to_slot_or_del(new src.corpseglasses(M), slot_glasses)
-	if(src.corpsemask)
-		M.equip_to_slot_or_del(new src.corpsemask(M), slot_wear_mask)
-	if(src.corpsehelmet)
-		M.equip_to_slot_or_del(new src.corpsehelmet(M), slot_head)
-	if(src.corpsebelt)
-		M.equip_to_slot_or_del(new src.corpsebelt(M), slot_belt)
-	if(src.corpsepocket1)
-		M.equip_to_slot_or_del(new src.corpsepocket1(M), slot_r_store)
-	if(src.corpsepocket2)
-		M.equip_to_slot_or_del(new src.corpsepocket2(M), slot_l_store)
-	if(src.corpseback)
-		M.equip_to_slot_or_del(new src.corpseback(M), slot_back)
-	if(src.corpseid == 1)
-		var/obj/item/weapon/card/id/W = new(M)
-		var/datum/job/jobdatum
-		for(var/jobtype in typesof(/datum/job))
-			var/datum/job/J = new jobtype
-			if(J.title == corpseidaccess)
-				jobdatum = J
-				break
-		if(src.corpseidicon)
-			W.icon_state = corpseidicon
-		if(src.corpseidaccess)
-			if(jobdatum)
-				W.access = jobdatum.get_access()
-			else
-				W.access = list()
-		if(corpseidjob)
-			W.assignment = corpseidjob
-		W.registered_name = M.real_name
-		W.update_label()
-		M.equip_to_slot_or_del(W, slot_wear_id)
-
-	for(var/I in implants)
-		var/obj/item/weapon/implant/X = new I
-		X.implant(M)
+	
+	M.adjustOxyLoss(oxy_damage)
+	M.adjustBruteLoss(brute_damage)
+	equip(M)
 
 	if(ckey)
 		M.ckey = ckey
 		M << "[flavour_text]"
+		if(objectives)
+			var/datum/mind/MM = M.mind
+			for(var/objective in objectives)
+				MM.objectives += new/datum/objective(objective)
 		special(M)
 	qdel(src)
 
-/obj/effect/landmark/corpse/AICorpse/createCorpse() //Creates a corrupted AI
-	var/A = locate(/mob/living/silicon/ai) in loc //variable A looks for an AI at the location of the landmark
-	if(A) //if variable A is true
-		return //stop executing the proc
-	var/L = new /datum/ai_laws/default/asimov/ //variable L is a new Asimov lawset
-	var/B = new /obj/item/device/mmi/ //variable B is a new MMI
+// Base version - place these on maps/templates.
+/obj/effect/mob_spawn/human
+	mob_type = /mob/living/carbon/human
+	//Human specific stuff.
+	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
+	var/uniform = null //Set this to an object path to have the slot filled with said object on the corpse.
+	var/suit = null
+	var/shoes = null
+	var/gloves = null
+	var/radio = null
+	var/glasses = null
+	var/mask = null
+	var/helmet = null
+	var/belt = null
+	var/pocket1 = null
+	var/pocket2 = null
+	var/back = null
+	var/has_id = 0     //Just set to 1 if you want them to have an ID
+	var/id_job = null // Needs to be in quotes, such as "Clown" or "Chef." This just determines what the ID reads as, not their access
+	var/id_access = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
+	var/id_icon = null //For setting it to be a gold, silver, centcom etc ID
+	var/husk = null
+	var/outfit_type = null // Will start with this if exists then apply specific slots
+	var/list/implants = list()
+
+/obj/effect/mob_spawn/human/equip(mob/living/carbon/human/H)
+	if(mob_species)
+		H.set_species(mob_species)
+	if(husk)
+		H.Drain()
+	if(outfit_type)
+		H.equipOutfit(outfit_type)
+	if(uniform)
+		H.equip_to_slot_or_del(new uniform(H), slot_w_uniform)
+	if(suit)
+		H.equip_to_slot_or_del(new suit(H), slot_wear_suit)
+	if(shoes)
+		H.equip_to_slot_or_del(new shoes(H), slot_shoes)
+	if(gloves)
+		H.equip_to_slot_or_del(new gloves(H), slot_gloves)
+	if(radio)
+		H.equip_to_slot_or_del(new radio(H), slot_ears)
+	if(glasses)
+		H.equip_to_slot_or_del(new glasses(H), slot_glasses)
+	if(mask)
+		H.equip_to_slot_or_del(new mask(H), slot_wear_mask)
+	if(helmet)
+		H.equip_to_slot_or_del(new helmet(H), slot_head)
+	if(belt)
+		H.equip_to_slot_or_del(new belt(H), slot_belt)
+	if(pocket1)
+		H.equip_to_slot_or_del(new pocket1(H), slot_r_store)
+	if(pocket2)
+		H.equip_to_slot_or_del(new pocket2(H), slot_l_store)
+	if(back)
+		H.equip_to_slot_or_del(new back(H), slot_back)
+	if(has_id)
+		var/obj/item/weapon/card/id/W = new(H)
+		if(id_icon)
+			W.icon_state = id_icon
+		if(id_access)
+			var/datum/job/jobdatum
+			for(var/jobtype in typesof(/datum/job))
+				var/datum/job/J = new jobtype
+				if(J.title == id_access)
+					jobdatum = J
+					break
+			if(jobdatum)
+				W.access = jobdatum.get_access()
+			else
+				W.access = list()
+		if(id_job)
+			W.assignment = id_job
+		W.registered_name = H.real_name
+		W.update_label()
+		H.equip_to_slot_or_del(W, slot_wear_id)
+
+	for(var/I in implants)
+		var/obj/item/weapon/implant/X = new I
+		X.implant(H)
+
+//Instant version - use when spawning corpses during runtime
+/obj/effect/mob_spawn/human/corpse
+	roundstart = FALSE
+	instant = TRUE
+
+/obj/effect/mob_spawn/human/alive
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	death = FALSE
+	roundstart = FALSE //you could use these for alive fake humans on roundstart but this is more common scenario
+
+
+//Non-human spawners
+
+/obj/effect/mob_spawn/AICorpse/create() //Creates a corrupted AI
+	var/A = locate(/mob/living/silicon/ai) in loc 
+	if(A) 
+		return
+	var/L = new /datum/ai_laws/default/asimov
+	var/B = new /obj/item/device/mmi
 	var/mob/living/silicon/ai/M = new(src.loc, L, B, 1) //spawn new AI at landmark as var M
 	M.name = src.name
 	M.real_name = src.name
@@ -133,21 +172,16 @@
 	M.death() //call the AI's death proc
 	qdel(src)
 
-/obj/effect/landmark/corpse/slimeCorpse
+/obj/effect/mob_spawn/slime
+	mob_type = 	/mob/living/simple_animal/slime
 	var/mobcolour = "grey"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime" //sets the icon in the map editor
 
-/obj/effect/landmark/corpse/slimeCorpse/createCorpse() //proc creates a dead slime
-	var/A = locate(/mob/living/simple_animal/slime/) in loc //variable A looks for a slime at the location of the landmark
-	if(A) //if variable A is true
-		return //stop executing the proc
-	var/mob/living/simple_animal/slime/M = new(src.loc) //variable M is a new slime at the location of the landmark
-	M.colour = src.mobcolour //slime colour is set by landmark's mobcolour var
-	M.adjustToxLoss(9001) //kills the slime, death() doesn't update its icon correctly
-	qdel(src)
+/obj/effect/mob_spawn/slime/equip(mob/living/simple_animal/slime/S)
+	S.colour = mobcolour
 
-/obj/effect/landmark/corpse/facehugCorpse/createCorpse() //Creates a squashed facehugger
+/obj/effect/mob_spawn/human/facehugger/create() //Creates a squashed facehugger
 	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
 	O.name = src.name
 	O.Die() //call the facehugger's death proc
@@ -156,212 +190,217 @@
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
 
-/obj/effect/landmark/corpse/syndicatesoldier
+/obj/effect/mob_spawn/human/syndicatesoldier
 	name = "Syndicate Operative"
-	corpseuniform = /obj/item/clothing/under/syndicate
-	corpsesuit = /obj/item/clothing/suit/armor/vest
-	corpseshoes = /obj/item/clothing/shoes/combat
-	corpsegloves = /obj/item/clothing/gloves/combat
-	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas
-	corpsehelmet = /obj/item/clothing/head/helmet/swat
-	corpseback = /obj/item/weapon/storage/backpack
-	corpseid = 1
-	corpseidjob = "Operative"
-	corpseidaccess = "Syndicate"
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/armor/vest
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	radio = /obj/item/device/radio/headset
+	mask = /obj/item/clothing/mask/gas
+	helmet = /obj/item/clothing/head/helmet/swat
+	back = /obj/item/weapon/storage/backpack
+	has_id = 1
+	id_job = "Operative"
+	id_access = "Syndicate"
 
-
-
-/obj/effect/landmark/corpse/syndicatecommando
+/obj/effect/mob_spawn/human/syndicatecommando
 	name = "Syndicate Commando"
-	corpseuniform = /obj/item/clothing/under/syndicate
-	corpsesuit = /obj/item/clothing/suit/space/hardsuit/syndi
-	corpseshoes = /obj/item/clothing/shoes/combat
-	corpsegloves = /obj/item/clothing/gloves/combat
-	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas/syndicate
-	corpsehelmet = /obj/item/clothing/head/helmet/space/hardsuit/syndi
-	corpseback = /obj/item/weapon/tank/jetpack/oxygen
-	corpsepocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
-	corpseid = 1
-	corpseidjob = "Operative"
-	corpseidaccess = "Syndicate"
-
-
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	radio = /obj/item/device/radio/headset
+	mask = /obj/item/clothing/mask/gas/syndicate
+	helmet = /obj/item/clothing/head/helmet/space/hardsuit/syndi
+	back = /obj/item/weapon/tank/jetpack/oxygen
+	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
+	has_id = 1
+	id_job = "Operative"
+	id_access = "Syndicate"
 
 ///////////Civilians//////////////////////
 
-/obj/effect/landmark/corpse/cook
+/obj/effect/mob_spawn/human/cook
 	name = "Cook"
-	corpseuniform = /obj/item/clothing/under/rank/chef
-	corpsesuit = /obj/item/clothing/suit/apron/chef
-	corpseshoes = /obj/item/clothing/shoes/sneakers/black
-	corpsehelmet = /obj/item/clothing/head/chefhat
-	corpseback = /obj/item/weapon/storage/backpack
-	corpseradio = /obj/item/device/radio/headset
-	corpseid = 1
-	corpseidjob = "Cook"
-	corpseidaccess = "Cook"
+	uniform = /obj/item/clothing/under/rank/chef
+	suit = /obj/item/clothing/suit/apron/chef
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	helmet = /obj/item/clothing/head/chefhat
+	back = /obj/item/weapon/storage/backpack
+	radio = /obj/item/device/radio/headset
+	has_id = 1
+	id_job = "Cook"
+	id_access = "Cook"
 
 
-/obj/effect/landmark/corpse/doctor
+/obj/effect/mob_spawn/human/doctor
 	name = "Doctor"
-	corpseradio = /obj/item/device/radio/headset/headset_med
-	corpseuniform = /obj/item/clothing/under/rank/medical
-	corpsesuit = /obj/item/clothing/suit/toggle/labcoat
-	corpseback = /obj/item/weapon/storage/backpack/medic
-	corpsepocket1 = /obj/item/device/flashlight/pen
-	corpseshoes = /obj/item/clothing/shoes/sneakers/black
-	corpseid = 1
-	corpseidjob = "Medical Doctor"
-	corpseidaccess = "Medical Doctor"
+	radio = /obj/item/device/radio/headset/headset_med
+	uniform = /obj/item/clothing/under/rank/medical
+	suit = /obj/item/clothing/suit/toggle/labcoat
+	back = /obj/item/weapon/storage/backpack/medic
+	pocket1 = /obj/item/device/flashlight/pen
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	has_id = 1
+	id_job = "Medical Doctor"
+	id_access = "Medical Doctor"
 
-/obj/effect/landmark/corpse/engineer
+/obj/effect/mob_spawn/human/engineer
 	name = "Engineer"
-	corpseradio = /obj/item/device/radio/headset/headset_eng
-	corpseuniform = /obj/item/clothing/under/rank/engineer
-	corpseback = /obj/item/weapon/storage/backpack/industrial
-	corpseshoes = /obj/item/clothing/shoes/sneakers/orange
-	corpsebelt = /obj/item/weapon/storage/belt/utility/full
-	corpsegloves = /obj/item/clothing/gloves/color/yellow
-	corpsehelmet = /obj/item/clothing/head/hardhat
-	corpseid = 1
-	corpseidjob = "Station Engineer"
-	corpseidaccess = "Station Engineer"
+	radio = /obj/item/device/radio/headset/headset_eng
+	uniform = /obj/item/clothing/under/rank/engineer
+	back = /obj/item/weapon/storage/backpack/industrial
+	shoes = /obj/item/clothing/shoes/sneakers/orange
+	belt = /obj/item/weapon/storage/belt/utility/full
+	gloves = /obj/item/clothing/gloves/color/yellow
+	helmet = /obj/item/clothing/head/hardhat
+	has_id = 1
+	id_job = "Station Engineer"
+	id_access = "Station Engineer"
 
-/obj/effect/landmark/corpse/engineer/rig
-	corpsesuit = /obj/item/clothing/suit/space/hardsuit/engine
-	corpsemask = /obj/item/clothing/mask/breath
+/obj/effect/mob_spawn/human/engineer/rig
+	suit = /obj/item/clothing/suit/space/hardsuit/engine
+	mask = /obj/item/clothing/mask/breath
 
-/obj/effect/landmark/corpse/clown
+/obj/effect/mob_spawn/human/clown
 	name = "Clown"
-	corpseuniform = /obj/item/clothing/under/rank/clown
-	corpseshoes = /obj/item/clothing/shoes/clown_shoes
-	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas/clown_hat
-	corpsepocket1 = /obj/item/weapon/bikehorn
-	corpseback = /obj/item/weapon/storage/backpack/clown
-	corpseid = 1
-	corpseidjob = "Clown"
-	corpseidaccess = "Clown"
+	uniform = /obj/item/clothing/under/rank/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes
+	radio = /obj/item/device/radio/headset
+	mask = /obj/item/clothing/mask/gas/clown_hat
+	pocket1 = /obj/item/weapon/bikehorn
+	back = /obj/item/weapon/storage/backpack/clown
+	has_id = 1
+	id_job = "Clown"
+	id_access = "Clown"
 
-/obj/effect/landmark/corpse/scientist
+/obj/effect/mob_spawn/human/scientist
 	name = "Scientist"
-	corpseradio = /obj/item/device/radio/headset/headset_sci
-	corpseuniform = /obj/item/clothing/under/rank/scientist
-	corpsesuit = /obj/item/clothing/suit/toggle/labcoat/science
-	corpseback = /obj/item/weapon/storage/backpack
-	corpseshoes = /obj/item/clothing/shoes/sneakers/white
-	corpseid = 1
-	corpseidjob = "Scientist"
-	corpseidaccess = "Scientist"
+	radio = /obj/item/device/radio/headset/headset_sci
+	uniform = /obj/item/clothing/under/rank/scientist
+	suit = /obj/item/clothing/suit/toggle/labcoat/science
+	back = /obj/item/weapon/storage/backpack
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	has_id = 1
+	id_job = "Scientist"
+	id_access = "Scientist"
 
-/obj/effect/landmark/corpse/miner
-	corpseradio = /obj/item/device/radio/headset/headset_cargo
-	corpseuniform = /obj/item/clothing/under/rank/miner
-	corpsegloves = /obj/item/clothing/gloves/fingerless
-	corpseback = /obj/item/weapon/storage/backpack/industrial
-	corpseshoes = /obj/item/clothing/shoes/sneakers/black
-	corpseid = 1
-	corpseidjob = "Shaft Miner"
-	corpseidaccess = "Shaft Miner"
+/obj/effect/mob_spawn/human/miner
+	radio = /obj/item/device/radio/headset/headset_cargo
+	uniform = /obj/item/clothing/under/rank/miner
+	gloves = /obj/item/clothing/gloves/fingerless
+	back = /obj/item/weapon/storage/backpack/industrial
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	has_id = 1
+	id_job = "Shaft Miner"
+	id_access = "Shaft Miner"
 
-/obj/effect/landmark/corpse/miner/rig
-	corpsesuit = /obj/item/clothing/suit/space/hardsuit/mining
-	corpsemask = /obj/item/clothing/mask/breath
+/obj/effect/mob_spawn/human/miner/rig
+	suit = /obj/item/clothing/suit/space/hardsuit/mining
+	mask = /obj/item/clothing/mask/breath
 
 
-/obj/effect/landmark/corpse/plasmaman
+/obj/effect/mob_spawn/human/plasmaman
 	mob_species = /datum/species/plasmaman
-	corpsehelmet = /obj/item/clothing/head/helmet/space/plasmaman
-	corpseuniform = /obj/item/clothing/under/plasmaman
-	corpseback = /obj/item/weapon/tank/internals/plasmaman/full
-	corpsemask = /obj/item/clothing/mask/breath
+	helmet = /obj/item/clothing/head/helmet/space/plasmaman
+	uniform = /obj/item/clothing/under/plasmaman
+	back = /obj/item/weapon/tank/internals/plasmaman/full
+	mask = /obj/item/clothing/mask/breath
 
 
+/obj/effect/mob_spawn/human/bartender
+	name = "Space Bartender"
+	uniform = /obj/item/clothing/under/rank/bartender
+	back = /obj/item/weapon/storage/backpack
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	suit = /obj/item/clothing/suit/armor
+	glasses = /obj/item/clothing/glasses/sunglasses/reagent
+	has_id = 1
+	id_job = "Bartender"
+	id_access = "Bartender"
+
+/obj/effect/mob_spawn/human/bartender/alive
+	death = FALSE
+	roundstart = FALSE
+	mob_name = "Space Bartender"
+	name = "sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	flavour_text = "You are a space bartender!"
 
 /////////////////Officers+Nanotrasen Security//////////////////////
 
-/obj/effect/landmark/corpse/bridgeofficer
+/obj/effect/mob_spawn/human/bridgeofficer
 	name = "Bridge Officer"
-	corpseradio = /obj/item/device/radio/headset/heads/hop
-	corpseuniform = /obj/item/clothing/under/rank/centcom_officer
-	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
-	corpseshoes = /obj/item/clothing/shoes/sneakers/black
-	corpseglasses = /obj/item/clothing/glasses/sunglasses
-	corpseid = 1
-	corpseidjob = "Bridge Officer"
-	corpseidaccess = "Captain"
+	radio = /obj/item/device/radio/headset/heads/hop
+	uniform = /obj/item/clothing/under/rank/centcom_officer
+	suit = /obj/item/clothing/suit/armor/bulletproof
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	glasses = /obj/item/clothing/glasses/sunglasses
+	has_id = 1
+	id_job = "Bridge Officer"
+	id_access = "Captain"
 
-/obj/effect/landmark/corpse/commander
+/obj/effect/mob_spawn/human/commander
 	name = "Commander"
-	corpseuniform = /obj/item/clothing/under/rank/centcom_commander
-	corpsesuit = /obj/item/clothing/suit/armor
-	corpseradio = /obj/item/device/radio/headset/heads/captain
-	corpseglasses = /obj/item/clothing/glasses/eyepatch
-	corpsemask = /obj/item/clothing/mask/cigarette/cigar/cohiba
-	corpsehelmet = /obj/item/clothing/head/centhat
-	corpsegloves = /obj/item/clothing/gloves/combat
-	corpseshoes = /obj/item/clothing/shoes/combat/swat
-	corpsepocket1 = /obj/item/weapon/lighter
-	corpseid = 1
-	corpseidjob = "Commander"
-	corpseidaccess = "Captain"
+	uniform = /obj/item/clothing/under/rank/centcom_commander
+	suit = /obj/item/clothing/suit/armor
+	radio = /obj/item/device/radio/headset/heads/captain
+	glasses = /obj/item/clothing/glasses/eyepatch
+	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
+	helmet = /obj/item/clothing/head/centhat
+	gloves = /obj/item/clothing/gloves/combat
+	shoes = /obj/item/clothing/shoes/combat/swat
+	pocket1 = /obj/item/weapon/lighter
+	has_id = 1
+	id_job = "Commander"
+	id_access = "Captain"
 
-/obj/effect/landmark/corpse/nanotrasensoldier
+/obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"
-	corpseuniform = /obj/item/clothing/under/rank/security
-	corpsesuit = /obj/item/clothing/suit/armor/vest
-	corpseshoes = /obj/item/clothing/shoes/combat
-	corpsegloves = /obj/item/clothing/gloves/combat
-	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas/sechailer/swat
-	corpsehelmet = /obj/item/clothing/head/helmet/swat/nanotrasen
-	corpseback = /obj/item/weapon/storage/backpack/security
-	corpseid = 1
-	corpseidjob = "Private Security Force"
-	corpseidaccess = "Security Officer"
+	uniform = /obj/item/clothing/under/rank/security
+	suit = /obj/item/clothing/suit/armor/vest
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	radio = /obj/item/device/radio/headset
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	helmet = /obj/item/clothing/head/helmet/swat/nanotrasen
+	back = /obj/item/weapon/storage/backpack/security
+	has_id = 1
+	id_job = "Private Security Force"
+	id_access = "Security Officer"
 
-/obj/effect/landmark/corpse/commander/alive
+/obj/effect/mob_spawn/human/commander/alive
 	death = FALSE
 	roundstart = FALSE
-	mobname = "Nanotrasen Commander"
+	mob_name = "Nanotrasen Commander"
 	name = "sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a Nanotrasen Commander!"
 
-/obj/effect/landmark/corpse/attack_ghost(mob/user)
-	if(ticker.current_state != GAME_STATE_PLAYING)
-		return
-	var/ghost_role = alert("Become [mobname]? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(ghost_role == "No")
-		return
-	createCorpse(death = src.death, ckey = user.ckey)
-
 /////////////////Spooky Undead//////////////////////
 
-/obj/effect/landmark/corpse/skeleton
+/obj/effect/mob_spawn/human/skeleton
 	name = "skeletal remains"
-	mobname = "skeleton"
+	mob_name = "skeleton"
 	mob_species = /datum/species/skeleton
-	mobgender = NEUTER
+	mob_gender = NEUTER
 
-
-/obj/effect/landmark/corpse/skeleton/alive
+/obj/effect/mob_spawn/human/skeleton/alive
 	death = FALSE
 	roundstart = FALSE
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
 	flavour_text = "By unknown powers, your skeletal remains have been reanimated! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
 
-
-/obj/effect/landmark/corpse/zombie
+/obj/effect/mob_spawn/human/zombie
 	name = "rotting corpse"
-	mobname = "zombie"
+	mob_name = "zombie"
 	mob_species = /datum/species/zombie
 
-/obj/effect/landmark/corpse/zombie/alive
+/obj/effect/mob_spawn/human/zombie/alive
 	death = FALSE
 	roundstart = FALSE
 	icon = 'icons/effects/blood.dmi'
@@ -369,27 +408,32 @@
 	flavour_text = "By unknown powers, your rotting remains have been resurrected! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
 
 
-/obj/effect/landmark/corpse/abductor
+/obj/effect/mob_spawn/human/abductor
 	name = "abductor"
-	mobname = "???"
+	mob_name = "???"
 	mob_species = /datum/species/abductor
-	corpseuniform = /obj/item/clothing/under/color/grey
-	corpseshoes = /obj/item/clothing/shoes/combat
+	uniform = /obj/item/clothing/under/color/grey
+	shoes = /obj/item/clothing/shoes/combat
 
 ///Prisoner
 
-/obj/effect/landmark/corpse/prisoner_transport
+/obj/effect/mob_spawn/human/prisoner_transport
 	name = "prisoner sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-	corpseuniform = /obj/item/clothing/under/rank/prisoner
-	corpsemask = /obj/item/clothing/mask/breath
-	corpseshoes = /obj/item/clothing/shoes/sneakers/orange
-	corpsepocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
+	uniform = /obj/item/clothing/under/rank/prisoner
+	mask = /obj/item/clothing/mask/breath
+	shoes = /obj/item/clothing/shoes/sneakers/orange
+	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	roundstart = FALSE
 	death = FALSE
 	flavour_text = {"You were a prisoner, sentenced to hard labour in one of Nanotrasen's harsh gulags, but judging by the explosive crash you just survived, fate may have other plans for. First thing is first though: Find a way to survive this mess."}
 
-/obj/effect/landmark/corpse/prisoner_transport/special(mob/living/new_spawn)
+/obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/new_spawn)
 	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "syndicate collaboration", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting your manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
 	new_spawn << "You were convincted of: [crime]."
+
+
+//NEWCODE
+
+

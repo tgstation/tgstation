@@ -114,7 +114,7 @@
 				newletter+="[newletter][newletter]"
 		newphrase+="[newletter]";counter-=1
 	return newphrase
-
+	
 /proc/stutter(n)
 	var/te = html_decode(n)
 	var/t = ""//placed before the message. Not really sure what it's for.

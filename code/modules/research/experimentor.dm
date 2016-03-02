@@ -576,7 +576,7 @@
 				var/list/temp_tech = ConvertReqString2List(process.origin_tech)
 				for(var/T in temp_tech)
 					linked_console.files.UpdateTech(T, temp_tech[T])
-				linked_console.files.UpdateDesigns(process,process.type)
+				linked_console.files.UpdateDesigns(process,temp_tech)
 	src.updateUsrDialog()
 	return
 

@@ -26,9 +26,7 @@ mob/living/carbon/getorganszone(zone, var/subzones = 0)
 	return returnorg
 
 mob/living/carbon/getorganslot(slot)
-	for(var/obj/item/organ/internal/O in internal_organs)
-		if(slot == O.slot)
-			return O
+	return internal_organs_slot[slot]
 
 mob/proc/getlimb()
 	return

@@ -251,11 +251,26 @@
 				var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
 				var/limb_name = affecting.getDisplayName()
 				if(affecting.name == "head" || affecting.name == "eyes" || affecting.name == "mouth")
-					user.apply_damage(300, BRUTE, affecting)
-					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
+					shoot_self(user, affecting)
 				else
 					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at \his [limb_name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [limb_name]!</span>", "<span class='italics'>You hear a gunshot!</span>")
 				return
 
 		user.visible_message("<span class='danger'>*click*</span>")
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+
+/obj/item/weapon/gun/projectile/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = "head")
+	user.apply_damage(300, BRUTE, affecting)
+	user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
+
+/obj/item/weapon/gun/projectile/revolver/russian/soul
+	name = "cursed russian revolver"
+	desc = "To play with this revolver requires wagering your very soul."
+
+/obj/item/weapon/gun/projectile/revolver/russian/soul/shoot_self(mob/living/user)
+	..()
+	var/obj/item/device/soulstone/anybody/SS = new /obj/item/device/soulstone/anybody(get_turf(src))
+	if(!SS.transfer_soul("FORCE", user)) //Something went wrong
+		qdel(SS)
+		return
+	user.visible_message("<span class='danger'>[user.name]'s soul is captured by \the [src]!</span>", "<span class='userdanger'>You've lost the gamble! Your soul is forfiet!</span>")

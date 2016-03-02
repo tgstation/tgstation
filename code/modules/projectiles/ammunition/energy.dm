@@ -8,11 +8,11 @@
 	fire_sound = 'sound/weapons/Laser.ogg'
 
 /obj/item/ammo_casing/energy/laser
-	projectile_type = /obj/item/projectile/beam
+	projectile_type = /obj/item/projectile/beam/laser
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun
-	projectile_type = /obj/item/projectile/beam
+	projectile_type = /obj/item/projectile/beam/laser
 	e_cost = 83
 	select_name = "kill"
 
@@ -30,7 +30,7 @@
 	select_name = "scatter"
 
 /obj/item/ammo_casing/energy/laser/heavy
-	projectile_type = /obj/item/projectile/beam/heavylaser
+	projectile_type = /obj/item/projectile/beam/laser/heavylaser
 	select_name = "anti-vehicle"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 

@@ -129,9 +129,9 @@ Sorry Giacom. Please don't be mad :(
 	if(!(M.status_flags & CANPUSH))
 		return 1
 	//anti-riot equipment is also anti-push
-	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
+	if(M.r_hand && (prob(M.r_hand.block_chance * 2)) && !istype(M.r_hand, /obj/item/clothing))
 		return 1
-	if(M.l_hand && istype(M.l_hand, /obj/item/weapon/shield/riot))
+	if(M.l_hand && (prob(M.l_hand.block_chance * 2)) && !istype(M.l_hand, /obj/item/clothing))
 		return 1
 
 //Called when we bump onto an obj
@@ -142,6 +142,8 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
 		return 1
+	if(!client && (mob_size < MOB_SIZE_SMALL))
+		return
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
@@ -308,6 +310,7 @@ Sorry Giacom. Please don't be mad :(
 	if(status_flags & GODMODE)
 		return 0
 	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
+
 /mob/living/proc/setBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return 0
@@ -316,28 +319,30 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
-/mob/living/proc/adjustStaminaLoss(amount)
+/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1)
 	return
 
-/mob/living/carbon/adjustStaminaLoss(amount)
+/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
 		return 0
 	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
-	update_stamina()
+	if(updating_stamina)
+		update_stamina()
 
-/mob/living/carbon/alien/adjustStaminaLoss(amount)
+/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1)
 	return
 
-/mob/living/proc/setStaminaLoss(amount)
+/mob/living/proc/setStaminaLoss(amount, updating_stamina = 1)
 	return
 
-/mob/living/carbon/setStaminaLoss(amount)
+/mob/living/carbon/setStaminaLoss(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
 		return 0
 	staminaloss = amount
-	update_stamina()
+	if(updating_stamina)
+		update_stamina()
 
-/mob/living/carbon/alien/setStaminaLoss(amount)
+/mob/living/carbon/alien/setStaminaLoss(amount, updating_stamina = 1)
 	return
 
 /mob/living/proc/getMaxHealth()

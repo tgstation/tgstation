@@ -264,3 +264,10 @@
 	var/obj/item/I = get_active_hand()
 	if (I)
 		I.equip_to_best_slot(src)
+
+//used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
+/mob/proc/getBackSlot()
+	return slot_back
+
+/mob/proc/getBeltSlot()
+	return slot_belt

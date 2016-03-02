@@ -381,10 +381,9 @@ var/list/VVckey_edit = list("key", "ckey")
 	if(!check_rights(R_VAREDIT))
 		return
 
-	for(var/p in forbidden_varedit_object_types)
-		if( istype(O,p) )
-			usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
-			return
+	if(is_type_in_list(O, forbidden_varedit_object_types))
+		usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
+		return
 
 	if(istype(O, /client) && (param_var_name == "ckey" || param_var_name == "key"))
 		usr << "<span class='danger'>You cannot edit ckeys on client objects.</span>"
@@ -606,8 +605,14 @@ var/list/VVckey_edit = list("key", "ckey")
 				O.vars[variable] = var_new
 
 		if("type")
-			var/var_new = input("Enter type:","Type",O.vars[variable]) as null|anything in typesof(/obj,/mob,/area,/turf)
-			if(var_new==null) return
+			var/target_path = input("Enter type:", "Type", O.vars[variable]) as null|text
+			if(!target_path)
+				return
+			var/var_new = text2path(target_path)
+			if(!ispath(var_new))
+				var_new = pick_closest_path(target_path)
+			if(!var_new)
+				return
 			O.vars[variable] = var_new
 
 		if("reference")

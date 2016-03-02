@@ -88,6 +88,8 @@
 			wear_suit = I
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_inv_w_uniform()
+			if(wear_suit.breakouttime) //when equipping a straightjacket
+				update_action_buttons_icon() //certain action buttons will no longer be usable.
 			update_inv_wear_suit()
 		if(slot_w_uniform)
 			w_uniform = I
@@ -113,6 +115,8 @@
 	if(I == wear_suit)
 		if(s_store)
 			unEquip(s_store, 1) //It makes no sense for your suit storage to stay on you if you drop your suit.
+		if(wear_suit.breakouttime) //when unequipping a straightjacket
+			update_action_buttons_icon() //certain action buttons may be usable again.
 		wear_suit = null
 		if(I.flags_inv & HIDEJUMPSUIT)
 			update_inv_w_uniform()
@@ -166,10 +170,10 @@
 		s_store = null
 		update_inv_s_store()
 
-/mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, unequip = 1)
+/mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
 	if((C.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(C.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_hair()
-	if(unequip && internal)
+	if(toggle_off && internal && !getorganslot("breathing_tube"))
 		update_internals_hud_icon(0)
 		internal = null
 	if(C.flags_inv & HIDEEYES)
