@@ -94,6 +94,7 @@
 /obj/structure/displaycase/gooncode/New()
 	..()
 	occupant=new /obj/item/toy/gooncode(src)
+	desc = "The glass is cracked and there are traces of something leaking out."
 	locked=1
 	req_access=list(access_captain)
 	update_icon()
