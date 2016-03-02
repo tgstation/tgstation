@@ -17,10 +17,10 @@ Bonus
 */
 /datum/symptom/sensory_restoration
 	name = "Sensory Restoration"
-	stealth = -5
+	stealth = -1
 	resistance = -4
 	stage_speed = -4
-	transmittable = -5
+	transmittable = -3
 	level = 6
 	severity = 0
 
@@ -70,7 +70,7 @@ Bonus
 	stealth = -1
 	resistance = -2
 	stage_speed = -3
-	transmittable = -5
+	transmittable = -4
 	level = 6
 	severity = 5
 
@@ -84,12 +84,12 @@ Bonus
 			if(2)
 				M << "<span class='warning'><b>You can't anything with your fingers.</b></span>"
 			if(3)
-				M.reagents.add_reagent("ethanol"=rand(7,25))
+				M.reagents.add_reagent("ethanol",rand(7,10))
 				M << "<span class='warning'><b>You feel absolutely hammered.</b></span>"
 			if(4)
-				M.reagents.add_reagent_list(list("ethanol"=rand(7,25),"mindbreaker"=rand(5,15)))
+				M.reagents.add_reagent_list(list("ethanol",rand(7,15),"mindbreaker",rand(5,10)))
 				M << "<span class='warning'><b>You try to focus on not dying.</b></span>"
 			if(5)
-				M.reagents.add_reagent_list(list("impedrezene"=rand(5,15),"ethanol"=rand(7,25),"mindbreaker"=rand(5,15)))
+				M.reagents.add_reagent_list(list("impedrezene",rand(5,15),"ethanol",rand(7,20),"mindbreaker",rand(5,15)))
 				M << "<span class='warning'><b>u can count 2 potato!</b></span>"
 	return
