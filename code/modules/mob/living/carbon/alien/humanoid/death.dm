@@ -25,7 +25,11 @@
 	if(stat == DEAD)
 		return
 
-	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
-		A.queen_death() //SCREEEEEEEEE!!
+	for(var/mob/living/carbon/C in living_mob_list)
+		if(C == src) //Make sure not to proc it on ourselves.
+			continue
+		var/obj/item/organ/internal/alien/hivenode/node = C.getorgan(/obj/item/organ/internal/alien/hivenode)
+		if(istype(node)) // just in case someone would ever add a diffirent node to hivenode slot
+			node.queen_death()
 
 	return ..(gibbed)

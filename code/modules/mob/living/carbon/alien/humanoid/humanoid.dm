@@ -13,7 +13,6 @@
 	var/custom_pixel_x_offset = 0 //for admin fuckery.
 	var/custom_pixel_y_offset = 0
 	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
-	var/recent_queen_death = 0 //Indicates if the queen died recently, aliens are heavily weakened while this is active.
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
@@ -168,23 +167,3 @@ proc/alien_type_present(var/alienpath)
 			continue
 		return 1
 	return 0
-
-//When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
-/mob/living/carbon/alien/humanoid/proc/queen_death()
-	if(stat == DEAD)
-		return
-	src << "<span class='userdanger'>Your queen has been struck down!</span>"
-	src << "<span class='danger'>You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed."
-
-	throw_alert("alien_noqueen", /obj/screen/alert/alien_vulnerable)
-	emote("roar")
-	Stun(10)
-	jitteriness += 30
-	do_jitter_animation(jitteriness)
-	confused += 30
-	stuttering += 30
-	recent_queen_death = 1
-	spawn(2400) //four minutes
-		recent_queen_death = 0
-		src << "<span class='noticealien'>The pain of losing your queen is easing. You begin to hear the hivemind again.</span>"
-		clear_alert("alien_noqueen")

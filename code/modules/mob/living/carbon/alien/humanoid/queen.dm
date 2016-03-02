@@ -71,10 +71,6 @@
 	. = ..()
 	. += 5
 
-
-/mob/living/carbon/alien/humanoid/royal/queen/queen_death()
-	return //This proc is called by the queen, at death, to affect all the other aliens. It therefore should not affect herself.
-
 //Queen verbs
 /obj/effect/proc_holder/alien/lay_egg
 	name = "Lay Egg"

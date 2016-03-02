@@ -53,7 +53,11 @@
 	action_icon_state = "alien_evolve_praetorian"
 
 /obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/alien/humanoid/user)
-	if(user.recent_queen_death)
+	var/obj/item/organ/internal/alien/hivenode/node = user.getorgan(/obj/item/organ/internal/alien/hivenode)
+	if(!node) //Just in case this particular Praetorian gets violated and kept by the RD as a replacement for Lamarr.
+		user << "<span class='danger'>Without the hivemind, you would be unfit to rule as queen!</span>"
+		return 0
+	if(node.recent_queen_death)
 		user << "<span class='danger'>You are still too burdened with guilt to evolve into a queen.</span>"
 		return 0
 	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen))
