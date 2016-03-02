@@ -204,6 +204,8 @@ var/const/MAX_ACTIVE_TIME = 400
 		return
 	if(attached)
 		return 0
+	if(!src.Adjacent(M))
+		return 0
 	else
 		attached++
 		spawn(MAX_IMPREGNATION_TIME)
@@ -228,15 +230,20 @@ var/const/MAX_ACTIVE_TIME = 400
 		var/obj/item/clothing/mask/facehugger/hugger = H.wear_mask
 		if(istype(hugger) && !hugger.sterile && !src.sterile) // Lamarr won't fight over faces and neither will normal huggers.
 			return
-			
+
 		if(mouth_protection && mouth_protection != H.wear_mask) //can't be protected with your own mask, has to be a hat
 			stat_collection.xeno.proper_head_protection++
-			if(prob(50)) // Temporary balance change, all mouth-covering hats will be more effective
+			var/rng = 50
+			if(istype(mouth_protection, /obj/item/clothing/head/helmet/space/rig))
+				rng = 15
+			if(prob(rng)) // Temporary balance change, all mouth-covering hats will be more effective
 				H.visible_message("<span class='danger'>\The [src] smashes against [H]'s [mouth_protection], and rips it off in the process!</span>")
 				H.drop_from_inventory(mouth_protection)
+				GoIdle(15)
+				return
 			else
 				H.visible_message("<span class='danger'>\The [src] bounces off of the [mouth_protection]!</span>")
-				if(prob(75))
+				if(prob(75) && sterile == 0)
 					Die()
 				else
 					GoIdle(15)
@@ -322,7 +329,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	return
 
 /obj/item/clothing/mask/facehugger/proc/Die()
-	if(stat == DEAD)
+	if(stat == DEAD || real == 0)
 		return
 	target = null
 /*		RemoveActiveIndicators()	*/
