@@ -52,6 +52,7 @@
 		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
 		//It's also extremely buggy visually, so it's balance+bugfix
 		return
+	
 	else // Hoping to add plasma cost for balance plz halp
 		leaping = 1
 		update_icons()
