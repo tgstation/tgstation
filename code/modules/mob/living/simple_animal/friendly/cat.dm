@@ -64,8 +64,6 @@
 	var/memory_saved = 0
 
 /mob/living/simple_animal/pet/cat/Runtime/New()
-	if(lives < 9)
-		desc += ". Looks like a cat with [lives] lives left."
 	Read_Memory()
 	..()
 
