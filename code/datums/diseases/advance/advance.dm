@@ -424,8 +424,15 @@ var/list/advance_cures = 	list(
 		src << "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>"
 */
 
+/datum/disease/advance/proc/totalStageSpeed()
+	var/total_stage_speed = 0
+	for(var/i in symptoms)
+		var/datum/symptom/S = i
+		total_stage_speed += S.stage_speed
+	return total_stage_speed
+
 /datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
-	var/get_damage = sqrt(20-"stage_rate")*(2+rand())
+	var/get_damage = sqrt(20+A.totalStageSpeed())*(2+rand())
 	M.adjustToxLoss(-get_damage)
 	return 1
 
