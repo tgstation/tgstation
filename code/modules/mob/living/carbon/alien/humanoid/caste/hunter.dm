@@ -52,12 +52,7 @@
 		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
 		//It's also extremely buggy visually, so it's balance+bugfix
 		return
-	if(user.getPlasma() < plasma_cost)
-		if(!silent)
-			user << "<span class='noticealien'>Not enough plasma stored.</span>"
-		return 0
-	else // Added plasma cost for balance
-		user.adjustPlasma(-15)
+	else // Hoping to add plasma cost for balance plz halp
 		leaping = 1
 		update_icons()
 		throw_at(A,MAX_ALIEN_LEAP_DIST,1, spin=0, diagonals_first = 1)
