@@ -77,8 +77,6 @@ var/list/preferences_datums = list()
 	var/job_engsec_med = 0
 	var/job_engsec_low = 0
 
-		// Want randomjob if preferences already filled - Donkie
-	var/userandomjob = 1 //defaults to 1 for fewer assistants
 
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
@@ -438,7 +436,8 @@ var/list/preferences_datums = list()
 	var/datum/job/lastJob
 
 	for(var/datum/job/job in SSjob.occupations)
-
+		if(job.title == "Assistant")
+			continue
 		index += 1
 		if((index >= limit) || (job.title in splitJobs))
 			width += widthPerColumn
@@ -459,9 +458,6 @@ var/list/preferences_datums = list()
 		if(!job.player_old_enough(user.client))
 			var/available_in_days = job.available_in_days(user.client)
 			HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
-			continue
-		if((job_civilian_low & ASSISTANT) && (rank != "Assistant") && !jobban_isbanned(user, "Assistant"))
-			HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 			continue
 		if(config.enforce_human_authority && !user.client.prefs.pref_species.qualifies_for_rank(rank, user.client.prefs.features))
 			if(user.client.prefs.pref_species.id == "human")
@@ -505,14 +501,6 @@ var/list/preferences_datums = list()
 
 		HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
-		if(rank == "Assistant")//Assistant is special
-			if(job_civilian_low & ASSISTANT)
-				HTML += "<font color=green>Yes</font>"
-			else
-				HTML += "<font color=red>No</font>"
-			HTML += "</a></td></tr>"
-			continue
-
 		HTML += "<font color=[prefLevelColor]>[prefLevelLabel]</font>"
 		HTML += "</a></td></tr>"
 
@@ -523,7 +511,6 @@ var/list/preferences_datums = list()
 
 	HTML += "</center></table>"
 
-	HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>[userandomjob ? "Get random job if preferences unavailable" : "Be an Assistant if preference unavailable"]</a></center>"
 	HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset Preferences</a></center>"
 
 	user << browse(null, "window=preferences")
@@ -595,6 +582,8 @@ var/list/preferences_datums = list()
 /datum/preferences/proc/UpdateJobPreference(mob/user, role, desiredLvl)
 	if(!SSjob)
 		return
+	if(role == "Assistant")
+		return
 	var/datum/job/job = SSjob.GetJob(role)
 
 	if(!job)
@@ -606,14 +595,6 @@ var/list/preferences_datums = list()
 		user << "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>"
 		ShowChoices(user)
 		return
-
-	if(role == "Assistant")
-		if(job_civilian_low & job.flag)
-			job_civilian_low &= ~job.flag
-		else
-			job_civilian_low |= job.flag
-		SetChoices(user)
-		return 1
 
 	SetJobPreferenceLevel(job, desiredLvl)
 	SetChoices(user)
@@ -696,12 +677,6 @@ var/list/preferences_datums = list()
 				ShowChoices(user)
 			if("reset")
 				ResetJobs()
-				SetChoices(user)
-			if("random")
-				if(jobban_isbanned(user, "Assistant"))
-					userandomjob = 1
-				else
-					userandomjob = !userandomjob
 				SetChoices(user)
 			if("setJobLevel")
 				UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))

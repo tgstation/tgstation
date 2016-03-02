@@ -329,7 +329,7 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
-		else if(player.client.prefs.userandomjob)
+		else
 			GiveRandomJob(player)
 
 	Debug("DO, Standard Check end")
