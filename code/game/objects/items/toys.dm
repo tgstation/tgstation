@@ -645,7 +645,7 @@
  */
 /obj/item/toy/gooncode
 	name = "Goonecode"
-	desc = "The holy grail of all programmers."
+	desc = "The holy grail of all programmers. It seems a bit leaky."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "gooncode"
 
