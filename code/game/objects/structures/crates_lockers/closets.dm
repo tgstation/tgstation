@@ -324,7 +324,7 @@
 		open()
 		return
 
-	//okay, so the closet is either welded or locked or inside something... resist!!!
+	//okay, so the closet is either welded or locked... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open.</span>"
