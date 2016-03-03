@@ -217,7 +217,23 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
-	mutatelist = list(/obj/item/seeds/mimanaseed)
+	mutatelist = list(/obj/item/seeds/mimanaseed, /obj/item/seeds/bluespacebananaseed)
+
+/obj/item/seeds/bluespacebananaseed
+	name = "pack of bluespace banana seeds"
+	desc = "They're seeds that grow into bluespace banana trees. When grown, keep away from clown."
+	icon_state = "seed-banana-blue"
+	species = "bluespacebanana"
+	plantname = "Bluespace Banana Tree"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bluespace
+	lifespan = 50
+	endurance = 30
+	maturation = 6
+	production = 6
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 6
 
 /obj/item/seeds/mimanaseed
 	name = "pack of mimana seeds"
@@ -225,7 +241,7 @@
 	icon_state = "seed-mimana"
 	species = "mimana"
 	plantname = "Mimana Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mimana
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/mime
 	lifespan = 50
 	endurance = 30
 	maturation = 6
@@ -468,7 +484,7 @@
 	icon_state = "seed-sweetpotato"
 	species = "sweetpotato"
 	plantname = "Sweet Potato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet
 	lifespan = 30
 	endurance = 15
 	maturation = 10
@@ -1470,7 +1486,7 @@
 	icon_state = "seed-coffeea"
 	species = "coffeea"
 	plantname = "Coffee Arabica Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee
 	lifespan = 30
 	endurance = 20
 	maturation = 5
@@ -1540,7 +1556,7 @@
 	icon_state = "seed-teaaspera"
 	species = "teaaspera"
 	plantname = "Tea Aspera Plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea
 	lifespan = 20
 	endurance = 15
 	maturation = 5

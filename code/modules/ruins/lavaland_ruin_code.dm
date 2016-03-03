@@ -16,9 +16,9 @@
 				/obj/item/seeds/moonflowerseed = 8,
 				)
 
-/obj/effect/landmark/corpse/seed_vault
+/obj/effect/mob_spawn/human/seed_vault
 	name = "sleeper"
-	mobname = "Vault Creature"
+	mob_name = "Vault Creature"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE

@@ -310,6 +310,7 @@ Sorry Giacom. Please don't be mad :(
 	if(status_flags & GODMODE)
 		return 0
 	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
+
 /mob/living/proc/setBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return 0
@@ -318,28 +319,30 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
-/mob/living/proc/adjustStaminaLoss(amount)
+/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1)
 	return
 
-/mob/living/carbon/adjustStaminaLoss(amount)
+/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
 		return 0
 	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
-	update_stamina()
+	if(updating_stamina)
+		update_stamina()
 
-/mob/living/carbon/alien/adjustStaminaLoss(amount)
+/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1)
 	return
 
-/mob/living/proc/setStaminaLoss(amount)
+/mob/living/proc/setStaminaLoss(amount, updating_stamina = 1)
 	return
 
-/mob/living/carbon/setStaminaLoss(amount)
+/mob/living/carbon/setStaminaLoss(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
 		return 0
 	staminaloss = amount
-	update_stamina()
+	if(updating_stamina)
+		update_stamina()
 
-/mob/living/carbon/alien/setStaminaLoss(amount)
+/mob/living/carbon/alien/setStaminaLoss(amount, updating_stamina = 1)
 	return
 
 /mob/living/proc/getMaxHealth()
@@ -725,8 +728,7 @@ Sorry Giacom. Please don't be mad :(
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		floating = 1
 	else if(((!on || fixed) && floating))
-		var/final_pixel_y = get_standard_pixel_y_offset(lying)
-		animate(src, pixel_y = final_pixel_y, time = 10)
+		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
 		floating = 0
 
 //called when the mob receives a bright flash
@@ -965,7 +967,7 @@ Sorry Giacom. Please don't be mad :(
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 	return
 /mob/living/proc/can_use_guns(var/obj/item/weapon/gun/G)
-	if (!IsAdvancedToolUser())
+	if (G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
 	return 1

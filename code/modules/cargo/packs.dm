@@ -372,7 +372,8 @@
 
 /datum/supply_pack/security/justiceinbound
 	name = "Standard Justice Enforcer Crate"
-	cost = 80 //justice comes at a price. An expensive, noisy price.
+	cost = 60 //justice comes at a price. An expensive, noisy price.
+	contraband = TRUE
 	contains = list(/obj/item/clothing/head/helmet/justice,
 					/obj/item/clothing/mask/gas/sechailer)
 	crate_name = "justice enforcer crate"
@@ -1226,10 +1227,12 @@
 	name = "Contraband Crate"
 	contraband = TRUE
 	cost = 30
-	num_contained = 5
+	num_contained = 6
 	contains = list(/obj/item/weapon/poster/contraband,
-					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
-					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims)
+					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims,
+					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori,
+					/obj/item/seeds/ambrosiadeusseed,
+					/obj/item/clothing/tie/dope_necklace)
 	crate_name = "crate"
 
 /datum/supply_pack/misc/randomised/toys

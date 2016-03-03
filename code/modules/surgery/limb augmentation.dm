@@ -61,15 +61,12 @@
 				if("head")
 					H.organs += new /obj/item/organ/limb/robot/head(src)
 				if("chest")
-					for(var/obj/item/organ/internal/I in target.getorganszone(target_zone, 1))
-						if(I.status == ORGAN_ORGANIC) // FLESH IS WEAK
-							I.Remove(target, special = 1)
-							qdel(I)
 					H.organs += new /obj/item/organ/limb/robot/chest(src)
 			user.drop_item()
 			qdel(tool)
 			H.update_damage_overlays(0)
 			H.update_augments() //Gives them the Cyber limb overlay
+			H.updatehealth()
 			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		user << "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>"

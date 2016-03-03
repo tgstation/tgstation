@@ -21,4 +21,6 @@
 	..(message, shown_name)
 
 /mob/living/carbon/hivecheck()
-	return getorgan(/obj/item/organ/internal/alien/hivenode)
+	var/obj/item/organ/internal/alien/hivenode/N = getorgan(/obj/item/organ/internal/alien/hivenode)
+	if(N && !N.recent_queen_death) //Mob has alien hive node and is not under the dead queen special effect.
+		return N
