@@ -226,9 +226,6 @@
 			feedback_inc("cyborg_medical",1)
 
 		if("Security")
-			if(!config.allow_secborg)
-				src << "spam class = 'warning'>ERROR: NANOTRASEN HAS DISABLED THIS MODULE. PLEASE SELECT A DIFFERENT ONE!</span>"
-				return
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
 			icon_state = "secborg"
