@@ -55,3 +55,43 @@
 	..()
 	user.AddLuminosity(round(-potency / 5))
 	src.SetLuminosity(round(potency / 5))
+
+
+// Cherries
+/obj/item/weapon/reagent_containers/food/snacks/grown/cherries
+	seed = /obj/item/seeds/cherryseed
+	name = "cherries"
+	desc = "Great for toppings!"
+	icon_state = "cherry"
+	gender = PLURAL
+	filling_color = "#FF0000"
+	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
+	bitesize_mod = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries
+	seed = /obj/item/seeds/bluecherryseed
+	name = "blue cherries"
+	desc = "They're cherries that are blue."
+	icon_state = "bluecherry"
+	filling_color = "#6495ED"
+	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
+	bitesize_mod = 2
+
+
+// Grapes
+/obj/item/weapon/reagent_containers/food/snacks/grown/grapes
+	seed = /obj/item/seeds/grapeseed
+	name = "bunch of grapes"
+	desc = "Nutritious!"
+	icon_state = "grapes"
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/no_raisin
+	filling_color = "#FF1493"
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)
+	bitesize_mod = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green
+	seed = /obj/item/seeds/greengrapeseed
+	name = "bunch of green grapes"
+	icon_state = "greengrapes"
+	filling_color = "#7FFF00"
+	reagents_add = list("salglu_solution" = 0.25, "vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)
