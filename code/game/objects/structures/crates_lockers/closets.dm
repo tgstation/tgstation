@@ -266,10 +266,12 @@
 	return 1
 
 /obj/structure/closet/relaymove(mob/user)
-	if(user.stat || !isturf(loc))
+	if(user.stat || !isturf(loc) || !isliving(user))
 		return
+	var/mob/living/L = user
 	if(!open())
-		container_resist()
+		if(L.last_special <= world.time)
+			container_resist(L)
 		if(world.time > lastbang+5)
 			lastbang = world.time
 			for(var/mob/M in get_hearers_in_view(src, null))
@@ -310,16 +312,25 @@
 	return 1
 
 /obj/structure/closet/container_resist(mob/living/user)
-	if(opened || (!welded && !locked && !istype(loc, /obj/mecha)))
-		return  //Door's open, not locked or welded or inside a mech, no point in resisting.
+	if(opened)
+		return
+	if(istype(loc, /atom/movable))
+		user.changeNext_move(CLICK_CD_BREAKOUT)
+		user.last_special = world.time + CLICK_CD_BREAKOUT
+		var/atom/movable/AM = loc
+		AM.relay_container_resist(user, src)
+		return
+	if(!welded && !locked)
+		open()
+		return
 
-	//okay, so the closet is either welded or locked... resist!!!
+	//okay, so the closet is either welded or locked or inside something... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message("<span class='warning'>[src] begins to shake violently!</span>",
-						"<span class='notice'>You lean on the back of [src] and start pushing the door open.</span>")
+	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open.</span>"
+	visible_message("<span class='warning'>[src] begins to shake violently!</span>")
 	if(do_after(user,(breakout_time * 60 * 10), target = src)) //minutes * 60seconds * 10deciseconds
-		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded && !istype(loc, /obj/mecha)) )
+		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 		welded = 0 //applies to all lockers lockers
@@ -327,14 +338,10 @@
 		broken = 1 //applies to secure lockers only
 		user.visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>",
 							"<span class='notice'>You successfully break out of [src]!</span>")
-		if(istype(loc, /obj/structure/bigDelivery))
-			var/obj/structure/bigDelivery/D = loc
-			qdel(D)
-		else if(istype(loc, /obj/mecha))
-			loc = get_turf(loc)
 		open()
 	else
-		user << "<span class='warning'>You fail to break out of [src]!</span>"
+		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
+			user << "<span class='warning'>You fail to break out of [src]!</span>"
 
 /obj/structure/closet/AltClick(mob/user)
 	..()
