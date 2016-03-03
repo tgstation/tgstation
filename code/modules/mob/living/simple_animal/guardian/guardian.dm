@@ -614,10 +614,6 @@
 	var/random = TRUE
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
-	for(var/mob/living/simple_animal/hostile/guardian/G in living_mob_list)
-		if (G.summoner == user)
-			user << "You already have a [mob_name]!"
-			return
 	if(user.mind && user.mind.changeling)
 		user << "[ling_failure]"
 		return
