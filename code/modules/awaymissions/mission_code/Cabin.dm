@@ -84,13 +84,23 @@
 	new L.plank_type(src.loc, 1 + round(L.potency / 25))
 	qdel(L)
 
+/mob/living/simple_animal/chicken/rabbit/normal
+	icon_state = "b_rabbit"
+	icon_living = "b_rabbit"
+	icon_dead = "b_rabbit_dead"
+	icon_prefix = "b_rabbit"
+	minbodytemp = 0
+	eggsleft = 0
+	egg_type = null
+	speak = list()
 
 /*Cabin's forest*/
 /datum/mapGenerator/snowy
 	modules = list(/datum/mapGeneratorModule/snow/pineTrees, \
 	/datum/mapGeneratorModule/snow/deadTrees, \
 	/datum/mapGeneratorModule/snow/randBushes, \
-	/datum/mapGeneratorModule/snow/randIceRocks)
+	/datum/mapGeneratorModule/snow/randIceRocks, \
+	/datum/mapGeneratorModule/snow/bunnies)
 
 /datum/mapGeneratorModule/snow/checkPlaceAtom(turf/T)
 	if(istype(T,/turf/simulated/floor/plating/asteroid/snow))
@@ -112,28 +122,11 @@
 	for(var/i in spawnableAtoms)
 		spawnableAtoms[i] = 1
 
+/datum/mapGeneratorModule/snow/bunnies
+	spawnableAtoms = list(/mob/living/simple_animal/chicken/rabbit/normal = 1)
+
 /datum/mapGeneratorModule/snow/randIceRocks
 	spawnableAtoms = list(/obj/structure/flora/rock/icy = 5, /obj/structure/flora/rock/pile/icy = 5)
-
-/obj/effect/landmark/mapGenerator
-	var/startTurfX = 0
-	var/startTurfY = 0
-	var/startTurfZ = -1
-	var/endTurfX = 0
-	var/endTurfY = 0
-	var/endTurfZ = -1
-	var/mapGeneratorType = /datum/mapGenerator/nature
-	var/datum/mapGenerator/mapGenerator
-
-/obj/effect/landmark/mapGenerator/New()
-	..()
-	if(startTurfZ < 0)
-		startTurfZ = z
-	if(endTurfZ < 0)
-		endTurfZ = z
-	mapGenerator = new mapGeneratorType()
-	mapGenerator.defineRegion(locate(startTurfX,startTurfY,startTurfZ), locate(endTurfX,endTurfY,endTurfZ))
-	mapGenerator.generate()
 
 /obj/effect/landmark/mapGenerator/snowy
 	mapGeneratorType = /datum/mapGenerator/snowy

@@ -1424,6 +1424,7 @@
 #include "code\modules\power\tesla\generator.dm"
 #include "code\modules\procedural mapping\mapGenerator.dm"
 #include "code\modules\procedural mapping\mapGeneratorModule.dm"
+#include "code\modules\procedural mapping\mapGeneratorObj.dm"
 #include "code\modules\procedural mapping\mapGeneratorReadme.dm"
 #include "code\modules\procedural mapping\mapGeneratorModules\helpers.dm"
 #include "code\modules\procedural mapping\mapGeneratorModules\nature.dm"
