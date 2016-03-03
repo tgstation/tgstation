@@ -37,6 +37,27 @@
 	create_reagents(50)
 	add_juice()
 
+/obj/item/weapon/grown/attackby(obj/item/O, mob/user, params)
+	..()
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		var/msg
+		msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
+		switch(plant_type)
+			if(0)
+				msg += "- Plant type: <i>Normal plant</i>\n"
+			if(1)
+				msg += "- Plant type: <i>Weed</i>.  Can grow in nutrient-poor soil.\n"
+			if(2)
+				msg += "- Plant type: <i>Mushroom</i>.  Can grow in dry soil.\n"
+		msg += "- Potency: <i>[potency]</i>\n"
+		msg += "- Yield: <i>[yield]</i>\n"
+		msg += "- Maturation speed: <i>[maturation]</i>\n"
+		msg += "- Production speed: <i>[production]</i>\n"
+		msg += "- Endurance: <i>[endurance]</i>\n"
+		msg += "*---------*</span>"
+		usr << msg
+		return
+
 /obj/item/weapon/grown/proc/add_juice()
 	if(reagents)
 		return 1
@@ -59,7 +80,7 @@
 	var/plank_name = "wooden planks"
 	var/list/accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/space,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tea,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
@@ -229,7 +250,7 @@
 /obj/item/weapon/grown/nettle/death
 	seed = /obj/item/seeds/deathnettleseed
 	name = "deathnettle"
-	desc = "The <span class='danger'>glowing</span> \black nettle incites <span class='boldannounce'>rage</span>\black in you just from looking at it!"
+	desc = "The <span class='danger'>glowing</span> nettle incites <span class='boldannounce'>rage</span> in you just from looking at it!"
 	icon_state = "deathnettle"
 	force = 30
 	throwforce = 15
@@ -283,6 +304,23 @@
 		var/weaken = Clamp(potency / 20, 0.5, 5)
 		M.slip(stun, weaken, src)
 		return 1
+
+/obj/item/weapon/grown/bananapeel/bluespace
+	name = "bluespace banana peel"
+	desc = "A peel from a bluespace banana."
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "banana_peel_blue"
+	origin_tech = "bluespace=3"
+
+/obj/item/weapon/grown/bananapeel/bluespace/Crossed(AM)
+	if(..())
+		var/teleport_radius = potency / 10
+		do_teleport(AM, get_turf(AM), teleport_radius)
+		AM << "<span class='notice'>You slip through spacetime!</span>"
+		if(prob(50))
+			do_teleport(src, get_turf(src), teleport_radius)
+		else
+			qdel(src)
 
 /obj/item/weapon/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
 	name = "synthesized banana peel"

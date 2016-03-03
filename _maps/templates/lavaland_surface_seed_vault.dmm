@@ -8,7 +8,7 @@
 "h" = (/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "i" = (/obj/machinery/vending/hydronutrients,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "j" = (/obj/machinery/vending/hydroseeds,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"k" = (/obj/effect/landmark/corpse/seed_vault,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"k" = (/obj/effect/mob_spawn/human/seed_vault,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "l" = (/obj/machinery/door/airlock,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "m" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "n" = (/obj/structure/table/wood,/obj/item/weapon/cultivator,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)

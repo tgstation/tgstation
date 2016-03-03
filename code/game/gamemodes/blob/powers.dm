@@ -107,6 +107,7 @@
 		blobber << 'sound/effects/blobattack.ogg'
 		blobber << 'sound/effects/attackblob.ogg'
 		blobber << "<b>You are a blobbernaut!</b>"
+		blobber << "You are powerful, hard to kill, and slowly regenerate near nodes and cores, but will slowly die if not near the blob."
 		blobber << "You can communicate with other blobbernauts and overminds via <b>:b</b>"
 		blobber << "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 		blobber << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"

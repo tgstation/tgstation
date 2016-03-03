@@ -26,7 +26,7 @@
 "az" = (/obj/structure/table,/obj/machinery/reagentgrinder,/turf/simulated/floor/wood,/area/awaymission/beach)
 "aA" = (/obj/machinery/vending/boozeomat{emagged = 1},/turf/simulated/floor/wood,/area/awaymission/beach)
 "aB" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/rag,/turf/simulated/floor/wood,/area/awaymission/beach)
-"aC" = (/obj/effect/landmark/corpse/cook{corpsehelmet = null; corpseidaccess = "Bartender"; corpseidjob = "Bartender"; corpsesuit = /obj/item/clothing/suit/armor/vest; corpseuniform = /obj/item/clothing/under/rank/bartender; death = 0; desc = "Looks secure."; flavour_text = "You are a bartender for the beach!"; icon = 'icons/obj/Cryogenic2.dmi'; icon_state = "sleeper"; mobname = "Jerry Thomas"; name = "bartenders cryosleeper"; roundstart = 1},/turf/simulated/floor/wood,/area/awaymission/beach)
+"aC" = (/obj/effect/mob_spawn/human/cook{helmet = null; id_access = "Bartender"; id_job = "Bartender"; suit = /obj/item/clothing/suit/armor/vest; uniform = /obj/item/clothing/under/rank/bartender; death = 0; desc = "Looks secure."; flavour_text = "You are a bartender for the beach!"; icon = 'icons/obj/Cryogenic2.dmi'; icon_state = "sleeper"; mob_name = "Jerry Thomas"; name = "bartenders cryosleeper"; roundstart = 1},/turf/simulated/floor/wood,/area/awaymission/beach)
 "aD" = (/turf/simulated/floor/wood,/area/awaymission/beach)
 "aE" = (/obj/structure/table,/obj/machinery/microwave,/turf/simulated/floor/wood,/area/awaymission/beach)
 "aF" = (/turf/simulated/floor/plating/beach/sand,/obj/structure/closet/crate/bin,/turf/simulated/floor/plasteel/sandeffect,/area/awaymission/beach)

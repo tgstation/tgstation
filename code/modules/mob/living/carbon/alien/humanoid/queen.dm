@@ -50,7 +50,6 @@
 	. = ..()
 	. += 5
 
-
 //Queen verbs
 /obj/effect/proc_holder/alien/lay_egg
 	name = "Lay Egg"
