@@ -167,4 +167,4 @@
 		cargo -= O
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			user << "<span class='warning'>You fail to push [src]!</span>"
+			user << "<span class='warning'>You fail to push [O] out of [src]!</span>"

@@ -95,11 +95,12 @@ Sorry Giacom. Please don't be mad :(
 			return 1
 
 		if(L.pulling)
-			var/mob/P = L.pulling
-			if(P.restrained())
-				if(!(world.time % 5))
-					src << "<span class='warning'>[L] is restraining [P], you cannot push past.</span>"
-				return 1
+			if(ismob(L.pulling))
+				var/mob/P = L.pulling
+				if(P.restrained())
+					if(!(world.time % 5))
+						src << "<span class='warning'>[L] is restraining [P], you cannot push past.</span>"
+					return 1
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
@@ -505,6 +506,7 @@ Sorry Giacom. Please don't be mad :(
 	ExtinguishMob()
 	fire_stacks = 0
 	updatehealth()
+	update_canmove()
 
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
