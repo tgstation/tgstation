@@ -102,7 +102,7 @@
 	M.apply_damage(0.6*reac_volume, BRUTE)
 
 /datum/reagent/blob/replicating_foam/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(damage > 0 && original_health - damage > 0 && prob(75))
+	if(damage > 0 && original_health - damage > 0 && prob(60))
 		var/obj/effect/blob/newB = B.expand()
 		if(newB)
 			newB.health = original_health - damage
@@ -111,7 +111,7 @@
 	return ..()
 
 /datum/reagent/blob/replicating_foam/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
-	if(prob(50))
+	if(prob(40))
 		newB.expand() //do it again!
 
 //does brute damage, shifts away when damaged
@@ -136,13 +136,13 @@
 	if(cause && prob(40))
 		var/list/blobstopick = list()
 		for(var/obj/effect/blob/OB in range(1, B))
-			blobstopick += OB
+			if((istype(OB, /obj/effect/blob/normal) || istype(OB, /obj/effect/blob/shield)) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id)
+				blobstopick += OB //as long as the blob picked is valid; ie, a normal or shield blob that has the same chemical as we do, we can swap with it
 		if(blobstopick.len)
 			var/obj/effect/blob/targeted = pick(blobstopick) //randomize the blob chosen, because otherwise it'd tend to the lower left
-			if(istype(targeted, /obj/effect/blob/normal) || istype(targeted, /obj/effect/blob/shield))
-				var/turf/T = get_turf(targeted)
-				targeted.forceMove(get_turf(B))
-				B.forceMove(T) //swap the blobs
+			var/turf/T = get_turf(targeted)
+			targeted.forceMove(get_turf(B))
+			B.forceMove(T) //swap the blobs
 	return ..()
 
 //does low burn and a lot of stamina damage, reacts to stamina damage
@@ -440,7 +440,8 @@
 
 /datum/reagent/blob/electromagnetic_web/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.emp_act(2)
+	if(prob(reac_volume))
+		M.emp_act(2)
 	if(M)
 		M.apply_damage(0.6*reac_volume, BURN)
 
@@ -473,10 +474,10 @@
 
 /datum/reagent/blob/synchronous_mesh/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(!isnull(cause)) //the cause isn't fire or bombs, so split the damage
-		var/damagesplit = 0.8 //maximum split is 7.2, reducing the damage each blob takes to 14% but doing that damage to 9 blobs
+		var/damagesplit = 1 //maximum split is 9, reducing the damage each blob takes to 11% but doing that damage to 9 blobs
 		for(var/obj/effect/blob/C in orange(1, B))
-			if(C.overmind && C.overmind.blob_reagent_datum == B.overmind.blob_reagent_datum) //if it doesn't have the same chemical, don't split damage to it
-				damagesplit += 0.8
+			if(C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) //if it doesn't have the same chemical, don't split damage to it
+				damagesplit += 1
 		for(var/obj/effect/blob/C in orange(1, B))
 			if(C.overmind && C.overmind.blob_reagent_datum == B.overmind.blob_reagent_datum && !istype(C, /obj/effect/blob/core)) //only hurt blobs that have the same overmind chemical and aren't cores
 				C.take_damage(damage/damagesplit, CLONE, B, 0)
