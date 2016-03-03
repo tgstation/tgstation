@@ -1,39 +1,38 @@
-"a" = (/turf/simulated/mineral/volcanic/lava_land_surface,/area/space)
-"b" = (/turf/indestructible,/area/awaymission/wwvault)
-"c" = (/turf/simulated/floor/engine/cult,/area/awaymission/wwvault)
-"d" = (/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/space)
-"e" = (/obj/structure/cult/pylon,/turf/simulated/floor/engine/cult,/area/awaymission/wwvault)
-"f" = (/turf/simulated/floor/plating{icon_state = "cultdamage5"},/area/awaymission/wwvault)
-"g" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/engine/cult,/area/awaymission/wwvault)
-"h" = (/turf/simulated/floor/plating{icon_state = "bcircuitoff"},/area/awaymission/wwvault)
-"i" = (/turf/indestructible{desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick."; icon = 'icons/turf/walls/cult_wall.dmi'; icon_state = "cult"},/area/awaymission/wwvault)
-"j" = (/turf/simulated/floor/plating{icon_state = "cultdamage3"},/area/awaymission/wwvault)
-"k" = (/turf/simulated/floor/plating{icon_state = "cultdamage6"},/area/awaymission/wwvault)
-"l" = (/obj/effect/gateway,/turf/simulated/floor/engine/cult,/area/awaymission/wwvault)
-"m" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/plating{icon_state = "bcircuitoff"},/area/awaymission/wwvault)
-"n" = (/obj/machinery/wish_granter_dark,/turf/simulated/floor/plating{icon_state = "gcircuitoff"},/area/awaymission/wwvault)
-"o" = (/turf/simulated/floor/plating{icon_state = "gcircuitoff"},/area/awaymission/wwvault)
-"p" = (/obj/structure/cult/pylon,/turf/simulated/floor/plating{icon_state = "gcircuitoff"},/area/awaymission/wwvault)
-"q" = (/obj/structure/signpost,/turf/simulated/floor/plating{icon_state = "gcircuitoff"},/area/awaymission/wwvault)
-"r" = (/obj/effect/meatgrinder,/turf/simulated/floor/plating{icon_state = "gcircuitoff"},/area/awaymission/wwvault)
-"s" = (/obj/structure/cult/pylon,/turf/simulated/floor/plating{icon_state = "bcircuitoff"},/area/awaymission/wwvault)
-"t" = (/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/awaymission/wwvault)
-"u" = (/turf/simulated/floor/plating{icon_state = "cultdamage2"},/area/awaymission/wwvault)
-"v" = (/turf/simulated/floor/carpet,/area/awaymission/wwvault)
-"w" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/carpet,/area/awaymission/wwvault)
-"x" = (/obj/machinery/door/airlock/vault{locked = 1},/turf/simulated/floor/engine/cult,/area/awaymission/wwvaultdoors)
-"y" = (/obj/structure/cult/pylon,/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/awaymission/wwvault)
-"z" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/awaymission/wwvault)
-"A" = (/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/turf/indestructible{desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick."; icon = 'icons/turf/walls/cult_wall.dmi'; icon_state = "cult"},/area/awaymission/wwvault)
-"B" = (/obj/machinery/door/airlock/vault{locked = 1},/turf/simulated/floor/engine/cult,/area/awaymission/wwvault)
-"C" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/space)
-"D" = (/obj/effect/mob_spawn/human/miner/rig,/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/awaymission/wwvault)
-"E" = (/turf/simulated/mineral/volcanic/lava_land_surface,/area/awaymission/wwvault)
-"F" = (/obj/machinery/door/airlock/vault{locked = 1},/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth; blocks_air = 1},/area/awaymission/wwvaultdoors)
-"G" = (/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/awaymission/wwvault)
-"H" = (/obj/item/weapon/paper{info = "meat grinder requires sacri"},/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/awaymission/wwvault)
-"I" = (/obj/effect/mob_spawn/human/syndicatecommando,/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/awaymission/wwvault)
-"J" = (/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/space)
+"a" = (/turf/simulated/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"b" = (/turf/indestructible,/area/ruin/powered)
+"c" = (/turf/simulated/floor/engine/cult,/area/ruin/powered)
+"d" = (/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"e" = (/obj/structure/cult/pylon,/turf/simulated/floor/engine/cult,/area/ruin/powered)
+"f" = (/turf/simulated/floor/plating{icon_state = "cultdamage5"},/area/ruin/powered)
+"g" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/engine/cult,/area/ruin/powered)
+"h" = (/turf/simulated/floor/plating{icon_state = "bcircuitoff"},/area/ruin/powered)
+"i" = (/turf/indestructible{desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick."; icon = 'icons/turf/walls/cult_wall.dmi'; icon_state = "cult"},/area/ruin/powered)
+"j" = (/turf/simulated/floor/plating{icon_state = "cultdamage3"},/area/ruin/powered)
+"k" = (/turf/simulated/floor/plating{icon_state = "cultdamage6"},/area/ruin/powered)
+"l" = (/obj/effect/gateway,/turf/simulated/floor/engine/cult,/area/ruin/powered)
+"m" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/plating{icon_state = "bcircuitoff"},/area/ruin/powered)
+"n" = (/obj/machinery/wish_granter_dark,/turf/simulated/floor/plating{icon_state = "gcircuitoff"},/area/ruin/powered)
+"o" = (/turf/simulated/floor/plating{icon_state = "gcircuitoff"},/area/ruin/powered)
+"p" = (/obj/structure/cult/pylon,/turf/simulated/floor/plating{icon_state = "gcircuitoff"},/area/ruin/powered)
+"q" = (/obj/structure/signpost,/turf/simulated/floor/plating{icon_state = "gcircuitoff"},/area/ruin/powered)
+"r" = (/obj/effect/meatgrinder,/turf/simulated/floor/plating{icon_state = "gcircuitoff"},/area/ruin/powered)
+"s" = (/obj/structure/cult/pylon,/turf/simulated/floor/plating{icon_state = "bcircuitoff"},/area/ruin/powered)
+"t" = (/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"u" = (/turf/simulated/floor/plating{icon_state = "cultdamage2"},/area/ruin/powered)
+"v" = (/turf/simulated/floor/carpet,/area/ruin/powered)
+"w" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/carpet,/area/ruin/powered)
+"x" = (/obj/machinery/door/airlock/vault{locked = 1},/turf/simulated/floor/engine/cult,/area/ruin/powered)
+"y" = (/obj/structure/cult/pylon,/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"z" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"A" = (/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/turf/indestructible{desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick."; icon = 'icons/turf/walls/cult_wall.dmi'; icon_state = "cult"},/area/ruin/powered)
+"B" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"C" = (/obj/effect/mob_spawn/human/miner/rig,/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"D" = (/obj/machinery/door/airlock/vault{locked = 1},/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/powered)
+"E" = (/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/lavaland/surface/outdoors)
+"F" = (/turf/indestructible,/area/lavaland/surface/outdoors)
+"G" = (/obj/item/weapon/paper{info = "meat grinder requires sacri"},/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/lavaland/surface/outdoors)
+"H" = (/obj/effect/mob_spawn/human/syndicatecommando,/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/lavaland/surface/outdoors)
+"I" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -94,25 +93,25 @@ aaaaabtitiittttiiiiiiiicccitttittttitttttticcccbbaaaaaabbbbbbbbbbcccclcccccccccb
 aaaaabtititttiiitttttticccittyiiiiiittttttibbbbbaaaaaaaaaaaaaaaabbcccccccgccccbbaaaaaaaaaadddbbcccccccccccgcccccbbaaaadd
 aaaaabtititttttttttzttitttttttttttttttttcbbbaaaaaaaaaaaaaaaaaaaaabbbccccccccccbaaaaaaaaadddddabbbccccgcgcccccgccbaaaaadd
 aaaaabtctittttttttztttittttttttttttttzttbbaaaaaaaaaaaaaaaaaaaaaaaaabbbbccccccbbaaaaaaaaaddddddaabbccccccccccccccbaaddddd
-aaaaabiiiiiiiiiiiiiBBiiiiiiiiiiiiiiiiiibbaaaaaaaaaaaaaaaadddddddaaaaaabbbbbccbaaaaaaaaaadddCdddaabbbbbbbbbbbbbbbbaaddddd
+aaaaabiiiiiiiiiiiiixxiiiiiiiiiiiiiiiiiibbaaaaaaaaaaaaaaaadddddddaaaaaabbbbbccbaaaaaaaaaadddBdddaabbbbbbbbbbbbbbbbaaddddd
 aaaaabbbtttttttttttttttttttttttttttttttbaaaaaaaaaaaaaaaaaddddddddaaaaaaaaabbbbaaaaaaaaaadddddddaaaaaaaaaaaaaaabbaaaddddd
 aaaaaddbbbtttttyttyttyttyttyttyttyttyttbaaaaaaaaaaaaaaaaaddddddddddddaaaaaaaaaaaaaaaaaaadddddddddaaaaaaaaaaaaaaaaadddddd
-aaaaaddddbbbbbttttttttttDtztttttttttttbbaaaaaaaaaaaaaaadddddddddddddddddaaaaaaaaaaaaaaaadddddddddaaaaaaaaaaaaaaadddddddd
+aaaaaddddbbbbbttttttttttCtztttttttttttbbaaaaaaaaaaaaaaadddddddddddddddddaaaaaaaaaaaaaaaadddddddddaaaaaaaaaaaaaaadddddddd
 aaaaaaaaadbbbttttttttttttttttttttttttbaaaaaaaaaaaaaaaaaddddddddddddddddddaaaaaaaaaaaaaaadddddddddaaaaaaaaaaaaaaadddddddd
-aaaaaaaaadddbbtttttttttttttttttttttttbEEEaaaaaaaaaaaaaaddddddddddddddddddaaaaaaaaaaaaaaaddddddddddddddaaaaaaaaaaddddCddd
-aaaaaaaaaddddbbbbtttttttttttttttttttbbddEaaaaaaaaaaaaaaddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaadddddaaaaaaaaaadadddddd
-aaaaaaaaaddddddbbbbbbbbbbbbbbFFbbbbbbGddEaaaaaaaaaadddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaadddddaaaaaddddadadddddd
-aaaaaaaaadddddddddtddtdtdtddbHtbddGtdGddaaaaadaaaaadddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaadddddaaaaaddddddaaddddd
-aaaaaaaaadddddddddtddtttttddbItbddGtJttdaaaaadddaaadddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaadddddaaaaaadddaaaaddddd
-aaaaaaaaadddddddddttddttttddbttbdGGGddGGaaaaaddaadddddddddddddddddddddaadddaaaaaaaaddaaaaaaaaaaaaddddaaaaaaaaaaaaaaaaadd
-aaaaaaaaaddddddddddttddtttddbtzbdGdGdddGEaaaadddddddddddddddddddddddddaadddaaaaaaaaaadddddddaaadadddaaaaaaaaaaaaaaaaaadd
-aaaaaaaaaddddddddddJdddGdtGGGttGddddddddaaaaaddddddddddddddddddddddddddddddaaaaaaaaaaddddddddaadddddaaaaaaaaaaaaaaaaaadd
-aaaaaaaaaddddddddddJdddCdJdGGttGddddddddddaaaaaadddddddddddddddddddddddddddaaaaaaaaaadddddddddddddddaaaddddaaaaaaaaaaaaa
-aaaaaaaaadaaaaaddJJddddddJddGtGtJJddddddddaaaaaaddddddddddddaaaddddddddddddaaaaaaaaddddddddddddddddaadddaaaaaaaaaaaaaaaa
-aaaaaaaaadaaaaaddddddddddJdddGGGJJddddddddaaaaaaddddddddddddaaadddddddddddddadaaddddddddddddddddddadddddaaaaadaaaaaaaaaa
-aaaaaaaaaaaaaaadddddddddddJJdGGGddddddddddaaaaaaadddddddddddaaadddddddddddddddaaddddddddddddddddddddddddaaaaadaaaaaaaaaa
-aaaaaaaaaaaaaaaaadddddddddJddGGGdddJdddddddaadddaaaaddddddddaaadddddddddddddddaaddddddddddddadddddddddddaaaaadaaaaaaaaaa
-dddaaaaaaaadddddddddddddddddddGddddddddddddddddddaaaaaddddddaaaaadddddddddddddaaddddddddddddddddddddddddaaaaadaaaaaaaaaa
+aaaaaaaaadddbbtttttttttttttttttttttttbaaaaaaaaaaaaaaaaaddddddddddddddddddaaaaaaaaaaaaaaaddddddddddddddaaaaaaaaaaddddBddd
+aaaaaaaaaddddbbbbtttttttttttttttttttbbddaaaaaaaaaaaaaaaddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaadddddaaaaaaaaaadadddddd
+aaaaaaaaaddddddbbbbbbbbbbbbbbDDbbbbbbdddaaaaaaaaaaadddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaadddddaaaaaddddadadddddd
+aaaaaaaaadddddddddEddEdEdEddFGEFdddEddddaaaaadaaaaadddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaadddddaaaaaddddddaaddddd
+aaaaaaaaadddddddddEddEEEEEddFHEFdddEEEEdaaaaadddaaadddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaadddddaaaaaadddaaaaddddd
+aaaaaaaaadddddddddEEddEEEEddFEEFddddddddaaaaaddaadddddddddddddddddddddaadddaaaaaaaaddaaaaaaaaaaaaddddaaaaaaaaaaaaaaaaadd
+aaaaaaaaaddddddddddEEddEEEddFEIFddddddddaaaaadddddddddddddddddddddddddaadddaaaaaaaaaadddddddaaadadddaaaaaaaaaaaaaaaaaadd
+aaaaaaaaaddddddddddEdddddEdddEEdddddddddaaaaaddddddddddddddddddddddddddddddaaaaaaaaaaddddddddaadddddaaaaaaaaaaaaaaaaaadd
+aaaaaaaaaddddddddddEdddBdEdddEEdddddddddddaaaaaadddddddddddddddddddddddddddaaaaaaaaaadddddddddddddddaaaddddaaaaaaaaaaaaa
+aaaaaaaaadaaaaaddEEddddddEdddEdEEEddddddddaaaaaaddddddddddddaaaddddddddddddaaaaaaaaddddddddddddddddaadddaaaaaaaaaaaaaaaa
+aaaaaaaaadaaaaaddddddddddEddddddEEddddddddaaaaaaddddddddddddaaadddddddddddddadaaddddddddddddddddddadddddaaaaadaaaaaaaaaa
+aaaaaaaaaaaaaaadddddddddddEEddddddddddddddaaaaaaadddddddddddaaadddddddddddddddaaddddddddddddddddddddddddaaaaadaaaaaaaaaa
+aaaaaaaaaaaaaaaaadddddddddEddddddddEdddddddaadddaaaaddddddddaaadddddddddddddddaaddddddddddddadddddddddddaaaaadaaaaaaaaaa
+dddaaaaaaaaddddddddddddddddddddddddddddddddddddddaaaaaddddddaaaaadddddddddddddaaddddddddddddddddddddddddaaaaadaaaaaaaaaa
 dddaaaaaaaadddddddddddddddddddddddddddddddddddddddddaadddddddddaaddddddddddddaaaddddddddddddddddddddddddaaaaadaaaaaaaaaa
 dddaaaddadadddddddddddddddddddddddddddddddddddddddddddddddddddaaaaaddddddddddaddddddddddddddddaaaaaaaaaaaaaaadaaaaaaaaaa
 dddaaadaadddddddddddddddddddddddddddddddddaadddaaaadddddddddddaaaaadddddddaaaaaaddddddddddddddddaaaaaaaaaaaaadaaaaaaaaad
