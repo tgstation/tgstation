@@ -11,9 +11,9 @@
 	lootcount = 1
 
 	loot = list(/obj/item/seeds/gatfruit = 10,
-				/obj/item/seeds/cherryseed = 15,
-				/obj/item/seeds/glowberryseed = 10,
-				/obj/item/seeds/moonflowerseed = 8,
+				/obj/item/seeds/cherry = 15,
+				/obj/item/seeds/berry/glow = 10,
+				/obj/item/seeds/sunflower/moonflower = 8
 				)
 
 /obj/effect/mob_spawn/human/seed_vault
