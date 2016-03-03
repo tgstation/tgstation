@@ -11,6 +11,7 @@
 		H.add_hud_to(user)
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
+	..()
 	if(hud_type && istype(user) && user.glasses == src)
 		var/datum/atom_hud/H = huds[hud_type]
 		H.remove_hud_from(user)
@@ -113,7 +114,7 @@
 /obj/item/clothing/glasses/hud/toggle
 	name = "Toggle Hud"
 	desc = "A hud with multiple functions."
-	action_button_name = "Switch HUD"
+	actions_types = list(/datum/action/item_action/switch_hud)
 
 /obj/item/clothing/glasses/hud/toggle/attack_self(mob/user)
 	if(!ishuman(user))

@@ -31,8 +31,8 @@
 	return ..() | dna.mutations_get_spans() | dna.species_get_spans()
 
 /mob/living/carbon/human/GetVoice()
-	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
-		var/obj/item/clothing/mask/gas/voice/V = wear_mask
+	if(istype(wear_mask, /obj/item/clothing/mask/chameleon))
+		var/obj/item/clothing/mask/chameleon/V = wear_mask
 		if(V.vchange && wear_id)
 			var/obj/item/weapon/card/id/idcard = wear_id.GetID()
 			if(istype(idcard))
@@ -48,6 +48,8 @@
 	return real_name
 
 /mob/living/carbon/human/IsVocal()
+	if(!getorganslot("lungs"))
+		return 0
 	if(mind)
 		return !mind.miming
 	return 1

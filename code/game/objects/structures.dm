@@ -43,3 +43,6 @@
 /obj/structure/ui_act(action, params)
 	..()
 	add_fingerprint(usr)
+
+/obj/structure/proc/deconstruct(forced = FALSE)
+	qdel(src)

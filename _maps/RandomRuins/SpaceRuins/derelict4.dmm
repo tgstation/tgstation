@@ -1,0 +1,63 @@
+"a" = (/turf/space,/area/space)
+"b" = (/turf/simulated/mineral,/area/ruin/unpowered)
+"c" = (/turf/simulated/floor/plating/asteroid/airless,/area/ruin/unpowered)
+"d" = (/turf/simulated/mineral/random/high_chance,/area/ruin/unpowered)
+"e" = (/turf/simulated/wall/shuttle/smooth,/area/ruin/unpowered)
+"f" = (/obj/machinery/door/airlock/shuttle,/turf/simulated/floor/plating/airless,/area/ruin/unpowered)
+"g" = (/turf/simulated/floor/plating/airless,/area/ruin/unpowered)
+"h" = (/turf/simulated/floor/plasteel/airless{icon_plating = "plating"; icon_regular_floor = "shuttlefloor"; icon_state = "shuttlefloor"},/area/ruin/unpowered)
+"i" = (/obj/structure/chair,/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8},/turf/simulated/floor/plasteel/airless{icon_plating = "plating"; icon_regular_floor = "shuttlefloor"; icon_state = "shuttlefloor"},/area/ruin/unpowered)
+"j" = (/obj/structure/chair,/turf/simulated/floor/plasteel/airless{icon_plating = "plating"; icon_regular_floor = "shuttlefloor"; icon_state = "shuttlefloor"},/area/ruin/unpowered)
+"k" = (/obj/effect/spawner/lootdrop/crate_spawner,/turf/simulated/floor/plasteel/airless{icon_plating = "plating"; icon_regular_floor = "shuttlefloor"; icon_state = "shuttlefloor"},/area/ruin/unpowered)
+"l" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion (WEST)"; icon_state = "propulsion"; dir = 8},/turf/simulated/floor/plating/airless,/area/ruin/unpowered)
+"m" = (/obj/item/weapon/shard,/turf/simulated/floor/plating/airless,/area/ruin/unpowered)
+"n" = (/obj/structure/chair{tag = "icon-chair (WEST)"; icon_state = "chair"; dir = 8},/turf/simulated/floor/plating/airless,/area/ruin/unpowered)
+"o" = (/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/ruin/unpowered)
+"p" = (/obj/structure/table,/turf/simulated/floor/plasteel/airless{icon_plating = "plating"; icon_regular_floor = "shuttlefloor"; icon_state = "shuttlefloor"},/area/ruin/unpowered)
+"q" = (/obj/item/weapon/shard,/obj/structure/chair{tag = "icon-chair (WEST)"; icon_state = "chair"; dir = 8},/turf/simulated/floor/plasteel/airless{icon_plating = "plating"; icon_regular_floor = "shuttlefloor"; icon_state = "shuttlefloor"},/area/ruin/unpowered)
+"r" = (/obj/structure/chair{dir = 1},/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8},/turf/simulated/floor/plasteel/airless{icon_plating = "plating"; icon_regular_floor = "shuttlefloor"; icon_state = "shuttlefloor"},/area/ruin/unpowered)
+"s" = (/obj/structure/chair{dir = 1},/turf/simulated/floor/plating/airless,/area/ruin/unpowered)
+"t" = (/obj/structure/girder,/turf/simulated/floor/plating/airless,/area/ruin/unpowered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaabbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaabbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaacccbbbbaaaaaaaaaaaaaaabaaaaaaaaaaaa
+aaaaacccbbbbaaaaaaaaaaaaaabbbaaaaaaaaaaa
+aaaaaaccbbaaaaaaaaaaaaaaaabbbaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabbdddddbbaaabbbbaaaaaaaaaaa
+aaaaaaaaaaabbbbddddbbbbbbbbbbbaaaaaaaaaa
+aaaaaaaaaaacbbbbbdbbbbbbbbbbbbbaaaaaaaaa
+aaaaaaaaccccbbbbbbbbbccbbdddbbbaaaaaaaaa
+aaaaaaaacccccbddbbccccccccccbccaaaaaaaaa
+aaaaaaaaaccccbddbbeeeefeeeeecccaaaaaaaaa
+aaaaaaaaacccccbbbgggghhijkelcccaaaaaaaaa
+aaaaaaaaacccccbbbgmnhhhhhhelcccaaaaaaaaa
+aaaaaaaaaccccbbbbopqhhhhhgelcccaaaaaaaaa
+aaaaaaaaaccccbbdbbghhhhrsgelcaaaaaaaaaaa
+aaaaaaaaaabccbbbbbeeeefetgeecaaaaaaaaaaa
+aaaaaabaaabbbbbbbccccccccccccaaaaaaaaaaa
+aaaaaaaaaabbbbbbbbbbcccccccccaaaaaaaaaaa
+aaabaaaaaaaabbbbbbbbbccccaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabdbbdddbccccaaaaaaaaaaaaaaa
+aaaaabbaaaaaaaaabdddbbbaaaaaaaaaaaaabaaa
+aaaabbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaabbaaaaaaaaaaaaaaaabbbaaaaaaaaaccbbaa
+aaaaaaaaaaaaaaaaaaaaadbbbbaaaaaaacccdbaa
+aaaaaaaaaaaaaaaaaaadbbbbccaaaaaaacbdbaaa
+aaaaaaaaaaaaaaaaaadbbbbcaaaaaaaaacbbbaaa
+aaaaaaaaaaaaaaaaaddbbcccaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaababbbbbcccaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaabbbbbccccaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaabbbbdcccaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabbcccccaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaabccaaaaaaaaaaaaaaaaaaaaa
+"}

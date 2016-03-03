@@ -1,58 +1,57 @@
-/datum/action/item_action/tank/internals
-	name = "Set Internals"
-
-/datum/action/item_action/tank/internals/Trigger()
-	if(!Checks())
-		return
-
-	var/mob/living/carbon/human/C = owner
-	if(!istype(C))
-		return
-
-	if(C.internal == target)
-		C.internal = null
-		C << "<span class='notice'>You close \the [target] valve.</span>"
-		C.update_internals_hud_icon(0)
-	else if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
-		C.internal = target
-		C << "<span class='notice'>You open \the [target] valve.</span>"
-		C.update_internals_hud_icon(1)
-	return 1
-
-/datum/action/item_action/tank/internals/IsAvailable()
-	var/mob/living/carbon/C = owner
-	if(!C.wear_mask || !(C.wear_mask.flags & MASKINTERNALS))
-		return
-	return ..()
-
 /obj/item/weapon/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/smash.ogg'
-
 	pressure_resistance = ONE_ATMOSPHERE * 5
-
 	force = 5
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
-
+	actions_types = list(/datum/action/item_action/set_internals)
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
 
-	var/datum/action/item_action/tank/internals/internals_action
+/obj/item/weapon/tank/ui_action_click(mob/user)
+	toggle_internals(user)
+
+/obj/item/weapon/tank/proc/toggle_internals(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		return
+
+	if(H.internal == src)
+		H << "<span class='notice'>You close [src] valve.</span>"
+		H.internal = null
+		H.update_internals_hud_icon(0)
+	else
+		if(!H.getorganslot("breathing_tube"))
+			if(!H.wear_mask)
+				H << "<span class='warning'>You need a mask!</span>"
+				return
+			if(H.wear_mask.mask_adjusted)
+				H.wear_mask.adjustmask(H)
+			if(!(H.wear_mask.flags & MASKINTERNALS))
+				H << "<span class='warning'>[H.wear_mask] can't use [src]!</span>"
+				return
+
+		if(H.internal)
+			H << "<span class='notice'>You switch your internals to [src].</span>"
+		else
+			H << "<span class='notice'>You open [src] valve.</span>"
+		H.internal = src
+		H.update_internals_hud_icon(1)
+	H.update_action_buttons_icon()
+
 
 /obj/item/weapon/tank/New()
 	..()
 
 	air_contents = new(volume) //liters
 	air_contents.temperature = T20C
-
-	internals_action = new(src)
 
 	SSobj.processing |= src
 
@@ -62,14 +61,6 @@
 
 	SSobj.processing -= src
 	return ..()
-
-/obj/item/weapon/tank/pickup(mob/user)
-	..()
-	internals_action.Grant(user)
-
-/obj/item/weapon/tank/dropped(mob/user)
-	..()
-	internals_action.Remove(user)
 
 /obj/item/weapon/tank/examine(mob/user)
 	var/obj/icon = src

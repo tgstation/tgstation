@@ -14,7 +14,7 @@
 /datum/mapGeneratorModule/syndieFurniture
 	clusterCheckFlags = CLUSTER_CHECK_ALL
 	spawnableTurfs = list()
-	spawnableAtoms = list(/obj/structure/table = 20,/obj/structure/bed/chair = 15,/obj/structure/bed/stool = 10, \
+	spawnableAtoms = list(/obj/structure/table = 20,/obj/structure/chair = 15,/obj/structure/chair/stool = 10, \
 		/obj/structure/computerframe = 15, /obj/item/weapon/storage/toolbox/syndicate = 15 ,\
 		/obj/structure/closet/syndicate = 25, /obj/machinery/suit_storage_unit/syndicate = 15)
 

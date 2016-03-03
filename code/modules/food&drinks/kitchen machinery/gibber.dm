@@ -9,7 +9,6 @@
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
-	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
 	var/meat_produced = 0
 	var/ignore_clothing = 0
 	use_power = 1
@@ -160,6 +159,7 @@
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 	src.operating = 1
 	update_icon()
+
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	var/sourcename = src.occupant.real_name
@@ -170,22 +170,32 @@
 	var/sourcenutriment = src.occupant.nutrition / 15
 	var/sourcetotalreagents = src.occupant.reagents.total_volume
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
+	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
+	var/typeofskin = /obj/item/stack/sheet/animalhide/human
 
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
+	var/obj/item/stack/sheet/animalhide/allskin
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
 		if(gibee.dna && gibee.dna.species)
 			typeofmeat = gibee.dna.species.meat
+			typeofskin = gibee.dna.species.skinned_type
 		else
 			typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
-	else
-		if(iscarbon(occupant))
-			var/mob/living/carbon/C = occupant
-			typeofmeat = C.type_of_meat
-			gibtype = C.gib_type
+			typeofskin = /obj/item/stack/sheet/animalhide/human
+	else if(iscarbon(occupant))
+		var/mob/living/carbon/C = occupant
+		typeofmeat = C.type_of_meat
+		gibtype = C.gib_type
+		if(ismonkey(C))
+			typeofskin = /obj/item/stack/sheet/animalhide/monkey
+		else if(isalien(C))
+			typeofskin = /obj/item/stack/sheet/animalhide/xeno
+
 	for (var/i=1 to meat_produced)
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
+		var/obj/item/stack/sheet/animalhide/newskin = new typeofskin
 		newmeat.name = sourcename + newmeat.name
 		newmeat.subjectname = sourcename
 		if(sourcejob)
@@ -193,6 +203,7 @@
 		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
 		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / meat_produced, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
+		allskin = newskin
 
 	add_logs(user, occupant, "gibbed")
 	src.occupant.death(1)
@@ -204,8 +215,11 @@
 		for (var/i=1 to meat_produced)
 			var/list/nearby_turfs = orange(3, get_turf(src))
 			var/obj/item/meatslab = allmeat[i]
+			var/obj/item/skin = allskin
 			meatslab.loc = src.loc
+			skin.loc = src.loc
 			meatslab.throw_at_fast(pick(nearby_turfs),i,3)
+			skin.throw_at_fast(pick(nearby_turfs),i,3)
 			for (var/turfs=1 to meat_produced*3)
 				var/turf/gibturf = pick(nearby_turfs)
 				if (!gibturf.density && src in viewers(gibturf))

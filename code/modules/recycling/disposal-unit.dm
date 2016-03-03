@@ -193,8 +193,9 @@
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
+	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in src)
-		AM.loc = src.loc
+		AM.forceMove(T)
 		AM.pipe_eject(0)
 	update()
 
@@ -244,14 +245,14 @@
 // called when holder is expelled from a disposal
 // should usually only occur if the pipe network is modified
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
-
+	var/turf/T = get_turf(src)
 	var/turf/target
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 	if(H) // Somehow, someone managed to flush a window which broke mid-transit and caused the disposal to go in an infinite loop trying to expel null, hopefully this fixes it
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
-			AM.loc = src.loc
+			AM.forceMove(T)
 			AM.pipe_eject(0)
 			AM.throw_at_fast(target, 5, 1)
 
@@ -475,7 +476,7 @@
 	return
 
 /obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
-	if(!(user.sight & (SEEOBJS|SEEMOBS)))
+	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
 
 

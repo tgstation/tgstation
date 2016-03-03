@@ -34,9 +34,10 @@
 		pcollar = new(src)
 		regenerate_icons()
 
-/mob/living/simple_animal/pet/revive()
-	..()
-	regenerate_icons()
+/mob/living/simple_animal/pet/revive(full_heal = 0, admin_revive = 0)
+	if(..())
+		regenerate_icons()
+		. = 1
 
 /mob/living/simple_animal/pet/death(gibbed)
 	..(gibbed)

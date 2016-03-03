@@ -11,6 +11,7 @@
 	mutant_bodyparts = list("tail_human", "ears")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
 	use_skintones = 1
+	skinned_type = /obj/item/stack/sheet/animalhide/human
 
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
@@ -62,6 +63,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
+	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -238,11 +240,23 @@ var/regex/lizard_hiSS = new("S+", "g")
 	burnmod = 0.5
 	coldmod = 2
 	heatmod = 0.5
+	var/datum/action/innate/split_body/slime_split
+	var/datum/action/innate/swap_body/callforward
+	var/datum/action/innate/swap_body/callback
+
+/datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
+	if(slime_split)
+		slime_split.Remove(C)
+	if(callforward)
+		callforward.Remove(C)
+	if(callback)
+		callback.Remove(C)
+	..()
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	if(recently_changed)
-		var/datum/action/innate/split_body/S = new
-		S.Grant(H)
+		slime_split = new
+		slime_split.Grant(H)
 
 	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
 		if(S.volume >= 200)
@@ -257,15 +271,9 @@ var/regex/lizard_hiSS = new("S+", "g")
 
 /datum/action/innate/split_body
 	name = "Split Body"
-	check_flags = AB_CHECK_ALIVE
+	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimesplit"
 	background_icon_state = "bg_alien"
-
-/datum/action/innate/split_body/CheckRemoval()
-	var/mob/living/carbon/human/H = owner
-	if(!ishuman(H) || !H.dna || !H.dna.species || H.dna.species.id != "slime")
-		return 1
-	return 0
 
 /datum/action/innate/split_body/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -284,12 +292,13 @@ var/regex/lizard_hiSS = new("S+", "g")
 			spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 			S.volume = 80
 			H.notransform = 0
-			var/datum/action/innate/swap_body/callforward = new /datum/action/innate/swap_body()
-			var/datum/action/innate/swap_body/callback = new /datum/action/innate/swap_body()
-			callforward.body = spare
-			callforward.Grant(H)
-			callback.body = H
-			callback.Grant(spare)
+			var/datum/species/jelly/slime/SS = H.dna.species
+			SS.callforward = new
+			SS.callforward.body = spare
+			SS.callforward.Grant(H)
+			SS.callback = new
+			SS.callback.body = H
+			SS.callback.Grant(spare)
 			H.mind.transfer_to(spare)
 			spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
 			return
@@ -299,16 +308,10 @@ var/regex/lizard_hiSS = new("S+", "g")
 
 /datum/action/innate/swap_body
 	name = "Swap Body"
-	check_flags = AB_CHECK_ALIVE
+	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimeswap"
 	background_icon_state = "bg_alien"
 	var/mob/living/carbon/human/body
-
-/datum/action/innate/swap_body/CheckRemoval()
-	var/mob/living/carbon/human/H = owner
-	if(!ishuman(H) || !H.dna || !H.dna.species || H.dna.species.id != "slime")
-		return 1
-	return 0
 
 /datum/action/innate/swap_body/Activate()
 	if(!body || !istype(body) || !body.dna || !body.dna.species || body.dna.species.id != "slime" || body.stat == DEAD || qdeleted(body))
@@ -370,6 +373,17 @@ var/regex/lizard_hiSS = new("S+", "g")
 
 /datum/species/fly/handle_speech(message)
 	return replacetext(message, "z", stutter("zz"))
+
+/datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(istype(chem,/datum/reagent/consumable))
+		var/datum/reagent/consumable/nutri_check = chem
+		if(nutri_check.nutriment_factor >0)
+			var/turf/pos = get_turf(H)
+			H.vomit()
+			playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
+						"<span class='userdanger'>You throw up on the floor!</span>")
+	..()
 
 /*
  SKELETONS
@@ -626,7 +640,7 @@ var/global/list/synth_flesh_disguises = list()
 
 
 /datum/species/synth/proc/handle_disguise(mob/living/carbon/human/H)
-	if(H)
+	if(H && fake_species) // Obviously we only are disguise when we're... disguised.
 		H.updatehealth()
 		var/add_overlay = FALSE
 		if(H.health < disguise_fail_health)

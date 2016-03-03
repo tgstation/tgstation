@@ -50,7 +50,7 @@
 			L.gib()
 			visible_message("<span class='danger'>[src] tears [L] to pieces!</span>")
 			src << "<span class='userdanger'>You feast on [L], restoring your health!</span>"
-			src.revive()
+			revive(full_heal = 1)
 
 /mob/living/simple_animal/hostile/zombie/death()
 	..()
@@ -67,7 +67,7 @@
 	spawn(rand(800,1200))
 		if(src)
 			visible_message("<span class='danger'>[src] staggers to their feet!</span>")
-			src.revive()
+			revive(full_heal = 1)
 
 /mob/living/simple_animal/hostile/zombie/proc/Zombify(mob/living/carbon/human/H)
 	H.set_species(/datum/species/zombie)

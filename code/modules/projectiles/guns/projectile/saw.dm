@@ -26,7 +26,7 @@
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
-	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? Ceiling(get_ammo(0)/12.5)*25 : "-empty"]"
+	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? Ceiling(get_ammo(0)/12.5)*25 : "-empty"][suppressed ? "-suppressed" : ""]"
 	item_state = "l6[cover_open ? "openmag" : "closedmag"]"
 
 
@@ -55,6 +55,9 @@
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
+	. = ..()
+	if(.)
+		return
 	if(!cover_open)
 		user << "<span class='warning'>[src]'s cover is closed! You can't insert a new mag.</span>"
 		return

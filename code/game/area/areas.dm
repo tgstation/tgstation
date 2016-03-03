@@ -166,12 +166,11 @@
 		//Trigger alarm effect
 		RA.set_fire_alarm_effect()
 		//Lockdown airlocks
-		for(var/obj/machinery/door/airlock/DOOR in RA)
+		for(var/obj/machinery/door/DOOR in RA)
 			spawn(0)
 				DOOR.close()
 				if(DOOR.density)
-					DOOR.locked = 1
-					DOOR.update_icon()
+					DOOR.lock()
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 

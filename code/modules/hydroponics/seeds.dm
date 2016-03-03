@@ -217,7 +217,23 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
-	mutatelist = list(/obj/item/seeds/mimanaseed)
+	mutatelist = list(/obj/item/seeds/mimanaseed, /obj/item/seeds/bluespacebananaseed)
+
+/obj/item/seeds/bluespacebananaseed
+	name = "pack of bluespace banana seeds"
+	desc = "They're seeds that grow into bluespace banana trees. When grown, keep away from clown."
+	icon_state = "seed-banana-blue"
+	species = "bluespacebanana"
+	plantname = "Bluespace Banana Tree"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacebanana
+	lifespan = 50
+	endurance = 30
+	maturation = 6
+	production = 6
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 6
 
 /obj/item/seeds/mimanaseed
 	name = "pack of mimana seeds"

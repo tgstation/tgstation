@@ -61,6 +61,9 @@
 /mob/camera/blob/update_health_hud()
 	if(blob_core)
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
+		for(var/mob/living/simple_animal/hostile/blob/blobbernaut/B in blob_mobs)
+			if(B.hud_used && B.hud_used.blobpwrdisplay)
+				B.hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_core.health)]</font></div>"
 
 /mob/camera/blob/proc/add_points(points)
 	if(points != 0)
@@ -98,7 +101,7 @@
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
 			M << rendered
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a>[rendered]"
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
 
 /mob/camera/blob/emote(act,m_type=1,message = null)
 	return

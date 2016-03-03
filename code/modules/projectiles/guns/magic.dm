@@ -16,7 +16,7 @@
 	var/no_den_usage
 	origin_tech = null
 	clumsy_check = 0
-	trigger_guard = 0
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses magic instead
 	pin = /obj/item/device/firing_pin/magic
 
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands

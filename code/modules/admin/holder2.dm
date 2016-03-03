@@ -87,13 +87,6 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 			return usr.client.holder.check_if_greater_rights_than_holder(other.holder)
 	return 0
 
-/client/proc/deadmin()
-	admin_datums -= ckey
-	if(holder)
-		holder.disassociate()
-		del(holder)
-	return 1
-
 //This proc checks whether subject has at least ONE of the rights specified in rights_required.
 /proc/check_rights_for(client/subject, rights_required)
 	if(subject && subject.holder && subject.holder.rank)

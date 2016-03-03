@@ -116,7 +116,7 @@ var/next_mob_id = 0
 		if(!M.client)
 			continue
 		var/msg = message
-		if(M.see_invisible<invisibility || T != loc)//if src is inside something or invisible to us,
+		if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
 			if(blind_message) // then people see blind message if there is one, otherwise nothing.
 				msg = blind_message
 			else
@@ -333,30 +333,35 @@ var/next_mob_id = 0
 
 //this and stop_pulling really ought to be /mob/living procs
 /mob/proc/start_pulling(atom/movable/AM)
-	if ( !AM || !src || src==AM || !isturf(AM.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+	if(!AM || !src)
 		return
-	if (!( AM.anchored ))
-		AM.add_fingerprint(src)
+	if(AM == src || !isturf(AM.loc))
+		return
+	if(AM.anchored)
+		return
 
-		// If we're pulling something then drop what we're currently pulling and pull this instead.
-		if(pulling)
-			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
-			if(AM == pulling)
-				return
-			stop_pulling()
+	AM.add_fingerprint(src)
 
-		src.pulling = AM
-		AM.pulledby = src
-		update_pull_hud_icon()
-		if(ismob(AM))
-			var/mob/M = AM
-			if(!iscarbon(src))
-				M.LAssailant = null
-			else
-				M.LAssailant = usr
+	// If we're pulling something then drop what we're currently pulling and pull this instead.
+	if(pulling)
+		// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
+		if(AM == pulling)
+			return
+		stop_pulling()
+
+	pulling = AM
+	AM.pulledby = src
+
+	update_pull_hud_icon()
+
+	if(ismob(AM))
+		var/mob/M = AM
+		if(!iscarbon(src))
+			M.LAssailant = null
+		else
+			M.LAssailant = usr
 
 /mob/verb/stop_pulling()
-
 	set name = "Stop Pulling"
 	set category = "IC"
 
@@ -375,7 +380,11 @@ var/next_mob_id = 0
 	set category = "Object"
 	set src = usr
 
-	if(istype(loc,/obj/mecha)) return
+	if(istype(loc,/obj/mecha))
+		return
+
+	if(incapacitated())
+		return
 
 	if(hand)
 		var/obj/item/W = l_hand
@@ -387,7 +396,6 @@ var/next_mob_id = 0
 		if (W)
 			W.attack_self(src)
 			update_inv_r_hand()
-	return
 
 /*
 /mob/verb/dump_source()
@@ -703,6 +711,7 @@ var/next_mob_id = 0
 		if(layer == MOB_LAYER - 0.2)
 			layer = initial(layer)
 	update_transform()
+	update_action_buttons_icon()
 	lying_prev = lying
 	return canmove
 
@@ -762,56 +771,65 @@ var/next_mob_id = 0
 /mob/proc/Dizzy(amount)
 	dizziness = max(dizziness,amount,0)
 
-/mob/proc/Stun(amount)
+/mob/proc/Stun(amount, updating_canmove = 1)
 	if(status_flags & CANSTUN)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		update_canmove()
+		if(updating_canmove)
+			update_canmove()
 
-/mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
+/mob/proc/SetStunned(amount, updating_canmove = 1) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
 	if(status_flags & CANSTUN)
 		stunned = max(amount,0)
-		update_canmove()
+		if(updating_canmove)
+			update_canmove()
 
-/mob/proc/AdjustStunned(amount)
+/mob/proc/AdjustStunned(amount, updating_canmove = 1)
 	if(status_flags & CANSTUN)
 		stunned = max(stunned + amount,0)
-		update_canmove()
+		if(updating_canmove)
+			update_canmove()
 
-/mob/proc/Weaken(amount, ignore_canweaken = 0)
-	if(status_flags & CANWEAKEN || ignore_canweaken)
+/mob/proc/Weaken(amount, ignore_canweaken = 0, updating_canmove = 1)
+	if((status_flags & CANWEAKEN) || ignore_canweaken)
 		weakened = max(max(weakened,amount),0)
-		update_canmove()	//updates lying, canmove and icons
+		if(updating_canmove)
+			update_canmove()	//updates lying, canmove and icons
 
-/mob/proc/SetWeakened(amount)
+/mob/proc/SetWeakened(amount, updating_canmove = 1)
 	if(status_flags & CANWEAKEN)
 		weakened = max(amount,0)
-		update_canmove()	//updates lying, canmove and icons
+		if(updating_canmove)
+			update_canmove()	//updates lying, canmove and icons
 
-/mob/proc/AdjustWeakened(amount)
-	if(status_flags & CANWEAKEN)
+/mob/proc/AdjustWeakened(amount, ignore_canweaken = 0, updating_canmove = 1)
+	if((status_flags & CANWEAKEN) || ignore_canweaken)
 		weakened = max(weakened + amount,0)
-		update_canmove()	//updates lying, canmove and icons
+		if(updating_canmove)
+			update_canmove()	//updates lying, canmove and icons
 
-/mob/proc/Paralyse(amount)
+/mob/proc/Paralyse(amount, updating_stat = 1)
 	if(status_flags & CANPARALYSE)
 		var/old_paralysis = paralysis
 		paralysis = max(max(paralysis,amount),0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			update_stat()
+			if(updating_stat)
+				update_stat()
 
-/mob/proc/SetParalysis(amount)
+/mob/proc/SetParalysis(amount, updating_stat = 1)
 	if(status_flags & CANPARALYSE)
 		var/old_paralysis = paralysis
 		paralysis = max(amount,0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			update_stat()
+			if(updating_stat)
+				update_stat()
 
-/mob/proc/AdjustParalysis(amount)
+/mob/proc/AdjustParalysis(amount, updating_stat = 1)
 	if(status_flags & CANPARALYSE)
 		var/old_paralysis = paralysis
 		paralysis = max(paralysis + amount,0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			update_stat()
+			if(updating_stat)
+				update_stat()
 
 /mob/proc/Sleeping(amount, updating_stat = 1)
 	var/old_sleeping = sleeping
@@ -825,25 +843,29 @@ var/next_mob_id = 0
 		if(updating_stat)
 			update_stat()
 
-/mob/proc/SetSleeping(amount)
+/mob/proc/SetSleeping(amount, updating_stat = 1)
 	var/old_sleeping = sleeping
 	sleeping = max(amount,0)
 	if(!old_sleeping && sleeping)
 		throw_alert("asleep", /obj/screen/alert/asleep)
-		update_stat()
+		if(updating_stat)
+			update_stat()
 	else if(old_sleeping && !sleeping)
 		clear_alert("asleep")
-		update_stat()
+		if(updating_stat)
+			update_stat()
 
-/mob/proc/AdjustSleeping(amount)
+/mob/proc/AdjustSleeping(amount, updating_stat = 1)
 	var/old_sleeping = sleeping
 	sleeping = max(sleeping + amount,0)
 	if(!old_sleeping && sleeping)
 		throw_alert("asleep", /obj/screen/alert/asleep)
-		update_stat()
+		if(updating_stat)
+			update_stat()
 	else if(old_sleeping && !sleeping)
 		clear_alert("asleep")
-		update_stat()
+		if(updating_stat)
+			update_stat()
 
 /mob/proc/Resting(amount)
 	resting = max(max(resting,amount),0)
@@ -882,18 +904,9 @@ var/next_mob_id = 0
 /mob/proc/setEarDamage()
 	return
 
-/mob/proc/AddSpell(obj/effect/proc_holder/spell/spell)
-	mob_spell_list += spell
-	if(!spell.action)
-		spell.action = new/datum/action/spell_action
-		spell.action.target = spell
-		spell.action.name = spell.name
-		spell.action.button_icon = spell.action_icon
-		spell.action.button_icon_state = spell.action_icon_state
-		spell.action.background_icon_state = spell.action_background_icon_state
-	if(isliving(src))
-		spell.action.Grant(src)
-	return
+/mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
+	mob_spell_list += S
+	S.action.Grant(src)
 
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
@@ -995,38 +1008,9 @@ var/next_mob_id = 0
 					obj.update_explanation_text()
 	return 1
 
-/mob/living/carbon/fully_replace_character_name(oldname,newname)
-	..()
-	if(dna)
-		dna.real_name = real_name
-
-/mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
-	..()
-	if(oldname != real_name)
-		if(eyeobj)
-			eyeobj.name = "[newname] (AI Eye)"
-
-		// Notify Cyborgs
-		for(var/mob/living/silicon/robot/Slave in connected_robots)
-			Slave.show_laws()
-
-/mob/living/silicon/robot/fully_replace_character_name(oldname,newname)
-	..()
-	if(oldname != real_name)
-		notify_ai(3, oldname, newname)
-	if(camera)
-		camera.c_tag = real_name
-	custom_name = newname
-
 //Updates data_core records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)
 	return
-
-/mob/living/carbon/human/replace_records_name(oldname,newname) // Only humans have records right now, move this up if changed.
-	for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
-		var/datum/data/record/R = find_record("name", oldname, L)
-		if(R)
-			R.fields["name"] = newname
 
 /mob/proc/replace_identification_name(oldname,newname)
 	var/list/searching = GetAllContents()
@@ -1051,12 +1035,6 @@ var/next_mob_id = 0
 				if(!search_id)
 					break
 				search_pda = 0
-
-/mob/living/silicon/ai/replace_identification_name(oldname,newname)
-	if(aiPDA)
-		aiPDA.owner = newname
-		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"
-
 
 /mob/proc/update_stat()
 	return
@@ -1086,3 +1064,5 @@ var/next_mob_id = 0
 			setEarDamage(ear_damage, -1)
 		if("maxHealth")
 			updatehealth()
+		if("resize")
+			update_transform()

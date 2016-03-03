@@ -47,6 +47,7 @@
 	var/list/datum/objective/objectives = list()
 	var/list/datum/objective/special_verbs = list()
 
+	var/list/cult_words = list()
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/datum/faction/faction 			//associated faction
@@ -145,7 +146,12 @@
 	if(src in ticker.mode.cult)
 		ticker.mode.cult -= src
 		ticker.mode.update_cult_icons_removed(src)
+		var/datum/game_mode/cult/cult = ticker.mode
+		if(istype(cult))
+			cult.memorize_cult_objectives(src)
 	special_role = null
+	remove_objectives()
+	remove_antag_equip()
 
 /datum/mind/proc/remove_rev()
 	if(src in ticker.mode.revolutionaries)
@@ -319,8 +325,11 @@
 		text = "<i><b>[text]</b></i>: "
 		if (src in ticker.mode.cult)
 			text += "loyal|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
-			text += "<br><a href='?src=\ref[src];cult=equip'>Equip</a>"
-
+			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
+/*
+			if (objectives.len==0)
+				text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
+*/
 		else if(isloyal(current))
 			text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
 		else
@@ -973,9 +982,14 @@
 					ticker.mode.add_cultist(src)
 					message_admins("[key_name_admin(usr)] has cult'ed [current].")
 					log_admin("[key_name(usr)] has cult'ed [current].")
-			if("equip")
+			if("tome")
+				if (!ticker.mode.equip_cultist(current,1))
+					usr << "<span class='danger'>Spawning tome failed!</span>"
+
+			if("amulet")
 				if (!ticker.mode.equip_cultist(current))
-					usr << "<span class='danger'>equip_cultist() failed! [current]'s starting equipment will be incomplete.</span>"
+					usr << "<span class='danger'>Spawning amulet failed!</span>"
+
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])
@@ -1111,10 +1125,10 @@
 					ticker.mode.shadows -= src
 					special_role = null
 					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
-					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
-					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
-					remove_spell(/obj/effect/proc_holder/spell/targeted/enthrall)
-					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/enthrall)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
 					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
 					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
 				else if(src in ticker.mode.thralls)
@@ -1344,8 +1358,20 @@
 		special_role = "Cultist"
 		current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
 		current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
-		current << "Your objective is to summon Nar-Sie by building and defending a suitable shell for the Geometer. Adequate supplies can be procured through human sacrifices."
-		ticker.mode.equip_cultist(current)
+		var/datum/game_mode/cult/cult = ticker.mode
+
+		if (istype(cult))
+			cult.memorize_cult_objectives(src)
+		else
+			var/explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
+			current << "<B>Objective #1</B>: [explanation]"
+			current.memory += "<B>Objective #1</B>: [explanation]<BR>"
+			current << "The convert rune is join blood self"
+			current.memory += "The convert rune is join blood self<BR>"
+
+	var/mob/living/carbon/human/H = current
+	if (!ticker.mode.equip_cultist(current))
+		H << "Spawning an amulet from your Master failed."
 
 /datum/mind/proc/make_Rev()
 	if (ticker.mode.head_revolutionaries.len>0)
@@ -1549,34 +1575,29 @@
 	return 1
 
 
-/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/spell)
-	spell_list += spell
-	if(!spell.action)
-		spell.action = new/datum/action/spell_action
-		spell.action.target = spell
-		spell.action.name = spell.name
-		spell.action.button_icon = spell.action_icon
-		spell.action.button_icon_state = spell.action_icon_state
-		spell.action.background_icon_state = spell.action_background_icon_state
-	spell.action.Grant(current)
-	return
+/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
+	spell_list += S
+	S.action.Grant(current)
+
+//To remove a specific spell from a mind
+/datum/mind/proc/RemoveSpell(var/obj/effect/proc_holder/spell/spell)
+	if(!spell) return
+	for(var/X in spell_list)
+		var/obj/effect/proc_holder/spell/S = X
+		if(istype(S, spell))
+			qdel(S)
+			spell_list -= S
+
 /datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)
 		for(var/datum/action/A in current.actions)
 			A.Grant(new_character)
 	transfer_mindbound_actions(new_character)
 
-/datum/mind/proc/transfer_mindbound_actions(var/mob/living/new_character)
-	for(var/obj/effect/proc_holder/spell/spell in spell_list)
-		if(!spell.action) // Unlikely but whatever
-			spell.action = new/datum/action/spell_action
-			spell.action.target = spell
-			spell.action.name = spell.name
-			spell.action.button_icon = spell.action_icon
-			spell.action.button_icon_state = spell.action_icon_state
-			spell.action.background_icon_state = spell.action_background_icon_state
-		spell.action.Grant(new_character)
-	return
+/datum/mind/proc/transfer_mindbound_actions(mob/living/new_character)
+	for(var/X in spell_list)
+		var/obj/effect/proc_holder/spell/S = X
+		S.action.Grant(new_character)
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
@@ -1689,4 +1710,3 @@
 	..()
 	mind.assigned_role = "[initial(name)]"
 	mind.special_role = "Cultist"
-

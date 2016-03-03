@@ -87,11 +87,35 @@
 	if(istype(traitor.current, /mob/living/silicon))
 		var/objective_count = 0
 
-		if(prob(10))
-			var/datum/objective/block/block_objective = new
-			block_objective.owner = traitor
-			traitor.objectives += block_objective
-			objective_count++
+		if(prob(30))
+			var/special_pick = rand(1,4)
+			switch(special_pick)
+				if(1)
+					var/datum/objective/block/block_objective = new
+					block_objective.owner = traitor
+					traitor.objectives += block_objective
+					objective_count++
+				if(2)
+					var/datum/objective/purge/purge_objective = new
+					purge_objective.owner = traitor
+					traitor.objectives += purge_objective
+					objective_count++
+				if(3)
+					var/datum/objective/robot_army/robot_objective = new
+					robot_objective.owner = traitor
+					traitor.objectives += robot_objective
+					objective_count++
+				if(4) //Protect and strand a target
+					var/datum/objective/protect/yandere_one = new
+					yandere_one.owner = traitor
+					traitor.objectives += yandere_one
+					yandere_one.find_target()
+					objective_count++
+					var/datum/objective/maroon/yandere_two = new
+					yandere_two.owner = traitor
+					yandere_two.target = yandere_one.target
+					traitor.objectives += yandere_two
+					objective_count++
 
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
 			var/datum/objective/assassinate/kill_objective = new

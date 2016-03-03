@@ -202,7 +202,7 @@ Contents:
 	equip_to_slot_or_del(theSuit, slot_wear_suit)
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(src), slot_gloves)
 	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/space_ninja(src), slot_head)
-	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/voice/space_ninja(src), slot_wear_mask)
+	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/space_ninja(src), slot_wear_mask)
 	equip_to_slot_or_del(new /obj/item/clothing/glasses/night(src), slot_glasses)
 	equip_to_slot_or_del(EK, slot_belt)
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_r_store)

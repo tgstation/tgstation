@@ -630,7 +630,7 @@
 			if(AI.mind.special_role) //Malf AIs cannot leave mechs. Except through death.
 				user << "<span class='boldannounce'>ACCESS DENIED.</span>"
 				return
-			AI.aiRestorePowerRoutine = 0//So the AI initially has power.
+			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
 			AI.loc = card
@@ -669,7 +669,7 @@
 
 //Hack and From Card interactions share some code, so leave that here for both to use.
 /obj/mecha/proc/ai_enter_mech(mob/living/silicon/ai/AI, interaction)
-	AI.aiRestorePowerRoutine = 0
+	AI.ai_restore_power()
 	AI.loc = src
 	occupant = AI
 	icon_state = initial(icon_state)
@@ -867,9 +867,9 @@
 			user << "<span class='warning'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
 		var/mob/brainmob = mmi_as_oc.brainmob
-		brainmob.reset_perspective(src)
 		occupant = brainmob
 		brainmob.loc = src //should allow relaymove
+		brainmob.reset_perspective(src)
 		brainmob.canmove = 1
 		mmi_as_oc.loc = src
 		mmi_as_oc.mecha = src
@@ -1036,9 +1036,12 @@ var/year_integer = text2num(year) // = 2013???
 
 
 /datum/action/innate/mecha
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_ALIVE
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
 	var/obj/mecha/chassis
 
+/datum/action/innate/mecha/Destroy()
+	chassis = null
+	return ..()
 
 /datum/action/innate/mecha/mech_eject
 	name = "Eject From Mech"

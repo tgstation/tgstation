@@ -1,30 +1,3 @@
-/datum/action/item_action/jetpack/cycle
-	name = "Jetpack Mode"
-
-/datum/action/item_action/jetpack/cycle/Trigger()
-	if(!Checks())
-		return
-
-	var/obj/item/weapon/tank/jetpack/J = target
-	J.cycle(owner)
-	return 1
-
-/datum/action/item_action/jetpack/cycle/suit
-	name = "Internal Jetpack Mode"
-
-/datum/action/item_action/jetpack/cycle/suit/New()
-	..()
-	check_flags &= ~AB_CHECK_INSIDE // The jetpack is inside the suit.
-
-/datum/action/item_action/jetpack/cycle/suit/CheckRemoval(mob/living/user)
-	return !(target.loc in user) // Check that the suit is on the user.
-
-/datum/action/item_action/jetpack/cycle/suit/IsAvailable()
-	var/mob/living/carbon/human/H = owner
-	if(!H.wear_suit)
-		return
-	return ..()
-
 /obj/item/weapon/tank/jetpack
 	name = "jetpack (empty)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
@@ -32,14 +5,11 @@
 	item_state = "jetpack"
 	w_class = 4
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
+	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/jetpack_mode)
 	var/gas_type = "o2"
 	var/on = FALSE
 	var/turbo = FALSE
-
 	var/datum/effect_system/trail_follow/ion/ion_trail
-
-	var/datum/action/item_action/jetpack/cycle/cycle_action
-	var/cycle_action_type = /datum/action/item_action/jetpack/cycle
 
 /obj/item/weapon/tank/jetpack/New()
 	..()
@@ -49,15 +19,12 @@
 	ion_trail = new
 	ion_trail.set_up(src)
 
-	cycle_action = new cycle_action_type(src)
+/obj/item/weapon/tank/jetpack/ui_action_click(mob/user, actiontype)
+	if(actiontype == /datum/action/item_action/jetpack_mode)
+		cycle(user)
+	else
+		toggle_internals(user)
 
-/obj/item/weapon/tank/jetpack/pickup(mob/user)
-	..()
-	cycle_action.Grant(user)
-
-/obj/item/weapon/tank/jetpack/dropped(mob/user)
-	..()
-	cycle_action.Remove(user)
 
 /obj/item/weapon/tank/jetpack/proc/cycle(mob/user)
 	if(user.incapacitated())
@@ -73,6 +40,10 @@
 		turn_off()
 		turbo = FALSE
 		user << "<span class='notice'>You turn jetpack off.</span>"
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+
 
 /obj/item/weapon/tank/jetpack/proc/turn_on()
 	on = TRUE
@@ -143,8 +114,8 @@
 	desc = "A device that will use your internals tank as a gas source for propulsion."
 	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
+	actions_types = list(/datum/action/item_action/jetpack_mode)
 	var/obj/item/weapon/tank/internals/tank = null
-	cycle_action_type = /datum/action/item_action/jetpack/cycle/suit
 
 /obj/item/weapon/tank/jetpack/suit/New()
 	..()

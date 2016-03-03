@@ -87,15 +87,7 @@
 			if(ghost.mind && ghost.mind.current == R)
 				R.key = ghost.key
 
-	R.notify_ai(1)
-
-	R.stat = UNCONSCIOUS
-	R.update_stat()
-	if(R.camera && !R.wires.is_cut(WIRE_CAMERA))
-		R.camera.toggle_cam(R,0)
-
-	dead_mob_list -= R //please never forget this ever kthx
-	living_mob_list += R
+	R.revive()
 
 	return 1
 
@@ -243,8 +235,8 @@
 
 	cyborg = R
 	icon_state = "selfrepair_off"
-	action_button_name = "Toggle Self-Repair"
-
+	var/datum/action/A = new /datum/action/item_action/toggle(src)
+	A.Grant(R)
 	return 1
 
 /obj/item/borg/upgrade/selfrepair/ui_action_click()
@@ -260,6 +252,9 @@
 /obj/item/borg/upgrade/selfrepair/update_icon()
 	if(cyborg)
 		icon_state = "selfrepair_[on ? "on" : "off"]"
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
 	else
 		icon_state = "cyborg_upgrade5"
 

@@ -1,0 +1,5 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Blobbernauts now die slowly when not near a blob."
+  - rscadd: "Blobbernauts can now see their health and the core health of the overmind that created them."

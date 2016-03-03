@@ -21,7 +21,7 @@
 	maxbodytemp = 400
 	unsuitable_atmos_damage = 1
 	species = /mob/living/simple_animal/pet/cat
-	childtype = /mob/living/simple_animal/pet/cat/kitten
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -60,12 +60,71 @@
 	icon_dead = "cat_dead"
 	gender = FEMALE
 	gold_core_spawnable = 0
+	var/list/family = list()
+	var/memory_saved = 0
+
+/mob/living/simple_animal/pet/cat/Runtime/New()
+	Read_Memory()
+	..()
+
+/mob/living/simple_animal/pet/cat/Runtime/Life()
+	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+		Write_Memory()
+	..()
+
+/mob/living/simple_animal/pet/cat/Runtime/death()
+	if(!memory_saved)
+		Write_Memory(1)
+	..()
+
+/mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
+	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
+	S["family"] 			>> family
+
+	if(isnull(family))
+		family = list()
+
+	for(var/cat_type in family)
+		if(family[cat_type] > 0)
+			for(var/i in 1 to family[cat_type])
+				new cat_type(loc)
+
+/mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
+	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
+	family = list()
+	for(var/mob/living/simple_animal/pet/cat/C in mob_list)
+		if(istype(C,type) || C.stat || !C.butcher_results) //That last one is a work around for hologram cats
+			continue
+		if(C.type in family)
+			family[C.type] += 1
+		else
+			family[C.type] = 1
+	S["family"]				<< family
+	memory_saved = 1
+
 
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
 	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/cat/Life()
+	if(!stat && !buckled)
+		if(prob(1))
+			emote("me", 1, pick("stretches out for a belly rub.", "wags its tail."))
+			icon_state = "[icon_living]_rest"
+			resting = 1
+		else if (prob(1))
+			emote("me", 1, pick("sits down.", "crouches on its hind legs."))
+			icon_state = "[icon_living]_sit"
+			resting = 1
+		else if (prob(1))
+			if (resting)
+				emote("me", 1, pick("gets up and meows.", "walks around."))
+				icon_state = "[icon_living]"
+				resting = 0
+			else
+				emote("me", 1, pick("grooms its fur.", "twitches its whiskers."))
+
 	//MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)

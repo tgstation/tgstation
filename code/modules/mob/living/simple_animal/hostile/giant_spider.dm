@@ -48,18 +48,19 @@
 	gold_core_spawnable = 1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 4
+	var/playable_spider = FALSE
     
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
 		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
+		if(istype(ghost) && playable_spider)
 			humanize_spider(ghost)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
 	humanize_spider(user)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
-	if(key)//Someone is in it
+	if(key || !playable_spider)//Someone is in it or the fun police are shutting it down
 		return
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
 	if(spider_ask == "No" || !src || qdeleted(src))
@@ -105,7 +106,7 @@
 		//1% chance to skitter madly away
 		if(!busy && prob(1))
 			stop_automated_movement = 1
-			Goto(pick(ultra_range(20, src, 1)), move_to_delay)
+			Goto(pick(urange(20, src, 1)), move_to_delay)
 			spawn(50)
 				stop_automated_movement = 0
 				walk(src,0)

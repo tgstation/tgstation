@@ -139,7 +139,7 @@
 	//Upgrade AI turrets around the world
 	for(var/obj/machinery/porta_turret/ai/turret in machines)
 		turret.health += 30
-		turret.eprojectile = /obj/item/projectile/beam/heavylaser //Once you see it, you will know what it means to FEAR.
+		turret.eprojectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
 		turret.eshot_sound = 'sound/weapons/lasercannonfire.ogg'
 	src << "<span class='notice'>Turrets upgraded.</span>"
 
@@ -522,6 +522,7 @@
 
 	var/upgradedcams = 0
 	see_override = SEE_INVISIBLE_MINIMUM //Night-vision, without which X-ray would be very limited in power.
+	update_sight()
 
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		if(C.assembly)

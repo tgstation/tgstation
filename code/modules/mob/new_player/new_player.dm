@@ -194,7 +194,7 @@
 		var/pollid = href_list["pollid"]
 		if(istext(pollid))
 			pollid = text2num(pollid)
-		if(isnum(pollid))
+		if(isnum(pollid) && IsInteger(pollid))
 			src.poll_player(pollid)
 		return
 
@@ -223,7 +223,7 @@
 							rating = null
 						else
 							rating = text2num(href_list["o[optionid]"])
-							if(!isnum(rating))
+							if(!isnum(rating) || !IsInteger(rating))
 								return
 
 						vote_on_numval_poll(pollid, optionid, rating)

@@ -59,7 +59,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	return flag
 
 /proc/admin_keyword_to_path(word) //use this with verb keywords eg +/client/proc/blah
-	return text2path(copytext(word,2,findtext(word," ",2,0)))
+	return text2path(copytext(word, 2, findtext(word, " ", 2, 0)))
 
 // Adds/removes rights to this admin_rank
 /datum/admin_rank/proc/process_keyword(word, previous_rights=0)
@@ -115,7 +115,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 			var/prev = findchar(line, "+-", next, 0)
 			while(prev)
-				next = findchar(line, "+-", prev+1, 0)
+				next = findchar(line, "+-", prev + 1, 0)
 				R.process_keyword(copytext(line, prev, next), previous_rights)
 				prev = next
 
@@ -152,14 +152,15 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	#endif
 
 
-/proc/load_admins()
+/proc/load_admins(target = null)
 	//clear the datums references
-	admin_datums.Cut()
-	for(var/client/C in admins)
-		C.remove_admin_verbs()
-		C.holder = null
-	admins.Cut()
-	load_admin_ranks()
+	if(!target)
+		admin_datums.Cut()
+		for(var/client/C in admins)
+			C.remove_admin_verbs()
+			C.holder = null
+		admins.Cut()
+		load_admin_ranks()
 
 	var/list/rank_names = list()
 	for(var/datum/admin_rank/R in admin_ranks)
@@ -167,35 +168,28 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 	if(config.admin_legacy_system)
 		//load text from file
-		var/list/Lines = file2list("config/admins.txt")
+		var/list/lines = file2list("config/admins.txt")
 
 		//process each line seperately
-		for(var/line in Lines)
+		for(var/line in lines)
 			if(!length(line))
 				continue
-			if(findtextEx(line,"#",1,2))
+			if(findtextEx(line, "#", 1, 2))
 				continue
 
-			//Split the line at every "="
-			var/list/List = splittext(line, "=")
-			if(!List.len)
+			var/list/entry = splittext(line, "=")
+			if(entry.len < 2)
 				continue
 
-			//ckey is before the first "="
-			var/ckey = ckey(List[1])
-			if(!ckey)
+			var/ckey = ckey(entry[1])
+			var/rank = ckeyEx(entry[2])
+			if(!ckey || !rank || (target && ckey != target))
 				continue
-
-			//rank follows the first "="
-			var/rank = ""
-			if(List.len >= 2)
-				rank = ckeyEx(List[2])
 
 			var/datum/admins/D = new(rank_names[rank], ckey)	//create the admin datum and store it for later use
 			if(!D)
 				continue									//will occur if an invalid rank is provided
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
-
 	else
 		establish_db_connection()
 		if(!dbcon.IsConnected())
@@ -210,9 +204,13 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 		while(query.NextRow())
 			var/ckey = ckey(query.item[1])
 			var/rank = ckeyEx(query.item[2])
+			if(target && ckey != target)
+				continue
+
 			if(rank_names[rank] == null)
 				WARNING("Admin rank ([rank]) does not exist.")
 				continue
+
 			var/datum/admins/D = new(rank_names[rank], ckey)				//create the admin datum and store it for later use
 			if(!D)
 				continue									//will occur if an invalid rank is provided
@@ -232,7 +230,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	if(holder)
 		holder.rank = newrank
 	else
-		holder = new /datum/admins(newrank,ckey)
+		holder = new /datum/admins(newrank, ckey)
 	remove_admin_verbs()
 	holder.associate(src)
 
@@ -240,10 +238,9 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	if(holder)
 		holder.rank.rights = newrights
 	else
-		holder = new /datum/admins("testing",newrights,ckey)
+		holder = new /datum/admins("testing", newrights, ckey)
 	remove_admin_verbs()
 	holder.associate(src)
-
 #endif
 
 /datum/admins/proc/edit_rights_topic(list/href_list)

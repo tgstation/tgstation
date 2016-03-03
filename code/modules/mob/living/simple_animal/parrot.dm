@@ -72,6 +72,7 @@
 	var/parrot_stuck_threshold = 10 //if this == parrot_stuck, it'll force the parrot back to wandering
 
 	var/list/speech_buffer = list()
+	var/speech_shuffle_rate = 20
 	var/list/available_channels = list()
 
 	//Headset for Poly to yell at engineers :)
@@ -335,7 +336,8 @@
 		user.drop_item()
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
-		speak_chance *= 2
+		speak_chance *= 1.27 // 20 crackers to go from 1% to 100%
+		speech_shuffle_rate += 10
 		user << "<span class='notice'>[src] eagerly devours the cracker.</span>"
 	..()
 	return
@@ -375,7 +377,7 @@
 	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list. */
 /mob/living/simple_animal/parrot/handle_automated_speech()
 	..()
-	if(speech_buffer.len && prob(20)) //shuffle out a phrase and add in a new one
+	if(speech_buffer.len && prob(speech_shuffle_rate)) //shuffle out a phrase and add in a new one
 		if(speak.len)
 			speak.Remove(pick(speak))
 
@@ -867,6 +869,7 @@
 	var/memory_saved = 0
 	var/rounds_survived = 0
 	var/longest_survival = 0
+	var/longest_deathstreak = 0
 
 /mob/living/simple_animal/parrot/Poly/New()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)
@@ -874,24 +877,43 @@
 	Read_Memory()
 	if(rounds_survived == longest_survival)
 		speak += pick("...[longest_survival].", "The things I've seen!", "I have lived many lives!", "What are you before me?")
+		desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
 		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
+		color = "#EEEE22"
+	else if(rounds_survived == longest_deathstreak)
+		speak += pick("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
+		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
+		color = "#BB7777"
 	else if(rounds_survived > 0)
 		speak += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
+		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
 	else
 		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
 	..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
 	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-		rounds_survived += 1
+		rounds_survived = max(++rounds_survived,1)
 		if(rounds_survived > longest_survival)
 			longest_survival = rounds_survived
 		Write_Memory()
 	..()
 
 /mob/living/simple_animal/parrot/Poly/death(gibbed)
-	rounds_survived = 0
-	Write_Memory()
+	if(!memory_saved)
+		var/go_ghost = 0
+		if(rounds_survived == longest_survival || rounds_survived == longest_deathstreak)
+			go_ghost = 1
+		rounds_survived = min(--rounds_survived,0)
+		if(rounds_survived < longest_deathstreak)
+			longest_deathstreak = rounds_survived
+		Write_Memory()
+		if(go_ghost)
+			var/mob/living/simple_animal/parrot/Poly/ghost/G = new(loc)
+			if(mind)
+				mind.transfer_to(G)
+			else
+				G.key = key
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
@@ -899,6 +921,7 @@
 	S["phrases"] 			>> speech_buffer
 	S["roundssurvived"]		>> rounds_survived
 	S["longestsurvival"]	>> longest_survival
+	S["longestdeathstreak"] >> longest_deathstreak
 
 	if(isnull(speech_buffer))
 		speech_buffer = list()
@@ -908,4 +931,18 @@
 	S["phrases"] 			<< speech_buffer
 	S["roundssurvived"]		<< rounds_survived
 	S["longestsurvival"]	<< longest_survival
+	S["longestdeathstreak"] << longest_deathstreak
 	memory_saved = 1
+
+/mob/living/simple_animal/parrot/Poly/ghost
+	name = "The Ghost of Poly"
+	desc = "Doomed to squawk the earth."
+	color = "#FFFFFF77"
+	speak_chance = 20
+	status_flags = GODMODE
+	incorporeal_move = 1
+	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
+
+/mob/living/simple_animal/parrot/Poly/ghost/New()
+	memory_saved = 1 //At this point nothing is saved
+	..()

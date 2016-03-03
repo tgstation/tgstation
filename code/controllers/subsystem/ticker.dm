@@ -201,8 +201,9 @@ var/datum/subsystem/ticker/ticker
 			if(S.name != "AI")
 				qdel(S)
 
-		if(!admins.len)
-			send2irc("Server", "Round just started with no admins online!")
+		var/list/adm = get_admin_counts()
+		if(!adm["present"])
+			send2irc("Server", "Round just started with no active admins online!")
 
 	return 1
 
@@ -215,7 +216,7 @@ var/datum/subsystem/ticker/ticker
 	for (var/datum/html_interface/hi in html_interfaces)
 		hi.closeAll()
 	//initialise our cinematic screen object
-	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=20;mouse_opacity=0;screen_loc="1,0";}(src)
+	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
 
 	var/obj/structure/bed/temp_buckle = new(src)
 	if(station_missed)

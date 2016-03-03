@@ -1117,8 +1117,27 @@ B --><-- A
 
 	return I
 
+//ultra range (no limitations on distance, faster than range for distances > 8); including areas drastically decreases performance
+/proc/urange(dist=0, atom/center=usr, orange=0, areas=0)
+	if(!dist)
+		if(!orange)
+			return list(center)
+		else
+			return list()
+
+	var/list/turfs = RANGE_TURFS(dist, center)
+	if(orange)
+		turfs -= get_turf(center)
+	. = list()
+	for(var/V in turfs)
+		var/turf/T = V
+		. += T
+		. += T.contents
+		if(areas)
+			. |= T.loc
+
 //similar function to range(), but with no limitations on the distance; will search spiralling outwards from the center
-/proc/ultra_range(dist=0, center=usr, orange=0)
+/proc/spiral_range(dist=0, center=usr, orange=0)
 	if(!dist)
 		if(!orange)
 			return list(center)
@@ -1182,7 +1201,7 @@ B --><-- A
 		if(location == src)
 			return 1
 
-proc/add_to_proximity_list(atom/A, range)
+/proc/add_to_proximity_list(atom/A, range)
 	var/turf/T = get_turf(A)
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
@@ -1190,14 +1209,14 @@ proc/add_to_proximity_list(atom/A, range)
 		C.proximity_checkers |= A
 	return L
 
-proc/remove_from_proximity_list(atom/A, range)
+/proc/remove_from_proximity_list(atom/A, range)
 	var/turf/T = get_turf(A)
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
 		C.proximity_checkers.Remove(A)
 
-proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
+/proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
 	var/turf/T = get_turf(A)
 	var/turf/Q = get_turf(B)
 	if(T == Q && range == newrange)
@@ -1213,6 +1232,27 @@ proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
 		var/turf/F = E
 		F.proximity_checkers |= checker
 	return 1
+
+/proc/flick_overlay_static(image/I, atom/A, duration)
+	set waitfor = 0
+	if(!A || !I)
+		return
+	A.overlays |= I
+	sleep(duration)
+	A.overlays -= I
+
+/proc/get_areas_in_z(zlevel)
+	. = list()
+	var/validarea = 0
+	for(var/V in sortedAreas)
+		var/area/A = V
+		validarea = 1
+		for(var/turf/T in A)
+			if(T.z != zlevel)
+				validarea = 0
+				break
+		if(validarea)
+			. += A
 
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
@@ -1247,3 +1287,7 @@ proc/pick_closest_path(value)
 			return
 	chosen = matches[chosen]
 	return chosen
+
+//gives us the stack trace from CRASH() without ending the current proc.
+/proc/stack_trace(msg)
+	CRASH(msg)

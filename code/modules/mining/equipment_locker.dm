@@ -771,7 +771,7 @@
 			var/mob/living/simple_animal/M = target
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
-				M.revive()
+				M.revive(full_heal = 1, admin_revive = 1)
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)
