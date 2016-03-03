@@ -34,7 +34,7 @@
 	var/obj/item/inventory_back
 	var/facehugger
 	var/list/spin_emotes = list("dances around","chases its tail")
-	colourmatrix = list(1,0.0,0.0,0,\
+//	colourmatrix = list(1,0.0,0.0,0,\
 						0,0.5,0.5,0,\
 						0,0.5,0.5,0,\
 						0,0.0,0.0,1,)

@@ -88,7 +88,7 @@
 			mutations.Remove(M_HARDCORE)
 			to_chat(src, "<span class='notice'>You feel like a pleb.</span>")
 	handle_beams()
-	update_colour()
+
 	//handles "call on life", allowing external life-related things to be processed
 	for(var/toCall in src.callOnLife)
 		if(locate(toCall) && callOnLife[toCall])

@@ -477,7 +477,8 @@ var/global/list/BODY_COVER_VALUE_LIST=list("[HEAD]" = COVER_PROTECTION_HEAD,"[EY
 var/global/list/NOIRMATRIX = list(0.33,0.33,0.33,0,\
 				 				  0.33,0.33,0.33,0,\
 								  0.33,0.33,0.33,0,\
-								  0.00,0.00,0.00,1,)
+								  0.00,0.00,0.00,1,\
+								  0.00,0.00,0.00,0)
 
 // Bustanuts
 #define M_HARDCORE      300

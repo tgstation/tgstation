@@ -86,4 +86,5 @@
 	if(client && client.haszoomed && !client.holder)
 		client.view = world.view
 		client.haszoomed = 0
+
 	update_colour()
