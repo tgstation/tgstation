@@ -728,8 +728,7 @@ Sorry Giacom. Please don't be mad :(
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		floating = 1
 	else if(((!on || fixed) && floating))
-		var/final_pixel_y = get_standard_pixel_y_offset(lying)
-		animate(src, pixel_y = final_pixel_y, time = 10)
+		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
 		floating = 0
 
 //called when the mob receives a bright flash

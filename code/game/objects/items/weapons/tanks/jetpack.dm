@@ -153,3 +153,23 @@
 		turn_off()
 		return
 	..()
+
+
+//Return a jetpack that the mob can use
+//Back worn jetpacks, hardsuit internal packs, and so on.
+//Used in Process_Spacemove() and wherever you want to check for/get a jetpack
+
+/mob/proc/get_jetpack()
+	return
+
+/mob/living/carbon/get_jetpack()
+	var/obj/item/weapon/tank/jetpack/J = back
+	if(istype(J))
+		return J
+
+/mob/living/carbon/human/get_jetpack()
+	var/obj/item/weapon/tank/jetpack/J = ..()
+	if(!istype(J) && istype(wear_suit, /obj/item/clothing/suit/space/hardsuit))
+		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
+		J = C.jetpack
+	return J
