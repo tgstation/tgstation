@@ -353,7 +353,41 @@
 
 
 		for(var/atom/movable/AM in locked_atoms)
-			AM.forceMove(loc)
+			var/new_loc = loc
+
+			if(locked_atoms[AM])
+				var/list/atomlock_params = locked_atoms[AM]
+
+				var/offset_x = atomlock_params[1]
+				var/offset_y = atomlock_params[2]
+
+				var/rotate_with_our_dir = atomlock_params[3]
+
+				if(rotate_with_our_dir)
+					var/newX = offset_x
+					var/newY = offset_y
+
+					switch(dir)
+						if(NORTH) //up
+							offset_x = newX
+							offset_y = newY
+						if(EAST) // right
+							offset_x = newY
+							offset_y = -newX
+						if(SOUTH) //down
+							offset_x = -newX
+							offset_y = -newY
+						if(WEST) //left
+							offset_x = -newY
+							offset_y = newX
+
+				if(offset_x || offset_y)
+					var/newer_loc = locate(x + offset_x, y + offset_y, z)
+					if(newer_loc)
+						new_loc = newer_loc
+
+			AM.forceMove(new_loc)
+
 
 		// Update on_moved listeners.
 		INVOKE_EVENT(on_moved,list("loc"=loc))
