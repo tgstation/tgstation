@@ -86,19 +86,22 @@
 	if(B.naut) //if it already made a blobbernaut, it can't do it again
 		src << "<span class='warning'>This factory blob is already sustaining a blobbernaut.</span>"
 		return
+	if(B.health < B.maxhealth * 0.5)
+		src << "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>"
+		return
 	if(!can_buy(30))
 		return
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
 	B.maxhealth = initial(B.maxhealth) * 0.25 //factories that produced a blobbernaut have much lower health
-	B.health = B.maxhealth
+	B.check_health()
 	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 	B.spore_delay = world.time + 600 //one minute before it can spawn spores again
-	B.naut = blobber
 	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
+	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
+	flick("blobbernaut_produce", blobber)
+	B.naut = blobber
 	blobber.factory = B
 	blobber.overmind = src
 	blobber.update_icons()
-	flick("blobbernaut_produce", blobber)
 	blobber.notransform = 1 //stop the naut from moving around
 	blob_mobs.Add(blobber)
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly

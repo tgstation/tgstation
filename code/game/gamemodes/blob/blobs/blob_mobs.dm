@@ -192,7 +192,6 @@
 	verb_exclaim = "roars"
 	verb_yell = "bellows"
 	force_threshold = 10
-	speed = 2
 	pressure_resistance = 40
 	mob_size = MOB_SIZE_LARGE
 	see_invisible = SEE_INVISIBLE_MINIMUM
@@ -204,7 +203,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
-		var/damagesources
+		var/damagesources = 0
 		if(!(locate(/obj/effect/blob) in range(2, src)))
 			damagesources++
 		if(!factory)

@@ -19,6 +19,7 @@
 			spore.factory = null
 	if(naut)
 		naut.factory = null
+		naut << "<span class='userdanger'>Your factory was destroyed! You feel yourself dying!</span>"
 	spores = null
 	return ..()
 
