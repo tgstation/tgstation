@@ -139,8 +139,6 @@
 	var/obj/item/clothing/shoes/S = H.shoes
 	if(istype(S))
 		damage += S.bonus_kick_damage //Unless they're wearing heavy boots
-	else if(M_TALONS in H.mutations)
-		damage += rand(1,6) //Or they have talons and they don't have shoes
 
 	if(damage > 0)
 		health -= damage
