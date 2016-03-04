@@ -313,12 +313,13 @@
 					/obj/item/ammo_box/magazine/wt550m9)
 	crate_name = "auto rifle ammo crate"
 
+/*
 /datum/supply_pack/security/armory/loyalty
 	name = "Loyalty Implants Crate"
 	cost = 40
 	contains = list(/obj/item/weapon/storage/lockbox/loyalty)
 	crate_name = "loyalty implant crate"
-
+*/
 /datum/supply_pack/security/armory/trackingimp
 	name = "Tracking Implants Crate"
 	cost = 20
