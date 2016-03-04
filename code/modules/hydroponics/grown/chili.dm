@@ -1,6 +1,20 @@
 // Chili
+/obj/item/seeds/chili
+	name = "pack of chili seeds"
+	desc = "These seeds grow into chili plants. HOT! HOT! HOT!"
+	icon_state = "seed-chili"
+	species = "chili"
+	plantname = "Chili Plants"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/chili
+	lifespan = 20
+	maturation = 5
+	production = 5
+	yield = 4
+	potency = 20
+	mutatelist = list(/obj/item/seeds/chili/ice, /obj/item/seeds/chili/ghost)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
-	seed = /obj/item/seeds/chiliseed
+	seed = /obj/item/seeds/chili
 	name = "chili"
 	desc = "It's spicy! Wait... IT'S BURNING ME!!"
 	icon_state = "chilipepper"
@@ -8,10 +22,22 @@
 	reagents_add = list("capsaicin" = 0.25, "vitamin" = 0.04, "nutriment" = 0.04)
 	bitesize_mod = 2
 
-
 // Ice Chili
+/obj/item/seeds/chili/ice
+	name = "pack of ice pepper seeds"
+	desc = "These seeds grow into ice pepper plants."
+	icon_state = "seed-icepepper"
+	species = "chiliice"
+	plantname = "Ice Pepper Plants"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
+	lifespan = 25
+	maturation = 4
+	production = 4
+	rarity = 20
+	mutatelist = list()
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
-	seed = /obj/item/seeds/icepepperseed
+	seed = /obj/item/seeds/chili/ice
 	name = "ice pepper"
 	desc = "It's a mutant strain of chili"
 	icon_state = "icepepper"
@@ -19,10 +45,23 @@
 	reagents_add = list("frostoil" = 0.25, "vitamin" = 0.02, "nutriment" = 0.02)
 	bitesize_mod = 2
 
-
 // Ghost Chili
+/obj/item/seeds/chili/ghost
+	name = "pack of ghost chili seeds"
+	desc = "These seeds grow into a chili said to be the hottest in the galaxy."
+	icon_state = "seed-chilighost"
+	species = "chilighost"
+	plantname = "chilighost"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili
+	endurance = 10
+	maturation = 10
+	production = 10
+	yield = 3
+	rarity = 20
+	mutatelist = list()
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili
-	seed = /obj/item/seeds/chilighost
+	seed = /obj/item/seeds/chili/ghost
 	name = "ghost chili"
 	desc = "It seems to be vibrating gently."
 	icon_state = "ghostchilipepper"

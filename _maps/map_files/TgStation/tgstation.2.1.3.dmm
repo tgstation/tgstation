@@ -91,7 +91,7 @@
 /area/security/prison)
 "aan" = (
 /obj/machinery/hydroponics/soil,
-/obj/item/seeds/ambrosiavulgarisseed,
+/obj/item/seeds/ambrosia,
 /turf/simulated/floor/plasteel{
 	dir = 9;
 	 icon_state = "green"
@@ -105,7 +105,7 @@
 /area/security/prison)
 "aap" = (
 /obj/machinery/hydroponics/soil,
-/obj/item/seeds/carrotseed,
+/obj/item/seeds/carrot,
 /turf/simulated/floor/plasteel{
 	dir = 1;
 	 icon_state = "green"
@@ -191,7 +191,7 @@
 "aaB" = (
 /obj/structure/window/reinforced,
 /obj/machinery/hydroponics/soil,
-/obj/item/seeds/potatoseed,
+/obj/item/seeds/potato,
 /turf/simulated/floor/plasteel{
 	dir = 10;
 	 icon_state = "green"
@@ -204,7 +204,7 @@
 "aaD" = (
 /obj/structure/window/reinforced,
 /obj/machinery/hydroponics/soil,
-/obj/item/seeds/grassseed,
+/obj/item/seeds/grass,
 /turf/simulated/floor/plasteel{
 	dir = 2;
 	 icon_state = "green"
@@ -13499,16 +13499,16 @@
 	name = "\improper Garden"
 	})
 "aBw" = (
-/obj/item/seeds/appleseed,
-/obj/item/seeds/bananaseed,
-/obj/item/seeds/cocoapodseed,
-/obj/item/seeds/grapeseed,
-/obj/item/seeds/orangeseed,
-/obj/item/seeds/sugarcaneseed,
-/obj/item/seeds/wheatseed,
-/obj/item/seeds/watermelonseed,
+/obj/item/seeds/apple,
+/obj/item/seeds/banana,
+/obj/item/seeds/cocoapod,
+/obj/item/seeds/grape,
+/obj/item/seeds/orange,
+/obj/item/seeds/sugarcane,
+/obj/item/seeds/wheat,
+/obj/item/seeds/watermelon,
 /obj/structure/table/glass,
-/obj/item/seeds/towermycelium,
+/obj/item/seeds/tower,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
