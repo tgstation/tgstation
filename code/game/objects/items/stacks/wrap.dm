@@ -34,24 +34,38 @@
 	max_amount = 25
 	burn_state = FLAMMABLE
 
+/obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
+	return 1
+
+/obj/item/weapon/storage/can_be_package_wrapped()
+	return 0
+
+/obj/item/weapon/storage/box/can_be_package_wrapped()
+	return 1
+
+/obj/item/smallDelivery/can_be_package_wrapped()
+	return 0
 
 /obj/item/stack/packageWrap/afterattack(obj/target, mob/user, proximity)
 	if(!proximity)
 		return
 	if(!istype(target))
 		return
-	if(istype(target, /obj/item/smallDelivery))
-		return
-	if(!isturf(target.loc))
-		user << "<span class='warning'>You can't wrap something that isn't on the ground.</span>"
-		return
 	if(target.anchored)
 		return
 
 	if(istype(target, /obj/item))
 		var/obj/item/I = target
+		if(!I.can_be_package_wrapped())
+			return
+		if(user.r_hand == I || user.l_hand == I)
+			if(!user.unEquip(I))
+				return
+		else if(!isturf(I.loc))
+			return
 		if(use(1))
 			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(I.loc))
+			user.put_in_hands(P)
 			I.loc = P
 			var/size = round(I.w_class)
 			P.w_class = size

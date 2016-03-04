@@ -75,12 +75,10 @@
 
 
 /obj/item/smallDelivery/attack_self(mob/user)
+	user.unEquip(src)
 	for(var/X in contents)
 		var/atom/movable/AM = X
-		if(ishuman(user))
-			user.put_in_hands(AM)
-		else
-			AM.loc = get_turf(src)
+		user.put_in_hands(AM)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
 
