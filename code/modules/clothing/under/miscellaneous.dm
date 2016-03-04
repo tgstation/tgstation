@@ -557,3 +557,17 @@
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
 
+ //credit to /vg/station for S.S clothing (Heredth made the pull request)
+ /obj/item/clothing/under/nsoldier
+	name = "dusty uniform"
+	desc = "A dusty old uniform, a relic from a time before."
+	icon_state = "soldieruniform"
+	item_state = "soldieruniform"
+	item_color = "soldieruniform"
+
+/obj/item/clothing/under/nsoldier/officer
+	name = "dusty uniform"
+	desc = "A dusty old uniform, a relic from a time before. This one looks more official."
+	icon_state = "officeruniform"
+	item_state = "officeruniform"
+	item_color = "officeruniform"
