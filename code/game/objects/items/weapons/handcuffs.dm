@@ -145,6 +145,20 @@
 		else
 			user << "<span class='warning'>You need one rod to make a wired rod!</span>"
 			return
+	else if(istype(I, /obj/item/stack/sheet/metal))
+		var/obj/item/stack/sheet/metal/M = I
+		if(M.amount < 6)
+			user << "<span class='warning'>You need at least six metal sheets to make good enough weights!</span>"
+			return
+		user << "<span class='notice'>You begin to apply [I] to [src]...</span>"
+		if(do_after(user, 35, target = src))
+			var/obj/item/weapon/restraints/legcuffs/bola/S = new /obj/item/weapon/restraints/legcuffs/bola
+			M.use(6)
+			user.put_in_hands(S)
+			user << "<span class='notice'>You make some weights out of [I] and tie them to [src].</span>"
+			if(!remove_item_from_storage(user))
+				user.unEquip(src)
+			qdel(src)
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
@@ -266,3 +280,21 @@
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
 	Crossed(user) //honk
+
+/obj/item/weapon/restraints/legcuffs/bola
+	name = "bola"
+	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
+	icon_state = "bola"
+	breakouttime = 35//easy to apply, easy to break out of
+	gender = NEUTER
+
+/obj/item/weapon/restraints/legcuffs/bola/throw_impact(atom/hit_atom)
+	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
+		return//abort
+	var/mob/living/carbon/C = hit_atom
+	if(!C.legcuffed)
+		C.legcuffed = src
+		src.loc = C
+		C.update_inv_legcuffed()
+		feedback_add_details("handcuffs","B")
+		C << "<span class='userdanger'>\The [src] ensnares you!</span>"

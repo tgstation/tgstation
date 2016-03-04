@@ -67,13 +67,12 @@
 			if(status_flags & CANSTUN) // stun is usually associated with stutter
 				stuttering = max(stuttering,(effect * blocked))
 		if(EYE_BLUR)
-			set_blurriness(max(eye_blurry,(effect * blocked)))
+			blur_eyes(effect * blocked)
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect * blocked))
 		if(JITTER)
 			if(status_flags & CANSTUN)
 				jitteriness = max(jitteriness,(effect * blocked))
-	updatehealth()
 	return 1
 
 

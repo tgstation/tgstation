@@ -22,3 +22,10 @@
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
 	item_color = "black_suit"
+
+/obj/item/clothing/under/syndicate/camo
+	name = "camouflage fatigues"
+	desc = "A green military camouflage uniform."
+	icon_state = "camogreen"
+	item_state = "g_suit"
+	item_color = "camogreen"

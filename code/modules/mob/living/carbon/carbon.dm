@@ -14,7 +14,6 @@
 /mob/living/carbon/updatehealth()
 	..()
 	med_hud_set_health()
-	med_hud_set_status()
 
 /mob/living/carbon/Destroy()
 	for(var/atom/movable/guts in internal_organs)
@@ -35,6 +34,18 @@
 				src.nutrition -= HUNGER_FACTOR/10
 		if((src.disabilities & FAT) && src.m_intent == "run" && src.bodytemperature <= 360)
 			src.bodytemperature += 2
+
+
+/mob/living/carbon/Process_Spacemove(movement_dir = 0)
+	if(..())
+		return 1
+	if(!isturf(loc)) // In a mecha? A locker? Who knows!
+		return 0
+
+	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
+	if(istype(J) && J.allow_thrust(0.01, src))
+		return 1
+
 
 /mob/living/carbon/movement_delay()
 	. = ..()
@@ -71,7 +82,16 @@
 						stomach_contents.Remove(A)
 					src.gib()
 
-/mob/living/carbon/gib(animation = 1)
+/mob/living/carbon/gib(animation = 1, var/no_brain = 0)
+	death(1)
+	for(var/obj/item/organ/internal/I in internal_organs)
+		if(no_brain && istype(I, /obj/item/organ/internal/brain))
+			continue
+		if(I)
+			I.Remove(src)
+			I.loc = get_turf(src)
+			I.throw_at_fast(get_edge_target_turf(src,pick(alldirs)),rand(1,3),5)
+
 	for(var/mob/M in src)
 		if(M in stomach_contents)
 			stomach_contents.Remove(M)
@@ -154,16 +174,18 @@
 	if(health >= 0)
 
 		if(lying)
-			AdjustSleeping(-5)
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
 							"<span class='notice'>You shake [src] trying to get \him up!</span>")
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make \him feel better!</span>", \
 						"<span class='notice'>You hug [src] to make \him feel better!</span>")
-
+		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)
 		AdjustWeakened(-3)
+		if(resting)
+			resting = 0
+			update_canmove()
 
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
@@ -179,25 +201,25 @@
 			if(1)
 				src << "<span class='warning'>Your eyes sting a little.</span>"
 				if(prob(40))
-					adjust_eye_stat(1)
+					adjust_eye_damage(1)
 
 			if(2)
 				src << "<span class='warning'>Your eyes burn.</span>"
-				adjust_eye_stat(rand(2, 4))
+				adjust_eye_damage(rand(2, 4))
 
 			else
 				src << "<span class='warning'>Your eyes itch and burn severely!</span>"
-				adjust_eye_stat(rand(12, 16))
+				adjust_eye_damage(rand(12, 16))
 
-		if(eye_stat > 10)
-			set_blindness(damage)
-			set_blurriness(damage * rand(3, 6))
+		if(eye_damage > 10)
+			blind_eyes(damage)
+			blur_eyes(damage * rand(3, 6))
 
-			if(eye_stat > 20)
-				if(prob(eye_stat - 20))
+			if(eye_damage > 20)
+				if(prob(eye_damage - 20))
 					if(become_nearsighted())
 						src << "<span class='warning'>Your eyes start to burn badly!</span>"
-				else if(prob(eye_stat - 25))
+				else if(prob(eye_damage - 25))
 					if(become_blind())
 						src << "<span class='warning'>You can't see anything!</span>"
 			else
@@ -322,9 +344,10 @@
 					if(internal)
 						internal = null
 						update_internals_hud_icon(0)
-					else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
-						internal = ITEM
-						update_internals_hud_icon(1)
+					else if(ITEM && istype(ITEM, /obj/item/weapon/tank))
+						if((wear_mask && (wear_mask.flags & MASKINTERNALS)) || getorganslot("breathing_tube"))
+							internal = ITEM
+							update_internals_hud_icon(1)
 
 					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>", \
 									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
@@ -554,13 +577,6 @@ var/const/GALOSHES_DONT_HELP = 4
 	abilities.Add(A)
 	A.on_gain(src)
 	if(A.has_action)
-		if(!A.action)
-			A.action = new/datum/action/spell_action/alien
-			A.action.target = A
-			A.action.name = A.name
-			A.action.button_icon = A.action_icon
-			A.action.button_icon_state = A.action_icon_state
-			A.action.background_icon_state = A.action_background_icon_state
 		A.action.Grant(src)
 	sortInsert(abilities, /proc/cmp_abilities_cost, 0)
 
@@ -657,121 +673,25 @@ var/const/GALOSHES_DONT_HELP = 4
 		see_invisible = see_override
 
 
-//to recalculate the mob's total tint from tinted equipment it's wearing.
-/mob/living/carbon/proc/update_tinttotal()
+//to recalculate and update the mob's total tint from tinted equipment it's wearing.
+/mob/living/carbon/proc/update_tint()
 	if(!tinted_weldhelh)
 		return
-	tinttotal = 0
+	tinttotal = get_total_tint()
+	if(tinttotal >= TINT_BLIND)
+		overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
+	else if(tinttotal >= TINT_DARKENED)
+		overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
+	else
+		clear_fullscreen("tint", 0)
+
+/mob/living/carbon/proc/get_total_tint()
+	. = 0
 	if(istype(head, /obj/item/clothing/head))
 		var/obj/item/clothing/head/HT = head
-		tinttotal += HT.tint
+		. += HT.tint
 	if(wear_mask)
-		tinttotal += wear_mask.tint
-	update_vision_overlays()
-
-/mob/living/carbon/update_vision_overlays()
-	if(!client)
-		return
-
-	if(stat == DEAD) //if dead we remove all vision impairments
-		clear_fullscreens()
-		return
-
-	if(tinted_weldhelh)
-		if(tinttotal >= TINT_BLIND)
-			overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
-		else if(tinttotal >= TINT_DARKENED)
-			overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
-		else
-			clear_fullscreen("tint", 0)
-
-	if(eye_blind)
-		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else
-		clear_fullscreen("blind")
-
-	if(disabilities & NEARSIGHT)
-		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("nearsighted")
-
-	if(eye_blurry)
-		overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else
-		clear_fullscreen("blurry")
-
-	if(druggy)
-		overlay_fullscreen("high", /obj/screen/fullscreen/high)
-	else
-		clear_fullscreen("high")
-
-	if(eye_stat > 20)
-		if(eye_stat > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("eye_damage")
-
-	if(client.eye != src)
-		var/atom/A = client.eye
-		A.get_remote_view_fullscreens(src)
-	else
-		clear_fullscreen("remote_view", 0)
-
-
-/mob/living/carbon/revive()
-	setToxLoss(0)
-	setOxyLoss(0)
-	setCloneLoss(0)
-	setBrainLoss(0)
-	setStaminaLoss(0)
-	SetParalysis(0)
-	SetStunned(0)
-	SetWeakened(0)
-	SetSleeping(0)
-	radiation = 0
-	nutrition = NUTRITION_LEVEL_FED + 50
-	bodytemperature = 310
-	eye_stat = 0
-	disabilities = 0
-	eye_blind = 0
-	eye_blurry = 0
-	ear_deaf = 0
-	ear_damage = 0
-	hallucination = 0
-	heal_overall_damage(1000, 1000)
-	ExtinguishMob()
-	fire_stacks = 0
-	suiciding = 0
-	handcuffed = initial(handcuffed)
-	for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
-		qdel(R)
-	update_handcuffed()
-	if(reagents)
-		for(var/datum/reagent/R in reagents.reagent_list)
-			reagents.clear_reagents()
-		reagents.addiction_list = list()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
-	if(stat == DEAD)
-		dead_mob_list -= src
-		living_mob_list += src
-	stat = CONSCIOUS
-	if(ishuman(src))
-		var/mob/living/carbon/human/human_mob = src
-		human_mob.restore_blood()
-		human_mob.remove_all_embedded_objects()
-	updatehealth()
-	update_fire()
-	if(dna)
-		for(var/datum/mutation/human/HM in dna.mutations)
-			if(HM.quality != POSITIVE)
-				dna.remove_mutation(HM.name)
-	update_sight()
-	update_vision_overlays()
-	update_canmove()
-
+		. += wear_mask.tint
 
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
@@ -863,7 +783,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
-				set_blindness(1)
+				blind_eyes(1)
 				update_canmove()
 		else
 			if(stat == UNCONSCIOUS)
@@ -873,6 +793,7 @@ var/const/GALOSHES_DONT_HELP = 4
 				update_canmove()
 	update_damage_hud()
 	update_health_hud()
+	med_hud_set_status()
 
 //called when we get cuffed/uncuffed
 /mob/living/carbon/proc/update_handcuffed()
@@ -883,5 +804,46 @@ var/const/GALOSHES_DONT_HELP = 4
 		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
 	else
 		clear_alert("handcuffed")
+	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
+
+/mob/living/carbon/fully_heal(admin_revive = 0)
+	if(reagents)
+		reagents.clear_reagents()
+	var/obj/item/organ/internal/brain/B = getorgan(/obj/item/organ/internal/brain)
+	if(B)
+		B.damaged_brain = 0
+	if(admin_revive)
+		handcuffed = initial(handcuffed)
+		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
+			qdel(R)
+		update_handcuffed()
+		if(reagents)
+			reagents.addiction_list = list()
+
+		for(var/datum/disease/D in viruses)
+			D.cure(0)
+	..()
+
+/mob/living/carbon/can_be_revived()
+	. = ..()
+	if(!getorgan(/obj/item/organ/internal/brain))
+		return 0
+
+/mob/living/carbon/harvest(mob/living/user)
+	if(qdeleted(src))
+		return
+	var/organs_amt = 0
+	for(var/obj/item/organ/internal/O in internal_organs)
+		if(prob(50))
+			organs_amt++
+			O.Remove(src)
+			O.loc = get_turf(src)
+	if(organs_amt)
+		user << "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>"
+
+	..()
+
+
+

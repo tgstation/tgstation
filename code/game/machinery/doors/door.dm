@@ -270,3 +270,9 @@
 
 /obj/machinery/door/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
+
+/obj/machinery/door/proc/lock()
+	return
+
+/obj/machinery/door/proc/unlock()
+	return

@@ -126,7 +126,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
-	container_resist()
+	container_resist(user)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
@@ -141,13 +141,11 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/user)
-	usr << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds and you need to stand still.)</span>"
+	user << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>"
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
-	addtimer(src, "resist_open", 300, FALSE, user)
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/resist_open(mob/user)
-	if(occupant && occupant == user) // Check they're still here.
-		open_machine()
+	if(do_after(user, 300))
+		if(occupant == user) // Check they're still here.
+			open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
 	..()

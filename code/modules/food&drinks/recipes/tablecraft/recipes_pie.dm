@@ -146,7 +146,7 @@
 	reqs = list(
 		/datum/reagent/consumable/vanilla = 5,
 		/datum/reagent/water = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato = 2
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/dulcedebatata
 	category = CAT_FOOD

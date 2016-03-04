@@ -39,6 +39,7 @@ Captain
 
 	backpack = /obj/item/weapon/storage/backpack/captain
 	satchel = /obj/item/weapon/storage/backpack/satchel_cap
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/captain
 
 /datum/outfit/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

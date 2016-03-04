@@ -6,8 +6,8 @@ var/datum/subsystem/air/SSair
 	wait = 5
 	dynamic_wait = 1
 	dwait_upper = 300
-	dwait_buffer = 0
-	dwait_delta = 10
+	dwait_buffer = 1
+	dwait_delta = 7
 	display = 1
 
 	var/cost_turfs = 0
@@ -124,8 +124,10 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/proc/process_active_turfs()
+	//cache for sanic speed
+	var/fire_count = times_fired
 	for(var/turf/simulated/T in active_turfs)
-		T.process_cell()
+		T.process_cell(fire_count)
 
 
 /datum/subsystem/air/proc/remove_from_active(turf/simulated/T)
@@ -143,12 +145,8 @@ var/datum/subsystem/air/SSair
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
 	else
-		for(var/direction in cardinal)
-			if(!(T.atmos_adjacent_turfs & direction))
-				continue
-			var/turf/simulated/S = get_step(T, direction)
-			if(istype(S))
-				add_to_active(S)
+		for(var/turf/simulated/S in T.atmos_adjacent_turfs)
+			add_to_active(S)
 
 /datum/subsystem/air/proc/process_excited_groups()
 	for(var/datum/excited_group/EG in excited_groups)
@@ -180,11 +178,8 @@ var/datum/subsystem/air/SSair
 
 		T.update_visuals()
 
-		for(var/direction in cardinal)
-			if(!(T.atmos_adjacent_turfs & direction))
-				continue
-
-			var/turf/enemy_tile = get_step(T, direction)
+		for(var/tile in T.atmos_adjacent_turfs)
+			var/turf/enemy_tile = tile
 			var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
 
 			var/is_active = T.air.compare(enemy_air)

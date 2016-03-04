@@ -19,6 +19,7 @@
 	saved_appearance = initial(butt.appearance)
 
 /obj/item/device/chameleon/dropped()
+	..()
 	disrupt()
 
 /obj/item/device/chameleon/equipped()

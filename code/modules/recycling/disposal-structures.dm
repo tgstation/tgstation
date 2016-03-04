@@ -192,7 +192,7 @@
 			return ..()
 
 		// otherwise, do normal expel from turf
-		if(H)
+		else
 			expel(H, T, 0)
 	return ..()
 
@@ -740,7 +740,7 @@
 // expel the contents of the holder object, then delete it
 // called when the holder exits the outlet
 /obj/structure/disposaloutlet/proc/expel(obj/structure/disposalholder/H)
-
+	var/turf/T = get_turf(src)
 	flick("outlet-open", src)
 	if((start_eject + 30) < world.time)
 		start_eject = world.time
@@ -751,11 +751,11 @@
 		sleep(20)
 	if(H)
 		for(var/atom/movable/AM in H)
-			AM.forceMove(src.loc)
+			AM.forceMove(T)
 			AM.pipe_eject(dir)
 			AM.throw_at_fast(target, eject_range, 1)
 
-		H.vent_gas(src.loc)
+		H.vent_gas(T)
 		qdel(H)
 	return
 

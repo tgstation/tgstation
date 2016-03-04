@@ -3,8 +3,7 @@
 /turf
 	var/pressure_difference = 0
 	var/pressure_direction = 0
-	var/atmos_adjacent_turfs = 0
-	var/atmos_adjacent_turfs_amount = 0
+	var/list/atmos_adjacent_turfs = list()
 	var/atmos_supeconductivity = 0
 
 /turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
@@ -124,72 +123,82 @@
 
 
 
-/turf/simulated/proc/process_cell()
+/turf/simulated/proc/process_cell(fire_count)
 
-	if(archived_cycle < SSair.times_fired) //archive self if not already done
+	if(archived_cycle < fire_count) //archive self if not already done
 		archive()
-	current_cycle = SSair.times_fired
 
+	current_cycle = fire_count
 	var/remove = 1 //set by non simulated turfs who are sharing with this turf
 
-	for(var/direction in cardinal)
-		if(!(atmos_adjacent_turfs & direction))
-			continue
+	//cache for sanic speed
+	var/list/adjacent_turfs = atmos_adjacent_turfs
+	var/datum/excited_group/our_excited_group = excited_group
+	var/adjacent_turfs_length = adjacent_turfs.len
 
-		var/turf/enemy_tile = get_step(src, direction)
+	for(var/t in adjacent_turfs)
+		var/turf/enemy_tile = t
 
 		if(istype(enemy_tile,/turf/simulated))
 			var/turf/simulated/enemy_simulated = enemy_tile
 
-			if(current_cycle > enemy_simulated.current_cycle)
+			if(fire_count > enemy_simulated.current_cycle)
 				enemy_simulated.archive()
 
 		/******************* GROUP HANDLING START *****************************************************************/
 
 			if(enemy_simulated.excited)
-				if(excited_group)
-					if(enemy_simulated.excited_group)
-						if(excited_group != enemy_simulated.excited_group)
-							excited_group.merge_groups(enemy_simulated.excited_group) //combine groups
-						share_air(enemy_simulated) //share
+				//cache for sanic speed
+				var/datum/excited_group/enemy_excited_group = enemy_simulated.excited_group
+				if(our_excited_group)
+					if(enemy_excited_group)
+						if(our_excited_group != enemy_excited_group)
+							//combine groups (this also handles updating the excited_group var of all involved turfs)
+							our_excited_group.merge_groups(enemy_excited_group)
+							our_excited_group = excited_group //update our cache
+						share_air(enemy_simulated, fire_count, adjacent_turfs_length) //share
 					else
 						if((recently_active == 1 && enemy_simulated.recently_active == 1) || air.compare(enemy_simulated.air))
-							excited_group.add_turf(enemy_simulated) //add enemy to our group
-							share_air(enemy_simulated) //share
+							our_excited_group.add_turf(enemy_simulated) //add enemy to our group
+							share_air(enemy_simulated, fire_count, adjacent_turfs_length) //share
 				else
-					if(enemy_simulated.excited_group)
+					if(enemy_excited_group)
 						if((recently_active == 1 && enemy_simulated.recently_active == 1) || air.compare(enemy_simulated.air))
-							enemy_simulated.excited_group.add_turf(src) //join self to enemy group
-							share_air(enemy_simulated) //share
+							enemy_excited_group.add_turf(src) //join self to enemy group
+							our_excited_group = excited_group //update our cache
+							share_air(enemy_simulated, fire_count, adjacent_turfs_length) //share
 					else
 						if((recently_active == 1 && enemy_simulated.recently_active == 1) || air.compare(enemy_simulated.air))
 							var/datum/excited_group/EG = new //generate new group
 							EG.add_turf(src)
 							EG.add_turf(enemy_simulated)
-							share_air(enemy_simulated) //share
+							our_excited_group = excited_group //update our cache
+							share_air(enemy_simulated, fire_count, adjacent_turfs_length) //share
 			else
 				if(air.compare(enemy_simulated.air)) //compare if
 					SSair.add_to_active(enemy_simulated) //excite enemy
-					if(excited_group)
+					if(our_excited_group)
 						excited_group.add_turf(enemy_simulated) //add enemy to group
 					else
 						var/datum/excited_group/EG = new //generate new group
 						EG.add_turf(src)
 						EG.add_turf(enemy_simulated)
-					share_air(enemy_simulated) //share
+						our_excited_group = excited_group //update our cache
+					share_air(enemy_simulated, fire_count, adjacent_turfs_length) //share
 
 		/******************* GROUP HANDLING FINISH *********************************************************************/
 
 		else
-			if(air.check_turf(enemy_tile, atmos_adjacent_turfs_amount))
-				var/difference = air.mimic(enemy_tile,atmos_adjacent_turfs_amount)
+
+			if(air.check_turf(enemy_tile, adjacent_turfs_length))
+				var/difference = air.mimic(enemy_tile, adjacent_turfs_length)
 				if(difference)
 					if(difference > 0)
 						consider_pressure_difference(enemy_tile, difference)
 					else
 						enemy_tile.consider_pressure_difference(src, -difference)
 				remove = 0
-				if(excited_group)
+				if(our_excited_group)
 					last_share_check()
 
 	air.react()
@@ -206,7 +215,7 @@
 			if(consider_superconductivity(starting = 1))
 				remove = 0
 
-	if(!excited_group && remove == 1)
+	if(!our_excited_group && remove == 1)
 		SSair.remove_from_active(src)
 
 /turf/simulated/temperature_expose()
@@ -239,10 +248,10 @@
 		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
 			. += gas[GAS_META][META_GAS_OVERLAY]
 
-/turf/simulated/proc/share_air(turf/simulated/T)
-	if(T.current_cycle < current_cycle)
+/turf/simulated/proc/share_air(turf/simulated/T, fire_count, adjacent_turfs_length)
+	if(T.current_cycle < fire_count)
 		var/difference
-		difference = air.share(T.air, atmos_adjacent_turfs_amount)
+		difference = air.share(T.air, adjacent_turfs_length)
 		if(difference)
 			if(difference > 0)
 				consider_pressure_difference(T, difference)
@@ -357,13 +366,14 @@
 	else
 		//Does particate in air exchange so only consider directions not considered during process_cell()
 		for(var/direction in cardinal)
-			if(!(atmos_adjacent_turfs & direction) && !(atmos_supeconductivity & direction))
+			var/turf/T = get_step(src, direction)
+			if(!(T in atmos_adjacent_turfs) && !(atmos_supeconductivity & direction))
 				conductivity_directions += direction
 
 	if(conductivity_directions>0)
 		//Conduct with tiles around me
 		for(var/direction in cardinal)
-			if(conductivity_directions&direction)
+			if(conductivity_directions & direction)
 				var/turf/neighbor = get_step(src,direction)
 
 				if(!neighbor.thermal_conductivity)

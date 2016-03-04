@@ -1,8 +1,3 @@
-/*		Portable Turrets:
-		Constructed from metal, a gun of choice, and a prox sensor.
-		This code is slightly more documented than normal, as requested by XSI on IRC.
-*/
-
 /obj/machinery/porta_turret
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
@@ -43,8 +38,8 @@
 	var/has_cover = 1		//Hides the cover
 
 	var/obj/machinery/porta_turret_cover/cover = null	//the cover that is covering this turret
-	var/last_fired = 0		//1: if the turret is cooling down from a shot, 0: turret is ready to fire
-	var/shot_delay = 15		//1.5 seconds between each shot
+	var/last_fired = 0		//world.time the turret last fired
+	var/shot_delay = 15		//ticks until next shot (1.5 ?)
 
 	var/check_records = 1	//checks if it can use the security records
 	var/criminals = 1		//checks if it can shoot people on arrest
@@ -76,7 +71,7 @@
 
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
-		cover.Parent_Turret = src
+		cover.parent_turret = src
 	setup()
 	if(!has_cover)
 		popUp()
@@ -298,7 +293,7 @@
 			user << "<span class='notice'>You secure the exterior bolts on the turret.</span>"
 			if(has_cover)
 				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
-				cover.Parent_Turret = src //make the cover's parent src
+				cover.parent_turret = src //make the cover's parent src
 		else if(anchored)
 			anchored = 0
 			user << "<span class='notice'>You unsecure the exterior bolts on the turret.</span>"
@@ -450,7 +445,7 @@
 		else
 			if(has_cover)
 				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
-				cover.Parent_Turret = src	//assign the cover its Parent_Turret, which would be this (src)
+				cover.parent_turret = src	//assign the cover its parent_turret, which would be this (src)
 
 	if(stat & (NOPOWER|BROKEN))
 		if(!always_up)
@@ -554,7 +549,6 @@
 	invisibility = 2
 	icon_state = "[base_icon_state][off_state]"
 
-
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0	//the integer returned
 
@@ -626,37 +620,33 @@
 	return
 
 /obj/machinery/porta_turret/proc/shootAt(atom/movable/target)
-	if(!emagged)	//if it hasn't been emagged, it has to obey a cooldown rate
-		if(last_fired || !raised)	//prevents rapid-fire shooting, unless it's been emagged
+	if(!raised) //the turret has to be raised in order to fire - makes sense, right?
+		return
+
+	if(!emagged)	//if it hasn't been emagged, cooldown before shooting again
+		if(last_fired + shot_delay > world.time)
 			return
-		last_fired = 1
-		spawn()
-			sleep(shot_delay)
-			last_fired = 0
+		last_fired = world.time
 
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
 	if(!istype(T) || !istype(U))
 		return
 
-	if(!raised) //the turret has to be raised in order to fire - makes sense, right?
-		return
-
-	//any emagged turrets will shoot extremely fast! This not only is deadly, but drains a lot power!
 	icon_state = "[base_icon_state][active_state]"
 	var/obj/item/projectile/A
-	if(emagged)
-		A = new eprojectile(T)
-		playsound(loc, eshot_sound, 75, 1)
-	else
-		A = new projectile(T)
-		playsound(loc, shot_sound, 75, 1)
-	A.original = target
+	//any emagged turrets drains 2x power and uses a different projectile?
 	if(!emagged)
 		use_power(reqpower)
+		A = new projectile(T)
+		playsound(loc, shot_sound, 75, 1)
 	else
 		use_power(reqpower * 2)
+		A = new eprojectile(T)
+		playsound(loc, eshot_sound, 75, 1)
+
 	//Shooting Code:
+	A.original = target
 	A.current = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -674,287 +664,6 @@
 	src.power_change()
 
 
-/obj/machinery/porta_turret_construct
-	name = "turret frame"
-	icon = 'icons/obj/turrets.dmi'
-	icon_state = "turret_frame"
-	density=1
-	var/build_step = 0			//the current step in the building process
-	var/finish_name="turret"	//the name applied to the product turret
-	var/installation = null		//the gun type installed
-	var/gun_charge = 0			//the gun charge of the gun type installed
-
-
-/obj/machinery/porta_turret_construct/attackby(obj/item/I, mob/user, params)
-	//this is a bit unwieldy but self-explanatory
-	switch(build_step)
-		if(0)	//first step
-			if(istype(I, /obj/item/weapon/wrench) && !anchored)
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-				user << "<span class='notice'>You secure the external bolts.</span>"
-				anchored = 1
-				build_step = 1
-				return
-
-			else if(istype(I, /obj/item/weapon/crowbar) && !anchored)
-				playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
-				user << "<span class='notice'>You dismantle the turret construction.</span>"
-				new /obj/item/stack/sheet/metal( loc, 5)
-				qdel(src)
-				return
-
-		if(1)
-			if(istype(I, /obj/item/stack/sheet/metal))
-				var/obj/item/stack/sheet/metal/M = I
-				if(M.use(2))
-					user << "<span class='notice'>You add some metal armor to the interior frame.</span>"
-					build_step = 2
-					icon_state = "turret_frame2"
-				else
-					user << "<span class='warning'>You need two sheets of metal to continue construction!</span>"
-				return
-
-			else if(istype(I, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user << "<span class='notice'>You unfasten the external bolts.</span>"
-				anchored = 0
-				build_step = 0
-				return
-
-
-		if(2)
-			if(istype(I, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-				user << "<span class='notice'>You bolt the metal armor into place.</span>"
-				build_step = 3
-				return
-
-			else if(istype(I, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/WT = I
-				if(!WT.isOn())
-					return
-				if(WT.get_fuel() < 5) //uses up 5 fuel.
-					user << "<span class='warning'>You need more fuel to complete this task!</span>"
-					return
-
-				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
-				user << "<span class='notice'>You start to remove the turret's interior metal armor...</span>"
-				if(do_after(user, 20/I.toolspeed, target = src))
-					if(!src || !WT.remove_fuel(5, user)) return
-					build_step = 1
-					user << "<span class='notice'>You remove the turret's interior metal armor.</span>"
-					new /obj/item/stack/sheet/metal( loc, 2)
-					return
-
-
-		if(3)
-			if(istype(I, /obj/item/weapon/gun/energy)) //the gun installation part
-
-				if(isrobot(user))
-					return
-				var/obj/item/weapon/gun/energy/E = I //typecasts the item to an energy gun
-				if(!user.unEquip(I))
-					user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
-					return
-				installation = I.type //installation becomes I.type
-				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
-				user << "<span class='notice'>You add [I] to the turret.</span>"
-				build_step = 4
-				qdel(I) //delete the gun :(
-				return
-
-			else if(istype(I, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-				user << "<span class='notice'>You remove the turret's metal armor bolts.</span>"
-				build_step = 2
-				return
-
-		if(4)
-			if(isprox(I))
-				build_step = 5
-				if(!user.unEquip(I))
-					user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
-					return
-				user << "<span class='notice'>You add the proximity sensor to the turret.</span>"
-				qdel(I)
-				return
-
-
-		if(5)
-			if(istype(I, /obj/item/weapon/screwdriver))
-				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
-				build_step = 6
-				user << "<span class='notice'>You close the internal access hatch.</span>"
-				return
-
-
-		if(6)
-			if(istype(I, /obj/item/stack/sheet/metal))
-				var/obj/item/stack/sheet/metal/M = I
-				if(M.use(2))
-					user << "<span class='notice'>You add some metal armor to the exterior frame.</span>"
-					build_step = 7
-				else
-					user << "<span class='warning'>You need two sheets of metal to continue construction!</span>"
-				return
-
-			else if(istype(I, /obj/item/weapon/screwdriver))
-				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
-				build_step = 5
-				user << "<span class='notice'>You open the internal access hatch.</span>"
-				return
-
-		if(7)
-			if(istype(I, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/WT = I
-				if(!WT.isOn()) return
-				if(WT.get_fuel() < 5)
-					user << "<span class='warning'>You need more fuel to complete this task!</span>"
-
-				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
-				user << "<span class='notice'>You begin to weld the turret's armor down...</span>"
-				if(do_after(user, 30/I.toolspeed, target = src))
-					if(!src || !WT.remove_fuel(5, user))
-						return
-					build_step = 8
-					user << "<span class='notice'>You weld the turret's armor down.</span>"
-
-					//The final step: create a full turret
-					var/obj/machinery/porta_turret/Turret = new/obj/machinery/porta_turret(loc)
-					Turret.name = finish_name
-					Turret.installation = installation
-					Turret.gun_charge = gun_charge
-					Turret.setup()
-
-					qdel(src)
-
-			else if(istype(I, /obj/item/weapon/crowbar))
-				playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
-				user << "<span class='notice'>You pry off the turret's exterior armor.</span>"
-				new /obj/item/stack/sheet/metal(loc, 2)
-				build_step = 6
-				return
-
-	if(istype(I, /obj/item/weapon/pen))	//you can rename turrets like bots!
-		var/t = stripped_input(user, "Enter new turret name", name, finish_name)
-		if(!t)
-			return
-		if(!in_range(src, usr) && loc != usr)
-			return
-
-		finish_name = t
-		return
-	..()
-
-
-/obj/machinery/porta_turret_construct/attack_hand(mob/user)
-	switch(build_step)
-		if(4)
-			if(!installation)
-				return
-			build_step = 3
-
-			var/obj/item/weapon/gun/energy/Gun = new installation(loc)
-			Gun.power_supply.charge = gun_charge
-			Gun.update_icon()
-			installation = null
-			gun_charge = 0
-			user << "<span class='notice'>You remove [Gun] from the turret frame.</span>"
-
-		if(5)
-			user << "<span class='notice'>You remove the prox sensor from the turret frame.</span>"
-			new /obj/item/device/assembly/prox_sensor(loc)
-			build_step = 4
-
-/obj/machinery/porta_turret_construct/attack_ai()
-	return
-
-
-/************************
-* PORTABLE TURRET COVER *
-************************/
-
-/obj/machinery/porta_turret_cover
-	name = "turret"
-	icon = 'icons/obj/turrets.dmi'
-	icon_state = "turretCover"
-	anchored = 1
-	layer = 3.5
-	density = 0
-	var/obj/machinery/porta_turret/Parent_Turret = null
-
-
-//The below code is pretty much just recoded from the initial turret object. It's necessary but uncommented because it's exactly the same!
-//>necessary
-//I'm not fixing it because i'm fucking bored of this code already, but someone should just reroute these to the parent turret's procs.
-
-/obj/machinery/porta_turret_cover/attack_ai(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	return Parent_Turret.attack_ai(user)
-
-
-/obj/machinery/porta_turret_cover/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	return Parent_Turret.attack_hand(user)
-
-
-/obj/machinery/porta_turret_cover/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench) && !Parent_Turret.on)
-		if(Parent_Turret.raised) return
-
-		if(!Parent_Turret.anchored)
-			Parent_Turret.anchored = 1
-			Parent_Turret.invisibility = INVISIBILITY_OBSERVER
-			Parent_Turret.icon_state = "grey_target_prism"
-			user << "<span class='notice'>You secure the exterior bolts on the turret.</span>"
-		else
-			Parent_Turret.anchored = 0
-			user << "<span class='notice'>You unsecure the exterior bolts on the turret.</span>"
-			Parent_Turret.icon_state = "turretCover"
-			Parent_Turret.invisibility = 0
-			qdel(src)
-
-	else if(istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
-		if(Parent_Turret.allowed(user))
-			Parent_Turret.locked = !Parent_Turret.locked
-			user << "<span class='notice'>Controls are now [Parent_Turret.locked ? "locked" : "unlocked"].</span>"
-			updateUsrDialog()
-		else
-			user << "<span class='notice'>Access denied.</span>"
-	else if(istype(I,/obj/item/device/multitool) && !Parent_Turret.locked)
-		var/obj/item/device/multitool/M = I
-		M.buffer = Parent_Turret
-		user << "<span class='notice'>You add [Parent_Turret] to multitool buffer.</span>"
-	else
-		user.changeNext_move(CLICK_CD_MELEE)
-		Parent_Turret.health -= I.force * 0.5
-		if(Parent_Turret.health <= 0)
-			Parent_Turret.die()
-		if(I.force * 0.5 > 2)
-			if(!Parent_Turret.attacked && !Parent_Turret.emagged)
-				Parent_Turret.attacked = 1
-				spawn()
-					sleep(30)
-					Parent_Turret.attacked = 0
-		..()
-
-/obj/machinery/porta_turret_cover/can_be_overridden()
-	. = 0
-
-/obj/machinery/porta_turret_cover/emag_act(mob/user)
-	if(!Parent_Turret.emagged)
-		user << "<span class='notice'>You short out [Parent_Turret]'s threat assessment circuits.</span>"
-		visible_message("[Parent_Turret] hums oddly...")
-		Parent_Turret.emagged = 1
-		Parent_Turret.on = 0
-		sleep(40)
-		Parent_Turret.on = 1
 
 /obj/machinery/porta_turret/stationary
 	emagged = 1
@@ -983,18 +692,18 @@
 	return
 
 /obj/machinery/porta_turret/syndicate/assess_perp(mob/living/carbon/human/perp)
-	if(faction in perp.faction) //Shoot all non syndies
-		return 0
-	return 10
+	return 10 //Syndicate turrets shoot everything not in their faction
 
 /obj/machinery/porta_turret/syndicate/pod
 	health = 40
 	projectile = /obj/item/projectile/bullet/weakbullet3
 	eprojectile = /obj/item/projectile/bullet/weakbullet3
 
-//Blame MSO
 /obj/machinery/porta_turret/ai
 	faction = "silicon"
+
+/obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
+	return 10 //AI turrets shoot at everything not in their faction
 
 ////////////////////////
 //Turret Control Panel//

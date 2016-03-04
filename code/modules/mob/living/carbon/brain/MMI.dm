@@ -61,12 +61,12 @@
 		newbrain.brainmob = null
 		brainmob.loc = src
 		brainmob.container = src
-		if(brainmob.health > config.health_threshold_dead)
-			brainmob.stat = CONSCIOUS
-			brainmob.reset_perspective()
-			dead_mob_list -= brainmob //Update dem lists
+		if(!newbrain.damaged_brain) // the brain organ hasn't been beaten to death.
+			brainmob.stat = CONSCIOUS //we manually revive the brain mob
+			dead_mob_list -= brainmob
 			living_mob_list += brainmob
 
+		brainmob.reset_perspective()
 		newbrain.loc = src //P-put your brain in it
 		brain = newbrain
 
@@ -95,17 +95,19 @@
 		brainmob.emp_damage = 0
 		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 		living_mob_list -= brainmob //Get outta here
+		dead_mob_list += brainmob
 		brain.brainmob = brainmob //Set the brain to use the brainmob
 		brainmob = null //Set mmi brainmob var to null
 
-		brain.loc = usr.loc
+		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
 		brain = null //No more brain in here
 
 		update_icon()
 		name = "Man-Machine Interface"
 
 /obj/item/device/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
-	brainmob = new(src)
+	if(!brainmob)
+		brainmob = new(src)
 	brainmob.name = L.real_name
 	brainmob.real_name = L.real_name
 	if(L.has_dna())
@@ -120,6 +122,9 @@
 		var/obj/item/organ/internal/brain/newbrain = H.getorgan(/obj/item/organ/internal/brain)
 		newbrain.loc = src
 		brain = newbrain
+	else if(!brain)
+		brain = new(src)
+		brain.name = "[L.real_name]'s brain"
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	update_icon()

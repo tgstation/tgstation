@@ -17,6 +17,13 @@
 	update_icon()
 	return
 
+/obj/item/weapon/gun/projectile/update_icon()
+	..()
+	if(reskinned && current_skin)
+		icon_state = "[current_skin][suppressed ? "-suppressed" : ""]"
+	else
+		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""]"
+
 /obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1)
 //	if(in_chamber)
 //		return 1
@@ -162,4 +169,4 @@
 	desc = "A foreign knock-off suppressor, it feels flimsy, cheap, and brittle. Still fits all weapons."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "suppressor"
-	
+

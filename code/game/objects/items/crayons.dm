@@ -192,8 +192,8 @@
 				user.visible_message("<span class='danger'>[user] sprays [src] into the face of [target]!</span>")
 				target << "<span class='userdanger'>[user] sprays [src] into your face!</span>"
 				if(C.client)
-					C.set_blurriness(3)
-					C.set_blindness(1)
+					C.blur_eyes(3)
+					C.blind_eyes(1)
 					if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS.
 						C.confused = max(C.confused, 3)
 						C.Weaken(3)

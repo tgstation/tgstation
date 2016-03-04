@@ -26,15 +26,6 @@
 		switch(destroys)
 			if("gib")
 				target.gib()
-			if("gib_brain")
-				if(ishuman(target) || ismonkey(target))
-					var/mob/living/carbon/C_target = target
-					var/obj/item/organ/internal/brain/B = C_target.getorgan(/obj/item/organ/internal/brain)
-					if(B)
-						B.loc = get_turf(C_target)
-						B.transfer_identity(C_target)
-						C_target.internal_organs -= B
-				target.gib()
 			if("disintegrate")
 				target.dust()
 
@@ -50,8 +41,8 @@
 		target.Paralyse(amt_paralysis)
 		target.Stun(amt_stunned)
 
-		target.set_blindness(max(target.eye_blind,amt_eye_blind))
-		target.set_blurriness(max(target.eye_blurry,amt_eye_blurry))
+		target.blind_eyes(amt_eye_blind)
+		target.blur_eyes(amt_eye_blurry)
 		//summoning
 		if(summon_type)
 			new summon_type(target.loc, target)

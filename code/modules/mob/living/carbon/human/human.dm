@@ -28,6 +28,7 @@
 	for(var/obj/item/organ/limb/O in organs)
 		O.owner = src
 	internal_organs += new /obj/item/organ/internal/appendix
+	internal_organs += new /obj/item/organ/internal/lungs
 	internal_organs += new /obj/item/organ/internal/heart
 	internal_organs += new /obj/item/organ/internal/brain
 
@@ -159,7 +160,7 @@
 		if(!prob(martial_art.deflection_chance))
 			return ..()
 		if(!src.lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-			src.visible_message("<span class='warning'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+			src.visible_message("<span class='danger'>[src] deflects the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 			return 0
 	..()
 
@@ -600,6 +601,10 @@
 		if(head.flags_inv & HIDEEARS)
 			obscured |= slot_ears
 
+	if(wear_mask)
+		if(wear_mask.flags_inv & HIDEEYES)
+			obscured |= slot_glasses
+
 	if(obscured.len > 0)
 		return obscured
 	else
@@ -894,69 +899,10 @@
 
 	dna.species.update_sight(src)
 
-/mob/living/carbon/human/update_tinttotal()
-	if(!tinted_weldhelh)
-		return
-	tinttotal = 0
-	if(istype(head, /obj/item/clothing/head))
-		var/obj/item/clothing/head/HT = head
-		tinttotal += HT.tint
-	if(wear_mask)
-		tinttotal += wear_mask.tint
+/mob/living/carbon/human/get_total_tint()
+	. = ..()
 	if(glasses)
-		tinttotal += glasses.tint
-	update_vision_overlays()
-
-/mob/living/carbon/human/update_vision_overlays()
-	if(!client)
-		return
-
-	if(stat == DEAD) //if dead we remove all vision impairments
-		clear_fullscreens()
-		return
-
-	if(tinted_weldhelh)
-		if(tinttotal >= TINT_BLIND)
-			overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
-		else if(tinttotal >= TINT_DARKENED)
-			overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
-		else
-			clear_fullscreen("tint", 0)
-
-	if(eye_blind)
-		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else
-		clear_fullscreen("blind")
-
-	if((disabilities & NEARSIGHT) && !(glasses && glasses.vision_correction))
-		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("nearsighted")
-
-	if(eye_blurry)
-		overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else
-		clear_fullscreen("blurry")
-
-	if(druggy)
-		overlay_fullscreen("high", /obj/screen/fullscreen/high)
-	else
-		clear_fullscreen("high")
-
-	if(eye_stat > 20)
-		if(eye_stat > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("eye_damage")
-
-	if(client.eye != src)
-		var/atom/A = client.eye
-		A.get_remote_view_fullscreens(src)
-	else
-		clear_fullscreen("remote_view", 0)
-
+		. += glasses.tint
 
 /mob/living/carbon/human/update_health_hud()
 	if(!client || !hud_used)
@@ -998,3 +944,14 @@
 						hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
+
+/mob/living/carbon/human/fully_heal(admin_revive = 0)
+	if(!getorganslot("lungs"))
+		var/obj/item/organ/internal/lungs/L = new()
+		L.Insert(src)
+	restore_blood()
+	remove_all_embedded_objects()
+	for(var/datum/mutation/human/HM in dna.mutations)
+		if(HM.quality != POSITIVE)
+			dna.remove_mutation(HM.name)
+	..()

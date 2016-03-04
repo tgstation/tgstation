@@ -27,7 +27,7 @@ Pipelines + Other Objects -> Pipe network
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes = list()
 
-/obj/machinery/atmospherics/New(process = TRUE)
+/obj/machinery/atmospherics/New(loc, process = TRUE)
 	nodes.len = device_type
 	..()
 	if(process)
@@ -276,24 +276,6 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/returnPipenets()
 	return list()
-
-/obj/machinery/atmospherics/onShuttleMove()
-	. = ..()
-	if(!.)
-		return
-
-	for(DEVICE_TYPE_LOOP)
-		dealWithShuttleStuff(I)
-	atmosinit() //we've moved, so what once was next to us may not be
-	build_network()
-
-/obj/machinery/atmospherics/proc/dealWithShuttleStuff(I)
-	var/obj/machinery/atmospherics/node = NODE_I
-	var/turf/node_turf = get_turf(node)
-	var/turf/self_turf = get_turf(src)
-	if(node_turf.loc != self_turf.loc) //shuttles are area based, so this means the node is not on the shuttle with us
-		node.disconnect(src)
-		NODE_I = null
 
 /obj/machinery/atmospherics/update_remote_sight(mob/user)
 	user.sight |= (SEE_TURFS|BLIND)

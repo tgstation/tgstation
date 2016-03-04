@@ -80,11 +80,17 @@ var/list/airlock_overlays = list()
 		airlock_material = "glass"
 	update_icon()
 
+/obj/machinery/door/airlock/lock()
+	bolt()
+
 /obj/machinery/door/airlock/proc/bolt()
 	if(locked)
 		return
 	locked = 1
 	update_icon()
+
+/obj/machinery/door/airlock/unlock()
+	unbolt()
 
 /obj/machinery/door/airlock/proc/unbolt()
 	if(!locked)

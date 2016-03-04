@@ -43,7 +43,7 @@
 
 /obj/item/organ/internal/cyberimp/eyes/shield/ling/on_life()
 	..()
-	if(owner.eye_blind>1 || (owner.eye_blind && owner.stat !=UNCONSCIOUS) || owner.eye_stat || owner.eye_blurry || (owner.disabilities & NEARSIGHT))
+	if(owner.eye_blind>1 || (owner.eye_blind && owner.stat !=UNCONSCIOUS) || owner.eye_damage || owner.eye_blurry || (owner.disabilities & NEARSIGHT))
 		owner.reagents.add_reagent("oculine", 1)
 
 /obj/item/organ/internal/cyberimp/eyes/shield/ling/prepare_eat()

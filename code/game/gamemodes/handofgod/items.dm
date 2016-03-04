@@ -110,7 +110,7 @@
 	name = "Crusader's Hood"
 	icon_state = "crusader"
 	w_class = 3 //normal
-	flags = BLOCKHAIR
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
@@ -147,7 +147,12 @@
 	else
 		speak2god = new()
 	speak2god.god = G
+	G.prophet_hats += src
 
+/obj/item/clothing/head/helmet/plate/crusader/prophet/Destroy()
+	if(speak2god)
+		qdel(speak2god)
+	return ..()
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/equipped(mob/user, slot)
 	if(slot == slot_head)

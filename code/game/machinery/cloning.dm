@@ -178,9 +178,6 @@
 	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
 
-	//Here let's calculate their health so the pod doesn't immediately eject them!!!
-	H.updatehealth()
-
 	clonemind.transfer_to(H)
 	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
@@ -309,23 +306,13 @@
 		mess = 0
 		gibs(loc)
 		icon_state = "pod_0"
-
-		/*
-		for(var/obj/O in src)
-			O.loc = src.loc
-		*/
 		return
 
 	if (!occupant)
 		return
-	/*
-	for(var/obj/O in src)
-		O.loc = src.loc
-	*/
 
-	if(occupant.loc == src)
-		occupant.loc = loc
-	occupant.reset_perspective(null)
+	var/turf/T = get_turf(src)
+	occupant.forceMove(T)
 	icon_state = "pod_0"
 	eject_wait = 0 //If it's still set somehow.
 	occupant.domutcheck() //Waiting until they're out before possible monkeyizing.

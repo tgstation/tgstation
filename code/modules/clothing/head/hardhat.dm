@@ -8,7 +8,7 @@
 	item_color = "yellow" //Determines used sprites: hardhat[on]_[item_color] and hardhat[on]_[item_color]2 (lying down sprite)
 	armor = list(melee = 15, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
 	flags_inv = 0
-	action_button_name = "Toggle Helmet Light"
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/head/hardhat/attack_self(mob/user)
@@ -24,13 +24,18 @@
 		turn_on(user)
 	else
 		turn_off(user)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/clothing/head/hardhat/pickup(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(brightness_on)
 		SetLuminosity(0)
 
 /obj/item/clothing/head/hardhat/dropped(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
@@ -78,8 +83,8 @@
 	item_color = "atmos"
 	name = "atmospheric technician's firefighting helmet"
 	desc = "A firefighter's helmet, able to keep the user cool in any situation."
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD

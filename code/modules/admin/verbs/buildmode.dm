@@ -232,7 +232,7 @@
 			log_admin("[key_name(usr)] has entered build mode.")
 
 
-/datum/buildmode/proc/ClickOn(user,params,atom/object) //Click Intercept
+/datum/buildmode/proc/InterceptClickOn(user,params,atom/object) //Click Intercept
 	var/list/pa = params2list(params)
 	var/right_click = pa.Find("right")
 	var/left_click = pa.Find("left")

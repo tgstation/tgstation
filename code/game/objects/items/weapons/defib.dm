@@ -11,7 +11,7 @@
 	throwforce = 6
 	w_class = 4
 	origin_tech = "biotech=4"
-	action_button_name = "Toggle Paddles"
+	actions_types = list(/datum/action/item_action/toggle_paddles)
 
 	var/on = 0 //if the paddles are equipped (1) or on the defib (0)
 	var/safety = 1 //if you can zap people with the defibs on harm mode
@@ -70,35 +70,40 @@
 	update_icon()
 
 /obj/item/weapon/defibrillator/ui_action_click()
-	if(usr.get_item_by_slot(slot_back) == src)
-		toggle_paddles()
-	else
-		usr << "<span class='warning'>Put the defibrillator on your back first!</span>"
-	return
+	toggle_paddles()
 
 /obj/item/weapon/defibrillator/attack_hand(mob/user)
-	if(src.loc == user)
-		ui_action_click()
+	if(loc == user)
+		if(slot_flags == SLOT_BACK)
+			if(user.get_item_by_slot(slot_back) == src)
+				ui_action_click()
+			else
+				user << "<span class='warning'>Put the defibrillator on your back first!</span>"
+
+		else if(slot_flags == SLOT_BELT)
+			if(user.get_item_by_slot(slot_belt) == src)
+				ui_action_click()
+			else
+				user << "<span class='warning'>Strap the defibrillator's belt on first!</span>"
 		return
 	..()
 
 /obj/item/weapon/defibrillator/MouseDrop(obj/over_object)
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/H = src.loc
+	if(ismob(src.loc))
+		var/mob/M = src.loc
 		switch(over_object.name)
 			if("r_hand")
-				if(H.r_hand)
+				if(M.r_hand)
 					return
-				if(!H.unEquip(src))
+				if(!M.unEquip(src))
 					return
-				H.put_in_r_hand(src)
+				M.put_in_r_hand(src)
 			if("l_hand")
-				if(H.l_hand)
+				if(M.l_hand)
 					return
-				if(!H.unEquip(src))
+				if(!M.unEquip(src))
 					return
-				H.put_in_l_hand(src)
-	return
+				M.put_in_l_hand(src)
 
 /obj/item/weapon/defibrillator/attackby(obj/item/weapon/W, mob/user, params)
 	if(W == paddles)
@@ -172,15 +177,22 @@
 		remove_paddles(user)
 
 	update_icon()
-	return
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/weapon/defibrillator/proc/make_paddles()
 	return new /obj/item/weapon/twohanded/shockpaddles(src)
 
 /obj/item/weapon/defibrillator/equipped(mob/user, slot)
-	if(slot != slot_back)
+	..()
+	if((slot_flags == SLOT_BACK && slot != slot_back) || (slot_flags == SLOT_BELT && slot != slot_belt))
 		remove_paddles(user)
 		update_icon()
+
+/obj/item/weapon/defibrillator/item_action_slot_check(slot, mob/user)
+	if(slot == user.getBackSlot())
+		return 1
 
 /obj/item/weapon/defibrillator/proc/remove_paddles(mob/user)
 	var/mob/living/carbon/human/M = user
@@ -230,12 +242,9 @@
 	slot_flags = SLOT_BELT
 	origin_tech = "biotech=4"
 
-/obj/item/weapon/defibrillator/compact/ui_action_click()
-	if(usr.get_item_by_slot(slot_belt) == src)
-		toggle_paddles()
-	else
-		usr << "<span class='warning'>Strap the defibrillator's belt on first!</span>"
-	return
+/obj/item/weapon/defibrillator/compact/item_action_slot_check(slot, mob/user)
+	if(slot == user.getBeltSlot())
+		return 1
 
 /obj/item/weapon/defibrillator/compact/loaded/New()
 	..()
@@ -322,7 +331,7 @@
 	if(!req_defib)
 		return ..()
 	if(user)
-		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
+		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(istype(O))
 			O.unwield()
 		user << "<span class='notice'>The paddles snap back into the main unit.</span>"
@@ -460,8 +469,8 @@
 				user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest.</span>")
 				playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
 				var/tplus = world.time - H.timeofdeath
-				var/tlimit = 6000 //past this much time the patient is unrecoverable (in deciseconds)
-				var/tloss = 3000 //brain damage starts setting in on the patient after some time left rotting
+				var/tlimit = 1200 //past this much time the patient is unrecoverable (in deciseconds)
+				var/tloss = 600 //brain damage starts setting in on the patient after some time left rotting
 				var/total_burn	= 0
 				var/total_brute	= 0
 				if(do_after(user, 20, target = M)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
@@ -488,9 +497,12 @@
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return. Further attempts futile.</span>"
 						else if(total_burn >= 180 || total_brute >= 180)
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Severe tissue damage makes recovery of patient impossible via defibrillator. Further attempts futile.</span>"
-						else if(H.get_ghost() || !H.getorgan(/obj/item/organ/internal/brain))
+						else if(H.get_ghost())
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - No activity in patient's brain. Further attempts may be successful.</span>"
-
+						else
+							var/obj/item/organ/internal/brain/BR = H.getorgan(/obj/item/organ/internal/brain)
+							if(!BR || BR.damaged_brain)
+								failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's brain is missing or damaged beyond point of no return. Further attempts futile.</span>"
 
 						if(failed)
 							user.visible_message(failed)
@@ -508,12 +520,7 @@
 								H.adjustBruteLoss((mobhealth - halfwaycritdeath) * (total_brute / overall_damage), 0)
 							user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
 							playsound(get_turf(src), 'sound/machines/defib_success.ogg', 50, 0)
-							H.stat = UNCONSCIOUS
-							H.updatehealth()
-							H.update_sight()
-							H.update_vision_overlays()
-							dead_mob_list -= H
-							living_mob_list |= list(H)
+							H.revive()
 							H.emote("gasp")
 							if(tplus > tloss)
 								H.setBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))))
@@ -541,7 +548,7 @@
 
 /obj/item/weapon/twohanded/shockpaddles/syndicate
 	name = "syndicate defibrillator paddles"
-	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and todeliver powerful shocks offensively."
+	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
 	combat = 1
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "defibpaddles0"

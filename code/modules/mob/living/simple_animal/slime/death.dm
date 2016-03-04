@@ -9,9 +9,11 @@
 			M.regenerate_icons()
 			is_adult = 0
 			maxHealth = 150
+			for(var/datum/action/innate/slime/reproduce/R in actions)
+				R.Remove(src)
 			var/datum/action/innate/slime/evolve/E = new
 			E.Grant(src)
-			revive()
+			revive(full_heal = 1)
 			regenerate_icons()
 			number = rand(1, 1000)
 			name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"

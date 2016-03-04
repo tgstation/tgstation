@@ -47,7 +47,8 @@
 "aU" = (/turf/simulated/floor/plasteel{icon_plating = "asteroid"; icon_state = "asteroid"; name = "Asteroid"},/area/mine/unexplored)
 "aV" = (/obj/item/clothing/under/soviet,/obj/item/clothing/head/ushanka,/turf/simulated/floor/plasteel{icon_plating = "asteroid"; icon_state = "asteroid"; name = "Asteroid"},/area/mine/unexplored)
 "aW" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plasteel{icon_plating = "asteroid"; icon_state = "asteroid"; name = "Asteroid"},/area/mine/unexplored)
-"aX" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_z5"; name = "south of asteroid"; turf_type = /turf/space; width = 18},/turf/space,/area/space)
+"aX" = (/obj/docking_port/stationary{dheight = 9; dir = 2; dwidth = 5; height = 24; id = "syndicate_z5"; name = "south of asteroid"; turf_type = /turf/space; width = 18},/turf/space,/area/space)
+"aY" = (/obj/structure/barricade/wooden,/turf/simulated/floor/plasteel{icon_state = "bot"; dir = 1},/area/mine/production)
 "aZ" = (/obj/structure/grille,/obj/structure/cable{icon_state = "0-2"; d2 = 2},/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating,/area/mine/laborcamp)
 "ba" = (/turf/simulated/floor/plasteel/airless{icon_state = "damaged2"},/area/mine/abandoned)
 "bb" = (/obj/machinery/light,/turf/simulated/floor/plating/asteroid/airless,/area/mine/north_outpost)
@@ -87,8 +88,9 @@
 "bJ" = (/turf/simulated/floor/plasteel{icon_state = "dark"},/area/mine/abandoned)
 "bK" = (/obj/structure/sink{pixel_y = 30},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/abandoned)
 "bL" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/abandoned)
-"bM" = (/obj/structure/table,/obj/item/weapon/paper/crumpled,/obj/item/seeds/cherryseed,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/abandoned)
+"bM" = (/obj/structure/table,/obj/item/weapon/paper/crumpled,/obj/item/seeds/cherry,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/abandoned)
 "bN" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/plating/asteroid/airless,/area/mine/north_outpost)
+"bO" = (/obj/machinery/light/small{dir = 4},/obj/structure/barricade/wooden,/turf/simulated/floor/plasteel{icon_state = "delivery"; name = "floor"},/area/mine/production)
 "bP" = (/obj/item/clothing/mask/facehugger{icon_state = "facehugger_dead"; stat = 2},/obj/structure/alien/weeds,/turf/simulated/floor/plasteel/airless,/area/mine/abandoned)
 "bQ" = (/obj/structure/table,/obj/item/weapon/pickaxe,/turf/simulated/floor/plasteel,/area/mine/north_outpost)
 "bR" = (/obj/machinery/newscaster{pixel_y = 32},/turf/simulated/floor/plasteel,/area/mine/north_outpost)
@@ -137,7 +139,7 @@
 "cI" = (/turf/simulated/floor/plasteel/airless{icon_state = "asteroidwarning"; dir = 6},/area/mine/west_outpost)
 "cJ" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor/plating/airless{icon_state = "asteroidplating"},/area/mine/unexplored)
 "cK" = (/obj/structure/table,/obj/item/weapon/storage/toolbox/mechanical,/turf/simulated/floor/plasteel,/area/mine/north_outpost)
-"cL" = (/obj/structure/bed/chair{dir = 8},/turf/simulated/floor/plasteel,/area/mine/north_outpost)
+"cL" = (/obj/structure/chair{dir = 8},/turf/simulated/floor/plasteel,/area/mine/north_outpost)
 "cM" = (/obj/machinery/atmospherics/components/unary/vent_pump{dir = 1; on = 1},/turf/simulated/floor/plasteel,/area/mine/north_outpost)
 "cN" = (/obj/structure/rack,/turf/simulated/floor/plasteel{icon_state = "bot"},/area/mine/north_outpost)
 "cO" = (/obj/structure/disposalpipe/segment,/turf/simulated/wall,/area/mine/north_outpost)
@@ -189,7 +191,7 @@
 "dI" = (/obj/structure/disposalpipe/segment,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/mine/explored)
 "dJ" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/o2{pixel_x = 2; pixel_y = 2},/turf/simulated/floor/plasteel{icon_state = "white"},/area/mine/laborcamp)
 "dK" = (/obj/structure/table,/obj/item/device/healthanalyzer,/obj/item/stack/medical/bruise_pack,/turf/simulated/floor/plasteel{icon_state = "white"},/area/mine/laborcamp)
-"dL" = (/obj/structure/sign/bluecross_2{pixel_y = 32},/obj/structure/bed/chair,/turf/simulated/floor/plasteel{icon_state = "white"},/area/mine/laborcamp)
+"dL" = (/obj/structure/sign/bluecross_2{pixel_y = 32},/obj/structure/chair,/turf/simulated/floor/plasteel{icon_state = "white"},/area/mine/laborcamp)
 "dM" = (/obj/machinery/camera{c_tag = "Labor Camp Medical"; dir = 8; network = list("Labor")},/obj/structure/bed,/obj/item/weapon/bedsheet/medical,/turf/simulated/floor/plasteel{icon_state = "white"},/area/mine/laborcamp)
 "dN" = (/turf/simulated/wall,/area/mine/laborcamp)
 "dO" = (/obj/machinery/atmospherics/components/unary/vent_pump{on = 1},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
@@ -228,16 +230,16 @@
 "ev" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/simulated/floor/plasteel/airless{icon_state = "asteroidwarning"; dir = 2},/area/mine/abandoned)
 "ew" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor/plating/airless{icon_state = "asteroidplating"},/area/mine/explored)
 "ex" = (/obj/structure/table,/obj/item/trash/plate,/obj/item/weapon/kitchen/fork,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
-"ey" = (/obj/effect/decal/cleanable/cobweb2,/obj/structure/bed/chair{dir = 8},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
+"ey" = (/obj/effect/decal/cleanable/cobweb2,/obj/structure/chair{dir = 8},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
 "ez" = (/obj/machinery/atmospherics/pipe/simple,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
 "eA" = (/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = 32},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
 "eB" = (/obj/machinery/atmospherics/pipe/simple,/obj/item/device/radio/intercom{desc = "Talk through this. It looks like it has been modified to not broadcast."; dir = 2; name = "Prison Intercom (General)"; pixel_x = 0; pixel_y = 24; prison_radio = 1},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
 "eC" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
 "eD" = (/turf/simulated/floor/plasteel{icon_state = "asteroidfloor"},/area/mine/explored)
-"eE" = (/turf/simulated/floor/plasteel{icon_state = "bot"; dir = 1},/area/mine/production)
+"eE" = (/obj/structure/barricade/wooden,/turf/simulated/floor/plasteel{dir = 4; icon_state = "loadingarea"},/area/space)
 "eF" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille{density = 0; icon_state = "brokengrille"},/obj/item/stack/rods,/obj/item/weapon/shard,/turf/simulated/floor/plating/airless{icon_state = "asteroidplating"},/area/mine/abandoned)
 "eG" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating/airless{icon_state = "asteroidplating"},/area/mine/abandoned)
-"eH" = (/obj/structure/bed/chair{dir = 1},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
+"eH" = (/obj/structure/chair{dir = 1},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
 "eI" = (/obj/machinery/navbeacon{codes_txt = "patrol;next_patrol=7-Sleeper"; location = "6-Vending"},/mob/living/simple_animal/mouse,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
 "eJ" = (/obj/machinery/door/airlock{name = "Vending"},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
 "eK" = (/obj/machinery/atmospherics/pipe/simple/general/hidden{dir = 5},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/laborcamp)
@@ -329,7 +331,7 @@
 "gs" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor/plating/airless{icon_state = "asteroidplating"},/area/mine/explored)
 "gt" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'HIGH VOLTAGE'"; icon_state = "shock"; name = "HIGH VOLTAGE"},/turf/simulated/wall/r_wall,/area/mine/laborcamp/security)
 "gu" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/plasteel,/area/mine/laborcamp/security)
-"gv" = (/obj/structure/bed/chair/office/dark,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plasteel,/area/mine/laborcamp/security)
+"gv" = (/obj/structure/chair/office/dark,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plasteel,/area/mine/laborcamp/security)
 "gw" = (/obj/machinery/button/door{id = "Labor"; name = "Labor Camp Lockdown"; pixel_x = 28; pixel_y = 7; req_access_txt = "2"},/obj/machinery/button/flasher{id = "Labor"; pixel_x = 26; pixel_y = -3},/obj/machinery/atmospherics/components/unary/vent_pump{dir = 1; on = 1},/turf/simulated/floor/plasteel,/area/mine/laborcamp/security)
 "gx" = (/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/plating,/area/mine/laborcamp/security)
 "gy" = (/turf/simulated/floor/plating,/area/mine/laborcamp/security)
@@ -427,7 +429,7 @@
 "im" = (/obj/structure/table,/obj/machinery/microwave{pixel_y = 6},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
 "in" = (/obj/machinery/computer/security/telescreen/entertainment{pixel_x = 0; pixel_y = 32},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
 "io" = (/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
-"ip" = (/obj/structure/bed/chair,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
+"ip" = (/obj/structure/chair,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
 "iq" = (/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 31},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
 "ir" = (/obj/machinery/door/airlock{id_tag = "miningdorm3"; name = "Room 3"},/turf/simulated/floor/plasteel,/area/mine/living_quarters)
 "is" = (/obj/structure/ore_box,/turf/simulated/floor/plasteel,/area/mine/living_quarters)
@@ -445,9 +447,9 @@
 "iE" = (/obj/machinery/door/airlock/external{name = "Mining West Outpost Airlock"; req_access_txt = "54"},/turf/simulated/floor/plasteel/airless{icon_state = "asteroidfloor"},/area/mine/west_outpost)
 "iF" = (/turf/simulated/floor/plasteel/airless{icon_state = "asteroidwarning"; dir = 4},/area/mine/explored)
 "iG" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/beer,/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
-"iH" = (/obj/structure/bed/chair{dir = 4},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
+"iH" = (/obj/structure/chair{dir = 4},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
 "iI" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
-"iJ" = (/obj/structure/bed/chair{dir = 8},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
+"iJ" = (/obj/structure/chair{dir = 8},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
 "iK" = (/obj/machinery/light{dir = 4},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
 "iL" = (/turf/simulated/floor/plasteel,/area/mine/living_quarters)
 "iM" = (/obj/machinery/atmospherics/components/unary/vent_pump{on = 1},/turf/simulated/floor/plasteel,/area/mine/living_quarters)
@@ -498,7 +500,7 @@
 "jF" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/mine/eva)
 "jG" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'EXTERNAL AIRLOCK'"; icon_state = "space"; layer = 4; name = "EXTERNAL AIRLOCK"; pixel_x = 0; pixel_y = 32},/turf/simulated/floor/plasteel{dir = 4; icon_state = "warning"},/area/mine/eva)
 "jH" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/plasteel,/area/mine/west_outpost)
-"jI" = (/obj/structure/bed/chair{dir = 1},/turf/simulated/floor/plasteel,/area/mine/west_outpost)
+"jI" = (/obj/structure/chair{dir = 1},/turf/simulated/floor/plasteel,/area/mine/west_outpost)
 "jJ" = (/obj/machinery/power/apc{dir = 2; name = "Mining West Outpost APC"; pixel_x = 1; pixel_y = -23},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/machinery/atmospherics/pipe/simple,/turf/simulated/floor/plasteel,/area/mine/west_outpost)
 "jK" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0},/obj/machinery/camera{c_tag = "West Outpost"; dir = 1; network = list("MINE")},/turf/simulated/floor/plasteel,/area/mine/west_outpost)
 "jL" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plasteel,/area/mine/west_outpost)
@@ -635,9 +637,9 @@
 "mm" = (/obj/machinery/mineral/equipment_vendor,/turf/simulated/floor/plasteel{icon_state = "delivery"; name = "floor"},/area/mine/production)
 "mn" = (/obj/machinery/mineral/mint{input_dir = 4},/turf/simulated/floor/plasteel,/area/mine/production)
 "mo" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plasteel{dir = 8; icon_state = "loadingarea"},/area/mine/production)
-"mp" = (/obj/structure/ore_box,/turf/simulated/floor/plasteel{icon_state = "bot"; dir = 1},/area/mine/production)
+"mp" = (/obj/structure/ore_box,/turf/simulated/floor/plasteel{dir = 6; icon_state = "warning"},/area/mine/production)
 "mq" = (/obj/structure/extinguisher_cabinet{pixel_x = -5; pixel_y = 30},/obj/structure/table,/obj/item/weapon/paper{anchored = 0; info = "A hastily written note has been scribbled here... <br><br> Please use the ore redemption machine in the science wing for smelting. PLEASE! <br><br>--The Research Staff"; name = "URGENT!"},/turf/simulated/floor/plasteel{icon_state = "bot"; dir = 1},/area/mine/production)
-"mr" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plasteel{icon_state = "delivery"; name = "floor"},/area/mine/production)
+"mr" = (/obj/structure/ore_box,/turf/simulated/floor/plasteel{icon_state = "delivery"; name = "floor"},/area/mine/production)
 "ms" = (/obj/structure/cable,/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/power/port_gen/pacman{anchored = 1},/turf/simulated/floor/plating,/area/mine/living_quarters)
 "mt" = (/obj/machinery/power/port_gen/pacman{anchored = 1},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/mine/living_quarters)
 "mu" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/plating,/area/mine/living_quarters)
@@ -646,7 +648,7 @@
 "mx" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor/plasteel,/area/mine/production)
 "my" = (/turf/simulated/floor/plasteel{icon_state = "loadingarea"},/area/mine/production)
 "mz" = (/turf/simulated/floor/plasteel{dir = 5; icon_state = "warning"},/area/mine/production)
-"mA" = (/turf/simulated/floor/plasteel{dir = 4; icon_state = "loadingarea"},/area/space)
+"mA" = (/obj/machinery/conveyor{dir = 8; id = "mining_internal"},/obj/structure/plasticflaps,/obj/structure/barricade/wooden,/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 1},/area/mine/production)
 "mB" = (/obj/machinery/conveyor{dir = 2; id = "mining_internal"},/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 8},/area/mine/production)
 "mC" = (/turf/simulated/floor/plasteel/airless{icon_state = "asteroidfloor"},/area/mine/explored)
 "mD" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/plating/asteroid/airless,/area/mine/living_quarters)
@@ -697,9 +699,7 @@
 "nw" = (/obj/structure/lattice,/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/space,/area/space)
 "nx" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/disposalpipe/trunk,/obj/machinery/door/window/northleft{name = "Pneumatic Tube Access"},/obj/machinery/disposal/deliveryChute{dir = 1; pixel_y = -1},/turf/simulated/floor/plasteel{icon_state = "bot"; dir = 1},/area/mine/production)
 "ny" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/machinery/light,/turf/simulated/floor/plasteel{icon_state = "bot"; dir = 1},/area/mine/production)
-"nz" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor/plasteel{icon_state = "delivery"; name = "floor"},/area/mine/production)
 "nA" = (/turf/simulated/floor/plasteel{icon_state = "delivery"; name = "floor"},/area/mine/production)
-"nB" = (/obj/machinery/conveyor{dir = 8; id = "mining_internal"},/obj/structure/plasticflaps,/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 1},/area/mine/production)
 "nC" = (/obj/machinery/mineral/stacking_machine{dir = 1; input_dir = 4},/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 9},/area/mine/production)
 "nD" = (/obj/machinery/conveyor{dir = 8; id = "mining_internal"},/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 1},/area/mine/production)
 "nE" = (/obj/machinery/conveyor{icon_state = "conveyor0"; dir = 10; id = "mining_internal"},/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating{icon_state = "warnplatecorner"; dir = 4},/area/mine/production)
@@ -896,14 +896,14 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababacacacacacacacacacacacac
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababacacacacababababababababababababbGababbGbGbGbGbGbGbGbGbGabababababbGbGbGbGbGbGbGbGbGababababbGbGbGewewbGbGbGgOdZbGbGbGewewbGbGbGbGbGdUdWbGbGbGbGbGbGfkflfkgsgUgVgsgsgsflbGbGbGbGbGbGbGbGbGbGbGbGbGbGafafafafafhwiLkTkUkVkVkUkWkXkYkVkVkUkUkZlalalalblblblblblblblblclclclclclcldlelelelflglhlijgjgjhjgjgjgjgjgjgdblklllklmcsafaiaiaiaiaiaiaiaiaiaiaiafafafafafafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababacacacacababababababababababababbGababbGbGbGbGbGbGbGbGababababbGbGbGbGabababababababababababbGbGbGewfkgsgsgsgUgVgsgsgsgQewbGbGbGbGbGbGbGbGbGbGbGabbGbGfkgsgsgUgVgsgsflfkflbGbGbGbGgOdZbGbGbGbGbGbGbGbGbGafafhwhwhLlrhLhwhwlsltluhwhwhLlvhLhwhLbGbGbGaaaaaaaaalaaaaaaalaaaaaaaaaaalaajijilwlxlylzlAlBlClDlElElFlGlHlHlHlHlmbGafaiaiaiaiaiaiaiaiaiaiafafafafafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacacabababbGbGbGababbGbGbGbGbGbGababababababababababababababababababababababababababababbGbGbGbGfkgsgsgsgsgUgVgsgsgsgsgQbGbGbGbGbGbGbGbGbGbGabababbGbGbGbGdUdWbGbGfkflfkgsgsgsgsgUgVgsgsgsgsgsgsgsflbGbGafhwlIlJlKlLhwlMlPlOnKlZhwlRlSlTlUbGbGbGbGbGbGaaaaalaaaaaaalalalalalalalalaljglVlWlXjgjgjgjgjgjgjgjgjglYlmlmlmlmbGafaiaiaiaiaiaiaiaiaiafafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababacacacacabababbGbGbGababbGbGbGbGbGbGabababacacacacacacacacacababababababababacacacacacacabababababbGbGbGbGbGbGdUdWbGbGbGbGbGbGbGbGbGbGbGabababababababababababababbGbGbGfkgsgsgsgsgsgUgVgsgsgsgsgsgsflewbGbGbGhwmcmambnJhwmdlQlQmemfhwmgmhmihwbGbGbGbGbGbGalalalalalalalaaaaaaaaaaalaaaljgmjmkmlmmjgmnmoeemqmpeEjgbGbGbGbGbGafafaiaiaiaiaiaiaiaiaiafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababacacacabababbGbGbGbGbGbGbGaaaaaaaabGbGabababacacacacacacacacacacacacacacacacacacacacacacabababababbGbGbGbGbGbGbGbGbGbGbGbGbGbGabababbGbGbGababababababababababbGbGbGbGbGbGbGbGbGbGbGdUdWbGbGbGbGbGbGewewbGbGbGlUhwhwhwhwhwmsmtmumvmfhwhLmwhLhwbGbGbGbGbGbGaaaaalaaaaaaalaaaaaaaaaaalaajijilwmxmlmmlemykckdmzmAmrjgafafafafafafaiaiaiaiaiaiaiaiaiaiafafaaaaaaaaaaafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababacacacacabababbGbGbGababbGbGbGbGbGbGabababacacacacacacacacacababababababababacacacacacacabababababbGbGbGbGbGbGdUdWbGbGbGbGbGbGbGbGbGbGbGabababababababababababababbGbGbGfkgsgsgsgsgsgUgVgsgsgsgsgsgsflewbGbGbGhwmcmambnJhwmdlQlQmemfhwmgmhmihwbGbGbGbGbGbGalalalalalalalaaaaaaaaaaalaaaljgmjmkmlmmjgmnmoeemqaYaYjgbGbGbGbGbGafafaiaiaiaiaiaiaiaiaiafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababacacacabababbGbGbGbGbGbGbGaaaaaaaabGbGabababacacacacacacacacacacacacacacacacacacacacacacabababababbGbGbGbGbGbGbGbGbGbGbGbGbGbGabababbGbGbGababababababababababbGbGbGbGbGbGbGbGbGbGbGdUdWbGbGbGbGbGbGewewbGbGbGlUhwhwhwhwhwmsmtmumvmfhwhLmwhLhwbGbGbGbGbGbGaaaaalaaaaaaalaaaaaaaaaaalaajijilwmxmlmmlemykckdmzeEbOjgafafafafafafaiaiaiaiaiaiaiaiaiaiafafaaaaaaaaaaafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababacacacacabababbGbGaaaaaaaaaaaaaaaaaaaabGabababacacacacacacacacacacacacacacacacacacacacacacacacacababbGbGbGbGbGbGbGbGbGbGbGbGababababababbGbGbGabababacabababbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGewfkgsflbGbGbGbGbGbGlUhwhwhwhwhwlUmCmCiFmDbGbGbGbGbGaaaaaaalaaaaaaalaaaaaaaaaamEjimFmGmHmxmlmIjgmJlwmKmLjgmMjgaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiafafafaaaaaaafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababacacacacababbGbGaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacacacacacacacacacacacacacacacacacacacacacacacabababababababababababababababababababababbGbGbGababacababbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGfkgsflfkflbGbGbGbGbGbGbGdUdVdVdVdVdVdVdWbGbGbGbGbGbGalalalalalalalalaaaaaaaamNmOlwmOlwmPmQmRmzlejylwmSmTjimBjgaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiafafafafafafafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababacacacacacacacababbGaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacacacacacacacacacacacacacacacacacacacacacacacabababababababababababababababababbGbGbGbGbGbGbGababacabababababababababababababababababababababbGbGbGbGbGfkflfkflmUbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGaaaaaaaaaaaaalaaaaaaaaaajijijimVmWmXmYmZnanbncndnenfngjgaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiafafafafafafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababacacacacacacacacababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacababababbGbGbGbGabababacababababababababababababababababababababbGbGbGbGbGbGbGfkflfkgsgsgsgsgsgsgsgsgsgsgsgsgsgsgsflbGbGbGbGbGbGaaaaaaaaaaalaaaaaaaaaaalaajijilwmxnhninjnknlnlnmjimBjgaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiafafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababacacacacacacacacababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacababababbGbGbGbGabababacababababababababababababababababababababbGbGbGbGbGbGbGfkflfkgsgsgsgsgsgsgsgsgsgsgsgsgsgsgsflbGbGbGbGbGbGaaaaaaaaaaalaaaaaaaaaaalaajijilwmxnhninjnknlnlmpjimBjgaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiafafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababacacacacacacababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacacacacacacacacacamacacacacacacacacacacacacacacacacacacacacacacacacacacacacabababababababbGabababacacacacacacacacacacacacacacabababababbGbGbGbGbGbGafbGbGbGfkgsgsgsgsgsgsgsgsgsgsgsgsgsgsgsflewbGgOdZbGbGbGesesalaaaaalaaaaaaaaaaalaannlCnonpnlnmlenqnrnsjijimBjgaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiafafafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababacacacacacacababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacababababababababacacacacacacacacacacacacacacacababbGbGbGbGbGbGbGbGbGafafafbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGewfkgsgUgVgsgsgsntnunvnvnvnvnvnvnvnvnvnvnvnwjgnxnyjymJjgnznAnBnCnDnEjgaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiafafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababacacacacacacababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacababababababababacacacacacacacacacacacacacacacababbGbGbGbGbGbGbGbGbGafafafbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGbGewfkgsgUgVgsgsgsntnunvnvnvnvnvnvnvnvnvnvnvnwjgnxnyjymJjgmrnAmAnCnDnEjgaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiafafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababacacacacacacababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacabababababacacacacacacacacacacacacacacacababababababababbGbGbGababafafafbGbGbGbGbGbGbGafafbGbGbGbGbGbGfkgsgsgUgVgsgsgsnFnunvnvnvnvnvnvnvnvnvnvnvnvlCnGjgjijijgnHjgjgjgjgjgjgaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababacacacababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacabababababababababbGbGababababafafafafafafafafafafafbGbGbGbGbGbGbGbGdUdWbGbGbGesesalaaaaaaaaaaaaaaaaaaaaalalalalalaljgjgjgaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacababababbGbGababacacacacacacabababbGbGbGbGbGbGbGbGabababababababababbGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafafaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiaiafafafafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

@@ -54,7 +54,7 @@
 	var/speed = 1 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
 	//Hot simple_animal baby making vars
-	var/childtype = null
+	var/list/childtype = null
 	var/scan_ready = 1
 	var/species //Sorry, no spider+corgi buttbabies.
 
@@ -81,6 +81,8 @@
 	verbs -= /mob/verb/observe
 	if(!real_name)
 		real_name = name
+	if(!loc)
+		stack_trace("Simple animal being instantiated in nullspace")
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
@@ -104,8 +106,16 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health < 1)
+		if(health <= 0)
 			death()
+		else
+			stat = CONSCIOUS
+
+/mob/living/simple_animal/blind_eyes()
+	return
+
+/mob/living/simple_animal/blur_eyes()
+	return
 
 /mob/living/simple_animal/adjust_blindness()
 	return
@@ -460,17 +470,22 @@
 
 /mob/living/simple_animal/update_fire()
 	return
+
 /mob/living/simple_animal/IgniteMob()
 	return
+
 /mob/living/simple_animal/ExtinguishMob()
 	return
 
-/mob/living/simple_animal/revive()
+/mob/living/simple_animal/revive(full_heal = 0, admin_revive = 0)
+	if(..()) //successfully ressuscitated from death
+		icon = initial(icon)
+		icon_state = icon_living
+		density = initial(density)
+		. = 1
+
+/mob/living/simple_animal/fully_heal(admin_revive = 0)
 	health = maxHealth
-	icon = initial(icon)
-	icon_state = icon_living
-	density = initial(density)
-	update_canmove()
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
@@ -496,7 +511,8 @@
 			alone = 0
 			continue
 	if(alone && partner && children < 3)
-		new childtype(loc)
+		var/childspawn = pickweight(childtype)
+		new childspawn(loc)
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
 	if(!child_override)
@@ -522,6 +538,7 @@
 	else
 		canmove = 1
 	update_transform()
+	update_action_buttons_icon()
 	return canmove
 
 /mob/living/simple_animal/update_transform()

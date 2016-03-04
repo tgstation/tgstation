@@ -189,7 +189,7 @@
 		if(STUTTER)
 			stuttering = max(stuttering,(effect/(blocked+1)))
 		if(EYE_BLUR)
-			set_blurriness(max(eye_blurry,(effect/(blocked+1))))
+			blur_eyes(effect/(blocked+1))
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect/(blocked+1)))
 	updatehealth()
@@ -368,7 +368,8 @@
 	diagsensor.add_hud_to(src)
 
 /mob/living/silicon/proc/sensor_mode()
-	set name = "Set Sensor Augmentation"
+	if(incapacitated())
+		return
 	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Diagnostic","Disable")
 	remove_med_sec_hud()
 	switch(sensor_type)
@@ -512,7 +513,7 @@
 		weakened = max(amount,0)
 		update_stat()
 
-/mob/living/silicon/AdjustWeakened(amount)
-	if(status_flags & CANWEAKEN)
+/mob/living/silicon/AdjustWeakened(amount, ignore_canweaken = 0)
+	if(status_flags & CANWEAKEN || ignore_canweaken)
 		weakened = max(weakened + amount,0)
 		update_stat()

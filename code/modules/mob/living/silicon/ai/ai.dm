@@ -24,6 +24,7 @@ var/list/ai_list = list()
 	see_in_dark = 8
 	med_hud = DATA_HUD_MEDICAL_BASIC
 	sec_hud = DATA_HUD_SECURITY_BASIC
+	mob_size = MOB_SIZE_LARGE
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
@@ -803,7 +804,7 @@ var/list/ai_list = list()
 			user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
 			return
 		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
-		aiRestorePowerRoutine = 0//So the AI initially has power.
+		ai_restore_power()//So the AI initially has power.
 		control_disabled = 1//Can't control things remotely if you're stuck in a card!
 		radio_enabled = 0 	//No talking on the built-in radio for you either!
 		loc = card//Throw AI into the card.
@@ -885,18 +886,13 @@ var/list/ai_list = list()
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
 		update_sight()
-		update_vision_overlays()
+		if(client.eye != src)
+			var/atom/AT = client.eye
+			AT.get_remote_view_fullscreens(src)
+		else
+			clear_fullscreen("remote_view", 0)
 
-
-/mob/living/silicon/ai/update_vision_overlays()
-	if(!client)
-		return
-
-	if(stat == DEAD) //if dead we just remove all vision impairments
-		clear_fullscreens()
-		return
-
-	if(eye_blind)
-		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else
-		clear_fullscreen("blind")
+/mob/living/silicon/ai/revive(full_heal = 0, admin_revive = 0)
+	if(..()) //successfully ressuscitated from death
+		icon_state = "ai"
+		. = 1

@@ -1,6 +1,7 @@
 /mob/living/gib(animation = 1)
 	var/prev_lying = lying
-	death(1)
+	if(stat != DEAD)
+		death(1)
 
 	if(buckled)
 		buckled.unbuckle_mob() //to update alien nest overlay.
@@ -36,7 +37,6 @@
 
 /mob/living/death(gibbed)
 	unset_machine()
-	reset_perspective(null)
 	timeofdeath = world.time
 	tod = worldtime2text()
 	if(mind)
@@ -50,8 +50,10 @@
 	stunned = 0
 	weakened = 0
 	sleeping = 0
-	update_sight()
-	update_vision_overlays()
+	blind_eyes(1)
+	reset_perspective(null)
+	hide_fullscreens()
+	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()
 	update_canmove()

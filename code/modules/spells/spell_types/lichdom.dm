@@ -87,6 +87,9 @@
 					var/mob/living/carbon/C = old_body
 					for(var/obj/item/W in C)
 						C.unEquip(W)
+					for(var/obj/item/organ/internal/I in C.internal_organs)
+						I.Remove(C)
+						I.forceMove(body_turf)
 				var/wheres_wizdo = dir2text(get_dir(body_turf, item_turf))
 				if(wheres_wizdo)
 					old_body.visible_message("<span class='warning'>Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!</span>")

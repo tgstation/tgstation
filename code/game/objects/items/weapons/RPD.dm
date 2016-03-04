@@ -138,12 +138,11 @@ var/global/list/RPD_recipes=list(
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
-	var/p_type = 0
-	var/p_conntype = 0
+	var/p_type = PIPE_SIMPLE
+	var/p_conntype = PIPE_BENDABLE
 	var/p_dir = 1
 	var/p_flipped = 0
 	var/p_class = ATMOS_MODE
-	var/p_disposal = 0
 	var/list/paint_colors = list(
 		"grey"		= rgb(255,255,255),
 		"red"		= rgb(255,0,0),

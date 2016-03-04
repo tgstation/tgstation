@@ -34,15 +34,15 @@ Bonus
 				M << "<span class='warning'>Your eyes itch.</span>"
 			if(3, 4)
 				M << "<span class='warning'><b>Your eyes burn!</b></span>"
-				M.set_blurriness(max(M.eye_blurry,10))
-				M.adjust_eye_stat(1)
+				M.blur_eyes(10)
+				M.adjust_eye_damage(1)
 			else
 				M << "<span class='userdanger'>Your eyes burn horrificly!</span>"
-				M.set_blurriness(max(M.eye_blurry,20))
-				M.adjust_eye_stat(5)
-				if(M.eye_stat >= 10)
+				M.blur_eyes(20)
+				M.adjust_eye_damage(5)
+				if(M.eye_damage >= 10)
 					M.become_nearsighted()
-					if(prob(M.eye_stat - 10 + 1))
+					if(prob(M.eye_damage - 10 + 1))
 						if(M.become_blind())
 							M << "<span class='userdanger'>You go blind!</span>"
 

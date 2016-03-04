@@ -80,7 +80,6 @@
 		equip_to_slot_or_del(I, slot_head)
 
 	access_card.flags |= NODROP
-	scanner.Grant(src)
 
 	alert_drones(DRONE_NET_CONNECT)
 
@@ -240,16 +239,7 @@
 /mob/living/simple_animal/drone/experience_pressure_difference(pressure_difference, direction)
 	return
 
-/mob/living/simple_animal/drone/revive()
+/mob/living/simple_animal/drone/fully_heal(admin_revive = 0)
 	adjustBruteLoss(-getBruteLoss()) //Heal all brute damage
-	stat = CONSCIOUS
-	updatehealth()
-	icon_state = icon_living
-	if(stat == DEAD)
-		dead_mob_list -= src
-		living_mob_list += src
-	update_sight()
-	update_vision_overlays()
-	update_canmove()
 
 

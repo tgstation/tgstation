@@ -174,17 +174,17 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	//first instance the /area and remove it from the members list
 	index = members.len
-	var/atom/instance
-	_preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
+	if(members[index] != /area/template_noop)
+		var/atom/instance
+		_preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
 
-	instance = locate(members[index])
-	var/turf/crds = locate(xcrd,ycrd,zcrd)
-	if(crds)
-		instance.contents.Add(crds)
+		instance = locate(members[index])
+		var/turf/crds = locate(xcrd,ycrd,zcrd)
+		if(crds)
+			instance.contents.Add(crds)
 
-	if(use_preloader && instance)
-		_preloader.load(instance)
-
+		if(use_preloader && instance)
+			_preloader.load(instance)
 	members.Remove(members[index])
 
 	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
@@ -194,7 +194,9 @@ var/global/dmm_suite/preloader/_preloader = new
 		first_turf_index++
 
 	//instanciate the first /turf
-	var/turf/T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd)
+	var/turf/T
+	if(members[first_turf_index] != /turf/template_noop)
+		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd)
 
 	if(T)
 		//if others /turf are presents, simulates the underlays piling effect
@@ -350,3 +352,9 @@ var/global/dmm_suite/preloader/_preloader = new
 	for(var/attribute in attributes)
 		what.vars[attribute] = attributes[attribute]
 	use_preloader = FALSE
+
+/area/template_noop
+	name = "Area Passthrough"
+
+/turf/template_noop
+	name = "Turf Passthrough"

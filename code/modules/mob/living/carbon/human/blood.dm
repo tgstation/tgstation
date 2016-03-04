@@ -97,7 +97,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					update_body()
 				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 50)
 				if(prob(5))
-					set_blurriness(max(eye_blurry,6))
+					blur_eyes(6)
 					var/word = pick("dizzy","woozy","faint")
 					src << "<span class='warning'>You feel very [word].</span>"
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)

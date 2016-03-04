@@ -100,9 +100,13 @@
 	if((status_flags & GODMODE))
 		return
 
+	var/lungs = getorganslot("lungs")
+	if(!lungs)
+		adjustOxyLoss(2)
+
 	//CRIT
-	if(!breath || (breath.total_moles() == 0))
-		if(reagents.has_reagent("epinephrine"))
+	if(!breath || (breath.total_moles() == 0) || !lungs)
+		if(reagents.has_reagent("epinephrine") && lungs)
 			return
 		adjustOxyLoss(1)
 		failed_last_breath = 1
@@ -133,7 +137,7 @@
 			var/ratio = safe_oxy_min/O2_partialpressure
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
-			oxygen_used = breath_gases["o2"][MOLES]*ratio/6
+			oxygen_used = breath_gases["o2"][MOLES]*ratio
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
@@ -143,7 +147,7 @@
 		failed_last_breath = 0
 		if(oxyloss)
 			adjustOxyLoss(-5)
-		oxygen_used = breath_gases["o2"][MOLES]/6
+		oxygen_used = breath_gases["o2"][MOLES]
 		clear_alert("oxy")
 
 	breath_gases["o2"][MOLES] -= oxygen_used
@@ -196,17 +200,15 @@
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)
-		if (!contents.Find(internal))
+		if(internal.loc != src)
 			internal = null
-		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
+			update_internals_hud_icon(0)
+		else if ((!wear_mask || !(wear_mask.flags & MASKINTERNALS)) && !getorganslot("breathing_tube"))
 			internal = null
-		if(internal)
+			update_internals_hud_icon(0)
+		else
 			update_internals_hud_icon(1)
 			return internal.remove_air_volume(volume_needed)
-		else
-			update_internals_hud_icon(0)
-	return
-
 
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used)
@@ -267,7 +269,6 @@
 			else
 				radiation = Clamp(radiation, 0, 100)
 
-
 /mob/living/carbon/handle_chemicals_in_body()
 	if(reagents)
 		reagents.metabolize(src)
@@ -298,7 +299,7 @@
 		if(sleeping)
 			adjustStaminaLoss(-10)
 		else
-			adjustStaminaLoss(-2)
+			adjustStaminaLoss(-3)
 
 	if(sleeping)
 		handle_dreams()
@@ -344,7 +345,7 @@
 
 	if(drowsyness)
 		drowsyness = max(drowsyness - restingpwr, 0)
-		set_blurriness(max(2, eye_blurry))
+		blur_eyes(2)
 		if(prob(5))
 			AdjustSleeping(1)
 			Paralyse(5)
@@ -362,6 +363,9 @@
 
 	if(slurring)
 		slurring = max(slurring-1,0)
+
+	if(cultslurring)
+		cultslurring = max(cultslurring-1, 0)
 
 	if(silent)
 		silent = max(silent-1, 0)
@@ -388,9 +392,3 @@
 		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
 			//We totally need a sweat system cause it totally makes sense...~
 			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
-
-
-/mob/living/carbon/handle_actions()
-	..()
-	for(var/obj/item/I in internal_organs)
-		give_action_button(I, 1)

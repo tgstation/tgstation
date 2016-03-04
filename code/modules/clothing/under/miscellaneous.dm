@@ -550,3 +550,10 @@
 	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
 	icon_state = "plasmarefill"
 
+/obj/item/clothing/under/rank/security/navyblue/russian
+	name = "russian officer's uniform"
+	desc = "The latest in fashionable russian outfits."
+	icon_state = "hostanclothes"
+	item_state = "hostanclothes"
+	item_color = "hostanclothes"
+

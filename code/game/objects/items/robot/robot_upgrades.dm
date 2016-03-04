@@ -1,4 +1,4 @@
-	// robot_upgrades.dm
+// robot_upgrades.dm
 // Contains various borg upgrades.
 
 /obj/item/borg/upgrade
@@ -8,8 +8,8 @@
 	icon_state = "cyborg_upgrade"
 	origin_tech = "programming=4"
 	var/locked = 0
-	var/require_module = 0
 	var/installed = 0
+	var/require_module = 0
 	var/module_type = null
 
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R)
@@ -20,7 +20,6 @@
 		R << "Upgrade mounting error!  No suitable hardpoint detected!"
 		usr << "There's no mounting point for the module!"
 		return 1
-	return 0
 
 /obj/item/borg/upgrade/reset
 	name = "cyborg module reset board"
@@ -29,23 +28,31 @@
 	require_module = 1
 
 /obj/item/borg/upgrade/reset/action(mob/living/silicon/robot/R)
-	if(..()) return 0
+	if(..())
+		return
+
+	R.notify_ai(2)
+
 	R.uneq_all()
 	R.hands.icon_state = "nomod"
 	R.icon_state = "robot"
 	qdel(R.module)
 	R.module = null
+
 	R.modtype = "robot"
-	R.updatename("Default")
-	R.status_flags |= CANPUSH
 	R.designation = "Default"
-	R.notify_ai(2)
+	R.updatename("Default")
+
 	R.update_icons()
 	R.update_headlamp()
-	R.magpulse = 0
+
+	R.speed = 0 // Remove upgrades.
+	R.ionpulse = FALSE
+	R.magpulse = FALSE
+
+	R.status_flags |= CANPUSH
 
 	return 1
-
 
 /obj/item/borg/upgrade/rename
 	name = "cyborg reclassification board"
@@ -57,12 +64,10 @@
 	heldname = stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN)
 
 /obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/R)
-	if(..()) return 0
-	R.notify_ai(3, R.name, heldname)
-	R.name = heldname
-	R.real_name = heldname
-	R.camera.c_tag = heldname
-	R.custom_name = heldname //Required or else if the cyborg's module changes, their name is lost.
+	if(..())
+		return
+
+	R.fully_replace_character_name(R.name, heldname)
 
 	return 1
 
@@ -82,16 +87,9 @@
 			if(ghost.mind && ghost.mind.current == R)
 				R.key = ghost.key
 
-	R.stat = UNCONSCIOUS
-	R.update_stat()
-	if(R.camera && !R.wires.is_cut(WIRE_CAMERA))
-		R.camera.toggle_cam(R,0)
-	dead_mob_list -= R //please never forget this ever kthx
-	living_mob_list += R
-	R.notify_ai(1)
+	R.revive()
 
 	return 1
-
 
 /obj/item/borg/upgrade/vtec
 	name = "cyborg VTEC module"
@@ -101,14 +99,16 @@
 	origin_tech = "engineering=4;materials=5"
 
 /obj/item/borg/upgrade/vtec/action(mob/living/silicon/robot/R)
-	if(..()) return 0
+	if(..())
+		return
+	if(R.speed < 0)
+		R << "<span class='notice'>A VTEC unit is already installed!</span>"
+		usr << "<span class='notice'>There's no room for another VTEC unit!</span>"
+		return
 
-	if(R.speed == -1)
-		return 0
+	R.speed = -2 // Gotta go fast.
 
-	R.speed--
 	return 1
-
 
 /obj/item/borg/upgrade/disablercooler
 	name = "cyborg rapid disabler cooling module"
@@ -119,46 +119,38 @@
 	origin_tech = "engineering=4;powerstorage=4"
 
 /obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/R)
-	if(..()) return 0
+	if(..())
+		return
 
-	var/obj/item/weapon/gun/energy/disabler/cyborg/T = locate() in R.module
+	var/obj/item/weapon/gun/energy/disabler/cyborg/T = locate() in R.module.modules
 	if(!T)
-		T = locate() in R.module.contents
-	if(!T)
-		T = locate() in R.module.modules
-	if(!T)
-		usr << "This cyborg has had its disabler removed!"
-		return 0
-
+		usr << "<span class='notice'>There's no disabler in this unit!</span>"
+		return
 	if(T.charge_delay <= 2)
-		R << "Maximum cooling achieved for this hardpoint!"
-		usr << "There's no room for another cooling unit!"
-		return 0
+		R << "<span class='notice'>A cooling unit is already installed!</span>"
+		usr << "<span class='notice'>There's no room for another cooling unit!</span>"
+		return
 
-	else
-		T.charge_delay = max(2 , T.charge_delay - 4)
+	T.charge_delay = max(2 , T.charge_delay - 4)
 
 	return 1
 
-
-/obj/item/borg/upgrade/jetpack
-	name = "mining cyborg jetpack"
-	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations."
+/obj/item/borg/upgrade/thrusters
+	name = "ion thruster upgrade"
+	desc = "A energy-operated thruster system for cyborgs."
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
-	module_type = /obj/item/weapon/robot_module/miner
 	origin_tech = "engineering=4;powerstorage=4"
 
-/obj/item/borg/upgrade/jetpack/action(mob/living/silicon/robot/R)
-	if(..()) return 0
+/obj/item/borg/upgrade/thrusters/action(mob/living/silicon/robot/R)
+	if(..())
+		return
 
-	R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide(R.module)
-	for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
-		R.internal = src
-	R.jetpackoverlay = 1
-	R.module.rebuild()
+	if(R.ionpulse)
+		usr << "<span class='notice'>This unit already has ion thrusters installed!</span>"
+		return
+
+	R.ionpulse = TRUE
 	return 1
-
 
 /obj/item/borg/upgrade/ddrill
 	name = "mining cyborg diamond drill"
@@ -169,16 +161,18 @@
 	origin_tech = "engineering=5;materials=5"
 
 /obj/item/borg/upgrade/ddrill/action(mob/living/silicon/robot/R)
-	if(..()) return 0
+	if(..())
+		return
 
 	for(var/obj/item/weapon/pickaxe/drill/cyborg/D in R.module.modules)
 		qdel(D)
 	for(var/obj/item/weapon/shovel/S in R.module.modules)
 		qdel(S)
+
 	R.module.modules += new /obj/item/weapon/pickaxe/drill/cyborg/diamond(R.module)
 	R.module.rebuild()
-	return 1
 
+	return 1
 
 /obj/item/borg/upgrade/soh
 	name = "mining cyborg satchel of holding"
@@ -189,14 +183,16 @@
 	origin_tech = "engineering=5;materials=5;bluespace=3"
 
 /obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R)
-	if(..()) return 0
+	if(..())
+		return
 
 	for(var/obj/item/weapon/storage/bag/ore/cyborg/S in R.module.modules)
 		qdel(S)
+
 	R.module.modules += new /obj/item/weapon/storage/bag/ore/holding(R.module)
 	R.module.rebuild()
-	return 1
 
+	return 1
 
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
@@ -206,12 +202,14 @@
 	origin_tech = "combat=4;syndicate=2"
 
 /obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/R)
-	if(..()) return 0
+	if(..())
+		return
 
-	if(R.emagged == 1)
-		return 0
+	if(R.emagged)
+		return
 
 	R.SetEmagged(1)
+
 	return 1
 
 /obj/item/borg/upgrade/selfrepair
@@ -228,14 +226,17 @@
 
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R)
 	if(..())
-		return 0
+		return
+
 	var/obj/item/borg/upgrade/selfrepair/U = locate() in R
 	if(U)
 		usr << "<span class='warning'>This unit is already equipped with a self-repair module.</span>"
 		return 0
+
 	cyborg = R
 	icon_state = "selfrepair_off"
-	action_button_name = "Toggle Self-Repair"
+	var/datum/action/A = new /datum/action/item_action/toggle(src)
+	A.Grant(R)
 	return 1
 
 /obj/item/borg/upgrade/selfrepair/ui_action_click()
@@ -251,12 +252,15 @@
 /obj/item/borg/upgrade/selfrepair/update_icon()
 	if(cyborg)
 		icon_state = "selfrepair_[on ? "on" : "off"]"
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
 	else
 		icon_state = "cyborg_upgrade5"
 
 /obj/item/borg/upgrade/selfrepair/proc/deactivate()
 	SSobj.processing -= src
-	on = 0
+	on = FALSE
 	update_icon()
 
 /obj/item/borg/upgrade/selfrepair/process()
@@ -264,8 +268,8 @@
 		repair_tick = 1
 		return
 
-	if( cyborg && (cyborg.stat != DEAD) && on)
-		if(cyborg.cell.charge < powercost*2)
+	if(cyborg && (cyborg.stat != DEAD) && on)
+		if(cyborg.cell.charge < powercost * 2)
 			cyborg << "<span class='warning'>Self-repair module deactivated. Please recharge.</span>"
 			deactivate()
 			return
@@ -285,7 +289,7 @@
 			cyborg.cell.use(5)
 		repair_tick = 0
 
-		if( (world.time - 2000) > msg_cooldown )
+		if((world.time - 2000) > msg_cooldown )
 			var/msgmode = "standby"
 			if(cyborg.health < 0)
 				msgmode = "critical"

@@ -70,6 +70,9 @@
 /turf/simulated/floor/plating/ice/colder
 	temperature = 140
 
+/turf/simulated/floor/plating/ice/temperate
+	temperature = 255.37
+
 /turf/simulated/floor/plating/ice/break_tile()
 	return
 
@@ -85,6 +88,9 @@
 
 /turf/simulated/floor/plating/snowed/colder
 	temperature = 140
+
+/turf/simulated/floor/plating/snowed/temperate
+	temperature = 255.37
 
 /turf/simulated/floor/noslip
 	name = "high-traction floor"

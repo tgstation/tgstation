@@ -40,6 +40,9 @@ Research Director
 	l_pocket = /obj/item/device/laser_pointer
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
 
+	backpack = /obj/item/weapon/storage/backpack/science
+	satchel = /obj/item/weapon/storage/backpack/satchel_tox
+
 /datum/outfit/job/rd/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 
@@ -76,6 +79,9 @@ Scientist
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit = /obj/item/clothing/suit/toggle/labcoat/science
 
+	backpack = /obj/item/weapon/storage/backpack/science
+	satchel = /obj/item/weapon/storage/backpack/satchel_tox
+
 /*
 Roboticist
 */
@@ -103,5 +109,8 @@ Roboticist
 	ears = /obj/item/device/radio/headset/headset_sci
 	uniform = /obj/item/clothing/under/rank/roboticist
 	suit = /obj/item/clothing/suit/toggle/labcoat
+
+	backpack = /obj/item/weapon/storage/backpack/science
+	satchel = /obj/item/weapon/storage/backpack/satchel_tox
 
 	pda_slot = slot_l_store

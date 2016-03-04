@@ -121,8 +121,11 @@
 	if(contents.len >= storage_capacity)
 		return -1
 
-	var/mob/living/L = AM
-	if(istype(L))
+
+	if(ismob(AM))
+		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
+			return
+		var/mob/living/L = AM
 		if(L.buckled || L.buckled_mob)
 			return
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
@@ -196,33 +199,34 @@
 		return
 	if(opened)
 		if(istype(W, cutting_tool))
-			if(istype(cutting_tool, /obj/item/weapon/weldingtool))
+			if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(!WT.remove_fuel(0, user))
 					return
 				user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
 				playsound(loc, cutting_sound, 40, 1)
-				if(do_after(user, 40/W.toolspeed, 1, target = src))
+				if(do_after(user, 40/WT.toolspeed, 1, target = src))
 					if(!opened || !WT.isOn())
 						return
 					playsound(loc, cutting_sound, 50, 1)
-					new material_drop(loc)
 					visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
 									"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
 									"<span class='italics'>You hear welding.</span>")
+					var/turf/T = get_turf(src)
+					new material_drop(T)
 					qdel(src)
 		else if(user.drop_item())
 			W.Move(loc)
 	else
 		if(istype(W, /obj/item/stack/packageWrap))
 			return
-		if(istype(W, /obj/item/weapon/weldingtool) && can_weld_shut)
+		else if(istype(W, /obj/item/weapon/weldingtool) && can_weld_shut)
 			var/obj/item/weapon/weldingtool/WT = W
 			if(!WT.remove_fuel(0, user))
 				return
 			user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
 			playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
-			if(do_after(user, 40, 1, target = src))
+			if(do_after(user, 40/WT.toolspeed, 1, target = src))
 				if(opened || !WT.isOn())
 					return
 				playsound(loc, 'sound/items/welder.ogg', 50, 1)
@@ -232,12 +236,12 @@
 								"<span class='italics'>You hear welding.</span>")
 				update_icon()
 		else
-			attack_hand(user)
+			togglelock(user)
 
-/obj/structure/closet/MouseDrop_T(atom/movable/O, mob/user)
+/obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /obj/screen))
 		return
-	if(user.incapacitated() || user.lying)
+	if(!istype(user) || user.incapacitated() || user.lying)
 		return
 	if(!Adjacent(user) || !user.Adjacent(O))
 		return
@@ -366,7 +370,7 @@
 		update_icon()
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)
-	if(!(user.sight & (SEEOBJS|SEEMOBS)))
+	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
 
 /obj/structure/closet/emp_act(severity)
