@@ -337,10 +337,13 @@ var/global/list/PDA_Manifest = list()
 	owner = mind
 	ourspell = F
 	src.theworld = theworld
+
 /obj/effect/stop/sleeping/Crossed(atom/movable/A)
 	if(sleeptime > world.time)
 		if(ismob(A))
 			var/mob/living/L = A
+			if(L.client)
+				L.client.move_delayer.next_allowed = sleeptime //So we don't need to check timestopped in client/move
 			if(L.mind != owner)
 				if(!L.stat) L.playsound_local(src, theworld == 1 ? 'sound/effects/theworld2.ogg' : 'sound/effects/fall2.ogg', 100, 0, 0, 0, 0)
 				//L.Paralyse(round(((sleeptime - world.time)/10)/2, 1))

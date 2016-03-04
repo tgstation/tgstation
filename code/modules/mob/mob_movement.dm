@@ -201,10 +201,6 @@
 		O.dir = direct
 
 /client/Move(loc,dir)
-	if(!mob)
-		return // Moved here to avoid nullrefs below. - N3X
-	if(mob.timestopped)
-		return 0
 	if(move_delayer.next_allowed > world.time)
 		return 0
 
