@@ -1,0 +1,6 @@
+author: TheEliminator16
+delete-after: True
+changes:
+  - tweak: Made autocloner spawn things faster in general
+  - tweak: Added skrite and necromorph as possibilities for autocloner
+  - imageadd: Made autocloner animated like it always should have been

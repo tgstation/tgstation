@@ -651,7 +651,26 @@ datum
 				explosion(get_turf(holder.my_atom),1,2,4)
 				holder.clear_reagents()
 				return
+		nanobots
+			name = "Nanobots"
+			id = "nanobots"
+			result = "nanobots"
+			required_reagents = list("nanites" = 1, "uranium" = 10, "gold" = 10, "nutriment" = 10, "silicon" = 10)
+			result_amount = 2
 
+		mednanobots
+			name = "Medical Nanobots"
+			id = "mednanobots"
+			result = "mednanobots"
+			required_reagents = list("nanobots" = 1, "doctorsdelight" = 5)
+			result_amount = 1
+
+		comnanobots
+			name = "Combat Nanobots"
+			id = "comnanobots"
+			result = "comnanobots"
+			required_reagents = list("nanobots" = 1, "mutagen" = 5, "silicate" = 5, "iron" = 10)
+			result_amount = 1
 
 ///////////////////////////////////////////////////////////////////////////////////
 

@@ -66,12 +66,8 @@
 /mob/living/simple_animal/hostile/hivebot/Die()
 	..()
 	visible_message("<b>[src]</b> blows apart!")
-	var/obj/effect/decal/cleanable/blood/gibs/robot/R = getFromPool(/obj/effect/decal/cleanable/blood/gibs/robot, get_turf(src))
-	R.New(R.loc)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
-	qdel (src)
+	new /obj/effect/gibspawner/robot(src.loc)
+	qdel(src)
 	return
 
 /mob/living/simple_animal/hostile/hivebot/tele//this still needs work

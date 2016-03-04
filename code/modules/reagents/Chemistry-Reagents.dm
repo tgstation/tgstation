@@ -2234,7 +2234,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagent/nanites
-	name = "Nanomachines"
+	name = "Nanites"
 	id = "nanites"
 	description = "Microscopic construction robots."
 	reagent_state = LIQUID
@@ -2271,6 +2271,151 @@
 
 	if((prob(10) && method == TOUCH) || method == INGEST)
 		M.contract_disease(new /datum/disease/xeno_transformation(0), 1)
+
+/datum/reagent/nanobots
+	name = "Nanobots"
+	id = "nanobots"
+	description = "Microscopic robots intended for use in humans. Must be loaded with further chemicals to be useful."
+	reagent_state = LIQUID
+	color = "#3E3959" //rgb: 62, 57, 89
+
+/datum/reagent/mednanobots  //Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage. Causes you to gib and turn into a cyber monster if you inject over 5 units.
+	name = "Medical Nanobots"
+	id = "mednanobots"
+	description = "Microscopic robots intended for use in humans. Configured for rapid healing upon infiltration into the body."
+	reagent_state = LIQUID
+	color = "#593948" //rgb: 89, 57, 72
+	custom_metabolism = 0.005
+
+/datum/reagent/mednanobots/on_mob_life(var/mob/living/M)
+
+	if(..()) return 1
+
+	switch(volume)
+		if(1 to 5)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.species.name != "Dionae")
+					var/datum/organ/external/affecting = H.get_organ()
+					for(var/datum/wound/W in affecting.wounds)
+						spawn(1)
+							affecting.wounds -= W
+							H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
+					if(H.getOxyLoss()>0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustOxyLoss(-4)
+							holder.remove_reagent("mednanobots", 4/40)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+						else
+					if(H.getBruteLoss()>0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.heal_organ_damage(5, 0)
+							holder.remove_reagent("mednanobots", 5/40)
+						else
+					if(H.getFireLoss()>0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.heal_organ_damage(0, 5)
+							holder.remove_reagent("mednanobots", 5/40)
+						else
+					if(H.getToxLoss()>0 && prob(50))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustToxLoss(-2)
+							holder.remove_reagent("mednanobots", 2/40)
+						else
+					if(H.getCloneLoss()>0 && prob(60))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustCloneLoss(-2)
+							holder.remove_reagent("mednanobots", 2/40)
+					if(H.dizziness != 0)
+						H.dizziness = max(0, H.dizziness - 15)
+					if(H.confused != 0)
+						H.confused = max(0, H.confused - 5)
+					for(var/datum/disease/D in M.viruses)
+						D.spread = "Remissive"
+						D.stage--
+						if(D.stage < 1)
+							D.cure()
+		if(5 to INFINITY)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				to_chat(H, pick("<b><span class='warning'>Something doesn't feel right...</span></b>", "<b><span class='warning'>Something is growing inside you!</span></b>", "<b><span class='warning'>You feel your insides rearrange!</span></b>"))
+				spawn(60)
+					to_chat(H, "<b><span class='warning'>Something bursts out from inside you!</span></b>")
+					message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. ([formatJumpTo(H)])")
+					H.visible_message("<b><span class='warning'>[H]'s body rips aparts to reveal something underneath!</b></span>")
+					new /mob/living/simple_animal/hostile/monster/cyber_horror(H.loc)
+					H.gib()
+
+
+/datum/reagent/comnanobots
+	name = "Combat Nanobots"
+	id = "comnanobots"
+	description = "Microscopic robots intended for use in humans. Configured to grant great resistance to damage."
+	reagent_state = LIQUID
+	color = "#343F42" //rgb: 52, 63, 66
+	custom_metabolism = 0.01
+	var/has_been_armstrong = 0
+	var/armstronged_at = 0 //world.time
+	data = 1 //Used as a tally
+
+/datum/reagent/comnanobots/reagent_deleted()
+
+	if(..()) return 1
+
+	if(!holder)
+		return
+	var/mob/M =  holder.my_atom
+
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!has_been_armstrong || (!(M_HULK in H.mutations)))
+			return
+		dehulk(H, 0, 1, 0)
+
+/datum/reagent/comnanobots/on_mob_life(var/mob/living/M)
+
+	if(..()) return 1
+
+	switch(volume)
+		if(1 to 4.5)
+			M.Jitter(5)
+			if(prob(10))
+				to_chat(M, "You feel slightly energized, but nothing happens")
+			if(has_been_armstrong>0) //Added in case person metabolizes below 5 units to prevent infinite hulk
+				dehulk(M)
+		if(4.5 to 10)
+			if(ishuman(M)) //Does nothing to non-humans.
+				var/mob/living/carbon/human/H = M
+				if(H.species.name != "Dionae") //Dionae are broken as fuck
+					if(H.hulk_time<world.time && !has_been_armstrong)
+						H.hulk_time = world.time + (45 SECONDS)
+						armstronged_at = H.hulk_time
+						if(!(M_HULK in H.mutations))
+							has_been_armstrong = 1
+							H.mutations.Add(M_HULK)
+							H.update_mutations() //Update our mutation overlays
+							H.update_body()
+							message_admins("[key_name(M)] is hopped up on combat nanobots! ([formatJumpTo(M)])")
+							to_chat(H, "The nanobots supercharge your body!")
+					else if(H.hulk_time<world.time && has_been_armstrong) //TIME'S UP
+						dehulk(H)
+		if(10 to INFINITY)
+			to_chat(M, "<b><big>The nanobots tear your body apart!</b></big>")
+			M.gib()
+			message_admins("[key_name(M)] took too many nanobots and gibbed!([formatJumpTo(M)])")
+
+
+	data++
+
+
+/datum/reagent/comnanobots/proc/dehulk(var/mob/living/carbon/human/H, damage = 0, override_remove = 1, gib = 0)
+
+		H.hulk_time = 0 //Just to be sure.
+		H.mutations.Remove(M_HULK)
+		holder.remove_reagent("comnanobots", holder.get_reagent_amount("comnanobots"))
+		//M.dna.SetSEState(HULKBLOCK,0)
+		H.update_mutations()		//update our mutation overlays
+		H.update_body()
+		to_chat(H, "The nanobots burn themselves out in your body.")
 
 //Foam precursor
 /datum/reagent/fluorosurfactant

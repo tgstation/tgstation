@@ -45,7 +45,6 @@ var/list/event_last_fired = list()
 	possibleEvents[/datum/event/infestation] = 50
 	possibleEvents[/datum/event/communications_blackout] = 25
 	possibleEvents[/datum/event/thing_storm/meaty_gore] = 25
-	possibleEvents[/datum/event/mass_drunk] = 15
 
 	if(active_with_role["AI"] > 0 || active_with_role["Cyborg"] > 0)
 		possibleEvents[/datum/event/ionstorm] = 30

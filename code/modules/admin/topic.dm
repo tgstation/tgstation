@@ -3082,11 +3082,6 @@
 				feedback_add_details("admin_secrets_fun_used","SILM")
 				message_admins("[key_name_admin(usr)] has spawned meteors without a command alert.", 1)
 				new /datum/event/meteor_shower/meteor_quiet
-			if("mass_drunk")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","MASD")
-				message_admins("[key_name_admin(usr)] gave the station a vodka enema.", 1)
-				new /datum/event/mass_drunk
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if(ok)
