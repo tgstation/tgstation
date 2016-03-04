@@ -1,0 +1,5 @@
+author: CoreOverload
+delete-after: True
+changes: 
+  - imageadd: "Cyborg tools (screwdriver, crowbar, wrench, etc) now have new fancy sprites."
+  - tweak: "Said cyborg tools have received a buff and are now two times faster than their non-cyborg counterparts."
