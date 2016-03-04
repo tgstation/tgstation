@@ -70,6 +70,6 @@ proc/check_plants_growth_stages_icons()
 		if( !("[seed.species]-dead" in states))
 			world << "[seed.name] ([seed.type]) lacks the [seed.species]-dead icon!"
 
-		if(seed.plant_type != 2 && yield != -1) // mushrooms have no grown sprites, same for items with no product
+		if(seed.plant_type != 2 && seed.yield != -1) // mushrooms have no grown sprites, same for items with no product
 			if(!("[seed.species]-harvest" in states))
 				world << "[seed.name] ([seed.type]) lacks the [seed.species]-harvest icon!"
