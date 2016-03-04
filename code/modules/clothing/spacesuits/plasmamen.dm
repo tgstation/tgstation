@@ -41,6 +41,7 @@
 	flags = FPRINT | PLASMAGUARD
 	pressure_resistance = 40 * ONE_ATMOSPHERE
 	species_restricted = list("Plasmaman")
+	eyeprot = 0
 
 	icon_state = "plasmaman_helmet0"
 	item_state = "plasmaman_helmet0"
@@ -96,6 +97,7 @@
 	base_state = "plasmamanEngineer_helmet"
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 80)
 	pressure_resistance = 200 * ONE_ATMOSPHERE
+	eyeprot = 1
 
 /obj/item/clothing/suit/space/plasmaman/engineer/ce
 	name = "plasmaman chief engineer suit"
@@ -259,6 +261,7 @@
 	icon_state = "plasmamanSecurity_helmet0"
 	base_state = "plasmamanSecurity_helmet"
 	armor = list(melee = 40, bullet = 15, laser = 35,energy = 5, bomb = 35, bio = 100, rad = 20)
+	eyeprot = 1
 
 /obj/item/clothing/suit/space/plasmaman/security/hos
 	name = "plasmaman head of security suit"
