@@ -316,6 +316,11 @@ var/global/list/PDA_Manifest = list()
 	desc = "You can't resist."
 	// name = ""
 
+/obj/effect/stop/Uncross(atom/movable/O)
+	if(victim == O)
+		return 0
+	return 1
+
 /obj/effect/stop/sleeping
 	var/sleeptime
 	icon_state = "empty"
