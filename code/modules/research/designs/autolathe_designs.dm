@@ -65,7 +65,7 @@
 	materials = list(MAT_METAL = 70, MAT_GLASS = 20)
 	build_path = /obj/item/weapon/weldingtool
 	category = list("initial","Tools")
-	
+
 /datum/design/cable_coil
 	name = "Cable coil"
 	id = "cable_coil"
