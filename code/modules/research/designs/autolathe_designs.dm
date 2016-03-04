@@ -65,14 +65,14 @@
 	materials = list(MAT_METAL = 70, MAT_GLASS = 20)
 	build_path = /obj/item/weapon/weldingtool
 	category = list("initial","Tools")
-
+	
 /datum/design/cable_coil
- 	name = "Cable coil"
- 	id = "cable_coil"
- 	build_type = AUTOLATHE
+	name = "Cable coil"
+	id = "cable_coil"
+	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GLASS = 5)
- 	build_path = /obj/item/stack/cable_coil/random 
- 	category = list("initial","Tools")
+	build_path = /obj/item/stack/cable_coil/random 
+	category = list("initial","Tools")
 	maxstack = 30
 
 /datum/design/screwdriver
