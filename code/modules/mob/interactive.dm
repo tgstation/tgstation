@@ -46,6 +46,7 @@
 	var/maxStepsTick = 6 // step as many times as we can per frame
 	//Job and mind data
 	var/obj/item/weapon/card/id/MYID
+	var/obj/item/weapon/card/id/RPID // the "real" idea they use
 	var/obj/item/device/pda/MYPDA
 	var/obj/item/main_hand
 	var/obj/item/other_hand
@@ -65,6 +66,10 @@
 	var/targetInterestShift = 5 // how much a good action should "reward" the npc
 	//modules
 	var/list/functions = list("nearbyscan","combat","shitcurity","chatter","healpeople")
+
+	var/alternateProcessing = 0
+	var/forceProcess = 0
+	var/processTime = 10
 
 //botPool funcs
 /mob/living/carbon/human/interactive/proc/takeDelegate(mob/living/carbon/human/interactive/from,doReset=TRUE)
@@ -96,12 +101,7 @@
 	//this is here because this has no client/prefs/brain whatever.
 	age = rand(AGE_MIN,AGE_MAX)
 	//job handling
-	var/list/jobs = SSjob.occupations.Copy()
-	for(var/job in jobs)
-		var/datum/job/J = job
-		if(J.title == "Cyborg" || J.title == "AI" || J.title == "Chaplain" || J.title == "Mime")
-			jobs -= J
-	myjob = pick(jobs)
+	myjob = new/datum/job/assistant()
 	job = myjob.title
 	if(!graytide)
 		myjob.equip(src)
@@ -119,20 +119,54 @@
 		retal_target = potentialAssault
 	..()
 
-/client/proc/customiseSNPC(var/mob/A in world)
-	set name = "Customize SNPC"
-	set desc = "Customise the SNPC"
+/client/proc/resetSNPC(var/mob/A in SSnpc.botPool_l)
+	set name = "Reset SNPC"
+	set desc = "Reset the SNPC"
 	set category = "Admin"
-	
+
 	if(!holder)
 		return
-	
+
 	if(A)
 		if(!istype(A,/mob/living/carbon/human/interactive))
 			return
 		var/mob/living/carbon/human/interactive/T = A
-		var/cjob = input("Choose Job") as null|anything in SSjob.occupations.Copy()
-	
+		if(T)
+			T.timeout = 100
+			T.retal = 0
+			T.doing = 0
+
+/client/proc/toggleSNPC(var/mob/A in SSnpc.botPool_l)
+	set name = "Toggle SNPC Proccessing Mode"
+	set desc = "Toggle SNPC Proccessing Mode"
+	set category = "Admin"
+
+	if(!holder)
+		return
+
+	if(A)
+		if(!istype(A,/mob/living/carbon/human/interactive))
+			return
+		var/mob/living/carbon/human/interactive/T = A
+		if(T)
+			T.alternateProcessing = !T.alternateProcessing
+			T.forceProcess = 1
+			usr << "[T]'s processing has been switched to [T.alternateProcessing ? "High Profile" : "Low Profile"]"
+
+/client/proc/customiseSNPC(var/mob/A in SSnpc.botPool_l)
+	set name = "Customize SNPC"
+	set desc = "Customise the SNPC"
+	set category = "Admin"
+
+	if(!holder)
+		return
+
+	if(A)
+		if(!istype(A,/mob/living/carbon/human/interactive))
+			return
+		var/mob/living/carbon/human/interactive/T = A
+		var/cjob = input("Choose Job") as null|anything in SSjob.occupations
+
 		if(cjob)
 			T.myjob = cjob
 			T.job = T.myjob.title
@@ -142,7 +176,18 @@
 			T.myjob.equip(T)
 			T.myjob.apply_fingerprints(T)
 			T.doSetup()
-	
+
+		var/shouldDoppel = input("Do you want the SNPC to disguise themself as a crewmember?") as null|anything in list("Yes","No")
+		if(shouldDoppel)
+			if(shouldDoppel == "Yes")
+				var/list/validchoices = list()
+				for(var/mob/living/carbon/human/M in mob_list)
+					if(M.job == T.myjob.title)
+						validchoices += M
+
+				var/mob/living/carbon/human/chosen = pick(validchoices)
+				T.name = chosen.name
+
 		var/doTele = input("Place the SNPC in their department?") as null|anything in list("Yes","No")
 		if(doTele)
 			if(doTele == "Yes")
@@ -159,6 +204,13 @@
 	MYID.assignment = "[myjob.title]"
 	MYID.registered_name = src.real_name
 	MYID.access = Path_ID.access // Automatons have strange powers... strange indeed
+
+	RPID = new(src)
+	RPID.name = "[src.real_name]'s ID Card ([myjob.title])"
+	RPID.assignment = "[myjob.title]"
+	RPID.registered_name = src.real_name
+	RPID.access = myjob.get_access()
+
 	equip_to_slot_or_del(MYID, slot_wear_id)
 	MYPDA = new(src)
 	MYPDA.owner = real_name
@@ -167,7 +219,7 @@
 	equip_to_slot_or_del(MYPDA, slot_belt)
 	zone_selected = "chest"
 	//arms
-	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
+	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
 		var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in organs
 		qdel(R)
 		organs += new /obj/item/organ/limb/robot/r_arm
@@ -176,7 +228,7 @@
 		qdel(L)
 		organs += new /obj/item/organ/limb/robot/l_arm
 	//legs
-	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
+	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
 		var/obj/item/organ/limb/r_leg/R = locate(/obj/item/organ/limb/r_leg) in organs
 		qdel(R)
 		organs += new /obj/item/organ/limb/robot/r_leg
@@ -185,7 +237,7 @@
 		qdel(L)
 		organs += new /obj/item/organ/limb/robot/l_leg
 	//chest and head
-	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
+	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
 		var/obj/item/organ/limb/chest/R = locate(/obj/item/organ/limb/chest) in organs
 		qdel(R)
 		organs += new /obj/item/organ/limb/robot/chest
@@ -194,8 +246,9 @@
 		qdel(L)
 		organs += new /obj/item/organ/limb/robot/head
 	for(var/LIMB in organs)
-		var/obj/item/organ/limb/L = LIMB
-		L.owner = src
+		if(LIMB) // prevents a runtime
+			var/obj/item/organ/limb/L = LIMB
+			L.owner = src
 	update_icons()
 	update_damage_overlays(0)
 	update_augments()
@@ -208,9 +261,12 @@
 			favoured_types = list(/obj/item/clothing, /obj/item/weapon)
 		if("Captain","Head of Personnel")
 			favoured_types = list(/obj/item/clothing, /obj/item/weapon/stamp/captain,/obj/item/weapon/disk/nuclear)
-		if("Bartender","Chef")
+		if("Cook")
 			favoured_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
 			functions += "souschef"
+		if("Bartender")
+			favoured_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
+			functions += "bartend"
 		if("Station Engineer","Chief Engineer","Atmospheric Technician")
 			favoured_types = list(/obj/item/stack, /obj/item/weapon, /obj/item/clothing)
 		if("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist")
@@ -264,6 +320,8 @@
 	doSetup()
 
 	SSnpc.insertBot(src)
+
+	doProcess()
 
 
 /mob/living/carbon/human/interactive/proc/retalTarget(var/target)
@@ -395,6 +453,11 @@
 
 /mob/living/carbon/human/interactive/Life()
 	..()
+	if(!alternateProcessing || forceProcess)
+		doProcess()
+
+/mob/living/carbon/human/interactive/proc/doProcess()
+	forceProcess = 0
 	if(IsDeadOrIncap())
 		walk(src,0)
 		return
@@ -420,20 +483,21 @@
 						spawn(0)
 							if(istype(D,/obj/machinery/door/airlock))
 								var/obj/machinery/door/airlock/AL = D
-								AL.p_open = 1
-								AL.update_icon()
-								AL.shock(src,5)
-								sleep(5)
-								AL.unbolt()
-								if(!AL.wires.is_cut(WIRE_BOLTS))
-									AL.wires.cut(WIRE_BOLTS)
-								if(!AL.wires.is_cut(WIRE_POWER1))
-									AL.wires.cut(WIRE_POWER1)
-								if(!AL.wires.is_cut(WIRE_POWER2))
-									AL.wires.cut(WIRE_POWER2)
-								sleep(5)
-								AL.p_open = 0
-								AL.update_icon()
+								if(!AL.CanAStarPass(RPID)) // only crack open doors we can't get through
+									AL.p_open = 1
+									AL.update_icon()
+									AL.shock(src,(100 - smartness)/2)
+									sleep(5)
+									AL.unbolt()
+									if(!AL.wires.is_cut(WIRE_BOLTS))
+										AL.wires.cut(WIRE_BOLTS)
+									if(!AL.wires.is_cut(WIRE_POWER1))
+										AL.wires.cut(WIRE_POWER1)
+									if(!AL.wires.is_cut(WIRE_POWER2))
+										AL.wires.cut(WIRE_POWER2)
+									sleep(5)
+									AL.p_open = 0
+									AL.update_icon()
 							D.open()
 
 	if(update_hands)
@@ -571,6 +635,9 @@
 					TARGET = pick(target_filter(oview(MIN_RANGE_FIND,src)))
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
+	if(alternateProcessing)
+		spawn(processTime)
+			doProcess()
 
 /mob/living/carbon/human/interactive/proc/favouredObjIn(var/list/inList)
 	var/list/outList = list()
@@ -645,8 +712,10 @@
 		return /area/hallway/primary
 	if(T.title == "Captain" || T.title == "Head of Personnel")
 		return /area/bridge
-	if(T.title == "Bartender" || T.title == "Chef")
-		return pick(/area/crew_quarters/kitchen,/area/crew_quarters/bar)
+	if(T.title == "Bartender")
+		return /area/crew_quarters/bar
+	if(T.title == "Cook")
+		return /area/crew_quarters/kitchen
 	if(T.title == "Station Engineer" || T.title == "Chief Engineer" || T.title == "Atmospheric Technician")
 		return /area/engine
 	if(T.title == "Chief Medical Officer" || T.title == "Medical Doctor" || T.title == "Chemist" || T.title == "Virologist" || T.title == "Geneticist")
@@ -667,6 +736,13 @@
 		if(is_type_in_list(A,filtered_targets))
 			L -= A
 	return L
+
+/mob/living/carbon/human/interactive/proc/shouldModulePass() // returns 1 if the npc is in anything "primary"
+	if(doing & FIGHTING)
+		return 1
+	if(retal)
+		return 1
+	return 0
 
 ///BUILT IN MODULES
 /mob/living/carbon/human/interactive/proc/chatter(obj)
@@ -740,6 +816,8 @@
 	update_icons()
 
 /mob/living/carbon/human/interactive/proc/botany(obj)
+	if(shouldModulePass())
+		return
 	var/list/allContents = getAllContents()
 	enforceHome()
 
@@ -824,17 +902,53 @@
 			GF.attackby(internalBag,src)
 
 	if(internalBag.contents.len > 0)
-		var/obj/machinery/smartfridge/SF = locate(/obj/machinery/smartfridge) in range(MAX_RANGE_FIND,src)
+		var/obj/machinery/smartfridge/SF = locate(/obj/machinery/smartfridge) in range(12,src)
 		if(!Adjacent(SF))
 			tryWalk(get_turf(SF))
 		else
-			customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], upending the [internalBag]'s contents all over [TARGET]!")
+			customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], upending the [internalBag]'s contents all over the [SF]!")
 			//smartfridges call updateUsrDialog when you call attackby, so we're going to have to cheese-magic-space this
 			for(var/obj/toLoad in internalBag.contents)
 				if(contents.len >= SF.max_n_of_items)
 					break
 				if(SF.accept_check(toLoad))
 					SF.load(toLoad)
+				else
+					qdel(toLoad) // destroy everything we dont need
+
+/mob/living/carbon/human/interactive/proc/bartend(obj)
+	if(shouldModulePass())
+		return
+
+	var/list/rangeCheck = range(12,src)
+	var/obj/structure/table/RT = locate(/obj/structure/table) in rangeCheck
+
+	enforceHome()
+
+	if(RT)
+		if(!Adjacent(RT))
+			tryWalk(get_turf(RT))
+		else
+			var/currentDrinks = 0
+			var/neededDrinks = 0
+
+			for(var/mob/living/carbon/human/H in rangeCheck)
+				if(H != src)
+					neededDrinks++
+
+			for(var/obj/item/weapon/reagent_containers/food/drinks/DC in rangeCheck)
+				if(DC.reagents)
+					if(DC.reagents.total_volume <= 0)
+						continue
+				currentDrinks++
+
+			if(currentDrinks < neededDrinks)
+				var/drinkChoice = pick(typesof(/obj/item/weapon/reagent_containers/food/drinks) - /obj/item/weapon/reagent_containers/food/drinks)
+				if(drinkChoice)
+					var/obj/item/weapon/reagent_containers/food/drinks/D = new drinkChoice(get_turf(src))
+					RT.attackby(D,src)
+					src.say("[pick("Something to wet your whistle!","Down the hatch, a tasty beverage!","One drink, coming right up!","Tasty liquid for your oral intake!","Enjoy!")]")
+					customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], serving up a [D]!")
 
 /mob/living/carbon/human/interactive/proc/shitcurity(obj)
 	var/list/allContents = getAllContents()
@@ -849,13 +963,14 @@
 	var/list/allContents = getAllContents()
 
 	for(var/A in allContents)
-		if(istype(A,/obj/item/weapon/soap))
-			npcDrop(A)
-		if(istype(A,/obj/item/weapon/reagent_containers/food/snacks/grown/banana))
-			var/obj/item/weapon/reagent_containers/food/snacks/B = A
-			B.attack(src, src)
-		if(istype(A,/obj/item/weapon/grown/bananapeel))
-			npcDrop(A)
+		if(prob(smartness/2))
+			if(istype(A,/obj/item/weapon/soap))
+				npcDrop(A)
+			if(istype(A,/obj/item/weapon/reagent_containers/food/snacks/grown/banana))
+				var/obj/item/weapon/reagent_containers/food/snacks/B = A
+				B.attack(src, src)
+			if(istype(A,/obj/item/weapon/grown/bananapeel))
+				npcDrop(A)
 
 
 /mob/living/carbon/human/interactive/proc/healpeople(obj)
@@ -868,9 +983,19 @@
 		if(istype(A,/obj/item/stack/medical))
 			shouldTryHeal = 1
 			M = A
-	if(shouldTryHeal)
-		for(var/mob/living/carbon/C in nearby)
-			if(istype(C,/mob/living/carbon)) //I haven't the foggiest clue why this is turning up non-carbons but sure here whatever
+
+	var/obj/item/weapon/reagent_containers/hypospray/HPS
+
+	if(!locate(/obj/item/weapon/reagent_containers/hypospray) in allContents)
+		new/obj/item/weapon/reagent_containers/hypospray(src)
+	else
+		HPS = locate(/obj/item/weapon/reagent_containers/hypospray) in allContents
+		if(!shouldTryHeal)
+			shouldTryHeal = 2 // we have no stackables to use, lets use our internal hypospray instead
+
+	if(shouldTryHeal == 1)
+		for(var/mob/living/carbon/human/C in nearby)
+			if(istype(C,/mob/living/carbon/human)) //I haven't the foggiest clue why this is turning up non-carbons but sure here whatever
 				if(C.health <= 75)
 					if(get_dist(src,C) <= 2)
 						src.say("Wait, [C], let me heal you!")
@@ -878,20 +1003,42 @@
 						sleep(25)
 					else
 						tryWalk(get_turf(C))
+	else if(shouldTryHeal == 2)
+		if(HPS)
+			if(HPS.reagents.total_volume <= 0)
+				HPS.reagents.add_reagent("tricordrazine",30)
+			for(var/mob/living/carbon/human/C in nearby)
+				if(istype(C,/mob/living/carbon/human))
+					if(C.health <= 75 && C.reagents.get_reagent_amount("tricordrazine") <= 0) // make sure they wont be overdosing
+						if(get_dist(src,C) <= 2)
+							src.say("Wait, [C], let me heal you!")
+							HPS.attack(C,src)
+							sleep(25)
+						else
+							tryWalk(get_turf(C))
+
 
 /mob/living/carbon/human/interactive/proc/dojanitor(obj)
-	if(istype(main_hand,/obj/item/weapon/mop))
-		var/obj/item/weapon/mop/M = main_hand
-		if(M)
-			if(M.reagents.total_volume <= 5)
-				M.reagents.add_reagent("water", 25) // bluespess water delivery for AI
-			if(!istype(TARGET,/obj/effect/decal/cleanable))
-				TARGET = locate(/obj/effect/decal/cleanable) in urange(MAX_RANGE_FIND,src,1)
-			if(targetRange(TARGET) <= 2)
-				M.afterattack(TARGET,src)
-				sleep(25)
-			else
-				tryWalk(TARGET)
+	if(shouldModulePass())
+		return
+	var/list/allContents = getAllContents()
+	//now with bluespace magic!
+	var/obj/item/weapon/reagent_containers/spray/S
+	if(!locate(/obj/item/weapon/reagent_containers/spray) in allContents)
+		new/obj/item/weapon/reagent_containers/spray(src)
+	else
+		S = locate(/obj/item/weapon/reagent_containers/spray) in allContents
+
+	if(S)
+		if(S.reagents.total_volume <= 5)
+			S.reagents.add_reagent("cleaner", 25) // bluespess water delivery for AI
+		if(!istype(TARGET,/obj/effect/decal/cleanable))
+			TARGET = locate(/obj/effect/decal/cleanable) in urange(MAX_RANGE_FIND,src,1)
+		if(targetRange(TARGET) <= 2)
+			S.afterattack(TARGET,src)
+			sleep(25)
+		else
+			tryWalk(TARGET)
 
 /mob/living/carbon/human/interactive/proc/customEmote(var/text)
 	for(var/mob/living/carbon/M in view(src))
@@ -903,11 +1050,14 @@
 		customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")] towards [target], and with a bang, it's instantly cooked!")
 		var/obj/item/weapon/reagent_containers/food/snacks/S = new target.cooked_type (get_turf(src))
 		target.initialize_cooked_food(S, 100)
-		playsound(get_turf(src), 'sound/weapons/flashbang.ogg', 50, 1)
+		if(target) // cleaning up old food seems inconsistent, so this will clean up stragglers
+			qdel(target)
 	else
 		tryWalk(target)
 
 /mob/living/carbon/human/interactive/proc/souschef(obj)
+	if(shouldModulePass())
+		return
 	var/list/allContents = getAllContents()
 
 	enforceHome()
@@ -920,11 +1070,13 @@
 	var/obj/item/weapon/kitchen/knife/KK = locate(/obj/item/weapon/kitchen/knife) in allContents
 	if(!KK)
 		new/obj/item/weapon/kitchen/knife(src)
-
+	var/foundCookable = 0
 	if(RP && KK) // Ready to cook!
+		var/list/rangeCheck = range(12,src)
 		//Process dough into various states
-		var/obj/item/weapon/reagent_containers/food/snacks/dough/D = locate(/obj/item/weapon/reagent_containers/food/snacks/dough) in range(MAX_RANGE_FIND,src)
+		var/obj/item/weapon/reagent_containers/food/snacks/dough/D = locate(/obj/item/weapon/reagent_containers/food/snacks/dough) in rangeCheck
 		if(D)
+			TARGET = D
 			var/choice = pick(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
@@ -932,8 +1084,10 @@
 				D.attackby(RP,src)
 			else
 				cookingwithmagic(D)
-		var/obj/item/weapon/reagent_containers/food/snacks/flatdough/FD = locate(/obj/item/weapon/reagent_containers/food/snacks/flatdough) in range(MAX_RANGE_FIND,src)
+			foundCookable = 1
+		var/obj/item/weapon/reagent_containers/food/snacks/flatdough/FD = locate(/obj/item/weapon/reagent_containers/food/snacks/flatdough) in rangeCheck
 		if(FD)
+			TARGET = FD
 			var/choice = pick(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
@@ -941,8 +1095,10 @@
 				FD.attackby(KK,src)
 			else
 				cookingwithmagic(FD)
-		var/obj/item/weapon/reagent_containers/food/snacks/cakebatter/CB = locate(/obj/item/weapon/reagent_containers/food/snacks/cakebatter) in range(MAX_RANGE_FIND,src)
+			foundCookable = 1
+		var/obj/item/weapon/reagent_containers/food/snacks/cakebatter/CB = locate(/obj/item/weapon/reagent_containers/food/snacks/cakebatter) in rangeCheck
 		if(CB)
+			TARGET = CB
 			var/choice = pick(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
@@ -950,8 +1106,10 @@
 				CB.attackby(RP,src)
 			else
 				cookingwithmagic(CB)
-		var/obj/item/weapon/reagent_containers/food/snacks/piedough/PD = locate(/obj/item/weapon/reagent_containers/food/snacks/piedough) in range(MAX_RANGE_FIND,src)
+			foundCookable = 1
+		var/obj/item/weapon/reagent_containers/food/snacks/piedough/PD = locate(/obj/item/weapon/reagent_containers/food/snacks/piedough) in rangeCheck
 		if(PD)
+			TARGET = PD
 			var/choice = pick(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
@@ -959,11 +1117,93 @@
 				PD.attackby(KK,src)
 			else
 				cookingwithmagic(PD)
+			foundCookable = 1
 		//Cook various regular foods into processed versions
-		var/obj/item/weapon/reagent_containers/food/snacks/toCook = locate(/obj/item/weapon/reagent_containers/food/snacks) in range(MAX_RANGE_FIND,src)
+		var/obj/item/weapon/reagent_containers/food/snacks/toCook = locate(/obj/item/weapon/reagent_containers/food/snacks) in rangeCheck
 		if(toCook)
 			if(toCook.cooked_type)
-				cookingwithmagic(toCook)
+				TARGET = toCook
+				foundCookable = 1
+				if(Adjacent(toCook))
+					cookingwithmagic(toCook)
+				else
+					tryWalk(get_turf(toCook))
+
+
+		//Make some basic custom food
+		var/list/customableTypes = list(/obj/item/weapon/reagent_containers/food/snacks/customizable,/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain,/obj/item/weapon/reagent_containers/food/snacks/pizzabread,/obj/item/weapon/reagent_containers/food/snacks/bun,/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain,/obj/item/weapon/reagent_containers/food/snacks/pie/plain,/obj/item/weapon/reagent_containers/food/snacks/pastrybase)
+
+		var/foundCustom
+
+		for(var/customType in customableTypes)
+			var/A = locate(customType) in rangeCheck
+			if(A)
+				foundCustom = A // this will eventually wittle down to 0
+
+
+		var/obj/machinery/smartfridge/SF = locate(/obj/machinery/smartfridge) in rangeCheck
+		if(SF)
+			if(SF.contents.len > 0)
+				if(!Adjacent(SF))
+					tryWalk(get_turf(SF))
+				else
+					customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], grabbing various foodstuffs from [SF] and sticking them in it's mouth!")
+					for(var/obj/item/A in SF.contents)
+						if(prob(smartness/2))
+							A.loc = src
+
+
+		if(foundCustom)
+			var/obj/item/weapon/reagent_containers/food/snacks/FC = foundCustom
+			for(var/obj/item/weapon/reagent_containers/food/snacks/toMake in allContents)
+				if(prob(smartness/2))
+					if(FC.reagents)
+						FC.attackby(toMake,src)
+					else
+						qdel(FC) // this food is usless, toss it
+
+		var/list/finishedList = list()
+		for(var/obj/item/weapon/reagent_containers/food/snacks/toDisplay in allContents)
+			if(!istype(toDisplay,/obj/item/weapon/reagent_containers/food/snacks/grown)) // dont display our ingredients
+				finishedList += toDisplay
+
+		for(var/obj/item/weapon/reagent_containers/food/snacks/toGrab in rangeCheck)
+			if(!toGrab.cooked_type && !(locate(/obj/structure/table/reinforced) in get_turf(toGrab))) //it's a final product and not beign displayed
+				if(!Adjacent(toGrab))
+					tryWalk(toGrab)
+				else
+					toGrab.loc = src
+
+		if(finishedList.len > 0)
+			var/obj/structure/table/reinforced/RT
+
+			for(var/obj/structure/table/reinforced/toCheck in rangeCheck)
+				if(locate(/obj/machinery/door/poddoor/preopen) in get_turf(toCheck)) // hacky check to make sure it's the chef's table
+					RT = toCheck
+					break
+
+			if(RT)
+				if(!Adjacent(RT))
+					tryWalk(get_turf(RT))
+				else
+					for(var/obj/item/weapon/reagent_containers/food/snacks/toPlop in allContents)
+						RT.attackby(toPlop,src)
+
+		if(!foundCookable)
+			var/list/allTypes = list(/obj/item/weapon/reagent_containers/food/snacks/piedough,/obj/item/weapon/reagent_containers/food/snacks/cakebatter,/obj/item/weapon/reagent_containers/food/snacks/dough,/obj/item/weapon/reagent_containers/food/snacks/flatdough)
+
+			for(var/A in typesof(/obj/item/weapon/reagent_containers/food/snacks))
+				var/obj/item/weapon/reagent_containers/food/snacks/O = A
+				if(initial(O.cooked_type))
+					allTypes += A
+
+			var/chosenType = pick(allTypes)
+
+			var/obj/item/weapon/reagent_containers/food/snacks/newSnack = new chosenType(get_turf(src))
+			TARGET = newSnack
+			newSnack.reagents.remove_any((newSnack.reagents.total_volume/2)-1)
+			newSnack.name = "Synthetic [newSnack.name]"
+			customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")] as they vomit [newSnack] from their mouth!")
 // END COOKING MODULE
 
 /mob/living/carbon/human/interactive/proc/combat(obj)
@@ -1027,10 +1267,12 @@
 			if(M.health > 1)
 				//THROWING OBJECTS
 				for(var/A in allContents)
+					if(istype(A,/obj/item/weapon/gun))	// guns are for shooting, not throwing.
+						continue
 					if(prob(robustness))
 						if(istype(A,/obj/item/weapon))
 							var/obj/item/weapon/W = A
-							if(W.throwforce > 0)
+							if(W.throwforce > 19) // Only throw worthwile stuff, no more lobbing wrenches at wenches
 								npcDrop(W,1)
 								throw_item(TARGET)
 						if(istype(A,/obj/item/weapon/grenade)) // Allahu ackbar! ALLAHU ACKBARR!!

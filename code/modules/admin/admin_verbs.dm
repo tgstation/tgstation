@@ -63,7 +63,9 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_change_command_name,
 	/client/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
-	/client/proc/customiseSNPC /* Customise any interactive crewmembers in the world */
+	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
+	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
+	/client/proc/toggleSNPC /* Toggles an npc's processing mode */
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
