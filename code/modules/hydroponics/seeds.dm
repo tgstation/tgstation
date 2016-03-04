@@ -50,3 +50,26 @@
 				user << string
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
+
+
+
+// Checks plants for broken tray icons. Use Advanced Proc Call to activate.
+// Maybe some day it would be used as unit test.
+proc/check_plants_growth_stages_icons()
+	var/list/states = icon_states('icons/obj/hydroponics/growing.dmi')
+	var/list/paths = typesof(/obj/item/seeds) - /obj/item/seeds
+
+	for(var/seedpath in paths)
+		var/obj/item/seeds/seed = new seedpath
+
+		for(var/i in 1 to seed.growthstages)
+			if("[seed.species]-grow[i]" in states)
+				continue
+			world << "[seed.name] ([seed.type]) lacks the [seed.species]-grow[i] icon!"
+
+		if( !("[seed.species]-dead" in states))
+			world << "[seed.name] ([seed.type]) lacks the [seed.species]-dead icon!"
+
+		if(seed.plant_type != 2 && yield != -1) // mushrooms have no grown sprites, same for items with no product
+			if(!("[seed.species]-harvest" in states))
+				world << "[seed.name] ([seed.type]) lacks the [seed.species]-harvest icon!"
