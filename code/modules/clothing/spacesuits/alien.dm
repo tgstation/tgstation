@@ -430,7 +430,7 @@
 	name = "grey pressure helmet"
 	icon_state = "grey-fishbowl-helm"
 	item_state = "grey-fishbowl-helm"
-	desc = "A strange globe-like structure. Despite looking like a decent glare would break it, it is surprisingly durable. Emough thinking room for a Grey."
+	desc = "A strange globe-like structure. Despite looking like a decent glare would break it, it is surprisingly durable. Enough thinking room for a Grey."
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 10, bio = 100, rad = 50)
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	heat_conductivity = SPACESUIT_HEAT_CONDUCTIVITY
