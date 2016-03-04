@@ -476,10 +476,10 @@
 	if(!isnull(cause)) //the cause isn't fire or bombs, so split the damage
 		var/damagesplit = 1 //maximum split is 9, reducing the damage each blob takes to 11% but doing that damage to 9 blobs
 		for(var/obj/effect/blob/C in orange(1, B))
-			if(C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) //if it doesn't have the same chemical, don't split damage to it
+			if(!istype(C, /obj/effect/blob/core) && !istype(C, /obj/effect/blob/node) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) //if it doesn't have the same chemical or is a core or node, don't split damage to it
 				damagesplit += 1
 		for(var/obj/effect/blob/C in orange(1, B))
-			if(C.overmind && C.overmind.blob_reagent_datum == B.overmind.blob_reagent_datum && !istype(C, /obj/effect/blob/core)) //only hurt blobs that have the same overmind chemical and aren't cores
+			if(!istype(C, /obj/effect/blob/core) && !istype(C, /obj/effect/blob/node) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) //only hurt blobs that have the same overmind chemical and aren't cores or nodes
 				C.take_damage(damage/damagesplit, CLONE, B, 0)
 		return damage / damagesplit
 	else
