@@ -167,7 +167,7 @@
 		return
 
 	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
-	if(config.allow_secborg)
+	if(!config.forbid_secborg)
 		modulelist += "Security"
 
 	designation = input("Please, select a module!", "Robot", null, null) in modulelist
