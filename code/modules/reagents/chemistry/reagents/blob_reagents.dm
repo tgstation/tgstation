@@ -135,7 +135,7 @@
 /datum/reagent/blob/shifting_fragments/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(cause && prob(40))
 		var/list/blobstopick = list()
-		for(var/obj/effect/blob/OB in range(1, B))
+		for(var/obj/effect/blob/OB in orange(1, B))
 			if((istype(OB, /obj/effect/blob/normal) || istype(OB, /obj/effect/blob/shield)) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id)
 				blobstopick += OB //as long as the blob picked is valid; ie, a normal or shield blob that has the same chemical as we do, we can swap with it
 		if(blobstopick.len)
