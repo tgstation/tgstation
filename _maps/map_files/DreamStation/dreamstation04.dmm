@@ -3962,7 +3962,7 @@
 "byj" = (/obj/machinery/door/poddoor/preopen{id = "permacell3"; name = "cell blast door"},/obj/machinery/door/airlock/glass{id_tag = "permabolt3"; name = "Cell 3"},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/security/prison)
 "byk" = (/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/security/prison)
 "byl" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/security/prison)
-"bym" = (/obj/machinery/hydroponics/soil,/obj/item/weapon/cultivator,/obj/item/seeds/steel,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/security/prison)
+"bym" = (/obj/machinery/hydroponics/soil,/obj/item/weapon/cultivator,/obj/item/seeds/tower/steel,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/security/prison)
 "byn" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/potato,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/security/prison)
 "byo" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/coffee/robusta,/obj/item/device/analyzer/plant_analyzer,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/security/prison)
 "byp" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/security/prison)
