@@ -25,33 +25,6 @@
 		qdel(dna)
 	return ..()
 
-/mob/living/carbon/Move(NewLoc, direct)
-	. = ..()
-	if(.)
-		if(src.nutrition && src.stat != 2)
-			src.nutrition -= HUNGER_FACTOR/10
-			if(src.m_intent == "run")
-				src.nutrition -= HUNGER_FACTOR/10
-		if((src.disabilities & FAT) && src.m_intent == "run" && src.bodytemperature <= 360)
-			src.bodytemperature += 2
-
-
-/mob/living/carbon/Process_Spacemove(movement_dir = 0)
-	if(..())
-		return 1
-	if(!isturf(loc)) // In a mecha? A locker? Who knows!
-		return 0
-
-	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
-	if(istype(J) && J.allow_thrust(0.01, src))
-		return 1
-
-
-/mob/living/carbon/movement_delay()
-	. = ..()
-	if(legcuffed)
-		. += legcuffed.slowdown
-
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))

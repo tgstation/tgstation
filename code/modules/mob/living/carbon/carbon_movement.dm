@@ -24,9 +24,14 @@ var/const/GALOSHES_DONT_HELP = 4
 		return 0
 
 	// Do we have a jetpack implant (and is it on)?
-	var/obj/item/organ/internal/cyberimp/chest/thrusters/J = getorganslot("thrusters")
-	if(istype(J) && movement_dir && J.allow_thrust(0.01))
+	var/obj/item/organ/internal/cyberimp/chest/thrusters/T = getorganslot("thrusters")
+	if(istype(T) && movement_dir && T.allow_thrust(0.01))
 		return 1
+
+	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
+	if(istype(J) && (movement_dir || J.stabilizers) && J.allow_thrust(0.01, src))
+		return 1
+
 
 
 /mob/living/carbon/Move(NewLoc, direct)
