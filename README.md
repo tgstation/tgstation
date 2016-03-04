@@ -129,6 +129,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ##LICENSE
 
+<B>LICENSE UPDATE GPL -> AGPL</B><br>
 All code after commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).
 
 All code before commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
@@ -136,11 +137,15 @@ All code before commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at
 
 See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details.
 
+<B>LICENSE UPDATE CC-BY-SA -> CC-BY-NC-SA</B><br>
+All assets including icons and sounds before commit [THIS COMMIT PLEASE PR AFTER] on [MERGE DATE] at [MERGE TIME PST]
+is licensed under Creative Commons 3.0 BY-SA (http://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
+
+All assets including icons and sounds after commit [THIS COMMIT PLEASE PR AFTER] on [MERGE DATE] at [MERGE TIME PST]
+is licensed under Creative Commons 3.0 BY-NC-SA (https://creativecommons.org/licenses/by-nc-sa/3.0/) unless otherwise indicated.
+
+<B>TGUI:</B><br>
 tgui clientside is licensed as a subproject under the MIT license.
 tgui assets are licensed under a Creative Commons Attribution-ShareAlike 4.0 International License
 (http://creativecommons.org/licenses/by-sa/4.0/).
-
 See tgui/LICENSE.md for more details.
-
-All assets including icons and sound are under a Creative Commons 3.0 BY-SA
-license (http://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
