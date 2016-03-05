@@ -116,6 +116,16 @@
 	status_flags = CANPUSH
 	del_on_death = 1
 
+/mob/living/simple_animal/hostile/nsoldier/ranged
+	ranged = 1
+	rapid = 1
+	retreat_distance = 5
+	minimum_distance = 5
+	icon_state = "nsoldierranged"
+	icon_living = "nsoldierranged"
+	casingtype = /obj/item/ammo_casing/c45nostamina
+	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
+
 /mob/living/simple_animal/hostile/nsoldier/melee //hulk nazi with really buff biceps for added effect
 	name = "Hulking Geo-Nazi"
 	desc = "The result severe genetic testing and steriods. Would probably win an arm-wrestling match."
@@ -146,17 +156,48 @@
 			src.say(pick("RAAAAAGGHHHH!!!","AAAARRRGGHHHH!!!","RRRAAUUUGGHH!!!"))
 
 
+/mob/living/simple_animal/hostile/nsoldier/bomber //think serious sam's kamikazes but with mini-hitlers
+	name = "Mini-Führer"
+	desc = "A small, robotic recreation of the Führer himself, it seems like he wants to tell you something."
+	icon_state = "miniheil"
+	icon_living = "miniheil"
+	speed = 1
+	maxHealth = 25
+	health = 25
+	harm_intent_damage = 5
+	melee_damage_lower = 5
+	melee_damage_upper = 7
+	attacktext = "heils"
+	deathmessage = "The Mini-Führer explodes!"
+	loot = list(/obj/effect/gibspawner/robot)
+
+/mob/living/simple_animal/hostile/nsoldier/bomber/AttackingTarget()
+	..()
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(prob(90))
+			C.Weaken(2)
+			src.say("HEIL HITLER!")
+			explosion(src, 0, 0, 4, 6, 3)
+			src.gib()
+
+
 /*
  *Structure-related stuff
  */
+
+/turf/simulated/floor/plating/marble
+	name = "marble flooring"
+	broken_states = list("marblebroken")
+	burnt_states = list("marblescorched")
 
 /obj/effect/mob_spawn/human/corpse/nsoldier
 	name = "Geo-Nazi"
 	uniform =  /obj/item/clothing/under/nsoldier
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	mask = /obj/item/clothing/mask/gas
-	helmet = /obj/item/clothing/head/helmet
+	mask = /obj/item/clothing/mask/gas/old
+	helmet = /obj/item/clothing/head/stalhelm
 	has_id = 0
 
 /obj/structure/pillar

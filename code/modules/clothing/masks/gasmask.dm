@@ -11,6 +11,10 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	burn_state = FIRE_PROOF
 
+/obj/item/clothing/mask/gas/old
+	desc = "A face-covering mask that can be connected to an air supply. This must be one of the older variants."
+	icon_state = "gas_mask"
+
 // **** Welding gas mask ****
 
 /obj/item/clothing/mask/gas/welding
@@ -65,7 +69,7 @@
 /obj/item/clothing/mask/gas/clown_hat/AltClick(mob/living/user)
 	if(!istype(user) || user.incapacitated())
 		return
-	
+
 	var/list/options = list()
 	options["True Form"] = "clown"
 	options["The Feminist"] = "sexyclown"
