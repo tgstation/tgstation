@@ -17,7 +17,7 @@
 
 		switch(attack_type) //Special attacks - kicks, bites
 			if(ATTACK_KICK)
-				if(can_kick())
+				if(can_kick(A))
 
 					delayNextAttack(10)
 
@@ -26,11 +26,10 @@
 
 					delayNextAttack(-10) //This is only called when the kick fails
 				else
-					to_chat(src, "<span class='warning'>You can't kick!</span>")
 					set_attack_type() //Reset attack type
 
 			if(ATTACK_BITE)
-				if(can_bite())
+				if(can_bite(A))
 
 					delayNextAttack(10)
 
@@ -39,7 +38,6 @@
 
 					delayNextAttack(-10) //This is only called when the bite fails
 				else
-					to_chat(src, "<span class='warning'>You can't bite!</span>")
 					set_attack_type() //Reset attack type
 
 	if(ismob(A))

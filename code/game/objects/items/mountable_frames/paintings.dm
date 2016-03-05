@@ -184,6 +184,7 @@ var/global/list/available_paintings = list(
 	icon = 'icons/obj/paintings.dmi'
 	icon_state = "blank"
 	autoignition_temperature = AUTOIGNITION_WOOD
+	anchored = 1
 
 /obj/structure/painting/New()
 	..()
@@ -286,6 +287,13 @@ var/global/list/available_paintings = list(
 
 	P.attack_hand(user)
 	qdel(src)
+
+/obj/structure/painting/kick_act(mob/living/carbon/human/H)
+	H.visible_message("<span class='danger'>[H] attempts to kick \the [src].</span>", "<span class='danger'>You attempt to kick \the [src].</span>")
+	to_chat(H, "<span class='danger'>Dumb move! You strain a muscle.</span>")
+
+	H.apply_damage(rand(1,2), BRUTE, pick("r_leg", "l_leg", "r_foot", "l_foot"))
+
 
 /obj/structure/painting/cultify()
 	var/obj/structure/painting/narsie/N = new(loc)

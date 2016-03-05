@@ -1672,6 +1672,9 @@
 	if(legcuffed)
 		return 0
 
+	if(target && !isturf(target) && !isturf(target.loc))
+		return 0
+
 	var/datum/organ/external/left_foot = get_organ("l_foot")
 	if(!left_foot)
 		return 0

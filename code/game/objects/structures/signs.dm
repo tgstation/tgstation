@@ -79,6 +79,14 @@
 		return
 	else ..()
 
+/obj/structure/sign/kick_act(mob/living/carbon/human/H)
+	H.visible_message("<span class='danger'>[H] kicks \the [src]!</span>", "<span class='danger'>You kick \the [src]!</span>")
+
+	if(prob(70))
+		to_chat(H, "<span class='userdanger'>Ouch! That hurts!</span>")
+
+		H.apply_damage(rand(5,7), BRUTE, pick("r_leg", "l_leg", "r_foot", "l_foot"))
+
 /obj/structure/sign/double/map
 	name = "station map"
 	desc = "A framed picture of the station."

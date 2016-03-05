@@ -75,18 +75,21 @@ var/global/list/ghdel_profiling = list()
 	return 1
 
 /atom/proc/shake(var/xy, var/intensity, mob/user) //Zth. SHAKE IT. Vending machines' kick uses this
+	var/old_pixel_x = pixel_x
+	var/old_pixel_y = pixel_y
+
 	switch(xy)
 		if(1)
-			src.pixel_x = rand(-intensity, intensity)
+			src.pixel_x += rand(-intensity, intensity)
 		if(2)
-			src.pixel_y = rand(-intensity, intensity)
+			src.pixel_y += rand(-intensity, intensity)
 		if(3)
-			src.pixel_x = rand(-intensity, intensity)
-			src.pixel_y = rand(-intensity, intensity)
+			src.pixel_x += rand(-intensity, intensity)
+			src.pixel_y += rand(-intensity, intensity)
 
 	spawn(2)
-	src.pixel_x = 0
-	src.pixel_y = 0
+	src.pixel_x = old_pixel_x
+	src.pixel_y = old_pixel_y
 
 // NOTE FROM AMATEUR CODER WHO STRUGGLED WITH RUNTIMES
 // throw_impact is called multiple times when an item is thrown: see /atom/movable/proc/hit_check at atoms_movable.dm

@@ -80,10 +80,11 @@
 	..()
 
 /obj/machinery/light_construct/kick_act(mob/living/carbon/human/H)
-	to_chat(H, "<span class='info'>You attempt to kick \the [src].</span>")
-	to_chat(H, "<span class='notice'>Dumb move! You strain a muscle.</span>")
+	H.visible_message("<span class='danger'>[H] attempts to kick \the [src].</span>", "<span class='danger'>You attempt to kick \the [src].</span>")
+	to_chat(H, "<span class='danger'>Dumb move! You strain a muscle.</span>")
 
 	H.apply_damage(rand(1,2), BRUTE, pick("r_leg", "l_leg", "r_foot", "l_foot"))
+
 
 /obj/machinery/light_construct/small
 	name = "small light fixture frame"
@@ -149,10 +150,11 @@ var/global/list/obj/machinery/light/alllights = list()
 			broken()
 
 /obj/machinery/light/kick_act(mob/living/carbon/human/H)
-	to_chat(H, "<span class='info'>You attempt to kick \the [src].</span>")
-	to_chat(H, "<span class='notice'>Dumb move! You strain a muscle.</span>")
+	H.visible_message("<span class='danger'>[H] attempts to kick \the [src].</span>", "<span class='danger'>You attempt to kick \the [src].</span>")
+	to_chat(H, "<span class='danger'>Dumb move! You strain a muscle.</span>")
 
 	H.apply_damage(rand(1,2), BRUTE, pick("r_leg", "l_leg", "r_foot", "l_foot"))
+
 
 /obj/machinery/light/small
 	icon_state = "lbulb1"
