@@ -489,7 +489,7 @@
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || !scan_ready || !childtype || !species)
+	if(gender != FEMALE || stat || !scan_ready || !childtype || !species || ticker.current_state != GAME_STATE_PLAYING)
 		return
 	scan_ready = 0
 	spawn(400)
