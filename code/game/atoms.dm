@@ -193,9 +193,10 @@
 	return
 
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
-	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav.
-		spawn(2)
-			step(AM,  turn(AM.dir, 180))
+	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
+		spawn(2) //very short wait, so we can actually see the impact.
+			if(AM && isturf(AM.loc))
+				step(AM, turn(AM.dir, 180))
 
 var/list/blood_splatter_icons = list()
 
