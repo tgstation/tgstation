@@ -43,12 +43,7 @@
 			smoke.start()
 			qdel(R)
 
-			var/cockroaches = prob(20) ? 2 : 0
-			cockroaches += prob(10) ? 1 : 0
-			cockroaches += prob(10) ? 1 : 0
-			if(!cockroaches)
-				if(prob(1) && prob(1))
-					cockroaches = 10
+			var/cockroaches = prob(33) ? 3 : 0
 			while(cockroaches)
 				new /mob/living/simple_animal/cockroach(get_turf(vent))
 				cockroaches--
