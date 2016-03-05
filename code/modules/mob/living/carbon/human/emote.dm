@@ -264,6 +264,7 @@
 			if (miming)
 				message = "<B>[src]</B> acts out a scream!"
 			else
+				playsound(src,'sound/voice/Wilhelm_Scream.ogg',50,1)
 				..(act)
 
 		if ("shiver","shivers")
