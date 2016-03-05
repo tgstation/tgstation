@@ -113,7 +113,7 @@
  */
 
 /obj/item/weapon/tank/internals/plasmaman
-	name = "breathing plasma tank"
+	name = "plasma tank"
 	desc = "A tank of plasma gas."
 	icon_state = "plasmaman_tank"
 	item_state = "plasmaman_tank"
@@ -134,7 +134,6 @@
 
 
 /obj/item/weapon/tank/internals/plasmaman/belt
-	desc = "A tank of plasma gas designed to provide breathing gas for plasmamen."
 	icon_state = "plasmaman_tank_belt"
 	item_state = "plasmaman_tank_belt"
 	slot_flags = SLOT_BELT
