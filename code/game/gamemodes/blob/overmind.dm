@@ -110,16 +110,17 @@
 /mob/camera/blob/Move(var/NewLoc, var/Dir = 0)
 	var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
 	if(B)
-		loc = NewLoc
+		forceEnter(B.loc)
 	else
 		B = locate() in range("3x3", src.loc)
+
 	if(!B) //PANIC, WE'RE NOWHERE NEAR ANYTHING
 		var/newrange = 3 //slowly grows outwards, looking for the nearest blob tile. Should not take very long to find it.
 		while (1)
 			newrange++
 			B = locate() in range("[newrange]x[newrange]", src.loc)
 			if(B)
-				loc = B.loc
+				forceEnter(B.loc)
 				break
 			if(newrange > maxjumprange) //to avoid going in an infinite loop
 				break
