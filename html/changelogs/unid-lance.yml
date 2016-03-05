@@ -1,0 +1,7 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+- rscadd: Added tournament lances - very long spears that are too heavy to use in normal combat. When traveling at fast speeds, tournament lances can be couched to deliver a devastating blow to anybody standing in your way (damage depends on distance traveled).
+- tweak: Tournament lances can be found on the asteroid as xenoarch finds.

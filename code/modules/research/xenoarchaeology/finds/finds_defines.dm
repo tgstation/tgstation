@@ -36,7 +36,8 @@
 #define ARCHAEO_MASK 35
 #define ARCHAEO_DICE 36
 #define ARCHAEO_SPACESUIT 37
-#define MAX_ARCHAEO 37
+#define ARCHAEO_LANCE 38
+#define MAX_ARCHAEO 38
 //eggs
 //droppings
 //footprints
@@ -128,6 +129,8 @@
 			return "mercury"
 		if(ARCHAEO_SPACESUIT)
 			return "potassium"
+		if(ARCHAEO_LANCE)
+			return "iron"
 	return "plasma"
 
 //see /turf/unsimulated/mineral/New() in code/modules/mining/mine_turfs.dm
@@ -210,6 +213,7 @@
 			75;ARCHAEO_LASER,\
 			75;ARCHAEO_KATANA,\
 			75;ARCHAEO_CLAYMORE,\
+			75;ARCHAEO_LANCE,\
 			50;ARCHAEO_UNKNOWN,\
 			50;ARCHAEO_CULTROBES,\
 			50;ARCHAEO_CULTBLADE,\
@@ -278,6 +282,7 @@ var/list/finds_as_strings = list( \
 #undef ARCHAEO_MASK
 #undef ARCHAEO_DICE
 #undef ARCHAEO_SPACESUIT
+#undef ARCHAEO_LANCE
 
 #undef DIGSITE_GARDEN
 #undef DIGSITE_ANIMAL

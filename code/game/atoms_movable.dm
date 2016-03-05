@@ -342,7 +342,11 @@
 		if(loc)
 			loc.Exited(src)
 
+		last_move = get_dir(loc, destination)
+		last_moved = world.time
+
 		loc = destination
+
 		loc.Entered(src)
 		if(isturf(destination))
 			var/area/A = get_area_master(destination)

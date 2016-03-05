@@ -690,6 +690,7 @@
 #include "code\game\objects\items\weapons\glowstick.dm"
 #include "code\game\objects\items\weapons\handcuffs.dm"
 #include "code\game\objects\items\weapons\kitchen.dm"
+#include "code\game\objects\items\weapons\lance.dm"
 #include "code\game\objects\items\weapons\manuals.dm"
 #include "code\game\objects\items\weapons\mop.dm"
 #include "code\game\objects\items\weapons\null_rod.dm"
