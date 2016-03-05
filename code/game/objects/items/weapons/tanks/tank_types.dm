@@ -113,9 +113,12 @@
  */
 
 /obj/item/weapon/tank/internals/plasmaman
+	name = "breathing plasma tank"
+	desc = "A tank of plasma gas."
 	icon_state = "plasmaman_tank"
 	item_state = "plasmaman_tank"
 	force = 10
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 
 /obj/item/weapon/tank/internals/plasmaman/New()
 	..()
@@ -131,6 +134,7 @@
 
 
 /obj/item/weapon/tank/internals/plasmaman/belt
+	desc = "A tank of plasma gas designed to provide breathing gas for plasmamen."
 	icon_state = "plasmaman_tank_belt"
 	item_state = "plasmaman_tank_belt"
 	slot_flags = SLOT_BELT
