@@ -278,14 +278,14 @@ mob/living/carbon/proc/handle_hallucinations()
 							if(C)
 								C.images.Remove(foodie) //Remove the image from hallucinating mob
 			if(87 to 88) //Turns your screen
-				var/current_client_dir = client.dir
+				var/angle = rand(1,3)*90
 				var/duration = rand(10 SECONDS, 40 SECONDS)
 
-				client.dir = turn(client.dir, pick(90, 180, 270))
+				client.dir = turn(client.dir, angle)
 				to_chat(src, "<span class='danger'>[pick("You feel lost.", "The walls suddenly start moving.", "Everything around you shifts and distorts.")]</span>")
 
 				spawn(duration)
-					client.dir = current_client_dir
+					client.dir = turn(client.dir, -angle)
 
 	handling_hal = 0
 
