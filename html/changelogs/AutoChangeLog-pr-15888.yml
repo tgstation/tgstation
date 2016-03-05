@@ -1,6 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - tweak: "Blobbernauts now attack much slower."
-  - tweak: "Blobbernauts are now maximum one per factory, reduce that factory's health drastically, and die slowly if that factory is destroyed."
-  - experiment: "Factories must still have above 50% health to produce blobbernauts."
