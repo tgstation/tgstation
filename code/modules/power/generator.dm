@@ -22,6 +22,8 @@
 	var/effective_gen		= 0
 	var/lastgenlev			= 0
 	var/max_power			= 500000 //Amount of W produced at which point the meter caps.
+	var/startup_ticks		= 5 // Amount of ticks needed of continuous thermal power generation to actually emit power.
+	var/startup_ticks_max	= 5
 
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
@@ -285,6 +287,9 @@
 	if(!operable())
 		return
 
+	if(startup_ticks)
+		return
+
 	overlays += "teg_mid"
 
 	if(lastgenlev != 0)
@@ -312,7 +317,7 @@
 		if(delta_temperature > 0 && air1_heat_capacity > 0 && air2_heat_capacity > 0)
 			var/energy_transfer = delta_temperature * air2_heat_capacity * air1_heat_capacity / (air2_heat_capacity + air1_heat_capacity)
 			var/heat = energy_transfer * (1 - thermal_efficiency)
-			last_thermal_gen = energy_transfer * thermal_efficiency
+			last_thermal_gen = energy_transfer * thermal_efficiency / 4
 
 			if(air2.temperature > air1.temperature)
 				air2.temperature = air2.temperature - energy_transfer/air2_heat_capacity
@@ -350,7 +355,19 @@
 		lastgenlev = genlev
 		update_icon()
 
-	add_avail(effective_gen)
+	// Make it so dorks have to actually keep the TEG producing power for more than 5 ticks before it starts producing power.
+	// No more making power with a jamming TEG.
+	if(last_thermal_gen)
+		if(startup_ticks <= 0)
+			add_avail(effective_gen)
+
+		else
+			startup_ticks--
+			if(startup_ticks == 0)
+				update_icon()
+
+	else
+		startup_ticks = startup_ticks_max
 
 	updateUsrDialog()
 
@@ -378,14 +395,25 @@
 	interface.updateContent("circ1", "Primary circulator ([vertical ? "top"		: "right"])")
 	interface.updateContent("circ2", "Primary circulator ([vertical ? "bottom"	: "left"])")
 
-	interface.updateContent("total_out",	format_watts(effective_gen))
-	interface.updateContent("thermal_out",	format_watts(last_thermal_gen))
+	if(startup_ticks)
+		if(last_thermal_gen)
+			interface.updateContent("total_out", "<span class='average'>Charging: [startup_ticks * 2] seconds</span>") // One tick is ~2 seconds.
+		else
+			interface.updateContent("total_out", "<span class='bad'>Stopped</span>") // If the turbines are generating more than 1e5 W (0.1 MW) say jammed because at that point it's probably not just no thermal transfer at all.
+	else
+		interface.updateContent("total_out", format_watts(effective_gen))
+
+	interface.updateContent("thermal_out", format_watts(last_thermal_gen))
 
 	if(!circ1 || !circ2)	//From this point on it's circulator data.
 		return
 
 	//CIRCULATOR 1
-	interface.updateContent("circ1_turbine",		format_watts(last_circ1_gen))
+	if(circ1.air2.return_pressure() > circ1.air1.return_pressure()) // Jammed circulator.
+		interface.updateContent("circ1_turbine",	"<span class='bad'>Jammed</span>")
+	else
+		interface.updateContent("circ1_turbine",	format_watts(last_circ1_gen))
+
 	interface.updateContent("circ1_flow_cap",		"[round(circ1.volume_capacity_used * 100)] %")
 
 	interface.updateContent("circ1_in_pressure",	"[round(circ1.air1.return_pressure(),	0.1)] kPa")
@@ -395,7 +423,11 @@
 	interface.updateContent("circ1_out_temp",		"[round(circ1.air2.temperature,		0.1)] K")
 
 	//CIRCULATOR 2
-	interface.updateContent("circ2_turbine",		format_watts(last_circ2_gen))
+	if(circ2.air2.return_pressure() > circ2.air1.return_pressure()) // Jammed circulator.
+		interface.updateContent("circ2_turbine",	"<span class='bad'>Jammed</span>")
+	else
+		interface.updateContent("circ2_turbine",	format_watts(last_circ2_gen))
+
 	interface.updateContent("circ2_flow_cap",		"[round(circ2.volume_capacity_used * 100)] %")
 
 	interface.updateContent("circ2_in_pressure",	"[round(circ2.air1.return_pressure(),	0.1)] kPa")
