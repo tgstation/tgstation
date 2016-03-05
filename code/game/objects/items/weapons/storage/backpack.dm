@@ -205,7 +205,7 @@
 
 /obj/item/weapon/storage/backpack/satchel/wizard
 	name = "scroll case"
-	desc = "Made from the leather of \"normies\", it is superior for carrying your wizardly needs."
+	desc = "Made from the leather of \"muggles\", it is superior for carrying your wizardly needs."
 	max_combined_w_class = 30
 
 
