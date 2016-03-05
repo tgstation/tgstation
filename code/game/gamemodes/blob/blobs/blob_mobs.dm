@@ -215,7 +215,11 @@
 			for(var/mob/M in viewers(src))
 				if(M.client)
 					viewing += M.client
-			flick_overlay(image('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.1), viewing, 8)
+			var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.1)
+			I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+			if(overmind)
+				I.color = overmind.blob_reagent_datum.complementary_color
+			flick_overlay(I, viewing, 8)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount)
 	. = ..()
