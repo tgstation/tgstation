@@ -47,6 +47,8 @@ var/datum/subsystem/ticker/ticker
 	var/obj/screen/cinematic = null			//used for station explosion cinematic
 
 	var/maprotatechecked = 0
+	var/round_elapsed_ticks = 0
+	var/round_time_check = 0
 
 
 /datum/subsystem/ticker/New()
@@ -104,6 +106,7 @@ var/datum/subsystem/ticker/ticker
 			mode.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
+			update_round_ticks()
 
 			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
@@ -174,6 +177,7 @@ var/datum/subsystem/ticker/ticker
 	if(!config.ooc_during_round)
 		toggle_ooc(0) // Turn it off
 	round_start_time = world.time
+	round_time_check = world.timeofday
 
 	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
@@ -207,6 +211,16 @@ var/datum/subsystem/ticker/ticker
 
 	return 1
 
+/datum/subsystem/ticker/proc/update_round_ticks()
+	if(round_time_check)
+		var/elapsed = world.timeofday - round_time_check
+		round_time_check = world.timeofday
+
+		if (round_time_check == 0) // on the slim chance that this happens exactly on a timeofday rollover
+			round_time_check = 1   // make it nonzero so it doesn't quit updating
+
+		if (elapsed > 0)
+			round_elapsed_ticks += elapsed
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
