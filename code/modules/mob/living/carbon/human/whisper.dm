@@ -11,6 +11,10 @@
 	if(isDead())
 		return
 
+	if(silent)
+		to_chat(src, "<span class='warning'>You can't speak while silenced.</span>")
+		return
+
 	var/datum/speech/speech = create_speech(message)
 	speech.language = parse_language(speech.message)
 	speech.mode = SPEECH_MODE_WHISPER
