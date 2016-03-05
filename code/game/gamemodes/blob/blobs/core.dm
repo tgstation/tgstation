@@ -1,6 +1,5 @@
 /obj/effect/blob/core
 	name = "blob core"
-	icon = 'icons/mob/blob.dmi'
 	icon_state = "blank_blob"
 	desc = "A huge, pulsating yellow mass."
 	health = 400

@@ -62,6 +62,12 @@
 	set desc = "Create a resource tower which will generate resources for you."
 	createSpecial(40, /obj/effect/blob/resource, 4)
 
+/mob/camera/blob/verb/create_heatsink()
+	set category = "Blob"
+	set name = "Create Heatsink (20)"
+	set desc = "Create a heatsink. It will absorb incoming energy projectiles, but is incredibly vulnerable to melee attacks."
+	createSpecial(20, /obj/effect/blob/heatsink, 0)
+
 /mob/camera/blob/verb/create_node()
 	set category = "Blob"
 	set name = "Create Node Blob (60)"
