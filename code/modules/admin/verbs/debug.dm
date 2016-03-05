@@ -621,10 +621,13 @@ Pressure: [env.return_pressure()]"}
 	set category = "Fun"
 	set name = "Select equipment"
 
+	if(!check_rights(R_SPAWN))
+		return
+
 	if(!ishuman(M))
 		alert("Invalid mob")
 		return
-	//log_admin("[key_name(src)] has alienized [M.key].")
+
 	var/list/dresspacks = list(
 		"strip",
 		"Engineer RIG",
@@ -659,6 +662,7 @@ Pressure: [env.return_pressure()]"}
 		"Bomberman",
 		"Bomberman(arena)",
 		)
+
 	var/dostrip = input("Do you want to strip [M] before equipping them? (0=no, 1=yes)", "STRIPTEASE") as null|anything in list(0,1)
 	if(isnull(dostrip))
 		return
