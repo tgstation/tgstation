@@ -53,7 +53,7 @@
 /datum/stock/proc/addArticle(var/datum/article/A)
 	if (!(A in articles))
 		articles.Insert(1, A)
-	A.ticks = ticker.round_elapsed_ticks
+	A.ticks = world.time
 
 /datum/stock/proc/generateEvents()
 	var/list/types = typesof(/datum/stockEvent) - /datum/stockEvent
@@ -180,11 +180,12 @@
 	average_shares /= 2
 	available_shares /= 2
 	current_value *= 2
-	last_unification = ticker.round_elapsed_ticks
+	last_unification = world.time
 
 /datum/stock/process()
-	for (var/datum/borrow/borrow in borrows)
-		if (ticker.round_elapsed_ticks > borrow.grace_expires)
+	for (var/B in borrows)
+		var/datum/borrow/borrow = B
+		if (world.time > borrow.grace_expires)
 			modifyAccount(borrow.borrower, -max(current_value * borrow.share_debt, 0), 1)
 			borrows -= borrow
 			if (borrow.borrower in FrozenAccounts)
@@ -192,7 +193,7 @@
 				if (length(FrozenAccounts[borrow.borrower]) == 0)
 					FrozenAccounts -= borrow.borrower
 			qdel(borrow)
-		else if (ticker.round_elapsed_ticks > borrow.lease_expires)
+		else if (world.time > borrow.lease_expires)
 			if (borrow.borrower in shareholders)
 				var/amt = shareholders[borrow.borrower]
 				if (amt > borrow.share_debt)
@@ -208,16 +209,18 @@
 					borrow.share_debt -= amt
 	if (bankrupt)
 		return
-	for (var/datum/borrow/borrow in borrow_brokers)
-		if (borrow.offer_expires < ticker.round_elapsed_ticks)
+	for (var/B in borrow_brokers)
+		var/datum/borrow/borrow = B
+		if (borrow.offer_expires < world.time)
 			borrow_brokers -= borrow
 			qdel(borrow)
-	if (prob(1) && prob(3))
+	if (prob(5))
 		generateBrokers()
 	fluctuation_counter++
 	if (fluctuation_counter >= fluctuation_rate)
-		for (var/datum/stockEvent/E in events)
-			E.process()
+		for (var/E in events)
+			var/datum/stockEvent/EV = E
+			EV.process()
 		fluctuation_counter = 0
 		fluctuate()
 
@@ -235,7 +238,7 @@
 	B.share_amount = rand(1, 10) * 100
 	B.deposit = rand(20, 70) / 100
 	B.share_debt = B.share_amount
-	B.offer_expires = rand(5, 10) * 600 + ticker.round_elapsed_ticks
+	B.offer_expires = rand(5, 10) * 600 + world.time
 	borrow_brokers += B
 
 /datum/stock/proc/modifyAccount(whose, by, force=0)
@@ -250,7 +253,7 @@
 /datum/stock/proc/borrow(var/datum/borrow/B, var/who)
 	if (B.lease_expires)
 		return 0
-	B.lease_expires = ticker.round_elapsed_ticks + B.lease_time
+	B.lease_expires = world.time + B.lease_time
 	var/old_d = B.deposit
 	var/d_amt = B.deposit * current_value * B.share_amount
 	if (!modifyAccount(who, -d_amt))

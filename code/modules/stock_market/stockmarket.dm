@@ -10,6 +10,7 @@
 		..()
 		generateBrokers()
 		generateStocks()
+		SSobj.processing.Add(src)
 
 /datum/stockMarket/proc/balanceLog(var/whose, var/net)
 	if (!(whose in balances))
@@ -107,7 +108,8 @@
 		last_read[S] = list()
 
 /datum/stockMarket/process()
-	for (var/datum/stock/S in stocks)
+	for (var/stock in stocks)
+		var/datum/stock/S = stock
 		S.process()
 
 

@@ -1,9 +1,5 @@
 proc/consonant()
-	var/list/vowels = list(65, 69, 73, 79, 85)
-	var/R = rand(65, 90)
-	while (R in vowels)
-		R = rand(65, 90)
-	return ascii2text(R)
+	return pick("B","C","D","F","H","J","K","L","M","N","P","Q","R","S","T","V","W","X","Y","Z")
 
 proc/vowel()
 	return pick("A", "E", "I", "O", "U")
@@ -82,7 +78,7 @@ proc/list_frozen()
 	else
 		author = pick(authors)
 
-	ticks = ticker.round_elapsed_ticks
+	ticks = world.time
 
 /datum/article/proc/generateOutletName()
 	var/list/locations = list("Earth", "Luna", "Mars", "Saturn", "Jupiter", "Uranus", "Pluto", "Europa", "Io", "Phobos", "Deimos", "Space", "Venus", "Neptune", "Mercury", "Kalliope", "Ganymede", "Callisto", "Amalthea", "Himalia")
@@ -110,7 +106,7 @@ proc/list_frozen()
 	var/ticksp = "[ticksc]"
 	while (length(ticksp) < 5)
 		ticksp = "0[ticksp]"
-	spacetime = "[ticksp][time2text(world.realtime, "MM")][time2text(world.realtime, "DD")]2053"
+	spacetime = "[ticksp][time2text(world.realtime, "MM")][time2text(world.realtime, "DD")]2556"
 
 /datum/article/proc/formatArticle()
 	if (spacetime == "")

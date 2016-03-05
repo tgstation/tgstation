@@ -1,4 +1,4 @@
-#define TIME_MULTIPLIER 0.5 // so I can speed up/slow down shit
+#define TIME_MULTIPLIER 0.7 // so I can speed up/slow down shit
 
 /datum/stockEvent
 	var/name = "event"
@@ -14,7 +14,7 @@
 /datum/stockEvent/process()
 	if (finished)
 		return
-	if (ticker.round_elapsed_ticks > next_phase)
+	if (world.time > next_phase)
 		transition()
 
 /datum/stockEvent/proc/transition()
@@ -35,17 +35,17 @@
 /datum/stockEvent/product/New(var/datum/stock/S)
 	company = S
 	var/mins = rand(5*TIME_MULTIPLIER,20*TIME_MULTIPLIER)
-	next_phase = mins * (600*TIME_MULTIPLIER) + (ticker && ticker.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
+	next_phase = mins * (600*TIME_MULTIPLIER) + world.time
 	current_title = "Product demo"
 	current_desc = S.industry.detokenize("[S.name] will unveil a new product on an upcoming %industrial% conference held at spacetime [spacetime(next_phase)]")
 	S.addEvent(src)
 
 
 /datum/stockEvent/product/transition()
-	last_change = ticker.round_elapsed_ticks
+	last_change = world.time
 	switch (phase_id)
 		if (0)
-			next_phase = ticker.round_elapsed_ticks + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
+			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
 			product_name = company.industry.generateProductName(company.name)
 			current_title = "Product release: [product_name]"
 			current_desc = "[company.name] unveiled their newest product, [product_name], at a conference. Product release is expected to happen at spacetime [spacetime(next_phase)]."
@@ -73,7 +73,7 @@
 	company = S
 	var/mins = rand(9*TIME_MULTIPLIER,60*TIME_MULTIPLIER)
 	bailout_millions = rand(70, 190)
-	next_phase = mins * 300*TIME_MULTIPLIER + (ticker && ticker.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
+	next_phase = mins * 300*TIME_MULTIPLIER + world.time
 	current_title = ""
 	current_desc = ""
 	S.addEvent(src)
@@ -81,7 +81,7 @@
 /datum/stockEvent/bankruptcy/transition()
 	switch (phase_id)
 		if (0)
-			next_phase = ticker.round_elapsed_ticks + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
+			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
 			var/datum/article/A = generateBankruptcyArticle()
 			if (!A.opinion)
 				effect = rand(5) * (prob(50) ? -1 : 1)
@@ -94,7 +94,7 @@
 			current_desc = "The government prepared a press release, which will occur at spacetime [spacetime(next_phase)]."
 			phase_id = 1
 		if (1)
-			next_phase = ticker.round_elapsed_ticks + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
+			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
 			finished = 1
 			if (effect <= -5 && prob(10))
 				current_title = "[company.name]: Complete crash"
@@ -151,7 +151,7 @@
 	hidden = 1
 	company = S
 	var/mins = rand(10*TIME_MULTIPLIER, 35*TIME_MULTIPLIER)
-	next_phase = mins * 600*TIME_MULTIPLIER + (ticker && ticker.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
+	next_phase = mins * 600*TIME_MULTIPLIER + world.time
 	current_title = ""
 	current_desc = ""
 	female = prob(50)
@@ -176,7 +176,7 @@
 	switch (phase_id)
 		if (0)
 			tname = "[female ? pick(first_names_female) : pick(first_names_male)] [pick(last_names)]"
-			next_phase = ticker.round_elapsed_ticks + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
+			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
 			var/datum/article/A = generateArrestArticle()
 			if (!A.opinion)
 				effect = rand(5) * (prob(50) ? -1 : 1)
@@ -189,7 +189,7 @@
 			current_desc = "[female ? "She": "He"] has been charged with [offenses]; the trial is scheduled to occur at spacetime [spacetime(next_phase)]."
 			phase_id = 1
 		if (1)
-			next_phase = ticker.round_elapsed_ticks + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
+			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
 			finished = 1
 			current_title = "[tname] [effect > 0 ? "acquitted" : "found guilty"]"
 			if (effect > 0)
