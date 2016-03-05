@@ -43,6 +43,9 @@ Captain
 
 /datum/outfit/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+	if(H.client && H.client.prefs.custom_names["station"])
+		station_name = H.client.prefs.custom_names["station"]
+		world.name = station_name
 
 	var/obj/item/clothing/under/U = H.w_uniform
 	U.attachTie(new /obj/item/clothing/tie/medal/gold/captain())

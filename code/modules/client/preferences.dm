@@ -59,7 +59,7 @@ var/list/preferences_datums = list()
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 
-	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
+	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity", "station")
 
 		//Mob preview
 	var/icon/preview_icon = null
@@ -96,6 +96,7 @@ var/list/preferences_datums = list()
 	custom_names["cyborg"] = pick(ai_names)
 	custom_names["clown"] = pick(clown_names)
 	custom_names["mime"] = pick(mime_names)
+	custom_names["station"] = "Space Station 13"
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -169,7 +170,8 @@ var/list/preferences_datums = list()
 			dat += "<a href ='?_src_=prefs;preference=ai_name;task=input'><b>AI:</b> [custom_names["ai"]]</a> "
 			dat += "<a href ='?_src_=prefs;preference=cyborg_name;task=input'><b>Cyborg:</b> [custom_names["cyborg"]]</a><BR>"
 			dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
-			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR></td>"
+			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR>"
+			dat += "<a href ='?_src_=prefs;preference=station_name;task=input'><b>Captain station name:</b> [custom_names["station"]]</a><BR></td>"
 
 
 			dat += "<td valign='center'>"
@@ -977,6 +979,14 @@ var/list/preferences_datums = list()
 						custom_names["deity"] = new_deity_name
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+
+				if("station_name")
+					var/new_station_name = reject_bad_name( input(user, "Choose your captain's station name:", "Character Preference")  as text|null, 1 )
+					if(new_station_name)
+						custom_names["station"] = new_station_name
+					else
+						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+
 				if ("preferred_map")
 					var/maplist = list()
 					var/default = "Default"
