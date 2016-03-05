@@ -9,7 +9,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
-	force = 5.0
+	force = 5
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 4
@@ -35,6 +35,32 @@
 			cooldown = world.time
 	else
 		..()
+
+/obj/item/weapon/shield/riot/buckler
+	name = "buckler"
+	desc = "A small wooden shield. Its surface area is small, but it's still somewhat effective."
+	icon_state = "buckler"
+	w_class = 3
+	slot_flags = 0
+	starting_materials = list()
+
+/obj/item/weapon/shield/riot/buckler/IsShield()
+	return prob(33) //Only attempt to block 1/3 of attacks
+
+/obj/item/weapon/shield/riot/buckler/on_block(damage, attack_text = "the_attack")
+	if(damage > 10)
+		if(prob(min(10*(damage-10), 75))) //Bucklers are prone to breaking apart
+			var/turf/T = get_turf(src)
+			T.visible_message("<span class='danger'>\The [src] breaks apart!</span>")
+			var/mob/living/L = loc
+
+			if(istype(L))
+				L.drop_item(src, force_drop = 1)
+
+			qdel(src)
+			return
+
+	return ..()
 
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"
@@ -63,7 +89,7 @@
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/shields.dmi', "right_hand" = 'icons/mob/in-hand/right/shields.dmi')
 	flags = FPRINT
 	siemens_coefficient = 1
-	force = 3.0
+	force = 3
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 4

@@ -16,3 +16,17 @@
 	suicide_act(mob/user)
 		to_chat(viewers(user), "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (OXYLOSS)
+
+/obj/item/weapon/melee/morningstar
+	name = "morningstar"
+	desc = "A long mace with a round, spiky end. Very heavy."
+	icon_state = "morningstar"
+	item_state = "morningstar"
+	hitsound = 'sound/weapons/heavysmash.ogg'
+	w_class = 4
+	origin_tech = "combat=4"
+	attack_verb = list("bashed", "smashed", "pulverized")
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/swords_axes.dmi', "right_hand" = 'icons/mob/in-hand/right/swords_axes.dmi')
+
+	throwforce = 5
+	force = 20

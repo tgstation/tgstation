@@ -283,10 +283,17 @@
 			new_item.icon_state = "unknown[rand(1,4)]"
 			new_item.icon = 'icons/obj/xenoarchaeology.dmi'
 			new_item.desc = ""
-		if(19)
+		if(19) //weapons
+			apply_material_decorations = 0
+			var/list/possible_spawns=list(/obj/item/weapon/claymore, /obj/item/weapon/melee/morningstar, /obj/item/weapon/spear/wooden)
+
+			var/new_type = pick(possible_spawns)
+
+			new_item = new new_type(src.loc)
 			apply_prefix = 0
-			new_item = new /obj/item/weapon/claymore(src.loc)
-			new_item.force = 10
+
+			if(istype(new_item, /obj/item/weapon/claymore)) new_item.force = 10
+
 			item_type = new_item.name
 		if(20)
 			//arcane clothing

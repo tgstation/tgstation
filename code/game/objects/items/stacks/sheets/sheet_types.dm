@@ -185,7 +185,8 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 	new/datum/stack_recipe("campfire",			/obj/machinery/space_heater/campfire,	4,		time = 35,	one_per_turf = 1,	on_floor = 1),
 	new/datum/stack_recipe("spit",				/obj/machinery/cooking/grill/spit,		1,		time = 10,	one_per_turf = 1,	on_floor = 1),
 	new/datum/stack_recipe("wall girders",		/obj/structure/girder/wood,				2, 		time = 50, 	one_per_turf = 1, 	on_floor = 1),
-	new/datum/stack_recipe("boomerang",			/obj/item/weapon/boomerang,				6,		time = 50)
+	new/datum/stack_recipe("boomerang",			/obj/item/weapon/boomerang,				6,		time = 50),
+	new/datum/stack_recipe("buckler",			/obj/item/weapon/shield/riot/buckler,	5,		time = 50),
 	)
 
 /obj/item/stack/sheet/wood
