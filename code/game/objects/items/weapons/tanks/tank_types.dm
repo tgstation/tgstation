@@ -113,7 +113,7 @@
  */
 
 /obj/item/weapon/tank/internals/plasmaman
-	name = "plasma tank"
+	name = "plasmaman plasma tank"
 	desc = "A tank of plasma gas."
 	icon_state = "plasmaman_tank"
 	item_state = "plasmaman_tank"
