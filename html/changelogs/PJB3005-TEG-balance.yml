@@ -1,4 +1,2 @@
 author: PJB3005
-changes:
-  - tweak: "TEG now needs to be creating <b>thermal</b> output for more than 5 ticks (~10 seconds) before it will output power."
-  - tweak: "TEG output is now 4 times lower."
+changes: []
