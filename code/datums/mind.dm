@@ -1041,6 +1041,7 @@
 					current << "<span class='boldannounce'>Your powers are awoken. A flash of memory returns to us...we are [changeling.changelingID], a changeling!</span>"
 					message_admins("[key_name_admin(usr)] has changeling'ed [current].")
 					log_admin("[key_name(usr)] has changeling'ed [current].")
+					ticker.mode.update_changeling_icons_added(src)
 			if("autoobjectives")
 				ticker.mode.forge_changeling_objectives(src)
 				usr << "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>"
