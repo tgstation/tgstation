@@ -1,2 +1,3 @@
 author: Sood
-changes: []
+changes:
+ - bugfix: You can no longer whisper while silence stung/silenced in general.
