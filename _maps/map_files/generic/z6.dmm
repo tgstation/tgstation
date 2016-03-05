@@ -190,7 +190,7 @@
 "dH" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/carpet,/area/awaymission/BMPship/Fore)
 "dI" = (/obj/machinery/hydroponics,/turf/simulated/floor/plasteel{icon_state = "green"; dir = 10},/area/awaymission/BMPship/Midship)
 "dJ" = (/turf/simulated/floor/plasteel{icon_state = "green"},/area/awaymission/BMPship/Midship)
-"dK" = (/obj/machinery/seed_extractor,/obj/item/seeds/walkingmushroommycelium,/turf/simulated/floor/plasteel{icon_state = "green"},/area/awaymission/BMPship/Midship)
+"dK" = (/obj/machinery/seed_extractor,/obj/item/seeds/plump/walkingmushroom,/turf/simulated/floor/plasteel{icon_state = "green"},/area/awaymission/BMPship/Midship)
 "dL" = (/obj/machinery/hydroponics,/turf/simulated/floor/plasteel{icon_state = "green"; dir = 6},/area/awaymission/BMPship/Midship)
 "dM" = (/turf/simulated/wall/shuttle{icon_state = "swall2"},/area/awaymission/BMPship/Midship)
 "dN" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/awaymission/BMPship/Midship)

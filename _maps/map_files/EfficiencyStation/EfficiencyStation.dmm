@@ -44476,7 +44476,7 @@
 	dir = 4
 	},
 /obj/machinery/hydroponics/soil,
-/obj/item/seeds/ambrosiavulgarisseed,
+/obj/item/seeds/ambrosia,
 /turf/simulated/floor/plating{
 	icon_state = "warnplate";
 	dir = 9
@@ -46162,7 +46162,7 @@
 /obj/structure/closet/crate/hydroponics,
 /obj/item/weapon/storage/bag/plants/portaseeder,
 /obj/item/weapon/cultivator,
-/obj/item/seeds/cornseed,
+/obj/item/seeds/corn,
 /turf/simulated/floor/plating,
 /area/maintenance/starboard)
 "bGm" = (
@@ -46207,7 +46207,7 @@
 /area/maintenance/starboard)
 "bGp" = (
 /obj/machinery/hydroponics/soil,
-/obj/item/seeds/wheatseed,
+/obj/item/seeds/wheat,
 /turf/simulated/floor/plating{
 	icon_state = "warnplate";
 	dir = 8
@@ -57982,7 +57982,7 @@
 	},
 /area/security/prison)
 "cci" = (
-/obj/item/seeds/ambrosiavulgarisseed,
+/obj/item/seeds/ambrosia,
 /turf/simulated/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -58625,7 +58625,7 @@
 	dir = 1
 	},
 /obj/machinery/hydroponics/soil,
-/obj/item/seeds/grassseed,
+/obj/item/seeds/grass,
 /turf/simulated/floor/grass,
 /area/security/prison)
 "cdH" = (
@@ -58847,7 +58847,7 @@
 	},
 /area/security/prison)
 "ced" = (
-/obj/item/seeds/potatoseed,
+/obj/item/seeds/potato,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -59091,7 +59091,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/hydroponics/soil,
-/obj/item/seeds/carrotseed,
+/obj/item/seeds/carrot,
 /turf/simulated/floor/grass,
 /area/security/prison)
 "ceD" = (

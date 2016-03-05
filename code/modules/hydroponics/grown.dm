@@ -55,6 +55,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/proc/add_juice()
 	if(reagents)
 		for(var/reagent_id in reagents_add)
+			if(reagent_id == "blood") // Hack to make blood in plants always O-
+				reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id]), list("blood_type"="O-"))
+				continue
 			reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id]))
 		if(bitesize_mod)
 			bitesize = 1 + round(reagents.total_volume / bitesize_mod)
@@ -73,6 +76,8 @@
 				msg += "- Plant type: <i>Weed</i>.  Can grow in nutrient-poor soil.\n"
 			if(2)
 				msg += "- Plant type: <i>Mushroom</i>.  Can grow in dry soil.\n"
+			else
+				msg += "- Plant type: <i>UNKNOWN</i>. \n"
 		msg += "- Potency: <i>[potency]</i>\n"
 		msg += "- Yield: <i>[yield]</i>\n"
 		msg += "- Maturation speed: <i>[maturation]</i>\n"
@@ -85,7 +90,7 @@
 		var/list/scannable_reagents = list("charcoal" = "Anti-Toxin", "morphine" = "Morphine", "amatoxin" = "Amatoxins",
 			"toxin" = "Toxins", "mushroomhallucinogen" = "Mushroom Hallucinogen", "condensedcapsaicin" = "Condensed Capsaicin",
 			"capsaicin" = "Capsaicin", "frostoil" = "Frost Oil", "gold" = "Mineral Content",
-			"radium" = "Radioactive Material", "uranium" = "Radioactive Material")
+			"radium" = "Highly Radioactive Material", "uranium" = "Radioactive Material")
 		var/reag_txt = ""
 		for(var/reagent_id in scannable_reagents)
 			if(reagent_id in reagents_add)
@@ -98,3 +103,10 @@
 			user << "<span class='info'>*---------*</span>"
 		return
 	return
+
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user as mob)
+	if(trash)
+		new trash(user.loc)
+	user.unEquip(src)
+	qdel(src)

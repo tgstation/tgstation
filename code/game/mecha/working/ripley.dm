@@ -156,3 +156,15 @@
 		step_in = 5
 		for(var/obj/item/mecha_parts/mecha_equipment/drill/drill in equipment)
 			drill.equip_cooldown = initial(drill.equip_cooldown)
+
+/obj/mecha/working/ripley/relay_container_resist(mob/living/user, obj/O)
+	user << "<span class='notice'>You lean on the back of [O] and start pushing so it falls out of [src].</span>"
+	if(do_after(user, 300, target = O))
+		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
+			return
+		user << "<span class='notice'>You successfully pushed [O] out of [src]!</span>"
+		O.loc = loc
+		cargo -= O
+	else
+		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
+			user << "<span class='warning'>You fail to push [O] out of [src]!</span>"

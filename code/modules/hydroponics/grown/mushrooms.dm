@@ -4,8 +4,25 @@
 
 
 // Reishi
+/obj/item/seeds/reishi
+	name = "pack of reishi mycelium"
+	desc = "This mycelium grows into something medicinal and relaxing."
+	icon_state = "mycelium-reishi"
+	species = "reishi"
+	plantname = "Reishi"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
+	lifespan = 35
+	endurance = 35
+	maturation = 10
+	production = 5
+	yield = 4
+	potency = 15
+	oneharvest = 1
+	growthstages = 4
+	plant_type = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
-	seed = /obj/item/seeds/reishimycelium
+	seed = /obj/item/seeds/reishi
 	name = "reishi"
 	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
 	icon_state = "reishi"
@@ -14,8 +31,25 @@
 
 
 // Fly Amanita
+/obj/item/seeds/amanita
+	name = "pack of fly amanita mycelium"
+	desc = "This mycelium grows into something horrible."
+	icon_state = "mycelium-amanita"
+	species = "amanita"
+	plantname = "Fly Amanitas"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
+	lifespan = 50
+	endurance = 35
+	maturation = 10
+	production = 5
+	yield = 4
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 2
+	mutatelist = list(/obj/item/seeds/angel)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
-	seed = /obj/item/seeds/amanitamycelium
+	seed = /obj/item/seeds/amanita
 	name = "fly amanita"
 	desc = "<I>Amanita Muscaria</I>: Learn poisonous mushrooms by heart. Only pick mushrooms you know."
 	icon_state = "amanita"
@@ -24,8 +58,26 @@
 
 
 // Destroying Angel
+/obj/item/seeds/angel
+	name = "pack of destroying angel mycelium"
+	desc = "This mycelium grows into something devastating."
+	icon_state = "mycelium-angel"
+	species = "angel"
+	plantname = "Destroying Angels"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
+	lifespan = 50
+	endurance = 35
+	maturation = 12
+	production = 5
+	yield = 2
+	potency = 35
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 2
+	rarity = 30
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
-	seed = /obj/item/seeds/angelmycelium
+	seed = /obj/item/seeds/angel
 	name = "destroying angel"
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
 	icon_state = "angel"
@@ -34,8 +86,23 @@
 
 
 // Liberty Cap
+/obj/item/seeds/liberty
+	name = "pack of liberty-cap mycelium"
+	desc = "This mycelium grows into liberty-cap mushrooms."
+	icon_state = "mycelium-liberty"
+	species = "liberty"
+	plantname = "Liberty-Caps"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
+	maturation = 7
+	production = 1
+	yield = 5
+	potency = 15
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
-	seed = /obj/item/seeds/libertymycelium
+	seed = /obj/item/seeds/liberty
 	name = "liberty-cap"
 	desc = "<I>Psilocybe Semilanceata</I>: Liberate yourself!"
 	icon_state = "libertycap"
@@ -44,8 +111,24 @@
 
 
 // Plump Helmet
+/obj/item/seeds/plump
+	name = "pack of plump-helmet mycelium"
+	desc = "This mycelium grows into helmets... maybe."
+	icon_state = "mycelium-plump"
+	species = "plump"
+	plantname = "Plump-Helmet Mushrooms"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
+	maturation = 8
+	production = 1
+	yield = 4
+	potency = 15
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 2
+	mutatelist = list(/obj/item/seeds/plump/walkingmushroom)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
-	seed = /obj/item/seeds/plumpmycelium
+	seed = /obj/item/seeds/plump
 	name = "plump-helmet"
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
 	icon_state = "plumphelmet"
@@ -54,8 +137,22 @@
 
 
 // Walking Mushroom
+/obj/item/seeds/plump/walkingmushroom
+	name = "pack of walking mushroom mycelium"
+	desc = "This mycelium will grow into huge stuff!"
+	icon_state = "mycelium-walkingmushroom"
+	species = "walkingmushroom"
+	plantname = "Walking Mushrooms"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
+	lifespan = 30
+	endurance = 30
+	maturation = 5
+	yield = 1
+	mutatelist = list()
+	rarity = 30
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
-	seed = /obj/item/seeds/walkingmushroommycelium
+	seed = /obj/item/seeds/plump/walkingmushroom
 	name = "walking mushroom"
 	desc = "<I>Plumus Locomotus</I>: The beginning of the great walk."
 	icon_state = "walkingmushroom"
@@ -76,8 +173,25 @@
 
 
 // Chanterelle
+/obj/item/seeds/chanter
+	name = "pack of chanterelle mycelium"
+	desc = "This mycelium grows into chanterelle mushrooms."
+	icon_state = "mycelium-chanter"
+	species = "chanter"
+	plantname = "Chanterelle Mushrooms"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
+	lifespan = 35
+	endurance = 20
+	maturation = 7
+	production = 1
+	yield = 5
+	potency = 15
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
-	seed = /obj/item/seeds/chantermycelium
+	seed = /obj/item/seeds/chanter
 	name = "chanterelle cluster"
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty!"
 	icon_state = "chanterelle"
@@ -86,6 +200,25 @@
 
 
 // Glowshroom
+/obj/item/seeds/glowshroom
+	name = "pack of glowshroom mycelium"
+	desc = "This mycelium -glows- into mushrooms!"
+	icon_state = "mycelium-glowshroom"
+	species = "glowshroom"
+	plantname = "Glowshrooms"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
+	lifespan = 120 //ten times that is the delay
+	endurance = 30
+	maturation = 15
+	production = 1
+	yield = 3 //-> spread
+	potency = 30 //-> brightness
+	oneharvest = 1
+	growthstages = 4
+	plant_type = 2
+	rarity = 20
+	mutatelist = list(/obj/item/seeds/glowshroom/glowcap)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	seed = /obj/item/seeds/glowshroom
 	name = "glowshroom cluster"
@@ -138,8 +271,18 @@
 
 
 // Glowcap
+/obj/item/seeds/glowshroom/glowcap
+	name = "pack of glowcap mycelium"
+	desc = "This mycelium -powers- into mushrooms!"
+	icon_state = "mycelium-glowcap"
+	species = "glowcap"
+	plantname = "Glowcaps"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
+	mutatelist = list()
+	rarity = 30
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
-	seed = /obj/item/seeds/glowcap
+	seed = /obj/item/seeds/glowshroom/glowcap
 	name = "glowcap cluster"
 	desc = "<I>Mycena Ruthenia</I>: This species of mushroom glows in the dark, but aren't bioluminescent. They're warm to the touch..."
 	icon_state = "glowcap"

@@ -189,6 +189,11 @@ ALLOW_RANDOM_EVENTS
 ## Allow the AI job to be picked.
 ALLOW_AI
 
+### Secborg ###
+## Uncomment to prevent the secborg module from being chosen
+#DISABLE_SECBORG
+
+
 ### AWAY MISSIONS ###
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
