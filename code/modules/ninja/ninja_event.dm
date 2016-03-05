@@ -216,7 +216,7 @@ Contents:
 
 /datum/game_mode/proc/update_ninja_icons_added(var/mob/living/carbon/human/ninja)
 	var/datum/atom_hud/antag/ninjahud = huds[ANTAG_HUD_TRAITOR]
-	ninjahud.join_hud(ninja)
+	ninjahud.join_hud(ninja, 0)
 	set_antag_hud(ninja, "traitor")
 
 /datum/game_mode/proc/update_ninja_icons_removed(datum/mind/ninja_mind)
