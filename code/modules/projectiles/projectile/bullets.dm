@@ -34,15 +34,36 @@
 	damage = 15
 
 /obj/item/projectile/bullet/pellet/weak
-	damage = 3
+	damage = 6
+	New()
+		range = rand(8)
 
-/obj/item/projectile/bullet/pellet/random/New()
-	damage = rand(10)
+/obj/item/projectile/bullet/pellet/weak/on_range()
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(1, 1, src)
+	sparks.start()
+	..()
+
+/obj/item/projectile/bullet/pellet/overload
+	damage = 3
+	New()
+		range = rand(10)
+
+/obj/item/projectile/bullet/pellet/overload/on_hit(atom/target, blocked = 0)
+	..()
+	explosion(target, 0, 0, 2)
+	return 1
+
+/obj/item/projectile/bullet/pellet/overload/on_range()
+	explosion(src, 0, 0, 2)
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(3, 3, src)
+	sparks.start()
+	..()
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20
 	stamina = 65 //two round bursts from the c20r knocks people down
-
 
 /obj/item/projectile/bullet/midbullet2
 	damage = 25
