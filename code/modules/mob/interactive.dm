@@ -123,16 +123,16 @@
 	set name = "Customize SNPC"
 	set desc = "Customise the SNPC"
 	set category = "Admin"
-	
+
 	if(!holder)
 		return
-	
+
 	if(A)
 		if(!istype(A,/mob/living/carbon/human/interactive))
 			return
 		var/mob/living/carbon/human/interactive/T = A
 		var/cjob = input("Choose Job") as null|anything in SSjob.occupations.Copy()
-	
+
 		if(cjob)
 			T.myjob = cjob
 			T.job = T.myjob.title
@@ -142,7 +142,7 @@
 			T.myjob.equip(T)
 			T.myjob.apply_fingerprints(T)
 			T.doSetup()
-	
+
 		var/doTele = input("Place the SNPC in their department?") as null|anything in list("Yes","No")
 		if(doTele)
 			if(doTele == "Yes")
@@ -451,8 +451,9 @@
 			update_icons()
 		update_hands = 0
 
-	if(grabbed_by.len > 0)
-		for(var/obj/item/weapon/grab/G in grabbed_by)
+	if(grabbed_by.len)
+		for(var/X in grabbed_by)
+			var/obj/item/weapon/grab/G = X
 			if(Adjacent(G))
 				a_intent = "disarm"
 				G.assailant.attack_hand(src)

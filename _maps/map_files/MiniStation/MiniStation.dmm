@@ -12882,6 +12882,14 @@
 	},
 /turf/simulated/floor/plasteel,
 /area/engine/engineering)
+"AR" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/simulated/floor/plasteel{
+	icon_state = "neutral";
+	dir = 6
+	},
+/area/hallway/primary/central)
 "AS" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/simulated/floor/plating,
@@ -47623,7 +47631,7 @@ bx
 jn
 jm
 og
-ld
+AR
 bx
 cT
 mz

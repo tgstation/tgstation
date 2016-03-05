@@ -166,7 +166,11 @@
 	if(module)
 		return
 
-	designation = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	if(!config.forbid_secborg)
+		modulelist += "Security"
+
+	designation = input("Please, select a module!", "Robot", null, null) in modulelist
 	var/animation_length = 0
 
 	if(module)
