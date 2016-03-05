@@ -94,7 +94,7 @@
 				/obj/item/weapon/coin/twoheaded = 1,
 				/obj/item/weapon/poster/contraband = 1,
 				/obj/item/weapon/poster/legit = 1,
-				/obj/item/weapon/crowbar = 1,
+				/obj/item/weapon/crowbar =1,
 				/obj/item/weapon/crowbar/red = 1,
 				/obj/item/weapon/extinguisher = 11,
 				//obj/item/weapon/gun/projectile/revolver/russian = 1, //disabled until lootdrop is a proper world proc.
@@ -120,7 +120,7 @@
 				/obj/item/weapon/wrench = 4,
 				/obj/item/weapon/relic = 3,
 				/obj/item/weaponcrafting/reciever = 1,
-				"" = 11
+				"" = 4
 				)
 
 /obj/effect/spawner/lootdrop/crate_spawner
