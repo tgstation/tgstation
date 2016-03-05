@@ -24,7 +24,7 @@
 			target.dna.add_mutation(A)
 		target.disabilities |= disabilities
 		spawn(duration)
-			if(target && !target.gc_destroyed)
+			if(target && !qdeleted(target))
 				for(var/A in mutations)
 					target.dna.remove_mutation(A)
 				target.disabilities &= ~disabilities
