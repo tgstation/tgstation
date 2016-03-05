@@ -1,7 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-- tweak: Allowed bigger items to be kicked. When kicking an item directly below you, it'll fly in the direction you're facing.
-- tweak: Some things will now visibly shake when kicked.
