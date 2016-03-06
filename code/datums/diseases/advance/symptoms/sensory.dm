@@ -32,19 +32,19 @@ Bonus
 			if(2)
 				if(M.reagents.get_reagent_amount("inacusiate")<10)
 					M.reagents.add_reagent("inacusiate"=10)
-					M << "<span class='notice'><b>Your hearing feels clearer and crisp</b></span>"
+					M << "<span class='notice'>Your hearing feels clearer and crisp.</span>"
 			if(3)
 				if(M.reagents.get_reagent_amount("antihol") < 10 && M.reagents.get_reagent_amount("inacusiate") < 10 )
 					M.reagents.add_reagent_list(list("antihol"=10, "inacusiate"=10))
-					M << "<span class='notice'><b>You feel sober.</b></span>"
+					M << "<span class='notice'>You feel sober.</span>"
 			if(4)
 				if(M.reagents.get_reagent_amount("antihol") < 10 && M.reagents.get_reagent_amount("inacusiate") < 10 && M.reagents.get_reagent_amount("synaptizine") < 10)
 					M.reagents.add_reagent_list(list("antihol"=10, "inacusiate"=10, "synaptizine"=5))
-					M << "<span class='notice'><b>You feel focused.</b></span>"
+					M << "<span class='notice'>You feel focused.</span>"
 			if(5)
 				if(M.reagents.get_reagent_amount("antihol") < 10 && M.reagents.get_reagent_amount("inacusiate") < 10 && M.reagents.get_reagent_amount("synaptizine") < 10 && M.reagents.get_reagent_amount("mannitol") < 10)
 					M.reagents.add_reagent_list(list("mannitol"=10, "antihol"=10, "inacusiate"=10, "synaptizine"=10))
-					M << "<span class='notice'><b>Your mind feels relaxed.</b></span>"
+					M << "<span class='notice'>Your mind feels relaxed.</span>"
 	return
 
 /*
@@ -82,14 +82,22 @@ Bonus
 			if(1)
 				M << "<span class='warning'><b>You can't taste a thing.</b></span>"
 			if(2)
-				M << "<span class='warning'><b>You can't anything with your fingers.</b></span>"
+				M << "<span class='warning'><b>You can't feel anything.</b></span>"
+				if(prob(10))
+					M.reagents.add_reagent("morphine",rand(5,7))
 			if(3)
-				M.reagents.add_reagent("ethanol",rand(7,10))
+				M.reagents.add_reagent("ethanol",rand(5,7))
 				M << "<span class='warning'><b>You feel absolutely hammered.</b></span>"
+				if(prob(15))
+					M.reagents.add_reagent("morphine",rand(5,7))
 			if(4)
 				M.reagents.add_reagent_list(list("ethanol",rand(7,15),"mindbreaker",rand(5,10)))
 				M << "<span class='warning'><b>You try to focus on not dying.</b></span>"
+				if(prob(20))
+					M.reagents.add_reagent("morphine",rand(5,7))
 			if(5)
 				M.reagents.add_reagent_list(list("impedrezene",rand(5,15),"ethanol",rand(7,20),"mindbreaker",rand(5,15)))
 				M << "<span class='warning'><b>u can count 2 potato!</b></span>"
+				if(prob(25))
+					M.reagents.add_reagent("morphine",rand(5,7))
 	return
