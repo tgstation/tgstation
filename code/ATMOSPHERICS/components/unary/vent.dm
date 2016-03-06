@@ -32,6 +32,8 @@
 	var/datum/gas_mixture/removed = air_contents.remove(volume)
 
 	loc.assume_air(removed)
+	if(network)
+		network.update = TRUE
 
 	return 1
 
@@ -61,20 +63,3 @@
 
 /obj/machinery/atmospherics/unary/vent/hide(var/i)
 	update_icon()
-
-/obj/machinery/atmospherics/unary/vent/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
-	if(pipe)
-		dir = pipe.dir
-		initialize_directions = pipe.get_pipe_dir()
-		if (pipe.pipename)
-			name = pipe.pipename
-	else
-		initialize_directions = dir
-	var/turf/T = loc
-	level = T.intact ? 2 : 1
-	initialize()
-	build_network()
-	if (node)
-		node.initialize()
-		node.build_network()
-	return 1
