@@ -479,6 +479,7 @@ var/global/list/NOIRMATRIX = list(0.33,0.33,0.33,0,\
 								  0.33,0.33,0.33,0,\
 								  0.00,0.00,0.00,1,\
 								  0.00,0.00,0.00,0)
+var/global/list/bad_changing_colour_ckeys = list()
 
 // Bustanuts
 #define M_HARDCORE      300

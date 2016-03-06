@@ -2,7 +2,7 @@
 	if(!alert && !noalert)
 		alert = 'sound/AI/commandreport.ogg'
 	var/gibberish = map.linked_to_centcomm ? 0 : 1
-	var/gibberish_main = (!map.linked_to_centcomm && force_report) ? 0 : 1
+	var/gibberish_main = (map.linked_to_centcomm || force_report) ? 0 : 1
 	var/command
 	command += "<h1 class='alert'>[gibberish ? Gibberish(command_name(),70): command_name()] Update</h1>"
 	if (title && length(title) > 0)
