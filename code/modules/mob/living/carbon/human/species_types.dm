@@ -482,7 +482,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	id = "plasmaman"
 	say_mod = "rattles"
 	sexes = 0
-	meat = /obj/item/stack/sheet/mineral/plasma
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plasma
 	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE)
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
@@ -511,7 +511,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
 
-	if(!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman))
+	if(!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) && (H.stat != DEAD))
 		if(environment)
 			var/total_moles = environment.total_moles()
 			if(total_moles)
@@ -526,6 +526,13 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 			if(istype(P))
 				P.Extinguish(H)
 	H.update_fire()
+
+/datum/species/plasmaman/spec_death(gibbed, mob/living/carbon/human/H)//Single life hard mode species.
+	if(H && !gibbed && !H.mind.changeling)//Note: add plasmamen to restricted species for ling post datum antags. This will have to do for now.
+		for(var/obj/item/W in H)
+			H.unEquip(W)
+		H.visible_message("<span class='warning'>[H]'s body crumbles away!</span>")
+		H.dust()
 
 /datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
