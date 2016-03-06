@@ -114,10 +114,12 @@
 
 /obj/item/weapon/grown/bananapeel/bluespace/Crossed(AM)
 	if(..())
-		var/teleport_radius = potency / 10
+		var/teleport_radius = max(round(potency / 10), 1)
+
 		do_teleport(AM, get_turf(AM), teleport_radius)
+		AM << "<span class='notice'>You slip through spacetime!</span>"
+
 		if(prob(50))
-			AM << "<span class='notice'>You slip through spacetime!</span>"
 			do_teleport(src, get_turf(src), teleport_radius)
 		else
 			qdel(src)

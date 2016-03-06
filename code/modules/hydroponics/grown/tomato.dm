@@ -114,7 +114,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace/squish(atom/squishee)
 	..()
-	var/teleport_radius = potency / 10
+	var/teleport_radius = max(round(potency / 10), 1)
 	if(isliving(squishee))
 		var/turf/T = get_turf(squishee)
 		new /obj/effect/decal/cleanable/molten_item(T) //Leave a pile of goo behind for dramatic effect...
