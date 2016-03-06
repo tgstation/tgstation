@@ -138,7 +138,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Spetsnaz Pyro bundle"
 	desc = "For systematic suppression of carbon lifeforms in close range: Contains a specialist Pyrotechnic equipment, foreign pistol, two magazines, a pipebomb, and a stimulant syringe."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter
-	cost = 20
+	cost = 30
 
 // Dangerous Items
 /datum/uplink_item/dangerous
@@ -743,7 +743,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	surplus = 30
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-	
+
 /datum/uplink_item/stealthy_tools/emplight
 	name = "EMP Flashlight"
 	desc = "A small, self-charging, short-ranged EMP device disguised as a flashlight. \
