@@ -37,6 +37,11 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	..()
 	update_brightness() //Useful if you want to spawn burnt matches, or burning ones you maniac
 
+/obj/item/weapon/match/Destroy()
+	. = ..()
+
+	processing_objects -= src
+
 /obj/item/weapon/match/examine(mob/user)
 
 	..()
@@ -166,6 +171,11 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	flags |= NOREACT // so it doesn't react until you light it
 	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
 	update_brightness()
+
+/obj/item/clothing/mask/cigarette/Destroy()
+	. = ..()
+
+	processing_objects -= src
 
 /obj/item/clothing/mask/cigarette/examine(mob/user)
 
@@ -591,6 +601,11 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	light_color = LIGHT_COLOR_FIRE
 	var/lit = 0
 
+/obj/item/weapon/lighter/Destroy()
+	. = ..()
+
+	processing_objects -= src
+
 /obj/item/weapon/lighter/zippo
 	name = "Zippo lighter"
 	desc = "The Zippo lighter. Need to light a smoke ? Zippo !"
@@ -724,4 +739,3 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 			update_brightness()
 			visible_message("<span class='warning'>Without warning, \the [src] suddenly shuts off.</span>")
 			fueltime = null
-	return
