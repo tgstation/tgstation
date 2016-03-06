@@ -94,7 +94,6 @@ var/list/admin_verbs_sounds = list(
 var/list/admin_verbs_fun = list(
 	/datum/admins/proc/media_stop_all,
 	/client/proc/object_talk,
-	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
 	/client/proc/drop_emp,
@@ -121,9 +120,10 @@ var/list/admin_verbs_fun = list(
 	/client/proc/makepAI
 	)
 var/list/admin_verbs_spawn = list(
-	/datum/admins/proc/spawn_atom,		/*	Allows us to spawn instances.							*/
-	/client/proc/spawn_datum,		/*	Allows us to spawn datums to the marked datum buffer.	*/
-	/client/proc/respawn_character
+	/datum/admins/proc/spawn_atom, // Allows us to spawn instances
+	/client/proc/spawn_datum, //Allows us to spawn datums to the marked datum buffer
+	/client/proc/cmd_admin_dress, //Allows us to spawn clothing and dress a mob with it in one click
+	/client/proc/respawn_character //Allows us to re-spawn someone
 	)
 var/list/admin_verbs_server = list(
 	/client/proc/Set_Holiday,
