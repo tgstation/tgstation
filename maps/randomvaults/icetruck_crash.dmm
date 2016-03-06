@@ -1,0 +1,63 @@
+"a" = (/turf/space,/area)
+"b" = (/turf/unsimulated/mineral,/area)
+"c" = (/turf/unsimulated/mineral,/area/vault/icetruck)
+"d" = (/obj/item/weapon/rack_parts,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"e" = (/obj/item/weapon/barricade_kit,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"f" = (/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"g" = (/mob/living/simple_animal/hostile/bear/polarbear,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"h" = (/obj/item/weapon/reagent_containers/food/snacks/icecream,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"i" = (/obj/effect/landmark/corpse/doctor,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"j" = (/obj/effect/decal/cleanable/cobweb2,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"k" = (/obj/item/weapon/paper,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"l" = (/obj/effect/landmark/corpse/doctor,/obj/item/weapon/folder/white,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"m" = (/obj/effect/decal/cleanable/campfire,/obj/item/toy/gasha/snowflake,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"n" = (/obj/effect/landmark/corpse/scientist,/obj/item/weapon/lighter,/obj/item/weapon/lipstick/purple,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"o" = (/obj/item/weapon/crowbar,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"p" = (/obj/item/weapon/extinguisher/foam,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"q" = (/obj/item/weapon/ore/diamond,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"r" = (/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"s" = (/turf/unsimulated/floor/asteroid,/area/vault/icetruck)
+"t" = (/obj/item/weapon/rack_parts,/turf/unsimulated/floor/asteroid,/area/vault/icetruck)
+"u" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f6"},/area/vault/icetruck)
+"v" = (/obj/machinery/space_heater/air_conditioner,/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/vault/icetruck)
+"w" = (/turf/simulated/shuttle/wall{icon_state = "swall3"},/area/vault/icetruck)
+"x" = (/obj/structure/sink{dir = 8; pixel_x = -12; pixel_y = 2},/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/vault/icetruck)
+"y" = (/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/vault/icetruck)
+"z" = (/obj/structure/sink{dir = 4; pixel_x = 11},/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/vault/icetruck)
+"A" = (/obj/structure/sink{dir = 4; pixel_x = 11},/obj/item/weapon/reagent_containers/food/drinks/ice,/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/vault/icetruck)
+"B" = (/obj/structure/closet/secure_closet/freezer/fridge,/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/vault/icetruck)
+"C" = (/obj/item/weapon/reagent_containers/food/drinks/ice,/obj/item/weapon/reagent_containers/food/drinks/ice,/obj/item/weapon/reagent_containers/food/drinks/ice,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"D" = (/obj/machinery/cooking/icemachine,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"E" = (/obj/machinery/cooking/icemachine,/obj/item/weapon/reagent_containers/food/snacks/icecream,/obj/item/weapon/gun/energy/temperature,/obj/item/weapon/gun/energy/temperature,/obj/item/weapon/gun/energy/temperature,/turf/unsimulated/floor/snow,/area/vault/icetruck)
+"F" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f5"},/area/vault/icetruck)
+"G" = (/turf/simulated/shuttle/wall{icon_state = "swall12"},/area/vault/icetruck)
+"H" = (/turf/simulated/shuttle/wall{icon_state = "swall13"},/area/vault/icetruck)
+"I" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f9"},/area/vault/icetruck)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaa
+abaaaaaaaccccccccaaabbaaa
+aaaaaacccccccccccaaaabaaa
+aaaaccccccccddccccaaaaaaa
+aaaacccefffgfffhccccaaaaa
+aaaccccfffgiffffjcccccaaa
+aaaccccffkfffgfffcaaaaaaa
+aaaccffflgmffngfocccaaaaa
+aaaccpffgfffffffqccccaaaa
+aaaccfffffffffffcccccaaaa
+aaaacccrffssfffcccccaaaaa
+aaaccccccctdccccccccaabaa
+aaaaaccauvffvccccaaaaaaaa
+aaaaaccawxfyzwcaaaaaaaaaa
+aaaaaaaawxyyAwaaaabbaaaaa
+aaaaaaaawBfwCwaaaabbaaaaa
+aaaaaaaawDDwEwaaaaaaaaaaa
+aaaaaaaaFGGHGIaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaabbaaaaaaaaaaaaaaaaaaaa
+aaabbaaaaaaaaaaaaaaaaaaaa
+aaaabaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabaaaaaaaaabaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaabaaaaaa
+"}

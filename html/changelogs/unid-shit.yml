@@ -1,0 +1,6 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+- rscadd: Randomly selected structures will now generate somewhere on the map on the beginning of each round. Currently there are only 5 structures that can be generated, but it's very easy to make more!

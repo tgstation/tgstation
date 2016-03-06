@@ -125,7 +125,7 @@
 			var/mob/dead/observer/observer = new()
 
 			spawning = 1
-			to_chat(src, sound(null, repeat = 0, wait = 0, volume = 85, channel = 1))// MAD JAMS cant last forever yo
+			src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 
 
 			observer.started_as_observer = 1

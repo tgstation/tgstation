@@ -63,6 +63,8 @@
 	throw_speed = 4
 	throw_range = 20
 
+	var/slip_power = 4
+
 /obj/item/weapon/bananapeel/traitorpeel/Crossed(AM as mob|obj)
 	var/burned = rand(2,5)
 	if(istype(AM, /mob/living))
@@ -83,10 +85,10 @@
 		if(!istype(M, /mob/living/carbon/slime) && !isrobot(M))
 			M.stop_pulling()
 			step(M, M.dir)
-			spawn(1) step(M, M.dir)
-			spawn(2) step(M, M.dir)
-			spawn(3) step(M, M.dir)
-			spawn(4) step(M, M.dir)
+			spawn(1)
+				for(var/i = 1 to slip_power)
+					step(M, M.dir)
+					sleep(1)
 			M.take_organ_damage(2) // Was 5 -- TLE
 			M.simple_message("<span class='notice'>You slipped on \the [name]!</span>",\
 				"<span class='userdanger'>Please, just end the pain!</span>")

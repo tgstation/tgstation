@@ -323,6 +323,27 @@
 	floor_tile = getFromPool(/obj/item/stack/tile/arcade, null)
 	..()
 
+/turf/simulated/floor/damaged
+	icon_state = "damaged1"
+
+/turf/simulated/floor/damaged/New()
+	broken = prob(71) // 5 of the icon states are "damaged" icons, 2 are burned.
+	burnt  = !broken
+
+	if(broken)
+		icon_state = pick("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
+	else // Burnt states.
+		icon_state = pick("floorscorched1", "floorscorched2")
+
+	. = ..()
+
+/turf/simulated/floor/damaged/airless
+	name        = "airless floor"
+	oxygen      = 0.01
+	nitrogen    = 0.01
+	temperature = TCMB
+
 /turf/simulated/floor/plating/ironsand/New()
 	..()
 	name = "Iron Sand"
@@ -341,6 +362,21 @@
 
 /turf/simulated/floor/plating/snow/ex_act(severity)
 	return
+
+/turf/simulated/floor/plating/airless/damaged
+	icon_state = "platingdmg1"
+
+/turf/simulated/floor/plating/airless/damaged/New()
+	broken = prob(75) // 3 of the icon states are "damaged" icons, 1 is burned.
+	burnt  = !broken
+
+	if(broken)
+		icon_state = pick("platingdmg1", "platingdmg2", "platigndmg3")
+
+	else // Burnt state.
+		icon_state = "panelscorched"
+
+	. = ..()
 
 // VOX SHUTTLE SHIT
 /turf/simulated/shuttle/floor/vox

@@ -136,6 +136,9 @@
 
 #define isspace(A) (A.type == /area)
 
+//This one returns the "space" area
+#define get_space_area (get_area(locate(1,1,2))) //xd
+
 //1 line helper procs compressed into defines.
 #define Clamp(x, y, z) 	(x <= y ? y : (x >= z ? z : x))
 //x is the number you want to clamp
