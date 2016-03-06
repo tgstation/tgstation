@@ -754,6 +754,8 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=power'>Make all areas powered</A><BR>
 			<A href='?src=\ref[src];secretsfun=unpower'>Make all areas unpowered</A><BR>
 			<A href='?src=\ref[src];secretsfun=quickpower'>Power all SMES</A><BR>
+			<A href='?src=\ref[src];secretsfun=breaklink'>Break the station's link with Central Command</A><BR>
+			<A href='?src=\ref[src];secretsfun=makelink'>Make the station linked with Central Command</A><BR>
 			<A href='?src=\ref[src];secretsfun=toggleprisonstatus'>Toggle Prison Shuttle Status(Use with S/R)</A><BR>
 			<A href='?src=\ref[src];secretsfun=activateprison'>Send Prison Shuttle</A><BR>
 			<A href='?src=\ref[src];secretsfun=deactivateprison'>Return Prison Shuttle</A><BR>

@@ -1063,6 +1063,7 @@
 #include "code\modules\events\immovablerod.dm"
 #include "code\modules\events\infestation.dm"
 #include "code\modules\events\ion_storm.dm"
+#include "code\modules\events\link_with_centcomm.dm"
 #include "code\modules\events\masshallucination.dm"
 #include "code\modules\events\meteors.dm"
 #include "code\modules\events\money_hacker.dm"

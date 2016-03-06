@@ -399,3 +399,4 @@ var/global/hardcore_mode = 0
 
 //Global list of all unsimulated mineral turfs for xenoarch
 var/global/list/mineral_turfs = list()
+var/global/list/static_list = list('sound/effects/static/static1.ogg','sound/effects/static/static2.ogg','sound/effects/static/static3.ogg','sound/effects/static/static4.ogg','sound/effects/static/static5.ogg',)
