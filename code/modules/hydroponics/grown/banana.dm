@@ -71,6 +71,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bluespace
 	seed = /obj/item/seeds/banana/bluespace
 	name = "bluespace banana"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "banana_blue"
 	trash = /obj/item/weapon/grown/bananapeel/bluespace
 	filling_color = "#0000FF"
@@ -115,6 +116,8 @@
 /obj/item/weapon/grown/bananapeel/bluespace/Crossed(AM)
 	if(..())
 		var/teleport_radius = potency / 10
+		if(teleport_radius < 1) //not enough potency to teleport
+			return
 		do_teleport(AM, get_turf(AM), teleport_radius)
 		AM << "<span class='notice'>You slip through spacetime!</span>"
 		if(prob(50))
