@@ -28,6 +28,7 @@
 		"kidneys"          = list(/obj/item/organ/kidneys,20),
 		"human eyes"       = list(/obj/item/organ/eyes,   30),
 		"grey eyes"        = list(/obj/item/organ/eyes/grey,   30),
+		"vox eyes"        = list(/obj/item/organ/eyes/vox,   30),
 		"liver"            = list(/obj/item/organ/liver,  50)
 	)
 

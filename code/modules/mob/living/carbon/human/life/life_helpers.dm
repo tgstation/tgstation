@@ -180,10 +180,10 @@
 		detect = 1
 	return detect
 
-/mob/living/carbon/human/proc/has_reagent_in_blood(var/reagent_name)
-	if(!reagents)
+/mob/living/carbon/human/proc/has_reagent_in_blood(var/reagent_name,var/amount = -1)
+	if(!reagents || !ticker)
 		return 0
-	return reagents.has_reagent(reagent_name)
+	return reagents.has_reagent(reagent_name,amount)
 
 var/list/cover_protection_value_list = list()
 

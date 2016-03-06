@@ -1,2 +1,6 @@
 author: DrCelt
-changes: []
+changes: 
+- tweak: Inspired by, but not copypasted from, Gooncode, the NOIR mutation, or any other colour change now fades in and out slowly.
+- rscadd: Adds a colour_matrix variable to both simple animals and eye organs to allow for cool stuff in the future.
+- rscadd: You can temporarily turn yourself noir by drinking some Joe.
+- rscadd: When transition to NOIR is activated, a song will play.

@@ -37,7 +37,6 @@
 			client.screen -= spell_master
 
 	client.reset_screen()				//remove hud items just in case
-	client.color = null
 	hud_used = new /datum/hud(src)
 	gui_icons = new /datum/ui_icons(src)
 	client.screen += catcher //Catcher of clicks
@@ -87,3 +86,5 @@
 	if(client && client.haszoomed && !client.holder)
 		client.view = world.view
 		client.haszoomed = 0
+
+	update_colour()

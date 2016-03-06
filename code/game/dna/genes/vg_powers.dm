@@ -121,11 +121,6 @@ Obviously, requires DNA2.
 		return 0
 	return ..(M,flags)
 
-var/list/NOIRLIST = list(0.3,0.3,0.3,0,\
-			 			 0.3,0.3,0.3,0,\
-						 0.3,0.3,0.3,0,\
-						 0.0,0.0,0.0,1,)
-
 /datum/dna/gene/basic/noir
 	name="Noir"
 	desc = "In recent years, there's been a real push towards 'Detective Noir' movies, but since the last black and white camera was lost many centuries ago, Scientists had to develop a way to turn any movie noir."
@@ -138,12 +133,10 @@ var/list/NOIRLIST = list(0.3,0.3,0.3,0,\
 	block=NOIRBLOCK
 	..()
 
-/datum/dna/gene/basic/noir/OnMobLife(var/mob/M)
+/datum/dna/gene/basic/noir/activate(var/mob/M)
 	..()
-	if(M.client && M.client.color != NOIRLIST)
-		M.client.color = NOIRLIST
+	M.update_colour()
 
 /datum/dna/gene/basic/noir/deactivate(var/mob/M,var/connected,var/flags)
 	if(..())
-		if(M.client)
-			M.client.color = null
+		M.update_colour()

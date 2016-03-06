@@ -502,7 +502,7 @@ var/global/list/whitelisted_species = list("Human")
 		"kidneys" =  /datum/organ/internal/kidney,
 		"brain" =    /datum/organ/internal/brain,
 		"appendix" = /datum/organ/internal/appendix,
-		"eyes" =     /datum/organ/internal/eyes
+		"eyes" =     /datum/organ/internal/eyes/vox
 	)
 
 	equip(var/mob/living/carbon/human/H)

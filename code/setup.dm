@@ -474,6 +474,12 @@ var/global/list/BODY_COVER_VALUE_LIST=list("[HEAD]" = COVER_PROTECTION_HEAD,"[EY
 #define M_FARSIGHT	212		// Increases mob's view range by 2
 #define M_NOIR		213		// aww yis detective noir
 
+var/global/list/NOIRMATRIX = list(0.33,0.33,0.33,0,\
+				 				  0.33,0.33,0.33,0,\
+								  0.33,0.33,0.33,0,\
+								  0.00,0.00,0.00,1,\
+								  0.00,0.00,0.00,0)
+
 // Bustanuts
 #define M_HARDCORE      300
 
@@ -909,6 +915,11 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define IS_SYNTHETIC 16384 // from baystation
 
 #define NO_SKIN 32768
+
+var/default_colour_matrix = list(1,0,0,0,\
+								 0,1,0,0,\
+								 0,0,1,0,\
+								 0,0,0,1)
 
 //species chemical flags
 #define NO_DRINK 1

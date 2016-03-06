@@ -86,6 +86,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	universal_understand = 1
 
 	var/life_tick = 0
+	var/list/colourmatrix = list()
 
 /mob/living/simple_animal/apply_beam_damage(var/obj/effect/beam/B)
 	var/lastcheck=last_beamchecks["\ref[B]"]

@@ -3483,12 +3483,13 @@
 	adj_sleepy = -2
 	adj_temp = 25
 	custom_metabolism = 0.1
+	var/causes_jitteriness = 1
 
 /datum/reagent/drink/coffee/on_mob_life(var/mob/living/M)
 
 	if(..()) return 1
-
-	M.Jitter(5)
+	if(causes_jitteriness)
+		M.Jitter(5)
 	if(adj_temp > 0 && holder.has_reagent("frostoil"))
 		holder.remove_reagent("frostoil", 10 * REAGENTS_METABOLISM)
 
@@ -4814,6 +4815,11 @@ var/global/list/tonio_doesnt_remove=list("tonio", "blood")
 	name = "Joe"
 	id = "detcoffee"
 	description = "Bitter, black, and tasteless. It's the way I've always had my joe, and the way I was having it when one of the officers came running toward me. The chief medical officer got axed, and no one knew who did it. I reluctantly took one last drink before putting on my coat and heading out. I knew that by the time I was finished, my joe would have fallen to a dreadfully low temperature, but I had work to do."
+	causes_jitteriness = 0
+
+/datum/reagent/drink/coffee/detcoffee/on_mob_life(var/mob/living/M)
+	..()
+	M.update_colour()
 
 /datum/reagent/drink/coffee/etank
 	name = "Recharger"

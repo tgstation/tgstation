@@ -164,6 +164,12 @@
 	prosthetic_name = "grey visual prosthesis"
 	organ_type = /datum/organ/internal/eyes/grey
 
+/obj/item/organ/eyes/vox
+	name = "vox eyeballs"
+	icon_state = "eyes-vox"
+	prosthetic_name = "vox visual prosthesis"
+	organ_type = /datum/organ/internal/eyes/vox
+
 /obj/item/organ/eyes/adv_1
 	name = "advanced prosthesis eyeballs"
 	robotic = 2

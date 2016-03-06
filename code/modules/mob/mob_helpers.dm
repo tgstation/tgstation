@@ -14,6 +14,49 @@
 	if(isStunned() || restrained())
 		return 1
 
+/mob/proc/get_screen_colour()
+	if(!client)
+		return 0
+	if(M_NOIR in mutations)
+		return NOIRMATRIX
+
+/mob/dead/observer/get_screen_colour()
+	return default_colour_matrix
+
+/mob/living/simple_animal/get_screen_colour()
+	. = ..()
+	if(.)
+		return .
+	else if(src.colourmatrix.len)
+		return src.colourmatrix
+
+/mob/living/carbon/human/get_screen_colour()
+	. = ..()
+	if(.)
+		return .
+	else if(has_reagent_in_blood("detcoffee",4))
+		return NOIRMATRIX
+	var/datum/organ/internal/eyes/eyes = internal_organs_by_name["eyes"]
+	if(eyes.colourmatrix.len && !(eyes.robotic))
+		return eyes.colourmatrix
+	else return default_colour_matrix
+
+/mob/proc/update_colour(var/time = 50)
+	if(!client ||  client.updating_colour)
+		return
+	var/list/colour_to_apply = get_screen_colour()
+	var/list/difference = difflist(client.color,colour_to_apply)
+	if(difference || !(client.color))
+		client.updating_colour = 1
+		if(colour_to_apply == NOIRMATRIX)
+			time = 170
+			src << sound('sound/misc/noirdarkcoffee.ogg')
+		client.colour_transition(colour_to_apply,time = time)
+		spawn(time)
+			if(client && client.mob == src)
+				client.color = colour_to_apply
+			client.updating_colour = 0
+
 /proc/RemoveAllFactionIcons(var/datum/mind/M)
 	ticker.mode.update_cult_icons_removed(M)
 	ticker.mode.update_rev_icons_removed(M)
