@@ -14,7 +14,7 @@
 	var/maturation = 0
 	var/production = 0
 	var/yield = 0
-	var/plant_type = 0
+	var/plant_type = PLANT_NORMAL
 	var/bitesize_mod = 0
 	// If set, bitesize = 1 + round(reagents.total_volume / bitesize_mod)
 	var/list/reagents_add = list()
@@ -70,11 +70,11 @@
 		var/msg
 		msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
 		switch(plant_type)
-			if(0)
+			if(PLANT_NORMAL)
 				msg += "- Plant type: <i>Normal plant</i>\n"
-			if(1)
+			if(PLANT_WEED)
 				msg += "- Plant type: <i>Weed</i>.  Can grow in nutrient-poor soil.\n"
-			if(2)
+			if(PLANT_MUSHROOM)
 				msg += "- Plant type: <i>Mushroom</i>.  Can grow in dry soil.\n"
 			else
 				msg += "- Plant type: <i>UNKNOWN</i>. \n"

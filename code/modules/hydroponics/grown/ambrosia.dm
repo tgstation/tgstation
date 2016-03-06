@@ -21,6 +21,7 @@
 	endurance = 25
 	yield = 6
 	potency = 5
+	icon_dead = "ambrosia-dead"
 	mutatelist = list(/obj/item/seeds/ambrosia/deus)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris

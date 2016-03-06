@@ -10,6 +10,8 @@
 	production = 4
 	potency = 15
 	growthstages = 4
+	icon_grow = "soybean-grow"
+	icon_dead = "soybean-dead"
 	mutatelist = list(/obj/item/seeds/soya/koi)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
@@ -27,7 +29,7 @@
 	name = "pack of koibean seeds"
 	desc = "These seeds grow into koibean plants."
 	icon_state = "seed-koibean"
-	species = "soybean"
+	species = "koibean"
 	plantname = "Koibean Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
 	mutatelist = list()

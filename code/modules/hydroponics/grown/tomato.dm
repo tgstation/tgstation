@@ -7,6 +7,8 @@
 	plantname = "Tomato Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	maturation = 8
+	icon_grow = "tomato-grow"
+	icon_dead = "tomato-dead"
 	mutatelist = list(/obj/item/seeds/tomato/blue, /obj/item/seeds/tomato/blood, /obj/item/seeds/tomato/killer)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
@@ -64,6 +66,7 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue
 	yield = 2
 	mutatelist = list(/obj/item/seeds/tomato/blue/bluespace)
+	icon_grow = "bluetomato-grow"
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue
@@ -129,6 +132,9 @@
 	yield = 2
 	oneharvest = 1
 	growthstages = 2
+	icon_grow = "killertomato-grow"
+	icon_harvest = "killertomato-harvest"
+	icon_dead = "killertomato-dead"
 	mutatelist = list()
 	rarity = 30
 

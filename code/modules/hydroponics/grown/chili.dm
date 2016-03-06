@@ -11,6 +11,9 @@
 	production = 5
 	yield = 4
 	potency = 20
+	icon_grow = "chili-grow" // Uses one growth icons set for all the subtypes
+	icon_dead = "chili-dead" // Same for the dead icon
+
 	mutatelist = list(/obj/item/seeds/chili/ice, /obj/item/seeds/chili/ghost)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili

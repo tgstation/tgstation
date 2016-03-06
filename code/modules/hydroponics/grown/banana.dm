@@ -8,13 +8,13 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	lifespan = 50
 	endurance = 30
+	icon_dead = "banana-dead"
 	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	seed = /obj/item/seeds/banana
 	name = "banana"
 	desc = "It's an excellent prop for a clown."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "banana"
 	item_state = "banana"
 	trash = /obj/item/weapon/grown/bananapeel
@@ -44,6 +44,7 @@
 	species = "mimana"
 	plantname = "Mimana Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/mime
+	growthstages = 4
 	mutatelist = list()
 	rarity = 15
 
@@ -63,6 +64,7 @@
 	desc = "They're seeds that grow into bluespace banana trees. When grown, keep away from bluespace clown."
 	icon_state = "seed-banana-blue"
 	species = "bluespacebanana"
+	icon_grow = "banana-grow"
 	plantname = "Bluespace Banana Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bluespace
 	mutatelist = list()
@@ -84,7 +86,6 @@
 /obj/item/weapon/grown/bananapeel
 	name = "banana peel"
 	desc = "A peel from a banana."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
 	w_class = 1
@@ -108,7 +109,6 @@
 /obj/item/weapon/grown/bananapeel/bluespace
 	name = "bluespace banana peel"
 	desc = "A peel from a bluespace banana."
-	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "banana_peel_blue"
 	origin_tech = "bluespace=3"
 
@@ -116,8 +116,8 @@
 	if(..())
 		var/teleport_radius = potency / 10
 		do_teleport(AM, get_turf(AM), teleport_radius)
-		AM << "<span class='notice'>You slip through spacetime!</span>"
 		if(prob(50))
+			AM << "<span class='notice'>You slip through spacetime!</span>"
 			do_teleport(src, get_turf(src), teleport_radius)
 		else
 			qdel(src)
@@ -133,5 +133,4 @@
 /obj/item/weapon/grown/bananapeel/mimanapeel
 	name = "mimana peel"
 	desc = "A mimana peel."
-	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "mimana_peel"

@@ -11,6 +11,7 @@
 	production = 5
 	yield = 5
 	growthstages = 5
+	icon_dead = "tea-dead"
 	mutatelist = list(/obj/item/seeds/tea/astra)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea
@@ -53,6 +54,7 @@
 	production = 5
 	yield = 5
 	growthstages = 5
+	icon_dead = "coffee-dead"
 	mutatelist = list(/obj/item/seeds/coffee/robusta)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/coffee

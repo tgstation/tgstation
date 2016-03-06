@@ -12,6 +12,8 @@
 	potency = 20
 	oneharvest = 1
 	growthstages = 3
+	icon_grow = "poppy-grow"
+	icon_dead = "poppy-dead"
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
@@ -75,7 +77,7 @@
 	potency = 30
 	oneharvest = 1
 	growthstages = 4
-	plant_type = 1
+	plant_type = PLANT_WEED
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell
@@ -87,6 +89,40 @@
 	reagents_add = list("nutriment" = 0.05)
 	bitesize_mod = 3
 
+
+// Sunflower
+/obj/item/seeds/sunflower
+	name = "pack of sunflower seeds"
+	desc = "These seeds grow into sunflowers."
+	icon_state = "seed-sunflower"
+	species = "sunflower"
+	plantname = "Sunflowers"
+	product = /obj/item/weapon/grown/sunflower
+	endurance = 20
+	production = 2
+	yield = 2
+	oneharvest = 1
+	growthstages = 3
+	icon_grow = "sunflower-grow"
+	icon_dead = "sunflower-dead"
+	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
+
+/obj/item/weapon/grown/sunflower // FLOWER POWER!
+	seed = /obj/item/seeds/sunflower
+	name = "sunflower"
+	desc = "It's beautiful! A certain person might beat you to death if you trample these."
+	icon_state = "sunflower"
+	damtype = "fire"
+	force = 0
+	slot_flags = SLOT_HEAD
+	throwforce = 0
+	w_class = 1
+	throw_speed = 1
+	throw_range = 3
+
+/obj/item/weapon/grown/sunflower/attack(mob/M, mob/user)
+	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
+	user << "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'>strikes [M]</font>"
 
 // Moonflower
 /obj/item/seeds/sunflower/moonflower
@@ -108,38 +144,6 @@
 	filling_color = "#E6E6FA"
 	reagents_add = list("moonshine" = 0.1, "vitamin" = 0.02, "nutriment" = 0.02)
 	bitesize_mod = 2
-
-// Sunflower
-/obj/item/seeds/sunflower
-	name = "pack of sunflower seeds"
-	desc = "These seeds grow into sunflowers."
-	icon_state = "seed-sunflower"
-	species = "sunflower"
-	plantname = "Sunflowers"
-	product = /obj/item/weapon/grown/sunflower
-	endurance = 20
-	production = 2
-	yield = 2
-	oneharvest = 1
-	growthstages = 3
-	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
-
-/obj/item/weapon/grown/sunflower // FLOWER POWER!
-	seed = /obj/item/seeds/sunflower
-	name = "sunflower"
-	desc = "It's beautiful! A certain person might beat you to death if you trample these."
-	icon_state = "sunflower"
-	damtype = "fire"
-	force = 0
-	slot_flags = SLOT_HEAD
-	throwforce = 0
-	w_class = 1
-	throw_speed = 1
-	throw_range = 3
-
-/obj/item/weapon/grown/sunflower/attack(mob/M, mob/user)
-	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
-	user << "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'>strikes [M]</font>"
 
 // Novaflower
 /obj/item/seeds/sunflower/novaflower
@@ -164,7 +168,7 @@
 	w_class = 1
 	throw_speed = 1
 	throw_range = 3
-	plant_type = 0
+	plant_type = PLANT_NORMAL
 	attack_verb = list("roasted", "scorched", "burned")
 
 /obj/item/weapon/grown/novaflower/add_juice()

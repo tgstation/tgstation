@@ -80,7 +80,6 @@
 	..()
 
 /obj/machinery/hydroponics/proc/FindConnected()
-
 	var/list/connected = list()
 	var/list/processing_atoms = list(src)
 
@@ -118,7 +117,6 @@
 		return
 
 /obj/machinery/hydroponics/process()
-
 	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
 
 	if(myseed && (myseed.loc != src))
@@ -137,7 +135,7 @@
 				adjustNutri(-1 / rating)
 
 			// Lack of nutrients hurts non-weeds
-			if(nutrilevel <= 0 && myseed.plant_type != 1)
+			if(nutrilevel <= 0 && myseed.plant_type != PLANT_WEED)
 				adjustHealth(-rand(1,3))
 
 //Photosynthesis/////////////////////////////////////////////////////////
@@ -145,7 +143,7 @@
 			if(isturf(loc))
 				var/turf/currentTurf = loc
 				var/lightAmt = currentTurf.lighting_lumcount
-				if(myseed.plant_type == 2) // Mushroom
+				if(myseed.plant_type == PLANT_MUSHROOM)
 					if(lightAmt < 2)
 						adjustHealth(-1 / rating)
 				else // Non-mushroom
@@ -157,7 +155,7 @@
 			adjustWater(-rand(1,6) / rating)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
-			if(waterlevel <= 10 && myseed.plant_type != 2)
+			if(waterlevel <= 10 && myseed.plant_type != PLANT_MUSHROOM)
 				adjustHealth(-rand(0,1) / rating)
 				if(waterlevel <= 0)
 					adjustHealth(-rand(0,2) / rating)
@@ -184,7 +182,7 @@
 				adjustHealth(-1 / rating)
 
 			// If it's a weed, it doesn't stunt the growth
-			if(weedlevel >= 5 && myseed.plant_type != 1 )
+			if(weedlevel >= 5 && myseed.plant_type != PLANT_WEED)
 				adjustHealth(-1 / rating)
 
 //Health & Age///////////////////////////////////////////////////////////
@@ -215,7 +213,7 @@
 
 		if(weedlevel >= 10 && prob(50)) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(planted)
-				if(myseed.plant_type == 0) // If a normal plant
+				if(myseed.plant_type == PLANT_NORMAL) // If a normal plant
 					weedinvasion()
 			else
 				weedinvasion() // Weed invasion into empty tray
@@ -244,50 +242,15 @@
 	return
 
 /obj/machinery/hydroponics/update_icon()
-
 	//Refreshes the icon and sets the luminosity
 	overlays.Cut()
 
-	var/n = 0
-
-	for(var/Dir in cardinal)
-
-		var/obj/machinery/hydroponics/t = locate() in get_step(src,Dir)
-		if(t && t.anchored == 2 && src.anchored == 2)
-			n += Dir
-
-	icon_state = "hoses-[n]"
-
+	update_icon_hoses()
 	UpdateDescription()
 
 	if(planted)
-		var/image/I
-		if(dead)
-			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-dead")
-		else if(harvest)
-			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
-				I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]")
-			else
-				I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-harvest")
-		else if(age < myseed.maturation)
-			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages ) // Make sure it won't crap out due to HERPDERP 6 stages only
-			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[round(t_growthstate)]")
-			lastproduce = age //Cheating by putting this here, it means that it isn't instantly ready to harvest
-		else
-			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
-		I.layer = MOB_LAYER + 0.1
-		overlays += I
-
-		if(waterlevel <= 10)
-			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3")
-		if(nutrilevel <= 2)
-			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lownutri3")
-		if(health <= (myseed.endurance / 2))
-			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowhealth3")
-		if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_alert3")
-		if(harvest)
-			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_harvest3")
+		update_icon_plant()
+		update_icon_lights()
 
 	if(istype(myseed,/obj/item/seeds/glowshroom))
 		SetLuminosity(round(myseed.potency / 10))
@@ -295,6 +258,46 @@
 		SetLuminosity(0)
 
 	return
+
+/obj/machinery/hydroponics/proc/update_icon_hoses()
+	var/n = 0
+	for(var/Dir in cardinal)
+		var/obj/machinery/hydroponics/t = locate() in get_step(src,Dir)
+		if(t && t.anchored == 2 && src.anchored == 2)
+			n += Dir
+
+	icon_state = "hoses-[n]"
+
+/obj/machinery/hydroponics/proc/update_icon_plant()
+	var/image/I
+	if(dead)
+		I = image('icons/obj/hydroponics/growing.dmi', icon_state = myseed.icon_dead)
+	else if(harvest)
+		if(!myseed.icon_harvest)
+			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.icon_grow][myseed.growthstages]")
+		else
+			I = image('icons/obj/hydroponics/growing.dmi', icon_state = myseed.icon_harvest)
+	else if(age < myseed.maturation)
+		var/t_growthstate = min(round((age / myseed.maturation) * myseed.growthstages), myseed.growthstages)
+		I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.icon_grow][t_growthstate]")
+		lastproduce = age //Cheating by putting this here, it means that it isn't instantly ready to harvest
+	else
+		I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.icon_grow][myseed.growthstages]") // Same
+	I.layer = MOB_LAYER + 0.1
+	overlays += I
+
+/obj/machinery/hydroponics/proc/update_icon_lights()
+	if(waterlevel <= 10)
+		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3")
+	if(nutrilevel <= 2)
+		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lownutri3")
+	if(health <= (myseed.endurance / 2))
+		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowhealth3")
+	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
+		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_alert3")
+	if(harvest)
+		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_harvest3")
+
 
 /obj/machinery/hydroponics/proc/UpdateDescription()
 	desc = null
@@ -836,9 +839,9 @@
 			user << "[src] is empty."
 		user << "Water: [waterlevel]/[maxwater]"
 		user << "Nutrient: [nutrilevel]/[maxnutri]"
-		if(weedlevel >= 5) // Visual aid for those blind
+		if(weedlevel >= 5)
 			user << "[src] is filled with weeds!"
-		if(pestlevel >= 5) // Visual aid for those blind
+		if(pestlevel >= 5)
 			user << "[src] is filled with tiny worms!"
 		user << "" // Empty line for readability.
 
@@ -952,70 +955,50 @@
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
 /obj/machinery/hydroponics/proc/adjustNutri(adjustamt)
-	nutrilevel += adjustamt
-	nutrilevel = max(nutrilevel, 0)
-	nutrilevel = min(nutrilevel, maxnutri)
+	nutrilevel = Clamp(nutrilevel + adjustamt, 0, maxnutri)
 
 /obj/machinery/hydroponics/proc/adjustWater(adjustamt)
-	waterlevel += adjustamt
-	waterlevel = max(waterlevel, 0)
-	waterlevel = min(waterlevel, maxwater)
+	waterlevel = Clamp(waterlevel + adjustamt, 0, maxwater)
+
 	if(adjustamt>0)
 		adjustToxic(-round(adjustamt/4))//Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
 
 /obj/machinery/hydroponics/proc/adjustHealth(adjustamt)
 	if(planted && !dead)
-		health += adjustamt
-		health = max(health, 0)
-		health = min(health, myseed.endurance)
+		health = Clamp(health + adjustamt, 0, myseed.endurance)
 
 /obj/machinery/hydroponics/proc/adjustToxic(adjustamt)
-	toxic += adjustamt
-	toxic = max(toxic, 0)
-	toxic = min(toxic, 100)
+	toxic = Clamp(toxic + adjustamt, 0, 100)
 
 /obj/machinery/hydroponics/proc/adjustPests(adjustamt)
-	pestlevel += adjustamt
-	pestlevel = max(pestlevel, 0)
-	pestlevel = min(pestlevel, 10)
+	pestlevel = Clamp(pestlevel + adjustamt, 0, 10)
 
 /obj/machinery/hydroponics/proc/adjustWeeds(adjustamt)
-	weedlevel += adjustamt
-	weedlevel = max(weedlevel, 0)
-	weedlevel = min(weedlevel, 10)
+	weedlevel = Clamp(weedlevel + adjustamt, 0, 10)
 
 /// Seed Setters ///
-/obj/machinery/hydroponics/proc/adjustSYield(adjustamt)//0,10
+/obj/machinery/hydroponics/proc/adjustSYield(adjustamt)
 	if(myseed && myseed.yield != -1) // Unharvestable shouldn't suddenly turn harvestable
-		myseed.yield += adjustamt
-		myseed.yield = max(myseed.yield, 0)
-		myseed.yield = min(myseed.yield, 10)
-		if(myseed.yield <= 0 && myseed.plant_type == 2)
+		myseed.yield = Clamp(myseed.yield + adjustamt, 0, 10)
+
+		if(myseed.yield <= 0 && myseed.plant_type == PLANT_MUSHROOM)
 			myseed.yield = 1 // Mushrooms always have a minimum yield of 1.
 
-/obj/machinery/hydroponics/proc/adjustSLife(adjustamt)//10,100
+/obj/machinery/hydroponics/proc/adjustSLife(adjustamt)
 	if(myseed)
-		myseed.lifespan += adjustamt
-		myseed.lifespan = max(myseed.lifespan, 10)
-		myseed.lifespan = min(myseed.lifespan, 100)
+		myseed.lifespan = Clamp(myseed.lifespan + adjustamt, 10, 100)
 
-/obj/machinery/hydroponics/proc/adjustSEnd(adjustamt)//10,100
+/obj/machinery/hydroponics/proc/adjustSEnd(adjustamt)
 	if(myseed)
-		myseed.endurance += adjustamt
-		myseed.endurance = max(myseed.endurance, 10)
-		myseed.endurance = min(myseed.endurance, 100)
+		myseed.endurance = Clamp(myseed.endurance + adjustamt, 10, 100)
 
-/obj/machinery/hydroponics/proc/adjustSProduct(adjustamt)//2,10
+/obj/machinery/hydroponics/proc/adjustSProduct(adjustamt)
 	if(myseed)
-		myseed.production += adjustamt
-		myseed.production = max(myseed.production, 2)
-		myseed.production = min(myseed.production, 10)
+		myseed.production = Clamp(myseed.production + adjustamt, 2, 10)
 
-/obj/machinery/hydroponics/proc/adjustSPot(adjustamt)//0,100
+/obj/machinery/hydroponics/proc/adjustSPot(adjustamt)
 	if(myseed && myseed.potency != -1) //Not all plants have a potency
-		myseed.potency += adjustamt
-		myseed.potency = max(myseed.potency, 0)
-		myseed.potency = min(myseed.potency, 100)
+		myseed.potency = Clamp(myseed.potency + adjustamt, 0, 100)
 
 /obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
 	var/list/livingplants = list(/mob/living/simple_animal/hostile/tree, /mob/living/simple_animal/hostile/killertomato)
@@ -1032,31 +1015,11 @@
 	use_power = 0
 	unwrenchable = 0
 
-/obj/machinery/hydroponics/soil/update_icon() // Same as normal but with the overlays removed - Cheridan.
-	overlays.Cut()
+/obj/machinery/hydroponics/soil/update_icon_hoses()
+	return // Has no hoses
 
-	UpdateDescription()
-
-	if(planted)
-		if(dead)
-			overlays += image('icons/obj/hydroponics/growing.dmi', icon_state= "[myseed.species]-dead")
-		else if(harvest)
-			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
-				overlays += image('icons/obj/hydroponics/growing.dmi', icon_state= "[myseed.species]-grow[myseed.growthstages]")
-			else
-				overlays += image('icons/obj/hydroponics/growing.dmi', icon_state= "[myseed.species]-harvest")
-		else if(age < myseed.maturation)
-			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages )
-			overlays += image('icons/obj/hydroponics/growing.dmi', icon_state= "[myseed.species]-grow[round(t_growthstate)]")
-			lastproduce = age
-		else
-			overlays += image('icons/obj/hydroponics/growing.dmi', icon_state= "[myseed.species]-grow[myseed.growthstages]")
-
-	if(istype(myseed,/obj/item/seeds/glowshroom))
-		SetLuminosity(round(myseed.potency/10))
-	else
-		SetLuminosity(0)
-	return
+/obj/machinery/hydroponics/soil/update_icon_lights()
+	return // Has no lights
 
 /obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user, params)
 	..()

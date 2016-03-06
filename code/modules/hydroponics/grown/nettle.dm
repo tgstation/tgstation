@@ -9,7 +9,7 @@
 	endurance = 40 // tuff like a toiger
 	yield = 4
 	growthstages = 5
-	plant_type = 1
+	plant_type = PLANT_WEED
 	mutatelist = list(/obj/item/seeds/nettle/death)
 
 /obj/item/seeds/nettle/death
@@ -38,7 +38,7 @@
 	w_class = 1
 	throw_speed = 1
 	throw_range = 3
-	plant_type = 1
+	plant_type = PLANT_WEED
 	origin_tech = "combat=1"
 	attack_verb = list("stung")
 

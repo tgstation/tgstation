@@ -13,7 +13,7 @@
 	potency = -1
 	oneharvest = 1
 	growthstages = 4
-	plant_type = 1
+	plant_type = PLANT_WEED
 
 
 // Cabbage

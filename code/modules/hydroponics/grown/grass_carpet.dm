@@ -12,6 +12,8 @@
 	production = 5
 	yield = 5
 	growthstages = 2
+	icon_grow = "grass-grow"
+	icon_dead = "grass-dead"
 	mutatelist = list(/obj/item/seeds/grass/carpet)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grass

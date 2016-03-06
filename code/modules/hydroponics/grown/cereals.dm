@@ -10,6 +10,7 @@
 	yield = 4
 	potency = 15
 	oneharvest = 1
+	icon_dead = "wheat-dead"
 	mutatelist = list(/obj/item/seeds/wheat/oat)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat

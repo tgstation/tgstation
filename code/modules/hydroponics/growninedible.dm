@@ -15,7 +15,7 @@
 	var/production = 7
 	var/yield = 2
 	var/potency = 20
-	var/plant_type = 0
+	var/plant_type = PLANT_NORMAL
 
 /obj/item/weapon/grown/New(newloc, new_potency = 50)
 	..()
@@ -43,11 +43,11 @@
 		var/msg
 		msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
 		switch(plant_type)
-			if(0)
+			if(PLANT_NORMAL)
 				msg += "- Plant type: <i>Normal plant</i>\n"
-			if(1)
+			if(PLANT_WEED)
 				msg += "- Plant type: <i>Weed</i>.  Can grow in nutrient-poor soil.\n"
-			if(2)
+			if(PLANT_MUSHROOM)
 				msg += "- Plant type: <i>Mushroom</i>.  Can grow in dry soil.\n"
 		msg += "- Potency: <i>[potency]</i>\n"
 		msg += "- Yield: <i>[yield]</i>\n"

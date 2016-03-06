@@ -12,6 +12,8 @@
 	yield = 4
 	oneharvest = 1
 	growthstages = 4
+	icon_grow = "potato-grow"
+	icon_dead = "potato-dead"
 	mutatelist = list(/obj/item/seeds/potato/sweet)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato

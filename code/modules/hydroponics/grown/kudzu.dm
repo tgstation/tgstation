@@ -11,7 +11,7 @@
 	endurance = 10
 	yield = 4
 	growthstages = 4
-	plant_type = 1
+	plant_type = PLANT_WEED
 	rarity = 30
 	var/list/mutations = list()
 

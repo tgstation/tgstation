@@ -8,6 +8,7 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
 	lifespan = 50
 	endurance = 40
+	icon_dead = "watermelon-dead"
 	mutatelist = list(/obj/item/seeds/watermelon/holy)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon

@@ -19,7 +19,7 @@
 	potency = 15
 	oneharvest = 1
 	growthstages = 4
-	plant_type = 2
+	plant_type = PLANT_MUSHROOM
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed = /obj/item/seeds/reishi
@@ -45,7 +45,7 @@
 	yield = 4
 	oneharvest = 1
 	growthstages = 3
-	plant_type = 2
+	plant_type = PLANT_MUSHROOM
 	mutatelist = list(/obj/item/seeds/angel)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
@@ -73,7 +73,7 @@
 	potency = 35
 	oneharvest = 1
 	growthstages = 3
-	plant_type = 2
+	plant_type = PLANT_MUSHROOM
 	rarity = 30
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
@@ -99,7 +99,7 @@
 	potency = 15
 	oneharvest = 1
 	growthstages = 3
-	plant_type = 2
+	plant_type = PLANT_MUSHROOM
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
 	seed = /obj/item/seeds/liberty
@@ -124,7 +124,7 @@
 	potency = 15
 	oneharvest = 1
 	growthstages = 3
-	plant_type = 2
+	plant_type = PLANT_MUSHROOM
 	mutatelist = list(/obj/item/seeds/plump/walkingmushroom)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
@@ -188,7 +188,7 @@
 	potency = 15
 	oneharvest = 1
 	growthstages = 3
-	plant_type = 2
+	plant_type = PLANT_MUSHROOM
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	seed = /obj/item/seeds/chanter
@@ -215,7 +215,7 @@
 	potency = 30 //-> brightness
 	oneharvest = 1
 	growthstages = 4
-	plant_type = 2
+	plant_type = PLANT_MUSHROOM
 	rarity = 20
 	mutatelist = list(/obj/item/seeds/glowshroom/glowcap)
 
@@ -237,7 +237,7 @@
 		production = 1
 		yield = 3
 		potency = 30
-		plant_type = 2
+		plant_type = PLANT_MUSHROOM
 	if(istype(src.loc,/mob))
 		pickup(src.loc)//adjusts the lighting on the mob
 	else
@@ -276,7 +276,10 @@
 	desc = "This mycelium -powers- into mushrooms!"
 	icon_state = "mycelium-glowcap"
 	species = "glowcap"
+	icon_grow = "glowshroom-grow"
+	icon_dead = "glowshroom-dead"
 	plantname = "Glowcaps"
+	plant_type = PLANT_MUSHROOM
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
 	mutatelist = list()
 	rarity = 30

@@ -40,6 +40,8 @@
 	endurance = 50
 	yield = 5
 	potency = 20
+	icon_grow = "lime-grow"
+	icon_dead = "lime-dead"
 	mutatelist = list(/obj/item/seeds/lime)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange
@@ -60,6 +62,8 @@
 	lifespan = 55
 	endurance = 45
 	yield = 4
+	icon_grow = "lime-grow"
+	icon_dead = "lime-dead"
 	mutatelist = list(/obj/item/seeds/cash)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon
@@ -77,6 +81,8 @@
 	species = "cashtree"
 	plantname = "Money Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit
+	icon_grow = "lime-grow"
+	icon_dead = "lime-dead"
 	lifespan = 55
 	endurance = 45
 	yield = 4

@@ -13,7 +13,8 @@
 	potency = 50
 	oneharvest = 1
 	growthstages = 3
-	plant_type = 2
+	plant_type = PLANT_MUSHROOM
+	icon_dead = "towercap-dead"
 	mutatelist = list(/obj/item/seeds/tower/steel)
 
 /obj/item/seeds/tower/steel
@@ -39,7 +40,7 @@
 	w_class = 3
 	throw_speed = 2
 	throw_range = 3
-	plant_type = 2
+	plant_type = PLANT_MUSHROOM
 	origin_tech = "materials=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	var/plank_type = /obj/item/stack/sheet/mineral/wood

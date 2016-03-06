@@ -9,6 +9,8 @@
 	lifespan = 50
 	endurance = 40
 	growthstages = 3
+	icon_grow = "pumpkin-grow"
+	icon_dead = "pumpkin-dead"
 	mutatelist = list(/obj/item/seeds/pumpkin/blumpkin)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin

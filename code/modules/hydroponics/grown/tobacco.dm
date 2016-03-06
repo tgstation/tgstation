@@ -12,6 +12,7 @@
 	oneharvest = 1
 	yield = 10
 	growthstages = 3
+	icon_dead = "tobacco-dead"
 	mutatelist = list(/obj/item/seeds/tobacco/space)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco

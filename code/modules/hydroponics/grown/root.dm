@@ -41,6 +41,7 @@
 	species = "parsnip"
 	plantname = "Parsnip"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
+	icon_dead = "carrot-dead"
 	mutatelist = list()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
@@ -86,6 +87,7 @@
 	lifespan = 60
 	endurance = 50
 	yield = 6
+	icon_dead = "whitebeet-dead"
 	oneharvest = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/redbeet

@@ -10,6 +10,8 @@
 	maturation = 5
 	production = 5
 	yield = 2
+	icon_grow = "berry-grow" // Uses one growth icons set for all the subtypes
+	icon_dead = "berry-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/berry/glow, /obj/item/seeds/berry/poison)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries
@@ -114,6 +116,8 @@
 	maturation = 5
 	production = 5
 	growthstages = 5
+	icon_grow = "cherry-grow"
+	icon_dead = "cherry-dead"
 	mutatelist = list(/obj/item/seeds/cherry/blue)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherries
@@ -161,6 +165,8 @@
 	production = 5
 	yield = 4
 	growthstages = 2
+	icon_grow = "grape-grow"
+	icon_dead = "grape-dead"
 	mutatelist = list(/obj/item/seeds/grape/green)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grapes

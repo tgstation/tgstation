@@ -11,6 +11,8 @@
 	production = 5
 	yield = 2
 	growthstages = 5
+	icon_grow = "cocoapod-grow"
+	icon_dead = "cocoapod-dead"
 	mutatelist = list(/obj/item/seeds/cocoapod/vanillapod)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
