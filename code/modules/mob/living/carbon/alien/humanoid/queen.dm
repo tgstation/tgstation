@@ -48,7 +48,7 @@
 
 /mob/living/carbon/alien/humanoid/royal/queen/movement_delay()
 	. = ..()
-	. += 5
+	. += 1
 
 
 //Queen verbs
