@@ -222,7 +222,10 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/toggle_nuke,
 	/client/proc/cmd_display_del_log,
 	/client/proc/toggle_antag_hud,
-	/client/proc/debug_huds
+	/client/proc/debug_huds,
+	/client/proc/customiseSNPC,
+	/client/proc/resetSNPC,
+	/client/proc/toggleSNPC
 	)
 
 /client/proc/add_admin_verbs()
