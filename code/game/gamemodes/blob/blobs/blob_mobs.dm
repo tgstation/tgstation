@@ -215,8 +215,8 @@
 			for(var/mob/M in viewers(src))
 				if(M.client)
 					viewing += M.client
-			var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.1)
-			I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+			var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
+			I.appearance_flags = RESET_COLOR
 			if(overmind)
 				I.color = overmind.blob_reagent_datum.complementary_color
 			flick_overlay(I, viewing, 8)
