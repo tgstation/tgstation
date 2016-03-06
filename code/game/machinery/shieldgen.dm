@@ -296,7 +296,7 @@
 ////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
 #define maxstoredpower 500
 /obj/machinery/shieldwallgen
-		name = "Shield Generator"
+		name = "shield generator"
 		desc = "A shield generator."
 		icon = 'icons/obj/stationobjs.dmi'
 		icon_state = "Shield_Gen"
@@ -319,6 +319,9 @@
 		use_power = 0
 
 		machine_flags = WRENCHMOVE | FIXED2WORK
+
+/obj/machinery/shieldwallgen/free_access
+	req_access = null
 
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)

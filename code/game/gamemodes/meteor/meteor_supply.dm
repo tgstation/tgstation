@@ -118,10 +118,10 @@
 /obj/structure/closet/crate/secure/large/meteor_shieldwallgen/New()
 
 	..()
-	new /obj/machinery/shieldwallgen(src)
-	new /obj/machinery/shieldwallgen(src)
-	new /obj/machinery/shieldwallgen(src)
-	new /obj/machinery/shieldwallgen(src)
+	new /obj/machinery/shieldwallgen/free_access(src)
+	new /obj/machinery/shieldwallgen/free_access(src)
+	new /obj/machinery/shieldwallgen/free_access(src)
+	new /obj/machinery/shieldwallgen/free_access(src)
 
 //Can protect window bays locally by putting forcefields in front of them, limited usefulness
 /obj/structure/closet/crate/secure/large/meteor_shieldgens
