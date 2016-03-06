@@ -28,23 +28,38 @@ var/global/dmm_suite/preloader/_preloader = new
 		y_offset = 0
 	var/quote = ascii2text(34)
 	var/tfile = file2text(dmm_file)//the map file we're creating
-	var/tfile_len = length(tfile)
-	var/lpos = 1 // the models definition index
+	var/is_tgm = copytext(tfile,1,3) == "//" //actual map format
+	var/lpos = findtext(tfile,quote) // the models definition index
 
 	///////////////////////////////////////////////////////////////////////////////////////
 	//first let's map model keys (e.g "aa") to their contents (e.g /turf/space{variables})
 	///////////////////////////////////////////////////////////////////////////////////////
-	var/list/grid_models = list()
-	var/key_len = length(copytext(tfile,2,findtext(tfile,quote,2,0)))//the length of the model key (e.g "aa" or "aba")
 
-	//proceed line by line
-	for(lpos=1; lpos<tfile_len; lpos=findtext(tfile,"\n",lpos,0)+1)
-		var/tline = copytext(tfile,lpos,findtext(tfile,"\n",lpos,0))
-		if(copytext(tline,1,2) != quote)//we reached the map "layout"
+	var/list/grid_models = list()
+
+	var/key_len = length(copytext(tfile,lpos+1,findtext(tfile,quote,lpos+1,0)))//the length of the model key (e.g "aa" or "aba")
+
+	//proceed key by key
+	var/next_delimiter
+	var/model_contents
+	while(1)
+		if(copytext(tfile,lpos,lpos+1) != quote)//we reached the map "layout"
 			break
-		var/model_key = copytext(tline,2,2+key_len)
-		var/model_contents = copytext(tline,findtext(tfile,"=")+3,length(tline))
+
+		var/model_key = copytext(tfile,lpos+1,lpos+1+key_len)
+
+		if(is_tgm)
+			lpos = findtext(tfile,"(",lpos+key_len+1,0)
+			next_delimiter = find_next_delimiter_position(tfile, lpos+1,")","{","}")
+			model_contents = fuse_lines(copytext(tfile,lpos+1,next_delimiter))
+
+		else
+			lpos += 8
+			next_delimiter = findtext(tfile,"\n",lpos,0)-1
+			model_contents = copytext(tfile,lpos,next_delimiter)
+
 		grid_models[model_key] = model_contents
+		lpos = findtext(tfile,"\n",next_delimiter,0)+1
 		sleep(-1)
 
 	///////////////////////////////////////////////////////////////////////////////////////
@@ -56,8 +71,7 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/ycrd=y_offset
 	var/xcrd=x_offset
 
-	for(var/zpos=findtext(tfile,"\n(1,1,",lpos,0);zpos!=0;zpos=findtext(tfile,"\n(1,1,",zpos+1,0))	//in case there's several maps to load
-
+	for(var/zpos=findtext(tfile,"\n(",lpos,0);zpos!=0;zpos=findtext(tfile,"\n(",zpos+1,0))	//in case there's several maps to load
 		zcrd++
 		world.maxz = max(world.maxz, zcrd+z_offset)//create a new z_level if needed
 
@@ -91,15 +105,13 @@ var/global/dmm_suite/preloader/_preloader = new
 
 			//reached end of current map
 			if(gpos+x_depth+1>z_depth)
+				zpos += z_depth + 1
 				break
 
 			ycrd--
 
 			sleep(-1)
 
-		//reached End Of File
-		if(findtext(tfile,quote+"}",zpos,0)+2==tfile_len)
-			break
 		sleep(-1)
 
 /**
@@ -160,7 +172,6 @@ var/global/dmm_suite/preloader/_preloader = new
 
 		sleep(-1)
 	while(dpos != 0)
-
 
 	////////////////
 	//Instanciation
@@ -233,15 +244,29 @@ var/global/dmm_suite/preloader/_preloader = new
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
 /dmm_suite/proc/trim_text(what as text,trim_quotes=0)
-	while(length(what) && (findtext(what," ",1,2)))
-		what=copytext(what,2,0)
-	while(length(what) && (findtext(what," ",length(what),0)))
-		what=copytext(what,1,length(what))
+	var/position = 1
+	var/len = length(what)
+	var/list/to_trim = list(" ", "\t")
+
 	if(trim_quotes)
-		while(length(what) && (findtext(what,quote,1,2)))
-			what=copytext(what,2,0)
-		while(length(what) && (findtext(what,quote,length(what),0)))
-			what=copytext(what,1,length(what))
+		to_trim.Add(quote)
+
+	while((position < len+1) && (copytext(what,position,position+1) in to_trim))
+		position++
+	if(position == len+1)
+		what = ""
+	else if (position > 1)
+		what = copytext(what,position,0)
+
+	len = length(what)
+	position = len+1
+	while((position > 0) && (copytext(what,position-1,position) in to_trim))
+		position--
+	if(position == 0)
+		what = ""
+	else if (position < len+1)
+		what = copytext(what,1,position)
+
 	return what
 
 //find the position of the next delimiter,skipping whatever is comprised between opening_escape and closing_escape
@@ -257,6 +282,21 @@ var/global/dmm_suite/preloader/_preloader = new
 		next_opening = findtext(text,opening_escape,position,0)
 
 	return next_delimiter
+
+//fuse a text written on several lines in one line
+/dmm_suite/proc/fuse_lines(text as text)
+	var/fused_text = ""
+	var/pos = findtext(text,"\n")
+	var/old_pos = 1
+
+	while(pos)
+		fused_text = fused_text + copytext(text,old_pos,pos)
+		old_pos = pos + 1
+		pos = findtext(text,"\n",old_pos)
+
+	fused_text = fused_text + copytext(text,old_pos)
+
+	return fused_text
 
 
 //build a list from variables in text form (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
