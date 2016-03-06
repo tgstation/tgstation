@@ -1453,7 +1453,7 @@ var/list/slot_equipment_priority = list( \
 		lying = (locked_to.lockflags & LOCKED_SHOULD_LIE) ? TRUE : FALSE //A lying value that !=1 will break this
 
 
-	else if(isUnconscious() || weakened || paralysis || resting)
+	else if(isUnconscious() || weakened || paralysis || resting || !can_stand)
 		stop_pulling()
 		lying = 1
 		canmove = 0
@@ -1465,7 +1465,7 @@ var/list/slot_equipment_priority = list( \
 		canmove = 0
 		lying = 0
 	else
-		lying = !can_stand
+		lying = 0
 		canmove = has_limbs
 
 	if(lying)
