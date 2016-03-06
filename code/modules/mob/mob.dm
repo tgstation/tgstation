@@ -52,7 +52,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 	gui_icons = null
 	qdel(hud_used)
 	hud_used = null
-	for(var/obj/leftovers in src)
+	for(var/atom/movable/leftovers in src)
 		qdel(leftovers)
 	if(on_uattack)
 		on_uattack.holder = null
