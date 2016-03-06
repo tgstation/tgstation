@@ -28,6 +28,12 @@
 			I.bots += src
 	..()
 
+/obj/machinery/bot/Destroy()
+	. = ..()
+	if(botcard)
+		qdel(botcard)
+		botcard = null
+
 /obj/machinery/bot/proc/turn_on()
 	if(stat)	return 0
 	on = 1
