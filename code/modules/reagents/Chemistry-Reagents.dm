@@ -4818,8 +4818,18 @@ var/global/list/tonio_doesnt_remove=list("tonio", "blood")
 	causes_jitteriness = 0
 
 /datum/reagent/drink/coffee/detcoffee/on_mob_life(var/mob/living/M)
-	..()
+	if(..()) return 1
 	M.update_colour()
+
+/datum/reagent/drink/coffee/detcoffee/reagent_deleted()
+	if(..()) return 1
+
+	if(!holder)
+		return
+	var/mob/M =  holder.my_atom
+
+	if(ishuman(M))
+		M.update_colour()
 
 /datum/reagent/drink/coffee/etank
 	name = "Recharger"
