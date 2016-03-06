@@ -630,61 +630,62 @@
 "mf" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor/carpet,/area/awaymission/academy/academygate)
 "mg" = (/obj/structure/closet/coffin,/turf/simulated/floor/plating,/area/awaymission/academy/academyengine)
 "mh" = (/obj/structure/rack,/obj/item/weapon/gun/magic/wand,/turf/simulated/floor/plating,/area/awaymission/academy/academyengine)
-"mi" = (/obj/machinery/gateway{dir = 9},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"mj" = (/obj/machinery/gateway{dir = 1},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"mk" = (/obj/machinery/gateway{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"ml" = (/obj/structure/rack,/obj/item/weapon/staff,/turf/simulated/floor/plating,/area/awaymission/academy/academyengine)
-"mm" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
-"mn" = (/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
-"mo" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
-"mp" = (/obj/machinery/gateway{dir = 8},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"mq" = (/obj/structure/cable,/obj/machinery/gateway/centeraway{calibrated = 1},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"mr" = (/obj/machinery/gateway{dir = 4},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"ms" = (/obj/machinery/gateway{dir = 10},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"mt" = (/obj/machinery/gateway,/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"mu" = (/obj/machinery/gateway{dir = 6},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"mv" = (/turf/simulated/floor/light,/area/awaymission/academy/academyengine)
-"mw" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/light,/area/awaymission/academy/academyengine)
-"mx" = (/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
-"my" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
-"mz" = (/obj/machinery/light,/turf/simulated/floor/carpet,/area/awaymission/academy/academygate)
-"mA" = (/obj/item/target,/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
-"mB" = (/turf/simulated/floor/carpet{icon_state = "carpetsymbol"},/area/awaymission/academy/academygate)
-"mC" = (/mob/living/simple_animal/hostile/wizard,/turf/simulated/floor/light,/area/awaymission/academy/academyengine)
-"mD" = (/obj/structure/chair/wood/normal,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
-"mE" = (/obj/machinery/door/poddoor/shutters{id = "AcademyGate"},/turf/simulated/floor/plating{dir = 2; icon_state = "warnplate"},/area/awaymission/academy/academygate)
-"mF" = (/obj/structure/chair/wood/normal{dir = 4},/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
-"mG" = (/obj/structure/table/wood/poker,/obj/item/toy/cards/deck,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
-"mH" = (/obj/structure/chair/wood/normal{dir = 8},/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
-"mI" = (/mob/living/simple_animal/hostile/wizard,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
-"mJ" = (/turf/simulated/mineral/random,/area/awaymission/academy/academycellar)
-"mK" = (/obj/effect/decal/cleanable/cobweb,/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"mL" = (/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"mM" = (/mob/living/simple_animal/hostile/skeleton,/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"mN" = (/obj/effect/decal/remains/robot,/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"mO" = (/mob/living/simple_animal/hostile/wizard,/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
-"mP" = (/obj/machinery/vending/magivend,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
-"mQ" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/bottle/gin,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
-"mR" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
-"mS" = (/obj/structure/chair/wood/normal{dir = 1},/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
-"mT" = (/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
-"mU" = (/obj/structure/reagent_dispensers/beerkeg,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
-"mV" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
-"mW" = (/obj/structure/ladder/unbreakable/rune{id = "academy_storage"},/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
-"mX" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 8},/area/awaymission/academy/academyengine)
-"mY" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 8},/area/awaymission/academy/academyengine)
-"mZ" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 4},/area/awaymission/academy/academyengine)
-"na" = (/obj/machinery/light,/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
-"nb" = (/obj/structure/ladder/unbreakable/rune{id = "academy_coldroom"},/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
-"nc" = (/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
-"nd" = (/obj/item/weapon/reagent_containers/food/snacks/meat/slab,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
-"ne" = (/obj/item/clothing/gloves/combat,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
-"nf" = (/obj/item/clothing/under/syndicate,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
-"ng" = (/obj/structure/rack,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
-"nh" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
-"ni" = (/obj/item/clothing/mask/gas/syndicate,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
-"nj" = (/mob/living/simple_animal/hostile/bear,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
-"nk" = (/turf/simulated/mineral/random,/area/template_noop)
+"mi" = (/obj/machinery/door/airlock/plasma,/turf/simulated/floor/carpet,/area/awaymission/academy/academygate)
+"mj" = (/obj/machinery/gateway{dir = 9},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"mk" = (/obj/machinery/gateway{dir = 1},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"ml" = (/obj/machinery/gateway{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"mm" = (/obj/structure/rack,/obj/item/weapon/staff,/turf/simulated/floor/plating,/area/awaymission/academy/academyengine)
+"mn" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
+"mo" = (/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
+"mp" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
+"mq" = (/obj/machinery/gateway{dir = 8},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"mr" = (/obj/structure/cable,/obj/machinery/gateway/centeraway{calibrated = 1},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"ms" = (/obj/machinery/gateway{dir = 4},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"mt" = (/obj/machinery/gateway{dir = 10},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"mu" = (/obj/machinery/gateway,/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"mv" = (/obj/machinery/gateway{dir = 6},/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"mw" = (/turf/simulated/floor/light,/area/awaymission/academy/academyengine)
+"mx" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/light,/area/awaymission/academy/academyengine)
+"my" = (/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
+"mz" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
+"mA" = (/obj/machinery/light,/turf/simulated/floor/carpet,/area/awaymission/academy/academygate)
+"mB" = (/obj/item/target,/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
+"mC" = (/turf/simulated/floor/carpet{icon_state = "carpetsymbol"},/area/awaymission/academy/academygate)
+"mD" = (/mob/living/simple_animal/hostile/wizard,/turf/simulated/floor/light,/area/awaymission/academy/academyengine)
+"mE" = (/obj/structure/chair/wood/normal,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
+"mF" = (/obj/machinery/door/poddoor/shutters{id = "AcademyGate"},/turf/simulated/floor/plating{dir = 2; icon_state = "warnplate"},/area/awaymission/academy/academygate)
+"mG" = (/obj/structure/chair/wood/normal{dir = 4},/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
+"mH" = (/obj/structure/table/wood/poker,/obj/item/toy/cards/deck,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
+"mI" = (/obj/structure/chair/wood/normal{dir = 8},/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
+"mJ" = (/mob/living/simple_animal/hostile/wizard,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
+"mK" = (/turf/simulated/mineral/random,/area/awaymission/academy/academycellar)
+"mL" = (/obj/effect/decal/cleanable/cobweb,/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"mM" = (/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"mN" = (/mob/living/simple_animal/hostile/skeleton,/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"mO" = (/obj/effect/decal/remains/robot,/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"mP" = (/mob/living/simple_animal/hostile/wizard,/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
+"mQ" = (/obj/machinery/vending/magivend,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
+"mR" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/bottle/gin,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
+"mS" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
+"mT" = (/obj/structure/chair/wood/normal{dir = 1},/turf/simulated/floor/wood,/area/awaymission/academy/academyengine)
+"mU" = (/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"mV" = (/obj/structure/reagent_dispensers/beerkeg,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"mW" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plating,/area/awaymission/academy/academygate)
+"mX" = (/obj/structure/ladder/unbreakable/rune{id = "academy_storage"},/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
+"mY" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 8},/area/awaymission/academy/academyengine)
+"mZ" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 8},/area/awaymission/academy/academyengine)
+"na" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 4},/area/awaymission/academy/academyengine)
+"nb" = (/obj/machinery/light,/turf/simulated/floor/plasteel,/area/awaymission/academy/academyengine)
+"nc" = (/obj/structure/ladder/unbreakable/rune{id = "academy_coldroom"},/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"nd" = (/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"ne" = (/obj/item/weapon/reagent_containers/food/snacks/meat/slab,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"nf" = (/obj/item/clothing/gloves/combat,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"ng" = (/obj/item/clothing/under/syndicate,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"nh" = (/obj/structure/rack,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"ni" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"nj" = (/obj/item/clothing/mask/gas/syndicate,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"nk" = (/mob/living/simple_animal/hostile/bear,/turf/simulated/floor/plating/asteroid/snow,/area/awaymission/academy/academycellar)
+"nl" = (/turf/simulated/mineral/random,/area/template_noop)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababab
@@ -791,24 +792,24 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClClGlTlUlUlUlVlClCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablIlKlKbJbJbQbJbJbJbRbJlJbFlWbFlJabababababababababababaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClClGlGlXlGlGlYlZmalClCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablIbJbJbJbJbJbJbJbJbJbJlJbFmbbFlJabababababababababababaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClGlGmcmdlYlYlYmemflGlCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImgmgbJmhmhlIlIlIlIcblIlJlJlJlJlIlIabababababababababaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClGlYlYmimjmklYlYlYlGlCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImgmgbJmlmllImmmnmnmnmnmnmomnmnmnlIababababababababaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClGlYlYmpmqmrlYlYlYlGlCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImgmgcjmlmllImnlIlIlIlIlIlIlIlIcblIlIlIababababababaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClGlGlYmsmtmulYlYlGlGlCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablIlIlIlIlIlIlIlImnlIlImvmwmvmxmxmxmxmxmylIabababababaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClCmzlGlYlYlYlYlGmzlClCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImnmomnmAmAmAmnmnlIlImvmvmvmxmxmxmxmxmxlIabababababaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClCmBlYlYlYlYmBlClCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImnmnmnmnmnmnmnmnlIlImvmvmCmxmxmDmxmxmxlIababababaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClCmEmEmEmElClCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImnmnmnmnmnmnmnmnlIlImxmxmxmxmFmGmHmImxlIabababaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaababababababmJmJmJmJmJmJabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalCmKlYmLlYmMmNlCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImAmnmnmnmnmOmnmnlIlImPmQmRmxmxmSmxmxmxlIabababaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaabababmJmJmJmJmJmJmTmTmUmUmJababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClYmMlYmVmLlYlCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImAmWmnmnmnmnmnmnlIlIlIlIlImXmYmYmYmYmZlIabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaababmJmJmTmTmTmTmTmTmTmUmUmJmJmJababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClYmLmMlYmMlYlCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImAmnmnmnnamnmnmnlIababababaaaaaaaaaaaaababaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaabmJmTmTnbmTmTmTncmTmUmUmJmJmJmJmJmJababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClClClClClClClCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaablIlIlIlIlIlIlIlIlIlIababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaabmJmTmTmTmTndmTmTmTmTmJmJmJmTnenfmJmJmJabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaabmJngmTncndmTndmTmTmTmJmJmTmTnhnimTmTmJabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaabmJngmTmTmTndmTmTmTmJmJmJmTmTmTmTnjmTmJabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaabmJngndmTmTncmTmTmTmJmJmJmTnjmTmTmTmTmJabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaabmJmJmTmTmTmTmTndmTmTmTmTmTmTndmTnjmTmJabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaabmJmJmJmTmTmTmTmTmTmTmTmTmTncmTmTmJmJabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaababmJmJmJmJmTmTmTmTmJmJmJmJmJmJmJabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaabababmJmJmJmJmJmJnkabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamilGlYlYmjmkmllYlYlYlGmiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImgmgbJmmmmlImnmomomomomompmomomolIababababababababaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClGlYlYmqmrmslYlYlYlGlCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImgmgcjmmmmlImolIlIlIlIlIlIlIlIcblIlIlIababababababaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamilGlGlYmtmumvlYlYlGlGmiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablIlIlIlIlIlIlIlImolIlImwmxmwmymymymymymzlIabababababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClCmAlGlYlYlYlYlGmAlClCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImompmomBmBmBmomolIlImwmwmwmymymymymymylIabababababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClCmClYlYlYlYmClClCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImomomomomomomomolIlImwmwmDmymymEmymymylIababababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClCmFmFmFmFlClCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImomomomomomomomolIlImymymymymGmHmImJmylIabababaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaababababababmKmKmKmKmKmKabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalCmLlYmMlYmNmOlCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImBmomomomomPmomolIlImQmRmSmymymTmymymylIabababaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabababmKmKmKmKmKmKmUmUmVmVmKababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClYmNlYmWmMlYlCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImBmXmomomomomomolIlIlIlIlImYmZmZmZmZnalIabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaababmKmKmUmUmUmUmUmUmUmVmVmKmKmKababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClYmMmNlYmNlYlCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabablImBmomomonbmomomolIababababaaaaaaaaaaaaababaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabmKmUmUncmUmUmUndmUmVmVmKmKmKmKmKmKababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalClClClClClClClCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaablIlIlIlIlIlIlIlIlIlIababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabmKmUmUmUmUnemUmUmUmUmKmKmKmUnfngmKmKmKabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabmKnhmUndnemUnemUmUmUmKmKmUmUninjmUmUmKabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabmKnhmUmUmUnemUmUmUmKmKmKmUmUmUmUnkmUmKabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabmKnhnemUmUndmUmUmUmKmKmKmUnkmUmUmUmUmKabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabmKmKmUmUmUmUmUnemUmUmUmUmUmUnemUnkmUmKabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaabmKmKmKmUmUmUmUmUmUmUmUmUmUndmUmUmKmKabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaababmKmKmKmKmUmUmUmUmKmKmKmKmKmKmKabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabababmKmKmKmKmKmKnlabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
