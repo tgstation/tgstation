@@ -45,3 +45,6 @@ players2.sqlite
 
 # Map player count config
 /maps/voting/*/playercount.txt
+
+# Runtime condenser I/O files.
+/tools/Runtime\ Condenser/*.txt
