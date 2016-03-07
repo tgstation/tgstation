@@ -37,7 +37,7 @@
 	return t
 
 //Removes a few problematic characters
-/proc/sanitize_simple(var/t,var/list/repl_chars = list("˙"="&#255;", "\n"="#","\t"="#","ďż˝"="ďż˝"))
+/proc/sanitize_simple(var/t,var/list/repl_chars = list("я"="&#255;", "\n"="#","\t"="#","пїЅ"="пїЅ"))
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
@@ -59,10 +59,10 @@ proc/resanitize_russian(var/msg, var/html = 0)
 		while(index)
 			msg = copytext(msg, 1, index) + rep + copytext(msg, index + 7)
 			index = findtext(msg, "&#x44F;")
-	var/index = findtext(msg, "˙")
+	var/index = findtext(msg, "?")
 	while(index)
 		msg = copytext(msg, 1, index) + rep + copytext(msg, index + 1)
-		index = findtext(msg, "˙")
+		index = findtext(msg, "?")
 	return msg
 
 proc/sanitize_russian(var/msg, var/html = 0)
@@ -71,10 +71,10 @@ proc/sanitize_russian(var/msg, var/html = 0)
 		rep = "&#x44F;"
 	else
 		rep = "&#255;"
-	var/index = findtext(msg, "˙")
+	var/index = findtext(msg, "я")
 	while(index)
 		msg = copytext(msg, 1, index) + rep + copytext(msg, index + 1)
-		index = findtext(msg, "˙")
+		index = findtext(msg, "я")
 	return msg
 
 /proc/rhtml_encode(var/msg, var/html = 0)
@@ -83,7 +83,7 @@ proc/sanitize_russian(var/msg, var/html = 0)
 		rep = "&#x44F;"
 	else
 		rep = "&#255;"
-	var/list/c = splittext(msg, "˙")
+	var/list/c = splittext(msg, "я")
 	if(c.len == 1)
 		c = splittext(msg, rep)
 		if(c.len == 1)
@@ -103,11 +103,11 @@ proc/sanitize_russian(var/msg, var/html = 0)
 		rep = "&#x44F;"
 	else
 		rep = "&#255;"
-	var/list/c = splittext(msg, "˙")
+	var/list/c = splittext(msg, "?")
 	if(c.len == 1)
 		c = splittext(msg, "&#255;")
 		if(c.len == 1)
-			c = splittext(msg, "&#x4FF")
+			c = splittext(msg, "&#x44F;")
 			if(c.len == 1)
 				return html_decode(msg)
 	var/out = ""
