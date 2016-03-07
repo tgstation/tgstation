@@ -431,4 +431,12 @@ var/list/advance_cures = 	list(
 		total_stage_speed += S.stage_speed
 	return total_stage_speed
 
+/datum/disease/advance/proc/totalStealth()
+	var/total_stealth = 0
+	for(var/i in symptoms)
+		var/datum/symptom/S = i
+		total_stealth += S.stealth
+	return total_stealth
+
+
 #undef RANDOM_STARTING_LEVEL
