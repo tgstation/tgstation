@@ -37,7 +37,7 @@
 	return t
 
 //Removes a few problematic characters
-/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","я"="Я"))
+/proc/sanitize_simple(var/t,var/list/repl_chars = list("я"="&#255;", "\n"="#","\t"="#","пїЅ"="пїЅ"))
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
@@ -45,19 +45,93 @@
 			index = findtext(t, char)
 	return t
 
+proc/resanitize_russian(var/msg, var/html = 0)
+	var/rep
+	if(html)
+		rep = "&#x44F;"
+		var/index = findtext(msg, "&#255;")
+		while(index)
+			msg = copytext(msg, 1, index) + rep + copytext(msg, index + 6)
+			index = findtext(msg, "&#255;")
+	else
+		rep = "&#255;"
+		var/index = findtext(msg, "&#x44F;")
+		while(index)
+			msg = copytext(msg, 1, index) + rep + copytext(msg, index + 7)
+			index = findtext(msg, "&#x44F;")
+	var/index = findtext(msg, "?")
+	while(index)
+		msg = copytext(msg, 1, index) + rep + copytext(msg, index + 1)
+		index = findtext(msg, "?")
+	return msg
+
+proc/sanitize_russian(var/msg, var/html = 0)
+	var/rep
+	if(html)
+		rep = "&#x44F;"
+	else
+		rep = "&#255;"
+	var/index = findtext(msg, "я")
+	while(index)
+		msg = copytext(msg, 1, index) + rep + copytext(msg, index + 1)
+		index = findtext(msg, "я")
+	return msg
+
+/proc/rhtml_encode(var/msg, var/html = 0)
+	var/rep
+	if(html)
+		rep = "&#x44F;"
+	else
+		rep = "&#255;"
+	var/list/c = splittext(msg, "я")
+	if(c.len == 1)
+		c = splittext(msg, rep)
+		if(c.len == 1)
+			return html_encode(msg)
+	var/out = ""
+	var/first = 1
+	for(var/text in c)
+		if(!first)
+			out += rep
+		first = 0
+		out += html_encode(text)
+	return out
+
+/proc/rhtml_decode(var/msg, var/html = 0)
+	var/rep
+	if(html)
+		rep = "&#x44F;"
+	else
+		rep = "&#255;"
+	var/list/c = splittext(msg, "?")
+	if(c.len == 1)
+		c = splittext(msg, "&#255;")
+		if(c.len == 1)
+			c = splittext(msg, "&#x44F;")
+			if(c.len == 1)
+				return html_decode(msg)
+	var/out = ""
+	var/first = 1
+	for(var/text in c)
+		if(!first)
+			out += rep
+		first = 0
+		out += html_decode(text)
+
+
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(t,list/repl_chars = null)
-	return html_encode(sanitize_simple(t,repl_chars))
+	return rhtml_encode(sanitize_simple(t,repl_chars))
 
 //Runs sanitize and strip_html_simple
-//I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
+//I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's rhtml_encode()
 /proc/strip_html(t,limit=MAX_MESSAGE_LEN)
 	return copytext((sanitize(strip_html_simple(t))),1,limit)
 
 //Runs byond's sanitization proc along-side strip_html_simple
-//I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' that html_encode() would cause
+//I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' that rhtml_encode() would cause
 /proc/adminscrub(t,limit=MAX_MESSAGE_LEN)
-	return copytext((html_encode(strip_html_simple(t))),1,limit)
+	return copytext((rhtml_encode(strip_html_simple(t))),1,limit)
 
 
 //Returns null if there is any bad text in the string
@@ -83,12 +157,12 @@
 // Used to get a properly sanitized input, of max_length
 /proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN)
 	var/name = input(user, message, title, default) as text|null
-	return trim(html_encode(name), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
+	return trim(rhtml_encode(name), max_length) //trim is "outside" because rhtml_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
 // Used to get a properly sanitized multiline input, of max_length
 /proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN)
 	var/name = input(user, message, title, default) as message|null
-	return html_encode(trim(name, max_length))
+	return rhtml_encode(trim(name, max_length))
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(t_in, allow_numbers=0, max_length=MAX_NAME_LEN)
@@ -164,7 +238,7 @@
 
 	return t_out
 
-//html_encode helper proc that returns the smallest non null of two numbers
+//rhtml_encode helper proc that returns the smallest non null of two numbers
 //or 0 if they're both null (needed because of findtext returning 0 when a value is not present)
 /proc/non_zero_min(a, b)
 	if(!a)
