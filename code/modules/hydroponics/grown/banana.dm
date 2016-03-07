@@ -10,6 +10,7 @@
 	endurance = 30
 	icon_dead = "banana-dead"
 	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace)
+	reagents_add = list("banana" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	seed = /obj/item/seeds/banana
@@ -19,7 +20,6 @@
 	item_state = "banana"
 	trash = /obj/item/weapon/grown/bananapeel
 	filling_color = "#FFFF00"
-	reagents_add = list("banana" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
 	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
@@ -36,7 +36,7 @@
 	return (OXYLOSS)
 
 
-// Mimana
+// Mimana - invisible sprites are totally a feature!
 /obj/item/seeds/banana/mime
 	name = "pack of mimana seeds"
 	desc = "They're seeds that grow into mimana trees. When grown, keep away from mime."
@@ -46,6 +46,7 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/mime
 	growthstages = 4
 	mutatelist = list()
+	reagents_add = list("nothing" = 0.1, "mutetoxin" = 0.1, "nutriment" = 0.02)
 	rarity = 15
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/mime
@@ -55,7 +56,6 @@
 	icon_state = "mimana"
 	trash = /obj/item/weapon/grown/bananapeel/mimanapeel
 	filling_color = "#FFFFEE"
-	reagents_add = list("nothing" = 0.1, "mutetoxin" = 0.1, "nutriment" = 0.02)
 
 
 // Bluespace Banana
@@ -68,6 +68,7 @@
 	plantname = "Bluespace Banana Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bluespace
 	mutatelist = list()
+	reagents_add = list("singulo" = 0.2, "banana" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
 	rarity = 30
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bluespace
@@ -77,7 +78,6 @@
 	trash = /obj/item/weapon/grown/bananapeel/bluespace
 	filling_color = "#0000FF"
 	origin_tech = "bluespace=3"
-	reagents_add = list("singulo" = 0.2, "banana" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
 
 
 
@@ -101,8 +101,8 @@
 /obj/item/weapon/grown/bananapeel/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		var/stun = Clamp(potency / 10, 1, 10)
-		var/weaken = Clamp(potency / 20, 0.5, 5)
+		var/stun = Clamp(seed.potency / 10, 1, 10)
+		var/weaken = Clamp(seed.potency / 20, 0.5, 5)
 		M.slip(stun, weaken, src)
 		return 1
 
@@ -114,7 +114,7 @@
 
 /obj/item/weapon/grown/bananapeel/bluespace/Crossed(AM)
 	if(..())
-		var/teleport_radius = max(round(potency / 10), 1)
+		var/teleport_radius = max(round(seed.potency / 10), 1)
 
 		do_teleport(AM, get_turf(AM), teleport_radius)
 		AM << "<span class='notice'>You slip through spacetime!</span>"

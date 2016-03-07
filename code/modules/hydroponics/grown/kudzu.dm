@@ -14,21 +14,17 @@
 	plant_type = PLANT_WEED
 	rarity = 30
 	var/list/mutations = list()
+	reagents_add = list("charcoal" = 0.04, "nutriment" = 0.02)
 
-/obj/item/seeds/kudzu/New(loc, obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/parent)
-	..()
-	if(parent)
-		mutations = parent.mutations
+/obj/item/seeds/kudzu/Copy()
+	var/obj/item/seeds/kudzu/S = ..()
+	S.mutations = mutations.Copy()
+	return S
 
 /obj/item/seeds/kudzu/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] swallows the pack of kudzu seeds! It looks like \he's trying to commit suicide..</span>")
 	plant(user)
 	return (BRUTELOSS)
-
-/obj/item/seeds/kudzu/harvest()
-	var/list/prod = ..()
-	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/K in prod)
-		K.mutations = mutations
 
 /obj/item/seeds/kudzu/proc/plant(mob/user)
 	if(istype(user.loc,/turf/space))
@@ -44,15 +40,14 @@
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 
 /obj/item/seeds/kudzu/get_analyzer_text()
-	var/list/mut_text = list()
+	var/text = ..()
 	var/text_string = ""
 	for(var/datum/spacevine_mutation/SM in mutations)
 		text_string += "[(text_string == "") ? "" : ", "][SM.name]"
-	mut_text += "-Plant Mutations: [(text_string == "") ? "None" : text_string]"
-	return mut_text
+	text += "\n- Plant Mutations: [(text_string == "") ? "None" : text_string]"
+	return text
 
 /obj/item/seeds/kudzu/on_chem_reaction(datum/reagents/S)
-
 	var/list/temp_mut_list = list()
 
 	if(S.has_reagent("sterilizine", 5))
@@ -90,7 +85,5 @@
 	name = "kudzu pod"
 	desc = "<I>Pueraria Virallis</I>: An invasive species with vines that rapidly creep and wrap around whatever they contact."
 	icon_state = "kudzupod"
-	var/list/mutations = list()
 	filling_color = "#6B8E23"
 	bitesize_mod = 2
-	reagents_add = list("charcoal" = 0.04, "nutriment" = 0.02)

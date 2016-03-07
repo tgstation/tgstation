@@ -13,6 +13,7 @@
 	icon_grow = "corn-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "corn-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/corn/snapcorn)
+	reagents_add = list("cornoil" = 0.1, "vitamin" = 0.04, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 	seed = /obj/item/seeds/corn
@@ -22,7 +23,6 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/popcorn
 	filling_color = "#FFFF00"
 	trash = /obj/item/weapon/grown/corncob
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 	bitesize_mod = 2
 
 /obj/item/weapon/grown/corncob
@@ -69,7 +69,7 @@
 
 /obj/item/weapon/grown/snapcorn/add_juice()
 	..()
-	snap_pops = max(round(potency/8), 1)
+	snap_pops = max(round(seed.potency/8), 1)
 
 /obj/item/weapon/grown/snapcorn/attack_self(mob/user)
 	..()

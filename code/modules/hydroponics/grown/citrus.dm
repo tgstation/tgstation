@@ -4,7 +4,6 @@
 	name = "citrus"
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 	bitesize_mod = 2
 
 // Lime
@@ -20,6 +19,7 @@
 	yield = 4
 	potency = 15
 	mutatelist = list(/obj/item/seeds/orange)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime
 	seed = /obj/item/seeds/lime
@@ -43,6 +43,7 @@
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	mutatelist = list(/obj/item/seeds/lime)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange
 	seed = /obj/item/seeds/orange
@@ -65,6 +66,7 @@
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	mutatelist = list(/obj/item/seeds/cash)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon
 	seed = /obj/item/seeds/lemon
@@ -86,6 +88,7 @@
 	lifespan = 55
 	endurance = 45
 	yield = 4
+	reagents_add = list("nutriment" = 0.05)
 	rarity = 50  // Nanotrasen approves...
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit
@@ -93,12 +96,11 @@
 	name = "Money Fruit"
 	desc = "Looks like a lemon with someone buldging from the inside."
 	icon_state = "moneyfruit"
-	reagents_add = list("nutriment" = 0.05)
 	bitesize_mod = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit/add_juice()
 	..()
-	switch(potency)
+	switch(seed.potency)
 		if(0 to 10)
 			trash = /obj/item/stack/spacecash
 		if(11 to 20)

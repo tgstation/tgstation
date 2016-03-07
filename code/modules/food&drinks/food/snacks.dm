@@ -11,7 +11,6 @@
 	var/eatverb
 	var/wrapped = 0
 	var/dried_type = null
-	var/potency = null
 	var/dry = 0
 	var/cooked_type = null  //for microwave cooking. path of the resulting item after microwaving
 	var/filling_color = "#FFFFFF" //color to use when added to custom food.
@@ -28,8 +27,9 @@
 		usr.unEquip(src)	//so icons update :[
 
 		if(trash)
-			if(ispath(trash,/obj/item/weapon/grown))
-				var/obj/item/TrashItem = new trash(usr,src.potency)
+			if(ispath(trash, /obj/item/weapon/grown) && istype(src, /obj/item/weapon/reagent_containers/food/snacks/grown))
+				var/obj/item/weapon/reagent_containers/food/snacks/grown/G = src
+				var/obj/item/TrashItem = new trash(usr, G.seed)
 				usr.put_in_hands(TrashItem)
 			else if(ispath(trash,/obj/item))
 				var/obj/item/TrashItem = new trash(usr)

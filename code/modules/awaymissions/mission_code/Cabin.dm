@@ -81,7 +81,7 @@
 		return
 	if(sound)
 		playsound(src.loc, 'sound/weapons/chainsawhit.ogg', 100, 1)
-	new L.plank_type(src.loc, 1 + round(L.potency / 25))
+	new L.plank_type(src.loc, 1 + round(L.seed.potency / 25))
 	qdel(L)
 
 /mob/living/simple_animal/chicken/rabbit/normal

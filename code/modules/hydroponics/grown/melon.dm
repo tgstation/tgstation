@@ -10,6 +10,7 @@
 	endurance = 40
 	icon_dead = "watermelon-dead"
 	mutatelist = list(/obj/item/seeds/watermelon/holy)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
 	seed = /obj/item/seeds/watermelon
@@ -21,7 +22,6 @@
 	dried_type = null
 	w_class = 3
 	filling_color = "#008000"
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.2, "water" = 0.1)
 	bitesize_mod = 3
 
 // Holymelon
@@ -33,6 +33,7 @@
 	plantname = "Holy Melon Vines"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/holymelon
 	mutatelist = list()
+	reagents_add = list("holywater" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/holymelon
@@ -42,4 +43,3 @@
 	icon_state = "holymelon"
 	filling_color = "#FFD700"
 	dried_type = null
-	reagents_add = list("holywater" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)

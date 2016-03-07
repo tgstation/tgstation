@@ -23,9 +23,15 @@
 	var/oneharvest = 0				// If a plant is cleared from the tray after harvesting, e.g. a carrot.
 	var/potency = 10				// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
 	var/growthstages = 6			// Amount of growth sprites the plant has.
-	var/plant_type = PLANT_NORMAL	// 0 = 'normal plant'; 1 = weed; 2 = shroom
+	var/plant_type = PLANT_NORMAL	// 0 = PLANT_NORMAL; 1 = PLANT_WEED; 2 = PLANT_MUSHROOM; 3 = PLANT_ALIEN
 	var/rarity = 0					// How rare the plant is. Used for giving points to cargo when shipping off to Centcom.
 	var/list/mutatelist = list()	// The type of plants that this plant can mutate into.
+	var/list/reagents_add = list()
+	// A list of reagents to add to product.
+	// Format: "reagent_id" = potency multiplier
+	// Stronger reagents must always come first to avoid being displaced by weaker ones.
+	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
+
 
 /obj/item/seeds/New(loc, parent)
 	..()
@@ -41,29 +47,140 @@
 	if(!icon_harvest && plant_type != PLANT_MUSHROOM && yield != -1)
 		icon_harvest = "[species]-harvest"
 
+/obj/item/seeds/proc/Copy()
+	var/obj/item/seeds/S = new type
+	// Copy all the stats
+	S.lifespan = lifespan
+	S.endurance = endurance
+	S.maturation = maturation
+	S.production = production
+	S.yield = yield
+	S.potency = potency
+	return S
+
+/obj/item/seeds/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
+	if(istype(Proj ,/obj/item/projectile/energy/florayield))
+
+		var/rating = 1
+		if(istype(loc, /obj/machinery/hydroponics))
+			var/obj/machinery/hydroponics/H = loc
+			rating = H.rating
+
+		if(yield == 0)//Oh god don't divide by zero you'll doom us all.
+			adjust_yield(1 * rating)
+		else if(prob(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
+			adjust_yield(1 * rating)
+	else
+		return ..()
+
+
+// Harvest procs
+/obj/item/seeds/proc/getYield()
+	var/return_yield = yield
+
+	var/obj/machinery/hydroponics/parent = loc
+	if(istype(loc, /obj/machinery/hydroponics))
+		if(parent.yieldmod == 0)
+			return_yield = min(return_yield, 1)//1 if above zero, 0 otherwise
+		else
+			return_yield *= parent.yieldmod
+
+	return return_yield
+
+/obj/item/seeds/proc/harvest(mob/user = usr)
+	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/t_amount = 0
+	var/list/result = list()
+	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+	var/product_name
+	while(t_amount < getYield())
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
+		prepare_result(t_prod)
+		result.Add(t_prod) // User gets a consumable
+		if(!t_prod)
+			return
+		t_amount++
+		product_name = t_prod.name
+	if(getYield() >= 1)
+		feedback_add_details("food_harvested","[product_name]|[getYield()]")
+	parent.update_tray()
+
+	return result
+
+/obj/item/seeds/proc/prepare_result(var/obj/item/weapon/reagent_containers/food/snacks/grown/T)
+	if(T.reagents)
+		for(var/reagent_id in reagents_add)
+			if(reagent_id == "blood") // Hack to make blood in plants always O-
+				T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id]), list("blood_type"="O-"))
+				continue
+
+			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id]))
+		return 1
+
+
+/// Setters procs ///
+/obj/item/seeds/proc/adjust_yield(adjustamt)
+	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
+		yield = Clamp(yield + adjustamt, 0, 10)
+
+		if(yield <= 0 && plant_type == PLANT_MUSHROOM)
+			yield = 1 // Mushrooms always have a minimum yield of 1.
+
+/obj/item/seeds/proc/adjust_lifespan(adjustamt)
+	lifespan = Clamp(lifespan + adjustamt, 10, 100)
+
+/obj/item/seeds/proc/adjust_endurance(adjustamt)
+	endurance = Clamp(endurance + adjustamt, 10, 100)
+
+/obj/item/seeds/proc/adjust_production(adjustamt)
+	production = Clamp(production + adjustamt, 2, 10)
+
+/obj/item/seeds/proc/adjust_potency(adjustamt)
+	potency = Clamp(potency + adjustamt, 0, 100)
+
+
 /obj/item/seeds/proc/get_analyzer_text()  //in case seeds have something special to tell to the analyzer
-	return
+	var/text = ""
+	switch(plant_type)
+		if(PLANT_NORMAL)
+			text += "- Plant type: Normal plant\n"
+		if(PLANT_WEED)
+			text += "- Plant type: Weed. Can grow in nutrient-poor soil.\n"
+		if(PLANT_MUSHROOM)
+			text += "- Plant type: Mushroom. Can grow in dry soil.\n"
+		else
+			text += "- Plant type: <span class='warning'>UNKNOWN</span> \n"
+	if(potency != -1)
+		text += "- Potency: [potency]\n"
+	if(yield != -1)
+		text += "- Yield: [yield]\n"
+	text += "- Maturation speed: [maturation]\n"
+	text += "- Production speed: [production]\n"
+	text += "- Endurance: [endurance]\n"
+	text += "- Lifespan: [lifespan]\n"
+	if(rarity)
+		text += "- Species Discovery Value: [rarity]\n"
+
+	text += "*---------*"
+
+	return text
 
 /obj/item/seeds/proc/on_chem_reaction(datum/reagents/S)  //in case seeds have some special interaction with special chems
 	return
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "*** <B>[plantname]</B> ***"
-		user << "-Plant Endurance: <span class='notice'>[endurance]</span>"
-		user << "-Plant Lifespan: <span class='notice'>[lifespan]</span>"
-		user << "-Species Discovery Value: <span class='notice'>[rarity]</span>"
-		if(yield != -1)
-			user << "-Plant Yield: <span class='notice'>[yield]</span>"
-		user << "-Plant Production: <span class='notice'>[production]</span>"
-		if(potency != -1)
-			user << "-Plant Potency: <span class='notice'>[potency]</span>"
-		var/list/text_strings = get_analyzer_text()
-		if(text_strings)
-			for(var/string in text_strings)
-				user << string
+		user << "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>"
+		var/text = get_analyzer_text()
+		if(text)
+			user << "<span class='notice'>[text]</span>"
+
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
+
+
+
+
 
 
 

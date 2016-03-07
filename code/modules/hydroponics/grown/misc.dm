@@ -31,6 +31,7 @@
 	yield = 4
 	growthstages = 1
 	mutatelist = list(/obj/item/seeds/replicapod)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage
 	seed = /obj/item/seeds/cabbage
@@ -38,7 +39,6 @@
 	desc = "Ewwwwwwwwww. Cabbage."
 	icon_state = "cabbage"
 	filling_color = "#90EE90"
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 	bitesize_mod = 2
 
 
@@ -55,6 +55,7 @@
 	maturation = 3
 	yield = 4
 	growthstages = 3
+	reagents_add = list("sugar" = 0.25)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
 	seed = /obj/item/seeds/sugarcane
@@ -62,7 +63,6 @@
 	desc = "Sickly sweet."
 	icon_state = "sugarcane"
 	filling_color = "#FFD700"
-	reagents_add = list("sugar" = 0.25)
 	bitesize_mod = 2
 
 
@@ -82,6 +82,7 @@
 	potency = 60
 	growthstages = 2
 	rarity = 60 // Obtainable only with xenobio+superluck.
+	reagents_add = list("sulfur" = 0.1, "carbon" = 0.1, "nitrogen" = 0.07, "potassium" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/gatfruit
 	seed = /obj/item/seeds/gatfruit
@@ -91,4 +92,3 @@
 	origin_tech = "combat=3"
 	trash = /obj/item/weapon/gun/projectile/revolver
 	bitesize_mod = 2
-	reagents_add = list("sulfur" = 0.1, "carbon" = 0.1, "nitrogen" = 0.07, "potassium" = 0.05)

@@ -11,6 +11,7 @@
 	icon_grow = "eggplant-grow"
 	icon_dead = "eggplant-dead"
 	mutatelist = list(/obj/item/seeds/eggplant/eggy)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	seed = /obj/item/seeds/eggplant
@@ -18,7 +19,6 @@
 	desc = "Maybe there's a chicken inside?"
 	icon_state = "eggplant"
 	filling_color = "#800080"
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 	bitesize_mod = 2
 
 // Egg-Plant
@@ -30,7 +30,7 @@
 	lifespan = 75
 	production = 12
 	mutatelist = list()
-	// No rarity: Centcom ships these to us in the exotic seeds crate.
+	reagents_add = list("nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	seed = /obj/item/seeds/eggplant/eggy
@@ -39,5 +39,4 @@
 	icon_state = "eggyplant"
 	trash = /obj/item/weapon/reagent_containers/food/snacks/egg
 	filling_color = "#F8F8FF"
-	reagents_add = list("nutriment" = 0.1)
 	bitesize_mod = 2
