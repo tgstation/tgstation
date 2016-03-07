@@ -97,12 +97,6 @@
 
 		step(src, direction)
 
-		if(buckled_mobs.len)
-			for(var/m in buckled_mobs)
-				var/mob/living/buckled_mob = m
-				if(buckled_mob.loc != loc)
-					buckled_mob.buckled = null //Temporary, so Move() succeeds.
-					buckled_mob.buckled = src //Restoring
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else

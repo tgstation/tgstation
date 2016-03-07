@@ -60,7 +60,7 @@
 			M.IgniteMob()
 
 /atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force=0)
-	if(buckled_mob && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
+	if(istype(buckled_mob) && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
 		. = buckled_mob
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
@@ -102,8 +102,6 @@
 
 
 /atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
-	if(!buckled_mob && buckled_mobs.len)
-		buckled_mob = buckled_mobs[1]
 	var/mob/living/M = unbuckle_mob(buckled_mob)
 	if(M)
 		if(M != user)

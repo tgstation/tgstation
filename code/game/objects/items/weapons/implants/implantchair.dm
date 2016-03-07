@@ -80,7 +80,7 @@
 			return
 		var/mob/M = G.affecting
 		if(M.buckled_mobs.len)
-			usr << "[M] will not fit into [src] because they have a creature on them!"
+			user << "[M] will not fit into [src] because they have a creature on them!"
 			return
 		if(put_mob(M))
 			qdel(G)
