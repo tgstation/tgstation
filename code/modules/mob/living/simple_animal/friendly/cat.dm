@@ -36,10 +36,11 @@
 
 /mob/living/simple_animal/pet/cat/update_canmove()
 	..()
-	if(client && resting)
-		icon_state = "[icon_living]_rest"
-	else
-		icon_state = "[icon_living]"
+	if(client)
+		if (resting)
+			icon_state = "[icon_living]_rest"
+		else
+			icon_state = "[icon_living]"
 
 
 /mob/living/simple_animal/pet/cat/space
