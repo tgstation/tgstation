@@ -52,7 +52,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 		move_the_basket_ball(2 + orbiting_balls.len * 2)
 
-		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 15)
+		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 30)
 
 		pixel_x = 0
 		pixel_y = 0
@@ -88,7 +88,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		energy_to_lower = energy_to_raise - 20
 		energy_to_raise += energy_to_raise
 
-		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 15)
+		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 30)
 		spawn(100)
 			if (!loc)
 				return
