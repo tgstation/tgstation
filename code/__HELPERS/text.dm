@@ -83,9 +83,9 @@ proc/sanitize_russian(var/msg, var/html = 0)
 		rep = "&#x44F;"
 	else
 		rep = "&#255;"
-	var/list/c = text2list(msg, "˙")
+	var/list/c = splittext(msg, "˙")
 	if(c.len == 1)
-		c = text2list(msg, rep)
+		c = splittext(msg, rep)
 		if(c.len == 1)
 			return html_encode(msg)
 	var/out = ""
@@ -103,11 +103,11 @@ proc/sanitize_russian(var/msg, var/html = 0)
 		rep = "&#x44F;"
 	else
 		rep = "&#255;"
-	var/list/c = text2list(msg, "˙")
+	var/list/c = splittext(msg, "˙")
 	if(c.len == 1)
-		c = text2list(msg, "&#255;")
+		c = splittext(msg, "&#255;")
 		if(c.len == 1)
-			c = text2list(msg, "&#x4FF")
+			c = splittext(msg, "&#x4FF")
 			if(c.len == 1)
 				return html_decode(msg)
 	var/out = ""
