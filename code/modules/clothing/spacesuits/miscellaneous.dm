@@ -80,7 +80,7 @@
 
 /obj/item/clothing/suit/space/clown
 	name = "clown spacesuit"
-	desc = "Many clowns tragically drowned in space before before the duck floaty was added to the suit's design."
+	desc = "Many clowns tragically drowned in space before the duck floaty was added to the suit's design."
 	icon_state = "clown-eva"
 	item_state = "clown-eva"
 	species_restricted = list("exclude","Vox")
