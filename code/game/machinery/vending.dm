@@ -107,7 +107,7 @@
 
 /obj/machinery/vending/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		if(prob(25))
 			malfunction()
 

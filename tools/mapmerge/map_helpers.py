@@ -46,17 +46,26 @@ def merge_map(newfile, backupfile, tgm):
             originalData = originalDict[originalKey]
 
             #if new tile data at x,y is the same as original tile data at x,y, add to the pile
-            if set(shitData) == frozenset(originalData):
+            if frozenset(shitData) == frozenset(originalData):
                 mergeGrid[x,y] = originalKey
                 known_keys[shitKey] = originalKey
                 unused_keys.remove(originalKey)
             else:
                 #search for the new tile data in the original dictionary, if a key is found add it to the pile, else generate a new key
-                newKey = search_data(originalDict, shitData)
+                newKey = search_key(originalDict, shitData)
                 if newKey != None:
+                    try:
+                        unused_keys.remove(newKey)
+                    except ValueError: #caused by a duplicate entry
+                        print("WARNING: Correcting duplicate dictionary entry. ({})".format(shitKey))
                     mergeGrid[x,y] = newKey
-                    known_keys[shitKey] = newKey
-                    unused_keys.remove(newKey)
+                    known_keys[shitKey] = newKey    
+                #if data at original x,y no longer exists we reuse the key immediately
+                elif search_key(shitDict, originalData) == None:
+                    mergeGrid[x,y] = originalKey
+                    originalDict[originalKey] = shitData
+                    unused_keys.remove(originalKey)
+                    known_keys[shitKey] = originalKey
                 else:
                     if len(tempDict) == 0:
                         newKey = generate_new_key(originalDict)
@@ -182,13 +191,12 @@ def write_grid_coord_small(filename, grid):
                 output.write("{}\n".format(grid[x,y]))
             output.write("{}\n\"}}\n".format(grid[x,maxy-1]))
 
-def search_data(dictionary, data):
-    found_data = None
-    try:
-        found_data = dictionary.values()[list(dictionary.keys()).index(data)]
-    except:
-        pass
-    return found_data
+def search_key(dictionary, data):
+    dataset = frozenset(data)
+    for key, value in dictionary.items():
+        if frozenset(value) == dataset:
+            return key
+    return None
 
 def generate_new_key(dictionary):
     last_key = next(reversed(dictionary))

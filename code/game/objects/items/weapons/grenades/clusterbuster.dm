@@ -66,7 +66,7 @@
 		walk_away(P,loc,rand(1,4))
 
 		spawn(rand(15,60))
-			if(P && !P.gc_destroyed)
+			if(P && !qdeleted(P))
 				P.prime()
 			qdel(src)
 

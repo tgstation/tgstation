@@ -15,6 +15,7 @@
 	maxbodytemp = 360
 	unique_name = 1
 	var/mob/camera/blob/overmind = null
+	var/obj/effect/blob/factory/factory = null
 
 /mob/living/simple_animal/hostile/blob/update_icons()
 	if(overmind)
@@ -76,7 +77,6 @@
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	flying = 1
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
-	var/obj/effect/blob/factory/factory = null
 	var/list/human_overlays = list()
 	var/is_zombie = 0
 	gold_core_spawnable = 1
@@ -182,6 +182,7 @@
 	health = 200
 	maxHealth = 200
 	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	next_move_modifier = 1.5 //slow-ass attack speed, 3 times higher than how fast the blob can attack
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	attacktext = "slams"
@@ -202,13 +203,23 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
+		var/damagesources = 0
 		if(!(locate(/obj/effect/blob) in range(2, src)))
-			adjustHealth(maxHealth*0.025) //take 2.5% maxhealth as damage when not near the blob
+			damagesources++
+		if(!factory)
+			damagesources++
+		if(damagesources)
+			for(var/i in 1 to damagesources)
+				adjustHealth(maxHealth*0.025) //take 2.5% maxhealth as damage when not near the blob or if the naut has no factory, 5% if both
 			var/list/viewing = list()
 			for(var/mob/M in viewers(src))
 				if(M.client)
 					viewing += M.client
-			flick_overlay(image('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.1), viewing, 8)
+			var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
+			I.appearance_flags = RESET_COLOR
+			if(overmind)
+				I.color = overmind.blob_reagent_datum.complementary_color
+			flick_overlay(I, viewing, 8)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount)
 	. = ..()
@@ -240,4 +251,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
 	..(gibbed)
+	if(factory)
+		factory.naut = null //remove this naut from its factory
+		factory.maxhealth = initial(factory.maxhealth)
 	flick("blobbernaut_death", src)

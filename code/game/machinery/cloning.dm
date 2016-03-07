@@ -341,7 +341,7 @@
 
 /obj/machinery/clonepod/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		go_out()
 
 /*
