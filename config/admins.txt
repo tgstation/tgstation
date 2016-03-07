@@ -9,3 +9,12 @@
 ###############################################################################################
 kloressent = Host
 lunardarkness = Host
+polyrykij = Game Admin
+zerger = Game Admin
+plin = Game Admin
+user = Game Admin
+anihillatorpol = Game Admin
+cirnonineball = Game Admin
+michaelshepard = Host
+kurotoko = Game Admin
+error909 = Game Admin
