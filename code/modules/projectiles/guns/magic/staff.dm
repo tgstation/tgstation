@@ -9,6 +9,14 @@
 	icon_state = "staffofchaos"
 	item_state = "staffofchaos"
 
+/obj/item/weapon/gun/magic/staff/fireball
+	name = "staff of fireball"
+	desc = "An artefact that shoots scorching balls of fire which explode into destructive flames"
+	fire_sound = "sound/magic/Fireball.ogg"
+	ammo_type = /obj/item/ammo_casing/magic/fireball
+	icon_state = "staffofchaos"
+	item_state = "staffofchaos"
+
 /obj/item/weapon/gun/magic/staff/change
 	name = "staff of change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
