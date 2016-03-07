@@ -382,7 +382,7 @@
 				if(CM in M.mind.spell_list)
 					M.mind.spell_list -= CM
 					qdel(CM)
-				M.mind.remove_spell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
+				M.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
 				M.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_ascend(null))
 				if(M == user)
 					M << "<span class='shadowling'><i>You project this power to the rest of the shadowlings.</i></span>"
@@ -416,31 +416,6 @@
 		S.set_up(B.reagents, 4, 0, B.loc)
 		S.start()
 	qdel(B)
-
-datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
-	name = "odd black liquid"
-	id = "blindness_smoke"
-	description = "<::ERROR::> CANNOT ANALYZE REAGENT <::ERROR::>"
-	color = "#000000" //Complete black (RGB: 0, 0, 0)
-	metabolization_rate = 100 //lel
-
-/datum/reagent/shadowling_blindness_smoke/on_mob_life(mob/living/M)
-	if(!M)
-		M = holder.my_atom
-	if(!is_shadow_or_thrall(M))
-		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"
-		M.blind_eyes(5)
-		if(prob(25))
-			M.visible_message("<b>[M]</b> claws at their eyes!")
-			M.Stun(3)
-	else
-		M << "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>"
-		M.heal_organ_damage(2,2)
-		M.adjustOxyLoss(-2)
-		M.adjustToxLoss(-2)
-	..()
-	return
-
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech //Damages nearby windows, confuses nearby carbons, and outright stuns silly cones
 	name = "Sonic Screech"
@@ -581,8 +556,8 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 											   "<span class='shadowling'><b>You feel new power flow into you. You have been gifted by your masters. You now closely resemble them. You are empowered in \
 											    darkness but wither slowly in light. In addition, Lesser Glare and Guise have been upgraded into their true forms.</b></span>")
 				thrallToRevive.set_species(/datum/species/shadow/ling/lesser)
-				thrallToRevive.mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_glare)
-				thrallToRevive.mind.remove_spell(/obj/effect/proc_holder/spell/self/lesser_shadow_walk)
+				thrallToRevive.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/lesser_glare)
+				thrallToRevive.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/lesser_shadow_walk)
 				thrallToRevive.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/glare(null))
 				thrallToRevive.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadow_walk(null))
 			if("Revive")

@@ -286,6 +286,8 @@
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		icon_state = "[icon_state]-sawn"
+		if(current_skin)
+			current_skin = "[current_skin]-sawn"
 		w_class = 3
 		item_state = "gun"
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back

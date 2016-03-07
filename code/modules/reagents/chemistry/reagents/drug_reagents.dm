@@ -42,9 +42,10 @@
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		M << "<span class='notice'>[smoke_message]</span>"
-	M.AdjustStunned(-1)
-	M.adjustStaminaLoss(-0.5*REM)
+	M.AdjustStunned(-1, 0)
+	M.adjustStaminaLoss(-0.5*REM, 0)
 	..()
+	. = 1
 
 /datum/reagent/drug/crank
 	name = "Crank"
@@ -59,34 +60,39 @@
 	var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
 	if(prob(5))
 		M << "<span class='notice'>[high_message]</span>"
-	M.AdjustParalysis(-1)
-	M.AdjustStunned(-1)
-	M.AdjustWeakened(-1)
+	M.AdjustParalysis(-1, 0)
+	M.AdjustStunned(-1, 0)
+	M.AdjustWeakened(-1, 0, 0)
 	..()
+	. = 1
 
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
 	M.adjustBrainLoss(2*REM)
-	M.adjustToxLoss(2*REM)
-	M.adjustBruteLoss(2*REM)
+	M.adjustToxLoss(2*REM, 0)
+	M.adjustBruteLoss(2*REM, 0)
 	..()
+	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage1(mob/living/M)
 	M.adjustBrainLoss(5*REM)
 	..()
 
 /datum/reagent/drug/crank/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(5*REM)
+	M.adjustToxLoss(5*REM, 0)
 	..()
+	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
-	M.adjustBruteLoss(5*REM)
+	M.adjustBruteLoss(5*REM, 0)
 	..()
+	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
 	M.adjustBrainLoss(5*REM)
-	M.adjustToxLoss(5*REM)
-	M.adjustBruteLoss(5*REM)
+	M.adjustToxLoss(5*REM, 0)
+	M.adjustBruteLoss(5*REM, 0)
 	..()
+	. = 1
 
 /datum/reagent/drug/krokodil
 	name = "Krokodil"
@@ -103,41 +109,40 @@
 	if(prob(5))
 		M << "<span class='notice'>[high_message]</span>"
 	..()
-	return
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M)
 	M.adjustBrainLoss(0.25*REM)
-	M.adjustToxLoss(0.25*REM)
+	M.adjustToxLoss(0.25*REM, 0)
 	..()
-	return
-
+	. = 1
 
 /datum/reagent/drug/krokodil/addiction_act_stage1(mob/living/M)
 	M.adjustBrainLoss(2*REM)
-	M.adjustToxLoss(2*REM)
+	M.adjustToxLoss(2*REM, 0)
 	..()
-	return
+	. = 1
+
 /datum/reagent/krokodil/addiction_act_stage2(mob/living/M)
 	if(prob(25))
 		M << "<span class='danger'>Your skin feels loose...</span>"
 	..()
-	return
+
 /datum/reagent/drug/krokodil/addiction_act_stage3(mob/living/M)
 	if(prob(25))
 		M << "<span class='danger'>Your skin starts to peel away...</span>"
-	M.adjustBruteLoss(3*REM)
+	M.adjustBruteLoss(3*REM, 0)
 	..()
-	return
+	. = 1
 
 /datum/reagent/drug/krokodil/addiction_act_stage4(mob/living/carbon/human/M)
 	if(M.has_dna() && M.dna.species.id != "zombie")
 		M << "<span class='userdanger'>Your skin falls off easily!</span>"
-		M.adjustBruteLoss(50*REM) // holy shit your skin just FELL THE FUCK OFF
+		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
 		M.set_species(/datum/species/cosmetic_zombie)
 	else
-		M.adjustBruteLoss(5*REM)
+		M.adjustBruteLoss(5*REM, 0)
 	..()
-	return
+	. = 1
 
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
@@ -153,17 +158,17 @@
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(prob(5))
 		M << "<span class='notice'>[high_message]</span>"
-	M.AdjustParalysis(-2)
-	M.AdjustStunned(-2)
-	M.AdjustWeakened(-2)
-	M.adjustStaminaLoss(-2)
+	M.AdjustParalysis(-2, 0)
+	M.AdjustStunned(-2, 0)
+	M.AdjustWeakened(-2, 0, 0)
+	M.adjustStaminaLoss(-2, 0)
 	M.status_flags |= GOTTAGOREALLYFAST
 	M.Jitter(2)
 	M.adjustBrainLoss(0.25)
 	if(prob(5))
 		M.emote(pick("twitch", "shiver"))
 	..()
-	return
+	. = 1
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
 	if(M.canmove && !istype(M.loc, /atom/movable))
@@ -177,23 +182,23 @@
 		if(I)
 			M.drop_item()
 	..()
-	M.adjustToxLoss(1)
+	M.adjustToxLoss(1, 0)
 	M.adjustBrainLoss(pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
-	return
+	. = 1
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage1(mob/living/M)
 	M.Jitter(5)
 	if(prob(20))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-	return
+
 /datum/reagent/drug/methamphetamine/addiction_act_stage2(mob/living/M)
 	M.Jitter(10)
 	M.Dizzy(10)
 	if(prob(30))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-	return
+
 /datum/reagent/drug/methamphetamine/addiction_act_stage3(mob/living/M)
 	if(M.canmove && !istype(M.loc, /atom/movable))
 		for(var/i = 0, i < 4, i++)
@@ -203,18 +208,18 @@
 	if(prob(40))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-	return
+
 /datum/reagent/drug/methamphetamine/addiction_act_stage4(mob/living/carbon/human/M)
 	if(M.canmove && !istype(M.loc, /atom/movable))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(cardinal))
 	M.Jitter(20)
 	M.Dizzy(20)
-	M.adjustToxLoss(5)
+	M.adjustToxLoss(5, 0)
 	if(prob(50))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-	return
+	. = 1
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
@@ -230,18 +235,18 @@
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		M << "<span class='notice'>[high_message]</span>"
-	M.AdjustParalysis(-3)
-	M.AdjustStunned(-3)
-	M.AdjustWeakened(-3)
-	M.adjustStaminaLoss(-5)
+	M.AdjustParalysis(-3, 0)
+	M.AdjustStunned(-3, 0)
+	M.AdjustWeakened(-3, 0, 0)
+	M.adjustStaminaLoss(-5, 0)
 	M.adjustBrainLoss(0.5)
-	M.adjustToxLoss(0.1)
+	M.adjustToxLoss(0.1, 0)
 	M.hallucination += 10
 	if(M.canmove && !istype(M.loc, /atom/movable))
 		step(M, pick(cardinal))
 		step(M, pick(cardinal))
 	..()
-	return
+	. = 1
 
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/M)
 	M.hallucination += 10
@@ -255,7 +260,6 @@
 		if(I)
 			M.drop_item()
 	..()
-	return
 
 /datum/reagent/drug/bath_salts/addiction_act_stage1(mob/living/M)
 	M.hallucination += 10
@@ -267,7 +271,7 @@
 	if(prob(20))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-	return
+
 /datum/reagent/drug/bath_salts/addiction_act_stage2(mob/living/M)
 	M.hallucination += 20
 	if(M.canmove && !istype(M.loc, /atom/movable))
@@ -279,7 +283,7 @@
 	if(prob(30))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-	return
+
 /datum/reagent/drug/bath_salts/addiction_act_stage3(mob/living/M)
 	M.hallucination += 30
 	if(M.canmove && !istype(M.loc, /atom/movable))
@@ -291,7 +295,7 @@
 	if(prob(40))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-	return
+
 /datum/reagent/drug/bath_salts/addiction_act_stage4(mob/living/carbon/human/M)
 	M.hallucination += 40
 	if(M.canmove && !istype(M.loc, /atom/movable))
@@ -299,12 +303,12 @@
 			step(M, pick(cardinal))
 	M.Jitter(50)
 	M.Dizzy(50)
-	M.adjustToxLoss(5)
+	M.adjustToxLoss(5, 0)
 	M.adjustBrainLoss(10)
 	if(prob(50))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-	return
+	. = 1
 
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
@@ -317,10 +321,10 @@
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		M << "<span class='notice'>[high_message]</span>"
-	M.adjustStaminaLoss(-18)
-	M.adjustToxLoss(0.5)
+	M.adjustStaminaLoss(-18, 0)
+	M.adjustToxLoss(0.5, 0)
 	if(prob(50))
 		M.losebreath++
-		M.adjustOxyLoss(1)
+		M.adjustOxyLoss(1, 0)
 	..()
-	return
+	. = 1

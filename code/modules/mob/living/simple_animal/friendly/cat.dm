@@ -21,7 +21,7 @@
 	maxbodytemp = 400
 	unsuitable_atmos_damage = 1
 	species = /mob/living/simple_animal/pet/cat
-	childtype = /mob/living/simple_animal/pet/cat/kitten
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -36,7 +36,7 @@
 
 /mob/living/simple_animal/pet/cat/update_canmove()
 	..()
-	if(resting)
+	if(client && resting)
 		icon_state = "[icon_living]_rest"
 	else
 		icon_state = "[icon_living]"
@@ -73,12 +73,9 @@
 	gender = FEMALE
 	gold_core_spawnable = 0
 	var/list/family = list()
-	var/lives = 9
 	var/memory_saved = 0
 
 /mob/living/simple_animal/pet/cat/Runtime/New()
-	if(lives < 9)
-		desc += ". Looks like a cat with [lives] lives left."
 	Read_Memory()
 	..()
 
@@ -95,18 +92,9 @@
 /mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 	S["family"] 			>> family
-	S["lives"]				>> lives
 
 	if(isnull(family))
 		family = list()
-
-	if(isnull(lives))
-		lives = 9
-
-	if(lives <= 0)
-		lives = 10 //Lowers to 9 in Write_Memory
-		Write_Memory(1)
-		qdel(src)
 
 	for(var/cat_type in family)
 		if(family[cat_type] > 0)
@@ -115,8 +103,6 @@
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
 	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
-	if(dead)
-		S["lives"] 				<< lives - 1
 	family = list()
 	for(var/mob/living/simple_animal/pet/cat/C in mob_list)
 		if(istype(C,type) || C.stat || !C.butcher_results) //That last one is a work around for hologram cats

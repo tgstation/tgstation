@@ -136,7 +136,7 @@
 	else if(severity == 2)
 		if(prob(50))
 			qdel(src)
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		..()
 
 //If a mob logouts/logins in side of an object you can use this proc
@@ -148,7 +148,7 @@
 
 /obj/singularity_act()
 	ex_act(1)
-	if(src && isnull(gc_destroyed))
+	if(src && !qdeleted(src))
 		qdel(src)
 	return 2
 

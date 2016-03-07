@@ -374,6 +374,17 @@ var/regex/lizard_hiSS = new("S+", "g")
 /datum/species/fly/handle_speech(message)
 	return replacetext(message, "z", stutter("zz"))
 
+/datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(istype(chem,/datum/reagent/consumable))
+		var/datum/reagent/consumable/nutri_check = chem
+		if(nutri_check.nutriment_factor >0)
+			var/turf/pos = get_turf(H)
+			H.vomit()
+			playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
+						"<span class='userdanger'>You throw up on the floor!</span>")
+	..()
+
 /*
  SKELETONS
 */

@@ -56,7 +56,7 @@ var/global/posibrain_notif_cooldown = 0
 		return
 
 	var/posi_ask = alert("Become a positronic brain? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
-	if(posi_ask == "No" || gc_destroyed)
+	if(posi_ask == "No" || qdeleted(src))
 		return
 	transfer_personality(user)
 

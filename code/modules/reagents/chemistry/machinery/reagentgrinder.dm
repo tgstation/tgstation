@@ -49,11 +49,10 @@
 				/obj/item/weapon/reagent_containers/food/snacks/egg = list("eggyolk" = -5),
 
 				//Grinder stuff, but only if dry
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica = list("coffeepowder" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera = list("teapowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
-
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0),
 
 
 				//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
@@ -81,12 +80,11 @@
 		)
 
 		var/list/dried_items = list(
-
-				//Grinder stuff, but only if dry
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica = list("coffeepowder" = 0),
+				//Grinder stuff, but only if dry,
 				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera = list("teapowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0)
 		)
 
 		var/list/holdingitems = list()
