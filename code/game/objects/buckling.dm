@@ -7,9 +7,6 @@
 	var/list/mob/living/buckled_mobs = list()
 	var/max_buckled_mobs = 1
 
-//todo:
-// * check all unbuckle_mob() calls have a mob argument - CHECK
-// * check all user_unbuckle_mob() calls have a mob argument - CHECK
 
 
 //Interaction
@@ -104,7 +101,6 @@
 		return 1
 
 
-//Edit so I can see all the calls
 /atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(!buckled_mob && buckled_mobs.len)
 		buckled_mob = buckled_mobs[1]
