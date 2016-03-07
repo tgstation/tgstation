@@ -31,7 +31,7 @@
 			animation.master = holder
 			target.ExtinguishMob()
 			var/mob/living/carbon/wiz = user
-			wiz.mutate |= MUT_MUTE
+			wiz.mute()
 			if(target.buckled)
 				target.buckled.unbuckle_mob()
 			if(target.pulledby)
@@ -73,7 +73,11 @@
 	animation.icon_state = "liquify"
 	flick("liquify",animation)
 
-
+/obj/effect/proc_holder/spell/targeted/inflict_handler/mute
+	mutations = list(MUT_MUTATE)
+	duration = 50
+	cooldown_min = 100
+	
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_reappear(atom/movable/overlay/animation, mob/living/target)
 	flick("reappear",animation)
 
