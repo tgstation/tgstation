@@ -458,7 +458,7 @@ var/const/GALOSHES_DONT_HELP = 4
 				handcuffed.dropped(src)
 				handcuffed = null
 				if(buckled && buckled.buckle_requires_restraints)
-					buckled.unbuckle_mob()
+					buckled.unbuckle_mob(src)
 				update_handcuffed()
 				return
 			if(I == legcuffed)
@@ -499,7 +499,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		var/obj/item/weapon/W = handcuffed
 		handcuffed = null
 		if (buckled && buckled.buckle_requires_restraints)
-			buckled.unbuckle_mob()
+			buckled.unbuckle_mob(src)
 		update_handcuffed()
 		if (client)
 			client.screen -= W
