@@ -168,24 +168,31 @@
 /mob/camera/blob/proc/expand_blob(turf/T)
 	if(!can_attack())
 		return
-	var/obj/effect/blob/B = locate() in T
-	if(B)
-		src << "<span class='warning'>There is a blob there!</span>"
-		return
 	var/obj/effect/blob/OB = locate() in circlerange(T, 1)
 	if(!OB)
 		src << "<span class='warning'>There is no blob adjacent to the target tile!</span>"
 		return
-	if(!can_buy(5))
-		return
-	last_attack = world.time
-	OB.expand(T, src)
-	for(var/mob/living/L in T)
-		if("blob" in L.faction) //no friendly fire
-			continue
-		var/mob_protection = L.get_permeability_protection()
-		blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection, src)
-		blob_reagent_datum.send_message(L)
+	if(can_buy(5))
+		var/attacksuccess = FALSE
+		last_attack = world.time
+		for(var/mob/living/L in T)
+			if("blob" in L.faction) //no friendly/dead fire
+				continue
+			if(L.stat != DEAD)
+				attacksuccess = TRUE
+				var/mob_protection = L.get_permeability_protection()
+				blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection, src)
+				blob_reagent_datum.send_message(L)
+		var/obj/effect/blob/B = locate() in T
+		if(B)
+			if(attacksuccess) //if we successfully attacked a turf with a blob on it, don't refund shit
+				B.blob_attack_animation(T, src)
+			else
+				src << "<span class='warning'>There is a blob there!</span>"
+				add_points(5) //otherwise, refund all of the cost
+			return
+		else
+			OB.expand(T, src)
 
 /mob/camera/blob/verb/rally_spores_power()
 	set category = "Blob"
