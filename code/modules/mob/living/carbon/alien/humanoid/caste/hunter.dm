@@ -5,6 +5,7 @@
 	health = 125
 	icon_state = "alienh_s"
 	var/obj/screen/leap_icon = null
+	var/plasma_cost = 0
 
 /mob/living/carbon/alien/humanoid/hunter/New()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small
@@ -54,6 +55,7 @@
 		return
 	
 	else // Hoping to add plasma cost for balance plz halp
+		plasma_cost = 15
 		leaping = 1
 		update_icons()
 		throw_at(A,MAX_ALIEN_LEAP_DIST,1, spin=0, diagonals_first = 1)
