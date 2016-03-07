@@ -12,7 +12,7 @@
 	include_user = 1
 	centcom_cancast = 0 //Prevent people from getting to centcom
 	nonabstract_req = 1
-	var/jaunt_duration = 50 //in deciseconds
+	var/duration = 50 //in deciseconds
 	action_icon_state = "jaunt"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
@@ -30,7 +30,7 @@
 			animation.layer = 5
 			animation.master = holder
 			target.ExtinguishMob()
-			target.silent(target.silent, 5)
+			mutations = list(MUT_MUTE)
 			if(target.buckled)
 				target.buckled.unbuckle_mob()
 			if(target.pulledby)
@@ -43,7 +43,7 @@
 			target.reset_perspective(holder)
 			target.notransform=0 //mob is safely inside holder now, no need for protection.
 			jaunt_steam(mobloc)
-			sleep(jaunt_duration)
+			sleep(duration)
 			if(target.loc != holder) //mob warped out of the warp
 				qdel(holder)
 				return
