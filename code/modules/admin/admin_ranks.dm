@@ -199,22 +199,25 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			load_admins()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, flags FROM erro_admin")
 		query.Execute()
 		while(query.NextRow())
-			var/ckey = ckey(query.item[1])
-			var/rank = ckeyEx(query.item[2])
-			if(target && ckey != target)
-				continue
+			var/ckey = query.item[1]
+			var/rank = query.item[2]
+			if(rank == "Removed")	continue	//This person was de-adminned. They are only in the admin list for archive purposes.
 
-			if(rank_names[rank] == null)
-				WARNING("Admin rank ([rank]) does not exist.")
-				continue
+			var/rights = query.item[3]
+			if(istext(rights))	rights = text2num(rights)
+			var/datum/admins/D = new /datum/admins(rank, rights, ckey)
 
-			var/datum/admins/D = new(rank_names[rank], ckey)				//create the admin datum and store it for later use
-			if(!D)
-				continue									//will occur if an invalid rank is provided
-			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
+			//find the client for a ckey if they are connected and associate them with the new admin datum
+			D.associate(directory[ckey])
+		if(!admin_datums)
+			world.log << "The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system."
+			diary << "The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system."
+			config.admin_legacy_system = 1
+			load_admins()
+			return
 
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
