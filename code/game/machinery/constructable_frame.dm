@@ -274,8 +274,8 @@ to destroy them and players will be able to make replacements.
 	else if(iswelder(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		if(WT.remove_fuel(1,user))
-			var/obj/item/stack/sheet/glass/glass/new_item = new /obj/item/stack/sheet/glass/glass(src.loc)
-			new_item.add_to_stacks(user)
+			var/obj/item/stack/sheet/glass/glass/new_item = new()
+			new_item.forceMove(src.loc) //This is because new() doesn't call forceMove, so we're forcemoving the new sheet to make it stack with other sheets on the ground.
 			returnToPool(src)
 			return
 	else

@@ -225,16 +225,21 @@
 			usr.before_take_item(src)
 		spawn returnToPool(src)
 
-/obj/item/stack/proc/add_to_stacks(mob/usr as mob)
-	for (var/obj/item/stack/item in usr.loc)
-		if (src == item)
-			continue
-		if(!can_stack_with(item))
-			continue
-		if (item.amount>=item.max_amount)
-			continue
-		src.preattack(item, usr,1)
-		break
+/obj/item/stack/proc/add(var/amount)
+	src.amount += amount
+	update_materials()
+
+/obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
+	if(src == S) //We need to check this because items can cross themselves for some fucked up reason
+		return
+	var/transfer = min(amount, S.max_amount - S.amount)
+	if(transfer <= 0)
+		return
+	if(pulledby)
+		pulledby.start_pulling(S)
+	S.copy_evidences(src)
+	use(transfer)
+	S.add(transfer)
 
 /obj/item/stack/proc/update_materials()
 	if(amount && starting_materials)
@@ -278,8 +283,7 @@
 			to_transfer = 1
 		else
 			to_transfer = min(S.amount, max_amount-amount)
-		amount+=to_transfer
-		update_materials()
+		add(to_transfer)
 		to_chat(user, "You add [to_transfer] [((to_transfer > 1) && S.irregular_plural) ? S.irregular_plural : "[S.singular_name]\s"] to \the [src]. It now contains [amount] [CORRECT_STACK_NAME(src)].")
 		if (S && user.machine==S)
 			spawn(0) interact(user)
@@ -289,6 +293,17 @@
 		update_icon()
 		S.update_icon()
 		return 1
+	return ..()
+
+//Ported from -tg-station/#10973, credit to MrPerson
+/obj/item/stack/Crossed(obj/o)
+	if(src != o && istype(o, src.type) && !o.throwing)
+		merge(o)
+	return ..()
+
+/obj/item/stack/hitby(atom/movable/AM) //Doesn't seem to ever be called since stacks are not dense but whatever
+	if(src != AM && istype(AM, src.type))
+		merge(AM)
 	return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
@@ -319,8 +334,7 @@
 	for(var/obj/item/stack/S in loc)
 		if(S.can_stack_with(new_stack_type))
 			if(S.max_amount >= S.amount + add_amount)
-				S.amount += add_amount
-				S.update_materials()
+				S.add(add_amount)
 
 				to_chat(user, "<span class='info'>You add [add_amount] item\s to the stack. It now contains [S.amount] [CORRECT_STACK_NAME(S)].</span>")
 				return S

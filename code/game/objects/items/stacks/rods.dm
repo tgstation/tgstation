@@ -62,11 +62,11 @@
 			return
 
 		if(WT.remove_fuel(0,user))
-			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal)
 			M.amount = 1
-			M.add_to_stacks(usr)
-			user.visible_message("<span class='warning'>[src] is shaped into metal by [user.name] with the weldingtool.</span>", \
-			"<span class='warning'>You shape the [src] into metal with the weldingtool.</span>", \
+			M.forceMove(get_turf(usr)) //This is because new() doesn't call forceMove, so we're forcemoving the new sheet to make it stack with other sheets on the ground.
+			user.visible_message("<span class='warning'>[src] is shaped into metal by [user.name] with the welding tool.</span>", \
+			"<span class='warning'>You shape the [src] into metal with the welding tool.</span>", \
 			"<span class='warning'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src
 			src = null
