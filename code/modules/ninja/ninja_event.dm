@@ -158,7 +158,7 @@ Contents:
 		return
 
 	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
-
+	ticker.mode.update_ninja_icons_added(Mind)
 	success_spawn = 1
 
 
@@ -213,3 +213,13 @@ Contents:
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src)
 	E.implant(src)
 	return 1
+
+/datum/game_mode/proc/update_ninja_icons_added(var/mob/living/carbon/human/ninja)
+	var/datum/atom_hud/antag/ninjahud = huds[ANTAG_HUD_TRAITOR]
+	ninjahud.join_hud(ninja, 0)
+	set_antag_hud(ninja, "traitor")
+
+/datum/game_mode/proc/update_ninja_icons_removed(datum/mind/ninja_mind)
+	var/datum/atom_hud/antag/ninjahud = huds[ANTAG_HUD_NINJA]
+	ninjahud.leave_hud(ninja_mind.current)
+	set_antag_hud(ninja_mind.current, null)
