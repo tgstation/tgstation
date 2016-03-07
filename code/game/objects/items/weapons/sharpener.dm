@@ -1,5 +1,5 @@
 /obj/item/weapon/sharpener
-	name = "sharpening block"
+	name = "whetstone"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sharpener"
 	desc = "A block that makes things sharp."
@@ -46,7 +46,7 @@
 	used = 1
 
 /obj/item/weapon/sharpener/super
-	name = "super sharpening block"
+	name = "super whetstone"
 	desc = "A block that will make your weapon sharper than Einstein on adderall."
 	increment = 200
 	max = 200

@@ -297,4 +297,4 @@
 		src.loc = C
 		C.update_inv_legcuffed()
 		feedback_add_details("handcuffs","B")
-		C << "<span class='userdanger'>\The [src] ensares you!</span>"
+		C << "<span class='userdanger'>\The [src] ensnares you!</span>"

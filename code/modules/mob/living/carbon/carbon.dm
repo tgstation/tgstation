@@ -35,6 +35,18 @@
 		if((src.disabilities & FAT) && src.m_intent == "run" && src.bodytemperature <= 360)
 			src.bodytemperature += 2
 
+
+/mob/living/carbon/Process_Spacemove(movement_dir = 0)
+	if(..())
+		return 1
+	if(!isturf(loc)) // In a mecha? A locker? Who knows!
+		return 0
+
+	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
+	if(istype(J) && J.allow_thrust(0.01, src))
+		return 1
+
+
 /mob/living/carbon/movement_delay()
 	. = ..()
 	if(legcuffed)
@@ -838,3 +850,6 @@ var/const/GALOSHES_DONT_HELP = 4
 		user << "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>"
 
 	..()
+
+
+

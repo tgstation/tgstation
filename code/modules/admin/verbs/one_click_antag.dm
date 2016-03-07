@@ -194,7 +194,7 @@
 									candidates += applicant
 
 	if(candidates.len)
-		var/numCultists = min(candidates.len, 5)
+		var/numCultists = min(candidates.len, 4)
 
 		for(var/i = 0, i<numCultists, i++)
 			H = pick(candidates)

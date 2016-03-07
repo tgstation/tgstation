@@ -331,7 +331,8 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/New()
 	if(random_sensor)
-		sensor_mode = pick(0,1,2,3)
+		//make the sensor mode favor higher levels, except coords.
+		sensor_mode = pick(0, 1, 1, 2, 2, 2, 3, 3)
 	adjusted = 0
 	suit_color = item_color
 	..()

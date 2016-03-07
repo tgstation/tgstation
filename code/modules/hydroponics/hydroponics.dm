@@ -315,19 +315,19 @@
 		oldPlantName = "Empty tray"
 	switch(rand(1,18))		// randomly pick predominative weed
 		if(16 to 18)
-			myseed = new /obj/item/seeds/reishimycelium
+			myseed = new /obj/item/seeds/reishi
 		if(14 to 15)
-			myseed = new /obj/item/seeds/nettleseed
+			myseed = new /obj/item/seeds/nettle
 		if(12 to 13)
 			myseed = new /obj/item/seeds/harebell
 		if(10 to 11)
-			myseed = new /obj/item/seeds/amanitamycelium
+			myseed = new /obj/item/seeds/amanita
 		if(8 to 9)
-			myseed = new /obj/item/seeds/chantermycelium
+			myseed = new /obj/item/seeds/chanter
 		if(6 to 7)
-			myseed = new /obj/item/seeds/towermycelium
+			myseed = new /obj/item/seeds/tower
 		if(4 to 5)
-			myseed = new /obj/item/seeds/plumpmycelium
+			myseed = new /obj/item/seeds/plump
 		else
 			myseed = new /obj/item/seeds/weeds
 	planted = 1
@@ -386,7 +386,7 @@
 	if( weedlevel > 5 )
 		if(myseed)
 			qdel(myseed)
-		var/newWeed = pick(/obj/item/seeds/libertymycelium, /obj/item/seeds/angelmycelium, /obj/item/seeds/deathnettleseed, /obj/item/seeds/kudzuseed)
+		var/newWeed = pick(/obj/item/seeds/liberty, /obj/item/seeds/angel, /obj/item/seeds/nettle/death, /obj/item/seeds/kudzu)
 		myseed = new newWeed
 		dead = 0
 		hardmutate()
@@ -510,7 +510,8 @@
 		adjustWater(-round(S.get_reagent_amount("chlorine") * 0.5))
 		adjustWeeds(-rand(1,3))
 
-	// White Phosphorous + water -> phosphoric acid. That's not a good thing really. Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
+	// White Phosphorous + water -> phosphoric acid. That's not a good thing really.
+	// Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
 	if(S.has_reagent("phosphorus", 1))
 		adjustHealth(-round(S.get_reagent_amount("phosphorus") * 0.75))
 		adjustNutri(round(S.get_reagent_amount("phosphorus") * 0.1))
@@ -532,7 +533,8 @@
 		adjustWater(round(S.get_reagent_amount("holywater") * 1))
 		adjustHealth(round(S.get_reagent_amount("holywater") * 0.1))
 
-	// A variety of nutrients are dissolved in club soda, without sugar. These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
+	// A variety of nutrients are dissolved in club soda, without sugar.
+	// These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
 	if(S.has_reagent("sodawater", 1))
 		adjustWater(round(S.get_reagent_amount("sodawater") * 1))
 		adjustHealth(round(S.get_reagent_amount("sodawater") * 0.1))
@@ -712,7 +714,7 @@
 
 	else if(istype(O, /obj/item/seeds/))
 		if(!planted)
-			if(/obj/item/seeds/kudzuseed)
+			if(/obj/item/seeds/kudzu)
 				investigate_log("had Kudzu planted in it by [user.ckey]([user]) at ([x],[y],[z])","kudzu")
 			user.unEquip(O)
 			user << "<span class='notice'>You plant [O].</span>"
