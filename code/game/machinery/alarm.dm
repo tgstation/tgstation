@@ -902,7 +902,7 @@ FIRE ALARM
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
 /obj/machinery/firealarm/update_icon()
-
+	overlays.len = 0
 	if(wiresexposed)
 		switch(buildstage)
 			if(2)
@@ -911,23 +911,26 @@ FIRE ALARM
 				icon_state="fire_b1"
 			if(0)
 				icon_state="fire_b0"
-
 		return
 
 	if(stat & BROKEN)
 		icon_state = "firex"
 	else if(stat & NOPOWER)
 		icon_state = "firep"
-	else if(!src.detecting)
-		icon_state = "fire1"
 	else
-		icon_state = "fire0"
+		if(!src.detecting)
+			icon_state = "fire1"
+		else
+			icon_state = "fire0"
+		if(z == 1 && security_level)
+			src.overlays += image('icons/obj/monitors.dmi', "overlay_[get_security_level()]")
+		else
+			src.overlays += image('icons/obj/monitors.dmi', "overlay_green")
 
 /obj/machinery/firealarm/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(src.detecting)
 		if(exposed_temperature > T0C+200)
 			src.alarm()			// added check of detector status here
-	return
 
 /obj/machinery/firealarm/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
@@ -1111,7 +1114,6 @@ FIRE ALARM
 		return
 	areaMaster.firereset()
 	update_icon()
-	return
 
 /obj/machinery/firealarm/proc/alarm()
 	if (!( src.working ))
@@ -1119,7 +1121,8 @@ FIRE ALARM
 	areaMaster.firealert()
 	update_icon()
 	//playsound(get_turf(src), 'sound/ambience/signal.ogg', 75, 0)
-	return
+
+var/global/list/firealarms = list() //shrug
 
 /obj/machinery/firealarm/New(loc, dir, building)
 	..()
@@ -1136,14 +1139,13 @@ FIRE ALARM
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
-	if(z == 1)
-		if(security_level)
-			src.overlays += image('icons/obj/monitors.dmi', "overlay_[get_security_level()]")
-		else
-			src.overlays += image('icons/obj/monitors.dmi', "overlay_green")
-
 	machines.Remove(src)
+	firealarms |= src
 	update_icon()
+
+/obj/machinery/firealarm/Destroy()
+	firealarms.Remove(src)
+	..()
 
 /obj/machinery/firealarm/change_area(oldarea, newarea)
 	..()
