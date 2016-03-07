@@ -45,8 +45,8 @@ Bonus
 		if(!parts.len)
 			return
 
-		for(var/obj/item/organ/limb/L in parts)
-			L.heal_damage(get_damage, get_damage, 0)
+		var/obj/item/organ/limb/L = pick(parts)
+		L.heal_damage(get_damage, get_damage, 0)
 
 	else
 		if(M.getFireLoss() > 0 || M.getBruteLoss() > 0)
