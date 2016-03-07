@@ -14,6 +14,7 @@
 	nonabstract_req = 1
 	var/duration = 50 //in deciseconds
 	action_icon_state = "jaunt"
+	starting_spells = list("/obj/effect/proc_holder/spell/targeted/ethereal_jaunt","/obj/effect/proc_holder/spell/targeted/genetic/mute")
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
 	playsound(get_turf(user), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
@@ -30,7 +31,6 @@
 			animation.layer = 5
 			animation.master = holder
 			target.ExtinguishMob()
-			mutations = list(MUT_MUTE)
 			if(target.buckled)
 				target.buckled.unbuckle_mob()
 			if(target.pulledby)
@@ -81,6 +81,11 @@
 	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
 	steam.set_up(10, 0, mobloc)
 	steam.start()
+
+/obj/effect/proc_holder/spell/targeted/genetic/mute
+	mutations = list(MUT_MUTE)
+	duration = 50
+	cooldown_min = 100
 
 /obj/effect/dummy/spell_jaunt
 	name = "water"
