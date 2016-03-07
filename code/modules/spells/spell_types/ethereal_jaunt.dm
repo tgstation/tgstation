@@ -31,7 +31,7 @@
 			animation.master = holder
 			target.ExtinguishMob()
 			var/mob/living/carbon/wiz = user
-			wiz.mutations |= MUT_MUTE
+			wiz.mutate |= MUT_MUTE
 			if(target.buckled)
 				target.buckled.unbuckle_mob()
 			if(target.pulledby)
