@@ -19,7 +19,7 @@
 	if(!(type in D.viable_mobtypes))
 		return 0
 
-	if(count_by_type(viruses, /datum/disease/advance) >= 3)
+	if(count_by_type(viruses, /datum/disease/advance) >= 1)
 		return 0
 
 	return 1
