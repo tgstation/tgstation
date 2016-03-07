@@ -33,6 +33,11 @@ Bonus
 				Heal(M, A)
 	return
 
+/datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
+	var/get_damage = sqrt(20+A.totalStageSpeed())*(2+rand())
+	M.adjustToxLoss(-get_damage)
+	return 1
+
 
 /*
 //////////////////////////////////////
