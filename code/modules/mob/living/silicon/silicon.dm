@@ -133,10 +133,8 @@
 	switch(severity)
 		if(1)
 			src.take_organ_damage(20)
-			Stun(8)
 		if(2)
 			src.take_organ_damage(10)
-			Stun(3)
 	flick("noise", src:flash)
 	src << "<span class='userdanger'>*BZZZT*</span>"
 	src << "<span class='danger'>Warning: Electromagnetic pulse detected.</span>"
@@ -144,7 +142,8 @@
 
 /mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
 	blocked = (100-blocked)/100
-	if(!damage || (blocked <= 0))	return 0
+	if(!damage || (blocked <= 0))
+		return 0
 	switch(damagetype)
 		if(BRUTE)
 			adjustBruteLoss(damage * blocked)
@@ -175,7 +174,8 @@
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
 	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
 /*
-	if(!effect || (blocked >= 2))	return 0
+	if(!effect || (blocked >= 2))
+		return 0
 	switch(effecttype)
 		if(STUN)
 			stunned = max(stunned,(effect/(blocked+1)))

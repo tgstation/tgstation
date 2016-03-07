@@ -8,7 +8,10 @@
 	layer = 2.9
 	var/finished = 0
 	var/admin = 0 //Can't be rotated or deconstructed
-
+	var/framebuildstacktype = /obj/item/stack/sheet/metal
+	var/framebuildstackamount = 5
+	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstackamount = 0
 
 /obj/structure/reflector/bullet_act(obj/item/projectile/P)
 	var/turf/reflector_turf = get_turf(src)
@@ -44,6 +47,8 @@
 		if(do_after(user, 80/W.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "You dismantle the [src]."
+			new framebuildstacktype(loc, framebuildstackamount)
+			new buildstacktype(loc, buildstackamount)
 			qdel(src)
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -140,6 +145,8 @@
 "[EAST]" = list("[SOUTH]" = EAST, "[WEST]" = NORTH),
 "[SOUTH]" = list("[NORTH]" = EAST, "[WEST]" = SOUTH),
 "[WEST]" = list("[NORTH]" = WEST, "[EAST]" = SOUTH) )
+	buildstacktype = /obj/item/stack/sheet/glass
+	buildstackamount = 5
 
 /obj/structure/reflector/single/get_reflection(srcdir,pdir)
 	var/new_dir = rotations["[srcdir]"]["[pdir]"]
@@ -161,6 +168,8 @@
 "[EAST]" = list("[NORTH]" = EAST, "[WEST]" = SOUTH, "[SOUTH]" = WEST, "[EAST]" = NORTH),
 "[SOUTH]" = list("[NORTH]" = EAST, "[WEST]" = SOUTH, "[SOUTH]" = WEST, "[EAST]" = NORTH),
 "[WEST]" = list("[NORTH]" = WEST, "[EAST]" = SOUTH, "[SOUTH]" = EAST, "[WEST]" = NORTH) )
+	buildstacktype = /obj/item/stack/sheet/rglass
+	buildstackamount = 10
 
 /obj/structure/reflector/double/get_reflection(srcdir,pdir)
 	var/new_dir = double_rotations["[srcdir]"]["[pdir]"]
@@ -182,6 +191,8 @@
 "[EAST]" = list("[SOUTH]" = EAST, "[EAST]" = EAST, "[WEST]" = EAST, "[NORTH]" = EAST),
 "[SOUTH]" = list("[SOUTH]" = SOUTH, "[EAST]" = SOUTH, "[WEST]" = SOUTH, "[NORTH]" = SOUTH),
 "[WEST]" = list("[SOUTH]" = WEST, "[EAST]" = WEST, "[WEST]" = WEST, "[NORTH]" = WEST) )
+	buildstacktype = /obj/item/stack/sheet/mineral/diamond
+	buildstackamount = 1
 
 /obj/structure/reflector/box/get_reflection(srcdir,pdir)
 	var/new_dir = box_rotations["[srcdir]"]["[pdir]"]

@@ -19,7 +19,8 @@
 
 
 /datum/surgery/proc/next_step(mob/user, mob/living/carbon/target)
-	if(step_in_progress)	return
+	if(step_in_progress)
+		return
 
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)

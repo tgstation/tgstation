@@ -44,8 +44,7 @@
 /obj/structure/bodycontainer/relaymove(mob/user)
 	if(user.stat || !isturf(loc))
 		return
-	if(!open())
-		open()
+	open()
 
 /obj/structure/bodycontainer/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -82,15 +81,15 @@
 /obj/structure/bodycontainer/proc/open()
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	var/turf/T = get_step(src, opendir)
-	for(var/atom/movable/A in src)
-		A.loc = T
+	for(var/atom/movable/AM in src)
+		AM.forceMove(T)
 	update_icon()
 
 /obj/structure/bodycontainer/proc/close()
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-	for(var/atom/movable/A in connected.loc)
-		if(!A.anchored || A == connected)
-			A.loc = src
+	for(var/atom/movable/AM in connected.loc)
+		if(!AM.anchored || AM == connected)
+			AM.forceMove(src)
 	update_icon()
 
 /*
@@ -108,24 +107,20 @@
 	..()
 
 /obj/structure/bodycontainer/morgue/update_icon()
-	if (!connected || connected.loc != src) //open or the tray broke off somehow
-		src.icon_state = "morgue0"
+	if (!connected || connected.loc != src) // Open or tray is gone.
+		icon_state = "morgue0"
 	else
-		if(src.contents.len == 1) //empty except for the tray
-			src.icon_state = "morgue1"
+		if(contents.len == 1)  // Empty
+			icon_state = "morgue1"
 		else
-
-			src.icon_state = "morgue2"//default dead no-client mob
-
-			var/list/compiled = recursive_mob_check(src,0,0)//run through contents
-
-			if(!length(compiled))//no mobs at all, but objects inside
-				src.icon_state = "morgue3"
+			icon_state = "morgue2" // Dead, brainded mob.
+			var/list/compiled = recursive_mob_check(src, 0, 0) // Search for mobs in all contents.
+			if(!length(compiled)) // No mobs?
+				icon_state = "morgue3"
 				return
-
 			for(var/mob/living/M in compiled)
 				if(M.client)
-					src.icon_state = "morgue4"//clone that mofo
+					icon_state = "morgue4" // Cloneable
 					break
 
 /*
@@ -267,7 +262,8 @@ var/global/list/crematoriums = new/list()
 	icon_state = "morguet"
 
 /obj/structure/tray/m_tray/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0) return 1
+	if(height == 0)
+		return 1
 
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
@@ -275,3 +271,9 @@ var/global/list/crematoriums = new/list()
 		return 1
 	else
 		return 0
+
+/obj/structure/tray/m_tray/CanAStarPass(ID, dir, caller)
+	. = !density
+	if(ismovableatom(caller))
+		var/atom/movable/mover = caller
+		. = . || mover.checkpass(PASSTABLE)

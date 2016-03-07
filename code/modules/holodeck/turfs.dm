@@ -18,12 +18,17 @@
 
 /turf/simulated/floor/holofloor/beach
 	name = "sand"
-	icon = 'icons/misc/beach.dmi' // what
+	icon = 'icons/misc/beach.dmi'
 	icon_state = "sand"
-/turf/simulated/floor/holofloor/beach/coast
+
+/turf/simulated/floor/holofloor/beach/coast_t
 	name = "coastline"
-	icon = 'icons/misc/beach2.dmi' // why
-	icon_state = "sandwater"
+	icon_state = "sandwater_t"
+
+/turf/simulated/floor/holofloor/beach/coast_b
+	name = "coastline"
+	icon_state = "sandwater_b"
+
 /turf/simulated/floor/holofloor/beach/water
 	name = "water"
 	icon_state = "water"
@@ -42,7 +47,7 @@
 	icon_state = "0"
 
 /turf/simulated/floor/holofloor/space/New()
-	icon_state = "[((x + y) ^ ~(x * y) + z) % 25]" // so realistic
+	icon_state = SPACE_ICON_STATE // so realistic
 	..()
 
 /turf/simulated/floor/holofloor/hyperspace

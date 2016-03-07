@@ -12,7 +12,7 @@
 	. = ..()
 	if(resource_delay > world.time)
 		return
-	flick("factory_glow", src)
+	flick("blob_resource_glow", src)
 	resource_delay = world.time + 45 // 4 and a half seconds
 	if(overmind)
 		overmind.add_points(1)

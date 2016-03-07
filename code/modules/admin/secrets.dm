@@ -101,7 +101,8 @@
 					dat += "[line]<BR>"
 				dat+= "*******<BR><BR>"
 				for(var/datum/job/job in SSjob.occupations)
-					if(!job)	continue
+					if(!job)
+						continue
 					dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
 				usr << browse(dat, "window=jobdebug;size=600x500")
 

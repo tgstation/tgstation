@@ -37,7 +37,7 @@ var/global/max_secret_rooms = 6
 //////////////
 
 /proc/make_mining_asteroid_secrets()
-	for(1 to max_secret_rooms)
+	for(var/i in 1 to max_secret_rooms)
 		make_mining_asteroid_secret()
 
 /proc/make_mining_asteroid_secret()

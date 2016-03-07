@@ -62,14 +62,19 @@ Actual Adjacent procs :
 	return b.f - a.f
 
 //wrapper that returns an empty list if A* failed to find a path
-/proc/get_path_to(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
-	var/list/path = AStar(start, end, atom, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+/proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
 	if(!path)
 		path = list()
 	return path
 
 //the actual algorithm
-/proc/AStar(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+/proc/AStar(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+
+	//sanitation
+	var/start = get_turf(caller)
+	if(!start)
+		return 0
 
 	if(maxnodes)
 		//if start turf is farther than maxnodes from end turf, no need to do anything
@@ -81,11 +86,6 @@ Actual Adjacent procs :
 	var/list/closed = new() //the closed list
 	var/list/path = null //the returned path, if any
 	var/PathNode/cur //current processed turf
-
-	//sanitation
-	start = get_turf(start)
-	if(!start)
-		return 0
 
 	//initialization
 	open.Insert(new /PathNode(start,null,0,call(start,dist)(end),0))
@@ -118,7 +118,7 @@ Actual Adjacent procs :
 			break
 
 		//get adjacents turfs using the adjacent proc, checking for access with id
-		var/list/L = call(cur.source,adjacent)(atom,id, simulated_only)
+		var/list/L = call(cur.source,adjacent)(caller,id, simulated_only)
 		for(var/turf/T in L)
 			if(T == exclude || (T in closed))
 				continue
@@ -151,7 +151,7 @@ Actual Adjacent procs :
 
 //Returns adjacent turfs in cardinal directions that are reachable
 //simulated_only controls whether only simulated turfs are considered or not
-/turf/proc/reachableAdjacentTurfs(atom, ID, simulated_only)
+/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
 	var/list/L = new()
 	var/turf/simulated/T
 
@@ -159,7 +159,7 @@ Actual Adjacent procs :
 		T = get_step(src,dir)
 		if(simulated_only && !istype(T))
 			continue
-		if(!T.density && !LinkBlockedWithAccess(T, ID))
+		if(!T.density && !LinkBlockedWithAccess(T,caller, ID))
 			L.Add(T)
 	return L
 
@@ -177,27 +177,15 @@ Actual Adjacent procs :
 				L.Add(T)
 	return L
 
-/turf/proc/LinkBlockedWithAccess(turf/T, obj/item/weapon/card/id/ID)
+/turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
 	var/adir = get_dir(src, T)
 	var/rdir = get_dir(T, src)
-	if(DirBlockedWithAccess(src, adir, ID))
-		return 1
-	if(DirBlockedWithAccess(T, rdir, ID))
-		return 1
-	for(var/obj/O in T)
-		if(O.density && !istype(O, /obj/machinery/door) && !(O.flags & ON_BORDER))
-			return 1
-	return 0
 
-/proc/DirBlockedWithAccess(turf/T, dir, ID)
-	for(var/obj/structure/window/D in T)
-		if(!D.density)
-			continue
-		if(D.dir == SOUTHWEST)
+	for(var/obj/structure/window/W in src)
+		if(!W.CanAStarPass(ID, adir))
 			return 1
-		if(D.dir == dir)
+	for(var/obj/O in T)
+		if(!O.CanAStarPass(ID, rdir, caller))
 			return 1
-	for(var/obj/machinery/door/D in T)
-		if(!D.CanAStarPass(ID, dir))
-			return 1
+
 	return 0

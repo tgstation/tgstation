@@ -139,7 +139,8 @@
 		return
 
 	//get the user's location
-	if( !istype(user.loc, /turf) )	return	//can't do this stuff whilst inside objects and such
+	if( !istype(user.loc, /turf) )
+		return	//can't do this stuff whilst inside objects and such
 
 	add_fingerprint(user)
 
@@ -233,11 +234,13 @@
 		F.icon_state = "wall_thermite"
 		F.add_hiddenprint(user)
 		spawn(max(100,300-thermite))
-			if(O)	qdel(O)
+			if(O)
+				qdel(O)
 	else
 		thermite = 0
 		spawn(50)
-			if(O)	qdel(O)
+			if(O)
+				qdel(O)
 	return
 
 /turf/simulated/wall/singularity_pull(S, current_size)

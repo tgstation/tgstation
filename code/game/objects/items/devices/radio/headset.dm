@@ -9,7 +9,6 @@
 
 	slot_flags = SLOT_EARS
 	var/obj/item/device/encryptionkey/keyslot2 = null
-	maxf = 1489
 
 /obj/item/device/radio/headset/New()
 	..()

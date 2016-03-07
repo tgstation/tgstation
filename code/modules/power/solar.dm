@@ -53,8 +53,6 @@
 		health *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
 	update_icon()
 
-
-
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -275,7 +273,7 @@
 	var/icon_screen = "solar"
 	var/icon_keyboard = "power_key"
 	var/id = 0
-	var/cdir = 0
+	var/currentdir = 0
 	var/targetdir = 0		// target angle in manual tracking (since it updates every game minute)
 	var/gen = 0
 	var/lastgen = 0
@@ -331,19 +329,19 @@
 	switch(track)
 		if(1)
 			if(trackrate) //we're manual tracking. If we set a rotation speed...
-				cdir = targetdir //...the current direction is the targetted one (and rotates panels to it)
+				currentdir = targetdir //...the current direction is the targetted one (and rotates panels to it)
 		if(2) // auto-tracking
 			if(connected_tracker)
 				connected_tracker.set_angle(SSsun.angle)
 
-	set_panels(cdir)
+	set_panels(currentdir)
 	updateDialog()
 
 
 /obj/machinery/power/solar_control/initialize()
 	..()
 	if(!powernet) return
-	set_panels(cdir)
+	set_panels(currentdir)
 
 /obj/machinery/power/solar_control/update_icon()
 	overlays.Cut()
@@ -355,33 +353,22 @@
 		overlays += "[icon_state]_broken"
 	else
 		overlays += icon_screen
-	if(cdir > -1)
-		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
-
-/obj/machinery/power/solar_control/attack_hand(mob/user)
-	if (..() || !user)
-		return
-	add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/power/solar_control/interact(mob/user)
-	if (stat & BROKEN)
-		return
-	ui_interact(user)
+	if(currentdir > -1)
+		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(currentdir))
 
 /obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 												datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "solar_control", name, 465, 400, master_ui, state)
+	if(!ui)
+		ui = new(user, src, ui_key, "solar_control", name, 500, 400, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/solar_control/get_ui_data()
 	var/data = list()
 
 	data["generated"] = round(lastgen)
-	data["angle"] = cdir
-	data["direction"] = angle2text(cdir)
+	data["angle"] = currentdir
+	data["direction"] = angle2text(currentdir)
 
 	data["tracking_state"] = track
 	data["tracking_rate"] = trackrate
@@ -390,6 +377,44 @@
 	data["connected_panels"] = connected_panels.len
 	data["connected_tracker"] = (connected_tracker ? 1 : 0)
 	return data
+
+/obj/machinery/power/solar_control/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("direction")
+			var/adjust = text2num(params["adjust"])
+			if(adjust)
+				currentdir = Clamp((360 + adjust + currentdir) % 360, 0, 359)
+				targetdir = currentdir
+				set_panels(currentdir)
+				. = TRUE
+		if("rate")
+			var/adjust = text2num(params["adjust"])
+			if(adjust)
+				trackrate = Clamp(trackrate + adjust, -7200, 7200)
+				if(trackrate)
+					nexttime = world.time + 36000 / abs(trackrate)
+				. = TRUE
+		if("tracking")
+			var/mode = text2num(params["mode"])
+			if(mode)
+				track = mode
+				. = TRUE
+			if(mode == 2 && connected_tracker)
+				connected_tracker.set_angle(SSsun.angle)
+				set_panels(currentdir)
+			else if(mode == 1)
+				targetdir = currentdir
+				if(trackrate)
+					nexttime = world.time + 36000 / abs(trackrate)
+				set_panels(targetdir)
+		if("refresh")
+			search_for_connected()
+			if(connected_tracker && track == 2)
+				connected_tracker.set_angle(SSsun.angle)
+			set_panels(currentdir)
+			. = TRUE
 
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -438,45 +463,11 @@
 			targetdir = (targetdir + trackrate/abs(trackrate) + 360) % 360 	//... do it
 			nexttime += 36000/abs(trackrate) //reset the counter for the next 1°
 
-/obj/machinery/power/solar_control/ui_act(action, params)
-	if(..())
-		return
-
-	switch(action)
-		if("control")
-			if(params["cdir"])
-				src.cdir = dd_range(0,359,(360+src.cdir+text2num(params["cdir"]))%360)
-				src.targetdir = src.cdir
-				if(track == 2) //manual update, so losing auto-tracking
-					track = 0
-				spawn(1)
-					set_panels(cdir)
-			if(params["tdir"])
-				src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(params["tdir"]))
-				if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
-		if("tracking")
-			track = text2num(params["mode"])
-			if(track == 2)
-				if(connected_tracker)
-					connected_tracker.set_angle(SSsun.angle)
-					set_panels(cdir)
-			else if (track == 1) //begin manual tracking
-				src.targetdir = src.cdir
-				if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
-				set_panels(targetdir)
-		if("refresh")
-			search_for_connected()
-			if(connected_tracker && track == 2)
-				connected_tracker.set_angle(SSsun.angle)
-			set_panels(cdir)
-	return 1
-
-
 //rotates the panel to the passed angle
-/obj/machinery/power/solar_control/proc/set_panels(cdir)
+/obj/machinery/power/solar_control/proc/set_panels(currentdir)
 
 	for(var/obj/machinery/power/solar/S in connected_panels)
-		S.adir = cdir //instantly rotates the panel
+		S.adir = currentdir //instantly rotates the panel
 		S.occlusion()//and
 		S.update_icon() //update it
 

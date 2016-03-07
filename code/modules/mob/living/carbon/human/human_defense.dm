@@ -17,11 +17,13 @@
 
 
 /mob/living/carbon/human/proc/checkarmor(obj/item/organ/limb/def_zone, type)
-	if(!type)	return 0
+	if(!type)
+		return 0
 	var/protection = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/bp in body_parts)
-		if(!bp)	continue
+		if(!bp)
+			continue
 		if(bp && istype(bp ,/obj/item/clothing))
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & def_zone.body_part)
@@ -93,7 +95,8 @@
 
 
 /mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user, def_zone)
-	if(!I || !user)	return 0
+	if(!I || !user)
+		return 0
 
 	var/obj/item/organ/limb/target_limb = get_organ(check_zone(user.zone_sel.selecting))
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))

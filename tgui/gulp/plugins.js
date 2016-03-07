@@ -5,7 +5,7 @@ export const browserify = {
   es3ify: require('es3ify'),
   globify: require('require-globify'),
   helpers: require('babelify-external-helpers'),
-  rememberify: require('rememberify')
+  watchify: require('watchify')
 }
 
 export const gulp = require('gulp-load-plugins')({ replaceString: /^gulp(-|\.)|-/g })

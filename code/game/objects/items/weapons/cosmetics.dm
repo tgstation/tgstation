@@ -44,9 +44,11 @@
 		icon_state = "lipstick"
 
 /obj/item/weapon/lipstick/attack(mob/M, mob/user)
-	if(!open)	return
+	if(!open)
+		return
 
-	if(!istype(M, /mob))	return
+	if(!istype(M, /mob))
+		return
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

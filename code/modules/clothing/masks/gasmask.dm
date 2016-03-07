@@ -75,7 +75,7 @@
 	flags_cover = MASKCOVERSEYES
 	burn_state = FLAMMABLE
 
-/obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
+/obj/item/clothing/mask/gas/clown_hat/AltClick(mob/user)
 
 	var/mob/M = usr
 	var/list/options = list()
@@ -88,7 +88,7 @@
 
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]
-		M << "Your Clown Mask has now morphed into [choice], all praise the Honkmother!"
+		M << "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>"
 		return 1
 
 /obj/item/clothing/mask/gas/sexyclown
@@ -108,6 +108,27 @@
 	item_state = "mime"
 	flags_cover = MASKCOVERSEYES
 	burn_state = FLAMMABLE
+	action_button_name = "Adjust Mask"
+
+/obj/item/clothing/mask/gas/mime/ui_action_click()
+	cycle_mask(usr)
+
+/obj/item/clothing/mask/gas/mime/AltClick(mob/user)
+	cycle_mask(user)
+
+/obj/item/clothing/mask/gas/mime/proc/cycle_mask(mob/user)
+	switch(icon_state)
+		if("mime")
+			icon_state = "sadmime"
+		if("sadmime")
+			icon_state = "scaredmime"
+		if("scaredmime")
+			icon_state = "sexymime"
+		if("sexymime")
+			icon_state = "mime"
+	user.update_inv_wear_mask()
+	user << "<span class='notice'>You adjust your mask to portray a different emotion.</span>"
+	return 1
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"

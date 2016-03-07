@@ -157,8 +157,10 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	for(var/mob/M in listening)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
+	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", MOB_LAYER+1)
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	spawn(0)
-		flick_overlay(image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+		flick_overlay(I, speech_bubble_recipients, 30)
 
 /mob/proc/binarycheck()
 	return 0

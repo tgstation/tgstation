@@ -430,14 +430,22 @@
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.
 	if(S.has_reagent("mutagen", 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))
 		switch(rand(100))
-			if(91 to 100)	plantdies()
-			if(81 to 90)	mutatespecie()
-			if(66 to 80)	hardmutate()
-			if(41 to 65)	mutate()
-			if(21 to 41)	usr << "The plants don't seem to react..."
-			if(11 to 20)	mutateweed()
-			if(1 to 10)		mutatepest()
-			else 			usr << "Nothing happens..."
+			if(91 to 100)
+				plantdies()
+			if(81 to 90)
+				mutatespecie()
+			if(66 to 80)
+				hardmutate()
+			if(41 to 65)
+				mutate()
+			if(21 to 41)
+				usr << "The plants don't seem to react..."
+			if(11 to 20)
+				mutateweed()
+			if(1 to 10)
+				mutatepest()
+			else
+				usr << "Nothing happens..."
 
 	// 2 or 1 units is enough to change the yield and other stats.// Can change the yield and other stats, but requires more than mutagen
 	else if(S.has_reagent("mutagen", 2) || S.has_reagent("radium", 5) || S.has_reagent("uranium", 5))
@@ -623,10 +631,14 @@
 		adjustWeeds(-rand(1,5))
 	if(S.has_reagent("adminordrazine", 5))
 		switch(rand(100))
-			if(66  to 100)	mutatespecie()
-			if(33	to 65)	mutateweed()
-			if(1   to 32)	mutatepest()
-			else 			usr << "Nothing happens..."
+			if(66  to 100)
+				mutatespecie()
+			if(33	to 65)
+				mutateweed()
+			if(1   to 32)
+				mutatepest()
+			else
+				usr << "Nothing happens..."
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 
@@ -843,7 +855,8 @@
 	while(t_amount < getYield())
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, potency)
 		result.Add(t_prod) // User gets a consumable
-		if(!t_prod)	return
+		if(!t_prod)
+			return
 		t_prod.lifespan = lifespan
 		t_prod.endurance = endurance
 		t_prod.maturation = maturation

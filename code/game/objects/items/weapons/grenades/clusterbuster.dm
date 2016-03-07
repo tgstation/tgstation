@@ -120,3 +120,7 @@
 /obj/item/weapon/grenade/clusterbuster/spawner_spesscarp
 	name = "Invasion of the Space Carps"
 	payload = /obj/item/weapon/grenade/spawnergrenade/spesscarp
+
+/obj/item/weapon/grenade/clusterbuster/soap
+	name = "Slipocalypse"
+	payload = /obj/item/weapon/grenade/spawnergrenade/syndiesoap

@@ -50,7 +50,9 @@
 	var/burnmod = 1		// multiplier for burn damage
 	var/coldmod = 1		// multiplier for cold damage
 	var/heatmod = 1		// multiplier for heat damage
-	var/punchmod = 0	// adds to the punch damage
+	var/punchdamagelow = 0       //lowest possible punch damage
+	var/punchdamagehigh = 9      //highest possible punch damage
+	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
@@ -667,7 +669,8 @@
 	if( H.stat == DEAD )
 		H.sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		H.see_in_dark = 8
-		if(!H.druggy)		H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		if(!H.druggy)
+			H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	else
 		if(!(SEE_TURFS & H.permanent_sight_flags))
 			H.sight &= ~SEE_TURFS
@@ -721,7 +724,8 @@
 
 		if( H.disabilities & NEARSIGHT && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
 			H.client.screen += global_hud.vimpaired
-		if(H.eye_blurry)			H.client.screen += global_hud.blurry
+		if(H.eye_blurry)
+			H.client.screen += global_hud.blurry
 		if(H.druggy)
 			H.client.screen += global_hud.druggy
 			H.throw_alert("high", /obj/screen/alert/high)
@@ -730,8 +734,10 @@
 
 
 		if(H.eye_stat > 20)
-			if(H.eye_stat > 30)	H.client.screen += global_hud.darkMask
-			else				H.client.screen += global_hud.vimpaired
+			if(H.eye_stat > 30)
+				H.client.screen += global_hud.darkMask
+			else
+				H.client.screen += global_hud.vimpaired
 
 	return 1
 
@@ -741,18 +747,28 @@
 			H.healths.icon_state = "health7"
 		else
 			switch(H.hal_screwyhud)
-				if(1)	H.healths.icon_state = "health6"
-				if(2)	H.healths.icon_state = "health7"
-				if(5)	H.healths.icon_state = "health0"
+				if(1)
+					H.healths.icon_state = "health6"
+				if(2)
+					H.healths.icon_state = "health7"
+				if(5)
+					H.healths.icon_state = "health0"
 				else
 					switch(H.health - H.staminaloss)
-						if(100 to INFINITY)		H.healths.icon_state = "health0"
-						if(80 to 100)			H.healths.icon_state = "health1"
-						if(60 to 80)			H.healths.icon_state = "health2"
-						if(40 to 60)			H.healths.icon_state = "health3"
-						if(20 to 40)			H.healths.icon_state = "health4"
-						if(0 to 20)				H.healths.icon_state = "health5"
-						else					H.healths.icon_state = "health6"
+						if(100 to INFINITY)
+							H.healths.icon_state = "health0"
+						if(80 to 100)
+							H.healths.icon_state = "health1"
+						if(60 to 80)
+							H.healths.icon_state = "health2"
+						if(40 to 60)
+							H.healths.icon_state = "health3"
+						if(20 to 40)
+							H.healths.icon_state = "health4"
+						if(0 to 20)
+							H.healths.icon_state = "health5"
+						else
+							H.healths.icon_state = "health6"
 
 	if(H.healthdoll)
 		H.healthdoll.overlays.Cut()
@@ -868,9 +884,9 @@
 				. += H.shoes.slowdown
 			if(H.back)
 				. += H.back.slowdown
-			if(H.l_hand)
+			if(H.l_hand && (H.l_hand.flags & HANDSLOW))
 				. += H.l_hand.slowdown
-			if(H.r_hand)
+			if(H.r_hand && (H.r_hand.flags & HANDSLOW))
 				. += H.r_hand.slowdown
 
 			if((H.disabilities & FAT))
@@ -928,7 +944,7 @@
 				if(H.lying)
 					atk_verb = "kick"
 
-				var/damage = rand(0, 9) + M.dna.species.punchmod
+				var/damage = rand(M.dna.species.punchdamagelow, M.dna.species.punchdamagehigh)
 
 				if(!damage)
 					playsound(H.loc, M.dna.species.miss_sound, 25, 1, -1)
@@ -946,7 +962,7 @@
 
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
 				add_logs(M, H, "punched")
-				if((H.stat != DEAD) && damage >= 9)
+				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold)
 					H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
 									"<span class='userdanger'>[M] has weakened [H]!</span>")
 					H.apply_effect(4, WEAKEN, armor_block)
@@ -1100,7 +1116,8 @@
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
-	if(!damage || blocked <= 0)	return 0
+	if(!damage || blocked <= 0)
+		return 0
 
 	var/obj/item/organ/limb/organ = null
 	if(islimb(def_zone))
@@ -1108,7 +1125,8 @@
 	else
 		if(!def_zone)	def_zone = ran_zone(def_zone)
 		organ = H.get_organ(check_zone(def_zone))
-	if(!organ)	return 0
+	if(!organ)
+		return 0
 
 	damage = (damage * blocked)
 
@@ -1155,7 +1173,8 @@
 		if(H.reagents.has_reagent("epinephrine"))
 			return
 		if(H.health >= config.health_threshold_crit)
-			if(NOBREATH in specflags)	return 1
+			if(NOBREATH in specflags)
+				return 1
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			H.failed_last_breath = 1
 		else
@@ -1333,6 +1352,8 @@
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	if(!environment)
 		return
+	if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		return
 
 	var/loc_temp = H.get_temperature(environment)
 
@@ -1369,21 +1390,19 @@
 					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
 				else
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
-		if(!istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-			switch(H.bodytemperature)
-				if(200 to 260)
-					H.throw_alert("temp", /obj/screen/alert/cold, 1)
-					H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
-				if(120 to 200)
-					H.throw_alert("temp", /obj/screen/alert/cold, 2)
-					H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
-				if(-INFINITY to 120)
-					H.throw_alert("temp", /obj/screen/alert/cold, 3)
-					H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
-		else
-			H.clear_alert("temp")
+		switch(H.bodytemperature)
+			if(200 to 260)
+				H.throw_alert("temp", /obj/screen/alert/cold, 1)
+				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
+			if(120 to 200)
+				H.throw_alert("temp", /obj/screen/alert/cold, 2)
+				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
+			if(-INFINITY to 120)
+				H.throw_alert("temp", /obj/screen/alert/cold, 3)
+				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+			else
+				H.clear_alert("temp")
 
 	else
 		H.clear_alert("temp")

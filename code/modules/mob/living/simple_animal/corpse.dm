@@ -117,6 +117,22 @@
 
 
 
+/obj/effect/landmark/mobcorpse/syndicatestormtrooper
+	name = "Syndicate Stormtrooper"
+	corpseuniform = /obj/item/clothing/under/syndicate
+	corpsesuit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	corpseshoes = /obj/item/clothing/shoes/combat
+	corpsegloves = /obj/item/clothing/gloves/combat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/gas/syndicate
+	corpsehelmet = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
+	corpseback = /obj/item/weapon/tank/jetpack/oxygen/harness
+	corpseid = 1
+	corpseidjob = "Operative"
+	corpseidaccess = "Syndicate"
+
+
+
 /obj/effect/landmark/mobcorpse/clown
 	name = "Clown"
 	corpseuniform = /obj/item/clothing/under/rank/clown

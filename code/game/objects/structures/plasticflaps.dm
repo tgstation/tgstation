@@ -7,6 +7,17 @@
 	anchored = 1
 	layer = 4
 
+/obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
+	if(istype(caller, /mob/living))
+		if(istype(caller,/mob/living/simple_animal/bot/mulebot))
+			return 1
+
+		var/mob/living/M = caller
+		if(!M.ventcrawler && M.mob_size != MOB_SIZE_TINY)
+			return 0
+
+	return 1 //diseases, stings, etc can pass
+
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))
 		return prob(60)

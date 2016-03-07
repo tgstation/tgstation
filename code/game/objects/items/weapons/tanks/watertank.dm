@@ -345,7 +345,7 @@
 	var/on = 0
 	volume = 300
 	var/usage_ratio = 5 //5 unit added per 1 removed
-	var/injection_amount = 1 
+	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
 	flags = OPENCONTAINER
 	spillable = 0
@@ -375,9 +375,12 @@
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
-			if(0 to 15)		filling.icon_state = "backpack-10"
-			if(16 to 60) 	filling.icon_state = "backpack50"
-			if(61 to INFINITY)	filling.icon_state = "backpack100"
+			if(0 to 15)
+				filling.icon_state = "backpack-10"
+			if(16 to 60)
+				filling.icon_state = "backpack50"
+			if(61 to INFINITY)
+				filling.icon_state = "backpack100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
@@ -390,9 +393,12 @@
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
-			if(0 to 15)		filling.icon_state = "backpackmob-10"
-			if(16 to 60) 	filling.icon_state = "backpackmob50"
-			if(61 to INFINITY)	filling.icon_state = "backpackmob100"
+			if(0 to 15)
+				filling.icon_state = "backpackmob-10"
+			if(16 to 60)
+				filling.icon_state = "backpackmob50"
+			if(61 to INFINITY)
+				filling.icon_state = "backpackmob100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling

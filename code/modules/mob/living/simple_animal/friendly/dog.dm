@@ -210,7 +210,8 @@
 		return
 
 	if(inventory_head)
-		if(user)	user << "<span class='warning'>You can't put more than one hat on [src]!</span>"
+		if(user)
+			user << "<span class='warning'>You can't put more than one hat on [src]!</span>"
 		return
 	if(!item_to_add)
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
@@ -378,7 +379,7 @@
 				emote_see = list("plays tricks.", "slips.")
 			else
 				special_hat = 0
-	
+
 	var/special_back = 0
 	if(inventory_back)
 		special_back = 1
@@ -571,8 +572,10 @@
 /mob/living/simple_animal/pet/dog/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	switch(M.a_intent)
-		if("help")	wuv(1,M)
-		if("harm")	wuv(-1,M)
+		if("help")
+			wuv(1,M)
+		if("harm")
+			wuv(-1,M)
 
 /mob/living/simple_animal/pet/dog/proc/wuv(change, mob/M)
 	if(change)

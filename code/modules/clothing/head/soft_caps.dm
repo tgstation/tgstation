@@ -6,16 +6,16 @@
 	item_color = "cargo"
 	var/flipped = 0
 
-	dropped()
-		src.icon_state = "[item_color]soft"
-		src.flipped=0
-		..()
+/obj/item/clothing/head/soft/dropped()
+	src.icon_state = "[item_color]soft"
+	src.flipped=0
+	..()
 
-	verb/flipcap()
-		set category = "Object"
-		set name = "Flip cap"
+/obj/item/clothing/head/soft/verb/flipcap()
+	set category = "Object"
+	set name = "Flip cap"
 
-		flip(usr)
+	flip(usr)
 
 
 /obj/item/clothing/head/soft/AltClick(mob/user)

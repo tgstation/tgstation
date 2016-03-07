@@ -54,7 +54,8 @@
 	remove_mutation_group(mutations)
 
 /datum/dna/proc/remove_mutation_group(list/group)
-	if(!group)	return
+	if(!group)
+		return
 	for(var/datum/mutation/human/HM in group)
 		HM.force_lose(holder)
 
@@ -77,8 +78,10 @@
 		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
 
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
-		if(L[i])	. += L[i]
-		else		. += random_string(DNA_BLOCK_SIZE,hex_characters)
+		if(L[i])
+			. += L[i]
+		else
+			. += random_string(DNA_BLOCK_SIZE,hex_characters)
 	return .
 
 /datum/dna/proc/generate_struc_enzymes()
@@ -160,7 +163,7 @@
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
 	struc_enzymes = generate_struc_enzymes()
-	features = list("mcolor" = "FFF", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+	features = random_features()
 
 
 
@@ -279,7 +282,8 @@ mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutat
 	return copytext(input, blocksize*(blocknumber-1)+1, (blocksize*blocknumber)+1)
 
 /proc/setblock(istring, blocknumber, replacement, blocksize=DNA_BLOCK_SIZE)
-	if(!istring || !blocknumber || !replacement || !blocksize)	return 0
+	if(!istring || !blocknumber || !replacement || !blocksize)
+		return 0
 	return getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
 
 /proc/randmut(mob/living/carbon/M, list/candidates, difficulty = 2)

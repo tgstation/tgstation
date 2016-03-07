@@ -4,7 +4,8 @@ var/list/whitelist
 
 /proc/load_whitelist()
 	whitelist = file2list(WHITELISTFILE)
-	if(!whitelist.len)	whitelist = null
+	if(!whitelist.len)
+		whitelist = null
 
 /proc/check_whitelist(mob/M /*, var/rank*/)
 	if(!whitelist)

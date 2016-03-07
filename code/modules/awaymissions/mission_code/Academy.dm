@@ -159,7 +159,7 @@
 	backpack_contents = list(/obj/item/weapon/storage/box/survival = 1)
 
 /obj/item/weapon/dice/d20/fate
-	name = "Dice of Fate"
+	name = "Die of Fate"
 	desc = "A die with twenty sides. You can feel unearthly energies radiating from it. Using this might be VERY risky."
 	icon_state = "d20"
 	sides = 20

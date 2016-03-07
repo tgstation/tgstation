@@ -20,7 +20,7 @@ Urist: I don't feel like figuring out how you store object spells so I'm leaving
 Make sure spells that are removed from spell_list are actually removed and deleted when mind transfering.
 Also, you never added distance checking after target is selected. I've went ahead and did that.
 */
-/obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets,mob/user = usr, distanceoverride)
+/obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets, mob/user = usr, distanceoverride)
 	if(!targets.len)
 		user << "<span class='warning'>No mind found!</span>"
 		return
@@ -43,7 +43,11 @@ Also, you never added distance checking after target is selected. I've went ahea
 		user << "<span class='warning'>They appear to be catatonic! Not even magic can affect their vacant mind.</span>"
 		return
 
-	if(target.mind.special_role in protected_roles)
+	if(user.suiciding)
+		user << "<span class='warning'>You're killing yourself! You can't concentrate enough to do this!</span>"
+		return
+
+	if((target.mind.special_role in protected_roles) || cmptext(copytext(target.key,1,2),"@"))
 		user << "<span class='warning'>Their mind is resisting your spell!</span>"
 		return
 
@@ -69,6 +73,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 	ghost.mind.transfer_to(caster)
 	if(ghost.key)
 		caster.key = ghost.key	//have to transfer the key since the mind was not active
+	qdel(ghost)
 
 	if(caster.mind.special_verbs.len)//If they had any special verbs, we add them here.
 		for(var/V in caster.mind.special_verbs)

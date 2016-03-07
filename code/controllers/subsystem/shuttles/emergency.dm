@@ -1,7 +1,3 @@
-#define UNLAUNCHED 0
-#define ENDGAME_LAUNCHED 1
-#define EARLY_LAUNCHED 2
-
 /obj/docking_port/mobile/emergency
 	name = "emergency shuttle"
 	id = "emergency"
@@ -72,7 +68,8 @@
 /*
 /obj/docking_port/mobile/emergency/findTransitDock()
 	. = SSshuttle.getDock("emergency_transit")
-	if(.)	return .
+	if(.)
+		return .
 	return ..()
 */
 
@@ -118,24 +115,32 @@
 				mode = SHUTTLE_STRANDED
 
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
-				//move each escape pod to its corresponding transit dock
-				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
-					if(M.launch_status == UNLAUNCHED) //Will not launch from the mine/planet
+				//move each escape pod (or applicable spaceship) to its corresponding transit dock
+				for(var/A in SSshuttle.mobile)
+					var/obj/docking_port/mobile/M = A
+					if(M.launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
 						M.launch_status = ENDGAME_LAUNCHED
 						M.enterTransit()
+
 				//now move the actual emergency shuttle to its transit dock
 				for(var/area/shuttle/escape/E in world)
 					E << 'sound/effects/hyperspace_progress.ogg'
 				enterTransit()
 				mode = SHUTTLE_ESCAPE
+				launch_status = ENDGAME_LAUNCHED
 				timer = world.time
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 		if(SHUTTLE_ESCAPE)
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
-				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
+				for(var/A in SSshuttle.mobile)
+					var/obj/docking_port/mobile/M = A
 					if(M.launch_status == ENDGAME_LAUNCHED)
-						M.dock(SSshuttle.getDock("[M.id]_away"))
+						if(istype(M, /obj/docking_port/mobile/pod))
+							M.dock(SSshuttle.getDock("[M.id]_away")) //Escape pods dock at centcomm
+						else
+							continue //Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
+
 				//now move the actual emergency shuttle to centcomm
 				for(var/area/shuttle/escape/E in world)
 					E << 'sound/effects/hyperspace_end.ogg'
@@ -157,7 +162,7 @@
 	dwidth = 1
 	width = 3
 	height = 4
-	var/launch_status = UNLAUNCHED
+	launch_status = UNLAUNCHED
 
 /obj/docking_port/mobile/pod/request()
 	if((security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA) && launch_status == UNLAUNCHED)
@@ -232,8 +237,8 @@
 	new /obj/item/clothing/suit/space/orange(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/weapon/tank/internals/air(src)
-	new /obj/item/weapon/tank/internals/air(src)
+	new /obj/item/weapon/tank/internals/oxygen/red(src)
+	new /obj/item/weapon/tank/internals/oxygen/red(src)
 	new /obj/item/weapon/pickaxe/emergency(src)
 	new /obj/item/weapon/pickaxe/emergency(src)
 	new /obj/item/weapon/survivalcapsule(src)

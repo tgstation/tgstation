@@ -140,7 +140,7 @@
 		return ..()
 	if(M.stat)
 		user << "<span class='warning'>The slime is dead!</span>"
-		return..()
+		return ..()
 
 	M.docile = 1
 	M.nutrition = 700
@@ -172,7 +172,7 @@
 		return ..()
 	if(M.stat)
 		user << "<span class='warning'>[M] is dead!</span>"
-		return..()
+		return ..()
 	var/mob/living/simple_animal/SM = M
 	if(SM.sentience_type != sentience_type)
 		user << "<span class='warning'>The potion won't work on [SM].</span>"
@@ -212,13 +212,13 @@
 		return ..()
 	if(M.is_adult) //Can't steroidify adults
 		user << "<span class='warning'>Only baby slimes can use the steroid!</span>"
-		return..()
+		return ..()
 	if(M.stat)
 		user << "<span class='warning'>The slime is dead!</span>"
-		return..()
+		return ..()
 	if(M.cores >= 5)
 		user <<"<span class='warning'>The slime already has the maximum amount of extract!</span>"
-		return..()
+		return ..()
 
 	user <<"<span class='notice'>You feed the slime the steroid. It will now produce one more extract.</span>"
 	M.cores++
@@ -242,10 +242,10 @@
 		return ..()
 	if(M.stat)
 		user << "<span class='warning'>The slime is dead!</span>"
-		return..()
+		return ..()
 	if(M.mutation_chance == 0)
 		user <<"<span class='warning'>The slime already has no chance of mutating!</span>"
-		return..()
+		return ..()
 
 	user <<"<span class='notice'>You feed the slime the stabilizer. It is now less likely to mutate.</span>"
 	M.mutation_chance = Clamp(M.mutation_chance-15,0,100)
@@ -263,13 +263,13 @@
 		return ..()
 	if(M.stat)
 		user << "<span class='warning'>The slime is dead!</span>"
-		return..()
+		return ..()
 	if(M.mutator_used)
 		user << "<span class='warning'>This slime has already consumed a mutator, any more would be far too unstable!</span>"
-		return..()
+		return ..()
 	if(M.mutation_chance == 100)
 		user <<"<span class='warning'>The slime is already guaranteed to mutate!</span>"
-		return..()
+		return ..()
 
 	user <<"<span class='notice'>You feed the slime the mutator. It is now more likely to mutate.</span>"
 	M.mutation_chance = Clamp(M.mutation_chance+12,0,100)
@@ -282,17 +282,27 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 
-/obj/item/slimepotion/speed/afterattack(obj/item/C, mob/user)
+/obj/item/slimepotion/speed/afterattack(obj/C, mob/user)
 	..()
 	if(!istype(C))
-		user << "<span class='warning'>The potion can only be used on items!</span>"
+		user << "<span class='warning'>The potion can only be used on items or vehicles!</span>"
 		return
-	if(C.slowdown <= 0)
-		user << "<span class='warning'>The [C] can't be made any faster!</span>"
-		return..()
+	if(istype(C, /obj/item))
+		var/obj/item/I = C
+		if(I.slowdown <= 0)
+			user << "<span class='warning'>The [C] can't be made any faster!</span>"
+			return ..()
+		I.slowdown = 0
+
+	if(istype(C, /obj/vehicle))
+		var/obj/vehicle/V = C
+		if(V.vehicle_move_delay <= 0)
+			user << "<span class='warning'>The [C] can't be made any faster!</span>"
+			return ..()
+		V.vehicle_move_delay = 0
+
 	user <<"<span class='notice'>You slather the red gunk over the [C], making it faster.</span>"
 	C.color = "#FF0000"
-	C.slowdown = 0
 	qdel(src)
 
 
@@ -313,7 +323,7 @@
 		return
 	if(C.max_heat_protection_temperature == FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
 		user << "<span class='warning'>The [C] is already fireproof!</span>"
-		return..()
+		return ..()
 	user <<"<span class='notice'>You slather the blue gunk over the [C], fireproofing it.</span>"
 	C.name = "fireproofed [C.name]"
 	C.color = "#000080"

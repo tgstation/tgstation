@@ -175,6 +175,9 @@ BLIND     // can't see anything
 	slowdown = SHOES_SLOWDOWN
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
+	var/can_hold_items = 0//if set to 1, the shoe can hold knives and edaggers
+	var/obj/held_item
+	var/list/valid_held_items = list(/obj/item/weapon/kitchen/knife, /obj/item/weapon/pen, /obj/item/weapon/switchblade)//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
 
 
 /obj/item/clothing/shoes/worn_overlays(var/isinhands = FALSE)
@@ -198,6 +201,32 @@ BLIND     // can't see anything
 		var/mob/M = loc
 		M.update_inv_shoes()
 
+/obj/item/clothing/shoes/attackby(obj/item/I, mob/user, params)
+	..()
+	if(!can_hold_items)
+		return
+	if(held_item)
+		user << "<span class='notice'>There's already something in [src].</span>"
+		return
+	if(is_type_in_list(I, valid_held_items))//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
+		if(I.w_class > 2)//if the object is too big (like if it's a cleaver or an extended edagger) it wont fit
+			user << "<span class='notice'>[I] is currently too big to fit into [src]. </span>"
+			return
+		if(!user.drop_item())
+			return
+		I.loc = src
+		held_item = I
+		user << "<span class='notice'>You discreetly slip [I] into [src]. Alt-click [src] to remove it.</span>"
+
+/obj/item/clothing/shoes/AltClick(mob/user)
+	if(user.incapacitated() || !held_item || !can_hold_items)
+		return
+	if(!user.put_in_hands(held_item))
+		user << "<span class='notice'>You fumble for [held_item] and it falls on the floor.</span>"
+		return 1
+		held_item = null
+	user.visible_message("<span class='warning'>[user] draws [held_item] from their shoes!</span>", "<span class='notice'>You draw [held_item] from [src].</span>")
+	held_item = null
 
 /obj/item/proc/negates_gravity()
 	return 0

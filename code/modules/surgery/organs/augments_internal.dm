@@ -267,22 +267,25 @@
 
 /obj/item/organ/internal/cyberimp/chest/arm_mod/ui_action_click()
 	if(overloaded)//ensure the implant isn't broken
-		owner.visible_message("<span class='warning'>The implant doesn't respond. It seems to be broken...</span>")
+		owner << "<span class='warning'>The implant doesn't respond. It seems to be broken...</span>"
+		return
+	if(holder == null)
+		owner << "<span class='warning'>You should not be attempting to use this implant, as it is a dummy item that should never appear. Please adminhelp and report this as an issue on github.</span>"
 		return
 	if(out)//check if the owner has the item out already
 		owner.unEquip(holder, 1)//if he does, take it away. then,
 		holder.loc = null//stash it in nullspace
 		out = 0//and set this to clarify the item isn't out.
-		owner.visible_message("<span class='notice'>You retract [holder].</span>")
+		owner << "<span class='notice'>You retract [holder].</span>"
 		playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
 	else//if he doesn't have the item out
 		if(owner.put_in_hands(holder))//put it in his hands.
 			out = 1
-			owner.visible_message("<span class='notice'>You extend [holder]!</span>")
+			owner << "<span class='notice'>You extend [holder]!</span>"
 			playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
 		else//if this fails to put the item in his hands,
 			holder.loc = null//keep it in nullspace
-			owner.visible_message("<span class='warning'>You can't extend [holder] if you can't use your hands!</span>")
+			owner << "<span class='warning'>You can't extend [holder] if you can't use your hands!</span>"
 
 /obj/item/organ/internal/cyberimp/chest/arm_mod/emp_act(severity)//if the implant gets EMPed...
 	if(!owner || overloaded)//ensure that it's in an owner and that it's not already EMPed, then...
@@ -291,7 +294,7 @@
 		owner.unEquip(holder, 1)//if he does, take it away.
 		holder.loc = null
 		out = 0
-		owner.visible_message("<span class='notice'>[holder] forcibly retracts into your arm.</span>")
+		owner << "<span class='warning'>[holder] forcibly retracts into your arm.</span>"
 	owner.visible_message("<span class='danger'>A loud bang comes from [owner]...</span>")
 	playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, 1)
 	owner << "<span class='warning'>You feel an explosion erupt inside you as your chest implant breaks. Is it hot in here?</span>"
@@ -333,8 +336,8 @@
 
 /obj/item/weapon/storage/box/cyber_implants/New()
 	..()
-	var/i
 	var/implant
-	for(i = 0, i < amount, i++)
+	while(contents.len <= amount)
 		implant = pick(boxed)
 		new implant(src)
+	new /obj/item/device/autoimplanter(src)

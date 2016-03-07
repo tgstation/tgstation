@@ -10,7 +10,7 @@
 	idle_power_usage = 20
 	var/temp_html = ""
 	var/wait = null
-	var/obj/item/weapon/reagent_containers/glass/beaker = null
+	var/obj/item/weapon/reagent_containers/beaker = null
 
 /obj/machinery/computer/pandemic/New()
 	..()
@@ -271,7 +271,7 @@
 
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
 		if(stat & (NOPOWER|BROKEN)) return
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"

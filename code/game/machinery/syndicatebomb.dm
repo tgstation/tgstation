@@ -9,12 +9,11 @@
 	layer = MOB_LAYER - 0.2 //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = 1
 
-	var/datum/wires/syndicatebomb/wires = null
 	var/timer = 60
-	var/open_panel = 0 	//are the wires exposed?
-	var/active = 0		//is the bomb counting down?
-	var/defused = 0		//is the bomb capable of exploding?
-	var/obj/item/weapon/bombcore/payload = /obj/item/weapon/bombcore/
+	var/open_panel = FALSE 	//are the wires exposed?
+	var/active = FALSE		//is the bomb counting down?
+	var/defused = FALSE		//is the bomb capable of exploding?
+	var/obj/item/weapon/bombcore/payload = /obj/item/weapon/bombcore
 	var/beepsound = 'sound/items/timer.ogg'
 
 /obj/machinery/syndicatebomb/process()
@@ -35,7 +34,7 @@
 		return
 
 /obj/machinery/syndicatebomb/New()
-	wires 	= new(src)
+	wires 	= new /datum/wires/syndicatebomb(src)
 	payload = new payload(src)
 	update_icon()
 	..()
@@ -76,11 +75,11 @@
 		update_icon()
 		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
 
-	else if(wires.IsInteractionTool(I) && open_panel)
-		wires.Interact(user)
+	else if(is_wire_tool(I) && open_panel)
+		wires.interact(user)
 
 	else if(istype(I, /obj/item/weapon/crowbar))
-		if(open_panel && isWireCut(WIRE_BOOM) && isWireCut(WIRE_UNBOLT) && isWireCut(WIRE_DELAY) && isWireCut(WIRE_PROCEED) && isWireCut(WIRE_ACTIVATE))
+		if(open_panel && wires.is_all_cut())
 			if(payload)
 				user << "<span class='notice'>You carefully pry out [payload].</span>"
 				payload.loc = user.loc
@@ -110,8 +109,7 @@
 	return
 
 /obj/machinery/syndicatebomb/interact(mob/user)
-	if(wires)
-		wires.Interact(user)
+	wires.interact(user)
 	if(!open_panel)
 		if(!active)
 			settings(user)
@@ -144,9 +142,6 @@
 				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has primed a [name] ([payload]) for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 				log_game("[key_name(user)] has primed a [name] ([payload]) for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 				payload.adminlog = "The [src.name] that [key_name(user)] had primed detonated!"
-
-/obj/machinery/syndicatebomb/proc/isWireCut(index)
-	return wires.IsIndexCut(index)
 
 ///Bomb Subtypes///
 
@@ -184,20 +179,20 @@
 	burn_state = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
 
-/obj/item/weapon/bombcore/ex_act(severity, target) //Little boom can chain a big boom
-	src.detonate()
+/obj/item/weapon/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
+	detonate()
 
 /obj/item/weapon/bombcore/burn()
-	src.detonate()
+	detonate()
 	..()
 
 /obj/item/weapon/bombcore/proc/detonate()
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
-	explosion(get_turf(src),3,9,17, flame_range = 17)
-	if(src.loc && istype(src.loc,/obj/machinery/syndicatebomb/))
-		qdel(src.loc)
+	explosion(get_turf(src), 3, 9, 17, flame_range = 17)
+	if(loc && istype(loc,/obj/machinery/syndicatebomb/))
+		qdel(loc)
 	qdel(src)
 
 /obj/item/weapon/bombcore/proc/defuse()
@@ -214,17 +209,18 @@
 	var/attempts = 0
 
 /obj/item/weapon/bombcore/training/proc/reset()
-	var/obj/machinery/syndicatebomb/holder = src.loc
+	var/obj/machinery/syndicatebomb/holder = loc
 	if(istype(holder))
 		if(holder.wires)
-			holder.wires.Shuffle()
+			holder.wires.repair()
+			holder.wires.shuffle_wires()
 		holder.defused = 0
 		holder.open_panel = 0
 		holder.update_icon()
 		holder.updateDialog()
 
 /obj/item/weapon/bombcore/training/detonate()
-	var/obj/machinery/syndicatebomb/holder = src.loc
+	var/obj/machinery/syndicatebomb/holder = loc
 	if(istype(holder))
 		attempts++
 		holder.loc.visible_message("<span class='danger'>\icon[holder] Alert: Bomb has detonated. Your score is now [defusals] for [attempts]. Resetting wires...</span>")
@@ -233,7 +229,7 @@
 		qdel(src)
 
 /obj/item/weapon/bombcore/training/defuse()
-	var/obj/machinery/syndicatebomb/holder = src.loc
+	var/obj/machinery/syndicatebomb/holder = loc
 	if(istype(holder))
 		attempts++
 		defusals++
@@ -248,7 +244,7 @@
 	origin_tech = null
 
 /obj/item/weapon/bombcore/badmin/defuse() //because we wouldn't want them being harvested by players
-	var/obj/machinery/syndicatebomb/B = src.loc
+	var/obj/machinery/syndicatebomb/B = loc
 	qdel(B)
 	qdel(src)
 
@@ -275,21 +271,25 @@
 	playsound(src.loc, 'sound/misc/sadtrombone.ogg', 50)
 	..()
 
-/obj/item/weapon/bombcore/badmin/explosion/
+/obj/item/weapon/bombcore/badmin/explosion
 	var/HeavyExplosion = 2
 	var/MediumExplosion = 5
 	var/LightExplosion = 11
 	var/Flames = 11
 
 /obj/item/weapon/bombcore/badmin/explosion/detonate()
-	explosion(get_turf(src),HeavyExplosion,MediumExplosion,LightExplosion, flame_range = Flames)
+	explosion(get_turf(src), HeavyExplosion, MediumExplosion, LightExplosion, flame_range = Flames)
+	qdel(src)
 
 /obj/item/weapon/bombcore/miniature
 	name = "small bomb core"
 	w_class = 2
 
 /obj/item/weapon/bombcore/miniature/detonate()
-	explosion(src.loc,1,2,4,flame_range = 2) //Identical to a minibomb
+	if(adminlog)
+		message_admins(adminlog)
+		log_game(adminlog)
+	explosion(src.loc, 1, 2, 4, flame_range = 2) //Identical to a minibomb
 	qdel(src)
 
 ///Syndicate Detonator (aka the big red button)///

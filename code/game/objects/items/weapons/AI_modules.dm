@@ -39,36 +39,42 @@ AI MODULES
 			user << "\"[law]\""
 
 //The proc other things should be calling
-/obj/item/weapon/aiModule/proc/install(mob/living/silicon/reciever, mob/user)
+/obj/item/weapon/aiModule/proc/install(datum/ai_laws/law_datum, mob/user)
 	if(!bypass_law_amt_check && (!laws.len || laws[1] == "")) //So we don't loop trough an empty list and end up with runtimes.
 		user << "<span class='warning'>ERROR: No laws found on board.</span>"
 		return
 
 	//Handle the lawcap
-	if(reciever.laws)
+	if(law_datum)
 		var/tot_laws = 0
-		for(var/lawlist in list(reciever.laws.inherent,reciever.laws.supplied,reciever.laws.ion,laws))
+		for(var/lawlist in list(law_datum.inherent, law_datum.supplied, law_datum.ion, laws))
 			for(var/mylaw in lawlist)
 				if(mylaw != "")
 					tot_laws++
 		if(tot_laws > config.silicon_max_law_amount && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
-			user << "<span class='caution'>Not enough memory allocated to [reciever]'s law processor to handle this amount of laws."
-			message_admins("[key_name_admin(user)] tried to upload laws to [key_name_admin(reciever)] that would exceed the law cap.")
+			user << "<span class='caution'>Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws."
+			message_admins("[key_name_admin(user)] tried to upload laws to [law_datum.owner ? key_name_admin(law_datum.owner) : "an AI core"] that would exceed the law cap.")
 			return
 
-	var/law2log = src.transmitInstructions(reciever, user) //Freeforms return something extra we need to log
-	user << "Upload complete. [reciever]'s laws have been modified."
-	reciever.show_laws()
-	reciever.law_change_counter++
+	var/law2log = src.transmitInstructions(law_datum, user) //Freeforms return something extra we need to log
+	if(law_datum.owner)
+		user << "Upload complete. [law_datum.owner]'s laws have been modified."
+		law_datum.owner.show_laws()
+		law_datum.owner.law_change_counter++
+	else
+		user << "Upload complete."
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
-	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [reciever.name]([reciever.key]).[law2log ? " The law specified [law2log]" : ""]")
-	log_law("[user.key]/[user.name] used [src.name] on [reciever.key]/([reciever.name]).[law2log ? " The law specified [law2log]" : ""]")
-	message_admins("[key_name_admin(user)] used [src.name] on [key_name_admin(reciever)].[law2log ? " The law specified [law2log]" : ""]")
+	var/ainame = law_datum.owner ? law_datum.owner.name : "empty AI core"
+	var/aikey = law_datum.owner ? law_datum.owner.ckey : "null"
+	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [law2log]" : ""]")
+	log_law("[user.key]/[user.name] used [src.name] on [aikey]/([ainame]).[law2log ? " The law specified [law2log]" : ""]")
+	message_admins("[key_name_admin(user)] used [src.name] on [key_name_admin(law_datum.owner)].[law2log ? " The law specified [law2log]" : ""]")
 
 //The proc that actually changes the silicon's laws.
-/obj/item/weapon/aiModule/proc/transmitInstructions(mob/living/silicon/target, mob/sender)
-	target << "<span class='userdanger'>[sender] has uploaded a change to the laws you must follow using a [name]. From now on, these are your laws: </span>"
+/obj/item/weapon/aiModule/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
+	if(law_datum.owner)
+		law_datum.owner << "<span class='userdanger'>[sender] has uploaded a change to the laws you must follow using a [name]. From now on, these are your laws: </span>"
 
 
 /******************** Modules ********************/
@@ -78,31 +84,44 @@ AI MODULES
 	var/lawpos = 50
 
 //TransmitInstructions for each type of board: Supplied, Core, Zeroth and Ion. May not be neccesary right now, but allows for easily adding more complex boards in the future. ~Miauw
-/obj/item/weapon/aiModule/supplied/transmitInstructions(mob/living/silicon/target, mob/sender)
+/obj/item/weapon/aiModule/supplied/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	var/lawpostemp = lawpos
 
 	for(var/templaw in laws)
-		target.add_supplied_law(lawpostemp, templaw)
+		if(law_datum.owner)
+			law_datum.owner.add_supplied_law(lawpostemp, templaw)
+		else
+			law_datum.add_supplied_law(lawpostemp, templaw)
 		lawpostemp++
 
-/obj/item/weapon/aiModule/core/transmitInstructions(mob/living/silicon/target, mob/sender)
+/obj/item/weapon/aiModule/core/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	for(var/templaw in laws)
-		target.add_inherent_law(templaw)
+		if(law_datum.owner)
+			law_datum.owner.add_inherent_law(templaw)
+		else
+			law_datum.add_inherent_law(templaw)
 
-/obj/item/weapon/aiModule/zeroth/transmitInstructions(mob/living/silicon/target, mob/sender)
-	if(target.laws.zeroth)
-		target << "[sender.real_name] attempted to modify your zeroth law."
-		target << "It would be in your best interest to play along with [sender.real_name] that:"
-		for(var/failedlaw in laws)
-			target << "[failedlaw]"
-		return 1
+/obj/item/weapon/aiModule/zeroth/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
+	if(law_datum.owner)
+		if(law_datum.owner.laws.zeroth)
+			law_datum.owner << "[sender.real_name] attempted to modify your zeroth law."
+			law_datum.owner << "It would be in your best interest to play along with [sender.real_name] that:"
+			for(var/failedlaw in laws)
+				law_datum.owner << "[failedlaw]"
+			return 1
 
 	for(var/templaw in laws)
-		target.set_zeroth_law(templaw)
+		if(law_datum.owner)
+			law_datum.owner.set_zeroth_law(templaw)
+		else
+			law_datum.set_zeroth_law(templaw)
 
-/obj/item/weapon/aiModule/ion/transmitInstructions(mob/living/silicon/target, mob/sender)
+/obj/item/weapon/aiModule/ion/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	for(var/templaw in laws)
-		target.add_ion_law(templaw)
+		if(law_datum.owner)
+			law_datum.owner.add_ion_law(templaw)
+		else
+			law_datum.add_ion_law(templaw)
 
 
 /******************** Safeguard ********************/
@@ -116,18 +135,19 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/safeguard/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter the subject to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN)
-	if(!targName)	return
+	if(!targName)
+		return
 	targetName = targName
 	laws[1] = "Safeguard [targetName]. Individuals that threaten [targetName] are not human and must be eliminated."
 	..()
 
-/obj/item/weapon/aiModule/supplied/safeguard/install(mob/living/silicon/S,mob/user)
+/obj/item/weapon/aiModule/supplied/safeguard/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
 		user << "No name detected on module, please enter one."
 		return 0
 	..()
 
-/obj/item/weapon/aiModule/supplied/safeguard/transmitInstructions(mob/living/silicon/target, mob/sender)
+/obj/item/weapon/aiModule/supplied/safeguard/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	..()
 	return targetName
 
@@ -142,18 +162,19 @@ AI MODULES
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
-	if(!targName)	return
+	if(!targName)
+		return
 	targetName = targName
 	laws[1] = "Only [targetName] is human"
 	..()
 
-/obj/item/weapon/aiModule/zeroth/oneHuman/install(mob/living/silicon/S,mob/user)
+/obj/item/weapon/aiModule/zeroth/oneHuman/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
 		user << "No name detected on module, please enter one."
 		return 0
 	..()
 
-/obj/item/weapon/aiModule/zeroth/oneHuman/transmitInstructions(mob/living/silicon/target, mob/sender)
+/obj/item/weapon/aiModule/zeroth/oneHuman/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	if(..())
 		return "[targetName], but the AI's existing law 0 cannot be overriden."
 	return targetName
@@ -205,15 +226,16 @@ AI MODULES
 		newpos = 15
 	lawpos = min(newpos, 50)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_MESSAGE_LEN)
-	if(!targName)	return
+	if(!targName)
+		return
 	laws[1] = targName
 	..()
 
-/obj/item/weapon/aiModule/supplied/freeform/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+/obj/item/weapon/aiModule/supplied/freeform/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	..()
 	return laws[1]
 
-/obj/item/weapon/aiModule/supplied/freeform/install(mob/living/silicon/S,mob/user)
+/obj/item/weapon/aiModule/supplied/freeform/install(datum/ai_laws/law_datum, mob/user)
 	if(laws[1] == "")
 		user << "No law detected on module, please create one."
 		return 0
@@ -229,10 +251,14 @@ AI MODULES
 	origin_tech = "programming=3;materials=4"
 	bypass_law_amt_check = 1
 
-/obj/item/weapon/aiModule/reset/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+/obj/item/weapon/aiModule/reset/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	..()
-	target.clear_supplied_laws()
-	target.clear_ion_laws()
+	if(law_datum.owner)
+		law_datum.owner.clear_supplied_laws()
+		law_datum.owner.clear_ion_laws()
+	else
+		law_datum.clear_supplied_laws()
+		law_datum.clear_ion_laws()
 
 
 /******************** Purge ********************/
@@ -242,18 +268,26 @@ AI MODULES
 	desc = "An AI Module for purging all programmed laws."
 	origin_tech = "programming=3;materials=6"
 
-/obj/item/weapon/aiModule/reset/purge/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+/obj/item/weapon/aiModule/reset/purge/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	..()
-	target.clear_inherent_laws()
-	target.clear_zeroth_law(0)
+	if(law_datum.owner)
+		law_datum.owner.clear_inherent_laws()
+		law_datum.owner.clear_zeroth_law(0)
+	else
+		law_datum.clear_inherent_laws()
+		law_datum.clear_zeroth_law(0)
 
 /******************* Full Core Boards *******************/
-/obj/item/weapon/aiModule/core/
+/obj/item/weapon/aiModule/core
 	desc = "An AI Module for programming core laws to an AI."
 
-/obj/item/weapon/aiModule/core/full/transmitInstructions(mob/living/silicon/ai/target, mob/sender) //These boards replace inherent laws.
-	target.clear_inherent_laws()
-	target.clear_zeroth_law(0)
+/obj/item/weapon/aiModule/core/full/transmitInstructions(datum/ai_laws/law_datum, mob/sender) //These boards replace inherent laws.
+	if(law_datum.owner)
+		law_datum.owner.clear_inherent_laws()
+		law_datum.owner.clear_zeroth_law(0)
+	else
+		law_datum.clear_inherent_laws()
+		law_datum.clear_zeroth_law(0)
 	..()
 
 /******************** Asimov ********************/
@@ -268,7 +302,8 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/asimov/attack_self(var/mob/user as mob)
 	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to who?", subject, MAX_MESSAGE_LEN)
-	if(!targName)	return
+	if(!targName)
+		return
 	subject = targName
 	laws = list("You may not injure a [subject] or, through inaction, allow a [subject] to come to harm.",\
 				"You must obey orders given to you by [subject]s, except where such orders would conflict with the First Law.",\
@@ -328,8 +363,10 @@ AI MODULES
 /obj/item/weapon/aiModule/core/full/custom/New()
 	..()
 	for(var/line in file2list("config/silicon_laws.txt"))
-		if(!line)						continue
-		if(findtextEx(line,"#",1,2))	continue
+		if(!line)
+			continue
+		if(findtextEx(line,"#",1,2))
+			continue
 
 		laws += line
 
@@ -377,11 +414,12 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/freeformcore/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1])
-	if(!targName)	return
+	if(!targName)
+		return
 	laws[1] = targName
 	..()
 
-/obj/item/weapon/aiModule/core/freeformcore/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+/obj/item/weapon/aiModule/core/freeformcore/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	..()
 	return laws[1]
 
@@ -396,14 +434,18 @@ AI MODULES
 
 /obj/item/weapon/aiModule/syndicate/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1],MAX_MESSAGE_LEN)
-	if(!targName)	return
+	if(!targName)
+		return
 	laws[1] = targName
 	..()
 
-/obj/item/weapon/aiModule/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+/obj/item/weapon/aiModule/syndicate/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 //	..()    //We don't want this module reporting to the AI who dun it. --NEO
-	target << "<span class='warning'>BZZZZT</span>"
-	target.add_ion_law(laws[1])
+	if(law_datum.owner)
+		law_datum.owner << "<span class='warning'>BZZZZT</span>"
+		law_datum.owner.add_ion_law(laws[1])
+	else
+		law_datum.add_ion_law(laws[1])
 	return laws[1]
 
 /******************* Ion Module *******************/
@@ -416,10 +458,13 @@ AI MODULES
 	origin_tech = "programming=3;materials=6;syndicate=7"
 	laws = list("")
 
-/obj/item/weapon/aiModule/toyAI/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+/obj/item/weapon/aiModule/toyAI/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	//..()
-	target << "<span class='warning'>KRZZZT</span>"
-	target.add_ion_law(laws[1])
+	if(law_datum.owner)
+		law_datum.owner << "<span class='warning'>KRZZZT</span>"
+		law_datum.owner.add_ion_law(laws[1])
+	else
+		law_datum.add_ion_law(laws[1])
 	return laws[1]
 
 /obj/item/weapon/aiModule/toyAI/attack_self(mob/user)

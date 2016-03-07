@@ -4,13 +4,13 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'/>
     <meta charset='utf-8'/>
     <script>
-      var update = function (dataString) {
+      window.update = function (dataString) {
         var data = JSON.parse(dataString);
         if (window.tgui) {
           window.tgui.set("config", data.config);
           if (typeof data.data !== 'undefined') {
             window.tgui.set("data", data.data);
-            window.tgui.animate("adata", data.adata);
+            window.tgui.animate("adata", data.data);
           }
         }
       };
@@ -19,7 +19,7 @@
     <script id='data' type='application/json' data-ref='[ref]'>{}</script>
     <script defer src='tgui.js'></script>
   </head>
-  <body>
+  <body class='[style]'>
     <div id='container' class='container'>
       <div class='notice'>
         <span>Loading...</span><br/>

@@ -62,7 +62,8 @@
 // if it's less than 0, open door, reset timer
 // update the door_timer window and the icon
 /obj/machinery/door_timer/process()
-	if(stat & (NOPOWER|BROKEN))	return
+	if(stat & (NOPOWER|BROKEN))
+		return
 	if(timing)
 		if(world.time > src.releasetime)
 			Radio.set_frequency(SEC_FREQ)
@@ -87,32 +88,40 @@
 // open/closedoor checks if door_timer has power, if so it checks if the
 // linked door is open/closed (by density) then opens it/closes it.
 /obj/machinery/door_timer/proc/timer_start()
-	if(stat & (NOPOWER|BROKEN))	return 0
+	if(stat & (NOPOWER|BROKEN))
+		return 0
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
-		if(door.density)	continue
+		if(door.density)
+			continue
 		spawn(0)
 			door.close()
 
 	for(var/obj/structure/closet/secure_closet/brig/C in targets)
-		if(C.broken)	continue
-		if(C.opened && !C.close())	continue
+		if(C.broken)
+			continue
+		if(C.opened && !C.close())
+			continue
 		C.locked = 1
 		C.update_icon()
 	return 1
 
 
 /obj/machinery/door_timer/proc/timer_end()
-	if(stat & (NOPOWER|BROKEN))	return 0
+	if(stat & (NOPOWER|BROKEN))
+		return 0
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
-		if(!door.density)	continue
+		if(!door.density)
+			continue
 		spawn(0)
 			door.open()
 
 	for(var/obj/structure/closet/secure_closet/brig/C in targets)
-		if(C.broken)	continue
-		if(C.opened)	continue
+		if(C.broken)
+			continue
+		if(C.opened)
+			continue
 		C.locked = 0
 		C.update_icon()
 
@@ -229,13 +238,15 @@
 			disp2 = "Error"
 		update_display(disp1, disp2)
 	else
-		if(maptext)	maptext = ""
+		if(maptext)
+			maptext = ""
 	return
 
 
 // Adds an icon in case the screen is broken/off, stolen from status_display.dm
 /obj/machinery/door_timer/proc/set_picture(state)
-	if(maptext)	maptext = ""
+	if(maptext)
+		maptext = ""
 	picture_state = state
 	overlays.Cut()
 	overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)

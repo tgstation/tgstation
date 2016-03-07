@@ -1,7 +1,8 @@
 /client/proc/create_poll()
 	set name = "Create Poll"
 	set category = "Special Verbs"
-	if(!check_rights(R_PERMISSIONS))	return
+	if(!check_rights(R_PERMISSIONS))
+		return
 	if(!dbcon.IsConnected())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return

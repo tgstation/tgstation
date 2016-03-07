@@ -17,24 +17,23 @@
 		var/list/hand_items = list(L.get_active_hand(),L.get_inactive_hand())
 		var/charged_item = null
 		var/burnt_out = 0
+
+		if(L.pulling && (istype(L.pulling, /mob/living)))
+			var/mob/living/M =	L.pulling
+			if(M.mob_spell_list.len != 0 || (M.mind && M.mind.spell_list.len != 0))
+				for(var/obj/effect/proc_holder/spell/S in M.mob_spell_list)
+					S.charge_counter = S.charge_max
+				if(M.mind)
+					for(var/obj/effect/proc_holder/spell/S in M.mind.spell_list)
+						S.charge_counter = S.charge_max
+				M <<"<span class='notice'>you feel raw magic flowing through you, it feels good!</span>"
+			else
+				M <<"<span class='notice'>you feel very strange for a moment, but then it passes.</span>"
+				burnt_out = 1
+			charged_item = M
+			break
 		for(var/obj/item in hand_items)
-			if(istype(item, /obj/item/weapon/grab))
-				var/obj/item/weapon/grab/G = item
-				if(G.affecting)
-					var/mob/M = G.affecting
-					if(M.mob_spell_list.len != 0 || (M.mind && M.mind.spell_list.len != 0))
-						for(var/obj/effect/proc_holder/spell/S in M.mob_spell_list)
-							S.charge_counter = S.charge_max
-						if(M.mind)
-							for(var/obj/effect/proc_holder/spell/S in M.mind.spell_list)
-								S.charge_counter = S.charge_max
-						M <<"<span class='notice'>you feel raw magic flowing through you, it feels good!</span>"
-					else
-						M <<"<span class='notice'>you feel very strange for a moment, but then it passes.</span>"
-						burnt_out = 1
-					charged_item = M
-					break
-			else if(istype(item, /obj/item/weapon/spellbook))
+			if(istype(item, /obj/item/weapon/spellbook))
 				if(istype(item, /obj/item/weapon/spellbook/oneuse))
 					var/obj/item/weapon/spellbook/oneuse/I = item
 					if(prob(80))

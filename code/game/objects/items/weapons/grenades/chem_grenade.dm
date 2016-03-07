@@ -143,9 +143,6 @@
 /obj/item/weapon/grenade/chem_grenade/receive_signal()
 	prime()
 
-/obj/item/weapon/grenade/chem_grenade/HasProximity(atom/movable/AM)
-	if(nadeassembly)
-		nadeassembly.HasProximity(AM)
 
 /obj/item/weapon/grenade/chem_grenade/Crossed(atom/movable/AM)
 	if(nadeassembly)
@@ -177,6 +174,10 @@
 		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] ([T.x], [T.y], [T.z])")
 
 	playsound(loc, 'sound/effects/bamf.ogg', 50, 1)
+
+	var/turf/DT = get_turf(src)
+	var/area/DA = get_area(DT)
+	log_game("A grenade detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")
 
 	update_mob()
 

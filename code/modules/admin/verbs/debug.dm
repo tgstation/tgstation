@@ -1,7 +1,8 @@
 /client/proc/Debug2()
 	set category = "Debug"
 	set name = "Debug-Game"
-	if(!check_rights(R_DEBUG))	return
+	if(!check_rights(R_DEBUG))
+		return
 
 	if(Debug2)
 		Debug2 = 0
@@ -67,7 +68,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			targetselected = 0
 
 	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
-	if(!procname)	return
+	if(!procname)
+		return
 	if(targetselected && !hascall(target,procname))
 		usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
 		return
@@ -92,8 +94,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
-
-	usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
+	. = get_callproc_returnval(returnval, procname)
+	if(.)
+		usr << .
 	feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/callproc_datum(A as null|area|mob|obj|turf)
@@ -122,13 +125,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	feedback_add_details("admin_verb","DPC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	var/returnval = call(A,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
-	usr << "<span class='notice'>[procname] returned: [returnval ? returnval : "null"]</span>"
+	. = get_callproc_returnval(returnval,procname)
+	if(.)
+		usr << .
 
 
 
 /client/proc/get_callproc_args()
 	var/argnum = input("Number of arguments","Number:",0) as num|null
-	if(!argnum && (argnum!=0))	return
+	if(!argnum && (argnum!=0))
+		return
 
 	var/list/lst = list()
 	//TODO: make a list to store whether each argument was initialised as null.
@@ -183,6 +189,30 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	return lst
 
 
+/client/proc/get_callproc_returnval(returnval,procname)
+	. = ""
+	if(islist(returnval))
+		var/list/returnedlist = returnval
+		. = "<font color='blue'>"
+		if(returnedlist.len)
+			var/assoc_check = returnedlist[1]
+			if(istext(assoc_check) && (returnedlist[assoc_check] != null))
+				. += "[procname] returned an associative list:"
+				for(var/key in returnedlist)
+					. += "\n[key] = [returnedlist[key]]"
+				
+			else
+				. += "[procname] returned a list:"
+				for(var/elem in returnedlist)
+					. += "\n[elem]"
+		else
+			. = "[procname] returned an empty list"
+		. += "</font>"
+
+	else
+		. = "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
+
+
 /client/proc/Cell()
 	set category = "Debug"
 	set name = "Air Status in Location"
@@ -199,7 +229,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/t = ""
 	for(var/id in env_gases)
 		if(id in hardcoded_gases || env_gases[id][MOLES])
-			t+= "[env_gases[id][GAS_NAME]] : [env_gases[id][MOLES]]\n"
+			t+= "[env_gases[id][GAS_META][META_GAS_NAME]] : [env_gases[id][MOLES]]\n"
 
 	usr << t
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -469,8 +499,8 @@ var/global/list/g_fancy_list_of_types = null
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
 
-	for(var/obj/machinery/alarm/alarm in machines)
-		var/area/A = get_area(alarm)
+	for(var/obj/machinery/airalarm/AA in machines)
+		var/area/A = get_area(AA)
 		if(!(A.type in areas_with_air_alarm))
 			areas_with_air_alarm.Add(A.type)
 
@@ -693,5 +723,6 @@ var/global/list/g_fancy_list_of_types = null
 	set name = "Debug HUDs"
 	set desc = "Debug the data or antag HUDs"
 
-	if(!holder)	return
+	if(!holder)
+		return
 	debug_variables(huds[i])

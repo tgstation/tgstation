@@ -30,7 +30,8 @@
 	return (chambered.BB ? 1 : 0)
 
 /obj/item/weapon/gun/projectile/shotgun/attack_self(mob/living/user)
-	if(recentpump)	return
+	if(recentpump)
+		return
 	pump(user)
 	recentpump = 1
 	spawn(10)
@@ -52,7 +53,8 @@
 		chambered = null
 
 /obj/item/weapon/gun/projectile/shotgun/proc/pump_reload(mob/M)
-	if(!magazine.ammo_count())	return 0
+	if(!magazine.ammo_count())
+		return 0
 	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 	chambered = AC
 

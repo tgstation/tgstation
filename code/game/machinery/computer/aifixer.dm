@@ -135,6 +135,7 @@
 		AI.radio_enabled = 0
 		AI << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
 		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+		card.AI = null
 		update_icon()
 
 	else //Uploading AI from terminal to card
@@ -142,6 +143,7 @@
 			occupier << "You have been downloaded to a mobile storage device. Still no remote access."
 			user << "<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 			occupier.loc = card
+			card.AI = occupier
 			occupier = null
 			update_icon()
 		else if (active)

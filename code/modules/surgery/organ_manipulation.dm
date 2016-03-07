@@ -36,15 +36,18 @@
 /datum/surgery_step/manipulate_organs/tool_check(mob/user, obj/item/tool)
 	if(istype(tool, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = tool
-		if(!WT.isOn())	return 0
+		if(!WT.isOn())
+			return 0
 
 	else if(istype(tool, /obj/item/weapon/lighter))
 		var/obj/item/weapon/lighter/L = tool
-		if(!L.lit)	return 0
+		if(!L.lit)
+			return 0
 
 	else if(istype(tool, /obj/item/weapon/match))
 		var/obj/item/weapon/match/M = tool
-		if(!M.lit)	return 0
+		if(!M.lit)
+			return 0
 
 	return 1
 

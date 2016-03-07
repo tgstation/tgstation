@@ -176,10 +176,13 @@
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
 
+	var/launch_status = NOLAUNCH
+
 /obj/docking_port/mobile/New()
 	..()
 	SSshuttle.mobile += src
 
+/obj/docking_port/mobile/initialize()
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
 		areaInstance = A
@@ -357,42 +360,8 @@
 				Ts1.copy_air_with_tile(T0)
 
 			//move mobile to new location
-
-
 			for(var/atom/movable/AM in T0)
-				if (rotation)
-					AM.shuttleRotate(rotation)
-
-				if (istype(AM,/obj))
-					var/obj/O = AM
-					if(O.invisibility >= 101)
-						continue
-					if(O == T0.lighting_object)
-						continue
-					O.loc = T1
-
-					//close open doors
-					if(istype(O, /obj/machinery/door))
-						var/obj/machinery/door/Door = O
-						spawn(0)
-							if(Door)
-								Door.close()
-				else if (istype(AM,/mob))
-					var/mob/M = AM
-					if(!M.move_on_shuttle)
-						continue
-					M.loc = T1
-
-					//docking turbulence
-					if(M.client)
-						if(M.buckled)
-							shake_camera(M, 2, 1) // turn it down a bit come on
-						else
-							shake_camera(M, 7, 1)
-					if(istype(M, /mob/living/carbon))
-						if(!M.buckled)
-							M.Weaken(3)
-
+				AM.onShuttleMove(T1, rotation)
 
 		if (rotation)
 			T1.shuttleRotate(rotation)
@@ -412,6 +381,46 @@
 
 	loc = S1.loc
 	dir = S1.dir
+
+/atom/movable/proc/onShuttleMove(turf/T1, rotation)
+	if(rotation)
+		shuttleRotate(rotation)
+	loc = T1
+	return 1
+
+/obj/onShuttleMove()
+	if(invisibility >= 101)
+		return 0
+	. = ..()
+
+/atom/movable/light/onShuttleMove()
+	return 0
+
+/obj/machinery/door/onShuttleMove()
+	. = ..()
+	if(!.)
+		return
+	spawn(0)
+		close()
+
+/mob/onShuttleMove()
+	if(!move_on_shuttle)
+		return 0
+	. = ..()
+	if(!.)
+		return
+	if(client)
+		if(buckled)
+			shake_camera(src, 2, 1) // turn it down a bit come on
+		else
+			shake_camera(src, 7, 1)
+
+/mob/living/carbon/onShuttleMove()
+	. = ..()
+	if(!.)
+		return
+	if(!buckled)
+		Weaken(3)
 
 /*
 	if(istype(S1, /obj/docking_port/stationary/transit))
@@ -578,15 +587,21 @@
 		return
 
 	if(href_list["move"])
+		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
+		if(M.launch_status == ENDGAME_LAUNCHED)
+			usr << "<span class='warning'>You've already escaped. Never going back to that place again!</span>"
+			return
 		if(no_destination_swap)
-			var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 			if(M.mode != SHUTTLE_IDLE)
 				usr << "<span class='warning'>Shuttle already in transit.</span>"
 				return
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
-			if(0)	usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
-			if(1)	usr << "<span class='warning'>Invalid shuttle requested.</span>"
-			else	usr << "<span class='notice'>Unable to comply.</span>"
+			if(0)
+				usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
+			if(1)
+				usr << "<span class='warning'>Invalid shuttle requested.</span>"
+			else
+				usr << "<span class='notice'>Unable to comply.</span>"
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(!emagged)

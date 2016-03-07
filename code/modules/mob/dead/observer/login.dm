@@ -11,6 +11,3 @@
 		ghost_orbit = client.prefs.ghost_orbit
 
 	updateghostimages()
-
-
-	update_interface()

@@ -4,28 +4,27 @@ var/datum/subsystem/timer/SStimer
 	name = "Timer"
 	wait = 5
 	priority = 1
+	display = 3
 
 	var/list/datum/timedevent/processing
 	var/list/hashes
-
 
 /datum/subsystem/timer/New()
 	NEW_SS_GLOBAL(SStimer)
 	processing = list()
 	hashes = list()
 
-
 /datum/subsystem/timer/stat_entry(msg)
 	..("P:[processing.len]")
 
 /datum/subsystem/timer/fire()
-	if (!processing.len)
+	if(!processing.len)
 		can_fire = 0 //nothing to do, lets stop firing.
 		return
-	for (var/datum/timedevent/event in processing)
-		if (!event.thingToCall || qdeleted(event.thingToCall))
+	for(var/datum/timedevent/event in processing)
+		if(!event.thingToCall || qdeleted(event.thingToCall))
 			qdel(event)
-		if (event.timeToRun <= world.time)
+		if(event.timeToRun <= world.time)
 			runevent(event)
 			qdel(event)
 
@@ -48,8 +47,8 @@ var/datum/subsystem/timer/SStimer
 
 /datum/timedevent/Destroy()
 	SStimer.processing -= src
-	SStimer.hashes -= src.hash
-	return ..()
+	SStimer.hashes -= hash
+	return QDEL_HINT_IWILLGC
 
 /proc/addtimer(thingToCall, procToCall, wait, unique = FALSE, ...)
 	if (!SStimer) //can't run timers before the mc has been created
@@ -65,7 +64,7 @@ var/datum/subsystem/timer/SStimer
 	event.procToCall = procToCall
 	event.timeToRun = world.time + wait
 	event.hash = list2text(args)
-	if (args.len > 4)
+	if(args.len > 4)
 		event.argList = args.Copy(5)
 
 	// Check for dupes if unique = 1.
@@ -78,8 +77,8 @@ var/datum/subsystem/timer/SStimer
 	return event.id
 
 /proc/deltimer(id)
-	for (var/datum/timedevent/event in SStimer.processing)
-		if (event.id == id)
+	for(var/datum/timedevent/event in SStimer.processing)
+		if(event.id == id)
 			qdel(event)
 			return 1
 	return 0

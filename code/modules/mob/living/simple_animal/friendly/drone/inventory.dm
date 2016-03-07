@@ -81,8 +81,10 @@
 
 
 /mob/living/simple_animal/drone/equip_to_slot(obj/item/I, slot)
-	if(!slot)	return
-	if(!istype(I))	return
+	if(!slot)
+		return
+	if(!istype(I))
+		return
 
 	if(I == l_hand)
 		l_hand = null

@@ -262,6 +262,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	strip_delay = 60
+	breakouttime = 3000
 
 /obj/item/clothing/suit/ianshirt
 	name = "worn shirt"

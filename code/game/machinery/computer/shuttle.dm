@@ -8,7 +8,8 @@
 
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/weapon/card/W, mob/user, params)
-	if(stat & (BROKEN|NOPOWER))	return
+	if(stat & (BROKEN|NOPOWER))
+		return
 	if(!istype(W, /obj/item/weapon/card))
 		return
 	if(SSshuttle.emergency.mode != SHUTTLE_DOCKED)

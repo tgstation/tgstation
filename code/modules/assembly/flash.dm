@@ -39,7 +39,7 @@
 		return 0
 	var/turf/T = get_turf(src)
 	T.visible_message("<span class='disarm'>[src] emits a blinding light!</span>")
-	for(var/mob/living/carbon/M in viewers(3, null))
+	for(var/mob/living/carbon/M in viewers(3, T))
 		flash_carbon(M, null, 5, 0)
 
 

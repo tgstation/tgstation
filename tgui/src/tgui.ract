@@ -1,0 +1,75 @@
+<link rel='ractive' href='components/resize.ract'>
+<link rel='ractive' href='components/titlebar.ract'>
+<link rel='ractive' href='components/warnings.ract'>
+
+<script>
+import { winset } from 'util/byond'
+import { lock, drag, resize } from 'util/dragresize'
+
+component.exports = {
+  components: {
+    'ui-bar': require('components/bar'),
+    'ui-button': require('components/button'),
+    'ui-display': require('components/display'),
+    'ui-notice': require('components/notice'),
+    'ui-section': require('components/section'),
+    'ui-subdisplay': require('components/subdisplay'),
+  },
+  events: {
+    enter: require('ractive-events-keys').enter,
+    space: require('ractive-events-keys').space,
+  },
+  transitions: {
+    fade: require('ractive-transitions-fade'),
+  },
+  onconfig () {
+    const requested  = this.get('config.interface')
+    const interfaces = require('interfaces/**/*.ract', { mode: 'hash' })
+    if (requested in interfaces) {
+      this.components.interface = interfaces[requested] // Use the interface specified in the config...
+    } else {
+      this.components.interface = interfaces.error // ...unless it does not exist.
+    }
+  },
+  oninit () {
+    this.observe('config.style', (newkey, oldkey, keypath) => {
+      if (newkey) document.body.classList.add(newkey)
+      if (oldkey) document.body.classList.remove(oldkey)
+    })
+    this.on('titlebar.drag', () => {
+      this.toggle('drag')
+      return false
+    })
+    this.on('resize.resize', () => {
+      this.toggle('resize')
+      return false
+    })
+    document.addEventListener('mousemove', (event) => {
+      if (this.get('drag')) {
+        drag.bind(this)(event)
+      } else if (this.get('resize')) {
+        resize.bind(this)(event)
+      }
+    })
+    document.addEventListener('mouseup', (event) => {
+      this.set({ drag: false, resize: false, x: null, y: null })
+    })
+  },
+  oncomplete () {
+    // If the window starts off screen, pull it back.
+    if (this.get('config.locked')) {
+      let {x, y} = lock(window.screenLeft, window.screenTop)
+      winset(this.get('config.window'), 'pos', `${x},${y}`)
+    }
+
+    winset('mapwindow.map', 'focus', true) // Give focus back to the map.
+  }
+}
+</script>
+
+<titlebar>{{{config.title}}}</titlebar>
+<main>
+  <warnings/>
+  <interface/>
+</main>
+<resize/>

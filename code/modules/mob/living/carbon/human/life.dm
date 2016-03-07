@@ -265,9 +265,11 @@
 /mob/living/carbon/human/handle_vision()
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 	if(machine)
-		if(!machine.check_eye(src))		reset_view(null)
+		if(!machine.check_eye(src))
+			reset_view(null)
 	else
-		if(!remote_view && !client.adminobs)			reset_view(null)
+		if(!remote_view && !client.adminobs)
+			reset_view(null)
 
 	dna.species.handle_vision(src)
 

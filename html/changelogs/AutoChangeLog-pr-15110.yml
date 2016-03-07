@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Nuke ops can purchase sentience potions for 4tc"

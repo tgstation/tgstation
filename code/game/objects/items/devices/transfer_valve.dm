@@ -60,11 +60,6 @@
 		attacher = user
 	return
 
-
-/obj/item/device/transfer_valve/HasProximity(atom/movable/AM as mob|obj)
-	if(!attached_device)	return
-	attached_device.HasProximity(AM)
-	return
 /obj/item/device/transfer_valve/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat = {"<B> Valve properties: </B>

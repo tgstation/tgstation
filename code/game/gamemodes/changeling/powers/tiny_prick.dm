@@ -38,7 +38,7 @@
 		return
 	if(!isturf(user.loc))
 		return
-	if(!AStar(user.loc, target.loc, null, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = 0))
+	if(!AStar(user, target.loc, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = 0))
 		return
 	if(target.mind && target.mind.changeling)
 		sting_feedback(user,target)

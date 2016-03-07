@@ -64,12 +64,20 @@ if ($hookSecret !== NULL) {
 		throw new \Exception('Hook secret does not match.');
 	}
 }
+$contenttype = null;
+//apache and nginx/fastcgi/phpfpm call this two different things.
 if (!isset($_SERVER['HTTP_CONTENT_TYPE'])) {
-	throw new \Exception("Missing HTTP 'Content-Type' header.");
-} elseif (!isset($_SERVER['HTTP_X_GITHUB_EVENT'])) {
+	if (!isset($_SERVER['CONTENT_TYPE']))
+		throw new \Exception("Missing HTTP 'Content-Type' header.");
+	else
+		$contenttype = $_SERVER['CONTENT_TYPE'];
+} else {
+	$contenttype = $_SERVER['HTTP_CONTENT_TYPE'];
+}
+if (!isset($_SERVER['HTTP_X_GITHUB_EVENT'])) {
 	throw new \Exception("Missing HTTP 'X-Github-Event' header.");
 }
-switch ($_SERVER['HTTP_CONTENT_TYPE']) {
+switch ($contenttype) {
 	case 'application/json':
 		$json = $rawPost ?: file_get_contents('php://input');
 		break;
@@ -77,7 +85,7 @@ switch ($_SERVER['HTTP_CONTENT_TYPE']) {
 		$json = $_POST['payload'];
 		break;
 	default:
-		throw new \Exception("Unsupported content type: $_SERVER[HTTP_CONTENT_TYPE]");
+		throw new \Exception("Unsupported content type: $contenttype");
 }
 # Payload structure depends on triggered event
 # https://developer.github.com/v3/activity/events/types/

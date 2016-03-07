@@ -277,7 +277,8 @@ var/datum/subsystem/shuttle/SSshuttle
 		contains = object.contains
 
 	for(var/typepath in contains)
-		if(!typepath)	continue
+		if(!typepath)
+			continue
 		var/atom/A = new typepath(Crate)
 		if(object.amount && A.vars.Find("amount") && A:amount)
 			A:amount = object.amount

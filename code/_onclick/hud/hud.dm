@@ -101,6 +101,8 @@ var/datum/global_hud/global_hud = new()
 	var/obj/screen/blobpwrdisplay
 	var/obj/screen/blobhealthdisplay
 
+	var/obj/screen/guardianhealthdisplay
+
 	var/obj/screen/alien_plasma_display
 
 	var/obj/screen/deity_health_display
@@ -125,6 +127,50 @@ var/datum/global_hud/global_hud = new()
 	instantiate()
 	..()
 
+/datum/hud/Destroy()
+	if(mymob.hud_used == src)
+		mymob.hud_used = null
+	qdel(lingchemdisplay)
+	lingchemdisplay = null
+	qdel(lingstingdisplay)
+	lingstingdisplay = null
+	qdel(blobpwrdisplay)
+	blobpwrdisplay = null
+	qdel(blobhealthdisplay)
+	blobhealthdisplay = null
+	qdel(alien_plasma_display)
+	alien_plasma_display = null
+	qdel(deity_health_display)
+	deity_health_display = null
+	qdel(deity_power_display)
+	deity_power_display = null
+	qdel(deity_follower_display)
+	deity_follower_display = null
+	qdel(nightvisionicon)
+	nightvisionicon = null
+	qdel(r_hand_hud_object)
+	r_hand_hud_object = null
+	qdel(l_hand_hud_object)
+	l_hand_hud_object = null
+	qdel(action_intent)
+	action_intent = null
+	qdel(move_intent)
+	move_intent = null
+	qdel(hotkeybuttons)
+	hotkeybuttons = null
+	qdel(hide_actions_toggle)
+	hide_actions_toggle = null
+	if(adding)
+		for(var/thing in adding)
+			qdel(thing)
+		adding.Cut()
+	if(other)
+		for(var/thing in other)
+			qdel(thing)
+		other.Cut()
+	mymob = null
+	return ..()
+
 
 /datum/hud/proc/hidden_inventory_update()
 	if(!mymob)
@@ -135,23 +181,39 @@ var/datum/global_hud/global_hud = new()
 		if(H.handcuffed)
 			H.handcuffed.screen_loc = null	//no handcuffs in my UI!
 		if(inventory_shown && hud_shown)
-			if(H.shoes)		H.shoes.screen_loc = ui_shoes
-			if(H.gloves)	H.gloves.screen_loc = ui_gloves
-			if(H.ears)		H.ears.screen_loc = ui_ears
-			if(H.glasses)	H.glasses.screen_loc = ui_glasses
-			if(H.w_uniform)	H.w_uniform.screen_loc = ui_iclothing
-			if(H.wear_suit)	H.wear_suit.screen_loc = ui_oclothing
-			if(H.wear_mask)	H.wear_mask.screen_loc = ui_mask
-			if(H.head)		H.head.screen_loc = ui_head
+			if(H.shoes)
+				H.shoes.screen_loc = ui_shoes
+			if(H.gloves)
+				H.gloves.screen_loc = ui_gloves
+			if(H.ears)
+				H.ears.screen_loc = ui_ears
+			if(H.glasses)
+				H.glasses.screen_loc = ui_glasses
+			if(H.w_uniform)
+				H.w_uniform.screen_loc = ui_iclothing
+			if(H.wear_suit)
+				H.wear_suit.screen_loc = ui_oclothing
+			if(H.wear_mask)
+				H.wear_mask.screen_loc = ui_mask
+			if(H.head)
+				H.head.screen_loc = ui_head
 		else
-			if(H.shoes)		H.shoes.screen_loc = null
-			if(H.gloves)	H.gloves.screen_loc = null
-			if(H.ears)		H.ears.screen_loc = null
-			if(H.glasses)	H.glasses.screen_loc = null
-			if(H.w_uniform)	H.w_uniform.screen_loc = null
-			if(H.wear_suit)	H.wear_suit.screen_loc = null
-			if(H.wear_mask)	H.wear_mask.screen_loc = null
-			if(H.head)		H.head.screen_loc = null
+			if(H.shoes)
+				H.shoes.screen_loc = null
+			if(H.gloves)
+				H.gloves.screen_loc = null
+			if(H.ears)
+				H.ears.screen_loc = null
+			if(H.glasses)
+				H.glasses.screen_loc = null
+			if(H.w_uniform)
+				H.w_uniform.screen_loc = null
+			if(H.wear_suit)
+				H.wear_suit.screen_loc = null
+			if(H.wear_mask)
+				H.wear_mask.screen_loc = null
+			if(H.head)
+				H.head.screen_loc = null
 
 
 /datum/hud/proc/persistant_inventory_update()
@@ -161,19 +223,31 @@ var/datum/global_hud/global_hud = new()
 	if(ishuman(mymob))
 		var/mob/living/carbon/human/H = mymob
 		if(hud_shown)
-			if(H.s_store)	H.s_store.screen_loc = ui_sstore1
-			if(H.wear_id)	H.wear_id.screen_loc = ui_id
-			if(H.belt)		H.belt.screen_loc = ui_belt
-			if(H.back)		H.back.screen_loc = ui_back
-			if(H.l_store)	H.l_store.screen_loc = ui_storage1
-			if(H.r_store)	H.r_store.screen_loc = ui_storage2
+			if(H.s_store)
+				H.s_store.screen_loc = ui_sstore1
+			if(H.wear_id)
+				H.wear_id.screen_loc = ui_id
+			if(H.belt)
+				H.belt.screen_loc = ui_belt
+			if(H.back)
+				H.back.screen_loc = ui_back
+			if(H.l_store)
+				H.l_store.screen_loc = ui_storage1
+			if(H.r_store)
+				H.r_store.screen_loc = ui_storage2
 		else
-			if(H.s_store)	H.s_store.screen_loc = null
-			if(H.wear_id)	H.wear_id.screen_loc = null
-			if(H.belt)		H.belt.screen_loc = null
-			if(H.back)		H.back.screen_loc = null
-			if(H.l_store)	H.l_store.screen_loc = null
-			if(H.r_store)	H.r_store.screen_loc = null
+			if(H.s_store)
+				H.s_store.screen_loc = null
+			if(H.wear_id)
+				H.wear_id.screen_loc = null
+			if(H.belt)
+				H.belt.screen_loc = null
+			if(H.back)
+				H.back.screen_loc = null
+			if(H.l_store)
+				H.l_store.screen_loc = null
+			if(H.r_store)
+				H.r_store.screen_loc = null
 
 
 /datum/hud/proc/instantiate()

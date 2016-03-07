@@ -15,6 +15,8 @@ z7 = empty space
 
 #if !defined(MAP_FILE)
 
+		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
+
         #include "map_files\TgStation\tgstation.2.1.3.dmm"
         #include "map_files\generic\z2.dmm"
         #include "map_files\generic\z3.dmm"
@@ -23,6 +25,7 @@ z7 = empty space
         #include "map_files\generic\z6.dmm"
         #include "map_files\generic\z7.dmm"
 
+		#define MAP_PATH "map_files/TgStation"
         #define MAP_FILE "tgstation.2.1.3.dmm"
         #define MAP_NAME "Box Station"
 

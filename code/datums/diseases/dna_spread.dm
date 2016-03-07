@@ -5,7 +5,7 @@
 	spread_flags = CONTACT_GENERAL
 	cure_text = "Mutadone"
 	cures = list("mutadone")
-	disease_flags = CAN_CARRY|CAN_RESIST
+	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	agent = "S4E1 retrovirus"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	var/datum/dna/original_dna = null

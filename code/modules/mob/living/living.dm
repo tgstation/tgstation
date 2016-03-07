@@ -23,7 +23,7 @@ Sorry Giacom. Please don't be mad :(
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
-	
+
 	faction |= "\ref[src]"
 
 
@@ -162,7 +162,7 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Pull"
 	set category = "Object"
 
-	if(AM.Adjacent(src))
+	if(istype(AM) && AM.Adjacent(src))
 		start_pulling(AM)
 	else
 		stop_pulling()
@@ -236,7 +236,8 @@ Sorry Giacom. Please don't be mad :(
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates() //we update our health right away.
 
@@ -244,12 +245,14 @@ Sorry Giacom. Please don't be mad :(
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	oxyloss = amount
 	handle_regular_status_updates()
 
@@ -257,12 +260,14 @@ Sorry Giacom. Please don't be mad :(
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setToxLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	toxloss = amount
 	handle_regular_status_updates()
 
@@ -270,7 +275,8 @@ Sorry Giacom. Please don't be mad :(
 	return fireloss
 
 /mob/living/proc/adjustFireLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates() //we update our health right away.
 
@@ -278,12 +284,14 @@ Sorry Giacom. Please don't be mad :(
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	cloneloss = amount
 	handle_regular_status_updates()
 
@@ -291,12 +299,14 @@ Sorry Giacom. Please don't be mad :(
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
 	handle_regular_status_updates()
 
 /mob/living/proc/setBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	brainloss = amount
 	handle_regular_status_updates() //we update our health right away.
 
@@ -304,11 +314,13 @@ Sorry Giacom. Please don't be mad :(
 	return staminaloss
 
 /mob/living/proc/adjustStaminaLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
 
 /mob/living/proc/setStaminaLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	staminaloss = amount
 
 /mob/living/proc/getMaxHealth()
@@ -743,8 +755,11 @@ Sorry Giacom. Please don't be mad :(
 	gib()
 	return(gain)
 
-/mob/living/singularity_pull(S)
-	step_towards(src,S)
+/mob/living/singularity_pull(S, current_size)
+	if(current_size >= STAGE_SIX)
+		throw_at_fast(S,14,3, spin=1)
+	else
+		step_towards(src,S)
 
 /mob/living/narsie_act()
 	if(client)
@@ -785,20 +800,22 @@ Sorry Giacom. Please don't be mad :(
 	var/image/I
 	if(hand && l_hand) // Attacked with item in left hand.
 		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 1)
-	else if (!hand && r_hand) // Attacked with item in right hand.
+	else if(!hand && r_hand) // Attacked with item in right hand.
 		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 1)
 	else // Attacked with a fist?
 		return
 
 	// Who can see the attack?
 	var/list/viewing = list()
-	for (var/mob/M in viewers(A))
-		if (M.client)
+	for(var/mob/M in viewers(A))
+		if(M.client)
 			viewing |= M.client
 	flick_overlay(I, viewing, 5) // 5 ticks/half a second
 
 	// Scale the icon.
 	I.transform *= 0.75
+	// The icon should not rotate.
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
 	// Set the direction of the icon animation.
 	var/direction = get_dir(src, A)
@@ -920,3 +937,9 @@ Sorry Giacom. Please don't be mad :(
 	else
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 	return
+
+/mob/living/proc/can_use_guns(var/obj/item/weapon/gun/G)
+	if (!IsAdvancedToolUser())
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return 0
+	return 1

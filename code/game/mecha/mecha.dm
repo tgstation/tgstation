@@ -71,13 +71,39 @@
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
 
+	//Action datums
 	var/datum/action/innate/mecha/mech_eject/eject_action = new
 	var/datum/action/innate/mecha/mech_toggle_internals/internals_action = new
 	var/datum/action/innate/mecha/mech_cycle_equip/cycle_action = new
 	var/datum/action/innate/mecha/mech_toggle_lights/lights_action = new
 	var/datum/action/innate/mecha/mech_view_stats/stats_action = new
+	var/datum/action/innate/mecha/mech_toggle_thrusters/thrusters_action = new
+	var/datum/action/innate/mecha/mech_defence_mode/defense_action = new
+	var/datum/action/innate/mecha/mech_overload_mode/overload_action = new
+	var/datum/effect_system/smoke_spread/smoke_system = new //not an action, but trigged by one
+	var/datum/action/innate/mecha/mech_smoke/smoke_action = new
+	var/datum/action/innate/mecha/mech_zoom/zoom_action = new
+	var/datum/action/innate/mecha/mech_switch_damtype/switch_damtype_action = new
+	var/datum/action/innate/mecha/mech_toggle_phasing/phasing_action = new
+
+	//Action vars
+	var/thrusters_active = FALSE
+	var/defence_mode = FALSE
+	var/defence_mode_deflect_chance = 35
+	var/leg_overload_mode = FALSE
+	var/leg_overload_coeff = 2
+	var/zoom_mode = FALSE
+	var/smoke = 5
+	var/smoke_ready = 1
+	var/smoke_cooldown = 100
+	var/phasing = FALSE
+	var/phasing_energy_drain = 200
+	var/phase_state = "" //icon_state when phasing
+
+
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
+
 
 /obj/mecha/New()
 	..()
@@ -88,6 +114,8 @@
 	add_airtank()
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
+	smoke_system.set_up(3, src)
+	smoke_system.attach(src)
 	add_cell()
 	SSobj.processing |= src
 	poi_list |= src
@@ -152,6 +180,8 @@
 	cabin_air = null
 	qdel(spark_system)
 	spark_system = null
+	qdel(smoke_system)
+	smoke_system = null
 
 	mechas_list -= src //global mech list
 	return ..()
@@ -358,6 +388,9 @@
 		return
 	if(!locate(/turf) in list(target,target.loc)) // Prevents inventory from being drilled
 		return
+	if(phasing)
+		occupant_message("Unable to interact with objects while phasing")
+		return
 	if(user.incapacitated())
 		return
 	if(state)
@@ -410,6 +443,8 @@
 	. = ..()
 	if(.)
 		return 1
+	if(thrusters_active && movement_dir && use_power(step_energy_drain))
+		return 1
 
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)
@@ -443,6 +478,17 @@
 		return 0
 	if(!has_charge(step_energy_drain))
 		return 0
+	if(defence_mode)
+		if(world.time - last_message > 20)
+			occupant_message("<span class='danger'>Unable to move while in defence mode</span>")
+			last_message = world.time
+		return 0
+	if(zoom_mode)
+		if(world.time - last_message > 20)
+			occupant_message("Unable to move while in zoom mode.")
+			last_message = world.time
+		return 0
+
 	var/move_result = 0
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
@@ -455,8 +501,16 @@
 		can_move = 0
 		spawn(step_in)
 			can_move = 1
+		if(leg_overload_mode)
+			health--
+			if(health < initial(health) - initial(health)/3)
+				leg_overload_mode = 0
+				step_in = initial(step_in)
+				step_energy_drain = initial(step_energy_drain)
+				occupant_message("<span class='danger'>Leg actuators damage threshold exceded. Disabling overload.</span>")
 		return 1
 	return 0
+
 
 /obj/mecha/proc/mechturn(direction)
 	dir = direction
@@ -477,15 +531,30 @@
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle, yes)
-	if(yes)
-		if(..()) //mech was thrown
-			return
-		if(istype(obstacle, /obj))
-			var/obj/O = obstacle
-			if(!O.anchored)
+	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
+		spawn()
+			if(can_move)
+				can_move = 0
+				if(phase_state)
+					flick(phase_state, src)
+				forceMove(get_step(src,dir))
+				use_power(phasing_energy_drain)
+				sleep(step_in*3)
+				can_move = 1
+	else
+		if(yes)
+			if(..()) //mech was thrown
+				return
+			if(istype(obstacle, /obj))
+				var/obj/O = obstacle
+				if(!O.anchored)
+					step(obstacle, dir)
+			else if(istype(obstacle, /mob))
 				step(obstacle, dir)
-		else if(istype(obstacle, /mob))
-			step(obstacle, dir)
+
+
+
+
 
 
 ///////////////////////////////////
@@ -566,6 +635,7 @@
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
 			AI.loc = card
+			card.AI = AI
 			occupant = null
 			AI.controlled_mech = null
 			AI.remote_control = null
@@ -582,7 +652,7 @@
 			ai_enter_mech(AI, interaction)
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to a mech.
-			AI = locate(/mob/living/silicon/ai) in card
+			AI = card.AI
 			if(!AI)
 				user << "<span class='warning'>There is no AI currently installed on this device.</span>"
 				return
@@ -595,6 +665,7 @@
 			AI.control_disabled = 0
 			AI.radio_enabled = 1
 			user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+			card.AI = null
 			ai_enter_mech(AI, interaction)
 
 //Hack and From Card interactions share some code, so leave that here for both to use.
@@ -615,6 +686,28 @@
 	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]"
 	AI << "<span class='boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
 	GrantActions(AI)
+
+
+//An actual AI (simple_animal mecha pilot) entering the mech
+/obj/mecha/proc/aimob_enter_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
+	if(pilot_mob && pilot_mob.Adjacent(src))
+		if(occupant)
+			return
+		icon_state = initial(icon_state)
+		occupant = pilot_mob
+		pilot_mob.mecha = src
+		pilot_mob.loc = src
+		GrantActions(pilot_mob)//needed for checks, and incase a badmin puts somebody in the mob
+
+/obj/mecha/proc/aimob_exit_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
+	if(occupant == pilot_mob)
+		occupant = null
+	if(pilot_mob.mecha == src)
+		pilot_mob.mecha = null
+	icon_state = "[initial(icon_state)]-open"
+	pilot_mob.forceMove(get_turf(src))
+	RemoveActions(pilot_mob)
+
 
 /////////////////////////////////////
 ////////  Atmospheric stuff  ////////
@@ -838,7 +931,10 @@
 			L.canmove = 0
 		icon_state = initial(icon_state)+"-open"
 		dir = dir_in
-	return
+
+	if(L && L.client)
+		L.client.view = world.view
+		zoom_mode = 0
 
 /////////////////////////
 ////// Access stuff /////
@@ -1027,3 +1123,144 @@ var/year_integer = text2num(year) // = 2013???
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	chassis.occupant << browse(chassis.get_stats_html(), "window=exosuit")
+
+
+
+//////////////////////////////////////// Specific Ability Actions  ///////////////////////////////////////////////
+//Need to be granted by the mech type, Not default abilities.
+
+/datum/action/innate/mecha/mech_toggle_thrusters
+	name = "Toggle Thrusters"
+	button_icon_state = "mech_thrusters_off"
+
+/datum/action/innate/mecha/mech_toggle_thrusters/Activate()
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+	var/obj/mecha/M = chassis
+	if(M.get_charge() > 0)
+		M.thrusters_active = !M.thrusters_active
+		button_icon_state = "mech_thrusters_[M.thrusters_active ? "on" : "off"]"
+		M.log_message("Toggled thrusters.")
+		M.occupant_message("<font color='[M.thrusters_active ?"blue":"red"]'>Thrusters [M.thrusters_active ?"en":"dis"]abled.")
+
+
+/datum/action/innate/mecha/mech_defence_mode
+	name = "Toggle Defence Mode"
+	button_icon_state = "mech_defense_mode_off"
+
+/datum/action/innate/mecha/mech_defence_mode/Activate(forced_state = null)
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+	var/obj/mecha/M = chassis
+	if(forced_state)
+		M.defence_mode = forced_state
+	else
+		M.defence_mode = !M.defence_mode
+	button_icon_state = "mech_defense_mode_[M.defence_mode ? "on" : "off"]"
+	if(M.defence_mode)
+		M.deflect_chance = M.defence_mode_deflect_chance
+		M.occupant_message("<span class='notice'>You enable [M] defence mode.</span>")
+	else
+		M.deflect_chance = initial(M.deflect_chance)
+		M.occupant_message("<span class='danger'>You disable [M] defence mode.</span>")
+	M.log_message("Toggled defence mode.")
+
+
+/datum/action/innate/mecha/mech_overload_mode
+	name = "Toggle leg actuators overload"
+	button_icon_state = "mech_overload_off"
+
+/datum/action/innate/mecha/mech_overload_mode/Activate(forced_state = null)
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+	var/obj/mecha/M = chassis
+	if(forced_state)
+		M.leg_overload_mode = forced_state
+	else
+		M.leg_overload_mode = !M.leg_overload_mode
+	button_icon_state = "mech_overload_[M.leg_overload_mode ? "on" : "off"]"
+	M.log_message("Toggled leg actuators overload.")
+	if(M.leg_overload_mode)
+		M.leg_overload_mode = 1
+		M.step_in = min(1, round(M.step_in/2))
+		M.step_energy_drain = M.step_energy_drain*M.leg_overload_coeff
+		M.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
+	else
+		M.leg_overload_mode = 0
+		M.step_in = initial(M.step_in)
+		M.step_energy_drain = initial(M.step_energy_drain)
+		M.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
+
+
+/datum/action/innate/mecha/mech_smoke
+	name = "Smoke"
+	button_icon_state = "mech_smoke"
+
+/datum/action/innate/mecha/mech_smoke/Activate()
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+	var/obj/mecha/M = chassis
+	if(M.smoke_ready && M.smoke>0)
+		M.smoke_system.start()
+		M.smoke--
+		M.smoke_ready = 0
+		spawn(M.smoke_cooldown)
+			M.smoke_ready = 1
+
+
+/datum/action/innate/mecha/mech_zoom
+	name = "Zoom"
+	button_icon_state = "mech_zoom_off"
+
+/datum/action/innate/mecha/mech_zoom/Activate()
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+	var/obj/mecha/M = chassis
+	if(owner.client)
+		M.zoom_mode = !M.zoom_mode
+		button_icon_state = "mech_zoom_[M.zoom_mode ? "on" : "off"]"
+		M.log_message("Toggled zoom mode.")
+		M.occupant_message("<font color='[M.zoom_mode?"blue":"red"]'>Zoom mode [M.zoom_mode?"en":"dis"]abled.</font>")
+		if(M.zoom_mode)
+			owner.client.view = 12
+			owner << sound('sound/mecha/imag_enh.ogg',volume=50)
+		else
+			owner.client.view = world.view//world.view - default mob view size
+
+
+/datum/action/innate/mecha/mech_switch_damtype
+	name = "Reconfigure arm microtool arrays"
+	button_icon_state = "mech_damtype_brute"
+
+/datum/action/innate/mecha/mech_switch_damtype/Activate()
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+	var/obj/mecha/M = chassis
+	var/new_damtype
+	switch(M.damtype)
+		if("tox")
+			new_damtype = "brute"
+			M.occupant_message("Your exosuit's hands form into fists.")
+		if("brute")
+			new_damtype = "fire"
+			M.occupant_message("A torch tip extends from your exosuit's hand, glowing red.")
+		if("fire")
+			new_damtype = "tox"
+			M.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
+	M.damtype = new_damtype.
+	button_icon_state = "mech_damtype_[new_damtype]"
+	playsound(src, 'sound/mecha/mechmove01.ogg', 50, 1)
+
+
+/datum/action/innate/mecha/mech_toggle_phasing
+	name = "Toggle Phasing"
+	button_icon_state = "mech_phasing_off"
+
+/datum/action/innate/mecha/mech_toggle_phasing/Activate()
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+	var/obj/mecha/M = chassis
+	M.phasing = !M.phasing
+	button_icon_state = "mech_phasing_[M.phasing ? "on" : "off"]"
+	M.occupant_message("<font color=\"[M.phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
+

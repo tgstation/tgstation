@@ -316,7 +316,7 @@
 /obj/item/device/firing_pin/alien/pin_auth(mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human") //stealth lizard buff go
+		if(H.dna.species.id != "abductor")
 			return 0
 	return 1
 
@@ -424,7 +424,14 @@ Congratulations! You are now trained for xenobiology research!"}
 	var/mob/living/L = target
 
 	user.do_attack_animation(L)
-	switch(mode)
+
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
+			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
+			return 0
+
+	switch (mode)
 		if(BATON_STUN)
 			StunAttack(L,user)
 		if(BATON_SLEEP)

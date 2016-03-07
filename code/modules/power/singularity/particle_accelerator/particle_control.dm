@@ -19,10 +19,9 @@
 	var/list/obj/structure/particle_accelerator/connected_parts
 	var/assembled = 0
 	var/parts = null
-	var/datum/wires/particle_acc/control_box/wires = null
 
 /obj/machinery/particle_accelerator/control_box/New()
-	wires = new(src)
+	wires = new /datum/wires/particle_accelerator/control_box(src)
 	connected_parts = list()
 	..()
 
@@ -37,7 +36,7 @@
 	if(construction_state >= 3)
 		interact(user)
 	else if(construction_state == 2) // Wires exposed
-		wires.Interact(user)
+		wires.interact(user)
 
 /obj/machinery/particle_accelerator/control_box/update_state()
 	if(construction_state < 3)
@@ -91,18 +90,18 @@
 		usr.unset_machine()
 		return
 	if(href_list["togglep"])
-		if(!wires.IsIndexCut(PARTICLE_TOGGLE_WIRE))
+		if(!wires.is_cut(WIRE_POWER))
 			src.toggle_power()
 
 	else if(href_list["scan"])
 		src.part_scan()
 
 	else if(href_list["strengthup"])
-		if(!wires.IsIndexCut(PARTICLE_STRENGTH_WIRE))
+		if(!wires.is_cut(WIRE_STRENGTH))
 			add_strength()
 
 	else if(href_list["strengthdown"])
-		if(!wires.IsIndexCut(PARTICLE_STRENGTH_WIRE))
+		if(!wires.is_cut(WIRE_STRENGTH))
 			remove_strength()
 
 	src.updateDialog()

@@ -3,6 +3,7 @@
 //Few global vars to track the blob
 var/list/blobs = list() //complete list of all blobs made.
 var/list/blob_cores = list()
+var/list/overminds = list()
 var/list/blob_nodes = list()
 var/list/blobs_legit = list() //used for win-score calculations, contains only blobs counted for win condition
 
@@ -147,8 +148,10 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 	for(var/datum/mind/blob in infected_crew)
 		greet_blob(blob)
-		var/datum/action/innate/blob_earlyhelp/B = new
+		var/datum/action/innate/blob/earlyhelp/B = new
 		B.Grant(blob.current)
+		var/datum/action/innate/blob/earlycomm/C = new
+		C.Grant(blob.current)
 	SSshuttle.emergencyNoEscape = 1
 
 	// Disable the blob event for this round.

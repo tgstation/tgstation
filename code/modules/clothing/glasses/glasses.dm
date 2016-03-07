@@ -47,7 +47,7 @@
 
 /obj/item/clothing/glasses/science/dropped(mob/user)
 	user.scanner.devices = max(0, user.scanner.devices - 1)
-	..(user)
+	..()
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"

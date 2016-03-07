@@ -2,7 +2,7 @@
 /mob/living/carbon/human/restrained()
 	if (handcuffed)
 		return 1
-	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
+	if (wear_suit && wear_suit.breakouttime)
 		return 1
 	return 0
 
@@ -66,10 +66,14 @@
 	var/obj/item/weapon/storage/wallet/wallet = wear_id
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
-	if(istype(wallet))		id = wallet.front_id
-	if(istype(id))			. = id.registered_name
-	else if(istype(pda))	. = pda.owner
-	if(!.) 					. = if_no_id	//to prevent null-names making the mob unclickable
+	if(istype(wallet))
+		id = wallet.front_id
+	if(istype(id))
+		. = id.registered_name
+	else if(istype(pda))
+		. = pda.owner
+	if(!.)
+		. = if_no_id	//to prevent null-names making the mob unclickable
 	return
 
 //gets ID card object from special clothes slot or null.
@@ -113,7 +117,7 @@
 	return tinted
 
 /mob/living/carbon/human/abiotic(full_body = 0)
-	if(full_body && ((src.l_hand && !( src.l_hand.flags&ABSTRACT )) || (src.r_hand && !( src.r_hand.flags&ABSTRACT )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves)))
+	if(full_body && ((l_hand && !( src.l_hand.flags&ABSTRACT )) || (r_hand && !( src.r_hand.flags&ABSTRACT )) || (back && !(back.flags&ABSTRACT)) || (wear_mask && !(wear_mask.flags&ABSTRACT)) || (head && !(head.flags&ABSTRACT)) || (shoes && !(shoes.flags&ABSTRACT)) || (w_uniform && !(w_uniform.flags&ABSTRACT)) || (wear_suit && !(wear_suit.flags&ABSTRACT)) || (glasses && !(glasses.flags&ABSTRACT)) || (ears && !(ears.flags&ABSTRACT)) || (gloves && !(gloves.flags&ABSTRACT)) ) )
 		return 1
 
 	if( (src.l_hand && !(src.l_hand.flags&ABSTRACT)) || (src.r_hand && !(src.r_hand.flags&ABSTRACT)) )
@@ -161,3 +165,20 @@
 			prot["head"] = max(1 - I.permeability_coefficient, prot["head"])
 	var/protection = (prot["head"] + prot["arms"] + prot["feet"] + prot["legs"] + prot["groin"] + prot["chest"] + prot["hands"])/7
 	return protection
+
+/mob/living/carbon/human/can_use_guns(var/obj/item/weapon/gun/G)
+	. = ..()
+
+	if(G.trigger_guard)
+		if(src.dna.check_mutation(HULK))
+			src << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
+			return 0
+		if(NOGUNS in src.dna.species.specflags)
+			src << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
+			return 0
+
+	if(martial_art && martial_art.name == "The Sleeping Carp") //great dishonor to famiry
+		src << "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>"
+		return 0
+
+	return .

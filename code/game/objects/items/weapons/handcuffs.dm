@@ -1,6 +1,5 @@
-
 /obj/item/weapon/restraints
-	var/breakouttime = 600
+	breakouttime = 600
 
 //Handcuffs
 
@@ -121,6 +120,16 @@
 
 /obj/item/weapon/restraints/handcuffs/alien
 	icon_state = "handcuffAlien"
+
+/obj/item/weapon/restraints/handcuffs/fake
+	name = "fake handcuffs"
+	desc = "Fake handcuffs meant for gag purposes."
+	breakouttime = 10 //Deciseconds = 1s
+
+/obj/item/weapon/restraints/handcuffs/fake/kinky
+	name = "kinky handcuffs"
+	desc = "Fake handcuffs meant for erotic roleplay."
+	icon_state = "handcuffGag"
 
 /obj/item/weapon/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()

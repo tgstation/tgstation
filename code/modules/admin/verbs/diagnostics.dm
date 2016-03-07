@@ -16,7 +16,7 @@
 	usr << "<span class='adminnotice'>@[target.x],[target.y]: [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]</span>"
 	for(var/id in GM_gases)
 		if(id in hardcoded_gases || GM_gases[id][MOLES])
-			usr << "[GM_gases[id][GAS_NAME]]: [GM_gases[id][MOLES]]"
+			usr << "[GM_gases[id][GAS_META][META_GAS_NAME]]: [GM_gases[id][MOLES]]"
 	feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/fix_next_move()
@@ -91,10 +91,12 @@
 	set name = "Reload Admins"
 	set category = "Admin"
 
-	if(!src.holder)	return
+	if(!src.holder)
+		return
 
 	var/confirm = alert(src, "Are you sure you want to reload all admins?", "Confirm", "Yes", "No")
-	if(confirm !="Yes") return
+	if(confirm !="Yes")
+		return
 
 	message_admins("[key_name_admin(usr)] manually reloaded admins")
 	load_admins()

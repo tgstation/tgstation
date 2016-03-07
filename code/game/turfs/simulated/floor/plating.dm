@@ -78,7 +78,7 @@
 	name = "reinforced floor"
 	icon_state = "engine"
 	thermal_conductivity = 0.025
-	heat_capacity = 325000
+	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 
 /turf/simulated/floor/engine/break_tile()
@@ -119,6 +119,18 @@
 			if(prob(50))
 				make_plating(1)
 
+/turf/simulated/floor/engine/n2o
+	name = "n2o floor"
+
+/turf/simulated/floor/engine/n2o/New()
+	..()
+
+	var/datum/gas_mixture/adding = new
+	adding.assert_gas("n2o")
+	adding.gases["n2o"][MOLES] = 6000
+	adding.temperature = T20C
+
+	assume_air(adding)
 
 /turf/simulated/floor/engine/cult
 	name = "engraved floor"
@@ -130,16 +142,6 @@
 
 /turf/simulated/floor/engine/cult/narsie_act()
 	return
-
-/turf/simulated/floor/engine/n20/New()
-	..()
-	var/datum/gas_mixture/adding = new
-
-	adding.assert_gas("n2o")
-	adding.gases["n2o"][MOLES] = 6000
-	adding.temperature = T20C
-
-	assume_air(adding)
 
 /turf/simulated/floor/engine/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -195,7 +197,7 @@
 	if(!burn_stuff())
 		processing = 0
 		SSobj.processing.Remove(src)
-	
+
 
 /turf/simulated/floor/plating/lava/proc/burn_stuff()
 	. = 0
@@ -208,10 +210,10 @@
 			. = 1
 			if(O.burn_state == FIRE_PROOF)
 				O.burn_state = FLAMMABLE //Even fireproof things burn up in lava
-			
+
 			O.fire_act()
-			
-			
+
+
 		else if (istype(thing, /mob/living))
 			. = 1
 			var/mob/living/L = thing
@@ -219,7 +221,7 @@
 			if(L) //mobs turning into object corpses could get deleted here.
 				L.adjust_fire_stacks(20)
 				L.IgniteMob()
-			
+
 
 /turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
 	return

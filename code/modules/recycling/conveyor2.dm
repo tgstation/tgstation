@@ -124,11 +124,13 @@
 		user << "<span class='notice'>You remove the conveyor belt.</span>"
 		qdel(src)
 		return
-	if(isrobot(user))	return //Carn: fix for borgs dropping their modules on conveyor belts
+	if(isrobot(user))
+		return //Carn: fix for borgs dropping their modules on conveyor belts
 	if(!user.drop_item())
 		user << "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
 		return
-	if(I && I.loc)	I.loc = src.loc
+	if(I && I.loc)
+		I.loc = src.loc
 	return
 
 // attack with hand, move pulled object onto conveyor

@@ -59,8 +59,10 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/Initialize(timeofday, zlevel)
 	if (zlevel)
 		return ..()
-	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
-	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
+	if(!syndicate_code_phrase)
+		syndicate_code_phrase	= generate_code_phrase()
+	if(!syndicate_code_response)
+		syndicate_code_response	= generate_code_phrase()
 	setupFactions()
 	..()
 
@@ -207,7 +209,8 @@ var/datum/subsystem/ticker/ticker
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
-	if( cinematic )	return	//already a cinematic in progress!
+	if( cinematic )
+		return	//already a cinematic in progress!
 
 	for (var/datum/html_interface/hi in html_interfaces)
 		hi.closeAll()
@@ -304,8 +307,10 @@ var/datum/subsystem/ticker/ticker
 	//If its actually the end of the round, wait for it to end.
 	//Otherwise if its a verb it will continue on afterwards.
 	spawn(300)
-		if(cinematic)	qdel(cinematic)		//end the cinematic
-		if(temp_buckle)	qdel(temp_buckle)	//release everybody
+		if(cinematic)
+			qdel(cinematic)		//end the cinematic
+		if(temp_buckle)
+			qdel(temp_buckle)	//release everybody
 	return
 
 

@@ -112,48 +112,78 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 9)		//an example, underwear were an index for a hardcoded list, converting to a string
 		if(gender == MALE)
 			switch(underwear)
-				if(1)	underwear = "Mens White"
-				if(2)	underwear = "Mens Grey"
-				if(3)	underwear = "Mens Green"
-				if(4)	underwear = "Mens Blue"
-				if(5)	underwear = "Mens Black"
-				if(6)	underwear = "Mankini"
-				if(7)	underwear = "Mens Hearts Boxer"
-				if(8)	underwear = "Mens Black Boxer"
-				if(9)	underwear = "Mens Grey Boxer"
-				if(10)	underwear = "Mens Striped Boxer"
-				if(11)	underwear = "Mens Kinky"
-				if(12)	underwear = "Mens Red"
-				if(13)	underwear = "Nude"
+				if(1)
+					underwear = "Mens White"
+				if(2)
+					underwear = "Mens Grey"
+				if(3)
+					underwear = "Mens Green"
+				if(4)
+					underwear = "Mens Blue"
+				if(5)
+					underwear = "Mens Black"
+				if(6)
+					underwear = "Mankini"
+				if(7)
+					underwear = "Mens Hearts Boxer"
+				if(8)
+					underwear = "Mens Black Boxer"
+				if(9)
+					underwear = "Mens Grey Boxer"
+				if(10)
+					underwear = "Mens Striped Boxer"
+				if(11)
+					underwear = "Mens Kinky"
+				if(12)
+					underwear = "Mens Red"
+				if(13)
+					underwear = "Nude"
 		else
 			switch(underwear)
-				if(1)	underwear = "Ladies Red"
-				if(2)	underwear = "Ladies White"
-				if(3)	underwear = "Ladies Yellow"
-				if(4)	underwear = "Ladies Blue"
-				if(5)	underwear = "Ladies Black"
-				if(6)	underwear = "Ladies Thong"
-				if(7)	underwear = "Babydoll"
-				if(8)	underwear = "Ladies Baby-Blue"
-				if(9)	underwear = "Ladies Green"
-				if(10)	underwear = "Ladies Pink"
-				if(11)	underwear = "Ladies Kinky"
-				if(12)	underwear = "Tankini"
-				if(13)	underwear = "Nude"
+				if(1)
+					underwear = "Ladies Red"
+				if(2)
+					underwear = "Ladies White"
+				if(3)
+					underwear = "Ladies Yellow"
+				if(4)
+					underwear = "Ladies Blue"
+				if(5)
+					underwear = "Ladies Black"
+				if(6)
+					underwear = "Ladies Thong"
+				if(7)
+					underwear = "Babydoll"
+				if(8)
+					underwear = "Ladies Baby-Blue"
+				if(9)
+					underwear = "Ladies Green"
+				if(10)
+					underwear = "Ladies Pink"
+				if(11)
+					underwear = "Ladies Kinky"
+				if(12)
+					underwear = "Tankini"
+				if(13)
+					underwear = "Nude"
 		if(!(pref_species in species_list))
 			pref_species = new /datum/species/human()
 	return
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
-	if(!ckey)	return
+	if(!ckey)
+		return
 	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
 
 /datum/preferences/proc/load_preferences()
-	if(!path)				return 0
-	if(!fexists(path))		return 0
+	if(!path)
+		return 0
+	if(!fexists(path))
+		return 0
 
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/"
 
 	var/needs_update = savefile_needs_update(S)
@@ -202,9 +232,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return 1
 
 /datum/preferences/proc/save_preferences()
-	if(!path)				return 0
+	if(!path)
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/"
 
 	S["version"] << SAVEFILE_VERSION_MAX		//updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
@@ -229,12 +261,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return 1
 
 /datum/preferences/proc/load_character(slot)
-	if(!path)				return 0
-	if(!fexists(path))		return 0
+	if(!path)
+		return 0
+	if(!fexists(path))
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/"
-	if(!slot)	slot = default_slot
+	if(!slot)
+		slot = default_slot
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
@@ -315,7 +351,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	real_name		= reject_bad_name(real_name)
 	if(!features["mcolor"] || features["mcolor"] == "#000")
 		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-	if(!real_name)	real_name = random_unique_name(gender)
+	if(!real_name)
+		real_name = random_unique_name(gender)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
 	gender			= sanitize_gender(gender)
@@ -360,9 +397,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return 1
 
 /datum/preferences/proc/save_character()
-	if(!path)				return 0
+	if(!path)
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)
+		return 0
 	S.cd = "/character[default_slot]"
 
 	S["version"]			<< SAVEFILE_VERSION_MAX	//load_character will sanitize any bad data, so assume up-to-date.

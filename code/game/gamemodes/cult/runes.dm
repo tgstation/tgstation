@@ -19,7 +19,7 @@ To draw a rune, use an arcane tome.
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	unacidable = 1
-	layer = TURF_LAYER
+	layer = TURF_LAYER + 0.08
 	color = rgb(255,0,0)
 	mouse_opacity = 2
 

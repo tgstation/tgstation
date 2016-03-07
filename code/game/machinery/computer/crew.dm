@@ -256,4 +256,4 @@ var/global/datum/crewmonitor/crewmonitor = new
 /datum/crewmonitor/proc/sendResources(var/client/client)
 	send_asset(client, "crewmonitor.js")
 	send_asset(client, "crewmonitor.css")
-	SSminimap.sendMinimaps(client)
+	SSminimap.send(client)

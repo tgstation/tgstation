@@ -95,7 +95,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 						T.dir = 10
 
 /obj/item/weapon/storage/book/bible/Topic(href, href_list)
-	if(href_list["seticon"])
+	if(href_list["seticon"] && ticker && !ticker.Bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
 
 		var/biblename = biblenames[iconi]

@@ -1,5 +1,6 @@
 /mob/living/carbon/brain/death(gibbed)
-	if(stat == DEAD)	return
+	if(stat == DEAD)
+		return
 	if(!gibbed && container && istype(container, /obj/item/device/mmi))//If not gibbed but in a container.
 		container.visible_message("<span class='warning'>[src]'s MMI flatlines!</span>", \
 					"<span class='italics'>You hear something flatline.</span>")
@@ -15,7 +16,8 @@
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 	tod = worldtime2text() //weasellos time of death patch
-	if(mind)	mind.store_memory("Time of death: [tod]", 0)	//mind. ?
+	if(mind)
+		mind.store_memory("Time of death: [tod]", 0)	//mind. ?
 
 	return ..(gibbed)
 

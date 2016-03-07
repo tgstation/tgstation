@@ -102,7 +102,7 @@
 			outfit.armor = list(melee = 20, bullet = 30, laser = 10, energy = 10, bomb = 20, bio = 0, rad = 0)
 			outfit.desc += " Tailored for the [name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
 			outfit.gang = src
-			user.put_in_any_hand_if_possible(outfit)
+			user.put_in_hands(outfit)
 			return 1
 
 	return 0

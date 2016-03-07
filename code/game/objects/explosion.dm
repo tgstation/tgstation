@@ -126,10 +126,14 @@
 		if(dist < flame_range)
 			flame_dist = 1
 
-		if(dist < devastation_range)		dist = 1
-		else if(dist < heavy_impact_range)	dist = 2
-		else if(dist < light_impact_range)	dist = 3
-		else 								dist = 0
+		if(dist < devastation_range)
+			dist = 1
+		else if(dist < heavy_impact_range)
+			dist = 2
+		else if(dist < light_impact_range)
+			dist = 3
+		else
+			dist = 0
 
 		//------- TURF FIRES -------
 
@@ -152,7 +156,8 @@
 
 	var/took = (world.timeofday-start)/10
 	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
-	if(Debug2)	world.log << "## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds."
+	if(Debug2)
+		world.log << "## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds."
 
 	//Machines which report explosions.
 	for(var/array in doppler_arrays)

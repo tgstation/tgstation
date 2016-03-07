@@ -42,7 +42,8 @@
 	if(rigged && amount > 0)
 		explode()
 		return 0
-	if(charge < amount)	return 0
+	if(charge < amount)
+		return 0
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
 		feedback_add_details("cell_used","[src.type]")
@@ -56,7 +57,8 @@
 	if(maxcharge < amount)
 		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
-	if(crit_fail)	return 0
+	if(crit_fail)
+		return 0
 	if(!prob(reliability))
 		minor_fault++
 		if(prob(minor_fault))

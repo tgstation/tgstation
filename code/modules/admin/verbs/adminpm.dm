@@ -5,7 +5,8 @@
 	if(!holder)
 		src << "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
 		return
-	if( !ismob(M) || !M.client )	return
+	if( !ismob(M) || !M.client )
+		return
 	cmd_admin_pm(M.client,null)
 	feedback_add_details("admin_verb","APMM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -44,7 +45,8 @@
 	else if(istype(whom,/client))
 		C = whom
 	if(!C)
-		if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+		if(holder)
+			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
 		return
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help.")
 	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
@@ -68,18 +70,23 @@
 	else if(istype(whom,/client))
 		C = whom
 	if(!C)
-		if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
-		else		adminhelp(msg)	//admin we are replying to left. adminhelp instead
+		if(holder)
+			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+		else
+			adminhelp(msg)	//admin we are replying to left. adminhelp instead
 		return
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
 		msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
 
-		if(!msg)	return
+		if(!msg)
+			return
 		if(!C)
-			if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
-			else		adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
+			if(holder)
+				src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+			else
+				adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
 			return
 
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
@@ -88,9 +95,13 @@
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0))
 		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-		if(!msg)	return
+		if(!msg)
+			return
 
-	msg = emoji_parse(msg)
+	var/rawmsg = msg
+	if(holder)
+		msg = emoji_parse(msg)
+
 	var/keywordparsedmsg = keywords_lookup(msg)
 
 	if(C.holder)
@@ -133,7 +144,7 @@
 			src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
 			return
 
-	log_admin("PM: [key_name(src)]->[key_name(C)]: [msg]")
+	log_admin("PM: [key_name(src)]->[key_name(C)]: [rawmsg]")
 
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in admins)

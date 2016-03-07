@@ -3,7 +3,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
 	item_state = "electronic"
-	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefacts power."
+	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = 1
 	slot_flags = SLOT_BELT
 	origin_tech = "bluespace=4;materials=4"
@@ -33,9 +33,6 @@
 		user << "<span class='cultlarge'>You shouldn't do that.</span>"
 		return
 	add_logs(user, M, "captured [M.name]'s soul", src)
-
-	if(iscultist(user) && M && M.mind)
-		new /obj/item/summoning_orb(get_turf(M))
 
 	transfer_soul("VICTIM", M, user)
 	return
@@ -85,9 +82,9 @@
 				A.cancel_camera()
 				src.icon_state = "soulstone"
 				if(iswizard(U) || usability)
-					A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
+					A << "<b>You have been released from your prison, but you are still bound to [U.real_name]'s will. Help them succeed in their goals at all costs.</b>"
 				else if(iscultist(U))
-					A << "<b>You have been released from your prison, but you are still bound to the cult's will. Help them suceed in their goals at all costs.</b>"
+					A << "<b>You have been released from your prison, but you are still bound to the cult's will. Help them succeed in their goals at all costs.</b>"
 
 	attack_self(U)
 
@@ -96,7 +93,7 @@
 	name = "empty shell"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
-	desc = "A wicked machine used by those skilled in magical arts. It is inactive"
+	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
 
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/device/soulstone))
@@ -121,7 +118,7 @@
 				init_shade(src, T, user)
 				return 1
 			else
-				user << "<span class='userdanger'>Capture failed!</span>: The soul has already fled it's mortal frame. You attempt to bring it back..."
+				user << "<span class='userdanger'>Capture failed!</span>: The soul has already fled its mortal frame. You attempt to bring it back..."
 				return getCultGhost(src,T,user)
 
 		if("VICTIM")
@@ -133,12 +130,14 @@
 					user << "<span class='userdanger'>Capture failed!</span>: Kill or maim the victim first!"
 				else
 					if(T.client == null)
-						user << "<span class='userdanger'>Capture failed!</span>: The soul has already fled it's mortal frame. You attempt to bring it back..."
+						user << "<span class='userdanger'>Capture failed!</span>: The soul has already fled its mortal frame. You attempt to bring it back..."
 						getCultGhost(src,T,user)
 					else
 						if(contents.len)
 							user << "<span class='userdanger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room."
 						else
+							if(iscultist(user))
+								new /obj/item/summoning_orb(get_turf(T))
 							for(var/obj/item/W in T)
 								T.unEquip(W)
 							init_shade(src, T, user, vic = 1)
@@ -161,7 +160,7 @@
 						icon_state = "soulstone2"
 						T << "Your soul has been recaptured by the soul stone, its arcane energies are reknitting your ethereal form"
 						if(user != T)
-							user << "<span class='info'><b>Capture successful!</b>:</span> [T.name]'s has been recaptured and stored within the soul stone."
+							user << "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s has been recaptured and stored within the soul stone."
 		if("CONSTRUCT")
 			var/obj/structure/constructshell/T = target
 			var/mob/living/simple_animal/shade/A = locate() in src
@@ -232,9 +231,9 @@
 	C.icon_state = "soulstone2"
 	C.name = "Soul Stone: [S.real_name]"
 	if(iswizard(U) || usability)
-		S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
+		S << "Your soul has been captured! You are now bound to [U.real_name]'s will. Help them succeed in their goals at all costs."
 	else if(iscultist(U))
-		S << "Your soul has been captured! You are now bound to the cult's will, help them suceed in their goals at all costs."
+		S << "Your soul has been captured! You are now bound to the cult's will. Help them succeed in their goals at all costs."
 	C.imprinted = "[S.name]"
 	if(vic)
 		U << "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from their body and stored within the soul stone."

@@ -58,6 +58,12 @@
 	cooldownTime = 100 //If we're gonna be a jackass, go the full mile - 10 second recharge timer
 	end_create_message = "dispenses a suspicious drone shell."
 
+/obj/machinery/droneDispenser/syndrone/badass //Please forgive me
+	name = "badass syndrone shell dispenser"
+	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with metal and glass. Disgusting. This one seems ominous."
+	dispense_type = /obj/item/drone_shell/syndrone/badass
+	end_create_message = "dispenses a ominous suspicious drone shell."
+
 /obj/machinery/droneDispenser/hivebot //An example of a custom drone dispenser. This one requires no materials and creates basic hivebots
 	name = "hivebot fabricator"
 	desc = "A large, bulky machine that whirs with activity, steam hissing from vents in its sides."

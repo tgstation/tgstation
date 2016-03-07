@@ -29,10 +29,13 @@
 	name = "Sand"
 	icon_state = "sand"
 
-/turf/simulated/floor/plating/beach/coastline
+/turf/simulated/floor/plating/beach/coastline_t
 	name = "Coastline"
-	icon = 'icons/misc/beach2.dmi'
-	icon_state = "sandwater"
+	icon_state = "sandwater_t"
+
+/turf/simulated/floor/plating/beach/coastline_b
+	name = "Coastline"
+	icon_state = "sandwater_b"
 
 /turf/simulated/floor/plating/beach/water
 	name = "Water"

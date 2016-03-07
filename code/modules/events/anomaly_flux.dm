@@ -15,7 +15,7 @@
 
 
 /datum/round_event/anomaly/anomaly_flux/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
+	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/flux(T)
 

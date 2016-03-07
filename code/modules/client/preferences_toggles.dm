@@ -58,7 +58,8 @@
 	set name = "Hear/Silence Adminhelps"
 	set category = "Preferences"
 	set desc = "Toggle hearing a notification when admin PMs are received"
-	if(!holder)	return
+	if(!holder)
+		return
 	prefs.toggles ^= SOUND_ADMINHELP
 	prefs.save_preferences()
 	usr << "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive."
@@ -68,7 +69,8 @@
 	set name = "Do/Don't Announce Login"
 	set category = "Preferences"
 	set desc = "Toggle if you want an announcement to admins when you login during a round"
-	if(!holder)	return
+	if(!holder)
+		return
 	prefs.toggles ^= ANNOUNCE_LOGIN
 	prefs.save_preferences()
 	usr << "You will [(prefs.toggles & ANNOUNCE_LOGIN) ? "now" : "no longer"] have an announcement to other admins when you login."
@@ -214,7 +216,8 @@ var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost",
 	set name = "Choose Ghost Form"
 	set category = "Preferences"
 	set desc = "Choose your preferred ghostly appearance."
-	if(!is_content_unlocked())	return
+	if(!is_content_unlocked())
+		return
 	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
 	if(new_form)
 		prefs.ghost_form = new_form
@@ -258,7 +261,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set name = "Toggle Ghost HUD"
 	set category = "Preferences"
 	set desc = "Hide/Show Ghost HUD"
-	
+
 	prefs.ghost_hud = !prefs.ghost_hud
 	src << "Ghost HUD will now be [prefs.ghost_hud ? "visible" : "hidden"]."
 	prefs.save_preferences()

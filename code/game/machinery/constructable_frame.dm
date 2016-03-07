@@ -361,9 +361,8 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/console_screen = 4)
 
 /obj/item/weapon/circuitboard/thermomachine
-	name = "circuit board (Freezer)"
-	desc = "Use screwdriver to switch between heating and cooling modes."
-	build_path = /obj/machinery/atmospherics/components/unary/cold_sink/freezer
+	name = "circuit board (Thermomachine)"
+	desc = "You can use a screwdriver to switch between heater and freezer."
 	board_type = "machine"
 	origin_tech = "programming=3;plasmatech=3"
 	req_components = list(
@@ -373,15 +372,25 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/thermomachine/attackby(obj/item/I, mob/user, params)
+	var/obj/item/weapon/circuitboard/freezer = /obj/item/weapon/circuitboard/thermomachine/freezer
+	var/obj/item/weapon/circuitboard/heater = /obj/item/weapon/circuitboard/thermomachine/heater
+	var/obj/item/weapon/circuitboard/newtype
+
 	if(istype(I, /obj/item/weapon/screwdriver))
-		if(build_path == /obj/machinery/atmospherics/components/unary/cold_sink/freezer)
-			build_path = /obj/machinery/atmospherics/components/unary/heat_reservoir/heater
-			name = "circuit board (Heater)"
-			user << "<span class='notice'>You set the board to heating.</span>"
+		if(build_path == initial(heater.build_path))
+			newtype = freezer
 		else
-			build_path = /obj/machinery/atmospherics/components/unary/cold_sink/freezer
-			name = "circuit board (Freezer)"
-			user << "<span class='notice'>You set the board to cooling.</span>"
+			newtype = heater
+		name = initial(newtype.name)
+		build_path = initial(newtype.build_path)
+
+/obj/item/weapon/circuitboard/thermomachine/freezer
+	name = "circuit board (Freezer)"
+	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+
+/obj/item/weapon/circuitboard/thermomachine/heater
+	name = "circuit board (Heater)"
+	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
 
 /obj/item/weapon/circuitboard/space_heater
 	name = "circuit board (Space Heater)"

@@ -121,12 +121,6 @@
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(target), slot_back)
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/box(target), slot_in_backpack)
 	target.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll/apprentice(target), slot_r_store)
-
-
-
-
-
-
 ///////////BORGS AND OPERATIVES
 
 
@@ -176,13 +170,14 @@
 	if(nuke)
 		new_op_code = nuke.r_code
 	M.mind.make_Nuke(T, new_op_code, 0, FALSE)
-
-
+	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
+	M.mind.name = newname
+	M.real_name = newname
+	M.name = newname
 
 
 
 //////SYNDICATE BORG
-
 /obj/item/weapon/antag_spawner/nuke_ops/borg_tele
 	name = "syndicate cyborg teleporter"
 	desc = "A single-use teleporter designed to quickly reinforce operatives in the field.."
@@ -211,13 +206,7 @@
 
 
 
-
-
-
-
-
 ///////////SLAUGHTER DEMON
-
 
 /obj/item/weapon/antag_spawner/slaughter_demon //Warning edgiest item in the game
 	name = "vial of blood"

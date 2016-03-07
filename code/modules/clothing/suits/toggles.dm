@@ -138,7 +138,7 @@
 		H.unEquip(helmet, 1)
 		H.update_inv_wear_suit()
 		H << "<span class='notice'>The helmet on the hardsuit disengages.</span>"
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	helmet.loc = src
 
 /obj/item/clothing/suit/space/hardsuit/dropped()

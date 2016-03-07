@@ -256,7 +256,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	user.set_machine(src)
 
-	if(active_uplink_check(user))
+	if(hidden_uplink && hidden_uplink.active)
+		hidden_uplink.interact(user)
 		return
 
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
@@ -381,7 +382,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 				if (!toff)
 					for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
-						if (P == src)	continue
+						if (P == src)
+							continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
 						if (istype(cartridge, /obj/item/weapon/cartridge/syndicate) && P.detonate)
 							dat += " (<a href='byond://?src=\ref[src];choice=Detonate;target=\ref[P]'><img src=pda_boom.png>*Detonate*</a>)"
@@ -425,7 +427,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						for(var/id in env_gases)
 							var/gas_level = env_gases[id][MOLES]/total_moles
 							if(id in hardcoded_gases || gas_level > 0.01)
-								dat += "[env_gases[id][GAS_NAME]]: [round(gas_level*100)]%<br>"
+								dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100)]%<br>"
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
@@ -502,12 +504,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("Light")
 				if(fon)
 					fon = 0
-					if(src in U.contents)	U.AddLuminosity(-f_lum)
-					else					SetLuminosity(0)
+					if(src in U.contents)
+						U.AddLuminosity(-f_lum)
+					else
+						SetLuminosity(0)
 				else
 					fon = 1
-					if(src in U.contents)	U.AddLuminosity(f_lum)
-					else					SetLuminosity(f_lum)
+					if(src in U.contents)
+						U.AddLuminosity(f_lum)
+					else
+						SetLuminosity(f_lum)
 			if("Medical Scan")
 				if(scanmode == 1)
 					scanmode = 0
@@ -560,9 +566,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				tnote = null
 			if("Ringtone")
 				var/t = input(U, "Please enter new ringtone", name, ttone) as text
-				if (in_range(src, U) && loc == U)
-					if (t)
-						if(src.hidden_uplink && hidden_uplink.check_trigger(U, trim(lowertext(t)), trim(lowertext(lock_code))))
+				if(in_range(src, U) && loc == U)
+					if(t)
+						if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
+							hidden_uplink.interact(U)
 							U << "The PDA softly beeps."
 							U << browse(null, "window=pda")
 							src.mode = 0

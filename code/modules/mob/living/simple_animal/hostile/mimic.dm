@@ -72,7 +72,7 @@
 
 /mob/living/simple_animal/hostile/mimic/crate/adjustHealth(damage)
 	trigger()
-	..(damage)
+	. = ..()
 
 /mob/living/simple_animal/hostile/mimic/crate/LoseTarget()
 	..()

@@ -55,13 +55,6 @@
 	if(master)
 		master.update_icon()
 
-/obj/item/device/assembly_holder/HasProximity(atom/movable/AM as mob|obj)
-	if(a_left)
-		a_left.HasProximity(AM)
-	if(a_right)
-		a_right.HasProximity(AM)
-
-
 /obj/item/device/assembly_holder/Crossed(atom/movable/AM as mob|obj)
 	if(a_left)
 		a_left.Crossed(AM)
@@ -110,8 +103,10 @@
 		return
 	if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
 		switch(alert("Which side would you like to use?",,"Left","Right"))
-			if("Left")	a_left.attack_self(user)
-			if("Right")	a_right.attack_self(user)
+			if("Left")
+				a_left.attack_self(user)
+			if("Right")
+				a_right.attack_self(user)
 		return
 	else
 		a_left.attack_self(user)

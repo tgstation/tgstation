@@ -31,3 +31,15 @@
 		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 		return 1
 	return 0
+
+/obj/structure/attack_hand(mob/user)
+	. = ..()
+	add_fingerprint(user)
+	interact(user)
+
+/obj/structure/interact(mob/user)
+	ui_interact(user)
+
+/obj/structure/ui_act(action, params)
+	..()
+	add_fingerprint(usr)

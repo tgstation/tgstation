@@ -25,8 +25,10 @@
 	icon_state = "[basestate][on]-[item_color]"
 	user.update_inv_head()	//so our mob-overlays update
 
-	if(on)	user.AddLuminosity(brightness_on)
-	else	user.AddLuminosity(-brightness_on)
+	if(on)
+		user.AddLuminosity(brightness_on)
+	else
+		user.AddLuminosity(-brightness_on)
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/pickup(mob/user)
@@ -521,6 +523,8 @@
 	item_state = "ert_security"
 	item_color = "ert_security"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/red
+	shield_state = "shield-red"
+	shield_on = "shield-red"
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 	name = "blue shielded hardsuit"

@@ -2,6 +2,7 @@
 				BLOOD SYSTEM
 ****************************************************/
 //Blood levels
+var/const/BLOOD_VOLUME_NORMAL = 560
 var/const/BLOOD_VOLUME_SAFE = 501
 var/const/BLOOD_VOLUME_OKAY = 336
 var/const/BLOOD_VOLUME_BAD = 224
@@ -12,7 +13,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 //Initializes blood vessels
 /mob/living/carbon/human/proc/make_blood()
-
 	if(vessel)
 		return
 
@@ -22,15 +22,23 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(NOBLOOD in dna.species.specflags)
 		return
 
-	vessel.add_reagent("blood",560)
-	spawn(1)
-		fixblood()
-
-//Resets blood data
-/mob/living/carbon/human/proc/fixblood()
+	vessel.add_reagent("blood", BLOOD_VOLUME_NORMAL)
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
 		if(B.id == "blood")
-			B.data = list("donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.blood_type,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"features"=null, "factions"=null)
+			B.data = list(
+			"donor" = src,
+			"viruses" = null,
+			"blood_DNA" = dna.unique_enzymes,
+			"blood_type" = dna.blood_type,
+			"resistances" = null,
+			"trace_chem" = null,
+			"mind" = null,
+			"ckey" = null,
+			"gender" = null,
+			"real_name" = null,
+			"cloneable" = null,
+			"features" = null,
+			"factions" = null)
 
 /mob/living/carbon/human/proc/suppress_bloodloss(amount)
 	if(bleedsuppress)
@@ -49,12 +57,11 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		blood_max = 0
 		return
 
-	if(stat != DEAD && bodytemperature >= 170)	//Dead or cryosleep people do not pump the blood.
-
+	if(stat != DEAD && bodytemperature >= 225) // Dead or cryosleep people do not pump the blood.
 		var/blood_volume = round(vessel.get_reagent_amount("blood"))
 
 		//Blood regeneration if there is some space
-		if(blood_volume < 560 && blood_volume)
+		if(blood_volume < BLOOD_VOLUME_NORMAL)
 			var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
 			if(B) // Make sure there's some blood at all
 				if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
@@ -64,10 +71,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 							break
 
 				B.volume += 0.1 // regenerate blood VERY slowly
-				if (reagents.has_reagent("nutriment"))	//Getting food speeds it up
+				if(reagents.has_reagent("nutriment"))	//Getting food speeds it up
 					B.volume += 0.4
 					reagents.remove_reagent("nutriment", 0.1)
-				if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
+				if(reagents.has_reagent("iron"))	//Hematogen candy anyone?
 					B.volume += 0.4
 					reagents.remove_reagent("iron", 0.1)
 
@@ -83,12 +90,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					update_body()
 					var/word = pick("dizzy","woozy","faint")
 					src << "<span class='warning'>You feel [word].</span>"
-				oxyloss += max(0, (20-oxyloss)*0.2)
+				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 100)
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = 1
 					update_body()
-				oxyloss += max(1, (50-oxyloss)*0.2)
+				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 50)
 				if(prob(5))
 					eye_blurry += 6
 					var/word = pick("dizzy","woozy","faint")
