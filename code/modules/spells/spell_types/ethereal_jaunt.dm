@@ -30,6 +30,7 @@
 			animation.layer = 5
 			animation.master = holder
 			target.ExtinguishMob()
+			target.silent(target.silent, 5)
 			if(target.buckled)
 				target.buckled.unbuckle_mob()
 			if(target.pulledby)
