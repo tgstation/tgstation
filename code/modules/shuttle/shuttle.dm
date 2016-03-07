@@ -455,7 +455,7 @@
 	for(var/turf/T in L)
 		for(var/atom/movable/AM in T)
 			if(ismob(AM))
-				if(istype(AM, /mob/living/carbon/human))
+				if(ishuman(AM))
 					var/mob/living/M = AM
 					M.Paralyse(10)
 					M.apply_damage(60, BRUTE, "chest")
