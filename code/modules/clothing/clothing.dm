@@ -10,7 +10,8 @@
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	var/alt_desc = null
 	var/gang //Is this a gang outfit?
-
+	var/scan_reagents = 0
+	
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"
