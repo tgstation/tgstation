@@ -10,7 +10,10 @@
 	maturation = 5
 	production = 5
 	yield = 2
+	icon_grow = "berry-grow" // Uses one growth icons set for all the subtypes
+	icon_dead = "berry-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/berry/glow, /obj/item/seeds/berry/poison)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries
 	seed = /obj/item/seeds/berry
@@ -19,7 +22,6 @@
 	icon_state = "berrypile"
 	gender = PLURAL
 	filling_color = "#FF00FF"
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 	bitesize_mod = 2
 
 // Poison Berries
@@ -31,6 +33,7 @@
 	plantname = "Poison-Berry Bush"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison
 	mutatelist = list(/obj/item/seeds/berry/death)
+	reagents_add = list("toxin" = 0.25, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 10 // Mildly poisonous berries are common in reality
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison
@@ -39,7 +42,6 @@
 	desc = "Taste so good, you could die!"
 	icon_state = "poisonberrypile"
 	filling_color = "#C71585"
-	reagents_add = list("toxin" = 0.25, "vitamin" = 0.04, "nutriment" = 0.1)
 
 // Death Berries
 /obj/item/seeds/berry/death
@@ -52,6 +54,7 @@
 	lifespan = 30
 	potency = 50
 	mutatelist = list()
+	reagents_add = list("lexorin" = 0.25, "toxin" = 0.35, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 30
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/death
@@ -60,7 +63,6 @@
 	desc = "Taste so good, you could die!"
 	icon_state = "deathberrypile"
 	filling_color = "#708090"
-	reagents_add = list("lexorin" = 0.25, "toxin" = 0.35, "vitamin" = 0.04, "nutriment" = 0.1)
 
 // Glow Berries
 /obj/item/seeds/berry/glow
@@ -73,6 +75,7 @@
 	lifespan = 30
 	endurance = 25
 	mutatelist = list()
+	reagents_add = list("uranium" = 0.25, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow
@@ -83,22 +86,21 @@
 	var/brightness_on = 2 //luminosity when on
 	icon_state = "glowberrypile"
 	filling_color = "#7CFC00"
-	reagents_add = list("uranium" = 0.25, "vitamin" = 0.04, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/Destroy()
 	if(istype(loc,/mob))
-		loc.AddLuminosity(round(-potency / 5))
+		loc.AddLuminosity(round(-seed.potency / 5))
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/pickup(mob/user)
 	..()
 	src.SetLuminosity(0)
-	user.AddLuminosity(round(potency / 5))
+	user.AddLuminosity(round(seed.potency / 5))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/dropped(mob/user)
 	..()
-	user.AddLuminosity(round(-potency / 5))
-	src.SetLuminosity(round(potency / 5))
+	user.AddLuminosity(round(-seed.potency / 5))
+	src.SetLuminosity(round(seed.potency / 5))
 
 
 // Cherries
@@ -114,7 +116,10 @@
 	maturation = 5
 	production = 5
 	growthstages = 5
+	icon_grow = "cherry-grow"
+	icon_dead = "cherry-dead"
 	mutatelist = list(/obj/item/seeds/cherry/blue)
+	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherries
 	seed = /obj/item/seeds/cherry
@@ -123,7 +128,6 @@
 	icon_state = "cherry"
 	gender = PLURAL
 	filling_color = "#FF0000"
-	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
 	bitesize_mod = 2
 
 // Blue Cherries
@@ -143,7 +147,6 @@
 	desc = "They're cherries that are blue."
 	icon_state = "bluecherry"
 	filling_color = "#6495ED"
-	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
 	bitesize_mod = 2
 
 
@@ -161,7 +164,10 @@
 	production = 5
 	yield = 4
 	growthstages = 2
+	icon_grow = "grape-grow"
+	icon_dead = "grape-dead"
 	mutatelist = list(/obj/item/seeds/grape/green)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grapes
 	seed = /obj/item/seeds/grape
@@ -170,7 +176,6 @@
 	icon_state = "grapes"
 	dried_type = /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	filling_color = "#FF1493"
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)
 	bitesize_mod = 2
 
 // Green Grapes
@@ -181,6 +186,7 @@
 	species = "greengrape"
 	plantname = "Green-Grape Vine"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green
+	reagents_add = list("salglu_solution" = 0.25, "vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)
 	// No rarity: technically it's a beneficial mutant, but it's not exactly "new"...
 	mutatelist = list()
 
@@ -189,4 +195,3 @@
 	name = "bunch of green grapes"
 	icon_state = "greengrapes"
 	filling_color = "#7FFF00"
-	reagents_add = list("salglu_solution" = 0.25, "vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)

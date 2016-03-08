@@ -10,7 +10,10 @@
 	production = 4
 	potency = 15
 	growthstages = 4
+	icon_grow = "soybean-grow"
+	icon_dead = "soybean-dead"
 	mutatelist = list(/obj/item/seeds/soya/koi)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	seed = /obj/item/seeds/soya
@@ -19,7 +22,6 @@
 	gender = PLURAL
 	icon_state = "soybeans"
 	filling_color = "#F0E68C"
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 	bitesize_mod = 2
 
 // Koibean
@@ -27,11 +29,12 @@
 	name = "pack of koibean seeds"
 	desc = "These seeds grow into koibean plants."
 	icon_state = "seed-koibean"
-	species = "soybean"
+	species = "koibean"
 	plantname = "Koibean Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
-	mutatelist = list()
 	potency = 10
+	mutatelist = list()
+	reagents_add = list("carpotoxin" = 0.05, "vitamin" = 0.04, "nutriment" = 0.05)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
@@ -40,5 +43,4 @@
 	desc = "Something about these seems fishy."
 	icon_state = "koibeans"
 	filling_color = "#F0E68C"
-	reagents_add = list("carpotoxin" = 0.05, "vitamin" = 0.04, "nutriment" = 0.05)
 	bitesize_mod = 2

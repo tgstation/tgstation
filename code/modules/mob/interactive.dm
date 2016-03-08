@@ -839,7 +839,7 @@
 		for(var/obj/machinery/hydroponics/tester in view(12,src))
 			considered[tester] = 1
 
-			if(!tester.planted)
+			if(!tester.myseed)
 				considered[tester] += 50
 			if(tester.weedlevel > 0)
 				considered[tester] += 5
@@ -866,7 +866,7 @@
 			else
 				if(HP.harvest || HP.dead)
 					HP.attack_hand(src)
-				else if(!HP.planted)
+				else if(!HP.myseed)
 					var/seedType = pick(typesof(/obj/item/seeds) - /obj/item/seeds)
 					var/obj/item/seeds/SEED = new seedType(src)
 					customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")] towards [TARGET], producing a [SEED]!")

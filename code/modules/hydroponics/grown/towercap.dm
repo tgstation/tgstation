@@ -13,7 +13,7 @@
 	potency = 50
 	oneharvest = 1
 	growthstages = 3
-	plant_type = 2
+	icon_dead = "towercap-dead"
 	mutatelist = list(/obj/item/seeds/tower/steel)
 
 /obj/item/seeds/tower/steel
@@ -39,7 +39,6 @@
 	w_class = 3
 	throw_speed = 2
 	throw_range = 3
-	plant_type = 2
 	origin_tech = "materials=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	var/plank_type = /obj/item/stack/sheet/mineral/wood
@@ -55,7 +54,7 @@
 	..()
 	if(W.sharpness)
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
-		var/obj/item/stack/plank = new plank_type(user.loc, 1 + round(potency / 25))
+		var/obj/item/stack/plank = new plank_type(user.loc, 1 + round(seed.potency / 25))
 		var/old_plank_amount = plank.amount
 		for(var/obj/item/stack/ST in user.loc)
 			if(ST != plank && istype(ST, plank_type) && ST.amount < ST.max_amount)
