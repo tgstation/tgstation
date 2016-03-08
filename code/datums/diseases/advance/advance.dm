@@ -438,5 +438,18 @@ var/list/advance_cures = 	list(
 		total_stealth += S.stealth
 	return total_stealth
 
+/datum/disease/advance/proc/totalResistance()
+	var/total_resistance = 0
+	for(var/i in symptoms)
+		var/datum/symptom/S = i
+		total_resistance += S.resistance
+	return total_resistance
+
+/datum/disease/advance/proc/totalTransmittable()
+	var/total_transmittable = 0
+	for(var/i in symptoms)
+		var/datum/symptom/S = i
+		total_transmittable += S.transmittable
+	return total_transmittable
 
 #undef RANDOM_STARTING_LEVEL
