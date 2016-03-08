@@ -597,6 +597,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A cigarette infused with a proprietary compound that ignites when struck. Smells of magnesium."
 
 /obj/item/clothing/mask/cigarette/strikeanywhere/afterattack(atom/target, mob/user, proximity)
+	if(!proximity)
+		return
 	if(!lit && smoketime > 0)
 		user.visible_message("[user] strikes [target] with the [src] and it ignites!", "<span class='notice'>You strike [target] with the [src] and it ignites!</span>")
 		light()
