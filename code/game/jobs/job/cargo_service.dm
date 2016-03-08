@@ -127,6 +127,7 @@ Bartender
 			H.equip_to_slot_or_del(BPK, slot_back,1)
 
 /datum/job/bartender/equip_items(var/mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/reagent(H), slot_glasses)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/bartender(H), slot_w_uniform)
