@@ -89,7 +89,7 @@
 		restricted_jobs += "Assistant"
 
 	//cult scaling goes here
-	recommended_enemies = 3 + round(num_players()/30)
+	recommended_enemies = 3 + round(num_players()/20)
 
 
 	for(var/cultists_number = 1 to recommended_enemies)
