@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "The Damage Converter virology symptom will now do toxin damage for each limb healed."
