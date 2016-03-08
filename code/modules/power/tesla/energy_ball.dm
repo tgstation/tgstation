@@ -50,7 +50,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	if(!orbiting)
 		handle_energy()
 
-		move_the_basket_ball(2 + orbiting_balls.len * 2)
+		move_the_basket_ball(4 + orbiting_balls.len * 2)
 
 		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 15)
 
@@ -86,7 +86,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= energy_to_raise)
 		energy_to_lower = energy_to_raise - 20
-		energy_to_raise += energy_to_raise
+		energy_to_raise = energy_to_raise * 1.5
 
 		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 15)
 		spawn(100)
@@ -103,14 +103,14 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 			EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
 
 	else if(energy < energy_to_lower && orbiting_balls.len)
-		energy_to_raise = energy_to_raise * 0.5
-		energy_to_lower = (energy_to_raise * 0.5) - 20
+		energy_to_raise = energy_to_raise / 1.5
+		energy_to_lower = (energy_to_raise / 1.5) - 20
 
 		var/Orchiectomy_target = pick(orbiting_balls)
 		qdel(Orchiectomy_target)
 
 	else if(orbiting_balls.len)
-		energy -= orbiting_balls.len
+		energy -= orbiting_balls.len * 0.5
 
 /obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
