@@ -141,9 +141,14 @@
 	icon_state = "dromedary"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift
-	name = "\improper Uplift Strikes packet"
-	desc = "Your favorite brand, now Magnesium flavored. Lights as reliable as a rocket!"
+	name = "\improper Uplift Smooth packet"
+	desc = "Your favorite brand, now menthol flavored."
 	icon_state = "uplift"
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift_strike
+	name = "\improper Uplift Strikes packet"
+	desc = "Your favorite brand, now magnesium flavored. Lights as reliably as a rocket!"
+	icon_state = "upliftstrike"
 	spawn_type = /obj/item/clothing/mask/cigarette/strikeanywhere
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robust
