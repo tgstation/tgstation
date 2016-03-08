@@ -14,12 +14,13 @@
 	icon_state = "nvgmeson"
 	item_state = "nvgmeson"
 	darkness_view = 8
-
+	
 /obj/item/clothing/glasses/science
-	name = "Science Goggles"
-	desc = "A pair of snazzy goggles used to protect against chemical spills."
+	name = "Science goggles"
+	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning reagents."
 	icon_state = "purple"
 	item_state = "glasses"
+	scan_reagents = 1 //You can see reagents while wearing science goggles
 	unacidable = 1
 
 /obj/item/clothing/glasses/night
