@@ -271,8 +271,8 @@ its easier to just keep the beam vertical.
 				for(var/datum/reagent/R in reagents.reagent_list)
 					total_volume += R.volume
 				user << "[total_volume] units of various reagents"
- 		else
- 			user << "Nothing."
+		else
+			user << "Nothing."
  
 /atom/proc/relaymove()
 	return
