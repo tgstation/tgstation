@@ -532,8 +532,8 @@
 	throwforce = 10
 	var/cooldown = 0
 	var/fieldsactive = 0
-	var/burst_time = 50
-	var/fieldlimit = 3
+	var/burst_time = 30
+	var/fieldlimit = 5
 	origin_tech = "magnets=2;combat=2"
 
 /obj/item/weapon/resonator/upgraded
@@ -542,7 +542,7 @@
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
 	origin_tech = "magnets=3;combat=3"
-	fieldlimit = 5
+	fieldlimit = INFINITY
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	var/turf/T = get_turf(target)
@@ -557,9 +557,18 @@
 
 /obj/item/weapon/resonator/attack_self(mob/user)
 	if(burst_time == 50)
+		burst_time = 10
+		user << "<span class='info'>You set the resonator's fields to detonate after 1 second.</span>"
+	elseif(burst_time == 10)
+		burst_time = 20
+		user << "<span class='info'>You set the resonator's fields to detonate after 2 seconds.</span>"
+	elseif(burst_time == 20)
 		burst_time = 30
 		user << "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>"
-	else
+	elseif(burst_time == 30)
+		burst_time = 40
+		user << "<span class='info'>You set the resonator's fields to detonate after 4 seconds.</span>"
+	elseif(burst_time == 40)
 		burst_time = 50
 		user << "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>"
 
@@ -575,7 +584,7 @@
 	icon_state = "shield1"
 	layer = 4.1
 	mouse_opacity = 0
-	var/resonance_damage = 20
+	var/resonance_damage = 50
 
 /obj/effect/resonance/New(loc, var/creator = null, var/timetoburst)
 	var/turf/proj_turf = get_turf(src)
@@ -592,7 +601,7 @@
 		var/pressure = environment.return_pressure()
 		if(pressure < 50)
 			name = "strong resonance field"
-			resonance_damage = 50
+			resonance_damage = 200
 		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			if(creator)
