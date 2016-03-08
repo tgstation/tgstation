@@ -180,6 +180,8 @@
 //spears
 /obj/item/weapon/spear
 	icon_state = "spearglass0"
+	var/base_state = "spearglass"
+
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
@@ -193,8 +195,8 @@
 	var/base_force = 10
 
 /obj/item/weapon/spear/update_wield(mob/user)
-	icon_state = "spearglass[wielded ? 1 : 0]"
-	item_state = "spearglass[wielded ? 1 : 0]"
+	icon_state = "[base_state][wielded ? 1 : 0]"
+	item_state = "[base_state][wielded ? 1 : 0]"
 
 	force = base_force
 	if(wielded) force += 8
@@ -203,3 +205,13 @@
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()
 	return
+
+/obj/item/weapon/spear/wooden
+	name = "steel spear"
+	desc = "An ancient weapon of an ancient design, with a smooth wooden handle and a sharp steel blade."
+	icon_state = "spear0"
+	base_state = "spear"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/swords_axes.dmi', "right_hand" = 'icons/mob/in-hand/right/swords_axes.dmi')
+
+	force = 16
+	throwforce = 25
