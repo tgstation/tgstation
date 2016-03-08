@@ -602,7 +602,7 @@
 		if(pressure < 50)
 			name = "strong resonance field"
 			resonance_damage = 200
-			burst_time = 50
+			timetoburst = 50
 		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			if(creator)
