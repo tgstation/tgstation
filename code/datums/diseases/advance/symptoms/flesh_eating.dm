@@ -38,6 +38,6 @@ Bonus
 	return
 
 /datum/symptom/flesh_eating/proc/Flesheat(mob/living/M, datum/disease/advance/A)
-	var/get_damage = sqrt(16-A.totalStealth()*5)
+	var/get_damage = (sqrt(16-A.totalStealth()))*5
 	M.adjustBruteLoss(get_damage)
 	return 1

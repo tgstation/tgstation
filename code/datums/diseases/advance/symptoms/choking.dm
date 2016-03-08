@@ -48,6 +48,6 @@ Bonus
 	return 1
 
 /datum/symptom/choking/proc/Choke2(mob/living/M, datum/disease/advance/A)
-	var/get_damage = (sqrt(20+A.totalStageSpeed())/2)+(sqrt(16+A.totalStealth())*5)
+	var/get_damage = (sqrt(20+A.totalStageSpeed())/2)+(sqrt(16+A.totalStealth()*5))
 	M.adjustOxyLoss(get_damage)
 	return 1
