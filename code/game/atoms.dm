@@ -274,7 +274,7 @@ its easier to just keep the beam vertical.
  		else
  			user << "Nothing."
  
- /atom/proc/relaymove()
+/atom/proc/relaymove()
 	return
 
 /atom/proc/contents_explosion(severity, target)
