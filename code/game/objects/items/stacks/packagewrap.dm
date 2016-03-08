@@ -118,6 +118,7 @@
 
 /obj/item/delivery/New(turf/loc, var/obj/item/target = null, var/size = 2)
 	..()
+	w_class = size
 	wrapped = target
 	icon_state = "deliverycrate[min(size,5)]"
 
@@ -161,6 +162,7 @@
 	desc = "A big wrapped package."
 	name = "large parcel"
 	density = 1
+	w_class = 200 //Someone was going to find a way to exploit this some day
 	flags = FPRINT
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
