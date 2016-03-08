@@ -316,6 +316,18 @@ var/global/list/global_handofgod_structuretypes = list()
 			return 1
 
 
+/mob/camera/god/proc/is_handofgod_myfollowers(A)
+	if(!ishuman(A))
+		return 0
+	var/mob/living/carbon/human/H = A
+	if(!H.mind)
+		return 0
+	if(side == "red")
+		if(H.mind in ticker.mode.red_deity_prophets|ticker.mode.red_deity_followers)
+			return 1
+	else if(side == "blue")
+		if(H.mind in ticker.mode.blue_deity_prophets|ticker.mode.blue_deity_followers)
+			return 1
 
 //////////////////////
 //Roundend Reporting//

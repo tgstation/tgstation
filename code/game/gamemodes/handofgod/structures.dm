@@ -28,10 +28,17 @@
 	var/side = "neutral" //"blue" or "red", also used for colouring structures when construction is started by a deity
 	var/health = 100
 	var/maxhealth = 100
+	var/deactivated = 0		//Structures being hidden can't be used. Mainly to prevent invisible defense pylons.
 	var/autocolours = TRUE //do we colour to our side?
 
 /obj/structure/divine/New()
 	..()
+
+/obj/structure/divine/proc/deactivate()
+	deactivated = 1
+
+/obj/structure/divine/proc/activate()
+	deactivated = 0
 
 
 /obj/structure/divine/proc/update_icons()
@@ -280,6 +287,15 @@
 	if(deity)
 		deity.conduits += src
 
+/obj/structure/divine/conduit/deactivate()
+	..()
+	if(deity)
+		deity.conduits -= src
+
+/obj/structure/divine/conduit/activate()
+	..()
+	if(deity)
+		deity.conduits += src
 
 /* //No good sprites, and not enough items to make it viable yet
 /obj/structure/divine/forge
@@ -304,6 +320,8 @@
 
 /obj/structure/divine/convertaltar/attack_hand(mob/living/user)
 	..()
+	if(deactivated)
+		return
 	var/mob/living/carbon/human/H = locate() in get_turf(src)
 	if(!is_handofgod_cultist(user))
 		user << "<span class='notice'>You try to use it, but unfortunately you don't know any rituals.</span>"
@@ -332,6 +350,8 @@
 
 /obj/structure/divine/sacrificealtar/attack_hand(mob/living/user)
 	..()
+	if(deactivated)
+		return
 	var/mob/living/L = locate() in get_turf(src)
 	if(!is_handofgod_cultist(user))
 		user << "<span class='notice'>You try to use it, but unfortunately you don't know any rituals.</span>"
@@ -397,6 +417,8 @@
 	cult_only = FALSE
 
 /obj/structure/divine/healingfountain/attack_hand(mob/living/user)
+	if(deactivated)
+		return
 	if(last_process + time_between_uses > world.time)
 		user << "<span class='notice'>The fountain appears to be empty.</span>"
 		return
@@ -434,7 +456,7 @@
 /obj/structure/divine/powerpylon/New()
 	..()
 	if(deity && deity.god_nexus)
-		deity.god_nexus.powerpylons |= src
+		deity.god_nexus.powerpylons += src
 
 
 /obj/structure/divine/powerpylon/Destroy()
@@ -442,6 +464,16 @@
 		deity.god_nexus.powerpylons -= src
 	return ..()
 
+
+/obj/structure/divine/powerpylon/deactivate()
+	..()
+	if(deity)
+		deity.god_nexus.powerpylons -= src
+
+/obj/structure/divine/powerpylon/activate()
+	..()
+	if(deity)
+		deity.god_nexus.powerpylons += src
 
 /obj/structure/divine/defensepylon
 	name = "defense pylon"
@@ -478,8 +510,21 @@
 
 /obj/structure/divine/defensepylon/attack_god(mob/camera/god/user)
 	if(user.side == side)
+		if(deactivated)
+			user << "You need to reveal it first!"
+			return
 		pylon_gun.on = !pylon_gun.on
 		icon_state = (pylon_gun.on) ? "defensepylon-[side]" : "defensepylon"
+
+/obj/structure/divine/defensepylon/deactivate()
+	..()
+	pylon_gun.on = 0
+	icon_state = (pylon_gun.on) ? "defensepylon-[side]" : "defensepylon"
+
+/obj/structure/divine/defensepylon/activate()
+	..()
+	pylon_gun.on = 1
+	icon_state = (pylon_gun.on) ? "defensepylon-[side]" : "defensepylon"
 
 //This sits inside the defensepylon, to avoid copypasta
 /obj/machinery/porta_turret/defensepylon_internal_turret
