@@ -559,16 +559,16 @@
 	if(burst_time == 50)
 		burst_time = 10
 		user << "<span class='info'>You set the resonator's fields to detonate after 1 second.</span>"
-	elseif(burst_time == 10)
+	if(burst_time == 10)
 		burst_time = 20
 		user << "<span class='info'>You set the resonator's fields to detonate after 2 seconds.</span>"
-	elseif(burst_time == 20)
+	if(burst_time == 20)
 		burst_time = 30
 		user << "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>"
-	elseif(burst_time == 30)
+	if(burst_time == 30)
 		burst_time = 40
 		user << "<span class='info'>You set the resonator's fields to detonate after 4 seconds.</span>"
-	elseif(burst_time == 40)
+	if(burst_time == 40)
 		burst_time = 50
 		user << "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>"
 
@@ -584,7 +584,7 @@
 	icon_state = "shield1"
 	layer = 4.1
 	mouse_opacity = 0
-	var/resonance_damage = 50
+	var/resonance_damage = 35
 
 /obj/effect/resonance/New(loc, var/creator = null, var/timetoburst)
 	var/turf/proj_turf = get_turf(src)
@@ -602,6 +602,7 @@
 		if(pressure < 50)
 			name = "strong resonance field"
 			resonance_damage = 200
+			burst_time = 50
 		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			if(creator)
