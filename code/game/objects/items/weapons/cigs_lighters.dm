@@ -589,3 +589,25 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			user << "<span class='warning'>You need to dry this first!</span>"
 	else
 		..()
+///////////////////
+//Strike anywhere//
+///////////////////
+/obj/item/clothing/mask/cigarette/strikeanywhere
+	name = "strike anywhere cigarette"
+	desc = "A cigarette impregnated with a propitary compound that ignites when struck. Smells of Magnesium."
+/obj/item/clothing/mask/cigarette/strikeanywhere/afterattack(atom/target, mob/user, proximity)
+	if(!lit && smoketime > 0)
+		user.visible_message("[user] strikes [target] with the [src] and it ignites!", "<span class='notice'>You strike [target] with the [src] and it ignites!</span>")
+		light()
+	..()
+/obj/item/clothing/mask/cigarette/strikeanywhere/throw_impact(atom/hit_atom)
+	if(!lit && smoketime > 0)
+		hit_atom.visible_message("The [src] strikes [hit_atom] and ignites!")
+		light()
+	..()
+/obj/item/clothing/mask/cigarette/strikeanywhere/attack_self(mob/user)
+	if(!lit && smoketime > 0)
+		user.visible_message("[user] strikes the [src] on their palm and it ignites!", "<span class='notice'>You strike [src] on your palm and it ignites!</span>")
+		light()
+		return
+	..()
