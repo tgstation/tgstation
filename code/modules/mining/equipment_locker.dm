@@ -542,7 +542,7 @@
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
 	origin_tech = "magnets=3;combat=3"
-	fieldlimit = INFINITY
+	fieldlimit = 8
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	var/turf/T = get_turf(target)
