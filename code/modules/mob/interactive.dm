@@ -54,7 +54,7 @@
 	var/obj/item/weapon/card/id/Path_ID
 	var/datum/job/myjob
 	var/list/myPath = list()
-	faction = list("station")
+	faction = list("synth")
 	//trait vars
 	var/robustness = 50
 	var/smartness = 50
@@ -67,6 +67,7 @@
 	//modules
 	var/list/functions = list("nearbyscan","combat","shitcurity","chatter","healpeople")
 
+	var/shouldUseDynamicProc = 0 // switch to make the AI control it's own proccessing
 	var/alternateProcessing = 0
 	var/forceProcess = 0
 	var/processTime = 10
@@ -171,7 +172,6 @@
 			T.myjob = cjob
 			T.job = T.myjob.title
 			for(var/obj/item/W in T)
-				T.unEquip(W, 1)
 				qdel(W)
 			T.myjob.equip(T)
 			T.myjob.apply_fingerprints(T)
@@ -182,11 +182,17 @@
 			if(shouldDoppel == "Yes")
 				var/list/validchoices = list()
 				for(var/mob/living/carbon/human/M in mob_list)
-					if(M.job == T.myjob.title)
-						validchoices += M
+					validchoices += M
 
-				var/mob/living/carbon/human/chosen = pick(validchoices)
-				T.name = chosen.name
+				var/mob/living/carbon/human/chosen = input("Which crewmember?") as null|anything in validchoices
+
+				if(chosen)
+					var/datum/dna/toDoppel = chosen.dna
+
+					T.real_name = toDoppel.real_name
+					toDoppel.transfer_identity(T, transfer_SE=1)
+					T.updateappearance(mutcolor_update=1)
+					T.domutcheck()
 
 		var/doTele = input("Place the SNPC in their department?") as null|anything in list("Yes","No")
 		if(doTele)
@@ -254,7 +260,7 @@
 	update_augments()
 
 	hand = 0
-	functions = list("nearbyscan","combat","shitcurity","chatter","healpeople") // stop customize adding multiple copies of a function
+	functions = list("nearbyscan","combat","shitcurity","chatter") // stop customize adding multiple copies of a function
 	//job specific favours
 	switch(myjob.title)
 		if("Assistant")
@@ -271,6 +277,7 @@
 			favoured_types = list(/obj/item/stack, /obj/item/weapon, /obj/item/clothing)
 		if("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist")
 			favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/storage/firstaid, /obj/item/stack/medical, /obj/item/weapon/reagent_containers/syringe)
+			functions += "healpeople"
 		if("Research Director","Scientist","Roboticist")
 			favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/stack, /obj/item/weapon/reagent_containers)
 		if("Head of Security","Warden","Security Officer","Detective")
@@ -295,10 +302,10 @@
 
 	//modifiers are prob chances, lower = smarter
 	if(TRAITS & TRAIT_SMART)
-		smartness = 25
+		smartness = 75
 	else if(TRAITS & TRAIT_DUMB)
 		disabilities |= CLUMSY
-		smartness = 75
+		smartness = 25
 
 	if(TRAITS & TRAIT_MEAN)
 		attitude = 75
@@ -458,6 +465,16 @@
 
 /mob/living/carbon/human/interactive/proc/doProcess()
 	forceProcess = 0
+
+	if(shouldUseDynamicProc)
+		var/isSeen = 0
+		for(var/mob/living/carbon/human/A in orange(12,src))
+			if(A.client)
+				isSeen = 1
+		alternateProcessing = isSeen
+		if(alternateProcessing)
+			forceProcess = 1
+
 	if(IsDeadOrIncap())
 		walk(src,0)
 		return
@@ -805,7 +822,15 @@
 	return allContents
 
 /mob/living/carbon/human/interactive/proc/enforceHome()
-	if(!(get_turf(src) in get_area_turfs(job2area(myjob))))
+	var/list/validHome = get_area_turfs(job2area(myjob))
+
+	if(TARGET)
+		var/atom/tcheck = TARGET
+		if(tcheck)
+			if(!(get_turf(tcheck) in validHome))
+				TARGET = null
+
+	if(!(get_turf(src) in validHome))
 		tryWalk(pick(get_area_turfs(job2area(myjob))))
 
 /mob/living/carbon/human/interactive/proc/npcDrop(var/obj/item/A,var/blacklist = 0)
@@ -920,35 +945,31 @@
 	if(shouldModulePass())
 		return
 
-	var/list/rangeCheck = range(12,src)
-	var/obj/structure/table/RT = locate(/obj/structure/table) in rangeCheck
-
 	enforceHome()
 
-	if(RT)
+	var/list/rangeCheck = orange(12,src)
+	var/obj/structure/table/RT
+
+	var/mob/living/carbon/human/serveTarget
+
+	for(var/mob/living/carbon/human/H in rangeCheck)
+		if(!locate(/obj/item/weapon/reagent_containers/food/drinks) in orange(1,H))
+			serveTarget = H
+
+
+	if(serveTarget)
+		RT = locate(/obj/structure/table) in orange(1,serveTarget)
+
+	if(RT && serveTarget)
 		if(!Adjacent(RT))
 			tryWalk(get_turf(RT))
 		else
-			var/currentDrinks = 0
-			var/neededDrinks = 0
-
-			for(var/mob/living/carbon/human/H in rangeCheck)
-				if(H != src)
-					neededDrinks++
-
-			for(var/obj/item/weapon/reagent_containers/food/drinks/DC in rangeCheck)
-				if(DC.reagents)
-					if(DC.reagents.total_volume <= 0)
-						continue
-				currentDrinks++
-
-			if(currentDrinks < neededDrinks)
-				var/drinkChoice = pick(typesof(/obj/item/weapon/reagent_containers/food/drinks) - /obj/item/weapon/reagent_containers/food/drinks)
-				if(drinkChoice)
-					var/obj/item/weapon/reagent_containers/food/drinks/D = new drinkChoice(get_turf(src))
-					RT.attackby(D,src)
-					src.say("[pick("Something to wet your whistle!","Down the hatch, a tasty beverage!","One drink, coming right up!","Tasty liquid for your oral intake!","Enjoy!")]")
-					customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], serving up a [D]!")
+			var/drinkChoice = pick(typesof(/obj/item/weapon/reagent_containers/food/drinks) - /obj/item/weapon/reagent_containers/food/drinks)
+			if(drinkChoice)
+				var/obj/item/weapon/reagent_containers/food/drinks/D = new drinkChoice(get_turf(src))
+				RT.attackby(D,src)
+				src.say("[pick("Something to wet your whistle!","Down the hatch, a tasty beverage!","One drink, coming right up!","Tasty liquid for your oral intake!","Enjoy!")]")
+				customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], serving up a [D]!")
 
 /mob/living/carbon/human/interactive/proc/shitcurity(obj)
 	var/list/allContents = getAllContents()
@@ -961,16 +982,54 @@
 
 /mob/living/carbon/human/interactive/proc/clowning(obj)
 	var/list/allContents = getAllContents()
+	var/list/rangeCheck = orange(12,src)
 
-	for(var/A in allContents)
-		if(prob(smartness/2))
-			if(istype(A,/obj/item/weapon/soap))
-				npcDrop(A)
-			if(istype(A,/obj/item/weapon/reagent_containers/food/snacks/grown/banana))
-				var/obj/item/weapon/reagent_containers/food/snacks/B = A
-				B.attack(src, src)
-			if(istype(A,/obj/item/weapon/grown/bananapeel))
-				npcDrop(A)
+	var/mob/living/carbon/human/clownTarget
+	var/list/clownPriority = list()
+
+	var/obj/item/weapon/reagent_containers/spray/S
+	if(!locate(/obj/item/weapon/reagent_containers/spray) in allContents)
+		new/obj/item/weapon/reagent_containers/spray(src)
+	else
+		S = locate(/obj/item/weapon/reagent_containers/spray) in allContents
+
+	for(var/mob/living/carbon/human/C in rangeCheck)
+		var/pranksNearby = 100
+		for(var/turf/simulated/T in orange(1,C))
+			for(var/obj/item/A in T)
+				if(istype(A,/obj/item/weapon/soap) || istype(A,/obj/item/weapon/reagent_containers/food/snacks/grown/banana) || istype(A,/obj/item/weapon/grown/bananapeel))
+					pranksNearby--
+			if(T.wet)
+				pranksNearby -= 10
+		clownPriority[C] = pranksNearby
+
+	for(var/A in clownPriority)
+		if(!clownTarget)
+			clownTarget = A
+		else
+			if(clownPriority[A] > clownPriority[clownTarget])
+				clownTarget = clownPriority[A]
+
+	if(clownTarget)
+		if(!Adjacent(clownTarget))
+			tryWalk(clownTarget)
+		else
+			var/hasPranked = 0
+			for(var/A in allContents)
+				if(prob(smartness/2) && !hasPranked)
+					if(istype(A,/obj/item/weapon/soap))
+						npcDrop(A)
+						hasPranked = 1
+					if(istype(A,/obj/item/weapon/reagent_containers/food/snacks/grown/banana))
+						var/obj/item/weapon/reagent_containers/food/snacks/B = A
+						B.attack(src, src)
+					if(istype(A,/obj/item/weapon/grown/bananapeel))
+						npcDrop(A)
+						hasPranked = 1
+			if(!hasPranked)
+				if(S.reagents.total_volume <= 5)
+					S.reagents.add_reagent("lube", 25)
+				S.afterattack(get_turf(clownTarget),src)
 
 
 /mob/living/carbon/human/interactive/proc/healpeople(obj)
@@ -1032,13 +1091,16 @@
 	if(S)
 		if(S.reagents.total_volume <= 5)
 			S.reagents.add_reagent("cleaner", 25) // bluespess water delivery for AI
-		if(!istype(TARGET,/obj/effect/decal/cleanable))
-			TARGET = locate(/obj/effect/decal/cleanable) in urange(MAX_RANGE_FIND,src,1)
-		if(targetRange(TARGET) <= 2)
-			S.afterattack(TARGET,src)
-			sleep(25)
-		else
-			tryWalk(TARGET)
+
+		var/obj/effect/decal/cleanable/TC
+		TC = locate(/obj/effect/decal/cleanable) in range(MAX_RANGE_FIND,src)
+
+		if(TC)
+			if(!Adjacent(TC))
+				tryWalk(TC)
+			else
+				S.afterattack(TC,src)
+				sleep(25)
 
 /mob/living/carbon/human/interactive/proc/customEmote(var/text)
 	for(var/mob/living/carbon/M in view(src))
@@ -1178,7 +1240,10 @@
 			var/obj/structure/table/reinforced/RT
 
 			for(var/obj/structure/table/reinforced/toCheck in rangeCheck)
-				if(locate(/obj/machinery/door/poddoor/preopen) in get_turf(toCheck)) // hacky check to make sure it's the chef's table
+				var/counted = 0
+				for(var/obj/item/weapon/reagent_containers/food/snacks/S in get_turf(toCheck))
+					++counted
+				if(counted < 12) // make sure theres not too much food here
 					RT = toCheck
 					break
 
@@ -1206,6 +1271,15 @@
 			customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")] as they vomit [newSnack] from their mouth!")
 // END COOKING MODULE
 
+/mob/living/carbon/human/interactive/proc/compareFaction(var/list/targetFactions)
+	var/hasSame = 0
+
+	for(var/A in targetFactions)
+		if(A in faction)
+			hasSame = 1
+
+	return hasSame
+
 /mob/living/carbon/human/interactive/proc/combat(obj)
 	set background = 1
 	enforce_hands()
@@ -1227,7 +1301,7 @@
 	//no infighting
 	if(retal)
 		if(retal_target)
-			if(retal_target.faction == src.faction)
+			if(compareFaction(retal_target.faction))
 				retal = 0
 				retal_target = null
 				TARGET = null
@@ -1346,13 +1420,13 @@
 /mob/living/carbon/human/interactive/angry/New()
 	TRAITS |= TRAIT_ROBUST
 	TRAITS |= TRAIT_MEAN
-	faction = list("bot_angry")
+	faction += "bot_angry"
 	..()
 
 /mob/living/carbon/human/interactive/friendly/New()
 	TRAITS |= TRAIT_FRIENDLY
 	TRAITS |= TRAIT_UNROBUST
-	faction = list("bot_friendly")
+	faction += "bot_friendly"
 	..()
 
 /mob/living/carbon/human/interactive/greytide/New()
@@ -1362,6 +1436,6 @@
 	TRAITS |= TRAIT_DUMB
 	maxInterest = 5 // really short attention span
 	targetInterestShift = 2 // likewise
-	faction = list("bot_grey")
+	faction += "bot_grey"
 	graytide = 1
 	..()
