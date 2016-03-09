@@ -39,7 +39,7 @@
 			if(G) // 10x charge for deafult cell charge gene - 20 000 with 100 potency.
 				pocell.maxcharge *= G.rate*1000
 			pocell.charge = pocell.maxcharge
-			pocell.desc = "A rechargable starch based power cell. This one has a power rating of [maxcharge], and you should not swallow it."
+			pocell.desc = "A rechargable starch based power cell. This one has a power rating of [pocell.maxcharge], and you should not swallow it."
 
 			if(reagents.has_reagent("plasma", 2))
 				pocell.rigged = 1
