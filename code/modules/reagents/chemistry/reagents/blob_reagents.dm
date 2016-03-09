@@ -354,7 +354,7 @@
 		M.apply_damage(0.8*reac_volume, BRUTE)
 
 /datum/reagent/blob/explosive_lattice/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(isnull(cause)
+	if(isnull(cause))
 		if(damage_type == BRUTE)
 			return 0 //no-sell the explosion we do not take damage
 		if(damage_type == BURN)
