@@ -1,13 +1,15 @@
 /datum/atom_hud/antag
 	hud_icons = list(ANTAG_HUD)
+	var/self_visible = 1
 
-/datum/atom_hud/antag/proc/join_hud(mob/M, var/sees_hud = 1)
+/datum/atom_hud/antag/proc/join_hud(mob/M, var/sees_hud = self_visible)
 	//sees_hud should be set to 0 if the mob does not get to see it's own hud type.
 	if(!istype(M))
 		CRASH("join_hud(): [M] ([M.type]) is not a mob!")
 	if(M.mind.antag_hud) //note: please let this runtime if a mob has no mind, as mindless mobs shouldn't be getting antagged
 		M.mind.antag_hud.leave_hud(M)
 	add_to_hud(M)
+	self_visible = sees_hud
 	if(sees_hud)
 		add_hud_to(M)
 	M.mind.antag_hud = src
@@ -39,7 +41,7 @@
 	leave_all_huds()
 	ticker.mode.set_antag_hud(current, antag_hud_icon_state)
 	if(newhud)
-		newhud.join_hud(current)
+		newhud.join_hud(current, newhud.self_visible)
 
 /datum/mind/proc/leave_all_huds()
 	for(var/datum/atom_hud/antag/hud in huds)
