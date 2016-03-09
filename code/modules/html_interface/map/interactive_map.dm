@@ -78,7 +78,7 @@ var/const/ALLOW_CENTCOMM = FALSE
 		C << browse_rsc(file("[getMinimapFile(z)].png"), "minimap_[z].png")
 
 /proc/getMinimapFile(z)
-	return "data/minimaps/map_[z]"
+	return "data/minimaps/map_[map.nameLong][z]"
 
 // Activate this to debug tile mismatches in the minimap.
 // This will store the full information on each tile and compare it the next time you run the minimap.
