@@ -30,6 +30,13 @@
 
 	transform *= TransformUsingVariable(seed.potency, 100, 0.5)
 
+	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+	if(G)
+		if(istype(src.loc,/mob))
+			pickup(src.loc)//adjusts the lighting on the mob
+		else
+			src.SetLuminosity(G.get_lum(seed))
+
 /obj/item/weapon/grown/attackby(obj/item/O, mob/user, params)
 	..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
@@ -43,3 +50,38 @@
 	if(reagents)
 		return 1
 	return 0
+
+
+/obj/item/weapon/grown/Crossed(AM as mob|obj)
+	var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
+	if(S && istype(AM, /mob/living/carbon))
+		var/mob/living/carbon/M = AM
+		var/stun = min(seed.potency * S.rate * 2, 1)
+		var/weaken = min(seed.potency * S.rate, 0.5)
+		if(M.slip(stun, weaken, src))
+			for(var/datum/plant_gene/trait/T in seed.genes)
+				T.on_slip(src, M)
+			return 1
+	..()
+
+
+// Glow gene procs
+/obj/item/weapon/grown/Destroy()
+	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+	if(G && istype(loc,/mob))
+		loc.AddLuminosity(-G.get_lum(seed))
+	return ..()
+
+/obj/item/weapon/grown/pickup(mob/user)
+	..()
+	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+	if(G)
+		SetLuminosity(0)
+		user.AddLuminosity(G.get_lum(seed))
+
+/obj/item/weapon/grown/dropped(mob/user)
+	..()
+	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+	if(G)
+		user.AddLuminosity(-G.get_lum(seed))
+		SetLuminosity(G.get_lum(seed))
