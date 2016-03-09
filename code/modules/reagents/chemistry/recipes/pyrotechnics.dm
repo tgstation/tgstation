@@ -2,12 +2,13 @@
 	name = "Generic explosive"
 	id = "reagent_explosion"
 	result = null
-	var/strength = 1 // A divisor. Lower means bigger and stronger explosions.
+	var/strengthdiv = 10
+	var/modifier = 0
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(round(created_volume/strength, 1), location, 0, 0)
+	e.set_up(modifier + round(created_volume/strengthdiv, 1), location, 0, 0)
 	e.start()
 	holder.clear_reagents()
 
@@ -18,7 +19,7 @@
 	result = "nitroglycerin"
 	required_reagents = list("glycerol" = 1, "facid" = 1, "sacid" = 1)
 	result_amount = 2
-	strength = 2
+	strengthdiv = 2
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent("stabilizing_agent"))
@@ -32,14 +33,14 @@
 	required_reagents = list("nitroglycerin" = 1)
 	result_amount = 1
 	required_temp = 474
-	strength = 2
+	strengthdiv = 2
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	name = "Explosion"
 	id = "potassium_explosion"
 	required_reagents = list("water" = 1, "potassium" = 1)
 	result_amount = 2
-	strength = 10
+	strengthdiv = 10
 
 /datum/chemical_reaction/blackpowder
 	name = "Black Powder"
@@ -54,7 +55,8 @@
 	required_reagents = list("blackpowder" = 1)
 	result_amount = 1
 	required_temp = 474
-	strength = 6
+	strengthdiv = 6
+	modifier = 1
 	mix_message = "<span class='boldannounce'>Sparks start flying around the black powder!</span>"
 
 /datum/chemical_reaction/reagent_explosion/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
