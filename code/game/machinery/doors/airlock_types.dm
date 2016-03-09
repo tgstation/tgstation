@@ -299,11 +299,14 @@
 
 /obj/machinery/door/airlock/abductor
 	name = "alien airlock"
+	desc = "With humanity's current technological level, it could take years to hack this advanced airlock... or maybe we should give screwdriver a try?"
 	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_abductor
 	opacity = 1
-	explosion_block = 2
+	explosion_block = 3
+	hackProof = 1
+	aiControlDisabled = 1
 
 //////////////////////////////////
 /*

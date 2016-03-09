@@ -589,17 +589,88 @@ Congratulations! You are now trained for xenobiology research!"}
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon = 'icons/obj/abductor.dmi'
+	buildstacktype = /obj/item/stack/sheet/mineral/abductor
 	icon_state = "bed"
+
+/obj/structure/table_frame/abductor
+	name = "alien table frame"
+	desc = "A strudy table frame made from alien alloy."
+	icon_state = "alien_frame"
+	framestack = /obj/item/stack/sheet/mineral/abductor
+	framestackamount = 1
+	density = 1
+
+/obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/wrench))
+		user << "<span class='notice'>You start disassembling [src]...</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 30/I.toolspeed, target = src))
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			for(var/i = 1, i <= framestackamount, i++)
+				new framestack(get_turf(src))
+			qdel(src)
+			return
+	if(istype(I, /obj/item/stack/sheet/mineral/abductor))
+		var/obj/item/stack/sheet/P = I
+		if(P.get_amount() < 1)
+			user << "<span class='warning'>You need one alien alloy sheet to do this!</span>"
+			return
+		user << "<span class='notice'>You start adding [P] to [src]...</span>"
+		if(do_after(user, 50, target = src))
+			P.use(1)
+			new /obj/structure/table/abductor(src.loc)
+			qdel(src)
+		return
 
 /obj/structure/table/abductor
 	name = "alien table"
 	desc = "Advanced flat surface technology at work!"
 	icon = 'icons/obj/smooth_structures/alien_table.dmi'
 	icon_state = "alien_table"
+	buildstack = /obj/item/stack/sheet/mineral/abductor
+	framestack = /obj/item/stack/sheet/mineral/abductor
+	buildstackamount = 1
+	framestackamount = 1
 	canSmoothWith = null
+	frame = /obj/structure/table_frame/abductor
+
 
 /obj/structure/closet/abductor
 	name = "alien locker"
 	desc = "Contains secrets of the universe."
 	icon_state = "abductor"
 	icon_door = "abductor"
+	can_weld_shut = FALSE
+	material_drop = /obj/item/stack/sheet/mineral/abductor
+
+/obj/structure/door_assembly/door_assembly_abductor
+	name = "alien airlock assembly"
+	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
+	typetext = "abductor"
+	icontext = "abductor"
+	airlock_type = /obj/machinery/door/airlock/abductor
+	anchored = 1
+	state = 1
+
+/obj/structure/door_assembly/door_assembly_abductor/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.remove_fuel(0,user))
+			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
+								"You start to disassemble the airlock assembly...")
+			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+			if(do_after(user, 40/W.toolspeed, target = src))
+				if( !WT.isOn() )
+					return
+				user << "<span class='notice'>You disassemble the airlock assembly.</span>"
+				new /obj/item/stack/sheet/mineral/abductor(get_turf(src), 4)
+				qdel(src)
+		else
+			return
+	else if(istype(W, /obj/item/weapon/airlock_painter))
+		return // no repainting
+	else if(istype(W, /obj/item/stack/sheet))
+		return // no material modding
+	else
+		..()
