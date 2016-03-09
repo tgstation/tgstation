@@ -14,7 +14,7 @@
 
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))
-		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+		icon_state = SPACE_ICON_STATE
 
 /turf/space/Destroy()
 	return QDEL_HINT_LETMELIVE

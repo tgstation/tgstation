@@ -42,8 +42,10 @@
 
 /mob/living/silicon/proc/make_laws()
 	switch(config.default_laws)
-		if(0)	laws = new /datum/ai_laws/default/asimov()
-		if(1)	laws = new /datum/ai_laws/custom()
+		if(0)
+			laws = new /datum/ai_laws/default/asimov()
+		if(1)
+			laws = new /datum/ai_laws/custom()
 		if(2)
 			var/datum/ai_laws/lawtype = pick(subtypesof(/datum/ai_laws/default))
 			laws = new lawtype()

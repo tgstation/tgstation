@@ -1,3 +1,4 @@
+// SUIT STORAGE UNIT /////////////////close_machine(
 /obj/machinery/suit_storage_unit
 	name = "suit storage unit"
 	desc = "An industrial unit made to hold space suits. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
@@ -96,6 +97,7 @@
 	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/New()
+	..()
 	wires = new /datum/wires/suit_storage_unit(src)
 	if(suit_type)
 		suit = new suit_type(src)
@@ -236,7 +238,7 @@
 		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")
 		addtimer(src, "resist_open", 300, FALSE, user)
 	else
-		open_machine()
+		open_machine(dump = TRUE)
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == 0) // Check they're still here.
@@ -289,13 +291,13 @@
 	return
 
 /obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "suit_storage_unit", name, 400, 305, master_ui, state)
 		ui.open()
 
-/obj/machinery/suit_storage_unit/get_ui_data()
+/obj/machinery/suit_storage_unit/ui_data()
 	var/list/data = list()
 	data["locked"] = locked
 	data["open"] = state_open

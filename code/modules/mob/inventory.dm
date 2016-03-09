@@ -3,14 +3,18 @@
 
 //Returns the thing in our active hand
 /mob/proc/get_active_hand()
-	if(hand)	return l_hand
-	else		return r_hand
+	if(hand)
+		return l_hand
+	else
+		return r_hand
 
 
 //Returns the thing in our inactive hand
 /mob/proc/get_inactive_hand()
-	if(hand)	return r_hand
-	else		return l_hand
+	if(hand)
+		return r_hand
+	else
+		return l_hand
 
 
 //Returns if a certain item can be equipped to a certain slot.
@@ -26,10 +30,9 @@
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
 		W.layer = 20	//TODO: move to equipped?
-//		l_hand.screen_loc = ui_lhand
 		W.equipped(src,slot_l_hand)
-		if(client)	client.screen |= W
-		if(pulling == W) stop_pulling()
+		if(pulling == W)
+			stop_pulling()
 		update_inv_l_hand()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
@@ -46,8 +49,8 @@
 		r_hand = W
 		W.layer = 20
 		W.equipped(src,slot_r_hand)
-		if(client)	client.screen |= W
-		if(pulling == W) stop_pulling()
+		if(pulling == W)
+			stop_pulling()
 		update_inv_r_hand()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
@@ -55,29 +58,38 @@
 	return 0
 
 /mob/proc/put_in_hand_check(obj/item/W)
-	if(lying && !(W.flags&ABSTRACT))	return 0
-	if(!istype(W))	return 0
+	if(lying && !(W.flags&ABSTRACT))
+		return 0
+	if(!istype(W))
+		return 0
 	return 1
 
 //Puts the item into our active hand if possible. returns 1 on success.
 /mob/proc/put_in_active_hand(obj/item/W)
-	if(hand)	return put_in_l_hand(W)
-	else		return put_in_r_hand(W)
+	if(hand)
+		return put_in_l_hand(W)
+	else
+		return put_in_r_hand(W)
 
 
 //Puts the item into our inactive hand if possible. returns 1 on success.
 /mob/proc/put_in_inactive_hand(obj/item/W)
-	if(hand)	return put_in_r_hand(W)
-	else		return put_in_l_hand(W)
+	if(hand)
+		return put_in_r_hand(W)
+	else
+		return put_in_l_hand(W)
 
 
 //Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns 1 on success.
 //If both fail it drops it on the floor and returns 0.
 //This is probably the main one you need to know :)
 /mob/proc/put_in_hands(obj/item/W)
-	if(!W)		return 0
-	if(put_in_active_hand(W))			return 1
-	else if(put_in_inactive_hand(W))	return 1
+	if(!W)
+		return 0
+	if(put_in_active_hand(W))
+		return 1
+	else if(put_in_inactive_hand(W))
+		return 1
 	else
 		W.loc = get_turf(src)
 		W.layer = initial(W.layer)
@@ -107,8 +119,10 @@
 
 //Drops the item in our active hand.
 /mob/proc/drop_item()
-	if(hand)	return drop_l_hand()
-	else		return drop_r_hand()
+	if(hand)
+		return drop_l_hand()
+	else
+		return drop_r_hand()
 
 
 //Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
@@ -156,21 +170,49 @@
 /mob/proc/get_equipped_items()
 	var/list/items = new/list()
 
-	if(hasvar(src,"back")) if(src:back) items += src:back
-	if(hasvar(src,"belt")) if(src:belt) items += src:belt
-	if(hasvar(src,"ears")) if(src:ears) items += src:ears
-	if(hasvar(src,"glasses")) if(src:glasses) items += src:glasses
-	if(hasvar(src,"gloves")) if(src:gloves) items += src:gloves
-	if(hasvar(src,"head")) if(src:head) items += src:head
-	if(hasvar(src,"shoes")) if(src:shoes) items += src:shoes
-	if(hasvar(src,"wear_id")) if(src:wear_id) items += src:wear_id
-	if(hasvar(src,"wear_mask")) if(src:wear_mask) items += src:wear_mask
-	if(hasvar(src,"wear_suit")) if(src:wear_suit) items += src:wear_suit
-//	if(hasvar(src,"w_radio")) if(src:w_radio) items += src:w_radio  commenting this out since headsets go on your ears now PLEASE DON'T BE MAD KEELIN
-	if(hasvar(src,"w_uniform")) if(src:w_uniform) items += src:w_uniform
+	if(hasvar(src,"back"))
+		if(src:back)
+			items += src:back
+	if(hasvar(src,"belt"))
+		if(src:belt)
+			items += src:belt
+	if(hasvar(src,"ears"))
+		if(src:ears)
+			items += src:ears
+	if(hasvar(src,"glasses"))
+		if(src:glasses)
+			items += src:glasses
+	if(hasvar(src,"gloves"))
+		if(src:gloves)
+			items += src:gloves
+	if(hasvar(src,"head"))
+		if(src:head)
+			items += src:head
+	if(hasvar(src,"shoes"))
+		if(src:shoes)
+			items += src:shoes
+	if(hasvar(src,"wear_id"))
+		if(src:wear_id)
+			items += src:wear_id
+	if(hasvar(src,"wear_mask"))
+		if(src:wear_mask)
+			items += src:wear_mask
+	if(hasvar(src,"wear_suit"))
+		if(src:wear_suit)
+			items += src:wear_suit
+/*	if(hasvar(src,"w_radio"))
+		if(src:w_radio)
+			items += src:w_radio  commenting this out since headsets go on your ears now PLEASE DON'T BE MAD KEELIN */
+	if(hasvar(src,"w_uniform"))
+		if(src:w_uniform)
+			items += src:w_uniform
 
-	//if(hasvar(src,"l_hand")) if(src:l_hand) items += src:l_hand
-	//if(hasvar(src,"r_hand")) if(src:r_hand) items += src:r_hand
+/*	if(hasvar(src,"l_hand"))
+		if(src:l_hand)
+			items += src:l_hand
+	if(hasvar(src,"r_hand"))
+		if(src:r_hand)
+			items += src:r_hand*/
 
 	return items
 
@@ -222,3 +264,10 @@
 	var/obj/item/I = get_active_hand()
 	if (I)
 		I.equip_to_best_slot(src)
+
+//used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
+/mob/proc/getBackSlot()
+	return slot_back
+
+/mob/proc/getBeltSlot()
+	return slot_belt

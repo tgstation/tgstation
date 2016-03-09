@@ -75,6 +75,9 @@
 		if (act == "roar")
 			playsound(src.loc, 'sound/voice/hiss5.ogg', 40, 1, 1)
 
+		if (act == "hiss")
+			playsound(src.loc, "hiss", 40, 1, 1)
+
 		if (act == "deathgasp")
 			playsound(src.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
 

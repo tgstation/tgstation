@@ -8,7 +8,6 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 /obj/effect/particle_effect
 	name = "particle effect"
-	icon = 'icons/effects/effects.dmi'
 	mouse_opacity = 0
 	unacidable = 1//So effects are not targeted by alien acid.
 	pass_flags = PASSTABLE | PASSGRILLE

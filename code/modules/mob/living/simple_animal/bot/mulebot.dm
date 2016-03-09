@@ -17,12 +17,15 @@ var/global/mulebot_count = 0
 	density = 1
 	anchored = 1
 	animate_movement=1
-	health = 150
-	maxHealth = 150
+	health = 50
+	maxHealth = 50
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	a_intent = "harm" //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
+
+	radio_key = /obj/item/device/encryptionkey/headset_cargo
+	radio_channel = "Supply"
 
 	bot_type = MULE_BOT
 	model = "MULE"
@@ -68,7 +71,10 @@ var/global/mulebot_count = 0
 
 /mob/living/simple_animal/bot/mulebot/proc/set_suffix(suffix)
 	src.suffix = suffix
-	name = "\improper MULEbot ([suffix])"
+	if(paicard)
+		bot_name = "\improper MULEbot ([suffix])"
+	else
+		name = "\improper MULEbot ([suffix])"
 
 /mob/living/simple_animal/bot/mulebot/bot_reset()
 	..()
@@ -109,18 +115,19 @@ var/global/mulebot_count = 0
 	return
 
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user)
-	locked = !locked
-	user << "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>"
+	if(emagged < 1)
+		emagged = 1
+	if(!open)
+		locked = !locked
+		user << "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>"
 	flick("mulebot-emagged", src)
 	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
 
 /mob/living/simple_animal/bot/mulebot/update_icon()
-	switch(mode)
-		if(BOT_IDLE && open)
-			if(open)
-				icon_state="mulebot-hatch"
-		else
-			icon_state = "mulebot[wires.is_cut(WIRE_AVOIDANCE)]"
+	if(open)
+		icon_state="mulebot-hatch"
+	else
+		icon_state = "mulebot[wires.is_cut(WIRE_AVOIDANCE)]"
 	overlays.Cut()
 	if(load && !ismob(load))//buckling handles the mob offsets
 		load.pixel_y = initial(load.pixel_y) + 9
@@ -164,7 +171,7 @@ var/global/mulebot_count = 0
 		ui = new(user, src, ui_key, "mulebot", name, 600, 375, master_ui, state)
 		ui.open()
 
-/mob/living/simple_animal/bot/mulebot/get_ui_data(mob/user)
+/mob/living/simple_animal/bot/mulebot/ui_data(mob/user)
 	var/list/data = list()
 	data["on"] = on
 	data["locked"] = locked
@@ -186,6 +193,7 @@ var/global/mulebot_count = 0
 	data["autoReturn"] = auto_return
 	data["autoPickup"] = auto_pickup
 	data["reportDelivery"] = report_delivery
+	data["haspai"] = paicard ? TRUE : FALSE
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
@@ -246,6 +254,8 @@ var/global/mulebot_count = 0
 			auto_pickup = !auto_pickup
 		if("report")
 			report_delivery = !report_delivery
+		if("ejectpai")
+			ejectpairemote(user)
 
 // TODO: remove this; PDAs currently depend on it
 /mob/living/simple_animal/bot/mulebot/get_controls(mob/user)
@@ -321,7 +331,7 @@ var/global/mulebot_count = 0
 	if(user.incapacitated() || user.lying)
 		return
 
-	if (!istype(AM))
+	if(!istype(AM))
 		return
 
 	load(AM)
@@ -362,14 +372,13 @@ var/global/mulebot_count = 0
 	update_icon()
 
 /mob/living/simple_animal/bot/mulebot/proc/load_mob(mob/living/M)
-	if(M.buckled)
-		return 0
-	passenger = M
-	load = M
-	can_buckle = 1
-	buckle_mob(M)
-	can_buckle = 0
-	return 1
+	can_buckle = TRUE
+	if(buckle_mob(M))
+		passenger = M
+		load = M
+		can_buckle = FALSE
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/bot/mulebot/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob) //post buckling
@@ -411,7 +420,7 @@ var/global/mulebot_count = 0
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
 	var/area/dest_area
-	if (path && path.len)
+	if(path && path.len)
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
 		dest_area = get_area(target)
 		destination = format_text(dest_area.name)
@@ -446,7 +455,7 @@ var/global/mulebot_count = 0
 						process_bot()
 
 /mob/living/simple_animal/bot/mulebot/proc/process_bot()
-	if(!on)
+	if(!on || client)
 		return
 	update_icon()
 
@@ -630,6 +639,7 @@ var/global/mulebot_count = 0
 			if(istype(M,/mob/living/silicon/robot))
 				visible_message("<span class='danger'>[src] bumps into [M]!</span>")
 			else
+				add_logs(src, M, "knocked down")
 				visible_message("<span class='danger'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
 				M.Stun(8)
@@ -639,6 +649,7 @@ var/global/mulebot_count = 0
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
+	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
 					"<span class='userdanger'>[src] drives over you!<span>")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
@@ -684,7 +695,7 @@ var/global/mulebot_count = 0
 				calc_path()
 
 /mob/living/simple_animal/bot/mulebot/emp_act(severity)
-	if (cell)
+	if(cell)
 		cell.emp_act(severity)
 	if(load)
 		load.emp_act(severity)
@@ -699,7 +710,7 @@ var/global/mulebot_count = 0
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/cable_coil/cut(Tsec)
-	if (cell)
+	if(cell)
 		cell.loc = Tsec
 		cell.update_icon()
 		cell = null
@@ -721,6 +732,12 @@ var/global/mulebot_count = 0
 	..()
 	if(load)
 		unload()
+
+/mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A)
+	if(isturf(A) && isturf(loc) && loc.Adjacent(A) && load)
+		unload(get_dir(loc, A))
+	else
+		..()
 
 #undef SIGH
 #undef ANNOYED

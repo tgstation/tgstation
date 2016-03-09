@@ -26,20 +26,16 @@
 	//Check for any living mobs trigger hasmob.
 	//hasmob effects whether the package goes to cargo or its tagged destination.
 	for(var/mob/living/M in D)
-		if(M && M.stat != DEAD)
-			if(M.client)
-				M.client.eye = src
-			hasmob = 1
+		if(M.client)
+			M.reset_perspective(src)
+		hasmob = 1
 
 	//Checks 1 contents level deep. This means that players can be sent through disposals...
 	//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
 	for(var/obj/O in D)
 		if(O.contents)
 			for(var/mob/living/M in O.contents)
-				if(M && M.stat != DEAD)
-					if(M.client)
-						M.client.eye = src
-					hasmob = 1
+				hasmob = 1
 
 	// now everything inside the disposal gets put into the holder
 	// note AM since can contain mobs or objs
@@ -106,8 +102,7 @@
 		AM.loc = src		// move everything in other holder to this one
 		if(ismob(AM))
 			var/mob/M = AM
-			if(M.client)	// if a client mob, update eye to follow this holder
-				M.client.eye = src
+			M.reset_perspective(src)	// if a client mob, update eye to follow this holder
 	qdel(other)
 
 
@@ -149,7 +144,7 @@
 /obj/structure/disposalpipe/New(loc,var/obj/structure/disposalconstruct/make_from)
 	..()
 
-	if(make_from && !make_from.gc_destroyed)
+	if(make_from && !qdeleted(make_from))
 		base_icon_state = make_from.base_state
 		dir = make_from.dir
 		dpdir = make_from.dpdir
@@ -191,13 +186,13 @@
 			// this is unlikely, but just dump out everything into the turf in case
 
 			for(var/atom/movable/AM in H)
-				AM.loc = T
+				AM.forceMove(src.loc)
 				AM.pipe_eject(0)
 			qdel(H)
 			return ..()
 
 		// otherwise, do normal expel from turf
-		if(H)
+		else
 			expel(H, T, 0)
 	return ..()
 
@@ -277,7 +272,7 @@
 		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 		if(H)
 			for(var/atom/movable/AM in H)
-				AM.loc = T
+				AM.forceMove(src.loc)
 				AM.pipe_eject(direction)
 				AM.throw_at_fast(target, 10, 1)
 
@@ -287,8 +282,7 @@
 		if(H)
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
-
-				AM.loc = T
+				AM.forceMove(src.loc)
 				AM.pipe_eject(0)
 				AM.throw_at_fast(target, 5, 1)
 	H.vent_gas(T)
@@ -317,7 +311,7 @@
 			// this is unlikely, but just dump out everything into the turf in case
 
 			for(var/atom/movable/AM in H)
-				AM.loc = T
+				AM.forceMove(src.loc)
 				AM.pipe_eject(0)
 			qdel(H)
 			return
@@ -746,7 +740,7 @@
 // expel the contents of the holder object, then delete it
 // called when the holder exits the outlet
 /obj/structure/disposaloutlet/proc/expel(obj/structure/disposalholder/H)
-
+	var/turf/T = get_turf(src)
 	flick("outlet-open", src)
 	if((start_eject + 30) < world.time)
 		start_eject = world.time
@@ -757,10 +751,11 @@
 		sleep(20)
 	if(H)
 		for(var/atom/movable/AM in H)
-			AM.loc = src.loc
+			AM.forceMove(T)
 			AM.pipe_eject(dir)
 			AM.throw_at_fast(target, eject_range, 1)
-		H.vent_gas(src.loc)
+
+		H.vent_gas(T)
 		qdel(H)
 	return
 
@@ -803,14 +798,6 @@
 // by default does nothing, override for special behaviour
 
 /atom/movable/proc/pipe_eject(direction)
-	return
-
-// check if mob has client, if so restore client view on eject
-/mob/pipe_eject(var/direction)
-	if (src.client)
-		src.client.perspective = MOB_PERSPECTIVE
-		src.client.eye = src
-
 	return
 
 /obj/effect/decal/cleanable/blood/gibs/pipe_eject(direction)

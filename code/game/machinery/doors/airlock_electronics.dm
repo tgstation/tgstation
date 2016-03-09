@@ -12,7 +12,7 @@
 		ui = new(user, src, ui_key, "airlock_electronics", name, 975, 420, master_ui, state)
 		ui.open()
 
-/obj/item/weapon/electronics/airlock/get_ui_data()
+/obj/item/weapon/electronics/airlock/ui_data()
 	var/list/data = list()
 	var/list/regions = list()
 

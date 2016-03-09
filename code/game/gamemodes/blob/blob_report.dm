@@ -98,7 +98,8 @@
 			world << "ERROR: NO VALID TERRITORIES"
 
 /datum/station_state/proc/score(datum/station_state/result)
-	if(!result)	return 0
+	if(!result)
+		return 0
 	var/output = 0
 	output += (result.floor / max(floor,1))
 	output += (result.r_wall/ max(r_wall,1))

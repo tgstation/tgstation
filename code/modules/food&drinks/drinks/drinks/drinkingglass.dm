@@ -575,6 +575,18 @@
 				icon_state = "shotglassbrown"
 				name = "shot of cognac"
 				desc = "You get the feeling this would piss off a rich person somewhere."
+			if ("wine")
+				icon_state = "shotglassred"
+				name = "shot of wine"
+				desc = "What kind of craven oaf would drink wine from a shot glass?"
+			if ("blood")
+				icon_state = "shotglassred"
+				name = "shot of blood"
+				desc = "If you close your eyes it sort of tastes like wine..."
+			if ("liquidgibs")
+				icon_state = "shotglassred"
+				name = "shot of gibs"
+				desc = "...Let's not talk about this."
 			else
 				icon_state = "shotglassbrown"
 				name = "shot of... what?"

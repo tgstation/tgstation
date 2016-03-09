@@ -73,11 +73,6 @@ specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
 and the server should start up and be ready to join. It is also recommended that
 you set up the SQL backend (see below).
 
-###HOSTING ON LINUX
-We use BYGEX for some of our text replacement related code. Unfortunately, we
-only have a windows dll included right now. You can find a version known to compile on linux, along with some basic install instructions here
-https://github.com/optimumtact/byond-regex
-
 ##UPDATING
 
 To update an existing installation, first back up your /config and /data folders
@@ -91,15 +86,21 @@ the new version.
 
 ##MAPS
 
-/tg/station currently comes equipped with three maps.
+/tg/station currently comes equipped with seven maps.
 
 * [tgstation2 (default)](http://tgstation13.org/wiki/Boxstation)
+* [MetaStation](https://tgstation13.org/wiki/MetaStation)
 * [MiniStation](http://tgstation13.org/wiki/MiniStation)
 * [AsteroidStation](https://tgstation13.org/wiki/AsteroidStation)
+* [BirdStation](https://tgstation13.org/wiki/BirdStation)
+* [DreamStation](https://tgstation13.org/wiki/Dreamstation)
+* [EfficiencyStation](https://tgstation13.org/wiki/Efficiency_Station)
 
 All maps have their own code file that is in the base of the _maps directory. Instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it; for example MiniStation changes the uplink items for the map. Follow this guideline when adding your own map, to your fork, for easy compatibility.
 
 If you want to load a different map, just open the corresponding map's code file in Dream Maker, make sure all of the other map code files are unticked in the file tree, in the left side of the screen, and then make sure the map code file you want is ticked.
+
+If you are hosting a server, and want randomly picked maps to be played each round, you can enable map rotation in [config.txt](config/config.txt) and then set the maps to be picked in the [maps.txt](config/maps.txt) file.
 
 Anytime you want to make changes to a map it's imperative you use the [Map Merging tools](http://tgstation13.org/wiki/Map_Merger)
 

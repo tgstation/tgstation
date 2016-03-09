@@ -42,10 +42,15 @@
 				if(S.charge_max < S.charge_counter)
 					S.charge_counter = S.charge_max
 				switch(S.spell_level)
-					if(1)	S.name = "Efficient [S.name]"
-					if(2)	S.name = "Quickened [S.name]"
-					if(3)	S.name = "Free [S.name]"
-					if(4)	S.name = "Instant [S.name]"
-					if(5)	S.name = "Ludicrous [S.name]"
+					if(1)
+						S.name = "Efficient [S.name]"
+					if(2)
+						S.name = "Quickened [S.name]"
+					if(3)
+						S.name = "Free [S.name]"
+					if(4)
+						S.name = "Instant [S.name]"
+					if(5)
+						S.name = "Ludicrous [S.name]"
 
 			L << "<span class='notice'>You suddenly feel more competent with your casting!</span>"

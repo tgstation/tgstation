@@ -86,17 +86,21 @@ Sorry Giacom. Please don't be mad :(
 	if(now_pushing)
 		return 1
 
-	//BubbleWrap: Should stop you pushing a restrained person out of the way
-	if(istype(M, /mob/living))
-		for(var/mob/MM in range(1,M))
-			if( ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
-				if ( !(world.time % 5) )
-					src << "<span class='warning'>[M] is restrained, you cannot push past.</span>"
-				return 1
-			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
-				if ( !(world.time % 5) )
-					src << "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>"
-				return 1
+	//Should stop you pushing a restrained person out of the way
+	if(isliving(M))
+		var/mob/living/L = M
+		if((L.pulledby && L.restrained()) || L.grabbed_by.len)
+			if(!(world.time % 5))
+				src << "<span class='warning'>[L] is restrained, you cannot push past.</span>"
+			return 1
+
+		if(L.pulling)
+			if(ismob(L.pulling))
+				var/mob/P = L.pulling
+				if(P.restrained())
+					if(!(world.time % 5))
+						src << "<span class='warning'>[L] is restraining [P], you cannot push past.</span>"
+					return 1
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
@@ -129,9 +133,9 @@ Sorry Giacom. Please don't be mad :(
 	if(!(M.status_flags & CANPUSH))
 		return 1
 	//anti-riot equipment is also anti-push
-	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
+	if(M.r_hand && (prob(M.r_hand.block_chance * 2)) && !istype(M.r_hand, /obj/item/clothing))
 		return 1
-	if(M.l_hand && istype(M.l_hand, /obj/item/weapon/shield/riot))
+	if(M.l_hand && (prob(M.l_hand.block_chance * 2)) && !istype(M.l_hand, /obj/item/clothing))
 		return 1
 
 //Called when we bump onto an obj
@@ -142,6 +146,8 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
 		return 1
+	if(!client && (mob_size < MOB_SIZE_SMALL))
+		return
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
@@ -193,15 +199,13 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/ex_act(severity, target)
 	..()
-	if(client && !eye_blind)
-		flick("flash", src.flash)
+	flash_eyes()
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
-		health = maxHealth
-		stat = CONSCIOUS
 		return
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+	update_stat()
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
@@ -235,81 +239,115 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/adjustBruteLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
-	handle_regular_status_updates() //we update our health right away.
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/adjustOxyLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
-/mob/living/proc/setOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/setOxyLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	oxyloss = amount
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getToxLoss()
 	return toxloss
 
-/mob/living/proc/adjustToxLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/adjustToxLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
-/mob/living/proc/setToxLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/setToxLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	toxloss = amount
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/adjustFireLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
-	handle_regular_status_updates() //we update our health right away.
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
-/mob/living/proc/adjustCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/adjustCloneLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
-/mob/living/proc/setCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/setCloneLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	cloneloss = amount
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getBrainLoss()
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
-	handle_regular_status_updates()
 
 /mob/living/proc/setBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	brainloss = amount
-	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
-/mob/living/proc/adjustStaminaLoss(amount)
-	if(status_flags & GODMODE)	return 0
-	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
+/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1)
+	return
 
-/mob/living/proc/setStaminaLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
+	if(status_flags & GODMODE)
+		return 0
+	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
+	if(updating_stamina)
+		update_stamina()
+
+/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1)
+	return
+
+/mob/living/proc/setStaminaLoss(amount, updating_stamina = 1)
+	return
+
+/mob/living/carbon/setStaminaLoss(amount, updating_stamina = 1)
+	if(status_flags & GODMODE)
+		return 0
 	staminaloss = amount
+	if(updating_stamina)
+		update_stamina()
+
+/mob/living/carbon/alien/setStaminaLoss(amount, updating_stamina = 1)
+	return
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -328,7 +366,7 @@ Sorry Giacom. Please don't be mad :(
 		return
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
-			sleeping = 20 //Short nap
+			SetSleeping(20) //Short nap
 	update_canmove()
 
 /mob/proc/get_contents()
@@ -381,7 +419,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/get_organ_target()
 	var/mob/shooter = src
-	var/t = shooter:zone_sel.selecting
+	var/t = shooter.zone_selected
 	if ((t in list( "eyes", "mouth" )))
 		t = "head"
 	var/obj/item/organ/limb/def_zone = ran_zone(t)
@@ -400,77 +438,85 @@ Sorry Giacom. Please don't be mad :(
 		ear_deaf = deaf
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_organ_damage(brute, burn)
-	adjustBruteLoss(-brute)
-	adjustFireLoss(-burn)
-	src.updatehealth()
+/mob/living/proc/heal_organ_damage(brute, burn, updating_health=1)
+	adjustBruteLoss(-brute, updating_health)
+	adjustFireLoss(-burn, updating_health)
+	if(updating_health)
+		updatehealth()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_organ_damage(brute, burn)
+/mob/living/proc/take_organ_damage(brute, burn, updating_health=1)
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
-	src.updatehealth()
+	if(updating_health)
+		updatehealth()
 
 // heal MANY external organs, in random order
-/mob/living/proc/heal_overall_damage(brute, burn)
-	adjustBruteLoss(-brute)
-	adjustFireLoss(-burn)
-	src.updatehealth()
+/mob/living/proc/heal_overall_damage(brute, burn, updating_health=1)
+	adjustBruteLoss(-brute, updating_health)
+	adjustFireLoss(-burn, updating_health)
+	if(updating_health)
+		updatehealth()
 
 // damage MANY external organs, in random order
-/mob/living/proc/take_overall_damage(brute, burn)
-	adjustBruteLoss(brute)
-	adjustFireLoss(burn)
-	src.updatehealth()
+/mob/living/proc/take_overall_damage(brute, burn, updating_health=1)
+	adjustBruteLoss(brute, updating_health)
+	adjustFireLoss(burn, updating_health)
+	if(updating_health)
+		updatehealth()
 
-/mob/living/proc/revive()
-	setToxLoss(0)
-	setOxyLoss(0)
-	setCloneLoss(0)
+//proc used to ressuscitate a mob
+/mob/living/proc/revive(full_heal = 0, admin_revive = 0)
+	if(full_heal)
+		fully_heal(admin_revive)
+	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
+		dead_mob_list -= src
+		living_mob_list += src
+		suiciding = 0
+		stat = UNCONSCIOUS //the mob starts unconscious,
+		blind_eyes(1)
+		updatehealth() //then we check if the mob should wake up.
+		update_canmove()
+		update_sight()
+		reload_fullscreen()
+		. = 1
+
+//proc used to completely heal a mob.
+/mob/living/proc/fully_heal(admin_revive = 0)
+	setToxLoss(0, 0)
+	setOxyLoss(0, 0)
+	setCloneLoss(0, 0)
 	setBrainLoss(0)
-	setStaminaLoss(0)
-	SetParalysis(0)
-	SetStunned(0)
-	SetWeakened(0)
+	setStaminaLoss(0, 0)
+	SetParalysis(0, 0)
+	SetStunned(0, 0)
+	SetWeakened(0, 0)
+	SetSleeping(0, 0)
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
 	disabilities = 0
-	eye_blind = 0
-	eye_blurry = 0
+	set_blindness(0)
+	set_blurriness(0)
+	set_eye_damage(0)
 	ear_deaf = 0
 	ear_damage = 0
 	hallucination = 0
 	heal_overall_damage(1000, 1000)
 	ExtinguishMob()
 	fire_stacks = 0
-	suiciding = 0
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		C.handcuffed = initial(C.handcuffed)
-		for(var/obj/item/weapon/restraints/R in C.contents) //actually remove cuffs from inventory
-			qdel(R)
-		if(C.reagents)
-			for(var/datum/reagent/R in C.reagents.reagent_list)
-				C.reagents.clear_reagents()
-			C.reagents.addiction_list = list()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
-	if(stat == DEAD)
-		dead_mob_list -= src
-		living_mob_list += src
-	stat = CONSCIOUS
-	if(ishuman(src))
-		var/mob/living/carbon/human/human_mob = src
-		human_mob.restore_blood()
-		human_mob.remove_all_embedded_objects()
+	updatehealth()
+	update_canmove()
 
-	update_fire()
-	regenerate_icons()
+
+//proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
+/mob/living/proc/can_be_revived()
+	. = 1
+	if(health <= config.health_threshold_dead)
+		return 0
 
 /mob/living/proc/update_damage_overlays()
 	return
-
 
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
@@ -529,18 +575,17 @@ Sorry Giacom. Please don't be mad :(
 			if ((get_dist(src, pulling) > 1 || diag))
 				if (isliving(pulling))
 					var/mob/living/M = pulling
-					var/ok = 1
-					if (locate(/obj/item/weapon/grab, M.grabbed_by))
+					var/pull_ok = 1
+					if (M.grabbed_by.len)
 						if (prob(75))
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
-							if (istype(G, /obj/item/weapon/grab))
-								visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
-								qdel(G)
+							visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
+							qdel(G)
 						else
-							ok = 0
-						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
-							ok = 0
-					if (ok)
+							pull_ok = 0
+						if (M.grabbed_by.len)
+							pull_ok = 0
+					if (pull_ok)
 						var/atom/movable/t = M.pulling
 						M.stop_pulling()
 
@@ -611,17 +656,18 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(src) || next_move > world.time)
+	if(!isliving(src) || next_move > world.time || stat || weakened || stunned || paralysis)
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
 	//resisting grabs (as if it helps anyone...)
-	if(!stat && canmove && !restrained())
+	if(canmove && !restrained())
 		var/resisting = 0
 		for(var/obj/O in requests)
 			qdel(O)
 			resisting++
-		for(var/obj/item/weapon/grab/G in grabbed_by)
+		for(var/X in grabbed_by)
+			var/obj/item/weapon/grab/G = X
 			resisting++
 			if(G.state == GRAB_PASSIVE)
 				qdel(G)
@@ -644,10 +690,9 @@ Sorry Giacom. Please don't be mad :(
 		resist_buckle()
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
-	else if(loc && istype(loc, /obj) && !isturf(loc))
-		if(stat == CONSCIOUS && !stunned && !weakened && !paralysis)
-			var/obj/C = loc
-			C.container_resist(src)
+	else if(isobj(loc))
+		var/obj/C = loc
+		C.container_resist(src)
 
 	else if(canmove)
 		if(on_fire)
@@ -687,14 +732,14 @@ Sorry Giacom. Please don't be mad :(
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		floating = 1
 	else if(((!on || fixed) && floating))
-		var/final_pixel_y = get_standard_pixel_y_offset(lying)
-		animate(src, pixel_y = final_pixel_y, time = 10)
+		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
 		floating = 0
 
 //called when the mob receives a bright flash
-/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	if(check_eye_prot() < intensity && (override_blindness_check || !(disabilities & BLIND)))
-		flick("e_flash", flash)
+		overlay_fullscreen("flash", type)
+		addtimer(src, "clear_fullscreen", 25, FALSE, "flash", 25)
 		return 1
 
 //this returns the mob's protection against eye damage (number between -1 and 2)
@@ -743,8 +788,11 @@ Sorry Giacom. Please don't be mad :(
 	gib()
 	return(gain)
 
-/mob/living/singularity_pull(S)
-	step_towards(src,S)
+/mob/living/singularity_pull(S, current_size)
+	if(current_size >= STAGE_SIX)
+		throw_at_fast(S,14,3, spin=1)
+	else
+		step_towards(src,S)
 
 /mob/living/narsie_act()
 	if(client)
@@ -922,3 +970,194 @@ Sorry Giacom. Please don't be mad :(
 	else
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 	return
+/mob/living/proc/can_use_guns(var/obj/item/weapon/gun/G)
+	if (G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return 0
+	return 1
+
+/mob/living/carbon/proc/update_stamina()
+	return
+
+/mob/living/carbon/human/update_stamina()
+	if(staminaloss)
+		var/total_health = (health - staminaloss)
+		if(total_health <= config.health_threshold_crit && !stat)
+			src << "<span class='notice'>You're too exhausted to keep going...</span>"
+			Weaken(5)
+			setStaminaLoss(health - 2)
+	update_health_hud()
+
+/mob/proc/update_sight()
+	return
+
+/mob/proc/blind_eyes(amount)
+	if(amount>0)
+		var/old_eye_blind = eye_blind
+		eye_blind = max(eye_blind, amount)
+		if(!old_eye_blind)
+			throw_alert("blind", /obj/screen/alert/blind)
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+
+/mob/proc/adjust_blindness(amount)
+	if(amount>0)
+		var/old_eye_blind = eye_blind
+		eye_blind += amount
+		if(!old_eye_blind)
+			throw_alert("blind", /obj/screen/alert/blind)
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+	else if(eye_blind)
+		var/blind_minimum = 0
+		if(stat != CONSCIOUS || (disabilities & BLIND))
+			blind_minimum = 1
+		eye_blind = max(eye_blind+amount, blind_minimum)
+		if(!eye_blind)
+			clear_alert("blind")
+			clear_fullscreen("blind")
+
+/mob/proc/set_blindness(amount)
+	if(amount>0)
+		var/old_eye_blind = eye_blind
+		eye_blind = amount
+		if(client && !old_eye_blind)
+			throw_alert("blind", /obj/screen/alert/blind)
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+	else if(eye_blind)
+		var/blind_minimum = 0
+		if(stat != CONSCIOUS || (disabilities & BLIND))
+			blind_minimum = 1
+		eye_blind = blind_minimum
+		if(!eye_blind)
+			clear_alert("blind")
+			clear_fullscreen("blind")
+
+/mob/proc/blur_eyes(amount)
+	if(amount>0)
+		var/old_eye_blurry = eye_blurry
+		eye_blurry = max(amount, eye_blurry)
+		if(!old_eye_blurry)
+			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+
+/mob/proc/adjust_blurriness(amount)
+	var/old_eye_blurry = eye_blurry
+	eye_blurry = max(eye_blurry+amount, 0)
+	if(amount>0)
+		if(!old_eye_blurry)
+			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+	else if(old_eye_blurry)
+		clear_fullscreen("blurry")
+
+/mob/proc/set_blurriness(amount)
+	var/old_eye_blurry = eye_blurry
+	eye_blurry = max(amount, 0)
+	if(amount>0)
+		if(!old_eye_blurry)
+			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+	else if(old_eye_blurry)
+		clear_fullscreen("blurry")
+
+
+/mob/proc/damage_eyes(amount)
+	return
+
+/mob/living/carbon/damage_eyes(amount)
+	if(amount>0)
+		eye_damage = amount
+		if(eye_damage > 20)
+			if(eye_damage > 30)
+				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+			else
+				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+
+
+/mob/proc/set_eye_damage(amount)
+	return
+
+/mob/living/carbon/set_eye_damage(amount)
+	eye_damage = max(amount,0)
+	if(eye_damage > 20)
+		if(eye_damage > 30)
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+		else
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("eye_damage")
+
+/mob/proc/adjust_eye_damage(amount)
+	return
+
+/mob/living/carbon/adjust_eye_damage(amount)
+	eye_damage = max(eye_damage+amount, 0)
+	if(eye_damage > 20)
+		if(eye_damage > 30)
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+		else
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("eye_damage")
+
+/mob/proc/adjust_drugginess(amount)
+	return
+
+/mob/living/carbon/adjust_drugginess(amount)
+	var/old_druggy = druggy
+	if(amount>0)
+		druggy += amount
+		if(!old_druggy)
+			overlay_fullscreen("high", /obj/screen/fullscreen/high)
+			throw_alert("high", /obj/screen/alert/high)
+	else if(old_druggy)
+		druggy = max(eye_blurry+amount, 0)
+		if(!druggy)
+			clear_fullscreen("high")
+			clear_alert("high")
+
+/mob/proc/set_drugginess(amount)
+	return
+
+/mob/living/carbon/set_drugginess(amount)
+	var/old_druggy = druggy
+	druggy = amount
+	if(amount>0)
+		if(!old_druggy)
+			overlay_fullscreen("high", /obj/screen/fullscreen/high)
+			throw_alert("high", /obj/screen/alert/high)
+	else if(old_druggy)
+		clear_fullscreen("high")
+		clear_alert("high")
+
+/mob/proc/cure_blind() //when we want to cure the BLIND disability only.
+	return
+
+/mob/living/carbon/cure_blind()
+	if(disabilities & BLIND)
+		disabilities &= ~BLIND
+		adjust_blindness(-1)
+		return 1
+
+/mob/proc/cure_nearsighted()
+	return
+
+/mob/living/carbon/cure_nearsighted()
+	if(disabilities & NEARSIGHT)
+		disabilities &= ~NEARSIGHT
+		clear_fullscreen("nearsighted")
+		return 1
+
+/mob/proc/become_nearsighted()
+	return
+
+/mob/living/carbon/become_nearsighted()
+	if(!(disabilities & NEARSIGHT))
+		disabilities |= NEARSIGHT
+		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+		return 1
+
+/mob/proc/become_blind()
+	return
+
+/mob/living/carbon/become_blind()
+	if(!(disabilities & BLIND))
+		disabilities |= BLIND
+		blind_eyes(1)
+		return 1

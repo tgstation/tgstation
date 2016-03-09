@@ -97,6 +97,15 @@
 	materials = list(MAT_METAL = 1750, MAT_GLASS = 400)
 	build_path = /obj/item/clothing/head/welding
 	category = list("initial","Tools")
+	
+/datum/design/cable_coil
+	name = "Cable coil"
+	id = "cable_coil"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 10, MAT_GLASS = 5)
+	build_path = /obj/item/stack/cable_coil/random 
+	category = list("initial","Tools")
+	maxstack = 30
 
 /datum/design/console_screen
 	name = "Console screen"
@@ -161,6 +170,7 @@
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/metal
 	category = list("initial","Construction")
+	maxstack = 50
 
 /datum/design/glass
 	name = "Glass"
@@ -169,6 +179,7 @@
 	materials = list(MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/glass
 	category = list("initial","Construction")
+	maxstack = 50
 
 /datum/design/rglass
 	name = "Reinforced glass"
@@ -177,6 +188,7 @@
 	materials = list(MAT_METAL = 1000, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/rglass
 	category = list("initial","Construction")
+	maxstack = 50
 
 /datum/design/rods
 	name = "Metal rod"
@@ -185,6 +197,7 @@
 	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/stack/rods
 	category = list("initial","Construction")
+	maxstack = 50
 
 /datum/design/rcd_ammo
 	name = "Compressed matter cardridge"

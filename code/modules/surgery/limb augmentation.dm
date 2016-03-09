@@ -11,7 +11,7 @@
 
 
 /datum/surgery_step/replace/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to sever the muscles on [target]'s [parse_zone(user.zone_sel.selecting)].", "<span class ='notice'>You begin to sever the muscles on [target]'s [parse_zone(user.zone_sel.selecting)]...</span>")
+	user.visible_message("[user] begins to sever the muscles on [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to sever the muscles on [target]'s [parse_zone(user.zone_selected)]...</span>")
 
 
 /datum/surgery_step/add_limb
@@ -25,9 +25,9 @@
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	L = surgery.organ
 	if(L)
-		user.visible_message("[user] begins to augment [target]'s [parse_zone(user.zone_sel.selecting)].", "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_sel.selecting)]...</span>")
+		user.visible_message("[user] begins to augment [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>")
 	else
-		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_sel.selecting)].", "<span class ='notice'>You look for [target]'s [parse_zone(user.zone_sel.selecting)]...</span>")
+		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
 
 
 
@@ -61,15 +61,12 @@
 				if("head")
 					H.organs += new /obj/item/organ/limb/robot/head(src)
 				if("chest")
-					for(var/obj/item/organ/internal/I in target.getorganszone(target_zone, 1))
-						if(I.status == ORGAN_ORGANIC) // FLESH IS WEAK
-							I.Remove(target, special = 1)
-							qdel(I)
 					H.organs += new /obj/item/organ/limb/robot/chest(src)
 			user.drop_item()
 			qdel(tool)
 			H.update_damage_overlays(0)
 			H.update_augments() //Gives them the Cyber limb overlay
+			H.updatehealth()
 			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		user << "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>"

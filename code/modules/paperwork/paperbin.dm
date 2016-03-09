@@ -24,8 +24,8 @@
 	return
 
 /obj/item/weapon/paper_bin/MouseDrop(atom/over_object)
-	var/mob/M = usr
-	if(M.restrained() || M.stat || !Adjacent(M))
+	var/mob/living/M = usr
+	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return
 
 	if(over_object == M)

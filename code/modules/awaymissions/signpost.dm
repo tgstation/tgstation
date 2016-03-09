@@ -11,7 +11,8 @@
 /obj/structure/signpost/attack_hand(mob/user)
 	switch(alert("Travel back to ss13?",,"Yes","No"))
 		if("Yes")
-			if(user.z != src.z)	return
+			if(user.z != src.z)
+				return
 			user.loc.loc.Exited(user)
 			user.loc = pick(latejoin)
 		if("No")

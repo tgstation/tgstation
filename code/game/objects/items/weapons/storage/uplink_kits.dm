@@ -5,9 +5,9 @@
 	switch (pickweight(list("bloodyspai" = 3, "stealth" = 3, "bond" = 1, "screwed" = 3, "sabotage" = 3, "guns" = 1, "murder" = 2, "implant" = 2, "hacker" = 2, "lordsingulo" = 2, "darklord" = 1)))
 		if("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src)
-			new /obj/item/clothing/mask/gas/voice(src)
+			new /obj/item/clothing/mask/chameleon(src)
 			new /obj/item/weapon/card/id/syndicate(src)
-			new /obj/item/clothing/shoes/sneakers/syndigaloshes(src)
+			new /obj/item/clothing/shoes/chameleon(src)
 			new /obj/item/device/camera_bug(src)
 			new /obj/item/device/multitool/ai_detect(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
@@ -55,7 +55,7 @@
 			new /obj/item/weapon/melee/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/weapon/card/emag(src)
-			new /obj/item/clothing/shoes/sneakers/syndigaloshes(src)
+			new /obj/item/clothing/shoes/chameleon(src)
 			return
 
 		if("implant")
@@ -198,9 +198,10 @@
 	..()
 	new /obj/item/weapon/grenade/empgrenade(src)
 	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
 	new /obj/item/weapon/implanter/emp(src)
-	new /obj/item/device/flashlight/emp(src)
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/chemical
 	name = "boxed chemical kit"
@@ -242,15 +243,21 @@
 		new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
 	new /obj/item/weapon/reagent_containers/syringe(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
-	return
 
-/obj/item/weapon/storage/box/syndie_kit/tuberculosiskit
-	name = "boxed virus kit"
+/obj/item/weapon/storage/box/syndie_kit/chameleon
+	name = "chameleon kit"
 
-/obj/item/weapon/storage/box/syndie_kit/tuberculosiskit/New()
+/obj/item/weapon/storage/box/syndie_kit/chameleon/New()
 	..()
-	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosis(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure(src)
-	new /obj/item/weapon/reagent_containers/syringe(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
-	return
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/clothing/suit/chameleon(src)
+	new /obj/item/clothing/gloves/chameleon(src)
+	new /obj/item/clothing/shoes/chameleon(src)
+	new /obj/item/clothing/glasses/chameleon(src)
+	new /obj/item/clothing/head/chameleon(src)
+	new /obj/item/clothing/mask/chameleon(src)
+	new /obj/item/weapon/storage/backpack/chameleon(src)
+	new /obj/item/device/radio/headset/chameleon(src)
+	new /obj/item/weapon/stamp/chameleon(src)
+	new /obj/item/device/pda/chameleon(src)
+	new /obj/item/weapon/gun/energy/laser/chameleon(src)

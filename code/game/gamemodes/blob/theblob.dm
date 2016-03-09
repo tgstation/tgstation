@@ -39,10 +39,8 @@
 	if(atmosblock)
 		atmosblock = 0
 		air_update_turf(1)
-	var/area/Ablob = get_area(loc)
-	if(Ablob.blob_allowed) //Only remove for blobs in areas that counted for the win
-		blobs_legit -= src
-	blobs -= src //It's still removed from the normal list
+	blobs_legit -= src  //if it was in the legit blobs list, it isn't now
+	blobs -= src //it's no longer in the all blobs list either
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
 
@@ -60,6 +58,11 @@
 		return 1
 	return 0
 
+/obj/effect/blob/CanAStarPass(ID, dir, caller)
+	. = 0
+	if(ismovableatom(caller))
+		var/atom/movable/mover = caller
+		. = . || mover.checkpass(PASSBLOB)
 
 /obj/effect/blob/proc/check_health(cause)
 	health = Clamp(health, 0, maxhealth)
@@ -88,7 +91,7 @@
 /obj/effect/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
 	src.Be_Pulsed()
 	if(claim_range)
-		for(var/obj/effect/blob/B in ultra_range(claim_range, src, 1))
+		for(var/obj/effect/blob/B in urange(claim_range, src, 1))
 			if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
 				B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
 				B.update_icon()
@@ -98,7 +101,7 @@
 	if(expand_range)
 		src.expand()
 		for(var/obj/effect/blob/B in orange(expand_range, src))
-			if(prob(12))
+			if(prob(max(13 - get_dist(get_turf(src), get_turf(B)) * 4, 1))) //expand falls off with range but is faster near the blob causing the expansion
 				B.expand()
 	return
 
@@ -114,11 +117,22 @@
 /obj/effect/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
 		A.blob_act()
+	if(istype(loc, /turf/simulated/wall))
+		loc.blob_act() //don't ask how a wall got on top of the core, just eat it
 
+/obj/effect/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
+	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, src.loc)
+	if(controller)
+		var/mob/camera/blob/BO = controller
+		O.color = BO.blob_reagent_datum.color
+		O.alpha = 200
+	else if(overmind)
+		O.color = overmind.blob_reagent_datum.color
+	if(A)
+		O.do_attack_animation(A) //visually attack the whatever
+	return O //just in case you want to do something to the animation.
 
-/obj/effect/blob/proc/expand(turf/T = null, prob = 1, controller = null)
-	if(prob && !prob(health))
-		return
+/obj/effect/blob/proc/expand(turf/T = null, controller = null)
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)
@@ -131,26 +145,20 @@
 				T = null
 	if(!T)
 		return 0
-	var/make_blob = 1 //can we make a blob?
-	if(istype(T, /turf/space) && prob(65))
-		make_blob = 0
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
-	for(var/atom/A in T)
-		if(A.density)
-			make_blob = 0
-		A.blob_act() //Hit everything
-	if(T.density) //Check for walls and such dense turfs
-		make_blob = 0
-		T.blob_act() //Hit the turf
+	var/make_blob = TRUE //can we make a blob?
 
-	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, src.loc)
-	if(controller)
-		var/mob/camera/blob/BO = controller
-		O.color = BO.blob_reagent_datum.color
-		O.alpha = 200 //if we have a controller, we're direct attack and must be more important
-	else if(overmind)
-		O.color = overmind.blob_reagent_datum.color
-	O.do_attack_animation(T) //visually attack the turf
+	if(istype(T, /turf/space) && !(locate(/obj/structure/lattice) in T) && prob(80))
+		make_blob = FALSE
+		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
+
+	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
+	if(!T.CanPass(src, T, 5)) //is the target turf impassable
+		make_blob = FALSE
+		T.blob_act() //hit the turf if it is
+	for(var/atom/A in T)
+		if(!A.CanPass(src, T, 5)) //is anything in the turf impassable
+			make_blob = FALSE
+		A.blob_act() //also hit everything in the turf
 
 	if(make_blob) //well, can we?
 		var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
@@ -160,17 +168,19 @@
 			B.overmind = overmind
 		B.density = 1
 		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
-			O.alpha = 0 //if we got to this point, we don't need to visually attack
 			B.density = initial(B.density)
 			B.loc = T
 			B.update_icon()
 			if(B.overmind)
-				B.overmind.blob_reagent_datum.expand_reaction(B, T)
+				B.overmind.blob_reagent_datum.expand_reaction(src, B, T)
 			return B
 		else
-			T.blob_act() //If we cant move in hit the turf
-			qdel(B) //We should never get to this point, since we checked before moving in. Destroy blob anyway for cleanliness though
+			blob_attack_animation(T, controller)
+			T.blob_act() //if we can't move in hit the turf again
+			qdel(B) //we should never get to this point, since we checked before moving in. destroy the blob so we don't have two blobs on one tile
 			return null
+	else
+		blob_attack_animation(T, controller) //if we can't, animate that we attacked
 	return null
 
 

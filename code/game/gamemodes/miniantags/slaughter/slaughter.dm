@@ -84,6 +84,9 @@
 	icon_state = "demon_heart"
 	origin_tech = "combat=5;biotech=8"
 
+/obj/item/organ/internal/heart/demon/update_icon()
+	return //always beating visually
+
 /obj/item/organ/internal/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
@@ -97,11 +100,6 @@
 			return
 	user.visible_message("<span class='warning'>[user]'s eyes flare a deep crimson!</span>", \
 						 "<span class='userdanger'>You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!</span>")
-	/*for(var/obj/item/organ/internal/O in user.internal_organs)
-		if(istype(O, /obj/item/organ/internal/heart))
-			O.Remove(user, 1)
-			O.loc = get_turf(user)
-			qdel(O)*/
 	user.drop_item()
 	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 
@@ -113,4 +111,7 @@
 /obj/item/organ/internal/heart/demon/Remove(mob/living/carbon/M, special = 0)
 	..()
 	if(M.mind)
-		M.mind.remove_spell(/obj/effect/proc_holder/spell/bloodcrawl)
+		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/bloodcrawl)
+
+/obj/item/organ/internal/heart/demon/Stop()
+	return 0 // Always beating.

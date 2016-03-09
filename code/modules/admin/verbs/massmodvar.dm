@@ -5,7 +5,8 @@
 
 	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL itms)
 
-	if(!check_rights(R_VAREDIT))	return
+	if(!check_rights(R_VAREDIT))
+		return
 
 	if(A && A.type)
 		if(typesof(A.type))
@@ -24,7 +25,8 @@
 
 
 /client/proc/massmodify_variables(atom/O, var_name = "", method = 0)
-	if(!check_rights(R_VAREDIT))	return
+	if(!check_rights(R_VAREDIT))
+		return
 
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )
@@ -44,7 +46,8 @@
 	else
 		variable = var_name
 
-	if(!variable)	return
+	if(!variable)
+		return
 	var/default
 	var/var_value = O.vars[variable]
 	var/dir
@@ -53,9 +56,11 @@
 		usr << "It's forbidden to mass-modify ckeys. I'll crash everyone's client you dummy."
 		return
 	if(variable in VVlocked)
-		if(!check_rights(R_DEBUG))	return
+		if(!check_rights(R_DEBUG))
+			return
 	if(variable in VVicon_edit_lock)
-		if(!check_rights(R_FUN|R_DEBUG)) return
+		if(!check_rights(R_FUN|R_DEBUG))
+			return
 
 	if(isnull(var_value))
 		usr << "Unable to determine variable type."
@@ -407,12 +412,12 @@
 						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
-				else if(istype(O.type, /obj))
+				else if(istype(O, /obj))
 					for(var/obj/A in world)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
-				else if(istype(O.type, /turf))
+				else if(istype(O, /turf))
 					for(var/turf/A in world)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]

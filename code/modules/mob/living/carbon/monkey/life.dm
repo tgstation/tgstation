@@ -130,13 +130,6 @@
 
 	return
 
-
-/mob/living/carbon/monkey/handle_hud_icons()
-
-	handle_hud_icons_health()
-
-	return 1
-
 /mob/living/carbon/monkey/handle_random_events()
 	if (prob(1) && prob(2))
 		emote("scratch")

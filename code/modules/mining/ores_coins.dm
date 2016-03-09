@@ -122,7 +122,6 @@
 	item_state = "Gibtonite ore"
 	w_class = 4
 	throw_range = 0
-	anchored = 1 //Forces people to carry it by hand, no pulling!
 	var/primed = 0
 	var/det_time = 100
 	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better

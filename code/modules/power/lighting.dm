@@ -161,7 +161,8 @@
 
 
 /obj/machinery/light/Move()
-	if(status != LIGHT_BROKEN)	broken(1)
+	if(status != LIGHT_BROKEN)
+		broken(1)
 	return ..()
 
 /obj/machinery/light/built/New()
@@ -396,7 +397,8 @@
 	return
 
 /obj/machinery/light/attack_animal(mob/living/simple_animal/M)
-	if(M.melee_damage_upper == 0)	return
+	if(M.melee_damage_upper == 0)
+		return
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
 		M << "<span class='danger'>That object is useless to you.</span>"
 		return
@@ -515,7 +517,7 @@
 
 /obj/machinery/light/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		switch(severity)
 			if(2)
 				if(prob(50))

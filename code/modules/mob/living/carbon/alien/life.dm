@@ -40,35 +40,5 @@
 	if(move_delay_add > 0)
 		move_delay_add = max(0, move_delay_add - rand(1, 2))
 
-/mob/living/carbon/alien/update_sight()
-	if(stat == DEAD)
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else
-		sight |= SEE_MOBS
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_OBJS
-		if(nightvision)
-			see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_MINIMUM
-		else if(!nightvision)
-			see_in_dark = 4
-			see_invisible = 45
-		if(see_override)
-			see_invisible = see_override
-
-/mob/living/carbon/alien/handle_hud_icons()
-
-	handle_hud_icons_health()
-
-	return 1
-
-/mob/living/carbon/alien/CheckStamina()
-	setStaminaLoss(max((staminaloss - 2), 0))
-	return
-
 /mob/living/carbon/alien/handle_changeling()
 	return

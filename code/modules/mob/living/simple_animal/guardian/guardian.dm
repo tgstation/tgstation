@@ -37,6 +37,7 @@
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
+
 	if(summoner)
 		if(summoner.stat == DEAD)
 			src << "<span class='danger'>Your summoner has died!</span>"
@@ -61,17 +62,19 @@
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 			forceMove(get_turf(summoner))
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	..()
 	if(summoner)
-		if (get_dist(get_turf(summoner),get_turf(src)) <= range)
+		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
 			return
 		else
 			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 			forceMove(get_turf(summoner))
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
@@ -89,6 +92,15 @@
 	summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
 	summoner.death()
 
+/mob/living/simple_animal/hostile/guardian/update_health_hud()
+	if(summoner)
+		var/resulthealth
+		if(iscarbon(summoner))
+			resulthealth = round((abs(config.health_threshold_dead - summoner.health) / abs(config.health_threshold_dead - summoner.maxHealth)) * 100)
+		else
+			resulthealth = round((summoner.health / summoner.maxHealth) * 100)
+		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>"
+
 /mob/living/simple_animal/hostile/guardian/adjustHealth(amount) //The spirit is invincible, but passes on damage to the summoner
 	. =  ..()
 	if(summoner)
@@ -101,6 +113,7 @@
 		if(summoner.stat == UNCONSCIOUS)
 			summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
 			summoner.adjustCloneLoss(amount*0.5) //dying hosts take 50% bonus damage as cloneloss
+		update_health_hud()
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
@@ -126,14 +139,15 @@
 		return
 	if(loc == summoner)
 		forceMove(get_turf(summoner))
+		PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
 		cooldown = world.time + 30
 
 /mob/living/simple_animal/hostile/guardian/proc/Recall()
 	if(loc == summoner || cooldown > world.time)
 		return
 	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
-	unbuckle_mob(force=1)
-	loc = summoner
+
+	forceMove(summoner)
 	cooldown = world.time + 30
 
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
@@ -572,6 +586,7 @@
 	return
 
 /obj/item/weapon/guardian_bomb/pickup(mob/living/user)
+	..()
 	detonate(user)
 	return
 
@@ -726,93 +741,3 @@
 	new /obj/item/weapon/guardiancreator/tech/choose(src)
 	new /obj/item/weapon/paper/guardian(src)
 	return
-
-
-///HUD
-
-/datum/hud/proc/guardian_hud(ui_style = 'icons/mob/screen_midnight.dmi')
-	adding = list()
-
-	var/obj/screen/using
-
-	using = new /obj/screen/guardian/Manifest()
-	using.screen_loc = ui_rhand
-	adding += using
-
-	using = new /obj/screen/guardian/Recall()
-	using.screen_loc = ui_lhand
-	adding += using
-
-	using = new /obj/screen/guardian/ToggleMode()
-	using.screen_loc = ui_storage1
-	adding += using
-
-	using = new /obj/screen/guardian/ToggleLight()
-	using.screen_loc = ui_inventory
-	adding += using
-
-	using = new /obj/screen/guardian/Communicate()
-	using.screen_loc = ui_back
-	adding += using
-
-	mymob.client.screen = list()
-	mymob.client.screen += mymob.client.void
-	mymob.client.screen += adding
-
-
-//HUD BUTTONS
-
-/obj/screen/guardian
-	icon = 'icons/mob/guardian.dmi'
-
-/obj/screen/guardian/Manifest
-	icon_state = "manifest"
-	name = "Manifest"
-	desc = "Spring forth into battle!"
-
-/obj/screen/guardian/Manifest/Click()
-	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.Manifest()
-
-
-/obj/screen/guardian/Recall
-	icon_state = "recall"
-	name = "Recall"
-	desc = "Return to your user."
-
-/obj/screen/guardian/Recall/Click()
-	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.Recall()
-
-/obj/screen/guardian/ToggleMode
-	icon_state = "toggle"
-	name = "Toggle Mode"
-	desc = "Switch between ability modes."
-
-/obj/screen/guardian/ToggleMode/Click()
-	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.ToggleMode()
-
-/obj/screen/guardian/Communicate
-	icon_state = "communicate"
-	name = "Communicate"
-	desc = "Communicate telepathically with your user."
-
-/obj/screen/guardian/Communicate/Click()
-	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.Communicate()
-
-
-/obj/screen/guardian/ToggleLight
-	icon_state = "light"
-	name = "Toggle Light"
-	desc = "Glow like star dust."
-
-/obj/screen/guardian/ToggleLight/Click()
-	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.ToggleLight()

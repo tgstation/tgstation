@@ -1,7 +1,8 @@
 /client/proc/Debug2()
 	set category = "Debug"
 	set name = "Debug-Game"
-	if(!check_rights(R_DEBUG))	return
+	if(!check_rights(R_DEBUG))
+		return
 
 	if(Debug2)
 		Debug2 = 0
@@ -67,7 +68,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			targetselected = 0
 
 	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
-	if(!procname)	return
+	if(!procname)
+		return
 	if(targetselected && !hascall(target,procname))
 		usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
 		return
@@ -92,8 +94,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
-
-	usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
+	. = get_callproc_returnval(returnval, procname)
+	if(.)
+		usr << .
 	feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/callproc_datum(A as null|area|mob|obj|turf)
@@ -122,13 +125,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	feedback_add_details("admin_verb","DPC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	var/returnval = call(A,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
-	usr << "<span class='notice'>[procname] returned: [returnval ? returnval : "null"]</span>"
+	. = get_callproc_returnval(returnval,procname)
+	if(.)
+		usr << .
 
 
 
 /client/proc/get_callproc_args()
 	var/argnum = input("Number of arguments","Number:",0) as num|null
-	if(!argnum && (argnum!=0))	return
+	if(!argnum && (argnum!=0))
+		return
 
 	var/list/lst = list()
 	//TODO: make a list to store whether each argument was initialised as null.
@@ -181,6 +187,30 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if("Marked datum")
 				lst += holder.marked_datum
 	return lst
+
+
+/client/proc/get_callproc_returnval(returnval,procname)
+	. = ""
+	if(islist(returnval))
+		var/list/returnedlist = returnval
+		. = "<font color='blue'>"
+		if(returnedlist.len)
+			var/assoc_check = returnedlist[1]
+			if(istext(assoc_check) && (returnedlist[assoc_check] != null))
+				. += "[procname] returned an associative list:"
+				for(var/key in returnedlist)
+					. += "\n[key] = [returnedlist[key]]"
+
+			else
+				. += "[procname] returned a list:"
+				for(var/elem in returnedlist)
+					. += "\n[elem]"
+		else
+			. = "[procname] returned an empty list"
+		. += "</font>"
+
+	else
+		. = "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
 
 
 /client/proc/Cell()
@@ -614,8 +644,15 @@ var/global/list/g_fancy_list_of_types = null
 			E.active = 1
 
 	for(var/obj/machinery/field/generator/F in machines)
-		if(F.anchored)
-			F.Varedit_start = 1
+		if(F.active == 0)
+			F.active = 1
+			F.state = 2
+			F.power = 250
+			F.anchored = 1
+			F.warming_up = 3
+			F.start_fields()
+			F.update_icon()
+
 	spawn(30)
 		for(var/obj/machinery/the_singularitygen/G in machines)
 			if(G.anchored)
@@ -658,19 +695,19 @@ var/global/list/g_fancy_list_of_types = null
 
 	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
 		if("Players")
-			usr << list2text(player_list,",")
+			usr << jointext(player_list,",")
 		if("Admins")
-			usr << list2text(admins,",")
+			usr << jointext(admins,",")
 		if("Mobs")
-			usr << list2text(mob_list,",")
+			usr << jointext(mob_list,",")
 		if("Living Mobs")
-			usr << list2text(living_mob_list,",")
+			usr << jointext(living_mob_list,",")
 		if("Dead Mobs")
-			usr << list2text(dead_mob_list,",")
+			usr << jointext(dead_mob_list,",")
 		if("Clients")
-			usr << list2text(clients,",")
+			usr << jointext(clients,",")
 		if("Joined Clients")
-			usr << list2text(joined_player_list,",")
+			usr << jointext(joined_player_list,",")
 
 /client/proc/cmd_display_del_log()
 	set category = "Debug"
@@ -693,5 +730,6 @@ var/global/list/g_fancy_list_of_types = null
 	set name = "Debug HUDs"
 	set desc = "Debug the data or antag HUDs"
 
-	if(!holder)	return
+	if(!holder)
+		return
 	debug_variables(huds[i])

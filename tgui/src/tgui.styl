@@ -80,6 +80,12 @@ button-color-border   = dark-gray
 button-lighten-hover  = 15%
 button-alpha-disabled = .75
 
+// Input
+input-color-text         = black
+input-color-placeholder  = light-gray
+input-color-border       = dark-gray
+input-color-background   = white
+
 // Tooltips
 tooltip-color-border = dark-gray
 tooltip-color-background = gray
@@ -108,5 +114,21 @@ body
 *, *:before, *:after
   box-sizing: inherit
 
-@require "util/*"
+$h
+  display: inline-block
+  margin: 0
+  padding: 6px 0
+h1
+  @extend $h
+  font-size: 18px
+h2
+  @extend $h
+  font-size: 16px
+h3
+  @extend $h
+  font-size: 14px
+h4
+  @extend $h
+  font-size: 12px
+
 @require "styles/*"

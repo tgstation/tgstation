@@ -4,53 +4,62 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/smash.ogg'
-
-	pressure_resistance = ONE_ATMOSPHERE*5
-
+	pressure_resistance = ONE_ATMOSPHERE * 5
 	force = 5
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
-
+	actions_types = list(/datum/action/item_action/set_internals)
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
 
-/obj/item/weapon/tank/suicide_act(mob/user)
-	var/mob/living/carbon/human/H = user
-	user.visible_message("<span class='suicide'>[user] is putting the [src]'s valve to their lips! I don't think they're gonna stop!</span>")
-	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
-	if (H && !qdeleted(H))
-		for(var/obj/item/W in H)
-			H.unEquip(W)
-			if(prob(50))
-				step(W, pick(alldirs))
-		H.hair_style = "Bald"
-		H.update_hair()
-		H.blood_max = 5
-		gibs(H.loc, H.viruses, H.dna)
-		H.adjustBruteLoss(1000) //to make the body super-bloody
+/obj/item/weapon/tank/ui_action_click(mob/user)
+	toggle_internals(user)
 
-	return (BRUTELOSS)
+/obj/item/weapon/tank/proc/toggle_internals(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		return
+
+	if(H.internal == src)
+		H << "<span class='notice'>You close [src] valve.</span>"
+		H.internal = null
+		H.update_internals_hud_icon(0)
+	else
+		if(!H.getorganslot("breathing_tube"))
+			if(!H.wear_mask)
+				H << "<span class='warning'>You need a mask!</span>"
+				return
+			if(H.wear_mask.mask_adjusted)
+				H.wear_mask.adjustmask(H)
+			if(!(H.wear_mask.flags & MASKINTERNALS))
+				H << "<span class='warning'>[H.wear_mask] can't use [src]!</span>"
+				return
+
+		if(H.internal)
+			H << "<span class='notice'>You switch your internals to [src].</span>"
+		else
+			H << "<span class='notice'>You open [src] valve.</span>"
+		H.internal = src
+		H.update_internals_hud_icon(1)
+	H.update_action_buttons_icon()
+
 
 /obj/item/weapon/tank/New()
 	..()
 
-	src.air_contents = new /datum/gas_mixture()
-	src.air_contents.volume = volume //liters
-	src.air_contents.temperature = T20C
+	air_contents = new(volume) //liters
+	air_contents.temperature = T20C
 
 	SSobj.processing |= src
-
-	return
 
 /obj/item/weapon/tank/Destroy()
 	if(air_contents)
 		qdel(air_contents)
 
-	SSobj.processing.Remove(src)
-
+	SSobj.processing -= src
 	return ..()
 
 /obj/item/weapon/tank/examine(mob/user)
@@ -58,7 +67,7 @@
 	..()
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
-	if (!in_range(src, user))
+	if(!in_range(src, user))
 		if (icon == src) user << "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
 
@@ -93,14 +102,31 @@
 
 		qdel(src)
 
+/obj/item/weapon/tank/suicide_act(mob/user)
+	var/mob/living/carbon/human/H = user
+	user.visible_message("<span class='suicide'>[user] is putting the [src]'s valve to their lips! I don't think they're gonna stop!</span>")
+	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	if (H && !qdeleted(H))
+		for(var/obj/item/W in H)
+			H.unEquip(W)
+			if(prob(50))
+				step(W, pick(alldirs))
+		H.hair_style = "Bald"
+		H.update_hair()
+		H.blood_max = 5
+		gibs(H.loc, H.viruses, H.dna)
+		H.adjustBruteLoss(1000) //to make the body super-bloody
+
+	return (BRUTELOSS)
+
 /obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 
 	add_fingerprint(user)
-	if (istype(src.loc, /obj/item/assembly))
+	if(istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 
-	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
+	if((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
 
 	if(istype(W, /obj/item/device/assembly_holder))
@@ -113,7 +139,7 @@
 		ui = new(user, src, ui_key, "tanks", name, 420, 200, master_ui, state)
 		ui.open()
 
-/obj/item/weapon/tank/get_ui_data()
+/obj/item/weapon/tank/ui_data(mob/user)
 	var/list/data = list()
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
@@ -121,22 +147,15 @@
 	data["minReleasePressure"] = round(TANK_MIN_RELEASE_PRESSURE)
 	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
 
-	var/mob/living/carbon/user = null
-	if(istype(loc, /mob/living/carbon))
-		user = loc
-	else if(istype(loc.loc, /mob/living/carbon))
-		user = loc.loc
+	var/mob/living/carbon/C = user
+	if(!istype(C))
+		C = loc.loc
+	if(!istype(C))
+		return data
 
-	if(user && user.internal == src)
-		data["valveOpen"] = TRUE
-	else
-		data["valveOpen"] = FALSE
+	if(C.internal == src)
+		data["connected"] = TRUE
 
-	if(user.wear_mask && (user.wear_mask.flags & MASKINTERNALS))
-		if(data["valveOpen"] || ((src in user) && !user.internal))
-			data["maskConnected"] = TRUE
-		else
-			data["maskConnected"] = FALSE
 	return data
 
 /obj/item/weapon/tank/ui_act(action, params)
@@ -156,31 +175,13 @@
 				. = TRUE
 			else if(pressure == "input")
 				pressure = input("New release pressure ([TANK_MIN_RELEASE_PRESSURE]-[TANK_MAX_RELEASE_PRESSURE] kPa):", name, distribute_pressure) as num|null
-				if(pressure && !..())
+				if(!isnull(pressure) && !..())
 					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
 				distribute_pressure = Clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
-		if("valve")
-			var/mob/living/carbon/user = loc
-			if(!istype(user))
-				return
-			if(user.internal == src)
-				user.internal = null
-				user.internals.icon_state = "internal0"
-				usr << "<span class='notice'>You close the tank release valve.</span>"
-				. = TRUE
-			else
-				if(user.wear_mask && (user.wear_mask.flags & MASKINTERNALS))
-					user.internal = src
-					user.internals.icon_state = "internal1"
-					usr << "<span class='notice'>You open \the [src] valve.</span>"
-					. = TRUE
-				else
-					usr << "<span class='warning'>You need something to connect to [src]!</span>"
-
 
 /obj/item/weapon/tank/remove_air(amount)
 	return air_contents.remove(amount)

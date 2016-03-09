@@ -294,7 +294,7 @@ var/list/advance_cures = 	list(
 		for(var/datum/symptom/S in symptoms)
 			L += S.id
 		L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
-		var/result = list2text(L, ":")
+		var/result = jointext(L, ":")
 		id = result
 	return id
 

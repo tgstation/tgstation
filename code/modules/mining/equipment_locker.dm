@@ -293,7 +293,7 @@
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   800),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  1000),
-		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               2000),
+		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack						,	              2000),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  2000),
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  2000),
 		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              2500),
@@ -408,7 +408,7 @@
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Kinetic Accelerator", "Resonator", "Mining Drone", "Advanced Scanner")
-	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
+	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
 		if("Kinetic Accelerator")
@@ -771,7 +771,7 @@
 			var/mob/living/simple_animal/M = target
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
-				M.revive()
+				M.revive(full_heal = 1, admin_revive = 1)
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)
@@ -885,15 +885,25 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "xeno_warning"
 
-/**********************Mining Jetpack**********************/
-/obj/item/weapon/tank/jetpack/carbondioxide/mining
-	name = "mining jetpack"
-	icon_state = "jetpack-mining"
-	item_state = "jetpack-mining"
-	desc = "A tank of compressed carbon dioxide for miners to use as propulsion in local space. The compact size allows for easy storage at the cost of capacity."
-	volume = 40
-	throw_range = 7
-	w_class = 3 //same as syndie harness
+/******************Hardsuit Jetpack Upgrade*******************/
+/obj/item/hardsuit_jetpack
+	name = "hardsuit jetpack upgrade"
+	icon_state = "jetpack_upgrade"
+	desc = "A modular, compact set of thrusters designed to integrate with a hardsuit. It is fueled by a tank inserted into the suit's storage compartment."
+
+
+/obj/item/hardsuit_jetpack/afterattack(var/obj/item/clothing/suit/space/hardsuit/S, mob/user)
+	..()
+	if(!istype(S))
+		user << "<span class='warning'>This upgrade can only be applied to a hardsuit.</span>"
+	else if(S.jetpack)
+		user << "<span class='warning'>[S] already has a jetpack installed.</span>"
+	else if(S == user.get_item_by_slot(slot_wear_suit)) //Make sure the player is not wearing the suit before applying the upgrade.
+		user << "<span class='warning'>You cannot install the upgrade to [S] while wearing it.</span>"
+	else
+		S.jetpack = new /obj/item/weapon/tank/jetpack/suit(S)
+		user << "<span class='notice'>You successfully install the jetpack into [S].</span>"
+		qdel(src)
 
 /*********************Hivelord stabilizer****************/
 

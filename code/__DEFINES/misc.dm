@@ -120,9 +120,11 @@
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
 
-#define MANIFEST_ERROR_NAME		1
-#define MANIFEST_ERROR_COUNT	2
-#define MANIFEST_ERROR_ITEM		4
+// Cargo-related stuff.
+#define MANIFEST_ERROR_CHANCE		5
+#define MANIFEST_ERROR_NAME			1
+#define MANIFEST_ERROR_CONTENTS		2
+#define MANIFEST_ERROR_ITEM			4
 
 #define TRANSITIONEDGE			7 //Distance from edge to move to another z-level
 
@@ -350,3 +352,23 @@ var/list/bloody_footprints_cache = list()
 // Consider these images/atoms as part of the UI/HUD
 #define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA
 #define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
+
+//Launching Shuttles to Centcomm
+#define NOLAUNCH -1
+#define UNLAUNCHED 0
+#define ENDGAME_LAUNCHED 1
+#define EARLY_LAUNCHED 2
+
+//Just space
+#define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
+
+//Gun trigger guards
+#define TRIGGER_GUARD_ALLOW_ALL -1
+#define TRIGGER_GUARD_NONE 0
+#define TRIGGER_GUARD_NORMAL 1
+
+// Plant types
+#define PLANT_NORMAL 0
+#define PLANT_WEED 1
+#define PLANT_MUSHROOM 2
+#define PLANT_ALIEN 3

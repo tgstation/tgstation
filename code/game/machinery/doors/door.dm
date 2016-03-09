@@ -115,9 +115,11 @@
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
-	if(isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
+	if(isrobot(user))
+		return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	src.add_fingerprint(user)
-	if(operating || emagged)	return
+	if(operating || emagged)
+		return
 	if(!Adjacent(user))
 		user = null
 	if(!src.requiresID())
@@ -268,3 +270,9 @@
 
 /obj/machinery/door/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
+
+/obj/machinery/door/proc/lock()
+	return
+
+/obj/machinery/door/proc/unlock()
+	return

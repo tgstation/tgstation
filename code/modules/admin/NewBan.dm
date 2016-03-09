@@ -183,8 +183,10 @@ var/savefile/Banlist
 		var/expiry
 		if(Banlist["temp"])
 			expiry = GetExp(Banlist["minutes"])
-			if(!expiry)		expiry = "Removal Pending"
-		else				expiry = "Permaban"
+			if(!expiry)
+				expiry = "Removal Pending"
+		else
+			expiry = "Permaban"
 
 		dat += text("<tr><td><A href='?src=[ref];unbanf=[key][id]'>(U)</A><A href='?src=[ref];unbane=[key][id]'>(E)</A> Key: <B>[key]</B></td><td>ComputerID: <B>[id]</B></td><td>IP: <B>[ip]</B></td><td> [expiry]</td><td>(By: [by])</td><td>(Reason: [reason])</td></tr>")
 

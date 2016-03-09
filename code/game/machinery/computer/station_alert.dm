@@ -13,7 +13,7 @@
 		ui = new(user, src, ui_key, "station_alert", name, 300, 500, master_ui, state)
 		ui.open()
 
-/obj/machinery/computer/station_alert/get_ui_data(mob/user)
+/obj/machinery/computer/station_alert/ui_data(mob/user)
 	var/list/data = list()
 
 	data["alarms"] = list()

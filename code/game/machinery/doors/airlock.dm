@@ -80,11 +80,17 @@ var/list/airlock_overlays = list()
 		airlock_material = "glass"
 	update_icon()
 
+/obj/machinery/door/airlock/lock()
+	bolt()
+
 /obj/machinery/door/airlock/proc/bolt()
 	if(locked)
 		return
 	locked = 1
 	update_icon()
+
+/obj/machinery/door/airlock/unlock()
+	unbolt()
 
 /obj/machinery/door/airlock/proc/unbolt()
 	if(!locked)
@@ -556,7 +562,7 @@ var/list/airlock_overlays = list()
 	// Otherwise it will runtime with this kind of error: null.Topic()
 	if(!nowindow)
 		..()
-	if((usr.stat || usr.restrained()) && !IsAdminGhost(usr))
+	if(usr.incapacitated() && !IsAdminGhost(usr))
 		return
 	add_fingerprint(usr)
 	if(href_list["close"])
@@ -1026,7 +1032,8 @@ var/list/airlock_overlays = list()
 	return 1
 
 /obj/machinery/door/airlock/proc/prison_open()
-	if(emagged)	return
+	if(emagged)
+		return
 	src.locked = 0
 	src.open()
 	src.locked = 1
@@ -1055,7 +1062,8 @@ var/list/airlock_overlays = list()
 		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!in_range(src, usr) && src.loc != usr) || !W.use(user))	return
+	if((!in_range(src, usr) && src.loc != usr) || !W.use(user))
+		return
 	switch(paintjob)
 		if("Public")
 			icon = 'icons/obj/doors/airlocks/station/public.dmi'

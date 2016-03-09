@@ -617,7 +617,7 @@
 		ui = new(user, src, ui_key, "apc", name, 535, 515, master_ui, state)
 		ui.open()
 
-/obj/machinery/power/apc/get_ui_data(mob/user)
+/obj/machinery/power/apc/ui_data(mob/user)
 	var/list/data = list(
 		"locked" = locked,
 		"isOperating" = operating,
@@ -625,7 +625,7 @@
 		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
-		"totalLoad" = lastused_equip + lastused_light + lastused_environ,
+		"totalLoad" = lastused_total,
 		"coverLocked" = coverlocked,
 		"siliconUser" = user.has_unlimited_silicon_privilege,
 		"malfStatus" = get_malf_status(user),
@@ -667,7 +667,7 @@
 
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
-	if(istype(malf) && is_special_character(malf))
+	if(istype(malf) && malf.malf_picker)
 		if(malfai == (malf.parent || malf))
 			if(occupier == malf)
 				return 3 // 3 = User is shunted in this APC
@@ -1075,7 +1075,7 @@
 
 /obj/machinery/power/apc/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		switch(severity)
 			if(2)
 				if(prob(50))

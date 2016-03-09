@@ -65,8 +65,10 @@
 				affected_mob << "<span class='danger'>Your entire body vibrates.</span>"
 
 			if (prob(35))
-				if(prob(50))	scramble_dna(affected_mob, 1, 0, rand(15,45))
-				else			scramble_dna(affected_mob, 0, 1, rand(15,45))
+				if(prob(50))
+					scramble_dna(affected_mob, 1, 0, rand(15,45))
+				else
+					scramble_dna(affected_mob, 0, 1, rand(15,45))
 
 		if(4)
 			if(restcure)
@@ -75,5 +77,7 @@
 					cure()
 					return
 			if (prob(60))
-				if(prob(50))	scramble_dna(affected_mob, 1, 0, rand(50,75))
-				else			scramble_dna(affected_mob, 0, 1, rand(50,75))
+				if(prob(50))
+					scramble_dna(affected_mob, 1, 0, rand(50,75))
+				else
+					scramble_dna(affected_mob, 0, 1, rand(50,75))

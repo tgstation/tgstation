@@ -3,6 +3,15 @@
 	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet
 
+/obj/item/ammo_casing/a762
+	desc = "A 7.62 bullet casing."
+	icon_state = "762-casing"
+	caliber = "a762"
+	projectile_type = /obj/item/projectile/bullet
+
+/obj/item/ammo_casing/a762/enchanted
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
+
 /obj/item/ammo_casing/a50
 	desc = "A .50AE bullet casing."
 	caliber = ".50"
@@ -66,7 +75,12 @@
 /obj/item/ammo_casing/c45nostamina
 	desc = "A .45 bullet casing."
 	caliber = ".45"
-	projectile_type = /obj/item/projectile/bullet/weakbullet3
+	projectile_type = /obj/item/projectile/bullet/midbullet3
+
+/obj/item/ammo_casing/n762
+	desc = "A 7.62x38mmR bullet casing."
+	caliber = "n762"
+	projectile_type = /obj/item/projectile/bullet
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
@@ -142,6 +156,12 @@
 	icon_state = "mshell"
 	projectile_type = /obj/item/projectile/bullet/meteorshot
 
+/obj/item/ammo_casing/shotgun/breaching
+	name = "breaching shell"
+	desc = "An economic version of the meteorshot, utilizing similar technologies. Great for busting down doors."
+	icon_state = "mshell"
+	projectile_type = /obj/item/projectile/bullet/meteorshot/weak
+
 /obj/item/ammo_casing/shotgun/pulseslug
 	name = "pulse slug"
 	desc = "A delicate device which can be loaded into a shotgun. The primer acts as a button which triggers the gain medium and fires a powerful \
@@ -183,7 +203,7 @@
 	name = "laser slug"
 	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a laser weapon in a ballistic package."
 	icon_state = "lshell"
-	projectile_type = /obj/item/projectile/beam
+	projectile_type = /obj/item/projectile/beam/laser
 
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"

@@ -38,13 +38,6 @@
 			beaker.reagents.chem_temp = round(beaker.reagents.chem_temp)
 			beaker.reagents.handle_reactions()
 
-/obj/machinery/chem_heater/power_change()
-	if(powered())
-		stat &= ~NOPOWER
-	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
-
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
 	if(isrobot(user))
 		return
@@ -80,7 +73,7 @@
 		ui = new(user, src, ui_key, "chem_heater", name, 275, 400, master_ui, state)
 		ui.open()
 
-/obj/machinery/chem_heater/get_ui_data()
+/obj/machinery/chem_heater/ui_data()
 	var/data = list()
 	data["targetTemp"] = target_temperature
 	data["isActive"] = on
@@ -109,7 +102,7 @@
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
 				target = input("New target temperature:", name, target_temperature) as num|null
-				if(target && !..())
+				if(!isnull(target) && !..())
 					. = TRUE
 			else if(adjust)
 				target = target_temperature + adjust

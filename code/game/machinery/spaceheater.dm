@@ -173,7 +173,7 @@
 		ui = new(user, src, ui_key, "space_heater", name, 400, 305, master_ui, state)
 		ui.open()
 
-/obj/machinery/space_heater/get_ui_data()
+/obj/machinery/space_heater/ui_data()
 	var/list/data = list()
 	data["open"] = panel_open
 	data["on"] = on
@@ -218,7 +218,7 @@
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
 				target = input("New target temperature:", name, round(targetTemperature - T0C, 1)) as num|null
-				if(target && !..())
+				if(!isnull(target) && !..())
 					. = TRUE
 			else if(adjust)
 				target = targetTemperature + adjust

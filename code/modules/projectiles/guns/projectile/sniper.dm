@@ -97,7 +97,7 @@
 /obj/item/projectile/bullet/sniper/soporific/on_hit(atom/target, blocked = 0, hit_zone)
 	if((blocked != 100) && istype(target, /mob/living))
 		var/mob/living/L = target
-		L.SetSleeping(20)
+		L.Sleeping(20)
 
 	return ..()
 

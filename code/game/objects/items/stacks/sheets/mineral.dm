@@ -15,12 +15,20 @@ Mineral Sheets
 		- Enriched Uranium
 */
 
+/obj/item/stack/sheet/mineral
+	icon = 'icons/obj/mining.dmi'
+
 /*
  * Sandstone
  */
 
-/obj/item/stack/sheet/mineral
-	icon = 'icons/obj/mining.dmi'
+var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
+	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
+/*	new/datum/stack_recipe("sandstone wall", ???), \
+		new/datum/stack_recipe("sandstone floor", ???),\ */
+	)
 
 /obj/item/stack/sheet/mineral/sandstone
 	name = "sandstone brick"
@@ -33,19 +41,14 @@ Mineral Sheets
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	sheettype = "sandstone"
 
-var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
-	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
-/*	new/datum/stack_recipe("sandstone wall", ???), \
-		new/datum/stack_recipe("sandstone floor", ???),\ */
-	)
-
 /obj/item/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
 	recipes = sandstone_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
+
+/obj/item/stack/sheet/mineral/sandstone/thirty
+	amount = 30
 
 /*
  * Diamond

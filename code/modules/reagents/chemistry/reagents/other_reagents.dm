@@ -180,13 +180,18 @@
 	data++
 	M.jitteriness = max(M.jitteriness-5,0)
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
-		if (!M.stuttering) M.stuttering = 1
+		if(!M.stuttering)
+			M.stuttering = 1
 		M.stuttering += 4
 		M.Dizzy(5)
+		if(iscultist(M) && prob(5))
+			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
 	if(data >= 75 && prob(33))	// 30 units, 135 seconds
-		if (!M.confused) M.confused = 1
+		if (!M.confused)
+			M.confused = 1
 		M.confused += 3
-		if((is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
+		if(iscultist(M) || (is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
+			ticker.mode.remove_cultist(M.mind)
 			ticker.mode.remove_hog_follower(M.mind)
 			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
@@ -194,7 +199,6 @@
 			M.confused = 0
 			return
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
-	return
 
 /datum/reagent/water/holywater/reaction_turf(turf/simulated/T, reac_volume)
 	..()
@@ -214,15 +218,16 @@
 	if(iscultist(M))
 		M.status_flags |= GOTTAGOFAST
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustParalysis(-2)
-		M.AdjustStunned(-2)
-		M.AdjustWeakened(-2)
+		M.AdjustParalysis(-2, 0)
+		M.AdjustStunned(-2, 0)
+		M.AdjustWeakened(-2, 0, 0)
 	else
-		M.adjustToxLoss(2)
-		M.adjustFireLoss(2)
-		M.adjustOxyLoss(2)
-		M.adjustBruteLoss(2)
+		M.adjustToxLoss(2, 0)
+		M.adjustFireLoss(2, 0)
+		M.adjustOxyLoss(2, 0)
+		M.adjustBruteLoss(2, 0)
 	holder.remove_reagent(src.id, 1)
+	. = 1
 
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
 	name = "Hell Water"
@@ -232,8 +237,8 @@
 /datum/reagent/hellwater/on_mob_life(mob/living/M)
 	M.fire_stacks = min(5,M.fire_stacks + 3)
 	M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
-	M.adjustToxLoss(1)
-	M.adjustFireLoss(1)		//Hence the other damages... ain't I a bastard?
+	M.adjustToxLoss(1, 0)
+	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?
 	M.adjustBrainLoss(5)
 	holder.remove_reagent(src.id, 1)
 
@@ -297,17 +302,23 @@
 				for(var/i=1, i<=len, i+=1)
 					var/ascii = text2ascii(N.dna.features["mcolor"],i)
 					switch(ascii)
-						if(48)		newcolor += "0"
-						if(49 to 57)	newcolor += ascii2text(ascii-1)	//numbers 1 to 9
-						if(97)		newcolor += "9"
-						if(98 to 102)	newcolor += ascii2text(ascii-1)	//letters b to f lowercase
-						if(65)		newcolor +="9"
-						if(66 to 70)	newcolor += ascii2text(ascii+31)	//letters B to F - translates to lowercase
+						if(48)
+							newcolor += "0"
+						if(49 to 57)
+							newcolor += ascii2text(ascii-1)	//numbers 1 to 9
+						if(97)
+							newcolor += "9"
+						if(98 to 102)
+							newcolor += ascii2text(ascii-1)	//letters b to f lowercase
+						if(65)
+							newcolor +="9"
+						if(66 to 70)
+							newcolor += ascii2text(ascii+31)	//letters B to F - translates to lowercase
 						else
 							break
-				N.dna.features["mcolor"] = newcolor
-				N.regenerate_icons()
-			N.update_body()
+				if(ReadHSV(newcolor)[3] >= ReadHSV("#7F7F7F")[3])
+					N.dna.features["mcolor"] = newcolor
+			N.regenerate_icons()
 
 
 
@@ -328,11 +339,9 @@
 			N.skin_tone = "orange"
 			N.hair_style = "Spiky"
 			N.hair_color = "000"
-			N.update_hair()
 		if(MUTCOLORS in N.dna.species.specflags) //Aliens with custom colors simply get turned orange
 			N.dna.features["mcolor"] = "f80"
-			N.regenerate_icons()
-		N.update_body()
+		N.regenerate_icons()
 		if(prob(7))
 			if(N.w_uniform)
 				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes their arms."))
@@ -360,26 +369,28 @@
 	..()
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
 	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
-	H.Weaken(3)
-	sleep(30)
-	//var/list/blacklisted_species = list(
-
-	var/list/possible_morphs = list()
-	for(var/type in subtypesof(/datum/species))
-		var/datum/species/S = type
-		if(initial(S.blacklisted))
-			continue
-		possible_morphs += S
-	var/datum/species/mutation = pick(possible_morphs)
-	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
-		H << "<span class='danger'>The pain subsides. You feel... different.</span>"
-		H.set_species(mutation)
-		if(mutation.id == "slime")
-			H.faction |= "slime"
+	H.Weaken(3, 0, 0)
+	spawn(30)
+		if(!H || qdeleted(H))
+			return
+		//var/list/blacklisted_species = list(
+		var/list/possible_morphs = list()
+		for(var/type in subtypesof(/datum/species))
+			var/datum/species/S = type
+			if(initial(S.blacklisted))
+				continue
+			possible_morphs += S
+		var/datum/species/mutation = pick(possible_morphs)
+		if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
+			H << "<span class='danger'>The pain subsides. You feel... different.</span>"
+			H.set_species(mutation)
+			if(mutation.id == "slime")
+				H.faction |= "slime"
+			else
+				H.faction -= "slime"
 		else
-			H.faction -= "slime"
-	else
-		H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
+			H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
+
 	return 1
 
 /datum/reagent/mulligan
@@ -390,11 +401,10 @@
 	metabolization_rate = INFINITY
 
 /datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
-	..()
 	H << "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>"
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	randomize_human(H)
-	return 1
+	..()
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
@@ -406,6 +416,15 @@
 	if(method != TOUCH)
 		M.ForceContractDisease(new /datum/disease/transformation/slime(0))
 
+/datum/reagent/gluttonytoxin
+	name = "Gluttony's Blessing"
+	id = "gluttonytoxin"
+	description = "An advanced corruptive toxin produced by something terrible."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+
+/datum/reagent/gluttonytoxin/reaction_mob(mob/M, method=TOUCH, reac_volume)
+	M.ForceContractDisease(new /datum/disease/transformation/morph(0))
+
 /datum/reagent/serotrotium
 	name = "Serotrotium"
 	id = "serotrotium"
@@ -415,9 +434,9 @@
 
 /datum/reagent/serotrotium/on_mob_life(mob/living/M)
 	if(ishuman(M))
-		if(prob(7)) M.emote(pick("twitch","drool","moan","gasp"))
+		if(prob(7))
+			M.emote(pick("twitch","drool","moan","gasp"))
 	..()
-	return
 
 /datum/reagent/oxygen
 	name = "Oxygen"
@@ -487,7 +506,6 @@
 		M.emote(pick("twitch","drool","moan"))
 	M.adjustBrainLoss(2)
 	..()
-	return
 
 /datum/reagent/sulfur
 	name = "Sulfur"
@@ -517,9 +535,9 @@
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/chlorine/on_mob_life(mob/living/M)
-	M.take_organ_damage(1*REM, 0)
+	M.take_organ_damage(1*REM, 0, 0)
+	. = 1
 	..()
-	return
 
 /datum/reagent/fluorine
 	name = "Fluorine"
@@ -529,9 +547,9 @@
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/fluorine/on_mob_life(mob/living/M)
-	M.adjustToxLoss(1*REM)
+	M.adjustToxLoss(1*REM, 0)
+	. = 1
 	..()
-	return
 
 /datum/reagent/sodium
 	name = "Sodium"
@@ -560,7 +578,6 @@
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-	return
 
 /datum/reagent/glycerol
 	name = "Glycerol"
@@ -578,7 +595,6 @@
 /datum/reagent/radium/on_mob_life(mob/living/M)
 	M.apply_effect(2*REM/M.metabolism_efficiency,IRRADIATE,0)
 	..()
-	return
 
 /datum/reagent/radium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
@@ -663,7 +679,8 @@
 	..()
 
 /datum/reagent/fuel/on_mob_life(mob/living/M)
-	M.adjustToxLoss(1)
+	M.adjustToxLoss(1, 0)
+	. = 1
 	..()
 
 /datum/reagent/space_cleaner
@@ -733,7 +750,6 @@
 		M.confused = 1
 	M.confused = max(M.confused, 20)
 	..()
-	return
 
 /datum/reagent/impedrezene
 	name = "Impedrezene"
@@ -743,11 +759,13 @@
 
 /datum/reagent/impedrezene/on_mob_life(mob/living/M)
 	M.jitteriness = max(M.jitteriness-5,0)
-	if(prob(80)) M.adjustBrainLoss(1*REM)
-	if(prob(50)) M.drowsyness = max(M.drowsyness, 3)
-	if(prob(10)) M.emote("drool")
+	if(prob(80))
+		M.adjustBrainLoss(1*REM)
+	if(prob(50))
+		M.drowsyness = max(M.drowsyness, 3)
+	if(prob(10))
+		M.emote("drool")
 	..()
-	return
 
 /datum/reagent/nanites
 	name = "Nanomachines"
@@ -895,9 +913,9 @@
 
 /datum/reagent/plantnutriment/on_mob_life(mob/living/M)
 	if(prob(tox_prob))
-		M.adjustToxLoss(1*REM)
+		M.adjustToxLoss(1*REM, 0)
+		. = 1
 	..()
-	return
 
 /datum/reagent/plantnutriment/eznutriment
 	name = "E-Z-Nutrient"
@@ -1145,3 +1163,27 @@
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	color = "#CEC3C6" // rgb: 206,195,198
+
+//Reagent used for shadowling blindness smoke spell
+datum/reagent/shadowling_blindness_smoke
+	name = "odd black liquid"
+	id = "blindness_smoke"
+	description = "<::ERROR::> CANNOT ANALYZE REAGENT <::ERROR::>"
+	color = "#000000" //Complete black (RGB: 0, 0, 0)
+	metabolization_rate = 100 //lel
+
+/datum/reagent/shadowling_blindness_smoke/on_mob_life(mob/living/M)
+	if(!is_shadow_or_thrall(M))
+		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"
+		M.blind_eyes(5)
+		if(prob(25))
+			M.visible_message("<b>[M]</b> claws at their eyes!")
+			M.Stun(3, 0)
+			. = 1
+	else
+		M << "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>"
+		M.heal_organ_damage(2,2, 0)
+		M.adjustOxyLoss(-2, 0)
+		M.adjustToxLoss(-2, 0)
+		. = 1
+	return ..() || .

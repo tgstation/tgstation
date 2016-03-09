@@ -8,7 +8,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
-	action_button_name = "Toggle Light"
+	actions_types = list(/datum/action/item_action/toggle_light)
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
 
@@ -41,12 +41,15 @@
 		return 0
 	on = !on
 	update_brightness(user)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 	return 1
 
 
 /obj/item/device/flashlight/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(on && user.zone_sel.selecting == "eyes")
+	if(on && user.zone_selected == "eyes")
 
 		if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
@@ -61,39 +64,37 @@
 			return
 
 		if(M == user)	//they're using it on themselves
-			if(!M.eye_blind)
-				flick("flash", M.flash)
+			if(M.flash_eyes(visual = 1))
 				M.visible_message("[M] directs [src] to \his eyes.", \
 									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			else
 				M.visible_message("[M] directs [src] to \his eyes.", \
 									 "<span class='notice'>You wave the light in front of your eyes.</span>")
-			return
-
-		user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
-							 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
-		M << "<span class='danger'>[user] directs [src] to your eyes.</span>"
-
-		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
-			if(M.stat == DEAD || M.disabilities & BLIND)	//mob is dead or fully blind
-				user << "<span class='warning'>[M] pupils don't react to the light!</span>"
-			else if(M.dna.check_mutation(XRAY))	//mob has X-RAY vision
-				user << "<span class='danger'>[M] pupils give an eerie glow!</span>"
-			else	//they're okay!
-				if(!M.eye_blind)
-					flick("flash", M.flash)	//flash the affected mob
-					user << "<span class='notice'>[M]'s pupils narrow.</span>"
+		else
+			user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
+								 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
+			var/mob/living/carbon/C = M
+			if(istype(C))
+				if(C.stat == DEAD || (C.disabilities & BLIND)) //mob is dead or fully blind
+					user << "<span class='warning'>[C] pupils don't react to the light!</span>"
+				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
+					user << "<span class='danger'>[C] pupils give an eerie glow!</span>"
+				else //they're okay!
+					if(C.flash_eyes(visual = 1))
+						user << "<span class='notice'>[C]'s pupils narrow.</span>"
 	else
 		return ..()
 
 
 /obj/item/device/flashlight/pickup(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(brightness_on)
 		SetLuminosity(0)
 
 
 /obj/item/device/flashlight/dropped(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
@@ -195,7 +196,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
-	action_button_name = null	//just pull it manually, neckbeard.
+	actions_types = list()
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
@@ -307,13 +308,13 @@ obj/item/device/flashlight/lamp/bananalamp
 		return 1
 
 /obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
+	if(on && user.zone_selected == "eyes") // call original attack proc only if aiming at the eyes
 		..()
 	return
 
 /obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity) return
-	if(istype(A, /obj/item/weapon/storage/) && A.loc == user) 
+	if(istype(A, /obj/item/weapon/storage/) && A.loc == user)
 		return
 	if (emp_cur_charges > 0)
 		emp_cur_charges -= 1

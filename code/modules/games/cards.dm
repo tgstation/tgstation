@@ -77,14 +77,19 @@
 	user.visible_message("\The [user] shuffles [src].")
 
 /obj/item/weapon/deck/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
-	if(flag)	return //It's adjacent, is the user, or is on the user's person
+	if(flag)
+		return //It's adjacent, is the user, or is on the user's person
 
-	if (istype(A, /mob/living)) src.dealTo(A, user)
-	else return ..()
+	if (istype(A, /mob/living))
+		src.dealTo(A, user)
+	else
+		return ..()
 
 /obj/item/weapon/deck/attack(mob/living/M, mob/living/user, def_zone)
-	if (istype(M)) src.dealTo(M, user)
-	else return ..()
+	if (istype(M))
+		src.dealTo(M, user)
+	else
+		return ..()
 
 /obj/item/weapon/deck/proc/dealTo(mob/living/target, mob/living/source)
 	if (!cards.len)
@@ -126,7 +131,8 @@
 	src.update_conceal()
 
 /obj/item/weapon/hand/Destroy()
-	if (src.hi) qdel(src.hi)
+	if (src.hi)
+		qdel(src.hi)
 
 	return ..()
 
@@ -139,14 +145,16 @@
 		H.update_icon()
 
 		qdel(src)
-	else return ..()
+	else
+		return ..()
 
 /obj/item/weapon/hand/verb/discard(datum/playingcard/card in cards)
 	set category = "Object"
 	set name     = "Discard"
 	set desc     = "Place a card from your hand in front of you."
 
-	if (!card)   return
+	if (!card)
+		return
 
 	var/obj/item/weapon/hand/H = new(src.loc)
 
@@ -191,11 +199,14 @@
 			usr.show_message("The [card.name].", 1)
 
 /obj/item/weapon/hand/proc/update_conceal()
-	if (src.concealed) src.hi.updateContent("headbar", "You are currently concealing your hand. <a href=\"byond://?src=\ref[hi]&action=toggle_conceal\">Reveal your hand.</a>")
-	else               src.hi.updateContent("headbar", "You are currently revealing your hand. <a href=\"byond://?src=\ref[hi]&action=toggle_conceal\">Conceal your hand.</a>")
+	if (src.concealed)
+		src.hi.updateContent("headbar", "You are currently concealing your hand. <a href=\"byond://?src=\ref[hi]&action=toggle_conceal\">Reveal your hand.</a>")
+	else
+		src.hi.updateContent("headbar", "You are currently revealing your hand. <a href=\"byond://?src=\ref[hi]&action=toggle_conceal\">Conceal your hand.</a>")
 
 /obj/item/weapon/hand/update_icon()
-	if (!cards.len) qdel (src)
+	if (!cards.len)
+		qdel (src)
 	else
 		if(cards.len > 1)
 			name = "hand of cards"

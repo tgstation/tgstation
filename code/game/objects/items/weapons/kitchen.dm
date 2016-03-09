@@ -41,7 +41,7 @@
 		forkload = null
 		return
 
-	else if(user.zone_sel.selecting == "eyes")
+	else if(user.zone_selected == "eyes")
 		if(user.disabilities & CLUMSY && prob(50))
 			M = user
 		return eyestab(M,user)
@@ -97,6 +97,20 @@
 	throwforce = 20
 	origin_tech = "materials=2;combat=4"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
+
+/obj/item/weapon/kitchen/knife/combat/cyborg
+	name = "cyborg knife"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "knife"
+	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
+
+/obj/item/weapon/kitchen/knife/carrotshiv
+	name = "carrot shiv"
+	icon_state = "carrotshiv"
+	item_state = "carrotshiv"
+	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
+	force = 8
+	throwforce = 12//fuck git
 
 
 /obj/item/weapon/kitchen/rollingpin
