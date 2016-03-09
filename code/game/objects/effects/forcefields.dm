@@ -7,6 +7,10 @@
 	density = 1
 	unacidable = 1
 
+obj/effect/forcefield/attackby(obj/item/I, mob/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	return ..()
+
 /obj/effect/forcefield/CanAtmosPass(turf/T)
 	return !density
 
