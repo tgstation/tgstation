@@ -417,31 +417,6 @@
 		S.start()
 	qdel(B)
 
-datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
-	name = "odd black liquid"
-	id = "blindness_smoke"
-	description = "<::ERROR::> CANNOT ANALYZE REAGENT <::ERROR::>"
-	color = "#000000" //Complete black (RGB: 0, 0, 0)
-	metabolization_rate = 100 //lel
-
-/datum/reagent/shadowling_blindness_smoke/on_mob_life(mob/living/M)
-	if(!M)
-		M = holder.my_atom
-	if(!is_shadow_or_thrall(M))
-		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"
-		M.blind_eyes(5)
-		if(prob(25))
-			M.visible_message("<b>[M]</b> claws at their eyes!")
-			M.Stun(3)
-	else
-		M << "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>"
-		M.heal_organ_damage(2,2)
-		M.adjustOxyLoss(-2)
-		M.adjustToxLoss(-2)
-	..()
-	return
-
-
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech //Damages nearby windows, confuses nearby carbons, and outright stuns silly cones
 	name = "Sonic Screech"
 	desc = "Deafens, stuns, and confuses nearby people. Also shatters windows."

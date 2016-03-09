@@ -357,7 +357,7 @@
 		master.vines -= src
 		master.growth_queue -= src
 		if(!master.vines.len)
-			var/obj/item/seeds/kudzuseed/KZ = new(loc)
+			var/obj/item/seeds/kudzu/KZ = new(loc)
 			KZ.mutations |= mutations
 			KZ.potency = min(100, master.mutativness * 10)
 			KZ.production = (master.spread_cap / initial(master.spread_cap)) * 50
@@ -506,7 +506,7 @@
 	var/list/obj/effect/spacevine/queue_end = list()
 
 	for( var/obj/effect/spacevine/SV in growth_queue )
-		if(SV.gc_destroyed)
+		if(qdeleted(SV))
 			continue
 		i++
 		queue_end += SV

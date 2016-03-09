@@ -56,7 +56,7 @@ var/global/posibrain_notif_cooldown = 0
 		return
 
 	var/posi_ask = alert("Become a positronic brain? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
-	if(posi_ask == "No" || gc_destroyed)
+	if(posi_ask == "No" || qdeleted(src))
 		return
 	transfer_personality(user)
 
@@ -136,7 +136,7 @@ var/global/posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/New()
 	brainmob = new(src)
-	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR","CHRI","CDB","HG","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","GOOF","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","WJ","JRD","CHOC","ANCL","JLLO","ANNS","KOS","TKRG","XAL","STLP","CBOS","DNCN","FXMC","DRSD"))]-[rand(100, 999)]"
+	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR","CHRI","CDB","HG","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","GOOF","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","WJ","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD"))]-[rand(100, 999)]"
 	brainmob.real_name = brainmob.name
 	brainmob.loc = src
 	brainmob.container = src

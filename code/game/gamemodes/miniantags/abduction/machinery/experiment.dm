@@ -164,6 +164,7 @@
 		for(var/datum/objective/objective in H.mind.objectives)
 			H << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
+		ticker.mode.update_abductor_icons_added(H.mind)
 
 		for(var/obj/item/organ/internal/gland/G in H.internal_organs)
 			G.Start()
