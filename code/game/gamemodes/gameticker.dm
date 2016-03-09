@@ -60,6 +60,7 @@ var/global/datum/controller/gameticker/ticker
 		"sound/music/moonbaseoddity.ogg",
 		"sound/music/whatisthissong.ogg",
 		"sound/music/space_asshole.ogg",
+		"sound/music/starman.ogg",
 		))
 	login_music = fcopy_rsc(oursong)
 	// Wait for MC to get its shit together
