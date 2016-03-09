@@ -37,8 +37,10 @@
 
 /obj/effect/mob_spawn/New()
 	..()
-	//Add to the atom spawners register for roundstart atom spawning
-	SSobj.atom_spawners += src
+	if(roundstart)
+		//Add to the atom spawners register for roundstart atom spawning
+		SSobj.atom_spawners += src
+
 	if(instant)
 		create()
 	else
