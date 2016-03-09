@@ -91,14 +91,12 @@
 
 
 /obj/item/candle/pickup(mob/user)
-	..()
 	if(lit)
 		SetLuminosity(0)
 		user.AddLuminosity(CANDLE_LUMINOSITY)
 
 
 /obj/item/candle/dropped(mob/user)
-	..()
 	if(lit)
 		user.AddLuminosity(-CANDLE_LUMINOSITY)
 		SetLuminosity(CANDLE_LUMINOSITY)

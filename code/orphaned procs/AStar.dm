@@ -159,15 +159,25 @@ Actual Adjacent procs :
 		T = get_step(src,dir)
 		if(simulated_only && !istype(T))
 			continue
-		if(!T.density && !LinkBlockedWithAccess(T,caller, ID))
+		if(!T.density && !LinkBlockedWithAccess(T,ID, caller))
 			L.Add(T)
 	return L
 
 //Returns adjacent turfs in cardinal directions that are reachable via atmos
 /turf/proc/reachableAdjacentAtmosTurfs()
-	return atmos_adjacent_turfs
+	var/list/L = new()
+	var/turf/simulated/T
 
-/turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
+	for(var/dir in cardinal)
+		if(dir & atmos_adjacent_turfs)
+			T = get_step(src,dir)
+			if(!istype(T))
+				continue
+			if(CanAtmosPass(T))
+				L.Add(T)
+	return L
+
+/turf/proc/LinkBlockedWithAccess(turf/T, ID, caller)
 	var/adir = get_dir(src, T)
 	var/rdir = get_dir(T, src)
 

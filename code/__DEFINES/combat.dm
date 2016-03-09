@@ -22,7 +22,6 @@
 #define FIRELOSS 2
 #define TOXLOSS 4
 #define OXYLOSS 8
-#define SHAME 16
 
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN		1

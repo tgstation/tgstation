@@ -10,11 +10,10 @@
 	if(user.digitalcamo)
 		user << "<span class='notice'>We return to normal.</span>"
 		user.digitalinvis = 0
-		user.digitalcamo = 0
 	else
 		user << "<span class='notice'>We distort our form to hide from the AI</span>"
 		user.digitalcamo = 1
-		user.digitalinvis = 1
+	user.digitalinvis = !user.digitalcamo
 
 
 	feedback_add_details("changeling_powers","CAM")

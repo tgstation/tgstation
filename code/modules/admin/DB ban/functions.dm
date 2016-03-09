@@ -3,8 +3,7 @@
 //Either pass the mob you wish to ban in the 'banned_mob' attribute, or the banckey, banip and bancid variables. If both are passed, the mob takes priority! If a mob is not passed, banckey is the minimum that needs to be passed! banip and bancid are optional.
 /datum/admins/proc/DB_ban_record(bantype, mob/banned_mob, duration = -1, reason, job = "", rounds = 0, banckey = null, banip = null, bancid = null)
 
-	if(!check_rights(R_BAN))
-		return
+	if(!check_rights(R_BAN))	return
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
@@ -141,8 +140,7 @@
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
 
-	if(!check_rights(R_BAN))
-		return
+	if(!check_rights(R_BAN))	return
 
 	var/bantype_str
 	if(bantype)
@@ -220,8 +218,7 @@
 
 /datum/admins/proc/DB_ban_edit(banid = null, param = null)
 
-	if(!check_rights(R_BAN))
-		return
+	if(!check_rights(R_BAN))	return
 
 	if(!isnum(banid) || !istext(param))
 		usr << "Cancelled"
@@ -281,8 +278,7 @@
 
 /datum/admins/proc/DB_ban_unban_by_id(id)
 
-	if(!check_rights(R_BAN))
-		return
+	if(!check_rights(R_BAN))	return
 
 	var/sql = "SELECT ckey FROM [format_table_name("ban")] WHERE id = [id]"
 
@@ -336,8 +332,7 @@
 	if(!usr.client)
 		return
 
-	if(!check_rights(R_BAN))
-		return
+	if(!check_rights(R_BAN))	return
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())

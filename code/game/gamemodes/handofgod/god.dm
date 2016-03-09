@@ -22,7 +22,7 @@
 	var/list/conduits = list()
 	var/prophets_sacrificed_in_name = 0
 	var/image/ghostimage = null //For observer with darkness off visiblity
-	var/list/prophet_hats = list()
+
 
 /mob/camera/god/New()
 	..()
@@ -51,10 +51,6 @@
 	for(var/datum/mind/F in followers)
 		if(F.current)
 			F.current << "<span class='danger'>Your god is DEAD!</span>"
-	for(var/X in prophet_hats)
-		var/obj/item/clothing/head/helmet/plate/crusader/prophet/P = X
-		if(P.speak2god && P.speak2god.god == src)
-			qdel(P.speak2god)
 	ghost_darkness_images -= ghostimage
 	updateallghostimages()
 	return ..()
@@ -77,10 +73,10 @@
 
 /mob/camera/god/update_icons()
 	icon_state = "[initial(icon_state)]-[side]"
-
+	
 	if(ghostimage)
 		ghost_darkness_images -= ghostimage
-
+	
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
@@ -108,9 +104,9 @@
 	update_health_hud()
 
 
-/mob/camera/god/update_health_hud()
-	if(god_nexus && hud_used && hud_used.healths)
-		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='lime'>[god_nexus.health]   </font></div>"
+/mob/camera/god/proc/update_health_hud()
+	if(god_nexus && hud_used && hud_used.deity_health_display)
+		hud_used.deity_health_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='lime'>[god_nexus.health]   </font></div>"
 
 
 /mob/camera/god/proc/add_faith(faith_amt)

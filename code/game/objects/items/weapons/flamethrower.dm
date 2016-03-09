@@ -70,8 +70,7 @@
 			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user, params)
-	if(user.stat || user.restrained() || user.lying)
-		return
+	if(user.stat || user.restrained() || user.lying)	return
 	if(istype(W, /obj/item/weapon/wrench) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
 		if(weldtool)
@@ -95,10 +94,8 @@
 
 	if(isigniter(W))
 		var/obj/item/device/assembly/igniter/I = W
-		if(I.secured)
-			return
-		if(igniter)
-			return
+		if(I.secured)	return
+		if(igniter)		return
 		if(!user.unEquip(W))
 			return
 		I.loc = src
@@ -124,8 +121,7 @@
 
 
 /obj/item/weapon/flamethrower/attack_self(mob/user)
-	if(user.stat || user.restrained() || user.lying)
-		return
+	if(user.stat || user.restrained() || user.lying)	return
 	user.set_machine(src)
 	if(!ptank)
 		user << "<span class='notice'>Attach a plasma tank first!</span>"
@@ -141,14 +137,11 @@
 		usr.unset_machine()
 		usr << browse(null, "window=flamethrower")
 		return
-	if(usr.stat || usr.restrained() || usr.lying)
-		return
+	if(usr.stat || usr.restrained() || usr.lying)	return
 	usr.set_machine(src)
 	if(href_list["light"])
-		if(!ptank)
-			return
-		if(!status)
-			return
+		if(!ptank)	return
+		if(!status)	return
 		lit = !lit
 		if(lit)
 			SSobj.processing |= src
@@ -159,8 +152,7 @@
 		throw_amount = throw_amount + text2num(href_list["amount"])
 		throw_amount = max(50, min(5000, throw_amount))
 	if(href_list["remove"])
-		if(!ptank)
-			return
+		if(!ptank)	return
 		usr.put_in_hands(ptank)
 		ptank = null
 		lit = 0
@@ -182,8 +174,7 @@
 
 //Called from turf.dm turf/dblclick
 /obj/item/weapon/flamethrower/proc/flame_turf(turflist)
-	if(!lit || operating)
-		return
+	if(!lit || operating)	return
 	operating = 1
 	var/turf/previousturf = get_turf(src)
 	for(var/turf/simulated/T in turflist)

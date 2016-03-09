@@ -120,7 +120,7 @@
 		ui = new(user, src, ui_key, "radio", name, 370, 220 + channels.len * 22, master_ui, state)
 		ui.open()
 
-/obj/item/device/radio/ui_data(mob/user)
+/obj/item/device/radio/get_ui_data(mob/user)
 	var/list/data = list()
 
 	data["broadcasting"] = broadcasting
@@ -153,7 +153,7 @@
 				var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
 				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
 				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
-				if(!isnull(tune) && !..())
+				if(tune && !..())
 					. = TRUE
 			else if(adjust)
 				tune = frequency + adjust * 10

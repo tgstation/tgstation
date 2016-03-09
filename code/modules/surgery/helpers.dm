@@ -2,7 +2,7 @@
 	if(istype(M))
 		var/mob/living/carbon/human/H
 		var/obj/item/organ/limb/affecting
-		var/selected_zone = user.zone_selected
+		var/selected_zone = user.zone_sel.selecting
 
 		if(istype(M, /mob/living/carbon/human))
 			H = M
@@ -81,9 +81,9 @@ proc/get_location_modifier(mob/M)
 
 
 /proc/get_location_accessible(mob/M, location)
-	var/covered_locations = 0	//based on body_parts_covered
-	var/face_covered = 0	//based on flags_inv
-	var/eyesmouth_covered = 0	//based on flags_cover
+	var/covered_locations	= 0	//based on body_parts_covered
+	var/face_covered		= 0	//based on flags_inv
+	var/eyesmouth_covered	= 0	//based on flags
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		for(var/obj/item/clothing/I in list(C.back, C.wear_mask, C.head))

@@ -69,8 +69,7 @@
 
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity)
 	var/atom/A = target
-	if(!proximity)
-		return
+	if(!proximity) return
 	A.emag_act(user)
 
 /obj/item/weapon/card/id
@@ -119,13 +118,11 @@ update_label("John Doe", "Clowny")
 	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
 
 /obj/item/weapon/card/id/silver
-	name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
 	item_state = "silver_id"
 
 /obj/item/weapon/card/id/gold
-	name = "gold identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
@@ -135,16 +132,8 @@ update_label("John Doe", "Clowny")
 	access = list(access_maint_tunnels, access_syndicate)
 	origin_tech = "syndicate=3"
 
-/obj/item/weapon/card/id/syndicate/New()
-	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/weapon/card/id
-	chameleon_action.chameleon_name = "ID Card"
-	chameleon_action.initialize_disguises()
-
 /obj/item/weapon/card/id/syndicate/afterattack(obj/item/weapon/O, mob/user, proximity)
-	if(!proximity)
-		return
+	if(!proximity) return
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = O
 		src.access |= I.access
@@ -187,11 +176,10 @@ update_label("John Doe", "Clowny")
 	item_state = "gold_id"
 	registered_name = "Captain"
 	assignment = "Captain"
-
-/obj/item/weapon/card/id/captains_spare/New()
-	var/datum/job/captain/J = new/datum/job/captain
-	access = J.get_access()
-	..()
+	New()
+		var/datum/job/captain/J = new/datum/job/captain
+		access = J.get_access()
+		..()
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper Centcom ID"
@@ -199,41 +187,31 @@ update_label("John Doe", "Clowny")
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
-
-/obj/item/weapon/card/id/centcom/New()
-	access = get_all_centcom_access()
-	..()
-
+	New()
+		access = get_all_centcom_access()
+		..()
 /obj/item/weapon/card/id/ert
 	name = "\improper Centcom ID"
 	desc = "A ERT ID card"
 	icon_state = "centcom"
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
-
-/obj/item/weapon/card/id/ert/New()
-	access = get_all_accesses()+get_ert_access("commander")-access_change_ids
+	New() access = get_all_accesses()+get_ert_access("commander")-access_change_ids
 
 /obj/item/weapon/card/id/ert/Security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
-
-/obj/item/weapon/card/id/ert/Security/New()
-	access = get_all_accesses()+get_ert_access("sec")-access_change_ids
+	New() access = get_all_accesses()+get_ert_access("sec")-access_change_ids
 
 /obj/item/weapon/card/id/ert/Engineer
 	registered_name = "Engineer Response Officer"
 	assignment = "Engineer Response Officer"
-
-/obj/item/weapon/card/id/ert/Engineer/New()
-	access = get_all_accesses()+get_ert_access("eng")-access_change_ids
+	New() access = get_all_accesses()+get_ert_access("eng")-access_change_ids
 
 /obj/item/weapon/card/id/ert/Medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
-
-/obj/item/weapon/card/id/ert/Medical/New()
-	access = get_all_accesses()+get_ert_access("med")-access_change_ids
+	New() access = get_all_accesses()+get_ert_access("med")-access_change_ids
 
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"

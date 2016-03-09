@@ -39,7 +39,7 @@
 	mag_type = /obj/item/ammo_box/magazine/m75
 	burst_size = 1
 	fire_delay = 0
-	actions_types = list()
+	action_button_name = null
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()
@@ -62,7 +62,7 @@
 	burst_size = 1
 	fire_delay = 0
 	select = 0
-	actions_types = list()
+	action_button_name = null
 
 /obj/item/weapon/gun/projectile/automatic/speargun/update_icon()
 	return

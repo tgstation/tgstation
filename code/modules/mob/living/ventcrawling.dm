@@ -66,7 +66,8 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 						return
 
 			visible_message("<span class='notice'>[src] scrambles into the ventilation ducts!</span>","<span class='notice'>You climb into the ventilation ducts.</span>")
-			forceMove(vent_found)
+			loc = vent_found
+			add_ventcrawl(vent_found)
 	else
 		src << "<span class='warning'>This ventilation duct is not connected to anything!</span>"
 
@@ -78,19 +79,18 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
-	if(!istype(starting_machine) || !starting_machine.can_see_pipes())
+	if(!istype(starting_machine))
 		return
 	var/list/totalMembers = list()
 
 	for(var/datum/pipeline/P in starting_machine.returnPipenets())
 		totalMembers += P.members
 		totalMembers += P.other_atmosmch
-
+	
 	if(!totalMembers.len)
 		return
 
-	for(var/X in totalMembers)
-		var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
+	for(var/obj/machinery/atmospherics/A in totalMembers)
 		if(!A.pipe_vision_img)
 			A.pipe_vision_img = image(A, A.loc, layer = 20, dir = A.dir)
 			//20 for being above darkness
@@ -103,6 +103,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 	if(client)
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
+		client.eye = src
 	pipes_shown.len = 0
 
 

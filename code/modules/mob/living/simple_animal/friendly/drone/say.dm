@@ -22,9 +22,11 @@
 
 /mob/living/simple_animal/drone/proc/alert_drones(msg, dead_can_hear = 0)
 	for(var/W in mob_list)
-		var/mob/living/simple_animal/drone/M = W
-		if(istype(M) && M.stat != DEAD && faction_check(M)) //if it's a living drone with matching factions, it gets a message
-			M << msg
+		var/mob/M = W
+		if(istype(M, /mob/living/simple_animal/drone) && M.stat != DEAD)
+			for(var/F in src.faction)
+				if(F in M.faction)
+					M << msg
 		if(dead_can_hear && (M in dead_mob_list))
 			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [msg]"
 

@@ -134,18 +134,12 @@
 	if(!client && powerlevel > 0)
 		var/probab = 10
 		switch(powerlevel)
-			if(1 to 2)
-				probab = 20
-			if(3 to 4)
-				probab = 30
-			if(5 to 6)
-				probab = 40
-			if(7 to 8)
-				probab = 60
-			if(9)
-				probab = 70
-			if(10)
-				probab = 95
+			if(1 to 2)	probab = 20
+			if(3 to 4)	probab = 30
+			if(5 to 6)	probab = 40
+			if(7 to 8)	probab = 60
+			if(9)		probab = 70
+			if(10)		probab = 95
 		if(prob(probab))
 			if(istype(O, /obj/structure/window) || istype(O, /obj/structure/grille))
 				if(nutrition <= get_hunger_nutrition() && !Atkcool)

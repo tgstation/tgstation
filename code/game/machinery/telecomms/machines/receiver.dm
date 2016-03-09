@@ -88,8 +88,8 @@
 	freq_listening = list(COMM_FREQ, ENG_FREQ, SEC_FREQ) //command, engineering, security
 
 	//Common and other radio frequencies for people to freely use
-/obj/machinery/telecomms/receiver/preset_right/New()
-	for(var/i = 1441, i < 1489, i += 2)
-		freq_listening |= i
-	..()
+	New()
+		for(var/i = 1441, i < 1489, i += 2)
+			freq_listening |= i
+		..()
 

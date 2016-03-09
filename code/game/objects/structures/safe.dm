@@ -86,8 +86,7 @@ FLOOR SAFES
 
 
 /obj/structure/safe/Topic(href, href_list)
-	if(!ishuman(usr))
-		return
+	if(!ishuman(usr))	return
 	var/mob/living/carbon/human/user = usr
 
 	var/canhear = 0

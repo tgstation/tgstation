@@ -295,8 +295,7 @@
 
 	var/obj/structure/cable/C = T.get_cable_node()
 	var/datum/powernet/PN
-	if(C)
-		PN = C.powernet		// find the powernet of the connected cable
+	if(C)	PN = C.powernet		// find the powernet of the connected cable
 
 	if(!PN)
 		power = 0

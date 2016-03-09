@@ -70,13 +70,6 @@
 			update_inv_ears()
 		if(slot_glasses)
 			glasses = I
-			var/obj/item/clothing/glasses/G = I
-			if(G.tint)
-				update_tint()
-			if(G.vision_correction)
-				clear_fullscreen("nearsighted")
-			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view)
-				update_sight()
 			update_inv_glasses()
 		if(slot_gloves)
 			gloves = I
@@ -88,8 +81,6 @@
 			wear_suit = I
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_inv_w_uniform()
-			if(wear_suit.breakouttime) //when equipping a straightjacket
-				update_action_buttons_icon() //certain action buttons will no longer be usable.
 			update_inv_wear_suit()
 		if(slot_w_uniform)
 			w_uniform = I
@@ -115,8 +106,6 @@
 	if(I == wear_suit)
 		if(s_store)
 			unEquip(s_store, 1) //It makes no sense for your suit storage to stay on you if you drop your suit.
-		if(wear_suit.breakouttime) //when unequipping a straightjacket
-			update_action_buttons_icon() //certain action buttons may be usable again.
 		wear_suit = null
 		if(I.flags_inv & HIDEJUMPSUIT)
 			update_inv_w_uniform()
@@ -138,14 +127,6 @@
 		update_inv_gloves()
 	else if(I == glasses)
 		glasses = null
-		var/obj/item/clothing/glasses/G = I
-		if(G.tint)
-			update_tint()
-		if(G.vision_correction)
-			if(disabilities & NEARSIGHT)
-				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view)
-			update_sight()
 		update_inv_glasses()
 	else if(I == ears)
 		ears = null
@@ -170,19 +151,18 @@
 		s_store = null
 		update_inv_s_store()
 
-/mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
-	if((C.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(C.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
+/mob/living/carbon/human/wear_mask_update(obj/item/I, unequip = 1)
+	if(I.flags & BLOCKHAIR)
 		update_hair()
-	if(toggle_off && internal && !getorganslot("breathing_tube"))
-		update_internals_hud_icon(0)
+	if(unequip && internal)
+		if(internals)
+			internals.icon_state = "internal0"
 		internal = null
-	if(C.flags_inv & HIDEEYES)
-		update_inv_glasses()
 	sec_hud_set_security_status()
 	..()
 
 /mob/living/carbon/human/head_update(obj/item/I, forced)
-	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || forced)
+	if(I.flags & BLOCKHAIR || forced)
 		update_hair()
 	if(I.flags_inv & HIDEEYES || forced)
 		update_inv_glasses()

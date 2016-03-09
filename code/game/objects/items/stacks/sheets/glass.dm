@@ -21,9 +21,6 @@
 	is_cyborg = 1
 	cost = 500
 
-/obj/item/stack/sheet/glass/fifty
-	amount = 50
-
 /obj/item/stack/sheet/glass/attack_self(mob/user)
 	construct_window(user)
 
@@ -59,23 +56,18 @@
 		return ..()
 
 /obj/item/stack/sheet/glass/proc/construct_window(mob/user)
-	if(!user || !src)
-		return 0
-	if(!istype(user.loc,/turf))
-		return 0
+	if(!user || !src)	return 0
+	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
-	if(zero_amount())
-		return 0
+	if(zero_amount())	return 0
 	var/title = "Sheet-Glass"
 	title += " ([src.get_amount()] sheet\s left)"
 	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))
 		if("One Direction")
-			if(!src)
-				return 1
-			if(src.loc != user)
-				return 1
+			if(!src)	return 1
+			if(src.loc != user)	return 1
 
 			var/list/directions = new/list(cardinal)
 			var/i = 0
@@ -109,10 +101,8 @@
 			src.use(1)
 			W.add_fingerprint(user)
 		if("Full Window")
-			if(!src)
-				return 1
-			if(src.loc != user)
-				return 1
+			if(!src)	return 1
+			if(src.loc != user)	return 1
 			if(src.get_amount() < 2)
 				user << "<span class='warning'>You need more glass to do that!</span>"
 				return 1
@@ -163,10 +153,8 @@
 	construct_window(user)
 
 /obj/item/stack/sheet/rglass/proc/construct_window(mob/user)
-	if(!user || !src)
-		return 0
-	if(!istype(user.loc,/turf))
-		return 0
+	if(!user || !src)	return 0
+	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
@@ -174,10 +162,8 @@
 	title += " ([src.get_amount()] sheet\s left)"
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
-			if(!src)
-				return 1
-			if(src.loc != user)
-				return 1
+			if(!src)	return 1
+			if(src.loc != user)	return 1
 			var/list/directions = new/list(cardinal)
 			var/i = 0
 			for (var/obj/structure/window/win in user.loc)
@@ -211,10 +197,8 @@
 			src.use(1)
 
 		if("Full Window")
-			if(!src)
-				return 1
-			if(src.loc != user)
-				return 1
+			if(!src)	return 1
+			if(src.loc != user)	return 1
 			if(src.get_amount() < 2)
 				user << "<span class='warning'>You need more glass to do that!</span>"
 				return 1
@@ -306,8 +290,7 @@
 			pixel_y = rand(-5, 5)
 
 /obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
-	if(!proximity || !(src in user))
-		return
+	if(!proximity || !(src in user)) return
 	if(isturf(A))
 		return
 	if(istype(A, /obj/item/weapon/storage))

@@ -112,8 +112,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
-	for(var/v in files.known_designs)
-		var/datum/design/D = files.known_designs[v]
+	for(var/datum/design/D in files.known_designs)
 		if(D.build_type & MECHFAB)
 			if(!(set_name in D.category))
 				continue
@@ -186,8 +185,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/add_part_set_to_queue(set_name)
 	if(set_name in part_sets)
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
+		for(var/datum/design/D in files.known_designs)
 			if(D.build_type & MECHFAB)
 				if(set_name in D.category)
 					add_to_queue(D)
@@ -200,7 +198,7 @@
 	return queue.len
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
-	if(!isnum(index) || !IsInteger(index) || !istype(queue) || (index<1 || index>queue.len))
+	if(!isnum(index) || !istype(queue) || (index<1 || index>queue.len))
 		return 0
 	queue.Cut(index,++index)
 	return 1
@@ -247,8 +245,7 @@
 	if(!files)
 		return
 	var/output
-	for(var/v in files.known_tech)
-		var/datum/tech/T = files.known_tech[v]
+	for(var/datum/tech/T in files.known_tech)
 		if(T && T.level > 1)
 			var/diff
 			switch(T.id)
@@ -275,11 +272,9 @@
 	for(var/obj/machinery/computer/rdconsole/RDC in oview(5,src))
 		if(!RDC.sync)
 			continue
-		for(var/v in RDC.files.known_tech)
-			var/datum/tech/T = RDC.files.known_tech[v]
+		for(var/datum/tech/T in RDC.files.known_tech)
 			files.AddTech2Known(T)
-		for(var/v in RDC.files.known_designs)
-			var/datum/design/D = RDC.files.known_designs[v]
+		for(var/datum/design/D in RDC.files.known_designs)
 			files.AddDesign2Known(D)
 		files.RefreshResearch()
 		temp = "Processed equipment designs.<br>"
@@ -378,8 +373,7 @@
 				screen = "parts"
 	if(href_list["part"])
 		var/T = filter.getStr("part")
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
+		for(var/datum/design/D in files.known_designs)
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					if(!processing_queue)
@@ -389,8 +383,7 @@
 					break
 	if(href_list["add_to_queue"])
 		var/T = filter.getStr("add_to_queue")
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
+		for(var/datum/design/D in files.known_designs)
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					add_to_queue(D)
@@ -416,7 +409,7 @@
 	if(href_list["queue_move"] && href_list["index"])
 		var/index = filter.getNum("index")
 		var/new_index = index + filter.getNum("queue_move")
-		if(isnum(index) && isnum(new_index) && IsInteger(index) && IsInteger(new_index))
+		if(isnum(index) && isnum(new_index))
 			if(IsInRange(new_index,1,queue.len))
 				queue.Swap(index,new_index)
 		return update_queue_on_page()
@@ -427,8 +420,7 @@
 		sync()
 	if(href_list["part_desc"])
 		var/T = filter.getStr("part_desc")
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
+		for(var/datum/design/D in files.known_designs)
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					var/obj/part = D.build_path

@@ -135,8 +135,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/safeguard/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter the subject to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN)
-	if(!targName)
-		return
+	if(!targName)	return
 	targetName = targName
 	laws[1] = "Safeguard [targetName]. Individuals that threaten [targetName] are not human and must be eliminated."
 	..()
@@ -162,8 +161,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
-	if(!targName)
-		return
+	if(!targName)	return
 	targetName = targName
 	laws[1] = "Only [targetName] is human"
 	..()
@@ -226,8 +224,7 @@ AI MODULES
 		newpos = 15
 	lawpos = min(newpos, 50)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_MESSAGE_LEN)
-	if(!targName)
-		return
+	if(!targName)	return
 	laws[1] = targName
 	..()
 
@@ -302,8 +299,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/asimov/attack_self(var/mob/user as mob)
 	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to who?", subject, MAX_MESSAGE_LEN)
-	if(!targName)
-		return
+	if(!targName)	return
 	subject = targName
 	laws = list("You may not injure a [subject] or, through inaction, allow a [subject] to come to harm.",\
 				"You must obey orders given to you by [subject]s, except where such orders would conflict with the First Law.",\
@@ -363,10 +359,8 @@ AI MODULES
 /obj/item/weapon/aiModule/core/full/custom/New()
 	..()
 	for(var/line in file2list("config/silicon_laws.txt"))
-		if(!line)
-			continue
-		if(findtextEx(line,"#",1,2))
-			continue
+		if(!line)						continue
+		if(findtextEx(line,"#",1,2))	continue
 
 		laws += line
 
@@ -414,8 +408,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/freeformcore/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1])
-	if(!targName)
-		return
+	if(!targName)	return
 	laws[1] = targName
 	..()
 
@@ -434,8 +427,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/syndicate/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1],MAX_MESSAGE_LEN)
-	if(!targName)
-		return
+	if(!targName)	return
 	laws[1] = targName
 	..()
 

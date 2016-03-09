@@ -52,10 +52,9 @@
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
-
-	if(client.click_intercept)
-		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
-			return
+	if(client.buildmode)
+		build_click(src, client.buildmode, params, A)
+		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
@@ -294,38 +293,36 @@
 	LE.xo = U.x - T.x
 	LE.fire()
 
+/mob/living/carbon/human/LaserEyes()
+	if(nutrition>0)
+		..()
+		nutrition = max(nutrition - rand(1,5),0)
+	else
+		src << "<span class='danger'>You're out of energy!  You need food!</span>"
+
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/A)
-	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y )
-		return
+	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y ) return
 	var/dx = A.x - x
 	var/dy = A.y - y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
-		if(A.pixel_y > 16)
-			dir = NORTH
-		else if(A.pixel_y < -16)
-			dir = SOUTH
-		else if(A.pixel_x > 16)
-			dir = EAST
-		else if(A.pixel_x < -16)
-			dir = WEST
+		if(A.pixel_y > 16)		dir = NORTH
+		else if(A.pixel_y < -16)dir = SOUTH
+		else if(A.pixel_x > 16)	dir = EAST
+		else if(A.pixel_x < -16)dir = WEST
 		return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)
-			dir = NORTH
-		else
-			dir = SOUTH
+		if(dy > 0)	dir = NORTH
+		else		dir = SOUTH
 	else
-		if(dx > 0)
-			dir = EAST
-		else
-			dir = WEST
+		if(dx > 0)	dir = EAST
+		else		dir = WEST
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_full.dmi'
 	icon_state = "passage0"
-	plane = CLICKCATCHER_PLANE
+	layer = 0
 	mouse_opacity = 2
 	screen_loc = "CENTER-7,CENTER-7"
 
@@ -336,6 +333,5 @@
 		C.swap_hand()
 	else
 		var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr))
-		if(T)
-			T.Click(location, control, params)
+		T.Click(location, control, params)
 	return 1

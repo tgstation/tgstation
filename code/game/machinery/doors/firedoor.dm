@@ -40,8 +40,7 @@
 
 /obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user, params)
 	add_fingerprint(user)
-	if(operating)
-		return//Already doing something.
+	if(operating)	return//Already doing something.
 
 	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = C
@@ -55,8 +54,7 @@
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] starts undoing [src]'s bolts...</span>", \
 							 "<span class='notice'>You start unfastening [src]'s floor bolts...</span>")
-		if(!do_after(user, 50/C.toolspeed, target = src))
-			return
+		if(!do_after(user, 50/C.toolspeed, target = src)) return
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] unfastens [src]'s bolts.</span>", \
 							 "<span class='notice'>You undo [src]'s floor bolts.</span>")
@@ -69,8 +67,7 @@
 		return
 
 	if(istype(C, /obj/item/weapon/crowbar) || (istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1))
-		if(blocked || operating)
-			return
+		if(blocked || operating)	return
 		if(density)
 			open()
 			return

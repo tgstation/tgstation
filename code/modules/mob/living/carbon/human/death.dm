@@ -16,6 +16,8 @@
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
+	if(healths)
+		healths.icon_state = "health5"
 	stat = DEAD
 	dizziness = 0
 	jitteriness = 0
@@ -29,9 +31,15 @@
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
-	dna.species.spec_death(gibbed, src)
+		update_canmove()
+		if(client) blind.layer = 0
 
+	dna.species.spec_death(gibbed,src)
+
+	tod = worldtime2text()		//weasellos time of death patch
+	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 	if(ticker && ticker.mode)
+//		world.log << "k"
 		sql_report_death(src)
 		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	return ..(gibbed)
@@ -42,8 +50,7 @@
 	return 1
 
 /mob/living/carbon/proc/ChangeToHusk()
-	if(disabilities & HUSK)
-		return
+	if(disabilities & HUSK)	return
 	disabilities |= HUSK
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	return 1

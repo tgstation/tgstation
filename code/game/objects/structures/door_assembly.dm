@@ -292,16 +292,6 @@
 	anchored = 1
 	state = 1
 
-/obj/structure/door_assembly/door_assembly_abductor
-	name = "alien airlock assembly"
-	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
-	typetext = "abductor"
-	icontext = "abductor"
-	airlock_type = /obj/machinery/door/airlock/abductor
-	anchored = 1
-	state = 1
-
 /obj/structure/door_assembly/door_assembly_wood
 	name = "wooden airlock assembly"
 	icon = 'icons/obj/doors/airlocks/station/wood.dmi'

@@ -20,7 +20,7 @@ Contains:
 	icon_state = "capspace"
 	item_state = "capspacehelmet"
 	desc = "A special helmet designed for only the most fashionable of military figureheads."
-	flags_inv = HIDEFACE|HIDEEARS|HIDEHAIR
+	flags_inv = HIDEFACE
 	permeability_coefficient = 0.01
 	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
 
@@ -44,7 +44,7 @@ Contains:
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
-	actions_types = list()
+	action_button_name = null
 
 /obj/item/clothing/head/helmet/space/hardsuit/deathsquad/attack_self(mob/user)
 	return
@@ -118,7 +118,7 @@ Contains:
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
-	flags = STOPSPRESSUREDMAGE
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/suit/space/santa
@@ -138,7 +138,7 @@ Contains:
 	icon_state = "pirate"
 	item_state = "pirate"
 	armor = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-	flags = STOPSPRESSUREDMAGE
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE
 	strip_delay = 40
 	put_on_delay = 20
 	flags_cover = HEADCOVERSEYES
@@ -165,8 +165,9 @@ Contains:
 	item_color = "ert_commander"
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
 	strip_delay = 130
-	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
 	brightness_on = 7
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/suit/space/hardsuit/ert
 	name = "emergency response team suit"
@@ -262,8 +263,10 @@ Contains:
 	item_state = "syndicate"
 	armor = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 75)	//As whimpy as a space carp
 	brightness_on = 0 //luminosity when on
-	actions_types = list()
-	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
+	action_button_name = ""
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 
 
 /obj/item/clothing/suit/space/hardsuit/carp
@@ -284,7 +287,6 @@ Contains:
 	item_state = "hardsuit0-prt"
 	item_color = "knight_grey"
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	actions_types = list()
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	name = "paranormal response team suit"
@@ -298,14 +300,3 @@ Contains:
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/New()
 	..()
 	new /obj/item/weapon/nullrod(src)
-
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
-	name = "inquisitor's hardsuit"
-	icon_state = "hardsuit-inq"
-	item_state = "hardsuit-inq"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor
-
-/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor
-	name = "inquisitor's helmet"
-	icon_state = "hardsuit0-inq"
-	item_state = "hardsuit0-inq"

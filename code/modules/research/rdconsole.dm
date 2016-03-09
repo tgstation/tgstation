@@ -53,14 +53,24 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 /proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
+	var/datum/tech/check_tech
+	var/return_name = null
 	for(var/T in subtypesof(/datum/tech))
-		var/datum/tech/tt = T
-		if(initial(tt.id) == ID)
-			return initial(tt.name)
+		check_tech = null
+		check_tech = new T()
+		if(check_tech.id == ID)
+			return_name = check_tech.name
+			qdel(check_tech)
+			check_tech = null
+			break
+
+	return return_name
 
 proc/CallMaterialName(ID)
+	var/datum/reagent/temp_reagent
+	var/return_name = null
 	if (copytext(ID, 1, 2) == "$")
-		var/return_name = copytext(ID, 2)
+		return_name = copytext(ID, 2)
 		switch(return_name)
 			if("metal")
 				return_name = "Metal"
@@ -78,12 +88,16 @@ proc/CallMaterialName(ID)
 				return_name = "Diamond"
 			if("clown")
 				return_name = "Bananium"
-		return return_name
 	else
 		for(var/R in subtypesof(/datum/reagent))
-			var/datum/reagent/rr = R
-			if(initial(rr.id) == ID)
-				return initial(rr.name)
+			temp_reagent = null
+			temp_reagent = new R()
+			if(temp_reagent.id == ID)
+				return_name = temp_reagent.name
+				qdel(temp_reagent)
+				temp_reagent = null
+				break
+	return return_name
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/r_n_d/D in oview(3,src))
@@ -106,11 +120,9 @@ proc/CallMaterialName(ID)
 //Have it automatically push research to the centcom server so wild griffins can't fuck up R&D's work --NEO
 /obj/machinery/computer/rdconsole/proc/griefProtection()
 	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
-		for(var/v in files.known_tech)
-			var/datum/tech/T = files.known_tech[v]
+		for(var/datum/tech/T in files.known_tech)
 			C.files.AddTech2Known(T)
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
+		for(var/datum/design/D in files.known_designs)
 			C.files.AddDesign2Known(D)
 		C.files.RefreshResearch()
 
@@ -193,7 +205,10 @@ proc/CallMaterialName(ID)
 		screen = 1.0
 
 	else if(href_list["copy_tech"]) //Copy some technology data from the research holder to the disk.
-		t_disk.stored = files.known_tech[href_list["copy_tech_ID"]]
+		for(var/datum/tech/T in files.known_tech)
+			if(href_list["copy_tech_ID"] == T.id)
+				t_disk.stored = T
+				break
 		screen = 1.2
 
 	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
@@ -215,17 +230,10 @@ proc/CallMaterialName(ID)
 		screen = 1.0
 
 	else if(href_list["copy_design"]) //Copy design data from the research holder to the design disk.
-		var/datum/design/D = files.known_designs[href_list["copy_design_ID"]]
-		if(D)
-			var/autolathe_friendly = 1
-			for(var/x in D.materials)
-				if( !(x in list(MAT_METAL, MAT_GLASS)))
-					autolathe_friendly = 0
-					D.category -= "Imported"
-			if(D.build_type & (AUTOLATHE|PROTOLATHE|CRAFTLATHE)) // Specifically excludes circuit imprinter and mechfab
-				D.build_type = autolathe_friendly ? (D.build_type | AUTOLATHE) : D.build_type
-				D.category |= "Imported"
-			d_disk.blueprint = D
+		for(var/datum/design/D in files.known_designs)
+			if(href_list["copy_design_ID"] == D.id)
+				d_disk.blueprint = D
+				break
 		screen = 1.4
 
 	else if(href_list["eject_item"]) //Eject the item inside the destructive analyzer.
@@ -311,20 +319,16 @@ proc/CallMaterialName(ID)
 						if(S.disabled)
 							continue
 						if((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom))
-							for(var/v in files.known_tech)
-								var/datum/tech/T = files.known_tech[v]
+							for(var/datum/tech/T in files.known_tech)
 								S.files.AddTech2Known(T)
-							for(var/v in files.known_designs)
-								var/datum/design/D = files.known_designs[v]
+							for(var/datum/design/D in files.known_designs)
 								S.files.AddDesign2Known(D)
 							S.files.RefreshResearch()
 							server_processed = 1
 						if(((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom)) || S.hacked)
-							for(var/v in S.files.known_tech)
-								var/datum/tech/T = S.files.known_tech[v]
+							for(var/datum/tech/T in S.files.known_tech)
 								files.AddTech2Known(T)
-							for(var/v in S.files.known_designs)
-								var/datum/design/D = S.files.known_designs[v]
+							for(var/datum/design/D in S.files.known_designs)
 								files.AddDesign2Known(D)
 							files.RefreshResearch()
 							server_processed = 1
@@ -344,7 +348,11 @@ proc/CallMaterialName(ID)
 			coeff = 1
 		var/g2g = 1
 		if(linked_lathe)
-			var/datum/design/being_built = files.known_designs[href_list["build"]]
+			var/datum/design/being_built = null
+			for(var/datum/design/D in files.known_designs)
+				if(D.id == href_list["build"])
+					being_built = D
+					break
 			if(being_built)
 				var/power = 2000
 				var/amount=text2num(href_list["amount"])
@@ -414,7 +422,11 @@ proc/CallMaterialName(ID)
 		var/coeff = linked_imprinter.efficiency_coeff
 		var/g2g = 1
 		if(linked_imprinter)
-			var/datum/design/being_built = files.known_designs[href_list["imprint"]]
+			var/datum/design/being_built = null
+			for(var/datum/design/D in files.known_designs)
+				if(D.id == href_list["imprint"])
+					being_built = D
+					break
 			if(being_built)
 				var/power = 2000
 				var/old_screen = screen
@@ -558,8 +570,7 @@ proc/CallMaterialName(ID)
 			compare = IMPRINTER
 			screen = 4.17
 
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
+		for(var/datum/design/D in files.known_designs)
 			if(!(D.build_type & compare))
 				continue
 			if(findtext(D.name,href_list["to_search"]))
@@ -575,6 +586,7 @@ proc/CallMaterialName(ID)
 	interact(user)
 
 /obj/machinery/computer/rdconsole/interact(mob/user)
+
 	user.set_machine(src)
 	var/dat = ""
 	files.RefreshResearch()
@@ -640,8 +652,7 @@ proc/CallMaterialName(ID)
 		if(1.1) //Research viewer
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<h3>Current Research Levels:</h3><BR><div class='statusDisplay'>"
-			for(var/v in files.known_tech)
-				var/datum/tech/T = files.known_tech[v]
+			for(var/datum/tech/T in files.known_tech)
 				dat += "[T.name]<BR>"
 				dat +=  "* Level: [T.level]<BR>"
 				dat +=  "* Summary: [T.desc]<HR>"
@@ -668,8 +679,7 @@ proc/CallMaterialName(ID)
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=1.2'>Return to Disk Operations</A><div class='statusDisplay'>"
 			dat += "<h3>Load Technology to Disk:</h3><BR>"
-			for(var/v in files.known_tech)
-				var/datum/tech/T = files.known_tech[v]
+			for(var/datum/tech/T in files.known_tech)
 				dat += "[T.name] "
 				dat += "<A href='?src=\ref[src];copy_tech=1;copy_tech_ID=[T.id]'>Copy to Disk</A><BR>"
 			dat += "</div>"
@@ -703,8 +713,7 @@ proc/CallMaterialName(ID)
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=1.4'>Return to Disk Operations</A><div class='statusDisplay'>"
 			dat += "<h3>Load Design to Disk:</h3><BR>"
-			for(var/v in files.known_designs)
-				var/datum/design/D = files.known_designs[v]
+			for(var/datum/design/D in files.known_designs)
 				dat += "[D.name] "
 				dat += "<A href='?src=\ref[src];copy_design=1;copy_design_ID=[D.id]'>Copy to Disk</A><BR>"
 			dat += "</div>"
@@ -762,8 +771,7 @@ proc/CallMaterialName(ID)
 			var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
 			for(var/T in temp_tech)
 				dat += "* [CallTechName(T)] [temp_tech[T]]"
-				for(var/v in files.known_tech)
-					var/datum/tech/F = files.known_tech[v]
+				for(var/datum/tech/F in files.known_tech)
 					if(F.name == CallTechName(T))
 						dat += " (Current: [F.level])"
 						break
@@ -807,8 +815,7 @@ proc/CallMaterialName(ID)
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
 
 			var/coeff = linked_lathe.efficiency_coeff
-			for(var/v in files.known_designs)
-				var/datum/design/D = files.known_designs[v]
+			for(var/datum/design/D in files.known_designs)
 				if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
 					continue
 				var/temp_material
@@ -978,8 +985,7 @@ proc/CallMaterialName(ID)
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
 			var/coeff = linked_imprinter.efficiency_coeff
-			for(var/v in files.known_designs)
-				var/datum/design/D = files.known_designs[v]
+			for(var/datum/design/D in files.known_designs)
 				if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
 					continue
 				var/temp_materials

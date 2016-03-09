@@ -85,8 +85,7 @@
 	ai_actual_track(target)
 
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
-	if(!istype(target))
-		return
+	if(!istype(target))	return
 	var/mob/living/silicon/ai/U = usr
 
 	U.cameraFollow = target

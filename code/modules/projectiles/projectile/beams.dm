@@ -8,28 +8,22 @@
 	flag = "laser"
 	eyeblur = 2
 
-/obj/item/projectile/beam/laser
-
-/obj/item/projectile/beam/laser/heavylaser
-	name = "heavy laser"
-	icon_state = "heavylaser"
-	damage = 40
-
-/obj/item/projectile/beam/laser/on_hit(atom/target, blocked = 0)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.IgniteMob()
-
 /obj/item/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
+	hitsound = null
 	nodamage = 1
 
 /obj/item/projectile/beam/scatter
 	name = "laser pellet"
 	icon_state = "scatterlaser"
 	damage = 5
+
+
+/obj/item/projectile/beam/heavylaser
+	name = "heavy laser"
+	icon_state = "heavylaser"
+	damage = 40
 
 /obj/item/projectile/beam/xray
 	name = "xray beam"
@@ -90,6 +84,7 @@
 			if(M.wear_suit.type in suit_types)
 				M.adjustStaminaLoss(34)
 
+
 /obj/item/projectile/beam/lasertag/redtag
 	icon_state = "laser"
 	suit_types = list(/obj/item/clothing/suit/bluetag)
@@ -97,22 +92,3 @@
 /obj/item/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"
 	suit_types = list(/obj/item/clothing/suit/redtag)
-
-/obj/item/projectile/beam/instakill
-	name = "instagib laser"
-	icon_state = "purple_laser"
-	damage = 200
-	damage_type = BURN
-
-/obj/item/projectile/beam/instakill/blue
-	icon_state = "blue_laser"
-
-/obj/item/projectile/beam/instakill/red
-	icon_state = "red_laser"
-
-/obj/item/projectile/beam/instakill/on_hit(atom/target)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
-		M.gib()

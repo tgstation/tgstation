@@ -82,11 +82,9 @@
 	if(command)
 		switch(command)
 			if("set-electriclevel")
-				if(modifier)
-					electricity_level = modifier
+				if(modifier)	electricity_level = modifier
 			if("set-magneticfield")
-				if(modifier)
-					magnetic_field = modifier
+				if(modifier)	magnetic_field = modifier
 
 			if("add-elec")
 				electricity_level++
@@ -106,11 +104,9 @@
 					magnetic_field = 1
 
 			if("set-x")
-				if(modifier)
-					center_x = modifier
+				if(modifier)	center_x = modifier
 			if("set-y")
-				if(modifier)
-					center_y = modifier
+				if(modifier)	center_y = modifier
 
 			if("N") // NORTH
 				center_y++
@@ -128,8 +124,7 @@
 				center_y = rand(-max_dist, max_dist)
 
 			if("set-code")
-				if(modifier)
-					code = modifier
+				if(modifier)	code = modifier
 			if("toggle-power")
 				on = !on
 

@@ -9,7 +9,7 @@
 	invisibility = 101
 
 	density = 0
-	stat = DEAD
+	stat = 2
 	canmove = 0
 
 	anchored = 1	//  don't get pushed around
@@ -86,8 +86,7 @@
 	if(src != usr)
 		return 0
 
-	if(!client)
-		return 0
+	if(!client)	return 0
 
 	//Determines Relevent Population Cap
 	var/relevant_cap
@@ -113,8 +112,7 @@
 	if(href_list["observe"])
 
 		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
-			if(!client)
-				return 1
+			if(!client)	return 1
 			var/mob/dead/observer/observer = new()
 
 			spawning = 1
@@ -194,7 +192,7 @@
 		var/pollid = href_list["pollid"]
 		if(istext(pollid))
 			pollid = text2num(pollid)
-		if(isnum(pollid) && IsInteger(pollid))
+		if(isnum(pollid))
 			src.poll_player(pollid)
 		return
 
@@ -223,7 +221,7 @@
 							rating = null
 						else
 							rating = text2num(href_list["o[optionid]"])
-							if(!isnum(rating) || !IsInteger(rating))
+							if(!isnum(rating))
 								return
 
 						vote_on_numval_poll(pollid, optionid, rating)

@@ -33,10 +33,9 @@
 
 		for(var/i = 0, i < 10, i++) //The healing itself - doesn't heal toxin damage (that's anatomic panacea) and effectiveness decreases with each use in a short timespan
 			if(user)
-				user.adjustBruteLoss(-10 / recent_uses, 0)
-				user.adjustOxyLoss(-10 / recent_uses, 0)
-				user.adjustFireLoss(-10 / recent_uses, 0)
-				user.updatehealth()
+				user.adjustBruteLoss(-10 / recent_uses)
+				user.adjustOxyLoss(-10 / recent_uses)
+				user.adjustFireLoss(-10 / recent_uses)
 			sleep(10)
 
 	feedback_add_details("changeling_powers","RR")

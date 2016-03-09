@@ -20,11 +20,8 @@ var/list/ai_list = list()
 	density = 1
 	status_flags = CANSTUN|CANPUSH
 	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
-	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
-	see_in_dark = 8
 	med_hud = DATA_HUD_MEDICAL_BASIC
 	sec_hud = DATA_HUD_SECURITY_BASIC
-	mob_size = MOB_SIZE_LARGE
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
@@ -299,7 +296,7 @@ var/list/ai_list = list()
 	onclose(src, "airoster")
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
-	if(stat == DEAD)
+	if(stat == 2)
 		return //won't work if dead
 	if(istype(usr,/mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = src
@@ -328,7 +325,7 @@ var/list/ai_list = list()
 	set name = "Toggle Floor Bolts"
 	if(!isturf(loc)) // if their location isn't a turf
 		return // stop
-	if(stat == DEAD)
+	if(stat == 2)
 		return //won't work if dead
 	anchored = !anchored // Toggles the anchor
 
@@ -340,7 +337,7 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "Malfunction"
-	if(stat == DEAD)
+	if(stat == 2)
 		return //won't work if dead
 	if(istype(usr,/mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = src
@@ -350,8 +347,14 @@ var/list/ai_list = list()
 	SSshuttle.cancelEvac(src)
 	return
 
+/mob/living/silicon/ai/check_eye(mob/user)
+	if (!current)
+		return null
+	user.reset_view(current)
+	return 1
+
 /mob/living/silicon/ai/blob_act()
-	if (stat != DEAD)
+	if (stat != 2)
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
@@ -376,11 +379,11 @@ var/list/ai_list = list()
 		if(1)
 			gib()
 		if(2)
-			if (stat != DEAD)
+			if (stat != 2)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3)
-			if (stat != DEAD)
+			if (stat != 2)
 				adjustBruteLoss(30)
 
 	return
@@ -470,12 +473,20 @@ var/list/ai_list = list()
 	..()
 	return
 
+/mob/living/silicon/ai/reset_view(atom/A)
+	if (camera_light_on)
+		light_cameras()
+	if(istype(A,/obj/machinery/camera))
+		current = A
+	..()
+
+
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
 
 	if(!tracking)
 		cameraFollow = null
 
-	if (!C || stat == DEAD) //C.can_use())
+	if (!C || stat == 2) //C.can_use())
 		return 0
 
 	if(!src.eyeobj)
@@ -804,7 +815,7 @@ var/list/ai_list = list()
 			user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
 			return
 		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
-		ai_restore_power()//So the AI initially has power.
+		aiRestorePowerRoutine = 0//So the AI initially has power.
 		control_disabled = 1//Can't control things remotely if you're stuck in a card!
 		radio_enabled = 0 	//No talking on the built-in radio for you either!
 		loc = card//Throw AI into the card.
@@ -855,44 +866,3 @@ var/list/ai_list = list()
 	if(aiPDA)
 		aiPDA.owner = newname
 		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"
-
-
-/mob/living/silicon/ai/proc/add_malf_picker()
-	src << "In the top right corner of the screen you will find the Malfunctions tab, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices."
-	src << "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds."
-	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
-	verbs += /mob/living/silicon/ai/proc/choose_modules
-	malf_picker = new /datum/module_picker
-
-
-/mob/living/silicon/ai/reset_perspective(atom/A)
-	if(camera_light_on)
-		light_cameras()
-	if(istype(A,/obj/machinery/camera))
-		current = A
-	if(client)
-		if(istype(A, /atom/movable))
-			client.perspective = EYE_PERSPECTIVE
-			client.eye = A
-		else
-			if(isturf(loc))
-				if(eyeobj)
-					client.eye = eyeobj
-					client.perspective = MOB_PERSPECTIVE
-				else
-					client.eye = client.mob
-					client.perspective = MOB_PERSPECTIVE
-			else
-				client.perspective = EYE_PERSPECTIVE
-				client.eye = loc
-		update_sight()
-		if(client.eye != src)
-			var/atom/AT = client.eye
-			AT.get_remote_view_fullscreens(src)
-		else
-			clear_fullscreen("remote_view", 0)
-
-/mob/living/silicon/ai/revive(full_heal = 0, admin_revive = 0)
-	if(..()) //successfully ressuscitated from death
-		icon_state = "ai"
-		. = 1

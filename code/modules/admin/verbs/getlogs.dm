@@ -85,10 +85,11 @@
 	set name = "Show Server Log"
 	set desc = "Shows today's server log."
 
-	if(fexists("[diary]"))
-		src << ftp(diary)
+	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")].log"
+	if( fexists(path) )
+		src << ftp( file(path) )
 	else
-		src << "<font color='red'>Server log not found, try using .getserverlog.</font>"
+		src << "<font color='red'>Error: view_txt_log(): File not found/Invalid path([path]).</font>"
 		return
 	feedback_add_details("admin_verb","VTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
@@ -99,10 +100,11 @@
 	set name = "Show Server Attack Log"
 	set desc = "Shows today's server attack log."
 
-	if(fexists("[diaryofmeanpeople]"))
-		src << ftp(diaryofmeanpeople)
+	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")] Attack.log"
+	if( fexists(path) )
+		src << ftp( file(path) )
 	else
-		src << "<font color='red'>Server attack log not found, try using .getserverlog.</font>"
+		src << "<font color='red'>Error: view_atk_log(): File not found/Invalid path([path]).</font>"
 		return
 	feedback_add_details("admin_verb","SSAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

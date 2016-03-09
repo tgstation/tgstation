@@ -34,8 +34,9 @@
 	..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
-	update_icon()
-	updateinfolinks()
+	spawn(2)
+		update_icon()
+		updateinfolinks()
 
 
 /obj/item/weapon/paper/update_icon()
@@ -53,10 +54,6 @@
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
 	assets.send(user)
 
-	if(istype(src, /obj/item/weapon/paper/talisman)) //Talismans cannot be read
-		if(!iscultist(user) && !user.stat)
-			user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
-			return
 	if(in_range(user, src) || isobserver(user))
 		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
@@ -82,7 +79,6 @@
 	if(H.disabilities & CLUMSY && prob(25))
 		H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
 		H.damageoverlaytemp = 9001
-		H.update_damage_hud()
 		return
 	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == 0))

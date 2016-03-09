@@ -162,8 +162,8 @@
 /obj/structure/closet/crate/miningcar
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
 	name = "Mining car (not for rails)"
+	icon_crate = "miningcar"
 	icon_state = "miningcar"
-
 /*****************************Survival Pod********************************/
 
 
@@ -217,11 +217,11 @@
 	new /obj/item/weapon/storage/pill_bottle/dice(cur_turf)
 
 	cur_turf = locate(start_turf.x+1, start_turf.y-1, start_turf.z)
-	var/obj/structure/chair/comfy/C = new /obj/structure/chair/comfy(cur_turf)
+	var/obj/structure/bed/chair/comfy/C = new /obj/structure/bed/chair/comfy(cur_turf)
 	C.dir = 1
 
 	cur_turf = locate(start_turf.x+1, start_turf.y+1, start_turf.z)
-	new /obj/structure/chair/comfy(cur_turf)
+	new /obj/structure/bed/chair/comfy(cur_turf)
 
 	cur_turf = locate(start_turf.x-1, start_turf.y-1, start_turf.z)
 	var/obj/machinery/sleeper/S = new /obj/machinery/sleeper(cur_turf)

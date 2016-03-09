@@ -1,17 +1,14 @@
 
 /obj/structure/table
-	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/list/table_contents = list()
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
 	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC)
 
 
-/obj/structure/table/MouseDrop(mob/living/user)
-	if(!istype(user))
+/obj/structure/table/MouseDrop(atom/over)
+	if(over != usr || !usr.IsAdvancedToolUser())
 		return
-	if(!user.IsAdvancedToolUser())
-		return
-	interact(user)
+	interact(usr)
 
 /obj/structure/table/proc/check_contents(datum/table_recipe/R)
 	check_table()
@@ -183,6 +180,8 @@
 	if(user.incapacitated() || user.lying || !Adjacent(user))
 		return
 	check_table()
+	if(!table_contents.len)
+		return
 	user.face_atom(src)
 	var/dat = "<h3>Crafting menu</h3>"
 	if(busy)

@@ -78,7 +78,7 @@
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
-	desc = "A suit of armor with heavy padding to protect against melee attacks."
+	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
 	icon_state = "riot"
 	item_state = "swat_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -123,15 +123,16 @@
 
 
 //Reactive armor
+//When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
 /obj/item/clothing/suit/armor/reactive
-	name = "reactive armor"
-	desc = "Doesn't seem to do much for some reason."
+	name = "reactive teleport armor"
+	desc = "Someone seperated our Research Director from his own head!"
 	var/active = 0
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
-	actions_types = list(/datum/action/item_action/toggle)
+	action_button_name = "Toggle Armor"
 	unacidable = 1
 	hit_reaction_chance = 50
 
@@ -155,35 +156,29 @@
 	src.item_state = "reactiveoff"
 	..()
 
-//When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
-/obj/item/clothing/suit/armor/reactive/teleport
-	name = "reactive teleport armor"
-	desc = "Someone seperated our Research Director from his own head!"
-	var/tele_range = 6
-	var/rad_amount= 15
-
-/obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/clothing/suit/armor/reactive/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(!active)
 		return 0
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text]!</span>")
 		var/list/turfs = new/list()
-		for(var/turf/T in orange(tele_range, H))
+		for(var/turf/T in orange(6, H))
 			if(T.density)
 				continue
-			if(T.x>world.maxx-tele_range || T.x<tele_range)
+			if(T.x>world.maxx-6 || T.x<6)
 				continue
-			if(T.y>world.maxy-tele_range || T.y<tele_range)
+			if(T.y>world.maxy-6 || T.y<6)
 				continue
 			turfs += T
 		if(!turfs.len)
-			turfs += pick(/turf in orange(tele_range, H))
+			turfs += pick(/turf in orange(6, H))
 		var/turf/picked = pick(turfs)
 		if(!isturf(picked))
 			return
+		if(H.buckled)
+			H.buckled.unbuckle_mob()
 		H.forceMove(picked)
-		H.rad_act(rad_amount)
 		return 1
 	return 0
 

@@ -41,6 +41,7 @@
 				//Blender Stuff
 				/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/oat = list("flour" = -5),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
@@ -48,10 +49,11 @@
 				/obj/item/weapon/reagent_containers/food/snacks/egg = list("eggyolk" = -5),
 
 				//Grinder stuff, but only if dry
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica = list("coffeepowder" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera = list("teapowder" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0),
+
 
 
 				//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
@@ -79,11 +81,12 @@
 		)
 
 		var/list/dried_items = list(
-				//Grinder stuff, but only if dry,
+
+				//Grinder stuff, but only if dry
+				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica = list("coffeepowder" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera = list("teapowder" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0)
 		)
 
 		var/list/holdingitems = list()
@@ -274,18 +277,18 @@
 /obj/machinery/reagentgrinder/proc/get_grownweapon_amount(obj/item/weapon/grown/O)
 		if (!istype(O))
 				return 5
-		else if (O.seed.potency == -1)
+		else if (O.potency == -1)
 				return 5
 		else
-				return round(O.seed.potency)
+				return round(O.potency)
 
 /obj/machinery/reagentgrinder/proc/get_juice_amount(obj/item/weapon/reagent_containers/food/snacks/grown/O)
 		if (!istype(O))
 				return 5
-		else if (O.seed.potency == -1)
+		else if (O.potency == -1)
 				return 5
 		else
-				return round(5*sqrt(O.seed.potency))
+				return round(5*sqrt(O.potency))
 
 /obj/machinery/reagentgrinder/proc/remove_object(obj/item/O)
 		holdingitems -= O

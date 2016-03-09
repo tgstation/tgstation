@@ -407,7 +407,7 @@ var/global/list/rockTurfEdgeCache
 	if(prob(30))
 		if(istype(loc, /area/mine/explored))
 			return
-		for(var/atom/A in urange(15,T))//Lowers chance of mob clumps
+		for(var/atom/A in ultra_range(15,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
 				return
 		var/randumb = pickweight(mob_spawn_list)
@@ -543,9 +543,6 @@ var/global/list/rockTurfEdgeCache
 	oxygen = 0.01
 	nitrogen = 0.01
 	temperature = TCMB
-
-/turf/simulated/floor/plating/asteroid/snow/temperate
-	temperature = 255.37
 
 /turf/simulated/floor/plating/asteroid/New()
 	var/proper_name = name

@@ -24,14 +24,6 @@ var/datum/subsystem/npcpool/SSnpc
 	..("T:[botPool_l.len + botPool_l_non.len]|D:[needsDelegate.len]|A:[needsAssistant.len + needsHelp_non.len]|U:[canBeUsed.len + canBeUsed_non.len]")
 
 
-/datum/subsystem/npcpool/proc/cleanNull()
-		//cleanup nulled bots
-	listclearnulls(botPool_l)
-	listclearnulls(needsDelegate)
-	listclearnulls(canBeUsed)
-	listclearnulls(needsAssistant)
-
-
 /datum/subsystem/npcpool/fire()
 	//bot delegation and coordination systems
 	//General checklist/Tasks for delegating a task or coordinating it (for SNPCs)
@@ -42,8 +34,6 @@ var/datum/subsystem/npcpool/SSnpc
 	// 5. Do all assignments: goes through the delegated/coordianted bots and assigns the right variables/tasks to them.
 	var/npcCount = 1
 
-	cleanNull()
-
 	//SNPC handling
 	for(var/mob/living/carbon/human/interactive/check in botPool_l)
 		if(!check)
@@ -53,7 +43,7 @@ var/datum/subsystem/npcpool/SSnpc
 		if(!(locate(check.TARGET) in checkInRange))
 			needsDelegate |= check
 
-		else if(check.IsDeadOrIncap(FALSE))
+		else if(check.isnotfunc(FALSE))
 			needsDelegate |= check
 
 		else if(check.doing & FIGHTING)
@@ -85,7 +75,6 @@ var/datum/subsystem/npcpool/SSnpc
 						needsDelegate -= check
 						canBeUsed -= candidate
 						candidate.eye_color = "red"
-						candidate.update_icons()
 			npcCount++
 
 	if(needsAssistant.len)
@@ -110,5 +99,4 @@ var/datum/subsystem/npcpool/SSnpc
 						needsAssistant -= check
 						canBeUsed -= candidate
 						candidate.eye_color = "yellow"
-						candidate.update_icons()
 			npcCount++

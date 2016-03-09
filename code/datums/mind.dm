@@ -47,7 +47,10 @@
 	var/list/datum/objective/objectives = list()
 	var/list/datum/objective/special_verbs = list()
 
+<<<<<<< HEAD
 	var/list/cult_words = list()
+=======
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/datum/faction/faction 			//associated faction
@@ -113,7 +116,10 @@
 			changeling = null
 	special_role = null
 	remove_antag_equip()
+<<<<<<< HEAD
 	ticker.mode.update_changeling_icons_removed(src)
+=======
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 /datum/mind/proc/remove_traitor()
 	if(src in ticker.mode.traitors)
@@ -127,7 +133,10 @@
 			qdel(A.malf_picker)
 	special_role = null
 	remove_antag_equip()
+<<<<<<< HEAD
 	ticker.mode.update_traitor_icons_removed(src)
+=======
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 /datum/mind/proc/remove_nukeop()
 	if(src in ticker.mode.syndicates)
@@ -148,12 +157,16 @@
 	if(src in ticker.mode.cult)
 		ticker.mode.cult -= src
 		ticker.mode.update_cult_icons_removed(src)
+<<<<<<< HEAD
 		var/datum/game_mode/cult/cult = ticker.mode
 		if(istype(cult))
 			cult.memorize_cult_objectives(src)
 	special_role = null
 	remove_objectives()
 	remove_antag_equip()
+=======
+	special_role = null
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 /datum/mind/proc/remove_rev()
 	if(src in ticker.mode.revolutionaries)
@@ -200,6 +213,7 @@
 	remove_cultist()
 	remove_rev()
 	remove_gang()
+<<<<<<< HEAD
 	ticker.mode.update_changeling_icons_removed(src)
 	ticker.mode.update_traitor_icons_removed(src)
 	ticker.mode.update_wiz_icons_removed(src)
@@ -207,6 +221,8 @@
 	ticker.mode.update_rev_icons_removed(src)
 	gang_datum.remove_gang_hud(src)
 
+=======
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)
@@ -220,10 +236,15 @@
 		for(var/datum/objective/objective in objectives)
 			output += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
 
+<<<<<<< HEAD
 	if(window)
 		recipient << browse(output,"window=memory")
 	else
 		recipient << "<i>[output]</i>"
+=======
+	if(window)	recipient << browse(output,"window=memory")
+	else		recipient << "<i>[output]</i>"
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 /datum/mind/proc/edit_memory()
 	if(!ticker || !ticker.mode)
@@ -334,11 +355,16 @@
 		text = "<i><b>[text]</b></i>: "
 		if (src in ticker.mode.cult)
 			text += "loyal|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
+<<<<<<< HEAD
 			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
 /*
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
 */
+=======
+			text += "<br><a href='?src=\ref[src];cult=equip'>Equip</a>"
+
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 		else if(isloyal(current))
 			text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
 		else
@@ -611,6 +637,7 @@
 
 
 /datum/mind/Topic(href, href_list)
+<<<<<<< HEAD
 	if(!check_rights(R_ADMIN))
 		return
 
@@ -618,12 +645,23 @@
 		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in get_all_jobs()
 		if (!new_role)
 			return
+=======
+	if(!check_rights(R_ADMIN))	return
+
+	if (href_list["role_edit"])
+		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in get_all_jobs()
+		if (!new_role) return
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 		assigned_role = new_role
 
 	else if (href_list["memory_edit"])
 		var/new_memo = copytext(sanitize(input("Write new memory", "Memory", memory) as null|message),1,MAX_MESSAGE_LEN)
+<<<<<<< HEAD
 		if (isnull(new_memo))
 			return
+=======
+		if (isnull(new_memo)) return
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 		memory = new_memo
 
 	else if (href_list["obj_edit"] || href_list["obj_add"])
@@ -633,8 +671,12 @@
 
 		if (href_list["obj_edit"])
 			objective = locate(href_list["obj_edit"])
+<<<<<<< HEAD
 			if (!objective)
 				return
+=======
+			if (!objective) return
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 			objective_pos = objectives.Find(objective)
 
 			//Text strings are easy to manipulate. Revised for simplicity.
@@ -644,8 +686,12 @@
 				def_value = "custom"
 
 		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom","follower block (HOG)","build (HOG)","deicide (HOG)", "follower escape (HOG)", "sacrifice prophet (HOG)")
+<<<<<<< HEAD
 		if (!new_obj_type)
 			return
+=======
+		if (!new_obj_type) return
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 		var/datum/objective/new_objective = null
 
@@ -662,8 +708,12 @@
 					def_target = objective:target.current
 
 				var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
+<<<<<<< HEAD
 				if (!new_target)
 					return
+=======
+				if (!new_target) return
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 				var/objective_path = text2path("/datum/objective/[new_obj_type]")
 				if (new_target == "Free objective")
@@ -763,14 +813,22 @@
 
 			if ("custom")
 				var/expl = stripped_input(usr, "Custom objective:", "Objective", objective ? objective.explanation_text : "")
+<<<<<<< HEAD
 				if (!expl)
 					return
+=======
+				if (!expl) return
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 				new_objective = new /datum/objective
 				new_objective.owner = src
 				new_objective.explanation_text = expl
 
+<<<<<<< HEAD
 		if (!new_objective)
 			return
+=======
+		if (!new_objective) return
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 		if (objective)
 			objectives -= objective
@@ -784,16 +842,24 @@
 
 	else if (href_list["obj_delete"])
 		var/datum/objective/objective = locate(href_list["obj_delete"])
+<<<<<<< HEAD
 		if(!istype(objective))
 			return
+=======
+		if(!istype(objective))	return
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 		objectives -= objective
 		message_admins("[key_name_admin(usr)] removed an objective for [current]: [objective.explanation_text]")
 		log_admin("[key_name(usr)] removed an objective for [current]: [objective.explanation_text]")
 
 	else if(href_list["obj_completed"])
 		var/datum/objective/objective = locate(href_list["obj_completed"])
+<<<<<<< HEAD
 		if(!istype(objective))
 			return
+=======
+		if(!istype(objective))	return
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
 
@@ -991,6 +1057,7 @@
 					ticker.mode.add_cultist(src)
 					message_admins("[key_name_admin(usr)] has cult'ed [current].")
 					log_admin("[key_name(usr)] has cult'ed [current].")
+<<<<<<< HEAD
 			if("tome")
 				if (!ticker.mode.equip_cultist(current,1))
 					usr << "<span class='danger'>Spawning tome failed!</span>"
@@ -999,6 +1066,11 @@
 				if (!ticker.mode.equip_cultist(current))
 					usr << "<span class='danger'>Spawning amulet failed!</span>"
 
+=======
+			if("equip")
+				if (!ticker.mode.equip_cultist(current))
+					usr << "<span class='danger'>equip_cultist() failed! [current]'s starting equipment will be incomplete.</span>"
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])
@@ -1006,7 +1078,10 @@
 				remove_wizard()
 				current << "<span class='userdanger'>You have been brainwashed! You are no longer a wizard!</span>"
 				log_admin("[key_name(usr)] has de-wizard'ed [current].")
+<<<<<<< HEAD
 				ticker.mode.update_wiz_icons_removed(src)
+=======
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 			if("wizard")
 				if(!(src in ticker.mode.wizards))
 					ticker.mode.wizards += src
@@ -1015,7 +1090,10 @@
 					current << "<span class='boldannounce'>You are the Space Wizard!</span>"
 					message_admins("[key_name_admin(usr)] has wizard'ed [current].")
 					log_admin("[key_name(usr)] has wizard'ed [current].")
+<<<<<<< HEAD
 					ticker.mode.update_wiz_icons_added(src)
+=======
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 			if("lair")
 				current.loc = pick(wizardstart)
 			if("dressup")
@@ -1041,7 +1119,10 @@
 					current << "<span class='boldannounce'>Your powers are awoken. A flash of memory returns to us...we are [changeling.changelingID], a changeling!</span>"
 					message_admins("[key_name_admin(usr)] has changeling'ed [current].")
 					log_admin("[key_name(usr)] has changeling'ed [current].")
+<<<<<<< HEAD
 					ticker.mode.update_changeling_icons_added(src)
+=======
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 			if("autoobjectives")
 				ticker.mode.forge_changeling_objectives(src)
 				usr << "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>"
@@ -1113,7 +1194,10 @@
 				current << "<span class='userdanger'>You have been brainwashed! You are no longer a traitor!</span>"
 				message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
 				log_admin("[key_name(usr)] has de-traitor'ed [current].")
+<<<<<<< HEAD
 				ticker.mode.update_traitor_icons_removed(src)
+=======
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 			if("traitor")
 				if(!(src in ticker.mode.traitors))
@@ -1125,7 +1209,10 @@
 					if(isAI(current))
 						var/mob/living/silicon/ai/A = current
 						ticker.mode.add_law_zero(A)
+<<<<<<< HEAD
 					ticker.mode.update_traitor_icons_added(src)
+=======
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 			if("autoobjectives")
 				ticker.mode.forge_traitor_objectives(src)
@@ -1139,10 +1226,17 @@
 					ticker.mode.shadows -= src
 					special_role = null
 					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
+<<<<<<< HEAD
 					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
 					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/enthrall)
 					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
+=======
+					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
+					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
+					remove_spell(/obj/effect/proc_holder/spell/targeted/enthrall)
+					remove_spell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
 					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
 				else if(src in ticker.mode.thralls)
@@ -1172,14 +1266,20 @@
 		switch(href_list["abductor"])
 			if("clear")
 				usr << "Not implemented yet. Sorry!"
+<<<<<<< HEAD
 				//ticker.mode.update_abductor_icons_removed(src)
+=======
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 			if("abductor")
 				if(!ishuman(current))
 					usr << "<span class='warning'>This only works on humans!</span>"
 					return
 				make_Abductor()
 				log_admin("[key_name(usr)] turned [current] into abductor.")
+<<<<<<< HEAD
 				ticker.mode.update_abductor_icons_added(src)
+=======
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 			if("equip")
 				var/gear = alert("Agent or Scientist Gear","Gear","Agent","Scientist")
 				if(gear)
@@ -1346,7 +1446,10 @@
 		special_role = "Changeling"
 		ticker.mode.forge_changeling_objectives(src)
 		ticker.mode.greet_changeling(src)
+<<<<<<< HEAD
 		ticker.mode.update_changeling_icons_added(src)
+=======
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 /datum/mind/proc/make_Wizard()
 	if(!(src in ticker.mode.wizards))
@@ -1375,6 +1478,7 @@
 		special_role = "Cultist"
 		current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
 		current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+<<<<<<< HEAD
 		var/datum/game_mode/cult/cult = ticker.mode
 
 		if (istype(cult))
@@ -1389,6 +1493,10 @@
 	var/mob/living/carbon/human/H = current
 	if (!ticker.mode.equip_cultist(current))
 		H << "Spawning an amulet from your Master failed."
+=======
+		current << "Your objective is to summon Nar-Sie by building and defending a suitable shell for the Geometer. Adequate supplies can be procured through human sacrifices."
+		ticker.mode.equip_cultist(current)
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 /datum/mind/proc/make_Rev()
 	if (ticker.mode.head_revolutionaries.len>0)
@@ -1592,6 +1700,7 @@
 	return 1
 
 
+<<<<<<< HEAD
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S
 	S.action.Grant(current)
@@ -1605,16 +1714,43 @@
 			qdel(S)
 			spell_list -= S
 
+=======
+/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/spell)
+	spell_list += spell
+	if(!spell.action)
+		spell.action = new/datum/action/spell_action
+		spell.action.target = spell
+		spell.action.name = spell.name
+		spell.action.button_icon = spell.action_icon
+		spell.action.button_icon_state = spell.action_icon_state
+		spell.action.background_icon_state = spell.action_background_icon_state
+	spell.action.Grant(current)
+	return
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 /datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)
 		for(var/datum/action/A in current.actions)
 			A.Grant(new_character)
 	transfer_mindbound_actions(new_character)
 
+<<<<<<< HEAD
 /datum/mind/proc/transfer_mindbound_actions(mob/living/new_character)
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		S.action.Grant(new_character)
+=======
+/datum/mind/proc/transfer_mindbound_actions(var/mob/living/new_character)
+	for(var/obj/effect/proc_holder/spell/spell in spell_list)
+		if(!spell.action) // Unlikely but whatever
+			spell.action = new/datum/action/spell_action
+			spell.action.target = spell
+			spell.action.name = spell.name
+			spell.action.button_icon = spell.action_icon
+			spell.action.button_icon_state = spell.action_icon_state
+			spell.action.background_icon_state = spell.action_background_icon_state
+		spell.action.Grant(new_character)
+	return
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
@@ -1726,4 +1862,9 @@
 /mob/living/simple_animal/hostile/construct/mind_initialize()
 	..()
 	mind.assigned_role = "[initial(name)]"
+<<<<<<< HEAD
 	mind.special_role = "Cultist"
+=======
+	mind.special_role = "Cultist"
+
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461

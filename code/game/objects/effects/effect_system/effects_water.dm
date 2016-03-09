@@ -2,6 +2,7 @@
 
 /obj/effect/particle_effect/water
 	name = "water"
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
 	var/life = 15
 	mouse_opacity = 0
@@ -43,6 +44,7 @@ steam.start() -- spawns the effect
 /////////////////////////////////////////////
 /obj/effect/particle_effect/steam
 	name = "steam"
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
 	density = 0
 

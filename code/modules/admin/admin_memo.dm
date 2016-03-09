@@ -1,8 +1,7 @@
 /client/proc/admin_memo()
 	set name = "Memo"
 	set category = "Server"
-	if(!check_rights(0))
-		return
+	if(!check_rights(0))	return
 	if(!dbcon.IsConnected())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return

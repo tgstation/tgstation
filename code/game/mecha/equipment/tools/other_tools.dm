@@ -35,9 +35,11 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
-		return
-	var/list/theareas = get_areas_in_range(100, chassis)
+	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM) return
+	var/list/theareas = list()
+	for(var/area/AR in ultra_range(100, chassis, 1))
+		if(AR in theareas) continue
+		theareas += AR
 	if(!theareas.len)
 		return
 	var/area/thearea = pick(theareas)

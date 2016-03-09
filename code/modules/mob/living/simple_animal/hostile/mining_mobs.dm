@@ -280,7 +280,7 @@
 				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
 			else
 				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
-			H.revive(full_heal = 1)
+			H.revive()
 			qdel(src)
 	..()
 
@@ -364,10 +364,9 @@
 		return
 	icon_state = "Goliath_preattack"
 
-/mob/living/simple_animal/hostile/asteroid/goliath/revive(full_heal = 0, admin_revive = 0)
-	if(..())
-		anchored = 1
-		. = 1
+/mob/living/simple_animal/hostile/asteroid/goliath/revive()
+	anchored = 1
+	..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	anchored = 0

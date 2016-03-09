@@ -27,9 +27,9 @@
 		return 0
 
 	//check for centcomm shuttles
-	for(var/A in SSshuttle.mobile)
-		var/obj/docking_port/mobile/M = A
-		if(M.launch_status == ENDGAME_LAUNCHED && T in M.areaInstance)
+	for(var/centcom_shuttle in list("emergency", "pod1", "pod2", "pod3", "pod4", "ferry"))
+		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(centcom_shuttle)
+		if(T in M.areaInstance)
 			return 1
 
 	//finally check for centcom itself
@@ -72,6 +72,8 @@
 		return null
 
 /atom/proc/check_eye(mob/user)
+	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
+		return 1
 	return
 
 /atom/proc/on_reagent_change()
@@ -88,11 +90,11 @@
 
 /*//Convenience proc to see whether a container can be accessed in a certain way.
 
-/atom/proc/can_subract_container()
-	return flags & EXTRACT_CONTAINER
+	proc/can_subract_container()
+		return flags & EXTRACT_CONTAINER
 
-/atom/proc/can_add_container()
-	return flags & INSERT_CONTAINER
+	proc/can_add_container()
+		return flags & INSERT_CONTAINER
 */
 
 
@@ -193,10 +195,9 @@
 	return
 
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
-	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
-		spawn(2) //very short wait, so we can actually see the impact.
-			if(AM && isturf(AM.loc))
-				step(AM, turn(AM.dir, 180))
+	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav.
+		spawn(2)
+			step(AM,  turn(AM.dir, 180))
 
 var/list/blood_splatter_icons = list()
 
@@ -276,6 +277,20 @@ var/list/blood_splatter_icons = list()
 /atom/proc/rejects_blood()
 	return 0
 
+/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
+	if( istype(src, /turf/simulated) )
+		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
+		if(M.reagents)
+			M.reagents.trans_to(this, M.reagents.total_volume / 10)
+		// Make toxins vomit look different
+		if(toxvomit)
+			this.icon_state = "vomittox_[pick(1,4)]"
+
+		/*for(var/datum/disease/D in M.viruses)
+			var/datum/disease/newDisease = D.Copy(1)
+			this.viruses += newDisease
+			newDisease.holder = this*/
+
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M)
 	if(istype(src, /turf/simulated))
@@ -287,13 +302,11 @@ var/list/blood_splatter_icons = list()
 			B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
 		else if(istype(M, /mob/living/carbon/alien))
 			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents
-			if(!B)
-				B = new(src)
+			if(!B)	B = new(src)
 			B.blood_DNA["UNKNOWN BLOOD"] = "X*"
 		else if(istype(M, /mob/living/silicon/robot))
 			var/obj/effect/decal/cleanable/oil/B = locate() in contents
-			if(!B)
-				B = new(src)
+			if(!B)	B = new(src)
 
 /atom/proc/clean_blood()
 	if(istype(blood_DNA, /list))
@@ -356,32 +369,3 @@ var/list/blood_splatter_icons = list()
 /atom/Stat()
 	. = ..()
 	sleep(1)
-
-//This will be called after the map and objects are loaded
-/atom/proc/initialize()
-	return
-
-//the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
-/atom/proc/get_remote_view_fullscreens(mob/user)
-	return
-
-//the sight changes to give to the mob whose perspective is set to that atom (e.g. A mob with nightvision loses its nightvision while looking through a normal camera)
-/atom/proc/update_remote_sight(mob/living/user)
-	return
-
-/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if(istype(src,/turf/simulated) )
-		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
-		// Make toxins vomit look different
-		if(toxvomit)
-			V.icon_state = "vomittox_[pick(1,4)]"
-		if(M.reagents)
-			clear_reagents_to_vomit_pool(M,V)
-
-/atom/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
-	M.reagents.trans_to(V, M.reagents.total_volume / 10)
-	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
-		if(istype(R, /datum/reagent/consumable))
-			var/datum/reagent/consumable/nutri_check = R
-			if(nutri_check.nutriment_factor >0)
-				M.reagents.remove_reagent(R.id,R.volume)

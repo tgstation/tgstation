@@ -40,6 +40,8 @@
 	icon_state = "plasmaman-helm"
 	item_color = "plasma" //needed for the helmet lighting
 	item_state = "plasmaman-helm"
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL
 	strip_delay = 80
-
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 

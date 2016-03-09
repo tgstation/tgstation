@@ -51,8 +51,7 @@
 
 /obj/structure/grille/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
-	if(istype(user, /mob/living/carbon/alien/larva))
-		return
+	if(istype(user, /mob/living/carbon/alien/larva))	return
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", \
@@ -67,8 +66,7 @@
 /obj/structure/grille/attack_slime(mob/living/simple_animal/slime/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	if(!user.is_adult)
-		return
+	if(!user.is_adult)	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \
@@ -110,12 +108,6 @@
 			return prob(30)
 		else
 			return !density
-
-/obj/structure/grille/CanAStarPass(ID, dir, caller)
-	. = !density
-	if(ismovableatom(caller))
-		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSGRILLE)
 
 /obj/structure/grille/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)

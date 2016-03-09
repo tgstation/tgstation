@@ -238,9 +238,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(slurring)
 		message = slur(message)
 
-	if(cultslurring)
-		message = cultslur(message)
-
 	message = capitalize(message)
 
 	return message

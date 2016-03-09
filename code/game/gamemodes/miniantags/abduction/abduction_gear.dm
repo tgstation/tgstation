@@ -13,7 +13,8 @@
 	blood_overlay_type = "armor"
 	origin_tech = "materials=5;biotech=4;powerstorage=5"
 	armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
-	actions_types = list(/datum/action/item_action/hands_free/activate)
+	action_button_name = "Activate"
+	action_button_is_hands_free = 1
 	var/mode = VEST_STEALTH
 	var/stealth_active = 0
 	var/combat_cooldown = 10
@@ -28,20 +29,20 @@
 			DeactivateStealth()
 			armor = combat_armor
 			icon_state = "vest_combat"
+			if(istype(loc, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = loc
+				H.update_inv_wear_suit()
+			return
 		if(VEST_COMBAT)// TO STEALTH
 			mode = VEST_STEALTH
 			armor = stealth_armor
 			icon_state = "vest_stealth"
-	if(istype(loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_wear_suit()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+			if(istype(loc, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = loc
+				H.update_inv_wear_suit()
+			return
 
-/obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
-	if(slot == slot_wear_suit) //we only give the mob the ability to activate the vest if he's actually wearing it.
-		return 1
+
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
@@ -99,10 +100,13 @@
 		if(combat_cooldown != initial(combat_cooldown))
 			src.loc << "<span class='warning'>Combat injection is still recharging.</span>"
 		var/mob/living/carbon/human/M = src.loc
-		M.adjustStaminaLoss(-75)
+		M.stat = 0
 		M.SetParalysis(0)
 		M.SetStunned(0)
 		M.SetWeakened(0)
+		M.lying = 0
+		M.update_canmove()
+		M.adjustStaminaLoss(-75)
 		combat_cooldown = 0
 		SSobj.processing |= src
 
@@ -312,7 +316,7 @@
 /obj/item/device/firing_pin/alien/pin_auth(mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id != "abductor")
+		if(H.dna.species.id == "human") //stealth lizard buff go
 			return 0
 	return 1
 
@@ -365,7 +369,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	origin_tech = "materials=6;combat=5;biotech=7"
 	force = 7
 	w_class = 3
-	actions_types = list(/datum/action/item_action/toggle_mode)
+	action_button_name = "Toggle Mode"
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
 	mode = (mode+1)%BATON_MODES
@@ -461,10 +465,11 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
 	if(L.stunned)
+		L.SetSleeping(60)
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-		L.Sleeping(60)
+
 		add_logs(user, L, "put to sleep")
 	else
 		L.drowsyness += 1
@@ -484,7 +489,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
-				C.update_handcuffed()
+				C.update_inv_handcuffed(0)
 				user << "<span class='notice'>You handcuff [C].</span>"
 				add_logs(user, C, "handcuffed")
 		else
@@ -574,7 +579,6 @@ Congratulations! You are now trained for xenobiology research!"}
 	item_state = "alienhelmet"
 	blockTracking = 1
 	origin_tech = "materials=6;magnets=5"
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 // Operating Table / Beds / Lockers
 

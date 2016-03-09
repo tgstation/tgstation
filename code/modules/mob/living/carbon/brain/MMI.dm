@@ -8,7 +8,7 @@
 	w_class = 3
 	origin_tech = "biotech=3"
 	var/braintype = "Cyborg"
-	var/obj/item/device/radio/radio = null //Let's give it a radio.
+
 	var/syndiemmi = 0 //Whether or not this is a Syndicate MMI
 	var/mob/living/carbon/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
@@ -18,26 +18,13 @@
 /obj/item/device/mmi/update_icon()
 	if(brain)
 		if(istype(brain,/obj/item/organ/internal/brain/alien))
-			if(brainmob && brainmob.stat == DEAD)
-				icon_state = "mmi_alien_dead"
-			else
-				icon_state = "mmi_alien"
+			icon_state = "mmi_alien"
 			braintype = "Xenoborg" //HISS....Beep.
 		else
-			if(brainmob && brainmob.stat == DEAD)
-				icon_state = "mmi_dead"
-			else
-				icon_state = "mmi_full"
+			icon_state = "mmi_full"
 			braintype = "Cyborg"
 	else
 		icon_state = "mmi_empty"
-
-/obj/item/device/mmi/New()
-	..()
-	radio = new(src) //Spawns a radio inside the MMI.
-	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
-
-
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -61,12 +48,10 @@
 		newbrain.brainmob = null
 		brainmob.loc = src
 		brainmob.container = src
-		if(!newbrain.damaged_brain) // the brain organ hasn't been beaten to death.
-			brainmob.stat = CONSCIOUS //we manually revive the brain mob
-			dead_mob_list -= brainmob
-			living_mob_list += brainmob
+		brainmob.stat = 0
+		dead_mob_list -= brainmob //Update dem lists
+		living_mob_list += brainmob
 
-		brainmob.reset_perspective()
 		newbrain.loc = src //P-put your brain in it
 		brain = newbrain
 
@@ -77,37 +62,31 @@
 
 		return
 
-	else if(brainmob)
+	if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
 		return
 	..()
 
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brain)
-		radio.on = !radio.on
-		user << "<span class='notice'>You toggle the MMI's radio system [radio.on==1 ? "on" : "off"].</span>"
+		user << "<span class='warning'>You upend the MMI, but there's nothing in it!</span>"
 	else
 		user << "<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>"
 
 		brainmob.container = null //Reset brainmob mmi var.
 		brainmob.loc = brain //Throw mob into brain.
-		brainmob.stat = DEAD
-		brainmob.emp_damage = 0
-		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 		living_mob_list -= brainmob //Get outta here
-		dead_mob_list += brainmob
 		brain.brainmob = brainmob //Set the brain to use the brainmob
 		brainmob = null //Set mmi brainmob var to null
 
-		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
+		brain.loc = usr.loc
 		brain = null //No more brain in here
 
 		update_icon()
 		name = "Man-Machine Interface"
 
 /obj/item/device/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
-	if(!brainmob)
-		brainmob = new(src)
+	brainmob = new(src)
 	brainmob.name = L.real_name
 	brainmob.real_name = L.real_name
 	if(L.has_dna())
@@ -122,16 +101,24 @@
 		var/obj/item/organ/internal/brain/newbrain = H.getorgan(/obj/item/organ/internal/brain)
 		newbrain.loc = src
 		brain = newbrain
-	else if(!brain)
-		brain = new(src)
-		brain.name = "[L.real_name]'s brain"
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	update_icon()
 	return
 
+/obj/item/device/mmi/radio_enabled
+	name = "Radio-enabled Man-Machine Interface"
+	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations. This one comes with a built-in radio."
+	origin_tech = "biotech=4"
 
-/obj/item/device/mmi/verb/Toggle_Listening()
+	var/obj/item/device/radio/radio = null //Let's give it a radio.
+
+/obj/item/device/mmi/radio_enabled/New()
+	..()
+	radio = new(src) //Spawns a radio inside the MMI.
+	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
+
+/obj/item/device/mmi/radio_enabled/verb/Toggle_Listening()
 	set name = "Toggle Listening"
 	set desc = "Toggle listening channel on or off."
 	set category = "MMI"
@@ -140,9 +127,6 @@
 
 	if(brainmob.stat)
 		brainmob << "<span class='warning'>Can't do that while incapacitated or dead!</span>"
-	if(!radio.on)
-		brainmob << "<span class='warning'>Your radio is disabled!</span>"
-		return
 
 	radio.listening = radio.listening==1 ? 0 : 1
 	brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
@@ -153,12 +137,11 @@
 	else
 		switch(severity)
 			if(1)
-				brainmob.emp_damage = min(brainmob.emp_damage + rand(20,30), 30)
+				brainmob.emp_damage += rand(20,30)
 			if(2)
-				brainmob.emp_damage = min(brainmob.emp_damage + rand(10,20), 30)
+				brainmob.emp_damage += rand(10,20)
 			if(3)
-				brainmob.emp_damage = min(brainmob.emp_damage + rand(0,10), 30)
-		brainmob.emote("alarm")
+				brainmob.emp_damage += rand(0,10)
 	..()
 
 /obj/item/device/mmi/Destroy()
@@ -188,7 +171,3 @@
 	name = "Syndicate Man-Machine Interface"
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs created with it, but doesn't fit in Nanotrasen AI cores."
 	syndiemmi = 1
-
-/obj/item/device/mmi/syndie/New()
-	..()
-	radio.on = 0

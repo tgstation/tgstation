@@ -45,14 +45,12 @@
 /obj/item/clothing/tie/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
 		if(user.a_intent == "help")
-			var/body_part = parse_zone(user.zone_selected)
+			var/body_part = parse_zone(user.zone_sel.selecting)
 			if(body_part)
 				var/their = "their"
 				switch(M.gender)
-					if(MALE)
-						their = "his"
-					if(FEMALE)
-						their = "her"
+					if(MALE)	their = "his"
+					if(FEMALE)	their = "her"
 
 				var/sound = "pulse"
 				var/sound_strength

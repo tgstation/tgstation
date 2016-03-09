@@ -47,7 +47,7 @@
 	icon_state = "0"
 
 /turf/simulated/floor/holofloor/space/New()
-	icon_state = SPACE_ICON_STATE // so realistic
+	icon_state = "[((x + y) ^ ~(x * y) + z) % 25]" // so realistic
 	..()
 
 /turf/simulated/floor/holofloor/hyperspace

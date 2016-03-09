@@ -15,8 +15,6 @@ z7 = empty space
 
 #if !defined(MAP_FILE)
 
-		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
-
         #include "map_files\MetaStation\MetaStation.v41I.dmm"
         #include "map_files\generic\z2.dmm"
         #include "map_files\generic\z3.dmm"

@@ -1,3 +1,6 @@
+/obj/screen/zone_sel/alien/update_icon()
+	overlays.Cut()
+	overlays += selecting
 
 /mob/living/carbon/alien/proc/updatePlasmaDisplay()
 	if(hud_used) //clientless aliens

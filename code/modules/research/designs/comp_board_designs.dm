@@ -241,24 +241,24 @@
 	build_path = /obj/item/weapon/circuitboard/rdconsole
 	category = list("Computer Boards")
 
-/datum/design/cargo
-	name = "Computer Design (Supply Console)"
-	desc = "Allows for the construction of circuit boards used to build a Supply Console."
-	id = "cargo"
-	req_tech = list("programming" = 3)
-	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/cargo
-	category = list("Computer Boards")
-
-/datum/design/cargorequest
-	name = "Computer Design (Supply Request Console)"
-	desc = "Allows for the construction of circuit boards used to build a Supply Request Console."
-	id = "cargorequest"
+/datum/design/ordercomp
+	name = "Computer Design (Supply ordering console)"
+	desc = "Allows for the construction of circuit boards used to build a Supply ordering console."
+	id = "ordercomp"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/cargo/request
+	build_path = /obj/item/weapon/circuitboard/ordercomp
+	category = list("Computer Boards")
+
+/datum/design/supplycomp
+	name = "Computer Design (Supply shuttle console)"
+	desc = "Allows for the construction of circuit boards used to build a Supply shuttle console."
+	id = "supplycomp"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/supplycomp
 	category = list("Computer Boards")
 
 /datum/design/mining

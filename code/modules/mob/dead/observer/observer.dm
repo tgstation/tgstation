@@ -9,9 +9,6 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	density = 0
 	canmove = 0
 	anchored = 1	//  don't get pushed around
-	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	see_invisible = SEE_INVISIBLE_OBSERVER
-	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
 	languages = ALL
 	var/can_reenter_corpse
@@ -30,7 +27,11 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 /mob/dead/observer/New(mob/body)
+	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+	see_invisible = SEE_INVISIBLE_OBSERVER
+	see_in_dark = 100
 	verbs += /mob/dead/observer/proc/dead_tele
+	stat = DEAD
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage
@@ -51,8 +52,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
-	if(!T)
-		T = pick(latejoin)			//Safety in case we cannot find the body's position
+	if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
 	loc = T
 
 	if(!name)							//To prevent nameless ghosts
@@ -105,8 +105,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		ghostize(1)
 	else
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
-		if(response != "Ghost")
-			return	//didn't want to ghost after-all
+		if(response != "Ghost")	return	//didn't want to ghost after-all
 		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 	return
 
@@ -147,8 +146,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
 	set name = "Re-enter Corpse"
-	if(!client)
-		return
+	if(!client)	return
 	if(!(mind && mind.current))
 		src << "<span class='warning'>You have no body.</span>"
 		return
@@ -187,8 +185,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/A
 	A = input("Area to jump to", "BOOYEA", A) as null|anything in sortedAreas
 	var/area/thearea = A
-	if(!thearea)
-		return
+	if(!thearea)	return
 
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
@@ -311,11 +308,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/proc/updateghostsight()
 	if (!seedarkness)
-		see_invisible = SEE_INVISIBLE_NOLIGHTING
+		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		if (!ghostvision)
-			see_invisible = SEE_INVISIBLE_LIVING
+			see_invisible = SEE_INVISIBLE_LIVING;
 	updateghostimages()
 
 /proc/updateallghostimages()
@@ -417,9 +414,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	switch(data_hud_seen) //give new huds
 		if(0)
-			show_me_the_hud(DATA_HUD_SECURITY_ADVANCED)
+			show_me_the_hud(DATA_HUD_SECURITY_BASIC)
 			src << "<span class='notice'>Security HUD set.</span>"
-		if(DATA_HUD_SECURITY_ADVANCED)
+		if(DATA_HUD_SECURITY_BASIC)
 			show_me_the_hud(DATA_HUD_MEDICAL_ADVANCED)
 			src << "<span class='notice'>Medical HUD set.</span>"
 		if(DATA_HUD_MEDICAL_ADVANCED)

@@ -6,9 +6,21 @@
 #define GROWTH_NEEDED		1
 
 /datum/action/innate/slime
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_ALIVE
 	background_icon_state = "bg_alien"
+	var/adult_action = SIZE_DOESNT_MATTER
 	var/needs_growth = NO_GROWTH_NEEDED
+
+/datum/action/innate/slime/CheckRemoval()
+	if(!isslime(owner))
+		return 1
+	var/mob/living/simple_animal/slime/S = owner
+	if(adult_action != SIZE_DOESNT_MATTER)
+		if(adult_action == ADULTS_ONLY && !S.is_adult)
+			return 1
+		else if(adult_action == BABIES_ONLY && S.is_adult)
+			return 1
+	return 0
 
 /datum/action/innate/slime/IsAvailable()
 	if(..())
@@ -32,8 +44,7 @@
 			choices += C
 
 	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|choices
-	if(!M)
-		return 0
+	if(!M) return 0
 	if(CanFeedon(M))
 		Feedon(M)
 		return 1
@@ -108,8 +119,6 @@
 			is_adult = 1
 			maxHealth = 200
 			amount_grown = 0
-			for(var/datum/action/innate/slime/evolve/E in actions)
-				E.Remove(src)
 			regenerate_icons()
 			name = text("[colour] [is_adult ? "adult" : "baby"] slime ([number])")
 		else
@@ -120,6 +129,7 @@
 /datum/action/innate/slime/evolve
 	name = "Evolve"
 	button_icon_state = "slimegrow"
+	adult_action = BABIES_ONLY
 	needs_growth = GROWTH_NEEDED
 
 /datum/action/innate/slime/evolve/Activate()
@@ -154,11 +164,9 @@
 					M.colour = slime_mutation[rand(1,4)]
 				else
 					M.colour = colour
-				if(ckey)
-					M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
+				if(ckey)	M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
-				if(i != 1)
-					step_away(M,src)
+				if(i != 1) step_away(M,src)
 				M.Friends = Friends.Copy()
 				babies += M
 				M.mutation_chance = Clamp(mutation_chance+(rand(5,-5)),0,100)
@@ -180,6 +188,7 @@
 /datum/action/innate/slime/reproduce
 	name = "Reproduce"
 	button_icon_state = "slimesplit"
+	adult_action = ADULTS_ONLY
 	needs_growth = GROWTH_NEEDED
 
 /datum/action/innate/slime/reproduce/Activate()

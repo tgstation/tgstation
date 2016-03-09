@@ -151,13 +151,13 @@
 	name = "circuit board (Prisoner Management Console)"
 	build_path = /obj/machinery/computer/prisoner
 /obj/item/weapon/circuitboard/rdconsole
-	name = "circuit board (RD Console)"
+	name = "circuit Board (RD Console)"
 	build_path = /obj/machinery/computer/rdconsole/core
 /obj/item/weapon/circuitboard/mecha_control
-	name = "circuit board (Exosuit Control Console)"
+	name = "circuit Board (Exosuit Control Console)"
 	build_path = /obj/machinery/computer/mecha
 /obj/item/weapon/circuitboard/rdservercontrol
-	name = "circuit board (R&D Server Control)"
+	name = "circuit Board (R&D Server Control)"
 	build_path = /obj/machinery/computer/rdservercontrol
 /obj/item/weapon/circuitboard/crew
 	name = "circuit board (Crew Monitoring Console)"
@@ -167,14 +167,14 @@
 	name = "circuit board (Mech Bay Power Control Console)"
 	build_path = /obj/machinery/computer/mech_bay_power_console
 	origin_tech = "programming=2;powerstorage=3"
-/obj/item/weapon/circuitboard/cargo
-	name = "circuit board (Supply Console)"
-	build_path = /obj/machinery/computer/cargo
+/obj/item/weapon/circuitboard/ordercomp
+	name = "circuit board (Supply Ordering Console)"
+	build_path = /obj/machinery/computer/ordercomp
+/obj/item/weapon/circuitboard/supplycomp
+	name = "circuit board (Supply shuttle console)"
+	build_path = /obj/machinery/computer/supplycomp
 	origin_tech = "programming=3"
-	var/contraband = 0
-/obj/item/weapon/circuitboard/cargo/request
-	name = "circuit board (Supply Request Console)"
-	build_path = /obj/machinery/computer/cargo/request
+	var/contraband_enabled = 0
 /obj/item/weapon/circuitboard/operating
 	name = "circuit board (Operating Computer)"
 	build_path = /obj/machinery/computer/operating
@@ -196,22 +196,22 @@
 	var/shuttleId
 	var/possible_destinations = ""
 /obj/item/weapon/circuitboard/labor_shuttle
-	name = "circuit board (Labor Shuttle)"
+	name = "circuit Board (Labor Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/labor
 /obj/item/weapon/circuitboard/labor_shuttle/one_way
-	name = "circuit board (Prisoner Shuttle Console)"
+	name = "circuit Board (Prisoner Shuttle Console)"
 	build_path = /obj/machinery/computer/shuttle/labor/one_way
 /obj/item/weapon/circuitboard/ferry
-	name = "circuit board (Transport Ferry)"
+	name = "circuit Board (Transport Ferry)"
 	build_path = /obj/machinery/computer/shuttle/ferry
 /obj/item/weapon/circuitboard/ferry/request
-	name = "circuit board (Transport Ferry Console)"
+	name = "circuit Board (Transport Ferry Console)"
 	build_path = /obj/machinery/computer/shuttle/ferry/request
 /obj/item/weapon/circuitboard/mining_shuttle
-	name = "circuit board (Mining Shuttle)"
+	name = "circuit Board (Mining Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/mining
 /obj/item/weapon/circuitboard/white_ship
-	name = "circuit board (White Ship)"
+	name = "circuit Board (White Ship)"
 	build_path = /obj/machinery/computer/shuttle/white_ship
 /obj/item/weapon/circuitboard/holodeck// Not going to let people get this, but it's just here for future
 	name = "circuit board (Holodeck Control)"
@@ -221,6 +221,9 @@
 	name = "circuit board (AI Integrity Restorer)"
 	build_path = /obj/machinery/computer/aifixer
 	origin_tech = "programming=3;biotech=2"
+/obj/item/weapon/circuitboard/area_atmos
+	name = "circuit board (Area Air Control)"
+	build_path = /obj/machinery/computer/area_atmos
 /*/obj/item/weapon/circuitboard/prison_shuttle
 	name = "circuit board (Prison Shuttle)"
 	build_path = /obj/machinery/computer/prison_shuttle*/
@@ -241,10 +244,27 @@
 			target_dept = dept_list.Find(choice)
 	return
 
-/obj/item/weapon/circuitboard/cargo/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/device/multitool))
-		contraband = !contraband
-		user << "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>"
+		var/catastasis = src.contraband_enabled
+		var/opposite_catastasis
+		if(catastasis)
+			opposite_catastasis = "STANDARD"
+			catastasis = "BROAD"
+		else
+			opposite_catastasis = "BROAD"
+			catastasis = "STANDARD"
+
+		switch( alert("Current receiver spectrum is set to: [catastasis]","Multitool-Circuitboard interface","Switch to [opposite_catastasis]","Cancel") )
+		//switch( alert("Current receiver spectrum is set to: " {(src.contraband_enabled) ? ("BROAD") : ("STANDARD")} , "Multitool-Circuitboard interface" , "Switch to " {(src.contraband_enabled) ? ("STANDARD") : ("BROAD")}, "Cancel") )
+			if("Switch to STANDARD","Switch to BROAD")
+				src.contraband_enabled = !src.contraband_enabled
+
+			if("Cancel")
+				return
+			else
+				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
+	return
 
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/screwdriver))

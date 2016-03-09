@@ -24,9 +24,6 @@
 	var/last_fire = 0		//last world.time we called fire()
 	var/next_fire = 0		//scheduled world.time for next fire()
 	var/cost = 0			//average time to execute
-#if DM_VERSION >= 510
-	var/tick_usage = 0		//average tick usage
-#endif
 	var/times_fired = 0		//number of times we have called fire()
 
 	// The object used for the clickable stat() button.
@@ -62,13 +59,9 @@
 		dwait = "DWait:[round(wait,0.1)]ds "
 
 	if(can_fire)
-#if DM_VERSION >= 510
-		msg = "[round(cost,0.01)]ds|[round(tick_usage,1)]%\t[dwait][msg]"
-#else
-		msg = "[round(cost,0.01)]ds\t[dwait][msg]"
-#endif
+		msg = "[round(cost,0.001)]ds\t[dwait][msg]"
 	else
-		msg = "OFFLINE\t[msg]"
+		msg = "OFFLINE"
 
 	stat(name, statclick.update(msg))
 
@@ -86,4 +79,4 @@
 /datum/subsystem/on_varedit(edited_var)
 	if (edited_var == "can_fire" && can_fire)
 		next_fire = world.time + wait
-
+	

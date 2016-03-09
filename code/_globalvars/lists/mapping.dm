@@ -28,7 +28,6 @@ var/global/list/global_map = null
 var/list/landmarks_list = list()				//list of all landmarks created
 var/list/start_landmarks_list = list()			//list of all spawn points created
 var/list/department_security_spawns = list()	//list of all department security spawns
-var/list/generic_event_spawns = list()			//list of all spawns for events
 
 var/list/monkeystart = list()
 var/list/wizardstart = list()
@@ -53,8 +52,3 @@ var/list/awaydestinations = list()	//a list of landmarks that the warpgate can t
 
 	//used by jump-to-area etc. Updated by area/updateName()
 var/list/sortedAreas = list()
-
-//List of preloaded templates
-var/list/datum/map_template/map_templates = list()
-var/list/datum/map_template/space_ruins_templates = list()
-var/list/datum/map_template/lava_ruins_templates = list()

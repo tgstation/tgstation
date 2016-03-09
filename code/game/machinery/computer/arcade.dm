@@ -36,7 +36,6 @@
 							/obj/item/weapon/coin/antagtoken						= 2,
 							/obj/item/stack/tile/fakespace/loaded					= 2,
 							/obj/item/toy/toy_xeno									= 2,
-							/obj/item/weapon/restraints/handcuffs/fake              = 2
 							)
 
 /obj/machinery/computer/arcade/New()
@@ -1034,23 +1033,23 @@
 	name = "Spaceport Security"
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
-	loot = list(/obj/effect/mob_spawn/human/corpse/orionsecurity,
+	loot = list(/obj/effect/landmark/mobcorpse/orionsecurity,
 				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
 				/obj/item/weapon/shield/energy)
 
-/obj/effect/mob_spawn/human/corpse/orionsecurity
+/obj/effect/landmark/mobcorpse/orionsecurity
 	name = "Spaceport Security"
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/armor/vest
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	radio = /obj/item/device/radio/headset
-	mask = /obj/item/clothing/mask/gas
-	helmet = /obj/item/clothing/head/helmet/swat
-	back = /obj/item/weapon/storage/backpack
-	has_id = 1
-	id_job = "Officer"
-	id_access = "Syndicate"
+	corpseuniform = /obj/item/clothing/under/syndicate
+	corpsesuit = /obj/item/clothing/suit/armor/vest
+	corpseshoes = /obj/item/clothing/shoes/combat
+	corpsegloves = /obj/item/clothing/gloves/combat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/gas
+	corpsehelmet = /obj/item/clothing/head/helmet/swat
+	corpseback = /obj/item/weapon/storage/backpack
+	corpseid = 1
+	corpseidjob = "Officer"
+	corpseidaccess = "Syndicate"
 
 /obj/item/weapon/orion_ship
 	name = "model settler ship"

@@ -79,14 +79,11 @@ var/datum/subsystem/vote/SSvote
 	var/list/winners = get_result()
 	var/text
 	if(winners.len > 0)
-		if(question)
-			text += "<b>[question]</b>"
-		else
-			text += "<b>[capitalize(mode)] Vote</b>"
+		if(question)	text += "<b>[question]</b>"
+		else			text += "<b>[capitalize(mode)] Vote</b>"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
-			if(!votes)
-				votes = 0
+			if(!votes)	votes = 0
 			text += "\n<b>[choices[i]]:</b> [votes]"
 		if(mode != "custom")
 			if(winners.len > 1)
@@ -152,21 +149,16 @@ var/datum/subsystem/vote/SSvote
 
 		reset()
 		switch(vote_type)
-			if("restart")
-				choices.Add("Restart Round","Continue Playing")
-			if("gamemode")
-				choices.Add(config.votable_modes)
+			if("restart")	choices.Add("Restart Round","Continue Playing")
+			if("gamemode")	choices.Add(config.votable_modes)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
-				if(!question)
-					return 0
+				if(!question)	return 0
 				for(var/i=1,i<=10,i++)
 					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
-					if(!option || mode || !usr.client)
-						break
+					if(!option || mode || !usr.client)	break
 					choices.Add(option)
-			else
-				return 0
+			else			return 0
 		mode = vote_type
 		initiator = initiator_key
 		started_time = world.time
@@ -180,8 +172,7 @@ var/datum/subsystem/vote/SSvote
 	return 0
 
 /datum/subsystem/vote/proc/interface(client/C)
-	if(!C)
-		return
+	if(!C)	return
 	var/admin = 0
 	var/trialmin = 0
 	if(C.holder)
@@ -191,15 +182,12 @@ var/datum/subsystem/vote/SSvote
 	voting |= C
 
 	if(mode)
-		if(question)
-			. += "<h2>Vote: '[question]'</h2>"
-		else
-			. += "<h2>Vote: [capitalize(mode)]</h2>"
+		if(question)	. += "<h2>Vote: '[question]'</h2>"
+		else			. += "<h2>Vote: [capitalize(mode)]</h2>"
 		. += "Time Left: [time_remaining] s<hr><ul>"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
-			if(!votes)
-				votes = 0
+			if(!votes)	votes = 0
 			. += "<li><a href='?src=\ref[src];vote=[i]'>[choices[i]]</a> ([votes] votes)</li>"
 		. += "</ul><hr>"
 		if(admin)
@@ -232,8 +220,7 @@ var/datum/subsystem/vote/SSvote
 
 
 /datum/subsystem/vote/Topic(href,href_list[],hsrc)
-	if(!usr || !usr.client)
-		return	//not necessary but meh...just in-case somebody does something stupid
+	if(!usr || !usr.client)	return	//not necessary but meh...just in-case somebody does something stupid
 	switch(href_list["vote"])
 		if("close")
 			voting -= usr.client

@@ -23,11 +23,13 @@
 	armour_penetration = 50
 	var/active = 0
 
-/obj/item/weapon/holo/esword/green/New()
-	item_color = "green"
+/obj/item/weapon/holo/esword/green
+	New()
+		item_color = "green"
 
-/obj/item/weapon/holo/esword/red/New()
-	item_color = "red"
+/obj/item/weapon/holo/esword/red
+	New()
+		item_color = "red"
 
 /obj/item/weapon/holo/esword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)
@@ -87,6 +89,18 @@
 //
 // Structures
 //
+
+/obj/structure/stool/bed/chair/holo/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/wrench))
+		user << "It's holographic!  There's no taking it apart."
+		return
+	..()
+
+/obj/structure/stool/bed/chair/holo/comfy
+	name = "comfy chair"
+	desc = "It looks comfy."
+	icon_state = "comfychair"
+	color = rgb(255,113,0)
 
 /obj/structure/holohoop
 	name = "basketball hoop"

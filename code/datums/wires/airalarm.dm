@@ -45,8 +45,7 @@
 					A.mode = 1 // AALARM_MODE_SCRUB
 				A.apply_mode()
 		if(WIRE_ALARM) // Clear alarms.
-			var/area/AA = get_area_master(A)
-			if(AA.atmosalert(0, holder))
+			if(A.alarm_area.atmosalert(0, holder))
 				A.post_alert(0)
 			A.update_icon()
 
@@ -67,7 +66,6 @@
 				A.mode = 3 // AALARM_MODE_PANIC
 				A.apply_mode()
 		if(WIRE_ALARM) // Post alarm.
-			var/area/AA = get_area_master(A)
-			if(AA.atmosalert(2, holder))
+			if(A.alarm_area.atmosalert(2, holder))
 				A.post_alert(2)
 			A.update_icon()

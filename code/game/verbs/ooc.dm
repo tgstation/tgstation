@@ -6,15 +6,13 @@
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 
-	if(!mob)
-		return
+	if(!mob)	return
 	if(IsGuestKey(key))
 		src << "Guests may not use OOC."
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	if(!msg)
-		return
+	if(!msg)	return
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
 		src << "<span class='danger'>You have OOC muted.</span>"
@@ -98,8 +96,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
+		if(!is_content_unlocked())	return
 
 	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
 	if(new_ooccolor)
@@ -114,8 +111,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
+		if(!is_content_unlocked())	return
 
 		prefs.ooccolor = initial(prefs.ooccolor)
 		prefs.save_preferences()

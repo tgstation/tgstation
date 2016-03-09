@@ -56,9 +56,9 @@
 	name = "bomb hood"
 	desc = "Use in case of bomb."
 	icon_state = "bombsuit"
-	flags = THICKMATERIAL
+	flags = BLOCKHAIR|THICKMATERIAL
 	armor = list(melee = 20, bullet = 0, laser = 20,energy = 10, bomb = 100, bio = 0, rad = 0)
-	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -107,8 +107,7 @@
 	name = "radiation hood"
 	icon_state = "rad"
 	desc = "A hood with radiation protective properties. The label reads, 'Made with lead. Please do not consume insulation.'"
-	flags = THICKMATERIAL
-	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
+	flags = BLOCKHAIR|THICKMATERIAL
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
 	strip_delay = 60
 	put_on_delay = 60

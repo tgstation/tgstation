@@ -4,7 +4,7 @@
 	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
 
 	//explode the input msg into a list
-	var/list/msglist = splittext(msg, " ")
+	var/list/msglist = text2list(msg, " ")
 
 	//generate keywords lookup
 	var/list/surnames = list()
@@ -12,11 +12,10 @@
 	var/list/ckeys = list()
 	for(var/mob/M in mob_list)
 		var/list/indexing = list(M.real_name, M.name)
-		if(M.mind)
-			indexing += M.mind.name
+		if(M.mind)	indexing += M.mind.name
 
 		for(var/string in indexing)
-			var/list/L = splittext(string, " ")
+			var/list/L = text2list(string, " ")
 			var/surname_found = 0
 			//surnames
 			for(var/i=L.len, i>=1, i--)
@@ -53,10 +52,7 @@
 							mobs_found += found
 							if(!ai_found && isAI(found))
 								ai_found = 1
-							var/is_antag = 0
-							if(found.mind && found.mind.special_role)
-								is_antag = 1
-							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
+							msg += "[original_word]<font size='1' color='black'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
 							continue
 		msg += "[original_word] "
 	return msg
@@ -84,8 +80,7 @@
 		return
 
 	//clean the input msg
-	if(!msg)
-		return
+	if(!msg)	return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)	return
 	var/original_msg = msg
@@ -96,8 +91,7 @@
 
 	msg = keywords_lookup(msg)
 
-	if(!mob)
-		return						//this doesn't happen
+	if(!mob)	return						//this doesn't happen
 
 	var/ref_mob = "\ref[mob]"
 	var/ref_client = "\ref[src]"
@@ -120,27 +114,32 @@
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/proc/get_admin_counts(requiredflags = R_BAN)
-	. = list("total" = 0, "noflags" = 0, "afk" = 0, "stealth" = 0, "present" = 0)
-	for(var/client/X in admins)
-		.["total"]++
-		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
-			.["noflags"]++
-		else if(X.is_afk())
-			.["afk"]++
-		else if(X.holder.fakekey)
-			.["stealth"]++
-		else
-			.["present"]++
-
 /proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
-	var/list/adm = get_admin_counts(requiredflags)
-	. = adm["present"]
-	if(. <= 0)
-		if(!adm["afk"] && !adm["stealth"] && !adm["noflags"])
+	var/admin_number_total = 0		//Total number of admins
+	var/admin_number_afk = 0		//Holds the number of admins who are afk
+	var/admin_number_ignored = 0	//Holds the number of admins without +BAN (so admins who are not really admins)
+	var/admin_number_decrease = 0	//Holds the number of admins with are afk, ignored or both
+	for(var/client/X in admins)
+		admin_number_total++;
+		var/invalid = 0
+		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
+			admin_number_ignored++
+			invalid = 1
+		if(X.is_afk())
+			admin_number_afk++
+			invalid = 1
+		if(X.holder.fakekey)
+			admin_number_ignored++
+			invalid = 1
+		if(invalid)
+			admin_number_decrease++
+	var/admin_number_present = admin_number_total - admin_number_decrease	//Number of admins who are neither afk nor invalid
+	if(admin_number_present <= 0)
+		if(!admin_number_afk && !admin_number_ignored)
 			send2irc(source, "[msg] - No admins online")
 		else
-			send2irc(source, "[msg] - All admins AFK ([adm["afk"]]/[adm["total"]]), stealthminned ([adm["stealth"]]/[adm["total"]]), or lack[rights2text(requiredflags, " ")] ([adm["noflags"]]/[adm["total"]])")
+			send2irc(source, "[msg] - All admins AFK ([admin_number_afk]/[admin_number_total]) or skipped ([admin_number_ignored]/[admin_number_total])")
+	return admin_number_present
 
 /proc/send2irc(msg,msg2)
 	if(config.useircbot)

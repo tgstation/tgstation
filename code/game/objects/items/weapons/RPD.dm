@@ -138,11 +138,12 @@ var/global/list/RPD_recipes=list(
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
-	var/p_type = PIPE_SIMPLE
-	var/p_conntype = PIPE_BENDABLE
+	var/p_type = 0
+	var/p_conntype = 0
 	var/p_dir = 1
 	var/p_flipped = 0
 	var/p_class = ATMOS_MODE
+	var/p_disposal = 0
 	var/list/paint_colors = list(
 		"grey"		= rgb(255,255,255),
 		"red"		= rgb(255,0,0),
@@ -182,8 +183,7 @@ var/global/list/RPD_recipes=list(
 	return "<a href=\"?src=\ref[src];setdir=[_dir];flipped=[flipped]\" title=\"[title]\"[selected]\"><img src=\"[pic]\" /></a>"
 
 /obj/item/weapon/pipe_dispenser/proc/show_menu(mob/user)
-	if(!user || !src)
-		return 0
+	if(!user || !src)	return 0
 	var/dat = {"<h2>Type</h2>
 <b>Utilities:</b>
 <ul>"}

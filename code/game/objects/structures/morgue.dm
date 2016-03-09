@@ -92,9 +92,6 @@
 			AM.forceMove(src)
 	update_icon()
 
-/obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
-	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
 /*
  * Morgue
  */
@@ -274,9 +271,3 @@ var/global/list/crematoriums = new/list()
 		return 1
 	else
 		return 0
-
-/obj/structure/tray/m_tray/CanAStarPass(ID, dir, caller)
-	. = !density
-	if(ismovableatom(caller))
-		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSTABLE)

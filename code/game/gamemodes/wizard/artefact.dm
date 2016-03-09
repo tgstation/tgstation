@@ -158,7 +158,7 @@
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
-	M.revive(full_heal = 1, admin_revive = 1)
+	M.revive()
 	spooky_scaries |= M
 	M << "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>"
 	M << "<span class='userdanger'>They are your master now, assist them even if it costs you your new life!</span>"
@@ -504,7 +504,7 @@ var/global/list/multiverse = list()
 			target.bodytemperature += 50
 			GiveHint(target)
 		else if(is_pointed(I))
-			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>"
+			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_sel.selecting)]!</span>"
 			target.Weaken(2)
 			GiveHint(target)
 		else if(istype(I,/obj/item/weapon/bikehorn))
@@ -525,16 +525,14 @@ var/global/list/multiverse = list()
 	..()
 
 /obj/item/voodoo/check_eye(mob/user)
-	if(loc != user)
-		user.reset_perspective(null)
-		user.unset_machine()
+	return src.loc == user
 
 /obj/item/voodoo/attack_self(mob/user)
 	if(!target && possible.len)
 		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
 		return
 
-	if(user.zone_selected == "chest")
+	if(user.zone_sel.selecting == "chest")
 		if(link)
 			target = null
 			link.loc = get_turf(src)
@@ -544,16 +542,18 @@ var/global/list/multiverse = list()
 			return
 
 	if(target && cooldown < world.time)
-		switch(user.zone_selected)
+		switch(user.zone_sel.selecting)
 			if("mouth")
 				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
 				target.say(wgw)
 				log_game("[user][user.key] made [target][target.key] say [wgw] with a voodoo doll.")
 			if("eyes")
 				user.set_machine(src)
-				user.reset_perspective(target)
+				if(user.client)
+					user.client.eye = target
+					user.client.perspective = EYE_PERSPECTIVE
 				spawn(100)
-					user.reset_perspective(null)
+					user.reset_view()
 					user.unset_machine()
 			if("r_leg","l_leg")
 				user << "<span class='notice'>You move the doll's legs around.</span>"
@@ -599,12 +599,3 @@ var/global/list/multiverse = list()
 		target.IgniteMob()
 		GiveHint(target,1)
 	return ..()
-
-
-//Provides a decent heal, need to pump every 6 seconds
-/obj/item/organ/internal/heart/cursed/wizard
-	pump_delay = 60
-	heal_brute = 25
-	heal_burn = 25
-	heal_oxy = 25
-

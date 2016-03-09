@@ -44,27 +44,15 @@
 		smooth_icon_neighbors(src)
 
 /obj/structure/table/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(50))
-				table_destroy(1)
-			else
-				qdel(src)
-		if(3)
-			if(prob(25))
-				table_destroy(1)
+	..()
+	if(severity == 3)
+		if(prob(25))
+			table_destroy(1)
 
 /obj/structure/table/blob_act()
 	if(prob(75))
 		table_destroy(1)
 		return
-
-/obj/structure/table/mech_melee_attack(obj/mecha/M)
-	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
-	table_destroy(1)
 
 /obj/structure/table/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
@@ -95,6 +83,7 @@
 	if(tableclimber && tableclimber != user)
 		tableclimber.Weaken(2)
 		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You're knocked off the table!", "You see [tableclimber.name] get knocked off the table</span>")
+	..()
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
@@ -109,12 +98,6 @@
 		return 1
 	else
 		return !density
-
-/obj/structure/table/CanAStarPass(ID, dir, caller)
-	. = !density
-	if(ismovableatom(caller))
-		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSTABLE)
 
 /obj/structure/table/MouseDrop_T(atom/movable/O, mob/user)
 	..()
@@ -147,7 +130,6 @@
 		if(istype(src, /obj/structure/table/optable))
 			var/obj/structure/table/optable/OT = src
 			G.affecting.resting = 1
-			G.affecting.update_canmove()
 			visible_message("<span class='notice'>[G.assailant] has laid [G.affecting] on [src].</span>")
 			OT.patient = G.affecting
 			OT.check_patient()
@@ -458,10 +440,6 @@
 		rack_destroy()
 		return
 
-/obj/structure/rack/mech_melee_attack(obj/mecha/M)
-	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-	rack_destroy(1)
-
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
@@ -470,12 +448,6 @@
 		return 1
 	else
 		return 0
-
-/obj/structure/rack/CanAStarPass(ID, dir, caller)
-	. = !density
-	if(ismovableatom(caller))
-		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSTABLE)
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))

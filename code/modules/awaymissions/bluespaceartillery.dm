@@ -1,10 +1,8 @@
 
 #define ARTILLERY_RELOAD_TIME 60
-#define EXPLOSION_SIZE 3
 
 /obj/machinery/artillerycontrol
 	var/reload = ARTILLERY_RELOAD_TIME
-	var/explosionsize = EXPLOSION_SIZE
 	name = "bluespace artillery control"
 	icon_state = "control_boxp1"
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
@@ -50,7 +48,7 @@
 		for(var/turf/T in get_area_turfs(thearea.type))
 			L+=T
 		var/loc = pick(L)
-		explosion(loc,explosionsize,explosionsize*2,explosionsize*4)
+		explosion(loc,2,5,11)
 		reload = 0
 
 /*/mob/proc/openfire()

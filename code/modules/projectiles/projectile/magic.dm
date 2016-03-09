@@ -25,15 +25,9 @@
 	nodamage = 0
 
 /obj/item/projectile/magic/fireball/Range()
-	var/turf/T1 = get_step(src,turn(dir, -45))
-	var/turf/T2 = get_step(src,turn(dir, 45))
-	var/mob/living/L = locate(/mob/living) in T1 //if there's a mob alive in our front right diagonal, we hit it.
+	var/mob/living/L = locate(/mob/living) in (range(src, 1) - firer)
 	if(L && L.stat != DEAD)
 		Bump(L) //Magic Bullet #teachthecontroversy
-		return
-	L = locate(/mob/living) in T2
-	if(L && L.stat != DEAD)
-		Bump(L)
 		return
 	..()
 
@@ -55,15 +49,18 @@
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
 	if(ismob(target))
-		if(target.revive(full_heal = 1))
-			if(!target.ckey)
-				for(var/mob/dead/observer/ghost in player_list)
-					if(target.real_name == ghost.real_name)
-						ghost.reenter_corpse()
-						break
-			target << "<span class='notice'>You rise with a start, you're alive!!!</span>"
-		else if(target.stat != DEAD)
+		var/old_stat = target.stat
+		target.revive()
+		target.suiciding = 0
+		if(!target.ckey)
+			for(var/mob/dead/observer/ghost in player_list)
+				if(target.real_name == ghost.real_name)
+					ghost.reenter_corpse()
+					break
+		if(old_stat != DEAD)
 			target << "<span class='notice'>You feel great!</span>"
+		else
+			target << "<span class='notice'>You rise with a start, you're alive!!!</span>"
 
 /obj/item/projectile/magic/teleport
 	name = "bolt of teleportation"
@@ -126,8 +123,7 @@
 /proc/wabbajack(mob/living/M)
 	if(istype(M))
 		if(istype(M, /mob/living) && M.stat != DEAD)
-			if(M.notransform)
-				return
+			if(M.notransform)	return
 			M.notransform = 1
 			M.canmove = 0
 			M.icon = null
@@ -136,8 +132,7 @@
 
 			if(istype(M, /mob/living/silicon/robot))
 				var/mob/living/silicon/robot/Robot = M
-				if(Robot.mmi)
-					qdel(Robot.mmi)
+				if(Robot.mmi)	qdel(Robot.mmi)
 				Robot.notify_ai(1)
 			else
 				for(var/obj/item/W in M)
@@ -154,10 +149,8 @@
 				if("robot")
 					var/robot = pick("cyborg","syndiborg","drone")
 					switch(robot)
-						if("cyborg")
-							new_mob = new /mob/living/silicon/robot(M.loc)
-						if("syndiborg")
-							new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
+						if("cyborg")		new_mob = new /mob/living/silicon/robot(M.loc)
+						if("syndiborg")		new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
 						if("drone")
 							new_mob = new /mob/living/simple_animal/drone(M.loc)
 							var/mob/living/simple_animal/drone/D = new_mob
@@ -167,6 +160,7 @@
 						new_mob.invisibility = 0
 						new_mob.job = "Cyborg"
 						var/mob/living/silicon/robot/Robot = new_mob
+						Robot.mmi = new /obj/item/device/mmi(new_mob)
 						Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 					else
 						new_mob.languages |= HUMAN
@@ -185,70 +179,42 @@
 
 					/*var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
 					switch(alien_caste)
-						if("Hunter")
-							new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
-						if("Sentinel")
-							new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
-						if("Drone")
-							new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
-						else
-							new_mob = new /mob/living/carbon/alien/larva(M.loc)
+						if("Hunter")	new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
+						if("Sentinel")	new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
+						if("Drone")		new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
+						else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
 					new_mob.languages |= HUMAN*/
 				if("animal")
 					if(prob(50))
 						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp")
 						switch(beast)
-							if("carp")
-								new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
-							if("bear")
-								new_mob = new /mob/living/simple_animal/hostile/bear(M.loc)
-							if("mushroom")
-								new_mob = new /mob/living/simple_animal/hostile/mushroom(M.loc)
-							if("statue")
-								new_mob = new /mob/living/simple_animal/hostile/statue(M.loc)
-							if("bat")
-								new_mob = new /mob/living/simple_animal/hostile/retaliate/bat(M.loc)
-							if("goat")
-								new_mob = new /mob/living/simple_animal/hostile/retaliate/goat(M.loc)
-							if("killertomato")
-								new_mob = new /mob/living/simple_animal/hostile/killertomato(M.loc)
-							if("spiderbase")
-								new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider(M.loc)
-							if("spiderhunter")
-								new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider/hunter(M.loc)
-							if("blobbernaut")
-								new_mob = new /mob/living/simple_animal/hostile/blob/blobbernaut(M.loc)
-							if("magicarp")
-								new_mob = new /mob/living/simple_animal/hostile/carp/ranged(M.loc)
-							if("chaosmagicarp")
-								new_mob = new /mob/living/simple_animal/hostile/carp/ranged/chaos(M.loc)
+							if("carp")		new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
+							if("bear")		new_mob = new /mob/living/simple_animal/hostile/bear(M.loc)
+							if("mushroom")	new_mob = new /mob/living/simple_animal/hostile/mushroom(M.loc)
+							if("statue")	new_mob = new /mob/living/simple_animal/hostile/statue(M.loc)
+							if("bat") 		new_mob = new /mob/living/simple_animal/hostile/retaliate/bat(M.loc)
+							if("goat")		new_mob = new /mob/living/simple_animal/hostile/retaliate/goat(M.loc)
+							if("killertomato")	new_mob = new /mob/living/simple_animal/hostile/killertomato(M.loc)
+							if("spiderbase")	new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider(M.loc)
+							if("spiderhunter")	new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider/hunter(M.loc)
+							if("blobbernaut")	new_mob = new /mob/living/simple_animal/hostile/blob/blobbernaut(M.loc)
+							if("magicarp")		new_mob = new /mob/living/simple_animal/hostile/carp/ranged(M.loc)
+							if("chaosmagicarp")	new_mob = new /mob/living/simple_animal/hostile/carp/ranged/chaos(M.loc)
 					else
 						var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly")
 						switch(animal)
-							if("parrot")
-								new_mob = new /mob/living/simple_animal/parrot(M.loc)
-							if("corgi")
-								new_mob = new /mob/living/simple_animal/pet/dog/corgi(M.loc)
-							if("crab")
-								new_mob = new /mob/living/simple_animal/crab(M.loc)
-							if("pug")
-								new_mob = new /mob/living/simple_animal/pet/dog/pug(M.loc)
-							if("cat")
-								new_mob = new /mob/living/simple_animal/pet/cat(M.loc)
-							if("mouse")
-								new_mob = new /mob/living/simple_animal/mouse(M.loc)
-							if("chicken")
-								new_mob = new /mob/living/simple_animal/chicken(M.loc)
-							if("cow")
-								new_mob = new /mob/living/simple_animal/cow(M.loc)
-							if("lizard")
-								new_mob = new /mob/living/simple_animal/hostile/lizard(M.loc)
-							if("fox")
-								new_mob = new /mob/living/simple_animal/pet/fox(M.loc)
-							if("butterfly")
-								new_mob = new /mob/living/simple_animal/butterfly(M.loc)
-							else
-								new_mob = new /mob/living/simple_animal/chick(M.loc)
+							if("parrot")	new_mob = new /mob/living/simple_animal/parrot(M.loc)
+							if("corgi")		new_mob = new /mob/living/simple_animal/pet/dog/corgi(M.loc)
+							if("crab")		new_mob = new /mob/living/simple_animal/crab(M.loc)
+							if("pug")		new_mob = new /mob/living/simple_animal/pet/dog/pug(M.loc)
+							if("cat")		new_mob = new /mob/living/simple_animal/pet/cat(M.loc)
+							if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)
+							if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)
+							if("cow")		new_mob = new /mob/living/simple_animal/cow(M.loc)
+							if("lizard")	new_mob = new /mob/living/simple_animal/hostile/lizard(M.loc)
+							if("fox") new_mob = new /mob/living/simple_animal/pet/fox(M.loc)
+							if("butterfly")	new_mob = new /mob/living/simple_animal/butterfly(M.loc)
+							else			new_mob = new /mob/living/simple_animal/chick(M.loc)
 					new_mob.languages |= HUMAN
 				if("humanoid")
 					new_mob = new /mob/living/carbon/human(M.loc)

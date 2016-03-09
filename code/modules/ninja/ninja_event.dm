@@ -151,14 +151,15 @@ Contents:
 		N.randomize_param()
 
 	Ninja.internal = Ninja.s_store
-	Ninja.update_internals_hud_icon(1)
+	if(Ninja.internals)
+		Ninja.internals.icon_state = "internal1"
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
 		throw EXCEPTION("Ninja created with incorrect mind")
 		return
 
 	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
-	ticker.mode.update_ninja_icons_added(Mind)
+
 	success_spawn = 1
 
 
@@ -202,7 +203,7 @@ Contents:
 	equip_to_slot_or_del(theSuit, slot_wear_suit)
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(src), slot_gloves)
 	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/space_ninja(src), slot_head)
-	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/space_ninja(src), slot_wear_mask)
+	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/voice/space_ninja(src), slot_wear_mask)
 	equip_to_slot_or_del(new /obj/item/clothing/glasses/night(src), slot_glasses)
 	equip_to_slot_or_del(EK, slot_belt)
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_r_store)
@@ -213,13 +214,3 @@ Contents:
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src)
 	E.implant(src)
 	return 1
-
-/datum/game_mode/proc/update_ninja_icons_added(var/mob/living/carbon/human/ninja)
-	var/datum/atom_hud/antag/ninjahud = huds[ANTAG_HUD_TRAITOR]
-	ninjahud.join_hud(ninja, 0)
-	set_antag_hud(ninja, "traitor")
-
-/datum/game_mode/proc/update_ninja_icons_removed(datum/mind/ninja_mind)
-	var/datum/atom_hud/antag/ninjahud = huds[ANTAG_HUD_NINJA]
-	ninjahud.leave_hud(ninja_mind.current)
-	set_antag_hud(ninja_mind.current, null)

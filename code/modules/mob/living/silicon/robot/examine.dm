@@ -35,12 +35,9 @@
 
 	switch(src.stat)
 		if(CONSCIOUS)
-			if(!src.client)
-				msg += "It appears to be in stand-by mode.\n" //afk
-		if(UNCONSCIOUS)
-			msg += "<span class='warning'>It doesn't seem to be responding.</span>\n"
-		if(DEAD)
-			msg += "<span class='deadsay'>It looks like its system is corrupted and requires a reset.</span>\n"
+			if(!src.client)	msg += "It appears to be in stand-by mode.\n" //afk
+		if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responding.</span>\n"
+		if(DEAD)			msg += "<span class='deadsay'>It looks like its system is corrupted and requires a reset.</span>\n"
 	msg += "*---------*</span>"
 
 	user << msg

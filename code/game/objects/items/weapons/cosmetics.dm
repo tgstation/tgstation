@@ -44,11 +44,9 @@
 		icon_state = "lipstick"
 
 /obj/item/weapon/lipstick/attack(mob/M, mob/user)
-	if(!open)
-		return
+	if(!open)	return
 
-	if(!istype(M, /mob))
-		return
+	if(!istype(M, /mob))	return
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -78,7 +76,7 @@
 
 //you can wipe off lipstick with paper!
 /obj/item/weapon/paper/attack(mob/M, mob/user)
-	if(user.zone_selected == "mouth")
+	if(user.zone_sel.selecting == "mouth")
 		if(!ismob(M))
 			return
 
@@ -122,7 +120,7 @@
 /obj/item/weapon/razor/attack(mob/M, mob/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/location = user.zone_selected
+		var/location = user.zone_sel.selecting
 		if(location == "mouth")
 			if(!(H.dna.species.specflags & FACEHAIR))
 				user << "<span class='warning'>There is no facial hair to shave!</span>"

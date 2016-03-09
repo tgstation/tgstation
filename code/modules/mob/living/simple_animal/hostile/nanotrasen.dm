@@ -5,7 +5,7 @@
 	icon_living = "nanotrasen"
 	icon_dead = null
 	icon_gib = "syndicate_gib"
-	speak_chance = 12
+	speak_chance = 25
 	turns_per_move = 5
 	response_help = "pokes"
 	response_disarm = "shoves"
@@ -21,7 +21,7 @@
 	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = "harm"
-	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
+	loot = list(/obj/effect/landmark/mobcorpse/nanotrasensoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list("nanotrasenprivate")
@@ -45,7 +45,7 @@
 	casingtype = /obj/item/ammo_casing/c45
 	projectilesound = 'sound/weapons/Gunshot.ogg'
 	loot = list(/obj/item/weapon/gun/projectile/automatic/pistol/m1911,
-				/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
+				/obj/effect/landmark/mobcorpse/nanotrasensoldier)
 
 
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg
@@ -55,4 +55,4 @@
 	casingtype = /obj/item/ammo_casing/c46x30mm
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
 	loot = list(/obj/item/weapon/gun/projectile/automatic/wt550,
-				/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
+				/obj/effect/landmark/mobcorpse/nanotrasensoldier)

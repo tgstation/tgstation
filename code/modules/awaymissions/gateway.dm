@@ -95,12 +95,9 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 
 /obj/machinery/gateway/centerstation/proc/toggleon(mob/user)
-	if(!ready)
-		return
-	if(linked.len != 8)
-		return
-	if(!powered())
-		return
+	if(!ready)			return
+	if(linked.len != 8)	return
+	if(!powered())		return
 	if(!awaygate)
 		user << "<span class='notice'>Error: No destination found.</span>"
 		return
@@ -211,10 +208,8 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 
 /obj/machinery/gateway/centeraway/proc/toggleon(mob/user)
-	if(!ready)
-		return
-	if(linked.len != 8)
-		return
+	if(!ready)			return
+	if(linked.len != 8)	return
 	if(!stationgate)
 		user << "<span class='notice'>Error: No destination found.</span>"
 		return

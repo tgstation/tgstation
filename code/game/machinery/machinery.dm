@@ -127,7 +127,8 @@ Class Procs:
 /obj/machinery/Destroy()
 	machines.Remove(src)
 	SSmachine.processing -= src
-	dropContents()
+	if(occupant)
+		dropContents()
 	return ..()
 
 /obj/machinery/attackby(obj/item/weapon/W, mob/user, params)
@@ -159,14 +160,12 @@ Class Procs:
 
 /obj/machinery/proc/dropContents()
 	var/turf/T = get_turf(src)
-	for(var/mob/living/L in src)
-		L.loc = T
-		L.reset_perspective(null)
-		L.update_canmove() //so the mob falls if he became unconscious inside the machine.
-		. += L
-
 	T.contents += contents
-	occupant = null
+	if(occupant)
+		if(occupant.client)
+			occupant.client.eye = occupant
+			occupant.client.perspective = MOB_PERSPECTIVE
+		occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
 	state_open = 0
@@ -178,8 +177,14 @@ Class Procs:
 			else
 				target = C
 	if(target && !target.buckled && !target.buckled_mob)
+		if(target.client)
+			target.client.perspective = EYE_PERSPECTIVE
+			target.client.eye = src
 		occupant = target
-		target.forceMove(src)
+		target.loc = src
+		target.stop_pulling()
+		if(target.pulledby)
+			target.pulledby.stop_pulling()
 	updateUsrDialog()
 	update_icon()
 
@@ -237,9 +242,10 @@ Class Procs:
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/attack_ai(mob/user)
-	if(isrobot(user))// For some reason attack_robot doesn't work
-		var/mob/living/silicon/robot/R = user
-		if(R.client && R.client.eye == R && !R.low_power_mode)// This is to stop robots from using cameras to remotely control machines; and from using machines when the borg has no power.
+	if(isrobot(user))
+		// For some reason attack_robot doesn't work
+		// This is to stop robots from using cameras to remotely control machines.
+		if(user.client && user.client.eye == user)
 			return attack_hand(user)
 	else
 		return attack_hand(user)
@@ -406,15 +412,3 @@ Class Procs:
 
 /obj/machinery/proc/can_be_overridden()
 	. = 1
-
-
-/obj/machinery/tesla_act(var/power)
-	..()
-	if(prob(85))
-		emp_act(2)
-	else if(prob(50))
-		ex_act(3)
-	else if(prob(90))
-		ex_act(2)
-	else
-		ex_act(1)

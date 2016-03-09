@@ -1,5 +1,6 @@
 
 /mob/living/carbon/alien/humanoid/update_icons()
+	update_hud()		//TODO: remove the need for this to be here
 	overlays.Cut()
 	for(var/image/I in overlays_standing)
 		overlays += I
@@ -41,6 +42,7 @@
 
 /mob/living/carbon/alien/humanoid/regenerate_icons()
 	if(!..())
+		update_hud()
 	//	update_icons() //Handled in update_transform(), leaving this here as a reminder
 		update_transform()
 
@@ -74,4 +76,5 @@
 
 		var/image/I = image("icon" = alt_inhands_file , "icon_state"="[itm_state][caste]_l", "layer"=-L_HAND_LAYER)
 		overlays_standing[L_HAND_LAYER] = I
+
 		apply_overlay(L_HAND_LAYER)

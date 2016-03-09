@@ -11,6 +11,7 @@
 	var/eatverb
 	var/wrapped = 0
 	var/dried_type = null
+	var/potency = null
 	var/dry = 0
 	var/cooked_type = null  //for microwave cooking. path of the resulting item after microwaving
 	var/filling_color = "#FFFFFF" //color to use when added to custom food.
@@ -21,15 +22,13 @@
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
-	if(!usr)
-		return
+	if(!usr)	return
 	if(!reagents.total_volume)
 		usr.unEquip(src)	//so icons update :[
 
 		if(trash)
-			if(ispath(trash, /obj/item/weapon/grown) && istype(src, /obj/item/weapon/reagent_containers/food/snacks/grown))
-				var/obj/item/weapon/reagent_containers/food/snacks/grown/G = src
-				var/obj/item/TrashItem = new trash(usr, G.seed)
+			if(ispath(trash,/obj/item/weapon/grown))
+				var/obj/item/TrashItem = new trash(usr,src.potency)
 				usr.put_in_hands(TrashItem)
 			else if(ispath(trash,/obj/item))
 				var/obj/item/TrashItem = new trash(usr)
@@ -260,7 +259,7 @@
 //	name = "Xenoburger"													//Name that displays in the UI.
 //	desc = "Smells caustic. Tastes like heresy."						//Duh
 //	icon_state = "xburger"												//Refers to an icon in food.dmi
-///obj/item/weapon/reagent_containers/food/snacks/xenoburger/New()		//Don't mess with this.
+//	New()																//Don't mess with this.
 //		..()															//Same here.
 //		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
 //		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.

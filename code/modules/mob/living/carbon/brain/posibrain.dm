@@ -39,7 +39,7 @@ var/global/posibrain_notif_cooldown = 0
 		spawn(askDelay) //Seperate from the global cooldown.
 			notified = 0
 			update_icon()
-			if(brainmob.client)
+			if(brainmob.stat == CONSCIOUS && brainmob.client)
 				visible_message("<span class='notice'>The positronic brain pings, and its lights start flashing. Success!</span>")
 			else
 				visible_message("<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
@@ -56,7 +56,7 @@ var/global/posibrain_notif_cooldown = 0
 		return
 
 	var/posi_ask = alert("Become a positronic brain? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
-	if(posi_ask == "No" || qdeleted(src))
+	if(posi_ask == "No" || gc_destroyed)
 		return
 	transfer_personality(user)
 
@@ -70,7 +70,7 @@ var/global/posibrain_notif_cooldown = 0
 			brainmob.dna = new /datum/dna(brainmob)
 		C.dna.copy_dna(brainmob.dna)
 	brainmob.timeofhostdeath = C.timeofdeath
-	brainmob.stat = CONSCIOUS
+	brainmob.stat = 0
 	if(brainmob.mind)
 		brainmob.mind.assigned_role = "Positronic Brain"
 	if(C.mind)
@@ -99,9 +99,6 @@ var/global/posibrain_notif_cooldown = 0
 	brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
 	brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
 	brainmob.mind.assigned_role = "Positronic Brain"
-	brainmob.stat = CONSCIOUS
-	dead_mob_list -= brainmob
-	living_mob_list += brainmob
 
 	visible_message("<span class='notice'>The positronic brain chimes quietly.</span>")
 	update_icon()
@@ -112,8 +109,7 @@ var/global/posibrain_notif_cooldown = 0
 
 	set src in oview()
 
-	if(!usr || !src)
-		return
+	if(!usr || !src)	return
 	if( (usr.disabilities & BLIND || usr.stat) && !istype(usr,/mob/dead/observer) )
 		usr << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
@@ -124,10 +120,9 @@ var/global/posibrain_notif_cooldown = 0
 	if(brainmob && brainmob.key)
 		switch(brainmob.stat)
 			if(CONSCIOUS)
-				if(!src.brainmob.client)
-					msg += "It appears to be in stand-by mode.\n" //afk
-			if(DEAD)
-				msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+				if(!src.brainmob.client)	msg += "It appears to be in stand-by mode.\n" //afk
+			if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
+			if(DEAD)			msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
 	else
 		msg += "<span class='deadsay'>It appears to be completely inactive. The reset light is blinking.</span>\n"
 	msg += "<span class='info'>*---------*</span>"
@@ -136,10 +131,13 @@ var/global/posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/New()
 	brainmob = new(src)
-	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR","CHRI","CDB","HG","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","GOOF","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","WJ","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD"))]-[rand(100, 999)]"
+	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR","CHRI","CDB","HG","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","GOOF","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","WJ","JRD","CHOC","ANCL","JLLO","ANNS","KOS","TKRG","XAL","STLP","CBOS","DNCN","FXMC","DRSD"))]-[rand(100, 999)]"
 	brainmob.real_name = brainmob.name
 	brainmob.loc = src
 	brainmob.container = src
+	brainmob.stat = 0
+	brainmob.silent = 0
+	dead_mob_list -= brainmob
 	ping_ghosts("created")
 	..()
 

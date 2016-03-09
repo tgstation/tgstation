@@ -66,7 +66,7 @@
 		walk_away(P,loc,rand(1,4))
 
 		spawn(rand(15,60))
-			if(P && !qdeleted(P))
+			if(P && !P.gc_destroyed)
 				P.prime()
 			qdel(src)
 
@@ -120,7 +120,3 @@
 /obj/item/weapon/grenade/clusterbuster/spawner_spesscarp
 	name = "Invasion of the Space Carps"
 	payload = /obj/item/weapon/grenade/spawnergrenade/spesscarp
-
-/obj/item/weapon/grenade/clusterbuster/soap
-	name = "Slipocalypse"
-	payload = /obj/item/weapon/grenade/spawnergrenade/syndiesoap

@@ -230,22 +230,17 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
 		P.resulting_poster = src
 		P.loc = location
-		P.pixel_x = 0
-		P.pixel_y = 0
 		loc = P
 	else
 		var/obj/item/weapon/poster/legit/P = new(src, serial_number)
 		P.resulting_poster = src
 		P.loc = location
-		P.pixel_x = 0
-		P.pixel_y = 0
 		loc = P
 
 
 //seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/simulated/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
-	if(!P.resulting_poster)
-		return
+	if(!P.resulting_poster)	return
 
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
@@ -270,8 +265,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 
 	if(do_after(user,D.placespeed,target=src))
-		if(!D)
-			return
+		if(!D)	return
 
 		if(istype(src,/turf/simulated/wall) && user && user.loc == temp_loc)	//Let's check if everything is still there
 			user << "<span class='notice'>You place the poster!</span>"

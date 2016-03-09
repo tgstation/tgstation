@@ -23,8 +23,7 @@
 
 
 /obj/item/device/assembly/timer/activate()
-	if(!..())
-		return 0//Cooldown check
+	if(!..())	return 0//Cooldown check
 	timing = !timing
 	update_icon()
 	return 1
