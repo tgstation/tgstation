@@ -206,7 +206,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 				closest_atom = A
 				closest_dist = dist
 
-		else if(closest_mob)
+		else if(closest_blob)
 			continue
 
 		else if(istype(A, /obj/structure))
