@@ -33,7 +33,7 @@
 		return
 	if(istype(user,/mob/living/silicon))
 		return
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/ammo_box/magazine/recharge))
+	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton))
 		if(anchored)
 			if(charging || panel_open)
 				return
@@ -98,31 +98,26 @@
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
 
-	var/using_power = 0
 	if(charging)
 		if(istype(charging, /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/E = charging
 			if(E.power_supply.charge < E.power_supply.maxcharge)
 				E.power_supply.give(E.power_supply.chargerate * recharge_coeff)
+				icon_state = "recharger1"
 				use_power(250 * recharge_coeff)
-				using_power = 1
-
-
+			else
+				icon_state = "recharger2"
+			return
 		if(istype(charging, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = charging
 			if(B.bcell)
 				if(B.bcell.give(B.bcell.chargerate * recharge_coeff))
+					icon_state = "recharger1"
 					use_power(200 * recharge_coeff)
-					using_power = 1
-
-		if(istype(charging, /obj/item/ammo_box/magazine/recharge))
-			var/obj/item/ammo_box/magazine/recharge/R = charging
-			if(R.stored_ammo.len < R.max_ammo)
-				R.stored_ammo += new R.ammo_type(R)
-				use_power(200 * recharge_coeff)
-				using_power = 1
-
-	update_icon(using_power)
+				else
+					icon_state = "recharger2"
+			else
+				icon_state = "recharger3"
 
 /obj/machinery/recharger/power_change()
 	..()
@@ -145,17 +140,12 @@
 	..(severity)
 
 
-/obj/machinery/recharger/update_icon(using_power = 0)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
+/obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		icon_state = "rechargeroff"
-		return
-	if(panel_open)
+	else if(panel_open)
 		icon_state = "rechargeropen"
-		return
-	if(charging)
-		if(using_power)
-			icon_state = "recharger1"
-		else
-			icon_state = "recharger2"
-		return
-	icon_state = "recharger0"
+	else if(charging)
+		icon_state = "recharger1"
+	else
+		icon_state = "recharger0"

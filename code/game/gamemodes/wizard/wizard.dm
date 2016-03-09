@@ -241,10 +241,16 @@
 /mob/proc/spellremove(mob/M)
 	if(!mind)
 		return
-	for(var/X in src.mind.spell_list)
-		var/obj/effect/proc_holder/spell/spell_to_remove = X
+	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.mind.spell_list)
 		qdel(spell_to_remove)
 		mind.spell_list -= spell_to_remove
+
+/datum/mind/proc/remove_spell(var/obj/effect/proc_holder/spell/spell) //To remove a specific spell from a mind - use AddSpell to add one
+	if(!spell) return
+	for(var/obj/effect/proc_holder/spell/S in spell_list)
+		if(istype(S, spell))
+			qdel(S)
+			spell_list -= S
 
 /*Checks if the wizard can cast spells.
 Made a proc so this is not repeated 14 (or more) times.*/
@@ -262,9 +268,9 @@ Made a proc so this is not repeated 14 (or more) times.*/
 	else
 		return 1
 
-//returns whether the mob is a wizard (or apprentice)
+
 /proc/iswizard(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && ((M.mind in ticker.mode.wizards) || (M.mind in ticker.mode.apprentices))
+	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)
 
 
 /datum/game_mode/proc/update_wiz_icons_added(datum/mind/wiz_mind)

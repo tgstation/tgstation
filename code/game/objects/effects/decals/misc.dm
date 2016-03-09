@@ -15,4 +15,3 @@
 	name = "chemicals"
 	icon = 'icons/obj/chempuff.dmi'
 	pass_flags = PASSTABLE | PASSGRILLE
-	layer = 5

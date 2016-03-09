@@ -34,11 +34,11 @@
 	..()
 	if (usr.stat || usr.restrained() || src.loc != usr)
 		return
-	if (!ishuman(usr))
-		return 1
 	var/mob/living/carbon/human/H = usr
-	if ((H == src.loc || (in_range(src, H) && istype(src.loc, /turf))))
-		H.set_machine(src)
+	if (!( istype(H, /mob/living/carbon/human)))
+		return 1
+	if ((usr == src.loc || (in_range(src, usr) && istype(src.loc, /turf))))
+		usr.set_machine(src)
 		if (href_list["spell_teleport"])
 			if (src.uses >= 1)
 				teleportscroll(H)
@@ -50,9 +50,7 @@
 
 	var/A
 
-	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs|null
-	if(!A)
-		return
+	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs
 	var/area/thearea = teleportlocs[A]
 
 	if (!user || user.stat || user.restrained() || uses <= 0)

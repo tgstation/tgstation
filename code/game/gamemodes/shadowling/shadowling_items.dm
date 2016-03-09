@@ -83,7 +83,8 @@
 	invis_view = 2
 	flash_protect = -1
 	unacidable = 1
-	actions_types = list(/datum/action/item_action/hands_free/shift_nerves)
+	action_button_name = "Shift Nerves"
+	action_button_is_hands_free = 1
 	var/max_darkness_view = 8
 	var/min_darkness_view = 0
 	flags = ABSTRACT | NODROP
@@ -95,7 +96,6 @@
 	if(H.dna.species.id != "shadowling")
 		user << "<span class='warning'>You aren't sure how to do this...</span>"
 		return
-	H.dna.species.darksight = 0 //so our species' vision in the dark doesn't interfere.
 	var/new_dark_view
 	new_dark_view = (input(user, "Enter the radius of tiles to see with night vision.", "Night Vision", "[new_dark_view]") as num)
 	new_dark_view = Clamp(new_dark_view,min_darkness_view,max_darkness_view)
@@ -105,4 +105,4 @@
 		else
 			user << "<span class='notice'>You shift your night vision capabilities to see [new_dark_view] tiles away.</span>"
 	darkness_view = new_dark_view
-	user.update_sight()
+	return

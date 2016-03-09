@@ -132,87 +132,87 @@
 	S.sensor_mode()
 
 
-/datum/hud/ai/New(mob/owner)
-	..()
+/datum/hud/proc/ai_hud()
+	adding = list()
+	other = list()
+
 	var/obj/screen/using
 
 //AI core
 	using = new /obj/screen/ai/aicore()
 	using.screen_loc = ui_ai_core
-	static_inventory += using
+	adding += using
 
 //Camera list
 	using = new /obj/screen/ai/camera_list()
 	using.screen_loc = ui_ai_camera_list
-	static_inventory += using
+	adding += using
 
 //Track
 	using = new /obj/screen/ai/camera_track()
 	using.screen_loc = ui_ai_track_with_camera
-	static_inventory += using
+	adding += using
 
 //Camera light
 	using = new /obj/screen/ai/camera_light()
 	using.screen_loc = ui_ai_camera_light
-	static_inventory += using
+	adding += using
 
 //Crew Monitoring
 	using = new /obj/screen/ai/crew_monitor()
 	using.screen_loc = ui_ai_crew_monitor
-	static_inventory += using
+	adding += using
 
 //Crew Manifest
 	using = new /obj/screen/ai/crew_manifest()
 	using.screen_loc = ui_ai_crew_manifest
-	static_inventory += using
+	adding += using
 
 //Alerts
 	using = new /obj/screen/ai/alerts()
 	using.screen_loc = ui_ai_alerts
-	static_inventory += using
+	adding += using
 
 //Announcement
 	using = new /obj/screen/ai/announcement()
 	using.screen_loc = ui_ai_announcement
-	static_inventory += using
+	adding += using
 
 //Shuttle
 	using = new /obj/screen/ai/call_shuttle()
 	using.screen_loc = ui_ai_shuttle
-	static_inventory += using
+	adding += using
 
 //Laws
 	using = new /obj/screen/ai/state_laws()
 	using.screen_loc = ui_ai_state_laws
-	static_inventory += using
+	adding += using
 
 //PDA message
 	using = new /obj/screen/ai/pda_msg_send()
 	using.screen_loc = ui_ai_pda_send
-	static_inventory += using
+	adding += using
 
 //PDA log
 	using = new /obj/screen/ai/pda_msg_show()
 	using.screen_loc = ui_ai_pda_log
-	static_inventory += using
+	adding += using
 
 //Take image
 	using = new /obj/screen/ai/image_take()
 	using.screen_loc = ui_ai_take_picture
-	static_inventory += using
+	adding += using
 
 //View images
 	using = new /obj/screen/ai/image_view()
 	using.screen_loc = ui_ai_view_images
-	static_inventory += using
+	adding += using
 
 
 //Medical/Security sensors
 	using = new /obj/screen/ai/sensors()
 	using.screen_loc = ui_ai_sensor
-	static_inventory += using
+	adding += using
 
-
-/mob/living/silicon/ai/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/ai(src)
+	mymob.client.screen += adding + other
+	return

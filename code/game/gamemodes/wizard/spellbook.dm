@@ -211,7 +211,7 @@
 	name = "Lesser Summon Guns"
 	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns
 	log_name = "IG"
-	cost = 3
+	cost = 4
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
@@ -227,7 +227,7 @@
 
 /datum/spellbook_entry/shapeshift
 	name = "Wild Shapeshift"
-	spell_type = /obj/effect/proc_holder/spell/targeted/shapeshift
+	spell_type = /obj/effect/proc_holder/spell/targeted/shapeshift/wild
 	log_name = "WS"
 	category = "Assistance"
 	cost = 1
@@ -367,14 +367,6 @@
 	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everthing nearby to the point of impact."
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
-
-/datum/spellbook_entry/item/cursed_heart
-	name = "Cursed Heart"
-	desc = "A heart that has been revived by dark magicks, the user must concentrate to ensure the heart beats, but every beat heals them. It must beat every 6 seconds."
-	item_path = /obj/item/organ/internal/heart/cursed/wizard
-	log_name = "CH"
-	cost = 1
-	category = "Defensive"
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
@@ -732,7 +724,7 @@
 /obj/item/weapon/spellbook/oneuse/blind/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>You go blind!</span>"
-	user.blind_eyes(10)
+	user.eye_blind = 10
 
 /obj/item/weapon/spellbook/oneuse/mindswap
 	spell = /obj/effect/proc_holder/spell/targeted/mind_transfer
@@ -802,7 +794,7 @@
 		user <<"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>"
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
 		magichead.flags |= NODROP		//curses!
-		magichead.flags_inv &= ~HIDEFACE //so you can still see their face
+		magichead.flags_inv = null	//so you can still see their face
 		magichead.voicechange = 1	//NEEEEIIGHH
 		if(!user.unEquip(user.wear_mask))
 			qdel(user.wear_mask)

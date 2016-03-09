@@ -39,7 +39,7 @@ effective or pretty fucking useless.
 
 	add_logs(user, null, "knocked down people in the area", src)
 
-	for(var/mob/living/carbon/human/M in urange(10, user, 1))
+	for(var/mob/living/carbon/human/M in ultra_range(10, user, 1))
 		if(prob(50))
 
 			M.Weaken(rand(10,20))
@@ -158,19 +158,15 @@ effective or pretty fucking useless.
 	var/max_charge = 300
 	var/on = 0
 	var/old_alpha = 0
-	actions_types = list(/datum/action/item_action/toggle)
+	action_button_name = "Toggle Cloaker"
 
-/obj/item/device/shadowcloak/ui_action_click(mob/user)
-	if(user.get_item_by_slot(slot_belt) == src)
+/obj/item/device/shadowcloak/ui_action_click()
+	if(usr.get_item_by_slot(slot_belt) == src)
 		if(!on)
 			Activate(usr)
 		else
 			Deactivate()
 	return
-
-/obj/item/device/shadowcloak/item_action_slot_check(slot, mob/user)
-	if(slot == slot_belt)
-		return 1
 
 /obj/item/device/shadowcloak/proc/Activate(mob/living/carbon/human/user)
 	if(!user)
@@ -190,7 +186,6 @@ effective or pretty fucking useless.
 	user = null
 
 /obj/item/device/shadowcloak/dropped(mob/user)
-	..()
 	if(user && user.get_item_by_slot(slot_belt) != src)
 		Deactivate()
 

@@ -34,10 +34,11 @@ Bonus
 	return
 
 /datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
+	var/get_damage = sqrt(20+A.totalStageSpeed())*(2+rand())
 
-	var/get_damage = rand(4, 8)
 	M.adjustToxLoss(-get_damage)
 	return 1
+
 
 /*
 //////////////////////////////////////
@@ -149,7 +150,7 @@ Bonus
 
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
 
-	var/amt_healed = rand(5, 10)
+	var/amt_healed = (sqrt(20+A.totalStageSpeed()*3))-(sqrt(16+A.totalStealth()*(1+rand())))
 	M.adjustBrainLoss(-amt_healed)
 	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
 	var/list/unclean_mutations = (not_good_mutations|bad_mutations) - mutations_list[RACEMUT]

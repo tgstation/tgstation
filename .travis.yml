@@ -3,17 +3,17 @@ sudo: false
 
 env:
     global:
-    - BYOND_MAJOR="510"
-    - BYOND_MINOR="1322"
+    - BYOND_MAJOR="509"
+    - BYOND_MINOR="1319"
     - NODE_VERSION="4"
     matrix:
     - DM_MAPFILE="tgstation2"
     - DM_MAPFILE="metastation"
     - DM_MAPFILE="ministation"
+    - DM_MAPFILE="DiscStation"
     - DM_MAPFILE="dreamstation"
     - DM_MAPFILE="birdstation"
     - DM_MAPFILE="asteroidstation"
-    - DM_MAPFILE="efficiencystation"
 
 
 cache:

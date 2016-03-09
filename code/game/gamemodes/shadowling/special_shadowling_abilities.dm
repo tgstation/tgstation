@@ -10,7 +10,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	action_icon_state = "hatch"
 
 /obj/effect/proc_holder/spell/self/shadowling_hatch/cast(list/targets,mob/user = usr)
-	if(user.stat || !ishuman(user) || !user || !is_shadow(user || isinspace(user)))
+	if(user.stat || !ishuman(user) || !user || !is_shadow(user || isinspace(user))) 
 		return
 	var/mob/living/carbon/human/H = user
 	var/hatch_or_no = alert(H,"Are you sure you want to hatch? You cannot undo this!",,"Yes","No")
@@ -88,7 +88,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(H), slot_glasses)
 			H.set_species(/datum/species/shadow/ling) //can't be a shadowling without being a shadowling
 
-			H.mind.RemoveSpell(src)
+			H.mind.remove_spell(src)
 
 			sleep(10)
 			H << "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>"
@@ -159,7 +159,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				var/mob/A = new /mob/living/simple_animal/ascendant_shadowling(H.loc)
 				for(var/obj/effect/proc_holder/spell/S in H.mind.spell_list)
 					if(S == src) continue
-					H.mind.RemoveSpell(S)
+					H.mind.remove_spell(S)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/annihilate(null))
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/hypnosis(null))
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_phase_shift(null))
@@ -175,5 +175,5 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				if(!ticker.mode.shadowling_ascended)
 					SSshuttle.emergency.request(null, 0.3)
 				ticker.mode.shadowling_ascended = 1
-				A.mind.RemoveSpell(src)
+				A.mind.remove_spell(src)
 				qdel(H)

@@ -2,6 +2,7 @@
 
 /obj/effect/anomaly
 	name = "anomaly"
+	icon = 'icons/effects/effects.dmi'
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
 	icon_state = "bhole3"
 	unacidable = 1
@@ -12,8 +13,6 @@
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/New()
-	..()
-	poi_list |= src
 	SetLuminosity(initial(luminosity))
 	aSignal = new(src)
 	aSignal.code = rand(1,100)
@@ -22,9 +21,6 @@
 	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
-/obj/effect/anomaly/Destroy()
-	poi_list.Remove(src)
-	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
 	if(prob(movechance))
@@ -215,8 +211,7 @@
 /obj/effect/anomaly/bhole/proc/affect_coord(x, y, ex_act_force, pull_chance, turf_removal_chance)
 	//Get turf at coordinate
 	var/turf/T = locate(x, y, z)
-	if(isnull(T))
-		return
+	if(isnull(T))	return
 
 	//Pulling and/or ex_act-ing movable atoms in that turf
 	if(prob(pull_chance))

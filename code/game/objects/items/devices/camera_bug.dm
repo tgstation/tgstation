@@ -57,17 +57,20 @@
 	interact(user)
 
 /obj/item/device/camera_bug/check_eye(mob/user)
-	if ( loc != user || user.incapacitated() || user.eye_blind || !current )
+	if (user.stat || loc != user || !user.canmove || user.eye_blind || !current)
+		user.reset_view(null)
 		user.unset_machine()
-		return
+		return null
+
 	var/turf/T = get_turf(user.loc)
 	if(T.z != current.z || !current.can_use())
 		user << "<span class='danger'>[src] has lost the signal.</span>"
 		current = null
+		user.reset_view(null)
 		user.unset_machine()
+		return null
 
-/obj/item/device/camera_bug/on_unset_machine(mob/user)
-	user.reset_perspective(null)
+	return 1
 
 /obj/item/device/camera_bug/proc/get_cameras()
 	if( world.time > (last_net_update + 100))
@@ -182,6 +185,7 @@
 /obj/item/device/camera_bug/Topic(href,list/href_list)
 	if(usr != loc)
 		usr.unset_machine()
+		usr.reset_view(null)
 		usr << browse(null, "window=camerabug")
 		return
 	usr.set_machine(src)
@@ -192,7 +196,7 @@
 		if(C)
 			track_mode = BUGMODE_MONITOR
 			current = C
-			usr.reset_perspective(null)
+			usr.reset_view(null)
 			interact()
 	if("track" in href_list)
 		var/atom/A = locate(href_list["track"])
@@ -211,9 +215,10 @@
 		interact()
 		return
 	if("close" in href_list)
+		usr.reset_view(null)
 		usr.unset_machine()
 		current = null
-		return
+		return // I do not <- I do not remember what I was going to write in this comment -Sayu, sometime later
 	if("view" in href_list)
 		var/obj/machinery/camera/C = locate(href_list["view"])
 		if(istype(C))
@@ -227,14 +232,16 @@
 			current = C
 			spawn(6)
 				if(src.check_eye(usr))
-					usr.reset_perspective(C)
+					usr.reset_view(C)
 					interact()
 				else
 					usr.unset_machine()
+					usr.reset_view(null)
 					usr << browse(null, "window=camerabug")
 			return
 		else
 			usr.unset_machine()
+			usr.reset_view(null)
 
 	interact()
 

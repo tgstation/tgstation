@@ -83,42 +83,31 @@
 	if(!B)
 		src << "<span class='warning'>You must be on a factory blob!</span>"
 		return
-	if(B.naut) //if it already made a blobbernaut, it can't do it again
-		src << "<span class='warning'>This factory blob is already sustaining a blobbernaut.</span>"
+	if(B.health < B.maxhealth*0.8) //if it's at less than 80% of its health, you can't blobbernaut it
+		src << "<span class='warning'>This factory blob is too damaged to produce a blobbernaut.</span>"
 		return
-	if(B.health < B.maxhealth * 0.5)
-		src << "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>"
+	if(!can_buy(20))
 		return
-	if(!can_buy(30))
-		return
-	B.maxhealth = initial(B.maxhealth) * 0.25 //factories that produced a blobbernaut have much lower health
-	B.check_health()
+	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
+	B.take_damage(B.maxhealth*0.8, CLONE, null, 0) //take a bunch of damage, so you can't produce tons of blobbernauts from a single factory
 	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 	B.spore_delay = world.time + 600 //one minute before it can spawn spores again
-	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
-	flick("blobbernaut_produce", blobber)
-	B.naut = blobber
-	blobber.factory = B
 	blobber.overmind = src
 	blobber.update_icons()
-	blobber.notransform = 1 //stop the naut from moving around
+	blobber.AIStatus = AI_OFF
 	blob_mobs.Add(blobber)
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
 	var/client/C = null
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
 		C = pick(candidates)
-		blobber.notransform = 0
 		blobber.key = C.key
 		blobber << 'sound/effects/blobattack.ogg'
 		blobber << 'sound/effects/attackblob.ogg'
 		blobber << "<b>You are a blobbernaut!</b>"
-		blobber << "You are powerful, hard to kill, and slowly regenerate near nodes and cores, but will slowly die if not near the blob or if the factory that made you is killed."
-		blobber << "You can communicate with other blobbernauts and overminds via <b>:b</b>"
 		blobber << "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 		blobber << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
 	else
-		blobber.notransform = 0 //otherwise, just let it move
+		blobber.AIStatus = AI_ON //otherwise, they reactivate AI and continue
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
@@ -168,31 +157,24 @@
 /mob/camera/blob/proc/expand_blob(turf/T)
 	if(!can_attack())
 		return
+	var/obj/effect/blob/B = locate() in T
+	if(B)
+		src << "<span class='warning'>There is a blob there!</span>"
+		return
 	var/obj/effect/blob/OB = locate() in circlerange(T, 1)
 	if(!OB)
 		src << "<span class='warning'>There is no blob adjacent to the target tile!</span>"
 		return
-	if(can_buy(5))
-		var/attacksuccess = FALSE
-		last_attack = world.time
-		for(var/mob/living/L in T)
-			if("blob" in L.faction) //no friendly/dead fire
-				continue
-			if(L.stat != DEAD)
-				attacksuccess = TRUE
-				var/mob_protection = L.get_permeability_protection()
-				blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection, src)
-				blob_reagent_datum.send_message(L)
-		var/obj/effect/blob/B = locate() in T
-		if(B)
-			if(attacksuccess) //if we successfully attacked a turf with a blob on it, don't refund shit
-				B.blob_attack_animation(T, src)
-			else
-				src << "<span class='warning'>There is a blob there!</span>"
-				add_points(5) //otherwise, refund all of the cost
-			return
-		else
-			OB.expand(T, src)
+	if(!can_buy(5))
+		return
+	last_attack = world.time
+	OB.expand(T, 0, src)
+	for(var/mob/living/L in T)
+		if("blob" in L.faction) //no friendly fire
+			continue
+		var/mob_protection = L.get_permeability_protection()
+		blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection)
+		blob_reagent_datum.send_message(L)
 
 /mob/camera/blob/verb/rally_spores_power()
 	set category = "Blob"
@@ -230,18 +212,12 @@
 	set desc = "Replaces your chemical with a random, different one."
 	if(!can_buy(40))
 		return
-	set_chemical()
-
-/mob/camera/blob/proc/set_chemical()
-	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
-	blob_reagent_datum = new BC
+	var/datum/reagent/blob/B = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
+	blob_reagent_datum = new B
 	for(var/obj/effect/blob/BL in blobs)
 		BL.update_icon()
 	for(var/mob/living/simple_animal/hostile/blob/BLO)
 		BLO.update_icons()
-		if(BLO.overmind == src) //If it's getting a new chemical, tell it what it does!
-			BLO << "Your overmind's blob reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
-			BLO << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
 	src << "Your reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 	src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
 
@@ -258,7 +234,7 @@
 	src << "<i>Shield Blobs</i> are strong and expensive blobs which take more damage. In additon, they are fireproof and can block air, use these to protect yourself from station fires."
 	src << "<i>Resource Blobs</i> are blobs which produce more resources for you, build as many of these as possible to consume the station. This type of blob must be placed near node blobs or your core to work."
 	src << "<i>Factory Blobs</i> are blobs that spawn blob spores which will attack nearby enemies. This type of blob must be placed near node blobs or your core to work."
-	src << "<i>Blobbernauts</i> can be produced from factories for a cost, and are hard to kill, powerful, and moderately smart. The factory used to create one will become fragile and briefly unable to produce spores."
+	src << "<i>Blobbernauts</i> can be produced from factories for a cost, and are hard to kill, powerful, and moderately smart. The factory used to create one will become briefly fragile and unable to produce spores."
 	src << "<i>Node Blobs</i> are blobs which grow, like the core. Like the core it can activate resource and factory blobs."
 	src << "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>"
 	src << "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob"
@@ -266,6 +242,14 @@
 
 /datum/action/innate/blob
 	background_icon_state = "bg_alien"
+
+/datum/action/innate/blob/CheckRemoval()
+	if(ticker.mode.name != "blob" || !ishuman(owner))
+		return 1
+	var/datum/game_mode/blob/B = ticker.mode
+	if(!owner.mind || !(owner.mind in B.infected_crew))
+		return 1
+	return 0
 
 /datum/action/innate/blob/earlyhelp
 	name = "Blob Help"

@@ -29,8 +29,7 @@
 	var/unwieldsound = null
 
 /obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user)
-	if(!wielded || !user)
-		return
+	if(!wielded || !user) return
 	wielded = 0
 	if(force_unwielded)
 		force = force_unwielded
@@ -54,8 +53,7 @@
 	return
 
 /obj/item/weapon/twohanded/proc/wield(mob/living/carbon/user)
-	if(wielded)
-		return
+	if(wielded) return
 	if(istype(user,/mob/living/carbon/monkey) )
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
@@ -87,7 +85,6 @@
 	return ..()
 
 /obj/item/weapon/twohanded/dropped(mob/user)
-	..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
@@ -275,11 +272,13 @@
 	if(wielded)
 		return 1
 
-/obj/item/weapon/twohanded/dualsaber/green/New()
-	item_color = "green"
+/obj/item/weapon/twohanded/dualsaber/green
+	New()
+		item_color = "green"
 
-/obj/item/weapon/twohanded/dualsaber/red/New()
-	item_color = "red"
+/obj/item/weapon/twohanded/dualsaber/red
+	New()
+		item_color = "red"
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user, params)
 	..()
@@ -394,7 +393,7 @@
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP
-	actions_types = list(/datum/action/item_action/startchainsaw)
+	action_button_name = "Pull the starting cord"
 	var/on = 0
 
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
@@ -412,9 +411,6 @@
 	if(src == user.get_active_hand()) //update inhands
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 
 
 //GREY TIDE

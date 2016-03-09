@@ -6,7 +6,7 @@
 	can_suppress = 1
 	burst_size = 3
 	fire_delay = 2
-	actions_types = list(/datum/action/item_action/toggle_firemode)
+	action_button_name = "Toggle Firemode"
 
 /obj/item/weapon/gun/projectile/automatic/proto
 	name = "\improper NanoTrasen Saber SMG"
@@ -67,9 +67,7 @@
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_icon()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	return
 
 /obj/item/weapon/gun/projectile/automatic/can_shoot()
 	return get_ammo()
@@ -120,7 +118,7 @@
 	fire_delay = 2
 	can_suppress = 0
 	burst_size = 0
-	actions_types = list()
+	action_button_name = null
 
 /obj/item/weapon/gun/projectile/automatic/wt550/update_icon()
 	..()

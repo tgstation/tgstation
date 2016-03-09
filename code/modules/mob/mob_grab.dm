@@ -19,8 +19,13 @@
 
 /obj/item/weapon/grab/New(mob/user, mob/victim)
 	..()
+	loc = user
 	assailant = user
 	affecting = victim
+
+	if(affecting.anchored || !user.Adjacent(victim))
+		qdel(src)
+		return
 
 	hud = new /obj/screen/grab(src)
 	hud.icon_state = "reinforce"
@@ -88,8 +93,7 @@
 			affecting.hand = 1
 			affecting.drop_item()
 			affecting.hand = h
-			for(var/X in affecting.grabbed_by)
-				var/obj/item/weapon/grab/G = X
+			for(var/obj/item/weapon/grab/G in affecting.grabbed_by)
 				if(G == src) continue
 				if(G.state == GRAB_AGGRESSIVE)
 					allow_upgrade = 0
@@ -101,18 +105,15 @@
 		if(!affecting.buckled)
 			affecting.loc = assailant.loc
 
-	var/breathing_tube = affecting.getorganslot("breathing_tube")
-
 	if(state >= GRAB_NECK)
 		affecting.Stun(5)	//It will hamper your voice, being choked and all.
-		if(isliving(affecting) && !breathing_tube)
+		if(isliving(affecting))
 			var/mob/living/L = affecting
 			L.adjustOxyLoss(1)
 
 	if(state >= GRAB_KILL)
 		affecting.Weaken(5)	//Should keep you down unless you get help.
-		if(!breathing_tube)
-			affecting.losebreath = min(affecting.losebreath + 2, 3)
+		affecting.losebreath = min(affecting.losebreath + 2, 3)
 
 /obj/item/weapon/grab/attack_self(mob/user)
 	s_click(hud)
@@ -169,8 +170,7 @@
 					add_logs(assailant, affecting, "strangled")
 
 					assailant.changeNext_move(CLICK_CD_TKSTRANGLE)
-					if(!affecting.getorganslot("breathing_tube"))
-						affecting.losebreath += 1
+					affecting.losebreath += 1
 				else
 					if(assailant)
 						assailant.visible_message("<span class='warning'>[assailant] is unable to tighten \his grip on [affecting]'s neck!</span>")
@@ -216,7 +216,6 @@
 	add_logs(user, affecting, "attempted to put", src, "into [M]")
 
 /obj/item/weapon/grab/dropped()
-	..()
 	qdel(src)
 
 #undef UPGRADE_COOLDOWN

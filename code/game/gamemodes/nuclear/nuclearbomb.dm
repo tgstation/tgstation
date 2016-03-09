@@ -391,18 +391,13 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/machinery/nuclearbomb/selfdestruct/proc/SetTurfs()
 	if(loc == initial(loc))
-		for(var/N in nuke_tiles)
-			var/turf/simulated/floor/T = N
-			T.icon_state = (timing ? "rcircuitanim" : T.icon_regular_floor)
+		for(var/turf/simulated/floor/bluegrid/T in orange(src, 1))
+			T.icon_state = (timing ? "rcircuitanim" : "bcircuit")
 
 /obj/machinery/nuclearbomb/selfdestruct/set_anchor()
 	return
 
 /obj/machinery/nuclearbomb/selfdestruct/set_active()
-	..()
-	SetTurfs()
-
-/obj/machinery/nuclearbomb/selfdestruct/set_safety()
 	..()
 	SetTurfs()
 

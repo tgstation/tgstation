@@ -127,7 +127,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/weapon/c4 = 7,
 				/obj/item/weapon/grenade/clusterbuster/smoke = 15,
 				/obj/item/clothing/under/chameleon = 13,
-				/obj/item/clothing/shoes/chameleon = 10,
+				/obj/item/clothing/shoes/sneakers/syndigaloshes = 10,
 				/obj/item/borg/upgrade/ddrill = 3,
 				/obj/item/borg/upgrade/soh = 3)
 
@@ -167,6 +167,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/weapon/twohanded/dualsaber = 15,
 				/obj/item/organ/internal/heart/demon = 7,
 				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted = 16,
+				/obj/item/weapon/dice/d20/fate = 4,
 				/obj/item/weapon/gun/magic/wand/resurrection/inert = 15,
 				/obj/item/weapon/gun/magic/wand/resurrection = 10,
 				/obj/item/device/radio/uplink/old = 2,
@@ -220,18 +221,18 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	hidden_uplink.name = "dusty radio"
 	hidden_uplink.telecrystals = 10
 
-obj/effect/mob_spawn/human/syndicatesoldier/coldres
+/obj/effect/landmark/corpse/syndicatesoldier/coldres
 	name = "Syndicate Snow Operative"
-	uniform = /obj/item/clothing/under/syndicate/coldres
-	shoes = /obj/item/clothing/shoes/combat/coldres
-	radio = /obj/item/device/radio/headset/syndicate/alt
-	pocket1 = /obj/item/weapon/gun/projectile/automatic/pistol
-	pocket2 = /obj/item/weapon/card/id/syndicate
-	has_id = 0
+	corpseuniform = /obj/item/clothing/under/syndicate/coldres
+	corpseshoes = /obj/item/clothing/shoes/combat/coldres
+	corpseradio = /obj/item/device/radio/headset/syndicate/alt
+	corpsepocket1 = /obj/item/weapon/gun/projectile/automatic/pistol
+	corpsepocket2 = /obj/item/weapon/card/id/syndicate
+	corpseid = 0
 
-obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive
+/obj/effect/landmark/corpse/syndicatesoldier/coldres/alive
 	name = "sleeper"
-	mob_name = "Syndicate Snow Operative"
+	mobname = "Syndicate Snow Operative"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
@@ -241,8 +242,8 @@ obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive
 	flavour_text = {"You are a syndicate operative recently awoken from cyrostatis in an underground outpost. Monitor Nanotrasen communications and record infomation. All intruders should be
 	disposed of swirfly to assure no gathered infomation is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."}
 
-obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
-	mob_gender = FEMALE
+/obj/effect/landmark/corpse/syndicatesoldier/coldres/alive/female
+	mobgender = FEMALE
 
 //mobs//--
 

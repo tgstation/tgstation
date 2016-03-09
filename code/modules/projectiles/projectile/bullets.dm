@@ -72,7 +72,7 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(4)
+		M.adjust_fire_stacks(1)
 		M.IgniteMob()
 
 
@@ -100,11 +100,6 @@
 	weaken = 8
 	stun = 8
 	hitsound = 'sound/effects/meteorimpact.ogg'
-
-/obj/item/projectile/bullet/meteorshot/weak
-	damage = 10
-	weaken = 4
-	stun = 4
 
 /obj/item/projectile/bullet/meteorshot/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -156,11 +151,12 @@
 	reagents.handle_reactions()
 	return 1
 
-/obj/item/projectile/bullet/dart/metalfoam/New()
-	..()
-	reagents.add_reagent("aluminium", 15)
-	reagents.add_reagent("foaming_agent", 5)
-	reagents.add_reagent("facid", 5)
+/obj/item/projectile/bullet/dart/metalfoam
+	New()
+		..()
+		reagents.add_reagent("aluminium", 15)
+		reagents.add_reagent("foaming_agent", 5)
+		reagents.add_reagent("facid", 5)
 
 //This one is for future syringe guns update
 /obj/item/projectile/bullet/dart/syringe

@@ -26,7 +26,7 @@
 /obj/machinery/conveyor/auto/New(loc, newdir)
 	..(loc, newdir)
 	operating = 1
-	update_move_direction()
+	setmove()
 
 /obj/machinery/conveyor/auto/update()
 	if(stat & BROKEN)
@@ -41,14 +41,11 @@
 		operating = 1
 	icon_state = "conveyor[operating * verted]"
 
-// create a conveyor
+	// create a conveyor
 /obj/machinery/conveyor/New(loc, newdir)
 	..(loc)
 	if(newdir)
 		dir = newdir
-	update_move_direction()
-
-/obj/machinery/conveyor/proc/update_move_direction()
 	switch(dir)
 		if(NORTH)
 			forwards = NORTH
@@ -66,11 +63,11 @@
 			forwards = EAST
 			backwards = SOUTH
 		if(NORTHWEST)
-			forwards = NORTH
-			backwards = EAST
-		if(SOUTHEAST)
 			forwards = SOUTH
 			backwards = WEST
+		if(SOUTHEAST)
+			forwards = NORTH
+			backwards = EAST
 		if(SOUTHWEST)
 			forwards = WEST
 			backwards = NORTH
@@ -78,6 +75,8 @@
 		var/temp = forwards
 		forwards = backwards
 		backwards = temp
+
+/obj/machinery/conveyor/proc/setmove()
 	if(operating == 1)
 		movedir = forwards
 	else
@@ -125,20 +124,11 @@
 		user << "<span class='notice'>You remove the conveyor belt.</span>"
 		qdel(src)
 		return
-	if(istype(I, /obj/item/weapon/wrench))	
-		if(!(stat & BROKEN))
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			dir = turn(dir,-45)
-			update_move_direction()
-			user << "<span class='notice'>You rotate [src].</span>"
-			return
-	if(isrobot(user))
-		return //Carn: fix for borgs dropping their modules on conveyor belts
+	if(isrobot(user))	return //Carn: fix for borgs dropping their modules on conveyor belts
 	if(!user.drop_item())
 		user << "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
 		return
-	if(I && I.loc)
-		I.loc = src.loc
+	if(I && I.loc)	I.loc = src.loc
 	return
 
 // attack with hand, move pulled object onto conveyor
@@ -239,7 +229,7 @@
 
 	for(var/obj/machinery/conveyor/C in conveyors)
 		C.operating = position
-		C.update_move_direction()
+		C.setmove()
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
@@ -302,9 +292,13 @@
 	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))
 		return
 	var/cdir = get_dir(A, user)
-	if(A == user.loc)
-		user << "<span class='notice'>You cannot place a conveyor belt under yourself.</span>"
+	if(!(cdir in cardinal) || A == user.loc)
 		return
+	for(var/obj/machinery/conveyor/CB in A)
+		if(CB.dir == cdir || CB.dir == turn(cdir,180))
+			return
+		cdir |= CB.dir
+		qdel(CB)
 	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A,cdir)
 	C.id = id
 	transfer_fingerprints_to(C)

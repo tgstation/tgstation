@@ -82,8 +82,7 @@ var/list/datum/dna/hivemind_bank = list()
 		return
 
 	var/S = input("Select a DNA absorb from the air: ", "Absorb DNA", null) as null|anything in names
-	if(!S)
-		return
+	if(!S)	return
 	var/datum/changelingprofile/chosen_prof = names[S]
 	if(!chosen_prof)
 		return

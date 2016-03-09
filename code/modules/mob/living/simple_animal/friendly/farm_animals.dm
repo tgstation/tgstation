@@ -250,7 +250,7 @@ var/global/chicken_count = 0
 	. =..()
 	if(!.)
 		return
-	if((!stat && prob(3) && eggsleft > 0) && egg_type)
+	if(!stat && prob(3) && eggsleft > 0)
 		visible_message("[src] [pick(layMessage)]")
 		eggsleft--
 		var/obj/item/E = new egg_type(get_turf(src))

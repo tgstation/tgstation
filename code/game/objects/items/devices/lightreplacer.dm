@@ -156,7 +156,7 @@
 
 /obj/item/device/lightreplacer/proc/Charge(var/mob/user)
 	charge += 1
-	if(charge > 3)
+	if(charge > 7)
 		AddUses(1)
 		charge = 1
 

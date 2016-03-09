@@ -1,15 +1,16 @@
-//supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
-#define RANGE_TURFS(RADIUS, CENTER) \
-  block( \
-    locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
-    locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
-  )
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/proc/get_area(atom/A)
-	if (!istype(A))
-		return
-	for(A, A && !isarea(A), A=A.loc); //semicolon is for the empty statement
-	return A
+/proc/get_area(O)
+	var/atom/location = O
+	var/i
+	for(i=1, i<=20, i++)
+		if(isarea(location))
+			return location
+		else if (istype(location))
+			location = location.loc
+		else
+			return null
+	return 0
 
 /proc/get_area_master(O)
 	var/area/A = get_area(O)
@@ -22,20 +23,6 @@
 		if(A.name == N)
 			return A
 	return 0
-
-/proc/get_areas_in_range(dist=0, atom/center=usr)
-	if(!dist)
-		var/turf/T = get_turf(center)
-		return T ? list(T.loc) : list()
-	if(!center)
-		return list()
-
-	var/list/turfs = RANGE_TURFS(dist, center)
-	var/list/areas = list()
-	for(var/V in turfs)
-		var/turf/T = V
-		areas |= T.loc
-	return areas
 
 // Like view but bypasses luminosity check
 
@@ -305,8 +292,7 @@
 	return candidates
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
-	if(!isobj(O))
-		O = new /obj/screen/text()
+	if(!isobj(O))	O = new /obj/screen/text()
 	O.maptext = maptext
 	O.maptext_height = maptext_height
 	O.maptext_width = maptext_width
@@ -314,10 +300,8 @@
 	return O
 
 /proc/Show2Group4Delay(obj/O, list/group, delay=0)
-	if(!isobj(O))
-		return
-	if(!group)
-		group = clients
+	if(!isobj(O))	return
+	if(!group)	group = clients
 	for(var/client/C in group)
 		C.screen += O
 	if(delay)
@@ -425,8 +409,7 @@
 	return candidates
 
 /proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
-	if(!G_found || !G_found.key)
-		return
+	if(!G_found || !G_found.key)	return
 
 	//First we spawn a dude.
 	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
@@ -436,3 +419,10 @@
 	new_character.key = G_found.key
 
 	return new_character
+
+//supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
+#define RANGE_TURFS(RADIUS, CENTER) \
+  block( \
+    locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
+    locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
+  )

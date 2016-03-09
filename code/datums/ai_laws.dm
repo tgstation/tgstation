@@ -88,10 +88,8 @@
 			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 		if(1)
 			for(var/line in file2list("config/silicon_laws.txt"))
-				if(!line)
-					continue
-				if(findtextEx(line,"#",1,2))
-					continue
+				if(!line)						continue
+				if(findtextEx(line,"#",1,2))	continue
 
 				add_inherent_law(line)
 			if(!inherent.len)
@@ -109,10 +107,8 @@
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
 	..()
 	for(var/line in file2list("config/silicon_laws.txt"))
-		if(!line)
-			continue
-		if(findtextEx(line,"#",1,2))
-			continue
+		if(!line)						continue
+		if(findtextEx(line,"#",1,2))	continue
 
 		add_inherent_law(line)
 	if(!inherent.len) //Failsafe to prevent lawless AIs being created.

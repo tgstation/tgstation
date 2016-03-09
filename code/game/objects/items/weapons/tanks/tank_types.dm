@@ -92,8 +92,7 @@
 
 	if (istype(W, /obj/item/weapon/flamethrower))
 		var/obj/item/weapon/flamethrower/F = W
-		if ((!F.status)||(F.ptank))
-			return
+		if ((!F.status)||(F.ptank))	return
 		src.master = F
 		F.ptank = src
 		user.unEquip(src)

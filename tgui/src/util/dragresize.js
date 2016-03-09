@@ -19,8 +19,6 @@ export function lock (x, y) {
 export function drag (event) {
   event.preventDefault()
 
-  if (!this.get('drag')) return
-
   if (this.get('x')) {
     let x = (event.screenX - this.get('x')) + window.screenLeft
     let y = (event.screenY - this.get('y')) + window.screenTop
@@ -38,8 +36,6 @@ export function sane (x, y) {
 
 export function resize (event) {
   event.preventDefault()
-
-  if (!this.get('resize')) return
 
   if (this.get('x')) {
     let x = (event.screenX - this.get('x')) + window.innerWidth

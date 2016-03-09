@@ -25,8 +25,7 @@
 			<A href='?src=\ref[src];secrets=showgm'>Show Game Mode</A><BR>
 			<A href='?src=\ref[src];secrets=manifest'>Show Crew Manifest</A><BR>
 			<A href='?src=\ref[src];secrets=DNA'>List DNA (Blood)</A><BR>
-			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR>
-			<A href='?src=\ref[src];secrets=ctfbutton'>Enable/Disable CTF</A><BR><BR>
+			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR><BR>
 			<A href='?src=\ref[src];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
 			<BR>
 			<B>Shuttles</B><BR>
@@ -102,8 +101,7 @@
 					dat += "[line]<BR>"
 				dat+= "*******<BR><BR>"
 				for(var/datum/job/job in SSjob.occupations)
-					if(!job)
-						continue
+					if(!job)	continue
 					dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
 				usr << browse(dat, "window=jobdebug;size=600x500")
 
@@ -528,16 +526,6 @@
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
-
-		if("ctfbutton")
-			if(!check_rights(R_ADMIN))
-				return
-			var/ctf_enabled = 0
-			for(var/obj/machinery/capture_the_flag/CTF in machines)
-				ctf_enabled = !CTF.ctf_enabled
-				CTF.ctf_enabled = !CTF.ctf_enabled
-			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
-
 	if(E)
 		E.processing = 0
 		if(E.announceWhen>0)

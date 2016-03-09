@@ -24,7 +24,7 @@
 	return
 
 /client/verb/rules()
-	set name = "rules"
+	set name = "Rules"
 	set desc = "Show Server Rules."
 	set hidden = 1
 	if(config.rulesurl)
@@ -36,7 +36,7 @@
 	return
 
 /client/verb/github()
-	set name = "github"
+	set name = "Github"
 	set desc = "Visit Github"
 	set hidden = 1
 	if(config.githuburl)
@@ -48,7 +48,7 @@
 	return
 
 /client/verb/reportissue()
-	set name = "report-issue"
+	set name = "Report issue"
 	set desc = "Report an issue"
 	set hidden = 1
 	if(config.githuburl)
@@ -75,33 +75,6 @@ Admin:
 
 	if(holder)
 		src << adminhotkeys
-
-/client/verb/changelog()
-	set name = "Changelog"
-	set category = "OOC"
-	getFiles(
-		'html/88x31.png',
-		'html/bug-minus.png',
-		'html/cross-circle.png',
-		'html/hard-hat-exclamation.png',
-		'html/image-minus.png',
-		'html/image-plus.png',
-		'html/music-minus.png',
-		'html/music-plus.png',
-		'html/tick-circle.png',
-		'html/wrench-screwdriver.png',
-		'html/spell-check.png',
-		'html/burn-exclamation.png',
-		'html/chevron.png',
-		'html/chevron-expand.png',
-		'html/changelog.css',
-		'html/changelog.html'
-		)
-	src << browse('html/changelog.html', "window=changes;size=675x650")
-	if(prefs.lastchangelog != changelog_hash)
-		prefs.lastchangelog = changelog_hash
-		prefs.save_preferences()
-		winset(src, "infowindow.changelog", "font-style=;")
 
 
 /mob/proc/hotkey_help()

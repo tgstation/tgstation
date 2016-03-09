@@ -7,7 +7,6 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
-	see_in_dark = 8
 	bubble_icon = "machine"
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
@@ -134,17 +133,18 @@
 	switch(severity)
 		if(1)
 			src.take_organ_damage(20)
+			Stun(8)
 		if(2)
 			src.take_organ_damage(10)
+			Stun(3)
+	flick("noise", src:flash)
 	src << "<span class='userdanger'>*BZZZT*</span>"
 	src << "<span class='danger'>Warning: Electromagnetic pulse detected.</span>"
-	flash_eyes(affect_silicon = 1)
 	..()
 
 /mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
 	blocked = (100-blocked)/100
-	if(!damage || (blocked <= 0))
-		return 0
+	if(!damage || (blocked <= 0))	return 0
 	switch(damagetype)
 		if(BRUTE)
 			adjustBruteLoss(damage * blocked)
@@ -175,8 +175,7 @@
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
 	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
 /*
-	if(!effect || (blocked >= 2))
-		return 0
+	if(!effect || (blocked >= 2))	return 0
 	switch(effecttype)
 		if(STUN)
 			stunned = max(stunned,(effect/(blocked+1)))
@@ -189,7 +188,7 @@
 		if(STUTTER)
 			stuttering = max(stuttering,(effect/(blocked+1)))
 		if(EYE_BLUR)
-			blur_eyes(effect/(blocked+1))
+			eye_blurry = max(eye_blurry,(effect/(blocked+1)))
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect/(blocked+1)))
 	updatehealth()
@@ -368,8 +367,7 @@
 	diagsensor.add_hud_to(src)
 
 /mob/living/silicon/proc/sensor_mode()
-	if(incapacitated())
-		return
+	set name = "Set Sensor Augmentation"
 	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Diagnostic","Disable")
 	remove_med_sec_hud()
 	switch(sensor_type)
@@ -395,7 +393,7 @@
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 							"<span class='userdanger'>[M] has slashed at [src]!</span>")
 			if(prob(8))
-				flash_eyes(affect_silicon = 1)
+				flick("noise", flash)
 			add_logs(M, src, "attacked")
 			adjustBruteLoss(damage)
 			updatehealth()
@@ -468,7 +466,7 @@
 /mob/living/silicon/grabbedby(mob/living/user)
 	return
 
-/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
+/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	if(affect_silicon)
 		return ..()
 
@@ -486,34 +484,3 @@
 	if(changed)
 		animate(src, transform = ntransform, time = 2,easing = EASE_IN|EASE_OUT)
 	return ..()
-
-
-/mob/living/silicon/Stun(amount)
-	if(status_flags & CANSTUN)
-		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		update_stat()
-
-/mob/living/silicon/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(status_flags & CANSTUN)
-		stunned = max(amount,0)
-		update_stat()
-
-/mob/living/silicon/AdjustStunned(amount)
-	if(status_flags & CANSTUN)
-		stunned = max(stunned + amount,0)
-		update_stat()
-
-/mob/living/silicon/Weaken(amount, ignore_canweaken = 0)
-	if(status_flags & CANWEAKEN || ignore_canweaken)
-		weakened = max(max(weakened,amount),0)
-		update_stat()
-
-/mob/living/silicon/SetWeakened(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(amount,0)
-		update_stat()
-
-/mob/living/silicon/AdjustWeakened(amount, ignore_canweaken = 0)
-	if(status_flags & CANWEAKEN || ignore_canweaken)
-		weakened = max(weakened + amount,0)
-		update_stat()

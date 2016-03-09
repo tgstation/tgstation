@@ -8,7 +8,7 @@
 	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
-	actions_types = list(/datum/action/item_action/toggle_mister)
+	action_button_name = "Toggle Mister"
 
 	var/obj/item/weapon/noz
 	var/on = 0
@@ -22,14 +22,10 @@
 /obj/item/weapon/watertank/ui_action_click()
 	toggle_mister()
 
-/obj/item/weapon/watertank/item_action_slot_check(slot, mob/user)
-	if(slot == user.getBackSlot())
-		return 1
-
 /obj/item/weapon/watertank/verb/toggle_mister()
 	set name = "Toggle Mister"
 	set category = "Object"
-	if (usr.get_item_by_slot(usr.getBackSlot()) != src)
+	if (usr.get_item_by_slot(usr.getWatertankSlot()) != src)
 		usr << "<span class='warning'>The watertank must be worn properly to use!</span>"
 		return
 	if(usr.incapacitated())
@@ -56,8 +52,7 @@
 	return new /obj/item/weapon/reagent_containers/spray/mister(src)
 
 /obj/item/weapon/watertank/equipped(mob/user, slot)
-	..()
-	if(slot != slot_back)
+	if (slot != slot_back)
 		remove_noz()
 
 /obj/item/weapon/watertank/proc/remove_noz()
@@ -80,27 +75,34 @@
 	..()
 
 /obj/item/weapon/watertank/MouseDrop(obj/over_object)
-	var/mob/M = src.loc
-	if(istype(M))
+	var/mob/H = src.loc
+	if(istype(H))
 		switch(over_object.name)
 			if("r_hand")
-				if(M.r_hand)
+				if(H.r_hand)
 					return
-				if(!M.unEquip(src))
+				if(!H.unEquip(src))
 					return
-				M.put_in_r_hand(src)
+				H.put_in_r_hand(src)
 			if("l_hand")
-				if(M.l_hand)
+				if(H.l_hand)
 					return
-				if(!M.unEquip(src))
+				if(!H.unEquip(src))
 					return
-				M.put_in_l_hand(src)
+				H.put_in_l_hand(src)
+	return
 
 /obj/item/weapon/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
 		remove_noz()
 		return
 	..()
+
+/mob/proc/getWatertankSlot()
+	return slot_back
+
+/mob/living/simple_animal/drone/getWatertankSlot()
+	return slot_drone_storage
 
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
@@ -129,7 +131,6 @@
 	return
 
 /obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user)
-	..()
 	user << "<span class='notice'>The mister snaps back onto the watertank.</span>"
 	tank.on = 0
 	loc = tank
@@ -203,7 +204,6 @@
 	return new /obj/item/weapon/extinguisher/mini/nozzle(src)
 
 /obj/item/weapon/watertank/atmos/dropped(mob/user)
-	..()
 	icon_state = "waterbackpackatmos"
 	if(istype(noz, /obj/item/weapon/extinguisher/mini/nozzle))
 		var/obj/item/weapon/extinguisher/mini/nozzle/N = noz
@@ -261,7 +261,6 @@
 	return
 
 /obj/item/weapon/extinguisher/mini/nozzle/dropped(mob/user)
-	..()
 	user << "<span class='notice'>The nozzle snaps back onto the tank!</span>"
 	tank.on = 0
 	loc = tank
@@ -341,12 +340,12 @@
 	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
-	actions_types = list(/datum/action/item_action/activate_injector)
+	action_button_name = "Activate Injector"
 
 	var/on = 0
 	volume = 300
 	var/usage_ratio = 5 //5 unit added per 1 removed
-	var/injection_amount = 1
+	var/injection_amount = 1 
 	amount_per_transfer_from_this = 5
 	flags = OPENCONTAINER
 	spillable = 0
@@ -354,10 +353,6 @@
 
 /obj/item/weapon/reagent_containers/chemtank/ui_action_click()
 	toggle_injection()
-
-/obj/item/weapon/reagent_containers/chemtank/item_action_slot_check(slot, mob/user)
-	if(slot == slot_back)
-		return 1
 
 /obj/item/weapon/reagent_containers/chemtank/proc/toggle_injection()
 	var/mob/living/carbon/human/user = usr
@@ -380,12 +375,9 @@
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
-			if(0 to 15)
-				filling.icon_state = "backpack-10"
-			if(16 to 60)
-				filling.icon_state = "backpack50"
-			if(61 to INFINITY)
-				filling.icon_state = "backpack100"
+			if(0 to 15)		filling.icon_state = "backpack-10"
+			if(16 to 60) 	filling.icon_state = "backpack50"
+			if(61 to INFINITY)	filling.icon_state = "backpack100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
@@ -398,12 +390,9 @@
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
-			if(0 to 15)
-				filling.icon_state = "backpackmob-10"
-			if(16 to 60)
-				filling.icon_state = "backpackmob50"
-			if(61 to INFINITY)
-				filling.icon_state = "backpackmob100"
+			if(0 to 15)		filling.icon_state = "backpackmob-10"
+			if(16 to 60) 	filling.icon_state = "backpackmob50"
+			if(61 to INFINITY)	filling.icon_state = "backpackmob100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling

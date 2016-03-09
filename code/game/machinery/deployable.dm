@@ -134,12 +134,10 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
 	item_state = "flashbang"
-	actions_types = list(/datum/action/item_action/toggle_barrier_spread)
+	action_button_name = "Toggle Barrier Spread"
 	var/mode = SINGLE
 
-/obj/item/weapon/grenade/barrier/AltClick(mob/living/user)
-	if(!istype(user) || user.incapacitated())
-		return
+/obj/item/weapon/grenade/barrier/AltClick(mob/user)
 	toggle_mode(user)
 
 /obj/item/weapon/grenade/barrier/proc/toggle_mode(mob/user)
@@ -174,8 +172,8 @@
 				new /obj/structure/barricade/security(target_turf2)
 	qdel(src)
 
-/obj/item/weapon/grenade/barrier/ui_action_click(mob/user)
-	toggle_mode(user)
+/obj/item/weapon/grenade/barrier/ui_action_click()
+	toggle_mode(usr)
 
 
 #undef SINGLE

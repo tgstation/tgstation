@@ -381,14 +381,7 @@ var/list/teleportlocs = list()
 
 //Maintenance
 /area/maintenance
-	ambientsounds = list('sound/ambience/ambimaint1.ogg',
-						 'sound/ambience/ambimaint2.ogg',
-						 'sound/ambience/ambimaint3.ogg',
-						 'sound/ambience/ambimaint4.ogg',
-						 'sound/ambience/ambimaint5.ogg',
-						 'sound/voice/lowHiss2.ogg', //Xeno Breathing Hisses, Hahahaha I'm not even sorry.
-						 'sound/voice/lowHiss3.ogg',
-						 'sound/voice/lowHiss4.ogg')
+	ambientsounds = list('sound/ambience/ambimaint1.ogg', 'sound/ambience/ambimaint2.ogg', 'sound/ambience/ambimaint3.ogg', 'sound/ambience/ambimaint4.ogg', 'sound/ambience/ambimaint5.ogg')
 	valid_territory = 0
 
 /area/maintenance/atmos_control
@@ -842,20 +835,20 @@ var/list/teleportlocs = list()
 	icon_state = "armory"
 
 /*
-/area/security/transfer/New()
-	..()
+	New()
+		..()
 
-	spawn(10) //let objects set up first
-		for(var/turf/turfToGrayscale in src)
-			if(turfToGrayscale.icon)
-				var/icon/newIcon = icon(turfToGrayscale.icon)
-				newIcon.GrayScale()
-				turfToGrayscale.icon = newIcon
-			for(var/obj/objectToGrayscale in turfToGrayscale) //1 level deep, means tables, apcs, locker, etc, but not locker contents
-				if(objectToGrayscale.icon)
-					var/icon/newIcon = icon(objectToGrayscale.icon)
+		spawn(10) //let objects set up first
+			for(var/turf/turfToGrayscale in src)
+				if(turfToGrayscale.icon)
+					var/icon/newIcon = icon(turfToGrayscale.icon)
 					newIcon.GrayScale()
-					objectToGrayscale.icon = newIcon
+					turfToGrayscale.icon = newIcon
+				for(var/obj/objectToGrayscale in turfToGrayscale) //1 level deep, means tables, apcs, locker, etc, but not locker contents
+					if(objectToGrayscale.icon)
+						var/icon/newIcon = icon(objectToGrayscale.icon)
+						newIcon.GrayScale()
+						objectToGrayscale.icon = newIcon
 */
 
 /area/security/nuke_storage

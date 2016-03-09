@@ -1,5 +1,8 @@
 <script>
   component.exports = {
+    data: {
+      text: require('util/text')
+    },
     computed: {
       seclevelState () {
         switch (this.get('data.seclevel')) {

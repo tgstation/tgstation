@@ -1,5 +1,3 @@
-
-
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
@@ -21,6 +19,23 @@
 	user << "<font color='red'>You have <b>BANNED</b> [M]</font>"
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
 
+
+/obj/item/weapon/nullrod
+	name = "null rod"
+	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
+	icon_state = "nullrod"
+	item_state = "nullrod"
+	slot_flags = SLOT_BELT
+	force = 15
+	throw_speed = 3
+	throw_range = 4
+	throwforce = 10
+	w_class = 1
+
+/obj/item/weapon/nullrod/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return (BRUTELOSS|FIRELOSS)
+
 /obj/item/weapon/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
@@ -34,8 +49,8 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/sord/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is trying to impale \himself with \the [name]! It might be a suicide attempt if it weren't so shitty.</span>", "<span class='suicide'>You try to impale yourself with \the [name], but it's USELESS...</span>")
-	return(SHAME)
+	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return(BRUTELOSS)
 
 /obj/item/weapon/claymore
 	name = "claymore"
@@ -195,7 +210,7 @@
 	hitsound = 'sound/weapons/ring.ogg'
 
 /obj/item/weapon/phone/suicide_act(mob/user)
-	if(locate(/obj/structure/chair/stool) in user.loc)
+	if(locate(/obj/structure/bed/stool) in user.loc)
 		user.visible_message("<span class='notice'>[user] begins to tie a noose with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
 	else
 		user.visible_message("<span class='notice'>[user] is strangling \himself with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
@@ -273,7 +288,6 @@
 	hitsound = "sound/weapons/chainsawhit.ogg"
 
 /obj/item/weapon/mounted_chainsaw/dropped()
-	..()
 	new /obj/item/weapon/twohanded/required/chainsaw(get_turf(src))
 	qdel(src)
 
@@ -293,4 +307,3 @@
 	icon_state = "tailwhip"
 	origin_tech = "combat=1"
 	needs_permit = 0
-

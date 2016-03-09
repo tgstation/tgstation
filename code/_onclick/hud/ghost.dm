@@ -36,39 +36,31 @@
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
-/datum/hud/ghost/New(mob/owner)
-	..()
+/datum/hud/proc/ghost_hud()
 	var/mob/dead/observer/G = mymob
 	if(!G.client.prefs.ghost_hud)
-		mymob.client.screen = null
+		mymob.client.screen -= adding
 		return
+
+	adding = list()
 
 	var/obj/screen/using
 
 	using = new /obj/screen/ghost/jumptomob()
 	using.screen_loc = ui_ghost_jumptomob
-	static_inventory += using
+	adding += using
 
 	using = new /obj/screen/ghost/orbit()
 	using.screen_loc = ui_ghost_orbit
-	static_inventory += using
+	adding += using
 
 	using = new /obj/screen/ghost/reenter_corpse()
 	using.screen_loc = ui_ghost_reenter_corpse
-	static_inventory += using
+	adding += using
 
 	using = new /obj/screen/ghost/teleport()
 	using.screen_loc = ui_ghost_teleport
-	static_inventory += using
+	adding += using
 
-
-/datum/hud/ghost/show_hud()
-	var/mob/dead/observer/G = mymob
-	mymob.client.screen = list()
-	if(!G.client.prefs.ghost_hud)
-		return
-	mymob.client.screen += static_inventory
-
-/mob/dead/observer/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/ghost(src)
+	mymob.client.screen += adding
+	return

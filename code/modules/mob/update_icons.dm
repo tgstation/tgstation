@@ -7,6 +7,9 @@
 /mob/proc/update_icons()
 	return
 
+/mob/proc/update_hud()
+	return
+
 /mob/proc/update_transform()
 	return
 

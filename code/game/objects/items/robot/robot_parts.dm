@@ -101,8 +101,7 @@
 			user << "<span class='warning'>You need one sheet of metal to start building ED-209!</span>"
 			return
 	if(istype(W, /obj/item/robot_parts/l_leg))
-		if(src.l_leg)
-			return
+		if(src.l_leg)	return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
@@ -110,8 +109,7 @@
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/r_leg))
-		if(src.r_leg)
-			return
+		if(src.r_leg)	return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
@@ -119,8 +117,7 @@
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/l_arm))
-		if(src.l_arm)
-			return
+		if(src.l_arm)	return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
@@ -128,8 +125,7 @@
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/r_arm))
-		if(src.r_arm)
-			return
+		if(src.r_arm)	return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
@@ -137,8 +133,7 @@
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/chest))
-		if(src.chest)
-			return
+		if(src.chest)	return
 		if(W:wired && W:cell)
 			if(!user.unEquip(W))
 				return
@@ -151,8 +146,7 @@
 			user << "<span class='warning'>You need to attach a cell to it first!</span>"
 
 	if(istype(W, /obj/item/robot_parts/head))
-		if(src.head)
-			return
+		if(src.head)	return
 		if(W:flash2 && W:flash1)
 			if(!user.unEquip(W))
 				return
@@ -187,7 +181,7 @@
 				user << "<span class='warning'>The mmi indicates that their mind is currently inactive; it might change!</span>"
 				return
 
-			if(BM.stat == DEAD || (M.brain && M.brain.damaged_brain))
+			if(BM.stat == DEAD)
 				user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>"
 				return
 
@@ -196,8 +190,7 @@
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
-			if(!O)
-				return
+			if(!O)	return
 
 			if(!user.unEquip(W))
 				return
@@ -210,6 +203,7 @@
 			O.invisibility = 0
 			//Transfer debug settings to new mob
 			O.custom_name = created_name
+			O.updatename("Default")
 			O.locked = panel_locked
 			if(!aisync)
 				lawsync = 0
@@ -236,9 +230,7 @@
 			chest.cell.loc = O
 			chest.cell = null
 			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
-			if(O.mmi) //we delete the mmi created by robot/New()
-				qdel(O.mmi)
-			O.mmi = W //and give the real mmi to the borg.
+			O.mmi = W
 			O.updatename()
 
 			feedback_inc("cyborg_birth",1)

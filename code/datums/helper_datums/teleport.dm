@@ -97,6 +97,7 @@
 
 	var/turf/destturf
 	var/turf/curturf = get_turf(teleatom)
+	var/area/destarea = get_area(destination)
 	if(precision)
 		var/list/posturfs = list()
 		var/center = get_turf(destination)
@@ -119,6 +120,16 @@
 	else
 		if(teleatom.Move(destturf))
 			playSpecials(destturf,effectout,soundout)
+
+	if(isliving(teleatom))
+		var/mob/living/L = teleatom
+		if(L.buckled)
+			L.buckled.unbuckle_mob()
+		if(L.buckled_mob)
+			L.unbuckle_mob(force=1)
+
+	destarea.Entered(teleatom)
+
 	return 1
 
 /datum/teleport/proc/teleport()

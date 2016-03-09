@@ -1,0 +1,23 @@
+<ui-display title='Air Controls'>
+  <ui-section>
+    <ui-button icon='{{data.atmos_alarm ? "exclamation-triangle" : "exclamation"}}' style='{{data.atmos_alarm ? "caution" : null}}'
+        action='{{data.atmos_alarm ? "reset" : "alarm"}}'>Area Atmosphere Alarm</ui-button>
+  </ui-section>
+  <ui-section>
+    <ui-button icon='{{data.mode == 3 ? "exclamation-triangle" : "exclamation"}}' style='{{data.mode == 3 ? "danger" : null}}'
+      action='mode' params='{"mode": {{data.mode == 3 ? 1 : 3}}}'>Panic Siphon</ui-button>
+  </ui-section>
+  <br/>
+  <ui-section>
+    <ui-button icon='sign-out' action='screen' params='{"screen": 2}'>Vent Controls</ui-button>
+  </ui-section>
+  <ui-section>
+    <ui-button icon='filter' action='screen' params='{"screen": 3}'>Scrubber Controls</ui-button>
+  </ui-section>
+  <ui-section>
+    <ui-button icon='cog' action='screen' params='{"screen": 4}'>Operating Mode</ui-button>
+  </ui-section>
+  <ui-section>
+    <ui-button icon='bar-chart' action='screen' params='{"screen": 5}'>Alarm Thresholds</ui-button>
+  </ui-section>
+</ui-display>

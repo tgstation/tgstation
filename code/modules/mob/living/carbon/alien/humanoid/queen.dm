@@ -27,10 +27,8 @@
 /mob/living/carbon/alien/humanoid/royal/queen/New()
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in living_mob_list)
-		if(Q == src)
-			continue
-		if(Q.stat == DEAD)
-			continue
+		if(Q == src)		continue
+		if(Q.stat == DEAD)	continue
 		if(Q.client)
 			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
 			break
@@ -46,9 +44,31 @@
 	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
 	..()
 
+/mob/living/carbon/alien/humanoid/royal/queen/handle_hud_icons_health()
+	if (src.healths)
+		if (src.stat != 2)
+			switch(health)
+				if(400 to INFINITY)
+					src.healths.icon_state = "health0"
+				if(320 to 400)
+					src.healths.icon_state = "health1"
+				if(240 to 320)
+					src.healths.icon_state = "health2"
+				if(160 to 240)
+					src.healths.icon_state = "health3"
+				if(80 to 160)
+					src.healths.icon_state = "health4"
+				if(0 to 80)
+					src.healths.icon_state = "health5"
+				else
+					src.healths.icon_state = "health6"
+		else
+			src.healths.icon_state = "health7"
+
 /mob/living/carbon/alien/humanoid/royal/queen/movement_delay()
 	. = ..()
 	. += 5
+
 
 //Queen verbs
 /obj/effect/proc_holder/alien/lay_egg

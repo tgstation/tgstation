@@ -287,6 +287,7 @@
 	return 1
 
 
+<<<<<<< HEAD
 /datum/objective/purge
 	explanation_text = "Ensure no mutant humanoid species are present aboard the escape shuttle."
 	dangerrating = 25
@@ -327,6 +328,8 @@
 		return 0
 	return 1
 
+=======
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 /datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
 	dangerrating = 5
@@ -484,10 +487,15 @@ var/global/list/possible_items = list()
 	return steal_target
 
 /datum/objective/steal/check_completion()
+<<<<<<< HEAD
 	if(!steal_target)
 		return 1
 	if(!isliving(owner.current))
 		return 0
+=======
+	if(!steal_target)	return 1
+	if(!isliving(owner.current))	return 0
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
 
 	for(var/obj/I in all_items) //Check for items
@@ -693,8 +701,12 @@ var/global/list/possible_items_special = list()
 	explanation_text = "Steal at least five guns!"
 
 /datum/objective/summon_guns/check_completion()
+<<<<<<< HEAD
 	if(!isliving(owner.current))
 		return 0
+=======
+	if(!isliving(owner.current))	return 0
+>>>>>>> dbd4169c0e4c4afad12aa45d35bc095f56f20461
 	var/guncount = 0
 	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
 	for(var/obj/I in all_items) //Check for guns

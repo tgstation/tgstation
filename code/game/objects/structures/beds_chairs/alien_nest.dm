@@ -50,7 +50,9 @@
 		add_fingerprint(user)
 
 /obj/structure/bed/nest/user_buckle_mob(mob/living/M, mob/living/user)
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled )
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.stat || M.buckled || istype(user,
+
+/mob/living/silicon/pai) )
 		return
 
 	if(M.getorgan(/obj/item/organ/internal/alien/plasmavessel))

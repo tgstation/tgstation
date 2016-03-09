@@ -75,9 +75,9 @@
 
 		if ("faint","faints")
 			message = "<B>[src]</B> faints."
-			if(sleeping)
+			if(src.sleeping)
 				return //Can't faint while asleep
-			SetSleeping(10) //Short-short nap
+			src.sleeping += 10 //Short-short nap
 			m_type = 1
 
 		if ("flap","flaps")
@@ -86,7 +86,7 @@
 				m_type = 2
 
 		if ("flip","flips")
-			if (!restrained() || !resting || !sleeping)
+			if (!src.restrained() || !src.resting || !src.sleeping)
 				src.SpinAnimation(7,1)
 				m_type = 2
 

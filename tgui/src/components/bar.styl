@@ -1,5 +1,3 @@
-context = selector()
-
 .bar
   display: inline-block
   position: relative
@@ -13,7 +11,7 @@ context = selector()
   background: bar-color-background
 
   .barText
-    @extend {context} $fontReset
+    @extend $fontReset
     position: absolute
     top: 0
     right: 3px

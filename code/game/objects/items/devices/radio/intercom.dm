@@ -55,11 +55,14 @@
 	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
 		last_tick = world.timeofday
 
-		var/area/A = get_area_master(src)
-		if(!A || emped)
+		if(!src.loc)
 			on = 0
 		else
-			on = A.powered(EQUIP) // set "on" to the power status
+			var/area/A = src.loc.loc
+			if(!A || !isarea(A) || !A.master || emped)
+				on = 0
+			else
+				on = A.master.powered(EQUIP) // set "on" to the power status
 
 		if(!on)
 			icon_state = "intercom-p"

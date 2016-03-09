@@ -87,8 +87,7 @@
 
 
 /obj/item/weapon/pen/sleepy/attack(mob/living/M, mob/user)
-	if(!istype(M))
-		return
+	if(!istype(M))	return
 
 	if(..())
 		if(reagents.total_volume)

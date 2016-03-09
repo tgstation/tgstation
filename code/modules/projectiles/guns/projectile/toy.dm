@@ -29,7 +29,7 @@
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
-	actions_types = list()
+	action_button_name = null
 
 /obj/item/weapon/gun/projectile/automatic/toy/pistol/update_icon()
 	..()

@@ -34,9 +34,6 @@
       {{#if data.load}}
         <ui-button icon='eject' action='unload'>Unload</ui-button>
       {{/if}}
-      {{#if data.haspai}}
-        <ui-button icon='eject' action='ejectpai'>Eject PAI</ui-button>
-      {{/if}}
       <ui-button icon='pencil' action='setid'>Set ID</ui-button>
     {{/partial}}
     <ui-section label='Destination'>

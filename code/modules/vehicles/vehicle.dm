@@ -89,7 +89,7 @@
 		unbuckle_mob()
 
 	if(keycheck(user))
-		if(!Process_Spacemove(direction) || world.time < next_vehicle_move || !isturf(loc))
+		if(!Process_Spacemove(direction) || !has_gravity(src.loc) || world.time < next_vehicle_move || !isturf(loc))
 			return
 		next_vehicle_move = world.time + vehicle_move_delay
 
@@ -123,18 +123,3 @@
 		if(istype(M, /obj/machinery/door) && buckled_mob)
 			M.Bumped(buckled_mob)
 
-
-/obj/vehicle/Process_Spacemove(direction)
-	if(has_gravity(src))
-		return 1
-
-	if(pulledby)
-		return 1
-
-	return 0
-
-/obj/vehicle/space
-	pressure_resistance = INFINITY
-
-/obj/vehicle/space/Process_Spacemove(direction)
-	return 1

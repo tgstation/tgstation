@@ -4,7 +4,7 @@
 		//ADMIN THINGS//
 		////////////////
 	var/datum/admins/holder = null
-	var/datum/click_intercept = null // Needs to implement InterceptClickOn(user,params,atom) proc
+	var/buildmode		= 0
 	var/AI_Interact		= 0
 
 	var/jobbancache = null //Used to cache this client's jobbans to save on DB queries
@@ -17,7 +17,7 @@
 	var/datum/preferences/prefs = null
 	var/move_delay		= 1
 	var/moving			= null
-
+	var/adminobs		= null
 	var/area			= null
 
 		///////////////

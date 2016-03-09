@@ -13,14 +13,6 @@
 	icon_state = "bcircuit"
 	floor_tile = /obj/item/stack/tile/plasteel
 
-/turf/simulated/floor/bluegrid/New()
-	..()
-	nuke_tiles += src
-
-/turf/simulated/floor/bluegrid/Destroy()
-	nuke_tiles -= src
-	return ..()
-
 /turf/simulated/floor/greengrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
@@ -70,9 +62,6 @@
 /turf/simulated/floor/plating/ice/colder
 	temperature = 140
 
-/turf/simulated/floor/plating/ice/temperate
-	temperature = 255.37
-
 /turf/simulated/floor/plating/ice/break_tile()
 	return
 
@@ -88,9 +77,6 @@
 
 /turf/simulated/floor/plating/snowed/colder
 	temperature = 140
-
-/turf/simulated/floor/plating/snowed/temperate
-	temperature = 255.37
 
 /turf/simulated/floor/noslip
 	name = "high-traction floor"

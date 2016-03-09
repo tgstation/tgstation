@@ -33,8 +33,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
 	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
-	var/list/actions = list() //list of /datum/action's that this item has.
-	var/list/actions_types = list() //list of paths of action datums to give to the item on New().
+	//If this is set, The item will make an action button on the player's HUD when picked up.
+	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
+	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
+	var/action_button_internal = 0 //If 1, bypass the inside check action buttons test for
+	var/datum/action/item_action/action = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -128,17 +131,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
-/obj/item/New()
-	..()
-	for(var/path in actions_types)
-		new path(src)
-
 /obj/item/Destroy()
 	if(ismob(loc))
 		var/mob/m = loc
 		m.unEquip(src, 1)
-	for(var/X in actions)
-		qdel(X)
 	return ..()
 
 /obj/item/blob_act()
@@ -147,7 +143,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/ex_act(severity, target)
 	if(severity == 1 || target == src)
 		qdel(src)
-	if(!qdeleted(src))
+	if(!gc_destroyed)
 		contents_explosion(severity, target)
 
 //user: The mob that is suiciding
@@ -243,8 +239,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/attack_hand(mob/user)
 	if(!user)
 		return
-	if(anchored)
-		return
 
 	if(burn_state == ON_FIRE)
 		var/mob/living/carbon/human/H = user
@@ -262,12 +256,12 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		else
 			extinguish()
 
-	if(istype(loc, /obj/item/weapon/storage))
+	if(istype(src.loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out
-		var/obj/item/weapon/storage/S = loc
+		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src, user.loc)
 
-	throwing = 0
+	src.throwing = 0
 	if(loc == user)
 		if(!user.unEquip(src))
 			return
@@ -276,27 +270,30 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
+	return
 
 
 /obj/item/attack_paw(mob/user)
-	if(!user)
-		return
-	if(anchored)
-		return
-
-	if(istype(loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = loc
-		S.remove_from_storage(src, user.loc)
-
-	throwing = 0
-	if(loc == user)
+	var/picked_up = 0
+	if (istype(src.loc, /obj/item/weapon/storage))
+		for(var/mob/M in range(1, src.loc))
+			if (M.s_active == src.loc)
+				if (M.client)
+					M.client.screen -= src
+	src.throwing = 0
+	if (src.loc == user)
 		if(!user.unEquip(src))
 			return
+	else
+		if(istype(src.loc, /mob/living))
+			return
+		src.pickup(user)
+		picked_up = 1
 
-	pickup(user)
-	add_fingerprint(user)
-	if(!user.put_in_active_hand(src))
+	if(!user.put_in_active_hand(src) && picked_up)
 		dropped(user)
+	return
+
 
 /obj/item/attack_alien(mob/user)
 	var/mob/living/carbon/alien/A = user
@@ -311,12 +308,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/attack_ai(mob/user)
 	if(istype(src.loc, /obj/item/weapon/robot_module))
 		//If the item is part of a cyborg module, equip it
-		if(!isrobot(user))
-			return
+		if(!isrobot(user)) return
 		var/mob/living/silicon/robot/R = user
-		if(!R.low_power_mode) //can't equip modules with an empty cell.
-			R.activate_module(src)
-			R.hud_used.update_robot_modules_display()
+		R.activate_module(src)
+		R.hud_used.update_robot_modules_display()
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
@@ -367,14 +362,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return
 
 /obj/item/proc/dropped(mob/user)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.Remove(user)
+	..()
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
 	return
-
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
@@ -394,14 +386,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
-	for(var/X in actions)
-		var/datum/action/A = X
-		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
-			A.Grant(user)
-
-//sometimes we only want to grant the item's action if it's equipped in a specific slot.
-obj/item/proc/item_action_slot_check(slot, mob/user)
-	return 1
+	return
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
@@ -423,11 +408,11 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(usr.get_active_hand() == null) // Let me know if this has any problems -Yota
 		usr.UnarmedAttack(src)
 
-//This proc is executed when someone clicks the on-screen UI button.
+//This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'action_button_name'.
 //The default action is attack_self().
 //Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
-/obj/item/proc/ui_action_click(mob/user, actiontype)
-	attack_self(user)
+/obj/item/proc/ui_action_click()
+	attack_self(usr)
 
 /obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 	return 0
@@ -484,25 +469,27 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
-	M.adjust_blurriness(3)
-	M.adjust_eye_damage(rand(2,4))
-	if(M.eye_damage >= 10)
-		M.adjust_blurriness(15)
-		if(M.stat != DEAD)
+	M.eye_blurry += rand(3,4)
+	M.eye_stat += rand(2,4)
+	if (M.eye_stat >= 10)
+		M.eye_blurry += 15+(0.1*M.eye_blurry)
+		if(M.stat != 2)
 			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
-		if(!(M.disabilities & (NEARSIGHT | BLIND)))
-			if(M.become_nearsighted())
-				M << "<span class='danger'>You become nearsighted!</span>"
+		if (!(M.disabilities & (NEARSIGHT | BLIND)))
+			M.disabilities |= NEARSIGHT
+			M << "<span class='danger'>You become nearsighted!</span>"
 		if(prob(50))
-			if(M.stat != DEAD)
+			if(M.stat != 2)
 				if(M.drop_item())
 					M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
-			M.adjust_blurriness(10)
+			M.eye_blurry += 10
 			M.Paralyse(1)
 			M.Weaken(2)
-		if (prob(M.eye_damage - 10 + 1))
-			if(M.become_blind())
+		if (prob(M.eye_stat - 10 + 1) && !(M.disabilities & BLIND))
+			if(M.stat != 2)
 				M << "<span class='danger'>You go blind!</span>"
+			M.disabilities |= BLIND
+	return
 
 /obj/item/clean_blood()
 	. = ..()

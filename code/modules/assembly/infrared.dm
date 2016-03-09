@@ -24,8 +24,7 @@
 	return "The infrared trigger is [on?"on":"off"]."
 
 /obj/item/device/assembly/infra/activate()
-	if(!..())
-		return 0//Cooldown check
+	if(!..())	return 0//Cooldown check
 	on = !on
 	update_icon()
 	return 1
@@ -90,8 +89,7 @@
 	return
 
 /obj/item/device/assembly/infra/holder_movement()
-	if(!holder)
-		return 0
+	if(!holder)	return 0
 //	dir = holder.dir
 	qdel(first)
 	return 1

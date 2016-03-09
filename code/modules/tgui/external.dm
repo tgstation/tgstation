@@ -30,7 +30,7 @@
   *
   * return list Data to be sent to the UI.
  **/
-/datum/proc/ui_data(mob/user)
+/datum/proc/get_ui_data(mob/user)
 	return list() // Not implemented.
 
 
@@ -59,13 +59,6 @@
  **/
 /datum/proc/ui_host()
 	return src // Default src.
-
- /**
-  * global
-  *
-  * Used to track the current screen.
- **/
-/datum/var/ui_screen = "home"
 
  /**
   * global

@@ -1,5 +1,3 @@
-context = selector()
-
 buttoncolor(selector, color)
   &.{selector}
     transition: background-color 0.5s
@@ -11,7 +9,7 @@ buttoncolor(selector, color)
     outline: 0
 
 span.button
-  @extend {context} $fontReset
+  @extend $fontReset
   display: inline-block
   vertical-align: middle
   height: 20px

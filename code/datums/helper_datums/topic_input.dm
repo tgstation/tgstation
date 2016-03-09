@@ -14,8 +14,6 @@
 	var/t = get(i)
 	if(t)
 		t = locate(t)
-	if (istext(t))
-		t = null
 	return t || null
 
 /datum/topic_input/proc/getNum(i)

@@ -33,10 +33,9 @@
 			if(M.confused < drunk_value)
 				M.confused += 3
 		if(volume >= boozepwr*3.8)
-			M.adjustToxLoss(1, 0)
-			. = 1
-	return ..() || .
-
+			M.adjustToxLoss(1)
+	..()
+	return
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
 	if(istype(O,/obj/item/weapon/paper))
 		var/obj/item/weapon/paper/paperaffected = O
@@ -56,7 +55,7 @@
 		return
 	if(method == TOUCH || method == VAPOR)
 		M.adjust_fire_stacks(reac_volume / 15)
-	return ..()
+	..()
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
@@ -82,10 +81,10 @@
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
-	M.AdjustSleeping(-2, 0)
+	M.sleeping = max(0,M.sleeping-2)
 	M.Jitter(5)
 	..()
-	return 1
+	return
 
 /datum/reagent/consumable/ethanol/whiskey
 	name = "Whiskey"
@@ -104,12 +103,12 @@
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-7)
-	M.AdjustSleeping(-2)
+	M.sleeping = max(0,M.sleeping-2)
 	if (M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	..()
-	return 1
+	return
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
@@ -120,7 +119,8 @@
 
 /datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/M)
 	M.radiation = max(M.radiation-2,0)
-	return ..()
+	..()
+	return
 
 /datum/reagent/consumable/ethanol/bilk
 	name = "Bilk"
@@ -132,9 +132,9 @@
 
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(10))
-		M.heal_organ_damage(1,0, 0)
-		. = 1
-	return ..() || .
+		M.heal_organ_damage(1,0)
+	..()
+	return
 
 /datum/reagent/consumable/ethanol/threemileisland
 	name = "Three Mile Island Iced Tea"
@@ -144,8 +144,9 @@
 	boozepwr = 15
 
 /datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/M)
-	M.set_drugginess(50)
-	return ..()
+	M.druggy = max(M.druggy, 50)
+	..()
+	return
 
 /datum/reagent/consumable/ethanol/gin
 	name = "Gin"
@@ -311,7 +312,8 @@
 /datum/reagent/consumable/ethanol/toxins_special/on_mob_life(var/mob/living/M as mob)
 	if (M.bodytemperature < 330)
 		M.bodytemperature = min(330, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
-	return ..()
+	..()
+	return
 
 /datum/reagent/consumable/ethanol/beepsky_smash
 	name = "Beepsky Smash"
@@ -322,9 +324,9 @@
 	metabolization_rate = 0.8
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/M)
-	M.Stun(2)
+	M.Stun(1)
 	..()
-	return 1
+	return
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
@@ -397,8 +399,9 @@
 	boozepwr = 15
 
 /datum/reagent/consumable/ethanol/manhattan_proj/on_mob_life(mob/living/M)
-	M.set_drugginess(30)
-	return ..()
+	M.druggy = max(M.druggy, 30)
+	..()
+	return
 
 /datum/reagent/consumable/ethanol/whiskeysoda
 	name = "Whiskey Soda"
@@ -417,7 +420,8 @@
 /datum/reagent/consumable/ethanol/antifreeze/on_mob_life(mob/living/M)
 	if (M.bodytemperature < 330)
 		M.bodytemperature = min(330, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
-	return ..()
+	..()
+	return
 
 /datum/reagent/consumable/ethanol/barefoot
 	name = "Barefoot"
@@ -478,7 +482,8 @@
 /datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/M)
 	if (M.bodytemperature < 360)
 		M.bodytemperature = min(360, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
-	return ..()
+	..()
+	return
 
 /datum/reagent/consumable/ethanol/devilskiss
 	name = "Devils Kiss"
@@ -512,7 +517,8 @@
 /datum/reagent/consumable/ethanol/iced_beer/on_mob_life(mob/living/M)
 	if(M.bodytemperature > 270)
 		M.bodytemperature = max(270, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
-	return ..()
+	..()
+	return
 
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"
@@ -602,9 +608,9 @@
 
 /datum/reagent/consumable/ethanol/bananahonk/on_mob_life(mob/living/M)
 	if( ( istype(M, /mob/living/carbon/human) && M.job in list("Clown") ) || istype(M, /mob/living/carbon/monkey) )
-		M.heal_organ_damage(1,1, 0)
-		. = 1
-	return ..() || .
+		M.heal_organ_damage(1,1)
+	..()
+	return
 
 /datum/reagent/consumable/ethanol/silencer
 	name = "Silencer"
@@ -617,8 +623,8 @@
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/M)
 	if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
 		M.heal_organ_damage(1,1)
-		. = 1
-	return ..() || .
+	..()
+	return
 
 /datum/reagent/consumable/ethanol/drunkenblumpkin
 	name = "Drunken Blumpkin"

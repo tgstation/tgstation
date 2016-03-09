@@ -27,7 +27,7 @@
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
-	var/trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
+	var/trigger_guard = 1				//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_state = SAWN_INTACT
 	var/burst_size = 1					//how large a burst is
@@ -38,7 +38,6 @@
 	var/unique_rename = 0 //allows renaming with a pen
 	var/unique_reskin = 0 //allows one-time reskinning
 	var/reskinned = 0 //whether or not the gun has been reskinned
-	var/current_skin = null
 	var/list/options = list()
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
@@ -130,51 +129,60 @@
 		O.emp_act(severity)
 
 
-/obj/item/weapon/gun/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)//TODO: go over this
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
 		if(!ismob(target) || user.a_intent == "harm") //melee attack
 			return
-		if(target == user && user.zone_selected != "mouth") //so we can't shoot ourselves (unless mouth selected)
-			return
-
-	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
-		var/mob/living/L = user
-		if(!can_trigger_gun(L))
-			return
-
-	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can't shoot.
-		shoot_with_empty_chamber(user)
-		return
-
-	if(flag)
-		if(user.zone_selected == "mouth")
+		if(user.zone_sel.selecting == "mouth")
 			handle_suicide(user, target, params)
 			return
-
+		if(target == user) //so we can't shoot ourselves (unless mouth selected)
+			return
 
 	//Exclude lasertag guns from the CLUMSY check.
-	if(clumsy_check)
-		if(istype(user))
-			if (user.disabilities & CLUMSY && prob(40))
+	if(clumsy_check && can_shoot())
+		if(istype(user, /mob/living))
+			var/mob/living/M = user
+			if (M.disabilities & CLUMSY && prob(40))
 				user << "<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>"
 				var/shot_leg = pick("l_leg", "r_leg")
 				process_fire(user,user,0,params, zone_override = shot_leg)
-				user.drop_item()
+				M.drop_item()
 				return
 
-
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!can_trigger_gun(L))
+			return
 
 	process_fire(target,user,1,params)
 
 
 
-/obj/item/weapon/gun/proc/can_trigger_gun(var/mob/living/user)
-
-	if(!handle_pins(user) || !user.can_use_guns(src))
+/obj/item/weapon/gun/proc/can_trigger_gun(mob/living/carbon/user)
+	if (!user.IsAdvancedToolUser())
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
 
+	if(!handle_pins(user))
+		return 0
+
+	if(trigger_guard)
+		if(user.has_dna())
+			if(user.dna.check_mutation(HULK))
+				user << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
+				return 0
+			if(NOGUNS in user.dna.species.specflags)
+				user << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
+				return 0
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.martial_art && H.martial_art.name == "The Sleeping Carp") //great dishonor to famiry
+			user << "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>"
+			return 0
 	return 1
 
 
@@ -258,26 +266,23 @@ obj/item/weapon/gun/proc/newshot()
 	else
 		return
 
-/obj/item/weapon/gun/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/flashlight/seclite))
-		var/obj/item/device/flashlight/seclite/S = I
+/obj/item/weapon/gun/attackby(obj/item/A, mob/user, params)
+	if(istype(A, /obj/item/device/flashlight/seclite))
+		var/obj/item/device/flashlight/seclite/S = A
 		if(can_flashlight)
 			if(!F)
-				if(!user.unEquip(I))
+				if(!user.unEquip(A))
 					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)
 					SetLuminosity(0)
 				F = S
-				I.loc = src
+				A.loc = src
 				update_icon()
 				update_gunlight(user)
 				verbs += /obj/item/weapon/gun/proc/toggle_gunlight
-				var/datum/action/A = new /datum/action/item_action/toggle_gunlight(src)
-				if(loc == user)
-					A.Grant(user)
 
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(A, /obj/item/weapon/screwdriver))
 		if(F)
 			for(var/obj/item/device/flashlight/seclite/S in src)
 				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
@@ -287,13 +292,13 @@ obj/item/weapon/gun/proc/newshot()
 				S.update_brightness(user)
 				update_icon()
 				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
-			for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
-				qdel(TGL)
 
 	if(unique_rename)
-		if(istype(I, /obj/item/weapon/pen))
+		if(istype(A, /obj/item/weapon/pen))
 			rename_gun(user)
+
 	..()
+	return
 
 /obj/item/weapon/gun/proc/toggle_gunlight()
 	set name = "Toggle Gunlight"
@@ -315,6 +320,7 @@ obj/item/weapon/gun/proc/newshot()
 
 /obj/item/weapon/gun/proc/update_gunlight(mob/user = null)
 	if(F)
+		action_button_name = "Toggle Gunlight"
 		if(F.on)
 			if(loc == user)
 				user.AddLuminosity(F.brightness_on)
@@ -327,17 +333,14 @@ obj/item/weapon/gun/proc/newshot()
 				SetLuminosity(0)
 		update_icon()
 	else
+		action_button_name = null
 		if(loc == user)
 			user.AddLuminosity(-5)
 		else if(isturf(loc))
 			SetLuminosity(0)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
-
+		return
 
 /obj/item/weapon/gun/pickup(mob/user)
-	..()
 	if(F)
 		if(F.on)
 			user.AddLuminosity(F.brightness_on)
@@ -346,7 +349,6 @@ obj/item/weapon/gun/proc/newshot()
 		azoom.Grant(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
-	..()
 	if(F)
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
@@ -375,7 +377,6 @@ obj/item/weapon/gun/proc/newshot()
 			icon_state = options[choice] + "-sawn"
 		else
 			icon_state = options[choice]
-		current_skin = icon_state
 		M << "Your gun is now skinned as [choice]. Say hello to your new friend."
 		reskinned = 1
 		return
@@ -405,7 +406,7 @@ obj/item/weapon/gun/proc/newshot()
 
 	semicd = 1
 
-	if(!do_mob(user, target, 120) || user.zone_selected != "mouth")
+	if(!do_mob(user, target, 120) || user.zone_sel.selecting != "mouth")
 		if(user)
 			if(user == target)
 				user.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
@@ -415,6 +416,9 @@ obj/item/weapon/gun/proc/newshot()
 		return
 
 	semicd = 0
+
+	if(!can_trigger_gun(user))
+		return
 
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
 
@@ -434,7 +438,7 @@ obj/item/weapon/gun/proc/newshot()
 
 /datum/action/toggle_scope_zoom
 	name = "Toggle Scope"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING
+	check_flags = AB_CHECK_ALIVE|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING
 	button_icon_state = "sniper_zoom"
 	var/obj/item/weapon/gun/gun = null
 
@@ -449,6 +453,7 @@ obj/item/weapon/gun/proc/newshot()
 /datum/action/toggle_scope_zoom/Remove(mob/living/L)
 	gun.zoom(L, FALSE)
 	..()
+
 
 
 /obj/item/weapon/gun/proc/zoom(mob/living/user, forced_zoom)

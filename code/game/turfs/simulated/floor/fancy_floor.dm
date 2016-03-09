@@ -21,9 +21,6 @@
 		playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		return
 
-/turf/simulated/floor/wood/cold
-	temperature = 255.37
-
 /turf/simulated/floor/grass
 	name = "Grass patch"
 	icon_state = "grass"

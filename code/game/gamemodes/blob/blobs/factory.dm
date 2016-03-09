@@ -8,7 +8,6 @@
 	health_regen = 1
 	point_return = 25
 	var/list/spores = list()
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
 	var/max_spores = 3
 	var/spore_delay = 0
 
@@ -17,9 +16,6 @@
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in spores)
 		if(spore.factory == src)
 			spore.factory = null
-	if(naut)
-		naut.factory = null
-		naut << "<span class='userdanger'>Your factory was destroyed! You feel yourself dying!</span>"
 	spores = null
 	return ..()
 

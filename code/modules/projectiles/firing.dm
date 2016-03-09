@@ -23,7 +23,7 @@
 	if (zone_override)
 		BB.def_zone = zone_override
 	else
-		BB.def_zone = user.zone_selected
+		BB.def_zone = user.zone_sel.selecting
 	BB.suppressed = quiet
 
 	if(reagents && BB.reagents)

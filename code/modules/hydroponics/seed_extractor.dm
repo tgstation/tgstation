@@ -9,20 +9,32 @@
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		while(t_amount < t_max)
-			var/obj/item/seeds/t_prod = F.seed.Copy()
-			t_prod.loc = O.loc
+			var/obj/item/seeds/t_prod = new F.seed(O.loc, O)
+			t_prod.lifespan = F.lifespan
+			t_prod.endurance = F.endurance
+			t_prod.maturation = F.maturation
+			t_prod.production = F.production
+			t_prod.yield = F.yield
+			t_prod.potency = F.potency
 			t_amount++
 		qdel(O)
 		return 1
 
-	else if(istype(O, /obj/item/weapon/grown))
+	else if(istype(O, /obj/item/weapon/grown/))
 		var/obj/item/weapon/grown/F = O
-		while(t_amount < t_max)
-			var/obj/item/seeds/t_prod = F.seed.Copy()
-			t_prod.loc = O.loc
-			t_amount++
-		qdel(O)
-		return 1
+		if(F.seed)
+			while(t_amount < t_max)
+				var/obj/item/seeds/t_prod = new F.seed(O.loc, O)
+				t_prod.lifespan = F.lifespan
+				t_prod.endurance = F.endurance
+				t_prod.maturation = F.maturation
+				t_prod.production = F.production
+				t_prod.yield = F.yield
+				t_prod.potency = F.potency
+				t_amount++
+			qdel(O)
+			return 1
+		else return 0
 
 	/*else if(istype(O, /obj/item/stack/tile/grass))
 		var/obj/item/stack/tile/grass/S = O

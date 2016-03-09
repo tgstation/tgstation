@@ -23,13 +23,12 @@
 	icon_dead = "corgi_dead"
 	gender = MALE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
-	childtype = list(/mob/living/simple_animal/pet/dog/corgi/puppy = 95, /mob/living/simple_animal/pet/dog/corgi/puppy/void = 5)
+	childtype = /mob/living/simple_animal/pet/dog/corgi/puppy
 	species = /mob/living/simple_animal/pet/dog
 	var/shaved = 0
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
-	var/nofur = 0 		//Corgis that have risen past the material plane of existence.
 	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/dog/pug
@@ -50,6 +49,10 @@
 
 /mob/living/simple_animal/pet/dog/corgi/death(gibbed)
 	..(gibbed)
+	regenerate_icons()
+
+/mob/living/simple_animal/pet/dog/corgi/revive()
+	..()
 	regenerate_icons()
 
 /mob/living/simple_animal/pet/dog/corgi/show_inv(mob/user)
@@ -87,9 +90,6 @@
 	if (istype(O, /obj/item/weapon/razor))
 		if (shaved)
 			user << "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>"
-			return
-		if (nofur)
-			user << "<span class='warning'> You can't shave this corgi, it doesn't have a fur coat!</span>"
 			return
 		user.visible_message("[user] starts to shave [src] using \the [O].", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50, target = src))
@@ -210,8 +210,7 @@
 		return
 
 	if(inventory_head)
-		if(user)
-			user << "<span class='warning'>You can't put more than one hat on [src]!</span>"
+		if(user)	user << "<span class='warning'>You can't put more than one hat on [src]!</span>"
 		return
 	if(!item_to_add)
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
@@ -379,7 +378,7 @@
 				emote_see = list("plays tricks.", "slips.")
 			else
 				special_hat = 0
-
+	
 	var/special_back = 0
 	if(inventory_back)
 		special_back = 1
@@ -522,22 +521,6 @@
 	..()
 
 
-/mob/living/simple_animal/pet/dog/corgi/puppy/void		//Tribute to the corgis born in nullspace
-	name = "\improper void puppy"
-	real_name = "voidy"
-	desc = "A corgi puppy that has been infused with deep space energy. It's staring back.."
-	icon_state = "void_puppy"
-	icon_living = "void_puppy"
-	icon_dead = "void_puppy_dead"
-	nofur = 1
-	unsuitable_atmos_damage = 0
-	minbodytemp = TCMB
-	maxbodytemp = T0C + 40
-
-/mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
-	return 1	//Void puppies can navigate space.
-
-
 //LISA! SQUEEEEEEEEE~
 /mob/living/simple_animal/pet/dog/corgi/Lisa
 	name = "Lisa"
@@ -588,10 +571,8 @@
 /mob/living/simple_animal/pet/dog/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	switch(M.a_intent)
-		if("help")
-			wuv(1,M)
-		if("harm")
-			wuv(-1,M)
+		if("help")	wuv(1,M)
+		if("harm")	wuv(-1,M)
 
 /mob/living/simple_animal/pet/dog/proc/wuv(change, mob/M)
 	if(change)

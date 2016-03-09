@@ -28,7 +28,6 @@
 	for(var/obj/item/organ/limb/O in organs)
 		O.owner = src
 	internal_organs += new /obj/item/organ/internal/appendix
-	internal_organs += new /obj/item/organ/internal/lungs
 	internal_organs += new /obj/item/organ/internal/heart
 	internal_organs += new /obj/item/organ/internal/brain
 
@@ -142,13 +141,27 @@
 			if (prob(50))
 				Paralyse(10)
 
-	take_overall_damage(b_loss,f_loss)
+	var/update = 0
+	for(var/obj/item/organ/limb/temp in organs)
+		switch(temp.name)
+			if("head")
+				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2)
+			if("chest")
+				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4)
+			if("l_arm")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+			if("r_arm")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+			if("l_leg")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+			if("r_leg")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+	if(update)	update_damage_overlays(0)
 
 	..()
 
 /mob/living/carbon/human/blob_act()
-	if(stat == DEAD)
-		return
+	if(stat == DEAD)	return
 	show_message("<span class='userdanger'>The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
@@ -160,7 +173,7 @@
 		if(!prob(martial_art.deflection_chance))
 			return ..()
 		if(!src.lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-			src.visible_message("<span class='danger'>[src] deflects the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+			src.visible_message("<span class='warning'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 			return 0
 	..()
 
@@ -365,10 +378,8 @@
 				var/datum/data/record/R = find_record("name", perpname, data_core.general)
 				if(href_list["photo_front"] || href_list["photo_side"])
 					if(R)
-						if(!H.canUseHUD())
-							return
-						else if(!istype(H.glasses, /obj/item/clothing/glasses/hud))
-							return
+						if(!H.canUseHUD()) return
+						else if(!istype(H.glasses, /obj/item/clothing/glasses/hud)) return
 						var/obj/item/weapon/photo/P = null
 						if(href_list["photo_front"])
 							P = R.fields["photo_front"]
@@ -382,20 +393,16 @@
 						if(href_list["p_stat"])
 							var/health = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
 							if(R)
-								if(!H.canUseHUD())
-									return
-								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
-									return
+								if(!H.canUseHUD()) return
+								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health)) return
 								if(health && health != "Cancel")
 									R.fields["p_stat"] = health
 							return
 						if(href_list["m_stat"])
 							var/health = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
 							if(R)
-								if(!H.canUseHUD())
-									return
-								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
-									return
+								if(!H.canUseHUD()) return
+								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health)) return
 								if(health && health != "Cancel")
 									R.fields["m_stat"] = health
 							return
@@ -476,10 +483,8 @@
 
 								if(href_list["view"])
 									if(R)
-										if(!H.canUseHUD())
-											return
-										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
-											return
+										if(!H.canUseHUD()) return
+										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
 										usr << "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]"
 										usr << "<b>Minor Crimes:</b>"
 										for(var/datum/data/crime/c in R.fields["mi_crim"])
@@ -503,12 +508,9 @@
 												var/t1 = stripped_input("Please input minor crime names:", "Security HUD", "", null)
 												var/t2 = stripped_multiline_input("Please input minor crime details:", "Security HUD", "", null)
 												if(R)
-													if (!t1 || !t2 || !allowed_access)
-														return
-													else if(!H.canUseHUD())
-														return
-													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
-														return
+													if (!t1 || !t2 || !allowed_access) return
+													else if(!H.canUseHUD()) return
+													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMinorCrime(R.fields["id"], crime)
 													usr << "<span class='notice'>Successfully added a minor crime.</span>"
@@ -518,12 +520,9 @@
 												var/t1 = stripped_input("Please input major crime names:", "Security HUD", "", null)
 												var/t2 = stripped_multiline_input("Please input major crime details:", "Security HUD", "", null)
 												if(R)
-													if (!t1 || !t2 || !allowed_access)
-														return
-													else if (!H.canUseHUD())
-														return
-													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
-														return
+													if (!t1 || !t2 || !allowed_access) return
+													else if (!H.canUseHUD()) return
+													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMajorCrime(R.fields["id"], crime)
 													usr << "<span class='notice'>Successfully added a major crime.</span>"
@@ -531,10 +530,8 @@
 
 								if(href_list["view_comment"])
 									if(R)
-										if(!H.canUseHUD())
-											return
-										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
-											return
+										if(!H.canUseHUD()) return
+										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
 										usr << "<b>Comments/Log:</b>"
 										var/counter = 1
 										while(R.fields[text("com_[]", counter)])
@@ -547,12 +544,9 @@
 									if(R)
 										var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
 										if(R)
-											if (!t1 || !allowed_access)
-												return
-											else if(!H.canUseHUD())
-												return
-											else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
-												return
+											if (!t1 || !allowed_access) return
+											else if(!H.canUseHUD()) return
+											else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security)) return
 											var/counter = 1
 											while(R.fields[text("com_[]", counter)])
 												counter++
@@ -567,7 +561,7 @@
 /mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
-		target_zone = user.zone_selected
+		target_zone = user.zone_sel.selecting
 	if(dna && PIERCEIMMUNE in dna.species.specflags)
 		. = 0
 	// If targeting the head, see if the head item is thin enough.
@@ -600,10 +594,6 @@
 			obscured |= slot_glasses
 		if(head.flags_inv & HIDEEARS)
 			obscured |= slot_ears
-
-	if(wear_mask)
-		if(wear_mask.flags_inv & HIDEEYES)
-			obscured |= slot_glasses
 
 	if(obscured.len > 0)
 		return obscured
@@ -887,71 +877,3 @@
 		var/datum/data/record/R = find_record("name", oldname, L)
 		if(R)
 			R.fields["name"] = newname
-
-/mob/living/carbon/human/update_sight()
-	if(!client)
-		return
-	if(stat == DEAD)
-		sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_OBSERVER
-		return
-
-	dna.species.update_sight(src)
-
-/mob/living/carbon/human/get_total_tint()
-	. = ..()
-	if(glasses)
-		. += glasses.tint
-
-/mob/living/carbon/human/update_health_hud()
-	if(!client || !hud_used)
-		return
-	if(dna.species.update_health_hud())
-		return
-	else
-		if(hud_used.healths)
-			var/health_amount = health - staminaloss
-			if(..(health_amount)) //not dead
-				switch(hal_screwyhud)
-					if(1)
-						hud_used.healths.icon_state = "health6"
-					if(2)
-						hud_used.healths.icon_state = "health7"
-					if(5)
-						hud_used.healths.icon_state = "health0"
-		if(hud_used.healthdoll)
-			hud_used.healthdoll.overlays.Cut()
-			if(stat != DEAD)
-				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
-				for(var/obj/item/organ/limb/L in organs)
-					var/damage = L.burn_dam + L.brute_dam
-					var/comparison = (L.max_damage/5)
-					var/icon_num = 0
-					if(damage)
-						icon_num = 1
-					if(damage > (comparison))
-						icon_num = 2
-					if(damage > (comparison*2))
-						icon_num = 3
-					if(damage > (comparison*3))
-						icon_num = 4
-					if(damage > (comparison*4))
-						icon_num = 5
-					if(hal_screwyhud == 5)
-						icon_num = 0
-					if(icon_num)
-						hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
-			else
-				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
-
-/mob/living/carbon/human/fully_heal(admin_revive = 0)
-	if(!getorganslot("lungs"))
-		var/obj/item/organ/internal/lungs/L = new()
-		L.Insert(src)
-	restore_blood()
-	remove_all_embedded_objects()
-	for(var/datum/mutation/human/HM in dna.mutations)
-		if(HM.quality != POSITIVE)
-			dna.remove_mutation(HM.name)
-	..()

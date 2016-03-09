@@ -175,10 +175,10 @@
 	if (!ban)
 		return null
 	. = params2list(ban)
-	.["keys"] = splittext(.["keys"], ",")
-	.["type"] = splittext(.["type"], ",")
-	.["IP"] = splittext(.["IP"], ",")
-	.["computer_id"] = splittext(.["computer_id"], ",")
+	.["keys"] = text2list(.["keys"], ",")
+	.["type"] = text2list(.["type"], ",")
+	.["IP"] = text2list(.["IP"], ",")
+	.["computer_id"] = text2list(.["computer_id"], ",")
 
 
 /proc/list2stickyban(var/list/ban)
@@ -186,13 +186,13 @@
 		return null
 	. = ban.Copy()
 	if (.["keys"])
-		.["keys"] = jointext(.["keys"], ",")
+		.["keys"] = list2text(.["keys"], ",")
 	if (.["type"])
-		.["type"] = jointext(.["type"], ",")
+		.["type"] = list2text(.["type"], ",")
 	if (.["IP"])
-		.["IP"] = jointext(.["IP"], ",")
+		.["IP"] = list2text(.["IP"], ",")
 	if (.["computer_id"])
-		.["computer_id"] = jointext(.["computer_id"], ",")
+		.["computer_id"] = list2text(.["computer_id"], ",")
 	. = list2params(.)
 
 

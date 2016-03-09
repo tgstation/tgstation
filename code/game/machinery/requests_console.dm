@@ -255,8 +255,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	return
 
 /obj/machinery/requests_console/Topic(href, href_list)
-	if(..())
-		return
+	if(..())	return
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
@@ -292,8 +291,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			screen = 0
 
 	if(href_list["sendAnnouncement"])
-		if(!announcementConsole)
-			return
+		if(!announcementConsole)	return
 		minor_announce(message, "[department] Announcement:")
 		news_network.SubmitArticle(message, department, "Station Announcements", null)
 		log_say("[key_name(usr)] has made a station announcement: [message]")
@@ -411,8 +409,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(9)		//authentication
 			screen = 9
 		if(10)		//send announcement
-			if(!announcementConsole)
-				return
+			if(!announcementConsole)	return
 			screen = 10
 		else		//main menu
 			dpt = ""
@@ -425,10 +422,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	//Handle silencing the console
 	switch( href_list["setSilent"] )
 		if(null)	//skip
-		if("1")
-			silent = 1
-		else
-			silent = 0
+		if("1")	silent = 1
+		else	silent = 0
 
 	updateUsrDialog()
 	return

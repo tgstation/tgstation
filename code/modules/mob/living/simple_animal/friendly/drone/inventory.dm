@@ -81,10 +81,8 @@
 
 
 /mob/living/simple_animal/drone/equip_to_slot(obj/item/I, slot)
-	if(!slot)
-		return
-	if(!istype(I))
-		return
+	if(!slot)	return
+	if(!istype(I))	return
 
 	if(I == l_hand)
 		l_hand = null
@@ -115,9 +113,3 @@
 
 /mob/living/simple_animal/drone/stripPanelEquip(obj/item/what, mob/who, where)
 	..(what, who, where, 1)
-
-/mob/living/simple_animal/drone/getBackSlot()
-	return slot_drone_storage
-
-/mob/living/simple_animal/drone/getBeltSlot()
-	return slot_drone_storage

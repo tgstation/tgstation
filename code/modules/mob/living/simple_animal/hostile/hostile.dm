@@ -33,14 +33,6 @@
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
 
 	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
-	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
-
-
-/mob/living/simple_animal/hostile/New()
-	..()
-	if(!targets_from)
-		targets_from = src
-
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
@@ -72,58 +64,41 @@
 
 
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
-	. = list()
+	var/list/L = list()
 	if(!search_objects)
-		var/list/Mobs = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
-		. += Mobs
-		for(var/M in mechas_list)
-			if(get_dist(M, targets_from) <= vision_range && can_see(targets_from, M, vision_range))
-				. += M
+		var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
+		L += Mobs
+		for(var/obj/mecha/M in mechas_list)
+			if(get_dist(M, src) <= vision_range && can_see(src, M, vision_range))
+				L += M
 	else
-		var/list/Objects = oview(vision_range, targets_from)
-		. += Objects
-
+		var/list/Objects = oview(vision_range, src)
+		L += Objects
+	return L
 
 /mob/living/simple_animal/hostile/proc/FindTarget(var/list/possible_targets, var/HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
-	. = list()
+	var/list/Targets = list()
 	if(!HasTargetsList)
 		possible_targets = ListTargets()
-	for(var/pos_targ in possible_targets)
-		var/atom/A = pos_targ
+	for(var/atom/A in possible_targets)
 		if(Found(A))//Just in case people want to override targetting
-			. = list(A)
+			Targets = list(A)
 			break
 		if(CanAttack(A))//Can we attack it?
-			. += A
+			Targets += A
 			continue
-	var/Target = PickTarget(.)
+	var/Target = PickTarget(Targets)
 	GiveTarget(Target)
 	return Target //We now have a target
-
-
-
-/mob/living/simple_animal/hostile/proc/PossibleThreats()
-	. = list()
-	for(var/pos_targ in ListTargets())
-		var/atom/A = pos_targ
-		if(Found(A))
-			. = list(A)
-			break
-		if(CanAttack(A))
-			. += A
-			continue
-
-
 
 /mob/living/simple_animal/hostile/proc/Found(atom/A)//This is here as a potential override to pick a specific target if available
 	return
 
 /mob/living/simple_animal/hostile/proc/PickTarget(list/Targets)//Step 3, pick amongst the possible, attackable targets
 	if(target != null)//If we already have a target, but are told to pick again, calculate the lowest distance between all possible, and pick from the lowest distance targets
-		for(var/pos_targ in Targets)
-			var/atom/A = pos_targ
-			var/target_dist = get_dist(targets_from, target)
-			var/possible_target_distance = get_dist(targets_from, A)
+		for(var/atom/A in Targets)
+			var/target_dist = get_dist(src, target)
+			var/possible_target_distance = get_dist(src, A)
 			if(target_dist < possible_target_distance)
 				Targets -= A
 	if(!Targets.len)//We didnt find nothin!
@@ -132,8 +107,6 @@
 	return chosen_target
 
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(!the_target)
-		return 0
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return 0
 	if(search_objects < 2)
@@ -175,7 +148,7 @@
 		LoseTarget()
 		return 0
 	if(target in possible_targets)
-		var/target_distance = get_dist(targets_from,target)
+		var/target_distance = get_dist(src,target)
 		if(ranged)//We ranged? Shoot at em
 			if(target_distance >= 2 && ranged_cooldown <= 0)//But make sure they're a tile away at least, and our range attack is off cooldown
 				OpenFire(target)
@@ -189,13 +162,11 @@
 				Goto(target,move_to_delay,minimum_distance)//Otherwise, get to our minimum distance so we chase them
 		else
 			Goto(target,move_to_delay,minimum_distance)
-		if(target)
-			if(isturf(targets_from.loc) && target.Adjacent(targets_from))	//If they're next to us, attack
-				AttackingTarget()
-			return 1
-		return 0
+		if(isturf(loc) && target.Adjacent(src))	//If they're next to us, attack
+			AttackingTarget()
+		return 1
 	if(environment_smash)
-		if(target.loc != null && get_dist(targets_from, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
+		if(target.loc != null && get_dist(src, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
 			if(environment_smash >= 2)//If we're capable of smashing through walls, forget about vision completely after finding our target
 				Goto(target,move_to_delay,minimum_distance)
 				FindHidden()
@@ -250,7 +221,7 @@
 /mob/living/simple_animal/hostile/proc/summon_backup(distance)
 	do_alert_animation(src)
 	playsound(loc, 'sound/machines/chime.ogg', 50, 1, -1)
-	for(var/mob/living/simple_animal/hostile/M in oview(distance, targets_from))
+	for(var/mob/living/simple_animal/hostile/M in oview(distance, src))
 		var/list/L = M.faction&faction
 		if(L.len)
 			if(M.AIStatus == AI_OFF)
@@ -278,19 +249,19 @@
 	else
 		Shoot(A)
 	ranged_cooldown = ranged_cooldown_cap
-
+	return
 
 /mob/living/simple_animal/hostile/proc/Shoot(atom/targeted_atom)
-	if(targeted_atom == targets_from.loc || targeted_atom == targets_from)
+	if(targeted_atom == src.loc)
 		return
-	var/turf/startloc = get_turf(targets_from)
+	var/turf/startloc = get_turf(src)
 	if(casingtype)
 		var/obj/item/ammo_casing/casing = new casingtype
 		playsound(src, projectilesound, 100, 1)
 		casing.fire(targeted_atom, src, zone_override = ran_zone())
 		casing.loc = startloc
 	else if(projectiletype)
-		var/obj/item/projectile/P = new projectiletype(startloc)
+		var/obj/item/projectile/P = new projectiletype(src.loc)
 		playsound(src, projectilesound, 100, 1)
 		P.current = startloc
 		P.starting = startloc
@@ -298,39 +269,39 @@
 		P.yo = targeted_atom.y - startloc.y
 		P.xo = targeted_atom.x - startloc.x
 		if(AIStatus == AI_OFF)//Don't want mindless mobs to have their movement screwed up firing in space
-			newtonian_move(get_dir(targeted_atom, targets_from))
+			newtonian_move(get_dir(targeted_atom, src))
 		P.original = targeted_atom
 		P.fire()
-
+	return
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
 		EscapeConfinement()
 		for(var/dir in cardinal)
-			var/turf/T = get_step(targets_from, dir)
+			var/turf/T = get_step(src, dir)
 			if(istype(T, /turf/simulated/wall) || istype(T, /turf/simulated/mineral))
-				if(T.Adjacent(targets_from))
+				if(T.Adjacent(src))
 					T.attack_animal(src)
-			for(var/a in T)
-				var/atom/A = a
-				if(!A.Adjacent(targets_from))
+			for(var/atom/A in T)
+				if(!A.Adjacent(src))
 					continue
 				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack))
 					A.attack_animal(src)
+	return
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
 	if(buckled)
 		buckled.attack_animal(src)
-	if(!isturf(targets_from.loc) && targets_from.loc != null)//Did someone put us in something?
-		var/atom/A = get_turf(targets_from)
+	if(!isturf(src.loc) && src.loc != null)//Did someone put us in something?
+		var/atom/A = src.loc
 		A.attack_animal(src)//Bang on it till we get out
-
+	return
 
 /mob/living/simple_animal/hostile/proc/FindHidden()
 	if(istype(target.loc, /obj/structure/closet) || istype(target.loc, /obj/machinery/disposal) || istype(target.loc, /obj/machinery/sleeper))
 		var/atom/A = target.loc
 		Goto(A,move_to_delay,minimum_distance)
-		if(A.Adjacent(targets_from))
+		if(A.Adjacent(src))
 			A.attack_animal(src)
 		return 1
 
