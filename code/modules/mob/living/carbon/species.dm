@@ -126,6 +126,13 @@ var/global/list/whitelisted_species = list("Human")
 	var/can_be_hypothermic = 1
 	var/has_sweat_glands = 1
 
+/datum/species/New()
+	..()
+	if(all_species[name])
+		var/datum/species/globalspeciesholder = all_species[name]
+		default_blocks = globalspeciesholder.default_blocks.Copy()
+		default_mutations = globalspeciesholder.default_mutations.Copy()
+
 /datum/species/proc/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
 	if(H.dna)
 		if(length(speech.message) >= 2)

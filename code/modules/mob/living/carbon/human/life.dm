@@ -94,20 +94,20 @@ var/global/list/organ_damage_overlays = list(
 // Doing this during species init breaks shit.
 /mob/living/carbon/human/proc/DeferredSpeciesSetup()
 	var/mut_update=0
-	var/datum/species/globalspecies = all_species[species.name]
-	if(globalspecies.default_mutations.len>0)
-		for(var/mutation in globalspecies.default_mutations)
-			if(!(mutation in src.mutations))
+	if(species.default_mutations.len>0)
+		for(var/mutation in species.default_mutations)
+			if(!(mutation in mutations))
 				mutations.Add(mutation)
 				mut_update=1
-	if(globalspecies.default_blocks.len>0)
-		for(var/block in globalspecies.default_blocks)
+	if(species.default_blocks.len>0)
+		for(var/block in species.default_blocks)
 			if(!dna.GetSEState(block))
 				dna.SetSEState(block,1)
 				mut_update=1
 	if(mut_update)
 		domutcheck(src,null,MUTCHK_FORCED)
 		update_mutations()
+
 
 
 /mob/living/carbon/human/proc/debug_life(var/stage,var/chat_message)
