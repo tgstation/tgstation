@@ -53,6 +53,18 @@
 /obj/item/projectile/bullet/heavybullet
 	damage = 35
 
+/obj/item/projectile/bullet/sabot
+	damage = 150
+	var/breakthings = FALSE
+	armour_penetration = -5 //NOT A TYPO
+
+/obj/item/projectile/bullet/sabot/Range()
+	..()
+	damage += 70
+	if(damage > 300)
+		armour_penetration = 15
+		new/obj/effect/decal/cleanable/generic/fins(src.loc)
+
 /obj/item/projectile/bullet/rpellet
 	damage = 3
 	stamina = 25

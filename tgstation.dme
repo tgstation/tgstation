@@ -1491,6 +1491,7 @@
 #include "code\modules\projectiles\guns\magic\wand.dm"
 #include "code\modules\projectiles\guns\projectile\automatic.dm"
 #include "code\modules\projectiles\guns\projectile\launchers.dm"
+#include "code\modules\projectiles\guns\projectile\marksman_rifle.dm"
 #include "code\modules\projectiles\guns\projectile\pistol.dm"
 #include "code\modules\projectiles\guns\projectile\rechargable_magazine.dm"
 #include "code\modules\projectiles\guns\projectile\revolver.dm"
