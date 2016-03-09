@@ -556,21 +556,10 @@
 			fieldsactive--
 
 /obj/item/weapon/resonator/attack_self(mob/user)
-	if(burst_time == 50)
-		burst_time = 10
-		user << "<span class='info'>You set the resonator's fields to detonate after 1 second.</span>"
-	if(burst_time == 10)
+	burst_time += 10
+	if(burst_time > 50)
 		burst_time = 20
-		user << "<span class='info'>You set the resonator's fields to detonate after 2 seconds.</span>"
-	if(burst_time == 20)
-		burst_time = 30
-		user << "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>"
-	if(burst_time == 30)
-		burst_time = 40
-		user << "<span class='info'>You set the resonator's fields to detonate after 4 seconds.</span>"
-	if(burst_time == 40)
-		burst_time = 50
-		user << "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>"
+		user << "<span class='info'>You set the resonator's fields to detonate after [burst_time * 0.1] seconds.</span>"
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
@@ -602,6 +591,7 @@
 		if(pressure < 50)
 			name = "strong resonance field"
 			resonance_damage = 200
+		else
 			timetoburst = 50
 		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
