@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "The Toxin Filter virology symptom now heals 4-8 toxin damage instead of 8-14."
