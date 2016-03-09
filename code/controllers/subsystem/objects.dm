@@ -9,6 +9,7 @@ var/datum/subsystem/objects/SSobj
 	name = "Objects"
 	priority = 12
 
+	var/list/atom_spawners = list()
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/list/burning = list()
@@ -17,6 +18,7 @@ var/datum/subsystem/objects/SSobj
 	NEW_SS_GLOBAL(SSobj)
 
 /datum/subsystem/objects/Initialize(timeofday, zlevel)
+	trigger_atom_spawners()
 	setupGenetics()
 	for(var/V in world)
 		var/atom/A = V
@@ -26,6 +28,12 @@ var/datum/subsystem/objects/SSobj
 		CHECK_TICK
 	. = ..()
 
+/datum/subsystem/objects/proc/trigger_atom_spawners(zlevel)
+	for(var/V in atom_spawners)
+		var/atom/A = V
+		if (zlevel && A.z != zlevel)
+			continue
+		A.spawn_atom_to_world()
 
 /datum/subsystem/objects/stat_entry()
 	..("P:[processing.len]")
@@ -57,4 +65,5 @@ var/datum/subsystem/objects/SSobj
 /datum/subsystem/objects/proc/setup_template_objects(list/objects)
 	for(var/A in objects)
 		var/atom/B = A
+		B.spawn_atom_to_world()
 		B.initialize()
