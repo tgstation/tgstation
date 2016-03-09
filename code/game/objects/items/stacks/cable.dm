@@ -5,9 +5,12 @@
 ////////////////////////////////
 // Definitions
 ////////////////////////////////
+/datum/stack_recipe/cable_cuffs/finish_building(var/mob/usr, var/obj/item/stack/cable_coil/S, var/obj/item/weapon/handcuffs/cable/C)
+	C._color = S._color
+	C.update_icon()
 
 var/global/list/datum/stack_recipe/cable_recipes = list ( \
-	new/datum/stack_recipe("cable cuffs", /obj/item/weapon/handcuffs/cable, 15, time = 3, one_per_turf = 0, on_floor = 0))
+	new/datum/stack_recipe/cable_cuffs("cable cuffs", /obj/item/weapon/handcuffs/cable, 15, time = 3, one_per_turf = 0, on_floor = 0))
 
 #define MAXCOIL 30
 

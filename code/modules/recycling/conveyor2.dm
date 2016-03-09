@@ -51,8 +51,6 @@
 		operating = 1
 	icon_state = "conveyor[operating]"
 
-
-
 /obj/machinery/conveyor/initialize()
 	if(frequency)
 		set_frequency(frequency)
@@ -101,37 +99,38 @@
 
 	updateConfig(!building)
 
-/obj/machinery/conveyor/proc/updateConfig(var/startup=0)
-	switch(dir)
-		if(NORTH)
-			forwards = NORTH
-			backwards = SOUTH
-		if(SOUTH)
-			forwards = SOUTH
-			backwards = NORTH
-		if(EAST)
-			forwards = EAST
-			backwards = WEST
-		if(WEST)
-			forwards = WEST
-			backwards = EAST
-		if(NORTHEAST)
-			forwards = EAST
-			backwards = SOUTH
-		if(NORTHWEST)
-			forwards = SOUTH
-			backwards = WEST
-		if(SOUTHEAST)
-			forwards = NORTH
-			backwards = EAST
-		if(SOUTHWEST)
-			forwards = WEST
-			backwards = NORTH
+	if(!id_tag) //Without an ID tag we'll never work, so let's try to copy it from one of our neighbors.
+		copy_radio_from_neighbors()
 
-	if(in_reverse)
-		var/next_backwards=forwards
-		forwards=backwards
-		backwards=next_backwards
+/obj/machinery/conveyor/proc/copy_radio_from_neighbors()
+	for(var/direction in cardinal)
+		var/obj/machinery/conveyor/domino = locate() in get_step(src, direction)
+		if(domino && domino.id_tag)
+			id_tag = domino.id_tag
+			frequency = domino.frequency
+			spawn(5) // Need to wait for the radio_controller to wake up.
+				updateConfig()
+			break
+
+/proc/conveyor_directions(var/dir, var/reverse = 0)
+	var/list/dirs = list()
+	switch(dir)
+		if(NORTH) dirs = list(NORTH, SOUTH)
+		if(SOUTH) dirs = list(SOUTH, NORTH)
+		if(EAST)  dirs = list(EAST, WEST)
+		if(WEST)  dirs = list(WEST, EAST)
+		if(NORTHEAST) dirs = list(EAST, SOUTH)
+		if(NORTHWEST) dirs = list(SOUTH, WEST)
+		if(SOUTHEAST) dirs = list(NORTH, EAST)
+		if(SOUTHWEST) dirs = list(WEST, NORTH)
+	if(reverse)
+		dirs.Swap(1,2)
+	return dirs
+
+/obj/machinery/conveyor/proc/updateConfig(var/startup=0)
+	var/list/dirs = conveyor_directions(dir, in_reverse)
+	forwards = dirs[1]
+	backwards = dirs[2]
 
 	if(!startup) // Need to wait for the radio_controller to wake up.
 		initialize()
@@ -217,6 +216,10 @@
 		</li>
 		<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=1367">Reset</a>)</li>
 		<li><b>ID Tag:</b> <a href="?src=\ref[src];set_id=1">[dis_id_tag]</a></li>
+
+		<li>To quickly copy configuration: Add a Conveyor or a Conveyor Switch into buffer, activate the Multitool in your hand to enable Cloning Mode, then use it on another Conveyor.</li>
+		<li><i>Cloning from a Conveyor Switch will only copy the Frequency and ID Tag, not direction.</i></li>
+		<li>To make counter-clockwise corners: Use the Reverse Direction button in this menu.</li>
 	</ul>"}
 
 
@@ -233,10 +236,28 @@
 		in_reverse=!in_reverse
 		updateConfig()
 		return MT_UPDATE
+
+/obj/machinery/conveyor/canClone(var/obj/machinery/O)
+	return is_type_in_list(O, list(/obj/machinery/conveyor_switch, /obj/machinery/conveyor))
+
+/obj/machinery/conveyor/clone(var/obj/machinery/O)
+	if(istype(O, /obj/machinery/conveyor))
+		var/obj/machinery/conveyor/it = O
+		dir = it.dir
+		in_reverse = it.in_reverse
+		operating = 0
+		id_tag = it.id_tag
+		frequency = it.frequency
+	else if(istype(O, /obj/machinery/conveyor_switch))
+		var/obj/machinery/conveyor_switch/it = O
+		id_tag = it.id_tag
+		frequency = it.frequency
+	updateConfig()
+	return 1
+
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user as mob)
 	user.Move_Pulled(src)
-
 
 // make the conveyor broken
 // also propagate inoperability to any connected conveyor with the same ID
@@ -258,8 +279,6 @@
 //set the operable var if ID matches, propagating in the given direction
 
 /obj/machinery/conveyor/proc/set_operable(stepdir, match_id, op)
-
-
 	if(id_tag != match_id)
 		return
 	operable = op
@@ -278,6 +297,9 @@
 /obj/machinery/conveyor/power_change()
 	..()
 	update()
+
+/obj/machinery/conveyor/dropFrame()
+	new /obj/machinery/conveyor_assembly(src.loc, src.dir)
 
 // the conveyor control switch
 //
@@ -439,6 +461,8 @@
 				[convdir ==  0 ? "<b>No</b>" 	 : {"<a href="?src=\ref[src];setconvdir= 0">No</a>"}]
 				[convdir ==  1 ? "<b>&rarr;</b>" : {"<a href="?src=\ref[src];setconvdir= 1">&rarr;</a>"}]
 			</li>
+			<li>To quickly copy configuration: Add a Conveyor or a Conveyor Switch into buffer, activate the Multitool in your hand to enable Cloning Mode, then use it on another Conveyor.</li>
+			<li><i>Cloning from a Conveyor Switch will only copy the Frequency and ID Tag, not direction.</i></li>
 		</ul>"}
 
 /obj/machinery/conveyor_switch/multitool_topic(var/mob/user,var/list/href_list,var/obj/O)
