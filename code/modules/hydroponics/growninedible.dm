@@ -18,7 +18,6 @@
 		// This is for adminspawn or map-placed growns. They get the default stats of their seed type.
 		seed = new seed()
 		seed.potency = 50
-		seed.prepare_result(src)
 	else // Something is terribly wrong
 		qdel(src)
 		return
@@ -26,16 +25,14 @@
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
-	add_juice()
+	for(var/datum/plant_gene/trait/T in seed.genes)
+		T.on_new(src, newloc)
 
+	if(istype(src, seed.product)) // no adding reagents if it is just a trash item
+		seed.prepare_result(src)
+	add_juice()
 	transform *= TransformUsingVariable(seed.potency, 100, 0.5)
 
-	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-	if(G)
-		if(istype(src.loc,/mob))
-			pickup(src.loc)//adjusts the lighting on the mob
-		else
-			src.SetLuminosity(G.get_lum(seed))
 
 /obj/item/weapon/grown/attackby(obj/item/O, mob/user, params)
 	..()
@@ -52,9 +49,9 @@
 	return 0
 
 
-/obj/item/weapon/grown/Crossed(AM as mob|obj)
+/obj/item/weapon/grown/Crossed(atom/movable/AM)
 	var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
-	if(S && istype(AM, /mob/living/carbon))
+	if(S && iscarbon(AM))
 		var/mob/living/carbon/M = AM
 		var/stun = min(seed.potency * S.rate * 2, 1)
 		var/weaken = min(seed.potency * S.rate, 0.5)
@@ -68,7 +65,7 @@
 // Glow gene procs
 /obj/item/weapon/grown/Destroy()
 	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-	if(G && istype(loc,/mob))
+	if(G && ismob(loc))
 		loc.AddLuminosity(-G.get_lum(seed))
 	return ..()
 

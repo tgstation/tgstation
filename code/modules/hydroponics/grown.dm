@@ -24,7 +24,6 @@
 		// This is for adminspawn or map-placed growns. They get the default stats of their seed type.
 		seed = new seed()
 		seed.potency = 50
-		seed.prepare_result(src)
 	else // Something is terribly wrong
 		qdel(src)
 		return
@@ -35,16 +34,13 @@
 	if(dried_type == -1)
 		dried_type = src.type
 
-	add_juice()
+	for(var/datum/plant_gene/trait/T in seed.genes)
+		T.on_new(src, newloc)
 
+	seed.prepare_result(src)
+	add_juice()
 	transform *= TransformUsingVariable(seed.potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
 
-	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-	if(G)
-		if(istype(src.loc,/mob))
-			pickup(src.loc)//adjusts the lighting on the mob
-		else
-			src.SetLuminosity(G.get_lum(seed))
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/proc/add_juice()
@@ -117,7 +113,7 @@
 	for(var/datum/plant_gene/trait/trait in seed.genes)
 		trait.on_squash(src, target)
 
-	for(var/atom/A in T)
+	for(var/A in T)
 		reagents.reaction(A)
 
 	qdel(src)
@@ -128,9 +124,9 @@
 			T.on_consume(src, usr)
 	..()
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/Crossed(AM as mob|obj)
+/obj/item/weapon/reagent_containers/food/snacks/grown/Crossed(atom/movable/AM)
 	var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
-	if(S && !ispath(trash, /obj/item/weapon/grown) && istype(AM, /mob/living/carbon))
+	if(S && !ispath(trash, /obj/item/weapon/grown) && iscarbon(AM))
 		var/mob/living/carbon/M = AM
 		var/stun = min(seed.potency * S.rate * 2, 1)
 		var/weaken = min(seed.potency * S.rate, 0.5)
@@ -144,7 +140,7 @@
 // Glow gene procs
 /obj/item/weapon/reagent_containers/food/snacks/grown/Destroy()
 	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-	if(G && istype(loc,/mob))
+	if(G && ismob(loc))
 		loc.AddLuminosity(-G.get_lum(seed))
 	return ..()
 

@@ -51,9 +51,9 @@
 	if(!nogenes) // not used on Copy()
 		genes += new /datum/plant_gene/core/lifespan(lifespan)
 		genes += new /datum/plant_gene/core/endurance(endurance)
-		genes += new /datum/plant_gene/core/production(production)
 		if(yield != -1)
 			genes += new /datum/plant_gene/core/yield(yield)
+			genes += new /datum/plant_gene/core/production(production)
 		if(potency != -1)
 			genes += new /datum/plant_gene/core/potency(potency)
 
@@ -82,6 +82,12 @@
 
 /obj/item/seeds/proc/get_gene(typepath)
 	return (locate(typepath) in genes)
+
+/obj/item/seeds/proc/reagents_from_genes()
+	reagents_add = list()
+	for(var/datum/plant_gene/reagent/R in genes)
+		reagents_add[R.reagent_id] = R.rate
+
 
 /obj/item/seeds/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj, /obj/item/projectile/energy/florayield))
@@ -120,7 +126,6 @@
 	var/product_name
 	while(t_amount < getYield())
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
-		prepare_result(t_prod)
 		result.Add(t_prod) // User gets a consumable
 		if(!t_prod)
 			return
@@ -164,9 +169,10 @@
 	C.value = endurance
 
 /obj/item/seeds/proc/adjust_production(adjustamt)
-	production = Clamp(production + adjustamt, 2, 10)
-	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
-	C.value = production
+	if(yield != -1)
+		production = Clamp(production + adjustamt, 2, 10)
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
+		C.value = production
 
 /obj/item/seeds/proc/adjust_potency(adjustamt)
 	if(potency != -1)
@@ -191,7 +197,8 @@
 	if(yield != -1)
 		text += "- Yield: [yield]\n"
 	text += "- Maturation speed: [maturation]\n"
-	text += "- Production speed: [production]\n"
+	if(yield != -1)
+		text += "- Production speed: [production]\n"
 	text += "- Endurance: [endurance]\n"
 	text += "- Lifespan: [lifespan]\n"
 	if(rarity)

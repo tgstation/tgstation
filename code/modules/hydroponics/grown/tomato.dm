@@ -86,7 +86,6 @@
 	name = "blue-space tomato"
 	desc = "So lubricated, you might slip through space-time."
 	icon_state = "bluespacetomato"
-	origin_tech = "bluespace=3"
 
 
 // Killer Tomato

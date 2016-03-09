@@ -100,14 +100,12 @@
 	icon_state = "banana_blue"
 	trash = /obj/item/weapon/grown/bananapeel/bluespace
 	filling_color = "#0000FF"
-	origin_tech = "bluespace=3"
 
 /obj/item/weapon/grown/bananapeel/bluespace
 	seed = /obj/item/seeds/banana/bluespace
 	name = "bluespace banana peel"
 	desc = "A peel from a bluespace banana."
 	icon_state = "banana_peel_blue"
-	origin_tech = "bluespace=3"
 
 
 // Other

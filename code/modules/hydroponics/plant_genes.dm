@@ -85,20 +85,34 @@
 /datum/plant_gene/trait
 	var/rate = 0.05
 	var/examine_line = ""
+	var/list/origin_tech = null
 
 /datum/plant_gene/trait/Copy()
 	var/datum/plant_gene/trait/G = ..()
 	G.rate = rate
 	return G
 
+/datum/plant_gene/trait/proc/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
+	if(origin_tech) // This ugly code segment adds RnD tech levels to resulting plants.
+		if(G.origin_tech)
+			var/list/tech = params2list(G.origin_tech)
+			for(var/t in origin_tech)
+				if(t in tech)
+					tech[t] = max(tech[t], origin_tech[t])
+				else
+					tech[t] = origin_tech[t]
+			G.origin_tech = list2params(tech)
+		else
+			G.origin_tech = list2params(origin_tech)
+	return
+
 /datum/plant_gene/trait/proc/on_consume(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
-
 /datum/plant_gene/trait/proc/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
-
 /datum/plant_gene/trait/proc/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	return
+
 
 
 /datum/plant_gene/trait/squash
@@ -128,6 +142,7 @@
 	// Multiplies max charge by (rate*1000) when used in potato power cells.
 	name = "Electrical Activity"
 	rate = 0.01
+	origin_tech = list("powerstorage" = 4)
 
 /datum/plant_gene/trait/cell_charge/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	var/power = G.seed.potency*rate*5
@@ -168,6 +183,13 @@
 /datum/plant_gene/trait/glow/proc/get_lum(obj/item/seeds/S)
 	return round(S.potency*rate)
 
+/datum/plant_gene/trait/glow/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
+	..()
+	if(ismob(newloc))
+		G.pickup(newloc)//adjusts the lighting on the mob
+	else
+		G.SetLuminosity(get_lum(G.seed))
+
 /datum/plant_gene/trait/glow/berry
 	name = "Strong Bioluminescence"
 	rate = 0.2
@@ -178,6 +200,7 @@
 	// Teleport radius is calculated as max(round(potency*rate), 1)
 	name = "Bluespace Activity"
 	rate = 0.1
+	origin_tech = list("bluespace" = 3)
 
 /datum/plant_gene/trait/teleport/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	if(isliving(target))
@@ -196,3 +219,16 @@
 	else
 		new /obj/effect/decal/cleanable/molten_item(T) //Leave a pile of goo behind for dramatic effect...
 		qdel(G)
+
+
+/datum/plant_gene/trait/noreact
+	// Makes plant NOREACT until squashed.
+	name = "Separated Chemicals"
+
+/datum/plant_gene/trait/noreact/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
+	..()
+	G.flags |= NOREACT
+
+/datum/plant_gene/trait/noreact/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
+	G.flags &= ~NOREACT
+	G.reagents.handle_reactions()
