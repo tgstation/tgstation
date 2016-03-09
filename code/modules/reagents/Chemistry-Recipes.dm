@@ -103,7 +103,7 @@ datum
 			id = "silicate"
 			result = "silicate"
 			required_reagents = list("aluminum" = 1, "silicon" = 1, "oxygen" = 1)
-			result_amount = 3
+			result_amount = 9
 
 		phalanximine
 			name = "Phalanximine"
