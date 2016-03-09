@@ -733,7 +733,7 @@ SYNDICATE BLACK OPS
 	hair_alpha = 0
 	need_nutrition = 0//They don't need to eat
 	say_mod = "declares"
-	speedmod = 2//Fast
+	speedmod = -2//Fast
 	brutemod = 0.7//Tough against firearms
 	burnmod = 0.65//Tough against lasers
 	coldmod = 0
