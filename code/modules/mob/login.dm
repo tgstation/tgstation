@@ -71,7 +71,7 @@
 			client.verbs += /client/proc/readmin
 
 		if(M_FARSIGHT in mutations)
-			client.view = max(client.view, world.view+2)
+			client.view = max(client.view, world.view+1)
 	CallHook("Login", list("client" = src.client, "mob" = src))
 
 	if(spell_masters)
