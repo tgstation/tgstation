@@ -2286,6 +2286,7 @@
 	reagent_state = LIQUID
 	color = "#593948" //rgb: 89, 57, 72
 	custom_metabolism = 0.005
+	var/spawning_horror = 0
 
 /datum/reagent/mednanobots/on_mob_life(var/mob/living/M)
 
@@ -2336,14 +2337,17 @@
 							D.cure()
 		if(5 to INFINITY)
 			if(ishuman(M))
+				spawning_horror = 1
 				var/mob/living/carbon/human/H = M
 				to_chat(H, pick("<b><span class='warning'>Something doesn't feel right...</span></b>", "<b><span class='warning'>Something is growing inside you!</span></b>", "<b><span class='warning'>You feel your insides rearrange!</span></b>"))
 				spawn(60)
-					to_chat(H, "<b><span class='warning'>Something bursts out from inside you!</span></b>")
-					message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. ([formatJumpTo(H)])")
-					H.visible_message("<b><span class='warning'>[H]'s body rips aparts to reveal something underneath!</b></span>")
-					new /mob/living/simple_animal/hostile/monster/cyber_horror(H.loc)
-					H.gib()
+					if(spawning_horror == 1)
+						to_chat(H, "<b><span class='warning'>Something bursts out from inside you!</span></b>")
+						message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. ([formatJumpTo(H)])")
+						H.visible_message("<b><span class='warning'>[H]'s body rips aparts to reveal something underneath!</b></span>")
+						new /mob/living/simple_animal/hostile/monster/cyber_horror(H.loc)
+						spawning_horror = 0
+						H.gib()
 
 
 /datum/reagent/comnanobots
