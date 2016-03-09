@@ -1,0 +1,8 @@
+
+author: Icantthinkofanameritenow
+
+delete-after: True
+
+
+changes: 
+- rscadd: Death Sting now injects cyanide instead of lexorin. Death Sting, DNA Extract Sting, and Horror Form all have reduced genome costs. 
