@@ -148,6 +148,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	var/mob/living/closest_mob
 	var/obj/machinery/closest_machine
 	var/obj/structure/closest_structure
+	var/obj/effect/blob/closest_blob
 
 	for(var/A in oview(source, zap_range))
 		if(istype(A, /obj/machinery/power/tesla_coil))
@@ -197,6 +198,17 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		else if(closest_mob)
 			continue
 
+		else if(istype(A, /obj/effect/blob))
+			var/obj/effect/blob/B = A
+			var/dist = get_dist(source, A)
+			if((dist < closest_dist || !closest_tesla_coil) && !B.being_shocked)
+				closest_blob = B
+				closest_atom = A
+				closest_dist = dist
+
+		else if(closest_mob)
+			continue
+
 		else if(istype(A, /obj/structure))
 			var/obj/structure/S = A
 			var/dist = get_dist(source, A)
@@ -204,7 +216,6 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 				closest_structure = S
 				closest_atom = A
 				closest_dist = dist
-
 
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
@@ -233,6 +244,9 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 	else if(closest_machine)
 		closest_machine.tesla_act(power)
+
+	else if(closest_blob)
+		closest_blob.tesla_act(power)
 
 	else if(closest_structure)
 		closest_structure.tesla_act(power)
