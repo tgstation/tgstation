@@ -440,6 +440,7 @@
 
 /turf/simulated/floor/plasteel/sandy
 	icon_state = "sandy"
+	baseturf = /turf/simulated/floor/plating/beach/sand
 
 /turf/simulated/floor/plasteel/sandeffect
 	icon_state = "sandeffect"
