@@ -228,7 +228,7 @@ research holder datum.
 
 /datum/tech/abductor
 	name = "Alien Technologies Research"
-	desc = "The study of technologies used by advanced alien race known as Abductors."
+	desc = "The study of technologies used by the advanced alien race known as Abductors."
 	id = "abductor"
 	rare = 5
 	level = 0

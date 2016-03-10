@@ -265,7 +265,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 /obj/item/stack/sheet/mineral/snow/New(var/loc, var/amount=null)
 	recipes = snow_recipes
 	pixel_x = rand(0,4)-4
-	pixel_y = rand(,4)-4
+	pixel_y = rand(0,4)-4
 	..()
 
 /****************************** Others ****************************/
@@ -330,7 +330,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 	sheettype = "abductor"
 
 var/global/list/datum/stack_recipe/abductor_recipes = list ( \
-/*	new/datum/stack_recipe("alien chair", /obj/structure/chair, one_per_turf = 1, on_floor = 1), \*/
+/*	new/datum/stack_recipe("alien chair", /obj/structure/chair, one_per_turf = 1, on_floor = 1), \ */
 	new/datum/stack_recipe("alien bed", /obj/structure/bed/abductor, 2, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("alien locker", /obj/structure/closet/abductor, 1, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("alien table frame", /obj/structure/table_frame/abductor, 1, time = 15, one_per_turf = 1, on_floor = 1), \

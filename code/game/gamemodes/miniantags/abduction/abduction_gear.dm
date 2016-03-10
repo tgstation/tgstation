@@ -601,7 +601,7 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/structure/table_frame/abductor
 	name = "alien table frame"
-	desc = "A strudy table frame made from alien alloy."
+	desc = "A sturdy table frame made from alien alloy."
 	icon_state = "alien_frame"
 	framestack = /obj/item/stack/sheet/mineral/abductor
 	framestackamount = 1
