@@ -522,6 +522,8 @@
 		return
 	if(pulling.anchored)
 		return
+	if(src.locked_to == pulling)
+		return
 	if(!pulling.Adjacent(src))
 		return
 	if(!isturf(pulling.loc))
