@@ -18,6 +18,14 @@
 			if(M.client)
 				src << "<span class='warning'>There is someone too close to place your blob core!</span>"
 				return 0
+		for(var/mob/living/M in view(15, src))
+			if(M.client)
+				src << "<span class='warning'>Someone could see your blob core from here!</span>"
+				return 0
+		var/turf/T = get_turf(src)
+		if(T.density)
+			src << "<span class='warning'>This spot is too dense to place a blob core on!</span>"
+			return 0
 	else if(override == 1)
 		var/turf/T = pick(blobstart)
 		loc = T //got overrided? you're somewhere random, motherfucker
