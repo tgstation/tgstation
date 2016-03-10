@@ -263,6 +263,7 @@ trans_to_atmos(var/datum/gas_mixture/target, var/amount=1, var/multiplier=1, var
 		var/datum/reagent/R = A
 		if(M && R)
 			R.on_mob_life(M, alien)
+			R.metabolize(M)
 	update_total()
 
 /datum/reagents/proc/update_aerosol(var/mob/M)
