@@ -15,7 +15,7 @@
 	var/point_rate = 2
 
 
-/obj/effect/blob/core/New(loc, var/client/new_overmind = null, var/new_rate = 2, var/placed = 0)
+/obj/effect/blob/core/New(loc, client/new_overmind = null, new_rate = 2, placed = 0)
 	blob_cores += src
 	SSobj.processing |= src
 	update_icon() //so it atleast appears
