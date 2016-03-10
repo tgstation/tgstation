@@ -8,17 +8,21 @@
 // Power verbs
 
 /mob/camera/blob/proc/place_blob_core(var/point_rate = base_point_rate, var/override = 0)
-	if(world.time <= manualplace_min_time && world.time <= autoplace_max_time)
+	if(!override && world.time <= manualplace_min_time && world.time <= autoplace_max_time)
 		src << "<span class='warning'>It is too early to place your blob core!</span>"
 		return 0
 	if(placed)
 		return 1
 	if(!override)
 		for(var/mob/living/M in range(7, src))
+			if("blob" in M.faction)
+				continue
 			if(M.client)
 				src << "<span class='warning'>There is someone too close to place your blob core!</span>"
 				return 0
-		for(var/mob/living/M in view(15, src))
+		for(var/mob/living/M in view(13, src))
+			if("blob" in M.faction)
+				continue
 			if(M.client)
 				src << "<span class='warning'>Someone could see your blob core from here!</span>"
 				return 0
@@ -26,6 +30,16 @@
 		if(T.density)
 			src << "<span class='warning'>This spot is too dense to place a blob core on!</span>"
 			return 0
+		for(var/obj/O in T)
+			if(istype(O, /obj/effect/blob))
+				if(istype(O, /obj/effect/blob/normal))
+					qdel(O)
+				else
+					src << "<span class='warning'>There is already a blob here!</span>"
+					return 0
+			if(O.density)
+				src << "<span class='warning'>This spot is too dense to place a blob core on!</span>"
+				return 0
 	else if(override == 1)
 		var/turf/T = pick(blobstart)
 		loc = T //got overrided? you're somewhere random, motherfucker

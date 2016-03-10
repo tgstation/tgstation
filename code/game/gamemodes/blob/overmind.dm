@@ -23,8 +23,8 @@
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
 	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 
-/mob/camera/blob/New(loc, placed = 0, mode_made = 0)
-	if(placed) //we already have a core!
+/mob/camera/blob/New(loc, pre_placed = 0, mode_made = 0)
+	if(pre_placed) //we already have a core!
 		manualplace_min_time = 0
 		autoplace_max_time = 0
 		placed = 1
