@@ -147,7 +147,7 @@ Rite of Disorientation
 	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and they disappear in a flash of red light!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>")
 	if(user.buckled)
-		user.buckled.unbuckle_mob()
+		user.buckled.unbuckle_mob(user,force=1)
 	user.loc = get_turf(chosen_rune)
 
 /obj/item/weapon/paper/talisman/teleport/New()
