@@ -197,19 +197,19 @@
 			return
 		if(weakeyes)
 			Stun(2)
-		switch(damage)
-			if(1)
-				src << "<span class='warning'>Your eyes sting a little.</span>"
-				if(prob(40))
-					adjust_eye_damage(1)
+		
+		if (damage == 1)
+			src << "<span class='warning'>Your eyes sting a little.</span>"
+			if(prob(40))
+				adjust_eye_damage(1)
 
-			if(2)
-				src << "<span class='warning'>Your eyes burn.</span>"
-				adjust_eye_damage(rand(2, 4))
+		else if (damage == 2)
+			src << "<span class='warning'>Your eyes burn.</span>"
+			adjust_eye_damage(rand(2, 4))
 
-			else
-				src << "<span class='warning'>Your eyes itch and burn severely!</span>"
-				adjust_eye_damage(rand(12, 16))
+		else if( damage > 3)
+			src << "<span class='warning'>Your eyes itch and burn severely!</span>"
+			adjust_eye_damage(rand(12, 16))
 
 		if(eye_damage > 10)
 			blind_eyes(damage)
