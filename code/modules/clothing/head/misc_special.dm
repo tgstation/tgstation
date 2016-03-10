@@ -49,11 +49,13 @@
 	item_state = "hardhat0_cakehat"
 	item_color = "cakehat"
 	flags_inv = HIDEEARS|HIDEHAIR
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
-	heat = 1000
-
+	heat = 1337
+	heat_protection = HEAD|CHEST|GROIN|LEGS|FEET|ARMS|HANDS											//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
 	if(istype(location, /mob/))
@@ -66,15 +68,15 @@
 
 /obj/item/clothing/head/hardhat/cakehat/turn_on()
 	..()
-	force = 15
-	throwforce = 15
+	force = 9001
+	throwforce = 9001
 	damtype = BURN
 	SSobj.processing |= src
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
 	..()
-	force = 0
-	throwforce = 0
+	force = 9001
+	throwforce = 9001
 	damtype = BRUTE
 	SSobj.processing -= src
 
