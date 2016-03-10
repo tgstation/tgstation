@@ -28,7 +28,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 
 /obj/machinery/gateway/centerstation/Destroy()
-	if(the_gateway == src)
+	if(destructible && the_gateway == src)
 		the_gateway = null
 	return ..()
 
