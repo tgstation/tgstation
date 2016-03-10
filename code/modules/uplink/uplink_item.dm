@@ -513,12 +513,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 17
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
-/datum/uplink_item/stealthy_weapons/throwingstars
-	name = "Box of Throwing Stars"
-	desc = "A box of shurikens from ancient Earth martial arts. They are highly effective throwing weapons, \
-			and will embed into limbs when possible."
-	item = /obj/item/weapon/storage/box/throwing_stars
-	cost = 6
+/datum/uplink_item/stealthy_weapons/throwingweapons
+	name = "Box of Throwing Weapons"
+	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
+			 throwing weapons. The bolas can knock a target down and the shirukens will embed into limbs."
+	item = /obj/item/weapon/storage/box/syndie_kit/throwing_weapons
+	cost = 5
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
