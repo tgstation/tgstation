@@ -858,15 +858,14 @@ Thanks.
 		var/obj/structure/closet/C = L.loc
 		if(C.opened)
 			return //Door's open... wait, why are you in it's contents then?
-		if(istype(L.loc, /obj/structure/closet/secure_closet))
-			var/obj/structure/closet/secure_closet/SC = L.loc
-			if(!SC.locked && !SC.welded)
-				return //It's a secure closet, but isn't locked. Easily escapable from, no need to 'resist'
-		else
-			if(!C.welded)
-				return //closed but not welded...
-		//	else Meh, lets just keep it at 2 minutes for now
-		//		breakout_time++ //Harder to get out of welded lockers than locked lockers
+		if(!istype(C.loc, /obj/item/delivery/large)) //Wouldn't want to interrupt escaping being wrapped over the next few trivial checks
+			if(istype(C, /obj/structure/closet/secure_closet))
+				var/obj/structure/closet/secure_closet/SC = L.loc
+				if(!SC.locked && !SC.welded)
+					return //It's a secure closet, but isn't locked. Easily escapable from, no need to 'resist'
+			else
+				if(!C.welded)
+					return //closed but not welded...
 
 		//okay, so the closet is either welded or locked... resist!!!
 		L.delayNext(DELAY_ALL,100)
@@ -877,14 +876,15 @@ Thanks.
 				if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened) //closet/user destroyed OR user dead/unconcious OR user no longer in closet OR closet opened
 					return
 
-				//Perform the same set of checks as above for weld and lock status to determine if there is even still a point in 'resisting'...
-				if(istype(L.loc, /obj/structure/closet/secure_closet))
-					var/obj/structure/closet/secure_closet/SC = L.loc
-					if(!SC.locked && !SC.welded)
-						return
-				else
-					if(!C.welded)
-						return
+				if(!istype(C.loc, /obj/item/delivery/large)) //Wouldn't want to interrupt escaping being wrapped over the next few trivial checks
+					//Perform the same set of checks as above for weld and lock status to determine if there is even still a point in 'resisting'...
+					if(istype(L.loc, /obj/structure/closet/secure_closet))
+						var/obj/structure/closet/secure_closet/SC = L.loc
+						if(!SC.locked && !SC.welded)
+							return
+					else
+						if(!C.welded)
+							return
 
 				//Well then break it!
 				if(istype(usr.loc, /obj/structure/closet/secure_closet))
