@@ -35,8 +35,9 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 /obj/machinery/gateway/initialize()
 	update_icon()
-	if(dir == 2)
-		density = 0
+	switch(dir)
+		if(SOUTH,SOUTHWEST,SOUTHEAST)
+			density = 0
 
 
 /obj/machinery/gateway/update_icon()
