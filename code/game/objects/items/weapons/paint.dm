@@ -26,6 +26,9 @@ var/global/list/cached_icons = list()
 	return 0
 
 /obj/item/weapon/reagent_containers/glass/paint/afterattack(turf/simulated/target, mob/user , flag)
+	if(!flag || user.stat)
+		return ..()
+
 	if(istype(target) && reagents.total_volume > 5)
 		for(var/mob/O in viewers(user))
 			O.show_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>", 1)
