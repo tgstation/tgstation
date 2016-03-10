@@ -43,7 +43,7 @@
 	leave_all_huds()
 	ticker.mode.set_antag_hud(current, antag_hud_icon_state)
 	if(newhud)
-		newhud.join_hud(current, newhud.self_visible)
+		newhud.join_hud(current)
 
 /datum/mind/proc/leave_all_huds()
 	for(var/datum/atom_hud/antag/hud in huds)
