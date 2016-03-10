@@ -759,7 +759,7 @@
 	sound = 'sound/magic/Staff_Chaos.ogg'
 
 /obj/effect/proc_holder/spell/targeted/annihilate/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
-	if(user.phasing)
+	if(user.incorporeal_move)
 		user << "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>"
 		revert_cast()
 		return
@@ -787,7 +787,7 @@
 	action_icon_state = "enthrall"
 
 /obj/effect/proc_holder/spell/targeted/hypnosis/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
-	if(user.phasing)
+	if(user.incorporeal_move)
 		revert_cast()
 		user << "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>"
 		return
@@ -824,19 +824,18 @@
 	clothes_req = 0
 	action_icon_state = "shadow_walk"
 
-/obj/effect/proc_holder/spell/self/shadowling_phase_shift/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
-	for(user in targets)
-		user.phasing = !user.phasing
-		if(user.phasing)
-			user.visible_message("<span class='danger'>[user] suddenly vanishes!</span>", \
-			"<span class='shadowling'>You begin phasing through planes of existence. Use the ability again to return.</span>")
-			user.incorporeal_move = 1
-			user.alpha = 0
-		else
-			user.visible_message("<span class='danger'>[user] suddenly appears from nowhere!</span>", \
-			"<span class='shadowling'>You return from the space between worlds.</span>")
-			user.incorporeal_move = 0
-			user.alpha = 255
+/obj/effect/proc_holder/spell/self/shadowling_phase_shift/cast(mob/living/simple_animal/ascendant_shadowling/user)
+	user.incorporeal_move = !user.incorporeal_move
+	if(user.incorporeal_move)
+		user.visible_message("<span class='danger'>[user] suddenly vanishes!</span>", \
+		"<span class='shadowling'>You begin phasing through planes of existence. Use the ability again to return.</span>")
+		user.density = 0
+		user.alpha = 0
+	else
+		user.visible_message("<span class='danger'>[user] suddenly appears from nowhere!</span>", \
+		"<span class='shadowling'>You return from the space between worlds.</span>")
+		user.density = 1
+		user.alpha = 255
 
 
 /obj/effect/proc_holder/spell/aoe_turf/ascendant_storm //Releases bolts of lightning to everyone nearby
@@ -850,7 +849,7 @@
 	sound = 'sound/magic/lightningbolt.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/ascendant_storm/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
-	if(user.phasing)
+	if(user.incorporeal_move)
 		user << "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>"
 		revert_cast()
 		return
