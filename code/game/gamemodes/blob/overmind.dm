@@ -18,8 +18,22 @@
 	var/datum/reagent/blob/blob_reagent_datum = new/datum/reagent/blob()
 	var/list/blob_mobs = list()
 	var/ghostimage = null
+	var/placed = 0
+	var/base_point_rate = 2 //for blob core placement
+	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
+	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 
-/mob/camera/blob/New()
+/mob/camera/blob/New(loc, placed = 0, mode_made = 0)
+	if(placed) //we already have a core!
+		manualplace_min_time = 0
+		autoplace_max_time = 0
+		placed = 1
+	else
+		if(mode_made)
+			manualplace_min_time = world.time + BLOB_NO_PLACE_TIME
+		else
+			manualplace_min_time += world.time
+		autoplace_max_time += world.time
 	overminds += src
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
@@ -39,7 +53,15 @@
 
 /mob/camera/blob/Life()
 	if(!blob_core)
-		qdel(src)
+		if(!placed)
+			if(manualplace_min_time && world.time >= manualplace_min_time)
+				src << "<b><span class='big'><font color=\"#EE4000\">You may now place your blob core.</font></span></b>"
+				src << "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [round((autoplace_max_time - world.time)/600, 0.5)] minutes.</font></span>"
+				manualplace_min_time = 0
+			if(autoplace_max_time && world.time >= autoplace_max_time)
+				place_blob_core(base_point_rate, 1)
+		else
+			qdel(src)
 	..()
 
 /mob/camera/blob/Destroy()
@@ -115,13 +137,24 @@
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
+		if(!placed)
+			stat(null, "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]")
+			if(manualplace_min_time)
+				stat(null, "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]")
 
 /mob/camera/blob/Move(NewLoc, Dir = 0)
-	var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
-	if(B)
-		loc = NewLoc
+	if(placed)
+		var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
+		if(B)
+			loc = NewLoc
+		else
+			return 0
 	else
-		return 0
+		var/area/A = get_area(NewLoc)
+		if(istype(NewLoc, /turf/space) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
+			return 0
+		loc = NewLoc
+		return 1
 
 /mob/camera/blob/proc/can_attack()
 	return (world.time > (last_attack + CLICK_CD_RANGE))
