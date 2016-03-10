@@ -276,7 +276,7 @@
 	icon_state = "conduit"
 	health = 150
 	maxhealth = 150
-	metal_cost = 20
+	metal_cost = 10
 	glass_cost = 5
 
 
@@ -314,7 +314,7 @@
 	desc = "An altar dedicated to a deity.  Cultists can \"forcefully teach\" their non-aligned crewmembers to join their side and take up their deity."
 	icon_state = "convertaltar"
 	density = 0
-	metal_cost = 15
+	metal_cost = 10
 	can_buckle = 1
 
 
@@ -344,7 +344,7 @@
 	desc = "An altar designed to perform blood sacrifice for a deity.  The cultists performing the sacrifice will gain a powerful material to use in their forge.  Sacrificing a prophet will yield even better results."
 	icon_state = "sacrificealtar"
 	density = 0
-	metal_cost = 25
+	metal_cost = 15
 	can_buckle = 1
 
 
@@ -450,7 +450,7 @@
 	health = 30
 	maxhealth = 30
 	metal_cost = 5
-	glass_cost = 20
+	glass_cost = 15
 
 
 /obj/structure/divine/powerpylon/New()

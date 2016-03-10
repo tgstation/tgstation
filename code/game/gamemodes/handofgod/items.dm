@@ -197,7 +197,7 @@
 
 
 /obj/item/weapon/godstaff/attack_self(mob/living/carbon/user)
-	if(god && !god.is_handofgod_myprophet(user))
+	if((god && !god.is_handofgod_myprophet(user)) || !god)
 		user << "<span class='danger'>YOU ARE NOT THE CHOSEN ONE!</span>"
 		return
 	if(!(istype(user.head, /obj/item/clothing/head/helmet/plate/crusader/prophet)))

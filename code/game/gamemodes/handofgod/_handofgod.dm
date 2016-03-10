@@ -121,8 +121,8 @@ var/global/list/global_handofgod_structuretypes = list()
 		if(1 to 30)
 			var/datum/objective/deicide/deicide = new
 			deicide.owner = deity
-			deicide.find_target()
-			deity.objectives += deicide
+			if(deicide.find_target())//Hard to kill the other god if there is none
+				deity.objectives += deicide
 
 			if(!(locate(/datum/objective/escape_followers) in deity.objectives))
 				var/datum/objective/escape_followers/recruit = new
@@ -316,7 +316,7 @@ var/global/list/global_handofgod_structuretypes = list()
 			return 1
 
 
-/mob/camera/god/proc/is_handofgod_myfollowers(A)
+/mob/camera/god/proc/is_handofgod_myfollowers(mob/A)
 	if(!ishuman(A))
 		return 0
 	var/mob/living/carbon/human/H = A
