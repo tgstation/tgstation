@@ -399,7 +399,8 @@ proc/CallMaterialName(ID)
 								if( new_item.type == /obj/item/weapon/storage/backpack/holding )
 									new_item.investigate_log("built by [key]","singulo")
 								new_item.reliability = R
-								new_item.materials = efficient_mats.Copy()
+								if(!istype(new_item, /obj/item/stack/sheet)) // To avoid materials dupe glitches
+									new_item.materials = efficient_mats.Copy()
 								if(linked_lathe.hacked)
 									R = max((new_item.reliability/2), 0)
 								new_item.loc = linked_lathe.loc
