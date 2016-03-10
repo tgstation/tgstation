@@ -184,6 +184,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/mgl
+	name = "6B40 MGL"
+	desc = "New Russian semi-automatic grenade launcher. Has 6 chambers for any 40mm grenade."
+	item = /obj/item/weapon/gun/projectile/shotgun/automatic/mgl
+	cost = 18
+	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/bolt_action
 	name = "Surplus Rifle"
 	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
@@ -450,6 +458,36 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A 5-round magazine of accelerator ammo designed for use with .50 sniper rifles. \
 			The shot is weak at close range, but gains more power the farther it flies."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/accelerator
+
+/datum/uplink_item/ammo/mgl
+	name = "40mm grenade"
+	desc = "One standard explosive 40mm grenade."
+	item = /obj/item/ammo_casing/a40mm
+	cost = 3
+
+/datum/uplink_item/ammo/mgl/rubber
+	name = "40mm rubbershot"
+	desc = "One less-than-lethal 40mm grenade packed with 24 rubber pellets."
+	item = /obj/item/ammo_casing/a40mm/rubber
+	cost = 1
+
+/datum/uplink_item/ammo/mgl/buckshot
+	name = "40mm buckshot"
+	desc = "One lethal 40mm grenade packed with 24 highly lethal tungsten carbide pellets."
+	item = /obj/item/ammo_casing/a40mm/buckshot
+	cost = 4
+
+/datum/uplink_item/ammo/mgl/emp
+	name = "40mm EMP-FSD"
+	desc = "One 40mm EMP-FSD sabot. Causes massive damage to silicon lifeforms on impact."
+	item = /obj/item/ammo_casing/a40mm/empsabot
+	cost = 6
+
+/datum/uplink_item/ammo/mgl/fire
+	name = "40mm Incindiary"
+	desc = "One highly flammable 40mm grenade with 18 segments of highly flammable white phosphorous pellets."
+	item = /obj/item/ammo_casing/a40mm/phosphorous
+	cost = 5
 
 /datum/uplink_item/ammo/toydarts
 	name = "Box of Riot Darts"

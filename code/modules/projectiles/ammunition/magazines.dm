@@ -126,6 +126,15 @@
 	caliber = "40mm"
 	max_ammo = 1
 
+/obj/item/ammo_box/magazine/internal/grenadelauncher/mgl
+	name = "multiple grenade launcher internal magazine"
+	ammo_type = /obj/item/ammo_casing/a40mm
+	caliber = "40mm"
+	max_ammo = 6
+
+/obj/item/ammo_box/magazine/internal/grenadelauncher/mgl/four
+	max_ammo = 4
+
 /obj/item/ammo_box/magazine/internal/speargun
 	name = "speargun internal magazine"
 	ammo_type = /obj/item/ammo_casing/caseless/magspear
