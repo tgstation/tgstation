@@ -7,9 +7,9 @@
 	color = "#673910" // rgb: 103, 57, 16
 
 /datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
-	if(reac_volume >= 1 && istype(T, /turf/simulated/wall))
-		var/turf/simulated/wall/Wall = T
-		if(istype(Wall, /turf/simulated/wall/r_wall))
+	if(reac_volume >= 1 && istype(T, /turf/wall))
+		var/turf/wall/Wall = T
+		if(istype(Wall, /turf/wall/r_wall))
 			Wall.thermite = Wall.thermite+(reac_volume*2.5)
 		else
 			Wall.thermite = Wall.thermite+(reac_volume*10)
@@ -47,23 +47,23 @@
 	M.adjustFireLoss(burndmg)
 	..()
 
-/datum/reagent/clf3/reaction_turf(turf/simulated/T, reac_volume)
-	if(istype(T, /turf/simulated/floor/plating))
-		var/turf/simulated/floor/plating/F = T
+/datum/reagent/clf3/reaction_turf(turf/T, reac_volume)
+	if(istype(T, /turf/floor/plating))
+		var/turf/floor/plating/F = T
 		if(prob(1 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
 			F.ChangeTurf(F.baseturf)
-	if(istype(T, /turf/simulated/floor/))
-		var/turf/simulated/floor/F = T
+	if(istype(T, /turf/floor/))
+		var/turf/floor/F = T
 		if(prob(reac_volume/10))
 			F.make_plating()
 		else if(prob(reac_volume))
 			F.burn_tile()
-		if(istype(F, /turf/simulated/floor/))
+		if(istype(F, /turf/floor/))
 			PoolOrNew(/obj/effect/hotspot, F)
-	if(istype(T, /turf/simulated/wall/))
-		var/turf/simulated/wall/W = T
+	if(istype(T, /turf/wall/))
+		var/turf/wall/W = T
 		if(prob(reac_volume/10))
-			W.ChangeTurf(/turf/simulated/floor/plating)
+			W.ChangeTurf(/turf/floor/plating)
 
 /datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
@@ -176,7 +176,7 @@
 		holder.handle_reactions()
 	..()
 
-/datum/reagent/cryostylane/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/cryostylane/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))

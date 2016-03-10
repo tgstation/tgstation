@@ -16,7 +16,7 @@
 		return
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
-	if(!istype(loc, /turf/simulated/floor))
+	if(!istype(loc, /turf/floor))
 		usr << "<span class='warning'>You cannot place [src] on this spot!</span>"
 		return
 	if(A.requires_power == 0 || istype(A, /area/space))
@@ -49,7 +49,7 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		// For camera-building borgs
 		var/turf/T = get_step(get_turf(user), user.dir)
-		if(istype(T, /turf/simulated/wall))
+		if(istype(T, /turf/wall))
 			T.attackby(src, user, params)
 
 

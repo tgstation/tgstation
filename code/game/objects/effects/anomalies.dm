@@ -170,7 +170,7 @@
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
-	var/turf/simulated/T = get_turf(src)
+	var/turf/T = get_turf(src)
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS | SPAWN_OXYGEN, 15)
 
@@ -229,6 +229,6 @@
 			step_towards(M,src)
 
 	//Damaging the turf
-	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )
+	if( T && prob(turf_removal_chance) )
 		T.ex_act(ex_act_force)
 	return

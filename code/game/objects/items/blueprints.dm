@@ -209,9 +209,9 @@
 		return BORDER_SPACE //omg hull breach we all going to die here
 	if (get_area_type(T2.loc)!=AREA_SPACE)
 		return BORDER_BETWEEN
-	if (istype(T2, /turf/simulated/wall))
+	if (istype(T2, /turf/wall))
 		return BORDER_2NDTILE
-	if (!istype(T2, /turf/simulated))
+	if (!istype(T2, /turf))
 		return BORDER_BETWEEN
 
 	for (var/obj/structure/window/W in T2)

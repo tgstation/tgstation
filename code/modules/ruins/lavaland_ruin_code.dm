@@ -91,8 +91,8 @@
 /obj/structure/mirror/magic/pride/curse(mob/user)
 	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as their hand leaves the mirror!</B></span>")
 	var/turf/T = get_turf(user)
-	T.ChangeTurf(/turf/simulated/chasm/straight_down)
-	var/turf/simulated/chasm/straight_down/C = T
+	T.ChangeTurf(/turf/chasm/straight_down)
+	var/turf/chasm/straight_down/C = T
 	C.drop(user)
 
 //Sloth - I'll finish this item later

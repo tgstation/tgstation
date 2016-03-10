@@ -821,7 +821,7 @@ var/list/teleport_other_runes = list()
 			C.fire_act()
 	user.apply_damage(15, BURN, pick("l_arm", "r_arm"))
 	user << "<span class='cultitalic'>[src] burns your arms!</span>"
-	var/turf/simulated/T = get_turf(src)
+	var/turf/T = get_turf(src)
 	T.burn_tile()
 	qdel(src)
 

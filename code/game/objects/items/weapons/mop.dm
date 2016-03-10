@@ -21,7 +21,7 @@
 	create_reagents(mopcap)
 
 
-obj/item/weapon/mop/proc/clean(turf/simulated/A)
+obj/item/weapon/mop/proc/clean(turf/A)
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1))
 		A.clean_blood()
 		A.thermite = 0
@@ -39,7 +39,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 		user << "<span class='warning'>Your mop is dry!</span>"
 		return
 
-	var/turf/simulated/turf = A
+	var/turf/turf = A
 	if(is_cleanable(A))
 		turf = A.loc
 	A = null

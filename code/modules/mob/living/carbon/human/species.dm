@@ -965,7 +965,7 @@
 			if(prob(I.force * 2))	//blood spatter!
 				bloody = 1
 				var/turf/location = H.loc
-				if(istype(location, /turf/simulated))
+				if(istype(location, /turf))
 					location.add_blood(H)
 				if(ishuman(user))
 					var/mob/living/carbon/human/M = user

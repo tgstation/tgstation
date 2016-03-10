@@ -6,10 +6,6 @@
 /turf/space/transit/horizontal
 	dir = WEST
 
-/turf/space/transit/New()
-	..()
-	update_icon()
-
 /turf/space/transit/Entered(atom/movable/AM, atom/OldLoc)
 	if(!AM)
 		return
@@ -50,7 +46,7 @@
 	update_icon()
 	..()
 
-/turf/space/transit/proc/update_icon()
+/turf/space/transit/update_icon()
 	var/p = 9
 	var/angle = 0
 	var/state = 1

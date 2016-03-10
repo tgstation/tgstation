@@ -25,8 +25,8 @@ var/datum/subsystem/air/SSair
 	var/list/obj/machinery/atmos_machinery = list()
 
 	//Special functions lists
-	var/list/turf/simulated/active_super_conductivity = list()
-	var/list/turf/simulated/high_pressure_delta = list()
+	var/list/turf/active_super_conductivity = list()
+	var/list/turf/high_pressure_delta = list()
 
 
 /datum/subsystem/air/New()
@@ -107,7 +107,7 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/proc/process_super_conductivity()
-	for(var/turf/simulated/T in active_super_conductivity)
+	for(var/turf/T in active_super_conductivity)
 		T.super_conduct()
 
 
@@ -126,11 +126,11 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air/proc/process_active_turfs()
 	//cache for sanic speed
 	var/fire_count = times_fired
-	for(var/turf/simulated/T in active_turfs)
+	for(var/turf/T in active_turfs)
 		T.process_cell(fire_count)
 
 
-/datum/subsystem/air/proc/remove_from_active(turf/simulated/T)
+/datum/subsystem/air/proc/remove_from_active(turf/T)
 	if(istype(T))
 		T.excited = 0
 		active_turfs -= T
@@ -138,14 +138,14 @@ var/datum/subsystem/air/SSair
 			T.excited_group.garbage_collect()
 
 
-/datum/subsystem/air/proc/add_to_active(turf/simulated/T, blockchanges = 1)
+/datum/subsystem/air/proc/add_to_active(turf/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		T.excited = 1
 		active_turfs |= T
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
 	else
-		for(var/turf/simulated/S in T.atmos_adjacent_turfs)
+		for(var/turf/S in T.atmos_adjacent_turfs)
 			add_to_active(S)
 
 /datum/subsystem/air/proc/process_excited_groups()
@@ -168,7 +168,7 @@ var/datum/subsystem/air/SSair
 
 	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
 
-	for(var/turf/simulated/T in turfs_to_init)
+	for(var/turf/T in turfs_to_init)
 		T.CalculateAdjacentTurfs()
 		T.excited = 0
 		active_turfs -= T
@@ -192,7 +192,7 @@ var/datum/subsystem/air/SSair
 
 	if(active_turfs.len)
 		warning("There are [active_turfs.len] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
-		for(var/turf/simulated/T in active_turfs)
+		for(var/turf/T in active_turfs)
 			active_turfs_startlist += text("[T.x], [T.y], [T.z]\n")
 
 /datum/subsystem/air/proc/setup_atmos_machinery(z_level)

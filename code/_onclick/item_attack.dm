@@ -28,9 +28,8 @@
 	apply_damage(I.force, I.damtype, def_zone)
 	if(I.damtype == "brute")
 		if(prob(33) && I.force)
-			var/turf/location = src.loc
-			if(istype(location, /turf/simulated))
-				location.add_blood_floor(src)
+			var/turf/location = get_turf(src)
+			location.add_blood_floor(src)
 
 	var/message_verb = ""
 	if(I.attack_verb && I.attack_verb.len)

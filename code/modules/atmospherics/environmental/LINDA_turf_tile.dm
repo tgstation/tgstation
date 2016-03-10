@@ -50,7 +50,7 @@
 	qdel(giver)
 	return 0
 
-/turf/proc/copy_air_with_tile(turf/simulated/T)
+/turf/proc/copy_air_with_tile(turf/T)
 	if(istype(T) && T.air && air)
 		air.copy_from(T.air)
 
@@ -81,7 +81,7 @@
 			(heat_capacity*model.heat_capacity/(heat_capacity+model.heat_capacity))
 		temperature -= heat/heat_capacity
 
-/turf/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduction_coefficient) //to be understood
+/turf/proc/share_temperature_mutual_solid(turf/sharer, conduction_coefficient) //to be understood
 	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && heat_capacity && sharer.heat_capacity)
 
@@ -113,67 +113,51 @@
 	for(var/t in adjacent_turfs)
 		var/turf/enemy_tile = t
 
-		if(istype(enemy_tile,/turf/simulated))
-			var/turf/simulated/enemy_simulated = enemy_tile
-
-			if(fire_count > enemy_simulated.current_cycle)
-				enemy_simulated.archive()
+		if(fire_count > enemy_tile.current_cycle)
+			enemy_tile.archive()
 
 		/******************* GROUP HANDLING START *****************************************************************/
 
-			if(enemy_simulated.excited)
+			if(enemy_tile.excited)
 				//cache for sanic speed
-				var/datum/excited_group/enemy_excited_group = enemy_simulated.excited_group
+				var/datum/excited_group/enemy_excited_group = enemy_tile.excited_group
 				if(our_excited_group)
 					if(enemy_excited_group)
 						if(our_excited_group != enemy_excited_group)
 							//combine groups (this also handles updating the excited_group var of all involved turfs)
 							our_excited_group.merge_groups(enemy_excited_group)
 							our_excited_group = excited_group //update our cache
-						share_air(enemy_simulated, fire_count, adjacent_turfs_length) //share
+						share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
 					else
-						if((recently_active == 1 && enemy_simulated.recently_active == 1) || air.compare(enemy_simulated.air))
-							our_excited_group.add_turf(enemy_simulated) //add enemy to our group
-							share_air(enemy_simulated, fire_count, adjacent_turfs_length) //share
+						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
+							our_excited_group.add_turf(enemy_tile) //add enemy to our group
+							share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
 				else
 					if(enemy_excited_group)
-						if((recently_active == 1 && enemy_simulated.recently_active == 1) || air.compare(enemy_simulated.air))
+						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
 							enemy_excited_group.add_turf(src) //join self to enemy group
 							our_excited_group = excited_group //update our cache
-							share_air(enemy_simulated, fire_count, adjacent_turfs_length) //share
+							share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
 					else
-						if((recently_active == 1 && enemy_simulated.recently_active == 1) || air.compare(enemy_simulated.air))
+						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
 							var/datum/excited_group/EG = new //generate new group
 							EG.add_turf(src)
-							EG.add_turf(enemy_simulated)
+							EG.add_turf(enemy_tile)
 							our_excited_group = excited_group //update our cache
-							share_air(enemy_simulated, fire_count, adjacent_turfs_length) //share
+							share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
 			else
-				if(air.compare(enemy_simulated.air)) //compare if
-					SSair.add_to_active(enemy_simulated) //excite enemy
+				if(air.compare(enemy_tile.air)) //compare if
+					SSair.add_to_active(enemy_tile) //excite enemy
 					if(our_excited_group)
-						excited_group.add_turf(enemy_simulated) //add enemy to group
+						excited_group.add_turf(enemy_tile) //add enemy to group
 					else
 						var/datum/excited_group/EG = new //generate new group
 						EG.add_turf(src)
-						EG.add_turf(enemy_simulated)
+						EG.add_turf(enemy_tile)
 						our_excited_group = excited_group //update our cache
-					share_air(enemy_simulated, fire_count, adjacent_turfs_length) //share
+					share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
 
 		/******************* GROUP HANDLING FINISH *********************************************************************/
-
-		else
-
-			if(air.check_turf(enemy_tile, adjacent_turfs_length))
-				var/difference = air.mimic(enemy_tile, adjacent_turfs_length)
-				if(difference)
-					if(difference > 0)
-						consider_pressure_difference(enemy_tile, difference)
-					else
-						enemy_tile.consider_pressure_difference(src, -difference)
-				remove = 0
-				if(our_excited_group)
-					last_share_check()
 
 	air.react()
 
@@ -222,8 +206,9 @@
 		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
 			. += gas[GAS_META][META_GAS_OVERLAY]
 
-/turf/proc/share_air(turf/simulated/T, fire_count, adjacent_turfs_length)	if(T.current_cycle < fire_count)		var/difference
-		difference = air.share(T.air, adjacent_turfs_length)
+/turf/proc/share_air(turf/T, fire_count, adjacent_turfs_length)
+	if(T.current_cycle < fire_count)
+		var/difference = air.share(T.air, adjacent_turfs_length)
 		if(difference)
 			if(difference > 0)
 				consider_pressure_difference(T, difference)
@@ -231,7 +216,7 @@
 				T.consider_pressure_difference(src, -difference)
 		last_share_check()
 
-/turf/proc/consider_pressure_difference(turf/simulated/T, difference)
+/turf/proc/consider_pressure_difference(turf/T, difference)
 	SSair.high_pressure_delta |= src
 	if(difference > pressure_difference)
 		pressure_direction = get_dir(src, T)
@@ -268,7 +253,7 @@
 /datum/excited_group/New()
 	SSair.excited_groups += src
 
-/datum/excited_group/proc/add_turf(turf/simulated/T)
+/datum/excited_group/proc/add_turf(turf/T)
 	turf_list += T
 	T.excited_group = src
 	T.recently_active = 1
@@ -277,13 +262,13 @@
 /datum/excited_group/proc/merge_groups(datum/excited_group/E)
 	if(turf_list.len > E.turf_list.len)
 		SSair.excited_groups -= E
-		for(var/turf/simulated/T in E.turf_list)
+		for(var/turf/T in E.turf_list)
 			T.excited_group = src
 			turf_list += T
 			reset_cooldowns()
 	else
 		SSair.excited_groups -= src
-		for(var/turf/simulated/T in turf_list)
+		for(var/turf/T in turf_list)
 			T.excited_group = E
 			E.turf_list += T
 			E.reset_cooldowns()
@@ -294,10 +279,10 @@
 /datum/excited_group/proc/self_breakdown()
 	var/datum/gas_mixture/A = new
 	var/list/A_gases = A.gases
-	for(var/turf/simulated/T in turf_list)
+	for(var/turf/T in turf_list)
 		A.merge(T.air)
 
-	for(var/turf/simulated/T in turf_list)
+	for(var/turf/T in turf_list)
 		var/T_gases = T.air.gases
 		for(var/id in T_gases)
 			T_gases[id][MOLES] = A_gases[id][MOLES]/turf_list.len
@@ -305,7 +290,7 @@
 		T.update_visuals()
 
 /datum/excited_group/proc/dismantle()
-	for(var/turf/simulated/T in turf_list)
+	for(var/turf/T in turf_list)
 		T.excited = 0
 		T.recently_active = 0
 		T.excited_group = null
@@ -313,7 +298,7 @@
 	garbage_collect()
 
 /datum/excited_group/proc/garbage_collect()
-	for(var/turf/simulated/T in turf_list)
+	for(var/turf/T in turf_list)
 		T.excited_group = null
 	turf_list.Cut()
 	SSair.excited_groups -= src
@@ -340,9 +325,9 @@
 		for(var/direction in cardinal)
 			var/turf/T = get_step(src, direction)
 			if(!(T in atmos_adjacent_turfs) && !(atmos_supeconductivity & direction))
-				conductivity_directions += direction
+				conductivity_directions |= direction
 
-	if(conductivity_directions>0)
+	if(conductivity_directions)
 		//Conduct with tiles around me
 		for(var/direction in cardinal)
 			if(conductivity_directions & direction)
@@ -351,48 +336,34 @@
 				if(!neighbor.thermal_conductivity)
 					continue
 
-				if(istype(neighbor, /turf/simulated)) //anything under this subtype will share in the exchange
-					var/turf/simulated/T = neighbor
+				if(neighbor.archived_cycle < SSair.times_fired)
+					neighbor.archive()
 
-					if(T.archived_cycle < SSair.times_fired)
-						T.archive()
-
-					if(T.air)
-						if(air) //Both tiles are open
-							air.temperature_share(T.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
-						else //Solid but neighbor is open
-							T.air.temperature_turf_share(src, T.thermal_conductivity)
-						SSair.add_to_active(T, 0)
-					else
-						if(air) //Open but neighbor is solid
-							air.temperature_turf_share(T, T.thermal_conductivity)
-						else //Both tiles are solid
-							share_temperature_mutual_solid(T, T.thermal_conductivity)
-						T.temperature_expose(null, T.temperature, null)
-
-					T.consider_superconductivity()
-
+				if(neighbor.air)
+					if(air) //Both tiles are open
+						air.temperature_share(neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
+					else //Solid but neighbor is open
+						neighbor.temperature_share_open_to_solid(src)
+					SSair.add_to_active(neighbor, 0)
 				else
-					if(air) //Open
-						air.temperature_mimic(neighbor, neighbor.thermal_conductivity)
-					else
-						mimic_temperature_solid(neighbor, neighbor.thermal_conductivity)
+					if(air) //Open but neighbor is solid
+						temperature_share_open_to_solid(neighbor)
+					else //Both tiles are solid
+						share_temperature_mutual_solid(neighbor, neighbor.thermal_conductivity)
+					neighbor.temperature_expose(null, neighbor.temperature, null)
+
+				neighbor.consider_superconductivity()
 
 	radiate_to_spess()
 
 	//Conduct with air on my tile if I have it
 	if(air)
-		air.temperature_turf_share(src, thermal_conductivity)
+		temperature = air.temperature_share(null, thermal_conductivity, temperature, heat_capacity)
 
-		//Make sure still hot enough to continue conducting heat
-		if(air.temperature < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
-			SSair.active_super_conductivity -= src
-			return 0
-
-	else
-		if(temperature < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
-			SSair.active_super_conductivity -= src
-			return 0
+	//Make sure still hot enough to continue conducting heat
+	if((air ? air.temperature : temperature) < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
+		SSair.active_super_conductivity -= src
+		return 0
 
 /turf/proc/consider_superconductivity(starting)
 	if(!thermal_conductivity)
@@ -418,3 +389,6 @@
 			var/heat = thermal_conductivity*delta_temperature* \
 				(heat_capacity*700000/(heat_capacity+700000)) //700000 is the heat_capacity from a space turf, hardcoded here
 			temperature -= heat/heat_capacity
+
+/turf/proc/temperature_share_open_to_solid(turf/sharer)
+	sharer.temperature = air.temperature_share(null, sharer.thermal_conductivity, sharer.temperature, sharer.heat_capacity)

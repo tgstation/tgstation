@@ -57,19 +57,19 @@
 /datum/station_state/proc/count(count_territories)
 	for(var/turf/T in block(locate(1,1,1), locate(world.maxx,world.maxy,1)))
 
-		if(istype(T,/turf/simulated/floor))
+		if(istype(T,/turf/floor))
 			if(!(T:burnt))
 				src.floor += 12
 			else
 				src.floor += 1
 
-		if(istype(T, /turf/simulated/wall))
+		if(istype(T, /turf/wall))
 			if(T:intact)
 				src.wall += 2
 			else
 				src.wall += 1
 
-		if(istype(T, /turf/simulated/wall/r_wall))
+		if(istype(T, /turf/wall/r_wall))
 			if(T:intact)
 				src.r_wall += 2
 			else

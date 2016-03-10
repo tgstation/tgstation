@@ -43,7 +43,7 @@
 
 /turf/Destroy()
 	// Adds the adjacent turfs to the current atmos processing
-	for(var/turf/simulated/T in atmos_adjacent_turfs)
+	for(var/turf/T in atmos_adjacent_turfs)
 		SSair.add_to_active(T)
 	..()
 	return QDEL_HINT_HARDDEL_NOW
@@ -96,13 +96,13 @@
 			return 0
 	return 1 //Nothing found to block so return success!
 
-/turf/Entered(atom/movable/M)
+/turf/Entered(atom/movable/AM)
 	for(var/A in proximity_checkers)
 		var/atom/B = A
-		B.HasProximity(M)
+		B.HasProximity(AM)
 	//slipping
-	if (istype(A,/mob/living/carbon))
-		var/mob/living/carbon/M = A
+	if (istype(AM,/mob/living/carbon))
+		var/mob/living/carbon/M = AM
 		switch(wet)
 			if(TURF_WET_WATER)
 				if(!M.slip(3, 1, null, NO_SLIP_WHEN_WALKING))
@@ -145,7 +145,7 @@
 	var/nocopy = density || smooth //dont copy walls or smooth turfs
 
 	var/turf/W = new path(src)
-	if(istype(W, /turf/simulated))
+	if(istype(W, /turf))
 		W:Assimilate_Air()
 		W.RemoveLattice()
 	W.levelupdate()
@@ -176,8 +176,8 @@
 				turf_count++//Considered a valid turf for air calcs
 				continue
 
-			if(istype(T,/turf/simulated/floor))
-				var/turf/simulated/S = T
+			if(istype(T,/turf/floor))
+				var/turf/S = T
 				if(S.air)//Add the air's contents to the holders
 					var/list/S_gases = S.air.gases
 					for(var/id in S_gases)
@@ -338,7 +338,7 @@
 		if(wet_overlay)
 			overlays -= wet_overlay
 			wet_overlay = null
-		var/turf/simulated/floor/F = src
+		var/turf/floor/F = src
 		if(istype(F))
 			wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
 		else
@@ -346,7 +346,7 @@
 		overlays += wet_overlay
 
 	spawn(rand(790, 820)) // Purely so for visual effect
-		if(!istype(src, /turf/simulated)) //Because turfs don't get deleted, they change, adapt, transform, evolve and deform. they are one and they are all.
+		if(!istype(src, /turf)) //Because turfs don't get deleted, they change, adapt, transform, evolve and deform. they are one and they are all.
 			return
 		MakeDry(wet_setting)
 

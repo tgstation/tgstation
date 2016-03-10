@@ -1,9 +1,9 @@
 "a" = (/turf/space,/area/space)
-"b" = (/turf/simulated/mineral/random/low_chance,/area/space)
-"c" = (/turf/simulated/mineral/random/high_chance,/area/space)
-"d" = (/turf/simulated/mineral,/area/space)
-"e" = (/turf/simulated/mineral/random,/area/space)
-"f" = (/turf/simulated/floor/plating/asteroid/airless/cave,/area/space)
+"b" = (/turf/mineral/random/low_chance,/area/space)
+"c" = (/turf/mineral/random/high_chance,/area/space)
+"d" = (/turf/mineral,/area/space)
+"e" = (/turf/mineral/random,/area/space)
+"f" = (/turf/floor/plating/asteroid/airless/cave,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

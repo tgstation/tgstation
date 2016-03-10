@@ -351,8 +351,8 @@
 			areaInstance.contents += T1
 
 			//copy over air
-			if(istype(T1, /turf/simulated))
-				var/turf/simulated/Ts1 = T1
+			if(istype(T1, /turf))
+				var/turf/Ts1 = T1
 				Ts1.copy_air_with_tile(T0)
 
 			//move mobile to new location

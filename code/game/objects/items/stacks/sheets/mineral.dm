@@ -257,7 +257,7 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	sheettype = "snow"
 
 var/global/list/datum/stack_recipe/snow_recipes = list ( \
-	new/datum/stack_recipe("Snow Wall",/turf/simulated/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Snow Wall",/turf/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Snowman", /obj/structure/statue/snow/snowman, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Snowball", /obj/item/toy/snowball, 1), \
 	)

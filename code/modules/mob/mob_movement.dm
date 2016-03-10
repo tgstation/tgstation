@@ -291,7 +291,7 @@
 				L.loc = get_step(L, direct)
 			L.dir = direct
 		if(3) //Incorporeal move, but blocked by holy-watered tiles
-			var/turf/simulated/floor/stepTurf = get_step(L, direct)
+			var/turf/floor/stepTurf = get_step(L, direct)
 			if(stepTurf.flags & NOJAUNT)
 				L << "<span class='warning'>Holy energies block your path.</span>"
 				L.notransform = 1

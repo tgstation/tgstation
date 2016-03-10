@@ -139,14 +139,14 @@ Doesn't work on other aliens/AI.*/
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 		// TURF CHECK
-		else if(istype(target, /turf/simulated))
+		else if(istype(target, /turf))
 			var/turf/T = target
 			// R WALL
-			if(istype(T, /turf/simulated/wall/r_wall))
+			if(istype(T, /turf/wall/r_wall))
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 			// R FLOOR
-			if(istype(T, /turf/simulated/floor/engine))
+			if(istype(T, /turf/floor/engine))
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 		else// Not a type we can acid.

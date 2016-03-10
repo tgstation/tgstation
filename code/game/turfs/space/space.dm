@@ -1,7 +1,6 @@
 /turf/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
-	icon_state = SPACE_ICON_STATE
 	intact = 0
 
 	temperature = TCMB
@@ -15,6 +14,7 @@
 	var/global/datum/gas_mixture/space/space_gas = new
 
 /turf/space/New()
+	update_icon()
 	air = space_gas
 
 /turf/space/Destroy()
@@ -23,7 +23,7 @@
 /turf/space/proc/update_starlight()
 	if(config)
 		if(config.starlight)
-			for(var/turf/simulated/T in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+			for(var/turf/T in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 				SetLuminosity(4,1)
 				return
 			SetLuminosity(0)
@@ -64,7 +64,7 @@
 				qdel(L)
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				user << "<span class='notice'>You build a floor.</span>"
-				ChangeTurf(/turf/simulated/floor/plating)
+				ChangeTurf(/turf/floor/plating)
 			else
 				user << "<span class='warning'>You need one floor tile to build a floor!</span>"
 		else
@@ -137,3 +137,6 @@
 	if(locate(/obj/structure/lattice/catwalk, src))
 		return 1
 	return 0
+
+/turf/space/proc/update_icon()
+	icon_state = SPACE_ICON_STATE

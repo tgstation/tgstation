@@ -68,7 +68,7 @@
 
 	else if(isturf(A))
 		var/turf/T = A
-		T.ChangeTurf(/turf/simulated/floor/plasteel/cult)
+		T.ChangeTurf(/turf/floor/plasteel/cult)
 
 
 /obj/singularity/narsie/mezzer()

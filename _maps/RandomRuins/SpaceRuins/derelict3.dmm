@@ -1,6 +1,6 @@
 "a" = (/turf/space,/area/space)
-"b" = (/turf/simulated/floor/plating/airless,/area/space)
-"c" = (/turf/simulated/wall,/area/space)
+"b" = (/turf/floor/plating/airless,/area/space)
+"c" = (/turf/wall,/area/space)
 "d" = (/obj/structure/lattice,/turf/space,/area/space)
 "e" = (/obj/structure/lattice,/obj/structure/lattice,/turf/space,/area/space)
 

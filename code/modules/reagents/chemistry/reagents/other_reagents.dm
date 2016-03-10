@@ -46,7 +46,7 @@
 				data["viruses"] = preserve
 	return 1
 
-/datum/reagent/blood/reaction_turf(turf/simulated/T, reac_volume)//splash the blood all over the place
+/datum/reagent/blood/reaction_turf(turf/T, reac_volume)//splash the blood all over the place
 	if(!istype(T))
 		return
 	if(reac_volume < 3)
@@ -118,7 +118,7 @@
  *	Water reaction to turf
  */
 
-/datum/reagent/water/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/water/reaction_turf(turf/T, reac_volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
 	if(reac_volume >= 10)
@@ -196,7 +196,7 @@
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 	return
 
-/datum/reagent/water/holywater/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/water/holywater/reaction_turf(turf/T, reac_volume)
 	..()
 	if(!istype(T)) return
 	if(reac_volume>=10)
@@ -249,7 +249,7 @@
 	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
 	color = "#009CA8" // rgb: 0, 156, 168
 
-/datum/reagent/lube/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/lube/reaction_turf(turf/T, reac_volume)
 	if (!istype(T)) return
 	if(reac_volume >= 1)
 		T.MakeSlippery(2)
@@ -446,7 +446,7 @@
 		return 0
 	O.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
 
-/datum/reagent/oxygen/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/oxygen/reaction_turf(turf/T, reac_volume)
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
 	return
@@ -470,7 +470,7 @@
 		return 0
 	O.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
 
-/datum/reagent/nitrogen/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/nitrogen/reaction_turf(turf/T, reac_volume)
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
 	return
@@ -832,7 +832,7 @@
 		return 0
 	O.atmos_spawn_air(SPAWN_CO2|SPAWN_20C, reac_volume/5)
 
-/datum/reagent/carbondioxide/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/carbondioxide/reaction_turf(turf/T, reac_volume)
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_CO2|SPAWN_20C, reac_volume/5)
 	return
@@ -987,10 +987,10 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-/datum/reagent/carpet/reaction_turf(turf/simulated/T, reac_volume)
-	if(istype(T, /turf/simulated/floor/plating) || istype(T, /turf/simulated/floor/plasteel))
-		var/turf/simulated/floor/F = T
-		F.ChangeTurf(/turf/simulated/floor/carpet)
+/datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
+	if(istype(T, /turf/floor/plating) || istype(T, /turf/floor/plasteel))
+		var/turf/floor/F = T
+		F.ChangeTurf(/turf/floor/carpet)
 	..()
 	return
 
@@ -1121,7 +1121,7 @@
 	reagent_state = LIQUID
 	color = "#A70FFF"
 
-/datum/reagent/drying_agent/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/drying_agent/reaction_turf(turf/T, reac_volume)
 	if(istype(T) && T.wet)
 		T.MakeDry(TURF_WET_WATER)
 

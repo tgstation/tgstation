@@ -204,8 +204,8 @@
 			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
 			bodytemperature += diff
 
-		if(istype(T,/turf/simulated))
-			var/turf/simulated/ST = T
+		if(istype(T,/turf))
+			var/turf/ST = T
 			if(ST.air)
 				var/ST_gases = ST.air.gases
 				ST.air.assert_gases(arglist(hardcoded_gases))

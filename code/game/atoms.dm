@@ -252,7 +252,7 @@ var/list/blood_splatter_icons = list()
 	bloody_hands_mob = M
 	return 1
 
-/turf/simulated/add_blood(mob/living/carbon/human/M)
+/turf/add_blood(mob/living/carbon/human/M)
 	if(!..())
 		return 0
 
@@ -276,37 +276,34 @@ var/list/blood_splatter_icons = list()
 	return 0
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if( istype(src, /turf/simulated) )
-		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
-		if(M.reagents)
-			M.reagents.trans_to(this, M.reagents.total_volume / 10)
-		// Make toxins vomit look different
-		if(toxvomit)
-			this.icon_state = "vomittox_[pick(1,4)]"
 
-		/*for(var/datum/disease/D in M.viruses)
-			var/datum/disease/newDisease = D.Copy(1)
-			this.viruses += newDisease
-			newDisease.holder = this*/
+/turf/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
+	var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
+	if(M.reagents)
+		M.reagents.trans_to(this, M.reagents.total_volume / 10)
+	// Make toxins vomit look different
+	if(toxvomit)
+		this.icon_state = "vomittox_[pick(1,4)]"
 
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M)
-	if(istype(src, /turf/simulated))
-		if(M.has_dna())	//mobs with dna = (monkeys + humans at time of writing)
-			var/obj/effect/decal/cleanable/blood/B = locate() in contents
-			if(!B)
-				blood_splatter(src,M,1)
-				B = locate(/obj/effect/decal/cleanable/blood) in contents
-			B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
-		else if(istype(M, /mob/living/carbon/alien))
-			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents
-			if(!B)
-				B = new(src)
-			B.blood_DNA["UNKNOWN BLOOD"] = "X*"
-		else if(istype(M, /mob/living/silicon/robot))
-			var/obj/effect/decal/cleanable/oil/B = locate() in contents
-			if(!B)
-				B = new(src)
+	return
+/turf/add_blood_floor(mob/living/carbon/M)
+	if(M.has_dna())	//mobs with dna = (monkeys + humans at time of writing)
+		var/obj/effect/decal/cleanable/blood/B = locate() in contents
+		if(!B)
+			blood_splatter(src,M,1)
+			B = locate(/obj/effect/decal/cleanable/blood) in contents
+		B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
+	else if(istype(M, /mob/living/carbon/alien))
+		var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents
+		if(!B)
+			B = new(src)
+		B.blood_DNA["UNKNOWN BLOOD"] = "X*"
+	else if(istype(M, /mob/living/silicon/robot))
+		var/obj/effect/decal/cleanable/oil/B = locate() in contents
+		if(!B)
+			B = new(src)
 
 /atom/proc/clean_blood()
 	if(istype(blood_DNA, /list))

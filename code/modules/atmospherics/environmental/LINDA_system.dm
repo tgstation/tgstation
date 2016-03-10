@@ -77,20 +77,20 @@
 //alldir includes adjacent diagonal tiles that can share
 //	air with both of the related adjacent cardinal tiles
 /turf/proc/GetAtmosAdjacentTurfs(alldir = 0)
-	if (!istype(src, /turf/simulated))
+	if (!istype(src, /turf))
 		return list()
 	
 	var/adjacent_turfs = atmos_adjacent_turfs.Copy()
 	if (!alldir)
 		return adjacent_turfs
-	var/turf/simulated/curloc = src
+	var/turf/curloc = src
 
 	for (var/direction in diagonals)
 		var/matchingDirections = 0
-		var/turf/simulated/S = get_step(curloc, direction)
+		var/turf/S = get_step(curloc, direction)
 
 		for (var/checkDirection in cardinal)
-			var/turf/simulated/checkTurf = get_step(S, checkDirection)
+			var/turf/checkTurf = get_step(S, checkDirection)
 			if(!(checkTurf in S.atmos_adjacent_turfs))
 				continue
 
@@ -120,7 +120,7 @@
     air_update_turf(1)
 
 /atom/movable/proc/atmos_spawn_air(text, amount) //because a lot of people loves to copy paste awful code lets just make a easy proc to spawn your plasma fires
-	var/turf/simulated/T = get_turf(src)
+	var/turf/T = get_turf(src)
 	if(!istype(T))
 		return
 	T.atmos_spawn_air(text, amount)
@@ -136,7 +136,7 @@ var/const/SPAWN_N2O = 64
 
 var/const/SPAWN_AIR = 256
 
-/turf/simulated/proc/atmos_spawn_air(flag, amount)
+/turf/proc/atmos_spawn_air(flag, amount)
 	if(!text || !amount || !air)
 		return
 

@@ -182,11 +182,11 @@
 			nicetype = "pipe"
 
 	var/turf/T = loc
-	if(T.intact && istype(T, /turf/simulated/floor))
+	if(T.intact && istype(T, /turf/floor))
 		user << "<span class='warning'>You can only attach the [nicetype] if the floor plating is removed!</span>"
 		return
 
-	if(!ispipe && istype(T, /turf/simulated/wall))
+	if(!ispipe && istype(T, /turf/wall))
 		user << "<span class='warning'>You can't build [nicetype]s on walls, only disposal pipes!</span>"
 		return
 

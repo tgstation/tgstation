@@ -88,7 +88,7 @@
 		H.update_hair()
 
 		if(blood_on_castoff)
-			var/turf/simulated/T = get_turf(H)
+			var/turf/T = get_turf(H)
 			if(istype(T))
 				T.add_blood(H) //So real blood decals
 				playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds

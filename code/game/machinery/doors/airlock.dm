@@ -919,7 +919,7 @@ var/list/airlock_overlays = list()
 		newCharge.loc = src
 		charge = newCharge
 		return
-	else if(istype(C, /obj/item/weapon/rcd)&& istype(loc, /turf/simulated)) //Do not attack the airlock if the user is holding an RCD
+	else if(istype(C, /obj/item/weapon/rcd)) //Do not attack the airlock if the user is holding an RCD
 		return
 	else
 		..()

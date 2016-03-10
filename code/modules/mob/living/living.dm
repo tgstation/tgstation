@@ -622,7 +622,7 @@ Sorry Giacom. Please don't be mad :(
 	var/trail_type = M.getTrail()
 	for(var/obj/effect/decal/cleanable/trail_holder/C in M.loc) //checks for blood splatter already on the floor
 		blood_exists = 1
-	if (istype(M.loc, /turf/simulated) && trail_type != null)
+	if (istype(M.loc, /turf) && trail_type != null)
 		var/newdir = get_dir(T, M.loc)
 		if(newdir != M.dir)
 			newdir = newdir | M.dir

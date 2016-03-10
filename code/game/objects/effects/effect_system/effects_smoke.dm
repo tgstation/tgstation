@@ -154,8 +154,8 @@
 	var/blast = 0
 
 /datum/effect_system/smoke_spread/freezing/proc/Chilled(atom/A)
-	if(istype(A, /turf/simulated))
-		var/turf/simulated/T = A
+	if(isturf(A))
+		var/turf/T = A
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			if(get_dist(T, location) < 2) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air

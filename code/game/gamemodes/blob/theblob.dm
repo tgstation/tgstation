@@ -117,7 +117,7 @@
 /obj/effect/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
 		A.blob_act()
-	if(istype(loc, /turf/simulated/wall))
+	if(istype(loc, /turf/wall))
 		loc.blob_act() //don't ask how a wall got on top of the core, just eat it
 
 /obj/effect/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom

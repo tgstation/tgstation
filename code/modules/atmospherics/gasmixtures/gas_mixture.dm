@@ -12,11 +12,11 @@ var/list/meta_gas_info = meta_gas_list() //see ATMOSPHERICS/gas_types.dm
 var/list/gaslist_cache = null
 /proc/gaslist(id)
 	var/list/cached_gas
-	
+
 	//only instantiate the first time it's needed
 	if(!gaslist_cache)
 		gaslist_cache = new(meta_gas_info.len)
-	
+
 	//only setup the individual lists the first time they're needed
 	if(!gaslist_cache[id])
 		if(!meta_gas_info[id])
@@ -257,7 +257,7 @@ var/list/gaslist_cache = null
 
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 	//Merges all air from giver into self. Deletes giver.
-	//Returns: 1 in all cases
+	//Returns: 1 if we are mutable, 0 otherwise
 
 /datum/gas_mixture/proc/remove(amount)
 	//Proportionally removes amount of gas from the gas_mixture
@@ -273,36 +273,23 @@ var/list/gaslist_cache = null
 
 /datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample)
 	//Copies variables from sample
-	//Returns: 1 in all cases
+	//Returns: 1 if we are mutable, 0 otherwise
 
 /datum/gas_mixture/proc/copy_from_turf(turf/model)
 	//Copies all gas info from the turf into the gas list along with temperature
-	//Returns: 1 in all cases
+	//Returns: 1 if we are mutable, 0 otherwise
 
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
 	//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
-	//Return: amount of gas exchanged (+ if sharer received)
-
-/datum/gas_mixture/proc/mimic(turf/model)
-	//Similar to share(...), except the model is not modified
-	//Return: amount of gas exchanged
-
-/datum/gas_mixture/proc/check_turf(turf/model)
-	//Similar to compare(...), except for turfs without their own gas mixtures
-	//Returns: 0 if self-check failed or 1 if check passes
+	//Returns: amount of gas exchanged (+ if sharer received)
 
 /datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	//Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
-
-/datum/gas_mixture/proc/temperature_mimic(turf/model, conduction_coefficient) //I want this proc to die a painful death
-	//Similar to temperature_share(...), except between a gas_mixture and a turf without its own gas_mixture
-
-/datum/gas_mixture/proc/temperature_turf_share(turf/simulated/sharer, conduction_coefficient) //I want this proc to die a painful death
-	//Similar to temperature_share(...), except between a gas_mixture and a simulated turf
+	//Returns: new temperature of the sharer
 
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
 	//Compares sample to self to see if within acceptable ranges that group processing may be enabled
-	//returns: a string indicating what check failed, or "" if check passes
+	//Returns: a string indicating what check failed, or "" if check passes
 
 /datum/gas_mixture/archive()
 	var/list/cached_gases = gases
@@ -316,7 +303,7 @@ var/list/gaslist_cache = null
 /datum/gas_mixture/merge(datum/gas_mixture/giver)
 	if(!giver)
 		return 0
-	
+
 	//heat transfer
 	if(abs(temperature - giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity()
@@ -324,7 +311,7 @@ var/list/gaslist_cache = null
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity)
 			temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
-	
+
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/giver_gases = giver.gases
 	//gas transfer
@@ -398,7 +385,7 @@ var/list/gaslist_cache = null
 
 /datum/gas_mixture/copy_from_turf(turf/model)
 	var/list/cached_gases = gases
-	
+
 	temperature = model.temperature
 	if(model.oxygen)
 		assert_gas("o2")
@@ -416,11 +403,6 @@ var/list/gaslist_cache = null
 	cached_gases &= hardcoded_gases
 
 	return 1
-
-/datum/gas_mixture/check_turf(turf/model, atmos_adjacent_turfs = 4)
-	var/datum/gas_mixture/copied = new
-	copied.copy_from_turf(model)
-	return compare(copied, datatype = ARCHIVE, adjacents = atmos_adjacent_turfs)
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	if(!sharer)
@@ -486,61 +468,34 @@ var/list/gaslist_cache = null
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY)
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.10) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
-	
+
 	var/list/unique_gases = cached_gases ^ sharer_gases
 	if(unique_gases.len) //if all gases were present in both mixtures, we know that no gases are 0
 		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
 		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
-	
+
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
 		return delta_pressure * R_IDEAL_GAS_EQUATION / volume
-	
 
-/datum/gas_mixture/mimic(turf/model, atmos_adjacent_turfs = 4)
-	var/datum/gas_mixture/copied = new
-	copied.copy_from_turf(model)
-	return share(copied, atmos_adjacent_turfs)
-
-/datum/gas_mixture/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
+/datum/gas_mixture/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
 	//transfer of thermal energy (via conduction) between self and sharer
-	var/temperature_delta = temperature_archived - sharer.temperature_archived
+	sharer_temperature = sharer_temperature || sharer.temperature_archived
+	var/temperature_delta = temperature_archived - sharer_temperature
 	if(abs(temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity_archived()
-		var/sharer_heat_capacity = sharer.heat_capacity_archived()
+		sharer_heat_capacity = sharer_heat_capacity || sharer.heat_capacity_archived()
 
 		if((sharer_heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 			var/heat = conduction_coefficient*temperature_delta* \
 				(self_heat_capacity*sharer_heat_capacity/(self_heat_capacity+sharer_heat_capacity))
 
 			temperature = max(temperature - heat/self_heat_capacity, TCMB)
-			sharer.temperature = max(sharer.temperature + heat/sharer_heat_capacity, TCMB)
+			sharer_temperature = max(sharer.temperature + heat/sharer_heat_capacity, TCMB)
+			if(sharer)
+				sharer.temperature = sharer_temperature
+	return sharer_temperature
 	//thermal energy of the system (self and sharer) is unchanged
-
-//see above
-/datum/gas_mixture/temperature_mimic(turf/model, conduction_coefficient)
-	var/temperature_delta = temperature - model.temperature
-	if(abs(temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = heat_capacity()
-
-		if((model.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
-			var/heat = conduction_coefficient*temperature_delta* \
-				(self_heat_capacity*model.heat_capacity/(self_heat_capacity+model.heat_capacity))
-
-			temperature = max(temperature - heat/self_heat_capacity, TCMB)
-
-//see above
-/datum/gas_mixture/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
-	var/temperature_delta = temperature_archived - sharer.temperature
-	if(abs(temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = heat_capacity()
-
-		if((sharer.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
-			var/heat = conduction_coefficient*temperature_delta* \
-				(self_heat_capacity*sharer.heat_capacity/(self_heat_capacity+sharer.heat_capacity))
-
-			temperature = max(temperature - heat/self_heat_capacity, TCMB)
-			sharer.temperature = max(sharer.temperature + heat/sharer.heat_capacity, TCMB)
 
 /datum/gas_mixture/compare(datum/gas_mixture/sample, datatype = MOLES, adjacents = 0)
 	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars

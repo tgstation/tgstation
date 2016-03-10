@@ -321,7 +321,7 @@
 	playstyle_string = "As a Support type, you may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent mob will warp them to your bluespace beacon after a short delay."
 	magic_fluff_string = "..And draw the CMO, a potent force of life...and death."
 	tech_fluff_string = "Boot sequence complete. Medical modules active. Bluespace modules activated. Holoparasite swarm online."
-	var/turf/simulated/floor/beacon
+	var/turf/floor/beacon
 	var/beacon_cooldown = 0
 	var/toggle = FALSE
 
@@ -368,15 +368,15 @@
 	set desc = "Mark a floor as your beacon point, allowing you to warp targets to it. Your beacon will not work in unfavorable atmospheric conditions."
 	if(beacon_cooldown<world.time)
 		var/turf/beacon_loc = get_turf(src.loc)
-		if(istype(beacon_loc, /turf/simulated/floor))
-			var/turf/simulated/floor/F = beacon_loc
+		if(istype(beacon_loc, /turf/floor))
+			var/turf/floor/F = beacon_loc
 			F.icon = 'icons/turf/floors.dmi'
 			F.name = "bluespace recieving pad"
 			F.desc = "A recieving zone for bluespace teleportations. Building a wall over it should disable it."
 			F.icon_state = "light_on-w"
 			src << "<span class='danger'><B>Beacon placed! You may now warp targets to it, including your user, via Alt+Click. </span></B>"
 			if(beacon)
-				beacon.ChangeTurf(/turf/simulated/floor/plating)
+				beacon.ChangeTurf(/turf/floor/plating)
 			beacon = F
 			beacon_cooldown = world.time+3000
 
