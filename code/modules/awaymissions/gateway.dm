@@ -2,13 +2,23 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 /obj/machinery/gateway
 	name = "gateway"
-	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
+	desc = "A mysterious, seemingly indestructible, gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
 	density = 1
 	anchored = 1
 	unacidable = 1
 	var/active = 0
+	var/destructible = 0
+
+/obj/machinery/gateway/Destroy()
+	if(destructible)
+		return ..()
+	else
+		return QDEL_HINT_LETMELIVE
+
+/obj/machinery/gateway/singularity_pull(S, current_size)
+	return
 
 
 /obj/machinery/gateway/centerstation/New()
@@ -20,7 +30,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 /obj/machinery/gateway/centerstation/Destroy()
 	if(the_gateway == src)
 		the_gateway = null
-	..()
+	return ..()
 
 
 /obj/machinery/gateway/initialize()
