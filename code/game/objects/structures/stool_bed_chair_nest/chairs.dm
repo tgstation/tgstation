@@ -6,6 +6,8 @@
 
 	sheet_amt = 1
 
+	var/overrideghostspin = 0 //Set it to 1 if ghosts should NEVER be able to spin this
+
 /obj/structure/bed/chair/New()
 	..()
 	spawn(3)
@@ -54,7 +56,7 @@
 	if(!usr || !isturf(usr.loc))
 		return
 
-	if(!config.ghost_interaction && !blessed)
+	if((!config.ghost_interaction && !blessed) || overrideghostspin)
 		if(usr.isUnconscious() || usr.restrained())
 			return
 

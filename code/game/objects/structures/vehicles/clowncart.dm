@@ -22,6 +22,7 @@
 	density = 1
 	nick = "honkin' ride" //For fucks sake, well then
 	flags = OPENCONTAINER
+	overrideghostspin = 0
 
 	max_health = 100 //Bananium sheets increases maximum health by 20
 	var/activated = 0 //Honk to activate, it stays active while you sit in it, and will deactivate when you unbuckle
@@ -36,6 +37,7 @@
 	var/colour2 = "#3D3D3D" //Default is boring black
 	var/emagged = 0			//Does something maybe
 	var/honk				//Timer to prevent spamming honk
+
 /obj/structure/bed/chair/vehicle/clowncart/process()
 	icon_state = "clowncart0"
 	if(empstun > 0)
