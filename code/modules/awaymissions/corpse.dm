@@ -49,7 +49,7 @@
 		M.faction = list(faction)
 	if(death)
 		M.death(1) //Kills the new mob
-	
+
 	M.adjustOxyLoss(oxy_damage)
 	M.adjustBruteLoss(brute_damage)
 	equip(M)
@@ -160,8 +160,8 @@
 //Non-human spawners
 
 /obj/effect/mob_spawn/AICorpse/create() //Creates a corrupted AI
-	var/A = locate(/mob/living/silicon/ai) in loc 
-	if(A) 
+	var/A = locate(/mob/living/silicon/ai) in loc
+	if(A)
 		return
 	var/L = new /datum/ai_laws/default/asimov
 	var/B = new /obj/item/device/mmi
@@ -314,7 +314,7 @@
 	uniform = /obj/item/clothing/under/rank/bartender
 	back = /obj/item/weapon/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
-	suit = /obj/item/clothing/suit/armor
+	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	has_id = 1
 	id_job = "Bartender"
