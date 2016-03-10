@@ -48,7 +48,8 @@ If the spell_projectile is seeking, it will update its target every process and 
 	for(var/mob/living/M in range(spell_holder, cast_prox_range))
 		if(M == user && !(spell_flags & INCLUDEUSER))
 			continue
-		targets += M
+		if(spell_holder.Adjacent(M))
+			targets += M
 	return targets
 
 /spell/targeted/projectile/proc/prox_cast(var/list/targets, var/atom/movable/spell_holder)

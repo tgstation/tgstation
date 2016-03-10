@@ -20,7 +20,7 @@
 	..()
 	if(!isnull(src.loc))
 		if(carried)
-			var/list/targets = carried.choose_prox_targets(user = carried.holder, spell_holder = src)
+			var/list/targets = choose_prox_targets(user = carried.holder, spell_holder = src)
 			if(targets.len)
 				src.prox_cast(targets)
 		if(proj_trail && src && src.loc) //pretty trails
@@ -40,16 +40,25 @@
 
 /obj/item/projectile/spell_projectile/Bump(var/atom/A)
 	if(loc)
-		prox_cast(carried.choose_prox_targets(user = carried.holder, spell_holder = src))
+		prox_cast(choose_prox_targets(user = carried.holder, spell_holder = src))
 	return
 
 /obj/item/projectile/spell_projectile/OnDeath()
 	if(loc)
-		prox_cast(carried.choose_prox_targets(user = carried.holder, spell_holder = src))
+		prox_cast(choose_prox_targets(user = carried.holder, spell_holder = src))
 	return
+
+/obj/item/projectile/spell_projectile/proc/choose_prox_targets(user = carried.holder, spell_holder = src)
+	return carried.choose_prox_targets(args)
 
 /obj/item/projectile/spell_projectile/seeking
 	name = "seeking spell"
+
+/obj/item/projectile/spell_projectile/seeking/choose_prox_targets()
+	if(Adjacent(original))
+		return list(original)
+	else
+		return list()
 
 /obj/item/projectile/spell_projectile/seeking/process_step()
 	..()
