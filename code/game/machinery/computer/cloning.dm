@@ -369,6 +369,9 @@
 	if (find_record("ckey", subject.ckey, records))
 		scantemp = "<font class='average'>Subject already in database.</font>"
 		return
+	if (subject.dna.species.id == "plasmaman")
+		scantemp = "<font class='bad'>Subject genetic structure incompatible. Cloning of this species impossible.</font>"
+		return
 
 	var/datum/data/record/R = new()
 	if(subject.dna.species)
