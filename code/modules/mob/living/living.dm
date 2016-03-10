@@ -734,12 +734,28 @@ Thanks.
 	//Getting out of someone's inventory.
 	if(istype(src.loc,/obj/item/weapon/holder))
 		var/obj/item/weapon/holder/H = src.loc
-		src.loc = get_turf(src.loc)
+		forceMove(get_turf(src))
 		if(istype(H.loc, /mob/living))
 			var/mob/living/Location = H.loc
 			Location.drop_from_inventory(H)
 		qdel(H)
 		H = null
+		return
+	else if(istype(src.loc, /obj/structure/strange_present))
+		var/obj/structure/strange_present/present = src.loc
+		forceMove(get_turf(src))
+		qdel(present)
+		playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
+		return
+	else if(istype(src.loc, /obj/item/delivery/large)) //Syndie item
+		var/obj/item/delivery/large/package = src.loc
+		to_chat(L, "<span class='warning'>You attempt to unwrap yourself, this package is tight and will take some time.</span>")
+		if(do_after(src, src, 100))
+			L.visible_message("<span class='danger'>[L] successfully breaks out of [package]!</span>",\
+							  "<span class='notice'>You successfully break out!</span>")
+			forceMove(get_turf(src))
+			qdel(package)
+			playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
 		return
 
 	//Detaching yourself from a tether
