@@ -120,13 +120,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle
 	cost = 30 // normally 42
 
-/datum/uplink_item/nukeoffer/ammo
-	name = "Fireteam bundle"
-	desc = "For the team player: A duffelbag filled with enough ammo to kit out a fireteam; four .45 magazines, \
-			three 5.56 magazines, a box of 40mm grenades, and a magazine of sniper ammunition; all at a discounted price."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam
-	cost = 24 // normally ??
-
 // Dangerous Items
 /datum/uplink_item/dangerous
 	category = "Conspicuous and Dangerous Weapons"
