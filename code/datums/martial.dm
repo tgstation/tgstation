@@ -283,39 +283,10 @@
 	usr << "<span class='notice'>Throwback</span>: Disarm Harm Disarm. Throws the target and an item at them."
 	usr << "<span class='notice'>The Plasma Fist</span>: Harm Disarm Disarm Disarm Harm. Knocks the brain out of the opponent and gibs their body."
 
-//Used by the gang of the same name. Uses combos. Basic attacks bypass armor and never miss
-#define WRIST_WRENCH_COMBO "DD"
-#define BACK_KICK_COMBO "HG"
-#define STOMACH_KNEE_COMBO "GH"
-#define HEAD_KICK_COMBO "DHH"
-#define ELBOW_DROP_COMBO "HDHDH"
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	deflection_chance = 100
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
-
-/datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(findtext(streak,WRIST_WRENCH_COMBO))
-		streak = ""
-		wristWrench(A,D)
-		return 1
-	if(findtext(streak,BACK_KICK_COMBO))
-		streak = ""
-		backKick(A,D)
-		return 1
-	if(findtext(streak,STOMACH_KNEE_COMBO))
-		streak = ""
-		kneeStomach(A,D)
-		return 1
-	if(findtext(streak,HEAD_KICK_COMBO))
-		streak = ""
-		headKick(A,D)
-		return 1
-	if(findtext(streak,ELBOW_DROP_COMBO))
-		streak = ""
-		elbowDrop(A,D)
-		return 1
-	return 0
 
 /datum/martial_art/the_sleeping_carp/proc/wristWrench(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.stunned && !D.weakened)
@@ -327,7 +298,6 @@
 		D.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
 		D.Stun(3)
 		return 1
-	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/backKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(A.dir == D.dir && !D.stat && !D.weakened)
@@ -336,19 +306,19 @@
 		step_to(D,get_step(D,D.dir),1)
 		D.Weaken(4)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
+		D.apply_damage(rand(10,15), BRUTE)
 		return 1
-	return basic_hit(A,D)
 
-/datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/proc/kneeGroin(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
-		D.visible_message("<span class='warning'>[A] knees [D] in the stomach!</span>", \
-						  "<span class='userdanger'>[A] winds you with a knee in the stomach!</span>")
+		D.visible_message("<span class='warning'>[A] knees [D] in the groin!</span>", \
+						  "<span class='userdanger'>[A] winds you with a knee in the groin!</span>")
 		D.audible_message("<b>[D]</b> gags!")
 		D.losebreath += 3
 		D.Stun(2)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
+		D.apply_damage(rand(10,15), BRUTE)
 		return 1
-	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/headKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
@@ -359,7 +329,6 @@
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		D.Stun(4)
 		return 1
-	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/elbowDrop(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(D.weakened || D.resting || D.stat)
@@ -367,23 +336,28 @@
 						  "<span class='userdanger'>[A] piledrives you with their elbow!</span>")
 		if(D.stat)
 			D.death() //FINISH HIM!
+			return 1
 		D.apply_damage(50, BRUTE, "chest")
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 75, 1, -1)
 		return 1
-	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("G",D)
-	if(check_streak(A,D))
-		return 1
 	D.grabbedby(A,1)
 	var/obj/item/weapon/grab/G = A.get_active_hand()
 	if(G)
 		G.state = GRAB_AGGRESSIVE //Instant aggressive grab
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("H",D)
-	if(check_streak(A,D))
+	if(elbowDrop(A,D))
+		return 1
+	if(A.dir == D.dir)
+		backKick(A,D)
+		return 1
+	if(A.zone_selected == "groin")
+		kneeGroin(A,D)
+		return 1
+	if(A.zone_selected == "head")
+		headKick(A,D)
 		return 1
 	var/atk_verb = pick("punches", "kicks", "chops", "hits", "slams")
 	D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
@@ -397,9 +371,7 @@
 
 
 /datum/martial_art/the_sleeping_carp/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("D",D)
-	if(check_streak(A,D))
-		return 1
+	wristWrench(A,D)
 	return ..()
 
 /mob/living/carbon/human/proc/sleeping_carp_help()
@@ -409,11 +381,11 @@
 
 	usr << "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>"
 
-	usr << "<span class='notice'>Wrist Wrench</span>: Disarm Disarm. Forces opponent to drop item in hand."
-	usr << "<span class='notice'>Back Kick</span>: Harm Grab. Opponent must be facing away. Knocks down."
-	usr << "<span class='notice'>Stomach Knee</span>: Grab Harm. Knocks the wind out of opponent and stuns."
-	usr << "<span class='notice'>Head Kick</span>: Disarm Harm Harm. Decent damage, forces opponent to drop item in hand."
-	usr << "<span class='notice'>Elbow Drop</span>: Harm Disarm Harm Disarm Harm. Opponent must be on the ground. Deals huge damage, instantly kills anyone in critical condition."
+	usr << "<span class='notice'>Wrist Wrench</span>: Disarm intent. Forces opponent to drop item in hand, stuns and hurts slightly."
+	usr << "<span class='notice'>Back Kick</span>: Harm intent while facing away. Knocks target down and does damage."
+	usr << "<span class='notice'>Groin Knee</span>: Harm intent on groin. Knocks the wind out of opponent, stuns, and damages."
+	usr << "<span class='notice'>Head Kick</span>: Harm intent on head. Decent damage, forces opponent to drop item in hand."
+	usr << "<span class='notice'>Elbow Drop</span>: Harm intent, opponent must be on the ground. Deals huge damage, and instantly kills anyone in critical condition."
 
 //ITEMS
 
