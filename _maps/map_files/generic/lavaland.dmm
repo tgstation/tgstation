@@ -50,7 +50,7 @@
 "aX" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/mine/living_quarters)
 "aY" = (/obj/structure/sign/xeno_warning_mining,/turf/simulated/wall{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
 "aZ" = (/obj/machinery/door/airlock/maintenance{name = "Mining Station Maintenance"; req_access_txt = "48"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plasteel{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
-"ba" = (/obj/docking_port/stationary{dir = 8; dwidth = 3; height = 5; id = "mining_away"; name = "lavaland mine"; turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface; width = 7},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"ba" = (/obj/docking_port/stationary{area_type = /area/lavaland/surface/outdoors; dir = 8; dwidth = 3; height = 5; id = "mining_away"; name = "lavaland mine"; turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface; width = 7},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
 "bb" = (/obj/machinery/door/airlock/external{name = "Mining External Airlock"; req_access_txt = "54"},/turf/simulated/floor/plasteel{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
 "bc" = (/turf/simulated/floor/plasteel{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
 "bd" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plasteel{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)

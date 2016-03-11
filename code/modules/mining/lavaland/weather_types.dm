@@ -64,7 +64,7 @@
 	name = "ash storm"
 	start_up_time = 300 //30 seconds
 	start_up_message = "The wind begins to pick up. Seek shelter."
-	duration_lower = 60 //1.5 minutes
+	duration_lower = 60 //1 minute
 	duration_upper = 180 //3 minutes
 	duration_message = "An ash storm has started! Get inside!"
 	wind_down = 300 // 30 seconds

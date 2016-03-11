@@ -28,7 +28,7 @@
 	if(ongoing_weather || weather_cooldown > world.time)
 		return
 	ongoing_weather = TRUE
-	weather_cooldown = world.time + rand(2000, 5000)
+	weather_cooldown = world.time + rand(3500, 8000)
 	var/datum/weather/ash_storm/LAVA = new /datum/weather/ash_storm
 	LAVA.weather_start_up()
 	ongoing_weather = FALSE
