@@ -1648,9 +1648,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
@@ -1975,9 +1972,6 @@
 	name = "Research Division"
 	})
 "et" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2143,9 +2137,6 @@
 	},
 /area/hallway/primary/central)
 "eJ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2309,9 +2300,6 @@
 	},
 /area/security/brig)
 "eW" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/structure/cable{
 	d1 = 1;
@@ -4112,9 +4100,6 @@
 	name = "Research Division"
 	})
 "iy" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/table,
 /obj/item/weapon/stock_parts/console_screen,
 /obj/item/weapon/stock_parts/console_screen,
@@ -10821,16 +10806,15 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9;
-	pixel_y = 0
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/engine/gravity_generator)
 "wq" = (
@@ -10838,7 +10822,6 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -12185,10 +12168,13 @@
 /turf/simulated/wall/r_wall,
 /area/engine/engineering)
 "zd" = (
-/obj/machinery/atmospherics/pipe/simple,
-/obj/structure/grille,
-/turf/simulated/wall/r_wall,
-/area/engine/engineering)
+/obj/machinery/door/airlock/glass{
+	name = "Central Access"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/simulated/floor/plasteel,
+/area/hallway/primary/central)
 "ze" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
@@ -15231,15 +15217,6 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Telecommunications";
 	req_access_txt = "61"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
 	},
 /turf/simulated/floor/plasteel,
 /area/tcommsat/computer)
@@ -48201,7 +48178,7 @@ fX
 lY
 fX
 fX
-iM
+iO
 fX
 iT
 fX
@@ -48697,7 +48674,7 @@ ex
 he
 ga
 ga
-iO
+zd
 jp
 fL
 kv
@@ -53613,7 +53590,7 @@ am
 aa
 aa
 aa
-zd
+zc
 zo
 zO
 zo
@@ -53870,7 +53847,7 @@ am
 aa
 aa
 aa
-zd
+zc
 zo
 zP
 zo
