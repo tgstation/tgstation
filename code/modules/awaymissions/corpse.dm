@@ -29,11 +29,19 @@
 /obj/effect/mob_spawn/initialize()
 	if(roundstart)
 		create()
+	else
+		poi_list |= src
 
 /obj/effect/mob_spawn/New()
 	..()
 	if(instant)
 		create()
+	else
+		poi_list |= src
+
+/obj/effect/mob_spawn/Destroy()
+	poi_list.Remove(src)
+	..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
 	return
@@ -49,7 +57,7 @@
 		M.faction = list(faction)
 	if(death)
 		M.death(1) //Kills the new mob
-	
+
 	M.adjustOxyLoss(oxy_damage)
 	M.adjustBruteLoss(brute_damage)
 	equip(M)
@@ -160,8 +168,8 @@
 //Non-human spawners
 
 /obj/effect/mob_spawn/AICorpse/create() //Creates a corrupted AI
-	var/A = locate(/mob/living/silicon/ai) in loc 
-	if(A) 
+	var/A = locate(/mob/living/silicon/ai) in loc
+	if(A)
 		return
 	var/L = new /datum/ai_laws/default/asimov
 	var/B = new /obj/item/device/mmi
