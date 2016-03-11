@@ -160,6 +160,14 @@ Detective
 	var/obj/item/clothing/mask/cigarette/cig = H.wear_mask
 	cig.light("")
 
+	if(visualsOnly)
+		return
+
+	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+	L.imp_in = H
+	L.implanted = 1
+	H.sec_hud_set_implants()
+
 /*
 Security Officer
 */
