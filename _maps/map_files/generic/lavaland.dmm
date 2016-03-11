@@ -41,7 +41,7 @@
 "aO" = (/obj/machinery/power/smes{charge = 5e+006},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
 "aP" = (/obj/machinery/atmospherics/components/unary/tank/air{dir = 8},/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
 "aQ" = (/obj/machinery/power/port_gen/pacman{anchored = 1},/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
-"aR" = (/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
+"aR" = (/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
 "aS" = (/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
 "aT" = (/obj/structure/reagent_dispensers/fueltank,/obj/machinery/light/small{dir = 8},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
 "aU" = (/obj/machinery/portable_atmospherics/canister/oxygen,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
