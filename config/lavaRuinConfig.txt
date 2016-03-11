@@ -2,3 +2,16 @@
 #Maps must be the full path to them
 #Ruins should be 30x30 at max. Anymore than that will break the game.
 #SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
+
+_maps/templates/lavaland_surface_automated_trade_outpost.dmm
+_maps/templates/lavaland_surface_biodome_winter.dmm
+_maps/templates/lavaland_surface_cube.dmm
+_maps/templates/lavaland_surface_envy.dmm
+_maps/templates/lavaland_surface_gluttony.dmm
+_maps/templates/lavaland_surface_greed.dmm
+_maps/templates/lavaland_surface_pride.dmm
+_maps/templates/lavaland_surface_prisoner_Crash.dmm
+_maps/templates/lavaland_surface_seed_vault
+_maps/templates/lavaland_surface_sloth.dmm
+_maps/templates/lavaland_surface_ufo_crash.dmm
+_maps/templates/lavaland_surface_ww_vault.dmm

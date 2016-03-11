@@ -64,8 +64,8 @@
 	name = "ash storm"
 	start_up_time = 300 //30 seconds
 	start_up_message = "The wind begins to pick up. Seek shelter."
-	duration_lower = 90 //1.5 minutes
-	duration_upper = 360 //3 minutes
+	duration_lower = 60 //1.5 minutes
+	duration_upper = 180 //3 minutes
 	duration_message = "An ash storm has started! Get inside!"
 	wind_down = 300 // 30 seconds
 	wind_down_message = "The storm begins to fade. Should be safe to go outside again."
@@ -85,6 +85,8 @@
 	wind_down_message = "The ash fall starts to trail off."
 
 /datum/weather/ash_storm/storm_act(mob/living/L)
+	if("mining" in L.faction)
+		return
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/thermal_protection = H.get_thermal_protection()

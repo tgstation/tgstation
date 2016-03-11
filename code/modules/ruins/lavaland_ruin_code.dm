@@ -1,5 +1,40 @@
+/obj/structure/lavaland_door
+	name = "necropolis gate"
+	desc = "An imposing, seemingly impenetrable door."
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "door"
+	anchored = 1
+	density = 1
+	bound_width = 96
+	bound_height = 96
+	burn_state = LAVA_PROOF
+	luminosity = 1
 
+/obj/structure/lavaland_door/singularity_pull()
+	return 0
 
+/obj/structure/lavaland_door/Destroy()
+	return QDEL_HINT_LETMELIVE
+
+/obj/machinery/lavaland_controller
+	name = "weather control machine"
+	desc = "Controls the weather."
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "processor"
+	var/ongoing_weather = FALSE
+	var/weather_cooldown = 0
+
+/obj/machinery/lavaland_controller/process()
+	if(ongoing_weather || weather_cooldown > world.time)
+		return
+	ongoing_weather = TRUE
+	weather_cooldown = world.time + rand(2000, 5000)
+	var/datum/weather/ash_storm/LAVA = new /datum/weather/ash_storm
+	LAVA.weather_start_up()
+	ongoing_weather = FALSE
+
+/obj/machinery/lavaland_controller/Destroy()
+	return QDEL_HINT_LETMELIVE
 
 
 

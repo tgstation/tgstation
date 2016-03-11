@@ -18,8 +18,8 @@ var/global/list/rockTurfEdgeCache
 	blocks_air = 1
 	layer = TURF_LAYER + 0.05
 	temperature = TCMB
-	var/environment_type = "asteroid"
-	var/turf/simulated/floor/plating/asteroid/turf_type = /turf/simulated/floor/plating/asteroid //For basalt vs normal asteroid
+	var/environment_type = "basalt"
+	var/turf/simulated/floor/plating/asteroid/turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface //For basalt vs normal asteroid
 	var/mineralType = null
 	var/mineralAmt = 3
 	var/spread = 0 //will the seam spread?
@@ -126,6 +126,8 @@ var/global/list/rockTurfEdgeCache
 					M = new/turf/simulated/mineral/plasma(src)
 				if("Cave")
 					new/turf/simulated/floor/plating/asteroid/airless/cave(src)
+				if("Cave2")
+					new/turf/simulated/floor/plating/asteroid/airless/cave/volcanic(src)
 				if("Gibtonite")
 					M = new/turf/simulated/mineral/gibtonite(src)
 				if("Bananium")
@@ -331,8 +333,13 @@ var/global/list/rockTurfEdgeCache
 	var/sanity = 1
 	turf_type = /turf/simulated/floor/plating/asteroid/airless
 
-/turf/simulated/floor/plating/asteroid/airless/cave/New(loc, var/length, var/go_backwards = 1, var/exclude_dir = -1)
+/turf/simulated/floor/plating/asteroid/airless/cave/volcanic
+	turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface
+	oxygen = 14
+	nitrogen = 23
+	temperature = 300
 
+/turf/simulated/floor/plating/asteroid/airless/cave/New(loc, length, go_backwards = 1, exclude_dir = -1)
 	// If length (arg2) isn't defined, get a random length; otherwise assign our length to the length arg.
 	if(!length)
 		src.length = rand(25, 50)
@@ -712,7 +719,7 @@ var/global/list/rockTurfEdgeCache
 	oxygen = 14
 	nitrogen = 23
 	temperature = 300
-	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+	baseturf = /turf/simulated/floor/plating/lava/smooth/lava_land_surface
 
 /turf/simulated/chasm/straight_down/lava_land_surface
 	oxygen = 14
@@ -724,6 +731,17 @@ var/global/list/rockTurfEdgeCache
 	environment_type = "basalt"
 	turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+
+/turf/simulated/mineral/random/volcanic
+	environment_type = "basalt"
+	turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface
+	baseturf = /turf/simulated/floor/plating/lava/smooth/lava_land_surface
+	mineralChance = 4
+	mineralSpawnChanceList = list(
+		"Uranium" = 5, "Diamond" = 1, "Gold" = 10,
+		"Silver" = 12, "Plasma" = 20, "Iron" = 40,
+		"Gibtonite" = 4, "Cave2" = 1, "BScrystal" = 1,
+		/*, "Adamantine" =5*/)
 
 /turf/simulated/floor/plating/lava/smooth/lava_land_surface
 	oxygen = 14
