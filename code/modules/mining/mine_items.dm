@@ -187,6 +187,13 @@
 		src.loc.visible_message("The [src] begins to shake. Stand back!")
 		used = TRUE
 		sleep(50)
+		var/clear = TRUE
+		for(var/turf/T in range(src, 2))
+			if(T.density)
+				clear = FALSE
+		if(!clear)
+			src.loc.visible_message("The [src] doesn't have room to deploy! You need to clear a 3x3 area!")
+			return
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
 		PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
 		load()
