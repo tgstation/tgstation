@@ -11,7 +11,7 @@ _maps/templates/lavaland_surface_gluttony.dmm
 _maps/templates/lavaland_surface_greed.dmm
 _maps/templates/lavaland_surface_pride.dmm
 _maps/templates/lavaland_surface_prisoner_Crash.dmm
-_maps/templates/lavaland_surface_seed_vault
+_maps/templates/lavaland_surface_seed_vault.dmm
 _maps/templates/lavaland_surface_sloth.dmm
 _maps/templates/lavaland_surface_ufo_crash.dmm
 _maps/templates/lavaland_surface_ww_vault.dmm

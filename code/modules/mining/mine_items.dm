@@ -188,9 +188,11 @@
 		used = TRUE
 		sleep(50)
 		var/clear = TRUE
-		for(var/turf/T in range(src, 2))
-			if(T.density)
-				clear = FALSE
+		for(var/unclear in trange(src, 2))
+			var/turf/T = unclear
+			if(istype(T, /turf/simulated/mineral/) || !T.density)
+				continue
+			clear = FALSE
 		if(!clear)
 			src.loc.visible_message("The [src] doesn't have room to deploy! You need to clear a 3x3 area!")
 			used = FALSE
