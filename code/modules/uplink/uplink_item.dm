@@ -186,9 +186,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/dangerous/mgl
 	name = "6B40 MGL"
-	desc = "New Russian semi-automatic grenade launcher. Has 6 chambers for any 40mm grenade."
+	desc = "New Russian semi-automatic grenade launcher. Has 6 chambers 40mm grenades."
 	item = /obj/item/weapon/gun/projectile/shotgun/automatic/mgl
-	cost = 18
+	cost = 25
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -467,13 +467,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/ammo/mgl/rubber
 	name = "40mm rubbershot"
-	desc = "One less-than-lethal 40mm grenade packed with 24 rubber pellets."
+	desc = "One less-than-lethal 40mm grenade packed with 24 rubber pellets. Front Toward Enemy"
 	item = /obj/item/ammo_casing/a40mm/rubber
 	cost = 1
 
 /datum/uplink_item/ammo/mgl/buckshot
 	name = "40mm buckshot"
-	desc = "One lethal 40mm grenade packed with 24 highly lethal tungsten carbide pellets."
+	desc = "One lethal 40mm grenade packed with 24 highly lethal tungsten carbide pellets. Ensure friendlies are behind you before use."
 	item = /obj/item/ammo_casing/a40mm/buckshot
 	cost = 4
 
