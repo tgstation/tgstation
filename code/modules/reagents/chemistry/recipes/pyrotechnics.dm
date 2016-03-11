@@ -35,12 +35,27 @@
 	required_temp = 474
 	strengthdiv = 2
 
+
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	name = "Explosion"
 	id = "potassium_explosion"
 	required_reagents = list("water" = 1, "potassium" = 1)
 	result_amount = 2
 	strengthdiv = 10
+
+/datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
+	name = "Holy Explosion"
+	id = "holyboom"
+	required_reagents = list("holywater" = 1, "potassium" = 1)
+
+/datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom/on_reaction(datum/reagents/holder, created_volume)
+	if(created_volume >= 150)
+		playsound(get_turf(holder.my_atom), 'sound/effects/holy.ogg', 80, 0, round(created_volume/48))
+		strengthdiv = 8
+		sleep(20)
+		..()
+	else
+		..()
 
 /datum/chemical_reaction/blackpowder
 	name = "Black Powder"
