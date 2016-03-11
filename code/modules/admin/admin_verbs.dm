@@ -60,8 +60,12 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_local_narrate,	/*sends text to all mobs within view of atom*/
 	/client/proc/cmd_admin_create_centcom_report,
+	/client/proc/cmd_change_command_name,
 	/client/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
-	/client/proc/toggle_AI_interact /*toggle admin ability to interact with machines as an AI*/
+	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
+	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
+	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
+	/client/proc/toggleSNPC /* Toggles an npc's processing mode */
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -188,6 +192,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/cmd_admin_create_centcom_report,
+	/client/proc/cmd_change_command_name,
 	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/cmd_admin_add_random_ai_law,
@@ -217,7 +222,10 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/toggle_nuke,
 	/client/proc/cmd_display_del_log,
 	/client/proc/toggle_antag_hud,
-	/client/proc/debug_huds
+	/client/proc/debug_huds,
+	/client/proc/customiseSNPC,
+	/client/proc/resetSNPC,
+	/client/proc/toggleSNPC
 	)
 
 /client/proc/add_admin_verbs()

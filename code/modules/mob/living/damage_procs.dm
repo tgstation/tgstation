@@ -73,7 +73,6 @@
 		if(JITTER)
 			if(status_flags & CANSTUN)
 				jitteriness = max(jitteriness,(effect * blocked))
-	updatehealth()
 	return 1
 
 

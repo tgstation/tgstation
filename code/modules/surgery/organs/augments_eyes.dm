@@ -116,7 +116,7 @@
 	implant_color = "#101010"
 	flash_protect = 2
 	aug_message = null
-	eye_color = "fff"
+	eye_color = null
 
 /obj/item/organ/internal/cyberimp/eyes/shield/emp_act(severity)
 	return

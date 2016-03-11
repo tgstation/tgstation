@@ -438,6 +438,9 @@
 /turf/floor/plasteel/sepia
 	icon_state = "sepia"
 
+/turf/floor/plasteel/sandy
+	icon_state = "sandy"
+	baseturf = /turf/floor/plating/beach/sand
 
 /turf/floor/plasteel/sandeffect
 	icon_state = "sandeffect"

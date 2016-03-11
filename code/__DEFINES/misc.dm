@@ -361,3 +361,14 @@ var/list/bloody_footprints_cache = list()
 
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
+
+//Gun trigger guards
+#define TRIGGER_GUARD_ALLOW_ALL -1
+#define TRIGGER_GUARD_NONE 0
+#define TRIGGER_GUARD_NORMAL 1
+
+// Plant types
+#define PLANT_NORMAL 0
+#define PLANT_WEED 1
+#define PLANT_MUSHROOM 2
+#define PLANT_ALIEN 3

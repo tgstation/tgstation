@@ -24,7 +24,7 @@
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
 	playsound(src.loc, "rustle", 50, 1, -5)
-	..()
+	return ..()
 
 /*
  * Backpack Types

@@ -129,7 +129,7 @@
 	walk(src,0)
 
 	if(buckled)
-		buckled.buckled_mob = null
+		buckled.unbuckle_mob(src,force=1)
 	buckled = null
 	pixel_x = initial(pixel_x)
 	pixel_y = initial(pixel_y)
@@ -811,7 +811,7 @@
 
 	if(icon_state == "parrot_fly")
 		for(var/mob/living/carbon/human/H in view(src,1))
-			if(H.buckled_mob) //Already has a parrot, or is being eaten by a slime
+			if(H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
 				continue
 			perch_on_human(H)
 			return
@@ -821,7 +821,7 @@
 		parrot_state = PARROT_WANDER
 		if(buckled)
 			src << "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>"
-			buckled.buckled_mob = null
+			buckled.unbuckle_mob(src,force=1)
 		buckled = null
 		pixel_x = initial(pixel_x)
 		pixel_y = initial(pixel_y)

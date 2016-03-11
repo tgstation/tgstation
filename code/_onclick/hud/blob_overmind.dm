@@ -105,7 +105,7 @@
 	infodisplay += blobpwrdisplay
 
 	healths = new /obj/screen/healths/blob()
-	static_inventory += healths
+	infodisplay += healths
 
 	using = new /obj/screen/blob/BlobHelp()
 	using.screen_loc = "NORTH:-6,WEST:6"

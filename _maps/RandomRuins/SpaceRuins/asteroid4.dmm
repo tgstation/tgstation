@@ -8,7 +8,7 @@
 "h" = (/obj/item/stack/sheet/mineral/bananium{amount = 15},/turf/floor/plating,/area/space)
 "i" = (/turf/floor/plating/asteroid,/turf/wall/shuttle{dir = 2; icon_state = "swall_f10"; layer = 2},/area/space)
 "j" = (/turf/wall/shuttle{icon_state = "swall3"; dir = 2},/area/space)
-"k" = (/obj/structure/chair{dir = 1},/obj/item/weapon/shard,/obj/effect/landmark/corpse/clown{corpsebrute = 120; corpseoxy = 75},/turf/floor/plasteel/shuttle,/area/space)
+"k" = (/obj/structure/chair{dir = 1},/obj/item/weapon/shard,/obj/effect/mob_spawn/human/clown{brute_damage = 120; oxy_damage = 75},/turf/floor/plasteel/shuttle,/area/space)
 "l" = (/obj/structure/chair{dir = 1},/obj/item/weapon/storage/pod{pixel_x = -26},/turf/floor/plasteel/shuttle,/area/space)
 "m" = (/turf/floor/plating,/obj/structure/shuttle/engine/propulsion/burst,/turf/wall/shuttle{icon_state = "swall_f5"; dir = 2},/area/space)
 "n" = (/obj/machinery/door/airlock/shuttle{name = "Escape Pod Airlock"},/turf/floor/plasteel/shuttle,/area/space)

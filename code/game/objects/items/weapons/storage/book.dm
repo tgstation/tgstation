@@ -205,4 +205,4 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 
 /obj/item/weapon/storage/book/bible/attackby(obj/item/weapon/W, mob/user, params)
 	playsound(src.loc, "rustle", 50, 1, -5)
-	..()
+	return ..()

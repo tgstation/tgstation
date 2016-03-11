@@ -5,6 +5,7 @@
 	throwforce = 0
 	var/zone = "chest"
 	var/slot
+	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
 	var/vital = 0
 
 
@@ -18,6 +19,7 @@
 
 	owner = M
 	M.internal_organs |= src
+	M.internal_organs_slot[slot] = src
 	loc = null
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -28,6 +30,8 @@
 	owner = null
 	if(M)
 		M.internal_organs -= src
+		if(M.internal_organs_slot[slot] == src)
+			M.internal_organs_slot.Remove(slot)
 		if(vital && !special)
 			M.death()
 	for(var/X in actions)
@@ -40,6 +44,12 @@
 
 /obj/item/organ/internal/proc/on_life()
 	return
+
+/obj/item/organ/internal/examine(mob/user)
+	..()
+	if(status == ORGAN_ROBOTIC && crit_fail)
+		user << "<span class='warning'>[src] seems to be broken!</span>"
+
 
 /obj/item/organ/internal/proc/prepare_eat()
 	var/obj/item/weapon/reagent_containers/food/snacks/organ/S = new
@@ -56,7 +66,6 @@
 	name = "appendix"
 	icon_state = "appendix"
 	icon = 'icons/obj/surgery.dmi'
-
 	list_reagents = list("nutriment" = 5)
 
 
@@ -92,7 +101,6 @@
 	zone = "chest"
 	slot = "heart"
 	origin_tech = "biotech=3"
-	vital = 1
 	var/beating = 1
 	var/icon_base = "heart"
 
@@ -102,16 +110,46 @@
 	else
 		icon_state = "[icon_base]-off"
 
-/obj/item/organ/internal/heart/Insert(mob/living/carbon/M, special = 0)
-	..()
-	beating = 1
-	update_icon()
-
 /obj/item/organ/internal/heart/Remove(mob/living/carbon/M, special = 0)
 	..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.stat == DEAD || H.heart_attack)
+			Stop()
+			return
+		if(!special)
+			H.heart_attack = 1
+
 	spawn(120)
-		beating = 0
-		update_icon()
+		if(!owner)
+			Stop()
+
+/obj/item/organ/internal/heart/attack_self(mob/user)
+	..()
+	if(!beating)
+		Restart()
+		spawn(80)
+			if(!owner)
+				Stop()
+
+
+/obj/item/organ/internal/heart/Insert(mob/living/carbon/M, special = 0)
+	..()
+	if(ishuman(M) && beating)
+		var/mob/living/carbon/human/H = M
+		if(H.heart_attack)
+			H.heart_attack = 0
+			return
+
+/obj/item/organ/internal/heart/proc/Stop()
+	beating = 0
+	update_icon()
+	return 1
+
+/obj/item/organ/internal/heart/proc/Restart()
+	beating = 1
+	update_icon()
+	return 1
 
 /obj/item/organ/internal/heart/prepare_eat()
 	var/obj/S = ..()

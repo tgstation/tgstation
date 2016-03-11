@@ -267,7 +267,7 @@
 "fg" = (/obj/structure/ore_box,/turf/floor/plating/asteroid/basalt{nitrogen = 23; oxygen = 14},/area/awaymission/BMPship)
 "fh" = (/obj/effect/spawner/structure/window/reinforced,/turf/floor/plating{baseturf = /turf/floor/plating/asteroid/basalt},/area/awaymission/listeningpost)
 "fi" = (/obj/machinery/door/airlock/external,/turf/floor/plating{baseturf = /turf/floor/plating/asteroid/basalt},/area/awaymission/listeningpost)
-"fj" = (/obj/effect/landmark/corpse/skeleton/alive{name = "spooky skeleton remains"},/turf/floor/plating/asteroid/basalt{nitrogen = 23; oxygen = 14},/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 2"})
+"fj" = (/obj/effect/mob_spawn/human/skeleton/alive{name = "spooky skeleton remains"},/turf/floor/plating/asteroid/basalt{nitrogen = 23; oxygen = 14},/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 2"})
 "fk" = (/obj/item/weapon/grenade/syndieminibomb/concussion,/turf/floor/plating/asteroid/basalt{nitrogen = 23; oxygen = 14},/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 2"})
 "fl" = (/obj/effect/decal/remains/human,/turf/floor/plating/asteroid/basalt{nitrogen = 23; oxygen = 14},/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 2"})
 "fm" = (/turf/floor/plating{baseturf = /turf/floor/plating/asteroid/basalt},/area/awaymission/listeningpost)

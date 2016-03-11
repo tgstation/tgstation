@@ -70,30 +70,7 @@
 	smooth = SMOOTH_MORE
 	icon_state = "shuttle_nd"
 
-/turf/wall/shuttle/smooth/overplating
-	icon_state = "overplating"
-	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="plating")
-
-/turf/wall/shuttle/smooth/overblue
-	icon_state = "overblue"
-	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor")
-
-/turf/wall/shuttle/smooth/overwhite
-	icon_state = "overwhite"
-	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor3")
-
-/turf/wall/shuttle/smooth/overred
-	icon_state = "overred"
-	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor4")
-
-/turf/wall/shuttle/smooth/overpurple
-	icon_state = "overpurple"
-	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor5")
-
-/turf/wall/shuttle/smooth/overyellow
-	icon_state = "overyellow"
-	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor2")
-
+/turf/wall/shuttle/smooth/overspace	icon_state = "overspace"	fixed_underlay = list("space"=1)
 /turf/wall/smooth
 	name = "smooth wall"
 	icon = 'icons/turf/smooth_wall.dmi'

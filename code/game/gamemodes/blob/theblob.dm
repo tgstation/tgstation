@@ -132,7 +132,7 @@
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.
 
-/obj/effect/blob/proc/expand(turf/T = null, controller = null)
+/obj/effect/blob/proc/expand(turf/T = null, controller = null, expand_reaction = 1)
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)
@@ -171,7 +171,7 @@
 			B.density = initial(B.density)
 			B.loc = T
 			B.update_icon()
-			if(B.overmind)
+			if(B.overmind && expand_reaction)
 				B.overmind.blob_reagent_datum.expand_reaction(src, B, T)
 			return B
 		else
@@ -193,6 +193,19 @@
 	..()
 	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
 	take_damage(damage, BURN)
+
+/obj/effect/blob/tesla_act(power)
+	..()
+	if(overmind)
+		if(overmind.blob_reagent_datum.tesla_reaction(src, power))
+			take_damage(power/400, BURN)
+	else
+		take_damage(power/400, BURN)
+
+/obj/effect/blob/extinguish()
+	..()
+	if(overmind)
+		overmind.blob_reagent_datum.extinguish_reaction(src)
 
 /obj/effect/blob/bullet_act(var/obj/item/projectile/Proj)
 	..()

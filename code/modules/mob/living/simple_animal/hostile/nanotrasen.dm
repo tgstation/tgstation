@@ -21,7 +21,7 @@
 	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = "harm"
-	loot = list(/obj/effect/landmark/mobcorpse/nanotrasensoldier)
+	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list("nanotrasenprivate")
@@ -45,7 +45,7 @@
 	casingtype = /obj/item/ammo_casing/c45
 	projectilesound = 'sound/weapons/Gunshot.ogg'
 	loot = list(/obj/item/weapon/gun/projectile/automatic/pistol/m1911,
-				/obj/effect/landmark/mobcorpse/nanotrasensoldier)
+				/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
 
 
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg
@@ -55,4 +55,4 @@
 	casingtype = /obj/item/ammo_casing/c46x30mm
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
 	loot = list(/obj/item/weapon/gun/projectile/automatic/wt550,
-				/obj/effect/landmark/mobcorpse/nanotrasensoldier)
+				/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)

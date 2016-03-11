@@ -36,18 +36,22 @@
 /turf/floor/plating/beach/sand
 	name = "Sand"
 	icon_state = "sand"
+	baseturf = /turf/floor/plating/beach/sand
 
 /turf/floor/plating/beach/coastline_t
 	name = "Coastline"
 	icon_state = "sandwater_t"
+	baseturf = /turf/floor/plating/beach/coastline_t
 
 /turf/floor/plating/beach/coastline_b
 	name = "Coastline"
 	icon_state = "sandwater_b"
+	baseturf = /turf/floor/plating/beach/coastline_b
 
 /turf/floor/plating/beach/water
 	name = "Water"
 	icon_state = "water"
+	baseturf = /turf/floor/plating/beach/water
 
 /turf/floor/plating/ironsand/New()
 	..()
@@ -70,8 +74,7 @@
 /turf/floor/plating/ice/colder
 	temperature = 140
 
-/turf/floor/plating/ice/break_tile()
-	return
+/turf/floor/plating/ice/temperate	temperature = 255.37/turf/floor/plating/ice/break_tile()	return
 
 /turf/floor/plating/ice/burn_tile()
 	return
@@ -86,8 +89,7 @@
 /turf/floor/plating/snowed/colder
 	temperature = 140
 
-/turf/floor/noslip
-	name = "high-traction floor"
+/turf/floor/plating/snowed/temperatre	temperature = 255.37/turf/floor/noslip	name = "high-traction floor"
 	icon_state = "noslip"
 	floor_tile = /obj/item/stack/tile/noslip
 	broken_states = list("noslip-damaged1","noslip-damaged2","noslip-damaged3")

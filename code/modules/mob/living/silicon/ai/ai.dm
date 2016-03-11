@@ -804,7 +804,7 @@ var/list/ai_list = list()
 			user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
 			return
 		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
-		aiRestorePowerRoutine = 0//So the AI initially has power.
+		ai_restore_power()//So the AI initially has power.
 		control_disabled = 1//Can't control things remotely if you're stuck in a card!
 		radio_enabled = 0 	//No talking on the built-in radio for you either!
 		loc = card//Throw AI into the card.

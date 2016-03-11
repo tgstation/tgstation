@@ -80,7 +80,7 @@
 		return
 
 	if(user && user.buckled)
-		user.buckled.unbuckle_mob()
+		user.buckled.unbuckle_mob(user, force=1)
 
 	var/list/tempL = L.Copy()
 	var/attempt = null

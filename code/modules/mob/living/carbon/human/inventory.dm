@@ -173,7 +173,7 @@
 /mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
 	if((C.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(C.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_hair()
-	if(toggle_off && internal)
+	if(toggle_off && internal && !getorganslot("breathing_tube"))
 		update_internals_hud_icon(0)
 		internal = null
 	if(C.flags_inv & HIDEEYES)

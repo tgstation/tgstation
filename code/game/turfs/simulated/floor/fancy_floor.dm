@@ -21,8 +21,7 @@
 		playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		return
 
-/turf/floor/grass
-	name = "Grass patch"
+/turf/floor/wood/cold	temperature = 255.37/turf/floor/grass	name = "Grass patch"
 	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")

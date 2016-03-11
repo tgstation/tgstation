@@ -91,7 +91,7 @@
 /area/security/prison)
 "aan" = (
 /obj/machinery/hydroponics/soil,
-/obj/item/seeds/ambrosiavulgarisseed,
+/obj/item/seeds/ambrosia,
 /turf/floor/plasteel{
 	dir = 9;
 	 icon_state = "green"
@@ -105,7 +105,7 @@
 /area/security/prison)
 "aap" = (
 /obj/machinery/hydroponics/soil,
-/obj/item/seeds/carrotseed,
+/obj/item/seeds/carrot,
 /turf/floor/plasteel{
 	dir = 1;
 	 icon_state = "green"
@@ -191,7 +191,7 @@
 "aaB" = (
 /obj/structure/window/reinforced,
 /obj/machinery/hydroponics/soil,
-/obj/item/seeds/potatoseed,
+/obj/item/seeds/potato,
 /turf/floor/plasteel{
 	dir = 10;
 	 icon_state = "green"
@@ -204,7 +204,7 @@
 "aaD" = (
 /obj/structure/window/reinforced,
 /obj/machinery/hydroponics/soil,
-/obj/item/seeds/grassseed,
+/obj/item/seeds/grass,
 /turf/floor/plasteel{
 	dir = 2;
 	 icon_state = "green"
@@ -6637,7 +6637,6 @@
 /turf/floor/plating,
 /area/maintenance/auxsolarport)
 "amB" = (
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/security/prison)
 "amC" = (
@@ -11251,7 +11250,6 @@
 /turf/floor/plating,
 /area/maintenance/fsmaint2)
 "awN" = (
-/mob/living/simple_animal/cockroach,
 /turf/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -13501,16 +13499,16 @@
 	name = "\improper Garden"
 	})
 "aBw" = (
-/obj/item/seeds/appleseed,
-/obj/item/seeds/bananaseed,
-/obj/item/seeds/cocoapodseed,
-/obj/item/seeds/grapeseed,
-/obj/item/seeds/orangeseed,
-/obj/item/seeds/sugarcaneseed,
-/obj/item/seeds/wheatseed,
-/obj/item/seeds/watermelonseed,
+/obj/item/seeds/apple,
+/obj/item/seeds/banana,
+/obj/item/seeds/cocoapod,
+/obj/item/seeds/grape,
+/obj/item/seeds/orange,
+/obj/item/seeds/sugarcane,
+/obj/item/seeds/wheat,
+/obj/item/seeds/watermelon,
 /obj/structure/table/glass,
-/obj/item/seeds/towermycelium,
+/obj/item/seeds/tower,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -15467,12 +15465,13 @@
 "aFA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/computer/pod/old{
+	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
-	 icon_state = "airlock_control_standby";
-	 id = "chapelgun";
-	 name = "Mass Driver Controller";
-	 pixel_x = 24;
-	 pixel_y = 0
+	icon_state = "airlock_control_standby";
+	id = "chapelgun";
+	name = "Mass Driver Controller";
+	pixel_x = 24;
+	pixel_y = 0
 	},
 /turf/floor/plasteel{
 	icon_state = "dark"
@@ -18167,7 +18166,6 @@
 /area/hydroponics)
 "aKY" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/maintenance/fpmaint2)
 "aKZ" = (
@@ -26542,14 +26540,12 @@
 	},
 /obj/structure/window/reinforced,
 /obj/item/weapon/aiModule/core/full/corp,
-/obj/item/weapon/aiModule/core/full/paladin,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/aiModule/core/full/robocop,
 /obj/item/weapon/aiModule/core/full/custom,
 /turf/floor/plasteel{
 	icon_state = "dark"
@@ -29857,7 +29853,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/maintenance/fsmaint)
 "bkW" = (
@@ -30387,12 +30382,10 @@
 	},
 /area/maintenance/disposal)
 "blT" = (
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/maintenance/fsmaint2)
 "blU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
 /turf/floor/wood,
 /area/crew_quarters/sleep)
 "blV" = (
@@ -58971,7 +58964,6 @@
 	 d2 = 2;
 	 icon_state = "1-2"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/maintenance/fsmaint2)
 "cpB" = (
@@ -59561,7 +59553,6 @@
 	 d2 = 4;
 	 icon_state = "2-4"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/maintenance/fsmaint2)
 "cqN" = (
@@ -64264,7 +64255,6 @@
 /turf/floor/plating/airless,
 /area/space/nearstation)
 "cAy" = (
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/maintenance/electrical)
 "cAz" = (
@@ -64275,25 +64265,21 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/mob/living/simple_animal/cockroach,
 /turf/floor/plasteel{
 	icon_state = "dark"
 	},
 /area/chapel/office)
 "cAA" = (
-/mob/living/simple_animal/cockroach,
 /turf/floor/wood,
 /area/crew_quarters/bar)
 "cAB" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
 /turf/floor/plasteel{
 	icon_state = "showroomfloor"
 	},
 /area/crew_quarters/kitchen)
 "cAC" = (
-/mob/living/simple_animal/cockroach,
 /turf/floor/plasteel{
 	icon_state = "cafeteria"
 	},
@@ -64302,7 +64288,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating{
 	icon_state = "warnplate";
 	 dir = 1
@@ -64314,13 +64299,11 @@
 	 d2 = 2;
 	 icon_state = "1-2"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/floor/plasteel{
 	icon_state = "dark"
 	},
 /area/medical/morgue)
 "cAF" = (
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/maintenance/disposal)
 "cAG" = (
@@ -64339,11 +64322,9 @@
 	d2 = 8;
 	 icon_state = "0-8"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/crew_quarters/heads)
 "cAH" = (
-/mob/living/simple_animal/cockroach,
 /turf/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -64354,16 +64335,13 @@
 	 id = "garbage";
 	 name = "disposal coveyor"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/maintenance/disposal)
 "cAJ" = (
 /obj/structure/closet,
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/maintenance/disposal)
 "cAK" = (
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/maintenance/asmaint2)
 "cAL" = (
@@ -64375,7 +64353,6 @@
 /turf/floor/plasteel,
 /area/janitor)
 "cAM" = (
-/mob/living/simple_animal/cockroach,
 /turf/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -64391,11 +64368,9 @@
 	 d2 = 8;
 	 icon_state = "1-8"
 	},
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/engine/engineering)
 "cAP" = (
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating{
 	icon_state = "warnplate";
 	 dir = 4
@@ -64403,7 +64378,6 @@
 /area/engine/engineering)
 "cAQ" = (
 /obj/structure/chair,
-/mob/living/simple_animal/cockroach,
 /turf/floor/plating,
 /area/maintenance/aft)
 "cAR" = (

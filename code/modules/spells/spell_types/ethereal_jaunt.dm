@@ -31,12 +31,12 @@
 			animation.master = holder
 			target.ExtinguishMob()
 			if(target.buckled)
-				target.buckled.unbuckle_mob()
+				target.buckled.unbuckle_mob(target,force=1)
 			if(target.pulledby)
 				target.pulledby.stop_pulling()
 			target.stop_pulling()
-			if(target.buckled_mob)
-				target.unbuckle_mob(force=1)
+			if(target.buckled_mobs.len)
+				target.unbuckle_all_mobs(force=1)
 			jaunt_disappear(animation, target)
 			target.loc = holder
 			target.reset_perspective(holder)

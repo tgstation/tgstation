@@ -380,7 +380,11 @@ var/next_mob_id = 0
 	set category = "Object"
 	set src = usr
 
-	if(istype(loc,/obj/mecha)) return
+	if(istype(loc,/obj/mecha))
+		return
+
+	if(incapacitated())
+		return
 
 	if(hand)
 		var/obj/item/W = l_hand
@@ -392,7 +396,6 @@ var/next_mob_id = 0
 		if (W)
 			W.attack_self(src)
 			update_inv_r_hand()
-	return
 
 /*
 /mob/verb/dump_source()
@@ -768,56 +771,65 @@ var/next_mob_id = 0
 /mob/proc/Dizzy(amount)
 	dizziness = max(dizziness,amount,0)
 
-/mob/proc/Stun(amount)
+/mob/proc/Stun(amount, updating_canmove = 1)
 	if(status_flags & CANSTUN)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		update_canmove()
+		if(updating_canmove)
+			update_canmove()
 
-/mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
+/mob/proc/SetStunned(amount, updating_canmove = 1) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
 	if(status_flags & CANSTUN)
 		stunned = max(amount,0)
-		update_canmove()
+		if(updating_canmove)
+			update_canmove()
 
-/mob/proc/AdjustStunned(amount)
+/mob/proc/AdjustStunned(amount, updating_canmove = 1)
 	if(status_flags & CANSTUN)
 		stunned = max(stunned + amount,0)
-		update_canmove()
+		if(updating_canmove)
+			update_canmove()
 
-/mob/proc/Weaken(amount, ignore_canweaken = 0)
+/mob/proc/Weaken(amount, ignore_canweaken = 0, updating_canmove = 1)
 	if((status_flags & CANWEAKEN) || ignore_canweaken)
 		weakened = max(max(weakened,amount),0)
-		update_canmove()	//updates lying, canmove and icons
+		if(updating_canmove)
+			update_canmove()	//updates lying, canmove and icons
 
-/mob/proc/SetWeakened(amount)
+/mob/proc/SetWeakened(amount, updating_canmove = 1)
 	if(status_flags & CANWEAKEN)
 		weakened = max(amount,0)
-		update_canmove()	//updates lying, canmove and icons
+		if(updating_canmove)
+			update_canmove()	//updates lying, canmove and icons
 
-/mob/proc/AdjustWeakened(amount, ignore_canweaken = 0)
+/mob/proc/AdjustWeakened(amount, ignore_canweaken = 0, updating_canmove = 1)
 	if((status_flags & CANWEAKEN) || ignore_canweaken)
 		weakened = max(weakened + amount,0)
-		update_canmove()	//updates lying, canmove and icons
+		if(updating_canmove)
+			update_canmove()	//updates lying, canmove and icons
 
-/mob/proc/Paralyse(amount)
+/mob/proc/Paralyse(amount, updating_stat = 1)
 	if(status_flags & CANPARALYSE)
 		var/old_paralysis = paralysis
 		paralysis = max(max(paralysis,amount),0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			update_stat()
+			if(updating_stat)
+				update_stat()
 
-/mob/proc/SetParalysis(amount)
+/mob/proc/SetParalysis(amount, updating_stat = 1)
 	if(status_flags & CANPARALYSE)
 		var/old_paralysis = paralysis
 		paralysis = max(amount,0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			update_stat()
+			if(updating_stat)
+				update_stat()
 
-/mob/proc/AdjustParalysis(amount)
+/mob/proc/AdjustParalysis(amount, updating_stat = 1)
 	if(status_flags & CANPARALYSE)
 		var/old_paralysis = paralysis
 		paralysis = max(paralysis + amount,0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			update_stat()
+			if(updating_stat)
+				update_stat()
 
 /mob/proc/Sleeping(amount, updating_stat = 1)
 	var/old_sleeping = sleeping
@@ -831,25 +843,29 @@ var/next_mob_id = 0
 		if(updating_stat)
 			update_stat()
 
-/mob/proc/SetSleeping(amount)
+/mob/proc/SetSleeping(amount, updating_stat = 1)
 	var/old_sleeping = sleeping
 	sleeping = max(amount,0)
 	if(!old_sleeping && sleeping)
 		throw_alert("asleep", /obj/screen/alert/asleep)
-		update_stat()
+		if(updating_stat)
+			update_stat()
 	else if(old_sleeping && !sleeping)
 		clear_alert("asleep")
-		update_stat()
+		if(updating_stat)
+			update_stat()
 
-/mob/proc/AdjustSleeping(amount)
+/mob/proc/AdjustSleeping(amount, updating_stat = 1)
 	var/old_sleeping = sleeping
 	sleeping = max(sleeping + amount,0)
 	if(!old_sleeping && sleeping)
 		throw_alert("asleep", /obj/screen/alert/asleep)
-		update_stat()
+		if(updating_stat)
+			update_stat()
 	else if(old_sleeping && !sleeping)
 		clear_alert("asleep")
-		update_stat()
+		if(updating_stat)
+			update_stat()
 
 /mob/proc/Resting(amount)
 	resting = max(max(resting,amount),0)
@@ -912,7 +928,7 @@ var/next_mob_id = 0
 
 //Default buckling shift visual for mobs
 /mob/post_buckle_mob(mob/living/M)
-	if(M == buckled_mob) //post buckling
+	if(M in buckled_mobs)//post buckling
 		var/height = M.get_mob_buckling_height(src)
 		M.pixel_y = initial(M.pixel_y) + height
 		if(M.layer < layer)

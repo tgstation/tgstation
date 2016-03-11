@@ -88,7 +88,7 @@
 "bJ" = (/turf/floor/plasteel{icon_state = "dark"},/area/mine/abandoned)
 "bK" = (/obj/structure/sink{pixel_y = 30},/turf/floor/plasteel{icon_state = "floorgrime"},/area/mine/abandoned)
 "bL" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/bucket,/turf/floor/plasteel{icon_state = "floorgrime"},/area/mine/abandoned)
-"bM" = (/obj/structure/table,/obj/item/weapon/paper/crumpled,/obj/item/seeds/cherryseed,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,/turf/floor/plasteel{icon_state = "floorgrime"},/area/mine/abandoned)
+"bM" = (/obj/structure/table,/obj/item/weapon/paper/crumpled,/obj/item/seeds/cherry,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,/turf/floor/plasteel{icon_state = "floorgrime"},/area/mine/abandoned)
 "bN" = (/obj/machinery/light{dir = 1},/turf/floor/plating/asteroid/airless,/area/mine/north_outpost)
 "bO" = (/obj/machinery/light/small{dir = 4},/obj/structure/barricade/wooden,/turf/floor/plasteel{icon_state = "delivery"; name = "floor"},/area/mine/production)
 "bP" = (/obj/item/clothing/mask/facehugger{icon_state = "facehugger_dead"; stat = 2},/obj/structure/alien/weeds,/turf/floor/plasteel/airless,/area/mine/abandoned)

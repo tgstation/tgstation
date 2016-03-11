@@ -144,7 +144,7 @@
 /obj/structure/disposalpipe/New(loc,var/obj/structure/disposalconstruct/make_from)
 	..()
 
-	if(make_from && !make_from.gc_destroyed)
+	if(make_from && !qdeleted(make_from))
 		base_icon_state = make_from.base_state
 		dir = make_from.dir
 		dpdir = make_from.dpdir

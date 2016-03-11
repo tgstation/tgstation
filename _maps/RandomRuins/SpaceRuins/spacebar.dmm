@@ -18,7 +18,7 @@
 "ar" = (/turf/floor/wood,/area/ruin/powered)
 "as" = (/obj/structure/table,/obj/item/toy/figure/bartender,/turf/floor/wood,/area/ruin/powered)
 "at" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/shaker,/turf/floor/wood,/area/ruin/powered)
-"au" = (/obj/effect/landmark/corpse/bartender/alive,/turf/floor/wood,/area/ruin/powered)
+"au" = (/obj/effect/mob_spawn/human/bartender/alive,/turf/floor/wood,/area/ruin/powered)
 "av" = (/obj/structure/reagent_dispensers/beerkeg,/turf/floor/wood,/area/ruin/powered)
 "aw" = (/turf/floor/plasteel/shuttle,/area/ruin/unpowered)
 "ax" = (/obj/machinery/door/airlock{name = "Bar Storage"; req_access_txt = "25"},/turf/floor/wood,/area/ruin/powered)

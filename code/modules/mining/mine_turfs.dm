@@ -544,8 +544,9 @@ var/global/list/rockTurfEdgeCache
 	nitrogen = 0.01
 	temperature = TCMB
 
-/turf/floor/plating/asteroid/New()
-	var/proper_name = name
+/turf/floor/plating/asteroid/snow/temperatre
+	temperature = 255.37
+/turf/floor/plating/asteroid/New()	var/proper_name = name
 	..()
 	name = proper_name
 	if(prob(20))

@@ -223,6 +223,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you."
 	icon_state = "alien_fire"
 
+/obj/screen/alert/alien_vulnerable
+	name = "Severed Matriarchy"
+	desc = "Your queen has been killed, you will suffer movement penalties and loss of hivemind. A new queen cannot be made until you recover."
+	icon_state = "alien_noqueen"
 
 //SILICONS
 

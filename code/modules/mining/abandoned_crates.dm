@@ -22,7 +22,7 @@
 	switch(loot)
 		if(1 to 5) //5% chance
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/rum(src)
-			new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia(src)
+			new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus(src)
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)
 			new /obj/item/weapon/lighter(src)
 		if(6 to 10)
@@ -45,7 +45,7 @@
 			for(var/i in 1 to 3)
 				new /obj/item/weapon/reagent_containers/glass/beaker/noreact(src)
 		if(31 to 35)
-			new /obj/item/seeds/cashseed(src)
+			new /obj/item/seeds/cash(src)
 		if(36 to 40)
 			new /obj/item/weapon/melee/baton(src)
 		if(41 to 45)
