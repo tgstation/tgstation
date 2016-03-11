@@ -57,6 +57,7 @@
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
+	var/datum/martial_art/martial_art = null
 
 /datum/mind/New(var/key)
 	src.key = key
