@@ -263,11 +263,17 @@ its easier to just keep the beam vertical.
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
 		user << "It contains:"
 		if(reagents.reagent_list.len)
-			for(var/datum/reagent/R in reagents.reagent_list)
-				user << "[R.volume] units of [R.name]"
+			if(user.can_see_reagents()) //Show each individual reagent
+				for(var/datum/reagent/R in reagents.reagent_list)
+					user << "[R.volume] units of [R.name]"
+			else //Otherwise, just show the total volume
+				var/total_volume = 0
+				for(var/datum/reagent/R in reagents.reagent_list)
+					total_volume += R.volume
+				user << "[total_volume] units of various reagents"
 		else
 			user << "Nothing."
-
+ 
 /atom/proc/relaymove()
 	return
 

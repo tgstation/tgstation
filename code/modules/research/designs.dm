@@ -331,6 +331,16 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/mask/gas/welding
 	category = list("Equipment")
 
+/datum/design/sci_goggles
+	name = "Science Goggles"
+	desc = "Goggles fitted with a portable analyzer capable of determining the reagents in containers."
+	id = "scigoggles"
+	req_tech = list("materials" = 2, "magnets" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 250, MAT_GLASS = 300)
+	build_path = /obj/item/clothing/glasses/science
+	category = list("Equipment")
+
 /datum/design/air_horn
 	name = "Air Horn"
 	desc = "Damn son, where'd you find this?"
