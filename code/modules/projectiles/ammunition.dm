@@ -114,8 +114,13 @@
 
 	return 0
 
+/obj/item/ammo_box/proc/can_load(mob/user)
+	return 1
+
 /obj/item/ammo_box/attackby(obj/item/A, mob/user, params, silent = 0, replace_spent = 0)
 	var/num_loaded = 0
+	if(!can_load(user))
+		return
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
