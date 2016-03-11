@@ -129,7 +129,7 @@ Borg Hypospray
 
 /obj/item/weapon/reagent_containers/borghypo/hacked
 	icon_state = "borghypo_s"
-	reagent_ids = list ("facid", "mutetoxin", "cyanide", "sodium_thiopental", "heparin", "teslium")
+	reagent_ids = list ("facid", "mutetoxin", "cyanide", "sodium_thiopental", "heparin", "lexorin")
 
 /obj/item/weapon/reagent_containers/borghypo/syndicate
 	name = "syndicate cyborg hypospray"
