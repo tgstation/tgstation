@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- bugfix: Paint cans now require you to be standing next to the tile you're trying to paint, and take obstacles such as windows into account. RIP lubing through walls using XRAY.
