@@ -287,7 +287,7 @@
 	icon_state = "bola"
 	breakouttime = 35//easy to apply, easy to break out of
 	gender = NEUTER
-	var/stun = 0
+	var/weaken = 0
 
 /obj/item/weapon/restraints/legcuffs/bola/throw_impact(atom/hit_atom)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
@@ -300,12 +300,11 @@
 		C.update_inv_legcuffed()
 		feedback_add_details("handcuffs","B")
 		C << "<span class='userdanger'>\The [src] ensnares you!</span>"
-		if(stun)
-			C.Weaken(1)
+		C.Weaken(weaken)
 
 /obj/item/weapon/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"
 	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
 	icon_state = "bola_r"
 	breakouttime = 70
-	stun = 1
+	weaken = 1
