@@ -454,7 +454,7 @@
 	var/mob/target = dropping
 
 	if(target == user)
-		if(!user.restrained() && user.canmove)
+		if(!user.restrained() && user.canmove && !user.locked_to)
 			target.visible_message("[target] starts climbing into the [src].", "You start climbing into the [src].")
 		else
 			return
