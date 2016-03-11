@@ -66,6 +66,15 @@
 	build_path = /obj/item/weapon/weldingtool
 	category = list("initial","Tools")
 
+/datum/design/cable_coil
+	name = "Cable coil"
+	id = "cable_coil"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 10, MAT_GLASS = 5)
+	build_path = /obj/item/stack/cable_coil/random 
+	category = list("initial","Tools")
+	maxstack = 30
+
 /datum/design/screwdriver
 	name = "Screwdriver"
 	id = "screwdriver"
@@ -153,6 +162,7 @@
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/metal
 	category = list("initial","Construction")
+	maxstack = 50
 
 /datum/design/glass
 	name = "Glass"
@@ -161,6 +171,7 @@
 	materials = list(MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/glass
 	category = list("initial","Construction")
+	maxstack = 50
 
 /datum/design/rglass
 	name = "Reinforced glass"
@@ -169,6 +180,7 @@
 	materials = list(MAT_METAL = 1000, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/rglass
 	category = list("initial","Construction")
+	maxstack = 50
 
 /datum/design/rods
 	name = "Metal rod"
@@ -177,6 +189,7 @@
 	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/stack/rods
 	category = list("initial","Construction")
+	maxstack = 50
 
 /datum/design/rcd_ammo
 	name = "Compressed matter cardridge"
@@ -256,6 +269,14 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_GLASS = 2500)
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/large
+	category = list("initial", "Medical")
+
+/datum/design/healthanalyzer
+	name = "Health Analyzer"
+	id = "healthanalyzer"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 50)
+	build_path = /obj/item/device/healthanalyzer
 	category = list("initial", "Medical")
 
 /datum/design/beanbag_slug

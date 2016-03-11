@@ -478,7 +478,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=50, MAT_GLASS= 20)
+	materials = list(MAT_METAL=10, MAT_GLASS=5)
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
