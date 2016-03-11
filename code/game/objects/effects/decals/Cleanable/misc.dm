@@ -7,11 +7,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shards"
 
-/obj/effect/decal/cleanable/generic/fins
-	name = "fins"
-	desc = "some kind of discarded fins"
-	icon_state = "fins"
-
 /obj/effect/decal/cleanable/ash
 	name = "ashes"
 	desc = "Ashes to ashes, dust to dust, and into space."

@@ -22,7 +22,7 @@
 
 /obj/item/projectile/ion/strong
 	damage = 35
-	damage_type = TOX
+	damage_type = BRUTE
 	nodamage = 0
 	weaken = 2
 
@@ -30,8 +30,8 @@
 	..()
 	damage += 5
 	if(damage > 50)
-		new/obj/effect/decal/cleanable/generic/fins(src.loc)
-		empulse(src.loc, 0, 0)
+		new/obj/item/trash/fins(src.loc)
+		empulse(src.loc, 1, 1)
 
 /obj/item/projectile/ion/strong/on_hit(atom/target, blocked = 0)
 	..()

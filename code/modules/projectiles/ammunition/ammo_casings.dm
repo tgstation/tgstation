@@ -290,7 +290,7 @@
 
 /obj/item/ammo_casing/a40mm/empsabot
 	name = "40mm EMP-FSD sabot"
-	desc = "A 40mm shell packed with a large silicon piercing ansible crystal to create a very heavy ion bolt similar to an ion rifle."
+	desc = "A 40mm shell packed with a large ansible crystal which creates a very heavy Ion sabot blast. At high speeds, it discards ion charged, silicon disrupting fins."
 	caliber = "40mm"
 	icon_state = "40mmemp"
 	projectile_type = /obj/item/projectile/ion/strong

@@ -371,7 +371,7 @@
 	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/shotgun/fourmgl
-	name = "4W40 MGL"
+	name = "Multiple Grenade launcher"
 	desc = "A pump action 40mm grenade launcher with four revolving chambers, automatic ejection systems, and slot reloading."
 	icon_state = "4mgl"
 	item_state = "4mgl"
