@@ -62,22 +62,20 @@
 		qdel(src)
 
 /obj/structure/chair/attack_tk(mob/user)
-	if(buckled_mobs.len)
+	if(buckled_mob)
 		..()
 	else
 		rotate()
 	return
 
 /obj/structure/chair/proc/handle_rotation(direction)
-	if(buckled_mobs.len)
-		for(var/m in buckled_mobs)
-			var/mob/living/buckled_mob = m
-			buckled_mob.buckled = null //Temporary, so Move() succeeds.
-			if(!direction || !buckled_mob.Move(get_step(src, direction), direction))
-				buckled_mob.buckled = src
-				dir = buckled_mob.dir
-				return 0
-			buckled_mob.buckled = src //Restoring
+	if(buckled_mob)
+		buckled_mob.buckled = null //Temporary, so Move() succeeds.
+		if(!direction || !buckled_mob.Move(get_step(src, direction), direction))
+			buckled_mob.buckled = src
+			dir = buckled_mob.dir
+			return 0
+		buckled_mob.buckled = src //Restoring
 	handle_layer()
 	return 1
 
@@ -90,10 +88,8 @@
 /obj/structure/chair/proc/spin()
 	dir = turn(dir, 90)
 	handle_layer()
-	if(buckled_mobs.len)
-		for(var/m in buckled_mobs)
-			var/mob/living/buckled_mob = m
-			buckled_mob.dir = dir
+	if(buckled_mob)
+		buckled_mob.dir = dir
 
 /obj/structure/chair/verb/rotate()
 	set name = "Rotate Chair"
@@ -155,7 +151,7 @@
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
-	if(buckled_mobs.len)
+	if(buckled_mob)
 		overlays += armrest
 	else
 		overlays -= armrest
@@ -200,7 +196,7 @@
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!item_chair || !ishuman(usr) || buckled_mobs.len)
+		if(!item_chair || !ishuman(usr) || buckled_mob)
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)

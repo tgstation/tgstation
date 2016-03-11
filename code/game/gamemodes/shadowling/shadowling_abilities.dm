@@ -127,12 +127,12 @@
 	var/turf/T = get_turf(user)
 	user.forceMove(T) //to properly move the mob out of a potential container
 	if(user.buckled)
-		user.buckled.unbuckle_mob(user,force=1)
+		user.buckled.unbuckle_mob()
 	if(user.pulledby)
 		user.pulledby.stop_pulling()
 	user.stop_pulling()
-	if(user.buckled_mobs.len)
-		user.unbuckle_all_mobs(force=1)
+	if(user.buckled_mob)
+		user.unbuckle_mob(force=1)
 	sleep(40) //4 seconds
 	if(!qdeleted(user))
 		user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The rift's pressure forces you back to corporeality.</span>")

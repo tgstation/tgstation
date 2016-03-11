@@ -173,11 +173,11 @@ Class Procs:
 	density = 1
 	if(!target)
 		for(var/mob/living/carbon/C in loc)
-			if(C.buckled || C.buckled_mobs.len)
+			if(C.buckled || C.buckled_mob)
 				continue
 			else
 				target = C
-	if(target && !target.buckled && !target.buckled_mobs.len)
+	if(target && !target.buckled && !target.buckled_mob)
 		occupant = target
 		target.forceMove(src)
 	updateUsrDialog()

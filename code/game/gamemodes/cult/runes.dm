@@ -802,7 +802,7 @@ var/list/teleport_other_runes = list()
 		log_game("Summon Cultist rune failed - target in away mission")
 		return
 	if(cultist_to_summon.buckled)
-		cultist_to_summon.buckled.unbuckle_mob(cultist_to_summon,force=1)
+		cultist_to_summon.buckled.unbuckle_mob()
 	cultist_to_summon.visible_message("<span class='warning'>[cultist_to_summon] suddenly disappears in a flash of red light!</span>", \
 									  "<span class='cultitalic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
 	visible_message("<span class='warning'>A foggy shape materializes atop [src] and solidifes into [cultist_to_summon]!</span>")

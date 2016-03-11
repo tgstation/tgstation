@@ -78,8 +78,8 @@
 	if(target.buckled)
 		occupant_message("<span class='warning'>[target] will not fit into the sleeper because they are buckled to [target.buckled]!</span>")
 		return
-	if(target.buckled_mobs.len)
-		occupant_message("<span class='warning'>[target] will not fit into the sleeper because of the creatures attached to it!</span>")
+	if(target.buckled_mob)
+		occupant_message("<span class='warning'>[target] will not fit into the sleeper because [target.buckled_mob] is attached to it!</span>")
 		return
 	if(patient)
 		occupant_message("<span class='warning'>The sleeper is already occupied!</span>")

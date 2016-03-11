@@ -363,8 +363,8 @@
 			KZ.production = (master.spread_cap / initial(master.spread_cap)) * 50
 	mutations = list()
 	SetOpacity(0)
-	if(buckled_mobs.len)
-		unbuckle_all_mobs(force=1)
+	if(buckled_mob)
+		unbuckle_mob()
 	return ..()
 
 /obj/effect/spacevine/proc/on_chem_effect(datum/reagent/R)
@@ -540,10 +540,10 @@
 		SM.on_grow(src)
 
 /obj/effect/spacevine/proc/entangle_mob()
-	if(!buckled_mobs.len && prob(25))
+	if(!buckled_mob && prob(25))
 		for(var/mob/living/V in src.loc)
 			entangle(V)
-			if(buckled_mobs.len)
+			if(buckled_mob)
 				break //only capture one mob at a time
 
 

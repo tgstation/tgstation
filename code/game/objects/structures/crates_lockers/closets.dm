@@ -126,7 +126,7 @@
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
 			return
 		var/mob/living/L = AM
-		if(L.buckled || L.buckled_mobs.len)
+		if(L.buckled || L.buckled_mob)
 			return
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(horizontal && !L.lying)
@@ -145,7 +145,7 @@
 			return
 		if(!allow_dense && AM.density)
 			return
-		if(AM.anchored || AM.buckled_mobs.len || (AM.flags & NODROP))
+		if(AM.anchored || AM.buckled_mob || (AM.flags & NODROP))
 			return
 
 	AM.forceMove(src)

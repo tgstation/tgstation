@@ -35,12 +35,10 @@
 //if they differ between directions, otherwise use the
 //generic variables
 /obj/vehicle/proc/handle_vehicle_offsets()
-	if(buckled_mobs.len)
-		for(var/m in buckled_mobs)
-			var/mob/living/buckled_mob = m
-			buckled_mob.dir = dir
-			buckled_mob.pixel_x = generic_pixel_x
-			buckled_mob.pixel_y = generic_pixel_y
+	if(buckled_mob)
+		buckled_mob.dir = dir
+		buckled_mob.pixel_x = generic_pixel_x
+		buckled_mob.pixel_y = generic_pixel_y
 
 
 /obj/vehicle/update_icon()
@@ -66,8 +64,8 @@
 
 
 //BUCKLE HOOKS
-/obj/vehicle/unbuckle_mob(mob/living/buckled_mob,force = 0)
-	if(istype(buckled_mob))
+/obj/vehicle/unbuckle_mob(force = 0)
+	if(buckled_mob)
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 	. = ..()
@@ -88,7 +86,7 @@
 //MOVEMENT
 /obj/vehicle/relaymove(mob/user, direction)
 	if(user.incapacitated())
-		unbuckle_mob(user)
+		unbuckle_mob()
 
 	if(keycheck(user))
 		if(!Process_Spacemove(direction) || world.time < next_vehicle_move || !isturf(loc))
@@ -96,6 +94,11 @@
 		next_vehicle_move = world.time + vehicle_move_delay
 
 		step(src, direction)
+
+		if(buckled_mob)
+			if(buckled_mob.loc != loc)
+				buckled_mob.buckled = null //Temporary, so Move() succeeds.
+				buckled_mob.buckled = src //Restoring
 
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
@@ -117,9 +120,8 @@
 /obj/vehicle/Bump(atom/movable/M)
 	. = ..()
 	if(auto_door_open)
-		if(istype(M, /obj/machinery/door) && buckled_mobs.len)
-			for(var/m in buckled_mobs)
-				M.Bumped(m)
+		if(istype(M, /obj/machinery/door) && buckled_mob)
+			M.Bumped(buckled_mob)
 
 
 /obj/vehicle/Process_Spacemove(direction)
