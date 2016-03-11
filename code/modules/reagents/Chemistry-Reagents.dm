@@ -683,7 +683,7 @@
 			M.drowsyness = 0
 			M.stuttering = 0
 			M.confused = 0
-			M.jitteriness = 0
+			M.remove_jitter()
 	data++
 
 /datum/reagent/inaprovaline
@@ -1292,7 +1292,7 @@
 	M.sdisabilities = 0
 
 	//Makes it more obvious that it worked.
-	M.jitteriness = 0
+	M.remove_jitter()
 
 	//Might need to update appearance for hulk etc.
 	if(needs_update)
@@ -1870,7 +1870,7 @@
 	M.stuttering = 0
 	M.confused = 0
 	M.sleeping = 0
-	M.jitteriness = 0
+	M.remove_jitter()
 	for(var/datum/disease/D in M.viruses)
 		D.spread = "Remissive"
 		D.stage--

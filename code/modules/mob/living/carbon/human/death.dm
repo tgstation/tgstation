@@ -46,7 +46,7 @@
 	if(healths)		healths.icon_state = "health7"
 	stat = DEAD
 	dizziness = 0
-	jitteriness = 0
+	remove_jitter()
 
 	//If we have brain worms, dump 'em.
 	var/mob/living/simple_animal/borer/B=has_brain_worms()

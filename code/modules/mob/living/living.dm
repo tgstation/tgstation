@@ -477,7 +477,7 @@ Thanks.
 	paralysis = 0
 	stunned = 0
 	weakened = 0
-	jitteriness = 0
+	remove_jitter()
 	germ_level = 0
 	next_pain_time = 0
 	traumatic_shock = 0
