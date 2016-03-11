@@ -694,11 +694,12 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/chasm/proc/drop(atom/movable/AM)
 	visible_message("[AM] falls into [src]!")
-	AM.forceMove(locate(drop_x, drop_y, drop_z))
+	qdel(AM)
+	/*AM.forceMove(locate(drop_x, drop_y, drop_z))
 	AM.visible_message("[AM] falls from above!")
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM
-		L.adjustBruteLoss(30)
+		L.adjustBruteLoss(30)*/
 
 
 
