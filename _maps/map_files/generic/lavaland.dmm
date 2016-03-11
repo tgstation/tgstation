@@ -58,7 +58,7 @@
 "bf" = (/obj/structure/extinguisher_cabinet{pixel_x = -5; pixel_y = 30},/turf/simulated/floor/plasteel{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
 "bg" = (/obj/machinery/power/apc{dir = 1; name = "Mining Station Port Wing APC"; pixel_x = 1; pixel_y = 25},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/plasteel{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
 "bh" = (/obj/machinery/mineral/equipment_vendor,/turf/simulated/floor/plasteel{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
-"bi" = (/obj/structure/closet/emcloset,/turf/simulated/floor/plasteel{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
+"bi" = (/obj/machinery/computer/shuttle/mining{req_access = "0"},/turf/simulated/floor/plasteel{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
 "bj" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plasteel{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
 "bk" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plasteel{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
 "bl" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plasteel{baseturf = /turf/simulated/floor/plating/asteroid/basalt},/area/mine/living_quarters)
