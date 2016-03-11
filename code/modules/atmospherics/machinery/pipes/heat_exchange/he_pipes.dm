@@ -43,16 +43,11 @@
 
 
 	//heatup/cooldown any mobs buckled to ourselves based on our temperature
-	if(buckled_mobs.len)
+	if(buckled_mob)
 		var/hc = pipe_air.heat_capacity()
-		var/mob/living/heat_source = buckled_mobs[1]
-		//Best guess-estimate of the total bodytemperature of all the mobs, since they share the same environment it's ~ok~ to guess like this
-		var/avg_temp = (pipe_air.temperature * hc + (heat_source.bodytemperature * buckled_mobs.len) * 3500) / (hc + (buckled_mobs.len * 3500))
-		for(var/m in buckled_mobs)
-			var/mob/living/L = m
-			L.bodytemperature = avg_temp
+		var/avg_temp = (pipe_air.temperature * hc + buckled_mob.bodytemperature * 3500) / (hc + 3500)
 		pipe_air.temperature = avg_temp
-
+		buckled_mob.bodytemperature = avg_temp
 
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/process()
@@ -79,9 +74,7 @@
 			animate(src, color = rgb(h_r, h_g, h_b), time = 20, easing = SINE_EASING)
 
 	//burn any mobs buckled based on temperature
-	if(buckled_mobs.len)
+	if(buckled_mob)
 		var/heat_limit = 1000
 		if(pipe_air.temperature > heat_limit + 1)
-			for(var/m in buckled_mobs)
-				var/mob/living/buckled_mob = m
-				buckled_mob.apply_damage(4 * log(pipe_air.temperature - heat_limit), BURN, "chest")
+			buckled_mob.apply_damage(4 * log(pipe_air.temperature - heat_limit), BURN, "chest")

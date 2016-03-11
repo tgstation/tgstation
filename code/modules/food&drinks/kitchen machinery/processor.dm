@@ -158,7 +158,7 @@
 		var/obj/item/weapon/grab/G = O
 		if(!user.Adjacent(G.affecting))
 			return
-		if(G.affecting.buckled || G.affecting.buckled_mobs.len)
+		if(G.affecting.buckled || G.affecting.buckled_mob)
 			user << "<span class='warning'>[G.affecting] is attached to somthing!</span>"
 			return
 		what = G.affecting

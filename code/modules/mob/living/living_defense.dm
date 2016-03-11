@@ -205,7 +205,7 @@
 		return
 
 	if(M.buckled)
-		if(M in buckled_mobs)
+		if(M == buckled_mob)
 			M.Feedstop()
 		return // can't attack while eating!
 

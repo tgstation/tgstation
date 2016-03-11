@@ -38,7 +38,7 @@
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		if(!buckled_mobs.len)
+		if(!src.buckled_mob)
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 			if(do_after(user, 20/I.toolspeed, target = src))
 				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
@@ -52,9 +52,9 @@
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		if(istype(G.affecting, /mob/living/))
-			if(!buckled_mobs.len)
+			if(!buckled_mob)
 				if(do_mob(user, src, 120))
-					if(buckled_mobs.len) //to prevent spam/queing up attacks
+					if(buckled_mob) //to prevent spam/queing up attacks
 						return
 					if(G.affecting.buckled)
 						return
@@ -69,7 +69,7 @@
 					H.adjustBruteLoss(30)
 					H.buckled = src
 					H.dir = 2
-					buckle_mob(H, force=1)
+					buckled_mob = H
 					var/matrix/m180 = matrix(H.transform)
 					m180.Turn(180)
 					animate(H, transform = m180, time = 3)
@@ -83,8 +83,8 @@
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking
 	return
 
-/obj/structure/kitchenspike/user_unbuckle_mob(mob/living/buckled_mob, mob/living/carbon/human/user)
-	if(buckled_mob)
+/obj/structure/kitchenspike/user_unbuckle_mob(mob/living/carbon/human/user)
+	if(buckled_mob && buckled_mob.buckled == src)
 		var/mob/living/M = buckled_mob
 		if(M != user)
 			M.visible_message(\
@@ -116,6 +116,6 @@
 		M.pixel_y = M.get_standard_pixel_y_offset(180)
 		M.adjustBruteLoss(30)
 		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
-		unbuckle_mob(M,force=1)
+		unbuckle_mob()
 		M.emote("scream")
 		M.AdjustWeakened(10)

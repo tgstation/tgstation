@@ -48,7 +48,7 @@
 			break
 
 		if(Target)
-			if(locate(/mob/living/simple_animal/slime) in Target.buckled_mobs)
+			if(isslime(Target.buckled_mob))
 				Target = null
 				AIproc = 0
 				break
@@ -322,7 +322,7 @@
 						if(src.type in H.dna.species.ignored_by)
 							continue
 
-					if(locate(/mob/living/simple_animal/slime) in L.buckled_mobs) // Only one slime can latch on at a time.
+					if(isslime(L.buckled_mob)) // Only one slime can latch on at a time.
 						continue
 
 					targets += L // Possible target found!

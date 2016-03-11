@@ -117,7 +117,7 @@
 
 		user.ExtinguishMob()
 		if(user.buckled)
-			user.buckled.unbuckle_mob(user,force=1)
+			user.buckled.unbuckle_mob()
 
 		phase_underlay = create_phase_underlay(user)
 

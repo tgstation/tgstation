@@ -61,7 +61,7 @@
 			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
 				newtonian_move(last_move)
 
-	if(. && buckled_mobs.len && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
+	if(. && buckled_mob && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob
 		. = 0
 
 //Called after a successful Move(). By this point, we've already moved
@@ -125,9 +125,9 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
-	if(buckled_mobs.len)
-		unbuckle_all_mobs(force=1)
+		buckled.unbuckle_mob()
+	if(buckled_mob)
+		unbuckle_mob(force=1)
 	. = ..()
 	if(client)
 		reset_perspective(destination)
@@ -308,18 +308,16 @@
 	return
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
-	for(var/m in buckled_mobs)
-		var/mob/living/buckled_mob = m
-		if(!buckled_mob.Move(newloc, direct))
-			loc = buckled_mob.loc
-			last_move = buckled_mob.last_move
-			inertia_dir = last_move
-			buckled_mob.inertia_dir = last_move
-			return 0
+	if(!buckled_mob.Move(newloc, direct))
+		loc = buckled_mob.loc
+		last_move = buckled_mob.last_move
+		inertia_dir = last_move
+		buckled_mob.inertia_dir = last_move
+		return 0
 	return 1
 
 /atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
-	if(mover in buckled_mobs)
+	if(buckled_mob == mover)
 		return 1
 	return ..()
 

@@ -252,7 +252,7 @@
 		C.Weaken(w_amount)
 		C.stop_pulling()
 		if(buckled_obj)
-			buckled_obj.unbuckle_mob(C)
+			buckled_obj.unbuckle_mob()
 			step(buckled_obj, olddir)
 		else if(lube&SLIDE)
 			for(var/i=1, i<5, i++)
