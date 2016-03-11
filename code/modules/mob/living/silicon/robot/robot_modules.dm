@@ -161,10 +161,6 @@
 
 	fix_modules()
 
-/obj/item/weapon/robot_module/medical/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-
-
 /obj/item/weapon/robot_module/engineering
 	name = "engineering robot module"
 
