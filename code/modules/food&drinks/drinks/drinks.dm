@@ -132,7 +132,7 @@
 	force = 5
 	throwforce = 4
 	amount_per_transfer_from_this = 10
-	materials = list(MAT_IRON=400)
+	materials = list(MAT_METAL=400)
 	possible_transfer_amounts = list()
 	volume = 25
 	flags = CONDUCT | OPENCONTAINER
@@ -146,7 +146,7 @@
 	force = 1
 	throwforce = 1
 	amount_per_transfer_from_this = 5
-	materials = list(MAT_IRON=100)
+	materials = list(MAT_METAL=100)
 	possible_transfer_amounts = list()
 	volume = 5
 	flags = CONDUCT | OPENCONTAINER
