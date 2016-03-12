@@ -1,0 +1,5 @@
+author: Impisi
+delete-after: True
+changes: 
+  - tweak: "Improvised shells now deal more far more damage but are more inaccurate."
+  - tweak: "Overloaded shells now require liquid plasma in addition to black powder. Shells now fire explosive pellets that are good at hurting you and everything in front of you."
