@@ -95,9 +95,9 @@
 /// Drinks. END
 ////////////////////////////////////////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/drinks/golden_cup
-	desc = "A golden cup"
-	name = "golden cup"
+/obj/item/weapon/reagent_containers/food/drinks/gold_cup
+	name = "gold cup"
+	desc = "You're winner!"
 	icon_state = "golden_cup"
 	w_class = 4
 	force = 14
@@ -109,9 +109,48 @@
 	flags = CONDUCT | OPENCONTAINER
 	spillable = 1
 
-/obj/item/weapon/reagent_containers/food/drinks/golden_cup/tournament_26_06_2011
-	desc = "A golden cup. It will be presented to a winner of tournament 26 june and name of the winner will be graved on it."
+/obj/item/weapon/reagent_containers/food/drinks/silver_cup
+	name = "silver cup"
+	desc = "Best loser!"
+	icon_state = "silver_cup"
+	w_class = 3
+	force = 10
+	throwforce = 8
+	amount_per_transfer_from_this = 15
+	materials = list(MAT_SILVER=800)
+	possible_transfer_amounts = list()
+	volume = 100
+	flags = CONDUCT | OPENCONTAINER
+	spillable = 1
 
+
+/obj/item/weapon/reagent_containers/food/drinks/bronze_cup
+	name = "bronze cup"
+	desc = "At least you ranked!"
+	icon_state = "bronze_cup"
+	w_class = 2
+	force = 5
+	throwforce = 4
+	amount_per_transfer_from_this = 10
+	materials = list(MAT_IRON=400)
+	possible_transfer_amounts = list()
+	volume = 25
+	flags = CONDUCT | OPENCONTAINER
+	spillable = 1
+
+/obj/item/weapon/reagent_containers/food/drinks/pewter_cup
+	name = "pewter cup"
+	desc = "Everyone gets a trophy."
+	icon_state = "pewter_cup"
+	w_class = 1
+	force = 1
+	throwforce = 1
+	amount_per_transfer_from_this = 5
+	materials = list(MAT_IRON=100)
+	possible_transfer_amounts = list()
+	volume = 5
+	flags = CONDUCT | OPENCONTAINER
+	spillable = 1
 
 ///////////////////////////////////////////////Drinks
 //Notes by Darem: Drinks are simply containers that start preloaded. Unlike condiments, the contents can be ingested directly
