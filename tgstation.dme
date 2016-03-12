@@ -1089,6 +1089,7 @@
 #include "code\modules\html_interface\cards\cards.dm"
 #include "code\modules\html_interface\nanotrasen\nanotrasen.dm"
 #include "code\modules\hydroponics\biogenerator.dm"
+#include "code\modules\hydroponics\gene_modder.dm"
 #include "code\modules\hydroponics\grown.dm"
 #include "code\modules\hydroponics\growninedible.dm"
 #include "code\modules\hydroponics\hydroitemdefines.dm"

@@ -78,6 +78,7 @@
 	for(var/g in genes)
 		var/datum/plant_gene/G = g
 		S.genes += G.Copy()
+	S.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
 	return S
 
 /obj/item/seeds/proc/get_gene(typepath)
@@ -141,10 +142,10 @@
 	if(T.reagents)
 		for(var/reagent_id in reagents_add)
 			if(reagent_id == "blood") // Hack to make blood in plants always O-
-				T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id]), list("blood_type"="O-"))
+				T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id], 1), list("blood_type"="O-"))
 				continue
 
-			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id]))
+			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id]), 1)
 		return 1
 
 
