@@ -406,7 +406,7 @@ var/global/list/rockTurfEdgeCache
 		return
 
 	SpawnMonster(T)
-	var/turf/simulated/floor/t = T.ChangeTurf(turf_type)
+	var/turf/simulated/floor/t = new turf_type(T)
 	spawn(2)
 		t.fullUpdateMineralOverlays()
 
@@ -597,7 +597,7 @@ var/global/list/rockTurfEdgeCache
 			return
 
 		user << "<span class='notice'>You start digging...</span>"
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 
 		if(do_after(user, digging_speed, target = src))
 			if(istype(src, /turf/simulated/floor/plating/asteroid))
