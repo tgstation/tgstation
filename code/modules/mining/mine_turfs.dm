@@ -32,6 +32,9 @@ var/global/list/rockTurfEdgeCache
 	environment_type = "basalt"
 	turf_type = /turf/simulated/floor/plating/asteroid/basalt
 	baseturf = /turf/simulated/floor/plating/asteroid/basalt
+	oxygen = 14
+	nitrogen = 23
+	temperature = 300
 
 /turf/simulated/mineral/ex_act(severity, target)
 	..()
