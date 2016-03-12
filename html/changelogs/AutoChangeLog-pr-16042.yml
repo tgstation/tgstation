@@ -1,0 +1,4 @@
+author: Jordie0608
+delete-after: True
+changes: 
+  - rscadd: "Show Server Revision will now tell you if a PR is test merged currently."
