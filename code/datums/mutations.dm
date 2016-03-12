@@ -646,3 +646,18 @@
 				mut_overlay |= V
 				overlays_standing[CM.layer_used] = mut_overlay
 				apply_overlay(CM.layer_used)
+
+/datum/mutation/human/smes_human
+	name = "SMES Human"
+	quality = POSITIVE
+	get_chance = 20
+	lowest_value = 256 * 12
+	text_gain_indication = "<span class='notice'>Your hair stands on end.</span>"
+	text_lose_indication = "<span class='notice'>The tingling in your skin fades.</span>"
+
+/datum/mutation/human/smes_human/New()
+	..()
+	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="smes_human", "layer"=-MUTATIONS_LAYER)
+
+/datum/mutation/human/smes_human/get_visual_indicator(mob/living/carbon/human/owner)
+	return visual_indicators[1]
