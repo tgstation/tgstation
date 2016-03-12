@@ -1,5 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - tweak: "Boiling Oil does slightly more damage and takes slightly less damage when extinguished."
-  - rscadd: "Flammable Goo now applies firestacks to targets, but does not ignite them."

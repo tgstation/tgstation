@@ -1,7 +1,0 @@
-author: xxalpha
-delete-after: True
-changes: 
-  - rscadd: "Detective can be a Traitor/Double Agent."
-  - tweak: "Removed Detective's access to security lockers and secbots."
-  - tweak: "Removed bowman's headset from Detective's locker."
-  - tweak: "Box Brig Security Office and Locker Room require a higher access level (Security Officer level)."
