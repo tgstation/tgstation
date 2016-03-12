@@ -236,7 +236,10 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		message = stutter(message)
 
 	if(slurring)
-		message = slur(message)
+		if(reagents && reagents.has_reagent_type(/datum/reagent/consumable/ethanol, 125))
+			message = say_superdrunk(message)
+		else
+			message = say_drunk(message)
 
 	if(cultslurring)
 		message = cultslur(message)

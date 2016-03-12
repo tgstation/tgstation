@@ -1181,6 +1181,7 @@
 #include "code\modules\mob\dead\observer\logout.dm"
 #include "code\modules\mob\dead\observer\observer.dm"
 #include "code\modules\mob\dead\observer\say.dm"
+#include "code\modules\mob\living\accents.dm"
 #include "code\modules\mob\living\bloodcrawl.dm"
 #include "code\modules\mob\living\damage_procs.dm"
 #include "code\modules\mob\living\death.dm"

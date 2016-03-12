@@ -558,6 +558,20 @@ var/const/INJECT = 5 //injection
 
 	return 0
 
+/datum/reagents/proc/has_reagent_type(type, amount = -1)
+	for(var/_reagent in reagent_list)
+		var/datum/reagent/R = _reagent
+		if (istype(R, type))
+			if(!amount)
+				return R
+			else
+				if(R.volume >= amount)
+					return R
+				else
+					return 0
+
+	return 0
+
 /datum/reagents/proc/get_reagent_amount(reagent)
 	for(var/_reagent in reagent_list)
 		var/datum/reagent/R = _reagent
