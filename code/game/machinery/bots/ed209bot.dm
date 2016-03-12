@@ -100,7 +100,6 @@
 			check_records = 0//Don't actively target people set to arrest
 			arrest_type = 1//Don't even try to cuff
 			req_access = list(access_maint_tunnels)
-			arrest_type = 1
 			if((lasercolor == "b") && (name == "ED-209 Security Robot"))//Picks a name if there isn't already a custome one
 				name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
 			if((lasercolor == "r") && (name == "ED-209 Security Robot"))
@@ -229,7 +228,7 @@ Auto Patrol: []"},
 				threatlevel +=6
 				if(threatlevel > 0)
 					src.target = user
-					if(lasercolor)//To make up for the fact that lasertag bots don't hunt
+					if(projectile)
 						src.shootAt(user)
 					src.mode = SECBOT_HUNT
 
@@ -259,9 +258,12 @@ Auto Patrol: []"},
 		src.emagged = 2
 		src.on = 1
 		src.icon_state = "[lasercolor]ed209[src.on]"
-		src.projectile = null
+		src.projectile = /obj/item/projectile/beam
 		mode = SECBOT_IDLE
-		declare_arrests = 0
+		src.shot_delay = 6//Longer shot delay because JESUS CHRIST
+		src.check_records = 0//Don't actively target people set to arrest
+		src.arrest_type = 1//Don't even try to cuff
+		src.declare_arrests = 0
 
 /obj/machinery/bot/ed209/process()
 	//set background = 1
