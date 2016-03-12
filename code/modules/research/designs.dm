@@ -494,3 +494,14 @@ datum/design/diagnostic_hud_night
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
 	build_path = /obj/item/weapon/weldingtool/experimental
 	category = list("Equipment")
+
+
+/datum/design/alienalloy
+	name = "Alien Alloy"
+	desc = "A sheet of reverse-engineered alien alloy."
+	id = "alienalloy"
+	req_tech = list("abductor" = 1, "materials" = 7, "plasmatech" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_PLASMA = 4000)
+	build_path = /obj/item/stack/sheet/mineral/abductor
+	category = list("Stock Parts")
