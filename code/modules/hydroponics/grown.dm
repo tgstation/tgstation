@@ -9,6 +9,7 @@
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	var/plantname = ""
 	var/bitesize_mod = 0
+	var/splat_type = /obj/effect/decal/cleanable/plant_smudge
 	// If set, bitesize = 1 + round(reagents.total_volume / bitesize_mod)
 	dried_type = -1
 	// Saves us from having to define each stupid grown's dried_type as itself.
@@ -23,7 +24,6 @@
 		// This is for adminspawn or map-placed growns. They get the default stats of their seed type.
 		seed = new seed()
 		seed.potency = 50
-		seed.prepare_result(src)
 	else // Something is terribly wrong
 		qdel(src)
 		return
@@ -34,9 +34,13 @@
 	if(dried_type == -1)
 		dried_type = src.type
 
-	add_juice()
+	for(var/datum/plant_gene/trait/T in seed.genes)
+		T.on_new(src, newloc)
 
+	seed.prepare_result(src)
+	add_juice()
 	transform *= TransformUsingVariable(seed.potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
+
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/proc/add_juice()
@@ -45,6 +49,12 @@
 			bitesize = 1 + round(reagents.total_volume / bitesize_mod)
 		return 1
 	return 0
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/examine(user)
+	..()
+	for(var/datum/plant_gene/trait/T in seed.genes)
+		if(T.examine_line)
+			user << T.examine_line
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user, params)
 	..()
@@ -72,15 +82,93 @@
 		return
 	return
 
+
+// Various gene procs
+/obj/item/weapon/reagent_containers/food/snacks/grown/attack_self(mob/user)
+	if(seed.get_gene(/datum/plant_gene/trait/squash))
+		squash(user)
+	..()
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/throw_impact(atom/hit_atom)
+	if(!..() && seed.get_gene(/datum/plant_gene/trait/squash)) //was it caught by a mob?
+		squash(hit_atom)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/proc/squash(atom/target)
+	var/turf/T = get_turf(target)
+	if(ispath(splat_type, /obj/effect/decal/cleanable/plant_smudge))
+		if(filling_color)
+			var/obj/O = new splat_type(T)
+			O.color = filling_color
+			O.name = "[name] smudge"
+	else if(splat_type)
+		new splat_type(T)
+
+	if(trash)
+		if(ispath(trash, /obj/item/weapon/grown) || ispath(trash, /obj/item/weapon/reagent_containers/food/snacks/grown))
+			new trash(T, seed)
+		else
+			new trash(T)
+
+	visible_message("<span class='warning'>[src] has been squashed.</span>","<span class='italics'>You hear a smack.</span>")
+	for(var/datum/plant_gene/trait/trait in seed.genes)
+		trait.on_squash(src, target)
+
+	for(var/A in T)
+		reagents.reaction(A)
+
+	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/On_Consume()
+	if(iscarbon(usr))
+		for(var/datum/plant_gene/trait/T in seed.genes)
+			T.on_consume(src, usr)
+	..()
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/Crossed(atom/movable/AM)
+	var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
+	if(S && !ispath(trash, /obj/item/weapon/grown) && iscarbon(AM))
+		var/mob/living/carbon/M = AM
+		var/stun = min(seed.potency * S.rate * 2, 1)
+		var/weaken = min(seed.potency * S.rate, 0.5)
+		if(M.slip(stun, weaken, src))
+			for(var/datum/plant_gene/trait/T in seed.genes)
+				T.on_slip(src, M)
+		return 1
+	..()
+
+
+// Glow gene procs
+/obj/item/weapon/reagent_containers/food/snacks/grown/Destroy()
+	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+	if(G && ismob(loc))
+		loc.AddLuminosity(-G.get_lum(seed))
+	return ..()
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/pickup(mob/user)
+	..()
+	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+	if(G)
+		SetLuminosity(0)
+		user.AddLuminosity(G.get_lum(seed))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/dropped(mob/user)
+	..()
+	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+	if(G)
+		user.AddLuminosity(-G.get_lum(seed))
+		SetLuminosity(G.get_lum(seed))
+
+
+
 // For item-containing growns such as eggy or gatfruit
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user as mob)
 	user.unEquip(src)
 	if(trash)
 		var/obj/item/weapon/T
-		if(ispath(trash, /obj/item/weapon/grown))
+		if(ispath(trash, /obj/item/weapon/grown) || ispath(trash, /obj/item/weapon/reagent_containers/food/snacks/grown))
 			T = new trash(user.loc, seed)
 		else
 			T = new trash(user.loc)
 		user.put_in_hands(T)
-		user << "<span class='notice'>You open [src]\'s shell, revealing [T].</span>"
+		user << "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>"
 	qdel(src)

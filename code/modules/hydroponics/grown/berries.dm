@@ -75,6 +75,7 @@
 	lifespan = 30
 	endurance = 25
 	mutatelist = list()
+	genes = list(/datum/plant_gene/trait/glow/berry)
 	reagents_add = list("uranium" = 0.25, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 20
 
@@ -82,26 +83,8 @@
 	seed = /obj/item/seeds/berry/glow
 	name = "bunch of glow-berries"
 	desc = "Nutritious!"
-	var/on = 1
-	var/brightness_on = 2 //luminosity when on
 	icon_state = "glowberrypile"
 	filling_color = "#7CFC00"
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/Destroy()
-	if(istype(loc,/mob))
-		loc.AddLuminosity(round(-seed.potency / 5))
-	return ..()
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/pickup(mob/user)
-	..()
-	src.SetLuminosity(0)
-	user.AddLuminosity(round(seed.potency / 5))
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/dropped(mob/user)
-	..()
-	user.AddLuminosity(round(-seed.potency / 5))
-	src.SetLuminosity(round(seed.potency / 5))
-
 
 // Cherries
 /obj/item/seeds/cherry

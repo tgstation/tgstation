@@ -217,6 +217,7 @@
 	growthstages = 4
 	plant_type = PLANT_MUSHROOM
 	rarity = 20
+	genes = list(/datum/plant_gene/trait/glow)
 	mutatelist = list(/obj/item/seeds/glowshroom/glowcap)
 	reagents_add = list("radium" = 0.05, "nutriment" = 0.04)
 
@@ -228,13 +229,6 @@
 	filling_color = "#00FA9A"
 	var/effect_path = /obj/effect/glowshroom
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/New(var/loc, var/new_potency = 10)
-	..()
-	if(istype(src.loc,/mob))
-		pickup(src.loc)//adjusts the lighting on the mob
-	else
-		src.SetLuminosity(round(seed.potency / 10,1))
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
 	if(istype(user.loc,/turf/space))
 		return
@@ -245,21 +239,6 @@
 	planted.potency = seed.potency
 	user << "<span class='notice'>You plant [src].</span>"
 	qdel(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Destroy()
-	if(istype(loc,/mob))
-		loc.AddLuminosity(round(-seed.potency / 10,1))
-	return ..()
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
-	..()
-	SetLuminosity(0)
-	user.AddLuminosity(round(seed.potency / 10,1))
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
-	..()
-	user.AddLuminosity(round(-seed.potency / 10,1))
-	SetLuminosity(round(seed.potency / 10,1))
 
 
 // Glowcap
@@ -273,8 +252,9 @@
 	plantname = "Glowcaps"
 	plant_type = PLANT_MUSHROOM
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
+	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/cell_charge)
 	mutatelist = list()
-	reagents_add = list("teslium" = 0.02, "nutriment" = 0.04)
+	reagents_add = list("teslium" = 0.01, "nutriment" = 0.04)
 	rarity = 30
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
@@ -284,18 +264,3 @@
 	icon_state = "glowcap"
 	filling_color = "#00FA9A"
 	effect_path = /obj/effect/glowshroom/glowcap
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap/On_Consume()
-	if(!reagents.total_volume)
-		var/batteries_recharged = 0
-		for(var/obj/item/weapon/stock_parts/cell/C in usr.GetAllContents())
-			var/newcharge = (seed.potency*0.01)*C.maxcharge
-			if(C.charge < newcharge)
-				C.charge = newcharge
-				if(isobj(C.loc))
-					var/obj/O = C.loc
-					O.update_icon() //update power meters and such
-				batteries_recharged = 1
-		if(batteries_recharged)
-			usr << "<span class='notice'>Battery has recovered.</span>"
-	..()

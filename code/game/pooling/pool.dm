@@ -106,14 +106,20 @@ var/list/pooledvariables = list()
 	for(var/key in vars)
 		if(key in exclude)
 			continue
-		pooledvariables[type][key] = initial(vars[key])
+		if(islist(vars[key]))
+			pooledvariables[type][key] = list()
+		else
+			pooledvariables[type][key] = initial(vars[key])
 
 /datum/proc/ResetVars()
 	if(!pooledvariables[type])
 		createVariables(args)
 
 	for(var/key in pooledvariables[type])
-		vars[key] = pooledvariables[type][key]
+		if (islist(pooledvariables[type][key]))
+			vars[key] = list()
+		else
+			vars[key] = pooledvariables[type][key]
 
 /atom/movable/ResetVars()
 	..()

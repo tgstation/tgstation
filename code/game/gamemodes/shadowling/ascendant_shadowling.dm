@@ -12,7 +12,6 @@
 	health = 100000
 	maxHealth = 100000
 	speed = 0
-	var/phasing = 0
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 

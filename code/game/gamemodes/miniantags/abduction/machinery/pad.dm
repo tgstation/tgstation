@@ -21,7 +21,7 @@
 		return
 
 	if(target && target.buckled)
-		target.buckled.unbuckle_mob()
+		target.buckled.unbuckle_mob(target) //Antur says this teleport -shouldn't- force unbuckle, and it's his codebabby soo~
 
 	var/list/tempL = L
 	var/attempt = null
