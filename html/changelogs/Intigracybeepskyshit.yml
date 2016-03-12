@@ -1,0 +1,8 @@
+author: Intigracy
+delete-after: True
+changes: 
+- tweak: "ED-209s, beepsky/security bots, and V.A.L.I.D.S. no longer consider you a threat for holding floral somatories, hookshots, or defibs."
+- bugfix: "Secbot options now properly work. Before, you had to have ID checking on for it to check for anything, and it would always check for weapons with ID checking on."
+- bugfix: "Weapon Permits (the access available from the HoP) now properly function. The abovenamed will no longer consider you a threat for having weapons if you have the access."
+- tweak: "Note: Agent Cards lower your threat level by 2 for bots/VALIDs. It takes a minimum of 4 for them to arrest/flash you."
+- tweak: "Note: Bartenders have always started with a weapons permit."

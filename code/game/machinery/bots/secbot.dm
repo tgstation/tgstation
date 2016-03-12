@@ -53,13 +53,17 @@
 
 	var/nearest_beacon			// the nearest beacon's tag
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
-	var/weapons_check = 0
+
+	//List of weapons that secbots will not arrest for, also copypasted in ed209.dm and metaldetector.dm
 	var/safe_weapons = list(
 		/obj/item/weapon/gun/energy/laser/bluetag,
 		/obj/item/weapon/gun/energy/laser/redtag,
 		/obj/item/weapon/gun/energy/laser/practice,
 		/obj/item/weapon/gun/hookshot,
+		/obj/item/weapon/gun/energy/floragun,
+		/obj/item/weapon/melee/defibrillator
 		)
+
 	light_color = LIGHT_COLOR_RED
 	power_change()
 		..()
@@ -72,9 +76,7 @@
 /obj/machinery/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
 	desc = "It's Officer Beep O'sky! Powered by a potato and a shot of whiskey."
-	idcheck = 0
 	auto_patrol = 1
-	weapons_check = 0
 	declare_arrests = 1
 
 /obj/item/weapon/secbot_assembly
@@ -696,39 +698,41 @@ Auto Patrol: []"},
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
+//THIS CODE IS COPYPASTED IN ed209bot.dm AND metaldetector.dm, with slight variations
 /obj/machinery/bot/secbot/proc/assess_perp(mob/living/carbon/human/perp as mob)
-	var/threatcount = 0
+	var/threatcount = 0 //If threat >= 4 at the end, they get arrested
 
 	if(src.emagged == 2) return 10 //Everyone is a criminal!
 
-	if(src.idcheck && !src.allowed(perp))
+	if(!src.allowed(perp)) //cops can do no wrong, unless set to arrest.
 
-		if(istype(perp.l_hand, /obj/item/weapon/gun) || istype(perp.l_hand, /obj/item/weapon/melee))
-			if(!istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/practice))
-				threatcount += 4
+		if(weaponscheck && !wpermit(perp))
+			if(istype(perp.l_hand, /obj/item/weapon/gun) || istype(perp.l_hand, /obj/item/weapon/melee))
+				if(!(perp.l_hand.type in safe_weapons))
+					threatcount += 4
 
-		if(istype(perp.r_hand, /obj/item/weapon/gun) || istype(perp.r_hand, /obj/item/weapon/melee))
-			if(!istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/practice))
-				threatcount += 4
+			if(istype(perp.r_hand, /obj/item/weapon/gun) || istype(perp.r_hand, /obj/item/weapon/melee))
+				if(!(perp.r_hand.type in safe_weapons))
+					threatcount += 4
 
-		if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
-			if(!istype(perp:belt, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/practice))
-				threatcount += 2
+			if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee))
+				if(!(perp.belt.type in safe_weapons))
+					threatcount += 2
 
-		if(istype(perp:wear_suit, /obj/item/clothing/suit/wizrobe))
+		if(istype(perp.wear_suit, /obj/item/clothing/suit/wizrobe))
 			threatcount += 2
 
 		if(perp.dna && perp.dna.mutantrace && perp.dna.mutantrace != "none")
 			threatcount += 2
 
+		if(!perp.wear_id)
+			if(idcheck)
+				threatcount += 4
+			else
+				threatcount += 2
+
 		//Agent cards lower threatlevel.
-		if(perp.wear_id && istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
+		if(perp.wear_id && istype(perp.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 			threatcount -= 2
 
 	if(src.check_records)
@@ -871,7 +875,7 @@ Auto Patrol: []"},
 	declare_message = "<span class='info'>\icon[src] [name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b></span>"
 	..()
 
-/obj/machinery/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
+/obj/machinery/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item) //Unused anywhere, copypasted in ed209bot.dm
 	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
 		if(!(slot_item.type in safe_weapons))
 			return 1
