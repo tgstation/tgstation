@@ -77,7 +77,6 @@ var/global/datum/controller/master/Master = new()
 	// Pick a random away mission.
 	createRandomZlevel()
 	// Generate asteroid.
-	spawn_rivers()
 	seedRuins(5, 5, /area/lavaland/surface/outdoors, lava_ruins_templates)
 	//make_mining_asteroid_secrets()
 	// Set up Z-level transistions.
