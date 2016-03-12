@@ -83,6 +83,8 @@
 				/obj/item/stack/rods = 1,
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/ore/bluespace_crystal = 1)
+	time = 40
+	category = CAT_WEAPON
 
 /datum/table_recipe/bola
 	name = "Bola"
