@@ -35,8 +35,11 @@
 
 #define SMOOTH_FALSE	0 //not smooth
 #define SMOOTH_TRUE		1 //smooths with exact specified types or just itself
-#define SMOOTH_MORE		2 //smooths with all subtypes of specified types or just itself
+#define SMOOTH_MORE		2 //smooths with all subtypes of specified types or just itself (this value can replace SMOOTH_TRUE)
 #define SMOOTH_DIAGONAL	4 //if atom should smooth diagonally, this should be present in 'smooth' var
+#define SMOOTH_BORDER	8 //atom will smooth with the borders of the map
+
+#define NULLTURF_BORDER 123456789
 
 #define DEFAULT_UNDERLAY_ICON 			'icons/turf/floors.dmi'
 #define DEFAULT_UNDERLAY_ICON_STATE 	"plating"
@@ -65,27 +68,42 @@
 
 	for(var/direction in cardinal)
 		AM = find_type_in_direction(A, direction)
-		if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+		if(AM == NULLTURF_BORDER)
+			if((A.smooth & SMOOTH_BORDER))
+				adjacencies |= 1 << direction
+		else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 			adjacencies |= 1 << direction
 
 	if(adjacencies & N_NORTH)
 		if(adjacencies & N_WEST)
 			AM = find_type_in_direction(A, NORTHWEST)
-			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			if(AM == NULLTURF_BORDER)
+				if((A.smooth & SMOOTH_BORDER))
+					adjacencies |= N_NORTHWEST
+			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 				adjacencies |= N_NORTHWEST
 		if(adjacencies & N_EAST)
 			AM = find_type_in_direction(A, NORTHEAST)
-			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			if(AM == NULLTURF_BORDER)
+				if((A.smooth & SMOOTH_BORDER))
+					adjacencies |= N_NORTHEAST
+			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 				adjacencies |= N_NORTHEAST
 
 	if(adjacencies & N_SOUTH)
 		if(adjacencies & N_WEST)
 			AM = find_type_in_direction(A, SOUTHWEST)
-			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			if(AM == NULLTURF_BORDER)
+				if((A.smooth & SMOOTH_BORDER))
+					adjacencies |= N_SOUTHWEST
+			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 				adjacencies |= N_SOUTHWEST
 		if(adjacencies & N_EAST)
 			AM = find_type_in_direction(A, SOUTHEAST)
-			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			if(AM == NULLTURF_BORDER)
+				if((A.smooth & SMOOTH_BORDER))
+					adjacencies |= N_SOUTHEAST
+			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 				adjacencies |= N_SOUTHEAST
 
 	return adjacencies
@@ -141,9 +159,9 @@
 				underlays += image(fixed_underlay["icon"], fixed_underlay["icon_state"], layer=src.layer)
 		else
 			var/turf/T = get_step(src, turn(adjacencies, 180))
-			if(T.density)
+			if(T && T.density)
 				T = get_step(src, turn(adjacencies, 135))
-				if(T.density)
+				if(T && T.density)
 					T = get_step(src, turn(adjacencies, 225))
 
 			if(istype(T, /turf/space))
@@ -241,6 +259,9 @@
 		x_offset -= range
 
 	var/turf/target_turf = locate(source.x + x_offset, source.y + y_offset, source.z)
+	if(!target_turf)
+		return NULLTURF_BORDER
+
 	if(source.canSmoothWith)
 		var/atom/A
 		if(source.smooth & SMOOTH_MORE)
@@ -341,3 +362,12 @@
 			return SOUTHEAST
 		else
 			return 0
+
+//Example smooth wall
+/turf/simulated/wall/smooth
+	name = "smooth wall"
+	icon = 'icons/turf/smooth_wall.dmi'
+	icon_state = "smooth"
+	walltype = "shuttle"
+	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL|SMOOTH_BORDER
+	canSmoothWith = null

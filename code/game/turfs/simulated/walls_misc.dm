@@ -74,14 +74,6 @@
 	icon_state = "overspace"
 	fixed_underlay = list("space"=1)
 
-/turf/simulated/wall/smooth
-	name = "smooth wall"
-	icon = 'icons/turf/smooth_wall.dmi'
-	icon_state = "smooth"
-	walltype = "shuttle"
-	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL
-	canSmoothWith = null
-
 //sub-type to be used for interior shuttle walls
 //won't get an underlay of the destination turf on shuttle move
 /turf/simulated/wall/shuttle/interior/copyTurf(turf/T)
