@@ -406,7 +406,7 @@ var/global/list/rockTurfEdgeCache
 		return
 
 	SpawnMonster(T)
-	var/turf/simulated/floor/t = new turf_type(T)
+	var/turf/simulated/floor/t = T.ChangeTurf(turf_type)
 	spawn(2)
 		t.fullUpdateMineralOverlays()
 
