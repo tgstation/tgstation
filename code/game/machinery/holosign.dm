@@ -2,6 +2,7 @@
 var/list/obj/machinery/holosign/holosigns = list()
 
 /obj/machinery/holosign
+	anchored = 1
 	name = "holosign"
 	desc = "Small wall-mounted holographic projector"
 	icon = 'icons/obj/holosign.dmi'
