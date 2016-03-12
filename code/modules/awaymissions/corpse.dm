@@ -16,6 +16,7 @@
 	var/brute_damage = 0
 	var/oxy_damage = 0
 	density = 1
+	anchored = 1
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(ticker.current_state != GAME_STATE_PLAYING)
@@ -438,10 +439,6 @@
 	flavour_text = {"You were a prisoner, sentenced to hard labour in one of Nanotrasen's harsh gulags, but judging by the explosive crash you just survived, fate may have other plans for. First thing is first though: Find a way to survive this mess."}
 
 /obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/new_spawn)
-	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "syndicate collaboration", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting your manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
+	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "speaking as a mime", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting your manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
 	new_spawn << "You were convincted of: [crime]."
-
-
-//NEWCODE
-
 

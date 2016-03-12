@@ -59,7 +59,11 @@
 	roundstart = FALSE
 	death = FALSE
 	mob_species = /datum/species/pod
-	flavour_text = {"You are a strange, artificial creature. In the face of impending apocalyptic events, your creators tasked you with maintaining an emergency seed vault. You are to tend to the plants and await their return to aid in rebuilding civilization. You've been waiting quite a while though..."}
+	flavour_text = {"You are a strange, artificial creature. Your creators were a highly advanced and benevolent race, and launched many seed vaults into the stars, hoping to aid fledgling civilizations. You are to tend to the vault and await the arrival of sentient species. You've been waiting quite a while though..."}
+
+/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
+	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Deathcap", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Spore", "Root", "Bark", "Glowshroom", "Petal", "Leaf", "Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper")
+	new_spawn.real_name = plant_name
 
 //Greed
 
