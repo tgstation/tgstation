@@ -40,8 +40,8 @@
 
 /obj/structure/table/update_icon()
 	if(smooth)
-		smooth_icon(src)
-		smooth_icon_neighbors(src)
+		queue_smooth(src)
+		queue_smooth_neighbors(src)
 
 /obj/structure/table/ex_act(severity, target)
 	switch(severity)

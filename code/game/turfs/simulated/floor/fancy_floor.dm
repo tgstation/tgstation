@@ -63,11 +63,11 @@
 		return 0
 	if(!broken && !burnt)
 		if(smooth)
-			smooth_icon(src)
+			queue_smooth(src)
 	else
 		make_plating()
 		if(smooth)
-			smooth_icon_neighbors(src)
+			queue_smooth_neighbors(src)
 
 /turf/simulated/floor/carpet/break_tile()
 	broken = 1

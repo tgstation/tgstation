@@ -44,7 +44,7 @@
 	..()
 	levelupdate()
 	if(smooth)
-		smooth_icon(src)
+		queue_smooth(src)
 	visibilityChanged()
 	if(!blocks_air)
 		air = new
