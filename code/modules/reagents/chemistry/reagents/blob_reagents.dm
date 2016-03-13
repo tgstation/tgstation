@@ -434,6 +434,8 @@
 				return damage * 2
 			if(0.25)
 				return damage * 4
+			if(0.1)
+				return damage * 10
 	return damage * 1.25 //a laser will do 25 damage, which will kill any normal blob
 
 /datum/reagent/blob/electromagnetic_web/death_reaction(obj/effect/blob/B, cause)
