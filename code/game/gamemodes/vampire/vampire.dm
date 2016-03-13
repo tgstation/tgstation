@@ -726,6 +726,14 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		adjustBruteLoss(-4)
 		adjustFireLoss(-4)
 		adjustToxLoss(-4)
+		adjustOxyLoss(-4)
 		mind.vampire.smitecounter = 0
 		mind.vampire.nullified -= 5
+		for(var/datum/organ/internal/I in internal_organs)
+			if(I && I.damage > 0)
+				I.damage = max(0, I.damage - 4)
+			if(I)
+				I.status &= ~ORGAN_BROKEN
+				I.status &= ~ORGAN_SPLINTED
+				I.status &= ~ORGAN_BLEEDING
 	mind.vampire.nullified = max(0, mind.vampire.nullified - 1)
