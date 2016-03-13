@@ -181,7 +181,16 @@ var/global/list/status_displays = list() //This list contains both normal status
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	switch(mode)
-		if(MODE_SHUTTLE_TIMER,MODE_MESSAGE,MODE_CARGO_TIMER)
+		if(MODE_CARGO_TIMER)
+			to_chat(user, "<span class='info'>The display reads:<br>\t<xmp>-ETA-</xmp><br>\t<xmp>[get_supply_shuttle_timer()]</xmp></span>")
+		if(MODE_SHUTTLE_TIMER)
+			var/ETwut
+			if(emergency_shuttle.location == 1)
+				ETwut = "-ETD-"
+			else
+				ETwut = "-ETA-"
+			to_chat(user, "<span class='info'>The display says:<br>\t<xmp>[ETwut]</xmp><br>\t<xmp>[get_shuttle_timer()]</xmp></span>")
+		if(MODE_MESSAGE)
 			to_chat(user, "<span class='info'>The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp></span>")
 
 
