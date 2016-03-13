@@ -1,0 +1,5 @@
+author: Intigracy
+delete-after: True
+changes: 
+- experiment: You have to wave your hands around to use the Force.
+- rscadd: You can now use TK even with broken hands and won't drop the items. You do need hands to use TK though, see above.

@@ -32,18 +32,22 @@ var/const/tk_maxrange = 15
 		return
 
 	var/obj/item/tk_grab/O = new(src)
-	user.put_in_active_hand(O)
-	O.host = user
-	O.focus_object(src)
+	if(user.put_in_hands(O))
+		O.host = user
+		O.focus_object(src)
+	else
+		to_chat(user, "<span class='warning'>You have to wave your hands around to use the Force.</span>")
 	return
 
 /obj/item/attack_tk(mob/user)
 	if(user.stat || !isturf(loc)) return
 	if((M_TK in user.mutations) && !user.get_active_hand()) // both should already be true to get here
 		var/obj/item/tk_grab/O = new(src)
-		user.put_in_active_hand(O)
-		O.host = user
-		O.focus_object(src)
+		if(user.put_in_hands(O))
+			O.host = user
+			O.focus_object(src)
+		else
+			to_chat(user, "<span class='warning'>You have to wave your hands around to use the Force.</span>")
 	else
 		warning("Strange attack_tk(): TK([M_TK in user.mutations]) empty hand([!user.get_active_hand()])")
 	return
@@ -61,7 +65,7 @@ var/const/tk_maxrange = 15
 	* Deletes itself if it is ever not in your hand, or if you should have no access to TK.
 */
 /obj/item/tk_grab
-	name = "Telekinetic Grab"
+	name = "The Force"
 	desc = "Magic"
 	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
