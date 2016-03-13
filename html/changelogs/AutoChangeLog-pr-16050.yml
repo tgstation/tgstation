@@ -1,7 +1,0 @@
-author: Dorsisdwarf
-delete-after: True
-changes: 
-  - rscadd: "Adds Robo-Doctor board (The Hippocratic Oath: Now on your beepbot)"
-  - rscadd: "Adds Reporter board (The truth will set ye free (termsandconditionsmayapply))"
-  - rscadd: "Adds Live and Let Live board"
-  - rscadd: "Adds Thermodynamics as a dangerous board."
