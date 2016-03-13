@@ -107,12 +107,12 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 /obj/effect/ruin_loader/proc/Load(list/potentialRuins = space_ruins_templates, datum/map_template/template = null)
 	var/list/possible_ruins = list()
 	for(var/A in potentialRuins)
-		var/datum/map_template/T = A
+		var/datum/map_template/T = potentialRuins[A]
 		if(!T.loaded)
 			possible_ruins += T
 	world << "<span class='boldannounce'>Loading ruins...</span>"
 	if(!template && possible_ruins.len)
-		template = possible_ruins[pick(possible_ruins)]
+		template = safepick(possible_ruins)
 	if(!template)
 		world << "<span class='boldannounce'>No ruins found.</span>"
 		return
