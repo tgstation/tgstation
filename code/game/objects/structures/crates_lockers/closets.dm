@@ -51,7 +51,7 @@
 
 /obj/structure/closet/proc/can_close()
 	for(var/obj/structure/closet/closet in get_turf(src))
-		if(closet != src)
+		if(closet != src && !closet.wall_mounted)
 			return 0
 	return 1
 
@@ -121,7 +121,7 @@
 			L.client.eye = src
 	else if(!istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
 		return 0
-	else if(AM.density || AM.anchored)
+	else if(AM.density || AM.anchored || istype(AM,/obj/structure/closet))
 		return 0
 	AM.loc = src
 	return 1
