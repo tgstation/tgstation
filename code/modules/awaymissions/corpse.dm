@@ -372,7 +372,6 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	radio = /obj/item/device/radio/headset
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	helmet = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/weapon/storage/backpack/security
@@ -419,7 +418,7 @@
 
 /obj/effect/mob_spawn/human/abductor
 	name = "abductor"
-	mob_name = "???"
+	mob_name = "alien"
 	mob_species = /datum/species/abductor
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/combat
