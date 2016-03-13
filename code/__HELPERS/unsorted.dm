@@ -1291,3 +1291,7 @@ proc/pick_closest_path(value)
 //gives us the stack trace from CRASH() without ending the current proc.
 /proc/stack_trace(msg)
 	CRASH(msg)
+
+/proc/pause1tick()
+	. = 1
+	sleep world.tick_lag

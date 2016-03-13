@@ -30,20 +30,25 @@ var/datum/subsystem/lighting/SSlighting
 //effects and then processes every turf in the queue, updating their lighting object's appearance
 //Any light that returns 1 in check() deletes itself
 //By using queues we are ensuring we don't perform more updates than are necessary
-/datum/subsystem/lighting/fire()
-	changed_lights_workload = MC_AVERAGE(changed_lights_workload, changed_lights.len)
-
-	for(var/thing in changed_lights)
-		var/datum/light_source/LS = thing
+/datum/subsystem/lighting/fire(resumed = 0)
+	if (!resumed)
+		changed_lights_workload = MC_AVERAGE(changed_lights_workload, changed_lights.len)
+	while (changed_lights.len)
+		var/datum/light_source/LS = changed_lights[1]
+		changed_lights.Cut(1, 2)
 		LS.check()
-	changed_lights.Cut()
+		if (MC_TICK_CHECK)
+			return
 
-	changed_turfs_workload = MC_AVERAGE(changed_turfs_workload, changed_turfs.len)
-	for(var/thing in changed_turfs)
-		var/turf/T = thing
+	if (!resumed)
+		changed_turfs_workload = MC_AVERAGE(changed_turfs_workload, changed_turfs.len)
+	while (changed_turfs.len)
+		var/turf/T = changed_turfs[1]
+		changed_turfs.Cut(1, 2)
 		if(T.lighting_changed)
 			T.redraw_lighting()
-	changed_turfs.Cut()
+		if (MC_TICK_CHECK)
+			return
 
 //same as above except it attempts to shift ALL turfs in the world regardless of lighting_changed status
 //Does not loop. Should be run prior to process() being called for the first time.

@@ -244,6 +244,7 @@
 			X.singularity_pull(S, current_size)
 		else if(dist <= consume_range)
 			consume(X)
+		CHECK_TICK
 	return
 
 

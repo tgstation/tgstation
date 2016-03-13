@@ -20,6 +20,7 @@ var/datum/subsystem/air/SSair
 
 	var/list/excited_groups = list()
 	var/list/active_turfs = list()
+	var/list/processing = list()
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
@@ -56,19 +57,24 @@ var/datum/subsystem/air/SSair
 	..()
 
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
-/datum/subsystem/air/fire()
+/datum/subsystem/air/fire(resumed = 0)
+
 	var/timer = world.timeofday
-	process_pipenets()
-	cost_pipenets = MC_AVERAGE(cost_pipenets, (world.timeofday - timer))
+	//tick paused, that means we already did this bit
+	if (!resumed)
+		process_pipenets()
+		cost_pipenets = MC_AVERAGE(cost_pipenets, (world.timeofday - timer))
 
-	timer = world.timeofday
-	process_atmos_machinery()
-	cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, (world.timeofday - timer))
+		timer = world.timeofday
+		process_atmos_machinery()
+		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, (world.timeofday - timer))
 
-	timer = world.timeofday
-	process_active_turfs()
+		timer = world.timeofday
+
+	process_active_turfs(resumed)
 	cost_turfs = MC_AVERAGE(cost_turfs, (world.timeofday - timer))
-
+	if (paused)
+		return //we paused mid way thru processing turfs due to tick overrun
 	timer = world.timeofday
 	process_excited_groups()
 	cost_groups = MC_AVERAGE(cost_groups, (world.timeofday - timer))
@@ -123,11 +129,18 @@ var/datum/subsystem/air/SSair
 	high_pressure_delta.len = 0
 
 
-/datum/subsystem/air/proc/process_active_turfs()
+/datum/subsystem/air/proc/process_active_turfs(resumed = 0)
 	//cache for sanic speed
 	var/fire_count = times_fired
-	for(var/turf/simulated/T in active_turfs)
-		T.process_cell(fire_count)
+	if (!resumed)
+		processing = active_turfs.Copy()
+	while(processing.len)
+		var/turf/simulated/T = processing[1]
+		processing.Cut(1, 2)
+		if (T)
+			T.process_cell(fire_count)
+		if (MC_TICK_CHECK)
+			return
 
 
 /datum/subsystem/air/proc/remove_from_active(turf/simulated/T)

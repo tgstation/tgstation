@@ -13,6 +13,7 @@
 	// Defaults are pretty sane for most use cases.
 	// You can change how quickly it starts scaling back with dwait_buffer,
 	// and you can change how much it scales back with dwait_delta.
+
 	var/dynamic_wait = 0	//changes the wait based on the amount of time it took to process
 	var/dwait_upper = 20	//longest wait can be under dynamic_wait
 	var/dwait_lower = 5		//shortest wait can be under dynamic_wait
@@ -27,6 +28,7 @@
 #if DM_VERSION >= 510
 	var/tick_usage = 0		//average tick usage
 #endif
+	var/paused =0			//was this subsystem paused mid fire.
 	var/times_fired = 0		//number of times we have called fire()
 
 	// The object used for the clickable stat() button.
@@ -39,8 +41,14 @@
 //fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
 //fire(), and the procs it calls, SHOULD NOT HAVE ANY SLEEP OPERATIONS in them!
 //YE BE WARNED!
-/datum/subsystem/proc/fire()
+/datum/subsystem/proc/fire(resumed = 0)
+	set waitfor = 0 //this should not be depended upon, this is just to solve issues with sleeps messing up tick tracking
 	can_fire = 0
+
+/datum/subsystem/proc/pause()
+	. = 1
+	Master.priority_queue += src
+	paused = 1
 
 //used to initialize the subsystem AFTER the map has loaded
 /datum/subsystem/proc/Initialize(start_timeofday, zlevel)
