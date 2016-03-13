@@ -16,7 +16,7 @@ var/global/datum/controller/master/Master = new()
 	// The minimum length of time between MC ticks (in deciseconds).
 	// The highest this can be without affecting schedules is the GCD of all subsystem waits.
 	// Set to 0 to disable all processing.
-	var/processing_interval = 1
+	var/processing = 1
 	// The iteration of the MC.
 	var/iteration = 0
 	// The cost (in deciseconds) of the MC loop.
@@ -131,15 +131,16 @@ var/global/datum/controller/master/Master = new()
 		// Schedule the first run of the Subsystems.
 		var/timer = world.time
 		for(var/datum/subsystem/SS in subsystems)
-			timer += processing_interval
+			timer += world.tick_lag
 			SS.next_fire = timer
-
+		var/list/subsystemstorun = subsystems.Copy()
 		var/start_time
 		while(1) // More efficient than recursion.
-			if(processing_interval > 0) //are we processing
+			if(processing) //are we processing
 				++iteration
 				start_time = world.timeofday
-				var/list/subsystemstorun = subsystems
+				if (!subsystemstorun.len)
+					subsystemstorun = subsystems.Copy()
 				var/priorityrunning = 0 //so we know if there are priority queue items
 #if DM_VERSION >= 510
 				//this is a queue for any SS skipped or paused for tick reasons, to be ran first next tick
@@ -147,7 +148,9 @@ var/global/datum/controller/master/Master = new()
 					priorityrunning = priority_queue.len
 					subsystemstorun = priority_queue | subsystems
 				var/ran_subsystems = 0
-				for(var/datum/subsystem/SS in subsystemstorun)
+				while(subsystemstorun.len)
+					var/datum/subsystem/SS = subsystemstorun[1]
+					subsystemstorun.Cut(1, 2)
 #if DM_VERSION >= 510
 					if (world.tick_usage > 80)
 #else
@@ -164,7 +167,7 @@ var/global/datum/controller/master/Master = new()
 					if(SS.can_fire > 0)
 						if(priorityrunning || ((SS.next_fire <= world.time) && (SS.last_fire + (SS.wait * 0.75) <= world.time)))
 #if DM_VERSION >= 510
-							if (!priorityrunning && (world.tick_usage + SS.tick_usage > 75) && (SS.last_fire + (SS.wait*1.25) > world.time))
+							if ((world.tick_usage + SS.tick_usage > 75) && (SS.last_fire + (SS.wait*1.25) > world.time))
 								priority_queue += SS
 								continue
 #endif
@@ -222,7 +225,7 @@ var/global/datum/controller/master/Master = new()
 				var/extrasleep = 0
 				// If we are loading the server too much, sleep a bit extra...
 				if(world.cpu >= 75)
-					extrasleep += (extrasleep + processing_interval) * ((world.cpu-50)/10)
+					extrasleep += (extrasleep + world.tick_lag) * ((world.cpu-50)/10)
 #if DM_VERSION < 510
 				if(world.cpu >= 100)
 					if(!old_fps)
@@ -233,7 +236,7 @@ var/global/datum/controller/master/Master = new()
 					world.fps = old_fps
 					old_fps = null
 #endif
-				sleep(processing_interval + extrasleep)
+				sleep(world.tick_lag+extrasleep)
 
 			else
 				sleep(50)
@@ -246,5 +249,5 @@ var/global/datum/controller/master/Master = new()
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug("Initializing...", src)
 
-	stat("Master Controller:", statclick.update("[round(Master.cost, 0.01)]ds (Interval: [Master.processing_interval] | Iteration:[Master.iteration])"))
+	stat("Master Controller:", statclick.update("[round(Master.cost, 0.01)]ds (Iteration:[Master.iteration])"))
 

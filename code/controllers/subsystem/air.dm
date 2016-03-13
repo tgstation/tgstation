@@ -6,7 +6,6 @@ var/datum/subsystem/air/SSair
 	wait = 5
 	dynamic_wait = 1
 	dwait_upper = 300
-	dwait_buffer = 1
 	dwait_delta = 7
 	display = 1
 
