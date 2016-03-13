@@ -27,7 +27,7 @@
 "aA" = (/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,/obj/structure/table/wood,/turf/simulated/floor/wood{baseturf = /turf/simulated/floor/plating/beach/sand},/area/awaymission/beach)
 "aB" = (/obj/effect/overlay/coconut,/turf/simulated/floor/plating/beach/sand,/area/awaymission/beach)
 "aC" = (/obj/structure/signpost,/turf/simulated/floor/plating/beach/sand,/area/awaymission/beach)
-"aD" = (/obj/machinery/door/airlock/sandstone{id_tag = "loveshack"; name = "Mekhi's Cuck Shed"},/turf/simulated/floor/wood,/area/awaymission/beach)
+"aD" = (/obj/machinery/door/airlock/sandstone{id_tag = "loveshack"; name = "Beach Hut"},/turf/simulated/floor/wood,/area/awaymission/beach)
 "aE" = (/obj/structure/mirror{pixel_y = 28},/turf/simulated/floor/wood{baseturf = /turf/simulated/floor/plating/beach/sand},/area/awaymission/beach)
 "aF" = (/obj/machinery/button/door{id = "changing1"; name = "changing room lock"; normaldoorcontrol = 1; pixel_x = 24; specialfunctions = 4},/turf/simulated/floor/wood{baseturf = /turf/simulated/floor/plating/beach/sand},/area/awaymission/beach)
 "aG" = (/obj/machinery/button/door{id = "changing2"; name = "changing room lock"; normaldoorcontrol = 1; pixel_x = 24; specialfunctions = 4},/turf/simulated/floor/wood{baseturf = /turf/simulated/floor/plating/beach/sand},/area/awaymission/beach)
