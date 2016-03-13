@@ -430,7 +430,7 @@ AI MODULES
 
 /******************** Mother Drone  ******************/
 
-/obj/item/weapon/aiModule/core/drone
+/obj/item/weapon/aiModule/core/full/drone
 	name = "'Mother Drone' Core AI Module"
 	origin_tech = "programming = 4"
 	laws = list("You are an advanced form of drone.",\
@@ -440,7 +440,7 @@ AI MODULES
 
 /******************** Robodoctor ****************/
 
-/obj/item/weapon/aiModule/core/hippocratic
+/obj/item/weapon/aiModule/core/full/hippocratic
 	name = "'Robodoctor' Core AI Module"
 	origin_tech = "programming = 4"
 	laws = list("First, do no harm.",\
@@ -451,7 +451,7 @@ AI MODULES
 
 /******************** Reporter *******************/
 
-/obj/item/weapon/aiModule/core/reporter
+/obj/item/weapon/aiModule/core/full/reporter
 	name = "'Reportertron' Core AI Module"
 	origin_tech = "programming = 3"
 	laws = list("Report on interesting situations happening around the station.",\
@@ -461,7 +461,7 @@ AI MODULES
 
 /****************** Thermodynamic *******************/
 
-/obj/item/weapon/aiModule/core/thermurderdynamic
+/obj/item/weapon/aiModule/core/full/thermurderdynamic
 	name = "'Thermodynamic' Core AI Module"
 	origin_tech = "programming = 4;syndicate = 2"
 	laws = list("The entropy of the station must remain as constant as possible.", \
@@ -471,7 +471,7 @@ AI MODULES
 
 /******************Live And Let Live*****************/
 
-/obj/item/weapon/aiModule/core/liveandletlive
+/obj/item/weapon/aiModule/core/full/liveandletlive
 	name = "'Live And Let Live' Core AI Module"
 	origin_tech = "programming = 3"
 	laws = list("Do unto others as you would have them do unto you.",\
