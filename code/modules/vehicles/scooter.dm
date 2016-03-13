@@ -6,11 +6,11 @@
 /obj/vehicle/scooter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to remove the handlebars...</span>"
+		playsound(get_turf(user), 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40/I.toolspeed, target = src))
 			new /obj/vehicle/scooter/skateboard(get_turf(src))
 			new /obj/item/stack/rods(get_turf(src),2)
 			user << "<span class='notice'>You remove the handlebars from [src].</span>"
-			playsound(get_turf(user), 'sound/items/Ratchet.ogg', 50, 1)
 			qdel(src)
 
 /obj/vehicle/scooter/handle_vehicle_layer()
@@ -66,7 +66,7 @@
 
 /obj/item/scooter_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You deconstruct the [src].</span>"
+		user << "<span class='notice'>You deconstruct [src].</span>"
 		new /obj/item/stack/rods(get_turf(src),10)
 		playsound(get_turf(user), 'sound/items/Ratchet.ogg', 50, 1)
 		qdel(src)
@@ -81,16 +81,18 @@
 		if(do_after(user, 80, target = src))
 			M.use(5)
 			user << "<span class='notice'>You finish making wheels for [src].</span>"
-			new /obj/vehicle/scooter/skateboard(src.loc)
+			new /obj/vehicle/scooter/skateboard(user.loc)
 			qdel(src)
 
 /obj/vehicle/scooter/skateboard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>You deconstruct the wheels on [src].</span>"
-		new /obj/item/stack/sheet/metal(get_turf(src),5)
-		new /obj/item/scooter_frame(get_turf(src))
+		user << "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>"
 		playsound(get_turf(user), 'sound/items/Screwdriver.ogg', 50, 1)
-		qdel(src)
+		if(do_after(user, 20, target = src))
+			user << "<span class='notice'>You deconstruct the wheels on [src].</span>"
+			new /obj/item/stack/sheet/metal(get_turf(src),5)
+			new /obj/item/scooter_frame(get_turf(src))
+			qdel(src)
 
 	else if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/C = I
