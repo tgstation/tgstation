@@ -43,10 +43,6 @@
 		synd_mind.assigned_role = "Syndicate"
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
-		if(ishuman(synd_mind.current))//don't want operatives burning to death instantly.
-			var/mob/living/carbon/human/human = synd_mind.current
-			if(human.dna && human.dna.species.dangerous_existence)
-				human.set_species(/datum/species/human)
 
 	return 1
 
@@ -162,6 +158,8 @@
 	return
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, telecrystals = TRUE)
+	synd_mob.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
+
 	if(telecrystals)
 		synd_mob.equipOutfit(/datum/outfit/syndicate)
 	else
