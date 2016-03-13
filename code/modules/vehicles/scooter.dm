@@ -21,20 +21,22 @@
 
 /obj/vehicle/scooter/handle_vehicle_offsets()
 	..()
-	if(buckled_mob)
-		switch(buckled_mob.dir)
-			if(NORTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 4
-			if(EAST)
-				buckled_mob.pixel_x = -2
-				buckled_mob.pixel_y = 4
-			if(WEST)
-				buckled_mob.pixel_x = 2
-				buckled_mob.pixel_y = 4
-			if(SOUTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 4
+	if(buckled_mobs.len)
+		for(var/m in buckled_mobs)
+			var/mob/living/buckled_mob = m
+			switch(buckled_mob.dir)
+				if(NORTH)
+					buckled_mob.pixel_x = 0
+					buckled_mob.pixel_y = 4
+				if(EAST)
+					buckled_mob.pixel_x = -2
+					buckled_mob.pixel_y = 4
+				if(SOUTH)
+					buckled_mob.pixel_x = 2
+					buckled_mob.pixel_y = 4
+				if(WEST)
+					buckled_mob.pixel_x = 0
+					buckled_mob.pixel_y = 4
 
 /obj/vehicle/scooter/skateboard
 	name = "skateboard"
@@ -44,8 +46,8 @@
 
 /obj/vehicle/scooter/skateboard/Bump(atom/A)
 	..()
-	if(A.density && buckled_mob)
-		var/mob/living/carbon/human/H = buckled_mob
+	if(A.density && buckled_mobs.len)
+		var/mob/living/carbon/human/H = buckled_mobs.len
 		var/atom/throw_target = get_edge_target_turf(H, get_dir(src, get_step_away(H, src)))
 		unbuckle_mob(H)
 		H.throw_at_fast(throw_target, 4, 3)
