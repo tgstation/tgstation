@@ -94,7 +94,7 @@
 	var/allow_ai = 0					// allow ai job
 
 	var/forbid_standardborg = 0			// disallow standardborg module to be chosen.
-	var/forbid_engiborg = 1				// disallow engiborg module to be chosen.
+	var/forbid_engiborg = 0				// disallow engiborg module to be chosen.
 	var/forbid_mediborg = 0				// disallow mediborg module to be chosen.
 	var/forbid_minerborg = 0			// disallow minerborg module to be chosen.
 	var/forbid_janiborg = 0				// disallow janiborg module to be chosen.
