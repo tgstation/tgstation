@@ -1144,6 +1144,7 @@
 	trash = /obj/item/trash/bustanuts
 	New()
 		..()
+		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("bustanut", 6)
 		reagents.add_reagent("sodiumchloride", 6)
 
