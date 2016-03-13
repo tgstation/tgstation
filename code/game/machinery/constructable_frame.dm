@@ -791,3 +791,11 @@ obj/item/weapon/circuitboard/rdserver
 	req_components = list(
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 3)
+
+/obj/item/weapon/circuitboard/camera //requires a circuit board to be upgradable, this should be unobtainable
+	name = "Camera Electronics"
+	build_path = /obj/machinery/camera
+	board_type = "machine"
+	origin_tech = "programming=1;engineering=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1)

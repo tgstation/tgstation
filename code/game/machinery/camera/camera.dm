@@ -48,6 +48,15 @@
 		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
 			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/camera(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	RefreshParts()
+
+/obj/machinery/camera/RefreshParts()
+	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
+		if(L.rating >= 2)
+			upgradeXRay()
 
 /obj/machinery/camera/initialize()
 	if(z == 1 && prob(3) && !start_active)
@@ -137,6 +146,9 @@
 /obj/machinery/camera/attackby(obj/W, mob/living/user, params)
 	var/msg = "<span class='notice'>You attach [W] into the assembly's inner circuits.</span>"
 	var/msg2 = "<span class='notice'>[src] already has that upgrade!</span>"
+
+	if(exchange_parts(user, W))
+		return
 
 	// DECONSTRUCTION
 	if(istype(W, /obj/item/weapon/screwdriver))
