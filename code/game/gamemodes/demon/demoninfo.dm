@@ -230,7 +230,7 @@ var/list/allDemons = list()
 		H.socks = "Nude"
 		H.dna.features["mcolor"] = "511" //A deep red
 		for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
-			owner.remove_spell(S)
+			owner.RemoveSpell(S)
 		H.regenerate_icons()
 
 

@@ -1197,10 +1197,10 @@
 					ticker.mode.demons -= src
 					special_role = null
 					current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a demon!</span>"
-					remove_spell(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon)
-					remove_spell(/obj/effect/proc_holder/spell/dumbfire/fireball/demonic)
-					remove_spell(/obj/effect/proc_holder/spell/targeted/summon_contract)
-					remove_spell(/obj/effect/proc_holder/spell/targeted/summon_pitchfork)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon)
+					RemoveSpell(/obj/effect/proc_holder/spell/dumbfire/fireball/demonic)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_pitchfork)
 					message_admins("[key_name_admin(usr)] has de-demon'ed [current].")
 					log_admin("[key_name(usr)] has de-demon'ed [current].")
 				else if(src in ticker.mode.sintouched)
