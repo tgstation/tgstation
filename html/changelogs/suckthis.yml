@@ -1,0 +1,5 @@
+author: Intigracy
+delete-after: True
+changes: 
+- tweak: Vampires now heal oxy damage inside of coffins, added on top of the brute/burn/toxin healing.
+- tweak: Vampires now have their internal organs healed in coffins. You still won't replenish blood if you bled it out, and it won't fix broken bones.
