@@ -95,50 +95,7 @@
 /// Drinks. END
 ////////////////////////////////////////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/drinks/gold_cup
-	name = "gold cup"
-	desc = "You're winner!"
-	icon_state = "golden_cup"
-	w_class = 4
-	force = 14
-	throwforce = 10
-	amount_per_transfer_from_this = 20
-	materials = list(MAT_GOLD=1000)
-	possible_transfer_amounts = list()
-	volume = 150
-	flags = CONDUCT | OPENCONTAINER
-	spillable = 1
-
-/obj/item/weapon/reagent_containers/food/drinks/silver_cup
-	name = "silver cup"
-	desc = "Best loser!"
-	icon_state = "silver_cup"
-	w_class = 3
-	force = 10
-	throwforce = 8
-	amount_per_transfer_from_this = 15
-	materials = list(MAT_SILVER=800)
-	possible_transfer_amounts = list()
-	volume = 100
-	flags = CONDUCT | OPENCONTAINER
-	spillable = 1
-
-
-/obj/item/weapon/reagent_containers/food/drinks/bronze_cup
-	name = "bronze cup"
-	desc = "At least you ranked!"
-	icon_state = "bronze_cup"
-	w_class = 2
-	force = 5
-	throwforce = 4
-	amount_per_transfer_from_this = 10
-	materials = list(MAT_METAL=400)
-	possible_transfer_amounts = list()
-	volume = 25
-	flags = CONDUCT | OPENCONTAINER
-	spillable = 1
-
-/obj/item/weapon/reagent_containers/food/drinks/pewter_cup
+/obj/item/weapon/reagent_containers/food/drinks/trophy
 	name = "pewter cup"
 	desc = "Everyone gets a trophy."
 	icon_state = "pewter_cup"
@@ -151,6 +108,40 @@
 	volume = 5
 	flags = CONDUCT | OPENCONTAINER
 	spillable = 1
+
+/obj/item/weapon/reagent_containers/food/drinks/trophy/gold_cup
+	name = "gold cup"
+	desc = "You're winner!"
+	icon_state = "golden_cup"
+	w_class = 4
+	force = 14
+	throwforce = 10
+	amount_per_transfer_from_this = 20
+	materials = list(MAT_GOLD=1000)
+	volume = 150
+
+/obj/item/weapon/reagent_containers/food/drinks/trophy/silver_cup
+	name = "silver cup"
+	desc = "Best loser!"
+	icon_state = "silver_cup"
+	w_class = 3
+	force = 10
+	throwforce = 8
+	amount_per_transfer_from_this = 15
+	materials = list(MAT_SILVER=800)
+	volume = 100
+
+
+/obj/item/weapon/reagent_containers/food/drinks/trophy/bronze_cup
+	name = "bronze cup"
+	desc = "At least you ranked!"
+	icon_state = "bronze_cup"
+	w_class = 2
+	force = 5
+	throwforce = 4
+	amount_per_transfer_from_this = 10
+	materials = list(MAT_METAL=400)
+	volume = 25
 
 ///////////////////////////////////////////////Drinks
 //Notes by Darem: Drinks are simply containers that start preloaded. Unlike condiments, the contents can be ingested directly
