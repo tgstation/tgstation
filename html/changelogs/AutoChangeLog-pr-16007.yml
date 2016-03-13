@@ -1,4 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - bugfix: "Blobbernauts and blob spores can now move near blob tiles in no gravity."

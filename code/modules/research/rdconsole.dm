@@ -399,7 +399,8 @@ proc/CallMaterialName(ID)
 								if( new_item.type == /obj/item/weapon/storage/backpack/holding )
 									new_item.investigate_log("built by [key]","singulo")
 								new_item.reliability = R
-								new_item.materials = efficient_mats.Copy()
+								if(!istype(new_item, /obj/item/stack/sheet)) // To avoid materials dupe glitches
+									new_item.materials = efficient_mats.Copy()
 								if(linked_lathe.hacked)
 									R = max((new_item.reliability/2), 0)
 								new_item.loc = linked_lathe.loc
@@ -642,6 +643,8 @@ proc/CallMaterialName(ID)
 			dat += "<h3>Current Research Levels:</h3><BR><div class='statusDisplay'>"
 			for(var/v in files.known_tech)
 				var/datum/tech/T = files.known_tech[v]
+				if(T.level <= 0)
+					continue
 				dat += "[T.name]<BR>"
 				dat +=  "* Level: [T.level]<BR>"
 				dat +=  "* Summary: [T.desc]<HR>"
@@ -670,6 +673,8 @@ proc/CallMaterialName(ID)
 			dat += "<h3>Load Technology to Disk:</h3><BR>"
 			for(var/v in files.known_tech)
 				var/datum/tech/T = files.known_tech[v]
+				if(T.level <= 0)
+					continue
 				dat += "[T.name] "
 				dat += "<A href='?src=\ref[src];copy_tech=1;copy_tech_ID=[T.id]'>Copy to Disk</A><BR>"
 			dat += "</div>"

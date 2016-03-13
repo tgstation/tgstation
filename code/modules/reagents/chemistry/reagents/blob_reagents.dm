@@ -156,12 +156,12 @@
 	M.adjust_fire_stacks(round(reac_volume/12))
 	M.IgniteMob()
 	if(M)
-		M.apply_damage(0.4*reac_volume, BURN)
+		M.apply_damage(0.5*reac_volume, BURN)
 	if(iscarbon(M))
 		M.emote("scream")
 
 /datum/reagent/blob/boiling_oil/extinguish_reaction(obj/effect/blob/B)
-	B.take_damage(rand(2, 3), BURN)
+	B.take_damage(rand(1, 3), BURN)
 
 //does burn and toxin damage, explodes into flame when hit with burn damage
 /datum/reagent/blob/flammable_goo
@@ -177,6 +177,7 @@
 
 /datum/reagent/blob/flammable_goo/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
+	M.adjust_fire_stacks(round(reac_volume/10)) //apply, but don't ignite
 	M.apply_damage(0.4*reac_volume, TOX)
 	if(M)
 		M.apply_damage(0.2*reac_volume, BURN)

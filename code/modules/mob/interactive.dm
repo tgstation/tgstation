@@ -981,6 +981,8 @@
 				sleep(25)
 
 /mob/living/carbon/human/interactive/proc/clowning(obj)
+	if(shouldModulePass())
+		return
 	var/list/allContents = getAllContents()
 	var/list/rangeCheck = orange(12,src)
 
@@ -1028,8 +1030,8 @@
 						hasPranked = 1
 			if(!hasPranked)
 				if(S.reagents.total_volume <= 5)
-					S.reagents.add_reagent("lube", 25)
-				S.afterattack(get_turf(clownTarget),src)
+					S.reagents.add_reagent("water", 25)
+				S.afterattack(get_turf(pick(range(1,clownTarget))),src)
 
 
 /mob/living/carbon/human/interactive/proc/healpeople(obj)
