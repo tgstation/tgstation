@@ -496,7 +496,7 @@ Class Procs:
 	else
 		icon_state = initial(icon_state)
 	to_chat(user, "<span class='notice'>\icon[src] You [panel_open ? "open" : "close"] the maintenance hatch of \the [src].</span>")
-	if(istype(toggleitem, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(toggleitem))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 	update_icon()
 	return 1
@@ -586,20 +586,20 @@ Class Procs:
 			emag(user)
 			return
 
-	if(istype(O, /obj/item/weapon/wrench) && machine_flags & WRENCHMOVE) //make sure this is BEFORE the fixed2work check
+	if(iswrench(O) && machine_flags & WRENCHMOVE) //make sure this is BEFORE the fixed2work check
 		if(!panel_open)
 			return wrenchAnchor(user)
 		else
 			to_chat(user, "<span class='warning'>\The [src]'s maintenance panel must be closed first!</span>")
 			return -1 //we return -1 rather than 0 for the if(..()) checks
 
-	if(istype(O, /obj/item/weapon/screwdriver) && machine_flags & SCREWTOGGLE)
+	if(isscrewdriver(O) && machine_flags & SCREWTOGGLE)
 		return togglePanelOpen(O, user)
 
-	if(istype(O, /obj/item/weapon/weldingtool) && machine_flags & WELD_FIXED)
+	if(iswelder(O) && machine_flags & WELD_FIXED)
 		return weldToFloor(O, user)
 
-	if(istype(O, /obj/item/weapon/crowbar) && machine_flags & CROWDESTROY)
+	if(iscrowbar(O) && machine_flags & CROWDESTROY)
 		if(panel_open)
 			if(crowbarDestroy(user) == 1)
 				qdel(src)

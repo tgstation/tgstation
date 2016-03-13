@@ -60,7 +60,7 @@
 			src.name += " ([t])"
 			src.overlays += image(src.icon, "bodybag_label")
 		return
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		to_chat(user, "You cut the tag off the bodybag")
 		src.name = "body bag"
 		src.overlays.len = 0

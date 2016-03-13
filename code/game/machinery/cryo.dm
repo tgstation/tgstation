@@ -327,7 +327,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 		if(user.drop_item(G, src))
 			beaker =  G
 			user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
-	if(istype(G, /obj/item/weapon/wrench))//FUCK YOU PARENT, YOU AREN'T MY REAL DAD
+	if(iswrench(G))//FUCK YOU PARENT, YOU AREN'T MY REAL DAD
 		return
 	if(..())
 		return

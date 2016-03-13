@@ -171,12 +171,12 @@ var/list/camera_names=list()
 /obj/machinery/camera/attackby(W as obj, mob/living/user as mob)
 
 	// DECONSTRUCTION
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 //		to_chat(user, "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>")
 		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
 		togglePanelOpen(W, user, icon_state, icon_state)
 
-	else if((istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool)) && panel_open)
+	else if((iswirecutter(W) || istype(W, /obj/item/device/multitool)) && panel_open)
 		wires.Interact(user)
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && wires.CanDeconstruct())
@@ -438,7 +438,7 @@ var/list/camera_names=list()
 	upgradeHearing()
 
 /obj/machinery/camera/arena/attackby(W as obj, mob/living/user as mob)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		to_chat(user, "<span class='warning'>There aren't any visible screws to unscrew.</span>")
 	else
 		user.visible_message("<span class='warning'>\The [user] hits \the [src] with \the [W] but it doesn't seem to affect it in the least.</span>","<span class='warning'>You hit \the [src] with \the [W] but it doesn't seem to affect it in the least</span>")

@@ -43,7 +43,7 @@
 			to_chat(user, "You short out the lock on [src].")
 			return
 
-		if (istype(W, /obj/item/weapon/screwdriver))
+		if (isscrewdriver(W))
 			if (do_after(user, src, 20))
 				src.open =! src.open
 				user.show_message(text("<span class='notice'>You [] the service panel.</span>", (src.open ? "open" : "close")))

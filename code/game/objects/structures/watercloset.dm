@@ -66,7 +66,7 @@
 		qdel(I)
 		qdel(src)
 		return
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(iscrowbar(I))
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, src, 30))

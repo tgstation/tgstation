@@ -184,7 +184,7 @@
 	if(!I || !user)
 		return
 
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		if(c_mode==0)
 			c_mode=1
 			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)

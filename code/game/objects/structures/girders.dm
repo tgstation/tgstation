@@ -19,7 +19,7 @@
 		icon_state = "displaced_wood"
 
 /obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(state == 0) //Normal girder or wooden girder
 			if(anchored && !istype(src, /obj/structure/girder/displaced)) //Anchored, destroy it
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
@@ -70,7 +70,7 @@
 			getFromPool(material, get_turf(src))
 			qdel(src)
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2) //Unsecuring support struts, stage 2 to 1
+	else if(isscrewdriver(W) && state == 2) //Unsecuring support struts, stage 2 to 1
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 		user.visible_message("<span class='warning'>[user] starts unsecuring \the [src]'s internal support struts.</span>", \
 		"<span class='notice'>You start unsecuring \the [src]'s internal support struts.</span>")
@@ -82,7 +82,7 @@
 			state = 1
 			update_icon()
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && state == 1) //Securing support struts, stage 1 to 2
+	else if(isscrewdriver(W) && state == 1) //Securing support struts, stage 1 to 2
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 		user.visible_message("<span class='notice'>[user] starts securing \the [src]'s internal support struts.</span>", \
 		"<span class='notice'>You start securing \the [src]'s internal support struts.</span>")
@@ -94,7 +94,7 @@
 			state = 2
 			update_icon()
 
-	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1) //Removing support struts, stage 1 to 0 (normal girder)
+	else if(iswirecutter(W) && state == 1) //Removing support struts, stage 1 to 0 (normal girder)
 		playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
 		user.visible_message("<span class='warning'>[user] starts removing \the [src]'s internal support struts.</span>", \
 		"<span class='notice'>You start removing \the [src]'s internal support struts.</span>")
@@ -127,7 +127,7 @@
 			state = 1
 			update_icon()
 
-	else if(istype(W, /obj/item/weapon/crowbar) && state == 0 && anchored) //Turning normal girder into disloged girder
+	else if(iscrowbar(W) && state == 0 && anchored) //Turning normal girder into disloged girder
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 100, 1)
 		user.visible_message("<span class='warning'>[user] starts dislodging \the [src].</span>", \
 		"<span class='notice'>You start dislodging \the [src].</span>")
@@ -372,7 +372,7 @@
 	layer = 2
 
 /obj/structure/cultgirder/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 		user.visible_message("<span class='notice'>[user] starts disassembling \the [src].</span>", \
 		"<span class='notice'>You start disassembling \the [src].</span>")

@@ -42,7 +42,7 @@
 			to_chat(user, "<span class='info'>\The [src.name] has maximum charge!</span>")
 
 /obj/item/weapon/stock_parts/capacitor/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(!istype(src.loc, /turf))
 			to_chat(user, "<span class='warning'>\The [src] needs to be on the ground to be secured.</span>")
 			return

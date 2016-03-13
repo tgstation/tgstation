@@ -95,7 +95,7 @@
 			update_icon()
 			return 1
 
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (iswrench(W))
 		if(connected_port)
 			disconnect()
 			to_chat(user, "<span class='notice'>You disconnect [name] from the port.</span>")

@@ -164,7 +164,7 @@
 		to_chat(user, "You insert \the [W] into \the [src]'s beaker port.")
 		icon_state = "venom_sword_beaker"
 		update_color()
-	if(istype(W, /obj/item/weapon/crowbar))
+	if(iscrowbar(W))
 		to_chat(user, "You pry the aluminum cylinder off of \the [src].")
 		var/obj/item/weapon/sword/I = new (get_turf(src))
 		if(HY)

@@ -205,7 +205,7 @@
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel.</span>")
 			return
-	else if(istype(W, /obj/item/weapon/wrench) && state == 0)
+	else if(iswrench(W) && state == 0)
 		busy = 1
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 		if(anchored)
@@ -230,7 +230,7 @@
 			to_chat(user, "<span class='notice'>You wire the Airlock!</span>")
 		busy = 0
 
-	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
+	else if(iswirecutter(W) && state == 1 )
 		busy = 1
 		playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
@@ -260,7 +260,7 @@
 			W.loc = src.loc
 		busy = 0
 
-	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
+	else if(iscrowbar(W) && state == 2 )
 		busy = 1
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to install electronics into the airlock assembly.")
@@ -303,7 +303,7 @@
 							glass = "[M]"
 				busy = 0
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 )
+	else if(isscrewdriver(W) && state == 2 )
 		busy = 1
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 		to_chat(user, "<span class='notice'>Now finishing the airlock.</span>")

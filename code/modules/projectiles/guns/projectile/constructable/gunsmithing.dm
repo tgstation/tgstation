@@ -407,7 +407,7 @@
 /obj/item/weapon/gun_assembly/attackby(obj/item/weapon/W, mob/user)
 	switch(state)
 		if("stock_reservoir_assembly")
-			if(istype(W, /obj/item/weapon/wrench))
+			if(iswrench(W))
 				to_chat(user, "You securely fasten the fuel reservoir to \the [src].")
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				state = "stock_reservoir"
@@ -427,7 +427,7 @@
 				state = "stock_capacitorbank_assembly"
 				update_assembly()
 				C.use(5)
-			if(istype(W, /obj/item/weapon/wrench))
+			if(iswrench(W))
 				to_chat(user, "You loosen the fuel reservoir on \the [src].")
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				state = "stock_reservoir_assembly"
@@ -454,7 +454,7 @@
 				update_assembly()
 				qdel(W)
 		if("blunderbuss_assembly")
-			if(istype(W, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(W))
 				to_chat(user, "You tighten the igniter to \the [src].")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				if(src.loc == user)
@@ -468,12 +468,12 @@
 
 //RAILGUN BEGIN////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if("stock_capacitorbank_assembly")
-			if(istype(W, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(W))
 				to_chat(user, "You tighten the wires in \the [src]'s capacitor bank.")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				state = "stock_capacitorbank"
 				update_assembly()
-			if(istype(W, /obj/item/weapon/wirecutters))
+			if(iswirecutter(W))
 				to_chat(user, "You cut the wires out of the capacitor bank.")
 				playsound(user, 'sound/items/Wirecutter.ogg', 50, 1)
 				state = "stock_reservoir"
@@ -486,7 +486,7 @@
 				state = "stock_capacitorbank_barrel_assembly"
 				update_assembly()
 				qdel(W)
-			if(istype(W, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(W))
 				to_chat(user, "You loosen the wires in \the [src]'s capacitor bank.")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				state = "stock_capacitorbank_assembly"
@@ -511,7 +511,7 @@
 				update_assembly()
 				qdel(W)
 		if("railgun_assembly")
-			if(istype(W, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(W))
 				to_chat(user, "You secure \the [src]'s triggering mechanism.")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				if(src.loc == user)
@@ -591,7 +591,7 @@
 				update_assembly()
 				qdel(W)
 		if("stock_ansible_amplifier_assembly")
-			if(istype(W, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(W))
 				to_chat(user, "You secure \the [src]'s subspace amplifier.")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				state = "stock_ansible_amplifier"
@@ -603,7 +603,7 @@
 				update_assembly()
 				qdel(W)
 		if("stock_ansible_amplifier_transmitter_assembly")
-			if(istype(W, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(W))
 				to_chat(user, "You secure \the [src]'s subspace transmitter.")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				state = "subspacetunneler_assembly"
@@ -808,7 +808,7 @@
 		to_chat(user, "<span class='notice'>\The [src.name] is uncharged.</span>")
 
 /obj/machinery/power/secured_capacitor/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(charging)
 			to_chat(user, "<span class='warning'>\The [src.name] needs to be turned off first.</span>")
 			return

@@ -67,7 +67,7 @@
 				qdel(src)
 				return
 			else
-				if(istype(P, /obj/item/weapon/wrench))
+				if(iswrench(P))
 					playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 					to_chat(user, "<span class='notice'>You dismantle the frame.</span>")
 					//new /obj/item/stack/sheet/metal(src.loc, 5)
@@ -109,7 +109,7 @@
 					else
 						to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				else
-					if(istype(P, /obj/item/weapon/wirecutters))
+					if(iswirecutter(P))
 						playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 						to_chat(user, "<span class='notice'>You remove the cables.</span>")
 						set_build_state(1)
@@ -118,7 +118,7 @@
 
 		if(3)
 			if(!..())
-				if(istype(P, /obj/item/weapon/crowbar))
+				if(iscrowbar(P))
 					playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 					set_build_state(2)
 					circuit.loc = src.loc
@@ -133,7 +133,7 @@
 					req_components = null
 					components = null
 				else
-					if(istype(P, /obj/item/weapon/screwdriver))
+					if(isscrewdriver(P))
 						var/component_check = 1
 						for(var/R in req_components)
 							if(req_components[R] > 0)

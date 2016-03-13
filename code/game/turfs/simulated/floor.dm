@@ -480,7 +480,7 @@ turf/simulated/floor/update_icon()
 	if(!C || !user)
 		return 0
 
-	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
+	if(iscrowbar(C) && (!(is_plating())))
 		if(broken || burnt)
 			to_chat(user, "<span class='warning'>You remove the broken plating.</span>")
 		else
@@ -496,7 +496,7 @@ turf/simulated/floor/update_icon()
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 
 		return
-	else if(istype(C, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(C))
 		if(is_wood_floor())
 			if(broken || burnt)
 				return
@@ -570,7 +570,7 @@ turf/simulated/floor/update_icon()
 			make_plating()
 		else
 			to_chat(user, "<span class='warning'>You cannot shovel this.</span>")
-	else if(istype(C, /obj/item/weapon/weldingtool))
+	else if(iswelder(C))
 		var/obj/item/weapon/weldingtool/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)

@@ -295,7 +295,7 @@
 	to_chat(user, "<span class='notice'>You can't move.</span>")
 
 /obj/structure/strange_present/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wirecutters))
+	if (iswirecutter(W))
 		to_chat(user, "<span class='notice'>You cut open the present.</span>")
 
 		for(var/mob/M in src) //Should only be one but whatever.

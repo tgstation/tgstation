@@ -61,7 +61,7 @@
 	if(isobserver(user)) return
 	if(user.stat)
 		return
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal,get_turf(src))
 		M.amount = 2

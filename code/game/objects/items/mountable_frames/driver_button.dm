@@ -23,7 +23,7 @@
 	qdel(src)
 
 /obj/item/mounted/frame/driver_button/signaler_button/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		new /obj/item/stack/sheet/metal(get_turf(src.loc))
 		var/obj/item/device/assembly/signaler/I = new (get_turf(src.loc))
 		I.code = src.code

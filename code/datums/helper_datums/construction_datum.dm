@@ -71,16 +71,16 @@
 	return 0
 
 /datum/construction/proc/custom_action(step, used_atom, user)
-	if(istype(used_atom, /obj/item/weapon/weldingtool))
+	if(iswelder(used_atom))
 		playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
 
-	else if(istype(used_atom, /obj/item/weapon/wrench))
+	else if(iswrench(used_atom))
 		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
 
-	else if(istype(used_atom, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(used_atom))
 		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
 
-	else if(istype(used_atom, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(used_atom))
 		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
 
 	construct_message(step, user)

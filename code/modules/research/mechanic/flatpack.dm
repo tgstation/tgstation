@@ -59,7 +59,7 @@
 /*	if(assembling)
 		if(unpacking.action(A, user))
 			return 1 */
-	if(istype(A, /obj/item/weapon/crowbar) && !assembling)
+	if(iscrowbar(A) && !assembling)
 		if(stacked.len)
 			to_chat(user, "<span class='rose'>You can't open this flatpack while others are stacked on top of it!</span>")
 			return

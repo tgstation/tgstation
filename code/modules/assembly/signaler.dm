@@ -257,7 +257,7 @@
 		if(n_name && Adjacent(user) && !user.stat)
 			name = "[n_name]"
 		return
-	if(istype(W, /obj/item/weapon/crowbar))
+	if(iscrowbar(W))
 		to_chat(user, "You begin prying \the [src] off the wall.")
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, src,10))

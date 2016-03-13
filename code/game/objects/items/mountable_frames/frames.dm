@@ -9,7 +9,7 @@
 
 /obj/item/mounted/frame/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if (istype(W, /obj/item/weapon/wrench) && sheets_refunded)
+	if (iswrench(W) && sheets_refunded)
 		//new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 		var/obj/item/stack/sheet/S = getFromPool(frame_material, get_turf(src))
 		S.amount = sheets_refunded

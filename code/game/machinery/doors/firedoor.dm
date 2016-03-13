@@ -232,7 +232,7 @@ var/global/list/alert_overlays_global = list()
 			update_icon()
 			return
 
-	if( istype(C, /obj/item/weapon/crowbar) || ( istype(C,/obj/item/weapon/fireaxe) && C.wielded ) )
+	if( iscrowbar(C) || ( istype(C,/obj/item/weapon/fireaxe) && C.wielded ) )
 		force_open(user, C)
 		return
 

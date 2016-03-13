@@ -53,7 +53,7 @@
 			icon_state = "scrubber:0"
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-		if(istype(W, /obj/item/weapon/wrench))
+		if(iswrench(W))
 			if(on)
 				to_chat(user, "<span class='notice'>Turn it off first!</span>")
 				return
@@ -70,7 +70,7 @@
 	name = "Stationary Air Scrubber"
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-		if(istype(W, /obj/item/weapon/wrench))
+		if(iswrench(W))
 			to_chat(user, "<span class='notice'>The bolts are too tight for you to unscrew!</span>")
 			return
 

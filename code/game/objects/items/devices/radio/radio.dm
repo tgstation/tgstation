@@ -533,7 +533,7 @@
 /obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	user.set_machine(src)
-	if (!( istype(W, /obj/item/weapon/screwdriver) ))
+	if (!( isscrewdriver(W) ))
 		return
 	b_stat = !( b_stat )
 	if (b_stat)

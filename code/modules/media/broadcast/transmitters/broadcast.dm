@@ -93,7 +93,7 @@
 
 /obj/machinery/media/transmitter/broadcast/attackby(var/obj/item/W, mob/user)
 	. = ..()
-	if(panel_open && (istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters)))
+	if(panel_open && (istype(W, /obj/item/device/multitool)||iswirecutter(W)))
 		attack_hand(user)
 	if(issolder(W))
 		if(integrity>=100)

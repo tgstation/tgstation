@@ -127,7 +127,7 @@
 				to_chat(user, "<span class='warning'> \the [W] is empty.</span>")
 	else if (istype(W,/obj/item/slime_extract))
 		to_chat(user, "<span class='warning'> This grenade case is too small for a slime core to fit in it.</span>")
-	else if(istype(W, /obj/item/weapon/crowbar))
+	else if(iscrowbar(W))
 		to_chat(user, "You begin pressing \the [W] into \the [src].")
 		if(do_after(user, src, 30))
 			to_chat(user, "You poke a hole in \the [src].")

@@ -11,7 +11,7 @@
 	siemens_coefficient = 1
 
 /obj/item/mounted/frame/rust_fuel_compressor/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/plasteel( get_turf(src.loc), 12 )
 		del(src)
 		return
@@ -43,7 +43,7 @@
 
 	if (istype(user, /mob/living/silicon) && get_dist(src,user)>1)
 		return src.attack_hand(user)
-	if (istype(W, /obj/item/weapon/crowbar))
+	if (iscrowbar(W))
 		if(opened)
 			if(has_electronics & 1)
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
@@ -110,7 +110,7 @@
 			has_electronics &= 2
 		return
 
-	else if (istype(W, /obj/item/weapon/wirecutters) && opened && (has_electronics & 2))
+	else if (iswirecutter(W) && opened && (has_electronics & 2))
 		to_chat(user, "You begin to cut the cables...")
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, src, 50))
