@@ -20,6 +20,7 @@
 	var/list/resource_blobs = list()
 	var/ghostimage = null
 	var/free_chem_rerolls = 1 //one free chemical reroll
+	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
 	var/placed = 0
 	var/base_point_rate = 2 //for blob core placement
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings

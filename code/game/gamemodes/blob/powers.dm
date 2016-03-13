@@ -81,7 +81,7 @@
 	if(!istype(B, /obj/effect/blob/normal))
 		src << "<span class='warning'>Unable to use this blob, find a normal one.</span>"
 		return
-	if(needsNode)
+	if(needsNode && nodes_required)
 		if(!(locate(/obj/effect/blob/node) in orange(3, T)) && !(locate(/obj/effect/blob/core) in orange(4, T)))
 			src << "<span class='warning'>You need to place this blob closer to a node or core!</span>"
 			return //handholdotron 2000
@@ -94,6 +94,16 @@
 		return
 	var/obj/effect/blob/N = B.change_to(blobType, src)
 	return N
+
+/mob/camera/blob/verb/toggle_node_req()
+	set category = "Blob"
+	set name = "Toggle Node Requirement"
+	set desc = "Toggle requiring nodes to place resource and factory blobs."
+	nodes_required = !nodes_required
+	if(nodes_required)
+		src << "<span class='warning'>You no longer require a nearby node or core to place factory and resource blobs.</span>"
+	else
+		src << "<span class='warning'>You now require a nearby node or core to place factory and resource blobs.</span>"
 
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
