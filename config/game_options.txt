@@ -189,8 +189,21 @@ ALLOW_RANDOM_EVENTS
 ## Allow the AI job to be picked.
 ALLOW_AI
 
-### Secborg ###
-## Uncomment to prevent the secborg module from being chosen
+### Borgs ###
+## Uncomment to prevent that particular borg module from being chosen
+
+#DISABLE_STANDARDBORG
+
+#DISABLE_ENGIBORG
+
+#DISABLE_MEDIBORG
+
+#DISABLE_MINERBORG
+
+#DISABLE_JANIBORG
+
+#DISABLE_SERVICEBORG
+
 #DISABLE_SECBORG
 
 

@@ -166,7 +166,19 @@
 	if(module)
 		return
 
-	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	var/list/modulelist = list()
+	if(!config.forbid_standardborg)
+		modulelist += "Standard"
+	if(!config.forbid_engiborg)
+		modulelist += "Engineering"
+	if(!config.forbid_mediborg)
+		modulelist += "Medical"
+	if(!config.forbid_minerborg)
+		modulelist += "Miner"
+	if(!config.forbid_janiborg)
+		modulelist += "Janitor"
+	if(!config.forbid_serviceborg)
+		modulelist += "Service"
 	if(!config.forbid_secborg)
 		modulelist += "Security"
 
