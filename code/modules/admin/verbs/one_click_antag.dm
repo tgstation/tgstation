@@ -320,6 +320,7 @@
 			missionobj.explanation_text = mission
 			missionobj.completed = 1
 			Commando.mind.objectives += missionobj
+			Commando.set_species(/datum/species/human)
 
 			//Greet the commando
 			Commando << "<B><font size=3 color=red>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>"
@@ -410,6 +411,7 @@
 		missionobj.explanation_text = mission
 		missionobj.completed = 1
 		newmob.mind.objectives += missionobj
+		newmob.set_species(/datum/species/human)
 
 		//Greet the official
 		newmob << "<B><font size=3 color=red>You are a Centcom Official.</font></B>"
@@ -507,6 +509,7 @@
 			missionobj.explanation_text = mission
 			missionobj.completed = 1
 			ERTOperative.mind.objectives += missionobj
+			ERTOperative.set_species(/datum/species/human)
 
 			//Greet the commando
 			ERTOperative << "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>"
