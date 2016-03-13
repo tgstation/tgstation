@@ -71,7 +71,7 @@
 		if(chosen_node)
 			src.loc = chosen_node.loc
 
-/mob/camera/blob/proc/createSpecial(price, blobType, nearEquals, turf/T)
+/mob/camera/blob/proc/createSpecial(price, blobType, nearEquals, needsNode, turf/T)
 	if(!T)
 		T = get_turf(src)
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
@@ -81,6 +81,10 @@
 	if(!istype(B, /obj/effect/blob/normal))
 		src << "<span class='warning'>Unable to use this blob, find a normal one.</span>"
 		return
+	if(needsNode)
+		if(!(locate(/obj/effect/blob/node) in orange(3, T)) && !(locate(/obj/effect/blob/core) in orange(4, T)))
+			src << "<span class='warning'>You need to place this blob closer to a node or core!</span>"
+			return //handholdotron 2000
 	if(nearEquals)
 		for(var/obj/effect/blob/L in orange(nearEquals, T))
 			if(L.type == blobType)
@@ -98,25 +102,25 @@
 	create_shield()
 
 /mob/camera/blob/proc/create_shield(turf/T)
-	createSpecial(10, /obj/effect/blob/shield, 0, T)
+	createSpecial(10, /obj/effect/blob/shield, 0, 0, T)
 
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
 	set name = "Create Resource Blob (40)"
 	set desc = "Create a resource tower which will generate resources for you."
-	createSpecial(40, /obj/effect/blob/resource, 4)
+	createSpecial(40, /obj/effect/blob/resource, 4, 1)
 
 /mob/camera/blob/verb/create_node()
 	set category = "Blob"
 	set name = "Create Node Blob (60)"
 	set desc = "Create a node, which will power nearby factory and resource blobs."
-	createSpecial(60, /obj/effect/blob/node, 5)
+	createSpecial(60, /obj/effect/blob/node, 5, 0)
 
 /mob/camera/blob/verb/create_factory()
 	set category = "Blob"
 	set name = "Create Factory Blob (60)"
 	set desc = "Create a spore tower that will spawn spores to harass your enemies."
-	createSpecial(60, /obj/effect/blob/factory, 7)
+	createSpecial(60, /obj/effect/blob/factory, 7, 1)
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
@@ -138,7 +142,6 @@
 	B.maxhealth = initial(B.maxhealth) * 0.25 //factories that produced a blobbernaut have much lower health
 	B.check_health()
 	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
-	B.spore_delay = world.time + 600 //one minute before it can spawn spores again
 	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
 	flick("blobbernaut_produce", blobber)
@@ -272,20 +275,20 @@
 	set category = "Blob"
 	set name = "Reactive Chemical Adaptation (40)"
 	set desc = "Replaces your chemical with a random, different one."
-	if(!can_buy(40))
-		return
-	set_chemical()
+	if(free_chem_rerolls || can_buy(40))
+		set_chemical()
+		if(free_chem_rerolls)
+			free_chem_rerolls--
 
 /mob/camera/blob/proc/set_chemical()
 	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
 	blob_reagent_datum = new BC
 	for(var/obj/effect/blob/BL in blobs)
 		BL.update_icon()
-	for(var/mob/living/simple_animal/hostile/blob/BLO)
-		BLO.update_icons()
-		if(BLO.overmind == src) //If it's getting a new chemical, tell it what it does!
-			BLO << "Your overmind's blob reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
-			BLO << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
+	for(var/mob/living/simple_animal/hostile/blob/BLO in blob_mobs)
+		BLO.update_icons() //If it's getting a new chemical, tell it what it does!
+		BLO << "Your overmind's blob reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
+		BLO << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
 	src << "Your reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 	src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
 
@@ -302,7 +305,7 @@
 	src << "<i>Shield Blobs</i> are strong and expensive blobs which take more damage. In additon, they are fireproof and can block air, use these to protect yourself from station fires."
 	src << "<i>Resource Blobs</i> are blobs which produce more resources for you, build as many of these as possible to consume the station. This type of blob must be placed near node blobs or your core to work."
 	src << "<i>Factory Blobs</i> are blobs that spawn blob spores which will attack nearby enemies. This type of blob must be placed near node blobs or your core to work."
-	src << "<i>Blobbernauts</i> can be produced from factories for a cost, and are hard to kill, powerful, and moderately smart. The factory used to create one will become fragile and briefly unable to produce spores."
+	src << "<i>Blobbernauts</i> can be produced from factories for a cost, and are hard to kill, powerful, and moderately smart. However, the factory used to create one will become fragile and unable to produce spores as long as the blobbernaut lives."
 	src << "<i>Node Blobs</i> are blobs which grow, like the core. Like the core it can activate resource and factory blobs."
 	src << "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>"
 	src << "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob"

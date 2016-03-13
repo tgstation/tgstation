@@ -66,11 +66,8 @@
 	if(overmind)
 		overmind.update_health_hud()
 	Pulse_Area(overmind, 12, 4, 3)
-	for(var/b_dir in alldirs)
-		if(!prob(5))
-			continue
-		var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
-		if(B)
+	for(var/obj/effect/blob/normal/B in range(1, src))
+		if(prob(5))
 			B.change_to(/obj/effect/blob/shield, overmind)
 	..()
 

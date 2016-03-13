@@ -17,7 +17,9 @@
 	var/last_attack = 0
 	var/datum/reagent/blob/blob_reagent_datum = new/datum/reagent/blob()
 	var/list/blob_mobs = list()
+	var/list/resource_blobs = list()
 	var/ghostimage = null
+	var/free_chem_rerolls = 1 //one free chemical reroll
 	var/placed = 0
 	var/base_point_rate = 2 //for blob core placement
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
@@ -65,8 +67,15 @@
 	..()
 
 /mob/camera/blob/Destroy()
+	for(var/obj/effect/blob/BL in blobs)
+		if(BL.overmind == src)
+			BL.overmind = null
+			BL.update_icon() //reset anything that was ours
+	for(var/mob/living/simple_animal/hostile/blob/BLO in blob_mobs)
+		BLO.overmind = null
+		BLO.update_icons()
 	overminds -= src
-	if (ghostimage)
+	if(ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
 		ghostimage = null;
@@ -137,10 +146,12 @@
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
+		if(free_chem_rerolls)
+			stat(null, "You have [free_chem_rerolls] Free Chemical Reroll\s Remaining")
 		if(!placed)
-			stat(null, "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]")
 			if(manualplace_min_time)
 				stat(null, "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]")
+			stat(null, "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]")
 
 /mob/camera/blob/Move(NewLoc, Dir = 0)
 	if(placed)
