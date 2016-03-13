@@ -8,9 +8,6 @@
 // Power verbs
 
 /mob/camera/blob/proc/place_blob_core(var/point_rate = base_point_rate, var/override = 0)
-	if(!override && world.time <= manualplace_min_time && world.time <= autoplace_max_time)
-		src << "<span class='warning'>It is too early to place your blob core!</span>"
-		return 0
 	if(placed)
 		return 1
 	if(!override)
@@ -40,6 +37,9 @@
 			if(O.density)
 				src << "<span class='warning'>This spot is too dense to place a blob core on!</span>"
 				return 0
+		if(world.time <= manualplace_min_time && world.time <= autoplace_max_time)
+			src << "<span class='warning'>It is too early to place your blob core!</span>"
+			return 0
 	else if(override == 1)
 		var/turf/T = pick(blobstart)
 		loc = T //got overrided? you're somewhere random, motherfucker
