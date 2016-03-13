@@ -1,0 +1,14 @@
+author: LanCartwright
+delete-after: True
+changes: 
+  - tweak: "Choking now deals damage based on virus' Stage speed and virus Stealth."
+  - tweak: "Fever heats the body based on Transmittability and Stage speed."
+  - tweak: "Spontaneous Combustion now adjusts firestacks based on stage speed minus Stealth."
+  - tweak: "Necrotizing Fasciitis now deals damage based on lower Stealth values."
+  - tweak: "Toxic Filter now heals based on Stage speed."
+  - tweak: "Deoxyribonucleic Acid Restoration now heals brain damage based on Stage speed minus Stealth."
+  - tweak: "Shivering now chills based on Stealth and Resistance."
+  - rscadd: "Proc for the total stage speed of a virus' symptoms."
+  - rscadd: "Proc for the total stealth of a virus' symptoms."
+  - rscadd: "Proc for the total resistance of a virus' symptoms."
+  - rscadd: "Proc for the total transmittance speed of a virus' symptoms."
