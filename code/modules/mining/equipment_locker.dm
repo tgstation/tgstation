@@ -201,7 +201,7 @@
 			var/obj/item/stack/sheet/inp = stack_list[text2path(href_list["release"])]
 			var/obj/item/stack/sheet/out = new inp.type()
 			var/desired = input("How much?", "How much to eject?", 1) as num
-			out.amount = min(desired,50,inp.amount)
+			out.amount = round(min(desired,50,inp.amount))
 			if(out.amount >= 1)
 				inp.amount -= out.amount
 				unload_mineral(out)
@@ -218,7 +218,7 @@
 
 			var/desired = input("How much?", "How much would you like to smelt?", 1) as num
 			var/obj/item/stack/sheet/plasteel/plasteelout = new
-			plasteelout.amount = min(desired,50,metalstack.amount,plasmastack.amount)
+			plasteelout.amount = round(min(desired,50,metalstack.amount,plasmastack.amount))
 			if(plasteelout.amount >= 1)
 				metalstack.amount -= plasteelout.amount
 				plasmastack.amount -= plasteelout.amount
