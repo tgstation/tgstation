@@ -66,15 +66,15 @@
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
 		if(!ishuman(usr))
-			return
-		if(buckled_mob)
+			return 0
+		if(buckled_mobs.len)
 			return 0
 		usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
 		new foldabletype(get_turf(src))
 		qdel(src)
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
-	if(M == buckled_mob)
+	if(M in buckled_mobs)
 		density = 1
 		icon_state = "up"
 		M.pixel_y = initial(M.pixel_y)
@@ -129,8 +129,12 @@
 			return
 
 		var/obj/structure/bed/roller/R = target
-		if(R.buckled_mob)
-			R.user_unbuckle_mob(user)
+		if(R.buckled_mobs.len)
+			if(R.buckled_mobs.len > 1)
+				R.unbuckle_all_mobs()
+				user.visible_message("<span class='notice'>[user] unbuckles all creatures from [R].</span>")
+			else
+				R.user_unbuckle_mob(R.buckled_mobs[1],user)
 
 		loaded = target
 		target.loc = src

@@ -490,6 +490,16 @@
 	can_adjust = 1
 	alt_covers_chest = 1
 
+/obj/item/clothing/under/plaid_skirt/green
+	name = "green plaid skirt"
+	desc = "A preppy green skirt with a white blouse."
+	icon_state = "plaid_green"
+	item_state = "plaid_green"
+	item_color = "plaid_green"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 1
+	alt_covers_chest = 1
+
 /obj/item/clothing/under/jester
 	name = "jester suit"
 	desc = "A jolly dress, well suited to entertain your master, nuncle."
@@ -556,18 +566,3 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
-
- //credit to /vg/station for S.S clothing (Heredth made the pull request)
- /obj/item/clothing/under/nsoldier
-	name = "dusty uniform"
-	desc = "A dusty old uniform, a relic from a time before."
-	icon_state = "soldieruniform"
-	item_state = "soldieruniform"
-	item_color = "soldieruniform"
-
-/obj/item/clothing/under/nsoldier/officer
-	name = "dusty uniform"
-	desc = "A dusty old uniform, a relic from a time before. This one looks more official."
-	icon_state = "officeruniform"
-	item_state = "officeruniform"
-	item_color = "officeruniform"

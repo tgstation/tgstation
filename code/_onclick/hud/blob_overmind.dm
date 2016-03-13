@@ -30,6 +30,8 @@
 /obj/screen/blob/JumpToCore/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
+		if(!B.placed)
+			B.place_blob_core()
 		B.transport_core()
 
 /obj/screen/blob/Blobbernaut

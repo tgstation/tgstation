@@ -53,14 +53,6 @@
 	mob_type = /mob/living/simple_animal/hostile/syndicate/ranged
 	faction = list("syndicate")
 
-/mob/living/simple_animal/hostile/spawner/heilfactory
-	name = "production factory"
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "bin_full"
-	spawn_text = "marches out of"
-	mob_type = /mob/living/simple_animal/hostile/syndicate/ranged
-	faction = list("german")
-
 /mob/living/simple_animal/hostile/spawner/skeleton
 	name = "bone pit"
 	desc = "A pit full of bones, some still seem to be moving.."

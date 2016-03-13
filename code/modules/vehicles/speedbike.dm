@@ -25,7 +25,7 @@
 	dir = move_dir
 
 /obj/vehicle/space/speedbike/Move(newloc,move_dir)
-	if(buckled_mob)
+	if(buckled_mobs.len)
 		PoolOrNew(/obj/effect/overlay/temp/speedbike_trail,list(loc,move_dir))
 	. = ..()
 
@@ -39,21 +39,23 @@
 			pixel_y = 0
 
 /obj/vehicle/space/speedbike/handle_vehicle_offsets()
-	if(buckled_mob)
-		buckled_mob.dir = dir
-		switch(dir)
-			if(NORTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = -8
-			if(SOUTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 4
-			if(EAST)
-				buckled_mob.pixel_x = -10
-				buckled_mob.pixel_y = 5
-			if(WEST)
-				buckled_mob.pixel_x = 10
-				buckled_mob.pixel_y = 5
+	if(buckled_mobs.len)
+		for(var/m in buckled_mobs)
+			var/mob/living/buckled_mob = m
+			buckled_mob.dir = dir
+			switch(dir)
+				if(NORTH)
+					buckled_mob.pixel_x = 0
+					buckled_mob.pixel_y = -8
+				if(SOUTH)
+					buckled_mob.pixel_x = 0
+					buckled_mob.pixel_y = 4
+				if(EAST)
+					buckled_mob.pixel_x = -10
+					buckled_mob.pixel_y = 5
+				if(WEST)
+					buckled_mob.pixel_x = 10
+					buckled_mob.pixel_y = 5
 
 /obj/vehicle/space/speedbike/red
 	icon_state = "speedbike_red"

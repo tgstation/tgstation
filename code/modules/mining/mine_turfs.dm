@@ -547,6 +547,20 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/floor/plating/asteroid/snow/temperate
 	temperature = 255.37
 
+/turf/simulated/floor/plating/asteroid/moon
+	name = "lunar floor"
+	baseturf = /turf/simulated/floor/plating/asteroid/moon
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "moon"
+	icon_plating = "moon"
+	environment_type = "moon"
+
+/turf/simulated/floor/plating/asteroid/moon/airless
+	baseturf = /turf/simulated/floor/plating/asteroid/moon/airless
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
 /turf/simulated/floor/plating/asteroid/New()
 	var/proper_name = name
 	..()

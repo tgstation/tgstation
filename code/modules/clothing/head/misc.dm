@@ -244,21 +244,3 @@
 	name = "lizardskin cloche hat"
 	desc = "How many lizards died to make this hat? Not enough."
 	icon_state = "lizard"
-
-/obj/item/clothing/head/stalhelm
-	name = "Stalhelm"
-	desc = "Ein Helm, um die Nazi-Interesse an fremden Raumstationen zu sichern."
-	icon_state = "stalhelm"
-	item_state = "stalhelm"
-
-/obj/item/clothing/head/panzer
-	name = "Panzer Cap"
-	desc = "Ein Hut passen nur für die größten Tanks."
-	icon_state = "panzercap"
-	item_state = "panzercap"
-
-/obj/item/clothing/head/naziofficer
-	name = "Officer Cap"
-	desc = "Ein Hut von Offizieren in der Nazi-Partei getragen."
-	icon_state = "officercap"
-	item_state = "officercap"

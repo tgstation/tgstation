@@ -964,7 +964,7 @@ var/list/WALLITEMS_INVERSE = list(
 /proc/IsValidSrc(A)
 	if(istype(A, /datum))
 		var/datum/B = A
-		return !B.gc_destroyed
+		return !qdeleted(B)
 	if(istype(A, /client))
 		return 1
 	return 0

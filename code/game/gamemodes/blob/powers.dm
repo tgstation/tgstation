@@ -7,6 +7,50 @@
 
 // Power verbs
 
+/mob/camera/blob/proc/place_blob_core(var/point_rate = base_point_rate, var/override = 0)
+	if(!override && world.time <= manualplace_min_time && world.time <= autoplace_max_time)
+		src << "<span class='warning'>It is too early to place your blob core!</span>"
+		return 0
+	if(placed)
+		return 1
+	if(!override)
+		for(var/mob/living/M in range(7, src))
+			if("blob" in M.faction)
+				continue
+			if(M.client)
+				src << "<span class='warning'>There is someone too close to place your blob core!</span>"
+				return 0
+		for(var/mob/living/M in view(13, src))
+			if("blob" in M.faction)
+				continue
+			if(M.client)
+				src << "<span class='warning'>Someone could see your blob core from here!</span>"
+				return 0
+		var/turf/T = get_turf(src)
+		if(T.density)
+			src << "<span class='warning'>This spot is too dense to place a blob core on!</span>"
+			return 0
+		for(var/obj/O in T)
+			if(istype(O, /obj/effect/blob))
+				if(istype(O, /obj/effect/blob/normal))
+					qdel(O)
+				else
+					src << "<span class='warning'>There is already a blob here!</span>"
+					return 0
+			if(O.density)
+				src << "<span class='warning'>This spot is too dense to place a blob core on!</span>"
+				return 0
+	else if(override == 1)
+		var/turf/T = pick(blobstart)
+		loc = T //got overrided? you're somewhere random, motherfucker
+	var/obj/effect/blob/core/core = new(get_turf(src), null, point_rate, 1)
+	core.overmind = src
+	blob_core = core
+	core.update_icon()
+	update_health_hud()
+	placed = 1
+	return 1
+
 /mob/camera/blob/verb/transport_core()
 	set category = "Blob"
 	set name = "Jump to Core"
@@ -83,19 +127,25 @@
 	if(!B)
 		src << "<span class='warning'>You must be on a factory blob!</span>"
 		return
-	if(B.health <= B.maxhealth*0.8) //if it's at less than 80% of its health, you can't blobbernaut it
-		src << "<span class='warning'>This factory blob is too damaged to produce a blobbernaut.</span>"
+	if(B.naut) //if it already made a blobbernaut, it can't do it again
+		src << "<span class='warning'>This factory blob is already sustaining a blobbernaut.</span>"
+		return
+	if(B.health < B.maxhealth * 0.5)
+		src << "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>"
 		return
 	if(!can_buy(30))
 		return
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
-	B.take_damage(B.maxhealth*0.8, CLONE, null, 0) //take a bunch of damage, so you can't produce tons of blobbernauts from a single factory
+	B.maxhealth = initial(B.maxhealth) * 0.25 //factories that produced a blobbernaut have much lower health
+	B.check_health()
 	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 	B.spore_delay = world.time + 600 //one minute before it can spawn spores again
 	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
+	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
+	flick("blobbernaut_produce", blobber)
+	B.naut = blobber
+	blobber.factory = B
 	blobber.overmind = src
 	blobber.update_icons()
-	flick("blobbernaut_produce", blobber)
 	blobber.notransform = 1 //stop the naut from moving around
 	blob_mobs.Add(blobber)
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
@@ -107,7 +157,7 @@
 		blobber << 'sound/effects/blobattack.ogg'
 		blobber << 'sound/effects/attackblob.ogg'
 		blobber << "<b>You are a blobbernaut!</b>"
-		blobber << "You are powerful, hard to kill, and slowly regenerate near nodes and cores, but will slowly die if not near the blob."
+		blobber << "You are powerful, hard to kill, and slowly regenerate near nodes and cores, but will slowly die if not near the blob or if the factory that made you is killed."
 		blobber << "You can communicate with other blobbernauts and overminds via <b>:b</b>"
 		blobber << "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 		blobber << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
@@ -162,24 +212,31 @@
 /mob/camera/blob/proc/expand_blob(turf/T)
 	if(!can_attack())
 		return
-	var/obj/effect/blob/B = locate() in T
-	if(B)
-		src << "<span class='warning'>There is a blob there!</span>"
-		return
 	var/obj/effect/blob/OB = locate() in circlerange(T, 1)
 	if(!OB)
 		src << "<span class='warning'>There is no blob adjacent to the target tile!</span>"
 		return
-	if(!can_buy(5))
-		return
-	last_attack = world.time
-	OB.expand(T, src)
-	for(var/mob/living/L in T)
-		if("blob" in L.faction) //no friendly fire
-			continue
-		var/mob_protection = L.get_permeability_protection()
-		blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection, src)
-		blob_reagent_datum.send_message(L)
+	if(can_buy(5))
+		var/attacksuccess = FALSE
+		last_attack = world.time
+		for(var/mob/living/L in T)
+			if("blob" in L.faction) //no friendly/dead fire
+				continue
+			if(L.stat != DEAD)
+				attacksuccess = TRUE
+				var/mob_protection = L.get_permeability_protection()
+				blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection, src)
+				blob_reagent_datum.send_message(L)
+		var/obj/effect/blob/B = locate() in T
+		if(B)
+			if(attacksuccess) //if we successfully attacked a turf with a blob on it, don't refund shit
+				B.blob_attack_animation(T, src)
+			else
+				src << "<span class='warning'>There is a blob there!</span>"
+				add_points(5) //otherwise, refund all of the cost
+			return
+		else
+			OB.expand(T, src)
 
 /mob/camera/blob/verb/rally_spores_power()
 	set category = "Blob"
@@ -245,37 +302,11 @@
 	src << "<i>Shield Blobs</i> are strong and expensive blobs which take more damage. In additon, they are fireproof and can block air, use these to protect yourself from station fires."
 	src << "<i>Resource Blobs</i> are blobs which produce more resources for you, build as many of these as possible to consume the station. This type of blob must be placed near node blobs or your core to work."
 	src << "<i>Factory Blobs</i> are blobs that spawn blob spores which will attack nearby enemies. This type of blob must be placed near node blobs or your core to work."
-	src << "<i>Blobbernauts</i> can be produced from factories for a cost, and are hard to kill, powerful, and moderately smart. The factory used to create one will become briefly fragile and unable to produce spores."
+	src << "<i>Blobbernauts</i> can be produced from factories for a cost, and are hard to kill, powerful, and moderately smart. The factory used to create one will become fragile and briefly unable to produce spores."
 	src << "<i>Node Blobs</i> are blobs which grow, like the core. Like the core it can activate resource and factory blobs."
 	src << "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>"
 	src << "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob"
 	src << "Attempting to talk will send a message to all other overminds, allowing you to coordinate with them."
-
-/datum/action/innate/blob
-	background_icon_state = "bg_alien"
-
-/datum/action/innate/blob/earlyhelp
-	name = "Blob Help"
-	button_icon_state = "blob"
-
-/datum/action/innate/blob_earlyhelp/Activate()
-	owner << "<b>You are a blob!</b>"
-	owner << "You will shortly burst, and should find a quiet place to do so, out of sight of the station."
-	owner << "Alternatively, you could burst near a place that would hinder the station, such as telecomms or science."
-	owner << "Once you burst, you can get additional information by <b>pressing this button again.</b>"
-
-/datum/action/innate/blob/earlycomm
-	name = "Blob Communication"
-	button_icon_state = "blob_comm"
-
-/datum/action/innate/blob/earlycomm/Activate()
-	var/msg = stripped_input(owner, "What do you wish to tell your fellow blobs?", null, "")
-	if(msg && owner)
-		var/mob/living/carbon/human/O = owner
-		var/spanned_message = O.say_quote(msg, O.get_spans())
-		var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [O.real_name]</b> [spanned_message]</font></span>"
-		var/datum/game_mode/blob/B = ticker.mode
-		B.show_message("[rendered]")
-		for(var/mob/M in mob_list)
-			if(isobserver(M))
-				M << "<a href='?src=\ref[M];follow=\ref[O]'>(F)</a> [rendered]"
+	if(!placed)
+		src << "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [round((autoplace_max_time - world.time)/600, 0.5)] minutes.</font></span>"
+		src << "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the button in the bottom right corner of the screen.</font></span>"

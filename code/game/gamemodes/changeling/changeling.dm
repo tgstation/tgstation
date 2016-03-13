@@ -97,6 +97,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		changeling.special_role = "Changeling"
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
+		ticker.mode.update_changeling_icons_added(changeling)
 	..()
 	return
 
@@ -500,3 +501,13 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	newprofile.underwear = underwear
 	newprofile.undershirt = undershirt
 	newprofile.socks = socks
+
+/datum/game_mode/proc/update_changeling_icons_added(datum/mind/changling_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CHANGELING]
+	hud.join_hud(changling_mind.current, 0)
+	set_antag_hud(changling_mind.current, "changling")
+
+/datum/game_mode/proc/update_changeling_icons_removed(datum/mind/changling_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CHANGELING]
+	hud.leave_hud(changling_mind.current)
+	set_antag_hud(changling_mind.current, null)

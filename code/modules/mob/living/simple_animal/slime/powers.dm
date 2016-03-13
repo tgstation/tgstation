@@ -71,13 +71,13 @@
 		src << "<span class='warning'><i>This subject does not have a strong enough life energy...</i></span>"
 		return 0
 
-	if(isslime(M.buckled_mob))
+	if(locate(/mob/living/simple_animal/slime) in M.buckled_mobs)
 		src << "<span class='warning'><i>Another slime is already feeding on this subject...</i></span>"
 		return 0
 	return 1
 
 /mob/living/simple_animal/slime/proc/Feedon(mob/living/M)
-	M.unbuckle_mob(force=1) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in CanFeedon())
+	M.unbuckle_all_mobs(force=1) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in CanFeedon())
 	if(M.buckle_mob(src, force=1))
 		M.visible_message("<span class='danger'>The [name] has latched onto [M]!</span>", \
 						"<span class='userdanger'>The [name] has latched onto [M]!</span>")
@@ -94,7 +94,7 @@
 		if(!silent)
 			visible_message("<span class='warning'>[src] has let go of [buckled]!</span>", \
 							"<span class='notice'><i>I stopped feeding.</i></span>")
-		buckled.unbuckle_mob(force=1)
+		buckled.unbuckle_mob(src,force=1)
 
 /mob/living/simple_animal/slime/verb/Evolve()
 	set category = "Slime"

@@ -35,7 +35,7 @@
 		user << "Can't become a drone before the game has started."
 		return
 	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(be_drone == "No" || gc_destroyed)
+	if(be_drone == "No" || qdeleted(src))
 		return
 	var/mob/living/simple_animal/drone/D = new drone_type(get_turf(loc))
 	D.key = user.key

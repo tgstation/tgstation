@@ -1,32 +1,22 @@
 /*
  *Yes, this is literally a mission about the crew fighting mecha-hitler and his army of geo-nazis.
  *No, I have no regrets about making this.
- *
- *Mission itself will be based around a nazi-controlled base on the Terran moon. Crew will be spawned into a
- *the remains of a russian vessel, finding their way to the actual base and fighting their way through to
- *eventually get to the boss, mecha-hitler. After defeating mecha-hitler, they can safetly leave through the
- *base gateway back to the station. This mission is meant to be a challenge, with attempts to circumvent
- *cheesy tactics (tk+xray, xray laser spam, corner peaking, ect).
  */
 
 /*
  *Mecha Hitler himself
  */
 
-/mob/living/simple_animal/hostile/syndicate/mecha_pilot/roboheil //robo-hitler with shoulder-mounted machineguns cause fuck yeah
-	name = "Cyborg Hitler"
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/roboheil //hitler's head in a jar with a spider walker sort of thing
+	name = "Hitler's Head in a Jar"
 	icon_state = "roboheil"
 	icon_living = "roboheil"
-	desc = "No.. it can't be!"
-	ranged = 1
-	rapid = 1
-	maxHealth = 500
-	health = 500
+	desc = "Don't let it get away!"
+	maxHealth = 50
+	health = 50
 	retreat_distance = 3
 	minimum_distance = 2
-	retreat_chance = 0
 	faction = list("german")
-	casingtype = /obj/item/ammo_casing/c45nostamina
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
 	deathmessage = "Mecha Hitler's body activates its self-destruct function!"
 	loot = list(/obj/effect/gibspawner/robot)
@@ -42,7 +32,7 @@
 	name = "\improper Mecha-Hitler"
 	desc = "A heavily modified marauder mech with reinforced reflective plating."
 	icon_state = "mauler"
-	health = 2000 //mech mob code seems to have the pilot jump out at half mech HP so its technically only 1000
+	health = 4000
 	deflect_chance = 40
 	damage_absorption = list("brute"=0.6,"fire"=0.3,"bullet"=0.7,"laser"=0.4,"energy"=0.5,"bomb"=0.5)
 	force = 75
@@ -178,9 +168,17 @@
 		if(prob(90))
 			C.Weaken(2)
 			src.say("HEIL HITLER!")
-			explosion(src, 0, 0, 4, 6, 3)
+			explosion(src, 0, 0, 2, 3, 2)
 			src.gib()
 
+/mob/living/simple_animal/hostile/spawner/heilfactory
+	name = "production factory"
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "bin_full"
+	spawn_text = "marches out of"
+	max_mobs = 3
+	mob_type = /mob/living/simple_animal/hostile/nsoldier/bomber
+	faction = list("german")
 
 /*
  *Structure-related stuff
@@ -188,8 +186,10 @@
 
 /turf/simulated/floor/plating/marble
 	name = "marble flooring"
+	icon_state = "marble"
 	broken_states = list("marblebroken")
 	burnt_states = list("marblescorched")
+
 
 /obj/effect/mob_spawn/human/corpse/nsoldier
 	name = "Geo-Nazi"
@@ -197,8 +197,29 @@
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	mask = /obj/item/clothing/mask/gas/old
-	helmet = /obj/item/clothing/head/stalhelm
+	helmet = /obj/item/clothing/head/helmet/stalhelm
 	has_id = 0
+
+
+//space billboards
+
+/obj/structure/billboard
+	name = "Space billboard"
+	desc = "The pinnancle of space-advertisement."
+	icon = 'icons/obj//banters/billboard.dmi'
+	icon_state = "generic"
+	density = 0
+	layer = 10
+	anchored = 1
+
+/obj/structure/billboard/random
+
+/obj/structure/billboard/random/New()
+	..()
+	icon_state = "billboard_[rand(1,5)]"
+
+
+//pillars
 
 /obj/structure/pillar
 	name = "pillar"
@@ -208,6 +229,15 @@
 	anchored = 1
 	density = 1
 	layer = 10
+
+/obj/structure/pillar/broken
+	name = "broken pillar"
+	desc = "The remains of a pillar."
+	icon = 'icons/obj/pillarbroke.dmi'
+	icon_state = "pillarbroke"
+
+
+//banners
 
 /obj/structure/banner
 	name = "banner"
@@ -234,7 +264,180 @@
 	icon_state = "assblastusa"
 
 
+//liberty
+
+/obj/structure/displaycase/liberty
+	name = "display case"
+
+/obj/structure/displaycase/liberty/New()
+	..()
+	var/obj/item/weapon/gun/projectile/sniper_rifle/S = new /obj/item/weapon/gun/projectile/sniper_rifle(src)
+	S.name = "Liberation"
+	S.desc = "A high-powered rifle with the name '<i>liberation</i>' scratched onto the side. Below it are several tally marks."
+	showpiece = S
+	update_icon()
+
+
+//flags
+
+/obj/structure/flag
+	name = "french flag"
+	desc = "A white sheet hung up on the side of a wall."
+	icon = 'icons/obj/banters/flags.dmi'
+	icon_state = "blank"
+	anchored = 1
+	density = 0
+	burn_state = FLAMMABLE
+	burntime = 30
+	var/ripped = 0
+
+/obj/structure/flag/assblastusa
+	name = "dusty flag"
+	desc = "A striped relic of a time long before. You think you hear the screech of an eagle in the distance."
+	icon_state = "assblastusa"
+
+/obj/structure/flag/germany
+	name = "dusty flag"
+	desc = "A striped relic of a time long before. The stripes seem extremely organized."
+	icon_state = "germany"
+
+/obj/structure/flag/cyka
+	name = "dusty flag"
+	desc = "A striped relic of a time long before. Smells faintly of vodka."
+	icon_state = "cyka"
+
+/obj/structure/flag/attack_hand(mob/user)
+	if(ripped)
+		return
+	var/temp_loc = user.loc
+	if((user.loc != temp_loc) || ripped )
+		return
+	visible_message("[user] tears [src] in half!" )
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
+	ripped = 1
+	icon_state = "ripped"
+	name = "ripped flag"
+	desc = "The poor remains of a desecrated flag."
+	add_fingerprint(user)
+
+//portraits
+
+/obj/structure/portrait
+	name = "portrait"
+	desc = "A framed portrait."
+	icon = 'icons/obj/banters/portraits.dmi'
+	icon_state = "blank"
+
+/*
+ *Areas
+ */
+
+/area/awaymission/raisearm
+	name = "Lunar Plains"
+	icon_state = "away"
+	requires_power = 0
+	luminosity = 1
+	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
+
+/area/awaymission/raisearm/mechahitler
+	name = "Führer's Secret Lair"
+
+/area/awaymission/raisearm/ship
+	name = "Derelict Ship"
+	requires_power = 1
+
+/area/awaymission/raisearm/mainhq
+	name = "Nazi HQ"
+	icon_state = "away3"
+	requires_power = 1
+
+/area/awaymission/raisearm/outpost
+	name = "Outpost"
+	icon_state = "away3"
+	requires_power = 1
+
+/area/awaymission/raisearm/random
+	name = "???"
+	icon_state = "away2"
+	requires_power = 1
+
 /*
  *Items
  */
 
+/obj/item/weapon/paper/raisearm
+	name = "map coordinates"
+	icon_state = "docs_generic"
+	info = "A detailed layout of the nearby expanse of space and various areas of potential intrest. A section of the map in the lower-right corner is circled several times with some cryllic writing.</i>"
+
+/obj/item/weapon/paper/raisearm/update_icon()
+	return
+
+
+//clothes
+
+//S.S clothing, credit to /vg/station (Heredth made the pull request)
+/obj/item/clothing/under/nsoldier
+	name = "dusty uniform"
+	desc = "A dusty old uniform, a relic from a time before."
+	icon_state = "soldieruniform"
+	item_state = "soldieruniform"
+	item_color = "soldieruniform"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	strip_delay = 50
+
+/obj/item/clothing/under/nsoldier/officer
+	name = "dusty uniform"
+	desc = "A dusty old uniform, a relic from a time before. This one looks more official."
+	icon_state = "officeruniform"
+	item_state = "officeruniform"
+	item_color = "officeruniform"
+	armor = list(melee = 15, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	strip_delay = 60
+
+/obj/item/clothing/head/helmet/stalhelm
+	name = "Stalhelm"
+	desc = "Ein Helm, um die Nazi-Interesse an fremden Raumstationen zu sichern."
+	icon_state = "stalhelm"
+	item_state = "stalhelm"
+
+/obj/item/clothing/head/helmet/panzer
+	name = "Panzer Cap"
+	desc = "Ein Hut passen nur für die größten Tanks."
+	icon_state = "panzercap"
+	item_state = "panzercap"
+
+/obj/item/clothing/head/helmet/naziofficer
+	name = "Officer Cap"
+	desc = "Ein Hut von Offizieren in der Nazi-Partei getragen."
+	icon_state = "officercap"
+	item_state = "officercap"
+
+
+//guns
+
+/obj/item/weapon/gun/projectile/automatic/pistol/APS/ra_APS
+
+/obj/item/weapon/gun/projectile/automatic/pistol/APS/ra_APS/New()
+	..()
+	for(var/ammo in magazine.stored_ammo)
+		if(prob(55))
+			magazine.stored_ammo -= ammo
+
+
+/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ra_deagle
+
+/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ra_deagle/New()
+	..()
+	for(var/ammo in magazine.stored_ammo)
+		if(prob(75))
+			magazine.stored_ammo -= ammo
+
+
+/obj/item/weapon/gun/projectile/revolver/nagant/ra_nagant
+
+/obj/item/weapon/gun/projectile/revolver/nagant/ra_nagant/New()
+	..()
+	for(var/ammo in magazine.stored_ammo)
+		if(prob(95))
+			magazine.stored_ammo -= ammo

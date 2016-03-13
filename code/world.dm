@@ -107,7 +107,7 @@ var/last_irc_status = 0
 		s["host"] = host ? host : null
 		s["active_players"] = get_active_player_count()
 		s["players"] = clients.len
-		s["revision"] = revdata.revision
+		s["revision"] = revdata.commit
 		s["revision_date"] = revdata.date
 
 		var/list/adm = get_admin_counts()
