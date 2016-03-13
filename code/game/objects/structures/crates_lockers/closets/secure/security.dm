@@ -168,7 +168,6 @@
 	new /obj/item/clothing/head/fedora(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/weapon/storage/box/evidence(src)
-	new /obj/item/device/radio/headset/headset_sec/alt(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/weapon/holosign_creator/security(src)

@@ -7,6 +7,50 @@
 
 // Power verbs
 
+/mob/camera/blob/proc/place_blob_core(var/point_rate = base_point_rate, var/override = 0)
+	if(!override && world.time <= manualplace_min_time && world.time <= autoplace_max_time)
+		src << "<span class='warning'>It is too early to place your blob core!</span>"
+		return 0
+	if(placed)
+		return 1
+	if(!override)
+		for(var/mob/living/M in range(7, src))
+			if("blob" in M.faction)
+				continue
+			if(M.client)
+				src << "<span class='warning'>There is someone too close to place your blob core!</span>"
+				return 0
+		for(var/mob/living/M in view(13, src))
+			if("blob" in M.faction)
+				continue
+			if(M.client)
+				src << "<span class='warning'>Someone could see your blob core from here!</span>"
+				return 0
+		var/turf/T = get_turf(src)
+		if(T.density)
+			src << "<span class='warning'>This spot is too dense to place a blob core on!</span>"
+			return 0
+		for(var/obj/O in T)
+			if(istype(O, /obj/effect/blob))
+				if(istype(O, /obj/effect/blob/normal))
+					qdel(O)
+				else
+					src << "<span class='warning'>There is already a blob here!</span>"
+					return 0
+			if(O.density)
+				src << "<span class='warning'>This spot is too dense to place a blob core on!</span>"
+				return 0
+	else if(override == 1)
+		var/turf/T = pick(blobstart)
+		loc = T //got overrided? you're somewhere random, motherfucker
+	var/obj/effect/blob/core/core = new(get_turf(src), null, point_rate, 1)
+	core.overmind = src
+	blob_core = core
+	core.update_icon()
+	update_health_hud()
+	placed = 1
+	return 1
+
 /mob/camera/blob/verb/transport_core()
 	set category = "Blob"
 	set name = "Jump to Core"
@@ -263,32 +307,6 @@
 	src << "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>"
 	src << "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob"
 	src << "Attempting to talk will send a message to all other overminds, allowing you to coordinate with them."
-
-/datum/action/innate/blob
-	background_icon_state = "bg_alien"
-
-/datum/action/innate/blob/earlyhelp
-	name = "Blob Help"
-	button_icon_state = "blob"
-
-/datum/action/innate/blob_earlyhelp/Activate()
-	owner << "<b>You are a blob!</b>"
-	owner << "You will shortly burst, and should find a quiet place to do so, out of sight of the station."
-	owner << "Alternatively, you could burst near a place that would hinder the station, such as telecomms or science."
-	owner << "Once you burst, you can get additional information by <b>pressing this button again.</b>"
-
-/datum/action/innate/blob/earlycomm
-	name = "Blob Communication"
-	button_icon_state = "blob_comm"
-
-/datum/action/innate/blob/earlycomm/Activate()
-	var/msg = stripped_input(owner, "What do you wish to tell your fellow blobs?", null, "")
-	if(msg && owner)
-		var/mob/living/carbon/human/O = owner
-		var/spanned_message = O.say_quote(msg, O.get_spans())
-		var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [O.real_name]</b> [spanned_message]</font></span>"
-		var/datum/game_mode/blob/B = ticker.mode
-		B.show_message("[rendered]")
-		for(var/mob/M in mob_list)
-			if(isobserver(M))
-				M << "<a href='?src=\ref[M];follow=\ref[O]'>(F)</a> [rendered]"
+	if(!placed)
+		src << "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [round((autoplace_max_time - world.time)/600, 0.5)] minutes.</font></span>"
+		src << "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the button in the bottom right corner of the screen.</font></span>"

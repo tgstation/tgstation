@@ -4,6 +4,7 @@
 	var/height = 0
 	var/mappath = null
 	var/mapfile = null
+	var/loaded = 0 // Times loaded this round
 
 /datum/map_template/New(path = null, map = null, rename = null)
 	if(path)

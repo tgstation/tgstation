@@ -399,21 +399,6 @@
 		new /obj/item/ammo_box/magazine/smgm45(src)
 	return
 
-
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam
-	desc = "A large dufflebag, packed to the brim with .45, 5.56, and .50 ammo."
-
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam/New()
-	..()
-	contents = list()
-	for(var/i in 1 to 4)
-		new /obj/item/ammo_box/magazine/smgm45(src)
-	for(var/i in 1 to 3)
-		new /obj/item/ammo_box/magazine/m556(src)
-	new /obj/item/ammo_box/a40mm(src)
-	new /obj/item/ammo_box/magazine/sniper_rounds(src)
-	return
-
 /obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle
 	desc = "A large dufflebag containing a C20r, some magazines, and a cheap looking suppressor."
 
@@ -424,18 +409,6 @@
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/weapon/gun/projectile/automatic/c20r(src)
 	new /obj/item/weapon/suppressor/specialoffer(src)
-	return
-
-/obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle
-	desc = "A large dufflebag containing an M90gl, a magazine, four additional grenades, and a pack of Syndicate cigarettes."
-
-/obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle/New()
-	..()
-	contents = list()
-	new /obj/item/ammo_box/magazine/m556(src)
-	new /obj/item/ammo_box/a40mm(src)
-	new /obj/item/weapon/gun/projectile/automatic/m90(src)
-	new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate(src)
 	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle
