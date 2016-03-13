@@ -101,9 +101,9 @@
 	set desc = "Toggle requiring nodes to place resource and factory blobs."
 	nodes_required = !nodes_required
 	if(nodes_required)
-		src << "<span class='warning'>You no longer require a nearby node or core to place factory and resource blobs.</span>"
-	else
 		src << "<span class='warning'>You now require a nearby node or core to place factory and resource blobs.</span>"
+	else
+		src << "<span class='warning'>You no longer require a nearby node or core to place factory and resource blobs.</span>"
 
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
