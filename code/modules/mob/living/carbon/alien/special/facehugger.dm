@@ -245,9 +245,11 @@ var/const/MAX_ACTIVE_TIME = 400
 				H.visible_message("<span class='danger'>\The [src] bounces off of the [mouth_protection]!</span>")
 				if(prob(75) && sterile == 0)
 					Die()
+					return
 				else
 					GoIdle(15)
 					return
+			return
 
 	if(iscarbon(M))
 		var/mob/living/carbon/target = L
