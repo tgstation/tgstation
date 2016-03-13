@@ -58,6 +58,7 @@
  */
 /obj/item/weapon/fireaxe  // DEM AXES MAN, marker -Agouri
 	icon_state = "fireaxe0"
+	hitsound = "sound/weapons/bloodyslice.ogg"
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	w_class = 4.0
