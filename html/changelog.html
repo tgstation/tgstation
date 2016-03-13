@@ -80,6 +80,16 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">2016.03.13</h2>
+			<h3 class="author">9600bauds updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">All Chemdispensers in Boxstation and Metastation now start with 100 energy, like they were intended to.</li>
+			</ul>
+			<h3 class="author">Intigracy updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Boxstation's engineering is now powered directly by the engines instead of through the SMES.</li>
+			</ul>
+
 			<h2 class="date">2016.03.11</h2>
 			<h3 class="author">Intigracy updated:</h3>
 			<ul class="changes bgimages16">
@@ -1752,81 +1762,6 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h3 class="author">Pomf123 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="tweak">Internal bleeding wound limited to 1 per organ.</li>
-			</ul>
-
-			<h2 class="date">2015.10.13</h2>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Tray lids now prevent gas outside the tray from being consumed/exuded by plants.</li>
-				<li class="bugfix">You can no longer be teleported while locked_to an atom (such as buckled on a chair. If the chair gets teleported you'll still be teleported along with it)</li>
-				<li class="bugfix">Logging out of an ATM with a Zero security account doesn't automatically re-log you in anymore.</li>
-				<li class="bugfix">Chemical puffs such as those coming out of sprayers can now move past tables, grilles, and various machines.</li>
-				<li class="bugfix">Silicons cannot be sent money through PDAs anymore.</li>
-			</ul>
-			<h3 class="author">Kurfurst updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added treadmill generators. They power based on a few attributes, such as your run speed, the chemicals in your body (such as Brawndo), and genetic traits like Hulk or fastrun.</li>
-				<li class="bugfix">Fixed a bug with treadmill generator bonus calculation related to upgrades.</li>
-				<li class="bugfix">Fixed a bug related to treadmill anchoring.</li>
-				<li class="bugfix">Fixed a bug in which you couldn't print out washing machine circuitboards.</li>
-				<li class="bugfix">Fixed pAI Brightness Enhancer</li>
-				<li class="bugfix">Fixed pAI Medical Records + brought back bioscan</li>
-				<li class="bugfix">Fixed pAI Security Records</li>
-				<li class="bugfix">Fixed pAI Door wirejacking</li>
-				<li class="tweak">Vending machines now throw at random from their products (and if unlocked, contraband), instead of just the first item from products alone.</li>
-				<li class="rscadd">Tweaked the malfunction proc, which now fires on emp_act as well, and a (2%) chance when kicking, too.</li>
-				<li class="rscadd">The wires display for MULEbots is much more verbose.</li>
-				<li class="rscadd">You can use a multitool or wirecutters on a mulebot to get the wires prompt, instead of just your hand.</li>
-				<li class="bugfix">Cleared up some ambiguity for radio transmitter wires.</li>
-				<li class="bugfix">Transmitters now don't get unresponsive if you cut the LINK wire.</li>
-				<li class="rscadd">The wires display for the particle accelerator is somewhat more verbose.</li>
-				<li class="bugfix">Fabricator (e.g.: Autolathe) wires behave much more rationally. Cut shock wire for indefinite shock, pulse for 30 second shock. The machine can no longer be powered at all if the power line is cut. Cutting the contraband wire resets it to default.</li>
-				<li class="tweak">Tier 3 parts now require plastic instead of metal/glass/uranium/gold/silver/plasma.</li>
-				<li class="tweak">The RPED now requires plastic instead of gold/silver.</li>
-				<li class="rscadd">The SMES can now be upgraded in terms of power capacity, input, and output.</li>
-				<li class="rscadd">The Biogenerator can now be upgraded to generate more biomass per nutriment, and to work faster.</li>
-				<li class="rscadd">Hydroponics Trays now have a Toggle Light verb (does not interfere with bioluminesence). Unnoticable at its weakest level, but useful at higher levels.</li>
-				<li class="rscadd">Upgrading a tray reduces weeds, helps mutations occur, and improves the onboard light.</li>
-				<li class="rscadd">Vending Machines can now be upgraded to throw items more often.</li>
-				<li class="tweak">Vending Machines have received a very slight buff to default throw rate.</li>
-				<li class="tweak">Microwaves and Prisms now have much simpler build recipes. The microwave's upgrade efficiency was not compromised.</li>
-				<li class="rscadd">Washing machines can now be built! Upgrading them will make them process faster.</li>
-				<li class="rscadd">Chem Masters can now be upgraded for more pills, bigger bottles, and bigger chemical reservoir.</li>
-				<li class="rscadd">The virus incubator can now be upgraded to grow faster and mutate more often.</li>
-				<li class="rscadd">The virus incubator display now tells you the growth level of the inserted dish.</li>
-				<li class="rscadd">The virus isolator is now a machine instead of a computer and can now be upgraded to work faster.</li>
-				<li class="rscadd">The virus analyzer can now be upgraded to work faster and require a lower minimum virus growth.</li>
-				<li class="rscadd">The mech port may now be upgraded to increase charge speed.</li>
-				<li class="rscadd">The mech floor may now be upgraded to store power for an instant transfusion, like a cyborg recharger.</li>
-				<li class="tweak">Freezer and Heater recipes simplified</li>
-				<li class="rscadd">Freezer and Heater may be upgraded to heat and cool to greater extremes.</li>
-				<li class="rscadd">Monkey Recycler can be upgraded to recycle monkeys more efficiently, and also recycle live monkeys in case you wanted to do that for some reason. Its recipe was also simplified.</li>
-				<li class="rscadd">Fax is now buildable and can be upgraded to send faster.</li>
-				<li class="bugfix">Fixed a bug where the Fax would still be recharging with negative recharge time remaining.</li>
-				<li class="rscadd">The Processor and Chicken Processor have been merged into one! Recipe simplified, and upgrades make it work faster.</li>
-				<li class="rscadd">The Hyperspectral Imager can now be built and upgraded.</li>
-				<li class="rscadd">The Isotope Ratio Spectrometer can now be built and upgraded.</li>
-				<li class="rscadd">The Ion Mobility Spectrometer can now be built and upgraded.</li>
-				<li class="rscadd">The Gas Chromatography Spectrometer can now be built and upgaded.</li>
-				<li class="rscadd">The Fourier Transform Spectroscope can now be built and upgraded.</li>
-				<li class="rscadd">The Accelerator Spectrometer can now be built and upgraded.</li>
-				<li class="rscadd">The DNA modifier can be upgraded to spit out SE syringes faster.</li>
-			</ul>
-			<h3 class="author">N3X15 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="experiment">Speech code has had some major changes under the hood.  Expect some buggy behavior while we straighten this shit out.  Report issues on github so we can find them easily.</li>
-				<li class="bugfix">Speech with special formatting (such as the SANS disability, and borg speech) now transmit over tcomms properly.</li>
-				<li class="bugfix">Issues with ghost chat formatting and encoding fixed.</li>
-				<li class="bugfix">Mobs and objects now use the proper verb for speaking.</li>
-				<li class="bugfix">MMIs should now insert brains properly.</li>
-			</ul>
-			<h3 class="author">Unid updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Marauder toys now have a sprite</li>
-				<li class="bugfix">Fixed MoMMI blueprints improperly behaving while in blueprint-created areas</li>
-				<li class="tweak">Ghosts can now teleport to blueprint areas. Those areas appear on the end of the list when choosing a teleport destination!</li>
-				<li class="imageadd">Added in-hands for space carps</li>
-				<li class="experiment">MoMMI blueprints may now be used to rename blueprint-created areas!</li>
 			</ul>
 		</div>
 		<!--
