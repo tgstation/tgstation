@@ -236,7 +236,7 @@ var/global/datum/controller/master/Master = new()
 					world.fps = old_fps
 					old_fps = null
 #endif
-				sleep(world.tick_lag+extrasleep)
+				sleep(world.tick_lag*processing+extrasleep)
 
 			else
 				sleep(50)
