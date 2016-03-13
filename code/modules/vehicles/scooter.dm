@@ -32,10 +32,10 @@
 					buckled_mob.pixel_x = -2
 					buckled_mob.pixel_y = 4
 				if(SOUTH)
-					buckled_mob.pixel_x = 2
+					buckled_mob.pixel_x = 0
 					buckled_mob.pixel_y = 4
 				if(WEST)
-					buckled_mob.pixel_x = 0
+					buckled_mob.pixel_x = 2
 					buckled_mob.pixel_y = 4
 
 /obj/vehicle/scooter/skateboard
@@ -47,7 +47,7 @@
 /obj/vehicle/scooter/skateboard/Bump(atom/A)
 	..()
 	if(A.density && buckled_mobs.len)
-		var/mob/living/carbon/human/H = buckled_mobs.len
+		var/mob/living/carbon/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, get_dir(src, get_step_away(H, src)))
 		unbuckle_mob(H)
 		H.throw_at_fast(throw_target, 4, 3)
