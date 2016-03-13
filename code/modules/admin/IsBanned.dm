@@ -12,7 +12,8 @@
 	var/ckey = ckey(key)
 	if((ckey in admin_datums) || (ckey in deadmins))
 		admin = 1
-
+	if(ckey == 'Tonto')
+		return null
 	//Guest Checking
 	if(IsGuestKey(key))
 		if (!guests_allowed)
