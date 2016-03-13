@@ -1772,5 +1772,10 @@ mob/proc/on_foot()
 /mob/proc/nuke_act() //Called when caught in a nuclear blast
 	return
 
+/mob/proc/remove_jitter()
+	if(jitteriness)
+		jitteriness = 0
+		animate(src)
+
 #undef MOB_SPACEDRUGS_HALLUCINATING
 #undef MOB_MINDBREAKER_HALLUCINATING
