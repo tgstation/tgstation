@@ -55,7 +55,7 @@
 		else
 			toggle_door(user)
 
-/obj/structure/cage/verb/toggle_cover()
+/obj/structure/cage/verb/toggle_cover_v()
 	set name = "Toggle Cover"
 	set category = "Object"
 	set src in oview(1)
