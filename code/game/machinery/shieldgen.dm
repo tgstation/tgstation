@@ -185,14 +185,14 @@
 		return
 
 	if (src.active)
-		user.visible_message("[src] [user] deactivated the shield generator.", \
-			"<span class='notice'>[src] You deactivate the shield generator.</span>", \
+		user.visible_message("[user] deactivated the shield generator.", \
+			"<span class='notice'>You deactivate the shield generator.</span>", \
 			"<span class='italics'>You hear heavy droning fade out.</span>")
 		src.shields_down()
 	else
 		if(anchored)
-			user.visible_message("[src] [user] activated the shield generator.", \
-				"<span class='notice'>[src] You activate the shield generator.</span>", \
+			user.visible_message("[user] activated the shield generator.", \
+				"<span class='notice'>You activate the shield generator.</span>", \
 				"<span class='italics'>You hear heavy droning.</span>")
 			src.shields_up()
 		else
