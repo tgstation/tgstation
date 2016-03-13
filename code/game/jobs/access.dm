@@ -187,6 +187,12 @@
 		return 0
 	return 1
 
+/proc/wpermit(var/mob/M) //weapons permit checking
+	var/list/L = M.GetAccess()
+	if(access_weapons in L)
+		return 1
+	return 0
+
 /proc/get_centcom_access(job)
 	switch(job)
 		if("VIP Guest")

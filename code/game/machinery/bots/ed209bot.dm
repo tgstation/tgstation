@@ -62,12 +62,15 @@
 	var/declare_arrests = 1 //When making an arrest, should it notify everyone wearing sechuds?
 	var/idcheck = 1 //If true, arrest people with no IDs
 	var/weaponscheck = 1 //If true, arrest people for weapons if they don't have access
-	//List of weapons that secbots will not arrest for
+
+	//List of weapons that secbots will not arrest for, also copypasted in secbot.dm and metaldetector.dm
 	var/safe_weapons = list(
 		/obj/item/weapon/gun/energy/laser/bluetag,
 		/obj/item/weapon/gun/energy/laser/redtag,
 		/obj/item/weapon/gun/energy/laser/practice,
 		/obj/item/weapon/gun/hookshot,
+		/obj/item/weapon/gun/energy/floragun,
+		/obj/item/weapon/melee/defibrillator
 		)
 
 
@@ -715,57 +718,59 @@ Auto Patrol: []"},
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
+//THIS CODE IS COPYPASTED IN secbot.dm AND metaldetector.dm, with slight variations
 /obj/machinery/bot/ed209/proc/assess_perp(mob/living/carbon/human/perp as mob)
-	var/threatcount = 0
+	var/threatcount = 0 //If threat >= 4 at the end, they get arrested
 
 	if(src.emagged == 2) return 10 //Everyone is a criminal!
 
-	if((src.idcheck) || (isnull(perp:wear_id)) || (istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate)))
+	if(!src.allowed(perp)) //cops can do no wrong, unless set to arrest.
 
-		if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.l_hand, /obj/item/weapon/melee/baton))
-			if(!istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/practice))
-				threatcount += 4
+		if(weaponscheck && !wpermit(perp))
+			if(istype(perp.l_hand, /obj/item/weapon/gun) || istype(perp.l_hand, /obj/item/weapon/melee))
+				if(!(perp.l_hand.type in safe_weapons))
+					threatcount += 4
 
-		if(istype(perp.r_hand, /obj/item/weapon/gun) || istype(perp.r_hand, /obj/item/weapon/melee))
-			if(!istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/practice))
-				threatcount += 4
+			if(istype(perp.r_hand, /obj/item/weapon/gun) || istype(perp.r_hand, /obj/item/weapon/melee))
+				if(!(perp.r_hand.type in safe_weapons))
+					threatcount += 4
 
-		if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
-			if(!istype(perp:belt, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/practice))
-				threatcount += 2
+			if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee))
+				if(!(perp.belt.type in safe_weapons))
+					threatcount += 2
 
-		if(istype(perp:wear_suit, /obj/item/clothing/suit/wizrobe))
+		if(istype(perp.wear_suit, /obj/item/clothing/suit/wizrobe))
 			threatcount += 2
 
 		if(perp.dna && perp.dna.mutantrace && perp.dna.mutantrace != "none")
 			threatcount += 2
 
-//Agent cards lower threatlevel when normal idchecking is off.
-		if((perp.wear_id && istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate)) && src.idcheck)
+		if(!perp.wear_id)
+			if(idcheck)
+				threatcount += 4
+			else
+				threatcount += 2
+
+		//Agent cards lower threatlevel.
+		if(perp.wear_id && istype(perp.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 			threatcount -= 2
 
 	if(src.lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
 		threatcount = 0//They will not, however shoot at people who have guns, because it gets really fucking annoying
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
 			threatcount += 4
-		if((istype(perp:r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(perp:l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+		if((istype(perp.r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(perp.l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
 			threatcount += 4
-		if(istype(perp:belt, /obj/item/weapon/gun/energy/laser/redtag))
+		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/redtag))
 			threatcount += 2
 
 	if(src.lasercolor == "r")
 		threatcount = 0
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/bluetag))
 			threatcount += 4
-		if((istype(perp:r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(perp:l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
+		if((istype(perp.r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(perp.l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
 			threatcount += 4
-		if(istype(perp:belt, /obj/item/weapon/gun/energy/laser/bluetag))
+		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/bluetag))
 			threatcount += 2
 
 	if(src.check_records)
@@ -781,9 +786,6 @@ Auto Patrol: []"},
 					if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
 						threatcount = 4
 						break
-
-	if((src.idcheck) && (src.allowed(perp)) && !(src.lasercolor))
-		threatcount = 0//Corrupt cops cannot exist beep boop
 
 	return threatcount
 
@@ -1108,7 +1110,7 @@ Auto Patrol: []"},
 	new /obj/machinery/bot/ed209(get_turf(src),null,"r")
 	qdel(src)
 
-/obj/machinery/bot/ed209/proc/check_for_weapons(var/obj/item/slot_item)
+/obj/machinery/bot/ed209/proc/check_for_weapons(var/obj/item/slot_item) //Unused anywhere, copypasted in secbot.dm
 	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
 		if(!(slot_item.type in safe_weapons))
 			return 1
