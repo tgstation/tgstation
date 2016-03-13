@@ -53,7 +53,9 @@ var/list/airlock_overlays = list()
 	var/autoclose = 1
 	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
 	var/detonated = 0
-	var/doorsound = 'sound/machines/airlock.ogg'
+	var/doorsound = 'sound/machines/airlockopen.ogg'
+	var/doorsoundclose = 'sound/machines/airlockclose.ogg'
+	var/denysound = 'sound/machines/airlockdeny.ogg'
 
 	var/airlock_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
@@ -348,6 +350,8 @@ var/list/airlock_overlays = list()
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
 			update_icon(AIRLOCK_DENY)
+			if(hasPower())
+				playsound(src, denysound, 50, 0 , 3)
 			sleep(6)
 			update_icon(AIRLOCK_CLOSED)
 			icon_state = "closed"
@@ -957,11 +961,11 @@ var/list/airlock_overlays = list()
 		if(emagged)
 			return 0
 		use_power(50)
-		playsound(src.loc, doorsound, 30, 1)
+		playsound(src.loc, doorsound, 30, 0, 3)
 		if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 			src.closeOther.close()
 	else
-		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
+		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 0, 3)
 
 	if(autoclose && normalspeed)
 		addtimer(src, "autoclose", 150)
@@ -1003,9 +1007,9 @@ var/list/airlock_overlays = list()
 		if(emagged)
 			return
 		use_power(50)
-		playsound(src.loc, doorsound, 30, 1)
+		playsound(src.loc, doorsoundclose, 30, 0, 3)
 	else
-		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
+		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 0, 3)
 
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
