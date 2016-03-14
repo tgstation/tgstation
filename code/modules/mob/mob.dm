@@ -772,6 +772,8 @@ var/next_mob_id = 0
 	dizziness = max(dizziness,amount,0)
 
 /mob/proc/Stun(amount, updating_canmove = 1)
+	if(stunned)
+		return
 	if(status_flags & CANSTUN)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
 		if(updating_canmove)
@@ -790,6 +792,8 @@ var/next_mob_id = 0
 			update_canmove()
 
 /mob/proc/Weaken(amount, ignore_canweaken = 0, updating_canmove = 1)
+	if(weakened)
+		return
 	if((status_flags & CANWEAKEN) || ignore_canweaken)
 		weakened = max(max(weakened,amount),0)
 		if(updating_canmove)
@@ -808,6 +812,8 @@ var/next_mob_id = 0
 			update_canmove()	//updates lying, canmove and icons
 
 /mob/proc/Paralyse(amount, updating_stat = 1)
+	if(paralysis)
+		return
 	if(status_flags & CANPARALYSE)
 		var/old_paralysis = paralysis
 		paralysis = max(max(paralysis,amount),0)
