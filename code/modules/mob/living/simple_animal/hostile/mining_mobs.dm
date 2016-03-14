@@ -625,18 +625,13 @@
 	icon_aggro = "watcher"
 	icon_dead = "Basilisk_dead"
 	pixel_x = -10
-	ranged_cooldown_cap = 20
 	throw_message = "bounces harmlessly off of"
-	vision_range = 5
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "stares into the soul of"
 	a_intent = "harm"
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	ranged_cooldown_cap = 3
-	aggro_vision_range = 9
-	idle_vision_range = 5
 	stat_attack = 1
 	robust_searching = 1
 	loot = list(/obj/item/weapon/ore/diamond{layer = 4.1},
