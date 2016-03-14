@@ -55,9 +55,10 @@
 	if(locked)
 		locked = 0
 		emagged = 1
-		to_chat(user, "<span class='warning'>You bypass [src]'s controls.</span>")
+		to_chat(user, "<span class='warning'>You remove [src]'s control restrictions. Swiping again will cause [src] to malfunction.</span>")
 	if(!locked && open)
 		emagged = 2
+		to_chat(user, "<span class='warning'>You cause a malfunction in [src]'s behavioral matrix.</span>")
 
 /obj/machinery/bot/examine(mob/user)
 	..()
