@@ -120,6 +120,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle
 	cost = 30 // normally 42
 
+/datum/uplink_item/nukeoffer/firestarter
+	name = "Spetsnaz Pyro bundle"
+	desc = "For systematic suppression of carbon lifeforms in close range: Contains a specialist Pyrotechnic equipment, foreign pistol, two magazines, a pipebomb, and a stimulant syringe."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter
+	cost = 30
+
 // Dangerous Items
 /datum/uplink_item/dangerous
 	category = "Conspicuous and Dangerous Weapons"
