@@ -55,10 +55,12 @@
 		else
 			toggle_door(user)
 
-/obj/structure/cage/examine(mob/user)
-	..()
+/obj/structure/cage/verb/toggle_cover_v()
+	set name = "Toggle Cover"
+	set category = "Object"
+	set src in oview(1)
 
-	to_chat(user, "<span class='info'>Alt + click opens/closes the cage's cover.</span>")
+	return AltClick()
 
 /obj/structure/cage/AltClick()
 	if(Adjacent(usr) && !usr.incapacitated() && !mob_is_inside(usr))
