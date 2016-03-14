@@ -11,7 +11,7 @@
 	opacity = 0 // Think table-height.
 
 /obj/structure/mirror_frame/attackby(var/obj/item/W,var/mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		to_chat(user, "<span class='info'>You begin to unfasten \the [src]'s bolts.</span>")
 		if(do_after(user, src,20))
 			anchored=!anchored

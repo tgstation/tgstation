@@ -37,7 +37,7 @@
 	if(type==/obj/machinery/embedded_controller)
 		switch(build)
 			if(0) // Empty hull
-				if(istype(W, /obj/item/weapon/screwdriver))
+				if(isscrewdriver(W))
 					to_chat(usr, "You begin removing screws from \the [src] backplate...")
 					if(do_after(user, src, 50))
 						to_chat(usr, "<span class='notice'>You unscrew \the [src] from the wall.</span>")
@@ -60,7 +60,7 @@
 							update_icon()
 					return 1
 			if(1) // Circuitboard installed
-				if(istype(W, /obj/item/weapon/crowbar))
+				if(iscrowbar(W))
 					to_chat(usr, "You begin to pry out \the [W] into \the [src].")
 					if(do_after(user, src, 10))
 						playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
@@ -89,7 +89,7 @@
 							"<span class='warning'>[user.name] has added cables to \the [src]!</span>",\
 							"You add cables to \the [src].")
 			if(2) // Circuitboard installed, wired.
-				if(istype(W, /obj/item/weapon/wirecutters))
+				if(iswirecutter(W))
 					to_chat(usr, "You begin to remove the wiring from \the [src].")
 					if(do_after(user, src, 50))
 						new /obj/item/stack/cable_coil(loc,5)
@@ -99,7 +99,7 @@
 						build--
 						update_icon()
 					return 1
-				if(istype(W, /obj/item/weapon/screwdriver))
+				if(isscrewdriver(W))
 					to_chat(user, "You begin to complete \the [src]...")
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 					if(do_after(user, src, 20))

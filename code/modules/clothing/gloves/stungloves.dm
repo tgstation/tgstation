@@ -29,7 +29,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already have a cell.</span>")
 
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		if(cell)
 			cell.updateicon()
 			cell.loc = get_turf(src.loc)

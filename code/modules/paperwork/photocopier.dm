@@ -294,7 +294,7 @@
 				updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
-	else if(istype(O, /obj/item/weapon/wrench))
+	else if(iswrench(O))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>")
@@ -313,7 +313,7 @@
 				copy.loc = src.loc
 				copy = null
 			updateUsrDialog()
-	else if(istype(O, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(O))
 		if(anchored)
 			to_chat(user, "[src] needs to be unanchored.")
 			return
@@ -327,7 +327,7 @@
 			to_chat(user, "You close the maintenance hatch of [src].")
 		return 1
 	if(opened)
-		if(istype(O, /obj/item/weapon/crowbar))
+		if(iscrowbar(O))
 			to_chat(user, "You begin to remove the circuits from the [src].")
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			if(do_after(user, src, 50))

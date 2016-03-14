@@ -378,7 +378,7 @@ var/global/list/loopModeNames=list(
 	. = ..()
 	if(.)
 		return .
-	if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
+	if(istype(W, /obj/item/device/multitool)||iswirecutter(W))
 		if(panel_open)
 			wires.Interact(user)
 		return

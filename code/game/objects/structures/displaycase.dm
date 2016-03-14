@@ -22,7 +22,7 @@
 					circuit.installed = 1
 					state++
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-			if(istype(W, /obj/item/weapon/crowbar))
+			if(iscrowbar(W))
 				var/obj/machinery/constructable_frame/machine_frame/MF = new /obj/machinery/constructable_frame/machine_frame(T)
 				MF.state = 1
 				MF.set_build_state(1)
@@ -43,7 +43,7 @@
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				qdel(src)
 				return
-			if(istype(W, /obj/item/weapon/crowbar))
+			if(iscrowbar(W))
 				circuit.loc=T
 				circuit.installed = 0
 				circuit=null
@@ -194,7 +194,7 @@
 		else
 			to_chat(user, "\icon[src] <span class='notice'>You close \the [src] and swipe your card, locking it.</span>")
 		update_icon()
-	else if(istype(W, /obj/item/weapon/crowbar) && (!locked || destroyed))
+	else if(iscrowbar(W) && (!locked || destroyed))
 		user.visible_message("[user.name] pries \the [src] apart.", \
 			"You pry \the [src] apart.", \
 			"You hear something pop.")

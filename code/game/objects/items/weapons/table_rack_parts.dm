@@ -13,7 +13,7 @@
  */
 /obj/item/weapon/table_parts/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 		M.amount = 1
 		//SN src = null
@@ -39,7 +39,7 @@
  * Reinforced Table Parts
  */
 /obj/item/weapon/table_parts/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 		M.amount = 1
 		new /obj/item/stack/rods( user.loc )
@@ -55,7 +55,7 @@
  * Wooden Table Parts
  */
 /obj/item/weapon/table_parts/wood/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/wood( user.loc )
 		qdel(src)
 
@@ -80,7 +80,7 @@
  */
 
 /obj/item/weapon/table_parts/wood/poker/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/wood( user.loc )
 		new /obj/item/stack/tile/grass( user.loc )
 		qdel(src)
@@ -97,7 +97,7 @@
  */
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 		M.amount = 1
 		qdel(src)

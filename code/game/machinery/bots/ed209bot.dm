@@ -225,7 +225,7 @@ Auto Patrol: []"},
 				to_chat(user, "<span class='notice'>Access denied.</span>")
 	else
 		..()
-		if (!istype(W, /obj/item/weapon/screwdriver) && (!src.target))
+		if (!isscrewdriver(W) && (!src.target))
 			if(hasvar(W,"force") && W.force)//If force is defined and non-zero
 				threatlevel = user.assess_threat(src)
 				threatlevel +=6
@@ -1055,7 +1055,7 @@ Auto Patrol: []"},
 			qdel(W)
 
 		if(8)
-			if( istype(W, /obj/item/weapon/screwdriver) )
+			if( isscrewdriver(W) )
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 				var/turf/T = get_turf(user)
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")

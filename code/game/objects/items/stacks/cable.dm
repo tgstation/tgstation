@@ -113,7 +113,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 // - Wirecutters : Cut a piece off
 // - Cable coil : Merge the cables
 /obj/item/stack/cable_coil/attackby(obj/item/weapon/W, mob/user)
-	if((istype(W, /obj/item/weapon/wirecutters)) && (amount > 1))
+	if((iswirecutter(W)) && (amount > 1))
 		use(1)
 		getFromPool(/obj/item/stack/cable_coil, user.loc, 1, _color)
 		to_chat(user, "<span class='notice'>You cut a piece off the cable coil.</span>")

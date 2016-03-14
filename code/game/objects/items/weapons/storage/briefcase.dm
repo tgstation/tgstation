@@ -96,7 +96,7 @@
 	return
 
 /obj/item/weapon/storage/briefcase/false_bottomed/attackby(var/obj/item/item, mob/user)
-	if(istype(item, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(item))
 		if(!bottom_open && !busy_hunting)
 			to_chat(user, "You begin to hunt around the rim of \the [src]...")
 			busy_hunting = 1

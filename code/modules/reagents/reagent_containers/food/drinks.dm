@@ -620,7 +620,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(iswirecutter(W))
 		to_chat(user, "You cut out the top and bottom of \the [src] with \the [W].")
 		playsound(user, 'sound/items/Wirecutter.ogg', 50, 1)
 		if(src.loc == user)

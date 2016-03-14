@@ -116,7 +116,7 @@
 	//Deconstruction and reconstruction
 	switch(d_state)
 		if(WALLCOMPLETED)
-			if(istype(W, /obj/item/weapon/wirecutters))
+			if(iswirecutter(W))
 				playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 				src.d_state = WALLCOVEREXPOSED
 				update_icon()
@@ -125,7 +125,7 @@
 				return
 
 		if(WALLCOVEREXPOSED)
-			if(istype(W, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(W))
 				user.visible_message("<span class='warning'>[user] begins unsecuring \the [src]'s external cover.</span>", \
 				"<span class='notice'>You begin unsecuring \the [src]'s external cover.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -138,7 +138,7 @@
 				return
 
 			//Repairing outer grille, use welding tool
-			else if(istype(W, /obj/item/weapon/weldingtool))
+			else if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0, user))
 					user.visible_message("<span class='notice'>[user] begins mending the damage on \the [src]'s outer grille.</span>", \
@@ -157,7 +157,7 @@
 				return
 
 		if(WALLCOVERUNSECURED)
-			if(istype(W, /obj/item/weapon/weldingtool))
+			if(iswelder(W))
 
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0, user))
@@ -194,7 +194,7 @@
 				return
 
 			//Re-secure external cover, unsurprisingly exact same step as above
-			else if(istype(W, /obj/item/weapon/screwdriver))
+			else if(isscrewdriver(W))
 				user.visible_message("<span class='notice'>[user] begins securing \the [src]'s external cover.</span>", \
 				"<span class='notice'>You begin securing \the [src]'s external cover.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -207,7 +207,7 @@
 				return
 
 		if(WALLCOVERWEAKENED)
-			if(istype(W, /obj/item/weapon/crowbar))
+			if(iscrowbar(W))
 
 				user.visible_message("<span class='warning'>[user] starts prying off \the [src]'s external cover.</span>", \
 				"<span class='notice'>You struggle to pry off \the [src]'s external cover.</span>", \
@@ -224,7 +224,7 @@
 				return
 
 			//Fix welding damage caused above, by welding shit into place again
-			else if(istype(W, /obj/item/weapon/weldingtool))
+			else if(iswelder(W))
 
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0, user))
@@ -245,7 +245,7 @@
 				return
 
 		if(WALLCOVERREMOVED)
-			if(istype(W, /obj/item/weapon/wrench))
+			if(iswrench(W))
 
 				user.visible_message("<span class='warning'>[user] starts loosening the bolts anchoring \the [src]'s external support rods.</span>", \
 				"<span class='notice'>You start loosening the bolts anchoring \the [src]'s external support rods.</span>")
@@ -275,7 +275,7 @@
 				return
 
 		if(WALLRODSUNSECURED)
-			if(istype(W, /obj/item/weapon/weldingtool))
+			if(iswelder(W))
 
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
@@ -308,7 +308,7 @@
 				return
 
 			//Repair step, tighten the anchoring bolts
-			else if(istype(W, /obj/item/weapon/wrench))
+			else if(iswrench(W))
 
 				user.visible_message("<span class='notice'>[user] starts tightening the bolts anchoring \the [src]'s external support rods.</span>", \
 				"<span class='notice'>You start tightening the bolts anchoring \the [src]'s external support rods.</span>")
@@ -322,7 +322,7 @@
 				return
 
 		if(WALLRODSCUT)
-			if(istype(W, /obj/item/weapon/crowbar))
+			if(iscrowbar(W))
 
 				user.visible_message("<span class='warning'>[user] starts prying off [src]'s internal cover.</span>", \
 				"<span class='notice'>You struggle to pry off [src]'s internal cover.</span>")

@@ -8,7 +8,7 @@
 	var/obj/item/weapon/reagent_containers/container = null
 
 /obj/machinery/computer/curer/attackby(var/obj/I as obj, var/mob/user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		return ..(I,user)
 	if(istype(I,/obj/item/weapon/reagent_containers))
 		var/mob/living/carbon/C = user

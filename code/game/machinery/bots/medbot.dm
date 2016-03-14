@@ -222,7 +222,7 @@
 
 	else
 		..()
-		if (health < maxhealth && !istype(W, /obj/item/weapon/screwdriver) && W.force)
+		if (health < maxhealth && !isscrewdriver(W) && W.force)
 			step_to(src, (get_step_away(src,user)))
 
 /obj/machinery/bot/medbot/Emag(mob/user as mob)

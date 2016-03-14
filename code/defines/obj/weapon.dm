@@ -328,7 +328,7 @@
 		var/obj/item/I = O
 		if(istype(O, /obj/item/weapon/legcuffs/bolas)) //don't stack into infinity
 			return
-		if(istype(I, /obj/item/weapon/wirecutters)) //allows you to convert the wire back to a cable coil
+		if(iswirecutter(I)) //allows you to convert the wire back to a cable coil
 			if(!weight1 && !weight2) //if there's nothing attached
 				user.show_message("<span class='notice'>You cut the knot in the [src].</span>")
 				playsound(usr, 'sound/items/Wirecutter.ogg', 50, 1)
@@ -435,7 +435,7 @@
 				to_chat(user, "<span class='danger'>You shouldn't be reading this message! Contact a coder or someone, something broke!</span>")
 				IED = null
 				return
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		if(IED)
 			IED.loc = get_turf(src.loc)
 			IED = null

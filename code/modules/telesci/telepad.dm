@@ -14,7 +14,7 @@
 	var/opened=0
 
 /obj/machinery/telepad/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(opened)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 			to_chat(user, "<span class = 'caution'>You secure the access port on \the [src].</span>")
@@ -33,7 +33,7 @@
 		W.loc=src
 		amplifier=W
 		return
-	if(istype(W, /obj/item/weapon/crowbar) && opened && amplifier)
+	if(iscrowbar(W) && opened && amplifier)
 		to_chat(user, "<span class='notice'>You carefully pry \the [amplifier] from \the [src].</span>")
 		var/obj/item/bluespace_crystal/C=amplifier
 		C.loc=get_turf(src)
@@ -53,7 +53,7 @@
 	var/stage = 0
 
 /obj/machinery/telepad_cargo/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		anchored = 0
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 		if(anchored)
@@ -62,7 +62,7 @@
 		else if(!anchored)
 			anchored = 1
 			to_chat(user, "<span class = 'caution'> The [src] is now secured.</span>")
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 			to_chat(user, "<span class = 'caution'>You unscrew the telepad's tracking beacon.</span>")

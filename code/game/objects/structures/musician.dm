@@ -423,7 +423,7 @@
 	return
 
 /obj/structure/device/piano/attackby(obj/item/O as obj, mob/user as mob)
-	if (istype(O, /obj/item/weapon/wrench))
+	if (iswrench(O))
 		if (anchored)
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You begin to loosen \the [src]'s casters...</span>")

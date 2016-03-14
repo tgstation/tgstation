@@ -39,7 +39,7 @@
 		node.build_network()
 
 /obj/machinery/atmospherics/unary/vent/burstpipe/attackby(var/obj/item/weapon/W, var/mob/user)
-	if (!istype(W, /obj/item/weapon/wrench))
+	if (!iswrench(W))
 		return ..()
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/items/Ratchet.ogg', 50, 1)

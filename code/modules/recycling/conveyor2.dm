@@ -415,7 +415,7 @@
 	. = ..()
 	if(.)
 		return .
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		to_chat(user, "<span class='notice'>Deconstructing \the [src]...</span>")
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 		if(do_after(user, src,50))

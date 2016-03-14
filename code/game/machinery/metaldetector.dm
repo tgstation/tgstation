@@ -143,7 +143,7 @@
 	if(..(W, user) == 1)
 		return 1 // resolved for click code!
 
-	/*if (istype(W, /obj/item/weapon/wirecutters))
+	/*if (iswirecutter(W))
 		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)

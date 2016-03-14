@@ -23,7 +23,7 @@
 
 /obj/structure/kitchenspike/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		if(occupant)
 			to_chat(user, "<span class='warning'>You can't disassemble [src] with meat and gore all over it.</span>")
 			return

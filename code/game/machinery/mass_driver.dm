@@ -29,7 +29,7 @@ var/list/mass_drivers = list()
 	if(.)
 		return .
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		to_chat(user, "You begin to unscrew the bolts off the [src]...")
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, src, 30))
@@ -122,7 +122,7 @@ var/list/mass_drivers = list()
 					new /obj/item/stack/sheet/plasteel(get_turf(src),3)
 					qdel(src)
 				return 1
-			if(istype(W, /obj/item/weapon/wrench))
+			if(iswrench(W))
 				to_chat(user, "You begin to anchor \the [src] on the floor.")
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, src, 10) && (build == 0))
@@ -132,7 +132,7 @@ var/list/mass_drivers = list()
 					update_icon()
 				return 1
 		if(1) // Fixed to the floor
-			if(istype(W, /obj/item/weapon/wrench))
+			if(iswrench(W))
 				to_chat(user, "You begin to de-anchor \the [src] from the floor.")
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, src, 10) && (build == 1))
@@ -175,7 +175,7 @@ var/list/mass_drivers = list()
 					build++
 					update_icon()
 		if(3) // Wired
-			if(istype(W, /obj/item/weapon/wirecutters))
+			if(iswirecutter(W))
 				to_chat(user, "You begin to remove the wiring from \the [src].")
 				if(do_after(user, src, 10) && (build == 3))
 					new /obj/item/stack/cable_coil(loc,3)
@@ -195,7 +195,7 @@ var/list/mass_drivers = list()
 					update_icon()
 				return 1
 		if(4) // Grille in place
-			if(istype(W, /obj/item/weapon/crowbar))
+			if(iscrowbar(W))
 				to_chat(user, "You begin to pry off the grille from \the [src]...")
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user, src, 30) && (build == 4))
@@ -203,7 +203,7 @@ var/list/mass_drivers = list()
 					build--
 					update_icon()
 				return 1
-			if(istype(W, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(W))
 				to_chat(user, "You finalize the Mass Driver...")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				var/obj/machinery/mass_driver/M = new(get_turf(src))

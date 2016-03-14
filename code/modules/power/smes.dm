@@ -65,7 +65,7 @@
 					"You added cables the SMES.")
 				src.stat = 0
 				return 1
-		else if(istype(W, /obj/item/weapon/wirecutters) && terminal)
+		else if(iswirecutter(W) && terminal)
 			var/turf/T = get_turf(terminal)
 			if(T.intact)
 				to_chat(user, "<span class='warning'>You must remove the floor plating in front of the SMES first.</span>")

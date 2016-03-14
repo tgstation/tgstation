@@ -224,7 +224,7 @@ Pipelines + Other Objects -> Pipe network
 		if(user.drop_item(pipe))
 			pipe.setPipingLayer(src.piping_layer) //align it with us
 			return 1
-	if (!istype(W, /obj/item/weapon/wrench))
+	if (!iswrench(W))
 		return ..()
 	if(src.machine_flags & WRENCHMOVE)
 		return ..()

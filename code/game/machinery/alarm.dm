@@ -949,7 +949,7 @@ FIRE ALARM
 /obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob)
 	src.add_fingerprint(user)
 
-	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
+	if (isscrewdriver(W) && buildstage == 2)
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"].")
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
@@ -983,7 +983,7 @@ FIRE ALARM
 					to_chat(user, "You wire \the [src]!")
 					update_icon()
 
-				else if(istype(W, /obj/item/weapon/crowbar))
+				else if(iscrowbar(W))
 					to_chat(user, "You start prying out the circuit...")
 					playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 					if (do_after(user, src,  20) && buildstage == 1)

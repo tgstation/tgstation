@@ -15,7 +15,7 @@
 	if(T.intact)
 		return
 
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(iswirecutter(W))
 		to_chat(user, "<span class='notice'>These cables are too tough to be cut with those [W.name].</span>")
 		return
 	else if(W.type == /obj/item/stack/cable_coil)

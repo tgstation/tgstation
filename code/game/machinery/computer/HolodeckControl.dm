@@ -390,7 +390,7 @@
 		qdel(W)
 		return
 
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		to_chat(user, "It's a holotable!  There are no bolts!")
 		return
 

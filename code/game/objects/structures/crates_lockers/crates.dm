@@ -493,7 +493,7 @@
 			if(user.drop_item(W, src.loc))
 				to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 			return
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		if(rigged)
 			to_chat(user, "<span class='notice'>You cut away the wiring.</span>")
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)

@@ -32,7 +32,7 @@ var/list/mechtoys = list(
 	var/airtight = 0
 
 /obj/structure/plasticflaps/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/crowbar) && anchored == 1)
+	if(iscrowbar(I) && anchored == 1)
 		if(airtight == 0)
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		else
@@ -42,7 +42,7 @@ var/list/mechtoys = list(
 		name = "\improper [airtight? "Airtight p" : "P"]lastic flaps"
 		desc = "[airtight? "Heavy duty, airtight, plastic flaps." : "I definitely can't get past those. No way."]"
 		return 1
-	if(istype(I, /obj/item/weapon/wrench) && airtight != 1)
+	if(iswrench(I) && airtight != 1)
 		if(anchored == 0)
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 		else
@@ -567,7 +567,7 @@ var/list/mechtoys = list(
 		to_chat(user, "<span class='notice'>Special supplies unlocked.</span>")
 		hacked = 1
 		return
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, src, 20))
 			if (stat & BROKEN)

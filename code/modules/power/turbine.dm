@@ -219,7 +219,7 @@
 				doors += P
 
 /obj/machinery/computer/turbine_computer/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, src, 20))
 			if (src.stat & BROKEN)

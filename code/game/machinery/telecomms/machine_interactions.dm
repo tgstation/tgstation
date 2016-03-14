@@ -22,25 +22,25 @@
 
 	switch(construct_op)
 		if(0)
-			if(istype(P, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(P))
 				to_chat(user, "You unfasten the bolts.")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op ++
 		if(1)
-			if(istype(P, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(P))
 				to_chat(user, "You fasten the bolts.")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op --
-			if(istype(P, /obj/item/weapon/wrench))
+			if(iswrench(P))
 				to_chat(user, "You dislodge the external plating.")
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op ++
 		if(2)
-			if(istype(P, /obj/item/weapon/wrench))
+			if(iswrench(P))
 				to_chat(user, "You secure the external plating.")
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op --
-			if(istype(P, /obj/item/weapon/wirecutters))
+			if(iswirecutter(P))
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 				to_chat(user, "You remove the cables.")
 				construct_op ++
@@ -60,7 +60,7 @@
 					stat &= ~BROKEN // the machine's not borked anymore!
 				else
 					to_chat(user, "You need more cable")
-			if(istype(P, /obj/item/weapon/crowbar))
+			if(iscrowbar(P))
 				to_chat(user, "You begin prying out the circuit board and components...")
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user, src,60))

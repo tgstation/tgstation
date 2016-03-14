@@ -39,7 +39,7 @@
 			if(C.lit)
 				lit(user,W)
 	else
-		if(istype(W, /obj/item/weapon/wirecutters))
+		if(iswirecutter(W))
 			fuse_lit = 0
 			update_icon()
 			to_chat(user, "<span class='warning'>You extinguish the fuse with [seconds_left] seconds left!</span>")

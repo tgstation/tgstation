@@ -372,7 +372,7 @@
 			returnToPool(W)
 			return
 
-	if (istype(W, /obj/item/weapon/wrench) && can_disassemble())
+	if (iswrench(W) && can_disassemble())
 		//if(!params_list.len || text2num(params_list["icon-y"]) < 8) //8 above the bottom of the icon
 		to_chat(user, "<span class='notice'>Now disassembling table</span>")
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
@@ -648,7 +648,7 @@
 	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		del(src)
