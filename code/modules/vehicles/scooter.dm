@@ -43,6 +43,7 @@
 	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
 	icon_state = "skateboard"
 	vehicle_move_delay = 0//fast
+	density = 0
 
 /obj/vehicle/scooter/skateboard/Bump(atom/A)
 	..()
