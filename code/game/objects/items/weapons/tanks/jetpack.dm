@@ -29,29 +29,34 @@
 /obj/item/weapon/tank/jetpack/proc/cycle(mob/user)
 	if(user.incapacitated())
 		return
-
 	if(!on)
-		turn_on()
+		turn_on(user)
 		user << "<span class='notice'>You turn the thrusters on.</span>"
 	else if(!turbo)
 		turbo = TRUE
 		user << "<span class='notice'>You engage turbo mode.</span>"
 	else
-		turn_off()
+		turn_off(user)
 		turbo = FALSE
-		user << "<span class='notice'>You turn jetpack off.</span>"
+		user << "<span class='notice'>You turn the jetpack off.</span>"
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
 
-/obj/item/weapon/tank/jetpack/proc/turn_on()
+/obj/item/weapon/tank/jetpack/proc/turn_on(mob/user)
 	on = TRUE
+	var/mob/living/C = user
+	if (!has_gravity(user))
+		C.pass_flags |= PASSTABLE
 	icon_state = "[initial(icon_state)]-on"
 	ion_trail.start()
 
-/obj/item/weapon/tank/jetpack/proc/turn_off()
+/obj/item/weapon/tank/jetpack/proc/turn_off(mob/user)
 	on = FALSE
+	var/mob/living/C = user
+	if(C.pass_flags & PASSTABLE)
+		C.pass_flags &= ~PASSTABLE // no keeping PASSTABLE
 	icon_state = initial(icon_state)
 	ion_trail.stop()
 
