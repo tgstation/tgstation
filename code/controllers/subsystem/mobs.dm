@@ -18,7 +18,11 @@ var/datum/subsystem/mobs/SSmob
 /datum/subsystem/mobs/fire(resumed = 0)
 	var/seconds = wait * 0.1
 	if (!resumed)
-		currentrun = mob_list.Copy()
+		src.currentrun = mob_list.Copy()
+
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+
 	while(currentrun.len)
 		var/mob/M = currentrun[1]
 		currentrun.Cut(1, 2)

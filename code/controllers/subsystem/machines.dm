@@ -38,7 +38,11 @@ var/datum/subsystem/machines/SSmachine
 	if (!resumed)
 		for(var/datum/powernet/Powernet in powernets)
 			Powernet.reset() //reset the power state.
-		currentrun = processing.Copy()
+		src.currentrun = processing.Copy()
+
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+
 	var/seconds = wait * 0.1
 	while(currentrun.len)
 		var/datum/thing = currentrun[1]

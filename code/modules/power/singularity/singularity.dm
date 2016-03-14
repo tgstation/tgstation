@@ -236,8 +236,7 @@
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	var/list/L = grav_pull > 8 ? urange(grav_pull, src, 1) : orange(grav_pull, src)
-	for(var/atom/X in L)
+	for(var/atom/X in spiral_range(grav_pull, src, 1))
 		var/dist = get_dist(X, src)
 		var/obj/singularity/S = src
 		if(dist > consume_range)

@@ -19,7 +19,7 @@ var/datum/subsystem/air/SSair
 
 	var/list/excited_groups = list()
 	var/list/active_turfs = list()
-	var/list/processing = list()
+	var/list/currentrun = list()
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
@@ -132,10 +132,12 @@ var/datum/subsystem/air/SSair
 	//cache for sanic speed
 	var/fire_count = times_fired
 	if (!resumed)
-		processing = active_turfs.Copy()
-	while(processing.len)
-		var/turf/simulated/T = processing[1]
-		processing.Cut(1, 2)
+		src.currentrun = active_turfs.Copy()
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+	while(currentrun.len)
+		var/turf/simulated/T = currentrun[1]
+		currentrun.Cut(1, 2)
 		if (T)
 			T.process_cell(fire_count)
 		if (MC_TICK_CHECK)

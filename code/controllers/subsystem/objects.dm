@@ -32,7 +32,10 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects/fire(resumed = 0)
 	if (!resumed)
-		currentrun = processing.Copy()
+		src.currentrun = processing.Copy()
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+
 	while(currentrun.len)
 		var/datum/thing = currentrun[1]
 		currentrun.Cut(1, 2)

@@ -31,6 +31,7 @@ var/datum/subsystem/lighting/SSlighting
 //Any light that returns 1 in check() deletes itself
 //By using queues we are ensuring we don't perform more updates than are necessary
 /datum/subsystem/lighting/fire(resumed = 0)
+	var/list/changed_lights = src.changed_lights
 	if (!resumed)
 		changed_lights_workload = MC_AVERAGE(changed_lights_workload, changed_lights.len)
 	while (changed_lights.len)
@@ -40,6 +41,7 @@ var/datum/subsystem/lighting/SSlighting
 		if (MC_TICK_CHECK)
 			return
 
+	var/list/changed_turfs = src.changed_turfs
 	if (!resumed)
 		changed_turfs_workload = MC_AVERAGE(changed_turfs_workload, changed_turfs.len)
 	while (changed_turfs.len)

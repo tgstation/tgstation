@@ -13,9 +13,7 @@ var/global/datum/controller/master/Master = new()
 /datum/controller/master
 	name = "Master"
 
-	// The minimum length of time between MC ticks (in deciseconds).
-	// The highest this can be without affecting schedules is the GCD of all subsystem waits.
-	// Set to 0 to disable all processing.
+	// are we processing (higher values increase the processing delay)
 	var/processing = 1
 	// The iteration of the MC.
 	var/iteration = 0
@@ -158,8 +156,8 @@ var/global/datum/controller/master/Master = new()
 #endif
 						break
 #if DM_VERSION >= 510
-					if (priorityrunning)
-						if (!priority_queue.len || !(SS in priority_queue))
+					if(priorityrunning)
+						if(!priority_queue.len || !(SS in priority_queue))
 							priorityrunning = 0 //end of priority queue items
 						else
 							priority_queue -= SS
@@ -167,8 +165,9 @@ var/global/datum/controller/master/Master = new()
 					if(SS.can_fire > 0)
 						if(priorityrunning || ((SS.next_fire <= world.time) && (SS.last_fire + (SS.wait * 0.75) <= world.time)))
 #if DM_VERSION >= 510
-							if ((world.tick_usage + SS.tick_usage > 75) && (SS.last_fire + (SS.wait*1.25) > world.time))
-								priority_queue += SS
+							if(!priorityrunning && (world.tick_usage + SS.tick_usage > 75) && (SS.last_fire + (SS.wait*1.25) > world.time))
+								if(!SS.dynamic_wait)
+									priority_queue += SS
 								continue
 #endif
 							//we can't reset SS.paused after we fire, incase it pauses again, so we cache it and
@@ -184,10 +183,10 @@ var/global/datum/controller/master/Master = new()
 #endif
 							SS.fire(paused) // Fire the subsystem
 #if DM_VERSION >= 510
-							if (priorityrunning)
+							if(priorityrunning)
 								priorityrunning--
 							var/newusage = max(world.tick_usage - tick_usage, 0)
-							if (newusage < SS.tick_usage)
+							if(newusage < SS.tick_usage)
 								SS.tick_usage = MC_AVERAGE_SLOW(SS.tick_usage,world.tick_usage - tick_usage)
 							else
 								SS.tick_usage = MC_AVERAGE_FAST(SS.tick_usage,world.tick_usage - tick_usage)
@@ -204,9 +203,9 @@ var/global/datum/controller/master/Master = new()
 								SS.wait = Clamp(newwait, SS.dwait_lower, SS.dwait_upper)
 								SS.next_fire = world.time + SS.wait
 							else
-								if (!paused)
+								if(!paused)
 									SS.next_fire += SS.wait
-							if (!SS.paused)
+							if(!SS.paused)
 								SS.times_fired++
 #if DM_VERSION < 510
 							sleep(0)

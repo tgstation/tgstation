@@ -1,18 +1,5 @@
 //TODO: Flash range does nothing currently
 
-/proc/trange(Dist=0,turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
-	if(Center==null) return
-
-	//var/x1=((Center.x-Dist)<1 ? 1 : Center.x-Dist)
-	//var/y1=((Center.y-Dist)<1 ? 1 : Center.y-Dist)
-	//var/x2=((Center.x+Dist)>world.maxx ? world.maxx : Center.x+Dist)
-	//var/y2=((Center.y+Dist)>world.maxy ? world.maxy : Center.y+Dist)
-
-	var/turf/x1y1 = locate(((Center.x-Dist)<1 ? 1 : Center.x-Dist),((Center.y-Dist)<1 ? 1 : Center.y-Dist),Center.z)
-	var/turf/x2y2 = locate(((Center.x+Dist)>world.maxx ? world.maxx : Center.x+Dist),((Center.y+Dist)>world.maxy ? world.maxy : Center.y+Dist),Center.z)
-	return block(x1y1,x2y2)
-
-
 /proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0)
 	set waitfor = 0
 	src = null	//so we don't abort once src is deleted
@@ -91,7 +78,7 @@
 	var/y0 = epicenter.y
 	var/z0 = epicenter.z
 
-	var/list/affected_turfs = trange(max_range, epicenter)
+	var/list/affected_turfs = spiral_range_turfs(max_range, epicenter)
 
 	if(config.reactionary_explosions)
 		for(var/turf/T in affected_turfs) // we cache the explosion block rating of every turf in the explosion area
@@ -112,7 +99,7 @@
 			CHECK_TICK
 
 	for(var/turf/T in affected_turfs)
-		CHECK_TICK
+
 		if (!T)
 			continue
 		var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
@@ -156,6 +143,7 @@
 				I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
 				I.throw_at_fast(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
 
+		CHECK_TICK
 
 	var/took = (world.timeofday-start)/10
 	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
@@ -172,7 +160,7 @@
 
 
 /proc/secondaryexplosion(turf/epicenter, range)
-	for(var/turf/tile in trange(range, epicenter))
+	for(var/turf/tile in spiral_range_turfs(range, epicenter))
 		tile.ex_act(2)
 
 
@@ -214,7 +202,7 @@
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
 	var/list/wipe_colours = list()
-	for(var/turf/T in trange(max_range, epicenter))
+	for(var/turf/T in spiral_range_turfs(max_range, epicenter))
 		wipe_colours += T
 		var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
 
