@@ -45,6 +45,12 @@
 	vehicle_move_delay = 0//fast
 	density = 0
 
+/obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
+	if(buckled_mobs.len)
+		density = 1
+	else
+		density = 0
+
 /obj/vehicle/scooter/skateboard/Bump(atom/A)
 	..()
 	if(A.density && buckled_mobs.len)
