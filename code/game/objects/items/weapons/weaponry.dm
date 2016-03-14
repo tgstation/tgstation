@@ -92,18 +92,28 @@
 	..()
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
-
 		if(!remove_item_from_storage(user))
 			user.unEquip(src)
 		user.unEquip(I)
-
 		user.put_in_hands(S)
 		user << "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>"
 		qdel(I)
 		qdel(src)
 
-	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags & NODROP))
+	else if(istype(I, /obj/item/weapon/wirecutters) && !(I.flags & NODROP))
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
+
+		if(!remove_item_from_storage(user))
+			user.unEquip(src)
+		user.unEquip(I)
+
+		user.put_in_hands(P)
+		user << "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>"
+		qdel(I)
+		qdel(src)
+
+	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags & NODROP))
+		var/obj/item/weapon/melee/baton/cattleprod/sparkprod/P = new /obj/item/weapon/melee/baton/cattleprod/sparkprod
 
 		if(!remove_item_from_storage(user))
 			user.unEquip(src)

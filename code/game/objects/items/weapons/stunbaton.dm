@@ -177,12 +177,19 @@
 	stunforce = 5
 	hitcost = 2500
 	slot_flags = null
+
+
+/obj/item/weapon/melee/baton/cattleprod/sparkprod//stunprod made with an igniter
+	name = "sparkprod"
+	desc = "An improvised stun baton that was made with an igniter."
+	icon_state = "sparkprod_nocell"
+	item_state = "sparkprod"
 	var/obj/item/device/assembly/igniter/sparkler = 0
 
-/obj/item/weapon/melee/baton/cattleprod/New()
+/obj/item/weapon/melee/baton/cattleprod/sparkprod/New()
 	..()
 	sparkler = new (src)
 
-/obj/item/weapon/melee/baton/cattleprod/baton_stun()
+/obj/item/weapon/melee/baton/cattleprod/sparkprod/baton_stun()
 	if(sparkler.activate())
 		..()
