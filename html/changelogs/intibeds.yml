@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- tweak: "Pushing someone pulling an occupied rollerbed is now treated like pushing someone pulling a prisoner: you can't."
