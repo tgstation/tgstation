@@ -484,7 +484,7 @@
 
 	var/area/space
 
-	space = get_area( locate(1,1,2) ) //xd
+	space = get_space_area
 	if(!space)
 		warning("There is no area at 1,1,2!")
 
@@ -531,7 +531,7 @@
 		if(!A)
 			message_admins("<span class='notice'>WARNING: Unable to find an area at [new_coords.x_pos];[new_coords.y_pos];[new_center.z]. [src.name] ([src.type]) will not be moved.")
 			return
-		if(!destroy_everything && !(A.type in list(/area, /area/station/custom))) //Breaking blueprint areas and space is fine, breaking the station is not
+		if(!destroy_everything && !(A.type in list(/area, /area/station/custom)) && !istype(A, /area/random_vault) && !istype(A, /area/vault)) //Breaking blueprint areas and space is fine, breaking the station is not. Breaking randomly generated vaults is fine, in case they spawn in a bad spot!
 			message_admins("<span class='notice'>WARNING: [src.name] ([src.type]) attempted to destroy [A] ([A.type]).</span> If you want [src.name] to be able to move freely and destroy areas, change its \"destroy_everything\" variable to 1.")
 			return
 		//If any of the new turfs are in the moved shuttle's current area, EMERGENCY ABORT (this leads to the shuttle destroying itself & potentially gibbing everybody inside)

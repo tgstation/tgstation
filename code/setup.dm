@@ -284,6 +284,7 @@ var/MAX_EXPLOSION_RANGE = 14
 
 //turf-only flags
 #define NOJAUNT		1
+#define NO_MINIMAP  2 //Invisible to minimaps (fuck minimaps)
 
 
 //slots

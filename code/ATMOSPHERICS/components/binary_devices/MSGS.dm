@@ -25,8 +25,6 @@
 	var/tmp/last_pressure
 
 /obj/machinery/atmospherics/binary/msgs/New()
-	. = ..()
-
 	html_machines += src
 
 	interface = new(src, sanitize(name), 500, 520)
@@ -36,7 +34,7 @@
 	air = new
 	air.volume = internal_volume
 
-	update_icon()
+	return ..()
 
 //Here we set the content of the interface.
 /obj/machinery/atmospherics/binary/msgs/proc/init_ui()
@@ -216,7 +214,7 @@
 	if((update_flags & MSGS_ON) != !(stat & (NOPOWER | BROKEN)))
 		update = 1
 
-	var/pressure = air.return_pressure()
+	var/pressure = air.return_pressure() // null ref error here.
 	var/i = Clamp(round(pressure / (max_pressure / 5)), 0, 5)
 	if(i != last_pressure)
 		update = 1

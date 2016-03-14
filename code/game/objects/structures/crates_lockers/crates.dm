@@ -61,6 +61,13 @@
 	icon_opened = "chestopen"
 	icon_closed = "chest"
 
+/obj/structure/closet/crate/chest/potential_mimic/New()
+	..()
+
+	if(prob(33))
+		var/mob/living/simple_animal/hostile/mimic/crate/chest/C = new(src.loc)
+		forceMove(C)
+
 /*these aren't needed anymore
 /obj/structure/closet/crate/hat
 	desc = "A crate filled with Valuable Collector's Hats!."

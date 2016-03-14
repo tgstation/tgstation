@@ -94,7 +94,16 @@
 
 	var/is_critical = 0 // Endgame scenarios will not destroy this APC.
 
+	var/make_alerts = TRUE // Should this APC make power alerts to the area?
+
 	machine_flags = WIREJACK
+
+// Frame only.
+/obj/machinery/power/apc/frame
+	icon_state = "apcmaint"
+
+/obj/machinery/power/apc/frame/New()
+	return ..(loc, dir, 1)
 
 /obj/machinery/power/apc/New(loc, var/ndir, var/building=0)
 	..(loc)
@@ -1105,25 +1114,25 @@
 			equipment = autoset(equipment, 0)
 			lighting = autoset(lighting, 0)
 			environ = autoset(environ, 0)
-			if(areaMaster.poweralm)
+			if(areaMaster.poweralm && make_alerts)
 				areaMaster.poweralert(0, src)
 		else if(cell.percent() < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
 			environ = autoset(environ, 1)
-			if(areaMaster.poweralm)
+			if(areaMaster.poweralm && make_alerts)
 				areaMaster.poweralert(0, src)
 		else if(cell.percent() < 30 && longtermpower < 0)			// <30%, turn off equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			if(areaMaster.poweralm)
+			if(areaMaster.poweralm && make_alerts)
 				areaMaster.poweralert(0, src)
 		else									// otherwise all can be on
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			if(cell.percent() > 75 && !areaMaster.poweralm)
+			if(cell.percent() > 75 && !areaMaster.poweralm && !make_alerts)
 				areaMaster.poweralert(1, src)
 
 		// now trickle-charge the cell
@@ -1168,7 +1177,8 @@
 		equipment = autoset(equipment, 0)
 		lighting = autoset(lighting, 0)
 		environ = autoset(environ, 0)
-		areaMaster.poweralert(0, src)
+		if(!make_alerts)
+			areaMaster.poweralert(0, src)
 
 	// update icon & area power if anything changed
 	if(last_lt != lighting || last_eq != equipment || last_en != environ)

@@ -1,0 +1,35 @@
+"a" = (/turf/space,/area)
+"b" = (/turf/unsimulated/floor/asteroid,/area/vault/asteroid)
+"c" = (/turf/unsimulated/mineral,/area/vault/asteroid)
+"d" = (/obj/structure/toilet,/obj/item/toy/gasha/minibutt,/turf/unsimulated/floor/airless,/area/vault/asteroid)
+"e" = (/obj/structure/window/reinforced/tinted{dir = 8},/obj/structure/window/reinforced/tinted{dir = 4},/obj/structure/grille,/turf/unsimulated/floor/airless,/area/vault/asteroid)
+"f" = (/obj/structure/closet/crate/chest/potential_mimic,/obj/item/weapon/spacecash/c1000,/obj/item/clothing/head/batman,/obj/item/weapon/reagent_containers/food/snacks/baguette,/turf/unsimulated/floor/airless,/area/vault/asteroid)
+"g" = (/obj/structure/closet/crate/chest/potential_mimic,/obj/item/weapon/spacecash/c1000,/obj/item/clothing/head/wizard/necro,/turf/unsimulated/floor/airless,/area/vault/asteroid)
+"h" = (/obj/structure/closet/crate/chest/potential_mimic,/obj/item/weapon/spacecash/c1000,/obj/item/clothing/head/wizard/magus,/turf/unsimulated/floor/airless,/area/vault/asteroid)
+"i" = (/obj/structure/closet/crate/chest/potential_mimic,/obj/item/weapon/spacecash/c1000,/obj/item/clothing/head/tinfoil,/obj/item/toy/syndicateballoon,/turf/unsimulated/floor/airless,/area/vault/asteroid)
+"j" = (/turf/unsimulated/floor/airless,/area/vault/asteroid)
+"k" = (/obj/structure/window/reinforced/tinted{dir = 4},/obj/structure/window/reinforced/tinted{dir = 8},/obj/structure/window/reinforced/tinted,/obj/structure/grille,/turf/unsimulated/floor/airless,/area/vault/asteroid)
+"l" = (/obj/structure/table,/obj/item/toy/gun,/turf/unsimulated/floor/airless,/area/vault/asteroid)
+"m" = (/obj/item/target/alien,/turf/unsimulated/floor/airless,/area/vault/asteroid)
+"n" = (/obj/machinery/door/mineral/wood,/turf/unsimulated/floor/airless,/area/vault/asteroid)
+"o" = (/turf/unsimulated/floor/airless{icon_state = "asteroidwarning"; dir = 9},/area/vault/asteroid)
+"p" = (/turf/unsimulated/floor/airless{icon_state = "asteroidwarning"; dir = 5},/area/vault/asteroid)
+"q" = (/turf/unsimulated/floor/airless{icon_state = "asteroidwarning"; dir = 8},/area/vault/asteroid)
+"r" = (/turf/unsimulated/floor/airless{icon_state = "asteroidwarning"; dir = 4},/area/vault/asteroid)
+"s" = (/turf/unsimulated/floor/airless{icon_state = "asteroidwarning"; dir = 10},/area/vault/asteroid)
+"t" = (/turf/unsimulated/floor/airless{icon_state = "asteroidwarning"; dir = 6},/area/vault/asteroid)
+
+(1,1,1) = {"
+aaabccaaaaaa
+acccccccccaa
+bccdefghiccc
+bccjkjjjjccc
+accjjjljmcca
+abcjjjljmcbb
+abccnnccccca
+acccopccccca
+acccqrccccaa
+acccqrccccaa
+aaacstbcaaaa
+aaaabbbaaaaa
+"}
