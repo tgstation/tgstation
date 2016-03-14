@@ -736,3 +736,32 @@
 	desc = "A demonic, still beating heart... its healing properties will soon become inert if not used quickly."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart"
+
+//Nests
+
+/mob/living/simple_animal/hostile/spawner/lavaland
+	name = "necropolis tendril"
+	desc = "A vile tendril of corruption, originating deep underground. Terrible monsters are pouring out of it."
+	icon = 'icons/mob/nest.dmi'
+	icon_state = "tendril"
+	icon_living = "tendril"
+	icon_dead = "tendril"
+	faction = list("mining")
+	health = 250
+	maxHealth = 200
+	max_mobs = 3
+	spawn_time = 300 //30 seconds default
+	mob_type = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
+	spawn_text = "emerges from"
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	maxbodytemp = INFINITY
+	layer = MOB_LAYER-0.1
+	loot = list(/obj/effect/gibspawner)
+	del_on_death = 1
+
+/mob/living/simple_animal/hostile/spawner/lavaland/goliath
+	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast
+
+/mob/living/simple_animal/hostile/spawner/lavaland/legion
+	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion

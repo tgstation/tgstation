@@ -315,7 +315,8 @@ var/global/list/rockTurfEdgeCache
 	turf_type = /turf/simulated/floor/plating/asteroid/airless
 
 /turf/simulated/floor/plating/asteroid/airless/cave/volcanic
-	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 1, /mob/living/simple_animal/hostile/asteroid/goliath/beast = 5, /mob/living/simple_animal/hostile/asteroid/basilisk/watcher = 4, /mob/living/simple_animal/hostile/asteroid/hivelord/legion = 3)
+	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 10, /mob/living/simple_animal/hostile/asteroid/goliath/beast = 50, /mob/living/simple_animal/hostile/asteroid/basilisk/watcher = 40, /mob/living/simple_animal/hostile/asteroid/hivelord/legion = 30,
+		/mob/living/simple_animal/hostile/spawner/lavaland = 2, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3)
 	turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface
 	oxygen = 14
 	nitrogen = 23
@@ -396,7 +397,7 @@ var/global/list/rockTurfEdgeCache
 	if(prob(30))
 		if(istype(loc, /area/mine/explored))
 			return
-		for(var/atom/A in urange(15,T))//Lowers chance of mob clumps
+		for(var/atom/A in urange(12,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
 				return
 		var/randumb = pickweight(mob_spawn_list)
@@ -704,7 +705,7 @@ var/global/list/rockTurfEdgeCache
 	nitrogen = 23
 	temperature = 300
 
-	mineralChance = 13
+	mineralChance = 10
 	mineralSpawnChanceList = list(
 		/turf/simulated/mineral/uranium/volcanic = 5, /turf/simulated/mineral/diamond/volcanic = 1, /turf/simulated/mineral/gold/volcanic = 10,
 		/turf/simulated/mineral/silver/volcanic = 12, /turf/simulated/mineral/plasma/volcanic = 20, /turf/simulated/mineral/iron/volcanic = 40,
