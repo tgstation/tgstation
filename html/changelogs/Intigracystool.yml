@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- rscadd: Surgeon Switchtool now fits in medical belts.
