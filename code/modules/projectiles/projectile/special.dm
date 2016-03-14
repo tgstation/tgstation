@@ -49,7 +49,7 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
-	var/temperature = 100
+	var/temperature = TCMB
 
 
 /obj/item/projectile/temp/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
@@ -59,9 +59,14 @@
 		M.bodytemperature = temperature
 	return 1
 
+
+/obj/item/projectile/temp/neutral
+	name = "neutral beam"
+	temperature = 293
+
 /obj/item/projectile/temp/hot
 	name = "heat beam"
-	temperature = 400
+	temperature = 800
 
 /obj/item/projectile/meteor
 	name = "meteor"
