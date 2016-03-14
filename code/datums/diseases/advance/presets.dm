@@ -41,3 +41,11 @@
 		name = "Reality Impairment"
 		symptoms = list(new/datum/symptom/hallucigen)
 	..(process, D, copy)
+
+// Scalerot
+
+/datum/disease/advance/scalerot/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+	if(!D)
+		name = "Necrotizing Dermatitis Chitinous Ichthyosis"
+		symptoms = list(new/datum/symptom/scalerot)
+	..(process, D, copy)
