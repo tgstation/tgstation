@@ -103,6 +103,7 @@
 		return
 	morphed = 0
 	form = null
+	alpha = initial(alpha)
 
 	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir)
 

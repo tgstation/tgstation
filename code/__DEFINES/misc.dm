@@ -221,12 +221,19 @@
 #define TRAIT_FRIENDLY 64
 #define TRAIT_THIEVING 128
 
-//defines
+//SNPC defines
 #define MAX_RANGE_FIND 32
 #define MIN_RANGE_FIND 16
 #define FUZZY_CHANCE_HIGH 85
 #define FUZZY_CHANCE_LOW 50
 #define CHANCE_TALK 15
+
+#define SNPC_BRUTE 1
+#define SNPC_STEALTH 2
+#define SNPC_MARTYR 3
+#define SNPC_PSYCHO 4
+
+
 #define MAXCOIL 30
 #define RESIZE_DEFAULT_SIZE 1
 
@@ -366,3 +373,9 @@ var/list/bloody_footprints_cache = list()
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
+
+// Plant types
+#define PLANT_NORMAL 0
+#define PLANT_WEED 1
+#define PLANT_MUSHROOM 2
+#define PLANT_ALIEN 3

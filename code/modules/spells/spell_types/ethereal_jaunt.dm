@@ -48,9 +48,8 @@
 	if(target.pulledby)
 		target.pulledby.stop_pulling()
 	target.stop_pulling()
-	if(target.buckled_mob)
-		target.unbuckle_mob(force=1)
 	jaunt_disappear(animation, target)
+	target.reset_perspective(holder)
 	target.loc = holder
 	target.reset_perspective(holder)
 	target.notransform=0 //mob is safely inside holder now, no need for protection.
@@ -80,8 +79,6 @@
 					if(target.Move(T))
 						break
 		target.canmove = 1
-		target.reset_perspective()
-		target.update_canmove() //if the caster became unconscious mid-jaunt we must make him fall down.
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(atom/movable/overlay/animation, mob/living/target)
 	animation.icon_state = "liquify"

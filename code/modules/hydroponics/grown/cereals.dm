@@ -10,7 +10,9 @@
 	yield = 4
 	potency = 15
 	oneharvest = 1
+	icon_dead = "wheat-dead"
 	mutatelist = list(/obj/item/seeds/wheat/oat)
+	reagents_add = list("nutriment" = 0.04)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed = /obj/item/seeds/wheat
@@ -20,7 +22,6 @@
 	icon_state = "wheat"
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
-	reagents_add = list("nutriment" = 0.04)
 
 // Oat
 /obj/item/seeds/wheat/oat
@@ -40,7 +41,6 @@
 	icon_state = "oat"
 	filling_color = "#556B2F"
 	bitesize_mod = 2
-	reagents_add = list("nutriment" = 0.04)
 
 // Rice
 /obj/item/seeds/wheat/rice
@@ -61,4 +61,3 @@
 	icon_state = "rice"
 	filling_color = "#FAFAD2"
 	bitesize_mod = 2
-	reagents_add = list("nutriment" = 0.04)

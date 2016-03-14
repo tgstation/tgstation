@@ -14,7 +14,7 @@
 
 /obj/item/weapon/reagent_containers/New(location, vol = 0)
 	..()
-	if (vol > 0)
+	if (isnum(vol) && vol > 0)
 		volume = vol
 	create_reagents(volume)
 	if(spawned_disease)

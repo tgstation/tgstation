@@ -12,6 +12,7 @@
 	oneharvest = 1
 	growthstages = 3
 	mutatelist = list(/obj/item/seeds/carrot/parsnip)
+	reagents_add = list("oculine" = 0.25, "vitamin" = 0.04, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
 	seed = /obj/item/seeds/carrot
@@ -20,7 +21,6 @@
 	icon_state = "carrot"
 	filling_color = "#FFA500"
 	bitesize_mod = 2
-	reagents_add = list("oculine" = 0.25, "vitamin" = 0.04, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/hatchet))
@@ -41,14 +41,15 @@
 	species = "parsnip"
 	plantname = "Parsnip"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
+	icon_dead = "carrot-dead"
 	mutatelist = list()
+	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
 	seed = /obj/item/seeds/carrot/parsnip
 	name = "parsnip"
 	desc = "Closely related to carrots."
 	icon_state = "parsnip"
-	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
 	bitesize_mod = 2
 
 
@@ -64,7 +65,9 @@
 	endurance = 50
 	yield = 6
 	oneharvest = 1
+	icon_dead = "whitebeet-dead"
 	mutatelist = list(/obj/item/seeds/redbeet)
+	reagents_add = list("vitamin" = 0.04, "sugar" = 0.2, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
 	seed = /obj/item/seeds/whitebeet
@@ -72,7 +75,6 @@
 	desc = "You can't beat white-beet."
 	icon_state = "whitebeet"
 	filling_color = "#F4A460"
-	reagents_add = list("vitamin" = 0.04, "sugar" = 0.2, "nutriment" = 0.05)
 	bitesize_mod = 2
 
 // Red Beet
@@ -87,11 +89,11 @@
 	endurance = 50
 	yield = 6
 	oneharvest = 1
+	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/redbeet
 	seed = /obj/item/seeds/redbeet
 	name = "red beet"
 	desc = "You can't beat red beet."
 	icon_state = "redbeet"
-	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
 	bitesize_mod = 2

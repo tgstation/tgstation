@@ -35,8 +35,11 @@
 
 #define SMOOTH_FALSE	0 //not smooth
 #define SMOOTH_TRUE		1 //smooths with exact specified types or just itself
-#define SMOOTH_MORE		2 //smooths with all subtypes of specified types or just itself
+#define SMOOTH_MORE		2 //smooths with all subtypes of specified types or just itself (this value can replace SMOOTH_TRUE)
 #define SMOOTH_DIAGONAL	4 //if atom should smooth diagonally, this should be present in 'smooth' var
+#define SMOOTH_BORDER	8 //atom will smooth with the borders of the map
+
+#define NULLTURF_BORDER 123456789
 
 #define DEFAULT_UNDERLAY_ICON 			'icons/turf/floors.dmi'
 #define DEFAULT_UNDERLAY_ICON_STATE 	"plating"
@@ -65,27 +68,42 @@
 
 	for(var/direction in cardinal)
 		AM = find_type_in_direction(A, direction)
-		if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+		if(AM == NULLTURF_BORDER)
+			if((A.smooth & SMOOTH_BORDER))
+				adjacencies |= 1 << direction
+		else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 			adjacencies |= 1 << direction
 
 	if(adjacencies & N_NORTH)
 		if(adjacencies & N_WEST)
 			AM = find_type_in_direction(A, NORTHWEST)
-			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			if(AM == NULLTURF_BORDER)
+				if((A.smooth & SMOOTH_BORDER))
+					adjacencies |= N_NORTHWEST
+			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 				adjacencies |= N_NORTHWEST
 		if(adjacencies & N_EAST)
 			AM = find_type_in_direction(A, NORTHEAST)
-			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			if(AM == NULLTURF_BORDER)
+				if((A.smooth & SMOOTH_BORDER))
+					adjacencies |= N_NORTHEAST
+			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 				adjacencies |= N_NORTHEAST
 
 	if(adjacencies & N_SOUTH)
 		if(adjacencies & N_WEST)
 			AM = find_type_in_direction(A, SOUTHWEST)
-			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			if(AM == NULLTURF_BORDER)
+				if((A.smooth & SMOOTH_BORDER))
+					adjacencies |= N_SOUTHWEST
+			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 				adjacencies |= N_SOUTHWEST
 		if(adjacencies & N_EAST)
 			AM = find_type_in_direction(A, SOUTHEAST)
-			if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			if(AM == NULLTURF_BORDER)
+				if((A.smooth & SMOOTH_BORDER))
+					adjacencies |= N_SOUTHEAST
+			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 				adjacencies |= N_SOUTHEAST
 
 	return adjacencies
@@ -98,34 +116,60 @@
 			var/adjacencies = calculate_adjacencies(A)
 
 			if(A.smooth & SMOOTH_DIAGONAL)
-				diagonal_smooth(A, adjacencies)
+				A.diagonal_smooth(adjacencies)
 			else
 				cardinal_smooth(A, adjacencies)
 
-/proc/diagonal_smooth(atom/A, adjacencies) //TODO: atom smoothing procs, optimize diagonal per previous state & underlay generation
+/atom/proc/diagonal_smooth(adjacencies)
 	switch(adjacencies)
 		if(N_NORTH|N_WEST)
-			A.replace_smooth_overlays("d1-se-0","d2-se","d3-se","d4-se")
+			replace_smooth_overlays("d1-se-0","d2-se","d3-se","d4-se")
 		if(N_NORTH|N_EAST)
-			A.replace_smooth_overlays("d1-sw","d2-sw-0","d3-sw","d4-sw")
+			replace_smooth_overlays("d1-sw","d2-sw-0","d3-sw","d4-sw")
 		if(N_SOUTH|N_WEST)
-			A.replace_smooth_overlays("d1-ne","d2-ne","d3-ne-0","d4-ne")
+			replace_smooth_overlays("d1-ne","d2-ne","d3-ne-0","d4-ne")
 		if(N_SOUTH|N_EAST)
-			A.replace_smooth_overlays("d1-nw","d2-nw","d3-nw","d4-nw-0")
+			replace_smooth_overlays("d1-nw","d2-nw","d3-nw","d4-nw-0")
 
 		if(N_NORTH|N_WEST|N_NORTHWEST)
-			A.replace_smooth_overlays("d1-se-1","d2-se","d3-se","d4-se")
+			replace_smooth_overlays("d1-se-1","d2-se","d3-se","d4-se")
 		if(N_NORTH|N_EAST|N_NORTHEAST)
-			A.replace_smooth_overlays("d1-sw","d2-sw-1","d3-sw","d4-sw")
+			replace_smooth_overlays("d1-sw","d2-sw-1","d3-sw","d4-sw")
 		if(N_SOUTH|N_WEST|N_SOUTHWEST)
-			A.replace_smooth_overlays("d1-ne","d2-ne","d3-ne-1","d4-ne")
+			replace_smooth_overlays("d1-ne","d2-ne","d3-ne-1","d4-ne")
 		if(N_SOUTH|N_EAST|N_SOUTHEAST)
-			A.replace_smooth_overlays("d1-nw","d2-nw","d3-nw","d4-nw-1")
+			replace_smooth_overlays("d1-nw","d2-nw","d3-nw","d4-nw-1")
 
 		else
-			cardinal_smooth(A, adjacencies)
+			cardinal_smooth(src, adjacencies)
 			return
-	A.icon_state = ""
+
+	icon_state = ""
+	return adjacencies
+
+//only walls should have a need to handle underlays
+/turf/simulated/wall/diagonal_smooth(adjacencies)
+	adjacencies = reverse_ndir(..())
+	if(adjacencies)
+		underlays.Cut()
+		if(fixed_underlay)
+			if(fixed_underlay["space"])
+				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=src.layer)
+			else
+				underlays += image(fixed_underlay["icon"], fixed_underlay["icon_state"], layer=src.layer)
+		else
+			var/turf/T = get_step(src, turn(adjacencies, 180))
+			if(T && T.density)
+				T = get_step(src, turn(adjacencies, 135))
+				if(T && T.density)
+					T = get_step(src, turn(adjacencies, 225))
+
+			if(istype(T, /turf/space))
+				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=src.layer)
+			else if(T && !T.density && !T.smooth)
+				underlays += T
+			else
+				underlays += DEFAULT_UNDERLAY_IMAGE
 
 /proc/cardinal_smooth(atom/A, adjacencies)
 	//NW CORNER
@@ -215,6 +259,9 @@
 		x_offset -= range
 
 	var/turf/target_turf = locate(source.x + x_offset, source.y + y_offset, source.z)
+	if(!target_turf)
+		return NULLTURF_BORDER
+
 	if(source.canSmoothWith)
 		var/atom/A
 		if(source.smooth & SMOOTH_MORE)
@@ -278,3 +325,49 @@
 	overlays += sw
 	bottom_right_corner = se
 	overlays += se
+
+/proc/reverse_ndir(ndir)
+	switch(ndir)
+		if(N_NORTH)
+			return NORTH
+		if(N_SOUTH)
+			return SOUTH
+		if(N_WEST)
+			return WEST
+		if(N_EAST)
+			return EAST
+		if(N_NORTHWEST)
+			return NORTHWEST
+		if(N_NORTHEAST)
+			return NORTHEAST
+		if(N_SOUTHEAST)
+			return SOUTHEAST
+		if(N_SOUTHWEST)
+			return SOUTHWEST
+		if(N_NORTH|N_WEST)
+			return NORTHWEST
+		if(N_NORTH|N_EAST)
+			return NORTHEAST
+		if(N_SOUTH|N_WEST)
+			return SOUTHWEST
+		if(N_SOUTH|N_EAST)
+			return SOUTHEAST
+		if(N_NORTH|N_WEST|N_NORTHWEST)
+			return NORTHWEST
+		if(N_NORTH|N_EAST|N_NORTHEAST)
+			return NORTHEAST
+		if(N_SOUTH|N_WEST|N_SOUTHWEST)
+			return SOUTHWEST
+		if(N_SOUTH|N_EAST|N_SOUTHEAST)
+			return SOUTHEAST
+		else
+			return 0
+
+//Example smooth wall
+/turf/simulated/wall/smooth
+	name = "smooth wall"
+	icon = 'icons/turf/smooth_wall.dmi'
+	icon_state = "smooth"
+	walltype = "shuttle"
+	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL|SMOOTH_BORDER
+	canSmoothWith = null

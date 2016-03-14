@@ -120,13 +120,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle
 	cost = 30 // normally 42
 
-/datum/uplink_item/nukeoffer/ammo
-	name = "Fireteam bundle"
-	desc = "For the team player: A duffelbag filled with enough ammo to kit out a fireteam; four .45 magazines, \
-			three 5.56 magazines, a box of 40mm grenades, and a magazine of sniper ammunition; all at a discounted price."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam
-	cost = 24 // normally ??
-
 // Dangerous Items
 /datum/uplink_item/dangerous
 	category = "Conspicuous and Dangerous Weapons"
@@ -513,12 +506,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 17
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
-/datum/uplink_item/stealthy_weapons/throwingstars
-	name = "Box of Throwing Stars"
-	desc = "A box of shurikens from ancient Earth martial arts. They are highly effective throwing weapons, \
-			and will embed into limbs when possible."
-	item = /obj/item/weapon/storage/box/throwing_stars
-	cost = 6
+/datum/uplink_item/stealthy_weapons/throwingweapons
+	name = "Box of Throwing Weapons"
+	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
+			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
+	item = /obj/item/weapon/storage/box/syndie_kit/throwing_weapons
+	cost = 5
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"

@@ -16,7 +16,7 @@
 
 	if(ishuman(L) || ismonkey(L) || iscorgi(L))
 		if(L.buckled)
-			L.buckled.unbuckle_mob()
+			L.buckled.unbuckle_mob(L,force=1)
 		L.reset_perspective(src)
 		L.loc = src
 		L.disabilities += MUTE

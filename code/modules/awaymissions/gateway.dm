@@ -20,13 +20,14 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 /obj/machinery/gateway/centerstation/Destroy()
 	if(the_gateway == src)
 		the_gateway = null
-	..()
+	return ..()
 
 
 /obj/machinery/gateway/initialize()
 	update_icon()
-	if(dir == 2)
-		density = 0
+	switch(dir)
+		if(SOUTH,SOUTHEAST,SOUTHWEST)
+			density = 0
 
 
 /obj/machinery/gateway/update_icon()

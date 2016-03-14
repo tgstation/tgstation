@@ -6,55 +6,40 @@
 	name = "grown_weapon"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	burn_state = FLAMMABLE
-	var/seed = null
-	var/plantname = ""
-	var/product	//a type path
-	var/lifespan = 0
-	var/endurance = 15
-	var/maturation = 7
-	var/production = 7
-	var/yield = 2
-	var/potency = 20
-	var/plant_type = 0
+	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 
-/obj/item/weapon/grown/New(newloc, new_potency = 50)
+/obj/item/weapon/grown/New(newloc, var/obj/item/seeds/new_seed = null)
 	..()
-	potency = new_potency
+	create_reagents(50)
+
+	if(new_seed)
+		seed = new_seed.Copy()
+	else if(ispath(seed))
+		// This is for adminspawn or map-placed growns. They get the default stats of their seed type.
+		seed = new seed()
+		seed.potency = 50
+	else // Something is terribly wrong
+		qdel(src)
+		return
+
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
-	transform *= TransformUsingVariable(potency, 100, 0.5)
+	for(var/datum/plant_gene/trait/T in seed.genes)
+		T.on_new(src, newloc)
 
-	if(seed && lifespan == 0) //This is for adminspawn or map-placed growns. They get the default stats of their seed type. This feels like a hack but people insist on putting these things on the map...
-		var/obj/item/seeds/S = new seed(src)
-		lifespan = S.lifespan
-		endurance = S.endurance
-		maturation = S.maturation
-		production = S.production
-		yield = S.yield
-		qdel(S) //Foods drop their contents when eaten, so delete the default seed.
-
-	create_reagents(50)
+	if(istype(src, seed.product)) // no adding reagents if it is just a trash item
+		seed.prepare_result(src)
 	add_juice()
+	transform *= TransformUsingVariable(seed.potency, 100, 0.5)
+
 
 /obj/item/weapon/grown/attackby(obj/item/O, mob/user, params)
 	..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		var/msg
-		msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
-		switch(plant_type)
-			if(0)
-				msg += "- Plant type: <i>Normal plant</i>\n"
-			if(1)
-				msg += "- Plant type: <i>Weed</i>.  Can grow in nutrient-poor soil.\n"
-			if(2)
-				msg += "- Plant type: <i>Mushroom</i>.  Can grow in dry soil.\n"
-		msg += "- Potency: <i>[potency]</i>\n"
-		msg += "- Yield: <i>[yield]</i>\n"
-		msg += "- Maturation speed: <i>[maturation]</i>\n"
-		msg += "- Production speed: <i>[production]</i>\n"
-		msg += "- Endurance: <i>[endurance]</i>\n"
-		msg += "*---------*</span>"
+		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
+		msg += seed.get_analyzer_text()
+		msg += "</span>"
 		usr << msg
 		return
 
@@ -62,3 +47,38 @@
 	if(reagents)
 		return 1
 	return 0
+
+
+/obj/item/weapon/grown/Crossed(atom/movable/AM)
+	var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
+	if(S && iscarbon(AM))
+		var/mob/living/carbon/M = AM
+		var/stun = min(seed.potency * S.rate * 2, 1)
+		var/weaken = min(seed.potency * S.rate, 0.5)
+		if(M.slip(stun, weaken, src))
+			for(var/datum/plant_gene/trait/T in seed.genes)
+				T.on_slip(src, M)
+			return 1
+	..()
+
+
+// Glow gene procs
+/obj/item/weapon/grown/Destroy()
+	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+	if(G && ismob(loc))
+		loc.AddLuminosity(-G.get_lum(seed))
+	return ..()
+
+/obj/item/weapon/grown/pickup(mob/user)
+	..()
+	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+	if(G)
+		SetLuminosity(0)
+		user.AddLuminosity(G.get_lum(seed))
+
+/obj/item/weapon/grown/dropped(mob/user)
+	..()
+	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+	if(G)
+		user.AddLuminosity(-G.get_lum(seed))
+		SetLuminosity(G.get_lum(seed))

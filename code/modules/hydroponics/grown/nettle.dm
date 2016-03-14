@@ -9,8 +9,9 @@
 	endurance = 40 // tuff like a toiger
 	yield = 4
 	growthstages = 5
-	plant_type = 1
+	plant_type = PLANT_WEED
 	mutatelist = list(/obj/item/seeds/nettle/death)
+	reagents_add = list("sacid" = 0.5)
 
 /obj/item/seeds/nettle/death
 	name = "pack of death-nettle seeds"
@@ -23,7 +24,8 @@
 	maturation = 8
 	yield = 2
 	mutatelist = list()
-	rarity = 10
+	reagents_add = list("facid" = 0.5, "sacid" = 0.5)
+	rarity = 20
 
 
 /obj/item/weapon/grown/nettle //abstract type
@@ -38,7 +40,6 @@
 	w_class = 1
 	throw_speed = 1
 	throw_range = 3
-	plant_type = 1
 	origin_tech = "combat=1"
 	attack_verb = list("stung")
 
@@ -79,8 +80,7 @@
 
 /obj/item/weapon/grown/nettle/basic/add_juice()
 	..()
-	reagents.add_reagent("sacid", round((potency / 2), 1))
-	force = round((5 + potency / 5), 1)
+	force = round((5 + seed.potency / 5), 1)
 
 
 /obj/item/weapon/grown/nettle/death
@@ -94,8 +94,7 @@
 
 /obj/item/weapon/grown/nettle/death/add_juice()
 	..()
-	reagents.add_reagent("facid", round((potency / 2), 1))
-	force = round((5 + potency / 2.5), 1)
+	force = round((5 + seed.potency / 2.5), 1)
 
 /obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/user)
 	..()

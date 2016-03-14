@@ -71,8 +71,6 @@
 	build_path = /obj/machinery/computer/communications
 	origin_tech = "programming=2;magnets=2"
 	var/lastTimeUsed = 0
-/obj/item/weapon/circuitboard/communications/proc/cooldownLeft(deciseconds=600)
-	return max(deciseconds - (world.time - lastTimeUsed), 0)
 
 /obj/item/weapon/circuitboard/card
 	name = "circuit board (ID Console)"

@@ -91,6 +91,7 @@
 	return 1
 
 /obj/structure/table/attack_hand(mob/living/user)
+	. = ..()
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(tableclimber && tableclimber != user)
 		tableclimber.Weaken(2)

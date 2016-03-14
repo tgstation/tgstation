@@ -81,7 +81,7 @@
 		return
 	if(sound)
 		playsound(src.loc, 'sound/weapons/chainsawhit.ogg', 100, 1)
-	new L.plank_type(src.loc, 1 + round(L.potency / 25))
+	new L.plank_type(src.loc, 1 + round(L.seed.potency / 25))
 	qdel(L)
 
 /mob/living/simple_animal/chicken/rabbit/normal
@@ -123,7 +123,7 @@
 		spawnableAtoms[i] = 1
 
 /datum/mapGeneratorModule/snow/bunnies
-	spawnableAtoms = list(/mob/living/simple_animal/chicken/rabbit/normal = 1)
+	spawnableAtoms = list(/mob/living/simple_animal/chicken/rabbit/normal = 0.1)
 
 /datum/mapGeneratorModule/snow/randIceRocks
 	spawnableAtoms = list(/obj/structure/flora/rock/icy = 5, /obj/structure/flora/rock/pile/icy = 5)
