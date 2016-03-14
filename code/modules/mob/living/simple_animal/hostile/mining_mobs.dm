@@ -695,10 +695,8 @@
 	icon_aggro = "legion_head"
 	icon_dead = "legion_head"
 	icon_gib = "syndicate_gib"
-	move_to_delay = 1
 	friendly = "buzzes near"
 	vision_range = 10
-	speed = 1
 	maxHealth = 1
 	health = 5
 	harm_intent_damage = 5
@@ -743,7 +741,7 @@
 	icon_dead = "tendril"
 	faction = list("mining")
 	health = 250
-	maxHealth = 200
+	maxHealth = 250
 	max_mobs = 3
 	spawn_time = 300 //30 seconds default
 	mob_type = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
