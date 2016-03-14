@@ -41,3 +41,18 @@
 		name = "Reality Impairment"
 		symptoms = list(new/datum/symptom/hallucigen)
 	..(process, D, copy)
+
+// Asthmothia
+
+/datum/disease/advance/asthmosthia/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+	if(!D)
+		name = "Atmospheric Asthma"
+		symptoms = list(new/datum/symptom/asthmothia)
+	..(process, D, copy)
+
+// Traitor Asthmothia
+/datum/disease/advance/severeasthmothia/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+	if(!D)
+		name = "Severe Atmospheric Asthma"
+		symptoms = list(new/datum/symptom/severeasthmothia)
+	..(process, D, copy)

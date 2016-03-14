@@ -180,6 +180,7 @@
 #include "code\datums\diseases\wizarditis.dm"
 #include "code\datums\diseases\advance\advance.dm"
 #include "code\datums\diseases\advance\presets.dm"
+#include "code\datums\diseases\advance\symptoms\asthmothia.dm"
 #include "code\datums\diseases\advance\symptoms\beard.dm"
 #include "code\datums\diseases\advance\symptoms\choking.dm"
 #include "code\datums\diseases\advance\symptoms\confusion.dm"
