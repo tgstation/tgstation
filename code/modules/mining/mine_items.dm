@@ -42,6 +42,7 @@
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/weapon/survivalcapsule(src)
 
 
 /**********************Shuttle Computer**************************/
@@ -186,6 +187,16 @@
 		src.loc.visible_message("The [src] begins to shake. Stand back!")
 		used = TRUE
 		sleep(50)
+		var/clear = TRUE
+		for(var/unclear in trange(3, src))
+			var/turf/T = unclear
+			if(istype(T, /turf/simulated/mineral) || !T.density)
+				continue
+			clear = FALSE
+		if(!clear)
+			src.loc.visible_message("The [src] doesn't have room to deploy! You need to clear a 3x3 area!")
+			used = FALSE
+			return
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
 		PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
 		load()

@@ -1,7 +1,6 @@
 /mob/living/simple_animal/hostile/asteroid/
 	vision_range = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 15
 	faction = list("mining")
 	environment_smash = 2
 	minbodytemp = 0
@@ -219,10 +218,11 @@
 	loot = list(/obj/item/organ/internal/hivelord_core)
 	var/next_brood = 0
 	var/brood_cooldown = 20
+	var/brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	if(world.time >= next_brood)
-		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
+		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
 		A.GiveTarget(target)
 		A.friends = friends
 		A.faction = faction
@@ -351,6 +351,7 @@
 	anchored = 1 //Stays anchored until death as to be unpullable
 	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
+	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
@@ -362,7 +363,7 @@
 		pre_attack++
 	if(!pre_attack || stat || AIStatus == AI_IDLE)
 		return
-	icon_state = "Goliath_preattack"
+	icon_state = pre_attack_icon
 
 /mob/living/simple_animal/hostile/asteroid/goliath/revive(full_heal = 0, admin_revive = 0)
 	if(..())
@@ -408,7 +409,7 @@
 	if(istype(turftype, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = turftype
 		M.gets_drilled()
-	spawn(20)
+	spawn(10)
 		Trip()
 
 /obj/effect/goliath_tentacle/original
@@ -484,7 +485,6 @@
 		adjustBruteLoss(2)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
-
 
 /mob/living/simple_animal/hostile/asteroid/fugu
 	name = "wumborian fugu"
@@ -611,3 +611,151 @@
 		A.environment_smash += 2
 		user << "<span class='info'>You increase the size of [A], giving it a surge of strength!</span>"
 		qdel(src)
+
+/////////////////////Lavaland
+
+//Watcher
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher
+	name = "watcher"
+	desc = "Its stare causes victims to freeze from the inside."
+	icon = 'icons/mob/lavaland/watcher.dmi'
+	icon_state = "watcher"
+	icon_living = "watcher"
+	icon_aggro = "watcher"
+	icon_dead = "Basilisk_dead"
+	pixel_x = -10
+	throw_message = "bounces harmlessly off of"
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	attacktext = "stares into the soul of"
+	a_intent = "harm"
+	speak_emote = list("telepathically cries")
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	stat_attack = 1
+	robust_searching = 1
+	loot = list(/obj/item/weapon/ore/diamond{layer = 4.1},
+				/obj/item/weapon/ore/diamond{layer = 4.1})
+
+
+//Goliath
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast
+	name = "goliath"
+	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "goliath"
+	icon_living = "goliath"
+	icon_aggro = "goliath"
+	icon_dead = "goliath_dead"
+	throw_message = "does nothing to the tough hide of the"
+	pre_attack_icon = "goliath2"
+	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
+	stat_attack = 1
+	robust_searching = 1
+
+//Legion
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion
+	name = "legion"
+	desc = "You can still see what was once a human under the shifting mass of corruption."
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "legion"
+	icon_living = "legion"
+	icon_aggro = "legion"
+	icon_dead = "legion"
+	icon_gib = "syndicate_gib"
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	attacktext = "lashes out at"
+	speak_emote = list("echoes")
+	attack_sound = 'sound/weapons/pierce.ogg'
+	throw_message = "bounces harmlessly off of"
+	loot = list(/obj/item/organ/internal/hivelord_core/legion)
+	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
+	del_on_death = 1
+	stat_attack = 1
+	robust_searching = 1
+	var/mob/living/carbon/human/stored_mob
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
+	visible_message("<span class='warning'>[src] wails as in anger as they are driven from their form!</span>")
+	if(stored_mob)
+		stored_mob.loc = get_turf(src)
+		stored_mob.adjustBruteLoss(1000)
+	else
+		new /obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
+	..(gibbed)
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
+	name = "legion"
+	desc = "One of many."
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "legion_head"
+	icon_living = "legion_head"
+	icon_aggro = "legion_head"
+	icon_dead = "legion_head"
+	icon_gib = "syndicate_gib"
+	friendly = "buzzes near"
+	vision_range = 10
+	maxHealth = 1
+	health = 5
+	harm_intent_damage = 5
+	melee_damage_lower = 12
+	melee_damage_upper = 12
+	attacktext = "bites"
+	speak_emote = list("echoes")
+	attack_sound = 'sound/weapons/pierce.ogg'
+	throw_message = "is shrugged off by"
+	pass_flags = PASSTABLE
+	del_on_death = 1
+	stat_attack = 1
+	robust_searching = 1
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
+	if(isturf(src.loc))
+		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
+			if(H.stat == UNCONSCIOUS)
+				visible_message("<span class='warning'>[src.name] burrows into the flesh of [H]!</span>")
+				var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
+				visible_message("<span class='warning'>[L] staggers to their feet!</span>")
+				H.death()
+				L.stored_mob = H
+				H.loc = L
+				qdel(src)
+	..()
+
+/obj/item/organ/internal/hivelord_core/legion
+	name = "legion's heart"
+	desc = "A demonic, still beating heart... its healing properties will soon become inert if not used quickly."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "demon_heart"
+
+//Nests
+
+/mob/living/simple_animal/hostile/spawner/lavaland
+	name = "necropolis tendril"
+	desc = "A vile tendril of corruption, originating deep underground. Terrible monsters are pouring out of it."
+	icon = 'icons/mob/nest.dmi'
+	icon_state = "tendril"
+	icon_living = "tendril"
+	icon_dead = "tendril"
+	faction = list("mining")
+	health = 250
+	maxHealth = 250
+	max_mobs = 3
+	spawn_time = 300 //30 seconds default
+	mob_type = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
+	spawn_text = "emerges from"
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	maxbodytemp = INFINITY
+	layer = MOB_LAYER-0.1
+	loot = list(/obj/effect/gibspawner)
+	del_on_death = 1
+
+/mob/living/simple_animal/hostile/spawner/lavaland/goliath
+	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast
+
+/mob/living/simple_animal/hostile/spawner/lavaland/legion
+	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion

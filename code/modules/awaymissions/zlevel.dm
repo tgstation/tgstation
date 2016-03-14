@@ -1,10 +1,3 @@
-#define RANDOM_UPPER_X 220
-#define RANDOM_UPPER_Y 220
-
-#define RANDOM_LOWER_X 30
-#define RANDOM_LOWER_Y 30
-
-
 var/global/list/potentialRandomZlevels = generateMapList(filename = "config/awaymissionconfig.txt")
 
 /proc/createRandomZlevel()
@@ -81,7 +74,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 			if(sanity > 100)
 				ruin_number--
 				break
-			var/turf/T = locate(rand(RANDOM_LOWER_X, RANDOM_UPPER_X), rand(RANDOM_LOWER_Y, RANDOM_UPPER_Y), z_level)
+			var/turf/T = locate(rand(25, world.maxx - 25), rand(25, world.maxy - 25), z_level)
 
 			for(var/turf/check in template.get_affected_turfs(T,1))
 				var/area/new_area = get_area(check)
@@ -96,7 +89,6 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 				ruin_number --
 
 	return
-
 
 /obj/effect/ruin_loader
 	name = "random ruin"
@@ -120,11 +112,3 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	template.loaded++
 	world << "<span class='boldannounce'>Ruins loaded.</span>"
 	qdel(src)
-
-
-
-#undef RANDOM_UPPER_X
-#undef RANDOM_UPPER_Y
-
-#undef RANDOM_LOWER_X
-#undef RANDOM_LOWER_Y
