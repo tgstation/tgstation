@@ -13,6 +13,9 @@
 	icon_closed = "wall-locker"
 	icon_opened = "wall-lockeropen"
 
+/obj/structure/closet/walllocker/can_close()
+	return 1
+
 //spawns endless (3 sets) amounts of breathmask, emergency oxy tank and crowbar
 
 /obj/structure/closet/walllocker/emerglocker
