@@ -190,19 +190,20 @@ var/global/datum/controller/gameticker/ticker
 		to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
 //		to_chat(world, sound('sound/AI/welcome.ogg'))// Skie //Out with the old, in with the new. - N3X15
 
-		var/welcome_sentence=list('sound/AI/vox_login.ogg')
-		welcome_sentence += pick(
-			'sound/AI/vox_reminder1.ogg',
-			'sound/AI/vox_reminder2.ogg',
-			'sound/AI/vox_reminder3.ogg',
-			'sound/AI/vox_reminder4.ogg',
-			'sound/AI/vox_reminder5.ogg',
-			'sound/AI/vox_reminder6.ogg',
-			'sound/AI/vox_reminder7.ogg',
-			'sound/AI/vox_reminder8.ogg',
-			'sound/AI/vox_reminder9.ogg')
-		for(var/sound in welcome_sentence)
-			play_vox_sound(sound,STATION_Z,null)
+		if(!config.shut_up_automatic_diagnostic_and_announcement_system)
+			var/welcome_sentence=list('sound/AI/vox_login.ogg')
+			welcome_sentence += pick(
+				'sound/AI/vox_reminder1.ogg',
+				'sound/AI/vox_reminder2.ogg',
+				'sound/AI/vox_reminder3.ogg',
+				'sound/AI/vox_reminder4.ogg',
+				'sound/AI/vox_reminder5.ogg',
+				'sound/AI/vox_reminder6.ogg',
+				'sound/AI/vox_reminder7.ogg',
+				'sound/AI/vox_reminder8.ogg',
+				'sound/AI/vox_reminder9.ogg')
+			for(var/sound in welcome_sentence)
+				play_vox_sound(sound,STATION_Z,null)
 		//Holiday Round-start stuff	~Carn
 		Holiday_Game_Start()
 		mode.Clean_Antags()
