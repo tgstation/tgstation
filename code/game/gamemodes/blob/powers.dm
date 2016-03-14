@@ -263,8 +263,8 @@
 	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
 	if(!surrounding_turfs.len)
 		return
-	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in living_mob_list)
-		if(BS.overmind == src && isturf(BS.loc) && get_dist(BS, T) <= 35)
+	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in blob_mobs)
+		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 
@@ -277,9 +277,10 @@
 		return
 	else
 		src << "You broadcast with your minions, <B>[speak_text]</B>"
-	for(var/mob/living/simple_animal/hostile/blob/blob_minion in blob_mobs)
-		if(blob_minion.overmind == src && blob_minion.stat == CONSCIOUS)
-			blob_minion.say(speak_text)
+	for(var/BLO in blob_mobs)
+		var/mob/living/simple_animal/hostile/blob/BM = BLO
+		if(BM.stat == CONSCIOUS)
+			BM.say(speak_text)
 
 /mob/camera/blob/verb/chemical_reroll()
 	set category = "Blob"
@@ -293,12 +294,14 @@
 /mob/camera/blob/proc/set_chemical()
 	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
 	blob_reagent_datum = new BC
-	for(var/obj/effect/blob/BL in blobs)
-		BL.update_icon()
-	for(var/mob/living/simple_animal/hostile/blob/BLO in blob_mobs)
-		BLO.update_icons() //If it's getting a new chemical, tell it what it does!
-		BLO << "Your overmind's blob reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
-		BLO << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
+	for(var/BL in blobs)
+		var/obj/effect/blob/B = BL
+		B.update_icon()
+	for(var/BLO in blob_mobs)
+		var/mob/living/simple_animal/hostile/blob/BM = BLO
+		BM.update_icons() //If it's getting a new chemical, tell it what it does!
+		BM << "Your overmind's blob reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
+		BM << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
 	src << "Your reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 	src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
 

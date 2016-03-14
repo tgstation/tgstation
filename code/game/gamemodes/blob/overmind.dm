@@ -68,13 +68,15 @@
 	..()
 
 /mob/camera/blob/Destroy()
-	for(var/obj/effect/blob/BL in blobs)
-		if(BL.overmind == src)
-			BL.overmind = null
-			BL.update_icon() //reset anything that was ours
-	for(var/mob/living/simple_animal/hostile/blob/BLO in blob_mobs)
-		BLO.overmind = null
-		BLO.update_icons()
+	for(var/BL in blobs)
+		var/obj/effect/blob/B = BL
+		if(B.overmind == src)
+			B.overmind = null
+			B.update_icon() //reset anything that was ours
+	for(var/BLO in blob_mobs)
+		var/mob/living/simple_animal/hostile/blob/BM = BLO
+		BM.overmind = null
+		BM.update_icons()
 	overminds -= src
 	if(ghostimage)
 		ghost_darkness_images -= ghostimage
