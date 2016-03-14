@@ -1,2 +1,7 @@
 author: Duny
-changes: []
+changes: 
+  - tweak: Deff: Re-added the security checkpoint in medbay.
+  - rscadd: Deff: Added a few additional air alarms in hallways.
+  - tweak: Rotated the AME room's layout to allow people to build and expand the AME horizontally rather than vertically, as AME code is apparently shit and will fuck up if built vertically.
+  - rscadd: Added windoors behind plastic flaps in places where simply deconstructing plastic flaps would allow anyone to enter.
+  - rscadd: Added a bar of soap in both custodial closets.
