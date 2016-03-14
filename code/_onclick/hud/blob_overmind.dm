@@ -3,7 +3,7 @@
 	icon = 'icons/mob/blob.dmi'
 
 /obj/screen/blob/MouseEntered(location,control,params)
-	openToolTip(usr,src,params,title = name,content = desc)
+	openToolTip(usr,src,params,title = name,content = desc, theme = "blob")
 
 /obj/screen/blob/MouseExited()
 	closeToolTip(usr)
@@ -37,7 +37,7 @@
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
 		if(!B.placed)
-			openToolTip(usr,src,params,title = "Place Blob Core",content = "Attempt to place your blob core at this location.")
+			openToolTip(usr,src,params,title = "Place Blob Core",content = "Attempt to place your blob core at this location.", theme = "blob")
 		else
 			..()
 
@@ -97,7 +97,7 @@
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
 		if(B.free_chem_rerolls)
-			openToolTip(usr,src,params,title = "Readapt Chemical (FREE)",content = "Randomly rerolls your chemical for free.")
+			openToolTip(usr,src,params,title = "Readapt Chemical (FREE)",content = "Randomly rerolls your chemical for free.", theme = "blob")
 		else
 			..()
 
