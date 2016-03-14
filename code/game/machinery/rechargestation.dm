@@ -230,6 +230,7 @@
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
 	src.occupant.forceMove(src.loc)
+	src.occupant = null
 	build_icon()
 	src.use_power = 1
 	// Removes dropped items/magically appearing mobs from the charger too
@@ -359,6 +360,7 @@
 		R.client.perspective = EYE_PERSPECTIVE
 		R.client.eye = src
 	R.forceMove(src)
+	src.occupant = R
 	src.add_fingerprint(R)
 	build_icon()
 	src.use_power = 2
