@@ -237,9 +237,9 @@
 				continue
 			if(L.stat != DEAD)
 				attacksuccess = TRUE
-				var/mob_protection = L.get_permeability_protection()
-				blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection, src)
-				blob_reagent_datum.send_message(L)
+			var/mob_protection = L.get_permeability_protection()
+			blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection, src)
+			blob_reagent_datum.send_message(L)
 		var/obj/effect/blob/B = locate() in T
 		if(B)
 			if(attacksuccess) //if we successfully attacked a turf with a blob on it, don't refund shit
