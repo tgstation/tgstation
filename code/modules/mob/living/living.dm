@@ -1127,18 +1127,27 @@ default behaviour is:
 		if ((!( yes ) || now_pushing) || !loc)
 			return
 		now_pushing = 1
-		if (istype(AM, /mob/living))
-			var/mob/living/tmob = AM
-
-			for(var/mob/living/M in range(tmob, 1))
-				if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
-					if ( !(world.time % 5) )
-						to_chat(src, "<span class='warning'>[tmob] is restrained, you cannot push past</span>")
+		if (istype(AM, /obj/structure/bed/roller)) //no pushing rollerbeds that have people on them
+			var/obj/structure/bed/roller/R = AM
+			for(var/mob/living/tmob in range(R, 1))
+				if(tmob.pulling == R && !(tmob.restrained()) && tmob.stat == 0 && R.density == 1)
+					to_chat(src, "<span class='warning'>[tmob] is pulling [R], you can't push past.</span>")
 					now_pushing = 0
 					return
-				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
-					if ( !(world.time % 5) )
-						to_chat(src, "<span class='warning'>[tmob] is restraining [M], you cannot push past</span>")
+		if (istype(AM, /mob/living)) //no pushing people pushing rollerbeds that have people on them
+			var/mob/living/tmob = AM
+			for(var/obj/structure/bed/roller/R in range(tmob, 1))
+				if(tmob.pulling == R && !(tmob.restrained()) && tmob.stat == 0 && R.density == 1)
+					to_chat(src, "<span class='warning'>[tmob] is pulling [R], you can't push past.</span>")
+					now_pushing = 0
+					return
+			for(var/mob/living/M in range(tmob, 1)) //no pushing prisoners or people pulling prisoners
+				if(tmob.pinned.len ||  ((M.pulling == tmob && (tmob.restrained() && !(M.restrained()) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)))
+					to_chat(src, "<span class='warning'>[tmob] is restrained, you can't push past.</span>")
+					now_pushing = 0
+					return
+				if(tmob.pulling == M && (M.restrained() && !(tmob.restrained()) && tmob.stat == 0))
+					to_chat(src, "<span class='warning'>[tmob] is restraining [M], you can't push past.</span>")
 					now_pushing = 0
 					return
 
