@@ -309,10 +309,38 @@
 			H.equip_or_collect(new /obj/item/toy/crayon/mime(H), slot_in_backpack)
 			H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_in_backpack)
 		H.add_spell(new /spell/aoe_turf/conjure/forcewall/mime, "grey_spell_ready")
+		H.add_spell(new /spell/targeted/oathbreak/)
 		H.miming = 1
 		H.rename_self("mime")
 		return 1
 
+//Mime's break vow spell, couldn't think of anywhere else to put this
+
+/spell/targeted/oathbreak
+	name = "Break Oath of Silence"
+	desc = "Break your oath of silence."
+	school = "mime"
+	panel = "Mime"
+	charge_max = 10
+	spell_flags = INCLUDEUSER
+	range = 0
+	max_targets = 1
+
+	hud_state = "mime_oath"
+	override_base = "const"
+
+/spell/targeted/oathbreak/cast(list/targets)
+	for(var/mob/living/carbon/human/M in targets)
+		var/response = alert(M, "Are you -sure- you want to break your oath of silence?\n(This removes your ability to create invisible walls and cannot be undone!)","Are you sure you want to break your oath?","Yes","No")
+		if(response != "Yes")	return
+		M.miming=0
+		for(var/spell/aoe_turf/conjure/forcewall/mime/spell in M.spell_list)
+			M.remove_spell(spell)
+		for(var/spell/targeted/oathbreak/spell in M.spell_list)
+			M.remove_spell(spell)
+		message_admins("[M.name] ([M.ckey]) has broken their oath of silence. (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</a>)")
+		to_chat(M, "<span class = 'notice'>An unsettling feeling surrounds you...</span>")
+		return
 
 /datum/job/janitor
 	title = "Janitor"

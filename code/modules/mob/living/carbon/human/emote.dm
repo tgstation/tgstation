@@ -19,15 +19,6 @@
 	if(src.stat == 2.0 && (act != "deathgasp"))
 		return
 
-	if(act == "oath" && src.miming)
-		src.miming = 0
-		for(var/spell/aoe_turf/conjure/forcewall/mime/spell in src.spell_list)
-			src.remove_spell(spell)
-			qdel(spell)
-		message_admins("[src.name] ([src.ckey]) has broken their oath of silence. (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</a>)")
-		to_chat(src, "<span class = 'notice'>An unsettling feeling surrounds you...</span>")
-		return
-
 	switch(act)
 		if ("airguitar")
 			if (!src.restrained())
