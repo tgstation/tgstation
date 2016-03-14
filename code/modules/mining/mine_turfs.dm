@@ -109,7 +109,7 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/mineral/random/New()
 	..()
 	if (prob(mineralChance))
-		var/path = pick(mineralSpawnChanceList)
+		var/path = pickweight(mineralSpawnChanceList)
 		var/turf/T = new path(src)
 
 		if(T && istype(T, /turf/simulated/mineral))
