@@ -436,7 +436,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += cart
 
 	dat += "</body></html>"
-	user << browse(dat, "window=pda;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
+	user << browse(sanitize_russian(dat, 1), "window=pda;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
 	onclose(user, "pda", src)
 
 /obj/item/device/pda/Topic(href, href_list)
@@ -546,7 +546,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //NOTEKEEPER FUNCTIONS===================================
 
 			if ("Edit")
-				var/n = stripped_multiline_input(U, "Please enter message", name, note)
+				var/n = sanitize_russian(stripped_multiline_input(U, "Please enter message", name, note))
 				if (in_range(src, U) && loc == U)
 					if (mode == 1 && n)
 						note = n

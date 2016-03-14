@@ -98,7 +98,7 @@
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
-	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
+	user << browse(sanitize_russian(get_content(), 1), "window=[window_id];[window_size][window_options]")
 	if (use_onclose)
 		spawn(0)
 			//winexists sleeps, so we don't need to.

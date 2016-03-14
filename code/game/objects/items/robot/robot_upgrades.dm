@@ -61,7 +61,7 @@
 	var/heldname = "default name"
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
-	heldname = stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN)
+	heldname = sanitize_russian(stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN))
 
 /obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/R)
 	if(..())

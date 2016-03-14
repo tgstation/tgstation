@@ -14,7 +14,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	if(!iscultist(usr) || usr.incapacitated())
 		return
 
-	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
+	var/input = sanitize_russian(stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", ""))
 	if(!input)
 		return
 

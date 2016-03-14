@@ -276,7 +276,7 @@
 	if(!is_shadow(user))
 		user << "<span class='warning'>You must be a shadowling to do that!</span>"
 		return
-	var/text = stripped_input(user, "What do you want to say your thralls and fellow shadowlings?.", "Hive Chat", "")
+	var/text = sanitize_russian(stripped_input(user, "What do you want to say your thralls and fellow shadowlings?.", "Hive Chat", ""))
 	if(!text)
 		return
 	var/my_message = "<span class='shadowling'><b>\[Shadowling\]</b><i> [user.real_name]</i>: [text]</span>"
@@ -758,7 +758,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 		user << "<span class='warning'><b>As you attempt to commune with the others, an agonizing spike of pain drives itself into your head!</b></span>"
 		user.apply_damage(10, BRUTE, "head")
 		return
-	var/text = stripped_input(user, "What do you want to say your masters and fellow thralls?.", "Lesser Commune", "")
+	var/text = sanitize_russian(stripped_input(user, "What do you want to say your masters and fellow thralls?.", "Lesser Commune", ""))
 	if(!text)
 		return
 	text = "<span class='shadowling'><b>\[Thrall\]</b><i> [user.real_name]</i>: [text]</span>"
@@ -902,7 +902,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	action_icon_state = "commune"
 
 /obj/effect/proc_holder/spell/self/shadowling_hivemind_ascendant/cast(mob/living/carbon/human/user)
-	var/text = stripped_input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", "")
+	var/text = sanitize_russian(stripped_input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""))
 	if(!text)
 		return
 	text = "<font size=4><span class='shadowling'><b>\[Ascendant\]<i> [user.real_name]</i>: [text]</b></span></font>"

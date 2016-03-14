@@ -122,7 +122,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	send_speech(message, message_range, src, bubble_type, spans)
 
-	log_say("[name]/[key] : [message]")
+	sanitize_russian(log_say("[name]/[key] : [message]"))
 	return 1
 
 /mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)

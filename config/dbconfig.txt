@@ -7,13 +7,13 @@
 
 ## Server the MySQL database can be found at.
 # Examples: localhost, 200.135.5.43, www.mysqldb.com, etc.
-ADDRESS 127.0.0.1
+ADDRESS localhost
 
 ## MySQL server port (default is 3306).
 PORT 3306
 
 ## Database for all SQL functions, not just feedback.
-DATABASE white
+FEEDBACK_DATABASE feedback
 
 ## Prefix to be added to the name of every table, older databases will require this be set to erro_
 ## if left out defaults to erro_ for legacy reasons, if you want no table prefix, give a blank prefix rather then comment out

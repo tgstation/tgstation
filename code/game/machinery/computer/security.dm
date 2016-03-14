@@ -359,7 +359,7 @@ What a mess.*/
 					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
 					sleep(30)
 					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
-					P.info = "<CENTER><B>Security Record - (SR-[data_core.securityPrintCount])</B></CENTER><BR>"
+					P.info = sanitize_russian("<CENTER><B>Security Record - (SR-[data_core.securityPrintCount])</B></CENTER><BR>")
 					if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
 						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["sex"], active1.fields["age"])
 						if(config.mutant_races)
@@ -408,10 +408,10 @@ What a mess.*/
 						while(active2.fields[text("com_[]", counter)])
 							P.info += text("[]<BR>", active2.fields[text("com_[]", counter)])
 							counter++
-						P.name = text("SR-[] '[]'", data_core.securityPrintCount, active1.fields["name"])
+						P.name = sanitize_russian(text("SR-[] '[]'", data_core.securityPrintCount, active1.fields["name"]))
 					else
 						P.info += "<B>Security Record Lost!</B><BR>"
-						P.name = text("SR-[] '[]'", data_core.securityPrintCount, "Record Lost")
+						P.name = sanitize_russian(text("SR-[] '[]'", data_core.securityPrintCount, "Record Lost"))
 					P.info += "</TT>"
 					printing = null
 //RECORD DELETE
@@ -432,7 +432,7 @@ What a mess.*/
 				if(!( istype(active2, /datum/data/record) ))
 					return
 				var/a2 = active2
-				var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
+				var/t1 = sanitize_russian(stripped_multiline_input("Add Comment:", "Secure. records", null, null))
 				if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 					return
 				var/counter = 1
@@ -589,8 +589,8 @@ What a mess.*/
 							active1.fields["photo_side"] = photo
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
-							var/t2 = stripped_multiline_input(usr, "Please input minor crime details:", "Secure. records", "", null)
+							var/t1 = sanitize_russian(stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null))
+							var/t2 = sanitize_russian(stripped_multiline_input(usr, "Please input minor crime details:", "Secure. records", "", null))
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
@@ -603,8 +603,8 @@ What a mess.*/
 								data_core.removeMinorCrime(active1.fields["id"], href_list["cdataid"])
 					if("ma_crim_add")
 						if(istype(active1, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please input major crime names:", "Secure. records", "", null)
-							var/t2 = stripped_multiline_input(usr, "Please input major crime details:", "Secure. records", "", null)
+							var/t1 = sanitize_russian(stripped_input(usr, "Please input major crime names:", "Secure. records", "", null))
+							var/t2 = sanitize_russian(stripped_multiline_input(usr, "Please input major crime details:", "Secure. records", "", null))
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
@@ -617,7 +617,7 @@ What a mess.*/
 								data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
 					if("notes")
 						if(istype(active2, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
+							var/t1 = sanitize_russian(stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null))
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							active2.fields["notes"] = t1

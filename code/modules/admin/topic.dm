@@ -1091,7 +1091,7 @@
 			return
 		if(query_noteedits.NextRow())
 			var/edit_log = query_noteedits.item[1]
-			usr << browse(edit_log,"window=noteedits")
+			usr << browse(sanitize_russian(edit_log,1),"window=noteedits")
 
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))
@@ -2169,7 +2169,8 @@
 			return
 		if(query_memoedits.NextRow())
 			var/edit_log = query_memoedits.item[1]
-			usr << browse(edit_log,"window=memoeditlist")
+			usr << browse(sanitize_russian(edit_log,1),"window=memoeditlist")
+
 
 	else if(href_list["check_antagonist"])
 		if(!check_rights(R_ADMIN))

@@ -161,7 +161,7 @@
 		if(M in dead_mob_list)
 			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
 	src << "[my_message]"
-	log_say("[src.real_name]/[src.key] : [input]")
+	sanitize_russian(log_say("[key_name(src)] : [input]"))
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleMode()
 	src << "<span class='danger'><B>You don't have another mode!</span></B>"

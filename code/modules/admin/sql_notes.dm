@@ -18,7 +18,7 @@
 		target_ckey = new_ckey
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	if(!notetext)
-		notetext = input(usr,"Write your Note","Add Note") as message
+		notetext = sanitize_russian(input(usr,"Write your Note","Add Note") as message)
 		if(!notetext)
 			return
 	notetext = sanitizeSQL(notetext)

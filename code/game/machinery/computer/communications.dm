@@ -205,7 +205,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if(CM.cooldownLeft())
 					usr << "Arrays recycling.  Please stand by."
 					return
-				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", "")
+				var/input = sanitize_russian(stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", ""))
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
@@ -220,7 +220,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if(CM.cooldownLeft())
 					usr << "Arrays recycling.  Please stand by."
 					return
-				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
+				var/input = sanitize_russian(stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", ""))
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
@@ -568,7 +568,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	return dat
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
-	var/input = rhtml_decode(stripped_input(user, "Please choose a message to announce to the station crew.", "What?"))
+	var/input = sanitize_russian((stripped_input(user, "Please choose a message to announce to the station crew.", "What?")), 1)
 	if(!input || !user.canUseTopic(src))
 		return
 	if(is_silicon)
@@ -577,7 +577,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		spawn(600)//One minute cooldown
 			ai_message_cooldown = 0
 	else
-		priority_announce(html_decode(input), null, 'sound/misc/announce.ogg', "Captain")
+		priority_announce(input, 1, 'sound/misc/announce.ogg', "Captain")
 		message_cooldown = 1
 		spawn(600)//One minute cooldown
 			message_cooldown = 0

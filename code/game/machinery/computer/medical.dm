@@ -314,67 +314,67 @@
 								src.active1.fields["sex"] = "Male"
 					if("age")
 						if(active1)
-							var/t1 = input("Please input age:", "Med. records", src.active1.fields["age"], null)  as num
+							var/t1 = sanitize_russian(input("Please input age:", "Med. records", src.active1.fields["age"], null)  as num)
 							if(!canUseMedicalRecordsConsole(usr, t1, a1))
 								return
 							src.active1.fields["age"] = t1
 					if("species")
 						if(active1)
-							var/t1 = stripped_input("Please input species name", "Med. records", src.active1.fields["species"], null)
+							var/t1 = sanitize_russian(stripped_input("Please input species name", "Med. records", src.active1.fields["species"], null))
 							if(!canUseMedicalRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1
 					if("mi_dis")
 						if(active2)
-							var/t1 = stripped_input("Please input minor disabilities list:", "Med. records", src.active2.fields["mi_dis"], null)
+							var/t1 = sanitize_russian(stripped_input("Please input minor disabilities list:", "Med. records", src.active2.fields["mi_dis"], null))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["mi_dis"] = t1
 					if("mi_dis_d")
 						if(active2)
-							var/t1 = stripped_multiline_input("Please summarize minor dis.:", "Med. records", src.active2.fields["mi_dis_d"], null)
+							var/t1 = sanitize_russian(stripped_multiline_input("Please summarize minor dis.:", "Med. records", src.active2.fields["mi_dis_d"], null))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["mi_dis_d"] = t1
 					if("ma_dis")
 						if(active2)
-							var/t1 = stripped_input("Please input major diabilities list:", "Med. records", src.active2.fields["ma_dis"], null)
+							var/t1 = sanitize_russian(stripped_input("Please input major diabilities list:", "Med. records", src.active2.fields["ma_dis"], null))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["ma_dis"] = t1
 					if("ma_dis_d")
 						if(active2)
-							var/t1 = stripped_multiline_input("Please summarize major dis.:", "Med. records", src.active2.fields["ma_dis_d"], null)
+							var/t1 = sanitize_russian(stripped_multiline_input("Please summarize major dis.:", "Med. records", src.active2.fields["ma_dis_d"], null))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["ma_dis_d"] = t1
 					if("alg")
 						if(active2)
-							var/t1 = stripped_input("Please state allergies:", "Med. records", src.active2.fields["alg"], null)
+							var/t1 = sanitize_russian(stripped_input("Please state allergies:", "Med. records", src.active2.fields["alg"], null))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["alg"] = t1
 					if("alg_d")
 						if(active2)
-							var/t1 = stripped_multiline_input("Please summarize allergies:", "Med. records", src.active2.fields["alg_d"], null)
+							var/t1 = sanitize_russian(stripped_multiline_input("Please summarize allergies:", "Med. records", src.active2.fields["alg_d"], null))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["alg_d"] = t1
 					if("cdi")
 						if(active2)
-							var/t1 = stripped_input("Please state diseases:", "Med. records", src.active2.fields["cdi"], null)
+							var/t1 = sanitize_russian(stripped_input("Please state diseases:", "Med. records", src.active2.fields["cdi"], null))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["cdi"] = t1
 					if("cdi_d")
 						if(active2)
-							var/t1 = stripped_multiline_input("Please summarize diseases:", "Med. records", src.active2.fields["cdi_d"], null)
+							var/t1 = sanitize_russian(stripped_multiline_input("Please summarize diseases:", "Med. records", src.active2.fields["cdi_d"], null))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["cdi_d"] = t1
 					if("notes")
 						if(active2)
-							var/t1 = stripped_multiline_input("Please summarize notes:", "Med. records", src.active2.fields["notes"], null)
+							var/t1 = sanitize_russian(stripped_multiline_input("Please summarize notes:", "Med. records", src.active2.fields["notes"], null))
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["notes"] = t1
@@ -554,7 +554,7 @@
 						P.name = text("MR-[] '[]'", data_core.medicalPrintCount, src.active1.fields["name"])
 					else
 						P.info += "<B>Medical Record Lost!</B><BR>"
-						P.name = text("MR-[] '[]'", data_core.medicalPrintCount, "Record Lost")
+						P.name = sanitize_russian(text("MR-[] '[]'", data_core.medicalPrintCount, "Record Lost"))
 					P.info += "</TT>"
 					src.printing = null
 

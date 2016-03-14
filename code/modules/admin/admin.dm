@@ -3,7 +3,7 @@ var/global/BSACooldown = 0
 
 ////////////////////////////////
 /proc/message_admins(msg)
-	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
+	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[sanitize_russian(msg)]</span></span>"
 	admins << msg
 
 
@@ -374,7 +374,7 @@ var/global/BSACooldown = 0
 
 	//world << "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]"
 	//world << "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]"
-	usr << browse(dat, "window=admincaster_main;size=400x600")
+	usr << browse(sanitize_russian(dat, 1), "window=admincaster_main;size=400x600")
 	onclose(usr, "admincaster_main")
 
 
@@ -400,7 +400,7 @@ var/global/BSACooldown = 0
 	if(marked_datum && istype(marked_datum, /atom))
 		dat += "<A href='?src=\ref[src];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
 
-	usr << browse(dat, "window=admin2;size=210x200")
+	usr << browse(sanitize_russian(dat, 1), "window=admin2;size=210x180")
 	return
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
@@ -443,13 +443,12 @@ var/global/BSACooldown = 0
 	if(!check_rights(0))
 		return
 
-	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
-	message = sanitize_russian(message)
+	var/message = sanitize_russian(input("Global message to send:", "Admin Announce", null, null)  as message)
 	if(message)
 		if(!check_rights(R_SERVER,0))
-			message = adminscrub(message,500)
+			message = message
 		world << "<span class='adminnotice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b></span>\n \t [message]"
-		log_admin("Announce: [key_name(usr)] : [message]")
+		sanitize_russian(log_admin("Announce: [key_name(usr)] : [message]"))
 	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/set_admin_notice()
@@ -466,10 +465,10 @@ var/global/BSACooldown = 0
 		return
 	if(new_admin_notice == "")
 		message_admins("[key_name(usr)] removed the admin notice.")
-		log_admin("[key_name(usr)] removed the admin notice:\n[admin_notice]")
+		sanitize_russian(log_admin("[key_name(usr)] removed the admin notice:\n[admin_notice]"))
 	else
 		message_admins("[key_name(usr)] set the admin notice.")
-		log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]")
+		sanitize_russian(log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]"))
 		world << "<span class ='adminnotice'><b>Admin Notice:</b>\n \t [new_admin_notice]</span>"
 	feedback_add_details("admin_verb","SAN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	admin_notice = new_admin_notice

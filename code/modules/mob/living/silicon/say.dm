@@ -3,7 +3,7 @@
 	return ..() | SPAN_ROBOT
 
 /mob/living/proc/robot_talk(message)
-	log_say("[key_name(src)] : [message]")
+	sanitize_russian(log_say("[key_name(src)] : [message]"))
 	var/desig = "Default Cyborg" //ezmode for taters
 	if(istype(src, /mob/living/silicon))
 		var/mob/living/silicon/S = src

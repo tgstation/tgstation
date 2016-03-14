@@ -1,15 +1,34 @@
 // Helpers for running 510 code on older versions of BYOND.
 #if DM_VERSION < 510
 #define BYGEX "code/__HELPERS/bygex"
-/proc/replacetext(text, replace, replacement)
-	if(istype(replace, /regex))
-		var/regex/R = replace
-		return R.Replace(text, replacement)
-	else
-		return call(BYGEX, "regex_replaceallliteral")(text, replace, replacement)
 
-/proc/replacetextEx(text, replace, replacement)
-	return call(BYGEX, "regEx_replaceallliteral")(text, replace, replacement)
+/proc/replacetext(text, find, replacement)
+	var/find_len = length(find)
+	if(find_len < 1)	return text
+	. = ""
+	var/last_found = 1
+	while(1)
+		var/found = findtext(text, find, last_found, 0)
+		. += copytext(text, last_found, found)
+		if(found)
+			. += replacement
+			last_found = found + find_len
+			continue
+		return .
+
+/proc/replacetextEx(text, find, replacement)
+	var/find_len = length(find)
+	if(find_len < 1)	return text
+	. = ""
+	var/last_found = 1
+	while(1)
+		var/found = findtextEx(text, find, last_found, 0)
+		. += copytext(text, last_found, found)
+		if(found)
+			. += replacement
+			last_found = found + find_len
+			continue
+		return .
 
 /proc/regex(pattern, flags)
 	return new /regex(pattern, flags)

@@ -487,4 +487,4 @@
 
 		output += "</table></div>"
 
-	usr << browse(output,"window=lookupbans;size=900x500")
+	usr << browse(sanitize_russian(output,1),"window=lookupbans;size=900x500")
