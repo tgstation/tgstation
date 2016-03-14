@@ -12,6 +12,7 @@ _maps/templates/lavaland_surface_cube.dmm
 ##RESPAWN
 _maps/templates/lavaland_surface_prisoner_Crash.dmm
 _maps/templates/lavaland_surface_seed_vault.dmm
+_maps/templates/lavaland_surface_ash_walker1.dmm
 
 ##SIN
 _maps/templates/lavaland_surface_envy.dmm

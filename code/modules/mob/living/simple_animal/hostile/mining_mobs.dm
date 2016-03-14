@@ -653,7 +653,7 @@
 	icon_living = "goliath"
 	icon_aggro = "goliath"
 	icon_dead = "goliath_dead"
-	throw_message = "does nothing to the touch hide of the"
+	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
 	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
 	stat_attack = 1
