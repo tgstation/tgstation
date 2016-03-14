@@ -20,6 +20,11 @@
 /area/vault/rust
 	requires_power = 1
 
+/area/vault/dancedance
+
+/area/vault/dancedance/loot
+	jammed = 2
+
 /mob/living/simple_animal/hostile/monster/cyber_horror/quiet
 	speak_chance = 1 //shut the fuck up
 

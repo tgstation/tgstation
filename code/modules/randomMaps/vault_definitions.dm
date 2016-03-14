@@ -31,5 +31,8 @@
 /datum/vault/rust
 	map_name = "rust"
 
+/datum/vault/dance_revolution
+	map_name = "dance_revolution"
+
 /datum/vault/spacegym
 	map_name = "spacegym"
