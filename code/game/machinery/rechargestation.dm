@@ -229,7 +229,7 @@
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
-	src.occupant.loc = src.loc
+	src.occupant.forceMove(src.loc)
 	src.occupant = null
 	build_icon()
 	src.use_power = 1
@@ -359,7 +359,7 @@
 	if(R && R.client)
 		R.client.perspective = EYE_PERSPECTIVE
 		R.client.eye = src
-	R.loc = src
+	R.forceMove(src)
 	src.occupant = R
 	src.add_fingerprint(R)
 	build_icon()
