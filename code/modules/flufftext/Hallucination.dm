@@ -278,7 +278,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/delusion
 	var/list/image/delusions = list()
 
-/obj/effect/hallucination/delusion/New(loc,mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1)
+/obj/effect/hallucination/delusion/New(loc,mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
 	target = T
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon")
@@ -298,6 +298,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				A = image('icons/mob/human.dmi',H,"skeleton_s")
 			if("demon")//Demon
 				A = image('icons/mob/mob.dmi',H,"daemon")
+			if("custom")
+				A = image(custom_icon_file, H, custom_icon)
 		A.override = 1
 		if(target.client)
 			delusions |= A
