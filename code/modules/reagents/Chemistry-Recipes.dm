@@ -1852,6 +1852,13 @@ datum
 
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
 
+		enzyme
+			name = "Universal Enzyme"
+			id = "enzyme"
+			result = "enzyme"
+			required_reagents = list("sodiumchloride" = 1, "nutriment" = 1, "blood" = 1)
+			result_amount = 1
+
 		tofu
 			name = "Tofu"
 			id = "tofu"
@@ -2033,7 +2040,7 @@ datum
 			name = "Moonshine"
 			id = "moonshine"
 			result = "moonshine"
-			required_reagents = list("nutriment" = 10)
+			required_reagents = list("cornoil" = 10)
 			required_catalysts = list("enzyme" = 5)
 			result_amount = 10
 

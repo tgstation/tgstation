@@ -1,0 +1,5 @@
+author: Intigracy
+delete-after: True
+changes: 
+- rscadd: You can now make Universal Enzyme in chemistry using 1 unit each of Blood, Nutriment, and Sodium Chloride (salt)
+- tweak: Moonshine is now made with cornoil and universal enzyme instead of nutriment and universal enzyme.
