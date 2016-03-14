@@ -1,0 +1,12 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Resource blobs produce resources for their overmind slightly slower for each resource blob their overmind has."
+  - rscadd: "Blob overminds get one free chemical reroll."
+  - rscadd: "Blob overminds can no longer place resource and factory blobs out of range of cores and nodes, unless they Toggle Node Requirement off. It is on by default."
+  - rscadd: "Blob UI buttons now have tooltips."
+  - tweak: "Cores and nodes will expand slightly slower."
+  - tweak: "Blob Chemicals no longer trigger effects on dead mobs."
+  - tweak: "Shifting Fragments has a lower chance to move shields with normal expansion and will no longer shift blobs to the location of a dying blob."
+  - tweak: "Flammable Goo no longer applies fire to tiles with blobs."
+  - tweak: "Electromagnetic Web has a slightly higher EMP range."
