@@ -682,8 +682,9 @@
 	visible_message("<span class='warning'>[src] wails as in anger as they are driven from their form!</span>")
 	if(stored_mob)
 		stored_mob.loc = get_turf(src)
+		stored_mob.adjustBruteLoss(1000)
 	else
-		new /obj/effect/mob_spawn/human/corpse(get_turf(src))
+		new /obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion

@@ -159,6 +159,9 @@
 	roundstart = FALSE
 	instant = TRUE
 
+/obj/effect/mob_spawn/human/corpse/damaged
+	brute_damage = 1000
+
 /obj/effect/mob_spawn/human/alive
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
