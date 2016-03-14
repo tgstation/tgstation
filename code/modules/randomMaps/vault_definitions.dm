@@ -33,3 +33,6 @@
 
 /datum/vault/spacegym
 	map_name = "spacegym"
+	
+/datum/vault/oldarmory
+	map_name = "oldarmory"
