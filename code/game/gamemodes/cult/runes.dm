@@ -348,13 +348,13 @@ var/list/teleport_other_runes = list()
 	if(!offering)
 		rune_in_use = 0
 		return
-	var/obj/item/weapon/nullrod/N = offering.null_rod_check()
+	/*var/obj/item/weapon/nullrod/N = offering.null_rod_check()
 	if(N)
 		user << "<span class='warning'>Something is blocking the Geometer's magic!</span>"
 		log_game("Sacrifice rune failed - target has \a [N]!")
 		fail_invoke()
 		rune_in_use = 0
-		return
+		return*/
 	if(((ishuman(offering) || isrobot(offering)) && offering.stat != DEAD) || is_sacrifice_target(offering.mind)) //Requires three people to sacrifice living targets
 		var/cultists_nearby = 1
 		for(var/mob/living/M in range(1,src))
