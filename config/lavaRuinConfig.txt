@@ -10,7 +10,7 @@ _maps/templates/lavaland_biodome_clown_planet.dmm
 _maps/templates/lavaland_surface_cube.dmm
 
 ##RESPAWN
-_maps/templates/lavaland_surface_prisoner_Crash.dmm
+_maps/templates/lavaland_surface_prisoner_crash.dmm
 _maps/templates/lavaland_surface_seed_vault.dmm
 _maps/templates/lavaland_surface_ash_walker1.dmm
 
