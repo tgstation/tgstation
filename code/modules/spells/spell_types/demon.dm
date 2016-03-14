@@ -5,8 +5,8 @@
 	include_user = 1
 	range = -1
 	clothes_req = 0
-	var/summoned = 0
 	var/obj/item/weapon/twohanded/pitchfork/demonic/pitchfork
+	var/pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/
 
 	school = "conjuration"
 	charge_max = 150
@@ -16,15 +16,23 @@
 
 
 /obj/effect/proc_holder/spell/targeted/summon_pitchfork/cast(list/targets, mob/user = usr)
-	if (summoned)
+	if (pitchfork)
 		qdel(pitchfork)
-		summoned = 0
 	else
 		for(var/mob/living/carbon/C in targets)
 			if(C.drop_item())
 				pitchfork = new
 				C.put_in_hands(pitchfork)
-				summoned = 1
+
+/obj/effect/proc_holder/spell/targeted/summon_pitchfork/Del()
+	if(pitchfork)
+		qdel(pitchfork)
+
+/obj/effect/proc_holder/spell/targeted/summon_pitchfork/greater
+	pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/greater
+
+/obj/effect/proc_holder/spell/targeted/summon_pitchfork/ascended
+	pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/ascended
 
 
 /obj/effect/proc_holder/spell/targeted/summon_contract

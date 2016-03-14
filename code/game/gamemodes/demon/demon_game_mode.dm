@@ -48,3 +48,20 @@
 		if(demon_mind.assigned_role == "Clown")
 			S << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
 			S.dna.remove_mutation(CLOWNMUT)
+
+/datum/mind/proc/announceDemonLaws()
+	if(!demoninfo)
+		return
+	current << "<span class='warning'><b>You remember your link to the infernal.  You are [src.demoninfo.truename], an agent of hell, a demon.  And you were sent to the plane of 		creation for a reason.  A greater  \
+		purpose.  Convince the crew to sin, and embroiden Hell's grasp. \
+		</b></span>"
+	current << "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>"
+	current << src.demoninfo.banelaw()
+	current << src.demoninfo.banlaw()
+	current << src.demoninfo.obligationlaw()
+	current << "<br/><br/> <span class='warning'>Remember, the crew can research your weaknesses if they find out your demon name.</span><br>"
+	var/obj_count = 1
+	current << "<span class='notice'>Your current objectives:</span>"
+	for(var/datum/objective/objective in objectives)
+		current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		obj_count++

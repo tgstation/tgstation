@@ -219,6 +219,7 @@ var/list/allDemons = list()
 /datum/demoninfo/proc/remove_blood_lizard()
 /datum/demoninfo/proc/remove_true_demon()
 /datum/demoninfo/proc/set_basic()
+
 /datum/demoninfo/proc/set_blood_lizard()
 	world << "MEEP: now setting blood lizard traits"
 	if(istype(owner.current, /mob/living/carbon/human))
@@ -236,15 +237,16 @@ var/list/allDemons = list()
 
 
 /datum/demoninfo/proc/set_true_demon()  //TODO LORDPIDEY: Finish these procs
-/*	user << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a true demon."
+	owner.current << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a true demon."
 	sleep(50)
-	var/mob/A = new /mob/living/simple_animal/ascendant_shadowling/arch_demon(H.loc)
+	var/mob/living/simple_animal/true_demon/A = new /mob/living/simple_animal/true_demon(owner.current.loc)
 	A.faction |= "hell"
+	owner.current.loc = A
+	A.oldform = owner.current
 	owner.transfer_to(A)
 	for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
-		owner.remove_spell(S)
+		owner.RemoveSpell(S)
 	//TODO LORDPIDEY: add appropriate spells here.
-	H.loc = A */
 
 
 

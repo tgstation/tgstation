@@ -459,13 +459,25 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
 
-/obj/item/weapon/twohanded/pitchfork/demoninfo
+/obj/item/weapon/twohanded/pitchfork/demonic
 	name = "demonic pitchfork"
 	desc = "A red pitchfork, it looks like the work of the devil."
 	force = 19
 	throwforce = 24
 	force_unwielded = 19
 	force_wielded = 25
+
+/obj/item/weapon/twohanded/pitchfork/demonic/greater
+	force = 24
+	throwforce = 50
+	force_unwielded = 24
+	force_wielded = 34
+
+/obj/item/weapon/twohanded/pitchfork/demonic/ascended
+	force = 100
+	throwforce = 100
+	force_unwielded = 100
+	force_wielded = 500000 // Kills you DEAD.
 
 /obj/item/weapon/twohanded/pitchfork/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "pitchfork[wielded]"

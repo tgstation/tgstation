@@ -990,7 +990,7 @@
 		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 
-/mob/living/check_weakness(obj/item/weapon, mob/living/attacker)
+/mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
 	if(mind && mind.demoninfo)
 		return check_demon_bane_multiplier(weapon, attacker)
 	return 1
