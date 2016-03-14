@@ -190,28 +190,31 @@
 	icon = 'icons/obj/plants.dmi'
 	icon_state = "plant-26"
 	layer = FLY_LAYER
-	var/obj/item/full = null
+
+/obj/structure/flora/pottedplant/Destroy()
+	for(var/I in contents)
+		qdel(I)
+
+	return ..()
 
 /obj/structure/flora/pottedplant/attackby(var/obj/item/I, var/mob/user)
 	if(!I)
 		return
-	if(I.w_class>2.0)
+	if(I.w_class > 2)
 		to_chat(user, "That item is too big.")
 		return
-	if(full)
+	if(contents.len)
 		to_chat(user, "There is already something in the pot.")
 	else
 		if(user.drop_item(I, src))
-			full = I
-
-			user.visible_message("<span class='notice'>[user] stuffs something into the pot.</span>","You stuff \the [full] into the [src].")
+			user.visible_message("<span class='notice'>[user] stuffs something into the pot.</span>", "You stuff \the [I] into the [src].")
 
 /obj/structure/flora/pottedplant/attack_hand(mob/user)
-	if(full)
-		user.visible_message("<span class='notice'>[user] retrieves something from the pot.</span>","You retrieve the [full] from the [src].")
-		full.forceMove(loc)
-		user.put_in_active_hand(full)
-		full = null
+	if(contents.len)
+		var/obj/item/I = contents[1]
+		user.visible_message("<span class='notice'>[user] retrieves something from the pot.</span>", "You retrieve \the [I] from the [src].")
+		I.forceMove(loc)
+		user.put_in_active_hand(I)
 	else
 		to_chat(user, "You root around in the roots.")
 
