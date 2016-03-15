@@ -623,7 +623,7 @@
 	icon_state = "watcher"
 	icon_living = "watcher"
 	icon_aggro = "watcher"
-	icon_dead = "Basilisk_dead"
+	icon_dead = "watcher_dead"
 	pixel_x = -10
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
