@@ -89,6 +89,13 @@
 	for(var/datum/plant_gene/reagent/R in genes)
 		reagents_add[R.reagent_id] = R.rate
 
+/obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25)
+	adjust_lifespan(rand(-lifemut,lifemut))
+	adjust_endurance(rand(-endmut,endmut))
+	adjust_production(rand(-productmut,productmut))
+	adjust_yield(rand(-yieldmut,yieldmut))
+	adjust_potency(rand(-potmut,potmut))
+
 
 /obj/item/seeds/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj, /obj/item/projectile/energy/florayield))
@@ -232,7 +239,7 @@
 // Maybe some day it would be used as unit test.
 /proc/check_plants_growth_stages_icons()
 	var/list/states = icon_states('icons/obj/hydroponics/growing.dmi')
-	var/list/paths = typesof(/obj/item/seeds) - /obj/item/seeds
+	var/list/paths = typesof(/obj/item/seeds) - /obj/item/seeds - typesof(/obj/item/seeds/sample)
 
 	for(var/seedpath in paths)
 		var/obj/item/seeds/seed = new seedpath

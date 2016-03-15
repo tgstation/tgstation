@@ -201,7 +201,7 @@
 				dat += "<a href='?src=\ref[src];op=insert'>Insert: [disk.gene.get_name()]</a>"
 			dat += "</div>"
 	else
-		dat += "<br>No sample found.<br><br>Please, insert a plant sample to use this device."
+		dat += "<br>No sample found.<br><span class='highlight'>Please, insert a plant sample to use this device.</span>"
 	popup.set_content(dat)
 	popup.open()
 
@@ -249,6 +249,7 @@
 				if(istype(disk.gene, /datum/plant_gene/reagent))
 					seed.reagents_from_genes()
 			update_genes()
+			repaint_seed()
 			operation = ""
 			target = null
 
@@ -269,6 +270,7 @@
 						seed.genes -= G
 						if(istype(G, /datum/plant_gene/reagent))
 							seed.reagents_from_genes()
+					repaint_seed()
 				if("extract")
 					if(disk && !disk.read_only)
 						disk.gene = G
@@ -282,11 +284,13 @@
 						var/datum/plant_gene/core/C = disk.gene.Copy()
 						seed.genes += C
 						C.apply_stat(seed)
+						repaint_seed()
 				if("insert")
 					if(disk && disk.gene && !istype(disk.gene, /datum/plant_gene/core) && disk.gene.can_add(seed))
 						seed.genes += disk.gene.Copy()
 						if(istype(disk.gene, /datum/plant_gene/reagent))
 							seed.reagents_from_genes()
+						repaint_seed()
 
 			update_genes()
 			operation = ""
@@ -326,6 +330,13 @@
 		for(var/datum/plant_gene/trait/G in seed.genes)
 			trait_genes += G
 
+/obj/machinery/plantgenes/proc/repaint_seed()
+	if(!seed)
+		return
+	if(copytext(seed.name, 1, 13) == "experimental")
+		return // Already modded name and icon
+	seed.name = "experimental " + seed.name
+	seed.icon_state = "seed-x"
 
 
 /*

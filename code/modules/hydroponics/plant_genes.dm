@@ -5,7 +5,7 @@
 	return name
 
 /datum/plant_gene/proc/can_add(obj/item/seeds/S)
-	return TRUE
+	return !istype(S, /obj/item/seeds/sample) // Samples can't accept new genes
 
 /datum/plant_gene/proc/Copy()
 	return new type
@@ -34,6 +34,8 @@
 	return C
 
 /datum/plant_gene/core/can_add(obj/item/seeds/S)
+	if(!..())
+		return FALSE
 	return S.get_gene(src.type)
 
 /datum/plant_gene/core/lifespan
@@ -107,6 +109,8 @@
 	return G
 
 /datum/plant_gene/reagent/can_add(obj/item/seeds/S)
+	if(!..())
+		return FALSE
 	for(var/datum/plant_gene/reagent/R in S.genes)
 		if(R.reagent_id == reagent_id)
 			return FALSE
@@ -126,6 +130,9 @@
 	return G
 
 /datum/plant_gene/trait/can_add(obj/item/seeds/S)
+	if(!..())
+		return FALSE
+
 	for(var/datum/plant_gene/trait/R in S.genes)
 		if(trait_id && R.trait_id == trait_id)
 			return FALSE
@@ -274,3 +281,13 @@
 /datum/plant_gene/trait/noreact/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	G.flags &= ~NOREACT
 	G.reagents.handle_reactions()
+
+
+/datum/plant_gene/trait/maxchem
+	// 2x to max reagents volume.
+	name = "Densified Chemicals"
+	rate = 2
+
+/datum/plant_gene/trait/maxchem/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
+	..()
+	G.reagents.maximum_volume *= rate
