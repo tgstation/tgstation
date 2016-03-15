@@ -42,6 +42,9 @@
 	access_card.access += J.get_access()
 	prev_access = access_card.access
 
+/mob/living/simple_animal/bot/floorbot/Process_Spacemove(movement_dir = 0)
+	return 1
+
 /mob/living/simple_animal/bot/floorbot/turn_on()
 	. = ..()
 	update_icon()
