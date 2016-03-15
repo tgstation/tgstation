@@ -526,7 +526,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "resonator"
 	item_state = "resonator"
-	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum."
+	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum. Deals extra damage to creatures."
 	w_class = 3
 	force = 8
 	throwforce = 10
@@ -538,7 +538,7 @@
 
 /obj/item/weapon/resonator/upgraded
 	name = "upgraded resonator"
-	desc = "An upgraded version of the resonator that can produce more fields at once."
+	desc = "An upgraded version of the resonator that can produce more fields at once. Deals extra damage to creatures."
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
 	origin_tech = "magnets=3;combat=3"
@@ -568,7 +568,7 @@
 
 /obj/effect/resonance
 	name = "resonance field"
-	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures."
+	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures. Deals extra damage to creatures."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	layer = 4.1
@@ -590,7 +590,7 @@
 		var/pressure = environment.return_pressure()
 		if(pressure < 50)
 			name = "strong resonance field"
-			resonance_damage = 200
+			resonance_damage = 100
 		else
 			timetoburst = 50
 		spawn(timetoburst)
@@ -599,11 +599,17 @@
 				for(var/mob/living/L in src.loc)
 					add_logs(creator, L, "used a resonator field on", "resonator")
 					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
-					L.adjustBruteLoss(resonance_damage)
+					if(istype(L, /mob/living/simple_animal))
+						L.adjustBruteLoss(resonance_damage*2)
+					else
+						L.adjustBruteLoss(resonance_damage)
 			else
 				for(var/mob/living/L in src.loc)
 					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
-					L.adjustBruteLoss(resonance_damage)
+					if(istype(L, /mob/living/simple_animal))
+						L.adjustBruteLoss(resonance_damage*2)
+					else
+						L.adjustBruteLoss(resonance_damage)
 			qdel(src)
 
 /**********************Facehugger toy**********************/
