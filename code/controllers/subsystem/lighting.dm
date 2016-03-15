@@ -61,11 +61,13 @@ var/datum/subsystem/lighting/SSlighting
 		if (A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT)
 			if (config.starlight)
 				A.SetDynamicLighting()
+		CHECK_TICK
 
 
 	for(var/thing in changed_lights)
 		var/datum/light_source/LS = thing
 		LS.check()
+		CHECK_TICK
 	changed_lights.Cut()
 
 	var/z_start = 1
@@ -80,6 +82,7 @@ var/datum/subsystem/lighting/SSlighting
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
 		T.init_lighting()
+		CHECK_TICK
 
 	if(z_level)
 		//we need to loop through to clear only shifted turfs from the list. or we will cause errors
@@ -88,6 +91,7 @@ var/datum/subsystem/lighting/SSlighting
 			if(T.z in z_start to z_finish)
 				continue
 			changed_turfs.Remove(thing)
+			CHECK_TICK
 	else
 		changed_turfs.Cut()
 

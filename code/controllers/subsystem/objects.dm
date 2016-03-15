@@ -23,6 +23,7 @@ var/datum/subsystem/objects/SSobj
 		if (zlevel && A.z != zlevel)
 			continue
 		A.initialize()
+		CHECK_TICK
 	. = ..()
 
 

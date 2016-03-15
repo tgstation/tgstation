@@ -70,7 +70,7 @@ var/global/datum/controller/master/Master = new()
 	if(zlevel && zlevel > 0 && zlevel <= world.maxz)
 		for(var/datum/subsystem/SS in subsystems)
 			SS.Initialize(world.timeofday, zlevel)
-			sleep(-1)
+			CHECK_TICK
 		return
 	world << "<span class='boldannounce'>Initializing subsystems...</span>"
 
@@ -95,7 +95,7 @@ var/global/datum/controller/master/Master = new()
 	// Initialize subsystems.
 	for(var/datum/subsystem/SS in subsystems)
 		SS.Initialize(world.timeofday, zlevel)
-		sleep(-1)
+		CHECK_TICK
 
 	world << "<span class='boldannounce'>Initializations complete!</span>"
 
@@ -106,16 +106,18 @@ var/global/datum/controller/master/Master = new()
 	world.sleep_offline = 1
 	world.fps = config.fps
 
-	sleep(-1)
+	sleep(1)
 
 	// Loop.
 	Master.process()
 
 // Notify the MC that the round has started.
 /datum/controller/master/proc/RoundStart()
+	var/timer = world.time
 	for(var/datum/subsystem/SS in subsystems)
+		timer += world.tick_lag
 		SS.can_fire = 1
-		SS.next_fire = world.time + rand(0, SS.wait) // Stagger subsystems.
+		SS.next_fire = timer + rand(0, SS.wait) // Stagger subsystems.
 
 // Used to smooth out costs to try and avoid oscillation.
 #define MC_AVERAGE_FAST(average, current) (0.7 * (average) + 0.3 * (current))
@@ -129,8 +131,10 @@ var/global/datum/controller/master/Master = new()
 		// Schedule the first run of the Subsystems.
 		var/timer = world.time
 		for(var/datum/subsystem/SS in subsystems)
-			timer += world.tick_lag
-			SS.next_fire = timer
+			if (SS.can_fire)
+				timer += world.tick_lag
+				SS.next_fire = timer
+
 		var/list/subsystemstorun = subsystems.Copy()
 		var/start_time
 		while(1) // More efficient than recursion.

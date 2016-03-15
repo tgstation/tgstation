@@ -203,6 +203,7 @@ var/datum/subsystem/air/SSair
 				T.excited = 1
 				active_turfs |= T
 				break
+		CHECK_TICK
 
 	if(active_turfs.len)
 		warning("There are [active_turfs.len] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
@@ -214,6 +215,7 @@ var/datum/subsystem/air/SSair
 		if (z_level && AM.z != z_level)
 			continue
 		AM.atmosinit()
+		CHECK_TICK
 
 //this can't be done with setup_atmos_machinery() because
 //	all atmos machinery has to initalize before the first
@@ -223,12 +225,15 @@ var/datum/subsystem/air/SSair
 		if (z_level && AM.z != z_level)
 			continue
 		AM.build_network()
+		CHECK_TICK
 
 /datum/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
 		AM.atmosinit()
+		CHECK_TICK
 
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
 		AM.build_network()
+		CHECK_TICK
