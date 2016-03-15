@@ -36,10 +36,9 @@
 			user << "<span class='danger'>Access Denied.</span>"
 			return
 	if(!locked)
-		..()
+		return ..()
 	else
 		user << "<span class='danger'>It's locked!</span>"
-	return
 
 /obj/item/weapon/storage/lockbox/MouseDrop(over_object, src_location, over_location)
 	if (locked)

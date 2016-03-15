@@ -184,11 +184,14 @@
 			M.stuttering = 1
 		M.stuttering += 4
 		M.Dizzy(5)
+		if(iscultist(M) && prob(5))
+			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
 	if(data >= 75 && prob(33))	// 30 units, 135 seconds
 		if (!M.confused)
 			M.confused = 1
 		M.confused += 3
-		if((is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
+		if(iscultist(M) || (is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
+			ticker.mode.remove_cultist(M.mind)
 			ticker.mode.remove_hog_follower(M.mind)
 			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
@@ -217,7 +220,7 @@
 		M.drowsyness = max(M.drowsyness-5, 0)
 		M.AdjustParalysis(-2, 0)
 		M.AdjustStunned(-2, 0)
-		M.AdjustWeakened(-2, 0)
+		M.AdjustWeakened(-2, 0, 0)
 	else
 		M.adjustToxLoss(2, 0)
 		M.adjustFireLoss(2, 0)
@@ -366,7 +369,7 @@
 	..()
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
 	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
-	H.Weaken(3)
+	H.Weaken(3, 0, 0)
 	spawn(30)
 		if(!H || qdeleted(H))
 			return
@@ -1160,3 +1163,27 @@
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	color = "#CEC3C6" // rgb: 206,195,198
+
+//Reagent used for shadowling blindness smoke spell
+datum/reagent/shadowling_blindness_smoke
+	name = "odd black liquid"
+	id = "blindness_smoke"
+	description = "<::ERROR::> CANNOT ANALYZE REAGENT <::ERROR::>"
+	color = "#000000" //Complete black (RGB: 0, 0, 0)
+	metabolization_rate = 100 //lel
+
+/datum/reagent/shadowling_blindness_smoke/on_mob_life(mob/living/M)
+	if(!is_shadow_or_thrall(M))
+		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"
+		M.blind_eyes(5)
+		if(prob(25))
+			M.visible_message("<b>[M]</b> claws at their eyes!")
+			M.Stun(3, 0)
+			. = 1
+	else
+		M << "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>"
+		M.heal_organ_damage(2,2, 0)
+		M.adjustOxyLoss(-2, 0)
+		M.adjustToxLoss(-2, 0)
+		. = 1
+	return ..() || .

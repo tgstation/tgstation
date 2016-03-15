@@ -166,7 +166,11 @@
 	if(module)
 		return
 
-	designation = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	if(!config.forbid_secborg)
+		modulelist += "Security"
+
+	designation = input("Please, select a module!", "Robot", null, null) in modulelist
 	var/animation_length = 0
 
 	if(module)
@@ -999,11 +1003,12 @@
 	set category = "IC"
 	set src = usr
 
+	if(incapacitated())
+		return
 	var/obj/item/W = get_active_hand()
 	if(W)
 		W.attack_self(src)
 
-	return
 
 /mob/living/silicon/robot/proc/SetLockdown(state = 1)
 	// They stay locked down if their wire is cut.

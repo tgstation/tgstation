@@ -889,34 +889,34 @@
 /datum/supply_pack/organic/hydroponics/seeds
 	name = "Seeds Crate"
 	cost = 10
-	contains = list(/obj/item/seeds/chiliseed,
-					/obj/item/seeds/berryseed,
-					/obj/item/seeds/cornseed,
-					/obj/item/seeds/eggplantseed,
-					/obj/item/seeds/tomatoseed,
-					/obj/item/seeds/soyaseed,
-					/obj/item/seeds/wheatseed,
-					/obj/item/seeds/riceseed,
-					/obj/item/seeds/carrotseed,
-					/obj/item/seeds/sunflowerseed,
-					/obj/item/seeds/chantermycelium,
-					/obj/item/seeds/potatoseed,
-					/obj/item/seeds/sugarcaneseed)
+	contains = list(/obj/item/seeds/chili,
+					/obj/item/seeds/berry,
+					/obj/item/seeds/corn,
+					/obj/item/seeds/eggplant,
+					/obj/item/seeds/tomato,
+					/obj/item/seeds/soya,
+					/obj/item/seeds/wheat,
+					/obj/item/seeds/wheat/rice,
+					/obj/item/seeds/carrot,
+					/obj/item/seeds/sunflower,
+					/obj/item/seeds/chanter,
+					/obj/item/seeds/potato,
+					/obj/item/seeds/sugarcane)
 	crate_name = "seeds crate"
 
 /datum/supply_pack/organic/hydroponics/exoticseeds
 	name = "Exotic Seeds Crate"
 	cost = 15
-	contains = list(/obj/item/seeds/nettleseed,
+	contains = list(/obj/item/seeds/nettle,
 					/obj/item/seeds/replicapod,
 					/obj/item/seeds/replicapod,
 					/obj/item/seeds/replicapod,
-					/obj/item/seeds/plumpmycelium,
-					/obj/item/seeds/libertymycelium,
-					/obj/item/seeds/amanitamycelium,
-					/obj/item/seeds/reishimycelium,
-					/obj/item/seeds/bananaseed,
-					/obj/item/seeds/eggyseed)
+					/obj/item/seeds/plump,
+					/obj/item/seeds/liberty,
+					/obj/item/seeds/amanita,
+					/obj/item/seeds/reishi,
+					/obj/item/seeds/banana,
+					/obj/item/seeds/eggplant/eggy)
 	crate_name = "exotic seeds crate"
 
 /datum/supply_pack/organic/vending
@@ -1231,7 +1231,7 @@
 	contains = list(/obj/item/weapon/poster/contraband,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori,
-					/obj/item/seeds/ambrosiadeusseed,
+					/obj/item/seeds/ambrosia/deus,
 					/obj/item/clothing/tie/dope_necklace)
 	crate_name = "crate"
 

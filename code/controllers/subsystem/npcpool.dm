@@ -64,6 +64,9 @@ var/datum/subsystem/npcpool/SSnpc
 		npcCount++
 
 	if(needsDelegate.len)
+
+		needsDelegate -= pick(needsDelegate) // cheapo way to make sure stuff doesn't pingpong around in the pool forever. delegation runs seperately to each loop so it will work much smoother
+
 		npcCount = 1 //reset the count
 		for(var/mob/living/carbon/human/interactive/check in needsDelegate)
 			if(!check)
@@ -89,6 +92,9 @@ var/datum/subsystem/npcpool/SSnpc
 			npcCount++
 
 	if(needsAssistant.len)
+
+		needsAssistant -= pick(needsAssistant)
+
 		npcCount = 1 //reset the count
 		for(var/mob/living/carbon/human/interactive/check in needsAssistant)
 			if(!check)

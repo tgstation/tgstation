@@ -35,6 +35,18 @@
 		if((src.disabilities & FAT) && src.m_intent == "run" && src.bodytemperature <= 360)
 			src.bodytemperature += 2
 
+
+/mob/living/carbon/Process_Spacemove(movement_dir = 0)
+	if(..())
+		return 1
+	if(!isturf(loc)) // In a mecha? A locker? Who knows!
+		return 0
+
+	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
+	if(istype(J) && J.allow_thrust(0.01, src))
+		return 1
+
+
 /mob/living/carbon/movement_delay()
 	. = ..()
 	if(legcuffed)
@@ -185,19 +197,19 @@
 			return
 		if(weakeyes)
 			Stun(2)
-		switch(damage)
-			if(1)
-				src << "<span class='warning'>Your eyes sting a little.</span>"
-				if(prob(40))
-					adjust_eye_damage(1)
+		
+		if (damage == 1)
+			src << "<span class='warning'>Your eyes sting a little.</span>"
+			if(prob(40))
+				adjust_eye_damage(1)
 
-			if(2)
-				src << "<span class='warning'>Your eyes burn.</span>"
-				adjust_eye_damage(rand(2, 4))
+		else if (damage == 2)
+			src << "<span class='warning'>Your eyes burn.</span>"
+			adjust_eye_damage(rand(2, 4))
 
-			else
-				src << "<span class='warning'>Your eyes itch and burn severely!</span>"
-				adjust_eye_damage(rand(12, 16))
+		else if( damage > 3)
+			src << "<span class='warning'>Your eyes itch and burn severely!</span>"
+			adjust_eye_damage(rand(12, 16))
 
 		if(eye_damage > 10)
 			blind_eyes(damage)
@@ -446,7 +458,7 @@ var/const/GALOSHES_DONT_HELP = 4
 				handcuffed.dropped(src)
 				handcuffed = null
 				if(buckled && buckled.buckle_requires_restraints)
-					buckled.unbuckle_mob()
+					buckled.unbuckle_mob(src)
 				update_handcuffed()
 				return
 			if(I == legcuffed)
@@ -487,7 +499,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		var/obj/item/weapon/W = handcuffed
 		handcuffed = null
 		if (buckled && buckled.buckle_requires_restraints)
-			buckled.unbuckle_mob()
+			buckled.unbuckle_mob(src)
 		update_handcuffed()
 		if (client)
 			client.screen -= W
@@ -832,3 +844,6 @@ var/const/GALOSHES_DONT_HELP = 4
 		user << "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>"
 
 	..()
+
+
+

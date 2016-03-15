@@ -36,18 +36,22 @@
 /turf/simulated/floor/plating/beach/sand
 	name = "Sand"
 	icon_state = "sand"
+	baseturf = /turf/simulated/floor/plating/beach/sand
 
 /turf/simulated/floor/plating/beach/coastline_t
 	name = "Coastline"
 	icon_state = "sandwater_t"
+	baseturf = /turf/simulated/floor/plating/beach/coastline_t
 
 /turf/simulated/floor/plating/beach/coastline_b
 	name = "Coastline"
 	icon_state = "sandwater_b"
+	baseturf = /turf/simulated/floor/plating/beach/coastline_b
 
 /turf/simulated/floor/plating/beach/water
 	name = "Water"
 	icon_state = "water"
+	baseturf = /turf/simulated/floor/plating/beach/water
 
 /turf/simulated/floor/plating/ironsand/New()
 	..()
@@ -70,6 +74,9 @@
 /turf/simulated/floor/plating/ice/colder
 	temperature = 140
 
+/turf/simulated/floor/plating/ice/temperate
+	temperature = 255.37
+
 /turf/simulated/floor/plating/ice/break_tile()
 	return
 
@@ -85,6 +92,9 @@
 
 /turf/simulated/floor/plating/snowed/colder
 	temperature = 140
+
+/turf/simulated/floor/plating/snowed/temperate
+	temperature = 255.37
 
 /turf/simulated/floor/noslip
 	name = "high-traction floor"

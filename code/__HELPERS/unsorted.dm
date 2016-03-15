@@ -964,7 +964,7 @@ var/list/WALLITEMS_INVERSE = list(
 /proc/IsValidSrc(A)
 	if(istype(A, /datum))
 		var/datum/B = A
-		return !B.gc_destroyed
+		return !qdeleted(B)
 	if(istype(A, /client))
 		return 1
 	return 0
@@ -1287,3 +1287,7 @@ proc/pick_closest_path(value)
 			return
 	chosen = matches[chosen]
 	return chosen
+
+//gives us the stack trace from CRASH() without ending the current proc.
+/proc/stack_trace(msg)
+	CRASH(msg)

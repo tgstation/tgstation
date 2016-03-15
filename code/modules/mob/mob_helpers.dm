@@ -114,7 +114,48 @@
 				newletter+="[newletter][newletter]"
 		newphrase+="[newletter]";counter-=1
 	return newphrase
-	
+
+
+/proc/cultslur(n) // Inflicted on victims of a stun talisman
+	var/phrase = html_decode(n)
+	var/leng = lentext(phrase)
+	var/counter=lentext(phrase)
+	var/newphrase=""
+	var/newletter=""
+	while(counter>=1)
+		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
+		if(rand(1,2)==2)
+			if(lowertext(newletter)=="o")
+				newletter="u"
+			if(lowertext(newletter)=="s")
+				newletter="ch"
+			if(lowertext(newletter)=="a")
+				newletter="ah"
+			if(lowertext(newletter)=="u")
+				newletter="oo"
+			if(lowertext(newletter)=="c")
+				newletter=" NAR "
+			if(lowertext(newletter)=="t")
+				newletter=" SIE "
+		if(rand(1,4)==4)
+			if(newletter==" ")
+				newletter=" GLORY "
+			if(newletter=="H")
+				newletter=" HAIL "
+
+		switch(rand(1,10))
+			if(1)
+				newletter="'"
+			if(2)
+				newletter+="agn"
+			if(3)
+				newletter="fth"
+			if(4)
+				newletter="nglu"
+		newphrase+="[newletter]";counter-=1
+	return newphrase
+
+
 /proc/stutter(n)
 	var/te = html_decode(n)
 	var/t = ""//placed before the message. Not really sure what it's for.

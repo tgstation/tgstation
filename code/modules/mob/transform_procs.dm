@@ -251,8 +251,6 @@
 	if(client)
 		stopLobbySound()
 	var/mob/living/silicon/ai/O = new (loc,,,1)//No MMI but safety is in effect.
-	O.invisibility = 0
-	O.aiRestorePowerRoutine = 0
 
 	if(mind)
 		mind.transfer_to(O)
@@ -420,14 +418,14 @@
 	. = new_slime
 	qdel(src)
 
-/mob/living/carbon/human/proc/Blobize()
-	if (notransform)
-		return
-	if(!client) //TOO BAD
-		new /obj/effect/blob/core (loc)
+/mob/proc/become_overmind(mode_made = 0)
+	var/mob/camera/blob/B = new /mob/camera/blob(loc, 0, mode_made)
+	if(mind)
+		mind.transfer_to(B)
 	else
-		new /obj/effect/blob/core (loc,new_overmind = src.client)
-	gib(src)
+		B.key = key
+	. = B
+	qdel(src)
 
 
 /mob/proc/become_god(var/side_colour)

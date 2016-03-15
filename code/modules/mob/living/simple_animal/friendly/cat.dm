@@ -21,7 +21,7 @@
 	maxbodytemp = 400
 	unsuitable_atmos_damage = 1
 	species = /mob/living/simple_animal/pet/cat
-	childtype = /mob/living/simple_animal/pet/cat/kitten
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -29,6 +29,19 @@
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = 2
+
+/mob/living/simple_animal/pet/cat/New()
+	..()
+	verbs += /mob/living/proc/lay_down
+
+/mob/living/simple_animal/pet/cat/update_canmove()
+	..()
+	if(client)
+		if (resting)
+			icon_state = "[icon_living]_rest"
+		else
+			icon_state = "[icon_living]"
+
 
 /mob/living/simple_animal/pet/cat/space
 	name = "space cat"
@@ -42,7 +55,7 @@
 
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
-	desc = "D'aaawwww"
+	desc = "D'aaawwww."
 	icon_state = "kitten"
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
@@ -61,12 +74,9 @@
 	gender = FEMALE
 	gold_core_spawnable = 0
 	var/list/family = list()
-	var/lives = 9
 	var/memory_saved = 0
 
 /mob/living/simple_animal/pet/cat/Runtime/New()
-	if(lives < 9)
-		desc += ". Looks like a cat with [lives] lives left."
 	Read_Memory()
 	..()
 
@@ -83,18 +93,9 @@
 /mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 	S["family"] 			>> family
-	S["lives"]				>> lives
 
 	if(isnull(family))
 		family = list()
-
-	if(isnull(lives))
-		lives = 9
-
-	if(lives <= 0)
-		lives = 10 //Lowers to 9 in Write_Memory
-		Write_Memory(1)
-		qdel(src)
 
 	for(var/cat_type in family)
 		if(family[cat_type] > 0)
@@ -103,8 +104,6 @@
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
 	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
-	if(dead)
-		S["lives"] 				<< lives - 1
 	family = list()
 	for(var/mob/living/simple_animal/pet/cat/C in mob_list)
 		if(istype(C,type) || C.stat || !C.butcher_results) //That last one is a work around for hologram cats
@@ -122,22 +121,25 @@
 	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/cat/Life()
-	if(!stat && !buckled)
+	if(!stat && !buckled && !client)
 		if(prob(1))
-			emote("me", 1, pick("stretches out for a belly rub.", "wags its tail."))
+			emote("me", 1, pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
 			icon_state = "[icon_living]_rest"
 			resting = 1
+			update_canmove()
 		else if (prob(1))
-			emote("me", 1, pick("sits down.", "crouches on its hind legs."))
+			emote("me", 1, pick("sits down.", "crouches on its hind legs.", "looks alert."))
 			icon_state = "[icon_living]_sit"
 			resting = 1
+			update_canmove()
 		else if (prob(1))
 			if (resting)
-				emote("me", 1, pick("gets up and meows.", "walks around."))
+				emote("me", 1, pick("gets up and meows.", "walks around.", "stops resting."))
 				icon_state = "[icon_living]"
 				resting = 0
+				update_canmove()
 			else
-				emote("me", 1, pick("grooms its fur.", "twitches its whiskers."))
+				emote("me", 1, pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
 
 	//MICE!
 	if((src.loc) && isturf(src.loc))

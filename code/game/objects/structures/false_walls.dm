@@ -59,7 +59,7 @@
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(density)
 		smooth = SMOOTH_TRUE
-		smooth_icon(src)
+		queue_smooth(src)
 		icon_state = ""
 	else
 		icon_state = "fwall_open"
@@ -271,3 +271,12 @@
 	mineral = "metal"
 	walltype = "iron"
 	canSmoothWith = list(/obj/structure/falsewall/iron, /turf/simulated/wall/mineral/iron)
+
+/obj/structure/falsewall/abductor
+	name = "alien wall"
+	desc = "A wall with alien alloy plating."
+	icon = 'icons/turf/walls/abductor_wall.dmi'
+	icon_state = "abductor"
+	mineral = "abductor"
+	walltype = "abductor"
+	canSmoothWith = list(/obj/structure/falsewall/abductor, /turf/simulated/wall/mineral/abductor)

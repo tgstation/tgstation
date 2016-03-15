@@ -61,7 +61,7 @@
 			if(target.stat == 0)
 				user << "<span class='warning'>The monkey is struggling far too much to put it in the recycler.</span>"
 				return
-			if(target.buckled || target.buckled_mob)
+			if(target.buckled || target.buckled_mobs.len)
 				user << "<span class='warning'>The monkey is attached to something.</span>"
 				return
 			if(!user.drop_item())

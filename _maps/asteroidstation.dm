@@ -8,6 +8,8 @@ Names of z-level do not matter, but order does greatly, for instances such as ch
 
 		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
 
+		#define MINETYPE "mining"
+
         #include "map_files\AsteroidStation\AsteroidStation.dmm"
         #include "map_files\generic\z2.dmm"
         #include "map_files\generic\z3.dmm"

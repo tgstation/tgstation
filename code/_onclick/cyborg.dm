@@ -59,7 +59,7 @@
 		return
 
 	// buckled cannot prevent machine interlinking but stops arm movement
-	if( buckled )
+	if( buckled || incapacitated())
 		return
 
 	if(W == A)
