@@ -42,6 +42,9 @@ var/datum/subsystem/minimap/SSminimap
 	var/icon/minimap = new /icon('icons/minimap.dmi')
 	// Scale it up to our target size.
 	minimap.Scale(MINIMAP_SIZE, MINIMAP_SIZE)
+	if (!fexists(map_path(z)))
+		fcopy(minimap, map_path(z))
+	return
 	var/list/obj_icons = list() 
 	var/counter = 128
 	// Loop over turfs and generate icons.
