@@ -77,7 +77,7 @@
 /turf/simulated/floor/engine
 	name = "reinforced floor"
 	icon_state = "engine"
-	thermal_conductivity = 0.025
+	thermal_conductivity = 0
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 
