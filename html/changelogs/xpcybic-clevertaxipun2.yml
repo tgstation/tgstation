@@ -1,0 +1,15 @@
+author: xpcybic
+delete-after: True
+
+changes: 
+  - wip: The following changes apply to Taxistation.
+  - tweak: Switched the positions of R&D and telescience.
+  - tweak: Redesigned the AI core to be more open and prevent turret shots from being blocked.
+  - tweak: AI core SMES is now in its own room south of AI upload and starts fully charged.
+  - tweak: Security camera in sec/sci bridge now appears first in the camera list, like the dock cameras. AIs can jump to this camera for easy access to consoles.
+  - rscadd: Added security records and research shuttle consoles to bridge.
+  - tweak: Spread out the sleepers, scanner, and mancrowave so that they can be walked between.
+  - rscdel: Replaced the Mancrowave with a body scanner.
+  - tweak: Expanded the IAA office a little bit.
+  - rscadd: Added a pAI to sec/sci rec room.
+  - bugfix: Wired the emitter in research outpost.
