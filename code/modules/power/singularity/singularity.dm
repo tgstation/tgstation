@@ -236,14 +236,18 @@
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	for(var/atom/X in spiral_range(grav_pull, src, 1))
-		var/dist = get_dist(X, src)
-		var/obj/singularity/S = src
-		if(dist > consume_range)
-			X.singularity_pull(S, current_size)
-		else if(dist <= consume_range)
-			consume(X)
-		CHECK_TICK
+	for(var/tile in spiral_range_turfs(grav_pull, src, 1))
+		var/turf/T = tile
+		if(!T)
+			continue
+		for(var/thing in T)
+			var/atom/movable/X = thing
+			var/dist = get_dist(X, src) //leave this in this loop, other wise it can cause bugs when sleeping from CHECK_TICK
+			if(dist > consume_range)
+				X.singularity_pull(src, current_size)
+			else
+				consume(X)
+			CHECK_TICK
 	return
 
 
