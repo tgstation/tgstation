@@ -125,7 +125,7 @@
 	species_fit = list("Vox")
 
 /obj/item/clothing/mask/gas/clown_hat/wiz
-	name = "clown wig and mask"
+	name = "purple clown wig and mask"
 	desc = "Some pranksters are truly magical."
 	icon_state = "wizzclown"
 	item_state = "wizzclown"
