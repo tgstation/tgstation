@@ -31,7 +31,7 @@
 			animation.master = holder
 			target.ExtinguishMob()
 			var/mob/living/carbon/wiz = user
-			wiz.mute()
+			mute(wiz)
 			if(target.buckled)
 				target.buckled.unbuckle_mob()
 			if(target.pulledby)
@@ -74,7 +74,7 @@
 	flick("liquify",animation)
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/mute
-	mutations = list(MUT_MUTATE)
+	wiz.mutations | = MUT_MUTATE
 	duration = 50
 	cooldown_min = 100
 	
