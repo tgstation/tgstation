@@ -1699,6 +1699,7 @@ var/global/num_vending_terminals = 1
 		/obj/item/device/multitool = 12,
 		/obj/item/weapon/wrench = 12,
 		/obj/item/device/t_scanner = 12,
+		/obj/item/device/analyzer = 12,
 		/obj/item/stack/cable_coil = 8,
 		/obj/item/weapon/cell = 8,
 		/obj/item/weapon/weldingtool = 8,
