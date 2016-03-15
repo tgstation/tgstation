@@ -320,7 +320,6 @@
 			missionobj.explanation_text = mission
 			missionobj.completed = 1
 			Commando.mind.objectives += missionobj
-			Commando.set_species(/datum/species/human)
 
 			//Greet the commando
 			Commando << "<B><font size=3 color=red>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>"
@@ -333,7 +332,7 @@
 			Commando << missiondesc
 
 			if(config.enforce_human_authority)
-				Commando.set_species("human")
+				Commando.set_species(/datum/species/human)
 
 			//Logging and cleanup
 			if(numagents == 1)
@@ -411,7 +410,9 @@
 		missionobj.explanation_text = mission
 		missionobj.completed = 1
 		newmob.mind.objectives += missionobj
-		newmob.set_species(/datum/species/human)
+
+		if(config.enforce_human_authority)
+			newmob.set_species(/datum/species/human)
 
 		//Greet the official
 		newmob << "<B><font size=3 color=red>You are a Centcom Official.</font></B>"
@@ -509,7 +510,6 @@
 			missionobj.explanation_text = mission
 			missionobj.completed = 1
 			ERTOperative.mind.objectives += missionobj
-			ERTOperative.set_species(/datum/species/human)
 
 			//Greet the commando
 			ERTOperative << "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>"
@@ -522,7 +522,7 @@
 			ERTOperative << missiondesc
 
 			if(config.enforce_human_authority)
-				ERTOperative.set_species("human")
+				ERTOperative.set_species(/datum/species/human)
 
 			//Logging and cleanup
 			if(numagents == 1)
