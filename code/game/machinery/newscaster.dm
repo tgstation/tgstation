@@ -1019,8 +1019,17 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "newspaper"
+	force = 1 //Getting hit by rolled up newspapers hurts!
+	throwforce = 0
 	w_class = 2	//Let's make it fit in trashbags!
-	attack_verb = list("bapped")
+	w_type = RECYK_WOOD
+	throw_range = 1
+	throw_speed = 1
+	pressure_resistance = 1
+	attack_verb = list("bapped", "smacked", "whapped")
+	autoignition_temperature = AUTOIGNITION_PAPER
+	fire_fuel = 1
+
 	var/screen = 0
 	var/pages = 0
 	var/curr_page = 0
@@ -1161,6 +1170,10 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 			src.scribble_page = src.curr_page
 			src.scribble = s
 			src.attack_self(user)
+		return
+
+	else if(W.is_hot())
+		src.ashify_item(user)
 		return
 
 #undef NEWSPAPER_TITLE_PAGE
