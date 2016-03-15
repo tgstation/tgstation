@@ -182,6 +182,7 @@
 /atom/proc/contents_explosion(severity, target)
 	for(var/atom/A in contents)
 		A.ex_act(severity, target)
+		CHECK_TICK
 
 /atom/proc/ex_act(severity, target)
 	contents_explosion(severity, target)

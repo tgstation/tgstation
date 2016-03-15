@@ -22,7 +22,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	var/list/queue = list() 	// list of refID's of things that should be garbage collected
 								// refID's are associated with the time at which they time out and need to be manually del()
 								// we do this so we aren't constantly locating them and preventing them from being gc'd
-	
+
 	var/list/tobequeued = list()	//We store the references of things to be added to the queue seperately so we can spread out GC overhead over a few ticks
 
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
@@ -56,11 +56,14 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	var/time_to_stop = world.timeofday + max_run_time
 	HandleToBeQueued(time_to_stop)
 	HandleQueue(time_to_stop)
-	
+
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
 /datum/subsystem/garbage_collector/proc/HandleToBeQueued(time_to_stop)
+	var/list/tobequeued = src.tobequeued
 	while(tobequeued.len && world.timeofday < time_to_stop)
+		if (MC_TICK_CHECK)
+			break
 		var/ref = tobequeued[1]
 		Queue(ref)
 		tobequeued.Cut(1, 2)
@@ -69,8 +72,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	delslasttick = 0
 	gcedlasttick = 0
 	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
-	
+	var/list/queue = src.queue
 	while(queue.len && world.timeofday < time_to_stop)
+		if (MC_TICK_CHECK)
+			break
 		var/refID = queue[1]
 		if (!refID)
 			queue.Cut(1, 2)
@@ -104,15 +109,15 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 /datum/subsystem/garbage_collector/proc/Queue(datum/A)
 	if (!istype(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
-		return 
+		return
 	var/gctime = world.time
 	var/refid = "\ref[A]"
-	
+
 	A.gc_destroyed = gctime
-	
+
 	if (queue[refid])
 		queue -= refid // Removing any previous references that were GC'd so that the current object will be at the end of the list.
-	
+
 	queue[refid] = gctime
 
 /datum/subsystem/garbage_collector/proc/HardQueue(datum/A)

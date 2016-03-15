@@ -45,6 +45,7 @@
 #include "code\__DEFINES\stat.dm"
 #include "code\__DEFINES\tablecrafting.dm"
 #include "code\__DEFINES\tgui.dm"
+#include "code\__DEFINES\tick.dm"
 #include "code\__DEFINES\wires.dm"
 #include "code\__HELPERS\510.dm"
 #include "code\__HELPERS\_logging.dm"
