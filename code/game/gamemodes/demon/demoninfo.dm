@@ -173,6 +173,44 @@ var/list/allDemons = list()
 			return "Wooden weapons will strike him true."*/
 
 
+/* TODO LORDPIDEY:  Actually implement resurrection/banishment
+/datum/demoninfo/proc/banishlaw()
+	switch(banish)
+		if(BANISH_WATER)
+			return "If your corpse is filled with holy water, you will be unable to resurrect."
+		if(BANISH_COFFIN)
+			return "If your corpse is in a coffin, you will be unable to resurrect."
+		if(BANISH_FORMALDYHIDE)
+			return "If your corpse is embalmed, you will be unable to resurrect."
+		if(BANISH_RUNES)
+			return "If your corpse is placed within a rune, you will be unable to resurrect."
+		if(BANISH_CANDLES)
+			return "If your corpse is near lit candles, you will be unable to resurrect."
+		if(BANISH_DESTRUCTION)
+			return "If your corpse is destroyed, you will be unable to resurrect."
+		if(BANISH_FUNERAL_GARB)
+			return "If your corpse is clad in funeral garments, you will be unable to resurrect."
+
+/datum/demoninfo/proc/banishlore()
+	switch(banish)
+		if(BANISH_WATER)
+			return "To banish the demon, you must sprinkle holy water upon it's body."
+		if(BANISH_COFFIN)
+			return "This demon will return to life if it's remains are not placed within a coffin."
+		if(BANISH_FORMALDYHIDE)
+			return "To banish the demon, you must inject it's lifeless body with embalming fluid."
+		if(BANISH_RUNES)
+			return "This demon will resurrect after death, unless it's remains are within a rune."
+		if(BANISH_CANDLES)
+			return "A large number of candles will prevent it fromr resurrecting."
+		if(BANISH_DESTRUCTION)
+			return "It's corpse must be utterly destroyed to prevent resurrection."
+		if(BANISH_FUNERAL_GARB)
+			return "Funeral garments will prevent the demon from resurrecting."
+*/
+
+
+
 /datum/demoninfo/proc/add_soul(var/datum/mind/soul)
 	if(soulsOwned.Find(soul))
 		return
