@@ -1775,6 +1775,18 @@ datum
 				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
 					send_admin_alert(holder, reaction_name="red slime + plasma (Glycerol) in a grenade")
 
+		slimeres
+			name = "Slime Res"
+			id = "m_nutrient"
+			result = null
+			required_reagents = list("blood" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/red
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				var/obj/item/weapon/slimeres/P = new /obj/item/weapon/slimeres
+				P.loc = get_turf(holder.my_atom)
 
 		slimebloodlust
 			name = "Bloodlust"
