@@ -529,6 +529,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 			var/mob/M = loc
 			if(M.wear_mask == src)
 				M.update_inv_wear_mask(0)
+		flags |= (MASKINTERNALS | BLOCK_GAS_SMOKE_EFFECT)
 
 /obj/item/clothing/mask/cigarette/pipe/process()
 	var/turf/location = get_turf(src)
@@ -553,6 +554,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		user.visible_message("<span class='notice'>[user] puts out \the [src].</span>", \
 							"<span class='notice'>You put out \the [src].</span>")
 		lit = 0
+		flags &= ~(MASKINTERNALS | BLOCK_GAS_SMOKE_EFFECT)
 		update_brightness()
 		return
 	if(smoketime < initial(smoketime)) //Warrants a refill
