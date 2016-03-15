@@ -4,7 +4,10 @@
 	var/w_type = NOT_RECYCLABLE  // Waste category for sorters. See setup.dm
 
 	layer = 3
-	var/last_move = null
+
+	var/last_move = null //Direction in which this atom last moved
+	var/last_moved = 0   //world.time when this atom last moved
+
 	var/anchored = 0
 	var/move_speed = 10
 	var/l_move_time = 1
@@ -156,7 +159,40 @@
 	if(. && locked_atoms && locked_atoms.len)	//The move was succesful, update locked atoms.
 		spawn(0)
 			for(var/atom/movable/AM in locked_atoms)
-				AM.forceMove(loc)
+				var/new_loc = loc
+
+				if(locked_atoms[AM])
+					var/list/atomlock_params = locked_atoms[AM]
+
+					var/offset_x = atomlock_params[1]
+					var/offset_y = atomlock_params[2]
+
+					var/rotate_with_our_dir = atomlock_params[3]
+
+					if(rotate_with_our_dir)
+						var/newX = offset_x
+						var/newY = offset_y
+
+						switch(dir)
+							if(NORTH) //up
+								offset_x = newX
+								offset_y = newY
+							if(EAST) // right
+								offset_x = newY
+								offset_y = -newX
+							if(SOUTH) //down
+								offset_x = -newX
+								offset_y = -newY
+							if(WEST) //left
+								offset_x = -newY
+								offset_y = newX
+
+					if(offset_x || offset_y)
+						var/newer_loc = locate(x + offset_x, y + offset_y, z)
+						if(newer_loc)
+							new_loc = newer_loc
+
+				AM.forceMove(new_loc)
 
 	update_dir()
 
@@ -172,6 +208,7 @@
 			tether_datum.Delete_Chain()
 
 	last_move = Dir
+	last_moved = world.time
 	src.move_speed = world.timeofday - src.l_move_time
 	src.l_move_time = world.timeofday
 	// Update on_moved listeners.
@@ -196,14 +233,47 @@
 //Atom locking, lock an atom to another atom, and the locked atom will move when the other atom moves.
 //Essentially buckling mobs to chairs. For all atoms.
 //Please don't lock atoms to other atoms if the atoms locked to expect for example a different type, it's basically bound to runtime/glitch.
-/atom/movable/proc/lock_atom(var/atom/movable/AM)
+//x_offset, y_offset parameters are used if you don't want the locked atom to be on the top of this atom. So x_offset = 1 means the atom-locked object will always be one turf to the east, etc...
+//rotate_offsets parameter is used if you have set x_offset or y_offset, and want the offsets to be relative to the object's direction
+/atom/movable/proc/lock_atom(var/atom/movable/AM, var/x_offset = 0, var/y_offset = 0, var/rotate_offsets = 0)
 	if(AM in locked_atoms || AM.locked_to || !istype(AM))
 		return
 
 	AM.locked_to = src
 	locked_atoms += AM
 
-	AM.forceMove(loc)
+	if(x_offset || y_offset)
+		locked_atoms[AM] = list(x_offset, y_offset, rotate_offsets)
+
+		var/new_loc = loc
+
+		if(rotate_offsets)
+			var/newX = x_offset
+			var/newY = y_offset
+
+			switch(dir)
+				if(NORTH) //up
+					x_offset = newX
+					y_offset = newY
+				if(EAST) // right
+					x_offset = newY
+					y_offset = -newX
+				if(SOUTH) //down
+					x_offset = -newX
+					y_offset = -newY
+				if(WEST) //left
+					x_offset = -newY
+					y_offset = newX
+
+			var/newer_loc = locate(x + x_offset, y + y_offset, z)
+			if(newer_loc)
+				new_loc = newer_loc
+
+		AM.forceMove(new_loc)
+
+	else
+		AM.forceMove(loc)
+
 	AM.change_dir(dir, src)
 
 	if(ismob(AM))
@@ -283,7 +353,41 @@
 
 
 		for(var/atom/movable/AM in locked_atoms)
-			AM.forceMove(loc)
+			var/new_loc = loc
+
+			if(locked_atoms[AM])
+				var/list/atomlock_params = locked_atoms[AM]
+
+				var/offset_x = atomlock_params[1]
+				var/offset_y = atomlock_params[2]
+
+				var/rotate_with_our_dir = atomlock_params[3]
+
+				if(rotate_with_our_dir)
+					var/newX = offset_x
+					var/newY = offset_y
+
+					switch(dir)
+						if(NORTH) //up
+							offset_x = newX
+							offset_y = newY
+						if(EAST) // right
+							offset_x = newY
+							offset_y = -newX
+						if(SOUTH) //down
+							offset_x = -newX
+							offset_y = -newY
+						if(WEST) //left
+							offset_x = -newY
+							offset_y = newX
+
+				if(offset_x || offset_y)
+					var/newer_loc = locate(x + offset_x, y + offset_y, z)
+					if(newer_loc)
+						new_loc = newer_loc
+
+			AM.forceMove(new_loc)
+
 
 		// Update on_moved listeners.
 		INVOKE_EVENT(on_moved,list("loc"=loc))
