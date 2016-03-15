@@ -1,4 +1,8 @@
 // Helpers for running 510 code on older versions of BYOND.
+//	list of places with #if DM_VERSION defines for when we remove 509 support:
+//		master controller and subsystems.dm
+//		map loader (reader.dm)
+//		defines/tick.dm
 #if DM_VERSION < 510
 #define BYGEX "code/__HELPERS/bygex"
 /proc/replacetext(text, replace, replacement)
