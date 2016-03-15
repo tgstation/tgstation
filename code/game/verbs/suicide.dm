@@ -91,6 +91,7 @@
 							"<span class='danger'>[src] is holding \his breath! It looks like \he's trying to commit suicide.</span>"))
 		adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
+		log_attack("<font color='red'>[key_name(src)] used the suicide verb.</font>")
 
 /mob/living/carbon/brain/verb/suicide()
 	set hidden = 1
@@ -112,6 +113,7 @@
 		suiciding = 1
 		if(!container)
 			visible_message("<span class='danger'>[src]'s brain is growing dull and lifeless. It looks like it has lost the will to live.</span>")
+		log_attack("<font color='red'>[key_name(src)] used the suicide verb.</font>")
 		spawn(50)
 			death(0)
 			suiciding = 0
@@ -147,6 +149,7 @@
 		visible_message("<span class='danger'>\The [src] is attempting to bite \his tongue off. It looks like \he's trying to commit suicide.</span>")
 		adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
+		log_attack("<font color='red'>[key_name(src)] used the suicide verb.</font>")
 
 /mob/living/silicon/ai/verb/suicide()
 	set hidden = 1
@@ -166,6 +169,7 @@
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
+		log_attack("<font color='red'>[key_name(src)] used the suicide verb.</font>")
 
 /mob/living/silicon/robot/verb/suicide()
 	set hidden = 1
@@ -186,6 +190,7 @@
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		stat = DEAD //new robot shit doesnt care about oxyloss
 		updatehealth()
+		log_attack("<font color='red'>[key_name(src)] used the suicide verb.</font>")
 
 /mob/living/silicon/pai/verb/suicide()
 	set category = "pAI Commands"
@@ -198,6 +203,7 @@
 		var/turf/T = get_turf(card.loc)
 		for (var/mob/M in viewers(T))
 			visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>")
+		log_attack("<font color='red'>[key_name(src)] used the suicide verb.</font>")
 		death(0)
 
 /mob/living/carbon/alien/humanoid/verb/suicide()
@@ -218,6 +224,7 @@
 		//put em at -175
 		adjustOxyLoss(max(175 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
+		log_attack("<font color='red'>[key_name(src)] used the suicide verb.</font>")
 
 /mob/living/carbon/slime/verb/suicide()
 	set hidden = 1
@@ -238,8 +245,8 @@
 		adjustBruteLoss(100 - getBruteLoss())
 		setToxLoss(100)
 		setCloneLoss(100)
-
 		updatehealth()
+		log_attack("<font color='red'>[key_name(src)] used the suicide verb.</font>")
 
 //Default for all simple animals, using the Die() proc. Custom cases below
 /mob/living/simple_animal/verb/suicide()
@@ -257,6 +264,7 @@
 	if(confirm == "Yes")
 		suiciding = 1
 		visible_message("<span class='danger'>[src] suddenly starts thrashing around! It looks like \he's trying to commit suicide.</span>")
+		log_attack("<font color='red'>[key_name(src)] used the suicide verb.</font>")
 		Die()
 
 /mob/living/simple_animal/spiderbot/suicide()
@@ -274,6 +282,7 @@
 	if(confirm == "Yes")
 		suiciding = 1
 		visible_message("<span class='danger'>[src] suddenly topples over and starts thrashing around! It looks like \he's trying to commit suicide.</span>")
+		log_attack("<font color='red'>[key_name(src)] used the suicide verb.</font>")
 		Die() //Handles death properly enough
 
 /mob/living/simple_animal/borer/suicide()
@@ -292,4 +301,5 @@
 		suiciding = 1
 		visible_message("<span class='danger'>[src] suddenly starts trashing around [host ? "[host]'s head":""]! It looks like \he's trying to commit suicide.</span>")
 		detach()
+		log_attack("<font color='red'>[key_name(src)] used the suicide verb.</font>")
 		Die()
