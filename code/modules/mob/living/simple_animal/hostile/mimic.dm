@@ -406,8 +406,9 @@ var/global/list/item_mimic_disguises = list(
 
 /mob/living/simple_animal/hostile/mimic/crate/item/examine(mob/user) //Total override to make the mimics look EXACTLY like items!
 	var/s_size = "normal-sized"
-	if(copied_object)
-		switch(initial(copied_object.w_class))
+	if(ispath(copied_object, /obj/item))
+		var/obj/item/I = copied_object
+		switch(initial(I.w_class))
 			if(1.0)
 				s_size = "tiny"
 			if(2.0)
