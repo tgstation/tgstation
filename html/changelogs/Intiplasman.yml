@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- bugfix: Plasmaman plasma tanks now fit on back slots correctly.
