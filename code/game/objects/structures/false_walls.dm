@@ -59,7 +59,7 @@
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(density)
 		smooth = SMOOTH_TRUE
-		smooth_icon(src)
+		queue_smooth(src)
 		icon_state = ""
 	else
 		icon_state = "fwall_open"

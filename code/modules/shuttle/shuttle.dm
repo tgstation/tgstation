@@ -282,7 +282,7 @@
 
 	//resmooth if need be.
 	if(smooth)
-		smooth_icon(src)
+		queue_smooth(src)
 
 	//rotate the pixel offsets too.
 	if (pixel_x || pixel_y)
