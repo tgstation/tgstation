@@ -117,14 +117,14 @@ var/list/department_radio_keys = list(
 	say_testing(src, "Say start, message=[message]")
 	if(!message) return
 
+	var/message_mode = get_message_mode(message)
 	if(silent)
 		to_chat(src, "<span class='warning'>You can't speak while silenced.</span>")
 		return
-	if((status_flags & FAKEDEATH) && !stat)
+	if((status_flags & FAKEDEATH) && !stat && message_mode != MODE_CHANGELING)
 		to_chat(src, "<span class='danger'>Talking right now would give us away!</span>")
 		return
 
-	var/message_mode = get_message_mode(message)
 	//var/message_mode_name = message_mode_to_name(message_mode)
 	if (stat == DEAD) // Dead.
 		say_testing(src, "ur ded kid")
