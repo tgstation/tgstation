@@ -40,12 +40,13 @@
 	return 0
 
 /obj/machinery/containment_field/HasProximity(atom/movable/AM as mob|obj)
-	if(istype(AM,/mob/living/silicon) && prob(40))
-		shock(AM)
-		return 1
-	if(istype(AM,/mob/living/carbon) && prob(50))
-		shock(AM)
-		return 1
+	if(Adjacent(AM)) //checking for windows and shit
+		if(istype(AM,/mob/living/silicon) && prob(40))
+			shock(AM)
+			return 1
+		if(istype(AM,/mob/living/carbon) && prob(50))
+			shock(AM)
+			return 1
 	return 0
 
 

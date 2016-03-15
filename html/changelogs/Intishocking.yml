@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- bugfix: "Containment Fields now won't shock you through windows. For an example of what this means, see http://tinyurl.com/noshockpls"
