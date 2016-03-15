@@ -15,7 +15,9 @@ var/datum/subsystem/minimap/SSminimap
 /datum/subsystem/minimap/Initialize(timeofday, zlevel)
 	if(zlevel)
 		return ..()
-
+	if(!config.generate_minimaps)
+		world << "Minimap generation disabled... Skipping"
+		return
 	var/hash = md5(file2text("_maps/[MAP_PATH]/[MAP_FILE]"))
 	if(hash == trim(file2text(hash_path())))
 		return ..()
@@ -43,15 +45,15 @@ var/datum/subsystem/minimap/SSminimap
 	// Scale it up to our target size.
 	minimap.Scale(MINIMAP_SIZE, MINIMAP_SIZE)
 
-	var/counter = 64
+	var/counter = 128
 	// Loop over turfs and generate icons.
 	for(var/T in block(locate(x1, y1, z), locate(x2, y2, z)))
 		generate_tile(T, minimap)
 
-		//byond bug, this fixes OOM crashes by flattening and reseting the minimap icon holder every 64 tiles
+		//byond bug, this fixes OOM crashes by flattening and reseting the minimap icon holder every 128 tiles
 		counter--
 		if(counter <= 0)
-			counter = 64
+			counter = 128
 			var/icon/flatten = new /icon()
 			flatten.Insert(minimap, "", SOUTH, 1, 0)
 			del(minimap)

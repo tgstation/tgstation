@@ -171,6 +171,7 @@
 	var/assistant_cap = -1
 
 	var/starlight = 0
+	var/generate_minimaps = 0
 	var/grey_assistants = 0
 
 	var/aggressive_changelog = 0
@@ -390,6 +391,8 @@
 					protected_config.autoadmin = 1
 					if(value)
 						protected_config.autoadmin_rank = ckeyEx(value)
+				if("generate_minimaps")
+					config.generate_minimaps = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
