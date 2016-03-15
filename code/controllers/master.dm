@@ -149,6 +149,7 @@ var/global/datum/controller/master/Master = new()
 				if (priority_queue.len)
 					priorityrunning = priority_queue.len
 					subsystemstorun = priority_queue | subsystems
+#endif
 				var/ran_subsystems = 0
 				while(subsystemstorun.len)
 					var/datum/subsystem/SS = subsystemstorun[1]

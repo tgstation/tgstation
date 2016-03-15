@@ -45,11 +45,13 @@
 	set waitfor = 0 //this should not be depended upon, this is just to solve issues with sleeps messing up tick tracking
 	can_fire = 0
 
+#if DM_VERSION >= 510
 /datum/subsystem/proc/pause()
 	. = 1
 	if (!dynamic_wait)
 		Master.priority_queue += src
 	paused = 1
+#endif
 
 //used to initialize the subsystem AFTER the map has loaded
 /datum/subsystem/proc/Initialize(start_timeofday, zlevel)
