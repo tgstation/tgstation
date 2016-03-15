@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- rscadd: "In order to break their vow, mimes now have a spell again instead of having to emote say *oath. It's still irreversible, and has a prompt just in case you don't mean to use it."
