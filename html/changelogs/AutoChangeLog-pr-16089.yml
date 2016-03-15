@@ -1,0 +1,9 @@
+author: MrStonedOne
+delete-after: True
+changes: 
+  - rscdel: "Lag has been removed from the following systems: mob life()/virus process, machine/object/event processing, atmos, deletion subsystem, lighting, explosions, singularity's eat(), timers, wall smoothing, mass var edit, mass proc calls(and all of sdql2), map loader, and the away mission loader."
+  - rscdel: "Removed limit on bomb cap of 32,64,128, it can now go to the MOON."
+  - tweak: "Minimap generation is now a config option that defaults to off so coders don't have to wait for it to generate to test their code, server operators should note that they need to enable it on production servers that want minimap generation."
+  - wip: "if you find any things that still lag, please report them to MrStonedOne for lag removal."
+  - experiment: "I'm gonna take this time to shill out that, Lummox JR, byond's only dev, coded the tool that made this change possible, he lives off of byond membership donations, if you like the lag removal, become a byond member or at least throw 5 bucks byond's way for doing this."
+  - experiment: "Feel free to ask for bomb cap removals when solo antag, but remember, the later in the round it is, the more likely you'll get it."
