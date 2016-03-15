@@ -55,7 +55,7 @@
 	..()
 	if(A.density && buckled_mobs.len)
 		var/mob/living/carbon/H = buckled_mobs[1]
-		var/atom/throw_target = get_edge_target_turf(H, get_dir(src, get_step_away(H, src)))
+		var/atom/throw_target = get_edge_target_turf(H, pick(cardinal))
 		unbuckle_mob(H)
 		H.throw_at_fast(throw_target, 4, 3)
 		H.Weaken(5)
