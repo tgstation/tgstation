@@ -7,6 +7,9 @@
 	uploaded_sound.status = SOUND_STREAM | SOUND_UPDATE
 	uploaded_sound.priority = 250
 
+	var/prompt = alert(src, "Do you want to announce the filename to everyone?","Announce?","Yes","No")
+	if(prompt == "Yes")
+		to_chat(world, "<B>[src.key] played sound [S]</B>")
 	log_admin("[key_name(src)] played sound [S]")
 	message_admins("[key_name_admin(src)] played sound [S]", 1)
 	for(var/mob/M in player_list)

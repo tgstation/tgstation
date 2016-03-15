@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- tweak: Admins can now choose to announce the filename of a sound they play globally.
