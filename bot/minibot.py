@@ -79,7 +79,9 @@ def irc_handler():
 		try:
 			buf = irc.recv(1024).decode("UTF-8").split("\n")
 			for i in buf:
-				print(i)
+				#convert to ascii for output to windows terminal
+				clean = i.encode('ascii', errors='backslashreplace')
+				print(clean)
 				if i[0:4] == "PING":
 					irc.send(bytes("PONG {0}\r\n".format(i[5:]), "UTF-8"))
 				else:
