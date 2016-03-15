@@ -150,7 +150,7 @@ var/global/datum/controller/master/Master = new()
 					var/datum/subsystem/SS = subsystemstorun[1]
 					subsystemstorun.Cut(1, 2)
 #if DM_VERSION >= 510
-					if (world.tick_usage > 80)
+					if (world.tick_usage > TICK_LIMIT_MC)
 #else
 					if(world.cpu >= 100)
 #endif
@@ -165,7 +165,7 @@ var/global/datum/controller/master/Master = new()
 					if(SS.can_fire > 0)
 						if(priorityrunning || ((SS.next_fire <= world.time) && (SS.last_fire + (SS.wait * 0.75) <= world.time)))
 #if DM_VERSION >= 510
-							if(!priorityrunning && (world.tick_usage + SS.tick_usage > 75) && (SS.last_fire + (SS.wait*1.25) > world.time))
+							if(!priorityrunning && (world.tick_usage + SS.tick_usage > TICK_LIMIT_TO_RUN) && (SS.last_fire + (SS.wait*1.25) > world.time))
 								if(!SS.dynamic_wait)
 									priority_queue += SS
 								continue
