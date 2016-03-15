@@ -172,7 +172,7 @@
 				item_state = null
 			if("sugar")
 				name = "sugar"
-				desc = "Tastey space sugar!"
+				desc = "Tasty space sugar!"
 				icon_state = "sugar"
 				item_state = null
 			if("chefspecial")
@@ -219,15 +219,21 @@
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
 
-	New()
-		..()
-		reagents.add_reagent("enzyme", 50)
+/obj/item/weapon/reagent_containers/food/condiment/enzyme/New()
+	..()
+	reagents.add_reagent("enzyme", 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/enzyme/restock()
+	if(istype(src,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
+		if(reagents.get_reagent_amount("enzyme") < 50)
+			reagents.add_reagent("enzyme", 2)
 
 /obj/item/weapon/reagent_containers/food/condiment/sugar
+	desc = "Tasty space sugar!"
 
-	New()
-		..()
-		reagents.add_reagent("sugar", 50)
+/obj/item/weapon/reagent_containers/food/condiment/sugar/New()
+	..()
+	reagents.add_reagent("sugar", 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker
 	name = "salt shaker"
@@ -236,9 +242,9 @@
 	possible_transfer_amounts = list(1, 50) //For clowns turning the lid off.
 	amount_per_transfer_from_this = 1
 
-	New()
-		..()
-		reagents.add_reagent("sodiumchloride", 50)
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker/New()
+	..()
+	reagents.add_reagent("sodiumchloride", 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "pepper mill"
@@ -247,31 +253,33 @@
 	possible_transfer_amounts = list(1, 50) //For clowns turning the lid off.
 	amount_per_transfer_from_this = 1
 
-	New()
-		..()
-		reagents.add_reagent("blackpepper", 50)
+/obj/item/weapon/reagent_containers/food/condiment/peppermill/New()
+	..()
+	reagents.add_reagent("blackpepper", 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/syndisauce
 	name = "Chef Excellence's Special Sauce"
 	desc = "A potent sauce distilled from the toxin glands of 1000 Space Carp with an extra touch of LSD, because why not?"
 	amount_per_transfer_from_this = 1
 
-	New()
-		..()
-		reagents.add_reagent("chefspecial", 20)
+/obj/item/weapon/reagent_containers/food/condiment/syndisauce/New()
+	..()
+	reagents.add_reagent("chefspecial", 20)
 
 /obj/item/weapon/reagent_containers/food/condiment/vinegar
 	name = "malt vinegar bottle"
 	desc = "Perfect for fish and chips."
-	New()
-		..()
-		reagents.add_reagent("vinegar", 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/vinegar/New()
+	..()
+	reagents.add_reagent("vinegar", 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/exotic
 	name = "exotic bottle"
 	desc = "If you can see this label, something is wrong."
 	//~9% chance of anything but special sauce, which is .09 chance
 	var/global/list/possible_exotic_condiments = list("enzyme"=10,"blackpepper"=10,"vinegar"=10,"sodiumchloride"=10,"cinnamon"=10,"chefspecial"=1,"frostoil"=10,"soysauce"=10,"capsaicin"=10,"honey"=10,"ketchup"=10,"coco"=10)
-	New()
-		..()
-		reagents.add_reagent(pickweight(possible_exotic_condiments), 30)
+
+/obj/item/weapon/reagent_containers/food/condiment/exotic/New()
+	..()
+	reagents.add_reagent(pickweight(possible_exotic_condiments), 30)

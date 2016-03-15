@@ -208,6 +208,12 @@
 						O.show_message("<span class='disarm'>[M] is blinded by the flash!</span>")
 	..()
 
+/obj/item/device/flash/restock()
+	if(broken)
+		broken = 0
+		times_used = 0
+		icon_state = "flash"
+
 /obj/item/device/flash/synthetic
 	name = "synthetic flash"
 	desc = "When a problem arises, SCIENCE is the solution."

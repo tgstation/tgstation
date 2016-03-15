@@ -246,86 +246,11 @@
 			if(R.module && R.module.modules)
 				var/list/um = R.contents|R.module.modules
 				// ^ makes single list of active (R.contents) and inactive modules (R.module.modules)
-				for(var/obj/O in um)
-					// Stacks
-					if(istype(O,/obj/item/stack))
-						var/obj/item/stack/S=O
-						if(!istype(S,/obj/item/stack/cable_coil) && !istype(S,/obj/item/stack/medical))
-							continue //Only recharge cable coils and medical stacks
-
-						if(S.amount < S.max_amount)
-							S.amount += 2
-						if(S.amount > S.max_amount)
-							S.amount = S.max_amount
-					// Security
-					if(istype(O,/obj/item/device/flash))
-						var/obj/item/device/flash/F=O
-						if(F.broken)
-							F.broken = 0
-							F.times_used = 0
-							F.icon_state = "flash"
-					if(istype(O,/obj/item/weapon/gun/energy/taser/cyborg))
-						var/obj/item/weapon/gun/energy/taser/cyborg/C=O
-						if(C.power_supply.charge < C.power_supply.maxcharge)
-							C.power_supply.give(C.charge_cost)
-							C.update_icon()
-						else
-							C.charge_tick = 0
-					if(istype(O,/obj/item/weapon/melee/baton))
-						var/obj/item/weapon/melee/baton/B = O
-						if(B.bcell)
-							B.bcell.charge = B.bcell.maxcharge
-					//Combat
-					if(istype(O,/obj/item/weapon/gun/energy/laser/cyborg))
-						var/obj/item/weapon/gun/energy/laser/cyborg/C=O
-						if(C.power_supply.charge < C.power_supply.maxcharge)
-							C.power_supply.give(C.charge_cost)
-							C.update_icon()
-						else
-							C.charge_tick = 0
-					if(istype(O,/obj/item/weapon/gun/energy/lasercannon/cyborg))
-						var/obj/item/weapon/gun/energy/lasercannon/cyborg/C=O
-						if(C.power_supply.charge < C.power_supply.maxcharge)
-							C.power_supply.give(C.charge_cost)
-							C.update_icon()
-					//Mining
-					if(istype(O,/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg))
-						var/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/C=O
-						if(C.power_supply.charge < C.power_supply.maxcharge)
-							C.power_supply.give(C.charge_cost)
-							C.update_icon()
-						else
-							O:charge_tick = 0
-					//Service
-					if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
-						if(O.reagents.get_reagent_amount("enzyme") < 50)
-							O.reagents.add_reagent("enzyme", 2)
-					//Medical & Standard
-					if(istype(O,/obj/item/weapon/reagent_containers/glass/bottle/robot))
-						var/obj/item/weapon/reagent_containers/glass/bottle/robot/B = O
-						if(B.reagent && (B.reagents.get_reagent_amount(B.reagent) < B.volume))
-							B.reagents.add_reagent(B.reagent, 2)
-					if(istype(O,/obj/item/weapon/melee/defibrillator))
-						var/obj/item/weapon/melee/defibrillator/D = O
-						D.charges = initial(D.charges)
-					//Janitor
-					if(istype(O, /obj/item/device/lightreplacer/borg))
-						var/obj/item/device/lightreplacer/borg/LR = O
-						LR.Charge(R)
+				for(var/obj/item/I in um)
+					I.restock()
 				if(R)
 					if(R.module)
 						R.module.respawn_consumable(R)
-
-				//Emagged items for janitor and medical borg
-				if(R.module.emag)
-					if(istype(R.module.emag, /obj/item/weapon/reagent_containers/spray))
-						var/obj/item/weapon/reagent_containers/spray/S = R.module.emag
-						if(S.name == "Polyacid spray")
-							S.reagents.add_reagent("pacid", 2)
-						else if(S.name == "Lube spray")
-							S.reagents.add_reagent("lube", 2)
-
-
 
 /obj/machinery/recharge_station/verb/move_eject()
 	set category = "Object"

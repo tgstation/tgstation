@@ -218,6 +218,10 @@
 			bcell.reliability -= 10 / severity
 	..()
 
+/obj/item/weapon/melee/baton/restock()
+	if(bcell)
+		bcell.charge = bcell.maxcharge
+
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/weapon/melee/baton/cattleprod
 	name = "stunprod"

@@ -182,3 +182,6 @@
 		else
 			target.visible_message("<span class='warning'>[src] buzzes: Defibrillation failed. Patient's condition does not allow reviving.</span>")
 		return
+
+/obj/item/weapon/melee/defibrillator/restock()
+	charges = initial(charges)
