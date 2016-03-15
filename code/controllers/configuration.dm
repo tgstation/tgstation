@@ -562,8 +562,6 @@
 						continue
 					if (BombCap < 4)
 						BombCap = 4
-					if (BombCap > 128)
-						BombCap = 128
 
 					MAX_EX_DEVESTATION_RANGE = round(BombCap/4)
 					MAX_EX_HEAVY_RANGE = round(BombCap/2)
