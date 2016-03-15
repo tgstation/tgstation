@@ -590,7 +590,7 @@
 		var/pressure = environment.return_pressure()
 		if(pressure < 50)
 			name = "strong resonance field"
-			resonance_damage = 100
+			resonance_damage = 75
 		else
 			timetoburst = 50
 		spawn(timetoburst)
