@@ -1143,6 +1143,81 @@ datum
 			required_other = 1
 			required_container = /obj/item/slime_extract/green
 
+		slimeperidaxon
+			name = "Slime Peridaxon"
+			id = "m_peridaxon"
+			result = null
+			required_reagents = list("water" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/green
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				var/obj/item/weapon/reagent_containers/glass/bottle/B = new /obj/item/weapon/reagent_containers/glass/bottle
+				B.name = "peridaxon bottle"
+				B.reagents.add_reagent("peridaxon",5)
+				B.loc = get_turf(holder.my_atom)
+
+		slimedexplus
+			name = "Slime Dexalin Plus"
+			id = "m_dexplus"
+			result = null
+			required_reagents = list("oxygen" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/green
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				var/obj/item/weapon/reagent_containers/glass/bottle/B = new /obj/item/weapon/reagent_containers/glass/bottle
+				B.name = "Dexalin Plus Bottle"
+				B.reagents.add_reagent("dexalinp",5)
+				B.loc = get_turf(holder.my_atom)
+
+		slimesdelight
+			name = "Slime Doctor's Delight"
+			id = "m_doctordelight"
+			result = null
+			required_reagents = list("sugar" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/green
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				var/obj/item/weapon/reagent_containers/glass/bottle/B = new /obj/item/weapon/reagent_containers/glass/bottle
+				B.name = "Doctor's Delight bottle"
+				B.reagents.add_reagent("doctorsdelight",10)
+				B.loc = get_turf(holder.my_atom)
+
+		slimebicard
+			name = "Slime Bicaridine"
+			id = "m_bicaridine"
+			result = null
+			required_reagents = list("carbon" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/green
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				var/obj/item/weapon/reagent_containers/glass/bottle/B = new /obj/item/weapon/reagent_containers/glass/bottle
+				B.name = "bicaridine bottle"
+				B.reagents.add_reagent("bicaridine",10)
+				B.loc = get_turf(holder.my_atom)
+
+		slimedermaline
+			name = "Slime Dermaline"
+			id = "m_dermaline"
+			result = null
+			required_reagents = list("phosphorus" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/green
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				var/obj/item/weapon/reagent_containers/glass/bottle/B = new /obj/item/weapon/reagent_containers/glass/bottle
+				B.name = "Dermaline bottle"
+				B.reagents.add_reagent("dermaline",5)
+				B.loc = get_turf(holder.my_atom)
+
 //Metal
 		slimemetal
 			name = "Slime Metal"
@@ -1158,6 +1233,59 @@ datum
 				var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel
 				P.amount = 5
 				P.loc = get_turf(holder.my_atom)
+
+		slimegold
+			name = "Slime Gold"
+			id = "m_gold"
+			result = null
+			required_reagents = list("copper" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/metal
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/stack/sheet/mineral/gold/G = new /obj/item/stack/sheet/mineral/gold
+				G.amount = 5
+				G.loc = get_turf(holder.my_atom)
+
+		slimesilver
+			name = "Slime Silver"
+			id = "m_silver"
+			result = null
+			required_reagents = list("tungsten" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/metal
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/stack/sheet/mineral/silver/S = new /obj/item/stack/sheet/mineral/silver
+				S.amount = 5
+				S.loc = get_turf(holder.my_atom)
+
+		slimeuranium
+			name = "Slime Uranium"
+			id = "m_uranium"
+			result = null
+			required_reagents = list("radium" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/metal
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/stack/sheet/mineral/uranium/U = new /obj/item/stack/sheet/mineral/uranium
+				U.amount = 5
+				U.loc = get_turf(holder.my_atom)
+
+		slimediamond
+			name = "Slime diamond"
+			id = "m_diamond"
+			result = null
+			required_reagents = list("carbon" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/metal
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/stack/sheet/mineral/diamond/K = new /obj/item/stack/sheet/mineral/diamond
+				K.amount = 2
+				K.loc = get_turf(holder.my_atom)
+
 
 //Gold
 		slimecrit
@@ -1432,6 +1560,31 @@ datum
 							for(var/j = 1, j <= rand(1, 3), j++)
 								step(B, pick(NORTH,SOUTH,EAST,WEST))
 
+		slimematerials
+			name = "Slime Materials"
+			id = "m_mats"
+			result = null
+			required_reagents = list("carbon" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/silver
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/stack/sheet/S1 = pick(new /obj/item/stack/sheet/plasteel,
+												new /obj/item/stack/sheet/metal,
+												new /obj/item/stack/sheet/mineral/plasma,
+												new /obj/item/stack/sheet/mineral/silver,
+												new /obj/item/stack/sheet/mineral/gold,
+												new /obj/item/stack/sheet/mineral/uranium)
+				S1.amount = 5
+				var/obj/item/stack/sheet/S2 = pick(new /obj/item/stack/sheet/plasteel,
+												new /obj/item/stack/sheet/metal,
+												new /obj/item/stack/sheet/mineral/plasma,
+												new /obj/item/stack/sheet/mineral/silver,
+												new /obj/item/stack/sheet/mineral/gold,
+												new /obj/item/stack/sheet/mineral/uranium)
+				S2.amount = 5
+				S1.loc = get_turf(holder.my_atom)
+				S2.loc = get_turf(holder.my_atom)
 
 //Blue
 		slimefrost
@@ -1467,6 +1620,19 @@ datum
 				for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
 					M.bodytemperature -= 6
 					to_chat(M, "<span class='notice'>You feel a chill!</span>")
+
+		slimenutrient
+			name = "Slime Nutrient"
+			id = "m_nutrient"
+			result = null
+			required_reagents = list("blood" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/darkblue
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				var/obj/item/weapon/slimenutrient/P = new /obj/item/weapon/slimenutrient
+				P.loc = get_turf(holder.my_atom)
 
 //Orange
 		slimecasp
@@ -1551,6 +1717,7 @@ datum
 				var/obj/item/device/flashlight/lamp/slime/P = new /obj/item/device/flashlight/lamp/slime
 				P.loc = get_turf(holder.my_atom)
 
+
 //Purple
 
 		slimepsteroid
@@ -1578,7 +1745,6 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
 					send_admin_alert(holder, reaction_name="purple slime + sugar (Slime Jelly) in a grenade")
-
 
 //Dark Purple
 		slimeplasma
@@ -1663,6 +1829,31 @@ datum
 				if (istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
 					send_admin_alert(holder, reaction_name="black slime + plasma (Mutates to Slime) in a grenade")
 
+		slimemednanobots
+			name = "Slime Medical Nanobots"
+			id = "m_mednanobots"
+			result = "mednanobots"
+			required_reagents = list("gold" = 5)
+			result_amount = 1
+			required_other = 1
+			required_container = /obj/item/slime_extract/black
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				send_admin_alert(holder, reaction_name="black slime + gold (Medical Nanobots) in a grenade")
+
+
+		slimecomnanobots
+			name  = "Slime Combat Nanobots"
+			id = "m_comnanobots"
+			result = "comnanobots"
+			required_reagents = list("uranium" = 5)
+			result_amount = 1
+			required_other = 1
+			required_container = /obj/item/slime_extract/black
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				send_admin_alert(holder, reaction_name="black slime + uranium (Combat Nanobots) in a grenade")
+
 //Oil
 		slimeexplosion
 			name = "Slime Explosion"
@@ -1681,6 +1872,28 @@ datum
 				else
 					send_admin_alert(holder, reaction_name="oil slime + plasma (Explosion) in a grenade")
 				explosion(get_turf(holder.my_atom), 1 ,3, 6)
+
+		slimegenocide
+			name = "Slime Genocide" //oy vey
+			id = "m_genocide"
+			result = null
+			required_reagents = list("blood" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/oil
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				if (!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+					send_admin_alert(holder, reaction_name="oil slime + blood (Slime Genocide)")
+				else
+					send_admin_alert(holder, reaction_name="oil slime + blood (Slime Genocide) in a grenade")
+				for(var/mob/living/carbon/slime/S in viewers(get_turf(holder.my_atom), null)) // kills slimes
+					S.death(0)
+				for(var/mob/living/simple_animal/slime/S in viewers(get_turf(holder.my_atom), null)) // kills pet slimes too
+					S.health = 0
+				for(var/mob/living/simple_animal/adultslime/S in viewers(get_turf(holder.my_atom), null)) // no survivors
+					S.health = 0
+
 //Light Pink
 		slimepotion2
 			name = "Slime Potion 2"
@@ -1694,6 +1907,7 @@ datum
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				var/obj/item/weapon/slimepotion2/P = new /obj/item/weapon/slimepotion2
 				P.loc = get_turf(holder.my_atom)
+
 //Adamantine
 		slimegolem
 			name = "Slime Golem"
@@ -1708,6 +1922,51 @@ datum
 				var/obj/effect/golem_rune/Z = new /obj/effect/golem_rune
 				Z.loc = get_turf(holder.my_atom)
 				Z.announce_to_ghosts()
+
+
+		slimediamond2
+			name = "Slime Diamond2"
+			id = "m_Diamond2"
+			result = null
+			result_amount = 1
+			required_container = /obj/item/slime_extract/adamantine
+			required_reagents = list("carbon" = 5)
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				var/obj/item/stack/sheet/mineral/diamond/D = new /obj/item/stack/sheet/mineral/diamond
+				D.amount = 5
+				D.loc = get_turf(holder.my_atom)
+
+
+		slimephazon
+			name = "Slime Phazon"
+			id = "m_Phazon"
+			result = null
+			result_amount = 1
+			required_container = /obj/item/slime_extract/adamantine
+			required_reagents = list("gold" = 5)
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				var/obj/item/stack/sheet/mineral/phazon/P = new /obj/item/stack/sheet/mineral/phazon
+				P.amount = 5
+				P.loc = get_turf(holder.my_atom)
+
+		slimeclown
+			name = "Slime Clown"
+			id = "m_Clown"
+			result = null
+			required_reagents = list("silver" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/adamantine
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				var/obj/item/stack/sheet/mineral/clown/C = new /obj/item/stack/sheet/mineral/clown
+				C.amount = 5
+				C.loc = get_turf(holder.my_atom)
+
 
 
 //Bluespace
@@ -1788,6 +2047,7 @@ datum
 					var/obj/item/bluespace_crystal/BC = new(get_turf(holder.my_atom))
 					BC.visible_message("<span class='notice'>The [BC.name] appears out of thin air!</span>")
 
+
 //Cerulean
 
 		slimepsteroid2
@@ -1801,6 +2061,19 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 				var/obj/item/weapon/slimesteroid2/P = new /obj/item/weapon/slimesteroid2
+				P.loc = get_turf(holder.my_atom)
+
+		slimedupe
+			name = "Slime Duplicator"
+			id = "m_dupe"
+			result = null
+			required_reagents = list("blood" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/cerulean
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+				var/obj/item/weapon/slimedupe/P = new /obj/item/weapon/slimedupe
 				P.loc = get_turf(holder.my_atom)
 
 //sepia
@@ -1848,6 +2121,20 @@ datum
 				var/obj/P = new chosen
 				if(P)
 					P.loc = get_turf(holder.my_atom)
+
+		slimecash
+			name = "Slime Cash"
+			id = "m_cash"
+			result = null
+			required_reagents = list("blood" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/pyrite
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/weapon/spacecash/c100/C = new /obj/item/weapon/spacecash/c100/
+				C.amount = 1
+				C.loc = get_turf(holder.my_atom)
+
 
 
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
