@@ -14,7 +14,8 @@
 	var/mob_react = 0 //Determines if a chemical reaction can occur inside a mob
 
 	var/required_temp = 0
-	var/mix_message = "The solution begins to bubble."
+	var/mix_message = "The solution begins to bubble." //Displayed when the mixture is created
+	var/mix_sound = 'sound/effects/bubbles.ogg' //Played when the mixture is created
 
 /datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume)
 	return

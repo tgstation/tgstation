@@ -578,3 +578,39 @@
 	required_reagents = list ("wine" = 10)
 	required_catalysts = list ("enzyme" = 5)
 	result_amount = 10
+
+/datum/chemical_reaction/lava_lamp
+	name = "Lava Lamp"
+	id = "lava_lamp"
+	result = "lava_lamp"
+	required_reagents = list("screwdrivercocktail" = 1, "tomatojuice" = 1)
+	result_amount = 2
+	mix_message = "<span class='danger'>The mixture boils and froths, a plume of smoke rising from inside.</span>"
+	mix_sound = 'sound/effects/smoke.ogg'
+	required_temp = 400
+
+/datum/chemical_reaction/bluepc
+	name = "Bluepc" //Bluepc = BluePC = Blue APC
+	id = "bluepc"
+	result = "bluepc"
+	required_reagents = list("antifreeze" = 2, "oil" = 2, "radium" = 1)
+	result_amount = 5
+	mix_message = "The drink pops and emits a slightly sulfurous odor."
+	mix_sound = 'sound/effects/snap.ogg'
+
+/datum/chemical_reaction/whiskey_sour //Requested since we had whiskey cola and soda but not sour.
+	name = "Whiskey Sour"
+	id = "whiskey_sour"
+	result = "whiskey_sour"
+	required_reagents = list("whiskey" = 1, "lemonjuice" = 1, "sugar" = 1)
+	result_amount = 3
+	mix_message = "The mixture darkens to a rich gold hue."
+	mix_sound = null
+
+/datum/chemical_reaction/fetching_fizz //A reference to one of my favorite games of all time. Pulls nearby ores to the imbiber!
+	name = "Fetching Fizz"
+	id = "fetching_fizz"
+	result = "fetching_fizz"
+	required_reagents = list("cola" = 1, "iron" = 1, "uranium" = 1) //Manufacturable from only the mining station
+	result_amount = 3
+	mix_message = "The mixture slightly vibrates before settling."

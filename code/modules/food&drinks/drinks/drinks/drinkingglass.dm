@@ -486,6 +486,22 @@
 				icon_state = "gibbfloats"
 				name = "Gibbfloat"
 				desc = "Dr. Gibb with ice cream on top."
+			if("lava_lamp")
+				icon_state = "lava_lamp"
+				name = "Lava Lamp"
+				desc = "You aren't sure if this is a cocktail or actual lava. It's hot enough to be the latter."
+			if("bluepc")
+				icon_state = "bluepc"
+				name = "Bluepc"
+				desc = "Is it just you, or does that camera look fidgety...?"
+			if("whiskey_sour")
+				icon_state = "whiskey_sour"
+				name = "Whiskey Sour"
+				desc = "Lemon juice mixed with whiskey and a dash of sugar. Surprisingly satisfying."
+			if("fetching_fizz")
+				icon_state = "fetching_fizz"
+				name = "Fetching Fizz"
+				desc = "Induces magnetism in the imbiber. Started as a barroom prank but evolved to become popular with miners and scrappers. Metallic aftertaste."
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")
