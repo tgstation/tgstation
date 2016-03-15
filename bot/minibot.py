@@ -80,7 +80,7 @@ def irc_handler():
 		try:
 			buf = irc.recv(1024).decode("UTF-8").split("\n")
 			for i in buf:
-				logger.info(clean)
+				logger.info(i)
 				if i[0:4] == "PING":
 					irc.send(bytes("PONG {0}\r\n".format(i[5:]), "UTF-8"))
 				else:
