@@ -82,6 +82,10 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	. = ..()
 	update_icon()
 
+/obj/item/stack/cable_coil/add(var/amount)
+	. = ..()
+	update_icon()
+
 /obj/item/stack/cable_coil/can_stack_with(obj/item/other_stack)
 	return istype(other_stack, /obj/item/stack/cable_coil) && !istype(other_stack, /obj/item/stack/cable_coil/heavyduty) //It can be any cable, except the fat stuff
 

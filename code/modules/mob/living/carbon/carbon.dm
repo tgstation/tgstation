@@ -247,8 +247,8 @@
 			M.visible_message( \
 				"<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 				"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>", \
-				drugged_message = "<span class='notice'>[M] starts massaging [t_him]'s back.</span>", \
-				self_drugged_message = "<span class='notice'>You start massaging [t_him]'s back.</span>"
+				drugged_message = "<span class='notice'>[M] starts massaging [src]'s back.</span>", \
+				self_drugged_message = "<span class='notice'>You start massaging [src]'s back.</span>"
 				)
 		// BEGIN HUGCODE - N3X
 		else
