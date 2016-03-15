@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- tweak: Showers are now ordered from cargo, not built using metal sheets. They also have to be bolted to the floor to turn them on.
