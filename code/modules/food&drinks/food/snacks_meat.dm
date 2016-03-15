@@ -228,6 +228,7 @@
 	list_reagents = list("nutriment" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/nugget/New()
+	..()
 	switch(rand(1,4))
 		if(1)
 			//Normal
