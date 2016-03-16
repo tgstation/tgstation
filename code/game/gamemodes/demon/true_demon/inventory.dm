@@ -1,46 +1,32 @@
-/mob/living/simple_animal/true_demon/activate_hand(selhand)
-
-	if(istext(selhand))
-		selhand = lowertext(selhand)
-
-		if(selhand == "right" || selhand == "r")
-			selhand = 0
-		if(selhand == "left" || selhand == "l")
-			selhand = 1
-
-	if(selhand != src.hand)
-		swap_hand()
-	else
-		mode()
-
-
-/mob/living/simple_animal/true_demon/swap_hand()
-	var/obj/item/held_item = get_active_hand()
-	if(held_item)
-		if(istype(held_item, /obj/item/weapon/twohanded))
-			var/obj/item/weapon/twohanded/T = held_item
-			if(T.wielded == 1)
-				usr << "<span class='warning'>Your other hand is too busy holding the [T.name].</span>"
-				return
-
-	hand = !hand
-	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
-		if(hand)
-			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
-		else
-			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
+/mob/living/carbon/demon/can_equip(obj/item/I, slot, disable_warning = 0)
+	switch(slot)
+		if(slot_l_hand)
+			if(l_hand)
+				return 0
+			return 1
+		if(slot_r_hand)
+			if(r_hand)
+				return 0
+			return 1
+		if(slot_wear_mask)
+			if(wear_mask)
+				return 0
+			if( !(I.slot_flags & SLOT_MASK) )
+				return 0
+			return 1
+		if(slot_head)
+			if(head)
+				return 0
+			if( !(I.slot_flags & SLOT_HEAD) )
+				return 0
+			return 1
+		if(slot_back)
+			if(back)
+				return 0
+			if( !(I.slot_flags & SLOT_BACK) )
+				return 0
+			return 1
+	return 0 //Unsupported slot
 
 
-/mob/living/simple_animal/true_demon/unEquip(obj/item/I, force)
-	if(..(I,force))
-		update_inv_hands()
-		return 1
-	return 0
 
-/mob/living/simple_animal/true_demon/stripPanelUnequip(obj/item/what, mob/who, where)
-	..(what, who, where, 1)
-
-/mob/living/simple_animal/true_demon/stripPanelEquip(obj/item/what, mob/who, where)
-	..(what, who, where, 1)

@@ -274,13 +274,14 @@ var/list/allDemons = list()
 
 
 
-/datum/demoninfo/proc/set_true_demon()  //TODO LORDPIDEY: Finish these procs
+/datum/demoninfo/proc/set_true_demon()
 	owner.current << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a true demon."
 	sleep(50)
-	var/mob/living/simple_animal/true_demon/A = new /mob/living/simple_animal/true_demon(owner.current.loc)
+	var/mob/living/carbon/demon/A = new(owner.current.loc)
+	//var/mob/living/simple_animal/true_demon/A = new /mob/living/simple_animal/true_demon(owner.current.loc)
 	A.faction |= "hell"
 	owner.current.loc = A
-	A.oldform = owner.current
+	//A.oldform = owner.current
 	owner.transfer_to(A)
 	for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
 		owner.RemoveSpell(S)

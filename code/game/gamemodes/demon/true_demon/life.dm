@@ -1,0 +1,146 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
+/mob/living/carbon/demon
+
+
+/mob/living/carbon/demon/Life()
+	set invisibility = 0
+	set background = BACKGROUND_ENABLED
+
+	if (notransform)
+		return
+
+	..()
+
+	if(!client && stat == CONSCIOUS)
+		if(prob(33) && canmove && isturf(loc) && !pulledby && !grabbed_by.len)
+			step(src, pick(cardinal))
+		if(prob(1))
+			emote(pick("scratch","jump","roll","tail"))
+
+/mob/living/carbon/demon/handle_mutations_and_radiation()
+
+	if (radiation)
+		if (radiation > 100)
+			Weaken(10)
+			src << "<span class='danger'>You feel weak.</span>"
+			emote("collapse")
+
+		switch(radiation)
+
+			if(50 to 75)
+				if(prob(5))
+					Weaken(3)
+					src << "<span class='danger'>You feel weak.</span>"
+					emote("collapse")
+
+			if(75 to 100)
+				if(prob(1))
+					src << "<span class='danger'>You mutate!</span>"
+					randmutb(src)
+					emote("gasp")
+					domutcheck()
+		..()
+
+/mob/living/carbon/demon/handle_chemicals_in_body()
+	if(reagents)
+		reagents.metabolize(src, can_overdose=1)
+
+/mob/living/carbon/demon/handle_breath_temperature(datum/gas_mixture/breath)
+	if(abs(310.15 - breath.temperature) > 50)
+		switch(breath.temperature)
+			if(-INFINITY to 120)
+				adjustFireLoss(3)
+			if(120 to 200)
+				adjustFireLoss(1.5)
+			if(200 to 260)
+				adjustFireLoss(0.5)
+			if(360 to 400)
+				adjustFireLoss(2)
+			if(400 to 1000)
+				adjustFireLoss(3)
+			if(1000 to INFINITY)
+				adjustFireLoss(8)
+
+/mob/living/carbon/demon/handle_environment(datum/gas_mixture/environment)
+	if(!environment)
+		return
+
+	var/loc_temp = get_temperature(environment)
+
+	if(stat != DEAD)
+		natural_bodytemperature_stabilization()
+
+	if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
+		if(loc_temp < bodytemperature)
+			bodytemperature += min(((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
+		else
+			bodytemperature += min(((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
+
+	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		switch(bodytemperature)
+			if(360 to 400)
+				throw_alert("temp", /obj/screen/alert/hot, 1)
+				adjustFireLoss(2)
+			if(400 to 460)
+				throw_alert("temp", /obj/screen/alert/hot, 2)
+				adjustFireLoss(3)
+			if(460 to INFINITY)
+				throw_alert("temp", /obj/screen/alert/hot, 3)
+				if(on_fire)
+					adjustFireLoss(8)
+				else
+					adjustFireLoss(3)
+
+	else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+			switch(bodytemperature)
+				if(200 to 260)
+					throw_alert("temp", /obj/screen/alert/cold, 1)
+					adjustFireLoss(0.5)
+				if(120 to 200)
+					throw_alert("temp", /obj/screen/alert/cold, 2)
+					adjustFireLoss(1.5)
+				if(-INFINITY to 120)
+					throw_alert("temp", /obj/screen/alert/cold, 3)
+					adjustFireLoss(3)
+		else
+			clear_alert("temp")
+
+	else
+		clear_alert("temp")
+
+	//Account for massive pressure differences
+
+	var/pressure = environment.return_pressure()
+	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+	switch(adjusted_pressure)
+		if(HAZARD_HIGH_PRESSURE to INFINITY)
+			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
+			throw_alert("pressure", /obj/screen/alert/highpressure, 2)
+		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
+			throw_alert("pressure", /obj/screen/alert/highpressure, 1)
+		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
+			clear_alert("pressure")
+		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
+			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+		else
+			adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+			throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+
+	return
+
+/mob/living/carbon/demon/handle_random_events()
+	if (prob(1) && prob(2))
+		emote("scratch")
+
+/mob/living/carbon/demon/has_smoke_protection()
+	if(wear_mask)
+		if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
+			return 1
+
+/mob/living/carbon/demon/handle_fire()
+	if(..())
+		return
+	bodytemperature += BODYTEMP_HEATING_MAX
+	return
