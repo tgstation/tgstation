@@ -46,7 +46,7 @@
 "aT" = (/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/obj/structure/table,/obj/item/weapon/storage/firstaid/o2,/turf/simulated/floor/plasteel/shuttle/white,/area/awaymission/raisearm/ship)
 "aU" = (/turf/simulated/floor/plasteel/shuttle/white,/area/awaymission/raisearm/ship)
 "aV" = (/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/obj/structure/table,/obj/item/weapon/paper/raisearm,/turf/simulated/floor/plasteel/shuttle/white,/area/awaymission/raisearm/ship)
-"aW" = (/obj/structure/computerframe,/obj/item/weapon/melee/classic_baton{step_x = 0},/turf/simulated/floor/plasteel/shuttle/white,/area/awaymission/raisearm/ship)
+"aW" = (/obj/structure/computerframe,/obj/item/weapon/melee/classic_baton,/turf/simulated/floor/plasteel/shuttle/white,/area/awaymission/raisearm/ship)
 "aX" = (/obj/machinery/constructable_frame/machine_frame,/turf/simulated/floor/plasteel/shuttle/white,/area/awaymission/raisearm/ship)
 "aY" = (/obj/machinery/teleport/hub,/turf/simulated/floor/plasteel/shuttle/white,/area/awaymission/raisearm/ship)
 "aZ" = (/obj/machinery/constructable_frame/machine_frame{desc = "A hypersleep chamber - this one appears broken. There are exposed bolts for easy detachment using a wrench."; dir = 2; icon = 'icons/obj/Cryogenic2.dmi'; icon_state = "sleeper-o"; name = "broken hypersleep chamber"; pixel_y = 3},/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor/plasteel/shuttle/white,/area/awaymission/raisearm/ship)
