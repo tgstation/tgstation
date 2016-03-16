@@ -506,6 +506,11 @@
 			possible_spawns += /obj/item/clothing/head/helmet/space/ancient
 			var/new_type = pick(possible_spawns)
 			new_item = new new_type(src.loc)
+		if(38)
+			//lance
+			apply_material_decorations = 1
+			apply_image_decorations = 1
+			new_item = new /obj/item/weapon/melee/lance(src.loc)
 
 
 	var/decorations = ""

@@ -15,6 +15,7 @@
 	icon_state = "offhand"
 	name = "offhand"
 	abstract = 1
+	flags = SLOWDOWN_WHEN_CARRIED
 	var/obj/item/wielding = null
 
 /obj/item/offhand/dropped(user)

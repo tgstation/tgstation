@@ -227,7 +227,12 @@ var/MAX_EXPLOSION_RANGE = 14
 
 //FLAGS BITMASK
 
+//Item flags!
 #define PROXMOVE		1	//Will the code check us when we move or when something moves near us?
+
+#define SLOWDOWN_WHEN_CARRIED 2 //Apply slowdown when carried in hands, instead of only when worn
+
+#define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
 
 #define MASKINTERNALS	8	// mask allows internals
 //#define SUITSPACE		8	// suit protects against space
@@ -237,7 +242,6 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define FPRINT		256		// takes a fingerprint
 #define ON_BORDER	512		// item has priority to check when entering or leaving
-#define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
 #define NOBLOODY	2048	// used to items if they don't want to get a blood overlay
 #define HEAR		16
 #define HEAR_ALWAYS 32 // Assign a virtualhearer to the mob even when no client is controlling it.
