@@ -232,8 +232,8 @@
 	mob_species = /datum/species/shadow
 	flavour_text = {"You are cursed! Many years ago you risked it all to reach the Wish Granter, siezing it's power for yourself and leaving your friends for dead.. Though your wish came true, it did so at a price, and you've been doomed to wander these wastes ever since. You seek only to atone now, to somehow redeem yourself, and finally be released. You've seen ships landing in the distance. Perhaps now is the time to make things right?"}
 
-/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-	new_spawn.real_name = "[new_spawn.real_name] ([rand(0,999)]"
+/obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
+	new_spawn.real_name = "[new_spawn.real_name] ([rand(0,999)])"
 	var/wish = rand(1,4)
 	switch(wish)
 		if(1)
