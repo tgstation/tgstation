@@ -1535,3 +1535,6 @@
 
 /mob/living/silicon/robot/proc/help_shake_act(mob/user)
 	user.visible_message("<span class='notice'>[user.name] pats [src.name] on the head.</span>")
+
+/mob/living/silicon/robot/CheckSlip()
+	return (istype(module,/obj/item/weapon/robot_module/engineering)? -1 : 0)
