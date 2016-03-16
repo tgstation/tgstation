@@ -1772,7 +1772,7 @@ datum
 			name = "Slime Res"
 			id = "m_nutrient"
 			result = null
-			required_reagents = list("blood" = 5)
+			required_reagents = list("sugar" = 5)
 			result_amount = 1
 			required_container = /obj/item/slime_extract/red
 			required_other = 1
