@@ -377,7 +377,7 @@
 
 /datum/game_mode/proc/update_traitor_icons_added(datum/mind/traitor_mind)
 	var/datum/atom_hud/antag/traitorhud = huds[ANTAG_HUD_TRAITOR]
-	traitorhud.join_hud(traitor_mind.current, 0)
+	traitorhud.join_hud(traitor_mind.current)
 	set_antag_hud(traitor_mind.current, "traitor")
 
 /datum/game_mode/proc/update_traitor_icons_removed(datum/mind/traitor_mind)
