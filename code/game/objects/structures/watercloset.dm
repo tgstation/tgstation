@@ -186,6 +186,9 @@
 	if(panel_open)
 		to_chat(M, "<span class='warning'>The shower's maintenance hatch needs to be closed first.</span>")
 		return
+	if(!anchored)
+		to_chat(M, "<span class='warning'>The shower needs to be bolted to the floor to work.</span>")
+		return
 
 	on = !on
 	M.visible_message("<span class='notice'>[M] turns the shower [on ? "on":"off"]</span>", \
@@ -203,14 +206,18 @@
 		to_chat(user, "<span class='notice'>The water's temperature seems to be [watertemp].</span>")
 	if(panel_open) //The panel is open
 		if(iswrench(I))
-			user.visible_message("<span class='warning'>[user] starts wrenching \the [src] apart.</span>", \
-								 "<span class='notice'>You start wrenching \the [src] apart.</span>")
+			user.visible_message("<span class='warning'>[user] starts adjusting the bolts on \the [src].</span>", \
+								 "<span class='notice'>You start adjusting the bolts on \the [src].</span>")
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 			if(do_after(user, src, 50))
-				user.visible_message("<span class='warning'>[user] wrenches \the [src] apart.</span>", \
-								 "<span class='notice'>You wrench \the [src] apart.</span>")
-				getFromPool(/obj/item/stack/sheet/metal, get_turf(src), 2)
-				qdel(src)
+				if(anchored == 1)
+					src.visible_message("<span class='warning'>[user] unbolts \the [src] from the floor.</span>", \
+								 "<span class='notice'>You unbolt \the [src] from the floor.</span>")
+					anchored = 0
+				else
+					src.visible_message("<span class='warning'>[user] bolts \the [src] to the floor.</span>", \
+								 "<span class='notice'>You bolt \the [src] to the floor.</span>")
+					anchored = 1
 	else
 		if(iswrench(I))
 			user.visible_message("<span class='warning'>[user] begins to adjust the [src]'s temperature valve with \a [I.name].</span>", \

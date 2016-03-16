@@ -32,6 +32,9 @@
 /obj/structure/largecrate/porcelain
 	..()
 
+/obj/structure/largecrate/showers
+	..()
+
 /obj/structure/largecrate/lisa/attackby(obj/item/weapon/W as obj, mob/user as mob)	//ugly but oh well
 	if(iscrowbar(W))
 		new /mob/living/simple_animal/corgi/Lisa(loc)
@@ -72,4 +75,12 @@
 		T.anchored = 0
 		var/obj/structure/sink/S = new (loc)
 		S.anchored = 0
+	..()
+
+/obj/structure/largecrate/showers/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(iscrowbar(W))
+		for(var/i = 0, i < 2, i++)
+			var/obj/machinery/shower/S = new (loc)
+			S.anchored = 0
+			S.panel_open = 1
 	..()

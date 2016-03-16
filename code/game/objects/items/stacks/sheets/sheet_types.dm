@@ -58,7 +58,6 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	new/datum/stack_recipe("canister",        /obj/machinery/portable_atmospherics/canister, 10, time = 15, one_per_turf = 1				),
 	new/datum/stack_recipe("iv drip",         /obj/machinery/iv_drip,                         2, time = 25, one_per_turf = 1				),
 	new/datum/stack_recipe("meat spike",      /obj/structure/kitchenspike,                    2, time = 25, one_per_turf = 1, on_floor = 1	),
-	new/datum/stack_recipe("shower",          /obj/machinery/shower/,                         2, time = 25, one_per_turf = 1, on_floor = 1	),
 	new/datum/stack_recipe("grenade casing",  /obj/item/weapon/grenade/chem_grenade                                                       	),
 	new/datum/stack_recipe("desk bell shell", /obj/item/device/deskbell_assembly,             2                                           	),
 	null,
