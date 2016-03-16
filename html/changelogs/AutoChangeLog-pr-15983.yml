@@ -1,0 +1,8 @@
+author: Shadowlight213
+delete-after: True
+changes: 
+  - rscadd: "HOG deity can now be heard by all of its followers!"
+  - tweak: "The prophet no longer needs to wear his hat to speak with his deity."
+  - rscadd: "The prophet's hat and staff have a new functionality! Use the staff inhand to reveal hidden structures."
+  - rscadd: "Deities can now hide their structures from view! Pretend to be a book club when sec bursts in.
+experiment:Only enemy prophets or your own deity can reveal these structures and they are disabled when hidden."
