@@ -234,7 +234,7 @@
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
 	new_spawn.real_name = "[new_spawn.real_name] ([rand(0,999)]"
-	var/wish = rand(1,3)
+	var/wish = rand(1,4)
 	switch(wish)
 		if(1)
 			new_spawn << "You wished to kill, and kill you did. You've lost track of the number and murder long lost it's spark of excitement. You feel only regret."
