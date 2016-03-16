@@ -527,23 +527,23 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "resonator"
 	item_state = "resonator"
-	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum."
+	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum. Deals extra damage to creatures."
 	w_class = 3
 	force = 8
 	throwforce = 10
 	var/cooldown = 0
 	var/fieldsactive = 0
-	var/burst_time = 50
-	var/fieldlimit = 3
+	var/burst_time = 30
+	var/fieldlimit = 5
 	origin_tech = "magnets=2;combat=2"
 
 /obj/item/weapon/resonator/upgraded
 	name = "upgraded resonator"
-	desc = "An upgraded version of the resonator that can produce more fields at once."
+	desc = "An upgraded version of the resonator that can produce more fields at once. Deals extra damage to creatures."
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
 	origin_tech = "magnets=3;combat=3"
-	fieldlimit = 5
+	fieldlimit = 8
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	var/turf/T = get_turf(target)
@@ -557,12 +557,10 @@
 			fieldsactive--
 
 /obj/item/weapon/resonator/attack_self(mob/user)
-	if(burst_time == 50)
-		burst_time = 30
-		user << "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>"
-	else
-		burst_time = 50
-		user << "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>"
+	burst_time += 10
+	if(burst_time > 50)
+		burst_time = 20
+		user << "<span class='info'>You set the resonator's fields to detonate after [burst_time * 0.1] seconds.</span>"
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
@@ -571,12 +569,12 @@
 
 /obj/effect/resonance
 	name = "resonance field"
-	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures."
+	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures. Deals extra damage to creatures."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	layer = 4.1
 	mouse_opacity = 0
-	var/resonance_damage = 20
+	var/resonance_damage = 35
 
 /obj/effect/resonance/New(loc, var/creator = null, var/timetoburst)
 	var/turf/proj_turf = get_turf(src)
@@ -593,18 +591,26 @@
 		var/pressure = environment.return_pressure()
 		if(pressure < 50)
 			name = "strong resonance field"
-			resonance_damage = 50
+			resonance_damage = 75
+		else
+			timetoburst = 50
 		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			if(creator)
 				for(var/mob/living/L in src.loc)
 					add_logs(creator, L, "used a resonator field on", "resonator")
 					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
-					L.adjustBruteLoss(resonance_damage)
+					if(istype(L, /mob/living/simple_animal))
+						L.adjustBruteLoss(resonance_damage*2)
+					else
+						L.adjustBruteLoss(resonance_damage)
 			else
 				for(var/mob/living/L in src.loc)
 					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
-					L.adjustBruteLoss(resonance_damage)
+					if(istype(L, /mob/living/simple_animal))
+						L.adjustBruteLoss(resonance_damage*2)
+					else
+						L.adjustBruteLoss(resonance_damage)
 			qdel(src)
 
 /**********************Facehugger toy**********************/
