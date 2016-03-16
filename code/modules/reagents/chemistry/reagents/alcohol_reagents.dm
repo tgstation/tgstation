@@ -626,3 +626,60 @@
 	description = "A weird mix of whiskey and blumpkin juice."
 	color = "#1EA0FF" // rgb: 102, 67, 0
 	boozepwr = 35
+
+/datum/reagent/consumable/ethanol/lava_lamp
+	name = "Lava Lamp"
+	id = "lava_lamp"
+	description = "Orange juice/vodka mixture combined with tomato juice at an extremely high temperature. Mild alcohol content."
+	color = rgb(251, 102, 30)
+	boozepwr = 5 //Not typically consumed for its strength
+	var/temperature_modifier = 1 //Deals less damage based upon how hot it is
+
+/datum/reagent/consumable/ethanol/lava_lamp/reaction_mob(mob/living/M, method)
+	if(iscarbon(M))
+		if(method == INGEST) //Breathe in and out really fast to make the liquid colder
+			M.audible_message("<span class='danger'>Holy shit, that's hot!</span>", "<span class='warning'>[M] hyperventilates!</span>")
+			temperature_modifier = 0.7
+		if(method in list(TOUCH, PATCH, VAPOR)) //Direct contact with skin
+			M.audible_message("<span class='danger'>Ow ow ow! That stuff <i>hurts</i>!</span>", "<span class='warning'>[M] yelps in pain!</span>")
+		if(method == INJECT) //In the bloodstream
+			M.visible_message("<span class='warning'>[M]'s skin begins to emit a slight glow!</span>", "<span class='boldannounce'>OW OW OWWW</span>")
+			M.emote("scream")
+			temperature_modifier = 1.3 //It's melting your fucking body from the inside
+	..()
+
+/datum/reagent/consumable/ethanol/lava_lamp/on_mob_life(mob/living/M)
+	M.adjustFireLoss((volume / 15) * temperature_modifier) //Volume-dependent burn damage affected by temperature; for instance, 50u would deal around 3 burn
+	return ..() || .
+
+/datum/reagent/consumable/ethanol/bluepc
+	name = "Bluepc" //A jab at people who scream "AI MALF" when they see an APC that's currently gaining charge
+	id = "bluepc"
+	description = "Vodka/cream/ice mixture combined with oil and a hint of radium. Moderate alcohol content."
+	color = rgb(0, 38, 255) //Same color as a hacked APC!
+	boozepwr = 30
+	var/list/flavor_messages = list("hacks another APC", "creates a borging machine", "initiates Delta", "blows up the Robotics console", "floods plasma", "shocks the airlocks")
+
+/datum/reagent/consumable/ethanol/bluepc/reaction_mob(mob/living/M, method)
+	playsound(M, "sparks", 50, 1) //beep boop HUMAN-DESTROYER-BORG unit active have a nice day.
+	M.visible_message("<span class='notice'>[M] [pick(flavor_messages)]!</span>")
+	..()
+
+/datum/reagent/consumable/ethanol/whiskey_sour
+	name = "Whiskey Sour"
+	id = "whiskey_sour"
+	description = "Lemon juice/whiskey/sugar mixture. Moderate alcohol content."
+	color = rgb(255, 201, 49)
+	boozepwr = 35
+
+/datum/reagent/consumable/ethanol/fetching_fizz
+	name = "Fetching Fizz"
+	id = "fetching_fizz"
+	description = "Whiskey sour/iron/uranium mixture resulting in highly magnetic slurry. Mild alcohol content." //Requires no alcohol to make but has alcohol anyway because ~magic~
+	color = rgb(255, 91, 15)
+	boozepwr = 10
+
+/datum/reagent/consumable/ethanol/fetching_fizz/on_mob_life(mob/living/M)
+	for(var/obj/item/weapon/ore/O in orange(3, M))
+		step_towards(O, get_turf(M))
+	..()

@@ -630,7 +630,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.blood_max += 2
-		H.adjustBruteLoss(1, 0) //Brute damage increases with the amount they're bleeding
+		H.adjustBruteLoss(1, 0) //Brute damage increases with the amount they're bleeding //well it used to fuck
 		. = 1
 	return ..() || .
 
