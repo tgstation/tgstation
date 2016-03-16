@@ -336,6 +336,7 @@ About the new airlock wires panel:
 			if(!src.justzap)
 				if(src.shock(user, 100))
 					src.justzap = 1
+					user.delayNextMove(10)
 					spawn (10)
 						src.justzap = 0
 					return
@@ -989,6 +990,7 @@ About the new airlock wires panel:
 		if (isElectrified())
 			// TODO: analyze the called proc
 			if (shock(user, 100))
+				user.delayNextAttack(10)
 				return
 	//Basically no open panel, not opening already, door has power, area has power, door isn't bolted
 	if (!panel_open && !operating && arePowerSystemsOn() && !(stat & (NOPOWER|BROKEN)) && !locked)
@@ -1015,6 +1017,7 @@ About the new airlock wires panel:
 		if (isElectrified())
 			// TODO: analyze the called proc
 			if (shock(user, 75))
+				user.delayNextAttack(10)
 				return
 
 	if(istype(I, /obj/item/weapon/batteringram))
