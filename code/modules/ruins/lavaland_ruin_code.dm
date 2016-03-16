@@ -217,3 +217,31 @@
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.dna.species.specflags |= NOBREATH
+
+
+
+//Wishgranter Exile
+
+/obj/effect/mob_spawn/human/exile
+	name = "exile sleeper"
+	mob_name = "Penitent Exile"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	roundstart = FALSE
+	death = FALSE
+	mob_species = /datum/species/shadow
+	flavour_text = {"You are cursed! Many years ago you risked it all to reach the Wish Granter, siezing it's power for yourself and leaving your friends for dead.. Though your wish came true, it did so at a price, and you've been doomed to wander these wastes ever since. You seek only to atone now, to somehow redeem yourself, and finally be released. You've seen ships landing in the distance. Perhaps now is the time to make things right?"}
+
+/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
+	new_spawn.real_name = "[new_spawn.real_name] ([rand(0,999)]"
+	var/wish = rand(1,3)
+	switch(wish)
+		if(1)
+			new_spawn << "You wished to kill, and kill you did. You've lost track of the number and murder long lost it's spark of excitement. You feel only regret."
+		if(2)
+			new_spawn << "You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?"
+		if(3)
+			new_spawn << "You wished for power. Little good it did you, cast out of the light. You are a king, but ruling over a miserable wasteland. You feel only remorse."
+		if(4)
+			new_spawn << "You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. You are overwhelmed with guilt."
+
