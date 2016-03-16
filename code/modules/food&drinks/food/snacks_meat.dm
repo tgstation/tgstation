@@ -221,28 +221,24 @@
 	list_reagents = list("nutriment" = 6, "capsaicin" = 5)
 	filling_color = "#FA8072"
 
+#define LUMP "lump"
+#define STAR "star"
+#define LIZARD "lizard"
+#define CORGI "corgi"
+
 /obj/item/weapon/reagent_containers/food/snacks/nugget
-	name = "chicken nugget"
-	filling_color = "#B22222"
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
-	list_reagents = list("nutriment" = 2)
+    name = "chicken nugget"
+    filling_color = "#B22222"
+    bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+    list_reagents = list("nutriment" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/nugget/New()
-	..()
-	switch(rand(1,4))
-		if(1)
-			//Normal
-			desc = "May not actually contain chicken."
-			icon_state = "nugget"
-		if(2)
-			//Star-Shaped
-			desc = "A 'chicken' nugget vaguely shaped like a star."
-			icon_state = "nugget_star"
-		if(3)
-			//Corgi-Shaped
-			desc = "A 'chicken' nugget vaguely shaped like a corgi."
-			icon_state = "nugget_corgi"
-		if(4)
-			//Lizard-Shaped
-			desc = "A 'chicken' nugget vaguely shaped like a lizard."
-			icon_state = "nugget_lizard"
+    ..()
+    var/shape = pick(LUMP, STAR, LIZARD, CORGI)
+    desc = "A 'chicken' nugget vaguely shaped like a [shape]."
+    icon_state = "nugget_[shape]"
+
+#undef LUMP
+#undef STAR
+#undef LIZARD
+#undef CORGI
