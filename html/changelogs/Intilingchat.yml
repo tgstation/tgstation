@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- tweak: Changelings can now use ling chat while using regenerative stasis.
