@@ -98,6 +98,14 @@
 	filling_color = "#F0F0F0"
 	slice_path = null  //can't slice a bone into cutlets
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plasma
+	name = "-plasmabone"
+	icon_state = "skeletonmeat"
+	desc = "A bone infused with plasma."
+	filling_color = "#660056"
+	list_reagents = list("nutriment" = 3,"plasma" = 3)
+	slice_path = null  //can't slice a bone into cutlets
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	name = "-meat (rotten)"
 	icon_state = "lizardmeat" //Close enough.

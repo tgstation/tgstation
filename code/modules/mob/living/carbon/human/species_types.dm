@@ -486,7 +486,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	id = "plasmaman"
 	say_mod = "rattles"
 	sexes = 0
-	meat = /obj/item/stack/sheet/mineral/plasma
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plasma
 	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE)
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
@@ -515,7 +515,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
 
-	if(!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman))
+	if((!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman)) && !((H.getBruteLoss() + H.getFireLoss() >= 180) || (world.time - H.timeofdeath > 1200)))
 		if(environment)
 			var/total_moles = environment.total_moles()
 			if(total_moles)
@@ -540,6 +540,8 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	if(rank in security_positions)
 		return 0
 	if(rank == "Clown" || rank == "Mime")//No funny bussiness
+		return 0
+	if(rank == "Geneticist") //DNA incompatible with technology
 		return 0
 	return ..()
 
