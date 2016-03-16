@@ -746,7 +746,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			Uses = 3
 			enhanced = 1
 			qdel(O)
-			O = null
 
 		//slime res
 		if(istype(O, /obj/item/weapon/slimeres))
@@ -758,7 +757,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			S.loc = get_turf(src)
 			Uses--
 			qdel(O)
-			O = null
 
 /obj/item/slime_extract/New()
 		..()
@@ -974,14 +972,14 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 
 /obj/item/weapon/slimenutrient
-	name = "Slime Nutrient"
+	name = "slime nutrient"
 	desc = "A potent chemical mix that is a great nutrient for slimes."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle12"
 	var/Uses = 2
 
 /obj/item/weapon/slimenutrient/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
-	if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+	if(!istype(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The steroid only works on slimes!</span>")
 		return ..()
 	if(M.stat)
@@ -1043,7 +1041,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
         qdel(src)
 
 /obj/item/weapon/slimeres
-    name = "Slime Resurrection Serum"
+    name = "slime resurrection serum"
     desc = "A potent chemical mix that when used on a slime extact, will bring it to life!"
     icon = 'icons/obj/chemical.dmi'
     icon_state = "bottle14"

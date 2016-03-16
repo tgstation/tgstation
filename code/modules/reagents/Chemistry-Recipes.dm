@@ -1569,22 +1569,15 @@ datum
 			required_container = /obj/item/slime_extract/silver
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
-				var/obj/item/stack/sheet/S1 = pick(new /obj/item/stack/sheet/plasteel,
-												new /obj/item/stack/sheet/metal,
-												new /obj/item/stack/sheet/mineral/plasma,
-												new /obj/item/stack/sheet/mineral/silver,
-												new /obj/item/stack/sheet/mineral/gold,
-												new /obj/item/stack/sheet/mineral/uranium)
-				S1.amount = 5
-				var/obj/item/stack/sheet/S2 = pick(new /obj/item/stack/sheet/plasteel,
-												new /obj/item/stack/sheet/metal,
-												new /obj/item/stack/sheet/mineral/plasma,
-												new /obj/item/stack/sheet/mineral/silver,
-												new /obj/item/stack/sheet/mineral/gold,
-												new /obj/item/stack/sheet/mineral/uranium)
-				S2.amount = 5
-				S1.loc = get_turf(holder.my_atom)
-				S2.loc = get_turf(holder.my_atom)
+				var/list/paths = list(/obj/item/stack/sheet/plasteel,
+						/obj/item/stack/sheet/metal,
+						/obj/item/stack/sheet/mineral/plasma,
+						/obj/item/stack/sheet/mineral/silver,
+						/obj/item/stack/sheet/mineral/gold,
+						/obj/item/stack/sheet/mineral/uranium)
+				getFromPool(pick(paths), get_turf(holder.my_atom), 5)
+				getFromPool(pick(paths), get_turf(holder.my_atom), 5)
+
 
 //Blue
 		slimefrost
