@@ -280,3 +280,8 @@ RENDERS_URL http://ss13.pomf.se/img/map-renders
 ## SKIP_MINIMAP_GENERATION
 ## Uncomment to disable generation of minimaps (makes the server start faster!)
 SKIP_MINIMAP_GENERATION
+
+## SHUT_UP_AUTOMATIC_DIAGNOSTIC_AND_ANNOUNCEMENT_SYSTEM
+## Uncomment to disable the lovely robotic voice that tells you the time at the start of every shift.
+## Recommended for your sanity if you start the server a lot for testing things.
+#SHUT_UP_AUTOMATIC_DIAGNOSTIC_AND_ANNOUNCEMENT_SYSTEM
