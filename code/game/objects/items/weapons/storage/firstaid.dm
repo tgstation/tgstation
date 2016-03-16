@@ -264,3 +264,17 @@ var/global/list/bottle_colour_choices = list("Blue" = "#0094FF","Dark Blue" = "#
 		new /obj/item/weapon/reagent_containers/pill/hyperzine( src )
 		new /obj/item/weapon/reagent_containers/pill/hyperzine( src )
 		new /obj/item/weapon/reagent_containers/pill/hyperzine( src )
+
+/obj/item/weapon/storage/pill_bottle/creatine
+	name = "Workout Supplements"
+	desc = "Because working out is far too much effort."
+
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/pill/creatine/safe( src )
+		new /obj/item/weapon/reagent_containers/pill/creatine/safe/supplement ( src )
+		new /obj/item/weapon/reagent_containers/pill/creatine/safe/supplement ( src )
+		new /obj/item/weapon/reagent_containers/pill/creatine/safe/supplement ( src )
+		new /obj/item/weapon/reagent_containers/pill/creatine/safe/supplement ( src )
+		new /obj/item/weapon/reagent_containers/pill/creatine/safe/supplement ( src )
+

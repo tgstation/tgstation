@@ -15,6 +15,8 @@
 
 /area/vault/clownbase
 
+/area/vault/gym
+
 /area/vault/rust
 	requires_power = 1
 
