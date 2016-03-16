@@ -69,10 +69,10 @@
 			owner.update_inv_r_hand()
 
 /obj/item/weapon/melee/lance/attack(mob/living/M, mob/living/user)
-	..()
+	if(istype(M) && trigger) //Lance is couched
+		return trigger.Crossed(M)
 
-	if(trigger) //Lance is couched
-		raise_lance(user)
+	return ..()
 
 /obj/effect/lance_trigger //This stays in front of the user (when the lance is lowered)
 	name = "lance tip"
