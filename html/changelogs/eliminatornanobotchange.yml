@@ -1,0 +1,8 @@
+author: TheEliminator16
+
+delete-after: True
+
+changes: 
+ - tweak: Changed instant death limit of medical nanobots to 20u. 5-20u is a danger zone that CAN result in horrors, the likelihood of which increases the more damage has been healed while nanobots have been above 5 units.
+ - rscadd: Added different species of cyber horror for each playable race (except diona, because nanobots have no effect on dionae)
+ - tweak: Made cryoxadone turn medical nanobots back into normal ones. This is both to discourage use in cryo mixes and act as a way to counteract nanobot overdoses.
