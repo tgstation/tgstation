@@ -44,7 +44,9 @@
 			target.reset_perspective(holder)
 			target.notransform=0 //mob is safely inside holder now, no need for protection.
 			jaunt_steam(mobloc)
+			target.mutations |= MUT_MUTATE
 			sleep(duration)
+			target.mutations &= ~MUT_MUTATE
 			if(target.loc != holder) //mob warped out of the warp
 				qdel(holder)
 				return
@@ -73,11 +75,7 @@
 	animation.icon_state = "liquify"
 	flick("liquify",animation)
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/mute
-	wiz.mutations | = MUT_MUTATE
-	duration = 50
-	cooldown_min = 100
-	
+
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_reappear(atom/movable/overlay/animation, mob/living/target)
 	flick("reappear",animation)
 
