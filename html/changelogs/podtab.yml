@@ -1,5 +1,0 @@
-author: Intigracy
-delete-after: True
-changes: 
-- rscdel: "Spacepods now no longer have their own verb tab when you get in. The one verb that's added is in the object tab."
-- tweak: "Spacepods now only have one verb to enter/exit instead of two seperate ones. It's still in both the object tab and right click menu."

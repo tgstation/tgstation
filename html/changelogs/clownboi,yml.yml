@@ -1,4 +1,0 @@
-author: Intigracy
-delete-after: True
-changes: 
-- bugfix: Voicechangers can now properly choose the clown mask option to morph into.
