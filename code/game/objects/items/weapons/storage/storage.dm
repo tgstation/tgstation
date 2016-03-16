@@ -370,6 +370,7 @@
 			usr.s_active.show_to(usr)
 	if(W.maptext)
 		W.maptext = ""
+	W.layer = initial(W.layer)
 	W.on_exit_storage(src)
 	update_icon()
 	return 1
