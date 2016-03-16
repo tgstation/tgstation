@@ -147,8 +147,8 @@ Bonus
 	level = 5
 
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	if (M.reagents.get_reagent_amount("mannitol") < 10)
-		M.reagents.add_reagent("mannitol", 10)
+	var/amt_healed = (sqrt(20+A.totalStageSpeed()*(3+rand())))-(sqrt(16+A.totalStealth()*rand()))
+	M.adjustBrainLoss(-amt_healed)
 	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
 	var/list/unclean_mutations = (not_good_mutations|bad_mutations) - mutations_list[RACEMUT]
 	M.dna.remove_mutation_group(unclean_mutations)
