@@ -5,10 +5,10 @@
 	item_state = "jetpack"
 	w_class = 4
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
-	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/jetpack_mode)
+	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
 	var/gas_type = "o2"
 	var/on = FALSE
-	var/turbo = FALSE
+	var/stabilizers = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/weapon/tank/jetpack/New()
@@ -20,8 +20,12 @@
 	ion_trail.set_up(src)
 
 /obj/item/weapon/tank/jetpack/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/jetpack_mode)
+	if(actiontype == /datum/action/item_action/toggle_jetpack)
 		cycle(user)
+	else if(actiontype == /datum/action/item_action/jetpack_stabilization)
+		if(on)
+			stabilizers = !stabilizers
+			user << "<span class='notice'>You turn the jetpack stabilization [stabilizers ? "on" : "off"].</span>"
 	else
 		toggle_internals(user)
 
@@ -32,14 +36,10 @@
 
 	if(!on)
 		turn_on()
-		user << "<span class='notice'>You turn the thrusters on.</span>"
-	else if(!turbo)
-		turbo = TRUE
-		user << "<span class='notice'>You engage turbo mode.</span>"
+		user << "<span class='notice'>You turn the jetpack on.</span>"
 	else
 		turn_off()
-		turbo = FALSE
-		user << "<span class='notice'>You turn jetpack off.</span>"
+		user << "<span class='notice'>You turn the jetpack off.</span>"
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -52,6 +52,7 @@
 
 /obj/item/weapon/tank/jetpack/proc/turn_off()
 	on = FALSE
+	stabilizers = FALSE
 	icon_state = initial(icon_state)
 	ion_trail.stop()
 
@@ -114,7 +115,7 @@
 	desc = "A device that will use your internals tank as a gas source for propulsion."
 	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
-	actions_types = list(/datum/action/item_action/jetpack_mode)
+	actions_types = list(/datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
 	var/obj/item/weapon/tank/internals/tank = null
 
 /obj/item/weapon/tank/jetpack/suit/New()
