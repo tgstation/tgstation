@@ -182,6 +182,7 @@
 /atom/proc/contents_explosion(severity, target)
 	for(var/atom/A in contents)
 		A.ex_act(severity, target)
+		CHECK_TICK
 
 /atom/proc/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -193,9 +194,10 @@
 	return
 
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
-	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav.
-		spawn(2)
-			step(AM,  turn(AM.dir, 180))
+	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
+		spawn(2) //very short wait, so we can actually see the impact.
+			if(AM && isturf(AM.loc))
+				step(AM, turn(AM.dir, 180))
 
 var/list/blood_splatter_icons = list()
 
@@ -379,7 +381,7 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
 	M.reagents.trans_to(V, M.reagents.total_volume / 10)
-	for(var/datum/reagent/R in reagents.reagent_list)                //clears the stomach of anything that might be digested as food
+	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
 		if(istype(R, /datum/reagent/consumable))
 			var/datum/reagent/consumable/nutri_check = R
 			if(nutri_check.nutriment_factor >0)

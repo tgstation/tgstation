@@ -148,7 +148,7 @@
 		qdel(C.handcuffed)
 		C.handcuffed = null
 		if(C.buckled && C.buckled.buckle_requires_restraints)
-			C.buckled.unbuckle_mob()
+			C.buckled.unbuckle_mob(C)
 		C.update_handcuffed()
 		return
 	else

@@ -4,7 +4,7 @@
 #define RANDOM_LOWER_X 50
 #define RANDOM_LOWER_Y 50
 
-/proc/spawn_rivers(target_z = 5, nodes = 4, turf_type = /turf/simulated/floor/plating/lava/smooth)
+/proc/spawn_rivers(target_z = 5, nodes = 4, turf_type = /turf/simulated/floor/plating/lava/smooth/lava_land_surface)
 	var/list/river_nodes = list()
 	var/num_spawned = 0
 	while(num_spawned < nodes)
@@ -19,8 +19,8 @@
 		if (W.z != target_z || W.connected)
 			continue
 		W.connected = 1
-		var/turf/cur_turf = get_turf(W)
-		cur_turf.ChangeTurf(turf_type)
+		var/turf/cur_turf = new turf_type(get_turf(W))
+		//cur_turf.ChangeTurf(turf_type)
 		var/turf/target_turf = get_turf(pick(river_nodes - W))
 		if(!target_turf)
 			break
@@ -44,8 +44,8 @@
 			cur_turf = get_step(cur_turf, cur_dir)
 
 			if(!istype(cur_turf, /turf/simulated/wall)) //Rivers will flow around walls
-				var/turf/simulated/river_turf = cur_turf
-				river_turf.ChangeTurf(turf_type)
+				var/turf/simulated/river_turf = new turf_type(cur_turf)
+			//	river_turf.ChangeTurf(turf_type)
 				river_turf.Spread(30, 25)
 			else
 				detouring = 0
@@ -70,9 +70,7 @@
 
 	for(var/turf/simulated/F in orange(1, src))
 
-		var/turf/L = F
-
-		L.ChangeTurf(src.type)
+		var/turf/L = new src.type(F)
 
 		if(L && prob(probability))
 			L.Spread(probability - prob_loss)

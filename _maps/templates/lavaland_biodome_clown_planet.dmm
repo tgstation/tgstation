@@ -1,0 +1,68 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/simulated/wall/r_wall,/area/ruin/powered)
+"c" = (/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"d" = (/obj/structure/grille,/obj/structure/window/fulltile,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"e" = (/turf/simulated/floor/grass{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"f" = (/obj/item/weapon/reagent_containers/food/snacks/grown/banana,/turf/simulated/floor/grass{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"g" = (/turf/simulated/mineral,/area/ruin/powered)
+"h" = (/obj/item/weapon/bikehorn,/turf/simulated/floor/grass{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"i" = (/obj/item/weapon/grown/bananapeel,/turf/simulated/floor/grass{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"j" = (/turf/simulated/mineral/clown,/area/ruin/powered)
+"k" = (/obj/structure/ore_box,/turf/simulated/floor/grass{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"l" = (/turf/simulated/floor/plating/asteroid,/area/ruin/powered)
+"m" = (/obj/item/weapon/grown/bananapeel,/turf/simulated/floor/plating/asteroid,/area/ruin/powered)
+"n" = (/turf/simulated/mineral/gibtonite,/area/ruin/powered)
+"o" = (/mob/living/simple_animal/hostile/retaliate/clown,/turf/simulated/floor/grass{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"p" = (/obj/machinery/door/airlock/hatch,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/powered)
+"q" = (/obj/machinery/door/airlock/clown,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"r" = (/turf/simulated/floor/mineral/bananium,/area/ruin/powered)
+"s" = (/obj/item/weapon/grown/bananapeel,/turf/simulated/floor/mineral/bananium,/area/ruin/powered)
+"t" = (/turf/simulated/wall/mineral/wood,/area/ruin/powered)
+"u" = (/obj/structure/table/wood,/obj/item/weapon/banhammer,/turf/simulated/floor/mineral/bananium,/area/ruin/powered)
+"v" = (/obj/structure/table/wood,/obj/item/clothing/mask/gas/sexyclown,/turf/simulated/floor/mineral/bananium,/area/ruin/powered)
+"w" = (/obj/structure/table/wood,/obj/item/clothing/mask/gas/clown_hat,/turf/simulated/floor/mineral/bananium,/area/ruin/powered)
+"x" = (/obj/structure/bed,/obj/item/weapon/bedsheet/clown,/turf/simulated/floor/mineral/bananium,/area/ruin/powered)
+"y" = (/obj/machinery/door/airlock/clown,/obj/item/weapon/grown/bananapeel,/turf/simulated/floor/mineral/bananium,/area/ruin/powered)
+"z" = (/obj/item/weapon/grown/bananapeel,/mob/living/simple_animal/hostile/retaliate/clown,/turf/simulated/floor/mineral/bananium,/area/ruin/powered)
+"A" = (/obj/structure/table/wood,/turf/simulated/floor/grass{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"B" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/pie/cream,/turf/simulated/floor/grass{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"C" = (/obj/structure/table/wood,/obj/item/weapon/sord,/turf/simulated/floor/grass{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"D" = (/obj/structure/table/wood,/obj/item/weapon/bikehorn/rubberducky,/turf/simulated/floor/grass{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"E" = (/obj/item/weapon/grenade/clusterbuster/soap,/obj/structure/bed,/obj/item/weapon/bedsheet/clown,/turf/simulated/floor/mineral/bananium,/area/ruin/powered)
+"F" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers,/turf/simulated/floor/grass{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"G" = (/obj/structure/table/wood,/obj/item/weapon/restraints/handcuffs/fake,/turf/simulated/floor/grass{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"H" = (/obj/structure/table/wood,/obj/item/weapon/bikehorn/airhorn,/turf/simulated/floor/grass{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"I" = (/turf/simulated/wall/r_wall{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bccccccccccccccccccccccccccccb
+bcddddddddddddddddddddddddddcb
+bcdefeeeeeeegggggggggggggggdcb
+bcdeeheieefeeggggggggggjgjgdcb
+bcdeeeeeheeeeekkggggjllllmgdcb
+bcdeeeeeieeeeeeeggggglllllgdcb
+bcdeeheeeeheeieeeeggglnjgggdcb
+bcdeheeoeeeeeeeeoellllgggjgdcb
+bcdeeeeeheeieheeeelmllgggggdcb
+bcdeeheeeeeeeeeeeggggggggggdcb
+bcdeeeeeeeheeeeheggggggggggdcb
+bcdeeeeeeeeefeeeegggggeegggdcb
+bcdeeeeheeeeeeheegggggefeeedcb
+pcqrrrsrrreeeeeeeeeeeeeeeeidcb
+bcdeeeeeereeeheeeeeefeeheehdcb
+bcdeeheeerefeeeoeeeeeeeeeeedcb
+bcdeeeeeereeeeehettttteeoeedcb
+bcdefeheereheeeeetuvwteeeeedcb
+bcdeeeeeireeeeeeetrrxteiehedcb
+bcdeheeeerrrrrsrryrrxteeeeedcb
+bcdeeeoeheeeeeeeetxzxteheeedcb
+bcdeieeeeABCDBefetxxEteeefedcb
+bcdeeeheeBAFGHheetttttieeeedcb
+bcdefeeeeeeheeeeeeeeeeeheeedcb
+bcdeeeeeeeeeeeeoeeeeheeeeehdcb
+bcddddddddddddddddddddddddddcb
+bccccccccccccccccccccccccccccb
+bbbbbIbbbbbbbbbbbbbbbbbbbbbbbb
+"}

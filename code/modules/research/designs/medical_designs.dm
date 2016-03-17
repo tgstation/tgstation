@@ -231,6 +231,17 @@
 	build_path = /obj/item/organ/internal/cyberimp/chest/reviver
 	category = list("Misc", "Medical Designs")
 
+/datum/design/cyberimp_thrusters
+	name = "Thrusters set implant"
+	desc = "This implant will allow you to use gas from environment or your internals for propulsion in zero-gravity areas."
+	id = "ci-thrusters"
+	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 5, "magnets" = 4, "engineering" = 5)
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 80
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_SILVER = 1000, MAT_DIAMOND = 1000)
+	build_path = /obj/item/organ/internal/cyberimp/chest/thrusters
+	category = list("Misc", "Medical Designs")
+
 
 /////////////////////////////////////////
 ////////////Regular Implants/////////////

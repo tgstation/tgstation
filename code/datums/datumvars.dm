@@ -676,6 +676,7 @@ body
 						if(Obj.type == O_type)
 							i++
 							qdel(Obj)
+						CHECK_TICK
 					if(!i)
 						usr << "No objects of this type exist"
 						return
@@ -687,6 +688,7 @@ body
 						if(istype(Obj,O_type))
 							i++
 							qdel(Obj)
+						CHECK_TICK
 					if(!i)
 						usr << "No objects of this type exist"
 						return
@@ -705,24 +707,14 @@ body
 					A.create_reagents(amount)
 
 			if(A.reagents)
-				var/list/reagent_options = list()
-				for(var/r_id in chemical_reagents_list)
-					var/datum/reagent/R = chemical_reagents_list[r_id]
-					reagent_options[R.name] = r_id
-
-				if(reagent_options.len)
-					sortList(reagent_options)
-					reagent_options.Insert(1, "CANCEL")
-
-					var/chosen = input(usr, "Choose a reagent to add.", "Choose a reagent.") in reagent_options
-					var/chosen_id = reagent_options[chosen]
-
-					if(chosen_id)
-						var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
-						if(amount)
-							A.reagents.add_reagent(chosen_id, amount)
-							log_admin("[key_name(usr)] has added [amount] units of [chosen] to \the [A]")
-							message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen] to \the [A]</span>")
+				var/list/reagent_options = sortList(chemical_reagents_list)
+				var/chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") in reagent_options|null
+				if(chosen_id)
+					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
+					if(amount)
+						A.reagents.add_reagent(chosen_id, amount)
+						log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to \the [A]")
+						message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen_id] to \the [A]</span>")
 
 			href_list["datumrefresh"] = href_list["addreagent"]
 

@@ -928,7 +928,7 @@ var/next_mob_id = 0
 
 //Default buckling shift visual for mobs
 /mob/post_buckle_mob(mob/living/M)
-	if(M == buckled_mob) //post buckling
+	if(M in buckled_mobs)//post buckling
 		var/height = M.get_mob_buckling_height(src)
 		M.pixel_y = initial(M.pixel_y) + height
 		if(M.layer < layer)

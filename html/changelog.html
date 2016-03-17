@@ -55,6 +55,208 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">17 March 2016</h2>
+			<h3 class="author">CoreOverload updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">The recent jetpacks nerf is finally reverted. Turbo mode is dead and stabilization is once again can be toggled on and off.</li>
+				<li class="rscadd">Added a new chest cyberimplant: implantable thrusters set. This implant is a built-in jetpack that has no stabilization mode at all and can use gas from environment (if 30+ kPa) or from internals. It can also use plasma from plasma vessel organ, if you have one.</li>
+			</ul>
+			<h3 class="author">Joan updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Moved the security hud's icons down slightly to allow it to coexist with medical and antag huds.</li>
+			</ul>
+			<h3 class="author">Shadowlight213 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">HOG deity can now be heard by all of its followers!</li>
+				<li class="tweak">The prophet no longer needs to wear his hat to speak with his deity.</li>
+				<li class="rscadd">The prophet's hat and staff have a new functionality! Use the staff inhand to reveal hidden structures.</li>
+				<li class="rscadd">Deities can now hide their structures from view! Pretend to be a book club when sec bursts in. experiment:Only enemy prophets or your own deity can reveal these structures and they are disabled when hidden.</li>
+			</ul>
+
+			<h2 class="date">15 March 2016</h2>
+			<h3 class="author">Cuboos updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="soundadd">Modded the current door sound and added a few new ones, unique sound for closing, bolting up/down and a nifty denied sound.</li>
+			</ul>
+			<h3 class="author">Isratosh updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Security flashlights can now be attached to the bulletproof helmets.</li>
+			</ul>
+			<h3 class="author">Joan updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Resource blobs produce resources for their overmind slightly slower for each resource blob their overmind has.</li>
+				<li class="rscadd">Blob overminds get one free chemical reroll.</li>
+				<li class="rscadd">Blob overminds can no longer place resource and factory blobs out of range of cores and nodes, unless they Toggle Node Requirement off. It is on by default.</li>
+				<li class="rscadd">Blob UI buttons now have tooltips.</li>
+				<li class="tweak">Cores and nodes will expand slightly slower.</li>
+				<li class="tweak">Blob Chemicals no longer trigger effects on dead mobs.</li>
+				<li class="tweak">Shifting Fragments has a lower chance to move shields with normal expansion and will no longer shift blobs to the location of a dying blob.</li>
+				<li class="tweak">Flammable Goo no longer applies fire to tiles with blobs.</li>
+				<li class="tweak">Electromagnetic Web has a slightly higher EMP range.</li>
+			</ul>
+			<h3 class="author">Kor updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Hunger was accidentally disabled sometime back in October 2015. We finally noticed and fixed it.</li>
+			</ul>
+			<h3 class="author">Kor (And all the lovely maintainers and spriters who helped me along the way) updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Adds a new, lava themed planet to mine on,with randomly generated rivers of lava and islands of volcanic rock. This mine is used on Box and Metastation. Other mappers may enable it at their discretion.</li>
+				<li class="rscadd">Added deadly ash storms to mining.</li>
+				<li class="rscadd">Added slightly deadlier variants of mining mobs to lavaland, with sprites done by my girlfriend.</li>
+				<li class="rscadd">Added portable survival capsules to mining equipment lockers. Don't forget these, or you might get caught out by a storm. You may purchase more at the venders.</li>
+				<li class="rscadd">Added randomly loaded ruins to mining. These maps contain new and unique items not seen elsewhere in thegame. There are around a dozen of them added with the "release" of lavaland, though I plan for many more.</li>
+				<li class="rscadd">Some ruins contain sleepers which allow you to spawn as various roles, such as survivors of a shuttle crash stranded in the wilderness. You can find these sleepers in the orbit list.</li>
+				<li class="rscadd">You can now fly the abandoned white ship to lavaland.</li>
+			</ul>
+			<h3 class="author">LanCartwright updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Choking now deals damage based on virus' Stage speed and virus Stealth.</li>
+				<li class="tweak">Fever heats the body based on Transmittability and Stage speed.</li>
+				<li class="tweak">Spontaneous Combustion now adjusts firestacks based on stage speed minus Stealth.</li>
+				<li class="tweak">Necrotizing Fasciitis now deals damage based on lower Stealth values.</li>
+				<li class="tweak">Toxic Filter now heals based on Stage speed.</li>
+				<li class="tweak">Deoxyribonucleic Acid Restoration now heals brain damage based on Stage speed minus Stealth.</li>
+				<li class="tweak">Shivering now chills based on Stealth and Resistance.</li>
+				<li class="rscadd">Proc for the total stage speed of a virus' symptoms.</li>
+				<li class="rscadd">Proc for the total stealth of a virus' symptoms.</li>
+				<li class="rscadd">Proc for the total resistance of a virus' symptoms.</li>
+				<li class="rscadd">Proc for the total transmittance speed of a virus' symptoms.</li>
+			</ul>
+			<h3 class="author">MrStonedOne updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">Lag has been removed from the following systems: mob life()/virus process, machine/object/event processing, atmos, deletion subsystem, lighting, explosions, singularity's eat(), timers, wall smoothing, mass var edit, mass proc calls(and all of sdql2), map loader, and the away mission loader.</li>
+				<li class="rscdel">Removed limit on bomb cap of 32,64,128, it can now go to the MOON.</li>
+				<li class="tweak">Minimap generation is now a config option that defaults to off so coders don't have to wait for it to generate to test their code, server operators should note that they need to enable it on production servers that want minimap generation.</li>
+				<li class="wip">if you find any things that still lag, please report them to MrStonedOne for lag removal.</li>
+				<li class="experiment">I'm gonna take this time to shill out that, Lummox JR, byond's only dev, coded the tool that made this change possible, he lives off of byond membership donations, if you like the lag removal, become a byond member or at least throw 5 bucks byond's way for doing this.</li>
+				<li class="experiment">Feel free to ask for bomb cap removals when solo antag, but remember, the later in the round it is, the more likely you'll get it.</li>
+			</ul>
+			<h3 class="author">PKPenguin321 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Scooters and skateboards have been added.</li>
+				<li class="rscadd">Use rods to make a scooter frame. From there, apply metal to make wheels, creating a skateboard. Apply a few more rods to make a full scooter. You can also use tablecrafting to create them, their recipes can be found under the Misc. category.</li>
+				<li class="rscadd">Each step of scooter deconstruction is performed with either a wrench or a screwdriver, depending on the step.</li>
+			</ul>
+			<h3 class="author">xxalpha updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Scrubber clog event now ejects cockroaches.</li>
+			</ul>
+
+			<h2 class="date">13 March 2016</h2>
+			<h3 class="author">Dorsisdwarf updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Adds Robo-Doctor board (The Hippocratic Oath: Now on your beepbot)</li>
+				<li class="rscadd">Adds Reporter board (The truth will set ye free (termsandconditionsmayapply))</li>
+				<li class="rscadd">Adds Live and Let Live board</li>
+				<li class="rscadd">Adds Thermodynamics as a dangerous board.</li>
+			</ul>
+			<h3 class="author">Impisi updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Improvised shells now deal more far more damage but are more inaccurate.</li>
+				<li class="tweak">Overloaded shells now require liquid plasma in addition to black powder. Shells now fire explosive pellets that are good at hurting you and everything in front of you.</li>
+			</ul>
+			<h3 class="author">Joan updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">Blob gamemode blobs will no longer burst from people.</li>
+				<li class="rscadd">Instead, the blob gamemode spawns overminds, which can place their blob core underneath them in an unobserved area.</li>
+				<li class="rscadd">The overminds can, until they have placed a blob core, move to any non-space, non-shuttle tile.</li>
+				<li class="rscadd">If the overminds fail to place a blob core within a time limit, it will be automatically placed for them at a random blob spawnpoint.</li>
+				<li class="tweak">The time before the overmind automatically places the core is slightly lower than the previous average time it'd take a blob to burst.</li>
+			</ul>
+
+			<h2 class="date">12 March 2016</h2>
+			<h3 class="author">Joan updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Blobbernauts and blob spores can now move near blob tiles in no gravity.</li>
+				<li class="tweak">Boiling Oil does slightly more damage and takes slightly less damage when extinguished.</li>
+				<li class="rscadd">Flammable Goo now applies firestacks to targets, but does not ignite them.</li>
+			</ul>
+			<h3 class="author">Jordie0608 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Show Server Revision will now tell you if a PR is test merged currently.</li>
+			</ul>
+			<h3 class="author">PKPenguin321 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added reinforced bolas. They do a very short stun in addition to normal functions, and take twice as long to break out of when compared to regular bolas.</li>
+				<li class="tweak">The traitor's Throwing Star Box has been made into the Throwing Weapons Box. It now contains two reinforced bolas in addition to its old contents. It also costs 5 TCs, down from 6.</li>
+			</ul>
+			<h3 class="author">tkdrg updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">The detective's revolver now takes three full seconds to reload.</li>
+			</ul>
+			<h3 class="author">xxalpha updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Detective can be a Traitor/Double Agent.</li>
+				<li class="tweak">Removed Detective's access to security lockers and secbots.</li>
+				<li class="tweak">Removed bowman's headset from Detective's locker.</li>
+				<li class="tweak">Box Brig Security Office and Locker Room require a higher access level (Security Officer level).</li>
+			</ul>
+
+			<h2 class="date">10 March 2016</h2>
+			<h3 class="author">Joan updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">The blob can now be shocked by the tesla.</li>
+				<li class="tweak">Strong blobs are now much more resistant to brute damage.</li>
+				<li class="wip">Tweaks blob reagents;</li>
+				<li class="rscdel">Removes Ripping Tendrils.</li>
+				<li class="rscdel">Removes Draining Spikes.</li>
+				<li class="tweak">Cryogenic Liquid does less burn damage.</li>
+				<li class="tweak">Pressurized Slime does less brute damage.</li>
+				<li class="tweak">Reactive Gelatin now has a lower minimum damage.</li>
+				<li class="tweak">Poisonous Strands applies its damage over a longer period of time.</li>
+				<li class="tweak">Sporing Pods now does much less damage, and is less likely to produce spores when killed.</li>
+				<li class="tweak">Regenerative Materia, Hallucinogenic Nectar, and Envenomed Filaments do less toxin damage.</li>
+				<li class="rscadd">Energized Fibers no longer heals when hit with stamina damage, and is instead immune to the tesla.</li>
+				<li class="rscadd">Boiling Oil now takes damage from extinguisher blasts. Boiling Oil blobbernauts, however, do not.</li>
+				<li class="tweak">Replicating Foam now takes increased brute damage and when expanding from damage, will not expand again.</li>
+				<li class="tweak">Flammable Goo takes 50% increased burn damage, from 30%.</li>
+				<li class="tweak">Explosive Lattice now takes much higher damage from fire, flashbangs, and the tesla.</li>
+				<li class="experiment">Electromagnetic Web takes full brute damage, lasers will now one-hit normal blobs, and the death EMP is smaller.</li>
+			</ul>
+
+			<h2 class="date">09 March 2016</h2>
+			<h3 class="author">Joan updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Blobs can now attack people that end up on top of blob tiles with Left-Click or the Expand/Attack Blob verb.</li>
+				<li class="tweak">The Toxin Filter virology symptom now heals 4-8 toxin damage instead of 8-14.</li>
+				<li class="tweak">The Damage Converter virology symptom will now do toxin damage for each limb healed.</li>
+			</ul>
+			<h3 class="author">MrStonedOne updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Centcom has improved the the tesla generator! The generated tesla energy balls should now be more stable! Growing quicker and dissipating slower. It seems to also move around a touch more but that shouldn't be an issue as the the tesla escaping containment is unheard of!</li>
+			</ul>
+
+			<h2 class="date">07 March 2016</h2>
+			<h3 class="author">WJohnston updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Queens and praetorians have new sprites!</li>
+			</ul>
+
+			<h2 class="date">05 March 2016</h2>
+			<h3 class="author">CoreOverload updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Cyborg tools (screwdriver, crowbar, wrench, etc) now have new fancy sprites.</li>
+				<li class="tweak">Said cyborg tools have received a buff and are now two times faster than their non-cyborg counterparts.</li>
+			</ul>
+			<h3 class="author">Joan updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Replicating Foam has lower expand chances when hit and on normal expand.</li>
+				<li class="bugfix">Shifting Fragments will no longer try and fail to swap with invalid blobs when hit.</li>
+				<li class="tweak">Electromagnetic Web no longer always EMPs targets, instead doing it at a 25% chance.</li>
+				<li class="tweak">Synchronous Mesh now only takes bonus damage from fire, bombs, and flashbangs.</li>
+				<li class="tweak">Synchronous Mesh no longer tries to split damage to blob cores or nodes. Cores and nodes still split damage to nearby blobs, however.</li>
+				<li class="tweak">Blobbernauts now attack much slower.</li>
+				<li class="tweak">Blobbernauts are now maximum one per factory, reduce that factory's health drastically, and die slowly if that factory is destroyed.</li>
+				<li class="experiment">Factories must still have above 50% health to produce blobbernauts.</li>
+			</ul>
+
+			<h2 class="date">03 March 2016</h2>
+			<h3 class="author">Joan updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Blobbernauts now die slowly when not near a blob.</li>
+				<li class="rscadd">Blobbernauts can now see their health and the core health of the overmind that created them.</li>
+			</ul>
+
 			<h2 class="date">02 March 2016</h2>
 			<h3 class="author">CoreOverload updated:</h3>
 			<ul class="changes bgimages16">

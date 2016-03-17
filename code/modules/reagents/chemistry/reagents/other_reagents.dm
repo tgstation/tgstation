@@ -220,7 +220,7 @@
 		M.drowsyness = max(M.drowsyness-5, 0)
 		M.AdjustParalysis(-2, 0)
 		M.AdjustStunned(-2, 0)
-		M.AdjustWeakened(-2, 0)
+		M.AdjustWeakened(-2, 0, 0)
 	else
 		M.adjustToxLoss(2, 0)
 		M.adjustFireLoss(2, 0)
@@ -369,7 +369,7 @@
 	..()
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
 	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
-	H.Weaken(3)
+	H.Weaken(3, 0, 0)
 	spawn(30)
 		if(!H || qdeleted(H))
 			return
@@ -1163,3 +1163,27 @@
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	color = "#CEC3C6" // rgb: 206,195,198
+
+//Reagent used for shadowling blindness smoke spell
+datum/reagent/shadowling_blindness_smoke
+	name = "odd black liquid"
+	id = "blindness_smoke"
+	description = "<::ERROR::> CANNOT ANALYZE REAGENT <::ERROR::>"
+	color = "#000000" //Complete black (RGB: 0, 0, 0)
+	metabolization_rate = 100 //lel
+
+/datum/reagent/shadowling_blindness_smoke/on_mob_life(mob/living/M)
+	if(!is_shadow_or_thrall(M))
+		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"
+		M.blind_eyes(5)
+		if(prob(25))
+			M.visible_message("<b>[M]</b> claws at their eyes!")
+			M.Stun(3, 0)
+			. = 1
+	else
+		M << "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>"
+		M.heal_organ_damage(2,2, 0)
+		M.adjustOxyLoss(-2, 0)
+		M.adjustToxLoss(-2, 0)
+		. = 1
+	return ..() || .

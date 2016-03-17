@@ -197,7 +197,7 @@
 	time = 15
 	name = "Poppy pretzel"
 	reqs = list(
-		/obj/item/seeds/poppyseed = 1,
+		/obj/item/seeds/poppy = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
