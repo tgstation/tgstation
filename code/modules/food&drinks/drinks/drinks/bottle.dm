@@ -231,6 +231,12 @@
 	icon_state = "winebottle"
 	list_reagents = list("wine" = 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
+	name = "T&T Extra-Strong Absinthe"
+	desc = "An strong alcoholic drink brewed and distributed by Terb & Tonte Inc."
+	icon_state = "absinthebottle"
+	list_reagents = list("absinthe" = 100)
+
 //////////////////////////JUICES AND STUFF ///////////////////////
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice

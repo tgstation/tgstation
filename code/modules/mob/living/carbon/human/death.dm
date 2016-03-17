@@ -16,6 +16,7 @@
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
+
 	stat = DEAD
 	dizziness = 0
 	jitteriness = 0
