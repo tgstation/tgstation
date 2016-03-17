@@ -61,6 +61,10 @@
 		table_destroy(1)
 		return
 
+/obj/structure/table/narsie_act()
+	if(prob(20))
+		new /obj/structure/table/wood(src.loc)
+
 /obj/structure/table/mech_melee_attack(obj/mecha/M)
 	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
@@ -332,6 +336,9 @@
 	burntime = 20
 	canSmoothWith = list(/obj/structure/table/wood, /obj/structure/table/wood/poker)
 
+/obj/structure/table/wood/narsie_act()
+	return
+
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
@@ -339,6 +346,9 @@
 	icon_state = "poker_table"
 	buildstack = /obj/item/stack/tile/carpet
 	canSmoothWith = list(/obj/structure/table/wood/poker, /obj/structure/table/wood)
+
+/obj/structure/table/wood/poker/narsie_act()
+	new /obj/structure/table/wood(src.loc)
 
 /*
  * Reinforced tables

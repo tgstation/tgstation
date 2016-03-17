@@ -310,6 +310,35 @@
 
 //////////////////////////////////
 /*
+	Cult Airlocks
+*/
+
+/obj/machinery/door/airlock/cult
+	name = "cult airlock"
+	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
+	doortype = /obj/structure/door_assembly/door_assembly_cult
+
+/obj/machinery/door/airlock/cult/narsie_act()
+	return
+
+/obj/machinery/door/airlock/cult/glass
+	doortype = /obj/structure/door_assembly/door_assembly_cult/glass
+	glass = 1
+	opacity = 0
+
+/obj/machinery/door/airlock/cult/unruned
+	icon = 'icons/obj/doors/airlocks/cult/unruned/cult.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/cult/unruned/overlays.dmi'
+	doortype = /obj/structure/door_assembly/door_assembly_cult/unruned
+
+/obj/machinery/door/airlock/cult/unruned/glass
+	doortype = /obj/structure/door_assembly/door_assembly_cult/unruned/glass
+	glass = 1
+	opacity = 0
+
+//////////////////////////////////
+/*
 	Misc Airlocks
 */
 
@@ -321,3 +350,6 @@
 	doortype = null
 	glass = 1
 	bound_width = 64 // 2x1
+
+/obj/machinery/door/airlock/glass_large/narsie_act()
+	return

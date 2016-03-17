@@ -45,6 +45,12 @@
 				deconstruct()
 				return
 
+/obj/structure/chair/narsie_act()
+	if(prob(20))
+		var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
+		W.dir = dir
+		qdel(src)
+
 /obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -130,6 +136,9 @@
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
 
+/obj/structure/chair/wood/narsie_act()
+	return
+
 /obj/structure/chair/wood/normal //Kept for map compatibility
 
 
@@ -197,6 +206,9 @@
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 
+/obj/structure/chair/stool/narsie_act()
+	return
+
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
@@ -222,6 +234,11 @@
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
+/obj/item/chair/narsie_act()
+	if(prob(20))
+		var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
+		W.dir = dir
+		qdel(src)
 
 /obj/item/chair/attack_self(mob/user)
 	plant(user)
@@ -281,6 +298,9 @@
 	origin_type = /obj/structure/chair/stool
 	break_chance = 0 //It's too sturdy.
 
+/obj/item/chair/stool/narsie_act()
+	return //sturdy enough to ignore a god
+
 /obj/item/chair/wood
 	name = "wooden chair"
 	icon_state = "wooden_chair_toppled"
@@ -290,6 +310,9 @@
 	hitsound = 'sound/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
 	break_chance = 50
+
+/obj/item/chair/wood/narsie_act()
+	return
 
 /obj/item/chair/wood/wings
 	icon_state = "wooden_chair_wings_toppled"

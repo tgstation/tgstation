@@ -98,6 +98,26 @@ var/list/airlock_overlays = list()
 	locked = 0
 	update_icon()
 
+/obj/machinery/door/airlock/narsie_act()
+	var/turf/T = get_turf(src)
+	var/runed = prob(20)
+	if(prob(20))
+		if(glass)
+			if(runed)
+				new/obj/machinery/door/airlock/cult/glass(T)
+			else
+				new/obj/machinery/door/airlock/cult/unruned/glass(T)
+		else
+			if(runed)
+				new/obj/machinery/door/airlock/cult(T)
+			else
+				new/obj/machinery/door/airlock/cult/unruned(T)
+		if(runed)
+			PoolOrNew(/obj/effect/overlay/temp/cult/door, T)
+		else
+			PoolOrNew(/obj/effect/overlay/temp/cult/door/unruned, T)
+		qdel(src)
+
 /obj/machinery/door/airlock/Destroy()
 	qdel(wires)
 	wires = null
