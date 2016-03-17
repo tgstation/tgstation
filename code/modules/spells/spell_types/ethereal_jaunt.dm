@@ -30,8 +30,6 @@
 			animation.layer = 5
 			animation.master = holder
 			target.ExtinguishMob()
-			var/mob/living/carbon/wiz = user
-			mute(wiz)
 			if(target.buckled)
 				target.buckled.unbuckle_mob()
 			if(target.pulledby)
