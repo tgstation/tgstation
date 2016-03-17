@@ -271,10 +271,10 @@ var/global/list/bottle_colour_choices = list("Blue" = "#0094FF","Dark Blue" = "#
 
 	New()
 		..()
-		new /obj/item/weapon/reagent_containers/pill/creatine/safe( src )
-		new /obj/item/weapon/reagent_containers/pill/creatine/safe/supplement ( src )
-		new /obj/item/weapon/reagent_containers/pill/creatine/safe/supplement ( src )
-		new /obj/item/weapon/reagent_containers/pill/creatine/safe/supplement ( src )
-		new /obj/item/weapon/reagent_containers/pill/creatine/safe/supplement ( src )
-		new /obj/item/weapon/reagent_containers/pill/creatine/safe/supplement ( src )
+		new /obj/item/weapon/reagent_containers/pill/creatine_safe( src )
+		new /obj/item/weapon/reagent_containers/pill/creatine_supplement ( src )
+		new /obj/item/weapon/reagent_containers/pill/creatine_supplement ( src )
+		new /obj/item/weapon/reagent_containers/pill/creatine_supplement ( src )
+		new /obj/item/weapon/reagent_containers/pill/creatine_supplement ( src )
+		new /obj/item/weapon/reagent_containers/pill/creatine_supplement ( src )
 

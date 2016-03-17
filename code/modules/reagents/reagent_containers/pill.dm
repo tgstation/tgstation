@@ -234,7 +234,7 @@
 		..()
 		reagents.add_reagent("hyperzine", 10)
 
-/obj/item/weapon/reagent_containers/pill/creatine/safe
+/obj/item/weapon/reagent_containers/pill/creatine_safe
 	name = "Creatine Pill (26 units)"
 	desc = "Become the boss of this Gym"
 	icon_state = "pill5"
@@ -243,7 +243,7 @@
 		..()
 		reagents.add_reagent("creatine", 26)
 
-/obj/item/weapon/reagent_containers/pill/creatine/safe/supplement
+/obj/item/weapon/reagent_containers/pill/creatine_supplement
 	name = "Creatine Supplement (5 units)"
 	desc = "Maintain those massive gains!"
 	icon_state = "pill6"
