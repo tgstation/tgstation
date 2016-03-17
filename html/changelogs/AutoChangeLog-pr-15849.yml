@@ -1,0 +1,5 @@
+author: CoreOverload
+delete-after: True
+changes: 
+  - rscdel: "The recent jetpacks nerf is finally reverted. Turbo mode is dead and stabilization is once again can be toggled on and off."
+  - rscadd: "Added a new chest cyberimplant: implantable thrusters set. This implant is a built-in jetpack that has no stabilization mode at all and can use gas from environment (if 30+ kPa) or from internals. It can also use plasma from plasma vessel organ, if you have one."
