@@ -246,7 +246,7 @@
 	if(summoner)
 		summoner.ExtinguishMob()
 		summoner.adjust_fire_stacks(-20)
-
+/*
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
 	if(..())
 		if(prob(45))
@@ -256,6 +256,13 @@
 					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
 					do_teleport(M, M, 10)
 					PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(M))
+*/
+
+/mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
+	if(..())
+		if(ishuman(target))
+			spawn(0)
+				new /obj/effect/hallucination/delusion(target.loc,target,force_kind="custom",duration=200,skip_nearby=0, custom_icon = src.icon_state, custom_icon_file = src.icon)
 
 /mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
 	..()
