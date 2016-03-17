@@ -8,4 +8,4 @@ nouns_body@=ass@,head@,face@,arms@,fingers@,toes@,chest@,eyes@,nails@,groin@,sto
 adjective_insult@=ugly@,repulsive@,dumb@,asian@,mongoloid@,childish@,captain-like@,monkey-like@,whoreish@,dimwit@,jerk-face@,vomit-inducer
 adjective_objects@=big@,small@,tiny@,round@,square@,oblong@,colorful@,dull@,shiny@,sparkling@,blinking@,awful
 adjective_generic@=nice@,pretty@,ugly@,bad@,okay@,stupid
-curse_words@=damn@,shit@,arse@,ass@,wank@,jerk@,bitch
+curse_words@=damn@,shit@,arse@,ass@,wank@,jerk@,bitch@,fuck@,hell@,cunt@,cuck@,cock
