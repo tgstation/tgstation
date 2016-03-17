@@ -53,9 +53,9 @@
 			revive(full_heal = 1)
 			
 	if(istype(target, /obj/machinery/door/airlock))
-		user << "<span class='notice'>You start tearing apart the airlock...</span>"
+		src << "<span class='notice'>You start tearing apart the airlock...</span>"
 		playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
-		if(do_after(user, 250, target))
+		if(do_after(src, 250, target))
 			playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 			qdel(target)
 			return 
