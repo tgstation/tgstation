@@ -90,6 +90,12 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
 	to_chat(user, "<span class='notice'>You switched [amount_per_transfer_from_this == 10 ? "on" : "off"] the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>")
 
+/obj/item/weapon/reagent_containers/spray/restock()
+	if(name == "Polyacid spray")
+		reagents.add_reagent("pacid", 2)
+	else if(name == "Lube spray")
+		reagents.add_reagent("lube", 2)
+
 /obj/item/weapon/reagent_containers/spray/proc/make_puff(var/atom/target, var/mob/user)
 	// Create the chemical puff
 	var/transfer_amount = amount_per_transfer_from_this

@@ -386,4 +386,11 @@
 		return
 	return ..()
 
+/obj/item/stack/restock()
+	if(istype(src,/obj/item/stack/cable_coil) || istype(src,/obj/item/stack/medical))
+		if(amount < max_amount)
+			amount += 2
+		if(amount > max_amount)
+			amount = max_amount
+
 #undef CORRECT_STACK_NAME

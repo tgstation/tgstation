@@ -92,6 +92,9 @@
 /obj/item/blob_act()
 	qdel(src)
 
+/obj/item/proc/restock() //used for borg recharging
+	return
+
 /obj/item/projectile_check()
 	return PROJREACT_OBJS
 

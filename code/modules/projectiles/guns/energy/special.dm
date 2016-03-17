@@ -435,6 +435,12 @@ obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user as mob)
 	update_icon()
 	return 1
 
+/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/restock()
+	if(power_supply.charge < power_supply.maxcharge)
+		power_supply.give(charge_cost)
+		update_icon()
+	else
+		charge_tick = 0
 
 /obj/item/weapon/gun/energy/radgun
 	name = "radgun"

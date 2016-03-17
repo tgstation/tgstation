@@ -586,6 +586,8 @@
 			if(usr) attack_self(usr)
 			return 1
 
+/obj/item/device/lightreplacer/borg/restock()
+	Charge()
 
 #undef LIGHT_OK
 #undef LIGHT_EMPTY
