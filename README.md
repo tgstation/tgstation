@@ -3,10 +3,10 @@
 [![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
 
 
-**Website:** http://www.tgstation13.org <BR>
-**Code:** https://github.com/tgstation/-tg-station <BR>
-**Wiki** http://tgstation13.org/wiki/Main_Page <BR>
-**IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
+**Website:** 👌  <BR>
+**Code:** 👌  <BR>
+**Wiki** 👌  <BR>
+**IRC:** 👌  or if you dont have an IRC client, you can click  👌 <BR>
 
 
 ##DOWNLOADING
