@@ -331,7 +331,6 @@
 		src.throwing = 0
 
 	if ((Obstacle && yes))
-		Obstacle.last_bumped = world.time
 		Obstacle.Bumped(src)
 	return
 	..()
