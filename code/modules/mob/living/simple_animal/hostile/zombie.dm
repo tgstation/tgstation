@@ -9,9 +9,9 @@
 	speak_emote = list("groans")
 	emote_see = list("groans")
 	a_intent = "harm"
-	maxHealth = 100
-	health = 100
-	speed = 1
+	maxHealth = 200
+	health = 200
+	speed = 2
 	harm_intent_damage = 8
 	melee_damage_lower = 20
 	melee_damage_upper = 20
@@ -51,6 +51,14 @@
 			visible_message("<span class='danger'>[src] tears [L] to pieces!</span>")
 			src << "<span class='userdanger'>You feast on [L], restoring your health!</span>"
 			revive(full_heal = 1)
+			
+	if(istype(target, /obj/machinery/door/airlock))
+		user << "<span class='notice'>You start tearing apart the airlock...</span>"
+		playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
+		if(do_after(user, 250, target))
+			playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
+			qdel(target)
+			return 
 
 /mob/living/simple_animal/hostile/zombie/death()
 	..()
