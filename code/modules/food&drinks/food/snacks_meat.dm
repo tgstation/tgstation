@@ -220,3 +220,25 @@
 	bonus_reagents = list("nutriment" = 1, "capsaicin" = 4, "vitamin" = 4)
 	list_reagents = list("nutriment" = 6, "capsaicin" = 5)
 	filling_color = "#FA8072"
+
+#define LUMP "lump"
+#define STAR "star"
+#define LIZARD "lizard"
+#define CORGI "corgi"
+
+/obj/item/weapon/reagent_containers/food/snacks/nugget
+    name = "chicken nugget"
+    filling_color = "#B22222"
+    bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+    list_reagents = list("nutriment" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/nugget/New()
+    ..()
+    var/shape = pick(LUMP, STAR, LIZARD, CORGI)
+    desc = "A 'chicken' nugget vaguely shaped like a [shape]."
+    icon_state = "nugget_[shape]"
+
+#undef LUMP
+#undef STAR
+#undef LIZARD
+#undef CORGI
