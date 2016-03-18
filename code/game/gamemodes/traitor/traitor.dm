@@ -89,7 +89,7 @@
 		kill_objective.find_target()
 		traitor.objectives += kill_objective
 
-		var/datum/objective/survive/survive_objective = new
+		var/datum/objective/siliconsurvive/survive_objective = new
 		survive_objective.owner = traitor
 		traitor.objectives += survive_objective
 
