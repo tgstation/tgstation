@@ -89,24 +89,25 @@
 	icon_state = "mateba"
 	origin_tech = "combat=2;materials=2"
 
+
 // A gun to play Russian Roulette!
 // You can spin the chamber to randomize the position of the bullet.
+// Makes liberal use of cut() to move around the rounds after firing.
 
 /obj/item/weapon/gun/projectile/russian
-	name = "Russian Revolver"
-	desc = "A Russian made revolver. Uses .357 ammo. It has a single slot in it's chamber for a bullet."
+	name = "russian revolver"
+	desc = "A Russian made revolver. Uses .357 ammo. It has six slots for ammo."
 	max_shells = 6
 	origin_tech = "combat=2;materials=2"
+	fire_delay = 1
 
 /obj/item/weapon/gun/projectile/russian/New()
-	..()
-	loaded = new/list(6)
+	loaded = new/list(6) //imperative that this keeps 6 entries at all times
 	loaded[1] = new ammo_type(src)
-	Spin()
+	Spin() //randomize where the first round is located
 	update_icon()
 
 /obj/item/weapon/gun/projectile/russian/proc/Spin()
-
 	loaded = shuffle(loaded)
 
 /obj/item/weapon/gun/projectile/russian/attackby(var/obj/item/A as obj, mob/user as mob)
@@ -114,27 +115,42 @@
 	if(!A) return
 
 	var/num_loaded = 0
-	if(istype(A, /obj/item/ammo_storage/magazine))
+	if(istype(A, /obj/item/ammo_casing)) //loading rounds one by one
+		var/obj/item/ammo_casing/AC = A
+		if(src.getAmmo() >= max_shells)
+			to_chat(user, "<span class='warning'>It's already full of ammo.</span>")
+			return
+		if(caliber[AC.caliber])
+			user.drop_item(AC)
+			AC.loc = src
+			loaded += AC
+			loaded -= null //ensure that the list constantly has 6 entries
+			num_loaded++
 
-		if((load_method == 2) && getAmmo())	return
-		var/obj/item/ammo_storage/magazine/AM = A
+	if(istype(A, /obj/item/ammo_storage)) //loading rounds from a box, still one by one
+		var/obj/item/ammo_storage/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(getAmmo() > 0 || getAmmo() >= max_shells)
-				break
+			if(src.getAmmo() >= max_shells)
+				to_chat(user, "<span class='warning'>It's already full of ammo.</span>")
+				return
 			if(caliber[AC.caliber] && getAmmo() < max_shells)
 				AC.loc = src
 				AM.stored_ammo -= AC
 				loaded += AC
+				loaded -= null //same here
 				num_loaded++
-			break
+			break //one at a time
 		A.update_icon()
 
 	if(num_loaded)
 		user.visible_message("<span class='warning'>[user] loads a single bullet into the revolver and spins the chamber.</span>", "<span class='warning'>You load a single bullet into the chamber and spin it.</span>")
 	else
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
+
+
 	if(getAmmo() > 0)
 		Spin()
+	playsound(user, 'sound/weapons/revolver_spin.ogg', 50, 1)
 	update_icon()
 	return
 
@@ -147,37 +163,65 @@
 
 /obj/item/weapon/gun/projectile/russian/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
 
-	if(!getAmmo())
-		user.visible_message("<span class='warning'>*click*</span>", "<span class='warning'>*click*</span>")
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
-		return
-
-	if(isliving(target) && isliving(user))
-		if(target == user)
-			var/datum/organ/external/affecting = user.zone_sel.selecting
-			if(affecting == "head")
-
-				var/obj/item/ammo_casing/AC = loaded[1]
-				if(!AC || !AC.BB)
-					user.visible_message("<span class='warning'>*click*</span>", "<span class='warning'>*click*</span>")
-					playsound(user, 'sound/weapons/empty.ogg', 100, 1)
-					loaded.Cut(1,2)
-					loaded += AC
-					return
-				if(AC.BB)
-					in_chamber = AC.BB //Load projectile into chamber.
-					AC.BB.loc = src //Set projectile loc to gun.
-					AC.BB = null //Empty casings
-					AC.update_icon()
-				if(!in_chamber)
-					return
-				var/obj/item/projectile/P = new AC.projectile_type
-				playsound(user, fire_sound, 50, 1)
-				user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
-				if(!P.nodamage)
-					user.apply_damage(300, BRUTE, affecting) // You are dead, dead, dead.
-				in_chamber = null
+	var/obj/item/ammo_casing/AC = loaded[1]
+	if(isliving(target) && isliving(user) && target == user)
+		if(mouthshoot)
+			to_chat(user, "<span class='warning'>You're already doing that.</span>")
+			return
+		var/datum/organ/external/affecting = user.zone_sel.selecting
+		if(affecting == "head" || affecting == "mouth")
+			user.visible_message("<span class='danger'>[user.name] puts \the [src] [affecting == "head" ? "against their head" : "in their mouth"], ready to pull the trigger...</span>")
+			mouthshoot = 1
+			if(!do_after(user,src, 40))
+				user.visible_message("<span class='warning'>[user.name] chickened out.</span>")
+				mouthshoot = 0
+				return
+			mouthshoot = 0
+			if(!AC || !AC.BB)
+				user.visible_message("<span class='warning'>*click*</span>")
+				playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 				loaded.Cut(1,2)
 				loaded += AC
 				return
+			if(AC.BB)
+				in_chamber = AC.BB //Load projectile into chamber.
+				AC.BB.loc = src //Set projectile loc to gun.
+				AC.BB = null //Empty casings
+				AC.update_icon()
+			if(!in_chamber)
+				return
+			var/obj/item/projectile/P = new AC.projectile_type
+			playsound(user, fire_sound, 50, 1)
+			user.visible_message("<span class='danger'>[user.name] fires \the [src]!</span>", "<span class='danger'>You fire \the [src]!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+			if(!P.nodamage)
+				affecting = "head"
+				user.apply_damage(300, BRUTE, affecting, used_weapon = "Shot self with [src].") // You are dead, dead, dead.
+			in_chamber = null
+			loaded.Cut(1,2)
+			loaded += AC //to make it more realistic, empty casings remain in until you empty the gun
+		else
+			to_chat(user, "<span class='warning'>Aim for your head or put it in your mouth.</span>")
+			return
+
 	..()
+
+/obj/item/weapon/gun/projectile/russian/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0, struggle = 0)
+	var/obj/item/ammo_casing/AC = loaded[1]
+	if(!AC || !AC.BB)
+		user.visible_message("<span class='warning'>*click*</span>")
+		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+		loaded.Cut(1,2)
+		loaded += AC
+		return
+
+	..()
+	loaded += AC
+	AC.forceMove(src) //get back in there you
+
+/obj/item/weapon/gun/projectile/russian/force_removeMag()
+	if(getAmmo() > 0)
+		for(var/obj/item/ammo_casing/AC in loaded)
+			AC.forceMove(get_turf(src))
+			loaded -= AC
+			loaded += null
+	src.loc.visible_message("<span class='warning'>[src] empties onto the ground!</span>")

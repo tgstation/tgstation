@@ -69,7 +69,7 @@
 	return 0
 
 /obj/item/weapon/gun/projectile/verb/force_removeMag()
-	set name = "Remove Magazine"
+	set name = "Remove Ammo / Magazine"
 	set category = "Object"
 	set src in range(0)
 	if(stored_magazine)

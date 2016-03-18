@@ -23,6 +23,7 @@
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
 	dir = pick(cardinal)
+	name = "[BB ? "" : "spent "][initial(name)]"
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 

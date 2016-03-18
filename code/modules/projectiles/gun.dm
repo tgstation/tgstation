@@ -30,7 +30,7 @@
 	var/clumsy_check = 1
 	var/tmp/list/mob/living/target //List of who yer targeting.
 	var/tmp/lock_time = -100
-	var/tmp/mouthshoot = 0 ///To stop people from suiciding twice... >.>
+	var/mouthshoot = 0 ///To stop people from suiciding twice... >.>
 	var/automatic = 0 //Used to determine if you can target multiple people.
 	var/tmp/mob/living/last_moved_mob //Used to fire faster at more than one person.
 	var/tmp/told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
@@ -123,7 +123,7 @@
 
 	if(!in_chamber)
 		return
-	if(!istype(src, /obj/item/weapon/gun/energy/laser/redtag) && !istype(src, /obj/item/weapon/gun/energy/laser/redtag))
+	if(!istype(src, /obj/item/weapon/gun/energy/laser/redtag) && !istype(src, /obj/item/weapon/gun/energy/laser/bluetag))
 		log_attack("[user.name] ([user.ckey]) fired \the [src] (proj:[in_chamber.name]) at [target] [ismob(target) ? "([target:ckey])" : ""] ([target.x],[target.y],[target.z])[struggle ? " due to being disarmed." :""]" )
 	in_chamber.firer = user
 
@@ -235,7 +235,7 @@
 		mouthshoot = 1
 		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
 		if(!do_after(user,src, 40))
-			M.visible_message("<span class='notice'>[user] decided life was worth living</span>")
+			M.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
 			mouthshoot = 0
 			return
 		if (process_chambered())
