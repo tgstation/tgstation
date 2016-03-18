@@ -311,6 +311,8 @@
 					"<span class='notice'>You unfasten \the [src]'s frame from the floor.</span>")
 					d_state = WINDOWLOOSE
 					anchored = 0
+					for(var/obj/structure/grille/G in loc)
+						G.setfullwindowed()
 					update_nearby_tiles() //Needed if it's a full window, since unanchored windows don't link
 					update_nearby_icons()
 					update_icon()
@@ -329,6 +331,8 @@
 					"<span class='notice'>You fasten \the [src]'s frame to the floor.</span>")
 					d_state = WINDOWLOOSEFRAME
 					anchored = 1
+					for(var/obj/structure/grille/G in loc)
+						G.setfullwindowed()
 					update_nearby_tiles() //Ditto above, but in reverse
 					update_nearby_icons()
 					update_icon()
