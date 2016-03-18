@@ -1,5 +1,0 @@
-author: Intigracy
-delete-after: True
-changes: 
-- bugfix: "The russian revolver finally works. Spinning randomizes ammo location. Click with single round or 357 box of ammo to add a round and spin it. Click it in hand to spin it. Target head or mouth and click yourself to try your luck. Right click > empty ammo to empty out all the ammunition (including the spent casings)."
-- tweak: "Spent casings are now named as such to make retrieving unspent ammunition from a pile easier."
