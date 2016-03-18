@@ -1895,9 +1895,9 @@ datum
 				for(var/mob/living/carbon/slime/S in viewers(get_turf(holder.my_atom), null)) // kills slimes
 					S.death(0)
 				for(var/mob/living/simple_animal/slime/S in viewers(get_turf(holder.my_atom), null)) // kills pet slimes too
-					S.health = 0
+					S.death(0)
 				for(var/mob/living/simple_animal/adultslime/S in viewers(get_turf(holder.my_atom), null)) // no survivors
-					S.health = 0
+					S.death(0)
 
 //Light Pink
 		slimepotion2

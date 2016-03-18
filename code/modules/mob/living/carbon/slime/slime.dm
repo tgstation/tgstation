@@ -753,8 +753,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 				to_chat(user, "<span class='warning'>The solution doesn't work on used extracts!</span>")
 				return ..()
 			to_chat(user, "You splash the Slime Resurrection Serum onto the extract causing it to quiver and come to life.")
-			var/mob/living/carbon/slime/S = new primarytype
-			S.loc = get_turf(src)
+			new primarytype(get_turf(src))
 			Uses--
 			qdel(O)
 
@@ -1017,34 +1016,34 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			del (src)*/
 
 /obj/item/weapon/slimedupe
-    name = "slime duplicator"
-    desc = "A potent chemical mix that will force a child slime to split in two!"
-    icon = 'icons/obj/chemical.dmi'
-    icon_state = "bottle15"
+	name = "slime duplicator"
+	desc = "temp desc i'm not good at things"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle15"
 
-    attack(mob/living/carbon/slime/M as mob, mob/user as mob)
-        if(!istype(M, /mob/living/carbon/slime))//target is not a slime
-            to_chat(user, "<span class='warning'>The solution only works on slimes!</span>")
-            return ..()
-        if(istype(M, /mob/living/carbon/slime/adult))
-            to_chat(user, "<span class='warning'>Only baby slimes can be duplicated!</span>")
-            return ..()
-        if(M.stat)
-            to_chat(user, "<span class='warning'>That slime is dead!</span>")
-            return ..()
+/obj/item/weapon/slimedupe/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+	if(!istype(M, /mob/living/carbon/slime))//target is not a slime
+		to_chat(user, "<span class='warning'>The solution only works on slimes!</span>")
+		return ..()
+	if(istype(M, /mob/living/carbon/slime/adult))//don't allow adults because i'm lazy i don't wanna
+		to_chat(user, "<span class='warning'>Only baby slimes can be duplicated!</span>")
+		return ..()
+	if(M.stat)//dunno if this should be allowed but i think it's probably better this way
+		to_chat(user, "<span class='warning'>That slime is dead!</span>")
+		return ..()
 
-        to_chat(user, "You splash the cloning juice onto the slime.")
+	to_chat(user, "You splash the cloning juice onto the slime.")
 
-        var/mob/living/carbon/slime/S = new M.primarytype
-        S.tame = M.tame
-        S.loc = get_turf(M)
-        qdel(src)
+	var/mob/living/carbon/slime/S = new M.primarytype // don't let's start
+	S.tame = M.tame
+	S.loc = get_turf(M)
+	qdel(src)
 
 /obj/item/weapon/slimeres
-    name = "slime resurrection serum"
-    desc = "A potent chemical mix that when used on a slime extact, will bring it to life!"
-    icon = 'icons/obj/chemical.dmi'
-    icon_state = "bottle14"
+	name = "slime resurrection serum"
+	desc = "A potent chemical mix that when used on a slime extact, will bring it to life!"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle14"
 
 ////////Adamantine Golem stuff I dunno where else to put it
 
