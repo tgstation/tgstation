@@ -125,9 +125,9 @@
 	for(var/obj/singularity/singulo in world)
 		if(singulo.z == z)
 			singulo.target = src
-	for(var/obj/singularity/energy_ball in world)
-		if(energy_ball.z == z)
-			energy_ball.home = src
+	for(var/obj/singularity/energy_ball/tesla in world)
+		if(tesla.z == z)
+			tesla.home = src
 	icon_state = "[icontype]1"
 	active = 1
 	machines |= src
