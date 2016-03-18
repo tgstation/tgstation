@@ -99,3 +99,12 @@
 /mob/living/simple_animal/hostile/necro/copy/ListTargets()
 	. = ..()
 	return . - creator
+
+/mob/living/simple_animal/hostile/necro/zombie/leatherman
+	..()
+	name = "leatherman"
+	icon_dead = "zombie_leather_dead"
+	icon_gib = "zombie_leather_dead"
+	icon_state = "zombie_leather"
+	icon_living = "zombie_leather"
+	desc = "Fuck you!"

@@ -931,3 +931,28 @@
 		/obj/item/seeds/whitebeetseed,
 		/obj/item/seeds/cinnamomum,
 		)
+
+// Gym ///////////////////////////////////////////////////////
+
+/obj/map/spawner/misc/gym //for the gym space vault
+	name = "gym spawner"
+	icon_state = "gym"
+	chance = 80
+	amount = 1
+	jiggle = 5
+	toSpawn = list(
+		/obj/item/weapon/dnainjector/nofail/hulkmut,
+		/obj/item/weapon/dnainjector/nofail/midgit,
+		/obj/item/weapon/dnainjector/nofail/fat,
+		/obj/item/weapon/dnainjector/nofail/runfast,
+		/obj/item/weapon/dnainjector/nofail/strong,
+		/obj/item/weapon/reagent_containers/food/snacks/chicken_fillet,
+		/obj/item/clothing/under/shorts/black,
+		/obj/item/clothing/under/shorts/blue,
+		/obj/item/clothing/under/shorts/red,
+		/obj/item/weapon/handcuffs,
+		/obj/item/weapon/storage/pill_bottle/hyperzine,
+		/obj/item/weapon/storage/pill_bottle/creatine,
+		/obj/item/weapon/storage/firstaid/regular,
+		/obj/item/weapon/storage/box/handcuffs,
+		)
