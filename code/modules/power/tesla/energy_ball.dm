@@ -33,8 +33,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
-	var/home = null // Syndie Beacon target
-
+	
 /obj/singularity/energy_ball/Destroy()
 	if(orbiting && istype(orbiting, /obj/singularity/energy_ball))
 		var/obj/singularity/energy_ball/EB = orbiting
@@ -80,8 +79,8 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	var/first_move = dir
 	for(var/i in 0 to move_amount)
 		var/move_dir = pick(alldirs + first_move) //give the first move direction a bit of favoring.
-		if(home && prob(60))
-			move_dir = get_dir(src,home)
+		if(target && prob(60))
+			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
 			loc = T
