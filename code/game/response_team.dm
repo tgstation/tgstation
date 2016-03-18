@@ -324,6 +324,9 @@ proc/trigger_armed_response_team(var/force = 0)
 		W.access = get_centcom_access("Emergency Responders Leader")
 		W.icon_state = "ERT_leader"
 	equip_to_slot_or_del(W, slot_wear_id)
+	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)
+	L.imp_in = src
+	L.implanted = 1
 
 	return 1
 
