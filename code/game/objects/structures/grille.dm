@@ -234,12 +234,20 @@
 /obj/structure/grille/broken //THIS IS ONLY TO BE USED FOR MAPPING, THANK YOU FOR YOUR UNDERSTANDING
 
 	//We need to set all variables for broken grilles manually, notably to have those show up nicely in mapmaker
-	broken = 1
 	icon_state = "grille-b"
+	broken = 1
 	density = 0 //Not blocking anything anymore
-	New()
-		health -= rand(initial(health)*0.8, initial(health)*0.9) //Largely under broken threshold, this is used to adjust the health, NOT to break it
-		healthcheck() //Send this to healthcheck just in case we want to do something else with it
+
+/obj/structure/grille/broken/New()
+	health -= rand(initial(health)*0.8, initial(health)*0.9) //Largely under broken threshold, this is used to adjust the health, NOT to break it
+	healthcheck() //Send this to healthcheck just in case we want to do something else with it
+
+/obj/structure/grille/broken/healthcheck(var/hitsound = 0) //needed because initial icon_state for broken is grille-b for mapping
+	..()
+	if(broken)
+		icon_state = "grille-b"
+	else
+		icon_state = "grille"
 
 /obj/structure/grille/cult //Used to get rid of those ugly fucking walls everywhere while still blocking air
 
