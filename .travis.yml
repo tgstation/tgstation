@@ -34,8 +34,7 @@ before_script:
   - ./install-byond.sh
 
 script:
-  - shopt -s globstar
-  - (! grep 'step_[xy]' maps/*.dmm)
+  - (! cat */*.* | awk '/step_x =/ && /step_y =/' | awk '!/step_y = 0/ && !/step_x = 0/')
   - python tools/ss13_genchangelog.py html/changelog.html html/changelogs --dry-run
   - source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
   - ./dm.sh -M${DM_MAPFILE} vgstation13.dme
