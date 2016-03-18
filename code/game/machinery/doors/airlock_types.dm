@@ -147,13 +147,9 @@
 /obj/machinery/door/airlock/uranium/process()
 	if(world.time > last_event+20)
 		if(prob(50))
-			radiate()
+			irradiate(3, FALSE)
 		last_event = world.time
 	..()
-
-/obj/machinery/door/airlock/uranium/proc/radiate()
-	radiation_pulse(get_turf(src), 3, 3, 15, 0)
-	return
 
 /obj/machinery/door/airlock/plasma
 	name = "plasma airlock"
@@ -222,6 +218,7 @@
 	icon = 'icons/obj/doors/airlocks/external/external.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_ext
+	rad_barrier = RAD_BARRIER_I
 
 /obj/machinery/door/airlock/glass_external
 	name = "external airlock"
@@ -254,6 +251,7 @@
 	opacity = 1
 	doortype = /obj/structure/door_assembly/door_assembly_vault
 	explosion_block = 2
+	rad_barrier = RAD_BARRIER_I
 
 //////////////////////////////////
 /*

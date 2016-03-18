@@ -102,6 +102,7 @@
 		pulse()
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
+		irradiate(20 * current_size, FALSE)
 	eat()
 	dissipate()
 	check_energy()
@@ -354,8 +355,6 @@
 	switch(numb)
 		if(1)//EMP
 			emp_area()
-		if(2,3)//tox damage all carbon mobs in area
-			toxmob()
 		if(4)//Stun mobs who lack optic scanners
 			mezzer()
 		if(5,6) //Sets all nearby mobs on fire
@@ -366,18 +365,6 @@
 			return 0
 	return 1
 
-
-/obj/singularity/proc/toxmob()
-	var/toxrange = 10
-	var/radiation = 15
-	var/radiationmin = 3
-	if (energy>200)
-		radiation += round((energy-150)/10,1)
-		radiationmin = round((radiation/5),1)
-	for(var/mob/living/M in view(toxrange, src.loc))
-		M.rad_act(rand(radiationmin,radiation))
-
-
 /obj/singularity/proc/combust_mobs()
 	for(var/mob/living/carbon/C in urange(20, src, 1))
 		C.visible_message("<span class='warning'>[C]'s skin bursts into flame!</span>", \
@@ -385,7 +372,6 @@
 		C.adjust_fire_stacks(5)
 		C.IgniteMob()
 	return
-
 
 /obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))

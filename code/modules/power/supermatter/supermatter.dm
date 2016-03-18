@@ -265,7 +265,7 @@
 
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
-		radiation_pulse(get_turf(src), 1, 1, 150, 1)
+		irradiate(25, TRUE, "[name] « [user]")
 
 
 /obj/machinery/power/supermatter_shard/Bumped(atom/AM as mob|obj)
@@ -298,7 +298,7 @@
 	power += 200
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(get_turf(src), 4, 10, 500, 1)
+	irradiate(50, TRUE, "[name] « [AM]")
 	for(var/mob/living/L in range(10))
 		investigate_log("has irradiated [L] after consuming [AM].", "supermatter")
 		if(L in view())

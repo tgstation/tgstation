@@ -163,14 +163,14 @@
 	..()
 
 /obj/structure/falsewall/uranium/attack_hand(mob/user)
-	radiate()
+	radiate(user)
 	..()
 
-/obj/structure/falsewall/uranium/proc/radiate()
+/obj/structure/falsewall/uranium/proc/radiate(mob/user)
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			radiation_pulse(get_turf(src), 0, 3, 15, 1)
+			irradiate(3, TRUE, "[name] « [user]")
 			for(var/turf/simulated/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
