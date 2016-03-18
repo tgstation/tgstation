@@ -30,10 +30,10 @@
 	update_icon()
 
 /obj/machinery/atmospherics/miner/wrenchAnchor(mob/user)
-	..()
 	if(on)
 		on = 0
 		update_icon()
+	..()
 
 // Critical equipment.
 /obj/machinery/atmospherics/miner/ex_act(severity)
@@ -52,14 +52,14 @@
 
 /obj/machinery/atmospherics/miner/attack_hand(var/mob/user)
 	..()
-	if(anchored)
+	if(!Adjacent(user))
+		to_chat(user, "<span class='warning'>You can't toggle \the [src] from that far away.</span>")
+	else if(anchored)
 		on=!on
-		update_icon()
-
-/obj/machinery/atmospherics/miner/attack_ai(var/mob/user)
-	..()
-	on=!on
-	update_icon()
+		power_change()
+		to_chat(user, "<span class='warning'>You toggle \the [src] [on ? "off" : "on"].</span>")
+	else
+		to_chat(user, "<span class='warning'>\The [src] needs to be bolted to the ground first.</span>")
 
 // Add air here.  DO NOT CALL UPDATE_VALUES OR UPDATE_ICON.
 /obj/machinery/atmospherics/miner/proc/AddAir()
