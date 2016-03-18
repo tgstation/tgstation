@@ -247,7 +247,7 @@
  */
 
 $(window).on("onUpdateContent", function(){
-	$("#textbased").html("<table><colgroup><col id=\"name\" style=\"width: 24px;\" /><col id=\"pos\" style=\"width: 180px;\" /></colgroup><thead><tr><td><h3>Name</h3></td><td><h3>&nbsp;</h3></td><td><h3>Position</h3></td></tr></thead><tbody id=\"textbased-tbody\"></tbody></table>");
+	$("#textbased").html("<table><colgroup><col id=\"name\" span = \"2\" style=\"min-width: 40px; width: 30%;\" /><col id=\"pos\" style=\"min-width:150px; width: 30%;\" /></colgroup><thead><tr><td><h3>Name</h3></td><td><h3>&nbsp;</h3></td><td><h3>Position</h3></td></tr></thead><tbody id=\"textbased-tbody\"></tbody></table>");
 
 	$("#uiMap").append("<img src=\"minimap_" + z + ".png\" id=\"uiMapImage\" width=\"256\" height=\"256\" unselectable=\"on\"/><div id=\"uiMapContent\" unselectable=\"on\"></div>");
 	$("#uiMapContainer").append("<div id=\"uiMapTooltip\"></div>");
