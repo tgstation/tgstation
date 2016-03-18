@@ -1631,6 +1631,12 @@
 	ticker.mode.greet_hog_follower(src,colour)
 	ticker.mode.update_hog_icons_added(src, colour)
 
+/datum/mind/proc/checkDemonInfo() //TODO LORDPIDEY: Delete this testproc
+	if(demoninfo)
+		world <<"MEEP: Demoninfo found!"
+	else
+		world <<"MEEP: DEMONINFO NOT FOUND!"
+
 /datum/mind/proc/make_Handofgod_god(colour)
 	switch(colour)
 		if("red")
