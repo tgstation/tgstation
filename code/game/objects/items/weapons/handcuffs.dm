@@ -27,7 +27,7 @@
 			playsound(get_turf(src), 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 			for(var/mob/O in viewers(user, null))
 				O.show_message("<span class='danger'>[user] is trying to put handcuffs on [C]!</span>", 1)
-			spawn(30)
+			if(do_after(user, C, 30))
 				if(!C)	return
 				if(p_loc == user.loc && p_loc_m == C.loc)
 					C.handcuffed = new /obj/item/weapon/handcuffs(C)
