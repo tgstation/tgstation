@@ -42,9 +42,9 @@
 			target.reset_perspective(holder)
 			target.notransform=0 //mob is safely inside holder now, no need for protection.
 			jaunt_steam(mobloc)
-			target.mutations |= MUT_MUTATE
+			target.dna.add_mutation (MUT_MUTE)
 			sleep(duration)
-			target.mutations &= ~MUT_MUTATE
+			target.dna.remove_mutation (MUT_MUTE)
 			if(target.loc != holder) //mob warped out of the warp
 				qdel(holder)
 				return
