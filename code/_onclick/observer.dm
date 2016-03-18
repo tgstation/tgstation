@@ -14,10 +14,10 @@
 
 	// Otherwise jump
 	else if(A.loc)
-		loc = get_turf(A)
+		Move(get_turf(A.loc))
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
-	
+
 	if(client.click_intercept)
 		if(call(client.click_intercept,"InterceptClickOn")(src,params,A))
 			return
