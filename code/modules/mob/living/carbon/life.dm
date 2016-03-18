@@ -90,7 +90,7 @@
 
 	if(breath)
 		loc.assume_air(breath)
-		loc.air_update_turf()
+		air_update_turf()
 
 /mob/living/carbon/proc/has_smoke_protection()
 	return 0
