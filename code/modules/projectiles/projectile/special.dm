@@ -20,6 +20,23 @@
 	empulse(target, 0, 0)
 	return 1
 
+/obj/item/projectile/ion/strong
+	damage = 35
+	damage_type = BRUTE
+	nodamage = 0
+	weaken = 2
+
+/obj/item/projectile/ion/strong/Range()
+	..()
+	damage += 5
+	if(damage > 50)
+		new/obj/item/trash/fins(src.loc)
+		empulse(src.loc, 1, 1)
+
+/obj/item/projectile/ion/strong/on_hit(atom/target, blocked = 0)
+	..()
+	empulse(target, 4, 4)
+	return 1
 
 /obj/item/projectile/bullet/gyro
 	name ="explosive bolt"

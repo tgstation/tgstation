@@ -266,6 +266,40 @@
 	icon_state = "40mmHE"
 	projectile_type = /obj/item/projectile/bullet/a40mm
 
+/obj/item/ammo_casing/a40mm/rubber
+	name = "40mm rubber shell"
+	desc = "A 40mm shell packed with 24 non-lethal rubber pellets."
+	caliber = "40mm"
+	icon_state = "40mmrubber"
+	projectile_type = /obj/item/projectile/bullet/rpellet
+	pellets = 24
+	variance = 0.8
+
+/obj/item/ammo_casing/a40mm/buckshot
+	name = "40mm buckshot shell"
+	desc = "A 40mm buckshell packed with 24 highly lethal tungsten carbide pellets."
+	caliber = "40mm"
+	icon_state = "40mmbuck"
+	projectile_type = /obj/item/projectile/bullet/pellet
+	pellets = 24
+	variance = 0.8
+
+/obj/item/ammo_casing/a40mm/empsabot
+	name = "40mm EMP-FSD sabot"
+	desc = "A 40mm shell packed with a large ansible crystal which creates a very heavy Ion sabot blast. At high speeds, it discards ion charged, silicon disrupting fins."
+	caliber = "40mm"
+	icon_state = "40mmemp"
+	projectile_type = /obj/item/projectile/ion/strong
+
+/obj/item/ammo_casing/a40mm/phosphorous
+	name = "40mm incindiary sabot"
+	desc = "A 40mm shell packed with 18 segments of white phosphorous incindiary pellets."
+	caliber = "40mm"
+	icon_state = "40mmfire"
+	projectile_type = /obj/item/projectile/bullet/incendiary/shell/dragonsbreath
+	pellets = 18
+	variance = 0.9
+
 /obj/item/ammo_casing/caseless/magspear
 	name = "magnetic spear"
 	desc = "A reusable spear that is typically loaded into kinetic spearguns."
