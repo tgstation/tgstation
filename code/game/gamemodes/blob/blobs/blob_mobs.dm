@@ -20,6 +20,13 @@
 /mob/living/simple_animal/hostile/blob/update_icons()
 	if(overmind)
 		color = overmind.blob_reagent_datum.color
+	else
+		color = initial(color)
+
+/mob/living/simple_animal/hostile/blob/Destroy()
+	if(overmind)
+		overmind.blob_mobs -= src
+	return ..()
 
 /mob/living/simple_animal/hostile/blob/blob_act()
 	if(stat != DEAD && health < maxHealth)
@@ -162,7 +169,8 @@
 		overlays.Cut()
 		overlays = human_overlays
 		var/image/I = image('icons/mob/blob.dmi', icon_state = "blob_head")
-		I.color = color
+		if(overmind)
+			I.color = overmind.blob_reagent_datum.color
 		color = initial(color)//looks better.
 		overlays += I
 

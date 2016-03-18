@@ -25,33 +25,6 @@
 		qdel(dna)
 	return ..()
 
-/mob/living/carbon/Move(NewLoc, direct)
-	. = ..()
-	if(.)
-		if(src.nutrition && src.stat != 2)
-			src.nutrition -= HUNGER_FACTOR/10
-			if(src.m_intent == "run")
-				src.nutrition -= HUNGER_FACTOR/10
-		if((src.disabilities & FAT) && src.m_intent == "run" && src.bodytemperature <= 360)
-			src.bodytemperature += 2
-
-
-/mob/living/carbon/Process_Spacemove(movement_dir = 0)
-	if(..())
-		return 1
-	if(!isturf(loc)) // In a mecha? A locker? Who knows!
-		return 0
-
-	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
-	if(istype(J) && J.allow_thrust(0.01, src))
-		return 1
-
-
-/mob/living/carbon/movement_delay()
-	. = ..()
-	if(legcuffed)
-		. += legcuffed.slowdown
-
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
@@ -368,13 +341,6 @@
 	else if(prob(50))
 		return "trails_1"
 	return "trails_2"
-
-var/const/NO_SLIP_WHEN_WALKING = 1
-var/const/SLIDE = 2
-var/const/GALOSHES_DONT_HELP = 4
-/mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
-	add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
-	return loc.handle_slip(src, s_amount, w_amount, O, lube)
 
 /mob/living/carbon/fall(forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing

@@ -183,7 +183,7 @@
 	desc = "Honkhonkhonk"
 	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
 	var/mineral = "bananium"
-	doorsound = 'sound/items/bikehorn.ogg'
+	doorOpen = 'sound/items/bikehorn.ogg'
 	doortype = /obj/structure/door_assembly/door_assembly_clown
 
 /obj/machinery/door/airlock/sandstone

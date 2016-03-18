@@ -82,4 +82,4 @@
 	if(!..())
 		return 0
 	if(intact)
-		smooth_icon(src)
+		queue_smooth(src)

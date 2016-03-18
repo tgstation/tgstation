@@ -777,14 +777,14 @@
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!has_gravity(H))
-			// If there's no gravity we have the option of sanic speed.
+			// If there's no gravity we have the sanic speed of jetpack.
 			var/obj/item/weapon/tank/jetpack/J = H.back
 			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
 			if(!istype(J) && istype(C))
 				J = C.jetpack
 
-			if(istype(J) && J.turbo && J.allow_thrust(0.01, H))
-				. -= 2 // Turbo mode. Gotta go fast.
+			if(istype(J) && J.allow_thrust(0.01, H))
+				. -= 2
 		else
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)

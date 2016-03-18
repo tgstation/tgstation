@@ -88,7 +88,6 @@ var/regex/lizard_hiSS = new("S+", "g")
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
-
 /*
  PODPEOPLE
 */

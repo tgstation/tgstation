@@ -203,7 +203,7 @@
 		SpinAnimation(5, 1)
 
 	var/dist_travelled = 0
-	var/dist_since_sleep = 0
+	var/next_sleep = 0
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
@@ -228,7 +228,7 @@
 	var/init_dir = get_dir(src, target)
 
 	while(target && ((dist_travelled < range && loc != finalturf)  || !has_gravity(src))) //stop if we reached our destination (or max range) and aren't floating
-
+		var/slept = 0
 		if(!istype(loc, /turf))
 			hit = 1
 			break
@@ -250,17 +250,23 @@
 			hit = 1
 			break
 		dist_travelled++
-		dist_since_sleep++
 
 		if(dist_travelled > 600) //safety to prevent infinite while loop.
 			break
-		if(dist_since_sleep >= speed)
-			dist_since_sleep = 0
+		if(dist_travelled >= next_sleep)
+			slept = 1
+			next_sleep += speed
 			sleep(1)
+		if(!slept)
+			var/ticks_slept = TICK_CHECK
+			if(ticks_slept)
+				slept = 1
+				next_sleep += speed*(ticks_slept*world.tick_lag) //delay the next normal sleep
 
-		if(!dist_since_sleep && hitcheck()) //to catch sneaky things moving on our tile during our sleep(1)
+		if(slept && hitcheck()) //to catch sneaky things moving on our tile while we slept
 			hit = 1
 			break
+
 
 	//done throwing, either because it hit something or it finished moving
 	throwing = 0

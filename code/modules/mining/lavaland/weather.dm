@@ -34,7 +34,7 @@
 	update_areas()
 	for(var/mob/M in player_list)
 		if(M.z == target_z)
-			M << start_up_message
+			M << "<span class='danger'><B>[start_up_message]</B></span>"
 
 	sleep(start_up_time)
 	stage = MAIN_STAGE
@@ -45,7 +45,7 @@
 	update_areas()
 	for(var/mob/M in player_list)
 		if(M.z == target_z)
-			M << "[duration_message]"
+			M << "<span class='danger'><B>[duration_message]</B></span>"
 	if(purely_aesthetic)
 		sleep(duration*10)
 	else  //Storm effects
@@ -64,7 +64,7 @@
 	update_areas()
 	for(var/mob/M in player_list)
 		if(M.z == target_z)
-			M << wind_down_message
+			M << "<span class='danger'><B>[wind_down_message]</B></span>"
 
 	sleep(wind_down)
 

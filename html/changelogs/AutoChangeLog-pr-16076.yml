@@ -1,4 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "Hunger was accidentally disabled sometime back in October 2015. We finally noticed and fixed it."
