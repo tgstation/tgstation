@@ -58,7 +58,7 @@
 		if(do_after(src, 250, target))
 			playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 			qdel(target)
-			var/obj/structure/door_assembly/door = new airlock.doortype(target.loc)
+			var/obj/structure/door_assembly/door = new(target.loc)
 			door.density = 0
 			door.anchored = 1
 			door.name = "ravaged airlock"
