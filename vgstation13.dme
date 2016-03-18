@@ -1933,7 +1933,6 @@
 #include "maps\defficiency\areas.dm"
 #include "maps\defficiency\pipes.dm"
 #include "maps\randomvaults\objects.dm"
-#include "maps\randomvaults\spacegym.dmm"
 #include "maps\RandomZLevels\Academy.dm"
 #include "maps\RandomZLevels\challenge.dm"
 #include "maps\RandomZLevels\stationCollision.dm"
