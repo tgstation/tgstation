@@ -1,4 +1,4 @@
-obj/machinery/recharger/defibcharger/wallcharger
+obj/machinery/recharger/defibcharger/wallcharger // obj/machinery/recharger/defibcharger define doesn't exist, don't bother trying to look for it
 	name = "defibrillator recharger"
 	desc = "A special wall mounted recharger meant for emergency defibrillators"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -87,29 +87,16 @@ obj/machinery/recharger/defibcharger/wallcharger/process()
 	return -1
 
 obj/machinery/recharger/defibcharger/wallcharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
-	if(..())
-		return
-	if(istype(user,/mob/living/silicon))
-		return
 	if(istype(G, /obj/item/weapon/melee/defibrillator))
+		if(..())
+			return
 		var/obj/item/weapon/melee/defibrillator/D = G
 		if(D.ready)
-			to_chat(user, "<span class='warning'>[D] won't fit. Try putting the paddles back on!</span>")
-			return
-		if(charging)
-			to_chat(user, "<span class='warning'>Remove [D] first!</span>")
-			return
-		// Checks to make sure he's not in space doing it, and that the area got proper power.
-		var/area/a = get_area(src)
-		if(!isarea(a))
-			to_chat(user, "<span class='warning'>[src] blinks red as you try to insert [D]!</span>")
-			return
-		if(a.power_equip == 0)
-			to_chat(user, "<span class='warning'>[src] blinks red as you try to insert [D]!</span>")
+			to_chat(user, "<span class='warning'>\The [D] won't fit. Try putting the paddles back on!</span>")
 			return
 		if(user.drop_item(G, src))
 			charging = G
 			use_power = 2
 			update_icon()
-		else
-			user << "<span class='warning'>You can't let go of \the [G]!</span>"
+	else
+		to_chat(user, "<span class='warning'>\The [G] isn't a defibrillator, it won't fit!</span>")

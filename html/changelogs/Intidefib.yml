@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- bugfix: Defib chargers no longer accept items (like guns) that aren't defibs.
