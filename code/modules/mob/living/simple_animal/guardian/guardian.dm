@@ -494,19 +494,16 @@
 			enemychain = null
 			enemy = null
 
-/mob/living/simple_animal/hostile/guardian/beam/proc/chainshock(var/datum/beam/B)
+/mob/living/simple_animal/hostile/guardian/beam/proc/chainshock(datum/beam/B)
 	var/list/turfs = list()
 	for(var/E in B.elements)
 		var/obj/effect/ebeam/chainpart = E
-		turfs |= get_turf(chainpart)
-	for(var/turf in getline(B.origin, B.target))
-		var/turf/T = turf
-		turfs |= T
-	for(var/turf in turfs)
-		var/turf/T = turf
-		if(T != get_turf(B.origin) && T != get_turf(B.target))
-			for(var/turf/TU in circlerange(T, 1))
-				turfs |= TU
+		if(chainpart && chainpart.x && chainpart.y && chainpart.z)
+			var/turf/T = get_turf_pixel(chainpart)
+			turfs |= T
+			if(T != get_turf(B.origin) && T != get_turf(B.target))
+				for(var/turf/TU in circlerange(T, 1))
+					turfs |= TU
 	for(var/turf in turfs)
 		var/turf/T = turf
 		for(var/mob/living/L in T)
