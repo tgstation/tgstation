@@ -48,7 +48,7 @@
 				target.dna.add_mutation(A)
 			sleep(duration)
 			for(var/A in mutations)
-				target.dna.add_mutation(A)
+				target.dna.remove_mutation(A)
 			if(target.loc != holder) //mob warped out of the warp
 				qdel(holder)
 				return
