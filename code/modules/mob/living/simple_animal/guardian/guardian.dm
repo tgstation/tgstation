@@ -37,7 +37,7 @@
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
-
+	update_health_hud() //we need to update our health display to match our summoner and we can't practically give the summoner a hook to do it
 	if(summoner)
 		if(summoner.stat == DEAD)
 			src << "<span class='danger'>Your summoner has died!</span>"
