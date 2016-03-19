@@ -40,6 +40,7 @@
 	points = 1
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
+	w_class = 1
 
 /obj/item/weapon/ore/glass/attack_self(mob/living/user)
 	user << "<span class='notice'>You use the sand to make sandstone.</span>"
@@ -59,6 +60,20 @@
 		sandAmt -= SS.max_amount
 	qdel(src)
 	return
+
+/obj/item/weapon/ore/glass/throw_impact(atom/hit_atom)
+	if(..() || !iscarbon(hit_atom))
+		return
+	var/mob/living/carbon/C = hit_atom
+	if((C.head && C.head.flags_cover & HEADCOVERSEYES) || \
+		(C.wear_mask && C.wear_mask.flags_cover & MASKCOVERSEYES))
+		visible_message("<span class='danger'>[C]'s mask/helmet blocks the sand!</span>")//glasses are not thick enough to stop it
+		return
+	C.adjust_blurriness(3)
+	C.adjust_eye_damage(rand(2,4))
+	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
+	C << "<span class='userdanger'>\The [src] burns your eyes!</span>"
+	qdel(src)
 
 /obj/item/weapon/ore/plasma
 	name = "plasma ore"
