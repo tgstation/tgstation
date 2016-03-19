@@ -135,6 +135,12 @@
 		. = 1
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 2)
+	var/datum/dna/Mdna = M.has_dna()
+	if(Mdna && Mdna.species)
+		var/datum/species/Mspecies
+		if(Mspecies.id == "plasmaman" || Mspecies.id == "skeleton")
+			M.heal_organ_damage(1,0, 0)
+			. = 1
 	..()
 
 /datum/reagent/consumable/soymilk
