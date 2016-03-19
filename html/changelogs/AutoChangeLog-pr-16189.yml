@@ -1,0 +1,5 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "The surplus crate is less likely to give you eight space suits."
+  - bugfix: "Nukeops can once again buy noslips. The nuke op magboots are still better than noslips, buy them instead."
