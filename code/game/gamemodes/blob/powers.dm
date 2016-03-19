@@ -8,7 +8,7 @@
 // Power verbs
 
 /mob/camera/blob/proc/place_blob_core(point_rate = base_point_rate, placement_override = 0)
-	if(placed && placement_override != -1) //byond is a pile of dicks so I need to do unimplied src for some reason
+	if(placed && placement_override != -1)
 		return 1
 	if(!placement_override)
 		for(var/mob/living/M in range(7, src))
