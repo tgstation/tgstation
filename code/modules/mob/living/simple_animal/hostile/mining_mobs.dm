@@ -756,8 +756,9 @@
 	var/gps = null
 
 /mob/living/simple_animal/hostile/spawner/lavaland/New()
-	gps = new /obj/item/device/gps/internal(src)
 	..()
+	gps = new /obj/item/device/gps/internal(src)
+
 
 /mob/living/simple_animal/hostile/spawner/lavaland/goliath
 	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast
