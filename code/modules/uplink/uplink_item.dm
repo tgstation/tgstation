@@ -634,10 +634,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
-	name = "Tactical No-Slip Chameleon Shoes"
-	desc = "These allow you to run on wet floors. They do not work on heavily lubricated surfaces, but the \
-			manufacturer guarantees they're somehow better than the normal ones."
+	name = "Stealthy No-Slip Chameleon Shoes"
+	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
+			They do not work on heavily lubricated surfaces. The manufacturer claims they are much more stealthy than the normal brand."
+	item = /obj/item/clothing/shoes/chameleon
 	cost = 4
+	exclude_modes = list()
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/agent_card
@@ -703,6 +705,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/suits
 	category = "Space Suits and Hardsuits"
 	exclude_modes = list(/datum/game_mode/gang)
+	surplus = 40
 
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
