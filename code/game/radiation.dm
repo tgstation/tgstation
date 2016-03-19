@@ -19,18 +19,23 @@
 /turf/var/radiation = 0
 /atom/var/rad_barrier = RAD_BARRIER_NONE
 
+/turf/proc/inherit_radiation(amount)
+	radiation = amount
+
+/turf/space/inherit_radiation()
+	return
+
 /turf/proc/rad_barrier()
 	if(rad_barrier == RAD_BARRIER_IMPREGNABLE)
 		return RAD_BARRIER_IMPREGNABLE
 
-	var/highest = rad_barrier
+	var/barrier_sum = rad_barrier
 	for(var/V in src)
 		var/atom/A = V
 		if(A.rad_barrier == RAD_BARRIER_IMPREGNABLE)
 			return RAD_BARRIER_IMPREGNABLE
-		if(A.rad_barrier > highest)
-			highest = A.rad_barrier
-	return highest
+		barrier_sum += A.rad_barrier
+	return min(10, barrier_sum)
 
 /atom/proc/irradiate(amount = 0, log = FALSE, signature = "\[?]")
 	var/turf/epicenter = get_turf(src)

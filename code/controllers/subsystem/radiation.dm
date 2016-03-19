@@ -18,3 +18,4 @@ var/datum/subsystem/radiation/SSradiation
 			T.radiation = max(0, T.radiation - RAD_DISSIPATE_AMOUNT)
 		else
 			processing -= T
+		CHECK_TICK

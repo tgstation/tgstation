@@ -121,6 +121,7 @@
 	if(path == type)
 		return src
 
+	var/rads = radiation
 	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
@@ -129,6 +130,7 @@
 		W.RemoveLattice()
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
+	W.inherit_radiation(rads)
 
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
