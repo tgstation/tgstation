@@ -14,6 +14,7 @@
 	nonabstract_req = 1
 	var/duration = 50 //in deciseconds
 	action_icon_state = "jaunt"
+	var/list/mutations = list() 
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
 	playsound(get_turf(user), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
@@ -42,9 +43,12 @@
 			target.reset_perspective(holder)
 			target.notransform=0 //mob is safely inside holder now, no need for protection.
 			jaunt_steam(mobloc)
-			target.mutations |= MUT_MUTATE
+			mutations = list(MUT_MUTE) // no more invisible point blank fireballs
+			for(var/A in mutations)
+				target.dna.add_mutation(A)
 			sleep(duration)
-			target.mutations &= ~MUT_MUTATE
+			for(var/A in mutations)
+				target.dna.add_mutation(A)
 			if(target.loc != holder) //mob warped out of the warp
 				qdel(holder)
 				return
