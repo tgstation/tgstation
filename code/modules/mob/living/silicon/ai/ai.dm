@@ -390,6 +390,8 @@ var/list/ai_list = list()
 
 	updatehealth()
 
+/mob/living/silicon/ai/put_in_hands(var/obj/item/W)
+	return 0
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	if(usr != src)
