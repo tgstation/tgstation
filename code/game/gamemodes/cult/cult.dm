@@ -75,7 +75,7 @@
 
 /datum/game_mode/cult/announce()
 	world << "<B>The current game mode is - Cult!</B>"
-	world << "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - complete your objectives at all costs. Convert crewmembers to your cause by using the convert rune, or sacrifice them and turn them into constructs. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Forced consumption of holy water will convert a cultist back to a Nanotrasen-sanctioned faith.</B>"
+	world << "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - complete your objectives at all costs. Convert crewmembers to your cause by using the convert rune, or sacrifice them and turn them into constructs. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Forced consumption of holy brawndo will convert a cultist back to a Nanotrasen-sanctioned faith.</B>"
 
 
 /datum/game_mode/cult/pre_setup()

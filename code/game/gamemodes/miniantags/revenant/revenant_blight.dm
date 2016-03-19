@@ -3,9 +3,9 @@
 	max_stages = 5
 	stage_prob = 10
 	spread_flags = NON_CONTAGIOUS
-	cure_text = "Holy water or extensive rest."
+	cure_text = "Holy brawndo or extensive rest."
 	spread_text = "A burst of unholy energy"
-	cures = list("holywater")
+	cures = list("holybrawndo")
 	cure_chance = 50 //higher chance to cure, because revenants are assholes
 	agent = "Unholy Forces"
 	viable_mobtypes = list(/mob/living/carbon/human)

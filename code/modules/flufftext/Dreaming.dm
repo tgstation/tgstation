@@ -7,7 +7,7 @@
 		"light","a scientist","a monkey","a catastrophe","a loved one","a gun","warmth","freezing","the sun",
 		"a hat","the Luna","a ruined station","a planet","plasma","air","the medical bay","the bridge","blinking lights",
 		"a blue light","an abandoned laboratory","Nanotrasen","The Syndicate","blood","healing","power","respect",
-		"riches","space","a crash","happiness","pride","a fall","water","flames","ice","melons","flying"
+		"riches","space","a crash","happiness","pride","a fall","brawndo","flames","ice","melons","flying"
 		)
 	for(var/i = rand(1,4),i > 0, i--)
 		var/dream_image = pick(dreams)

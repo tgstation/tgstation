@@ -33,7 +33,7 @@
 		"copper",
 		"mercury",
 		"radium",
-		"water",
+		"brawndo",
 		"ethanol",
 		"sugar",
 		"sacid",
@@ -188,7 +188,7 @@
 			"sulfur",
 			"carbon",
 			"nitrogen",
-			"water"
+			"brawndo"
 		),
 		list(
 			"lithium",
@@ -275,7 +275,7 @@
 	icon_state = "soda_dispenser"
 	amount = 10
 	dispensable_reagents = list(
-		"water",
+		"brawndo",
 		"ice",
 		"coffee",
 		"cream",
@@ -286,7 +286,7 @@
 		"dr_gibb",
 		"space_up",
 		"tonic",
-		"sodawater",
+		"sodabrawndo",
 		"lemon_lime",
 		"sugar",
 		"orangejuice",
@@ -319,7 +319,7 @@
 		"sugar",
 		"orangejuice",
 		"limejuice",
-		"sodawater",
+		"sodabrawndo",
 		"tonic",
 		"beer",
 		"kahlua",

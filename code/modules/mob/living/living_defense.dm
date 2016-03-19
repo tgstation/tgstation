@@ -131,7 +131,7 @@
 		ExtinguishMob()
 
 /mob/living/proc/handle_fire()
-	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
+	if(fire_stacks < 0) //If we've doused ourselves in brawndo to avoid fire, dry off slowly
 		fire_stacks = min(0, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
 		return 1

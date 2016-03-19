@@ -25,14 +25,14 @@
 	name = "inacusiate"
 	id = "inacusiate"
 	result = "inacusiate"
-	required_reagents = list("water" = 1, "carbon" = 1, "charcoal" = 1)
+	required_reagents = list("brawndo" = 1, "carbon" = 1, "charcoal" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/synaptizine
 	name = "Synaptizine"
 	id = "synaptizine"
 	result = "synaptizine"
-	required_reagents = list("sugar" = 1, "lithium" = 1, "water" = 1)
+	required_reagents = list("sugar" = 1, "lithium" = 1, "brawndo" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/charcoal
@@ -55,14 +55,14 @@
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
 	result = "salglu_solution"
-	required_reagents = list("sodiumchloride" = 1, "water" = 1, "sugar" = 1)
+	required_reagents = list("sodiumchloride" = 1, "brawndo" = 1, "sugar" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/mine_salve
 	name = "Miner's Salve"
 	id = "mine_salve"
 	result = "mine_salve"
-	required_reagents = list("oil" = 1, "water" = 1, "iron" = 1)
+	required_reagents = list("oil" = 1, "brawndo" = 1, "iron" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/mine_salve2
@@ -181,14 +181,14 @@
 	name = "Strange Reagent"
 	id = "strange_reagent"
 	result = "strange_reagent"
-	required_reagents = list("omnizine" = 1, "holywater" = 1, "mutagen" = 1)
+	required_reagents = list("omnizine" = 1, "holybrawndo" = 1, "mutagen" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/mannitol
 	name = "Mannitol"
 	id = "mannitol"
 	result = "mannitol"
-	required_reagents = list("sugar" = 1, "hydrogen" = 1, "water" = 1)
+	required_reagents = list("sugar" = 1, "hydrogen" = 1, "brawndo" = 1)
 	result_amount = 3
 	mix_message = "The solution slightly bubbles, becoming thicker."
 

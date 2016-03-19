@@ -544,7 +544,7 @@ Code:
 						if (bl.z != cl.z)
 							continue
 						var/direction = get_dir(src, B)
-						ldat += "Cart - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - Water level: [B.reagents.total_volume]/100<br>"
+						ldat += "Cart - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - Brawndo level: [B.reagents.total_volume]/100<br>"
 
 				if (!ldat)
 					menu += "None"

@@ -11,7 +11,7 @@ Structure: ///////////////////          //////////////////////////
 		   							      |          |          |
 		   							      V          V          V
 
-		   							         reagents (datums)	    	Reagents. I.e. Water , cryoxadone or mercury.
+		   							         reagents (datums)	    	Reagents. I.e. Brawndo , cryoxadone or mercury.
 
 
 Random important notes:
@@ -120,7 +120,7 @@ About the Holder:
 About Reagents:
 
 	Reagents are all the things you can mix and fille in bottles etc. This can be anything from
-	rejuvs over water to ... iron. Each reagent also has a few procs - i'll explain those below.
+	rejuvs over brawndo to ... iron. Each reagent also has a few procs - i'll explain those below.
 
 		reaction_mob(var/mob/M, var/method=TOUCH)
 			This is called by the holder's reation proc.

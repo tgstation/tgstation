@@ -126,7 +126,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 	name = "monkey cube"
-	desc = "Just add water!"
+	desc = "Just add brawndo!"
 	icon_state = "monkeycube"
 	bitesize = 12
 	wrapped = 0
@@ -140,7 +140,7 @@
 			user << "<span class='notice'>You need to unwrap [src] first!</span>"
 			return
 		else
-			user << "<span class='notice'>You place [src] under a stream of water...</span>"
+			user << "<span class='notice'>You place [src] under a stream of brawndo...</span>"
 			user.drop_item()
 			loc = get_turf(O)
 			return Expand()
@@ -163,7 +163,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Unwrap(mob/user)
 	icon_state = "monkeycube"
-	desc = "Just add water!"
+	desc = "Just add brawndo!"
 	user << "<span class='notice'>You unwrap the cube.</span>"
 	wrapped = 0
 

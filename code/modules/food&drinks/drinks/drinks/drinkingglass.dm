@@ -58,18 +58,18 @@
 				icon_state  = "lemonglass"
 				name = "glass of lemon juice"
 				desc = "Sour..."
-			if("holywater")
+			if("holybrawndo")
 				icon_state  = "glass_clear"
-				name = "glass of Holy Water"
-				desc = "A glass of holy water."
+				name = "glass of Holy Brawndo"
+				desc = "A glass of holy brawndo."
 			if("potato")
 				icon_state = "glass_brown"
 				name = "glass of potato juice"
 				desc = "Bleh..."
-			if("watermelonjuice")
+			if("brawndomelonjuice")
 				icon_state = "glass_red"
-				name = "glass of watermelon juice"
-				desc = "A glass of watermelon juice."
+				name = "glass of brawndomelon juice"
+				desc = "A glass of brawndomelon juice."
 			if("cola")
 				icon_state  = "glass_brown"
 				name = "glass of space Cola"
@@ -173,7 +173,7 @@
 			if("bravebull")
 				icon_state = "bravebullglass"
 				name = "Brave Bull"
-				desc = "Tequila and Coffee liqueur, brought together in a mouthwatering mixture. Drink up."
+				desc = "Tequila and Coffee liqueur, brought together in a mouthbrawndoing mixture. Drink up."
 			if("tequilasunrise")
 				icon_state = "tequilasunriseglass"
 				name = "tequila Sunrise"
@@ -248,15 +248,15 @@
 				desc = "Ultimate refreshment."
 			if("tonic")
 				icon_state = "glass_clear"
-				name = "glass of Tonic Water"
+				name = "glass of Tonic Brawndo"
 				desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
-			if("sodawater")
+			if("sodabrawndo")
 				icon_state = "glass_clear"
-				name = "glass of Soda Water"
-				desc = "Soda water. Why not make a scotch and soda?"
-			if("water")
+				name = "glass of Soda Brawndo"
+				desc = "Soda brawndo. Why not make a scotch and soda?"
+			if("brawndo")
 				icon_state = "glass_clear"
-				name = "glass of Water"
+				name = "glass of Brawndo"
 				desc = "The father of all refreshments."
 			if("spacemountainwind")
 				icon_state = "Space_mountain_wind_glass"
@@ -527,9 +527,9 @@
 				icon_state = "shotglassclear"
 				name = "shot of vodka"
 				desc = "Good for cold weather."
-			if("water")
+			if("brawndo")
 				icon_state = "shotglassclear"
-				name = "shot of water"
+				name = "shot of brawndo"
 				desc = "You're not sure why someone would drink this from a shot glass."
 			if("whiskey")
 				icon_state = "shotglassbrown"
@@ -603,7 +603,7 @@
 	on_reagent_change()
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/soda
-	list_reagents = list("sodawater" = 50)
+	list_reagents = list("sodabrawndo" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
 	list_reagents = list("cola" = 50)

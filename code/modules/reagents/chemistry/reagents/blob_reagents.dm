@@ -28,7 +28,7 @@
 /datum/reagent/blob/proc/tesla_reaction(obj/effect/blob/B, power) //when the blob is hit by a tesla bolt, do this
 	return 1 //return 0 to ignore damage
 
-/datum/reagent/blob/proc/extinguish_reaction(obj/effect/blob/B) //when the blob is hit with water, do this
+/datum/reagent/blob/proc/extinguish_reaction(obj/effect/blob/B) //when the blob is hit with brawndo, do this
 	return
 
 //does low toxin damage, but creates fragile spores when expanding or killed by weak attacks
@@ -141,11 +141,11 @@
 /datum/reagent/blob/energized_fibers/tesla_reaction(obj/effect/blob/B, power)
 	return 0
 
-//sets you on fire, does burn damage, weak to water
+//sets you on fire, does burn damage, weak to brawndo
 /datum/reagent/blob/boiling_oil
 	name = "Boiling Oil"
 	id = "boiling_oil"
-	description = "will do medium burn damage and set targets on fire, but is weak to water."
+	description = "will do medium burn damage and set targets on fire, but is weak to brawndo."
 	shortdesc = "will do medium burn damage and set targets on fire."
 	color = "#B68D00"
 	complementary_color = "#0029B6"

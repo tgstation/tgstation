@@ -4,7 +4,7 @@
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bitesize = 5
 	volume = 80
-	list_reagents = list("nutriment" = 8, "water" = 5, "vitamin" = 4)
+	list_reagents = list("nutriment" = 8, "brawndo" = 5, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/New()
 	..()
@@ -14,7 +14,7 @@
 	name = "wish soup"
 	desc = "I wish this was soup."
 	icon_state = "wishsoup"
-	list_reagents = list("water" = 10)
+	list_reagents = list("brawndo" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/wish/New()
 	..()
@@ -32,17 +32,17 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/slime
 	name = "slime soup"
-	desc = "If no water is available, you may substitute tears."
+	desc = "If no brawndo is available, you may substitute tears."
 	icon_state = "slimesoup"
 	bonus_reagents = list("nutriment" = 1, "slimejelly" = 5, "vitamin" = 5)
-	list_reagents = list("nutriment" = 5, "slimejelly" = 5, "water" = 5, "vitamin" = 4)
+	list_reagents = list("nutriment" = 5, "slimejelly" = 5, "brawndo" = 5, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/blood
 	name = "tomato soup"
 	desc = "Smells like copper."
 	icon_state = "tomatosoup"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 6)
-	list_reagents = list("nutriment" = 2, "blood" = 10, "water" = 5, "vitamin" = 4)
+	list_reagents = list("nutriment" = 2, "blood" = 10, "brawndo" = 5, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/wingfangchu
 	name = "wing fang chu"
@@ -57,7 +57,7 @@
 	desc = "Not very funny."
 	icon_state = "clownstears"
 	bonus_reagents = list("nutriment" = 1, "banana" = 5, "vitamin" = 8)
-	list_reagents = list("nutriment" = 4, "banana" = 5, "water" = 5, "vitamin" = 8)
+	list_reagents = list("nutriment" = 4, "banana" = 5, "brawndo" = 5, "vitamin" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/vegetable
 	name = "vegetable soup"

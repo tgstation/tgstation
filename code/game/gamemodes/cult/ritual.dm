@@ -67,12 +67,12 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	if(!iscultist(user))
 		return ..()
 	if(iscultist(M))
-		if(M.reagents && M.reagents.has_reagent("holywater")) //allows cultists to be rescued from the clutches of ordained religion
+		if(M.reagents && M.reagents.has_reagent("holybrawndo")) //allows cultists to be rescued from the clutches of ordained religion
 			user << "<span class='cult'>You remove the taint from [M].</span>"
-			var/holy2unholy = M.reagents.get_reagent_amount("holywater")
-			M.reagents.del_reagent("holywater")
-			M.reagents.add_reagent("unholywater",holy2unholy)
-			add_logs(user, M, "smacked", src, " removing the holy water from them")
+			var/holy2unholy = M.reagents.get_reagent_amount("holybrawndo")
+			M.reagents.del_reagent("holybrawndo")
+			M.reagents.add_reagent("unholybrawndo",holy2unholy)
+			add_logs(user, M, "smacked", src, " removing the holy brawndo from them")
 		return
 	M.take_organ_damage(0, 15) //Used to be a random between 5 and 20
 	playsound(M, 'sound/weapons/sear.ogg', 50, 1)

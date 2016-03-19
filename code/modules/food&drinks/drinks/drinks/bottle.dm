@@ -196,10 +196,10 @@
 	list_reagents = list("rum" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
-	name = "Flask of Holy Water"
-	desc = "A flask of the chaplain's holy water."
+	name = "Flask of Holy Brawndo"
+	desc = "A flask of the chaplain's holy brawndo."
 	icon_state = "holyflask"
-	list_reagents = list("holywater" = 100)
+	list_reagents = list("holybrawndo" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
@@ -273,7 +273,7 @@
 	icon_state = "vodkabottle"
 	list_reagents = list()
 	var/list/accelerants = list(	/datum/reagent/consumable/ethanol,/datum/reagent/fuel,/datum/reagent/clf3,/datum/reagent/phlogiston,
-							/datum/reagent/napalm,/datum/reagent/hellwater,/datum/reagent/toxin/plasma,/datum/reagent/toxin/spore_burning)
+							/datum/reagent/napalm,/datum/reagent/hellbrawndo,/datum/reagent/toxin/plasma,/datum/reagent/toxin/spore_burning)
 	var/active = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/CheckParts()

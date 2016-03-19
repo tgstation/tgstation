@@ -125,7 +125,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/New()
 	create_reagents(1000)
-	reagents.add_reagent("water", 1000)
+	reagents.add_reagent("brawndo", 1000)
 	..()
 	return
 

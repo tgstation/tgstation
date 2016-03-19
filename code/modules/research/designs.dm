@@ -443,7 +443,7 @@ datum/design/diagnostic_hud_night
 
 /datum/design/advmop
 	name = "Advanced Mop"
-	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
+	desc = "An upgraded mop with a large internal capacity for holding brawndo or other cleaning chemicals."
 	id = "advmop"
 	req_tech = list("materials" = 4, "engineering" = 3)
 	build_type = PROTOLATHE

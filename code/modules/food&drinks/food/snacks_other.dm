@@ -17,10 +17,10 @@
 	filling_color = "#FFD700"
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/watermelonslice
-	name = "watermelon slice"
-	desc = "A slice of watery goodness."
-	icon_state = "watermelonslice"
+/obj/item/weapon/reagent_containers/food/snacks/brawndomelonslice
+	name = "brawndomelon slice"
+	desc = "A slice of brawndoy goodness."
+	icon_state = "brawndomelonslice"
 	filling_color = "#FF1493"
 
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn

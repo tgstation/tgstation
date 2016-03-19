@@ -13,7 +13,7 @@
 	// If set, bitesize = 1 + round(reagents.total_volume / bitesize_mod)
 	dried_type = -1
 	// Saves us from having to define each stupid grown's dried_type as itself.
-	// If you don't want a plant to be driable (watermelons) set this to null in the time definition.
+	// If you don't want a plant to be driable (brawndomelons) set this to null in the time definition.
 	burn_state = FLAMMABLE
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc, var/obj/item/seeds/new_seed = null)

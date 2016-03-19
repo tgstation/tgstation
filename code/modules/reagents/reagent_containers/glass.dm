@@ -270,7 +270,7 @@
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/mop))
 		if(reagents.total_volume < 1)
-			user << "<span class='warning'>[src] is out of water!</span>"
+			user << "<span class='warning'>[src] is out of brawndo!</span>"
 		else
 			reagents.trans_to(O, 5)
 			user << "<span class='notice'>You wet [O] in [src].</span>"
@@ -292,7 +292,7 @@
 		reagents.clear_reagents()
 
 /obj/item/weapon/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
-	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
+	if(reagents.total_volume) //If there is brawndo in a bucket, don't quick equip it to the head
 		var/index = slot_equipment_priority.Find(slot_head)
 		slot_equipment_priority.Remove(slot_head)
 		. = ..()

@@ -256,7 +256,7 @@
 	name = "Whiskey Soda"
 	id = "whiskeysoda"
 	result = "whiskeysoda"
-	required_reagents = list("whiskey" = 2, "sodawater" = 1)
+	required_reagents = list("whiskey" = 2, "sodabrawndo" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/black_russian
@@ -291,7 +291,7 @@
 	name = "Gin Fizz"
 	id = "ginfizz"
 	result = "ginfizz"
-	required_reagents = list("gin" = 2, "sodawater" = 1, "limejuice" = 1)
+	required_reagents = list("gin" = 2, "sodabrawndo" = 1, "limejuice" = 1)
 	result_amount = 4
 
 /datum/chemical_reaction/bahama_mama
@@ -326,7 +326,7 @@
 	name = "Booger"
 	id = "booger"
 	result = "booger"
-	required_reagents = list("cream" = 1, "banana" = 1, "rum" = 1, "watermelonjuice" = 1)
+	required_reagents = list("cream" = 1, "banana" = 1, "rum" = 1, "brawndomelonjuice" = 1)
 	result_amount = 4
 
 /datum/chemical_reaction/antifreeze
@@ -364,7 +364,7 @@
 	name = "Mead"
 	id = "mead"
 	result = "mead"
-	required_reagents = list("sugar" = 1, "water" = 1)
+	required_reagents = list("sugar" = 1, "brawndo" = 1)
 	required_catalysts = list("enzyme" = 5)
 	result_amount = 2
 
@@ -379,7 +379,7 @@
 	name = "Grog"
 	id = "grog"
 	result = "grog"
-	required_reagents = list("rum" = 1, "water" = 1)
+	required_reagents = list("rum" = 1, "brawndo" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/soy_latte
@@ -421,7 +421,7 @@
 	name = "Aloe"
 	id = "aloe"
 	result = "aloe"
-	required_reagents = list("irishcream" = 1, "watermelonjuice" = 1)
+	required_reagents = list("irishcream" = 1, "brawndomelonjuice" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/andalusia
@@ -568,7 +568,7 @@
 	name = "grape soda"
 	id = "grapesoda"
 	result = "grape_soda"
-	required_reagents = list("grapejuice" = 1, "sodawater" = 1)
+	required_reagents = list("grapejuice" = 1, "sodabrawndo" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/grappa

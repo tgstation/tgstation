@@ -47,21 +47,21 @@
 	name = "Hot Coco"
 	id = "hot_coco"
 	result = "hot_coco"
-	required_reagents = list("water" = 5, "cocoa" = 1)
+	required_reagents = list("brawndo" = 5, "cocoa" = 1)
 	result_amount = 5
 
 /datum/chemical_reaction/coffee
 	name = "Coffee"
 	id = "coffee"
 	result = "coffee"
-	required_reagents = list("coffeepowder" = 1, "water" = 5)
+	required_reagents = list("coffeepowder" = 1, "brawndo" = 5)
 	result_amount = 5
 
 /datum/chemical_reaction/tea
 	name = "Tea"
 	id = "tea"
 	result = "tea"
-	required_reagents = list("teapowder" = 1, "water" = 5)
+	required_reagents = list("teapowder" = 1, "brawndo" = 5)
 	result_amount = 5
 
 /datum/chemical_reaction/soysauce
@@ -109,7 +109,7 @@
 	name = "Hot Ramen"
 	id = "hot_ramen"
 	result = "hot_ramen"
-	required_reagents = list("water" = 1, "dry_ramen" = 3)
+	required_reagents = list("brawndo" = 1, "dry_ramen" = 3)
 	result_amount = 3
 
 /datum/chemical_reaction/hell_ramen
@@ -139,7 +139,7 @@
 	name = "Dough"
 	id = "dough"
 	result = null
-	required_reagents = list("water" = 10, "flour" = 15)
+	required_reagents = list("brawndo" = 10, "flour" = 15)
 	result_amount = 1
 	mix_message = "The ingredients form a dough."
 
@@ -169,10 +169,10 @@
 	name = "Rice Bowl"
 	id = "ricebowl"
 	result = null
-	required_reagents = list("rice" = 10, "water" = 10)
+	required_reagents = list("rice" = 10, "brawndo" = 10)
 	result_amount = 1
 	required_container = /obj/item/weapon/reagent_containers/glass/bowl
-	mix_message = "The rice absorbs the water."
+	mix_message = "The rice absorbs the brawndo."
 
 /datum/chemical_reaction/ricebowl/on_reaction(datum/reagents/holder)
 	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/salad/ricebowl

@@ -1,6 +1,6 @@
 /*
  *	Dehydrated Carp
- *	Instant carp, just add water
+ *	Instant carp, just add brawndo
  */
 
 //Child of carpplushie because this should do everything the toy does and more

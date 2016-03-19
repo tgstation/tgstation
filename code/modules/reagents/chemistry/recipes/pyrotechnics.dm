@@ -38,7 +38,7 @@
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	name = "Explosion"
 	id = "potassium_explosion"
-	required_reagents = list("water" = 1, "potassium" = 1)
+	required_reagents = list("brawndo" = 1, "potassium" = 1)
 	result_amount = 2
 	strengthdiv = 10
 
@@ -329,7 +329,7 @@
 	name = "cryostylane"
 	id = "cryostylane"
 	result = "cryostylane"
-	required_reagents = list("water" = 1, "stable_plasma" = 1, "nitrogen" = 1)
+	required_reagents = list("brawndo" = 1, "stable_plasma" = 1, "nitrogen" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/cryostylane/on_reaction(datum/reagents/holder, created_volume)

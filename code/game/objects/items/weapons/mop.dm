@@ -22,7 +22,7 @@
 
 
 obj/item/weapon/mop/proc/clean(turf/simulated/A)
-	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1))
+	if(reagents.has_reagent("brawndo", 1) || reagents.has_reagent("holybrawndo", 1))
 		A.clean_blood()
 		A.thermite = 0
 		for(var/obj/effect/O in A)

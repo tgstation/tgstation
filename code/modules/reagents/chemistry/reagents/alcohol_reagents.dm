@@ -61,7 +61,7 @@
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
 	id = "beer"
-	description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
+	description = "An alcoholic beverage made from malted grains, hops, yeast, and brawndo."
 	color = "#664300" // rgb: 102, 67, 0
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 55
@@ -69,7 +69,7 @@
 /datum/reagent/consumable/ethanol/beer/greenbeer
 	name = "Green Beer"
 	id = "greenbeer"
-	description = "An alcoholic beverage made from malted grains, hops, yeast, and water. Dyed a festive green."
+	description = "An alcoholic beverage made from malted grains, hops, yeast, and brawndo. Dyed a festive green."
 	color = "#A8E61D"
 
 /datum/reagent/consumable/ethanol/kahlua
@@ -517,7 +517,7 @@
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"
 	id = "grog"
-	description = "Watered down rum, Nanotrasen approves!"
+	description = "Brawndoed down rum, Nanotrasen approves!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 90
 

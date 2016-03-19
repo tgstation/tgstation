@@ -187,7 +187,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"
-	desc = "Just add 10ml of water, self heats! A taste that reminds you of your school years."
+	desc = "Just add 10ml of brawndo, self heats! A taste that reminds you of your school years."
 	icon_state = "ramen"
 	list_reagents = list("dry_ramen" = 30)
 
@@ -206,7 +206,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup
 	name = "Paper Cup"
-	desc = "A paper water cup."
+	desc = "A paper brawndo cup."
 	icon_state = "water_cup_e"
 	possible_transfer_amounts = list()
 	volume = 10
@@ -275,16 +275,16 @@
 	list_reagents = list("cola" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic
-	name = "T-Borg's Tonic Water"
+	name = "T-Borg's Tonic Brawndo"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	icon_state = "tonic"
 	list_reagents = list("tonic" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater
-	name = "Soda Water"
-	desc = "A can of soda water. Why not make a scotch and soda?"
-	icon_state = "sodawater"
-	list_reagents = list("sodawater" = 50)
+	name = "Soda Brawndo"
+	desc = "A can of soda brawndo. Why not make a scotch and soda?"
+	icon_state = "sodabrawndo"
+	list_reagents = list("sodabrawndo" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime
 	name = "Orange Soda"

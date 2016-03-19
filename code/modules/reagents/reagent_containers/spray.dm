@@ -152,18 +152,18 @@
 	amount_per_transfer_from_this = 5
 	list_reagents = list("condensedcapsaicin" = 40)
 
-//water flower
-/obj/item/weapon/reagent_containers/spray/waterflower
-	name = "water flower"
+//brawndo flower
+/obj/item/weapon/reagent_containers/spray/brawndoflower
+	name = "brawndo flower"
 	desc = "A seemingly innocent sunflower...with a twist."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	item_state = "sunflower"
 	amount_per_transfer_from_this = 1
 	volume = 10
-	list_reagents = list("water" = 10)
+	list_reagents = list("brawndo" = 10)
 
-/obj/item/weapon/reagent_containers/spray/waterflower/attack_self(mob/user) //Don't allow changing how much the flower sprays
+/obj/item/weapon/reagent_containers/spray/brawndoflower/attack_self(mob/user) //Don't allow changing how much the flower sprays
 	return
 
 //chemsprayer

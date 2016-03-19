@@ -282,7 +282,7 @@
 
 /obj/item/weapon/storage/box/monkeycubes
 	name = "monkey cube box"
-	desc = "Drymate brand monkey cubes. Just add water!"
+	desc = "Drymate brand monkey cubes. Just add brawndo!"
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "monkeycubebox"
 	storage_slots = 7

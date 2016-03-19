@@ -339,7 +339,7 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
 	B1.reagents.add_reagent("fluorosurfactant", 40)
-	B2.reagents.add_reagent("water", 40)
+	B2.reagents.add_reagent("brawndo", 40)
 	B2.reagents.add_reagent("cleaner", 10)
 
 	beakers += B1
@@ -416,7 +416,7 @@
 
 	B1.reagents.add_reagent("fluorosurfactant", 250)
 	B1.reagents.add_reagent("clf3", 50)
-	B2.reagents.add_reagent("water", 250)
+	B2.reagents.add_reagent("brawndo", 250)
 	B2.reagents.add_reagent("clf3", 50)
 
 	beakers += B1
@@ -433,7 +433,7 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
 	B1.reagents.add_reagent("cryptobiolin", 75)
-	B1.reagents.add_reagent("water", 50)
+	B1.reagents.add_reagent("brawndo", 50)
 	B1.reagents.add_reagent("mutetoxin", 50)
 	B1.reagents.add_reagent("spore", 75)
 	B1.reagents.add_reagent("itching_powder", 50)

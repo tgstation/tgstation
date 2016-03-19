@@ -6,7 +6,7 @@
 /datum/table_recipe/meatballsoup
 	name = "Meatball soup"
 	reqs = list(
-		/datum/reagent/water = 10,
+		/datum/reagent/brawndo = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = 1,
@@ -18,7 +18,7 @@
 /datum/table_recipe/vegetablesoup
 	name = "Vegetable soup"
 	reqs = list(
-		/datum/reagent/water = 10,
+		/datum/reagent/brawndo = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = 1,
@@ -31,7 +31,7 @@
 /datum/table_recipe/nettlesoup
 	name = "Nettle soup"
 	reqs = list(
-		/datum/reagent/water = 10,
+		/datum/reagent/brawndo = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/grown/nettle = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = 1,
@@ -53,7 +53,7 @@
 /datum/table_recipe/wishsoup
 	name = "Wish soup"
 	reqs = list(
-		/datum/reagent/water = 20,
+		/datum/reagent/brawndo = 20,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1
 	)
 	result= /obj/item/weapon/reagent_containers/food/snacks/soup/wish
@@ -84,7 +84,7 @@
 /datum/table_recipe/tomatosoup
 	name = "Tomato soup"
 	reqs = list(
-		/datum/reagent/water = 10,
+		/datum/reagent/brawndo = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 2
 	)
@@ -94,7 +94,7 @@
 /datum/table_recipe/milosoup
 	name = "Milo soup"
 	reqs = list(
-		/datum/reagent/water = 10,
+		/datum/reagent/brawndo = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/soydope = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/tofu = 2
@@ -115,7 +115,7 @@
 /datum/table_recipe/slimesoup
 	name = "Slime soup"
 	reqs = list(
-			/datum/reagent/water = 10,
+			/datum/reagent/brawndo = 10,
 			/datum/reagent/toxin/slimejelly = 5,
 			/obj/item/weapon/reagent_containers/glass/bowl = 1
 	)
@@ -125,7 +125,7 @@
 /datum/table_recipe/clownstears
 	name = "Clowns tears"
 	reqs = list(
-		/datum/reagent/water = 10,
+		/datum/reagent/brawndo = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
 		/obj/item/weapon/ore/bananium = 1
@@ -136,7 +136,7 @@
 /datum/table_recipe/mysterysoup
 	name = "Mystery soup"
 	reqs = list(
-		/datum/reagent/water = 10,
+		/datum/reagent/brawndo = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/badrecipe = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/tofu = 1,
@@ -150,7 +150,7 @@
 	name = "Mushroom soup"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
-		/datum/reagent/water = 5,
+		/datum/reagent/brawndo = 5,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle = 1
 	)
@@ -160,7 +160,7 @@
 /datum/table_recipe/beetsoup
 	name = "Beet soup"
 	reqs = list(
-		/datum/reagent/water = 10,
+		/datum/reagent/brawndo = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1,
@@ -171,7 +171,7 @@
 /datum/table_recipe/stew
 	name = "Stew"
 	reqs = list(
-		/datum/reagent/water = 10,
+		/datum/reagent/brawndo = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 3,
@@ -206,7 +206,7 @@
 /datum/table_recipe/sweetpotatosoup
 	name = "Sweet potato soup"
 	reqs = list(
-		/datum/reagent/water = 10,
+		/datum/reagent/brawndo = 10,
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet = 2
@@ -217,7 +217,7 @@
 /datum/table_recipe/redbeetsoup
 	name = "Red beet soup"
 	reqs = list(
-		/datum/reagent/water = 10,
+		/datum/reagent/brawndo = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/redbeet = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1
