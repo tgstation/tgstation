@@ -482,7 +482,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	boozepwr = 35
 
-/datum/reagent/consumable/ethanol/demonsblood //Prevents the imbiber from being dagged into a pool of blood by a slaughter demon.
+/datum/reagent/consumable/ethanol/demonsblood //Prevents the imbiber from being dragged into a pool of blood by a slaughter demon.
 	name = "Demon's Blood"
 	id = "demonsblood"
 	description = "AHHHH!!!!"

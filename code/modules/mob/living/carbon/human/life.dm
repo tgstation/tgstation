@@ -35,8 +35,6 @@
 		//heart attack stuff
 		handle_heart()
 
-		handle_alcohol() //Alcohol
-
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
 	//Update our name based on whether our face is obscured/disfigured
@@ -335,68 +333,61 @@ All effects don't start immediately, but rather get worse over time; the rate is
 51-60: Just above average - disorientation, vomiting, imbiber begins to look heavily drunk
 61-70: Above average - small chance of blurry vision, imbiber begins to look smashed
 71-80: High alcohol content - blurry vision, imbiber completely shitfaced
-81-90: Extremely high alcohol content - heavy toxin damage, passing out
+81-90: Extremely high alcohol content - light brain damage, passing out
 91-100: Dangerously toxic - swift death
 */
 
-/mob/living/carbon/human/proc/handle_alcohol()
-	if(sleeping)
-		modify_drunkenness(-1.5) //Sleeping helps you recover from alcohol poisoning
-	else
-		modify_drunkenness(-0.2) //Becoming sober takes much longer than becoming drunk
+/mob/living/carbon/human/handle_status_effects()
+	..()
+	if(drunkenness)
+		modify_drunkenness(-0.2) //Slow sobering - sleeping increases it to 1 per tick
 
-	if(!drunkenness)
-		return 0
+		if(drunkenness >= 6)
+			if(prob(25))
+				slurring += 2
+			jitteriness = max(jitteriness - 3, 0)
 
-	if(drunkenness >= 6)
-		if(prob(25))
-			slurring += 2
-		jitteriness = max(jitteriness - 3, 0)
+		if(drunkenness >= 11 && slurring < 5)
+			slurring += 1.2
 
-	if(drunkenness >= 11 && slurring < 5)
-		slurring += 1.2
+		if(drunkenness >= 41)
+			if(prob(25))
+				confused += 2
+			Dizzy(10)
 
-	if(drunkenness >= 41)
-		if(prob(25))
-			confused += 2
-		Dizzy(10)
+		if(drunkenness >= 51)
+			if(prob(5))
+				confused += 10
+				vomit()
+			Dizzy(25)
 
-	if(drunkenness >= 51)
-		if(prob(5))
-			confused += 10
-			vomit()
-		Dizzy(25)
+		if(drunkenness >= 61)
+			if(prob(50))
+				blur_eyes(5)
 
-	if(drunkenness >= 61)
-		if(prob(50))
+		if(drunkenness >= 71)
 			blur_eyes(5)
 
-	if(drunkenness >= 71)
-		blur_eyes(5)
+		if(drunkenness >= 81)
+			adjustToxLoss(0.2)
+			if(prob(5) && !sleeping)
+				src << "<span class='warning'>Maybe you should lie down for a bit...</span>"
 
-	if(drunkenness >= 81)
-		adjustToxLoss(0.2)
-		if(prob(5))
-			src << "<span class='warning'>Maybe you should lie down for a bit...</span>"
+		if(drunkenness >= 91)
+			adjustBrainLoss(0.4)
+			if(prob(20))
+				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && z == ZLEVEL_STATION) //QoL mainly
+					src << "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>"
+				else if(!sleeping)
+					src << "<span class='warning'>Just a quick nap...</span>"
+					Sleeping(45)
 
-	if(drunkenness >= 91)
-		if(!sleeping)
-			adjustToxLoss(1)
-		if(prob(20))
-			if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && z == ZLEVEL_STATION) //QoL mainly
-				src << "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>"
-			else if(!sleeping)
-				src << "<span class='warning'>Just a quick nap...</span>"
-				Sleeping(45)
-
-	if(drunkenness >= 101)
-		adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
-
-/mob/living/carbon/human/proc/modify_drunkenness(var/amount)
-	drunkenness += amount
-	if(sleeping)
 		if(drunkenness >= 101)
-			drunkenness -= 25 //Mainly to ensure that you don't goddamn die from it for balance reasons
-	drunkenness = Clamp(drunkenness, 0, INFINITY)
+			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
+
+/mob/living/carbon/human/proc/modify_drunkenness(amount)
+	if(sleeping)
+		amount *= 5
+	drunkenness = max(drunkenness + amount, 0)
 
 #undef HUMAN_MAX_OXYLOSS
