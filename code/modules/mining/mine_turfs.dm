@@ -646,7 +646,7 @@ var/global/list/rockTurfEdgeCache
 	name = "chasm"
 	desc = "Watch your step."
 	baseturf = /turf/simulated/chasm
-	smooth = SMOOTH_TRUE
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
 	var/drop_x = 1
