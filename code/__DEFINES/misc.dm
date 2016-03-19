@@ -342,7 +342,9 @@ var/list/bloody_footprints_cache = list()
 /////////////////////////////////////
 //this was added midway thru 510, so it might not exist in some versions, but we can't check by minor verison
 #ifndef TILE_BOUND
+#if DM_VERSION >= 510
 #warn this version of 510 is too old, You should use byond 510.1332 or later when using 510.
+#endif
 #define TILE_BOUND 256
 #endif
 
