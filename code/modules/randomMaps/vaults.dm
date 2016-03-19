@@ -8,7 +8,7 @@
 
 #define MINIMUM_VAULT_AMOUNT 1 //Amount of guaranteed vault spawns
 
-#define SPAWN_ALL_VAULTS //Uncomment to spawn all existing vaults (otherwise only some will spawn)!
+//#define SPAWN_ALL_VAULTS //Uncomment to spawn all existing vaults (otherwise only some will spawn)!
 
 //List of spawnable vaults is in code/modules/randomMaps/vault_definitions.dm
 
