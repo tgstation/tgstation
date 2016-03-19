@@ -43,14 +43,16 @@
 
 			cur_turf = get_step(cur_turf, cur_dir)
 
-			if(!cur_turf.density || istype(cur_turf, /turf/simulated/mineral)) //Rivers will flow around walls
+			if(!istype(cur_turf, /turf/simulated/wall)) //Rivers will flow around walls
+				var/turf/simulated/river_turf = new turf_type(cur_turf)
+			//	river_turf.ChangeTurf(turf_type)
+				river_turf.Spread(30, 25)
+			else
 				detouring = 0
 				cur_dir = get_dir(cur_turf, target_turf)
 				cur_turf = get_step(cur_turf, cur_dir)
 				continue
-			else
-				var/turf/simulated/river_turf = new turf_type(cur_turf)
-				river_turf.Spread(30, 25)
+
 
 	for(var/WP in river_nodes)
 		qdel(WP)
@@ -67,11 +69,11 @@
 		return
 
 	for(var/turf/simulated/F in orange(1, src))
-		if(!F.density || istype(F, /turf/simulated/mineral))
-			var/turf/L = new src.type(F)
 
-			if(L && prob(probability))
-				L.Spread(probability - prob_loss)
+		var/turf/L = new src.type(F)
+
+		if(L && prob(probability))
+			L.Spread(probability - prob_loss)
 
 
 #undef RANDOM_UPPER_X
