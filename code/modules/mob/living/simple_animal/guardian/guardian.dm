@@ -471,8 +471,8 @@
 	..()
 	if(summoner && summonerchain && !qdeleted(summonerchain))
 		chainshock(summonerchain)
-	else
-		summonerchain = null
+	else if(summoner)
+		summonerchain = Beam(summoner,"lightning[rand(1,12)]",'icons/effects/effects.dmi',INFINITY, INFINITY,/obj/effect/ebeam/chain)
 	if(enemy && enemychain && !qdeleted(enemychain))
 		chainshock(enemychain)
 	else
