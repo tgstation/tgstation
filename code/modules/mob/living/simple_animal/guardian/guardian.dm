@@ -246,17 +246,6 @@
 	if(summoner)
 		summoner.ExtinguishMob()
 		summoner.adjust_fire_stacks(-20)
-/*
-/mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
-	if(..())
-		if(prob(45))
-			if(istype(target, /atom/movable))
-				var/atom/movable/M = target
-				if(!M.anchored && M != summoner)
-					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
-					do_teleport(M, M, 10)
-					PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(M))
-*/
 
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
 	if(..())
@@ -541,10 +530,23 @@
 	melee_damage_upper = 15
 	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
 	range = 13
-	playstyle_string = "As an explosive type, you have only moderate close combat abilities, but are capable of converting any adjacent item into a disguised bomb via alt click."
+	playstyle_string = "As an explosive type, you have moderate close combat abilities, may explosively teleport targets on attack, and are capable of converting nearby items and objects into disguised bombs via alt click."
 	magic_fluff_string = "..And draw the Scientist, master of explosive death."
 	tech_fluff_string = "Boot sequence complete. Explosive modules active. Holoparasite swarm online."
 	var/bomb_cooldown = 0
+
+/mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
+	if(..())
+		if(prob(33))
+			if(istype(target, /atom/movable))
+				var/atom/movable/M = target
+				if(!M.anchored && M != summoner)
+					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
+					do_teleport(M, M, 10)
+					for(var/mob/living/L in range(1, M))
+						if(L != src && L != summoner)
+							L.apply_damage(15, BRUTE)
+					PoolOrNew(/obj/effect/overlay/temp/explosion, get_turf(M))
 
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
 	if(!istype(A))
@@ -558,7 +560,7 @@
 			src << "<span class='danger'><B>Success! Bomb armed!</span></B>"
 			bomb_cooldown = world.time + 200
 			B.spawner = src
-			B.disguise (A)
+			B.disguise(A)
 		else
 			src << "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>"
 
@@ -572,6 +574,7 @@
 /obj/item/weapon/guardian_bomb/proc/disguise(var/obj/A)
 	A.loc = src
 	stored_obj = A
+	opacity = A.opacity
 	anchored = A.anchored
 	density = A.density
 	appearance = A.appearance
@@ -587,6 +590,12 @@
 	playsound(get_turf(src),'sound/effects/Explosion2.ogg', 200, 1)
 	user.ex_act(2)
 	qdel(src)
+
+/obj/item/weapon/guardian_bomb/Bump(atom/A)
+	if(isliving(A))
+		detonate(A)
+	else
+		..()
 
 /obj/item/weapon/guardian_bomb/attackby(mob/living/user)
 	detonate(user)
@@ -725,7 +734,7 @@
 	info = {"<b>A list of Holoparasite Types</b><br>
 
  <br>
- <b>Chaos</b>: Ignites enemies on touch and teleports them at random on attack. Automatically extinguishes the user if they catch on fire.<br>
+ <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the parasite. Automatically extinguishes the user if they catch on fire.<br>
  <br>
  <b>Standard</b>:Devastating close combat attacks and high damage resist. Can smash through weak walls.<br>
  <br>
@@ -733,7 +742,7 @@
  <br>
  <b>Support</b>:Has two modes. Combat; Medium power attacks and damage resist. Healer; Heals instead of attack, but has low damage resist and slow movement. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
  <br>
- <b>Explosive</b>: High damage resist and medium power attack. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
+ <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
 "}
 
 /obj/item/weapon/paper/guardian/update_icon()
