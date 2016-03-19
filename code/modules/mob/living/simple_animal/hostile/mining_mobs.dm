@@ -751,8 +751,29 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	layer = MOB_LAYER-0.1
-	loot = list(/obj/effect/gibspawner)
+	loot = list(/obj/effect/collapse, /obj/structure/closet/crate/necropolis/tendril)
 	del_on_death = 1
+
+/obj/effect/collapse
+	name = "collapsing necropolis tendril"
+	desc = "Get clear!"
+	layer = 2
+	icon = 'icons/mob/nest.dmi'
+	icon_state = "tendril"
+
+/obj/effect/collapse/New()
+	..()
+	visible_message("<B><span class='danger'>The tendril writhes in pain and anger and the earth around it begins to split! Get back!</span></B>")
+	visible_message("<span class='danger'>A chest falls clear of the tendril!</span>")
+	spawn(50)
+		for(var/mob/M in range(7,src))
+			shake_camera(M, 15, 1)
+		playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, 1)
+		visible_message("<B><span class='danger'>The tendril collapes!</span></B>")
+		for(var/turf/T in range(2,src))
+			if(!T.density)
+				T.ChangeTurf(/turf/simulated/chasm/straight_down/lava_land_surface)
+		qdel(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/goliath
 	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast
