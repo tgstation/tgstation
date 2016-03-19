@@ -77,7 +77,7 @@
 	crate_name = "firefighting crate"
 
 /datum/supply_pack/emergency/atmostank
-	name = "Firefighting Watertank"
+	name = "Firefighting watertank"
 	cost = 10
 	access = access_atmospherics
 	contains = list(/obj/item/weapon/watertank/atmos)
@@ -1031,10 +1031,10 @@
 	crate_name = "conveyor assembly crate"
 
 /datum/supply_pack/misc/watertank
-	name = "Water Tank Crate"
+	name = "Brawndo Tank Crate"
 	cost = 8
 	contains = list(/obj/structure/reagent_dispensers/watertank)
-	crate_name = "water tank crate"
+	crate_name = "brawndo tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/misc/lasertag

@@ -145,7 +145,7 @@
 	name = "Dulce de batata"
 	reqs = list(
 		/datum/reagent/consumable/vanilla = 5,
-		/datum/reagent/water = 5,
+		/datum/reagent/brawndo = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/dulcedebatata

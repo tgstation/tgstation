@@ -125,7 +125,7 @@
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/weapon/bikehorn(src)
 			new /obj/item/toy/crayon/rainbow(src)
-			new /obj/item/weapon/reagent_containers/spray/waterflower(src)
+			new /obj/item/weapon/reagent_containers/spray/brawndoflower(src)
 		if(95)
 			new /obj/item/clothing/under/rank/mime(src)
 			new /obj/item/clothing/shoes/sneakers/black(src)

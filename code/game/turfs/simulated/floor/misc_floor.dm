@@ -40,17 +40,17 @@
 
 /turf/simulated/floor/plating/beach/coastline_t
 	name = "Coastline"
-	icon_state = "sandwater_t"
+	icon_state = "sandbrawndo_t"
 	baseturf = /turf/simulated/floor/plating/beach/coastline_t
 
 /turf/simulated/floor/plating/beach/coastline_b
 	name = "Coastline"
-	icon_state = "sandwater_b"
+	icon_state = "sandbrawndo_b"
 	baseturf = /turf/simulated/floor/plating/beach/coastline_b
 
 /turf/simulated/floor/plating/beach/water
-	name = "Water"
-	icon_state = "water"
+	name = "Brawndo"
+	icon_state = "brawndo"
 	baseturf = /turf/simulated/floor/plating/beach/water
 
 /turf/simulated/floor/plating/ironsand/New()

@@ -30,7 +30,7 @@
 	icon_state = "sandwater_b"
 
 /turf/simulated/floor/holofloor/beach/water
-	name = "water"
+	name = "brawndo"
 	icon_state = "water"
 
 /turf/simulated/floor/holofloor/asteroid

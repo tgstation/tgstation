@@ -557,7 +557,7 @@
 
 /obj/item/device/extinguisher_refill
 	name = "Plasma-man jumpsuit refill pack"
-	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
+	desc = "A compressed brawndo pack used to refill plasma-man jumpsuit auto-extinguishers."
 	icon_state = "plasmarefill"
 
 /obj/item/clothing/under/rank/security/navyblue/russian

@@ -13,13 +13,13 @@
 	force = 10
 	materials = list(MAT_METAL=90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
-	var/max_water = 50
+	var/max_brawndo = 50
 	var/last_use = 1
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
-	var/power = 5 //Maximum distance launched water will travel
-	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
-	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
+	var/power = 5 //Maximum distance launched brawndo will travel
+	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one brawndo effect per row
+	var/cooling_power = 2 //Sets the cooling_temperature of the brawndo reagent datum inside of the extinguisher when it is refilled
 
 /obj/item/weapon/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -32,12 +32,12 @@
 	w_class = 2
 	force = 3
 	materials = list()
-	max_water = 30
+	max_brawndo = 30
 	sprite_name = "miniFE"
 
 /obj/item/weapon/extinguisher/New()
-	create_reagents(max_water)
-	reagents.add_reagent("water", max_water)
+	create_reagents(max_brawndo)
+	reagents.add_reagent("brawndo", max_brawndo)
 
 /obj/item/weapon/extinguisher/attack_self(mob/user)
 	safety = !safety
@@ -62,11 +62,11 @@
 			safety = safety_save
 			return 1
 		var/obj/structure/reagent_dispensers/watertank/W = target
-		var/transferred = W.reagents.trans_to(src, max_water)
+		var/transferred = W.reagents.trans_to(src, max_brawndo)
 		if(transferred > 0)
 			user << "<span class='notice'>\The [src] has been refilled by [transferred] units.</span>"
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-			for(var/datum/reagent/water/R in reagents.reagent_list)
+			for(var/datum/reagent/brawndo/R in reagents.reagent_list)
 				R.cooling_temperature = cooling_power
 		else
 			user << "<span class='warning'>\The [W] is empty!</span>"
@@ -76,7 +76,7 @@
 		return 0
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
-	//TODO; Add support for reagents in water.
+	//TODO; Add support for reagents in brawndo.
 	if(target.loc == user || !check_allowed_items(target)) //No more spraying yourself when putting your extinguisher away
 		return
 	var/Refill = AttemptRefill(target, user)

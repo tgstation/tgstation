@@ -330,14 +330,14 @@
 
 /obj/item/clothing/suit/jacket/puffer
 	name = "puffer jacket"
-	desc = "A thick jacket with a rubbery, water-resistant shell."
+	desc = "A thick jacket with a rubbery, brawndo-resistant shell."
 	icon_state = "pufferjacket"
 	item_state = "hostrench"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0)
 
 /obj/item/clothing/suit/jacket/puffer/vest
 	name = "puffer vest"
-	desc = "A thick vest with a rubbery, water-resistant shell."
+	desc = "A thick vest with a rubbery, brawndo-resistant shell."
 	icon_state = "puffervest"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN

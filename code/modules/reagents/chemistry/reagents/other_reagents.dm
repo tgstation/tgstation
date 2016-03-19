@@ -107,25 +107,25 @@
 	if(istype(data))
 		src.data |= data.Copy()
 
-/datum/reagent/water
-	name = "Water"
-	id = "water"
-	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
-	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
+/datum/reagent/brawndo
+	name = "Brawndo"
+	id = "brawndo"
+	description = "its got electroyltes"
+	color = "#00FF0077" // rgb: 170, 170, 170, 77 (alpha)
 	var/cooling_temperature = 2
 
 /*
- *	Water reaction to turf
+ *	Brawndo reaction to turf
  */
 
-/datum/reagent/water/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/brawndo/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
 	if(reac_volume >= 10)
 		T.MakeSlippery()
 
 	for(var/mob/living/simple_animal/slime/M in T)
-		M.apply_water()
+		M.apply_brawndo()
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot && !istype(T, /turf/space))
@@ -137,10 +137,10 @@
 	return
 
 /*
- *	Water reaction to an object
+ *	Brawndo reaction to an object
  */
 
-/datum/reagent/water/reaction_obj(obj/O, reac_volume)
+/datum/reagent/brawndo/reaction_obj(obj/O, reac_volume)
 	if(istype(O))
 		O.extinguish()
 
@@ -158,10 +158,10 @@
 	return
 
 /*
- *	Water reaction to a mob
+ *	Brawndo reaction to a mob
  */
 
-/datum/reagent/water/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with water can help put them out!
+/datum/reagent/brawndo/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with brawndo can help put them out!
 	if(!istype(M))
 		return
 	if(method == TOUCH)
@@ -169,13 +169,13 @@
 		M.ExtinguishMob()
 	..()
 
-/datum/reagent/water/holywater
-	name = "Holy Water"
-	id = "holywater"
-	description = "Water blessed by some deity."
+/datum/reagent/brawndo/holybrawndo
+	name = "Holy Brawndo"
+	id = "holybrawndo"
+	description = "Brawndo blessed by some deity."
 	color = "#E0E8EF" // rgb: 224, 232, 239
 
-/datum/reagent/water/holywater/on_mob_life(mob/living/M)
+/datum/reagent/brawndo/holybrawndo/on_mob_life(mob/living/M)
 	if(!data) data = 1
 	data++
 	M.jitteriness = max(M.jitteriness-5,0)
@@ -200,7 +200,7 @@
 			return
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 
-/datum/reagent/water/holywater/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/brawndo/holybrawndo/reaction_turf(turf/simulated/T, reac_volume)
 	..()
 	if(!istype(T)) return
 	if(reac_volume>=10)
@@ -208,12 +208,12 @@
 			qdel(R)
 	T.Bless()
 
-/datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
-	name = "Unholy Water"
-	id = "unholywater"
+/datum/reagent/fuel/unholybrawndo		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
+	name = "Unholy Brawndo"
+	id = "unholybrawndo"
 	description = "Something that shouldn't exist on this plane of existance."
 
-/datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
+/datum/reagent/fuel/unholybrawndo/on_mob_life(mob/living/M)
 	M.adjustBrainLoss(3)
 	if(iscultist(M))
 		M.status_flags |= GOTTAGOFAST
@@ -229,12 +229,12 @@
 	holder.remove_reagent(src.id, 1)
 	. = 1
 
-/datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
-	name = "Hell Water"
-	id = "hell_water"
+/datum/reagent/hellbrawndo			//if someone has this in their system they've really pissed off an eldrich god
+	name = "Hell Brawndo"
+	id = "hell_brawndo"
 	description = "YOUR FLESH! IT BURNS!"
 
-/datum/reagent/hellwater/on_mob_life(mob/living/M)
+/datum/reagent/hellbrawndo/on_mob_life(mob/living/M)
 	M.fire_stacks = min(5,M.fire_stacks + 3)
 	M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
 	M.adjustToxLoss(1, 0)
@@ -489,7 +489,7 @@
 /datum/reagent/potassium
 	name = "Potassium"
 	id = "potassium"
-	description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
+	description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with brawndo."
 	reagent_state = SOLID
 	color = "#A0A0A0" // rgb: 160, 160, 160
 
@@ -800,7 +800,7 @@
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
 	id = "fluorosurfactant"
-	description = "A perfluoronated sulfonic acid that forms a foam when mixed with water."
+	description = "A perfluoronated sulfonic acid that forms a foam when mixed with brawndo."
 	color = "#9E6B38" // rgb: 158, 107, 56
 
 /datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.

@@ -1,10 +1,10 @@
 //Hydroponics tank and base code
 /obj/item/weapon/watertank
-	name = "backpack water tank"
-	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
+	name = "backpack brawndo tank"
+	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to brawndo plants."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "waterbackpack"
-	item_state = "waterbackpack"
+	icon_state = "brawndobackpack"
+	item_state = "brawndobackpack"
 	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
@@ -107,8 +107,8 @@
 // the watertank backpack. Allowing it to be placed elsewhere or created without a parent
 // watertank object will likely lead to weird behaviour or runtimes.
 /obj/item/weapon/reagent_containers/spray/mister
-	name = "water mister"
-	desc = "A mister nozzle attached to a water tank."
+	name = "brawndo mister"
+	desc = "A mister nozzle attached to a brawndo tank."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
@@ -157,10 +157,10 @@
 
 //Janitor tank
 /obj/item/weapon/watertank/janitor
-	name = "backpack water tank"
+	name = "backpack brawndo tank"
 	desc = "A janitorial watertank backpack with nozzle to clean dirt and graffiti."
-	icon_state = "waterbackpackjani"
-	item_state = "waterbackpackjani"
+	icon_state = "brawndobackpackjani"
+	item_state = "brawndobackpackjani"
 
 /obj/item/weapon/watertank/janitor/New()
 	..()
@@ -191,20 +191,20 @@
 /obj/item/weapon/watertank/atmos
 	name = "backpack firefighter tank"
 	desc = "A refridgerated and pressurized backpack tank with extinguisher nozzle, intended to fight fires. Swaps between extinguisher, nanofrost launcher, and metal foam dispenser for breaches. Nanofrost converts plasma in the air to nitrogen, but only if it is combusting at the time."
-	icon_state = "waterbackpackatmos"
-	item_state = "waterbackpackatmos"
+	icon_state = "brawndobackpackatmos"
+	item_state = "brawndobackpackatmos"
 	volume = 200
 
 /obj/item/weapon/watertank/atmos/New()
 	..()
-	reagents.add_reagent("water", 200)
+	reagents.add_reagent("brawndo", 200)
 
 /obj/item/weapon/watertank/atmos/make_noz()
 	return new /obj/item/weapon/extinguisher/mini/nozzle(src)
 
 /obj/item/weapon/watertank/atmos/dropped(mob/user)
 	..()
-	icon_state = "waterbackpackatmos"
+	icon_state = "brawndobackpackatmos"
 	if(istype(noz, /obj/item/weapon/extinguisher/mini/nozzle))
 		var/obj/item/weapon/extinguisher/mini/nozzle/N = noz
 		N.nozzle_mode = 0
@@ -216,7 +216,7 @@
 	icon_state = "atmos_nozzle"
 	item_state = "nozzleatmos"
 	safety = 0
-	max_water = 200
+	max_brawndo = 200
 	power = 8
 	precision = 1
 	cooling_power = 5
@@ -231,7 +231,7 @@
 	if(check_tank_exists(parent_tank, src))
 		tank = parent_tank
 		reagents = tank.reagents
-		max_water = tank.volume
+		max_brawndo = tank.volume
 		loc = tank
 	return
 
@@ -245,18 +245,18 @@
 	switch(nozzle_mode)
 		if(EXTINGUISHER)
 			nozzle_mode = NANOFROST
-			tank.icon_state = "waterbackpackatmos_1"
+			tank.icon_state = "brawndobackpackatmos_1"
 			user << "Swapped to nanofrost launcher"
 			return
 		if(NANOFROST)
 			nozzle_mode = METAL_FOAM
-			tank.icon_state = "waterbackpackatmos_2"
+			tank.icon_state = "brawndobackpackatmos_2"
 			user << "Swapped to metal foam synthesizer"
 			return
 		if(METAL_FOAM)
 			nozzle_mode = EXTINGUISHER
-			tank.icon_state = "waterbackpackatmos_0"
-			user << "Swapped to water extinguisher"
+			tank.icon_state = "brawndobackpackatmos_0"
+			user << "Swapped to brawndo extinguisher"
 			return
 	return
 
@@ -278,7 +278,7 @@
 			return //Safety check so you don't blast yourself trying to refill your tank
 		var/datum/reagents/R = reagents
 		if(R.total_volume < 100)
-			user << "<span class='warning'>You need at least 100 units of water to use the nanofrost launcher!</span>"
+			user << "<span class='warning'>You need at least 100 units of brawndo to use the nanofrost launcher!</span>"
 			return
 		if(nanofrost_cooldown)
 			user << "<span class='warning'>Nanofrost launcher is still recharging...</span>"
@@ -336,8 +336,8 @@
 	name = "backpack chemical injector"
 	desc = "A chemical autoinjector that can be carried on your back."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "waterbackpackatmos"
-	item_state = "waterbackpackatmos"
+	icon_state = "brawndobackpackatmos"
+	item_state = "brawndobackpackatmos"
 	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
@@ -445,10 +445,10 @@
 
 //Operator backpack spray
 /obj/item/weapon/watertank/operator
-	name = "backpack water tank"
+	name = "backpack brawndo tank"
 	desc = "A New Russian backpack spray for systematic cleansing of carbon lifeforms."
-	icon_state = "waterbackpackjani"
-	item_state = "waterbackpackjani"
+	icon_state = "brawndobackpackjani"
+	item_state = "brawndobackpackjani"
 	w_class = 3
 	volume = 2000
 	slowdown = 0
@@ -465,7 +465,7 @@
 
 /obj/item/weapon/reagent_containers/spray/mister/operator
 	name = "janitor spray nozzle"
-	desc = "A mister nozzle attached to several extended water tanks. It suspiciously has a compressor in the system and is labelled entirely in New Cyrillic."
+	desc = "A mister nozzle attached to several extended brawndo tanks. It suspiciously has a compressor in the system and is labelled entirely in New Cyrillic."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
 	item_state = "misterjani"

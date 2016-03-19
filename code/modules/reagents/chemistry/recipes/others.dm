@@ -10,7 +10,7 @@
 	name = "Space Lube"
 	id = "lube"
 	result = "lube"
-	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
+	required_reagents = list("brawndo" = 1, "silicon" = 1, "oxygen" = 1)
 	result_amount = 4
 
 /datum/chemical_reaction/spraytan
@@ -52,7 +52,7 @@
 	name = "Sodium Chloride"
 	id = "sodiumchloride"
 	result = "sodiumchloride"
-	required_reagents = list("water" = 1, "sodium" = 1, "chlorine" = 1)
+	required_reagents = list("brawndo" = 1, "sodium" = 1, "chlorine" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/plasmasolidification
@@ -130,7 +130,7 @@
 	name = "Virus Food"
 	id = "virusfood"
 	result = "virusfood"
-	required_reagents = list("water" = 5, "milk" = 5)
+	required_reagents = list("brawndo" = 5, "milk" = 5)
 	result_amount = 15
 
 /datum/chemical_reaction/virus_food_mutagen
@@ -289,7 +289,7 @@
 	name = "Foam"
 	id = "foam"
 	result = null
-	required_reagents = list("fluorosurfactant" = 1, "water" = 1)
+	required_reagents = list("fluorosurfactant" = 1, "brawndo" = 1)
 	result_amount = 2
 	mob_react = 1
 
@@ -368,14 +368,14 @@
 	name = "Space cleaner"
 	id = "cleaner"
 	result = "cleaner"
-	required_reagents = list("ammonia" = 1, "water" = 1)
+	required_reagents = list("ammonia" = 1, "brawndo" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/plantbgone
 	name = "Plant-B-Gone"
 	id = "plantbgone"
 	result = "plantbgone"
-	required_reagents = list("toxin" = 1, "water" = 4)
+	required_reagents = list("toxin" = 1, "brawndo" = 4)
 	result_amount = 5
 
 /datum/chemical_reaction/weedkiller
@@ -427,7 +427,7 @@
 	name = "phenol"
 	id = "phenol"
 	result = "phenol"
-	required_reagents = list("water" = 1, "chlorine" = 1, "oil" = 1)
+	required_reagents = list("brawndo" = 1, "chlorine" = 1, "oil" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/ash
@@ -508,5 +508,5 @@
 	name = "lye"
 	id = "lye"
 	result = "lye"
-	required_reagents = list("ash" = 1, "water" = 1)
+	required_reagents = list("ash" = 1, "brawndo" = 1)
 	result_amount = 2

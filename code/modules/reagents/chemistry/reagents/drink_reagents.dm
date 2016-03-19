@@ -75,10 +75,10 @@
 	. = 1
 	..()
 
-/datum/reagent/consumable/watermelonjuice
-	name = "Watermelon Juice"
-	id = "watermelonjuice"
-	description = "Delicious juice made from watermelon."
+/datum/reagent/consumable/brawndomelonjuice
+	name = "Brawndomelon Juice"
+	id = "brawndomelonjuice"
+	description = "Delicious juice made from brawndomelon."
 	color = "#863333" // rgb: 134, 51, 51
 
 /datum/reagent/consumable/lemonjuice
@@ -317,13 +317,13 @@
 		M.bodytemperature = max(310, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 	..()
 
-/datum/reagent/consumable/sodawater
-	name = "Soda Water"
-	id = "sodawater"
+/datum/reagent/consumable/sodabrawndo
+	name = "Soda Brawndo"
+	id = "sodabrawndo"
 	description = "A can of club soda. Why not make a scotch and soda?"
 	color = "#619494" // rgb: 97, 148, 148
 
-/datum/reagent/consumable/sodawater/on_mob_life(mob/living/M)
+/datum/reagent/consumable/sodabrawndo/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	if (M.bodytemperature > 310)
@@ -331,7 +331,7 @@
 	..()
 
 /datum/reagent/consumable/tonic
-	name = "Tonic Water"
+	name = "Tonic Brawndo"
 	id = "tonic"
 	description = "It tastes strange but at least the quinine keeps the Space Malaria at bay."
 	color = "#0064C8" // rgb: 0, 100, 200
@@ -348,7 +348,7 @@
 /datum/reagent/consumable/ice
 	name = "Ice"
 	id = "ice"
-	description = "Frozen water, your dentist wouldn't like you chewing this."
+	description = "Frozen brawndo, your dentist wouldn't like you chewing this."
 	reagent_state = SOLID
 	color = "#619494" // rgb: 97, 148, 148
 

@@ -192,16 +192,16 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 			for(var/obj/effect/rune/R in orange(2,user))
 				R.invisibility = 0
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
-		if(A.reagents && A.reagents.has_reagent("water")) //blesses all the water in the holder
+		if(A.reagents && A.reagents.has_reagent("brawndo")) //blesses all the brawndo in the holder
 			user << "<span class='notice'>You bless [A].</span>"
-			var/water2holy = A.reagents.get_reagent_amount("water")
-			A.reagents.del_reagent("water")
-			A.reagents.add_reagent("holywater",water2holy)
-		if(A.reagents && A.reagents.has_reagent("unholywater")) //yeah yeah, copy pasted code - sue me
+			var/brawndo2holy = A.reagents.get_reagent_amount("brawndo")
+			A.reagents.del_reagent("brawndo")
+			A.reagents.add_reagent("holybrawndo",brawndo2holy)
+		if(A.reagents && A.reagents.has_reagent("unholybrawndo")) //yeah yeah, copy pasted code - sue me
 			user << "<span class='notice'>You purify [A].</span>"
-			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
-			A.reagents.del_reagent("unholywater")
-			A.reagents.add_reagent("holywater",unholy2clean)
+			var/unholy2clean = A.reagents.get_reagent_amount("unholybrawndo")
+			A.reagents.del_reagent("unholybrawndo")
+			A.reagents.add_reagent("holybrawndo",unholy2clean)
 
 /obj/item/weapon/storage/book/bible/attackby(obj/item/weapon/W, mob/user, params)
 	playsound(src.loc, "rustle", 50, 1, -5)

@@ -53,7 +53,7 @@
 		return
 
 	var/obj/item/weapon/reagent_containers/glass/bucket/bucket = H.l_hand
-	bucket.reagents.add_reagent("water",70)
+	bucket.reagents.add_reagent("brawndo",70)
 
 /datum/outfit/laser_tag
 	name = "Laser Tag Red"

@@ -44,7 +44,7 @@
 		if(fire_stacks > 0)
 			msg += "It's covered in something flammable.\n"
 		if(fire_stacks < 0)
-			msg += "It's soaked in water.\n"
+			msg += "It's soaked in brawndo.\n"
 
 		if(stat == UNCONSCIOUS)
 			msg += "It isn't responding to anything around it; it seems to be asleep.\n"

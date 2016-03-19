@@ -19,7 +19,7 @@
 	name = "Slime epinephrine"
 	id = "m_inaprov"
 	result = "epinephrine"
-	required_reagents = list("water" = 5)
+	required_reagents = list("brawndo" = 5)
 	result_amount = 3
 	required_other = 1
 	required_container = /obj/item/slime_extract/grey
@@ -125,7 +125,7 @@
 	name = "Slime Crit Friendly"
 	id = "m_tele5"
 	result = null
-	required_reagents = list("water" = 1)
+	required_reagents = list("brawndo" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/gold
 	required_other = 1
@@ -191,7 +191,7 @@
 	name = "Slime Bork 2"
 	id = "m_tele4"
 	result = null
-	required_reagents = list("water" = 1)
+	required_reagents = list("brawndo" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/silver
 	required_other = 1
@@ -273,7 +273,7 @@
 	name = "Slime Fireproof"
 	id = "m_fireproof"
 	result = null
-	required_reagents = list("water" = 1)
+	required_reagents = list("brawndo" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/darkblue
 	required_other = 1
@@ -349,7 +349,7 @@
 	name = "Slime Glow"
 	id = "m_glow"
 	result = null
-	required_reagents = list("water" = 1)
+	required_reagents = list("brawndo" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/yellow
 	required_other = 1
@@ -442,7 +442,7 @@
 	name = "Slime Speed"
 	id = "m_speed"
 	result = null
-	required_reagents = list("water" = 1)
+	required_reagents = list("brawndo" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/red
 	required_other = 1
@@ -617,7 +617,7 @@
 	name = "Slime Camera"
 	id = "m_camera"
 	result = null
-	required_reagents = list("water" = 1)
+	required_reagents = list("brawndo" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/sepia
 	required_other = 1

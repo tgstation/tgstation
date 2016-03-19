@@ -22,7 +22,7 @@
 
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/weapon/mop, mob/user)
 	if(reagents.total_volume < 1)
-		user << "<span class='warning'>[src] is out of water!</span>"
+		user << "<span class='warning'>[src] is out of brawndo!</span>"
 		return 0
 	else
 		reagents.trans_to(mop, 5)

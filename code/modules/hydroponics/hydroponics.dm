@@ -4,10 +4,10 @@
 	icon_state = "hydrotray"
 	density = 1
 	anchored = 1			// anchored == 2 means the hoses are screwed in place
-	var/waterlevel = 100	//The amount of water in the tray (max 100)
-	var/maxwater = 100		//The maximum amount of water in the tray
+	var/brawndolevel = 100	//The amount of brawndo in the tray (max 100)
+	var/maxbrawndo = 100		//The maximum amount of brawndo in the tray
 	var/nutrilevel = 10		//The amount of nutrient in the tray (max 10)
-	var/maxnutri = 10		//The maximum nutrient of water in the tray
+	var/maxnutri = 10		//The maximum nutrient of brawndo in the tray
 	var/pestlevel = 0		//The amount of pests in the tray (max 10)
 	var/weedlevel = 0		//The amount of weeds in the tray (max 10)
 	var/yieldmod = 1		//Nutriment's effect on yield
@@ -47,9 +47,9 @@
 		tmp_capacity += M.rating
 	for (var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		rating = M.rating
-	maxwater = tmp_capacity * 50 // Up to 300
+	maxbrawndo = tmp_capacity * 50 // Up to 300
 	maxnutri = tmp_capacity * 5 // Up to 30
-	waterlevel = maxwater
+	brawndolevel = maxbrawndo
 	nutrilevel = 3
 
 /obj/machinery/hydroponics/Destroy()
@@ -143,25 +143,25 @@
 					if(lightAmt < 4)
 						adjustHealth(-2 / rating)
 
-//Water//////////////////////////////////////////////////////////////////
-			// Drink random amount of water
-			adjustWater(-rand(1,6) / rating)
+//Brawndo//////////////////////////////////////////////////////////////////
+			// Drink random amount of brawndo
+			adjustBrawndo(-rand(1,6) / rating)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
-			if(waterlevel <= 10 && myseed.plant_type != PLANT_MUSHROOM)
+			if(brawndolevel <= 10 && myseed.plant_type != PLANT_MUSHROOM)
 				adjustHealth(-rand(0,1) / rating)
-				if(waterlevel <= 0)
+				if(brawndolevel <= 0)
 					adjustHealth(-rand(0,2) / rating)
 
-			// Sufficient water level and nutrient level = plant healthy
-			else if(waterlevel > 10 && nutrilevel > 0)
+			// Sufficient brawndo level and nutrient level = plant healthy
+			else if(brawndolevel > 10 && nutrilevel > 0)
 				adjustHealth(rand(1,2) / rating)
 				if(prob(5))  //5 percent chance the weed population will increase
 					adjustWeeds(1 / rating)
 
 //Toxins/////////////////////////////////////////////////////////////////
 
-			// Too much toxins cause harm, but when the plant drinks the contaiminated water, the toxins disappear slowly
+			// Too much toxins cause harm, but when the plant drinks the contaiminated brawndo, the toxins disappear slowly
 			if(toxic >= 40 && toxic < 80)
 				adjustHealth(-1 / rating)
 				adjustToxic(-rand(1,10) / rating)
@@ -199,7 +199,7 @@
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
 				adjustPests(1 / rating)
 		else
-			if(waterlevel > 10 && nutrilevel > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
+			if(brawndolevel > 10 && nutrilevel > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
 				adjustWeeds(1 / rating)
 
 		// Weeeeeeeeeeeeeeedddssss
@@ -275,8 +275,8 @@
 	overlays += I
 
 /obj/machinery/hydroponics/proc/update_icon_lights()
-	if(waterlevel <= 10)
-		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3")
+	if(brawndolevel <= 10)
+		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowbrawndo3")
 	if(nutrilevel <= 2)
 		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lownutri3")
 	if(health <= (myseed.endurance / 2))
@@ -300,7 +300,7 @@
 	else
 		user << "<span class='info'>[src] is empty.</span>"
 
-	user << "<span class='info'>Water: [waterlevel]/[maxwater]</span>"
+	user << "<span class='info'>Brawndo: [brawndolevel]/[maxbrawndo]</span>"
 	user << "<span class='info'>Nutrient: [nutrilevel]/[maxnutri]</span>"
 
 	if(weedlevel >= 5)
@@ -490,57 +490,57 @@
 	// Milk is good for humans, but bad for plants. The sugars canot be used by plants, and the milk fat fucks up growth. Not shrooms though. I can't deal with this now...
 	if(S.has_reagent("milk", 1))
 		adjustNutri(round(S.get_reagent_amount("milk") * 0.1))
-		adjustWater(round(S.get_reagent_amount("milk") * 0.9))
+		adjustBrawndo(round(S.get_reagent_amount("milk") * 0.9))
 
 	// Beer is a chemical composition of alcohol and various other things. It's a shitty nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
 	if(S.has_reagent("beer", 1))
 		adjustHealth(-round(S.get_reagent_amount("beer") * 0.05))
 		adjustNutri(round(S.get_reagent_amount("beer") * 0.25))
-		adjustWater(round(S.get_reagent_amount("beer") * 0.7))
+		adjustBrawndo(round(S.get_reagent_amount("beer") * 0.7))
 
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
 	if(S.has_reagent("fluorine", 1))
 		adjustHealth(-round(S.get_reagent_amount("fluorine") * 2))
 		adjustToxic(round(S.get_reagent_amount("flourine") * 2.5))
-		adjustWater(-round(S.get_reagent_amount("flourine") * 0.5))
+		adjustBrawndo(-round(S.get_reagent_amount("flourine") * 0.5))
 		adjustWeeds(-rand(1,4))
 
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
 	if(S.has_reagent("chlorine", 1))
 		adjustHealth(-round(S.get_reagent_amount("chlorine") * 1))
 		adjustToxic(round(S.get_reagent_amount("chlorine") * 1.5))
-		adjustWater(-round(S.get_reagent_amount("chlorine") * 0.5))
+		adjustBrawndo(-round(S.get_reagent_amount("chlorine") * 0.5))
 		adjustWeeds(-rand(1,3))
 
-	// White Phosphorous + water -> phosphoric acid. That's not a good thing really.
+	// White Phosphorous + brawndo -> phosphoric acid. That's not a good thing really.
 	// Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
 	if(S.has_reagent("phosphorus", 1))
 		adjustHealth(-round(S.get_reagent_amount("phosphorus") * 0.75))
 		adjustNutri(round(S.get_reagent_amount("phosphorus") * 0.1))
-		adjustWater(-round(S.get_reagent_amount("phosphorus") * 0.5))
+		adjustBrawndo(-round(S.get_reagent_amount("phosphorus") * 0.5))
 		adjustWeeds(-rand(1,2))
 
-	// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
+	// Plants should not have sugar, they can't use it and it prevents them getting brawndo/ nutients, it is good for mold though...
 	if(S.has_reagent("sugar", 1))
 		adjustWeeds(rand(1,2))
 		adjustPests(rand(1,2))
 		adjustNutri(round(S.get_reagent_amount("sugar") * 0.1))
 
-	// It is water!
-	if(S.has_reagent("water", 1))
-		adjustWater(round(S.get_reagent_amount("water") * 1))
+	// It is brawndo!
+	if(S.has_reagent("brawndo", 1))
+		adjustBrawndo(round(S.get_reagent_amount("brawndo") * 1))
 
-	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits~
-	if(S.has_reagent("holywater", 1))
-		adjustWater(round(S.get_reagent_amount("holywater") * 1))
-		adjustHealth(round(S.get_reagent_amount("holywater") * 0.1))
+	// Holy brawndo. Mostly the same as brawndo, it also heals the plant a little with the power of the spirits~
+	if(S.has_reagent("holybrawndo", 1))
+		adjustBrawndo(round(S.get_reagent_amount("holybrawndo") * 1))
+		adjustHealth(round(S.get_reagent_amount("holybrawndo") * 0.1))
 
 	// A variety of nutrients are dissolved in club soda, without sugar.
 	// These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
-	if(S.has_reagent("sodawater", 1))
-		adjustWater(round(S.get_reagent_amount("sodawater") * 1))
-		adjustHealth(round(S.get_reagent_amount("sodawater") * 0.1))
-		adjustNutri(round(S.get_reagent_amount("sodawater") * 0.1))
+	if(S.has_reagent("sodabrawndo", 1))
+		adjustBrawndo(round(S.get_reagent_amount("sodabrawndo") * 1))
+		adjustHealth(round(S.get_reagent_amount("sodabrawndo") * 0.1))
+		adjustNutri(round(S.get_reagent_amount("sodabrawndo") * 0.1))
 
 	// Man, you guys are retards
 	if(S.has_reagent("sacid", 1))
@@ -631,7 +631,7 @@
 
 	// The best stuff there is. For testing/debugging.
 	if(S.has_reagent("adminordrazine", 1))
-		adjustWater(round(S.get_reagent_amount("adminordrazine") * 1))
+		adjustBrawndo(round(S.get_reagent_amount("adminordrazine") * 1))
 		adjustHealth(round(S.get_reagent_amount("adminordrazine") * 1))
 		adjustNutri(round(S.get_reagent_amount("adminordrazine") * 1))
 		adjustPests(-rand(1,5))
@@ -744,7 +744,7 @@
 		user << "- Weed level: <span class='notice'>[weedlevel] / 10</span>"
 		user << "- Pest level: <span class='notice'>[pestlevel] / 10</span>"
 		user << "- Toxicity level: <span class='notice'>[toxic] / 100</span>"
-		user << "- Water level: <span class='notice'>[waterlevel] / [maxwater]</span>"
+		user << "- Brawndo level: <span class='notice'>[brawndolevel] / [maxbrawndo]</span>"
 		user << "- Nutrition level: <span class='notice'>[nutrilevel] / [maxnutri]</span>"
 		user << ""
 
@@ -840,11 +840,11 @@
 /obj/machinery/hydroponics/proc/adjustNutri(adjustamt)
 	nutrilevel = Clamp(nutrilevel + adjustamt, 0, maxnutri)
 
-/obj/machinery/hydroponics/proc/adjustWater(adjustamt)
-	waterlevel = Clamp(waterlevel + adjustamt, 0, maxwater)
+/obj/machinery/hydroponics/proc/adjustBrawndo(adjustamt)
+	brawndolevel = Clamp(brawndolevel + adjustamt, 0, maxbrawndo)
 
 	if(adjustamt>0)
-		adjustToxic(-round(adjustamt/4))//Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
+		adjustToxic(-round(adjustamt/4))//Toxicity dilutation code. The more brawndo you put in, the lesser the toxin concentration.
 
 /obj/machinery/hydroponics/proc/adjustHealth(adjustamt)
 	if(myseed && !dead)

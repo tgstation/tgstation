@@ -62,7 +62,7 @@ var/hsboxspawn = 1
 			"Miscellaneous",
 			"Spawn Air Scrubber"				= "hsbscrubber",
 			"Spawn Welding Fuel Tank"			= "hsbspawn&path=[/obj/structure/reagent_dispensers/fueltank]",
-			"Spawn Water Tank"					= "hsbspawn&path=[/obj/structure/reagent_dispensers/watertank]",
+			"Spawn Brawndo Tank"					= "hsbspawn&path=[/obj/structure/reagent_dispensers/watertank]",
 
 			"Bots",
 			"Spawn Cleanbot"					= "hsbspawn&path=[/mob/living/simple_animal/bot/cleanbot]",

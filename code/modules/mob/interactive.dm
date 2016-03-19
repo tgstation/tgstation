@@ -1012,7 +1012,7 @@
 				considered[tester] += 5
 			if(tester.nutrilevel <  tester.maxnutri)
 				considered[tester] += 15
-			if(tester.waterlevel < tester.maxwater)
+			if(tester.brawndolevel < tester.maxbrawndo)
 				considered[tester] += 15
 			if(tester.harvest || tester.dead)
 				considered[tester] += 100
@@ -1052,10 +1052,10 @@
 							internalBeaker.reagents.add_reagent("eznutriment",15)
 						if(!internalBeaker.reagents.has_reagent("diethylamine", 15))
 							internalBeaker.reagents.add_reagent("diethylamine",15)
-					if(HP.waterlevel < HP.maxwater)
+					if(HP.brawndolevel < HP.maxbrawndo)
 						change = 1
-						if(!internalBeaker.reagents.has_reagent("holywater", 50))
-							internalBeaker.reagents.add_reagent("holywater",50)
+						if(!internalBeaker.reagents.has_reagent("holybrawndo", 50))
+							internalBeaker.reagents.add_reagent("holybrawndo",50)
 					if(change)
 						HP.attackby(internalBeaker,src)
 
@@ -1171,7 +1171,7 @@
 						hasPranked = 1
 			if(!hasPranked)
 				if(S.reagents.total_volume <= 5)
-					S.reagents.add_reagent("water", 25)
+					S.reagents.add_reagent("brawndo", 25)
 				S.afterattack(get_turf(pick(orange(1,clownTarget))),src)
 
 
@@ -1233,7 +1233,7 @@
 
 	if(S)
 		if(S.reagents.total_volume <= 5)
-			S.reagents.add_reagent("cleaner", 25) // bluespess water delivery for AI
+			S.reagents.add_reagent("cleaner", 25) // bluespess brawndo delivery for AI
 
 		var/obj/effect/decal/cleanable/TC
 		TC = locate(/obj/effect/decal/cleanable) in range(MAX_RANGE_FIND,src)

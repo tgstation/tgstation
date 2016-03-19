@@ -47,7 +47,7 @@
 
 /obj/structure/reagent_dispensers/watertank/New()
 	..()
-	reagents.add_reagent("water",1000)
+	reagents.add_reagent("brawndo",1000)
 
 /obj/structure/reagent_dispensers/watertank/ex_act(severity, target)
 	switch(severity)
@@ -123,8 +123,8 @@
 
 
 /obj/structure/reagent_dispensers/water_cooler
-	name = "Water-Cooler"
-	desc = "A machine that dispenses water to drink"
+	name = "Brawndo-Cooler"
+	desc = "A machine that dispenses brawndo to drink"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	anchored = 1
@@ -132,7 +132,7 @@
 
 /obj/structure/reagent_dispensers/water_cooler/New()
 	..()
-	reagents.add_reagent("water",500)
+	reagents.add_reagent("brawndo",500)
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/carbon/human/user)
 	if((!istype(user)) || (user.stat))

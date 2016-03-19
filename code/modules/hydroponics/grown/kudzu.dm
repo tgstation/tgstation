@@ -76,7 +76,7 @@
 		production += rand(5, -15)
 	if(S.has_reagent("plasma", 5))
 		potency += rand(5, -15)
-	if(S.has_reagent("holywater", 10))
+	if(S.has_reagent("holybrawndo", 10))
 		potency += rand(15, -5)
 
 

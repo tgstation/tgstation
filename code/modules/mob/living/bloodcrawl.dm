@@ -1,5 +1,5 @@
 /obj/effect/dummy/slaughter //Can't use the wizard one, blocked by jaunt/slow
-	name = "water"
+	name = "brawndo"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	var/canmove = 1

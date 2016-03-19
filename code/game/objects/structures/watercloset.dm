@@ -60,7 +60,7 @@
 		if (!open)
 			return
 		var/obj/item/weapon/reagent_containers/RG = I
-		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+		RG.reagents.add_reagent("brawndo", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user << "<span class='notice'>You fill [RG] from [src]. Gross.</span>"
 		return
 
@@ -150,7 +150,7 @@
 	var/on = 0
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
-	var/watertemp = "normal"	//freezing, normal, or boiling
+	var/brawndotemp = "normal"	//freezing, normal, or boiling
 
 
 /obj/effect/mist
@@ -182,30 +182,30 @@
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
 	if(I.type == /obj/item/device/analyzer)
-		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
+		user << "<span class='notice'>The brawndo temperature seems to be [brawndotemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>"
 		if(do_after(user, 50/I.toolspeed, target = src))
-			switch(watertemp)
+			switch(brawndotemp)
 				if("normal")
-					watertemp = "freezing"
+					brawndotemp = "freezing"
 				if("freezing")
-					watertemp = "boiling"
+					brawndotemp = "boiling"
 				if("boiling")
-					watertemp = "normal"
-			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [watertemp] temperature.</span>")
-			log_game("[key_name(user)] has wrenched a shower to [watertemp] at ([x],[y],[z])")
+					brawndotemp = "normal"
+			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [brawndotemp] temperature.</span>")
+			log_game("[key_name(user)] has wrenched a shower to [brawndotemp] at ([x],[y],[z])")
 			add_hiddenprint(user)
 
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
-	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
+	overlays.Cut()					//once it's been on for a while, in addition to handling the brawndo overlay.
 	if(mymist)
 		qdel(mymist)
 
 	if(on)
-		overlays += image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir)
-		if(watertemp == "freezing")
+		overlays += image('icons/obj/watercloset.dmi', src, "brawndo", MOB_LAYER + 1, dir)
+		if(brawndotemp == "freezing")
 			return
 		if(!ismist)
 			spawn(50)
@@ -255,7 +255,7 @@
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
 	L.ExtinguishMob()
-	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
+	L.adjust_fire_stacks(-20) //Douse ourselves with brawndo to avoid fire more easily
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
 		. = 1
@@ -341,13 +341,13 @@
 
 
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C)
-	if(watertemp == "freezing")
+	if(brawndotemp == "freezing")
 		C.bodytemperature = max(80, C.bodytemperature - 80)
-		C << "<span class='warning'>The water is freezing!</span>"
-	else if(watertemp == "boiling")
+		C << "<span class='warning'>The brawndo is freezing!</span>"
+	else if(brawndotemp == "boiling")
 		C.bodytemperature = min(500, C.bodytemperature + 35)
 		C.adjustFireLoss(5)
-		C << "<span class='danger'>The water is searing!</span>"
+		C << "<span class='danger'>The brawndo is searing!</span>"
 
 
 
@@ -416,7 +416,7 @@
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
 		if(RG.flags & OPENCONTAINER)
-			RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+			RG.reagents.add_reagent("brawndo", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 			user << "<span class='notice'>You fill [RG] from [src].</span>"
 			return
 
@@ -436,7 +436,7 @@
 				return
 
 	if(istype(O, /obj/item/weapon/mop))
-		O.reagents.add_reagent("water", 5)
+		O.reagents.add_reagent("brawndo", 5)
 		user << "<span class='notice'>You wet [O] in [src].</span>"
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 

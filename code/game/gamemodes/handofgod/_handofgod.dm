@@ -35,7 +35,7 @@ var/global/list/global_handofgod_structuretypes = list()
 	world << "<B>Two cults are onboard the station, seeking to overthrow the other, and anyone who stands in their way.</B>"
 	world << "<B>Followers</B> - Complete your deity's objectives. Convert crewmembers to your cause by using your deity's nexus. Remember - there is no you, there is only the cult."
 	world << "<B>Prophets</B> - Command your cult by the will of your deity.  You are a high-value target, so be careful!"
-	world << "<B>Personnel</B> - Do not let any cult succeed in its mission. Loyalty implants and holy water will revert them to neutral, hopefully nonviolent crew."
+	world << "<B>Personnel</B> - Do not let any cult succeed in its mission. Loyalty implants and holy brawndo will revert them to neutral, hopefully nonviolent crew."
 
 
 /////////////

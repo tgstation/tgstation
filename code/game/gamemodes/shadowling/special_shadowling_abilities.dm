@@ -53,7 +53,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H << "<i><b>You rip and slice.</b></i>"
 			sleep(10)
 			playsound(H.loc, 'sound/weapons/slashmiss.ogg', 25, 1)
-			H << "<i><b>The chrysalis falls like water before you.</b></i>"
+			H << "<i><b>The chrysalis falls like brawndo before you.</b></i>"
 			sleep(10)
 			playsound(H.loc, 'sound/weapons/slice.ogg', 25, 1)
 			H << "<i><b>You are free!</b></i>"

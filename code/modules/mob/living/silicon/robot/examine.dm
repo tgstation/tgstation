@@ -20,7 +20,7 @@
 	if (src.health < -maxHealth*0.5)
 		msg += "It looks barely operational.\n"
 	if (src.fire_stacks < 0)
-		msg += "It's covered in water.\n"
+		msg += "It's covered in brawndo.\n"
 	else if (src.fire_stacks > 0)
 		msg += "It's coated in something flammable.\n"
 	msg += "</span>"

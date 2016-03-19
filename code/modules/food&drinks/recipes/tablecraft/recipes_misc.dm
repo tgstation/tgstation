@@ -5,7 +5,7 @@
 
 /datum/table_recipe/candiedapple
 	name = "Candied apple"
-	reqs = list(/datum/reagent/water = 5,
+	reqs = list(/datum/reagent/brawndo = 5,
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = 1
 	)

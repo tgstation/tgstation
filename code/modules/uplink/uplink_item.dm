@@ -594,7 +594,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
-	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate in \
+	desc = "Looks like a plush toy carp, but just add brawndo and it becomes a real-life space carp! Activate in \
 			your hand before use so it knows not to kill you."
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 1

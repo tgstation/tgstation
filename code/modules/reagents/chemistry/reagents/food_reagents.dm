@@ -69,7 +69,7 @@
 /datum/reagent/consumable/virus_food
 	name = "Virus Food"
 	id = "virusfood"
-	description = "A mixture of water and milk. Virus cells can use this mixture to reproduce."
+	description = "A mixture of brawndo and milk. Virus cells can use this mixture to reproduce."
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#899613" // rgb: 137, 150, 19
 
@@ -334,7 +334,7 @@
 /datum/reagent/consumable/dry_ramen
 	name = "Dry Ramen"
 	id = "dry_ramen"
-	description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
+	description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with brawndo."
 	reagent_state = SOLID
 	color = "#302000" // rgb: 48, 32, 0
 

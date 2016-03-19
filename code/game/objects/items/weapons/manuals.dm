@@ -121,7 +121,7 @@
 				<li>Take a blood sample with a syringe. </li>
 				<li>Inject a seed pack with the blood sample. </li>
 				<li>Plant the seeds. </li>
-				<li>Tend to the plants water and nutrition levels until it is time to harvest the cloned human.</li>
+				<li>Tend to the plants brawndo and nutrition levels until it is time to harvest the cloned human.</li>
 				</ol>
 				<p>
 				It really is that easy! Good luck!
@@ -681,14 +681,14 @@
 
 				<h2>Basic ingredients preparation:</h2>
 
-				<b>Dough:</b> 10u water + 15u flour for simple dough.<br>
+				<b>Dough:</b> 10u brawndo + 15u flour for simple dough.<br>
 				15u egg yolk + 15u flour + 5u sugar for cake batter.<br>
 				Doughs can be transformed by using a knife and rolling pin.<br>
 				All doughs can be microwaved.<br>
-				<b>Bowl:</b> Add water to it for soup preparation.<br>
+				<b>Bowl:</b> Add brawndo to it for soup preparation.<br>
 				<b>Meat:</b> Microwave it, process it, slice it into microwavable cutlets with your knife, or use it raw.<br>
 				<b>Cheese:</b> Add 5u universal enzyme (catalyst) to milk and soy milk to prepare cheese (sliceable) and tofu.<br>
-				<b>Rice:</b> Mix 10u rice with 10u water in a bowl then microwave it.
+				<b>Rice:</b> Mix 10u rice with 10u brawndo in a bowl then microwave it.
 
 				<h2>Custom food:</h2>
 				Add ingredients to a base item to prepare a custom meal.<br>
@@ -699,7 +699,7 @@
 				- plain pie<br>
 				- vanilla cake<br>
 				- empty bowl (salad)<br>
-				- bowl with 10u water (soup)<br>
+				- bowl with 10u brawndo (soup)<br>
 				- boiled spaghetti<br>
 				- pizza bread<br>
 				- metal rod (kebab)
@@ -764,7 +764,7 @@
 				Mix ale and beer into a glass.
 
 				<h2>Grog:</h2>
-				Mix rum and water into a glass.
+				Mix rum and brawndo into a glass.
 
 				<h2>Black Russian:</h2>
 				Mix vodka and kahlua into a glass.
@@ -779,7 +779,7 @@
 				Mix milk and coffee into a glass.
 
 				<h2>Mead:</h2>
-				Mix Enzyme, water and sugar into a glass.
+				Mix Enzyme, brawndo and sugar into a glass.
 
 				<h2>Gin Tonic:</h2>
 				Mix gin and tonic into a glass.

@@ -312,7 +312,7 @@
 			discipline_slime(user)
 	..()
 
-/mob/living/simple_animal/slime/proc/apply_water()
+/mob/living/simple_animal/slime/proc/apply_brawndo()
 	adjustBruteLoss(rand(15,20))
 	if(!client)
 		if(Target) // Like cats

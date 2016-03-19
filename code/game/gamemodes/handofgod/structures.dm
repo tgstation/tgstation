@@ -403,7 +403,7 @@
 
 /obj/structure/divine/healingfountain
 	name = "healing fountain"
-	desc = "A fountain containing the waters of life... or death, depending on where your allegiances lie."
+	desc = "A fountain containing the brawndos of life... or death, depending on where your allegiances lie."
 	icon_state = "fountain"
 	metal_cost = 10
 	glass_cost = 5
@@ -413,7 +413,7 @@
 	var/cult_only = TRUE
 
 /obj/structure/divine/healingfountain/anyone
-	desc = "A fountain containing the waters of life."
+	desc = "A fountain containing the brawndos of life."
 	cult_only = FALSE
 
 /obj/structure/divine/healingfountain/attack_hand(mob/living/user)
@@ -424,10 +424,10 @@
 		return
 	last_process = world.time
 	if(!is_handofgod_cultist(user) && cult_only)
-		user << "<span class='danger'><B>The water burns!</b></spam>"
-		user.reagents.add_reagent("hell_water",20)
+		user << "<span class='danger'><B>The brawndo burns!</b></spam>"
+		user.reagents.add_reagent("hell_brawndo",20)
 	else
-		user << "<span class='notice'>The water feels warm and soothing as you touch it. The fountain immediately dries up shortly afterwards.</span>"
+		user << "<span class='notice'>The brawndo feels warm and soothing as you touch it. The fountain immediately dries up shortly afterwards.</span>"
 		user.reagents.add_reagent("godblood",20)
 	update_icons()
 	spawn(time_between_uses)
