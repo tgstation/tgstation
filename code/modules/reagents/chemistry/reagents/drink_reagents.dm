@@ -133,7 +133,7 @@
 	if(M.getBruteLoss() && prob(20))
 		M.heal_organ_damage(1,0, 0)
 		. = 1
-	if (subject.dna.species.id == "plasmaman" || subject.dna.species.id == "skeleton")
+	if (M.dna.species.id == "plasmaman" || M.dna.species.id == "skeleton")
 		M.heal_organ_damage(1,0, 0)
 		. = 1
 	if(holder.has_reagent("capsaicin"))
