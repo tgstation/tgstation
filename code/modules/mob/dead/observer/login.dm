@@ -5,9 +5,7 @@
 		has_unlimited_silicon_privilege = 1
 
 	if(client.prefs.unlock_content)
-		icon_state = client.prefs.ghost_form
-		if (ghostimage)
-			ghostimage.icon_state = src.icon_state
+		update_icon(client.prefs.ghost_form)
 		ghost_orbit = client.prefs.ghost_orbit
 
 	updateghostimages()

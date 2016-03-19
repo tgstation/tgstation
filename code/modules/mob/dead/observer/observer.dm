@@ -29,12 +29,21 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	var/data_hud_seen = 0 //this should one of the defines in __DEFINES/hud.dm
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
+	//These variables store hair data if the ghost originates from a species with head and/or facial hair.
+	var/hair_style
+	var/hair_color
+	var/image/hair_image
+	var/facial_hair_style
+	var/facial_hair_color
+	var/image/facial_hair_image
+
 /mob/dead/observer/New(mob/body)
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
+
 	var/turf/T
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
@@ -50,6 +59,16 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 				name = random_unique_name(gender)
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
+		if(ishuman(body))
+			var/mob/living/carbon/human/body_human = body
+			if(HAIR in body_human.dna.species.specflags)
+				hair_style = body_human.hair_style
+				hair_color = body_human.hair_color
+			if(FACEHAIR in body_human.dna.species.specflags)
+				facial_hair_style = body_human.facial_hair_style
+				facial_hair_color = body_human.facial_hair_color
+
+	update_icon()
 
 	if(!T)
 		T = pick(latejoin)			//Safety in case we cannot find the body's position
@@ -76,6 +95,50 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
+
+
+/*
+ * This proc will update the icon of the ghost itself, with hair overlays, as well as the ghost image.
+ * Please call update_icon(icon_state) from now on when you want to update the icon_state of the ghost,
+ * or you might end up with hair on a sprite that's not supposed to get it.
+ * Hair will always update its dir, so if your sprite has no dirs the haircut will go all over the place.
+ * |- Ricotez
+ */
+/mob/dead/observer/proc/update_icon(new_form)
+	if(hair_image)
+		overlays -= hair_image
+		ghostimage.overlays -= hair_image
+		hair_image = null
+	if(facial_hair_image)
+		overlays -= facial_hair_image
+		ghostimage.overlays -= facial_hair_image
+		facial_hair_image = null
+
+	if(new_form)
+		icon_state = new_form
+		ghostimage.icon_state = new_form
+
+	if(icon_state == "ghost") //For now we just check for the default ghost sprite. If other sprites get updated in the future to support hair, change this to a list. |- Ricotez
+		var/datum/sprite_accessory/S
+		if(facial_hair_style)
+			S = facial_hair_styles_list[facial_hair_style]
+			if(S)
+				facial_hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+				if(facial_hair_color)
+					facial_hair_image.color = "#" + facial_hair_color
+				facial_hair_image.alpha = 200
+				overlays += facial_hair_image
+				ghostimage.overlays += facial_hair_image
+		if(hair_style)
+			S = hair_styles_list[hair_style]
+			if(S)
+				hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+				if(hair_color)
+					hair_image.color = "#" + hair_color
+				hair_image.alpha = 200
+				overlays += hair_image
+				ghostimage.overlays += hair_image
+
 
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.

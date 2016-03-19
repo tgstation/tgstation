@@ -223,7 +223,8 @@ var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost",
 		prefs.ghost_form = new_form
 		prefs.save_preferences()
 		if(istype(mob,/mob/dead/observer))
-			mob.icon_state = new_form
+			var/mob/dead/observer/O = mob
+			O.update_icon(new_form)
 
 var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON)
 

@@ -131,9 +131,16 @@
 				client.prefs.real_name = random_unique_name(gender)
 			if(client.prefs.be_random_body)
 				client.prefs.random_character(gender)
+			if(HAIR in client.prefs.pref_species.specflags)
+				observer.hair_style = client.prefs.hair_style
+				observer.hair_color = client.prefs.hair_color
+			if(FACEHAIR in client.prefs.pref_species.specflags)
+				observer.facial_hair_style = client.prefs.facial_hair_style
+				observer.facial_hair_color = client.prefs.facial_hair_color
 			observer.real_name = client.prefs.real_name
 			observer.name = observer.real_name
 			observer.key = key
+			observer.update_icon()
 			observer.stopLobbySound()
 			qdel(mind)
 
