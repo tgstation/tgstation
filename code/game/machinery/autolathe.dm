@@ -238,8 +238,6 @@
 		tot_rating += MB.rating
 	tot_rating *= 25000
 	materials.max_amount = tot_rating * 3
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		prod_coeff += M.rating - 1
 
 /obj/machinery/autolathe/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Autolathe Menu:</h3><br>"
