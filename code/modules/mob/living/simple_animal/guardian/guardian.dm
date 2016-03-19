@@ -23,7 +23,7 @@
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
-	environment_smash = 0
+	environment_smash = 1
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
@@ -136,19 +136,21 @@
 
 /mob/living/simple_animal/hostile/guardian/proc/Manifest()
 	if(cooldown > world.time)
-		return
+		return 0
 	if(loc == summoner)
 		forceMove(get_turf(summoner))
 		PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
-		cooldown = world.time + 30
+		cooldown = world.time + 10
+		return 1
 
 /mob/living/simple_animal/hostile/guardian/proc/Recall()
 	if(loc == summoner || cooldown > world.time)
-		return
+		return 0
 	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 
 	forceMove(summoner)
-	cooldown = world.time + 30
+	cooldown = world.time + 10
+	return 1
 
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
 	var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
@@ -435,6 +437,95 @@
 	else
 		src << "<span class='danger'><B>You need to hold still!</span></B>"
 
+////Beam
+/obj/effect/ebeam/chain
+	name = "lightning chain"
+	layer = MOB_LAYER - 0.1
+
+/mob/living/simple_animal/hostile/guardian/beam
+	next_move_modifier = 0.5
+	melee_damage_lower = 7
+	melee_damage_upper = 7
+	attacktext = "shocks"
+	melee_damage_type = BURN
+	attack_sound = 'sound/machines/defib_zap.ogg'
+	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
+	range = 8
+	playstyle_string = "As a lightning type, you will apply lightning chains to targets on attack and have a lightning chain to your summoner. Lightning chains will shock anyone near them."
+	magic_fluff_string = "..And draw the Tesla, a shocking, lethal source of power."
+	tech_fluff_string = "Boot sequence complete. Lightning modules active. Holoparasite swarm online."
+	var/datum/beam/summonerchain
+	var/datum/beam/enemychain
+	var/mob/living/enemy
+
+/mob/living/simple_animal/hostile/guardian/beam/AttackingTarget()
+	if(..())
+		if(isliving(target) && target != src && target != summoner && target != enemy)
+			if(enemychain)
+				qdel(enemychain)
+				enemychain = null
+			enemy = target
+			enemychain = Beam(enemy,"lightning[rand(1,12)]",'icons/effects/effects.dmi',70, 8,/obj/effect/ebeam/chain)
+
+/mob/living/simple_animal/hostile/guardian/beam/Life()
+	..()
+	if(summoner && summonerchain && !qdeleted(summonerchain))
+		chainshock(summonerchain)
+	else
+		summonerchain = null
+	if(enemy && enemychain && !qdeleted(enemychain))
+		chainshock(enemychain)
+	else
+		enemy = null
+		enemychain = null
+
+/mob/living/simple_animal/hostile/guardian/beam/Manifest()
+	if(..())
+		if(summoner)
+			summonerchain = Beam(summoner,"lightning[rand(1,12)]",'icons/effects/effects.dmi',INFINITY, INFINITY,/obj/effect/ebeam/chain)
+
+/mob/living/simple_animal/hostile/guardian/beam/Recall()
+	if(..())
+		if(summonerchain)
+			qdel(summonerchain)
+			summonerchain = null
+		if(enemychain)
+			qdel(enemychain)
+			enemychain = null
+			enemy = null
+
+/mob/living/simple_animal/hostile/guardian/beam/proc/chainshock(var/datum/beam/B)
+	var/list/turfs = list()
+	for(var/E in B.elements)
+		var/obj/effect/ebeam/chainpart = E
+		turfs |= get_turf(chainpart)
+	for(var/turf in getline(B.origin, B.target))
+		var/turf/T = turf
+		turfs |= T
+	for(var/turf in turfs)
+		var/turf/T = turf
+		if(T != get_turf(B.origin) && T != get_turf(B.target))
+			for(var/turf/TU in circlerange(T, 1))
+				turfs |= TU
+	for(var/turf in turfs)
+		var/turf/T = turf
+		for(var/mob/living/L in T)
+			if(!L.lying && L != B.origin && L != B.target && L != summoner)
+				if(ishuman(L))
+					var/mob/living/carbon/human/H = L
+					H.jitteriness += 1000
+					H.do_jitter_animation(jitteriness)
+					H.stuttering += 1
+					H.electrocution_animation(20)
+					spawn(20)
+						if(H)
+							H.jitteriness = max(H.jitteriness - 990, 10)
+				L.visible_message(
+					"<span class='danger'>[L] was shocked by the lightning chain!</span>", \
+					"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
+					"<span class='italics'>You hear a heavy electrical crack.</span>" \
+				)
+				L.adjustFireLoss(7) //not actually a ton of damage, but it adds up
 
 ///////////////////Ranged
 /obj/item/projectile/guardian
@@ -617,7 +708,7 @@
 	var/used_message = "All the cards seem to be blank now."
 	var/failure_message = "..And draw a card! It's...blank? Maybe you should try again later."
 	var/ling_failure = "The deck refuses to respond to a souless creature such as you."
-	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive")
+	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning")
 	var/random = TRUE
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
@@ -667,6 +758,9 @@
 
 		if("Explosive")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/bomb
+
+		if("Lightning")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/beam
 
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user)
 	G.summoner = user
@@ -734,6 +828,8 @@
  <b>Support</b>:Has two modes. Combat; Medium power attacks and damage resist. Healer; Heals instead of attack, but has low damage resist and slow movement. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
  <br>
  <b>Explosive</b>: High damage resist and medium power attack. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
+ <br>
+ <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them.<br>
 "}
 
 /obj/item/weapon/paper/guardian/update_icon()
