@@ -592,7 +592,7 @@
 	name = "Fetching Fizz"
 	id = "fetching_fizz"
 	result = "fetching_fizz"
-	required_reagents = list("nuka_cola" = 1, "iron" = 1, "uranium" = 1) //Manufacturable from only the mining station
+	required_reagents = list("nuka_cola" = 1, "iron" = 1) //Manufacturable from only the mining station
 	result_amount = 3
 	mix_message = "The mixture slightly vibrates before settling."
 
