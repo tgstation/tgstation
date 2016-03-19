@@ -88,7 +88,7 @@
 		"<span class='notice'>You honk at [src].</span>", \
 		"<span class='notice'>You hear honking.</span>")
 		playsound(get_turf(src), W.hitsound, 50, 1)
-		if(reagents.get_reagent_amount("banana") <= 5)
+		if(reagents.get_reagent_amount("banana") <= 5 && max_health < HEALTH_FOR_FREE_MOVEMENT)
 			if(activated)
 				visible_message("<span class='warning'>[nick] lets out a last honk before running out of fuel and activating its ejection seat.</span>")
 				if(ishuman(user)) //This shouldn't be needed, but fucks sakes
@@ -261,7 +261,7 @@
 		if(user)
 			to_chat(user, "<span class='warning'>[src]'s banana essence battery has been shorted out.</span>")
 		return
-	if(reagents.total_volume <= 0) //No fuel
+	if(reagents.total_volume <= 0 && max_health < HEALTH_FOR_FREE_MOVEMENT) //No fuel
 		if(user)
 			to_chat(user, "<span class='warning'>[src] has no fuel, it activates its ejection seat as soon as you jam down the pedal!</span>")
 			unlock_atom(user)
