@@ -63,6 +63,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(DAMAGE_LAYER)
 
 	var/image/standing	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
+	if (gender == FEMALE && dna.species.id == "human")
+		standing = image("icon"='icons/mob/dam_human_f.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
 	overlays_standing[DAMAGE_LAYER]	= standing
 
 	for(var/obj/item/organ/limb/O in organs)
@@ -113,19 +115,19 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 
 	if(getlimb(/obj/item/organ/limb/robot/r_arm))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_arm_s", "layer"=-AUGMENTS_LAYER)
+		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_arm_[g]_s", "layer"=-AUGMENTS_LAYER)
 	if(getlimb(/obj/item/organ/limb/robot/l_arm))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_arm_s", "layer"=-AUGMENTS_LAYER)
+		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_arm_[g]_s", "layer"=-AUGMENTS_LAYER)
 
 	if(getlimb(/obj/item/organ/limb/robot/r_leg))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_leg_s", "layer"=-AUGMENTS_LAYER)
+		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_leg_[g]_s", "layer"=-AUGMENTS_LAYER)
 	if(getlimb(/obj/item/organ/limb/robot/l_leg))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_leg_s", "layer"=-AUGMENTS_LAYER)
+		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_leg_[g]_s", "layer"=-AUGMENTS_LAYER)
 
 	if(getlimb(/obj/item/organ/limb/robot/chest))
 		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="chest_[g]_s", "layer"=-AUGMENTS_LAYER)
 	if(getlimb(/obj/item/organ/limb/robot/head))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="head_s", "layer"=-AUGMENTS_LAYER)
+		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="head_[g]_s", "layer"=-AUGMENTS_LAYER)
 
 	if(standing.len)
 		overlays_standing[AUGMENTS_LAYER]	= standing
@@ -182,9 +184,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/image/standing
 
 		if(dna && dna.species.sexes)
-			var/G = (gender == FEMALE) ? "f" : "m"
-			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-				standing = U.build_worn_icon(state = "[t_color]_s", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE, femaleuniform = U.fitted)
+			if (gender == FEMALE && dna.species.id == "human")
+				standing = U.build_worn_icon(state = "[t_color]_s", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform_f.dmi', isinhands = FALSE)
 
 		if(!standing)
 			standing = U.build_worn_icon(state = "[t_color]_s", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE)
@@ -226,6 +227,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			t_state = gloves.icon_state
 
 		var/image/standing = gloves.build_worn_icon(state = t_state, default_layer = GLOVES_LAYER, default_icon_file = 'icons/mob/hands.dmi')
+		if (gender == FEMALE && dna.species.id == "human")
+			standing = gloves.build_worn_icon(state = t_state, default_layer = GLOVES_LAYER, default_icon_file = 'icons/mob/hands_f.dmi')
 
 		overlays_standing[GLOVES_LAYER]	= standing
 
@@ -249,6 +252,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(!(head && (head.flags_inv & HIDEEYES)))
 
 			var/image/standing = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/eyes.dmi')
+			if (gender == FEMALE && dna.species.id == "human")
+				standing = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/eyes_f.dmi')
 			overlays_standing[GLASSES_LAYER] = standing
 
 	apply_overlay(GLASSES_LAYER)
@@ -264,6 +269,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			client.screen += ears					//Either way, add the item to the HUD
 
 		var/image/standing = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears.dmi')
+		if (gender == FEMALE && dna.species.id == "human")
+			standing = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears_f.dmi')
 		overlays_standing[EARS_LAYER] = standing
 
 	apply_overlay(EARS_LAYER)
@@ -279,6 +286,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			client.screen += shoes					//Either way, add the item to the HUD
 
 		var/image/standing = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
+		if (gender == FEMALE && dna.species.id == "human")
+			standing = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet_f.dmi')
 		overlays_standing[SHOES_LAYER]	= standing
 
 	apply_overlay(SHOES_LAYER)
@@ -319,6 +328,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			t_state = belt.icon_state
 
 		var/image/standing = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER, default_icon_file = 'icons/mob/belt.dmi')
+		if (gender == FEMALE && dna.species.id == "human")
+			standing = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER, default_icon_file = 'icons/mob/belt_f.dmi')
 		overlays_standing[BELT_LAYER] = standing
 
 
@@ -336,6 +347,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			client.screen += wear_suit						//Either way, add the item to the HUD
 
 		var/image/standing = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
+		if (gender == FEMALE && dna.species.id == "human")
+			standing = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit_f.dmi')
 		overlays_standing[SUIT_LAYER]	= standing
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
