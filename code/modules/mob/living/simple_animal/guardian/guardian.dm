@@ -469,15 +469,20 @@
 
 /mob/living/simple_animal/hostile/guardian/beam/Life()
 	..()
-	if(summoner && summonerchain && !qdeleted(summonerchain))
-		chainshock(summonerchain)
-	else if(summoner)
-		summonerchain = Beam(summoner,"lightning[rand(1,12)]",'icons/effects/effects.dmi',INFINITY, INFINITY,/obj/effect/ebeam/chain)
+	if(summoner)
+		if(summonerchain && !qdeleted(summonerchain))
+			chainshock(summonerchain)
+		else
+			summonerchain = Beam(summoner,"lightning[rand(1,12)]",'icons/effects/effects.dmi',INFINITY, INFINITY,/obj/effect/ebeam/chain)
 	if(enemy && enemychain && !qdeleted(enemychain))
 		chainshock(enemychain)
 	else
 		enemy = null
 		enemychain = null
+
+/mob/living/simple_animal/hostile/guardian/beam/Destroy()
+	removechains()
+	return ..()
 
 /mob/living/simple_animal/hostile/guardian/beam/Manifest()
 	if(..())
@@ -486,13 +491,16 @@
 
 /mob/living/simple_animal/hostile/guardian/beam/Recall()
 	if(..())
-		if(summonerchain)
-			qdel(summonerchain)
-			summonerchain = null
-		if(enemychain)
-			qdel(enemychain)
-			enemychain = null
-			enemy = null
+		removechains()
+
+/mob/living/simple_animal/hostile/guardian/beam/proc/removechains()
+	if(summonerchain)
+		qdel(summonerchain)
+		summonerchain = null
+	if(enemychain)
+		qdel(enemychain)
+		enemychain = null
+		enemy = null
 
 /mob/living/simple_animal/hostile/guardian/beam/proc/chainshock(datum/beam/B)
 	var/list/turfs = list()
