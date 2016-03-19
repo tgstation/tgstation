@@ -13,17 +13,17 @@
 
 
 /datum/game_mode/meteor/process()
-	if(nometeors || meteordelay < world.time - round_start_time) 
+	if(nometeors || meteordelay > world.time - round_start_time) 
 		return
 	
 	var/list/wavetype = meteors_normal
 	var/meteorminutes = (world.time - round_start_time - meteordelay) / 10 / 60
 	
-	if (prob(meteorminutes))
-		wavetype = meteors_threatening
-	else if (prob(meteorminutes/2))
-		wavetype = meteors_catastrophic
 	
+	if (prob(meteorminutes/2))
+		wavetype = meteors_catastrophic
+	else if (prob(meteorminutes))
+		wavetype = meteors_threatening
 	spawn_meteors(Clamp(round(meteorminutes/rampupdelta),1,10), wavetype)
 
 
