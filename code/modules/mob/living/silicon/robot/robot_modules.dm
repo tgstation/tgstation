@@ -130,7 +130,7 @@
 	modules += new /obj/item/weapon/wrench/cyborg(src)
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
 	modules += new /obj/item/device/healthanalyzer(src)
-	emag = new /obj/item/weapon/melee/energy/sword/cyborg(src)
+	emag = new /obj/item/weapon/toggle/energy/sword/cyborg(src)
 	fix_modules()
 
 
@@ -298,7 +298,7 @@
 
 /obj/item/weapon/robot_module/syndicate/New()
 	..()
-	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
+	modules += new /obj/item/weapon/toggle/energy/sword/cyborg(src)
 	modules += new /obj/item/weapon/gun/energy/printer(src)
 	modules += new /obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg(src)
 	modules += new /obj/item/weapon/card/emag(src)
@@ -320,7 +320,7 @@
 	modules += new /obj/item/weapon/hemostat(src)
 	modules += new /obj/item/weapon/cautery(src)
 	modules += new /obj/item/weapon/scalpel(src)
-	modules += new /obj/item/weapon/melee/energy/sword/cyborg/saw(src) //Energy saw -- primary weapon
+	modules += new /obj/item/weapon/toggle/energy/sword/cyborg/saw(src) //Energy saw -- primary weapon
 	modules += new /obj/item/roller/robo(src)
 	modules += new /obj/item/weapon/card/emag(src)
 	modules += new /obj/item/weapon/crowbar/cyborg(src)

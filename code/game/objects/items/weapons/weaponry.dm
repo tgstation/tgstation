@@ -131,7 +131,7 @@
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
 
 
-/obj/item/weapon/switchblade
+/obj/item/weapon/toggle/switchblade
 	name = "switchblade"
 	icon_state = "switchblade"
 	desc = "A sharp, concealable, spring-loaded knife."
@@ -145,27 +145,20 @@
 	origin_tech = "materials=1"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
-	var/extended = 0
+	force_on = 20
+	throwforce_on = 23
+	icon_state_on = "switchblade_ext"
+	attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	w_class_on = 3
+	activation_sound = 'sound/weapons/batonextend.ogg'
+	active_hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/weapon/switchblade/attack_self(mob/user)
-	extended = !extended
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
-	if(extended)
-		force = 20
-		w_class = 3
-		throwforce = 23
-		icon_state = "switchblade_ext"
-		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-		hitsound = 'sound/weapons/bladeslice.ogg'
-	else
-		force = 3
-		w_class = 2
-		throwforce = 5
-		icon_state = "switchblade"
-		attack_verb = list("stubbed", "poked")
-		hitsound = 'sound/weapons/Genhit.ogg'
+/obj/item/weapon/toggle/switchblade/attack_self(mob/living/carbon/user)
+	..()
+	if(!active)
+		playsound(user, activation_sound, 35, 1) //Switchblades make the same noise either way
 
-/obj/item/weapon/switchblade/suicide_act(mob/user)
+/obj/item/weapon/toggle/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS)
 

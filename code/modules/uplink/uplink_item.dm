@@ -216,7 +216,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			pocketed when inactive. Activating it produces a loud, distinctive noise. One can combine two \
 			energy swords to create a double energy sword, which must be wielded in two hands but is more robust \
 			and deflects all energy projectiles."
-	item = /obj/item/weapon/melee/energy/sword/saber
+	item = /obj/item/weapon/toggle/energy/sword/saber
 	cost = 8
 
 /datum/uplink_item/dangerous/emp
@@ -905,7 +905,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Energy Shield"
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending \
 			against other attacks. Pair with an Energy Sword for a killer combination."
-	item = /obj/item/weapon/shield/energy
+	item = /obj/item/weapon/toggle/energy_shield
 	cost = 16
 	surplus = 20
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)

@@ -1036,7 +1036,7 @@
 	faction = list("orion")
 	loot = list(/obj/effect/mob_spawn/human/corpse/orionsecurity,
 				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
-				/obj/item/weapon/shield/energy)
+				/obj/item/weapon/toggle/energy_shield)
 
 /obj/effect/mob_spawn/human/corpse/orionsecurity
 	name = "Spaceport Security"

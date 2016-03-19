@@ -75,7 +75,7 @@
 	new /obj/item/weapon/storage/lockbox/loyalty(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
-	new /obj/item/weapon/shield/riot/tele(src)
+	new /obj/item/weapon/toggle/tele_shield(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/weapon/gun/energy/gun/hos(src)
 	new /obj/item/weapon/door_remote/head_of_security(src)
