@@ -161,6 +161,7 @@
 	desc = "Someone seperated our Research Director from his own head!"
 	var/tele_range = 6
 	var/rad_amount= 15
+	hit_reaction_chance = 30
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(!active)
