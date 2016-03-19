@@ -4,7 +4,7 @@
 #define RANDOM_LOWER_X 50
 #define RANDOM_LOWER_Y 50
 
-/proc/spawn_rivers(target_z = 5, nodes = 4, turf_type = /turf/simulated/floor/plating/lava/smooth/lava_land_surface)
+/proc/spawn_rivers(target_z = 5, nodes = 4, turf_type = /turf/simulated/floor/plating/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors)
 	var/list/river_nodes = list()
 	var/num_spawned = 0
 	while(num_spawned < nodes)
@@ -42,8 +42,8 @@
 				cur_dir = get_dir(cur_turf, target_turf)
 
 			cur_turf = get_step(cur_turf, cur_dir)
-
-			if(!cur_turf.density || istype(cur_turf, /turf/simulated/mineral)) //Rivers will flow around walls
+			var/area/new_area = get_area(cur_turf)
+			if(!istype(new_area, whitelist_area)) //Rivers will skip ruins
 				detouring = 0
 				cur_dir = get_dir(cur_turf, target_turf)
 				cur_turf = get_step(cur_turf, cur_dir)
