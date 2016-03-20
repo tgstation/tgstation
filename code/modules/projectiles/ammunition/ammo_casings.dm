@@ -290,10 +290,10 @@
 
 /obj/item/ammo_casing/a40mm/empsabot
 	name = "40mm EMP-FSD sabot"
-	desc = "A 40mm shell packed with a large ansible crystal which creates a very heavy Ion sabot blast. At high speeds, it discards ion charged, silicon disrupting fins."
+	desc = "A 40mm shell packed with a large ansible crystal which creates a sabot that unleashes a heavy ion blast. At high speeds, it discards fins charged with silicon disrupting ions."
 	caliber = "40mm"
 	icon_state = "40mmemp"
-	projectile_type = /obj/item/projectile/ion/strong
+	projectile_type = /obj/item/projectile/ion/fsds
 
 /obj/item/ammo_casing/a40mm/phosphorous
 	name = "40mm incindiary sabot"
@@ -303,6 +303,20 @@
 	projectile_type = /obj/item/projectile/bullet/incendiary/shell/dragonsbreath
 	pellets = 18
 	variance = 0.9
+
+/obj/item/ammo_casing/a40mm/empgrenade
+	name = "40mm emp grenade"
+	desc = "A 40mm shell with an EMP grenade stuffed into it."
+	caliber = "40mm"
+	icon_state = "40mmempgrenade"
+	projectile_type = /obj/item/projectile/bullet/empgrenade
+
+/obj/item/ammo_casing/a40mm/pipebomb
+	name = "40mm pipebomb"
+	desc = "A 40mm shell with a pipebomb stuffed into it."
+	caliber = "40mm"
+	icon_state = "40mmpipebomb"
+	projectile_type = /obj/item/projectile/bullet/pipebomb
 
 /obj/item/ammo_casing/caseless/magspear
 	name = "magnetic spear"

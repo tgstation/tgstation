@@ -20,20 +20,20 @@
 	empulse(target, 0, 0)
 	return 1
 
-/obj/item/projectile/ion/strong
+/obj/item/projectile/ion/fsds
 	damage = 35
 	damage_type = BRUTE
 	nodamage = 0
 	weaken = 2
 
-/obj/item/projectile/ion/strong/Range()
+/obj/item/projectile/ion/fsds/Range()
 	..()
 	damage += 5
 	if(damage > 50)
 		new/obj/item/trash/fins(src.loc)
 		empulse(src.loc, 1, 1)
 
-/obj/item/projectile/ion/strong/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/ion/fsds/on_hit(atom/target, blocked = 0)
 	..()
 	empulse(target, 4, 4)
 	return 1
@@ -58,6 +58,46 @@
 	..()
 	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
 	return 1
+
+/obj/item/projectile/bullet/empgrenade
+	name ="propelled emp grenade"
+	desc = "this could hurt"
+	icon_state= "empgrenade"
+	damage = 10
+	weaken = 2
+	stamina = 66
+
+/obj/item/projectile/bullet/empgrenade/Range()
+	..()
+	damage += 5
+	if(damage > 50)
+		empulse(src.loc, 4, 10)
+		qdel(src)
+
+/obj/item/projectile/bullet/empgrenade/on_hit(atom/target, blocked = 0)
+	..()
+	empulse(src.loc, 4, 7)
+	return 1
+
+/obj/item/projectile/bullet/pipebomb
+	name ="propelled pipebomb"
+	desc = "this could hurt"
+	icon_state= "pipebomb"
+	damage = 5
+	weaken = 1
+	stamina = 33
+
+/obj/item/projectile/bullet/pipebomb/Range()
+	..()
+	damage += 5
+	if(damage > 50)
+		icon_state = "pipebomb"
+		explosion(src.loc,1,2,4,flame_range = 3)
+		qdel(src)
+
+/obj/item/projectile/bullet/pipebomb/on_hit(atom/target, blocked = 0)
+	..()
+	explosion(src.loc,1,1,1,flame_range = 1)
 
 /obj/item/projectile/temp
 	name = "freeze beam"
