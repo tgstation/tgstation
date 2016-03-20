@@ -201,10 +201,6 @@
 	icon_state = "holyflask"
 	list_reagents = list("holywater" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell
-	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
-	list_reagents = list("hellwater" = 100)
-
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
 	desc = "Sweet, sweet dryness~"

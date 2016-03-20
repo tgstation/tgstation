@@ -487,7 +487,6 @@ var/global/list/rockTurfEdgeCache
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/simulated/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
-	var/sand_type = /obj/item/weapon/ore/glass
 
 /turf/simulated/floor/plating/asteroid/airless
 	oxygen = 0.01
@@ -502,7 +501,6 @@ var/global/list/rockTurfEdgeCache
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
-	sand_type = /obj/item/weapon/ore/glass/basalt
 
 /turf/simulated/floor/plating/asteroid/basalt/lava //lava underneath
 	baseturf = /turf/simulated/floor/plating/lava/smooth
@@ -522,7 +520,6 @@ var/global/list/rockTurfEdgeCache
 	temperature = 180
 	slowdown = 2
 	environment_type = "snow"
-	sand_type = /obj/item/stack/sheet/mineral/snow
 
 /turf/simulated/floor/plating/asteroid/snow/airless
 	oxygen = 0.01
@@ -604,8 +601,11 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/floor/plating/asteroid/proc/gets_dug()
 	if(dug)
 		return
-	for(var/i in 1 to 5)
-		new sand_type(src)
+	new/obj/item/weapon/ore/glass(src)
+	new/obj/item/weapon/ore/glass(src)
+	new/obj/item/weapon/ore/glass(src)
+	new/obj/item/weapon/ore/glass(src)
+	new/obj/item/weapon/ore/glass(src)
 	dug = 1
 	icon_plating = "[environment_type]_dug"
 	icon_state = "[environment_type]_dug"
@@ -646,7 +646,7 @@ var/global/list/rockTurfEdgeCache
 	name = "chasm"
 	desc = "Watch your step."
 	baseturf = /turf/simulated/chasm
-	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	smooth = SMOOTH_TRUE
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
 	var/drop_x = 1
@@ -692,14 +692,10 @@ var/global/list/rockTurfEdgeCache
 	temperature = 300
 	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
 
-/turf/simulated/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
-	visible_message("[AM] falls into [src]!")
-	qdel(AM)
-
 /turf/simulated/mineral/volcanic/lava_land_surface
 	environment_type = "basalt"
 	turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface
-	baseturf = /turf/simulated/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
 
 /turf/simulated/mineral/random/volcanic
 	environment_type = "basalt"

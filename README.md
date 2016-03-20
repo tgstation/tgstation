@@ -122,8 +122,10 @@ The SQL backend requires a MySQL server. SQL is required for the library, stats 
 
 ##IRC BOT SETUP
 
-Included in the repository is a python3 compatible IRC bot capable of relaying adminhelps to a specified
-IRC channel/server, see the /bot folder for more
+Included in the repository is an IRC bot capable of relaying adminhelps to a specified
+IRC channel/server (thanks to Skibiliano).
+Instructions for bot setup are included in the /bot folder along with the script
+itself
 
 ##CONTRIBUTING
 

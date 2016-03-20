@@ -8,6 +8,7 @@
 	var/obj/item/weapon/tank/holding
 
 	var/volume = 0
+	var/destroyed = 0
 
 	var/maximum_pressure = 90 * ONE_ATMOSPHERE
 
@@ -24,7 +25,6 @@
 /obj/machinery/portable_atmospherics/Destroy()
 	SSair.atmos_machinery -= src
 
-	disconnect()
 	qdel(air_contents)
 	air_contents = null
 
@@ -69,14 +69,14 @@
 	return air_contents
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/tank) && !(stat & BROKEN))
+	if((istype(W, /obj/item/weapon/tank) && !destroyed))
 		var/obj/item/weapon/tank/T = W
 		if(holding || !user.drop_item())
 			return
 		T.loc = src
 		holding = T
 		update_icon()
-	else if(istype(W, /obj/item/weapon/wrench) && !(stat & BROKEN))
+	else if(istype(W, /obj/item/weapon/wrench))
 		if(connected_port)
 			disconnect()
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
