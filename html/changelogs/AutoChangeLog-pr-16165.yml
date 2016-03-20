@@ -1,6 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscadd: "Nar-Sie will now corrupt airlocks, tables, windows, and windoors."
-  - rscadd: "Corrupted airlocks have no access restrictions."
-  - tweak: "Nar-Sie no longer causes destruction while moving around in favor of additional corruption."

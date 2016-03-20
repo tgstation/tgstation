@@ -1,5 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "Killing a necropolis tendril will now drop a chest full of spooky loot."
-  - rscadd: "Killing a necropolis tendril will now cause the ground to collapse around it after 5 seconds."
