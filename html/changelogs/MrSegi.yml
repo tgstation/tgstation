@@ -1,0 +1,7 @@
+author: MrSegi
+delete-after: True
+changes:
+- bugfix: Finally fixes Defficiency's cryo setup
+- tweak: Gives Paramedic direct access to the cryo room
+- bugfix: Removes extra camera in atmos that wasn't deleted before making changes
+- bugfix: Adds missing window in atmos
