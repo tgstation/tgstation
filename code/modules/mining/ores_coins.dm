@@ -62,17 +62,22 @@
 	return
 
 /obj/item/weapon/ore/glass/throw_impact(atom/hit_atom)
-	if(..() || !iscarbon(hit_atom))
+	if(..() || !ishuman(hit_atom))
 		return
-	var/mob/living/carbon/C = hit_atom
-	if((C.head && C.head.flags_cover & HEADCOVERSEYES) || \
-		(C.wear_mask && C.wear_mask.flags_cover & MASKCOVERSEYES))
-		visible_message("<span class='danger'>[C]'s mask/helmet blocks the sand!</span>")//glasses are not thick enough to stop it
+	var/mob/living/carbon/human/C = hit_atom
+	if(C.head && C.head.flags_cover & HEADCOVERSEYES)
+		visible_message("<span class='danger'>[C]'s headgear blocks the sand!</span>")
 		return
-	C.adjust_blurriness(3)
-	C.adjust_eye_damage(rand(2,4))
+	if(C.wear_mask && C.wear_mask.flags_cover & MASKCOVERSEYES)
+		visible_message("<span class='danger'>[C]'s mask blocks the sand!</span>")
+		return
+	if(C.glasses && C.glasses.flags_cover & GLASSESCOVERSEYES)
+		visible_message("<span class='danger'>[C]'s glasses block the sand!</span>")
+		return
+	C.adjust_blurriness(6)
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
-	C << "<span class='userdanger'>\The [src] burns your eyes!</span>"
+	C.confused += 5
+	C << "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>"
 	qdel(src)
 
 /obj/item/weapon/ore/plasma
