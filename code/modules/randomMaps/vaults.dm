@@ -10,18 +10,7 @@
 
 //#define SPAWN_ALL_VAULTS //Uncomment to spawn all existing vaults (otherwise only some will spawn)!
 
-var/const/vault_map_directory = "maps/randomVaults/"
-
-
-var/list/vault_map_names = list( //Add your vaults' map names to this list. Don't include the .dmm prefix
-	"icetruck_crash",
-	"asteroid_temple",
-	//"doomed_satelite", WARNING: this map is possessed. Uncommenting will cause bugs and general spookiness. Don't uncomment
-	"hivebot_factory",
-	"clown_base",
-	"rust",
-	"spacegym"
-)
+//List of spawnable vaults is in code/modules/randomMaps/vault_definitions.dm
 
 /area/random_vault
 	name = "random vault area"
@@ -50,25 +39,52 @@ var/list/vault_map_names = list( //Add your vaults' map names to this list. Don'
 /proc/generate_vaults()
 	var/area/space = get_space_area
 
-	var/list/list_of_vaults = shuffle(typesof(/area/random_vault) - /area/random_vault)
+	var/list/list_of_vault_spawners = shuffle(typesof(/area/random_vault) - /area/random_vault)
+	var/list/list_of_vaults = typesof(/datum/vault) - /datum/vault
+
+	for(var/vault_path in list_of_vaults) //Turn a list of paths into a list of objects
+		list_of_vaults.Add(new vault_path)
+		list_of_vaults.Remove(vault_path)
+
+	//Start processing the list of vaults
+
+	if(map.only_spawn_map_exclusive_vaults) //If the map spawns only map-exclusive vaults - remove all vaults that aren't exclusive to this map
+		for(var/datum/vault/V in list_of_vaults)
+
+			if(V.exclusive_to_maps.Find(map.nameShort) || V.exclusive_to_maps.Find(map.nameLong))
+				continue
+
+			list_of_vaults.Remove(V)
+	else //Map spawns all vaults - remove all vaults that are exclusive to other maps
+		for(var/datum/vault/V in list_of_vaults)
+
+			if(V.exclusive_to_maps.len)
+				if(!V.exclusive_to_maps.Find(map.nameShort) && !V.exclusive_to_maps.Find(map.nameLong))
+					list_of_vaults.Remove(V)
+
+	for(var/datum/vault/V in list_of_vaults) //Remove all vaults that can't spawn on this map
+		if(V.map_blacklist.len)
+			if(V.map_blacklist.Find(map.nameShort) || V.map_blacklist.Find(map.nameLong))
+				list_of_vaults.Remove(V)
+
 	var/failures = 0
 	var/successes = 0
-	var/vault_number = rand(MINIMUM_VAULT_AMOUNT, min(vault_map_names.len, list_of_vaults.len))
+	var/vault_number = rand(MINIMUM_VAULT_AMOUNT, min(list_of_vaults.len, list_of_vault_spawners.len))
 
 	#ifdef SPAWN_ALL_VAULTS
 	#warning Spawning all vaults!
-	vault_number = min(vault_map_names.len, list_of_vaults.len)
+	vault_number = min(list_of_vaults.len, list_of_vault_spawners.len)
 	#endif
 
-	message_admins("<span class='info'>Spawning [vault_number] vaults (in [list_of_vaults.len] areas)...</span>")
+	message_admins("<span class='info'>Spawning [vault_number] vaults (in [list_of_vault_spawners.len] areas)...</span>")
 
-	for(var/T in list_of_vaults) //Go through all subtypes of /area/random_vault
+	for(var/T in list_of_vault_spawners) //Go through all subtypes of /area/random_vault
 		var/area/A = locate(T) //Find the area
 
 		if(!A || !A.contents.len) //Area is empty and doesn't exist - skip
 			continue
 
-		if(vault_map_names.len > 0 && vault_number>0)
+		if(list_of_vaults.len > 0 && vault_number>0)
 			vault_number--
 
 			var/vault_x
@@ -81,15 +97,16 @@ var/list/vault_map_names = list( //Add your vaults' map names to this list. Don'
 			vault_y = TURF.y
 			vault_z = TURF.z
 
-			var/map_name = pick(vault_map_names)
-			vault_map_names.Remove(map_name)
+			var/datum/vault/new_vault = pick(list_of_vaults) //Pick a random path from list_of_vaults (like /datum/vault/spacegym)
 
-			var/path_file = "[vault_map_directory][pick(map_name)].dmm"
+			if(!new_vault.only_spawn_once)
+				list_of_vaults.Remove(new_vault)
+
+			var/path_file = "[new_vault.map_directory][new_vault.map_name].dmm"
 
 			if(fexists(path_file))
 				var/list/L = maploader.load_map(file(path_file), vault_z, vault_x, vault_y)
-				for(var/turf/new_turf in L)
-					new_turf.flags |= NO_MINIMAP //f u c k minimaps
+				new_vault.initialize(L)
 
 				message_admins("<span class='info'>Loaded [path_file]: [formatJumpTo(locate(vault_x, vault_y, vault_z))].")
 				successes++

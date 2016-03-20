@@ -44,6 +44,9 @@
 	var/dorf = 0
 	var/linked_to_centcomm = 1
 
+	//If 1, only spawn vaults that are exclusive to this map (other vaults aren't spawned). For more info, see code/modules/randomMaps/vault_definitions.dm
+	var/only_spawn_map_exclusive_vaults = 0
+
 	// List of package tagger locations. Due to legacy shitcode you can only append or replace ones with null, or you'll break stuff.
 	var/list/default_tagger_locations = list(
 		DISP_DISPOSALS,

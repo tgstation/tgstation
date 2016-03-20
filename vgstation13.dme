@@ -1592,6 +1592,7 @@
 #include "code\modules\projectiles\projectile\ricochet.dm"
 #include "code\modules\projectiles\projectile\rocket.dm"
 #include "code\modules\projectiles\projectile\special.dm"
+#include "code\modules\randomMaps\vault_definitions.dm"
 #include "code\modules\randomMaps\vaults.dm"
 #include "code\modules\RCD\engie.dm"
 #include "code\modules\RCD\RCD.dm"
