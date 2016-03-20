@@ -118,7 +118,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 		icon_state = new_form
 		ghostimage.icon_state = new_form
 
-	if(icon_state == "ghost") //For now we just check for the default ghost sprite. If other sprites get updated in the future to support hair, change this to a list. |- Ricotez
+	if(icon_state == "ghost") //For now we just check for the default ghost sprite. If other sprites get updated in the future to support hair, change this to a list.
 		var/datum/sprite_accessory/S
 		if(facial_hair_style)
 			S = facial_hair_styles_list[facial_hair_style]
@@ -175,7 +175,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 /mob/dead/observer/Move(NewLoc, direct)
-	dir = direct //For the new fancy directional sprites. |- Ricotez
+	dir = direct
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
