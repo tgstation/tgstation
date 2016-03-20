@@ -22,8 +22,8 @@
 	var/obj/item/weapon/bombcore/pizza/bomb
 	var/bomb_active = FALSE // If the bomb is counting down.
 	var/bomb_defused = TRUE // If the bomb is inert.
-	var/bomb_timer = 1 // How long before blowing the bomb.
-	var/const/BOMB_TIMER_MIN = 1
+	var/bomb_timer = 3 // How long before blowing the bomb.
+	var/const/BOMB_TIMER_MIN = 3 //because one was broken
 	var/const/BOMB_TIMER_MAX = 10
 
 /obj/item/pizzabox/New()
