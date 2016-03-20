@@ -1017,7 +1017,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /obj/item/weapon/slimedupe
 	name = "slime duplicator"
-	desc = "temp desc i'm not good at things"
+	desc = "A potent chemical mix that will force a child slime to split in two!"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 
