@@ -14,7 +14,7 @@
 	holder_type = /obj/item/weapon/holder/diona
 	var/list/donors = list()
 	var/ready_evolve = 0
-	canWearHats = 0
+	canWearHats = 1
 	canWearClothes = 0
 	canWearGlasses = 0
 
