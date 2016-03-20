@@ -117,13 +117,11 @@
 		sharer.temperature += heat/sharer.heat_capacity
 
 
+/turf/proc/process_cell(fire_count)
+	SSair.remove_from_active(src)
 
 
-
-
-
-
-/turf/simulated/proc/process_cell(fire_count)
+/turf/simulated/process_cell(fire_count)
 
 	if(archived_cycle < fire_count) //archive self if not already done
 		archive()
