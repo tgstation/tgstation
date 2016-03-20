@@ -223,6 +223,9 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 
 		stat("Chemicals", chemicals)
 
+/mob/living/simple_animal/borer/start_pulling(var/atom/movable/AM)
+	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
+
 // VERBS!
 /mob/living/simple_animal/borer/proc/borer_speak(var/message)
 	set category = "Alien"
