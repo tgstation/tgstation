@@ -199,7 +199,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			stat_msg2 = reject_bad_text(input("Line 2", "Enter Message Text", stat_msg2) as text|null, 40)
 			src.updateDialog()
 
-		// OMG CENTCOM LETTERHEAD
+		// OMG CENTCOM FUCKED US
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(CM.cooldownLeft())
@@ -568,7 +568,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	return dat
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
-	var/input = sanitize_russian((stripped_input(user, "Please choose a message to announce to the station crew.", "What?")), 1)
+	var/input = sanitize_russian(stripped_input(user, "Please choose a message to announce to the station crew.", "What?"))
 	if(!input || !user.canUseTopic(src))
 		return
 	if(is_silicon)

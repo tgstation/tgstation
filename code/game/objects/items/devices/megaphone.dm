@@ -30,7 +30,7 @@
 	if(!message)
 		return
 
-	message = capitalize(message)
+	message = ruscapitalize(message)
 	if(!user.can_speak(message))
 		user << "<span class='warning'>You find yourself unable to speak at all!</span>"
 		return

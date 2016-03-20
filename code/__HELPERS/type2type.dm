@@ -574,4 +574,14 @@ for(var/t in test_times)
 	var/B = hex2num(copytext(A,6,0))
 	return R+G+B
 
-
+/proc/splittextEx(text, delimiter="\n")
+	var/delim_len = length(delimiter)
+	if(delim_len < 1) return list(text)
+	. = list()
+	var/last_found = 1
+	var/found
+	do
+		found = findtextEx(text, delimiter, last_found, 0)
+		. += copytext(text, last_found, found)
+		last_found = found + delim_len
+	while(found)

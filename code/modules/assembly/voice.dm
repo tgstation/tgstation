@@ -31,11 +31,11 @@
 /obj/item/device/assembly/voice/proc/record_speech(atom/movable/speaker, raw_message)
 	switch(mode)
 		if(1)
-			recorded = raw_message
+			recorded = lowerrustext(raw_message)
 			listening = 0
 			say("Activation message is '[recorded]'.")
 		if(2)
-			recorded = raw_message
+			recorded = lowerrustext(raw_message)
 			listening = 0
 			say("Activation message is '[recorded]'.")
 		if(3)
@@ -51,7 +51,7 @@
 	. = 0
 	switch(mode)
 		if(1)
-			if(findtextEx(raw_message, recorded))
+			if(findtextEx(lowerrustext(raw_message), recorded))
 				. = 1
 		if(2)
 			if(raw_message == recorded)

@@ -81,7 +81,7 @@ var/const/VOX_DELAY = 600
 	var/index = 0
 	for(var/word in vox_sounds)
 		index++
-		dat += "<A href='?src=\ref[src];say_word=[word]'>[capitalize(word)]</A>"
+		dat += "<A href='?src=\ref[src];say_word=[word]'>[ruscapitalize(word)]</A>"
 		if(index != vox_sounds.len)
 			dat += " / "
 

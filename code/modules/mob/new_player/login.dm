@@ -7,7 +7,7 @@
 	..()
 
 	if(join_motd)
-		src << "<div class=\"motd\">[join_motd]</div>"
+		src << sanitize_russian("<div class=\"motd\">[join_motd]</div>")
 
 	if(admin_notice)
 		src << "<span class='notice'><b>Admin Notice:</b>\n \t [admin_notice]</span>"

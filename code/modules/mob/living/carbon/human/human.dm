@@ -482,8 +482,8 @@
 										usr << "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]"
 										usr << "<b>Minor Crimes:</b>"
 										for(var/datum/data/crime/c in R.fields["mi_crim"])
-											usr << "<b>Crime:</b> [c.crimeName]"
-											usr << "<b>Details:</b> [c.crimeDetails]"
+											usr << "<b>Crime:</b> [russian_html2text(c.crimeName)]"
+											usr << "<b>Details:</b> [russian_html2text(c.crimeDetails)]"
 											usr << "Added by [c.author] at [c.time]"
 											usr << "----------"
 										usr << "<b>Major Crimes:</b>"

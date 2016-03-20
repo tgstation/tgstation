@@ -957,6 +957,19 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/tie/dope_necklace=3)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
+/obj/machinery/vending/ammo
+	name = "Sgt. Robust's Munition Supply"
+	desc = "An overwhelming amount of <b>ancient patriotism</b> washes over you just by looking at the machine."
+	icon_state = "liberationstation"
+	product_slogans = "Kill 'em all!;Any caliber or filling!;Get your clip!;I've got pills that cure defiance!"
+	product_ads = "Float like an astronaut, sting like a bullet!;Express your second ammendment today!;Guns don't kill people, but you can!;Who needs responsibilities when you have guns?"
+	vend_reply = "Don't spend all at once!"
+	req_access_txt = "2"
+	products = list(/obj/item/weapon/storage/box/lethalshot = 5,/obj/item/weapon/storage/box/rubbershot = 5, /obj/item/ammo_box/magazine/m45 = 5, /obj/item/ammo_box/magazine/m556 = 5,
+					/obj/item/ammo_box/c38 = 6, /obj/item/ammo_box/c9mm = 5, /obj/item/ammo_box/c45 = 4, /obj/item/ammo_box/c10mm = 4)
+	contraband = list(/obj/item/ammo_casing/shotgun/incendiary/dragonsbreath = 5, /obj/item/clothing/under/syndicate/tacticool=5,/obj/item/clothing/mask/balaclava=5, /obj/item/ammo_box/magazine/smgm45 = 3)
+	premium = list(/obj/item/ammo_box/magazine/m50 = 3, /obj/item/ammo_box/magazine/m75 = 2)
+
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE
 #undef COIN_CHARGE
