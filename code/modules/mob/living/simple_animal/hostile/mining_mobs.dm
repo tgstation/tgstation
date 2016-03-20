@@ -403,6 +403,7 @@
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "Goliath_tentacle"
 	var/latched = 0
+	anchored = 1
 
 /obj/effect/goliath_tentacle/New()
 	var/turftype = get_turf(src)
