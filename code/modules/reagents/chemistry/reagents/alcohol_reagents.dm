@@ -374,7 +374,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 70
 
-/datum/reagent/consumable/ethanol/manly_dorf //THE SPRITE FOR THIS HAS A HANDLE AND THE HANDLE HAD A STRIP OF WHITE PIXELS BETWEEN IT AND THE MUG AND I FINALLY REMOVED IT AND OH GOD I'M SO HAPPY
+/datum/reagent/consumable/ethanol/manly_dorf
 	name = "The Manly Dorf"
 	id = "manlydorf"
 	description = "Beer and Ale, brought together in a delicious mix. Intended for true men only."
