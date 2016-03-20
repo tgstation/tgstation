@@ -184,6 +184,9 @@
 			return
 		H.forceMove(picked)
 		H.rad_act(rad_amount)
+		active = 0
+		src.icon_state = "reactiveoff"
+		src.item_state = "reactiveoff"
 		return 1
 	return 0
 
