@@ -903,5 +903,5 @@ var/global/list/image/blood_overlays = list()
 					break
 				sleep(5)
 
-	throw_at(T, kick_power, 1)
 	Crossed(H) //So you can't kick shards while naked without suffering
+	throw_at(T, kick_power, 1)
