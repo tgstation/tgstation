@@ -487,6 +487,7 @@ var/global/list/rockTurfEdgeCache
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/simulated/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
+	var/sand_type = /obj/item/weapon/ore/glass
 
 /turf/simulated/floor/plating/asteroid/airless
 	oxygen = 0.01
@@ -501,6 +502,7 @@ var/global/list/rockTurfEdgeCache
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
+	sand_type = /obj/item/weapon/ore/glass/basalt
 
 /turf/simulated/floor/plating/asteroid/basalt/lava //lava underneath
 	baseturf = /turf/simulated/floor/plating/lava/smooth
@@ -520,6 +522,7 @@ var/global/list/rockTurfEdgeCache
 	temperature = 180
 	slowdown = 2
 	environment_type = "snow"
+	sand_type = /obj/item/stack/sheet/mineral/snow
 
 /turf/simulated/floor/plating/asteroid/snow/airless
 	oxygen = 0.01
@@ -601,11 +604,8 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/floor/plating/asteroid/proc/gets_dug()
 	if(dug)
 		return
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
+	for(var/i in 1 to 5)
+		new sand_type(src)
 	dug = 1
 	icon_plating = "[environment_type]_dug"
 	icon_state = "[environment_type]_dug"
