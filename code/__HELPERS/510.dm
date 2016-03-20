@@ -3,6 +3,7 @@
 //		master controller and subsystems.dm
 //		map loader (reader.dm)
 //		defines/tick.dm
+//		defines/misc.dm
 //		unsorted.dm (bottom, in stoplag())
 #if DM_VERSION < 510
 #define BYGEX "code/__HELPERS/bygex"
