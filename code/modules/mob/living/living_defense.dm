@@ -160,12 +160,12 @@
 	var/L_old_on_fire = L.on_fire
 
 	if(on_fire) //Only spread fire stacks if we're on fire
-		fire_stacks /= 2
+		fire_stacks *= 0.45 // split fire stacks half-and-half with 90% efficiency
 		L.fire_stacks += fire_stacks
 		L.IgniteMob()
 
 	if(L_old_on_fire) //Only ignite us and gain their stacks if they were onfire before we bumped them
-		L.fire_stacks /= 2
+		L.fire_stacks *= 0.45
 		fire_stacks += L.fire_stacks
 		IgniteMob()
 
