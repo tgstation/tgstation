@@ -198,6 +198,7 @@
 #include "code\datums\diseases\advance\symptoms\heal.dm"
 #include "code\datums\diseases\advance\symptoms\itching.dm"
 #include "code\datums\diseases\advance\symptoms\oxygen.dm"
+#include "code\datums\diseases\advance\symptoms\sensory.dm"
 #include "code\datums\diseases\advance\symptoms\shedding.dm"
 #include "code\datums\diseases\advance\symptoms\shivering.dm"
 #include "code\datums\diseases\advance\symptoms\skin.dm"
