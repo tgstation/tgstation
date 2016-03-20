@@ -340,7 +340,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /mob/living/carbon/human/handle_status_effects()
 	..()
 	if(drunkenness)
-		modify_drunkenness(-0.2) //Slow sobering - sleeping increases it to 1 per tick
+		if(sleeping)
+			drunkenness = max(drunkenness - 1.5, 0)
+		else
+			drunkenness = max(drunkenness - 0.2, 0)
 
 		if(drunkenness >= 6)
 			if(prob(25))
@@ -370,24 +373,19 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 		if(drunkenness >= 81)
 			adjustToxLoss(0.2)
-			if(prob(5) && !sleeping)
+			if(prob(5) && !stat)
 				src << "<span class='warning'>Maybe you should lie down for a bit...</span>"
 
 		if(drunkenness >= 91)
 			adjustBrainLoss(0.4)
-			if(prob(20))
+			if(prob(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && z == ZLEVEL_STATION) //QoL mainly
 					src << "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>"
-				else if(!sleeping)
+				else
 					src << "<span class='warning'>Just a quick nap...</span>"
 					Sleeping(45)
 
 		if(drunkenness >= 101)
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
-
-/mob/living/carbon/human/proc/modify_drunkenness(amount)
-	if(sleeping)
-		amount *= 5
-	drunkenness = max(drunkenness + amount, 0)
 
 #undef HUMAN_MAX_OXYLOSS

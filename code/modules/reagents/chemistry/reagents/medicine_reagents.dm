@@ -768,7 +768,7 @@
 	M.adjustToxLoss(-0.2*REM, 0)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.modify_drunkenness(-10)
+		H.drunkenness = max(H.drunkenness - 10, 0)
 	..()
 	. = 1
 

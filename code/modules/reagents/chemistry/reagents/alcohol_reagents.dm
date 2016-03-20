@@ -34,7 +34,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.modify_drunkenness(boozepwr * ALCOHOL_RATE)
+		H.drunkenness = max((H.drunkenness + boozepwr * ALCOHOL_RATE), 0)
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
