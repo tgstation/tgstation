@@ -26,6 +26,7 @@
 /obj/machinery/particle_accelerator/control_box/New()
 	wires = new(src)
 	connected_parts = list()
+	update_icon()
 	..()
 
 /obj/machinery/particle_accelerator/control_box/Destroy()
