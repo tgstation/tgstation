@@ -443,7 +443,6 @@
 	layer = MOB_LAYER - 0.1
 
 /mob/living/simple_animal/hostile/guardian/beam
-	next_move_modifier = 0.5
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attacktext = "shocks"
