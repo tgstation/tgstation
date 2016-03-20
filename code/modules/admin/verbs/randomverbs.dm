@@ -52,16 +52,17 @@
 		return
 
 	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text
-
 	if (!msg)
 		return
+	var/deity = input("Deity: The current chosen deity is [ticker.Bible_deity_name]. Input a different one, or leave blank to have the message be from 'a voice'.", text("Subtle PM to [M.key]"), ticker.Bible_deity_name) as text
+	if(!deity)
+		deity = "a voice"
 	if(usr)
 		if (usr.client)
 			if(usr.client.holder)
-				M.get_subtle_message(msg)
-
-	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
-	message_admins("<span class='notice'><B>SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]</B></span>", 1)
+				M.get_subtle_message(msg, deity)
+	log_admin("SubtlePM: [key_name(usr)] as [deity] -> [key_name(M)] : [msg]")
+	message_admins("<span class='notice'><B>SubtleMessage: [key_name_admin(usr)] as [deity] -> [key_name_admin(M)] : [msg]</B></span>", 1)
 	feedback_add_details("admin_verb","SMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_world_narrate() // Allows administrators to fluff events a little easier -- TLE
