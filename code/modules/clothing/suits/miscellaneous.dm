@@ -373,7 +373,7 @@
 
 /obj/item/clothing/suit/soldiercoat
 	name = "Soldier's Coat"
-	desc = "Ein Mantel gemacht, um die Verbündeten zu zerstören."
+	desc = "Und das hei�t: Erika"
 	icon_state = "soldiersuit"
 	item_state = "soldiersuit"
 
