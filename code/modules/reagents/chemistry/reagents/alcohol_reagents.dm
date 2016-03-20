@@ -1,4 +1,4 @@
-#define ALCOHOL_RATE 0.015 //The rate at which alcohol affects you; by default, one glass of whiskey gets you just above tipsy
+#define ALCOHOL_RATE 0.015 //The rate at which alcohol affects you; by default, one full glass of straight whiskey gets you shitfaced
 
 ////////////// I don't know who made this header before I refactored alcohols but I'm going to fucking strangle them because it was so ugly, holy Christ
 // ALCOHOLS //
