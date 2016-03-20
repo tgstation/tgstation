@@ -143,7 +143,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		M << browse(dat, "window=paiRecruit")
 
 	proc/findPAI(var/obj/item/device/paicard/p, var/mob/user)
-		requestRecruits()
+		requestRecruits(p)
 		var/list/available = list()
 		for(var/datum/paiCandidate/c in paiController.pai_candidates)
 			if(c.ready)
@@ -188,11 +188,11 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 
 		user << browse(dat, "window=findPai")
 
-	proc/requestRecruits()
+	proc/requestRecruits(var/obj/item/device/paicard/p)
 		for(var/mob/dead/observer/O in get_active_candidates(ROLE_PAI)) // We handle polling ourselves.
 			if(O.client)
 				if(check_recruit(O))
-					to_chat(O, "<span class='recruit'>A pAI card is looking for personalities. (<a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>")
+					to_chat(O, "<span class='recruit'>A pAI card is looking for personalities. (<a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a> | <a href='?src=\ref[O];jump=\ref[p]'>Teleport</a>)</span>")
 					//question(O.client)
 
 	proc/check_recruit(var/mob/dead/observer/O)
