@@ -692,10 +692,14 @@ var/global/list/rockTurfEdgeCache
 	temperature = 300
 	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
 
+/turf/simulated/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
+	visible_message("[AM] falls into [src]!")
+	qdel(AM)
+
 /turf/simulated/mineral/volcanic/lava_land_surface
 	environment_type = "basalt"
 	turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface
-	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
+	baseturf = /turf/simulated/floor/plating/lava/smooth/lava_land_surface
 
 /turf/simulated/mineral/random/volcanic
 	environment_type = "basalt"
