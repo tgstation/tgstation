@@ -117,7 +117,7 @@
 	origin_tech = "powerstorage=2;biotech=4"
 	icon = 'icons/mob/slimes.dmi' //'icons/obj/harvest.dmi'
 	icon_state = "yellow slime extract" //"potato_battery"
-	maxcharge = 10000
+	maxcharge = 30000
 	starting_materials =  null
 	w_type = RECYK_BIOLOGICAL
 
