@@ -99,7 +99,7 @@
 
 			var/datum/vault/new_vault = pick(list_of_vaults) //Pick a random path from list_of_vaults (like /datum/vault/spacegym)
 
-			if(!new_vault.only_spawn_once)
+			if(new_vault.only_spawn_once)
 				list_of_vaults.Remove(new_vault)
 
 			var/path_file = "[new_vault.map_directory][new_vault.map_name].dmm"
