@@ -1,4 +1,5 @@
-#define ALCOHOL_RATE 0.015 //The rate at which alcohol affects you; by default, one full glass of straight whiskey gets you shitfaced
+#define ALCOHOL_THRESHOLD_MODIFIER 0.05 //Greater numbers mean that less alcohol has greater intoxication potential
+#define ALCOHOL_RATE 0.005 //The rate at which alcohol affects you
 
 ////////////// I don't know who made this header before I refactored alcohols but I'm going to fucking strangle them because it was so ugly, holy Christ
 // ALCOHOLS //
@@ -34,7 +35,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.drunkenness = max((H.drunkenness + boozepwr * ALCOHOL_RATE), 0)
+		if(H.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
+			H.drunkenness = max((H.drunkenness + (sqrt(volume) * boozepwr * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
