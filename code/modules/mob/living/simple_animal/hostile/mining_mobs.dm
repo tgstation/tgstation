@@ -754,6 +754,12 @@
 	layer = MOB_LAYER-0.1
 	loot = list(/obj/effect/collapse, /obj/structure/closet/crate/necropolis/tendril)
 	del_on_death = 1
+	var/gps = null
+
+/mob/living/simple_animal/hostile/spawner/lavaland/New()
+	..()
+	gps = new /obj/item/device/gps/internal(src)
+
 
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
