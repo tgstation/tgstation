@@ -228,6 +228,7 @@
 						return
 					var/obj/item/queen_bee/QB = new()
 					queen_bee.loc = QB
+					bees -= queen_bee
 					QB.queen = queen_bee
 					QB.name = queen_bee.name
 					if(!user.put_in_active_hand(QB))
