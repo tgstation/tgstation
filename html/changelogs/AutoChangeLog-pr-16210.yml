@@ -1,6 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscadd: "Adds lightning holoparasites, which have medium damage resist, a weak attack, have a lightning chain to their summoner, and apply lightning chains when attacking targets."
-  - rscadd: "Lightning chains shock everyone nearby, doing low burn damage. This is excluding the parasite and summoner; chains will shock enemies they're attached to."
-  - tweak: "Holoparasites can now smash tables and lockers."

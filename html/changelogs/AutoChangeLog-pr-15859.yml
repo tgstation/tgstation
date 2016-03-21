@@ -1,4 +1,0 @@
-author: CoreOverload
-delete-after: True
-changes: 
-  - rscadd: "You can now construct and deconstruct wall mounted flashes by using a wrench on empty wall flash. A crate with four linked \"flash frame - flash controller\" pairs is added to cargo."
