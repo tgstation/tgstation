@@ -254,64 +254,81 @@
 		var/err = query_insert.ErrorMsg()
 		log_game("SQL ERROR adding vote to table. Error : \[[err]\]\n")
 		return
-	usr << "<span class='notice'>Vote successful.</span>"
 	usr << browse(null,"window=playerpoll")
+	return 1
 
 /mob/new_player/proc/log_text_poll_reply(pollid, replytext)
-	if(!pollid || !replytext)
+	if(!pollid)
+		return
+	if(!replytext)
+		usr << "The text you entered was blank. Please correct the text and submit again."
 		return
 	var/adminrank = poll_check_voted(pollid, "poll_textreply")
 	if(!adminrank)
 		return
 	replytext = sanitizeSQL(replytext)
-	if(!length(replytext) > 0 || !length(replytext) <= 8000)
-		usr << "The text you entered was blank or too long. Please correct the text and submit again."
+	if(!(length(replytext) > 0) || !(length(replytext) <= 8000))
+		usr << "The text you entered was invalid or too long. Please correct the text and submit again."
 		return
 	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_textreply")] (datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (Now(), [pollid], '[ckey]', '[client.address]', '[replytext]', '[adminrank]')")
 	if(!query_insert.Execute())
 		var/err = query_insert.ErrorMsg()
 		log_game("SQL ERROR adding text reply to table. Error : \[[err]\]\n")
 		return
-	usr << "<span class='notice'>Feedback logging successful.</span>"
 	usr << browse(null,"window=playerpoll")
+	return 1
 
 /mob/new_player/proc/vote_on_numval_poll(pollid, optionid, rating)
 	if(!pollid || !optionid || !rating)
 		return
-	var/adminrank = poll_check_voted(pollid, "poll_vote")
-	if(!adminrank)
+	if(!dbcon.IsConnected())
+		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
+	var/DBQuery/query_hasvoted = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_vote")] WHERE optionid = [optionid] AND ckey = '[ckey]'")
+	if(!query_hasvoted.Execute())
+		var/err = query_hasvoted.ErrorMsg()
+		log_game("SQL ERROR obtaining id from poll_vote table. Error : \[[err]\]\n")
+		return
+	if(query_hasvoted.NextRow())
+		usr << "<span class='danger'>You've already replied to this poll.</span>"
+		return
+	var/adminrank = "Player"
+	if(client.holder)
+		adminrank = client.holder.rank
 	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (Now(), [pollid], [optionid], '[ckey]', '[client.address]', '[adminrank]', [(isnull(rating)) ? "null" : rating])")
 	if(!query_insert.Execute())
 		var/err = query_insert.ErrorMsg()
 		log_game("SQL ERROR adding vote to table. Error : \[[err]\]\n")
 		return
-	usr << "<span class='notice'>Vote successful.</span>"
 	usr << browse(null,"window=playerpoll")
+	return 1
 
 /mob/new_player/proc/vote_on_multi_poll(pollid, optionid)
 	if(!pollid || !optionid)
-		return
+		return 1
 	if(!dbcon.IsConnected())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
-		return
-	var/DBQuery/query_get_choicelen = dbcon.NewQuery("SELECT multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE pollid = [pollid]")
+		return 1
+	var/DBQuery/query_get_choicelen = dbcon.NewQuery("SELECT multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
 	if(!query_get_choicelen.Execute())
 		var/err = query_get_choicelen.ErrorMsg()
 		log_game("SQL ERROR obtaining multiplechoiceoptions from poll_question table. Error : \[[err]\]\n")
-		return
-	var/i = text2num(query_get_choicelen.item[1])
+		return 1
+	var/i
+	if(query_get_choicelen.NextRow())
+		i = text2num(query_get_choicelen.item[1])
 	var/DBQuery/query_hasvoted = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
 	if(!query_hasvoted.Execute())
 		var/err = query_hasvoted.ErrorMsg()
 		log_game("SQL ERROR obtaining id from poll_vote table. Error : \[[err]\]\n")
-		return
+		return 1
 	while(i)
 		if(query_hasvoted.NextRow())
 			i--
+		else
+			break
 	if(!i)
-		usr << "<span class='danger'>Maximum replies reached.</span>"
-		return
+		return 2
 	var/adminrank = "Player"
 	if(client.holder)
 		adminrank = client.holder.rank
@@ -319,6 +336,6 @@
 	if(!query_insert.Execute())
 		var/err = query_insert.ErrorMsg()
 		log_game("SQL ERROR adding vote to table. Error : \[[err]\]\n")
-		return
-	usr << "<span class='notice'>Vote successful.</span>"
+		return 1
 	usr << browse(null,"window=playerpoll")
+	return 0
