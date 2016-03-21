@@ -329,7 +329,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
 			For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
-	cost = 2
+	cost = 4
 
 /datum/uplink_item/ammo/shotgun
 	cost = 2
