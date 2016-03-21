@@ -824,7 +824,7 @@
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return 0
 
-	var/datum/martial_art/attacker_style = M.martial_art
+	var/datum/martial_art/attacker_style = M.mind.martial_art
 
 	switch(M.a_intent)
 		if("help")

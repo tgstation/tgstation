@@ -66,18 +66,18 @@
 		H.verbs += help_verb
 	if(make_temporary)
 		temporary = 1
-	if(H.martial_art && H.martial_art.temporary)
+	if(H.mind.martial_art && H.mind.martial_art.temporary)
 		if(temporary)
-			base = H.martial_art.base
+			base = H.mind.martial_art.base
 		else
-			H.martial_art.base = src //temporary styles have priority
+			H.mind.martial_art.base = src //temporary styles have priority
 			return
-	H.martial_art = src
+	H.mind.martial_art = src
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
-	if(H.martial_art != src)
+	if(H.mind.martial_art != src)
 		return
-	H.martial_art = base
+	H.mind.martial_art = base
 	if(help_verb)
 		H.verbs -= help_verb
 

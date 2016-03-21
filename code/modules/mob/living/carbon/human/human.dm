@@ -156,13 +156,15 @@
 	return
 
 /mob/living/carbon/human/bullet_act()
-	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
-		if(!prob(martial_art.deflection_chance))
-			return ..()
-		if(!src.lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-			src.visible_message("<span class='danger'>[src] deflects the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-			return 0
-	..()
+	if(mind)
+		if(mind.martial_art)
+			if(mind.martial_art && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
+				if(!prob(mind.martial_art.deflection_chance))
+					return ..()
+				if(!src.lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
+					src.visible_message("<span class='danger'>[src] deflects the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+					return 0
+			..()
 
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)
