@@ -212,11 +212,11 @@
 		if((isDead() || src.health < config.health_threshold_crit) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
 
-		if(ishuman(user) && !isUnconscious(user) && distance <= 1)
-			user.visible_message("<span class='info'>[user] checks [src]'s pulse.")
+		if(ishuman(user) && !user.isUnconscious() && distance <= 1)
+			user.visible_message("<span class='info'>[user] checks [src]'s pulse.</span>")
 
 			spawn(15)
-				if(user && distance <= 1 && !isUnconscious(user))
+				if(user && distance <= 1 && !user.isUnconscious())
 					if(pulse == PULSE_NONE || (status_flags & FAKEDEATH))
 						to_chat(user, "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>")
 					else
