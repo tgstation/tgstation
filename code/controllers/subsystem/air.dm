@@ -145,9 +145,9 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/proc/remove_from_active(turf/simulated/T)
+	active_turfs -= T
 	if(istype(T))
 		T.excited = 0
-		active_turfs -= T
 		if(T.excited_group)
 			T.excited_group.garbage_collect()
 

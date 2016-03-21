@@ -53,6 +53,13 @@
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
 
+/mob/living/simple_animal/pet/cat/original
+	name = "Batsy"
+	desc = "The product of alien DNA and bored geneticists."
+	icon_state = "original"
+	icon_living = "original"
+	icon_dead = "original_dead"
+
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
 	desc = "D'aaawwww."
@@ -77,6 +84,10 @@
 	var/memory_saved = 0
 
 /mob/living/simple_animal/pet/cat/Runtime/New()
+	if(prob(30))
+		icon_state = "original"
+		icon_living = "original"
+		icon_dead = "original_dead"
 	Read_Memory()
 	..()
 

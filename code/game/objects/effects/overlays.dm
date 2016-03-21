@@ -81,6 +81,14 @@
 	name = "maw of Nar-Sie"
 	icon_state = "sacconsume"
 
+/obj/effect/overlay/temp/cult/door
+	name = "unholy glow"
+	icon_state = "doorglow"
+	layer = 3.17 //above closed doors
+
+/obj/effect/overlay/temp/cult/door/unruned
+	icon_state = "unruneddoorglow"
+
 /obj/effect/overlay/temp/cult/turf
 	name = "unholy glow"
 	icon_state = "wallglow"

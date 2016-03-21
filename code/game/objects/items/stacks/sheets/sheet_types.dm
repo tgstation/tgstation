@@ -193,15 +193,12 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	icon = 'icons/obj/items.dmi'
 	sheettype = "runed"
 
+/obj/item/stack/sheet/runed_metal/fifty
+	amount = 50
+
 /obj/item/stack/sheet/runed_metal/New(var/loc, var/amount=null)
 	recipes = runed_metal_recipes
 	return ..()
-
-/obj/item/stack/sheet/runed_metal/attack_self(mob/user)
-	if(!iscultist(user))
-		user << "<span class='warning'>You aren't able to think of anything [src] could build...</span>"
-		return
-	..()
 
 /obj/item/stack/sheet/lessergem
 	name = "lesser gems"
