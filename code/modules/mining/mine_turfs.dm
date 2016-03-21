@@ -61,6 +61,14 @@
 
 /turf/simulated/mineral/random/New()
 	..()
+
+	if (mineralType && mineralAmt && spread && spreadChance)
+		for(var/dir in cardinal)
+			if(prob(spreadChance))
+				var/turf/T = get_step(src, dir)
+				if(istype(T, /turf/simulated/mineral/random))
+					Spread(T)
+
 	if (prob(mineralChance))
 		var/path = pickweight(mineralSpawnChanceList)
 		var/turf/T = new path(src)
@@ -99,42 +107,36 @@
 	..()
 
 /turf/simulated/mineral/iron
-	name = "iron deposit"
 	mineralType = /obj/item/weapon/ore/iron
 	spreadChance = 20
 	spread = 1
 	scan_state = "rock_Iron"
 
 /turf/simulated/mineral/uranium
-	name = "uranium deposit"
 	mineralType = /obj/item/weapon/ore/uranium
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Uranium"
 
 /turf/simulated/mineral/diamond
-	name = "diamond deposit"
 	mineralType = /obj/item/weapon/ore/diamond
 	spreadChance = 0
 	spread = 1
 	scan_state = "rock_Diamond"
 
 /turf/simulated/mineral/gold
-	name = "gold deposit"
 	mineralType = /obj/item/weapon/ore/gold
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Gold"
 
 /turf/simulated/mineral/silver
-	name = "silver deposit"
 	mineralType = /obj/item/weapon/ore/silver
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Silver"
 
 /turf/simulated/mineral/plasma
-	name = "plasma deposit"
 	icon_state = "rock_Plasma"
 	mineralType = /obj/item/weapon/ore/plasma
 	spreadChance = 8
@@ -142,7 +144,6 @@
 	scan_state = "rock_Plasma"
 
 /turf/simulated/mineral/clown
-	name = "bananium deposit"
 	mineralType = /obj/item/weapon/ore/bananium
 	mineralAmt = 3
 	spreadChance = 0
@@ -150,7 +151,6 @@
 	scan_state = "rock_Clown"
 
 /turf/simulated/mineral/bscrystal
-	name = "bluespace crystal deposit"
 	icon_state = "rock_BScrystal"
 	mineralType = /obj/item/weapon/ore/bluespace_crystal
 	mineralAmt = 1
@@ -184,7 +184,7 @@
 
 /turf/simulated/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
 	if(stage == 0)
-		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_active", layer = 18)
+		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_active", layer = 4.06)
 		overlays += I
 		activated_image = I
 		name = "gibtonite deposit"
@@ -222,7 +222,7 @@
 /turf/simulated/mineral/gibtonite/proc/defuse()
 	if(stage == 1)
 		overlays -= activated_image
-		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_inactive", layer = 18)
+		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_inactive", layer = 4.06)
 		overlays += I
 		desc = "An inactive gibtonite reserve. The ore can be extracted."
 		stage = 2
