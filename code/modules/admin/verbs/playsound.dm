@@ -7,7 +7,9 @@
 	uploaded_sound.status = SOUND_STREAM | SOUND_UPDATE
 	uploaded_sound.priority = 250
 
-	var/prompt = alert(src, "Do you want to announce the filename to everyone?","Announce?","Yes","No")
+	var/prompt = alert(src, "Do you want to announce the filename to everyone?","Announce?","Yes","No","Cancel")
+	if(prompt == "Cancel")
+		return
 	if(prompt == "Yes")
 		to_chat(world, "<B>[src.key] played sound [S]</B>")
 	log_admin("[key_name(src)] played sound [S]")
@@ -25,6 +27,10 @@
 	set name = "Play Local Sound"
 	if(!check_rights(R_SOUNDS))	return
 	if(!istype(S)) S = sound(S)
+
+	var/prompt = alert(src, "Are you sure you want to play this sound?","Are you sure?","Yes","Cancel")
+	if(prompt == "Cancel")
+		return
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]", 1)
 	S.status = SOUND_STREAM | SOUND_UPDATE
