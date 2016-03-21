@@ -22,6 +22,9 @@
 /datum/vault/asteroid_temple
 	map_name = "asteroid_temple"
 
+/datum/vault/tommyboyasteroid
+	map_name = "tommyboyasteroid"
+
 /datum/vault/hivebot_factory
 	map_name = "hivebot_factory"
 
