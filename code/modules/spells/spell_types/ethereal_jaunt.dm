@@ -43,12 +43,7 @@
 			target.reset_perspective(holder)
 			target.notransform=0 //mob is safely inside holder now, no need for protection.
 			jaunt_steam(mobloc)
-			mutations = list(MUT_MUTE) // no more invisible point blank fireballs
-			for(var/A in mutations)
-				target.dna.add_mutation(A)
-			sleep(duration)
-			for(var/A in mutations)
-				target.dna.remove_mutation(A)
+			target.silent += 50
 			if(target.loc != holder) //mob warped out of the warp
 				qdel(holder)
 				return
