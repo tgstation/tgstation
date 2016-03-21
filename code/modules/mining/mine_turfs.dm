@@ -28,6 +28,11 @@ var/global/list/rockTurfEdgeCache
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 	var/hidden = 1
 
+
+/turf/simulated/mineral/Destroy()
+	fullUpdateMineralOverlays()
+	..()
+
 /turf/simulated/mineral/volcanic
 	environment_type = "basalt"
 	turf_type = /turf/simulated/floor/plating/asteroid/basalt
@@ -619,7 +624,9 @@ var/global/list/rockTurfEdgeCache
 	return
 
 /turf/proc/updateMineralOverlays()
-	src.overlays.Cut()
+	overlays.Cut()
+	if(smooth)
+		smooth_icon(src)
 
 	if(istype(get_step(src, NORTH), /turf/simulated/mineral))
 		src.overlays += rockTurfEdgeCache[NORTH_EDGING]
@@ -635,6 +642,8 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/wall/updateMineralOverlays()
 	return
+
+
 
 /turf/proc/fullUpdateMineralOverlays()
 	for (var/turf/t in range(1,src))
