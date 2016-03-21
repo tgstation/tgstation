@@ -14,7 +14,7 @@
 	pixel_y = -4
 	pixel_x = -4
 	blocks_air = 1
-	layer = TURF_LAYER + 0.05
+	layer = MOB_LAYER + 0.05
 	temperature = TCMB
 	var/environment_type = "basalt"
 	var/turf/simulated/floor/plating/asteroid/turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface //For basalt vs normal asteroid
