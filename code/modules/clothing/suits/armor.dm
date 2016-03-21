@@ -137,6 +137,9 @@
 
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
+	if(cooldown)
+		user << "<span class='notice'>[src] is still cooling down. It can't be reactivated yet.</span>"
+		return
 	src.active = !( src.active )
 	if (src.active)
 		user << "<span class='notice'>[src] is now active.</span>"
@@ -167,7 +170,7 @@
 		return 0
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text]!</span>")
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)
@@ -187,8 +190,21 @@
 		active = 0
 		src.icon_state = "reactiveoff"
 		src.item_state = "reactiveoff"
+		cooldown++
+		var/cd = cooldown
+		spawn(100)
+			if(cooldown == cd)
+				cooldown = 0
 		return 1
 	return 0
+
+/obj/item/clothing/suit/armor/reactive/teleport/emp_act(severity)
+	cooldown++
+	var/curremp = cooldown
+	..()//shut off
+	spawn(200)
+		if(cooldown == curremp)
+			cooldown = 0
 
 /obj/item/clothing/suit/armor/reactive/fire
 	name = "reactive incendiary armor"
