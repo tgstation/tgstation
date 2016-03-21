@@ -423,3 +423,17 @@
 /datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/M)
 	holder.add_reagent("sugar", 3)
 	..()
+
+/datum/reagent/consumable/honey
+	name = "honey"
+	id = "honey"
+	description = "Sweet sweet honey, decays into sugar."
+	color = "#d3a308"
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+
+/datum/reagent/consumable/honey/on_mob_life(mob/living/M)
+	M.reagents.add_reagent("sugar",3)
+	M.reagents.remove_reagent("honey", 1)
+	if(prob(20))
+		M.heal_organ_damage(3,1)
+	..()
