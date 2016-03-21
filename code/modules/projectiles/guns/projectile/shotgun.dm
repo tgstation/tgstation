@@ -354,3 +354,30 @@
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = 5
+
+
+// MULTIPLE GRENADE LAUNCHER //
+/obj/item/weapon/gun/projectile/shotgun/automatic/mgl
+	name = "6B40 MGL"
+	desc = "A semi-automatic 40mm grenade launcher with six revolving chambers, automatic ejection systems, and slot reloading."
+	icon_state = "mgl"
+	item_state = "mgl"
+	origin_tech = "combat=7;materials=4;syndicate=8"
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	pin = /obj/item/device/firing_pin/implant/pindicate
+	mag_type = /obj/item/ammo_box/magazine/internal/grenadelauncher/mgl
+	w_class = 3
+
+/obj/item/weapon/gun/projectile/shotgun/automatic/mgl/unrestricted
+	pin = /obj/item/device/firing_pin
+
+/obj/item/weapon/gun/projectile/shotgun/fourmgl
+	name = "Multiple Grenade launcher"
+	desc = "A pump action 40mm grenade launcher with four revolving chambers, automatic ejection systems, and slot reloading."
+	icon_state = "4mgl"
+	item_state = "4mgl"
+	origin_tech = "combat=5;materials=4"
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	pin = /obj/item/device/firing_pin
+	mag_type = /obj/item/ammo_box/magazine/internal/grenadelauncher/mgl/four
+	w_class = 5
