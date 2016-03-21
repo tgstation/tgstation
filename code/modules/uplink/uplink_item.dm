@@ -855,11 +855,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 10
 
 /datum/uplink_item/device_tools/singularity_beacon
-	name = "Singularity Beacon"
+	name = "Power Beacon"
 	desc = "When screwed to wiring attached to an electric grid and activated, this large device pulls any \
-			active gravitational singularities towards it. This will not work when the singularity is still \
-			in containment. A singularity beacon can cause catastrophic damage to a space station, \
-			leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this \
+			active gravitational singularities or tesla balls towards it. This will not work when the engine is still \
+			in containment. Because of its size, it cannot be carried. Ordering this \
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
 	item = /obj/item/device/sbeacondrop
 	cost = 14
