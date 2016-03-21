@@ -1,20 +1,18 @@
 /**********************Mineral deposits**************************/
 
-var/global/list/rockTurfEdgeCache
-#define NORTH_EDGING	"north"
-#define SOUTH_EDGING	"south"
-#define EAST_EDGING		"east"
-#define WEST_EDGING		"west"
-
 /turf/simulated/mineral //wall piece
 	name = "rock"
-	icon = 'icons/turf/mining.dmi'
-	icon_state = "rock_nochance"
+	icon = 'icons/turf/smoothrocks.dmi'
+	icon_state = "rock"
+	smooth = SMOOTH_MORE
+	canSmoothWith = list (/turf/simulated/mineral, /turf/simulated/wall)
 	baseturf = /turf/simulated/floor/plating/asteroid/airless
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
 	density = 1
+	pixel_y = -4
+	pixel_x = -4
 	blocks_air = 1
 	layer = TURF_LAYER + 0.05
 	temperature = TCMB
@@ -26,7 +24,6 @@ var/global/list/rockTurfEdgeCache
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 	var/last_act = 0
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
-	var/hidden = 1
 
 /turf/simulated/mineral/volcanic
 	environment_type = "basalt"
@@ -47,50 +44,6 @@ var/global/list/rockTurfEdgeCache
 				src.gets_drilled(null, 1)
 		if(1)
 			src.gets_drilled(null, 1)
-	return
-
-/turf/simulated/mineral/New()
-	if(!rockTurfEdgeCache || !rockTurfEdgeCache.len)
-		rockTurfEdgeCache = list()
-		rockTurfEdgeCache.len = 4
-		rockTurfEdgeCache[NORTH_EDGING] = image('icons/turf/mining.dmi', "rock_side_n", layer = 6)
-		rockTurfEdgeCache[SOUTH_EDGING] = image('icons/turf/mining.dmi', "rock_side_s")
-		rockTurfEdgeCache[EAST_EDGING] = image('icons/turf/mining.dmi', "rock_side_e", layer = 6)
-		rockTurfEdgeCache[WEST_EDGING] = image('icons/turf/mining.dmi', "rock_side_w", layer = 6)
-
-	spawn(1)
-		var/turf/T
-		if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)))
-			T = get_step(src, NORTH)
-			if (T)
-				T.overlays += rockTurfEdgeCache[SOUTH_EDGING]
-		if((istype(get_step(src, SOUTH), /turf/simulated/floor)) || (istype(get_step(src, SOUTH), /turf/space)))
-			T = get_step(src, SOUTH)
-			if (T)
-				T.overlays += rockTurfEdgeCache[NORTH_EDGING]
-		if((istype(get_step(src, EAST), /turf/simulated/floor)) || (istype(get_step(src, EAST), /turf/space)))
-			T = get_step(src, EAST)
-			if (T)
-				T.overlays += rockTurfEdgeCache[WEST_EDGING]
-		if((istype(get_step(src, WEST), /turf/simulated/floor)) || (istype(get_step(src, WEST), /turf/space)))
-			T = get_step(src, WEST)
-			if (T)
-				T.overlays += rockTurfEdgeCache[EAST_EDGING]
-
-	if (mineralType && mineralAmt && spread && spreadChance)
-		for(var/dir in cardinal)
-			if(prob(spreadChance))
-				var/turf/T = get_step(src, dir)
-				if(istype(T, /turf/simulated/mineral/random))
-					Spread(T)
-
-	HideRock()
-	return
-
-/turf/simulated/mineral/proc/HideRock()
-	if(hidden)
-		name = "rock"
-		icon_state = "rock"
 	return
 
 /turf/simulated/mineral/Spread(turf/T)
@@ -147,18 +100,16 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/mineral/iron
 	name = "iron deposit"
-	icon_state = "rock_Iron"
 	mineralType = /obj/item/weapon/ore/iron
 	spreadChance = 20
 	spread = 1
-	hidden = 0
+	scan_state = "rock_Iron"
 
 /turf/simulated/mineral/uranium
 	name = "uranium deposit"
 	mineralType = /obj/item/weapon/ore/uranium
 	spreadChance = 5
 	spread = 1
-	hidden = 1
 	scan_state = "rock_Uranium"
 
 /turf/simulated/mineral/diamond
@@ -166,7 +117,6 @@ var/global/list/rockTurfEdgeCache
 	mineralType = /obj/item/weapon/ore/diamond
 	spreadChance = 0
 	spread = 1
-	hidden = 1
 	scan_state = "rock_Diamond"
 
 /turf/simulated/mineral/gold
@@ -174,7 +124,6 @@ var/global/list/rockTurfEdgeCache
 	mineralType = /obj/item/weapon/ore/gold
 	spreadChance = 5
 	spread = 1
-	hidden = 1
 	scan_state = "rock_Gold"
 
 /turf/simulated/mineral/silver
@@ -182,7 +131,6 @@ var/global/list/rockTurfEdgeCache
 	mineralType = /obj/item/weapon/ore/silver
 	spreadChance = 5
 	spread = 1
-	hidden = 1
 	scan_state = "rock_Silver"
 
 /turf/simulated/mineral/plasma
@@ -191,17 +139,15 @@ var/global/list/rockTurfEdgeCache
 	mineralType = /obj/item/weapon/ore/plasma
 	spreadChance = 8
 	spread = 1
-	hidden = 1
 	scan_state = "rock_Plasma"
 
 /turf/simulated/mineral/clown
 	name = "bananium deposit"
-	icon_state = "rock_Clown"
 	mineralType = /obj/item/weapon/ore/bananium
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
-	hidden = 0
+	scan_state = "rock_Clown"
 
 /turf/simulated/mineral/bscrystal
 	name = "bluespace crystal deposit"
@@ -210,7 +156,6 @@ var/global/list/rockTurfEdgeCache
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
-	hidden = 1
 	scan_state = "rock_BScrystal"
 
 ////////////////////////////////Gibtonite
@@ -220,12 +165,12 @@ var/global/list/rockTurfEdgeCache
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
-	hidden = 1
 	scan_state = "rock_Gibtonite"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = 0 //How far into the lifecycle of gibtonite we are, 0 is untouched, 1 is active and attempting to detonate, 2 is benign and ready for extraction
 	var/activated_ckey = null //These are to track who triggered the gibtonite deposit for logging purposes
 	var/activated_name = null
+	var/activated_image = null
 
 /turf/simulated/mineral/gibtonite/New()
 	det_time = rand(8,10) //So you don't know exactly when the hot potato will explode
@@ -239,7 +184,9 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
 	if(stage == 0)
-		icon_state = "rock_Gibtonite_active"
+		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_active", layer = 18)
+		overlays += I
+		activated_image = I
 		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"
 		stage = 1
@@ -274,7 +221,9 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/mineral/gibtonite/proc/defuse()
 	if(stage == 1)
-		icon_state = "rock_Gibtonite_inactive"
+		overlays -= activated_image
+		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_inactive", layer = 18)
+		overlays += I
 		desc = "An inactive gibtonite reserve. The ore can be extracted."
 		stage = 2
 		if(det_time < 0)
@@ -298,8 +247,7 @@ var/global/list/rockTurfEdgeCache
 		if(det_time >= 1 && det_time <= 2)
 			G.quality = 2
 			G.icon_state = "Gibtonite ore 2"
-	var/turf/simulated/floor/plating/asteroid/G = ChangeTurf(turf_type)
-	G.fullUpdateMineralOverlays()
+	ChangeTurf(turf_type)
 
 /turf/simulated/mineral/gibtonite/volcanic
 	oxygen = 14
@@ -389,9 +337,7 @@ var/global/list/rockTurfEdgeCache
 		return
 
 	SpawnMonster(T)
-	var/turf/simulated/floor/t = new turf_type(T)
-	spawn(2)
-		t.fullUpdateMineralOverlays()
+	new turf_type(T)
 
 /turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
@@ -436,9 +382,8 @@ var/global/list/rockTurfEdgeCache
 		for (i=0;i<mineralAmt;i++)
 			new mineralType(src)
 		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
-	var/turf/simulated/floor/plating/asteroid/N = ChangeTurf(turf_type)
+	ChangeTurf(turf_type)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
-	N.fullUpdateMineralOverlays()
 	return
 
 /turf/simulated/mineral/attack_animal(mob/living/simple_animal/user)
@@ -617,28 +562,6 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/floor/plating/asteroid/singularity_pull(S, current_size)
 	return
-
-/turf/proc/updateMineralOverlays()
-	src.overlays.Cut()
-
-	if(istype(get_step(src, NORTH), /turf/simulated/mineral))
-		src.overlays += rockTurfEdgeCache[NORTH_EDGING]
-	if(istype(get_step(src, SOUTH), /turf/simulated/mineral))
-		src.overlays += rockTurfEdgeCache[SOUTH_EDGING]
-	if(istype(get_step(src, EAST), /turf/simulated/mineral))
-		src.overlays += rockTurfEdgeCache[EAST_EDGING]
-	if(istype(get_step(src, WEST), /turf/simulated/mineral))
-		src.overlays += rockTurfEdgeCache[WEST_EDGING]
-
-/turf/simulated/mineral/updateMineralOverlays()
-	return
-
-/turf/simulated/wall/updateMineralOverlays()
-	return
-
-/turf/proc/fullUpdateMineralOverlays()
-	for (var/turf/t in range(1,src))
-		t.updateMineralOverlays()
 
 //////////////CHASM//////////////////
 
