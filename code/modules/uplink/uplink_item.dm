@@ -135,7 +135,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
-	cost = 9
+	cost = 5
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
@@ -174,6 +174,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 18
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/dangerous/grenadier
+	name = "Grenadier's belt"
+	desc = "A belt of a large variety of lethally dangerous and destructive grenades."
+	item = /obj/item/weapon/storage/belt/grenade/full
+	include_modes = list(/datum/game_mode/nuclear)
+	cost = 22
+	surplus = 0
 
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
@@ -231,7 +239,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "The minibomb is a grenade with a five-second fuse. Upon detonation, it will create a small hull breach \
 			in addition to dealing high amounts of damage to nearby personnel."
 	item = /obj/item/weapon/grenade/syndieminibomb
-	cost = 6
+	cost = 3
 
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
@@ -321,7 +329,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
 			For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
-	cost = 4
+	cost = 2
 
 /datum/uplink_item/ammo/shotgun
 	cost = 2
