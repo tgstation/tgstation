@@ -40,6 +40,8 @@
 //What happens when you slap things with the Bible in general
 /obj/item/weapon/storage/bible/attack(mob/living/M as mob, mob/living/user as mob)
 
+	//Note : For some reason the Bible does not respect innate attack delays
+
 	var/chaplain = 0 //Are we the Chaplain ? Used for simplification
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		chaplain = 1 //Indeed we are
@@ -111,24 +113,27 @@
 
 	if(ishuman(M)) //Only humans can be vampires or cultists
 		var/mob/living/carbon/human/H = M
-		if(isvampire(H) && !(VAMP_MATURE in H.mind.vampire.powers)) //The user is a "young" Vampire, fuck up his vampiric powers and hurt his head
+		if(H.mind && isvampire(H) && !(VAMP_MATURE in H.mind.vampire.powers)) //The user is a "young" Vampire, fuck up his vampiric powers and hurt his head
 			to_chat(H, "<span class='warning'>[deity_name]'s power nullifies your own!</span>")
 			if(H.mind.vampire.nullified < 5) //Don't actually reduce their debuff if it's over 5
 				H.mind.vampire.nullified = max(5, H.mind.vampire.nullified + 2)
 			H.mind.vampire.smitecounter += 10 //Better get out of here quickly before the problem shows. Ten hits and you are literal toast
+			return //Don't heal the mob
 
-		if(iscult(H)) //The user is a Cultist. We are thus deconverting him
+		if(H.mind && iscult(H)) //The user is a Cultist. We are thus deconverting him
 			if(prob(20))
 				to_chat(H, "<span class='notice'>The power of [deity_name] suddenly clears your mind of heresy. Your allegiance to Nar'Sie wanes!</span>")
 				to_chat(user, "<span class='notice'>You see [H]'s eyes become clear. Nar'Sie no longer controls his mind, [deity_name] saved \him!</span>")
 				ticker.mode.remove_cultist(H.mind)
 			else //We aren't deconverting him this time, give the Cultist a fair warning
 				to_chat(H, "<span class='warning'>The power of [deity_name] is overwhelming you. Your mind feverishly questions Nar'Sie's teachings!</span>")
+			return //Don't heal the mob
+
 		if(H.mind && H.mind.special_role == "VampThrall")
 			ticker.mode.remove_vampire_mind(H.mind, H.mind)
 			H.visible_message("<span class='notice'>[H] suddenly becomes calm and collected again, \his eyes clear up.</span>",
 			"<span class='notice'>Your blood cools down and you are inhabited by a sensation of untold calmness.</span>")
-
+			return //That's it, game over
 
 		bless_mob(user, H) //Let's outsource the healing code, because we can
 
@@ -149,7 +154,6 @@
 
 //We're done working on mobs, let's check if we're blessing something else
 /obj/item/weapon/storage/bible/afterattack(atom/A, mob/user as mob)
-	user.delayNextAttack(5) //Extra delay
 	if(user.mind && (user.mind.assigned_role == "Chaplain")) //Make sure we still are a Chaplain, just in case
 		if(A.reagents && A.reagents.has_reagent("water")) //Blesses all the water in the holder
 			user.visible_message("<span class='notice'>[user] blesses \the [A].</span>",
