@@ -1,5 +1,6 @@
 
 /obj/effect
+	icon = 'icons/effects/effects.dmi'
 
 /obj/effect/portal
 	name = "portal"

@@ -108,6 +108,18 @@
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/New()
 	SSobj.processing |= src
 
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/attach(obj/mecha/M)
+	..()
+	M.occupant_sight_flags |= SEE_TURFS
+	if(M.occupant)
+		M.occupant.update_sight()
+
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/detach()
+	chassis.occupant_sight_flags &= ~SEE_TURFS
+	if(chassis.occupant)
+		chassis.occupant.update_sight()
+	return ..()
+
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()
 	if(!loc)
 		SSobj.processing.Remove(src)
@@ -118,13 +130,10 @@
 		var/obj/mecha/working/mecha = loc
 		if(!mecha.occupant)
 			return
-		var/mob/pilot = mecha.occupant
-		var/list/occupant = list()
-		occupant |= pilot
-		pilot.sight |= SEE_TURFS
+		var/list/L = list(mecha.occupant)
 		scanning = 1
-		mineral_scan_pulse(occupant,get_turf(loc))
+		mineral_scan_pulse(L,get_turf(loc))
 		spawn(equip_cooldown)
 			scanning = 0
-			pilot.sight -= SEE_TURFS
+
 

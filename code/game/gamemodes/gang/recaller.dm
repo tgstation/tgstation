@@ -107,30 +107,6 @@
 
 			dat += "<br>"
 
-		//////////////////
-		// MARTIAL ARTS //
-		//////////////////
-
-		else if(gang.fighting_style == "martial")
-			dat += "(10 Influence) "
-			if(points >= 10)
-				dat += "<a href='?src=\ref[src];purchase=bostaff'>Bo Staff</a><br>"
-			else
-				dat += "Bo Staff<br>"
-
-			dat += "(20 Influence) "
-			if(points >= 20)
-				dat += "<a href='?src=\ref[src];purchase=wrestlingbelt'>Wrestling Belt</a><br>"
-			else
-				dat += "Wrestling Belt<br>"
-
-			dat += "(30 Influence) "
-			if(points >= 30)
-				dat += "<a href='?src=\ref[src];purchase=scroll'>Sleeping Carp Scroll (one-use)</a><br>"
-			else
-				dat += "Sleeping Carp Scroll (one-use)<br>"
-			dat += "<br>"
-
 		////////////////////////
 		// STANDARD EQUIPMENT //
 		////////////////////////
@@ -305,7 +281,7 @@
 			if(ispath(item_type))
 				var/obj/purchased = new item_type(get_turf(usr),gang)
 				var/mob/living/carbon/human/H = usr
-				H.put_in_any_hand_if_possible(purchased)
+				H.put_in_hands(purchased)
 				if(pointcost)
 					gang.message_gangtools("A [href_list["purchase"]] was purchased by [usr.real_name] for [pointcost] Influence.")
 			log_game("A [href_list["purchase"]] was purchased by [key_name(usr)] ([gang.name] Gang) for [pointcost] Influence.")

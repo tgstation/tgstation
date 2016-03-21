@@ -1,3 +1,5 @@
+
+
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
@@ -19,23 +21,6 @@
 	user << "<font color='red'>You have <b>BANNED</b> [M]</font>"
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
 
-
-/obj/item/weapon/nullrod
-	name = "null rod"
-	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
-	icon_state = "nullrod"
-	item_state = "nullrod"
-	slot_flags = SLOT_BELT
-	force = 15
-	throw_speed = 3
-	throw_range = 4
-	throwforce = 10
-	w_class = 1
-
-/obj/item/weapon/nullrod/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	return (BRUTELOSS|FIRELOSS)
-
 /obj/item/weapon/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
@@ -49,8 +34,8 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/sord/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	return(BRUTELOSS)
+	user.visible_message("<span class='suicide'>[user] is trying to impale \himself with \the [name]! It might be a suicide attempt if it weren't so shitty.</span>", "<span class='suicide'>You try to impale yourself with \the [name], but it's USELESS...</span>")
+	return(SHAME)
 
 /obj/item/weapon/claymore
 	name = "claymore"
@@ -117,7 +102,7 @@
 		qdel(I)
 		qdel(src)
 
-	else if(istype(I, /obj/item/weapon/wirecutters) && !(I.flags & NODROP))
+	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags & NODROP))
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 
 		if(!remove_item_from_storage(user))
@@ -125,7 +110,7 @@
 		user.unEquip(I)
 
 		user.put_in_hands(P)
-		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
+		user << "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>"
 		qdel(I)
 		qdel(src)
 
@@ -144,18 +129,6 @@
 	embedded_fall_chance = 0 //Hahaha!
 	sharpness = IS_SHARP
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
-
-//5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
-//Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
-/obj/item/weapon/storage/box/throwing_stars/New()
-	..()
-	contents = list()
-	new /obj/item/weapon/throwing_star(src)
-	new /obj/item/weapon/throwing_star(src)
-	new /obj/item/weapon/throwing_star(src)
-	new /obj/item/weapon/throwing_star(src)
-	new /obj/item/weapon/throwing_star(src)
-
 
 
 /obj/item/weapon/switchblade
@@ -210,7 +183,7 @@
 	hitsound = 'sound/weapons/ring.ogg'
 
 /obj/item/weapon/phone/suicide_act(mob/user)
-	if(locate(/obj/structure/bed/stool) in user.loc)
+	if(locate(/obj/structure/chair/stool) in user.loc)
 		user.visible_message("<span class='notice'>[user] begins to tie a noose with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
 	else
 		user.visible_message("<span class='notice'>[user] is strangling \himself with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
@@ -288,6 +261,7 @@
 	hitsound = "sound/weapons/chainsawhit.ogg"
 
 /obj/item/weapon/mounted_chainsaw/dropped()
+	..()
 	new /obj/item/weapon/twohanded/required/chainsaw(get_turf(src))
 	qdel(src)
 
@@ -307,3 +281,4 @@
 	icon_state = "tailwhip"
 	origin_tech = "combat=1"
 	needs_permit = 0
+

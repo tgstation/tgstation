@@ -7,7 +7,7 @@
 	use_power = 1
 	idle_power_usage = 40
 	var/obj/item/weapon/reagent_containers/beaker = null
-	var/target_temp = 300
+	var/target_temperature = 300
 	var/heater_coefficient = 0.10
 	var/on = FALSE
 
@@ -30,20 +30,13 @@
 		return
 	if(on)
 		if(beaker)
-			if(beaker.reagents.chem_temp > target_temp)
-				beaker.reagents.chem_temp += min(-1, (target_temp - beaker.reagents.chem_temp) * heater_coefficient)
-			if(beaker.reagents.chem_temp < target_temp)
-				beaker.reagents.chem_temp += max(1, (target_temp - beaker.reagents.chem_temp) * heater_coefficient)
-			beaker.reagents.chem_temp = round(beaker.reagents.chem_temp) //stops stuff like 456.12312312302
+			if(beaker.reagents.chem_temp > target_temperature)
+				beaker.reagents.chem_temp += min(-1, (target_temperature - beaker.reagents.chem_temp) * heater_coefficient)
+			if(beaker.reagents.chem_temp < target_temperature)
+				beaker.reagents.chem_temp += max(1, (target_temperature - beaker.reagents.chem_temp) * heater_coefficient)
 
+			beaker.reagents.chem_temp = round(beaker.reagents.chem_temp)
 			beaker.reagents.handle_reactions()
-
-/obj/machinery/chem_heater/power_change()
-	if(powered())
-		stat &= ~NOPOWER
-	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
 
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
 	if(isrobot(user))
@@ -54,11 +47,12 @@
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 			return
 
-		if(user.drop_item())
-			beaker = I
-			I.loc = src
-			user << "<span class='notice'>You add the beaker to the machine.</span>"
-			icon_state = "mixer1b"
+		if(!user.drop_item())
+			return
+		beaker = I
+		I.loc = src
+		user << "<span class='notice'>You add the beaker to the machine.</span>"
+		icon_state = "mixer1b"
 
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
 		return
@@ -79,9 +73,9 @@
 		ui = new(user, src, ui_key, "chem_heater", name, 275, 400, master_ui, state)
 		ui.open()
 
-/obj/machinery/chem_heater/get_ui_data()
+/obj/machinery/chem_heater/ui_data()
 	var/data = list()
-	data["targetTemp"] = target_temp
+	data["targetTemp"] = target_temperature
 	data["isActive"] = on
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 
@@ -104,13 +98,19 @@
 			on = !on
 			. = TRUE
 		if("temperature")
-			var/target = text2num(params["target"])
-			if(target != null)
-				target_temp = Clamp(target, 0, 1000)
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "input")
+				target = input("New target temperature:", name, target_temperature) as num|null
+				if(!isnull(target) && !..())
+					. = TRUE
+			else if(adjust)
+				target = target_temperature + adjust
+			else if(text2num(target) != null)
+				target = text2num(target)
 				. = TRUE
-			else
-				target = input("New target temperature:", name, target_temp) as num|null
-				. = .(action, list("target" = target))
+			if(.)
+				target_temperature = Clamp(target, 0, 1000)
 		if("eject")
 			on = FALSE
 			eject_beaker()

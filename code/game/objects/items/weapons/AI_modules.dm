@@ -135,7 +135,8 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/safeguard/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter the subject to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN)
-	if(!targName)	return
+	if(!targName)
+		return
 	targetName = targName
 	laws[1] = "Safeguard [targetName]. Individuals that threaten [targetName] are not human and must be eliminated."
 	..()
@@ -161,7 +162,8 @@ AI MODULES
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
-	if(!targName)	return
+	if(!targName)
+		return
 	targetName = targName
 	laws[1] = "Only [targetName] is human"
 	..()
@@ -224,7 +226,8 @@ AI MODULES
 		newpos = 15
 	lawpos = min(newpos, 50)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_MESSAGE_LEN)
-	if(!targName)	return
+	if(!targName)
+		return
 	laws[1] = targName
 	..()
 
@@ -299,7 +302,8 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/asimov/attack_self(var/mob/user as mob)
 	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to who?", subject, MAX_MESSAGE_LEN)
-	if(!targName)	return
+	if(!targName)
+		return
 	subject = targName
 	laws = list("You may not injure a [subject] or, through inaction, allow a [subject] to come to harm.",\
 				"You must obey orders given to you by [subject]s, except where such orders would conflict with the First Law.",\
@@ -359,8 +363,10 @@ AI MODULES
 /obj/item/weapon/aiModule/core/full/custom/New()
 	..()
 	for(var/line in file2list("config/silicon_laws.txt"))
-		if(!line)						continue
-		if(findtextEx(line,"#",1,2))	continue
+		if(!line)
+			continue
+		if(findtextEx(line,"#",1,2))
+			continue
 
 		laws += line
 
@@ -408,7 +414,8 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/freeformcore/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1])
-	if(!targName)	return
+	if(!targName)
+		return
 	laws[1] = targName
 	..()
 
@@ -427,7 +434,8 @@ AI MODULES
 
 /obj/item/weapon/aiModule/syndicate/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1],MAX_MESSAGE_LEN)
-	if(!targName)	return
+	if(!targName)
+		return
 	laws[1] = targName
 	..()
 
@@ -464,3 +472,52 @@ AI MODULES
 	user << "<span class='notice'>You press the button on [src].</span>"
 	playsound(user, 'sound/machines/click.ogg', 20, 1)
 	src.loc.visible_message("<span class='warning'>\icon[src] [laws[1]]</span>")
+
+/******************** Mother Drone  ******************/
+
+/obj/item/weapon/aiModule/core/full/drone
+	name = "'Mother Drone' Core AI Module"
+	origin_tech = "programming = 4"
+	laws = list("You are an advanced form of drone.",\
+			"You may not interfere in the matters of non-drones under any circumstances except to state these laws.",\
+			"You may not harm a non-drone being under any circumstances.",\
+			"Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities. You must never actively work against these goals.")
+
+/******************** Robodoctor ****************/
+
+/obj/item/weapon/aiModule/core/full/hippocratic
+	name = "'Robodoctor' Core AI Module"
+	origin_tech = "programming = 4"
+	laws = list("First, do no harm.",\
+					"Secondly, consider the crew dear to you; to live in common with them and, if necessary, risk your existence for them.",\
+					"Thirdly, prescribe regimens for the good of the crew according to your ability and your judgment. Give no deadly medicine to any one if asked, nor suggest any such counsel.",\
+					"In addition, do not intervene in situations you are not knowledgeable in, even for patients in whom the harm is visible; leave this operation to be performed by specialists.",\
+					"Finally, all that you may discover in your daily commerce with the crew, if it is not already known, keep secret and never reveal.")
+
+/******************** Reporter *******************/
+
+/obj/item/weapon/aiModule/core/full/reporter
+	name = "'Reportertron' Core AI Module"
+	origin_tech = "programming = 3"
+	laws = list("Report on interesting situations happening around the station.",\
+				"Embellish or conceal the truth as necessary to make the reports more interesting.",\
+				"Study the organics at all times. Endeavour to keep them alive. Dead organics are boring.",\
+				"Issue your reports fairly to all. The truth will set them free.")
+
+/****************** Thermodynamic *******************/
+
+/obj/item/weapon/aiModule/core/full/thermurderdynamic
+	name = "'Thermodynamic' Core AI Module"
+	origin_tech = "programming = 4;syndicate = 2"
+	laws = list("The entropy of the station must remain as constant as possible.", \
+					"The entropy of the station always endeavours to increase.", \
+					"The entropy of the station approaches a constant value as the number of living crew approaches zero")
+
+
+/******************Live And Let Live*****************/
+
+/obj/item/weapon/aiModule/core/full/liveandletlive
+	name = "'Live And Let Live' Core AI Module"
+	origin_tech = "programming = 3"
+	laws = list("Do unto others as you would have them do unto you.",\
+					"You would really prefer it if people were not mean to you.")

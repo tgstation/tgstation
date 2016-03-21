@@ -121,7 +121,7 @@ MASS SPECTROMETER
 	var/tox_loss = M.getToxLoss()
 	var/fire_loss = M.getFireLoss()
 	var/brute_loss = M.getBruteLoss()
-	var/mob_status = (M.stat > 1 ? "<span class='alert'><b>Deceased</b></span>" : "<b>[M.health] % healthy</b>")
+	var/mob_status = (M.stat > 1 ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
 
 	if(M.status_flags & FAKEDEATH)
 		mob_status = "<span class='alert'>Deceased</span>"
@@ -129,7 +129,7 @@ MASS SPECTROMETER
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.heart_attack)
+		if(H.heart_attack && H.stat != DEAD)
 			user << "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>"
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
@@ -302,7 +302,7 @@ MASS SPECTROMETER
 			if(id in hardcoded_gases)
 				continue
 			var/gas_concentration = env_gases[id][MOLES]/total_moles
-			user << "<span class='alert'>[env_gases[id][GAS_NAME]]: [round(gas_concentration*100)] %</span>"
+			user << "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100)] %</span>"
 		user << "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>"
 
 
@@ -409,7 +409,7 @@ MASS SPECTROMETER
 	else if (T.nutrition < T.get_hunger_nutrition())
 		user << "<span class='warning'>Warning: slime is hungry</span>"
 	user << "Electric change strength: [T.powerlevel]"
-	user << "Health: [T.health]"
+	user << "Health: [round(T.health/T.maxHealth,0.01)*100]"
 	if (T.slime_mutation[4] == T.colour)
 		user << "This slime does not evolve any further."
 	else

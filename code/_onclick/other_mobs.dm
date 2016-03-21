@@ -18,7 +18,8 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		override += HM.on_attack_hand(src, A)
 
-	if(override)	return
+	if(override)
+		return
 
 	A.attack_hand(src)
 
@@ -82,7 +83,8 @@
 /mob/living/carbon/monkey/RestrainedClickOn(atom/A)
 	if(..())
 		return
-	if(a_intent != "harm" || !ismob(A)) return
+	if(a_intent != "harm" || !ismob(A))
+		return
 	if(is_muzzled())
 		return
 	var/mob/living/carbon/ML = A
@@ -95,7 +97,8 @@
 		ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
 		ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
 						"<span class='userdanger'>[name] bites [ML]!</span>")
-		if(armor >= 2) return
+		if(armor >= 2)
+			return
 		for(var/datum/disease/D in viruses)
 			ML.ForceContractDisease(D)
 	else

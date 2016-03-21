@@ -34,11 +34,11 @@
 	..()
 	if (usr.stat || usr.restrained() || src.loc != usr)
 		return
-	var/mob/living/carbon/human/H = usr
-	if (!( istype(H, /mob/living/carbon/human)))
+	if (!ishuman(usr))
 		return 1
-	if ((usr == src.loc || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.set_machine(src)
+	var/mob/living/carbon/human/H = usr
+	if ((H == src.loc || (in_range(src, H) && istype(src.loc, /turf))))
+		H.set_machine(src)
 		if (href_list["spell_teleport"])
 			if (src.uses >= 1)
 				teleportscroll(H)
@@ -50,7 +50,9 @@
 
 	var/A
 
-	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs
+	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs|null
+	if(!A)
+		return
 	var/area/thearea = teleportlocs[A]
 
 	if (!user || user.stat || user.restrained() || uses <= 0)
@@ -78,7 +80,7 @@
 		return
 
 	if(user && user.buckled)
-		user.buckled.unbuckle_mob()
+		user.buckled.unbuckle_mob(user, force=1)
 
 	var/list/tempL = L.Copy()
 	var/attempt = null

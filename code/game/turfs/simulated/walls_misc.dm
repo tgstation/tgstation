@@ -54,9 +54,25 @@
 /turf/simulated/wall/shuttle
 	name = "wall"
 	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall1"
+	icon_state = "wall"
 	walltype = "shuttle"
 	smooth = SMOOTH_FALSE
+
+/turf/simulated/wall/shuttle/smooth
+	name = "wall"
+	icon = 'icons/turf/walls/shuttle_wall.dmi'
+	icon_state = "shuttle"
+	walltype = "shuttle"
+	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	canSmoothWith = list(/turf/simulated/wall/shuttle/smooth, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
+
+/turf/simulated/wall/shuttle/smooth/nodiagonal
+	smooth = SMOOTH_MORE
+	icon_state = "shuttle_nd"
+
+/turf/simulated/wall/shuttle/smooth/overspace
+	icon_state = "overspace"
+	fixed_underlay = list("space"=1)
 
 //sub-type to be used for interior shuttle walls
 //won't get an underlay of the destination turf on shuttle move
@@ -79,6 +95,7 @@
 /turf/simulated/wall/shuttle/copyTurf(turf/T)
 	. = ..()
 	T.transform = transform
+
 
 //why don't shuttle walls habe smoothwall? now i gotta do rotation the dirty way
 /turf/simulated/wall/shuttle/shuttleRotate(rotation)

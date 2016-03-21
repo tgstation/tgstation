@@ -83,12 +83,13 @@
 	morphed = 1
 	form = target
 
+	visible_message("<span class='warning'>[src] suddenly twists and changes shape, becoming a copy of [target]!</span>", \
+					"<span class='notice'>You twist your body and assume the form of [target].</span>")
 	appearance = target.appearance
 	transform = initial(transform)
 	pixel_y = initial(pixel_y)
 	pixel_x = initial(pixel_x)
-	visible_message("<span class='warning'>[src] suddenly twists and changes shape, becoming a copy of [target]!</span>", \
-					"<span class='notice'>You twist your body and assume the form of [target].</span>")
+
 	//Morphed is weaker
 	melee_damage_lower = 5
 	melee_damage_upper = 5
@@ -102,6 +103,7 @@
 		return
 	morphed = 0
 	form = null
+	alpha = initial(alpha)
 
 	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir)
 
@@ -168,9 +170,6 @@
 				eat(I)
 			return
 	target.attack_animal(src)
-
-/mob/living/simple_animal/hostile/morph/update_action_buttons() //So all eaten objects are not counted every life
-	return
 
 //Spawn Event
 

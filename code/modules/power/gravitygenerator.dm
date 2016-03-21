@@ -32,6 +32,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	if(severity == 1) // Very sturdy.
 		set_broken()
 
+/obj/machinery/gravity_generator/blob_act()
+	if(prob(20))
+		set_broken()
+
 /obj/machinery/gravity_generator/update_icon()
 	..()
 	icon_state = "[get_status()]_[sprite_number]"
@@ -288,7 +292,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	// Sound the alert if gravity was just enabled or disabled.
 	var/alert = 0
 	var/area/area = get_area(src)
-	if(new_state) // If we turned on
+	if(on && ticker && ticker.current_state == GAME_STATE_PLAYING) // If we turned on and the game is live.
 		if(gravity_in_level() == 0)
 			alert = 1
 			investigate_log("was brought online and is now producing gravity for this level.", "gravity")
@@ -354,14 +358,14 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
-	var/turf/our_turf = get_turf(src)
+	var/turf/T = get_turf(src)
 	for(var/mob/M in mob_list)
-		var/turf/their_turf = get_turf(M)
-		if(their_turf.z == our_turf.z)
-			M.update_gravity(M.mob_has_gravity())
-			if(M.client)
-				shake_camera(M, 15, 1)
-				M.playsound_local(our_turf, 'sound/effects/alert.ogg', 100, 1, 0.5)
+		if(M.z != z)
+			continue
+		M.update_gravity(M.mob_has_gravity())
+		if(M.client)
+			shake_camera(M, 15, 1)
+			M.playsound_local(T, 'sound/effects/alert.ogg', 100, 1, 0.5)
 
 /obj/machinery/gravity_generator/main/proc/gravity_in_level()
 	var/turf/T = get_turf(src)

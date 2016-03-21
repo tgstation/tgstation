@@ -79,7 +79,8 @@
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
 /obj/item/organ/limb/proc/take_damage(brute, burn)
-	if(owner && (owner.status_flags & GODMODE))	return 0	//godmode
+	if(owner && (owner.status_flags & GODMODE))
+		return 0	//godmode
 	brute	= max(brute,0)
 	burn	= max(burn,0)
 
@@ -89,7 +90,8 @@
 		burn = max(0, burn - 4)
 
 	var/can_inflict = max_damage - (brute_dam + burn_dam)
-	if(!can_inflict)	return 0
+	if(!can_inflict)
+		return 0
 
 	if((brute + burn) < can_inflict)
 		brute_dam	+= brute
@@ -108,6 +110,8 @@
 				burn_dam	+= can_inflict
 			else
 				return 0
+	if(owner)
+		owner.updatehealth()
 	return update_organ_icon()
 
 
@@ -126,6 +130,8 @@
 
 	brute_dam	= max(brute_dam - brute, 0)
 	burn_dam	= max(burn_dam - burn, 0)
+	if(owner)
+		owner.updatehealth()
 	return update_organ_icon()
 
 
@@ -149,13 +155,20 @@
 //Returns a display name for the organ
 /obj/item/organ/limb/proc/getDisplayName() //Added "Chest" and "Head" just in case, this may not be needed
 	switch(name)
-		if("l_leg")		return "left leg"
-		if("r_leg")		return "right leg"
-		if("l_arm")		return "left arm"
-		if("r_arm")		return "right arm"
-		if("chest")     return "chest"
-		if("head")		return "head"
-		else			return name
+		if("l_leg")
+			return "left leg"
+		if("r_leg")
+			return "right leg"
+		if("l_arm")
+			return "left arm"
+		if("r_arm")
+			return "right arm"
+		if("chest")
+			return "chest"
+		if("head")
+			return "head"
+		else
+			return name
 
 
 //Remove all embedded objects from all limbs on the human mob

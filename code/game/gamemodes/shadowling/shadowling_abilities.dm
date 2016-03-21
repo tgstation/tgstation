@@ -123,13 +123,22 @@
 	user.SetWeakened(0)
 	user.incorporeal_move = 1
 	user.alpha = 0
+	user.ExtinguishMob()
+	var/turf/T = get_turf(user)
+	user.forceMove(T) //to properly move the mob out of a potential container
 	if(user.buckled)
-		user.buckled.unbuckle_mob()
+		user.buckled.unbuckle_mob(user,force=1)
+	if(user.pulledby)
+		user.pulledby.stop_pulling()
+	user.stop_pulling()
+	if(user.buckled_mobs.len)
+		user.unbuckle_all_mobs(force=1)
 	sleep(40) //4 seconds
-	user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The rift's pressure forces you back to corporeality.</span>")
-	user.incorporeal_move = 0
-	user.alpha = 255
-
+	if(!qdeleted(user))
+		user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The rift's pressure forces you back to corporeality.</span>")
+		user.incorporeal_move = 0
+		user.alpha = 255
+		user.forceMove(user.loc)
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze //Stuns and freezes nearby people - a bit more effective than a changeling's cryosting
 	name = "Icy Veins"
@@ -373,7 +382,7 @@
 				if(CM in M.mind.spell_list)
 					M.mind.spell_list -= CM
 					qdel(CM)
-				M.mind.remove_spell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
+				M.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
 				M.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_ascend(null))
 				if(M == user)
 					M << "<span class='shadowling'><i>You project this power to the rest of the shadowlings.</i></span>"
@@ -407,30 +416,6 @@
 		S.set_up(B.reagents, 4, 0, B.loc)
 		S.start()
 	qdel(B)
-
-datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
-	name = "odd black liquid"
-	id = "blindness_smoke"
-	description = "<::ERROR::> CANNOT ANALYZE REAGENT <::ERROR::>"
-	color = "#000000" //Complete black (RGB: 0, 0, 0)
-	metabolization_rate = 100 //lel
-
-/datum/reagent/shadowling_blindness_smoke/on_mob_life(mob/living/M)
-	if(!M) M = holder.my_atom
-	if(!is_shadow_or_thrall(M))
-		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"
-		M.eye_blind = 5
-		if(prob(25))
-			M.visible_message("<b>[M]</b> claws at their eyes!")
-			M.Stun(3)
-	else
-		M << "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>"
-		M.heal_organ_damage(2,2)
-		M.adjustOxyLoss(-2)
-		M.adjustToxLoss(-2)
-	..()
-	return
-
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech //Damages nearby windows, confuses nearby carbons, and outright stuns silly cones
 	name = "Sonic Screech"
@@ -571,8 +556,8 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 											   "<span class='shadowling'><b>You feel new power flow into you. You have been gifted by your masters. You now closely resemble them. You are empowered in \
 											    darkness but wither slowly in light. In addition, Lesser Glare and Guise have been upgraded into their true forms.</b></span>")
 				thrallToRevive.set_species(/datum/species/shadow/ling/lesser)
-				thrallToRevive.mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_glare)
-				thrallToRevive.mind.remove_spell(/obj/effect/proc_holder/spell/self/lesser_shadow_walk)
+				thrallToRevive.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/lesser_glare)
+				thrallToRevive.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/lesser_shadow_walk)
 				thrallToRevive.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/glare(null))
 				thrallToRevive.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadow_walk(null))
 			if("Revive")
@@ -597,12 +582,12 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 				playsound(thrallToRevive, 'sound/machines/defib_zap.ogg', 50, 1)
 				user.Beam(thrallToRevive,icon_state="red_lightning",icon='icons/effects/effects.dmi',time=1)
 				sleep(10)
-				thrallToRevive.revive()
-				thrallToRevive.visible_message("<span class='boldannounce'>[thrallToRevive] heaves in breath, dim red light shining in their eyes.</span>", \
+				if(thrallToRevive.revive(full_heal = 1))
+					thrallToRevive.visible_message("<span class='boldannounce'>[thrallToRevive] heaves in breath, dim red light shining in their eyes.</span>", \
 											   "<span class='shadowling'><b><i>You have returned. One of your masters has brought you from the darkness beyond.</b></i></span>")
-				thrallToRevive.Weaken(4)
-				thrallToRevive.emote("gasp")
-				playsound(thrallToRevive, "bodyfall", 50, 1)
+					thrallToRevive.Weaken(4)
+					thrallToRevive.emote("gasp")
+					playsound(thrallToRevive, "bodyfall", 50, 1)
 			else
 				revert_cast()
 				return
@@ -725,12 +710,13 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	active = !active
 	if(active)
 		user << "<span class='notice'>You shift the nerves in your eyes, allowing you to see in the dark.</span>"
-		user.see_in_dark = 8
+		user.dna.species.darksight = 8
 		user.dna.species.invis_sight = SEE_INVISIBLE_MINIMUM
 	else
 		user << "<span class='notice'>You return your vision to normal.</span>"
-		user.see_in_dark = 0
+		user.dna.species.darksight = 0
 		user.dna.species.invis_sight = initial(user.dna.species.invis_sight)
+	user.update_sight()
 
 
 /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind //Lets a thrall talk with their allies
@@ -773,7 +759,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	sound = 'sound/magic/Staff_Chaos.ogg'
 
 /obj/effect/proc_holder/spell/targeted/annihilate/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
-	if(user.phasing)
+	if(user.incorporeal_move)
 		user << "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>"
 		revert_cast()
 		return
@@ -801,7 +787,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	action_icon_state = "enthrall"
 
 /obj/effect/proc_holder/spell/targeted/hypnosis/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
-	if(user.phasing)
+	if(user.incorporeal_move)
 		revert_cast()
 		user << "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>"
 		return
@@ -838,19 +824,18 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	clothes_req = 0
 	action_icon_state = "shadow_walk"
 
-/obj/effect/proc_holder/spell/self/shadowling_phase_shift/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
-	for(user in targets)
-		user.phasing = !user.phasing
-		if(user.phasing)
-			user.visible_message("<span class='danger'>[user] suddenly vanishes!</span>", \
-			"<span class='shadowling'>You begin phasing through planes of existence. Use the ability again to return.</span>")
-			user.incorporeal_move = 1
-			user.alpha = 0
-		else
-			user.visible_message("<span class='danger'>[user] suddenly appears from nowhere!</span>", \
-			"<span class='shadowling'>You return from the space between worlds.</span>")
-			user.incorporeal_move = 0
-			user.alpha = 255
+/obj/effect/proc_holder/spell/self/shadowling_phase_shift/cast(mob/living/simple_animal/ascendant_shadowling/user)
+	user.incorporeal_move = !user.incorporeal_move
+	if(user.incorporeal_move)
+		user.visible_message("<span class='danger'>[user] suddenly vanishes!</span>", \
+		"<span class='shadowling'>You begin phasing through planes of existence. Use the ability again to return.</span>")
+		user.density = 0
+		user.alpha = 0
+	else
+		user.visible_message("<span class='danger'>[user] suddenly appears from nowhere!</span>", \
+		"<span class='shadowling'>You return from the space between worlds.</span>")
+		user.density = 1
+		user.alpha = 255
 
 
 /obj/effect/proc_holder/spell/aoe_turf/ascendant_storm //Releases bolts of lightning to everyone nearby
@@ -864,7 +849,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	sound = 'sound/magic/lightningbolt.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/ascendant_storm/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
-	if(user.phasing)
+	if(user.incorporeal_move)
 		user << "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>"
 		revert_cast()
 		return

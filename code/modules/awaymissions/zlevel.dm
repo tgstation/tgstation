@@ -1,15 +1,4 @@
-#define RANDOM_UPPER_X 220
-#define RANDOM_UPPER_Y 220
-
-#define RANDOM_LOWER_X 30
-#define RANDOM_LOWER_Y 30
-
-
 var/global/list/potentialRandomZlevels = generateMapList(filename = "config/awaymissionconfig.txt")
-
-var/global/list/potentialLavaRuins = generateMapList(filename = "config/lavaRuinConfig.txt")
-
-var/global/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRuinConfig.txt")
 
 /proc/createRandomZlevel()
 	if(awaydestinations.len)	//crude, but it saves another var!
@@ -43,7 +32,8 @@ var/global/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRu
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()
 	var/list/Lines = file2list(filename)
-	if(!Lines.len)	return
+	if(!Lines.len)
+		return
 	for (var/t in Lines)
 		if (!t)
 			continue
@@ -71,35 +61,34 @@ var/global/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRu
 	return potentialMaps
 
 
-/proc/seedRuins(z_level = 1, ruin_number = 0, whitelist = /area/space, list/potentialRuins = potentialSpaceRuins)
+/proc/seedRuins(z_level = 1, ruin_number = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
 	ruin_number = min(ruin_number, potentialRuins.len)
 
 	while(ruin_number)
 		var/sanity = 0
 		var/valid = FALSE
+		var/datum/map_template/template = potentialRuins[pick(potentialRuins)]
 		while(!valid)
 			valid = TRUE
 			sanity++
 			if(sanity > 100)
 				ruin_number--
 				break
-			var/turf/T = locate(rand(RANDOM_LOWER_X, RANDOM_UPPER_X), rand(RANDOM_LOWER_Y, RANDOM_UPPER_Y), z_level)
+			var/turf/T = locate(rand(25, world.maxx - 25), rand(25, world.maxy - 25), z_level)
 
-			for(var/turf/check in range(T, 15))
+			for(var/turf/check in template.get_affected_turfs(T,1))
 				var/area/new_area = get_area(check)
 				if(!(istype(new_area, whitelist)))
 					valid = FALSE
 					break
 
-
 			if(valid)
 				world.log << "Ruins marker placed at [T.x][T.y][T.z]"
 				var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
-				R.Load(potentialRuins, -15, -15)
+				R.Load(potentialRuins,template)
 				ruin_number --
 
 	return
-
 
 /obj/effect/ruin_loader
 	name = "random ruin"
@@ -107,28 +96,19 @@ var/global/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRu
 	icon_state = "syndballoon"
 	invisibility = 0
 
-/obj/effect/ruin_loader/proc/Load(list/potentialRuins = potentialSpaceRuins, x_offset = 0, y_offset = 0)
-	if(potentialRuins.len)
-		world << "<span class='boldannounce'>Loading ruins...</span>"
-
-		var/map = pick(potentialRuins)
-		var/file = file(map)
-		if(isfile(file))
-			maploader.load_map(file, src.x + x_offset, src.y + y_offset, src.z)
-			world.log << "[map] loaded at at [src.x + x_offset],[src.y + y_offset],[src.z]"
-		potentialRuins -= map //Don't want to load the same one twice
-		world << "<span class='boldannounce'>Ruins loaded.</span>"
-
-	else
+/obj/effect/ruin_loader/proc/Load(list/potentialRuins = space_ruins_templates, datum/map_template/template = null)
+	var/list/possible_ruins = list()
+	for(var/A in potentialRuins)
+		var/datum/map_template/T = potentialRuins[A]
+		if(!T.loaded)
+			possible_ruins += T
+	world << "<span class='boldannounce'>Loading ruins...</span>"
+	if(!template && possible_ruins.len)
+		template = safepick(possible_ruins)
+	if(!template)
 		world << "<span class='boldannounce'>No ruins found.</span>"
 		return
-
+	template.load(get_turf(src),centered = TRUE)
+	template.loaded++
+	world << "<span class='boldannounce'>Ruins loaded.</span>"
 	qdel(src)
-
-
-
-#undef RANDOM_UPPER_X
-#undef RANDOM_UPPER_Y
-
-#undef RANDOM_LOWER_X
-#undef RANDOM_LOWER_Y

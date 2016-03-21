@@ -149,8 +149,10 @@ var/list/VVckey_edit = list("key", "ckey")
 	message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
 
 /client/proc/mod_list(list/L, atom/O, original_name, objectvar)
-	if(!check_rights(R_VAREDIT))	return
-	if(!istype(L,/list)) src << "Not a List."
+	if(!check_rights(R_VAREDIT))
+		return
+	if(!istype(L,/list))
+		src << "Not a List."
 
 	if(L.len > 1000)
 		var/confirm = alert(src, "The list you're trying to edit is very long, continuing may crash the server.", "Warning", "Continue", "Abort")
@@ -191,11 +193,14 @@ var/list/VVckey_edit = list("key", "ckey")
 	var/dir
 
 	if(variable in VVlocked)
-		if(!check_rights(R_DEBUG))	return
+		if(!check_rights(R_DEBUG))
+			return
 	if(variable in VVckey_edit)
-		if(!check_rights(R_SPAWN|R_DEBUG)) return
+		if(!check_rights(R_SPAWN|R_DEBUG))
+			return
 	if(variable in VVicon_edit_lock)
-		if(!check_rights(R_FUN|R_DEBUG)) return
+		if(!check_rights(R_FUN|R_DEBUG))
+			return
 
 	if(isnull(variable))
 		usr << "Unable to determine variable type."
@@ -373,12 +378,12 @@ var/list/VVckey_edit = list("key", "ckey")
 	message_admins("[key_name_admin(src)] modified [original_name]'s varlist [objectvar]: [original_var]=[new_var]")
 
 /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
-	if(!check_rights(R_VAREDIT))	return
+	if(!check_rights(R_VAREDIT))
+		return
 
-	for(var/p in forbidden_varedit_object_types)
-		if( istype(O,p) )
-			usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
-			return
+	if(is_type_in_list(O, forbidden_varedit_object_types))
+		usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
+		return
 
 	if(istype(O, /client) && (param_var_name == "ckey" || param_var_name == "key"))
 		usr << "<span class='danger'>You cannot edit ckeys on client objects.</span>"
@@ -394,11 +399,14 @@ var/list/VVckey_edit = list("key", "ckey")
 			return
 
 		if(param_var_name in VVlocked)
-			if(!check_rights(R_DEBUG))	return
+			if(!check_rights(R_DEBUG))
+				return
 		if(param_var_name in VVckey_edit)
-			if(!check_rights(R_SPAWN|R_DEBUG)) return
+			if(!check_rights(R_SPAWN|R_DEBUG))
+				return
 		if(param_var_name in VVicon_edit_lock)
-			if(!check_rights(R_FUN|R_DEBUG)) return
+			if(!check_rights(R_FUN|R_DEBUG))
+				return
 
 		variable = param_var_name
 
@@ -452,15 +460,19 @@ var/list/VVckey_edit = list("key", "ckey")
 		names = sortList(names)
 
 		variable = input("Which var?","Var") as null|anything in names
-		if(!variable)	return
+		if(!variable)
+			return
 		var_value = O.vars[variable]
 
 		if(variable in VVlocked)
-			if(!check_rights(R_DEBUG)) return
+			if(!check_rights(R_DEBUG))
+				return
 		if(variable in VVckey_edit)
-			if(!check_rights(R_SPAWN|R_DEBUG)) return
+			if(!check_rights(R_SPAWN|R_DEBUG))
+				return
 		if(variable in VVicon_edit_lock)
-			if(!check_rights(R_FUN|R_DEBUG)) return
+			if(!check_rights(R_FUN|R_DEBUG))
+				return
 
 	if(!autodetect_class)
 
@@ -593,8 +605,14 @@ var/list/VVckey_edit = list("key", "ckey")
 				O.vars[variable] = var_new
 
 		if("type")
-			var/var_new = input("Enter type:","Type",O.vars[variable]) as null|anything in typesof(/obj,/mob,/area,/turf)
-			if(var_new==null) return
+			var/target_path = input("Enter type:", "Type", O.vars[variable]) as null|text
+			if(!target_path)
+				return
+			var/var_new = text2path(target_path)
+			if(!ispath(var_new))
+				var_new = pick_closest_path(target_path)
+			if(!var_new)
+				return
 			O.vars[variable] = var_new
 
 		if("reference")

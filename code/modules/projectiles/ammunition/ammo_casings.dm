@@ -3,6 +3,15 @@
 	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet
 
+/obj/item/ammo_casing/a762
+	desc = "A 7.62 bullet casing."
+	icon_state = "762-casing"
+	caliber = "a762"
+	projectile_type = /obj/item/projectile/bullet
+
+/obj/item/ammo_casing/a762/enchanted
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
+
 /obj/item/ammo_casing/a50
 	desc = "A .50AE bullet casing."
 	caliber = ".50"
@@ -66,7 +75,12 @@
 /obj/item/ammo_casing/c45nostamina
 	desc = "A .45 bullet casing."
 	caliber = ".45"
-	projectile_type = /obj/item/projectile/bullet/weakbullet3
+	projectile_type = /obj/item/projectile/bullet/midbullet3
+
+/obj/item/ammo_casing/n762
+	desc = "A 7.62x38mmR bullet casing."
+	caliber = "n762"
+	projectile_type = /obj/item/projectile/bullet
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
@@ -109,23 +123,19 @@
 	icon_state = "improvshell"
 	projectile_type = /obj/item/projectile/bullet/pellet/weak
 	materials = list(MAT_METAL=250)
-	pellets = 5
+	pellets = 10
 	variance = 0.8
 
 
-/obj/item/ammo_casing/shotgun/improvised/overload
+/obj/item/ammo_casing/shotgun/improvised/overload/
 	name = "overloaded improvised shell"
 	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards. This one has been packed with even more \
 	propellant. It's like playing russian roulette, with a shotgun."
 	icon_state = "improvshell"
-	projectile_type = /obj/item/projectile/bullet/pellet/random
+	projectile_type = /obj/item/projectile/bullet/pellet/overload
 	materials = list(MAT_METAL=250)
-	pellets = 5
+	pellets = 4
 	variance = 1
-
-/obj/item/ammo_casing/shotgun/improvised/overload/New()
-	..()
-	pellets = rand(3, 8)
 
 
 /obj/item/ammo_casing/shotgun/stunslug
@@ -141,6 +151,12 @@
 	desc = "A shotgun shell rigged with CMC technology, which launches a massive slug when fired."
 	icon_state = "mshell"
 	projectile_type = /obj/item/projectile/bullet/meteorshot
+
+/obj/item/ammo_casing/shotgun/breaching
+	name = "breaching shell"
+	desc = "An economic version of the meteorshot, utilizing similar technologies. Great for busting down doors."
+	icon_state = "mshell"
+	projectile_type = /obj/item/projectile/bullet/meteorshot/weak
 
 /obj/item/ammo_casing/shotgun/pulseslug
 	name = "pulse slug"
@@ -183,7 +199,7 @@
 	name = "laser slug"
 	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a laser weapon in a ballistic package."
 	icon_state = "lshell"
-	projectile_type = /obj/item/projectile/beam
+	projectile_type = /obj/item/projectile/beam/laser
 
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"

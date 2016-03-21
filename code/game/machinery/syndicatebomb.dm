@@ -10,9 +10,9 @@
 	unacidable = 1
 
 	var/timer = 60
-	var/open_panel = 0 	//are the wires exposed?
-	var/active = 0		//is the bomb counting down?
-	var/defused = 0		//is the bomb capable of exploding?
+	var/open_panel = FALSE 	//are the wires exposed?
+	var/active = FALSE		//is the bomb counting down?
+	var/defused = FALSE		//is the bomb capable of exploding?
 	var/obj/item/weapon/bombcore/payload = /obj/item/weapon/bombcore
 	var/beepsound = 'sound/items/timer.ogg'
 
@@ -213,7 +213,7 @@
 	if(istype(holder))
 		if(holder.wires)
 			holder.wires.repair()
-			holder.wires.randomize()
+			holder.wires.shuffle_wires()
 		holder.defused = 0
 		holder.open_panel = 0
 		holder.update_icon()

@@ -379,7 +379,8 @@ var/global/BSACooldown = 0
 
 
 /datum/admins/proc/Game()
-	if(!check_rights(0))	return
+	if(!check_rights(0))
+		return
 
 	var/dat = {"
 		<center><B>Game Panel</B></center><hr>\n
@@ -439,7 +440,8 @@ var/global/BSACooldown = 0
 	set category = "Special Verbs"
 	set name = "Announce"
 	set desc="Announce your desires to the world"
-	if(!check_rights(0))	return
+	if(!check_rights(0))
+		return
 
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
 	if(message)
@@ -453,7 +455,8 @@ var/global/BSACooldown = 0
 	set category = "Special Verbs"
 	set name = "Set Admin Notice"
 	set desc ="Set an announcement that appears to everyone who joins the server. Only lasts this round"
-	if(!check_rights(0))	return
+	if(!check_rights(0))
+		return
 
 	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice) as message|null
 	if(new_admin_notice == null)
@@ -613,24 +616,12 @@ var/global/BSACooldown = 0
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
 
-	if(!check_rights(R_SPAWN))	return
-
-	var/list/matches = get_fancy_list_of_types()
-	if (!isnull(object) && object!="")
-		matches = filter_fancy_list(matches, object)
-
-	if(matches.len==0)
+	if(!check_rights(R_SPAWN))
 		return
 
-	var/chosen
-	if(matches.len==1)
-		chosen = matches[1]
-	else
-		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
-		if(!chosen)
-			return
-	chosen = matches[chosen]
-
+	var/chosen = pick_closest_path(object)
+	if(!chosen)
+		return
 	if(ispath(chosen,/turf))
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)

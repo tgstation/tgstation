@@ -110,7 +110,7 @@
 	name = "Crusader's Hood"
 	icon_state = "crusader"
 	w_class = 3 //normal
-	flags = BLOCKHAIR
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
@@ -137,38 +137,36 @@
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 50, bomb = 70, bio = 50, rad = 50) //religion protects you from disease and radiation, honk.
 	worn_x_dimension = 64
 	worn_y_dimension = 64
-	var/datum/action/innate/godspeak/speak2god
+	var/side = "neither"
 
-
-/obj/item/clothing/head/helmet/plate/crusader/prophet/proc/assign_deity(mob/camera/god/G)
-	if(speak2god)
-		if(speak2god.owner)
-			speak2god.Remove(speak2god.owner)
-	else
-		speak2god = new()
-	speak2god.god = G
-
-
-/obj/item/clothing/head/helmet/plate/crusader/prophet/equipped(mob/user, slot)
+/obj/item/clothing/head/helmet/plate/crusader/prophet/equipped(mob/living/carbon/user, slot)
+	var/faithful = 0
 	if(slot == slot_head)
-		if(speak2god)
-			speak2god.Grant(user)
-			user << "<span class='boldnotice'>You gain the ability to speak to the god this hat belongs to!</span>"
-
-
-/obj/item/clothing/head/helmet/plate/crusader/prophet/dropped(mob/user)
-	if(speak2god)
-		if(speak2god.owner == user)
-			speak2god.Remove(user)
-			user << "<span class='boldnotice'>You lose the ability to speak to the god this hat belongs to!</span>"
-
+		switch(side)
+			if("blue")
+				faithful = is_handofgod_bluecultist(user)
+			if("red")
+				faithful = is_handofgod_redcultist(user)
+			else
+				faithful = 1
+		if(!faithful)
+			user << "<span class='danger'>Your mind is assaulted by a vast power, furious at your desecration!</span>"
+			user.emote("scream")
+			user.adjustFireLoss(10)
+			user.unEquip(src)
+			user.head = null
+			user.update_inv_head()
+			src.screen_loc = null
+			user.Weaken(1)
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/red
 	icon_state = "prophet-red"
+	side = "red"
 
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/blue
 	icon_state = "prophet-blue"
+	side = "blue"
 
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/examine(mob/user)
@@ -177,8 +175,7 @@
 		user << "A brownish, religious-looking hat."
 	else
 		user << "A hat bestowed upon a prophet of gods and demigods."
-		if(speak2god && speak2god.god)
-			user << "This hat belongs to the [speak2god.god.side] god."
+		user << "This hat belongs to the [side] god."
 
 
 
@@ -187,6 +184,8 @@
 	name = "godstaff"
 	icon_state = "godstaff-red"
 	var/mob/camera/god/god = null
+	var/staffcooldown = 0
+	var/staffwait = 30
 
 /obj/item/weapon/godstaff/examine(mob/user)
 	..()
@@ -195,6 +194,29 @@
 	else
 		user << "A powerful staff capable of changing the allegiance of god/demigod structures."
 
+
+
+/obj/item/weapon/godstaff/attack_self(mob/living/carbon/user)
+	if((god && !god.is_handofgod_myprophet(user)) || !god)
+		user << "<span class='danger'>YOU ARE NOT THE CHOSEN ONE!</span>"
+		return
+	if(!(istype(user.head, /obj/item/clothing/head/helmet/plate/crusader/prophet)))
+		user << "<span class='warning'>Your connection to your diety isn't strong enough! You must wear your big hat!</span>"
+		return
+	if(staffcooldown + staffwait > world.time)
+		return
+	user.visible_message("[user] chants deeply and waves their staff")
+	if(do_after(user, 20,1,src))
+		for(var/obj/structure/divine/R in orange(3,user))
+			user.say("Grant us true sight my god!")
+			if(istype(R, /obj/structure/divine/nexus)|| istype(R, /obj/structure/divine/trap))
+				continue
+			R.visible_message("<span class='danger'>[R] suddenly appears!</span>")
+			R.invisibility = 0
+			R.alpha = initial(R.alpha)
+			R.density = initial(R.density)
+			R.activate()
+	staffcooldown = world.time
 
 /obj/item/weapon/godstaff/red
 	icon_state = "godstaff-red"

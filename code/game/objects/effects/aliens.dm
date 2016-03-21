@@ -318,6 +318,9 @@
 	spawn(rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 		Grow()
 
+/obj/structure/alien/egg/Destroy()
+	remove_from_proximity_list(src, 1)
+	..()
 
 /obj/structure/alien/egg/attack_paw(mob/living/user)
 	return attack_hand(user)
@@ -348,10 +351,11 @@
 /obj/structure/alien/egg/proc/Grow()
 	icon_state = "egg"
 	status = GROWN
-
+	add_to_proximity_list(src, 1)
 
 /obj/structure/alien/egg/proc/Burst(kill = 1)	//drops and kills the hugger if any is remaining
 	if(status == GROWN || status == GROWING)
+		remove_from_proximity_list(src, 1)
 		icon_state = "egg_hatched"
 		flick("egg_opening", src)
 		status = BURSTING
@@ -368,6 +372,9 @@
 							child.Attach(M)
 							break
 
+/obj/structure/alien/egg/Move()
+	remove_from_proximity_list(src, 1)
+	..()
 
 /obj/structure/alien/egg/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
@@ -434,7 +441,6 @@
 	gender = PLURAL
 	name = "acid"
 	desc = "Burbling corrossive stuff."
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "acid"
 	density = 0
 	opacity = 0

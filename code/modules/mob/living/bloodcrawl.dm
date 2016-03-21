@@ -8,14 +8,8 @@
 	invisibility = 60
 	burn_state = LAVA_PROOF
 
-
-obj/effect/dummy/slaughter/relaymove(mob/user, direction)
-	if (!src.canmove || !direction) return
-	var/turf/newLoc = get_step(src,direction)
-	loc = newLoc
-	src.canmove = 0
-	spawn(1)
-		src.canmove = 1
+/obj/effect/dummy/slaughter/relaymove(mob/user, direction)
+	forceMove(get_step(src,direction))
 
 /obj/effect/dummy/slaughter/ex_act()
 	return
@@ -52,9 +46,9 @@ obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 		var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
 		src.ExtinguishMob()
 		if(buckled)
-			buckled.unbuckle_mob(force=1)
-		if(buckled_mob)
-			unbuckle_mob(force=1)
+			buckled.unbuckle_mob(src,force=1)
+		if(buckled_mobs.len)
+			unbuckle_all_mobs(force=1)
 		if(pulledby)
 			pulledby.stop_pulling()
 		if(src.pulling && src.bloodcrawl == BLOODCRAWL_EAT)

@@ -3,17 +3,15 @@
 /////////////////////////////////////////////////////////////
 
 /obj/machinery/air_sensor
+	name = "gas sensor"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
-	name = "gas sensor"
 	anchored = 1
 
-	var/on = 1
-	var/state = 0
+	var/on = TRUE
 
 	var/id_tag
-	var/frequency = 1439
-
+	var/frequency = 1441
 	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/air_sensor/update_icon()
@@ -35,7 +33,7 @@
 		)
 		var/total_moles = air_sample.total_moles()
 		for(var/gas_id in air_sample.gases)
-			var/gas_name = air_sample.gases[gas_id][GAS_NAME]
+			var/gas_name = air_sample.gases[gas_id][GAS_META][META_GAS_NAME]
 			signal.data["gases"][gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
 
 		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
@@ -58,7 +56,7 @@
 /obj/machinery/air_sensor/Destroy()
 	SSair.atmos_machinery -= src
 	if(SSradio)
-		SSradio.remove_object(src,frequency)
+		SSradio.remove_object(src, frequency)
 	return ..()
 
 /////////////////////////////////////////////////////////////
@@ -66,13 +64,24 @@
 /////////////////////////////////////////////////////////////
 
 /obj/machinery/computer/atmos_control
+	name = "Atmospherics Monitoring"
+	desc = "Used to monitor the station's atmospherics sensors."
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/weapon/circuitboard/atmos_control
 
-	var/frequency = 1439
-	var/list/sensors = list()
-
+	var/frequency = 1441
+	var/list/sensors = list(
+		"n2_sensor" = "Nitrogen Tank",
+		"o2_sensor" = "Oxygen Tank",
+		"co2_sensor" = "Carbon Dioxide Tank",
+		"tox_sensor" = "Plasma Tank",
+		"n2o_sensor" = "Nitrous Oxide Tank",
+		"air_sensor" = "Mixed Air Tank",
+		"mix_sensor" = "Mix Tank",
+		"distro_meter" = "Distribution Loop",
+		"waste_meter" = "Waste Loop",
+	)
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
@@ -90,10 +99,10 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_control", name, 500, 750, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_control", name, 400, 925, master_ui, state)
 		ui.open()
 
-/obj/machinery/computer/atmos_control/get_ui_data(mob/user)
+/obj/machinery/computer/atmos_control/ui_data(mob/user)
 	var/data = list()
 
 	data["sensors"] = list()
@@ -112,10 +121,12 @@
 	return data
 
 /obj/machinery/computer/atmos_control/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption) return
+	if(!signal || signal.encryption)
+		return
 
 	var/id_tag = signal.data["id_tag"]
-	if(!id_tag || !sensors.Find(id_tag)) return
+	if(!id_tag || !sensors.Find(id_tag))
+		return
 
 	sensor_information[id_tag] = signal.data
 
@@ -126,37 +137,6 @@
 
 /obj/machinery/computer/atmos_control/initialize()
 	set_frequency(frequency)
-
-/obj/machinery/computer/atmos_control/ui_act(action, params)
-	if(..())
-		return
-	switch(action)
-		if("initialize")
-			if(name != initial(name))
-				return
-			switch(params["type"])
-				if("dist")
-					name = "Distribution and Waste Monitor"
-					set_frequency(1443)
-					sensors = list(
-						"air_in_meter" = "Air In",
-						"air_sensor" = "Air Tank",
-						"air_out_meter" = "Air Out",
-						"distro_meter" = "Distribution Loop",
-						"waste_meter" = "Waste Loop"
-					)
-				if("tank")
-					name = "Tank Monitor"
-					set_frequency(1441)
-					sensors = list(
-						"n2_sensor" = "Nitrogen Tank",
-						"o2_sensor" = "Oxygen Tank",
-						"co2_sensor" = "Carbon Dioxide Tank",
-						"tox_sensor" = "Toxins Tank",
-						"n2o_sensor" = "Nitrous Oxide Tank",
-						"mix_sensor" = "Mix Tank"
-					)
-			. = TRUE
 
 /////////////////////////////////////////////////////////////
 // LARGE TANK CONTROL
@@ -174,15 +154,13 @@
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)
 	var/list/IO = list()
-	var/datum/radio_frequency/air_freq = SSradio.return_frequency(1443)
-	var/datum/radio_frequency/gas_freq = SSradio.return_frequency(1441)
-	var/list/devices = air_freq.devices["_default"]
-	devices |= gas_freq.devices["_default"]
+	var/datum/radio_frequency/freq = SSradio.return_frequency(1441)
+	var/list/devices = freq.devices["_default"]
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
-		var/list/text = text2list(U.id_tag, "_")
+		var/list/text = splittext(U.id_tag, "_")
 		IO |= text[1]
 	for(var/obj/machinery/atmospherics/components/unary/outlet_injector/U in devices)
-		var/list/text = text2list(U.id, "_")
+		var/list/text = splittext(U.id, "_")
 		IO |= text[1]
 	if(!IO.len)
 		user << "<span class='alert'>No machinery detected.</span>"
@@ -191,24 +169,15 @@
 		src.input_tag = "[S]_in"
 		src.output_tag = "[S]_out"
 		name = "[uppertext(S)] Supply Control"
-		var/list/new_devices = gas_freq.devices["4"]
-		new_devices |= air_freq.devices["4"]
+		var/list/new_devices = freq.devices["4"]
 		for(var/obj/machinery/air_sensor/U in new_devices)
-			var/list/text = text2list(U.id_tag, "_")
+			var/list/text = splittext(U.id_tag, "_")
 			if(text[1] == S)
 				sensors = list("[S]_sensor" = "Tank")
 				break
 
-	if(S == "air")
-		frequency = 1443
-	else
-		frequency = 1441
-
-	set_frequency(frequency)
-
 	for(var/obj/machinery/atmospherics/components/unary/outlet_injector/U in devices)
 		U.broadcast_status()
-
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		U.broadcast_status()
 
@@ -216,10 +185,10 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_control", name, 400, 425, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_control", name, 500, 305, master_ui, state)
 		ui.open()
 
-/obj/machinery/computer/atmos_control/tank/get_ui_data(mob/user)
+/obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()
 	data["tank"] = TRUE
 	data["inputting"] = input_info ? input_info["power"] : FALSE
@@ -247,18 +216,16 @@
 			signal.data += list("tag" = output_tag, "power_toggle" = TRUE)
 			. = TRUE
 		if("pressure")
-			var/pressure = text2num(params["pressure"])
-			if(pressure != null)
-				pressure = Clamp(pressure, 0, 50 * ONE_ATMOSPHERE)
-				signal.data += list("tag" = output_tag, "set_internal_pressure" = pressure)
+			var/target = input("New target pressure:", name, output_info["internal"]) as num|null
+			if(!isnull(target) && !..())
+				target =  Clamp(target, 0, 50 * ONE_ATMOSPHERE)
+				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
-			else
-				pressure = input("New output pressure:", name, input_info["internal"]) as num|null
-				. = .(action, params + list("pressure" = pressure))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_control/tank/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption) return
+	if(!signal || signal.encryption)
+		return
 
 	var/id_tag = signal.data["tag"]
 

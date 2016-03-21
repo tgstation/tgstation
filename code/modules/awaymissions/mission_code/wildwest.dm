@@ -109,9 +109,7 @@
 				user << "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>"
 				user << "You feel as if you just narrowly avoided a terrible fate..."
 				for(var/mob/living/simple_animal/hostile/faithless/F in mob_list)
-					F.health = -10
-					F.stat = 2
-					F.icon_state = "faithless_dead"
+					F.death()
 
 
 ///////////////Meatgrinder//////////////
@@ -162,7 +160,7 @@
 	C << "<span class='notice'>Death is not your end!</span>"
 
 	spawn(rand(80,120))
-		C.revive()
+		C.revive(full_heal = 1, admin_revive = 1)
 		C << "<span class='notice'>You have regenerated.</span>"
 		C.visible_message("<span class='warning'>[usr] appears to wake from the dead, having healed all wounds.</span>")
 		C.update_canmove()

@@ -19,6 +19,7 @@
 	saved_appearance = initial(butt.appearance)
 
 /obj/item/device/chameleon/dropped()
+	..()
 	disrupt()
 
 /obj/item/device/chameleon/equipped()
@@ -46,24 +47,18 @@
 		qdel(active_dummy)
 		active_dummy = null
 		usr << "<span class='notice'>You deactivate \the [src].</span>"
-		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
-		T.icon = 'icons/effects/effects.dmi'
-		flick("emppulse",T)
-		spawn(8)
-			qdel(T)
+		PoolOrNew(/obj/effect/overlay/temp/emp/pulse, get_turf(src))
 	else
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
 		C.activate(usr, saved_appearance, src)
 		usr << "<span class='notice'>You activate \the [src].</span>"
-		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
-		T.icon = 'icons/effects/effects.dmi'
-		flick("emppulse",T)
-		spawn(8)
-			qdel(T)
+		PoolOrNew(/obj/effect/overlay/temp/emp/pulse, get_turf(src))
 
 /obj/item/device/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)
+		for(var/mob/M in active_dummy)
+			M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
@@ -80,7 +75,7 @@
 		A.loc = active_dummy.loc
 		if(ismob(A))
 			var/mob/M = A
-			M.reset_view(null)
+			M.reset_perspective(null)
 
 /obj/effect/dummy/chameleon
 	name = ""
@@ -96,23 +91,24 @@
 	master.active_dummy = src
 
 /obj/effect/dummy/chameleon/attackby()
-	for(var/mob/M in src)
-		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/attack_hand()
-	for(var/mob/M in src)
-		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
+	master.disrupt()
+
+/obj/effect/dummy/chameleon/attack_animal()
+	master.disrupt()
+
+/obj/effect/dummy/chameleon/attack_slime()
+	master.disrupt()
+
+/obj/effect/dummy/chameleon/attack_alien()
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/ex_act() //ok now THATS some serious protection against explosions right here
-	for(var/mob/M in src)
-		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()
-	for(var/mob/M in src)
-		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	..()
 	master.disrupt()
 

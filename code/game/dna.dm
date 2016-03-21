@@ -54,7 +54,8 @@
 	remove_mutation_group(mutations)
 
 /datum/dna/proc/remove_mutation_group(list/group)
-	if(!group)	return
+	if(!group)
+		return
 	for(var/datum/mutation/human/HM in group)
 		HM.force_lose(holder)
 
@@ -77,8 +78,10 @@
 		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
 
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
-		if(L[i])	. += L[i]
-		else		. += random_string(DNA_BLOCK_SIZE,hex_characters)
+		if(L[i])
+			. += L[i]
+		else
+			. += random_string(DNA_BLOCK_SIZE,hex_characters)
 	return .
 
 /datum/dna/proc/generate_struc_enzymes()
@@ -169,11 +172,9 @@
 /mob/proc/set_species(datum/species/mrace, icon_update = 1)
 	return
 
-/mob/living/carbon/set_species(datum/species/mrace, icon_update = 1)
-	if(has_dna())
-		if(dna.species.exotic_blood)
-			var/datum/reagent/EB = dna.species.exotic_blood
-			reagents.del_reagent(initial(EB.id))
+/mob/living/carbon/set_species(datum/species/mrace = null, icon_update = 1)
+	if(mrace && has_dna())
+		dna.species.on_species_loss(src)
 		dna.species = new mrace()
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = 1)
@@ -279,7 +280,8 @@ mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutat
 	return copytext(input, blocksize*(blocknumber-1)+1, (blocksize*blocknumber)+1)
 
 /proc/setblock(istring, blocknumber, replacement, blocksize=DNA_BLOCK_SIZE)
-	if(!istring || !blocknumber || !replacement || !blocksize)	return 0
+	if(!istring || !blocknumber || !replacement || !blocksize)
+		return 0
 	return getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
 
 /proc/randmut(mob/living/carbon/M, list/candidates, difficulty = 2)

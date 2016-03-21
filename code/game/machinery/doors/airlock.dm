@@ -53,7 +53,12 @@ var/list/airlock_overlays = list()
 	var/autoclose = 1
 	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
 	var/detonated = 0
-	var/doorsound = 'sound/machines/airlock.ogg'
+	var/doorOpen = 'sound/machines/airlock.ogg'
+	var/doorClose = 'sound/machines/AirlockClose.ogg'
+	var/doorDeni = 'sound/machines/DeniedBeep.ogg' // i'm thinkin' Deni's
+	var/boltUp = 'sound/machines/BoltsUp.ogg'
+	var/boltDown = 'sound/machines/BoltsDown.ogg'
+	var/noPower = 'sound/machines/DoorClick.ogg'
 
 	var/airlock_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
@@ -80,17 +85,45 @@ var/list/airlock_overlays = list()
 		airlock_material = "glass"
 	update_icon()
 
+/obj/machinery/door/airlock/lock()
+	bolt()
+
 /obj/machinery/door/airlock/proc/bolt()
 	if(locked)
 		return
 	locked = 1
+	playsound(src,boltDown,30,0,3)
 	update_icon()
+
+/obj/machinery/door/airlock/unlock()
+	unbolt()
 
 /obj/machinery/door/airlock/proc/unbolt()
 	if(!locked)
 		return
 	locked = 0
+	playsound(src,boltUp,30,0,3)
 	update_icon()
+
+/obj/machinery/door/airlock/narsie_act()
+	var/turf/T = get_turf(src)
+	var/runed = prob(20)
+	if(prob(20))
+		if(glass)
+			if(runed)
+				new/obj/machinery/door/airlock/cult/glass(T)
+			else
+				new/obj/machinery/door/airlock/cult/unruned/glass(T)
+		else
+			if(runed)
+				new/obj/machinery/door/airlock/cult(T)
+			else
+				new/obj/machinery/door/airlock/cult/unruned(T)
+		if(runed)
+			PoolOrNew(/obj/effect/overlay/temp/cult/door, T)
+		else
+			PoolOrNew(/obj/effect/overlay/temp/cult/door/unruned, T)
+		qdel(src)
 
 /obj/machinery/door/airlock/Destroy()
 	qdel(wires)
@@ -342,6 +375,7 @@ var/list/airlock_overlays = list()
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
 			update_icon(AIRLOCK_DENY)
+			playsound(src,doorDeni,50,0,3)
 			sleep(6)
 			update_icon(AIRLOCK_CLOSED)
 			icon_state = "closed"
@@ -556,7 +590,7 @@ var/list/airlock_overlays = list()
 	// Otherwise it will runtime with this kind of error: null.Topic()
 	if(!nowindow)
 		..()
-	if((usr.stat || usr.restrained()) && !IsAdminGhost(usr))
+	if(usr.incapacitated() && !IsAdminGhost(usr))
 		return
 	add_fingerprint(usr)
 	if(href_list["close"])
@@ -951,7 +985,7 @@ var/list/airlock_overlays = list()
 		if(emagged)
 			return 0
 		use_power(50)
-		playsound(src.loc, doorsound, 30, 1)
+		playsound(src.loc, doorOpen, 30, 1)
 		if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 			src.closeOther.close()
 	else
@@ -997,7 +1031,7 @@ var/list/airlock_overlays = list()
 		if(emagged)
 			return
 		use_power(50)
-		playsound(src.loc, doorsound, 30, 1)
+		playsound(src.loc, doorClose, 30, 1)
 	else
 		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
@@ -1026,7 +1060,8 @@ var/list/airlock_overlays = list()
 	return 1
 
 /obj/machinery/door/airlock/proc/prison_open()
-	if(emagged)	return
+	if(emagged)
+		return
 	src.locked = 0
 	src.open()
 	src.locked = 1
@@ -1055,7 +1090,8 @@ var/list/airlock_overlays = list()
 		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!in_range(src, usr) && src.loc != usr) || !W.use(user))	return
+	if((!in_range(src, usr) && src.loc != usr) || !W.use(user))
+		return
 	switch(paintjob)
 		if("Public")
 			icon = 'icons/obj/doors/airlocks/station/public.dmi'
@@ -1110,11 +1146,6 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID)
 //Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
 	return !density || (check_access(ID) && !locked && hasPower())
-
-/obj/machinery/door/airlock/HasProximity(atom/movable/AM as mob|obj)
-	for (var/obj/A in contents)
-		A.HasProximity(AM)
-	return
 
 /obj/machinery/door/airlock/emag_act(mob/user)
 	if(!operating && density && hasPower() && !emagged)

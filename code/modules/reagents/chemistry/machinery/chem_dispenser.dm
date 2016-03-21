@@ -49,13 +49,6 @@
 	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
 
-/obj/machinery/chem_dispenser/power_change()
-	if(powered())
-		stat &= ~NOPOWER
-	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
-
 /obj/machinery/chem_dispenser/process()
 
 	if(recharged < 0)
@@ -87,7 +80,7 @@
 		ui = new(user, src, ui_key, "chem_dispenser", name, 550, 550, master_ui, state)
 		ui.open()
 
-/obj/machinery/chem_dispenser/get_ui_data()
+/obj/machinery/chem_dispenser/ui_data()
 	var/data = list()
 	data["amount"] = amount
 	data["energy"] = energy
@@ -167,7 +160,7 @@
 
 	if(!user.drop_item()) // Can't let go?
 		return
-	
+
 	beaker = B
 	beaker.loc = src
 	user << "<span class='notice'>You add the beaker to the machine.</span>"
@@ -340,3 +333,8 @@
 		"cognac",
 		"ale"
 	)
+
+/obj/machinery/chem_dispenser/mutagen
+	name = "mutagen dispenser"
+	desc = "Creates and dispenses mutagen."
+	dispensable_reagents = list("mutagen")

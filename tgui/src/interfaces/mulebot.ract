@@ -34,6 +34,9 @@
       {{#if data.load}}
         <ui-button icon='eject' action='unload'>Unload</ui-button>
       {{/if}}
+      {{#if data.haspai}}
+        <ui-button icon='eject' action='ejectpai'>Eject PAI</ui-button>
+      {{/if}}
       <ui-button icon='pencil' action='setid'>Set ID</ui-button>
     {{/partial}}
     <ui-section label='Destination'>
@@ -55,12 +58,3 @@
     </ui-section>
   </ui-display>
 {{/if}}
-<!--
-    dat += "<A href='byond://?src=\ref[src];op=setid'>Set Bot ID</A><BR>"
-    dat += "<A href='byond://?src=\ref[src];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
-    dat += "<A href='byond://?src=\ref[src];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
-    dat += "<A href='byond://?src=\ref[src];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
-    if(load)
-        dat += "<A href='byond://?src=\ref[src];op=unload'>Unload Now</A><BR>"
-    dat += "<div class='notice'>The maintenance hatch is closed.</div>"
--->

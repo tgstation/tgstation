@@ -186,7 +186,7 @@
 
 /datum/effect_system/smoke_spread/freezing/start()
 	if(blast)
-		for(var/turf/T in trange(2, location))
+		for(var/turf/T in RANGE_TURFS(2, location))
 			Chilled(T)
 	..()
 
@@ -203,7 +203,7 @@
 /obj/effect/particle_effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
 	if(..())
 		M.drop_item()
-		M.sleeping = max(M.sleeping,10)
+		M.Sleeping(max(M.sleeping,10))
 		M.emote("cough")
 		return 1
 

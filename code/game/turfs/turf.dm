@@ -26,6 +26,8 @@
 
 	flags = 0
 
+	var/list/proximity_checkers = list()
+
 	var/image/obscured	//camerachunks
 /turf/New()
 	..()
@@ -34,11 +36,8 @@
 
 /turf/Destroy()
 	// Adds the adjacent turfs to the current atmos processing
-	for(var/direction in cardinal)
-		if(atmos_adjacent_turfs & direction)
-			var/turf/simulated/T = get_step(src, direction)
-			if(istype(T))
-				SSair.add_to_active(T)
+	for(var/turf/simulated/T in atmos_adjacent_turfs)
+		SSair.add_to_active(T)
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -91,12 +90,9 @@
 	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/M)
-	var/loopsanity = 100
-	for(var/atom/A in range(1))
-		if(loopsanity == 0)
-			break
-		loopsanity--
-		A.HasProximity(M, 1)
+	for(var/A in proximity_checkers)
+		var/atom/B = A
+		B.HasProximity(M)
 
 /turf/proc/is_plasteel_floor()
 	return 0
@@ -120,8 +116,10 @@
 
 //Creates a new turf
 /turf/proc/ChangeTurf(path)
-	if(!path)			return
-	if(path == type)	return src
+	if(!path)
+		return
+	if(path == type)
+		return src
 
 	SSair.remove_from_active(src)
 
@@ -254,7 +252,7 @@
 		C.Weaken(w_amount)
 		C.stop_pulling()
 		if(buckled_obj)
-			buckled_obj.unbuckle_mob()
+			buckled_obj.unbuckle_mob(C)
 			step(buckled_obj, olddir)
 		else if(lube&SLIDE)
 			for(var/i=1, i<5, i++)
@@ -300,6 +298,12 @@
 	icon = 'icons/misc/fullscreen.dmi'
 	icon_state = "title"
 	layer = FLY_LAYER
+	var/titlescreen = TITLESCREEN
+
+/turf/indestructible/splashscreen/New()
+	..()
+	if(titlescreen)
+		icon_state = titlescreen
 
 /turf/indestructible/riveted
 	icon_state = "riveted"
@@ -307,7 +311,7 @@
 /turf/indestructible/riveted/New()
 	..()
 	if(smooth)
-		smooth_icon(src)
+		queue_smooth(src)
 		icon_state = ""
 
 /turf/indestructible/riveted/uranium
@@ -317,6 +321,9 @@
 
 /turf/indestructible/abductor
 	icon_state = "alien1"
+
+/turf/indestructible/opshuttle
+	icon_state = "wall3"
 
 /turf/indestructible/fakeglass
 	name = "window"

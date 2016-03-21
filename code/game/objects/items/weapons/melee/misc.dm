@@ -56,6 +56,10 @@
 			if(!isrobot(target)) return
 		else
 			if(cooldown <= 0)
+				if(ishuman(target))
+					var/mob/living/carbon/human/H = target
+					if (H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
+						return
 				playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
 				target.Weaken(3)
 				add_logs(user, target, "stunned", src)
@@ -207,7 +211,8 @@
 		consume_turf(target)
 
 /obj/item/weapon/melee/supermatter_sword/proc/consume_turf(turf/T)
-	if(istype(T, T.baseturf))	return //Can't void the void, baby!
+	if(istype(T, T.baseturf))
+		return //Can't void the void, baby!
 	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
 	T.visible_message("<span class='danger'>\The [T] smacks into \the [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")

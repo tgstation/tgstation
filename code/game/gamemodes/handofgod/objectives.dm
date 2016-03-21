@@ -42,10 +42,13 @@
 	if(is_handofgod_god(owner.current))
 		var/mob/camera/god/G = owner.current
 		if(G.side == "red")
-			target = ticker.mode.blue_deities[1]
+			if(ticker.mode.blue_deities.len)
+				target = ticker.mode.blue_deities[1]
 		if(G.side == "blue")
-			target = ticker.mode.red_deities[1]
-
+			if(ticker.mode.red_deities.len)
+				target = ticker.mode.red_deities[1]
+		if(!target)
+			return 0
 	update_explanation_text()
 
 /datum/objective/deicide/update_explanation_text()

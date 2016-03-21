@@ -72,7 +72,6 @@
 	var/lastused_environ = 0
 	var/lastused_total = 0
 	var/main_status = 0
-	var/wiresexposed = 0
 	powernet = 0		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	var/malfhack = 0 //New var for my changes to AI malf. --NeoFite
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
@@ -302,7 +301,7 @@
 			update_state |= UPSTATE_OPENED2
 	else if(emagged || malfai)
 		update_state |= UPSTATE_BLUESCREEN
-	else if(wiresexposed)
+	else if(panel_open)
 		update_state |= UPSTATE_WIREEXP
 	if(update_state <= 1)
 		update_state |= UPSTATE_ALLGOOD
@@ -439,8 +438,8 @@
 		else if(emagged)
 			user << "<span class='warning'>The interface is broken!</span>"
 		else
-			wiresexposed = !wiresexposed
-			user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
+			panel_open = !panel_open
+			user << "The wires have been [panel_open ? "exposed" : "unexposed"]"
 			update_icon()
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
@@ -448,7 +447,7 @@
 			user << "<span class='warning'>The interface is broken!</span>"
 		else if(opened)
 			user << "<span class='warning'>You must close the cover to swipe an ID card!</span>"
-		else if(wiresexposed)
+		else if(panel_open)
 			user << "<span class='warning'>You must close the panel!</span>"
 		else if(stat & (BROKEN|MAINT))
 			user << "<span class='warning'>Nothing happens!</span>"
@@ -546,10 +545,9 @@
 				opened = 1
 			update_icon()
 	else
-		if(!opened && wiresexposed && is_wire_tool(W))
-			return attack_hand(user)
-		..()
-		if( ((stat & BROKEN) || malfhack) && !opened && W.force >= 5 && W.w_class >= 3 && prob(20) )
+		if(panel_open && !opened && is_wire_tool(W))
+			wires.interact(user)
+		if(((stat & BROKEN) || malfhack) && !opened && W.force >= 5 && W.w_class >= 3 && prob(20))
 			opened = 2
 			user.visible_message("<span class='warning'>[user.name] has knocked down the APC cover  with the [W.name].</span>", \
 				"<span class='danger'>You knock down the APC cover with your [W.name]!</span>", \
@@ -560,7 +558,7 @@
 	if(!emagged && !malfhack)
 		if(opened)
 			user << "<span class='warning'>You must close the cover to swipe an ID card!</span>"
-		else if(wiresexposed)
+		else if(panel_open)
 			user << "<span class='warning'>You must close the panel first!</span>"
 		else if(stat & (BROKEN|MAINT))
 			user << "<span class='warning'>Nothing happens!</span>"
@@ -599,25 +597,18 @@
 	user.visible_message("<span class='danger'>[user.name] slashes at the [src.name]!</span>", "<span class='notice'>You slash at the [src.name]!</span>")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 
-	if(beenhit >= pick(3, 4) && wiresexposed != 1)
-		wiresexposed = 1
+	if(beenhit >= pick(3, 4) && panel_open != 1)
+		panel_open = 1
 		update_icon()
 		visible_message("<span class='danger'>The [src.name]'s cover flies open, exposing the wires!</span>")
 
-	else if(wiresexposed == 1 && !wires.is_all_cut())
+	else if(panel_open == 1 && !wires.is_all_cut())
 		wires.cut_all()
 		update_icon()
 		visible_message("<span class='danger'>The [src.name]'s wires are shredded!</span>")
 	else
 		beenhit += 1
 	return
-
-
-/obj/machinery/power/apc/interact(mob/user)
-	if(wiresexposed && !istype(user, /mob/living/silicon/ai))
-		wires.interact(user)
-	else
-		ui_interact(user)
 
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -626,7 +617,7 @@
 		ui = new(user, src, ui_key, "apc", name, 535, 515, master_ui, state)
 		ui.open()
 
-/obj/machinery/power/apc/get_ui_data(mob/user)
+/obj/machinery/power/apc/ui_data(mob/user)
 	var/list/data = list(
 		"locked" = locked,
 		"isOperating" = operating,
@@ -634,7 +625,7 @@
 		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
-		"totalLoad" = lastused_equip + lastused_light + lastused_environ,
+		"totalLoad" = lastused_total,
 		"coverLocked" = coverlocked,
 		"siliconUser" = user.has_unlimited_silicon_privilege,
 		"malfStatus" = get_malf_status(user),
@@ -676,7 +667,7 @@
 
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
-	if(istype(malf) && is_special_character(malf))
+	if(istype(malf) && malf.malf_picker)
 		if(malfai == (malf.parent || malf))
 			if(occupier == malf)
 				return 3 // 3 = User is shunted in this APC
@@ -723,7 +714,7 @@
 			)                                                            \
 		)
 			if(!loud)
-				user << "<span class='danger'>\The [src] has AI control disabled!</span>"
+				user << "<span class='danger'>\The [src] has eee disabled!</span>"
 			return FALSE
 	return TRUE
 
@@ -1084,7 +1075,7 @@
 
 /obj/machinery/power/apc/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		switch(severity)
 			if(2)
 				if(prob(50))
@@ -1133,7 +1124,7 @@
 	s.start()
 	if(isalien(user))
 		return 0
-	if (electrocute_mob(user, src, src))
+	if(electrocute_mob(user, src, src))
 		return 1
 	else
 		return 0

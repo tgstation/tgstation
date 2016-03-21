@@ -3,7 +3,8 @@
 //////////////////////////////////////////////////////////////
 
 //global datum that will preload variables on atoms instanciation
-var/global/dmm_suite/preloader/_preloader = null
+var/global/use_preloader = FALSE
+var/global/dmm_suite/preloader/_preloader = new
 
 
 /**
@@ -93,13 +94,20 @@ var/global/dmm_suite/preloader/_preloader = null
 				break
 
 			ycrd--
-
+#if DM_VERSION < 510
 			sleep(-1)
+#else
+			CHECK_TICK
+#endif
 
 		//reached End Of File
 		if(findtext(tfile,quote+"}",zpos,0)+2==tfile_len)
 			break
+#if DM_VERSION < 510
 		sleep(-1)
+#else
+		CHECK_TICK
+#endif
 
 /**
  * Fill a given tile with its area/turf/objects/mobs
@@ -151,13 +159,17 @@ var/global/dmm_suite/preloader/_preloader = null
 		var/variables_start = findtext(full_def,"{")
 		if(variables_start)//if there's any variable
 			full_def = copytext(full_def,variables_start+1,length(full_def))//removing the last '}'
-			fields = text2list(full_def,";")
+			fields = readlist(full_def, ";")
 
 		//then fill the members_attributes list with the corresponding variables
 		members_attributes.len++
 		members_attributes[index++] = fields
 
+#if DM_VERSION < 510
 		sleep(-1)
+#else
+		CHECK_TICK
+#endif
 	while(dpos != 0)
 
 
@@ -173,17 +185,17 @@ var/global/dmm_suite/preloader/_preloader = null
 
 	//first instance the /area and remove it from the members list
 	index = members.len
-	var/atom/instance
-	_preloader = new(members_attributes[index])//preloader for assigning  set variables on atom creation
+	if(members[index] != /area/template_noop)
+		var/atom/instance
+		_preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
 
-	instance = locate(members[index])
-	var/turf/crds = locate(xcrd,ycrd,zcrd)
-	if(crds)
-		instance.contents.Add(crds)
+		instance = locate(members[index])
+		var/turf/crds = locate(xcrd,ycrd,zcrd)
+		if(crds)
+			instance.contents.Add(crds)
 
-	if(_preloader && instance)
-		_preloader.load(instance)
-
+		if(use_preloader && instance)
+			_preloader.load(instance)
 	members.Remove(members[index])
 
 	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
@@ -193,7 +205,9 @@ var/global/dmm_suite/preloader/_preloader = null
 		first_turf_index++
 
 	//instanciate the first /turf
-	var/turf/T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd)
+	var/turf/T
+	if(members[first_turf_index] != /turf/template_noop)
+		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd)
 
 	if(T)
 		//if others /turf are presents, simulates the underlays piling effect
@@ -208,6 +222,7 @@ var/global/dmm_suite/preloader/_preloader = null
 	//finally instance all remainings objects/mobs
 	for(index in 1 to first_turf_index-1)
 		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
+		CHECK_TICK
 
 ////////////////
 //Helpers procs
@@ -216,13 +231,13 @@ var/global/dmm_suite/preloader/_preloader = null
 //Instance an atom at (x,y,z) and gives it the variables in attributes
 /dmm_suite/proc/instance_atom(path,list/attributes, x, y, z)
 	var/atom/instance
-	_preloader = new(attributes, path)
+	_preloader.setup(attributes, path)
 
 	var/turf/T = locate(x,y,z)
 	if(T)
 		instance = new path (T)//first preloader pass
 
-	if(_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
+	if(use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 		_preloader.load(instance)
 
 	return instance
@@ -258,7 +273,7 @@ var/global/dmm_suite/preloader/_preloader = null
 
 //build a list from variables in text form (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
 //return the filled list
-/dmm_suite/proc/text2list(text as text,delimiter=",")
+/dmm_suite/proc/readlist(text as text, delimiter=",")
 
 	var/list/to_return = list()
 
@@ -292,7 +307,7 @@ var/global/dmm_suite/preloader/_preloader = null
 
 			//Check for list
 			else if(copytext(trim_right,1,5) == "list")
-				trim_right = text2list(copytext(trim_right,6,length(trim_right)))
+				trim_right = readlist(copytext(trim_right,6,length(trim_right)))
 
 			//Check for file
 			else if(copytext(trim_right,1,2) == "'")
@@ -321,7 +336,7 @@ var/global/dmm_suite/preloader/_preloader = null
 
 //atom creation method that preloads variables at creation
 /atom/New()
-	if(_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
 
 	. = ..()
@@ -339,15 +354,19 @@ var/global/dmm_suite/preloader/_preloader = null
 	var/list/attributes
 	var/target_path
 
-/dmm_suite/preloader/New(list/the_attributes, path)
-	.=..()
-	if(!the_attributes.len)
-		qdel(src)
-		return
-	attributes = the_attributes
-	target_path = path
+/dmm_suite/preloader/proc/setup(list/the_attributes, path)
+	if(the_attributes.len)
+		use_preloader = TRUE
+		attributes = the_attributes
+		target_path = path
 
 /dmm_suite/preloader/proc/load(atom/what)
 	for(var/attribute in attributes)
 		what.vars[attribute] = attributes[attribute]
-	qdel(src)
+	use_preloader = FALSE
+
+/area/template_noop
+	name = "Area Passthrough"
+
+/turf/template_noop
+	name = "Turf Passthrough"

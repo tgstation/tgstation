@@ -384,12 +384,12 @@
 	dat = ""
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
-	var/list/base = text2list(lowertext(text),"")
+	var/list/base = char_split(lowertext(text))
 	var/list/out = list()
 	for(var/a in base)
 		if(a in (letters|numerals))
 			out += a
-	return list2text(out)
+	return jointext(out,"")
 
 /obj/item/toy/crayon/Topic(href, href_list, hsrc)
 	var/temp = "a"
@@ -800,7 +800,7 @@
 	H.apply_card_vars(H,O)
 	src.cards -= choice
 	H.pickup(user)
-	user.put_in_active_hand(H)
+	user.put_in_hands(H)
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
 	if(cards.len > 26)
 		src.icon_state = "deck_[deckstyle]_full"
@@ -921,7 +921,7 @@
 			C.cardname = choice
 			C.apply_card_vars(C,O)
 			C.pickup(cardUser)
-			cardUser.put_in_any_hand_if_possible(C)
+			cardUser.put_in_hands(C)
 			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from \his hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
 
 			interact(cardUser)
@@ -938,7 +938,7 @@
 				N.apply_card_vars(N,O)
 				cardUser.unEquip(src)
 				N.pickup(cardUser)
-				cardUser.put_in_any_hand_if_possible(N)
+				cardUser.put_in_hands(N)
 				cardUser << "<span class='notice'>You also take [currenthand[1]] and hold it.</span>"
 				cardUser << browse(null, "window=cardhand")
 				qdel(src)
@@ -1131,7 +1131,7 @@
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom)
 	if(!..())
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
-		for(var/mob/M in ultra_range(10, src))
+		for(var/mob/M in urange(10, src))
 			if(!M.stat && !istype(M, /mob/living/silicon/ai))\
 				shake_camera(M, 3, 1)
 		qdel(src)
@@ -1178,7 +1178,7 @@
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
 		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>The button clicks loudly.</span>")
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, 0, surround = 0)
-		for(var/mob/M in ultra_range(10, src)) // Checks range
+		for(var/mob/M in urange(10, src)) // Checks range
 			if(!M.stat && !istype(M, /mob/living/silicon/ai)) // Checks to make sure whoever's getting shaken is alive/not the AI
 				sleep(8) // Short delay to match up with the explosion sound
 				shake_camera(M, 2, 1) // Shakes player camera 2 squares for 1 second.

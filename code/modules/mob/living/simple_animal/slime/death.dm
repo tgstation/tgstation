@@ -9,23 +9,23 @@
 			M.regenerate_icons()
 			is_adult = 0
 			maxHealth = 150
+			for(var/datum/action/innate/slime/reproduce/R in actions)
+				R.Remove(src)
 			var/datum/action/innate/slime/evolve/E = new
 			E.Grant(src)
-			revive()
+			revive(full_heal = 1)
 			regenerate_icons()
 			number = rand(1, 1000)
 			name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
 			return
 
 	if(buckled)
-		Feedstop(silent=1) //releases ourselves from the mob we fed on.
+		Feedstop(silent = 1) //releases ourselves from the mob we fed on.
 
 	stat = DEAD
 	overlays.len = 0
 
 	update_canmove()
-	if(blind)
-		blind.layer = 0
 
 	if(ticker && ticker.mode)
 		ticker.mode.check_win()

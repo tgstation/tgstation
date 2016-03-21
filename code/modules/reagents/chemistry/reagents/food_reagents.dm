@@ -27,9 +27,9 @@
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
 	if(prob(50))
-		M.heal_organ_damage(1,0)
+		M.heal_organ_damage(1,0, 0)
+		. = 1
 	..()
-	return
 
 /datum/reagent/consumable/vitamin
 	name = "Vitamin"
@@ -40,11 +40,11 @@
 
 /datum/reagent/consumable/vitamin/on_mob_life(mob/living/M)
 	if(prob(50))
-		M.heal_organ_damage(1,1)
+		M.heal_organ_damage(1,1, 0)
+		. = 1
 	if(M.satiety < 600)
 		M.satiety += 30
 	..()
-	return
 
 /datum/reagent/consumable/sugar
 	name = "Sugar"
@@ -58,13 +58,13 @@
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	M << "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>"
-	M.sleeping += 30
-	return
+	M.AdjustSleeping(30, 0)
+	. = 1
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/M)
-	M.sleeping += 3
+	M.AdjustSleeping(3, 0)
 	..()
-	return
+	. = 1
 
 /datum/reagent/consumable/virus_food
 	name = "Virus Food"
@@ -115,7 +115,6 @@
 			if(isslime(M))
 				M.bodytemperature += rand(20,25)
 	..()
-	return
 
 /datum/reagent/consumable/frostoil
 	name = "Frost Oil"
@@ -148,7 +147,6 @@
 			if(isslime(M))
 				M.bodytemperature -= rand(20,25)
 	..()
-	return
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, reac_volume)
 	if(reac_volume >= 5)
@@ -204,32 +202,32 @@
 		else if ( mouth_covered )	// Reduced effects if partially protected
 			if(prob(5))
 				victim.emote("scream")
-			victim.eye_blurry = max(M.eye_blurry, 3)
-			victim.eye_blind = max(M.eye_blind, 1)
+			victim.blur_eyes(3)
+			victim.blind_eyes(2)
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
 			victim.Weaken(3)
 			victim.drop_item()
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
-			victim.eye_blurry = max(M.eye_blurry, 3)
+			victim.blur_eyes(3)
 			victim.damageoverlaytemp = 30
 			return
 		else // Oh dear :D
 			if(prob(5))
 				victim.emote("scream")
-			victim.eye_blurry = max(M.eye_blurry, 5)
-			victim.eye_blind = max(M.eye_blind, 2)
+			victim.blur_eyes(5)
+			victim.blind_eyes(3)
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
 			victim.Weaken(5)
 			victim.drop_item()
+		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/M)
 	if(prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 	..()
-	return
 
 /datum/reagent/consumable/sodiumchloride
 	name = "Table Salt"
@@ -264,7 +262,6 @@
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
-	return
 
 /datum/reagent/mushroomhallucinogen
 	name = "Mushroom Hallucinogen"
@@ -274,32 +271,27 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 
 /datum/reagent/mushroomhallucinogen/on_mob_life(mob/living/M)
-	M.druggy = max(M.druggy, 30)
+	if(!M.slurring)
+		M.slurring = 1
 	switch(current_cycle)
 		if(1 to 5)
-			if (!M.slurring)
-				M.slurring = 1
 			M.Dizzy(5)
+			M.set_drugginess(30)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			if (!M.slurring)
-				M.slurring = 1
 			M.Jitter(10)
 			M.Dizzy(10)
-			M.druggy = max(M.druggy, 35)
+			M.set_drugginess(35)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if (10 to INFINITY)
-			if (!M.slurring)
-				M.slurring = 1
 			M.Jitter(20)
 			M.Dizzy(20)
-			M.druggy = max(M.druggy, 40)
+			M.set_drugginess(40)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
 	..()
-	return
 
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
@@ -309,9 +301,8 @@
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/M)
 	if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
-		M.heal_organ_damage(1,1)
-		..()
-		return
+		M.heal_organ_damage(1,1, 0)
+		. = 1
 	..()
 
 /datum/reagent/consumable/cornoil
@@ -358,7 +349,6 @@
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
-	return
 
 /datum/reagent/consumable/hell_ramen
 	name = "Hell Ramen"
@@ -370,7 +360,6 @@
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/M)
 	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 	..()
-	return
 
 /datum/reagent/consumable/flour
 	name = "Flour"

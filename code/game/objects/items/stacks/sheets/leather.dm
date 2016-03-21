@@ -5,6 +5,21 @@
 	icon_state = "sheet-hide"
 	origin_tech = null
 
+var/global/list/datum/stack_recipe/human_recipes = list( \
+	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/animalhide/human/New(var/loc, var/amount=null)
+	recipes = human_recipes
+	return ..()
+
+/obj/item/stack/sheet/animalhide/generic
+	name = "generic skin"
+	desc = "A piece of generic skin."
+	singular_name = "generic skin piece"
+	icon_state = "sheet-hide"
+	origin_tech = null
+
 /obj/item/stack/sheet/animalhide/corgi
 	name = "corgi hide"
 	desc = "The by-product of corgi farming."

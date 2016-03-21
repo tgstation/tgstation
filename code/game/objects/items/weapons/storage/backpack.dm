@@ -24,7 +24,7 @@
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
 	playsound(src.loc, "rustle", 50, 1, -5)
-	..()
+	return ..()
 
 /*
  * Backpack Types
@@ -385,7 +385,7 @@
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
-	new /obj/item/ammo_box/magazine/m12g/stun(src)
+	new /obj/item/ammo_box/magazine/m12g/slug(src)
 	new /obj/item/ammo_box/magazine/m12g/dragon(src)
 	return
 
@@ -397,21 +397,6 @@
 	contents = list()
 	for(var/i in 1 to 9)
 		new /obj/item/ammo_box/magazine/smgm45(src)
-	return
-
-
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam
-	desc = "A large dufflebag, packed to the brim with .45, 5.56, and .50 ammo."
-
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam/New()
-	..()
-	contents = list()
-	for(var/i in 1 to 4)
-		new /obj/item/ammo_box/magazine/smgm45(src)
-	for(var/i in 1 to 3)
-		new /obj/item/ammo_box/magazine/m556(src)
-	new /obj/item/ammo_box/a40mm(src)
-	new /obj/item/ammo_box/magazine/sniper_rounds(src)
 	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle
@@ -426,18 +411,6 @@
 	new /obj/item/weapon/suppressor/specialoffer(src)
 	return
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle
-	desc = "A large dufflebag containing an M90gl, a magazine, four additional grenades, and a pack of Syndicate cigarettes."
-
-/obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle/New()
-	..()
-	contents = list()
-	new /obj/item/ammo_box/magazine/m556(src)
-	new /obj/item/ammo_box/a40mm(src)
-	new /obj/item/weapon/gun/projectile/automatic/m90(src)
-	new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate(src)
-	return
-
 /obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle
 	desc = "A large dufflebag containing a Bulldog, several drums, and a collapsed hardsuit."
 
@@ -447,7 +420,7 @@
 	new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
-	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
+	new /obj/item/clothing/glasses/thermal/syndi(src)
 	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
@@ -488,3 +461,25 @@
 	new /obj/item/ammo_box/foambox/riot(src)
 	new /obj/item/weapon/grenade/chem_grenade/bioterrorfoam(src)
 	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/c4/New()
+	..()
+	contents = list()
+	for(var/i in 1 to 10)
+		new /obj/item/weapon/c4(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter
+	desc = "A large dufflebag containing New Russian pyro backpack sprayer, a pistol, a pipebomb, fireproof hardsuit, ammo, and other equipment."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter/New()
+	..()
+	new /obj/item/clothing/under/syndicate/soviet(src)
+	new /obj/item/weapon/watertank/operator(src)
+	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
+	new /obj/item/weapon/gun/projectile/automatic/pistol/APS(src)
+	new /obj/item/ammo_box/magazine/pistolm9mm(src)
+	new /obj/item/ammo_box/magazine/pistolm9mm(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka(src)
+	new /obj/item/weapon/reagent_containers/syringe/stimulants(src)
+	new /obj/item/weapon/grenade/syndieminibomb(src)

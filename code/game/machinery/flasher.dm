@@ -26,6 +26,10 @@
 	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	bulb = new /obj/item/device/assembly/flash/handheld(src)
 
+/obj/machinery/flasher/Move()
+	remove_from_proximity_list(src, range)
+	..()
+
 /obj/machinery/flasher/power_change()
 	if (powered() && anchored && bulb)
 		stat &= ~NOPOWER
@@ -127,11 +131,13 @@
 			overlays += "[base_state]-s"
 			anchored = 1
 			power_change()
+			add_to_proximity_list(src, range)
 		else
 			user << "<span class='notice'>[src] can now be moved.</span>"
 			overlays.Cut()
 			anchored = 0
 			power_change()
+			remove_from_proximity_list(src, range)
 
 	else
 		..()

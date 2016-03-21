@@ -127,6 +127,10 @@ Borg Hypospray
 	if(empty)
 		usr << "<span class='warning'>It is currently empty! Allow some time for the internal syntheszier to produce more.</span>"
 
+/obj/item/weapon/reagent_containers/borghypo/hacked
+	icon_state = "borghypo_s"
+	reagent_ids = list ("facid", "mutetoxin", "cyanide", "sodium_thiopental", "heparin", "lexorin")
+
 /obj/item/weapon/reagent_containers/borghypo/syndicate
 	name = "syndicate cyborg hypospray"
 	desc = "An experimental piece of Syndicate technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. Also metabolizes potassium iodide, for radiation poisoning, and morphine, for offense."

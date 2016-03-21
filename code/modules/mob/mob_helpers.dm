@@ -8,7 +8,8 @@
 	return 0
 
 /proc/check_zone(zone)
-	if(!zone)	return "chest"
+	if(!zone)
+		return "chest"
 	switch(zone)
 		if("eyes")
 			zone = "head"
@@ -36,12 +37,18 @@
 
 	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
 	switch(t)
-		if(1)		 return "head"
-		if(2)		 return "chest"
-		if(3 to 6)	 return "l_arm"
-		if(7 to 10)	 return "r_arm"
-		if(11 to 14) return "l_leg"
-		if(15 to 18) return "r_leg"
+		if(1)
+			return "head"
+		if(2)
+			return "chest"
+		if(3 to 6)
+			return "l_arm"
+		if(7 to 10)
+			return "r_arm"
+		if(11 to 14)
+			return "l_leg"
+		if(15 to 18)
+			return "r_leg"
 
 	return zone
 
@@ -83,20 +90,71 @@
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
 		if(rand(1,3)==3)
-			if(lowertext(newletter)=="o")	newletter="u"
-			if(lowertext(newletter)=="s")	newletter="ch"
-			if(lowertext(newletter)=="a")	newletter="ah"
-			if(lowertext(newletter)=="u")	newletter="oo"
-			if(lowertext(newletter)=="c")	newletter="k"
+			if(lowertext(newletter)=="o")
+				newletter="u"
+			if(lowertext(newletter)=="s")
+				newletter="ch"
+			if(lowertext(newletter)=="a")
+				newletter="ah"
+			if(lowertext(newletter)=="u")
+				newletter="oo"
+			if(lowertext(newletter)=="c")
+				newletter="k"
 		if(rand(1,20)==20)
-			if(newletter==" ")	newletter="...huuuhhh..."
-			if(newletter==".")	newletter=" *BURP*."
+			if(newletter==" ")
+				newletter="...huuuhhh..."
+			if(newletter==".")
+				newletter=" *BURP*."
 		switch(rand(1,20))
-			if(1)	newletter+="'"
-			if(10)	newletter+="[newletter]"
-			if(20)	newletter+="[newletter][newletter]"
+			if(1)
+				newletter+="'"
+			if(10)
+				newletter+="[newletter]"
+			if(20)
+				newletter+="[newletter][newletter]"
 		newphrase+="[newletter]";counter-=1
 	return newphrase
+
+
+/proc/cultslur(n) // Inflicted on victims of a stun talisman
+	var/phrase = html_decode(n)
+	var/leng = lentext(phrase)
+	var/counter=lentext(phrase)
+	var/newphrase=""
+	var/newletter=""
+	while(counter>=1)
+		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
+		if(rand(1,2)==2)
+			if(lowertext(newletter)=="o")
+				newletter="u"
+			if(lowertext(newletter)=="s")
+				newletter="ch"
+			if(lowertext(newletter)=="a")
+				newletter="ah"
+			if(lowertext(newletter)=="u")
+				newletter="oo"
+			if(lowertext(newletter)=="c")
+				newletter=" NAR "
+			if(lowertext(newletter)=="t")
+				newletter=" SIE "
+		if(rand(1,4)==4)
+			if(newletter==" ")
+				newletter=" GLORY "
+			if(newletter=="H")
+				newletter=" HAIL "
+
+		switch(rand(1,10))
+			if(1)
+				newletter="'"
+			if(2)
+				newletter+="agn"
+			if(3)
+				newletter="fth"
+			if(4)
+				newletter="nglu"
+		newphrase+="[newletter]";counter-=1
+	return newphrase
+
 
 /proc/stutter(n)
 	var/te = html_decode(n)
@@ -222,16 +280,24 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)
-			if("help")		return 0
-			if("disarm")	return 1
-			if("grab")		return 2
-			else			return 3
+			if("help")
+				return 0
+			if("disarm")
+				return 1
+			if("grab")
+				return 2
+			else
+				return 3
 	else
 		switch(argument)
-			if(0)			return "help"
-			if(1)			return "disarm"
-			if(2)			return "grab"
-			else			return "harm"
+			if(0)
+				return "help"
+			if(1)
+				return "disarm"
+			if(2)
+				return "grab"
+			else
+				return "harm"
 
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
@@ -260,10 +326,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
 
 		if(hud_used && hud_used.action_intent)
-			if(a_intent == "harm")
-				hud_used.action_intent.icon_state = "harm"
-			else
-				hud_used.action_intent.icon_state = "help"
+			hud_used.action_intent.icon_state = "[a_intent]"
 
 /proc/is_blind(A)
 	if(ismob(A))
@@ -350,7 +413,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 						A.overlays += alert_overlay
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute, burn)
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
 
 	var/dam //changes repair text based on how much brute/burn was supplied
 
@@ -373,7 +436,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return
 
 /proc/IsAdminGhost(var/mob/user)
-	if(check_rights_for(user.client, R_ADMIN) && istype(user, /mob/dead/observer) && user.client.AI_Interact)
-		return 1
-	else
-		return 0
+	if(!user.client) // Do they have a client?
+		return
+	if(!isobserver(user)) // Are they a ghost?
+		return
+	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
+		return
+	if(!user.client.AI_Interact) // Do they have it enabled?
+		return
+	return TRUE

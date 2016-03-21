@@ -51,7 +51,7 @@ var/religion_name = null
 	return capitalize(name)
 
 /proc/station_name()
-	if (station_name)
+	if(station_name)
 		return station_name
 
 	if(config && config.station_name)
@@ -59,7 +59,7 @@ var/religion_name = null
 	else
 		station_name = new_station_name()
 
-	if (config && config.server_name)
+	if(config && config.server_name)
 		world.name = "[config.server_name][config.server_name==station_name ? "" : ": [station_name]"]"
 	else
 		world.name = station_name

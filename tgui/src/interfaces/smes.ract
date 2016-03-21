@@ -1,24 +1,24 @@
 <script>
-component.exports = {
-  computed: {
-    capacityPercentState () {
-      const charge = this.get('data.capacityPercent')
-      if (charge > 50) return 'good'
-      else if (charge > 15) return 'average'
-      else return 'bad'
-    },
-    inputState () {
-      if (this.get('data.capacityPercent') >= 100) return 'good'
-      else if (this.get('data.inputting')) return 'average'
-      else return 'bad'
-    },
-    outputState () {
-      if (this.get('data.outputting')) return 'good'
-      else if (this.get('data.charge') > 0) return 'average'
-      else return 'bad'
+  component.exports = {
+    computed: {
+      capacityPercentState () {
+        const charge = this.get('data.capacityPercent')
+        if (charge > 50) return 'good'
+        else if (charge > 15) return 'average'
+        else return 'bad'
+      },
+      inputState () {
+        if (this.get('data.capacityPercent') >= 100) return 'good'
+        else if (this.get('data.inputting')) return 'average'
+        else return 'bad'
+      },
+      outputState () {
+        if (this.get('data.outputting')) return 'good'
+        else if (this.get('data.charge') > 0) return 'average'
+        else return 'bad'
+      }
     }
   }
-}
 </script>
 
 <ui-display title='Storage'>

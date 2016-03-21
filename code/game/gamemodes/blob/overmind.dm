@@ -17,9 +17,27 @@
 	var/last_attack = 0
 	var/datum/reagent/blob/blob_reagent_datum = new/datum/reagent/blob()
 	var/list/blob_mobs = list()
+	var/list/resource_blobs = list()
 	var/ghostimage = null
+	var/free_chem_rerolls = 1 //one free chemical reroll
+	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
+	var/placed = 0
+	var/base_point_rate = 2 //for blob core placement
+	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
+	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 
-/mob/camera/blob/New()
+/mob/camera/blob/New(loc, pre_placed = 0, mode_made = 0)
+	if(pre_placed) //we already have a core!
+		manualplace_min_time = 0
+		autoplace_max_time = 0
+		placed = 1
+	else
+		if(mode_made)
+			manualplace_min_time = world.time + BLOB_NO_PLACE_TIME
+		else
+			manualplace_min_time += world.time
+		autoplace_max_time += world.time
+	overminds += src
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
@@ -38,11 +56,29 @@
 
 /mob/camera/blob/Life()
 	if(!blob_core)
-		qdel(src)
+		if(!placed)
+			if(manualplace_min_time && world.time >= manualplace_min_time)
+				src << "<b><span class='big'><font color=\"#EE4000\">You may now place your blob core.</font></span></b>"
+				src << "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [round((autoplace_max_time - world.time)/600, 0.5)] minutes.</font></span>"
+				manualplace_min_time = 0
+			if(autoplace_max_time && world.time >= autoplace_max_time)
+				place_blob_core(base_point_rate, 1)
+		else
+			qdel(src)
 	..()
 
 /mob/camera/blob/Destroy()
-	if (ghostimage)
+	for(var/BL in blobs)
+		var/obj/effect/blob/B = BL
+		if(B.overmind == src)
+			B.overmind = null
+			B.update_icon() //reset anything that was ours
+	for(var/BLO in blob_mobs)
+		var/mob/living/simple_animal/hostile/blob/BM = BLO
+		BM.overmind = null
+		BM.update_icons()
+	overminds -= src
+	if(ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
 		ghostimage = null;
@@ -54,11 +90,14 @@
 	sync_mind()
 	src << "<span class='notice'>You are the overmind!</span>"
 	blob_help()
-	update_health()
+	update_health_hud()
 
-/mob/camera/blob/proc/update_health()
+/mob/camera/blob/update_health_hud()
 	if(blob_core)
-		hud_used.blobhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
+		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
+		for(var/mob/living/simple_animal/hostile/blob/blobbernaut/B in blob_mobs)
+			if(B.hud_used && B.hud_used.blobpwrdisplay)
+				B.hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_core.health)]</font></div>"
 
 /mob/camera/blob/proc/add_points(points)
 	if(points != 0)
@@ -110,168 +149,26 @@
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
+		if(free_chem_rerolls)
+			stat(null, "You have [free_chem_rerolls] Free Chemical Reroll\s Remaining")
+		if(!placed)
+			if(manualplace_min_time)
+				stat(null, "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]")
+			stat(null, "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]")
 
 /mob/camera/blob/Move(NewLoc, Dir = 0)
-	var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
-	if(B)
-		loc = NewLoc
+	if(placed)
+		var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
+		if(B)
+			loc = NewLoc
+		else
+			return 0
 	else
-		return 0
+		var/area/A = get_area(NewLoc)
+		if(istype(NewLoc, /turf/space) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
+			return 0
+		loc = NewLoc
+		return 1
 
 /mob/camera/blob/proc/can_attack()
 	return (world.time > (last_attack + CLICK_CD_RANGE))
-
-
-/obj/screen/blob
-	icon = 'icons/mob/blob.dmi'
-
-/obj/screen/blob/BlobHelp
-	icon_state = "ui_help"
-	name = "Blob Help"
-	desc = "Help on playing blob!"
-
-/obj/screen/blob/BlobHelp/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.blob_help()
-
-/obj/screen/blob/JumpToNode
-	icon_state = "ui_tonode"
-	name = "Jump to Node"
-	desc = "Moves your camera to a selected blob node."
-
-/obj/screen/blob/JumpToNode/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.jump_to_node()
-
-/obj/screen/blob/JumpToCore
-	icon_state = "ui_tocore"
-	name = "Jump to Core"
-	desc = "Moves your camera to your blob core."
-
-/obj/screen/blob/JumpToCore/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.transport_core()
-
-/obj/screen/blob/Blobbernaut
-	icon_state = "ui_blobbernaut"
-	name = "Produce Blobbernaut (20)"
-	desc = "Produces a blobbernaut for 20 points."
-
-/obj/screen/blob/Blobbernaut/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.create_blobbernaut()
-
-/obj/screen/blob/ResourceBlob
-	icon_state = "ui_resource"
-	name = "Produce Resource Blob (40)"
-	desc = "Produces a resource blob for 40 points."
-
-/obj/screen/blob/ResourceBlob/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.create_resource()
-
-/obj/screen/blob/NodeBlob
-	icon_state = "ui_node"
-	name = "Produce Node Blob (60)"
-	desc = "Produces a node blob for 60 points."
-
-/obj/screen/blob/NodeBlob/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.create_node()
-
-/obj/screen/blob/FactoryBlob
-	icon_state = "ui_factory"
-	name = "Produce Factory Blob (60)"
-	desc = "Produces a resource blob for 60 points."
-
-/obj/screen/blob/FactoryBlob/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.create_factory()
-
-/obj/screen/blob/ReadaptChemical
-	icon_state = "ui_chemswap"
-	name = "Readapt Chemical (40)"
-	desc = "Randomly rerolls your chemical for 40 points."
-
-/obj/screen/blob/ReadaptChemical/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.chemical_reroll()
-
-/obj/screen/blob/RelocateCore
-	icon_state = "ui_swap"
-	name = "Relocate Core (80)"
-	desc = "Swaps a node and your core for 80 points."
-
-/obj/screen/blob/RelocateCore/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.relocate_core()
-
-/datum/hud/proc/blob_hud(ui_style = 'icons/mob/screen_midnight.dmi')
-	adding = list()
-
-	var/obj/screen/using
-
-	blobpwrdisplay = new /obj/screen()
-	blobpwrdisplay.name = "blob power"
-	blobpwrdisplay.icon_state = "block"
-	blobpwrdisplay.screen_loc = ui_health
-	blobpwrdisplay.mouse_opacity = 0
-	blobpwrdisplay.layer = 20
-	adding += blobpwrdisplay
-
-	blobhealthdisplay = new /obj/screen()
-	blobhealthdisplay.name = "blob health"
-	blobhealthdisplay.icon_state = "block"
-	blobhealthdisplay.screen_loc = ui_internal
-	blobhealthdisplay.mouse_opacity = 0
-	blobhealthdisplay.layer = 20
-	adding += blobhealthdisplay
-
-	using = new /obj/screen/blob/BlobHelp()
-	using.screen_loc = "NORTH:-6,WEST:6"
-	adding += using
-
-	using = new /obj/screen/blob/JumpToNode()
-	using.screen_loc = ui_inventory
-	adding += using
-
-	using = new /obj/screen/blob/JumpToCore()
-	using.screen_loc = ui_zonesel
-	adding += using
-
-	using = new /obj/screen/blob/Blobbernaut()
-	using.screen_loc = ui_belt
-	adding += using
-
-	using = new /obj/screen/blob/ResourceBlob()
-	using.screen_loc = ui_back
-	adding += using
-
-	using = new /obj/screen/blob/NodeBlob()
-	using.screen_loc = ui_lhand
-	adding += using
-
-	using = new /obj/screen/blob/FactoryBlob()
-	using.screen_loc = ui_rhand
-	adding += using
-
-	using = new /obj/screen/blob/ReadaptChemical()
-	using.screen_loc = ui_storage1
-	adding += using
-
-	using = new /obj/screen/blob/RelocateCore()
-	using.screen_loc = ui_storage2
-	adding += using
-
-	mymob.client.screen = list()
-	mymob.client.screen += mymob.client.void
-	mymob.client.screen += adding

@@ -1,4 +1,4 @@
-//These procs handle putting s tuff in your hand. It's probably best to use these rather than setting stuff manually
+//These procs handle putting stuff in your hand. It's probably best to use these rather than setting stuff manually
 //as they handle all relevant stuff like adding it to the player's screen and such
 
 //Returns the thing in our active hand (whatever is in our active module-slot, in this case)
@@ -15,6 +15,7 @@
 	if(istype(O,/obj/item/borg/sight))
 		var/obj/item/borg/sight/S = O
 		sight_mode &= ~S.sight_mode
+		update_sight()
 	else if(istype(O, /obj/item/weapon/storage/bag/tray/))
 		var/obj/item/weapon/storage/bag/tray/T = O
 		T.do_quick_empty()
@@ -51,7 +52,9 @@
 		O.screen_loc = inv1.screen_loc
 		contents += O
 		if(istype(module_state_1,/obj/item/borg/sight))
-			sight_mode |= module_state_1:sight_mode
+			var/obj/item/borg/sight/S = module_state_1
+			sight_mode |= S.sight_mode
+			update_sight()
 	else if(!module_state_2)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_2 = O
@@ -59,7 +62,9 @@
 		O.screen_loc = inv2.screen_loc
 		contents += O
 		if(istype(module_state_2,/obj/item/borg/sight))
-			sight_mode |= module_state_2:sight_mode
+			var/obj/item/borg/sight/S = module_state_2
+			sight_mode |= S.sight_mode
+			update_sight()
 	else if(!module_state_3)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_3 = O
@@ -67,7 +72,9 @@
 		O.screen_loc = inv3.screen_loc
 		contents += O
 		if(istype(module_state_3,/obj/item/borg/sight))
-			sight_mode |= module_state_3:sight_mode
+			var/obj/item/borg/sight/S = module_state_3
+			sight_mode |= S.sight_mode
+			update_sight()
 	else
 		src << "<span class='warning'>You need to disable a module first!</span>"
 

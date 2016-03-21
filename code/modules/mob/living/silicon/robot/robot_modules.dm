@@ -84,7 +84,6 @@
 	emag.name = "Placeholder Emag Item"
 	return
 
-
 /obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	for(var/datum/robot_energy_storage/st in storages)
 		st.energy = min(st.max_energy, st.energy + coeff * st.recharge_rate)
@@ -101,8 +100,6 @@
 				B.bcell.charge = B.bcell.maxcharge
 
 	R.toner = R.tonermax
-
-	return
 
 /obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
 	var/list/temp_list = modules
@@ -123,7 +120,6 @@
 /obj/item/weapon/robot_module/proc/on_emag()
 	return
 
-
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
 
@@ -131,8 +127,8 @@
 	..()
 	modules += new /obj/item/weapon/melee/baton/loaded(src)
 	modules += new /obj/item/weapon/extinguisher(src)
-	modules += new /obj/item/weapon/wrench(src)
-	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/wrench/cyborg(src)
+	modules += new /obj/item/weapon/crowbar/cyborg(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	emag = new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	fix_modules()
@@ -161,18 +157,9 @@
 
 	add_module(new /obj/item/stack/medical/gauze/cyborg())
 
-	emag = new /obj/item/weapon/reagent_containers/spray(src)
-	emag.reagents.add_reagent("facid", 250)
-	emag.name = "Fluacid spray"
+	emag = new /obj/item/weapon/reagent_containers/borghypo/hacked(src)
 
 	fix_modules()
-
-/obj/item/weapon/robot_module/medical/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	if(R.emagged && istype(emag, /obj/item/weapon/reagent_containers/spray))
-		emag.reagents.add_reagent("facid", 2 * coeff)
-
-
 
 /obj/item/weapon/robot_module/engineering
 	name = "engineering robot module"
@@ -185,11 +172,11 @@
 	modules += new /obj/item/weapon/pipe_dispenser(src) //What could possibly go wrong?
 	modules += new /obj/item/weapon/extinguisher(src)
 	modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
-	modules += new /obj/item/weapon/screwdriver(src)
-	modules += new /obj/item/weapon/wrench(src)
-	modules += new /obj/item/weapon/crowbar(src)
-	modules += new /obj/item/weapon/wirecutters(src)
-	modules += new /obj/item/device/multitool(src)
+	modules += new /obj/item/weapon/screwdriver/cyborg(src)
+	modules += new /obj/item/weapon/wrench/cyborg(src)
+	modules += new /obj/item/weapon/crowbar/cyborg(src)
+	modules += new /obj/item/weapon/wirecutters/cyborg(src)
+	modules += new /obj/item/device/multitool/cyborg(src)
 	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/device/analyzer(src)
 
@@ -206,8 +193,6 @@
 	add_module(new /obj/item/stack/cable_coil/cyborg(src,MAXCOIL,"red"))
 
 	fix_modules()
-
-
 
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
@@ -231,8 +216,6 @@
 			T.update_icon()
 		else
 			T.charge_tick = 0
-
-
 
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
@@ -310,8 +293,6 @@
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	fix_modules()
 
-
-
 /obj/item/weapon/robot_module/syndicate
 	name = "syndicate assault robot module"
 
@@ -321,8 +302,7 @@
 	modules += new /obj/item/weapon/gun/energy/printer(src)
 	modules += new /obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg(src)
 	modules += new /obj/item/weapon/card/emag(src)
-	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-	modules += new /obj/item/weapon/crowbar/red(src)
+	modules += new /obj/item/weapon/crowbar/cyborg(src)
 	modules += new /obj/item/weapon/pinpointer/operative(src)
 	emag = null
 	fix_modules()
@@ -343,14 +323,11 @@
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg/saw(src) //Energy saw -- primary weapon
 	modules += new /obj/item/roller/robo(src)
 	modules += new /obj/item/weapon/card/emag(src)
-	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/crowbar/cyborg(src)
 	modules += new /obj/item/weapon/pinpointer/operative(src)
 	emag = null
 
-
 	add_module(new /obj/item/stack/medical/gauze/cyborg())
-
 	fix_modules()
 
 /datum/robot_energy_storage

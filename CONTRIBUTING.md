@@ -193,6 +193,14 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Do not divide when you can easily convert it to a multiplication. (ie `4/2` should be done as `4*0.5`)
 
+####Enforced not enforced
+The following different coding styles are not only not enforced, but it is generally frowned upon to change them over from one to the other for little reason:
+
+* English/British spelling on var/proc names
+	* Color/Colour nobody cares,
+* Spaces after control statements
+	* if() if () nobody cares.
+
 ####Operators and spaces:
 (this is not strictly enforced, but more a guideline for readability's sake)
 
@@ -212,6 +220,8 @@ Math operators like +, -, /, *, etc are up in the air, just choose which version
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
 
 * In-To for loops: ```for(var/i = 1, i <= some_value, i++)``` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family) however DM's ```for(var/i in 1 to some_value)``` syntax is oddly faster than its implementation of the former syntax; where possible it's advised to use DM's syntax. (Note, the ```to``` keyword is inclusive, so it automatically defaults to replacing ```<=```, if you want ```<``` then you should write it as ```1 to some_value-1```).
+HOWEVER, if either ```some_value``` or ```i``` changes within the body of the for (underneath the ```for(...)``` header) or if you are looping over a list AND changing the length of the list then you can NOT use this type of for loop!
+
 
 * Istypeless for loops: a name for a differing syntax for writing for-each style loops in DM, however it is NOT DM's standard syntax hence why this is considered a quirk. Take a look at this:
 ```
@@ -262,4 +272,4 @@ There is no strict process when it comes to merging pull requests, pull requests
 
 * If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
 
-* If your pull request is accepted, the code you add is no longer exclusively yours but everyones, everyone is free to work on it but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager. It is a shame this has to be explicitly told but there have been cases where this would've saved some trouble.
+* If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.

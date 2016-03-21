@@ -91,8 +91,7 @@
 	item_state = "bunnyhead"
 	desc = "Considerably more cute than 'Frank'"
 	slowdown = -1
-	flags = BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/bunnysuit
 	name = "Easter Bunny Suit"

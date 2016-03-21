@@ -17,8 +17,8 @@
 /datum/wires/autolathe/get_status()
 	var/obj/machinery/autolathe/A = holder
 	var/list/status = list()
-	status += "The red light is [A.disabled ? "off" : "on"]."
-	status += "The blue light is [A.hacked ? "off" : "on"]."
+	status += "The red light is [A.disabled ? "on" : "off"]."
+	status += "The blue light is [A.hacked ? "on" : "off"]."
 	return status
 
 /datum/wires/autolathe/on_pulse(wire)
@@ -26,25 +26,19 @@
 	switch(wire)
 		if(WIRE_HACK)
 			A.adjust_hacked(!A.hacked)
-			spawn(50)
-				if(A && !is_cut(wire))
-					A.adjust_hacked(FALSE)
+			addtimer(A, "reset", 60, FALSE, wire)
 		if(WIRE_SHOCK)
 			A.shocked = !A.shocked
-			spawn(50)
-				if(A && !is_cut(wire))
-					A.shocked = FALSE
+			addtimer(A, "reset", 60, FALSE, wire)
 		if(WIRE_DISABLE)
 			A.disabled = !A.disabled
-			spawn(50)
-				if(A && !is_cut(wire))
-					A.disabled = FALSE
+			addtimer(A, "reset", 60, FALSE, wire)
 
 /datum/wires/autolathe/on_cut(wire, mend)
 	var/obj/machinery/autolathe/A = holder
 	switch(wire)
 		if(WIRE_HACK)
-			A.adjust_hacked(mend)
+			A.adjust_hacked(!mend)
 		if(WIRE_HACK)
 			A.shocked = !mend
 		if(WIRE_DISABLE)

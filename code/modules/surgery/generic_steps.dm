@@ -52,15 +52,18 @@
 
 	if(istype(tool, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = tool
-		if(WT.isOn())	return 1
+		if(WT.isOn())
+			return 1
 
 	else if(istype(tool, /obj/item/weapon/lighter))
 		var/obj/item/weapon/lighter/L = tool
-		if(L.lit)	return 1
+		if(L.lit)
+			return 1
 
 	else if(istype(tool, /obj/item/weapon/match))
 		var/obj/item/weapon/match/M = tool
-		if(M.lit)	return 1
+		if(M.lit)
+			return 1
 
 	return 0
 

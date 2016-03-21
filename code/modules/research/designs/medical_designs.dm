@@ -37,18 +37,6 @@
 	build_path = /obj/item/device/mmi
 	category = list("Misc","Medical Designs")
 
-/datum/design/mmi_radio
-	name = "Radio-enabled Man-Machine Interface"
-	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
-	id = "mmi_radio"
-	req_tech = list("programming" = 2, "biotech" = 4)
-	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 1200, MAT_GLASS = 500)
-	construction_time = 75
-	reliability = 74
-	build_path = /obj/item/device/mmi/radio_enabled
-	category = list("Misc","Medical Designs")
-
 /datum/design/posibrain
 	name = "Positronic Brain"
 	desc = "The latest in Artificial Intelligences."
@@ -133,6 +121,17 @@
 	build_path = /obj/item/organ/internal/cyberimp/eyes/shield
 	category = list("Misc", "Medical Designs")
 
+/datum/design/cyberimp_breather
+	name = "Breathing Tube implant"
+	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
+	id = "ci-breather"
+	req_tech = list("materials" = 3, "biotech" = 3)
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 35
+	materials = list(MAT_METAL = 200, MAT_GLASS = 250)
+	build_path = /obj/item/organ/internal/cyberimp/mouth/breathing_tube
+	category = list("Misc", "Medical Designs")
+
 /datum/design/cyberimp_medical_hud
 	name = "Medical HUD implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
@@ -186,7 +185,7 @@
 	construction_time = 60
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 400, MAT_GOLD = 400)
 	build_path = /obj/item/organ/internal/cyberimp/brain/anti_drop
-	category = list("Medical Designs")
+	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_antistun
 	name = "CNS Rebooter implant"
@@ -197,7 +196,7 @@
 	construction_time = 60
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 500, MAT_GOLD = 1000)
 	build_path = /obj/item/organ/internal/cyberimp/brain/anti_stun
-	category = list("Medical Designs")
+	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_nutriment
 	name = "Nutriment pump implant"
@@ -208,7 +207,7 @@
 	construction_time = 40
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 500)
 	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment
-	category = list("Medical Designs")
+	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_nutriment_plus
 	name = "Nutriment pump implant PLUS"
@@ -219,7 +218,7 @@
 	construction_time = 50
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 750)
 	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment/plus
-	category = list("Medical Designs")
+	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_reviver
 	name = "Reviver implant"
@@ -230,6 +229,17 @@
 	construction_time = 60
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 1000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/organ/internal/cyberimp/chest/reviver
+	category = list("Misc", "Medical Designs")
+
+/datum/design/cyberimp_thrusters
+	name = "Thrusters set implant"
+	desc = "This implant will allow you to use gas from environment or your internals for propulsion in zero-gravity areas."
+	id = "ci-thrusters"
+	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 5, "magnets" = 4, "engineering" = 5)
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 80
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_SILVER = 1000, MAT_DIAMOND = 1000)
+	build_path = /obj/item/organ/internal/cyberimp/chest/thrusters
 	category = list("Misc", "Medical Designs")
 
 
@@ -249,7 +259,7 @@
 
 /datum/design/implantcase
 	name = "Implant Case"
-	desc = "A glass case containing an implant."
+	desc = "A glass case for containing an implant."
 	id = "implantcase"
 	req_tech = list("materials" = 1, "biotech" = 2)
 	build_type = PROTOLATHE

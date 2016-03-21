@@ -63,7 +63,7 @@
 		if(do_after(user, src.cleanspeed, target = target))
 			user << "<span class='notice'>You scrub \the [target.name] out.</span>"
 			qdel(target)
-	else if(ishuman(target) && user.zone_sel && user.zone_sel.selecting == "mouth")
+	else if(ishuman(target) && user.zone_selected == "mouth")
 		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
 		return
 	else if(istype(target, /obj/structure/window))

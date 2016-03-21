@@ -27,7 +27,8 @@
 	return
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
-	if(!start || !end) return 0
+	if(!start || !end)
+		return 0
 	var/dy
 	var/dx
 	dy=(32*end.y+end.pixel_y)-(32*start.y+start.pixel_y)
@@ -117,18 +118,25 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 			//Now to find a box from center location and make that our destination.
 			for(var/turf/T in block(locate(center.x+b1xerror,center.y+b1yerror,location.z), locate(center.x+b2xerror,center.y+b2yerror,location.z) ))
-				if(density&&T.density)	continue//If density was specified.
-				if(T.x>world.maxx || T.x<1)	continue//Don't want them to teleport off the map.
-				if(T.y>world.maxy || T.y<1)	continue
+				if(density&&T.density)
+					continue//If density was specified.
+				if(T.x>world.maxx || T.x<1)
+					continue//Don't want them to teleport off the map.
+				if(T.y>world.maxy || T.y<1)
+					continue
 				destination_list += T
 			if(destination_list.len)
 				destination = pick(destination_list)
-			else	return
+			else
+				return
 
 		else//Same deal here.
-			if(density&&destination.density)	return
-			if(destination.x>world.maxx || destination.x<1)	return
-			if(destination.y>world.maxy || destination.y<1)	return
+			if(density&&destination.density)
+				return
+			if(destination.x>world.maxx || destination.x<1)
+				return
+			if(destination.y>world.maxy || destination.y<1)
+				return
 	else	return
 
 	return destination
@@ -177,82 +185,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return 0
 	return 1
 
-//This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
-//Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
-/mob/proc/fully_replace_character_name(oldname,newname)
-	if(!newname)	return 0
-	real_name = newname
-	name = newname
-	if(mind)
-		mind.name = newname
-	if(istype(src, /mob/living/carbon))
-		var/mob/living/carbon/C = src
-		if(C.dna)
-			C.dna.real_name = real_name
-
-	if(isAI(src))
-		var/mob/living/silicon/ai/AI = src
-		if(oldname != real_name)
-			if(AI.eyeobj)
-				AI.eyeobj.name = "[newname] (AI Eye)"
-
-			// Set ai pda name
-			if(AI.aiPDA)
-				AI.aiPDA.owner = newname
-				AI.aiPDA.name = newname + " (" + AI.aiPDA.ownjob + ")"
-
-			// Notify Cyborgs
-			for(var/mob/living/silicon/robot/Slave in AI.connected_robots)
-				Slave.show_laws()
-
-	if(isrobot(src))
-		var/mob/living/silicon/robot/R = src
-		if(oldname != real_name)
-			R.notify_ai(3, oldname, newname)
-		if(R.camera)
-			R.camera.c_tag = real_name
-
-	if(oldname)
-		//update the datacore records! This is goig to be a bit costly.
-		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
-			var/datum/data/record/R = find_record("name", oldname, L)
-			if(R)	R.fields["name"] = newname
-
-		//update our pda and id if we have them on our person
-		var/list/searching = GetAllContents()
-		var/search_id = 1
-		var/search_pda = 1
-
-		for(var/A in searching)
-			if( search_id && istype(A,/obj/item/weapon/card/id) )
-				var/obj/item/weapon/card/id/ID = A
-				if(ID.registered_name == oldname)
-					ID.registered_name = newname
-					ID.update_label()
-					if(!search_pda)	break
-					search_id = 0
-
-			else if( search_pda && istype(A,/obj/item/device/pda) )
-				var/obj/item/device/pda/PDA = A
-				if(PDA.owner == oldname)
-					PDA.owner = newname
-					PDA.update_label()
-					if(!search_id)	break
-					search_pda = 0
-
-		for(var/datum/mind/T in ticker.minds)
-			for(var/datum/objective/obj in T.objectives)
-				// Only update if this player is a target
-				if(obj.target && obj.target.current && obj.target.current.real_name == name)
-					obj.update_explanation_text()
-
-	return 1
-
-
-
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
-
-/mob/proc/rename_self(role, allow_numbers=0)
+/mob/proc/rename_self(role)
 	var/oldname = real_name
 	var/newname
 	var/loop = 1
@@ -284,13 +218,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		loop--
 		safety++
 
-	if(isAI(src))
-		oldname = null//don't bother with the records update crap
 	if(newname)
 		fully_replace_character_name(oldname,newname)
-		if(isrobot(src))
-			var/mob/living/silicon/robot/A = src
-			A.custom_name = newname
 
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
@@ -336,15 +265,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/select_active_free_borg(mob/user)
 	var/list/borgs = active_free_borgs()
 	if(borgs.len)
-		if(user)	. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in borgs
-		else		. = pick(borgs)
+		if(user)
+			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in borgs
+		else
+			. = pick(borgs)
 	return .
 
 /proc/select_active_ai(mob/user)
 	var/list/ais = active_ais()
 	if(ais.len)
-		if(user)	. = input(user,"AI signals detected:", "AI Selection", ais[1]) in ais
-		else		. = pick(ais)
+		if(user)
+			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in ais
+		else
+			. = pick(ais)
 	return .
 
 //Returns a list of all items of interest with their name
@@ -440,7 +373,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/key
 	var/ckey
 
-	if(!whom)	return "*null*"
+	if(!whom)
+		return "*null*"
 	if(istype(whom, /client))
 		C = whom
 		M = C.mob
@@ -603,22 +537,35 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(current != target_turf)
 		current = get_step_towards(current, target_turf)
 		while(current != target_turf)
-			if(steps > length) return 0
-			if(current.opacity) return 0
+			if(steps > length)
+				return 0
+			if(current.opacity)
+				return 0
 			for(var/atom/A in current)
-				if(A.opacity) return 0
+				if(A.opacity)
+					return 0
 			current = get_step_towards(current, target_turf)
 			steps++
 
 	return 1
 
 /proc/is_blocked_turf(turf/T)
-	var/cant_pass = 0
-	if(T.density) cant_pass = 1
-	for(var/atom/A in T)
-		if(A.density)//&&A.anchored
-			cant_pass = 1
-	return cant_pass
+	if(T.density)
+		return 1
+	for(var/i in T)
+		var/atom/A = i
+		if(A.density)
+			return 1
+	return 0
+
+/proc/is_anchored_dense_turf(turf/T) //like the older version of the above, fails only if also anchored
+	if(T.density)
+		return 1
+	for(var/i in T)
+		var/atom/movable/A = i
+		if(A.density && A.anchored)
+			return 1
+	return 0
 
 /proc/get_step_towards2(atom/ref , atom/trg)
 	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
@@ -643,16 +590,21 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			turf_last2 = get_step(turf_last2,dir_alt2)
 			breakpoint++
 
-		if(!free_tile) return get_step(ref, base_dir)
-		else return get_step_towards(ref,free_tile)
+		if(!free_tile)
+			return get_step(ref, base_dir)
+		else
+			return get_step_towards(ref,free_tile)
 
-	else return get_step(ref, base_dir)
+	else
+		return get_step(ref, base_dir)
 
 //Takes: Anything that could possibly have variables and a varname to check.
 //Returns: 1 if found, 0 if not.
 /proc/hasvar(datum/A, varname)
-	if(A.vars.Find(lowertext(varname))) return 1
-	else return 0
+	if(A.vars.Find(lowertext(varname)))
+		return 1
+	else
+		return 0
 
 //Repopulates sortedAreas list
 /proc/SortAreas()
@@ -670,15 +622,18 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
 /proc/get_areas(areatype)
-	if(!areatype) return null
-	if(istext(areatype)) areatype = text2path(areatype)
+	if(!areatype)
+		return null
+	if(istext(areatype))
+		areatype = text2path(areatype)
 	if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
 
 	var/list/areas = new/list()
 	for(var/area/N in world)
-		if(istype(N, areatype)) areas += N
+		if(istype(N, areatype))
+			areas += N
 	return areas
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
@@ -686,7 +641,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/get_area_turfs(areatype, target_z = 0)
 	if(!areatype)
 		return null
-	if(istext(areatype)) areatype = text2path(areatype)
+	if(istext(areatype))
+		areatype = text2path(areatype)
 	if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
@@ -702,8 +658,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all atoms	(objs, turfs, mobs) in areas of that type of that type in the world.
 /proc/get_area_all_atoms(areatype)
-	if(!areatype) return null
-	if(istext(areatype)) areatype = text2path(areatype)
+	if(!areatype)
+		return null
+	if(istext(areatype))
+		areatype = text2path(areatype)
 	if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
@@ -741,15 +699,24 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return
 
 /proc/parse_zone(zone)
-	if(zone == "r_hand") return "right hand"
-	else if (zone == "l_hand") return "left hand"
-	else if (zone == "l_arm") return "left arm"
-	else if (zone == "r_arm") return "right arm"
-	else if (zone == "l_leg") return "left leg"
-	else if (zone == "r_leg") return "right leg"
-	else if (zone == "l_foot") return "left foot"
-	else if (zone == "r_foot") return "right foot"
-	else return zone
+	if(zone == "r_hand")
+		return "right hand"
+	else if (zone == "l_hand")
+		return "left hand"
+	else if (zone == "l_arm")
+		return "left arm"
+	else if (zone == "r_arm")
+		return "right arm"
+	else if (zone == "l_leg")
+		return "left leg"
+	else if (zone == "r_leg")
+		return "right leg"
+	else if (zone == "l_foot")
+		return "left foot"
+	else if (zone == "r_foot")
+		return "right foot"
+	else
+		return zone
 
 
 //Gets the turf this atom inhabits
@@ -870,7 +837,7 @@ var/global/list/common_tools = list(
 Checks if that loc and dir has a item on the wall
 */
 var/list/WALLITEMS = list(
-	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
+	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
@@ -935,7 +902,7 @@ var/list/WALLITEMS_INVERSE = list(
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
 			if(id in hardcoded_gases || gas_concentration > 0.01) //ensures the four primary gases are always shown.
-				user << "<span class='notice'>[cached_gases[id][GAS_NAME]]: [round(gas_concentration*100)] %</span>"
+				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100)] %</span>"
 
 		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
 	else
@@ -984,11 +951,11 @@ var/list/WALLITEMS_INVERSE = list(
 
 
 /proc/screen_loc2turf(scr_loc, turf/origin)
-	var/tX = text2list(scr_loc, ",")
-	var/tY = text2list(tX[2], ":")
+	var/tX = splittext(scr_loc, ",")
+	var/tY = splittext(tX[2], ":")
 	var/tZ = origin.z
 	tY = tY[1]
-	tX = text2list(tX[1], ":")
+	tX = splittext(tX[1], ":")
 	tX = tX[1]
 	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
 	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
@@ -997,7 +964,7 @@ var/list/WALLITEMS_INVERSE = list(
 /proc/IsValidSrc(A)
 	if(istype(A, /datum))
 		var/datum/B = A
-		return !B.gc_destroyed
+		return !qdeleted(B)
 	if(istype(A, /client))
 		return 1
 	return 0
@@ -1150,8 +1117,27 @@ B --><-- A
 
 	return I
 
+//ultra range (no limitations on distance, faster than range for distances > 8); including areas drastically decreases performance
+/proc/urange(dist=0, atom/center=usr, orange=0, areas=0)
+	if(!dist)
+		if(!orange)
+			return list(center)
+		else
+			return list()
+
+	var/list/turfs = RANGE_TURFS(dist, center)
+	if(orange)
+		turfs -= get_turf(center)
+	. = list()
+	for(var/V in turfs)
+		var/turf/T = V
+		. += T
+		. += T.contents
+		if(areas)
+			. |= T.loc
+
 //similar function to range(), but with no limitations on the distance; will search spiralling outwards from the center
-/proc/ultra_range(dist=0, center=usr, orange=0)
+/proc/spiral_range(dist=0, center=usr, orange=0)
 	if(!dist)
 		if(!orange)
 			return list(center)
@@ -1208,6 +1194,58 @@ B --><-- A
 
 	return L
 
+//similar function to RANGE_TURFS(), but will search spiralling outwards from the center (like the above, but only turfs)
+/proc/spiral_range_turfs(dist=0, center=usr, orange=0)
+	if(!dist)
+		if(!orange)
+			return list(center)
+		else
+			return list()
+
+	var/turf/t_center = get_turf(center)
+	if(!t_center)
+		return list()
+
+	var/list/L = list()
+	var/turf/T
+	var/y
+	var/x
+	var/c_dist = 1
+
+	if(!orange)
+		L += t_center
+
+	while( c_dist <= dist )
+		y = t_center.y + c_dist
+		x = t_center.x - c_dist + 1
+		for(x in x to t_center.x+c_dist)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+
+		y = t_center.y + c_dist - 1
+		x = t_center.x + c_dist
+		for(y in t_center.y-c_dist to y)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+
+		y = t_center.y - c_dist
+		x = t_center.x + c_dist - 1
+		for(x in t_center.x-c_dist to x)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+
+		y = t_center.y - c_dist + 1
+		x = t_center.x - c_dist
+		for(y in y to t_center.y+c_dist)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+		c_dist++
+
+	return L
 
 /atom/proc/contains(var/atom/A)
 	if(!A)
@@ -1215,3 +1253,109 @@ B --><-- A
 	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
 			return 1
+
+/proc/add_to_proximity_list(atom/A, range)
+	var/turf/T = get_turf(A)
+	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
+	for(var/B in L)
+		var/turf/C = B
+		C.proximity_checkers |= A
+	return L
+
+/proc/remove_from_proximity_list(atom/A, range)
+	var/turf/T = get_turf(A)
+	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
+	for(var/B in L)
+		var/turf/C = B
+		C.proximity_checkers.Remove(A)
+
+/proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
+	var/turf/T = get_turf(A)
+	var/turf/Q = get_turf(B)
+	if(T == Q && range == newrange)
+		return 0
+	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
+	var/list/M = block(locate(Q.x - newrange, Q.y - newrange, Q.z), locate(Q.x + newrange, Q.y + newrange, Q.z))
+	var/list/N = L - M
+	var/list/O = M - L
+	for(var/C in N)
+		var/turf/D = C
+		D.proximity_checkers.Remove(checker)
+	for(var/E in O)
+		var/turf/F = E
+		F.proximity_checkers |= checker
+	return 1
+
+/proc/flick_overlay_static(image/I, atom/A, duration)
+	set waitfor = 0
+	if(!A || !I)
+		return
+	A.overlays |= I
+	sleep(duration)
+	A.overlays -= I
+
+/proc/get_areas_in_z(zlevel)
+	. = list()
+	var/validarea = 0
+	for(var/V in sortedAreas)
+		var/area/A = V
+		validarea = 1
+		for(var/turf/T in A)
+			if(T.z != zlevel)
+				validarea = 0
+				break
+		if(validarea)
+			. += A
+
+/proc/get_closest_atom(type, list, source)
+	var/closest_atom
+	var/closest_distance
+	for(var/A in list)
+		if(!istype(A, type))
+			continue
+		var/distance = get_dist(source, A)
+		if(!closest_distance)
+			closest_distance = distance
+			closest_atom = A
+		else
+			if(closest_distance > distance)
+				closest_distance = distance
+				closest_atom = A
+	return closest_atom
+
+proc/pick_closest_path(value)
+	var/list/matches = get_fancy_list_of_types()
+	if (!isnull(value) && value!="")
+		matches = filter_fancy_list(matches, value)
+
+	if(matches.len==0)
+		return
+
+	var/chosen
+	if(matches.len==1)
+		chosen = matches[1]
+	else
+		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
+		if(!chosen)
+			return
+	chosen = matches[chosen]
+	return chosen
+
+//gives us the stack trace from CRASH() without ending the current proc.
+/proc/stack_trace(msg)
+	CRASH(msg)
+
+//Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
+/proc/stoplag()
+	. = 1
+	sleep(world.tick_lag)
+#if DM_VERSION >= 510
+	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
+		. += 2
+		sleep(world.tick_lag*2)
+		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
+			. += 4
+			sleep(world.tick_lag*4)
+			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
+			//	not worth it.
+#endif

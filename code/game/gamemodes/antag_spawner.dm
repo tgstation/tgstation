@@ -121,12 +121,6 @@
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(target), slot_back)
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/box(target), slot_in_backpack)
 	target.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll/apprentice(target), slot_r_store)
-
-
-
-
-
-
 ///////////BORGS AND OPERATIVES
 
 
@@ -176,13 +170,14 @@
 	if(nuke)
 		new_op_code = nuke.r_code
 	M.mind.make_Nuke(T, new_op_code, 0, FALSE)
-
-
+	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
+	M.mind.name = newname
+	M.real_name = newname
+	M.name = newname
 
 
 
 //////SYNDICATE BORG
-
 /obj/item/weapon/antag_spawner/nuke_ops/borg_tele
 	name = "syndicate cyborg teleporter"
 	desc = "A single-use teleporter designed to quickly reinforce operatives in the field.."
@@ -203,6 +198,20 @@
 			R = new /mob/living/silicon/robot/syndicate/medical(T)
 		else
 			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
+
+	var/brainfirstname = pick(first_names_male)
+	if(prob(50))
+		brainfirstname = pick(first_names_female)
+	var/brainopslastname = pick(last_names)
+	if(ticker.mode.nukeops_lastname)  //the brain inside the syndiborg has the same last name as the other ops.
+		brainopslastname = ticker.mode.nukeops_lastname
+	var/brainopsname = "[brainfirstname] [brainopslastname]"
+
+	R.mmi.name = "Man-Machine Interface: [brainopsname]"
+	R.mmi.brain.name = "[brainopsname]'s brain"
+	R.mmi.brainmob.real_name = brainopsname
+	R.mmi.brainmob.name = brainopsname
+
 	R.key = C.key
 	ticker.mode.syndicates += R.mind
 	ticker.mode.update_synd_icons_added(R.mind)
@@ -211,13 +220,7 @@
 
 
 
-
-
-
-
-
 ///////////SLAUGHTER DEMON
-
 
 /obj/item/weapon/antag_spawner/slaughter_demon //Warning edgiest item in the game
 	name = "vial of blood"

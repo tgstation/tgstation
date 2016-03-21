@@ -36,16 +36,17 @@ var/global/list/uplinks = list()
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "uplink", name, 450, 750, master_ui, state)
+		ui.set_autoupdate(FALSE) // This UI is only ever opened by one person, and never is updated outside of user input.
 		ui.set_style("syndicate")
 		ui.open()
 
-/obj/item/device/uplink/get_ui_data(mob/user)
+/obj/item/device/uplink/ui_data(mob/user)
 	var/list/data = list()
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
 
 	var/list/uplink_items = get_uplink_items(gamemode)
-	data["buyable"] = list()
+	data["categories"] = list()
 	for(var/category in uplink_items)
 		var/list/cat = list(
 			"name" = category,
@@ -55,11 +56,10 @@ var/global/list/uplinks = list()
 			var/datum/uplink_item/I = uplink_items[category][item]
 			cat["items"] += list(list(
 				"name" = I.name,
-				"category" = I.category,
 				"cost" = I.cost,
 				"desc" = I.desc,
 			))
-		data["buyable"] += list(cat)
+		data["categories"] += list(cat)
 	return data
 
 /obj/item/device/uplink/ui_act(action, params)
@@ -68,16 +68,20 @@ var/global/list/uplinks = list()
 
 	switch(action)
 		if("buy")
-			var/list/uplink_items = get_uplink_items(gamemode)
-			var/category = params["category"]
 			var/item = params["item"]
-			var/datum/uplink_item/I = uplink_items[category][item]
-			if(I)
+
+			var/list/uplink_items = get_uplink_items(gamemode)
+			var/list/buyable_items = list()
+			for(var/category in uplink_items)
+				buyable_items += uplink_items[category]
+
+			if(item in buyable_items)
+				var/datum/uplink_item/I = buyable_items[item]
 				I.buy(usr, src)
+				. = TRUE
 		if("lock")
 			active = FALSE
 			SStgui.close_uis(src)
-	return 1
 
 
 /obj/item/device/uplink/ui_host()
@@ -96,6 +100,7 @@ var/global/list/uplinks = list()
 			user << "<span class='notice'>[I] refunded.</span>"
 			qdel(I)
 			return
+	..()
 
 // A collection of pre-set uplinks, for admin spawns.
 /obj/item/device/radio/uplink/New()

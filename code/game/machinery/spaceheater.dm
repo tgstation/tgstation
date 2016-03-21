@@ -5,6 +5,7 @@
 /obj/machinery/space_heater
 	anchored = 0
 	density = 1
+	interact_open = TRUE
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "sheater-off"
 	name = "space heater"
@@ -19,7 +20,6 @@
 	var/temperatureTolerance = 1
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
-
 
 /obj/machinery/space_heater/New()
 	..()
@@ -45,6 +45,14 @@
 		cell = null
 	return ..()
 
+/obj/machinery/space_heater/examine(mob/user)
+	..()
+	user << "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
+	if(cell)
+		user << "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
+	else
+		user << "There is no power cell installed."
+
 /obj/machinery/space_heater/update_icon()
 	if(on)
 		icon_state = "sheater-[mode]"
@@ -55,13 +63,50 @@
 	if(panel_open)
 		overlays += "sheater-open"
 
-/obj/machinery/space_heater/examine(mob/user)
-	..()
-	user << "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
-	if(cell)
-		user << "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
+/obj/machinery/space_heater/process()
+	if(!on || !is_operational())
+		return
+
+	if(cell && cell.charge > 0)
+		var/turf/simulated/L = loc
+		if(!istype(L))
+			if(mode != HEATER_MODE_STANDBY)
+				mode = HEATER_MODE_STANDBY
+				update_icon()
+			return
+
+		var/datum/gas_mixture/env = L.return_air()
+
+		var/newMode = HEATER_MODE_STANDBY
+		if(setMode != HEATER_MODE_COOL && env.temperature < targetTemperature - temperatureTolerance)
+			newMode = HEATER_MODE_HEAT
+		else if(setMode != HEATER_MODE_HEAT && env.temperature > targetTemperature + temperatureTolerance)
+			newMode = HEATER_MODE_COOL
+
+		if(mode != newMode)
+			mode = newMode
+			update_icon()
+
+		if(mode == HEATER_MODE_STANDBY)
+			return
+
+		var/heat_capacity = env.heat_capacity()
+		var/requiredPower = abs(env.temperature - targetTemperature) * heat_capacity
+		requiredPower = min(requiredPower, heatingPower)
+
+		if(requiredPower < 1)
+			return
+
+		var/deltaTemperature = requiredPower / heat_capacity
+		if(mode == HEATER_MODE_COOL)
+			deltaTemperature *= -1
+		if(deltaTemperature)
+			env.temperature += deltaTemperature
+			air_update_turf()
+		cell.use(requiredPower / efficiency)
 	else
-		user << "There is no power cell installed."
+		on = FALSE
+		update_icon()
 
 /obj/machinery/space_heater/RefreshParts()
 	var/laser = 0
@@ -128,7 +173,7 @@
 		ui = new(user, src, ui_key, "space_heater", name, 400, 305, master_ui, state)
 		ui.open()
 
-/obj/machinery/space_heater/get_ui_data()
+/obj/machinery/space_heater/ui_data()
 	var/list/data = list()
 	data["open"] = panel_open
 	data["on"] = on
@@ -172,16 +217,17 @@
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
-				target = input("New target temperature", name, round(targetTemperature - T0C, 1)) as num|null
-				. = .(action, list("target" = target))
-			else if(text2num(target) != null)
-				targetTemperature = text2num(target) + T0C
-				. = TRUE
+				target = input("New target temperature:", name, round(targetTemperature - T0C, 1)) as num|null
+				if(!isnull(target) && !..())
+					. = TRUE
 			else if(adjust)
-				targetTemperature += adjust
+				target = targetTemperature + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target= text2num(target) + T0C
 				. = TRUE
 			if(.)
-				targetTemperature = Clamp(round(targetTemperature, 1),
+				targetTemperature = Clamp(round(target),
 					max(settableTemperatureMedian - settableTemperatureRange, TCMB),
 					settableTemperatureMedian + settableTemperatureRange)
 		if("eject")
@@ -189,51 +235,6 @@
 				cell.loc = get_turf(src)
 				cell = null
 				. = TRUE
-
-/obj/machinery/space_heater/process()
-	if(!on || (stat & BROKEN))
-		return
-
-	if(cell && cell.charge > 0)
-		var/turf/simulated/L = loc
-		if(!istype(L))
-			if(mode != HEATER_MODE_STANDBY)
-				mode = HEATER_MODE_STANDBY
-				update_icon()
-			return
-
-		var/datum/gas_mixture/env = L.return_air()
-
-		var/newMode = HEATER_MODE_STANDBY
-		if(setMode != HEATER_MODE_COOL && env.temperature < targetTemperature - temperatureTolerance)
-			newMode = HEATER_MODE_HEAT
-		else if(setMode != HEATER_MODE_HEAT && env.temperature > targetTemperature + temperatureTolerance)
-			newMode = HEATER_MODE_COOL
-
-		if(mode != newMode)
-			mode = newMode
-			update_icon()
-
-		if(mode == HEATER_MODE_STANDBY)
-			return
-
-		var/heat_capacity = env.heat_capacity()
-		var/requiredPower = abs(env.temperature - targetTemperature) * heat_capacity
-		requiredPower = min(requiredPower, heatingPower)
-
-		if(requiredPower < 1)
-			return
-
-		var/deltaTemperature = requiredPower / heat_capacity
-		if(mode == HEATER_MODE_COOL)
-			deltaTemperature *= -1
-		if(deltaTemperature)
-			env.temperature += deltaTemperature
-			air_update_turf()
-		cell.use(requiredPower / efficiency)
-	else
-		on = FALSE
-		update_icon()
 
 #undef HEATER_MODE_STANDBY
 #undef HEATER_MODE_HEAT

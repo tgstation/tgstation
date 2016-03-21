@@ -15,18 +15,23 @@ z7 = empty space
 
 #if !defined(MAP_FILE)
 
+		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
+
+		#define MINETYPE "lavaland"
+
         #include "map_files\TgStation\tgstation.2.1.3.dmm"
         #include "map_files\generic\z2.dmm"
         #include "map_files\generic\z3.dmm"
         #include "map_files\generic\z4.dmm"
-        #include "map_files\generic\z5.dmm"
+        #include "map_files\generic\lavaland.dmm"
         #include "map_files\generic\z6.dmm"
         #include "map_files\generic\z7.dmm"
 
+		#define MAP_PATH "map_files/TgStation"
         #define MAP_FILE "tgstation.2.1.3.dmm"
         #define MAP_NAME "Box Station"
 
-        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED)
+        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = SELFLOOPING, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED)
 
 #elif !defined(MAP_OVERRIDE)
 

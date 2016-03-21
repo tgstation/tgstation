@@ -1,6 +1,6 @@
-<ui-display title='{{tank ? data.sensors[0].long_name : null}}'>
+<ui-display title='{{data.tank ? data.sensors[0].long_name : null}}'>
   {{#each adata.sensors}}
-    <ui-subdisplay title='{{!tank ? long_name : null}}'>
+    <ui-subdisplay title='{{!data.tank ? long_name : null}}'>
       <ui-section label='Pressure'>
 		<span>{{Math.fixed(pressure, 2)}} kPa</span>
       </ui-section>
@@ -15,14 +15,9 @@
         </ui-section>
 	  {{/each}}
     </ui-subdisplay>
-  {{else}}
-    <ui-section label='Initialize'>
-		<ui-button action='initialize' params='{"type": "dist"}'>Distribution and Waste</ui-button>
-		<ui-button action='initialize' params='{"type": "tank"}'>Tanks</ui-button>
-	</ui-section>
   {{/each}}
 </ui-display>
-{{#if tank}}
+{{#if data.tank}}
   <ui-display title='Controls' button>
   {{#partial button}}
     <ui-button icon='refresh' action='reconnect'>Reconnect</ui-button>
@@ -42,4 +37,4 @@
       <ui-button icon='pencil' action='pressure'>{{Math.round(adata.outputPressure)}} kPa</ui-button>
     </ui-section>
   </ui-display>
-{{/if tank}}
+{{/if}}
