@@ -244,8 +244,9 @@
 		update_icon_plant()
 		update_icon_lights()
 
-	if(istype(myseed, /obj/item/seeds/glowshroom))
-		SetLuminosity(round(myseed.potency / 10))
+	if(myseed && myseed.get_gene(/datum/plant_gene/trait/glow))
+		var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
+		SetLuminosity(G.get_lum(myseed))
 	else
 		SetLuminosity(0)
 
@@ -350,12 +351,7 @@
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25) // Mutates the current seed
 	if(!myseed)
 		return
-	myseed.adjust_lifespan(rand(-lifemut,lifemut))
-	myseed.adjust_endurance(rand(-endmut,endmut))
-	myseed.adjust_production(rand(-productmut,productmut))
-	myseed.adjust_yield(rand(-yieldmut,yieldmut))
-	myseed.adjust_potency(rand(-potmut,potmut))
-
+	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut)
 
 /obj/machinery/hydroponics/proc/hardmutate()
 	mutate(4, 10, 2, 4, 50)
@@ -717,7 +713,7 @@
 			reagent_source.update_icon()
 		return 1
 
-	else if(istype(O, /obj/item/seeds))
+	else if(istype(O, /obj/item/seeds) && !istype(O, /obj/item/seeds/sample))
 		if(!myseed)
 			if(istype(O, /obj/item/seeds/kudzu))
 				investigate_log("had Kudzu planted in it by [user.ckey]([user]) at ([x],[y],[z])","kudzu")
@@ -865,6 +861,7 @@
 	var/chosen = pick(livingplants)
 	var/mob/living/simple_animal/hostile/C = new chosen
 	C.faction = list("plants")
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
