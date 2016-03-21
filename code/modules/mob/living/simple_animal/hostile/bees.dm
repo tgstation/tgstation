@@ -135,6 +135,7 @@
 		if(beegent && isliving(target))
 			var/mob/living/L = target
 			beegent.reaction_mob(L, TOUCH)
+			L.reagents.add_reagent(beegent.id, rand(1,5))
 		target.attack_animal(src)
 
 
@@ -208,6 +209,7 @@
 	if(beegent && isliving(target))
 		var/mob/living/L = target
 		beegent.reaction_mob(L, TOUCH)
+		L.reagents.add_reagent(beegent.id, rand(1,5))
 	target.attack_animal(src)
 
 
@@ -218,7 +220,7 @@
 
 /mob/living/simple_animal/hostile/poison/bees/proc/reagent_incompatible(mob/living/simple_animal/hostile/poison/bees/B)
 	if(!B)
-		return 1
+		return 0
 	if(B.beegent && beegent && B.beegent.id != beegent.id || B.beegent && beegent || !B.beegent && beegent)
 		return 1
 	return 0

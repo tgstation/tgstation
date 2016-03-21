@@ -433,7 +433,6 @@
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/M)
 	M.reagents.add_reagent("sugar",3)
-	M.reagents.remove_reagent("honey", 1)
 	if(prob(20))
 		M.heal_organ_damage(3,1)
 	..()

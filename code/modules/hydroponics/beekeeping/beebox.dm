@@ -16,6 +16,8 @@
 
 
 /mob/living/carbon/human/bee_friendly()
+	if(dna && dna.species && dna.species.id == "pod") //bees pollinate plants, duh.
+		return 1
 	if((wear_suit && (wear_suit.flags & THICKMATERIAL)) && (head && (head.flags & THICKMATERIAL)))
 		return 1
 	return 0
@@ -123,11 +125,12 @@
 	if(!queen_bee)
 		user << "<span class='warning'>There is no queen bee!</span>"
 
-	if(bees.len >= get_max_bees()*0.5)
+	var/half_bee = get_max_bees()*0.5
+	if(half_bee && (bees.len >= half_bee))
 		user << "This place is a BUZZ with activity..."
 
 	if(bee_resources)
-		user << "[bee_resources]/100 honey supply."
+		user << "[bee_resources]/100 resource supply."
 		user << "[bee_resources]% towards a new honeycomb."
 		user << "[bee_resources*2]% towards a new bee."
 
@@ -159,7 +162,7 @@
 		queen_bee = qb.queen
 		qb.queen = null
 
-		if(qb.queen)
+		if(queen_bee)
 			visible_message("<span class='notice'>[user] sets [qb] down inside the apiary, making it their new home.</span>")
 			var/relocated = 0
 			for(var/b in bees)
@@ -196,6 +199,8 @@
 				visible_message("<span class='danger'>[user] disturbs the bees!</span>")
 		else
 			var/option = alert(user, "What Action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee")
+			if(!Adjacent(user))
+				return
 			switch(option)
 				if("Remove a Honey Frame")
 					if(!honey_frames.len)
@@ -208,13 +213,11 @@
 							HF.loc = get_turf(src)
 						visible_message("<span class='notice'>[user] removes a frame from the apiary.</span>")
 
-						var/amtH = honeycombs.len
-						var/maxH = get_max_honeycomb()
+						var/amtH = HF.honeycomb_capacity
 						var/fallen = 0
-						while(amtH > maxH) //let's pretend you always grab the frame with the most honeycomb on it
+						while(honeycombs.len && amtH) //let's pretend you always grab the frame with the most honeycomb on it
 							var/obj/item/weapon/reagent_containers/honeycomb/HC = pick_n_take(honeycombs)
 							if(HC)
-								honeycombs -= HC
 								HC.loc = get_turf(user)
 								amtH--
 								fallen++
