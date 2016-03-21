@@ -1,5 +1,0 @@
-author: kingofkosmos
-delete-after: True
-changes: 
-  - rscdel: "The backpack close-button has got a visual overhaul."
-  - rscadd: "All storage items can be closed by clicking on them again."
