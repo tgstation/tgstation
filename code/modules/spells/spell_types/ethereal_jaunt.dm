@@ -43,7 +43,7 @@
 			target.reset_perspective(holder)
 			target.notransform=0 //mob is safely inside holder now, no need for protection.
 			jaunt_steam(mobloc)
-			target.silent += 50
+			target.reagents.add_reagent("mutetoxin", 2)
 			if(target.loc != holder) //mob warped out of the warp
 				qdel(holder)
 				return
