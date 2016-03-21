@@ -127,6 +127,7 @@
 	name = "reactive armor"
 	desc = "Doesn't seem to do much for some reason."
 	var/active = 0
+	var/cd = 0//cooldown specific to reactive armor
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
@@ -137,7 +138,7 @@
 
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
-	if(cooldown)
+	if(world.time < cd)
 		user << "<span class='notice'>[src] is still cooling down. It can't be reactivated yet.</span>"
 		return
 	src.active = !( src.active )
@@ -190,21 +191,13 @@
 		active = 0
 		src.icon_state = "reactiveoff"
 		src.item_state = "reactiveoff"
-		cooldown++
-		var/cd = cooldown
-		spawn(100)
-			if(cooldown == cd)
-				cooldown = 0
+		cd = world.time + 100
 		return 1
 	return 0
 
 /obj/item/clothing/suit/armor/reactive/teleport/emp_act(severity)
-	cooldown++
-	var/curremp = cooldown
-	..()//shut off
-	spawn(200)
-		if(cooldown == curremp)
-			cooldown = 0
+	..()
+	cd = world.time + 200
 
 /obj/item/clothing/suit/armor/reactive/fire
 	name = "reactive incendiary armor"
