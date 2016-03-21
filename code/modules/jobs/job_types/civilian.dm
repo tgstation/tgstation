@@ -26,7 +26,11 @@ Clown
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	l_pocket = /obj/item/weapon/bikehorn
 	r_pocket = /obj/item/toy/crayon/rainbow
-	backpack_contents = list(/obj/item/weapon/stamp/clown=1,/obj/item/weapon/reagent_containers/spray/waterflower=1)
+	backpack_contents = list(
+		/obj/item/weapon/stamp/clown = 1,
+		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1
+		)
 
 	backpack = /obj/item/weapon/storage/backpack/clown
 	satchel = /obj/item/weapon/storage/backpack/clown
@@ -45,8 +49,6 @@ Clown
 
 	if(visualsOnly)
 		return
-
-	new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H.back, 50)
 
 	H.dna.add_mutation(CLOWNMUT)
 	H.rename_self("clown")
