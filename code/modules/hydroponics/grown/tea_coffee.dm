@@ -30,7 +30,7 @@
 	plantname = "Tea Astra Plant"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra
 	mutatelist = list()
-	reagents_add = list("salglu_solution" = 0.05, "vitamin" = 0.04, "teapowder" = 0.1)
+	reagents_add = list("synaptizine" = 0.1, "vitamin" = 0.04, "teapowder" = 0.1)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra
@@ -75,10 +75,11 @@
 	plantname = "Coffee Robusta Bush"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta
 	mutatelist = list()
-	reagents_add = list("morphine" = 0.05, "vitamin" = 0.04, "coffeepowder" = 0.1)
+	reagents_add = list("ephedrine" = 0.1, "vitamin" = 0.04, "coffeepowder" = 0.1)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta
 	seed = /obj/item/seeds/coffee/robusta
 	name = "coffee robusta beans"
+	desc = "Increases robustness by 37 percent!"
 	icon_state = "coffee_robusta"
