@@ -1,0 +1,5 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Explosive Holoparasites now have a 33% chance to explosively teleport attacked targets, doing damage to everyone near the target's appearance point."
+  - tweak: "Explosive Holoparasite bombs can now detonate when living mobs bump them."
