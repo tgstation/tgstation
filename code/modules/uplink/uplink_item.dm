@@ -135,7 +135,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
-	cost = 5
+	cost = 9
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
@@ -239,7 +239,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "The minibomb is a grenade with a five-second fuse. Upon detonation, it will create a small hull breach \
 			in addition to dealing high amounts of damage to nearby personnel."
 	item = /obj/item/weapon/grenade/syndieminibomb
-	cost = 5
+	cost = 6
 
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
