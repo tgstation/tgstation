@@ -236,14 +236,21 @@
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	var/list/L = grav_pull > 8 ? urange(grav_pull, src, 1) : orange(grav_pull, src)
-	for(var/atom/X in L)
-		var/dist = get_dist(X, src)
-		var/obj/singularity/S = src
-		if(dist > consume_range)
-			X.singularity_pull(S, current_size)
-		else if(dist <= consume_range)
-			consume(X)
+	for(var/tile in spiral_range_turfs(grav_pull, src, 1))
+		var/turf/T = tile
+		if(!T)
+			continue
+		if(get_dist(T, src) > consume_range)
+			T.singularity_pull(src, current_size)
+		else
+			consume(T)
+		for(var/thing in T)
+			var/atom/movable/X = thing
+			if(get_dist(X, src) > consume_range)
+				X.singularity_pull(src, current_size)
+			else
+				consume(X)
+			CHECK_TICK
 	return
 
 

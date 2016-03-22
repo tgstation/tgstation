@@ -169,6 +169,15 @@
 					/obj/item/weapon/melee/baton/loaded)
 	crate_name = "stun baton crate"
 
+/datum/supply_pack/security/wall_flash
+	name = "Wall-Mounted Flash Crate"
+	cost = 10
+	contains = list(/obj/item/weapon/storage/box/wall_flash,
+					/obj/item/weapon/storage/box/wall_flash,
+					/obj/item/weapon/storage/box/wall_flash,
+					/obj/item/weapon/storage/box/wall_flash)
+	crate_name = "wall-mounted flash crate"
+
 /datum/supply_pack/security/laser
 	name = "Lasers Crate"
 	cost = 1500

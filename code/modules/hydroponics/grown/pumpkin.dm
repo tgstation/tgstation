@@ -9,7 +9,10 @@
 	lifespan = 50
 	endurance = 40
 	growthstages = 3
+	icon_grow = "pumpkin-grow"
+	icon_dead = "pumpkin-dead"
 	mutatelist = list(/obj/item/seeds/pumpkin/blumpkin)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
 	seed = /obj/item/seeds/pumpkin
@@ -17,7 +20,6 @@
 	desc = "It's large and scary."
 	icon_state = "pumpkin"
 	filling_color = "#FFA500"
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.2)
 	bitesize_mod = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
@@ -37,6 +39,7 @@
 	plantname = "Blumpkin Vines"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
 	mutatelist = list()
+	reagents_add = list("ammonia" = 0.2, "nutriment" = 0.2)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
@@ -45,5 +48,4 @@
 	desc = "The pumpkin's toxic sibling."
 	icon_state = "blumpkin"
 	filling_color = "#87CEFA"
-	reagents_add = list("ammonia" = 0.2, "nutriment" = 0.2)
 	bitesize_mod = 2

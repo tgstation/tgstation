@@ -79,8 +79,8 @@
 		if(!ismob(G.affecting))
 			return
 		var/mob/M = G.affecting
-		if(M.buckled_mob)
-			usr << "[M] will not fit into [src] because they have a slime latched onto their head."
+		if(M.buckled_mobs.len)
+			user << "[M] will not fit into [src] because they have a creature on them!"
 			return
 		if(put_mob(M))
 			qdel(G)

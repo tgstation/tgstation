@@ -1,49 +1,74 @@
+/datum/chemical_reaction/reagent_explosion
+	name = "Generic explosive"
+	id = "reagent_explosion"
+	result = null
+	var/strengthdiv = 10
+	var/modifier = 0
 
-/datum/chemical_reaction/nitroglycerin
+/datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	var/datum/effect_system/reagents_explosion/e = new()
+	e.set_up(modifier + round(created_volume/strengthdiv, 1), location, 0, 0)
+	e.start()
+	holder.clear_reagents()
+
+
+/datum/chemical_reaction/reagent_explosion/nitroglycerin
 	name = "Nitroglycerin"
 	id = "nitroglycerin"
 	result = "nitroglycerin"
 	required_reagents = list("glycerol" = 1, "facid" = 1, "sacid" = 1)
 	result_amount = 2
+	strengthdiv = 2
 
-/datum/chemical_reaction/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent("stabilizing_agent"))
 		return
 	holder.remove_reagent("nitroglycerin", created_volume)
-	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(round (created_volume/2, 1), location, 0, 0)
-	e.start()
-	holder.clear_reagents()
+	..()
 
-/datum/chemical_reaction/nitroglycerin_explosion
+/datum/chemical_reaction/reagent_explosion/nitroglycerin_explosion
 	name = "Nitroglycerin explosion"
 	id = "nitroglycerin_explosion"
-	result = null
 	required_reagents = list("nitroglycerin" = 1)
 	result_amount = 1
 	required_temp = 474
+	strengthdiv = 2
 
-/datum/chemical_reaction/nitroglycerin_explosion/on_reaction(datum/reagents/holder, created_volume)
-	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(round(created_volume/2, 1), location, 0, 0)
-	e.start()
-	holder.clear_reagents()
 
-/datum/chemical_reaction/potassium_explosion
+/datum/chemical_reaction/reagent_explosion/potassium_explosion
 	name = "Explosion"
 	id = "potassium_explosion"
-	result = null
 	required_reagents = list("water" = 1, "potassium" = 1)
 	result_amount = 2
+	strengthdiv = 10
 
-/datum/chemical_reaction/potassium_explosion/on_reaction(datum/reagents/holder, created_volume)
-	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(round (created_volume/10, 1), location, 0, 0)
-	e.start()
-	holder.clear_reagents()
+/datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
+	name = "Holy Explosion"
+	id = "holyboom"
+	required_reagents = list("holywater" = 1, "potassium" = 1)
+
+/datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom/on_reaction(datum/reagents/holder, created_volume)
+	if(created_volume >= 150)
+		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, 0, round(created_volume/48))
+		strengthdiv = 8
+		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
+			var/diety = ticker.Bible_deity_name
+			if(!ticker.Bible_deity_name)
+				diety = "Christ"
+			R << "<span class='userdanger'>The power of [diety] compels you!</span>"
+			R.stun(20)
+			R.reveal(100)
+		sleep(20)
+		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
+			if(iscultist(C) || is_handofgod_cultist(C) || C.dna.species.id == "shadowling" || C.dna.species.id == "l_shadowling")
+				C << "<span class='userdanger'>The divine explosion sears you!</span>"
+				C.Weaken(2)
+				C.adjust_fire_stacks(5)
+				C.IgniteMob()
+		..()
+	else
+		..()
 
 /datum/chemical_reaction/blackpowder
 	name = "Black Powder"
@@ -52,22 +77,19 @@
 	required_reagents = list("saltpetre" = 1, "charcoal" = 1, "sulfur" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/blackpowder_explosion
+/datum/chemical_reaction/reagent_explosion/blackpowder_explosion
 	name = "Black Powder Kaboom"
 	id = "blackpowder_explosion"
-	result = null
 	required_reagents = list("blackpowder" = 1)
 	result_amount = 1
 	required_temp = 474
+	strengthdiv = 6
+	modifier = 1
 	mix_message = "<span class='boldannounce'>Sparks start flying around the black powder!</span>"
 
-/datum/chemical_reaction/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/reagent_explosion/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
 	sleep(rand(50,100))
-	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(1 + round(created_volume/6, 1), location, 0, 0)
-	e.start()
-	holder.clear_reagents()
+	..()
 
 /datum/chemical_reaction/thermite
 	name = "Thermite"

@@ -588,7 +588,7 @@
 			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
 			if(istype(ticker.mode,/datum/game_mode/blob))
 				var/datum/game_mode/blob/mode = ticker.mode
-				blob_minds |= mode.infected_crew
+				blob_minds |= mode.blob_overminds
 				dat += "<tr><td><i>Progress: [blobs_legit.len]/[mode.blobwincount]</i></td></tr>"
 
 			for(var/datum/mind/blob in blob_minds)

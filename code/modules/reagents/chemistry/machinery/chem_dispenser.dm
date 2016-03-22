@@ -333,3 +333,8 @@
 		"cognac",
 		"ale"
 	)
+
+/obj/machinery/chem_dispenser/mutagen
+	name = "mutagen dispenser"
+	desc = "Creates and dispenses mutagen."
+	dispensable_reagents = list("mutagen")

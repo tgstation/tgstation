@@ -147,7 +147,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/ex_act(severity, target)
 	if(severity == 1 || target == src)
 		qdel(src)
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		contents_explosion(severity, target)
 
 //user: The mob that is suiciding

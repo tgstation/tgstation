@@ -39,10 +39,12 @@
 			ndir = turn(ndir, 180)
 
 		var/obj/O = new result_path(get_turf(usr), ndir, 1)
-		transfer_fingerprints_to(O)
+		after_attach(O)
 
 	qdel(src)
 
+/obj/item/wallframe/proc/after_attach(var/obj/O)
+	transfer_fingerprints_to(O)
 
 /obj/item/wallframe/attackby(obj/item/weapon/W, mob/user, params)
 	..()
@@ -51,7 +53,6 @@
 		var/turf/T = get_step(get_turf(user), user.dir)
 		if(istype(T, /turf/simulated/wall))
 			T.attackby(src, user, params)
-
 
 	var/metal_amt = round(materials[MAT_METAL]/MINERAL_MATERIAL_AMOUNT)
 	var/glass_amt = round(materials[MAT_GLASS]/MINERAL_MATERIAL_AMOUNT)

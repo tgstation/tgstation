@@ -143,3 +143,12 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sausage
 	category = CAT_FOOD
+
+/datum/table_recipe/nugget
+	name = "Chicken nugget"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/nugget
+	category = CAT_FOOD
+

@@ -11,7 +11,10 @@
 	production = 5
 	yield = 2
 	growthstages = 5
+	icon_grow = "cocoapod-grow"
+	icon_dead = "cocoapod-dead"
 	mutatelist = list(/obj/item/seeds/cocoapod/vanillapod)
+	reagents_add = list("cocoa" = 0.25, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	seed = /obj/item/seeds/cocoapod
@@ -19,7 +22,6 @@
 	desc = "Fattening... Mmmmm... chucklate."
 	icon_state = "cocoapod"
 	filling_color = "#FFD700"
-	reagents_add = list("cocoa" = 0.25, "nutriment" = 0.1)
 	bitesize_mod = 2
 
 // Vanilla Pod
@@ -31,6 +33,7 @@
 	plantname = "Vanilla Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/vanillapod
 	mutatelist = list()
+	reagents_add = list("vanilla" = 0.25, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/vanillapod
 	seed = /obj/item/seeds/cocoapod/vanillapod
@@ -38,4 +41,3 @@
 	desc = "Fattening... Mmmmm... vanilla."
 	icon_state = "vanillapod"
 	filling_color = "#FFD700"
-	reagents_add = list("vanilla" = 0.25, "nutriment" = 0.1)

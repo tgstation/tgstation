@@ -176,7 +176,7 @@
 
 /obj/item/organ/internal/cyberimp/arm/toolset/emag_act()
 	if(!(locate(/obj/item/weapon/kitchen/knife/combat/cyborg) in items_list))
-		owner << "<span class='notice'>You unlock [src]'s integrated knife!</span>"
+		usr << "<span class='notice'>You unlock [src]'s integrated knife!</span>"
 		items_list += new /obj/item/weapon/kitchen/knife/combat/cyborg(src)
 		return 1
 	return 0

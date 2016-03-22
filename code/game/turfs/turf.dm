@@ -123,19 +123,12 @@
 
 	SSair.remove_from_active(src)
 
-	var/s_appearance = appearance
-	var/nocopy = density || smooth //dont copy walls or smooth turfs
-
 	var/turf/W = new path(src)
 	if(istype(W, /turf/simulated))
 		W:Assimilate_Air()
 		W.RemoveLattice()
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
-
-	if(W.smooth & SMOOTH_DIAGONAL)
-		if(!W.apply_fixed_underlay())
-			W.underlays += !nocopy ? s_appearance : DEFAULT_UNDERLAY_IMAGE
 
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
@@ -259,7 +252,7 @@
 		C.Weaken(w_amount)
 		C.stop_pulling()
 		if(buckled_obj)
-			buckled_obj.unbuckle_mob()
+			buckled_obj.unbuckle_mob(C)
 			step(buckled_obj, olddir)
 		else if(lube&SLIDE)
 			for(var/i=1, i<5, i++)
@@ -291,23 +284,6 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 
-/turf/proc/apply_fixed_underlay()
-	if(!fixed_underlay)
-		return
-	var/obj/O = new
-	O.layer = layer
-	if(fixed_underlay["icon"])
-		O.icon = fixed_underlay["icon"]
-		O.icon_state = fixed_underlay["icon_state"]
-	else if(fixed_underlay["space"])
-		O.icon = 'icons/turf/space.dmi'
-		O.icon_state = SPACE_ICON_STATE
-	else
-		O.icon = DEFAULT_UNDERLAY_ICON
-		O.icon_state = DEFAULT_UNDERLAY_ICON_STATE
-	underlays += O
-	return 1
-
 /turf/indestructible
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
@@ -335,7 +311,7 @@
 /turf/indestructible/riveted/New()
 	..()
 	if(smooth)
-		smooth_icon(src)
+		queue_smooth(src)
 		icon_state = ""
 
 /turf/indestructible/riveted/uranium

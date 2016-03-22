@@ -72,7 +72,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	icon = 'icons/effects/tile_effects.dmi'
 	mouse_opacity = 0
 	layer = 5
-	appearance_flags = RESET_COLOR
+	appearance_flags = RESET_COLOR|TILE_BOUND
 
 /obj/effect/overlay/gas/New(state)
 	. = ..()

@@ -41,7 +41,6 @@
 				//Blender Stuff
 				/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/oat = list("flour" = -5),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
@@ -275,18 +274,18 @@
 /obj/machinery/reagentgrinder/proc/get_grownweapon_amount(obj/item/weapon/grown/O)
 		if (!istype(O))
 				return 5
-		else if (O.potency == -1)
+		else if (O.seed.potency == -1)
 				return 5
 		else
-				return round(O.potency)
+				return round(O.seed.potency)
 
 /obj/machinery/reagentgrinder/proc/get_juice_amount(obj/item/weapon/reagent_containers/food/snacks/grown/O)
 		if (!istype(O))
 				return 5
-		else if (O.potency == -1)
+		else if (O.seed.potency == -1)
 				return 5
 		else
-				return round(5*sqrt(O.potency))
+				return round(5*sqrt(O.seed.potency))
 
 /obj/machinery/reagentgrinder/proc/remove_object(obj/item/O)
 		holdingitems -= O

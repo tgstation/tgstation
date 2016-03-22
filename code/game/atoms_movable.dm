@@ -14,6 +14,7 @@
 	var/inertia_dir = 0
 	var/pass_flags = 0
 	glide_size = 8
+	appearance_flags = TILE_BOUND
 
 
 /atom/movable/Move(atom/newloc, direct = 0)
@@ -61,7 +62,7 @@
 			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
 				newtonian_move(last_move)
 
-	if(. && buckled_mob && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob
+	if(. && buckled_mobs.len && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
 		. = 0
 
 //Called after a successful Move(). By this point, we've already moved
@@ -125,9 +126,9 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 	if(buckled)
-		buckled.unbuckle_mob()
-	if(buckled_mob)
-		unbuckle_mob(force=1)
+		buckled.unbuckle_mob(src,force=1)
+	if(buckled_mobs.len)
+		unbuckle_all_mobs(force=1)
 	. = ..()
 	if(client)
 		reset_perspective(destination)
@@ -203,7 +204,7 @@
 		SpinAnimation(5, 1)
 
 	var/dist_travelled = 0
-	var/dist_since_sleep = 0
+	var/next_sleep = 0
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
@@ -228,7 +229,7 @@
 	var/init_dir = get_dir(src, target)
 
 	while(target && ((dist_travelled < range && loc != finalturf)  || !has_gravity(src))) //stop if we reached our destination (or max range) and aren't floating
-
+		var/slept = 0
 		if(!istype(loc, /turf))
 			hit = 1
 			break
@@ -250,17 +251,23 @@
 			hit = 1
 			break
 		dist_travelled++
-		dist_since_sleep++
 
 		if(dist_travelled > 600) //safety to prevent infinite while loop.
 			break
-		if(dist_since_sleep >= speed)
-			dist_since_sleep = 0
+		if(dist_travelled >= next_sleep)
+			slept = 1
+			next_sleep += speed
 			sleep(1)
+		if(!slept)
+			var/ticks_slept = TICK_CHECK
+			if(ticks_slept)
+				slept = 1
+				next_sleep += speed*(ticks_slept*world.tick_lag) //delay the next normal sleep
 
-		if(!dist_since_sleep && hitcheck()) //to catch sneaky things moving on our tile during our sleep(1)
+		if(slept && hitcheck()) //to catch sneaky things moving on our tile while we slept
 			hit = 1
 			break
+
 
 	//done throwing, either because it hit something or it finished moving
 	throwing = 0
@@ -308,16 +315,18 @@
 	return
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
-	if(!buckled_mob.Move(newloc, direct))
-		loc = buckled_mob.loc
-		last_move = buckled_mob.last_move
-		inertia_dir = last_move
-		buckled_mob.inertia_dir = last_move
-		return 0
+	for(var/m in buckled_mobs)
+		var/mob/living/buckled_mob = m
+		if(!buckled_mob.Move(newloc, direct))
+			loc = buckled_mob.loc
+			last_move = buckled_mob.last_move
+			inertia_dir = last_move
+			buckled_mob.inertia_dir = last_move
+			return 0
 	return 1
 
 /atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
-	if(buckled_mob == mover)
+	if(mover in buckled_mobs)
 		return 1
 	return ..()
 

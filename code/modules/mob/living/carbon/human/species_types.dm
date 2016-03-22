@@ -88,7 +88,6 @@ var/regex/lizard_hiSS = new("S+", "g")
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
-
 /*
  PODPEOPLE
 */
@@ -333,26 +332,52 @@ var/regex/lizard_hiSS = new("S+", "g")
 	name = "Golem"
 	id = "golem"
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
-	speedmod = 3
+	speedmod = 2
 	armor = 55
 	siemens_coeff = 0
 	punchdamagelow = 5
 	punchdamagehigh = 14
 	punchstunthreshold = 11 //about 40% chance to stun
-	blacklisted = 1
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
+	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
-
-
-/*
- ADAMANTINE GOLEMS
-*/
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
 	id = "adamantine"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
+
+/datum/species/golem/plasma
+	name = "Plasma Golem"
+	id = "plasma"
+	dangerous_existence = 1
+	blacklisted = 1
+
+/datum/species/golem/diamond
+	name = "Diamond Golem"
+	id = "diamond"
+	blacklisted = 1
+	dangerous_existence = 1
+
+/datum/species/golem/gold
+	name = "Gold Golem"
+	id = "gold"
+	blacklisted = 1
+	dangerous_existence = 1
+
+/datum/species/golem/silver
+	name = "Silver Golem"
+	id = "silver"
+	blacklisted = 1
+	dangerous_existence = 1
+
+/datum/species/golem/uranium
+	name = "Uranium Golem"
+	id = "uranium"
+	blacklisted = 1
+	dangerous_existence = 1
+
 
 /*
  FLIES
@@ -731,3 +756,31 @@ var/global/list/synth_flesh_disguises = list()
 			return ..()
 	else
 		return ..()
+
+
+/*
+SYNDICATE BLACK OPS
+*/
+//The hardcore return of the failed Deathsquad augmentation project
+//Now it's own, wizard-tier, very robust, lone antag
+/datum/species/corporate
+	name = "Corporate Agent"
+	id = "agent"
+	hair_alpha = 0
+	need_nutrition = 0//They don't need to eat
+	say_mod = "declares"
+	speedmod = -2//Fast
+	brutemod = 0.7//Tough against firearms
+	burnmod = 0.65//Tough against lasers
+	coldmod = 0
+	heatmod = 0.5//it's a little tough to burn them to death not as hard though.
+	punchdamagelow = 20
+	punchdamagehigh = 30//they are inhumanly strong
+	punchstunthreshold = 25
+	attack_verb = "smash"
+	attack_sound = "sound/weapons/resonator_blast.ogg"
+	blacklisted = 1
+	use_skintones = 0
+	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR)
+	sexes = 0
+

@@ -1,8 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - tweak: "Replicating Foam has lower expand chances when hit and on normal expand."
-  - bugfix: "Shifting Fragments will no longer try and fail to swap with invalid blobs when hit."
-  - tweak: "Electromagnetic Web no longer always EMPs targets, instead doing it at a 25% chance."
-  - tweak: "Synchronous Mesh now only takes bonus damage from fire, bombs, and flashbangs."
-  - tweak: "Synchronous Mesh no longer tries to split damage to blob cores or nodes. Cores and nodes still split damage to nearby blobs, however."

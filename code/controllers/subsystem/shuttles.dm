@@ -210,3 +210,4 @@ var/datum/subsystem/shuttle/SSshuttle
 				S.dwidth = M.dwidth
 				S.dheight = M.dheight
 		moveShuttle(M.id, "[M.roundstart_move]", 0)
+		CHECK_TICK

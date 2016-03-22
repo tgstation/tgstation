@@ -33,7 +33,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
-
+	
 /obj/singularity/energy_ball/Destroy()
 	if(orbiting && istype(orbiting, /obj/singularity/energy_ball))
 		var/obj/singularity/energy_ball/EB = orbiting
@@ -50,9 +50,9 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	if(!orbiting)
 		handle_energy()
 
-		move_the_basket_ball(2 + orbiting_balls.len * 2)
+		move_the_basket_ball(4 + orbiting_balls.len * 2)
 
-		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 15)
+		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 30)
 
 		pixel_x = 0
 		pixel_y = 0
@@ -79,16 +79,19 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	var/first_move = dir
 	for(var/i in 0 to move_amount)
 		var/move_dir = pick(alldirs + first_move) //give the first move direction a bit of favoring.
+		if(target && prob(60))
+			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
 			loc = T
+	
 
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= energy_to_raise)
 		energy_to_lower = energy_to_raise - 20
-		energy_to_raise += energy_to_raise
+		energy_to_raise = energy_to_raise * 1.5
 
-		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 15)
+		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 30)
 		spawn(100)
 			if (!loc)
 				return
@@ -103,14 +106,14 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 			EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
 
 	else if(energy < energy_to_lower && orbiting_balls.len)
-		energy_to_raise = energy_to_raise * 0.5
-		energy_to_lower = (energy_to_raise * 0.5) - 20
+		energy_to_raise = energy_to_raise / 1.5
+		energy_to_lower = (energy_to_raise / 1.5) - 20
 
 		var/Orchiectomy_target = pick(orbiting_balls)
 		qdel(Orchiectomy_target)
 
 	else if(orbiting_balls.len)
-		energy -= orbiting_balls.len
+		energy -= orbiting_balls.len * 0.5
 
 /obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
@@ -148,6 +151,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	var/mob/living/closest_mob
 	var/obj/machinery/closest_machine
 	var/obj/structure/closest_structure
+	var/obj/effect/blob/closest_blob
 
 	for(var/A in oview(source, zap_range))
 		if(istype(A, /obj/machinery/power/tesla_coil))
@@ -197,6 +201,17 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		else if(closest_mob)
 			continue
 
+		else if(istype(A, /obj/effect/blob))
+			var/obj/effect/blob/B = A
+			var/dist = get_dist(source, A)
+			if((dist < closest_dist || !closest_tesla_coil) && !B.being_shocked)
+				closest_blob = B
+				closest_atom = A
+				closest_dist = dist
+
+		else if(closest_blob)
+			continue
+
 		else if(istype(A, /obj/structure))
 			var/obj/structure/S = A
 			var/dist = get_dist(source, A)
@@ -204,7 +219,6 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 				closest_structure = S
 				closest_atom = A
 				closest_dist = dist
-
 
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
@@ -233,6 +247,9 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 	else if(closest_machine)
 		closest_machine.tesla_act(power)
+
+	else if(closest_blob)
+		closest_blob.tesla_act(power)
 
 	else if(closest_structure)
 		closest_structure.tesla_act(power)

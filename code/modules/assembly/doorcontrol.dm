@@ -10,7 +10,7 @@
 /obj/item/device/assembly/control/examine(mob/user)
 	..()
 	if(id)
-		user << "It's channel ID is '[id]'."
+		user << "<span class='notice'>Its channel ID is '[id]'.</span>"
 
 
 /obj/item/device/assembly/control/activate()

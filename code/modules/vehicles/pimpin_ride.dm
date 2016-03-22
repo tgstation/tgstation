@@ -12,20 +12,22 @@
 
 /obj/vehicle/janicart/handle_vehicle_offsets()
 	..()
-	if(buckled_mob)
-		switch(buckled_mob.dir)
-			if(NORTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 4
-			if(EAST)
-				buckled_mob.pixel_x = -12
-				buckled_mob.pixel_y = 7
-			if(SOUTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 7
-			if(WEST)
-				buckled_mob.pixel_x = 12
-				buckled_mob.pixel_y = 7
+	if(buckled_mobs.len)
+		for(var/m in buckled_mobs)
+			var/mob/living/buckled_mob = m
+			switch(buckled_mob.dir)
+				if(NORTH)
+					buckled_mob.pixel_x = 0
+					buckled_mob.pixel_y = 4
+				if(EAST)
+					buckled_mob.pixel_x = -12
+					buckled_mob.pixel_y = 7
+				if(SOUTH)
+					buckled_mob.pixel_x = 0
+					buckled_mob.pixel_y = 7
+				if(WEST)
+					buckled_mob.pixel_x = 12
+					buckled_mob.pixel_y = 7
 
 
 /obj/item/key/janitor
