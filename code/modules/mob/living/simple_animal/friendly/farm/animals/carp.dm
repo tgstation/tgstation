@@ -51,3 +51,10 @@
 	maxbodytemp = INFINITY
 	gold_core_spawnable = 0
 	del_on_death = 1
+
+/mob/living/simple_animal/farm/carp/cayenne
+	name = "Cayenne"
+	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
+	speak_emote = list("squeaks")
+	gold_core_spawnable = 0
+	faction = list("syndicate")

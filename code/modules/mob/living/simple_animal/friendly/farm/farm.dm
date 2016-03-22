@@ -227,6 +227,14 @@
 		return 1
 
 /mob/living/simple_animal/farm/attackby(obj/item/O, mob/living/user, params)
+	if(istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "The animal has the following traits:"
+		for(var/datum/farm_animal_trait/T in dna.traits)
+			user << "[T.name]"
+			user << "[T.description]"
+			user << "-----------------------------------------------"
+		user << "Hunger: [hunger]"
+		user << "Thirst: [thirst]"
 	for(var/datum/farm_animal_trait/T in dna.traits)
 		T.on_attack_by(src, O, user, params)
 	..()

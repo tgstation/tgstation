@@ -50,3 +50,5 @@
 	parent_type = /mob/living/simple_animal/hostile/carp_ranged/chaos
 /mob/living/simple_animal/cow
 	parent_type = /mob/living/simple_animal/farm/cow
+/mob/living/simple_animal/hostile/carp/cayenne
+	parent_type = /mob/living/simple_animal/farm/carp/cayenne
