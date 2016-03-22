@@ -175,6 +175,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/grenadier
+	name = "Grenadier's belt"
+	desc = "A belt of a large variety of lethally dangerous and destructive grenades."
+	item = /obj/item/weapon/storage/belt/grenade/full
+	include_modes = list(/datum/game_mode/nuclear)
+	cost = 22
+	surplus = 0
+
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. guaranteed to cause shock and awe or your TC back!"
