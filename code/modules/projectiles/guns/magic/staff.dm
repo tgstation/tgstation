@@ -1,6 +1,30 @@
 /obj/item/weapon/gun/magic/staff/
 	slot_flags = SLOT_BACK
 
+/obj/item/weapon/gun/magic/staff/death
+	name = "staff of death"
+	desc = "An artefact that spits deadly bolts of energy which overwhelm a victim's body with pure energy, slaying them without fail"
+	fire_sound = "sound/magic/WandoDeath.ogg"
+	ammo_type = /obj/item/ammo_casing/magic/death
+	icon_state = "staffofstorms"
+	item_state = "staffofstorms"
+
+/obj/item/weapon/gun/magic/staff/fireball
+	name = "staff of fireball"
+	desc = "An artefact that shoots scorching balls of fire which explode into destructive flames"
+	fire_sound = "sound/magic/Fireball.ogg"
+	ammo_type = /obj/item/ammo_casing/magic/fireball
+	icon_state = "staffofstorms"
+	item_state = "staffofstorms"
+
+/obj/item/weapon/gun/magic/staff/teleport
+	name = "staff of teleportation"
+	desc = "An artefact that will wrench targets through space and time to move them somewhere else."
+	ammo_type = /obj/item/ammo_casing/magic/teleport
+	fire_sound = "sound/magic/Wand_Teleport.ogg"
+	icon_state = "staffofnothing"
+	item_state = "staffofnothing"
+
 /obj/item/weapon/gun/magic/staff/change
 	name = "staff of change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
