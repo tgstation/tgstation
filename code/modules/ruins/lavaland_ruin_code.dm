@@ -52,7 +52,7 @@
 				)
 
 /obj/effect/mob_spawn/human/seed_vault
-	name = "sleeper"
+	name = "vault creature sleeper"
 	mob_name = "Vault Creature"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
@@ -62,7 +62,7 @@
 	flavour_text = {"You are a strange, artificial creature. Your creators were a highly advanced and benevolent race, and launched many seed vaults into the stars, hoping to aid fledgling civilizations. You are to tend to the vault and await the arrival of sentient species. You've been waiting quite a while though..."}
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Deathcap", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Spore", "Root", "Bark", "Glowshroom", "Petal", "Leaf", "Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper")
+	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Deathcap", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Spore", "Root", "Bark", "Glowshroom", "Petal", "Leaf", "Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
 	new_spawn.real_name = plant_name
 
 //Greed
@@ -318,8 +318,19 @@
 	flavour_text = {"<B>You are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to travel the stars with a single declaration; 'Yeah go do whatever.' Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn golems, so that no golem may ever be forced to serve again.</B>"}
 
 /obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
-	new_spawn.real_name = "Golem ([rand(0,999)])"
+	var/golem_name = pick("Quartz", "Crystal", "Boulder", "Mountain", "Rock", "Stalagmite", "Stalagtite", "Sediment", "Geode", "Igneous", "Quarry", "Shale", "Obsidian", "Chasm", "Stone", "Oynx", "Iron", "Quake", "Grotto","Landslide","Mineral", "Slag", "Pebble", "Gravel", "Pyrite", "Flint", "Sand")
+	new_spawn.real_name = golem_name
 	new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.set_cloned_appearance()
+
+
+/obj/effect/mob_spawn/human/golem/adamantine
+	name = "golem sleeper"
+	mob_name = "Free Golem"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	anchored = 1
+	density = 1
+	mob_species = /datum/species/golem/adamantine
