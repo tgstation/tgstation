@@ -44,7 +44,7 @@
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
-	if(ranged)
+	if(ranged && ranged_cooldown)
 		ranged_cooldown--
 	if(!.) //dead
 		walk(src, 0) //stops walking
