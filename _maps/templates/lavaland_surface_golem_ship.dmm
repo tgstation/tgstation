@@ -17,17 +17,18 @@
 "q" = (/obj/machinery/mineral/equipment_vendor,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "r" = (/obj/machinery/autolathe,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "s" = (/obj/item/weapon/storage/firstaid/brute,/obj/item/weapon/storage/firstaid/fire,/obj/structure/table/wood,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"t" = (/obj/item/weapon/disk/design_disk/golem_shell,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"u" = (/obj/machinery/mineral/ore_redemption,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"v" = (/obj/structure/statue/gold/rd,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"w" = (/obj/structure/window/reinforced{dir = 4; name = "shrine of the liberator"; pixel_x = 0},/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"x" = (/obj/machinery/door/airlock/shuttle{name = "automated trading pod"},/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"y" = (/obj/structure/table/wood,/obj/item/weapon/book/manual/research_and_development{name = "Sacred Text of the Liberator"},/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"z" = (/obj/item/weapon/resonator/upgraded,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"A" = (/obj/machinery/computer/arcade/orion_trail,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"B" = (/obj/structure/ore_box,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"C" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"D" = (/turf/space,/area/space)
+"t" = (/obj/item/weapon/storage/firstaid/brute,/obj/item/weapon/storage/firstaid/fire,/obj/structure/table/wood,/obj/item/areaeditor/blueprints{desc = "Use to build new structures in the wastes."; name = "land claim"},/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"u" = (/obj/item/weapon/disk/design_disk/golem_shell,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"v" = (/obj/machinery/mineral/ore_redemption,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"w" = (/obj/structure/statue/gold/rd,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"x" = (/obj/structure/window/reinforced{dir = 4; name = "shrine of the liberator"; pixel_x = 0},/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"y" = (/obj/machinery/door/airlock/shuttle{name = "automated trading pod"},/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"z" = (/obj/structure/table/wood,/obj/item/weapon/book/manual/research_and_development{name = "Sacred Text of the Liberator"},/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"A" = (/obj/item/weapon/resonator/upgraded,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"B" = (/obj/machinery/computer/arcade/orion_trail,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"C" = (/obj/structure/ore_box,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"D" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"E" = (/turf/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaa
@@ -36,18 +37,18 @@ aaaaabbbbbbbbbbbbbbb
 aaaaabccccccdddefegh
 aaaaabffffffffiefegh
 aabbbbjkbbbbbbbbbbbb
-aablmmmnopbqrssrmkgh
-aabmmmmnopbmtmmmmkgh
-bbbkkbbbbbbmmuummbbb
-bvwmmmmmmmkmmmmmmkmx
-bywmmmmmmmkmmuummkmk
-bbbkkbbbbbbmmmmzmbbb
+aablmmmnopbqrstrmkgh
+aabmmmmnopbmummmmkgh
+bbbkkbbbbbbmmvvmmbbb
+bwxmmmmmmmkmmmmmmkmy
+bzxmmmmmmmkmmvvmmkmk
+bbbkkbbbbbbmmmmAmbbb
 aabmmmmnopbmmmmmmkgh
-aabAmmmnopbqrssrmkgh
+aabBmmmnopbqrssrmkgh
 aabbbbkkbbbbbbbbbbbb
 aaaaabfffffffffefegh
-aaaaabBBBBBBBCiefegh
+aaaaabCCCCCCCDiefegh
 aaaaabbbbbbbbbbbbbbb
 aaaaaaaaaaaaaaaaaaaa
-DDDDDDDDDDDDDDDDDDDD
+EEEEEEEEEEEEEEEEEEEE
 "}
