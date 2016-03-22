@@ -92,7 +92,15 @@
 	var/humans_need_surnames = 0
 	var/allow_random_events = 0			// enables random events mid-round when set to 1
 	var/allow_ai = 0					// allow ai job
+
+	var/forbid_standardborg = 0			// disallow standardborg module to be chosen.
+	var/forbid_engiborg = 0				// disallow engiborg module to be chosen.
+	var/forbid_mediborg = 0				// disallow mediborg module to be chosen.
+	var/forbid_minerborg = 0			// disallow minerborg module to be chosen.
+	var/forbid_janiborg = 0				// disallow janiborg module to be chosen.
+	var/forbid_serviceborg = 0			// disallow serviceborg module to be chosen.
 	var/forbid_secborg = 0				// disallow secborg module to be chosen.
+
 	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
 	var/notify_new_player_age = 0		// how long do we notify admins of a new player
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
@@ -521,6 +529,18 @@
 					config.force_random_names		= 1
 				if("allow_ai")
 					config.allow_ai					= 1
+				if("disable_standardborg")
+					config.forbid_secborg			= 1
+				if("disable_engiborg")
+					config.forbid_secborg			= 1
+				if("disable_mediborg")
+					config.forbid_secborg			= 1
+				if("disable_minerborg")
+					config.forbid_secborg			= 1
+				if("disable_janiborg")
+					config.forbid_secborg			= 1
+				if("disable_serviceborg")
+					config.forbid_secborg			= 1
 				if("disable_secborg")
 					config.forbid_secborg			= 1
 				if("silent_ai")
