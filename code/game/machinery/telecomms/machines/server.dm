@@ -156,11 +156,6 @@
 	freq_listening = list(SERV_FREQ)
 	autolinkers = list("service")
 
-/obj/machinery/telecomms/server/presets/common
-	id = "Common Server"
-	freq_listening = list()
-	autolinkers = list("common")
-
 	//Common and other radio frequencies for people to freely use
 	// 1441 to 1489
 /obj/machinery/telecomms/server/presets/common/New()

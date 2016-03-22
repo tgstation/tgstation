@@ -124,7 +124,6 @@ On the map:
 */
 
 var/list/radiochannels = list(
-	"Common" = 1459,
 	"Science" = 1351,
 	"Command" = 1353,
 	"Medical" = 1355,
@@ -138,7 +137,6 @@ var/list/radiochannels = list(
 )
 
 var/list/radiochannelsreverse = list(
-	"1459" = "Common",
 	"1351" = "Science",
 	"1353" = "Command",
 	"1355" = "Medical",

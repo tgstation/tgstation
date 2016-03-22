@@ -145,8 +145,6 @@
 		var/blackbox_msg = "[AM] [AM.say_quote(message, spans)]"
 		if(istype(blackbox))
 			switch(freq)
-				if(1459)
-					blackbox.msg_common += blackbox_msg
 				if(1351)
 					blackbox.msg_science += blackbox_msg
 				if(1353)
@@ -348,8 +346,6 @@
 		//BR.messages_admin += blackbox_admin_msg
 		if(istype(blackbox))
 			switch(display_freq)
-				if(1459)
-					blackbox.msg_common += blackbox_msg
 				if(1351)
 					blackbox.msg_science += blackbox_msg
 				if(1353)
