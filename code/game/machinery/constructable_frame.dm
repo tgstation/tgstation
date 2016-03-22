@@ -811,7 +811,8 @@ obj/item/weapon/circuitboard/rdserver
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/weapon/stock_parts/micro_laser = 2,
 							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/stock_parts/scanning_module = 1,)/obj/item/weapon/circuitboard/incubator
+							/obj/item/weapon/stock_parts/scanning_module = 1,)
+/obj/item/weapon/circuitboard/incubator
 	name = "circuit board (Incubator)"
 	build_path = /obj/machinery/incubator
 	board_type = "machine"

@@ -22,8 +22,8 @@
 	var/thirst = 500
 	var/hunger_max = 500
 	var/thirst_max = 500
-	var/hunger_decay = 1
-	var/thirst_decay = 3
+	var/hunger_decay = 0.3
+	var/thirst_decay = 0.5
 	var/hunger_threshold_hungry = 300
 	var/hunger_threshold_dying = 100
 	var/thirst_threshold_thirsty = 300
@@ -126,10 +126,10 @@
 
 	if(thirst <= thirst_threshold_thirsty)
 		if(prob(10))
-			emote("coughs.")
+			emote("coughs")
 	if(hunger <= hunger_threshold_hungry)
 		if(prob(10))
-			emote("whines.")
+			emote("whines")
 	return
 
 /mob/living/simple_animal/farm/proc/handle_age()
@@ -151,42 +151,42 @@
 	if(dna)
 		for(var/datum/farm_animal_trait/T in dna.traits)
 			T.on_life(src)
+			CHECK_TICK
 	return
 
 /mob/living/simple_animal/farm/proc/handle_priority_traits()
 	if(dna)
 		for(var/datum/farm_animal_trait/T in dna.traits)
 			T.on_priority_life(src)
+			CHECK_TICK
 	return
 
 /mob/living/simple_animal/farm/proc/handle_riding_layer()
 	if(dir != NORTH)
 		layer = MOB_LAYER+0.1
-		if(buckled_mob)
-			buckled_mob.layer = MOB_LAYER
 	else
-		if(buckled_mob)
-			buckled_mob.layer = MOB_LAYER
 		layer = 5
 
 /mob/living/simple_animal/farm/proc/handle_riding_offsets()
-	if(buckled_mob)
-		buckled_mob.dir = dir
-		buckled_mob.pixel_x = pixel_x_offset
-		buckled_mob.pixel_y = pixel_y_offset
-		switch(buckled_mob.dir)
-			if(NORTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 4
-			if(EAST)
-				buckled_mob.pixel_x = -4
-				buckled_mob.pixel_y = 7
-			if(SOUTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 7
-			if(WEST)
-				buckled_mob.pixel_x = 4
-				buckled_mob.pixel_y = 7
+	if(buckled_mobs.len)
+		for(var/m in buckled_mobs)
+			var/mob/living/buckled_mob = m
+			buckled_mob.dir = dir
+			buckled_mob.pixel_x = pixel_x_offset
+			buckled_mob.pixel_y = pixel_y_offset
+			switch(buckled_mob.dir)
+				if(NORTH)
+					buckled_mob.pixel_x = 0
+					buckled_mob.pixel_y = 4
+				if(EAST)
+					buckled_mob.pixel_x = -4
+					buckled_mob.pixel_y = 7
+				if(SOUTH)
+					buckled_mob.pixel_x = 0
+					buckled_mob.pixel_y = 7
+				if(WEST)
+					buckled_mob.pixel_x = 4
+					buckled_mob.pixel_y = 7
 
 /mob/living/simple_animal/farm/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(dna)
@@ -260,7 +260,7 @@
 	if(src)
 		for(var/datum/farm_animal_trait/T in dna.traits)
 			T.on_death(src)
-		if(buckled_mob)
+		if(buckled_mobs.len)
 			unbuckle_mob()
 		if(icon_living == icon_dead) // no icon for death? gib he
 			gib()
@@ -273,11 +273,13 @@
 		T.on_move(src)
 
 /mob/living/simple_animal/farm/unbuckle_mob(force = 0)
-	if(buckled_mob)
-		animate(buckled_mob, pixel_x = 0, time = 5)
-		animate(buckled_mob, pixel_y = 0, time = 5)
-		buckled_mob.pixel_x = 0
-		buckled_mob.pixel_y = 0
+	if(buckled_mobs.len)
+		for(var/m in buckled_mobs)
+			var/mob/living/buckled_mob = m
+			animate(buckled_mob, pixel_x = 0, time = 5)
+			animate(buckled_mob, pixel_y = 0, time = 5)
+			buckled_mob.pixel_x = 0
+			buckled_mob.pixel_y = 0
 	. = ..()
 
 /mob/living/simple_animal/farm/relaymove(mob/user, direction)
@@ -292,10 +294,12 @@
 
 	step(src, direction)
 
-	if(buckled_mob)
-		if(buckled_mob.loc != loc)
-			buckled_mob.buckled = null //Temporary, so Move() succeeds.
-			buckled_mob.buckled = src //Restoring
+	if(buckled_mobs.len)
+		for(var/m in buckled_mobs)
+			var/mob/living/buckled_mob = m
+			if(buckled_mob.loc != loc)
+				buckled_mob.buckled = null //Temporary, so Move() succeeds.
+				buckled_mob.buckled = src //Restoring
 
 	handle_riding_layer()
 	handle_riding_offsets()
@@ -316,5 +320,7 @@
 /mob/living/simple_animal/farm/Bump(atom/movable/M)
 	. = ..()
 	if(auto_door_open)
-		if(istype(M, /obj/machinery/door) && buckled_mob)
-			M.Bumped(buckled_mob)
+		if(istype(M, /obj/machinery/door) && buckled_mobs.len)
+			for(var/m in buckled_mobs)
+				var/mob/living/buckled_mob = m
+				M.Bumped(buckled_mob)

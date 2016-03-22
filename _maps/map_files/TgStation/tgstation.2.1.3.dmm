@@ -19865,6 +19865,10 @@
 	pixel_y = 30
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/camera{
+	c_tag = "Hydroponics North";
+	dir = 2
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -58644,6 +58648,13 @@
 	},
 /turf/space,
 /area/space)
+"coT" = (
+/mob/living/simple_animal/cow{
+	gender = "female";
+	name = "Bessie"
+	},
+/turf/simulated/floor/plasteel,
+/area/hydroponics)
 "coU" = (
 /obj/structure/table,
 /obj/item/weapon/surgicaldrill,
@@ -58755,6 +58766,10 @@
 	icon_state = "shuttlefloor4"
 	},
 /area/shuttle/syndicate)
+"cpg" = (
+/obj/machinery/incubator,
+/turf/simulated/floor/plasteel,
+/area/hydroponics)
 "cph" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/green/visible,
@@ -64285,24 +64300,17 @@
 	},
 /area/crew_quarters/kitchen)
 "cAD" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plating{
-	icon_state = "warnplate";
-	dir = 1
-	},
-/area/maintenance/disposal)
-"cAE" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/machinery/nest,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/medical/morgue)
+/area/hydroponics)
+"cAE" = (
+/obj/machinery/trough,
+/turf/simulated/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/hydroponics)
 "cAF" = (
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
@@ -64325,10 +64333,15 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads)
 "cAH" = (
-/turf/simulated/floor/plasteel{
-	icon_state = "dark"
+/mob/living/simple_animal/chicken{
+	gender = "male";
+	name = "Dan"
 	},
-/area/medical/morgue)
+/turf/simulated/floor/plasteel{
+	dir = 1;
+	icon_state = "green"
+	},
+/area/hydroponics)
 "cAI" = (
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
@@ -64342,8 +64355,15 @@
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
 "cAK" = (
-/turf/simulated/floor/plating,
-/area/maintenance/asmaint2)
+/mob/living/simple_animal/cow{
+	gender = "male";
+	name = "Ben"
+	},
+/turf/simulated/floor/plasteel{
+	dir = 1;
+	icon_state = "green"
+	},
+/area/hydroponics)
 "cAL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /mob/living/simple_animal/hostile/lizard{
@@ -64353,10 +64373,12 @@
 /turf/simulated/floor/plasteel,
 /area/janitor)
 "cAM" = (
-/turf/simulated/floor/plasteel{
-	icon_state = "floorgrime"
+/mob/living/simple_animal/chicken{
+	gender = "female";
+	name = "Danielle"
 	},
-/area/maintenance/aft)
+/turf/simulated/floor/plasteel,
+/area/hydroponics)
 "cAN" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Maintenance";
@@ -79019,7 +79041,7 @@ bgj
 bgj
 bjc
 cAF
-bkA
+cAF
 bja
 aaa
 aaa
@@ -79274,8 +79296,8 @@ beO
 beU
 bgl
 bhL
-cAD
-bkA
+bjc
+cAF
 blV
 beO
 aaa
@@ -84889,7 +84911,7 @@ aaa
 aaa
 aaa
 ali
-alX
+aKY
 ali
 asC
 apQ
@@ -85731,7 +85753,7 @@ bTv
 bCq
 bVC
 bWx
-cAM
+bWy
 bYv
 bZl
 bCq
@@ -90521,7 +90543,7 @@ aaD
 aat
 aat
 aat
-awN
+aat
 abA
 acd
 acd
@@ -91287,7 +91309,7 @@ aag
 aaf
 aaj
 aaq
-amB
+aay
 aaE
 aaJ
 aaN
@@ -94492,7 +94514,7 @@ cii
 cpB
 cqi
 cAP
-cqG
+cAP
 crv
 cqY
 cAl
@@ -102129,7 +102151,7 @@ aGL
 aHM
 aJm
 aKz
-cAA
+aKR
 aND
 aJC
 aPP
@@ -102908,7 +102930,7 @@ aRC
 aSK
 aVz
 aVz
-cAC
+aVz
 aYL
 aJI
 bbz
@@ -103415,7 +103437,7 @@ aIf
 aJA
 aKC
 aKC
-cAB
+aKC
 aON
 aQk
 aRD
@@ -103690,7 +103712,7 @@ bfL
 bhm
 bhm
 bhm
-cAH
+bhm
 bkP
 bmV
 boc
@@ -104717,7 +104739,7 @@ bcq
 bfL
 bhp
 biB
-cAE
+biB
 biB
 bkU
 bmX
@@ -104948,7 +104970,7 @@ anf
 anf
 alP
 arA
-blT
+anf
 alP
 atw
 alP
@@ -105472,9 +105494,9 @@ aIq
 aKK
 aMy
 aIp
-aOX
-aQm
-aRJ
+cAD
+cAH
+cAM
 aRJ
 aRJ
 aVK
@@ -105729,12 +105751,12 @@ aIp
 aKI
 aMt
 aIp
-aOW
+cAD
 aQm
 aRJ
+cpg
 aSS
 aUj
-aRJ
 aRJ
 aYQ
 cBg
@@ -105986,12 +106008,12 @@ aIp
 aKI
 aMA
 aIp
-aOX
+cAE
 aQm
 aRJ
+cpg
 aST
 aUk
-aRJ
 aRJ
 aYQ
 bam
@@ -106226,7 +106248,7 @@ apz
 aqw
 arr
 asw
-cpA
+asw
 auE
 apC
 awG
@@ -106243,9 +106265,9 @@ aIp
 aKL
 aMz
 aNQ
-aOX
-aQm
-aRJ
+cAE
+cAK
+coT
 aRJ
 aRJ
 aRJ
@@ -106490,7 +106512,7 @@ awH
 auF
 alP
 aAr
-blT
+anf
 alP
 aaa
 aFq
@@ -111877,14 +111899,14 @@ aaf
 alP
 anf
 apE
-blT
+anf
 anf
 asB
 asB
 asB
 avL
 awR
-cAy
+auI
 azu
 aAz
 asB
@@ -114264,7 +114286,7 @@ bPN
 cbe
 cbY
 bQZ
-cAK
+btp
 ceS
 cae
 bky
@@ -116802,7 +116824,7 @@ aaf
 bky
 bky
 brI
-cAK
+btp
 btp
 bvR
 btp

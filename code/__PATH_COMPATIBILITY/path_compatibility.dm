@@ -18,7 +18,8 @@
 	/obj/structure/bed/chair/janicart/secway
 		parent_type = /obj/vehicle/secway
 
-	parent_type = /obj/vehicle/atv*///Animal Farm Botany Expansion - 2016
+	parent_type = /obj/vehicle/atv*/
+//Animal Farm Botany Expansion - 2016
 /mob/living/simple_animal/chick
 	parent_type = /mob/living/simple_animal/farm/chick
 /mob/living/simple_animal/chicken

@@ -88,29 +88,12 @@
 
 /datum/farm_animal_trait/incendiary_mitochondria/on_death(var/mob/living/simple_animal/farm/M)
 	M.visible_message("[M] burns into dust.")
-	M.dust()
+	M.spawn_dust()
+	qdel(M)
 	return
 
 /datum/farm_animal_trait/incendiary_mitochondria/on_attack_mob(var/mob/living/simple_animal/farm/M, var/mob/living/L)
 	L.adjustFireLoss(M.dna.strength)
-	return
-
-/datum/farm_animal_trait/mitosis
-	name = "Mitosis"
-	description = "This animal has a very small chance to subdivide into two animals. It can only do this once, and the replacement animals cannot subdivide."
-	manifest_probability = 55
-	continue_probability = 75
-	var/has_split = FALSE
-
-/datum/farm_animal_trait/mitosis/on_life(var/mob/living/simple_animal/farm/M)
-	if(prob(1) && !has_split)
-		M.visible_message("[M] performs mitosis!")
-		var/mob/living/simple_animal/farm/F = new M.type(M.loc, new_dna = 0)
-		F.dna = M.dna
-		for(var/datum/farm_animal_trait/T in F.dna)
-			T.on_apply(F)
-		F.resize = 0.8
-		M.resize = 0.8
 	return
 
 /datum/farm_animal_trait/strong

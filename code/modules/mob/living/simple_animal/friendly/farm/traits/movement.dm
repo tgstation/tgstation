@@ -1,6 +1,6 @@
 /datum/farm_animal_trait/vine_eating
 	name = "Vine-Eating"
-	description = "This animal will eat vines it crosses."
+	description = "This animal will eat vines it encounters."
 	manifest_probability = 55
 	continue_probability = 75
 
@@ -9,12 +9,14 @@
 		if(locate(/obj/effect/spacevine) in M.loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in M.loc
 			SV.eat(M)
+			M.hunger += 50
 
 /datum/farm_animal_trait/vine_eating/on_life(var/mob/living/simple_animal/farm/M)
 	if(M.stat == CONSCIOUS)
 		if(locate(/obj/effect/spacevine) in M.loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in M.loc
 			SV.eat(M)
+			M.hunger += 50
 		if(!M.pulledby)
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
 				var/step = get_step(M, direction)

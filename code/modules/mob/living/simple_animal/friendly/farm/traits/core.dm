@@ -119,9 +119,9 @@
 			target = null
 	var/getting_water = 0
 	var/getting_food = 0
-	if(M.thirst_threshold_thirsty >= M.thirst)
+	if(M.thirst_threshold_thirsty + 50 >= M.thirst)
 		getting_water = 1
-	if(M.hunger_threshold_hungry >= M.hunger)
+	if(M.hunger_threshold_hungry + 50 >= M.hunger)
 		getting_food = 1
 	if(getting_water)
 		var/list/usable_troughs = list()
