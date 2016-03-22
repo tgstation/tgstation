@@ -295,7 +295,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Species
 	var/species_id
 	S["species"]			>> species_id
-	if(config.mutant_races && species_id && (species_id in roundstart_species))
+	if((species_id == "human" || !species_id ) && (SSevent.holidays && SSevent.holidays[APRIL_FOOLS]) && prob(15))
+		species_id = "pony" // Here goes your humanity.
+		pref_species = new /datum/species/pony()
+
+	else if(config.mutant_races && species_id && (species_id in roundstart_species))
 		var/newtype = roundstart_species[species_id]
 		pref_species = new newtype()
 	else
