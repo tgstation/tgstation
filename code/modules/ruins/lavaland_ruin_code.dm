@@ -315,7 +315,7 @@
 	death = FALSE
 	anchored = 0
 	density = 0
-	flavour_text = {"<B>You are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to travel the stars with a single declaration; "Yeah go do whatever." Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn golems, so that no golem may ever be forced to serve again.</B>"}
+	flavour_text = {"<B>You are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to travel the stars with a single declaration; 'Yeah go do whatever.' Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn golems, so that no golem may ever be forced to serve again.</B>"}
 
 /obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
 	new_spawn.real_name = "Golem ([rand(0,999)])"
