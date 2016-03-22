@@ -327,7 +327,6 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 
 /datum/job/elo
 	title = "Elite Security Officer"
-	flag = ELO
 	department_head = list("Head of Security")
 	department_flag = ENGSEC
 	faction = "Station"
@@ -357,14 +356,14 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
-	backpack_contents = list(/obj/item/weapon/gun/energy=1,\ /obj/item/weapon/melee/classic_baton=1)
+	backpack_contents = list(/obj/item/weapon/gun/energy=1, /obj/item/weapon/melee/classic_baton=1)
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
-
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
+
 
 /obj/item/weapon/storage/belt/military/full/New()
 	..()
