@@ -139,7 +139,7 @@ Pipelines + Other Objects -> Pipe network
 			user << "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>"
 			unsafe_wrenching = TRUE //Oh dear oh dear
 
-		if (do_after(user, 20/W.toolspeed, target = src) && !gc_destroyed)
+		if (do_after(user, 20/W.toolspeed, target = src) && !qdeleted(src))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You unfasten \the [src].</span>", \
@@ -237,7 +237,7 @@ Pipelines + Other Objects -> Pipe network
 	if(!(direction & initialize_directions)) //cant go this way.
 		return
 
-	if(buckled_mob == user) // fixes buckle ventcrawl edgecase fuck bug
+	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
 		return
 
 	var/obj/machinery/atmospherics/target_move = findConnecting(direction)

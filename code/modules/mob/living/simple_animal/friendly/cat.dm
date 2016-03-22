@@ -30,6 +30,19 @@
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = 2
 
+/mob/living/simple_animal/pet/cat/New()
+	..()
+	verbs += /mob/living/proc/lay_down
+
+/mob/living/simple_animal/pet/cat/update_canmove()
+	..()
+	if(client)
+		if (resting)
+			icon_state = "[icon_living]_rest"
+		else
+			icon_state = "[icon_living]"
+
+
 /mob/living/simple_animal/pet/cat/space
 	name = "space cat"
 	desc = "It's a cat... in space!"
@@ -40,9 +53,16 @@
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
 
+/mob/living/simple_animal/pet/cat/original
+	name = "Batsy"
+	desc = "The product of alien DNA and bored geneticists."
+	icon_state = "original"
+	icon_living = "original"
+	icon_dead = "original_dead"
+
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
-	desc = "D'aaawwww"
+	desc = "D'aaawwww."
 	icon_state = "kitten"
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
@@ -64,6 +84,10 @@
 	var/memory_saved = 0
 
 /mob/living/simple_animal/pet/cat/Runtime/New()
+	if(prob(30))
+		icon_state = "original"
+		icon_living = "original"
+		icon_dead = "original_dead"
 	Read_Memory()
 	..()
 
@@ -108,22 +132,25 @@
 	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/cat/Life()
-	if(!stat && !buckled)
+	if(!stat && !buckled && !client)
 		if(prob(1))
-			emote("me", 1, pick("stretches out for a belly rub.", "wags its tail."))
+			emote("me", 1, pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
 			icon_state = "[icon_living]_rest"
 			resting = 1
+			update_canmove()
 		else if (prob(1))
-			emote("me", 1, pick("sits down.", "crouches on its hind legs."))
+			emote("me", 1, pick("sits down.", "crouches on its hind legs.", "looks alert."))
 			icon_state = "[icon_living]_sit"
 			resting = 1
+			update_canmove()
 		else if (prob(1))
 			if (resting)
-				emote("me", 1, pick("gets up and meows.", "walks around."))
+				emote("me", 1, pick("gets up and meows.", "walks around.", "stops resting."))
 				icon_state = "[icon_living]"
 				resting = 0
+				update_canmove()
 			else
-				emote("me", 1, pick("grooms its fur.", "twitches its whiskers."))
+				emote("me", 1, pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
 
 	//MICE!
 	if((src.loc) && isturf(src.loc))

@@ -30,6 +30,7 @@
 	icon_state = "helmetalt"
 	item_state = "helmetalt"
 	armor = list(melee = 15, bullet = 40, laser = 10, energy = 10, bomb = 40, bio = 0, rad = 0)
+	can_flashlight = 1
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"

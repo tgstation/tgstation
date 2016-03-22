@@ -10,7 +10,7 @@
 	config_tag = "traitor"
 	antag_flag = ROLE_TRAITOR
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Security Officer", "Warden", "Head of Security", "Captain")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -206,6 +206,7 @@
 		add_law_zero(traitor.current)
 	else
 		equip_traitor(traitor.current)
+	ticker.mode.update_traitor_icons_added(traitor)
 	return
 
 
@@ -373,3 +374,14 @@
 		where = "In your [equipped_slot]"
 	mob << "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>"
 	mob.update_icons()
+
+/datum/game_mode/proc/update_traitor_icons_added(datum/mind/traitor_mind)
+	var/datum/atom_hud/antag/traitorhud = huds[ANTAG_HUD_TRAITOR]
+	traitorhud.join_hud(traitor_mind.current)
+	set_antag_hud(traitor_mind.current, "traitor")
+
+/datum/game_mode/proc/update_traitor_icons_removed(datum/mind/traitor_mind)
+	var/datum/atom_hud/antag/traitorhud = huds[ANTAG_HUD_TRAITOR]
+	traitorhud.leave_hud(traitor_mind.current)
+	set_antag_hud(traitor_mind.current, null)
+

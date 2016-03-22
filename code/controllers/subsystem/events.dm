@@ -6,6 +6,7 @@ var/datum/subsystem/events/SSevent
 
 	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list()	//list of all existing /datum/round_event
+	var/list/currentrun = list()
 
 	var/scheduled = 0			//The next world.time that a naturally occuring random event can be selected.
 	var/frequency_lower = 1800	//3 minutes lower bound.
@@ -34,14 +35,23 @@ var/datum/subsystem/events/SSevent
 	..()
 
 
-/datum/subsystem/events/fire()
-	checkEvent()
-	for(var/thing in running)
-		if(thing)
-			thing:process()
-			continue
-		running.Remove(thing)
+/datum/subsystem/events/fire(resumed = 0)
+	if(!resumed)
+		checkEvent() //only check these if we aren't resuming a paused fire
+		src.currentrun = running.Copy()
 
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+
+	while(currentrun.len)
+		var/datum/thing = currentrun[1]
+		currentrun.Cut(1, 2)
+		if(thing)
+			thing.process()
+		else
+			running.Remove(thing)
+		if (MC_TICK_CHECK)
+			return
 
 //checks if we should select a random event yet, and reschedules if necessary
 /datum/subsystem/events/proc/checkEvent()

@@ -26,4 +26,4 @@
 	var/turf/T = pick(blobstart)
 	if(!T)
 		return kill()
-	new/obj/effect/blob/core(T, 200, null, new_rate)
+	new/obj/effect/blob/core(T, null, new_rate)

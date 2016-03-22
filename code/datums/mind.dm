@@ -113,6 +113,7 @@
 			changeling = null
 	special_role = null
 	remove_antag_equip()
+	ticker.mode.update_changeling_icons_removed(src)
 
 /datum/mind/proc/remove_traitor()
 	if(src in ticker.mode.traitors)
@@ -126,6 +127,7 @@
 			qdel(A.malf_picker)
 	special_role = null
 	remove_antag_equip()
+	ticker.mode.update_traitor_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()
 	if(src in ticker.mode.syndicates)
@@ -198,6 +200,13 @@
 	remove_cultist()
 	remove_rev()
 	remove_gang()
+	ticker.mode.update_changeling_icons_removed(src)
+	ticker.mode.update_traitor_icons_removed(src)
+	ticker.mode.update_wiz_icons_removed(src)
+	ticker.mode.update_cult_icons_removed(src)
+	ticker.mode.update_rev_icons_removed(src)
+	gang_datum.remove_gang_hud(src)
+
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)
@@ -997,6 +1006,7 @@
 				remove_wizard()
 				current << "<span class='userdanger'>You have been brainwashed! You are no longer a wizard!</span>"
 				log_admin("[key_name(usr)] has de-wizard'ed [current].")
+				ticker.mode.update_wiz_icons_removed(src)
 			if("wizard")
 				if(!(src in ticker.mode.wizards))
 					ticker.mode.wizards += src
@@ -1005,6 +1015,7 @@
 					current << "<span class='boldannounce'>You are the Space Wizard!</span>"
 					message_admins("[key_name_admin(usr)] has wizard'ed [current].")
 					log_admin("[key_name(usr)] has wizard'ed [current].")
+					ticker.mode.update_wiz_icons_added(src)
 			if("lair")
 				current.loc = pick(wizardstart)
 			if("dressup")
@@ -1030,6 +1041,7 @@
 					current << "<span class='boldannounce'>Your powers are awoken. A flash of memory returns to us...we are [changeling.changelingID], a changeling!</span>"
 					message_admins("[key_name_admin(usr)] has changeling'ed [current].")
 					log_admin("[key_name(usr)] has changeling'ed [current].")
+					ticker.mode.update_changeling_icons_added(src)
 			if("autoobjectives")
 				ticker.mode.forge_changeling_objectives(src)
 				usr << "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>"
@@ -1101,6 +1113,7 @@
 				current << "<span class='userdanger'>You have been brainwashed! You are no longer a traitor!</span>"
 				message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
 				log_admin("[key_name(usr)] has de-traitor'ed [current].")
+				ticker.mode.update_traitor_icons_removed(src)
 
 			if("traitor")
 				if(!(src in ticker.mode.traitors))
@@ -1112,6 +1125,7 @@
 					if(isAI(current))
 						var/mob/living/silicon/ai/A = current
 						ticker.mode.add_law_zero(A)
+					ticker.mode.update_traitor_icons_added(src)
 
 			if("autoobjectives")
 				ticker.mode.forge_traitor_objectives(src)
@@ -1158,12 +1172,14 @@
 		switch(href_list["abductor"])
 			if("clear")
 				usr << "Not implemented yet. Sorry!"
+				//ticker.mode.update_abductor_icons_removed(src)
 			if("abductor")
 				if(!ishuman(current))
 					usr << "<span class='warning'>This only works on humans!</span>"
 					return
 				make_Abductor()
 				log_admin("[key_name(usr)] turned [current] into abductor.")
+				ticker.mode.update_abductor_icons_added(src)
 			if("equip")
 				var/gear = alert("Agent or Scientist Gear","Gear","Agent","Scientist")
 				if(gear)
@@ -1330,6 +1346,7 @@
 		special_role = "Changeling"
 		ticker.mode.forge_changeling_objectives(src)
 		ticker.mode.greet_changeling(src)
+		ticker.mode.update_changeling_icons_added(src)
 
 /datum/mind/proc/make_Wizard()
 	if(!(src in ticker.mode.wizards))

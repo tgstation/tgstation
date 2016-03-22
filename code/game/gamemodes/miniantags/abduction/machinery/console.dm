@@ -61,7 +61,6 @@
 		dat += "<span class='bad'>Emergency Teleporter System.</span>"
 		dat += "<span class='bad'>Consider using primary observation console first.</span>"
 		dat += "<a href='?src=\ref[src];teleporter_send=1'>Activate Teleporter</A><br>"
-		dat += "<a href='?src=\ref[src];teleporter_set=1'>Set Teleporter</A><br>"
 		if(gizmo!=null && gizmo.marked!=null)
 			dat += "<a href='?src=\ref[src];teleporter_retrieve=1'>Retrieve Mark</A><br>"
 		else
@@ -94,9 +93,7 @@
 		return
 
 	usr.set_machine(src)
-	if(href_list["teleporter_set"])
-		TeleporterSet()
-	else if(href_list["teleporter_send"])
+	if(href_list["teleporter_send"])
 		TeleporterSend()
 	else if(href_list["teleporter_retrieve"])
 		TeleporterRetrieve()
@@ -116,12 +113,6 @@
 				Dispense(/obj/item/device/abductor/gizmo)
 	src.updateUsrDialog()
 
-/obj/machinery/abductor/console/proc/TeleporterSet()
-	var/A = null
-	A = input("Select area to teleport to", "Teleport", A) in teleportlocs
-	if(pad!=null && in_range(usr,src))
-		pad.teleport_target = teleportlocs[A]
-	return
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
 	if(gizmo!=null && pad!=null && gizmo.marked)
@@ -151,6 +142,16 @@
 	if(chosen && (remote || in_range(usr,src)))
 		vest.SetDisguise(chosen)
 	return
+
+/obj/machinery/abductor/console/proc/SetDroppoint(turf/simulated/location,user)
+	if(!istype(location))
+		user << "<span class='warning'>That place is not safe for the specimen.</span>"
+		return
+
+	if(pad)
+		pad.teleport_target = location
+		user << "<span class='notice'>Location marked as test subject release point.</span>"
+
 
 /obj/machinery/abductor/console/proc/Initialize()
 

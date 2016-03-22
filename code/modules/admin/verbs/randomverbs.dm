@@ -976,6 +976,10 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	for(var/datum/atom_hud/H in huds)
 		if(istype(H, /datum/atom_hud/antag) || istype(H, /datum/atom_hud/data/human/security/advanced))
 			(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
+	
+	for(var/datum/gang/G in ticker.mode.gangs)
+		var/datum/atom_hud/antag/H = G.ganghud
+		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
 	usr << "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"]."
 	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")

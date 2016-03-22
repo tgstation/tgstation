@@ -111,7 +111,7 @@
 
 /obj/structure/bookcase/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		for(var/obj/item/weapon/book/b in contents)
 			b.loc = (get_turf(src))
 		if(prob(50))

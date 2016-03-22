@@ -152,10 +152,11 @@ Cook
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H)
 	..()
 	var/datum/job/cook/J = SSjob.GetJob(H.job)
-	J.cooks++
-	if(J.cooks>1)//Cooks
-		suit = /obj/item/clothing/suit/apron/chef
-		head = /obj/item/clothing/head/soft/mime
+	if(J) // Fix for runtime caused by invalid job being passed
+		J.cooks++
+		if(J.cooks>1)//Cooks
+			suit = /obj/item/clothing/suit/apron/chef
+			head = /obj/item/clothing/head/soft/mime
 
 
 /*

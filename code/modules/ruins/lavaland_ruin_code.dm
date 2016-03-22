@@ -1,5 +1,40 @@
+/obj/structure/lavaland_door
+	name = "necropolis gate"
+	desc = "An imposing, seemingly impenetrable door."
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "door"
+	anchored = 1
+	density = 1
+	bound_width = 96
+	bound_height = 96
+	burn_state = LAVA_PROOF
+	luminosity = 1
 
+/obj/structure/lavaland_door/singularity_pull()
+	return 0
 
+/obj/structure/lavaland_door/Destroy()
+	return QDEL_HINT_LETMELIVE
+
+/obj/machinery/lavaland_controller
+	name = "weather control machine"
+	desc = "Controls the weather."
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "processor"
+	var/ongoing_weather = FALSE
+	var/weather_cooldown = 0
+
+/obj/machinery/lavaland_controller/process()
+	if(ongoing_weather || weather_cooldown > world.time)
+		return
+	ongoing_weather = TRUE
+	weather_cooldown = world.time + rand(3500, 6500)
+	var/datum/weather/ash_storm/LAVA = new /datum/weather/ash_storm
+	LAVA.weather_start_up()
+	ongoing_weather = FALSE
+
+/obj/machinery/lavaland_controller/Destroy()
+	return QDEL_HINT_LETMELIVE
 
 
 
@@ -11,9 +46,9 @@
 	lootcount = 1
 
 	loot = list(/obj/item/seeds/gatfruit = 10,
-				/obj/item/seeds/cherryseed = 15,
-				/obj/item/seeds/glowberryseed = 10,
-				/obj/item/seeds/moonflowerseed = 8,
+				/obj/item/seeds/cherry = 15,
+				/obj/item/seeds/berry/glow = 10,
+				/obj/item/seeds/sunflower/moonflower = 8
 				)
 
 /obj/effect/mob_spawn/human/seed_vault
@@ -24,7 +59,11 @@
 	roundstart = FALSE
 	death = FALSE
 	mob_species = /datum/species/pod
-	flavour_text = {"You are a strange, artificial creature. In the face of impending apocalyptic events, your creators tasked you with maintaining an emergency seed vault. You are to tend to the plants and await their return to aid in rebuilding civilization. You've been waiting quite a while though..."}
+	flavour_text = {"You are a strange, artificial creature. Your creators were a highly advanced and benevolent race, and launched many seed vaults into the stars, hoping to aid fledgling civilizations. You are to tend to the vault and await the arrival of sentient species. You've been waiting quite a while though..."}
+
+/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
+	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Deathcap", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Spore", "Root", "Bark", "Glowshroom", "Petal", "Leaf", "Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper")
+	new_spawn.real_name = plant_name
 
 //Greed
 
@@ -124,3 +163,85 @@
 			user.updateappearance(mutcolor_update=1)
 			user.domutcheck()
 			user << "You assume the face of [H]. Are you satisfied?"
+
+///Ash Walkers
+
+/mob/living/simple_animal/hostile/spawner/ash_walker
+	name = "ash walker nest"
+	desc = "A nest built around a necropolis tendril. The eggs seem to grow unnaturally fast..."
+	icon = 'icons/mob/nest.dmi'
+	icon_state = "ash_walker_nest"
+	icon_living = "ash_walker_nest"
+	health = 200
+	maxHealth = 200
+	loot = list(/obj/effect/gibspawner, /obj/item/device/assembly/signaler/anomaly)
+	del_on_death = 1
+	var/meat_counter
+
+/mob/living/simple_animal/hostile/spawner/ash_walker/Life()
+	..()
+	if(!stat)
+		consume()
+		spawn_mob()
+
+/mob/living/simple_animal/hostile/spawner/ash_walker/proc/consume()
+	for(var/mob/living/H in view(src,1)) //Only for corpse right next to/on same tile
+		if(H.stat)
+			visible_message("<span class='warning'>Tendrils reach out from \the [src.name] pulling [H] in! Blood seeps over the eggs as [H] is devoured.</span>")
+			playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
+			meat_counter ++
+			H.gib()
+
+/mob/living/simple_animal/hostile/spawner/ash_walker/spawn_mob()
+	if(meat_counter >= 2)
+		new /obj/effect/mob_spawn/human/ash_walker(get_step(src.loc, SOUTH))
+		visible_message("<span class='danger'>An egg is ready to hatch!</span>")
+		meat_counter -= 2
+
+/obj/effect/mob_spawn/human/ash_walker
+	name = "ash walker egg"
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "large_egg"
+	mob_species = /datum/species/lizard
+	helmet = /obj/item/clothing/head/helmet/gladiator
+	uniform = /obj/item/clothing/under/gladiator
+	roundstart = FALSE
+	death = FALSE
+	anchored = 0
+	density = 0
+	flavour_text = {"<B>You are an Ash Walker. Your tribe worships<span class='danger'>the necropolis</span>. The wastes are sacred ground, it's monsters a blessed bounty. You have seen lights in the distance though, the arrival of outsiders seeking to destroy the land. Fresh sacrifices.</B>"}
+
+/obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
+	new_spawn.real_name = random_unique_lizard_name(gender)
+	new_spawn << "Drag corpes to your nest to feed the young, and spawn more Ash Walkers. Bring glory to the tribe!"
+	if(ishuman(new_spawn))
+		var/mob/living/carbon/human/H = new_spawn
+		H.dna.species.specflags |= NOBREATH
+
+
+
+//Wishgranter Exile
+
+/obj/effect/mob_spawn/human/exile
+	name = "exile sleeper"
+	mob_name = "Penitent Exile"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	roundstart = FALSE
+	death = FALSE
+	mob_species = /datum/species/shadow
+	flavour_text = {"You are cursed! Many years ago you risked it all to reach the Wish Granter, siezing it's power for yourself and leaving your friends for dead.. Though your wish came true, it did so at a price, and you've been doomed to wander these wastes ever since. You seek only to atone now, to somehow redeem yourself, and finally be released. You've seen ships landing in the distance. Perhaps now is the time to make things right?"}
+
+/obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
+	new_spawn.real_name = "[new_spawn.real_name] ([rand(0,999)])"
+	var/wish = rand(1,4)
+	switch(wish)
+		if(1)
+			new_spawn << "You wished to kill, and kill you did. You've lost track of the number and murder long lost it's spark of excitement. You feel only regret."
+		if(2)
+			new_spawn << "You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?"
+		if(3)
+			new_spawn << "You wished for power. Little good it did you, cast out of the light. You are a king, but ruling over a miserable wasteland. You feel only remorse."
+		if(4)
+			new_spawn << "You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. You are overwhelmed with guilt."
+

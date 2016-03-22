@@ -185,14 +185,14 @@
 		return
 
 	if (src.active)
-		user.visible_message("[src] [user] deactivated the shield generator.", \
-			"<span class='notice'>[src] You deactivate the shield generator.</span>", \
+		user.visible_message("[user] deactivated \the [src].", \
+			"<span class='notice'>You deactivate \the [src].</span>", \
 			"<span class='italics'>You hear heavy droning fade out.</span>")
 		src.shields_down()
 	else
 		if(anchored)
-			user.visible_message("[src] [user] activated the shield generator.", \
-				"<span class='notice'>[src] You activate the shield generator.</span>", \
+			user.visible_message("[user] activated \the [src].", \
+				"<span class='notice'>You activate \the [src].</span>", \
 				"<span class='italics'>You hear heavy droning.</span>")
 			src.shields_up()
 		else
@@ -317,28 +317,28 @@
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
 	if(!anchored)
-		user << "<span class='warning'>The shield generator needs to be firmly secured to the floor first!</span>"
+		user << "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>"
 		return 1
 	if(locked && !istype(user, /mob/living/silicon))
 		user << "<span class='warning'>The controls are locked!</span>"
 		return 1
 	if(power != 1)
-		user << "<span class='warning'>The shield generator needs to be powered by wire underneath!</span>"
+		user << "<span class='warning'>\The [src] needs to be powered by wire underneath!</span>"
 		return 1
 
 	if(src.active >= 1)
 		src.active = 0
 		icon_state = "Shield_Gen"
 
-		user.visible_message("[user] turned the shield generator off.", \
-			"<span class='notice'>You turn off the shield generator.</span>", \
+		user.visible_message("[user] turned \the [src] off.", \
+			"<span class='notice'>You turn off \the [src].</span>", \
 			"<span class='italics'>You hear heavy droning fade out.</span>")
 		src.cleanup()
 	else
 		src.active = 1
 		icon_state = "Shield_Gen +a"
-		user.visible_message("[user] turned the shield generator on.", \
-			"<span class='notice'>You turn on the shield generator.</span>", \
+		user.visible_message("[user] turned \the [src] on.", \
+			"<span class='notice'>You turn on \the [src].</span>", \
 			"<span class='italics'>You hear heavy droning.</span>")
 	src.add_fingerprint(user)
 

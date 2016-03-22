@@ -37,11 +37,11 @@
 	var/point_upgrade_temp = 1
 	var/sheet_per_ore_temp = 1
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
-		sheet_per_ore_temp = B.rating
+		sheet_per_ore_temp = 0.65 + (0.35 * B.rating)
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		ore_pickup_rate_temp = 15 * M.rating
 	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
-		point_upgrade_temp = L.rating
+		point_upgrade_temp = 0.65 + (0.35 * L.rating)
 	ore_pickup_rate = ore_pickup_rate_temp
 	point_upgrade = point_upgrade_temp
 	sheet_per_ore = sheet_per_ore_temp
@@ -201,7 +201,7 @@
 			var/obj/item/stack/sheet/inp = stack_list[text2path(href_list["release"])]
 			var/obj/item/stack/sheet/out = new inp.type()
 			var/desired = input("How much?", "How much to eject?", 1) as num
-			out.amount = min(desired,50,inp.amount)
+			out.amount = round(min(desired,50,inp.amount))
 			if(out.amount >= 1)
 				inp.amount -= out.amount
 				unload_mineral(out)
@@ -218,7 +218,7 @@
 
 			var/desired = input("How much?", "How much would you like to smelt?", 1) as num
 			var/obj/item/stack/sheet/plasteel/plasteelout = new
-			plasteelout.amount = min(desired,50,metalstack.amount,plasmastack.amount)
+			plasteelout.amount = round(min(desired,50,metalstack.amount,plasmastack.amount))
 			if(plasteelout.amount >= 1)
 				metalstack.amount -= plasteelout.amount
 				plasmastack.amount -= plasteelout.amount
@@ -285,6 +285,7 @@
 		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   300),
 		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     400),
 		new /datum/data/mining_equipment("Hivelord Stabilizer",	/obj/item/weapon/hivelordstabilizer			 ,                     400),
+		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     400),
 		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                    500),
 		new /datum/data/mining_equipment("GAR mesons",			/obj/item/clothing/glasses/meson/gar,							   500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   600),
@@ -293,7 +294,7 @@
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   800),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  1000),
-		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               2000),
+		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack						,	              2000),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  2000),
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  2000),
 		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              2500),
@@ -408,7 +409,7 @@
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Kinetic Accelerator", "Resonator", "Mining Drone", "Advanced Scanner")
-	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
+	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
 		if("Kinetic Accelerator")
@@ -872,7 +873,7 @@
 				var/client/C = user.client
 				for(var/turf/simulated/mineral/M in minerals)
 					var/turf/F = get_turf(M)
-					var/image/I = image('icons/turf/mining.dmi', loc = F, icon_state = M.scan_state, layer = 18)
+					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = 18)
 					C.images += I
 					spawn(30)
 						if(C)
@@ -885,15 +886,25 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "xeno_warning"
 
-/**********************Mining Jetpack**********************/
-/obj/item/weapon/tank/jetpack/carbondioxide/mining
-	name = "mining jetpack"
-	icon_state = "jetpack-mining"
-	item_state = "jetpack-mining"
-	desc = "A tank of compressed carbon dioxide for miners to use as propulsion in local space. The compact size allows for easy storage at the cost of capacity."
-	volume = 40
-	throw_range = 7
-	w_class = 3 //same as syndie harness
+/******************Hardsuit Jetpack Upgrade*******************/
+/obj/item/hardsuit_jetpack
+	name = "hardsuit jetpack upgrade"
+	icon_state = "jetpack_upgrade"
+	desc = "A modular, compact set of thrusters designed to integrate with a hardsuit. It is fueled by a tank inserted into the suit's storage compartment."
+
+
+/obj/item/hardsuit_jetpack/afterattack(var/obj/item/clothing/suit/space/hardsuit/S, mob/user)
+	..()
+	if(!istype(S))
+		user << "<span class='warning'>This upgrade can only be applied to a hardsuit.</span>"
+	else if(S.jetpack)
+		user << "<span class='warning'>[S] already has a jetpack installed.</span>"
+	else if(S == user.get_item_by_slot(slot_wear_suit)) //Make sure the player is not wearing the suit before applying the upgrade.
+		user << "<span class='warning'>You cannot install the upgrade to [S] while wearing it.</span>"
+	else
+		S.jetpack = new /obj/item/weapon/tank/jetpack/suit(S)
+		user << "<span class='notice'>You successfully install the jetpack into [S].</span>"
+		qdel(src)
 
 /*********************Hivelord stabilizer****************/
 

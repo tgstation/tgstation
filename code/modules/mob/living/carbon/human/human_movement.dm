@@ -3,19 +3,6 @@
 	. += ..()
 	. += config.human_delay
 
-/mob/living/carbon/human/Process_Spacemove(movement_dir = 0)
-	if(..())
-		return 1
-	if(!isturf(loc)) // In a mecha? A locker? Who knows!
-		return 0
-
-	// Do we have a jetpack (and is it on)?
-	var/obj/item/weapon/tank/jetpack/J = back
-	if(!istype(J) && istype(wear_suit, /obj/item/clothing/suit/space/hardsuit))
-		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
-		J = C.jetpack
-	if(istype(J) && J.allow_thrust(0.01, src))
-		return 1
 
 /mob/living/carbon/human/slip(s_amount, w_amount, obj/O, lube)
 	if(isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP))

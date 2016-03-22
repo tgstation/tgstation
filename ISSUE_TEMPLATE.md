@@ -1,13 +1,3 @@
-[Everyone]: # (Please fill in your information on the line AFTER the header.)
-
-### What is the problem?
-
-### Why is it a problem, or what should have happened?
-
-### How can the problem be reproduced?
-
-### What revision did the problem happen on? (Helpful, but not required)
-[If you're including this]: # (Type find-server-revision ingame to find it. "Current" isn't helpful.)
-
+[Note]: # (State what the issue is from a "whats wrong" prospective. Issue reports should clearly allow maintainers to understand whats wrong and how to test/reproduce if that is not obvious. Avoid ambiguity. Start your issue report below both of these lines (or remove them))
 
 [Admins]: # (If you are reporting a bug that occured AFTER you used varedit/admin buttons to alter an object out of normal operating conditions, please verify that you can re-create the bug without the varedit usage/admin buttons before reporting the issue.)
