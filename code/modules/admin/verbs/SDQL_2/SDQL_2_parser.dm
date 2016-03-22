@@ -28,7 +28,7 @@
 //
 //	assignments			:	assignment, [',' assignments]
 //	assignment			:	<variable name> '=' expression
-//	variable			:	<variable name> | <variable name> '.' variable
+//	variable			:	<variable name> | <variable name> '.' variable | '[' <hex number> ']' | '[' <hex number> ']' '.' variable
 //
 //	bool_expression		:	expression comparitor expression  [bool_operator bool_expression]
 //	expression			:	( unary_expression | '(' expression ')' | value ) [binary_operator expression]
@@ -338,10 +338,17 @@
 	return i
 
 
-//variable:	<variable name> | <variable name> '.' variable
+//variable:	<variable name> | <variable name> '.' variable | '[' <hex number> ']' | '[' <hex number> ']' '.' variable
 /datum/SDQL_parser/proc/variable(i, list/node)
 	var/list/L = list(token(i))
 	node[++node.len] = L
+
+	if(token(i) == "{")
+		L += token(i + 1)
+		i += 2
+
+		if(token(i) != "}")
+			parse_error("Missing } at end of pointer.")
 
 	if(token(i + 1) == ".")
 		L += "."
@@ -427,7 +434,7 @@
 		expression_list[++expression_list.len] = temp_expression_list
 
 	else
-		
+
 		i++
 
 	node[++node.len] = expression_list
@@ -437,7 +444,11 @@
 //call_function:	<function name> ['(' [arguments] ')']
 /datum/SDQL_parser/proc/call_function(i, list/node, list/arguments)
 	if(length(tokenl(i)))
-		node += token(i++)
+		var/procname = ""
+		if(tokenl(i) == "global" && token(i + 1) == ".") // Global proc.
+			i += 2
+			procname = "global."
+		node += procname + token(i++)
 		if(token(i) != "(")
 			parse_error("Expected ( but found '[token(i)]'")
 
@@ -557,9 +568,12 @@
 
 //value:	variable | string | number | 'null'
 /datum/SDQL_parser/proc/value(i, list/node)
-
 	if(token(i) == "null")
 		node += "null"
+		i++
+
+	else if(lowertext(copytext(token(i), 1, 3)) == "0x" && isnum(hex2num(copytext(token(i), 3))))
+		node += hex2num(copytext(token(i), 3))
 		i++
 
 	else if(isnum(text2num(token(i))))
