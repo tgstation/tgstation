@@ -160,7 +160,12 @@
 	else
 		position = ucfirsts(company.industry.detokenize("Lead %industrial% Engineer"))
 	offenses = ""
-	var/list/O = list("corruption", "murder", "jaywalking", "assault", "battery", "drug possession", "burglary", "theft", "larceny", "bribery", "disorderly conduct", "treason", "sedition", "shoplifting", "tax evasion", "tax fraud", "insurance fraud", "perjury", "kidnapping", "manslaughter", "vandalism", "forgery", "extortion", "embezzlement", "public indecency", "public intoxication", "trespassing", "loitering", "littering", "vigilantism", "squatting", "panhandling")
+	var/list/O = list("corruption", "murder", "jaywalking", "assault", "battery", "drug possession", "burglary", "theft", "larceny", "bribery",
+						"disorderly conduct", "treason", "sedition", "shoplifting", "tax evasion", "tax fraud", "insurance fraud", "perjury", "kidnapping", "manslaughter", "vandalism", "forgery", "extortion", "embezzlement",
+						"public indecency", "public intoxication", "trespassing", "loitering", "littering", "vigilantism", "squatting", "panhandling", "arson", "spacepodjacking", "shuttlejacking", "carjacking", "boatjacking",
+						"aircraft piracy", "spacecraft piracy", "music piracy", "tabletop game piracy", "software piracy", "escaping from space prison", "seniornapping", "adultnapping", "horsenappinng", "corginapping", "catnapping",
+						"sleeping on the job", "terrorism", "counterterrorism", "drug distribution", "vouyerism", "owning a computer", "owning a cellphone", "owning a PDA", "owning a smartphone", "owning a pAI", "adultery",
+						"committing an unnatural act with another person", "corrupting public morals", "skateboarding without a license", "car piracy")
 	while (prob(60) && O.len > 2)
 		var/offense = pick(O)
 		O -= offense

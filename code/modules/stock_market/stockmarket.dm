@@ -5,6 +5,7 @@
 	var/list/balances = list()
 	var/list/last_read = list()
 	var/list/stockBrokers = list()
+	var/list/logs = list()
 
 /datum/stockMarket/New()
 		..()
@@ -59,10 +60,10 @@
 		return d
 
 /datum/stockMarket/proc/generateStocks(var/amt = 15)
-	var/list/fruits = list("Banana", "Strawberry", "Watermelon", "Maracuja", "Pomegranate", "Papaya", "Mango", "Tomato", "Conkerberry", "Fig", "Lychee", "Mandarin", "Oroblanco", "Pumpkin", "Rhubarb", "Tamarillo", "Yantok", "Ziziphus")
-	var/list/tech_prefix = list("Nano", "Cyber", "Funk", "Astro", "Fusion", "Tera", "Exo", "Star", "Virtual", "Plasma", "Robust", "Bit", "Butt")
+	var/list/fruits = list("Banana", "Strawberry", "Watermelon", "Maracuja", "Pomegranate", "Papaya", "Mango", "Tomato", "Conkerberry", "Fig", "Lychee", "Mandarin", "Oroblanco", "Pumpkin", "Rhubarb", "Tamarillo", "Yantok", "Ziziphus", "Oranges")
+	var/list/tech_prefix = list("Nano", "Cyber", "Funk", "Astro", "Fusion", "Tera", "Exo", "Star", "Virtual", "Plasma", "Robust", "Bit", "Butt", "Fart", "Porn")
 	var/list/tech_short = list("soft", "tech", "prog", "tec", "tek", "ware", "", "gadgets", "nics", "tric", "trasen", "tronic", "coin")
-	var/list/random_nouns = list("Johnson", "Cluwne", "General", "Specific", "Master", "King", "Queen", "Wayne", "Rupture", "Dynamic", "Massive", "Mega", "Giga", "Certain", "Stale", "State", "National", "International", "Interplanetary", "Sector", "Planet", "Burn", "Robust", "Exotic", "Solar", "Cheesecake")
+	var/list/random_nouns = list("Johnson", "Cluwne", "General", "Specific", "Master", "King", "Queen", "Wayne", "Rupture", "Dynamic", "Massive", "Mega", "Giga", "Certain", "Stale", "State", "National", "International", "Interplanetary", "Sector", "Planet", "Burn", "Robust", "Exotic", "Solar", "Cheesecake", "Chelp", "Corgi")
 	var/list/company = list("Company", "Factory", "Incorporated", "Industries", "Group", "Consolidated", "GmbH", "LLC", "Ltd", "Inc.", "Association", "Limited", "Software", "Technology", "Programming", "IT Group", "Electronics", "Nanotechnology", "Farms", "Stores", "Mobile", "Motors", "Electric", "Energy", "Pharmaceuticals", "Communications", "Wholesale", "Holding", "Health", "Machines", "Astrotech", "Gadgets", "Kinetics")
 	for (var/i = 1, i <= amt, i++)
 		var/datum/stock/S = new
@@ -112,6 +113,14 @@
 		var/datum/stock/S = stock
 		S.process()
 
+/datum/stockMarket/proc/add_log(var/log_type, var/user, var/company_name, var/stocks, var/money)
+	var/datum/stock_log/L = new log_type
+	L.user_name = user
+	L.company_name = company_name
+	L.stocks = stocks
+	L.money = money
+	L.time = time2text(world.timeofday, "hh:mm")
+	logs += L
 
 var/global/datum/stockMarket/stockExchange = new
 

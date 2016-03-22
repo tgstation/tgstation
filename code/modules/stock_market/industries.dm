@@ -174,3 +174,16 @@
 	var/list/meat = list("chicken", "beef", "seal", "monkey", "goat", "insect", "pigeon", "human", "walrus", "wendigo", "bear", "horse", "turkey", "pork", "shellfish", "starfish", "mimic", "mystery")
 	var/list/qualifier = list("synthetic", "organic", "bio", "diet", "sugar-free", "paleolithic", "homeopathic", "recycled", "reclaimed", "vat-grown")
 	return "the [pick(qualifier)] [pick(meat)] meat product line"
+
+/datum/industry/mining
+	name = "Mining"
+	tokens = list( \
+		"industry" = list("mines", "large scale mining operations"), \
+		"industrial" = list("resource accusational"), \
+		"jobs" = list("miners", "drill operators", "mining foremen", "explosives handlers")
+	)
+
+/datum/industry/mining/generateProductName(var/company)
+	var/list/equipment = list("drill", "pickaxe", "shovel", "mini-pickaxe", "power hammer", "power gloves", "power armor", "hardsuit", "oxygen tank", "emergency bike horn")
+	var/list/material = list("mauxite", "pharosium", "molitz", "char", "ice", "cobryl", "bohrum", "claretine", "viscerite", "syreline", "cerenkite", "plasmastone", "gold", "koshmarite")
+	return "the [pick(material)] [pick(equipment)]"

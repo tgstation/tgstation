@@ -1617,6 +1617,7 @@
 #include "code\modules\stock_market\computer.dm"
 #include "code\modules\stock_market\events.dm"
 #include "code\modules\stock_market\industries.dm"
+#include "code\modules\stock_market\logs.dm"
 #include "code\modules\stock_market\stockmarket.dm"
 #include "code\modules\stock_market\stocks.dm"
 #include "code\modules\surgery\cavity_implant.dm"

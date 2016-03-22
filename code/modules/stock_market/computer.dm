@@ -50,7 +50,7 @@ a.updated {
 		if (!(logged_in in LR))
 			LR[logged_in] = 0
 	dat += "<b>View mode:</b> <a href='?src=\ref[src];cycleview=1'>[vmode ? "compact" : "full"]</a>"
-
+	dat += "<b>Stock Transaction Log:</b> <a href='?src=\ref[src];show_logs=1'>Check</a>"
 	dat += "<h3>Listed stocks</h3>"
 
 	if (vmode == 0)
@@ -60,7 +60,7 @@ a.updated {
 				mystocks = S.shareholders[logged_in]
 			dat += "<hr /><div class='stock'><span class='company'>[S.name]</span> <span class='s_company'>([S.short_name])</span>[S.bankrupt ? " <b style='color:red'>BANKRUPT</b>" : null]<br>"
 			if (S.last_unification)
-				dat += "<b>Unified shares</b> [(ticker.times_fired - S.last_unification) / 600] minutes ago.<br>"
+				dat += "<b>Unified shares</b> [(world.time - S.last_unification) / 600] minutes ago.<br>"
 			dat += "<b>Current value per share:</b> [S.current_value] | <a href='?src=\ref[src];viewhistory=\ref[S]'>View history</a><br><br>"
 			dat += "You currently own <b>[mystocks]</b> shares in this company. There are [S.available_shares] purchasable shares on the market currently.<br>"
 			if (S.bankrupt)
@@ -75,7 +75,7 @@ a.updated {
 				for (var/datum/borrow/B in S.borrow_brokers)
 					dat += "<b>[B.broker]</b> offers <i>[B.share_amount] shares</i> for borrowing, for a deposit of <i>[B.deposit * 100]%</i> of the shares' value.<br>"
 					dat += "The broker expects the return of the shares after <i>[B.lease_time / 600] minutes</i>, with a grace period of <i>[B.grace_time / 600]</i> minute(s).<br>"
-					dat += "<i>This offer expires in [(B.offer_expires - ticker.times_fired) / 600] minutes.</i><br>"
+					dat += "<i>This offer expires in [(B.offer_expires - world.time) / 600] minutes.</i><br>"
 					dat += "<b>Note:</b> If you do not return all shares by the end of the grace period, you will lose your deposit and the value of all unreturned shares at current value from your account!<br>"
 					dat += "<b>Note:</b> You cannot withdraw or transfer money off your account while a borrow is active.<br>"
 					dat += "<a href='?src=\ref[src];take=\ref[B]'>Take offer</a> (Estimated deposit: [B.deposit * S.current_value * B.share_amount] credits)<br><br>"
@@ -85,10 +85,10 @@ a.updated {
 				if (B.borrower == logged_in)
 					dat += "You are borrowing <i>[B.share_amount] shares</i> from <b>[B.broker]</b>.<br>"
 					dat += "Your deposit riding on the deal is <i>[B.deposit] credits</i>.<br>"
-					if (ticker.times_fired < B.lease_expires)
-						dat += "You are expected to return the borrowed shares in [(B.lease_expires - ticker.times_fired) / 600] minutes.<br><br>"
+					if (world.time < B.lease_expires)
+						dat += "You are expected to return the borrowed shares in [(B.lease_expires - world.time) / 600] minutes.<br><br>"
 					else
-						dat += "The brokering agency is collecting. You still owe them <i>[B.share_debt]</i> shares, which you have [(B.grace_expires - ticker.times_fired) / 600] minutes to present.<br><br>"
+						dat += "The brokering agency is collecting. You still owe them <i>[B.share_debt]</i> shares, which you have [(B.grace_expires - world.time) / 600] minutes to present.<br><br>"
 			var/news = 0
 			if (logged_in)
 				var/list/LR = stockExchange.last_read[S]
@@ -133,7 +133,6 @@ a.updated {
 			else
 				dat += "<a href='?src=\ref[src];buyshares=\ref[S]'>+</a> <a href='?src=\ref[src];sellshares=\ref[S]'>-</a> "
 			dat += "<a href='?src=\ref[src];archive=\ref[S]' class='[news ? "updated" : "default"]'>(A)</a> <a href='?src=\ref[src];viewhistory=\ref[S]'>(H)</a></td></tr>"
-
 	dat += "</body></html>"
 	var/datum/browser/popup = new(user, "computer", "Stock Exchange", 600, 400)
 	popup.set_content(dat)
@@ -175,6 +174,7 @@ a.updated {
 		user << "<span style='color:red'>Could not complete transaction.</span>"
 		return
 	user << "<span style='color:blue'>Sold [amt] shares of [S.name] for [total] points.</span>"
+	stockExchange.add_log(/datum/stock_log/sell, user.name, S.name, amt, total)
 
 /obj/machinery/computer/stockexchange/proc/buy_some_shares(var/datum/stock/S, var/mob/user)
 	if (!user || !S)
@@ -214,10 +214,12 @@ a.updated {
 		user << "<span style='color:red'>Could not complete transaction.</span>"
 		return
 	user << "<span style='color:blue'>Bought [amt] shares of [S.name] for [total] points.</span>"
+	stockExchange.add_log(/datum/stock_log/buy, user.name, S.name, amt, total)
 
 /obj/machinery/computer/stockexchange/proc/do_borrowing_deal(var/datum/borrow/B, var/mob/user)
 	if (B.stock.borrow(B, logged_in))
 		user << "<span style='color:blue'>You successfully borrowed [B.share_amount] shares. Deposit: [B.deposit].</span>"
+		stockExchange.add_log(/datum/stock_log/borrow, user.name, B.stock.name, B.share_amount, B.deposit)
 	else
 		user << "<span style='color:red'>Could not complete transaction. Check your account balance.</span>"
 
@@ -251,11 +253,29 @@ a.updated {
 		if (B && !B.lease_expires)
 			do_borrowing_deal(B, usr)
 
+	if (href_list["show_logs"])
+		var/dat = "<html><head><title>Stock Transaction Logs</title></head><body><h2>Stock Transaction Logs</h2><div><a href='?src=\ref[src];show_logs=1'>Refresh</a></div><br>"
+		for(var/D in stockExchange.logs)
+			var/datum/stock_log/L = D
+			if(istype(L, /datum/stock_log/buy))
+				dat += "[L.time] | <b>[L.user_name]</b> bought <b>[L.stocks]</b> stocks for <b>[L.money]</b> credits in <b>[L.company_name]</b>.<br>"
+				continue
+			if(istype(L, /datum/stock_log/sell))
+				dat += "[L.time] | <b>[L.user_name]</b> sold <b>[L.stocks]</b> stocks for <b>[L.money]</b> credits from <b>[L.company_name]</b>.<br>"
+				continue
+			if(istype(L, /datum/stock_log/borrow))
+				dat += "[L.time] | <b>[L.user_name]</b> borrowed <b>[L.stocks]</b> stocks with a deposit of <b>[L.money]</b> credits in <b>[L.company_name]</b>.<br>"
+				continue
+		var/datum/browser/popup = new(usr, "stock_logs", "Stock Transaction Logs", 600, 400)
+		popup.set_content(dat)
+		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open()
+
 	if (href_list["archive"])
 		var/datum/stock/S = locate(href_list["archive"])
 		if (logged_in && logged_in != "")
 			var/list/LR = stockExchange.last_read[S]
-			LR[logged_in] = ticker.times_fired
+			LR[logged_in] = world.time
 		var/dat = "<html><head><title>News feed for [S.name]</title></head><body><h2>News feed for [S.name]</h2><div><a href='?src=\ref[src];archive=\ref[S]'>Refresh</a></div>"
 		dat += "<div><h3>Events</h3>"
 		var/p = 0
