@@ -40,19 +40,35 @@
 
 /obj/structure/table/update_icon()
 	if(smooth)
-		smooth_icon(src)
-		smooth_icon_neighbors(src)
+		queue_smooth(src)
+		queue_smooth_neighbors(src)
 
 /obj/structure/table/ex_act(severity, target)
-	..()
-	if(severity == 3)
-		if(prob(25))
-			table_destroy(1)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			if(prob(50))
+				table_destroy(1)
+			else
+				qdel(src)
+		if(3)
+			if(prob(25))
+				table_destroy(1)
 
 /obj/structure/table/blob_act()
 	if(prob(75))
 		table_destroy(1)
 		return
+
+/obj/structure/table/narsie_act()
+	if(prob(20))
+		new /obj/structure/table/wood(src.loc)
+
+/obj/structure/table/mech_melee_attack(obj/mecha/M)
+	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
+	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
+	table_destroy(1)
 
 /obj/structure/table/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
@@ -79,11 +95,11 @@
 	return 1
 
 /obj/structure/table/attack_hand(mob/living/user)
+	. = ..()
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(tableclimber && tableclimber != user)
 		tableclimber.Weaken(2)
 		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You're knocked off the table!", "You see [tableclimber.name] get knocked off the table</span>")
-	..()
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
@@ -136,6 +152,7 @@
 		if(istype(src, /obj/structure/table/optable))
 			var/obj/structure/table/optable/OT = src
 			G.affecting.resting = 1
+			G.affecting.update_canmove()
 			visible_message("<span class='notice'>[G.assailant] has laid [G.affecting] on [src].</span>")
 			OT.patient = G.affecting
 			OT.check_patient()
@@ -319,6 +336,9 @@
 	burntime = 20
 	canSmoothWith = list(/obj/structure/table/wood, /obj/structure/table/wood/poker)
 
+/obj/structure/table/wood/narsie_act()
+	return
+
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
@@ -326,6 +346,9 @@
 	icon_state = "poker_table"
 	buildstack = /obj/item/stack/tile/carpet
 	canSmoothWith = list(/obj/structure/table/wood/poker, /obj/structure/table/wood)
+
+/obj/structure/table/wood/poker/narsie_act()
+	new /obj/structure/table/wood(src.loc)
 
 /*
  * Reinforced tables
@@ -445,6 +468,10 @@
 	else if(prob(50))
 		rack_destroy()
 		return
+
+/obj/structure/rack/mech_melee_attack(obj/mecha/M)
+	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
+	rack_destroy(1)
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1

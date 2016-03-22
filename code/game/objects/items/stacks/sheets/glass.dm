@@ -21,6 +21,9 @@
 	is_cyborg = 1
 	cost = 500
 
+/obj/item/stack/sheet/glass/fifty
+	amount = 50
+
 /obj/item/stack/sheet/glass/attack_self(mob/user)
 	construct_window(user)
 

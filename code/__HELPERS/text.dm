@@ -206,18 +206,6 @@
 	if(start)
 		return findtextEx(text, suffix, start, null)
 
-/*
- * Text modification
- */
-// See bygex.dm
-#ifndef USE_BYGEX
-/proc/replacetext(text, find, replacement)
-	return list2text(text2list(text, find), replacement)
-
-/proc/replacetextEx(text, find, replacement)
-	return list2text(text2listEx(text, find), replacement)
-#endif
-
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
 	while (length(t) < u)
@@ -432,3 +420,8 @@ var/list/binary = list("0","1")
 	t = replacetext(t, "\[/list\]", "</ul>")
 
 	return t
+
+/proc/char_split(t)
+	. = list()
+	for(var/x in 1 to length(t))
+		. += copytext(t,x,x+1)

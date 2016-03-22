@@ -82,27 +82,23 @@
 /obj/machinery/computer/aifixer/Topic(href, href_list)
 	if(..())
 		return
-	if (href_list["fix"])
-		src.active = 1
-		while (src.occupier.health < 100)
-			src.occupier.adjustOxyLoss(-1)
-			src.occupier.adjustFireLoss(-1)
-			src.occupier.adjustToxLoss(-1)
-			src.occupier.adjustBruteLoss(-1)
-			src.occupier.updatehealth()
-			if (src.occupier.health >= 0 && src.occupier.stat == 2)
-				src.occupier.stat = 0
-				src.occupier.lying = 0
-				dead_mob_list -= src.occupier
-				living_mob_list += src.occupier
-			src.updateUsrDialog()
+	if(href_list["fix"])
+		active = 1
+		while (occupier.health < 100)
+			occupier.adjustOxyLoss(-1, 0)
+			occupier.adjustFireLoss(-1, 0)
+			occupier.adjustToxLoss(-1, 0)
+			occupier.adjustBruteLoss(-1, 0)
+			occupier.updatehealth()
+			if(occupier.health >= 0 && occupier.stat == DEAD)
+				occupier.revive()
+			updateUsrDialog()
 			update_icon()
 			sleep(10)
-		src.active = 0
-		src.add_fingerprint(usr)
-	src.updateUsrDialog()
+		active = 0
+		add_fingerprint(usr)
+	updateUsrDialog()
 	update_icon()
-	return
 
 
 /obj/machinery/computer/aifixer/update_icon()
@@ -129,7 +125,7 @@
 		if(stat & (NOPOWER|BROKEN))
 			user << "[src] is offline and cannot take an AI at this time!"
 			return
-		AI.loc = src
+		AI.forceMove(src)
 		occupier = AI
 		AI.control_disabled = 1
 		AI.radio_enabled = 0

@@ -17,8 +17,9 @@
 		Wall.overlays += image('icons/effects/effects.dmi',"thermite")
 
 /datum/reagent/pyro/thermite/on_mob_life(mob/living/M)
-	M.adjustFireLoss(1)
+	M.adjustFireLoss(1, 0)
 	..()
+	. = 1
 
 /datum/reagent/nitroglycerin
 	name = "Nitroglycerin"
@@ -44,8 +45,9 @@
 /datum/reagent/pyro/clf3/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(2)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
-	M.adjustFireLoss(burndmg)
+	M.adjustFireLoss(burndmg, 0)
 	..()
+	. = 1
 
 /datum/reagent/pyro/clf3/reaction_turf(turf/simulated/T, reac_volume)
 	if(istype(T, /turf/simulated/floor/plating))
@@ -136,8 +138,9 @@
 /datum/reagent/pyro/phlogiston/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
-	M.adjustFireLoss(burndmg)
+	M.adjustFireLoss(burndmg, 0)
 	..()
+	. = 1
 
 /datum/reagent/pyro/napalm
 	name = "Napalm"

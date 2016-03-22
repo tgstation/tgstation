@@ -23,7 +23,7 @@
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
-	environment_smash = 0
+	environment_smash = 1
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
@@ -37,7 +37,7 @@
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
-	updatehudhealth()
+	update_health_hud() //we need to update our health display to match our summoner and we can't practically give the summoner a hook to do it
 	if(summoner)
 		if(summoner.stat == DEAD)
 			src << "<span class='danger'>Your summoner has died!</span>"
@@ -92,14 +92,14 @@
 	summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
 	summoner.death()
 
-/mob/living/simple_animal/hostile/guardian/proc/updatehudhealth()
+/mob/living/simple_animal/hostile/guardian/update_health_hud()
 	if(summoner)
 		var/resulthealth
 		if(iscarbon(summoner))
 			resulthealth = round((abs(config.health_threshold_dead - summoner.health) / abs(config.health_threshold_dead - summoner.maxHealth)) * 100)
 		else
 			resulthealth = round((summoner.health / summoner.maxHealth) * 100)
-		hud_used.guardianhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>"
+		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>"
 
 /mob/living/simple_animal/hostile/guardian/adjustHealth(amount) //The spirit is invincible, but passes on damage to the summoner
 	. =  ..()
@@ -113,7 +113,7 @@
 		if(summoner.stat == UNCONSCIOUS)
 			summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
 			summoner.adjustCloneLoss(amount*0.5) //dying hosts take 50% bonus damage as cloneloss
-		updatehudhealth()
+		update_health_hud()
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
@@ -136,19 +136,22 @@
 
 /mob/living/simple_animal/hostile/guardian/proc/Manifest()
 	if(cooldown > world.time)
-		return
+		return 0
 	if(loc == summoner)
 		forceMove(get_turf(summoner))
 		PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
-		cooldown = world.time + 30
+		cooldown = world.time + 10
+		return 1
+	return 0
 
 /mob/living/simple_animal/hostile/guardian/proc/Recall()
 	if(loc == summoner || cooldown > world.time)
-		return
+		return 0
 	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
-	unbuckle_mob(force=1)
+
 	forceMove(summoner)
-	cooldown = world.time + 30
+	cooldown = world.time + 10
+	return 1
 
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
 	var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
@@ -249,13 +252,9 @@
 
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
 	if(..())
-		if(prob(45))
-			if(istype(target, /atom/movable))
-				var/atom/movable/M = target
-				if(!M.anchored && M != summoner)
-					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
-					do_teleport(M, M, 10)
-					PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(M))
+		if(ishuman(target))
+			spawn(0)
+				new /obj/effect/hallucination/delusion(target.loc,target,force_kind="custom",duration=200,skip_nearby=0, custom_icon = src.icon_state, custom_icon_file = src.icon)
 
 /mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
 	..()
@@ -428,6 +427,105 @@
 	else
 		src << "<span class='danger'><B>You need to hold still!</span></B>"
 
+////Beam
+/obj/effect/ebeam/chain
+	name = "lightning chain"
+	layer = MOB_LAYER - 0.1
+
+/mob/living/simple_animal/hostile/guardian/beam
+	melee_damage_lower = 5
+	melee_damage_upper = 5
+	attacktext = "shocks"
+	melee_damage_type = BURN
+	attack_sound = 'sound/machines/defib_zap.ogg'
+	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
+	range = 7
+	playstyle_string = "As a lightning type, you will apply lightning chains to targets on attack and have a lightning chain to your summoner. Lightning chains will shock anyone near them."
+	magic_fluff_string = "..And draw the Tesla, a shocking, lethal source of power."
+	tech_fluff_string = "Boot sequence complete. Lightning modules active. Holoparasite swarm online."
+	var/datum/beam/summonerchain
+	var/list/enemychains = list()
+
+/mob/living/simple_animal/hostile/guardian/beam/AttackingTarget()
+	if(..())
+		if(isliving(target) && target != src && target != summoner)
+			for(var/chain in enemychains)
+				var/datum/beam/B = chain
+				if(B.target == target)
+					return //oh this guy already HAS a chain, let's not chain again
+			if(enemychains.len > 2)
+				var/datum/beam/C = pick(enemychains)
+				qdel(C)
+				enemychains -= C
+			enemychains += Beam(target,"lightning[rand(1,12)]",'icons/effects/effects.dmi',70, 7,/obj/effect/ebeam/chain)
+
+/mob/living/simple_animal/hostile/guardian/beam/Life()
+	..()
+	if(summoner)
+		if(summonerchain && !qdeleted(summonerchain))
+			chainshock(summonerchain)
+		else
+			summonerchain = Beam(summoner,"lightning[rand(1,12)]",'icons/effects/effects.dmi',INFINITY, INFINITY,/obj/effect/ebeam/chain)
+	if(enemychains.len)
+		for(var/chain in enemychains)
+			if(!qdeleted(chain))
+				chainshock(chain)
+			else
+				enemychains -= chain
+
+/mob/living/simple_animal/hostile/guardian/beam/Destroy()
+	removechains()
+	return ..()
+
+/mob/living/simple_animal/hostile/guardian/beam/Manifest()
+	if(..())
+		if(summoner)
+			summonerchain = Beam(summoner,"lightning[rand(1,12)]",'icons/effects/effects.dmi',INFINITY, INFINITY,/obj/effect/ebeam/chain)
+
+/mob/living/simple_animal/hostile/guardian/beam/Recall()
+	if(..())
+		removechains()
+
+/mob/living/simple_animal/hostile/guardian/beam/proc/removechains()
+	if(summonerchain)
+		qdel(summonerchain)
+		summonerchain = null
+	if(enemychains.len)
+		for(var/chain in enemychains)
+			qdel(chain)
+		enemychains = list()
+
+/mob/living/simple_animal/hostile/guardian/beam/proc/chainshock(datum/beam/B)
+	var/list/turfs = list()
+	for(var/E in B.elements)
+		var/obj/effect/ebeam/chainpart = E
+		if(chainpart && chainpart.x && chainpart.y && chainpart.z)
+			var/turf/T = get_turf_pixel(chainpart)
+			turfs |= T
+			if(T != get_turf(B.origin) && T != get_turf(B.target))
+				for(var/turf/TU in circlerange(T, 1))
+					turfs |= TU
+	for(var/turf in turfs)
+		var/turf/T = turf
+		for(var/mob/living/L in T)
+			if(!L.lying && L != src && L != summoner)
+				if(iscarbon(L))
+					var/mob/living/carbon/C = L
+					if(ishuman(C))
+						var/mob/living/carbon/human/H = C
+						H.electrocution_animation(20)
+					C.jitteriness += 1000
+					C.do_jitter_animation(jitteriness)
+					C.stuttering += 1
+					spawn(20)
+						if(C)
+							C.jitteriness = max(C.jitteriness - 990, 10)
+				L.visible_message(
+					"<span class='danger'>[L] was shocked by the lightning chain!</span>", \
+					"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
+					"<span class='italics'>You hear a heavy electrical crack.</span>" \
+				)
+				L.adjustFireLoss(5) //not actually a ton of damage, but it adds up
 
 ///////////////////Ranged
 /obj/item/projectile/guardian
@@ -534,10 +632,23 @@
 	melee_damage_upper = 15
 	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
 	range = 13
-	playstyle_string = "As an explosive type, you have only moderate close combat abilities, but are capable of converting any adjacent item into a disguised bomb via alt click."
+	playstyle_string = "As an explosive type, you have moderate close combat abilities, may explosively teleport targets on attack, and are capable of converting nearby items and objects into disguised bombs via alt click."
 	magic_fluff_string = "..And draw the Scientist, master of explosive death."
 	tech_fluff_string = "Boot sequence complete. Explosive modules active. Holoparasite swarm online."
 	var/bomb_cooldown = 0
+
+/mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
+	if(..())
+		if(prob(33))
+			if(istype(target, /atom/movable))
+				var/atom/movable/M = target
+				if(!M.anchored && M != summoner)
+					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
+					do_teleport(M, M, 10)
+					for(var/mob/living/L in range(1, M))
+						if(L != src && L != summoner)
+							L.apply_damage(15, BRUTE)
+					PoolOrNew(/obj/effect/overlay/temp/explosion, get_turf(M))
 
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
 	if(!istype(A))
@@ -551,7 +662,7 @@
 			src << "<span class='danger'><B>Success! Bomb armed!</span></B>"
 			bomb_cooldown = world.time + 200
 			B.spawner = src
-			B.disguise (A)
+			B.disguise(A)
 		else
 			src << "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>"
 
@@ -565,6 +676,7 @@
 /obj/item/weapon/guardian_bomb/proc/disguise(var/obj/A)
 	A.loc = src
 	stored_obj = A
+	opacity = A.opacity
 	anchored = A.anchored
 	density = A.density
 	appearance = A.appearance
@@ -581,11 +693,18 @@
 	user.ex_act(2)
 	qdel(src)
 
+/obj/item/weapon/guardian_bomb/Bump(atom/A)
+	if(isliving(A))
+		detonate(A)
+	else
+		..()
+
 /obj/item/weapon/guardian_bomb/attackby(mob/living/user)
 	detonate(user)
 	return
 
 /obj/item/weapon/guardian_bomb/pickup(mob/living/user)
+	..()
 	detonate(user)
 	return
 
@@ -609,7 +728,7 @@
 	var/used_message = "All the cards seem to be blank now."
 	var/failure_message = "..And draw a card! It's...blank? Maybe you should try again later."
 	var/ling_failure = "The deck refuses to respond to a souless creature such as you."
-	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive")
+	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning")
 	var/random = TRUE
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
@@ -659,6 +778,9 @@
 
 		if("Explosive")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/bomb
+
+		if("Lightning")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/beam
 
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user)
 	G.summoner = user
@@ -717,7 +839,7 @@
 	info = {"<b>A list of Holoparasite Types</b><br>
 
  <br>
- <b>Chaos</b>: Ignites enemies on touch and teleports them at random on attack. Automatically extinguishes the user if they catch on fire.<br>
+ <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the parasite. Automatically extinguishes the user if they catch on fire.<br>
  <br>
  <b>Standard</b>:Devastating close combat attacks and high damage resist. Can smash through weak walls.<br>
  <br>
@@ -725,7 +847,9 @@
  <br>
  <b>Support</b>:Has two modes. Combat; Medium power attacks and damage resist. Healer; Heals instead of attack, but has low damage resist and slow movement. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
  <br>
- <b>Explosive</b>: High damage resist and medium power attack. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
+ <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
+ <br>
+ <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them.<br>
 "}
 
 /obj/item/weapon/paper/guardian/update_icon()
@@ -740,100 +864,3 @@
 	new /obj/item/weapon/guardiancreator/tech/choose(src)
 	new /obj/item/weapon/paper/guardian(src)
 	return
-
-
-///HUD
-
-/datum/hud/proc/guardian_hud(ui_style = 'icons/mob/screen_midnight.dmi')
-	adding = list()
-
-	var/obj/screen/using
-
-	guardianhealthdisplay = new /obj/screen/guardian()
-	guardianhealthdisplay.name = "summoner health"
-	guardianhealthdisplay.screen_loc = ui_health
-	guardianhealthdisplay.mouse_opacity = 0
-	adding += guardianhealthdisplay
-
-	using = new /obj/screen/guardian/Manifest()
-	using.screen_loc = ui_rhand
-	adding += using
-
-	using = new /obj/screen/guardian/Recall()
-	using.screen_loc = ui_lhand
-	adding += using
-
-	using = new /obj/screen/guardian/ToggleMode()
-	using.screen_loc = ui_storage1
-	adding += using
-
-	using = new /obj/screen/guardian/ToggleLight()
-	using.screen_loc = ui_inventory
-	adding += using
-
-	using = new /obj/screen/guardian/Communicate()
-	using.screen_loc = ui_back
-	adding += using
-
-	mymob.client.screen = list()
-	mymob.client.screen += mymob.client.void
-	mymob.client.screen += adding
-
-
-//HUD BUTTONS
-
-/obj/screen/guardian
-	icon = 'icons/mob/guardian.dmi'
-	icon_state = "base"
-
-/obj/screen/guardian/Manifest
-	icon_state = "manifest"
-	name = "Manifest"
-	desc = "Spring forth into battle!"
-
-/obj/screen/guardian/Manifest/Click()
-	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.Manifest()
-
-
-/obj/screen/guardian/Recall
-	icon_state = "recall"
-	name = "Recall"
-	desc = "Return to your user."
-
-/obj/screen/guardian/Recall/Click()
-	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.Recall()
-
-/obj/screen/guardian/ToggleMode
-	icon_state = "toggle"
-	name = "Toggle Mode"
-	desc = "Switch between ability modes."
-
-/obj/screen/guardian/ToggleMode/Click()
-	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.ToggleMode()
-
-/obj/screen/guardian/Communicate
-	icon_state = "communicate"
-	name = "Communicate"
-	desc = "Communicate telepathically with your user."
-
-/obj/screen/guardian/Communicate/Click()
-	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.Communicate()
-
-
-/obj/screen/guardian/ToggleLight
-	icon_state = "light"
-	name = "Toggle Light"
-	desc = "Glow like star dust."
-
-/obj/screen/guardian/ToggleLight/Click()
-	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.ToggleLight()

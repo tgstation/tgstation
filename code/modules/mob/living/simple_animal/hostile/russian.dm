@@ -19,7 +19,7 @@
 	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = "harm"
-	loot = list(/obj/effect/landmark/mobcorpse/russian,
+	loot = list(/obj/effect/mob_spawn/human/corpse/russian,
 				/obj/item/weapon/kitchen/knife)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
@@ -31,18 +31,41 @@
 /mob/living/simple_animal/hostile/russian/ranged
 	icon_state = "russianranged"
 	icon_living = "russianranged"
-	loot = list(/obj/effect/landmark/mobcorpse/russian/ranged,
-				/obj/item/weapon/gun/projectile/revolver/mateba)
+	loot = list(/obj/effect/mob_spawn/human/corpse/russian/ranged,
+				/obj/item/weapon/gun/projectile/revolver/nagant)
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
 	projectilesound = 'sound/weapons/Gunshot.ogg'
-	casingtype = /obj/item/ammo_casing/a357
+	casingtype = /obj/item/ammo_casing/n762
 
-/mob/living/simple_animal/hostile/russian/ranged/New()
-	var/obj/item/weapon/gun/projectile/revolver/mateba/M
-	if(prob(50) && is_type_in_list(M, loot)) //to preserve varedits
-		loot = list(/obj/effect/landmark/mobcorpse/russian/ranged,
-					/obj/item/weapon/gun/projectile/shotgun/boltaction)
-		casingtype = /obj/item/ammo_casing/a762
+
+/mob/living/simple_animal/hostile/russian/ranged/mosin
+	loot = list(/obj/effect/mob_spawn/human/corpse/russian/ranged,
+				/obj/item/weapon/gun/projectile/shotgun/boltaction)
+	casingtype = /obj/item/ammo_casing/a762
+
+/mob/living/simple_animal/hostile/russian/ranged/trooper
+	icon_state = "russianrangedelite"
+	icon_living = "russianrangedelite"
+	maxHealth = 150
+	health = 150
+	casingtype = /obj/item/ammo_casing/shotgun/buckshot
+	loot = list(/obj/effect/mob_spawn/human/corpse/russian/ranged/trooper,
+				/obj/item/weapon/gun/projectile/shotgun/lethal)
+
+/mob/living/simple_animal/hostile/russian/ranged/officer
+	name = "Russian Officer"
+	icon_state = "russianofficer"
+	icon_living = "russianofficer"
+	maxHealth = 65
+	health = 65
+	rapid = 1
+	casingtype = /obj/item/ammo_casing/c9mm
+	loot = list(/obj/effect/mob_spawn/human/corpse/russian/ranged/officer,
+				/obj/item/weapon/gun/projectile/automatic/pistol/APS)
+
+/mob/living/simple_animal/hostile/russian/ranged/officer/Aggro()
 	..()
+	summon_backup(15)
+	say("V BOJ!!")

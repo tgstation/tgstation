@@ -86,7 +86,7 @@
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/weapon/gun/magic/wand/resurrection/zap_self(mob/living/user)
-	user.revive()
+	user.revive(full_heal = 1)
 	user << "<span class='notice'>You feel great!</span>"
 	charges--
 	..()

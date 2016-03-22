@@ -16,10 +16,8 @@
 
 	if(ishuman(L) || ismonkey(L) || iscorgi(L))
 		if(L.buckled)
-			L.buckled.unbuckle_mob()
-		if(L.client)
-			L.client.perspective = EYE_PERSPECTIVE
-			L.client.eye = src
+			L.buckled.unbuckle_mob(L,force=1)
+		L.reset_perspective(src)
 		L.loc = src
 		L.disabilities += MUTE
 		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
@@ -57,9 +55,9 @@
 		M.adjustFireLoss(intialFire - M.getFireLoss())
 		M.adjustBruteLoss(intialBrute - M.getBruteLoss())
 		M.setOxyLoss(intialOxy)
-	if (timer <= 0)
+	if(timer <= 0)
 		dump_contents()
-		SSobj.processing.Remove(src)
+		SSobj.processing -= src
 		qdel(src)
 
 /obj/structure/closet/statue/dump_contents()
@@ -83,9 +81,7 @@
 		M.disabilities -= MUTE
 		M.take_overall_damage((M.health - health - 100),0) //any new damage the statue incurred is transfered to the mob
 		M.faction -= "mimic"
-		if(M.client)
-			M.client.eye = M.client.mob
-			M.client.perspective = MOB_PERSPECTIVE
+		M.reset_perspective(null)
 
 /obj/structure/closet/statue/take_contents()
 	return
@@ -133,9 +129,6 @@
 		for(var/mob/M in src)
 			shatter(M)
 
-/obj/structure/closet/statue/place()
-	return
-
 /obj/structure/closet/statue/MouseDrop_T()
 	return
 
@@ -152,7 +145,7 @@
 	return
 
 /obj/structure/closet/statue/proc/shatter(mob/user)
-	if (user)
+	if(user)
 		user.dust()
 	dump_contents()
 	visible_message("<span class='danger'>[src] shatters!.</span>")

@@ -4,6 +4,7 @@
 	icon = 'icons/obj/magic_terror.dmi'
 	pixel_x = -89
 	pixel_y = -85
+	density = 0
 	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
 	contained = 0 //Are we going to move around?
 	dissipate = 0 //Do we lose energy over time?
@@ -29,7 +30,7 @@
 
 	var/area/A = get_area(src)
 	if(A)
-		var/image/alert_overlay = image('icons/mob/mob.dmi', "harvester")
+		var/image/alert_overlay = image('icons/effects/effects.dmi', "ghostalertsie")
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, attack_not_jump = 1)
 
 	narsie_spawn_animation()
@@ -52,23 +53,9 @@
 		mezzer()
 
 
-/obj/singularity/narsie/Bump(atom/A)//you dare stand before a god?!
-	godsmack(A)
-	return
-
-/obj/singularity/narsie/Bumped(atom/A)
-	godsmack(A)
-	return
-
-/obj/singularity/narsie/proc/godsmack(atom/A)
-	if(isobj(A))
-		var/obj/O = A
-		O.ex_act(1)
-		if(O) qdel(O)
-
-	else if(isturf(A))
-		var/turf/T = A
-		T.ChangeTurf(/turf/simulated/floor/plasteel/cult)
+/obj/singularity/narsie/Bump(atom/A)
+	forceMove(get_turf(A))
+	A.narsie_act()
 
 
 /obj/singularity/narsie/mezzer()
@@ -83,11 +70,11 @@
 	A.narsie_act()
 
 
-/obj/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
+/obj/singularity/narsie/ex_act() //No throwing bombs at her either.
 	return
 
 
-/obj/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
+/obj/singularity/narsie/proc/pickcultist() //Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
 	var/list/cultists = list()
 	var/list/noncultists = list()
 	for(var/mob/living/carbon/food in living_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
@@ -139,7 +126,7 @@
 	set background = BACKGROUND_ENABLED
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 1
-	for(var/atom/X in ultra_range(consume_range,src,1))
+	for(var/atom/X in urange(consume_range,src,1))
 		if(isturf(X) || istype(X, /atom/movable))
 			consume(X)
 //	if(defer_powernet_rebuild != 2)

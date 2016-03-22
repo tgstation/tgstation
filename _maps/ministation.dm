@@ -50,6 +50,8 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
 
 		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
 
+		#define MINETYPE "mining"
+
         #include "map_files\MiniStation\MiniStation.dmm"
         #include "map_files\generic\z2.dmm"
         #include "map_files\generic\z3.dmm"
@@ -67,7 +69,7 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
 		#if !defined(MAP_OVERRIDE_FILES)
 				#define MAP_OVERRIDE_FILES
 				#include "map_files\MiniStation\misc.dm"
-		        #include "map_files\MiniStation\supplypacks.dm"
+		        #include "map_files\MiniStation\cargopacks.dm"
 		        #include "map_files\MiniStation\telecomms.dm"
 		        #include "map_files\MiniStation\uplink_item.dm"
 		        #include "map_files\MiniStation\job\jobs.dm"

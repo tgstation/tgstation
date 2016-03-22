@@ -15,12 +15,20 @@ Mineral Sheets
 		- Enriched Uranium
 */
 
+/obj/item/stack/sheet/mineral
+	icon = 'icons/obj/mining.dmi'
+
 /*
  * Sandstone
  */
 
-/obj/item/stack/sheet/mineral
-	icon = 'icons/obj/mining.dmi'
+var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
+	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
+/*	new/datum/stack_recipe("sandstone wall", ???), \
+		new/datum/stack_recipe("sandstone floor", ???),\ */
+	)
 
 /obj/item/stack/sheet/mineral/sandstone
 	name = "sandstone brick"
@@ -33,19 +41,14 @@ Mineral Sheets
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	sheettype = "sandstone"
 
-var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
-	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
-/*	new/datum/stack_recipe("sandstone wall", ???), \
-		new/datum/stack_recipe("sandstone floor", ???),\ */
-	)
-
 /obj/item/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
 	recipes = sandstone_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
+
+/obj/item/stack/sheet/mineral/sandstone/thirty
+	amount = 30
 
 /*
  * Diamond
@@ -309,3 +312,36 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"
+
+/*
+ * Alien Alloy
+ */
+/obj/item/stack/sheet/mineral/abductor
+	name = "alien alloy"
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "sheet-abductor"
+	singular_name = "alien alloy sheet"
+	force = 5
+	throwforce = 5
+	w_class = 3
+	throw_speed = 1
+	throw_range = 3
+	origin_tech = "materials=6;abductor=1"
+	sheettype = "abductor"
+
+var/global/list/datum/stack_recipe/abductor_recipes = list ( \
+/*	new/datum/stack_recipe("alien chair", /obj/structure/chair, one_per_turf = 1, on_floor = 1), \ */
+	new/datum/stack_recipe("alien bed", /obj/structure/bed/abductor, 2, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("alien locker", /obj/structure/closet/abductor, 1, time = 15, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("alien table frame", /obj/structure/table_frame/abductor, 1, time = 15, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("alien airlock assembly", /obj/structure/door_assembly/door_assembly_abductor, 4, time = 20, one_per_turf = 1, on_floor = 1), \
+	null, \
+	new/datum/stack_recipe("alien floor tile", /obj/item/stack/tile/mineral/abductor, 1, 4, 20), \
+/*	null, \
+	new/datum/stack_recipe("Abductor Agent Statue", /obj/structure/statue/bananium/clown, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Abductor Sciencist Statue", /obj/structure/statue/bananium/clown, 5, one_per_turf = 1, on_floor = 1)*/
+	)
+
+/obj/item/stack/sheet/mineral/abductor/New(var/loc, var/amount=null)
+	recipes = abductor_recipes
+	..()

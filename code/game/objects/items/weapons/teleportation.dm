@@ -98,7 +98,7 @@ Frequency:
 									direct = "strong"
 								else
 									direct = "weak"
-							src.temp += "[W.id]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
+							src.temp += "[W.imp_in.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=\ref[src];refresh=1'>Refresh</A><BR>"
 			else
@@ -149,7 +149,7 @@ Frequency:
 			else
 				L["[get_area(com.target)] (Inactive)"] = com.target
 	var/list/turfs = list(	)
-	for(var/turf/T in ultra_range(10, orange=1))
+	for(var/turf/T in urange(10, orange=1))
 		if(T.x>world.maxx-8 || T.x<8)
 			continue	//putting them at the edge is dumb
 		if(T.y>world.maxy-8 || T.y<8)

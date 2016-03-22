@@ -59,7 +59,7 @@
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 
-	var/obj/item/organ/limb/affecting = user.zone_sel.selecting //Find what the player is aiming at
+	var/obj/item/organ/limb/affecting = user.zone_selected //Find what the player is aiming at
 
 	var/armor_block = 0 //Get the target's armor values for normal attack damage.
 	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
@@ -200,6 +200,10 @@
 	desc = "A flask of the chaplain's holy water."
 	icon_state = "holyflask"
 	list_reagents = list("holywater" = 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell
+	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
+	list_reagents = list("hellwater" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"

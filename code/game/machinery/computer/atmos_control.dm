@@ -102,7 +102,7 @@
 		ui = new(user, src, ui_key, "atmos_control", name, 400, 925, master_ui, state)
 		ui.open()
 
-/obj/machinery/computer/atmos_control/get_ui_data(mob/user)
+/obj/machinery/computer/atmos_control/ui_data(mob/user)
 	var/data = list()
 
 	data["sensors"] = list()
@@ -157,10 +157,10 @@
 	var/datum/radio_frequency/freq = SSradio.return_frequency(1441)
 	var/list/devices = freq.devices["_default"]
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
-		var/list/text = text2list(U.id_tag, "_")
+		var/list/text = splittext(U.id_tag, "_")
 		IO |= text[1]
 	for(var/obj/machinery/atmospherics/components/unary/outlet_injector/U in devices)
-		var/list/text = text2list(U.id, "_")
+		var/list/text = splittext(U.id, "_")
 		IO |= text[1]
 	if(!IO.len)
 		user << "<span class='alert'>No machinery detected.</span>"
@@ -171,7 +171,7 @@
 		name = "[uppertext(S)] Supply Control"
 		var/list/new_devices = freq.devices["4"]
 		for(var/obj/machinery/air_sensor/U in new_devices)
-			var/list/text = text2list(U.id_tag, "_")
+			var/list/text = splittext(U.id_tag, "_")
 			if(text[1] == S)
 				sensors = list("[S]_sensor" = "Tank")
 				break
@@ -188,7 +188,7 @@
 		ui = new(user, src, ui_key, "atmos_control", name, 500, 305, master_ui, state)
 		ui.open()
 
-/obj/machinery/computer/atmos_control/tank/get_ui_data(mob/user)
+/obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()
 	data["tank"] = TRUE
 	data["inputting"] = input_info ? input_info["power"] : FALSE

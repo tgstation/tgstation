@@ -114,11 +114,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		icon_state = "[d1]-[d2]"
 
-
-// returns the powernet this cable belongs to
-/obj/structure/cable/proc/get_powernet()			//TODO: remove this as it is obsolete
-	return powernet
-
 //Telekinesis has no effect on a cable
 /obj/structure/cable/attack_tk(mob/user)
 	return
@@ -176,7 +171,7 @@ By design, d1 is the smallest direction and d2 is the highest
 //explosion handling
 /obj/structure/cable/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		switch(severity)
 			if(2)
 				if(prob(50))
@@ -478,7 +473,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	w_class = 2
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=50, MAT_GLASS=20)
+	materials = list(MAT_METAL=10, MAT_GLASS=5)
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
@@ -495,7 +490,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	update_icon()
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
-	if(locate(/obj/structure/bed/stool) in user.loc)
+	if(locate(/obj/structure/chair/stool) in get_turf(user))
 		user.visible_message("<span class='suicide'>[user] is making a noose with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	else
 		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -520,7 +515,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	if(!istype(H))
 		return ..()
 
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
 	if(affecting.status == ORGAN_ROBOTIC)
 		user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.getDisplayName()].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.getDisplayName()].</span>")
 		if(!do_mob(user, H, 50))

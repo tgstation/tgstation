@@ -4,89 +4,140 @@
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
 	circuit = /obj/item/weapon/circuitboard/security
-	var/obj/machinery/camera/current = null
 	var/last_pic = 1
 	var/list/network = list("SS13")
 	var/mapping = 0//For the overview file, interesting bit of code.
+	var/list/watchers = list() //who's using the console, associated with the camera they're on.
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if ((get_dist(user, src) > 1 || user.eye_blind || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
-		return null
-	var/list/viewing = viewers(src)
-	if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
-		return null
-	user.reset_view(current)
-	return 1
+	if( (stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.eye_blind )
+		user.unset_machine()
+		return
+	if(!(user in watchers))
+		user.unset_machine()
+		return
+	if(!watchers[user])
+		user.unset_machine()
+		return
+	var/obj/machinery/camera/C = watchers[user]
+	if(!C.can_use())
+		user.unset_machine()
+		return
+	if(!issilicon(user))
+		if(!Adjacent(user))
+			user.unset_machine()
+			return
+	else if(isrobot(user))
+		var/list/viewing = viewers(src)
+		if(!viewing.Find(user))
+			user.unset_machine()
 
+/obj/machinery/computer/security/on_unset_machine(mob/user)
+	watchers.Remove(user)
+	user.reset_perspective(null)
+
+/obj/machinery/computer/security/Destroy()
+	if(watchers.len)
+		for(var/mob/M in watchers)
+			M.unset_machine() //to properly reset the view of the users if the console is deleted.
+	return ..()
 
 /obj/machinery/computer/security/attack_hand(mob/user)
-	if(!stat)
-
-		if (!network)
-			throw EXCEPTION("No camera network")
-			return
-		if (!(istype(network,/list)))
-			throw EXCEPTION("Camera network is not a list")
-			return
-
-		if(..())
-			return
-
-		var/list/L = list()
-		for (var/obj/machinery/camera/C in cameranet.cameras)
-			if((z > ZLEVEL_SPACEMAX || C.z > ZLEVEL_SPACEMAX) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
-				continue
-			L.Add(C)
-
-		camera_sort(L)
-
-		var/list/D = list()
-		D["Cancel"] = "Cancel"
-		for(var/obj/machinery/camera/C in L)
-			if(!C.network)
-				spawn(0)
-					throw EXCEPTION("Camera in a cameranet has no camera network")
-				continue
-			if(!(istype(C.network,/list)))
-				spawn(0)
-					throw EXCEPTION("Camera in a cameranet has a non-list camera network")
-				continue
-			var/list/tempnetwork = C.network&network
-			if(tempnetwork.len)
-				D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C
-
-		var/t = input(user, "Which camera should you change to?") as null|anything in D
-		if(!t)
-			user.unset_machine()
-			return 0
-
-		var/obj/machinery/camera/C = D[t]
-
-		if(t == "Cancel")
-			user.unset_machine()
-			return 0
-
-		if(C)
-			if ((get_dist(user, src) > 1 || user.machine != src || user.eye_blind || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
-				user.unset_machine()
-				if(!C.can_use() && !isAI(user))
-					src.current = null
-
-				return 0
-			else
-				if(isAI(user))
-					var/mob/living/silicon/ai/A = user
-					A.eyeobj.setLoc(get_turf(C))
-					A.client.eye = A.eyeobj
-				else
-					src.current = C
-					use_power(50)
-
-				spawn(5)
-					attack_hand(user)
+	if(stat)
+		return
+	if (!network)
+		throw EXCEPTION("No camera network")
+		user.unset_machine()
+		return
+	if (!(istype(network,/list)))
+		throw EXCEPTION("Camera network is not a list")
+		user.unset_machine()
+		return
+	if(..())
+		user.unset_machine()
 		return
 
+	var/list/camera_list = get_available_cameras()
+	if(!(user in watchers))
+		for(var/Num in camera_list)
+			var/obj/machinery/camera/CAM = camera_list[Num]
+			if(istype(CAM))
+				if(CAM.can_use())
+					watchers[user] = CAM //let's give the user the first usable camera, and then let him change to the camera he wants.
+					break
+		if(!(user in watchers))
+			user.unset_machine() // no usable camera on the network, we disconnect the user from the computer.
+			return
+	use_camera_console(user)
 
+/obj/machinery/computer/security/proc/use_camera_console(mob/user)
+	var/list/camera_list = get_available_cameras()
+	var/t = input(user, "Which camera should you change to?") as null|anything in camera_list
+	if(user.machine != src) //while we were choosing we got disconnected from our computer or are using another machine.
+		return
+	if(!t)
+		user.unset_machine()
+		return
+
+	var/obj/machinery/camera/C = camera_list[t]
+
+	if(t == "Cancel")
+		user.unset_machine()
+		return
+	if(C)
+		var/camera_fail = 0
+		if(!C.can_use() || user.machine != src || user.eye_blind || user.incapacitated())
+			camera_fail = 1
+		else if(isrobot(user))
+			var/list/viewing = viewers(src)
+			if(!viewing.Find(user))
+				camera_fail = 1
+		else if(!issilicon(user))
+			if(!Adjacent(user))
+				camera_fail = 1
+
+		if(camera_fail)
+			user.unset_machine()
+			return 0
+
+		if(isAI(user))
+			var/mob/living/silicon/ai/A = user
+			A.eyeobj.setLoc(get_turf(C))
+			A.client.eye = A.eyeobj
+		else
+			user.reset_perspective(C)
+		watchers[user] = C
+		use_power(50)
+		spawn(5)
+			use_camera_console(user)
+	else
+		user.unset_machine()
+
+//returns the list of cameras accessible from this computer
+/obj/machinery/computer/security/proc/get_available_cameras()
+	var/list/L = list()
+	for (var/obj/machinery/camera/C in cameranet.cameras)
+		if((z > ZLEVEL_SPACEMAX || C.z > ZLEVEL_SPACEMAX) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
+			continue
+		L.Add(C)
+
+	camera_sort(L)
+
+	var/list/D = list()
+	D["Cancel"] = "Cancel"
+	for(var/obj/machinery/camera/C in L)
+		if(!C.network)
+			spawn(0)
+				throw EXCEPTION("Camera in a cameranet has no camera network")
+			continue
+		if(!(istype(C.network,/list)))
+			spawn(0)
+				throw EXCEPTION("Camera in a cameranet has a non-list camera network")
+			continue
+		var/list/tempnetwork = C.network&network
+		if(tempnetwork.len)
+			D["[C.c_tag][(C.status ? null : " (Deactivated)")]"] = C
+	return D
 
 /obj/machinery/computer/security/telescreen
 	name = "\improper Telescreen"

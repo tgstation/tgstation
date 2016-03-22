@@ -17,8 +17,8 @@ var/global/mulebot_count = 0
 	density = 1
 	anchored = 1
 	animate_movement=1
-	health = 150
-	maxHealth = 150
+	health = 50
+	maxHealth = 50
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	a_intent = "harm" //No swapping
 	buckle_lying = 0
@@ -171,7 +171,7 @@ var/global/mulebot_count = 0
 		ui = new(user, src, ui_key, "mulebot", name, 600, 375, master_ui, state)
 		ui.open()
 
-/mob/living/simple_animal/bot/mulebot/get_ui_data(mob/user)
+/mob/living/simple_animal/bot/mulebot/ui_data(mob/user)
 	var/list/data = list()
 	data["on"] = on
 	data["locked"] = locked
@@ -357,7 +357,7 @@ var/global/mulebot_count = 0
 
 	if(isobj(AM))
 		var/obj/O = AM
-		if(O.buckled_mob || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+		if(O.buckled_mobs.len || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
 			return
 
@@ -381,7 +381,7 @@ var/global/mulebot_count = 0
 	return FALSE
 
 /mob/living/simple_animal/bot/mulebot/post_buckle_mob(mob/living/M)
-	if(M == buckled_mob) //post buckling
+	if(M in buckled_mobs) //post buckling
 		M.pixel_y = initial(M.pixel_y) + 9
 		if(M.layer < layer)
 			M.layer = layer + 0.1
@@ -402,7 +402,7 @@ var/global/mulebot_count = 0
 
 	overlays.Cut()
 
-	unbuckle_mob()
+	unbuckle_all_mobs()
 
 	if(load)
 		load.loc = loc
@@ -649,9 +649,6 @@ var/global/mulebot_count = 0
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
-	if(client)
-		return
-
 	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
 					"<span class='userdanger'>[src] drives over you!<span>")

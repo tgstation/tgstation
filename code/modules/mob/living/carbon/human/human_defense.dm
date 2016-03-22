@@ -98,8 +98,8 @@
 	if(!I || !user)
 		return 0
 
-	var/obj/item/organ/limb/target_limb = get_organ(check_zone(user.zone_sel.selecting))
-	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
+	var/obj/item/organ/limb/target_limb = get_organ(check_zone(user.zone_selected))
+	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_selected))
 	var/hit_area = parse_zone(affecting.name)
 	var/target_area = parse_zone(target_limb.name)
 	feedback_add_details("item_used_for_combat","[I.type]|[I.force]")
@@ -291,7 +291,7 @@
 			return 0
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-			var/obj/item/organ/limb/affecting = get_organ(ran_zone(L.zone_sel.selecting))
+			var/obj/item/organ/limb/affecting = get_organ(ran_zone(L.zone_selected))
 			var/armor_block = run_armor_check(affecting, "melee")
 			apply_damage(damage, BRUTE, affecting, armor_block)
 			updatehealth()

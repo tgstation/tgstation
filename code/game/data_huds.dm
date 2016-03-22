@@ -102,18 +102,19 @@
 //called when a carbon changes health
 /mob/living/carbon/proc/med_hud_set_health()
 	var/image/holder = hud_list[HEALTH_HUD]
-	if(stat == 2)
+	if(stat == DEAD)
 		holder.icon_state = "hudhealth-100"
 	else
 		holder.icon_state = "hud[RoundHealth(health)]"
 
 	var/turf/T = get_turf(src)
-	if (T) crewmonitor.queueUpdate(T.z)
+	if (T)
+		crewmonitor.queueUpdate(T.z)
 
 //called when a carbon changes stat, virus or XENO_HOST
 /mob/living/carbon/proc/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
-	if(stat == 2)
+	if(stat == DEAD)
 		holder.icon_state = "huddead"
 	else if(status_flags & XENO_HOST)
 		holder.icon_state = "hudxeno"

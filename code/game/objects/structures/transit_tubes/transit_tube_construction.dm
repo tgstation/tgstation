@@ -16,19 +16,19 @@
 //wrapper for turn that changes the transit tube formatted icon_state instead of the dir
 /obj/structure/c_transit_tube/proc/tube_turn(angle)
 	var/list/badtubes = list("W-E", "W-E-Pass", "S-N", "S-N-Pass", "SW-NE", "SE-NW")
-	var/list/split_text = text2list(icon_state, "-")
+	var/list/split_text = splittext(icon_state, "-")
 	for(var/i=1; i<=split_text.len; i++)
 		var/curdir = text2dir_extended(split_text[i]) //0 if not a valid direction (e.g. Pass, Block)
 		if(curdir)
 			split_text[i] = dir2text_short(turn(curdir, angle))
-	var/newdir = list2text(split_text, "-")
+	var/newdir = jointext(split_text, "-")
 	if(badtubes.Find(newdir))
 		split_text.Swap(1,2)
-		newdir = list2text(split_text, "-")
+		newdir = jointext(split_text, "-")
 	icon_state = newdir
 
 /obj/structure/c_transit_tube/proc/tube_flip()
-	var/list/split_text = text2list(icon_state, "-")
+	var/list/split_text = splittext(icon_state, "-")
 	//skip straight pipes
 	if(length(split_text[2]) < 2)
 		return
@@ -44,7 +44,7 @@
 			split_text[2] = copytext(split_text[2],1,2) + ((copytext(split_text[2],2,3) == "E") ? "W" : "E")
 		else
 			split_text[2] = ((copytext(split_text[2],1,2) == "N") ? "S" : "N") + copytext(split_text[2],2,3)
-	icon_state = list2text(split_text, "-")
+	icon_state = jointext(split_text, "-")
 
 // disposals-style flip and rotate verbs
 /obj/structure/c_transit_tube/verb/rotate()

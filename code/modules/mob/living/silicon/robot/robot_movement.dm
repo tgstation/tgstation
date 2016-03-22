@@ -1,18 +1,11 @@
 /mob/living/silicon/robot/Process_Spacemove(movement_dir = 0)
-	if(module)
-		for(var/obj/item/weapon/tank/jetpack/J in module.modules)
-			if(J && istype(J, /obj/item/weapon/tank/jetpack))
-				if(J.allow_thrust(0.01))
-					return 1
-	if(..())
+	if(ionpulse())
 		return 1
-	return 0
+	return ..()
 
 /mob/living/silicon/robot/movement_delay()
 	. = ..()
-
 	. += speed
-
 	. += config.robot_delay
 
 /mob/living/silicon/robot/mob_negates_gravity()

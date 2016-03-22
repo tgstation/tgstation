@@ -792,7 +792,26 @@ obj/item/weapon/circuitboard/rdserver
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 3)
 
-/obj/item/weapon/circuitboard/incubator
+/obj/item/weapon/circuitboard/plantgenes
+	name = "circuit board (Plant DNA Manipulator)"
+	build_path = /obj/machinery/plantgenes
+	board_type = "machine"
+	origin_tech = "programming=2;biotech=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/scanning_module = 1,)
+/obj/item/weapon/circuitboard/plantgenes
+	name = "circuit board (Plant DNA Manipulator)"
+	build_path = /obj/machinery/plantgenes
+	board_type = "machine"
+	origin_tech = "programming=2;biotech=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/scanning_module = 1,)/obj/item/weapon/circuitboard/incubator
 	name = "circuit board (Incubator)"
 	build_path = /obj/machinery/incubator
 	board_type = "machine"

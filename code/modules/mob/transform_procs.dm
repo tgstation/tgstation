@@ -94,8 +94,6 @@
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a monkey.</B>"
 
-	O.update_pipe_vision()
-
 	for(var/A in loc.vars)
 		if(loc.vars[A] == src)
 			loc.vars[A] = O
@@ -216,8 +214,6 @@
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a human.</B>"
 
-	O.update_pipe_vision()
-
 	. = O
 
 	for(var/A in loc.vars)
@@ -255,15 +251,11 @@
 	if(client)
 		stopLobbySound()
 	var/mob/living/silicon/ai/O = new (loc,,,1)//No MMI but safety is in effect.
-	O.invisibility = 0
-	O.aiRestorePowerRoutine = 0
 
 	if(mind)
 		mind.transfer_to(O)
 	else
 		O.key = key
-
-	O.update_pipe_vision()
 
 	var/obj/loc_landmark
 	for(var/obj/effect/landmark/start/sloc in landmarks_list)
@@ -326,35 +318,41 @@
 	for(var/t in organs)
 		qdel(t)
 
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
+	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(loc)
 
 	// cyborgs produced by Robotize get an automatic power cell
-	O.cell = new(O)
-	O.cell.maxcharge = 7500
-	O.cell.charge = 7500
+	R.cell = new(R)
+	R.cell.maxcharge = 7500
+	R.cell.charge = 7500
 
 
-	O.gender = gender
-	O.invisibility = 0
+	R.gender = gender
+	R.invisibility = 0
 
 
 	if(mind)		//TODO
-		mind.transfer_to(O)
+		mind.transfer_to(R)
 		if(mind.special_role)
-			O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+			R.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 	else
-		O.key = key
-
-	O.update_pipe_vision()
+		R.key = key
 
 	if (config.rename_cyborg)
-		O.rename_self("cyborg")
+		R.rename_self("cyborg")
 
-	O.loc = loc
-	O.job = "Cyborg"
-	O.notify_ai(1)
+	if(R.mmi)
+		R.mmi.name = "Man-Machine Interface: [real_name]"
+		if(R.mmi.brain)
+			R.mmi.brain.name = "[real_name]'s brain"
+		if(R.mmi.brainmob)
+			R.mmi.brainmob.real_name = real_name //the name of the brain inside the cyborg is the robotized human's name.
+			R.mmi.brainmob.name = real_name
 
-	. = O
+	R.loc = loc
+	R.job = "Cyborg"
+	R.notify_ai(1)
+
+	. = R
 	qdel(src)
 
 //human -> alien
@@ -385,7 +383,6 @@
 	new_xeno.key = key
 
 	new_xeno << "<B>You are now an alien.</B>"
-	new_xeno.update_pipe_vision()
 	. = new_xeno
 	qdel(src)
 
@@ -418,18 +415,17 @@
 	new_slime.key = key
 
 	new_slime << "<B>You are now a slime. Skreee!</B>"
-	new_slime.update_pipe_vision()
 	. = new_slime
 	qdel(src)
 
-/mob/living/carbon/human/proc/Blobize()
-	if (notransform)
-		return
-	if(!client) //TOO BAD
-		new /obj/effect/blob/core (loc)
+/mob/proc/become_overmind(mode_made = 0)
+	var/mob/camera/blob/B = new /mob/camera/blob(loc, 0, mode_made)
+	if(mind)
+		mind.transfer_to(B)
 	else
-		new /obj/effect/blob/core (loc,new_overmind = src.client)
-	gib(src)
+		B.key = key
+	. = B
+	qdel(src)
 
 
 /mob/proc/become_god(var/side_colour)
@@ -467,7 +463,6 @@
 	new_corgi.key = key
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
-	new_corgi.update_pipe_vision()
 	. = new_corgi
 	qdel(src)
 
@@ -501,7 +496,6 @@
 
 
 	new_mob << "You suddenly feel more... animalistic."
-	new_mob.update_pipe_vision()
 	. = new_mob
 	qdel(src)
 
@@ -519,7 +513,6 @@
 	new_mob.key = key
 	new_mob.a_intent = "harm"
 	new_mob << "You feel more... animalistic"
-	new_mob.update_pipe_vision()
 
 	. = new_mob
 	qdel(src)

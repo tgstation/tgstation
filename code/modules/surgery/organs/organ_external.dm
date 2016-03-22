@@ -110,6 +110,8 @@
 				burn_dam	+= can_inflict
 			else
 				return 0
+	if(owner)
+		owner.updatehealth()
 	return update_organ_icon()
 
 
@@ -128,6 +130,8 @@
 
 	brute_dam	= max(brute_dam - brute, 0)
 	burn_dam	= max(burn_dam - burn, 0)
+	if(owner)
+		owner.updatehealth()
 	return update_organ_icon()
 
 

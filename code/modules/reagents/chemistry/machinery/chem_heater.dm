@@ -73,7 +73,7 @@
 		ui = new(user, src, ui_key, "chem_heater", name, 275, 400, master_ui, state)
 		ui.open()
 
-/obj/machinery/chem_heater/get_ui_data()
+/obj/machinery/chem_heater/ui_data()
 	var/data = list()
 	data["targetTemp"] = target_temperature
 	data["isActive"] = on

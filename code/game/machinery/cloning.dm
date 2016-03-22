@@ -51,12 +51,24 @@
 //TO-DO: Make the genetics machine accept them.
 /obj/item/weapon/disk/data
 	name = "cloning data disk"
-	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
-	item_state = "card-id"
-	w_class = 1
 	var/list/fields = list()
 	var/read_only = 0 //Well,it's still a floppy disk
+
+//Disk stuff.
+/obj/item/weapon/disk/data/New()
+	..()
+	icon_state = "datadisk[rand(0,6)]"
+	overlays += "datadisk_gene"
+
+
+/obj/item/weapon/disk/data/attack_self(mob/user)
+	read_only = !read_only
+	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
+
+/obj/item/weapon/disk/data/examine(mob/user)
+	..()
+	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 
 
 //Find a dead mob with a brain and client.
@@ -77,19 +89,6 @@
 			selected = M
 			break
 	return selected
-
-//Disk stuff.
-/obj/item/weapon/disk/data/New()
-	..()
-	icon_state = "datadisk[pick(0,1,2)]"
-
-/obj/item/weapon/disk/data/attack_self(mob/user)
-	read_only = !read_only
-	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
-
-/obj/item/weapon/disk/data/examine(mob/user)
-	..()
-	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 
 //Health Tracker Implant
 
@@ -177,9 +176,6 @@
 	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
 	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
-
-	//Here let's calculate their health so the pod doesn't immediately eject them!!!
-	H.updatehealth()
 
 	clonemind.transfer_to(H)
 	H.ckey = ckey
@@ -309,25 +305,13 @@
 		mess = 0
 		gibs(loc)
 		icon_state = "pod_0"
-
-		/*
-		for(var/obj/O in src)
-			O.loc = src.loc
-		*/
 		return
 
 	if (!occupant)
 		return
-	/*
-	for(var/obj/O in src)
-		O.loc = src.loc
-	*/
 
-	if (occupant.client)
-		occupant.client.eye = occupant.client.mob
-		occupant.client.perspective = MOB_PERSPECTIVE
-	if(occupant.loc == src)
-		occupant.loc = loc
+	var/turf/T = get_turf(src)
+	occupant.forceMove(T)
 	icon_state = "pod_0"
 	eject_wait = 0 //If it's still set somehow.
 	occupant.domutcheck() //Waiting until they're out before possible monkeyizing.
@@ -356,7 +340,7 @@
 
 /obj/machinery/clonepod/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		go_out()
 
 /*
@@ -369,13 +353,8 @@
 
 /obj/item/weapon/storage/box/disks/New()
 	..()
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/disk/data(src)
 
 /*
  *	Manual -- A big ol' manual.

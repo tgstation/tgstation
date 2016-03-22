@@ -1,14 +1,17 @@
 
 /obj/structure/table
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/list/table_contents = list()
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
 	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC)
 
 
-/obj/structure/table/MouseDrop(atom/over)
-	if(over != usr || !usr.IsAdvancedToolUser())
+/obj/structure/table/MouseDrop(mob/living/user)
+	if(!istype(user))
 		return
-	interact(usr)
+	if(!user.IsAdvancedToolUser())
+		return
+	tablecraft(user)
 
 /obj/structure/table/proc/check_contents(datum/table_recipe/R)
 	check_table()
@@ -176,12 +179,10 @@
 
 	return Deletion
 
-/obj/structure/table/interact(mob/user)
+/obj/structure/table/proc/tablecraft(mob/user)
 	if(user.incapacitated() || user.lying || !Adjacent(user))
 		return
 	check_table()
-	if(!table_contents.len)
-		return
 	user.face_atom(src)
 	var/dat = "<h3>Crafting menu</h3>"
 	if(busy)
@@ -226,22 +227,22 @@
 	if(href_list["make"])
 		var/datum/table_recipe/TR = locate(href_list["make"])
 		busy = 1
-		interact(usr)
+		tablecraft(usr)
 		var/fail_msg = construct_item(usr, TR)
 		if(!fail_msg)
 			usr << "<span class='notice'>[TR.name] constructed.</span>"
 		else
 			usr << "<span class ='warning'>Construction failed[fail_msg]</span>"
 		busy = 0
-		interact(usr)
+		tablecraft(usr)
 	if(href_list["forwardCat"])
 		viewing_category = next_cat()
 		usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
-		interact(usr)
+		tablecraft(usr)
 	if(href_list["backwardCat"])
 		viewing_category = prev_cat()
 		usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
-		interact(usr)
+		tablecraft(usr)
 
 //Next works nicely with modular arithmetic
 /obj/structure/table/proc/next_cat()

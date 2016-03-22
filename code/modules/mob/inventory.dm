@@ -30,10 +30,7 @@
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
 		W.layer = 20	//TODO: move to equipped?
-//		l_hand.screen_loc = ui_lhand
 		W.equipped(src,slot_l_hand)
-		if(client)
-			client.screen |= W
 		if(pulling == W)
 			stop_pulling()
 		update_inv_l_hand()
@@ -52,8 +49,6 @@
 		r_hand = W
 		W.layer = 20
 		W.equipped(src,slot_r_hand)
-		if(client)
-			client.screen |= W
 		if(pulling == W)
 			stop_pulling()
 		update_inv_r_hand()
@@ -269,3 +264,10 @@
 	var/obj/item/I = get_active_hand()
 	if (I)
 		I.equip_to_best_slot(src)
+
+//used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
+/mob/proc/getBackSlot()
+	return slot_back
+
+/mob/proc/getBeltSlot()
+	return slot_belt

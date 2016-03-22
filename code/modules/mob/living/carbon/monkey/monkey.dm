@@ -17,12 +17,14 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
-	gender = pick(MALE, FEMALE)
+	if(unique_name) //used to exclude pun pun
+		gender = pick(MALE, FEMALE)
 	real_name = name
 	if(good_mutations.len) //genetic mutations have been set up.
 		initialize()
 
 	internal_organs += new /obj/item/organ/internal/appendix
+	internal_organs += new /obj/item/organ/internal/lungs
 	internal_organs += new /obj/item/organ/internal/heart
 	internal_organs += new /obj/item/organ/internal/brain
 
@@ -299,3 +301,14 @@
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
 	return number
+
+/mob/living/carbon/monkey/fully_heal(admin_revive = 0)
+	if(!getorganslot("lungs"))
+		var/obj/item/organ/internal/lungs/L = new()
+		L.Insert(src)
+	..()
+
+/mob/living/carbon/monkey/IsVocal()
+	if(!getorganslot("lungs"))
+		return 0
+	return 1

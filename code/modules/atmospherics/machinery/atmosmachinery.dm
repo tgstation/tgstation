@@ -27,10 +27,11 @@ Pipelines + Other Objects -> Pipe network
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes = list()
 
-/obj/machinery/atmospherics/New()
+/obj/machinery/atmospherics/New(loc, process = TRUE)
 	nodes.len = device_type
 	..()
-	SSair.atmos_machinery += src
+	if(process)
+		SSair.atmos_machinery += src
 	SetInitDirections()
 	if(can_unwrench)
 		stored = new(src, make_from=src)
@@ -44,9 +45,7 @@ Pipelines + Other Objects -> Pipe network
 		qdel(stored)
 		stored = null
 
-	for(var/mob/living/L in src)
-		L.remove_ventcrawl()
-		L.forceMove(get_turf(src))
+	dropContents()
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
 
@@ -140,7 +139,7 @@ Pipelines + Other Objects -> Pipe network
 			user << "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>"
 			unsafe_wrenching = TRUE //Oh dear oh dear
 
-		if (do_after(user, 20/W.toolspeed, target = src) && !gc_destroyed)
+		if (do_after(user, 20/W.toolspeed, target = src) && !qdeleted(src))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You unfasten \the [src].</span>", \
@@ -238,27 +237,26 @@ Pipelines + Other Objects -> Pipe network
 	if(!(direction & initialize_directions)) //cant go this way.
 		return
 
-	if(buckled_mob == user) // fixes buckle ventcrawl edgecase fuck bug
+	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
 		return
 
 	var/obj/machinery/atmospherics/target_move = findConnecting(direction)
 	if(target_move)
-		if(is_type_in_list(target_move, ventcrawl_machinery) && target_move.can_crawl_through())
-			user.remove_ventcrawl()
-			user.forceMove(target_move.loc) //handle entering and so on.
-			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
-		else if(target_move.can_crawl_through())
-			var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
-			if(pipenetdiff.len)
-				user.update_pipe_vision(target_move)
-			user.loc = target_move
-			user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
-			if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
-				user.last_played_vent = world.time
-				playsound(src, 'sound/machines/ventcrawl.ogg', 50, 1, -3)
+		if(target_move.can_crawl_through())
+			if(is_type_in_list(target_move, ventcrawl_machinery))
+				user.forceMove(target_move.loc) //handle entering and so on.
+				user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
+			else
+				var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
+				if(pipenetdiff.len)
+					user.update_pipe_vision(target_move)
+				user.loc = target_move
+				user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
+				if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
+					user.last_played_vent = world.time
+					playsound(src, 'sound/machines/ventcrawl.ogg', 50, 1, -3)
 	else
 		if((direction & initialize_directions) || is_type_in_list(src, ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
-			user.remove_ventcrawl()
 			user.forceMove(src.loc)
 			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 	user.canmove = 0
@@ -279,20 +277,9 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/returnPipenets()
 	return list()
 
-/obj/machinery/atmospherics/onShuttleMove()
-	. = ..()
-	if(!.)
-		return
+/obj/machinery/atmospherics/update_remote_sight(mob/user)
+	user.sight |= (SEE_TURFS|BLIND)
 
-	for(DEVICE_TYPE_LOOP)
-		dealWithShuttleStuff(I)
-	atmosinit() //we've moved, so what once was next to us may not be
-	build_network()
-
-/obj/machinery/atmospherics/proc/dealWithShuttleStuff(I)
-	var/obj/machinery/atmospherics/node = NODE_I
-	var/turf/node_turf = get_turf(node)
-	var/turf/self_turf = get_turf(src)
-	if(node_turf.loc != self_turf.loc) //shuttles are area based, so this means the node is not on the shuttle with us
-		node.disconnect(src)
-		NODE_I = null
+//Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
+/obj/machinery/atmospherics/proc/can_see_pipes()
+	return 1

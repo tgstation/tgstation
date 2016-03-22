@@ -99,7 +99,7 @@ Passive gate is similar to the regular pump except:
 		ui = new(user, src, ui_key, "atmos_pump", name, 335, 115, master_ui, state)
 		ui.open()
 
-/obj/machinery/atmospherics/components/binary/passive_gate/get_ui_data()
+/obj/machinery/atmospherics/components/binary/passive_gate/ui_data()
 	var/data = list()
 	data["on"] = on
 	data["pressure"] = round(target_pressure)

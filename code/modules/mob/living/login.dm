@@ -10,8 +10,10 @@
 			if("sandbox")
 				CanBuild()
 
+	update_damage_hud()
+	update_health_hud()
+
 	//Vents
 	if(ventcrawler)
 		src << "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>"
-	//Should update regardless of if we can ventcrawl, since we can end up in pipes in other ways.
-	update_pipe_vision(loc)
+

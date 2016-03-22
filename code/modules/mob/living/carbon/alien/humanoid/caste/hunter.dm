@@ -10,27 +10,6 @@
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small
 	..()
 
-/mob/living/carbon/alien/humanoid/hunter/handle_hud_icons_health()
-	if (healths)
-		if (stat != 2)
-			switch(health)
-				if(150 to INFINITY)
-					healths.icon_state = "health0"
-				if(120 to 150)
-					healths.icon_state = "health1"
-				if(90 to 120)
-					healths.icon_state = "health2"
-				if(60 to 90)
-					healths.icon_state = "health3"
-				if(30 to 60)
-					healths.icon_state = "health4"
-				if(0 to 30)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
-
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
 	. = -1		//hunters are sanic
 	. += ..()	//but they still need to slow down on stun

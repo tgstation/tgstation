@@ -1,6 +1,7 @@
 //Hoods for winter coats and chaplain hoodie etc
 
 /obj/item/clothing/suit/hooded
+	actions_types = list(/datum/action/item_action/toggle_hood)
 	var/obj/item/clothing/head/hood
 	var/hoodtype = /obj/item/clothing/head/winterhood //so the chaplain hoodie or other hoodies can override this
 
@@ -20,6 +21,10 @@
 /obj/item/clothing/suit/hooded/ui_action_click()
 	ToggleHood()
 
+/obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user)
+	if(slot == slot_wear_suit)
+		return 1
+
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
 	if(slot != slot_wear_suit)
 		RemoveHood()
@@ -33,8 +38,12 @@
 		H.unEquip(hood, 1)
 		H.update_inv_wear_suit()
 	hood.loc = src
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/hooded/dropped()
+	..()
 	RemoveHood()
 
 /obj/item/clothing/suit/hooded/proc/ToggleHood()
@@ -52,6 +61,9 @@
 				suittoggled = 1
 				src.icon_state = "[initial(icon_state)]_t"
 				H.update_inv_wear_suit()
+				for(var/X in actions)
+					var/datum/action/A = X
+					A.UpdateButtonIcon()
 	else
 		RemoveHood()
 
@@ -84,6 +96,9 @@
 		src.icon_state = "[initial(icon_state)]_t"
 		src.suittoggled = 1
 	usr.update_inv_wear_suit()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
 	..()
@@ -92,10 +107,8 @@
 //Hardsuit toggle code
 /obj/item/clothing/suit/space/hardsuit/New()
 	MakeHelmet()
-	if(!jetpack)
-		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack
-		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets
 	..()
+
 /obj/item/clothing/suit/space/hardsuit/Destroy()
 	if(helmet)
 		helmet.suit = null
@@ -142,6 +155,7 @@
 	helmet.loc = src
 
 /obj/item/clothing/suit/space/hardsuit/dropped()
+	..()
 	RemoveHelmet()
 
 /obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()

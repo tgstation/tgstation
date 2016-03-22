@@ -80,7 +80,7 @@
 		return
 	A.ex_act(2)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
-	for(var/mob/M in ultra_range(10, src))
+	for(var/mob/M in urange(10, src))
 		if(!M.stat)
 			shake_camera(M, 3, 1)
 	qdel(src)

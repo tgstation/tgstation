@@ -121,8 +121,8 @@ var/global/list/global_handofgod_structuretypes = list()
 		if(1 to 30)
 			var/datum/objective/deicide/deicide = new
 			deicide.owner = deity
-			deicide.find_target()
-			deity.objectives += deicide
+			if(deicide.find_target())//Hard to kill the other god if there is none
+				deity.objectives += deicide
 
 			if(!(locate(/datum/objective/escape_followers) in deity.objectives))
 				var/datum/objective/escape_followers/recruit = new
@@ -188,9 +188,9 @@ var/global/list/global_handofgod_structuretypes = list()
 	if((follower_mind in red_deity_followers) || (follower_mind in red_deity_prophets) || (follower_mind in blue_deity_followers) || (follower_mind in blue_deity_prophets))
 		H << "<span class='danger'>You already belong to a deity. Your strong faith has blocked out the conversion attempt by the followers of the [colour] deity.</span>"
 		return 0
-	var/obj/item/weapon/nullrod/N = locate() in H
+	var/obj/item/weapon/nullrod/N = H.null_rod_check()
 	if(N)
-		H << "<span class='danger'>Your null rod prevented the [colour] deity from brainwashing you.</span>"
+		H << "<span class='danger'>Your holy weapon prevented the [colour] deity from brainwashing you.</span>"
 		return 0
 
 	if(colour == "red")
@@ -316,6 +316,18 @@ var/global/list/global_handofgod_structuretypes = list()
 			return 1
 
 
+/mob/camera/god/proc/is_handofgod_myfollowers(mob/A)
+	if(!ishuman(A))
+		return 0
+	var/mob/living/carbon/human/H = A
+	if(!H.mind)
+		return 0
+	if(side == "red")
+		if(H.mind in ticker.mode.red_deity_prophets|ticker.mode.red_deity_followers)
+			return 1
+	else if(side == "blue")
+		if(H.mind in ticker.mode.blue_deity_prophets|ticker.mode.blue_deity_followers)
+			return 1
 
 //////////////////////
 //Roundend Reporting//

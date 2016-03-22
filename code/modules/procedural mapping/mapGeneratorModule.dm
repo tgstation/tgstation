@@ -42,7 +42,7 @@
 			//You're the same as me? I hate you I'm going home
 			if(clusterCheckFlags & CLUSTER_CHECK_SAME_TURFS)
 				clustering = rand(clusterMin,clusterMax)
-				for(var/turf/F in trange(clustering,T))
+				for(var/turf/F in RANGE_TURFS(clustering,T))
 					if(istype(F,turfPath))
 						skipLoopIteration = TRUE
 						break
@@ -53,7 +53,7 @@
 			//You're DIFFERENT to me? I hate you I'm going home
 			if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_TURFS)
 				clustering = rand(clusterMin,clusterMax)
-				for(var/turf/F in trange(clustering,T))
+				for(var/turf/F in RANGE_TURFS(clustering,T))
 					if(!(istype(F,turfPath)))
 						skipLoopIteration = TRUE
 						break

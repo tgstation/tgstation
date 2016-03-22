@@ -5,8 +5,8 @@
 /obj/structure/New()
 	..()
 	if(smooth)
-		smooth_icon(src)
-		smooth_icon_neighbors(src)
+		queue_smooth(src)
+		queue_smooth_neighbors(src)
 		icon_state = ""
 	if(ticker)
 		cameranet.updateVisibility(src)
@@ -23,7 +23,7 @@
 	if(opacity)
 		UpdateAffectingLights()
 	if(smooth)
-		smooth_icon_neighbors(src)
+		queue_smooth_neighbors(src)
 	return ..()
 
 /obj/structure/mech_melee_attack(obj/mecha/M)
@@ -43,3 +43,6 @@
 /obj/structure/ui_act(action, params)
 	..()
 	add_fingerprint(usr)
+
+/obj/structure/proc/deconstruct(forced = FALSE)
+	qdel(src)

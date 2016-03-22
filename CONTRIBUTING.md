@@ -193,6 +193,14 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Do not divide when you can easily convert it to a multiplication. (ie `4/2` should be done as `4*0.5`)
 
+####Enforced not enforced
+The following different coding styles are not only not enforced, but it is generally frowned upon to change them over from one to the other for little reason:
+
+* English/British spelling on var/proc names
+	* Color/Colour nobody cares,
+* Spaces after control statements
+	* if() if () nobody cares.
+
 ####Operators and spaces:
 (this is not strictly enforced, but more a guideline for readability's sake)
 
@@ -264,4 +272,4 @@ There is no strict process when it comes to merging pull requests, pull requests
 
 * If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
 
-* If your pull request is accepted, the code you add is no longer exclusively yours but everyones, everyone is free to work on it but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager. It is a shame this has to be explicitly told but there have been cases where this would've saved some trouble.
+* If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.

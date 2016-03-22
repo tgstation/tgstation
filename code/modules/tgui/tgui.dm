@@ -31,7 +31,7 @@
 	var/list/initial_data // The data (and datastructure) used to initialize the UI.
 	var/status = UI_INTERACTIVE // The status/visibility of the UI.
 	var/datum/ui_state/state = null // Topic state used to determine status/interactability.
-	var/datum/tgui/master_ui	 // The parent UI.
+	var/datum/tgui/master_ui // The parent UI.
 	var/list/datum/tgui/children = list() // Children of this UI.
 
  /**
@@ -80,16 +80,15 @@
   * Open this UI (and initialize it with data).
  **/
 /datum/tgui/proc/open()
-	set waitfor = 0 // Don't wait on sleep()s.
 	if(!user.client)
 		return // Bail if there is no client.
 
 	update_status(push = 0) // Update the window status.
-	if(status == UI_CLOSE)
+	if(status < UI_UPDATE)
 		return // Bail if we're not supposed to open.
 
 	if(!initial_data)
-		set_initial_data(src_object.get_ui_data(user)) // Get the UI data.
+		set_initial_data(src_object.ui_data(user)) // Get the UI data.
 
 	var/window_size = ""
 	if(width && height) // If we have a width and height, use them.
@@ -129,6 +128,7 @@
 	children.Cut()
 	state = null
 	master_ui = null
+	qdel(src)
 
  /**
   * public
@@ -212,6 +212,7 @@
 	var/list/config_data = list(
 			"title"     = title,
 			"status"    = status,
+			"screen"	= src_object.ui_screen,
 			"style"     = style,
 			"interface" = interface,
 			"fancy"     = user.client.prefs.tgui_fancy,
@@ -245,10 +246,10 @@
 		json_data["data"] = data
 
 	// Generate the JSON.
-	var/json = JSON.stringify(json_data)
+	var/json = json_encode(json_data)
 	// Strip #255/improper.
-	json = regex_replaceall(json, "\improper", "")
-	json = regex_replaceall(json, "\proper", "")
+	json = replacetext(json, "\proper", "")
+	json = replacetext(json, "\improper", "")
 	return json
 
  /**
@@ -265,26 +266,24 @@
 	var/action = href_list["action"]
 	var/params = href_list; params -= "action"
 
-	// Handle any special actions.
 	switch(action)
 		if("tgui:initialize")
 			user << output(url_encode(get_json(initial_data)), "[window_id].browser:initialize")
 			initialized = TRUE
-			return
+		if("tgui:view")
+			if(params["screen"])
+				src_object.ui_screen = params["screen"]
+			SStgui.update_uis(src_object)
 		if("tgui:link")
 			user << link(params["url"])
-			return
 		if("tgui:fancy")
 			user.client.prefs.tgui_fancy = TRUE
-			return
 		if("tgui:nofrills")
 			user.client.prefs.tgui_fancy = FALSE
-			return
-
-	update_status(push = 0) // Update the window state.
-	var/update = src_object.ui_act(action, params, src, state) // Call ui_act() on the src_object.
-	if(src_object && update)
-		SStgui.update_uis(src_object) // If we have a src_object and its ui_act() told us to update.
+		else
+			update_status(push = 0) // Update the window state.
+			if(src_object.ui_act(action, params, src, state)) // Call ui_act() on the src_object.
+				SStgui.update_uis(src_object) // Update if the object requested it.
 
  /**
   * private

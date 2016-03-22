@@ -49,10 +49,17 @@ header.titlebar
     top: 4px
     right: 12px
 
-.wf-inactive
-  .statusicon::after
-    content: "O"
-  .minimize::after
-    content: "-"
-  .close::after
-    content: "X"
+/.no-icons header.titlebar
+  .statusicon
+    font-size: 20px
+    &::after
+      content: "O"
+  .minimize
+    top: -2px
+    font-size: 20px
+    &::after
+      content: "—"
+  .close
+    font-size: 20px
+    &::after
+      content: "X"

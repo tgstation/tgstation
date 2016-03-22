@@ -107,7 +107,13 @@
 
 /obj/item/weapon/storage/belt/security/full/New()
 	..()
-	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/weapon/reagent_containers/spray/pepper(src)
+	new /obj/item/weapon/restraints/handcuffs(src)
+	new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/weapon/melee/baton/loaded(src)
+
+
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
@@ -185,7 +191,8 @@
 		/obj/item/device/flashlight,
 		/obj/item/weapon/reagent_containers/spray,
 		/obj/item/weapon/soap,
-		/obj/item/weapon/holosign_creator
+		/obj/item/weapon/holosign_creator,
+		/obj/item/key/janitor
 		)
 
 /obj/item/weapon/storage/belt/bandolier

@@ -29,25 +29,20 @@
 	player_list |= src
 	update_Login_details()
 	world.update_status()
-
-	client.images = null				//remove the images such as AIs being unable to see runes
 	client.screen = list()				//remove hud items just in case
+	client.images = list()
+
+	if(!hud_used)
+		create_mob_hud()
 	if(hud_used)
-		qdel(hud_used)					//remove the hud objects
-	hud_used = new(src)
+		hud_used.show_hud(hud_used.hud_version)
 
 	next_move = 1
-	sight |= SEE_SELF
 
 	..()
 	if (key != client.key)
 		key = client.key
-	if(loc && !isturf(loc))
-		client.eye = loc
-		client.perspective = EYE_PERSPECTIVE
-	else
-		client.eye = src
-		client.perspective = MOB_PERSPECTIVE
+	reset_perspective(loc)
 
 	if(isobj(loc))
 		var/obj/Loc=loc
@@ -56,6 +51,8 @@
 	//readd this mob's HUDs (antag, med, etc)
 	reload_huds()
 
+	reload_fullscreen() // Reload any fullscreen overlays this mob has.
+
 	if(ckey in deadmins)
 		verbs += /client/proc/readmin
 
@@ -63,4 +60,7 @@
 
 	sync_mind()
 
-	winset(src, null, "mainwindow.macro=default")
+	if(client.prefs.hotkeys)
+		winset(src, null, "mainwindow.macro=[macro_hotkeys] mapwindow.map.focus=true input.background-color=#e0e0e0")
+	else
+		winset(src, null, "mainwindow.macro=[macro_default] input.focus=true input.background-color=#d3b5b5")

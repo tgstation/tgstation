@@ -576,7 +576,7 @@
 				var/list/temp_tech = ConvertReqString2List(process.origin_tech)
 				for(var/T in temp_tech)
 					linked_console.files.UpdateTech(T, temp_tech[T])
-				linked_console.files.UpdateDesigns(process,process.type)
+				linked_console.files.UpdateDesigns(process,temp_tech)
 	src.updateUsrDialog()
 	return
 
@@ -640,7 +640,7 @@
 			spawn(cooldownMax)
 				cooldown = FALSE
 	else
-		user << "<span class='notice'>You aren't quite sure what to do with this, yet.</span>"
+		user << "<span class='notice'>You aren't quite sure what to do with this yet.</span>"
 
 //////////////// RELIC PROCS /////////////////////////////
 

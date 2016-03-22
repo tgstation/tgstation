@@ -103,7 +103,13 @@
 	return
 
 /mob/proc/unset_machine()
-	src.machine = null
+	if(machine)
+		machine.on_unset_machine(src)
+		machine = null
+
+//called when the user unsets the machine.
+/atom/movable/proc/on_unset_machine(mob/user)
+	return
 
 /mob/proc/set_machine(obj/O)
 	if(src.machine)
@@ -130,7 +136,7 @@
 	else if(severity == 2)
 		if(prob(50))
 			qdel(src)
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		..()
 
 //If a mob logouts/logins in side of an object you can use this proc
@@ -142,7 +148,7 @@
 
 /obj/singularity_act()
 	ex_act(1)
-	if(src && isnull(gc_destroyed))
+	if(src && !qdeleted(src))
 		qdel(src)
 	return 2
 
@@ -192,8 +198,12 @@
 	being_shocked = 1
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
-	spawn(10)
-		being_shocked = 0
+	addtimer(src, "reset_shocked", 10)
+
+/obj/proc/reset_shocked()
+	being_shocked = 0
 
 /obj/proc/CanAStarPass()
 	. = !density
+
+

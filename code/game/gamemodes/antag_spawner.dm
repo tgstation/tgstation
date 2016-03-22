@@ -198,6 +198,20 @@
 			R = new /mob/living/silicon/robot/syndicate/medical(T)
 		else
 			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
+
+	var/brainfirstname = pick(first_names_male)
+	if(prob(50))
+		brainfirstname = pick(first_names_female)
+	var/brainopslastname = pick(last_names)
+	if(ticker.mode.nukeops_lastname)  //the brain inside the syndiborg has the same last name as the other ops.
+		brainopslastname = ticker.mode.nukeops_lastname
+	var/brainopsname = "[brainfirstname] [brainopslastname]"
+
+	R.mmi.name = "Man-Machine Interface: [brainopsname]"
+	R.mmi.brain.name = "[brainopsname]'s brain"
+	R.mmi.brainmob.real_name = brainopsname
+	R.mmi.brainmob.name = brainopsname
+
 	R.key = C.key
 	ticker.mode.syndicates += R.mind
 	ticker.mode.update_synd_icons_added(R.mind)

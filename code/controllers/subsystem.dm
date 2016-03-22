@@ -13,6 +13,7 @@
 	// Defaults are pretty sane for most use cases.
 	// You can change how quickly it starts scaling back with dwait_buffer,
 	// and you can change how much it scales back with dwait_delta.
+
 	var/dynamic_wait = 0	//changes the wait based on the amount of time it took to process
 	var/dwait_upper = 20	//longest wait can be under dynamic_wait
 	var/dwait_lower = 5		//shortest wait can be under dynamic_wait
@@ -24,6 +25,10 @@
 	var/last_fire = 0		//last world.time we called fire()
 	var/next_fire = 0		//scheduled world.time for next fire()
 	var/cost = 0			//average time to execute
+#if DM_VERSION >= 510
+	var/tick_usage = 0		//average tick usage
+#endif
+	var/paused =0			//was this subsystem paused mid fire.
 	var/times_fired = 0		//number of times we have called fire()
 
 	// The object used for the clickable stat() button.
@@ -36,8 +41,17 @@
 //fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
 //fire(), and the procs it calls, SHOULD NOT HAVE ANY SLEEP OPERATIONS in them!
 //YE BE WARNED!
-/datum/subsystem/proc/fire()
+/datum/subsystem/proc/fire(resumed = 0)
+	set waitfor = 0 //this should not be depended upon, this is just to solve issues with sleeps messing up tick tracking
 	can_fire = 0
+
+#if DM_VERSION >= 510
+/datum/subsystem/proc/pause()
+	. = 1
+	if (!dynamic_wait)
+		Master.priority_queue += src
+	paused = 1
+#endif
 
 //used to initialize the subsystem AFTER the map has loaded
 /datum/subsystem/proc/Initialize(start_timeofday, zlevel)
@@ -59,9 +73,13 @@
 		dwait = "DWait:[round(wait,0.1)]ds "
 
 	if(can_fire)
-		msg = "[round(cost,0.001)]ds\t[dwait][msg]"
+#if DM_VERSION >= 510
+		msg = "[round(cost,0.01)]ds|[round(tick_usage,1)]%\t[dwait][msg]"
+#else
+		msg = "[round(cost,0.01)]ds\t[dwait][msg]"
+#endif
 	else
-		msg = "OFFLINE"
+		msg = "OFFLINE\t[msg]"
 
 	stat(name, statclick.update(msg))
 
@@ -79,4 +97,4 @@
 /datum/subsystem/on_varedit(edited_var)
 	if (edited_var == "can_fire" && can_fire)
 		next_fire = world.time + wait
-	
+

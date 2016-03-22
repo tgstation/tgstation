@@ -6,6 +6,7 @@
 	icon_state = "marker"
 	invisibility = 60
 	see_in_dark = 0
+	see_invisible = 55
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	languages = HUMAN | MONKEY | ALIEN | ROBOT | SLIME | DRONE | SWARMER
 	hud_possible = list(ANTAG_HUD)
@@ -22,7 +23,8 @@
 	var/list/conduits = list()
 	var/prophets_sacrificed_in_name = 0
 	var/image/ghostimage = null //For observer with darkness off visiblity
-
+	var/list/prophets = list()
+	var/datum/action/innate/godspeak/speak2god
 
 /mob/camera/god/New()
 	..()
@@ -51,6 +53,8 @@
 	for(var/datum/mind/F in followers)
 		if(F.current)
 			F.current << "<span class='danger'>Your god is DEAD!</span>"
+	for(var/X in prophets)
+		speak2god.Remove(X)
 	ghost_darkness_images -= ghostimage
 	updateallghostimages()
 	return ..()
@@ -73,10 +77,10 @@
 
 /mob/camera/god/update_icons()
 	icon_state = "[initial(icon_state)]-[side]"
-	
+
 	if(ghostimage)
 		ghost_darkness_images -= ghostimage
-	
+
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
@@ -104,9 +108,9 @@
 	update_health_hud()
 
 
-/mob/camera/god/proc/update_health_hud()
-	if(god_nexus && hud_used && hud_used.deity_health_display)
-		hud_used.deity_health_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='lime'>[god_nexus.health]   </font></div>"
+/mob/camera/god/update_health_hud()
+	if(god_nexus && hud_used && hud_used.healths)
+		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='lime'>[god_nexus.health]   </font></div>"
 
 
 /mob/camera/god/proc/add_faith(faith_amt)
@@ -196,7 +200,7 @@
 	var/rendered = "<font color='#045FB4'><i><span class='game say'>Divine Telepathy, <span class='name'>[name]</span> <span class='message'>[msg]</span></span></i></font>"
 
 	for(var/mob/M in mob_list)
-		if(is_handofgod_myprophet(M) || isobserver(M))
+		if(is_handofgod_myfollowers(M) || isobserver(M))
 			M.show_message(rendered, 2)
 	src << rendered
 

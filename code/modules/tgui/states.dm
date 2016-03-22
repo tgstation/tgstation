@@ -39,7 +39,6 @@
 /datum/ui_state/proc/can_use_topic(src_object, mob/user)
 	return UI_CLOSE // Don't allow interaction by default.
 
-
  /**
   * public
   *
@@ -48,22 +47,21 @@
   * return UI_state The state of the UI.
  **/
 /mob/proc/shared_ui_interaction(src_object)
-	if(!client || stat) // Close UIs if mindless or dead/unconcious.
+	if(!client) // Close UIs if mindless.
 		return UI_CLOSE
-	// Update UIs if incapicitated but concious.
-	else if(incapacitated() || lying)
+	else if(stat) // Disable UIs if unconcious.
+		return UI_DISABLED
+	else if(incapacitated() || lying) // Update UIs if incapicitated but concious.
 		return UI_UPDATE
 	return UI_INTERACTIVE
 
 /mob/living/silicon/ai/shared_ui_interaction(src_object)
-	if(lacks_power()) // Close UIs if the AI is unpowered.
-		return UI_CLOSE
+	if(lacks_power()) // Disable UIs if the AI is unpowered.
+		return UI_DISABLED
 	return ..()
 
 /mob/living/silicon/robot/shared_ui_interaction(src_object)
-	if(cell.charge <= 0) // Close UIs if the Borg is unpowered.
-		return UI_CLOSE
-	if(lockcharge) // Disable UIs if the Borg is locked.
+	if(cell.charge <= 0 || lockcharge) // Disable UIs if the Borg is unpowered or locked.
 		return UI_DISABLED
 	return ..()
 
@@ -92,7 +90,7 @@
   * return UI_state The state of the UI.
  **/
 /mob/living/proc/shared_living_ui_distance(atom/movable/src_object)
-	if(!(src_object in view(4, src))) // If the object is out of view, close it.
+	if(!(src_object in view(src))) // If the object is obscured, close it.
 		return UI_CLOSE
 
 	var/dist = get_dist(src_object, src)

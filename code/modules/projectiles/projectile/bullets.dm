@@ -33,11 +33,30 @@
 	name = "pellet"
 	damage = 15
 
-/obj/item/projectile/bullet/pellet/weak
-	damage = 3
+/obj/item/projectile/bullet/pellet/weak/New()
+	damage = 6
+	range = rand(8)
 
-/obj/item/projectile/bullet/pellet/random/New()
-	damage = rand(10)
+/obj/item/projectile/bullet/pellet/weak/on_range()
+ 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+ 	sparks.set_up(1, 1, src)
+ 	sparks.start()
+ 	..()
+
+/obj/item/projectile/bullet/pellet/overload/New()
+	damage = 3
+	range = rand(10)
+
+/obj/item/projectile/bullet/pellet/overload/on_hit(atom/target, blocked = 0)
+ 	..()
+ 	explosion(target, 0, 0, 2)
+
+/obj/item/projectile/bullet/pellet/overload/on_range()
+ 	explosion(src, 0, 0, 2)
+ 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+ 	sparks.set_up(3, 3, src)
+ 	sparks.start()
+ 	..()
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20
@@ -72,7 +91,7 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(1)
+		M.adjust_fire_stacks(4)
 		M.IgniteMob()
 
 
@@ -100,6 +119,11 @@
 	weaken = 8
 	stun = 8
 	hitsound = 'sound/effects/meteorimpact.ogg'
+
+/obj/item/projectile/bullet/meteorshot/weak
+	damage = 10
+	weaken = 4
+	stun = 4
 
 /obj/item/projectile/bullet/meteorshot/on_hit(atom/target, blocked = 0)
 	. = ..()

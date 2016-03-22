@@ -22,7 +22,7 @@
 	var/underwear = "Nude"	//Which underwear the player wants
 	var/undershirt = "Nude" //Which undershirt the player wants
 	var/socks = "Nude" //Which socks the player wants
-	var/backbag = 1		//Which backpack type the player has chosen. Backpack.or Satchel
+	var/backbag = DBACKPACK		//Which backpack type the player has chosen.
 
 	//Equipment slots
 	var/obj/item/wear_suit = null
@@ -30,7 +30,7 @@
 	var/obj/item/shoes = null
 	var/obj/item/belt = null
 	var/obj/item/gloves = null
-	var/obj/item/glasses = null
+	var/obj/item/clothing/glasses/glasses = null
 	var/obj/item/ears = null
 	var/obj/item/wear_id = null
 	var/obj/item/r_store = null

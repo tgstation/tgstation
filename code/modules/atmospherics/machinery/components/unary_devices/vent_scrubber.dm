@@ -2,67 +2,57 @@
 #define SCRUBBING	1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber
-	icon_state = "scrub_map"
-
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it"
-
+	icon_state = "scrub_map"
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 60
-
+	can_unwrench = 1
+	welded = 0
 	level = 1
 
-	can_unwrench = 1
-
-	welded = 0
-
-	var/area/initial_loc
 	var/id_tag = null
-	var/frequency = 1439
-	var/datum/radio_frequency/radio_connection
-
-	var/list/turf/simulated/adjacent_turfs = list()
-
 	var/on = 0
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
+
 	var/scrub_CO2 = 1
 	var/scrub_Toxins = 0
 	var/scrub_N2O = 0
 
 	var/volume_rate = 200
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
+	var/list/turf/simulated/adjacent_turfs = list()
 
-	var/area_uid
+	var/frequency = 1439
+	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
 
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
-	initial_loc = get_area(loc)
-	if (initial_loc.master)
-		initial_loc = initial_loc.master
-	area_uid = initial_loc.uid
-	if (!id_tag)
+	if(!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
+	var/area/A = get_area_master(src)
+	A.air_scrub_names -= id_tag
+	A.air_scrub_info -= id_tag
+
 	if(SSradio)
 		SSradio.remove_object(src,frequency)
 	radio_connection = null
-	if(initial_loc)
-		initial_loc.air_scrub_info -= id_tag
-		initial_loc.air_scrub_names -= id_tag
-		initial_loc = null
+
 	for(var/I in adjacent_turfs)
 		I = null
+
 	return ..()
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
 	if(!powered(power_channel))
 		return 0
-	if (!on || welded)
+	if(!on || welded)
 		return 0
 	if(stat & (NOPOWER|BROKEN))
 		return 0
@@ -80,7 +70,7 @@
 		amount = active_power_usage
 
 	if (widenet)
-		amount += amount*(adjacent_turfs.len*(adjacent_turfs.len/2))
+		amount += amount * (adjacent_turfs.len * (adjacent_turfs.len / 2))
 	use_power(amount, power_channel)
 	return 1
 
@@ -115,7 +105,6 @@
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
 	signal.data = list(
-		"area" = area_uid,
 		"tag" = id_tag,
 		"frequency" = frequency,
 		"device" = "VS",
@@ -128,11 +117,13 @@
 		"filter_n2o" = scrub_N2O,
 		"sigtype" = "status"
 	)
-	if(!initial_loc.air_scrub_names[id_tag])
-		var/new_name = "\improper [initial_loc.name] air scrubber #[initial_loc.air_scrub_names.len+1]"
-		initial_loc.air_scrub_names[id_tag] = new_name
-		src.name = new_name
-	initial_loc.air_scrub_info[id_tag] = signal.data
+
+	var/area/A = get_area_master(src)
+	if(!A.air_scrub_names[id_tag])
+		name = "\improper [A.name] air scrubber #[A.air_scrub_names.len + 1]"
+		A.air_scrub_names[id_tag] = name
+	A.air_scrub_info[id_tag] = signal.data
+
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
 	return 1
@@ -140,7 +131,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/atmosinit()
 	radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
 	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
-	if (frequency)
+	if(frequency)
 		set_frequency(frequency)
 	broadcast_status()
 	check_turfs()
@@ -158,8 +149,6 @@
 	if(widenet)
 		for (var/turf/simulated/tile in adjacent_turfs)
 			scrub(tile)
-
-
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(var/turf/simulated/tile)
 	if (!istype(tile))
@@ -245,9 +234,9 @@
 //	diagonal turfs that can share atmos with *both* of the cardinal turfs
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/check_turfs()
 	adjacent_turfs.Cut()
-	var/turf/T = loc
-	if (istype(T))
-		adjacent_turfs = T.GetAtmosAdjacentTurfs(alldir=1)
+	var/turf/T = get_turf(src)
+	if(istype(T))
+		adjacent_turfs = T.GetAtmosAdjacentTurfs(alldir = 1)
 
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
@@ -299,10 +288,7 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/power_change()
-	if(powered(power_channel))
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
+	..()
 	update_icon_nopipes()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/attackby(obj/item/weapon/W, mob/user, params)

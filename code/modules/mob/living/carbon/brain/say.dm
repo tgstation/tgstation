@@ -10,8 +10,8 @@
 		..()
 
 /mob/living/carbon/brain/radio(message, message_mode, list/spans)
-	if(message_mode && istype(container, /obj/item/device/mmi/radio_enabled))
-		var/obj/item/device/mmi/radio_enabled/R = container
+	if(message_mode && istype(container, /obj/item/device/mmi))
+		var/obj/item/device/mmi/R = container
 		if(R.radio)
 			R.radio.talk_into(src, message, , spans)
 			return ITALICS | REDUCE_RANGE

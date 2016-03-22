@@ -92,6 +92,7 @@
 	var/humans_need_surnames = 0
 	var/allow_random_events = 0			// enables random events mid-round when set to 1
 	var/allow_ai = 0					// allow ai job
+	var/forbid_secborg = 0				// disallow secborg module to be chosen.
 	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
 	var/notify_new_player_age = 0		// how long do we notify admins of a new player
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
@@ -121,6 +122,7 @@
 	var/no_summon_magic		//Fun
 	var/no_summon_events	//Allowed
 
+	var/intercept = 1					//Whether or not to send a communications intercept report roundstart. This may be overriden by gamemodes.
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
 	var/alert_desc_blue_downto = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
@@ -169,6 +171,7 @@
 	var/assistant_cap = -1
 
 	var/starlight = 0
+	var/generate_minimaps = 0
 	var/grey_assistants = 0
 
 	var/aggressive_changelog = 0
@@ -388,6 +391,8 @@
 					protected_config.autoadmin = 1
 					if(value)
 						protected_config.autoadmin_rank = ckeyEx(value)
+				if("generate_minimaps")
+					config.generate_minimaps = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -437,6 +442,8 @@
 					config.alert_desc_green			= value
 				if("alert_delta")
 					config.alert_desc_delta			= value
+				if("no_intercept_report")
+					config.intercept				= 0
 				if("assistants_have_maint_access")
 					config.jobs_have_maint_access	|= ASSISTANTS_HAVE_MAINT_ACCESS
 				if("security_has_maint_access")
@@ -514,6 +521,8 @@
 					config.force_random_names		= 1
 				if("allow_ai")
 					config.allow_ai					= 1
+				if("disable_secborg")
+					config.forbid_secborg			= 1
 				if("silent_ai")
 					config.silent_ai 				= 1
 				if("silent_borg")
@@ -556,8 +565,6 @@
 						continue
 					if (BombCap < 4)
 						BombCap = 4
-					if (BombCap > 128)
-						BombCap = 128
 
 					MAX_EX_DEVESTATION_RANGE = round(BombCap/4)
 					MAX_EX_HEAVY_RANGE = round(BombCap/2)

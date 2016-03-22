@@ -1,0 +1,49 @@
+"a" = (/turf/simulated/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"b" = (/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"c" = (/obj/item/weapon/shard,/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"d" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"e" = (/turf/indestructible/opshuttle,/area/lavaland/surface/outdoors)
+"f" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 4},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"g" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 4},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"h" = (/turf/indestructible/opshuttle,/area/ruin/unpowered)
+"i" = (/turf/simulated/floor/plasteel/shuttle/red{baseturf = /turf/simulated/floor/plating/lava/smooth; nitrogen = 23; oxygen = 16},/area/lavaland/surface/outdoors)
+"j" = (/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/device/flashlight/lantern,/turf/simulated/floor/plasteel/shuttle/red{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/unpowered)
+"k" = (/obj/effect/mob_spawn/human/prisoner_transport,/turf/simulated/floor/plasteel/shuttle/red{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/unpowered)
+"l" = (/obj/item/weapon/shard,/turf/simulated/floor/plasteel/shuttle/red{baseturf = /turf/simulated/floor/plating/lava/smooth; nitrogen = 23; oxygen = 16},/area/ruin/unpowered)
+"m" = (/obj/effect/mob_spawn/human/nanotrasensoldier,/obj/effect/decal/cleanable/blood,/obj/item/device/flashlight/seclite,/obj/effect/light_emitter,/turf/simulated/floor/plasteel/shuttle/red{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/unpowered)
+"n" = (/obj/item/weapon/gun/projectile/automatic/pistol/m1911,/turf/simulated/floor/plasteel/shuttle/red{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/unpowered)
+"o" = (/turf/simulated/floor/plasteel/shuttle/red{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/unpowered)
+"p" = (/obj/machinery/door/airlock/shuttle,/turf/simulated/floor/plasteel/shuttle/red{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/unpowered)
+"q" = (/obj/item/weapon/shard,/turf/simulated/floor/plasteel/shuttle/red{baseturf = /turf/simulated/floor/plating/lava/smooth; nitrogen = 23; oxygen = 16},/area/lavaland/surface/outdoors)
+"r" = (/obj/machinery/door/airlock/shuttle,/turf/simulated/floor/plasteel/shuttle/red{baseturf = /turf/simulated/floor/plating/lava/smooth; nitrogen = 23; oxygen = 16},/area/ruin/unpowered)
+"s" = (/obj/effect/mob_spawn/human/nanotrasensoldier,/obj/item/weapon/gun/projectile/automatic/pistol/m1911,/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plasteel/shuttle/red{baseturf = /turf/simulated/floor/plating/lava/smooth; nitrogen = 23; oxygen = 16},/area/ruin/unpowered)
+"t" = (/obj/structure/closet/crate/internals,/obj/item/weapon/crowbar/large,/turf/simulated/floor/plasteel/shuttle/red{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/unpowered)
+"u" = (/obj/structure/lattice,/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"v" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"w" = (/obj/item/weapon/shard{icon_state = "small"},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"x" = (/obj/item/weapon/gun/projectile/automatic/pistol/m1911,/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"y" = (/obj/effect/mob_spawn/human/nanotrasensoldier,/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"z" = (/obj/effect/decal/cleanable/blood,/obj/item/device/flashlight/seclite,/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+abbbbbbabbaabbbbbbbb
+aabbbbbbbbbbbabbbbbb
+bbcbaabbbbbbbabbbbbb
+bbbbaabbdbbbabaaabbb
+bbbbaabbbbbbbbaaabbb
+baabbbbbbbbbbaaaaaaa
+baaabbbbbbbbbaaaaaaa
+bbbbbebaaaabaaaaaaaa
+bbbbbfeaaaabbaaaaaaa
+bbbghhhhhhheiihheaaa
+bbbhhjkkkkhiiihlaaaa
+bbbghmnooopiqirsaaaa
+bbbhhtkkkkhiiieaaeaa
+bbbghhhhhhhuuieeeabb
+bbbbbfebbbbbbbbbbabb
+bbbbbebbbbbbbbbbbbbb
+bbbbbbbvvbbbbbbbbaab
+bbbwxbvvvbbbcbbbbaab
+babbbyzbbaaaaaaaaaaa
+bbabbbbbbaaaaaaaaaaa
+"}

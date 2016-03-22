@@ -23,10 +23,6 @@
 	update_icon()
 	return
 
-/obj/item/weapon/melee/baton/CheckParts()
-	bcell = locate(/obj/item/weapon/stock_parts/cell) in contents
-	update_icon()
-
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
 	..()
 	bcell = new(src)

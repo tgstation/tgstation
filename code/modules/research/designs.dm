@@ -41,6 +41,7 @@ other types of metals and chemistry for reagents).
 	var/build_path = ""					//The file path of the object that gets created
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
 	var/list/reagents = list()			//List of reagents. Format: "id" = amount.
+	var/maxstack = 1
 
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
@@ -62,10 +63,7 @@ other types of metals and chemistry for reagents).
 /obj/item/weapon/disk/design_disk
 	name = "Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes."
-	icon = 'icons/obj/cloning.dmi'
-	icon_state = "datadisk2"
-	item_state = "card-id"
-	w_class = 1
+	icon_state = "datadisk1"
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	var/datum/design/blueprint
 
@@ -496,3 +494,14 @@ datum/design/diagnostic_hud_night
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
 	build_path = /obj/item/weapon/weldingtool/experimental
 	category = list("Equipment")
+
+
+/datum/design/alienalloy
+	name = "Alien Alloy"
+	desc = "A sheet of reverse-engineered alien alloy."
+	id = "alienalloy"
+	req_tech = list("abductor" = 1, "materials" = 7, "plasmatech" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_PLASMA = 4000)
+	build_path = /obj/item/stack/sheet/mineral/abductor
+	category = list("Stock Parts")

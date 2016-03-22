@@ -185,7 +185,7 @@ Auto Patrol[]"},
 		set_weapon()
 
 /mob/living/simple_animal/bot/ed209/bullet_act(obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+	if(istype(Proj ,/obj/item/projectile/beam/laser)||istype(Proj,/obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health)
 				retaliate(Proj.firer)
@@ -564,5 +564,5 @@ Auto Patrol[]"},
 			return
 		if(!C.handcuffed)
 			C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
-			C.update_inv_handcuffed(0)	//update the handcuffs overlay
+			C.update_handcuffed()
 			back_to_idle()

@@ -3,14 +3,15 @@
 // each contiguous network of cables & nodes
 /////////////////////////////////////
 /datum/powernet
+	var/number					// unique id
 	var/list/cables = list()	// all cables & junctions
 	var/list/nodes = list()		// all connected machines
 
 	var/load = 0				// the current load on the powernet, increased by each machine at processing
 	var/newavail = 0			// what available power was gathered last tick, then becomes...
 	var/avail = 0				//...the current available power in the powernet
+	var/viewavail = 0			// the available power as it appears on the power console (gradually updated)
 	var/viewload = 0			// the load as it appears on the power console (gradually updated)
-	var/number = 0				// Unused //TODEL
 	var/netexcess = 0			// excess power on the powernet (typically avail-load)///////
 
 /datum/powernet/New()
@@ -75,7 +76,6 @@
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
 /datum/powernet/proc/reset()
-
 	//see if there's a surplus of power remaining in the powernet and stores unused power in the SMES
 	netexcess = avail - load
 
@@ -83,11 +83,11 @@
 		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used
 
-	//updates the viewed load (as seen on power computers)
-	viewload = 0.8*viewload + 0.2*load
-	viewload = round(viewload)
+	// update power consoles
+	viewavail = round(0.8 * viewavail + 0.2 * avail)
+	viewload = round(0.8 * viewload + 0.2 * load)
 
-	//reset the powernet
+	// reset the powernet
 	load = 0
 	avail = newavail
 	newavail = 0

@@ -13,21 +13,12 @@
 
 	tl;dr TYPEFUCKERY, because fuck updating all these maps
 
-*/
+	Example:
 
+	/obj/structure/bed/chair/janicart/secway
+		parent_type = /obj/vehicle/secway
 
-
-//Vehicle Refactor - 2015
-/obj/structure/bed/chair/janicart/secway
-	parent_type = /obj/vehicle/secway
-
-/obj/structure/bed/chair/janicart
-	parent_type = /obj/vehicle/janicart
-
-/obj/structure/bed/chair/janicart/atv
-	parent_type = /obj/vehicle/atv
-
-//Animal Farm Botany Expansion - 2016
+	parent_type = /obj/vehicle/atv*///Animal Farm Botany Expansion - 2016
 /mob/living/simple_animal/chick
 	parent_type = /mob/living/simple_animal/farm/chick
 /mob/living/simple_animal/chicken

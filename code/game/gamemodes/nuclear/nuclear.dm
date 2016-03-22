@@ -5,7 +5,7 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	required_players = 20 // 20 players - 5 players to be the nuke ops = 15 players remaining
+	required_players = 35 // 35 players - 5 players to be the nuke ops = 30 players remaining
 	required_enemies = 5
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
@@ -43,10 +43,6 @@
 		synd_mind.assigned_role = "Syndicate"
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
-		if(ishuman(synd_mind.current))//don't want operatives burning to death instantly.
-			var/mob/living/carbon/human/human = synd_mind.current
-			if(human.dna && human.dna.species.dangerous_existence)
-				human.set_species(/datum/species/human)
 
 	return 1
 
@@ -162,6 +158,8 @@
 	return
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, telecrystals = TRUE)
+	synd_mob.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
+
 	if(telecrystals)
 		synd_mob.equipOutfit(/datum/outfit/syndicate)
 	else
@@ -302,6 +300,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/weapon/storage/backpack
 	ears = /obj/item/device/radio/headset/syndicate/alt
+	l_pocket = /obj/item/weapon/pinpointer/nukeop
 	id = /obj/item/weapon/card/id/syndicate
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1)
@@ -336,13 +335,12 @@
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
-	l_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
-	r_pocket = /obj/item/weapon/gun/projectile/automatic/pistol
+	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
 	belt = /obj/item/weapon/storage/belt/military
 	r_hand = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/tank/jetpack/oxygen/harness=1,\
-		/obj/item/weapon/pinpointer/nukeop=1)
+		/obj/item/weapon/gun/projectile/automatic/pistol=1)
 
 /datum/outfit/syndicate/full/post_equip(mob/living/carbon/human/H)
 	..()
@@ -353,4 +351,4 @@
 	var/obj/item/clothing/head/helmet/space/hardsuit/syndi/helmet = H.head
 	helmet.attack_self(H)
 
-	H.internal = H.l_store
+	H.internal = H.r_store
