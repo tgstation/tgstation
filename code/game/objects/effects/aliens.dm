@@ -158,7 +158,8 @@
 	layer = TURF_LAYER + 0.09
 	pixel_x = -4
 	pixel_y = -4 //so the sprites line up right
-	icon = 'icons/obj/smooth_structures/alien/weeds.dmi'
+	icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
+	icon_state = "weeds"
 	var/health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/simulated/wall)
@@ -167,6 +168,12 @@
 
 /obj/structure/alien/weeds/New(pos, node)
 	..()
+	if(!luminosity) //weed nodes have luminosity, but normal weeds don't!
+		switch(rand(1,3))//why is there no 1? because we already have the icon set to that
+			if(2)
+				icon = 'icons/obj/smooth_structures/alien/weeds2.dmi'
+			if(3)
+				icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
 	linked_node = node
 	if(istype(loc, /turf/space))
 		qdel(src)
@@ -237,6 +244,7 @@
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
 	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
+	icon_state = "weednode"
 	luminosity = 1
 	var/node_range = NODERANGE
 
