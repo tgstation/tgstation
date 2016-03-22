@@ -28,7 +28,6 @@
 "B" = (/obj/machinery/computer/arcade/orion_trail,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "C" = (/obj/structure/ore_box,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "D" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"E" = (/turf/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaa
@@ -50,5 +49,5 @@ aaaaabfffffffffefegh
 aaaaabCCCCCCCDiefegh
 aaaaabbbbbbbbbbbbbbb
 aaaaaaaaaaaaaaaaaaaa
-EEEEEEEEEEEEEEEEEEEE
+aaaaaaaaaaaaaaaaaaaa
 "}
