@@ -281,7 +281,7 @@
 	origin_tech = "combat=3;materials=4;powerstorage=3;magnets=2"
 
 	ammo_type = list(/obj/item/ammo_casing/energy/temp)
-	cell_type = "/obj/item/weapon/stock_parts/cell/bluespace"
+	cell_type = "/obj/item/weapon/stock_parts/cell"
 	selfcharge = 1
 	var/powercost = ""
 	var/powercostcolor = ""
