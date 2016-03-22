@@ -9,9 +9,19 @@
 	if (!current_day)
 		current_day = text2num(time2text(world.realtime, "DD"))
 	var/warn = 0
-	var/y = text2num(copytext(jd, 1, 5))
-	var/m = text2num(copytext(jd, 6, 8))
-	var/d = text2num(copytext(jd, 9, 11))
+	var/regex/R = regex("joined = \"(\\d{4})-(\\d\\d)-(\\d\\d)\"")
+	if(!R.Find(jd))
+		CRASH("fail check")
+	var/y = text2num(R.group[1])
+	var/m = text2num(R.group[2])
+	var/d = text2num(R.group[3])
+
+
+
+
+//	var/y = text2num(copytext(jd, 1, 5))
+//	var/m = text2num(copytext(jd, 6, 8))
+//	var/d = text2num(copytext(jd, 9, 11))
 	if (current_month == 1 && current_day <= YOUNG)
 		if (y == current_year - 1 && m == 12 && d >= 31 - (YOUNG - current_day))
 			warn = 1
@@ -33,7 +43,28 @@
 
 /client/proc/findJoinDate()
 	joindate = ""
-	var/list/headers = world.Export("http://byond.com/members/[src.ckey]?format=text")
+	var/http[] = world.Export("http://byond.com/members/[src.ckey]?format=text")
+	if(!http)
+		world.log << "Failed to connect"
+
+	world.log << "http header"
+	for(var/V in http)
+		world.log << "[V] = [http[V]]"
+
+	world.log << "\n"
+
+	var/F = http["CONTENT"]
+	if(F)
+		world.log << html_encode(file2text(F))
+
+		var/regex/R = regex("joined = \"(\\d{4}-\\d\\d-\\d\\d)\"")
+		if(!R.Find(F))
+			CRASH("Fail join")
+		var/date = text2num(R.group[1])
+
+		world.log << date
+		join_date_check(date)
+/*
 	if(headers)
 		if (!("CONTENT" in headers) || headers["STATUS"] != "200 OK")
 			world.log << "ERROR export fail"
@@ -48,19 +79,4 @@
 		world.log << filter2
 		//join_date_check(joindate)
 	return
-
-/*
-var/regex/R = regex("joined = \"(\d{4})-(\d\d)-(\d\d)\"")
-if(!R.Find(text))
-    CRASH(!!!)
-var/year = text2num(R.group[1])
-var/month = text2num(R.group[2])
-var/day = text2num(R.group[3])
-
-
-
-var/regex/R = regex("joined = \"(\d{4}-\d\d-\d\d)\"")
-if(!R.Find(text))
-    CRASH(!!!)
-var/date = text2num(R.group[1])
-*./
+*/
