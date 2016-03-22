@@ -327,6 +327,7 @@ Sorry Giacom. Please don't be mad :(
 	return
 
 /mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
+	return
 	if(status_flags & GODMODE)
 		return 0
 	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
