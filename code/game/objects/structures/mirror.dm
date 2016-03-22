@@ -130,7 +130,7 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton")
+	var/list/races_blacklist = list("skeleton","agent")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
@@ -159,13 +159,17 @@
 
 	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "race", "gender", "hair", "eyes")
 
+	if(!Adjacent(user))
+		return
+
 	switch(choice)
 		if("name")
 			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
 
 			if(!newname)
 				return
-
+			if(!Adjacent(user))
+				return
 			H.real_name = newname
 			H.name = newname
 			if(H.dna)
@@ -180,7 +184,8 @@
 
 			if(!newrace)
 				return
-
+			if(!Adjacent(user))
+				return
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
@@ -209,7 +214,8 @@
 		if("gender")
 			if(!(H.gender in list("male", "female"))) //blame the patriarchy
 				return
-
+			if(!Adjacent(user))
+				return
 			if(H.gender == "male")
 				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "female"
@@ -227,10 +233,10 @@
 			H.update_body()
 			H.update_mutations_overlay() //(hulk male/female)
 
-
 		if("hair")
 			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
-
+			if(!Adjacent(user))
+				return
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				..()
 			else
@@ -247,7 +253,14 @@
 
 		if("eyes")
 			var/new_eye_color = input(H, "Choose your eye color", "Eye Color") as null|color
+			if(!Adjacent(user))
+				return
 			if(new_eye_color)
 				H.eye_color = sanitize_hexcolor(new_eye_color)
 				H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 				H.update_body()
+	if(choice)
+		curse(user)
+
+/obj/structure/mirror/magic/proc/curse(mob/living/user)
+	return

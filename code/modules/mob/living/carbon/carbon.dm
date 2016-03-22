@@ -25,21 +25,6 @@
 		qdel(dna)
 	return ..()
 
-/mob/living/carbon/Move(NewLoc, direct)
-	. = ..()
-	if(.)
-		if(src.nutrition && src.stat != 2)
-			src.nutrition -= HUNGER_FACTOR/10
-			if(src.m_intent == "run")
-				src.nutrition -= HUNGER_FACTOR/10
-		if((src.disabilities & FAT) && src.m_intent == "run" && src.bodytemperature <= 360)
-			src.bodytemperature += 2
-
-/mob/living/carbon/movement_delay()
-	. = ..()
-	if(legcuffed)
-		. += legcuffed.slowdown
-
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
@@ -70,7 +55,16 @@
 						stomach_contents.Remove(A)
 					src.gib()
 
-/mob/living/carbon/gib(animation = 1)
+/mob/living/carbon/gib(animation = 1, var/no_brain = 0)
+	death(1)
+	for(var/obj/item/organ/internal/I in internal_organs)
+		if(no_brain && istype(I, /obj/item/organ/internal/brain))
+			continue
+		if(I)
+			I.Remove(src)
+			I.loc = get_turf(src)
+			I.throw_at_fast(get_edge_target_turf(src,pick(alldirs)),rand(1,3),5)
+
 	for(var/mob/M in src)
 		if(M in stomach_contents)
 			stomach_contents.Remove(M)
@@ -176,19 +170,19 @@
 			return
 		if(weakeyes)
 			Stun(2)
-		switch(damage)
-			if(1)
-				src << "<span class='warning'>Your eyes sting a little.</span>"
-				if(prob(40))
-					adjust_eye_damage(1)
+		
+		if (damage == 1)
+			src << "<span class='warning'>Your eyes sting a little.</span>"
+			if(prob(40))
+				adjust_eye_damage(1)
 
-			if(2)
-				src << "<span class='warning'>Your eyes burn.</span>"
-				adjust_eye_damage(rand(2, 4))
+		else if (damage == 2)
+			src << "<span class='warning'>Your eyes burn.</span>"
+			adjust_eye_damage(rand(2, 4))
 
-			else
-				src << "<span class='warning'>Your eyes itch and burn severely!</span>"
-				adjust_eye_damage(rand(12, 16))
+		else if( damage > 3)
+			src << "<span class='warning'>Your eyes itch and burn severely!</span>"
+			adjust_eye_damage(rand(12, 16))
 
 		if(eye_damage > 10)
 			blind_eyes(damage)
@@ -323,9 +317,10 @@
 					if(internal)
 						internal = null
 						update_internals_hud_icon(0)
-					else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
-						internal = ITEM
-						update_internals_hud_icon(1)
+					else if(ITEM && istype(ITEM, /obj/item/weapon/tank))
+						if((wear_mask && (wear_mask.flags & MASKINTERNALS)) || getorganslot("breathing_tube"))
+							internal = ITEM
+							update_internals_hud_icon(1)
 
 					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>", \
 									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
@@ -340,13 +335,6 @@
 	else if(prob(50))
 		return "trails_1"
 	return "trails_2"
-
-var/const/NO_SLIP_WHEN_WALKING = 1
-var/const/SLIDE = 2
-var/const/GALOSHES_DONT_HELP = 4
-/mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
-	add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
-	return loc.handle_slip(src, s_amount, w_amount, O, lube)
 
 /mob/living/carbon/fall(forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
@@ -436,7 +424,7 @@ var/const/GALOSHES_DONT_HELP = 4
 				handcuffed.dropped(src)
 				handcuffed = null
 				if(buckled && buckled.buckle_requires_restraints)
-					buckled.unbuckle_mob()
+					buckled.unbuckle_mob(src)
 				update_handcuffed()
 				return
 			if(I == legcuffed)
@@ -477,7 +465,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		var/obj/item/weapon/W = handcuffed
 		handcuffed = null
 		if (buckled && buckled.buckle_requires_restraints)
-			buckled.unbuckle_mob()
+			buckled.unbuckle_mob(src)
 		update_handcuffed()
 		if (client)
 			client.screen -= W
@@ -555,13 +543,6 @@ var/const/GALOSHES_DONT_HELP = 4
 	abilities.Add(A)
 	A.on_gain(src)
 	if(A.has_action)
-		if(!A.action)
-			A.action = new/datum/action/spell_action/alien
-			A.action.target = A
-			A.action.name = A.name
-			A.action.button_icon = A.action_icon
-			A.action.button_icon_state = A.action_icon_state
-			A.action.background_icon_state = A.action_background_icon_state
 		A.action.Grant(src)
 	sortInsert(abilities, /proc/cmp_abilities_cost, 0)
 
@@ -789,6 +770,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
 	else
 		clear_alert("handcuffed")
+	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 
@@ -808,13 +790,26 @@ var/const/GALOSHES_DONT_HELP = 4
 
 		for(var/datum/disease/D in viruses)
 			D.cure(0)
-		if(dna)
-			for(var/datum/mutation/human/HM in dna.mutations)
-				if(HM.quality != POSITIVE)
-					dna.remove_mutation(HM.name)
 	..()
 
 /mob/living/carbon/can_be_revived()
 	. = ..()
 	if(!getorgan(/obj/item/organ/internal/brain))
 		return 0
+
+/mob/living/carbon/harvest(mob/living/user)
+	if(qdeleted(src))
+		return
+	var/organs_amt = 0
+	for(var/obj/item/organ/internal/O in internal_organs)
+		if(prob(50))
+			organs_amt++
+			O.Remove(src)
+			O.loc = get_turf(src)
+	if(organs_amt)
+		user << "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>"
+
+	..()
+
+
+

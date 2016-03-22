@@ -20,7 +20,6 @@
 	spawn(10) qdel(src)
 
 /obj/effect/overlay/temp
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	anchored = 1
 	layer = 4.1
@@ -81,6 +80,14 @@
 /obj/effect/overlay/temp/cult/sac
 	name = "maw of Nar-Sie"
 	icon_state = "sacconsume"
+
+/obj/effect/overlay/temp/cult/door
+	name = "unholy glow"
+	icon_state = "doorglow"
+	layer = 3.17 //above closed doors
+
+/obj/effect/overlay/temp/cult/door/unruned
+	icon_state = "unruneddoorglow"
 
 /obj/effect/overlay/temp/cult/turf
 	name = "unholy glow"

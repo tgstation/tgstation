@@ -163,8 +163,12 @@
 	desc = "A die with twenty sides. You can feel unearthly energies radiating from it. Using this might be VERY risky."
 	icon_state = "d20"
 	sides = 20
+	var/reusable = 1
 	var/used = 0
 	var/rigged = -1
+
+/obj/item/weapon/dice/d20/fate/one_use
+	reusable = 0
 
 /obj/item/weapon/dice/d20/fate/diceroll(mob/user)
 	..()
@@ -184,7 +188,8 @@
 
 
 /obj/item/weapon/dice/d20/fate/proc/effect(var/mob/living/carbon/human/user,roll)
-	used = 1
+	if(!reusable)
+		used = 1
 	visible_message("<span class='userdanger'>The die flare briefly.</span>")
 	switch(roll)
 		if(1)

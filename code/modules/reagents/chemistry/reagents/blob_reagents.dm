@@ -10,6 +10,8 @@
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
 
 /datum/reagent/blob/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	if(M.stat == DEAD)
+		return 0 //the dead don't cause reactions
 	if(istype(M, /mob/living/simple_animal/hostile/blob))
 		return 0 //the blob mobs do not cause effects when hitting themselves or other blob mobs
 	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.
@@ -23,23 +25,11 @@
 /datum/reagent/blob/proc/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T) //when the blob expands, do this
 	return
 
-//does brute and a little stamina damage
-/datum/reagent/blob/ripping_tendrils
-	name = "Ripping Tendrils"
-	id = "ripping_tendrils"
-	description = "will do medium brute and stamina damage."
-	color = "#991010"
-	complementary_color = "#109999"
-	blobbernaut_message = "rips"
-	message_living = ", and you feel your skin ripping and tearing off"
+/datum/reagent/blob/proc/tesla_reaction(obj/effect/blob/B, power) //when the blob is hit by a tesla bolt, do this
+	return 1 //return 0 to ignore damage
 
-/datum/reagent/blob/ripping_tendrils/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reac_volume = ..()
-	M.apply_damage(0.7*reac_volume, BRUTE)
-	if(M)
-		M.adjustStaminaLoss(0.5*reac_volume)
-	if(iscarbon(M))
-		M.emote("scream")
+/datum/reagent/blob/proc/extinguish_reaction(obj/effect/blob/B) //when the blob is hit with water, do this
+	return
 
 //does low toxin damage, but creates fragile spores when expanding or killed by weak attacks
 /datum/reagent/blob/sporing_pods
@@ -53,10 +43,10 @@
 
 /datum/reagent/blob/sporing_pods/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.5*reac_volume, TOX)
+	M.apply_damage(0.2*reac_volume, TOX)
 
 /datum/reagent/blob/sporing_pods/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(!isnull(cause) && damage <= 20 && original_health - damage <= 0 && prob(50)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 50% chance of a shitty spore.
+	if(!isnull(cause) && damage <= 20 && original_health - damage <= 0 && prob(30)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 30% chance of a shitty spore.
 		B.visible_message("<span class='warning'><b>A spore floats free of the blob!</b></span>")
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(B.loc)
 		BS.overmind = B.overmind
@@ -75,7 +65,7 @@
 /datum/reagent/blob/replicating_foam
 	name = "Replicating Foam"
 	id = "replicating_foam"
-	description = "will do medium brute damage and replicate when damaged."
+	description = "will do medium brute damage and replicate when damaged, but takes increased brute damage."
 	shortdesc = "will do medium brute damage."
 	color = "#7B5A57"
 	complementary_color = "#57787B"
@@ -85,23 +75,57 @@
 	M.apply_damage(0.6*reac_volume, BRUTE)
 
 /datum/reagent/blob/replicating_foam/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(damage > 0 && original_health - damage > 0)
-		var/obj/effect/blob/newB = B.expand()
+	var/effectivedamage = damage
+	if(damage_type == BRUTE)
+		effectivedamage = damage * 2
+	if(effectivedamage > 0 && original_health - effectivedamage > 0 && prob(60))
+		var/obj/effect/blob/newB = B.expand(null, null, 0)
 		if(newB)
-			newB.health = original_health - damage
+			newB.health = original_health - effectivedamage
 			newB.check_health(cause)
 			newB.update_icon()
-	return ..()
+	return effectivedamage
 
 /datum/reagent/blob/replicating_foam/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
-	if(prob(50))
+	if(prob(40))
 		newB.expand() //do it again!
 
-//does low burn and a lot of stamina damage, reacts to stamina damage
+//does brute damage, shifts away when damaged
+/datum/reagent/blob/shifting_fragments
+	name = "Shifting Fragments"
+	id = "shifting_fragments"
+	description = "will do medium brute damage and shift away from damage."
+	shortdesc = "will do medium brute damage."
+	color = "#C8963C"
+	complementary_color = "#3C6EC8"
+
+/datum/reagent/blob/shifting_fragments/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	reac_volume = ..()
+	M.apply_damage(0.6*reac_volume, BRUTE)
+
+/datum/reagent/blob/shifting_fragments/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
+	if(istype(B, /obj/effect/blob/normal) || (istype(B, /obj/effect/blob/shield) && prob(20)))
+		newB.forceMove(get_turf(B))
+		B.forceMove(T)
+
+/datum/reagent/blob/shifting_fragments/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	if(cause && damage > 0 && original_health - damage > 0 && prob(40))
+		var/list/blobstopick = list()
+		for(var/obj/effect/blob/OB in orange(1, B))
+			if((istype(OB, /obj/effect/blob/normal) || istype(OB, /obj/effect/blob/shield)) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id)
+				blobstopick += OB //as long as the blob picked is valid; ie, a normal or shield blob that has the same chemical as we do, we can swap with it
+		if(blobstopick.len)
+			var/obj/effect/blob/targeted = pick(blobstopick) //randomize the blob chosen, because otherwise it'd tend to the lower left
+			var/turf/T = get_turf(targeted)
+			targeted.forceMove(get_turf(B))
+			B.forceMove(T) //swap the blobs
+	return ..()
+
+//does low burn and a lot of stamina damage, immune to tesla bolts
 /datum/reagent/blob/energized_fibers
 	name = "Energized Fibers"
 	id = "energized_fibers"
-	description = "will do low burn and high stamina damage, and react to stamina damage."
+	description = "will do low burn and high stamina damage and conduct electricity."
 	shortdesc = "will do low burn and high stamina damage."
 	color = "#EFD65A"
 	complementary_color = "#5A73EF"
@@ -110,21 +134,19 @@
 
 /datum/reagent/blob/energized_fibers/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.5*reac_volume, BURN)
+	M.apply_damage(0.4*reac_volume, BURN)
 	if(M)
 		M.adjustStaminaLoss(0.8*reac_volume)
 
-/datum/reagent/blob/energized_fibers/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(damage_type == STAMINA)
-		B.visible_message("<span class='warning'><b>The blob abruptly regenerates!</b></span>")
-		B.health = B.maxhealth //stop disabling the blob!
-	return ..()
+/datum/reagent/blob/energized_fibers/tesla_reaction(obj/effect/blob/B, power)
+	return 0
 
-//sets you on fire, does burn damage
+//sets you on fire, does burn damage, weak to water
 /datum/reagent/blob/boiling_oil
 	name = "Boiling Oil"
 	id = "boiling_oil"
-	description = "will do medium burn damage and set targets on fire."
+	description = "will do medium burn damage and set targets on fire, but is weak to water."
+	shortdesc = "will do medium burn damage and set targets on fire."
 	color = "#B68D00"
 	complementary_color = "#0029B6"
 	blobbernaut_message = "splashes"
@@ -136,10 +158,41 @@
 	M.adjust_fire_stacks(round(reac_volume/12))
 	M.IgniteMob()
 	if(M)
-		M.apply_damage(0.6*reac_volume, BURN)
+		M.apply_damage(0.5*reac_volume, BURN)
 	if(iscarbon(M))
 		M.emote("scream")
 
+/datum/reagent/blob/boiling_oil/extinguish_reaction(obj/effect/blob/B)
+	B.take_damage(rand(1, 3), BURN)
+
+//does burn and toxin damage, explodes into flame when hit with burn damage
+/datum/reagent/blob/flammable_goo
+	name = "Flammable Goo"
+	id = "flammable_goo"
+	description = "will do low burn damage, medium toxin damage, and ignite when burned."
+	shortdesc = "will do low burn damage and medium toxin damage."
+	color = "#BE5532"
+	complementary_color = "#329BBE"
+	blobbernaut_message = "splashes"
+	message = "The blob splashes you with a thin goo"
+	message_living = ", and you smell a faint, sweet scent"
+
+/datum/reagent/blob/flammable_goo/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	reac_volume = ..()
+	M.adjust_fire_stacks(round(reac_volume/10)) //apply, but don't ignite
+	M.apply_damage(0.4*reac_volume, TOX)
+	if(M)
+		M.apply_damage(0.2*reac_volume, BURN)
+
+/datum/reagent/blob/flammable_goo/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	if(cause && damage_type == BURN)
+		for(var/turf/T in range(1, B))
+			if(!(locate(/obj/effect/blob) in T) && prob(80))
+				PoolOrNew(/obj/effect/hotspot, T)
+		return damage * 1.5
+	return ..()
+
+//does toxin damage, targets think they're not hurt at all
 /datum/reagent/blob/regenerative_materia
 	name = "Regenerative Materia"
 	id = "regenerative_materia"
@@ -152,7 +205,7 @@
 	reac_volume = ..()
 	if(M.reagents)
 		M.reagents.add_reagent("regenerative_materia", 0.2*reac_volume)
-	M.apply_damage(0.6*reac_volume, TOX)
+	M.apply_damage(0.5*reac_volume, TOX)
 
 /datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/M)
 	M.adjustToxLoss(1*REM)
@@ -185,7 +238,7 @@
 
 	if(M.reagents)
 		M.reagents.add_reagent("spore", 0.2*reac_volume)
-	M.apply_damage(0.6*reac_volume, TOX)
+	M.apply_damage(0.5*reac_volume, TOX)
 
 //kills sleeping targets and turns them into blob zombies
 /datum/reagent/blob/zombifying_feelers
@@ -198,7 +251,6 @@
 
 /datum/reagent/blob/zombifying_feelers/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.6*reac_volume, TOX)
 	if(O && ishuman(M) && M.stat == UNCONSCIOUS)
 		M.death() //sleeping in a fight? bad plan.
 		var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(get_turf(M))
@@ -206,6 +258,8 @@
 		BS.update_icons()
 		O.blob_mobs.Add(BS)
 		BS.Zombify(M)
+	if(M)
+		M.apply_damage(0.6*reac_volume, TOX)
 
 //toxin, stamina, and some bonus spore toxin
 /datum/reagent/blob/envenomed_filaments
@@ -220,9 +274,30 @@
 	reac_volume = ..()
 	if(M.reagents)
 		M.reagents.add_reagent("spore", 0.2*reac_volume)
-	M.apply_damage(0.6*reac_volume, TOX)
+	M.apply_damage(0.4*reac_volume, TOX)
 	if(M)
 		M.adjustStaminaLoss(0.4*reac_volume)
+
+//does brute, fire, and toxin over a few seconds
+/datum/reagent/blob/poisonous_strands
+	name = "Poisonous Strands"
+	id = "poisonous_strands"
+	description = "will inject targets with poison."
+	color = "#7D6EB4"
+	complementary_color = "#A5B46E"
+	blobbernaut_message = "injects"
+	message_living = ", and you feel like your insides are melting"
+
+/datum/reagent/blob/poisonous_strands/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	reac_volume = ..()
+	if(M.reagents)
+		M.reagents.add_reagent("poisonous_strands", 0.16*reac_volume)
+
+/datum/reagent/blob/poisonous_strands/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(1*REM)
+	M.adjustFireLoss(1*REM)
+	M.adjustToxLoss(1*REM)
+	..()
 
 //does oxygen damage, randomly pushes or pulls targets
 /datum/reagent/blob/cyclonic_grid
@@ -272,26 +347,29 @@
 	if(reac_volume >= 10) //if it's not a spore cloud, bad time incoming
 		var/obj/effect/overlay/temp/explosion/E = PoolOrNew(/obj/effect/overlay/temp/explosion, get_turf(M))
 		E.alpha = 150
-		for(var/mob/living/L in range(M, 1))
+		for(var/mob/living/L in orange(M, 1))
 			if("blob" in L.faction) //no friendly fire
 				continue
 			L.apply_damage(0.6*reac_volume, BRUTE)
 		if(M)
-			M.apply_damage(0.1*reac_volume, BRUTE)
+			M.apply_damage(0.6*reac_volume, BRUTE)
 	else
 		M.apply_damage(0.8*reac_volume, BRUTE)
 
 /datum/reagent/blob/explosive_lattice/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(isnull(cause) && damage_type == BRUTE)
-		return 0 //no-sell the explosion we do not take damage
+	if(isnull(cause))
+		if(damage_type == BRUTE)
+			return 0 //no-sell the explosion we do not take damage
+		if(damage_type == BURN)
+			return damage * 1.5 //take more from fire, tesla, and flashbangs
 	return ..()
 
 //does semi-random brute damage and reacts to brute damage
 /datum/reagent/blob/reactive_gelatin
 	name = "Reactive Gelatin"
 	id = "reactive_gelatin"
-	description = "will do high brute damage and react to brute damage."
-	shortdesc = "will do high brute damage."
+	description = "will do random brute damage and react to brute damage."
+	shortdesc = "will do random brute damage."
 	color = "#FFA500"
 	complementary_color = "#005AFF"
 	blobbernaut_message = "pummels"
@@ -299,7 +377,7 @@
 
 /datum/reagent/blob/reactive_gelatin/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	var/damage = rand(10, 30)/25
+	var/damage = rand(0, 30)/25
 	M.apply_damage(damage*reac_volume, BRUTE)
 
 /datum/reagent/blob/reactive_gelatin/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
@@ -326,7 +404,7 @@
 	if(M.reagents)
 		M.reagents.add_reagent("frostoil", 0.4*reac_volume)
 		M.reagents.add_reagent("ice", 0.4*reac_volume)
-	M.apply_damage(0.6*reac_volume, BURN)
+	M.apply_damage(0.4*reac_volume, BURN)
 	if(M)
 		M.adjustStaminaLoss(0.4*reac_volume)
 
@@ -334,7 +412,7 @@
 /datum/reagent/blob/electromagnetic_web
 	name = "Electromagnetic Web"
 	id = "electromagnetic_web"
-	description = "will do low burn damage and EMP targets, but is somewhat fragile."
+	description = "will do low burn damage and EMP targets, but is very fragile."
 	shortdesc = "will do low burn damage and EMP targets."
 	color = "#83ECEC"
 	complementary_color = "#EC8383"
@@ -344,16 +422,25 @@
 
 /datum/reagent/blob/electromagnetic_web/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.emp_act(2)
+	if(prob(reac_volume*2))
+		M.emp_act(2)
 	if(M)
 		M.apply_damage(0.6*reac_volume, BURN)
 
 /datum/reagent/blob/electromagnetic_web/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	return damage * 1.2 //a laser will do 24 damage, which will kill any recently-made normal blob
+	if(damage_type == BRUTE) //take full brute
+		switch(B.brute_resist)
+			if(0.5)
+				return damage * 2
+			if(0.25)
+				return damage * 4
+			if(0.1)
+				return damage * 10
+	return damage * 1.25 //a laser will do 25 damage, which will kill any normal blob
 
 /datum/reagent/blob/electromagnetic_web/death_reaction(obj/effect/blob/B, cause)
-	if(!isnull(cause))
-		empulse(B.loc, 2, 3) //less than screen range, so you can stand out of range to avoid it
+	if(cause)
+		empulse(B.loc, 1, 3) //less than screen range, so you can stand out of range to avoid it
 
 //does brute damage, bonus damage for each nearby blob, and spreads damage out
 /datum/reagent/blob/synchronous_mesh
@@ -377,12 +464,12 @@
 
 /datum/reagent/blob/synchronous_mesh/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(!isnull(cause)) //the cause isn't fire or bombs, so split the damage
-		var/damagesplit = 0.8 //maximum split is 7.2, reducing the damage each blob takes to 14% but doing that damage to 9 blobs
+		var/damagesplit = 1 //maximum split is 9, reducing the damage each blob takes to 11% but doing that damage to 9 blobs
 		for(var/obj/effect/blob/C in orange(1, B))
-			if(C.overmind && C.overmind.blob_reagent_datum == B.overmind.blob_reagent_datum) //if it doesn't have the same chemical, don't split damage to it
-				damagesplit += 0.8
+			if(!istype(C, /obj/effect/blob/core) && !istype(C, /obj/effect/blob/node) && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) //if it doesn't have the same chemical or is a core or node, don't split damage to it
+				damagesplit += 1
 		for(var/obj/effect/blob/C in orange(1, B))
-			if(C.overmind && C.overmind.blob_reagent_datum == B.overmind.blob_reagent_datum && !istype(C, /obj/effect/blob/core)) //only hurt blobs that have the same overmind chemical and aren't cores
+			if(!istype(C, /obj/effect/blob/core) && !istype(C, /obj/effect/blob/node) && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) //only hurt blobs that have the same overmind chemical and aren't cores or nodes
 				C.take_damage(damage/damagesplit, CLONE, B, 0)
 		return damage / damagesplit
 	else
@@ -393,14 +480,33 @@
 	name = "Penetrating Spines"
 	id = "penetrating_spines"
 	description = "will do medium brute damage through armor."
-	color = "#408B80"
-	complementary_color = "#8B404B"
+	color = "#6E4664"
+	complementary_color = "#466E50"
 	blobbernaut_message = "stabs"
 	message = "The blob stabs you"
 
 /datum/reagent/blob/penetrating_spines/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	M.adjustBruteLoss(0.6*reac_volume)
+
+/datum/reagent/blob/adaptive_nexuses
+	name = "Adaptive Nexuses"
+	id = "adaptive_nexuses"
+	description = "will do medium brute damage and kill unconscious targets, giving you bonus resources."
+	shortdesc = "will do medium brute damage and kill unconscious targets, giving your overmind bonus resources."
+	color = "#4A64C0"
+	complementary_color = "#823ABB"
+
+/datum/reagent/blob/adaptive_nexuses/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	reac_volume = ..()
+	if(O && ishuman(M) && M.stat == UNCONSCIOUS)
+		PoolOrNew(/obj/effect/overlay/temp/revenant, get_turf(M))
+		var/points = rand(5, 10)
+		O.add_points(points)
+		O << "<span class='notice'>Gained [points] resources from the death of [M].</span>"
+		M.death()
+	if(M)
+		M.apply_damage(0.6*reac_volume, BRUTE)
 
 //does low brute damage, oxygen damage, and stamina damage and wets tiles when damaged
 /datum/reagent/blob/pressurized_slime
@@ -419,7 +525,7 @@
 	var/turf/simulated/T = get_turf(M)
 	if(istype(T, /turf/simulated) && prob(reac_volume))
 		T.MakeSlippery(TURF_WET_WATER)
-	M.apply_damage(0.4*reac_volume, BRUTE)
+	M.apply_damage(0.2*reac_volume, BRUTE)
 	if(M)
 		M.apply_damage(0.4*reac_volume, OXY)
 	if(M)

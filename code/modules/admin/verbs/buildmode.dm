@@ -64,7 +64,7 @@
 	bd.quit()
 	return 1
 
-/obj/screen/buildmode/dir/Click()
+/obj/screen/buildmode/bdir/Click()
 	bd.change_dir()
 	update_icon()
 	return 1
@@ -232,7 +232,7 @@
 			log_admin("[key_name(usr)] has entered build mode.")
 
 
-/datum/buildmode/proc/ClickOn(user,params,atom/object) //Click Intercept
+/datum/buildmode/proc/InterceptClickOn(user,params,atom/object) //Click Intercept
 	var/list/pa = params2list(params)
 	var/right_click = pa.Find("right")
 	var/left_click = pa.Find("left")

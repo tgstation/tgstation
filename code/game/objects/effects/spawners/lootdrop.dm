@@ -119,7 +119,8 @@
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/wrench = 4,
 				/obj/item/weapon/relic = 3,
-				"" = 11
+				/obj/item/weaponcrafting/reciever = 1,
+				"" = 4
 				)
 
 /obj/effect/spawner/lootdrop/crate_spawner

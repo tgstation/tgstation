@@ -22,7 +22,7 @@
 	desc = "An advanced spacesuit equipped with teleportation and anti-compression technology"
 	icon_state = "chronosuit"
 	item_state = "chronosuit"
-	action_button_name = "Toggle Chronosuit"
+	actions_types = list(/datum/action/item_action/toggle)
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90)
 	var/list/chronosafe_items = list(/obj/item/weapon/chrono_eraser, /obj/item/weapon/gun/energy/chrono_gun)
 	var/hands_nodrop_states
@@ -93,8 +93,7 @@
 		if(camera)
 			camera.remove_target_ui()
 			camera.loc = user
-		if(teleport_now.button)
-			teleport_now.button.UpdateIcon()
+		teleport_now.UpdateButtonIcon()
 
 /obj/item/clothing/suit/space/chronos/proc/chronowalk(atom/location)
 	var/mob/living/carbon/human/user = src.loc
@@ -108,8 +107,7 @@
 		if(camera)
 			camera.remove_target_ui()
 
-		if(teleport_now.button)
-			teleport_now.button.UpdateIcon()
+		teleport_now.UpdateButtonIcon()
 
 		var/list/nonsafe_slots = list(slot_belt, slot_back, slot_l_hand, slot_r_hand)
 		for(var/slot in nonsafe_slots)
@@ -119,7 +117,7 @@
 
 		user.ExtinguishMob()
 		if(user.buckled)
-			user.buckled.unbuckle_mob()
+			user.buckled.unbuckle_mob(user,force=1)
 
 		phase_underlay = create_phase_underlay(user)
 
@@ -331,16 +329,13 @@
 /datum/action/innate/chrono_teleport
 	name = "Teleport Now"
 	button_icon_state = "chrono_phase"
-	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_CONSCIOUS //|AB_CHECK_INSIDE
 	var/obj/item/clothing/suit/space/chronos/chronosuit = null
 
 /datum/action/innate/chrono_teleport/IsAvailable()
-	return (!CheckRemoval(owner) && !chronosuit.teleporting)
+	return (chronosuit && chronosuit.activated && chronosuit.camera && !chronosuit.teleporting)
 
 /datum/action/innate/chrono_teleport/Activate()
 	if(IsAvailable())
 		if(chronosuit.camera)
 			chronosuit.chronowalk(chronosuit.camera)
-
-/datum/action/innate/chrono_teleport/CheckRemoval()
-	return (..() && !(chronosuit && chronosuit.activated && chronosuit.camera))

@@ -83,8 +83,7 @@
 	invis_view = 2
 	flash_protect = -1
 	unacidable = 1
-	action_button_name = "Shift Nerves"
-	action_button_is_hands_free = 1
+	actions_types = list(/datum/action/item_action/hands_free/shift_nerves)
 	var/max_darkness_view = 8
 	var/min_darkness_view = 0
 	flags = ABSTRACT | NODROP

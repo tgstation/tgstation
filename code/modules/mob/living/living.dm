@@ -86,21 +86,25 @@ Sorry Giacom. Please don't be mad :(
 	if(now_pushing)
 		return 1
 
-	//BubbleWrap: Should stop you pushing a restrained person out of the way
-	if(istype(M, /mob/living))
-		for(var/mob/MM in range(1,M))
-			if( ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
-				if ( !(world.time % 5) )
-					src << "<span class='warning'>[M] is restrained, you cannot push past.</span>"
-				return 1
-			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
-				if ( !(world.time % 5) )
-					src << "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>"
-				return 1
+	//Should stop you pushing a restrained person out of the way
+	if(isliving(M))
+		var/mob/living/L = M
+		if((L.pulledby && L.restrained()) || L.grabbed_by.len)
+			if(!(world.time % 5))
+				src << "<span class='warning'>[L] is restrained, you cannot push past.</span>"
+			return 1
+
+		if(L.pulling)
+			if(ismob(L.pulling))
+				var/mob/P = L.pulling
+				if(P.restrained())
+					if(!(world.time % 5))
+						src << "<span class='warning'>[L] is restraining [P], you cannot push past.</span>"
+					return 1
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
+	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mobs.len) // mutual brohugs all around!
 		if(loc && !loc.Adjacent(M.loc))
 			return 1
 		now_pushing = 1
@@ -129,9 +133,9 @@ Sorry Giacom. Please don't be mad :(
 	if(!(M.status_flags & CANPUSH))
 		return 1
 	//anti-riot equipment is also anti-push
-	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
+	if(M.r_hand && (prob(M.r_hand.block_chance * 2)) && !istype(M.r_hand, /obj/item/clothing))
 		return 1
-	if(M.l_hand && istype(M.l_hand, /obj/item/weapon/shield/riot))
+	if(M.l_hand && (prob(M.l_hand.block_chance * 2)) && !istype(M.l_hand, /obj/item/clothing))
 		return 1
 
 //Called when we bump onto an obj
@@ -142,6 +146,8 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
 		return 1
+	if(!client && (mob_size < MOB_SIZE_SMALL))
+		return
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
@@ -308,6 +314,7 @@ Sorry Giacom. Please don't be mad :(
 	if(status_flags & GODMODE)
 		return 0
 	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
+
 /mob/living/proc/setBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return 0
@@ -316,28 +323,30 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
-/mob/living/proc/adjustStaminaLoss(amount)
+/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1)
 	return
 
-/mob/living/carbon/adjustStaminaLoss(amount)
+/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
 		return 0
 	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
-	update_stamina()
+	if(updating_stamina)
+		update_stamina()
 
-/mob/living/carbon/alien/adjustStaminaLoss(amount)
+/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1)
 	return
 
-/mob/living/proc/setStaminaLoss(amount)
+/mob/living/proc/setStaminaLoss(amount, updating_stamina = 1)
 	return
 
-/mob/living/carbon/setStaminaLoss(amount)
+/mob/living/carbon/setStaminaLoss(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
 		return 0
 	staminaloss = amount
-	update_stamina()
+	if(updating_stamina)
+		update_stamina()
 
-/mob/living/carbon/alien/setStaminaLoss(amount)
+/mob/living/carbon/alien/setStaminaLoss(amount, updating_stamina = 1)
 	return
 
 /mob/living/proc/getMaxHealth()
@@ -497,6 +506,7 @@ Sorry Giacom. Please don't be mad :(
 	ExtinguishMob()
 	fire_stacks = 0
 	updatehealth()
+	update_canmove()
 
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
@@ -565,18 +575,17 @@ Sorry Giacom. Please don't be mad :(
 			if ((get_dist(src, pulling) > 1 || diag))
 				if (isliving(pulling))
 					var/mob/living/M = pulling
-					var/ok = 1
-					if (locate(/obj/item/weapon/grab, M.grabbed_by))
+					var/pull_ok = 1
+					if (M.grabbed_by.len)
 						if (prob(75))
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
-							if (istype(G, /obj/item/weapon/grab))
-								visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
-								qdel(G)
+							visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
+							qdel(G)
 						else
-							ok = 0
-						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
-							ok = 0
-					if (ok)
+							pull_ok = 0
+						if (M.grabbed_by.len)
+							pull_ok = 0
+					if (pull_ok)
 						var/atom/movable/t = M.pulling
 						M.stop_pulling()
 
@@ -647,17 +656,18 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(src) || next_move > world.time)
+	if(!isliving(src) || next_move > world.time || stat || weakened || stunned || paralysis)
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
 	//resisting grabs (as if it helps anyone...)
-	if(!stat && canmove && !restrained())
+	if(canmove && !restrained())
 		var/resisting = 0
 		for(var/obj/O in requests)
 			qdel(O)
 			resisting++
-		for(var/obj/item/weapon/grab/G in grabbed_by)
+		for(var/X in grabbed_by)
+			var/obj/item/weapon/grab/G = X
 			resisting++
 			if(G.state == GRAB_PASSIVE)
 				qdel(G)
@@ -680,10 +690,9 @@ Sorry Giacom. Please don't be mad :(
 		resist_buckle()
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
-	else if(loc && istype(loc, /obj) && !isturf(loc))
-		if(stat == CONSCIOUS && !stunned && !weakened && !paralysis)
-			var/obj/C = loc
-			C.container_resist(src)
+	else if(isobj(loc))
+		var/obj/C = loc
+		C.container_resist(src)
 
 	else if(canmove)
 		if(on_fire)
@@ -723,8 +732,7 @@ Sorry Giacom. Please don't be mad :(
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		floating = 1
 	else if(((!on || fixed) && floating))
-		var/final_pixel_y = get_standard_pixel_y_offset(lying)
-		animate(src, pixel_y = final_pixel_y, time = 10)
+		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
 		floating = 0
 
 //called when the mob receives a bright flash
@@ -789,6 +797,8 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/narsie_act()
 	if(client)
 		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
+	else
+		new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
 	spawn_dust()
 	gib()
 	return
@@ -963,7 +973,7 @@ Sorry Giacom. Please don't be mad :(
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 	return
 /mob/living/proc/can_use_guns(var/obj/item/weapon/gun/G)
-	if (!IsAdvancedToolUser())
+	if (G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
 	return 1

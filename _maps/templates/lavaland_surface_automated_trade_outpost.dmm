@@ -1,4 +1,4 @@
-"a" = (/turf/simulated/wall/shuttle/smooth/overred{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"a" = (/turf/indestructible/opshuttle,/area/ruin/powered)
 "b" = (/obj/machinery/vending/medical,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "c" = (/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "d" = (/obj/machinery/vending/autodrobe,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)

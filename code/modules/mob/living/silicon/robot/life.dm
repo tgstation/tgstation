@@ -6,7 +6,7 @@
 		return
 
 	..()
-
+	handle_robot_hud_updates()
 	handle_robot_cell()
 
 /mob/living/silicon/robot/proc/handle_robot_cell()
@@ -30,7 +30,7 @@
 		update_headlamp()
 	diag_hud_set_borgcell()
 
-/mob/living/silicon/robot/handle_regular_hud_updates()
+/mob/living/silicon/robot/proc/handle_robot_hud_updates()
 	if(!client)
 		return
 
@@ -49,8 +49,7 @@
 			if(!mind.special_role)
 				mind.special_role = "traitor"
 				ticker.mode.traitors += mind
-	..()
-	return 1
+
 
 /mob/living/silicon/robot/update_health_hud()
 	if(!client || !hud_used)
@@ -117,4 +116,5 @@
 	else
 		canmove = 1
 	update_transform()
+	update_action_buttons_icon()
 	return canmove

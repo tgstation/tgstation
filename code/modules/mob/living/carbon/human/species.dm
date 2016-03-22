@@ -119,6 +119,12 @@
 		return 0
 	return 1
 
+/datum/species/proc/on_species_loss(mob/living/carbon/C)
+	if(C.dna.species)
+		if(C.dna.species.exotic_blood)
+			var/datum/reagent/EB = C.dna.species.exotic_blood
+			C.reagents.del_reagent(initial(EB.id))
+
 /datum/species/proc/update_base_icon_state(mob/living/carbon/human/H)
 	if(H.disabilities & HUSK)
 		H.remove_overlay(SPECIES_LAYER) // races lose their color
@@ -640,7 +646,7 @@
 			H.update_inv_wear_suit()
 
 	// nutrition decrease and satiety
-	if (H.nutrition > 0 && H.stat != DEAD && !H.dna.species.need_nutrition)
+	if (H.nutrition > 0 && H.stat != DEAD && H.dna.species.need_nutrition)
 		var/hunger_rate = HUNGER_FACTOR
 		if(H.satiety > 0)
 			H.satiety--
@@ -771,14 +777,14 @@
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!has_gravity(H))
-			// If there's no gravity we have the option of sanic speed.
+			// If there's no gravity we have the sanic speed of jetpack.
 			var/obj/item/weapon/tank/jetpack/J = H.back
 			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
 			if(!istype(J) && istype(C))
 				J = C.jetpack
 
-			if(istype(J) && J.turbo && J.allow_thrust(0.01, H))
-				. -= 2 // Turbo mode. Gotta go fast.
+			if(istype(J) && J.allow_thrust(0.01, H))
+				. -= 2
 		else
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
@@ -1072,13 +1078,17 @@
 	if((H.status_flags & GODMODE))
 		return
 
-	if(!breath || (breath.total_moles() == 0))
-		if(H.reagents.has_reagent("epinephrine"))
+	var/lungs = H.getorganslot("lungs")
+
+	if(!breath || (breath.total_moles() == 0) || !lungs)
+		if(H.reagents.has_reagent("epinephrine") && lungs)
 			return
 		if(H.health >= config.health_threshold_crit)
 			if(NOBREATH in specflags)
 				return 1
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+			if(!lungs)
+				H.adjustOxyLoss(1)
 			H.failed_last_breath = 1
 		else
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
@@ -1120,7 +1130,7 @@
 			H.failed_last_breath = 0
 			if(H.getOxyLoss())
 				H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["o2"][MOLES]/6
+			gas_breathed = breath_gases["o2"][MOLES]
 			H.clear_alert("oxy")
 
 	//Exhale
@@ -1157,7 +1167,7 @@
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["co2"][MOLES]/6
+			gas_breathed = breath_gases["co2"][MOLES]
 			H.clear_alert("not_enough_co2")
 
 	//Exhale
@@ -1187,7 +1197,7 @@
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["plasma"][MOLES]/6
+			gas_breathed = breath_gases["plasma"][MOLES]
 			H.clear_alert("not_enough_tox")
 
 	//Exhale

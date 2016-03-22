@@ -62,6 +62,7 @@
 	SSobj.processing.Remove(src)
 
 /obj/item/weapon/twohanded/required/ctf/dropped(mob/user)
+	..()
 	reset_cooldown = world.time + 200 //20 seconds
 	SSobj.processing |= src
 	for(var/mob/M in player_list)

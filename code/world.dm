@@ -69,11 +69,13 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 	return
 
+#define IRC_STATUS_THROTTLE 50
+var/last_irc_status = 0
 
 /world/Topic(T, addr, master, key)
 	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
-	if (T == "ping")
+	if(T == "ping")
 		var/x = 1
 		for (var/client/C in clients)
 			x++
@@ -86,7 +88,14 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 				n++
 		return n
 
-	else if (T == "status")
+	else if(T == "ircstatus")
+		if(world.time - last_irc_status < IRC_STATUS_THROTTLE)
+			return
+		var/list/adm = get_admin_counts()
+		send2irc("Status", "Admins: [Sum(adm)] (Active: [adm["admins"]] AFK: [adm["afkadmins"]] Stealth: [adm["stealthadmins"]] Skipped: [adm["noflagadmins"]]). Players: [clients.len] (Active: [get_active_player_count()]). Mode: [master_mode].")
+		last_irc_status = world.time
+
+	else if(T == "status")
 		var/list/s = list()
 		// Please add new status indexes under the old ones, for the server banner (until that gets reworked)
 		s["version"] = game_version
@@ -96,26 +105,21 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
-
-		var/admins = 0
-		for(var/client/C in clients)
-			if(C.holder)
-				if(C.holder.fakekey)
-					continue	//so stealthmins aren't revealed by the hub
-				admins++
-
 		s["active_players"] = get_active_player_count()
 		s["players"] = clients.len
-		s["revision"] = revdata.revision
+		s["revision"] = revdata.commit
 		s["revision_date"] = revdata.date
-		s["admins"] = admins
+
+		var/list/adm = get_admin_counts()
+		s["admins"] = adm["present"] + adm["afk"] //equivalent to the info gotten from adminwho
 		s["gamestate"] = 1
 		if(ticker)
 			s["gamestate"] = ticker.current_state
 		s["map_name"] = map_name ? map_name : "Unknown"
 
 		return list2params(s)
-	else if (copytext(T,1,9) == "announce")
+
+	else if(copytext(T,1,9) == "announce")
 		var/input[] = params2list(T)
 		if(global.comms_allowed)
 			if(input["key"] != global.comms_key)
@@ -170,6 +174,26 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 			C << link("byond://[config.server]")
 	..(0)
 
+var/inerror = 0
+/world/Error(var/exception/e)
+	//runtime while processing runtimes
+	if (inerror)
+		inerror = 0
+		return ..(e)
+	inerror = 1
+	//newline at start is because of the "runtime error" byond prints that can't be timestamped.
+	e.name = "\n\[[time2text(world.timeofday,"hh:mm:ss")]\][e.name]"
+	
+	//this is done this way rather then replace text to pave the way for processing the runtime reports more thoroughly
+	//	(and because runtimes end with a newline, and we don't want to basically print an empty time stamp)
+	var/list/split = splittext(e.desc, "\n")
+	for (var/i in 1 to split.len)
+		if (split[i] != "")
+			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
+	e.desc = jointext(split, "\n")
+	inerror = 0
+	return ..(e)
+	
 /world/proc/load_mode()
 	var/list/Lines = file2list("data/mode.txt")
 	if(Lines.len)

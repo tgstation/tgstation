@@ -374,11 +374,12 @@
 	handle_item_insertion(W, 0 , user)
 	return 1
 
-
-/obj/item/weapon/storage/dropped(mob/user)
-	return
-
 /obj/item/weapon/storage/attack_hand(mob/user)
+	if(user.s_active == src && loc == user) //if you're already looking inside the storage item
+		user.s_active.close(user)
+		close(user)
+		return
+
 	playsound(loc, "rustle", 50, 1, -5)
 
 	if(ishuman(user))

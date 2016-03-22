@@ -130,18 +130,6 @@
 	sharpness = IS_SHARP
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
 
-//5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
-//Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
-/obj/item/weapon/storage/box/throwing_stars/New()
-	..()
-	contents = list()
-	new /obj/item/weapon/throwing_star(src)
-	new /obj/item/weapon/throwing_star(src)
-	new /obj/item/weapon/throwing_star(src)
-	new /obj/item/weapon/throwing_star(src)
-	new /obj/item/weapon/throwing_star(src)
-
-
 
 /obj/item/weapon/switchblade
 	name = "switchblade"
@@ -273,6 +261,7 @@
 	hitsound = "sound/weapons/chainsawhit.ogg"
 
 /obj/item/weapon/mounted_chainsaw/dropped()
+	..()
 	new /obj/item/weapon/twohanded/required/chainsaw(get_turf(src))
 	qdel(src)
 

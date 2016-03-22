@@ -103,6 +103,7 @@
 		return
 	morphed = 0
 	form = null
+	alpha = initial(alpha)
 
 	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir)
 
@@ -169,9 +170,6 @@
 				eat(I)
 			return
 	target.attack_animal(src)
-
-/mob/living/simple_animal/hostile/morph/update_action_buttons() //So all eaten objects are not counted every life
-	return
 
 //Spawn Event
 

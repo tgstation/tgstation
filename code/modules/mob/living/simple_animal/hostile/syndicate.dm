@@ -32,7 +32,7 @@
 	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = "harm"
-	loot = list(/obj/effect/landmark/mobcorpse/syndicatesoldier)
+	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list("syndicate")
@@ -47,9 +47,7 @@
 	melee_damage_upper = 30
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
-	loot = list(/obj/effect/landmark/mobcorpse/syndicatesoldier,
-				/obj/item/weapon/melee/energy/sword/saber/red,
-				/obj/item/weapon/shield/energy)
+	loot = list(/obj/effect/gibspawner/human)
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	armour_penetration = 28
@@ -74,9 +72,7 @@
 	icon_state = "syndicatemeleespace"
 	icon_living = "syndicatemeleespace"
 	name = "Syndicate Commando"
-	loot = list(/obj/effect/landmark/mobcorpse/syndicatecommando,
-				/obj/item/weapon/melee/energy/sword/saber/red,
-				/obj/item/weapon/shield/energy)
+	loot = list(/obj/effect/gibspawner/human)
 	speed = 1
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/noloot
@@ -91,7 +87,7 @@
 	name = "Syndicate Stormtrooper"
 	maxHealth = 340
 	health = 340
-	loot = list(/obj/effect/landmark/mobcorpse/syndicatestormtrooper,
+	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper,
 				/obj/item/weapon/melee/energy/sword/saber/red,
 				/obj/item/weapon/shield/energy)
 
@@ -106,9 +102,7 @@
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/c45nostamina
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
-	loot = list(/obj/effect/landmark/mobcorpse/syndicatesoldier,
-				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
-				/obj/item/weapon/shield/energy)
+	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space
 	icon_state = "syndicaterangedspace"
@@ -117,9 +111,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	loot = list(/obj/effect/landmark/mobcorpse/syndicatecommando,
-				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
-				/obj/item/weapon/shield/energy)
+	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/noloot
 	loot = list()
@@ -135,7 +127,7 @@
 	health = 200
 	projectilesound = 'sound/weapons/Gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot
-	loot = list(/obj/effect/landmark/mobcorpse/syndicatestormtrooper,
+	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper,
 				/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted,
 				/obj/item/weapon/shield/energy)
 

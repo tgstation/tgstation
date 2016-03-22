@@ -88,7 +88,6 @@ var/regex/lizard_hiSS = new("S+", "g")
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
-
 /*
  PODPEOPLE
 */
@@ -240,11 +239,23 @@ var/regex/lizard_hiSS = new("S+", "g")
 	burnmod = 0.5
 	coldmod = 2
 	heatmod = 0.5
+	var/datum/action/innate/split_body/slime_split
+	var/datum/action/innate/swap_body/callforward
+	var/datum/action/innate/swap_body/callback
+
+/datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
+	if(slime_split)
+		slime_split.Remove(C)
+	if(callforward)
+		callforward.Remove(C)
+	if(callback)
+		callback.Remove(C)
+	..()
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	if(recently_changed)
-		var/datum/action/innate/split_body/S = new
-		S.Grant(H)
+		slime_split = new
+		slime_split.Grant(H)
 
 	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
 		if(S.volume >= 200)
@@ -259,15 +270,9 @@ var/regex/lizard_hiSS = new("S+", "g")
 
 /datum/action/innate/split_body
 	name = "Split Body"
-	check_flags = AB_CHECK_ALIVE
+	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimesplit"
 	background_icon_state = "bg_alien"
-
-/datum/action/innate/split_body/CheckRemoval()
-	var/mob/living/carbon/human/H = owner
-	if(!ishuman(H) || !H.dna || !H.dna.species || H.dna.species.id != "slime")
-		return 1
-	return 0
 
 /datum/action/innate/split_body/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -286,12 +291,13 @@ var/regex/lizard_hiSS = new("S+", "g")
 			spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 			S.volume = 80
 			H.notransform = 0
-			var/datum/action/innate/swap_body/callforward = new /datum/action/innate/swap_body()
-			var/datum/action/innate/swap_body/callback = new /datum/action/innate/swap_body()
-			callforward.body = spare
-			callforward.Grant(H)
-			callback.body = H
-			callback.Grant(spare)
+			var/datum/species/jelly/slime/SS = H.dna.species
+			SS.callforward = new
+			SS.callforward.body = spare
+			SS.callforward.Grant(H)
+			SS.callback = new
+			SS.callback.body = H
+			SS.callback.Grant(spare)
 			H.mind.transfer_to(spare)
 			spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
 			return
@@ -301,16 +307,10 @@ var/regex/lizard_hiSS = new("S+", "g")
 
 /datum/action/innate/swap_body
 	name = "Swap Body"
-	check_flags = AB_CHECK_ALIVE
+	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimeswap"
 	background_icon_state = "bg_alien"
 	var/mob/living/carbon/human/body
-
-/datum/action/innate/swap_body/CheckRemoval()
-	var/mob/living/carbon/human/H = owner
-	if(!ishuman(H) || !H.dna || !H.dna.species || H.dna.species.id != "slime")
-		return 1
-	return 0
 
 /datum/action/innate/swap_body/Activate()
 	if(!body || !istype(body) || !body.dna || !body.dna.species || body.dna.species.id != "slime" || body.stat == DEAD || qdeleted(body))
@@ -332,26 +332,52 @@ var/regex/lizard_hiSS = new("S+", "g")
 	name = "Golem"
 	id = "golem"
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
-	speedmod = 3
+	speedmod = 2
 	armor = 55
 	siemens_coeff = 0
 	punchdamagelow = 5
 	punchdamagehigh = 14
 	punchstunthreshold = 11 //about 40% chance to stun
-	blacklisted = 1
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
+	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
-
-
-/*
- ADAMANTINE GOLEMS
-*/
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
 	id = "adamantine"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
+
+/datum/species/golem/plasma
+	name = "Plasma Golem"
+	id = "plasma"
+	dangerous_existence = 1
+	blacklisted = 1
+
+/datum/species/golem/diamond
+	name = "Diamond Golem"
+	id = "diamond"
+	blacklisted = 1
+	dangerous_existence = 1
+
+/datum/species/golem/gold
+	name = "Gold Golem"
+	id = "gold"
+	blacklisted = 1
+	dangerous_existence = 1
+
+/datum/species/golem/silver
+	name = "Silver Golem"
+	id = "silver"
+	blacklisted = 1
+	dangerous_existence = 1
+
+/datum/species/golem/uranium
+	name = "Uranium Golem"
+	id = "uranium"
+	blacklisted = 1
+	dangerous_existence = 1
+
 
 /*
  FLIES
@@ -372,6 +398,17 @@ var/regex/lizard_hiSS = new("S+", "g")
 
 /datum/species/fly/handle_speech(message)
 	return replacetext(message, "z", stutter("zz"))
+
+/datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(istype(chem,/datum/reagent/consumable))
+		var/datum/reagent/consumable/nutri_check = chem
+		if(nutri_check.nutriment_factor >0)
+			var/turf/pos = get_turf(H)
+			H.vomit()
+			playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
+						"<span class='userdanger'>You throw up on the floor!</span>")
+	..()
 
 /*
  SKELETONS
@@ -719,3 +756,31 @@ var/global/list/synth_flesh_disguises = list()
 			return ..()
 	else
 		return ..()
+
+
+/*
+SYNDICATE BLACK OPS
+*/
+//The hardcore return of the failed Deathsquad augmentation project
+//Now it's own, wizard-tier, very robust, lone antag
+/datum/species/corporate
+	name = "Corporate Agent"
+	id = "agent"
+	hair_alpha = 0
+	need_nutrition = 0//They don't need to eat
+	say_mod = "declares"
+	speedmod = -2//Fast
+	brutemod = 0.7//Tough against firearms
+	burnmod = 0.65//Tough against lasers
+	coldmod = 0
+	heatmod = 0.5//it's a little tough to burn them to death not as hard though.
+	punchdamagelow = 20
+	punchdamagehigh = 30//they are inhumanly strong
+	punchstunthreshold = 25
+	attack_verb = "smash"
+	attack_sound = "sound/weapons/resonator_blast.ogg"
+	blacklisted = 1
+	use_skintones = 0
+	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR)
+	sexes = 0
+

@@ -53,7 +53,7 @@
 /obj/item/weapon/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/packageWrap))
 		return 0
-	..()
+	return ..()
 
 
 /obj/item/weapon/storage/box/survival
@@ -95,7 +95,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/gloves/color/latex(src)
-	
+
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"
 	desc = "This box contains sterile medical masks."
@@ -105,7 +105,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/mask/surgical(src)
-	
+
 /obj/item/weapon/storage/box/syringes
 	name = "box of syringes"
 	desc = "A box full of syringes."
@@ -116,7 +116,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/syringe( src )
-	
+
 /obj/item/weapon/storage/box/medipens
 	name = "box of medipens"
 	desc = "A box full of epinephrine MediPens."
@@ -126,7 +126,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
-	
+
 /obj/item/weapon/storage/box/medipens/utility
 	name = "stimpack value kit"
 	desc = "A box with several stimpack medipens for the economical miner."
@@ -136,7 +136,7 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
-	
+
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"
 	icon_state = "beaker"
@@ -145,7 +145,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/glass/beaker( src )
-	
+
 /obj/item/weapon/storage/box/injectors
 	name = "box of DNA injectors"
 	desc = "This box contains injectors it seems."
@@ -156,7 +156,7 @@
 		new /obj/item/weapon/dnainjector/h2m(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/dnainjector/m2h(src)
-	
+
 /obj/item/weapon/storage/box/flashbangs
 	name = "box of flashbangs (WARNING)"
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause blindness or deafness in repeated use.</B>"
@@ -166,7 +166,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/grenade/flashbang(src)
-	
+
 /obj/item/weapon/storage/box/flashes
 	name = "box of flashbulbs"
 	desc = "<B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
@@ -176,7 +176,26 @@
 	..()
 	for(var/i in 1 to 6)
 		new /obj/item/device/assembly/flash/handheld(src)
-	
+
+/obj/item/weapon/storage/box/wall_flash
+	name = "wall-mounted flash kit"
+	desc = "This box contains everything neccesary to build a wall-mounted flash. <B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
+	icon_state = "flashbang"
+
+/obj/item/weapon/storage/box/wall_flash/New()
+	..()
+	var/id = rand(1000, 9999)
+
+	new /obj/item/wallframe/button(src)
+	new /obj/item/weapon/electronics/airlock(src)
+	var/obj/item/device/assembly/control/flasher/remote = new(src)
+	remote.id = id
+	var/obj/item/wallframe/flasher/frame = new(src)
+	frame.id = id
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/weapon/screwdriver(src)
+
+
 /obj/item/weapon/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause blindness and skin irritation.</B>"
@@ -186,7 +205,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
-	
+
 /obj/item/weapon/storage/box/emps
 	name = "box of emp grenades"
 	desc = "A box with 5 emp grenades."
@@ -196,7 +215,7 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/grenade/empgrenade(src)
-	
+
 /obj/item/weapon/storage/box/trackimp
 	name = "boxed tracking implant kit"
 	desc = "Box full of scum-bag tracking utensils."
@@ -242,7 +261,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/glasses/regular(src)
-	
+
 /obj/item/weapon/storage/box/drinkingglasses
 	name = "box of drinking glasses"
 	desc = "It has a picture of drinking glasses on it."
@@ -251,7 +270,7 @@
 	..()
 	for(var/i in 1 to 6)
 		new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass(src)
-	
+
 /obj/item/weapon/storage/box/condimentbottles
 	name = "box of condiment bottles"
 	desc = "It has a large ketchup smear on it."
@@ -269,7 +288,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-	
+
 /obj/item/weapon/storage/box/donkpockets
 	name = "box of donk-pockets"
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
@@ -314,7 +333,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/card/id(src)
-	
+
 /obj/item/weapon/storage/box/silver_ids
 	name = "box of spare silver IDs"
 	desc = "Shiny IDs for important people."
@@ -360,7 +379,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/device/firing_pin(src)
-	
+
 /obj/item/weapon/storage/box/handcuffs
 	name = "box of spare handcuffs"
 	desc = "A box full of handcuffs."
@@ -370,7 +389,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/restraints/handcuffs(src)
-	
+
 /obj/item/weapon/storage/box/zipties
 	name = "box of spare zipties"
 	desc = "A box full of zipties."
@@ -380,7 +399,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
-	
+
 /obj/item/weapon/storage/box/alienhandcuffs
 	name = "box of spare handcuffs"
 	desc = "A box full of handcuffs."
@@ -390,7 +409,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new	/obj/item/weapon/restraints/handcuffs/alien(src)
-	
+
 /obj/item/weapon/storage/box/fakesyndiesuit
 	name = "boxed space suit and helmet"
 	desc = "A sleek, sturdy box used to hold replica spacesuits."
@@ -410,7 +429,7 @@
 	..()
 	for(var/i in 1 to 6)
 		new /obj/item/device/assembly/mousetrap( src )
-	
+
 /obj/item/weapon/storage/box/pillbottles
 	name = "box of pill bottles"
 	desc = "It has pictures of pill bottles on its front."
@@ -420,7 +439,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/storage/pill_bottle( src )
-	
+
 /obj/item/weapon/storage/box/snappops
 	name = "snap pop box"
 	desc = "Eight wrappers of fun! Ages 8 and up. Not suitable for children."
@@ -453,7 +472,6 @@
 /obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/match))
 		W.matchignite()
-	return
 
 /obj/item/weapon/storage/box/lights
 	name = "box of replacement bulbs"
@@ -501,7 +519,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/tie/armband/deputy(src)
-	
+
 /obj/item/weapon/storage/box/metalfoam
 	name = "box of metal foam grenades"
 	desc = "To be used to rapidly seal hull breaches"
@@ -511,7 +529,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
-	
+
 /obj/item/weapon/storage/box/hug
 	name = "box of hugs"
 	desc = "A special box for sensitive people."
@@ -546,7 +564,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/rubbershot(src)
-	
+
 /obj/item/weapon/storage/box/lethalshot
 	name = "box of lethal shotgun shots"
 	desc = "A box full of lethal shots, designed for riot shotguns."

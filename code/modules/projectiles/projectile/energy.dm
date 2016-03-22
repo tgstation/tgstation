@@ -10,7 +10,8 @@
 	name = "electrode"
 	icon_state = "spark"
 	color = "#FFFF00"
-	nodamage = 1
+	damage = 30
+	damage_type = STAMINA
 	stutter = 5
 	jitter = 15
 	hitsound = 'sound/weapons/taserhit.ogg'
@@ -24,7 +25,6 @@
 		sparks.start()
 	else if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.adjustStaminaLoss(30)
 		if(C.dna && C.dna.check_mutation(HULK))
 			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else if(C.status_flags & CANWEAKEN)

@@ -1,9 +1,10 @@
 /mob/living/gib(animation = 1)
 	var/prev_lying = lying
-	death(1)
+	if(stat != DEAD)
+		death(1)
 
 	if(buckled)
-		buckled.unbuckle_mob() //to update alien nest overlay.
+		buckled.unbuckle_mob(src,force=1) //to update alien nest overlay, forced because we don't exist anymore
 
 	var/atom/movable/overlay/animate = setup_animation(animation, prev_lying)
 	if(animate)
@@ -44,7 +45,7 @@
 	if(!gibbed)
 		dead_mob_list += src
 	else if(buckled)
-		buckled.unbuckle_mob()
+		buckled.unbuckle_mob(src,force=1)
 	paralysis = 0
 	stunned = 0
 	weakened = 0
@@ -52,6 +53,7 @@
 	blind_eyes(1)
 	reset_perspective(null)
 	hide_fullscreens()
+	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()
 	update_canmove()

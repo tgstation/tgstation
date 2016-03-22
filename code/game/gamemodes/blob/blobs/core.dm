@@ -15,16 +15,16 @@
 	var/point_rate = 2
 
 
-/obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2)
+/obj/effect/blob/core/New(loc, client/new_overmind = null, new_rate = 2, placed = 0)
 	blob_cores += src
 	SSobj.processing |= src
 	update_icon() //so it atleast appears
-	if(!overmind)
+	if(!placed && !overmind)
 		create_overmind(new_overmind)
 	if(overmind)
 		update_icon()
 	point_rate = new_rate
-	..(loc, h)
+	..()
 
 /obj/effect/blob/core/update_icon()
 	overlays.Cut()
@@ -66,11 +66,8 @@
 	if(overmind)
 		overmind.update_health_hud()
 	Pulse_Area(overmind, 12, 4, 3)
-	for(var/b_dir in alldirs)
-		if(!prob(5))
-			continue
-		var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
-		if(B)
+	for(var/obj/effect/blob/normal/B in range(1, src))
+		if(prob(5))
 			B.change_to(/obj/effect/blob/shield, overmind)
 	..()
 
@@ -95,7 +92,7 @@
 		C = new_overmind
 
 	if(C)
-		var/mob/camera/blob/B = new(src.loc)
+		var/mob/camera/blob/B = new(src.loc, 1)
 		B.key = C.key
 		B.blob_core = src
 		src.overmind = B

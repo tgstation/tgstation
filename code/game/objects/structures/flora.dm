@@ -9,6 +9,31 @@
 	density = 1
 	pixel_x = -16
 	layer = 9
+	var/cut = FALSE
+	var/log_amount = 10
+
+/obj/structure/flora/tree/attackby(obj/item/weapon/W, mob/user, params)
+	if(!cut && log_amount)
+		if(W.sharpness && W.force > 0)
+			if(W.hitsound)
+				playsound(get_turf(src), W.hitsound, 100, 0, 0)
+			user.visible_message("<span class='notice'>[user] begins to cut down [src] with [W].</span>","<span class='notice'>You begin to cut down [src] with [W].</span>", "You hear the sound of cutting a tree.")
+			if(do_after(user, 1000/W.force, target = user)) //5 seconds with 20 force, 8 seconds with a hatchet, 20 seconds with a shard.
+				if(cut)
+					return
+				user.visible_message("<span class='notice'>[user] falls [src] with the [W].</span>","<span class='notice'>You fall [src] with the [W].</span>", "You hear the sound of a tree falling.")
+				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , 0, 0)
+				icon_state = "tree_stump"
+				name = "stump"
+				cut = TRUE
+				for(var/i=1 to log_amount)
+					new /obj/item/weapon/grown/log/tree(get_turf(src))
+
+	else
+		..()
+
+
+
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"
@@ -21,7 +46,6 @@
 
 /obj/structure/flora/tree/pine/xmas
 	name = "xmas tree"
-	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_c"
 
 /obj/structure/flora/tree/pine/xmas/New()
@@ -32,7 +56,7 @@
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
 
-/obj/structure/flora/tree/festivus
+/obj/structure/festivus
 	name = "festivus pole"
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "festivus_pole"

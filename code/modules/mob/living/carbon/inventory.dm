@@ -40,7 +40,7 @@
 			update_inv_back()
 		if(slot_wear_mask)
 			wear_mask = I
-			wear_mask_update(I, toggle_off=0)
+			wear_mask_update(I, toggle_off = 0)
 		if(slot_head)
 			head = I
 			head_update(I)
@@ -81,7 +81,7 @@
 	else if(I == handcuffed)
 		handcuffed = null
 		if(buckled && buckled.buckle_requires_restraints)
-			buckled.unbuckle_mob()
+			buckled.unbuckle_mob(src)
 		update_handcuffed()
 	else if(I == legcuffed)
 		legcuffed = null

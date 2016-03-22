@@ -102,7 +102,7 @@
 #define FULL 16
 #define DANGER 32
 /obj/machinery/portable_atmospherics/canister/update_icon()
-	if(destroyed)
+	if(stat & BROKEN)
 		overlays.Cut()
 		icon_state = "[initial(icon_state)]-1"
 		return
@@ -153,15 +153,17 @@
 		healthcheck()
 
 /obj/machinery/portable_atmospherics/canister/proc/healthcheck()
-	if(destroyed)
+	if(stat & BROKEN)
 		return
 
 	if(health <= 10)
+		disconnect()
+		var/datum/gas_mixture/expelled_gas = air_contents.remove(air_contents.total_moles())
 		var/turf/T = get_turf(src)
-		T.assume_air(air_contents)
+		T.assume_air(expelled_gas)
 		air_update_turf()
 
-		destroyed = TRUE
+		stat |= BROKEN
 		density = 0
 		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
 		update_icon()
@@ -173,7 +175,7 @@
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	..()
-	if(destroyed)
+	if(stat & BROKEN)
 		return PROCESS_KILL
 	if(!valve_open)
 		pump.AIR1 = null
@@ -204,13 +206,13 @@
 /obj/machinery/portable_atmospherics/canister/ex_act(severity, target)
 	switch(severity)
 		if(1)
-			if(destroyed || prob(30))
+			if((stat & BROKEN) || prob(30))
 				qdel(src)
 				return
 			else
 				health = 0
 		if(2)
-			if(destroyed)
+			if(stat & BROKEN)
 				qdel(src)
 				return
 			else

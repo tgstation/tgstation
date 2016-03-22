@@ -56,7 +56,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		var/datum/supply_pack/P = new pack()
 		if(!P.contains)
 			continue
-		supply_packs["[P.type]"] = P
+		supply_packs[P.type] = P
 
 	initial_move()
 	..()
@@ -212,3 +212,4 @@ var/datum/subsystem/shuttle/SSshuttle
 				S.dwidth = M.dwidth
 				S.dheight = M.dheight
 		moveShuttle(M.id, "[M.roundstart_move]", 0)
+		CHECK_TICK
