@@ -263,7 +263,7 @@
 	id = "golem"
 	req_tech = list("materials" = 12)
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 20000)
+	materials = list(MAT_METAL = 40000)
 	build_path = /obj/item/golem_shell
 	category = list("Imported")
 
