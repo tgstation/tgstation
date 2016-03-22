@@ -245,3 +245,77 @@
 		if(4)
 			new_spawn << "You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. You are overwhelmed with guilt."
 
+//Free Golems
+
+/obj/item/golem_shell
+	name = "empty golem shell"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "construct"
+	desc = "The incomplete body of a golem."
+
+/obj/item/weapon/disk/design_disk/golem_shell
+	name = "Golem Creation Disk"
+	desc = "A gift from the Liberator."
+	icon_state = "datadisk1"
+	blueprint = /datum/design/golem_shell
+
+/datum/design/golem_shell
+	name = "Golem Shell Construction"
+	desc = "Allows for the construction of a Golem Shell."
+	id = "golem"
+	req_tech = list("materials" = 12)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000)
+	build_path = /obj/item/golem_shell
+	category = list("Misc")
+
+/obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
+	..()
+	var/species
+	if(istype(I, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/O = I
+		if(O.amount < 10)
+			user << "You need at least 10 sheets of your chosen material to activate the golem."
+			return
+		if(istype(O, /obj/item/stack/sheet/metal))
+			species = /datum/species/golem
+
+		if(istype(O, /obj/item/stack/sheet/mineral/plasma))
+			species = /datum/species/golem/plasma
+
+		if(istype(O, /obj/item/stack/sheet/mineral/diamond))
+			species = /datum/species/golem/diamond
+
+		if(istype(O, /obj/item/stack/sheet/mineral/gold))
+			species = /datum/species/golem/gold
+
+		if(istype(O, /obj/item/stack/sheet/mineral/silver))
+			species = /datum/species/golem/silver
+
+		if(istype(O, /obj/item/stack/sheet/mineral/uranium))
+			species = /datum/species/golem/uranium
+
+		if(species)
+			O.amount -= 10
+			user << "You finish up the golem shell with ten sheets of [O]."
+			var/obj/effect/mob_spawn/human/golem/G = new(get_turf(src))
+			G.mob_species = species
+			qdel(src)
+
+/obj/effect/mob_spawn/human/golem
+	name = "completed golem shell"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "construct"
+	mob_species = /datum/species/golem
+	roundstart = FALSE
+	death = FALSE
+	anchored = 0
+	density = 0
+	flavour_text = {"<B>You are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to travel the stars with a single declaration; "Yeah go do whatever." Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn golems, so that no golem may ever be forced to serve again.</B>"}
+
+/obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
+	new_spawn.real_name = "Golem ([rand(0,999)])"
+	new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
+	if(ishuman(new_spawn))
+		var/mob/living/carbon/human/H = new_spawn
+		H.set_cloned_appearance()
