@@ -302,6 +302,8 @@
 
 		//We are now going to move
 		move_delay = max(move_delay,1)
+		if(mob.movement_speed_modifier)
+			move_delay *= (1/mob.movement_speed_modifier)
 		mob.delayNextMove(move_delay)
 		//Something with pulling things
 		if(Findgrab)
