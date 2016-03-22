@@ -43,7 +43,7 @@ Head of Security
 	gloves = /obj/item/clothing/gloves/color/black/hos
 	head = /obj/item/clothing/head/HoS/beret
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	suit_store = /obj/item/weapon/gun/projectile/automatic/ar
+	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
 	r_pocket = /obj/item/device/assembly/flash/handheld
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
@@ -352,7 +352,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	uniform = /obj/item/clothing/under/rank/security/navyblue
 	shoes = /obj/item/clothing/shoes/combat/swat
 	suit = /obj/item/clothing/suit/armor/laserproof
-	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
+	suit_store = /obj/item/weapon/gun/projectile/automatic/ar
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	l_pocket = /obj/item/weapon/restraints/handcuffs
