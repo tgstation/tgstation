@@ -247,27 +247,31 @@
 
 //Free Golems
 
-/obj/item/golem_shell
-	name = "empty golem shell"
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "construct"
-	desc = "The incomplete body of a golem."
-
 /obj/item/weapon/disk/design_disk/golem_shell
 	name = "Golem Creation Disk"
 	desc = "A gift from the Liberator."
 	icon_state = "datadisk1"
-	blueprint = /datum/design/golem_shell
+
+/obj/item/weapon/disk/design_disk/golem_shell/New()
+	..()
+	var/datum/design/golem_shell/G = new
+	blueprint = G
 
 /datum/design/golem_shell
 	name = "Golem Shell Construction"
 	desc = "Allows for the construction of a Golem Shell."
 	id = "golem"
 	req_tech = list("materials" = 12)
-	build_type = PROTOLATHE
+	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 20000)
 	build_path = /obj/item/golem_shell
-	category = list("Misc")
+	category = list("Imported")
+
+/obj/item/golem_shell
+	name = "empty golem shell"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "construct"
+	desc = "The incomplete body of a golem."
 
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	..()
