@@ -29,6 +29,8 @@
 
 /area/vault/spacepond
 
+/area/vault/ioufort
+
 /mob/living/simple_animal/hostile/monster/cyber_horror/quiet
 	speak_chance = 1 //shut the fuck up
 
@@ -85,3 +87,7 @@
 
 /obj/machinery/atmospherics/binary/msgs/rust_vault
 	name = "\improper Magnitno Priostanovleno Blok Khraneniya Gaza"
+
+/obj/item/weapon/paper/iou
+	name = "paper- 'IOU'"
+	info = "I owe you a rod of destruction. Redeemable at Milliway's at the end of time."

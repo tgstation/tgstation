@@ -225,3 +225,7 @@
 			loaded -= AC
 			loaded += null
 	src.loc.visible_message("<span class='warning'>[src] empties onto the ground!</span>")
+
+
+/obj/item/weapon/gun/projectile/russian/empty/New()
+	update_icon()
