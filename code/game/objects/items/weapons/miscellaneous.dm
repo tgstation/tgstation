@@ -15,5 +15,5 @@
 	desc = "A skub"
 	name = "skub"
 	icon = 'icons/obj/items.dmi'
-	icon_state = 'skub'
+	icon_state = "skub"
 	w_class = 4
