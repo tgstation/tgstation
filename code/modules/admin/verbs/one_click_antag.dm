@@ -588,7 +588,7 @@
 			ERPOperative.socks = "Nude"
 			ERPOperative.undershirt = "Nude"
 			ERPOperative.lip_style = pick("red", "purple", "jade", "black")
-			ready_dna(ERPOperative)
+			ERPOperative.dna.update_dna_identity()
 			ERPOperative.update_body()
 			ERPOperative.update_hair()
 			ERPOperative.real_name = "[pick(the_big_list_of_hookers)] [pick(last_names)]"
