@@ -1,4 +1,7 @@
-var/list/image/ghost_darkness_images = list() //this is a list of images for things ghosts should still be able to see when they toggle darkness
+var/list/image/ghost_darkness_images = list() //this is a list of images for things ghosts should still be able to see when they toggle darkness, BUT NOT THE GHOSTS THEMSELVES!
+var/list/image/ghost_images_full = list() //this is a list of full images of the ghosts themselves
+var/list/image/ghost_images_default = list() //this is a list of the default (non-accessorized, non-dir) images of the ghosts themselves
+var/list/image/ghost_images_simple = list() //this is a list of all ghost images as the simple white ghost
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -23,6 +26,8 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	var/atom/movable/following = null
 	var/fun_verbs = 0
 	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
+	var/image/ghostimage_default = null //this mobs ghost image without accessories and dirs
+	var/image/ghostimage_simple = null //this mob with the simple white ghost sprite
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
@@ -37,11 +42,26 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	var/facial_hair_color
 	var/image/facial_hair_image
 
+	var/updatedir = 1						//Do we have to update our dir as the ghost moves around?
+	var/lastsetting = null	//Stores the last setting that ghost_others was set to, for a little more efficiency when we update ghost images. Null means no update is necessary
+
+	//We store copies of the ghost display preferences locally so they can be referred to even if no client is connected.
+	//If there's a bug with changing your ghost settings, it's probably related to this.
+	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
+	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
+
 /mob/dead/observer/New(mob/body)
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	ghostimage = image(src.icon,src,src.icon_state)
-	ghost_darkness_images |= ghostimage
+	if(icon_state in ghost_forms_with_directions_list)
+		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
+	else
+		ghostimage_default = image(src.icon,src,src.icon_state)
+	ghostimage_simple = image(src.icon,src,"ghost_nodir")
+	ghost_images_full |= ghostimage
+	ghost_images_default |= ghostimage_default
+	ghost_images_simple |= ghostimage_simple
 	updateallghostimages()
 
 	var/turf/T
@@ -63,10 +83,10 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 			var/mob/living/carbon/human/body_human = body
 			if(HAIR in body_human.dna.species.specflags)
 				hair_style = body_human.hair_style
-				hair_color = body_human.hair_color
+				hair_color = brighten_color(body_human.hair_color)
 			if(FACEHAIR in body_human.dna.species.specflags)
 				facial_hair_style = body_human.facial_hair_style
-				facial_hair_color = body_human.facial_hair_color
+				facial_hair_color = brighten_color(body_human.facial_hair_color)
 
 	update_icon()
 
@@ -105,20 +125,35 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
  * |- Ricotez
  */
 /mob/dead/observer/proc/update_icon(new_form)
+	if(client) //We update our preferences in case they changed right before update_icon was called.
+		ghost_accs = client.prefs.ghost_accs
+		ghost_others = client.prefs.ghost_others
+
 	if(hair_image)
 		overlays -= hair_image
 		ghostimage.overlays -= hair_image
 		hair_image = null
+
 	if(facial_hair_image)
 		overlays -= facial_hair_image
 		ghostimage.overlays -= facial_hair_image
 		facial_hair_image = null
 
+
 	if(new_form)
 		icon_state = new_form
-		ghostimage.icon_state = new_form
+		if(icon_state in ghost_forms_with_directions_list)
+			ghostimage_default.icon_state = new_form + "_nodir" //if this icon has dirs, the default ghostimage must use its nodir version or clients with the preference set to default sprites only will see the dirs
+		else
+			ghostimage_default.icon_state = new_form
 
-	if(icon_state == "ghost") //For now we just check for the default ghost sprite. If other sprites get updated in the future to support hair, change this to a list.
+	if(ghost_accs >= GHOST_ACCS_DIR && icon_state in ghost_forms_with_directions_list) //if this icon has dirs AND the client wants to show them, we make sure we update the dir on movement
+		updatedir = 1
+	else
+		updatedir = 0	//stop updating the dir in case we want to show accessories with dirs on a ghost sprite without dirs
+		dir = 2 		//reset the dir to its default so the sprites all properly align up
+
+	if(ghost_accs == GHOST_ACCS_FULL && icon_state in ghost_forms_with_accessories_list) //check if this form supports accessories and if the client wants to show them
 		var/datum/sprite_accessory/S
 		if(facial_hair_style)
 			S = facial_hair_styles_list[facial_hair_style]
@@ -139,6 +174,39 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 				overlays += hair_image
 				ghostimage.overlays += hair_image
 
+/*
+ * Increase the brightness of a color by calculating the average distance between the R, G and B values,
+ * and maximum brightness, then adding 30% of that average to R, G and B.
+ *
+ * I'll make this proc global and move it to its own file in a future update. |- Ricotez
+ */
+/mob/proc/brighten_color(input_color)
+	var/r_val
+	var/b_val
+	var/g_val
+	var/color_format = lentext(input_color)
+	if(color_format == 3)
+		r_val = hex2num(copytext(input_color, 1, 2))*16
+		g_val = hex2num(copytext(input_color, 2, 3))*16
+		b_val = hex2num(copytext(input_color, 3, 0))*16
+	else if(color_format == 6)
+		r_val = hex2num(copytext(input_color, 1, 3))
+		g_val = hex2num(copytext(input_color, 3, 5))
+		b_val = hex2num(copytext(input_color, 5, 0))
+	else
+		return 0 //If the color format is not 3 or 6, you're using an unexpected way to represent a color.
+
+	r_val += (255 - r_val) * 0.4
+	if(r_val > 255)
+		r_val = 255
+	g_val += (255 - g_val) * 0.4
+	if(g_val > 255)
+		g_val = 255
+	b_val += (255 - b_val) * 0.4
+	if(b_val > 255)
+		b_val = 255
+
+	return num2hex(r_val, 2) + num2hex(g_val, 2) + num2hex(b_val, 2)
 
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.
@@ -175,7 +243,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 /mob/dead/observer/Move(NewLoc, direct)
-	dir = direct
+	if(updatedir)
+		dir = direct //only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
@@ -303,6 +372,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
+	dir = 2 //reset dir so the right directional sprites show up
 	..()
 	//restart our floating animation after orbit is done.
 	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
@@ -374,12 +444,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	updateghostsight()
 
 /mob/dead/observer/proc/updateghostsight()
-	if (!seedarkness)
-		see_invisible = SEE_INVISIBLE_NOLIGHTING
-	else
+	if(client)
+		ghost_others = client.prefs.ghost_others //A quick update just in case this setting was changed right before calling the proc
+
+	if (seedarkness)
 		see_invisible = SEE_INVISIBLE_OBSERVER
-		if (!ghostvision)
+		if (!ghostvision || ghost_others <= GHOST_OTHERS_DEFAULT_SPRITE)
 			see_invisible = SEE_INVISIBLE_LIVING
+	else
+		see_invisible = SEE_INVISIBLE_NOLIGHTING
+
 	updateghostimages()
 
 /proc/updateallghostimages()
@@ -389,13 +463,37 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/updateghostimages()
 	if (!client)
 		return
-	if (seedarkness || !ghostvision)
+
+	if(lastsetting)
+		switch(lastsetting) //checks the setting we last came from, for a little efficiency so we don't try to delete images from the client that it doesn't have anyway
+			if(GHOST_OTHERS_THEIR_SETTING)
+				client.images -= ghost_images_full
+			if(GHOST_OTHERS_DEFAULT_SPRITE)
+				client.images -= ghost_images_default
+			if(GHOST_OTHERS_SIMPLE)
+				client.images -= ghost_images_simple
+
+	if ((seedarkness || !ghostvision) && client.prefs.ghost_others == GHOST_OTHERS_THEIR_SETTING)
 		client.images -= ghost_darkness_images
-	else
+		lastsetting = null
+	else if(ghostvision && (!seedarkness || client.prefs.ghost_others <= GHOST_OTHERS_DEFAULT_SPRITE))
 		//add images for the 60inv things ghosts can normally see when darkness is enabled so they can see them now
-		client.images |= ghost_darkness_images
-		if (ghostimage)
-			client.images -= ghostimage //remove ourself
+		if(!lastsetting)
+			client.images |= ghost_darkness_images
+		switch(client.prefs.ghost_others)
+			if(GHOST_OTHERS_THEIR_SETTING)
+				client.images |= ghost_images_full
+				if (ghostimage)
+					client.images -= ghostimage //remove ourself
+			if(GHOST_OTHERS_DEFAULT_SPRITE)
+				client.images |= ghost_images_default
+				if(ghostimage_default)
+					client.images -= ghostimage_default
+			if(GHOST_OTHERS_SIMPLE)
+				client.images |= ghost_images_simple
+				if(ghostimage_simple)
+					client.images -= ghostimage_simple
+		lastsetting = client.prefs.ghost_others
 
 /mob/dead/observer/verb/possess()
 	set category = "Ghost"

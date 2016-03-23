@@ -34,6 +34,8 @@ var/list/preferences_datums = list()
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
+	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
+	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
 	var/ghost_hud = 1
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
@@ -356,6 +358,27 @@ var/list/preferences_datums = list()
 					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
 					dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
 					dat += "<B>Ghost Orbit: </B> <a href='?_src_=prefs;task=input;preference=ghostorbit'>[ghost_orbit]</a><br>"
+
+			var/button_name = "If you see this something went wrong."
+			switch(ghost_accs)
+				if(GHOST_ACCS_FULL)
+					button_name = GHOST_ACCS_FULL_NAME
+				if(GHOST_ACCS_DIR)
+					button_name = GHOST_ACCS_DIR_NAME
+				if(GHOST_ACCS_NONE)
+					button_name = GHOST_ACCS_NONE_NAME
+
+			dat += "<b>Ghost Accessories:</b> <a href='?_src_=prefs;task=input;preference=ghostaccs'>[button_name]</a><br>"
+
+			switch(ghost_others)
+				if(GHOST_OTHERS_THEIR_SETTING)
+					button_name = GHOST_OTHERS_THEIR_SETTING_NAME
+				if(GHOST_OTHERS_DEFAULT_SPRITE)
+					button_name = GHOST_OTHERS_DEFAULT_SPRITE_NAME
+				if(GHOST_OTHERS_SIMPLE)
+					button_name = GHOST_OTHERS_SIMPLE_NAME
+
+			dat += "<b>Ghosts of Others:</b> <a href='?_src_=prefs;task=input;preference=ghostothers'>[button_name]</a><br>"
 
 			if (SERVERTOOLS && config.maprotation)
 				var/p_map = preferred_map
@@ -751,6 +774,26 @@ var/list/preferences_datums = list()
 						var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in ghost_orbits
 						if(new_orbit)
 							ghost_orbit = new_orbit
+
+				if("ghostaccs")
+					var/new_ghost_accs = alert("Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,GHOST_ACCS_FULL_NAME, GHOST_ACCS_DIR_NAME, GHOST_ACCS_NONE_NAME)
+					switch(new_ghost_accs)
+						if(GHOST_ACCS_FULL_NAME)
+							ghost_accs = GHOST_ACCS_FULL
+						if(GHOST_ACCS_DIR_NAME)
+							ghost_accs = GHOST_ACCS_DIR
+						if(GHOST_ACCS_NONE_NAME)
+							ghost_accs = GHOST_ACCS_NONE
+
+				if("ghostothers")
+					var/new_ghost_others = alert("Do you want the ghosts of others to show up as their own setting, as their default sprites or always as the default white ghost?",,GHOST_OTHERS_THEIR_SETTING_NAME, GHOST_OTHERS_DEFAULT_SPRITE_NAME, GHOST_OTHERS_SIMPLE_NAME)
+					switch(new_ghost_others)
+						if(GHOST_OTHERS_THEIR_SETTING_NAME)
+							ghost_others = GHOST_OTHERS_THEIR_SETTING
+						if(GHOST_OTHERS_DEFAULT_SPRITE_NAME)
+							ghost_others = GHOST_OTHERS_DEFAULT_SPRITE
+						if(GHOST_OTHERS_SIMPLE_NAME)
+							ghost_others = GHOST_OTHERS_SIMPLE
 
 				if("name")
 					var/new_name = reject_bad_name( input(user, "Choose your character's name:", "Character Preference")  as text|null )
