@@ -71,7 +71,8 @@
 	if(istype(buckled_mob))
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
-		buckled_mob.client.view = world.view
+		if(buckled_mob.client)
+			buckled_mob.client.view = world.view
 	. = ..()
 
 
@@ -85,7 +86,8 @@
 	M.loc = get_turf(src)
 	..()
 	handle_vehicle_offsets()
-	user.client.view = view_range
+	if(user.client)
+		user.client.view = view_range
 
 
 //MOVEMENT
