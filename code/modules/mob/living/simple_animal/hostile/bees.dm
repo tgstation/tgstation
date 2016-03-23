@@ -6,6 +6,9 @@
 #define BEE_TRAY_RECENT_VISIT	200	//How long in deciseconds until a tray can be visited by a bee again
 #define BEE_DEFAULT_COLOUR		"#e5e500" //the colour we make the stripes of the bee if our reagent has no colour (or we have no reagent)
 
+#define BEE_POLLINATE_YIELD_CHANCE		10
+#define BEE_POLLINATE_PEST_CHANCE		33
+#define BEE_POLLINATE_POTENTCY_CHANCE	50
 
 /mob/living/simple_animal/hostile/poison/bees
 	name = "bee"
@@ -160,9 +163,13 @@
 
 	var/growth = health //Health also means how many bees are in the swarm, roughly.
 	//better healthier plants!
-	Hydro.health += growth
-	Hydro.pestlevel = max(0, --Hydro.pestlevel)
-	Hydro.yieldmod++
+	Hydro.health += round(growth*0.5)
+	if(prob(BEE_POLLINATE_PEST_CHANCE))
+		Hydro.pestlevel = max(0, --Hydro.pestlevel)
+	if(prob(BEE_POLLINATE_YIELD_CHANCE)) //Yield mod is HELLA powerful, but quite rare
+		Hydro.myseed.innate_yieldmod++
+	if(prob(BEE_POLLINATE_POTENTCY_CHANCE))
+		Hydro.myseed.potency++
 
 	if(beehome)
 		beehome.bee_resources = min(beehome.bee_resources + growth, 100)
