@@ -211,7 +211,7 @@
 			src.occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
-			src.occupant.adjustCloneLoss(-((speed_coeff/2)))
+			src.occupant.adjustCloneLoss(Clamp(config.health_threshold_dead - 1, 0,-(speed_coeff/2)))
 
 			//Premature clones may have brain damage.
 			src.occupant.adjustBrainLoss(-((speed_coeff/2)))
