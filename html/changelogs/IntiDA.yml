@@ -1,4 +1,0 @@
-author: Intigracy
-delete-after: True
-changes: 
-- bugfix: Double agents no longer get themselves as targets. If they're the only one, they get a random assassinate objective.
