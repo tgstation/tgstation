@@ -72,8 +72,8 @@
 		for(var/i = 1; i <= 5; i++)
 			for(var/mob/living/L in get_turf(src))
 				if(!istype(L, /mob/living/silicon)) //Silicons are immune to fire
-					if(!istype(L, /mob/living/carbon))
-						L.adjustFireLoss(adjusted_fire_damage * 2) //Deals double damage to non-carbon mobs
+					if(!istype(L, /mob/living/carbon/human))
+						L.adjustFireLoss(adjusted_fire_damage * 2) //Deals double damage to non-human mobs
 					else
 						L.adjustFireLoss(adjusted_fire_damage)
 					if(!L.on_fire)
