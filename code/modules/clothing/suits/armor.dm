@@ -127,7 +127,7 @@
 	name = "reactive armor"
 	desc = "Doesn't seem to do much for some reason."
 	var/active = 0
-	var/cd = 0//cooldown specific to reactive armor
+	var/reactivearmor_cooldown = 0//cooldown specific to reactive armor
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
@@ -138,9 +138,6 @@
 
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
-	if(world.time < cd)
-		user << "<span class='notice'>[src] is still cooling down. It can't be reactivated yet.</span>"
-		return
 	src.active = !( src.active )
 	if (src.active)
 		user << "<span class='notice'>[src] is now active.</span>"
@@ -171,6 +168,9 @@
 		return 0
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
+		if(world.time < reactivearmor_cooldown)
+			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [H]!</span>")
+			return
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
@@ -188,16 +188,13 @@
 			return
 		H.forceMove(picked)
 		H.rad_act(rad_amount)
-		active = 0
-		src.icon_state = "reactiveoff"
-		src.item_state = "reactiveoff"
-		cd = world.time + 100
+		reactivearmor_cooldown = world.time + 100
 		return 1
 	return 0
 
 /obj/item/clothing/suit/armor/reactive/teleport/emp_act(severity)
 	..()
-	cd = world.time + 200
+	reactivearmor_cooldown = world.time + 200
 
 /obj/item/clothing/suit/armor/reactive/fire
 	name = "reactive incendiary armor"
