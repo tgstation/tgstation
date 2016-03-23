@@ -310,3 +310,36 @@
 				footstep++
 		else
 			playsound(src, "clownstep", 20, 1)
+
+/mob/living/simple_animal/hostile/retaliate/cluwne/goblin
+	name = "clown goblin"
+	desc = "A tiny walking mask and clown shoes. You want to honk his nose!"
+	icon_state = "ClownGoblin"
+	icon_living = "ClownGoblin"
+	icon_dead = null
+	response_help = "honks the"
+	speak = list("Honk!")
+	speak_emote = list("sqeaks")
+	emote_see = list("honks")
+	maxHealth = 100
+	health = 100
+	size = 1
+
+	speed = -1
+	turns_per_move = 1
+
+	melee_damage_type = "BRAIN"
+
+/mob/living/simple_animal/hostile/retaliate/cluwne/goblin/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W,/obj/item/weapon/pen)) //Renaming
+		var/n_name = copytext(sanitize(input(user, "What would you like to name this clown goblin?", "Clown Goblin Name", null) as text|null), 1, MAX_NAME_LEN*3)
+		if(n_name && Adjacent(user) && !user.stat)
+			name = "[n_name]"
+		return
+	..()
+
+/mob/living/simple_animal/hostile/retaliate/cluwne/goblin/Die()
+	..()
+	new /obj/item/clothing/mask/gas/clown_hat(src.loc)
+	new /obj/item/clothing/shoes/clown_shoes(src.loc)
+	qdel(src)

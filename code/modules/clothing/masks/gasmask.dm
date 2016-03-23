@@ -130,6 +130,13 @@
 	species_fit = list("Vox")
 	can_flip = 0
 
+/obj/item/clothing/mask/gas/clown_hat/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/clothing/shoes/clown_shoes))
+		new /mob/living/simple_animal/hostile/retaliate/cluwne/goblin(get_turf(src))
+		qdel(W)
+		qdel(src)
+
 /obj/item/clothing/mask/gas/clown_hat/wiz
 	name = "purple clown wig and mask"
 	desc = "Some pranksters are truly magical."
