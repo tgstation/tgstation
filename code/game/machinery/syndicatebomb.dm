@@ -190,7 +190,7 @@
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
-	explosion(get_turf(src), 3, 9, 17, flame_range = 17)
+	explosion(get_turf(src), 5, 15, 25, flame_range = 17)
 	if(loc && istype(loc,/obj/machinery/syndicatebomb/))
 		qdel(loc)
 	qdel(src)
