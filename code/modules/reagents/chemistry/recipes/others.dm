@@ -27,6 +27,18 @@
 	required_reagents = list("orangejuice" = 1, "cornoil" = 1)
 	result_amount = 2
 
+/datum/chemical_reaction/skub
+	name = "skub"
+	id = "skub"
+	result = null
+	required_reagents = list("spraytan" = 1, "liquidgibs" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/skub/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/weapon/skub(location)
+	..()
+
 /datum/chemical_reaction/impedrezene
 	name = "Impedrezene"
 	id = "impedrezene"
