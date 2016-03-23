@@ -15,7 +15,7 @@
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
-	reagents_add = list("salglu_solution" = 0.05, "nutriment" = 0.05)
+	reagents_add = list("bicaridine" = 0.2, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	seed = /obj/item/seeds/poppy
@@ -134,7 +134,7 @@
 	plantname = "Moonflowers"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/moonflower
 	mutatelist = list()
-	reagents_add = list("moonshine" = 0.1, "vitamin" = 0.02, "nutriment" = 0.02)
+	reagents_add = list("moonshine" = 0.2, "vitamin" = 0.02, "nutriment" = 0.02)
 	rarity = 15
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/moonflower
