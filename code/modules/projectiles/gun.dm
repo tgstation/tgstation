@@ -34,7 +34,10 @@
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
 	var/semicd = 0						//cooldown handler
 	var/heavy_weapon = 0
-
+	var/safetyposition = 1				//the safety position you see not the one you have 0 = off
+	var/safetyon = 1				//the safetys actual position
+	var/safetybroken = 0				//whether the safetys lever is atached
+	
 	var/unique_rename = 0 //allows renaming with a pen
 	var/unique_reskin = 0 //allows one-time reskinning
 	var/reskinned = 0 //whether or not the gun has been reskinned
@@ -95,6 +98,8 @@
 //check if there's enough ammo/energy/whatever to shoot one time
 //i.e if clicking would make it shoot
 /obj/item/weapon/gun/proc/can_shoot()
+	if(saftyon = 1)
+		return 0
 	return 1
 
 
@@ -144,7 +149,7 @@
 		if(!can_trigger_gun(L))
 			return
 
-	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can't shoot.
+	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)
 		return
 
@@ -293,6 +298,14 @@ obj/item/weapon/gun/proc/newshot()
 	if(unique_rename)
 		if(istype(I, /obj/item/weapon/pen))
 			rename_gun(user)
+
+	if(istype(I, obj/item/weapon/wirecutters))
+		if(safetybroken == 0)
+			user << "<span class='notice'>You disconect the safety leaver from the internal mechanism.</span>"
+			safetybroken = 1
+		else
+			user << "<span class='notice'>You reconect the safety leaver to the internal mechanism.</span>"
+			safetybroken = 0
 	..()
 
 /obj/item/weapon/gun/proc/toggle_gunlight()
@@ -363,7 +376,19 @@ obj/item/weapon/gun/proc/newshot()
 		return
 	if(unique_reskin && !reskinned && loc == user)
 		reskin_gun(user)
-
+		return
+	if(safetyposition = 1)
+		user << "<span class='warning'>You flip the safety to FIRE.</span>"
+		safetyposition = 0
+		if(safetybroken == 0)
+			safetyon = !safetyon
+		return
+	else
+		user << "<span class='warning'>You flip the safety to SAFE.</span>"
+		safetyposition = 1
+		if(safetybroken == 0)
+			safetyon = !safetyon
+		return
 
 /obj/item/weapon/gun/proc/reskin_gun(mob/M)
 	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
