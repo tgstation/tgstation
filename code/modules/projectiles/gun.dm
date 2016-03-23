@@ -34,7 +34,10 @@
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
 	var/semicd = 0						//cooldown handler
 	var/heavy_weapon = 0
-
+	var/safetyposition = 1				//the safety position you see not the one you have 0 = off
+	var/safetyon = 1				//the safetys actual position
+	var/safetybroken = 0				//whether the safetys lever is atached
+	
 	var/unique_rename = 0 //allows renaming with a pen
 	var/unique_reskin = 0 //allows one-time reskinning
 	var/reskinned = 0 //whether or not the gun has been reskinned
@@ -86,7 +89,10 @@
 		user << "It has [pin] installed."
 	else
 		user << "It doesn't have a firing pin installed, and won't fire."
-
+	if(safetyposition == 1)
+		user << "The safety lever points to SAFE."
+	else
+		user << "The safety lever points to FIRE."
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -143,8 +149,12 @@
 		var/mob/living/L = user
 		if(!can_trigger_gun(L))
 			return
-
-	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can't shoot.
+	
+	if(safetyon == 1)
+		shoot_with_empty_chamber(user)
+		return
+	
+	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)
 		return
 
@@ -293,6 +303,14 @@ obj/item/weapon/gun/proc/newshot()
 	if(unique_rename)
 		if(istype(I, /obj/item/weapon/pen))
 			rename_gun(user)
+
+	if(istype(I, /obj/item/weapon/wirecutters))
+		if(safetybroken == 0)
+			user << "<span class='notice'>You disconnect the safety lever from the internal mechanism.</span>"
+			safetybroken = 1
+		else
+			user << "<span class='notice'>You reconnect the safety lever to the internal mechanism.</span>"
+			safetybroken = 0
 	..()
 
 /obj/item/weapon/gun/proc/toggle_gunlight()
@@ -363,7 +381,19 @@ obj/item/weapon/gun/proc/newshot()
 		return
 	if(unique_reskin && !reskinned && loc == user)
 		reskin_gun(user)
-
+		return
+	if(safetyposition == 1)
+		user << "<span class='warning'>You flip the safety to FIRE.</span>"
+		safetyposition = 0
+		if(safetybroken == 0)
+			safetyon = !safetyon
+		return
+	else
+		user << "<span class='warning'>You flip the safety to SAFE.</span>"
+		safetyposition = 1
+		if(safetybroken == 0)
+			safetyon = !safetyon
+		return
 
 /obj/item/weapon/gun/proc/reskin_gun(mob/M)
 	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options

@@ -1,0 +1,6 @@
+author: Iamgoofball
+delete-after: True
+changes: 
+  - rscadd: "Cargo now works off of Credits."
+  - rscadd: "Cargo now plays the Stock Market."
+  - rscadd: "Buy Low, Sell High"
