@@ -182,11 +182,8 @@
 				inserted_id.verb_pickup()
 				inserted_id = null
 			if(href_list["choice"] == "claim")
-				if(access_mining_station in inserted_id.access)
-					inserted_id.mining_points += points
-					points = 0
-				else
-					usr << "<span class='warning'>Required access not found.</span>"
+				inserted_id.mining_points += points
+				points = 0
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
