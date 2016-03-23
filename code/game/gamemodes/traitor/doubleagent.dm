@@ -81,7 +81,7 @@
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = traitor
 		kill_objective.target = target_list[traitor]
-		if(kill_objective.target)
+		if(kill_objective.target && kill_objective.target != traitor)
 			kill_objective.explanation_text = "Assassinate [kill_objective.target.current.real_name], the [kill_objective.target.special_role]."
 		else //Something went wrong, so give them a random assasinate objective
 			kill_objective.find_target()
