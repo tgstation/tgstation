@@ -145,12 +145,12 @@ a.updated {
 		return
 	var/li = logged_in
 	if (!li)
-		user << "<span style='color:red'>No active account on the console!</span>"
+		user << "<span class='danger'>No active account on the console!</span>"
 		return
 	var/b = SSshuttle.points
 	var/avail = S.shareholders[logged_in]
 	if (!avail)
-		user << "<span style='color:red'>This account does not own any shares of [S.name]!</span>"
+		user << "<span class='danger'>This account does not own any shares of [S.name]!</span>"
 		return
 	var/price = S.current_value
 	var/amt = round(input(user, "How many shares? (Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0) as num|null)
@@ -164,16 +164,16 @@ a.updated {
 		return
 	b = SSshuttle.points
 	if (!isnum(b))
-		user << "<span style='color:red'>No active account on the console!</span>"
+		user << "<span class='danger'>No active account on the console!</span>"
 		return
 	if (amt > S.shareholders[logged_in])
-		user << "<span style='color:red'>You do not own that many shares!</span>"
+		user << "<span class='danger'>You do not own that many shares!</span>"
 		return
 	var/total = amt * S.current_value
 	if (!S.sellShares(logged_in, amt))
-		user << "<span style='color:red'>Could not complete transaction.</span>"
+		user << "<span class='danger'>Could not complete transaction.</span>"
 		return
-	user << "<span style='color:blue'>Sold [amt] shares of [S.name] for [total] points.</span>"
+	user << "<span class='notice'>Sold [amt] shares of [S.name] for [total] points.</span>"
 	stockExchange.add_log(/datum/stock_log/sell, user.name, S.name, amt, total)
 
 /obj/machinery/computer/stockexchange/proc/buy_some_shares(var/datum/stock/S, var/mob/user)
@@ -181,11 +181,11 @@ a.updated {
 		return
 	var/li = logged_in
 	if (!li)
-		user << "<span style='color:red'>No active account on the console!</span>"
+		user << "<span class='danger'>No active account on the console!</span>"
 		return
 	var/b = balance()
 	if (!isnum(b))
-		user << "<span style='color:red'>No active account on the console!</span>"
+		user << "<span class='danger'>No active account on the console!</span>"
 		return
 	var/avail = S.available_shares
 	var/price = S.current_value
@@ -201,27 +201,27 @@ a.updated {
 		return
 	b = balance()
 	if (!isnum(b))
-		user << "<span style='color:red'>No active account on the console!</span>"
+		user << "<span class='danger'>No active account on the console!</span>"
 		return
 	if (amt > S.available_shares)
-		user << "<span style='color:red'>That many shares are not available!</span>"
+		user << "<span class='danger'>That many shares are not available!</span>"
 		return
 	var/total = amt * S.current_value
 	if (total > b)
-		user << "<span style='color:red'>Insufficient points.</span>"
+		user << "<span class='danger'>Insufficient points.</span>"
 		return
 	if (!S.buyShares(logged_in, amt))
-		user << "<span style='color:red'>Could not complete transaction.</span>"
+		user << "<<span class='danger'>Could not complete transaction.</span>"
 		return
-	user << "<span style='color:blue'>Bought [amt] shares of [S.name] for [total] points.</span>"
+	user << "<span class='notice'>Bought [amt] shares of [S.name] for [total] points.</span>"
 	stockExchange.add_log(/datum/stock_log/buy, user.name, S.name, amt, total)
 
 /obj/machinery/computer/stockexchange/proc/do_borrowing_deal(var/datum/borrow/B, var/mob/user)
 	if (B.stock.borrow(B, logged_in))
-		user << "<span style='color:blue'>You successfully borrowed [B.share_amount] shares. Deposit: [B.deposit].</span>"
+		user << "<span class='notice'>You successfully borrowed [B.share_amount] shares. Deposit: [B.deposit].</span>"
 		stockExchange.add_log(/datum/stock_log/borrow, user.name, B.stock.name, B.share_amount, B.deposit)
 	else
-		user << "<span style='color:red'>Could not complete transaction. Check your account balance.</span>"
+		user << "<span class='danger'>Could not complete transaction. Check your account balance.</span>"
 
 /obj/machinery/computer/stockexchange/Topic(href, href_list)
 	if (..())
