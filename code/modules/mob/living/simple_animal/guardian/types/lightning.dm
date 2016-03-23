@@ -105,5 +105,5 @@
 						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
 						"<span class='italics'>You hear a heavy electrical crack.</span>" \
 					)
-				L.adjustFireLoss(0.7) //adds up very rapidly
+				L.adjustFireLoss(0.9) //adds up very rapidly
 				. = 1
