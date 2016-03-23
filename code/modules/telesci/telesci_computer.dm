@@ -199,14 +199,16 @@
 	browserdatum.set_content(out)
 	browserdatum.open()
 
-/obj/machinery/computer/telescience/proc/sparks()
-	if(telepad)
-		var/L = get_turf(E)
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, L)
-		s.start()
-	else
-		return
+/obj/machinery/computer/telescience/proc/sparks(var/atom/target)
+	if(!target)
+		if(telepad && get_turf(telepad))
+			target = telepad
+		else
+			return
+	var/L = get_turf(target)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, L)
+	s.start()
 
 /obj/machinery/computer/telescience/proc/telefail()
 	if(prob(95))
@@ -218,7 +220,7 @@
 		// Irradiate everyone in telescience!
 		for(var/obj/machinery/telepad/E in machines)
 			var/L = get_turf(E)
-			sparks()
+			sparks(target = L)
 			for(var/mob/living/carbon/human/M in viewers(L, null))
 				M.apply_effect((rand(10, 20)), IRRADIATE, 0)
 				to_chat(M, "<span class='warning'>You feel strange.</span>")
@@ -266,7 +268,7 @@
 				M.Paralyse(4)
 			else
 				M.Jitter(500)
-			sparks()
+			sparks(target = M)
 		return
 	if(prob(1))
 		// They did the mash! (They did the monster mash!) The monster mash! (It was a graveyard smash!)

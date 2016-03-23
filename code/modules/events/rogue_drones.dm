@@ -38,14 +38,16 @@
 /datum/event/rogue_drone/end()
 	var/num_recovered = 0
 	for(var/mob/living/simple_animal/hostile/retaliate/malf_drone/D in drones_list)
-		var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
-		sparks.set_up(3, 0, D.loc)
-		sparks.start()
+		var/locc = get_turf(D)
+		if(locc)
+			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+			sparks.set_up(3, 0, locc)
+			sparks.start()
 		D.z = 2
 		D.has_loot = 0
 
+		drones_list -= D
 		qdel(D)
-		D = null
 		num_recovered++
 
 	if(num_recovered > drones_list.len * 0.75)
