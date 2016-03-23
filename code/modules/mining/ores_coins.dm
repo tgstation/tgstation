@@ -40,6 +40,7 @@
 	points = 1
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
+	w_class = 1
 
 /obj/item/weapon/ore/glass/attack_self(mob/living/user)
 	user << "<span class='notice'>You use the sand to make sandstone.</span>"
@@ -59,6 +60,25 @@
 		sandAmt -= SS.max_amount
 	qdel(src)
 	return
+
+/obj/item/weapon/ore/glass/throw_impact(atom/hit_atom)
+	if(..() || !ishuman(hit_atom))
+		return
+	var/mob/living/carbon/human/C = hit_atom
+	if(C.head && C.head.flags_cover & HEADCOVERSEYES)
+		visible_message("<span class='danger'>[C]'s headgear blocks the sand!</span>")
+		return
+	if(C.wear_mask && C.wear_mask.flags_cover & MASKCOVERSEYES)
+		visible_message("<span class='danger'>[C]'s mask blocks the sand!</span>")
+		return
+	if(C.glasses && C.glasses.flags_cover & GLASSESCOVERSEYES)
+		visible_message("<span class='danger'>[C]'s glasses block the sand!</span>")
+		return
+	C.adjust_blurriness(6)
+	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
+	C.confused += 5
+	C << "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>"
+	qdel(src)
 
 /obj/item/weapon/ore/glass/basalt
 	name = "volcanic ash"
