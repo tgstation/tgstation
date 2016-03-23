@@ -237,7 +237,8 @@
 
 	var/freqnum = text2num(freq) //Why should we call text2num three times when we can just do it here?
 	var/turf/position = get_turf(src)
-
+	if(freqnum == 1459)
+		return
 	//#### Tagging the signal with all appropriate identity values ####//
 
 	// ||-- The mob's name identity --||
@@ -437,6 +438,8 @@
 /obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(radio_freq)
 		return
+	if(radio_freq == 1459)
+		return
 	if(broadcasting)
 		if(get_dist(src, speaker) <= canhear_range)
 			talk_into(speaker, raw_message, , spans)
@@ -587,3 +590,7 @@
 
 /obj/item/device/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
 	listening = 0			// And it's nice to have a subtype too for future features.
+
+/obj/item/device/radio/off/New()
+	..()
+	qdel(src)

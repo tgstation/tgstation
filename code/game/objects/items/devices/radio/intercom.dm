@@ -13,6 +13,7 @@
 /obj/item/device/radio/intercom/New()
 	..()
 	SSobj.processing += src
+	qdel(src)
 
 /obj/item/device/radio/intercom/Destroy()
 	SSobj.processing -= src

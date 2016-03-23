@@ -27,6 +27,8 @@
 	..()
 
 /obj/item/device/radio/headset/receive_range(freq, level, AIuser)
+	if(freq == 1459)
+		return -1
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		if(H.ears == src)

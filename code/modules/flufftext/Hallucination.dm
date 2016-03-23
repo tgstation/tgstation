@@ -524,7 +524,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 		for(var/mob/living/carbon/human/H in living_mob_list)
 			humans += H
 		person = pick(humans)
-		target << target.compose_message(person,person.languages,pick(radio_messages),"1459",person.get_spans())
+		target << target.compose_message(person,person.languages,pick(radio_messages),"1213",person.get_spans())
 	qdel(src)
 
 /obj/effect/hallucination/message

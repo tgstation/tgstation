@@ -89,7 +89,7 @@
 	id = "Bus 4"
 	network = "tcommsat"
 	freq_listening = list(ENG_FREQ)
-	autolinkers = list("processor4", "engineering", "common")
+	autolinkers = list("processor4", "engineering")
 
 /obj/machinery/telecomms/bus/preset_four/New()
 	for(var/i = 1441, i < 1489, i += 2)

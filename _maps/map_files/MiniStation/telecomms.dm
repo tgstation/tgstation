@@ -4,7 +4,7 @@
 
 /obj/machinery/telecomms/bus/preset_one/ministation
 	name = "Bus"
-	autolinkers = list("processor1", "common")
+	autolinkers = list("processor1")
 	freq_listening = list()
 
 /obj/machinery/telecomms/processor/preset_one/ministation
