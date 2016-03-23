@@ -545,31 +545,12 @@
 	return 1
 
 /datum/admins/proc/makeERPsquad()
-	var/list/mob/dead/observer/candidates = list()
-	var/time_passed = world.time
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for an elite Nanotrasen ERP Squad being sent in?", "deathsquad", null)
 
-	//Generates a list of ERPers from active ghosts.
-	for(var/mob/dead/observer/G in player_list)
-		spawn(0)
-			switch(alert(G,"Do you wish to be considered for an elite Nanotrasen ERP Squad being sent in?","Please answer in 30 seconds!","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-						return
-					candidates += G
-				if("No")
-					return
-				else
-					return
-	sleep(300)
-
-	for(var/mob/dead/observer/G in candidates)
-		if(!G.key)
-			candidates.Remove(G)
-
-	if(candidates.len >= 3) //Minimum 3 to be considered a squad
+	if(candidates.len)
 		//Pick the unlucky players
 		var/numerps = min(5,candidates.len) //How many erpers to spawn
-		var/list/spawnpoints = deathsquadspawn
+		var/list/spawnpoints = latejoin
 		while(numerps && spawnpoints.len && candidates.len)
 			var/spawnloc = spawnpoints[1]
 			var/mob/dead/observer/chosen_candidate = pick(candidates)
@@ -587,8 +568,10 @@
 			ERPOperative.underwear = "Ladies Kinky"
 			ERPOperative.socks = "Nude"
 			ERPOperative.undershirt = "Nude"
-			ERPOperative.lip_style = pick("red", "purple", "jade", "black")
+			ERPOperative.lip_style = "lipstick"
+			ERPOperative.lip_color = pick("red", "purple", "jade", "black")
 			ERPOperative.dna.update_dna_identity()
+			ERPOperative.dna.species.specflags |= HAIR //Everyone's getting a braid, EVERYONE
 			ERPOperative.update_body()
 			ERPOperative.update_hair()
 			ERPOperative.real_name = "[pick(the_big_list_of_hookers)] [pick(last_names)]"
