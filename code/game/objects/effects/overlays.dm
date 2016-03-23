@@ -83,10 +83,7 @@
 		icon = mimiced_atom.icon
 		icon_state = mimiced_atom.icon_state
 		dir = mimiced_atom.dir
-	spawn(0)
-		while(alpha)
-			alpha -= initial(alpha) / duration //reduce alpha over duration
-			sleep(1)
+	animate(src, alpha = 0, time = duration)
 
 /obj/effect/overlay/temp/cult
 	randomdir = 0
