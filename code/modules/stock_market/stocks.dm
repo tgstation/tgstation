@@ -47,8 +47,7 @@
 	var/datum/industry/industry = null
 
 /datum/stock/proc/addEvent(var/datum/stockEvent/E)
-	if (!(E in events))
-		events += E
+	events |= E
 
 /datum/stock/proc/addArticle(var/datum/article/A)
 	if (!(A in articles))
