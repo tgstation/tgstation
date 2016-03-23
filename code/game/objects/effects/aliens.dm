@@ -7,11 +7,6 @@
  *		effect/acid
  */
 
-#define WEED_NORTH_EDGING "north"
-#define WEED_SOUTH_EDGING "south"
-#define WEED_EAST_EDGING "east"
-#define WEED_WEST_EDGING "west"
-
 /obj/structure/alien
 	icon = 'icons/mob/alien.dmi'
 
@@ -158,33 +153,37 @@
 	gender = PLURAL
 	name = "resin floor"
 	desc = "A thick resin surface covers the floor."
-	icon_state = "weeds"
 	anchored = 1
 	density = 0
-	layer = 2
+	layer = TURF_LAYER + 0.09
+	pixel_x = -4
+	pixel_y = -4 //so the sprites line up right
+	icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
+	icon_state = "weeds"
 	var/health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
-	var/static/list/weedImageCache
+	canSmoothWith = list(/obj/structure/alien/weeds, /turf/simulated/wall)
+	smooth = SMOOTH_MORE
 
 
 /obj/structure/alien/weeds/New(pos, node)
 	..()
+	if(!luminosity) //weed nodes have luminosity, but normal weeds don't!
+		switch(rand(1,3))//why is there no 1? because we already have the icon set to that
+			if(2)
+				icon = 'icons/obj/smooth_structures/alien/weeds2.dmi'
+			if(3)
+				icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
 	linked_node = node
 	if(istype(loc, /turf/space))
 		qdel(src)
 		return
-	if(icon_state == "weeds")
-		icon_state = pick("weeds", "weeds1", "weeds2")
-	fullUpdateWeedOverlays()
 	spawn(rand(150, 200))
 		if(src)
 			Life()
 
 /obj/structure/alien/weeds/Destroy()
-	var/turf/T = loc
 	loc = null
-	for (var/obj/structure/alien/weeds/W in range(1,T))
-		W.updateWeedOverlays()
 	linked_node = null
 	return ..()
 
@@ -240,44 +239,11 @@
 		healthcheck()
 
 
-/obj/structure/alien/weeds/proc/updateWeedOverlays()
-
-	overlays.Cut()
-
-	if(!weedImageCache || !weedImageCache.len)
-		weedImageCache = list()
-		weedImageCache.len = 4
-		weedImageCache[WEED_NORTH_EDGING] = image('icons/mob/alien.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
-		weedImageCache[WEED_SOUTH_EDGING] = image('icons/mob/alien.dmi', "weeds_side_s", layer=2.11, pixel_y = 32)
-		weedImageCache[WEED_EAST_EDGING] = image('icons/mob/alien.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
-		weedImageCache[WEED_WEST_EDGING] = image('icons/mob/alien.dmi', "weeds_side_w", layer=2.11, pixel_x = 32)
-
-	var/turf/N = get_step(src, NORTH)
-	var/turf/S = get_step(src, SOUTH)
-	var/turf/E = get_step(src, EAST)
-	var/turf/W = get_step(src, WEST)
-	if(!locate(/obj/structure/alien) in N.contents)
-		if(istype(N, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_SOUTH_EDGING]
-	if(!locate(/obj/structure/alien) in S.contents)
-		if(istype(S, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_NORTH_EDGING]
-	if(!locate(/obj/structure/alien) in E.contents)
-		if(istype(E, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_WEST_EDGING]
-	if(!locate(/obj/structure/alien) in W.contents)
-		if(istype(W, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_EAST_EDGING]
-
-
-/obj/structure/alien/weeds/proc/fullUpdateWeedOverlays()
-	for (var/obj/structure/alien/weeds/W in range(1,src))
-		W.updateWeedOverlays()
-
 //Weed nodes
 /obj/structure/alien/weeds/node
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
+	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
 	icon_state = "weednode"
 	luminosity = 1
 	var/node_range = NODERANGE
@@ -515,8 +481,3 @@
 	spawn(1)
 		if(src)
 			tick()
-
-#undef WEED_NORTH_EDGING
-#undef WEED_SOUTH_EDGING
-#undef WEED_EAST_EDGING
-#undef WEED_WEST_EDGING

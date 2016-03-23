@@ -355,8 +355,8 @@ var/list/admin_verbs_hideable = list(
 		src << "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>"
 	else
 		//ghostize
-		log_admin("[key_name(usr)] admin ghosted")
-		message_admins("[key_name_admin(usr)] admin ghosted")
+		log_admin("[key_name(usr)] admin ghosted.")
+		message_admins("[key_name_admin(usr)] admin ghosted.")
 		var/mob/body = mob
 		body.ghostize(1)
 		if(body && !body.key)
