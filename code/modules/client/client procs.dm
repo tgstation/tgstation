@@ -218,6 +218,8 @@ var/next_external_rsc = 0
 		tooltips = new /datum/tooltip(src)
 
 
+	dir = pick(NORTH,SOUTH,EAST,WEST)
+
 //////////////
 //DISCONNECT//
 //////////////
