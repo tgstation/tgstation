@@ -423,7 +423,7 @@
 	name = "blast wave"
 	icon_state = null
 	damage = 0
-	penetration = 100
+	penetration = -1
 	embed = 0
 	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS|PROJREACT_MOBS|PROJREACT_BLOB
 	var/heavy_damage_range = 0
@@ -443,7 +443,8 @@
 		if(medium_damage_range)
 			if(heavy_damage_range)
 				for(var/atom/movable/A in T.contents)
-					A.ex_act(1)
+					if(!istype(A, /obj/item/weapon/organ/head))
+						A.ex_act(1)
 				T.ex_act(1)
 				heavy_damage_range -= 1
 			else
