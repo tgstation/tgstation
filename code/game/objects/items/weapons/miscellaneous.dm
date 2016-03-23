@@ -10,3 +10,10 @@
 	throw_range = 5
 	w_class = 2
 	attack_verb = list("warned", "cautioned", "smashed")
+
+/obj/item/weapon/skub
+	desc = "A skub"
+	name = "skub"
+	icon = 'icons/obj/items.dmi'
+	icon_state = 'skub'
+	w_class = 4
