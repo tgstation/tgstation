@@ -15,9 +15,10 @@
 	var/operating = 0
 	var/glass = 0
 	var/normalspeed = 1
-	var/heat_proof = 0 // For glass airlocks/opacity firedoors
+	var/heat_proof = 0 // For rglass-windowed airlocks and firedoors
 	var/emergency = 0 // Emergency access override
 	var/sub_door = 0 // 1 if it's meant to go under another door.
+	var/closingLayer = 3.1
 
 /obj/machinery/door/New()
 	..()
@@ -36,27 +37,19 @@
 	air_update_turf(1)
 	update_freelook_sight()
 	airlocks -= src
-	..()
-	return
+	return ..()
 
 //process()
 	//return
 
 /obj/machinery/door/Bumped(atom/AM)
 	if(operating || emagged) return
-	if(ismob(AM))
-		var/mob/M = AM
+	if(isliving(AM))
+		var/mob/living/M = AM
 		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
 		M.last_bumped = world.time
 		if(!M.restrained())
 			bumpopen(M)
-		return
-
-	if(istype(AM, /obj/machinery/bot))
-		var/obj/machinery/bot/bot = AM
-		if(src.check_access(bot.botcard) || emergency == 1)
-			if(density)
-				open()
 		return
 
 	if(istype(AM, /obj/mecha))
@@ -65,7 +58,7 @@
 			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access) || emergency == 1))
 				open()
 			else
-				flick("door_deny", src)
+				do_animate("deny")
 		return
 	return
 
@@ -82,11 +75,12 @@
 /obj/machinery/door/CanAtmosPass()
 	return !density
 
-//used in the AStar algorithm to determinate if the turf the door is on is passable
-/obj/machinery/door/proc/CanAStarPass(var/obj/item/weapon/card/id/ID)
-	return !density
+/obj/machinery/door/proc/CheckForMobs()
+	if(locate(/mob/living) in get_turf(src))
+		sleep(1)
+		open()
 
-/obj/machinery/door/proc/bumpopen(mob/user as mob)
+/obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)
 		return
 	src.add_fingerprint(user)
@@ -97,33 +91,35 @@
 		if(allowed(user) || src.emergency == 1)
 			open()
 		else
-			flick("door_deny", src)
+			do_animate("deny")
 	return
 
 
-/obj/machinery/door/attack_ai(mob/user as mob)
+/obj/machinery/door/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/door/attack_paw(mob/user as mob)
+/obj/machinery/door/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/door/attack_hand(mob/user as mob)
+/obj/machinery/door/attack_hand(mob/user)
 	return src.attackby(user, user)
 
 
-/obj/machinery/door/attack_tk(mob/user as mob)
+/obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
 		return
 	..()
 
-/obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/door/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
-	if(isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
+	if(isrobot(user))
+		return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	src.add_fingerprint(user)
-	if(operating || emagged)	return
+	if(operating || emagged)
+		return
 	if(!Adjacent(user))
 		user = null
 	if(!src.requiresID())
@@ -135,23 +131,8 @@
 			close()
 		return
 	if(src.density)
-		flick("door_deny", src)
+		do_animate("deny")
 	return
-
-/obj/machinery/door/emag_act(mob/user as mob)
-	if(density && hasPower() && !emagged)
-		flick("door_spark", src)
-		sleep(6)
-		open()
-		emagged = 1
-		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
-		if(istype(src, /obj/machinery/door/airlock))
-			var/obj/machinery/door/airlock/A = src
-			A.lights = 0
-			A.locked = 1
-			A.loseMainPower()
-			A.loseBackupPower()
-			A.update_icon()
 
 /obj/machinery/door/blob_act()
 	if(prob(40))
@@ -173,7 +154,7 @@
 /obj/machinery/door/ex_act(severity, target)
 	if(severity == 3)
 		if(prob(80))
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(2, 1, src)
 			s.start()
 		return
@@ -209,7 +190,7 @@
 		return 1
 	if(operating)
 		return
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		return 0
 	operating = 1
 
@@ -236,13 +217,14 @@
 	operating = 1
 
 	do_animate("closing")
-	src.layer = 3.1
+	src.layer = closingLayer
 	sleep(5)
 	src.density = 1
 	sleep(5)
 	update_icon()
 	if(visible && !glass)
 		SetOpacity(1)
+	CheckForMobs()
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
@@ -274,10 +256,23 @@
 /obj/machinery/door/proc/hasPower()
 	return !(stat & NOPOWER)
 
-/obj/machinery/door/BlockSuperconductivity()
+/obj/machinery/door/proc/update_freelook_sight()
+	if(!glass && cameranet)
+		cameranet.updateVisibility(src, 0)
+
+/obj/machinery/door/BlockSuperconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)
 		return 1
 	return 0
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
+
+/obj/machinery/door/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0
+
+/obj/machinery/door/proc/lock()
+	return
+
+/obj/machinery/door/proc/unlock()
+	return

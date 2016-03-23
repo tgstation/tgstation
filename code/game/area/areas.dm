@@ -27,29 +27,30 @@
 /area/New()
 	icon_state = ""
 	layer = 10
-	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references src.loc.loc.master ~Carn
+	master = src
 	uid = ++global_uid
 	related = list(src)
+	map_name = name // Save the initial (the name set in the map) name of the area.
 
 	if(requires_power)
 		luminosity = 0
 	else
-		power_light = 0			//rastaf0
-		power_equip = 0			//rastaf0
-		power_environ = 0		//rastaf0
-		luminosity = 1
-		lighting_use_dynamic = 0
+		power_light = 1
+		power_equip = 1
+		power_environ = 1
+
+		if (lighting_use_dynamic != DYNAMIC_LIGHTING_IFSTARLIGHT)
+			lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 
 	..()
 
-	power_change()		// all machines set to current power level, also updates lighting icon
-	InitializeLighting()
+	power_change()		// all machines set to current power level, also updates icon
 
-	blend_mode = BLEND_MULTIPLY // Putting this in the constructure so that it stops the icons being screwed up in the map editor.
-
+	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
 
-/area/proc/poweralert(var/state, var/obj/source as obj)
+
+/area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
@@ -75,7 +76,7 @@
 					D.triggerAlarm("Power", src, cameras, source)
 	return
 
-/area/proc/atmosalert(var/danger_level, var/obj/source as obj)
+/area/proc/atmosalert(danger_level, obj/source)
 	if(danger_level != atmosalm)
 		if (danger_level==2)
 			var/list/cameras = list()
@@ -102,7 +103,7 @@
 		return 1
 	return 0
 
-/area/proc/firealert(var/obj/source as obj)
+/area/proc/firealert(obj/source)
 	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
 
@@ -131,7 +132,7 @@
 		D.triggerAlarm("Fire", src, cameras, source)
 	return
 
-/area/proc/firereset(var/obj/source as obj)
+/area/proc/firereset(obj/source)
 	for(var/area/RA in related)
 		if (RA.fire)
 			RA.fire = 0
@@ -155,7 +156,7 @@
 		D.cancelAlarm("Fire", src, source)
 	return
 
-/area/proc/burglaralert(var/obj/trigger)
+/area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
 		return
 
@@ -165,12 +166,11 @@
 		//Trigger alarm effect
 		RA.set_fire_alarm_effect()
 		//Lockdown airlocks
-		for(var/obj/machinery/door/airlock/DOOR in RA)
+		for(var/obj/machinery/door/DOOR in RA)
 			spawn(0)
 				DOOR.close()
 				if(DOOR.density)
-					DOOR.locked = 1
-					DOOR.update_icon()
+					DOOR.lock()
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
@@ -223,21 +223,24 @@
 	return
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && (!requires_power||power_environ) && !lighting_space)//If it doesn't require power, can still activate this proc.
+	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
 		if(fire && !eject && !party)
 			icon_state = "blue"
-		/*else if(atmosalm && !fire && !eject && !party)
-			icon_state = "bluenew"*/
 		else if(!fire && eject && !party)
 			icon_state = "red"
 		else if(party && !fire && !eject)
 			icon_state = "party"
 		else
 			icon_state = "blue-red"
+		invisibility = INVISIBILITY_LIGHTING
 	else
 	//	new lighting behaviour with obj lights
 		icon_state = null
+		invisibility = INVISIBILITY_MAXIMUM
 
+/area/space/updateicon()
+	icon_state = null
+	invisibility = INVISIBILITY_MAXIMUM
 
 /*
 #define EQUIP 1
@@ -245,14 +248,12 @@
 #define ENVIRON 3
 */
 
-/area/proc/powered(var/chan)		// return true if the area has power to given channel
+/area/proc/powered(chan)		// return true if the area has power to given channel
 
 	if(!master.requires_power)
 		return 1
 	if(master.always_unpowered)
 		return 0
-	if(src.lighting_space)
-		return 0 // Nope sorry
 	switch(chan)
 		if(EQUIP)
 			return master.power_equip
@@ -263,16 +264,18 @@
 
 	return 0
 
+/area/space/powered(chan) //Nope.avi
+	return 0
+
 // called when power status changes
 
 /area/proc/power_change()
 	for(var/area/RA in related)
 		for(var/obj/machinery/M in RA)	// for each machine in the area
 			M.power_change()				// reverify power status (to update icons etc.)
-		if (fire || eject || party)
-			RA.updateicon()
+		RA.updateicon()
 
-/area/proc/usage(var/chan)
+/area/proc/usage(chan)
 	var/used = 0
 	switch(chan)
 		if(LIGHT)
@@ -306,7 +309,7 @@
 	master.used_light = 0
 	master.used_environ = 0
 
-/area/proc/use_power(var/amount, var/chan)
+/area/proc/use_power(amount, chan)
 
 	switch(chan)
 		if(EQUIP)
@@ -318,23 +321,20 @@
 
 
 /area/Entered(A)
-	if(!istype(A,/mob/living))	return
+	if(!istype(A,/mob/living))
+		return
 
 	var/mob/living/L = A
-	if(!L.ckey)	return
-
-	if(!L.lastarea)
-		L.lastarea = get_area(L.loc)
-	var/area/newarea = get_area(L.loc)
-
-	L.lastarea = newarea
+	if(!L.ckey)
+		return
 
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return
-
-	if(!L.client.ambience_playing)
+	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
 		L.client.ambience_playing = 1
 		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
+
+	if(!(L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
+		return //General ambience check is below the ship ambience so one can play without the other
 
 	if(prob(35))
 		var/sound = pick(ambientsounds)
@@ -359,6 +359,16 @@
 		if(T && gravity_generators["[T.z]"] && length(gravity_generators["[T.z]"]))
 			return 1
 	return 0
+
+/area/proc/setup(a_name)
+	name = a_name
+	power_equip = 0
+	power_light = 0
+	power_environ = 0
+	always_unpowered = 0
+	valid_territory = 0
+	addSorted()
+
 /*
 /area/proc/clear_docking_area()
 	var/list/dstturfs = list()
@@ -389,7 +399,7 @@
 			else
 				qdel(AM)
 		if(istype(T, /turf/simulated))
-			del(T)
+			qdel(T)
 
 	/*for(var/atom/movable/bug in src) // If someone (or something) is somehow still in the shuttle's docking area...
 		if(ismob(bug))

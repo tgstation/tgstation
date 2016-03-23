@@ -9,7 +9,6 @@
 /mob/living/silicon/pai/var/list/available_software = list(
 															"crew manifest" = 5,
 															"digital messenger" = 5,
-															"chatroom client" = 5,
 															"medical records" = 15,
 															"security records" = 15,
 															//"camera jack" = 10,
@@ -67,8 +66,6 @@
 				left_part = src.softwareCamera()
 			if("signaller")
 				left_part = src.softwareSignal()
-			if("chatroom")
-				src.chatroom() //snowflake? maybe, but it's less effort this way
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -263,8 +260,7 @@
 			if(href_list["cable"])
 				var/turf/T = get_turf(src.loc)
 				src.cable = new /obj/item/weapon/pai_cable(T)
-				for (var/mob/M in viewers(T))
-					M.show_message("<span class='danger'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", 3, "<span class='danger'>You hear the soft click of something light and hard falling to the ground.</span>", 2)
+				T.visible_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
@@ -287,8 +283,6 @@
 	for(var/s in src.software)
 		if(s == "digital messenger")
 			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> <br>"
-		if(s == "chatroom client")
-			dat += "<a href='byond://?src=\ref[src];software=chatroom;sub=0'>Chatroom Client</a> <br>"
 		if(s == "crew manifest")
 			dat += "<a href='byond://?src=\ref[src];software=manifest;sub=0'>Crew Manifest</a> <br>"
 		if(s == "medical records")
@@ -372,10 +366,10 @@
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
-		var/turf/T = get_turf(P.loc)
-		for (var/mob/v in viewers(T))
-			v.show_message("<span class='notice'>[M] presses \his thumb against [P].</span>", 3, "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>", 2)
-		if(!check_dna_integrity(M))
+		M.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>",\
+						"<span class='notice'>You press your thumb against [P].</span>",\
+						"<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
+		if(!M.has_dna())
 			P << "<b>No DNA detected</b>"
 			return
 		P << "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>"
@@ -532,6 +526,7 @@
 		dat += "Unable to obtain a reading.<br>"
 	else
 		var/datum/gas_mixture/environment = T.return_air()
+		var/list/env_gases = environment.gases
 
 		var/pressure = environment.return_pressure()
 		var/total_moles = environment.total_moles()
@@ -539,17 +534,10 @@
 		dat += "Air Pressure: [round(pressure,0.1)] kPa<br>"
 
 		if (total_moles)
-			var/o2_level = environment.oxygen/total_moles
-			var/n2_level = environment.nitrogen/total_moles
-			var/co2_level = environment.carbon_dioxide/total_moles
-			var/plasma_level = environment.toxins/total_moles
-			var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
-			dat += "Nitrogen: [round(n2_level*100)]%<br>"
-			dat += "Oxygen: [round(o2_level*100)]%<br>"
-			dat += "Carbon Dioxide: [round(co2_level*100)]%<br>"
-			dat += "Plasma: [round(plasma_level*100)]%<br>"
-			if(unknown_level > 0.01)
-				dat += "OTHER: [round(unknown_level)]%<br>"
+			for(var/id in env_gases)
+				var/gas_level = env_gases[id][MOLES]/total_moles
+				if(id in hardcoded_gases || gas_level > 0.01)
+					dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100)]%<br>"
 		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 	dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
 	dat += "<br>"
@@ -632,20 +620,17 @@
 
 	var/dat = "<h3>Digital Messenger</h3>"
 	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;toggler=1'>
-	[(pda.toff) ? "<font color='red'> \[Off\]</font>" : "<font color='green'> \[On\]</font>"]</a><br>
+	[(pda.toff) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br>
 	<b>Ringer Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;ringer=1'>
-	[(pda.silent) ? "<font color='red'> \[Off\]</font>" : "<font color='green'> \[On\]</font>"]</a><br><br>"}
+	[(pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
 	if(!pda.toff)
 		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
-			if (P == src.pda)	continue
+			if (P == src.pda)
+				continue
 			dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
 			dat += "</li>"
 	dat += "</ul>"
 	dat += "<br><br>"
 	dat += "Messages: <hr> [pda.tnote]"
 	return dat
-
-/mob/living/silicon/pai/proc/chatroom()
-	pda.mode = 5
-	pda.attack_self(src)

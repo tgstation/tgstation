@@ -1,4 +1,3 @@
-
 #define INGREDIENTS_FILL 1
 #define INGREDIENTS_SCATTER 2
 #define INGREDIENTS_STACK 3
@@ -15,11 +14,11 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable
 	bitesize = 4
 	w_class = 3
-	volume = 60
+	volume = 80
 
 	var/ingMax = 12
 	var/list/ingredients = list()
-	var/Ingredientsplacement = INGREDIENTS_FILL
+	var/ingredients_placement = INGREDIENTS_FILL
 	var/customname = "custom"
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/examine(mob/user)
@@ -40,17 +39,18 @@
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)
-			user << "<span class='warning'>The ingredient is too big for [src].</span>"
+			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
 		else if((ingredients.len >= ingMax) || (reagents.total_volume >= volume))
-			user << "<span class='warning'>You can't add more ingredients to [src].</span>"
+			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
 		else
-			user.drop_item()
+			if(!user.unEquip(I))
+				return
 			if(S.trash)
 				new S.trash(get_turf(user))
 				S.trash = null  //we remove the plate before adding the ingredient
 			ingredients += S
 			S.loc = src
-			filling_color = S.filling_color
+			mix_filling_color(S)
 			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
 			update_overlays(S)
 			user << "<span class='notice'>You add the [I.name] to the [name].</span>"
@@ -77,34 +77,50 @@
 			customname = "custom"
 			break
 	if(ingredients.len == 1) //first ingredient
-		if(istype(S, /obj/item/weapon/reagent_containers/food/snacks/meat/human))
-			var/obj/item/weapon/reagent_containers/food/snacks/meat/human/H = S
-			if(H.subjectname)
-				customname = "[H.subjectname]"
-			else if(H.subjectjob)
-				customname = "[H.subjectjob]"
+		if(istype(S, /obj/item/weapon/reagent_containers/food/snacks/meat))
+			var/obj/item/weapon/reagent_containers/food/snacks/meat/M = S
+			if(M.subjectname)
+				customname = "[M.subjectname]"
+			else if(M.subjectjob)
+				customname = "[M.subjectjob]"
+			else
+				customname = S.name
 		else
-			customname = "[initial(S.name)]"
+			customname = S.name
 	name = "[customname] [initial(name)]"
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/proc/initialize_custom_food(obj/item/BASE, obj/item/I, mob/user)
 	if(istype(BASE,/obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RC = BASE
 		RC.reagents.trans_to(src,RC.reagents.total_volume)
+	for(var/obj/O in BASE.contents)
+		contents += O
 	if(I && user)
 		attackby(I, user)
+	user.unEquip(BASE)
 	qdel(BASE)
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
+/obj/item/weapon/reagent_containers/food/snacks/customizable/proc/mix_filling_color(obj/item/weapon/reagent_containers/food/snacks/S)
+	if(ingredients.len == 1)
+		filling_color = S.filling_color
+	else
+		var/list/rgbcolor = list(0,0,0,0)
+		var/customcolor = GetColors(filling_color)
+		var/ingcolor =  GetColors(S.filling_color)
+		rgbcolor[1] = (customcolor[1]+ingcolor[1])/2
+		rgbcolor[2] = (customcolor[2]+ingcolor[2])/2
+		rgbcolor[3] = (customcolor[3]+ingcolor[3])/2
+		rgbcolor[4] = (customcolor[4]+ingcolor[4])/2
+		filling_color = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3], rgbcolor[4])
 
+/obj/item/weapon/reagent_containers/food/snacks/customizable/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
 	var/image/I = new(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
 		I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
 	else
 		I.color = S.filling_color
 
-	switch(Ingredientsplacement)
-
+	switch(ingredients_placement)
 		if(INGREDIENTS_SCATTER)
 			I.pixel_x = rand(-1,1)
 			I.pixel_y = rand(-1,1)
@@ -122,6 +138,7 @@
 			return
 		if(INGREDIENTS_FILL)
 			overlays.Cut()
+			I.color = filling_color
 		if(INGREDIENTS_LINE)
 			I.pixel_y = rand(-8,3)
 			I.pixel_x = I.pixel_y
@@ -152,7 +169,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/burger
 	name = "burger"
 	desc = "A timeless classic."
-	Ingredientsplacement = INGREDIENTS_STACKPLUSTOP
+	ingredients_placement = INGREDIENTS_STACKPLUSTOP
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "bun"
 
 
@@ -161,6 +179,7 @@
 	ingMax = 6
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/custom
 	slices_num = 5
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "tofubread"
 
 
@@ -169,13 +188,14 @@
 	ingMax = 6
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom
 	slices_num = 5
+	icon = 'icons/obj/food/piecake.dmi'
 	icon_state = "plaincake"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/kebab
 	name = "kebab"
 	desc = "Delicious food on a stick."
-	Ingredientsplacement = INGREDIENTS_LINE
+	ingredients_placement = INGREDIENTS_LINE
 	trash = /obj/item/stack/rods
 	list_reagents = list("nutriment" = 1)
 	ingMax = 6
@@ -185,24 +205,27 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pasta
 	name = "spaghetti"
 	desc = "Noodles. With stuff. Delicious."
-	Ingredientsplacement = INGREDIENTS_SCATTER
+	ingredients_placement = INGREDIENTS_SCATTER
 	ingMax = 6
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "spaghettiboiled"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pie
 	name = "pie"
 	ingMax = 6
+	icon = 'icons/obj/food/piecake.dmi'
 	icon_state = "pie"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza
 	name = "pizza"
 	desc = "A personalized pan pizza meant for only one person."
-	Ingredientsplacement = INGREDIENTS_SCATTER
+	ingredients_placement = INGREDIENTS_SCATTER
 	ingMax = 8
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom
 	slices_num = 6
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "pizzamargherita"
 
 
@@ -211,13 +234,15 @@
 	desc = "Very tasty."
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	ingMax = 6
+	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
 	name = "toast"
 	desc = "A timeless classic."
-	Ingredientsplacement = INGREDIENTS_STACK
+	ingredients_placement = INGREDIENTS_STACK
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "breadslice"
 	var/finished = 0
 
@@ -254,9 +279,12 @@
 	desc = "A bowl with liquid and... stuff in it."
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	ingMax = 8
+	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "wishsoup"
 
-
+/obj/item/weapon/reagent_containers/food/snacks/customizable/soup/New()
+	..()
+	eatverb = pick("slurp","sip","suck","inhale","drink")
 
 
 
@@ -269,7 +297,7 @@
 	icon_state	= "snack_bowl"
 	name = "bowl"
 	desc = "A simple bowl, used for soups and salads."
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
 	flags = OPENCONTAINER
 	w_class = 3
@@ -278,9 +306,9 @@
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)
-			user << "<span class='warning'>The ingredient is too big for [src].</span>"
+			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
 		else if(contents.len >= 20)
-			user << "<span class='warning'>You can't add more ingredients to [src].</span>"
+			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
 		else
 			if(reagents.has_reagent("water", 10)) //are we starting a soup or a salad?
 				var/obj/item/weapon/reagent_containers/food/snacks/customizable/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/soup(get_turf(src))
@@ -297,8 +325,10 @@
 
 /obj/item/weapon/reagent_containers/glass/bowl/update_icon()
 	overlays.Cut()
-	if(reagents.total_volume)
-		icon_state = "wishsoup"
+	if(reagents && reagents.total_volume)
+		var/image/filling = image('icons/obj/food/soupsalad.dmi', "fullbowl")
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		overlays += filling
 	else
 		icon_state = "bowl"
 

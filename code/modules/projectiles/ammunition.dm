@@ -6,7 +6,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	var/fire_sound = null						//What sound should play when this ammo is fired
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
@@ -19,8 +19,8 @@
 	..()
 	if(projectile_type)
 		BB = new projectile_type(src)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 	dir = pick(alldirs)
 	update_icon()
 
@@ -34,24 +34,26 @@
 		BB = new projectile_type(src)
 	return
 
-/obj/item/ammo_casing/attackby(obj/item/ammo_box/box as obj, mob/user as mob, params)
-	if (!istype(box, /obj/item/ammo_box))
-		return
-	if(isturf(src.loc))
-		var/boolets = 0
-		for(var/obj/item/ammo_casing/bullet in src.loc)
-			if (box.stored_ammo.len >= box.max_ammo)
-				break
-			if (bullet.BB)
-				if (box.give_round(bullet, 0))
-					boolets++
+/obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ammo_box))
+		var/obj/item/ammo_box/box = I
+		if(isturf(loc))
+			var/boolets = 0
+			for(var/obj/item/ammo_casing/bullet in loc)
+				if (box.stored_ammo.len >= box.max_ammo)
+					break
+				if (bullet.BB)
+					if (box.give_round(bullet, 0))
+						boolets++
+				else
+					continue
+			if (boolets > 0)
+				box.update_icon()
+				user << "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>"
 			else
-				continue
-		if (boolets > 0)
-			box.update_icon()
-			user << "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>"
-		else
-			user << "<span class='notice'>You fail to collect anything.</span>"
+				user << "<span class='warning'>You fail to collect anything!</span>"
+	else
+		..()
 
 //Boxes of ammo
 /obj/item/ammo_box
@@ -62,9 +64,9 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
-	m_amt = 30000
+	materials = list(MAT_METAL=30000)
 	throwforce = 2
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	var/list/stored_ammo = list()
@@ -79,7 +81,7 @@
 		stored_ammo += new ammo_type(src)
 	update_icon()
 
-/obj/item/ammo_box/proc/get_round(var/keep = 0)
+/obj/item/ammo_box/proc/get_round(keep = 0)
 	if (!stored_ammo.len)
 		return null
 	else
@@ -89,7 +91,7 @@
 			stored_ammo.Insert(1,b)
 		return b
 
-/obj/item/ammo_box/proc/give_round(var/obj/item/ammo_casing/R, var/replace_spent = 0)
+/obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/R, replace_spent = 0)
 	// Boxes don't have a caliber type, magazines do. Not sure if it's intended or not, but if we fail to find a caliber, then we fall back to ammo_type.
 	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
 		return 0
@@ -112,8 +114,13 @@
 
 	return 0
 
-/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, params, var/silent = 0, var/replace_spent = 0)
+/obj/item/ammo_box/proc/can_load(mob/user)
+	return 1
+
+/obj/item/ammo_box/attackby(obj/item/A, mob/user, params, silent = 0, replace_spent = 0)
 	var/num_loaded = 0
+	if(!can_load(user))
+		return
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
@@ -138,7 +145,7 @@
 
 	return num_loaded
 
-/obj/item/ammo_box/attack_self(mob/user as mob)
+/obj/item/ammo_box/attack_self(mob/user)
 	var/obj/item/ammo_casing/A = get_round()
 	if(A)
 		user.put_in_hands(A)

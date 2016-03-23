@@ -15,18 +15,17 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
-	m_amt = 1750
-	g_amt = 400
+	materials = list(MAT_METAL=1750, MAT_GLASS=400)
 //	var/up = 0
 	flash_protect = 2
 	tint = 2
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-	action_button_name = "Toggle Welding Helmet"
-	visor_flags = HEADCOVERSEYES | HEADCOVERSMOUTH
+	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -43,21 +42,19 @@
 /*
  * Cakehat
  */
-/obj/item/clothing/head/cakehat
-	name = "cake-hat"
-	desc = "It's tasty looking!"
-	icon_state = "cake0"
-	flags = HEADCOVERSEYES
-	var/onfire = 0.0
-	var/status = 0
-	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
-	var/processing = 0 //I dont think this is used anywhere.
+/obj/item/clothing/head/hardhat/cakehat
+	name = "cakehat"
+	desc = "You put the cake on your head. Brilliant."
+	icon_state = "hardhat0_cakehat"
+	item_state = "hardhat0_cakehat"
+	item_color = "cakehat"
+	flags_inv = HIDEEARS|HIDEHAIR
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	brightness_on = 2 //luminosity when on
+	flags_cover = HEADCOVERSEYES
+	heat = 1000
 
-/obj/item/clothing/head/cakehat/process()
-	if(!onfire)
-		SSobj.processing.Remove(src)
-		return
-
+/obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
 	if(istype(location, /mob/))
 		var/mob/living/carbon/human/M = location
@@ -67,21 +64,22 @@
 	if (istype(location, /turf))
 		location.hotspot_expose(700, 1)
 
-/obj/item/clothing/head/cakehat/attack_self(mob/user as mob)
-	if(status > 1)	return
-	src.onfire = !( src.onfire )
-	if (src.onfire)
-		src.force = 3
-		src.damtype = "fire"
-		src.icon_state = "cake1"
-		SSobj.processing |= src
-	else
-		src.force = null
-		src.damtype = "brute"
-		src.icon_state = "cake0"
-	return
+/obj/item/clothing/head/hardhat/cakehat/turn_on()
+	..()
+	force = 15
+	throwforce = 15
+	damtype = BURN
+	SSobj.processing |= src
 
+/obj/item/clothing/head/hardhat/cakehat/turn_off()
+	..()
+	force = 0
+	throwforce = 0
+	damtype = BRUTE
+	SSobj.processing -= src
 
+/obj/item/clothing/head/hardhat/cakehat/is_hot()
+	return on * heat
 /*
  * Ushanka
  */
@@ -90,22 +88,22 @@
 	desc = "Perfect for winter in Siberia, da?"
 	icon_state = "ushankadown"
 	item_state = "ushankadown"
-	flags_inv = HIDEEARS
+	flags_inv = HIDEEARS|HIDEHAIR
 	var/earflaps = 1
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
-/obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
+/obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(earflaps)
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"
 		earflaps = 0
-		user << "You raise the ear flaps on the ushanka."
+		user << "<span class='notice'>You raise the ear flaps on the ushanka.</span>"
 	else
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
 		earflaps = 1
-		user << "You lower the ear flaps on the ushanka."
+		user << "<span class='notice'>You lower the ear flaps on the ushanka.</span>"
 
 /*
  * Pumpkin head
@@ -116,11 +114,10 @@
 	icon_state = "hardhat0_pumpkin"
 	item_state = "hardhat0_pumpkin"
 	item_color = "pumpkin"
-	flags = HEADCOVERSEYES | BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-	action_button_name = "Toggle Pumpkin Light"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 2 //luminosity when on
+	flags_cover = HEADCOVERSEYES
 
 /*
  * Kitty ears
@@ -148,6 +145,5 @@
 	item_state = "hardhat0_reindeer"
 	item_color = "reindeer"
 	flags_inv = 0
-	action_button_name = "Toggle Nose Light"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 1 //luminosity when on

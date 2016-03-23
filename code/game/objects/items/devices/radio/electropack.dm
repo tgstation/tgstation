@@ -6,39 +6,42 @@
 	item_state = "electropack"
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
-	w_class = 5.0
-	g_amt = 2500
-	m_amt = 10000
+	w_class = 5
+	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
 	var/on = 1
 	var/code = 2
 	var/frequency = 1449
 	var/shock_cooldown = 0
 
+/obj/item/device/electropack/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] hooks \himself to the electropack and spams the trigger! It looks like \he's trying to commit suicide..</span>")
+	return (FIRELOSS)
+
 /obj/item/device/electropack/initialize()
-	if(radio_controller)
-		radio_controller.add_object(src, frequency, RADIO_CHAT)
+	if(SSradio)
+		SSradio.add_object(src, frequency, RADIO_CHAT)
 
 /obj/item/device/electropack/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, frequency)
-	..()
+	if(SSradio)
+		SSradio.remove_object(src, frequency)
+	return ..()
 
 /obj/item/device/electropack/attack_hand(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.back)
-			user << "<span class='notice'>You need help taking this off!</span>"
+			user << "<span class='warning'>You need help taking this off!</span>"
 			return
 	..()
 
-/obj/item/device/electropack/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/device/electropack/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
 
 		if(!user.unEquip(W))
-			user << "<span class='notice'>\the [W] is stuck to your hand, you cannot attach it to \the [src]!</span>"
+			user << "<span class='warning'>\the [W] is stuck to your hand, you cannot attach it to \the [src]!</span>"
 			return
 		W.loc = A
 		W.master = A
@@ -56,14 +59,15 @@
 
 /obj/item/device/electropack/Topic(href, href_list)
 	//..()
-	if(usr.stat || usr.restrained())
+	var/mob/living/carbon/C = usr
+	if(usr.stat || usr.restrained() || C.back == src)
 		return
 	if(((istype(usr, /mob/living/carbon/human) && ((!( ticker ) || (ticker && ticker.mode != "monkey")) && usr.contents.Find(src))) || (usr.contents.Find(master) || (in_range(src, usr) && istype(loc, /turf)))))
 		usr.set_machine(src)
 		if(href_list["freq"])
-			radio_controller.remove_object(src, frequency)
+			SSradio.remove_object(src, frequency)
 			frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
-			radio_controller.add_object(src, frequency, RADIO_CHAT)
+			SSradio.add_object(src, frequency, RADIO_CHAT)
 		else
 			if(href_list["code"])
 				code += text2num(href_list["code"])
@@ -107,7 +111,7 @@
 		step(M, pick(cardinal))
 
 		M << "<span class='danger'>You feel a sharp shock!</span>"
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, M)
 		s.start()
 

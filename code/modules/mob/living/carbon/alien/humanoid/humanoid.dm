@@ -1,26 +1,28 @@
 /mob/living/carbon/alien/humanoid
 	name = "alien"
 	icon_state = "alien_s"
+	pass_flags = PASSTABLE
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
+	var/alt_icon = 'icons/mob/alienleap.dmi' //used to switch between the two alien icon files.
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 30
+	var/custom_pixel_x_offset = 0 //for admin fuckery.
+	var/custom_pixel_y_offset = 0
+	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
-	create_reagents(1000)
-	if(name == "alien")
-		name = text("alien ([rand(1, 1000)])")
-	real_name = name
+	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
 	..()
+
 
 /mob/living/carbon/alien/humanoid/movement_delay()
 	. = ..()
-	. += move_delay_add + config.alien_delay	//move_delay_add is used to slow aliens with stuns
-
-///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
+	. += move_delay_add + config.alien_delay + sneaking	//move_delay_add is used to slow aliens with stuns
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
 	if(r_store) r_store.emp_act(severity)
@@ -30,14 +32,20 @@
 /mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
 		..(user, 1)
-		adjustBruteLoss(14 + rand(1,9))
-		Paralyse(1)
-		step_away(src,user,15)
-		sleep(1)
-		step_away(src,user,15)
+		adjustBruteLoss(15)
+		var/hitverb = "punched"
+		if(mob_size < MOB_SIZE_LARGE)
+			Paralyse(1)
+			step_away(src,user,15)
+			sleep(1)
+			step_away(src,user,15)
+			hitverb = "slammed"
+		playsound(loc, "punch", 25, 1, -1)
+		visible_message("<span class='danger'>[user] has [hitverb] [src]!</span>", \
+		"<span class='userdanger'>[user] has [hitverb] [src]!</span>")
 		return 1
 
-/mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M)
 	if(..())
 		switch(M.a_intent)
 			if ("harm")
@@ -51,7 +59,7 @@
 						visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
 								"<span class='userdanger'>[M] has weakened [src]!</span>")
 					adjustBruteLoss(damage)
-					add_logs(M, src, "attacked", admin=0)
+					add_logs(M, src, "attacked")
 					updatehealth()
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -62,7 +70,7 @@
 					if (prob(5))
 						Paralyse(2)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						add_logs(M, src, "pushed", admin=0)
+						add_logs(M, src, "pushed")
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 					else
@@ -115,5 +123,53 @@
 				unEquip(r_store)
 				unEquip(l_store)
 
-/mob/living/carbon/alien/humanoid/reagent_check(var/datum/reagent/R)
+/mob/living/carbon/alien/humanoid/cuff_resist(obj/item/I)
+	playsound(src, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when starting to break free
+	..(I, cuff_break = 1)
+
+/mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = 0)
+	if(leaping)
+		return -32
+	else if(custom_pixel_y_offset)
+		return custom_pixel_y_offset
+	else
+		return initial(pixel_y)
+
+/mob/living/carbon/alien/humanoid/get_standard_pixel_x_offset(lying = 0)
+	if(leaping)
+		return -32
+	else if(custom_pixel_x_offset)
+		return custom_pixel_x_offset
+	else
+		return initial(pixel_x)
+
+/mob/living/carbon/alien/humanoid/check_ear_prot()
+	return 1
+
+/mob/living/carbon/alien/humanoid/get_permeability_protection()
+	return 0.8
+
+/mob/living/carbon/alien/humanoid/alien_evolve(mob/living/carbon/alien/humanoid/new_xeno)
+	drop_l_hand()
+	drop_r_hand()
+	for(var/atom/movable/A in stomach_contents)
+		stomach_contents.Remove(A)
+		new_xeno.stomach_contents.Add(A)
+		A.loc = new_xeno
+	..()
+
+//For alien evolution/promotion procs. Checks for
+proc/alien_type_present(var/alienpath)
+	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
+		if(!istype(A, alienpath))
+			continue
+		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
+			continue
+		return 1
 	return 0
+
+
+/mob/living/carbon/alien/humanoid/check_breath(datum/gas_mixture/breath)
+	if(breath && breath.total_moles() > 0 && !sneaking)
+		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, 0, -5)
+	..()

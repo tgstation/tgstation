@@ -11,13 +11,15 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_range = 1
 	throw_speed = 1
 	layer = 3
-	pressure_resistance = 1
+	pressure_resistance = 0
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
+	burn_state = FLAMMABLE
+	burntime = 5
 
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
@@ -26,19 +28,20 @@
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
-	var/burning = 0 //Whether or not the paper is on fire
 
 
 /obj/item/weapon/paper/New()
 	..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
-	spawn(2)
-		update_icon()
-		updateinfolinks()
+	update_icon()
+	updateinfolinks()
 
 
 /obj/item/weapon/paper/update_icon()
+	if(burn_state == ON_FIRE)
+		icon_state = "paper_onfire"
+		return
 	if(info)
 		icon_state = "paper_words"
 		return
@@ -47,7 +50,14 @@
 
 /obj/item/weapon/paper/examine(mob/user)
 	..()
-	if(in_range(user, src))
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
+	assets.send(user)
+
+	if(istype(src, /obj/item/weapon/paper/talisman)) //Talismans cannot be read
+		if(!iscultist(user) && !user.stat)
+			user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+			return
+	if(in_range(user, src) || isobserver(user))
 		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
@@ -72,12 +82,16 @@
 	if(H.disabilities & CLUMSY && prob(25))
 		H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
 		H.damageoverlaytemp = 9001
+		H.update_damage_hud()
 		return
 	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == 0))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
+/obj/item/weapon/paper/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] scratches a grid on their wrist with the paper! It looks like \he's trying to commit sudoku..</span>")
+	return (BRUTELOSS)
 
 /obj/item/weapon/paper/attack_self(mob/user)
 	user.examinate(src)
@@ -87,15 +101,6 @@
 			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
 			spawn(20)
 				spam_flag = 0
-
-
-/obj/item/weapon/paper/attack_hand()
-	var/mob/living/carbon/M = usr
-	if(burning)
-		M << "<span class='danger'>Picking up a burning paper seems awfully stupid.</span>"
-		return //Doesn't make any sense to pick up a burning paper
-	else //Probably isn't necessary but it's safer
-		..()
 
 
 /obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
@@ -197,6 +202,7 @@
 
 		t = "<font face=\"[PEN_FONT]\" color=[P.colour]>[t]</font>"
 	else // If it is a crayon, and he still tries to use these, make them empty!
+		var/obj/item/toy/crayon/C = P
 		t = replacetext(t, "\[*\]", "")
 		t = replacetext(t, "\[hr\]", "")
 		t = replacetext(t, "\[small\]", "")
@@ -204,7 +210,7 @@
 		t = replacetext(t, "\[list\]", "")
 		t = replacetext(t, "\[/list\]", "")
 
-		t = "<font face=\"[CRAYON_FONT]\" color=[P.colour]><b>[t]</b></font>"
+		t = "<font face=\"[CRAYON_FONT]\" color=[C.paint_color]><b>[t]</b></font>"
 
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
@@ -278,7 +284,7 @@
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
 
-	if(burning)
+	if(burn_state == ON_FIRE)
 		return
 
 	if(is_blind(user))
@@ -290,6 +296,9 @@
 			return
 		else
 			user << "<span class='notice'>You don't know how to read or write.</span>"
+			return
+		if(istype(src, /obj/item/weapon/paper/talisman/))
+			user << "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>"
 			return
 
 	else if(istype(P, /obj/item/weapon/stamp))
@@ -311,7 +320,7 @@
 
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
 
-	if(is_hot(P))
+	if(P.is_hot())
 		if(user.disabilities & CLUMSY && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
@@ -325,25 +334,21 @@
 
 		user.unEquip(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
-		burn(0, 100)
+		fire_act()
 
 
 
 	add_fingerprint(user)
 
 /obj/item/weapon/paper/fire_act()
-	burn(1, 50)
-
-/obj/item/weapon/paper/proc/burn(var/showmsg, var/burntime)
-	if(showmsg)
-		src.visible_message("<span class='warning'>[src] catches on fire!</span>")
-	burning = 1
+	..(0)
 	icon_state = "paper_onfire"
 	info = "[stars(info)]"
-	sleep(burntime) //7 seconds
-	src.visible_message("<span class='danger'>[src] burns away, leaving behind a pile of ashes.</span>")
-	new /obj/effect/decal/cleanable/ash(src.loc)
-	qdel(src)
+
+
+/obj/item/weapon/paper/extinguish()
+	..()
+	update_icon()
 
 /*
  * Premade paper

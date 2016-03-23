@@ -5,6 +5,11 @@
 	density = 0
 	layer = 3.5
 
+/obj/structure/sign/basic
+	name = "blank sign"
+	desc = "How can signs be real if our eyes aren't real?"
+	icon_state = "backing"
+
 /obj/structure/sign/ex_act(severity, target)
 	qdel(src)
 
@@ -12,6 +17,79 @@
 	qdel(src)
 	return
 
+/obj/structure/sign/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/weapon/wrench))
+		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
+							 "<span class='notice'>You start unfastening [src].</span>")
+		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+		if(!do_after(user, 30/O.toolspeed, target = src))
+			return
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
+							 "<span class='notice'>You unfasten [src].</span>")
+		new /obj/item/sign_backing(get_turf(user))
+		qdel(src)
+	if(istype(O, /obj/item/weapon/pen))
+		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
+		"Hydroponics", "Xenobiology")
+		var/sign_type
+		switch(input(user, "Select a sign type.", "Sign Customization") as null|anything in sign_types)
+			if("Blank")
+				sign_type = /obj/structure/sign/basic
+			if("Secure Area")
+				sign_type = /obj/structure/sign/securearea
+			if("Biohazard")
+				sign_type = /obj/structure/sign/biohazard
+			if("High Voltage")
+				sign_type = /obj/structure/sign/electricshock
+			if("Radiation")
+				sign_type = /obj/structure/sign/radiation
+			if("Hard Vacuum Ahead")
+				sign_type = /obj/structure/sign/vacuum
+			if("Disposal: Leads To Space")
+				sign_type = /obj/structure/sign/deathsposal
+			if("Danger: Fire")
+				sign_type = /obj/structure/sign/fire
+			if("No Smoking")
+				sign_type = /obj/structure/sign/nosmoking_1
+			if("Medbay")
+				sign_type = /obj/structure/sign/bluecross_2
+			if("Science")
+				sign_type = /obj/structure/sign/science
+			if("Chemistry")
+				sign_type = /obj/structure/sign/chemistry
+			if("Hydroponics")
+				sign_type = /obj/structure/sign/botany
+			if("Xenobiology")
+				sign_type = /obj/structure/sign/xenobio
+		if(!sign_type)
+			return
+		new sign_type(get_turf(src))
+		qdel(src)
+
+/obj/item/sign_backing
+	name = "sign backing"
+	desc = "A blank sign with adhesive backing."
+	icon = 'icons/obj/decals.dmi'
+	icon_state = "backing"
+	w_class = 3
+	burn_state = FLAMMABLE
+
+/obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
+	if(!isturf(target))
+		return ..()
+	if(!user.Adjacent(target))
+		return ..()
+	var/turf/T = target
+	if(!T || !istype(T))
+		return ..()
+	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
+						 "<span class='notice'>You attach a blank sign to [T].</span>")
+	playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
+	new /obj/structure/sign/basic(T)
+	user.drop_item()
+	qdel(src)
+	return
 
 /obj/structure/sign/map
 	name = "station map"
@@ -75,14 +153,19 @@
 	desc = "A warning sign which reads 'NO SMOKING'"
 	icon_state = "nosmoking2"
 
+/obj/structure/sign/radiation
+	name = "HAZARDOUS RADIATION"
+	desc = "A warning sign alerting the user of potential radiation hazards."
+	icon_state = "radiation"
+
 /obj/structure/sign/bluecross
 	name = "medbay"
-	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here.'"
+	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here."
 	icon_state = "bluecross"
 
 /obj/structure/sign/bluecross_2
 	name = "medbay"
-	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here.'"
+	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here."
 	icon_state = "bluecross2"
 
 /obj/structure/sign/goldenplaque
@@ -111,19 +194,24 @@
 	icon_state = "maltesefalcon-right"
 
 /obj/structure/sign/science			//These 3 have multiple types, just var-edit the icon_state to whatever one you want on the map
-	name = "\improper SCIENCE!"
-	desc = "A warning sign which reads 'SCIENCE!'"
+	name = "\improper SCIENCE"
+	desc = "A sign labelling an area where research and science is performed."
 	icon_state = "science1"
 
 /obj/structure/sign/chemistry
 	name = "\improper CHEMISTRY"
-	desc = "A warning sign which reads 'CHEMISTRY'"
+	desc = "A sign labelling an area containing chemical equipment."
 	icon_state = "chemistry1"
 
 /obj/structure/sign/botany
 	name = "\improper HYDROPONICS"
-	desc = "A warning sign which reads 'HYDROPONICS'"
+	desc = "A sign labelling an area as a place where plants are grown."
 	icon_state = "hydro1"
+
+/obj/structure/sign/xenobio
+	name = "\improper XENOBIOLOGY"
+	desc = "A sign labelling an area as a place where xenobiological entites are researched."
+	icon_state = "xenobio"
 
 /obj/structure/sign/directions/science
 	name = "science department"

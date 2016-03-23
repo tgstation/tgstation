@@ -31,7 +31,7 @@
 // returns 1 if loaded (or file was incompatible)
 // returns 0 if savefile did not exist
 
-/datum/paiCandidate/proc/savefile_load(mob/user, var/silent = 1)
+/datum/paiCandidate/proc/savefile_load(mob/user, silent = 1)
 	if (IsGuestKey(user.key))
 		return 0
 

@@ -3,7 +3,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion3"
 	layer = 3
-	anchored = 1.0
+	anchored = 1
 	var/uses = 20
 	var/disabled = 1
 	var/lethal = 0
@@ -23,7 +23,7 @@
 			icon_state = "motion0"
 			stat |= NOPOWER
 
-/obj/machinery/ai_slipper/proc/setState(var/enabled, var/uses)
+/obj/machinery/ai_slipper/proc/setState(enabled, uses)
 	src.disabled = disabled
 	src.uses = uses
 	src.power_change()
@@ -36,7 +36,7 @@
 	else // trying to unlock the interface
 		if (src.allowed(usr))
 			locked = !locked
-			user << "You [ locked ? "lock" : "unlock"] the device."
+			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the device.</span>"
 			if (locked)
 				if (user.machine==src)
 					user.unset_machine()
@@ -46,17 +46,16 @@
 					src.attack_hand(usr)
 		else
 			user << "<span class='danger'>Access denied.</span>"
-			return
-	return
 
-/obj/machinery/ai_slipper/attack_ai(mob/user as mob)
+
+/obj/machinery/ai_slipper/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/ai_slipper/attack_hand(mob/user as mob)
+/obj/machinery/ai_slipper/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if ( (get_dist(src, user) > 1 ))
-		if (!istype(user, /mob/living/silicon))
+		if (!(istype(user, /mob/living/silicon) || IsAdminGhost(user)))
 			user << text("Too far away.")
 			user.unset_machine()
 			user << browse(null, "window=ai_slipper")
@@ -72,7 +71,7 @@
 	var/area/area = loc
 	var/t = "<TT><B>AI Liquid Dispenser</B> ([format_text(area.name)])<HR>"
 
-	if(src.locked && (!istype(user, /mob/living/silicon)))
+	if(src.locked && (!(istype(user, /mob/living/silicon) || IsAdminGhost(user))))
 		t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 	else
 		t += text("Dispenser [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.disabled?"deactivated":"activated", src, src.disabled?"Enable":"Disable")
@@ -86,7 +85,7 @@
 	if(..())
 		return
 	if (src.locked)
-		if (!istype(usr, /mob/living/silicon))
+		if (!(istype(usr, /mob/living/silicon)|| IsAdminGhost(usr)))
 			usr << "Control panel is locked!"
 			return
 	if (href_list["toggleOn"])
@@ -96,7 +95,7 @@
 		if(cooldown_on || disabled)
 			return
 		else
-			PoolOrNew(/obj/effect/effect/foam, loc)
+			PoolOrNew(/obj/effect/particle_effect/foam, loc)
 			src.uses--
 			cooldown_on = 1
 			cooldown_time = world.timeofday + 100

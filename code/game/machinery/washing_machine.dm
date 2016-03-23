@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_10"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/state = 1
 	//1 = empty, open door
 	//2 = empty, closed door
@@ -14,21 +14,11 @@
 	//6 = blood, open door
 	//7 = blood, closed door
 	//8 = blood, running
-	var/panel = 0
-	//0 = closed
-	//1 = open
-	var/hacked = 1 //Bleh, screw hacking, let's have it hacked by default.
-	//0 = not hacked
-	//1 = hacked
 	var/gibs_ready = 0
 	var/obj/crayon
 
-/obj/machinery/washing_machine/verb/start()
-	set name = "Start Washing"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || usr.restrained() || !usr.canmove)
+/obj/machinery/washing_machine/AltClick(mob/user)
+	if(!user.canUseTopic(src))
 		return
 
 	if( state != 4 )
@@ -50,6 +40,10 @@
 		WL.amount = HH.amount
 		qdel(HH)
 
+	//Corgi costume says goodbye
+	for(var/obj/item/clothing/suit/hooded/ian_costume/IC in contents)
+		new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
+		qdel(IC)
 
 	if(crayon)
 		var/wash_color
@@ -64,6 +58,7 @@
 			var/new_jumpsuit_icon_state = ""
 			var/new_jumpsuit_item_state = ""
 			var/new_jumpsuit_name = ""
+			var/new_can_adjust
 			var/new_glove_icon_state = ""
 			var/new_glove_item_state = ""
 			var/new_glove_name = ""
@@ -81,6 +76,7 @@
 					new_jumpsuit_icon_state = J.icon_state
 					new_jumpsuit_item_state = J.item_state
 					new_jumpsuit_name = J.name
+					new_can_adjust = J.can_adjust
 					qdel(J)
 					break
 				qdel(J)
@@ -125,6 +121,7 @@
 					J.name = new_jumpsuit_name
 					J.desc = new_desc
 					J.suit_color = wash_color
+					J.can_adjust = new_can_adjust
 			if(new_glove_icon_state && new_glove_item_state && new_glove_name)
 				for(var/obj/item/clothing/gloves/color/G in contents)
 					G.item_state = new_glove_item_state
@@ -176,16 +173,14 @@
 
 
 /obj/machinery/washing_machine/update_icon()
-	icon_state = "wm_[state][panel]"
+	icon_state = "wm_[state]0"
 
-/obj/machinery/washing_machine/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	/*if(istype(W,/obj/item/weapon/screwdriver))
-		panel = !panel
-		user << "\blue you [panel ? "open" : "close"] the [src]'s maintenance panel"*/
+/obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
 		if( state in list(	1, 3, 6 ) )
 			if(!crayon)
-				user.drop_item()
+				if(!user.drop_item())
+					return
 				crayon = W
 				crayon.loc = src
 			else
@@ -193,9 +188,9 @@
 		else
 			..()
 	else if(istype(W,/obj/item/weapon/grab))
-		if( (state == 1) && hacked)
+		if(state == 1)
 			var/obj/item/weapon/grab/G = W
-			if(ishuman(G.assailant) && iscorgi(G.affecting))
+			if(iscorgi(G.affecting))
 				G.affecting.loc = src
 				qdel(G)
 				state = 3
@@ -241,30 +236,28 @@
 		if ( istype(W,/obj/item/clothing/head/syndicatefake ) )
 			user << "This item does not fit."
 			return
-//		if ( istype(W,/obj/item/clothing/head/powered ) )
-//			user << "This item does not fit."
-//			return
 		if ( istype(W,/obj/item/clothing/head/helmet ) )
 			user << "This item does not fit."
 			return
 		if(W.flags & NODROP) //if "can't drop" item
-			user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>"
+			user << "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>"
 			return
 
 		if(contents.len < 5)
 			if ( state in list(1, 3) )
-				user.drop_item()
+				if(!user.drop_item())
+					return
 				W.loc = src
 				state = 3
 			else
-				user << "<span class='notice'>You can't put the item in right now.</span>"
+				user << "<span class='warning'>You can't put the item in right now!</span>"
 		else
-			user << "<span class='notice'>The washing machine is full.</span>"
+			user << "<span class='warning'>The washing machine is full!</span>"
 	else
 		..()
 	update_icon()
 
-/obj/machinery/washing_machine/attack_hand(mob/user as mob)
+/obj/machinery/washing_machine/attack_hand(mob/user)
 	switch(state)
 		if(1)
 			state = 2

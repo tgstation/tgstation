@@ -4,45 +4,43 @@
 	maxHealth = 100
 	health = 100
 	icon_state = "aliend_s"
-	plasma_rate = 15
 
 
 /mob/living/carbon/alien/humanoid/drone/New()
-	create_reagents(100)
-	if(src.name == "alien drone")
-		src.name = text("alien drone ([rand(1, 1000)])")
-	src.real_name = src.name
-	verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/corrosive_acid)
+	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large
+	internal_organs += new /obj/item/organ/internal/alien/resinspinner
+	internal_organs += new /obj/item/organ/internal/alien/acid
+
+	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
 	..()
-//Drones use the same base as generic humanoids.
 
 /mob/living/carbon/alien/humanoid/drone/movement_delay()
 	. = ..()
 	. += 1
 
+/obj/effect/proc_holder/alien/evolve
+	name = "Evolve to Praetorian"
+	desc = "Praetorian"
+	plasma_cost = 500
 
-//Drone verbs
-/mob/living/carbon/alien/humanoid/drone/verb/evolve()
-	set name = "Evolve (500)"
-	set desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."
-	set category = "Alien"
+	action_icon_state = "alien_evolve_drone"
 
-	if(powerc(500))
-		// Queen check
-		var/no_queen = 1
-		for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-			if(!Q.key || !Q.getorgan(/obj/item/organ/brain))
-				continue
-			no_queen = 0
+/obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/humanoid/user)
+	var/obj/item/organ/internal/alien/hivenode/node = user.getorgan(/obj/item/organ/internal/alien/hivenode)
+	if(!node) //Players are Murphy's Law. We may not expect there to ever be a living xeno with no hivenode, but they _WILL_ make it happen.
+		user << "<span class='danger'>Without the hivemind, you can't possibly hold the responsibility of leadership!</span>"
+		return 0
+	if(node.recent_queen_death)
+		user << "<span class='danger'>Your thoughts are still too scattered to take up the position of leadership.</span>"
+		return 0
 
-		if(no_queen)
-			adjustToxLoss(-500)
-			src << "<span class='noticealien'>You begin to evolve!</span>"
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("<span class='alertalien'>[src] begins to twist and contort!</span>"), 1)
-			var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
-			mind.transfer_to(new_xeno)
-			qdel(src)
-		else
-			src << "<span class='notice'>We already have an alive queen.</span>"
-	return
+	if(!isturf(user.loc))
+		user << "<span class='notice'>You can't evolve here!</span>"
+		return 0
+	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal))
+		var/mob/living/carbon/alien/humanoid/royal/praetorian/new_xeno = new (user.loc)
+		user.alien_evolve(new_xeno)
+		return 1
+	else
+		user << "<span class='notice'>We already have a living royal!</span>"
+		return 0

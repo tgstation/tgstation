@@ -8,7 +8,7 @@
 
 
 
-/mob/living/simple_animal/drone/activate_hand(var/selhand)
+/mob/living/simple_animal/drone/activate_hand(selhand)
 
 	if(istext(selhand))
 		selhand = lowertext(selhand)
@@ -64,7 +64,7 @@
 			if(!((I.slot_flags & SLOT_HEAD) || (I.slot_flags & SLOT_MASK)))
 				return 0
 			return 1
-		if("drone_storage_slot")
+		if(slot_drone_storage)
 			if(internal_storage)
 				return 0
 			return 1
@@ -75,14 +75,16 @@
 	switch(slot_id)
 		if(slot_head)
 			return head
-		if("drone_storage_slot")
+		if(slot_drone_storage)
 			return internal_storage
 	..()
 
 
 /mob/living/simple_animal/drone/equip_to_slot(obj/item/I, slot)
-	if(!slot)	return
-	if(!istype(I))	return
+	if(!slot)
+		return
+	if(!istype(I))
+		return
 
 	if(I == l_hand)
 		l_hand = null
@@ -99,7 +101,7 @@
 		if(slot_head)
 			head = I
 			update_inv_head()
-		if("drone_storage_slot")
+		if(slot_drone_storage)
 			internal_storage = I
 			update_inv_internal_storage()
 		else
@@ -113,3 +115,9 @@
 
 /mob/living/simple_animal/drone/stripPanelEquip(obj/item/what, mob/who, where)
 	..(what, who, where, 1)
+
+/mob/living/simple_animal/drone/getBackSlot()
+	return slot_drone_storage
+
+/mob/living/simple_animal/drone/getBeltSlot()
+	return slot_drone_storage

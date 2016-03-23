@@ -13,8 +13,11 @@
 	clumsy_check = 0
 	needs_permit = 0
 
-/obj/item/weapon/gun/projectile/automatic/toy/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
+/obj/item/weapon/gun/projectile/automatic/toy/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()
+
+/obj/item/weapon/gun/projectile/automatic/toy/unrestricted
+	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/automatic/toy/pistol
 	name = "foam force pistol"
@@ -26,15 +29,24 @@
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
-	action_button_name = null
+	actions_types = list()
 
 /obj/item/weapon/gun/projectile/automatic/toy/pistol/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
+/obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
+	mag_type = /obj/item/ammo_box/magazine/toy/pistol/riot
+
 /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot/New()
 	magazine = new /obj/item/ammo_box/magazine/toy/pistol/riot(src)
 	..()
+
+/obj/item/weapon/gun/projectile/automatic/toy/pistol/unrestricted
+	pin = /obj/item/device/firing_pin
+
+/obj/item/weapon/gun/projectile/automatic/toy/pistol/riot/unrestricted
+	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/shotgun/toy
 	name = "foam force shotgun"
@@ -51,6 +63,9 @@
 	..()
 	if(chambered && !chambered.BB)
 		qdel(chambered)
+
+/obj/item/weapon/gun/projectile/shotgun/toy/unrestricted
+	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/shotgun/toy/crossbow
 	name = "foam force crossbow"
@@ -71,8 +86,12 @@
 	needs_permit = 0
 	mag_type = /obj/item/ammo_box/magazine/toy/smgm45
 
-/obj/item/weapon/gun/projectile/automatic/c20r/toy/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
+/obj/item/weapon/gun/projectile/automatic/c20r/toy/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()
+
+
+/obj/item/weapon/gun/projectile/automatic/c20r/toy/unrestricted
+	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/toy
 	name = "donksoft LMG"
@@ -82,5 +101,8 @@
 	needs_permit = 0
 	mag_type = /obj/item/ammo_box/magazine/toy/m762
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/toy/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/toy/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/toy/unrestricted
+	pin = /obj/item/device/firing_pin

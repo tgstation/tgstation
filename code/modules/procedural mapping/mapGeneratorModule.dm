@@ -1,20 +1,16 @@
 
-#define CLUSTER_CHECK_NONE	0 //No checks are done, cluster as much as possible
-#define CLUSTER_CHECK_ATOMS	2 //Don't let atoms cluster, based on clusterMin and clusterMax as guides
-#define CLUSTER_CHECK_TURFS	4 //Don't let turfs cluster, based on clusterMin and clusterMax as guides
-#define CLUSTER_CHECK_ALL	6 //Don't let anything cluster, based on clusterMind and clusterMax as guides
-
 /datum/mapGeneratorModule
 	var/datum/mapGenerator/mother = null
 	var/list/spawnableAtoms = list()
 	var/list/spawnableTurfs = list()
 	var/clusterMax = 5
 	var/clusterMin = 1
-	var/clusterCheckFlags = CLUSTER_CHECK_ALL
+	var/clusterCheckFlags = CLUSTER_CHECK_SAME_ATOMS
+	var/allowAtomsOnSpace = FALSE
 
 
 //Syncs the module up with it's mother
-/datum/mapGeneratorModule/proc/sync(var/datum/mapGenerator/mum)
+/datum/mapGeneratorModule/proc/sync(datum/mapGenerator/mum)
 	mother = null
 	if(mum)
 		mother = mum
@@ -30,38 +26,85 @@
 
 
 //Place a spawnable atom or turf on this turf
-/datum/mapGeneratorModule/proc/place(var/turf/T)
+/datum/mapGeneratorModule/proc/place(turf/T)
 	if(!T)
 		return 0
 
 	var/clustering = 0
+	var/skipLoopIteration = FALSE
 
 	//Turfs don't care whether atoms can be placed here
 	for(var/turfPath in spawnableTurfs)
-		if(clusterCheckFlags & CLUSTER_CHECK_TURFS)
-			if(clusterMax && clusterMin)
+
+		//Clustering!
+		if(clusterMax && clusterMin)
+
+			//You're the same as me? I hate you I'm going home
+			if(clusterCheckFlags & CLUSTER_CHECK_SAME_TURFS)
 				clustering = rand(clusterMin,clusterMax)
-				if(locate(/atom/movable) in range(clustering, T))
+				for(var/turf/F in RANGE_TURFS(clustering,T))
+					if(istype(F,turfPath))
+						skipLoopIteration = TRUE
+						break
+				if(skipLoopIteration)
+					skipLoopIteration = FALSE
 					continue
+
+			//You're DIFFERENT to me? I hate you I'm going home
+			if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_TURFS)
+				clustering = rand(clusterMin,clusterMax)
+				for(var/turf/F in RANGE_TURFS(clustering,T))
+					if(!(istype(F,turfPath)))
+						skipLoopIteration = TRUE
+						break
+				if(skipLoopIteration)
+					skipLoopIteration = FALSE
+					continue
+
+		//Success!
 		if(prob(spawnableTurfs[turfPath]))
 			T.ChangeTurf(turfPath)
 
+
 	//Atoms DO care whether atoms can be placed here
 	if(checkPlaceAtom(T))
+
 		for(var/atomPath in spawnableAtoms)
-			if(clusterCheckFlags & CLUSTER_CHECK_ATOMS)
-				if(clusterMax && clusterMin)
-					clustering = rand(clusterMin,clusterMax)
-					if(locate(/atom/movable) in range(clustering, T))
+
+			//Clustering!
+			if(clusterMax && clusterMin)
+
+				//You're the same as me? I hate you I'm going home
+				if(clusterCheckFlags & CLUSTER_CHECK_SAME_ATOMS)
+					clustering = rand(clusterMin, clusterMax)
+					for(var/atom/movable/M in range(clustering,T))
+						if(istype(M,atomPath))
+							skipLoopIteration = TRUE
+							break
+					if(skipLoopIteration)
+						skipLoopIteration = FALSE
 						continue
+
+				//You're DIFFERENT from me? I hate you I'm going home
+				if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_ATOMS)
+					clustering = rand(clusterMin, clusterMax)
+					for(var/atom/movable/M in range(clustering,T))
+						if(!(istype(M,atomPath)))
+							skipLoopIteration = TRUE
+							break
+					if(skipLoopIteration)
+						skipLoopIteration = FALSE
+						continue
+
+			//Success!
 			if(prob(spawnableAtoms[atomPath]))
-				new atomPath (T)
+				new atomPath(T)
 
 	. = 1
 
 
 //Checks and Rejects dense turfs
-/datum/mapGeneratorModule/proc/checkPlaceAtom(var/turf/T)
+/datum/mapGeneratorModule/proc/checkPlaceAtom(turf/T)
 	. = 1
 	if(!T)
 		return 0
@@ -71,6 +114,8 @@
 		if(A.density)
 			. = 0
 			break
+	if(!allowAtomsOnSpace && (istype(T,/turf/space)))
+		. = 0
 
 
 ///////////////////////////////////////////////////////////

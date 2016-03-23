@@ -8,7 +8,7 @@
 	id = "s-receiver"
 	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 1)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/telecomms/receiver
 	category = list("Subspace Telecomms")
 
@@ -18,7 +18,7 @@
 	id = "s-bus"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/telecomms/bus
 	category = list("Subspace Telecomms")
 
@@ -28,7 +28,7 @@
 	id = "s-hub"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/telecomms/hub
 	category = list("Subspace Telecomms")
 
@@ -38,7 +38,7 @@
 	id = "s-relay"
 	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/telecomms/relay
 	category = list("Subspace Telecomms")
 
@@ -48,7 +48,7 @@
 	id = "s-processor"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/telecomms/processor
 	category = list("Subspace Telecomms")
 
@@ -58,7 +58,7 @@
 	id = "s-server"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/telecomms/server
 	category = list("Subspace Telecomms")
 
@@ -68,6 +68,6 @@
 	id = "s-broadcaster"
 	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 1)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/telecomms/broadcaster
 	category = list("Subspace Telecomms")

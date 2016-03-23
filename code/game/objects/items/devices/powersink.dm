@@ -5,16 +5,16 @@
 	name = "power sink"
 	icon_state = "powersink0"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = 4
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
-	m_amt = 750
+	materials = list(MAT_METAL=750)
 	origin_tech = "powerstorage=3;syndicate=5"
-	var/drain_rate = 600000		// amount of power to drain per tick
+	var/drain_rate = 1600000	// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
-	var/max_power = 1e8		// maximum power that can be drained before exploding
+	var/max_power = 1e10		// maximum power that can be drained before exploding
 	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
 	var/admins_warned = 0 // stop spam, only warn the admins once that we are about to boom
 
@@ -54,28 +54,28 @@
 	update_icon()
 	SetLuminosity(0)
 
-/obj/item/device/powersink/attackby(var/obj/item/I, var/mob/user, params)
+/obj/item/device/powersink/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(mode == DISCONNECTED)
 			var/turf/T = loc
 			if(isturf(T) && !T.intact)
 				attached = locate() in T
 				if(!attached)
-					user << "No exposed cable here to attach to."
+					user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
 				else
 					set_mode(CLAMPED_OFF)
 					user.visible_message( \
 						"[user] attaches \the [src] to the cable.", \
-						"You attach \the [src] to the cable.",
-						"You hear some wires being connected to something.")
+						"<span class='notice'>You attach \the [src] to the cable.</span>",
+						"<span class='italics'>You hear some wires being connected to something.</span>")
 			else
-				user << "Device must be placed over an exposed cable to attach to it."
+				user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
 		else
 			set_mode(DISCONNECTED)
 			user.visible_message( \
 				"[user] detaches \the [src] from the cable.", \
-				"You detach \the [src] from the cable.",
-				"You hear some wires being disconnected from something.")
+				"<span class='notice'>You detach \the [src] from the cable.</span>",
+				"<span class='italics'>You hear some wires being disconnected from something.</span>")
 	else
 		..()
 
@@ -85,7 +85,7 @@
 /obj/item/device/powersink/attack_ai()
 	return
 
-/obj/item/device/powersink/attack_hand(var/mob/user)
+/obj/item/device/powersink/attack_hand(mob/user)
 	switch(mode)
 		if(DISCONNECTED)
 			..()
@@ -93,17 +93,17 @@
 		if(CLAMPED_OFF)
 			user.visible_message( \
 				"[user] activates \the [src]!", \
-				"You activate \the [src]!",
-				"You hear a click.")
-			message_admins("Power sink activated by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+				"<span class='notice'>You activate \the [src].</span>",
+				"<span class='italics'>You hear a click.</span>")
+			message_admins("Power sink activated by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 			log_game("Power sink activated by [key_name(user)] at ([x],[y],[z])")
 			set_mode(OPERATING)
 
 		if(OPERATING)
 			user.visible_message( \
 				"[user] deactivates \the [src]!", \
-				"You deactivate \the [src]!",
-				"You hear a click.")
+				"<span class='notice'>You deactivate \the [src].</span>",
+				"<span class='italics'>You hear a click.</span>")
 			set_mode(CLAMPED_OFF)
 
 /obj/item/device/powersink/process()
@@ -133,7 +133,7 @@
 						if(A.charging == 2) // If the cell was full
 							A.charging = 1 // It's no longer full
 
-	if(power_drained > max_power * 0.95)
+	if(power_drained > max_power * 0.98)
 		if (!admins_warned)
 			admins_warned = 1
 			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) is 95% full. Explosion imminent.")
@@ -141,5 +141,5 @@
 
 	if(power_drained >= max_power)
 		SSobj.processing.Remove(src)
-		explosion(src.loc, 3,6,9,12)
+		explosion(src.loc, 4,8,16,32)
 		qdel(src)

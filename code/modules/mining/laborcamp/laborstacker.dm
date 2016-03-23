@@ -36,7 +36,7 @@
 	return (istype(inserted_id) && inserted_id.points >= inserted_id.goal) //Otherwise, only let them out if the prisoner's reached his quota.
 
 
-/obj/machinery/mineral/labor_claim_console/attack_hand(user as mob)
+/obj/machinery/mineral/labor_claim_console/attack_hand(mob/user)
 	var/dat
 	dat += text("<b>Point Claim Console</b><br><br>")
 	if(emagged) //Shit's broken
@@ -58,12 +58,12 @@
 	user << browse("[dat]", "window=console_stacking_machine")
 
 
-/obj/machinery/mineral/labor_claim_console/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
 		return attack_hand(user)
 	..()
 
-/obj/machinery/mineral/labor_claim_console/emag_act(mob/user as mob)
+/obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
 	if(!emagged)
 		emagged = 1
 		user << "<span class='warning'>PZZTTPFFFT</span>"
@@ -86,7 +86,8 @@
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/prisoner/I = usr.get_active_hand()
 			if(istype(I))
-				usr.drop_item()
+				if(!usr.drop_item())
+					return
 				I.loc = src
 				inserted_id = I
 			else usr << "<span class='warning'>Invalid ID.</span>"
@@ -105,7 +106,7 @@
 						else
 							Radio.set_frequency(SEC_FREQ)
 							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", SEC_FREQ)
-							usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
+							usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
 
 			if(href_list["choice"] == "release")
 				if(alone_in_area(get_area(loc), usr))
@@ -158,7 +159,7 @@
 /obj/machinery/mineral/labor_points_checker/attack_hand(mob/user)
 	user.examinate(src)
 
-/obj/machinery/mineral/labor_points_checker/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/mineral/labor_points_checker/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
 		if(istype(I, /obj/item/weapon/card/id/prisoner))
 			var/obj/item/weapon/card/id/prisoner/prisoner_id = I

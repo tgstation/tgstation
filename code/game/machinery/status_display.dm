@@ -44,14 +44,17 @@
 
 /obj/machinery/status_display/New()
 	..()
-	spawn(5)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_controller.add_object(src, frequency)
+	if(SSradio)
+		SSradio.add_object(src, frequency)
+
+/obj/machinery/status_display/initialize()
+	if(SSradio)
+		SSradio.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
-	..()
+	if(SSradio)
+		SSradio.remove_object(src,frequency)
+	return ..()
 
 // timed process
 
@@ -287,7 +290,7 @@
 		return
 
 
-/obj/machinery/ai_status_display/proc/set_picture(var/state)
+/obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
 	if(overlays.len)
 		overlays.Cut()

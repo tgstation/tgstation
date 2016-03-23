@@ -14,8 +14,8 @@
 		// Make a quick flash
 		var/turf/T = get_turf(src)
 		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
-		for(var/mob/living/carbon/human/M in viewers(T, null))
-			M.flash_eyes()
+		for(var/mob/living/carbon/C in viewers(T, null))
+			C.flash_eyes()
 
 		for(var/i=1, i<=deliveryamt, i++)
 			var/atom/movable/x = new spawner_type
@@ -39,3 +39,7 @@
 	spawner_type = /mob/living/simple_animal/hostile/carp
 	deliveryamt = 5
 	origin_tech = "materials=3;magnets=4;syndicate=4"
+
+/obj/item/weapon/grenade/spawnergrenade/syndiesoap
+	name = "Mister Scrubby"
+	spawner_type = /obj/item/weapon/soap/syndie

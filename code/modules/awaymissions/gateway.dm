@@ -1,3 +1,5 @@
+var/obj/machinery/gateway/centerstation/the_gateway = null
+
 /obj/machinery/gateway
 	name = "gateway"
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
@@ -9,10 +11,23 @@
 	var/active = 0
 
 
+/obj/machinery/gateway/centerstation/New()
+	..()
+	if(!the_gateway)
+		the_gateway = src
+
+
+/obj/machinery/gateway/centerstation/Destroy()
+	if(the_gateway == src)
+		the_gateway = null
+	return ..()
+
+
 /obj/machinery/gateway/initialize()
 	update_icon()
-	if(dir == 2)
-		density = 0
+	switch(dir)
+		if(SOUTH,SOUTHEAST,SOUTHWEST)
+			density = 0
 
 
 /obj/machinery/gateway/update_icon()
@@ -21,7 +36,9 @@
 		return
 	icon_state = "off"
 
-
+//prevents shuttles attempting to rotate this since it messes up sprites
+/obj/machinery/gateway/shuttleRotate()
+	return
 
 //this is da important part wot makes things go
 /obj/machinery/gateway/centerstation
@@ -49,7 +66,7 @@
 
 
 
-obj/machinery/gateway/centerstation/process()
+/obj/machinery/gateway/centerstation/process()
 	if(stat & (NOPOWER))
 		if(active) toggleoff()
 		return
@@ -78,10 +95,13 @@ obj/machinery/gateway/centerstation/process()
 		ready = 1
 
 
-/obj/machinery/gateway/centerstation/proc/toggleon(mob/user as mob)
-	if(!ready)			return
-	if(linked.len != 8)	return
-	if(!powered())		return
+/obj/machinery/gateway/centerstation/proc/toggleon(mob/user)
+	if(!ready)
+		return
+	if(linked.len != 8)
+		return
+	if(!powered())
+		return
 	if(!awaygate)
 		user << "<span class='notice'>Error: No destination found.</span>"
 		return
@@ -104,7 +124,7 @@ obj/machinery/gateway/centerstation/process()
 	update_icon()
 
 
-/obj/machinery/gateway/centerstation/attack_hand(mob/user as mob)
+/obj/machinery/gateway/centerstation/attack_hand(mob/user)
 	if(!ready)
 		detect()
 		return
@@ -115,28 +135,36 @@ obj/machinery/gateway/centerstation/process()
 
 
 //okay, here's the good teleporting stuff
-/obj/machinery/gateway/centerstation/Bumped(atom/movable/M as mob|obj)
-	if(!ready)		return
-	if(!active)		return
-	if(!awaygate)	return
+/obj/machinery/gateway/centerstation/Bumped(atom/movable/AM)
+	if(!ready)
+		return
+	if(!active)
+		return
+	if(!awaygate || qdeleted(awaygate))
+		return
 
 	if(awaygate.calibrated)
-		M.loc = get_step(awaygate.loc, SOUTH)
-		M.dir = SOUTH
+		AM.forceMove(get_step(awaygate.loc, SOUTH))
+		AM.dir = SOUTH
+		if (ismob(AM))
+			var/mob/M = AM
+			if (M.client)
+				M.client.move_delay = max(world.time + 5, M.client.move_delay)
 		return
 	else
 		var/obj/effect/landmark/dest = pick(awaydestinations)
 		if(dest)
-			M.loc = dest.loc
-			M.dir = SOUTH
+			AM.forceMove(get_turf(dest))
+			AM.dir = SOUTH
 			use_power(5000)
 		return
 
 
-/obj/machinery/gateway/centerstation/attackby(obj/item/device/W as obj, mob/user as mob, params)
+/obj/machinery/gateway/centerstation/attackby(obj/item/device/W, mob/user, params)
 	if(istype(W,/obj/item/device/multitool))
 		user << "\black The gate is already calibrated, there is no work for you to do here."
 		return
+
 
 /////////////////////////////////////Away////////////////////////
 
@@ -183,9 +211,11 @@ obj/machinery/gateway/centerstation/process()
 		ready = 1
 
 
-/obj/machinery/gateway/centeraway/proc/toggleon(mob/user as mob)
-	if(!ready)			return
-	if(linked.len != 8)	return
+/obj/machinery/gateway/centeraway/proc/toggleon(mob/user)
+	if(!ready)
+		return
+	if(linked.len != 8)
+		return
 	if(!stationgate)
 		user << "<span class='notice'>Error: No destination found.</span>"
 		return
@@ -205,7 +235,7 @@ obj/machinery/gateway/centerstation/process()
 	update_icon()
 
 
-/obj/machinery/gateway/centeraway/attack_hand(mob/user as mob)
+/obj/machinery/gateway/centeraway/attack_hand(mob/user)
 	if(!ready)
 		detect()
 		return
@@ -215,19 +245,27 @@ obj/machinery/gateway/centerstation/process()
 	toggleoff()
 
 
-/obj/machinery/gateway/centeraway/Bumped(atom/movable/M as mob|obj)
-	if(!ready)	return
-	if(!active)	return
-	if(istype(M, /mob/living/carbon))
-		for(var/obj/item/weapon/implant/exile/E in M)//Checking that there is an exile implant in the contents
-			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
-				M << "\black The station gate has detected your exile implant and is blocking your entry."
+/obj/machinery/gateway/centeraway/Bumped(atom/movable/AM)
+	if(!ready)
+		return
+	if(!active)
+		return
+	if(!stationgate || qdeleted(stationgate))
+		return
+	if(istype(AM, /mob/living/carbon))
+		for(var/obj/item/weapon/implant/exile/E in AM)//Checking that there is an exile implant in the contents
+			if(E.imp_in == AM)//Checking that it's actually implanted vs just in their pocket
+				AM << "\black The station gate has detected your exile implant and is blocking your entry."
 				return
-	M.loc = get_step(stationgate.loc, SOUTH)
-	M.dir = SOUTH
+	AM.forceMove(get_step(stationgate.loc, SOUTH))
+	AM.dir = SOUTH
+	if (ismob(AM))
+		var/mob/M = AM
+		if (M.client)
+			M.client.move_delay = max(world.time + 5, M.client.move_delay)
 
 
-/obj/machinery/gateway/centeraway/attackby(obj/item/device/W as obj, mob/user as mob, params)
+/obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user, params)
 	if(istype(W,/obj/item/device/multitool))
 		if(calibrated)
 			user << "\black The gate is already calibrated, there is no work for you to do here."

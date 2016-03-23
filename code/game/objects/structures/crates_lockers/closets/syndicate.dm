@@ -2,8 +2,6 @@
 	name = "armory closet"
 	desc = "Why is this here?"
 	icon_state = "syndicate"
-	icon_closed = "syndicate"
-	icon_opened = "syndicateopen"
 
 /obj/structure/closet/syndicate/personal
 	desc = "It's a personal storage unit for operative gear."
@@ -24,25 +22,12 @@
 
 /obj/structure/closet/syndicate/nuclear/New()
 	..()
-	new /obj/item/ammo_box/magazine/m10mm(src)
-	new /obj/item/ammo_box/magazine/m10mm(src)
-	new /obj/item/ammo_box/magazine/m10mm(src)
-	new /obj/item/ammo_box/magazine/m10mm(src)
-	new /obj/item/ammo_box/magazine/m10mm(src)
+	contents = list()
+	for(var/i in 1 to 5)
+		new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/teargas(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/syndiemed(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/syndieammo(src)
-	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
-	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
-	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
-	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
-	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
-	new /obj/item/weapon/pinpointer/nukeop(src)
-	new /obj/item/weapon/pinpointer/nukeop(src)
-	new /obj/item/weapon/pinpointer/nukeop(src)
-	new /obj/item/weapon/pinpointer/nukeop(src)
-	new /obj/item/weapon/pinpointer/nukeop(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/syndie/med(src)
 	new /obj/item/device/pda/syndicate(src)
 	return
 
@@ -107,6 +92,8 @@
 	desc = "It's an emergency storage closet for repairs."
 
 /obj/structure/closet/syndicate/resources/everything/New()
+	..()
+	contents = list()
 	var/list/resources = list(
 	/obj/item/stack/sheet/metal,
 	/obj/item/stack/sheet/glass,

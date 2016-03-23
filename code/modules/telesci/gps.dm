@@ -4,7 +4,7 @@ var/list/GPS_list = list()
 	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
-	w_class = 2.0
+	w_class = 2
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2;engineering=2"
 	var/gpstag = "COM0"
@@ -19,7 +19,7 @@ var/list/GPS_list = list()
 
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
-	..()
+	return ..()
 
 /obj/item/device/gps/emp_act(severity)
 	emped = 1
@@ -30,7 +30,7 @@ var/list/GPS_list = list()
 		overlays -= "emp"
 		overlays += "working"
 
-/obj/item/device/gps/attack_self(mob/user as mob)
+/obj/item/device/gps/attack_self(mob/user)
 
 	var/obj/item/device/gps/t = ""
 	var/gps_window_height = 110 + GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
@@ -79,3 +79,9 @@ var/list/GPS_list = list()
 	icon_state = "gps-m"
 	gpstag = "MINE0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
+
+/obj/item/device/gps/internal
+	icon_state = null
+	gpstag = "Eerie Signal"
+	desc = "Report to a coder immediately."
+	invisibility = 100

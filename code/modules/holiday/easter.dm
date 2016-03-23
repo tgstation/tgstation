@@ -16,6 +16,7 @@
 
 /datum/round_event_control/rabbitrelease
 	name = "Release the Rabbits!"
+	holidayID = EASTER
 	typepath = /datum/round_event/rabbitrelease
 	weight = 5
 	max_occurrences = 10
@@ -44,10 +45,9 @@
 	speak_emote = list("sniffles","twitches")
 	emote_hear = list("hops.")
 	emote_see = list("hops around","bounces up and down")
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
 	egg_type = /obj/item/weapon/reagent_containers/food/snacks/egg/loaded
 	food_type = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
-	meat_amount = 1
 	eggsleft = 10
 	eggsFertile = FALSE
 	icon_prefix = "rabbit"
@@ -91,8 +91,7 @@
 	item_state = "bunnyhead"
 	desc = "Considerably more cute than 'Frank'"
 	slowdown = -1
-	flags = BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/bunnysuit
 	name = "Easter Bunny Suit"
@@ -116,7 +115,7 @@
 	icon_state = "egg-[color]"
 	item_color = "[color]"
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/proc/dispensePrize(var/turf/where)
+/obj/item/weapon/reagent_containers/food/snacks/egg/proc/dispensePrize(turf/where)
 	var/won = pick(/obj/item/clothing/head/bunnyhead,
 	/obj/item/clothing/suit/bunnysuit,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
@@ -133,7 +132,7 @@
 	new won(where)
 	new/obj/item/weapon/reagent_containers/food/snacks/chocolateegg(where)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/egg/attack_self(mob/user)
 	..()
 	if(containsPrize)
 		user << "<span class='notice'>You unwrap the [src] and find a prize inside!</span>"
@@ -159,6 +158,7 @@
 		/datum/reagent/consumable/sugar = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/hotcrossbun
+	category = CAT_FOOD
 
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/brioche
@@ -182,6 +182,7 @@
 		/datum/reagent/consumable/sugar = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/brioche
+	category = CAT_FOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/scotchegg
 	name = "scotch egg"
@@ -201,6 +202,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/scotchegg
+	category = CAT_FOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/mammi
 	name = "Mämmi"
@@ -217,6 +219,7 @@
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/mammi
+	category = CAT_FOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebunny
 	name = "chocolate bunny"
@@ -233,3 +236,4 @@
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/chocolatebunny
+	category = CAT_FOOD

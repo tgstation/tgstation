@@ -1,13 +1,13 @@
-/proc/gibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)
+/proc/gibs(atom/location, list/viruses, datum/dna/MobDNA)
 	new /obj/effect/gibspawner/generic(location,viruses,MobDNA)
 
-/proc/hgibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)
+/proc/hgibs(atom/location, list/viruses, datum/dna/MobDNA)
 	new /obj/effect/gibspawner/human(location,viruses,MobDNA)
 
-/proc/xgibs(atom/location, var/list/viruses)
+/proc/xgibs(atom/location, list/viruses)
 	new /obj/effect/gibspawner/xeno(location,viruses)
 
-/proc/robogibs(atom/location, var/list/viruses)
+/proc/robogibs(atom/location, list/viruses)
 	new /obj/effect/gibspawner/robot(location,viruses)
 
 /obj/effect/gibspawner
@@ -22,7 +22,7 @@
 
 	Gib(loc,viruses,MobDNA)
 
-/obj/effect/gibspawner/proc/Gib(atom/location, var/list/viruses = list(), var/datum/dna/MobDNA = null)
+/obj/effect/gibspawner/proc/Gib(atom/location, list/viruses = list(), datum/dna/MobDNA = null)
 	if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
 		world << "<span class='danger'>Gib list length mismatch!</span>"
 		return
@@ -30,7 +30,7 @@
 	var/obj/effect/decal/cleanable/blood/gibs/gib = null
 
 	if(sparks)
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(2, 1, location)
 		s.start()
 
@@ -50,11 +50,8 @@
 							gib.viruses += viruus
 							viruus.holder = gib
 
-				gib.blood_DNA = list()
 				if(MobDNA)
 					gib.blood_DNA[MobDNA.unique_enzymes] = MobDNA.blood_type
-				else if(istype(src, /obj/effect/gibspawner/xeno))
-					gib.blood_DNA["UNKNOWN DNA"] = "X*"
 				else if(istype(src, /obj/effect/gibspawner/generic)) // Probably a monkey
 					gib.blood_DNA["Non-human DNA"] = "A+"
 				var/list/directions = gibdirections[i]

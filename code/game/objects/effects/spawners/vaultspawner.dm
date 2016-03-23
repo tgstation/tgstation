@@ -4,7 +4,7 @@
 	var/minX = 2
 	var/minY = 2
 
-/obj/effect/vaultspawner/New(turf/location as turf,lX = minX,uX = maxX,lY = minY,uY = maxY,var/type = null)
+/obj/effect/vaultspawner/New(turf/location,lX = minX,uX = maxX,lY = minY,uY = maxY,type = null)
 	if(!type)
 		type = pick("sandstone","rock","alien")
 

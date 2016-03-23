@@ -24,7 +24,7 @@
 
 	loot = list(
 				/obj/item/weapon/gun/projectile/automatic/pistol = 8,
-				/obj/item/weapon/gun/projectile/shotgun/combat = 5,
+				/obj/item/weapon/gun/projectile/shotgun/automatic/combat = 5,
 				/obj/item/weapon/gun/projectile/revolver/mateba,
 				/obj/item/weapon/gun/projectile/automatic/pistol/deagle
 				)
@@ -92,7 +92,8 @@
 				/obj/item/clothing/head/cone = 1,
 				/obj/item/weapon/coin/silver = 1,
 				/obj/item/weapon/coin/twoheaded = 1,
-				/obj/item/weapon/contraband/poster = 1,
+				/obj/item/weapon/poster/contraband = 1,
+				/obj/item/weapon/poster/legit = 1,
 				/obj/item/weapon/crowbar = 1,
 				/obj/item/weapon/crowbar/red = 1,
 				/obj/item/weapon/extinguisher = 11,
@@ -101,12 +102,14 @@
 				/obj/item/weapon/paper/crumpled = 1,
 				/obj/item/weapon/pen = 1,
 				/obj/item/weapon/reagent_containers/spray/pestspray = 1,
+				/obj/item/weapon/reagent_containers/glass/rag = 3,
 				/obj/item/weapon/stock_parts/cell = 3,
 				/obj/item/weapon/storage/belt/utility = 2,
 				/obj/item/weapon/storage/box = 2,
 				/obj/item/weapon/storage/box/cups = 1,
 				/obj/item/weapon/storage/box/donkpockets = 1,
 				/obj/item/weapon/storage/box/lights/mixed = 3,
+				/obj/item/weapon/storage/box/hug/medical = 1,
 				/obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 1,
 				/obj/item/weapon/storage/toolbox/mechanical = 1,
 				/obj/item/weapon/screwdriver = 3,
@@ -116,5 +119,15 @@
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/wrench = 4,
 				/obj/item/weapon/relic = 3,
-				"" = 11
+				/obj/item/weaponcrafting/reciever = 1,
+				"" = 4
+				)
+
+/obj/effect/spawner/lootdrop/crate_spawner
+	name = "lootcrate spawner"
+	lootdoubles = 0
+
+	loot = list(
+				/obj/structure/closet/crate/secure/loot = 20,
+				"" = 80
 				)

@@ -12,6 +12,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
+
 using namespace std;
 
 //Make all of these global. It's bad yes, but it's a small program so it really doesn't affect anything.
@@ -28,15 +30,20 @@ using namespace std;
 	string storedSource[maxStorage+1];
 	string storedUsr[maxStorage+1];
 	string storedSrc[maxStorage+1];
+	
+	string storedHardDel[maxStorage+1];
 
 	//Stat tracking stuff for output
 	unsigned int totalRuntimes = 0;
 	unsigned int totalUniqueRuntimes = 0;
 	unsigned int totalInfiniteLoops = 0;
 	unsigned int totalUniqueInfiniteLoops = 0;
+	unsigned int totalHardDels = 0;
+	unsigned int totalUniqueHardDels = 0;
 
 	//Misc
 	unsigned int numRuntime[maxStorage+1]; //Number of times a specific runtime has occured
+	unsigned int numHardDel[maxStorage+1]; //Number of times a specific hard del has occured
 	bool checkNextLines = false; //Used in case byond has condensed a large number of similar runtimes
 	int storedIterator = 0; //Used to remember where we stored the runtime
 
@@ -94,7 +101,7 @@ bool readFromFile()
 						break;
 					}
 
-					//We've never encoutnered this
+					//We've never encountered this
 					if(storedRuntime[i] == "Blank")
 					{
 						storedRuntime[i] = currentLine;
@@ -122,7 +129,7 @@ bool readFromFile()
 						break;
 					}
 
-					//We've never encoutnered this
+					//We've never encountered this
 					if(storedRuntime[i] == "Blank")
 					{
 						storedRuntime[i] = currentLine;
@@ -131,6 +138,41 @@ bool readFromFile()
 						checkNextLines = true;
 						storedIterator = i;
 						totalUniqueRuntimes++;
+						break;
+					}
+				}
+			}
+			
+			//Found a hard del!
+			else if(currentLine.find("Path :") != std::string::npos)
+			{				
+				//this is pretty ugly but the alternative was implementing regex which I haven't the slightest idea how to do
+				//it takes advantage of the formatting of the line to extract the amount of failures
+				std::string tmp;
+				char c;
+				int failures;
+				std::stringstream ss(nextLine);
+				ss >> tmp >> c >> failures;
+				
+				totalHardDels += failures;
+				
+				for(int i=0; i <= maxStorage; i++)
+				{
+					
+					//We've already encountered this
+					if(currentLine == storedHardDel[i])
+					{
+						numHardDel[i] += failures;
+						break;
+					}
+
+					//We've never encountered this
+					if(storedHardDel[i] == "Blank")
+					{
+						storedHardDel[i] = currentLine;
+						numHardDel[i] = failures;
+						checkNextLines = true;
+						totalUniqueHardDels++;
 						break;
 					}
 				}
@@ -158,15 +200,27 @@ bool writeToFile()
 		}
 		if(totalInfiniteLoops > 0)
 		{
-			outputFile << "Total infinite loops: " << totalInfiniteLoops << endl;
+			outputFile << "Total infinite loops: " << totalInfiniteLoops << endl << endl;
 		}
 		outputFile << "Total unique runtimes: " << totalUniqueRuntimes << endl;
 		outputFile << "Total runtimes: " << totalRuntimes << endl << endl;
+		if(totalUniqueHardDels > 0)
+		{
+			outputFile << "Total unique hard deletions: " << totalUniqueHardDels << endl;
+		}
+		if(totalHardDels > 0)
+		{
+			outputFile << "Total hard deletions: " << totalHardDels << endl << endl;
+		}
 
 		//Display a warning if we've hit the maximum space we've allocated for storage
 		if(totalUniqueRuntimes + totalUniqueInfiniteLoops >= maxStorage)
 		{
 			outputFile << "Warning: The maximum number of unique runtimes has been hit. If there were more, they have been cropped out.\n\n";
+		}
+		if(totalUniqueHardDels >= maxStorage)
+		{
+			outputFile << "Warning: The maximum number of unique hard deletions has been hit. If there were more, they have been croped out.\n\n";
 		}
 
 
@@ -202,6 +256,16 @@ bool writeToFile()
 			if(storedSource[i] != "Blank") outputFile << storedSource[i] << endl;
 			if(storedUsr[i] != "Blank") outputFile << storedUsr[i] << endl;
 			if(storedSrc[i] != "Blank") outputFile << storedSrc[i] << endl;
+		}
+		
+		//and finally, hard deletes
+		if(totalHardDels > 0)
+		{
+			outputFile << endl << "** Hard deletions **";
+			for(int i=0; i <= maxStorage; i++)
+			{
+				if(numHardDel[i] != 0 && storedHardDel[i] != "Blank") outputFile << endl << storedHardDel[i] << " - " << numHardDel[i] << " time(s).\n";
+			}
 		}
 		outputFile.close();
 	}
@@ -265,6 +329,45 @@ void sortRuntimes()
 	}
 }
 
+void sortHardDels() //copypasting and I don't care~
+{
+	string tempHardDel[maxStorage + 1];
+	unsigned int tempNumHardDel[maxStorage + 1];
+	unsigned int highestCount = 0;
+
+	for (int i = 0; i <= maxStorage; i++)
+	{
+		//Get the largest occurance of a single hard deletion
+		if (highestCount < numHardDel[i])
+		{
+			highestCount = numHardDel[i];
+		}
+
+		tempHardDel[i] = storedHardDel[i];	storedHardDel[i] = "Blank";
+		tempNumHardDel[i] = numHardDel[i];	numHardDel[i] = 0;
+	}
+
+	while (highestCount > 0)
+	{
+		for (int i = 0; i <= maxStorage; i++) //For every hard deletion
+		{
+			if (tempNumHardDel[i] == highestCount) //If the number of occurances of that hard deletion is equal to our current highest
+			{
+				for (int j = 0; j <= maxStorage; j++) //Find the next available slot and store the info
+				{
+					if (storedHardDel[j] == "Blank") //Found an empty spot
+					{
+						storedHardDel[j] = tempHardDel[i];
+						numHardDel[j] = tempNumHardDel[i];
+						break;
+					}
+				}
+			}
+		}
+		highestCount--; //Lower our 'highest' by one and continue
+	}
+}
+
 
 int main() {
 	char exit; //Used to stop the program from immediatly exiting
@@ -278,6 +381,8 @@ int main() {
 		storedUsr[i] = "Blank";
 		storedSrc[i] = "Blank";
 		numRuntime[i] = 0;
+		storedHardDel[i] = "Blank";
+		numHardDel[i] = 0;
 
 	}
 
@@ -294,6 +399,7 @@ int main() {
 	}
 
 	sortRuntimes();
+	sortHardDels();
 
 	if(writeToFile())
 	{

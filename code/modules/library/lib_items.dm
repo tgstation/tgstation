@@ -17,6 +17,8 @@
 	anchored = 0
 	density = 1
 	opacity = 0
+	burn_state = FLAMMABLE
+	burntime = 30
 	var/state = 0
 	var/list/allowed_books = list(/obj/item/weapon/book, /obj/item/weapon/spellbook, /obj/item/weapon/storage/book) //Things allowed in the bookcase
 
@@ -36,13 +38,13 @@
 		if(0)
 			if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20/I.toolspeed, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
 			if(istype(I, /obj/item/weapon/crowbar))
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20/I.toolspeed, target = src))
 					user << "<span class='notice'>You pry the frame apart.</span>"
 					new /obj/item/stack/sheet/mineral/wood(loc, 4)
 					qdel(src)
@@ -63,7 +65,8 @@
 
 		if(2)
 			if(is_type_in_list(I, allowed_books))
-				user.drop_item()
+				if(!user.drop_item())
+					return
 				I.loc = src
 				update_icon()
 			else if(istype(I, /obj/item/weapon/storage/bag/books))
@@ -81,7 +84,7 @@
 					name = ("bookcase ([sanitize(newname)])")
 			else if(istype(I, /obj/item/weapon/crowbar))
 				if(contents.len)
-					user << "<span class='notice'>You need to remove the books first.</span>"
+					user << "<span class='warning'>You need to remove the books first!</span>"
 				else
 					playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user << "<span class='notice'>You pry the shelf out.</span>"
@@ -108,7 +111,7 @@
 
 /obj/structure/bookcase/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		for(var/obj/item/weapon/book/b in contents)
 			b.loc = (get_turf(src))
 		if(prob(50))
@@ -164,6 +167,7 @@
 	throw_range = 5
 	w_class = 3		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb = list("bashed", "whacked", "educated")
+	burn_state = FLAMMABLE
 	var/dat				//Actual page content
 	var/due_date = 0	//Game time in 1/10th seconds
 	var/author			//Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -191,7 +195,7 @@
 		if(is_blind(user))
 			return
 		if(unique)
-			user << "<span class='notice'>These pages don't seem to take the ink well. Looks like you can't modify it.</span>"
+			user << "<span class='warning'>These pages don't seem to take the ink well! Looks like you can't modify it.</span>"
 			return
 		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
 		switch(choice)
@@ -250,9 +254,9 @@
 					scanner.computer.inventory.Add(src)
 					user << "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"
 
-	else if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>You begin to carve out [title].</span>"
-		if(do_after(user, 30))
+	else if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/wirecutters))
+		user << "<span class='notice'>You begin to carve out [title]...</span>"
+		if(do_after(user, 30, target = src))
 			user << "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>"
 			var/obj/item/weapon/storage/book/B = new
 			B.name = src.name
@@ -280,7 +284,7 @@
 	icon_state ="scanner"
 	throw_speed = 3
 	throw_range = 5
-	w_class = 1.0
+	w_class = 1
 	var/obj/machinery/computer/libraryconsole/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
 	var/obj/item/weapon/book/book			//Currently scanned book
 	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory

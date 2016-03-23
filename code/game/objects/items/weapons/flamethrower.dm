@@ -5,12 +5,12 @@
 	icon_state = "flamethrowerbase"
 	item_state = "flamethrower_0"
 	flags = CONDUCT
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
-	m_amt = 500
+	w_class = 3
+	materials = list(MAT_METAL=500)
 	origin_tech = "combat=1;plasmatech=1"
 	var/status = 0
 	var/throw_amount = 100
@@ -19,6 +19,7 @@
 	var/obj/item/weapon/weldingtool/weldtool = null
 	var/obj/item/device/assembly/igniter/igniter = null
 	var/obj/item/weapon/tank/internals/plasma/ptank = null
+	var/warned_admins = 0 //for the message_admins() when lit
 
 
 /obj/item/weapon/flamethrower/Destroy()
@@ -28,7 +29,7 @@
 		qdel(igniter)
 	if(ptank)
 		qdel(ptank)
-	..()
+	return ..()
 
 
 /obj/item/weapon/flamethrower/process()
@@ -65,10 +66,12 @@
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
 			var/turflist = getline(user, target_turf)
+			add_logs(user, target, "flamethrowered", src, "at [target.x],[target.y],[target.z]")
 			flame_turf(turflist)
 
-/obj/item/weapon/flamethrower/attackby(obj/item/W as obj, mob/user as mob, params)
-	if(user.stat || user.restrained() || user.lying)	return
+/obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user, params)
+	if(user.stat || user.restrained() || user.lying)
+		return
 	if(istype(W, /obj/item/weapon/wrench) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
 		if(weldtool)
@@ -92,9 +95,12 @@
 
 	if(isigniter(W))
 		var/obj/item/device/assembly/igniter/I = W
-		if(I.secured)	return
-		if(igniter)		return
-		user.drop_item()
+		if(I.secured)
+			return
+		if(igniter)
+			return
+		if(!user.unEquip(W))
+			return
 		I.loc = src
 		igniter = I
 		update_icon()
@@ -104,7 +110,8 @@
 		if(ptank)
 			user << "<span class='notice'>There appears to already be a plasma tank loaded in [src]!</span>"
 			return
-		user.drop_item()
+		if(!user.unEquip(W))
+			return
 		ptank = W
 		W.loc = src
 		update_icon()
@@ -116,8 +123,9 @@
 	return
 
 
-/obj/item/weapon/flamethrower/attack_self(mob/user as mob)
-	if(user.stat || user.restrained() || user.lying)	return
+/obj/item/weapon/flamethrower/attack_self(mob/user)
+	if(user.stat || user.restrained() || user.lying)
+		return
 	user.set_machine(src)
 	if(!ptank)
 		user << "<span class='notice'>Attach a plasma tank first!</span>"
@@ -133,19 +141,26 @@
 		usr.unset_machine()
 		usr << browse(null, "window=flamethrower")
 		return
-	if(usr.stat || usr.restrained() || usr.lying)	return
+	if(usr.stat || usr.restrained() || usr.lying)
+		return
 	usr.set_machine(src)
 	if(href_list["light"])
-		if(!ptank)	return
-		if(!status)	return
+		if(!ptank)
+			return
+		if(!status)
+			return
 		lit = !lit
 		if(lit)
 			SSobj.processing |= src
+			if(!warned_admins)
+				message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has lit a flamethrower.")
+				warned_admins = 1
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
 		throw_amount = max(50, min(5000, throw_amount))
 	if(href_list["remove"])
-		if(!ptank)	return
+		if(!ptank)
+			return
 		usr.put_in_hands(ptank)
 		ptank = null
 		lit = 0
@@ -160,11 +175,15 @@
 /obj/item/weapon/flamethrower/CheckParts()
 	weldtool = locate(/obj/item/weapon/weldingtool) in contents
 	igniter = locate(/obj/item/device/assembly/igniter) in contents
+	weldtool.status = 0
+	igniter.secured = 0
+	status = 1
 	update_icon()
 
 //Called from turf.dm turf/dblclick
 /obj/item/weapon/flamethrower/proc/flame_turf(turflist)
-	if(!lit || operating)	return
+	if(!lit || operating)
+		return
 	operating = 1
 	var/turf/previousturf = get_turf(src)
 	for(var/turf/simulated/T in turflist)
@@ -184,11 +203,12 @@
 	return
 
 
-/obj/item/weapon/flamethrower/proc/ignite_turf(turf/target)
+/obj/item/weapon/flamethrower/proc/ignite_turf(turf/target, release_amount = 0.05)
 	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
 	//Transfer 5% of current tank air contents to turf
-	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(0.05)
-	air_transfer.toxins = air_transfer.toxins * 5
+	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(release_amount)
+	if(air_transfer.gases["plasma"])
+		air_transfer.gases["plasma"][MOLES] *= 5
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
@@ -212,3 +232,12 @@
 	..()
 	ptank = new /obj/item/weapon/tank/internals/plasma/full(src)
 	update_icon()
+
+
+/obj/item/weapon/flamethrower/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(ptank && damage && attack_type == PROJECTILE_ATTACK && prob(15))
+		owner.visible_message("<span class='danger'>[attack_text] hits the fueltank on [owner]'s [src], rupturing it! What a shot!</span>")
+		var/target_turf = get_turf(owner)
+		ignite_turf(target_turf, 100)
+		qdel(ptank)
+		return 1 //It hit the flamethrower, not them

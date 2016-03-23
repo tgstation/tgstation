@@ -66,12 +66,15 @@ ALERT_GREEN All threats to the station have passed. Security may not have weapon
 ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
 ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
 ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised.
-ALERT_RED_DOWNTO The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
-ALERT_DELTA The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
+ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
+ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
 
 
 
 ### GAME MODES ###
+
+## Uncomment to not send a roundstart intercept report. Gamemodes may override this.
+#NO_INTERCEPT_REPORT
 
 ## Probablities for game modes chosen in 'secret' and 'random' modes.
 ## Default probablity is 1, increase to make that mode more likely to be picked.
@@ -82,28 +85,64 @@ PROBABILITY TRAITORCHAN 4
 PROBABILITY DOUBLE_AGENTS 3
 PROBABILITY NUCLEAR 2
 PROBABILITY REVOLUTION 2
-PROBABILITY GANG 0
+PROBABILITY SHADOWLING 2
+PROBABILITY GANG 2
 PROBABILITY CULT 2
 PROBABILITY CHANGELING 2
 PROBABILITY WIZARD 4
 PROBABILITY MALFUNCTION 1
 PROBABILITY BLOB 2
 PROBABILITY RAGINMAGES 2
-PROBABILITY MONKEY 1
+PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
 
-## Uncomment to make rounds which end instantly (Rev, Wizard, Malf) continue until
-## the shuttle is called or the station is nuked.
-## Malf and Rev will let the shuttle be called when the antags/protags are dead.
-#CONTINUOUS_ROUND_REV
-#CONTINUOUS_ROUND_GANG
-#CONTINUOUS_ROUND_WIZ
-#CONTINUOUS_ROUND_MALF
-#CONTINUOUS_ROUND_BLOB
+
+## Toggles for continuous modes.
+## Modes that aren't continuous will end the instant all antagonists are dead.
+
+CONTINUOUS TRAITOR
+CONTINUOUS TRAITORCHAN
+CONTINUOUS DOUBLE_AGENTS
+#CONTINUOUS NUCLEAR
+#CONTINUOUS REVOLUTION
+#CONTINUOUS SHADOWLING
+CONTINUOUS GANG
+CONTINUOUS CULT
+CONTINUOUS CHANGELING
+CONTINUOUS WIZARD
+CONTINUOUS MALFUNCTION
+CONTINUOUS BLOB
+#CONTINUOUS RAGINMAGES
+#CONTINUOUS MONKEY
+
+##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
+
+CONTINUOUS METEOR
+CONTINUOUS EXTENDED
+
+
+## Toggles for allowing midround antagonists (aka mulligan antagonists).
+## In modes that are continuous, if all antagonists should die then a new set of antagonists will be created.
+
+MIDROUND_ANTAG TRAITOR
+MIDROUND_ANTAG TRAITORCHAN
+MIDROUND_ANTAG DOUBLE_AGENTS
+#MIDROUND_ANTAG  NUCLEAR
+#MIDROUND_ANTAG  REVOLUTION
+#MIDROUND_ANTAG  SHADOWLING
+#MIDROUND_ANTAG  GANG
+MIDROUND_ANTAG CULT
+MIDROUND_ANTAG CHANGELING
+MIDROUND_ANTAG WIZARD
+MIDROUND_ANTAG MALFUNCTION
+MIDROUND_ANTAG BLOB
+#MIDROUND_ANTAG  RAGINMAGES
+#MIDROUND_ANTAG  MONKEY
+
 
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
 SHUTTLE_REFUEL_DELAY 12000
@@ -150,6 +189,9 @@ ALLOW_RANDOM_EVENTS
 ## Allow the AI job to be picked.
 ALLOW_AI
 
+### Secborg ###
+## Uncomment to prevent the secborg module from being chosen
+#DISABLE_SECBORG
 
 
 ### AWAY MISSIONS ###
@@ -213,11 +255,39 @@ DEFAULT_LAWS 1
 ## Attempting to upload laws past this point will fail unless the AI is reset
 SILICON_MAX_LAW_AMOUNT 12
 
-## Uncoment to give players the choice of their species before they join the game
-#JOIN_WITH_MUTANT_RACE
+## Uncomment to give players the choice of their species before they join the game
+JOIN_WITH_MUTANT_RACE
 
-## Uncomment to allow certain species to have custom colors
-#MUTANT_COLORS
+
+## Roundstart Races
+##-------------------------------------------------------------------------------------------
+## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on
+
+## Disabling humans is possible but a bit buggy. Some code relies on the notion that white people exist in space.
+ROUNDSTART_RACES human
+
+## Races that are strictly worse than humans that could probably be turned on without balance concerns
+ROUNDSTART_RACES lizard
+#ROUNDSTART_RACES fly
+ROUNDSTART_RACES plasmaman
+#ROUNDSTART_RACES shadow
+#ROUNDSTART_RACES shadowling
+
+## Races that are better than humans in some ways, but worse in others
+#ROUNDSTART_RACES jelly
+#ROUNDSTART_RACES golem
+#ROUNDSTART_RACES adamantine
+#ROUNDSTART_RACES abductor
+
+## Races that are straight upgrades. If these are on expect powergamers to always pick them
+#ROUNDSTART_RACES skeleton
+#ROUNDSTART_RACES zombie
+#ROUNDSTART_RACES slime
+#ROUNDSTART_RACES pod
+##-------------------------------------------------------------------------------------------
+
+## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
+#JOIN_WITH_MUTANT_HUMANS
 
 ## Assistant slot cap. Set to -1 for unlimited.
 ASSISTANT_CAP -1
@@ -242,4 +312,23 @@ MIDROUND_ANTAG_LIFE_CHECK 0.7
 #NO_SUMMON_GUNS
 #NO_SUMMON_MAGIC
 #NO_SUMMON_EVENTS
+
+##Comment for "normal" explosions, which ignore obstacles
+##Uncomment for explosions that react to doors and walls
+REACTIONARY_EXPLOSIONS
+
+### Configure the bomb cap
+## This caps all explosions to the specified range. Used for both balance reasons and to prevent overloading the server and lagging the game out.
+## This is given as the 3rd number(light damage) in the standard (1,2,3) explosion notation. The other numbers are derived by dividing by 2 and 4.
+## eg: If you give the number 20. The bomb cap will be 5,10,20.
+## Can be any number above 4, some examples are provided below.
+
+## Small (3, 7, 14)
+#BOMBCAP 14
+## Default (5, 10, 20) (recommended if you enable REACTIONARY_EXPLOSIONS above)
+BOMBCAP 20
+## LagHell (7, 14, 28)
+#BOMBCAP 28
+
+
 

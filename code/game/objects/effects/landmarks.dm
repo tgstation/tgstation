@@ -2,11 +2,10 @@
 	name = "landmark"
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
-	anchored = 1.0
+	anchored = 1
 	unacidable = 1
 
 /obj/effect/landmark/New()
-
 	..()
 	tag = text("landmark*[]", name)
 	invisibility = 101
@@ -55,10 +54,6 @@
 			secequipment += loc
 			qdel(src)
 			return
-		if("Deathsquad")
-			deathsquadspawn += loc
-			qdel(src)
-			return
 		if("Emergencyresponseteam")
 			emergencyresponseteamspawn += loc
 			qdel(src)
@@ -67,26 +62,28 @@
 			xeno_spawn += loc
 			qdel(src)
 			return
-
 	return 1
 
 /obj/effect/landmark/Destroy()
 	landmarks_list -= src
-	..()
+	return ..()
 
 /obj/effect/landmark/start
 	name = "start"
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x"
-	anchored = 1.0
+	anchored = 1
 
 /obj/effect/landmark/start/New()
 	..()
 	tag = "start*[name]"
 	invisibility = 101
 	start_landmarks_list += src
-
 	return 1
+
+/obj/effect/landmark/start/Destroy()
+	start_landmarks_list -= src
+	return ..()
 
 //Costume spawner landmarks
 
@@ -228,10 +225,51 @@
 
 /obj/effect/landmark/costume/sexyclown/New()
 	new /obj/item/clothing/mask/gas/sexyclown(src.loc)
-	new /obj/item/clothing/under/sexyclown(src.loc)
+	new /obj/item/clothing/under/rank/clown/sexy(src.loc)
 	qdel(src)
 
 /obj/effect/landmark/costume/sexymime/New()
 	new /obj/item/clothing/mask/gas/sexymime(src.loc)
 	new /obj/item/clothing/under/sexymime(src.loc)
 	qdel(src)
+
+//Department Security spawns
+
+/obj/effect/landmark/start/depsec
+	name = "department_sec"
+
+/obj/effect/landmark/start/depsec/New()
+	..()
+	department_security_spawns += src
+
+/obj/effect/landmark/start/depsec/Destroy()
+	department_security_spawns -= src
+	return ..()
+
+/obj/effect/landmark/start/depsec/supply
+	name = "supply_sec"
+
+/obj/effect/landmark/start/depsec/medical
+	name = "medical_sec"
+
+/obj/effect/landmark/start/depsec/engineering
+	name = "engineering_sec"
+
+/obj/effect/landmark/start/depsec/science
+	name = "science_sec"
+
+/obj/effect/landmark/latejoin
+	name = "JoinLate"
+
+//generic event spawns
+/obj/effect/landmark/event_spawn
+	name = "generic event spawn"
+	icon_state = "x4"
+
+/obj/effect/landmark/event_spawn/New()
+	..()
+	generic_event_spawns += src
+
+/obj/effect/landmark/event_spawn/Destroy()
+	generic_event_spawns -= src
+	return ..()

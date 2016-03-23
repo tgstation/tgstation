@@ -23,7 +23,7 @@
 	var/l_hacking = 0
 	var/emagged = 0
 	var/open = 0
-	w_class = 3.0
+	w_class = 3
 	max_w_class = 2
 	max_combined_w_class = 14
 
@@ -31,37 +31,38 @@
 	..()
 	user << text("The service panel is [src.open ? "open" : "closed"].")
 
-/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W, mob/user, params)
 	if(locked)
 		if (istype(W, /obj/item/weapon/screwdriver))
-			if (do_after(user, 20))
+			if (do_after(user, 20/W.toolspeed, target = src))
 				src.open =! src.open
-				user.show_message(text("<span class='notice'>You [] the service panel.</span>", (src.open ? "open" : "close")))
+				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
 			return
 		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
-			user.show_message(text("<span class='danger'>Now attempting to reset internal memory, please hold.</span>"), 1)
+			user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
 			src.l_hacking = 1
-			if (do_after(usr, 100))
+			if (do_after(usr, 100/W.toolspeed, target = src))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0
-					user.show_message(text("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>"), 1)
+					user.show_message("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
 					sleep(80)
 					src.l_setshort = 0
 					src.l_hacking = 0
 				else
-					user.show_message(text("<span class='danger'>Unable to reset internal memory.</span>"), 1)
+					user.show_message("<span class='danger'>Unable to reset internal memory.</span>", 1)
 					src.l_hacking = 0
-			else	src.l_hacking = 0
+			else
+				src.l_hacking = 0
 			return
 		//At this point you have exhausted all the special things to do when locked
 		// ... but it's still locked.
 		return
 
 	// -> storage/attackby() what with handle insertion, etc
-	..()
+	return ..()
 
-/obj/item/weapon/storage/secure/emag_act(mob/user as mob)
+/obj/item/weapon/storage/secure/emag_act(mob/user)
 	if(locked)
 		if(!emagged)
 			emagged = 1
@@ -70,16 +71,16 @@
 			src.overlays = null
 			overlays += image('icons/obj/storage.dmi', icon_locking)
 			locked = 0
-			user << "You short out the lock on [src]."
+			user << "<span class='notice'>You short out the lock on [src].</span>"
 
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
 		src.add_fingerprint(usr)
-		return
+		usr << "<span class='warning'>It's locked!</span>"
+		return 0
 	..()
 
-
-/obj/item/weapon/storage/secure/attack_self(mob/user as mob)
+/obj/item/weapon/storage/secure/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (src.locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
@@ -128,6 +129,12 @@
 			return
 	return
 
+/obj/item/weapon/storage/secure/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	if(locked)
+		user << "<span class='warning'>It's locked!</span>"
+		return 0
+	return ..()
+
 /obj/item/weapon/storage/secure/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(locked)
 		return 0
@@ -143,11 +150,11 @@
 	icon_state = "secure"
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
-	force = 8.0
+	force = 8
 	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
-	w_class = 4.0
+	w_class = 4
 	max_w_class = 3
 	max_combined_w_class = 21
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
@@ -157,9 +164,9 @@
 	new /obj/item/weapon/pen(src)
 	return ..()
 
-/obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user as mob)
+/obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
-		usr << "<span class='danger'>[src] is locked and cannot be opened!</span>"
+		usr << "<span class='warning'>[src] is locked and cannot be opened!</span>"
 	else if ((src.loc == user) && (!src.locked))
 		playsound(src.loc, "rustle", 50, 1, -5)
 		if (user.s_active)
@@ -176,11 +183,11 @@
 
 //Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/weapon/storage/secure/briefcase/syndie
-	force = 15.0
+	force = 15
 
 /obj/item/weapon/storage/secure/briefcase/syndie/New()
 	for(var/i = 0, i < storage_slots - 2, i++)
-		new /obj/item/weapon/spacecash/c1000(src)
+		new /obj/item/stack/spacecash/c1000(src)
 	return ..()
 
 
@@ -195,10 +202,10 @@
 	icon_opened = "safe0"
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
-	force = 8.0
-	w_class = 8.0
+	force = 8
+	w_class = 8
 	max_w_class = 8
-	anchored = 1.0
+	anchored = 1
 	density = 0
 	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
 
@@ -207,7 +214,7 @@
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
 
-/obj/item/weapon/storage/secure/safe/attack_hand(mob/user as mob)
+/obj/item/weapon/storage/secure/safe/attack_hand(mob/user)
 	return attack_self(user)
 
 /obj/item/weapon/storage/secure/safe/HoS/New()

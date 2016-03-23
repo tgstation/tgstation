@@ -6,7 +6,7 @@
 //Disease Flags
 #define CURABLE		1
 #define CAN_CARRY	2
-#define CAN_RESIST	3
+#define CAN_RESIST	4
 
 //Spread Flags
 #define SPECIAL 1
@@ -27,7 +27,7 @@
 #define BIOHAZARD	"BIOHAZARD THREAT!"
 
 
-var/list/diseases = typesof(/datum/disease) - /datum/disease
+var/list/diseases = subtypesof(/datum/disease)
 
 
 /datum/disease
@@ -61,7 +61,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	var/permeability_mod = 1
 	var/severity =	NONTHREAT
 	var/list/required_organs = list()
-
+	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
 
 
@@ -90,14 +90,14 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(!(disease_flags & CURABLE))
 		return 0
 
-	. = 1
+	. = cures.len
 	for(var/C_id in cures)
 		if(!affected_mob.reagents.has_reagent(C_id))
 			.--
-			break //One missing cure is enough to fail
+	if(!. || (needs_all_cures && . < cures.len))
+		return 0
 
-
-/datum/disease/proc/spread(var/atom/source, var/force_spread = 0)
+/datum/disease/proc/spread(atom/source, force_spread = 0)
 	if((spread_flags & SPECIAL || spread_flags & NON_CONTAGIOUS || spread_flags & BLOOD) && !force_spread)
 		return
 
@@ -122,11 +122,11 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(isturf(source.loc))
 		for(var/mob/living/carbon/C in oview(spread_range, source))
 			if(isturf(C.loc))
-				if(AStar(source.loc, C.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, spread_range))
+				if(AStar(source, C.loc,/turf/proc/Distance, spread_range, adjacent = (spread_flags & AIRBORNE) ? /turf/proc/reachableAdjacentAtmosTurfs : /turf/proc/reachableAdjacentTurfs))
 					C.ContractDisease(src)
 
 
-/datum/disease/proc/process()
+/datum/disease/process()
 	if(!holder)
 		SSdisease.processing -= src
 		return
@@ -138,7 +138,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		for(var/datum/disease/D in affected_mob.viruses)
 			if(D != src)
 				if(IsSame(D))
-					del(D)
+					qdel(D)
 
 		if(holder == affected_mob)
 			if(affected_mob.stat != DEAD)
@@ -156,7 +156,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 			if(!(type in affected_mob.resistances))
 				affected_mob.resistances += type
 				remove_virus()
-	del(src)
+	qdel(src)
 
 
 /datum/disease/New()
@@ -172,23 +172,25 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	SSdisease.processing += src
 
 
-/datum/disease/proc/IsSame(var/datum/disease/D)
+/datum/disease/proc/IsSame(datum/disease/D)
 	if(istype(src, D.type))
 		return 1
 	return 0
 
 
 /datum/disease/proc/Copy()
-	return new type()
+	var/datum/disease/D = new type()
+	D.strain_data = strain_data.Copy()
+	return D
 
 
 /datum/disease/proc/GetDiseaseID()
 	return type
 
 
-/datum/disease/Del()
+/datum/disease/Destroy()
 	SSdisease.processing.Remove(src)
-	..()
+	return ..()
 
 
 /datum/disease/proc/IsSpreadByTouch()

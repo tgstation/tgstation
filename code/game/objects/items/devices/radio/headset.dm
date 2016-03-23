@@ -3,14 +3,12 @@
 	desc = "An updated, modular intercom that fits over the head. Takes encryption keys. \nTo speak on the general radio frequency, use ; before speaking."
 	icon_state = "headset"
 	item_state = "headset"
-	g_amt = 0
-	m_amt = 75
+	materials = list(MAT_METAL=75)
 	subspace_transmission = 1
 	canhear_range = 0 // can't hear headsets from very far away
 
 	slot_flags = SLOT_EARS
 	var/obj/item/device/encryptionkey/keyslot2 = null
-	maxf = 1489
 
 /obj/item/device/radio/headset/New()
 	..()
@@ -21,14 +19,14 @@
 	qdel(keyslot2)
 	keyslot = null
 	keyslot2 = null
-	..()
+	return ..()
 
 /obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans)
 	if (!listening)
 		return
 	..()
 
-/obj/item/device/radio/headset/receive_range(freq, level, var/AIuser)
+/obj/item/device/radio/headset/receive_range(freq, level, AIuser)
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		if(H.ears == src)
@@ -47,6 +45,10 @@
 	origin_tech = "syndicate=3"
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
+
+/obj/item/device/radio/headset/syndicate/alt/leader
+	name = "team leader headset"
+	command = TRUE
 
 /obj/item/device/radio/headset/syndicate/New()
 	..()
@@ -115,6 +117,9 @@
 	icon_state = "com_headset"
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_com
+
+/obj/item/device/radio/headset/heads
+	command = TRUE
 
 /obj/item/device/radio/headset/heads/captain
 	name = "\proper the captain's headset"
@@ -188,10 +193,22 @@
 
 /obj/item/device/radio/headset/headset_cent
 	name = "\improper Centcom headset"
-	desc = "A headset used by the upper echelons of Nanotrasen. \nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
+	desc = "A headset used by the upper echelons of Nanotrasen. \nTo access the centcom channel, use :y."
 	icon_state = "cent_headset"
 	item_state = "headset"
+	keyslot = new /obj/item/device/encryptionkey/headset_com
+	keyslot2 = new /obj/item/device/encryptionkey/headset_cent
+
+/obj/item/device/radio/headset/headset_cent/commander
 	keyslot = new /obj/item/device/encryptionkey/heads/captain
+
+/obj/item/device/radio/headset/headset_cent/alt
+	name = "\improper Centcom bowman headset"
+	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs. \nTo access the centcom channel, use :y."
+	flags = EARBANGPROTECT
+	icon_state = "cent_headset_alt"
+	item_state = "cent_headset_alt"
+	keyslot = null
 
 /obj/item/device/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "
@@ -200,7 +217,7 @@
 /obj/item/device/radio/headset/ai/receive_range(freq, level)
 	return ..(freq, level, 1)
 
-/obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user, params)
 //	..()
 	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
@@ -211,7 +228,7 @@
 
 
 			for(var/ch_name in channels)
-				radio_controller.remove_object(src, radiochannels[ch_name])
+				SSradio.remove_object(src, radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
 
@@ -230,23 +247,25 @@
 					keyslot2 = null
 
 			recalculateChannels()
-			user << "You pop out the encryption keys in the headset!"
+			user << "<span class='notice'>You pop out the encryption keys in the headset.</span>"
 
 		else
-			user << "This headset doesn't have any unique encryption keys!  How useless..."
+			user << "<span class='warning'>This headset doesn't have any unique encryption keys!  How useless...</span>"
 
 	if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot && keyslot2)
-			user << "The headset can't hold another key!"
+			user << "<span class='warning'>The headset can't hold another key!</span>"
 			return
 
 		if(!keyslot)
-			user.drop_item()
+			if(!user.unEquip(W))
+				return
 			W.loc = src
 			keyslot = W
 
 		else
-			user.drop_item()
+			if(!user.unEquip(W))
+				return
 			W.loc = src
 			keyslot2 = W
 
@@ -273,6 +292,9 @@
 
 		if(keyslot2.syndie)
 			src.syndie = 1
+
+		if (keyslot2.centcom)
+			centcom = 1
 
 
 	for(var/ch_name in channels)

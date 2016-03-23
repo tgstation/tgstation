@@ -9,6 +9,12 @@
 	var/modifystate = 0
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
+	var/can_charge = 1 //Can it be charged in a recharger?
+	ammo_x_offset = 2
+	var/shaded_charge = 0 //if this gun uses a stateful charge bar for more detail
+	var/selfcharge = 0
+	var/charge_tick = 0
+	var/charge_delay = 4
 
 /obj/item/weapon/gun/energy/emp_act(severity)
 	power_supply.use(round(power_supply.charge / severity))
@@ -30,9 +36,30 @@
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
+	if(selfcharge)
+		SSobj.processing |= src
 	update_icon()
 	return
 
+/obj/item/weapon/gun/energy/Destroy()
+	SSobj.processing -= src
+	return ..()
+
+/obj/item/weapon/gun/energy/process()
+	if(selfcharge)
+		charge_tick++
+		if(charge_tick < charge_delay)
+			return
+		charge_tick = 0
+		if(!power_supply)
+			return
+		power_supply.give(100)
+		update_icon()
+
+/obj/item/weapon/gun/energy/attack_self(mob/living/user as mob)
+	if(ammo_type.len > 1)
+		select_fire(user)
+		update_icon()
 
 /obj/item/weapon/gun/energy/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
 	newshot() //prepare a new shot
@@ -42,7 +69,7 @@
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	return power_supply.charge >= shot.e_cost
 
-/obj/item/weapon/gun/energy/proc/newshot()
+/obj/item/weapon/gun/energy/newshot()
 	if (!ammo_type || !power_supply)
 		return
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
@@ -58,7 +85,7 @@
 	chambered = null //either way, released the prepared shot
 	return
 
-/obj/item/weapon/gun/energy/proc/select_fire(mob/living/user as mob)
+/obj/item/weapon/gun/energy/proc/select_fire(mob/living/user)
 	select++
 	if (select > ammo_type.len)
 		select = 1
@@ -66,30 +93,39 @@
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
 	if (shot.select_name)
-		user << "<span class='danger'>[src] is now set to [shot.select_name].</span>"
+		user << "<span class='notice'>[src] is now set to [shot.select_name].</span>"
 	update_icon()
 	return
 
 /obj/item/weapon/gun/energy/update_icon()
-	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = Ceiling(ratio*4) * 25
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(power_supply.charge < shot.e_cost)
-		ratio = 0 //so the icon changes to empty if the charge isn't zero but not enough for a shot.
-	switch(modifystate)
-		if (0)
-			icon_state = "[initial(icon_state)][ratio]"
-		if (1)
-			icon_state = "[initial(icon_state)][shot.mod_name][ratio]"
-		if (2)
-			icon_state = "[initial(icon_state)][shot.select_name][ratio]"
 	overlays.Cut()
-	if(F)
-		if(F.on)
-			overlays += "flight-[initial(icon_state)]-on"
+	var/ratio = Ceiling((power_supply.charge / power_supply.maxcharge) * 4)
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/iconState = "[icon_state]_charge"
+	var/itemState = null
+	if(!initial(item_state))
+		itemState = icon_state
+	if (modifystate)
+		overlays += "[icon_state]_[shot.select_name]"
+		iconState += "_[shot.select_name]"
+		if(itemState)
+			itemState += "[shot.select_name]"
+	if(power_supply.charge < shot.e_cost)
+		overlays += "[icon_state]_empty"
+	else
+		if(!shaded_charge)
+			for(var/i = ratio, i >= 1, i--)
+				overlays += image(icon = icon, icon_state = iconState, pixel_x = ammo_x_offset * (i -1))
 		else
-			overlays += "flight-[initial(icon_state)]"
-	return
+			overlays += image(icon = icon, icon_state = "[icon_state]_charge[ratio]")
+	if(F)
+		var/iconF = "flight"
+		if(F.on)
+			iconF = "flight_on"
+		overlays += image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset)
+	if(itemState)
+		itemState += "[ratio]"
+		item_state = itemState
 
 /obj/item/weapon/gun/energy/ui_action_click()
 	toggle_gunlight()
@@ -112,3 +148,18 @@
 		user.visible_message("<span class='suicide'>[user] is pretending to blow \his brains out with the [src.name]! It looks like \he's trying to commit suicide!</b></span>")
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
 		return (OXYLOSS)
+
+/obj/item/weapon/gun/energy/proc/robocharge()
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		if(R && R.cell)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
+				power_supply.give(shot.e_cost)	//... to recharge the shot
+
+/obj/item/weapon/gun/energy/on_varedit(modified_var)
+	if(modified_var == "selfcharge")
+		if(selfcharge)
+			SSobj.processing |= src
+		else
+			SSobj.processing -= src

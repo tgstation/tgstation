@@ -1,23 +1,18 @@
-/mob/living/silicon/ai/say(var/message)
+/mob/living/silicon/ai/say(message)
 	if(parent && istype(parent) && parent.stat != 2) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		parent.say(message)
 		return
 	..(message)
 
-/mob/living/silicon/ai/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
-	//this proc assumes that the message originated from a radio. if the speaker is not a virtual speaker this will probably fuck up hard.
+/mob/living/silicon/ai/compose_track_href(atom/movable/speaker, namepart)
 	var/mob/M = speaker.GetSource()
-	var/obj/item/device/radio = speaker.GetRadio()
 	if(M)
-		var/faketrack = "byond://?src=\ref[radio];track2=\ref[src];track=\ref[M]"
-		if(speaker.GetTrack())
-			faketrack = "byond://?src=\ref[radio];track2=\ref[src];faketrack=\ref[M]"
-		return "<a href='[faketrack]'>"
+		return "<a href='?src=\ref[src];track=[html_encode(namepart)]'>"
 	return ""
 
 /mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	//Also includes the </a> for AI hrefs, for convenience.
-	return " [radio_freq ? "(" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
+	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
 /mob/living/silicon/ai/IsVocal()
 	return !config.silent_ai
@@ -44,7 +39,7 @@
 		return 1
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(var/message)
+/mob/living/silicon/ai/proc/holopad_talk(message)
 	log_say("[key_name(src)] : [message]")
 
 	message = trim(message)
@@ -54,8 +49,8 @@
 
 	var/obj/machinery/hologram/holopad/T = current
 	if(istype(T) && T.masters[src])//If there is a hologram and its master is the user.
-		send_speech(message, 7, T, "R")
-		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>\"[message]\"</span></span></i>"//The AI can "hear" its own message.
+		send_speech(message, 7, T, "robot", get_spans())
+		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>"//The AI can "hear" its own message.
 	else
 		src << "No holopad connected."
 	return
@@ -74,6 +69,8 @@ var/const/VOX_DELAY = 600
 	set desc = "Display a list of vocal words to announce to the crew."
 	set category = "AI Commands"
 
+	if(usr.stat == 2)
+		return //won't work if dead
 
 	var/dat = "Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR> \
 	<UL><LI>You can also click on the word to preview it.</LI>\
@@ -112,7 +109,7 @@ var/const/VOX_DELAY = 600
 		src << "<span class='notice'>Wireless interface disabled, unable to interact with announcement PA.</span>"
 		return
 
-	var/list/words = text2list(trim(message), " ")
+	var/list/words = splittext(trim(message), " ")
 	var/list/incorrect_words = list()
 
 	if(words.len > 30)
@@ -146,7 +143,7 @@ var/const/VOX_DELAY = 600
 */
 
 
-/proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
+/proc/play_vox_word(word, z_level, mob/only_listener)
 
 	word = lowertext(word)
 
@@ -160,7 +157,7 @@ var/const/VOX_DELAY = 600
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/M in player_list)
-				if(M.client && !M.ear_deaf)
+				if(M.client && !M.ear_deaf && !(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)
 						M << voice

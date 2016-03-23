@@ -15,14 +15,14 @@
 
 
 /datum/round_event/anomaly/anomaly_bluespace/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
+	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
-		newAnomaly = new /obj/effect/anomaly/bluespace(T.loc)
+		newAnomaly = new /obj/effect/anomaly/bluespace(T)
 
 
 /datum/round_event/anomaly/anomaly_bluespace/end()
 	if(newAnomaly.loc)//If it hasn't been neutralized, it's time to warp half the station away jeez
-		var/turf/T = pick(get_area_turfs(impact_area))
+		var/turf/T = safepick(get_area_turfs(impact_area))
 		if(T)
 				// Calculate new position (searches through beacons in world)
 			var/obj/item/device/radio/beacon/chosen
@@ -43,19 +43,19 @@
 				priority_announce("Massive bluespace translocation detected.", "Anomaly Alert")
 
 				var/list/flashers = list()
-				for(var/mob/living/carbon/human/M in viewers(TO, null))
-					if(M.flash_eyes())
-						flashers += M
+				for(var/mob/living/carbon/C in viewers(TO, null))
+					if(C.flash_eyes())
+						flashers += C
 
 				var/y_distance = TO.y - FROM.y
 				var/x_distance = TO.x - FROM.x
-				for (var/atom/movable/A in range(12, FROM )) // iterate thru list of mobs in the area
+				for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
 					if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
 					if(A.anchored) continue
 
 					var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
-					if(!A.Move(newloc)) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
-						A.loc = locate(A.x + x_distance, A.y + y_distance, TO.z)
+					if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
+						A.loc = newloc
 
 					spawn()
 						if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect

@@ -24,7 +24,7 @@
 	return
 
 /client/verb/rules()
-	set name = "Rules"
+	set name = "rules"
 	set desc = "Show Server Rules."
 	set hidden = 1
 	if(config.rulesurl)
@@ -36,7 +36,7 @@
 	return
 
 /client/verb/github()
-	set name = "Github"
+	set name = "github"
 	set desc = "Visit Github"
 	set hidden = 1
 	if(config.githuburl)
@@ -48,7 +48,7 @@
 	return
 
 /client/verb/reportissue()
-	set name = "Report issue"
+	set name = "report-issue"
 	set desc = "Report an issue"
 	set hidden = 1
 	if(config.githuburl)
@@ -66,7 +66,7 @@
 	var/adminhotkeys = {"<font color='purple'>
 Admin:
 \tF5 = Aghost (admin-ghost)
-\tF6 = player-panel-new
+\tF6 = player-panel
 \tF7 = admin-pm
 \tF8 = Invisimin
 </font>"}
@@ -75,6 +75,33 @@ Admin:
 
 	if(holder)
 		src << adminhotkeys
+
+/client/verb/changelog()
+	set name = "Changelog"
+	set category = "OOC"
+	getFiles(
+		'html/88x31.png',
+		'html/bug-minus.png',
+		'html/cross-circle.png',
+		'html/hard-hat-exclamation.png',
+		'html/image-minus.png',
+		'html/image-plus.png',
+		'html/music-minus.png',
+		'html/music-plus.png',
+		'html/tick-circle.png',
+		'html/wrench-screwdriver.png',
+		'html/spell-check.png',
+		'html/burn-exclamation.png',
+		'html/chevron.png',
+		'html/chevron-expand.png',
+		'html/changelog.css',
+		'html/changelog.html'
+		)
+	src << browse('html/changelog.html', "window=changes;size=675x650")
+	if(prefs.lastchangelog != changelog_hash)
+		prefs.lastchangelog = changelog_hash
+		prefs.save_preferences()
+		winset(src, "infowindow.changelog", "font-style=;")
 
 
 /mob/proc/hotkey_help()
@@ -91,6 +118,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tm = me
 \tt = say
 \to = OOC
+\tb = resist
 \tx = swap-hand
 \tz = activate held object (or y)
 \tf = cycle-intents-left
@@ -110,6 +138,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+q = drop
 \tCtrl+e = equip
 \tCtrl+r = throw
+\tCtrl+b = resist
+\tCtrl+O = OOC
 \tCtrl+x = swap-hand
 \tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left
@@ -139,7 +169,9 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tw = up
 \tq = unequip active module
 \tt = say
+\to = OOC
 \tx = cycle active modules
+\tb = resist
 \tz = activate held object (or y)
 \tf = cycle-intents-left
 \tg = cycle-intents-right
@@ -157,6 +189,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+w = up
 \tCtrl+q = unequip active module
 \tCtrl+x = cycle active modules
+\tCtrl+b = resist
+\tCtrl+o = OOC
 \tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left
 \tCtrl+g = cycle-intents-right
@@ -172,3 +206,10 @@ Any-Mode: (hotkey doesn't need to be on)
 
 	src << hotkey_mode
 	src << other
+
+// Needed to circumvent a bug where .winset does not work when used on the window.on-size event in skins.
+// Used by /datum/html_interface/nanotrasen (code/modules/html_interface/nanotrasen/nanotrasen.dm)
+/client/verb/_swinset(var/x as text)
+	set name = ".swinset"
+	set hidden = 1
+	winset(src, null, x)

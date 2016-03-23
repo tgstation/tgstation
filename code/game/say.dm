@@ -13,7 +13,7 @@ var/list/freqtospan = list(
 	"1353" = "comradio",
 	"1447" = "aiprivradio",
 	"1213" = "syndradio",
-	"1441" = "dsquadradio"
+	"1337" = "centcomradio"
 	)
 
 /atom/movable/proc/say(message)
@@ -54,7 +54,7 @@ var/list/freqtospan = list(
 	//Message
 	var/messagepart = " <span class='message'>[lang_treat(speaker, message_langs, raw_message, spans)]</span></span>"
 
-	return "[spanpart1][spanpart2][freqpart][compose_track_href(speaker, message_langs, raw_message, radio_freq)][namepart][compose_job(speaker, message_langs, raw_message, radio_freq)][endspanpart][messagepart]"
+	return "[spanpart1][spanpart2][freqpart][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_langs, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
@@ -62,7 +62,7 @@ var/list/freqtospan = list(
 /atom/movable/proc/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
 
-/atom/movable/proc/say_quote(input, list/spans)
+/atom/movable/proc/say_quote(input, list/spans=list())
 	if(!input)
 		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(input, length(input))
@@ -125,7 +125,7 @@ var/list/freqtospan = list(
 	output = "[output]'>"
 	return output
 
-/mob/living/proc/say_test(var/text)
+/proc/say_test(text)
 	var/ending = copytext(text, length(text))
 	if (ending == "?")
 		return "1"
@@ -146,8 +146,6 @@ var/list/freqtospan = list(
 
 /atom/movable/proc/GetJob() //Get a job, you lazy butte
 
-/atom/movable/proc/GetTrack()
-
 /atom/movable/proc/GetSource()
 
 /atom/movable/proc/GetRadio()
@@ -155,18 +153,18 @@ var/list/freqtospan = list(
 //VIRTUALSPEAKERS
 /atom/movable/virtualspeaker
 	var/job
-	var/faketrack
 	var/atom/movable/source
 	var/obj/item/device/radio/radio
 
 /atom/movable/virtualspeaker/GetJob()
 	return job
 
-/atom/movable/virtualspeaker/GetTrack()
-	return faketrack
-
 /atom/movable/virtualspeaker/GetSource()
 	return source
 
 /atom/movable/virtualspeaker/GetRadio()
 	return radio
+
+/atom/movable/virtualspeaker/Destroy()
+	..()
+	return QDEL_HINT_PUTINPOOL

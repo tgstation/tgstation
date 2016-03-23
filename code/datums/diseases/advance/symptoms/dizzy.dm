@@ -25,14 +25,14 @@ Bonus
 	level = 4
 	severity = 2
 
-/datum/symptom/dizzy/Activate(var/datum/disease/advance/A)
+/datum/symptom/dizzy/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("You feel dizzy.", "Your head starts spinning.")]</span>"
+				M << "<span class='warning'>[pick("You feel dizzy.", "Your head spins.")]</span>"
 			else
-				M << "<span class='notice'>You are unable to look straight!</span>"
+				M << "<span class='userdanger'>A wave of dizziness washes over you!</span>"
 				M.Dizzy(5)
 	return

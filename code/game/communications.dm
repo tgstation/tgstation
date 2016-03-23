@@ -1,7 +1,7 @@
 /*
   HOW IT WORKS
 
-  The radio_controller is a global object maintaining all radio transmissions, think about it as about "ether".
+  The SSradio is a global object maintaining all radio transmissions, think about it as about "ether".
   Note that walkie-talkie, intercoms and headsets handle transmission using nonstandard way.
   procs:
 
@@ -40,7 +40,7 @@
 
   obj/proc/receive_signal(datum/signal/signal, var/receive_method as num, var/receive_param)
     Handler from received signals. By default does nothing. Define your own for your object.
-    Avoid of sending signals directly from this proc, use spawn(-1). Do not use sleep() here please.
+    Avoid of sending signals directly from this proc, use spawn(0). Do not use sleep() here please.
       parameters:
         signal - see description below. Extract all needed data from the signal before doing sleep(), spawn() or return!
         receive_method - may be TRANSMISSION_WIRE or TRANSMISSION_RADIO.
@@ -64,7 +64,7 @@
 	so i made radios not use the radio controller.
 */
 var/list/all_radios = list()
-/proc/add_radio(var/obj/item/radio, freq)
+/proc/add_radio(obj/item/radio, freq)
 	if(!freq || !radio)
 		return
 	if(!all_radios["[freq]"])
@@ -74,7 +74,7 @@ var/list/all_radios = list()
 	all_radios["[freq]"] |= radio
 	return freq
 
-/proc/remove_radio(var/obj/item/radio, freq)
+/proc/remove_radio(obj/item/radio, freq)
 	if(!freq || !radio)
 		return
 	if(!all_radios["[freq]"])
@@ -82,7 +82,7 @@ var/list/all_radios = list()
 
 	all_radios["[freq]"] -= radio
 
-/proc/remove_radio_all(var/obj/item/radio)
+/proc/remove_radio_all(obj/item/radio)
 	for(var/freq in all_radios)
 		all_radios["[freq]"] -= radio
 
@@ -97,7 +97,7 @@ Radio:
 1355 - Medical
 1357 - Engineering
 1359 - Security
-1441 - death squad
+1337 - death squad
 1443 - Confession Intercom
 1349 - Miners
 1347 - Cargo techs
@@ -130,7 +130,7 @@ var/list/radiochannels = list(
 	"Medical" = 1355,
 	"Engineering" = 1357,
 	"Security" = 1359,
-	"Deathsquad" = 1441,
+	"Centcom" = 1337,
 	"Syndicate" = 1213,
 	"Supply" = 1347,
 	"Service" = 1349,
@@ -144,7 +144,7 @@ var/list/radiochannelsreverse = list(
 	"1355" = "Medical",
 	"1357" = "Engineering",
 	"1359" = "Security",
-	"1441" = "Deathsquad",
+	"1337" = "Centcom",
 	"1213" = "Syndicate",
 	"1347" = "Supply",
 	"1349" = "Service",
@@ -160,7 +160,7 @@ var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/MED_FREQ = 1355 //medical, coloured blue in chat window
 var/const/ENG_FREQ = 1357 //engineering, coloured orange in chat window
 var/const/SEC_FREQ = 1359 //security, coloured red in chat window
-var/const/DSQUAD_FREQ = 1441 //death squad frequency, coloured grey in chat window
+var/const/CENTCOM_FREQ = 1337 //centcom frequency, coloured grey in chat window
 var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
 
 #define TRANSMISSION_WIRE	0
@@ -173,12 +173,7 @@ var/const/RADIO_CHAT = "3" //deprecated
 var/const/RADIO_ATMOSIA = "4"
 var/const/RADIO_NAVBEACONS = "5"
 var/const/RADIO_AIRLOCK = "6"
-var/const/RADIO_SECBOT = "7"
-var/const/RADIO_MULEBOT = "8"
 var/const/RADIO_MAGNETS = "9"
-var/const/RADIO_CLEANBOT = "10"
-var/const/RADIO_FLOORBOT = "11"
-var/const/RADIO_MEDBOT = "12"
 
 /datum/radio_frequency
 
@@ -187,7 +182,7 @@ var/const/RADIO_MEDBOT = "12"
 
 //If range > 0, only post to devices on the same z_level and within range
 //Use range = -1, to restrain to the same z_level without limiting range
-datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, var/filter = null as text|null, var/range = null as num|null)
+/datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, filter = null as text|null, range = null as num|null)
 
 	//Apply filter to the signal. If none supply, broadcast to every devices
 	//_default channel is always checked
@@ -218,7 +213,7 @@ datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/sign
 					continue
 			device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 
-datum/radio_frequency/proc/add_listener(obj/device as obj, var/filter as text|null)
+/datum/radio_frequency/proc/add_listener(obj/device, filter as text|null)
 	if (!filter)
 		filter = "_default"
 
@@ -229,7 +224,7 @@ datum/radio_frequency/proc/add_listener(obj/device as obj, var/filter as text|nu
 	devices_line += device
 
 
-datum/radio_frequency/proc/remove_listener(obj/device)
+/datum/radio_frequency/proc/remove_listener(obj/device)
 	for(var/devices_filter in devices)
 		var/list/devices_line = devices[devices_filter]
 		if(!devices_line)
@@ -277,9 +272,9 @@ var/list/pointers = list()
 	..()
 	pointers += "\ref[src]"
 
-/datum/signal/Del()
+/datum/signal/Destroy()
 	pointers -= "\ref[src]"
-	..()
+	return ..()
 
 /datum/signal/proc/copy_from(datum/signal/model)
 	source = model.source
@@ -304,4 +299,4 @@ var/list/pointers = list()
 	for(var/d in data)
 		var/val = data[d]
 		if(istext(val))
-			data[d] = strip_html_properly(val)
+			data[d] = html_encode(val)

@@ -26,7 +26,7 @@
 /obj/machinery/conveyor/auto/New(loc, newdir)
 	..(loc, newdir)
 	operating = 1
-	setmove()
+	update_move_direction()
 
 /obj/machinery/conveyor/auto/update()
 	if(stat & BROKEN)
@@ -41,11 +41,14 @@
 		operating = 1
 	icon_state = "conveyor[operating * verted]"
 
-	// create a conveyor
+// create a conveyor
 /obj/machinery/conveyor/New(loc, newdir)
 	..(loc)
 	if(newdir)
 		dir = newdir
+	update_move_direction()
+
+/obj/machinery/conveyor/proc/update_move_direction()
 	switch(dir)
 		if(NORTH)
 			forwards = NORTH
@@ -63,11 +66,11 @@
 			forwards = EAST
 			backwards = SOUTH
 		if(NORTHWEST)
-			forwards = SOUTH
-			backwards = WEST
-		if(SOUTHEAST)
 			forwards = NORTH
 			backwards = EAST
+		if(SOUTHEAST)
+			forwards = SOUTH
+			backwards = WEST
 		if(SOUTHWEST)
 			forwards = WEST
 			backwards = NORTH
@@ -75,8 +78,6 @@
 		var/temp = forwards
 		forwards = backwards
 		backwards = temp
-
-/obj/machinery/conveyor/proc/setmove()
 	if(operating == 1)
 		movedir = forwards
 	else
@@ -104,18 +105,18 @@
 	use_power(100)
 
 	affecting = loc.contents - src		// moved items will be all in loc
-	spawn(1)	// slight delay to prevent infinite propagation due to map order	//TODO: please no spawn() in process(). It's a very bad idea
-		var/items_moved = 0
-		for(var/atom/movable/A in affecting)
-			if(!A.anchored)
-				if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
-					step(A,movedir)
-					items_moved++
-			if(items_moved >= 10)
-				break
+	sleep(1)	// slight delay to prevent infinite propagation due to map order
+	var/items_moved = 0
+	for(var/atom/movable/A in affecting)
+		if(!A.anchored)
+			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
+				step(A,movedir)
+				items_moved++
+		if(items_moved >= 10)
+			break
 
 // attack with item, place item on conveyor
-/obj/machinery/conveyor/attackby(var/obj/item/I, mob/user, params)
+/obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!(stat & BROKEN))
 			var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
@@ -124,15 +125,24 @@
 		user << "<span class='notice'>You remove the conveyor belt.</span>"
 		qdel(src)
 		return
-	if(isrobot(user))	return //Carn: fix for borgs dropping their modules on conveyor belts
+	if(istype(I, /obj/item/weapon/wrench))	
+		if(!(stat & BROKEN))
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			dir = turn(dir,-45)
+			update_move_direction()
+			user << "<span class='notice'>You rotate [src].</span>"
+			return
+	if(isrobot(user))
+		return //Carn: fix for borgs dropping their modules on conveyor belts
 	if(!user.drop_item())
-		user << "<span class='notice'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
+		user << "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
 		return
-	if(I && I.loc)	I.loc = src.loc
+	if(I && I.loc)
+		I.loc = src.loc
 	return
 
 // attack with hand, move pulled object onto conveyor
-/obj/machinery/conveyor/attack_hand(mob/user as mob)
+/obj/machinery/conveyor/attack_hand(mob/user)
 	user.Move_Pulled(src)
 
 
@@ -204,7 +214,7 @@
 
 	spawn(5)		// allow map load
 		conveyors = list()
-		for(var/obj/machinery/conveyor/C in world)
+		for(var/obj/machinery/conveyor/C in machines)
 			if(C.id == id)
 				conveyors += C
 
@@ -229,7 +239,7 @@
 
 	for(var/obj/machinery/conveyor/C in conveyors)
 		C.operating = position
-		C.setmove()
+		C.update_move_direction()
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
@@ -252,12 +262,12 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in world)
+	for(var/obj/machinery/conveyor_switch/S in machines)
 		if(S.id == src.id)
 			S.position = position
 			S.update()
 
-/obj/machinery/conveyor_switch/attackby(var/obj/item/I, mob/user, params)
+/obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id
@@ -292,13 +302,9 @@
 	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))
 		return
 	var/cdir = get_dir(A, user)
-	if(!(cdir in cardinal) || A == user.loc)
+	if(A == user.loc)
+		user << "<span class='notice'>You cannot place a conveyor belt under yourself.</span>"
 		return
-	for(var/obj/machinery/conveyor/CB in A)
-		if(CB.dir == cdir || CB.dir == turn(cdir,180))
-			return
-		cdir |= CB.dir
-		qdel(CB)
 	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A,cdir)
 	C.id = id
 	transfer_fingerprints_to(C)

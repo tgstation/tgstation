@@ -12,18 +12,13 @@
 #define NOBLUDGEON		4		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
 #define MASKINTERNALS	8		// mask allows internals
 #define HEAR 			16		// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
-#define NOSHIELD		32		// weapon not affected by shield
+#define HANDSLOW        32		// If an item has this flag, it will slow you to carry it
 #define CONDUCT			64		// conducts electricity (metal etc.)
 #define ABSTRACT    	128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
+#define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
 #define FPRINT			256		// takes a fingerprint
 #define ON_BORDER		512		// item has priority to check when entering or leaving
 
-
-#define GLASSESCOVERSEYES	1024
-#define MASKCOVERSEYES		1024		// get rid of some of the other retardation in these flags
-#define HEADCOVERSEYES		1024		// feel free to realloc these numbers for other purposes
-#define MASKCOVERSMOUTH		2048		// on other items, these are just for mask/head
-#define HEADCOVERSMOUTH		2048
 
 #define HEADBANGPROTECT		4096
 #define EARBANGPROTECT		1024
@@ -38,8 +33,6 @@
 
 #define	NOREACT		16384 		//Reagents dont' react inside this container.
 
-#define BLOCKHAIR	32768		// temporarily removes the user's hair icon
-
 //turf-only flags
 #define NOJAUNT		1
 
@@ -48,26 +41,32 @@
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)
 */
 //flags for pass_flags
-#define PASSTABLE	1
-#define PASSGLASS	2
-#define PASSGRILLE	4
-#define PASSBLOB	8
-#define PASSMOB		16
+#define PASSTABLE		1
+#define PASSGLASS		2
+#define PASSGRILLE		4
+#define PASSBLOB		8
+#define PASSMOB			16
+#define LETPASSTHROW	32
 
 //flags for species
 
-#define MUTCOLORS	1
-#define HAIR		2
-#define FACEHAIR	4
-#define EYECOLOR	8
-#define LIPS		16
-#define COLDRES		32
-#define HEATRES		64
-#define RADIMMUNE	128
-#define NOBREATH	256
-#define NOGUNS		512
-#define NOBLOOD		1024
-#define NOFIRE		2048
+#define MUTCOLORS		1
+#define HAIR			2
+#define FACEHAIR		4
+#define EYECOLOR		8
+#define LIPS			16
+#define COLDRES			32
+#define HEATRES			64
+#define RADIMMUNE		128
+#define NOBREATH		256
+#define NOGUNS			512
+#define NOBLOOD			1024
+#define NOFIRE			2048
+#define VIRUSIMMUNE		4096
+#define PIERCEIMMUNE	8192
+#define NOTRANSSTING	16384
+
+#define MUTCOLORS_PARTSONLY 	32768	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
@@ -79,3 +78,4 @@
 #define ROBOT 8
 #define SLIME 16
 #define DRONE 32
+#define SWARMER 64

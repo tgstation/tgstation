@@ -4,7 +4,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pill"
 	item_state = "pill"
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 	volume = 50
 	var/apply_type = INGEST
 	var/apply_method = "swallow"
@@ -40,15 +40,14 @@
 
 
 	user.unEquip(src) //icon update
-	add_logs(user, M, "fed", object="[reagentlist(src)]")
+	add_logs(user, M, "fed", reagentlist(src))
 	loc = M //Put the pill inside the mob. This fixes the issue where the pill appears to drop to the ground after someone eats it.
 
 	if(reagents.total_volume)
 		reagents.reaction(M, apply_type)
-		spawn(5)
-			reagents.trans_to(M, reagents.total_volume)
-			qdel(src)
-			return 1
+		reagents.trans_to(M, reagents.total_volume)
+		qdel(src)
+		return 1
 	else
 		qdel(src)
 		return 1
@@ -59,11 +58,11 @@
 	if(!proximity) return
 	if(target.is_open_container() != 0 && target.reagents)
 		if(!target.reagents.total_volume)
-			user << "<span class='notice'>[target] is empty. There's nothing to dissolve [src] in.</span>"
+			user << "<span class='warning'>[target] is empty! There's nothing to dissolve [src] in.</span>"
 			return
 		user << "<span class='notice'>You dissolve [src] in [target].</span>"
 		for(var/mob/O in viewers(2, user))	//viewers is necessary here because of the small radius
-			O << "<span class='warning'>[user] slips something into [target].</span>"
+			O << "<span class='warning'>[user] slips something into [target]!</span>"
 		reagents.trans_to(target, reagents.total_volume)
 		spawn(5)
 			qdel(src)
@@ -96,7 +95,7 @@
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
 	icon_state = "pill19"
-	list_reagents = list("ephedrine" = 10, "ethylredoxrazine" = 10, "coffee" = 30)
+	list_reagents = list("ephedrine" = 10, "antihol" = 10, "coffee" = 30)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/salbutamol
 	name = "salbutamol pill"
@@ -133,6 +132,12 @@
 	desc = "Used to dull pain."
 	icon_state = "pill5"
 	list_reagents = list("sal_acid" = 24)
+	roundstart = 1
+/obj/item/weapon/reagent_containers/pill/oxandrolone
+	name = "oxandrolone pill"
+	desc = "Used to stimulate burn healing."
+	icon_state = "pill5"
+	list_reagents = list("oxandrolone" = 24)
 	roundstart = 1
 
 /obj/item/weapon/reagent_containers/pill/insulin

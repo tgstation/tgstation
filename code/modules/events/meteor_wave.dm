@@ -15,7 +15,7 @@
 	random_wave_type()
 
 /datum/round_event/meteor_wave/proc/random_wave_type()
-	var/picked_wave = pickweight(list("normal" = 75, "threatening" = 20, "catastrophic" = 5))
+	var/picked_wave = pickweight(list("normal" = 50, "threatening" = 40, "catastrophic" = 10))
 	switch(picked_wave)
 		if("normal")
 			wave_type = meteors_normal

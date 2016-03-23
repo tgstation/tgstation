@@ -21,7 +21,7 @@
 	var/const/ROOM_ERR_TOOLARGE = -2
 
 
-/obj/item/areaeditor/attack_self(mob/user as mob)
+/obj/item/areaeditor/attack_self(mob/user)
 	add_fingerprint(user)
 	var/text = "<BODY><HTML><head><title>[src]</title></head> \
 				<h2>[station_name()] [src.name]</h2> \
@@ -37,6 +37,9 @@
 
 /obj/item/areaeditor/Topic(href, href_list)
 	if(..())
+		return
+	if(!usr.canUseTopic(src))
+		usr << browse(null, "window=blueprints")
 		return
 	if(href_list["create_area"])
 		if(get_area_type()==AREA_SPACE)
@@ -54,11 +57,11 @@
 	w_class = 1
 
 
-/obj/item/areaeditor/permit/attack_self(mob/user as mob)
+/obj/item/areaeditor/permit/attack_self(mob/user)
 	. = ..()
 	var/area/A = get_area()
 	if(get_area_type() == AREA_STATION)
-		. += "<p>According to \the [src], you are now in <b>\"[strip_html_properly(A.name)]\"</b>.</p>"
+		. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
 	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
 	popup.set_content(.)
 	popup.open()
@@ -66,8 +69,9 @@
 
 
 /obj/item/areaeditor/permit/create_area()
-	..()
-	qdel(src)
+	var/success = ..()
+	if(success)
+		qdel(src)
 
 
 //Station blueprints!!!
@@ -79,12 +83,12 @@
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
 
 
-/obj/item/areaeditor/blueprints/attack_self(mob/user as mob)
+/obj/item/areaeditor/blueprints/attack_self(mob/user)
 	. = ..()
 	var/area/A = get_area()
 	if(get_area_type() == AREA_STATION)
-		. += "<p>According to \the [src], you are now in <b>\"[strip_html_properly(A.name)]\"</b>.</p>"
-		. += "<p>You may <a href='?src=\ref[src];edit_area=1'> move an amendment</a> to the drawing.</p>"
+		. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
+		. += "<p>You may <a href='?src=\ref[src];edit_area=1'>make an amendment</a> to the drawing.</p>"
 	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
 	popup.set_content(.)
 	popup.open()
@@ -107,7 +111,7 @@
 	return A
 
 
-/obj/item/areaeditor/proc/get_area_type(var/area/A = get_area())
+/obj/item/areaeditor/proc/get_area_type(area/A = get_area())
 	if (istype(A,/area/space))
 		return AREA_SPACE
 	var/list/SPECIALS = list(
@@ -139,34 +143,31 @@
 			else
 				usr << "<span class='warning'>Error! Please notify administration.</span>"
 				return
-	var/list/turf/turfs = res
+	var/list/turfs = res
 	var/str = trim(stripped_input(usr,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN))
 	if(!str || !length(str)) //cancel
 		return
 	if(length(str) > 50)
 		usr << "<span class='warning'>The given name is too long.  The area remains undefined.</span>"
 		return
-	var/area/A = new
-	A.name = str
-	A.tagbase="[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
-	//var/ma
-	//ma = A.master ? "[A.master]" : "(null)"
-	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
-	A.power_equip = 0
-	A.power_light = 0
-	A.power_environ = 0
-	A.always_unpowered = 0
-	move_turfs_to_area(turfs, A)
-	A.SetDynamicLighting()
 
-	A.addSorted()
-
+	var/area/A
+	for(var/key in turfs)
+		if(key == str)
+			A = turfs[key]
+		if(turfs[key])
+			turfs -= turfs[key]
+			turfs -= key
+	if(A)
+		A.contents += turfs
+		A.SetDynamicLighting()
+	else
+		A = new
+		A.setup(str)
+		A.contents += turfs
+		A.SetDynamicLighting()
 	interact()
-	return
-
-
-/obj/item/areaeditor/proc/move_turfs_to_area(var/list/turf/turfs, var/area/A)
-	A.contents.Add(turfs)
+	return 1
 
 
 /obj/item/areaeditor/proc/edit_area()
@@ -183,31 +184,29 @@
 		RA.name = str
 	usr << "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>"
 	interact()
-	return
+	return 1
 
 
-/obj/item/areaeditor/proc/set_area_machinery_title(var/area/A,var/title,var/oldtitle)
-	if (!oldtitle) // or replacetext goes to infinite loop
+/obj/item/areaeditor/proc/set_area_machinery_title(area/A,title,oldtitle)
+	if(!oldtitle) // or replacetext goes to infinite loop
 		return
 	for(var/area/RA in A.related)
-		for(var/obj/machinery/alarm/M in RA)
+		for(var/obj/machinery/airalarm/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
 		for(var/obj/machinery/power/apc/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in RA)
+		for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/unary/vent_pump/M in RA)
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
 		for(var/obj/machinery/door/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.
 
 
-/obj/item/areaeditor/proc/check_tile_is_border(var/turf/T2,var/dir)
+/obj/item/areaeditor/proc/check_tile_is_border(turf/T2,dir)
 	if (istype(T2, /turf/space))
 		return BORDER_SPACE //omg hull breach we all going to die here
-	if (istype(T2, /turf/simulated/shuttle))
-		return BORDER_SPACE
 	if (get_area_type(T2.loc)!=AREA_SPACE)
 		return BORDER_BETWEEN
 	if (istype(T2, /turf/simulated/wall))
@@ -231,9 +230,10 @@
 	return BORDER_NONE
 
 
-/obj/item/areaeditor/proc/detect_room(var/turf/first)
+/obj/item/areaeditor/proc/detect_room(turf/first)
 	var/list/turf/found = new
 	var/list/turf/pending = list(first)
+	var/list/border = list()
 	while(pending.len)
 		if (found.len+pending.len > 300)
 			return ROOM_ERR_TOOLARGE
@@ -243,12 +243,16 @@
 			var/skip = 0
 			for (var/obj/structure/window/W in T)
 				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
-					skip = 1; break
-			if (skip) continue
+					skip = 1
+					break
+			if (skip)
+				continue
 			for(var/obj/machinery/door/window/D in T)
 				if(dir == D.dir)
-					skip = 1; break
-			if (skip) continue
+					skip = 1
+					break
+			if (skip)
+				continue
 
 			var/turf/NT = get_step(T,dir)
 			if (!isturf(NT) || (NT in found) || (NT in pending))
@@ -258,10 +262,24 @@
 				if(BORDER_NONE)
 					pending+=NT
 				if(BORDER_BETWEEN)
-					//do nothing, may be later i'll add 'rejected' list as optimization
+					var/area/A = NT.loc
+					if(!found[A.name])
+						found[A.name] = NT.loc
 				if(BORDER_2NDTILE)
-					found+=NT //tile included to new area, but we dont seek more
+					border[NT] += dir
 				if(BORDER_SPACE)
 					return ROOM_ERR_SPACE
 		found+=T
+
+	for(var/V in border) //lazy but works
+		var/turf/F = V
+		for(var/direction in cardinal)
+			if(direction == border[F])
+				continue //don't want to grab turfs from outside the border
+			var/turf/U = get_step(F, direction)
+			if((U in border) || (U in found))
+				continue
+			if(check_tile_is_border(U, direction) == BORDER_2NDTILE)
+				found += U
+		found |= F
 	return found

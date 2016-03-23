@@ -5,7 +5,7 @@
 
 	return message
 
-/mob/living/carbon/can_speak_basic(message)
+/mob/living/carbon/can_speak_vocal(message)
 	if(silent)
 		return 0
 	return ..()

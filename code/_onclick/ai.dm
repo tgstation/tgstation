@@ -10,9 +10,9 @@
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
 /mob/living/silicon/ai/DblClickOn(var/atom/A, params)
-	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
-		build_click(src, client.buildmode, params, A)
-		return
+	if(client.click_intercept)
+		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
+			return
 
 	if(control_disabled || stat) return
 
@@ -27,9 +27,9 @@
 		return
 	next_click = world.time + 1
 
-	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
-		build_click(src, client.buildmode, params, A)
-		return
+	if(client.click_intercept)
+		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
+			return
 
 	if(control_disabled || stat)
 		return
@@ -39,7 +39,10 @@
 		CtrlShiftClickOn(A)
 		return
 	if(modifiers["middle"])
-		MiddleClickOn(A)
+		if(controlled_mech) //Are we piloting a mech? Placed here so the modifiers are not overridden.
+			controlled_mech.click_action(A, src) //Override AI normal click behavior.
+		return
+
 		return
 	if(modifiers["shift"])
 		ShiftClickOn(A)
@@ -82,7 +85,7 @@
 /mob/living/silicon/ai/RangedAttack(atom/A)
 	A.attack_ai(src)
 
-/atom/proc/attack_ai(mob/user as mob)
+/atom/proc/attack_ai(mob/user)
 	return
 
 /*
@@ -109,14 +112,14 @@
 /* Atom Procs */
 /atom/proc/AICtrlClick()
 	return
-/atom/proc/AIAltClick(var/mob/living/silicon/ai/user)
+/atom/proc/AIAltClick(mob/living/silicon/ai/user)
 	AltClick(user)
 	return
 /atom/proc/AIShiftClick()
 	return
 /atom/proc/AICtrlShiftClick()
 	return
-	
+
 /* Airlocks */
 /obj/machinery/door/airlock/AICtrlClick() // Bolts doors
 	if(emagged)
@@ -152,7 +155,7 @@
 	else
 		Topic("aiDisable=11", list("aiDisable"="11"), 1)
 	return
-	
+
 /* APC */
 /obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
 	toggle_breaker()
@@ -160,12 +163,10 @@
 
 /* AI Turrets */
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
-	if(can_be_used_by(usr))
-		toggle_lethal()
+	toggle_lethal()
 	add_fingerprint(usr)
 /obj/machinery/turretid/AICtrlClick() //turns off/on Turrets
-	if(can_be_used_by(usr))
-		toggle_on()
+	toggle_on()
 	add_fingerprint(usr)
 
 //

@@ -1,7 +1,12 @@
+var/datum/subsystem/server_maint/SSserver
+
 /datum/subsystem/server_maint
 	name = "Server Tasks"
 	wait = 6000
 	priority = 19
+
+/datum/subsystem/server_maint/New()
+	NEW_SS_GLOBAL(SSserver)
 
 /datum/subsystem/server_maint/fire()
 	//handle kicking inactive players

@@ -14,12 +14,14 @@
 	name = "oxygen tank"
 	desc = "A tank of oxygen."
 	icon_state = "oxygen"
-	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+	force = 10
 
 
 /obj/item/weapon/tank/internals/oxygen/New()
 	..()
-	src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("o2")
+	air_contents.gases["o2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 
@@ -40,16 +42,13 @@
 	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
 	item_state = "an_tank"
+	force = 10
 
 /obj/item/weapon/tank/internals/anesthetic/New()
 	..()
-
-	src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-
-	var/datum/gas/sleeping_agent/trace_gas = new()
-	trace_gas.moles = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
-
-	src.air_contents.trace_gases += trace_gas
+	air_contents.assert_gases("o2", "n2o")
+	air_contents.gases["o2"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
+	air_contents.gases["n2o"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 	return
 
 /*
@@ -59,13 +58,14 @@
 	name = "air tank"
 	desc = "Mixed anyone?"
 	icon_state = "oxygen"
+	force = 10
 
 
 /obj/item/weapon/tank/internals/air/New()
 	..()
-
-	src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-	src.air_contents.nitrogen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
+	air_contents.assert_gases("o2","n2")
+	air_contents.gases["o2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
+	air_contents.gases["n2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 	return
 
 
@@ -78,20 +78,22 @@
 	icon_state = "plasma"
 	flags = CONDUCT
 	slot_flags = null	//they have no straps!
+	force = 8
 
 
 /obj/item/weapon/tank/internals/plasma/New()
 	..()
-
-	src.air_contents.toxins = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("plasma")
+	air_contents.gases["plasma"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
-/obj/item/weapon/tank/internals/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/tank/internals/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 
 	if (istype(W, /obj/item/weapon/flamethrower))
 		var/obj/item/weapon/flamethrower/F = W
-		if ((!F.status)||(F.ptank))	return
+		if ((!F.status)||(F.ptank))
+			return
 		src.master = F
 		F.ptank = src
 		user.unEquip(src)
@@ -101,8 +103,49 @@
 
 /obj/item/weapon/tank/internals/plasma/full/New()
 	..()
-	src.air_contents.toxins = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("plasma")
+	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
+
+
+/*
+ * Plasmaman Plasma Tank
+ */
+
+/obj/item/weapon/tank/internals/plasmaman
+	name = "plasmaman plasma tank"
+	desc = "A tank of plasma gas."
+	icon_state = "plasmaman_tank"
+	item_state = "plasmaman_tank"
+	force = 10
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+
+/obj/item/weapon/tank/internals/plasmaman/New()
+	..()
+	air_contents.assert_gas("plasma")
+	air_contents.gases["plasma"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	return
+
+/obj/item/weapon/tank/internals/plasmaman/full/New()
+	..()
+	air_contents.assert_gas("plasma")
+	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	return
+
+
+/obj/item/weapon/tank/internals/plasmaman/belt
+	icon_state = "plasmaman_tank_belt"
+	item_state = "plasmaman_tank_belt"
+	slot_flags = SLOT_BELT
+	force = 5
+
+/obj/item/weapon/tank/internals/plasmaman/belt/full/New()
+	..()
+	air_contents.assert_gas("plasma")
+	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	return
+
+
 
 /*
  * Emergency Oxygen
@@ -113,15 +156,16 @@
 	icon_state = "emergency"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	w_class = 2.0
-	force = 4.0
-	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+	w_class = 2
+	force = 4
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
 
 
 /obj/item/weapon/tank/internals/emergency_oxygen/New()
 	..()
-	src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas("o2")
+	air_contents.gases["o2"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 /obj/item/weapon/tank/internals/emergency_oxygen/engi

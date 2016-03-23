@@ -1,12 +1,17 @@
 /obj/structure/lattice
 	name = "lattice"
-	desc = "A lightweight support lattice."
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "latticefull"
+	desc = "A lightweight support lattice. These hold our station together."
+	icon = 'icons/obj/smooth_structures/lattice.dmi'
+	icon_state = "lattice"
 	density = 0
-	anchored = 1.0
+	anchored = 1
 	layer = 2.3 //under pipes
 	var/obj/item/stack/rods/stored
+	canSmoothWith = list(/obj/structure/lattice,
+	/turf/simulated/floor,
+	/turf/simulated/wall,
+	/obj/structure/falsewall)
+	smooth = SMOOTH_MORE
 	//	flags = CONDUCT
 
 /obj/structure/lattice/New()
@@ -17,73 +22,41 @@
 		if(LAT != src)
 			qdel(LAT)
 	stored = new/obj/item/stack/rods(src)
-	icon = 'icons/obj/smoothlattice.dmi'
-	updateOverlays()
-	for (var/dir in cardinal)
-		var/obj/structure/lattice/L
-		if(locate(/obj/structure/lattice, get_step(src, dir)))
-			L = locate(/obj/structure/lattice, get_step(src, dir))
-			L.updateOverlays()
 
 /obj/structure/lattice/Destroy()
-	for (var/dir in cardinal)
-		var/obj/structure/lattice/L
-		if(locate(/obj/structure/lattice, get_step(src, dir)))
-			L = locate(/obj/structure/lattice, get_step(src, dir))
-			L.updateOverlays(src.loc)
-	..()
+	qdel(stored)
+	stored = null
+	return ..()
 
 /obj/structure/lattice/blob_act()
-	qdel(src)
 	return
 
 /obj/structure/lattice/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			qdel(src)
 			return
-		if(3.0)
+		if(3)
 			return
 		else
 	return
 
-/obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob, params)
-	var/turf/T = get_turf(src)
-	if (istype(C, /obj/item/stack/tile/plasteel))
-		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead (for building plating)
-	if(istype(C, /obj/item/stack/rods))
-		T.attackby(C, user) //see above, for building catwalks
-	if (istype(C, /obj/item/weapon/weldingtool))
+/obj/structure/lattice/attackby(obj/item/C, mob/user, params)
+	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
 			user << "<span class='notice'>Slicing [name] joints ...</span>"
 			Deconstruct()
-	return
-
-/obj/structure/lattice/proc/updateOverlays()
-	//if(!(istype(src.loc, /turf/space)))
-	//	qdel(src)
-	overlays.Cut()
-
-	var/dir_sum = 0
-
-	for (var/direction in cardinal)
-		if(locate(/obj/structure/lattice, get_step(src, direction)))
-			dir_sum += direction
-		else
-			if(!(istype(get_step(src, direction), /turf/space)))
-				dir_sum += direction
-
-	icon_state = "[name][dir_sum]"
-	return
+	else
+		var/turf/T = get_turf(src)
+		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
 
 /obj/structure/lattice/Deconstruct()
-	var/turf/T = loc
-	stored.loc = T
-	updateOverlays()
+	stored.loc = get_turf(src)
+	stored = null
 	..()
 
 /obj/structure/lattice/singularity_pull(S, current_size)
@@ -92,8 +65,11 @@
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"
-	desc = "A catwalk for easier EVA manuevering and cable placement."
-	icon_state = "catwalkfull"
+	desc = "A catwalk for easier EVA maneuvering and cable placement."
+	icon = 'icons/obj/smooth_structures/catwalk.dmi'
+	icon_state = "catwalk"
+	smooth = SMOOTH_TRUE
+	canSmoothWith = null
 
 /obj/structure/lattice/catwalk/Move()
 	var/turf/T = loc
@@ -107,21 +83,3 @@
 		C.Deconstruct()
 	..()
 
-/obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob, params)
-	..()
-	if(istype(C, /obj/item/stack/cable_coil))
-		var/turf/T = get_turf(src)
-		T.attackby(C, user) //catwalks 'enable' coil laying on space tiles, not the catwalks themselves
-		return
-
-/obj/structure/lattice/catwalk/updateOverlays()
-	overlays.Cut()
-
-	var/dir_sum = 0
-
-	for (var/direction in cardinal)
-		if(locate(/obj/structure/lattice/catwalk, get_step(src, direction))) //so we only blend with other catwalks
-			dir_sum += direction
-
-	icon_state = "[name][dir_sum]"
-	return

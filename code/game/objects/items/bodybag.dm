@@ -34,33 +34,39 @@
 	name = "body bag"
 	desc = "A plastic bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
-	icon_state = "bodybag_closed"
-	icon_closed = "bodybag_closed"
-	icon_opened = "bodybag_open"
+	icon_state = "bodybag"
 	var/foldedbag_path = /obj/item/bodybag
+	var/tagged = 0 // so closet code knows to put the tag overlay back
 	density = 0
 	mob_storage_capacity = 2
+	open_sound = 'sound/items/zip.ogg'
+	close_sound = 'sound/items/zip.ogg'
 
 
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/weapon/pen))
+	if (istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null, 53)
 		if(user.get_active_hand() != I)
 			return
 		if(!in_range(src, user) && loc != user)
 			return
 		if(t)
-			name = "body bag - "
-			name += t
-			overlays += "bodybag_label"
+			name = "body bag - [t]"
+			tagged = 1
+			update_icon()
 		else
 			name = "body bag"
 		return
 	else if(istype(I, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>You cut the tag off of [src].</span>"
+		user << "<span class='notice'>You cut the tag off [src].</span>"
 		name = "body bag"
-		overlays.Cut()
+		tagged = 0
+		update_icon()
 
+/obj/structure/closet/body_bag/update_icon()
+	..()
+	if (tagged)
+		overlays += "bodybag_label"
 
 /obj/structure/closet/body_bag/close()
 	if(..())
@@ -84,13 +90,6 @@
 		qdel(src)
 
 
-/obj/structure/closet/body_bag/update_icon()
-	if(!opened)
-		icon_state = icon_closed
-	else
-		icon_state = icon_opened
-
-
 // Bluespace bodybag
 
 /obj/item/bodybag/bluespace
@@ -105,9 +104,7 @@
 	name = "bluespace body bag"
 	desc = "A bluespace body bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
-	icon_state = "bluebodybag_closed"
-	icon_closed = "bluebodybag_closed"
-	icon_opened = "bluebodybag_open"
+	icon_state = "bluebodybag"
 	foldedbag_path = /obj/item/bodybag/bluespace
 	density = 0
 	mob_storage_capacity = 15

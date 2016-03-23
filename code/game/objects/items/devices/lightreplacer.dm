@@ -82,20 +82,48 @@
 			user << "<span class='notice'>You insert a piece of glass into the [src.name]. You have [uses] lights remaining.</span>"
 			return
 		else
-			user << "<span class='warning'>You need one sheet of glass to replace lights.</span>"
+			user << "<span class='warning'>You need one sheet of glass to replace lights!</span>"
 
 	if(istype(W, /obj/item/weapon/light))
 		var/obj/item/weapon/light/L = W
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
+				if(!user.unEquip(W))
+					return
 				AddUses(1)
-				user << "You insert the [L.name] into the [src.name]. You have [uses] lights remaining."
-				user.drop_item()
+				user << "<span class='notice'>You insert the [L.name] into the [src.name]. You have [uses] lights remaining.</span>"
 				qdel(L)
 				return
 		else
-			user << "You need a working light."
+			user << "<span class='warning'>You need a working light!</span>"
 			return
+
+	if(istype(W, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = W
+		var/found_good_light = 0
+		var/replaced_something = 0
+
+		for(var/obj/item/I in S.contents)
+			if(istype(I,/obj/item/weapon/light))
+				var/obj/item/weapon/light/L = I
+				if(L.status == LIGHT_OK)
+					found_good_light = 1
+					if(src.uses < max_uses)
+						qdel(L)
+						AddUses(1)
+						replaced_something = 1
+					else
+						break
+
+		if(!found_good_light)
+			user << "<span class='warning'>\The [S] contains no useable lights!</span>"
+			return
+
+		if(!replaced_something && src.uses == max_uses)
+			user << "<span class='warning'>\The [src] is full!</span>"
+			return
+
+		user << "<span class='notice'>You fill \the [src] with lights from \the [S]. You have [uses] lights remaining.</span>"
 
 /obj/item/device/lightreplacer/emag_act()
 	if(!emagged)
@@ -116,23 +144,23 @@
 	icon_state = "lightreplacer[emagged]"
 
 
-/obj/item/device/lightreplacer/proc/Use(var/mob/user)
+/obj/item/device/lightreplacer/proc/Use(mob/user)
 
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	AddUses(-1)
 	return 1
 
 // Negative numbers will subtract
-/obj/item/device/lightreplacer/proc/AddUses(var/amount = 1)
+/obj/item/device/lightreplacer/proc/AddUses(amount = 1)
 	uses = min(max(uses + amount, 0), max_uses)
 
 /obj/item/device/lightreplacer/proc/Charge(var/mob/user)
 	charge += 1
-	if(charge > 7)
+	if(charge > 3)
 		AddUses(1)
 		charge = 1
 
-/obj/item/device/lightreplacer/proc/ReplaceLight(var/obj/machinery/light/target, var/mob/living/U)
+/obj/item/device/lightreplacer/proc/ReplaceLight(obj/machinery/light/target, mob/living/U)
 
 	if(target.status != LIGHT_OK)
 		if(CanUse(U))
@@ -170,7 +198,7 @@
 			U << failmsg
 			return
 	else
-		U << "There is a working [target.fitting] already inserted."
+		U << "<span class='warning'>There is a working [target.fitting] already inserted!</span>"
 		return
 
 /obj/item/device/lightreplacer/proc/Emag()
@@ -184,7 +212,7 @@
 
 //Can you use it?
 
-/obj/item/device/lightreplacer/proc/CanUse(var/mob/living/user)
+/obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
 	src.add_fingerprint(user)
 	//Not sure what else to check for. Maybe if clumsy?
 	if(uses > 0)

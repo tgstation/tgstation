@@ -25,6 +25,8 @@
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
+	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
+	burn_state = LAVA_PROOF
 
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -33,7 +35,8 @@
 	src.energy = starting_energy
 	..()
 	SSobj.processing |= src
-	for(var/obj/machinery/power/singularity_beacon/singubeacon in world)
+	poi_list |= src
+	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
 			target = singubeacon
 			break
@@ -41,7 +44,8 @@
 
 /obj/singularity/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	poi_list.Remove(src)
+	return ..()
 
 /obj/singularity/Move(atom/newloc, direct)
 	if(current_size >= STAGE_FIVE || check_turfs_in(direct))
@@ -52,7 +56,7 @@
 		return 0
 
 
-/obj/singularity/attack_hand(mob/user as mob)
+/obj/singularity/attack_hand(mob/user)
 	consume(user)
 	return 1
 
@@ -64,16 +68,16 @@
 
 /obj/singularity/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			if(current_size <= STAGE_TWO)
 				investigate_log("has been destroyed by a heavy explosion.","singulo")
 				qdel(src)
 				return
 			else
 				energy -= round(((energy+1)/2),1)
-		if(2.0)
+		if(2)
 			energy -= round(((energy+1)/3),1)
-		if(3.0)
+		if(3)
 			energy -= round(((energy+1)/4),1)
 	return
 
@@ -111,8 +115,9 @@
 
 /obj/singularity/proc/admin_investigate_setup()
 	last_warning = world.time
-	var/count = locate(/obj/machinery/field/containment) in orange(30, src)
-	if(!count)	message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
+	var/count = locate(/obj/machinery/field/containment) in urange(30, src, 1)
+	if(!count)
+		message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
 	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
 
 /obj/singularity/proc/dissipate()
@@ -125,10 +130,12 @@
 		dissipate_track++
 
 
-/obj/singularity/proc/expand(var/force_size = 0)
+/obj/singularity/proc/expand(force_size = 0)
 	var/temp_allowed_size = src.allowed_size
 	if(force_size)
 		temp_allowed_size = force_size
+	if(temp_allowed_size >= STAGE_SIX && !consumedSupermatter)
+		temp_allowed_size = STAGE_FIVE
 	switch(temp_allowed_size)
 		if(STAGE_ONE)
 			current_size = STAGE_ONE
@@ -185,6 +192,15 @@
 			grav_pull = 10
 			consume_range = 4
 			dissipate = 0 //It cant go smaller due to e loss
+		if(STAGE_SIX) //This only happens if a stage 5 singulo consumes a supermatter shard.
+			current_size = STAGE_SIX
+			icon = 'icons/effects/352x352.dmi'
+			icon_state = "singularity_s11"
+			pixel_x = -160
+			pixel_y = -160
+			grav_pull = 15
+			consume_range = 5
+			dissipate = 0
 	if(current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size]</font>","singulo")
 		return 1
@@ -209,7 +225,10 @@
 		if(1000 to 1999)
 			allowed_size = STAGE_FOUR
 		if(2000 to INFINITY)
-			allowed_size = STAGE_FIVE
+			if(energy >= 3000 && consumedSupermatter)
+				allowed_size = STAGE_SIX
+			else
+				allowed_size = STAGE_FIVE
 	if(current_size != allowed_size)
 		expand()
 	return 1
@@ -217,23 +236,36 @@
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	for(var/atom/X in orange(grav_pull,src))
-		var/dist = get_dist(X, src)
-		var/obj/singularity/S = src
-		if(dist > consume_range)
-			X.singularity_pull(S, current_size)
-		else if(dist <= consume_range)
-			consume(X)
+	for(var/tile in spiral_range_turfs(grav_pull, src, 1))
+		var/turf/T = tile
+		if(!T)
+			continue
+		if(get_dist(T, src) > consume_range)
+			T.singularity_pull(src, current_size)
+		else
+			consume(T)
+		for(var/thing in T)
+			var/atom/movable/X = thing
+			if(get_dist(X, src) > consume_range)
+				X.singularity_pull(src, current_size)
+			else
+				consume(X)
+			CHECK_TICK
 	return
 
 
-/obj/singularity/proc/consume(var/atom/A)
-	var/gain = A.singularity_act(current_size)
+/obj/singularity/proc/consume(atom/A)
+	var/gain = A.singularity_act(current_size, src)
 	src.energy += gain
+	if(istype(A, /obj/machinery/power/supermatter_shard) && !consumedSupermatter)
+		desc = "[initial(desc)] It glows fiercely with inner fire."
+		name = "supermatter-charged [initial(name)]"
+		consumedSupermatter = 1
+		luminosity = 10
 	return
 
 
-/obj/singularity/proc/move(var/force_move = 0)
+/obj/singularity/proc/move(force_move = 0)
 	if(!move_self)
 		return 0
 
@@ -248,7 +280,7 @@
 	step(src, movement_dir)
 
 
-/obj/singularity/proc/check_turfs_in(var/direction = 0, var/step = 0)
+/obj/singularity/proc/check_turfs_in(direction = 0, step = 0)
 	if(!direction)
 		return 0
 	var/steps = 0
@@ -301,7 +333,7 @@
 	return 1
 
 
-/obj/singularity/proc/can_move(var/turf/T)
+/obj/singularity/proc/can_move(turf/T)
 	if(!T)
 		return 0
 	if((locate(/obj/machinery/field/containment) in T)||(locate(/obj/machinery/shieldwall) in T))
@@ -326,6 +358,10 @@
 			toxmob()
 		if(4)//Stun mobs who lack optic scanners
 			mezzer()
+		if(5,6) //Sets all nearby mobs on fire
+			if(current_size < STAGE_SIX)
+				return 0
+			combust_mobs()
 		else
 			return 0
 	return 1
@@ -333,17 +369,21 @@
 
 /obj/singularity/proc/toxmob()
 	var/toxrange = 10
-	var/toxdamage = 4
 	var/radiation = 15
 	var/radiationmin = 3
-	if (src.energy>200)
-		toxdamage = round(((src.energy-150)/50)*4,1)
-		radiation = round(((src.energy-150)/50)*5,1)
-		radiationmin = round((radiation/5),1)//
+	if (energy>200)
+		radiation += round((energy-150)/10,1)
+		radiationmin = round((radiation/5),1)
 	for(var/mob/living/M in view(toxrange, src.loc))
-		M.apply_effect(rand(radiationmin,radiation), IRRADIATE)
-		toxdamage = (toxdamage - (toxdamage*M.getarmor(null, "rad")))
-		M.apply_effect(toxdamage, TOX)
+		M.rad_act(rand(radiationmin,radiation))
+
+
+/obj/singularity/proc/combust_mobs()
+	for(var/mob/living/carbon/C in urange(20, src, 1))
+		C.visible_message("<span class='warning'>[C]'s skin bursts into flame!</span>", \
+						  "<span class='userdanger'>You feel an inner fire as your skin bursts into flames!</span>")
+		C.adjust_fire_stacks(5)
+		C.IgniteMob()
 	return
 
 

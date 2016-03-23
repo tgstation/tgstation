@@ -4,6 +4,7 @@
 	icon = 'icons/obj/magic_terror.dmi'
 	pixel_x = -89
 	pixel_y = -85
+	density = 0
 	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
 	contained = 0 //Are we going to move around?
 	dissipate = 0 //Do we lose energy over time?
@@ -24,12 +25,13 @@
 
 /obj/singularity/narsie/large/New()
 	..()
-	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
-	world << pick(sound('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
+	world << "<span class='narsie'>NAR-SIE HAS RISEN</span>"
+	world << pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
 
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
+		var/image/alert_overlay = image('icons/effects/effects.dmi', "ghostalertsie")
+		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, attack_not_jump = 1)
 
 	narsie_spawn_animation()
 
@@ -38,11 +40,8 @@
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
-	if(!(src in view()))
-		user << "Your soul is too far away."
-		return
-	makeNewConstruct(/mob/living/simple_animal/construct/harvester, user, null, 1)
-	PoolOrNew(/obj/effect/effect/sleep_smoke, user.loc)
+	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, null, 0, loc_override = src.loc)
+	PoolOrNew(/obj/effect/particle_effect/smoke/sleeping, src.loc)
 
 
 /obj/singularity/narsie/process()
@@ -54,42 +53,28 @@
 		mezzer()
 
 
-/obj/singularity/narsie/Bump(atom/A)//you dare stand before a god?!
-	godsmack(A)
-	return
-
-/obj/singularity/narsie/Bumped(atom/A)
-	godsmack(A)
-	return
-
-/obj/singularity/narsie/proc/godsmack(var/atom/A)
-	if(istype(A,/obj/))
-		var/obj/O = A
-		O.ex_act(1.0)
-		if(O) qdel(O)
-
-	else if(isturf(A))
-		var/turf/T = A
-		T.ChangeTurf(/turf/simulated/floor/engine/cult)
+/obj/singularity/narsie/Bump(atom/A)
+	forceMove(get_turf(A))
+	A.narsie_act()
 
 
 /obj/singularity/narsie/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
-				M << "<span class='warning'>You feel your sanity crumble away in an instant as you gaze upon [src.name]...</span>"
+				M << "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>"
 				M.apply_effect(3, STUN)
 
 
-/obj/singularity/narsie/consume(var/atom/A)
+/obj/singularity/narsie/consume(atom/A)
 	A.narsie_act()
 
 
-/obj/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
+/obj/singularity/narsie/ex_act() //No throwing bombs at her either.
 	return
 
 
-/obj/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
+/obj/singularity/narsie/proc/pickcultist() //Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
 	var/list/cultists = list()
 	var/list/noncultists = list()
 	for(var/mob/living/carbon/food in living_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
@@ -123,13 +108,15 @@
 		return
 
 
-/obj/singularity/narsie/proc/acquire(var/mob/food)
-	target << "<span class='notice'>NAR-SIE HAS LOST INTEREST IN YOU</span>"
+/obj/singularity/narsie/proc/acquire(mob/food)
+	if(food == target)
+		return
+	target << "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>"
 	target = food
-	if(ishuman(target))
-		target << "<span class ='userdanger'>NAR-SIE HUNGERS FOR YOUR SOUL</span>"
+	if(isliving(target))
+		target << "<span class ='cult'>NAR-SIE HUNGERS FOR YOUR SOUL.</span>"
 	else
-		target << "<span class ='userdanger'>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</span>"
+		target << "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL.</span>"
 
 //Wizard narsie
 /obj/singularity/narsie/wizard
@@ -139,7 +126,7 @@
 	set background = BACKGROUND_ENABLED
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 1
-	for(var/atom/X in orange(consume_range,src))
+	for(var/atom/X in urange(consume_range,src,1))
 		if(isturf(X) || istype(X, /atom/movable))
 			consume(X)
 //	if(defer_powernet_rebuild != 2)

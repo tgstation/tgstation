@@ -3,7 +3,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2",
 				"platingdmg3","plating","light_on","light_on_flicker1","light_on_flicker2",
 				"light_on_clicker3","light_on_clicker4","light_on_clicker5","light_broken",
-				"light_on_broken","light_off","wall_thermite","grass1","grass2","grass3","grass4",
+				"light_on_broken","light_off","wall_thermite","grass", "sand",
 				"asteroid","asteroid_dug",
 				"asteroid0","asteroid1","asteroid2","asteroid3","asteroid4",
 				"asteroid5","asteroid6","asteroid7","asteroid8","asteroid9","asteroid10","asteroid11","asteroid12",
@@ -25,15 +25,12 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
 	intact = 1
-	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
 	var/floor_tile = null //tile that this floor drops
 	var/obj/item/stack/tile/builtin_tile = null //needed for performance reasons when the singularity rips off floor tiles
 	var/list/broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	var/list/burnt_states = list()
-	var/dirt = 0
-	var/ignoredirt = 0
 
 /turf/simulated/floor/New()
 	..()
@@ -44,23 +41,33 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(floor_tile)
 		builtin_tile = new floor_tile
 
+/turf/simulated/floor/Destroy()
+	if(builtin_tile)
+		qdel(builtin_tile)
+		builtin_tile = null
+	return ..()
+
 /turf/simulated/floor/ex_act(severity, target)
+	var/shielded = is_shielded()
 	..()
+	if(severity != 1 && shielded && target != src)
+		return
 	if(target == src)
-		src.ChangeTurf(/turf/space)
+		src.ChangeTurf(src.baseturf)
 	if(target != null)
 		ex_act(3)
 		return
+
 	switch(severity)
-		if(1.0)
-			src.ChangeTurf(/turf/space)
-		if(2.0)
+		if(1)
+			src.ChangeTurf(src.baseturf)
+		if(2)
 			switch(pick(1,2;75,3))
 				if(1)
 					src.ReplaceWithLattice()
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 				if(2)
-					src.ChangeTurf(/turf/space)
+					src.ChangeTurf(src.baseturf)
 				if(3)
 					if(prob(80))
 						src.break_tile_to_plating()
@@ -68,23 +75,25 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 						src.break_tile()
 					src.hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
-		if(3.0)
+		if(3)
 			if (prob(50))
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
-	return
+
+/turf/simulated/floor/is_shielded()
+	for(var/obj/structure/A in contents)
+		if(A.level == 3)
+			return 1
 
 /turf/simulated/floor/blob_act()
 	return
 
 /turf/simulated/floor/proc/update_icon()
-	if(lava)
-		return 0
 	if(air)
-		update_visuals(air)
+		update_visuals()
 	return 1
 
-/turf/simulated/floor/attack_paw(mob/user as mob)
+/turf/simulated/floor/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /turf/simulated/floor/proc/gets_drilled()
@@ -113,8 +122,10 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	return ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/floor/ChangeTurf(turf/simulated/floor/T)
-	if(!istype(src,/turf/simulated/floor)) return ..() //fucking turfs switch the fucking src of the fucking running procs
-	if(!ispath(T,/turf/simulated/floor)) return ..()
+	if(!istype(src,/turf/simulated/floor))
+		return ..() //fucking turfs switch the fucking src of the fucking running procs
+	if(!ispath(T,/turf/simulated/floor))
+		return ..()
 	var/old_icon = icon_regular_floor
 	var/old_dir = dir
 	var/turf/simulated/floor/W = ..()
@@ -123,7 +134,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	W.update_icon()
 	return W
 
-/turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob, params)
+/turf/simulated/floor/attackby(obj/item/C, mob/user, params)
 	if(!C || !user)
 		return 1
 	if(..())
@@ -167,22 +178,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(prob(20))
 		ChangeTurf(/turf/simulated/floor/engine/cult)
 
-/turf/simulated/floor/Entered(atom/A, atom/OL)
-	..()
-	if(!ignoredirt)
-		if(has_gravity(src))
-			if(istype(A,/mob/living/carbon))
-				var/mob/living/carbon/M = A
-				if(M.lying)	return
-				if(prob(80))
-					dirt++
-				var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, src)
-				if(dirt >= 100)
-					if(!dirtoverlay)
-						dirtoverlay = new/obj/effect/decal/cleanable/dirt(src)
-						dirtoverlay.alpha = 10
-					else if(dirt > 100)
-						dirtoverlay.alpha = min(dirtoverlay.alpha+10, 200)
-
 /turf/simulated/floor/can_have_cabling()
-	return !burnt & !broken & !lava
+	return !burnt && !broken
+
+/turf/simulated/floor/initialize()
+	..()
+	MakeDirty()

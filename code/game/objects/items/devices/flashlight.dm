@@ -7,9 +7,8 @@
 	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	m_amt = 50
-	g_amt = 20
-	action_button_name = "Toggle Light"
+	materials = list(MAT_METAL=50, MAT_GLASS=20)
+	actions_types = list(/datum/action/item_action/toggle_light)
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
 
@@ -22,7 +21,7 @@
 		icon_state = initial(icon_state)
 		SetLuminosity(0)
 
-/obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
+/obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		if(loc == user)
@@ -38,62 +37,64 @@
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]." //To prevent some lighting anomalities.
+		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
 		return 0
 	on = !on
 	update_brightness(user)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 	return 1
 
 
-/obj/item/device/flashlight/attack(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
+/obj/item/device/flashlight/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(on && user.zone_sel.selecting == "eyes")
+	if(on && user.zone_selected == "eyes")
 
 		if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())
-			user << "<span class='notice'>You don't have the dexterity to do this!</span>"
+			user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
-		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-			user << "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>"
+		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES)))
+			user << "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>"
 			return
 
 		if(M == user)	//they're using it on themselves
-			if(!M.eye_blind)
-				flick("flash", M.flash)
-				M.visible_message("<span class='notice'>[M] directs [src] to \his eyes.</span>", \
+			if(M.flash_eyes(visual = 1))
+				M.visible_message("[M] directs [src] to \his eyes.", \
 									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			else
-				M.visible_message("<span class='notice'>[M] directs [src] to \his eyes.</span>", \
+				M.visible_message("[M] directs [src] to \his eyes.", \
 									 "<span class='notice'>You wave the light in front of your eyes.</span>")
-			return
-
-		user.visible_message("<span class='notice'>[user] directs [src] to [M]'s eyes.</span>", \
-							 "<span class='notice'>You direct [src] to [M]'s eyes.</span>")
-
-		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
-			if(M.stat == DEAD || M.disabilities & BLIND)	//mob is dead or fully blind
-				user << "<span class='notice'>[M] pupils does not react to the light!</span>"
-			else if(M.dna.check_mutation(XRAY))	//mob has X-RAY vision
-				user << "<span class='notice'>[M] pupils give an eerie glow!</span>"
-			else	//they're okay!
-				if(!M.eye_blind)
-					flick("flash", M.flash)	//flash the affected mob
-					user << "<span class='notice'>[M]'s pupils narrow.</span>"
+		else
+			user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
+								 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
+			var/mob/living/carbon/C = M
+			if(istype(C))
+				if(C.stat == DEAD || (C.disabilities & BLIND)) //mob is dead or fully blind
+					user << "<span class='warning'>[C] pupils don't react to the light!</span>"
+				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
+					user << "<span class='danger'>[C] pupils give an eerie glow!</span>"
+				else //they're okay!
+					if(C.flash_eyes(visual = 1))
+						user << "<span class='notice'>[C]'s pupils narrow.</span>"
 	else
 		return ..()
 
 
 /obj/item/device/flashlight/pickup(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(brightness_on)
 		SetLuminosity(0)
 
 
 /obj/item/device/flashlight/dropped(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
@@ -111,7 +112,7 @@
 /obj/item/device/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag)
 		if(holo_cooldown)
-			user << "<span class='warning'>[src] is not ready yet.</span>"
+			user << "<span class='warning'>[src] is not ready yet!</span>"
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
@@ -119,7 +120,7 @@
 			return
 	..()
 
-/obj/item/device/flashlight/pen/proc/CreateHolo(var/tturf,var/creator)
+/obj/item/device/flashlight/pen/proc/CreateHolo(tturf,creator)
 	var/obj/effect/medical_holosign/M = new /obj/effect/medical_holosign(tturf)
 	M.visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
 	holo_cooldown = 1
@@ -159,8 +160,7 @@
 	brightness_on = 5
 	w_class = 4
 	flags = CONDUCT
-	m_amt = 0
-	g_amt = 0
+	materials = list()
 	on = 1
 
 
@@ -192,14 +192,15 @@ obj/item/device/flashlight/lamp/bananalamp
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = 2.0
+	w_class = 2
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
-	action_button_name = null	//just pull it manually, neckbeard.
+	actions_types = list()
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
+	heat = 1000
 
 /obj/item/device/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
@@ -226,7 +227,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	else
 		update_brightness(null)
 
-/obj/item/device/flashlight/flare/update_brightness(var/mob/user = null)
+/obj/item/device/flashlight/flare/update_brightness(mob/user = null)
 	..()
 	if(on)
 		item_state = "[initial(item_state)]-on"
@@ -237,7 +238,7 @@ obj/item/device/flashlight/lamp/bananalamp
 
 	// Usual checks
 	if(!fuel)
-		user << "<span class='notice'>It's out of fuel.</span>"
+		user << "<span class='warning'>It's out of fuel!</span>"
 		return
 	if(on)
 		return
@@ -250,18 +251,23 @@ obj/item/device/flashlight/lamp/bananalamp
 		damtype = "fire"
 		SSobj.processing += src
 
+/obj/item/device/flashlight/flare/is_hot()
+	return on * heat
+
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
 	w_class = 4
-	brightness_on = 7
+	brightness_on = 4
 	icon_state = "torch"
 	item_state = "torch"
 	on_damage = 10
+	slot_flags = null
 
 /obj/item/device/flashlight/lantern
 	name = "lantern"
 	icon_state = "lantern"
+	item_state = "lantern"
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
 
@@ -275,8 +281,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	item_state = "slime"
 	w_class = 2
 	slot_flags = SLOT_BELT
-	m_amt = 0
-	g_amt = 0
+	materials = list()
 	brightness_on = 6 //luminosity when on
 
 /obj/item/device/flashlight/emp
@@ -293,7 +298,7 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/emp/Destroy()
 		SSobj.processing.Remove(src)
-		..()
+		return ..()
 
 /obj/item/device/flashlight/emp/process()
 		charge_tick++
@@ -302,20 +307,22 @@ obj/item/device/flashlight/lamp/bananalamp
 		emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
 		return 1
 
-/obj/item/device/flashlight/emp/attack(mob/living/M as mob, mob/living/user as mob)
-	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
+/obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
+	if(on && user.zone_selected == "eyes") // call original attack proc only if aiming at the eyes
 		..()
 	return
 
 /obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity) return
+	if(istype(A, /obj/item/weapon/storage/) && A.loc == user)
+		return
 	if (emp_cur_charges > 0)
 		emp_cur_charges -= 1
 		A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
 											"<span class='userdanger'>[user] blinks \the [src] at \the [A].")
 		if(ismob(A))
 			var/mob/M = A
-			add_logs(user, M, "attacked", object="EMP-light")
+			add_logs(user, M, "attacked", "EMP-light")
 		user << "\The [src] now has [emp_cur_charges] charge\s."
 		A.emp_act(1)
 	else

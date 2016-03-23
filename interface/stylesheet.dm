@@ -1,4 +1,4 @@
-client/script = {"<style>
+/client/script = {"<style>
 body					{font-family: Verdana, sans-serif;}
 
 h1, h2, h3, h4, h5, h6	{color: #0000ff;	font-family: Georgia, Verdana, sans-serif;}
@@ -17,7 +17,7 @@ em						{font-style: normal;	font-weight: bold;}
 
 .ooc					{					font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
-.adminooc				{color: #b82e00;	font-weight: bold;}
+.adminooc				{color: #700038;	font-weight: bold;}
 
 .adminobserver			{color: #996600;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
@@ -35,7 +35,7 @@ em						{font-style: normal;	font-weight: bold;}
 .suppradio				{color: #a8732b;}
 .servradio				{color: #6eaa2c;}
 .syndradio				{color: #6d3f40;}
-.dsquadradio			{color: #686868;}
+.centcomradio			{color: #686868;}
 .aiprivradio			{color: #ff00ff;}
 
 .yell					{					font-weight: bold;}
@@ -55,6 +55,7 @@ h1.alert, h2.alert		{color: #000000;}
 .warning				{color: #ff0000;	font-style: italic;}
 .announce 				{color: #228b22;	font-weight: bold;}
 .boldannounce			{color: #ff0000;	font-weight: bold;}
+.greenannounce			{color: #00ff00;	font-weight: bold;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
@@ -63,6 +64,19 @@ h1.alert, h2.alert		{color: #000000;}
 .unconscious			{color: #0000ff;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}
+.shadowling				{color: #3b2769;}
+.cult					{color: #960000;}
+.cultitalic				{color: #960000;	font-style: italic;}
+.cultlarge				{color: #960000; font-weight: bold; font-size: 3;}
+.narsie					{color: #960000; font-weight: bold; font-size: 15;}
+.purple					{color: #5e2d79;}
+
+.revennotice			{color: #1d2953;}
+.revenboldnotice		{color: #1d2953;	font-weight: bold;}
+.revenbignotice			{color: #1d2953;	font-weight: bold; font-size: 3;}
+.revenminor				{color: #823abb}
+.revenwarning			{color: #760fbb;	font-style: italic;}
+.revendanger			{color: #760fbb;	font-weight: bold; font-size: 3;}
 
 .newscaster				{color: #800000;}
 .ghostalert				{color: #5c00e6;	font-style: italic; font-weight: bold;}
@@ -74,8 +88,18 @@ h1.alert, h2.alert		{color: #000000;}
 .interface				{color: #330033;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
+.papyrus				{font-family: "Papyrus", cursive, sans-serif;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
 
+.commmand_headset       {font-weight: bold; font-size: 3;}
+.big					{font-size: 3;}
+.reallybig				{font-size: 4;}
+.greentext				{color: #00FF00;	font-size: 3;}
+.redtext				{color: #FF0000;	font-size: 3;}
+
 BIG IMG.icon 			{width: 32px; height: 32px;}
+
+.memo					{color: #638500;	text-align: center;}
+.memoedit				{text-align: center;	font-size: 2;}
 
 </style>"}

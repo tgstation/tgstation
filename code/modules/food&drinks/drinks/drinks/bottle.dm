@@ -7,18 +7,27 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
+	throwforce = 15
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target as mob, mob/living/user as mob)
+/obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
+	..(target,thrower)
+	SplashReagents(target)
+	smash(target,thrower,1)
+	return
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user, ranged = 0)
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
-	user.drop_item()
-	var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(user.loc)
-	user.put_in_active_hand(B)
-	if(prob(33))
-		new/obj/item/weapon/shard(target.loc) // Create a glass shard at the target's location!
+	var/new_location = get_turf(loc)
+	var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(new_location)
+	if(ranged)
+		B.loc = new_location
+	else
+		user.drop_item()
+		user.put_in_active_hand(B)
 	B.icon_state = src.icon_state
 
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
@@ -26,13 +35,20 @@
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	B.icon = I
 
-	playsound(src, "shatter", 70, 1)
-	user.put_in_active_hand(B)
+	if(isGlass)
+		if(prob(33))
+			new/obj/item/weapon/shard(new_location)
+		playsound(src, "shatter", 70, 1)
+	else
+		B.name = "broken carton"
+		B.force = 0
+		B.throwforce = 0
+		B.desc = "A carton with the bottom half burst open. Might give you a papercut."
 	src.transfer_fingerprints_to(B)
 
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target as mob, mob/living/user as mob)
+/obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user)
 
 	if(!target)
 		return
@@ -43,7 +59,7 @@
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 
-	var/obj/item/organ/limb/affecting = user.zone_sel.selecting //Find what the player is aiming at
+	var/obj/item/organ/limb/affecting = user.zone_selected //Find what the player is aiming at
 
 	var/armor_block = 0 //Get the target's armor values for normal attack damage.
 	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
@@ -53,7 +69,7 @@
 
 		var/mob/living/carbon/human/H = target
 		var/headarmor = 0 // Target's head armor
-		armor_block = H.run_armor_check(affecting, "melee") // For normal attack damage
+		armor_block = H.run_armor_check(affecting, "melee","","",armour_penetration) // For normal attack damage
 
 		//If they have a hat/helmet and the user is targeting their head.
 		if(istype(H.head, /obj/item/clothing/head) && affecting == "head")
@@ -77,6 +93,7 @@
 	armor_duration /= 10
 
 	//Apply the damage!
+	armor_block = min(90,armor_block)
 	target.apply_damage(force, BRUTE, affecting, armor_block)
 
 	// You are going to knock someone out for longer if they are not wearing a helmet.
@@ -96,34 +113,39 @@
 				"<span class='userdanger'>[target] hits \himself with a bottle of [src.name][head_attack_message]!</span>")
 
 	//Attack logs
-	add_logs(user, target, "attacked", object="bottle")
+	add_logs(user, target, "attacked", src)
 
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
-	if(src.reagents)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span class='danger'>The contents of \the [src] splashes all over [target]!</span>"), 1)
-		src.reagents.reaction(target, TOUCH)
+	SplashReagents(target)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
 	src.smash(target, user)
 
 	return
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/SplashReagents(var/mob/M)
+	if(src.reagents.total_volume)
+		M.visible_message("<span class='danger'>The contents of \the [src] splashes all over [M]!</span>")
+		reagents.reaction(M, TOUCH)
+		reagents.clear_reagents()
+	return
+
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/weapon/broken_bottle
-
 	name = "Broken Bottle"
 	desc = "A bottle with a sharp broken bottom."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "broken_bottle"
-	force = 9.0
-	throwforce = 5.0
+	force = 9
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
+	w_class = 1
 	item_state = "beer"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
+	sharpness = IS_SHARP
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater Gin"
@@ -157,7 +179,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing
 	name = "Bottle of Nothing"
-	desc = "A bottle filled with nothing"
+	desc = "A bottle filled with nothing."
 	icon_state = "bottleofnothing"
 	list_reagents = list("nothing" = 100)
 
@@ -179,6 +201,10 @@
 	icon_state = "holyflask"
 	list_reagents = list("holywater" = 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell
+	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
+	list_reagents = list("hellwater" = 100)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
 	desc = "Sweet, sweet dryness~"
@@ -187,7 +213,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua
 	name = "Robert Robust's Coffee Liqueur"
-	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK"
+	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK."
 	icon_state = "kahluabottle"
 	list_reagents = list("kahlua" = 100)
 
@@ -242,3 +268,71 @@
 	item_state = "carton"
 	isGlass = 0
 	list_reagents = list("limejuice" = 100)
+
+
+////////////////////////// MOLOTOV ///////////////////////
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
+	name = "molotov cocktail"
+	desc = "A throwing weapon used to ignite things, typically filled with an accelerant. Recommended highly by rioters and revolutionaries. Light and toss."
+	icon_state = "vodkabottle"
+	list_reagents = list()
+	var/list/accelerants = list(	/datum/reagent/consumable/ethanol,/datum/reagent/fuel,/datum/reagent/clf3,/datum/reagent/phlogiston,
+							/datum/reagent/napalm,/datum/reagent/hellwater,/datum/reagent/toxin/plasma,/datum/reagent/toxin/spore_burning)
+	var/active = 0
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/CheckParts()
+	var/obj/item/weapon/reagent_containers/food/drinks/bottle/B = locate() in contents
+	if(B)
+		icon_state = B.icon_state
+		B.reagents.copy_to(src,100)
+		if(!B.isGlass)
+			desc += " You're not sure if making this out of a carton was the brightest idea."
+			isGlass = 0
+	return
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/target,mob/thrower)
+	var/firestarter = 0
+	for(var/datum/reagent/R in reagents.reagent_list)
+		for(var/A in accelerants)
+			if(istype(R,A))
+				firestarter = 1
+				break
+	SplashReagents(target)
+	if(firestarter && active)
+		target.fire_act()
+		new /obj/effect/hotspot(get_turf(target))
+	..()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
+	if(I.is_hot() && !active)
+		active = 1
+		var/turf/bombturf = get_turf(src)
+		var/area/bombarea = get_area(bombturf)
+		message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[bombarea] (JMP)</a>.")
+		log_game("[key_name(user)] has primed a [name] for detonation at [bombarea] ([bombturf.x],[bombturf.y],[bombturf.z]).")
+
+		user << "<span class='info'>You light \the [src] on fire.</span>"
+		overlays += fire_overlay
+		if(!isGlass)
+			spawn(50)
+				if(active)
+					var/counter
+					var/target = src.loc
+					for(counter = 0, counter<2, counter++)
+						if(istype(target, /obj/item/weapon/storage))
+							var/obj/item/weapon/storage/S = target
+							target = S.loc
+					if(istype(target, /atom))
+						var/atom/A = target
+						SplashReagents(A)
+						A.fire_act()
+					qdel(src)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attack_self(mob/user)
+	if(active)
+		if(!isGlass)
+			user << "<span class='danger'>The flame's spread too far on it!</span>"
+			return
+		user << "<span class='info'>You snuff out the flame on \the [src].</span>"
+		overlays -= fire_overlay
+		active = 0

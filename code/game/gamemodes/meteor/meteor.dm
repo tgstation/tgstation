@@ -21,7 +21,7 @@
 /datum/game_mode/meteor/process()
 	if(nometeors) return
 
-	spawn() spawn_meteors(6, meteors_normal)
+	spawn() spawn_meteors(1, meteors_normal)
 
 
 /datum/game_mode/meteor/declare_completion()
@@ -34,6 +34,8 @@
 
 			if(player.onCentcom())
 				text += "<br><b><font size=2>[player.real_name] escaped to the safety of Centcom.</font></b>"
+			else if(player.onSyndieBase())
+				text += "<br><b><font size=2>[player.real_name] escaped to the (relative) safety of Syndicate Space.</font></b>"
 			else
 				text += "<br><font size=1>[player.real_name] survived but is stranded without any hope of rescue.</font>"
 

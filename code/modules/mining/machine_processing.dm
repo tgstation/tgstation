@@ -18,7 +18,7 @@
 		else
 			qdel(src)
 
-/obj/machinery/mineral/processing_unit_console/attack_hand(user as mob)
+/obj/machinery/mineral/processing_unit_console/attack_hand(mob/user)
 
 	var/dat = "<b>Smelter control console</b><br><br>"
 	//iron
@@ -392,6 +392,6 @@
 			unload_mineral(O)
 
 
-/obj/machinery/mineral/processing_unit/proc/generate_mineral(var/P)
+/obj/machinery/mineral/processing_unit/proc/generate_mineral(P)
 	var/O = new P(src)
 	unload_mineral(O)

@@ -13,12 +13,13 @@
 /obj/item/weapon/circuitboard
 	density = 0
 	anchored = 0
-	w_class = 2.0
+	w_class = 2
 	name = "circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
 	origin_tech = "programming=2"
+	materials = list(MAT_GLASS=200)
 	var/frequency = null
 	var/build_path = null
 	var/board_type = "computer"
@@ -27,10 +28,6 @@
 	var/list/records = null
 	var/frame_desc = null
 
-/obj/item/weapon/circuitboard/large_tank_control
-	name = "circuit board (Large Tank Control)"
-	build_path = /obj/machinery/computer/general_air_control/large_tank_control
-	origin_tech = "programming=2;engineering=3;materials=2"
 /obj/item/weapon/circuitboard/turbine_computer
 	name = "circuit board (Turbine Computer)"
 	build_path = /obj/machinery/computer/turbine_computer
@@ -74,8 +71,6 @@
 	build_path = /obj/machinery/computer/communications
 	origin_tech = "programming=2;magnets=2"
 	var/lastTimeUsed = 0
-/obj/item/weapon/circuitboard/communications/proc/cooldownLeft(deciseconds=600)
-	return max(deciseconds - (world.time - lastTimeUsed), 0)
 
 /obj/item/weapon/circuitboard/card
 	name = "circuit board (ID Console)"
@@ -83,6 +78,10 @@
 /obj/item/weapon/circuitboard/card/centcom
 	name = "circuit board (Centcom ID Console)"
 	build_path = /obj/machinery/computer/card/centcom
+/obj/item/weapon/circuitboard/card/minor
+	name = "circuit board (Department Management Console)"
+	build_path = /obj/machinery/computer/card/minor
+	var/target_dept = 1
 //obj/item/weapon/circuitboard/shield
 //	name = "Circuit board (Shield Control)"
 //	build_path = /obj/machinery/computer/stationshield
@@ -99,12 +98,13 @@
 /*/obj/item/weapon/circuitboard/atmospheresiphonswitch
 	name = "circuit board (Atmosphere siphon control)"
 	build_path = /obj/machinery/computer/atmosphere/siphonswitch*/
-/obj/item/weapon/circuitboard/air_management
-	name = "circuit board (Atmospheric monitor)"
-	build_path = /obj/machinery/computer/general_air_control
-/obj/item/weapon/circuitboard/injector_control
-	name = "circuit board (Injector control)"
-	build_path = /obj/machinery/computer/general_air_control/fuel_injection
+/obj/item/weapon/circuitboard/atmos_control
+	name = "circuit board (Atmospheric Monitor)"
+	build_path = /obj/machinery/computer/atmos_control
+/obj/item/weapon/circuitboard/atmos_control/tank
+	name = "circuit board (Tank Control)"
+	build_path = /obj/machinery/computer/atmos_control/tank
+	origin_tech = "programming=2;engineering=3;materials=2"
 /obj/item/weapon/circuitboard/atmos_alert
 	name = "circuit board (Atmospheric Alert)"
 	build_path = /obj/machinery/computer/atmos_alert
@@ -124,7 +124,7 @@
 	build_path = /obj/machinery/computer/arcade/battle
 	origin_tech = "programming=1"
 /obj/item/weapon/circuitboard/arcade/orion_trail
-	name = "circuit board (Orion_Trail)"
+	name = "circuit board (Orion Trail)"
 	build_path = /obj/machinery/computer/arcade/orion_trail
 /obj/item/weapon/circuitboard/turbine_control
 	name = "circuit board (Turbine control)"
@@ -149,13 +149,13 @@
 	name = "circuit board (Prisoner Management Console)"
 	build_path = /obj/machinery/computer/prisoner
 /obj/item/weapon/circuitboard/rdconsole
-	name = "circuit Board (RD Console)"
+	name = "circuit board (RD Console)"
 	build_path = /obj/machinery/computer/rdconsole/core
 /obj/item/weapon/circuitboard/mecha_control
-	name = "circuit Board (Exosuit Control Console)"
+	name = "circuit board (Exosuit Control Console)"
 	build_path = /obj/machinery/computer/mecha
 /obj/item/weapon/circuitboard/rdservercontrol
-	name = "circuit Board (R&D Server Control)"
+	name = "circuit board (R&D Server Control)"
 	build_path = /obj/machinery/computer/rdservercontrol
 /obj/item/weapon/circuitboard/crew
 	name = "circuit board (Crew Monitoring Console)"
@@ -165,14 +165,14 @@
 	name = "circuit board (Mech Bay Power Control Console)"
 	build_path = /obj/machinery/computer/mech_bay_power_console
 	origin_tech = "programming=2;powerstorage=3"
-/obj/item/weapon/circuitboard/ordercomp
-	name = "circuit board (Supply Ordering Console)"
-	build_path = /obj/machinery/computer/ordercomp
-/obj/item/weapon/circuitboard/supplycomp
-	name = "circuit board (Supply shuttle console)"
-	build_path = /obj/machinery/computer/supplycomp
+/obj/item/weapon/circuitboard/cargo
+	name = "circuit board (Supply Console)"
+	build_path = /obj/machinery/computer/cargo
 	origin_tech = "programming=3"
-	var/contraband_enabled = 0
+	var/contraband = 0
+/obj/item/weapon/circuitboard/cargo/request
+	name = "circuit board (Supply Request Console)"
+	build_path = /obj/machinery/computer/cargo/request
 /obj/item/weapon/circuitboard/operating
 	name = "circuit board (Operating Computer)"
 	build_path = /obj/machinery/computer/operating
@@ -188,47 +188,37 @@
 	name = "circuit board (Telecommunications Server Monitor)"
 	build_path = /obj/machinery/computer/telecomms/server
 	origin_tech = "programming=3"
-/obj/item/weapon/circuitboard/comm_traffic
-	name = "circuitboard (Telecommunications Traffic Control)"
-	build_path = /obj/machinery/computer/telecomms/traffic
-	origin_tech = "programming=3"
-/*/obj/item/weapon/circuitboard/curefab
-	name = "circuit board (Cure fab)"
-	build_path = /obj/machinery/computer/curer
-/obj/item/weapon/circuitboard/splicer
-	name = "circuit board (Disease Splicer)"
-	build_path = /obj/machinery/computer/diseasesplicer*/
 /obj/item/weapon/circuitboard/shuttle
 	name = "circuit board (Shuttle)"
 	build_path = /obj/machinery/computer/shuttle
 	var/shuttleId
 	var/possible_destinations = ""
 /obj/item/weapon/circuitboard/labor_shuttle
-	name = "circuit Board (Labor Shuttle)"
+	name = "circuit board (Labor Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/labor
 /obj/item/weapon/circuitboard/labor_shuttle/one_way
-	name = "circuit Board (Prisoner Shuttle Console)"
+	name = "circuit board (Prisoner Shuttle Console)"
 	build_path = /obj/machinery/computer/shuttle/labor/one_way
 /obj/item/weapon/circuitboard/ferry
-	name = "circuit Board (Transport Ferry)"
+	name = "circuit board (Transport Ferry)"
 	build_path = /obj/machinery/computer/shuttle/ferry
 /obj/item/weapon/circuitboard/ferry/request
-	name = "circuit Board (Transport Ferry Console)"
+	name = "circuit board (Transport Ferry Console)"
 	build_path = /obj/machinery/computer/shuttle/ferry/request
 /obj/item/weapon/circuitboard/mining_shuttle
-	name = "circuit Board (Mining Shuttle)"
+	name = "circuit board (Mining Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/mining
-/obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
+/obj/item/weapon/circuitboard/white_ship
+	name = "circuit board (White Ship)"
+	build_path = /obj/machinery/computer/shuttle/white_ship
+/obj/item/weapon/circuitboard/holodeck// Not going to let people get this, but it's just here for future
 	name = "circuit board (Holodeck Control)"
-	build_path = /obj/machinery/computer/HolodeckControl
+	build_path = /obj/machinery/computer/holodeck
 	origin_tech = "programming=4"
 /obj/item/weapon/circuitboard/aifixer
 	name = "circuit board (AI Integrity Restorer)"
 	build_path = /obj/machinery/computer/aifixer
 	origin_tech = "programming=3;biotech=2"
-/obj/item/weapon/circuitboard/area_atmos
-	name = "circuit board (Area Air Control)"
-	build_path = /obj/machinery/computer/area_atmos
 /*/obj/item/weapon/circuitboard/prison_shuttle
 	name = "circuit board (Prison Shuttle)"
 	build_path = /obj/machinery/computer/prison_shuttle*/
@@ -241,30 +231,20 @@
 	build_path = /obj/machinery/computer/libraryconsole
 	origin_tech = "programming=1"
 
-
-/obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/circuitboard/card/minor/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/device/multitool))
-		var/catastasis = src.contraband_enabled
-		var/opposite_catastasis
-		if(catastasis)
-			opposite_catastasis = "STANDARD"
-			catastasis = "BROAD"
-		else
-			opposite_catastasis = "BROAD"
-			catastasis = "STANDARD"
-
-		switch( alert("Current receiver spectrum is set to: [catastasis]","Multitool-Circuitboard interface","Switch to [opposite_catastasis]","Cancel") )
-		//switch( alert("Current receiver spectrum is set to: " {(src.contraband_enabled) ? ("BROAD") : ("STANDARD")} , "Multitool-Circuitboard interface" , "Switch to " {(src.contraband_enabled) ? ("STANDARD") : ("BROAD")}, "Cancel") )
-			if("Switch to STANDARD","Switch to BROAD")
-				src.contraband_enabled = !src.contraband_enabled
-
-			if("Cancel")
-				return
-			else
-				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
+		var/list/dept_list = list("general","security","medical","science","engineering")
+		var/choice = input("Currently set to [dept_list[target_dept]] personnel database. Changing to:","Multitool-Circuitboard interface") as null|anything in dept_list
+		if(choice)
+			target_dept = dept_list.Find(choice)
 	return
 
-/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/circuitboard/cargo/attackby(obj/item/I, mob/user, params)
+	if(istype(I,/obj/item/device/multitool))
+		contraband = !contraband
+		user << "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>"
+
+/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/computer/rdconsole/core)
 			name = "circuit board (RD Console - Robotics)"
@@ -276,7 +256,7 @@
 			user << "<span class='notice'>Defaulting access protocols.</span>"
 	return
 
-/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "circuit board (Library Visitor Console)"
@@ -288,7 +268,7 @@
 			user << "<span class='notice'>Access protocols successfully updated.</span>"
 	return
 
-/obj/item/weapon/circuitboard/shuttle/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/circuitboard/shuttle/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/multitool))
 		var/chosen_id = round(input(usr, "Choose an ID number (-1 for reset):", "Input an Integer", null) as num|null)
 		if(chosen_id >= 0)
@@ -297,47 +277,48 @@
 			shuttleId = initial(shuttleId)
 	return
 
-/obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/structure/computerframe/attackby(obj/item/P, mob/user, params)
 	add_fingerprint(user)
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				user << "<span class='notice'>You start wrenching the frame into place.</span>"
-				if(do_after(user, 20))
-					user << "<span class='notice'>You've wrenched the frame into place.</span>"
+				user << "<span class='notice'>You start wrenching the frame into place...</span>"
+				if(do_after(user, 20/P.toolspeed, target = src))
+					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = P
 				if(!WT.remove_fuel(0, user))
 					if(!WT.isOn())
-						user << "<span class='warning'>The welding tool must be on to complete this task.</span>"
+						user << "<span class='warning'>The welding tool must be on to complete this task!</span>"
 					return
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				user << "<span class='notice'>You start deconstructing the frame.</span>"
-				if(do_after(user, 20))
+				user << "<span class='notice'>You start deconstructing the frame...</span>"
+				if(do_after(user, 20/P.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>You've deconstructed the frame.</span>"
+					user << "<span class='notice'>You deconstruct the frame.</span>"
 					var/obj/item/stack/sheet/metal/M = new (loc, 5)
 					M.add_fingerprint(user)
 					qdel(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				user << "<span class='notice'>You start to unfasten the frame.</span>"
-				if(do_after(user, 20))
-					user << "<span class='notice'>You've unfastened the frame.</span>"
+				user << "<span class='notice'>You start to unfasten the frame...</span>"
+				if(do_after(user, 20/P.toolspeed, target = src))
+					user << "<span class='notice'>You unfasten the frame.</span>"
 					anchored = 0
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
+					if(!user.drop_item())
+						return
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You place the circuit board inside the frame.</span>"
 					icon_state = "1"
 					circuit = P
-					user.drop_item()
 					circuit.add_fingerprint(user)
 					P.loc = null
 				else
@@ -365,15 +346,15 @@
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "<span class='notice'>You start adding cables to the frame.</span>"
-					if(do_after(user, 20))
+					user << "<span class='notice'>You start adding cables to the frame...</span>"
+					if(do_after(user, 20/P.toolspeed, target = src))
 						if(C.get_amount() >= 5 && state == 2)
 							C.use(5)
-							user << "<span class='notice'>You've added cables to the frame.</span>"
+							user << "<span class='notice'>You add cables to the frame.</span>"
 							state = 3
 							icon_state = "3"
 				else
-					user << "<span class='warning'>You need five lengths of cable to wire the frame.</span>"
+					user << "<span class='warning'>You need five lengths of cable to wire the frame!</span>"
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
@@ -387,15 +368,15 @@
 			if(istype(P, /obj/item/stack/sheet/glass))
 				var/obj/item/stack/sheet/glass/G = P
 				if(G.get_amount() < 2)
-					user << "<span class='warning'>You need two glass sheets to continue construction.</span>"
+					user << "<span class='warning'>You need two glass sheets to continue construction!</span>"
 					return
 				else
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "<span class='notice'>You start to put in the glass panel.</span>"
-					if(do_after(user, 20))
+					user << "<span class='notice'>You start to put in the glass panel...</span>"
+					if(do_after(user, 20, target = src))
 						if(G.get_amount() >= 2 && state == 3)
 							G.use(2)
-							user << "<span class='notice'>You've put in the glass panel.</span>"
+							user << "<span class='notice'>You put in the glass panel.</span>"
 							state = 4
 							src.icon_state = "4"
 		if(4)

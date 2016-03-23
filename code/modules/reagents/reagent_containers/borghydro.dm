@@ -16,14 +16,15 @@ Borg Hypospray
 	icon_state = "borghypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 	var/mode = 1
 	var/charge_cost = 50
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
+	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list("salbutamol", "salglu_solution", "charcoal", "epinephrine", "spaceacillin")
+	var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "antitoxin", "epinephrine", "spaceacillin")
 	//var/list/reagent_ids = list("salbutamol", "salglu_solution", "salglu_solution", "charcoal", "ephedrine", "spaceacillin")
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
@@ -43,7 +44,7 @@ Borg Hypospray
 
 /obj/item/weapon/reagent_containers/borghypo/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 
 /obj/item/weapon/reagent_containers/borghypo/process() //Every [recharge_time] seconds, recharge some reagents for the cyborg
@@ -55,7 +56,7 @@ Borg Hypospray
 	//update_icon()
 	return 1
 
-// Purely for testing purposes I swear~
+// Purely for testing purposes I swear~ //don't lie to me
 /*
 /obj/item/weapon/reagent_containers/borghypo/verb/add_cyanide()
 	set src in world
@@ -64,7 +65,7 @@ Borg Hypospray
 
 
 // Use this to add more chemicals for the borghypo to produce.
-/obj/item/weapon/reagent_containers/borghypo/proc/add_reagent(var/reagent)
+/obj/item/weapon/reagent_containers/borghypo/proc/add_reagent(reagent)
 	reagent_ids |= reagent
 	var/datum/reagents/RG = new(30)
 	RG.my_atom = src
@@ -77,33 +78,34 @@ Borg Hypospray
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
-			var/datum/reagents/RG = reagent_list[mode]
-			if(RG.total_volume < RG.maximum_volume) 	//Don't recharge reagents and drain power if the storage is full.
-				R.cell.use(charge_cost) 					//Take power from borg...
-				RG.add_reagent(reagent_ids[mode], 5)		//And fill hypo with reagent.
+			for(var/i in 1 to reagent_ids.len)
+				var/datum/reagents/RG = reagent_list[i]
+				if(RG.total_volume < RG.maximum_volume) 	//Don't recharge reagents and drain power if the storage is full.
+					R.cell.use(charge_cost) 					//Take power from borg...
+					RG.add_reagent(reagent_ids[i], 5)		//And fill hypo with reagent.
 
-/obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/weapon/reagent_containers/borghypo/attack(mob/living/carbon/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
 		user << "<span class='notice'>The injector is empty.</span>"
 		return
-	if (!( istype(M) ))
+	if(!istype(M))
 		return
-	if (R.total_volume && M.can_inject(user, 1))
+	if(R.total_volume && M.can_inject(user, 1, bypass_protection))
 		M << "<span class='warning'>You feel a tiny prick!</span>"
 		user << "<span class='notice'>You inject [M] with the injector.</span>"
-		R.reaction(M, INGEST)
+		var/fraction = min(amount_per_transfer_from_this/R.total_volume, 1)
+		R.reaction(M, INJECT, fraction)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
 			user << "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>"
-	return
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
-	mode++
-	if(mode > reagent_list.len)
-		mode = 1
+	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]
+	if(!chosen_reagent)
+		return
+	mode = chosen_reagent
 	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
-
 	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
 	user << "<span class='notice'>[src] is now dispensing '[R.name]'.</span>"
 	return
@@ -123,7 +125,21 @@ Borg Hypospray
 			empty = 0
 
 	if(empty)
-		usr << "<span class='notice'>It is currently empty. Allow some time for the internal syntheszier to produce more.</span>"
+		usr << "<span class='warning'>It is currently empty! Allow some time for the internal syntheszier to produce more.</span>"
+
+/obj/item/weapon/reagent_containers/borghypo/hacked
+	icon_state = "borghypo_s"
+	reagent_ids = list ("facid", "mutetoxin", "cyanide", "sodium_thiopental", "heparin", "lexorin")
+
+/obj/item/weapon/reagent_containers/borghypo/syndicate
+	name = "syndicate cyborg hypospray"
+	desc = "An experimental piece of Syndicate technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. Also metabolizes potassium iodide, for radiation poisoning, and morphine, for offense."
+	icon_state = "borghypo_s"
+	charge_cost = 20
+	recharge_time = 2
+	reagent_ids = list("syndicate_nanites", "potass_iodide", "morphine")
+	bypass_protection = 1
+
 /*
 Borg Shaker
 */
@@ -138,8 +154,8 @@ Borg Shaker
 
 	reagent_ids = list("beer", "orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale")
 
-/obj/item/weapon/reagent_containers/borghypo/borgshaker/attack(mob/M as mob, mob/user as mob)
-	return //Can't inject stuff with a shaker, can we?
+/obj/item/weapon/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
+	return //Can't inject stuff with a shaker, can we? //not with that attitude
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/regenerate_reagents()
 	if(isrobot(src.loc))
@@ -152,22 +168,13 @@ Borg Shaker
 					R.cell.use(charge_cost)
 					RG.add_reagent(reagent_ids[valueofi], 5)
 
-/obj/item/weapon/reagent_containers/borghypo/borgshaker/attack_self(mob/user)
-	mode = modes[input(user, "What reagent do you want to dispense?") as anything in reagent_ids]
-
-	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
-
-	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
-	user << "<span class='notice'>[src] is now dispensing '[R.name]'.</span>"
-	return
-
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
 	if(!proximity) return
 
 	else if(target.is_open_container() && target.reagents)
 		var/datum/reagents/R = reagent_list[mode]
 		if(!R.total_volume)
-			user << "<span class='notice'>[src] is currently out of this ingredient. Please allow some time for the synthesizer to produce more.</span>"
+			user << "<span class='warning'>[src] is currently out of this ingredient! Please allow some time for the synthesizer to produce more.</span>"
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -187,7 +194,7 @@ Borg Shaker
 		empty = 0
 
 	if(empty)
-		usr << "<span class='notice'>It is currently empty. Please allow some time for the synthesizer to produce more.</span>"
+		usr << "<span class='warning'>It is currently empty! Please allow some time for the synthesizer to produce more.</span>"
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/hacked
 	..()

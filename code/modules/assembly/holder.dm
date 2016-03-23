@@ -5,7 +5,7 @@
 	item_state = "assembly"
 	flags = CONDUCT
 	throwforce = 5
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 2
 	throw_range = 7
 
@@ -16,17 +16,19 @@
 	return 1
 
 
-/obj/item/device/assembly_holder/proc/assemble(var/obj/item/device/assembly/A, var/obj/item/device/assembly/A2, var/mob/user)
+/obj/item/device/assembly_holder/proc/assemble(obj/item/device/assembly/A, obj/item/device/assembly/A2, mob/user)
 	attach(A,user)
 	attach(A2,user)
 	name = "[A.name]-[A2.name] assembly"
 	update_icon()
+	feedback_add_details("assembly_made","[A.name]-[A2.name]")
 
-/obj/item/device/assembly_holder/proc/attach(var/obj/item/device/assembly/A, var/mob/user)
-	if(user)
-		user.remove_from_mob(A)
+/obj/item/device/assembly_holder/proc/attach(obj/item/device/assembly/A, mob/user)
+	if(!A.remove_item_from_storage(src))
+		if(user)
+			user.remove_from_mob(A)
+		A.loc = src
 	A.holder = src
-	A.loc = src
 	A.toggle_secure()
 	if(!a_left)
 		a_left = A
@@ -39,19 +41,19 @@
 		overlays += "[a_left.icon_state]_left"
 		for(var/O in a_left.attached_overlays)
 			overlays += "[O]_l"
+
 	if(a_right)
-		src.overlays += "[a_right.icon_state]_right"
+		var/list/images = list()
+		images += image(icon, icon_state = "[a_right.icon_state]_left")
 		for(var/O in a_right.attached_overlays)
-			overlays += "[O]_r"
+			images += image(icon, icon_state = "[O]_l")
+		var/matrix = matrix(-1, 0, 0, 0, 1, 0)
+		for(var/image/I in images)
+			I.transform = matrix
+			overlays += I
+
 	if(master)
 		master.update_icon()
-
-/obj/item/device/assembly_holder/HasProximity(atom/movable/AM as mob|obj)
-	if(a_left)
-		a_left.HasProximity(AM)
-	if(a_right)
-		a_right.HasProximity(AM)
-
 
 /obj/item/device/assembly_holder/Crossed(atom/movable/AM as mob|obj)
 	if(a_left)
@@ -59,7 +61,7 @@
 	if(a_right)
 		a_right.Crossed(AM)
 
-/obj/item/device/assembly_holder/on_found(mob/finder as mob)
+/obj/item/device/assembly_holder/on_found(mob/finder)
 	if(a_left)
 		a_left.on_found(finder)
 	if(a_right)
@@ -79,7 +81,7 @@
 	..()
 	return
 
-/obj/item/device/assembly_holder/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/device/assembly_holder/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		var/turf/T = get_turf(src)
 		if(!T)
@@ -94,22 +96,24 @@
 	else
 		..()
 
-/obj/item/device/assembly_holder/attack_self(mob/user as mob)
+/obj/item/device/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)
 	if(!a_left || !a_right)
 		user << "<span class='danger'>Assembly part missing!</span>"
 		return
 	if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
 		switch(alert("Which side would you like to use?",,"Left","Right"))
-			if("Left")	a_left.attack_self(user)
-			if("Right")	a_right.attack_self(user)
+			if("Left")
+				a_left.attack_self(user)
+			if("Right")
+				a_right.attack_self(user)
 		return
 	else
 		a_left.attack_self(user)
 		a_right.attack_self(user)
 
 
-/obj/item/device/assembly_holder/proc/process_activation(var/obj/D, var/normal = 1, var/special = 1)
+/obj/item/device/assembly_holder/proc/process_activation(obj/D, normal = 1, special = 1)
 	if(!D)
 		return 0
 	if((normal) && (a_right) && (a_left))

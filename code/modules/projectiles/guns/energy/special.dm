@@ -9,7 +9,9 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
-
+	ammo_x_offset = 3
+	flight_x_offset = 17
+	flight_y_offset = 9
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	return
@@ -18,11 +20,13 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
-	item_state = "ioncarbine"
 	origin_tech = "combat=4;magnets=4;materials=4"
 	w_class = 3
 	slot_flags = SLOT_BELT
 	pin = null
+	ammo_x_offset = 2
+	flight_x_offset = 18
+	flight_y_offset = 11
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
@@ -31,6 +35,13 @@
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 	pin = null
+	ammo_x_offset = 1
+
+/obj/item/weapon/gun/energy/decloner/update_icon()
+	..()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if(power_supply.charge > shot.e_cost)
+		overlays += "decloner_spin"
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
@@ -40,32 +51,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
 	modifystate = 1
-	var/charge_tick = 0
-	var/mode = 0 //0 = mutate, 1 = yield boost
-
-/obj/item/weapon/gun/energy/floragun/New()
-	..()
-	SSobj.processing |= src
-
-
-/obj/item/weapon/gun/energy/floragun/Destroy()
-	SSobj.processing.Remove(src)
-	..()
-
-
-/obj/item/weapon/gun/energy/floragun/process()
-	charge_tick++
-	if(charge_tick < 4) return 0
-	charge_tick = 0
-	if(!power_supply) return 0
-	power_supply.give(100)
-	update_icon()
-	return 1
-
-/obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user as mob)
-	select_fire(user)
-	update_icon()
-	return
+	ammo_x_offset = 1
+	selfcharge = 1
 
 /obj/item/weapon/gun/energy/meteorgun
 	name = "meteor gun"
@@ -76,28 +63,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
 	cell_type = "/obj/item/weapon/stock_parts/cell/potato"
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
-	var/charge_tick = 0
-	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
-
-/obj/item/weapon/gun/energy/meteorgun/New()
-	..()
-	SSobj.processing |= src
-
-
-/obj/item/weapon/gun/energy/meteorgun/Destroy()
-	SSobj.processing.Remove(src)
-	..()
-
-/obj/item/weapon/gun/energy/meteorgun/process()
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-	if(!power_supply) return 0
-	power_supply.give(100)
-
-/obj/item/weapon/gun/energy/meteorgun/update_icon()
-	return
-
+	selfcharge = 1
 
 /obj/item/weapon/gun/energy/meteorgun/pen
 	name = "meteor pen"
@@ -109,12 +75,13 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = 1
 
-
 /obj/item/weapon/gun/energy/mindflayer
-	name = "mind flayer"
+	name = "\improper Mind Flayer"
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
+	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
+	ammo_x_offset = 2
 
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
@@ -124,66 +91,48 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = "/obj/item/weapon/stock_parts/cell/emproof"
 	needs_permit = 0 // Aparently these are safe to carry? I'm sure Golliaths would disagree.
-	var/overheat = 0
-	var/recent_reload = 1
-	var/range_add = 0
-	var/overheat_time = 20
-	upgrades = list("diamond" = 0, "screwdriver" = 0, "plasma" = 0)
+	var/overheat_time = 16
 	unique_rename = 1
+	origin_tech = "combat=2;powerstorage=1"
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/newshot()
-	..()
-	if(chambered && chambered.BB)
-		var/obj/item/projectile/kinetic/charge = chambered.BB
-		charge.range += range_add
+/obj/item/weapon/gun/energy/kinetic_accelerator/super
+	name = "super-kinetic accelerator"
+	desc = "An upgraded, superior version of the proto-kinetic accelerator."
+	icon_state = "kineticgun_u"
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/super)
+	overheat_time = 15
+	origin_tech = "combat=3;powerstorage=2"
 
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if(istype(W, /obj/item/weapon/screwdriver) && upgrades["screwdriver"] < 3)
-		upgrades["screwdriver"]++
-		overheat_time -= 1
-		user << "<span class='info'>You tweak [src]'s thermal exchanger.</span>"
-
-
-	else if(istype(W, /obj/item/stack))
-		var/obj/item/stack/S = W
-
-		if(istype(S, /obj/item/stack/sheet/mineral/diamond) && upgrades["diamond"] < 3)
-			upgrades["diamond"]++
-			overheat_time -= 3
-			user << "<span class='info'>You upgrade [src]'s thermal exchanger with diamonds.</span>"
-			S.use(1)
-
-		if(istype(S, /obj/item/stack/sheet/mineral/plasma) && upgrades["plasma"] < 2)
-			upgrades["plasma"]++
-			range_add++
-			user << "<span class='info'>You upgrade [src]'s accelerating chamber with plasma.</span>"
-			if(prob(5 * (range_add + 1) * (range_add + 1)) && power_supply)
-				power_supply.rigged = 1 // This is dangerous!
-			S.use(1)
-
-	..()
+/obj/item/weapon/gun/energy/kinetic_accelerator/hyper
+	name = "hyper-kinetic accelerator"
+	desc = "An upgraded, even more superior version of the proto-kinetic accelerator."
+	icon_state = "kineticgun_h"
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hyper)
+	overheat_time = 14
+	origin_tech = "combat=4;powerstorage=3"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
-	overheat = 1
-	spawn(overheat_time)
-		overheat = 0
-		recent_reload = 0
 	..()
+	spawn(overheat_time)
+		reload()
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/living/user)
-	if(overheat || recent_reload)
-		return
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
 	power_supply.give(500)
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
-		user << "<span class='warning'>You silently charge [src].<span>"
-	recent_reload = 1
+		loc << "<span class='warning'>[src] silently charges up.<span>"
 	update_icon()
-	return
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if(power_supply.charge < shot.e_cost)
+		icon_state = "[initial(icon_state)]_empty"
+	else
+		icon_state = initial(icon_state)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	name = "mini energy crossbow"
@@ -191,60 +140,70 @@
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	w_class = 2
-	m_amt = 2000
+	materials = list(MAT_METAL=2000)
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	unique_rename = 0
+	overheat_time = 20
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
 	w_class = 3
-	m_amt = 4000
+	materials = list(MAT_METAL=4000)
 	origin_tech = "combat=2;magnets=2;syndicate=3" //can be further researched for more syndie tech
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
 
-/obj/item/weapon/gun/energy/disabler
-	name = "disabler"
-	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
-	icon_state = "disabler"
-	item_state = null
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
+/obj/item/weapon/gun/energy/kinetic_accelerator/suicide_act(mob/user)
+	if(!suppressed)
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+	user.visible_message("<span class='suicide'>[user] cocks the [src.name] and pretends to blow \his brains out! It looks like \he's trying to commit suicide!</b></span>")
+	shoot_live_shot()
+	return (OXYLOSS)
 
-/obj/item/weapon/gun/energy/disabler/cyborg
-	name = "cyborg disabler"
-	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
-	var/charge_tick = 0
-	var/recharge_time = 2.5
+/obj/item/weapon/gun/energy/plasmacutter
+	name = "plasma cutter"
+	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	icon_state = "plasmacutter"
+	item_state = "plasmacutter"
+	modifystate = -1
+	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=2;engineering=1"
+	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
+	flags = CONDUCT | OPENCONTAINER
+	attack_verb = list("attacked", "slashed", "cut", "sliced")
+	can_charge = 0
+	heat = 3800
 
-/obj/item/weapon/gun/energy/disabler/cyborg/New()
+/obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
 	..()
-	SSobj.processing |= src
+	if(power_supply)
+		user <<"<span class='notice'>[src] is [round(power_supply.percent())]% charged.</span>"
 
+/obj/item/weapon/gun/energy/plasmacutter/attackby(obj/item/A, mob/user)
+	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
+		var/obj/item/stack/sheet/S = A
+		S.use(1)
+		power_supply.give(1000)
+		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+	else if(istype(A, /obj/item/weapon/ore/plasma))
+		qdel(A)
+		power_supply.give(500)
+		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+	else
+		..()
 
-/obj/item/weapon/gun/energy/disabler/cyborg/Destroy()
-	SSobj.processing.Remove(src)
-	..()
+/obj/item/weapon/gun/energy/plasmacutter/update_icon()
+	return
 
-/obj/item/weapon/gun/energy/disabler/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-
-	if(!power_supply) return 0 //sanity
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
-				power_supply.give(shot.e_cost)	//... to recharge the shot
-
-	update_icon()
-	return 1
+/obj/item/weapon/gun/energy/plasmacutter/adv
+	name = "advanced plasma cutter"
+	icon_state = "adv_plasmacutter"
+	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=3;engineering=2"
+	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
 /obj/item/weapon/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"
@@ -257,16 +216,14 @@
 
 /obj/item/weapon/gun/energy/wormhole_projector/update_icon()
 	icon_state = "[initial(icon_state)][select]"
+	item_state = icon_state
 	return
-
-/obj/item/weapon/gun/energy/wormhole_projector/attack_self(mob/living/user as mob)
-	select_fire(user)
 
 /obj/item/weapon/gun/energy/wormhole_projector/process_chamber()
 	..()
 	select_fire()
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/portal_destroyed(var/obj/effect/portal/P)
+/obj/item/weapon/gun/energy/wormhole_projector/proc/portal_destroyed(obj/effect/portal/P)
 	if(P.icon_state == "portal")
 		blue = null
 		if(orange)
@@ -276,7 +233,7 @@
 		if(blue)
 			blue.target = null
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(var/obj/item/projectile/beam/wormhole/W)
+/obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W)
 	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(W), null, src)
 	P.precision = 0
 	if(W.name == "bluespace beam")
@@ -300,32 +257,47 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
-	var/charge_tick = 0
-	var/recharge_time = 5
+	can_charge = 0
 
 /obj/item/weapon/gun/energy/printer/update_icon()
 	return
 
-/obj/item/weapon/gun/energy/printer/New()
+/obj/item/weapon/gun/energy/printer/emp_act()
+	return
+
+/obj/item/weapon/gun/energy/printer/newshot()
 	..()
-	SSobj.processing |= src
+	robocharge()
 
+/obj/item/weapon/gun/energy/temperature
+	name = "temperature gun"
+	icon_state = "freezegun"
+	desc = "A gun that changes temperatures."
+	origin_tech = "combat=3;materials=4;powerstorage=3;magnets=2"
+	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
+	cell_type = "/obj/item/weapon/stock_parts/cell/high"
+	pin = null
 
-/obj/item/weapon/gun/energy/printer/Destroy()
-	SSobj.processing.Remove(src)
-	..()
+/obj/item/weapon/gun/energy/laser/instakill
+	name = "instakill rifle"
+	icon_state = "instagib"
+	item_state = "instagib"
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
+	force = 60
+	origin_tech = null
 
-/obj/item/weapon/gun/energy/printer/process()
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
+/obj/item/weapon/gun/energy/laser/instakill/red
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."
+	icon_state = "instagibred"
+	item_state = "instagibred"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/red)
 
-	if(!power_supply) return 0 //sanity
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
-				power_supply.give(shot.e_cost)	//...to recharge the shot
+/obj/item/weapon/gun/energy/laser/instakill/blue
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a blue design."
+	icon_state = "instagibblue"
+	item_state = "instagibblue"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/blue)
 
-	return 1
+/obj/item/weapon/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
+	return

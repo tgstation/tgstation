@@ -5,20 +5,20 @@
 	item_state = "lgloves"
 	force = 0
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 1
 	throw_range = 7
 	var/state
 	var/datum/gas_mixture/air_contents = null
 
-/obj/item/latexballon/proc/blow(obj/item/weapon/tank/tank, mob/user as mob)
+/obj/item/latexballon/proc/blow(obj/item/weapon/tank/tank, mob/user)
 	if (icon_state == "latexballon_bursted")
 		return
 	icon_state = "latexballon_blow"
 	item_state = "latexballon"
 	user.update_inv_r_hand()
 	user.update_inv_l_hand()
-	user << "<span class='notice'> You blow up [src] with [tank].</span>"
+	user << "<span class='notice'>You blow up [src] with [tank].</span>"
 	air_contents = tank.remove_air_volume(3)
 
 /obj/item/latexballon/proc/burst()
@@ -50,10 +50,10 @@
 		burst()
 	return
 
-/obj/item/latexballon/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/latexballon/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/tank))
 		var/obj/item/weapon/tank/T = W
 		blow(T, user)
 		return
-	if (is_sharp(W) || is_hot(W) || is_pointed(W))
+	if (is_sharp(W) || W.is_hot() || is_pointed(W))
 		burst()

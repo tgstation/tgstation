@@ -6,34 +6,38 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronobackpack"
 	item_state = "backpack"
-	w_class = 4.0
+	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
-	action_button_name = "Equip/Unequip TED Gun"
+	actions_types = list(/datum/action/item_action/equip_unequip_TED_Gun)
 	var/obj/item/weapon/gun/energy/chrono_gun/PA = null
 	var/list/erased_minds = list() //a collection of minds from the dead
 
-/obj/item/weapon/chrono_eraser/proc/pass_mind(var/datum/mind/M)
+/obj/item/weapon/chrono_eraser/proc/pass_mind(datum/mind/M)
 	erased_minds += M
 
 /obj/item/weapon/chrono_eraser/dropped()
+	..()
 	if(PA)
 		qdel(PA)
 
 /obj/item/weapon/chrono_eraser/Destroy()
 	dropped()
-	..()
+	return ..()
 
-/obj/item/weapon/chrono_eraser/ui_action_click()
-	var/mob/living/carbon/user = src.loc
-	if(iscarbon(user) && (user.back == src))
-		if(PA)
-			qdel(PA)
-		else
-			PA = new(src)
-			user.put_in_hands(PA)
+/obj/item/weapon/chrono_eraser/ui_action_click(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.back == src)
+			if(PA)
+				qdel(PA)
+			else
+				PA = new(src)
+				user.put_in_hands(PA)
 
-
+/obj/item/weapon/chrono_eraser/item_action_slot_check(slot, mob/user)
+	if(slot == slot_back)
+		return 1
 
 /obj/item/weapon/gun/energy/chrono_gun
 	name = "T.E.D. Projection Apparatus"
@@ -41,9 +45,10 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	item_state = "chronogun"
-	w_class = 3.0
+	w_class = 3
 	flags = NODROP
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
+	can_charge = 0
 	fire_delay = 50
 	var/obj/item/weapon/chrono_eraser/TED = null
 	var/obj/effect/chrono_field/field = null
@@ -58,6 +63,7 @@
 		qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/dropped()
+	..()
 	qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/update_icon()
@@ -74,9 +80,9 @@
 		TED = null
 	if(field)
 		field_disconnect(field)
-	..()
+	return ..()
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/field_connect(var/obj/effect/chrono_field/F)
+/obj/item/weapon/gun/energy/chrono_gun/proc/field_connect(obj/effect/chrono_field/F)
 	var/mob/living/user = src.loc
 	if(F.gun)
 		if(isliving(user) && F.captured)
@@ -90,7 +96,7 @@
 			user << "<span class='notice'>Connection established with target: <b>[F.captured]</b></span>"
 
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/field_disconnect(var/obj/effect/chrono_field/F)
+/obj/item/weapon/gun/energy/chrono_gun/proc/field_disconnect(obj/effect/chrono_field/F)
 	if(F && field == F)
 		var/mob/living/user = src.loc
 		if(F.gun == src)
@@ -100,7 +106,7 @@
 	field = null
 	startpos = null
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/field_check(var/obj/effect/chrono_field/F)
+/obj/item/weapon/gun/energy/chrono_gun/proc/field_check(obj/effect/chrono_field/F)
 	if(F)
 		if(field == F)
 			var/turf/currentpos = get_turf(src)
@@ -110,7 +116,7 @@
 		field_disconnect(F)
 		return 0
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/pass_mind(var/datum/mind/M)
+/obj/item/weapon/gun/energy/chrono_gun/proc/pass_mind(datum/mind/M)
 	if(TED)
 		TED.pass_mind(M)
 
@@ -130,7 +136,7 @@
 	else
 		return 0
 
-/obj/item/projectile/energy/chrono_beam/on_hit(var/atom/target)
+/obj/item/projectile/energy/chrono_beam/on_hit(atom/target)
 	if(target && gun && isliving(target))
 		var/obj/effect/chrono_field/F = new(target.loc, target, gun)
 		gun.field_connect(F)
@@ -148,13 +154,13 @@
 	desc = "An aura of time-bluespace energy."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
-	density = 1
+	density = 0
 	anchored = 1
 	unacidable = 1
 	blend_mode = BLEND_MULTIPLY
 	var/mob/living/captured = null
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
-	var/tickstokill = 30
+	var/tickstokill = 15
 	var/image/mob_underlay = null
 	var/preloaded = 0
 	var/RPpos = null
@@ -181,7 +187,7 @@
 /obj/effect/chrono_field/Destroy()
 	if(gun && gun.field_check(src))
 		gun.field_disconnect(src)
-	..()
+	return ..()
 
 /obj/effect/chrono_field/update_icon()
 	var/ttk_frame = 1 - (tickstokill / initial(tickstokill))
@@ -210,12 +216,8 @@
 			qdel(src)
 		else
 			captured.Paralyse(4)
-			if(captured.reagents)
-				captured.reagents.del_reagent("synaptizine") //you pesky thing you
-			if(captured.loc != src) //If they manage to escape, immediately kill them, this is so that even if there IS a way to get out, they won't use it
+			if(captured.loc != src)
 				captured.loc = src
-				tickstokill = 0
-				return .()
 			update_icon()
 			if(gun)
 				if(gun.field_check(src))
@@ -228,7 +230,7 @@
 	else
 		qdel(src)
 
-/obj/effect/chrono_field/bullet_act(var/obj/item/projectile/P)
+/obj/effect/chrono_field/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy/chrono_beam))
 		var/obj/item/projectile/energy/chrono_beam/beam = P
 		var/obj/item/weapon/gun/energy/chrono_gun/Pgun = beam.gun
@@ -242,8 +244,9 @@
 
 /obj/effect/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/GM = new
-	GM.oxygen = MOLES_O2STANDARD
-	GM.nitrogen = MOLES_N2STANDARD
+	GM.assert_gases("o2","n2")
+	GM.gases["o2"][MOLES] = MOLES_O2STANDARD
+	GM.gases["n2"][MOLES] = MOLES_N2STANDARD
 	GM.temperature = T20C
 	return GM
 

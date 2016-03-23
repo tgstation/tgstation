@@ -1,44 +1,28 @@
 /obj/structure/closet/l3closet
-	name = "level-3 biohazard suit closet"
+	name = "level-3 biohazard gear closet"
 	desc = "It's a storage unit for level-3 biohazard gear."
 	icon_state = "bio"
-	icon_closed = "bio"
-	icon_opened = "bioopen"
 
 /obj/structure/closet/l3closet/New()
 	..()
-	new /obj/item/clothing/suit/bio_suit/general( src )
-	new /obj/item/clothing/head/bio_hood/general( src )
-
-
-/obj/structure/closet/l3closet/general
-	icon_state = "bio_general"
-	icon_closed = "bio_general"
-	icon_opened = "bio_generalopen"
-
-/obj/structure/closet/l3closet/general/New()
-	..()
-	contents = list()
+	new /obj/item/weapon/storage/bag/bio( src )
 	new /obj/item/clothing/suit/bio_suit/general( src )
 	new /obj/item/clothing/head/bio_hood/general( src )
 
 
 /obj/structure/closet/l3closet/virology
-	icon_state = "bio_virology"
-	icon_closed = "bio_virology"
-	icon_opened = "bio_virologyopen"
+	icon_state = "bio_viro"
 
 /obj/structure/closet/l3closet/virology/New()
 	..()
 	contents = list()
+	new /obj/item/weapon/storage/bag/bio( src )
 	new /obj/item/clothing/suit/bio_suit/virology( src )
 	new /obj/item/clothing/head/bio_hood/virology( src )
 
 
 /obj/structure/closet/l3closet/security
-	icon_state = "bio_security"
-	icon_closed = "bio_security"
-	icon_opened = "bio_securityopen"
+	icon_state = "bio_sec"
 
 /obj/structure/closet/l3closet/security/New()
 	..()
@@ -48,9 +32,7 @@
 
 
 /obj/structure/closet/l3closet/janitor
-	icon_state = "bio_janitor"
-	icon_closed = "bio_janitor"
-	icon_opened = "bio_janitoropen"
+	icon_state = "bio_jan"
 
 /obj/structure/closet/l3closet/janitor/New()
 	..()
@@ -60,12 +42,12 @@
 
 
 /obj/structure/closet/l3closet/scientist
-	icon_state = "bio_scientist"
-	icon_closed = "bio_scientist"
-	icon_opened = "bio_scientistopen"
+	icon_state = "bio_viro"
 
 /obj/structure/closet/l3closet/scientist/New()
 	..()
 	contents = list()
+	new /obj/item/weapon/storage/bag/bio( src )
 	new /obj/item/clothing/suit/bio_suit/scientist( src )
 	new /obj/item/clothing/head/bio_hood/scientist( src )
+	

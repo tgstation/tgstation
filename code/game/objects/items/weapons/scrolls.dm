@@ -3,12 +3,13 @@
 	desc = "A scroll for moving around."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
-	var/uses = 4.0
-	w_class = 2.0
+	var/uses = 4
+	w_class = 2
 	item_state = "paper"
 	throw_speed = 3
 	throw_range = 7
 	origin_tech = "bluespace=4"
+	burn_state = FLAMMABLE
 
 /obj/item/weapon/teleportation_scroll/apprentice
 	name = "lesser scroll of teleportation"
@@ -17,7 +18,7 @@
 
 
 
-/obj/item/weapon/teleportation_scroll/attack_self(mob/user as mob)
+/obj/item/weapon/teleportation_scroll/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat = "<B>Teleportation Scroll:</B><BR>"
 	dat += "Number of uses: [src.uses]<BR>"
@@ -33,11 +34,11 @@
 	..()
 	if (usr.stat || usr.restrained() || src.loc != usr)
 		return
-	var/mob/living/carbon/human/H = usr
-	if (!( istype(H, /mob/living/carbon/human)))
+	if (!ishuman(usr))
 		return 1
-	if ((usr == src.loc || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.set_machine(src)
+	var/mob/living/carbon/human/H = usr
+	if ((H == src.loc || (in_range(src, H) && istype(src.loc, /turf))))
+		H.set_machine(src)
 		if (href_list["spell_teleport"])
 			if (src.uses >= 1)
 				teleportscroll(H)
@@ -45,11 +46,13 @@
 		attack_self(H)
 	return
 
-/obj/item/weapon/teleportation_scroll/proc/teleportscroll(var/mob/user)
+/obj/item/weapon/teleportation_scroll/proc/teleportscroll(mob/user)
 
 	var/A
 
-	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs
+	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs|null
+	if(!A)
+		return
 	var/area/thearea = teleportlocs[A]
 
 	if (!user || user.stat || user.restrained() || uses <= 0)
@@ -57,8 +60,8 @@
 	if(!((user == loc || (in_range(src, user) && istype(src.loc, /turf)))))
 		return
 
-	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
-	smoke.set_up(5, 0, user.loc)
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(2, user.loc)
 	smoke.attach(user)
 	smoke.start()
 	var/list/L = list()
@@ -77,7 +80,7 @@
 		return
 
 	if(user && user.buckled)
-		user.buckled.unbuckle_mob()
+		user.buckled.unbuckle_mob(user, force=1)
 
 	var/list/tempL = L.Copy()
 	var/attempt = null

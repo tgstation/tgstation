@@ -14,14 +14,14 @@
 	var/time_coeff_tech = 1
 	var/resource_coeff_tech = 1
 	var/list/resources = list(
-								"$metal"=0,
-								"$glass"=0,
-								"$bananium"=0,
-								"$diamond"=0,
-								"$gold"=0,
-								"$plasma"=0,
-								"$silver"=0,
-								"$uranium"=0
+								MAT_METAL=0,
+								MAT_GLASS=0,
+								MAT_BANANIUM=0,
+								MAT_DIAMOND=0,
+								MAT_GOLD=0,
+								MAT_PLASMA=0,
+								MAT_SILVER=0,
+								MAT_URANIUM=0
 								)
 	var/res_max_amount = 200000
 	var/datum/research/files
@@ -112,7 +112,8 @@
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
-	for(var/datum/design/D in files.known_designs)
+	for(var/v in files.known_designs)
+		var/datum/design/D = files.known_designs[v]
 		if(D.build_type & MECHFAB)
 			if(!(set_name in D.category))
 				continue
@@ -139,7 +140,7 @@
 		var/amount = min(res_max_amount, resources[resource])
 		output += "<span class=\"res_name\">[material2name(resource)]: </span>[amount] cm&sup3;"
 		if(amount>0)
-			output += "<span style='font-size:80%;'> - Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[resources[resource] / MINERAL_MATERIAL_AMOUNT];material=[resource]'>All</a>\]</span>"
+			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[resources[resource] / MINERAL_MATERIAL_AMOUNT];material=[resource]'>All</a>\]</span>"
 		output += "<br/>"
 	return output
 
@@ -169,10 +170,10 @@
 	overlays -= "fab-active"
 	desc = initial(desc)
 
-	var/obj/item/I = new D.build_path
-	I.loc = get_step(src,SOUTH)
-	I.m_amt = get_resource_cost_w_coeff(D,"$metal")
-	I.g_amt = get_resource_cost_w_coeff(D,"$glass")
+	var/location = get_step(src,(dir))
+	var/obj/item/I = new D.build_path(location)
+	I.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
+	I.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
 	visible_message("\icon[src] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
 	being_built = null
 
@@ -185,7 +186,8 @@
 
 /obj/machinery/mecha_part_fabricator/proc/add_part_set_to_queue(set_name)
 	if(set_name in part_sets)
-		for(var/datum/design/D in files.known_designs)
+		for(var/v in files.known_designs)
+			var/datum/design/D = files.known_designs[v]
 			if(D.build_type & MECHFAB)
 				if(set_name in D.category)
 					add_to_queue(D)
@@ -198,7 +200,7 @@
 	return queue.len
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
-	if(!isnum(index) || !istype(queue) || (index<1 || index>queue.len))
+	if(!isnum(index) || !IsInteger(index) || !istype(queue) || (index<1 || index>queue.len))
 		return 0
 	queue.Cut(index,++index)
 	return 1
@@ -245,7 +247,8 @@
 	if(!files)
 		return
 	var/output
-	for(var/datum/tech/T in files.known_tech)
+	for(var/v in files.known_tech)
+		var/datum/tech/T = files.known_tech[v]
 		if(T && T.level > 1)
 			var/diff
 			switch(T.id)
@@ -269,12 +272,14 @@
 	updateUsrDialog()
 	sleep(30) //only sleep if called by user
 
-	for(var/obj/machinery/computer/rdconsole/RDC in area_contents(get_area(src)))
+	for(var/obj/machinery/computer/rdconsole/RDC in oview(5,src))
 		if(!RDC.sync)
 			continue
-		for(var/datum/tech/T in RDC.files.known_tech)
+		for(var/v in RDC.files.known_tech)
+			var/datum/tech/T = RDC.files.known_tech[v]
 			files.AddTech2Known(T)
-		for(var/datum/design/D in RDC.files.known_designs)
+		for(var/v in RDC.files.known_designs)
+			var/datum/design/D = RDC.files.known_designs[v]
 			files.AddDesign2Known(D)
 		files.RefreshResearch()
 		temp = "Processed equipment designs.<br>"
@@ -305,7 +310,7 @@
 	if (..())
 		return
 	user.set_machine(src)
-	var/turf/exit = get_step(src,SOUTH)
+	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
 		visible_message("\icon[src] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")
 		return
@@ -373,7 +378,8 @@
 				screen = "parts"
 	if(href_list["part"])
 		var/T = filter.getStr("part")
-		for(var/datum/design/D in files.known_designs)
+		for(var/v in files.known_designs)
+			var/datum/design/D = files.known_designs[v]
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					if(!processing_queue)
@@ -383,7 +389,8 @@
 					break
 	if(href_list["add_to_queue"])
 		var/T = filter.getStr("add_to_queue")
-		for(var/datum/design/D in files.known_designs)
+		for(var/v in files.known_designs)
+			var/datum/design/D = files.known_designs[v]
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					add_to_queue(D)
@@ -396,7 +403,7 @@
 		add_part_set_to_queue(filter.get("partset_to_queue"))
 		return update_queue_on_page()
 	if(href_list["process_queue"])
-		spawn(-1)
+		spawn(0)
 			if(processing_queue || being_built)
 				return 0
 			processing_queue = 1
@@ -409,7 +416,7 @@
 	if(href_list["queue_move"] && href_list["index"])
 		var/index = filter.getNum("index")
 		var/new_index = index + filter.getNum("queue_move")
-		if(isnum(index) && isnum(new_index))
+		if(isnum(index) && isnum(new_index) && IsInteger(index) && IsInteger(new_index))
 			if(IsInRange(new_index,1,queue.len))
 				queue.Swap(index,new_index)
 		return update_queue_on_page()
@@ -420,7 +427,8 @@
 		sync()
 	if(href_list["part_desc"])
 		var/T = filter.getStr("part_desc")
-		for(var/datum/design/D in files.known_designs)
+		for(var/v in files.known_designs)
+			var/datum/design/D = files.known_designs[v]
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					var/obj/part = D.build_path
@@ -446,26 +454,26 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/remove_material(var/mat_string, var/amount)
+/obj/machinery/mecha_part_fabricator/proc/remove_material(mat_string, amount)
 	if(resources[mat_string] < MINERAL_MATERIAL_AMOUNT) //not enough mineral for a sheet
 		return -1
 	var/type
 	switch(mat_string)
-		if("$metal")
+		if(MAT_METAL)
 			type = /obj/item/stack/sheet/metal
-		if("$glass")
+		if(MAT_GLASS)
 			type = /obj/item/stack/sheet/glass
-		if("$gold")
+		if(MAT_GOLD)
 			type = /obj/item/stack/sheet/mineral/gold
-		if("$silver")
+		if(MAT_SILVER)
 			type = /obj/item/stack/sheet/mineral/silver
-		if("$diamond")
+		if(MAT_DIAMOND)
 			type = /obj/item/stack/sheet/mineral/diamond
-		if("$plasma")
+		if(MAT_PLASMA)
 			type = /obj/item/stack/sheet/mineral/plasma
-		if("$uranium")
+		if(MAT_URANIUM)
 			type = /obj/item/stack/sheet/mineral/uranium
-		if("$bananium")
+		if(MAT_BANANIUM)
 			type = /obj/item/stack/sheet/mineral/bananium
 		else
 			return 0
@@ -486,7 +494,7 @@
 	return result
 
 
-/obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob, params)
+/obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
 
@@ -500,36 +508,36 @@
 			default_deconstruction_crowbar(W)
 			return 1
 		else
-			user << "<span class='danger'>You can't load \the [name] while it's opened.</span>"
+			user << "<span class='warning'>You can't load \the [name] while it's opened!</span>"
 			return 1
 
 	if(istype(W, /obj/item/stack))
 		var/material
 		switch(W.type)
 			if(/obj/item/stack/sheet/mineral/gold)
-				material = "$gold"
+				material = MAT_GOLD
 			if(/obj/item/stack/sheet/mineral/silver)
-				material = "$silver"
+				material = MAT_SILVER
 			if(/obj/item/stack/sheet/mineral/diamond)
-				material = "$diamond"
+				material = MAT_DIAMOND
 			if(/obj/item/stack/sheet/mineral/plasma)
-				material = "$plasma"
+				material = MAT_PLASMA
 			if(/obj/item/stack/sheet/metal)
-				material = "$metal"
+				material = MAT_METAL
 			if(/obj/item/stack/sheet/glass)
-				material = "$glass"
+				material = MAT_GLASS
 			if(/obj/item/stack/sheet/mineral/bananium)
-				material = "$bananium"
+				material = MAT_BANANIUM
 			if(/obj/item/stack/sheet/mineral/uranium)
-				material = "$uranium"
+				material = MAT_URANIUM
 			else
 				return ..()
 
 		if(being_built)
-			user << "\The [src] is currently processing. Please wait until completion."
+			user << "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>"
 			return
 		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) //overstuffing the fabricator
-			user << "\The [src] [material2name(material)] storage is full."
+			user << "<span class='warning'>\The [src] [material2name(material)] storage is full!</span>"
 			return
 		var/obj/item/stack/sheet/stack = W
 		var/sname = "[stack.name]"
@@ -539,15 +547,15 @@
 			var/transfer_amount = min(stack.amount, round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
 			stack.use(transfer_amount)
-			user << "You insert [transfer_amount] [sname] sheet\s into \the [src]."
+			user << "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>"
 			sleep(10)
 			updateUsrDialog()
 			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
 		else
-			user << "\The [src] cannot hold any more [sname] sheet\s."
+			user << "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>"
 		return
 
-/obj/machinery/mecha_part_fabricator/proc/material2name(var/ID)
+/obj/machinery/mecha_part_fabricator/proc/material2name(ID)
 	return copytext(ID,2)
 
 /obj/machinery/mecha_part_fabricator/emag_act()

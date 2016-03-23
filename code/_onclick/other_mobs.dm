@@ -4,7 +4,7 @@
 
 	Otherwise pretty standard.
 */
-/mob/living/carbon/human/UnarmedAttack(var/atom/A, var/proximity)
+/mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
 
 	// Special glove functions:
@@ -18,11 +18,15 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		override += HM.on_attack_hand(src, A)
 
-	if(override)	return
+	if(override)
+		return
 
 	A.attack_hand(src)
 
-/atom/proc/attack_hand(mob/user as mob)
+/atom/proc/attack_hand(mob/user)
+	return
+
+/atom/proc/interact(mob/user)
 	return
 
 /*
@@ -30,10 +34,10 @@
 	return
 */
 
-/mob/living/carbon/RestrainedClickOn(var/atom/A)
+/mob/living/carbon/RestrainedClickOn(atom/A)
 	return 0
 
-/mob/living/carbon/human/RangedAttack(var/atom/A)
+/mob/living/carbon/human/RangedAttack(atom/A)
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
 		if(istype(G) && G.Touch(A,0)) // for magic gloves
@@ -42,27 +46,31 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_ranged_attack(src, A)
 
+	var/turf/T = A
+	if(istype(T) && get_dist(src,T) <= 1)
+		src.Move_Pulled(T)
+
 /*
 	Animals & All Unspecified
 */
-/mob/living/UnarmedAttack(var/atom/A)
+/mob/living/UnarmedAttack(atom/A)
 	A.attack_animal(src)
 
-/mob/living/simple_animal/hostile/UnarmedAttack(var/atom/A)
+/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
 	target = A
 	AttackingTarget()
 
-/atom/proc/attack_animal(mob/user as mob)
+/atom/proc/attack_animal(mob/user)
 	return
-/mob/living/RestrainedClickOn(var/atom/A)
+/mob/living/RestrainedClickOn(atom/A)
 	return
 
 /*
 	Monkeys
 */
-/mob/living/carbon/monkey/UnarmedAttack(var/atom/A)
+/mob/living/carbon/monkey/UnarmedAttack(atom/A)
 	A.attack_paw(src)
-/atom/proc/attack_paw(mob/user as mob)
+/atom/proc/attack_paw(mob/user)
 	return
 
 /*
@@ -72,10 +80,11 @@
 	moving it here instead of various hand_p's has simplified
 	things considerably
 */
-/mob/living/carbon/monkey/RestrainedClickOn(var/atom/A)
+/mob/living/carbon/monkey/RestrainedClickOn(atom/A)
 	if(..())
 		return
-	if(a_intent != "harm" || !ismob(A)) return
+	if(a_intent != "harm" || !ismob(A))
+		return
 	if(is_muzzled())
 		return
 	var/mob/living/carbon/ML = A
@@ -88,7 +97,8 @@
 		ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
 		ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
 						"<span class='userdanger'>[name] bites [ML]!</span>")
-		if(armor >= 2) return
+		if(armor >= 2)
+			return
 		for(var/datum/disease/D in viruses)
 			ML.ForceContractDisease(D)
 	else
@@ -98,18 +108,18 @@
 	Aliens
 	Defaults to same as monkey in most places
 */
-/mob/living/carbon/alien/UnarmedAttack(var/atom/A)
+/mob/living/carbon/alien/UnarmedAttack(atom/A)
 	A.attack_alien(src)
-/atom/proc/attack_alien(mob/user as mob)
+/atom/proc/attack_alien(mob/user)
 	attack_paw(user)
 	return
-/mob/living/carbon/alien/RestrainedClickOn(var/atom/A)
+/mob/living/carbon/alien/RestrainedClickOn(atom/A)
 	return
 
 // Babby aliens
-/mob/living/carbon/alien/larva/UnarmedAttack(var/atom/A)
+/mob/living/carbon/alien/larva/UnarmedAttack(atom/A)
 	A.attack_larva(src)
-/atom/proc/attack_larva(mob/user as mob)
+/atom/proc/attack_larva(mob/user)
 	return
 
 
@@ -117,11 +127,11 @@
 	Slimes
 	Nothing happening here
 */
-/mob/living/simple_animal/slime/UnarmedAttack(var/atom/A)
+/mob/living/simple_animal/slime/UnarmedAttack(atom/A)
 	A.attack_slime(src)
-/atom/proc/attack_slime(mob/user as mob)
+/atom/proc/attack_slime(mob/user)
 	return
-/mob/living/simple_animal/slime/RestrainedClickOn(var/atom/A)
+/mob/living/simple_animal/slime/RestrainedClickOn(atom/A)
 	return
 
 /*

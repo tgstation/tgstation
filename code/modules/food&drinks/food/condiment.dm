@@ -8,10 +8,10 @@
 /obj/item/weapon/reagent_containers/food/condiment
 	name = "condiment container"
 	desc = "Just your average condiment container."
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "emptycondiment"
 	flags = OPENCONTAINER
-	possible_transfer_amounts = list(1,5,10)
+	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	//Possible_states has the reagent id as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change() to change names, descs and sprites.
 	var/list/possible_states = list(
@@ -25,14 +25,9 @@
 	 "cornoil" = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
 	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"))
 
+/obj/item/weapon/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
 
-/obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user as mob)
-	return
-
-/obj/item/weapon/reagent_containers/food/condiment/attack(mob/M as mob, mob/user as mob, def_zone)
-	var/datum/reagents/R = src.reagents
-
-	if(!R || !R.total_volume)
+	if(!reagents || !reagents.total_volume)
 		user << "<span class='warning'>None of [src] left, oh no!</span>"
 		return 0
 
@@ -41,51 +36,43 @@
 
 	if(M == user)
 		M << "<span class='notice'>You swallow some of contents of \the [src].</span>"
-		if(reagents.total_volume)
-			reagents.reaction(M, INGEST)
-			spawn(5)
-				reagents.trans_to(M, 10)
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-		return 1
-
 	else
 		user.visible_message("<span class='warning'>[user] attempts to feed [M] from [src].</span>")
-		if(!do_mob(user, M)) return
+		if(!do_mob(user, M))
+			return
+		if(!reagents || !reagents.total_volume)
+			return // The condiment might be empty after the delay.
 		user.visible_message("<span class='warning'>[user] feeds [M] from [src].</span>")
+		add_logs(user, M, "fed", reagentlist(src))
 
-		add_logs(user, M, "fed", object="[reagentlist(src)]")
-
-		if(reagents.total_volume)
-			reagents.reaction(M, INGEST)
-			spawn(5)
-				reagents.trans_to(M, 10)
-
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-		return 1
-	return 0
+	var/fraction = min(10/reagents.total_volume, 1)
+	reagents.reaction(M, INGEST, fraction)
+	reagents.trans_to(M, 10)
+	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+	return 1
 
 /obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
-			user << "<span class='warning'>[target] is empty.</span>"
+			user << "<span class='warning'>[target] is empty!</span>"
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class='warning'>[src] is full.</span>"
+			user << "<span class='warning'>[src] is full!</span>"
 			return
 
-		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 		user << "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>"
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
 	else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!reagents.total_volume)
-			user << "<span class='warning'>[src] is empty.</span>"
+			user << "<span class='warning'>[src] is empty!</span>"
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span class='warning'>you can't add anymore to [target].</span>"
+			user << "<span class='warning'>you can't add anymore to [target]!</span>"
 			return
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		user << "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>"
@@ -157,7 +144,6 @@
 /obj/item/weapon/reagent_containers/food/condiment/flour
 	name = "flour sack"
 	desc = "A big bag of flour. Good for baking!"
-	icon = 'icons/obj/food.dmi'
 	icon_state = "flour"
 	item_state = "flour"
 	list_reagents = list("flour" = 30)
@@ -171,6 +157,13 @@
 	list_reagents = list("soymilk" = 50)
 	possible_states = list()
 
+/obj/item/weapon/reagent_containers/food/condiment/rice
+	name = "rice sack"
+	desc = "A big bag of rice. Good for cooking!"
+	icon_state = "rice"
+	item_state = "flour"
+	list_reagents = list("rice" = 30)
+	possible_states = list()
 
 
 
@@ -182,7 +175,7 @@
 	icon_state = "condi_empty"
 	volume = 10
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(10)
+	possible_transfer_amounts = list()
 	possible_states = list("ketchup" = list("condi_ketchup", "Ketchup", "You feel more American already."), "capsaicin" = list("condi_hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"), "soysauce" = list("condi_soysauce", "Soy Sauce", "A salty soy-based flavoring"), "frostoil" = list("condi_frostoil", "Coldsauce", "Leaves the tongue numb in it's passage"), "sodiumchloride" = list("condi_salt", "Salt Shaker", "Salt. From space oceans, presumably"), "blackpepper" = list("condi_pepper", "Pepper Mill", "Often used to flavor food or make people sneeze"), "cornoil" = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"), "sugar" = list("condi_sugar", "Sugar", "Tasty spacey sugar!"))
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 

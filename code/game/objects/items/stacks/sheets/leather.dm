@@ -5,12 +5,35 @@
 	icon_state = "sheet-hide"
 	origin_tech = null
 
+var/global/list/datum/stack_recipe/human_recipes = list( \
+	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/animalhide/human/New(var/loc, var/amount=null)
+	recipes = human_recipes
+	return ..()
+
+/obj/item/stack/sheet/animalhide/generic
+	name = "generic skin"
+	desc = "A piece of generic skin."
+	singular_name = "generic skin piece"
+	icon_state = "sheet-hide"
+	origin_tech = null
+
 /obj/item/stack/sheet/animalhide/corgi
 	name = "corgi hide"
 	desc = "The by-product of corgi farming."
 	singular_name = "corgi hide piece"
 	icon_state = "sheet-corgi"
 	origin_tech = null
+
+var/global/list/datum/stack_recipe/corgi_recipes = list ( \
+	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/animalhide/corgi/New(var/loc, var/amount=null)
+	recipes = corgi_recipes
+	return ..()
 
 /obj/item/stack/sheet/animalhide/cat
 	name = "cat hide"
@@ -108,26 +131,22 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 
 //Step one - dehairing.
 
-/obj/item/stack/sheet/animalhide/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if(	istype(W, /obj/item/weapon/kitchenknife) || \
-		istype(W, /obj/item/weapon/kitchen/utensil/knife) || \
-		istype(W, /obj/item/weapon/twohanded/fireaxe) || \
-		istype(W, /obj/item/weapon/hatchet) )
-
-		//visible message on mobs is defined as visible_message(var/message, var/self_message, var/blind_message)
-		usr.visible_message("<span class='notice'>\the [usr] starts cutting hair off \the [src]</span>", "<span class='notice'>You start cutting the hair off \the [src]</span>", "You hear the sound of a knife rubbing against flesh")
-		if(do_after(user,50))
-			usr << "<span class='notice'>You cut the hair from this [src.singular_name]</span>"
+/obj/item/stack/sheet/animalhide/attackby(obj/item/weapon/W, mob/user, params)
+	if(is_sharp(W))
+		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+		user.visible_message("[user] starts cutting hair off \the [src].", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='italics'>You hear the sound of a knife rubbing against flesh.</span>")
+		if(do_after(user,50, target = src))
+			user << "<span class='notice'>You cut the hair from this [src.singular_name].</span>"
 			//Try locating an exisitng stack on the tile and add to there if possible
-			for(var/obj/item/stack/sheet/hairlesshide/HS in usr.loc)
+			for(var/obj/item/stack/sheet/hairlesshide/HS in user.loc)
 				if(HS.amount < 50)
 					HS.amount++
-					src.use(1)
+					use(1)
 					break
 			//If it gets to here it means it did not find a suitable stack on the tile.
-			var/obj/item/stack/sheet/hairlesshide/HS = new(usr.loc)
+			var/obj/item/stack/sheet/hairlesshide/HS = new(user.loc)
 			HS.amount = 1
-			src.use(1)
+			use(1)
 	else
 		..()
 

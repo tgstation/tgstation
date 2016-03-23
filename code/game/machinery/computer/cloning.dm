@@ -2,8 +2,8 @@
 /obj/machinery/computer/cloning
 	name = "cloning console"
 	desc = "Used to clone people and manage DNA."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "dna"
+	icon_screen = "dna"
+	icon_keyboard = "med_key"
 	circuit = /obj/item/weapon/circuitboard/cloning
 	req_access = list(access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
@@ -35,7 +35,7 @@
 	if(!(pod1.occupant || pod1.mess) && (pod1.efficiency > 5))
 		for(var/datum/data/record/R in records)
 			if(!(pod1.occupant || pod1.mess))
-				if(pod1.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["mcolor"], R.fields["factions"]))
+				if(pod1.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"]))
 					records -= R
 
 /obj/machinery/computer/cloning/proc/updatemodules()
@@ -73,13 +73,14 @@
 
 	return null
 
-/obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			user.drop_item()
+			if(!user.drop_item())
+				return ..()
 			W.loc = src
 			src.diskette = W
-			user << "You insert [W]."
+			user << "<span class='notice'>You insert [W].</span>"
 			src.updateUsrDialog()
 			return
 	else
@@ -296,7 +297,8 @@
 					src.updateUsrDialog()
 					return
 
-				src.active_record.fields = diskette.fields.Copy()
+				for(var/key in diskette.fields)
+					src.active_record.fields[key] = diskette.fields[key]
 				src.temp = "Load successful."
 
 			if("eject")
@@ -329,7 +331,7 @@
 				temp = "<font class='bad'>Clonepod malfunction.</font>"
 			else if(!config.revival_cloning)
 				temp = "<font class='bad'>Unable to initiate cloning cycle.</font>"
-			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["mcolor"], C.fields["factions"]))
+			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["features"], C.fields["factions"]))
 				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 				records.Remove(C)
 				if(active_record == C)
@@ -348,17 +350,17 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
-	if (!check_dna_integrity(subject) || !istype(subject))
+/obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
+	if (!istype(subject))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		return
-	if (!subject.getorgan(/obj/item/organ/brain))
+	if (!subject.getorgan(/obj/item/organ/internal/brain))
 		scantemp = "<font class='bad'>No signs of intelligence detected.</font>"
 		return
 	if (subject.suiciding == 1)
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		return
-	if ((NOCLONE in subject.mutations) && (src.scanner.scan_level < 2))
+	if ((subject.disabilities & NOCLONE) && (src.scanner.scan_level < 2))
 		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		return
 	if ((!subject.ckey) || (!subject.client))
@@ -380,7 +382,7 @@
 	R.fields["UI"] = subject.dna.uni_identity
 	R.fields["SE"] = subject.dna.struc_enzymes
 	R.fields["blood_type"] = subject.dna.blood_type
-	R.fields["mcolor"] = subject.dna.mutant_color
+	R.fields["features"] = subject.dna.features
 	R.fields["factions"] = subject.faction
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)
@@ -397,16 +399,3 @@
 
 	src.records += R
 	scantemp = "Subject successfully scanned."
-
-/obj/machinery/computer/cloning/update_icon()
-	SetLuminosity(brightness_on)
-	if(stat & BROKEN)
-		icon_state = "commb"
-	else
-		if(stat & NOPOWER)
-			src.icon_state = "c_unpowered"
-			stat |= NOPOWER
-			SetLuminosity(0)
-		else
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER

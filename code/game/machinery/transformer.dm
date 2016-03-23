@@ -1,6 +1,6 @@
 /obj/machinery/transformer
 	name = "\improper Automatic Robotic Factory 5000"
-	desc = "A large metalic machine with an entrance and an exit. A sign on the side reads, 'human go in, robot come out', human must be lying down and alive. Has to cooldown between each use."
+	desc = "A large metallic machine with an entrance and an exit. A sign on the side reads, 'human go in, robot come out', human must be lying down and alive. Has to cooldown between each use."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = MOB_LAYER+1 // Overhead
@@ -28,7 +28,7 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/machinery/transformer/Bumped(var/atom/movable/AM)
+/obj/machinery/transformer/Bumped(atom/movable/AM)
 
 	if(cooldown == 1)
 		return
@@ -49,7 +49,7 @@
 			return ..()
 	return 0
 
-/obj/machinery/transformer/proc/do_transform(var/mob/living/carbon/human/H)
+/obj/machinery/transformer/proc/do_transform(mob/living/carbon/human/H)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(cooldown == 1)
@@ -69,7 +69,6 @@
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	H.emote("scream") // It is painful
 	H.adjustBruteLoss(max(0, 80 - H.getBruteLoss())) // Hurt the human, don't try to kill them though.
-	H.handle_regular_hud_updates() // Make sure they see the pain.
 
 	// Sleep for a couple of ticks to allow the human to see the pain
 	sleep(5)

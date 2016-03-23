@@ -1,7 +1,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/soup
 	w_class = 3
+	icon = 'icons/obj/food/soupsalad.dmi'
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bitesize = 5
+	volume = 80
 	list_reagents = list("nutriment" = 8, "water" = 5, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/New()
@@ -41,6 +43,14 @@
 	icon_state = "tomatosoup"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 6)
 	list_reagents = list("nutriment" = 2, "blood" = 10, "water" = 5, "vitamin" = 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/wingfangchu
+	name = "wing fang chu"
+	desc = "A savory dish of alien wing wang in soy."
+	icon_state = "wingfangchu"
+	trash = /obj/item/weapon/reagent_containers/glass/bowl
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
+	list_reagents = list("nutriment" = 6, "soysauce" = 5, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/clownstears
 	name = "clown's tears"
@@ -120,7 +130,6 @@
 	desc = "Wait, how do you spell it again..?"
 	icon_state = "beetsoup"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
-	list_reagents = list("nutriment" = 8, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/beet/New()
 	..()
@@ -150,3 +159,18 @@
 	bonus_reagents = list("nutriment" = 1, "tomatojuice" = 5, "vitamin" = 5)
 	list_reagents = list("nutriment" = 10, "oculine" = 5, "tomatojuice" = 5, "vitamin" = 5)
 	bitesize = 7
+	volume = 100
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/sweetpotato
+	name = "sweet potato soup"
+	desc = "Delicious sweet potato in soup form."
+	icon_state = "sweetpotatosoup"
+	bonus_reagents = list("nutriment" = 4, "vitamin" = 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/beet/red
+	name = "red beet soup"
+	desc = "Quite a delicacy."
+	icon_state = "redbeetsoup"
+	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
+
+

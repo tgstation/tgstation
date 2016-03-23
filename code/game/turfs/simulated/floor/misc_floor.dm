@@ -1,18 +1,3 @@
-/* In this file:
- *
- * Commemorative Plaque
- * Vault floor
- * Vault wall (why)
- * Blue grid
- * Green grid
- * Shuttle floor
- * Beach
- * Ocean
- * Iron Sand
- * Snow
- * High-traction
- */
-
 /turf/simulated/floor/goonplaque
 	name = "Commemorative Plaque"
 	icon_state = "plaque"
@@ -28,95 +13,88 @@
 	icon_state = "bcircuit"
 	floor_tile = /obj/item/stack/tile/plasteel
 
+/turf/simulated/floor/bluegrid/New()
+	..()
+	nuke_tiles += src
+
+/turf/simulated/floor/bluegrid/Destroy()
+	nuke_tiles -= src
+	return ..()
+
 /turf/simulated/floor/greengrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
 	floor_tile = /obj/item/stack/tile/plasteel
 
-/turf/simulated/shuttle
-	name = "shuttle"
-	icon = 'icons/turf/shuttle.dmi'
-	thermal_conductivity = 0.05
-	heat_capacity = 0
-	layer = 2
-
-/turf/simulated/shuttle/wall
-	name = "wall"
-	icon_state = "wall1"
-	opacity = 1
-	density = 1
-	blocks_air = 1
-
-//sub-type to be used for interior shuttle walls
-//won't get an underlay of the destination turf on shuttle move
-/turf/simulated/shuttle/wall/interior/copyTurf(turf/T)
-	if(T.type != type)
-		T = new type(T)
-		if(underlays.len)
-			T.underlays = underlays
-	if(T.icon_state != icon_state)
-		T.icon_state = icon_state
-	if(T.icon != icon)
-		T.icon = icon
-	if(T.color != color)
-		T.color = color
-	if(T.dir != dir)
-		T.dir = dir
-	return T
-
-/turf/simulated/shuttle/floor
-	name = "floor"
-	icon_state = "floor"
-
-/turf/simulated/shuttle/plating
-	name = "plating"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "plating"
-
-/turf/simulated/shuttle/plating/airless
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
-
-/turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
-	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.
-	icon_state = "floor4"
-
-/turf/simulated/floor/beach
+/turf/simulated/floor/plating/beach
 	name = "Beach"
 	icon = 'icons/misc/beach.dmi'
-	ignoredirt = 1
 
-/turf/simulated/floor/beach/ex_act(severity, target)
+/turf/simulated/floor/plating/beach/ex_act(severity, target)
 	contents_explosion(severity, target)
 
-/turf/simulated/floor/beach/sand
+/turf/simulated/floor/plating/beach/sand
 	name = "Sand"
 	icon_state = "sand"
+	baseturf = /turf/simulated/floor/plating/beach/sand
 
-/turf/simulated/floor/beach/coastline
+/turf/simulated/floor/plating/beach/coastline_t
 	name = "Coastline"
-	icon = 'icons/misc/beach2.dmi'
-	icon_state = "sandwater"
+	icon_state = "sandwater_t"
+	baseturf = /turf/simulated/floor/plating/beach/coastline_t
 
-/turf/simulated/floor/beach/water
+/turf/simulated/floor/plating/beach/coastline_b
+	name = "Coastline"
+	icon_state = "sandwater_b"
+	baseturf = /turf/simulated/floor/plating/beach/coastline_b
+
+/turf/simulated/floor/plating/beach/water
 	name = "Water"
 	icon_state = "water"
+	baseturf = /turf/simulated/floor/plating/beach/water
 
 /turf/simulated/floor/plating/ironsand/New()
 	..()
 	name = "Iron Sand"
 	icon_state = "ironsand[rand(1,15)]"
-	ignoredirt = 1
 
-/turf/simulated/floor/plating/snow
-	name = "snow"
+/turf/simulated/floor/plating/ironsand/burn_tile()
+	return
+
+/turf/simulated/floor/plating/ice
+	name = "ice sheet"
+	desc = "A sheet of solid ice. Looks slippery."
 	icon = 'icons/turf/snow.dmi'
-	icon_state = "snow"
-	ignoredirt = 1
+	icon_state = "ice"
+	temperature = 180
+	baseturf = /turf/simulated/floor/plating/ice
+	slowdown = 1
+	wet = TURF_WET_ICE
 
-/turf/simulated/floor/plating/snow/ex_act(severity, target)
-	contents_explosion(severity, target)
+/turf/simulated/floor/plating/ice/colder
+	temperature = 140
+
+/turf/simulated/floor/plating/ice/temperate
+	temperature = 255.37
+
+/turf/simulated/floor/plating/ice/break_tile()
+	return
+
+/turf/simulated/floor/plating/ice/burn_tile()
+	return
+
+/turf/simulated/floor/plating/snowed
+	name = "snowed-over plating"
+	desc = "A section of plating covered in a light layer of snow."
+	icon = 'icons/turf/snow.dmi'
+	icon_state = "snowplating"
+	temperature = 180
+
+/turf/simulated/floor/plating/snowed/colder
+	temperature = 140
+
+/turf/simulated/floor/plating/snowed/temperate
+	temperature = 255.37
 
 /turf/simulated/floor/noslip
 	name = "high-traction floor"
@@ -124,6 +102,7 @@
 	floor_tile = /obj/item/stack/tile/noslip
 	broken_states = list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
 	burnt_states = list("noslip-scorched1","noslip-scorched2")
+	slowdown = -0.3
 
 /turf/simulated/floor/noslip/MakeSlippery()
 	return

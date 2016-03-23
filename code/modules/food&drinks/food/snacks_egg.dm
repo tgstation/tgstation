@@ -18,12 +18,13 @@
 	filling_color = "#F0E68C"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
-	..()
-	new/obj/effect/decal/cleanable/egg_smudge(src.loc)
-	reagents.reaction(hit_atom, TOUCH)
-	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
+	if(!..()) //was it caught by a mob?
+		var/turf/T = get_turf(hit_atom)
+		new/obj/effect/decal/cleanable/egg_smudge(T)
+		reagents.reaction(hit_atom, TOUCH)
+		qdel(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype( W, /obj/item/toy/crayon ))
 		var/obj/item/toy/crayon/C = W
 		var/clr = C.colourName
@@ -98,18 +99,20 @@
 	w_class = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
-		if(W.icon_state == "forkloaded")
-			user << "<span class='notice'>You already have omelette on your fork.</span>"
-			return
-		W.icon_state = "forkloaded"
-		user.visible_message( \
-			"<span class='notice'>[user] takes a piece of omelette with their fork!</span>", \
-			"<span class='notice'>You take a piece of omelette with your fork!</span>" \
-		)
-		reagents.remove_reagent("nutriment", 1)
-		if(reagents.total_volume <= 0)
-			qdel(src)
+	if(istype(W,/obj/item/weapon/kitchen/fork))
+		var/obj/item/weapon/kitchen/fork/F = W
+		if(F.forkload)
+			user << "<span class='warning'>You already have omelette on your fork!</span>"
+		else
+			F.icon_state = "forkloaded"
+			user.visible_message("[user] takes a piece of omelette with their fork!", \
+				"<span class='notice'>You take a piece of omelette with your fork.</span>")
+
+			var/datum/reagent/R = pick(reagents.reagent_list)
+			reagents.remove_reagent(R.id, 1)
+			F.forkload = R
+			if(reagents.total_volume <= 0)
+				qdel(src)
 		return
 	..()
 

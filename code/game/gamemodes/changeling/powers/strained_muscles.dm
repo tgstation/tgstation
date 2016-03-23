@@ -11,7 +11,7 @@
 	var/stacks = 0 //Increments every 5 seconds; damage increases over time
 	var/active = 0 //Whether or not you are a hedgehog
 
-/obj/effect/proc_holder/changeling/strained_muscles/sting_action(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/strained_muscles/sting_action(mob/living/carbon/user)
 	active = !active
 	if(active)
 		user << "<span class='notice'>Our muscles tense and strengthen.</span>"

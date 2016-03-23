@@ -9,13 +9,14 @@
 /obj/screen
 	name = ""
 	icon = 'icons/mob/screen_gen.dmi'
-	layer = 20.0
+	layer = 20
 	unacidable = 1
+	appearance_flags = APPEARANCE_UI
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 
 /obj/screen/Destroy()
 	master = null
-	..()
+	return ..()
 
 
 /obj/screen/text
@@ -40,32 +41,6 @@
 			var/obj/item/weapon/storage/S = master
 			S.close(usr)
 	return 1
-
-
-/obj/screen/item_action
-	var/obj/item/owner
-
-/obj/screen/item_action/Click()
-	if(!usr || !owner)
-		return 1
-	if(usr.next_move >= world.time)
-		return
-
-	if(!owner.action_button_is_hands_free && (usr.restrained() || usr.stunned || usr.lying))
-		return 1
-
-	if(usr.stat)
-		return 1
-
-	if(!(owner in usr))
-		return 1
-
-	owner.ui_action_click()
-	return 1
-
-//This is the proc used to update all the action buttons. It just returns for all mob types except humans.
-/mob/proc/update_action_buttons()
-	return
 
 
 /obj/screen/drop
@@ -94,6 +69,7 @@
 /obj/screen/act_intent
 	name = "intent"
 	icon_state = "help"
+	screen_loc = ui_acti
 
 /obj/screen/act_intent/Click(location, control, params)
 	if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
@@ -116,53 +92,75 @@
 	else
 		usr.a_intent_change("right")
 
+/obj/screen/act_intent/alien
+	icon = 'icons/mob/screen_alien.dmi'
+	screen_loc = ui_movi
+
+/obj/screen/act_intent/robot
+	icon = 'icons/mob/screen_cyborg.dmi'
+	screen_loc = ui_borg_intents
+
 /obj/screen/internals
 	name = "toggle internals"
 	icon_state = "internal0"
+	screen_loc = ui_internal
 
 /obj/screen/internals/Click()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		if(!C.incapacitated())
-			if(C.internal)
-				C.internal = null
-				C << "<span class='notice'>No longer running on internals.</span>"
-				icon_state = "internal0"
+	if(!iscarbon(usr))
+		return
+	var/mob/living/carbon/C = usr
+	if(C.incapacitated())
+		return
+
+	if(C.internal)
+		C.internal = null
+		C << "<span class='notice'>You are no longer running on internals.</span>"
+		icon_state = "internal0"
+	else
+		if(!C.getorganslot("breathing_tube"))
+			if(!istype(C.wear_mask, /obj/item/clothing/mask))
+				C << "<span class='warning'>You are not wearing an internals mask!</span>"
+				return 1
 			else
-				if(!istype(C.wear_mask, /obj/item/clothing/mask))
-					C << "<span class='notice'>You are not wearing a mask.</span>"
-					return 1
-				else
-					if(istype(C.l_hand, /obj/item/weapon/tank))
-						C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
-						C.internal = C.l_hand
-					else if(istype(C.r_hand, /obj/item/weapon/tank))
-						C << "<span class='notice'>You are now running on internals from the [C.r_hand] on your right hand.</span>"
-						C.internal = C.r_hand
-					else if(ishuman(C))
-						var/mob/living/carbon/human/H = C
-						if(istype(H.s_store, /obj/item/weapon/tank))
-							H << "<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>"
-							H.internal = H.s_store
-						else if(istype(H.belt, /obj/item/weapon/tank))
-							H << "<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>"
-							H.internal = H.belt
-						else if(istype(H.l_store, /obj/item/weapon/tank))
-							H << "<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>"
-							H.internal = H.l_store
-						else if(istype(H.r_store, /obj/item/weapon/tank))
-							H << "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>"
-							H.internal = H.r_store
+				var/obj/item/clothing/mask/M = C.wear_mask
+				if(M.mask_adjusted) // if mask on face but pushed down
+					M.adjustmask(C) // adjust it back
+				if( !(M.flags & MASKINTERNALS) )
+					C << "<span class='warning'>You are not wearing an internals mask!</span>"
+					return
 
-					//Seperate so CO2 jetpacks are a little less cumbersome.
-					if(!C.internal && istype(C.back, /obj/item/weapon/tank))
-						C << "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>"
-						C.internal = C.back
+		if(istype(C.l_hand, /obj/item/weapon/tank))
+			C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
+			C.internal = C.l_hand
+		else if(istype(C.r_hand, /obj/item/weapon/tank))
+			C << "<span class='notice'>You are now running on internals from the [C.r_hand] on your right hand.</span>"
+			C.internal = C.r_hand
+		else if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(istype(H.s_store, /obj/item/weapon/tank))
+				H << "<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>"
+				H.internal = H.s_store
+			else if(istype(H.belt, /obj/item/weapon/tank))
+				H << "<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>"
+				H.internal = H.belt
+			else if(istype(H.l_store, /obj/item/weapon/tank))
+				H << "<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>"
+				H.internal = H.l_store
+			else if(istype(H.r_store, /obj/item/weapon/tank))
+				H << "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>"
+				H.internal = H.r_store
 
-					if(C.internal)
-						icon_state = "internal1"
-					else
-						C << "<span class='notice'>You don't have an oxygen tank.</span>"
+		//Seperate so CO2 jetpacks are a little less cumbersome.
+		if(!C.internal && istype(C.back, /obj/item/weapon/tank))
+			C << "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>"
+			C.internal = C.back
+
+		if(C.internal)
+			icon_state = "internal1"
+		else
+			C << "<span class='warning'>You don't have an oxygen tank!</span>"
+			return
+	C.update_action_buttons_icon()
 
 /obj/screen/mov_intent
 	name = "run/walk toggle"
@@ -287,23 +285,24 @@
 							selecting = "eyes"
 
 	if(old_selecting != selecting)
-		update_icon()
+		update_icon(usr)
 	return 1
 
-/obj/screen/zone_sel/update_icon()
+/obj/screen/zone_sel/update_icon(mob/user)
 	overlays.Cut()
 	overlays += image('icons/mob/screen_gen.dmi', "[selecting]")
+	user.zone_selected = selecting
 
+/obj/screen/zone_sel/alien
+	icon = 'icons/mob/screen_alien.dmi'
 
-/obj/screen/Click(location, control, params)
-	if(!usr)	return 1
+/obj/screen/zone_sel/alien/update_icon(mob/user)
+	overlays.Cut()
+	overlays += image('icons/mob/screen_alien.dmi', "[selecting]")
+	user.zone_selected = selecting
 
-	if(name == "Reset Machine") //I don't know what this is, CTRL+F has the only entry right here in this file, so I'm going to leave it in case it is something important
-		usr.unset_machine()
-	else
-		return 0
-
-	return 1
+/obj/screen/zone_sel/robot
+	icon = 'icons/mob/screen_cyborg.dmi'
 
 /obj/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -337,3 +336,71 @@
 				usr.update_inv_l_hand(0)
 				usr.update_inv_r_hand(0)
 	return 1
+
+/obj/screen/flash
+	name = "flash"
+	icon_state = "blank"
+	blend_mode = BLEND_ADD
+	screen_loc = "WEST,SOUTH to EAST,NORTH"
+	layer = 17
+
+/obj/screen/damageoverlay
+	icon = 'icons/mob/screen_full.dmi'
+	icon_state = "oxydamageoverlay0"
+	name = "dmg"
+	blend_mode = BLEND_MULTIPLY
+	screen_loc = "CENTER-7,CENTER-7"
+	mouse_opacity = 0
+	layer = 18.1 //The black screen overlay sets layer to 18 to display it, this one has to be just on top.
+
+/obj/screen/healths
+	name = "health"
+	icon_state = "health0"
+	screen_loc = ui_health
+
+/obj/screen/healths/alien
+	icon = 'icons/mob/screen_alien.dmi'
+	screen_loc = ui_alien_health
+
+/obj/screen/healths/robot
+	icon = 'icons/mob/screen_cyborg.dmi'
+	screen_loc = ui_borg_health
+
+/obj/screen/healths/deity
+	name = "Nexus Health"
+	icon_state = "deity_nexus"
+	screen_loc = ui_deityhealth
+
+/obj/screen/healths/blob
+	name = "blob health"
+	icon_state = "block"
+	screen_loc = ui_internal
+	mouse_opacity = 0
+
+/obj/screen/healths/blob/naut
+	name = "health"
+	icon = 'icons/mob/blob.dmi'
+	icon_state = "nauthealth"
+
+/obj/screen/healths/blob/naut/core
+	name = "overmind health"
+	screen_loc = ui_health
+	icon_state = "corehealth"
+
+/obj/screen/healths/guardian
+	name = "summoner health"
+	icon = 'icons/mob/guardian.dmi'
+	icon_state = "base"
+	screen_loc = ui_health
+	mouse_opacity = 0
+
+/obj/screen/healths/revenant
+	name = "essence"
+	icon = 'icons/mob/actions.dmi'
+	icon_state = "bg_revenant"
+	screen_loc = ui_health
+	mouse_opacity = 0
+
+/obj/screen/healthdoll
+	name = "health doll"
+	screen_loc = ui_healthdoll
