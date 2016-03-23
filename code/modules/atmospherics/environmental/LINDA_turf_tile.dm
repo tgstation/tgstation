@@ -325,7 +325,8 @@
 
 	for(var/turf/simulated/T in turf_list)
 		var/T_gases = T.air.gases
-		for(var/id in T_gases)
+		for(var/id in A_gases)
+			T.air.assert_gas(id)
 			T_gases[id][MOLES] = A_gases[id][MOLES]/turf_list.len
 
 		T.update_visuals()
