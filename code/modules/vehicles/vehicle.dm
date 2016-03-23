@@ -12,7 +12,7 @@
 	var/next_vehicle_move = 0 //used for move delays
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/auto_door_open = TRUE
-	var/view_range = world.view
+	var/view_range = 7
 
 	//Pixels
 	var/generic_pixel_x = 0 //All dirs show this pixel_x for the driver
