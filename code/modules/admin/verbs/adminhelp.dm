@@ -160,7 +160,7 @@
 		return
 
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>"
+		src << "<span class='danger'>Error: Admin-PM: You cannot send mentorhelps (Muted).</span>"
 		return
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
@@ -184,7 +184,7 @@
 
 	for(var/client/X in admins)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
-			X << 'sound/effects/adminhelp.ogg'
+			X << 'sound/machines/twobeep.ogg'
 		X << msg
 
 	src << "<span class='adminnotice'>PM to-<b>Mentors</b>: [original_msg]</span>"
