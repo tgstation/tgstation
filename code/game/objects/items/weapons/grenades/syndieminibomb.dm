@@ -28,7 +28,7 @@
 	icon_state = "frag"
 
 /obj/item/weapon/grenade/gluon
-    desc = "An advanced grenade that releases a harmful stream of gluons inducing radiation in those nearby."
+    desc = "An advanced grenade that releases a harmful stream of gluons inducing radiation in those nearby. These gluon streams will also make victims feel exhausted, and induce shivering. This extreme coldness will also likely wet any nearby floors."
     name = "gluon grenade"
     icon = 'icons/obj/grenade.dmi'
     icon_state = "bluefrag"
