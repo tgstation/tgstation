@@ -330,6 +330,14 @@
 
 	melee_damage_type = "BRAIN"
 
+/mob/living/simple_animal/hostile/retaliate/cluwne/goblin/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W,/obj/item/weapon/pen)) //Renaming
+		var/n_name = copytext(sanitize(input(user, "What would you like to name this clown goblin?", "Clown Goblin Name", null) as text|null), 1, MAX_NAME_LEN*3)
+		if(n_name && Adjacent(user) && !user.stat)
+			name = "[n_name]"
+		return
+	..()
+
 /mob/living/simple_animal/hostile/retaliate/cluwne/goblin/Die()
 	..()
 	new /obj/item/clothing/mask/gas/clown_hat(src.loc)
