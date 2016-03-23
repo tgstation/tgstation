@@ -593,4 +593,3 @@
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
-	new /obj/item/ammo_casing/shotgun/beanbag(src)
