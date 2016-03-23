@@ -150,7 +150,7 @@
 		if(!can_trigger_gun(L))
 			return
 	
-	if(saftyon == 1)
+	if(safetyon == 1)
 		shoot_with_empty_chamber(user)
 		return
 	
