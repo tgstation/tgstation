@@ -89,7 +89,10 @@
 		user << "It has [pin] installed."
 	else
 		user << "It doesn't have a firing pin installed, and won't fire."
-
+	if(safetyposition == 1)
+		user << "The safety lever points to SAFE."
+	else
+		user << "The safety lever points to FIRE."
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -98,8 +101,6 @@
 //check if there's enough ammo/energy/whatever to shoot one time
 //i.e if clicking would make it shoot
 /obj/item/weapon/gun/proc/can_shoot()
-	if(saftyon = 1)
-		return 0
 	return 1
 
 
@@ -148,7 +149,11 @@
 		var/mob/living/L = user
 		if(!can_trigger_gun(L))
 			return
-
+	
+	if(saftyon == 1)
+		shoot_with_empty_chamber(user)
+		return
+	
 	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)
 		return
@@ -299,12 +304,12 @@ obj/item/weapon/gun/proc/newshot()
 		if(istype(I, /obj/item/weapon/pen))
 			rename_gun(user)
 
-	if(istype(I, obj/item/weapon/wirecutters))
+	if(istype(I, /obj/item/weapon/wirecutters))
 		if(safetybroken == 0)
-			user << "<span class='notice'>You disconect the safety leaver from the internal mechanism.</span>"
+			user << "<span class='notice'>You disconnect the safety lever from the internal mechanism.</span>"
 			safetybroken = 1
 		else
-			user << "<span class='notice'>You reconect the safety leaver to the internal mechanism.</span>"
+			user << "<span class='notice'>You reconnect the safety lever to the internal mechanism.</span>"
 			safetybroken = 0
 	..()
 
@@ -377,7 +382,7 @@ obj/item/weapon/gun/proc/newshot()
 	if(unique_reskin && !reskinned && loc == user)
 		reskin_gun(user)
 		return
-	if(safetyposition = 1)
+	if(safetyposition == 1)
 		user << "<span class='warning'>You flip the safety to FIRE.</span>"
 		safetyposition = 0
 		if(safetybroken == 0)
