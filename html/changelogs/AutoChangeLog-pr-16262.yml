@@ -1,8 +1,0 @@
-author: RemieRichards
-delete-after: True
-changes: 
-  - rscadd: "BEES"
-  - rscadd: "Hydroponics can now manage bee colonies, bees produce honeycombs that can be grinded to obtain honey, a decent nutriment+healing chemical"
-  - rscadd: "Hydroponics can inject a queen bee with a syringe of a reagent to alter her DNA to match that reagent, meaning all honeycombs produced will contain that reagent in small amounts"
-  - rscadd: "Bees with reagents will attack with that reagent"
-  - rscadd: "BEES"
