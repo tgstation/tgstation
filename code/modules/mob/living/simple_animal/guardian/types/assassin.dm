@@ -1,11 +1,11 @@
 //Assassin
 /mob/living/simple_animal/hostile/guardian/assassin
-	melee_damage_lower = 20
-	melee_damage_upper = 20
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	playstyle_string = "As an assassin type you do high damage and have no damage resistance, but can enter stealth, increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage."
+	playstyle_string = "As an assassin type you do low damage and have no damage resistance, but can enter stealth, massively increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage."
 	magic_fluff_string = "..And draw the Space Ninja, a lethal, invisible assassin."
 	tech_fluff_string = "Boot sequence complete. Assassin modules loaded. Holoparasite swarm online."
 	var/toggle = FALSE
@@ -57,12 +57,12 @@
 				stealthcooldown = world.time + initial(stealthcooldown) //we were forced out of stealth and go on cooldown
 			toggle = FALSE
 		else if(stealthcooldown <= world.time)
-			melee_damage_lower = 40
-			melee_damage_upper = 40
+			melee_damage_lower = 60
+			melee_damage_upper = 60
 			armour_penetration = 100
 			environment_smash = 0
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
-			alpha = 10
+			alpha = 15
 			if(!forced)
 				src << "<span class='danger'><B>You enter stealth, empowering your next attack.</span></B>"
 			updatestealthalert()
