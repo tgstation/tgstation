@@ -64,7 +64,7 @@ var/list/shipping_categories = list("Clothing","Medical","Exports","Machinery","
 		if (S)
 			buy_object(S, usr)
 	if (href_list["switch_category"])
-		var/C = locate(href_list["switch_category"])
+		var/C = href_list["switch_category"]
 		if (C)
 			current_category = C
 
