@@ -23,8 +23,6 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/points = 5000						//number of trade-points we have
 	var/points_per_manifest = 200			//points gained per manifest returned
 	var/points_per_crate = 500			//points gained per crate returned
-	var/points_per_intel = 25000			//points gained per intel returned
-	var/points_per_plasma = 500			//points gained per plasma returned
 	var/points_per_design = 2500			//points gained per max reliability research design returned (only for initilally unreliable designs)
 	var/centcom_message = ""			//Remarks from Centcom on how well you checked the last order.
 	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentComm, associated with their potencies
@@ -35,6 +33,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/orderhistory = list()
+
+	var/list/shipping_datums = list()
+	var/list/shipping_logs = list()
 
 	var/datum/round_event/shuttle_loan/shuttle_loan
 
@@ -68,6 +69,65 @@ var/datum/subsystem/shuttle/SSshuttle
 			P.check()
 			continue
 		mobile.Remove(thing)
+	if(prob(1) && prob(10))
+		fluctuate()
+	if(prob(1) && prob(10))
+		var/datum/shipping/S = pick(shipping_datums)
+		if(S.allow_import) // no more shortages of syndicate documents
+			var/event = pick(1,2)
+			var/percentage = rand(25,75)
+			switch(event)
+				if(1)
+					priority_announce("Crew, there's a galaxy wide shortage of [S.name]. The Space Trade Commission is reporting prices to be going up by [percentage]%, and we recommend exporting.")
+					var/temp = (percentage / 100) * S.value
+					var/temp_amt = round((percentage / 100) * S.amount_on_market)
+					S.amount_on_market -= temp_amt
+					S.add_value(temp)
+				if(2)
+					priority_announce("Crew, there's a galaxy wide surplus of [S.name]. The Space Trade Commission is reporting prices to be going down by [percentage]%, and we recommend importing.")
+					var/temp = (percentage / 100) * S.value
+					var/temp_amt = round((percentage / 100) * S.amount_on_market)
+					S.amount_on_market += temp_amt
+					S.lower_value(temp)
+
+/datum/subsystem/shuttle/proc/fluctuate()
+	for(var/D in shipping_datums)
+		var/datum/shipping/S = D
+		switch(pick(1,2))
+			if(1)
+				S.add_value(rand(1,5))
+				if(S.allow_import)
+					S.amount_on_market += rand(1,5)
+			if(2)
+				S.lower_value(rand(1,5))
+				if(S.allow_import)
+					S.amount_on_market -= rand(1,5)
+
+/datum/subsystem/shuttle/proc/add_export_logs(var/datum/shipping/S)
+	var/datum/shipping_log/export/L = new /datum/shipping_log/export
+	L.item_name = S.name
+	L.profit_per_unit = S.value
+	L.amount_sold = S.amount_sold
+	L.total_profit = S.profit_made
+	S.amount_sold = 0
+	S.profit_made = 0
+	L.time = time2text(world.timeofday, "hh:mm")
+	shipping_logs += L
+
+/datum/subsystem/shuttle/proc/add_import_logs(var/datum/shipping/S, var/amount, var/credits, var/name)
+	var/datum/shipping_log/import/L = new /datum/shipping_log/import
+	L.item_name = S.name
+	L.cost_per_unit = S.value
+	L.amount_imported = amount
+	L.amount_spent = credits
+	L.user = name
+	L.time = time2text(world.timeofday, "hh:mm")
+	shipping_logs += L
+
+/datum/subsystem/shuttle/proc/has_shipping_datum(var/atom/movable/O)
+	for(var/datum/shipping/S in shipping_datums)
+		if(istype(S.sell_type, O.type))
+			return S
 
 /datum/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
