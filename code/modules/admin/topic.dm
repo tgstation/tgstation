@@ -133,6 +133,11 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create a shadowling. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a shadowling.")
+			if("17")
+				message_admins("[key_name(usr)] created an ERP squad.")
+				log_admin("[key_name(usr)] created an ERP squad.")
+				if(!src.makeERPsquad())
+					usr << "<span class='danger'>Fortunatly there were not enough candidates available.</span>"
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))

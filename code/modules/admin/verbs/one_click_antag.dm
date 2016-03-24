@@ -23,6 +23,7 @@
 		<a href='?src=\ref[src];makeAntag=13'>Make Centcom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=14'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=15'>Make Revenant (Requires Ghost)</a><br>
+		<a href='?src=\ref[src];makeAntag=17'>Make ERP Squad (Requires Sexy Ghosts)</a><br>
 		"}
 
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
@@ -542,6 +543,77 @@
 /datum/admins/proc/makeAbductorTeam()
 	new /datum/round_event/abductor
 	return 1
+
+/datum/admins/proc/makeERPsquad()
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for an elite Nanotrasen ERP Squad being sent in?", "deathsquad", null)
+
+	if(candidates.len)
+		//Pick the unlucky players
+		var/numerps = min(5,candidates.len) //How many erpers to spawn
+		var/list/spawnpoints = latejoin
+		while(numerps && spawnpoints.len && candidates.len)
+			var/spawnloc = spawnpoints[1]
+			var/mob/dead/observer/chosen_candidate = pick(candidates)
+			candidates -= chosen_candidate
+			if(!chosen_candidate.key)
+				continue
+
+			//Spawn and equip the erper
+			var/mob/living/carbon/human/ERPOperative = new(spawnloc)
+			var/list/the_big_list_of_hookers = list("Abriana","Aira","Africa","Alabama","Alana","Alaya","Alecia","Alicia","Alex","Alexis","Alexa","Alexandra","Alexandria","Alison","Allura","Ally","Alpha","Alyssa","Amanda","Amaze","Amber","Amelia","Amethyst","Analis","Anastasia","Andra","Andrea","Andromeda","Angel","Angela","Angelique","Angie","Anise","Anisette","Anna","Annabella","Annie","Annika","Antoinette","Aphrodite","April","Ariel","Aries","Ashlee","Ashley","Ashlyn","Asia","Athena","Atlanta","Aubra","Aubrey","Audra","Aura","Aurora","Austin","Autumn","Ava","Azrael","Baby","Bailey","Bambi","Barbie","Beau","Beautiful","Becky","Bede","Belinda","Belle","Berry","Bethany","Bianca","Bindi","Bird","Bo","Bolero","Blade","Blake","Blanca","Blaze","Blondie","Blossom","Blue","Blush","Bobbie","Bordeaux","Bountiful","Brandy","Brandi","Breeze","Breezy","Brianna","Bridget","Brie","Brilliant","Brita","Britain","Brittany","Bronte","Bubbles","Buffy","Bunny","Burgundie","Butterfly","Callie","Cameo","Camille","Candi","Candice","Candy","Candee","Carmel","Carmela","Carmen","Carrie","Cashmere","Champagne","Chance","Chanel","Chantal","Chantelle","Chantilly","Chantiqua","Chaos","Charity","Charlie","Charlotte","Chastity","Cherie","Cherry","Cheyenne","China","Chloe","Chocolate","Chrissy","Christian","Christi","Lynn","Christy","Christine","Chynna","Cecilia","Cinder","Cinnamon","CJ","Cleo","Cleopatra","Clover","Coco","Cody","Constance","Contessa","Cookie","Crystal","Cuddles","Cynara","Cynder","Cyndi","Dagny","Dahlia","Daisy","Dakota","Dallas","Damiana","Dana","Danger","Danielle","Danni","Daphne","Darby","Darkness","Darla","Dawn","Decadence","Dee","Ann","Deidre","Deja","Delicious","Delight","Delilah","Delta","Deluxe","Denver","Desert","Rose","Desire","Desiree","Destiny","Devon","Devyn","Dharma","Diablo","Diamond","Diana","Dido","Diva","Divine","Divinity","Dixie","Dolly","Dominique","Dream","Duchess","Dusty","Dylan","Ebony","Echo","Ecstasy","Eden","Elan","Ella","Elle","Electra","Eli","Eliza","Elizabeth","Elvira","Elyse","Ember","Emerald","Emergency","Emily","Empress","Envy","Epiphany","Erotica","Esme","Eva","Evie","Eve","Fable","Fabulous","Faith","Fallon","Fame","Fantasia","Fantasy","Farrah","Fate","Fawn","Fawna","Fawnia","Feather","Felicia","Felicity","Felony","Ferrari","Fern","Fetish","Fiona","Fire","Francesca","Flame","Foxxxy","Frankie","Frosty","Gabrielle","Gabriella","Gaia","Gem","Gemma","Gemini","Genie","Gentle","Georgia","Gia","Giggles","Gigi","Gillian","Ginger","Giselle","Glamour","Glitter","Glory","Godiva","Grace","Gracious","Gypsy","Hanna","Harley","Harlow","Harmony","Heather","Heaven","Heavenleigh","Heavenly","Helena","Hillary","Holiday","Holly","Honey","Hope","Houston","Hyacinth","Ianna","Ice","Iesha","Illusion","Imagine","India","Indigo","Inferno","Infinity","Ireland","Irene","Isabel","Isabella","Isis","Ivory","Ivy","Izzy","Jade","Jaguar","Jamie","Janelle","Jasmine","Jasmyn","Jeanette","Jeanie","Jenna","Jenny","Jessica","Jessie","Jewel","Jewels","Jezebel","Jill","Jinx","JJ","Joetta","Joelle","Jolene","Jordan","Journey","Joy","Juicy","Julia","Julie","Juliet","June","Juno","Kaia","Kailli","Kara","Karla","Kashmir","Kat","Kathleen","Kayla","Kelli","Kenya","Karma","Kira","Kitten","Kitty","Krista","Kristen","Kristi","Krystal","Kylie","Kyra","Lace","Lacy","Lainie","Lakota","Lana","Latifah","Laura","Layla","Leah","Leather","Leggs","Leia","Leigh","Lexie","Licorice","Lightning","Lila","Lilith","Lily","Lindsey","Lisa","Lita","Liza","Logan","Lola","London","Loni","Lori","Love","Lucinda","Lucky","Lucretia","Lumina","Luna","Luscious","Luxury","Luxxie","Macy","Madeline","Madison","Magdalene","Magenta","Maggie","Magic","Magnolia","Malia","Malibu","Malice","Mandy","Manhattan","Margot","Maria","Mariah","Mariana","Marilyn","Marina","Marla","Marlena","Marti","Mary","Ann","Mary","Jane","Maxxx","May","McKenzie","Medusa","Megan","Melano","Melanie","Melinda","Melody","Melonie","Mercury","Merlot","Merlyn","Michelle","Mikhaila","Mikki","Mindee","Mindy","Mink","Mistress","Misty","Mercedes","Mercy","Midnight","Miracle","Mocha","Molly","Mona","Monaco","Monica","Monique","Montana","Morgan","Muse","Music","Mystery","Mystique","Nadia","Nanette","Nastasia","Nasty","Natalia","Natalie","Natasha","Nica","Nicole","Nikita","Nikki","Niko","Nina","Nixie","Noel","Nola","Norah","Notorious","Octavia","Olive","Olivia","Olympia","Omega","Opal","Ophelia","Paige","Pallas","Pamela","Pandemonium","Pandora","Pansy","Panther","Paradise","Paris","Passion","Paula","Peaches","Peanut","Pearl","Pebbles","Penelope","Penny","Pepper","Persephone","Petal","Peyton","Phoenix","Piper","Pisces","Pixie","Poison","Porsche","Power","Precious","Princess","Puppy","Queen","Quinn","Rachel","Rain","Ramona","Raven","Reba","Rebecca","Red","Renee","Rhiannon","Ria","Rio","Rita","River","Robyn","Rocki","Roma","Rose","Rosemary","Rosie","Roxanna","Roxanne","Ruby","Sable","Sabrina","Sachet","Saffron","Sage","Salome","Samantha","Sandi","Sapphire","Sarah","Sarasota","Saraya","Sasha","Sashay","Sassparilla","Sassy","Satan","Satin","Sativa","Savannah","Scandal","Scarlet","Selena","September","Septiva","Serena","Serenity","Seven","Shana","Shane","Shannon","Shawna","Shay","Shea","Shelby","Shelly","Sheree","Sherri","Sherry","Shine","Siam","Siena","Sierra","Silk","Silky","Silver","Sin","Simone","Siren","Skye","Sloane","Smoky","Soleil","Sonia","Song","Sorority","Spice","Spider","Spring","Staci","Stacia","Starr","Stevie","Storm","Stormy","Strawberry","Suavecita","Sublime","Sugar","Summer","Sundae","Sundance","Sunday","Sunni","Sunny","Sunshine","Sunset","Susanna","Suzanne","Swallow","Sweet","Sweetness","Tabitha","Taffy","Talia","Tallulah","Tamar","Tamara","Tammi","Tane","Tanya","Tara","Tasha","Tasty","Tatiana","Tawni","Taylor","Temper","Tempest","Temptation","Terra","Terror","Tess","Tessa","Texxxas","Thai","Thia","Thumper","Thyme","Tia","Tickle","Tiffany","Tiger","Tigra","Tika","Time","Tina","Tinker","Tisha","Toffee","Tommy","Toni","Topaz","Tori","Traci","Tracy","Tricia","Trinity","Trip","Tristana","Trixie","Trouble","Tuesday","Tyffany","Tyler","Tyra","Unique","Utopia","Valentina","Valentine","Vandal","Vanessa","Vanity","Velvet","Venus","Veronica","Viagra","Victoria","Victory","Viola","Violet","Viper","Virginia","Virgo","Vision","Vivienne","Vixen","Vonda","Wanda","Wednesday","Wendy","Whimsy","Whisky","Whisper","Willow","Windy","Winter","Wish","Wyndi","Xanadu","Xanthe","Xaviera","Xena","Xiola","Xtase","Yasmin","Yolanda","Yvette","Yvonne","Zena","Zenith","Zinnia","Zoe","Zoey","Zora")
+			chosen_candidate.client.prefs.copy_to(ERPOperative)
+			ERPOperative.gender = FEMALE
+			ERPOperative.hair_style = "Floorlength Braid"
+			ERPOperative.facial_hair_style = "Shaved"
+			ERPOperative.underwear = "Ladies Kinky"
+			ERPOperative.socks = "Nude"
+			ERPOperative.undershirt = "Nude"
+			ERPOperative.lip_style = "lipstick"
+			ERPOperative.lip_color = pick("red", "purple", "jade", "black")
+			ERPOperative.dna.update_dna_identity()
+			ERPOperative.dna.species.specflags |= HAIR //Everyone's getting a braid, EVERYONE
+			ERPOperative.update_body()
+			ERPOperative.update_hair()
+			ERPOperative.real_name = "[pick(the_big_list_of_hookers)] [pick(last_names)]"
+			ERPOperative.key = chosen_candidate.key
+			ERPOperative.mind.assigned_role = "ERP"
+
+			//Assign antag status and the mission
+			ticker.mode.traitors += ERPOperative.mind
+			ERPOperative.mind.special_role = "ert"
+			var/datum/objective/missionobj = new
+			missionobj.owner = ERPOperative.mind
+			missionobj.explanation_text = "Titillate the crew."
+			missionobj.completed = 1
+			ERPOperative.mind.objectives += missionobj
+			var/datum/objective/dontgetbanned/banana = new
+			banana.owner = ERPOperative.mind
+			ERPOperative.mind.objectives += banana
+
+			//Greet the ERPer
+			ERPOperative << "<B><font size=3 color=red>You are an ERP squadmate.</font></B>"
+			var/missiondesc = "Your squad is being sent on a goodwill mission to [station_name()]."
+			missiondesc += " Work hard, play hard. Don't break the server rules. Avoid civilian casualites when possible."
+			missiondesc += "<BR><B>Your Mission</B>:"
+			var/obj_count = 1
+			for(var/datum/objective/objective in ERPOperative.mind.objectives)
+				missiondesc += "<BR><B>Objective #[obj_count]</B>: [objective.explanation_text]"
+				obj_count++
+			ERPOperative << missiondesc
+
+			//Logging and cleanup
+			if(numerps == 1)
+				message_admins("The ERP Squad has spawned. You asked for this.")
+			log_game("[key_name(ERPOperative)] has been selected as an ERP Squadmate")
+			spawnpoints -= spawnloc
+			numerps--
+
+		return 1
+
+	return
+
+/datum/admins/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
+	if(!G_found || !G_found.key)	return
 
 /datum/admins/proc/makeRevenant()
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for becoming a revenant?", "revenant", null)

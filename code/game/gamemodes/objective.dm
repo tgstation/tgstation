@@ -879,3 +879,12 @@ var/global/list/possible_items_special = list()
 
 
 
+
+datum/objective/dontgetbanned
+	dangerrating = 69
+	explanation_text = "Don't get banned."
+
+datum/objective/dontgetbanned/check_completion()
+	if(!owner.current.client)
+		return 0
+	return 1
