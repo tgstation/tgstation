@@ -193,7 +193,7 @@
 	var/move_on_shuttle = 1 // Can move on the shuttle.
 	var/captured = 0 //Functionally, should give the same effect as being buckled into a chair when true.
 
-	var/movement_speed_modifier = 0
+	var/movement_speed_modifier = 1
 
 //Generic list for proc holders. Only way I can see to enable certain verbs/procs. Should be modified if needed.
 	var/proc_holder_list[] = list()//Right now unused.
