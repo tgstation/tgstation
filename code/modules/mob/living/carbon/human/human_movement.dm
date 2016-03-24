@@ -5,6 +5,10 @@
 
 
 /mob/living/carbon/human/slip(s_amount, w_amount, obj/O, lube)
+	if(isobj(shoes))
+		var/obj/S = shoes
+		if(istype(S, /obj/item/clothing/shoes/gottagofast)) //Wearing sanic shoes makes all slips equivalent to lube
+			lube = SLIDE
 	if(isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP))
 		return 0
 	return ..()

@@ -76,9 +76,12 @@
 	if(check_holiday(APRIL_FOOLS))
 		if(prox_check && !user.Adjacent(M))
 			return
+		if(flags & NODROP)
+			user << "<span class='warning'>[!issilicon(user) ? "[src] is stuck to your hand" : "[src] is one of your modules"]!</span>"
+			return
 		user.visible_message("<span class='warning'>[user] smacks [M] with [src]!</span>", "<span class='danger'>You emag [M]!</span>")
 		if(iscarbon(M))
-			M << "<span class='userdanger'>Your blind goes blank with white noise!</span>"
+			M << "<span class='userdanger'>Your mind goes blank with white noise!</span>"
 			M.confused = min(M.confused + 5, 10) //Can never go above 10 seconds
 			M << 'sound/arcade/boom.ogg'
 		else if(issilicon(M))
@@ -98,9 +101,8 @@
 	if(istype(I, type) && check_holiday(APRIL_FOOLS)) //Another emag, if it's on April Fool's
 		user.visible_message("<span class='warning'>[user] emags [src]!</span>", "<span class='danger'>You emag [src], creating a bluespace cryptographic sequencer!</span>")
 		var/obj/item/weapon/card/emag/bluespace/B = new (get_turf(src))
-		user.drop_item()
-		qdel(src)
 		user.put_in_hands(B)
+		qdel(src)
 		return 1
 	..()
 
