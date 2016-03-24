@@ -71,7 +71,7 @@
 				break
 			SSshuttle.points -= value
 			amount_on_market--
-			new sell_type(P)
+			new sell_type(P.loc)
 		playsound(P, 'sound/effects/import_sound.wav', 50, 0)
 
 /datum/shipping/material
@@ -89,13 +89,13 @@
 		amount_on_market += S.amount
 		if(prob(25))
 			lower_value(rand(3, 1) * S.amount)
-		SSshuttle.add_export_logs(S)
+		SSshuttle.add_export_logs(src)
 	return
 
 /datum/shipping/material/buy_obj(var/amount_purchased)
 	if(shipping_pads.len)
 		var/obj/machinery/shipping_pad/P = pick(shipping_pads)
-		var/obj/item/stack/sheet/S = new sell_type(P)
+		var/obj/item/stack/sheet/S = new sell_type(P.loc)
 		for(var/i in 1 to amount_purchased)
 			if(amount_on_market == 0)
 				break

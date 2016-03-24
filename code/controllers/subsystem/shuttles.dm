@@ -57,6 +57,10 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(!P.contains)
 			continue
 		supply_packs[P.type] = P
+	for(var/SD in subtypesof(/datum/shipping))
+		var/datum/shipping/S = new SD()
+		if(!S.abstract)
+			shipping_datums += S
 
 	initial_move()
 	..()
@@ -126,7 +130,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/has_shipping_datum(var/atom/movable/O)
 	for(var/datum/shipping/S in shipping_datums)
-		if(istype(S.sell_type, O.type))
+		if(istype(O, S.sell_type))
 			return S
 
 /datum/subsystem/shuttle/proc/getShuttle(id)

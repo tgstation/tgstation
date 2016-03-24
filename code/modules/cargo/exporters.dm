@@ -12,7 +12,7 @@
 	else
 		if(works_from_distance)
 			if(istype(T))
-				user.Beam(T,icon_state="cash_beam",icon='icons/effects/effects.dmi',time=5)
+				user.Beam(T.loc,icon_state="cash_beam",icon='icons/effects/effects.dmi',time=5)
 				export(T, user)
 				playsound(src, 'sound/effects/sellaporter.wav', 50, 0)
 	return

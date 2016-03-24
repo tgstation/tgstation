@@ -22,8 +22,9 @@
 		dat += "<div><td><span class='company'>[S.name]</span></td><td>| [S.value] credits per unit |</td><td><b>Trend: [S.status]</b></td><br>"
 		dat +="<td><span class='company'>Total Exported: </span>[S.amount_sold_total]</td><td>|<span class='company'>Total Profit: </span>[S.profit_made_total]</td></div><br>"
 		if(S.allow_import)
-			dat += "<td><span class='company'>Amount On Market: </span>[S.amount_on_market]</td><td><br>"
+			dat += "<span class='company'>Amount On Market: </span>[S.amount_on_market]<br>"
 			dat += "<a href='?src=\ref[src];buy=\ref[S]'>Import</a><br>"
+		dat += "---------------------------------------------------------------<br>"
 
 	dat += "</body></html>"
 	var/datum/browser/popup = new(user, "computer", "Export Computer", 600, 600)
