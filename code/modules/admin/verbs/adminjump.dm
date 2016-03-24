@@ -114,8 +114,7 @@
 	set category = "Admin"
 	set name = "Jump to Vault"
 
-	if(!src.holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights())
 		return
 
 	if(config.allow_admin_jump)
