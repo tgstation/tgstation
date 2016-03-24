@@ -525,6 +525,10 @@
 					user << "<span class='warning'>[thrallToRevive] must be conscious to become empowered.</span>"
 					revert_cast()
 					return
+				if(thrallToRevive.dna.species.id == "l_shadowling")
+					user << "<span class='warning'>[thrallToRevive] is already empowered.</span>"
+					revert_cast()
+					return
 				var/empowered_thralls = 0
 				for(var/datum/mind/M in ticker.mode.thralls)
 					if(!ishuman(M.current))
