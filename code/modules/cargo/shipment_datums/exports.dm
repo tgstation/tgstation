@@ -3,6 +3,7 @@
 	value = 25000
 	sell_type = /obj/item/documents/syndicate
 	allow_import = 0 // yes sir lets import the syndicate documents
+	use_exact_type = 0
 	category = "Exports"
 
 /datum/shipping/plants
@@ -10,6 +11,7 @@
 	value = 50
 	sell_type = /obj/item/weapon/reagent_containers/food/snacks/grown
 	allow_import = 0
+	use_exact_type = 0
 	category = "Exports"
 
 /datum/shipping/seeds
@@ -17,7 +19,9 @@
 	value = 200
 	sell_type = /obj/item/seeds
 	allow_import = 0
+	use_exact_type = 0
 	category = "Exports"
+
 /datum/shipping/seeds/ship_obj(var/atom/movable/AM)
 	if(istype(AM, /obj/item/seeds))
 		var/obj/item/seeds/S = AM

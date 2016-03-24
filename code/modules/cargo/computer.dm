@@ -9,6 +9,13 @@ var/list/shipping_categories = list("Clothing","Medical","Exports","Machinery","
 	icon_keyboard = "no_keyboard"
 	var/current_category = "Clothing"
 
+/obj/machinery/computer/cargo_shipping/emag_act(mob/user)
+	if(!emagged)
+		emagged = 1
+		user << "You short out the ID locks."
+		return
+	..()
+
 /obj/machinery/computer/cargo_shipping/attack_hand(var/mob/user)
 	if(..())
 		return
@@ -20,7 +27,7 @@ var/list/shipping_categories = list("Clothing","Medical","Exports","Machinery","
 </style>"}
 	var/dat = "<html><head><title>Market Prices</title>[css]</head><body><h2>Shipping</h2>"
 	dat += "<b>WARNING:</b> Do <b>NOT</b> ship export products in crates, otherwise they're liable to get processed as donations to Central Command.<br>"
-	dat += "<b>Stock Transaction Log:</b> <a href='?src=\ref[src];show_logs=1'>Check</a><br>"
+	dat += "<b>Import/Export Log:</b> <a href='?src=\ref[src];show_logs=1'>Check</a><br>"
 	dat += "<b>Current Category:</b> [current_category]<br>"
 	for(var/C in shipping_categories)
 		dat += "<a href='?src=\ref[src];switch_category=[C]'>[C]</a>"
@@ -30,7 +37,8 @@ var/list/shipping_categories = list("Clothing","Medical","Exports","Machinery","
 		if(S.category != current_category)
 			continue
 		dat += "<div><td><span class='company'>[S.name]</span></td><td>| [S.value] credits per unit |</td><td><b>Trend: [S.status]</b></td><br>"
-		dat +="<td><span class='company'>Total Exported: </span>[S.amount_sold_total]</td><td>|<span class='company'>Total Profit: </span>[S.profit_made_total]</td></div><br>"
+		if(S.allow_export)
+			dat +="<td><span class='company'>Total Exported: </span>[S.amount_sold_total]</td><td>|<span class='company'>Total Profit: </span>[S.profit_made_total]</td></div><br>"
 		if(S.allow_import)
 			dat += "<span class='company'>Amount On Market: </span>[S.amount_on_market]<br>"
 			dat += "<a href='?src=\ref[src];buy=\ref[S]'>Import</a><br>"
@@ -73,6 +81,13 @@ var/list/shipping_categories = list("Clothing","Medical","Exports","Machinery","
 	src.updateUsrDialog()
 
 /obj/machinery/computer/cargo_shipping/proc/buy_object(var/datum/shipping/S, mob/user)
+	if(!emagged)
+		req_access = S.req_access
+		if(!allowed(user))
+			user << "<span class='danger'>You do not have the access required to purchase this!</span>"
+			req_access = list()
+			return
+		req_access = list()
 	var/avail = S.amount_on_market
 	var/price = S.value
 	var/canbuy = round(SSshuttle.points / price)

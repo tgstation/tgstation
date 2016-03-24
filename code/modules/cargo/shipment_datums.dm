@@ -11,7 +11,10 @@
 	var/profit_made = 0
 	var/amount_on_market = 0
 	var/allow_import = 1
+	var/allow_export = 1
+	var/use_exact_type = 1
 	var/category = "blugh"
+	var/list/req_access = list()
 
 /datum/shipping/proc/add_value(var/V)
 	var/original_value = value
@@ -54,6 +57,12 @@
 
 
 /datum/shipping/proc/ship_obj(var/atom/movable/AM)
+	if(use_exact_type)
+		if(AM.type != sell_type)
+			return
+	else
+		if(!istype(AM, sell_type))
+			return
 	SSshuttle.points += value
 	profit_made_total += value
 	profit_made += value
@@ -78,6 +87,12 @@
 	category = "Materials"
 
 /datum/shipping/material/ship_obj(var/atom/movable/AM)
+	if(use_exact_type)
+		if(AM.type != sell_type)
+			return
+	else
+		if(!istype(AM, sell_type))
+			return
 	if(istype(AM, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = AM
 		SSshuttle.points += value * S.amount
