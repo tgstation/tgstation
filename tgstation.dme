@@ -1343,6 +1343,7 @@
 #include "code\modules\mob\living\simple_animal\friendly\drone\verbs.dm"
 #include "code\modules\mob\living\simple_animal\friendly\drone\visuals_icons.dm"
 #include "code\modules\mob\living\simple_animal\guardian\guardian.dm"
+#include "code\modules\mob\living\simple_animal\guardian\types\assassin.dm"
 #include "code\modules\mob\living\simple_animal\guardian\types\charger.dm"
 #include "code\modules\mob\living\simple_animal\guardian\types\explosive.dm"
 #include "code\modules\mob\living\simple_animal\guardian\types\fire.dm"

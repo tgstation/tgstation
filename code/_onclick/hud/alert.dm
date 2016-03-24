@@ -79,10 +79,11 @@
 	mouse_opacity = 1
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
+	var/alerttooltipstyle = ""
 
 
 /obj/screen/alert/MouseEntered(location,control,params)
-	openToolTip(usr,src,params,title = name,content = desc)
+	openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
 
 
 /obj/screen/alert/MouseExited()
@@ -234,6 +235,19 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Charge Ready"
 	desc = "You are ready to charge at a location!"
 	icon_state = "guardian_charge"
+	alerttooltipstyle = "parasite"
+
+/obj/screen/alert/canstealth
+	name = "Stealth Ready"
+	desc = "You are ready to enter stealth!"
+	icon_state = "guardian_canstealth"
+	alerttooltipstyle = "parasite"
+
+/obj/screen/alert/instealth
+	name = "In Stealth"
+	desc = "You are in stealth and your next attack will do bonus damage!"
+	icon_state = "guardian_instealth"
+	alerttooltipstyle = "parasite"
 
 //SILICONS
 

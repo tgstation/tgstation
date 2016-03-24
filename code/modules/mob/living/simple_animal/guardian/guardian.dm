@@ -247,7 +247,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/used_message = "All the cards seem to be blank now."
 	var/failure_message = "..And draw a card! It's...blank? Maybe you should try again later."
 	var/ling_failure = "The deck refuses to respond to a souless creature such as you."
-	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Protector", "Charger")
+	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Protector", "Charger", "Assassin")
 	var/random = TRUE
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
@@ -307,6 +307,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if("Charger")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/charger
 
+		if("Assassin")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/assassin
+
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user)
 	G.summoner = user
 	G.key = key
@@ -356,7 +359,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	ling_failure = "The holoparasites recoil in horror. They want nothing to do with a creature like you."
 
 /obj/item/weapon/guardiancreator/tech/choose/traitor
-	possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning")
+	possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Assassin")
 
 /obj/item/weapon/guardiancreator/tech/choose
 	random = FALSE
