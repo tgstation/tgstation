@@ -928,6 +928,27 @@
 					/obj/item/seeds/eggplant/eggy)
 	crate_name = "exotic seeds crate"
 
+/datum/supply_pack/organic/hydroponics/beekeeping_fullkit
+	name = "Beekeeping Starter Kit"
+	cost = 40
+	contains = list(/obj/structure/beebox,
+					/obj/item/honey_frame,
+					/obj/item/honey_frame,
+					/obj/item/honey_frame,
+					/obj/item/queen_bee/bought,
+					/obj/item/clothing/head/beekeeper_head,
+					/obj/item/clothing/suit/beekeeper_suit)
+	crate_name = "beekeeping starter kit"
+
+/datum/supply_pack/organic/hydroponics/beekeeping_suits
+	name = "2 Beekeeper suits"
+	cost = 10
+	contains = list(/obj/item/clothing/head/beekeeper_head,
+					/obj/item/clothing/suit/beekeeper_suit,
+					/obj/item/clothing/head/beekeeper_head,
+					/obj/item/clothing/suit/beekeeper_suit)
+	crate_name = "beekeper suits"
+
 /datum/supply_pack/organic/vending
 	name = "Bartending Supply Crate"
 	cost = 2000
