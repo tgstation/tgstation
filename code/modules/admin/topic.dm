@@ -172,54 +172,20 @@
 
 	else if(href_list["dbbanaddtype"])
 
-		var/bantype = text2num(href_list["dbbanaddtype"])
 		var/banckey = href_list["dbbanaddckey"]
 		var/banip = href_list["dbbanaddip"]
 		var/bancid = href_list["dbbanaddcid"]
 		var/banduration = text2num(href_list["dbbaddduration"])
 		var/banjob = href_list["dbbanaddjob"]
 		var/banreason = href_list["dbbanreason"]
+		var/applies_to_admins = ("dbbanappliestoadmins" in href_list) ? 1 : null
 
 		banckey = ckey(banckey)
 
-		switch(bantype)
-			if(BANTYPE_PERMA)
-				if(!banckey || !banreason)
-					usr << "Not enough parameters (Requires ckey and reason)"
-					return
-				banduration = null
-				banjob = null
-			if(BANTYPE_TEMP)
-				if(!banckey || !banreason || !banduration)
-					usr << "Not enough parameters (Requires ckey, reason and duration)"
-					return
-				banjob = null
-			if(BANTYPE_JOB_PERMA)
-				if(!banckey || !banreason || !banjob)
-					usr << "Not enough parameters (Requires ckey, reason and job)"
-					return
-				banduration = null
-			if(BANTYPE_JOB_TEMP)
-				if(!banckey || !banreason || !banjob || !banduration)
-					usr << "Not enough parameters (Requires ckey, reason and job)"
-					return
-			if(BANTYPE_APPEARANCE)
-				if(!banckey || !banreason)
-					usr << "Not enough parameters (Requires ckey and reason)"
-					return
-				banduration = null
-				banjob = null
-			if(BANTYPE_ADMIN_PERMA)
-				if(!banckey || !banreason)
-					usr << "Not enough parameters (Requires ckey and reason)"
-					return
-				banduration = null
-				banjob = null
-			if(BANTYPE_ADMIN_TEMP)
-				if(!banckey || !banreason || !banduration)
-					usr << "Not enough parameters (Requires ckey, reason and duration)"
-					return
-				banjob = null
+		if(!banjob)
+			banjob = null
+		if(!banduration)
+			banduration = null
 
 		var/mob/playermob
 
@@ -227,7 +193,6 @@
 			if(M.ckey == banckey)
 				playermob = M
 				break
-
 
 		banreason = "(MANUAL BAN) "+banreason
 
@@ -239,7 +204,7 @@
 		else
 			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob")
 
-		DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey, banip, bancid )
+		DB_ban_record(playermob, banduration, banreason, banjob, banckey, banip, bancid, applies_to_admins)
 		add_note(banckey, banreason, null, usr.ckey, 0)
 
 	else if(href_list["editrights"])
@@ -436,121 +401,7 @@
 			if("shade")
 				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
 
-
-	/////////////////////////////////////new ban stuff
-	else if(href_list["unbanf"])
-		if(!check_rights(R_BAN))
-			return
-
-		var/banfolder = href_list["unbanf"]
-		Banlist.cd = "/base/[banfolder]"
-		var/key = Banlist["key"]
-		if(alert(usr, "Are you sure you want to unban [key]?", "Confirmation", "Yes", "No") == "Yes")
-			if(RemoveBan(banfolder))
-				unbanpanel()
-			else
-				alert(usr, "This ban has already been lifted / does not exist.", "Error", "Ok")
-				unbanpanel()
-
-	else if(href_list["unbane"])
-		if(!check_rights(R_BAN))
-			return
-
-		UpdateTime()
-		var/reason
-
-		var/banfolder = href_list["unbane"]
-		Banlist.cd = "/base/[banfolder]"
-		var/reason2 = Banlist["reason"]
-		var/temp = Banlist["temp"]
-
-		var/minutes = Banlist["minutes"]
-
-		var/banned_key = Banlist["key"]
-		Banlist.cd = "/base"
-
-		var/duration
-
-		switch(alert("Temporary Ban?",,"Yes","No"))
-			if("Yes")
-				temp = 1
-				var/mins = 0
-				if(minutes > CMinutes)
-					mins = minutes - CMinutes
-				mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440) as num|null
-				if(!mins)
-					return
-				minutes = CMinutes + mins
-				duration = GetExp(minutes)
-				reason = input(usr,"Please State Reason","Reason",reason2) as message
-				if(!reason)
-					return
-			if("No")
-				temp = 0
-				duration = "Perma"
-				reason = input(usr,"Please State Reason","Reason",reason2) as message
-				if(!reason)
-					return
-
-		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
-		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]</span>")
-		Banlist.cd = "/base/[banfolder]"
-		Banlist["reason"] << reason
-		Banlist["temp"] << temp
-		Banlist["minutes"] << minutes
-		Banlist["bannedby"] << usr.ckey
-		Banlist.cd = "/base"
-		feedback_inc("ban_edit",1)
-		unbanpanel()
-
-	/////////////////////////////////////new ban stuff
-
-	else if(href_list["appearanceban"])
-		if(!check_rights(R_BAN))
-			return
-		var/mob/M = locate(href_list["appearanceban"])
-		if(!ismob(M))
-			usr << "This can only be used on instances of type /mob"
-			return
-		if(!M.ckey)	//sanity
-			usr << "This mob has no ckey"
-			return
-
-		var/banreason = appearance_isbanned(M)
-		if(banreason)
-			switch(alert("Reason: '[banreason]' Remove appearance ban?","Please Confirm","Yes","No"))
-				if("Yes")
-					ban_unban_log_save("[key_name(usr)] removed [key_name(M)]'s appearance ban")
-					log_admin("[key_name(usr)] removed [key_name(M)]'s appearance ban")
-					feedback_inc("ban_appearance_unban", 1)
-					DB_ban_unban(M.ckey, BANTYPE_APPEARANCE)
-					appearance_unban(M)
-					message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [key_name_admin(M)]'s appearance ban</span>")
-					M << "<span class='boldannounce'><BIG>[usr.client.ckey] has removed your appearance ban.</BIG></span>"
-
-		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
-			if("Yes")
-				var/reason = input(usr,"Please State Reason","Reason") as message
-				if(!reason)
-					return
-				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
-				log_admin("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
-				feedback_inc("ban_appearance",1)
-				DB_ban_record(BANTYPE_APPEARANCE, M, -1, reason)
-				appearance_fullban(M, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
-				add_note(M.ckey, "Appearance banned - [reason]", null, usr.ckey, 0)
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)]</span>")
-				M << "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>"
-				M << "<span class='boldannounce'>The reason is: [reason]</span>"
-				M << "<span class='danger'>Appearance ban can be lifted only upon request.</span>"
-				if(config.banappeals)
-					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
-				else
-					M << "<span class='danger'>No ban appeals URL has been set.</span>"
-			if("No")
-				return
-
+	/////////////////////////////////////job ban stuff
 	else if(href_list["jobban2"])
 		var/mob/M = locate(href_list["jobban2"])
 		if(!ismob(M))
@@ -972,7 +823,7 @@
 						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [reason]")
 						log_admin("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes")
 						feedback_inc("ban_job_tmp",1)
-						DB_ban_record(BANTYPE_JOB_TEMP, M, mins, reason, job)
+						DB_ban_record(M, mins, reason, job)
 						if(M.client)
 							jobban_buildcache(M.client)
 						feedback_add_details("ban_job_tmp","- [job]")
@@ -995,7 +846,7 @@
 							ban_unban_log_save("[key_name(usr)] perma-jobbanned [key_name(M)] from [job]. reason: [reason]")
 							log_admin("[key_name(usr)] perma-banned [key_name(M)] from [job]")
 							feedback_inc("ban_job",1)
-							DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, job)
+							DB_ban_record(M, null, reason, job)
 							if(M.client)
 								jobban_buildcache(M.client)
 							feedback_add_details("ban_job","- [job]")
@@ -1118,12 +969,12 @@
 				var/reason = input(usr,"Please State Reason","Reason") as message
 				if(!reason)
 					return
-				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
+				add_note(M.ckey, "Banned for [mins] minutes - [reason]", null, usr.ckey, 0)
 				ban_unban_log_save("[usr.client.ckey] has banned [M.ckey]. - Reason: [reason] - This will be removed in [mins] minutes.")
 				M << "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>"
 				M << "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes.</span>"
 				feedback_inc("ban_tmp",1)
-				DB_ban_record(BANTYPE_TEMP, M, mins, reason)
+				DB_ban_record(M, mins, reason)
 				feedback_inc("ban_tmp_mins",mins)
 				if(config.banappeals)
 					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
@@ -1138,13 +989,7 @@
 				var/reason = input(usr,"Please State Reason","Reason") as message
 				if(!reason)
 					return
-				switch(alert(usr,"IP ban?",,"Yes","No","Cancel"))
-					if("Cancel")
-						return
-					if("Yes")
-						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
-					if("No")
-						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
+				add_note(M.ckey, "Pemanently banned - [reason]", null, usr.ckey, 0)
 				M << "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>"
 				M << "<span class='danger'>This is a permanent ban.</span>"
 				if(config.banappeals)
@@ -1155,7 +1000,7 @@
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 				message_admins("<span class='adminnotice'>[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.</span>")
 				feedback_inc("ban_perma",1)
-				DB_ban_record(BANTYPE_PERMA, M, -1, reason)
+				DB_ban_record(M, null, reason)
 
 				del(M.client)
 				//qdel(M)

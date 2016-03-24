@@ -152,7 +152,7 @@ var/list/preferences_datums = list()
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
 			dat += "<h2>Identity</h2>"
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
-			if(appearance_isbanned(user))
+			if(jobban_isbanned(user, "appearance"))
 				dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
 			dat += "<a href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
 			dat += "<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a><BR>"
@@ -670,7 +670,7 @@ var/list/preferences_datums = list()
 	if(href_list["jobbancheck"])
 		var/job = sanitizeSQL(href_list["jobbancheck"])
 		var/sql_ckey = sanitizeSQL(user.ckey)
-		var/DBQuery/query_get_jobban = dbcon.NewQuery("SELECT reason, bantime, duration, expiration_time, a_ckey FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND job = '[job]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+		var/DBQuery/query_get_jobban = dbcon.NewQuery("SELECT reason, bantime, TIMESTAMPDIFF(MINUTE,bantime,expiration_time), expiration_time, a_ckey FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND job = '[job]' AND (isnull(expiration_time) OR expiration_time > Now()) AND isnull(unbanned)")
 		if(!query_get_jobban.Execute())
 			var/err = query_get_jobban.ErrorMsg()
 			log_game("SQL ERROR obtaining reason from ban table. Error : \[[err]\]\n")

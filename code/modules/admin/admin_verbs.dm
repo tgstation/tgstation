@@ -68,7 +68,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggleSNPC /* Toggles an npc's processing mode */
 	)
 var/list/admin_verbs_ban = list(
-	/client/proc/unban_panel,
 	/client/proc/DB_ban_panel,
 	/client/proc/stickybanpanel
 	)
@@ -393,17 +392,6 @@ var/list/admin_verbs_hideable = list(
 		if(!isobserver(usr))
 			message_admins("[key_name_admin(usr)] checked antagonists.")
 	feedback_add_details("admin_verb","CHA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
-
-/client/proc/unban_panel()
-	set name = "Unban Panel"
-	set category = "Admin"
-	if(holder)
-		if(config.ban_legacy_system)
-			holder.unbanpanel()
-		else
-			holder.DB_ban_panel()
-	feedback_add_details("admin_verb","UBP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/game_panel()

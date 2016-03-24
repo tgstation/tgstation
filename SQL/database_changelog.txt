@@ -1,3 +1,15 @@
+22 February 2016, by tkdrg
+
+Modified the ban table heavily: 
+- Appearance bans are now tracked as job bans (now known as role bans);
+- Permanent bans are now tracked by having a NULL expiration_time;
+- Any ban can now apply to admins using the new applies_to_admins column;
+- The bantype and duration columns have been removed as they are redundant now.
+- The rounds column was removed as it was unused.
+
+A series of queries to ease the migration have been included in the file ban_db_migration_2016-02-22.sql; remember to backup beforehand, and edit the queries to remove the prefix from the table name if you don't use it.
+
+----------------------------------------------------
 21 September 2015, by Jordie0608
 
 Modified table 'poll_question', adding columns 'createdby_ckey', 'createdby_ip' and 'for_trialmin' to bring it inline with the schema used by the tg servers.
