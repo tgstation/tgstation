@@ -442,5 +442,5 @@
 			ticker.Bible_deity_name = B.deity_name
 		feedback_set_details("religion_deity","[new_deity]")
 		feedback_set_details("religion_book","[new_book_style]")
-		to_chat(world, "<b>[H.real_name] and \his deity, [B.deity_name], have brought religion to the station!</b>")
+		to_chat(world, "<b>[H.real_name] and their deity [B.deity_name] have brought religion to the station!</b>")
 	return 1
