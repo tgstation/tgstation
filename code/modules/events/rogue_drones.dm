@@ -18,6 +18,7 @@
 		num = rand(2,6)
 	for(var/i=0, i<num, i++)
 		var/mob/living/simple_animal/hostile/retaliate/malf_drone/D = new(get_turf(pick(possible_spawns)))
+		D.from_event = src
 		drones_list.Add(D)
 		if(prob(25))
 			D.disabled = rand(15, 60)
@@ -46,8 +47,7 @@
 		D.z = 2
 		D.has_loot = 0
 
-		drones_list -= D
-		qdel(D)
+		qdel(D) // Drone deletion handles removal from drones list
 		num_recovered++
 
 	if(num_recovered > drones_list.len * 0.75)

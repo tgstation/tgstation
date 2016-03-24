@@ -57,6 +57,8 @@
 	var/has_loot = 1
 	faction = "malf_drone"
 
+	var/datum/event/rogue_drone/from_event = null
+
 /mob/living/simple_animal/hostile/retaliate/malf_drone/New()
 	..()
 	if(prob(5))
@@ -175,6 +177,9 @@
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/Destroy()
 	//some random debris left behind
+	if(from_event)
+		from_event.drones_list -= src
+		from_event = null
 	if(has_loot)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
