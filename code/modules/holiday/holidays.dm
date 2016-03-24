@@ -1,3 +1,10 @@
+/proc/check_holiday(holiday)
+	if(holiday == APRIL_FOOLS) //Temporary
+		return 1
+	if(SSevent.holidays && SSevent.holidays[holiday])
+		return 1
+	return 0
+
 /datum/holiday
 	var/name = "Bugsgiving"
 	//Right now, only holidays that take place on a certain day or within a time period are supported
