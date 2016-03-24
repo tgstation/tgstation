@@ -86,7 +86,7 @@
 	//clean the input msg
 	if(!msg)
 		return
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	msg = copytext(msg,1,MAX_MESSAGE_LEN)
 	if(!msg)	return
 	var/original_msg = msg
 
@@ -108,44 +108,39 @@
 	for(var/client/X in admins)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			X << 'sound/effects/adminhelp.ogg'
-		X << msg
+		X << sanitize(msg)
 
 
 	//show it to the person adminhelping too
-	src << "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>"
+	src << "<span class='adminnotice'>PM to-<b>Admins</b>: [sanitize(original_msg)]</span>"
 
 	//send it to irc if nobody is on and tell us how many were on
 	var/admin_number_present = send2irc_adminless_only(ckey,original_msg)
-	sanitize_russian(log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN."))
+	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
-	var/admin_number_total = 0		//Total number of admins
-	var/admin_number_afk = 0		//Holds the number of admins who are afk
-	var/admin_number_ignored = 0	//Holds the number of admins without +BAN (so admins who are not really admins)
-	var/admin_number_decrease = 0	//Holds the number of admins with are afk, ignored or both
+/proc/get_admin_counts(requiredflags = R_BAN)
+	. = list("total" = 0, "noflags" = 0, "afk" = 0, "stealth" = 0, "present" = 0)
 	for(var/client/X in admins)
-		admin_number_total++;
-		var/invalid = 0
+		.["total"]++
 		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
-			admin_number_ignored++
-			invalid = 1
-		if(X.is_afk())
-			admin_number_afk++
-			invalid = 1
-		if(X.holder.fakekey)
-			admin_number_ignored++
-			invalid = 1
-		if(invalid)
-			admin_number_decrease++
-	var/admin_number_present = admin_number_total - admin_number_decrease	//Number of admins who are neither afk nor invalid
-	if(admin_number_present <= 0)
-		if(!admin_number_afk && !admin_number_ignored)
+			.["noflags"]++
+		else if(X.is_afk())
+			.["afk"]++
+		else if(X.holder.fakekey)
+			.["stealth"]++
+		else
+			.["present"]++
+
+/proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
+	var/list/adm = get_admin_counts(requiredflags)
+	. = adm["present"]
+	if(. <= 0)
+		if(!adm["afk"] && !adm["stealth"] && !adm["noflags"])
 			send2irc(source, "[msg] - No admins online")
 		else
-			send2irc(source, "[msg] - All admins AFK ([admin_number_afk]/[admin_number_total]) or skipped ([admin_number_ignored]/[admin_number_total])")
-	return admin_number_present
+			send2irc(source, "[msg] - All admins AFK ([adm["afk"]]/[adm["total"]]), stealthminned ([adm["stealth"]]/[adm["total"]]), or lack[rights2text(requiredflags, " ")] ([adm["noflags"]]/[adm["total"]])")
 
 /proc/send2irc(msg,msg2)
 	if(config.useircbot)

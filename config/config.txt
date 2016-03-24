@@ -11,10 +11,10 @@ LOBBY_COUNTDOWN 120
 ROUND_END_COUNTDOWN 90
 
 ## Add a # infront of this if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
-ADMIN_LEGACY_SYSTEM
+#ADMIN_LEGACY_SYSTEM
 
 ## Add a # infront of this if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
-BAN_LEGACY_SYSTEM
+#BAN_LEGACY_SYSTEM
 
 ## Unhash this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
 ## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
@@ -157,7 +157,7 @@ ALLOW_HOLIDAYS
 #USEIRCBOT
 
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
-TICKLAG 0.9
+TICKLAG 0.5
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
@@ -229,3 +229,7 @@ ANNOUNCE_ADMIN_LOGOUT
 ## AUTOADMIN
 ## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN Game Admin
+
+## GENERATE_MINIMAPS
+## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
+#GENERATE_MINIMAPS

@@ -42,6 +42,7 @@
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/weapon/survivalcapsule(src)
 
 
 /**********************Shuttle Computer**************************/
@@ -186,6 +187,15 @@
 		src.loc.visible_message("The [src] begins to shake. Stand back!")
 		used = TRUE
 		sleep(50)
+		var/clear = TRUE
+		for(var/turf/T in range(3,src))
+			if(istype(T, /turf/simulated/mineral) || !T.density)
+				continue
+			clear = FALSE
+		if(!clear)
+			src.loc.visible_message("The [src] doesn't have room to deploy! You need to clear a 3x3 area!")
+			used = FALSE
+			return
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
 		PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
 		load()
@@ -217,11 +227,11 @@
 	new /obj/item/weapon/storage/pill_bottle/dice(cur_turf)
 
 	cur_turf = locate(start_turf.x+1, start_turf.y-1, start_turf.z)
-	var/obj/structure/bed/chair/comfy/C = new /obj/structure/bed/chair/comfy(cur_turf)
+	var/obj/structure/chair/comfy/C = new /obj/structure/chair/comfy(cur_turf)
 	C.dir = 1
 
 	cur_turf = locate(start_turf.x+1, start_turf.y+1, start_turf.z)
-	new /obj/structure/bed/chair/comfy(cur_turf)
+	new /obj/structure/chair/comfy(cur_turf)
 
 	cur_turf = locate(start_turf.x-1, start_turf.y-1, start_turf.z)
 	var/obj/machinery/sleeper/S = new /obj/machinery/sleeper(cur_turf)

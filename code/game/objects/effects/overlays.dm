@@ -20,7 +20,6 @@
 	spawn(10) qdel(src)
 
 /obj/effect/overlay/temp
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	anchored = 1
 	layer = 4.1
@@ -38,6 +37,16 @@
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
 	spawn(duration)
 		qdel(src)
+
+/obj/effect/overlay/temp/heal //color is white by default, set to whatever is needed
+	name = "healing glow"
+	icon_state = "heal"
+	duration = 15
+
+/obj/effect/overlay/temp/heal/New()
+	..()
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(-9, 0)
 
 /obj/effect/overlay/temp/explosion
 	name = "explosion"
@@ -64,6 +73,18 @@
 /obj/effect/overlay/temp/guardian/phase/out
 	icon_state = "phaseout"
 
+/obj/effect/overlay/temp/guardian/charge
+	duration = 15
+
+/obj/effect/overlay/temp/decoy/New(loc, atom/mimiced_atom)
+	..()
+	alpha = initial(alpha)
+	if(mimiced_atom)
+		icon = mimiced_atom.icon
+		icon_state = mimiced_atom.icon_state
+		dir = mimiced_atom.dir
+	animate(src, alpha = 0, time = duration)
+
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10
@@ -71,6 +92,14 @@
 /obj/effect/overlay/temp/cult/sac
 	name = "maw of Nar-Sie"
 	icon_state = "sacconsume"
+
+/obj/effect/overlay/temp/cult/door
+	name = "unholy glow"
+	icon_state = "doorglow"
+	layer = 3.17 //above closed doors
+
+/obj/effect/overlay/temp/cult/door/unruned
+	icon_state = "unruneddoorglow"
 
 /obj/effect/overlay/temp/cult/turf
 	name = "unholy glow"

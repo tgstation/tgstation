@@ -42,6 +42,7 @@
 	var/ear_damage = 0		//Carbon
 	var/stuttering = 0		//Carbon
 	var/slurring = 0		//Carbon
+	var/cultslurring = 0	//Carbon
 	var/real_name = null
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
@@ -84,7 +85,6 @@
 	var/datum/hud/hud_used = null
 
 	var/research_scanner = 0 //For research scanner equipped mobs. Enable to show research data when examining.
-	var/datum/action/innate/scan_mode/scanner = new
 
 	var/list/grabbed_by = list(  )
 	var/list/requests = list(  )

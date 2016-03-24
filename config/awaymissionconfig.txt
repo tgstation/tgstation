@@ -19,3 +19,5 @@
 #_maps/RandomZLevels/caves.dmm
 #_maps/RandomZLevels/snowdin.dmm
 #_maps/RandomZLevels/research.dmm
+#_maps/RandomZLevels/Cabin.dmm
+#_maps/RandomZLevels/beach2.dmm

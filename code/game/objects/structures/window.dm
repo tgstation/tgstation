@@ -67,6 +67,9 @@
 /obj/structure/window/blob_act()
 	spawnfragments()
 
+/obj/structure/window/narsie_act()
+	color = "#7D1919"
+
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		spawnfragments()
@@ -398,7 +401,7 @@
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
 	if(smooth)
-		smooth_icon_neighbors(src)
+		queue_smooth_neighbors(src)
 
 //merges adjacent full-tile windows into one (blatant ripoff from game/smoothwall.dm)
 /obj/structure/window/update_icon()
@@ -414,7 +417,7 @@
 		ratio = Ceiling(ratio*4) * 25
 
 		if(smooth)
-			smooth_icon(src)
+			queue_smooth(src)
 
 		overlays -= crack_overlay
 		if(ratio > 75)
@@ -516,3 +519,6 @@
 	canSmoothWith = null
 	explosion_block = 1
 	level = 3
+
+/obj/structure/window/shuttle/narsie_act()
+	color = "#3C3434"

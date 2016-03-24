@@ -4,7 +4,7 @@
 
 <script>
 import { winset } from 'util/byond'
-import { lock, drag, resize } from 'util/dragresize'
+import { lock } from 'util/dragresize'
 
 component.exports = {
   components: {
@@ -39,24 +39,6 @@ component.exports = {
       if (newkey) document.body.classList.add(newkey)
       if (oldkey) document.body.classList.remove(oldkey)
     })
-    this.on('titlebar.drag', () => {
-      this.toggle('drag')
-      return false
-    })
-    this.on('resize.resize', () => {
-      this.toggle('resize')
-      return false
-    })
-    document.addEventListener('mousemove', (event) => {
-      if (this.get('drag')) {
-        drag.bind(this)(event)
-      } else if (this.get('resize')) {
-        resize.bind(this)(event)
-      }
-    })
-    document.addEventListener('mouseup', (event) => {
-      this.set({ drag: false, resize: false, x: null, y: null })
-    })
   },
   oncomplete () {
     // If the window starts off screen, pull it back.
@@ -65,7 +47,8 @@ component.exports = {
       winset(this.get('config.window'), 'pos', `${x},${y}`)
     }
 
-    winset('mapwindow.map', 'focus', true) // Give focus back to the map.
+    // Give focus back to the map.
+    winset('mapwindow.map', 'focus', true)
   }
 }
 </script>

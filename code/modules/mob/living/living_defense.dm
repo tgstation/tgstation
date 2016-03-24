@@ -8,8 +8,7 @@
 			src << "<span class='userdanger'>[penetrated_text]</span>"
 		else
 			src << "<span class='userdanger'>Your armor was penetrated!</span>"
-
-	if(armor >= 100)
+	else if(armor >= 100)
 		if(absorb_text)
 			src << "<span class='userdanger'>[absorb_text]</span>"
 		else
@@ -206,7 +205,7 @@
 		return
 
 	if(M.buckled)
-		if(M == buckled_mob)
+		if(M in buckled_mobs)
 			M.Feedstop()
 		return // can't attack while eating!
 

@@ -149,21 +149,20 @@
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	switch(H.backbag)
-		//Grey backpacks are handled later.
+		if(GBACKPACK)
+			back = /obj/item/weapon/storage/backpack //Grey backpack
 		if(GSATCHEL)
 			back = /obj/item/weapon/storage/backpack/satchel_norm //Grey satchel
 		if(GDUFFLEBAG)
 			back = /obj/item/weapon/storage/backpack/dufflebag //Grey Dufflebag
 		if(LSATCHEL)
 			back = /obj/item/weapon/storage/backpack/satchel //Leather Satchel
-		if(DBACKPACK)
-			back = backpack //Department backpack
 		if(DSATCHEL)
 			back = satchel //Department satchel
 		if(DDUFFLEBAG)
 			back = dufflebag //Department dufflebag
 		else
-			back = /obj/item/weapon/storage/backpack //Grey backpack
+			back = backpack //Department backpack
 
 	backpack_contents[box] = 1
 

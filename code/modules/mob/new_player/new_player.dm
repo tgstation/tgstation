@@ -39,7 +39,7 @@
 
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
-	if(!IsGuestKey(src.key))
+/*	if(!IsGuestKey(src.key))
 		establish_db_connection()
 
 		if(dbcon.IsConnected())
@@ -57,7 +57,7 @@
 				output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
 			else
 				output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
-
+*/
 	output += "</center>"
 
 	//src << browse(output,"window=playersetup;size=210x240;can_close=0")
@@ -186,7 +186,7 @@
 	else if(!href_list["late_join"])
 		new_player_panel()
 
-	if(href_list["showpoll"])
+/*	if(href_list["showpoll"])
 		handle_player_polling()
 		return
 
@@ -194,7 +194,7 @@
 		var/pollid = href_list["pollid"]
 		if(istext(pollid))
 			pollid = text2num(pollid)
-		if(isnum(pollid))
+		if(isnum(pollid) && IsInteger(pollid))
 			src.poll_player(pollid)
 		return
 
@@ -204,10 +204,16 @@
 		switch(votetype)
 			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
-				vote_on_poll(pollid, optionid)
+				if(vote_on_poll(pollid, optionid))
+					usr << "<span class='notice'>Vote successful.</span>"
+				else
+					usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
 			if(POLLTYPE_TEXT)
 				var/replytext = href_list["replytext"]
-				log_text_poll_reply(pollid, replytext)
+				if(log_text_poll_reply(pollid, replytext))
+					usr << "<span class='notice'>Feedback logging successful.</span>"
+				else
+					usr << "<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>"
 			if(POLLTYPE_RATING)
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
@@ -223,10 +229,13 @@
 							rating = null
 						else
 							rating = text2num(href_list["o[optionid]"])
-							if(!isnum(rating))
+							if(!isnum(rating) || !IsInteger(rating))
 								return
 
-						vote_on_numval_poll(pollid, optionid, rating)
+						if(!vote_on_numval_poll(pollid, optionid, rating))
+							usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+							return
+				usr << "<span class='notice'>Vote successful.</span>"
 			if(POLLTYPE_MULTI)
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
@@ -237,8 +246,18 @@
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
 					if(!isnull(href_list["option_[optionid]"]))	//Test if this optionid was selected
-						vote_on_poll(pollid, optionid, 1)
-
+						var/i = vote_on_multi_poll(pollid, optionid)
+						switch(i)
+							if(0)
+								continue
+							if(1)
+								usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+								return
+							if(2)
+								usr << "<span class='danger'>Maximum replies reached.</span>"
+								break
+				usr << "<span class='notice'>Vote successful.</span>"
+*/
 /mob/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)

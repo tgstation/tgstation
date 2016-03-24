@@ -52,11 +52,11 @@
 
 	..()	//redirect to hsrc.Topic()
 
-/client/proc/is_content_unlocked()
-	if(!prefs.unlock_content)
-		src << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
-		return 0
-	return 1
+///client/proc/is_content_unlocked()
+//	if(!prefs.unlock_content)
+//		src << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
+//		return 0
+//	return 1
 
 /client/proc/handle_spam_prevention(message, mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
@@ -116,18 +116,18 @@ var/next_external_rsc = 0
 	directory[ckey] = src
 
 	//Admin Authorisation
-	if(protected_config.autoadmin)
-		if(!admin_datums[ckey])
-			var/datum/admin_rank/autorank
-			for(var/datum/admin_rank/R in admin_ranks)
-				if(R.name == protected_config.autoadmin_rank)
-					autorank = R
-					break
-			if(!autorank)
-				world << "Autoadmin rank not found"
-			else
-				var/datum/admins/D = new(autorank, ckey)
-				admin_datums[ckey] = D
+//	if(protected_config.autoadmin)
+//		if(!admin_datums[ckey])
+//			var/datum/admin_rank/autorank
+//			for(var/datum/admin_rank/R in admin_ranks)
+//				if(R.name == protected_config.autoadmin_rank)
+//					autorank = R
+//					break
+//			if(!autorank)
+//				world << "Autoadmin rank not found"
+//			else
+//				var/datum/admins/D = new(autorank, ckey)
+//				admin_datums[ckey] = D
 	holder = admin_datums[ckey]
 	if(holder)
 		admins += src
@@ -283,7 +283,7 @@ var/next_external_rsc = 0
 
 	var/admin_rank = "Player"
 	if (src.holder && src.holder.rank)
-		admin_rank = src.holder.rank.name
+		admin_rank = src.holder.rank
 
 	var/sql_ip = sanitizeSQL(src.address)
 	var/sql_computerid = sanitizeSQL(src.computer_id)
@@ -294,9 +294,9 @@ var/next_external_rsc = 0
 	query_insert.Execute()
 
 	//Logging player access
-	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
-	query_accesslog.Execute()
+//	var/serverip = "[world.internet_address]:[world.port]"
+//	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+//	query_accesslog.Execute()
 
 /client/proc/add_verbs_from_config()
 	if(config.see_own_notes)

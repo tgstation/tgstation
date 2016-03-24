@@ -280,22 +280,22 @@
 	quality = POSITIVE
 	get_chance = 15
 	lowest_value = 256 * 12
-	text_gain_indication = "<span class='notice'>Everything around you seems to grow..</span>"
-	text_lose_indication = "<span class='notice'>Everything around you seems to shrink..</span>"
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	owner.resize = 0.8
+	owner.update_transform()
 	owner.pass_flags |= PASSTABLE
-	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>")
+	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	owner.resize = 1.25
+	owner.update_transform()
 	owner.pass_flags &= ~PASSTABLE
-	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>")
+	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
 
 /datum/mutation/human/clumsy
 

@@ -10,7 +10,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	action_icon_state = "hatch"
 
 /obj/effect/proc_holder/spell/self/shadowling_hatch/cast(list/targets,mob/user = usr)
-	if(user.stat || !ishuman(user) || !user || !is_shadow(user || isinspace(user))) 
+	if(user.stat || !ishuman(user) || !user || !is_shadow(user || isinspace(user)))
 		return
 	var/mob/living/carbon/human/H = user
 	var/hatch_or_no = alert(H,"Are you sure you want to hatch? You cannot undo this!",,"Yes","No")
@@ -24,6 +24,9 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.visible_message("<span class='warning'>[H]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
 							"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you.</span>")
 
+			var/temp_flags = H.status_flags
+			H.status_flags |= GODMODE //Can't die while hatching
+
 			for(var/obj/item/I in H) //drops all items
 				H.unEquip(I)
 
@@ -35,8 +38,6 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf) //extremely hacky
 				qdel(R)
 				new /obj/structure/alien/weeds/node(shadowturf) //Dim lighting in the chrysalis -- removes itself afterwards
-			var/temp_flags = H.status_flags
-			H.status_flags |= GODMODE //Can't die while hatching
 
 			H.visible_message("<span class='warning'>A chrysalis forms around [H], sealing them inside.</span>", \
 							"<span class='shadowling'>You create your chrysalis and begin to contort within.</span>")
@@ -88,7 +89,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(H), slot_glasses)
 			H.set_species(/datum/species/shadow/ling) //can't be a shadowling without being a shadowling
 
-			H.mind.remove_spell(src)
+			H.mind.RemoveSpell(src)
 
 			sleep(10)
 			H << "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>"
@@ -159,7 +160,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				var/mob/A = new /mob/living/simple_animal/ascendant_shadowling(H.loc)
 				for(var/obj/effect/proc_holder/spell/S in H.mind.spell_list)
 					if(S == src) continue
-					H.mind.remove_spell(S)
+					H.mind.RemoveSpell(S)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/annihilate(null))
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/hypnosis(null))
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_phase_shift(null))
@@ -175,5 +176,5 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				if(!ticker.mode.shadowling_ascended)
 					SSshuttle.emergency.request(null, 0.3)
 				ticker.mode.shadowling_ascended = 1
-				A.mind.remove_spell(src)
+				A.mind.RemoveSpell(src)
 				qdel(H)

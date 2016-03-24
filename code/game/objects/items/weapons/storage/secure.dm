@@ -60,7 +60,7 @@
 		return
 
 	// -> storage/attackby() what with handle insertion, etc
-	..()
+	return ..()
 
 /obj/item/weapon/storage/secure/emag_act(mob/user)
 	if(locked)

@@ -93,7 +93,7 @@
 	feedback_add_details("admin_verb","VTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-//Shows today's attack log
+/*	//Shows today's attack log
 /datum/admins/proc/view_atk_log()
 	set category = "Admin"
 	set name = "Show Server Attack Log"
@@ -105,4 +105,4 @@
 		src << "<font color='red'>Server attack log not found, try using .getserverlog.</font>"
 		return
 	feedback_add_details("admin_verb","SSAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
+	return	*/

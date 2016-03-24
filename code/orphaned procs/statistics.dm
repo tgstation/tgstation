@@ -1,4 +1,4 @@
-/proc/sql_poll_players()
+/*/proc/sql_poll_players()
 	if(!config.sql_enabled)
 		return
 	var/playercount = 0
@@ -110,7 +110,7 @@
 			log_game("SQL ERROR during death reporting. Error : \[[err]\]\n")
 
 
-
+*/
 
 //This proc is used for feedback. It is executed at round end.
 /proc/sql_commit_feedback()

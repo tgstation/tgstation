@@ -49,7 +49,7 @@ var/list/preferences_datums = list()
 	var/underwear = "Nude"				//underwear type
 	var/undershirt = "Nude"				//undershirt type
 	var/socks = "Nude"					//socks type
-	var/backbag = GBACKPACK				//backpack type
+	var/backbag = DBACKPACK				//backpack type
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
 	var/facial_hair_style = "Shaved"	//Face hair type
@@ -86,7 +86,7 @@ var/list/preferences_datums = list()
 		// OOC Metadata:
 	var/metadata = ""
 
-	var/unlock_content = 0
+//	var/unlock_content = 0
 
 	var/list/ignoring = list()
 
@@ -96,12 +96,12 @@ var/list/preferences_datums = list()
 	custom_names["cyborg"] = pick(ai_names)
 	custom_names["clown"] = pick(clown_names)
 	custom_names["mime"] = pick(mime_names)
-	if(istype(C))
-		if(!IsGuestKey(C.key))
-			load_path(C.ckey)
-			unlock_content = C.IsByondMember()
-			if(unlock_content)
-				max_save_slots = 8
+//	if(istype(C))
+//		if(!IsGuestKey(C.key))
+//			load_path(C.ckey)
+//			unlock_content = C.IsByondMember()
+//			if(unlock_content)
+//				max_save_slots = 8
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
@@ -349,13 +349,13 @@ var/list/preferences_datums = list()
 					dat += "<b>Adminhelp Sound:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 					dat += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
 
-				if(unlock_content || check_rights_for(user.client, R_ADMIN))
+				if(check_rights_for(user.client, R_ADMIN))
 					dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
 
-				if(unlock_content)
-					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
-					dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
-					dat += "<B>Ghost Orbit: </B> <a href='?_src_=prefs;task=input;preference=ghostorbit'>[ghost_orbit]</a><br>"
+//				if(unlock_content)
+//					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
+				dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
+				dat += "<B>Ghost Orbit: </B> <a href='?_src_=prefs;task=input;preference=ghostorbit'>[ghost_orbit]</a><br>"
 
 			if (SERVERTOOLS && config.maprotation)
 				var/p_map = preferred_map
@@ -742,15 +742,15 @@ var/list/preferences_datums = list()
 		if("input")
 			switch(href_list["preference"])
 				if("ghostform")
-					if(unlock_content)
-						var/new_form = input(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
-						if(new_form)
-							ghost_form = new_form
+//					if(unlock_content)
+					var/new_form = input(user, "Thanks Mr.Skeltal - Choose your ghostly form:","Thanks Mr.Skeltal",null) as null|anything in ghost_forms
+					if(new_form)
+						ghost_form = new_form
 				if("ghostorbit")
-					if(unlock_content)
-						var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in ghost_orbits
-						if(new_orbit)
-							ghost_orbit = new_orbit
+//					if(unlock_content)
+					var/new_orbit = input(user, "Thanks Mr.Skeltal - Choose your ghostly orbit:","Thanks Mr.Skeltal", null) as null|anything in ghost_orbits
+					if(new_orbit)
+						ghost_orbit = new_orbit
 
 				if("name")
 					var/new_name = reject_bad_name( input(user, "Choose your character's name:", "Character Preference")  as text|null )
@@ -996,9 +996,9 @@ var/list/preferences_datums = list()
 
 		else
 			switch(href_list["preference"])
-				if("publicity")
-					if(unlock_content)
-						toggles ^= MEMBER_PUBLIC
+//				if("publicity")
+//					if(unlock_content)
+//						toggles ^= MEMBER_PUBLIC
 				if("gender")
 					if(gender == MALE)
 						gender = FEMALE

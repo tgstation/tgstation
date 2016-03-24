@@ -173,9 +173,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 13 || !istext(backbag))
 		switch(backbag)
 			if(2)
-				backbag = GSATCHEL
+				backbag = DSATCHEL
 			else
-				backbag = GBACKPACK
+				backbag = DBACKPACK
 
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")

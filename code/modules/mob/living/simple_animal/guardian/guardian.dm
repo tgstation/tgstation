@@ -1,3 +1,6 @@
+
+var/global/list/parasites = list() //all currently existing/living guardians
+
 /mob/living/simple_animal/hostile/guardian
 	name = "Guardian Spirit"
 	real_name = "Guardian Spirit"
@@ -23,7 +26,7 @@
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
-	environment_smash = 0
+	environment_smash = 1
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
@@ -35,13 +38,21 @@
 	var/magic_fluff_string = " You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!"
 	var/tech_fluff_string = "BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!"
 
-/mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
+/mob/living/simple_animal/hostile/guardian/New()
+	parasites |= src
 	..()
 
+/mob/living/simple_animal/hostile/guardian/Destroy()
+	parasites -= src
+	return ..()
+
+/mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
+	..()
+	update_health_hud() //we need to update our health display to match our summoner and we can't practically give the summoner a hook to do it
 	if(summoner)
 		if(summoner.stat == DEAD)
 			src << "<span class='danger'>Your summoner has died!</span>"
-			visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
+			visible_message("<span class='danger'><B>\The [src] dies along with its user!</B></span>")
 			summoner.visible_message("<span class='danger'><B>[summoner]'s body is completely consumed by the strain of sustaining [src]!</B></span>")
 			for(var/obj/item/W in summoner)
 				if(!summoner.unEquip(W))
@@ -54,24 +65,19 @@
 		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
 		ghostize()
 		qdel(src)
-	if(summoner)
-		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
-			return
-		else
-			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
-			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
-			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
-			forceMove(get_turf(summoner))
-			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
+	snapback()
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
-	..()
+	. = ..()
+	snapback()
+
+/mob/living/simple_animal/hostile/guardian/proc/snapback()
 	if(summoner)
 		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
 			return
 		else
-			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
-			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
+			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"
+			visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 			forceMove(get_turf(summoner))
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
@@ -93,7 +99,7 @@
 	summoner.death()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
-	if(summoner)
+	if(summoner && hud_used && hud_used.healths)
 		var/resulthealth
 		if(iscarbon(summoner))
 			resulthealth = round((abs(config.health_threshold_dead - summoner.health) / abs(config.health_threshold_dead - summoner.maxHealth)) * 100)
@@ -136,19 +142,22 @@
 
 /mob/living/simple_animal/hostile/guardian/proc/Manifest()
 	if(cooldown > world.time)
-		return
+		return 0
 	if(loc == summoner)
 		forceMove(get_turf(summoner))
 		PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
-		cooldown = world.time + 30
+		cooldown = world.time + 10
+		return 1
+	return 0
 
 /mob/living/simple_animal/hostile/guardian/proc/Recall()
 	if(loc == summoner || cooldown > world.time)
-		return
+		return 0
 	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 
 	forceMove(summoner)
-	cooldown = world.time + 30
+	cooldown = world.time + 10
+	return 1
 
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
 	var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
@@ -224,377 +233,6 @@
 		SetLuminosity(0)
 
 
-//////////////////////////TYPES OF GUARDIANS
-
-
-//Fire. Low damage, low resistance, sets mobs on fire when bumping
-/mob/living/simple_animal/hostile/guardian/fire
-	a_intent = "help"
-	melee_damage_lower = 10
-	melee_damage_upper = 10
-	attack_sound = 'sound/items/Welder.ogg'
-	attacktext = "sears"
-	damage_coeff = list(BRUTE = 0.8, BURN = 0.8, TOX = 0.8, CLONE = 0.8, STAMINA = 0, OXY = 0.8)
-	range = 10
-	playstyle_string = "As a Chaos type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will randomly teleport enemies."
-	environment_smash = 1
-	magic_fluff_string = "..And draw the Wizard, bringer of endless chaos!"
-	tech_fluff_string = "Boot sequence complete. Crowd control modules activated. Holoparasite swarm online."
-
-/mob/living/simple_animal/hostile/guardian/fire/Life() //Dies if the summoner dies
-	..()
-	if(summoner)
-		summoner.ExtinguishMob()
-		summoner.adjust_fire_stacks(-20)
-
-/mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
-	if(..())
-		if(prob(45))
-			if(istype(target, /atom/movable))
-				var/atom/movable/M = target
-				if(!M.anchored && M != summoner)
-					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
-					do_teleport(M, M, 10)
-					PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(M))
-
-/mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
-	..()
-	collision_ignite(AM)
-
-/mob/living/simple_animal/hostile/guardian/fire/Bumped(AM as mob|obj)
-	..()
-	collision_ignite(AM)
-
-/mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
-	..()
-	collision_ignite(AM)
-
-/mob/living/simple_animal/hostile/guardian/fire/proc/collision_ignite(AM as mob|obj)
-	if(istype(AM, /mob/living/))
-		var/mob/living/M = AM
-		if(AM != summoner && M.fire_stacks < 7)
-			M.fire_stacks = 7
-			M.IgniteMob()
-
-/mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
-	..()
-	collision_ignite(AM)
-
-//Standard
-/mob/living/simple_animal/hostile/guardian/punch
-	melee_damage_lower = 20
-	melee_damage_upper = 20
-	playstyle_string = "As a standard type you have no special abilities, but have a high damage resistance and a powerful attack capable of smashing through walls."
-	environment_smash = 2
-	magic_fluff_string = "..And draw the Assistant, faceless and generic, but never to be underestimated."
-	tech_fluff_string = "Boot sequence complete. Standard combat modules loaded. Holoparasite swarm online."
-	var/battlecry = "AT"
-
-/mob/living/simple_animal/hostile/guardian/punch/verb/Battlecry()
-	set name = "Set Battlecry"
-	set category = "Guardian"
-	set desc = "Choose what you shout as you punch"
-	var/input = stripped_input(src,"What do you want your battlecry to be? Max length of 5 characters.", ,"", 6)
-	if(input)
-		battlecry = input
-
-
-
-/mob/living/simple_animal/hostile/guardian/punch/AttackingTarget()
-	..()
-	if(istype(target, /mob/living))
-		src.say("[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]\
-		[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]")
-		playsound(loc, src.attack_sound, 50, 1, 1)
-		playsound(loc, src.attack_sound, 50, 1, 1)
-		playsound(loc, src.attack_sound, 50, 1, 1)
-		playsound(loc, src.attack_sound, 50, 1, 1)
-
-//Healer
-/mob/living/simple_animal/hostile/guardian/healer
-	a_intent = "harm"
-	friendly = "heals"
-	speed = 0
-	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	playstyle_string = "As a Support type, you may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent mob will warp them to your bluespace beacon after a short delay."
-	magic_fluff_string = "..And draw the CMO, a potent force of life...and death."
-	tech_fluff_string = "Boot sequence complete. Medical modules active. Bluespace modules activated. Holoparasite swarm online."
-	var/turf/simulated/floor/beacon
-	var/beacon_cooldown = 0
-	var/toggle = FALSE
-
-/mob/living/simple_animal/hostile/guardian/healer/New()
-	..()
-	var/datum/atom_hud/medsensor = huds[DATA_HUD_MEDICAL_ADVANCED]
-	medsensor.add_hud_to(src)
-
-/mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
-	if(..())
-		if(toggle == TRUE)
-			if(iscarbon(target))
-				var/mob/living/carbon/C = target
-				C.adjustBruteLoss(-5)
-				C.adjustFireLoss(-5)
-				C.adjustOxyLoss(-5)
-				C.adjustToxLoss(-5)
-
-/mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
-	if(src.loc == summoner)
-		if(toggle)
-			a_intent = "harm"
-			speed = 0
-			damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
-			melee_damage_lower = 15
-			melee_damage_upper = 15
-			src << "<span class='danger'><B>You switch to combat mode.</span></B>"
-			toggle = FALSE
-		else
-			a_intent = "help"
-			speed = 1
-			damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-			melee_damage_lower = 0
-			melee_damage_upper = 0
-			src << "<span class='danger'><B>You switch to healing mode.</span></B>"
-			toggle = TRUE
-	else
-		src << "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>"
-
-
-/mob/living/simple_animal/hostile/guardian/healer/verb/Beacon()
-	set name = "Place Bluespace Beacon"
-	set category = "Guardian"
-	set desc = "Mark a floor as your beacon point, allowing you to warp targets to it. Your beacon will not work in unfavorable atmospheric conditions."
-	if(beacon_cooldown<world.time)
-		var/turf/beacon_loc = get_turf(src.loc)
-		if(istype(beacon_loc, /turf/simulated/floor))
-			var/turf/simulated/floor/F = beacon_loc
-			F.icon = 'icons/turf/floors.dmi'
-			F.name = "bluespace recieving pad"
-			F.desc = "A recieving zone for bluespace teleportations. Building a wall over it should disable it."
-			F.icon_state = "light_on-w"
-			src << "<span class='danger'><B>Beacon placed! You may now warp targets to it, including your user, via Alt+Click. </span></B>"
-			if(beacon)
-				beacon.ChangeTurf(/turf/simulated/floor/plating)
-			beacon = F
-			beacon_cooldown = world.time+3000
-
-	else
-		src << "<span class='danger'><B>Your power is on cooldown. You must wait five minutes between placing beacons.</span></B>"
-
-/mob/living/simple_animal/hostile/guardian/healer/AltClickOn(atom/movable/A)
-	if(!istype(A))
-		return
-	if(src.loc == summoner)
-		src << "<span class='danger'><B>You must be manifested to warp a target!</span></B>"
-		return
-	if(!beacon)
-		src << "<span class='danger'><B>You need a beacon placed to warp things!</span></B>"
-		return
-	if(!Adjacent(A))
-		src << "<span class='danger'><B>You must be adjacent to your target!</span></B>"
-		return
-	if((A.anchored))
-		src << "<span class='danger'><B>Your target cannot be anchored!</span></B>"
-		return
-	src << "<span class='danger'><B>You begin to warp [A]</span></B>"
-	if(do_mob(src, A, 50))
-		if(!A.anchored)
-			if(src.beacon) //Check that the beacon still exists and is in a safe place. No instant kills.
-				if(beacon.air)
-					var/datum/gas_mixture/Z = beacon.air
-					var/list/Z_gases = Z.gases
-					var/trace_gases = FALSE
-
-					for(var/id in Z_gases)
-						if(id in hardcoded_gases)
-							continue
-						trace_gases = TRUE
-						break
-					if((Z_gases["o2"] && Z_gases["o2"][MOLES] >= 16) && !Z_gases["plasma"] && (!Z_gases["co2"] || Z_gases["co2"][MOLES] < 10) && !trace_gases)
-						if((Z.temperature > 270) && (Z.temperature < 360))
-							var/pressure = Z.return_pressure()
-							if((pressure > 20) && (pressure < 550))
-								PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(A))
-								do_teleport(A, beacon, 0)
-								PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(A))
-						else
-							src << "<span class='danger'><B>The beacon isn't in a safe location!</span></B>"
-					else
-						src << "<span class='danger'><B>The beacon isn't in a safe location!</span></B>"
-			else
-				src << "<span class='danger'><B>You need a beacon to warp things!</span></B>"
-	else
-		src << "<span class='danger'><B>You need to hold still!</span></B>"
-
-
-///////////////////Ranged
-/obj/item/projectile/guardian
-	name = "crystal spray"
-	icon_state = "guardian"
-	damage = 5
-	damage_type = BRUTE
-	armour_penetration = 100
-
-/mob/living/simple_animal/hostile/guardian/ranged
-	a_intent = "help"
-	friendly = "quietly assesses"
-	melee_damage_lower = 10
-	melee_damage_upper = 10
-	damage_coeff = list(BRUTE = 0.9, BURN = 0.9, TOX = 0.9, CLONE = 0.9, STAMINA = 0, OXY = 0.9)
-	projectiletype = /obj/item/projectile/guardian
-	ranged_cooldown_cap = 0
-	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
-	ranged = 1
-	range = 13
-	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit."
-	magic_fluff_string = "..And draw the Sentinel, an alien master of ranged combat."
-	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Holoparasite swarm online."
-	see_invisible = SEE_INVISIBLE_MINIMUM
-	see_in_dark = 8
-	var/list/snares = list()
-	var/toggle = FALSE
-
-/mob/living/simple_animal/hostile/guardian/ranged/ToggleMode()
-	if(src.loc == summoner)
-		if(toggle)
-			ranged = 1
-			melee_damage_lower = 10
-			melee_damage_upper = 10
-			alpha = 255
-			range = 13
-			incorporeal_move = 0
-			src << "<span class='danger'><B>You switch to combat mode.</span></B>"
-			toggle = FALSE
-		else
-			ranged = 0
-			melee_damage_lower = 0
-			melee_damage_upper = 0
-			alpha = 60
-			range = 255
-			incorporeal_move = 1
-			src << "<span class='danger'><B>You switch to scout mode.</span></B>"
-			toggle = TRUE
-	else
-		src << "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>"
-
-/mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
-	if(see_invisible == SEE_INVISIBLE_MINIMUM)
-		src << "<span class='notice'>You deactivate your night vision.</span>"
-		see_invisible = SEE_INVISIBLE_LIVING
-	else
-		src << "<span class='notice'>You activate your night vision.</span>"
-		see_invisible = SEE_INVISIBLE_MINIMUM
-
-/mob/living/simple_animal/hostile/guardian/ranged/verb/Snare()
-	set name = "Set Surveillance Trap"
-	set category = "Guardian"
-	set desc = "Set an invisible trap that will alert you when living creatures walk over it. Max of 5"
-	if(src.snares.len <6)
-		var/turf/snare_loc = get_turf(src.loc)
-		var/obj/item/effect/snare/S = new /obj/item/effect/snare(snare_loc)
-		S.spawner = src
-		S.name = "[get_area(snare_loc)] trap ([rand(1, 1000)])"
-		src.snares |= S
-		src << "<span class='danger'><B>Surveillance trap deployed!</span></B>"
-	else
-		src << "<span class='danger'><B>You have too many traps deployed. Delete some first.</span></B>"
-
-/mob/living/simple_animal/hostile/guardian/ranged/verb/DisarmSnare()
-	set name = "Remove Surveillance Trap"
-	set category = "Guardian"
-	set desc = "Disarm unwanted surveillance traps."
-	var/picked_snare = input(src, "Pick which trap to disarm", "Disarm Trap") as null|anything in src.snares
-	if(picked_snare)
-		src.snares -= picked_snare
-		qdel(picked_snare)
-		src << "<span class='danger'><B>Snare disarmed.</span></B>"
-
-/obj/item/effect/snare
-	name = "snare"
-	desc = "You shouldn't be seeing this!"
-	var/mob/living/spawner
-	invisibility = 1
-
-
-/obj/item/effect/snare/Crossed(AM as mob|obj)
-	if(istype(AM, /mob/living/))
-		var/turf/snare_loc = get_turf(src.loc)
-		if(spawner)
-			spawner << "<span class='danger'><B>[AM] has crossed your surveillance trap at [get_area(snare_loc)].</span></B>"
-			if(istype(spawner, /mob/living/simple_animal/hostile/guardian))
-				var/mob/living/simple_animal/hostile/guardian/G = spawner
-				if(G.summoner)
-					G.summoner << "<span class='danger'><B>[AM] has crossed your surveillance trap at [get_area(snare_loc)].</span></B>"
-
-////Bomb
-/mob/living/simple_animal/hostile/guardian/bomb
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
-	range = 13
-	playstyle_string = "As an explosive type, you have only moderate close combat abilities, but are capable of converting any adjacent item into a disguised bomb via alt click."
-	magic_fluff_string = "..And draw the Scientist, master of explosive death."
-	tech_fluff_string = "Boot sequence complete. Explosive modules active. Holoparasite swarm online."
-	var/bomb_cooldown = 0
-
-/mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
-	if(!istype(A))
-		return
-	if(src.loc == summoner)
-		src << "<span class='danger'><B>You must be manifested to create bombs!</span></B>"
-		return
-	if(istype(A, /obj/))
-		if(bomb_cooldown <= world.time && !stat)
-			var/obj/item/weapon/guardian_bomb/B = new /obj/item/weapon/guardian_bomb(get_turf(A))
-			src << "<span class='danger'><B>Success! Bomb armed!</span></B>"
-			bomb_cooldown = world.time + 200
-			B.spawner = src
-			B.disguise (A)
-		else
-			src << "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>"
-
-/obj/item/weapon/guardian_bomb
-	name = "bomb"
-	desc = "You shouldn't be seeing this!"
-	var/obj/stored_obj
-	var/mob/living/spawner
-
-
-/obj/item/weapon/guardian_bomb/proc/disguise(var/obj/A)
-	A.loc = src
-	stored_obj = A
-	anchored = A.anchored
-	density = A.density
-	appearance = A.appearance
-	spawn(600)
-		stored_obj.loc = get_turf(src.loc)
-		spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"
-		qdel(src)
-
-/obj/item/weapon/guardian_bomb/proc/detonate(var/mob/living/user)
-	user << "<span class='danger'><B>The [src] was boobytrapped!</span></B>"
-	spawner << "<span class='danger'><B>Success! Your trap caught [user]</span></B>"
-	stored_obj.loc = get_turf(src.loc)
-	playsound(get_turf(src),'sound/effects/Explosion2.ogg', 200, 1)
-	user.ex_act(2)
-	qdel(src)
-
-/obj/item/weapon/guardian_bomb/attackby(mob/living/user)
-	detonate(user)
-	return
-
-/obj/item/weapon/guardian_bomb/pickup(mob/living/user)
-	detonate(user)
-	return
-
-/obj/item/weapon/guardian_bomb/examine(mob/user)
-	stored_obj.examine(user)
-	if(get_dist(user,src)<=2)
-		user << "<span class='notice'>Looks odd!</span>"
-
-
 ////////Creation
 
 /obj/item/weapon/guardiancreator
@@ -609,7 +247,7 @@
 	var/used_message = "All the cards seem to be blank now."
 	var/failure_message = "..And draw a card! It's...blank? Maybe you should try again later."
 	var/ling_failure = "The deck refuses to respond to a souless creature such as you."
-	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive")
+	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Protector", "Charger")
 	var/random = TRUE
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
@@ -660,6 +298,15 @@
 		if("Explosive")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/bomb
 
+		if("Lightning")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/beam
+
+		if("Protector")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/protector
+
+		if("Charger")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/charger
+
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user)
 	G.summoner = user
 	G.key = key
@@ -708,6 +355,9 @@
 	failure_message = "<B>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</B>"
 	ling_failure = "The holoparasites recoil in horror. They want nothing to do with a creature like you."
 
+/obj/item/weapon/guardiancreator/tech/choose/traitor
+	possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning")
+
 /obj/item/weapon/guardiancreator/tech/choose
 	random = FALSE
 
@@ -717,7 +367,7 @@
 	info = {"<b>A list of Holoparasite Types</b><br>
 
  <br>
- <b>Chaos</b>: Ignites enemies on touch and teleports them at random on attack. Automatically extinguishes the user if they catch on fire.<br>
+ <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the parasite. Automatically extinguishes the user if they catch on fire.<br>
  <br>
  <b>Standard</b>:Devastating close combat attacks and high damage resist. Can smash through weak walls.<br>
  <br>
@@ -725,7 +375,9 @@
  <br>
  <b>Support</b>:Has two modes. Combat; Medium power attacks and damage resist. Healer; Heals instead of attack, but has low damage resist and slow movement. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
  <br>
- <b>Explosive</b>: High damage resist and medium power attack. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
+ <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
+ <br>
+ <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them.<br>
 "}
 
 /obj/item/weapon/paper/guardian/update_icon()
@@ -737,6 +389,6 @@
 
 /obj/item/weapon/storage/box/syndie_kit/guardian/New()
 	..()
-	new /obj/item/weapon/guardiancreator/tech/choose(src)
+	new /obj/item/weapon/guardiancreator/tech/choose/traitor(src)
 	new /obj/item/weapon/paper/guardian(src)
 	return

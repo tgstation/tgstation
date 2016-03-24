@@ -182,6 +182,7 @@
 /atom/proc/contents_explosion(severity, target)
 	for(var/atom/A in contents)
 		A.ex_act(severity, target)
+		CHECK_TICK
 
 /atom/proc/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -193,9 +194,10 @@
 	return
 
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
-	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav.
-		spawn(2)
-			step(AM,  turn(AM.dir, 180))
+	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
+		spawn(2) //very short wait, so we can actually see the impact.
+			if(AM && isturf(AM.loc))
+				step(AM, turn(AM.dir, 180))
 
 var/list/blood_splatter_icons = list()
 
@@ -274,20 +276,6 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/rejects_blood()
 	return 0
-
-/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if( istype(src, /turf/simulated) )
-		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
-		if(M.reagents)
-			M.reagents.trans_to(this, M.reagents.total_volume / 10)
-		// Make toxins vomit look different
-		if(toxvomit)
-			this.icon_state = "vomittox_[pick(1,4)]"
-
-		/*for(var/datum/disease/D in M.viruses)
-			var/datum/disease/newDisease = D.Copy(1)
-			this.viruses += newDisease
-			newDisease.holder = this*/
 
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M)
@@ -370,6 +358,10 @@ var/list/blood_splatter_icons = list()
 	. = ..()
 	sleep(1)
 
+//This is called just before maps and objects are initialized, use it to spawn other mobs/objects
+//effects at world start up without causing runtimes
+/atom/proc/spawn_atom_to_world()
+
 //This will be called after the map and objects are loaded
 /atom/proc/initialize()
 	return
@@ -381,3 +373,20 @@ var/list/blood_splatter_icons = list()
 //the sight changes to give to the mob whose perspective is set to that atom (e.g. A mob with nightvision loses its nightvision while looking through a normal camera)
 /atom/proc/update_remote_sight(mob/living/user)
 	return
+
+/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
+	if(istype(src,/turf/simulated) )
+		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
+		// Make toxins vomit look different
+		if(toxvomit)
+			V.icon_state = "vomittox_[pick(1,4)]"
+		if(M.reagents)
+			clear_reagents_to_vomit_pool(M,V)
+
+/atom/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
+	M.reagents.trans_to(V, M.reagents.total_volume / 10)
+	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
+		if(istype(R, /datum/reagent/consumable))
+			var/datum/reagent/consumable/nutri_check = R
+			if(nutri_check.nutriment_factor >0)
+				M.reagents.remove_reagent(R.id,R.volume)

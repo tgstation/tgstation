@@ -14,8 +14,9 @@
 	if (src.handle_spam_prevention(msg,MUTE_DEADCHAT))
 		return
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	sanitize_russian(log_dsay("[key_name(src)] : [msg]"))
+	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	log_dsay("[key_name(src)] : [msg]")
+	msg = sanitize(msg)
 
 	if (!msg)
 		return

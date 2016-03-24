@@ -134,6 +134,7 @@
 	pump()
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/dropped()
+	..()
 	guns_left = 0
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
@@ -285,6 +286,8 @@
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		icon_state = "[icon_state]-sawn"
+		if(current_skin)
+			current_skin = "[current_skin]-sawn"
 		w_class = 3
 		item_state = "gun"
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
@@ -311,7 +314,7 @@
 	burst_size = 1
 	fire_delay = 0
 	pin = /obj/item/device/firing_pin/implant/pindicate
-	action_button_name = null
+	actions_types = list()
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted
 	pin = /obj/item/device/firing_pin

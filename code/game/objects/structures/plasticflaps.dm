@@ -23,7 +23,7 @@
 		return prob(60)
 
 	var/obj/structure/bed/B = A
-	if (istype(A, /obj/structure/bed) && (B.buckled_mob || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass
+	if (istype(A, /obj/structure/bed) && (B.buckled_mobs.len || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass
 		return 0
 
 	if (istype(A, /obj/structure/closet/cardboard))

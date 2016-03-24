@@ -70,6 +70,12 @@ proc/russian_html2text(msg)
 proc/russian_text2html(msg)
 	return replacetext(msg, "&#255;", "&#1103;")
 
+proc/rus2norm(msg)
+	return replacetext(msg, "&#255;", "ÿ")
+
+proc/html2norm(msg)
+	return	replacetext(msg, "&#1103;", "ÿ")
+
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(var/t,var/list/repl_chars = null)
 	return rhtml_encode(sanitize_simple(t,repl_chars))

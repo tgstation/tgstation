@@ -32,7 +32,7 @@
 	dna.species.spec_death(gibbed, src)
 
 	if(ticker && ticker.mode)
-		sql_report_death(src)
+//		sql_report_death(src)
 		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	return ..(gibbed)
 

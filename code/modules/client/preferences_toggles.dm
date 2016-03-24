@@ -216,8 +216,8 @@ var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost",
 	set name = "Choose Ghost Form"
 	set category = "Preferences"
 	set desc = "Choose your preferred ghostly appearance."
-	if(!is_content_unlocked())
-		return
+//	if(!is_content_unlocked())
+//		return
 	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
 	if(new_form)
 		prefs.ghost_form = new_form
@@ -231,8 +231,8 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set name = "Choose Ghost Orbit"
 	set category = "Preferences"
 	set desc = "Choose your preferred ghostly orbit."
-	if(!is_content_unlocked())
-		return
+//	if(!is_content_unlocked())
+//		return
 	var/new_orbit = input(src, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND",null) as null|anything in ghost_orbits
 	if(new_orbit)
 		prefs.ghost_orbit = new_orbit
@@ -280,11 +280,11 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	else
 		src << "<span class='notice'>You will no longer examine things you click on.</span>"
 
-/client/verb/toggle_announcment_sound()
-	set name = "Hear/Silence Announcments"
+/client/verb/toggle_announcement_sound()
+	set name = "Hear/Silence Announcements"
 	set category = "Preferences"
-	set desc = ".Toggles hearing Central Command, Captain, VOX, and other announcment sounds"
-	prefs.toggles ^= SOUND_ANNOUNCMENTS
-	src << "You will now [(prefs.toggles & SOUND_ANNOUNCMENTS) ? "hear announcment sounds" : "no longer hear announcments"]."
+	set desc = ".Toggles hearing Central Command, Captain, VOX, and other announcement sounds"
+	prefs.toggles ^= SOUND_ANNOUNCEMENTS
+	src << "You will now [(prefs.toggles & SOUND_ANNOUNCEMENTS) ? "no longer hear announcements" : "hear announcement sounds"]."
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

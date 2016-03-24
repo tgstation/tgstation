@@ -51,3 +51,8 @@
 
 /mob/living/carbon/brain/update_damage_hud()
 	return //no red circles for brain
+
+/mob/living/carbon/brain/can_be_revived()
+	. = 1
+	if(!container || health <= config.health_threshold_dead)
+		return 0

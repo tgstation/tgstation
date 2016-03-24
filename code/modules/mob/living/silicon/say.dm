@@ -17,7 +17,7 @@
 				M << renderedAI
 			else
 				M << rendered
-		if(M in dead_mob_list)
+		if(isobserver(M))
 			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
 
 /mob/living/silicon/binarycheck()

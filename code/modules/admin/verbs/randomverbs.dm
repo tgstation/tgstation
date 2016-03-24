@@ -30,7 +30,7 @@
 		return
 
 	message_admins("[key_name_admin(src)] has started answering [key_name(M.key, 0, 0)]'s prayer.")
-	var/msg = sanitize_russian(input("Message:", text("Subtle PM to [M.key]")) as text)
+	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text
 
 	if (!msg)
 		message_admins("[key_name_admin(src)] decided not to answer [key_name(M.key, 0, 0)]'s prayer")
@@ -38,10 +38,10 @@
 	if(usr)
 		if (usr.client)
 			if(usr.client.holder)
-				M << "<i>You hear a voice in your head... <b>[msg]</i></b>"
+				M << "<i>You hear a voice in your head... <b>[sanitize_russian(msg)]</i></b>"
 
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
-	message_admins("<span class='adminnotice'><b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>")
+	message_admins("<span class='adminnotice'><b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [sanitize_russian(msg)]</span>")
 	feedback_add_details("admin_verb","SMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_world_narrate()
@@ -52,13 +52,13 @@
 		src << "Only administrators may use this command."
 		return
 
-	var/msg = sanitize_russian(input("Message:", text("Enter the text you wish to appear to everyone:")) as text)
+	var/msg = input("Message:", text("Enter the text you wish to appear to everyone:")) as text
 
 	if (!msg)
 		return
-	world << "[msg]"
+	world << "[sanitize_russian(msg)]"
 	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
-	message_admins("<span class='adminnotice'><b> GlobalNarrate: [key_name_admin(usr)] :</b> [msg]<BR></span>")
+	message_admins("<span class='adminnotice'><b> GlobalNarrate: [key_name_admin(usr)] :</b> [sanitize_russian(msg)]<BR></span>")
 	feedback_add_details("admin_verb","GLN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_direct_narrate(mob/M)
@@ -75,14 +75,14 @@
 	if(!M)
 		return
 
-	var/msg = sanitize_russian(input("Message:", text("Enter the text you wish to appear to your target:")) as text)
+	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text
 
 	if( !msg )
 		return
 
-	M << msg
+	M << sanitize_russian(msg)
 	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
-	message_admins("<span class='adminnotice'><b> DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]):</b> [msg]<BR></span>")
+	message_admins("<span class='adminnotice'><b> DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]):</b> [sanitize_russian(msg)]<BR></span>")
 	feedback_add_details("admin_verb","DIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_local_narrate(atom/A)
@@ -97,14 +97,14 @@
 	var/range = input("Range:", "Narrate to mobs within how many tiles:", 7) as num
 	if(!range)
 		return
-	var/msg = sanitize_russian(input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text)
+	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text
 	if (!msg)
 		return
 	for(var/mob/M in view(range,A))
-		M << msg
+		M << sanitize_russian(msg)
 
 	log_admin("LocalNarrate: [key_name(usr)] at ([get_area(A)]): [msg]")
-	message_admins("<span class='adminnotice'><b> LocalNarrate: [key_name_admin(usr)] at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>[get_area(A)]</a>):</b> [msg]<BR></span>")
+	message_admins("<span class='adminnotice'><b> LocalNarrate: [key_name_admin(usr)] at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>[get_area(A)]</a>):</b> [sanitize_russian(msg)]<BR></span>")
 	feedback_add_details("admin_verb","LN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_godmode(mob/M in mob_list)
@@ -429,11 +429,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = sanitize_russian(input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null)
+	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
 	if(!input)
 		return
 
 	log_admin("Admin [key_name(usr)] has added a new AI law - [input]")
+	input = sanitize_russian(input)
 	message_admins("Admin [key_name_admin(usr)] has added a new AI law - [input]")
 
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
@@ -454,7 +455,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!istype(M))
 		alert("Cannot revive a ghost")
 		return
-	M.revive()
+	M.revive(full_heal = 1, admin_revive = 1)
 
 	log_admin("[key_name(usr)] healed / revived [key_name(M)]")
 	message_admins("<span class='danger'>Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!</span>")
@@ -466,7 +467,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = sanitize_russian(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null, 1)
+	var/input = sanitize_russian(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null)
 	if(!input)
 		return
 
@@ -481,6 +482,19 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report")
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/cmd_change_command_name()
+	set category = "Special Verbs"
+	set name = "Change Command Name"
+	if(!holder)
+		src << "Only administrators may use this command."
+		return
+	var/input = sanitize_russian(input(usr, "Please input a new name for Central Command.", "What?", "") as text|null)
+	if(!input)
+		return
+	change_command_name(input)
+	message_admins("[key_name_admin(src)] has changed Central Command's name to [input]")
+	log_admin("[key_name(src)] has changed the Central Command name to: [input]")
 
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
 	set category = "Admin"
@@ -963,6 +977,10 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	for(var/datum/atom_hud/H in huds)
 		if(istype(H, /datum/atom_hud/antag) || istype(H, /datum/atom_hud/data/human/security/advanced))
 			(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
+
+	for(var/datum/gang/G in ticker.mode.gangs)
+		var/datum/atom_hud/antag/H = G.ganghud
+		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
 	usr << "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"]."
 	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")

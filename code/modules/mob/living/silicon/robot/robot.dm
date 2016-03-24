@@ -166,7 +166,11 @@
 	if(module)
 		return
 
-	designation = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	if(!config.forbid_secborg)
+		modulelist += "Security"
+
+	designation = input("Please, select a module!", "Robot", null, null) in modulelist
 	var/animation_length = 0
 
 	if(module)
@@ -453,7 +457,7 @@
 		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 			if(src == user)
 				user << "<span class='notice'>You start fixing youself...</span>"
-				if(!do_after(user, 50/W.toolspeed, target = src))
+				if(!do_after(user, 50, target = src))
 					return
 
 			adjustBruteLoss(-30)
@@ -999,11 +1003,12 @@
 	set category = "IC"
 	set src = usr
 
+	if(incapacitated())
+		return
 	var/obj/item/W = get_active_hand()
 	if(W)
 		W.attack_self(src)
 
-	return
 
 /mob/living/silicon/robot/proc/SetLockdown(state = 1)
 	// They stay locked down if their wire is cut.
@@ -1188,9 +1193,6 @@
 			if(health < -maxHealth*0.5)
 				if(uneq_module(module_state_1))
 					src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
-	diag_hud_set_health()
-	diag_hud_set_status()
-	update_health_hud()
 
 /mob/living/silicon/robot/update_sight()
 	if(!client)
@@ -1247,25 +1249,9 @@
 				adjust_blindness(-1)
 				update_canmove()
 				update_headlamp()
-
-/mob/living/silicon/robot/update_vision_overlays()
-	if(!client)
-		return
-
-	if(stat == DEAD) //if dead we just remove all vision impairments
-		clear_fullscreens()
-		return
-
-	if(eye_blind)
-		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else
-		clear_fullscreen("blind")
-
-	if(client.eye != src)
-		var/atom/A = client.eye
-		A.get_remote_view_fullscreens(src)
-	else
-		clear_fullscreen("remote_view", 0)
+	diag_hud_set_status()
+	diag_hud_set_health()
+	update_health_hud()
 
 /mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
 	..()
@@ -1283,3 +1269,12 @@
 			Stun(3)
 	..()
 
+/mob/living/silicon/robot/revive(full_heal = 0, admin_revive = 0)
+	if(..()) //successfully ressuscitated from death
+		if(camera && !wires.is_cut(WIRE_CAMERA))
+			camera.toggle_cam(src,0)
+		update_headlamp()
+		if(admin_revive)
+			locked = 1
+		notify_ai(1)
+		. = 1

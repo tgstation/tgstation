@@ -217,6 +217,8 @@
 		else if (istype(thing, /mob/living))
 			. = 1
 			var/mob/living/L = thing
+			if("mining" in L.faction)
+				continue
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.
 				L.adjust_fire_stacks(20)
@@ -238,10 +240,11 @@
 /turf/simulated/floor/plating/lava/smooth
 	name = "lava"
 	baseturf = /turf/simulated/floor/plating/lava/smooth
-	smooth = SMOOTH_TRUE
 	icon = 'icons/turf/floors/lava.dmi'
-	icon_state = "smooth"
-	canSmoothWith = list(/turf/simulated/wall, /turf/simulated/mineral, /turf/simulated/floor/plating/lava/smooth)
+	icon_state = "unsmooth"
+//	smooth = SMOOTH_BORDER | SMOOTH_TRUE
+	canSmoothWith = list(/turf/simulated/wall, /turf/simulated/mineral, /turf/simulated/floor/plating/lava/smooth, /turf/simulated/floor/plating/lava/smooth/lava_land_surface
+	)
 
 /turf/simulated/floor/plating/lava/smooth/airless
 	oxygen = 0

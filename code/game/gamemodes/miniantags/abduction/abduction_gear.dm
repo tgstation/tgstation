@@ -11,10 +11,9 @@
 	icon_state = "vest_stealth"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	origin_tech = "materials=5;biotech=4;powerstorage=5"
+	origin_tech = "materials=5;biotech=4;powerstorage=5;abductor=3"
 	armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
-	action_button_name = "Activate"
-	action_button_is_hands_free = 1
+	actions_types = list(/datum/action/item_action/hands_free/activate)
 	var/mode = VEST_STEALTH
 	var/stealth_active = 0
 	var/combat_cooldown = 10
@@ -29,20 +28,20 @@
 			DeactivateStealth()
 			armor = combat_armor
 			icon_state = "vest_combat"
-			if(istype(loc, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_wear_suit()
-			return
 		if(VEST_COMBAT)// TO STEALTH
 			mode = VEST_STEALTH
 			armor = stealth_armor
 			icon_state = "vest_stealth"
-			if(istype(loc, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_wear_suit()
-			return
+	if(istype(loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = loc
+		H.update_inv_wear_suit()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
-
+/obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
+	if(slot == slot_wear_suit) //we only give the mob the ability to activate the vest if he's actually wearing it.
+		return 1
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
@@ -137,7 +136,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gizmo_scan"
 	item_state = "silencer"
-	origin_tech = "materials=5;magnets=5;bluespace=6"
+	origin_tech = "materials=5;magnets=5;bluespace=6;abductor=4"
 	var/mode = GIZMO_SCAN
 	var/mob/living/marked = null
 	var/obj/machinery/abductor/console/console
@@ -218,7 +217,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "silencer"
 	item_state = "gizmo"
-	origin_tech = "materials=5;magnets=5"
+	origin_tech = "materials=5;magnets=5;abductor=3"
 
 /obj/item/device/abductor/silencer/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
@@ -262,7 +261,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "implant"
 	activated = 1
-	origin_tech = "materials=2;biotech=3;magnets=4;bluespace=5"
+	origin_tech = "materials=2;biotech=3;magnets=4;bluespace=5;abductor=5"
 	var/obj/machinery/abductor/pad/home
 	var/cooldown = 30
 
@@ -324,7 +323,7 @@
 	pin = /obj/item/device/firing_pin/alien
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
-	origin_tech = "combat=5;materials=4;powerstorage=3"
+	origin_tech = "combat=5;materials=4;powerstorage=3;abductor=3"
 
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"
@@ -363,10 +362,10 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
 	slot_flags = SLOT_BELT
-	origin_tech = "materials=6;combat=5;biotech=7"
+	origin_tech = "materials=6;combat=5;biotech=7;abductor=4"
 	force = 7
 	w_class = 3
-	action_button_name = "Toggle Mode"
+	actions_types = list(/datum/action/item_action/toggle_mode)
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
 	mode = (mode+1)%BATON_MODES
@@ -519,6 +518,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "cuff_white" // Needs sprite
 	breakouttime = 450
 	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
+	origin_tech = "materials=2;magnets=5;abductor=2"
 
 /obj/item/weapon/restraints/handcuffs/energy/used
 	desc = "energy discharge"
@@ -547,26 +547,32 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/item/weapon/scalpel/alien
 	name = "alien scalpel"
 	icon = 'icons/obj/abductor.dmi'
+	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/hemostat/alien
 	name = "alien hemostat"
 	icon = 'icons/obj/abductor.dmi'
+	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/retractor/alien
 	name = "alien retractor"
 	icon = 'icons/obj/abductor.dmi'
+	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/circular_saw/alien
 	name = "alien saw"
 	icon = 'icons/obj/abductor.dmi'
+	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/surgicaldrill/alien
 	name = "alien drill"
 	icon = 'icons/obj/abductor.dmi'
+	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/cautery/alien
 	name = "alien cautery"
 	icon = 'icons/obj/abductor.dmi'
+	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/clothing/head/helmet/abductor
 	name = "agent headgear"
@@ -574,7 +580,8 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
 	blockTracking = 1
-	origin_tech = "materials=6;magnets=5"
+	origin_tech = "materials=6;magnets=5;abductor=3"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 // Operating Table / Beds / Lockers
 
@@ -589,17 +596,88 @@ Congratulations! You are now trained for xenobiology research!"}
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon = 'icons/obj/abductor.dmi'
+	buildstacktype = /obj/item/stack/sheet/mineral/abductor
 	icon_state = "bed"
+
+/obj/structure/table_frame/abductor
+	name = "alien table frame"
+	desc = "A sturdy table frame made from alien alloy."
+	icon_state = "alien_frame"
+	framestack = /obj/item/stack/sheet/mineral/abductor
+	framestackamount = 1
+	density = 1
+
+/obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/wrench))
+		user << "<span class='notice'>You start disassembling [src]...</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 30/I.toolspeed, target = src))
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			for(var/i = 1, i <= framestackamount, i++)
+				new framestack(get_turf(src))
+			qdel(src)
+			return
+	if(istype(I, /obj/item/stack/sheet/mineral/abductor))
+		var/obj/item/stack/sheet/P = I
+		if(P.get_amount() < 1)
+			user << "<span class='warning'>You need one alien alloy sheet to do this!</span>"
+			return
+		user << "<span class='notice'>You start adding [P] to [src]...</span>"
+		if(do_after(user, 50, target = src))
+			P.use(1)
+			new /obj/structure/table/abductor(src.loc)
+			qdel(src)
+		return
 
 /obj/structure/table/abductor
 	name = "alien table"
 	desc = "Advanced flat surface technology at work!"
 	icon = 'icons/obj/smooth_structures/alien_table.dmi'
 	icon_state = "alien_table"
+	buildstack = /obj/item/stack/sheet/mineral/abductor
+	framestack = /obj/item/stack/sheet/mineral/abductor
+	buildstackamount = 1
+	framestackamount = 1
 	canSmoothWith = null
+	frame = /obj/structure/table_frame/abductor
+
 
 /obj/structure/closet/abductor
 	name = "alien locker"
 	desc = "Contains secrets of the universe."
 	icon_state = "abductor"
 	icon_door = "abductor"
+	can_weld_shut = FALSE
+	material_drop = /obj/item/stack/sheet/mineral/abductor
+
+/obj/structure/door_assembly/door_assembly_abductor
+	name = "alien airlock assembly"
+	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
+	typetext = "abductor"
+	icontext = "abductor"
+	airlock_type = /obj/machinery/door/airlock/abductor
+	anchored = 1
+	state = 1
+
+/obj/structure/door_assembly/door_assembly_abductor/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.remove_fuel(0,user))
+			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
+								"You start to disassemble the airlock assembly...")
+			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+			if(do_after(user, 40/W.toolspeed, target = src))
+				if( !WT.isOn() )
+					return
+				user << "<span class='notice'>You disassemble the airlock assembly.</span>"
+				new /obj/item/stack/sheet/mineral/abductor(get_turf(src), 4)
+				qdel(src)
+		else
+			return
+	else if(istype(W, /obj/item/weapon/airlock_painter))
+		return // no repainting
+	else if(istype(W, /obj/item/stack/sheet))
+		return // no material modding
+	else
+		..()

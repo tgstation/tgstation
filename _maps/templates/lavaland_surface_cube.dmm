@@ -1,0 +1,38 @@
+"a" = (/turf/simulated/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"b" = (/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"c" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"d" = (/turf/indestructible/riveted,/area/lavaland/surface/outdoors)
+"e" = (/obj/machinery/wish_granter,/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+aaaaabbaaaaaaaaaaaaaaaaaabbbbb
+aabaaaaaaaaaaaaaaaaaaaaaabbbaa
+aaaabaaabaabbbbbbbbbbbaabbbbaa
+aaaabaaaaababcbbbaabbbaabbaaaa
+aaabbaaaaaaabbbbbaabbbaabbaaaa
+aaabbaaaaaaabbbbbaabbbaabbaaaa
+aabbbaaaaaabbbcbbbbbbabcbbaaaa
+aaaaaaaaaaabbbbbcbbbbbbbbbaaaa
+aaaaaaaaaaaabcbbbbbcbbbbbbaaaa
+aaaaaaaaaaaabbbcbbbbbbbbbbaaaa
+aaaaaabbbaacbcbbcbbbbabbbcaaaa
+aaaaaabbbaabbdddddcbbbbbbbbbba
+aaaaaabbbbabcdddddbcbbbbbbcbba
+bbaaabbbbbbbcddeddcbcbbbbbbbba
+aabbabbbcbbbbdddddcbbbbcbbbbba
+bbababbbbbbbcdddddbbbbbbbbabba
+bbbbbbbbbbbccbbbcbcbbbcbaabbba
+bcbabbcbbcbbbbcbccbbbbbbaabbba
+bbbabbbbbbbcbbbaabbabbbbaabbba
+bbabbbbbbbbbbbbaaaaaabaaaabbba
+bbabbbcbbbbbbbcbaaaaaaaaaabbaa
+abbbbbbbbbbbbbbbaaaaaaaaabbbaa
+aabbbbbbbbbbbcaaaaaaaaaaaaacaa
+aaabbbbbbbcbbbbaaaaaaaaaaaabaa
+aaabbbcbbbbbbbbbabbaaaaaaaabba
+aabbbbbbbbbbbbbbbbaaaaaaaaabaa
+aabbbbbbbcbbbbbbbbbaaaaaaaabba
+aaaaabbbbbbbbbbbacbaaaaaaaabba
+baabaabbbbbbcbbbbaaaaaaaaaabba
+aaabbbaabbbbbbbbbaaaaaaaaaabba
+"}

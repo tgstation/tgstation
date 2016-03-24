@@ -108,7 +108,7 @@
 		return
 	if(!istype(user.loc, /turf/)) //No magically doing it from inside closets
 		return
-	if(target.buckled || target.buckled_mob)
+	if(target.buckled || target.buckled_mobs.len)
 		return
 	if(target.mob_size > MOB_SIZE_HUMAN)
 		user << "<span class='warning'>[target] doesn't fit inside [src]!</span>"
@@ -211,7 +211,7 @@
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		last_sound = world.time
 	sleep(5)
-	if(gc_destroyed)
+	if(qdeleted(src))
 		return
 	var/obj/structure/disposalholder/H = new()
 	newHolderDestination(H)
@@ -476,7 +476,7 @@
 	return
 
 /obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
-	if(!(user.sight & (SEEOBJS|SEEMOBS)))
+	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
 
 

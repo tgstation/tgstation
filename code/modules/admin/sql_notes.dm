@@ -185,9 +185,9 @@
 			server = config.server_name
 		var/regex/note = new("^(\\d{2}-\\w{3}-\\d{4}) \\| (.+) ~(\\w+)$", "i")
 		note.Find(notetext)
-		var/timestamp = note.group[2]
-		notetext = note.group[3]
-		var/adminckey = note.group[4]
+		var/timestamp = note.group[1]
+		notetext = note.group[2]
+		var/adminckey = note.group[3]
 		var/DBQuery/query_convert_time = dbcon.NewQuery("SELECT ADDTIME(STR_TO_DATE('[timestamp]','%d-%b-%Y'), '0')")
 		if(!query_convert_time.Execute())
 			var/err = query_convert_time.ErrorMsg()

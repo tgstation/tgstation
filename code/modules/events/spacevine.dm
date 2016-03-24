@@ -357,14 +357,14 @@
 		master.vines -= src
 		master.growth_queue -= src
 		if(!master.vines.len)
-			var/obj/item/seeds/kudzuseed/KZ = new(loc)
+			var/obj/item/seeds/kudzu/KZ = new(loc)
 			KZ.mutations |= mutations
 			KZ.potency = min(100, master.mutativness * 10)
 			KZ.production = (master.spread_cap / initial(master.spread_cap)) * 50
 	mutations = list()
 	SetOpacity(0)
-	if(buckled_mob)
-		unbuckle_mob()
+	if(buckled_mobs.len)
+		unbuckle_all_mobs(force=1)
 	return ..()
 
 /obj/effect/spacevine/proc/on_chem_effect(datum/reagent/R)
@@ -506,7 +506,7 @@
 	var/list/obj/effect/spacevine/queue_end = list()
 
 	for( var/obj/effect/spacevine/SV in growth_queue )
-		if(SV.gc_destroyed)
+		if(qdeleted(SV))
 			continue
 		i++
 		queue_end += SV
@@ -540,10 +540,10 @@
 		SM.on_grow(src)
 
 /obj/effect/spacevine/proc/entangle_mob()
-	if(!buckled_mob && prob(25))
+	if(!buckled_mobs.len && prob(25))
 		for(var/mob/living/V in src.loc)
 			entangle(V)
-			if(buckled_mob)
+			if(buckled_mobs.len)
 				break //only capture one mob at a time
 
 

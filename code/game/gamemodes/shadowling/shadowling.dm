@@ -168,7 +168,7 @@ Made by Xhuis
 	thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Dethralled</span>"
 	thrall_mind.special_role = null
 	for(var/obj/effect/proc_holder/spell/S in thrall_mind.spell_list)
-		thrall_mind.remove_spell(S)
+		thrall_mind.RemoveSpell(S)
 	if(kill && ishuman(thrall_mind.current)) //If dethrallization surgery fails, kill the mob as well as dethralling them
 		var/mob/living/carbon/human/H = thrall_mind.current
 		H.visible_message("<span class='warning'>[H] jerks violently and falls still.</span>", \
@@ -192,7 +192,7 @@ Made by Xhuis
 	ling_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Deshadowlinged</span>"
 	ling_mind.special_role = null
 	for(var/obj/effect/proc_holder/spell/S in ling_mind.spell_list)
-		ling_mind.remove_spell(S)
+		ling_mind.RemoveSpell(S)
 	var/mob/living/M = ling_mind.current
 	if(issilicon(M))
 		M.audible_message("<span class='notice'>[M] lets out a short blip.</span>", \
@@ -306,7 +306,7 @@ Made by Xhuis
 	shadow_hud.join_hud(shadow_mind.current)
 	set_antag_hud(shadow_mind.current, ((shadow_mind in shadows) ? "shadowling" : "thrall"))
 
-/datum/game_mode/proc/update_shadow_icons_removed(datum/mind/shadow_mind) //This should never actually occur, but it's here anyway.
+/datum/game_mode/proc/update_shadow_icons_removed(datum/mind/shadow_mind)
 	var/datum/atom_hud/antag/shadow_hud = huds[ANTAG_HUD_SHADOW]
 	shadow_hud.leave_hud(shadow_mind.current)
 	set_antag_hud(shadow_mind.current, null)

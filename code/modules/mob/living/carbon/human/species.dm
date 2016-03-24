@@ -119,6 +119,12 @@
 		return 0
 	return 1
 
+/datum/species/proc/on_species_loss(mob/living/carbon/C)
+	if(C.dna.species)
+		if(C.dna.species.exotic_blood)
+			var/datum/reagent/EB = C.dna.species.exotic_blood
+			C.reagents.del_reagent(initial(EB.id))
+
 /datum/species/proc/update_base_icon_state(mob/living/carbon/human/H)
 	if(H.disabilities & HUSK)
 		H.remove_overlay(SPECIES_LAYER) // races lose their color
@@ -169,11 +175,23 @@
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
-
+	if(H.disabilities & HUSK)
+		return
 	var/datum/sprite_accessory/S
-	var/list/standing	= list()
+	var/list/standing = list()
+	var/hair_hidden = 0
+	var/facialhair_hidden = 0
+	//we check if our hat or helmet hides our facial hair.
+	if(H.head)
+		var/obj/item/I = H.head
+		if(I.flags_inv & HIDEFACIALHAIR)
+			facialhair_hidden = 1
+	if(H.wear_mask)
+		var/obj/item/clothing/mask/M = H.wear_mask
+		if(M.flags_inv & HIDEFACIALHAIR)
+			facialhair_hidden = 1
 
-	if(H.facial_hair_style && FACEHAIR in specflags)
+	if(H.facial_hair_style && (FACEHAIR in specflags) && !facialhair_hidden)
 		S = facial_hair_styles_list[H.facial_hair_style]
 		if(S)
 			var/image/img_facial_s
@@ -193,44 +211,46 @@
 
 			img_facial_s.alpha = hair_alpha
 
-			standing	+= img_facial_s
+			standing += img_facial_s
 
-	//Applies the debrained overlay if there is no brain
-	if(!H.getorgan(/obj/item/organ/internal/brain))
-		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
+	//we check if our hat or helmet hides our hair.
+	if(H.head)
+		var/obj/item/I = H.head
+		if(I.flags_inv & HIDEHAIR)
+			hair_hidden = 1
+	if(H.wear_mask)
+		var/obj/item/clothing/mask/M = H.wear_mask
+		if(M.flags_inv & HIDEHAIR)
+			hair_hidden = 1
+	if(!hair_hidden)
+		if(!H.getorgan(/obj/item/organ/internal/brain)) //Applies the debrained overlay if there is no brain
+			standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
 
-	if((H.wear_suit) && (H.wear_suit.hooded) && (H.wear_suit.suittoggled == 1))
-		if(standing.len)
-			H.overlays_standing[HAIR_LAYER]    = standing
-		H.apply_overlay(HAIR_LAYER)
-		return
+		else if(H.hair_style && (HAIR in specflags))
+			S = hair_styles_list[H.hair_style]
+			if(S)
+				var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 
-	else if(H.hair_style && HAIR in specflags)
-		S = hair_styles_list[H.hair_style]
-		if(S)
-			var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+				img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 
-			img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
-
-			if(!forced_colour)
-				if(hair_color)
-					if(hair_color == "mutcolor")
-						img_hair_s.color = "#" + H.dna.features["mcolor"]
+				if(!forced_colour)
+					if(hair_color)
+						if(hair_color == "mutcolor")
+							img_hair_s.color = "#" + H.dna.features["mcolor"]
+						else
+							img_hair_s.color = "#" + hair_color
 					else
-						img_hair_s.color = "#" + hair_color
+						img_hair_s.color = "#" + H.hair_color
 				else
-					img_hair_s.color = "#" + H.hair_color
-			else
-				img_hair_s.color = forced_colour
-			img_hair_s.alpha = hair_alpha
+					img_hair_s.color = forced_colour
+				img_hair_s.alpha = hair_alpha
 
-			standing	+= img_hair_s
+				standing += img_hair_s
 
 	if(standing.len)
 		H.overlays_standing[HAIR_LAYER]	= standing
 
 	H.apply_overlay(HAIR_LAYER)
-	return
 
 /datum/species/proc/handle_body(mob/living/carbon/human/H)
 	H.remove_overlay(BODY_LAYER)
@@ -329,11 +349,11 @@
 			bodyparts_to_add -= "frills"
 
 	if("horns" in mutant_bodyparts)
-		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
+		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)))
 			bodyparts_to_add -= "horns"
 
 	if("ears" in mutant_bodyparts)
-		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
+		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)))
 			bodyparts_to_add -= "ears"
 
 	if(!bodyparts_to_add)
@@ -626,7 +646,7 @@
 			H.update_inv_wear_suit()
 
 	// nutrition decrease and satiety
-	if (H.nutrition > 0 && H.stat != DEAD && !H.dna.species.need_nutrition)
+	if (H.nutrition > 0 && H.stat != DEAD && H.dna.species.need_nutrition)
 		var/hunger_rate = HUNGER_FACTOR
 		if(H.satiety > 0)
 			H.satiety--
@@ -757,14 +777,14 @@
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!has_gravity(H))
-			// If there's no gravity we have the option of sanic speed.
+			// If there's no gravity we have the sanic speed of jetpack.
 			var/obj/item/weapon/tank/jetpack/J = H.back
 			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
 			if(!istype(J) && istype(C))
 				J = C.jetpack
 
-			if(istype(J) && J.turbo && J.allow_thrust(0.01, H))
-				. -= 2 // Turbo mode. Gotta go fast.
+			if(istype(J) && J.allow_thrust(0.01, H))
+				. -= 2
 		else
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
@@ -799,7 +819,7 @@
 /datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H)
 	if(!istype(M)) //sanity check for drones.
 		return
-	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name))
+	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name, attack_type = UNARMED_ATTACK))
 		add_logs(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return 0
@@ -1029,13 +1049,13 @@
 			if(organ.take_damage(0, damage*burnmod))
 				H.update_damage_overlays(0)
 		if(TOX)
-			H.adjustToxLoss(damage * blocked)
+			H.adjustToxLoss(damage)
 		if(OXY)
-			H.adjustOxyLoss(damage * blocked)
+			H.adjustOxyLoss(damage)
 		if(CLONE)
-			H.adjustCloneLoss(damage * blocked)
+			H.adjustCloneLoss(damage)
 		if(STAMINA)
-			H.adjustStaminaLoss(damage * blocked)
+			H.adjustStaminaLoss(damage)
 	return 1
 
 /datum/species/proc/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)
@@ -1058,13 +1078,17 @@
 	if((H.status_flags & GODMODE))
 		return
 
-	if(!breath || (breath.total_moles() == 0))
-		if(H.reagents.has_reagent("epinephrine"))
+	var/lungs = H.getorganslot("lungs")
+
+	if(!breath || (breath.total_moles() == 0) || !lungs)
+		if(H.reagents.has_reagent("epinephrine") && lungs)
 			return
 		if(H.health >= config.health_threshold_crit)
 			if(NOBREATH in specflags)
 				return 1
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+			if(!lungs)
+				H.adjustOxyLoss(1)
 			H.failed_last_breath = 1
 		else
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
@@ -1106,7 +1130,7 @@
 			H.failed_last_breath = 0
 			if(H.getOxyLoss())
 				H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["o2"][MOLES]/6
+			gas_breathed = breath_gases["o2"][MOLES]
 			H.clear_alert("oxy")
 
 	//Exhale
@@ -1143,7 +1167,7 @@
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["co2"][MOLES]/6
+			gas_breathed = breath_gases["co2"][MOLES]
 			H.clear_alert("not_enough_co2")
 
 	//Exhale
@@ -1173,7 +1197,7 @@
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["plasma"][MOLES]/6
+			gas_breathed = breath_gases["plasma"][MOLES]
 			H.clear_alert("not_enough_tox")
 
 	//Exhale

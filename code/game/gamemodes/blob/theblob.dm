@@ -39,10 +39,8 @@
 	if(atmosblock)
 		atmosblock = 0
 		air_update_turf(1)
-	var/area/Ablob = get_area(loc)
-	if(Ablob.blob_allowed) //Only remove for blobs in areas that counted for the win
-		blobs_legit -= src
-	blobs -= src //It's still removed from the normal list
+	blobs_legit -= src  //if it was in the legit blobs list, it isn't now
+	blobs -= src //it's no longer in the all blobs list either
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
 
@@ -93,7 +91,7 @@
 /obj/effect/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
 	src.Be_Pulsed()
 	if(claim_range)
-		for(var/obj/effect/blob/B in ultra_range(claim_range, src, 1))
+		for(var/obj/effect/blob/B in urange(claim_range, src, 1))
 			if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
 				B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
 				B.update_icon()
@@ -101,7 +99,8 @@
 		for(var/obj/effect/blob/B in orange(pulse_range, src))
 			B.Be_Pulsed()
 	if(expand_range)
-		src.expand()
+		if(prob(85))
+			src.expand()
 		for(var/obj/effect/blob/B in orange(expand_range, src))
 			if(prob(max(13 - get_dist(get_turf(src), get_turf(B)) * 4, 1))) //expand falls off with range but is faster near the blob causing the expansion
 				B.expand()
@@ -134,7 +133,7 @@
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.
 
-/obj/effect/blob/proc/expand(turf/T = null, controller = null)
+/obj/effect/blob/proc/expand(turf/T = null, controller = null, expand_reaction = 1)
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)
@@ -173,7 +172,7 @@
 			B.density = initial(B.density)
 			B.loc = T
 			B.update_icon()
-			if(B.overmind)
+			if(B.overmind && expand_reaction)
 				B.overmind.blob_reagent_datum.expand_reaction(src, B, T)
 			return B
 		else
@@ -195,6 +194,19 @@
 	..()
 	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
 	take_damage(damage, BURN)
+
+/obj/effect/blob/tesla_act(power)
+	..()
+	if(overmind)
+		if(overmind.blob_reagent_datum.tesla_reaction(src, power))
+			take_damage(power/400, BURN)
+	else
+		take_damage(power/400, BURN)
+
+/obj/effect/blob/extinguish()
+	..()
+	if(overmind)
+		overmind.blob_reagent_datum.extinguish_reaction(src)
 
 /obj/effect/blob/bullet_act(var/obj/item/projectile/Proj)
 	..()

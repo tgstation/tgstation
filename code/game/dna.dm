@@ -174,9 +174,7 @@
 
 /mob/living/carbon/set_species(datum/species/mrace = null, icon_update = 1)
 	if(mrace && has_dna())
-		if(dna.species.exotic_blood)
-			var/datum/reagent/EB = dna.species.exotic_blood
-			reagents.del_reagent(initial(EB.id))
+		dna.species.on_species_loss(src)
 		dna.species = new mrace()
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = 1)

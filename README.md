@@ -73,6 +73,10 @@ specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
 and the server should start up and be ready to join. It is also recommended that
 you set up the SQL backend (see below).
 
+###HOSTING ON LINUX
+If you're not using BYOND version 510, BYGEX will be used for some text replacement related code. Unfortunately, we only have a windows dll included right now. You can find a version known to compile on linux, along with some basic install instructions here:
+https://github.com/optimumtact/byond-regex
+
 ##UPDATING
 
 To update an existing installation, first back up your /config and /data folders
@@ -118,10 +122,8 @@ The SQL backend requires a MySQL server. SQL is required for the library, stats 
 
 ##IRC BOT SETUP
 
-Included in the repository is an IRC bot capable of relaying adminhelps to a specified
-IRC channel/server (thanks to Skibiliano).
-Instructions for bot setup are included in the /bot folder along with the script
-itself
+Included in the repository is a python3 compatible IRC bot capable of relaying adminhelps to a specified
+IRC channel/server, see the /bot folder for more
 
 ##CONTRIBUTING
 

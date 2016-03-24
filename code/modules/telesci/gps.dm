@@ -79,3 +79,9 @@ var/list/GPS_list = list()
 	icon_state = "gps-m"
 	gpstag = "MINE0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
+
+/obj/item/device/gps/internal
+	icon_state = null
+	gpstag = "Eerie Signal"
+	desc = "Report to a coder immediately."
+	invisibility = 100

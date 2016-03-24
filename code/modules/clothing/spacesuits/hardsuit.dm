@@ -10,9 +10,7 @@
 	var/on = 0
 	var/obj/item/clothing/suit/space/hardsuit/suit
 	item_color = "engineering" //Determines used sprites: hardsuit[on]-[color] and hardsuit[on]-[color]2 (lying down sprite)
-	action_button_name = "Toggle Helmet Light"
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
@@ -27,21 +25,31 @@
 		user.AddLuminosity(brightness_on)
 	else
 		user.AddLuminosity(-brightness_on)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/pickup(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(brightness_on)
 		SetLuminosity(0)
 
 /obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
 	if(suit)
 		suit.RemoveHelmet()
 
+/obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot)
+	if(slot == slot_head)
+		return 1
+
 /obj/item/clothing/head/helmet/space/hardsuit/equipped(mob/user, slot)
+	..()
 	if(slot != slot_head)
 		if(suit)
 			suit.RemoveHelmet()
@@ -71,19 +79,28 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/t_scanner, /obj/item/weapon/rcd, /obj/item/weapon/pipe_dispenser)
 	siemens_coefficient = 0
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
-	action_button_name = "Toggle Helmet"
+	actions_types = list(/datum/action/item_action/toggle_helmet)
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
 	var/obj/item/weapon/tank/jetpack/suit/jetpack = null
 
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	..()
-	if(slot == slot_wear_suit && jetpack)
-		jetpack.cycle_action.Grant(user)
+	if(jetpack)
+		if(slot == slot_wear_suit)
+			for(var/X in jetpack.actions)
+				var/datum/action/A = X
+				A.Grant(user)
 
 /obj/item/clothing/suit/space/hardsuit/dropped(mob/user)
 	..()
 	if(jetpack)
-		jetpack.cycle_action.Remove(user)
+		for(var/X in jetpack.actions)
+			var/datum/action/A = X
+			A.Remove(user)
+
+/obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot)
+	if(slot == slot_wear_suit) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
+		return 1
 
 	//Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/engine
@@ -184,11 +201,11 @@
 	item_state = "syndie_helm"
 	item_color = "syndi"
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
-	on = 0
+	on = 1
 	var/obj/item/clothing/suit/space/hardsuit/syndi/linkedsuit = null
-	action_button_name = "Toggle Helmet Mode"
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	actions_types = list(/datum/action/item_action/toggle_helmet_mode)
+	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	visor_flags = STOPSPRESSUREDMAGE
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
 	icon_state = "hardsuit[on]-[item_color]"
@@ -208,18 +225,18 @@
 		name = initial(name)
 		desc = initial(desc)
 		user.AddLuminosity(brightness_on)
-		flags |= STOPSPRESSUREDMAGE
+		flags |= visor_flags
 		flags_cover |= HEADCOVERSEYES | HEADCOVERSMOUTH
-		flags_inv |= HIDEMASK|HIDEEYES|HIDEFACE
+		flags_inv |= visor_flags_inv
 		cold_protection |= HEAD
 	else
 		user << "<span class='notice'>You switch your hardsuit to combat mode.</span>"
 		name += " (combat)"
 		desc = alt_desc
 		user.AddLuminosity(-brightness_on)
-		flags &= ~(STOPSPRESSUREDMAGE)
+		flags &= ~visor_flags
 		flags_cover &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
-		flags_inv &= ~(HIDEMASK|HIDEEYES|HIDEFACE)
+		flags_inv &= ~visor_flags_inv
 		cold_protection &= ~HEAD
 	update_icon()
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
@@ -228,6 +245,9 @@
 	if(istype(user, /mob/living/carbon))
 		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/proc/toggle_hardsuit_mode(mob/user) //Helmet Toggles Suit Mode
 	if(linkedsuit)
@@ -258,7 +278,6 @@
 	item_state = "syndie_hardsuit"
 	item_color = "syndi"
 	w_class = 3
-	action_button_name = "Toggle Helmet"
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi
@@ -278,6 +297,9 @@
 	armor = list(melee = 60, bullet = 60, laser = 50, energy = 25, bomb = 55, bio = 100, rad = 70)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	visor_flags_inv = 0
+	visor_flags = 0
+	on = 0
 
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
@@ -300,7 +322,9 @@
 	icon_state = "hardsuit1-owl"
 	item_state = "s_helmet"
 	item_color = "owl"
-
+	visor_flags_inv = 0
+	visor_flags = 0
+	on = 0
 
 /obj/item/clothing/suit/space/hardsuit/syndi/owl
 	name = "owl hardsuit"
@@ -346,7 +370,6 @@
 	item_state = "medical_helm"
 	item_color = "medical"
 	flash_protect = 0
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
 	scan_reagents = 1
 
@@ -371,15 +394,14 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60)
 	var/obj/machinery/doppler_array/integrated/bomb_radar
 	scan_reagents = 1
+	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_research_scanner)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/New()
 	..()
 	bomb_radar = new /obj/machinery/doppler_array/integrated(src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/living/carbon/human/user, slot)
-	..(user, slot)
-	user.scanner.Grant(user)
-	user.scanner.devices += 1
+	..()
 	if(user.glasses && istype(user.glasses, /obj/item/clothing/glasses/hud/diagnostic))
 		user << ("<span class='warning'>Your [user.glasses] prevents you using [src]'s diagnostic visor HUD.</span>")
 	else
@@ -388,8 +410,7 @@
 		DHUD.add_hud_to(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/dropped(mob/living/carbon/human/user)
-	..(user)
-	user.scanner.devices = max(0, user.scanner.devices - 1)
+	..()
 	if(onboard_hud_enabled && !(user.glasses && istype(user.glasses, /obj/item/clothing/glasses/hud/diagnostic)))
 		var/datum/atom_hud/DHUD = huds[DATA_HUD_DIAGNOSTIC]
 		DHUD.remove_hud_from(user)

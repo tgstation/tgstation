@@ -78,7 +78,7 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = sanitize_russian(input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null)
+		msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
 
 		if(!msg)
 			return
@@ -92,17 +92,24 @@
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
-	//clean the message if it's not sent by a high-rank admin
-	if(!check_rights(R_SERVER|R_DEBUG,0))
-		msg = sanitize_russian(msg)
-		if(!msg)
-			return
-
 	var/rawmsg = msg
 	if(holder)
 		msg = emoji_parse(msg)
 
 	var/keywordparsedmsg = keywords_lookup(msg)
+
+	//clean the message if it's not sent by a high-rank admin
+	if(!check_rights(R_DEBUG,0))
+		msg = sanitize(msg)
+		keywordparsedmsg = sanitize(keywordparsedmsg)
+		if(!msg)
+			return
+	else
+		msg = sanitize_russian(msg)
+		keywordparsedmsg = sanitize_russian(keywordparsedmsg)
+		if(!msg)
+			return
+
 
 	if(C.holder)
 		if(holder)	//both are admins
@@ -144,7 +151,7 @@
 			src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
 			return
 
-	sanitize_russian(log_admin("PM: [key_name(src)]->[key_name(C)]: [rawmsg]"))
+	log_admin("PM: [key_name(src)]->[key_name(C)]: [rawmsg]")
 
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in admins)

@@ -73,6 +73,12 @@ var/global/BSACooldown = 0
 		body += "<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
 		body += "(<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
 
+	if(M.ckey)
+		body += "<br><b>Permamute: </b> "
+		body += "\[<A href='?_src_=holder;permamute=[M.ckey];chat=OOC'><font color='[oocmuted(M.ckey)?"red":"blue"]'>OOC</font></a> | "
+		body += "<A href='?_src_=holder;permamute=[M.ckey];chat=AH'><font color='[ahmuted(M.ckey)?"red":"blue"]'>ADMINHELP</font></a>\]"
+
+
 	body += "<br><br>"
 	body += "<A href='?_src_=holder;jumpto=\ref[M]'><b>Jump to</b></A> | "
 	body += "<A href='?_src_=holder;getmob=\ref[M]'>Get</A> | "
@@ -81,7 +87,8 @@ var/global/BSACooldown = 0
 	body += "<br><br>"
 	body += "<A href='?_src_=holder;traitor=\ref[M]'>Traitor panel</A> | "
 	body += "<A href='?_src_=holder;narrateto=\ref[M]'>Narrate to</A> | "
-	body += "<A href='?_src_=holder;subtlemessage=\ref[M]'>Subtle message</A>"
+	body += "<A href='?_src_=holder;subtlemessage=\ref[M]'>Subtle message</A> |"
+	body += "<A href='?_src_=holder;showmultiacc=\ref[M]'>Check multiaccounts</A>"
 
 	if (M.client)
 		if(!istype(M, /mob/new_player))
@@ -620,7 +627,8 @@ var/global/BSACooldown = 0
 		return
 
 	var/chosen = pick_closest_path(object)
-
+	if(!chosen)
+		return
 	if(ispath(chosen,/turf))
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)

@@ -7,8 +7,10 @@
 
 /datum/round_event/wizard/lava/
 	endWhen = 0
+	var/started = FALSE
 
 /datum/round_event/wizard/lava/start()
-	var/datum/weather/floor_is_lava/LAVA = new /datum/weather/floor_is_lava
-	LAVA.weather_start_up()
-	return
+	if(!started)
+		started = TRUE
+		var/datum/weather/floor_is_lava/LAVA = new /datum/weather/floor_is_lava
+		LAVA.weather_start_up()

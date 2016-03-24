@@ -60,10 +60,17 @@
 	return 0
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev38
-	name = "d-tiv revolver cylinder"
+	name = "detective revolver cylinder"
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = "38"
 	max_ammo = 6
+
+/obj/item/ammo_box/magazine/internal/cylinder/rev38/can_load(mob/user)
+	user << "<span class='notice'>You start reloading \the [src]...</span>"
+	if(!do_after(user, 30))
+		user << "<span class='danger'>You didn't manage to reload \the [src]!</span>"
+		return 0
+	return 1
 
 /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
 	name = "grenade launcher internal magazine"
@@ -247,11 +254,11 @@
 
 /obj/item/ammo_box/magazine/smgm45
 	name = "SMG magazine (.45)"
-	icon_state = "c20r45-20"
+	icon_state = "c20r45-24"
 	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c45
+	ammo_type = /obj/item/ammo_casing/c45nostamina
 	caliber = ".45"
-	max_ammo = 20
+	max_ammo = 24
 
 /obj/item/ammo_box/magazine/smgm45/update_icon()
 	..()
@@ -326,7 +333,7 @@ obj/item/ammo_box/magazine/tommygunm45
 /obj/item/ammo_box/magazine/m12g/breach
 	name = "shotgun magazine (12g breacher slugs)"
 	icon_state = "m12gbc"
-	ammo_type = /obj/item/projectile/bullet/meteorshot/weak
+	ammo_type = /obj/item/ammo_casing/shotgun/breaching
 
 /obj/item/ammo_box/magazine/toy
 	name = "foam force META magazine"

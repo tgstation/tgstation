@@ -47,6 +47,8 @@
 
 /datum/hud/New(mob/owner)
 	mymob = owner
+	hide_actions_toggle = new
+	hide_actions_toggle.InitialiseIcon(mymob)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
@@ -135,6 +137,8 @@
 			if(infodisplay.len)
 				mymob.client.screen += infodisplay
 
+			mymob.client.screen += hide_actions_toggle
+
 			if(action_intent)
 				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
 
@@ -171,7 +175,7 @@
 
 	hud_version = display_hud_version
 	persistant_inventory_update()
-	mymob.update_action_buttons()
+	mymob.update_action_buttons(1)
 	reorganize_alerts()
 	mymob.reload_fullscreen()
 

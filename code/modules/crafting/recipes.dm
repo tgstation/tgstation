@@ -63,10 +63,8 @@
 	result = /obj/item/weapon/melee/baton/cattleprod
 	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1,
-				/obj/item/device/assembly/igniter = 1,
-				/obj/item/weapon/stock_parts/cell = 1)
+				/obj/item/device/assembly/igniter = 1)
 	time = 40
-	parts = list(/obj/item/weapon/stock_parts/cell = 1)
 	category = CAT_WEAPON
 
 /datum/table_recipe/teleprod
@@ -74,12 +72,18 @@
 	result = /obj/item/weapon/melee/baton/cattleprod/teleprod
 	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1,
-				/obj/item/weapon/wirecutters = 1,
-				/obj/item/weapon/stock_parts/cell = 1,
+				/obj/item/device/assembly/igniter = 1,
 				/obj/item/weapon/ore/bluespace_crystal = 1)
 	time = 40
-	parts = list(/obj/item/weapon/stock_parts/cell = 1)
 	category = CAT_WEAPON
+
+/datum/table_recipe/bola
+	name = "Bola"
+	result = /obj/item/weapon/restraints/legcuffs/bola
+	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
+				/obj/item/stack/sheet/metal = 6)
+	time = 20//15 faster than crafting them by hand!
+	category= CAT_WEAPON
 
 /datum/table_recipe/tailclub
 	name = "Tail Club"
@@ -233,7 +237,8 @@
 	name = "Overload Improvised Shell"
 	result = /obj/item/ammo_casing/shotgun/improvised/overload
 	reqs = list(/obj/item/ammo_casing/shotgun/improvised = 1,
-				/datum/reagent/blackpowder = 5)
+				/datum/reagent/blackpowder = 10,
+				/datum/reagent/toxin/plasma = 20)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 	category = CAT_AMMO
@@ -290,4 +295,20 @@
 	result = /obj/item/clothing/head/lizard
 	time = 10
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
+	category = CAT_MISC
+
+/datum/table_recipe/skateboard
+	name = "Skateboard"
+	result = /obj/vehicle/scooter/skateboard
+	time = 60
+	reqs = list(/obj/item/stack/sheet/metal = 5,
+				/obj/item/stack/rods = 10)
+	category = CAT_MISC
+
+/datum/table_recipe/scooter
+	name = "Scooter"
+	result = /obj/vehicle/scooter
+	time = 65
+	reqs = list(/obj/item/stack/sheet/metal = 5,
+				/obj/item/stack/rods = 12)
 	category = CAT_MISC

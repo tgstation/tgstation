@@ -4,6 +4,7 @@
 	var/height = 0
 	var/mappath = null
 	var/mapfile = null
+	var/loaded = 0 // Times loaded this round
 
 /datum/map_template/New(path = null, map = null, rename = null)
 	if(path)
@@ -28,7 +29,7 @@
 
 /datum/map_template/proc/load(turf/T, centered = FALSE)
 	if(centered)
-		T = locate(T.x - width/2 , T.y - height/2 , T.z)
+		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
 	if(!T)
 		return
 	if(T.x+width > world.maxx)
@@ -36,14 +37,14 @@
 	if(T.y+height > world.maxy)
 		return
 
-	maploader.load_map(get_file(), T.x, T.y, T.z)
+	maploader.load_map(get_file(), T.x-1, T.y-1, T.z)
 
 	//initialize things that are normally initialized after map load
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
 
-	for(var/L in block(T,locate(T.x+width, T.y+height, T.z)))
+	for(var/L in block(T,locate(T.x+width-1, T.y+height-1, T.z)))
 		var/turf/B = L
 		for(var/A in B)
 			atoms += A
@@ -70,10 +71,10 @@
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
 	var/turf/placement = T
 	if(centered)
-		var/turf/corner = locate(placement.x - width/2, placement.y - height/2, placement.z)
+		var/turf/corner = locate(placement.x - round(width/2), placement.y - round(height/2), placement.z)
 		if(corner)
 			placement = corner
-	return block(placement, locate(placement.x + width, placement.y + height, placement.z))
+	return block(placement, locate(placement.x+width-1, placement.y+height-1, placement.z))
 
 
 /proc/preloadTemplates(path = "_maps/templates/") //see master controller setup

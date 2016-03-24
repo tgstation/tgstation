@@ -71,9 +71,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(!(src in user.mob_spell_list))
 			return 0
 
-	if(user.z == ZLEVEL_CENTCOM && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
-		return 0
-	if(user.z == ZLEVEL_CENTCOM && ticker.mode.name == "ragin' mages")
+	var/turf/T = get_turf(user)
+	if(T.z == ZLEVEL_CENTCOM && (!centcom_cancast || ticker.mode.name == "ragin' mages")) //Certain spells are not allowed on the centcom zlevel
+		user << "<span class='notice'>You can't cast this spell here.</span>"
 		return 0
 
 	if(!skipcharge)
@@ -156,9 +156,14 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/spell/New()
 	..()
+	action = new(src)
 
 	still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"
 	charge_counter = charge_max
+
+/obj/effect/proc_holder/spell/Destroy()
+	qdel(action)
+	return ..()
 
 /obj/effect/proc_holder/spell/Click()
 	if(cast_check())
@@ -169,9 +174,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	return
 
 /obj/effect/proc_holder/spell/proc/start_recharge()
-	while(charge_counter < charge_max && isnull(gc_destroyed))
+	if(action)
+		action.UpdateButtonIcon()
+	while(charge_counter < charge_max && !qdeleted(src))
 		sleep(1)
 		charge_counter++
+	if(action)
+		action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets)
@@ -380,11 +389,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
 		return 0
 
-	if(user.z == ZLEVEL_CENTCOM && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
-		return 0
-	if(user.z == ZLEVEL_CENTCOM && ticker.mode.name == "ragin' mages")
-		return 0
-
 	switch(charge_type)
 		if("recharge")
 			if(charge_counter < charge_max)
@@ -396,21 +400,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(user.stat && !stat_allowed)
 		return 0
 
-	if(ishuman(user))
-
-		var/mob/living/carbon/human/H = user
-
-		if((invocation_type == "whisper" || invocation_type == "shout") && H.is_muzzled())
-			return 0
-
-		if(clothes_req) //clothes check
-			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/wizard))
-				return 0
-			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
-				return 0
-			if(!istype(H.head, /obj/item/clothing/head/wizard) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/wizard))
-				return 0
-	else
+	if(!ishuman(user))
 		if(clothes_req || human_req)
 			return 0
 		if(nonabstract_req && (isbrain(user) || ispAI(user)))

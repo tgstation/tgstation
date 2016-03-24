@@ -189,6 +189,9 @@ ALLOW_RANDOM_EVENTS
 ## Allow the AI job to be picked.
 ALLOW_AI
 
+### Secborg ###
+## Uncomment to prevent the secborg module from being chosen
+#DISABLE_SECBORG
 
 
 ### AWAY MISSIONS ###
@@ -318,7 +321,7 @@ REACTIONARY_EXPLOSIONS
 ## This caps all explosions to the specified range. Used for both balance reasons and to prevent overloading the server and lagging the game out.
 ## This is given as the 3rd number(light damage) in the standard (1,2,3) explosion notation. The other numbers are derived by dividing by 2 and 4.
 ## eg: If you give the number 20. The bomb cap will be 5,10,20.
-## Can be any number between 4 and 128, some examples are provided below.
+## Can be any number above 4, some examples are provided below.
 
 ## Small (3, 7, 14)
 #BOMBCAP 14

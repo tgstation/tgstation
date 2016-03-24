@@ -19,20 +19,18 @@
 	burntime = 30
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
-	var/foldabletype //to fold into an item (e.g. roller bed item)
 
-/obj/structure/bed/alien
-	name = "resting contraption"
-	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
-	icon_state = "abed"
+/obj/structure/bed/deconstruct()
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
+	..()
 
 /obj/structure/bed/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/bed/attack_animal(mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
 	if(M.environment_smash)
-		new /obj/item/stack/sheet/metal(src.loc)
-		qdel(src)
+		deconstruct()
 
 /obj/structure/bed/ex_act(severity, target)
 	switch(severity)
@@ -41,42 +39,17 @@
 			return
 		if(2)
 			if(prob(70))
-				if(buildstacktype)
-					new buildstacktype(loc, buildstackamount)
-				qdel(src)
+				deconstruct()
 				return
 		if(3)
 			if(prob(50))
-				if(buildstacktype)
-					new buildstacktype(loc, buildstackamount)
-				qdel(src)
+				deconstruct()
 				return
-
-/obj/structure/bed/blob_act()
-	if(buildstacktype)
-		new buildstacktype(loc, buildstackamount)
-	qdel(src)
 
 /obj/structure/bed/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(buildstacktype)
-			new buildstacktype(loc, buildstackamount)
-		qdel(src)
-
-/obj/structure/bed/MouseDrop(over_object, src_location, over_location)
-	. = ..()
-	if(foldabletype)
-		if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
-			if(!ishuman(usr))
-				return
-			if(buckled_mob)
-				return 0
-			usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
-			new foldabletype(get_turf(src))
-			qdel(src)
-
-
+		deconstruct()
 
 /*
  * Roller beds
@@ -87,10 +60,21 @@
 	icon_state = "down"
 	anchored = 0
 	burn_state = FIRE_PROOF
-	foldabletype = /obj/item/roller
+	var/foldabletype = /obj/item/roller
+
+/obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
+	. = ..()
+	if(over_object == usr && Adjacent(usr))
+		if(!ishuman(usr))
+			return 0
+		if(buckled_mobs.len)
+			return 0
+		usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
+		new foldabletype(get_turf(src))
+		qdel(src)
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
-	if(M == buckled_mob)
+	if(M in buckled_mobs)
 		density = 1
 		icon_state = "up"
 		M.pixel_y = initial(M.pixel_y)
@@ -145,8 +129,12 @@
 			return
 
 		var/obj/structure/bed/roller/R = target
-		if(R.buckled_mob)
-			R.user_unbuckle_mob(user)
+		if(R.buckled_mobs.len)
+			if(R.buckled_mobs.len > 1)
+				R.unbuckle_all_mobs()
+				user.visible_message("<span class='notice'>[user] unbuckles all creatures from [R].</span>")
+			else
+				R.user_unbuckle_mob(R.buckled_mobs[1],user)
 
 		loaded = target
 		target.loc = src
@@ -165,13 +153,7 @@
 	buildstackamount = 10
 
 
-//Stool
-
-/obj/structure/bed/stool
-	name = "stool"
-	desc = "Apply butt."
-	icon_state = "stool"
-	can_buckle = 0
-	buildstackamount = 1
-
-
+/obj/structure/bed/alien
+	name = "resting contraption"
+	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
+	icon_state = "abed"

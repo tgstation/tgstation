@@ -964,7 +964,7 @@ var/list/WALLITEMS_INVERSE = list(
 /proc/IsValidSrc(A)
 	if(istype(A, /datum))
 		var/datum/B = A
-		return !B.gc_destroyed
+		return !qdeleted(B)
 	if(istype(A, /client))
 		return 1
 	return 0
@@ -1117,8 +1117,27 @@ B --><-- A
 
 	return I
 
+//ultra range (no limitations on distance, faster than range for distances > 8); including areas drastically decreases performance
+/proc/urange(dist=0, atom/center=usr, orange=0, areas=0)
+	if(!dist)
+		if(!orange)
+			return list(center)
+		else
+			return list()
+
+	var/list/turfs = RANGE_TURFS(dist, center)
+	if(orange)
+		turfs -= get_turf(center)
+	. = list()
+	for(var/V in turfs)
+		var/turf/T = V
+		. += T
+		. += T.contents
+		if(areas)
+			. |= T.loc
+
 //similar function to range(), but with no limitations on the distance; will search spiralling outwards from the center
-/proc/ultra_range(dist=0, center=usr, orange=0)
+/proc/spiral_range(dist=0, center=usr, orange=0)
 	if(!dist)
 		if(!orange)
 			return list(center)
@@ -1175,6 +1194,59 @@ B --><-- A
 
 	return L
 
+//similar function to RANGE_TURFS(), but will search spiralling outwards from the center (like the above, but only turfs)
+/proc/spiral_range_turfs(dist=0, center=usr, orange=0)
+	if(!dist)
+		if(!orange)
+			return list(center)
+		else
+			return list()
+
+	var/turf/t_center = get_turf(center)
+	if(!t_center)
+		return list()
+
+	var/list/L = list()
+	var/turf/T
+	var/y
+	var/x
+	var/c_dist = 1
+
+	if(!orange)
+		L += t_center
+
+	while( c_dist <= dist )
+		y = t_center.y + c_dist
+		x = t_center.x - c_dist + 1
+		for(x in x to t_center.x+c_dist)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+
+		y = t_center.y + c_dist - 1
+		x = t_center.x + c_dist
+		for(y in t_center.y-c_dist to y)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+
+		y = t_center.y - c_dist
+		x = t_center.x + c_dist - 1
+		for(x in t_center.x-c_dist to x)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+
+		y = t_center.y - c_dist + 1
+		x = t_center.x - c_dist
+		for(y in y to t_center.y+c_dist)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+		c_dist++
+
+	return L
+
 /atom/proc/contains(var/atom/A)
 	if(!A)
 		return 0
@@ -1182,7 +1254,7 @@ B --><-- A
 		if(location == src)
 			return 1
 
-proc/add_to_proximity_list(atom/A, range)
+/proc/add_to_proximity_list(atom/A, range)
 	var/turf/T = get_turf(A)
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
@@ -1190,14 +1262,14 @@ proc/add_to_proximity_list(atom/A, range)
 		C.proximity_checkers |= A
 	return L
 
-proc/remove_from_proximity_list(atom/A, range)
+/proc/remove_from_proximity_list(atom/A, range)
 	var/turf/T = get_turf(A)
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
 		C.proximity_checkers.Remove(A)
 
-proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
+/proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
 	var/turf/T = get_turf(A)
 	var/turf/Q = get_turf(B)
 	if(T == Q && range == newrange)
@@ -1213,6 +1285,27 @@ proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
 		var/turf/F = E
 		F.proximity_checkers |= checker
 	return 1
+
+/proc/flick_overlay_static(image/I, atom/A, duration)
+	set waitfor = 0
+	if(!A || !I)
+		return
+	A.overlays |= I
+	sleep(duration)
+	A.overlays -= I
+
+/proc/get_areas_in_z(zlevel)
+	. = list()
+	var/validarea = 0
+	for(var/V in sortedAreas)
+		var/area/A = V
+		validarea = 1
+		for(var/turf/T in A)
+			if(T.z != zlevel)
+				validarea = 0
+				break
+		if(validarea)
+			. += A
 
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
@@ -1247,3 +1340,22 @@ proc/pick_closest_path(value)
 			return
 	chosen = matches[chosen]
 	return chosen
+
+//gives us the stack trace from CRASH() without ending the current proc.
+/proc/stack_trace(msg)
+	CRASH(msg)
+
+//Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
+/proc/stoplag()
+	. = 1
+	sleep(world.tick_lag)
+#if DM_VERSION >= 510
+	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
+		. += 2
+		sleep(world.tick_lag*2)
+		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
+			. += 4
+			sleep(world.tick_lag*4)
+			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
+			//	not worth it.
+#endif

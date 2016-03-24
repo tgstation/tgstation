@@ -48,7 +48,7 @@
 			break
 
 		if(Target)
-			if(isslime(Target.buckled_mob))
+			if(locate(/mob/living/simple_animal/slime) in Target.buckled_mobs)
 				Target = null
 				AIproc = 0
 				break
@@ -230,6 +230,7 @@
 	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		nutrition -= 20
 		amount_grown++
+		update_action_buttons_icon()
 
 	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD && !buckled && !Target && !ckey)
 		if(is_adult)
@@ -321,7 +322,7 @@
 						if(src.type in H.dna.species.ignored_by)
 							continue
 
-					if(isslime(L.buckled_mob)) // Only one slime can latch on at a time.
+					if(locate(/mob/living/simple_animal/slime) in L.buckled_mobs) // Only one slime can latch on at a time.
 						continue
 
 					targets += L // Possible target found!
